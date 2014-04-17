@@ -35,22 +35,17 @@
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
-  #ifdef _MSC_VER
-    #define lseek _lseek
-    #define  read _read
-    #define write _write
-    #define open _open
-    #define close _close
-  #endif
 #endif
 
-#ifdef __GNU__
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
+#ifdef _MSC_VER
+  #define lseek _lseek
+  #define  read _read
+  #define write _write
+  #define open _open
+  #define close _close
+#else
+  #include <iostream>
+  using namespace std;
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>

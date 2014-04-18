@@ -235,8 +235,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 
 #ifdef _MSC_VER
   SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandler, true);
-#endif
-
+#else
   /* Check the value of control variable ireturn:
         -1 (exit status)
          0 (initialization of function minimizer)
@@ -244,27 +243,12 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
          2 (call2 - line search and Hessian update)
          >=3 (derivative check)
   */
-#if !defined (_MSC_VER)
-  #if defined( __SUN__) && !(defined __GNU__)
-    #if defined( __HP__)
-        if (ireturn <= 0 )
-        {
-          signal(SIGINT, &onintr);
-        }
-    #else
-        if (ireturn <= 0 )
-        {
-          signal(SIGINT, (SIG_PF)&onintr);
-        }
-    #endif
-  #endif
+  if (ireturn <= 0 )
+  {
+    signal(SIGINT, &onintr);
+  }
 #endif
-#if defined( __GNU__) || defined (__BORLANDC__)
-      if (ireturn <= 0 )
-      {
-        signal(SIGINT, &onintr);
-      }
-#endif
+
 #ifdef __ZTC__
       if (ireturn <= 0 )
       {

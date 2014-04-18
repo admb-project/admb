@@ -121,11 +121,11 @@
     }
 #endif
 
-  #ifdef __GNU__
-    file_ptr=open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777 );
-  #else
+#if defined(_MSC_VER)
     file_ptr=open(file_name, O_RDWR | O_CREAT | O_TRUNC );
-  #endif
+#else
+    file_ptr=open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777 );
+#endif
 
     if (file_ptr == -1)
     {

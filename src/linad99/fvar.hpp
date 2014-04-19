@@ -141,8 +141,6 @@ Macro definitions.
   #include <pc.h>
 #endif
 
-#define AD_VERSION 7
-
 #if !defined(CGNU_DOUBLE)
   #define CGNU_DOUBLE double
 #endif
@@ -156,7 +154,9 @@ Macro definitions.
 #endif
 
 #ifndef OPT_LIB
+  #ifndef SAFE_ARRAYS
   #define SAFE_ARRAYS
+  #endif
 #endif
 
 // C language function prototypes
@@ -176,12 +176,12 @@ extern "C"
  */
 class smart_counter
 {
-   int *ncopies;
- public:
-   int *get_ncopies(void);
-    smart_counter(void);
-    smart_counter(const smart_counter & sc);
-   ~smart_counter(void);
+  int *ncopies;
+public:
+  int *get_ncopies();
+  smart_counter();
+  smart_counter(const smart_counter& sc);
+  ~smart_counter();
 };
 
 /**

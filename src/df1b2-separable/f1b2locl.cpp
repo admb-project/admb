@@ -638,7 +638,7 @@ local_init_df1b2vector::local_init_df1b2vector(const df1b2vector & _x)
  */
   void local_init_df1b2variable::set_index(imatrix& y,int& ii)
   {
-    //cout << "FUCK " << ind_index << " " << ii << endl;
+    //cout << ind_index << " " << ii << endl;
     y(ii,1)= ind_index;
     y(ii,2)= ii;
     ii++;

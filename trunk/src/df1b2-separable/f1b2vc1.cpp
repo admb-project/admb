@@ -455,7 +455,7 @@ df1b2vector& df1b2vector::operator /= (const df1b2variable& _x)
   return *this;
 }
 
-#if defined(SAFE_ARRAYS)
+#if !defined(OPT_LIB)
 /**
  * Description not yet available.
  * \param

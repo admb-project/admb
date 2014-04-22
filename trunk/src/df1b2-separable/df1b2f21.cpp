@@ -125,7 +125,7 @@ void read_pass1_1_dv(void)
 
   // get info from tape1
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("HU",list);
 #endif
   df1b2_header * px=(df1b2_header *) list.bptr;
@@ -270,7 +270,7 @@ void read_pass1_2_dv(void)
 
   // get info from tape1
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("HU",list);
   checkidentiferstring("JE",list2);
 #endif
@@ -379,7 +379,7 @@ void read_pass1_3_dv(void)
   //df1b2function1 * pf;
 
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("HU",list);
 #endif
   df1b2_header * px=(df1b2_header *) list.bptr;

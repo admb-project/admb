@@ -131,7 +131,7 @@ void read_pass2_1_dvdv(void)
   //df1b2function2 * pf;
 
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("UZ",f1b2gradlist->list);
 #endif
   char * bptr=f1b2gradlist->list.bptr;
@@ -414,7 +414,7 @@ void read_pass2_2_dvdv(void)
 
   // get info from tape1
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("UZ",list);
   checkidentiferstring("FW",list2);
 #endif
@@ -650,7 +650,7 @@ void read_pass2_3_dvdv(void)
 
   // get info from tape1
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("UZ",list);
 #endif
  /*

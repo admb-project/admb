@@ -355,13 +355,13 @@ void print_derivatives(df1b2_header * px,const char * s,
     int indexmin(void) const {return index_min;}
     int indexmax(void) const {return index_max;}
 
-#  if defined(OPT_LIB)
+#if defined(OPT_LIB)
     init_df1b2variable& operator () (int i) { return ptr[i];}
     init_df1b2variable& operator [] (int i) { return ptr[i];}
-#  else
+#else
     init_df1b2variable& operator () (int i);
     init_df1b2variable& operator [] (int i);
-#  endif
+#endif
     void set_value(const dvector&);
     ~init_df1b2vector();
   };
@@ -1042,9 +1042,9 @@ public:
     const index_type& nch,const char *);
   void allocate(void);
   void deallocate(void);
-#  if defined(OPT_LIB)
+#if defined(OPT_LIB)
   df1b2variable& operator () (int i,int j) const
-    {return (df1b2variable&)(v[i][j]);}
+    { return (df1b2variable&)(v[i][j]);}
   df1b2vector& operator [] (int i) const {return (df1b2vector&)(v[i]);}
   df1b2vector& operator () (int i) const {return (df1b2vector&)(v[i]);}
 #else

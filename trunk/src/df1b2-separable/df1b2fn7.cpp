@@ -99,7 +99,7 @@ void read_tilde_values_1(void)
   // backup the size of the record
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("YS",list);
 #endif
   df1b2_header * px=(df1b2_header *) list.bptr; // we don't need this here
@@ -135,7 +135,7 @@ void read_tilde_values_2(void)
 #endif
   list.check_buffer_size(total_bytes);
   list.saveposition(); // save pointer to beginning of record;
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("YS",list);
 #endif
 
@@ -194,7 +194,7 @@ void read_tilde_values_3(void)
   // backup the size of the record
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("YS",list);
 #endif
   df1b2_header * px=(df1b2_header *) list.bptr;
@@ -208,7 +208,7 @@ void read_tilde_values_3(void)
   // backup the size of the record
   list3-=num_bytes3;
   list3.saveposition(); // save pointer to beginning of record;
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("WF",list3);
 #endif
   memcpy(px->get_u_tilde(),list3.bptr,sizeof(double));

@@ -923,7 +923,7 @@ void re_objective_function_value::allocate(const char * s)
   df1b2variable::allocate();
 }
 
-#if defined(SAFE_ARRAYS)
+#if !defined(OPT_LIB)
 /**
  * Description not yet available.
  * \param

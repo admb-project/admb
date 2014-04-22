@@ -230,7 +230,7 @@ void read_pass1_plus_eq_1(void)
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("JK",list);
 #endif
 
@@ -330,7 +330,7 @@ void read_pass1_plus_eq_2(void)
   //list2.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
   // bptr and bptr2 now both point to the beginning of their records
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("JK",list);
   //checkidentiferstring("IL",list2);
 #endif
@@ -389,7 +389,7 @@ void read_pass1_plus_eq_3(void)
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
 
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("JK",list);
 #endif
   // get info from tape1

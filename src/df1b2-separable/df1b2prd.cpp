@@ -141,7 +141,7 @@ void read_pass2_1_prod(void)
   //df1b2function2 * pf;
 
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("DL",f1b2gradlist->list);
 #endif
   char * bptr=f1b2gradlist->list.bptr;
@@ -293,7 +293,7 @@ void read_pass2_2_prod(void)
 
   // get info from tape1
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("DL",list);
   checkidentiferstring("QK",list2);
 #endif
@@ -445,7 +445,7 @@ void read_pass2_3_prod(void)
 
   // get info from tape1
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("DL",list);
 #endif
   df1b2_header * px=(df1b2_header *) list.bptr;

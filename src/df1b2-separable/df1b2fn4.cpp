@@ -169,7 +169,7 @@ void read_pass1_eq_1(void)
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
 
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("GV",list);
 #endif
 
@@ -287,7 +287,7 @@ void read_pass1_eq_2(void)
   // backup the size of the record
   list2-=num_bytes2;
   list2.saveposition(); // save pointer to beginning of record;
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("GV",list);
   checkidentiferstring("HT",list2);
 #endif
@@ -357,7 +357,7 @@ void read_pass1_eq_3(void)
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
 
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("GV",list);
 #endif
   // get info from tape1

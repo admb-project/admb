@@ -277,7 +277,7 @@ void read_pass1_init_1(void)
   //df1b2_header z;
 
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("AZ",list);
 #endif
   df1b2_header * pz=(df1b2_header *) list.bptr;

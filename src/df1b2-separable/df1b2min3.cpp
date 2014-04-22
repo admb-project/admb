@@ -102,7 +102,7 @@ void read_pass2_1_minusvc(void)
   list.saveposition(); // save pointer to beginning of record;
 
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("LK",f1b2gradlist->list);
 #endif
   char * bptr=f1b2gradlist->list.bptr;
@@ -165,7 +165,7 @@ void read_pass2_2_minusvc(void)
   // get record size
   int num_bytes=nlist.bptr->numbytes;
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("LK",list);
 #endif
   df1b2_header * py=(df1b2_header *) list.bptr;
@@ -218,7 +218,7 @@ void read_pass2_3_minusvc(void)
 
   // get info from tape1
   // get info from tape1
-#if defined(SAFE_ARRAYS)
+#if defined(SAFE_ALL)
   checkidentiferstring("LK",list);
 #endif
   df1b2_header * py=(df1b2_header *) list.bptr;

@@ -573,12 +573,12 @@ void dvar3_array::shallow_copy(const dvar3_array& m2)
        deallocate();
      }
    }
-#  ifdef SAFE_ARRAYS
+#ifdef SAFE_ALL
    else
    {
-     //cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
    }
-#  endif
+#endif
  }
 
 /**
@@ -596,12 +596,12 @@ void dvar3_array::shallow_copy(const dvar3_array& m2)
      t=NULL;
      shape=NULL;
    }
-#  ifdef SAFE_ARRAYS
+#ifdef SAFE_ALL
    else
    {
-     //cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
    }
-#  endif
+#endif
  }
 
 /**

@@ -615,12 +615,12 @@ d3_array::d3_array(const d3_array& m2)
    {
      (shape->ncopies)++;
    }
-#  ifdef SAFE_ARRAYS
+#ifdef SAFE_ALL
    else
    {
      cerr << "Making a copy of an unallocated d3_array"<<endl;
    }
-#  endif
+#endif
    t = m2.t;
  }
 
@@ -635,12 +635,12 @@ void d3_array::shallow_copy(const d3_array& m2)
    {
      (shape->ncopies)++;
    }
-#  ifdef SAFE_ARRAYS
+#ifdef SAFE_ALL
    else
    {
      cerr << "Making a copy of an unallocated d3_array"<<endl;
    }
-#  endif
+#endif
    t = m2.t;
  }
 
@@ -681,12 +681,12 @@ static int testflag=0;
      t=NULL;
      shape=NULL;
    }
-#  ifdef SAFE_ARRAYS
+#ifdef SAFE_ALL
    else
    {
-    // cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
    }
-#  endif
+#endif
  }
 
 /**
@@ -705,12 +705,12 @@ d3_array::~d3_array()
       deallocate();
     }
   }
-#  ifdef SAFE_ARRAYS
+#ifdef SAFE_ALL
   else
   {
     cerr << "Warning -- trying to deallocate an unallocated d3_array"<<endl;
   }
-#  endif
+#endif
 }
 /**
  * Description not yet available.

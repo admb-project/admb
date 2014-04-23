@@ -37,7 +37,6 @@ void gradfree(dlink *);
  */
     prevariable dvar_vector::operator[] (int i)
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
           cerr << "array bound exceeded -- index too low in "
@@ -50,7 +49,6 @@ void gradfree(dlink *);
           "prevariable::operator[]";
           ad_exit(1);
         }
-      #endif
       //((va+i)->nc)++;
       return (va+i);
     }
@@ -61,7 +59,6 @@ void gradfree(dlink *);
  */
     prevariable dvar_vector::operator() (int i)
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
           cerr << "array bound exceeded -- index too low in "
@@ -74,20 +71,16 @@ void gradfree(dlink *);
           "prevariable::operator()";
           ad_exit(1);
         }
-      #endif
       //((va+i)->nc)++;
       return (va+i);
     }
-#endif
 
-#ifndef OPT_LIB
 /**
  * Description not yet available.
  * \param
  */
 const prevariable dvar_vector::operator[](int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
           cerr << "array bound exceeded -- index too low in "
@@ -100,7 +93,6 @@ const prevariable dvar_vector::operator[](int i) const
           "prevariable::operator[]";
           ad_exit(1);
         }
-      #endif
       //((va+i)->nc)++;
       return (va+i);
     }
@@ -111,7 +103,6 @@ const prevariable dvar_vector::operator[](int i) const
  */
 const prevariable dvar_vector::operator()(int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
           cerr << "array bound exceeded -- index too low in "
@@ -124,7 +115,6 @@ const prevariable dvar_vector::operator()(int i) const
           "prevariable::operator()";
           ad_exit(1);
         }
-      #endif
       //((va+i)->nc)++;
       return (va+i);
     }

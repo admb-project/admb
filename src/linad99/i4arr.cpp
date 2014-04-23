@@ -225,13 +225,11 @@ i4_array::i4_array(const i4_array& m2)
  */
     i3_array& i4_array::operator ( ) (int i)
     {
-#     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
         "i3_array& i4_array::operator ( ) (int i)", indexmin(), indexmax(), i);
       }
-#     endif
       return t[i];
     }
 
@@ -241,13 +239,11 @@ i4_array::i4_array(const i4_array& m2)
  */
     i3_array& i4_array::operator [] (int i)
     {
-#     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
         "i3_array& i4_array::operator [] (int i)", indexmin(), indexmax(), i);
       }
-#     endif
       return t[i];
     }
 
@@ -284,14 +280,12 @@ i4_array::i4_array(const i4_array& m2)
  */
 const i3_array& i4_array::operator()(int i) const
     {
-#     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
         cerr << "Index out of bounds in i4_array::operator () (int)"
              << endl;
         ad_exit(1);
       }
-#     endif
       return t[i];
     }
 
@@ -301,14 +295,12 @@ const i3_array& i4_array::operator()(int i) const
  */
 const i3_array& i4_array::operator[](int i) const
     {
-#     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
         cerr << "Index out of bounds in i4_array::operator () (int)"
              << endl;
         ad_exit(1);
       }
-#     endif
       return t[i];
     }
 

@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#define SAFE_ARRAYS
 #include <fvar.hpp>
 #include <fcntl.h>
 

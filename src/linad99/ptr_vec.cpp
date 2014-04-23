@@ -164,7 +164,6 @@ void ptr_vector::initialize(void)
  */
 void*& ptr_vector::operator[] (int i)
 {
-#ifdef SAFE_ARRAYS
   if (i > indexmax())
   {
     cerr << "array bound exceeded -- index too high in ivector::operator[]";
@@ -175,7 +174,6 @@ void*& ptr_vector::operator[] (int i)
     cerr << "array bound exceeded -- index too low in ivector::operator[]";
     ad_exit(1);
   }
-#endif
   return (*(v+i));
 }
 
@@ -185,7 +183,6 @@ void*& ptr_vector::operator[] (int i)
  */
 void*& ptr_vector::operator()(int i)
 {
-#ifdef SAFE_ARRAYS
   if (i>indexmax())
   {
     cerr << "array bound exceeded -- index too high in ivector::operator[]";
@@ -196,7 +193,6 @@ void*& ptr_vector::operator()(int i)
     cerr << "array bound exceeded -- index too low in ivector::operator[]";
     ad_exit(1);
   }
-#endif
   return(*(v+i));
 }
 /**

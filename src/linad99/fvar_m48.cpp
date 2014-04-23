@@ -19,7 +19,6 @@
  */
 const dvar_vector& dvar_matrix::operator()(int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -34,7 +33,6 @@ const dvar_vector& dvar_matrix::operator()(int i) const
              << "value was" << i << endl;
        ad_exit(22);
      }
-   #endif
-   return (m[i]);
+   return m[i];
  }
 #endif

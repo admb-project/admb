@@ -19,7 +19,6 @@ Returns a reference to the element at index __i__ in the array.
 */
 double& dvector::operator[](int i)
 {
-#ifdef SAFE_ARRAYS
   if (i < index_min || index_max < i)
   {
   #if defined(USE_EXCEPTIONS)
@@ -29,7 +28,6 @@ double& dvector::operator[](int i)
     "double& dvector::operator[] (int i)", index_min, index_max, i);
   #endif
   }
-#endif
   return *(v+i);
 }
 /**
@@ -39,7 +37,6 @@ Returns a reference to the element at index __i__ in the array.
 */
 double& dvector::operator()(int i)
 {
-#ifdef SAFE_ARRAYS
   if (i < index_min || index_max < i)
   {
   #if defined(USE_EXCEPTIONS)
@@ -49,7 +46,6 @@ double& dvector::operator()(int i)
     "double& dvector::operator[] (int i)", index_min, index_max, i);
   #endif
   }
-#endif
   return *(v+i);
 }
 /**
@@ -59,7 +55,6 @@ Returns a reference to the element at index __i__ in the array.
 */
 const double& dvector::operator[](int i) const
 {
-#ifdef SAFE_ARRAYS
   if (i < index_min || index_max < i)
   {
   #if defined(USE_EXCEPTIONS)
@@ -69,7 +64,6 @@ const double& dvector::operator[](int i) const
     "double& dvector::operator[] (int i)", index_min, index_max, i);
   #endif
   }
-#endif
   return *(v+i);
 }
 /**
@@ -79,7 +73,6 @@ Returns a reference to the element at index __i__ in the array.
 */
 const double& dvector::operator()(int i) const
 {
-#ifdef SAFE_ARRAYS
   if (i < index_min || index_max < i)
   {
   #if defined(USE_EXCEPTIONS)
@@ -89,7 +82,6 @@ const double& dvector::operator()(int i) const
     "double& dvector::operator[] (int i)", index_min, index_max, i);
   #endif
   }
-#endif
   return *(v+i);
 }
 #endif

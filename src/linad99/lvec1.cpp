@@ -29,7 +29,6 @@
  */
  AD_LONG_INT& lvector::operator[] (int i)
  {
-   #ifdef SAFE_ARRAYS
      if (i>indexmax())
      {
        ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
@@ -41,7 +40,6 @@
        ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
        "AD_LONG_INT& lvector::operator() (int i)", indexmin(), indexmax(), i);
      }
-   #endif
    return(*(v+i));
  }
 
@@ -51,7 +49,6 @@
  */
  AD_LONG_INT& lvector::operator() (int i)
  {
-   #ifdef SAFE_ARRAYS
      if (i>indexmax())
      {
        ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
@@ -62,7 +59,6 @@
        ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
        "AD_LONG_INT& lvector::operator() (int i)", indexmin(), indexmax(), i);
      }
-   #endif
    return(*(v+i));
  }
 #endif

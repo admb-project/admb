@@ -193,14 +193,12 @@ dvar6_array::~dvar6_array()
  */
     dvar5_array& dvar6_array::operator ( ) (int i)
     {
-      #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
         "dvar5_array& dvar6_array::operator()(int i)",
         indexmin(), indexmax(), i);
       }
-      #endif
       return t[i];
     }
 
@@ -210,14 +208,12 @@ dvar6_array::~dvar6_array()
  */
     dvar5_array& dvar6_array::operator [] (int i)
     {
-      #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
         "dvar5_array& dvar6_array::operator[](int i)",
         indexmin(), indexmax(), i);
       }
-      #endif
       return t[i];
     }
 
@@ -227,14 +223,12 @@ dvar6_array::~dvar6_array()
  */
     dvar4_array& dvar6_array::operator ( ) (int i ,int j)
     {
-      #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
         "dvar5_array& dvar6_array::operator()(int i, int j)",
         indexmin(), indexmax(), i);
       }
-      #endif
       return elem(i)(j);
     }
 
@@ -244,14 +238,12 @@ dvar6_array::~dvar6_array()
  */
     dvar3_array& dvar6_array::operator ( ) (int i,int j,int k)
     {
-      #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
         "dvar5_array& dvar6_array::operator()(int i, int j, int k)",
         indexmin(), indexmax(), i);
       }
-      #endif
       return elem(i)(j,k);
     }
 
@@ -261,14 +253,12 @@ dvar6_array::~dvar6_array()
  */
     dvar_matrix& dvar6_array::operator ( ) (int i,int j,int k,int l)
     {
-      #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
         "dvar_matrix& dvar6_array::operator()(int i, int j, int k, int l)",
         indexmin(), indexmax(), i);
       }
-      #endif
       return elem(i)(j,k,l);
     }
 
@@ -278,14 +268,12 @@ dvar6_array::~dvar6_array()
  */
     dvar_vector& dvar6_array::operator ( ) (int i,int j,int k,int l,int m)
     {
-      #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
       "dvar_vector& dvar6_array::operator()(int i, int j, int k, int l, int m)",
         indexmin(), indexmax(), i);
       }
-      #endif
       return elem(i)(j,k,l,m);
     }
 
@@ -296,14 +284,12 @@ dvar6_array::~dvar6_array()
     prevariable dvar6_array::operator ( ) (int i,int j,int k,int l,int m,
       int n)
     {
-      #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
 "prevariable dvar6_array::operator()(int i, int j, int k, int l, int m, int n)",
         indexmin(), indexmax(), i);
       }
-      #endif
       return elem(i)(j,k,l,m,n);
     }
 
@@ -313,13 +299,11 @@ dvar6_array::~dvar6_array()
  */
 const dvar5_array& dvar6_array::operator()(int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
         { cerr << "Error  index out of bounds in\n"
             "dvar5_array& dvar6_array::operator ( )" << endl;
           ad_exit(1);
         }
-      #endif
       return t[i];
     }
 
@@ -329,13 +313,11 @@ const dvar5_array& dvar6_array::operator()(int i) const
  */
 const dvar5_array& dvar6_array::operator[](int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
         { cerr << "Error  index out of bounds in\n"
             "dvar5_array& dvar6_array::operator []" << endl;
           ad_exit(1);
         }
-      #endif
       return t[i];
     }
 
@@ -345,13 +327,11 @@ const dvar5_array& dvar6_array::operator[](int i) const
  */
 const dvar4_array& dvar6_array::operator()(int i ,int j) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
         { cerr << "Error hslice index out of bounds in\n"
             "dvar_matrix& dvar6_array::operator ( )" << endl;
           ad_exit(1);
         }
-      #endif
       return elem(i)(j);
     }
 
@@ -361,13 +341,11 @@ const dvar4_array& dvar6_array::operator()(int i ,int j) const
  */
 const dvar3_array& dvar6_array::operator()(int i, int j, int k) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
         { cerr << "Error hslice index out of bounds in\n"
           "dvar_vector& dvar4_array::operator ( )" << endl;
           ad_exit(1);
         }
-      #endif
       return elem(i)(j,k);
     }
 
@@ -377,13 +355,11 @@ const dvar3_array& dvar6_array::operator()(int i, int j, int k) const
  */
 const dvar_matrix& dvar6_array::operator()(int i, int j, int k, int l) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
         { cerr << "Error hslice index out of bounds in\n"
             "dvar-vector& dvar4_array::operator ( )"  << endl;
           ad_exit(1);
         }
-      #endif
       return elem(i)(j,k,l);
     }
 
@@ -394,13 +370,11 @@ const dvar_matrix& dvar6_array::operator()(int i, int j, int k, int l) const
 const dvar_vector& dvar6_array::operator()(int i, int j, int k, int l, int m)
   const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
         { cerr << "Error hslice index out of bounds in\n"
             "prevariable& dvar4_array::operator ( )"  << endl;
           ad_exit(1);
         }
-      #endif
       return elem(i)(j,k,l,m);
     }
 
@@ -411,13 +385,11 @@ const dvar_vector& dvar6_array::operator()(int i, int j, int k, int l, int m)
 const prevariable dvar6_array::operator()(int i, int j, int k, int l, int m,
   int n) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
         { cerr << "Error hslice index out of bounds in\n"
             "prevariable& dvar4_array::operator ( )"  << endl;
           ad_exit(1);
         }
-      #endif
       return elem(i)(j,k,l,m,n);
     }
 #endif

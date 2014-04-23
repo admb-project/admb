@@ -95,7 +95,6 @@ double  nr_generic(double y,double a,pinit_f p_get_initial_x,
     cerr << "shit" << endl;
   }
 
-
   return x;
 }
 

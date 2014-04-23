@@ -49,7 +49,6 @@
  */
     dvar_vector& dvar3_array::operator () (int k, int i)
     {
-      #ifdef SAFE_ARRAYS
       if (k < slicemin())
       {
          ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low",
@@ -62,7 +61,6 @@
          "dvar_vector& dvar3_array::operator () (int k, int i)",
          slicemin(), slicemax(), k);
       }
-      #endif
       return ( (elem(k))(i) );
     }
 
@@ -72,7 +70,6 @@
  */
  dvar_matrix& dvar3_array::operator[] (int i)
  {
-   #ifdef SAFE_ARRAYS
    if (i < slicemin())
    {
      ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low",
@@ -85,7 +82,6 @@
      "dvar_matrix& dvar3_array::operator [] (int i)",
      slicemin(), slicemax(), i);
    }
-   #endif
    return( t[i]);
  }
 
@@ -95,7 +91,6 @@
  */
  dvar_matrix& dvar3_array::operator() (int i)
  {
-   #ifdef SAFE_ARRAYS
    if (!allocated(*this))
    {
        cerr << "trying to access an unallocated object" << endl;
@@ -113,7 +108,6 @@
      "dvar_matrix& dvar3_array::operator () (int i)",
      slicemin(), slicemax(), i);
    }
-   #endif
    return( t[i]);
  }
 #endif

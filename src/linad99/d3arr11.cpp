@@ -16,7 +16,6 @@
  */
 const dmatrix& d3_array::operator()(int i) const
 {
-#ifdef SAFE_ARRAYS
   if (i<slicemin())
   {
     cerr << "matrix bound exceeded"
@@ -31,7 +30,6 @@ const dmatrix& d3_array::operator()(int i) const
          << "value was" << i;
     ad_exit(22);
   }
-#endif
   return t[i];
 }
 #endif

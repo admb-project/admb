@@ -17,7 +17,6 @@
  */
 const dvar_matrix& dvar3_array::operator[] (int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i<slicemin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -32,7 +31,6 @@ const dvar_matrix& dvar3_array::operator[] (int i) const
              << "value was" << i;
        ad_exit(22);
      }
-   #endif
-   return( t[i]);
+   return t[i];
  }
 #endif

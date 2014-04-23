@@ -63,7 +63,8 @@ ifneq ($(CXX),CC)
 ADCXXFLAGS:= -Wall -Wextra -Wno-unused-parameter $(ADCXXFLAGS)
 endif
 
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL -DUSE_LAPLACE
+#ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DUSE_LAPLACE
 
 ifeq ($(SHELL),cmd)
 ADCXXFLAGS:= $(ADCXXFLAGS) -I..\build\dist\include
@@ -73,7 +74,7 @@ endif
 
 override CXXFLAGS += $(ADCXXFLAGS)
 
-CXXFLAGS_OPT_LIB:=$(subst -DSAFE_ALL,-DOPT_LIB,$(CXXFLAGS))
+CXXFLAGS_OPT_LIB:=$(subst -DUSE_LAPLACE,-DOPT_LIB -DUSE_LAPLACE,$(CXXFLAGS))
 
 include df1b2-separable/objects.lst
 OBJECTS=$(addprefix optlp-df1b2-separable-,$(OBJ0)) $(addprefix saflp-df1b2-separable-,$(OBJ0))

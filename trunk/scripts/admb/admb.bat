@@ -150,7 +150,6 @@ if "!CXX!"=="cl" (
       set libs="!ADMB_HOME!\contrib\lib\contribo.lib" "!ADMB_HOME!\lib\admbo.lib" /link
     )
   ) else (
-    set CXXFLAGS=!CXXFLAGS! /DSAFE_ALL
     if not exist !ADMB_HOME!\contrib\lib\contrib.lib (
       set libs="!ADMB_HOME!\lib\admb.lib" /link
     ) else (
@@ -204,7 +203,6 @@ if "!CXX!"=="cl" (
       set libs=!ADMB_HOME!\contrib\lib\libcontribo.a !ADMB_HOME!\lib\libadmbo.a
     )
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -DSAFE_ALL
     if not exist !ADMB_HOME!\contrib\lib\libcontrib.a (
       set libs=!ADMB_HOME!\lib\libadmb.a
     ) else (

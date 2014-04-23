@@ -29,11 +29,7 @@ int main(int argc, char** argv)
   gradient_structure::set_NO_DERIVATIVES();
   gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
 
-  #if defined(__GNUDOS__) || defined(DOS386) || defined(__DPMI32__)  || defined(__MSVC32__)
-      if (!arrmblsize) arrmblsize=150000;
-  #else
-      if (!arrmblsize) arrmblsize=25000;
-  #endif
+  if (!arrmblsize) arrmblsize=150000;
 
   model_parameters mp(arrmblsize,argc,argv);
   mp.iprint=10;

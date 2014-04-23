@@ -455,9 +455,6 @@ OBJ4=\
  orthpoly.obj\
  makesub.obj\
  fvar_a49.obj
-OBJ5=\
- manip.obj\
- conjprod.obj
 OBJ16=\
  d3arr1.obj\
  dvec_acc.obj\
@@ -486,10 +483,12 @@ OBJ16=\
 PVM=\
  slgrdclc.obj\
  adcomm1.obj
-DEPRECATED=\
+UNUSED=\
  denorm.obj\
  dvect21.obj\
  tsdfpool.obj\
  fvar_a52.obj\
  ad_atlas.obj\
- getopt.obj
+ getopt.obj\
+ manip.obj\
+ conjprod.obj

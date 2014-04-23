@@ -363,7 +363,7 @@ dmatrix::dmatrix(const dmatrix& m2)
    {
      (shape->ncopies)++;
    }
-#ifdef  SAFE_ARRAYS
+#ifdef SAFE_ALL
    else
    {
      cerr << "Making a copy of an unallocated dmatrix"<<endl;
@@ -385,7 +385,7 @@ void dmatrix::shallow_copy(const dmatrix& m2)
    {
      (shape->ncopies)++;
    }
-#ifdef  SAFE_ARRAYS
+#ifdef SAFE_ALL
    else
    {
      cerr << "Making a copy of an unallocated dmatrix"<<endl;
@@ -467,10 +467,10 @@ dmatrix cube(const dmatrix& m)
      cout << " B " << ycounter << endl;
      test_the_pointer();
    }
-#ifdef  SAFE_ARRAYS
+#ifdef SAFE_ALL
    else
    {
-     //cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
    }
 #endif
  }

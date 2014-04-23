@@ -19,7 +19,6 @@
  */
 const int& i3_array::operator()(int k, int i, int j) const
     {
-      #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
           cerr << "array bound exceeded -- slice index too low in "
@@ -32,7 +31,6 @@ const int& i3_array::operator()(int k, int i, int j) const
           "i3_array::operator(int,int)";
           ad_exit(1);
         }
-      #endif
       return ( (elem(k))(i,j) );
     }
 
@@ -42,7 +40,6 @@ const int& i3_array::operator()(int k, int i, int j) const
  */
 const ivector& i3_array::operator()(int k, int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
           cerr << "array bound exceeded -- slice index too low in "
@@ -55,7 +52,6 @@ const ivector& i3_array::operator()(int k, int i) const
           "i3_array::operator(int,int)";
           ad_exit(1);
         }
-      #endif
       return ( (elem(k))(i) );
     }
 
@@ -65,7 +61,6 @@ const ivector& i3_array::operator()(int k, int i) const
  */
 const imatrix& i3_array::operator[](int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i<slicemin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -80,7 +75,6 @@ const imatrix& i3_array::operator[](int i) const
              << "value was" << i;
        ad_exit(22);
      }
-   #endif
    return(t[i]);
  }
 
@@ -90,7 +84,6 @@ const imatrix& i3_array::operator[](int i) const
  */
 const imatrix& i3_array::operator()(int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i<slicemin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -105,7 +98,6 @@ const imatrix& i3_array::operator()(int i) const
              << "value was" << i;
        ad_exit(22);
      }
-   #endif
    return(t[i]);
  }
 #endif

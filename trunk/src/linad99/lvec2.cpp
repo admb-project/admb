@@ -29,7 +29,6 @@
  */
 const AD_LONG_INT& lvector::operator[](int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i>indexmax())
      {
        cerr << "array bound exceeded -- index too high in lvector::operator[]";
@@ -41,7 +40,6 @@ const AD_LONG_INT& lvector::operator[](int i) const
        cerr << "array bound exceeded -- index too low in lvector::operator[]";
        ad_exit(1);
      }
-   #endif
    return(*(v+i));
  }
 
@@ -51,7 +49,6 @@ const AD_LONG_INT& lvector::operator[](int i) const
  */
 const AD_LONG_INT& lvector::operator()(int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i>indexmax())
      {
        cerr << "array bound exceeded -- index too high in lvector::operator[]";
@@ -63,7 +60,6 @@ const AD_LONG_INT& lvector::operator()(int i) const
        cerr << "array bound exceeded -- index too low in lvector::operator[]";
        ad_exit(1);
      }
-   #endif
    return(*(v+i));
  }
 #endif

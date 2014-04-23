@@ -201,13 +201,11 @@ void d4_array::allocate(const d4_array& m1)
  */
     d3_array& d4_array::operator () (int i)
     {
-      #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
         "d3_array& d4_array::operator() (int i)", hslicemin(), hslicemax(), i);
       }
-      #endif
       return t[i];
     }
 
@@ -217,14 +215,12 @@ void d4_array::allocate(const d4_array& m1)
  */
     d3_array& d4_array::operator [] (int i)
     {
-      #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
         "d3_array& d4_array::operator[] (int i)",
         hslicemin(), hslicemax(), i);
       }
-      #endif
       return t[i];
     }
 
@@ -234,14 +230,12 @@ void d4_array::allocate(const d4_array& m1)
  */
     dmatrix& d4_array::operator ( ) (int i ,int j)
     {
-      #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
         "dmatrix& d4_array::operator() (int i, int j)",
         hslicemin(), hslicemax(), i);
       }
-      #endif
       return ((*this)(i))(j);
     }
 
@@ -251,14 +245,12 @@ void d4_array::allocate(const d4_array& m1)
  */
     dvector& d4_array::operator ( ) (int i,int j,int k)
     {
-      #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
         "dvector& d4_array::operator() (int i, int j, int k)",
         hslicemin(), hslicemax(), i);
       }
-      #endif
       return (((*this)(i,j))(k));
     }
 
@@ -268,14 +260,12 @@ void d4_array::allocate(const d4_array& m1)
  */
     double& d4_array::operator ( ) (int i,int j,int k,int l)
     {
-      #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
         "double& d4_array::operator() (int i, int j, int k, int l)",
         hslicemin(), hslicemax(), i);
       }
-      #endif
       return ( ((*this)(i,j,k))(l));
     }
 
@@ -285,13 +275,11 @@ void d4_array::allocate(const d4_array& m1)
  */
 const d3_array& d4_array::operator()(int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
             "d3_array& d4_array::operator ( )" << endl;
           ad_exit(1);
         }
-      #endif
       return t[i];
     }
 
@@ -301,13 +289,11 @@ const d3_array& d4_array::operator()(int i) const
  */
 const d3_array& d4_array::operator[](int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
             "d3_array& d4_array::operator ( )" << endl;
           ad_exit(1);
         }
-      #endif
       return t[i];
     }
 
@@ -317,13 +303,11 @@ const d3_array& d4_array::operator[](int i) const
  */
 const dmatrix& d4_array::operator()(int i, int j) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
             "dmatrix& d4_array::operator ( )" << endl;
           ad_exit(1);
         }
-      #endif
       return ((*this)(i))(j);
     }
 
@@ -333,13 +317,11 @@ const dmatrix& d4_array::operator()(int i, int j) const
  */
 const dvector& d4_array::operator()(int i, int j, int k) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
           "dvector& d4_array::operator ( )" << endl;
           ad_exit(1);
         }
-      #endif
       return (((*this)(i,j))(k));
     }
 
@@ -349,13 +331,11 @@ const dvector& d4_array::operator()(int i, int j, int k) const
  */
 const double& d4_array::operator()(int i, int j, int k, int l) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
             "double& d4_array::operator ( )"  << endl;
           ad_exit(1);
         }
-      #endif
       return ( ((*this)(i,j,k))(l));
     }
 

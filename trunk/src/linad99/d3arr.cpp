@@ -681,12 +681,12 @@ static int testflag=0;
      t=NULL;
      shape=NULL;
    }
+#  ifdef SAFE_ARRAYS
    else
    {
-#  ifdef SAFE_ARRAYS
     // cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
-#  endif
    }
+#  endif
  }
 
 /**

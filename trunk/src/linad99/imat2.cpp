@@ -22,7 +22,6 @@
  */
  int& imatrix::operator() (int i,int j)
  {
-   #ifdef SAFE_ARRAYS
    if (i < rowmin())
    {
      ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
@@ -45,7 +44,6 @@
      "int& imatrix::operator() (int i, int j)",
      (*this)(i).indexmin(), (*this)(i).indexmax(), j);
    }
-   #endif
    return(*((*(m+i)).v+j));
  }
 
@@ -55,7 +53,6 @@
  */
 const int& imatrix::operator()(int i, int j) const
  {
-   #ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -84,7 +81,6 @@ const int& imatrix::operator()(int i, int j) const
             << "\nvalue was " << j << endl;
        ad_exit(22);
      }
-   #endif
    return(*((*(m+i)).v+j));
  }
 #endif

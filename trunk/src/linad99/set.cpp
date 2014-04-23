@@ -328,14 +328,12 @@ void set_value_partial(const dvar_vector& x, const dvar_vector& v,
   {
     int min=x.indexmin();
     int max=min+n-1;
-    #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
         cerr <<
           "index out of range in set_value_patial(const dvar_vector&, ... "
           << endl;
       }
-    #endif
     for (int i=min;i<=max;i++)
     {
       ((dvar_vector&)(x))(i)=v(ii++);
@@ -356,14 +354,12 @@ void set_value_partial(const dvar_vector& x, const dvar_vector& v,
   {
     int min=x.indexmin();
     int max=min+n-1;
-    #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
         cerr <<
           "index out of range in set_value_patial(const dvar_vector&, ... "
              << endl;
       }
-    #endif
     for (int i=min;i<=max;i++)
     {
       ((dvar_vector&)(x))(i)=boundp(v(ii++),fmin,fmax,fpen);

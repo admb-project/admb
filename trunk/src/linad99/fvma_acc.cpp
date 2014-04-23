@@ -19,7 +19,6 @@
  */
     prevariable dvar_matrix::operator () (int i, int j)
     {
-      #ifdef SAFE_ARRAYS
       if (i < rowmin())
       {
         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
@@ -44,7 +43,6 @@
         "prevariable dvar_matrix::operator () (int i, int j)",
         elem(i).indexmin(), elem(i).indexmax(), j);
       }
-      #endif
       return ( m[i].va+j );
     }
 
@@ -54,7 +52,6 @@
  */
  dvar_vector& dvar_matrix::operator[] (int i)
  {
-   #ifdef SAFE_ARRAYS
    if (i < rowmin())
    {
      ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
@@ -67,7 +64,6 @@
      "prevariable dvar_matrix::operator () (int i, int j)",
      rowmin(), rowmax(), i);
    }
-   #endif
    return (m[i]);
  }
 
@@ -77,7 +73,6 @@
  */
 const prevariable dvar_matrix::operator()(int i, int j) const
     {
-      #ifdef SAFE_ARRAYS
         if (i<rowmin())
         {
           cerr << "array bound exceeded -- index too low in "
@@ -106,7 +101,6 @@ const prevariable dvar_matrix::operator()(int i, int j) const
                << " second argument was " << j << endl;
           ad_exit(24);
         }
-      #endif
       return ( m[i].va+j );
     }
 
@@ -116,7 +110,6 @@ const prevariable dvar_matrix::operator()(int i, int j) const
  */
 const dvar_vector& dvar_matrix::operator[](int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -131,7 +124,6 @@ const dvar_vector& dvar_matrix::operator[](int i) const
              << "value was" << i;
        ad_exit(22);
      }
-   #endif
    return (m[i]);
  }
 #endif

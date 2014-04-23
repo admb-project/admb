@@ -19,7 +19,6 @@
  */
  dvar_vector& dvar_matrix::operator() (int i)
  {
-   #ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -32,7 +31,6 @@
        "dvar_matrix::operator()" << "value was" << i << endl;
        ad_exit(22);
      }
-   #endif
-   return (m[i]);
+   return m[i];
  }
 #endif

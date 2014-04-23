@@ -17,7 +17,6 @@
  */
 const double& d3_array::operator()(int k, int i, int j) const
     {
-      #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
           cerr << "array bound exceeded -- slice index too low in "
@@ -30,7 +29,6 @@ const double& d3_array::operator()(int k, int i, int j) const
           "d3_array::operator(int,int)";
           ad_exit(1);
         }
-      #endif
       return ( (elem(k))(i,j) );
     }
 
@@ -40,7 +38,6 @@ const double& d3_array::operator()(int k, int i, int j) const
  */
 const dvector& d3_array::operator()(int k, int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
           cerr << "array bound exceeded -- slice index too low in "
@@ -53,7 +50,6 @@ const dvector& d3_array::operator()(int k, int i) const
           "d3_array::operator(int,int)";
           ad_exit(1);
         }
-      #endif
       return ( (elem(k))(i) );
     }
 
@@ -63,7 +59,6 @@ const dvector& d3_array::operator()(int k, int i) const
  */
 const dmatrix& d3_array::operator[](int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i<slicemin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -76,7 +71,6 @@ const dmatrix& d3_array::operator[](int i) const
        "3d_array::operator[]" << "value was" << i;
        ad_exit(22);
      }
-   #endif
    return(t[i]);
  }
 #endif

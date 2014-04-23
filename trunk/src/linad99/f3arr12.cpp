@@ -17,7 +17,6 @@
  */
 const prevariable dvar3_array::operator()(int k, int i, int j) const
     {
-      #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
           cerr << "array bound exceeded -- slice index too"
@@ -35,9 +34,6 @@ const prevariable dvar3_array::operator()(int k, int i, int j) const
           ad_exit(1);
         }
         return ( ((t[k].m[i]).va)+j );
-      #else
-        return ( ((t[k].m[i]).va)+j );
-      #endif
     }
 
 /**
@@ -46,7 +42,6 @@ const prevariable dvar3_array::operator()(int k, int i, int j) const
  */
 const dvar_vector& dvar3_array::operator()(int k, int i) const
     {
-      #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
           cerr << "array bound exceeded -- slice index too"
@@ -63,7 +58,6 @@ const dvar_vector& dvar3_array::operator()(int k, int i) const
            << k << "\n";
           ad_exit(1);
         }
-      #endif
       return ( t[k].m[i]);
     }
 #endif

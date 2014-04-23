@@ -16,7 +16,6 @@
  */
 const dvector& dmatrix::operator()(int i) const
  {
-#    ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -29,7 +28,6 @@ const dvector& dmatrix::operator()(int i) const
        "dmatrix::operator()" << "value was" << i;
        ad_exit(22);
      }
-#    endif
    return *(m+i);
  }
 #endif

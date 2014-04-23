@@ -20,9 +20,8 @@
  * Description not yet available.
  * \param
  */
- lvector& lmatrix::operator[] (int i)
+lvector& lmatrix::operator[](int i)
  {
-   #ifdef SAFE_ARRAYS
    if (i < rowmin())
    {
      ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
@@ -33,7 +32,6 @@
      ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
      "lvector& lmatrix::operator[] (int i)", rowmin(), rowmax(), i);
    }
-   #endif
    return m[i];
  }
 
@@ -43,7 +41,6 @@
  */
 const lvector& lmatrix::operator[](int i) const
  {
-   #ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in "
@@ -56,7 +53,6 @@ const lvector& lmatrix::operator[](int i) const
        "imatrix::operator[]" << "value was" << i;
        ad_exit(22);
      }
-   #endif
    return m[i];
  }
 #endif

@@ -155,11 +155,7 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
 
   dvariable SIGN(const prevariable& x, const prevariable& y)
 {
-#if defined __SUN__ || defined(__GNU__)
-  if(value(y) < 0)
-#else
-  if (y<0)
-#endif
+  if (value(y) < 0)
   {
     return -fabs(x);
   }

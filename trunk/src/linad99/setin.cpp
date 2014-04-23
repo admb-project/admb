@@ -196,13 +196,11 @@ void set_value_inv_partial(const dvector& x, const dvector& _v, const int& _ii,
   dvector& v=(dvector&) _v;
   int min=x.indexmin();
   int max=min+n-1;
-  #ifdef SAFE_ARRAYS
     if (max >x.indexmax())
     {
       cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
            << endl;
     }
-  #endif
   for (int i=min;i<=max;i++)
   {
     v(ii++)=x(i);
@@ -220,13 +218,11 @@ void set_value_inv_partial(const dvector& x,const dvector& _v, const int& _ii,
   dvector& v=(dvector&) _v;
   int min=x.indexmin();
   int max=min+n-1;
-  #ifdef SAFE_ARRAYS
     if (max >x.indexmax())
     {
       cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
            << endl;
     }
-  #endif
   for (int i=min;i<=max;i++)
   {
     v(ii++)=boundpin(x(i),fmin,fmax);
@@ -259,13 +255,11 @@ void set_value_inv_partial(const dvar_vector& x, const dvector& _v,
   dvector& v=(dvector&) _v;
   int min=x.indexmin();
   int max=min+n-1;
-  #ifdef SAFE_ARRAYS
     if (max >x.indexmax())
     {
       cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
            << endl;
     }
-  #endif
   for (int i=min;i<=max;i++)
   {
     v(ii++)=value(x(i));
@@ -283,13 +277,11 @@ void set_value_inv_partial(const dvar_vector& x, const dvector& _v,
   int min=x.indexmin();
   int max=min+n-1;
   dvector& v=(dvector&) _v;
-  #ifdef SAFE_ARRAYS
     if (max >x.indexmax())
     {
       cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
            << endl;
     }
-  #endif
   for (int i=min;i<=max;i++)
   {
     v(ii++)=boundpin(x(i),fmin,fmax);

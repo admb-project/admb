@@ -19,7 +19,6 @@
  */
     prevariable dvar3_array::operator () (int k, int i, int j)
     {
-      #ifdef SAFE_ARRAYS
       if (!allocated(*this))
       {
          cerr << "trying to access an unallocated object" << endl;
@@ -37,10 +36,7 @@
          "prevariable dvar3_array::operator () (int k, int i, int j)",
          slicemin(), slicemax(), k);
       }
-      return ( (elem(k))(i,j) );
-      #else
-      return ( (t[k].m[i]).va+j );
-      #endif
+      return (elem(k))(i,j);
     }
 
 /**
@@ -61,7 +57,7 @@
          "dvar_vector& dvar3_array::operator () (int k, int i)",
          slicemin(), slicemax(), k);
       }
-      return ( (elem(k))(i) );
+      return (elem(k))(i);
     }
 
 /**
@@ -82,7 +78,7 @@
      "dvar_matrix& dvar3_array::operator [] (int i)",
      slicemin(), slicemax(), i);
    }
-   return( t[i]);
+   return t[i];
  }
 
 /**
@@ -108,7 +104,7 @@
      "dvar_matrix& dvar3_array::operator () (int i)",
      slicemin(), slicemax(), i);
    }
-   return( t[i]);
+   return t[i];
  }
 #endif
 

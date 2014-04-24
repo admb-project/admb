@@ -21,14 +21,9 @@ void function_minimizer::mcmc_eval(void)
   uistream * pifs_psave = NULL;
 
 #if defined(USE_LAPLACE)
-#endif
-
-#if defined(USE_LAPLACE)
     initial_params::set_active_random_effects();
-    int nvar1=initial_params::nvarcalc();
-#else
-  int nvar1=initial_params::nvarcalc(); // get the number of active parameters
 #endif
+  int nvar1=initial_params::nvarcalc(); // get the number of active parameters
   int nvar = 0;
 
   pifs_psave= new

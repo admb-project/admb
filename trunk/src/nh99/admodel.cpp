@@ -10,5 +10,3 @@
  */
 #pragma implementation "admodel.h"
 #include <admodel.h>
-
-int to_make_sure_admodel_cpp_gets_linked=0;

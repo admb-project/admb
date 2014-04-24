@@ -4575,11 +4575,8 @@ TOP_OF_MAIN_SECTION {
 
      if (have_separable_function)
        fprintf(ftopmain,"    initial_df1b2params::separable_flag=1;\n");
-#if defined(NET_DEMO)
-     fprintf(ftopmain,"    mp.computationsx(argc,argv);\n");
-#else
+
      fprintf(ftopmain,"    mp.computations(argc,argv);\n");
-#endif
 
     fprintf(htop,"#include <admodel.h>\n");
     fprintf(htop,"#include <contrib.h>\n\n");

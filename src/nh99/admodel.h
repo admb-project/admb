@@ -1851,7 +1851,6 @@ public:
   virtual void constraints_minimize(void);
   virtual void between_phases_calculations(void){;}
   void computations(int argc,char * argv[]);
-  void computationsx(int argc,char * argv[]);
   void computations1(int argc,char * argv[]);
   void computations_np(int argc,char * argv[]);
   void computations(void);

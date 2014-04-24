@@ -213,9 +213,9 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
   if not exist !ADMB_HOME!\contrib\lib\libcontrib.a (
-    set CXXFLAGS=!CXXFLAGS! -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\include\contrib
+    set CXXFLAGS=!CXXFLAGS! -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\include\contrib
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\contrib\include
+    set CXXFLAGS=!CXXFLAGS! -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\contrib\include
   )
 )
 set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!

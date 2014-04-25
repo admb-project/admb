@@ -73,7 +73,7 @@
     df1_two_variable(const df1_two_variable& );
   };
 
-  inline  double value(const df1_two_variable& x) { return double(*x.get_u()); }
+  inline double value(const df1_two_variable& x) { return double(*x.get_u()); }
 
 /**
  * Description not yet available.
@@ -233,14 +233,11 @@
   df1_two_variable operator * (const df1_two_variable& x,
     const df1_two_variable& y);
 
-
   df1_two_variable operator - (const df1_two_variable& v);
   df1_two_matrix choleski_decomp(const df1_two_matrix& MM);
 
   df1_two_variable cumd_gamma(const df1_two_variable& x,
     const df1_two_variable& a);
 
-
   df1_two_variable gammln(const df1_two_variable& xx);
 #endif  // __DF12FUN__
-

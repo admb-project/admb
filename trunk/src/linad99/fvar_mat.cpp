@@ -18,9 +18,9 @@
  dvar_matrix::dvar_matrix(int nrl,int nrh,int ncl,int nch)
  {
    allocate(nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -30,9 +30,9 @@
  dvar_matrix::dvar_matrix(int nrl,int nrh,kkludge_object kk)
  {
    allocate(nrl,nrh);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -42,9 +42,9 @@
  dvar_matrix::dvar_matrix(int nrl,int nrh)
  {
    allocate(nrl,nrh);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -57,9 +57,9 @@
    int indexmax = pibnm.indexmax();
    allocate(indexmin, indexmax);
 
-   #ifdef SAFE_ARRAYS
+#ifndef OPT_LIB
    initialize();
-   #endif
+#endif
 
    for (int i = indexmin; i <= indexmax; i++)
    {
@@ -251,9 +251,9 @@ dvar_matrix::dvar_matrix(int nrl, int nrh, const ivector& ncl,
   const ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -305,9 +305,9 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl,
 dvar_matrix::dvar_matrix(int nrl, int nrh, int ncl, const ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**

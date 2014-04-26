@@ -124,7 +124,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   adprogram_name=_argv[0];
   //int len=strlen(_argv[0]);
   //for (int i=1;i<=len;i++) adprogram_name[i]=tolower(adprogram_name[i]);
-#if !defined(__SPDLL__)
+#if defined(_MSC_VER)
   strip_full_path(adprogram_name);
 #endif
   adstring workdir;
@@ -363,7 +363,7 @@ void ad_comm::allocate(void)
 #endif
   adstring tmpstring;
 
-#if !defined(__SPDLL__)
+#if defined(_MSC_VER)
   //remove path
   for (int i = adprogram_name.size(); i >= 1; i--)
   {

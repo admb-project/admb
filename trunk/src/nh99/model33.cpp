@@ -137,7 +137,7 @@ void cleanup_argv(int nopt,char *** pa)
   }
 }
 
-#if defined(__SPDLL__)
+#if !defined(_MSC_VER)
   #if defined(_WIN32)
     #include <windows.h>
 void get_sp_printf(void)
@@ -154,7 +154,7 @@ void get_sp_printf(void)
 
 void do_dll_housekeeping(int argc,char ** argv)
 {
-#if defined(__SPDLL__)
+#if !defined(_MSC_VER)
   int on = option_match(argc,argv,"-sp");
   if (on > -1)
   {

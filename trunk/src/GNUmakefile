@@ -241,18 +241,6 @@ $(OBJECTS): | dirs
 endif
 
 ifeq ($(SHELL),cmd)
-$(OBJSDIR)optlp-nh99-model7.obj: nh99\model7.cpp
-	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
-
-$(OBJSDIR)saflp-nh99-model7.obj: nh99\model7.cpp
-	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
-
-$(OBJSDIR)optlp-nh99-model33.obj: nh99\model33.cpp
-	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
-
-$(OBJSDIR)saflp-nh99-model33.obj: nh99\model33.cpp
-	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
-
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
@@ -296,18 +284,6 @@ $(OBJSDIR)optlp-tools99-%.obj:tools99\%.cpp
 $(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 else
-$(OBJSDIR)optlp-nh99-model7.obj: nh99/model7.cpp
-	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
-
-$(OBJSDIR)saflp-nh99-model7.obj: nh99/model7.cpp
-	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
-
-$(OBJSDIR)optlp-nh99-model33.obj: nh99/model33.cpp
-	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
-
-$(OBJSDIR)saflp-nh99-model33.obj: nh99/model33.cpp
-	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
-
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<

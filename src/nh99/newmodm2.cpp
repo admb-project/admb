@@ -5,10 +5,8 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-#endif
 
 double function_minimizer::projected_hess_determinant(const dvector& g,
   const int underflow_flag)
@@ -176,7 +174,6 @@ void function_minimizer::get_particular_grad(int iprof,int nvar,
     dvariable vf=0.0;
     gradient_structure::set_YES_DERIVATIVES();
     vf=initial_params::reset(dvar_vector(x));
-    #if defined(USE_LAPLACE)
       if (lapprox)
       {
         if (lapprox->hesstype==2)
@@ -184,7 +181,6 @@ void function_minimizer::get_particular_grad(int iprof,int nvar,
           lapprox->separable_calls_counter=0;
         }
       }
-    #endif
     userfunction();
     vf=likeprof_params::likeprofptr[iprof]->variable();
     gradcalc(nvar, g, vf);
@@ -192,7 +188,6 @@ void function_minimizer::get_particular_grad(int iprof,int nvar,
     vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     *objective_function_value::pobjfun=0.0;
-    #if defined(USE_LAPLACE)
       if (lapprox)
       {
         if (lapprox->hesstype==2)
@@ -200,7 +195,6 @@ void function_minimizer::get_particular_grad(int iprof,int nvar,
           lapprox->separable_calls_counter=0;
         }
       }
-    #endif
     userfunction();
     vf+=*objective_function_value::pobjfun;
     gradcalc(nvar, fg, vf);

@@ -4,10 +4,6 @@
  * Author: Unknown
  */
 
-#if defined(USE_LAPLACE)
-#  include <df1b2fun.h>
-#endif
-
 #include <admodel.h>
 #include "df12fun.h"
 
@@ -18,19 +14,8 @@ static double lnbeta(double a,double b)
   return gammln(a)+gammln(b)-gammln(a+b);
 }
 
-/*
-static int sgn(double z)
-{
-  if (z>=0)
-    return 1;
-  else
-    return -1;
-}
-*/
-
 df1_two_variable betai(const df1_two_variable& a,
   const df1_two_variable& b,double x,int maxit=100);
-
 
 dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
   const prevariable& _y,double eps)

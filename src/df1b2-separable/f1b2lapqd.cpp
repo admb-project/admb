@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -27,7 +26,6 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   (const dvector& x,function_minimizer * pfmin)
 {
-  //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
   fmc1.itn=0;
@@ -58,16 +56,12 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   return u;
 }
 
-#else
-
-/**
- * Description not yet available.
- * \param
- */
+/*
+For no laplace
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   (const dvector& x,function_minimizer * pfmin)
 {
   dvector u(1,1)
   return u;
 }
-#endif
+*/

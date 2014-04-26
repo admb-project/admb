@@ -11,10 +11,8 @@
 #include <sstream>
 using std::istringstream;
 
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-#endif
 #include <admodel.h>
 
 #if defined(_MSC_VER)
@@ -126,12 +124,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     //double total_spread=2500;
     //uostream * pofs_sd = NULL;
 
-#if defined(USE_LAPLACE)
     initial_params::set_inactive_random_effects();
     //int nvar_x=initial_params::nvarcalc();
     initial_params::set_active_random_effects();
-    int nvar_re=initial_params::nvarcalc();
-#endif
 
     int nvar=initial_params::nvarcalc(); // get the number of active parameters
     dmatrix s_covar;
@@ -154,20 +149,15 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int ndvar=stddev_params::num_stddev_calc();
     /*int numdvar=*/stddev_params::num_stddev_number_calc();
 
-#if defined(USE_LAPLACE)
     if (mcmc2_flag==0)
     {
       initial_params::set_inactive_random_effects();
       nvar=initial_params::nvarcalc(); // get the number of active parameters
     }
-#endif
 
-#if defined(USE_LAPLACE)
-      independent_variables parsave(1,nvar_re);
-      initial_params::restore_start_phase();
-#else
-      independent_variables parsave(1,nvar);
-#endif
+    independent_variables parsave(1,nvar);
+    initial_params::restore_start_phase();
+
     dvector x(1,nvar);
     //dvector scale(1,nvar);
     dmatrix values;
@@ -488,12 +478,10 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       dvector y(1,nvar);
       y.initialize();
 
-#if defined(USE_LAPLACE)
       if (mcmc2_flag==0)
       {
         initial_params::set_inactive_random_effects();
       }
-#endif
 
       dvector p(1,nvar);  // momentum
       int iseed=2197;
@@ -704,7 +692,6 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
 {
   //initial_params::xinit(x);
   double f=0.0;
-#if defined(USE_LAPLACE)
   if (mcmc2_flag==0 && lapprox)
   {
     cerr << "error not implemented" << endl;
@@ -713,7 +700,6 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
   }
   else
   {
-#endif
     dvariable vf=0.0;
     dvar_vector vx=dvar_vector(x);
     vf=initial_params::reset(vx);
@@ -725,8 +711,6 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
     vf+=*objective_function_value::pobjfun;
     f=value(vf);
     gradcalc(nvar,g);
-#if defined(USE_LAPLACE)
   }
-#endif
   return f;
 }

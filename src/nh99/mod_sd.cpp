@@ -7,9 +7,7 @@
 #if !defined(DOS386)
   #define DOS386
 #endif
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
-#endif
 #include <admodel.h>
 
 dmatrix * GAUSS_varcovariance_matrix = NULL;
@@ -179,7 +177,6 @@ void function_minimizer::sd_routine(void)
       }
       else  // have random effects
       {
-#if defined(USE_LAPLACE)
         dmatrix tv(1,ndvar,1,nvar1);
         adstring tmpstring="admodel.dep";
         if (ad_comm::wd_flag)
@@ -259,7 +256,6 @@ void function_minimizer::sd_routine(void)
             ofs << endl;
           }
         }
-#    endif
       }
     }
     // *******************************************************

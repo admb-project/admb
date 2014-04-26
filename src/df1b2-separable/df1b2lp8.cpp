@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -1199,4 +1198,3 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
   exit(1);
   return M;
 }
-#endif // if defined(USE_LAPLACE)

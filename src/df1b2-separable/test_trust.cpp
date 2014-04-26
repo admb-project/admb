@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <fvar.hpp>
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -660,6 +659,3 @@ dvector laplace_approximation_calculator::lincg(dvector& xinit,
   while(1);
   return 0;
 }
-
-
-#endif //#if defined(USE_LAPLACE)

@@ -117,8 +117,7 @@ static double get_initial_u(double a,double y);
 
 static double Sn(double x,double a);
 
-#if defined(USE_LAPLACE)
-#include <df1b2fun.h>
+#include <df32fun.h>
 df3_two_variable cumd_gamma(const df3_two_variable& x,
   const df3_two_variable& a);
 
@@ -172,7 +171,6 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 
   return vz;
 }
-#endif //#if defined(USE_LAPLACE)
 
 #undef ITMAX
 #undef EPS

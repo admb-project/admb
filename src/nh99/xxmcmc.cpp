@@ -160,12 +160,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     //double total_spread=2500;
     uostream * pofs_sd = NULL;
 
-#if defined(USE_LAPLACE)
     initial_params::set_inactive_random_effects();
     //int nvar_x=initial_params::nvarcalc();
     initial_params::set_active_random_effects();
-    int nvar_re=initial_params::nvarcalc();
-#endif
 
     int nvar=initial_params::nvarcalc(); // get the number of active parameters
     //int scov_option=0;
@@ -200,13 +197,11 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       number_offsets=stddev_params::copy_all_number_offsets();
     }
     */
-#if defined(USE_LAPLACE)
     if (mcmc2_flag==0)
     {
       initial_params::set_inactive_random_effects();
       nvar=initial_params::nvarcalc(); // get the number of active parameters
     }
-#endif
     dvector x(1,nvar);
     dvector scale(1,nvar);
     dmatrix values;
@@ -379,12 +374,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       // get lower and upper bounds
 
       independent_variables y(1,nvar);
-#if defined(USE_LAPLACE)
-      independent_variables parsave(1,nvar_re);
-      initial_params::restore_start_phase();
-#else
       independent_variables parsave(1,nvar);
-#endif
+      initial_params::restore_start_phase();
 
       // read in the mcmc values to date
       int ii=1;
@@ -450,12 +441,10 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       ii=1;
       initial_params::restore_all_values(parsave,ii);
 
-#if defined(USE_LAPLACE)
       if (mcmc2_flag==0)
       {
         initial_params::set_inactive_random_effects();
       }
-#endif
 
       gradient_structure::set_NO_DERIVATIVES();
       ofstream ogs("sims");
@@ -594,11 +583,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
           {
             if (psvflag || (mcrestart_flag == -1) )
             {
-#           if defined(USE_LAPLACE)
-              (*pofs_psave) << nvar_re;
-#           else
               (*pofs_psave) << nvar;
-#           endif
             }
           }
         }
@@ -696,7 +681,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
           }
         }
         ii=1;
-#if defined(USE_LAPLACE)
         if (random_effects_flag)
         {
           initial_params::restore_start_phase();
@@ -710,9 +694,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         {
           initial_params::restore_all_values(parsave,ii);
         }
-#else
-        initial_params::restore_all_values(parsave,ii);
-#endif
         initial_params::set_all_simulation_bounds(symbds);
 
         // option of generating uniform or normal random variables
@@ -738,12 +719,10 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
               symbds(2), chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
 
           ll=-get_monte_carlo_value(nvar,y);
-#if defined(USE_LAPLACE)
           if (random_effects_flag)
           {
             initial_params::restore_start_phase();
           }
-#endif
           //cout << ll << " " << llc << endl;
           double ldiff=lprob-lpinv;
           logr= ll - ldiff - llc;
@@ -774,7 +753,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
           ii=1;
           // save current mcmc values
           stddev_params::copy_all_values(mcmc_values,ii);
-#         if defined(USE_LAPLACE)
             if (random_effects_flag)
             {
               if (mcmc2_flag==0)
@@ -782,7 +760,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
                 initial_params::set_inactive_random_effects();
               }
             }
-#         endif
           // update prob density for current point
           llc =ll;
           liac++;

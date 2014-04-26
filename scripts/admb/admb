@@ -152,9 +152,9 @@ if [ "$library" == "opt" ]; then
   CXXFLAGS="$CXXFLAGS -DOPT_LIB"
 fi
 if [ ! -f "$ADMB_HOME/contrib/lib/libcontrib.a" ]; then
-  CXXFLAGS="$CXXFLAGS -DUSE_LAPLACE -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/include/contrib\""
+  CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/include/contrib\""
 else
-  CXXFLAGS="$CXXFLAGS -DUSE_LAPLACE -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/contrib/include\""
+  CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/contrib/include\""
 fi
 if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
   LDFLAGS="--static $LDFLAGS"

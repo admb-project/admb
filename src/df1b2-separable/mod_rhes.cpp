@@ -11,7 +11,6 @@
 #include <sstream>
 using std::istringstream;
 
-#if defined(USE_LAPLACE)
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
@@ -555,5 +554,3 @@ dvector get_solution_vector(int n)
   dmatrix tmp1=inv(tmp);
   return tmp1*v;
 }
-
-#endif

@@ -4,7 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -197,7 +196,6 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       //**********************************************************
       //**********************************************************
       //**********************************************************
-      #if defined(USE_LAPLACE)
         if (lapprox)
         {
           if (lapprox->hesstype==2)
@@ -206,7 +204,6 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
             lapprox->separable_calls_counter=0;
           }
         }
-      #endif
       //**********************************************************
       //**********************************************************
       //**********************************************************
@@ -243,7 +240,6 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       //**********************************************************
       //**********************************************************
       //**********************************************************
-      #if defined(USE_LAPLACE)
         if (lapprox)
         {
           if (lapprox->hesstype==2)
@@ -252,7 +248,6 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
             lapprox->separable_calls_counter=0;
           }
         }
-      #endif
       //**********************************************************
       //**********************************************************
       //**********************************************************
@@ -275,4 +270,3 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       fprof=global_min+20.0;
     }
    }
-#endif //#if defined(USE_LAPLACE)

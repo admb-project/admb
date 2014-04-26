@@ -11,7 +11,6 @@
 #include <sstream>
 using std::istringstream;
 
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -2208,10 +2207,6 @@ void laplace_approximation_calculator::set_default_hessian_type(void )
  */
 }
 
-
-
-#  if defined(USE_LAPLACE)
-
 /**
  * Description not yet available.
  * \param
@@ -2845,5 +2840,3 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
   pfmin->inner_opt_flag=0;
   return u;
 }
-#  endif
-#endif

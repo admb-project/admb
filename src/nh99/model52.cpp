@@ -4,7 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#if defined(USE_LAPLACE)
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
@@ -132,4 +131,3 @@
   {
     phase_start=-1;
   }
-#endif

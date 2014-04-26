@@ -54,10 +54,8 @@
 
 #define BIG_INIT_PARAMS
 
-#if defined(USE_LAPLACE)
   class laplace_approximation_calculator;
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
-#endif
 
 #include <fvar.hpp>
 #if defined(USE_ADPVM)
@@ -1752,11 +1750,9 @@ typedef dvariable (model_parameters::*PMFVI) (const dvar_vector&,int n);
 typedef void (model_parameters::*PMFVIV4) (const dvar_vector&,int n,
   dvariable& f1, const dvariable& f2, const dvariable& f3, const dvariable& f4);
 
-#if defined(USE_LAPLACE)
   class init_df1b2vector;
   class df1b2vector;
   class df1b2variable;
-#endif
 
 /**
  * Description not yet available.
@@ -1772,16 +1768,15 @@ public:
   static int random_effects_flag;
   dmatrix * negdirections;
   static int negative_eigenvalue_flag;
-#if defined(USE_LAPLACE)
   static int inner_opt_flag;
   static int inner_opt(void);
   laplace_approximation_calculator * lapprox;
   dvector * multinomial_weights;
   void set_multinomial_weights(dvector&d);
   //init_df1b2vector* py;
-  virtual void AD_uf_inner(void);
-  virtual void AD_uf_outer(void);
-  virtual void user_function(void);
+  virtual void AD_uf_inner();
+  virtual void AD_uf_outer();
+  virtual void user_function();
   void pre_user_function(void);
   //void df1b2_pre_user_function(void);
   //virtual void user_function(const init_df1b2vector& x,df1b2variable& f);
@@ -1796,7 +1791,6 @@ public:
   void get_function_difference(void);
   void start_get_importance_sampling_comnponent(void);
   void end_get_importance_sampling_comnponent(void);
-#endif
   int spminflag;
   int repeatminflag;
   int mcmc2_flag;
@@ -2034,14 +2028,12 @@ public:
     independent_variables& x,const dvector& _g,const double& _f,
     int nsteps);
 
-#if defined(USE_LAPLACE)
   void function_evaluation_block_pvm_slave_random_effects(int nvar,int _crit,
     independent_variables& x,const dvector& g,const double& f);
   void quasi_newton_block_pvm_master_random_effects(int nvar,int _crit,
     independent_variables& x,const dvector& g,const double& f);
   void function_evaluation_block_pvm_slave_random_effects(void);
   void hess_routine_random_effects(void);
-#endif
   void quasi_newton_block_pvm_master(int nvar,int _crit,
     independent_variables& x,const dvector& g,const double& f);
   void hess_routine_noparallel_random_effects(void);
@@ -2050,8 +2042,10 @@ public:
   void hess_routine_slave_random_effects(void);
 #endif
   dvariable do_gauss_hermite_integration(void);
-  dvariable do_gauss_hermite_integration_multi(void);
   void end_df1b2_funnel_stuff(void);
+
+private:
+  dvariable do_gauss_hermite_integration_multi(void);
 };
 
 cifstream& operator>>(const cifstream& s, const param_init_number& x);
@@ -2841,9 +2835,7 @@ public:
   void send_variable_values_to_slaves(void);
   adpvm_manager(int);
   ~adpvm_manager();
-#  if defined(USE_LAPLACE)
       int start_slave_processes_for_random_effects(const ad_comm& mp);
-#  endif
 };
 
 void send_dmatrix_to_slaves(const dmatrix&  x,ivector& jmin,ivector& jmax);

@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -451,5 +450,3 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
   }
   return step;
 }
-
-#endif //#if defined(USE_LAPLACE)

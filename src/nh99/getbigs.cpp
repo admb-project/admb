@@ -8,9 +8,7 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
-#endif
 #include <admodel.h>
 
 /**
@@ -35,7 +33,6 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     ad_exit(1);
   }
 
-#if defined(USE_LAPLACE)
     int us=nvar1-nvar;
     int xsize = 0, usize = 0;
     dmatrix minv(1,us,1,us);
@@ -201,9 +198,6 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
         BS(i,j)=Suu(i-xsize,j-xsize);
       }
     }
-#   endif
-
-
  //
  //   int us=nvar1-nvar;
  //   int xsize,usize;

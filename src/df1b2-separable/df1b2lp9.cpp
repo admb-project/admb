@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -278,4 +277,3 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   pfmc1 = 0;
   return u;
 }
-#endif  // #if defined(USE_LAPLACE)

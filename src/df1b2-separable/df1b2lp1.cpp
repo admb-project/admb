@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <fvar.hpp>
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -904,4 +903,3 @@ void laplace_approximation_calculator::check_pool_size(void)
   df1b2variable::nvar=num_active_parameters;
   df1b2variable::set_blocksize();
 }
-#endif //#if defined(USE_LAPLACE)

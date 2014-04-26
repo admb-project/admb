@@ -462,7 +462,6 @@ void tracing_message(int traceflag,const char *s);
       *objective_function_value::pobjfun=0.0;
       if (!random_effects_flag || !lapprox)
       {
-
 #if defined(USE_ADPVM)
         if (ad_comm::pvm_manager)
         {
@@ -487,7 +486,6 @@ void tracing_message(int traceflag,const char *s);
 #if defined(USE_ADPVM)
         }
 #endif  //#if defined(USE_ADPVM)
-
       }
       else
       {

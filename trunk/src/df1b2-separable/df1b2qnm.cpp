@@ -11,7 +11,6 @@
 #include <sstream>
 using std::istringstream;
 
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -411,4 +410,3 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   quit_flag=fmc.quit_flag;
   objective_function_value::gmax=fabs(fmc.gmax);
 } // end block for quasi newton minimization
-#endif

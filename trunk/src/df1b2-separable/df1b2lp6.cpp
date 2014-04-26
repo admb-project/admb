@@ -10,7 +10,6 @@
  */
 //#define USE_DD_STUFF
 //#define USE_DD
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -1192,4 +1191,3 @@ dvector laplace_approximation_calculator::
   }
   return uhat;
 }
-#endif  //#if defined(USE_LAPLACE)

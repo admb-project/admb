@@ -4,10 +4,8 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-#endif
 #include <admodel.h>
 
 double better_rand(long int&);
@@ -17,23 +15,19 @@ double function_minimizer::get_monte_carlo_value(int nvar,
 {
   //initial_params::xinit(x);
   double f=0.0;
-#if defined(USE_LAPLACE)
   if (mcmc2_flag==0 && lapprox)
   {
     dvector g=(*lapprox)(x,f,this);
   }
   else
   {
-#endif
     dvariable vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     *objective_function_value::pobjfun=0.0;
     userfunction();
     vf+=*objective_function_value::pobjfun;
     f=value(vf);
-#if defined(USE_LAPLACE)
   }
-#endif
   return f;
 }
 
@@ -85,14 +79,12 @@ double function_minimizer::get_monte_carlo_value(int nvar,
 {
   //initial_params::xinit(x);
   double f=0.0;
-#if defined(USE_LAPLACE)
   if (mcmc2_flag==0 && lapprox)
   {
     g=(*lapprox)(x,f,this);
   }
   else
   {
-#endif
     dvariable vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     *objective_function_value::pobjfun=0.0;
@@ -100,8 +92,6 @@ double function_minimizer::get_monte_carlo_value(int nvar,
     vf+=*objective_function_value::pobjfun;
     f=value(vf);
     gradcalc(nvar,g);
-#if defined(USE_LAPLACE)
   }
-#endif
   return f;
 }

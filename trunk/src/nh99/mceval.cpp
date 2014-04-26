@@ -20,9 +20,8 @@ void function_minimizer::mcmc_eval(void)
   initial_params::current_phase=initial_params::max_number_phases;
   uistream * pifs_psave = NULL;
 
-#if defined(USE_LAPLACE)
-    initial_params::set_active_random_effects();
-#endif
+  initial_params::set_active_random_effects();
+
   int nvar1=initial_params::nvarcalc(); // get the number of active parameters
   int nvar = 0;
 

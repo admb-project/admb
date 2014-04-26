@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -305,4 +304,3 @@ dvector laplace_approximation_calculator::get_gradient_lme_hp
   gradcalc(xsize,g);
   return g;
 }
-#endif   //if defined(USE_LAPLACE)

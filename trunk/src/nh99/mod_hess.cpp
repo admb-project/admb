@@ -4,11 +4,8 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
-#else
 #  include <admodel.h>
-#endif
 //#include <parallel.h>
 
 void hess_calcreport(int i,int nvar);
@@ -20,14 +17,12 @@ void ad_update_hess_stats_report(int i,int nvar);
 
 void function_minimizer::hess_routine(void)
 {
-#if defined(USE_LAPLACE)
   if (random_effects_flag && lapprox !=0 )
   {
     hess_routine_random_effects();
   }
   else
   {
-#endif
 #if !defined(USE_ADPVM)
     hess_routine_noparallel();
 #else
@@ -52,9 +47,7 @@ void function_minimizer::hess_routine(void)
       cout << "finished hess routine" << endl;
     }
 #endif
-#if defined(USE_LAPLACE)
   }
-#endif
 }
 void function_minimizer::hess_routine_noparallel(void)
 {
@@ -435,12 +428,10 @@ void function_minimizer::depvars_routine(void)
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".dep";
   ofstream ofs((char*)tmpstring);
-#if defined(USE_LAPLACE)
   if (lapprox)
   {
     lapprox->no_function_component_flag=1;
   }
-#endif
 
   dvariable vf;
   vf=initial_params::reset(dvar_vector(x));
@@ -460,12 +451,10 @@ void function_minimizer::depvars_routine(void)
      ofs << stddev_params::stddevptr[i]->label() << "  ";
      ofs << stddev_params::stddevptr[i]->size_count() << endl;
   }
-#if defined(USE_LAPLACE)
   if (lapprox)
   {
     lapprox->no_function_component_flag=0;
   }
-#endif
   gradient_structure::set_NO_DERIVATIVES();
 }
 /**
@@ -561,9 +550,7 @@ void function_minimizer::hess_inv(void)
      << "sorted:\t" << se << endl;
      if (se(se.indexmin())<=0.0)
       {
-#if defined(USE_LAPLACE)
         negative_eigenvalue_flag=1;
-#endif
         cout << "Warning -- Hessian does not appear to be"
          " positive definite" << endl;
       }

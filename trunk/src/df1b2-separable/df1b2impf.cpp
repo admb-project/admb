@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -175,4 +174,3 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
       Hessadjoint(i,j)=g(ii++);
   return f;
 }
-#endif

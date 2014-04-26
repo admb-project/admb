@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <fvar.hpp>
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -535,4 +534,3 @@ dvector laplace_approximation_calculator::
 
   return xadjoint;
 }
-#endif //#if defined(USE_LAPLACE)

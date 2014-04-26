@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #include <df1b2fun.h>
 
 /**
@@ -239,4 +238,3 @@ void laplace_approximation_calculator::
   funnel_init_var::num_active_parameters=0;
   funnel_init_var::num_inactive_vars=0;
 }
-#endif // if defined(USE_LAPLACE)

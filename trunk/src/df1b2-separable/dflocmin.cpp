@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -197,4 +196,3 @@ dvector laplace_approximation_calculator::local_minimization_routine
  //  fmc1.fbest=fb;
  //  return ub;
  //}
-#endif  //#if defined(USE_LAPLACE)

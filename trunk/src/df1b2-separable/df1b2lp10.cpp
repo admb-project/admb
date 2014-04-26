@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -416,4 +415,3 @@ void laplace_approximation_calculator::
     }
   }
 }
-#endif // if defined(USE_LAPLACE)

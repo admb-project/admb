@@ -9,10 +9,8 @@ using std::istringstream;
 
 #include <admodel.h>
 
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-#endif
 
 void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
   int& next_flag);
@@ -38,14 +36,12 @@ extern int traceflag;
 
 void tracing_message(int traceflag,const char *s);
 
-#if defined(USE_LAPLACE)
   int function_minimizer::inner_opt(void)
   {
     return inner_opt_flag;
   }
 
   int function_minimizer::inner_opt_flag=0;
-#endif
 
 
   int function_minimizer::bad_step_flag=0;
@@ -54,7 +50,6 @@ void tracing_message(int traceflag,const char *s);
   {
     int nopt=0;
     int on=0;
-#   if defined(USE_LAPLACE)
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-shess"))>-1)
     {
       laplace_approximation_calculator::sparse_hessian_flag=1;
@@ -80,7 +75,6 @@ void tracing_message(int traceflag,const char *s);
         }
 #    endif
 
-#   endif
     //initial_params::read(); // read in the values for the initial parameters
     if (initial_params::restart_phase)
     {
@@ -226,10 +220,8 @@ void tracing_message(int traceflag,const char *s);
     {
       between_phases_calculations();
 
-#if defined(USE_LAPLACE)
       if (random_effects_flag)
         initial_params::set_inactive_random_effects();
-#endif
 
       int nvar=initial_params::nvarcalc(); // get the number of active
              // parameters
@@ -322,14 +314,12 @@ void tracing_message(int traceflag,const char *s);
       }
       if ( (lmnflag=option_match(ad_comm::argc,ad_comm::argv,"-lmn",nopt))>-1)
       {
-#if   defined(USE_LAPLACE)
         if (random_effects_flag)
         {
           cerr << "At present you can not use the -lmn option for the outer"
                << endl << " optimiation in a random-effects model" << endl;
           ad_exit(1);
         }
-#endif
         if (!nopt)
         {
           cerr << "Usage -lmn option needs integer  -- set to default 10.\n";
@@ -352,12 +342,10 @@ void tracing_message(int traceflag,const char *s);
       {
         // *********************************************************
         // block for quasi newton minimization
-#if   defined(USE_LAPLACE)
         if (negative_eigenvalue_flag)
         {
           trust_region_update(nvar,_crit,x,g,f);
         }
-#endif   //defined(USE_LAPLACE)
         if (!ad_comm::pvm_manager)
         {
           do
@@ -412,7 +400,6 @@ void tracing_message(int traceflag,const char *s);
         else
         {
 #if defined(USE_ADPVM)
-#if   defined(USE_LAPLACE)
       if (random_effects_flag)
       {
         if (maxfn>0)
@@ -434,7 +421,6 @@ void tracing_message(int traceflag,const char *s);
         }
       }
       else
-#  endif // #if   defined(USE_LAPLACE)
       {
         if (maxfn>0)
         {
@@ -474,10 +460,8 @@ void tracing_message(int traceflag,const char *s);
       gradient_structure::set_NO_DERIVATIVES();
       initial_params::reset(dvar_vector(x));
       *objective_function_value::pobjfun=0.0;
-#if defined(USE_LAPLACE)
       if (!random_effects_flag || !lapprox)
       {
-#endif
 
 #if defined(USE_ADPVM)
         if (ad_comm::pvm_manager)
@@ -504,7 +488,6 @@ void tracing_message(int traceflag,const char *s);
         }
 #endif  //#if defined(USE_ADPVM)
 
-#if defined(USE_LAPLACE)
       }
       else
       {
@@ -513,7 +496,6 @@ void tracing_message(int traceflag,const char *s);
         initial_params::set_inactive_only_random_effects();
         print_is_diagnostics(lapprox);
       }
-#endif
       initial_params::save();
       report(g);
       // in case the user changes some initial_params in the report section
@@ -534,20 +516,16 @@ void tracing_message(int traceflag,const char *s);
     }
     tracing_message(traceflag,"N2");
   }
-#  if defined(USE_LAPLACE)
   void function_minimizer::set_multinomial_weights(dvector& d)
   {
     multinomial_weights=new dvector(d);
   }
-#endif
 
   function_minimizer::function_minimizer(long int sz)
   {
-#  if defined(USE_LAPLACE)
     lapprox=0;
     multinomial_weights=0;
     //cout << lapprox << endl;
-#  endif
     maxfn  = 1000;
     iprint = 1;
     crit   = 0.0001;
@@ -605,7 +583,6 @@ Destructor
 */
 function_minimizer::~function_minimizer()
 {
-#if defined(USE_LAPLACE)
   if (multinomial_weights)
   {
     delete multinomial_weights;
@@ -616,7 +593,6 @@ function_minimizer::~function_minimizer()
     delete lapprox;
     lapprox = 0;
   }
-#endif
   delete pgs;
   pgs = 0;
   if (negdirections)
@@ -705,7 +681,6 @@ int get_option_number(const char * option_name,const char * error_message,
   return on1;
 }
 
-#if defined(USE_LAPLACE)
 
 void function_minimizer::other_separable_stuff_begin(void)
 {
@@ -888,4 +863,3 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox)
     }
   }
 }
-#endif // #if defined(USE_LAPLACE)

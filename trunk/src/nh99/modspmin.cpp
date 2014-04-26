@@ -5,10 +5,8 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-#endif
 
 //#define NO_MCMC
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
@@ -62,9 +60,7 @@ extern admb_javapointers * adjm_ptr;
 
     final_calcs();
     // clean up if have random effects
-#   if defined(USE_LAPLACE)
      // cleanup_laplace_stuff(lapprox);
-#   endif
   }
 
   void function_minimizer::computations1(int argc,char * argv[])
@@ -185,7 +181,6 @@ extern admb_javapointers * adjm_ptr;
       {
         if (!quit_flag)
         {
-#       if defined(USE_LAPLACE)
           // save the sparse Hessian for the random effects
           if (lapprox && lapprox->sparse_hessian_flag)
           {
@@ -198,7 +193,6 @@ extern admb_javapointers * adjm_ptr;
                   << dct.get_coords() << dct.get_x();
             }
           }
-#endif     //  if defined(USE_LAPLACE)
 
           int on=-1;
           int on1=-1;

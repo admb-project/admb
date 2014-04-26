@@ -4,11 +4,8 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
-#else
 #  include <admodel.h>
-#endif
 //#include <parallel.h>
 #include <signal.h>
 
@@ -563,7 +560,6 @@ ad_comm::~ad_comm()
 
 void function_minimizer::pre_userfunction(void)
 {
-#if defined(USE_LAPLACE)
   if (lapprox)
   {
     if (lapprox->hesstype==2)
@@ -572,9 +568,7 @@ void function_minimizer::pre_userfunction(void)
       lapprox->separable_calls_counter=0;
     }
   }
-#endif
   userfunction();
-#if defined(USE_LAPLACE)
   if (lapprox)
   {
     if (lapprox->hesstype==2)
@@ -604,5 +598,4 @@ void function_minimizer::pre_userfunction(void)
       }
     }
   }
-#endif
 }

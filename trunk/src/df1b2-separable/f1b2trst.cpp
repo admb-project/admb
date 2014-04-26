@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -110,5 +109,3 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
     g=(*lapprox)(step,f,this);
   }
 } // end block for quasi newton minimization
-
-#endif

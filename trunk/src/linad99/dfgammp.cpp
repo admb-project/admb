@@ -14,11 +14,7 @@
  * and some polynomial evaluation functions.
  */
 
-#if defined(USE_LAPLACE)
-#  include <df1b2fun.h>
-#else
-#  include <fvar.hpp>
-#endif
+#include <fvar.hpp>
 #define ITMAX 100
 #define EPS 1.0e-9
 //#define EPS 3.0e-7

@@ -18,9 +18,9 @@
    const index_type& ncl,const index_type& nch)
  {
    allocate(nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
+#ifndef OPT_LIB
      initialize();
-   #endif
+#endif
  }
 
 /**

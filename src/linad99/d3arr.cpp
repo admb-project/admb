@@ -72,9 +72,9 @@ double sum(const d3_array& m)
  d3_array::d3_array(int sl,int sh,int nrl,int nrh,int ncl,int nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -85,9 +85,9 @@ d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl,
   int nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -98,9 +98,9 @@ d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl,
   const ivector& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**

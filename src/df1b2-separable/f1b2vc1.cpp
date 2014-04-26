@@ -696,9 +696,9 @@ void df1b2vector::allocate(int lb,int ub)
     {
       ind_1=0;
     }
-#  if defined(SAFE_ALL)
-    //int i;
    /*
+#  if defined(SAFE_ALL)
+    int i;
     for (i=mmin+1;i<mmax;i++)
     {
       int ind_i=ptrdiff_t((*this)(i+1).get_u())-ptrdiff_t((*this)(i).get_u());
@@ -712,8 +712,8 @@ void df1b2vector::allocate(int lb,int ub)
         ind_1=ind_i;
       }
     }
-   */
 #endif
+   */
   /*
     if (ind_1%sizeof(double))
     {

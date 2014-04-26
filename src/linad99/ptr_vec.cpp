@@ -144,7 +144,7 @@ void ptr_vector::allocate(int ncl,int nch)
     ad_exit(21);
   }
   v -= indexmin();
-#ifdef SAFE_ARRAYS
+#ifndef OPT_LIB
   this->initialize();
 #endif
 }

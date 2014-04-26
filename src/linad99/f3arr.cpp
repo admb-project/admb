@@ -67,9 +67,9 @@
      return;
    }
    allocate(sl,sh,nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -210,9 +210,9 @@ dvar3_array::dvar3_array(int sl, int sh, int nrl, int nrh,
      return;
    }
    allocate(sl,sh,nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -402,9 +402,9 @@ dvar3_array::dvar3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
      return;
    }
    allocate(sl,sh,nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -452,9 +452,9 @@ dvar3_array::dvar3_array(int sl, int sh, int nrl, const ivector& nrh,
      return;
    }
    allocate(sl,sh,nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**
@@ -502,9 +502,9 @@ dvar3_array::dvar3_array(int sl, int sh, int nrl, const ivector& nrh,
      return;
    }
    allocate(sl,sh,nrl,nrh,ncl,nch);
-   #ifdef SAFE_ARRAYS
-     initialize();
-   #endif
+#ifndef OPT_LIB
+   initialize();
+#endif
  }
 
 /**

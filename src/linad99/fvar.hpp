@@ -764,33 +764,10 @@ class ivector
 
    void read_from(const uistream & s);
 
-#ifdef OPT_LIB
-   inline int &operator[] (int i)
-   {
-      return (*(v + i));
-   }
-   inline int &operator() (int i)
-   {
-      return (*(v + i));
-   }
-#else
-   int &operator[] (int i);
-   int &operator() (int i);
-#endif
-
-#ifdef OPT_LIB
-   inline const int &operator[] (int i) const
-   {
-      return (*(v + i));
-   }
-   inline const int &operator() (int i) const
-   {
-      return (*(v + i));
-   }
-#else
-   const int &operator[] (int i) const;
-   const int &operator() (int i) const;
-#endif
+   int& operator[](int i);
+   int& operator()(int i);
+   const int& operator[](int i) const;
+   const int& operator()(int i) const;
 
    ivector sub(int lb, int ub)
    {
@@ -818,6 +795,25 @@ class ivector
    ivector & operator+=(const ivector & t);
    ivector & operator +=(int t);
 };
+
+#ifdef OPT_LIB
+inline int& ivector::operator[](int i)
+{
+  return *(v + i);
+}
+inline int& ivector::operator()(int i)
+{
+  return *(v + i);
+}
+inline const int& ivector::operator[](int i) const
+{
+  return *(v + i);
+}
+inline const int& ivector::operator()(int i) const
+{
+  return *(v + i);
+}
+#endif
 
 ivector operator+(const ivector & v, const ivector & w);
 ivector operator-(const ivector & v, const ivector & w);
@@ -917,33 +913,10 @@ class lvector
 
    void read_from(const uistream & s);
 
-#ifdef OPT_LIB
-   inline AD_LONG_INT & operator[] (int i)
-   {
-      return v[i];
-   }
-   inline AD_LONG_INT & operator() (int i)
-   {
-      return v[i];
-   }
-#else
-   AD_LONG_INT & operator[](int i);
-   AD_LONG_INT & operator()(int i);
-#endif
-
-#ifdef OPT_LIB
-   inline const AD_LONG_INT & operator[] (int i) const
-   {
-      return v[i];
-   }
-   inline const AD_LONG_INT & operator() (int i) const
-   {
-      return v[i];
-   }
-#else
-   const AD_LONG_INT & operator[] (int i) const;
-   const AD_LONG_INT & operator() (int i) const;
-#endif
+   AD_LONG_INT& operator[](int i);
+   AD_LONG_INT& operator()(int i);
+   const AD_LONG_INT& operator[](int i) const;
+   const AD_LONG_INT& operator()(int i) const;
 
    lvector operator() (const lvector & u);
 
@@ -952,6 +925,25 @@ class lvector
    void initialize(void);
    friend class lmatrix;
 };
+
+#ifdef OPT_LIB
+inline AD_LONG_INT& lvector::operator[](int i)
+{
+  return v[i];
+}
+inline AD_LONG_INT& lvector::operator()(int i)
+{
+  return v[i];
+}
+inline const AD_LONG_INT& lvector::operator[](int i) const
+{
+  return v[i];
+}
+inline const AD_LONG_INT& lvector::operator()(int i) const
+{
+  return v[i];
+}
+#endif
 
 AD_LONG_INT sum(const lvector &);
 
@@ -2514,34 +2506,10 @@ class dvector
 
    friend dvar_vector operator*(const dvar_matrix & x, const dvector & m);
 
-
-#ifdef OPT_LIB
-   inline double &operator[] (register int i)
-   {
-      return (*(v + i));
-   }
-   inline double &operator() (register int i)
-   {
-      return (*(v + i));
-   }
-#else
-   double &operator[] (int i);
-   double &operator() (int i);
-#endif
-
-#ifdef OPT_LIB
-   inline const double &operator[] (register int i) const
-   {
-      return (*(v + i));
-   }
-   inline const double &operator() (register int i) const
-   {
-      return (*(v + i));
-   }
-#else
-   const double &operator[] (int i) const;
-   const double &operator() (int i) const;
-#endif
+   double& operator[](int i);
+   double& operator()(int i);
+   const double& operator[](int i) const;
+   const double& operator()(int i) const;
 
    dvector & operator=(const dvector & t);
 
@@ -2557,6 +2525,25 @@ class dvector
 
    friend double min(const dvector &);
 };
+
+#ifdef OPT_LIB
+inline double& dvector::operator[] (register int i)
+{
+  return (*(v + i));
+}
+inline double& dvector::operator() (register int i)
+{
+  return (*(v + i));
+}
+inline const double& dvector::operator[] (register int i) const
+{
+  return (*(v + i));
+}
+inline const double& dvector::operator() (register int i) const
+{
+  return (*(v + i));
+}
+#endif
 
 /**
  * Description not yet available.
@@ -3239,33 +3226,10 @@ class dvar_matrix
    void read_from(const istream &);
    void read_from(const uistream &);
 
-#ifdef OPT_LIB
-   inline dvar_vector & operator[] (register int i)
-   {
-      return (m[i]);
-   }
-   inline dvar_vector & operator() (register int i)
-   {
-      return (m[i]);
-   }
-#else
-   dvar_vector & operator ()(int i);
-   dvar_vector & operator[](int);
-#endif
-
-#ifdef OPT_LIB
-   inline const dvar_vector & operator[] (register int i) const
-   {
-      return m[i];
-   }
-   inline const dvar_vector & operator() (register int i) const
-   {
-      return m[i];
-   }
-#else
-   const dvar_vector & operator() (int i) const;
-   const dvar_vector & operator[] (int) const;
-#endif
+   dvar_vector& operator ()(int i);
+   dvar_vector& operator[](int);
+   const dvar_vector& operator()(int i) const;
+   const dvar_vector& operator[](int) const;
 
 #ifdef OPT_LIB
 #ifdef __NDPX__
@@ -3372,6 +3336,25 @@ class dvar_matrix
 
    friend void copy_status(const ostream & s, const dvar_matrix & m1);
 };
+
+#ifdef OPT_LIB
+inline dvar_vector& dvar_matrix::operator[](int i)
+{
+  return m[i];
+}
+inline dvar_vector& dvar_matrix::operator()(int i)
+{
+  return m[i];
+}
+inline const dvar_vector& dvar_matrix::operator[](int i) const
+{
+  return m[i];
+}
+inline const dvar_vector& dvar_matrix::operator()(int i) const
+{
+  return m[i];
+}
+#endif
 
 dvariable ln_det(const dvar_matrix &);
 dvar_matrix operator *(const dvar_matrix & t1, double x);
@@ -3562,33 +3545,10 @@ class dmatrix
    void colfill(int j, const dvector & v);
    void rowfill(int j, const dvector & v);
 
-#if defined(OPT_LIB)
-   inline dvector & operator() (register int i)
-   {
-      return m[i];
-   }
-   inline dvector & operator[] (register int i)
-   {
-      return m[i];
-   }
-#else
-   dvector & operator()(int i);
-   dvector & operator[](int);
-#endif
-
-#if defined(OPT_LIB)
-   inline const dvector & operator() (register int i) const
-   {
-      return m[i];
-   }
-   inline const dvector & operator[] (register int i) const
-   {
-      return m[i];
-   }
-#else
-   const dvector & operator() (int i) const;
-   const dvector & operator[] (int) const;
-#endif
+   dvector& operator()(int i);
+   dvector& operator[](int);
+   const dvector& operator()(int i) const;
+   const dvector& operator[](int) const;
 
 #if defined(OPT_LIB) && !defined(__INTEL_COMPILER)
    inline double &operator() (register int i, register int j)
@@ -3672,6 +3632,25 @@ class dmatrix
    dmatrix & operator /=(double d);
    dmatrix & operator *=(double d);
 };
+
+#if defined(OPT_LIB)
+inline dvector& dmatrix::operator()(int i)
+{
+  return m[i];
+}
+inline dvector& dmatrix::operator[](int i)
+{
+  return m[i];
+}
+inline const dvector& dmatrix::operator()(int i) const
+{
+  return m[i];
+}
+inline const dvector& dmatrix::operator[](int i) const
+{
+  return m[i];
+}
+#endif
 
 imatrix operator*(const imatrix &, const imatrix &);
 
@@ -3804,43 +3783,13 @@ class imatrix
      const index_type & ncl, const index_type & nch);
    void deallocate();
 
-#ifdef OPT_LIB
-   inline ivector & operator() (int i)
-   {
-      return m[i];
-   }
-   inline int &operator() (int i, int j)
-   {
-      return (*((*(m + i)).v + j));
-   }
-   inline ivector & operator[] (int i)
-   {
-      return m[i];
-   }
-#else
-   ivector & operator [] (int);
-   ivector & operator () (int);
-   int &operator () (int, int);
-#endif
+   ivector& operator[](int);
+   ivector& operator()(int);
+   int& operator()(int, int);
+   const ivector& operator[](int) const;
+   const ivector& operator()(int) const;
+   const int& operator()(int, int) const;
 
-#ifdef OPT_LIB
-   inline const ivector & operator() (int i) const
-   {
-      return m[i];
-   }
-   inline const int &operator() (int i, int j) const
-   {
-      return (*((*(m + i)).v + j));
-   }
-   inline const ivector & operator[] (int i) const
-   {
-      return m[i];
-   }
-#else
-   const ivector & operator[] (int) const;
-   const ivector & operator() (int) const;
-   const int &operator() (int, int) const;
-#endif
    int indexmin(void) const
    {
       return index_min;
@@ -3903,6 +3852,33 @@ class imatrix
    void fill_seqadd(int, int);
    void colfill_seqadd(int, int, int);
 };
+
+#ifdef OPT_LIB
+inline ivector& imatrix::operator()(int i)
+{
+  return m[i];
+}
+inline int& imatrix::operator()(int i, int j)
+{
+  return (*((*(m + i)).v + j));
+}
+inline ivector& imatrix::operator[](int i)
+{
+  return m[i];
+}
+inline const ivector& imatrix::operator()(int i) const
+{
+  return m[i];
+}
+inline const int& imatrix::operator()(int i, int j) const
+{
+  return (*((*(m + i)).v + j));
+}
+inline const ivector& imatrix::operator[](int i) const
+{
+  return m[i];
+}
+#endif
 
 dvariable regression(const dvector & obs, const dvar_vector & pred);
 double regression(const dvector & obs, const dvector & pred);
@@ -4023,20 +3999,20 @@ class dfsdmat
    friend uistream & operator>>(const uistream &, const dfsdmat &);
    friend uostream & operator<<(const uostream &, const dfsdmat &);
 
-#if defined(OPT_LIB) && !defined(__INTEL_COMPILER)
-   double &elem(int i, int j)
-   {
-      return *(m[i] + j);
-   }
-   double &operator () (int i, int j)
-   {
-      return *(m[i] + j);
-   }
-#else
-   double &elem(int i, int j);
-   double &operator () (int i, int j);
-#endif
+  double &elem(int i, int j);
+  double &operator () (int i, int j);
 };
+
+#if defined(OPT_LIB) && !defined(__INTEL_COMPILER)
+inline double& dfsdmat::elem(int i, int j)
+{
+  return *(m[i] + j);
+}
+inline double& dfsdmat::operator()(int i, int j)
+{
+  return *(m[i] + j);
+}
+#endif
 
 /**
  Functions and variables for function minimizer.
@@ -4621,47 +4597,6 @@ class d3_array
    {
       return t[k];
    }
-#ifdef OPT_LIB
-   inline const double &operator() (int k, int i, int j) const
-   {
-      return (((t[k].m[i]).v)[j]);
-   }
-
-   inline const dvector & operator() (int k, int i) const
-   {
-      return (t[k].m[i]);
-   }
-
-   inline const dmatrix & operator() (int i) const
-   {
-      return (t[i]);
-   }
-
-   inline const dmatrix & operator[] (int i) const
-   {
-      return (t[i]);
-   }
-
-   inline double &operator () (int k, int i, int j)
-   {
-      return (((t[k].m[i]).v)[j]);
-   }
-
-   inline dvector & operator () (int k, int i)
-   {
-      return (t[k].m[i]);
-   }
-
-   inline dmatrix & operator() (int i)
-   {
-      return (t[i]);
-   }
-
-   inline dmatrix & operator[] (int i)
-   {
-      return (t[i]);
-   }
-#else
    double &operator () (int k, int i, int j);
    dvector & operator ()(int k, int i);
    dmatrix & operator[](int i);
@@ -4670,7 +4605,6 @@ class d3_array
    const dvector & operator() (int k, int i) const;
    const dmatrix & operator[] (int i) const;
    const dmatrix & operator() (int i) const;
-#endif
 
    d3_array & operator=(const d3_array & m1);
    d3_array & operator=(double x);
@@ -4688,6 +4622,40 @@ class d3_array
    double fill_seqadd(double, double);
    void operator /=(double d);
 };
+#ifdef OPT_LIB
+inline const double& d3_array::operator()(int k, int i, int j) const
+{
+  return ((t[k].m[i]).v)[j];
+}
+inline const dvector& d3_array::operator()(int k, int i) const
+{
+  return t[k].m[i];
+}
+inline const dmatrix& d3_array::operator()(int i) const
+{
+  return t[i];
+}
+inline const dmatrix& d3_array::operator[](int i) const
+{
+  return t[i];
+}
+inline double& d3_array::operator()(int k, int i, int j)
+{
+  return ((t[k].m[i]).v)[j];
+}
+inline dvector& d3_array::operator()(int k, int i)
+{
+  return t[k].m[i];
+}
+inline dmatrix& d3_array::operator()(int i)
+{
+  return t[i];
+}
+inline dmatrix& d3_array::operator[](int i)
+{
+  return t[i];
+}
+#endif
 
 /**
  * Description not yet available.
@@ -4827,56 +4795,14 @@ class i3_array
    {
       return t[k];
    }
-#ifdef OPT_LIB
-   inline const int &operator() (int k, int i, int j) const
-   {
-      return (((t[k].m[i]).v)[j]);
-   }
-
-   inline const ivector & operator() (int k, int i) const
-   {
-      return (t[k].m[i]);
-   }
-
-   inline const imatrix & operator() (int i) const
-   {
-      return (t[i]);
-   }
-
-   inline const imatrix & operator[] (int i) const
-   {
-      return (t[i]);
-   }
-
-   inline int &operator() (int k, int i, int j)
-   {
-      return (((t[k].m[i]).v)[j]);
-   }
-
-   inline ivector & operator () (int k, int i)
-   {
-      return (t[k].m[i]);
-   }
-
-   inline imatrix & operator() (int i)
-   {
-      return (t[i]);
-   }
-
-   inline imatrix & operator[] (int i)
-   {
-      return (t[i]);
-   }
-#else
-   int &operator () (int k, int i, int j);
-   ivector & operator ()(int k, int i);
+   int &operator()(int k, int i, int j);
+   ivector & operator()(int k, int i);
    imatrix & operator[](int i);
    imatrix & operator()(int i);
-   const int &operator() (int k, int i, int j) const;
-   const ivector & operator() (int k, int i) const;
-   const imatrix & operator[] (int i) const;
-   const imatrix & operator() (int i) const;
-#endif
+   const int &operator()(int k, int i, int j) const;
+   const ivector & operator()(int k, int i) const;
+   const imatrix & operator[](int i) const;
+   const imatrix & operator()(int i) const;
 
    i3_array & operator=(const i3_array & m1);
    i3_array & operator=(int x);
@@ -4886,6 +4812,41 @@ class i3_array
    void fill_randu_ni(long int &n);
    void fill_randn_ni(long int &n);
 };
+
+#ifdef OPT_LIB
+inline const int& i3_array::operator()(int k, int i, int j) const
+{
+  return ((t[k].m[i]).v)[j];
+}
+inline const ivector& i3_array::operator()(int k, int i) const
+{
+  return t[k].m[i];
+}
+inline const imatrix& i3_array::operator()(int i) const
+{
+  return t[i];
+}
+inline const imatrix& i3_array::operator[](int i) const
+{
+  return t[i];
+}
+inline int& i3_array::operator()(int k, int i, int j)
+{
+  return ((t[k].m[i]).v)[j];
+}
+inline ivector& i3_array::operator()(int k, int i)
+{
+  return t[k].m[i];
+}
+inline imatrix& i3_array::operator()(int i)
+{
+  return t[i];
+}
+inline imatrix& i3_array::operator[](int i)
+{
+  return t[i];
+}
+#endif
 
 #   if defined(__NUMBERVECTOR__)
 class param_init_matrix_vector;
@@ -5976,59 +5937,17 @@ class d4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#ifdef OPT_LIB
-   d3_array & operator () (int i)
-   {
-      return t[i];
-   }
-   d3_array & operator [](int i)
-   {
-      return t[i];
-   }
-   dmatrix & operator ()(int i, int j)
-   {
-      return ((*this) (i)) (j);
-   }
-   dvector & operator ()(int i, int j, int k)
-   {
-      return (((*this) (i, j)) (k));
-   }
-   double &operator () (int i, int j, int k, int l)
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-   inline const d3_array & operator() (int i) const
-   {
-      return t[i];
-   }
-   inline const d3_array & operator[] (int i) const
-   {
-      return t[i];
-   }
-   inline const dmatrix & operator() (int i, int j) const
-   {
-      return ((*this) (i)) (j);
-   }
-   inline const dvector & operator() (int i, int j, int k) const
-   {
-      return (((*this) (i, j)) (k));
-   }
-   inline const double &operator() (int i, int j, int k, int l) const
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-#else
-   const d3_array & operator() (int i) const;
-   const d3_array & operator[] (int i) const;
-   const dmatrix & operator() (int i, int j) const;
-   const dvector & operator() (int i, int j, int k) const;
-   const double &operator() (int i, int j, int k, int l) const;
-   d3_array & operator ()(int);
-   d3_array & operator [](int);
-   dmatrix & operator ()(int, int);
-   dvector & operator ()(int, int, int);
-   double &operator () (int, int, int, int);
-#endif
+   const d3_array& operator()(int i) const;
+   const d3_array& operator[](int i) const;
+   const dmatrix& operator()(int i, int j) const;
+   const dvector& operator()(int i, int j, int k) const;
+   const double& operator()(int i, int j, int k, int l) const;
+   d3_array& operator()(int);
+   d3_array& operator[](int);
+   dmatrix& operator()(int, int);
+   dvector& operator()(int, int, int);
+   double& operator()(int, int, int, int);
+
    //access functions
    friend class four_array_shape;
 
@@ -6165,6 +6084,48 @@ class d4_array
    void initialize(void);
    void operator /=(double d);
 };
+#ifdef OPT_LIB
+inline d3_array& d4_array::operator()(int i)
+{
+  return t[i];
+}
+inline d3_array& d4_array::operator[](int i)
+{
+  return t[i];
+}
+inline dmatrix& d4_array::operator()(int i, int j)
+{
+  return ((*this)(i))(j);
+}
+inline dvector& d4_array::operator()(int i, int j, int k)
+{
+  return ((*this)(i, j))(k);
+}
+inline double& d4_array::operator()(int i, int j, int k, int l)
+{
+  return ((*this)(i, j, k))(l);
+}
+inline const d3_array& d4_array::operator()(int i) const
+{
+  return t[i];
+}
+inline const d3_array& d4_array::operator[](int i) const
+{
+  return t[i];
+}
+inline const dmatrix& d4_array::operator()(int i, int j) const
+{
+  return ((*this)(i))(j);
+}
+inline const dvector& d4_array::operator()(int i, int j, int k) const
+{
+  return ((*this)(i, j))(k);
+}
+inline const double& d4_array::operator()(int i, int j, int k, int l) const
+{
+  return ((*this)(i, j, k))(l);
+}
+#endif
 
 d4_array operator/(const d4_array & m, double d);
 d4_array operator/(double d, const d4_array & m);

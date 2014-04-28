@@ -67,7 +67,7 @@ double sum(const d5_array& m)
        shape=NULL;
      }
    }
-#if defined(ADWARN_DEV)
+#if defined(SAFE_ALL)
    else
    {
      cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;

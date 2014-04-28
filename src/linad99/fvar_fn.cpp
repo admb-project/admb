@@ -30,13 +30,13 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-prevariable& pow(const prevariable& v1, CGNU_DOUBLE u)
+prevariable& pow(const prevariable& v1, const double u)
     {
       #ifdef SAFE_ARRAYS
         if (v1.v->x == 0)
         {
           cerr << "Error -- base = 0 in function"
-            " prevariable& pow(const prevariable& v1, CGNU_DOUBLE u)" << endl;
+            " prevariable& pow(const prevariable& v1, const double u)" << endl;
         }
       #endif
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)

@@ -136,7 +136,7 @@ dvariable::~dvariable()
    Sets Value to the argument and initializes derivative information.
    \param t constant double passed by value.
  */
-dvariable::dvariable(CGNU_DOUBLE t)
+dvariable::dvariable(const double t)
 {
   v = gradnew();
   v->x = t;

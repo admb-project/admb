@@ -38,7 +38,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-prevariable& operator+(CGNU_DOUBLE x, const prevariable& v2)
+prevariable& operator+(const double x, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -53,7 +53,7 @@ prevariable& operator+(CGNU_DOUBLE x, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator+(const prevariable& v1, CGNU_DOUBLE x)
+prevariable& operator+(const prevariable& v1, const double x)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -82,7 +82,7 @@ prevariable& operator-(const prevariable& v1, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator-(const prevariable& v1, CGNU_DOUBLE x)
+prevariable& operator-(const prevariable& v1, const double x)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -96,7 +96,7 @@ prevariable& operator-(const prevariable& v1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-prevariable& operator-(CGNU_DOUBLE x, const prevariable& v2)
+prevariable& operator-(const double x, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -141,7 +141,7 @@ prevariable& operator/(const prevariable& v1, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator/( CGNU_DOUBLE u, const prevariable& v2)
+prevariable& operator/(const double u, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -160,7 +160,7 @@ prevariable& operator/( CGNU_DOUBLE u, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator/(const prevariable& v1, CGNU_DOUBLE u)
+prevariable& operator/(const prevariable& v1, const double u)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;

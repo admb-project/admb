@@ -58,7 +58,7 @@ dvector& dvector::operator-=(const dvector& v1)
  * Description not yet available.
  * \param
  */
- dvector& dvector::operator+= ( CGNU_DOUBLE d)
+ dvector& dvector::operator+=(const double d)
  {
    for (int i=indexmin();i<=indexmax();i++)
    {
@@ -71,7 +71,7 @@ dvector& dvector::operator-=(const dvector& v1)
  * Description not yet available.
  * \param
  */
- dvector& dvector::operator-= ( CGNU_DOUBLE d)
+ dvector& dvector::operator-=(const double d)
  {
    for (int i=indexmin();i<=indexmax();i++)
    {

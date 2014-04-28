@@ -54,7 +54,7 @@ dmatrix mfexp(const dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix mfexp(const dmatrix& m, CGNU_DOUBLE d)
+dmatrix mfexp(const dmatrix& m, const double d)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());

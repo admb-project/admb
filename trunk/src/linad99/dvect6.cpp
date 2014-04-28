@@ -107,7 +107,7 @@ dvector tanh(const dvector& v1)// ***
  * Description not yet available.
  * \param
  */
-dvector pow(const dvector& v1, CGNU_DOUBLE x)// ***
+dvector pow(const dvector& v1, const double x)// ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -151,7 +151,7 @@ dvector pow(const dvector& v1, const dvector& v2)// ***
  * Description not yet available.
  * \param
  */
-dvector pow(CGNU_DOUBLE x, const dvector& v2)// ***
+dvector pow(const double x, const dvector& v2)// ***
  {
    dvector tmp(v2.indexmin(),v2.indexmax());
    for (int i=v2.indexmin();i<=v2.indexmax();i++)

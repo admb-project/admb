@@ -49,7 +49,7 @@ dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
  * \param
  */
 dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
-  CGNU_DOUBLE a)
+  const double a)
 {
   if (obs.indexmin() != pred.indexmin() || obs.indexmax() != pred.indexmax() )
   {

@@ -41,7 +41,7 @@ dvector mfexp(const dvector& v1)
  * \param v1 a data vector
  * \param d macro for CGNU_DOUBLE
  */
-dvector mfexp(const dvector& v1, CGNU_DOUBLE d)
+dvector mfexp(const dvector& v1, const double d)
 {
   int mmin=v1.indexmin();
   int mmax=v1.indexmax();

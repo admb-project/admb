@@ -35,7 +35,7 @@ dmatrix log(const dmatrix& m);
 dmatrix sin(const dmatrix& m);
 dmatrix cos(const dmatrix& m);
 dmatrix tan(const dmatrix& m);
-dmatrix pow(const dmatrix& m, CGNU_DOUBLE e);
+dmatrix pow(const dmatrix& m, const double e);
 dmatrix pow(const dmatrix& m,int e);
 // end of dvar_vector mathematical functions
 
@@ -85,7 +85,7 @@ dmatrix pow(const dmatrix& m,int e)
  * Description not yet available.
  * \param
  */
-dmatrix pow(const dmatrix& m, CGNU_DOUBLE e)
+dmatrix pow(const dmatrix& m, const double e)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());

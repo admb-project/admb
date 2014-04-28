@@ -32,7 +32,7 @@
  * Description not yet available.
  * \param
  */
-dvar_matrix operator/( CGNU_DOUBLE e, const dvar_matrix& m)
+dvar_matrix operator/(const double e, const dvar_matrix& m)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());

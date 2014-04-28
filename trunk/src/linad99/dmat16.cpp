@@ -60,7 +60,7 @@ dmatrix operator+(const dmatrix& m1, const dmatrix& m2)
  * Description not yet available.
  * \param
  */
-dmatrix operator+(CGNU_DOUBLE d, const dmatrix& m2)
+dmatrix operator+(const double d, const dmatrix& m2)
  {
    dmatrix tmp;
    tmp.allocate(m2.rowmin(),m2.rowmax());
@@ -75,7 +75,7 @@ dmatrix operator+(CGNU_DOUBLE d, const dmatrix& m2)
  * Description not yet available.
  * \param
  */
-dmatrix operator-(CGNU_DOUBLE d, const dmatrix& m2)
+dmatrix operator-(const double d, const dmatrix& m2)
  {
    dmatrix tmp;
    tmp.allocate(m2.rowmin(),m2.rowmax());
@@ -90,7 +90,7 @@ dmatrix operator-(CGNU_DOUBLE d, const dmatrix& m2)
  * Description not yet available.
  * \param
  */
-dmatrix operator*(CGNU_DOUBLE d, const dmatrix& m2)
+dmatrix operator*(const double d, const dmatrix& m2)
  {
    dmatrix tmp;
    tmp.allocate(m2.rowmin(),m2.rowmax());
@@ -105,7 +105,7 @@ dmatrix operator*(CGNU_DOUBLE d, const dmatrix& m2)
  * Description not yet available.
  * \param
  */
-dmatrix operator+(const dmatrix& m1, CGNU_DOUBLE d)
+dmatrix operator+(const dmatrix& m1, const double d)
  {
    dmatrix tmp;
    tmp.allocate(m1.rowmin(),m1.rowmax());
@@ -120,7 +120,7 @@ dmatrix operator+(const dmatrix& m1, CGNU_DOUBLE d)
  * Description not yet available.
  * \param
  */
-dmatrix operator-(const dmatrix& m1, CGNU_DOUBLE d)
+dmatrix operator-(const dmatrix& m1, const double d)
  {
    dmatrix tmp;
    tmp.allocate(m1.rowmin(),m1.rowmax());
@@ -135,7 +135,7 @@ dmatrix operator-(const dmatrix& m1, CGNU_DOUBLE d)
  * Description not yet available.
  * \param
  */
-dmatrix operator*(const dmatrix& m1, CGNU_DOUBLE d)
+dmatrix operator*(const dmatrix& m1, const double d)
  {
    dmatrix tmp;
    tmp.allocate(m1.rowmin(),m1.rowmax());

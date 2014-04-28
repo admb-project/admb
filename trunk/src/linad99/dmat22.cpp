@@ -32,7 +32,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix& dmatrix::operator = ( CGNU_DOUBLE x)
+dmatrix& dmatrix::operator=(const double x)
 {
   for (int i=rowmin();i<=rowmax();i++)
   {
@@ -45,7 +45,7 @@ dmatrix& dmatrix::operator = ( CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dmatrix& dmatrix::operator /= ( CGNU_DOUBLE x)
+dmatrix& dmatrix::operator/=(const double x)
 {
   for (int i=rowmin();i<=rowmax();i++)
   {
@@ -58,7 +58,7 @@ dmatrix& dmatrix::operator /= ( CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dmatrix& dmatrix::operator *= ( CGNU_DOUBLE x)
+dmatrix& dmatrix::operator*=(const double x)
 {
   for (int i=rowmin();i<=rowmax();i++)
   {

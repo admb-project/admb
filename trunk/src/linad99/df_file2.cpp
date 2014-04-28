@@ -139,14 +139,14 @@ void DF_FILE::fread(void* &x)
  * Description not yet available.
  * \param
  */
-void DF_FILE::fwrite( CGNU_DOUBLE x)
+void DF_FILE::fwrite(const double x)
 {
-  #ifdef NO_DERIVS
-    if (gradient_structure::no_derivatives)
-    {
-      return;
-    }
-  #endif
+#ifdef NO_DERIVS
+  if (gradient_structure::no_derivatives)
+  {
+    return;
+  }
+#endif
   const unsigned int num_bytes=sizeof(double);
   toffset+=num_bytes; //increment the temporary offset count
   if (toffset>buff_end)

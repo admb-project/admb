@@ -44,7 +44,7 @@ dvar3_array operator/(const prevariable& d, const d3_array& m)
  * Description not yet available.
  * \param
  */
-dvar3_array operator/(CGNU_DOUBLE d, const dvar3_array& m)
+dvar3_array operator/(const double d, const dvar3_array& m)
    {
      dvar3_array tmp;
      tmp.allocate(m);

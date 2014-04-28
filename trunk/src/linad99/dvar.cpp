@@ -31,7 +31,7 @@
  * Description not yet available.
  * \param
  */
- double sigmoid( CGNU_DOUBLE v1)
+double sigmoid(const double v1)
  {
    return(atan(v1)/2.8);
  }

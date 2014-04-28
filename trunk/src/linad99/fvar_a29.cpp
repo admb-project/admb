@@ -430,7 +430,7 @@ void DF_dvpow(void);
  * Description not yet available.
  * \param
  */
-dvar_vector pow(const dvar_vector& v1, CGNU_DOUBLE e)
+dvar_vector pow(const dvar_vector& v1, const double e)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());

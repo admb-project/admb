@@ -77,7 +77,7 @@ void set_value_inv(const prevariable& x,const dvector& _v,const int& _ii,
  * \param
  */
 void set_value(const prevariable& _u, const dvar_vector& x, const int& _ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,const dvariable& _fpen)
+  const double fmin, const double fmax,const dvariable& _fpen)
 {
   int& ii = (int&) _ii;
   prevariable& u= (prevariable&) _u;
@@ -252,7 +252,7 @@ void set_value(const dvar_matrix& x,const dvar_vector& v,const int& _ii,
  * \param
  */
 void set_value(const dvar_matrix& x, const dvar_vector& v, const int& ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,const dvariable& fpen)
+  const double fmin, const double fmax,const dvariable& fpen)
 {
   if (!(!(x)))
   {
@@ -288,7 +288,7 @@ void set_value(const dvar_matrix& x,const dvar_vector& v, const int& ii,
  * \param
  */
 void set_value(dvar3_array& x, const dvar_vector& v, const int& ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,const dvariable& fpen)
+  const double fmin, const double fmax,const dvariable& fpen)
 {
   if (!(!(x)))
   {
@@ -346,7 +346,7 @@ void set_value_partial(const dvar_vector& x, const dvar_vector& v,
  * \param
  */
 void set_value_partial(const dvar_vector& x, const dvar_vector& v,
-  const int& _ii, int n, CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,
+  const int& _ii, int n, const double fmin, const double fmax,
   const dvariable& fpen)
 {
   int& ii = (int&) _ii;

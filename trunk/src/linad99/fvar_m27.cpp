@@ -34,7 +34,7 @@ dvar_matrix log(const dvar_matrix& m);
 dvar_matrix sin(const dvar_matrix& m);
 dvar_matrix cos(const dvar_matrix& m);
 dvar_matrix tan(const dvar_matrix& m);
-dvar_matrix pow(const dvar_matrix& m, CGNU_DOUBLE e);
+dvar_matrix pow(const dvar_matrix& m, const double e);
 dvar_matrix pow(const dvar_matrix& m, const prevariable& e);
 dvar_matrix pow(const dmatrix& m, const prevariable& e);
 dvar_matrix pow(const dvar_matrix& m, int e);
@@ -146,7 +146,7 @@ dvar_matrix pow(const dvar_matrix& m, const prevariable& e)
  * Description not yet available.
  * \param
  */
-dvar_matrix pow(const dvar_matrix& m, CGNU_DOUBLE e)
+dvar_matrix pow(const dvar_matrix& m, const double e)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -343,7 +343,7 @@ dvar_matrix elem_prod(const dvar_matrix& m, const dmatrix& m2)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator+(CGNU_DOUBLE x, const dvar_matrix& m)
+dvar_matrix operator+(const double x, const dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -371,7 +371,7 @@ dvar_matrix operator*(const prevariable& x, const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator+(const dvar_matrix& m, CGNU_DOUBLE x)
+dvar_matrix operator+(const dvar_matrix& m, const double x)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -427,7 +427,7 @@ dvar_matrix operator*(const dvar_matrix& m, const prevariable& x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator-(const dvar_matrix& m, CGNU_DOUBLE x)
+dvar_matrix operator-(const dvar_matrix& m, const double x)
 {
   dvar_matrix tmp=use_shape(m);
   double t=-x;
@@ -442,7 +442,7 @@ dvar_matrix operator-(const dvar_matrix& m, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator-(CGNU_DOUBLE x, const dvar_matrix& m)
+dvar_matrix operator-(const double x, const dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)

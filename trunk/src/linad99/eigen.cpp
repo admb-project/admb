@@ -156,7 +156,7 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
   #endif
 }
 
-double SIGN( CGNU_DOUBLE x, double y)
+double SIGN(const double x, double y)
 {
   if (y<0)
   {

@@ -232,7 +232,7 @@ void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
  * Description not yet available.
  * \param
  */
-void save_dmatrix_derivatives(const dvar_matrix_position& _pos, CGNU_DOUBLE x,
+void save_dmatrix_derivatives(const dvar_matrix_position& _pos, const double x,
   const int& i, int& j)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos;

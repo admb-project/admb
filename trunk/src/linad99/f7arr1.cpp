@@ -31,7 +31,7 @@ dvar7_array operator/(const d7_array& m, const prevariable& d)
  * Description not yet available.
  * \param
  */
-dvar7_array operator/(const dvar7_array& m, CGNU_DOUBLE d)
+dvar7_array operator/(const dvar7_array& m, const double d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar7_array tmp;

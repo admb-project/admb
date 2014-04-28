@@ -15,10 +15,10 @@
 \param m Nu,ber to be squared.
 \return \f$m^2\f$
 */
-   double square( CGNU_DOUBLE m)
-   {
-     return m*m;
-   }
+double square(const double m)
+{
+  return m * m;
+}
 
 /** Square of a number; constant vector object.
 \ingroup misc

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvar3_array operator-(CGNU_DOUBLE d, const dvar3_array& m2)
+dvar3_array operator-(const double d, const dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;

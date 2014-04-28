@@ -32,7 +32,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix operator/(const dmatrix& m, CGNU_DOUBLE e)
+dmatrix operator/(const dmatrix& m, const double e)
 {
   dmatrix tmp;
   tmp.allocate(m);
@@ -47,7 +47,7 @@ dmatrix operator/(const dmatrix& m, CGNU_DOUBLE e)
  * Description not yet available.
  * \param
  */
-dmatrix operator/(CGNU_DOUBLE e, const dmatrix& m)
+dmatrix operator/(const double e, const dmatrix& m)
 {
   dmatrix tmp;
   tmp.allocate(m);

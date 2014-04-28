@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-void save_double_derivative(CGNU_DOUBLE x, const prevariable_position& _pos)
+void save_double_derivative(const double x, const prevariable_position& _pos)
 {
   prevariable_position& pos= (prevariable_position&) _pos;
   // adds the derivative value in a double to a prevariables' guts
@@ -72,7 +72,7 @@ void prevariable::save_prevariable_value(void) const
  * Description not yet available.
  * \param
  */
-void save_double_value( CGNU_DOUBLE x)
+void save_double_value(const double x)
 {
   //const unsigned wsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);

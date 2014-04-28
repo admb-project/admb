@@ -31,7 +31,7 @@ dll_param_number& dll_param_number::operator=(const prevariable& m)
   return *this;
 }
 
-dll_param_number& dll_param_number::operator = (CGNU_DOUBLE m)
+dll_param_number& dll_param_number::operator=(const double m)
 {
   dvariable::operator = (m);
   return *this;
@@ -61,7 +61,7 @@ void dll_param_init_number::allocate
   allocate(_pd,1,_s);
 }
 
-dll_param_init_number& dll_param_init_number::operator = (CGNU_DOUBLE m)
+dll_param_init_number& dll_param_init_number::operator=(const double m)
 {
   dvariable::operator = (m);
   return *this;
@@ -126,8 +126,7 @@ dll_param_vector& dll_param_vector::operator=(const dvector& m)
   return *this;
 }
 
-dll_param_vector& dll_param_vector::operator =
-  (CGNU_DOUBLE m)
+dll_param_vector& dll_param_vector::operator=(const double m)
 {
   dvar_vector::operator = (m);
   return *this;

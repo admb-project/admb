@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-double max(CGNU_DOUBLE u, CGNU_DOUBLE v)
+double max(const double u, const double v)
 {
   return u > v ? u : v;
 }
@@ -23,7 +23,7 @@ double max(CGNU_DOUBLE u, CGNU_DOUBLE v)
  * Description not yet available.
  * \param
  */
-double min(CGNU_DOUBLE u, CGNU_DOUBLE v)
+double min(const double u, const double v)
 {
   return u < v ? u : v;
 }

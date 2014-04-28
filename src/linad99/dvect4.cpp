@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvector operator*(const dvector& t1, CGNU_DOUBLE x)
+dvector operator*(const dvector& t1, const double x)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -29,7 +29,7 @@ dvector operator*(const dvector& t1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvector operator/(CGNU_DOUBLE x, const dvector& t1)
+dvector operator/(const double x, const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -44,7 +44,7 @@ dvector operator/(CGNU_DOUBLE x, const dvector& t1)
  * Description not yet available.
  * \param
  */
-dvector operator/(const dvector& t1, CGNU_DOUBLE x)
+dvector operator/(const dvector& t1, const double x)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -59,7 +59,7 @@ dvector operator/(const dvector& t1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvector operator+(CGNU_DOUBLE x, const dvector& t1)
+dvector operator+(const double x, const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -74,7 +74,7 @@ dvector operator+(CGNU_DOUBLE x, const dvector& t1)
  * Description not yet available.
  * \param
  */
-dvector operator+(const dvector& t1, CGNU_DOUBLE x)
+dvector operator+(const dvector& t1, const double x)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -89,7 +89,7 @@ dvector operator+(const dvector& t1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvector operator-( CGNU_DOUBLE x, const dvector& t1)
+dvector operator-(const double x, const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -104,7 +104,7 @@ dvector operator-( CGNU_DOUBLE x, const dvector& t1)
  * Description not yet available.
  * \param
  */
-dvector operator-(const dvector& t1, CGNU_DOUBLE x)
+dvector operator-(const dvector& t1, const double x)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 

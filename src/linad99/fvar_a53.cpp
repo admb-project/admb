@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-dvar_vector operator*(const dvar_vector& t1, CGNU_DOUBLE x)
+dvar_vector operator*(const dvar_vector& t1, const double x)
   {
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -59,7 +59,7 @@ dvar_vector operator*(const dvar_vector& t1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvar_vector operator*(CGNU_DOUBLE x, const dvar_vector& t1)
+dvar_vector operator*(const double x, const dvar_vector& t1)
   {
     return t1*x;
   }

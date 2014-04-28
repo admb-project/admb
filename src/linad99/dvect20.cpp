@@ -14,7 +14,7 @@
  * Divide elements of a vector by a constant  
  * \param x constant to divide vector by.
  */
-dvector& dvector::operator /= ( CGNU_DOUBLE x)
+dvector& dvector::operator/=(const double x)
 {
   for (int i=indexmin(); i<=indexmax(); i++)
   {
@@ -27,7 +27,7 @@ dvector& dvector::operator /= ( CGNU_DOUBLE x)
  * Multiply elements of a vector by a constant.
  * \param x constant for multiplication.
  */
-dvector& dvector::operator *= ( CGNU_DOUBLE x)
+dvector& dvector::operator*=(const double x)
 {
   for (int i=indexmin(); i<=indexmax(); i++)
   {

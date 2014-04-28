@@ -29,7 +29,7 @@ dvar3_array mfexp(const dvar3_array& m)
  * Description not yet available.
  * \param
  */
-dvar3_array mfexp(const dvar3_array& m, CGNU_DOUBLE d)
+dvar3_array mfexp(const dvar3_array& m, const double d)
 {
   dvar3_array tmp;
   tmp.allocate(m);

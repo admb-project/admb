@@ -65,7 +65,7 @@ double mean(const dvector& v)
  * Description not yet available.
  * \param
  */
-  void dvector::fill_seqadd( CGNU_DOUBLE base, CGNU_DOUBLE offset)
+  void dvector::fill_seqadd(const double base, const double offset)
   {
     double temp=0;
     for (int i=indexmin(); i<=indexmax(); i++)
@@ -107,7 +107,7 @@ void lvector::fill_seqadd(const AD_LONG_INT& base, const AD_LONG_INT& offset)
  * Description not yet available.
  * \param
  */
-void dmatrix::colfill_seqadd(const int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dmatrix::colfill_seqadd(const int& j, const double base, const double offset)
   {
     double temp=0;
     for (int i=rowmin(); i<=rowmax(); i++)
@@ -145,7 +145,7 @@ void dmatrix::rowfill(int i, const dvector& v)
  * Description not yet available.
  * \param
  */
-void dmatrix::rowfill_seqadd(const int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dmatrix::rowfill_seqadd(const int& i, const double base, const double offset)
   {
     double temp=0;
     for (int j=colmin(); j<=colmax(); j++)

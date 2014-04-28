@@ -30,7 +30,7 @@
  * Description not yet available.
  * \param
  */
-  void dvar_vector::fill_seqadd( CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dvar_vector::fill_seqadd(const double base, const double offset)
   {
     RETURN_ARRAYS_INCREMENT();
     double temp=0;
@@ -69,8 +69,8 @@ void imatrix::colfill_seqadd(int j, int base, int offset)
   \return dvar_matrix with those values
  */
 
-void dvar_matrix::colfill_seqadd(const int& j, CGNU_DOUBLE base,
-  CGNU_DOUBLE offset)
+void dvar_matrix::colfill_seqadd(const int& j, const double base,
+  const double offset)
   {
     double temp=0;
     RETURN_ARRAYS_INCREMENT();
@@ -90,8 +90,8 @@ void dvar_matrix::colfill_seqadd(const int& j, CGNU_DOUBLE base,
   \param offset base+offset,base+offset*2,..., 
   \return dvar_vector with those value
  */
-void dvar_matrix::rowfill_seqadd(const int& i, CGNU_DOUBLE base,
-  CGNU_DOUBLE offset)
+void dvar_matrix::rowfill_seqadd(const int& i, const double base,
+  const double offset)
   {
     double temp=0;
     RETURN_ARRAYS_INCREMENT();

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-d5_array operator/(const d5_array& m, CGNU_DOUBLE d)
+d5_array operator/(const d5_array& m, const double d)
    {
      d5_array tmp;
      tmp.allocate(m);
@@ -29,7 +29,7 @@ d5_array operator/(const d5_array& m, CGNU_DOUBLE d)
  * Description not yet available.
  * \param
  */
-   void d5_array::operator /= ( CGNU_DOUBLE d)
+void d5_array::operator/=(const double d)
    {
      for (int i=indexmin();i<=indexmax();i++)
      {

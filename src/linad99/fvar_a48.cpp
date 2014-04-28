@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector& dvar_vector::operator /= ( CGNU_DOUBLE x)
+dvar_vector& dvar_vector::operator/=(const double x)
   {
     RETURN_ARRAYS_INCREMENT();
     save_identifier_string("wctf");

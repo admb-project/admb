@@ -141,10 +141,6 @@ Macro definitions.
   #include <pc.h>
 #endif
 
-#if !defined(CGNU_DOUBLE)
-  #define CGNU_DOUBLE double
-#endif
-
 #ifdef _SNGL_
    #define double float
 #endif
@@ -9041,8 +9037,8 @@ banded_symmetric_dmatrix restore_bounded_symmetric_dvar_matrix_derivatives
 
 unsigned long max(unsigned long u, unsigned long v);
 unsigned long min(unsigned long u, unsigned long v);
-double max(CGNU_DOUBLE u, CGNU_DOUBLE v);
-double min(CGNU_DOUBLE u, CGNU_DOUBLE v);
+double max(const double u, const double v);
+double min(const double u, const double v);
 int max(int i, int j, int k);
 int max(int i, int j);
 

@@ -31,7 +31,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
- void prevariable::operator +=( CGNU_DOUBLE uu)
+void prevariable::operator+=(const double uu)
  {
    (*v).x+=uu;
  }
@@ -40,7 +40,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
- void prevariable::operator -=( CGNU_DOUBLE uu)
+void prevariable::operator-=(const double uu)
  {
    (*v).x-=uu;
  }

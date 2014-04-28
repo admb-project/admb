@@ -35,7 +35,7 @@
  * Description not yet available.
  * \param
  */
-prevariable& prevariable::operator=(CGNU_DOUBLE t) const
+prevariable& prevariable::operator=(const double t) const
     {
       (*v).x=t;
       gradient_structure::GRAD_STACK1->
@@ -88,7 +88,7 @@ dvariable& dvariable::operator=(const prevariable& t)
   \param t constant object of type double.
   \return prevariable reference
  */
-    dvariable& dvariable::operator=( CGNU_DOUBLE t)
+dvariable& dvariable::operator=(const double t)
     {
       (*v).x=t;
       gradient_structure::GRAD_STACK1->
@@ -101,7 +101,7 @@ dvariable& dvariable::operator=(const prevariable& t)
   \param t constant object of type double.
   \return prevariable reference
  */
-    prevariable& prevariable::operator=( CGNU_DOUBLE t)
+prevariable& prevariable::operator=(const double t)
     {
       (*v).x=t;
       gradient_structure::GRAD_STACK1->

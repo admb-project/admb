@@ -63,7 +63,7 @@ param_likeprof_number& param_likeprof_number::operator=(const prevariable& v)
                 return *this;
         }
 
-        param_likeprof_number& param_likeprof_number::operator = (CGNU_DOUBLE v)
+param_likeprof_number& param_likeprof_number::operator=(const double v)
         {
                 this->param_stddev_number::operator = (v);
                 return *this;

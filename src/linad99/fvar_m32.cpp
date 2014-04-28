@@ -47,7 +47,7 @@ dvar_matrix mfexp(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix mfexp(const dvar_matrix& m, CGNU_DOUBLE d)
+dvar_matrix mfexp(const dvar_matrix& m, const double d)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());

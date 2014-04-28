@@ -112,7 +112,7 @@ void dv_eqdoub(void);
  * Description not yet available.
  * \param
  */
- dvar_vector& dvar_vector::operator = ( CGNU_DOUBLE t)
+dvar_vector& dvar_vector::operator=(const double t)
  {
    int mmin=indexmin();
    int mmax=indexmax();

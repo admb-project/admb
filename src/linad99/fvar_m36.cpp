@@ -32,7 +32,7 @@
  * Description not yet available.
  * \param
  */
-double dvar_matrix::fill_seqadd( CGNU_DOUBLE x, CGNU_DOUBLE d)
+double dvar_matrix::fill_seqadd(const double x, const double d)
 {
   double x1=x;
   double d1=d;

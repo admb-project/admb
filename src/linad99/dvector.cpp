@@ -219,7 +219,7 @@ dvector::dvector(const predvector& pdv)
   \param x A double constant.
   \return Reference to a %dvector object.
  */
- dvector& dvector::operator = ( CGNU_DOUBLE x)
+dvector& dvector::operator=(const double x)
  {
    #ifdef DIAG
      myheapcheck("Entering dvector =");
@@ -632,7 +632,7 @@ dvector operator-(const dvector& t1, const dvector& t2)
   \param t1 %dvector reference, \f$y\f$.
   \return A %dvector \f$z_i = x*y_i\f$.
   */
-dvector operator*(CGNU_DOUBLE x, const dvector& t1)
+dvector operator*(const double x, const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
    #ifdef OPT_LIB
@@ -699,7 +699,7 @@ int max(int a,int b)
 \param m Number to be cubed
 \return \f$m^3\f$
 */
-double cube( CGNU_DOUBLE m)
+double cube(const double m)
 {
   return m*m*m;
 }
@@ -709,7 +709,7 @@ double cube( CGNU_DOUBLE m)
 \param m Number to be taken to the fourth power.
 \return \f$m^4\f$
 */
-double fourth( CGNU_DOUBLE m)
+double fourth(const double m)
 {
   double m2=m*m;
   return m2*m2;

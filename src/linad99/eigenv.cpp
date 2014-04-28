@@ -227,7 +227,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
   \param y Argument to test.
   \return The value of x with the sign of y.
 */
-double SIGNV( CGNU_DOUBLE x, double y)
+double SIGNV(const double x, double y)
 {
   if (y<0)
   {

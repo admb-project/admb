@@ -17,7 +17,7 @@
  * Description not yet available.
  * \param
  */
- double sfabs( CGNU_DOUBLE v1)
+double sfabs(const double v1)
  {
    #define cutoff 0.001
    #define cutoff2 0.000001

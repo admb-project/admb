@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector& dvar_vector::operator *= ( CGNU_DOUBLE x)
+dvar_vector& dvar_vector::operator*=(const double x)
   {
     for (int i=indexmin(); i<=indexmax(); i++)
     {

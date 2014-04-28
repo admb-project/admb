@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-d7_array operator/(const d7_array& m, CGNU_DOUBLE d)
+d7_array operator/(const d7_array& m, const double d)
    {
      d7_array tmp;
      tmp.allocate(m);
@@ -29,7 +29,7 @@ d7_array operator/(const d7_array& m, CGNU_DOUBLE d)
  * Description not yet available.
  * \param
  */
-   void d7_array::operator /= ( CGNU_DOUBLE d)
+void d7_array::operator/=(const double d)
    {
      for (int i=indexmin();i<=indexmax();i++)
      {

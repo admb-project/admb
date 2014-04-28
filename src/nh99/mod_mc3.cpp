@@ -135,7 +135,7 @@ double set_value_mc(double z,double min,double max)
 }
 
 void set_value_inv_mc(const dvar_vector& x, const dvector& _v, const int& _ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
+  const double fmin, const double fmax)
 {
   dvector& v=(dvector&) _v;
   int& ii=(int&) _ii;
@@ -148,7 +148,7 @@ void set_value_inv_mc(const dvar_vector& x, const dvector& _v, const int& _ii,
 }
 
 void set_value_mc(const dvar_vector& _x,const dvar_vector& v, const int& _ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
+  const double fmin, const double fmax)
 {
   ADUNCONST(dvar_vector,x)
   int& ii=(int&) _ii;

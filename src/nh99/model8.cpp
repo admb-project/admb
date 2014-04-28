@@ -16,8 +16,7 @@
     prevariable::operator = (v);
     return *this;
   }
-  objective_function_value& objective_function_value::operator =
-    (CGNU_DOUBLE v)
+objective_function_value& objective_function_value::operator=(const double v)
   {
     prevariable::operator = (v);
     return *this;

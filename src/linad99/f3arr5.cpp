@@ -31,7 +31,7 @@ dvar3_array operator/(const d3_array& m, const prevariable& d)
  * Description not yet available.
  * \param
  */
-dvar3_array operator/(const dvar3_array& m, CGNU_DOUBLE d)
+dvar3_array operator/(const dvar3_array& m, const double d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -79,7 +79,7 @@ void dvar3_array::operator/=(const prevariable& d)
  * Description not yet available.
  * \param
  */
-   void dvar3_array::operator /=(CGNU_DOUBLE d)
+   void dvar3_array::operator/=(const double d)
    {
      RETURN_ARRAYS_INCREMENT();
      for (int i=slicemin();i<=slicemax();i++)

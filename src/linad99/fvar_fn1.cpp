@@ -191,7 +191,7 @@ prevariable& pow(const prevariable& v1, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& pow( CGNU_DOUBLE u, const prevariable& v1)
+prevariable& pow(const double u, const prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
         gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -256,7 +256,7 @@ prevariable& atan2(const prevariable& v1, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& atan2(const prevariable& v1, CGNU_DOUBLE v2)
+prevariable& atan2(const prevariable& v1, const double v2)
 {
   if (value(v1) == 0 && v2 == 0)
   {
@@ -276,7 +276,7 @@ prevariable& atan2(const prevariable& v1, CGNU_DOUBLE v2)
  * Description not yet available.
  * \param
  */
-prevariable& atan2( CGNU_DOUBLE v1, const prevariable& v2)
+prevariable& atan2(const double v1, const prevariable& v2)
 {
   if (v1 == 0 && value(v2) == 0)
   {

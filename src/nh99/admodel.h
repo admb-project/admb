@@ -87,7 +87,7 @@ class init_xml_doc;
 #define SPparam_number SPnamed_dvariable
 #define SPparam_3array SPnamed_dvar3_array
 #define SPparam_4array SPnamed_dvar4_array
-  double mfexp(CGNU_DOUBLE );
+  double mfexp(const double);
   dvariable mfexp(const prevariable& v1);
   dvar_vector mfexp(const dvar_vector&);
   dvector mfexp(const dvector&);
@@ -104,11 +104,11 @@ class init_xml_doc;
  void set_value_inv(const dvar_matrix& x, const dvector& v, const int& ii);
  void set_value_inv(const dvar_vector&, const dvector&, const int &ii);
  void set_value_inv(const dvariable& u, const dvector& x, const int& ii,
-   CGNU_DOUBLE fmin, CGNU_DOUBLE fmax);
+   const double fmin, const double fmax);
  void set_value_inv(const dvar_matrix& u, const dvector& x, const int& ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
+  const double fmin,const double fmax);
  void set_value_inv(const dvar3_array& u, const dvector& x, const int& ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
+  const double fmin,const double fmax);
  void set_value_inv(const dvar3_array& u, const dvector& x, const int& ii);
 */
 
@@ -189,7 +189,7 @@ protected:
   named_dvar_vector(void) : dvar_vector(), model_name_tag() {;}
   named_dvar_vector& operator=(const dvar_vector& m);
   named_dvar_vector& operator=(const dvector& m);
-  named_dvar_vector& operator = (CGNU_DOUBLE m);
+  named_dvar_vector& operator=(const double m);
   named_dvar_vector& operator=(const prevariable& m);
   friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
@@ -206,7 +206,7 @@ protected:
   equality_constraint_vector(void);
   equality_constraint_vector& operator=(const dvar_vector& m);
   equality_constraint_vector& operator=(const dvector& m);
-  equality_constraint_vector& operator = (CGNU_DOUBLE m);
+  equality_constraint_vector& operator=(const double m);
   equality_constraint_vector& operator=(const prevariable& m);
   friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
@@ -222,7 +222,7 @@ protected:
   inequality_constraint_vector(void);
   inequality_constraint_vector& operator=(const dvar_vector& m);
   inequality_constraint_vector& operator=(const dvector& m);
-  inequality_constraint_vector& operator = (CGNU_DOUBLE m);
+  inequality_constraint_vector& operator=(const double m);
   inequality_constraint_vector& operator=(const prevariable& m);
   friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
@@ -240,7 +240,7 @@ public:
   void allocate(double *_pd,int mmin,int mmax,const char * s);
   dll_param_vector& operator=(const dvar_vector& m);
   dll_param_vector& operator=(const dvector& m);
-  dll_param_vector& operator = (CGNU_DOUBLE m);
+  dll_param_vector& operator=(const double m);
   dll_param_vector& operator=(const prevariable& m);
 };
 
@@ -255,7 +255,7 @@ protected:
   named_dvariable(void) : dvariable(), model_name_tag() {;}
   void allocate(const char * s);
   named_dvariable& operator=(const prevariable& m);
-  named_dvariable& operator = (CGNU_DOUBLE m);
+  named_dvariable& operator=(const double m);
   friend class model_parameters;
 };
 
@@ -270,7 +270,7 @@ protected:
   //named_dvariable(void) : dvariable(), model_name_tag() {;}
   void allocate(double *_d,const char * s);
   dll_param_number& operator=(const prevariable& m);
-  dll_param_number& operator = (CGNU_DOUBLE m);
+  dll_param_number& operator=(const double m);
   virtual ~dll_param_number();
   friend class model_parameters;
 };
@@ -291,7 +291,7 @@ protected:
   void allocate(int rmin,int rmax,const index_type&,const index_type&,
     const char * s);
 public:
-  named_dvar_matrix& operator = (CGNU_DOUBLE m);
+  named_dvar_matrix& operator=(const double m);
   named_dvar_matrix& operator=(const dmatrix& m);
   named_dvar_matrix& operator=(const dvar_matrix& m);
   named_dvar_matrix& operator=(const dvariable& m);
@@ -485,7 +485,7 @@ protected:
   void allocate(const char * s);
   void allocate(int mmin, const ivector& mmax, const char *s);
   named_dvector& operator=(const dvector& m);
-  named_dvector& operator = (CGNU_DOUBLE m);
+  named_dvector& operator=(const double m);
   friend class model_data;
 };
 
@@ -516,7 +516,7 @@ protected:
     const char * s);
   void allocate(int rmin,int rmax,int cmin,const ivector& cmax,const char * s);
   named_dmatrix& operator=(const dmatrix& m);
-  named_dmatrix& operator = (CGNU_DOUBLE m);
+  named_dmatrix& operator=(const double m);
 };
 
 /**
@@ -1179,7 +1179,7 @@ protected:
   friend class model_parameters;
   friend class param_init_number_vector;
   param_init_number();
-  param_init_number& operator = (CGNU_DOUBLE m);
+  param_init_number& operator=(const double m);
   param_init_number& operator=(const prevariable& m);
 };
 
@@ -1194,7 +1194,7 @@ public:
   void allocate(double * pd,int phase_start=1,const char *s="UNNAMED");
   void allocate(double *pd,const char *s="UNNAMED");
   virtual ~dll_param_init_number();
-  dll_param_init_number& operator = (CGNU_DOUBLE m);
+  dll_param_init_number& operator=(const double m);
   dll_param_init_number& operator=(const prevariable& m);
 };
 
@@ -1248,7 +1248,7 @@ private:
   virtual void hess_scale(const dvector&, const dvector&, const int&){}
   virtual const char * label(void);
   void report_value(void);
-  param_init_bounded_number& operator = (CGNU_DOUBLE m);
+  param_init_bounded_number& operator=(const double m);
   param_init_bounded_number& operator=(const prevariable& m);
   friend class model_parameters;
   friend class param_init_bounded_number_vector;
@@ -1675,7 +1675,7 @@ class data_vector : public named_dvector
 {
 public:
   data_vector& operator=(const dvector& m);
-  data_vector& operator = (CGNU_DOUBLE m);
+  data_vector& operator=(const double m);
   data_vector(void) : named_dvector() {;}
 private:
   void allocate(int imin,int imax,const char * ="UNNAMED");
@@ -2136,7 +2136,7 @@ class param_stddev_vector: public named_dvar_vector , stddev_params
     virtual void get_sd_values(const dvector& x, const int& ii);
   param_stddev_vector& operator=(const dvar_vector& m);
   param_stddev_vector& operator=(const dvector& m);
-  param_stddev_vector& operator = (CGNU_DOUBLE m);
+  param_stddev_vector& operator=(const double m);
 };
 
 /**
@@ -2159,7 +2159,7 @@ protected:
   friend class model_parameters;
   virtual void set_dependent_variables(void);
   param_stddev_number& operator=(const prevariable&);
-  param_stddev_number& operator = (CGNU_DOUBLE);
+  param_stddev_number& operator=(const double);
 };
 
 /**
@@ -2181,7 +2181,7 @@ class param_likeprof_number: public param_stddev_number ,
     friend class model_parameters;
 public:
     param_likeprof_number& operator=(const prevariable&);
-    param_likeprof_number& operator = (CGNU_DOUBLE);
+    param_likeprof_number& operator=(const double);
 };
 
 /**
@@ -2201,7 +2201,7 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
   virtual void set_dependent_variables(void);
   virtual void get_sd_values(const dvector& x, const int& ii);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
-  param_stddev_matrix& operator = (CGNU_DOUBLE m);
+  param_stddev_matrix& operator=(const double m);
   param_stddev_matrix& operator=(const dmatrix& m);
   param_stddev_matrix& operator=(const dvar_matrix& m);
 };
@@ -2241,7 +2241,7 @@ class adpvm_manager;
     static double gmax;
     objective_function_value();
     objective_function_value& operator=(const prevariable& v);
-    objective_function_value& operator = (CGNU_DOUBLE v);
+    objective_function_value& operator=(const double v);
   };
 
   int withinbound(int lb,int n,int ub);
@@ -2407,17 +2407,17 @@ public:
 };
 
 
-//double set_value_mc(const double& x, CGNU_DOUBLE fmin, CGNU_DOUBLE fmax);
+//double set_value_mc(const double& x, const double fmin, const double fmax);
 
 void set_value_mc(const dvar_vector& x, const dvar_vector& v, const int& ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
+  const double fmin, const double fmax);
 
 double set_value_inv_mc(double v,double fmin,double fmax);
 
 double set_value_inv_mc(const prevariable& v, double fmin, double fmax);
 
 void set_value_inv_mc(const dvar_vector& x, const dvector& v, const int& ii,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
+  const double fmin, const double fmax);
 
 //double set_value_inv_mc(const dvector&, const dvector& x, int ii, double minb,
 //  double maxb);

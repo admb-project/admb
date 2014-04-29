@@ -10,7 +10,6 @@
  */
 #include "fvar.hpp"
 #include "admb_messages.h"
-//#include <d4arr.hpp>
 
 /**
  * Description not yet available.

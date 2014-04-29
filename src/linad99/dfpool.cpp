@@ -19,7 +19,6 @@
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
-  void my_do_nothing(void * t){}
 //ofstream xofs("allocation");
 vector_shape_pool * vector_shape::xpool =
     new vector_shape_pool(sizeof(vector_shape));

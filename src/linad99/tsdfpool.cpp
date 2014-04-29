@@ -108,8 +108,5 @@ void * ts_vector_shapex::operator new(size_t n)
   {
     xpool[get_pthread_number()]->free(ptr);
   }
-
-  void my_do_nothing(void * t);
-
 #endif // defined(THREAD_SAFE)
 #endif // defined(THREAD_SAFE)

@@ -47,7 +47,6 @@
 
 #include <fvar.hpp>
 
-
 double pythag(double a, double b);
 double fmax(double a,double b) { if (a>b) return a; else return b;}
 double imin(int a,int b) { if (a>b) return b; else return a;}

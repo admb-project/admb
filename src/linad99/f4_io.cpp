@@ -12,7 +12,6 @@
 
 // i/o operations for class dmatrix
 #include "fvar.hpp"
-#include "d4arr.hpp"
 
 #ifdef __TURBOC__
   #pragma hdrstop

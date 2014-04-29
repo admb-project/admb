@@ -332,7 +332,6 @@ ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\include md ${DIST}\include
 	copy linad99\fvar.hpp ${DIST}\include
 	copy linad99\dfpool.h ${DIST}\include
-	copy linad99\trunc.hpp ${DIST}\include
 	copy linad99\factors.h ${DIST}\include
 	copy tools99\adoption.hpp ${DIST}\include
 	copy tools99\adstring.hpp ${DIST}\include
@@ -353,7 +352,6 @@ else
 	mkdir -p ${DIST}/include
 	cp linad99/fvar.hpp ${DIST}/include
 	cp linad99/dfpool.h ${DIST}/include
-	cp linad99/trunc.hpp ${DIST}/include
 	cp linad99/factors.h ${DIST}/include
 	cp tools99/adoption.hpp ${DIST}/include
 	cp tools99/adstring.hpp ${DIST}/include

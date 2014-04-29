@@ -145,12 +145,6 @@ Macro definitions.
   #define  NO_DERIVS
 #endif
 
-#ifndef OPT_LIB
-  #ifndef SAFE_ARRAYS
-  #define SAFE_ARRAYS
-  #endif
-#endif
-
 // C language function prototypes
 extern "C"
 {

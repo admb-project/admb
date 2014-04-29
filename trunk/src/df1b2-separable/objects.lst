@@ -83,8 +83,6 @@ OBJ0=\
  df1b2f19.obj\
  df1b2f20.obj\
  df1b2f21.obj\
- df1b2f22.obj\
- df1b2f23.obj\
  df1b2f24.obj\
  df1b2f25.obj\
  df1b2f26.obj\
@@ -121,6 +119,8 @@ OBJ0=\
  f1b2solv.obj\
  mod_rhes.obj
 UNUSED=\
+ df1b2f22.obj\
+ df1b2f23.obj\
  newfunc.obj\
  f1b2locl.obj\
  f1b2loc2.obj\

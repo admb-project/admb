@@ -141,10 +141,6 @@ Macro definitions.
   #include <pc.h>
 #endif
 
-#ifdef _SNGL_
-   #define double float
-#endif
-
 #ifndef NO_DERIVS
   #define  NO_DERIVS
 #endif

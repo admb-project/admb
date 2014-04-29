@@ -32,7 +32,7 @@
  */
 double_and_int* gradnew()
 {
-#if defined (SAFE_ARRAYS)
+#if !defined(OPT_LIB)
   if (!gradient_structure::instances)
   {
     cerr << "Error -- you are trying to create a dvariable object"

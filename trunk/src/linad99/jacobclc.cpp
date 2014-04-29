@@ -206,10 +206,10 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 
     if(GRAD_STACK1->ptr <= GRAD_STACK1->ptr_first)
     {
-      #ifdef SAFE_ARRAYS
+#ifdef SAFE_ALL
         cerr << "warning -- calling gradcalc when no calculations generating"
          << endl << "derivative information have occurred" << endl;
-      #endif
+#endif
       g.initialize();
       return;
     }    // current is one past the end so -- it

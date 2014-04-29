@@ -32,13 +32,13 @@ void gradfree(dlink *);
  */
 prevariable& pow(const prevariable& v1, const double u)
     {
-      #ifdef SAFE_ARRAYS
+#ifndef OPT_LIB
         if (v1.v->x == 0)
         {
           cerr << "Error -- base = 0 in function"
             " prevariable& pow(const prevariable& v1, const double u)" << endl;
         }
-      #endif
+#endif
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
         gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       double x,y;

@@ -133,7 +133,6 @@ includes: objdestdir
 	copy df1b2-separable\df32fun.h $(DESTDIR)\include
 	copy df1b2-separable\df1b2loc.h $(DESTDIR)\include
 	copy linad99\fvar.hpp $(DESTDIR)\include
-	copy linad99\d4arr.hpp $(DESTDIR)\include
 	copy linad99\dfpool.h $(DESTDIR)\include
 	copy linad99\factors.h $(DESTDIR)\include
 	copy nh99\admodel.h $(DESTDIR)\include

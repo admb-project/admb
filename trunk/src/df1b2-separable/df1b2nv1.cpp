@@ -12,13 +12,12 @@
 #include "admb_messages.h"
 
 /**
- * Description not yet available.
- * \param
- */
- df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
- {
-   it=NULL;
- }
+Default constructor
+*/
+df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
+{
+  it = NULL;
+}
 
 #if !defined(OPT_LIB)
 /**

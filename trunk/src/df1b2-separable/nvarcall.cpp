@@ -56,5 +56,3 @@
     }
     return pen;
   }
-
-#undef HOME_VERSION

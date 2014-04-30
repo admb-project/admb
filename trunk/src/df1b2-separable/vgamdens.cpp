@@ -1,14 +1,3 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
- */
-#define HOME_VERSION
 #include <df1b2fun.h>
 
 /**

@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#define HOME_VERSION
 #include "df1b2fun.h"
   df3_two_variable cumd_exponential(const df3_two_variable& x,
     const df3_two_variable& a);

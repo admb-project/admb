@@ -54,9 +54,13 @@ class df1b2variable;
   {
     double v[20];
   public:
+    df3_three_variable();
+    df3_three_variable(const df3_three_variable& );
+
     static df1b2variable * ind_var[];
     static int num_ind_var;
     static int num_local_ind_var;
+
     double * get_u(void) const {return (double*) (&(v[0]));}
     double * get_u_x(void)const {return (double*) (&(v[1]));}
     double * get_u_y(void)const {return (double*) (&(v[2]));}
@@ -99,8 +103,6 @@ class df1b2variable;
     df3_three_variable& operator -= (const df3_three_variable& v);
     df3_three_variable& operator -= (double v);
     df3_three_variable& operator /= (const df3_three_variable& v);
-    df3_three_variable(void);
-    df3_three_variable(const df3_three_variable& );
     void initialize(void);
   };
 

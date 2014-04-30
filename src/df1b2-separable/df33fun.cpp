@@ -99,9 +99,8 @@ df1b2variable& df1b2variable::operator = (const df3_three_variable& v)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Intialize values (v) to zero.
+*/
 void df3_three_variable::initialize(void)
 {
   for (int i=0;i<20;i++)
@@ -109,13 +108,12 @@ void df3_three_variable::initialize(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
- df3_three_vector::~df3_three_vector()
- {
-   deallocate();
- }
+Destructor
+*/
+df3_three_vector::~df3_three_vector()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.
@@ -1444,27 +1442,24 @@ df3_three_variable& df3_three_variable::operator=(const df3_three_variable& v)
     return z;
   }
 /**
- * Description not yet available.
- * \param
- */
-  init_df3_three_variable::~init_df3_three_variable()
+Destructor
+*/
+init_df3_three_variable::~init_df3_three_variable()
+{
+  num_local_ind_var--;
+  if (num_local_ind_var<0)
   {
-    num_local_ind_var--;
-    if (num_local_ind_var<0)
-    {
-      cerr << "This can't happen" << endl;
-      ad_exit(1);
-    }
-    if (num_local_ind_var==0)
-    {
-      num_ind_var=0;
-    }
+    cerr << "This can't happen" << endl;
+    ad_exit(1);
   }
-
+  if (num_local_ind_var==0)
+  {
+    num_ind_var=0;
+  }
+}
 /**
- * Description not yet available.
- * \param
- */
+Copy constructor
+*/
   init_df3_three_variable::init_df3_three_variable(const df1b2variable& _v)
   {
     ADUNCONST(df1b2variable,v)
@@ -1565,9 +1560,12 @@ df3_three_variable& df3_three_variable::operator=(const df3_three_variable& v)
     *get_u_zzz() = 0.0;
   }
 
-  df3_three_variable::df3_three_variable(void)
-  {
-  }
+/**
+Default constructor
+*/
+df3_three_variable::df3_three_variable()
+{
+}
 
 /**
  * Description not yet available.

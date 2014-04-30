@@ -69,7 +69,26 @@
 #include <string.h>
 
 char lastchar(char*);
-void byte_copy(void* dest,void* source, unsigned num_bytes);
+
+void byte_copy(void* dest, void* source, unsigned int num_bytes)
+{
+#if defined(__ADSGI__)
+  char* pdest = (char*)dest;
+  char* psource = (char*)source;
+  int ii=0;
+  while (ii < num_bytes)
+  {
+    //*((char *)dest)++ = *((char *)source)++;
+    *pdest = *psource;
+    pdest++;
+    psource++;
+    ii++;
+  }
+#else
+  memcpy((char*)dest, (char*)source, num_bytes);
+#endif
+}
+
 extern char ad_random_part[6];
 
 /**

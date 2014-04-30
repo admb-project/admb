@@ -284,7 +284,7 @@
       }
       int imin= sf.indexmin();
       int imax= sf.indexmax();
-      int fmin,fmax;
+      int fmin = 0, fmax = 0;
       int i,k;
       int ibreak=0;
       // get intial values for min and max active flag values

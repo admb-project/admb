@@ -545,7 +545,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
        }
        double Hbegin=beginprior+pprob;
-       double tmpprior;
+       double tmpprior = 0;
        int ii=1;
        initial_params::copy_all_values(parsave,ii);
        // detmine whether to go forward or backward

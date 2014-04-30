@@ -189,7 +189,7 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   double diff;
   double diff1;
   int expflag;
-  double y;
+  double y = 0;
   //int in=0;
   //int ie=0;
 

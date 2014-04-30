@@ -9,7 +9,6 @@
  * Description not yet available.
  */
 
-//#define HOME_VERSION
 #include <df1b2fun.h>
 #include <admodel.h>
 
@@ -235,4 +234,3 @@ int allocated(const df1b2matrix& _x)
   ADUNCONST(df1b2matrix,x)
   return x.allocated();
 }
-#undef HOME_VERSION

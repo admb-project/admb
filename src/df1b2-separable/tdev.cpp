@@ -8,7 +8,6 @@
  * \file
  * Description not yet available.
  */
-#define HOME_VERSION
 #include <df1b2fun.h>
 
 /**

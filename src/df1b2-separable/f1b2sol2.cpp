@@ -4,7 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#define HOME_VERSION
 #include <df1b2fun.h>
 
 #ifdef __TURBOC__
@@ -202,7 +201,4 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
 
   return x;
 }
-
 #undef TINY
-#undef HOME_VERSION
-

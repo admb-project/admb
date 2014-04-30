@@ -188,7 +188,6 @@ double_index_guts::~double_index_guts()
  */
 dvector_index::dvector_index(const dvector& v) : dvector(v)
 {
-  //xxjj();
 }
 
 /**

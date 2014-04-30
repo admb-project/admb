@@ -538,18 +538,13 @@ index_guts::~index_guts()
    #endif
  }
 
-void xxjj(void);
-
 /**
  * Description not yet available.
  * \param
  */
 vector_index::vector_index(const ivector& v) : ivector(v)
 {
-  //xxjj();
 }
-
-void xxjj(void){;}
 
 /**
  * Description not yet available.

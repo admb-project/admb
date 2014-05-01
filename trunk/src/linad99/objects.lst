@@ -388,7 +388,6 @@ OBJ3=\
  setin.obj\
  shape.obj\
  size.obj\
- fmmq.obj\
  maxmin.obj\
  fvar_arr.obj\
  def_eval.obj\
@@ -491,4 +490,5 @@ UNUSED=\
  ad_atlas.obj\
  getopt.obj\
  manip.obj\
+ fmmq.obj\
  conjprod.obj

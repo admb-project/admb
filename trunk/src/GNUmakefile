@@ -331,6 +331,7 @@ includes: dirs
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\include md ${DIST}\include
 	copy linad99\fvar.hpp ${DIST}\include
+	copy linad99\ad_exit.h ${DIST}\include
 	copy linad99\dvector.h ${DIST}\include
 	copy linad99\ivector.h ${DIST}\include
 	copy linad99\vector_shapex.h ${DIST}\include
@@ -353,6 +354,7 @@ ifeq ($(SHELL),cmd)
 else
 	mkdir -p ${DIST}/include
 	cp linad99/fvar.hpp ${DIST}/include
+	cp linad99/ad_exit.h ${DIST}/include
 	cp linad99/dvector.h ${DIST}/include
 	cp linad99/ivector.h ${DIST}/include
 	cp linad99/vector_shapex.h ${DIST}/include

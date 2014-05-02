@@ -23,9 +23,7 @@ void function_minimizer::hess_routine(void)
   }
   else
   {
-#if !defined(USE_ADPVM)
-    hess_routine_noparallel();
-#else
+#if defined(USE_ADPVM)
     if (!ad_comm::pvm_manager)
     {
       hess_routine_noparallel();
@@ -46,6 +44,8 @@ void function_minimizer::hess_routine(void)
       }
       cout << "finished hess routine" << endl;
     }
+#else
+    hess_routine_noparallel();
 #endif
   }
 }

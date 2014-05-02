@@ -207,9 +207,9 @@ extern admb_javapointers * adjm_ptr;
             // set this flag so that variables only needed for their std devs
             // will be calculated
             initial_params::sd_phase=1;
+#if defined(USE_ADPVM)
             if (ad_comm::pvm_manager)
             {
-  #if defined(USE_ADPVM)
               if (ad_comm::pvm_manager->mode==1)  //master
               {
                 depvars_routine();
@@ -219,14 +219,9 @@ extern admb_javapointers * adjm_ptr;
                   sd_routine();
                 }
               }
-  #else
-              {
-                cerr << "PVM not included with this distribution" << endl;
-                ad_exit(1);
-              }
-  #endif
             }
             else
+#endif
             {
               depvars_routine();
               hess_inv();
@@ -246,28 +241,27 @@ extern admb_javapointers * adjm_ptr;
             {
               if (likeprof_params::num_likeprof_params)
               {
-                if (!ad_comm::pvm_manager)
+    #if defined(USE_ADPVM)
+                if (ad_comm::pvm_manager)
                 {
-                  likeprof_routine(ffbest);
+                  switch (ad_comm::pvm_manager->mode)
+                  {
+                  case 1: // master
+                    likeprof_routine(ffbest);
+                    break;
+                  case 2: // slave
+                    pvm_slave_likeprof_routine();
+                    break;
+                  default:
+                    cerr << "error illega value for pvm_manager->mode" << endl;
+                    exit(1);
+                  }
                 }
                 else
-    #if defined(USE_ADPVM)
-                switch (ad_comm::pvm_manager->mode)
-                {
-                case 1: // master
-                  likeprof_routine(ffbest);
-                break;
-                case 2: // slave
-                  pvm_slave_likeprof_routine();
-                  break;
-                default:
-                  cerr << "error illega value for pvm_manager->mode" << endl;
-                  exit(1);
-                }
-    #else
-                cerr << "PVM not included with this distribution" << endl;
-                ad_exit(1);
     #endif
+                {
+                  likeprof_routine(ffbest);
+                }
               }
             }
             int nopt=0;
@@ -284,13 +278,9 @@ extern admb_javapointers * adjm_ptr;
               else
                 mcmc2_flag=0;
 
-              if (!ad_comm::pvm_manager)
+ #if defined(USE_ADPVM)
+              if (ad_comm::pvm_manager)
               {
-                mcmc_computations();
-              }
-              else
-              {
-    #if defined(USE_ADPVM)
                 switch (ad_comm::pvm_manager->mode)
                 {
                 case 1: // master
@@ -303,10 +293,11 @@ extern admb_javapointers * adjm_ptr;
                   cerr << "error illega value for pvm_manager->mode" << endl;
                   exit(1);
                 }
-    #else
-                cerr << "PVM not included with this distribution" << endl;
-                ad_exit(1);
-    #endif
+              }
+              else
+ #endif
+              {
+                mcmc_computations();
               }
             }
             if ( (on=option_match(argc,argv,"-sob",nopt))>-1)

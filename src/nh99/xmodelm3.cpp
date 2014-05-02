@@ -346,7 +346,50 @@ void tracing_message(int traceflag,const char *s);
         {
           trust_region_update(nvar,_crit,x,g,f);
         }
-        if (!ad_comm::pvm_manager)
+#if defined(USE_ADPVM)
+        if (ad_comm::pvm_manager)
+        {
+          if (random_effects_flag)
+          {
+            if (maxfn>0)
+            {
+              switch (ad_comm::pvm_manager->mode)
+              {
+              case 1: // master
+                quasi_newton_block_pvm_master_random_effects(nvar,_crit,x,g,f);
+                break;
+              case 2: // slave
+              // these don't exist yet
+                function_evaluation_block_pvm_slave_random_effects
+                  (nvar,_crit,x,g,f);
+                break;
+              default:
+                cerr << "error illega value for pvm_manager->mode" << endl;
+                exit(1);
+              }
+            }
+          }
+          else
+          {
+            if (maxfn>0)
+            {
+              switch (ad_comm::pvm_manager->mode)
+              {
+              case 1: // master
+                quasi_newton_block_pvm_master(nvar,_crit,x,g,f);
+                break;
+              case 2: // slave
+                function_evaluation_block_pvm_slave();
+                break;
+              default:
+                cerr << "error illega value for pvm_manager->mode" << endl;
+                exit(1);
+              }
+            }
+          }
+        }
+        else
+#endif
         {
           do
           {
@@ -396,54 +439,6 @@ void tracing_message(int traceflag,const char *s);
             }
           }
           while(repeatminflag);
-        }
-        else
-        {
-#if defined(USE_ADPVM)
-      if (random_effects_flag)
-      {
-        if (maxfn>0)
-        {
-          switch (ad_comm::pvm_manager->mode)
-          {
-          case 1: // master
-            quasi_newton_block_pvm_master_random_effects(nvar,_crit,x,g,f);
-            break;
-          case 2: // slave
-          // these don't exist yet
-            function_evaluation_block_pvm_slave_random_effects
-              (nvar,_crit,x,g,f);
-            break;
-          default:
-            cerr << "error illega value for pvm_manager->mode" << endl;
-            exit(1);
-          }
-        }
-      }
-      else
-      {
-        if (maxfn>0)
-        {
-          switch (ad_comm::pvm_manager->mode)
-          {
-          case 1: // master
-            quasi_newton_block_pvm_master(nvar,_crit,x,g,f);
-            break;
-          case 2: // slave
-            function_evaluation_block_pvm_slave();
-            break;
-          default:
-            cerr << "error illega value for pvm_manager->mode" << endl;
-            exit(1);
-          }
-        }
-      }
-#else
-          {
-            cerr << "PVM not included with this distribution" << endl;
-            ad_exit(1);
-          }
-#endif
         }
       } // end block for quasi newton minimization
       else

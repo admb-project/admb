@@ -16,7 +16,10 @@
  adtimer * ad_comm::ptm=0;
  adtimer * ad_comm::ptm1=0;
  int ad_comm::bandwidth=0;
- adpvm_manager * ad_comm::pvm_manager=NULL;
+
+#if defined(USE_ADPVM)
+adpvm_manager* ad_comm::pvm_manager = NULL;
+#endif
 
  int ad_comm::time_flag=0;
  adstring ad_comm::subdir;

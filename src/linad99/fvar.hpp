@@ -9529,7 +9529,9 @@ void reset_gradient_stack(void);
 int make_sub_directory(const char *s);
 #include <adstring.hpp>
 adstring get_string_marker(void);
+#if defined(USE_ADPVM)
 class adpvm_manager;
+#endif
 class adtimer;
 
 /**
@@ -9554,8 +9556,8 @@ class ad_comm
    static adtimer *ptm1;
 #if defined(USE_ADPVM)
    virtual void get_slave_assignments(void);
-#endif
    static adpvm_manager *pvm_manager;
+#endif
    static adstring subdir;
    static streampos change_datafile_name(const adstring & s,
      const streampos & off = 0);

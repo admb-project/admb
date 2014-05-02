@@ -209,7 +209,18 @@ dmatrix trans(const dvector& x)
                 new_value=current_value;
               }
             }
-          if (!ad_comm::pvm_manager)
+#if defined(USE_ADPVM)
+          if (ad_comm::pvm_manager)
+          {
+            if (ad_comm::pvm_manager->mode==1) // master
+            {
+              send_int_to_slaves(3);
+              pvm_master_prof_minimize(ip,sigma,new_value,fprof,underflow_flag,
+                global_min,penalties(ip,j*sign),final_weight); // get the
+            }
+          }
+          else
+#endif
           {
             if (random_effects_flag==0)
             {
@@ -223,22 +234,6 @@ dmatrix trans(const dvector& x)
               global_min,penalties(ip,j*sign),final_weight); // get the
                                                         // conditional max
             }
-          }
-          else
-          {
-#if defined(USE_ADPVM)
-            if (ad_comm::pvm_manager->mode==1) // master
-            {
-              send_int_to_slaves(3);
-              pvm_master_prof_minimize(ip,sigma,new_value,fprof,underflow_flag,
-                global_min,penalties(ip,j*sign),final_weight); // get the
-            }
-#else
-            {
-              cerr << "PVM not included with this distribution" << endl;
-              ad_exit(1);
-            }
-#endif
           }
           all_num_sigs(j*sign)=num_sigs;
           initial_params::xinit(xvector); // save the

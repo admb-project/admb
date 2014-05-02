@@ -58,9 +58,6 @@
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
 
 #include <fvar.hpp>
-#if defined(USE_ADPVM)
-#  include <adpvm2.h>
-#endif
 
 //#include <d4arr.hpp>
 #include <cifstrem.h>
@@ -2210,29 +2207,6 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
  * Description not yet available.
  * \param
  */
-class adpvm_slave_args
-{
-  char ** argv;
-  int num_args;
-  ivector length_args;
-public:
-  int counter;
-  char * operator () (int);
-  operator char ** ();
-  void operator -- (void);
-  adpvm_slave_args(int num_args,int len_args);
-  adpvm_slave_args(int num_args,const ivector& len_args);
-  ~adpvm_slave_args();
-  int get_num_args(void);
-};
-
-void strcpy(const adpvm_slave_args& a,const char * s);
-class adpvm_manager;
-
-/**
- * Description not yet available.
- * \param
- */
   class objective_function_value : public named_dvariable
   {
   public:
@@ -2805,61 +2779,6 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
      matrix_kludge(const param_init_bounded_vector_vector &);
   };
 
-class ad_comm;
-
-/**
- * Description not yet available.
- * \param
- */
-class adpvm_manager
-{
-  adstring_array slave_names;
-  adpvm_slave_args * slave_argv;
-public:
-  struct pvmhostinfo *hostp;
-  int nhost;
-  int mode;  // 1 = master 2 = slave
-  int copy;
-  int slave_number;
-  int narch;
-  imatrix id;
-  int num_slave_processes;
-  ivector num_per_host;
-  int start_slave_processes(const ad_comm& mp);
-  imatrix slave_assignments;
-  adtimer tm;
-  int timing_flag;
-  void master_slave_variable_interface(const ad_comm& mp);
-  void master_slave_variable_interface(void);
-  void get_variable_values_from_master(void);
-  void send_variable_values_to_slaves(void);
-  adpvm_manager(int);
-  ~adpvm_manager();
-      int start_slave_processes_for_random_effects(const ad_comm& mp);
-};
-
-void send_dmatrix_to_slaves(const dmatrix&  x,ivector& jmin,ivector& jmax);
-dvariable receive_f_from_slaves(void);
-void send_x_to_slaves(const dvar_vector& x);
-void send_dvector_to_slaves(const dvector& x);
-void send_dvector_to_master(const dvector& x);
-void send_dmatrix_to_master(const dmatrix& x);
-dvar_vector get_x_from_master(void);
-dvector get_dvector_from_master(void);
-dmatrix get_dmatrix_from_master(void);
-void send_f_to_master(const dvariable& x);
-void send_int_to_master(int i);
-dvar_matrix get_f_from_slaves();
-d3_array get_dmatrix_from_slaves();
-d3_array get_dmatrix_from_slaves(const imatrix& flags);
-dmatrix get_dvector_from_slaves();
-void admaster_slave_variable_interface(const ad_comm& mp);
-void admaster_slave_variable_interface(void);
-int get_int_from_master(void);
-imatrix get_int_from_slaves(void);
-void send_int_to_slaves(int  x);
-void send_int_to_slaves(const ivector& x);
-int check_pvm_message(int i,int j);
 void read_covariance_matrix(const dmatrix& S, int nvar, int& hbf,
   dvector& sscale);
 

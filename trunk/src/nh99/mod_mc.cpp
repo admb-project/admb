@@ -181,11 +181,8 @@ void function_minimizer::monte_carlo_routine(void)
 
       //double fbest;
 
-      if (!ad_comm::pvm_manager)
-      {
-        /*fbest=*/get_monte_carlo_value(nvar,x);
-      }
-      else
+#ifdef USE_ADPVM
+      if (ad_comm::pvm_manager)
       {
         switch (ad_comm::pvm_manager->mode)
         {
@@ -199,6 +196,11 @@ void function_minimizer::monte_carlo_routine(void)
           cerr << "error illegal value for pvm_manager->mode" << endl;
           exit(1);
         }
+      }
+      else
+#endif
+      {
+        /*fbest=*/get_monte_carlo_value(nvar,x);
       }
 
       multivariate_mixture(bmn,nvar,iseed,log_tprob_normal,
@@ -301,11 +303,8 @@ void function_minimizer::monte_carlo_routine(void)
 
 
        // ogs << log_tprob << " " << ll << " " << x << endl;
-        if (!ad_comm::pvm_manager)
-        {
-          get_monte_carlo_value(nvar,x);
-        }
-        else
+#ifdef USE_ADPVM
+        if (ad_comm::pvm_manager)
         {
           switch (ad_comm::pvm_manager->mode)
           {
@@ -319,6 +318,11 @@ void function_minimizer::monte_carlo_routine(void)
             cerr << "error illega value for pvm_manager->mode" << endl;
             exit(1);
           }
+        }
+        else
+#endif
+        {
+          get_monte_carlo_value(nvar,x);
         }
 
         //ooff << setw(12) << -f-log_tprob << "  "

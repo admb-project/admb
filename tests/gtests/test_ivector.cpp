@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <fvar.hpp>
+#include <ivector.h>
 
 class test_ivector: public ::testing::Test {};
 

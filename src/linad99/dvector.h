@@ -41,6 +41,29 @@
 #ifndef __ADMB_DVECTOR_H__
 #define __ADMB_DVECTOR_H__
 
+class dvector;
+
+class predvector
+{
+  dvector *p;
+  int lb;
+  int ub;
+  inline predvector(dvector * _p, int _lb, int _ub)
+  {
+    p = _p;
+    lb = _lb, ub = _ub;
+  }
+  friend class dvector;
+};
+
+class dvar_vector;
+class dvar_vector_position;
+class kkludge_object;
+class dvariable;
+class prevariable;
+class dmatrix;
+class dvar_matrix;
+
 /** Vector of double precision numbers.
 A basic container class for a one dimensional array of double precision
 floating point numbers.

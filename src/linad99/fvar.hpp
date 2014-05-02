@@ -145,16 +145,7 @@ Macro definitions.
   #define  NO_DERIVS
 #endif
 
-// C language function prototypes
-extern "C"
-{
-   typedef int (*fptr) (const char *format, ...);
-   extern fptr ad_printf;
-   typedef void (*exitptr) (int);
-   extern exitptr ad_exit;
-
-   void spdll_exit(int);
-}
+#include "ad_exit.h"
 
 /**
  * Description not yet available.
@@ -618,23 +609,6 @@ public:
 
   ptr_vector& operator=(const ptr_vector& t);
   void initialize();
-};
-
-/**
- * Description not yet available.
- * \param
- */
-class preivector
-{
-   ivector *p;
-   int lb;
-   int ub;
-   inline preivector(ivector * _p, int _lb, int _ub)
-   {
-      p = _p;
-      lb = _lb, ub = _ub;
-   }
-   friend class ivector;
 };
 
 #include <ivector.h>
@@ -1947,23 +1921,6 @@ class ts_vector_shapex
 #endif
 
 #include "vector_shapex.h"
-
-/**
- * Description not yet available.
- * \param
- */
-class predvector
-{
-   dvector *p;
-   int lb;
-   int ub;
-   inline predvector(dvector * _p, int _lb, int _ub)
-   {
-      p = _p;
-      lb = _lb, ub = _ub;
-   }
-   friend class dvector;
-};
 
 /**
  * Description not yet available.
@@ -8576,7 +8533,6 @@ dvar_matrix operator-(const dvar_matrix & m);
 ivector sgn(const dvector &);
 ivector sgn(const dvar_vector &);
 
-int allocated(const ivector & v);
 int allocated(const lvector & v);
 int allocated(const dvector & v);
 int allocated(const dvar_vector & v);

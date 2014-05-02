@@ -21,9 +21,36 @@
 
 #include <stdlib.h>
 
-long int _farptr_tolong(void * px);
-long int farptr_tolong(void *);
+#ifdef DIAG
+long int _farptr_tolong(void* px);
+long int farptr_tolong(void*);
+#endif
 
+/**
+Default constructor
+*/
+ivector::ivector(void)
+{
+  allocate();
+}
+/**
+Copy constructor
+*/
+ivector::ivector(const ivector& t)
+ {
+   index_min=t.index_min;
+   index_max=t.index_max;
+   #ifdef DIAG
+    cout << "Copy constructor called for ivector with address "
+         << _farptr_tolong(t.v) <<"\n";
+   #endif
+   shape=t.shape;
+   if (shape)
+   {
+     (shape->ncopies)++;
+     v = t.v;
+   }
+ }
 /**
 Destructor
 */
@@ -37,12 +64,17 @@ ivector::~ivector()
     }
     else
     {
-      if ( v == NULL)
+      if (v != NULL)
+      {
+        deallocate();
+      }
+#ifdef SAFE_ALL
+      else
       {
          cerr << " Trying to delete NULL pointer in ~ivector\n";
          ad_exit(21);
       }
-      deallocate();
+#endif
     }
   }
 }
@@ -104,25 +136,6 @@ ivector::~ivector()
    shape=NULL;
  }
 
-/**
- * Description not yet available.
- * \param
- */
-ivector::ivector(const ivector& t)
- {
-   index_min=t.index_min;
-   index_max=t.index_max;
-   #ifdef DIAG
-    cout << "Copy constructor called for ivector with address "
-         << _farptr_tolong(t.v) <<"\n";
-   #endif
-   shape=t.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-     v = t.v;
-   }
- }
 
 /**
  * Description not yet available.
@@ -223,15 +236,6 @@ ivector::ivector(const dvector& u)
  ivector::ivector(int ncl,int nch)
  {
    allocate(ncl, nch);
- }
-
-/**
- * Description not yet available.
- * \param
- */
- ivector::ivector(void)
- {
-   allocate();
  }
 
 /**

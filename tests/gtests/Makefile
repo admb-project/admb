@@ -10,6 +10,7 @@ GTESTS=\
  test_ad_comm.cpp\
  test_gradient_structure.cpp\
  test_option_match.cpp\
+ test_ivector.cpp\
  test_lvector.cpp\
  test_df3_two_variable.cpp\
  test_adjson.cpp\

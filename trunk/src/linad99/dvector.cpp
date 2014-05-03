@@ -8,9 +8,15 @@
  * \file
  * Description not yet available.
  */
-#include "fvar.hpp"
-
-long int farptr_tolong(void *);
+#include <iostream>
+using std::cout;
+using std::cerr;
+using std::endl;
+#include "dvector.h"
+#include "ad_exit.h"
+#include "independent_variables.h"
+#include "dvar_vector.h"
+#include "dvar_vector_position.h"
 
 #ifdef DOSX286
   int heapcheck(void){return 0;}
@@ -22,6 +28,8 @@ long int farptr_tolong(void *);
 #ifdef _MSC_VER
 #include <memory.h>
 #endif
+
+#include <cstring>
 
 /** Average of two numbers; constant objects.
 \ingroup misc
@@ -141,9 +149,6 @@ void dvector::deallocate()
   */
 dvector::dvector(const dvector& t)
  {
-   #ifdef DIAG
-    // cout << "starting out in dvector contructor\n";
-   #endif
    shape=t.shape;
    if (shape)
    {

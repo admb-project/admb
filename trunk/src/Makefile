@@ -137,11 +137,11 @@ includes: objdestdir
 	copy linad99\dvector.h $(DESTDIR)\include
 	copy linad99\ivector.h $(DESTDIR)\include
 	copy linad99\vector_shapex.h $(DESTDIR)\include
-	copy linad99\independent_variables.h ${DIST}\include
-	copy linad99\dvar_vector.h ${DIST}\include
-	copy linad99\dvar_vector_position.h ${DIST}\include
-	copy linad99\double_and_int.h ${DIST}\include
-	copy linad99\prevariable.h ${DIST}\include
+	copy linad99\independent_variables.h $(DESTDIR)\include
+	copy linad99\dvar_vector.h $(DESTDIR)\include
+	copy linad99\dvar_vector_position.h $(DESTDIR)\include
+	copy linad99\double_and_int.h $(DESTDIR)\include
+	copy linad99\prevariable.h $(DESTDIR)\include
 	copy linad99\dfpool.h $(DESTDIR)\include
 	copy linad99\factors.h $(DESTDIR)\include
 	copy nh99\admodel.h $(DESTDIR)\include

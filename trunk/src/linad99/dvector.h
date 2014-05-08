@@ -41,42 +41,6 @@
 #ifndef __ADMB_DVECTOR_H__
 #define __ADMB_DVECTOR_H__
 
-#include <iostream>
-using std::istream;
-using std::ostream;
-#include <vector_shapex.h>
-#include <ad_exit.h>
-
-class dvector;
-
-class predvector
-{
-  dvector *p;
-  int lb;
-  int ub;
-  inline predvector(dvector * _p, int _lb, int _ub)
-  {
-    p = _p;
-    lb = _lb, ub = _ub;
-  }
-  friend class dvector;
-};
-
-class dvar_vector;
-class dvar_vector_position;
-class kkludge_object;
-class dvariable;
-class prevariable;
-class dmatrix;
-class dvar_matrix;
-class random_number_generator;
-class ad_integer;
-class index_type;
-class ivector;
-class lvector;
-class uistream;
-class uostream;
-
 /** Vector of double precision numbers.
 A basic container class for a one dimensional array of double precision
 floating point numbers.
@@ -244,7 +208,7 @@ class dvector
    /// Get number of elements in array.
    int size() const
    {
-      return v ? index_max - index_min + 1 : 0;
+      return (index_max - index_min + 1);
    }
 
    dvector & shift(int min);

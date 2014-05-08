@@ -331,15 +331,9 @@ includes: dirs
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\include md ${DIST}\include
 	copy linad99\fvar.hpp ${DIST}\include
-	copy linad99\ad_exit.h ${DIST}\include
 	copy linad99\dvector.h ${DIST}\include
 	copy linad99\ivector.h ${DIST}\include
 	copy linad99\vector_shapex.h ${DIST}\include
-	copy linad99\independent_variables.h ${DIST}\include
-	copy linad99\dvar_vector.h ${DIST}\include
-	copy linad99\dvar_vector_position.h ${DIST}\include
-	copy linad99\double_and_int.h ${DIST}\include
-	copy linad99\prevariable.h ${DIST}\include
 	copy linad99\dfpool.h ${DIST}\include
 	copy linad99\factors.h ${DIST}\include
 	copy tools99\adoption.hpp ${DIST}\include
@@ -359,15 +353,9 @@ ifeq ($(SHELL),cmd)
 else
 	mkdir -p ${DIST}/include
 	cp linad99/fvar.hpp ${DIST}/include
-	cp linad99/ad_exit.h ${DIST}/include
 	cp linad99/dvector.h ${DIST}/include
 	cp linad99/ivector.h ${DIST}/include
 	cp linad99/vector_shapex.h ${DIST}/include
-	cp linad99/independent_variables.h ${DIST}/include
-	cp linad99/dvar_vector.h ${DIST}/include
-	cp linad99/dvar_vector_position.h ${DIST}/include
-	cp linad99/double_and_int.h ${DIST}/include
-	cp linad99/prevariable.h ${DIST}/include
 	cp linad99/dfpool.h ${DIST}/include
 	cp linad99/factors.h ${DIST}/include
 	cp tools99/adoption.hpp ${DIST}/include

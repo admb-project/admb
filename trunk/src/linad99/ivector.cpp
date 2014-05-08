@@ -8,14 +8,7 @@
  * \file
  * Description not yet available.
  */
-#include <iostream>
-using std::cout;
-using std::cerr;
-using std::endl;
-#include "ivector.h"
-#include "vector_shapex.h"
-#include "ad_exit.h"
-#include "dvector.h"
+#include "fvar.hpp"
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -26,8 +19,9 @@ using std::endl;
   #include <iostream.hpp>
 #endif
 
-#ifdef DIAG
 #include <stdlib.h>
+
+#ifdef DIAG
 long int _farptr_tolong(void* px);
 long int farptr_tolong(void*);
 #endif

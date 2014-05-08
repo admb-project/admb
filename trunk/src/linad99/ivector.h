@@ -40,33 +40,6 @@
 
 #ifndef __ADMB_IVECTOR_H__
 #define __ADMB_IVECTOR_H__
-#include <iostream>
-using std::istream;
-using std::ostream;
-
-class ivector;
-
-class preivector
-{
-  ivector *p;
-  int lb;
-  int ub;
-  inline preivector(ivector * _p, int _lb, int _ub)
-  {
-    p = _p;
-    lb = _lb, ub = _ub;
-  }
-  friend class ivector;
-};
-
-class uistream;
-class uostream;
-class vector_shapex;
-class lvector;
-class dvector;
-class random_number_generator;
-class ad_integer;
-class index_type;
 
 /**
 */
@@ -228,8 +201,6 @@ inline const int& ivector::operator()(int i) const
   return *(v + i);
 }
 #endif
-
-int allocated(const ivector & v);
 
 ivector operator+(const ivector& v, const ivector& w);
 ivector operator-(const ivector& v, const ivector& w);

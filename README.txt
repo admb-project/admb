@@ -65,7 +65,8 @@ Contributors
 ------------
 This software was originally developed by David Fournier of Otter Research Ltd.
 
-Several other folks have contributed to the ADMB Project:
+Thanks to the following who have contributed to the ADMB Project by
+providing fixes and/or suggestions:
 
 * David Fournier
 * John Sibert
@@ -76,15 +77,13 @@ Several other folks have contributed to the ADMB Project:
 * Ian Taylor
 * Chris Grandin
 * Derek Seiple
-* Johnoel Ancheta
-
-Thanks to the following people for providing fixes and suggestions.
-
 * Jan Jaap Poos
 * Gareth Williams
 * Weihai Liu
 * Barak A. Pearlmutter
 * Jon Schnute
+* Jiashen Tang
+* Johnoel Ancheta
 
 ---
 For help and support, email <users@admb-project.org>.

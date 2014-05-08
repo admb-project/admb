@@ -50,6 +50,11 @@ ADMB-trunk
 
   Note &mdash; This is great for testing linker errors.
 
+* Added contributed method to save gradient values to a file.
+  Contributed by Jiashen Tang and David Fournier.
+
+        REPORT_SECTION
+          save_gradients(gradients);
 
 ####New Supported Compilers
 

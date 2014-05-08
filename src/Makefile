@@ -133,15 +133,9 @@ includes: objdestdir
 	copy df1b2-separable\df32fun.h $(DESTDIR)\include
 	copy df1b2-separable\df1b2loc.h $(DESTDIR)\include
 	copy linad99\fvar.hpp $(DESTDIR)\include
-	copy linad99\ad_exit.h $(DESTDIR)\include
-	copy linad99\dvector.h $(DESTDIR)\include
-	copy linad99\ivector.h $(DESTDIR)\include
-	copy linad99\vector_shapex.h $(DESTDIR)\include
-	copy linad99\independent_variables.h $(DESTDIR)\include
-	copy linad99\dvar_vector.h $(DESTDIR)\include
-	copy linad99\dvar_vector_position.h $(DESTDIR)\include
-	copy linad99\double_and_int.h $(DESTDIR)\include
-	copy linad99\prevariable.h $(DESTDIR)\include
+	copy linad99\dvector.h ${DIST}\include
+	copy linad99\ivector.h ${DIST}\include
+	copy linad99\vector_shapex.h ${DIST}\include
 	copy linad99\dfpool.h $(DESTDIR)\include
 	copy linad99\factors.h $(DESTDIR)\include
 	copy nh99\admodel.h $(DESTDIR)\include

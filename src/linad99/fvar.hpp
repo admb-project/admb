@@ -145,7 +145,16 @@ Macro definitions.
   #define  NO_DERIVS
 #endif
 
-#include "ad_exit.h"
+// C language function prototypes
+extern "C"
+{
+   typedef int (*fptr) (const char *format, ...);
+   extern fptr ad_printf;
+   typedef void (*exitptr) (int);
+   extern exitptr ad_exit;
+
+   void spdll_exit(int);
+}
 
 /**
  * Description not yet available.
@@ -161,7 +170,24 @@ public:
   ~smart_counter();
 };
 
-#include <double_and_int.h>
+/**
+  Holds the data for the prevariable class.
+  \ingroup BAD
+ */
+class double_and_int
+{
+ public:
+   ///< value of the variable
+   double x;
+    /** Return the value of the variable.
+    \return double reference containing the value of the variable.
+    */
+   inline double &xvalue(void)
+   {
+      return x;
+   }
+};
+
 
 // "forward" class definitions
 class banded_symmetric_dvar_matrix;
@@ -592,6 +618,23 @@ public:
 
   ptr_vector& operator=(const ptr_vector& t);
   void initialize();
+};
+
+/**
+ * Description not yet available.
+ * \param
+ */
+class preivector
+{
+   ivector *p;
+   int lb;
+   int ub;
+   inline preivector(ivector * _p, int _lb, int _ub)
+   {
+      p = _p;
+      lb = _lb, ub = _ub;
+   }
+   friend class ivector;
 };
 
 #include <ivector.h>
@@ -1392,8 +1435,216 @@ class indvar_offset_list
 
 void gradfree(dlink *);
 
-#include <prevariable.h>
+class prevariable_position;
 
+/**
+  Base class for dvariable.
+  Principle role is to avoid calling a descructor when a pevariable or dvariable
+  object is passed on the stack.
+  (There is no destructor, ~prevariable().)
+  \ingroup BAD
+ */
+class prevariable
+{
+ protected:
+#ifndef __SUN__
+   prevariable(void)
+   {
+   }
+#endif
+#ifndef __NDPX__
+   prevariable(double_and_int * u)
+   {
+      v = u;
+   }
+#endif
+
+ public:
+   double_and_int * v; ///< pointer to the data
+   friend class dvar_vector_iterator;
+   friend class dvar_vector;
+   friend class dvar_matrix;
+   friend class dvar3_array;
+   //shclass sc;
+   friend class indvar_offset_list;
+   friend class gradient_structure;
+   friend double_and_int *gradnew();
+   friend void make_indvar_list(int, dvariable *);
+
+   friend class banded_symmetric_dvar_matrix;
+   friend class banded_lower_triangular_dvar_matrix;
+   friend double &value(const prevariable & v1);
+
+   friend double *address(const prevariable & v1);
+
+   //void gradfree(dlink * v)
+
+   friend prevariable & operator*(const prevariable& v1, const prevariable& v2);
+
+   friend prevariable & operator*(double v1, const prevariable & v2);
+
+   friend prevariable & operator*(const prevariable & v1, double v2);
+
+   friend prevariable & operator/(const prevariable& t1, const prevariable& t2);
+
+   friend prevariable & operator/(double t1, const prevariable & t2);
+
+   friend prevariable & operator/(const prevariable & t1, double t2);
+
+   friend prevariable & sin(const prevariable & t1);
+
+   friend prevariable & fabs(const prevariable & t1);
+   friend prevariable & sigmoid(const prevariable & t1);
+
+   //"smoothed absolute value function
+   friend prevariable & sfabs(const prevariable & t1);
+
+   friend prevariable & sqrt(const prevariable & t1);
+   friend prevariable & sqr(const prevariable & t1);
+
+   friend prevariable & exp(const prevariable & t1);
+
+   friend prevariable & atan(const prevariable & t1);
+
+   friend prevariable & tan(const prevariable & t1);
+   friend prevariable & tanh(const prevariable & t1);
+
+   friend prevariable & atan2(const prevariable & t1,
+     const prevariable & t2);
+   friend prevariable & atan2(const prevariable & t1, double t2);
+   friend prevariable & atan2(double t1, const prevariable & t2);
+
+   friend prevariable & acos(const prevariable & t1);
+
+   friend prevariable & asin(const prevariable & t1);
+
+   friend prevariable & cos(const prevariable & t1);
+   friend prevariable & sinh(const prevariable & t1);
+   friend prevariable & cosh(const prevariable & t1);
+
+   friend prevariable & log(const prevariable & t1);
+   friend prevariable & log10(const prevariable & t1);
+
+   friend prevariable & ldexp(const prevariable &, const int &);
+
+
+ public:
+   void save_prevariable_position(void) const;
+   prevariable_position restore_prevariable_position(void);
+   void save_prevariable_value(void) const;
+   double restore_prevariable_value(void);
+   double restore_prevariable_derivative(void);
+
+
+   inline double *xadr()
+   {
+      return (&(v->x));
+   }
+   inline double &xval()
+   {
+      return ((v->x));
+   }
+
+   inline double_and_int *&get_v()
+   {
+      return v;
+   }
+   inline double_and_int *get_v() const
+   {
+      return v;
+   }
+
+   prevariable & operator=(const prevariable &);
+   prevariable & operator=(double);
+#if (__BORLANDC__  >= 0x0540)
+   prevariable & operator=(const prevariable &) const;
+   prevariable & operator=(double) const;
+#endif
+
+   int operator==(const prevariable & v1) const;
+   int operator<=(const prevariable & v1) const;
+   int operator>=(const prevariable & v1) const;
+   int operator>(const prevariable & v1) const;
+   int operator<(const prevariable & v1) const;
+   int operator!=(const prevariable & v1) const;
+
+   int operator==(double v1) const;
+   int operator<=(double v1) const;
+   int operator>=(double v1) const;
+   int operator>(double v1) const;
+   int operator<(double v1) const;
+   int operator!=(double v1) const;
+#if defined(USE_DDOUBLE)
+   int operator==(int v1) const;
+   int operator<=(int v1) const;
+   int operator>=(int v1) const;
+   int operator>(int v1) const;
+   int operator<(int v1) const;
+   int operator!=(int v1) const;
+#endif
+
+ public:
+#ifdef __SUN__
+   prevariable(void)
+   {
+   }
+#endif
+#ifdef __NDPX__
+   prevariable(double_and_int * u)
+   {
+      v = u;
+   }
+#endif
+
+   void initialize(void);
+
+   friend char *fform(const char *, const prevariable &);
+
+   void operator+=(const prevariable & t1);
+   void operator +=(double t1);
+
+   void operator-=(const prevariable & t1);
+   void operator -=(double t1);
+
+   void operator/=(const prevariable & v1);
+   void operator /=(double v1);
+
+   void operator*=(const prevariable & v1);
+   void operator *=(double v1);
+
+   friend prevariable& operator+(const prevariable& v1, const prevariable& v2);
+
+   friend prevariable & operator+(double v1, const prevariable & v2);
+
+   friend prevariable & operator+(const prevariable & v1, double v2);
+
+   friend prevariable & operator-(const prevariable & v1);
+
+   friend prevariable & operator-(const prevariable& v1, const prevariable& v2);
+
+   friend prevariable & operator-(double v1, const prevariable & v2);
+
+   friend prevariable & operator-(const prevariable & v1, double v2);
+
+   friend prevariable & pow(const prevariable & t1, const prevariable & t2);
+
+   friend prevariable & pow(const prevariable & t1, double t2);
+
+   friend prevariable & pow(double t1, const prevariable & t2);
+};
+
+inline double &value(const prevariable & v1)
+{
+   return v1.v->x;
+}
+
+inline double *address(const prevariable & v1)
+{
+   return (&(v1.v->x));
+}
+
+
+prevariable & operator<<(const prevariable & v1, const prevariable & v2);
 dvar_vector & operator<<(const dvar_vector & v1, const dvar_vector & v2);
 dvar_matrix & operator<<(const dvar_matrix & v1, const dvar_matrix & v2);
 
@@ -1696,8 +1947,67 @@ class ts_vector_shapex
 #endif
 
 #include "vector_shapex.h"
+
+/**
+ * Description not yet available.
+ * \param
+ */
+class predvector
+{
+   dvector *p;
+   int lb;
+   int ub;
+   inline predvector(dvector * _p, int _lb, int _ub)
+   {
+      p = _p;
+      lb = _lb, ub = _ub;
+   }
+   friend class dvector;
+};
+
+/**
+ * Description not yet available.
+ * \param
+ */
+class predvar_vector
+{
+   dvar_vector *p;
+   int lb;
+   int ub;
+   inline predvar_vector(dvar_vector * _p, int _lb, int _ub)
+   {
+      p = _p;
+      lb = _lb, ub = _ub;
+   }
+   friend class dvar_vector;
+};
+
 #include "dvector.h"
-#include "independent_variables.h"
+
+/**
+ * Description not yet available.
+ * \param
+ */
+class independent_variables:public dvector
+{
+ public:
+   independent_variables(const independent_variables & v):dvector(v)
+   {
+   }
+
+   independent_variables(int ncl, int ncu):dvector(ncl, ncu)
+   {
+   }
+   // makes an array [ncl..ncu]
+
+   independent_variables(unsigned int sz, double *x):dvector(sz, x)
+   {
+   }
+
+   independent_variables & operator=(const dvector & t);
+};
+
+
 
 dvariable dfatan1(dvariable, double, double, const prevariable & fpen);
 
@@ -1875,7 +2185,297 @@ class param_init_vector_vector;
 class param_init_bounded_vector_vector;
 #endif
 
-#include <dvar_vector.h>
+/**
+ * Description not yet available.
+ * \param
+ */
+class dvar_vector
+{
+ public:
+   double_and_int * va;
+   int index_min;
+   int index_max;
+   arr_link *link_ptr;
+   vector_shapex *shape;
+ public:
+   dvar_vector operator -();
+
+   dvar_vector & operator --(void)
+   {
+      index_min--;
+      index_max--;
+      va++;
+      return *this;
+   }
+   dvar_vector & operator ++(void)
+   {
+      index_min++;
+      index_max++;
+      va--;
+      return *this;
+   }
+   dvar_vector sub(int lb, int ub)
+   {
+      return predvar_vector(this, lb, ub);
+   }
+   dvar_vector operator () (int lb, int ub)
+   {
+      return predvar_vector(this, lb, ub);
+   }
+   void shallow_copy(const dvar_vector &);
+   int operator!(void) const
+   {
+      return (shape == NULL);
+   }
+   friend class dvar_matrix;
+   friend class dvar3_array;
+   friend class banded_symmetric_dvar_matrix;
+   friend class banded_lower_triangular_dvar_matrix;
+   friend class banded_symmetric_dmatrix;
+   friend class banded_lower_triangular_dmatrix;
+
+   void fill_randpoisson(double lambda, const random_number_generator & rng);
+   void fill_randnegbinomial(double lambda, double tau,
+     const random_number_generator & rng);
+   prevariable elem(int i)
+   {
+      return (va + i);
+   }
+
+   double &elem_value(int i)
+   {
+      return (va[i].x);
+   }
+
+   double_and_int *get_va()
+   {
+      return va;
+   }
+
+   prevariable elem(int i) const
+   {
+      return (va + i);
+   }
+
+   double &elem_value(int i) const
+   {
+      return (va[i].x);
+   }
+
+   double_and_int *get_va() const
+   {
+      return va;
+   }
+
+   friend dvar_matrix operator*(const dvar_matrix & m1, const dmatrix & m2);
+
+   void deallocate();
+   dvar_vector(const dvar_vector &);
+   dvar_vector(const predvar_vector &);
+   dvar_vector();
+   dvar_vector(int ncl, int ncu); // makes an array [ncl..ncu]
+   dvar_vector(int ncl, int ncu, kkludge_object);
+
+   //dvar_vector(const ad_integer&,const ad_integer&);
+   dvar_vector(unsigned int sz, double *x);
+   dvar_vector(const independent_variables &);
+   friend char *fform(const char *, const dvar_vector &);
+#   if defined(__NUMBERVECTOR__)
+   dvar_vector(const param_init_number_vector &);
+   dvar_vector(const param_init_bounded_number_vector &);
+#   endif
+   dvar_vector(const dvector &);
+   dvar_vector(const char *);
+   ~dvar_vector();
+   void allocate(int, int);
+   void allocate(void);
+   void allocate(const dvector &);
+   void allocatec(const dvar_vector &);
+   void allocate(const dvar_vector &);
+
+   void allocate(const ad_integer &, const ad_integer &);
+   void initialize(const dvector & ww);
+   void initialize(void);
+   void save_dvar_vector_position(void) const;
+   void save_dvar_vector_value(void) const;
+   void write_on(const ostream &) const;
+   void write_on(const uostream &) const;
+   void read_from(const istream &);
+   void read_from(const uistream &);
+   // returns the minimum allowable index
+   int indexmin() const
+   {
+      return index_min;
+   }
+   // returns the maximum allowable index
+   int indexmax() const
+   {
+      return index_max;
+   }
+   // returns the number of elements
+   int size() const
+   {
+      return (index_max - index_min + 1);
+   }
+   dvar_vector & shift(int min);
+
+#ifdef OPT_LIB
+#if defined(__NDPX__) || defined(__SUN__)
+   inline prevariable operator() (register int i)
+   {
+      return (va + i);
+   }
+   inline prevariable operator[] (register int i)
+   {
+      return (va + i);
+   }
+   inline const prevariable operator() (int i) const
+   {
+      return (va + i);
+   }
+   inline const prevariable operator[] (int i) const
+   {
+      return (va + i);
+   }
+#else
+   inline prevariable operator() (int i)
+   {
+      return (va + i);
+   }
+   inline prevariable operator[] (int i)
+   {
+      return (va + i);
+   }
+   inline const prevariable operator() (int i) const
+   {
+      return (va + i);
+   }
+   inline const prevariable operator[] (int i) const
+   {
+      return (va + i);
+   }
+#endif
+#else
+   prevariable operator[] (int i);
+   prevariable operator() (int i);
+   const prevariable operator[] (int i) const;
+   const prevariable operator() (int i) const;
+#endif
+
+   double *initpointer(void)
+   {
+      return ((double *) (va + indexmin()));
+   }
+   const double *initpointer(void) const
+   {
+      return ((double *) (va + indexmin()));
+   }
+   dvar_vector operator() (const lvector &);
+   //dvar_vector operator()(int,int);
+   dvar_vector operator () (const ivector & u);
+   dvar_vector & operator+=(const prevariable & d);
+   dvar_vector & operator+=(double d);
+   dvar_vector & operator/=(const prevariable & d);
+   //dvar_vector& operator*=(const dvariable& d);
+   dvar_vector & operator*=(const prevariable & d);
+   dvar_vector & operator*=(double d);
+   dvar_vector & operator/=(double d);
+   dvar_vector & operator-=(const prevariable & d);
+   dvar_vector & operator-=(double d);
+   dvar_vector & operator+=(const dvector & v1);
+   dvar_vector & operator-=(const dvector & v1);
+   dvar_vector & operator+=(const dvar_vector & v1);
+   dvar_vector & operator-=(const dvar_vector & v1);
+   dvar_vector & operator=(const dvar_vector & t);
+   dvar_vector & operator=(const dvector & t);
+   dvar_vector & operator =(double t);
+   dvar_vector & operator=(const prevariable & t);
+   void fill(const char *);
+   void fill_randu(long int &n);
+   void fill_randn(long int &n);
+   void fill_randbi(long int &n, double);
+
+   void fill_randu_ni(long int &n);
+   void fill_randn_ni(long int &n);
+   void fill_randbi_ni(long int &n, double);
+
+   void fill_seqadd(double, double);
+   void fill_multinomial(const int &seed, const dvector & p);
+   void fill_multinomial(const random_number_generator& rng, const dvector& p);
+   friend dvar_vector operator+(const dvar_vector &, const dvar_vector &);
+   friend dvar_vector operator+(const dvar_vector &, const dvector &);
+   friend dvar_vector operator+(const dvector &, const dvar_vector &);
+   friend dvar_vector operator-(const dvar_vector &, const dvar_vector &);
+
+   friend dvar_vector operator-(const dvector &, const dvar_vector &);
+
+   friend dvar_vector operator-(const dvar_vector &, const dvector &);
+
+   friend dvar_vector sigmoid(const dvar_vector & t1);
+
+   friend dvariable operator*(const dvar_vector &, const dvar_vector &);
+
+   friend dvar_vector elem_div(const dvar_vector &, const dvar_vector &);
+
+   friend dvariable operator*(const dvector &, const dvar_vector &);
+
+   friend dvariable operator*(const dvar_vector &, const dvector &);
+
+   friend dvar_vector operator*(const prevariable &, const dvar_vector &);
+
+   friend dvar_vector operator*(const prevariable &, const dvector &);
+
+   friend dvar_vector operator*(double, const dvar_vector &);
+
+   friend dvar_vector operator*(const dvar_vector &, const dmatrix &);
+
+   friend dvar_vector operator*(const dmatrix &, const dvar_vector &);
+
+   friend dvar_vector operator*(const dvar_vector &, const dvar_matrix &);
+
+   friend dvar_vector operator*(const dvar_matrix &, const dvar_vector &);
+
+   friend dvar_matrix operator*(const dvar_matrix &, const dvar_matrix &);
+
+   friend dvar_matrix operator*(const dmatrix &, const dvar_matrix &);
+
+   friend dvar_vector elem_prod(const dvar_vector &, const dvar_vector &);
+
+   friend dvar_vector first_difference(const dvar_vector &);
+   friend dvar_vector second_difference(const dvar_vector &);
+
+   // js, see above
+   //friend dvar_vector elem_div(const dvar_vector&, const dvar_vector&);
+
+   friend dvar_vector elem_prod(const dvector &, const dvar_vector &);
+
+   friend dvar_vector elem_div(const dvector &, const dvar_vector &);
+
+   friend dvar_vector elem_prod(const dvar_vector &, const dvector &);
+
+   friend dvar_vector elem_div(const dvar_vector &, const dvector &);
+
+   friend dvariable norm(const dvar_vector &);
+   friend dvariable norm2(const dvar_vector &);
+   friend dvariable sumsq(const dvar_vector &);
+
+   friend void copy_status(const ostream & s, const dvar_vector & v);
+
+   friend dvar_vector exp(const dvar_vector &);
+
+   friend dvar_vector log(const dvar_vector &);
+
+   friend dvar_vector sin(const dvar_vector &);
+
+   friend dvar_vector fabs(const dvar_vector &);
+
+   friend dvector value(const dvar_vector & v1);
+
+   friend dvar_vector sfabs(const dvar_vector &);
+
+   friend void make_indvar_list(const dvar_vector &);
+   friend class array_size;
+};
 
  /*
     class funnel_dvar_vector : public dvar_vector
@@ -4297,8 +4897,30 @@ dmatrix orthpoly(int n, int deg, int skip);
 dvar_vector gammln(const dvar_vector & n);
 dvector gammln(const dvector & n);
 
-
-#include <dvar_vector_position.h>
+/**
+ * Description not yet available.
+ * \param
+ */
+class dvar_vector_position
+{
+ public:
+   int min;
+   int max;
+   double_and_int *va;
+   int indexmin() const
+   {
+      return min;
+   }
+   int indexmax() const
+   {
+      return max;
+   }
+   dvar_vector_position(const dvar_vector & v);
+   dvar_vector_position(const dvar_vector_position & dvp);
+   dvar_vector_position(void);
+   double &operator() (const int &i);
+   friend class dvar_matrix_position;
+};
 
 /**
  * Description not yet available.
@@ -7954,6 +8576,7 @@ dvar_matrix operator-(const dvar_matrix & m);
 ivector sgn(const dvector &);
 ivector sgn(const dvar_vector &);
 
+int allocated(const ivector & v);
 int allocated(const lvector & v);
 int allocated(const dvector & v);
 int allocated(const dvar_vector & v);

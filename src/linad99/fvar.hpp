@@ -5226,9 +5226,6 @@ void *cdecl _farptr_fromlong(unsigned long int);
 void ludcmp_index(const dmatrix & a, const ivector & indx, const double &d);
 
 void ludcmp(const dmatrix & a, const ivector & indx, const double &d);
-// this should allways appear at the end of the file
-#if (__BCPLUSPLUS__ >= 2)
-#endif
 
 /**
  * Description not yet available.

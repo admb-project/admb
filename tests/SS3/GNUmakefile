@@ -15,7 +15,6 @@ run:
 	@printf "Finished run.\n"
 
 clean:
-ifndef WINDIR
 	@rm -vf ss3.b01
 	@rm -vf ss3.bar
 	@rm -vf ss3.cor
@@ -84,4 +83,14 @@ ifndef WINDIR
 	@rm -vf f1b2list1 gradfil1.tmp nf1b2list12
 	@rm -vf f1b2list12 gradfil2.tmp nf1b2list13
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
-endif
+	@rm -vf SS3.b02
+	@rm -vf SS3.b03
+	@rm -vf SS3.b04
+	@rm -vf SS3.obj
+	@rm -vf SS3.p02
+	@rm -vf SS3.p03
+	@rm -vf SS3.p04
+	@rm -vf SS3.par
+	@rm -vf SS3.r02
+	@rm -vf SS3.r03
+	@rm -vf SS3.r04

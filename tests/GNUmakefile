@@ -32,6 +32,8 @@ all-gtests:
 	$(MAKE) --directory=gtests
 
 all-tpls:\
+  tpl-agemat\
+  tpl-cov_re\
   tpl-hysimple\
   tpl-expm\
   tpl-SS3
@@ -44,6 +46,12 @@ tpl-expm:
 
 tpl-SS3:
 	$(MAKE) --directory=SS3
+
+tpl-cov_re:
+	$(MAKE) --directory=cov_re
+
+tpl-agemat:
+	$(MAKE) --directory=agemat
 
 gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill
@@ -58,18 +66,11 @@ test-adstring:
 test-geolocation:
 	$(MAKE) --directory=geolocation
 
-test-expm:
-	$(MAKE) --directory=expm
-
-test-cov_re:
-	$(MAKE) --directory=cov_re
-
 priors:
 	CXXFLAGS=$(CXXFLAGS) OPTIONS=-s $(MAKE) --directory=$@
 
 testminmax:
 	OPTIONS=-s $(MAKE) --directory=$@
-
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -82,7 +83,6 @@ df33_tester:
 
 beta_regression:
 	OPTIONS=-s $(MAKE) --directory=$@
-
 
 simple_mcmc:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -140,9 +140,6 @@ beta2:
 
 beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
-
-test-agemat:
-	OPTIONS=-s $(MAKE) --directory=agemat
 
 verify:
 ifeq ($(SHELL),cmd)

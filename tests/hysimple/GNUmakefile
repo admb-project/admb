@@ -16,6 +16,8 @@ run:
 	@printf "Finished run.\n"
 
 clean:
+	@rm -f hybrid_seed
+	@rm -f hysimple.obj
 	@rm -f admodel.cov
 	@rm -f admodel.hes
 	@rm -f fmin.log

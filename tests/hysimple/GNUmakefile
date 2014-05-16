@@ -1,11 +1,13 @@
-.PHONY: clean run
-
 TARGET=hysimple
+
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=-I/usr/local/gtest-1.5.0/include LDFLAGS="-static -L/usr/local/gtest-1.5.0/lib -lgtest -lpthread" admb -s $(TARGET)
+	../../admb$(EXT) $(TARGET)
 
 run:
 	@printf "Started run:\n"

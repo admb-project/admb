@@ -22,14 +22,28 @@ endif
 
 DIST=../build/dist
 
-GTEST_DIR=googletest-read-only
-
-all: all-gtests 
-
-all2: test-cov_re test-expm
+ifeq ($(CXX),CC)
+all: all-tpls
+else
+all: all-gtests all-tpls
+endif
 
 all-gtests:
 	$(MAKE) --directory=gtests
+
+all-tpls:\
+  tpl-hysimple\
+  tpl-expm\
+  tpl-SS3
+
+tpl-hysimple:
+	$(MAKE) --directory=hysimple
+
+tpl-expm:
+	$(MAKE) --directory=expm
+
+tpl-SS3:
+	$(MAKE) --directory=SS3
 
 gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill
@@ -56,8 +70,6 @@ priors:
 testminmax:
 	OPTIONS=-s $(MAKE) --directory=$@
 
-SS3:
-	$(MAKE) --directory=$@
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -71,8 +83,6 @@ df33_tester:
 beta_regression:
 	OPTIONS=-s $(MAKE) --directory=$@
 
-hysimple:
-	OPTIONS=-s $(MAKE) --directory=$@
 
 simple_mcmc:
 	OPTIONS=-s $(MAKE) --directory=$@

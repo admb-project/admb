@@ -24,19 +24,15 @@ DIST=../build/dist
 
 GTEST_DIR=googletest-read-only
 
-all: test-cov_re test-expm
+all: all-gtests 
 
-run-gtests: $(GTEST_DIR)/gtest-all.o
+all2: test-cov_re test-expm
+
+all-gtests:
 	$(MAKE) --directory=gtests
 
 gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill
-
-$(GTEST_DIR)/gtest-all.o: googletest-read-only
-	$(CXX) -c -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
-
-googletest-read-only:
-	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
 
 svn:
 

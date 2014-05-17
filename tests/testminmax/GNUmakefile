@@ -1,15 +1,17 @@
-.PHONY: run
-
 TARGET=testminmax
+
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s $(TARGET)
+	../../admb$(EXT) $(TARGET)
 
 run:
 	@printf "Started run:\n"
-	touch t.dat
+	touch testminmax.dat
 	./$(TARGET) -nohess
 	@printf "Finished run.\n"
 
@@ -18,6 +20,7 @@ clean:
 	@rm -vf $(TARGET)
 	@rm -vf admodel.*
 	@rm -vf variance
+	@rm -vf testminmax.dat
 	@rm -vf fmin.log
 	@rm -vf $(TARGET).dat
 	@rm -vf $(TARGET).par
@@ -33,6 +36,7 @@ clean:
 	@rm -vf $(TARGET).psv
 	@rm -vf $(TARGET).r01
 	@rm -vf $(TARGET).o
+	@rm -vf $(TARGET).obj
 	@rm -vf $(TARGET).p01
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).rep

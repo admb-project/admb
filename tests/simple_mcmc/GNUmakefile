@@ -1,11 +1,13 @@
-.PHONY: clean run
-
 TARGET=simple_mcmc
+
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH};  admb -s $(TARGET)
+	../../admb$(EXT) $(TARGET)
 
 run:
 	@printf "Started run:\n"
@@ -30,6 +32,7 @@ clean:
 	@rm -f $(TARGET).cpp
 	@rm -f $(TARGET).htp
 	@rm -f $(TARGET).o
+	@rm -f $(TARGET).obj
 	@rm -f $(TARGET).psv
 	@rm -f variance
 	@rm -f posteriors.rep

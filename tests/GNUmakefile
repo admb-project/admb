@@ -34,24 +34,40 @@ all-gtests:
 all-tpls:\
   tpl-agemat\
   tpl-cov_re\
-  tpl-hysimple\
+  tpl-ctl\
   tpl-expm\
+  tpl-simple_mcmc\
+  tpl-hysimple\
+  tpl-priors\
+  tpl-testminmax\
   tpl-SS3
 
-tpl-hysimple:
-	$(MAKE) --directory=hysimple
-
-tpl-expm:
-	$(MAKE) --directory=expm
-
-tpl-SS3:
-	$(MAKE) --directory=SS3
+tpl-agemat:
+	$(MAKE) --directory=agemat
 
 tpl-cov_re:
 	$(MAKE) --directory=cov_re
 
-tpl-agemat:
-	$(MAKE) --directory=agemat
+tpl-ctl:
+	$(MAKE) --directory=ctl
+
+tpl-expm:
+	$(MAKE) --directory=expm
+
+tpl-simple_mcmc:
+	$(MAKE) --directory=simple_mcmc
+
+tpl-hysimple:
+	$(MAKE) --directory=hysimple
+
+tpl-priors:
+	$(MAKE) --directory=priors
+
+tpl-testminmax:
+	$(MAKE) --directory=testminmax
+
+tpl-SS3:
+	$(MAKE) --directory=SS3
 
 gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill
@@ -65,12 +81,6 @@ test-adstring:
 
 test-geolocation:
 	$(MAKE) --directory=geolocation
-
-priors:
-	CXXFLAGS=$(CXXFLAGS) OPTIONS=-s $(MAKE) --directory=$@
-
-testminmax:
-	OPTIONS=-s $(MAKE) --directory=$@
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -178,6 +188,8 @@ else
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean
 	$(MAKE) --directory=agemat clean
+	$(MAKE) --directory=ctl clean
+	$(MAKE) --directory=priors clean
 endif
 
 copy:

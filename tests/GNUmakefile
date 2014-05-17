@@ -33,6 +33,8 @@ all-gtests:
 
 all-tpls:\
   tpl-agemat\
+  tpl-beta2\
+  tpl-beta_regression\
   tpl-cov_re\
   tpl-ctl\
   tpl-expm\
@@ -44,6 +46,12 @@ all-tpls:\
 
 tpl-agemat:
 	$(MAKE) --directory=agemat
+
+tpl-beta2:
+	$(MAKE) --directory=beta2
+
+tpl-beta_regression:
+	$(MAKE) --directory=beta_regression
 
 tpl-cov_re:
 	$(MAKE) --directory=cov_re
@@ -91,8 +99,6 @@ init_bounded_number_matrix:
 df33_tester:
 	OPTIONS=-s $(MAKE) --directory=$@
 
-beta_regression:
-	OPTIONS=-s $(MAKE) --directory=$@
 
 simple_mcmc:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -145,8 +151,6 @@ betai:
 beta_deviate:
 	OPTIONS=-s $(MAKE) --directory=$@
 
-beta2:
-	OPTIONS=-s $(MAKE) --directory=$@
 
 beta3:
 	OPTIONS=-s $(MAKE) --directory=$@

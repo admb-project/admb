@@ -1,11 +1,13 @@
-.PHONY: run
-
 TARGET=beta_regression
+
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
 
 all: clean $(TARGET) run3 run2 run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -r -s $(TARGET)
+	../../admb$(EXT) -r $(TARGET)
 
 run:
 	@printf "Started run:\n"

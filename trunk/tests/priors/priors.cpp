@@ -37,7 +37,7 @@
     #include <df1b2fun.h>
     #include <adrndeff.h>
     // define constant variable
-    const double EPS = 1.e-30;          //tiny number to avoid 0 in log
+    extern const double EPS;
   
 
 

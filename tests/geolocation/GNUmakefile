@@ -2,7 +2,10 @@ ifndef ADMB_HOME
 ADMB_HOME=../../../build/dist
 endif
 
-all: kfsst kftrack trackit ukfsst
+all:
+	$(MAKE) svn
+	$(MAKE) kfsst kftrack trackit ukfsst
+	$(MAKE) run
 
 kfsst:
 ifeq ($(SHELL),sh.exe)
@@ -32,15 +35,26 @@ else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-ukfsst
 endif
 
-svn: clean
+svn:
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile svn
 else
-	svn export http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source svn-kfsst
-	svn export http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src svn-kftrack
-	svn export http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src svn-trackit
-	svn export http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src svn-ukfsst
+	svn checkout http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source svn-kfsst
+	svn checkout http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src svn-kftrack
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kftrack/kftrack.dat > svn-kftrack/kftrack.dat
+	svn checkout http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src svn-trackit
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/ukf.dat > svn-trackit/ukf.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/sstsim.dat > svn-trackit/sstsim.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/model.cfg > svn-trackit/model.cfg
+	svn checkout http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src svn-ukfsst
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/ukfsst.dat > svn-ukfsst/ukfsst.dat
+	svn export http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/sst_files svn-ukfsst/sst_files
 endif
+
+run:
+	pushd svn-kftrack; ./kftrack; popd
+	pushd svn-trackit; ./ukf; popd
+	pushd svn-ukfsst; ./ukfsst; popd
 
 clean:
 ifeq ($(SHELL),sh.exe)

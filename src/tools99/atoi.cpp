@@ -12,7 +12,7 @@ using std::istringstream;
 int atoi(adstring& s)
 {
   istringstream is((char*)s);
-  int i;
+  int i = 0;
   is >> i;
   return i;
 }

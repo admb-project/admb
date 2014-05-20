@@ -1441,6 +1441,7 @@ DATA_SECTION
     matrix env_data_RD(styr-1,endyr+100,1,N_envvar)  //  leave enough room for N_Fore_Yrs which is not yet known
     init_matrix env_temp(1,N_envdata,1,3)
  LOCAL_CALCS
+     env_data_RD.initialize();
      if(N_envdata>0)
      {
       if(N_envdata>0)echoinput<<" env data "<<endl<<env_temp<<endl;

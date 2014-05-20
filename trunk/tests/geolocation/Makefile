@@ -18,6 +18,12 @@ svn:
 	if not exist svn-kftrack svn export http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src svn-kftrack
 	if not exist svn-kfsst svn export http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source svn-kfsst
 
+run:
+	pushd svn-kfsst & kfsst
+	pushd svn-kftrack & kftrack
+	pushd svn-trackit & ukf
+	pushd svn-ukfsst & ukfsst
+
 clean:
 	if exist svn-kfsst rd /S /Q svn-kfsst
 	if exist svn-kftrack rd /S /Q svn-kftrack

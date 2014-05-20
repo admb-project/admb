@@ -40,6 +40,8 @@ ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile svn
 else
 	svn checkout http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source svn-kfsst
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/kfsst.dat > svn-kfsst/kfsst.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/sst.dat > svn-kfsst/sst.dat
 	svn checkout http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src svn-kftrack
 	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kftrack/kftrack.dat > svn-kftrack/kftrack.dat
 	svn checkout http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src svn-trackit
@@ -48,13 +50,19 @@ else
 	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/model.cfg > svn-trackit/model.cfg
 	svn checkout http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src svn-ukfsst
 	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/ukfsst.dat > svn-ukfsst/ukfsst.dat
+	rm -rvf svn-ukfsst/sst_files
 	svn export http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/sst_files svn-ukfsst/sst_files
 endif
 
 run:
+ifeq ($(SHELL),sh.exe)
+	$(MAKE) --file=Makefile run
+else
+	pushd svn-kfsst; ./kfsst; popd
 	pushd svn-kftrack; ./kftrack; popd
 	pushd svn-trackit; ./ukf; popd
 	pushd svn-ukfsst; ./ukfsst; popd
+endif
 
 clean:
 ifeq ($(SHELL),sh.exe)

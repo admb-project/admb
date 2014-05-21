@@ -192,6 +192,7 @@ do
   fi
 
   fileobj=${file%.*}.obj
+  rm -f $fileobj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
   echo -e \\n\*\*\* Compile: $file\\n$CMD
   eval $CMD
@@ -210,6 +211,7 @@ do
     exit 1
   fi
   fileobj=${file%.*}.obj
+  rm -f $fileobj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
   echo -e \\n\*\*\* Compile: $file\\n$CMD
   eval $CMD

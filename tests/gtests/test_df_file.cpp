@@ -56,6 +56,7 @@ TEST_F(test_df_file, constructor_max)
     DF_FILE df_file(ULLONG_MAX)
   );
 }
+/*
 TEST_F(test_df_file, allocate_max)
 {
 #if defined(__GNUC__) && defined(__i686__)
@@ -77,6 +78,7 @@ TEST_F(test_df_file, allocate_max)
     FAIL();
   }
 }
+*/
 TEST_F(test_df_file, write_read_int)
 {
   size_t sizeofint = sizeof(int);

@@ -31,8 +31,7 @@ TEST_F(test_df_file, strtok)
 }
 TEST_F(test_df_file, allocate_INT_MAX)
 {
-  int size = INT_MAX;
-  ASSERT_EQ(INT_MAX, size);
+  int size = INT_MAX/2;
   char* a = 0;
   ASSERT_NO_THROW(a = new char[size]);
   delete [] a;
@@ -42,11 +41,11 @@ TEST_F(test_df_file, constructor_size)
 {
   ad_exit=&test_ad_exit;
   ad_comm::argc = 0;
-  ASSERT_NO_THROW(DF_FILE df_file(INT_MAX));
+  ASSERT_NO_THROW(DF_FILE df_file(INT_MAX/2));
 }
 TEST_F(test_df_file, union_sizeof)
 {
-  DF_FILE df_file(INT_MAX);
+  DF_FILE df_file(INT_MAX/2);
   ASSERT_EQ(sizeof(df_file.fourb), sizeof(df_file.offset));
   ad_comm::argc = 0;
 }
@@ -59,8 +58,8 @@ TEST_F(test_df_file, constructor_max)
 }
 TEST_F(test_df_file, allocate_max)
 {
-#ifdef __i686__
-  size_t size = INT_MAX;
+#if defined(__GNUC__) && defined(__i686__)
+  size_t size = INT_MAX/2;
 #else
   ASSERT_LT(INT_MAX, LONG_MAX);
   ASSERT_LT(LONG_MAX, ULONG_MAX);

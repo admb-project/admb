@@ -6,16 +6,18 @@ endif
 
 all: clean $(TARGET) run
 
-$(TARGET): $(TARGET).tpl $(TARGET).dat
+$(TARGET): $(TARGET).tpl
 	../../admb$(EXT) $(TARGET)
 
 run:
 	@printf "Started run:\n"
+	touch $(TARGET).dat
 	./$(TARGET)
 	@printf "Finished run.\n"
 
 clean:
 	@rm -vf $(TARGET)
+	@rm -vf $(TARGET).dat
 	@rm -vf admodel.*
 	@rm -vf variance
 	@rm -vf fmin.log

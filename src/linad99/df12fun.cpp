@@ -728,13 +728,6 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
-  df1_two_variable operator - (const df1_two_variable& x,
-    const df1_two_variable& y);
-  df1_two_variable operator / (const df1_two_variable& x,
-    const df1_two_variable& y);
-  df1_two_variable operator * (const df1_two_variable& x,
-    const df1_two_variable& y);
-
 /**
  * Description not yet available.
  * \param

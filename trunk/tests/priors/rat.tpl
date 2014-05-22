@@ -1,4 +1,5 @@
 GLOBALS_SECTION
+  #include <fvar.hpp>
   // append to mcmc output file
   long mcmc_iter = 0; 
   adstring mcFileName="testmc.dat"; //put your mcmc saving file name

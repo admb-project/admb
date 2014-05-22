@@ -1,11 +1,7 @@
 GLOBALS_SECTION
-  #include "priors.cpp"
   // append to mcmc output file
   long mcmc_iter = 0; 
   adstring mcFileName="testmc.dat"; //put your mcmc saving file name
-
-
-
 
 TOP_OF_MAIN_SECTION
   arrmblsize = 90000000L;

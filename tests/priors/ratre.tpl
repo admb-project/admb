@@ -1,5 +1,4 @@
 GLOBALS_SECTION
-  #include "priors.cpp"
   // append to mcmc output file
   long mcmc_iter = 0; 
   adstring mcFileName="admb1.mc.dat"; //put your mcmc saving file name

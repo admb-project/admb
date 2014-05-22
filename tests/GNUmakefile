@@ -33,6 +33,7 @@ all-gtests:
 
 all-tpls:\
   tpl-agemat\
+  tpl-betai\
   tpl-beta2\
   tpl-beta_regression\
   tpl-cov_re\
@@ -46,6 +47,9 @@ all-tpls:\
 
 tpl-agemat:
 	$(MAKE) --directory=agemat
+
+tpl-betai:
+	$(MAKE) --directory=betai
 
 tpl-beta2:
 	$(MAKE) --directory=beta2
@@ -143,9 +147,6 @@ RC05_quad:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 RC01_svd:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-betai:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 beta_deviate:

@@ -1,27 +1,14 @@
-.PHONY: run
-
 TARGET=betai
 
-all: clean $(TARGET) run tests_$(TARGET) run_tests
-
-tests_$(TARGET): tests_$(TARGET).o
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; LDFLAGS=" `gtest-config --ldflags --libs` " adlink -g ${OPTIONS} tests_$(TARGET)
-
-tests_$(TARGET).o: $(TARGET).cpp $(TARGET).htp
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; adcomp -g ${OPTIONS} tests_$(TARGET)
+all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s -g $(TARGET)
+	../../admb -g $(TARGET)
 
 run:
 	@printf "Started run:\n"
 	./$(TARGET)
 	@printf "Finished run.\n"
-
-run_tests:
-	@printf "Started run tests:\n"
-	./tests_$(TARGET)
-	@printf "Finished run tests.\n"
 
 clean:
 	@rm -vf $(TARGET)
@@ -36,6 +23,7 @@ clean:
 	@rm -vf $(TARGET).cpp
 	@rm -vf $(TARGET).log
 	@rm -vf $(TARGET).o
+	@rm -vf $(TARGET).obj
 	@rm -vf $(TARGET).par
 	@rm -vf $(TARGET).std
 	@rm -vf tests_$(TARGET).o

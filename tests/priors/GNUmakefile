@@ -54,3 +54,7 @@ clean:
 	@rm -f ratre.r02
 	@rm -f ratre.rep
 	@rm -f variance
+	@rm -f cmpdiff.tmp
+	@rm -f gradfil1.tmp
+	@rm -f gradfil2.tmp
+	@rm -f varssave.tmp

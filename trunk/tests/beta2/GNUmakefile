@@ -29,6 +29,7 @@ clean:
 	@rm -vf $(TARGET).cpp
 	@rm -vf $(TARGET).log
 	@rm -vf $(TARGET).o
+	@rm -vf $(TARGET).obj
 	@rm -vf $(TARGET).par
 	@rm -vf $(TARGET).std
 	@rm -vf eigv.rpt

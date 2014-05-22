@@ -54,4 +54,4 @@ clean:
 	@rm -vf f1b2list1 gradfil1.tmp nf1b2list12
 	@rm -vf f1b2list12 gradfil2.tmp nf1b2list13
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
-
+	@rm -vf hybrid_seed

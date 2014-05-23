@@ -1,15 +1,6 @@
 TARGET=colfill
-GTEST_DIR=../googletest-read-only
 
-all: clean $(TARGET) run gtest
-
-gtest: gtest-all.o gtest.cpp
-	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb gtest.cpp gtest-all.o
-	./gtest
-
-gtest-all.o: $(GTEST_DIR)/src/gtest-all.cc
-	$(CXX) -c -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $<
-
+all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
 	../../admb $(TARGET)
@@ -42,6 +33,7 @@ clean:
 	@rm -vf $(TARGET).psv
 	@rm -vf $(TARGET).r01
 	@rm -vf $(TARGET).o
+	@rm -vf $(TARGET).obj
 	@rm -vf $(TARGET).p01
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).rep

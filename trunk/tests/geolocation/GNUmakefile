@@ -67,6 +67,4 @@ endif
 clean:
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile clean
-else
-	rm -rvf svn-kfsst svn-kftrack svn-trackit svn-ukfsst
 endif

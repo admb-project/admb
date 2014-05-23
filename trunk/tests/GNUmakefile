@@ -39,6 +39,7 @@ all-tpls:\
   tpl-beta_deviate\
   tpl-betareg\
   tpl-beta_regression\
+  tpl-colfill\
   tpl-cov_re\
   tpl-ctl\
   tpl-expm\
@@ -70,6 +71,9 @@ tpl-betareg:
 
 tpl-beta_regression:
 	$(MAKE) --directory=beta_regression
+
+tpl-colfill:
+	$(MAKE) --directory=colfill
 
 tpl-cov_re:
 	$(MAKE) --directory=cov_re
@@ -106,15 +110,9 @@ ifneq ($(CXX),openCC)
 	$(MAKE) --directory=SS3
 endif
 
-gtest-colfill: googletest-read-only
-	$(MAKE) --directory=colfill
-
 svn:
 
 main:
-
-test-adstring:
-	$(MAKE) --directory=adstring
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -200,6 +198,7 @@ else
 	$(MAKE) --directory=agemat clean
 	$(MAKE) --directory=ctl clean
 	$(MAKE) --directory=priors clean
+	$(MAKE) --directory=colfill clean
 endif
 
 copy:

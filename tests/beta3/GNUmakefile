@@ -1,11 +1,9 @@
-.PHONY: run
-
 TARGET=beta3
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s -r $(TARGET)
+	../../admb -r $(TARGET)
 
 run:
 	@printf "Started run:\n"
@@ -27,6 +25,7 @@ clean:
 	@rm -vf $(TARGET).cpp
 	@rm -vf $(TARGET).log
 	@rm -vf $(TARGET).o
+	@rm -vf $(TARGET).obj
 	@rm -vf $(TARGET).par
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).luu

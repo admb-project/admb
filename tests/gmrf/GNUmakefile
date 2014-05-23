@@ -1,11 +1,13 @@
-.PHONY: run
-
 TARGET=gmrf
+
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
 
 all: clean $(TARGET) run run2
 
 $(TARGET): $(TARGET).tpl
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -r -s $(TARGET)
+	../../admb$(EXT) -r $(TARGET)
 
 run:
 	@printf "Started run:\n"
@@ -40,6 +42,7 @@ clean:
 	@rm -vf $(TARGET).psv
 	@rm -vf $(TARGET).r01
 	@rm -vf $(TARGET).o
+	@rm -vf $(TARGET).obj
 	@rm -vf $(TARGET).p01
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).rep

@@ -42,6 +42,7 @@ all-tpls:\
   tpl-cov_re\
   tpl-ctl\
   tpl-expm\
+  tpl-geolocation\
   tpl-gmrf\
   tpl-simple_mcmc\
   tpl-hysimple\
@@ -82,6 +83,9 @@ tpl-expm:
 tpl-simple_mcmc:
 	$(MAKE) --directory=simple_mcmc
 
+tpl-geolocation:
+	$(MAKE) --directory=geolocation
+
 tpl-gmrf:
 	$(MAKE) --directory=gmrf
 
@@ -107,13 +111,10 @@ gtest-colfill: googletest-read-only
 
 svn:
 
-main: test-geolocation test-cov_re
+main:
 
 test-adstring:
 	$(MAKE) --directory=adstring
-
-test-geolocation:
-	$(MAKE) --directory=geolocation
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@

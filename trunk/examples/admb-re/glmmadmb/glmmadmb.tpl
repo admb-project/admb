@@ -7,6 +7,8 @@ DATA_SECTION
   init_matrix y(1,n,1,p_y)			// Observation matrix
   init_int p					// Number of fixed effects
   init_matrix X(1,n,1,p)			// Design matrix for fixed effects
+  vector predy(1,n)
+  vector mytau(1,n)
   init_int M					// Number of RE blocks (crossed terms)
   init_ivector q(1,M)				// Number of levels of the grouping variable per RE block; Can be skipped
   init_ivector m(1,M)				// Number of random effects parameters within each block
@@ -117,11 +119,15 @@ PARAMETER_SECTION
  END_CALCS
   
   init_bounded_number pz(.000001,0.999,zi_phase)
+ !! pz.set_scalefactor(1000.);
   init_vector beta(1,p,1)     	// Fixed effects
   sdreport_vector real_beta(1,p)     
   init_bounded_vector tmpL(1,ncolZ,-10,10.5,rand_phase)		// Log standard deviations of random effects
+ !! tmpL.set_scalefactor(1000.);
   init_bounded_vector tmpL1(1,numb_cor_params,-10,10.5,cor_phase)	// Offdiagonal elements of cholesky-factor of correlation matrix
   init_bounded_number log_alpha(log_alpha_lowerbound,6.,alpha_phase)	
+ !!log_alpha.set_scalefactor(1000.);
+
   sdreport_number alpha
   sdreport_vector S(1,nS)
   random_effects_vector u(1,sum_mq,rand_phase)    // Pool of random effects 
@@ -151,10 +157,11 @@ PROCEDURE_SECTION
     for (i=1;i<=sum_mq;i++)
       n01_prior(u(i));			// u's are N(0,1) distributed
 
-  if (rlinkflag && !last_phase()) 
+  if (rlinkflag && current_phase()<3) 
   {
     betapen(beta);
   }
+  tmpLpen(tmpL);
 
   for(i=1;i<=n;i++)
     log_lik(i,tmpL,tmpL1,u(I(i)),beta,log_alpha,pz);
@@ -211,6 +218,15 @@ SEPARABLE_FUNCTION void kludgepen(const prevariable&  v)
 
 SEPARABLE_FUNCTION void betapen(const dvar_vector&  v)
   g+=0.5*norm2(v);
+
+SEPARABLE_FUNCTION void tmpLpen(const dvar_vector&  tmpL)
+  int mmin=tmpL.indexmin();
+  int mmax=tmpL.indexmax();
+  for (int i=mmin;i<=mmax;i++)
+  {
+    if (value(tmpL(i))<-8.0)
+      g+=square(tmpL(i)+8.0);
+  }
 
 SEPARABLE_FUNCTION void n01_prior(const prevariable&  u)
  g -= -0.5*log(2.0*M_PI) - 0.5*square(u);
@@ -329,12 +345,12 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
        } else {
           lambda = 1.0/(1.0+exp(-eta));
        }
-       if (initial_params::current_phase < initial_params::max_number_phases-1)
+       if (initial_params::current_phase < initial_params::max_number_phases-2)
        {
          lambda=0.999*lambda+0.0005;
        }
        else if 
-         (initial_params::current_phase == initial_params::max_number_phases-1)
+         (initial_params::current_phase == initial_params::max_number_phases-2)
        {
          lambda=0.999999*lambda+0.0000005;
        }
@@ -392,6 +408,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
   }
 
   dvariable  tau = nbinom1_flag ? alpha : 1.0 + e1 + lambda/alpha ;
+  mytau(_i)=value(tau);
   dvariable tmpl; 				// Log likelihood
 
   int cph=current_phase();
@@ -425,6 +442,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
       }
       break;
     case 2:   // neg binomial
+      predy(_i)=value(lambda);
       if (cph<2)  // would like to use alpha_phase rather than 2 but it's in local_calcs
       	   tmpl = -square(log(1.0+y(_i,1))-log(1.0+lambda));
       if (cph<4)  
@@ -485,8 +503,24 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
       g -= log(e2+(1.0-pz)*mfexp(tmpl));
    } else g -= tmpl;
 
+
 REPORT_SECTION
   report << beta*phi << endl;
+  switch(like_type_flag)
+  {
+  case 2:
+    report << " obs index   obs value   pred value  (obs-pred)^2/(pred_var) " << endl;
+    for (int i=1;i<=n;i++)
+    {
+      report << setw(6) << i << "     " << y(i,1) << "         " << predy(i)
+             << "        " << square(y(i,1)-predy(i))/(predy(i)*mytau(i))<< endl;
+    }
+    break;
+  default:
+    break;
+  }
+
+
 
 TOP_OF_MAIN_SECTION
   arrmblsize=40000000;

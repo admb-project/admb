@@ -42,6 +42,7 @@ all-tpls:\
   tpl-cov_re\
   tpl-ctl\
   tpl-expm\
+  tpl-gmrf\
   tpl-simple_mcmc\
   tpl-hysimple\
   tpl-priors\
@@ -81,11 +82,17 @@ tpl-expm:
 tpl-simple_mcmc:
 	$(MAKE) --directory=simple_mcmc
 
+tpl-gmrf:
+	$(MAKE) --directory=gmrf
+
 tpl-hysimple:
 	$(MAKE) --directory=hysimple
 
 tpl-priors:
 	$(MAKE) --directory=priors
+
+tpl-simple_mcmc:
+	$(MAKE) --directory=simple_mcmc
 
 tpl-testminmax:
 	$(MAKE) --directory=testminmax
@@ -115,13 +122,6 @@ init_bounded_number_matrix:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 df33_tester:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-
-simple_mcmc:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-gmrf:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 RC04_solve:

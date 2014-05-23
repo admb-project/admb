@@ -35,7 +35,7 @@ else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-ukfsst
 endif
 
-svn:
+svn: clean
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile svn
 else

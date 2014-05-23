@@ -136,8 +136,6 @@ else
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=hysimple clean
-	$(MAKE) --directory=admb_messages clean
-	$(MAKE) --directory=init_bounded_number_matrix clean
 	$(MAKE) --directory=betareg clean
 	$(MAKE) --directory=gmrf clean
 	$(MAKE) --directory=simple_mcmc clean

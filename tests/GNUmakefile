@@ -79,7 +79,9 @@ tpl-testminmax:
 	$(MAKE) --directory=testminmax
 
 tpl-SS3:
+ifneq ($(CXX),openCC)
 	$(MAKE) --directory=SS3
+endif
 
 gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill

@@ -114,51 +114,6 @@ svn:
 
 main:
 
-admb_messages:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-init_bounded_number_matrix:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-df33_tester:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC04_solve:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC04_det:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC04_inv:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC10_spline1:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC10_spline2:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC13_dsort:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC15_eigen:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC26_dflndet:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC27_dfsolve1:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC27_dfsolve2:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC05_quad:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-RC01_svd:
-	OPTIONS=-s $(MAKE) --directory=$@
-
 verify:
 ifeq ($(SHELL),cmd)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all

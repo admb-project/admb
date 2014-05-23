@@ -49,6 +49,15 @@ gtest-all.obj: googletest-read-only
 googletest-read-only:
 	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
 
+admb_messages:
+	OPTIONS=-s $(MAKE) --directory=$@
+
+init_bounded_number_matrix:
+	OPTIONS=-s $(MAKE) --directory=$@
+
+df33_tester:
+	OPTIONS=-s $(MAKE) --directory=$@
+
 clean:
 	@rm -vf gtest-all *.obj
 	@rm -vf eigv.rpt

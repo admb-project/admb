@@ -41,6 +41,7 @@ clean:
 	@rm -vf $(TARGET).psv
 	@rm -vf $(TARGET).r01
 	@rm -vf $(TARGET).o
+	@rm -vf $(TARGET).obj
 	@rm -vf $(TARGET).p01
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).rep

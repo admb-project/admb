@@ -35,6 +35,9 @@ all-tpls:\
   tpl-agemat\
   tpl-betai\
   tpl-beta2\
+  tpl-beta3\
+  tpl-beta_deviate\
+  tpl-betareg\
   tpl-beta_regression\
   tpl-cov_re\
   tpl-ctl\
@@ -53,6 +56,15 @@ tpl-betai:
 
 tpl-beta2:
 	$(MAKE) --directory=beta2
+
+tpl-beta3:
+	$(MAKE) --directory=beta3
+
+tpl-beta_deviate:
+	$(MAKE) --directory=beta_deviate
+
+tpl-betareg:
+	$(MAKE) --directory=betareg
 
 tpl-beta_regression:
 	$(MAKE) --directory=beta_regression
@@ -109,9 +121,6 @@ df33_tester:
 simple_mcmc:
 	OPTIONS=-s $(MAKE) --directory=$@
 
-betareg:
-	OPTIONS=-s $(MAKE) --directory=$@
-
 gmrf:
 	OPTIONS=-s $(MAKE) --directory=$@
 
@@ -149,13 +158,6 @@ RC05_quad:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 RC01_svd:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-beta_deviate:
-	OPTIONS=-s $(MAKE) --directory=$@
-
-
-beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 verify:

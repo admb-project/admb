@@ -122,7 +122,7 @@ bvprobit:
 
 glmmadmb:
 	@#Do not catch for admb-9.x
-	-cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	-cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
 
 caest:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@

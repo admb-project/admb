@@ -3,7 +3,6 @@ GTEST_DIR=googletest-read-only
 GTESTS=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
- test_atan2.cpp\
  test_adstring.cpp\
  test_adstring_array.cpp\
  test_dlist.cpp\
@@ -19,6 +18,9 @@ GTESTS=\
  test_df_file.cpp\
  main.cpp
 
+##Need to debug this
+## test_atan2.cpp
+
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\
 # test_scalefactor.obj\
@@ -26,25 +28,53 @@ GTESTS=\
 
 
 all: clean gtest-all
+ifeq ($(OS),Windows_NT)
+	gtest-all
+else
 	./gtest-all
+endif
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
+ifeq ($(OS),Windows_NT)
+	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c -r -g test_df1b2atan2.cpp
+else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -c -r -g test_df1b2atan2.cpp
+endif
 
 df1b2atan2.obj: df1b2atan2.cpp
+ifeq ($(OS),Windows_NT)
+	..\\..\\admb -c -r -g $^
+else
 	../../admb -c -r -g $^
+endif
 
 test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
+ifeq ($(OS),Windows_NT)
+	CXXFLAGS=-I$(GTEST_DIR)/include ..\\..\\admb -c -r -g test_scalefactor.cpp
+else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -c -r -g test_scalefactor.cpp
+endif
 
 scalefactor.obj: scalefactor.tpl
+ifeq ($(OS),Windows_NT)
+	CXXFLAGS="-Dmain=scalefactor" ..\\..\\admb -c -r -g $^
+else
 	CXXFLAGS="-Dmain=scalefactor" ../../admb -c -r -g $^
+endif
 
 gtest-all: gtest-all.obj $(GTESTS)
+ifeq ($(OS),Windows_NT)
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -g -r $^
+else
 	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb -g -r $^
+endif
 
 gtest-all.obj: googletest-read-only
+ifeq ($(OS),Windows_NT)
+	$(CXX) -c $(CXXFLAGS) -g -I$(GTEST_DIR)\\include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)\\src\\gtest-all.cc
+else
 	$(CXX) -c $(CXXFLAGS) -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
+endif
 
 googletest-read-only:
 	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
@@ -59,6 +89,40 @@ df33_tester:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 clean:
+ifeq ($(OS),Windows_NT)
+	@del gtest-all.exe
+	@del gtest-all *.obj
+	@del eigv.rpt
+	@del fmin.log
+	@del simple.log
+	@del variance
+	@del cmpdiff.tmp
+	@del f1b2list1
+	@del f1b2list12
+	@del f1b2list13
+	@del gradfil1.tmp
+	@del gradfil2.tmp
+	@del nf1b2list1
+	@del nf1b2list12
+	@del nf1b2list13
+	@del scalefactor.cpp
+	@del scalefactor.htp
+	@del scalefactor.log
+	@del varssave.tmp
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del hesscheck
+	@del hessian.bin
+	@del scalefactor.bar
+	@del scalefactor.bgs
+	@del scalefactor.cor
+	@del scalefactor.eva
+	@del scalefactor.luu
+	@del scalefactor.par
+	@del scalefactor.rhes
+	@del scalefactor.std
+else
 	@rm -vf gtest-all *.obj
 	@rm -vf eigv.rpt
 	@rm -vf fmin.log
@@ -90,3 +154,4 @@ clean:
 	@rm -vf scalefactor.par
 	@rm -vf scalefactor.rhes
 	@rm -vf scalefactor.std
+endif

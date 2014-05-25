@@ -110,10 +110,6 @@ ifneq ($(CXX),openCC)
 	$(MAKE) --directory=SS3
 endif
 
-svn:
-
-main:
-
 verify:
 ifeq ($(SHELL),cmd)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all

@@ -99,9 +99,6 @@ tpl-hysimple:
 tpl-priors:
 	$(MAKE) --directory=priors
 
-tpl-simple_mcmc:
-	$(MAKE) --directory=simple_mcmc
-
 tpl-testminmax:
 	$(MAKE) --directory=testminmax
 

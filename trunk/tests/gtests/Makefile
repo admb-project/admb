@@ -1,3 +1,8 @@
+ifeq ($(OS),Windows_NT2)
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL = cmd
+  endif
+endif
 GTEST_DIR=googletest-read-only
 
 GTESTS=\
@@ -89,7 +94,7 @@ df33_tester:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 clean:
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	@del gtest-all.exe
 	@del gtest-all *.obj
 	@del eigv.rpt

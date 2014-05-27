@@ -1,4 +1,4 @@
-ifeq ($(OS),Windows_NT2)
+ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL = cmd
   endif

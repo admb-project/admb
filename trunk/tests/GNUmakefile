@@ -39,6 +39,7 @@ all-tpls:\
   tpl-beta_deviate\
   tpl-betareg\
   tpl-beta_regression\
+  tpl-changepoint\
   tpl-colfill\
   tpl-cov_re\
   tpl-ctl\
@@ -71,6 +72,9 @@ tpl-betareg:
 
 tpl-beta_regression:
 	$(MAKE) --directory=beta_regression
+
+tpl-changepoint:
+	$(MAKE) --directory=changepoint
 
 tpl-colfill:
 	$(MAKE) --directory=colfill
@@ -145,6 +149,7 @@ else
 	$(MAKE) --directory=ctl clean
 	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=colfill clean
+	$(MAKE) --directory=changepoint clean
 endif
 
 copy:

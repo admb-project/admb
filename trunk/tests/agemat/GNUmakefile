@@ -1,12 +1,12 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    EXT=.sh
+    SHELL=cmd
   endif
 endif
 
 all:
 	$(MAKE) agemat.tpl
-	../../admb$(EXT) agemat.tpl
+	../../admb agemat.tpl
 	$(MAKE) run
 
 run: agemat.dat

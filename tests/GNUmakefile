@@ -132,6 +132,7 @@ ifeq ($(SHELL),cmd)
 else
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
+	$(MAKE) --directory=changepoint clean
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=betareg clean
 	$(MAKE) --directory=gmrf clean
@@ -149,7 +150,6 @@ else
 	$(MAKE) --directory=ctl clean
 	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=colfill clean
-	$(MAKE) --directory=changepoint clean
 endif
 
 copy:

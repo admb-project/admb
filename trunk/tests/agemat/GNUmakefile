@@ -6,7 +6,11 @@ endif
 
 all:
 	$(MAKE) agemat.tpl
+ifeq ($(SHELL),cmd)
+	..\\..\\admb agemat.tpl
+else
 	../../admb agemat.tpl
+endif
 	$(MAKE) run
 
 run: agemat.dat

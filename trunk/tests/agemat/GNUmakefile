@@ -1,5 +1,7 @@
 ifeq ($(OS),Windows_NT)
-EXT=.sh
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    EXT=.sh
+  endif
 endif
 
 all:

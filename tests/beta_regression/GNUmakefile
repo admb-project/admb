@@ -1,29 +1,61 @@
-TARGET=beta_regression
-
 ifeq ($(OS),Windows_NT)
-EXT=.sh
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  endif
 endif
+
+TARGET=beta_regression
 
 all: clean $(TARGET) run3 run2 run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	../../admb$(EXT) -r $(TARGET)
+ifeq ($(SHELL),cmd)
+	..\\..\\admb -r $(TARGET)
+else
+	../../admb -r $(TARGET)
+endif
 
 run:
-	@printf "Started run:\n"
+ifeq ($(SHELL),cmd)
+	$(TARGET) -mno 1000  -mceval -ainp $(TARGET).par -phase 10 -nohess 
+else
 	./$(TARGET) -mno 1000  -mceval -ainp $(TARGET).par -phase 10 -nohess 
-	@printf "Finished run.\n"
+endif
+
 run2:
-	@printf "Started run2:\n"
+ifeq ($(SHELL),cmd)
+	$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
+else
 	./$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
-	@printf "Finished run2.\n"
+endif
 
 run3:
-	@printf "Started run3:\n"
+ifeq ($(SHELL),cmd)
+	$(TARGET) -mno 1000
+else
 	./$(TARGET) -mno 1000
-	@printf "Finished run3.\n"
+endif
 
 clean:
+ifeq ($(SHELL),cmd)
+	@del $(TARGET)
+	@del variance
+	@del fmin.log
+	@del $(TARGET).eva
+	@del $(TARGET).htp
+	@del $(TARGET).bar
+	@del $(TARGET).bgs
+	@del $(TARGET).cor
+	@del $(TARGET).cpp
+	@del $(TARGET).log
+	@del $(TARGET).o
+	@del $(TARGET).obj
+	@del $(TARGET).par
+	@del $(TARGET).std
+	@del tests_$(TARGET).o
+	@del tests_$(TARGET)
+	@del eigv.rpt
+else
 	@rm -vf b1 b2 s1 s2
 	@rm -vf $(TARGET)
 	@rm -vf admodel.*
@@ -56,3 +88,4 @@ clean:
 	@rm -vf f1b2list12 gradfil2.tmp nf1b2list13
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
 	@rm -vf hybrid_seed
+endif

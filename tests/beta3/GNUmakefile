@@ -1,16 +1,47 @@
+ifeq ($(OS),Windows_NT)
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  endif
+endif
+
 TARGET=beta3
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
+ifeq ($(SHELL),cmd)
+	..\\..\\admb -r $(TARGET)
+else
 	../../admb -r $(TARGET)
+endif
 
 run:
-	@printf "Started run:\n"
+ifeq ($(SHELL),cmd)
+	$(TARGET)
+else
 	./$(TARGET)
-	@printf "Finished run.\n"
+endif
 
 clean:
+ifeq ($(SHELL),cmd)
+	@del $(TARGET)
+	@del variance
+	@del fmin.log
+	@del $(TARGET).eva
+	@del $(TARGET).htp
+	@del $(TARGET).bar
+	@del $(TARGET).bgs
+	@del $(TARGET).cor
+	@del $(TARGET).cpp
+	@del $(TARGET).log
+	@del $(TARGET).o
+	@del $(TARGET).obj
+	@del $(TARGET).par
+	@del $(TARGET).std
+	@del tests_$(TARGET).o
+	@del tests_$(TARGET)
+	@del eigv.rpt
+else
 	@rm -vf $(TARGET)
 	@rm -vf admodel.*
 	@rm -vf variance
@@ -31,3 +62,4 @@ clean:
 	@rm -vf $(TARGET).luu
 	@rm -vf $(TARGET).rhes
 	@rm -vf eigv.rpt
+endif

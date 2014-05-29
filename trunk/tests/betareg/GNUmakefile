@@ -1,16 +1,47 @@
+ifeq ($(OS),Windows_NT)
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  endif
+endif
+
 TARGET=betareg
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
+ifeq ($(SHELL),cmd)
+	..\\..\\admb -r $(TARGET)
+else
 	../../admb -r $(TARGET)
+endif
 
 run:
-	@printf "Started run:\n"
+ifeq ($(SHELL),cmd)
+	$(TARGET)
+else
 	./$(TARGET)
-	@printf "Finished run.\n"
+endif
 
 clean:
+ifeq ($(SHELL),cmd)
+	@del $(TARGET)
+	@del variance
+	@del fmin.log
+	@del $(TARGET).eva
+	@del $(TARGET).htp
+	@del $(TARGET).bar
+	@del $(TARGET).bgs
+	@del $(TARGET).cor
+	@del $(TARGET).cpp
+	@del $(TARGET).log
+	@del $(TARGET).o
+	@del $(TARGET).obj
+	@del $(TARGET).par
+	@del $(TARGET).std
+	@del tests_$(TARGET).o
+	@del tests_$(TARGET)
+	@del eigv.rpt
+else
 	@rm -vf a
 	@rm -vf betareg.p02
 	@rm -vf betareg.par
@@ -47,3 +78,4 @@ clean:
 	@rm -vf f1b2list1 gradfil1.tmp nf1b2list12
 	@rm -vf f1b2list12 gradfil2.tmp nf1b2list13
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
+endif

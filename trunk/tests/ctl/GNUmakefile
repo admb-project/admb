@@ -1,20 +1,47 @@
-TARGET=example
-
 ifeq ($(OS),Windows_NT)
-EXT=.sh
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  endif
 endif
+
+TARGET=example
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
+ifeq ($(SHELL),cmd)
+	..\\..\\admb$(EXT) $(TARGET)
+else
 	../../admb$(EXT) $(TARGET)
+endif
 
 run:
-	@printf "Started run:\n"
+ifeq ($(SHELL),cmd)
+	$(TARGET)
+else
 	./$(TARGET)
-	@printf "Finished run.\n"
+endif
 
 clean:
+ifeq ($(SHELL),cmd)
+	@del $(TARGET)
+	@del variance
+	@del fmin.log
+	@del $(TARGET).eva
+	@del $(TARGET).htp
+	@del $(TARGET).bar
+	@del $(TARGET).bgs
+	@del $(TARGET).cor
+	@del $(TARGET).cpp
+	@del $(TARGET).log
+	@del $(TARGET).o
+	@del $(TARGET).obj
+	@del $(TARGET).par
+	@del $(TARGET).std
+	@del tests_$(TARGET).o
+	@del tests_$(TARGET)
+	@del eigv.rpt
+else
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
 	@rm -vf admodel.hes
@@ -33,3 +60,4 @@ clean:
 	@rm -vf example.std
 	@rm -vf fmin.log
 	@rm -vf variance
+endif

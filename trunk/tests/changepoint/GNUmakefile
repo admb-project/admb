@@ -1,14 +1,26 @@
 ifeq ($(OS),Windows_NT)
-EXT=.sh
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  endif
 endif
+
+TARGET=changepoint
 
 all:
 	$(MAKE) changepoint.tpl
-	../../admb$(EXT) changepoint.tpl
+ifeq ($(SHELL),cmd)
+	..\\..\\admb changepoint.tpl
+else
+	../../admb changepoint.tpl
+endif
 	$(MAKE) run
 
 run: changepoint.dat
+ifeq ($(SHELL),cmd)
+	changepoint
+else
 	./changepoint
+endif
 
 changepoint.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/executables/AGEMAT.TPL > changepoint.tpl
@@ -17,6 +29,25 @@ changepoint.dat:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/doc/changepoint.dat > changepoint.dat
 
 clean:
+ifeq ($(SHELL),cmd)
+	@del $(TARGET)
+	@del variance
+	@del fmin.log
+	@del $(TARGET).eva
+	@del $(TARGET).htp
+	@del $(TARGET).bar
+	@del $(TARGET).bgs
+	@del $(TARGET).cor
+	@del $(TARGET).cpp
+	@del $(TARGET).log
+	@del $(TARGET).o
+	@del $(TARGET).obj
+	@del $(TARGET).par
+	@del $(TARGET).std
+	@del tests_$(TARGET).o
+	@del tests_$(TARGET)
+	@del eigv.rpt
+else
 	@rm -vf changepoint changepoint.cpp changepoint.htp changepoint.obj
 	@rm -vf Echo.Out
 	@rm -vf admodel.cov
@@ -39,3 +70,4 @@ clean:
 	@rm -vf gradfil2.tmp
 	@rm -vf variance
 	@rm -vf varssave.tmp
+endif

@@ -1,29 +1,57 @@
 ifeq ($(OS),Windows_NT)
-EXT=.sh
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  endif
 endif
+TARGET=cov_re
 
 all: clean cov_re cov_re_sep run
 
 cov_re: cov_re.tpl
-	../../admb$(EXT) -r $@
+ifeq ($(SHELL),cmd)
+	..\\..\\admb -r $@
+else
+	../../admb -r $@
+endif
 
 cov_re_sep: cov_re_sep.tpl
-	../../admb$(EXT) -r $@
+ifeq ($(SHELL),cmd)
+	..\\..\\admb -r $@
+else
+	../../admb -r $@
+endif
 
 run:
-	@printf "Started run:\n"
+ifeq ($(SHELL),cmd)
+	cov_re
+	cov_re_sep
+	cov_re_sep -shess
+else
 	./cov_re
-	@printf "Finished run.\n"
-
-	@printf "Started run:\n"
 	./cov_re_sep
-	@printf "Finished run.\n"
-
-	@printf "Started run:\n"
 	./cov_re_sep -shess
-	@printf "Finished run.\n"
+endif
 
 clean:
+ifeq ($(SHELL),cmd)
+	@del $(TARGET)
+	@del variance
+	@del fmin.log
+	@del $(TARGET).eva
+	@del $(TARGET).htp
+	@del $(TARGET).bar
+	@del $(TARGET).bgs
+	@del $(TARGET).cor
+	@del $(TARGET).cpp
+	@del $(TARGET).log
+	@del $(TARGET).o
+	@del $(TARGET).obj
+	@del $(TARGET).par
+	@del $(TARGET).std
+	@del tests_$(TARGET).o
+	@del tests_$(TARGET)
+	@del eigv.rpt
+else
 	@rm -vf cov_re.o
 	@rm -vf cov_re.obj
 	@rm -vf cov_re.cor
@@ -59,3 +87,4 @@ clean:
 	@rm -vf cov_re_sep.cpp
 	@rm -vf cov_re_sep.std
 	@rm -vf cov_re_sep.htp
+endif

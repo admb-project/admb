@@ -1,20 +1,66 @@
-TARGET=expm
-
 ifeq ($(OS),Windows_NT)
-EXT=.sh
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  endif
 endif
+
+TARGET=expm
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
+ifeq ($(SHELL),cmd)
+	..\\..\\admb$(EXT) $(TARGET)
+else
 	../../admb$(EXT) $(TARGET)
+endif
 
 run:
-	@printf "Started run:\n"
+ifeq ($(SHELL),cmd)
+	$(TARGET)
+else
 	./$(TARGET)
-	@printf "Finished run.\n"
+endif
 
 clean:
+ifeq ($(SHELL),cmd)
+	@del a
+	@del $(TARGET).p02
+	@del $(TARGET).par
+	@del $(TARGET).b02
+	@del $(TARGET).r02
+	@del b1 b2 s1 s2
+	@del $(TARGET)
+	@del admodel.tmp
+	@del variance
+	@del fmin.log
+	@del $(TARGET).eva
+	@del $(TARGET).htp
+	@del $(TARGET).bar
+	@del $(TARGET).bgs
+	@del $(TARGET).cor
+	@del $(TARGET).cpp
+	@del $(TARGET).log
+	@del $(TARGET).luu
+	@del $(TARGET).b01
+	@del $(TARGET).psv
+	@del $(TARGET).r01
+	@del $(TARGET).o
+	@del $(TARGET).obj
+	@del $(TARGET).p01
+	@del $(TARGET).std
+	@del $(TARGET).rep
+	@del $(TARGET).rhes
+	@del f1b2list13
+	@del hesscheck
+	@del data
+	@del sims
+	@del eigv.rpt
+	@del hessian.bin
+	@del f1b2list1 gradfil1.tmp nf1b2list12
+	@del f1b2list12 gradfil2.tmp nf1b2list13
+	@del cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
+else
 	@rm -vf a
 	@rm -vf $(TARGET).p02
 	@rm -vf $(TARGET).par
@@ -51,3 +97,4 @@ clean:
 	@rm -vf f1b2list1 gradfil1.tmp nf1b2list12
 	@rm -vf f1b2list12 gradfil2.tmp nf1b2list13
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
+endif

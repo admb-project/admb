@@ -8,7 +8,7 @@ endif
 
 TARGET=gmrf
 
-all: clean $(TARGET) run run2
+all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
 ifeq ($(SHELL),cmd)

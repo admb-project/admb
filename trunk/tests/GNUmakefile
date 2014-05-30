@@ -32,6 +32,7 @@ all-gtests:
 	$(MAKE) --directory=gtests
 
 all-tpls:\
+  tpl-glmmadmb\
   tpl-agemat\
   tpl-betai\
   tpl-beta2\
@@ -51,6 +52,9 @@ all-tpls:\
   tpl-priors\
   tpl-testminmax\
   tpl-SS3
+
+tpl-glmmadmb:
+	$(MAKE) --directory=glmmadmb
 
 tpl-agemat:
 	$(MAKE) --directory=agemat

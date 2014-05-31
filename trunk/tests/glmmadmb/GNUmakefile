@@ -6,7 +6,7 @@ endif
 
 TARGET=glmmadmb
 
-all: clean $(TARGET) nbmm bvprobit
+all: clean $(TARGET) nbmm bvprobit run
 
 $(TARGET): $(TARGET).tpl
 ifeq ($(SHELL),cmd)

@@ -46,7 +46,6 @@ all-tpls:\
   tpl-ctl\
   tpl-expm\
   tpl-geolocation\
-  tpl-gmrf\
   tpl-simple_mcmc\
   tpl-hysimple\
   tpl-priors\

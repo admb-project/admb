@@ -39,6 +39,8 @@ bvprobit.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
 run:
+
+run2:
 ifeq ($(SHELL),cmd)
 	$(TARGET)
 else

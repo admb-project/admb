@@ -1,21 +1,52 @@
-TARGET=hysimple
-
 ifeq ($(OS),Windows_NT)
-EXT=.sh
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  endif
 endif
+
+TARGET=hysimple
 
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
+ifeq ($(SHELL),cmd)
+	..\\..\\admb$(EXT) $(TARGET)
+else
 	../../admb$(EXT) $(TARGET)
+endif
 
 run:
-	@printf "Started run:\n"
+ifeq ($(SHELL),cmd)
+	$(TARGET) -hybrid -mcmc 2000 -hyeps .3 -hynsteps 20
+	$(TARGET) -mceval
+else
 	./$(TARGET) -hybrid -mcmc 2000 -hyeps .3 -hynsteps 20
 	./$(TARGET) -mceval
-	@printf "Finished run.\n"
+endif
 
 clean:
+ifeq ($(SHELL),cmd)
+	@del hybrid_seed
+	@del hysimple.obj
+	@del admodel.cov
+	@del admodel.hes
+	@del fmin.log
+	@del hysimple.exe
+	@del hysimple.cor
+	@del hysimple.eva
+	@del hysimple.log
+	@del hysimple.par
+	@del hysimple.std
+	@del sims
+	@del admodel.dep
+	@del eigv.rpt
+	@del hysimple.bar
+	@del hysimple.cpp
+	@del hysimple.htp
+	@del hysimple.o
+	@del hysimple.psv
+	@del variance
+else
 	@rm -f hybrid_seed
 	@rm -f hysimple.obj
 	@rm -f admodel.cov
@@ -36,3 +67,4 @@ clean:
 	@rm -f hysimple.o
 	@rm -f hysimple.psv
 	@rm -f variance
+endif

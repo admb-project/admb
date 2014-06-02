@@ -8,7 +8,7 @@ debug:
 	$(MAKE) $(CXX)-all DEBUG=yes
 	@echo ADMB debug build completed.
 contrib: $(CXX)-contrib
-test:
+test: verify
 	$(MAKE) $(CXX)-test DEBUG=$(DEBUG)
 copy: $(CXX)-copy
 verify:

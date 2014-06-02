@@ -70,6 +70,7 @@ providing fixes and/or suggestions:
 
 * David Fournier
 * John Sibert
+* Bill Clark
 * Hans Skaug
 * Mark Maunder
 * Anders Nielsen

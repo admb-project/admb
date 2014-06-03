@@ -31,9 +31,6 @@ GTESTS=\
 # test_scalefactor.obj\
 # scalefactor.obj\
 
-CXXFLAGS=-DGTEST_OS_WINDOWS_MINGW
-
-
 all: clean gtest-all
 ifeq ($(OS),Windows_NT)
 	gtest-all

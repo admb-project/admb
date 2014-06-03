@@ -1,5 +1,6 @@
-DEBUG=yes
 #default targets depending on compiler
+#DEBUG=yes
+
 all:
 	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)
 	@echo ADMB build completed.

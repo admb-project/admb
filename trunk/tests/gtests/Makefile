@@ -31,6 +31,8 @@ GTESTS=\
 # test_scalefactor.obj\
 # scalefactor.obj\
 
+CXXFLAGS=-DGTEST_OS_WINDOWS_MINGW
+
 
 all: clean gtest-all
 ifeq ($(OS),Windows_NT)
@@ -41,9 +43,9 @@ endif
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
 ifeq ($(OS),Windows_NT)
-	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c -r -g test_df1b2atan2.cpp
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" ..\\..\\admb -c -r -g test_df1b2atan2.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -c -r -g test_df1b2atan2.cpp
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" ../../admb -c -r -g test_df1b2atan2.cpp
 endif
 
 df1b2atan2.obj: df1b2atan2.cpp
@@ -55,23 +57,23 @@ endif
 
 test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
 ifeq ($(OS),Windows_NT)
-	CXXFLAGS=-I$(GTEST_DIR)/include ..\\..\\admb -c -r -g test_scalefactor.cpp
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" ..\\..\\admb -c -r -g test_scalefactor.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -c -r -g test_scalefactor.cpp
+	CXXFLAGS=-"$(CXXFLAGS) I$(GTEST_DIR)/include" ../../admb -c -r -g test_scalefactor.cpp
 endif
 
 scalefactor.obj: scalefactor.tpl
 ifeq ($(OS),Windows_NT)
-	CXXFLAGS="-Dmain=scalefactor" ..\\..\\admb -c -r -g $^
+	CXXFLAGS="$(CXXFLAGS) -Dmain=scalefactor" ..\\..\\admb -c -r -g $^
 else
-	CXXFLAGS="-Dmain=scalefactor" ../../admb -c -r -g $^
+	CXXFLAGS="$(CXXFLAGS) -Dmain=scalefactor" ../../admb -c -r -g $^
 endif
 
 gtest-all: gtest-all.obj $(GTESTS)
 ifeq ($(OS),Windows_NT)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -g -r $^
+	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS=-pthread & ..\\..\\admb -g -r $^
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb -g -r $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb -g -r $^
 endif
 
 gtest-all.obj: googletest-read-only

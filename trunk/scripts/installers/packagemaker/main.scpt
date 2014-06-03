@@ -4,7 +4,8 @@
 -- Copyright 2012 ADMB Foundation. All rights reserved.
 
 set p to path to
+set pp to (POSIX path of p)
 tell application "Terminal"
 	activate
-	do script "export ADMB_HOME=\"" & p & "\"; export PATH=\"" & p & "bin\":${PATH}"
+	do script "export ADMB_HOME=\"" & pp & "\"; export PATH=\"" & pp & "bin\":${PATH}"
 end tell

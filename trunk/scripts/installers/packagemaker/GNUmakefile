@@ -3,6 +3,7 @@ CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMake
 all: ADMBTerminal.dmg
 
 ADMBTerminal.dmg: build/ADMBTerminal.app/Contents/Resources/Scripts/main.scpt
+	cp -vf README.txt build
 	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build/
 
 build/ADMBTerminal.app/Contents/Resources/Scripts/main.scpt: build/ADMBTerminal.app/Contents
@@ -11,7 +12,7 @@ build/ADMBTerminal.app/Contents/Resources/Scripts/main.scpt: build/ADMBTerminal.
 
 build/ADMBTerminal.app/Contents:
 	mkdir -p build
-	cp -Rvf ../../../build/dist/ build/ADMBTerminal.app
+	cp -Rvf ../../../build/dist build/ADMBTerminal.app
 	cp -Rvf Contents build/ADMBTerminal.app
 
 build/ADMBTerminal.pkg:

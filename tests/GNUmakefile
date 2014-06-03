@@ -29,7 +29,9 @@ all: all-gtests all-tpls
 endif
 
 all-gtests:
+ifneq ($(USE_GTESTS),no)
 	$(MAKE) --directory=gtests
+endif
 
 all-tpls:\
   tpl-glmmadmb\

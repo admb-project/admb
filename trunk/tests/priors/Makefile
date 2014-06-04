@@ -27,7 +27,7 @@ clean:
 	@if exist rat.cpp del /Q rat.cpp
 	@if exist rat.htp del /Q rat.htp
 	@if exist rat.log del /Q rat.log
-	@if exist rat.o del /Q rat.o
+	@if exist rat.obj del /Q rat.obj
 	@if exist rat.obj del /Q rat.obj
 	@if exist rat.p01 del /Q rat.p01
 	@if exist rat.p02 del /Q rat.p02

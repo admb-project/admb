@@ -131,9 +131,24 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	$(MAKE) --directory=expm --file=Makefile clean
-	$(MAKE) --directory=priors --file=Makefile clean
+	$(MAKE) --directory=glmmadmb --file=Makefile clean
 	$(MAKE) --directory=agemat --file=Makefile clean
+	$(MAKE) --directory=betai --file=Makefile clean
+	$(MAKE) --directory=beta2 --file=Makefile clean
+	$(MAKE) --directory=beta3 --file=Makefile clean
+	$(MAKE) --directory=beta_deviate --file=Makefile clean
+	$(MAKE) --directory=betareg --file=Makefile clean
+	$(MAKE) --directory=beta_regression --file=Makefile clean
+	$(MAKE) --directory=changepoint --file=Makefile clean
+	$(MAKE) --directory=colfill --file=Makefile clean
+	$(MAKE) --directory=cov_re --file=Makefile clean
+	$(MAKE) --directory=ctl --file=Makefile clean
+	$(MAKE) --directory=expm --file=Makefile clean
+	$(MAKE) --directory=hysimple --file=Makefile clean
+	$(MAKE) --directory=priors --file=Makefile clean
+	$(MAKE) --directory=testminmax --file=Makefile clean
+	$(MAKE) --directory=gmrf --file=Makefile clean
+	$(MAKE) --directory=SS3 --file=Makefile clean
 else
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
@@ -155,6 +170,7 @@ else
 	$(MAKE) --directory=ctl clean
 	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=colfill clean
+	$(MAKE) --directory=glmmadmb clean
 endif
 
 copy:

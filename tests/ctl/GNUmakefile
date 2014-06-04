@@ -41,6 +41,11 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET).o
 	@del tests_$(TARGET)
 	@del eigv.rpt
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del example.b01
+	@del example.p01
 else
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
@@ -60,4 +65,9 @@ else
 	@rm -vf example.std
 	@rm -vf fmin.log
 	@rm -vf variance
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
+	@rm -vf example.b01
+	@rm -vf example.p01
 endif

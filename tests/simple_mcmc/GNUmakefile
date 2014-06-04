@@ -50,6 +50,7 @@ ifeq ($(SHELL),cmd)
 	@del $(TARGET).mc2
 	@del $(TARGET).mcm
 	@del $(TARGET).exe
+	@del $(TARGET)
 	@del admodel.cov
 	@del admodel.dep
 	@del admodel.hes
@@ -77,6 +78,7 @@ else
 	@rm -f admodel.cov
 	@rm -f admodel.hes
 	@rm -f fmin.log
+	@rm -vf $(TARGET)
 	@rm -f $(TARGET).cor
 	@rm -f $(TARGET).eva
 	@rm -f $(TARGET).log

@@ -41,6 +41,13 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET).o
 	@del tests_$(TARGET)
 	@del eigv.rpt
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del beta3.luu
+	@del beta3.rhes
+	@del hesscheck
+	@del hessian.bin
 else
 	@rm -vf $(TARGET)
 	@rm -vf admodel.*
@@ -62,4 +69,11 @@ else
 	@rm -vf $(TARGET).luu
 	@rm -vf $(TARGET).rhes
 	@rm -vf eigv.rpt
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
+	@rm -vf beta3.luu
+	@rm -vf beta3.rhes
+	@rm -vf hesscheck
+	@rm -vf hessian.bin
 endif

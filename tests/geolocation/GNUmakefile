@@ -3,73 +3,146 @@ ADMB_HOME=../../../build/dist
 endif
 
 all:
-	$(MAKE) svn
-	$(MAKE) kfsst kftrack trackit ukfsst
+ifeq ($(SHELL),sh.exe)
+	$(MAKE) --file=Makefile all
+else
+	$(MAKE) kfsst/kfsst kftrack/kftrack trackit/trackit ukfsst/ukfsst
 	$(MAKE) run
+endif
+
+kfsst/kfsst: kfsst
+	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=kfsst
+
+kftrack/kftrack: kftrack
+	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=kftrack
+
+trackit/trackit: trackit
+	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=trackit
+
+ukfsst/ukfsst: ukfsst
+	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=ukfsst
 
 kfsst:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --file=Makefile kfsst
-else
-	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-kfsst
-endif
+	svn checkout http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source kfsst
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/kfsst.dat > kfsst/kfsst.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/sst.dat > kfsst/sst.dat
 
 kftrack:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --file=Makefile kftrack
-else
-	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-kftrack
-endif
+	svn checkout http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src kftrack
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kftrack/kftrack.dat > kftrack/kftrack.dat
 
 trackit:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --file=Makefile trackit
-else
-	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-trackit
-endif
+	svn checkout http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src trackit
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/ukf.dat > trackit/ukf.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/sstsim.dat > trackit/sstsim.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/model.cfg > trackit/model.cfg
 
 ukfsst:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --file=Makefile ukfsst
-else
-	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-ukfsst
-endif
-
-svn: clean
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --file=Makefile svn
-else
-	svn checkout http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source svn-kfsst
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/kfsst.dat > svn-kfsst/kfsst.dat
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/sst.dat > svn-kfsst/sst.dat
-	svn checkout http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src svn-kftrack
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kftrack/kftrack.dat > svn-kftrack/kftrack.dat
-	svn checkout http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src svn-trackit
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/ukf.dat > svn-trackit/ukf.dat
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/sstsim.dat > svn-trackit/sstsim.dat
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/model.cfg > svn-trackit/model.cfg
-	svn checkout http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src svn-ukfsst
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/ukfsst.dat > svn-ukfsst/ukfsst.dat
-	rm -rvf svn-ukfsst/sst_files
-	svn export http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/sst_files svn-ukfsst/sst_files
-endif
+	svn checkout http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src ukfsst
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/ukfsst.dat > ukfsst/ukfsst.dat
+	svn export http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/sst_files ukfsst/sst_files
 
 run:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --file=Makefile run
-else
-	pushd svn-kfsst; ./kfsst; popd
-	pushd svn-kftrack; ./kftrack; popd
-	pushd svn-trackit; ./ukf; popd
-	pushd svn-ukfsst; ./ukfsst; popd
-endif
+	pushd kfsst; ./kfsst; popd
+	pushd kftrack; ./kftrack; popd
+	pushd trackit; ./ukf; popd
+	pushd ukfsst; ./ukfsst; popd
 
 clean:
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile clean
 else
-	@rm -rvf svn-kfsst
-	@rm -rvf svn-kftrack
-	@rm -rvf svn-trackit
-	@rm -rvf svn-ukfsst
+	$(MAKE) --directory=kfsst clean
+	@rm -vf kfsst/admodel.cov
+	@rm -vf kfsst/admodel.dep
+	@rm -vf kfsst/admodel.hes
+	@rm -vf kfsst/check.dat
+	@rm -vf kfsst/eigv.rpt
+	@rm -vf kfsst/fmin.log
+	@rm -vf kfsst/gmt_111011110%F3-9%C3%D6%C8.dat
+	@rm -vf kfsst/kfsst.b01
+	@rm -vf kfsst/kfsst.b02
+	@rm -vf kfsst/kfsst.bar
+	@rm -vf kfsst/kfsst.cor
+	@rm -vf kfsst/kfsst.eva
+	@rm -vf kfsst/kfsst.log
+	@rm -vf kfsst/kfsst.p01
+	@rm -vf kfsst/kfsst.p02
+	@rm -vf kfsst/kfsst.par
+	@rm -vf kfsst/kfsst.r01
+	@rm -vf kfsst/kfsst.r02
+	@rm -vf kfsst/kfsst.rep
+	@rm -vf kfsst/kfsst.std
+	@rm -vf kfsst/kftrack.log
+	@rm -vf kfsst/mpt_111011110%F3-9%C3%D6%C8.dat
+	@rm -vf kfsst/variance
+	$(MAKE) --directory=kftrack clean
+	@rm -vf kftrack/admodel.cov
+	@rm -vf kftrack/admodel.dep
+	@rm -vf kftrack/admodel.hes
+	@rm -vf kftrack/eigv.rpt
+	@rm -vf kftrack/fmin.log
+	@rm -vf kftrack/gmt.dat
+	@rm -vf kftrack/kftrack.b01
+	@rm -vf kftrack/kftrack.b02
+	@rm -vf kftrack/kftrack.bar
+	@rm -vf kftrack/kftrack.cor
+	@rm -vf kftrack/kftrack.eva
+	@rm -vf kftrack/kftrack.log
+	@rm -vf kftrack/kftrack.p01
+	@rm -vf kftrack/kftrack.p02
+	@rm -vf kftrack/kftrack.par
+	@rm -vf kftrack/kftrack.r01
+	@rm -vf kftrack/kftrack.r02
+	@rm -vf kftrack/kftrack.rep
+	@rm -vf kftrack/kftrack.std
+	@rm -vf kftrack/mpt.dat
+	@rm -vf kftrack/variance
+	$(MAKE) --directory=trackit clean
+	@rm -vf trackit/admodel.cov
+	@rm -vf trackit/admodel.dep
+	@rm -vf trackit/admodel.hes
+	@rm -vf trackit/eigv.rpt
+	@rm -vf trackit/fmin.log
+	@rm -vf trackit/program.log
+	@rm -vf trackit/ukf.b01
+	@rm -vf trackit/ukf.b02
+	@rm -vf trackit/ukf.b03
+	@rm -vf trackit/ukf.bar
+	@rm -vf trackit/ukf.cor
+	@rm -vf trackit/ukf.eva
+	@rm -vf trackit/ukf.log
+	@rm -vf trackit/ukf.p01
+	@rm -vf trackit/ukf.p02
+	@rm -vf trackit/ukf.p03
+	@rm -vf trackit/ukf.par
+	@rm -vf trackit/ukf.r01
+	@rm -vf trackit/ukf.r02
+	@rm -vf trackit/ukf.r03
+	@rm -vf trackit/ukf.rep
+	@rm -vf trackit/ukf.std
+	@rm -vf trackit/variance
+	$(MAKE) --directory=ukfsst clean
+	@rm -vf ukfsst/admodel.cov
+	@rm -vf ukfsst/admodel.dep
+	@rm -vf ukfsst/admodel.hes
+	@rm -vf ukfsst/eigv.rpt
+	@rm -vf ukfsst/fmin.log
+	@rm -vf ukfsst/mpt.out
+	@rm -vf ukfsst/pred.out
+	@rm -vf ukfsst/time.out
+	@rm -vf ukfsst/ukfsst.b01
+	@rm -vf ukfsst/ukfsst.b02
+	@rm -vf ukfsst/ukfsst.bar
+	@rm -vf ukfsst/ukfsst.cor
+	@rm -vf ukfsst/ukfsst.eva
+	@rm -vf ukfsst/ukfsst.log
+	@rm -vf ukfsst/ukfsst.p01
+	@rm -vf ukfsst/ukfsst.p02
+	@rm -vf ukfsst/ukfsst.par
+	@rm -vf ukfsst/ukfsst.r01
+	@rm -vf ukfsst/ukfsst.r02
+	@rm -vf ukfsst/ukfsst.rep
+	@rm -vf ukfsst/ukfsst.std
+	@rm -vf ukfsst/variance
 endif

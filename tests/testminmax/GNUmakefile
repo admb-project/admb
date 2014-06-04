@@ -58,6 +58,16 @@ ifeq ($(SHELL),cmd)
 	@del f1b2list1 gradfil1.tmp nf1b2list12
 	@del f1b2list12 gradfil2.tmp nf1b2list13
 	@del cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
+	@del eigv.rpt
+	@del fmin.log
+	@del testminmax.bar
+	@del testminmax.cpp
+	@del testminmax.exe
+	@del testminmax.htp
+	@del testminmax.log
+	@del testminmax.obj
+	@del testminmax.par
+	@del variance
 else
 	@rm -vf b1 b2 s1 s2
 	@rm -vf $(TARGET)

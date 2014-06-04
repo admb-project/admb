@@ -50,6 +50,29 @@ ifeq ($(SHELL),cmd)
 	@del $(TARGET).mc2
 	@del $(TARGET).mcm
 	@del $(TARGET).exe
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del eigv.rpt
+	@del fmin.log
+	@del posteriors.rep
+	@del simple_mcmc.bar
+	@del simple_mcmc.cor
+	@del simple_mcmc.cpp
+	@del simple_mcmc.ecm
+	@del simple_mcmc.eva
+	@del simple_mcmc.exe
+	@del simple_mcmc.hst
+	@del simple_mcmc.htp
+	@del simple_mcmc.log
+	@del simple_mcmc.mc2
+	@del simple_mcmc.mcm
+	@del simple_mcmc.obj
+	@del simple_mcmc.par
+	@del simple_mcmc.psv
+	@del simple_mcmc.std
+	@del sims
+	@del variance
 else
 	@rm -f admodel.cov
 	@rm -f admodel.hes

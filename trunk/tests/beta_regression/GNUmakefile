@@ -55,6 +55,7 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET).o
 	@del tests_$(TARGET)
 	@del eigv.rpt
+	@del beta_regression.par
 else
 	@rm -vf b1 b2 s1 s2
 	@rm -vf $(TARGET)
@@ -88,4 +89,5 @@ else
 	@rm -vf f1b2list12 gradfil2.tmp nf1b2list13
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
 	@rm -vf hybrid_seed
+	@rm -vf beta_regression.par
 endif

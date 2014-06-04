@@ -1,38 +1,39 @@
-all: 
-	$(MAKE) glmmadmb.exe nbmm.exe bvprobit.exe
-	$(MAKE) run
+all: admb_tests glmmadmb.exe nbmm.exe bvprobit.exe run
 
 glmmadmb.exe: glmmadmb.tpl
-	..\\..\\admb -r $@
+	..\\..\\admb -r $^
 
 glmmadmb.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
 nbmm.exe: nbmm.tpl
-	..\\..\\admb -r $@
+	..\\..\\admb -r $^
 
 nbmm.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
 bvprobit.exe: bvprobit.tpl
-	..\\..\\admb -r $@
+	..\\..\\admb -r $^
 
 bvprobit.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
+admb_tests:
+	svn checkout svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/$@ $@ 
+
 run:
-	copy glmmadmb.exe admb_tests\\bacteria
-	pushd admb_tests ; bacteria ; popd 
-	copy glmmadmb.exe admb_tests\\betabinom
-	pushd admb_tests ; betabinom ; popd 
-	copy glmmadmb.exe admb_tests\\epil2
-	pushd admb_tests ; epil2 ; popd 
-	copy glmmadmb.exe admb_tests\\hurdle_biochem1
-	pushd admb_tests ; hurdle_biochem1 ; popd 
-	copy glmmadmb.exe admb_tests\\hurdle_biochem2
-	pushd admb_tests ; hurdle_biochem2 ; popd 
-	copy glmmadmb admb_tests\\zi_owls
-	pushd admb_tests ; zi_owls ; popd 
+	copy glmmadmb.exe admb_tests\\bacteria.exe
+	pushd admb_tests & bacteria
+	copy glmmadmb.exe admb_tests\\betabinom.exe
+	pushd admb_tests & betabinom
+	copy glmmadmb.exe admb_tests\\epil2.exe
+	pushd admb_tests & epil2 -nohess
+	copy glmmadmb.exe admb_tests\\hurdle_biochem1.exe
+	pushd admb_tests & hurdle_biochem1
+	copy glmmadmb.exe admb_tests\\hurdle_biochem2.exe
+	pushd admb_tests & hurdle_biochem2
+	copy glmmadmb.exe admb_tests\\zi_owls.exe
+	pushd admb_tests & zi_owls
 	glmmadmb.exe
 
 clean:

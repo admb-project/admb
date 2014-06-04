@@ -18,4 +18,5 @@ run:
 	./test1
 
 clean:
-	rm -rvf cppad-trunk
+	@rm -vf test
+	@rm -vf test1

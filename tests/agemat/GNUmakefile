@@ -38,6 +38,7 @@ clean:
 	@rm -vf agemat.r01
 	@rm -vf agemat.rep
 	@rm -vf agemat.std
+	@rm -vf agemat
 	@rm -vf cmpdiff.tmp
 	@rm -vf eigv.rpt
 	@rm -vf fmin.log

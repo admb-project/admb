@@ -28,6 +28,7 @@ ifeq ($(SHELL),cmd)
 	@del $(TARGET)
 	@del variance
 	@del fmin.log
+	@del $(TARGET).exe
 	@del $(TARGET).eva
 	@del $(TARGET).htp
 	@del $(TARGET).bar

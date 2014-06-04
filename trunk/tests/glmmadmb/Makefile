@@ -45,6 +45,8 @@ clean:
 	@del eigv.rpt
 	@del fmin.log
 	@del glmmadmb.exe
+	@del nbmm.exe
+	@del bvprobit.exe
 	@del glmmadmb.b01
 	@del glmmadmb.bar
 	@del glmmadmb.bgs

@@ -133,22 +133,24 @@ clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --directory=glmmadmb --file=Makefile clean
 	$(MAKE) --directory=agemat --file=Makefile clean
-	$(MAKE) --directory=betai --file=Makefile clean
-	$(MAKE) --directory=beta2 --file=Makefile clean
-	$(MAKE) --directory=beta3 --file=Makefile clean
-	$(MAKE) --directory=beta_deviate --file=Makefile clean
-	$(MAKE) --directory=betareg --file=Makefile clean
-	$(MAKE) --directory=beta_regression --file=Makefile clean
-	$(MAKE) --directory=changepoint --file=Makefile clean
-	$(MAKE) --directory=colfill --file=Makefile clean
-	$(MAKE) --directory=cov_re --file=Makefile clean
-	$(MAKE) --directory=ctl --file=Makefile clean
-	$(MAKE) --directory=expm --file=Makefile clean
-	$(MAKE) --directory=hysimple --file=Makefile clean
-	$(MAKE) --directory=priors --file=Makefile clean
-	$(MAKE) --directory=testminmax --file=Makefile clean
-	$(MAKE) --directory=gmrf --file=Makefile clean
-	$(MAKE) --directory=SS3 --file=Makefile clean
+	$(MAKE) --directory=betai clean
+	$(MAKE) --directory=beta2 clean
+	$(MAKE) --directory=beta3 clean
+	$(MAKE) --directory=beta_deviate clean
+	$(MAKE) --directory=betareg clean
+	$(MAKE) --directory=beta_regression clean
+	$(MAKE) --directory=changepoint clean
+	$(MAKE) --directory=colfill clean
+	$(MAKE) --directory=cov_re clean
+	$(MAKE) --directory=ctl clean
+	$(MAKE) --directory=expm clean
+	$(MAKE) --directory=hysimple clean
+	$(MAKE) --directory=priors clean
+	$(MAKE) --directory=testminmax clean
+	$(MAKE) --directory=gmrf clean
+	$(MAKE) --directory=SS3 clean
+	$(MAKE) --directory=gtests clean
+	$(MAKE) --directory=simple_mcmc clean
 else
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean

@@ -49,6 +49,7 @@ ifeq ($(SHELL),cmd)
 	@del $(TARGET).std
 	@del $(TARGET).rep
 	@del $(TARGET).rhes
+	@del $(TARGET)
 	@del f1b2list13
 	@del hesscheck
 	@del data
@@ -94,6 +95,7 @@ else
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).rep
 	@rm -vf $(TARGET).rhes
+	@rm -vf $(TARGET)
 	@rm -vf f1b2list13
 	@rm -vf hesscheck
 	@rm -vf data

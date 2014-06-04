@@ -41,6 +41,12 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET).o
 	@del tests_$(TARGET)
 	@del eigv.rpt
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del hesscheck
+	@del hessian.bin
+	@del minto.rhes
 else
 	@rm -vf $(TARGET)
 	@rm -vf admodel.*
@@ -70,4 +76,10 @@ else
 	@rm -vf f1b2list12
 	@rm -vf f1b2list13
 	@rm -vf beta_deviate.log
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
+	@rm -vf hesscheck
+	@rm -vf hessian.bin
+	@rm -vf minto.rhes
 endif

@@ -51,6 +51,25 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET).o
 	@del tests_$(TARGET)
 	@del eigv.rpt
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del cov_re.luu
+	@del cov_re.rhes
+	@del cov_re_sep
+	@del cov_re_sep.bar
+	@del cov_re_sep.bgs
+	@del cov_re_sep.cor
+	@del cov_re_sep.cpp
+	@del cov_re_sep.eva
+	@del cov_re_sep.htp
+	@del cov_re_sep.log
+	@del cov_re_sep.obj
+	@del cov_re_sep.par
+	@del cov_re_sep.rhes
+	@del cov_re_sep.std
+	@del hesscheck
+	@del hessian.bin
 else
 	@rm -vf cov_re.o
 	@rm -vf cov_re.obj
@@ -87,4 +106,23 @@ else
 	@rm -vf cov_re_sep.cpp
 	@rm -vf cov_re_sep.std
 	@rm -vf cov_re_sep.htp
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
+	@rm -vf cov_re.luu
+	@rm -vf cov_re.rhes
+	@rm -vf cov_re_sep
+	@rm -vf cov_re_sep.bar
+	@rm -vf cov_re_sep.bgs
+	@rm -vf cov_re_sep.cor
+	@rm -vf cov_re_sep.cpp
+	@rm -vf cov_re_sep.eva
+	@rm -vf cov_re_sep.htp
+	@rm -vf cov_re_sep.log
+	@rm -vf cov_re_sep.obj
+	@rm -vf cov_re_sep.par
+	@rm -vf cov_re_sep.rhes
+	@rm -vf cov_re_sep.std
+	@rm -vf hesscheck
+	@rm -vf hessian.bin
 endif

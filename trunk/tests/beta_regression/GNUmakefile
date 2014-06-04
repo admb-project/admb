@@ -56,6 +56,25 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET)
 	@del eigv.rpt
 	@del beta_regression.par
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del b1
+	@del b2
+	@del beta_regression.b01
+	@del beta_regression.luu
+	@del beta_regression.p01
+	@del beta_regression.psv
+	@del beta_regression.r01
+	@del beta_regression.rep
+	@del beta_regression.rhes
+	@del data
+	@del hesscheck
+	@del hessian.bin
+	@del hybrid_seed
+	@del s1
+	@del s2
+	@del sims
 else
 	@rm -vf b1 b2 s1 s2
 	@rm -vf $(TARGET)
@@ -90,4 +109,23 @@ else
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
 	@rm -vf hybrid_seed
 	@rm -vf beta_regression.par
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
+	@rm -vf b1
+	@rm -vf b2
+	@rm -vf beta_regression.b01
+	@rm -vf beta_regression.luu
+	@rm -vf beta_regression.p01
+	@rm -vf beta_regression.psv
+	@rm -vf beta_regression.r01
+	@rm -vf beta_regression.rep
+	@rm -vf beta_regression.rhes
+	@rm -vf data
+	@rm -vf hesscheck
+	@rm -vf hessian.bin
+	@rm -vf hybrid_seed
+	@rm -vf s1
+	@rm -vf s2
+	@rm -vf sims
 endif

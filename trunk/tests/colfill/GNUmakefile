@@ -41,6 +41,7 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET).o
 	@del tests_$(TARGET)
 	@del eigv.rpt
+	@del colfill.rep
 else
 	@rm -vf a
 	@rm -vf $(TARGET).p02
@@ -78,4 +79,5 @@ else
 	@rm -vf f1b2list1 gradfil1.tmp nf1b2list12
 	@rm -vf f1b2list12 gradfil2.tmp nf1b2list13
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
+	@rm -vf colfill.rep
 endif

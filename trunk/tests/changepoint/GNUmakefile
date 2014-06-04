@@ -47,6 +47,10 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET).o
 	@del tests_$(TARGET)
 	@del eigv.rpt
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del changepoint.rep
 else
 	@rm -vf changepoint changepoint.cpp changepoint.htp changepoint.obj
 	@rm -vf Echo.Out
@@ -70,4 +74,8 @@ else
 	@rm -vf gradfil2.tmp
 	@rm -vf variance
 	@rm -vf varssave.tmp
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
+	@rm -vf changepoint.rep
 endif

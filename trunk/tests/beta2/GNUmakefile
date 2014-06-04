@@ -42,6 +42,10 @@ ifeq ($(SHELL),cmd)
 	@del tests_$(TARGET).o
 	@del tests_$(TARGET)
 	@del eigv.rpt
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
+	@del beta2.dat
 else
 	@rm -vf $(TARGET)
 	@rm -vf $(TARGET).dat
@@ -60,4 +64,8 @@ else
 	@rm -vf $(TARGET).par
 	@rm -vf $(TARGET).std
 	@rm -vf eigv.rpt
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
+	@rm -vf beta2.dat
 endif

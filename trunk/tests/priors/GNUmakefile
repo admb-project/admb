@@ -40,6 +40,8 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
+	@del rat
+	@del ratre
 	@del rat.obj
 	@del ratre.obj
 	@del eigv.rpt

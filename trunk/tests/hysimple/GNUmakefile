@@ -31,6 +31,7 @@ ifeq ($(SHELL),cmd)
 	@del admodel.cov
 	@del admodel.hes
 	@del fmin.log
+	@del hysimple
 	@del hysimple.exe
 	@del hysimple.cor
 	@del hysimple.eva

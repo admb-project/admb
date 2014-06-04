@@ -102,6 +102,9 @@ ifeq ($(SHELL),cmd)
 	@del SS3.r02
 	@del SS3.r03
 	@del SS3.r04
+	@del admodel.cov
+	@del admodel.dep
+	@del admodel.hes
 else
 	@rm -vf ss3.b01
 	@rm -vf ss3.bar
@@ -182,4 +185,7 @@ else
 	@rm -vf SS3.r02
 	@rm -vf SS3.r03
 	@rm -vf SS3.r04
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
 endif

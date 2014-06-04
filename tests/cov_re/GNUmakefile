@@ -38,6 +38,7 @@ ifeq ($(SHELL),cmd)
 	@del variance
 	@del fmin.log
 	@del $(TARGET).eva
+	@del $(TARGET).exe
 	@del $(TARGET).htp
 	@del $(TARGET).bar
 	@del $(TARGET).bgs
@@ -57,6 +58,7 @@ ifeq ($(SHELL),cmd)
 	@del cov_re.luu
 	@del cov_re.rhes
 	@del cov_re_sep
+	@del cov_re_sep.exe
 	@del cov_re_sep.bar
 	@del cov_re_sep.bgs
 	@del cov_re_sep.cor

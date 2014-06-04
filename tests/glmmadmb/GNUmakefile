@@ -34,6 +34,9 @@ admb_tests:
 	svn checkout svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/$@ $@ 
 
 run:
+ifeq ($(SHELL),cmd)
+	$(MAKE) --file=Makefile run
+else
 	cp -vf glmmadmb admb_tests/bacteria
 	pushd admb_tests ; ./bacteria ; popd 
 	cp -vf glmmadmb admb_tests/betabinom
@@ -47,6 +50,7 @@ run:
 	cp -vf glmmadmb admb_tests/zi_owls
 	pushd admb_tests ; ./zi_owls ; popd 
 	./glmmadmb
+endif
 
 clean:
 ifeq ($(SHELL),cmd)

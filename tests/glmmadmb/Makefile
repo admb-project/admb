@@ -21,6 +21,18 @@ bvprobit.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
 run:
+	copy glmmadmb.exe admb_tests\\bacteria
+	pushd admb_tests ; bacteria ; popd 
+	copy glmmadmb.exe admb_tests\\betabinom
+	pushd admb_tests ; betabinom ; popd 
+	copy glmmadmb.exe admb_tests\\epil2
+	pushd admb_tests ; epil2 ; popd 
+	copy glmmadmb.exe admb_tests\\hurdle_biochem1
+	pushd admb_tests ; hurdle_biochem1 ; popd 
+	copy glmmadmb.exe admb_tests\\hurdle_biochem2
+	pushd admb_tests ; hurdle_biochem2 ; popd 
+	copy glmmadmb admb_tests\\zi_owls
+	pushd admb_tests ; zi_owls ; popd 
 	glmmadmb.exe
 
 clean:

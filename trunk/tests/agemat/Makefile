@@ -28,6 +28,8 @@ clean:
 	@del /Q agemat.r01
 	@del /Q agemat.rep
 	@del /Q agemat.std
+	@del /Q agemat
+	@del /Q agemat.exe
 	@del /Q cmpdiff.tmp
 	@del /Q eigv.rpt
 	@del /Q fmin.log

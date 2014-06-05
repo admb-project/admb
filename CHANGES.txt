@@ -56,6 +56,8 @@ ADMB-trunk
         REPORT_SECTION
           save_gradients(gradients);
 
+* Added back the MacOS binary ADMBTerminal app.
+
 ####New Supported Compilers
 
 * GNU C++ 4.8 compiler

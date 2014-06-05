@@ -1,3 +1,11 @@
+ifeq ($(OS),Windows_NT)
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL=cmd
+  else
+    EXT=.sh
+  endif
+endif
+
 ifndef ADMB_HOME
 ADMB_HOME=../../../build/dist
 endif
@@ -11,16 +19,34 @@ else
 endif
 
 kfsst/kfsst: kfsst
+ifeq ($(EXT),.sh)
+	pushd kfsst && ../../../admb.sh kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=kfsst
+endif
 
 kftrack/kftrack: kftrack
+ifeq ($(EXT),.sh)
+	pushd kftrack && ../../../admb.sh kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	pushd kftrack && ../../../admb.sh twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=kftrack
+endif
 
 trackit/trackit: trackit
+ifeq ($(EXT),.sh)
+	pushd trackit && ../../../admb.sh ukf
+	pushd trackit && ../../../admb.sh prepro
+else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=trackit
+endif
 
 ukfsst/ukfsst: ukfsst
+ifeq ($(EXT),.sh)
+	pushd ukfsst && ../../../admb.sh ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=ukfsst
+endif
 
 kfsst:
 	svn checkout http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source kfsst

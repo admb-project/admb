@@ -1,6 +1,8 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
+  else
+    EXT=.sh
   endif
 endif
 TARGET=cov_re
@@ -11,14 +13,14 @@ cov_re: cov_re.tpl
 ifeq ($(SHELL),cmd)
 	..\\..\\admb -r $@
 else
-	../../admb -r $@
+	../../admb$(EXT) -r $@
 endif
 
 cov_re_sep: cov_re_sep.tpl
 ifeq ($(SHELL),cmd)
 	..\\..\\admb -r $@
 else
-	../../admb -r $@
+	../../admb$(EXT) -r $@
 endif
 
 run:

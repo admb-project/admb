@@ -1,6 +1,8 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
+  else
+    EXT=.sh
   endif
 endif
 
@@ -13,19 +15,31 @@ else
 endif
 
 glmmadmb: glmmadmb.tpl
-	../../admb -r $@
+ifeq ($(SHELL),cmd)
+	..\\..\\admb -r $^
+else
+	../../admb$(EXT) -r $^
+endif
 
 glmmadmb.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
 nbmm: nbmm.tpl
-	../../admb -r $@
+ifeq ($(SHELL),cmd)
+	..\\..\\admb -r $^
+else
+	../../admb$(EXT) -r $^
+endif
 
 nbmm.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
 bvprobit: bvprobit.tpl
-	../../admb -r $@
+ifeq ($(SHELL),cmd)
+	..\\..\\admb -r $^
+else
+	../../admb$(EXT) -r $^
+endif
 
 bvprobit.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@

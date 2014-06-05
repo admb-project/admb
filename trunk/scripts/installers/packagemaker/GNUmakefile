@@ -4,7 +4,8 @@ all: ADMBTerminal.dmg
 
 ADMBTerminal.dmg: build/ADMBTerminal.app/Contents/Resources/Scripts/main.scpt
 	cp -vf README.txt build
-	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build/
+	hdiutil create raw$@ -volname "ADMBTerminal" -srcfolder build/
+	hdiutil convert raw$@ -format UDBZ -o $@
 
 build/ADMBTerminal.app/Contents/Resources/Scripts/main.scpt: build/ADMBTerminal.app/Contents
 	mkdir -p build/ADMBTerminal.app/Contents/Resources/Scripts

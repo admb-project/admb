@@ -1,6 +1,8 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
+  else
+    EXT=.sh
   endif
 endif
 
@@ -26,14 +28,14 @@ endif
 
 $(TPL_TARGET): $(TPL_TARGET).tpl
 ifeq ($(SHELL),cmd)
-	..\\..\\admb$(EXT) $(TPL_TARGET)
+	..\\..\\admb $(TPL_TARGET)
 else
 	../../admb$(EXT) $(TPL_TARGET)
 endif
 
 $(TPL_TARGETRE): $(TPL_TARGETRE).tpl
 ifeq ($(SHELL),cmd)
-	..\\..\\admb$(EXT) -r $(TPL_TARGETRE)
+	..\\..\\admb -r $(TPL_TARGETRE)
 else
 	../../admb$(EXT) -r $(TPL_TARGETRE)
 endif

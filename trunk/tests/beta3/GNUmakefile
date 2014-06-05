@@ -1,6 +1,8 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
+  else
+    EXT=.sh
   endif
 endif
 
@@ -12,7 +14,7 @@ $(TARGET): $(TARGET).tpl $(TARGET).dat
 ifeq ($(SHELL),cmd)
 	..\\..\\admb -r $(TARGET)
 else
-	../../admb -r $(TARGET)
+	../../admb$(EXT) -r $(TARGET)
 endif
 
 run:

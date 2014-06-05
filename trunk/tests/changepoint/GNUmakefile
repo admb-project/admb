@@ -1,6 +1,8 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
+  else
+    EXT=.sh
   endif
 endif
 
@@ -11,7 +13,7 @@ all:
 ifeq ($(SHELL),cmd)
 	..\\..\\admb changepoint.tpl
 else
-	../../admb changepoint.tpl
+	../../admb$(EXT) changepoint.tpl
 endif
 	$(MAKE) run
 

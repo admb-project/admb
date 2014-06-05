@@ -1,6 +1,8 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL = cmd
+    SHELL=cmd
+  else
+    EXT=.sh
   endif
 endif
 GTEST_DIR=googletest-read-only
@@ -32,49 +34,49 @@ GTESTS=\
 # scalefactor.obj\
 
 all: clean gtest-all
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	gtest-all
 else
 	./gtest-all
 endif
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c -r -g test_df1b2atan2.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -c -r -g test_df1b2atan2.cpp
+	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c -r -g test_df1b2atan2.cpp
 endif
 
 df1b2atan2.obj: df1b2atan2.cpp
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	..\\..\\admb -c -r -g $^
 else
-	../../admb -c -r -g $^
+	../../admb$(EXT) -c -r -g $^
 endif
 
 test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	CXXFLAGS=-I$(GTEST_DIR)/include ..\\..\\admb -c -r -g test_scalefactor.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -c -r -g test_scalefactor.cpp
+	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c -r -g test_scalefactor.cpp
 endif
 
 scalefactor.obj: scalefactor.tpl
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	CXXFLAGS=-Dmain=scalefactor ..\\..\\admb -c -r -g $^
 else
-	CXXFLAGS=-Dmain=scalefactor ../../admb -c -r -g $^
+	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c -r -g $^
 endif
 
 gtest-all: gtest-all.obj $(GTESTS)
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -g -r $^
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb -g -r $^
+	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb$(EXT) -g -r $^
 endif
 
 gtest-all.obj: googletest-read-only
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	$(CXX) -c $(CXXFLAGS) -g -I$(GTEST_DIR)\\include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)\\src\\gtest-all.cc
 else
 	$(CXX) -c $(CXXFLAGS) -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc

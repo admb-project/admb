@@ -96,8 +96,10 @@ else
 	@rm -vf fmin.log
 	@rm -vf admodel.dep
 	@rm -vf cov_re
+	@rm -vf cov_re.exe
 	@rm -vf cov_re.rhes
 	@rm -vf cov_re_sep
+	@rm -vf cov_re_sep.exe
 	@rm -vf cov_re_sep.o
 	@rm -vf cov_re_sep.obj
 	@rm -vf cov_re_sep.cor

@@ -78,6 +78,7 @@ else
 	@rm -vf variance
 	@rm -vf fmin.log
 	@rm -vf $(TARGET).eva
+	@rm -vf $(TARGET).exe
 	@rm -vf $(TARGET).htp
 	@rm -vf $(TARGET).bar
 	@rm -vf $(TARGET).bgs

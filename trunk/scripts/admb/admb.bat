@@ -17,20 +17,20 @@ if ERRORLEVEL 1 (
 
 set ADMB_HOME=
 if not defined ADMB_HOME (
-  set SCRIPT_PATH=%~dp0
+  set "SCRIPT_PATH=%~dp0"
   if defined SCRIPT_PATH (
     pushd !SCRIPT_PATH!
     pushd ..
-    set ADMB_HOME=!CD!
+    set "ADMB_HOME=!CD!"
     popd
     popd
   ) else (
     for %%a in (admb.cmd) do (
-      set HAS_PATH=%%~dp$PATH:a
+      set "HAS_PATH=%%~dp$PATH:a"
       if defined HAS_PATH (
         pushd !HAS_PATH!
         pushd ..
-        set ADMB_HOME=!CD!
+        set "ADMB_HOME=!CD!"
         popd
         popd
       )
@@ -38,7 +38,7 @@ if not defined ADMB_HOME (
   )
 ) else (
   pushd !ADMB_HOME!
-  set ADMB_HOME=!CD!
+  set "ADMB_HOME=!CD!"
   popd
 )
 
@@ -46,6 +46,7 @@ if not defined ADMB_HOME (
   echo "Error: ADMB_HOME is not defined."
   goto EOF
 )
+
 set tpls=
 set srcs=
 set objs=
@@ -113,8 +114,8 @@ for %%a in (%*) do (
     )
   )
 )
-if exist !ADMB_HOME!\bin\admb-cfg.bat (
-  call !ADMB_HOME!\bin\admb-cfg.bat
+if exist "!ADMB_HOME!\bin\admb-cfg.bat" (
+  call "!ADMB_HOME!\bin\admb-cfg.bat"
   if defined ADMB_CFG_CXX (
     set CXX=!ADMB_CFG_CXX!
   )
@@ -144,19 +145,19 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
-    if not exist !ADMB_HOME!\contrib\lib\contribo.lib (
+    if not exist "!ADMB_HOME!\contrib\lib\contribo.lib" (
       set libs="!ADMB_HOME!\lib\admbo.lib" /link
     ) else (
       set libs="!ADMB_HOME!\contrib\lib\contribo.lib" "!ADMB_HOME!\lib\admbo.lib" /link
     )
   ) else (
-    if not exist !ADMB_HOME!\contrib\lib\contrib.lib (
+    if not exist "!ADMB_HOME!\contrib\lib\contrib.lib" (
       set libs="!ADMB_HOME!\lib\admb.lib" /link
     ) else (
       set libs="!ADMB_HOME!\contrib\lib\contrib.lib" "!ADMB_HOME!\lib\admb.lib" /link
     )
   )
-  if not exist !ADMB_HOME!\contrib\lib\contrib.lib (
+  if not exist "!ADMB_HOME!\contrib\lib\contrib.lib" (
     set CXXFLAGS=!CXXFLAGS! /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
   ) else (
     set CXXFLAGS=!CXXFLAGS! /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
@@ -197,28 +198,28 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-    if not exist !ADMB_HOME!\contrib\lib\libcontribo.a (
-      set libs=!ADMB_HOME!\lib\libadmbo.a
+    if not exist "!ADMB_HOME!\contrib\lib\libcontribo.a" (
+      set libs="!ADMB_HOME!\lib\libadmbo.a"
     ) else (
-      set libs=!ADMB_HOME!\contrib\lib\libcontribo.a !ADMB_HOME!\lib\libadmbo.a
+      set libs="!ADMB_HOME!\contrib\lib\libcontribo.a" "!ADMB_HOME!\lib\libadmbo.a"
     )
   ) else (
-    if not exist !ADMB_HOME!\contrib\lib\libcontrib.a (
-      set libs=!ADMB_HOME!\lib\libadmb.a
+    if not exist "!ADMB_HOME!\contrib\lib\libcontrib.a" (
+      set libs="!ADMB_HOME!\lib\libadmb.a"
     ) else (
-      set libs=!ADMB_HOME!\contrib\lib\libcontrib.a !ADMB_HOME!\lib\libadmb.a
+      set libs="!ADMB_HOME!\contrib\lib\libcontrib.a" "!ADMB_HOME!\lib\libadmb.a"
     )
   )
   if defined d (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
-  if not exist !ADMB_HOME!\contrib\lib\libcontrib.a (
-    set CXXFLAGS=!CXXFLAGS! -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\include\contrib
+  if not exist "!ADMB_HOME!\contrib\lib\libcontrib.a" (
+    set CXXFLAGS=!CXXFLAGS! -fpermissive -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\contrib\include
+    set CXXFLAGS=!CXXFLAGS! -fpermissive -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"
   )
 )
-set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!
+set "PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!"
 if not defined tpls (
   if not defined srcs (
     if not defined objs (

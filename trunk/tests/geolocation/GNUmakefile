@@ -1,8 +1,8 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL=cmd
-  else
     EXT=.sh
+  else
+    SHELL=cmd
   endif
 endif
 
@@ -11,8 +11,8 @@ ADMB_HOME=../../../build/dist
 endif
 
 all:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --file=Makefile all
+ifeq ($(SHELL),cmd)
+	$(MAKE) MAKEDIR=.. --file=Makefile all
 else
 	$(MAKE) kfsst/kfsst kftrack/kftrack trackit/trackit ukfsst/ukfsst
 	$(MAKE) run

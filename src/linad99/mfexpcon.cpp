@@ -11,16 +11,21 @@
 #include <fvar.hpp>
 
 /**
- Robust exponential function for arguments > 60 or < -60.
+  Robust exponential function for constant argument > 60 or < -60.
   Prevents overflow and underflow for arguments outside of the domain
   of exp().
-  \param x constant exponent.
-  \return \f$e^x\f$
+  (Note: \f$e^{60} > 10^{26}\f$.)
+  \param x exponent.
+  \return \f$\left\{\begin{array} {r@{\quad:\quad}l}
+                    x > 60 & e^{60}\frac{(1+2(x-60))}{1+x-60}\\
+                    x < 60 & e^{-60}\frac{(1-x-60)}{1+2(-x-60)}\\
+               {\rm else} & e^x
+                    \end{array}\right.\f$ 
   \ingroup misc
  */
   double mfexp(double x)
   {
-    double b=60;
+    double b=60; 
     if (x<=b && x>=-b)
     {
       return exp(x);
@@ -36,11 +41,16 @@
   }
 
 /**
-  Robust exponential function.
+  Robust exponential function for constant argument with user 
+  specified domain bound.
   Prevents overflow and underflow for arguments outside of the domain
-  \param x constant exponent.
-  \param b double user specified function domain bound.
-  \return \f$e^x\f$
+  \param x exponent.
+  \param b ouble user specified function domain bound.
+  \return \f$\left\{\begin{array} {r@{\quad:\quad}l}
+                    x > b & e^b\frac{(1+2(x-b))}{1+x-b}\\
+                    x < b & e^{-b}\frac{(1-x-b)}{1+2(-x-b)}\\
+               {\rm else} & e^x
+                    \end{array}\right.\f$ 
   \ingroup misc
   */
   double mfexp(double x,double b)

@@ -4,15 +4,15 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
+/** \file
+    Code for computing square of various constant objects.
+
  */
 #include "fvar.hpp"
 
 /** Square of a number; constant object.
 \ingroup misc
-\param m Nu,ber to be squared.
+\param m Number to be squared.
 \return \f$m^2\f$
 */
 double square(const double m)
@@ -20,10 +20,10 @@ double square(const double m)
   return m * m;
 }
 
-/** Square of a number; constant vector object.
+/** Square of elements in a vector; constant vector object.
 \ingroup misc
-\param m vector of numbers to be squared.
-\return vector of the same length ad #x containing \f$m_i^2\f$
+\param m Vector of constant object to be squared.
+\return vector of the same length as #m containing \f$m_i^2\f$
 */
 dvector square(const dvector& m)
    {
@@ -36,7 +36,7 @@ dvector square(const dvector& m)
      return tmp;
    }
 
-/** Square of a number; constant matrix object.
+/** Square of a elements in a matrix; constant matrix object.
 \ingroup misc
 \param m matrix of numbers to be squared.
 \return A matrix of the same rank as #m containing \f$m_{ij}^2\f$
@@ -52,7 +52,7 @@ dmatrix square(const dmatrix& m)
      return tmp;
    }
 
-/** Square of a number; constant 3 dimensionsal array.
+/** Square of elements in a 3-dimensional array; constant 3-dimensionsal array.
 \ingroup misc
 \param m d3_array of numbers to be squared.
 \return A d3_array of the same shape as #m containing \f$m_{ijk}^2\f$

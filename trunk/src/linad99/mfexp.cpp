@@ -11,11 +11,16 @@
 #include <fvar.hpp>
 
 /**
-  Robust exponential function for arguments > 60 or < -60.
+  Robust exponential function for variable argument > 60 or < -60.
   Prevents overflow and underflow for arguments outside of the domain
   of exp().
+  (Note: \f$e^{60} > 10^{26}\f$.)
   \param x dvariable exponent.
-  \return \f$e^x\f$
+  \return \f$\left\{\begin{array} {r@{\quad:\quad}l}
+                    x > 60 & e^{60}\frac{(1+2(x-60))}{1+x-60}\\
+                    x < 60 & e^{-60}\frac{(1-x-60)}{1+2(-x-60)}\\
+               {\rm else} & e^x
+                    \end{array}\right.\f$ 
   \ingroup misc
  */
 dvariable mfexp(const prevariable& x)
@@ -36,11 +41,16 @@ dvariable mfexp(const prevariable& x)
   }
 
 /**
-  Robust exponential function.
+  Robust exponential function for variable argument with user 
+  specified domain bound.
   Prevents overflow and underflow for arguments outside of the domain
   \param x dvariable exponent.
   \param b double user specified function domain bound.
-  \return \f$e^x\f$
+  \return \f$\left\{\begin{array} {r@{\quad:\quad}l}
+                    x > b & e^b\frac{(1+2(x-b))}{1+x-b}\\
+                    x < b & e^{-b}\frac{(1-x-b)}{1+2(-x-b)}\\
+               {\rm else} & e^x
+                    \end{array}\right.\f$ 
   \ingroup misc
  */
 dvariable mfexp(const prevariable& x, double b)

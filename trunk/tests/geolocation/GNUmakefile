@@ -1,8 +1,8 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    EXT=.sh
-  else
     SHELL=cmd
+  else
+    EXT=.sh
   endif
 endif
 
@@ -69,13 +69,17 @@ ukfsst:
 	svn export http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/sst_files ukfsst/sst_files
 
 run:
+ifeq ($(SHELL),cmd)
+	$(MAKE) --file=Makefile run
+else
 	pushd kfsst; ./kfsst; popd
 	pushd kftrack; ./kftrack; popd
 	pushd trackit; ./ukf; popd
 	pushd ukfsst; ./ukfsst; popd
+endif
 
 clean:
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
 	$(MAKE) --file=Makefile clean
 else
 	if [[ -d kfsst ]]; then $(MAKE) --directory=kfsst clean; fi;

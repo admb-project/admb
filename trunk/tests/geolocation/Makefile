@@ -1,18 +1,18 @@
-PATH=$(MAKEDIR)\\..\\..;$(PATH)
-
 all: kfsst\\kfsst.exe kftrack\\kftrack.exe trackit\\trackit.exe ukfsst\\ukfsst.exe
 
 kfsst\\kfsst.exe: kfsst
-	pushd kfsst& $(MAKE)
+	pushd kfsst& ..\\..\\..\\admb kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 
 kftrack\\kftrack.exe: kftrack
-	pushd kftrack& $(MAKE)
+	pushd kftrack& ..\\..\\..\\admb kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	pushd kftrack& ..\\..\\..\\admb twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 
 trackit\\trackit.exe: trackit
-	pushd trackit& $(MAKE)
+	pushd trackit& ..\\..\\..\\admb ukf
+	pushd trackit& ..\\..\\..\\admb prepro
 
 ukfsst\\ukfsst.exe: ukfsst
-	pushd ukfsst& $(MAKE)
+	pushd ukfsst& ..\\..\\..\\admb ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 
 kfsst:
 	if not exist kfsst svn export http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source kfsst

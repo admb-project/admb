@@ -17,7 +17,7 @@ LicenseFile=..\..\..\LICENSE.txt
 Name: "vc11"; Description: "ADMB (Microsoft Visual C++ 2012)"
 
 [Files]
-Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\cl\set-admb-vc11.bat"; DestDir: "{app}\bin"
 
 [Icons]

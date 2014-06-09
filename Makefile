@@ -73,16 +73,13 @@ g++: g++-all
 g++-all: 
 	$(MAKE) g++-src
 	$(MAKE) g++-contrib
-	$(MAKE) g++-shared
 	$(MAKE) g++-copy
 g++-debug:
 	$(MAKE) g++-all DEBUG=yes
 g++-src:
 	$(MAKE) --directory=src CC=gcc CXX=g++ all
-	$(MAKE) --directory=src CC=gcc CXX=g++ SHARED=-shared libs
 g++-contrib:
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ all
-	$(MAKE) --directory=contrib CC=gcc CXX=g++ SHARED=-shared libs
 g++-docs:
 	$(MAKE) --directory=docs CC=gcc CXX=g++ all
 g++-test:

@@ -26,8 +26,8 @@ build/examples/simple:
 	cp -vf build/ADMBTerminal.app/Contents/admb/examples/admb/simple/simple.dat build/examples/simple/
 	cp -vf build/ADMBTerminal.app/Contents/admb/examples/admb/simple/simple.tpl build/examples/simple/
 
-
 clean:
 	rm -rvf build/ADMBTerminal.app
 	rm -rvf build
 	rm -vf ADMBTerminal.dmg
+	rm -vf rawADMBTerminal.dmg

@@ -57,6 +57,7 @@ ADMB-trunk
           save_gradients(gradients);
 
 * Added back the MacOS binary ADMBTerminal app.
+* Packaged mingw compilers (32 and 64 bit) with windows installers.
 
 ####New Supported Compilers
 

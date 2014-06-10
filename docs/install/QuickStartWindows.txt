@@ -19,6 +19,7 @@ Quick Start
 1. **Download** ADMB installer
 
        [ADMB Installer (32 Bit)](http://www.admb-project.org/buildbot/snapshots/admb-mingw32-r2083-windows8-mingw32.exe)
+
        [ADMB Installer (64 Bit)](http://www.admb-project.org/buildbot/snapshots/admb-mingw64-r2083-windows8-mingw64.exe)
 
 2. **Open** ADMB Command Prompt
@@ -29,13 +30,13 @@ Quick Start
  
        Copy the simple example directory
 
-       C:\> xcopy %ADMB_HOME%\examples\admb\simple
+           C:\> xcopy %ADMB_HOME%\examples\admb\simple
 
        The build and run simple.
 
-       C:\> cd simple
-       C:\simple\> admb simple
-       C:\simple\> simple
+           C:\> cd simple
+           C:\simple\> admb simple
+           C:\simple\> simple
 
 ---
 For help and support, contact <users@admb-project.org>.

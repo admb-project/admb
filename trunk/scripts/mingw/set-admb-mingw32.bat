@@ -1,5 +1,7 @@
 @echo off
 
+@set "ADMB_HOME=%CD%"
+
 @set "PATH=%CD%\bin;%CD%\utilities;%CD%\utilities\mingw32\bin;%PATH%"
 
 @cd "%USERPROFILE%"

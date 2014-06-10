@@ -10,9 +10,9 @@ ADMBTerminal.dmg: build/ADMBTerminal.app
 	rm -vf $@
 	hdiutil convert build/raw$@ -format UDBZ -o $@
 
-build/ADMBTerminal.app:
+build/ADMBTerminal.app: ADMBTerminal.scpt
 	mkdir -p build
-	osacompile -o $@ ADMBTerminal.scpt
+	osacompile -o $@ $^
 
 build/ADMBTerminal.pkg:
 	$(CC) --verbose --title "ADMBTerminal" --root build --id www.admb-project.org --resources build/ADMBTerminal.app/Contents/Resources --out $@

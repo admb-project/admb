@@ -22,11 +22,15 @@ Quick Start
 
        [ADMB Windows Installer (32 Bit)](http://www.admb-project.org/buildbot/snapshots/admb-mingw32-r2083-windows8-mingw32.exe)
 
-2. **Open** ADMB Command Prompt
+2. **Install** 
+
+       Double click the ADMB installer and follow the installer instructions.
+
+3. **Open** ADMB Command Prompt
 
        On the Desktop, double click ADMB Command Prompt.
 
-3. **Use** ADMB
+4. **Use** ADMB
  
        Copy the simple example directory
 

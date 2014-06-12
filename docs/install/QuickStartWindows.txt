@@ -34,7 +34,7 @@ Quick Start
  
        Copy the simple example directory
 
-           C:\> xcopy %ADMB_HOME%\examples\admb\simple
+           C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
 
        The build and run simple.
 

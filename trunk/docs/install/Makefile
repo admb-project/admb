@@ -1,4 +1,12 @@
-all: QuickStartWindows.html QuickStartVisualC++.html QuickStartUnix.html CHANGES.html INSTALL.html README.html LICENSE.html
+all:\
+  QuickStartWindows.html\
+  QuickStartVisualC++.html\
+  QuickStartUnix.html\
+  QuickStartMacOS.html\
+  CHANGES.html\
+  INSTALL.html\
+  LICENSE.html\
+  README.html
 
 QuickStartWindows.html: QuickStartWindows.txt
 	cat begin.html>$@
@@ -11,6 +19,11 @@ QuickStartVisualC++.html: QuickStartVisualC++.txt
 	cat end.html>>$@
 
 QuickStartUnix.html: QuickStartUnix.txt
+	cat begin.html>$@
+	markdown_py $^>>$@
+	cat end.html>>$@
+
+QuickStartMacOS.html: ../../scripts/installers/packagemaker/README.txt
 	cat begin.html>$@
 	markdown_py $^>>$@
 	cat end.html>>$@

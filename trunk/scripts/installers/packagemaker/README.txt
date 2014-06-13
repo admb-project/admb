@@ -8,8 +8,15 @@ Prerequisites
 
 Installation
 ============
-1. Open ADMB dmg file. 
-2. In the mounted disk image "ADMB", copy "ADMBTerminal"
+1. Download ADMBTerminal
+
+   [For XCode 5 (64 Bit)](http://www.admb-project.org/buildbot/snapshots/ADMBTerminal-latest-macos10.9-xcode5-64bit.dmg)  
+
+   [For XCode 5 (32 Bit)](http://www.admb-project.org/buildbot/snapshots/ADMBTerminal-latest-macos10.9-xcode5-32bit.dmg)  
+
+2. Open ADMB dmg file. 
+
+3. In the mounted disk image "ADMB", copy "ADMBTerminal"
    to the "Applications" folder.
 
 Quick Start

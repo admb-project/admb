@@ -24,7 +24,10 @@ Quick Start
 
 2. **Install** 
 
+       _**Warning** &mdash; Uninstall any existing installations of ADMB._
+
        Double click the ADMB installer and follow the installer instructions.
+
 
 3. **Open** ADMB Command Prompt
 

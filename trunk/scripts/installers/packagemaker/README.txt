@@ -1,13 +1,13 @@
-The installation procedure for installing ADMB
-from the package installer file.
+The installation procedure for installing ADMBTerminal app for the MacOS.
 
-Prerequisites
-============
-[ ] Apple Developer Tools (XCode) must be installed
-    from http://www.apple.com/xcode/.
 
 Installation
 ============
+
+**Prerequisites**
+
+* [Apple Developer Tools &mdash; XCode](http://www.apple.com/xcode/) must be installed.
+
 1. Download ADMB installer
 
        [ADMB XCode 5 (64 Bit).dmg](http://www.admb-project.org/buildbot/snapshots/ADMBTerminal-latest-macos10.9-xcode5-64bit.dmg)  
@@ -18,7 +18,7 @@ Installation
 3. In the mounted disk image ADMBTerminal, copy **ADMBTerminal**
    into the **Applications** folder.
   
-   _**Note** &mdash; ADMB_HOME is /Applications/ADMBTerminal.app/admb_
+        _**Note** &mdash; ADMBTerminal ADMB_HOME is /Applications/ADMBTerminal.app/admb_
 
 Quick Start
 ===========

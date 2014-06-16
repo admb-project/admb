@@ -66,6 +66,7 @@ cl-check:
 cl-clean:
 	pushd src& nmake clean
 	pushd contrib& nmake clean
+	pushd scripts& nmake clean
 	pushd tests& nmake clean
 
 #GNU
@@ -102,6 +103,7 @@ g++-check:
 g++-clean:
 	$(MAKE) --directory=src CC=gcc CXX=g++ clean
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ clean
+	$(MAKE) --directory=scripts CC=gcc CXX=g++ clean
 	$(MAKE) --directory=tests CC=gcc CXX=g++ clean
 
 #clang
@@ -138,6 +140,7 @@ clang++-check:
 clang++-clean:
 	$(MAKE) --directory=src CC=clang CXX=clang++ clean
 	$(MAKE) --directory=contrib CC=clang CXX=clang++ clean
+	$(MAKE) --directory=scripts CC=clang CXX=clang++ clean
 	$(MAKE) --directory=tests CC=clang CXX=clang++ clean
 
 #default c++
@@ -174,6 +177,7 @@ c++-check:
 c++-clean:
 	$(MAKE) --directory=src CC=cc CXX=c++ clean
 	$(MAKE) --directory=contrib CC=cc CXX=c++ clean
+	$(MAKE) --directory=scripts CC=cc CXX=c++ clean
 	$(MAKE) --directory=tests CC=cc CXX=c++ clean
 
 #Oracle Solaris Studio
@@ -210,6 +214,7 @@ CC-check:
 CC-clean:
 	$(MAKE) --directory=src CC=cc CXX=CC clean
 	$(MAKE) --directory=contrib CC=cc CXX=CC clean
+	$(MAKE) --directory=scripts CC=cc CXX=CC clean
 	$(MAKE) --directory=tests CC=cc CXX=CC clean
 
 #Intel
@@ -246,6 +251,7 @@ icpc-check:
 icpc-clean:
 	$(MAKE) --directory=src CC=icc CXX=icpc clean
 	$(MAKE) --directory=contrib CC=icc CXX=icpc clean
+	$(MAKE) --directory=scripts CC=icc CXX=icpc clean
 	$(MAKE) --directory=tests CC=icc CXX=icpc clean
 
 #AMD
@@ -282,6 +288,7 @@ openCC-check:
 openCC-clean:
 	$(MAKE) --directory=src CC=opencc CXX=openCC clean
 	$(MAKE) --directory=contrib CC=opencc CXX=openCC clean
+	$(MAKE) --directory=scripts CC=opencc CXX=openCC clean
 	$(MAKE) --directory=tests CC=opencc CXX=openCC clean
 
 #Unsupported Borland 5.5

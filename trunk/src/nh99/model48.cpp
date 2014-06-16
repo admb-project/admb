@@ -6,11 +6,15 @@
  */
 #include <admodel.h>
 
-void param_init_bounded_number_vector::set_initial_value(
-  const double_index_type& _it)
- {
-    it=new double_index_type(_it);
- }
+void param_init_bounded_number_vector::set_initial_value(const double_index_type& _it)
+{
+  int mmin = indexmin();
+  int mmax = indexmax();
+  for (int i = mmin; i <= mmax; i++)
+  {
+    (*this)(i) = ad_double(_it(i));
+  }
+}
 
 /**
 Default constructor

@@ -23,6 +23,7 @@ GTESTS=\
  test_adpool.cpp\
  test_dvector.cpp\
  test_df_file.cpp\
+ test_param_init_bounded_number_vector.cpp\
  main.cpp
 
 ##Need to debug this

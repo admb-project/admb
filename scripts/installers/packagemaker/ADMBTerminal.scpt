@@ -8,7 +8,4 @@ set pp to (POSIX path of p)
 tell application "Terminal"
   activate
   do script "export ADMB_HOME=\"" & pp & "admb\"; export PATH=\"" & pp & "admb/bin\":${PATH}"
--- echo ADMB Terminal
--- echo For help, type command "admb".
-  do shell script "echo kdjfkdj"
 end tell

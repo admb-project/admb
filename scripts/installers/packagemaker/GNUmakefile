@@ -1,7 +1,5 @@
 CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
 
-all2: build/ADMBTerminal.app
-
 all: ADMBTerminal.dmg
 
 ADMBTerminal.dmg: build/ADMBTerminal.app

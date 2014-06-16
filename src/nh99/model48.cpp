@@ -6,7 +6,8 @@
  */
 #include <admodel.h>
 
-void param_init_bounded_number_vector::set_initial_value(const double_index_type& _it)
+void param_init_bounded_number_vector::set_initial_value(
+  const double_index_type& _it)
 {
   int mmin = indexmin();
   int mmax = indexmax();

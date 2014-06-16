@@ -15,5 +15,4 @@ else
 endif
 
 clean:
-	$(MAKE) --directory=installs clean
-	$(MAKE) --directory=tpmarkdown clean
+	$(MAKE) --directory=install clean

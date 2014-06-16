@@ -51,3 +51,4 @@ LICENSE.html: ../../LICENSE.txt
 clean:
 	rm -vf QuickStartWindows.html QuickStartVisualC++.html QuickStartUnix.html
 	rm -vf CHANGES.html INSTALL.html README.html LICENSE.html
+	rm -vf QuickStartMacOS.html

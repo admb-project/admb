@@ -84,6 +84,7 @@ providing fixes and/or suggestions:
 * Barak A. Pearlmutter
 * Jon Schnute
 * Jiashen Tang
+* William Stockhausen - NOAA
 * Johnoel Ancheta
 
 ---

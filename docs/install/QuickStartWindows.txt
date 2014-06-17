@@ -12,9 +12,9 @@ read and follow the instuctions in [QuickStart for Visual C++](QuickStartVisualC
 _For builds within *Cygwin* and *MinGW-Msys* shells, read and follow the
 instructions in the [QuickStart for Unix](QuickStartUnix.html)._
 
-
 Quick Start
 -----------
+_**Warning** &mdash; Uninstall any existing installations of ADMB._
 
 1. **Download** ADMB installer
 
@@ -24,10 +24,7 @@ Quick Start
 
 2. **Install** 
 
-       _**Warning** &mdash; Uninstall any existing installations of ADMB._
-
        Double click the ADMB installer and follow the installer instructions.
-
 
 3. **Open** ADMB Command Prompt
 

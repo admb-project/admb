@@ -7,8 +7,8 @@ TEST_F(test_param_init_bounded_number_vector, default_constructor)
 {
   param_init_bounded_number_vector p;
   EXPECT_EQ(0, p.allocated());
-  //EXPECT_NE(0, p.indexmin());
-  //EXPECT_NE(0, p.indexmax());
+  EXPECT_EQ(-1, p.indexmin());
+  EXPECT_EQ(-1, p.indexmax());
 }
 TEST_F(test_param_init_bounded_number_vector, set_initial_value)
 {
@@ -42,4 +42,9 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value)
   {
     EXPECT_EQ(i, p[i]);
   }
+
+  p.deallocate();
+  EXPECT_EQ(0, p.allocated());
+  EXPECT_EQ(-1, p.indexmin());
+  EXPECT_EQ(-1, p.indexmax());
 }

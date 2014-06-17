@@ -23,6 +23,8 @@ Default constructor
 param_init_bounded_number_vector::param_init_bounded_number_vector():
   v(NULL), it(NULL)
 {
+  index_min = -1;
+  index_max = -1;
 }
 /**
 Destructor
@@ -47,6 +49,8 @@ void param_init_bounded_number_vector::deallocate(void)
     delete [] v;
     v = NULL;
   }
+  index_min = -1;
+  index_max = -1;
 }
 /**
 Overload the allocate function to use a data_matrix object.
@@ -135,8 +139,6 @@ void param_init_number_vector::set_scalefactor(double s)
   }
 }
 
-
-
 dvector param_init_vector_vector::get_scalefactor(void)
 {
   int mmin=indexmin();
@@ -174,9 +176,6 @@ void param_init_vector_vector::set_scalefactor(double s)
     (*this)(i).set_scalefactor(s);
   }
 }
-
-
-
 
 dvector param_init_matrix_vector::get_scalefactor(void)
 {
@@ -216,8 +215,6 @@ void param_init_matrix_vector::set_scalefactor(double s)
   }
 }
 
-
-
 dvector param_init_bounded_number_vector::get_scalefactor(void)
 {
   int mmin=indexmin();
@@ -256,8 +253,6 @@ void param_init_bounded_number_vector::set_scalefactor(double s)
   }
 }
 
-
-
 dvector param_init_bounded_vector_vector::get_scalefactor(void)
 {
   int mmin=indexmin();
@@ -295,9 +290,6 @@ void param_init_bounded_vector_vector::set_scalefactor(double s)
     (*this)(i).set_scalefactor(s);
   }
 }
-
-
-
 
 dvector param_init_bounded_matrix_vector::get_scalefactor(void)
 {

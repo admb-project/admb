@@ -33,7 +33,7 @@ Quick Start
 
        This will copy admb trunk folder to _~/admb/_.
 
-       If **unable** to checkout, download [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest.zip).
+       If **unable** to checkout, download [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip).
 
        Use the command below to extract to _~/admb/_. 
 

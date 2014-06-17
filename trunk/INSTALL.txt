@@ -7,14 +7,23 @@ Installation procedures for Unix and Windows computers.
 
 ---
 
-Installation procedures
------------------------
+Installation
+------------
 
 For Windows computers, read the [QuickStartWindows](QuickStartWindows.html).  
 
 For Windows computers with Visual C++, read the [QuickStartWindowsVisualC++](QuickStartVisualC++.html).  
 
 For MacOS computers, read the [QuickStartMacOS](QuickStartMacOS.html).
+
+For Unix (Linux, Solaris and BSD) computers, read the [QuickStartUnix](QuickStartUnix.html).
+
+For MinGW and Cygwin shells, read the [QuickStartUnix](QuickStartUnix.html).
+
+Source Installation
+-------------------
+
+For Windows computers, read the [QuickStartWindowsSource](QuickStartWindowsSource.html).  
 
 For Unix (Linux, MacOS, Solaris and BSD) computers, read the [QuickStartUnix](QuickStartUnix.html).
 

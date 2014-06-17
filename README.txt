@@ -55,8 +55,8 @@ For help and support, email <users@admb-project.org>.
 
 Mailing list archives
 
-+ [Users list][ADMB_users] is the general mailing list.
-+ [Developers list][ADMB_developers] is for developers.
++ [Users][ADMB_users] is the general mailing list.
++ [Developers][ADMB_developers] is core team mailing list.
 
 [ADMB_users]: http://lists.admb-project.org/pipermail/users/
 [ADMB_developers]: http://lists.admb-project.org/pipermail/developers/

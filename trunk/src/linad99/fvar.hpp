@@ -455,31 +455,6 @@ class grad_stack;
  */
 class kkludge_object{};
 
-/**
- * Description not yet available.
- * \param
- */
-class humungous_pointer
-{
- public:
-   char *ptr;
-   int adjustment;
-   void free(void);
-   ~humungous_pointer()
-   {;
-   }
-   void adjust(int);
-   humungous_pointer();
-   humungous_pointer operator +(unsigned long int &offset);
-   humungous_pointer & operator +=(unsigned long int &offset);
-   humungous_pointer & operator =(void *p);
-   int operator ==(void *p);
-   int operator !=(void *p);
-   operator  char *();
-   operator  void *();
-   operator  double_and_int *();
-   operator  double *();
-};
 
 #ifndef _VECTOR_SHAPE
 #define _VECTOR_SHAPE
@@ -2985,183 +2960,7 @@ double sfabs(double t1); //"smoothed absolute value function
 
 dvector sfabs(const dvector & t1); //"smoothed absolute value function
 
-//// daves' addition to john's additions
-
-/**
- * Description not yet available.
- * \param
- */
-class imatrix_position
-{
- public:
-   int row_min;
-   int row_max;
-   ivector lb;
-   ivector ub;
-   ptr_vector ptr;
-   imatrix_position(const imatrix &);
-   imatrix_position(int min, int max);
-   imatrix_position(const imatrix_position &);
-   ivector_position operator () (int i);
-};
-
-imatrix_position restore_imatrix_position(void);
-imatrix restore_imatrix_value(const imatrix_position &);
-
-/**
- * Description not yet available.
- * \param
- */
-class imatrix
-{
- protected:
-   int index_min;
-   int index_max;
-   ivector *m;
-   mat_shapex *shape;
-   friend char *fform(const char *, const dmatrix &);
-
- public:
-   int operator!(void) const
-   {
-      return (shape == NULL);
-   }
-
-   imatrix(int, int);
-   // makes a matrix [0..nr][0..nc]
-
-   imatrix(int nrl, int nrh, const ivector & iv);
-   void allocate(int nrl, int nrh, const ivector & iv);
-
-   imatrix(int, int, int, int);
-   // makes a matrix [nrl..nrh][ncl..nch]
-   imatrix(int, int, int, const ivector &);
-   imatrix sub(int, int);
-   imatrix(int, int, const ivector &, const ivector &);
-   imatrix(const ad_integer & nrl, const ad_integer & nrh,
-     const index_type & ncl, const index_type & nch);
-
-   imatrix & operator=(const imatrix & t);
-   imatrix & operator =(const int);
-   imatrix(const imatrix &);
-   // copy initializer
-   imatrix(const imatrix_position &);
-   imatrix(void);
-
-   ~imatrix();
-   void shallow_copy(const imatrix &);
-
-   void save_imatrix_value(void);
-   void save_imatrix_position(void);
-   imatrix restore_imatrix_value(const imatrix_position & mpos);
-   imatrix_position restore_imatrix_position(void);
-
-   void allocate(void);
-   void allocate(const imatrix & dm);
-   void allocate(int nrl, int nrh, int ncl, int nch);
-   void allocate(int nrl, int nrh);
-   void allocate(int nrl, int nrh, int ncl, const ivector & nch);
-   void allocate(int nrl, int nrh, const ivector & ncl, const ivector & nch);
-   void allocate(const ad_integer & nrl, const ad_integer & nrh,
-     const index_type & ncl, const index_type & nch);
-   void deallocate();
-
-   ivector& operator[](int);
-   ivector& operator()(int);
-   int& operator()(int, int);
-   const ivector& operator[](int) const;
-   const ivector& operator()(int) const;
-   const int& operator()(int, int) const;
-
-   int indexmin(void) const
-   {
-      return index_min;
-   }
-   int indexmax(void) const
-   {
-      return index_max;
-   }
-   int rowmin(void) const
-   {
-      return index_min;
-   }
-   int rowmax(void) const
-   {
-      return index_max;
-   }
-   int colmin(void) const
-   {
-      return ((*this) (indexmin()).indexmin());
-   }
-   int colmax(void) const
-   {
-      return ((*this) (indexmin()).indexmax());
-   }
-   // returns the number of rows
-   int rowsize() const
-   {
-      return (rowmax() - rowmin() + 1);
-   }
-   // returns the number of columns
-   int colsize() const
-   {
-      return (colmax() - colmin() + 1);
-   }
-   void rowshift(int min);
-   inline ivector & elem(int i)
-   {
-      return (*(m + i));
-   }
-   inline int &elem(int i, int j)
-   {
-      return (*((*(m + i)).v + j));
-   }
-   inline const ivector & elem(int i) const
-   {
-      return (*(m + i));
-   }
-   inline const int &elem(int i, int j) const
-   {
-      return (*((*(m + i)).v + j));
-   }
-
-
-   void write_on(const ostream &) const;
-   void write_on(const uostream &) const;
-   void read_from(const istream &);
-   void read_from(const uistream &);
-   void initialize(void);
-   friend class i3_array;
-   void fill_seqadd(int, int);
-   void colfill_seqadd(int, int, int);
-};
-
-#ifdef OPT_LIB
-inline ivector& imatrix::operator()(int i)
-{
-  return m[i];
-}
-inline int& imatrix::operator()(int i, int j)
-{
-  return (*((*(m + i)).v + j));
-}
-inline ivector& imatrix::operator[](int i)
-{
-  return m[i];
-}
-inline const ivector& imatrix::operator()(int i) const
-{
-  return m[i];
-}
-inline const int& imatrix::operator()(int i, int j) const
-{
-  return (*((*(m + i)).v + j));
-}
-inline const ivector& imatrix::operator[](int i) const
-{
-  return m[i];
-}
-#endif
+#include <imatrix.h>
 
 dvariable regression(const dvector & obs, const dvar_vector & pred);
 double regression(const dvector & obs, const dvector & pred);
@@ -8327,9 +8126,7 @@ dvariable log_negbinomial_density(double x, const prevariable & mu,
 dvariable log_density_poisson(double x, const prevariable & mu);
 double log_density_poisson(double x, double mu);
 
-
 //double negbinomial_density(double x,double r, double mu);
-
 
 /**
  * Description not yet available.
@@ -8728,12 +8525,10 @@ class function_minimizer_exception
    }
 };
 
-
 void tracing_message(int traceflag, const char *s);
 void tracing_message(int traceflag, const char *s, int *pn);
 void tracing_message(int traceflag, const char *s, double *pd);
 void tracing_message(int traceflag, const char *s, double d);
-
 
 int sub_unallocated(const dvar_vector & m);
 int sub_unallocated(const dvar_matrix & m);

@@ -30,7 +30,9 @@ class df1b2_gradlist;
 
 //int initial_df1b2params::current_phase=0;
 
+#if defined(__DERCHECK__)
 int mydercheckercounter=0;
+#endif
 
 /**
  * Description not yet available.
@@ -165,8 +167,8 @@ void df1b2_gradcalc1(void)
   case 3:
 #if defined(__DERCHECK__)
     //  derchecker->counter=f1b2gradlist->ncount;
-      mydercheckercounter=f1b2gradlist->ncount;
-#   endif
+    mydercheckercounter=f1b2gradlist->ncount;
+#endif
     f1b2gradlist->list.set_reverse();
     f1b2gradlist->list.restore_end();
     f1b2gradlist->nlist.set_reverse();
@@ -211,11 +213,11 @@ void df1b2_gradcalc1(void)
         }
       }
      */
-#if   defined(__DERCHECK__)
+#if defined(__DERCHECK__)
         //derchecker->counter--;
       mydercheckercounter--;
        // stupid_xxx(derchecker->counter);
-#     endif
+#endif
         xcount++;
           tcount--;
        if (xcount > 99999999) cout << xcount << endl;
@@ -241,10 +243,10 @@ void df1b2_gradcalc1(void)
       f1b2gradlist->nlist2.save_end();
       f1b2gradlist->nlist2.set_reverse();
       f1b2gradlist->nlist2.restore_end();
-#if   defined(__DERCHECK__)
-      //  derchecker->counter=0;
+#if defined(__DERCHECK__)
+      // derchecker->counter=0;
       mydercheckercounter=0;
-#     endif
+#endif
       f1b2gradlist->list.set_forward();
       f1b2gradlist->list.rewind();
       f1b2gradlist->nlist.set_forward();
@@ -255,10 +257,10 @@ void df1b2_gradcalc1(void)
       int icount=0;
       do
       {
-#if     defined(__DERCHECK__)
-         // derchecker->counter++;
-          mydercheckercounter++;
-#       endif
+#if defined(__DERCHECK__)
+        // derchecker->counter++;
+        mydercheckercounter++;
+#endif
         //ADrfptr rf=*ADprfptr(nlist.bptr);
         ADrfptr rf=nlist.bptr->pf;
         (*rf)();

@@ -1,0 +1,5 @@
+Package: admb
+Architecture: all
+Maintainer: ADMB Core Team
+Version: 11.1
+Description: ADMB Project

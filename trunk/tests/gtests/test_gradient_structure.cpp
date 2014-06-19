@@ -17,6 +17,7 @@ TEST_F(test_gradient_structure, default_constructor)
 {
   gradient_structure gs;
 }
+/*
 TEST_F(test_gradient_structure, default_constructor2x)
 {
   {
@@ -26,7 +27,6 @@ TEST_F(test_gradient_structure, default_constructor2x)
     gradient_structure gs;
   }
 }
-/*
 TEST_F(test_gradient_structure, default_constructorb2b)
 {
   ad_exit=&test_ad_exit;

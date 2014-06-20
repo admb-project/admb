@@ -1,4 +1,6 @@
-all: admb_11.1.deb
+all:
+	$(MAKE) clean
+	$(MAKE) admb_11.1.deb
 
 admb_11.1.deb: admb_11.1
 	dpkg-deb --build $^

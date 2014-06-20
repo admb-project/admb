@@ -8,6 +8,7 @@ Installation
        [ADMB Ubuntu14LTS (64 Bit).deb](http://www.admb-project.org/buildbot/snapshots/admb-latest-ubuntu14-64bit_11.1.deb)
 
 2. Install ADMB
+       __Note &mdash; Remove any existing admb package $ sudo dpkg -r admb__
 
        $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.1.deb
 

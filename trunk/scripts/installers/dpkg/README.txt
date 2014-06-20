@@ -5,12 +5,11 @@ Installation
 
 1. Download ADMB debian package
 
-       [ADMB Ubuntu (64 Bit).deb](http://www.admb-project.org/buildbot/snapshots/admb-latest-ubuntu14-64bit.deb)
-       [ADMB Ubuntu (32 Bit).deb](http://www.admb-project.org/buildbot/snapshots/admb-latest-ubuntu14-32bit.deb)
+       [ADMB Ubuntu14LTS (64 Bit).deb](http://www.admb-project.org/buildbot/snapshots/admb-latest-ubuntu14-64bit_11.1.deb)
 
 2. Install ADMB
 
-       $ sudo dpkg -i admb_11.1.deb
+       $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.1.deb
 
 Quick Start
 ===========

@@ -3,6 +3,7 @@ all:\
   QuickStartVisualC++.html\
   QuickStartUnix.html\
   QuickStartMacOS.html\
+  QuickStartUbuntu14.html\
   CHANGES.html\
   INSTALL.html\
   LICENSE.html\
@@ -24,6 +25,11 @@ QuickStartUnix.html: QuickStartUnix.txt
 	cat end.html>>$@
 
 QuickStartMacOS.html: ../../scripts/installers/packagemaker/README.txt
+	cat begin.html>$@
+	markdown_py $^>>$@
+	cat end.html>>$@
+
+QuickStartUbuntu14.html: ../../scripts/installers/packagemaker/README.txt
 	cat begin.html>$@
 	markdown_py $^>>$@
 	cat end.html>>$@

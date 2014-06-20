@@ -16,6 +16,8 @@ For Windows computers with Visual C++, read the [QuickStartWindowsVisualC++](Qui
 
 For MacOS computers, read the [QuickStartMacOS](QuickStartMacOS.html).
 
+For Ubuntu14 computers, read the [QuickStartUbuntu14](QuickStartUbuntu14.html).
+
 For Unix (Linux, Solaris and BSD) computers, read the [QuickStartUnix](QuickStartUnix.html).
 
 For MinGW and Cygwin shells, read the [QuickStartUnix](QuickStartUnix.html).

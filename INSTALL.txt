@@ -22,6 +22,8 @@ For Unix (Linux, Solaris and BSD) computers, read the [QuickStartUnix](QuickStar
 
 For MinGW and Cygwin shells, read the [QuickStartUnix](QuickStartUnix.html).
 
+For all others, read the sourc installation procedure below.
+
 Source Installation
 -------------------
 

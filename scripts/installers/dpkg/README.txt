@@ -1,4 +1,4 @@
-Desribes the ADMB installation procedure for Ubuntu operating system.
+Describe the ADMB installation for Ubuntu operating system.
 
 Installation
 ============

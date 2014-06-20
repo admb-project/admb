@@ -5,7 +5,7 @@ all: cppad-trunk
 
 cppad-trunk:
 	svn checkout https://projects.coin-or.org/svn/CppAD/trunk $@
-	pushd $@ && ./configure
+	cd $@ && ./configure
 
 test: test.cpp
 	$(CXX) -Icppad-trunk -o $@  $^

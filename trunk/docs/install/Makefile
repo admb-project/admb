@@ -29,7 +29,7 @@ QuickStartMacOS.html: ../../scripts/installers/packagemaker/README.txt
 	markdown_py $^>>$@
 	cat end.html>>$@
 
-QuickStartUbuntu14.html: ../../scripts/installers/packagemaker/README.txt
+QuickStartUbuntu14.html: ../../scripts/installers/dpkg/README.txt
 	cat begin.html>$@
 	markdown_py $^>>$@
 	cat end.html>>$@

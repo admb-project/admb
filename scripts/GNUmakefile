@@ -6,4 +6,5 @@ ifeq ($(OS),Windows_NT)
 else
 	@rm -rvf installers/packagemaker/ADMBTerminal.dmg
 	@rm -rvf installers/packagemaker/build
+	$(MAKE) --directory=installers/dpkg clean
 endif

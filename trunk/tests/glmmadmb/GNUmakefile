@@ -52,17 +52,17 @@ ifeq ($(SHELL),cmd)
 	$(MAKE) --file=Makefile run
 else
 	cp -vf glmmadmb admb_tests/bacteria
-	pushd admb_tests ; ./bacteria ; popd 
+	cd admb_tests && ./bacteria
 	cp -vf glmmadmb admb_tests/betabinom
-	pushd admb_tests ; ./betabinom ; popd 
+	cd admb_tests && ./betabinom
 	cp -vf glmmadmb admb_tests/epil2
-	pushd admb_tests ; ./epil2 ; popd 
+	cd admb_tests && ./epil2 -nohess
 	cp -vf glmmadmb admb_tests/hurdle_biochem1
-	pushd admb_tests ; ./hurdle_biochem1 ; popd 
+	cd admb_tests && ./hurdle_biochem1
 	cp -vf glmmadmb admb_tests/hurdle_biochem2
-	pushd admb_tests ; ./hurdle_biochem2 ; popd 
+	cd admb_tests && ./hurdle_biochem2
 	cp -vf glmmadmb admb_tests/zi_owls
-	pushd admb_tests ; ./zi_owls ; popd 
+	cd admb_tests && ./zi_owls
 	./glmmadmb
 endif
 

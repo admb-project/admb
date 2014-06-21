@@ -3,7 +3,7 @@ ADMB Project
 *ADMB-11.1*  
 *Released May 10, 2013*  
 
-Installation procedures for Unix and Windows computers.
+ADMB Installation procedures
 
 ---
 
@@ -18,11 +18,9 @@ For MacOS computers, read the [QuickStartMacOS](QuickStartMacOS.html).
 
 For Ubuntu14 computers, read the [QuickStartUbuntu14](QuickStartUbuntu14.html).
 
-For Unix (Linux, Solaris and BSD) computers, read the [QuickStartUnix](QuickStartUnix.html).
-
 For MinGW and Cygwin shells, read the [QuickStartUnix](QuickStartUnix.html).
 
-For all others, read the sourc installation procedure below.
+For all others, read the source installation procedure below.
 
 Source Installation
 -------------------

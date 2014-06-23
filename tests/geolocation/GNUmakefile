@@ -20,30 +20,30 @@ endif
 
 kfsst/kfsst: kfsst
 ifeq ($(EXT),.sh)
-	cd kfsst && ../../../admb.sh kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	pushd kfsst && ../../../admb.sh kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=kfsst
 endif
 
 kftrack/kftrack: kftrack
 ifeq ($(EXT),.sh)
-	cd kftrack && ../../../admb.sh kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
-	cd kftrack && ../../../admb.sh twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	pushd kftrack && ../../../admb.sh kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	pushd kftrack && ../../../admb.sh twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=kftrack
 endif
 
 trackit/trackit: trackit
 ifeq ($(EXT),.sh)
-	cd trackit && ../../../admb.sh ukf
-	cd trackit && ../../../admb.sh prepro
+	pushd trackit && ../../../admb.sh ukf
+	pushd trackit && ../../../admb.sh prepro
 else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=trackit
 endif
 
 ukfsst/ukfsst: ukfsst
 ifeq ($(EXT),.sh)
-	cd ukfsst && ../../../admb.sh ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	pushd ukfsst && ../../../admb.sh ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 else
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=ukfsst
 endif
@@ -72,10 +72,10 @@ run:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --file=Makefile run
 else
-	cd kfsst && ./kfsst
-	cd kftrack && ./kftrack
-	cd trackit && ./ukf
-	cd ukfsst && ./ukfsst
+	pushd kfsst; ./kfsst; popd
+	pushd kftrack; ./kftrack; popd
+	pushd trackit; ./ukf; popd
+	pushd ukfsst; ./ukfsst; popd
 endif
 
 clean:

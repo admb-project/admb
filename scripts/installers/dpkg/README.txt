@@ -9,7 +9,7 @@ Installation
 
 2. Install ADMB
 
-       $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.1.deb
+        $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.1.deb
 
 Quick Start
 ===========

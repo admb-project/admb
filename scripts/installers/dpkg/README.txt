@@ -15,7 +15,7 @@ Quick Start
 ===========
 Describe the procedure for building and running the ADMB simple example.
 
-1. Open "Terminal", then type admb for Usage options.
+1. Open **Terminal**, then type **admb** for Usage options.
 
         ~$ admb
 
@@ -35,7 +35,7 @@ Describe the procedure for building and running the ADMB simple example.
          src(s) C/C++ Source file(s) containing classes, methods and variables that
                 are used in model.
 
-2. Copy simple example from ADMB_HOME.
+2. Copy simple example to HOME directory.
 
         ~$ cp -R /usr/local/admb/examples/admb/simple .
 
@@ -76,7 +76,9 @@ Describe the procedure for building and running the ADMB simple example.
         Estimating row 1 out of 2 for hessian
         Estimating row 2 out of 2 for hessian
 
-6. Consult the ADMB manual for description of the simple output files.
+6. Consult the [ADMB manuals][ADMB_manuals_link] for description of the simple output files.
+
+[ADMB_manuals_link]: http://www.admb-project.org/buildbot/manuals/
 
 Help
 ====

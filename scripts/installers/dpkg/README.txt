@@ -1,4 +1,4 @@
-Describe the ADMB installation for Ubuntu operating system.
+Describes the ADMB installation for Ubuntu operating system using package manage _dpkg_.
 
 Installation
 ============
@@ -8,8 +8,6 @@ Installation
        [ADMB Ubuntu14LTS 64Bit.deb](http://www.admb-project.org/buildbot/snapshots/admb-latest-ubuntu14-64bit_11.1.deb)
 
 2. Install ADMB
-
-       __**Note** &mdash; Remove any existing admb package $ sudo dpkg -r admb__
 
        $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.1.deb
 

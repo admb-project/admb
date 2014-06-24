@@ -1,4 +1,4 @@
-Describes the ADMB installation for Ubuntu operating system using package manage _dpkg_.
+Describes the ADMB installation for Ubuntu operating system using Debian package manager _dpkg_.
 
 Installation
 ============
@@ -7,9 +7,12 @@ Installation
 
        [ADMB Ubuntu14LTS 64Bit.deb](http://www.admb-project.org/buildbot/snapshots/admb-latest-ubuntu14-64bit_11.1.deb)
 
-2. Install ADMB
+2. Install ADMB using Debian package manager _dpkg_.
 
         $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.1.deb
+
+        __Note__ &mdash; The installer adds the admb script into the system PATH.  It is no longer necessary to modify
+the PATH or set ADMB_HOME system variables.
 
 Quick Start
 ===========

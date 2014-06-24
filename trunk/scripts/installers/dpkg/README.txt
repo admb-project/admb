@@ -11,8 +11,8 @@ Installation
 
         $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.1.deb
 
-        __Note__ &mdash; The installer adds the admb script into the system PATH.  It is no longer necessary to modify
-the PATH or set ADMB_HOME system variables.
+        __Note__ &mdash; The installer will copy the admb script to the /usr/local/bin and put the distribution to 
+/usr/local/admb.  It is no longer necessary to modify the PATH or set ADMB_HOME system variables.
 
 Quick Start
 ===========

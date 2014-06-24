@@ -2,4 +2,5 @@ Package: admb
 Architecture: all
 Maintainer: ADMB Core Team
 Version: 11.1
+Installed-Size: 100
 Description: ADMB Project

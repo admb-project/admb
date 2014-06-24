@@ -23,7 +23,9 @@ clean:
 	pushd geolocation & $(MAKE) clean & popd
 
 verify:
+	del ..\benchmarks-saf.txt
 	pushd ..\build\dist\examples & $(MAKE) all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+	del ..\benchmarks-opt.txt
 	pushd ..\build\dist\examples & $(MAKE) FAST_OPTION=-f all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd

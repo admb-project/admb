@@ -127,7 +127,6 @@ copy:
 ifeq ($(SHELL),cmd)
 	if not exist ..\build\dist\contrib md ..\build\dist\contrib
 	xcopy ..\contrib ..\build\dist\contrib /S /Y /D
-	pushd ..\build\dist\contrib; $(MAKE) clean; popd
 else
 	cp -Rvf ../contrib ../build/dist/
 	$(MAKE) --directory=../build/dist/contrib clean

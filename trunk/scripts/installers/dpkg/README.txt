@@ -2,6 +2,7 @@ Describes the ADMB installation for Ubuntu operating system using Debian package
 
 Installation
 ============
+__Note__ &mdash; The installation will copy the admb script to /usr/local/bin and put the distribution in /usr/local/admb.  It is no longer necessary to append the PATH or to set ADMB_HOME system variables.
 
 1. Download ADMB debian package
 
@@ -11,7 +12,6 @@ Installation
 
         $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.1.deb
 
-__Note__ &mdash; The installer will copy the admb script to the /usr/local/bin and put the distribution to /usr/local/admb.  It is no longer necessary to modify the PATH or set ADMB_HOME system variables.
 
 Quick Start
 ===========

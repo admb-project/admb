@@ -250,7 +250,7 @@ for %%a in (!tpls!) do (
   if not defined parser (
     set parser=tpl2cpp
   )
-  set CMD=!parser! !debug! !dll! !tpl!
+  set CMD=!parser! !dll! !tpl!
   echo.&echo *** Parsing !tpl!.tpl:
   echo !CMD!
   call !CMD!

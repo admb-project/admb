@@ -875,7 +875,7 @@ public:
   virtual void bsave_value(void)=0; // save the objects value in a binary file
   virtual void save_value(const ofstream& ofs, int prec) = 0;
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
-    int& offset) = 0;
+    int& offset){}
   //virtual void bsave_value(const uostream& ofs) = 0;
     virtual const char * label()=0;
   void allocate(int _phase_start);

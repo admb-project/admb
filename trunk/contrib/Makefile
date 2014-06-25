@@ -65,3 +65,4 @@ clean:
 
 copy:
 	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib
+	pushd $(DESTDIR)\contrib& $(MAKE) clean& popd

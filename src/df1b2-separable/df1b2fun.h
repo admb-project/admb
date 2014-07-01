@@ -2013,6 +2013,8 @@ df1b2matrix expm(const df1b2matrix & A);
 df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   df1b2variable ln_unsigned_det,df1b2variable& sign);
 df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz);
+df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z,
+  const df1b2variable& ld, df1b2variable& sign);
 
 void check_pool_depths();
 

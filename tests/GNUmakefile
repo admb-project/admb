@@ -52,6 +52,7 @@ all-tpls:\
   tpl-hysimple\
   tpl-priors\
   tpl-testminmax\
+  tpl-orange_mvn\
   tpl-SS3
 
 tpl-glmmadmb:
@@ -111,6 +112,9 @@ tpl-priors:
 tpl-testminmax:
 	$(MAKE) --directory=testminmax
 
+tpl-orange_mvn:
+	$(MAKE) --directory=orange_mvn
+
 tpl-SS3:
 ifneq ($(CXX),openCC)
 	$(MAKE) --directory=SS3
@@ -137,25 +141,7 @@ clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --directory=glmmadmb --file=Makefile clean
 	$(MAKE) --directory=agemat --file=Makefile clean
-	$(MAKE) --directory=betai clean
-	$(MAKE) --directory=beta2 clean
-	$(MAKE) --directory=beta3 clean
-	$(MAKE) --directory=beta_deviate clean
-	$(MAKE) --directory=betareg clean
-	$(MAKE) --directory=beta_regression clean
-	$(MAKE) --directory=changepoint clean
-	$(MAKE) --directory=colfill clean
-	$(MAKE) --directory=cov_re clean
-	$(MAKE) --directory=ctl clean
-	$(MAKE) --directory=expm clean
-	$(MAKE) --directory=hysimple clean
-	$(MAKE) --directory=priors clean
-	$(MAKE) --directory=testminmax clean
-	$(MAKE) --directory=gmrf clean
-	$(MAKE) --directory=SS3 clean
-	$(MAKE) --directory=gtests clean
-	$(MAKE) --directory=simple_mcmc clean
-else
+endif
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean
@@ -177,7 +163,7 @@ else
 	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=colfill clean
 	$(MAKE) --directory=glmmadmb clean
-endif
+	$(MAKE) --directory=orange_mvn clean
 
 copy:
 ifeq ($(SHELL),cmd)

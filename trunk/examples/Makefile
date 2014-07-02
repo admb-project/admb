@@ -94,7 +94,7 @@ union \
 weights
 
 bcb:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 biglog:

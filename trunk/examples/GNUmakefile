@@ -114,78 +114,78 @@ bcb:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 bvprobit:
 	@#Do not catch for admb-9.x
-	-cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	-cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 glmmadmb:
 	@#Do not catch for admb-9.x
-	-cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
+	-cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
 
 caest:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 gamma:
-	-cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) liver_$@ && $(PROG) ./liver_$@
+	-cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) liver_$@ && $(PROG) ./liver_$@
 
 kidney:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 lidar:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 logistic:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 nbmm:
-	-cd admb-re/nbmm && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	-cd admb-re/nbmm && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 nested4:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 orange:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 orange2:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 orange_cor:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -nohess
 
 pheno:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 polio:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 sdv:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 skewed:
 	$(MAKE) diet
 	$(MAKE) diet_sk
 diet:
-	cd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 diet_sk:
-	cd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 socatt:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 spatial:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 union:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 weights: binomial
 binomial:
-	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 binomial_w2:
-	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -nohess
 
 copy:
 ifeq ($(SHELL),cmd)

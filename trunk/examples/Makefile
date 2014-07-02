@@ -98,97 +98,97 @@ bcb:
 	pushd admb-re\\$@ & $@
 
 biglog:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 bvprobit:
-	pushd admb-re\\glmmadmb & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\glmmadmb & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\glmmadmb & $@
 
 glmmadmb:
-	pushd admb-re\\glmmadmb & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\glmmadmb & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\glmmadmb & $@
 
 caest:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 gamma:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) liver_$@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) liver_$@
 	pushd admb-re\\$@ & liver_$@
 
 kidney:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 lidar:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 logistic:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 nbmm:
-	@REM pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	@REM pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	@REM pushd admb-re\\$@ & $@
 
 nested4:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 orange:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 orange2:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 orange_cor:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@ -nohess
 
 pheno:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 polio:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 sdv:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 skewed: diet diet_sk
 diet:
-	pushd admb-re\\skewed & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\skewed & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\skewed & $@
 
 diet_sk:
-	pushd admb-re\\skewed & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\skewed & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\skewed & $@
 
 socatt:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 spatial:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 union:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@
 
 weights: binomial
 binomial:
-	pushd admb-re\\weights & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\weights & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\weights & $@
 
 binomial_w2:
-	pushd admb-re\\weights & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
+	pushd admb-re\\weights & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\weights & $@ -nohess
 
 copy:

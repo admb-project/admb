@@ -55,7 +55,7 @@ unset library
 unset compileonly
 dll=
 debug=
-parser=tpl2cpp
+parser=
 library=safe
 compileonly=
 output=
@@ -172,9 +172,22 @@ do
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
   rm -f $model.cpp $model.htp $model.obj $model.o $model
 
-  CMD="$parser $debug $dll $model"
-  echo -e \\n\*\*\* Parse tpl: $model.tpl\\n$CMD
-  eval $CMD
+  if [ "$parser" == "tpl2rem" ]; then
+    CMD="$parser $debug $dll $model"
+    echo -e \\n\*\*\* Parse tpl: $model.tpl\\n$CMD
+    eval $CMD
+  else
+    echo -e \\n\*\*\* Parse tpl: $model.tpl\\n
+    CMD="tpl2rem $debug $dll $model"
+    eval $CMD
+    if [ ! -f $model.cpp -o ! -f $model.htp ]; then
+      CMD="tpl2cpp $debug $dll $model"
+      eval $CMD
+    fi
+    if [ -f $model.cpp -o -f $model.htp ]; then
+      echo -e $CMD
+    fi
+  fi
 
   if [ ! -f $model.cpp -o ! -f $model.htp ]; then
     echo -e "\\nError: could not parse $model.tpl\\n"

@@ -258,7 +258,7 @@ for %%a in (!tpls!) do (
     if not exist !tpl!.cpp (
       unset CMD
       set CMD=tpl2rem !dll! !tpl!
-      call !CMD! 2>> !tpl!-error.log
+      call !CMD! 2> !tpl!-re-error.log
     fi
     if exist !tpl!.cpp (
       if exist !tpl!.htp(
@@ -268,10 +268,12 @@ for %%a in (!tpls!) do (
   )
   if not exist !tpl!.cpp (
     echo.&echo Error: Unable to parse !tpl!.tpl to !tpl!.cpp.
+    type !tpl!-error.log
     goto ERROR
   )
   if not exist !tpl!.htp (
-    echo.&echo Error: Unable to parse !tpl!.tpl to !tpl!.htp.
+    echo.&echo Error: Unable to parse !tpl!.tpl to !tpl!.htp as a random effects model.
+    type !tpl!-re-error.log
     goto ERROR
   )
 )

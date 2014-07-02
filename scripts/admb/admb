@@ -167,10 +167,10 @@ do
     exit 1
   fi
 
-  rm -vf classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp
-  rm -vf xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp
-  rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
-  rm -f $model.cpp $model.htp $model.obj $model.o $model
+  rm -f classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp &> /dev/null
+  rm -f xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp &> /dev/null
+  rm -f tfile1 tfile2 tfile3 tfile4 tfile5 &> /dev/null
+  rm -f $model.cpp $model.htp $model.obj $model.o $model &> /dev/null
 
   if [ "$parser" == "tpl2rem" ]; then
     CMD="$parser $debug $dll $model"

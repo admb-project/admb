@@ -259,9 +259,9 @@ for %%a in (!tpls!) do (
       unset CMD
       set CMD=tpl2rem !dll! !tpl!
       call !CMD! 2> !tpl!-re-error.log
-    fi
+    ) 
     if exist !tpl!.cpp (
-      if exist !tpl!.htp(
+      if exist !tpl!.htp (
         echo !CMD!
       )
     )

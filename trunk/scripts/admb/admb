@@ -182,7 +182,7 @@ do
     eval $CMD &> $model-error.log
     if [ ! -f $model.cpp -o ! -f $model.htp ]; then
       CMD="tpl2rem $debug $dll $model"
-      eval $CMD &>> $model-error.log
+      eval $CMD &> $model-re-error.log
     fi
     if [ -f $model.cpp -o -f $model.htp ]; then
       rm -f $model-error.log
@@ -191,9 +191,13 @@ do
   fi
 
   if [ ! -f $model.cpp -o ! -f $model.htp ]; then
-    echo -e "\\nError: could not parse $model.tpl\\n"
     if [  -f  $model-error.log ]; then
+      echo -e "\\nError: could not parse $model.tpl.\\n"
       cat model-error.log
+    fi
+    if [  -f  $model-re-error.log ]; then
+      echo -e "\\nError: could not parse $model.tpl as random effects model.\\n"
+      cat model-re-error.log
     fi
     exit 1
   fi

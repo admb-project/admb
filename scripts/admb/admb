@@ -174,10 +174,10 @@ do
 
   if [ "$parser" == "tpl2rem" ]; then
     CMD="$parser $debug $dll $model"
-    echo -e \\n\*\*\* Parse tpl: $model.tpl\\n$CMD
+    echo -e \\n\*\*\* Parse: $model.tpl\\n$CMD
     eval $CMD
   else
-    echo -e \\n\*\*\* Parse tpl: $model.tpl
+    echo -e \\n\*\*\* Parse: $model.tpl
     CMD="tpl2cpp $debug $dll $model"
     eval $CMD &> $model-error.log
     if [ ! -f $model.cpp -o ! -f $model.htp ]; then

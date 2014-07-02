@@ -58,6 +58,11 @@ ADMB-trunk
 
 * Added back the MacOS binary ADMBTerminal app.
 * Packaged mingw compilers (32 and 64 bit) with windows installers.
+* admb scripts can determine which parser (tpl2cpp or tpl2rem) to use.
+
+        [~/admb/examples/admb-re/union/]$ ~/admb/admb union
+
+  _Note: Option *-r* is no longer needed to build the random effects model._
 
 ####New Supported Compilers
 

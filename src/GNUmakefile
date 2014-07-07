@@ -415,7 +415,7 @@ endif
 
 install:
 	@#echo "Read INSTALL.txt for installation instructions."
-	rm -rvf /usr/local/admb
+	rm -rvf $(INSTALL_DIR)admb
 	cp -Rf ../build/dist $(INSTALL_DIR)admb
 	ln -sf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
 

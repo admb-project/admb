@@ -99,11 +99,21 @@ void initial_params::save_all(const ofstream& _ofs, int prec, const dvector& g)
 }
 
 void param_init_matrix::save_value(const ofstream& _ofs, int prec,
-  const dvector&g, int& offset)
+  const dvector& g, int& offset)
 {
-  //ADUNCONST(ofstream,ofs)
-  //cerr << "not done yet" << endl;
-  //ad_exit(1);
-  ofstream& ofs = (ofstream&)_ofs;
-  ofs << setw(prec+6) << setprecision(prec) << dvar_matrix(*this) << endl;
+  ADUNCONST(ofstream,ofs)
+  int rmin=indexmin();
+  int rmax=indexmax();
+  for (int i=rmin;i<=rmax;i++)
+  {
+    int cmin=(*this)(i).indexmin();
+    int cmax=(*this)(i).indexmax();
+    for (int j=cmin;j<=cmax;j++)
+    {
+      ofs << label()
+	  << "(" << i << "," <<  j << ") "
+	  << setw(prec+6) << setprecision(prec) << (*this)(i,j) << " "
+	  << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
+    }
+  }
 }

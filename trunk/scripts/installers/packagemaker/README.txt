@@ -4,7 +4,7 @@ The installation procedure for installing ADMBTerminal app for the MacOS.
 Installation
 ============
 
-**Prerequisite** &mdash; [Apple Developer Tools (XCode)](http://www.apple.com/xcode/) must be installed.
+**Prerequisite** &mdash; [Apple Developer Tools (XCode)](https://developer.apple.com/xcode/) must be installed.
 
 1. Download ADMB installer
 

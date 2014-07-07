@@ -47,6 +47,7 @@ all-tpls:\
   tpl-cov_re\
   tpl-ctl\
   tpl-expm\
+  tpl-gradients_output\
   tpl-geolocation\
   tpl-simple_mcmc\
   tpl-hysimple\
@@ -96,6 +97,9 @@ tpl-expm:
 
 tpl-simple_mcmc:
 	$(MAKE) --directory=simple_mcmc
+
+tpl-gradients_output:
+	$(MAKE) --directory=gradients_output
 
 tpl-geolocation:
 	$(MAKE) --directory=geolocation
@@ -164,6 +168,7 @@ endif
 	$(MAKE) --directory=colfill clean
 	$(MAKE) --directory=glmmadmb clean
 	$(MAKE) --directory=orange_mvn clean
+	$(MAKE) --directory=gradients_output clean
 
 copy:
 ifeq ($(SHELL),cmd)

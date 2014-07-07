@@ -111,9 +111,9 @@ void param_init_matrix::save_value(const ofstream& _ofs, int prec,
     for (int j=cmin;j<=cmax;j++)
     {
       ofs << label()
-	  << "(" << i << "," <<  j << ") "
-	  << setw(prec+6) << setprecision(prec) << (*this)(i,j) << " "
-	  << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
+          << "(" << i << "," <<  j << ") "
+          << setw(prec+6) << setprecision(prec) << (*this)(i,j) << " "
+          << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
     }
   }
 }

@@ -138,7 +138,6 @@ The following are planned or requested features for the next release.
 - [ ] Migrating ADMB Redmine Issue Tracking to Git
 - [ ] Merge Threading Code to trunk
 - [ ] Atan2
-- [ ] Gradient output
 - [ ] Write Design Documentation
 - [ ] Write Developer Documentation
 - [ ] Shared library for Random Effects models

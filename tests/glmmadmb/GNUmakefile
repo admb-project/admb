@@ -16,9 +16,9 @@ endif
 
 glmmadmb: glmmadmb.tpl
 ifeq ($(SHELL),cmd)
-	..\\..\\admb -r $^
+	..\\..\\admb $^
 else
-	../../admb$(EXT) -r $^
+	LDFLAGS=-static ../../admb$(EXT) $^
 endif
 
 glmmadmb.tpl:
@@ -26,9 +26,9 @@ glmmadmb.tpl:
 
 nbmm: nbmm.tpl
 ifeq ($(SHELL),cmd)
-	..\\..\\admb -r $^
+	..\\..\\admb $^
 else
-	../../admb$(EXT) -r $^
+	LDFLAGS=-static ../../admb$(EXT) $^
 endif
 
 nbmm.tpl:
@@ -36,9 +36,9 @@ nbmm.tpl:
 
 bvprobit: bvprobit.tpl
 ifeq ($(SHELL),cmd)
-	..\\..\\admb -r $^
+	..\\..\\admb $^
 else
-	../../admb$(EXT) -r $^
+	LDFLAGS=-static ../../admb$(EXT) $^
 endif
 
 bvprobit.tpl:

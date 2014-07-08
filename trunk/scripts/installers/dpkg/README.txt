@@ -15,7 +15,7 @@ __Note__ &mdash; The installation will copy the admb script to /usr/local/bin an
 
 Quick Start
 ===========
-Describe the procedure for building and running the ADMB simple example.
+Procedure for building and running the ADMB simple example.
 
 1. Open **Terminal**, then type **admb** for Usage options.
 
@@ -49,7 +49,7 @@ Describe the procedure for building and running the ADMB simple example.
 
         ~/simple$ admb simple
 
-        *** Parse tpl: simple.tpl
+        *** Parse: simple.tpl
         tpl2cpp simple
 
         *** Compile: simple.cpp

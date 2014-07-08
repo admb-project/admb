@@ -14,7 +14,7 @@ around the AUTODIF Library, a C++ language extension which transparently
 implements reverse mode automatic differentiation. A closely related software
 package, ADMB-RE, implements random effects in nonlinear models.
 
-ADMB is an open source project.  Read the AD Model Builder [LICENSE.txt](LICENSE.html).
+ADMB is an open source project.  Read the AD Model Builder [LICENSE](LICENSE.html).
 
 Donations
 ---------
@@ -36,9 +36,9 @@ The abstract and publication can be freely [downloaded][publisher_link] from the
 
 Documentation
 -------------
-Read release notes for changes and features in [CHANGES.txt](CHANGES.html).
+Read release notes for changes and features in [CHANGES](CHANGES.html).
 
-Read the installation procedures in [INSTALL.txt](INSTALL.html) for Unix and Windows computers.
+Read the installation procedures in [INSTALL](INSTALL.html) for Unix and Windows computers.
 
 User manuals for AD Model Builder, the AUTODIF library and the ADMB-RE nonlinear
 random effects module are in the [ADMB downloads][ADMB_downloads_link].

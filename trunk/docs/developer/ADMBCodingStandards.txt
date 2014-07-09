@@ -71,7 +71,8 @@ The most important principles are the first 2 from Misfeldt et al
          -sai -saw -nsc -nsob -nss $1 -o indent.out
         cp -v indent.out $1
 
-7. Avoid mixing lower and uppercase characters in classes and methods (isCamelBack() notation).
+7. Avoid mixing lower and uppercase characters in classes and functions.
+   Do not use isCamelBack() notation.
  
 
 ##Naming Conventions

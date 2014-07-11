@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 #include <admodel.h>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_param_init_bounded_number_vector: public ::testing::Test {};
 
 TEST_F(test_param_init_bounded_number_vector, default_constructor)
@@ -10,13 +15,45 @@ TEST_F(test_param_init_bounded_number_vector, default_constructor)
   EXPECT_EQ(-1, p.indexmin());
   EXPECT_EQ(-1, p.indexmax());
 }
-TEST_F(test_param_init_bounded_number_vector, set_initial_value)
+TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)
+{
+  ad_exit=&test_ad_exit;
+
+  const int min = 1;
+  const int max = 3;
+  dvector v(min, max); 
+  v.initialize();
+
+  param_init_bounded_number_vector p;
+  p.set_initial_value(v);
+  try
+  {
+    p[min];
+  }
+  catch (const int exit_code)          
+  {   
+    const int expected_exit_code = 1;
+    if (exit_code == expected_exit_code)
+    {
+      SUCCEED();
+      return;
+    }
+  }
+  FAIL();
+}
+/*
+TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
 {
   gradient_structure gs(1500);
 
   param_init_bounded_number_vector p;
   const int min = 1;
   const int max = 3;
+
+  dvector v(min, max); 
+  v.initialize();
+  p.set_initial_value(v);
+
   dvector mins(min, max);
   mins.initialize();
   dvector maxs(min, max);
@@ -27,20 +64,9 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value)
   EXPECT_EQ(min, p.indexmin());
   EXPECT_EQ(max, p.indexmax());
 
-  dvector v(min, max); 
-  v.initialize();
-
-  p.set_initial_value(v);
   for (int i = min; i <= max; i++)
   {
-    EXPECT_EQ(0, p[i]);
-    v[i] = i;
-  }
-
-  p.set_initial_value(v);
-  for (int i = min; i <= max; i++)
-  {
-    EXPECT_EQ(i, p[i]);
+    EXPECT_EQ(0, value(p[i]));
   }
 
   p.deallocate();
@@ -48,3 +74,4 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value)
   EXPECT_EQ(-1, p.indexmin());
   EXPECT_EQ(-1, p.indexmax());
 }
+*/

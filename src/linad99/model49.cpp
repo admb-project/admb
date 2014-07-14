@@ -323,36 +323,35 @@ prevariable param_init_bounded_matrix_vector::operator()(int i,int j,int k)
  * \param
  */
 param_init_bounded_number& param_init_bounded_number_vector::operator[](int i)
-   {
-     if (i<indexmin()) {
-       ADMB_ARRAY_BOUNDS_ERROR("Index too low",
-       "param_init_bounded_number_vector::operator [] (int i)",
-       indexmin(), indexmax(), i);
-     }
-     if (i>indexmax()) {
-       ADMB_ARRAY_BOUNDS_ERROR("Index too high",
-       "param_init_bounded_number_vector::operator[](int i)",
-       indexmin(), indexmax(), i);
-     }
-     return v[i];
-   }
-
+{
+  if (!v)
+  {
+    cerr << "Error: param_init_bounded_number_vector was not allocated.\n";
+    ad_exit(1);
+  }
+  if (i < indexmin() || indexmax() < i) {
+    ADMB_ARRAY_BOUNDS_ERROR("Invalid index",
+      "param_init_number_vector::operator[](int i)",
+      indexmin(), indexmax(), i);
+  }
+  return v[i];
+}
 /**
  * Description not yet available.
  * \param
  */
 param_init_bounded_number& param_init_bounded_number_vector::operator()(int i)
-   {
-     if (i<indexmin()) {
-       ADMB_ARRAY_BOUNDS_ERROR("Index too low",
-       "param_init_bounded_number_vector::operator()(int i)",
-       indexmin(), indexmax(), i);
-     }
-     if (i>indexmax()) {
-       ADMB_ARRAY_BOUNDS_ERROR("Index too high",
-       "param_init_bounded_number_vector::operator () (int i)",
-       indexmin(), indexmax(), i);
-     }
-     return v[i];
-   }
+{
+  if (!v)
+  {
+    cerr << "Error: param_init_bounded_number_vector was not allocated.\n";
+    ad_exit(1);
+  }
+  if (i < indexmin() || indexmax() < i) {
+    ADMB_ARRAY_BOUNDS_ERROR("Invalid index",
+      "param_init_number_vector::operator()(int i)",
+      indexmin(), indexmax(), i);
+  }
+  return v[i];
+}
 #endif

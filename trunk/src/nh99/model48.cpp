@@ -9,7 +9,22 @@
 void param_init_bounded_number_vector::set_initial_value(
   const double_index_type& _it)
 {
+  if (it)
+  {
+    delete it;
+    it = 0;
+  }
   it = new double_index_type(_it);
+
+  if (v)
+  {
+    int mmin = indexmin();
+    int mmax = indexmax();
+    for (int i = mmin; i <= mmax; i++)
+    {
+      v[i] = ad_double(_it(i));
+    }
+  }
 }
 
 /**

@@ -1,6 +1,5 @@
 #ADMB Project  
 
-
 Describe changes and features for each release.
 
 ---
@@ -134,13 +133,10 @@ ADMB-trunk
 
 The following are planned or requested features for the next release.
 
-- [ ] Migrating ADMB Subversion Version Control to Git
-- [ ] Migrating ADMB Redmine Issue Tracking to Git
 - [ ] Merge Threading Code to trunk
 - [ ] Atan2
 - [ ] Write Design Documentation
 - [ ] Write Developer Documentation
-- [ ] Shared library for Random Effects models
 
 ADMB-11.1
 ---------

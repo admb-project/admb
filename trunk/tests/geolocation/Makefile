@@ -41,6 +41,12 @@ run:
 	pushd ukfsst& ukfsst
 
 clean:
+	if exist kfsst $(MAKE) clean-kfsst
+	if exist kftrack $(MAKE) clean-kftrack
+	if exist trackit $(MAKE) clean-trackit
+	if exist ukfsst $(MAKE) clean-ukfsst
+
+clean-kfsst:
 	@del kfsst\\admodel.cov
 	@del kfsst\\admodel.dep
 	@del kfsst\\admodel.hes
@@ -72,6 +78,8 @@ clean:
 	@del kfsst\\solstice.obj
 	@del kfsst\\sst.dat
 	@del kfsst\\yrmonday.obj
+
+clean-kftrack:
 	@del kftrack\\admodel.cov
 	@del kftrack\\admodel.dep
 	@del kftrack\\admodel.hes
@@ -106,6 +114,8 @@ clean:
 	@del kftrack\\twosegtrack.htp
 	@del kftrack\\twosegtrack.obj
 	@del kftrack\\yrmonday.obj
+
+clean-trackit:
 	@del trackit\\admodel.cov
 	@del trackit\\admodel.dep
 	@del trackit\\admodel.hes
@@ -138,6 +148,8 @@ clean:
 	@del trackit\\ukf.cpp
 	@del trackit\\ukf.dat
 	@del trackit\\ukf.htp
+
+clean-ukfsst:
 	@del ukfsst\\admodel.cov
 	@del ukfsst\\admodel.dep
 	@del ukfsst\\admodel.hes

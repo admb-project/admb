@@ -187,8 +187,8 @@ else
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
-	cp ../scripts/admb/root-admb ../admb.sh
-	cp ../scripts/admb/root-admb ${DIST}/admb.sh
+	cp ../scripts/admb/root-admb.sh ../admb.sh
+	cp ../scripts/admb/root-admb.sh ${DIST}/admb.sh
 	cp ../scripts/admb/adcomp ${DIST}/bin/adcomp.sh
 	cp ../scripts/admb/adlink ${DIST}/bin/adlink.sh
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
@@ -201,8 +201,8 @@ else
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin
-	ln -sf bin/admb ${DIST}
-	ln -sf build/dist/bin/admb ..
+	cp ../scripts/admb/root-admb ${DIST}/admb
+	cp ../scripts/admb/root-admb ../admb
   endif
 	mkdir -p $(DIST)/include/contrib
 	touch $(DIST)/include/contrib/contrib.h

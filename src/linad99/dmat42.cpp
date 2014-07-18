@@ -25,9 +25,6 @@ int svd_mln(int m, int n, int withu, int withv, double eps, double tol,
             const dmatrix& aa, const dvector& _q,
             const dmatrix& _u, const dmatrix& _v);
 
-
-static const int  maxiter = 40;
-
 /*
 static double pythag(double a, double b)
 {

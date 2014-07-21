@@ -20,7 +20,11 @@ ifeq ($(DEBUG),yes)
 DEBUG_OPTION=-g
 endif
 
+ifneq ($(DEBUG),yes)
 DIST=../build/dist
+else
+DIST=../build/debug
+endif
 
 ifeq ($(CXX),CC)
 all: all-tpls
@@ -126,12 +130,21 @@ endif
 
 verify:
 ifeq ($(SHELL),cmd)
+  ifneq ($(DEBUG),yes)
 	del ..\benchmarks-opt.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
 	del ..\benchmarks-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+  else
+	del ..\benchmarks-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
+	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+	del ..\benchmarks-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\examples --file=Makefile all
+	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+  endif
 else
 	rm -vf ../benchmarks-opt.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all

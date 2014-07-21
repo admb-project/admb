@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2013 ADMB Foundation
+# Copyright (c) 2013-2014 ADMB Foundation
 #
 shopt -s expand_aliases
 

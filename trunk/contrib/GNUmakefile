@@ -17,13 +17,21 @@ ifeq ($(OS),Windows_NT)
 endif
 ifeq ($(SHELL),cmd)
   CONTRIB_OBJS_DIR=..\..\build\objects\contrib$(SHARED)
+  ifneq ($(DEBUG),yes)
   CONTRIB_DIR=..\..\build\dist\contrib
+  else
+  CONTRIB_DIR=..\..\build\debug\contrib
+  endif
   CONTRIB_BIN=$(addsuffix \bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix \lib,$(CONTRIB_DIR))
 else
   CONTRIB_OBJS_DIR=../../build/objects/contrib$(SHARED)
+  ifneq ($(DEBUG),yes)
   CONTRIB_DIR=../../build/dist/contrib
+  else
+  CONTRIB_DIR=../../build/debug/contrib
+  endif
   CONTRIB_BIN=$(addsuffix /bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix /include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix /lib,$(CONTRIB_DIR))
@@ -42,16 +50,31 @@ all:
 	@echo ADMB contrib build completed.
 
 shared:
-ifeq ($(SHELL),cmd)
+ifneq ($(DEBUG),yes)
+  ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\admb-contrib.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib-shared.a ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\admb-contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
-else
-  ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
+  else
+    ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contribo.so -Wl,-force_load ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a
-  else
+    else
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contrib.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contribo.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+    endif
+  endif
+else
+  ifeq ($(SHELL),cmd)
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\contrib\lib\admb-contrib.dll -Wl,--whole-archive ..\build\debug\contrib\lib\libcontrib-shared.a ../build/debug/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\contrib\lib\admb-contribo.dll -Wl,--whole-archive ..\build\debug\contrib\lib\libcontribo-shared.a ../build/debug/lib/libadmbo-shared.a -Wl,--no-whole-archive
+  else
+    ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/contrib/lib/libadmb-contrib.so -Wl,-force_load ../build/debug/contrib/lib/libcontrib-shared.a ../build/debug/lib/libadmb-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/contrib/lib/libadmb-contribo.so -Wl,-force_load ../build/debug/contrib/lib/libcontribo-shared.a ../build/debug/lib/libadmbo-shared.a
+    else
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/contrib/lib/libadmb-contrib.so -Wl,--whole-archive ../build/debug/contrib/lib/libcontrib-shared.a ../build/debug/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/contrib/lib/libadmb-contribo.so -Wl,--whole-archive ../build/debug/contrib/lib/libcontribo-shared.a ../build/debug/lib/libadmbo-shared.a -Wl,--no-whole-archive
+    endif
   endif
 endif
 	@echo ADMB contrib shared build completed.
@@ -124,12 +147,22 @@ contrib-test-R:
 	$(MAKE) --directory=qfclib test
 
 copy:
-ifeq ($(SHELL),cmd)
+ifneq ($(DEBUG),yes)
+  ifeq ($(SHELL),cmd)
 	if not exist ..\build\dist\contrib md ..\build\dist\contrib
 	xcopy ..\contrib ..\build\dist\contrib /S /Y /D
-else
+  else
 	cp -Rvf ../contrib ../build/dist/
 	$(MAKE) --directory=../build/dist/contrib clean
+  endif
+else
+  ifeq ($(SHELL),cmd)
+	if not exist ..\build\debug\contrib md ..\build\debug\contrib
+	xcopy ..\contrib ..\build\debug\contrib /S /Y /D
+  else
+	cp -Rvf ../contrib ../build/debug/
+	$(MAKE) --directory=../build/debug/contrib clean
+  endif
 endif
 
 clean:

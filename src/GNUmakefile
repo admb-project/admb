@@ -201,9 +201,9 @@ else
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin
-	ln -sf ${DIST}/bin/admb ${DIST}
+	ln -sf bin/admb ${DIST}
 	#cp ../scripts/admb/root-admb ${DIST}/admb
-	ln -sf ${DIST}/bin/admb ..
+	ln -sf build/dist/bin/admb ..
 	#cp ../scripts/admb/root-admb ../admb
   endif
 	mkdir -p $(DIST)/include/contrib

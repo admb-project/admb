@@ -17,17 +17,33 @@ ifeq ($(OS),Windows_NT)
 endif
 
 ifeq ($(SHELL),cmd)
+  ifneq ($(DEBUG),yes)
   DIST=..\build\dist
+  else
+  DIST=..\build\debug
+  endif
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
+  ifneq ($(DEBUG),yes)
   OBJSDIR=..\build\objects\dist$(SHARED)
+  else
+  OBJSDIR=..\build\objects\debug$(SHARED)
+  endif
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
 else
   INSTALL_DIR=/usr/local/
+  ifneq ($(DEBUG),yes)
   DIST=../build/dist
+  else
+  DIST=../build/debug
+  endif
   LIBSDIR=$(DIST)/lib/
+  ifneq ($(DEBUG),yes)
   OBJSDIR=../build/objects/dist$(SHARED)/
+  else
+  OBJSDIR=../build/objects/debug$(SHARED)/
+  endif
   ADMB_VERSION:=$(shell cat ../VERSION)
 endif
 
@@ -65,10 +81,18 @@ endif
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
 
-ifeq ($(SHELL),cmd)
+ifneq ($(DEBUG),yes)
+  ifeq ($(SHELL),cmd)
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\dist\include
-else
+  else
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/dist/include
+  endif
+else
+  ifeq ($(SHELL),cmd)
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\debug\include
+  else
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/debug/include
+  endif
 endif
 
 override CXXFLAGS += $(ADCXXFLAGS)
@@ -108,16 +132,31 @@ endif
 	@echo Check README.txt for usage and installation information.
 
 shared: $(OBJECTS)
-ifeq ($(SHELL),cmd)
+ifneq ($(DEBUG),yes)
+  ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-shared.a -Wl,--no-whole-archive
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo-shared.a -Wl,--no-whole-archive
-else
-  ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
+  else
+    ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,-all_load ../build/dist/lib/libadmb-shared.a
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,-all_load ../build/dist/lib/libadmbo-shared.a
-  else
+    else
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+    endif
+  endif
+else
+  ifeq ($(SHELL),cmd)
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admbo.dll -Wl,--whole-archive ..\build\debug\lib\libadmbo-shared.a -Wl,--no-whole-archive
+  else
+    ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb.so -Wl,-all_load ../build/debug/lib/libadmb-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmbo.so -Wl,-all_load ../build/debug/lib/libadmbo-shared.a
+    else
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb.so -Wl,--whole-archive ../build/debug/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmbo.so -Wl,--whole-archive ../build/debug/lib/libadmbo-shared.a -Wl,--no-whole-archive
+    endif
   endif
 endif
 	@echo ADMB shared build completed.
@@ -203,7 +242,11 @@ else
 	cp ../scripts/admb/adcomp ${DIST}/bin
 	ln -sf bin/admb ${DIST}
 	#cp ../scripts/admb/root-admb ${DIST}/admb
+    ifneq ($(DEBUG),yes)
 	ln -sf build/dist/bin/admb ..
+    else
+	ln -sf build/debug/bin/admb ..
+    endif
 	#cp ../scripts/admb/root-admb ../admb
   endif
 	mkdir -p $(DIST)/include/contrib
@@ -418,7 +461,11 @@ endif
 install:
 	@#echo "Read INSTALL.txt for installation instructions."
 	rm -rvf $(INSTALL_DIR)admb
+ifneq ($(DEBUG),yes)
 	cp -Rvf ../build/dist $(INSTALL_DIR)admb
+else
+	cp -Rvf ../build/debug $(INSTALL_DIR)admb
+endif
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
 
 copy:

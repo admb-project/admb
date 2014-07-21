@@ -188,9 +188,18 @@ binomial_w2:
 	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -nohess
 
 copy:
-ifeq ($(SHELL),cmd)
+ifneq ($(DEBUG),yes)
+  ifeq ($(SHELL),cmd)
 	if not exist ..\build\dist\examples md ..\build\dist\examples
 	xcopy ..\examples ..\build\dist\examples /S /Y /D
-else
+  else
 	cp -Rvf ../examples ../build/dist
+  endif
+else
+  ifeq ($(SHELL),cmd)
+	if not exist ..\build\debug\examples md ..\build\debug\examples
+	xcopy ..\examples ..\build\debug\examples /S /Y /D
+  else
+	cp -Rvf ../examples ../build/debug
+  endif
 endif

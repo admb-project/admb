@@ -1,5 +1,5 @@
 #default targets depending on compiler
-#DEBUG=yes
+DEBUG=yes
 
 all:
 	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)

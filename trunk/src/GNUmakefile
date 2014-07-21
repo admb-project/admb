@@ -201,8 +201,10 @@ else
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin
-	cp ../scripts/admb/root-admb ${DIST}/admb
-	cp ../scripts/admb/root-admb ../admb
+	ln -sf ${DIST}/bin/admb ${DIST}/admb
+	#cp ../scripts/admb/root-admb ${DIST}/admb
+	ln -sf ${DIST}/bin/admb ../admb
+	#cp ../scripts/admb/root-admb ../admb
   endif
 	mkdir -p $(DIST)/include/contrib
 	touch $(DIST)/include/contrib/contrib.h

@@ -176,3 +176,15 @@ else
 	@rm -vf ukfsst/ukfsst.std
 	@rm -vf ukfsst/variance
 endif
+
+clean-kfsst:
+	$(MAKE) --file=Makefile clean-kfsst
+
+clean-kftrack:
+	$(MAKE) --file=Makefile clean-kftrack
+
+clean-trackit:
+	$(MAKE) --file=Makefile clean-trackit
+
+clean-ukfsst:
+	$(MAKE) --file=Makefile clean-ukfsst

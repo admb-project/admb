@@ -249,14 +249,14 @@ for %%a in (!tpls!) do (
   )
   echo.&echo *** Parse: !tpl!.tpl
   if defined parser (
-    set CMD=!parser! !dll! !tpl!
+    set CMD=!parser! !debug! !dll! !tpl!
     echo !CMD!
     call !CMD!
   ) else (
-    set CMD=tpl2cpp !dll! !tpl!
+    set CMD=tpl2cpp !debug! !dll! !tpl!
     call !CMD! 2> !tpl!-error.log
     if not exist !tpl!.cpp (
-      set CMD=tpl2rem !dll! !tpl!
+      set CMD=tpl2rem !debug! !dll! !tpl!
       call !CMD! 2> !tpl!-re-error.log
     ) 
     if exist !tpl!.cpp (

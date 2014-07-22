@@ -30,7 +30,7 @@ endif
 
 includes:
 ifeq ($(SHELL),cmd)
-	for %f in ( $(HEADERS) ) do copy %%f $(CONTRIB_INCLUDE)
+	for %%a in ($(HEADERS)) do copy %%a $(CONTRIB_INCLUDE)
 else
 	cp $(HEADERS) $(CONTRIB_INCLUDE)
 endif

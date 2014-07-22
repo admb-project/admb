@@ -38,9 +38,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+#ifndef __ADMB_CONTRIB_H__
+#define __ADMB_CONTRIB_H__
+
 #include <statsLib.h>
 #include <ecolib.h>
 #include <qfclib.h>
-#include <gdbprintlib.h>
 
 void save_gradients(const dvector& g);
+#endif

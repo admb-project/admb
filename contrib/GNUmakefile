@@ -16,21 +16,23 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 ifeq ($(SHELL),cmd)
-  CONTRIB_OBJS_DIR=..\..\build\objects\contrib$(SHARED)
   ifneq ($(DEBUG),yes)
   CONTRIB_DIR=..\..\build\dist\contrib
+  CONTRIB_OBJS_DIR=..\..\build\objects\contrib$(SHARED)
   else
   CONTRIB_DIR=..\..\build\debug\contrib
+  CONTRIB_OBJS_DIR=..\..\build\objects\debug\contrib$(SHARED)
   endif
   CONTRIB_BIN=$(addsuffix \bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix \lib,$(CONTRIB_DIR))
 else
-  CONTRIB_OBJS_DIR=../../build/objects/contrib$(SHARED)
   ifneq ($(DEBUG),yes)
   CONTRIB_DIR=../../build/dist/contrib
+  CONTRIB_OBJS_DIR=../../build/objects/contrib$(SHARED)
   else
   CONTRIB_DIR=../../build/debug/contrib
+  CONTRIB_OBJS_DIR=../../build/objects/debug/contrib$(SHARED)
   endif
   CONTRIB_BIN=$(addsuffix /bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix /include,$(CONTRIB_DIR))

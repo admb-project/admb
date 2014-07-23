@@ -485,6 +485,11 @@ coding-standard: cpplint.py
 cpplint.py:
 	svn cat http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py > cpplint.py
 
+admb-dist.zip:
+ifeq ($(SHELL),cmd)
+	pushd ..\build && xcopy dist admb /E /I /Y && 7z.exe a $@ admb && popd
+endif
+
 check: coding-standard
 	@echo "SHELL: $(SHELL)"
 	@echo "PATH: $(PATH)"

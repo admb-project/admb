@@ -15,6 +15,8 @@
   @date 6/18/2013
   \ingroup GDBPRINTLIB
 */
+#ifndef _GDBPRINT_CPP_
+#define _GDBPRINT_CPP_
 
 #include "gdbprintlib.h"
 
@@ -576,3 +578,4 @@ void padsum(const imatrix & v)
 {
   cout << sum(v) << endl;
 }
+#endif

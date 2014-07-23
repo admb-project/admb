@@ -173,6 +173,9 @@ clean:
 	if exist ..\admb.sh del ..\admb.sh
 	if exist ..\admb.zip del ..\admb.zip
 
+admb-dist.zip:
+	pushd ..\build && xcopy dist admb /E /I /Y && 7z.exe a $@ admb && popd
+
 check:
 	@echo "SHELL: $(SHELL)"
 	@echo "PATH: $(PATH)"

@@ -63,6 +63,8 @@ ADMB-trunk
 
   _Note: Option *-r* is no longer needed to build the random effects model._
 
+* Separate build/dist and build/debug for easily switching between the both.
+
 ####New Supported Compilers
 
 * GNU C++ 4.8 compiler

@@ -25,9 +25,9 @@ ifeq ($(SHELL),cmd)
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
   ifneq ($(DEBUG),yes)
-  OBJSDIR=..\build\objects\dist$(SHARED)
+  OBJSDIR=..\build\objects\dist
   else
-  OBJSDIR=..\build\objects\debug$(SHARED)
+  OBJSDIR=..\build\objects\debug
   endif
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
@@ -40,11 +40,14 @@ else
   endif
   LIBSDIR=$(DIST)/lib/
   ifneq ($(DEBUG),yes)
-  OBJSDIR=../build/objects/dist$(SHARED)/
+  OBJSDIR=../build/objects/dist/
   else
-  OBJSDIR=../build/objects/debug$(SHARED)/
+  OBJSDIR=../build/objects/debug/
   endif
   ADMB_VERSION:=$(shell cat ../VERSION)
+endif
+ifdef SHARED
+  OBJSDIR:=$(addsuffix shared-,$(OBJSDIR))
 endif
 
 ifdef CXX
@@ -427,7 +430,11 @@ dirs:
 ifeq ($(SHELL),cmd)
 	if not exist $(OBJSDIR) md $(OBJSDIR)
 else
-	mkdir -p $(OBJSDIR)
+  ifneq ($(DEBUG),yes)
+	mkdir -p ../build/objects/dist/
+  else
+	mkdir -p ../build/objects/debug/
+  endif
 endif
 
 clean:

@@ -18,7 +18,7 @@ endif
 ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
   CONTRIB_DIR=..\..\build\dist\contrib
-  CONTRIB_OBJS_DIR=..\..\build\objects\contrib$(SHARED)
+  CONTRIB_OBJS_DIR=..\..\build\objects\dist\contrib$(SHARED)
   else
   CONTRIB_DIR=..\..\build\debug\contrib
   CONTRIB_OBJS_DIR=..\..\build\objects\debug\contrib$(SHARED)
@@ -29,7 +29,7 @@ ifeq ($(SHELL),cmd)
 else
   ifneq ($(DEBUG),yes)
   CONTRIB_DIR=../../build/dist/contrib
-  CONTRIB_OBJS_DIR=../../build/objects/contrib$(SHARED)
+  CONTRIB_OBJS_DIR=../../build/objects/dist/contrib$(SHARED)
   else
   CONTRIB_DIR=../../build/debug/contrib
   CONTRIB_OBJS_DIR=../../build/objects/debug/contrib$(SHARED)
@@ -95,14 +95,14 @@ libs:
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
 ifeq ($(SHELL),cmd)
 	if exist  src\$(CONTRIB_LIB)\libcontrib$(SHARED).a del src\$(CONTRIB_LIB)\libcontrib.a
-	$(AR) -rs src\$(CONTRIB_LIB)\libcontrib$(SHARED).a src\$(CONTRIB_OBJS_DIR)\saflp-contrib-*.obj
+	$(AR) -rs src\$(CONTRIB_LIB)\libcontrib$(SHARED).a src\$(CONTRIB_OBJS_DIR)-saflp-*.obj
 	if exist  src\$(CONTRIB_LIB)\libcontribo$(SHARED).a del src\$(CONTRIB_LIB)\libcontribo.a
-	$(AR) -rs src\$(CONTRIB_LIB)\libcontribo$(SHARED).a src\$(CONTRIB_OBJS_DIR)\optlp-contrib-*.obj
+	$(AR) -rs src\$(CONTRIB_LIB)\libcontribo$(SHARED).a src\$(CONTRIB_OBJS_DIR)-optlp-*.obj
 else
 	rm -vf src/$(CONTRIB_LIB)/libcontrib$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_LIB)/libcontrib$(SHARED).a src/$(CONTRIB_OBJS_DIR)/saflp-contrib-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)/libcontrib$(SHARED).a src/$(CONTRIB_OBJS_DIR)-saflp-*.obj
 	rm -vf src/$(CONTRIB_LIB)/libcontribo$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_LIB)/libcontribo$(SHARED).a src/$(CONTRIB_OBJS_DIR)/optlp-contrib-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)/libcontribo$(SHARED).a src/$(CONTRIB_OBJS_DIR)-optlp-*.obj
 endif
 
 contrib-ad2csv: contrib-dirs
@@ -125,13 +125,13 @@ contrib-src:
 
 contrib-dirs:
 ifeq ($(SHELL),cmd)
-	if not exist src\$(CONTRIB_OBJS_DIR) md src\$(CONTRIB_OBJS_DIR)
+	#if not exist src\$(CONTRIB_OBJS_DIR) md src\$(CONTRIB_OBJS_DIR)
 	if not exist src\$(CONTRIB_DIR) md src\$(CONTRIB_DIR)
 	if not exist src\$(CONTRIB_BIN) md src\$(CONTRIB_BIN)
 	if not exist src\$(CONTRIB_INCLUDE) md src\$(CONTRIB_INCLUDE)
 	if not exist src\$(CONTRIB_LIB) md src\$(CONTRIB_LIB)
 else
-	mkdir -p src/$(CONTRIB_OBJS_DIR)
+	#mkdir -p src/$(CONTRIB_OBJS_DIR)
 	mkdir -p src/$(CONTRIB_DIR)
 	mkdir -p src/$(CONTRIB_BIN)
 	mkdir -p src/$(CONTRIB_INCLUDE)

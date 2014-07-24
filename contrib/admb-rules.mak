@@ -7,23 +7,23 @@ EXT=.sh
 endif
 
 ifeq ($(SHELL),cmd)
-all: $(addprefix $(CONTRIB_OBJS_DIR)\saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)\optlp-contrib-, $(OBJECTS))
+all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)-optlp-, $(OBJECTS))
 
-$(CONTRIB_OBJS_DIR)\saflp-contrib-%.obj: %.cpp
+$(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
 
-$(CONTRIB_OBJS_DIR)\optlp-contrib-%.obj: %.cpp
+$(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
 	..\..\admb -c -f $(OPTION) $<
 	copy $(basename $<).obj $@
 else
-all: $(addprefix $(CONTRIB_OBJS_DIR)/saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)/optlp-contrib-, $(OBJECTS))
+all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)-optlp-, $(OBJECTS))
 
-$(CONTRIB_OBJS_DIR)/saflp-contrib-%.obj: %.cpp
+$(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
 
-$(CONTRIB_OBJS_DIR)/optlp-contrib-%.obj: %.cpp
+$(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
 	../../admb$(EXT) -c -f $(OPTION) $<
 	cp $(basename $<).obj $@
 endif

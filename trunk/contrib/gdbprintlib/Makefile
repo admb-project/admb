@@ -14,7 +14,7 @@ $(SAF):: $(@B:saflp-contrib-gdbprintlib-=).cpp
 	copy $(?:.cpp=.obj) $@
 
 includes: $(HEADERS)
-	copy $(HEADERS) $(CONTRIB_INCLUDE)
+	for %%a in ($(HEADERS)) do copy %%a $(CONTRIB_INCLUDE)
 
 clean:
 	del /Q $(OBJECTS)

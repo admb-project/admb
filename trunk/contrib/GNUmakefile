@@ -125,13 +125,11 @@ contrib-src:
 
 contrib-dirs:
 ifeq ($(SHELL),cmd)
-	#if not exist src\$(CONTRIB_OBJS_DIR) md src\$(CONTRIB_OBJS_DIR)
 	if not exist src\$(CONTRIB_DIR) md src\$(CONTRIB_DIR)
 	if not exist src\$(CONTRIB_BIN) md src\$(CONTRIB_BIN)
 	if not exist src\$(CONTRIB_INCLUDE) md src\$(CONTRIB_INCLUDE)
 	if not exist src\$(CONTRIB_LIB) md src\$(CONTRIB_LIB)
 else
-	#mkdir -p src/$(CONTRIB_OBJS_DIR)
 	mkdir -p src/$(CONTRIB_DIR)
 	mkdir -p src/$(CONTRIB_BIN)
 	mkdir -p src/$(CONTRIB_INCLUDE)

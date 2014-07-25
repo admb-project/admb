@@ -3414,6 +3414,33 @@ DATA_SECTION  {
     }
                             }
 
+<IN_NAMED_SIX_ARRAY_DEF>{name} {
+    if (warn_unallocated) write_unallocated("6darray()");
+
+    strcpy(tmp_string,yytext);  // get x in x(1,4)
+    fprintf(fdat,"%s",tmp_string);
+    fprintf(fall,"  %s",tmp_string);
+    fprintf(fall,"%s",".allocate()");
+    //fprintf(fall,"%s",".allocate");
+    //after_part(tmp_string1,yytext,'(');  // get x in x(1,4)
+    //before_part(tmp_string2,tmp_string1,')');
+    //fprintf(fall,"%s)",tmp_string2);
+    fprintf(fdat,"%s",";\n");
+    fprintf(fall,"%s",";\n");
+    if (!params_defined)
+    {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      BEGIN DEFINE_PARAMETERS;
+    }
+  }
+
 <IN_NAMED_SEVEN_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)

@@ -81,6 +81,7 @@ bins: libs
 	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS)>>$(DESTDIR)\bin\admb-cfg.bat
 	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS)>>$(DESTDIR)\bin\admb-cfg.bat
 	copy df1b2-separable\sed* $(DESTDIR)\bin
+	if exist ..\admb del ..\admb
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat $(DESTDIR)\admb.cmd

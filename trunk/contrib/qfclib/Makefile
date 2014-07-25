@@ -1,15 +1,20 @@
 include objects.lst
 
-OPT=$(OBJECTS: = ..\..\build\objects\contrib\optlp-contrib-qfclib-)
-SAF=$(OBJECTS: = ..\..\build\objects\contrib\saflp-contrib-qfclib-)
+!IF DEFINED(DEBUG)
+OPT=$(OBJECTS: = ..\..\build\objects\debug\contrib-optlp-qfclib-)
+SAF=$(OBJECTS: = ..\..\build\objects\debug\contrib-saflp-qfclib-)
+!ELSE
+OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-qfclib-)
+SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-qfclib-)
+!ENDIF
 
 all: $(OPT) $(SAF)
 
-$(OPT):: $(@B:optlp-contrib-qfclib-=).cpp
+$(OPT):: $(@B:contrib-optlp-qfclib-=).cpp
 	..\..\admb -c -f $?
 	copy $(?:.cpp=.obj) $@
 
-$(SAF):: $(@B:saflp-contrib-qfclib-=).cpp
+$(SAF):: $(@B:contrib-saflp-qfclib-=).cpp
 	..\..\admb -c $?
 	copy $(?:.cpp=.obj) $@
 

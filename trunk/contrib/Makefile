@@ -1,5 +1,10 @@
+!IF DEFINED(DEBUG)
+DESTDIR=..\build\debug
+OBJDESTDIR=..\build\objects\debug
+!ELSE
 DESTDIR=..\build\dist
-OBJDESTDIR=..\build\objects\contrib
+OBJDESTDIR=..\build\objects\dist
+!ENDIf
 all:
 	$(MAKE) contrib-includes
 	$(MAKE) contrib-libs
@@ -29,9 +34,9 @@ contrib-dirs:
 
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
 	IF EXIST $(DESTDIR)\contrib\lib\contrib.lib del $(DESTDIR)\contrib\lib\contrib.lib
-	lib /OUT:$(DESTDIR)\contrib\lib\contrib.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\saflp-contrib*.obj
+	lib /OUT:$(DESTDIR)\contrib\lib\contrib.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\contrib-saflp-*.obj
 	IF EXIST $(DESTDIR)\contrib\lib\contribo.lib del $(DESTDIR)\contrib\lib\contribo.lib
-	lib /OUT:$(DESTDIR)\contrib\lib\contribo.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\optlp-contrib*.obj
+	lib /OUT:$(DESTDIR)\contrib\lib\contribo.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\contrib-optlp-*.obj
 
 contrib-ad2csv:
 	pushd ad2csv& $(MAKE)

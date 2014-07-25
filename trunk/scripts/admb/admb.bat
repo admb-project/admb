@@ -241,6 +241,7 @@ for %%a in (!tpls!) do (
   del xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 2> NUL
   del tfile1 tfile2 tfile3 tfile4 tfile5 2> NUL
   del !tpl!.cpp !tpl!.htp !tpl!.obj !tpl!.exe 2> NUL
+  del admb.log 2> NUL
   if defined d (
     set dll= -dll
   )
@@ -254,10 +255,10 @@ for %%a in (!tpls!) do (
     call !CMD!
   ) else (
     set CMD=tpl2cpp !debug! !dll! !tpl!
-    call !CMD! 2> !tpl!-error.log
+    call !CMD! 2> admb.log
     if not exist !tpl!.cpp (
       set CMD=tpl2rem !debug! !dll! !tpl!
-      call !CMD! 2> !tpl!-re-error.log
+      call !CMD! 2> admb.log
     ) 
     if exist !tpl!.cpp (
       if exist !tpl!.htp (
@@ -266,15 +267,11 @@ for %%a in (!tpls!) do (
     )
   )
   if not exist !tpl!.cpp (
-    echo.&echo Error: Unable to parse !tpl!.tpl to !tpl!.cpp.
-    type !tpl!-error.log
+    echo.&echo Error: Unable to parse "!tpl!.tpl".
+    type admb.log
     goto ERROR
   )
-  if not exist !tpl!.htp (
-    echo.&echo Error: Unable to parse !tpl!.tpl to !tpl!.htp as a random effects model.
-    type !tpl!-re-error.log
-    goto ERROR
-  )
+  del admb.log 2> NUL
 )
 for %%b in (!tpls!) do (
   set tpl=%%~nb

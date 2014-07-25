@@ -1,15 +1,20 @@
 include objects.lst
 
-OPT=$(OBJECTS: = ..\..\build\objects\contrib\optlp-contrib-gdbprintlib-)
-SAF=$(OBJECTS: = ..\..\build\objects\contrib\saflp-contrib-gdbprintlib-)
+!IF DEFINED(DEBUG)
+OPT=$(OBJECTS: = ..\..\build\objects\debug\contrib-optlp-gdbprintlib-)
+SAF=$(OBJECTS: = ..\..\build\objects\debug\contrib-saflp-gdbprintlib-)
+!ELSE
+OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-gdbprintlib-)
+SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-gdbprintlib-)
+!ENDIf
 
 all: $(OPT) $(SAF)
 
-$(OPT):: $(@B:optlp-contrib-gdbprintlib-=).cpp
+$(OPT):: $(@B:contrib-optlp-gdbprintlib-=).cpp
 	..\..\admb -c -f $?
 	copy $(?:.cpp=.obj) $@
 
-$(SAF):: $(@B:saflp-contrib-gdbprintlib-=).cpp
+$(SAF):: $(@B:contrib-saflp-gdbprintlib-=).cpp
 	..\..\admb -c $?
 	copy $(?:.cpp=.obj) $@
 

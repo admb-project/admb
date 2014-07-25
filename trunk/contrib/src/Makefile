@@ -1,15 +1,20 @@
 include objects.lst
 
-OPT=$(OBJECTS: = ..\..\build\objects\contrib\optlp-contrib-src-)
-SAF=$(OBJECTS: = ..\..\build\objects\contrib\saflp-contrib-src-)
+!IF DEFINED(DEBUG)
+OPT=$(OBJECTS: = ..\..\build\objects\debug\contrib-optlp-src-)
+SAF=$(OBJECTS: = ..\..\build\objects\debug\contrib-saflp-src-)
+!ELSE
+OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-src-)
+SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-src-)
+!ENDIF
 
 all: $(OPT) $(SAF)
 
-$(OPT):: $(@B:optlp-contrib-src-=).cpp
+$(OPT):: $(@B:contrib-optlp-src-=).cpp
 	..\..\admb -c -f $?
 	copy $(?:.cpp=.obj) $@
 
-$(SAF):: $(@B:saflp-contrib-src-=).cpp
+$(SAF):: $(@B:contrib-saflp-src-=).cpp
 	..\..\admb -c $?
 	copy $(?:.cpp=.obj) $@
 

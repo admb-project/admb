@@ -210,8 +210,13 @@ ifeq ($(SHELL),cmd)
 	copy ..\utilities\libintl3.dll ${DIST}\bin
 	copy ..\utilities\regex2.dll ${DIST}\bin
 	copy ..\scripts\admb\admb.bat ${DIST}\bin\admb.cmd
+  ifneq ($(DEBUG),yes)
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
+  else
+	copy ..\scripts\admb\root-admb-debug.bat ..\admb.cmd
+	copy ..\scripts\admb\root-admb-debug.bat ${DIST}\admb.cmd
+  endif
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
 	if not exist $(DIST)\include\contrib md $(DIST)\include\contrib
@@ -229,13 +234,23 @@ else
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
+    ifneq ($(DEBUG),yes)
 	cp ../scripts/admb/root-admb.sh ../admb.sh
 	cp ../scripts/admb/root-admb.sh ${DIST}/admb.sh
+    else
+	cp ../scripts/admb/root-admb-debug.sh ../admb.sh
+	cp ../scripts/admb/root-admb-debug.sh ${DIST}/admb.sh
+    endif
 	cp ../scripts/admb/adcomp ${DIST}/bin/adcomp.sh
 	cp ../scripts/admb/adlink ${DIST}/bin/adlink.sh
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
+    ifneq ($(DEBUG),yes)
 	cp ../scripts/admb/root-admb.bat ../admb.cmd
 	cp ../scripts/admb/root-admb.bat ${DIST}/admb.cmd
+    else
+	cp ../scripts/admb/root-admb-debug.bat ../admb.cmd
+	cp ../scripts/admb/root-admb-debug.bat ${DIST}/admb.cmd
+    endif
 	cp ../scripts/admb/adcomp.bat ${DIST}/bin/adcomp.cmd
 	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
   else

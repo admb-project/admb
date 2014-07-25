@@ -1,34 +1,57 @@
 SHELL=cmd
 
-DESTDIR=..\build\dist
-OBJDESTDIR=..\build\objects\dist
 LEXDESTDIR=..\build\lex
 
 #SAFE_ALL= /DSAFE_ALL
 
 !IF DEFINED(DEBUG)
+DESTDIR=..\build\debug
+OBJDESTDIR=..\build\objects\debug
 CXXFLAGS_SAF=/nologo /W4 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
 CXXFLAGS_OPT=/nologo /W4 /wd4100 /wd4239 /GF /EHsc /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
 !ELSE
+DESTDIR=..\build\dist
+OBJDESTDIR=..\build\objects\dist
 CXXFLAGS_SAF=/nologo /O2 /W4 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
 CXXFLAGS_OPT=/nologo /O2 /W4 /wd4100 /wd4239 /GF /EHsc /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
 !ENDIF
 
 !INCLUDE df1b2-separable\objects.lst
+!IF DEFINED(DEBUG)
+OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\debug\optlp-df1b2-separable-)
+SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\debug\saflp-df1b2-separable-)
+!ELSE
 OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist\optlp-df1b2-separable-)
 SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist\saflp-df1b2-separable-)
+!ENDIF
 
 !INCLUDE linad99\objects.lst
+!IF DEFINED(DEBUG)
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug\optlp-linad99-) $(OBJ2: = ..\build\objects\debug\optlp-linad99-) $(OBJ3: = ..\build\objects\debug\optlp-linad99-) $(OBJ4: = ..\build\objects\debug\optlp-linad99-)
+SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug\saflp-linad99-) $(OBJ2: = ..\build\objects\debug\saflp-linad99-) $(OBJ3: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
+!ELSE
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\optlp-linad99-) $(OBJ2: = ..\build\objects\dist\optlp-linad99-) $(OBJ3: = ..\build\objects\dist\optlp-linad99-) $(OBJ4: = ..\build\objects\dist\optlp-linad99-)
 SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\saflp-linad99-) $(OBJ2: = ..\build\objects\dist\saflp-linad99-) $(OBJ3: = ..\build\objects\dist\saflp-linad99-) $(OBJ4: = ..\build\objects\dist\saflp-linad99-) $(OBJ16: = ..\build\objects\dist\saflp-linad99-)
+!ENDIF
 
 !INCLUDE nh99\objects.lst
+!IF DEFINED(DEBUG)
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\debug\optlp-nh99-)
+SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\debug\saflp-nh99-)
+!ELSE
 OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\dist\optlp-nh99-)
 SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\dist\saflp-nh99-)
+!ENDIF
 
 !INCLUDE tools99\objects.lst
+!IF DEFINED(DEBUG)
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\debug\optlp-nh99-)
+OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\debug\optlp-tools99-)
+SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\debug\saflp-tools99-)
+!ELSE
 OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\optlp-tools99-)
 SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\saflp-tools99-)
+!ENDIF
 
 all: dist
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
@@ -147,7 +170,7 @@ includes: objdestdir
 	copy tools99\adstring.hpp $(DESTDIR)\include
 	copy tools99\admb_messages.h $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
-	echo " ">$(DESTDIR)\include\contrib\contrib.h
+	copy nh99\nocontrib.h $(DESTDIR)\include\contrib\contrib.h
 
 objdestdir:
 	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)

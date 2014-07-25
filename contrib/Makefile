@@ -69,5 +69,5 @@ clean:
 	pushd ad2csv& $(MAKE) clean
 
 copy:
-	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib
+	IF EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib
 	pushd $(DESTDIR)\contrib& $(MAKE) clean& popd

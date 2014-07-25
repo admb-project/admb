@@ -192,5 +192,10 @@ binomial_w2:
 	pushd admb-re\\weights & $@ -nohess
 
 copy:
+!IF DEFINED(DEBUG)
+	if not exist ..\build\dist\examples md ..\build\debug\examples
+	xcopy ..\examples ..\build\debug\examples /S /Y /D
+!ELSE
 	if not exist ..\build\dist\examples md ..\build\dist\examples
 	xcopy ..\examples ..\build\dist\examples /S /Y /D
+!ENDIF

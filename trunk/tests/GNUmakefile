@@ -20,10 +20,18 @@ ifeq ($(DEBUG),yes)
 DEBUG_OPTION=-g
 endif
 
-ifneq ($(DEBUG),yes)
-DIST=../build/dist
+ifeq ($(SHELL),cmd)
+  ifneq ($(DEBUG),yes)
+    DIST=..\build\dist
+  else
+    DIST=..\build\debug
+  endif
 else
-DIST=../build/debug
+  ifneq ($(DEBUG),yes)
+    DIST=../build/dist
+  else
+    DIST=../build/debug
+  endif
 endif
 
 ifeq ($(CXX),CC)
@@ -189,7 +197,7 @@ endif
 
 copy:
 ifeq ($(SHELL),cmd)
-	if not exist ${DIST}\tests md ${DIST}\tests
+	if not exist $(DIST)\tests md $(DIST)\tests
 	xcopy ..\tests $(DIST)\tests /S /Y /D
 else
 	cp -Rvf ../tests ${DIST}

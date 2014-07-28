@@ -194,6 +194,34 @@ endif
 	$(MAKE) --directory=glmmadmb clean
 	$(MAKE) --directory=orange_mvn clean
 	$(MAKE) --directory=gradients_output clean
+	$(MAKE) --directory=4darray clean
+
+dist-clean:
+ifeq ($(SHELL),cmd)
+	del agemat/agemat.dat
+	del agemat/agemat.tpl
+	if exist geolocation/kfsst rd /S /Q geolocation/kfsst
+	if exist geolocation/kftrack rd /S /Q geolocation/kftrack
+	if exist geolocation/trackit rd /S /Q geolocation/trackit
+	if exist geolocation/ukfsst rd /S /Q geolocation/ukfsst
+	if exist glmmadmb/admb_tests rd /S /Q glmmadmb/admb_tests
+	del glmmadmb/bvprobit.tpl
+	del glmmadmb/glmmadmb.tpl
+	del glmmadmb/nbmm.tpl
+	if exist gtests/googletest-read-only rd /S /Q gtests/googletest-read-only
+else
+	rm -vf agemat/agemat.dat
+	rm -vf agemat/agemat.tpl
+	rm -rvf geolocation/kfsst
+	rm -rvf geolocation/kftrack
+	rm -rvf geolocation/trackit
+	rm -rvf geolocation/ukfsst
+	rm -rvf glmmadmb/admb_tests
+	rm -vf glmmadmb/bvprobit.tpl
+	rm -vf glmmadmb/glmmadmb.tpl
+	rm -vf glmmadmb/nbmm.tpl
+	rm -rvf gtests/googletest-read-only
+endif
 
 copy:
 ifeq ($(SHELL),cmd)

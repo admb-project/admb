@@ -194,6 +194,8 @@ copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\src
 	IF NOT EXIST $(DESTDIR)\src xcopy /I /E /Y ..\src $(DESTDIR)\src
+	cd ..\contrib $(MAKE) copy
+	cd ..\tests $(MAKE) copy
 
 clean:
 	if exist ..\build rd /S /Q ..\build

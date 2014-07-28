@@ -55,7 +55,9 @@ Quick Start
 
        _**Note** &mdash; When completed, `~/admb/build/dist` is the binary distribution directory._
 
-5. **Use** ADMB
+5. **Test** ADMB
+
+       _Test the build on a simple example before installing._
 
        The following commands build and run the simple example.
 
@@ -69,7 +71,15 @@ Quick Start
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 
-6. _**Optional**_ &mdash; Installation    
+6. _**Installation**_
+
+       Installs binary distribution folder to /usr/local/ as super-user.
+
+           [~/admb/]$ sudo make install
+
+       _Use the Manual Installation below if the command above does not work._
+
+7. _**Optional**_ &mdash; Manual Installation    
 
        _The dist folder can be copied to other computers with similar configurations._
 
@@ -78,7 +88,7 @@ Quick Start
 
        Copy binary distribution folder to /usr/local/ as super-user.
 
-           [~/admb/]$ sudo cp -Rvf build/dist  /usr/local/admb
+           [~/admb/]$ sudo cp -Rvf build/dist /usr/local/admb
 
        Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
 

@@ -131,6 +131,7 @@ ifeq ($(SHELL),cmd)
 else
 	cp -vRf ../utilities ${DIST}
 endif
+	$(MAKE) copy
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
@@ -182,7 +183,7 @@ else
 endif
 
 
-dist: bins copy
+dist: bins
 ifeq ($(SHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
 	copy /Y ..\README.txt ${DIST}

@@ -18,10 +18,10 @@ endif
 ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
   CONTRIB_DIR=..\..\build\dist\contrib
-  CONTRIB_OBJS_DIR=..\..\build\objects\dist\contrib$(SHARED)
+  CONTRIB_OBJS_DIR=..\..\build\objects\dist\contrib
   else
   CONTRIB_DIR=..\..\build\debug\contrib
-  CONTRIB_OBJS_DIR=..\..\build\objects\debug\contrib$(SHARED)
+  CONTRIB_OBJS_DIR=..\..\build\objects\debug\contrib
   endif
   CONTRIB_BIN=$(addsuffix \bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))

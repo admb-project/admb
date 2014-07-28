@@ -47,7 +47,9 @@ else
   ADMB_VERSION:=$(shell cat ../VERSION)
 endif
 ifdef SHARED
-  OBJSDIR:=$(addsuffix shared-,$(OBJSDIR))
+  ifneq ($(SHELL),cmd)
+    OBJSDIR:=$(addsuffix shared-,$(OBJSDIR))
+  endif
 endif
 
 ifdef CXX

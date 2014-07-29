@@ -16,23 +16,23 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 ifeq ($(SHELL),cmd)
-  ifneq ($(DEBUG),yes)
-  CONTRIB_DIR=..\..\build\dist\contrib
-  CONTRIB_OBJS_DIR=..\..\build\objects\dist\contrib
-  else
+  ifeq ($(DEBUG),yes)
   CONTRIB_DIR=..\..\build\debug\contrib
   CONTRIB_OBJS_DIR=..\..\build\objects\debug\contrib
+  else
+  CONTRIB_DIR=..\..\build\dist\contrib
+  CONTRIB_OBJS_DIR=..\..\build\objects\dist\contrib
   endif
   CONTRIB_BIN=$(addsuffix \bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix \lib,$(CONTRIB_DIR))
 else
-  ifneq ($(DEBUG),yes)
-  CONTRIB_DIR=../../build/dist/contrib
-  CONTRIB_OBJS_DIR=../../build/objects/dist/contrib$(SHARED)
-  else
+  ifeq ($(DEBUG),yes)
   CONTRIB_DIR=../../build/debug/contrib
   CONTRIB_OBJS_DIR=../../build/objects/debug/contrib$(SHARED)
+  else
+  CONTRIB_DIR=../../build/dist/contrib
+  CONTRIB_OBJS_DIR=../../build/objects/dist/contrib$(SHARED)
   endif
   CONTRIB_BIN=$(addsuffix /bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix /include,$(CONTRIB_DIR))
@@ -103,6 +103,17 @@ else
 	$(AR) -rs src/$(CONTRIB_LIB)/libcontrib$(SHARED).a src/$(CONTRIB_OBJS_DIR)-saflp-*.obj
 	rm -vf src/$(CONTRIB_LIB)/libcontribo$(SHARED).a
 	$(AR) -rs src/$(CONTRIB_LIB)/libcontribo$(SHARED).a src/$(CONTRIB_OBJS_DIR)-optlp-*.obj
+  ifeq ($(DEBUG),yes)
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib$(SHARED).a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib$(SHARED).a ../build/objects/debug/saflp-*.obj ../build/objects/debug/contrib-saflp-*.obj
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo$(SHARED).a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo$(SHARED).a ../build/objects/debug/optlp-*.obj ../build/objects/debug/contrib-optlp-*.obj
+  else
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib$(SHARED).a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib$(SHARED).a ../build/objects/dist/saflp-*.obj ../build/objects/dist/contrib-saflp-*.obj
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo$(SHARED).a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo$(SHARED).a ../build/objects/dist/optlp-*.obj ../build/objects/dist/contrib-optlp-*.obj
+  endif
 endif
 
 contrib-ad2csv: contrib-dirs
@@ -147,21 +158,21 @@ contrib-test-R:
 	$(MAKE) --directory=qfclib test
 
 copy:
-ifneq ($(DEBUG),yes)
-  ifeq ($(SHELL),cmd)
-	if not exist ..\build\dist\contrib md ..\build\dist\contrib
-	xcopy ..\contrib ..\build\dist\contrib /S /Y /D
-  else
-	cp -Rvf ../contrib ../build/dist/
-	$(MAKE) --directory=../build/dist/contrib clean
-  endif
-else
+ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
 	if not exist ..\build\debug\contrib md ..\build\debug\contrib
 	xcopy ..\contrib ..\build\debug\contrib /S /Y /D
   else
 	cp -Rvf ../contrib ../build/debug/
 	$(MAKE) --directory=../build/debug/contrib clean
+  endif
+else
+  ifeq ($(SHELL),cmd)
+	if not exist ..\build\dist\contrib md ..\build\dist\contrib
+	xcopy ..\contrib ..\build\dist\contrib /S /Y /D
+  else
+	cp -Rvf ../contrib ../build/dist/
+	$(MAKE) --directory=../build/dist/contrib clean
   endif
 endif
 

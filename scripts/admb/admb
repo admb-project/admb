@@ -151,7 +151,7 @@ fi
 if [ "$library" == "opt" ]; then
   CXXFLAGS="$CXXFLAGS -DOPT_LIB"
 fi
-if [ ! -f "$ADMB_HOME/contrib/lib/libcontrib.a" ]; then
+if [ ! -f "$ADMB_HOME/lib/libadmb-contrib$SHARED.a" ]; then
   CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/include/contrib\""
 else
   CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/contrib/include\""
@@ -259,7 +259,7 @@ do
     CMD="$CXX $LDFLAGS -o$model"
   fi
   CMD="$CMD $file $objs"
-  if [ ! -f "$ADMB_HOME/contrib/lib/libcontrib.a" ]; then
+  if [ ! -f "$ADMB_HOME/lib/libadmb-contrib$SHARED.a" ]; then
     if [[ "$library" == "opt" ]]; then
       CMD="$CMD \"$ADMB_HOME/lib/libadmbo$SHARED.a\""
     else
@@ -267,9 +267,9 @@ do
     fi
   else
     if [[ "$library" == "opt" ]]; then
-      CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontribo$SHARED.a\" \"$ADMB_HOME/lib/libadmbo$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo$SHARED.a\""
     else
-      CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontrib$SHARED.a\" \"$ADMB_HOME/lib/libadmb$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contrib$SHARED.a\""
     fi
   fi
   echo -e \\n\*\*\* Linking: $file $objs\\n$CMD
@@ -312,7 +312,7 @@ if [[ "$tplobjs" == "" ]]; then
     CMD="$CXX $LDFLAGS -o$outputfilebasename"
   fi
   CMD="$CMD $listobjs"
-  if [ ! -f "$ADMB_HOME/contrib/lib/libcontrib.a" ]; then
+  if [ ! -f "$ADMB_HOME/lib/libadmb-contrib$SHARED.a" ]; then
     if [[ "$library" == "opt" ]]; then
       CMD="$CMD \"$ADMB_HOME/lib/libadmbo$SHARED.a\""
     else
@@ -320,9 +320,9 @@ if [[ "$tplobjs" == "" ]]; then
     fi
   else
     if [[ "$library" == "opt" ]]; then
-      CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontribo$SHARED.a\" \"$ADMB_HOME/lib/libadmbo$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo$SHARED.a\""
     else
-      CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontrib$SHARED.a\" \"$ADMB_HOME/lib/libadmb$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contrib$SHARED.a\""
     fi
   fi
   echo -e \\n\*\*\* Linking: $listobjs\\n$CMD

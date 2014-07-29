@@ -37,6 +37,7 @@ cl: cl-all
 cl-all: 
 	nmake cl-src
 	nmake cl-contrib
+	nmake cl-shared
 cl-debug:
 	pushd src& nmake DEBUG=yes all
 	pushd contrib& nmake DEBUG=yes all

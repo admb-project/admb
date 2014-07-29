@@ -145,19 +145,19 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
-    if not exist "!ADMB_HOME!\contrib\lib\contribo.lib" (
+    if not exist "!ADMB_HOME!\lib\admb-contribo.lib" (
       set libs="!ADMB_HOME!\lib\admbo.lib" /link
     ) else (
-      set libs="!ADMB_HOME!\contrib\lib\contribo.lib" "!ADMB_HOME!\lib\admbo.lib" /link
+      set libs="!ADMB_HOME!\lib\admb-contribo.lib" /link
     )
   ) else (
-    if not exist "!ADMB_HOME!\contrib\lib\contrib.lib" (
+    if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
       set libs="!ADMB_HOME!\lib\admb.lib" /link
     ) else (
-      set libs="!ADMB_HOME!\contrib\lib\contrib.lib" "!ADMB_HOME!\lib\admb.lib" /link
+      set libs="!ADMB_HOME!\lib\admb-contrib.lib" /link
     )
   )
-  if not exist "!ADMB_HOME!\contrib\lib\contrib.lib" (
+  if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
     set CXXFLAGS=!CXXFLAGS! /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
   ) else (
     set CXXFLAGS=!CXXFLAGS! /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
@@ -213,7 +213,7 @@ if "!CXX!"=="cl" (
   if defined d (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
-  if not exist "!ADMB_HOME!\contrib\lib\libcontrib.a" (
+  if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
     set CXXFLAGS=!CXXFLAGS! -fpermissive -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
   ) else (
     set CXXFLAGS=!CXXFLAGS! -fpermissive -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"

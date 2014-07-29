@@ -17,32 +17,32 @@ ifeq ($(OS),Windows_NT)
 endif
 
 ifeq ($(SHELL),cmd)
-  ifneq ($(DEBUG),yes)
-  DIST=..\build\dist
-  else
+  ifeq ($(DEBUG),yes)
   DIST=..\build\debug
+  else
+  DIST=..\build\dist
   endif
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
-  ifneq ($(DEBUG),yes)
-  OBJSDIR=..\build\objects\dist
-  else
+  ifeq ($(DEBUG),yes)
   OBJSDIR=..\build\objects\debug
+  else
+  OBJSDIR=..\build\objects\dist
   endif
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
 else
   INSTALL_DIR=/usr/local/
-  ifneq ($(DEBUG),yes)
-  DIST=../build/dist
-  else
+  ifeq ($(DEBUG),yes)
   DIST=../build/debug
+  else
+  DIST=../build/dist
   endif
   LIBSDIR=$(DIST)/lib/
-  ifneq ($(DEBUG),yes)
-  OBJSDIR=../build/objects/dist/
-  else
+  ifeq ($(DEBUG),yes)
   OBJSDIR=../build/objects/debug/
+  else
+  OBJSDIR=../build/objects/dist/
   endif
   ADMB_VERSION:=$(shell cat ../VERSION)
 endif
@@ -86,17 +86,17 @@ endif
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
 
-ifneq ($(DEBUG),yes)
-  ifeq ($(SHELL),cmd)
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\dist\include
-  else
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/dist/include
-  endif
-else
+ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\debug\include
   else
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/debug/include
+  endif
+else
+  ifeq ($(SHELL),cmd)
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\dist\include
+  else
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/dist/include
   endif
 endif
 
@@ -130,10 +130,13 @@ all: dist
 ifeq ($(SHELL),cmd)
 	if not exist $(DIST)\utilities md $(DIST)\utilities
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
+	$(MAKE) copy
+	$(MAKE) --directory=..\build\dist\src dist-clean
 else
 	cp -vRf ../utilities ${DIST}
-endif
 	$(MAKE) copy
+	$(MAKE) --directory=../build/dist/src dist-clean
+endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
@@ -213,12 +216,12 @@ ifeq ($(SHELL),cmd)
 	copy ..\utilities\libintl3.dll ${DIST}\bin
 	copy ..\utilities\regex2.dll ${DIST}\bin
 	copy ..\scripts\admb\admb.bat ${DIST}\bin\admb.cmd
-  ifneq ($(DEBUG),yes)
-	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
-	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
-  else
+  ifeq ($(DEBUG),yes)
 	copy ..\scripts\admb\root-admb-debug.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb-debug.bat ${DIST}\admb.cmd
+  else
+	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
+	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
   endif
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
@@ -237,22 +240,22 @@ else
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
-    ifneq ($(DEBUG),yes)
-	cp ../scripts/admb/root-admb.sh ../admb.sh
-	cp ../scripts/admb/root-admb.sh ${DIST}/admb.sh
-    else
+    ifeq ($(DEBUG),yes)
 	cp ../scripts/admb/root-admb-debug.sh ../admb.sh
 	cp ../scripts/admb/root-admb-debug.sh ${DIST}/admb.sh
+    else
+	cp ../scripts/admb/root-admb.sh ../admb.sh
+	cp ../scripts/admb/root-admb.sh ${DIST}/admb.sh
     endif
 	cp ../scripts/admb/adcomp ${DIST}/bin/adcomp.sh
 	cp ../scripts/admb/adlink ${DIST}/bin/adlink.sh
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
-    ifneq ($(DEBUG),yes)
-	cp ../scripts/admb/root-admb.bat ../admb.cmd
-	cp ../scripts/admb/root-admb.bat ${DIST}/admb.cmd
-    else
+    ifeq ($(DEBUG),yes)
 	cp ../scripts/admb/root-admb-debug.bat ../admb.cmd
 	cp ../scripts/admb/root-admb-debug.bat ${DIST}/admb.cmd
+    else
+	cp ../scripts/admb/root-admb.bat ../admb.cmd
+	cp ../scripts/admb/root-admb.bat ${DIST}/admb.cmd
     endif
 	cp ../scripts/admb/adcomp.bat ${DIST}/bin/adcomp.cmd
 	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
@@ -263,10 +266,10 @@ else
 	cp ../scripts/admb/adcomp ${DIST}/bin
 	ln -sf bin/admb ${DIST}
 	#cp ../scripts/admb/root-admb ${DIST}/admb
-    ifneq ($(DEBUG),yes)
-	ln -sf build/dist/bin/admb ..
-    else
+    ifeq ($(DEBUG),yes)
 	ln -sf build/debug/bin/admb ..
+    else
+	ln -sf build/dist/bin/admb ..
     endif
 	#cp ../scripts/admb/root-admb ../admb
   endif
@@ -448,24 +451,35 @@ dirs:
 ifeq ($(SHELL),cmd)
 	if not exist $(OBJSDIR) md $(OBJSDIR)
 else
-  ifneq ($(DEBUG),yes)
-	mkdir -p ../build/objects/dist/
-  else
+  ifeq ($(DEBUG),yes)
 	mkdir -p ../build/objects/debug/
+  else
+	mkdir -p ../build/objects/dist/
   endif
 endif
 
-clean:
+dist-clean:
+ifeq ($(SHELL),cmd)
+	if exist nh99\lex.yy.c del nh99\lex.yy.c
+	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
+	if exist df1b2-separable\lex.yy.c del df1b2-separable\lex.yy.c
+	if exist df1b2-separable\tpl2rem.c del df1b2-separable\tpl2rem.c
+else
+	@rm -vf nh99/lex.yy.c
+	@rm -vf nh99/tpl2cpp.c
+	@rm -vf nh99/tpl2cpp
+	@rm -vf df1b2-separable/lex.yy.c
+	@rm -vf df1b2-separable/tpl2rem.c
+	@rm -vf df1b2-separable/tpl2rem
+endif
+
+clean: dist-clean
 ifeq ($(SHELL),cmd)
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat
 	if exist ..\admb.cmd del ..\admb.cmd
 	if exist ..\admb.zip del ..\admb.zip
 	if exist ..\REVISION del ..\REVISION
-	if exist nh99\lex.yy.c del nh99\lex.yy.c
-	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
-	if exist df1b2-separable\lex.yy.c del df1b2-separable\lex.yy.c
-	if exist df1b2-separable\tpl2rem.c del df1b2-separable\tpl2rem.c
 	if exist ..\build rd /S /Q ..\build
 else
 	@rm -vf ../admb
@@ -474,22 +488,16 @@ else
 	@rm -vf ../admb.sh
 	@rm -vf ../admb.zip
 	@rm -vf ../REVISION
-	@rm -vf nh99/lex.yy.c
-	@rm -vf nh99/tpl2cpp.c
-	@rm -vf nh99/tpl2cpp
-	@rm -vf df1b2-separable/lex.yy.c
-	@rm -vf df1b2-separable/tpl2rem.c
-	@rm -vf df1b2-separable/tpl2rem
 	@rm -vrf ../build
 endif
 
 install:
 	@#echo "Read INSTALL.txt for installation instructions."
 	rm -rvf $(INSTALL_DIR)admb
-ifneq ($(DEBUG),yes)
-	cp -Rvf ../build/dist $(INSTALL_DIR)admb
-else
+ifeq ($(DEBUG),yes)
 	cp -Rvf ../build/debug $(INSTALL_DIR)admb
+else
+	cp -Rvf ../build/dist $(INSTALL_DIR)admb
 endif
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
 

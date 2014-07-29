@@ -92,17 +92,28 @@ libs:
 
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
 ifeq ($(SHELL),cmd)
-	if exist  src\$(CONTRIB_LIB)\libcontrib$(SHARED).a del src\$(CONTRIB_LIB)\libcontrib.a
-	$(AR) -rs src\$(CONTRIB_LIB)\libcontrib$(SHARED).a src\$(CONTRIB_OBJS_DIR)-saflp-*.obj
-	if exist  src\$(CONTRIB_LIB)\libcontribo$(SHARED).a del src\$(CONTRIB_LIB)\libcontribo.a
-	$(AR) -rs src\$(CONTRIB_LIB)\libcontribo$(SHARED).a src\$(CONTRIB_OBJS_DIR)-optlp-*.obj
+  ifeq ($(DEBUG),yes)
+	if exist  src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a del src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a
+	copy src\$(CONTRIB_LIB)\..\..\lib\libadmb$(SHARED).a src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a
+	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a ..\build\objects\debug\contrib-saflp-*.obj
+	if exist  src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a del src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a
+	copy src\$(CONTRIB_LIB)\..\..\lib\libadmbo$(SHARED).a src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a
+	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a ..\build\objects\debug\contrib-optlp-*.obj
+  else
+	if exist  src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a del src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a
+	copy src\$(CONTRIB_LIB)\..\..\lib\libadmb$(SHARED).a src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a
+	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a ..\build\objects\dist\contrib-saflp-*.obj
+	if exist  src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a del src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a
+	copy src\$(CONTRIB_LIB)\..\..\lib\libadmbo$(SHARED).a src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a
+	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a ..\build\objects\dist\contrib-optlp-*.obj
+  endif
 else
   ifdef SHARED
     ifeq ($(DEBUG),yes)
 	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shareda ../build/objects/debug/shared-saflp-*.obj ../build/objects/debug/contrib-shared-saflp-*.obj
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shareda
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shareda ../build/objects/debug/shared-optlp-*.obj ../build/objects/debug/contrib-shared-optlp-*.obj
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a ../build/objects/debug/shared-saflp-*.obj ../build/objects/debug/contrib-shared-saflp-*.obj
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a ../build/objects/debug/shared-optlp-*.obj ../build/objects/debug/contrib-shared-optlp-*.obj
     else
 	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a
 	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a ../build/objects/dist/shared-saflp-*.obj ../build/objects/dist/contrib-shared-saflp-*.obj

@@ -198,16 +198,16 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-    if not exist "!ADMB_HOME!\contrib\lib\libcontribo.a" (
+    if not exist "!ADMB_HOME!\lib\libadmb-contribo.a" (
       set libs="!ADMB_HOME!\lib\libadmbo.a"
     ) else (
-      set libs="!ADMB_HOME!\contrib\lib\libcontribo.a" "!ADMB_HOME!\lib\libadmbo.a"
+      set libs="!ADMB_HOME!\lib\libadmb-contribo.a"
     )
   ) else (
-    if not exist "!ADMB_HOME!\contrib\lib\libcontrib.a" (
+    if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
       set libs="!ADMB_HOME!\lib\libadmb.a"
     ) else (
-      set libs="!ADMB_HOME!\contrib\lib\libcontrib.a" "!ADMB_HOME!\lib\libadmb.a"
+      set libs="!ADMB_HOME!\lib\libadmb-contrib.a"
     )
   )
   if defined d (

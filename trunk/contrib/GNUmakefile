@@ -49,37 +49,35 @@ all:
 	$(MAKE) contrib-includes
 	$(MAKE) contrib-libs
 	$(MAKE) contrib-ad2csv
-	@echo ADMB contrib build completed.
 
 shared:
-ifneq ($(DEBUG),yes)
+ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\admb-contrib.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib-shared.a ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\admb-contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb-contrib.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-contrib-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb-contribo.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-contribo-shared.a -Wl,--no-whole-archive
   else
     ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contribo.so -Wl,-force_load ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contrib.so -Wl,-force_load ../build/debug/lib/libadmb-contrib-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contribo.so -Wl,-force_load ../build/debug/lib/libadmb-contribo-shared.a
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contrib.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contribo.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contrib.so -Wl,--whole-archive ../build/debug/lib/libadmb-contrib-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contribo.so -Wl,--whole-archive ../build/debug/lib/libadmb-contribo-shared.a -Wl,--no-whole-archive
     endif
   endif
 else
   ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\contrib\lib\admb-contrib.dll -Wl,--whole-archive ..\build\debug\contrib\lib\libcontrib-shared.a ../build/debug/lib/libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\contrib\lib\admb-contribo.dll -Wl,--whole-archive ..\build\debug\contrib\lib\libcontribo-shared.a ../build/debug/lib/libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb-contrib.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-contrib-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb-contribo.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-contribo-shared.a -Wl,--no-whole-archive
   else
     ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/contrib/lib/libadmb-contrib.so -Wl,-force_load ../build/debug/contrib/lib/libcontrib-shared.a ../build/debug/lib/libadmb-shared.a
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/contrib/lib/libadmb-contribo.so -Wl,-force_load ../build/debug/contrib/lib/libcontribo-shared.a ../build/debug/lib/libadmbo-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contrib.so -Wl,-force_load ../build/dist/lib/libadmb-contrib-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contribo.so -Wl,-force_load ../build/dist/lib/libadmb-contribo-shared.a
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/contrib/lib/libadmb-contrib.so -Wl,--whole-archive ../build/debug/contrib/lib/libcontrib-shared.a ../build/debug/lib/libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/contrib/lib/libadmb-contribo.so -Wl,--whole-archive ../build/debug/contrib/lib/libcontribo-shared.a ../build/debug/lib/libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contrib.so -Wl,--whole-archive ../build/dist/lib/libadmb-contrib-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contribo.so -Wl,--whole-archive ../build/dist/lib/libadmb-contribo-shared.a -Wl,--no-whole-archive
     endif
   endif
 endif
-	@echo ADMB contrib shared build completed.
 
 contrib-includes: contrib-dirs
 	@$(MAKE) --directory=ecolib CONTRIB_INCLUDE=$(CONTRIB_INCLUDE) includes
@@ -99,20 +97,30 @@ ifeq ($(SHELL),cmd)
 	if exist  src\$(CONTRIB_LIB)\libcontribo$(SHARED).a del src\$(CONTRIB_LIB)\libcontribo.a
 	$(AR) -rs src\$(CONTRIB_LIB)\libcontribo$(SHARED).a src\$(CONTRIB_OBJS_DIR)-optlp-*.obj
 else
-	rm -vf src/$(CONTRIB_LIB)/libcontrib$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_LIB)/libcontrib$(SHARED).a src/$(CONTRIB_OBJS_DIR)-saflp-*.obj
-	rm -vf src/$(CONTRIB_LIB)/libcontribo$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_LIB)/libcontribo$(SHARED).a src/$(CONTRIB_OBJS_DIR)-optlp-*.obj
-  ifeq ($(DEBUG),yes)
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib$(SHARED).a ../build/objects/debug/saflp-*.obj ../build/objects/debug/contrib-saflp-*.obj
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo$(SHARED).a ../build/objects/debug/optlp-*.obj ../build/objects/debug/contrib-optlp-*.obj
+  ifdef SHARED
+    ifeq ($(DEBUG),yes)
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shareda ../build/objects/debug/shared-saflp-*.obj ../build/objects/debug/contrib-shared-saflp-*.obj
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shareda
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shareda ../build/objects/debug/shared-optlp-*.obj ../build/objects/debug/contrib-shared-optlp-*.obj
+    else
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a ../build/objects/dist/shared-saflp-*.obj ../build/objects/dist/contrib-shared-saflp-*.obj
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a ../build/objects/dist/shared-optlp-*.obj ../build/objects/dist/contrib-shared-optlp-*.obj
+    endif
   else
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib$(SHARED).a ../build/objects/dist/saflp-*.obj ../build/objects/dist/contrib-saflp-*.obj
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo$(SHARED).a ../build/objects/dist/optlp-*.obj ../build/objects/dist/contrib-optlp-*.obj
+    ifeq ($(DEBUG),yes)
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a ../build/objects/debug/saflp-*.obj ../build/objects/debug/contrib-saflp-*.obj
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a ../build/objects/debug/optlp-*.obj ../build/objects/debug/contrib-optlp-*.obj
+    else
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a ../build/objects/dist/saflp-*.obj ../build/objects/dist/contrib-saflp-*.obj
+	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a ../build/objects/dist/optlp-*.obj ../build/objects/dist/contrib-optlp-*.obj
+    endif
   endif
 endif
 

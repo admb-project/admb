@@ -135,7 +135,7 @@ else
     else
 	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a
 	cp -vf src/$(CONTRIB_DIR)/../lib/libadmb.a src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a ../build/objects/dist/saflp-*.obj ../build/objects/dist/contrib-saflp-*.obj
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a ../build/objects/dist/contrib-saflp-*.obj
 	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a
 	cp -vf src/$(CONTRIB_DIR)/../lib/libadmbo.a src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a
 	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a ../build/objects/dist/contrib-optlp-*.obj

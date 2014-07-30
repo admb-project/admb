@@ -131,11 +131,19 @@ ifeq ($(SHELL),cmd)
 	if not exist $(DIST)\utilities md $(DIST)\utilities
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
 	$(MAKE) copy
+  ifeq ($(DEBUG),yes)
+	$(MAKE) --directory=..\build\debug\src dist-clean
+  else
 	$(MAKE) --directory=..\build\dist\src dist-clean
+  endif
 else
 	cp -vRf ../utilities ${DIST}
 	$(MAKE) copy
+  ifeq ($(DEBUG),yes)
+	$(MAKE) --directory=../build/debug/src dist-clean
+  else
 	$(MAKE) --directory=../build/dist/src dist-clean
+  endif
 endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.

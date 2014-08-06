@@ -132,17 +132,6 @@ extern admb_javapointers * adjm_ptr;
 
     tracing_message(traceflag,"C1");
 
-#if defined(ADMB_REDEMO)
-  if (return_int(*pflag5) != 1912)
-  {
-    for (int i=0;i<initial_params::num_initial_params;i++)
-    {
-      initial_params::varsptr[i]=0;
-    }
-  }
-
-#endif // #if defined(ADMB_REDEMO)
-
     repeatminflag=0;
     do
     {

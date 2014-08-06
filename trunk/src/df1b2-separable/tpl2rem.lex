@@ -735,12 +735,23 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  data_matrix ");
                      }
 
+<DEFINE_DATA>init_3iarray {
+  prior_found=1;
+    BEGIN IN_THREE_ARRAY_DEF;
+    fprintf(fdat,"%s"," data_3iarray ");
+                     }
+
 <DEFINE_DATA>init_3darray {
     likelihood_found=1;
     BEGIN IN_THREE_ARRAY_DEF;
     fprintf(fdat,"%s","  data_3array ");
                      }
 
+<DEFINE_DATA>init_4iarray {
+  prior_found=1;
+    BEGIN IN_FOUR_ARRAY_DEF;
+    fprintf(fdat,"%s","  data_4iarray ");
+                     }
 
 <DEFINE_DATA>init_4darray {
     likelihood_found=1;
@@ -806,10 +817,22 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  imatrix ");
                      }
 
+<DEFINE_DATA>3iarray {
+    likelihood_found=1;
+    BEGIN IN_NAMED_THREE_ARRAY_DEF;
+    fprintf(fdat,"%s","  i3_array ");
+                     }
+
 <DEFINE_DATA>3darray {
     likelihood_found=1;
     BEGIN IN_NAMED_THREE_ARRAY_DEF;
     fprintf(fdat,"%s","  d3_array ");
+                     }
+
+<DEFINE_DATA>4iarray {
+    likelihood_found=1;
+    BEGIN IN_NAMED_FOUR_ARRAY_DEF;
+    fprintf(fdat,"%s","  i4_array ");
                      }
 
 <DEFINE_DATA>4darray {

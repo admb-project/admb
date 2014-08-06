@@ -249,7 +249,8 @@ extern admb_javapointers * adjm_ptr;
                 else
     #endif
                 {
-                  likeprof_routine(ffbest);
+                  const double f = value(*objective_function_value::pobjfun);
+                  likeprof_routine(f);
                 }
               }
             }

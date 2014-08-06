@@ -610,6 +610,31 @@ protected:
 
   named_d4_array& operator=(const d4_array& m);
 };
+class named_i4_array : public i4_array, public model_name_tag
+{
+protected:
+  named_i4_array(void) : i4_array(), model_name_tag() {;}
+  void allocate(ad_integer,ad_integer,const index_type&,const index_type&,
+    const index_type&,const index_type&,const index_type&,const index_type&,
+    const char * s);
+  void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,
+    int rmax,int cmin,int cmax,const char * s);
+
+  void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,
+    int rmax,const char * s);
+  void allocate(int hhsl,int hhsu,int hsl,int hsu,const char * s);
+  void allocate(int hhsl,int hhsu,const char * s);
+  void allocate(const char * s);
+
+  void allocate(ad_integer,ad_integer,const index_type&,const index_type&,
+    const index_type&,const index_type&,const char * s);
+  void allocate(ad_integer,ad_integer,const index_type&,const index_type&,
+    const char * s);
+  void allocate(ad_integer,ad_integer,const char * s);
+
+
+  named_i4_array& operator=(const i4_array& m);
+};
 
 /**
  * Description not yet available.
@@ -1589,6 +1614,16 @@ private:
   friend class model_data;
 };
 
+class data_3iarray : public named_i3_array
+{
+  data_3iarray(void) : named_i3_array() {;}
+  void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
+    const char * ="UNNAMED");
+  void allocate(int hsl, int hsu,const index_type& rmin, const index_type& rmax,
+    const index_type& cmin, const index_type& cmax, const char * ="UNNAMED");
+  friend class model_data;
+};
+
 /**
  * Description not yet available.
  * \param
@@ -1604,19 +1639,6 @@ public:
   friend class model_data;
 };
 
-/**
- * Description not yet available.
- * \param
- */
-class data_3iarray : public named_i3_array
-{
-  data_3iarray(void) : named_i3_array() {;}
-  void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
-    const char * ="UNNAMED");
-  void allocate(int hsl, int hsu,const index_type& rmin, const index_type& rmax,
-    const index_type& cmin, const index_type& cmax, const char * ="UNNAMED");
-  friend class model_data;
-};
 
 /**
  * Description not yet available.
@@ -1643,6 +1665,17 @@ class data_5array : public named_d5_array
 class data_4array : public named_d4_array
 {
   data_4array(void) : named_d4_array() {;}
+  void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
+    int cmin,int cmax,const char * ="UNNAMED");
+  void allocate(ad_integer hhsl, ad_integer hhsu, const index_type& hsl,
+    const index_type& hsu, const index_type& rmin, const index_type& rmax,
+    const index_type& cmin, const index_type& cmax, const char * ="UNNAMED");
+  friend class model_data;
+};
+
+class data_4iarray : public named_i4_array
+{
+  data_4iarray(void) : named_i4_array() {;}
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
     int cmin,int cmax,const char * ="UNNAMED");
   void allocate(ad_integer hhsl, ad_integer hhsu, const index_type& hsl,

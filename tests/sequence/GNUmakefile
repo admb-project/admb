@@ -1,5 +1,5 @@
-all: simple gdb.py
-	gdb --python gdb.py
+all: simple sequence.py
+	gdb --python sequence.py
 
 simple: simple.tpl simple.dat
 	../../admb -g simple.tpl

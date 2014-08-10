@@ -2,6 +2,7 @@
 #include <sstream>
 #include <fvar.hpp>
 #include <admodel.h>
+//#include "contrib.h"
 
 /**
 Write out gradients into external file.

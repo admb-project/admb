@@ -89,6 +89,6 @@ The most important principles are the first 2 from Misfeldt et al
 + Adding new files
 + When a new cpp file is added to a directory it must be listed in the "objects.lst" file in that directory in order to be compiled into the libraries. 
 + 
-+ Example: "my_new.cpp" would be listes as "my_new.obj".
++ Example: "my_new.cpp" would be listed as "my_new.obj".
 + Naming conventions
 + Naming conventions .....

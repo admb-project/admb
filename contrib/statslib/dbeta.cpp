@@ -76,4 +76,24 @@ dvariable dbeta( const dvariable& x, const dvariable& shape1, const dvariable& s
 	return -1.* gammln(a+b)+(gammln(a)+gammln(b))-(a-1.)*log(x)-(b-1.)*log(1.-x);
 }
 
+dvariable dbeta( const dvariable& x, const prevariable& shape1, const prevariable& shape2 )
+{
+	if( x<=0 || x>=1.0 )
+	{
+		cerr<<"x is <=0 or >=1.0 in "
+			"dbeta( const dvariable& x, const double& shape1, const double& shape2 )\n";
+		return 0;
+	}
+	
+	if( shape1<=0 || shape2 <=0 )
+	{
+		cerr<<"shape1 or shape2 is <= 0 in "
+			"dbeta( const dvariable& x, const double& shape1, const double& shape2 )\n";
+		return 0;
+	}
+	
+	dvariable a=shape1;
+	dvariable b=shape2;
+	return -1.* gammln(a+b)+(gammln(a)+gammln(b))-(a-1.)*log(x)-(b-1.)*log(1.-x);
+}
 

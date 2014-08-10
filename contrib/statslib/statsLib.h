@@ -103,28 +103,82 @@ df1b2variable dnorm( const df1b2vector& x, const df1b2variable& mu, const df1b2v
 
 
 // Plogis distribution
-// #include <plogis.cpp>
-template <typename T1, typename T2>
-T1 plogis(T1 *x, T2 *location, T2 *scale)
-{
-  T1 y = 1./(1.+mfexp((*location - *x) / *scale));
-  return (y);
-}  
+#ifndef LOGISTIC_HPP
+#define LOGISTIC_HPP
 
-template <typename T1, typename T2>
-T1 plogis(T1 x, T2 location, T2 scale)
-{
-  T1 y = 1./(1.+mfexp((location - x) / scale));
-  return (y);
-} 
+template <typename T>
+class plogisTraits;
 
-template <typename T1, typename T2, typename T3>
-T1 plogis(T2 x, T3 location, T3 scale)
+template<>
+class plogisTraits<double> {
+public:
+  typedef dvector plogisT;
+};
+
+template<>
+class plogisTraits<named_dvariable> {
+public:
+  typedef dvar_vector plogisT;
+};
+
+template<>
+class plogisTraits<dvariable> {
+public:
+  typedef dvar_vector plogisT;
+};
+
+
+template<typename T, typename T1>
+inline
+typename plogisTraits<T>::plogisT plogis(const T1 &x, const T &location, const T &scale)
 {
-  T1 y = 1./(1.+mfexp((location - x) / scale));
-  //cout<<typeid(y)<<endl;
+  typedef typename plogisTraits<T>::plogisT plogisT;
+  plogisT y = 1./(1.+mfexp((location - x) / scale));
   return (y);
-} 
+}
+
+
+// template <typename T1, typename T2>
+// T1 plogis(T1 *x, T2 *location, T2 *scale)
+// {
+//   T1 y = 1./(1.+mfexp((*location - *x) / *scale));
+//   return (y);
+// }  
+
+// template <typename T1, typename T2>
+// T1 plogis(T1 x, T2 location, T2 scale)
+// {
+//   T1 y = 1./(1.+mfexp((location - x) / scale));
+//   return (y);
+// } 
+
+
+
+#endif
+
+
+// #include "plogis.hpp"
+// template <typename T1, typename T2>
+// T1 plogis(T1 *x, T2 *location, T2 *scale)
+// {
+//   T1 y = 1./(1.+mfexp((*location - *x) / *scale));
+//   return (y);
+// }  
+
+// template <typename T1, typename T2>
+// T1 plogis(T1 x, T2 location, T2 scale)
+// {
+//   T1 y = 1./(1.+mfexp((location - x) / scale));
+//   return (y);
+// } 
+
+// template <typename T1, typename T2, typename T3>
+// T1 plogis(T2 x, T3 location, T3 scale)
+// {
+//   T1 y = 1./(1.+mfexp((location - x) / scale));
+//   //cout<<typeid(y)<<endl;
+//   return (y);
+// } 
 
 // template class plogis<dvariable>;
 // template class plogis<dvector>;

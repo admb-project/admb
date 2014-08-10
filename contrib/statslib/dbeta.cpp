@@ -33,8 +33,6 @@
 * 	-\ln(\Gamma(a+b)) +\ln(\Gamma(a)) + \ln(\Gamma(b))-(a-1)\ln(x)-(b-1)\ln(1-x)
 * \f]
 * 
-* This function has nobt been overloaded for differentiable parameters
-* (shape1 and shape2) because the gammln function does not accept them.s
 */
 dvariable dbeta( const dvariable& x, const double& shape1, const double& shape2 )
 {
@@ -54,6 +52,27 @@ dvariable dbeta( const dvariable& x, const double& shape1, const double& shape2 
 	
 	double a=shape1;
 	double b=shape2;
+	return -1.* gammln(a+b)+(gammln(a)+gammln(b))-(a-1.)*log(x)-(b-1.)*log(1.-x);
+}
+
+dvariable dbeta( const dvariable& x, const dvariable& shape1, const dvariable& shape2 )
+{
+	if( x<=0 || x>=1.0 )
+	{
+		cerr<<"x is <=0 or >=1.0 in "
+			"dbeta( const dvariable& x, const double& shape1, const double& shape2 )\n";
+		return 0;
+	}
+	
+	if( shape1<=0 || shape2 <=0 )
+	{
+		cerr<<"shape1 or shape2 is <= 0 in "
+			"dbeta( const dvariable& x, const double& shape1, const double& shape2 )\n";
+		return 0;
+	}
+	
+	dvariable a=shape1;
+	dvariable b=shape2;
 	return -1.* gammln(a+b)+(gammln(a)+gammln(b))-(a-1.)*log(x)-(b-1.)*log(1.-x);
 }
 

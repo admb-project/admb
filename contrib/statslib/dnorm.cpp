@@ -70,6 +70,8 @@ dvariable dnorm( const prevariable& x, const double& mu, const double& std, bool
 	return tmp;
 }
 
+
+
 df1b2variable dnorm( const df1b2variable& x, const df1b2variable& mu, const df1b2variable& std, bool bLog=true )
 {
 

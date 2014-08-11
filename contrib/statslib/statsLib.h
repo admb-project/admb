@@ -223,6 +223,8 @@ dvector eplogis(const dvector& x, const double& alpha, const double& beta, const
 
 // Beta distribution
 dvariable dbeta( const dvariable& x, const double& shape1, const double& shape2 );
+dvariable dbeta( const dvariable& x, const dvariable& shape1, const dvariable& shape2 );
+dvariable dbeta( const dvariable& x, const prevariable& shape1, const prevariable& shape2 );
 
 // Lognormal distribution
 dvariable dlnorm( const prevariable& x, const double& mu, const double& std );

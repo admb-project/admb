@@ -1,6 +1,6 @@
-all: api
+all: _api
 
-api:
+_api:
 	$(MAKE) --directory=api
 
 installs:

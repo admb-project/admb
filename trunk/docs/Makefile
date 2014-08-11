@@ -3,6 +3,9 @@ all: _api
 _api:
 	$(MAKE) --directory=api
 
+_manuals:
+	$(MAKE) --directory=manuals
+
 installs:
 	$(MAKE) --directory=install
 

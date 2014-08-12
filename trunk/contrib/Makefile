@@ -12,9 +12,9 @@ all:
 	
 shared:
 	IF EXIST $(DESTDIR)\lib\admb-contrib.dll del $(DESTDIR)\lib\admb-contrib.dll
-	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\dist\lib\admb-contrib.dll /NOLOGO /IGNORE:4006 ..\..\dist\lib\admb.lib contrib-saflp-*.obj
+	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contrib.dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admb.lib contrib-saflp-*.obj
 	IF EXIST $(DESTDIR)\lib\admb-contribo.dll del $(DESTDIR)\lib\admb-contribo.dll
-	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\dist\lib\admb-contribo.dll /NOLOGO /IGNORE:4006 ..\..\dist\lib\admbo.lib contrib-optlp-*.obj
+	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contribo.dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admbo.lib contrib-optlp-*.obj
 
 contrib-includes: contrib-dirs
 	pushd ecolib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
@@ -33,10 +33,10 @@ contrib-dirs:
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
 	IF EXIST $(DESTDIR)\lib\admb-contrib.lib del $(DESTDIR)\lib\admb-contrib.lib
 	copy $(DESTDIR)\lib\admb.lib $(DESTDIR)\lib\admb-contrib.lib
-	pushd $(OBJDESTDIR)& lib ..\..\dist\lib\admb-contrib.lib /NOLOGO /IGNORE:4006 contrib-saflp-*.obj
+	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contrib.lib /NOLOGO /IGNORE:4006 contrib-saflp-*.obj
 	IF EXIST $(DESTDIR)\lib\admb-contribo.lib del $(DESTDIR)\lib\admb-contribo.lib
 	copy $(DESTDIR)\lib\admbo.lib $(DESTDIR)\lib\admb-contribo.lib
-	pushd $(OBJDESTDIR)& lib ..\..\dist\lib\admb-contribo.lib /NOLOGO /IGNORE:4006 contrib-optlp-*.obj
+	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contribo.lib /NOLOGO /IGNORE:4006 contrib-optlp-*.obj
 
 contrib-ad2csv:
 	pushd ad2csv& $(MAKE)

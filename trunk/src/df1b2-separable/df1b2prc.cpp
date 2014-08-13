@@ -167,8 +167,7 @@ void read_pass2_1_prodc1(void)
   df1b2_header * pz=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
   memcpy(&yu,bptr,sizeof(double));
-  bptr+=sizeof(double);
-  //double * ydot=(double*)bptr;
+  //bptr+=sizeof(double); double* ydot=(double*)bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
 

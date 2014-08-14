@@ -106,15 +106,7 @@ void fmmdisp(const dvector& x, const dvector& g,
 {
   if (!noprintx)
   {
-    int      headings = 3;     /* number of heading lines */
-    int      cols = 3;     /* number of columns to display  */
-
     //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
-    int      i, j, ij;
-    int      imax;         /* number of lines to display */
-    int      wmax;         /* number of lines in current window */
-
-    char     colhead[30];
 
     char format[20];
     char format1[20];
@@ -127,11 +119,11 @@ void fmmdisp(const dvector& x, const dvector& g,
       strcpy(format2,"%3d%9.3lf %12.4le");
       strcpy(format3,"%3d%9.2lf %12.4le");
                  /*  12345678901234567 */
-    #elif defined(_MSC_VER)
-      strcpy(format,"%3d%8.4lf %12.4le");
-      strcpy(format1,"%3d%8.3lf %12.4le");
-      strcpy(format2,"%3d%8.2lf %12.4le");
-      strcpy(format3,"%3d%8.1lf %12.4le");
+    #elif defined(_WIN32)
+      strcpy(format,"%3d%9.5lf %12.4le");
+      strcpy(format1,"%3d%9.4lf %12.4le");
+      strcpy(format2,"%3d%9.3lf %12.4le");
+      strcpy(format3,"%3d%9.2lf %12.4le");
               /*  12345678901234567 */
     #else
       strcpy(format,"%3d%9.5lf %12.5le");
@@ -141,21 +133,31 @@ void fmmdisp(const dvector& x, const dvector& g,
               /*  12345678901234567 */
     #endif
 
-    wmax = 22;
+    char colhead[30];
+    char colhead2[30];
     strcpy(colhead,"Var   Value    Gradient   ");
-    if (ad_printf) (*ad_printf)("%26s|%26s|%26s\n",colhead,colhead,colhead);
-    imax = nvar / cols;
+    strcpy(colhead2,"Var   Value    Gradient");
+    if (ad_printf) (*ad_printf)("%26s|%26s|%23s\n",colhead,colhead,colhead2);
+
+    // number of columns to display
+    const int cols = 3;
+    // number of lines to display
+    int imax = nvar / cols;
+    // number of lines in current window
+    const int wmax = 22;
+    // number of heading lines
+    const int headings = 3;
     if (nvar % cols > 0) imax++;
     if ( (scroll_flag == 0) && (imax > wmax-headings) )
       imax = wmax - headings - 1;
 
     //int rownum = headings;       /* row number to print */
 
-    for (i=1; i<=imax; i++)
+    for (int i=1; i<=imax; i++)
     {
-      for (j=0; j<cols; j++)
+      for (int j=0; j<cols; j++)
       {
-        ij = cols*(i-1)+(j+1);
+        int ij = cols*(i-1)+(j+1);
         if (ij <= nvar)
         {
           if (fabs(x[ij])<100)

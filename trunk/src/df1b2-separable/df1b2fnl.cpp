@@ -32,8 +32,6 @@ imatrix * funnel_init_var::plist=0;
 
   int funnel_check_flag=0;
 
-void  xxx(init_df1b2vector & tmp,int x){;}
-
 /**
  * Description not yet available.
  * \param

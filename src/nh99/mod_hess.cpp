@@ -488,7 +488,7 @@ void function_minimizer::hess_inv(void)
       exit(1);
     }
   }
-  int hybflag;
+  int hybflag = 0;
   ifs >> hybflag;
   dvector sscale(1,nvar);
   ifs >> sscale;
@@ -555,14 +555,11 @@ void function_minimizer::hess_inv(void)
          " positive definite" << endl;
       }
     }
-    int on=0;
     ivector negflags(0,hess.indexmax());
     int num_negflags=0;
-    int on2;
     {
-      on=option_match(ad_comm::argc,ad_comm::argv,"-eigvec");
+      int on = option_match(ad_comm::argc,ad_comm::argv,"-eigvec");
       on1=option_match(ad_comm::argc,ad_comm::argv,"-spmin");
-      on2=option_match(ad_comm::argc,ad_comm::argv,"-cross");
       if (on > -1 || on1 >-1 )
       {
         ofs3 << setshowpoint() << setw(14) << setprecision(10)
@@ -595,6 +592,7 @@ void function_minimizer::hess_inv(void)
             (*negdirections)(i)=ev(negflags(i));
           }
         }
+        int on2 = option_match(ad_comm::argc,ad_comm::argv,"-cross");
         if (on2>-1)
         {                                     // saddle point
           dmatrix cross(1,ev.indexmax(),1,ev.indexmax());

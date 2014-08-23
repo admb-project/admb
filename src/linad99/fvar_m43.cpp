@@ -29,7 +29,6 @@ dvar_vector VEC(const dvar_matrix& _m)
       io(i)=ii;
     }
     dvar_vector tmp(1,ii);
-    ii=0;
     for (i=mmin;i<=mmax;i++)
     {
       tmp(io(i-1)+1,io(i)).shift(m(i).indexmin())=m(i);

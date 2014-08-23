@@ -46,8 +46,7 @@ void dmatrix::fill( const char * s)
   ivector k1(1, MAXROWS);
   ivector k2(1, MAXROWS);
 
-  int k;
-  for (k = 0; k < n; k++)
+  for (int k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -133,13 +132,12 @@ void dmatrix::fill( const char * s)
     }
   }
 
-  k = 0;
   for (i=rowmin(); i<=rowmax(); i++)
   {
     char *t = new char[strlen(s)+1];
     //t = (char*) new[strlen(s)+1];
 
-    for (k = k1[i]; k <= k2[i]; k++)
+    for (int k = k1[i]; k <= k2[i]; k++)
     {
       t[k-k1[i]] = s[k];
     }

@@ -32,7 +32,7 @@ void df_xdet(void);
 */
 dvariable det(const dvar_matrix& aa)
 {
-  int i,imax,j,k,n;
+  int i,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -82,6 +82,7 @@ dvariable det(const dvar_matrix& aa)
       //a[i][j]=sum;
       bb(i,j)=sum;
     }
+    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {

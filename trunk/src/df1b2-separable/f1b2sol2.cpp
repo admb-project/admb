@@ -57,7 +57,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
 {
   ADUNCONST(df1b2variable,ln_unsigned_det)
   ADUNCONST(df1b2vector,z)
-  int i,imax,j,k,n;
+  int i,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -107,6 +107,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
       //a[i][j]=sum;
       bb(i,j)=sum;
     }
+    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {

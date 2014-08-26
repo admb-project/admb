@@ -55,7 +55,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   prevariable& sign=(prevariable&) _sign;
 
   RETURN_ARRAYS_INCREMENT();
-  int i,imax,j,k,n;
+  int i,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -107,6 +107,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
       //a[i][j]=sum;
       bb.elem(i,j)=sum;
     }
+    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {

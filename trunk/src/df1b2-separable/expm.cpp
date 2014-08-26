@@ -34,7 +34,7 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   df1b2variable ln_unsigned_det,df1b2variable& sign)
 {
   RETURN_ARRAYS_INCREMENT();
-  int i,imax,j,k,n;
+  int i,j,k,n;
   n = aa.colsize();
   int lb = aa.colmin();
   int ub = aa.colmax();
@@ -84,6 +84,7 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
       // a[i][j] = sum;
       bb(i,j) = sum;
     }
+    int imax = j;
     big = 0.0;
     for (i = j;i<=ub;i++)
     {

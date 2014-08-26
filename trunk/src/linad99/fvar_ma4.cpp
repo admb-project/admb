@@ -25,7 +25,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
   ADUNCONST(dvar_matrix,a)
   ADUNCONST(prevariable,d)
   ivector& indx= (ivector&) _indx;
-  int i,imax,j,k,n;
+  int i,j,k,n;
 
   n=a.colsize();
   int lb=a.colmin();
@@ -67,6 +67,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
       }
       a(i,j)=sum;
     }
+    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {

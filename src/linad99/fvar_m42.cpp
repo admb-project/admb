@@ -41,7 +41,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 {
   int& sgn=(int&)(_sgn);
   int errflag=0;
-  int i,imax,j,k,n;
+  int i,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -94,6 +94,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
       //a[i][j]=sum;
       bb(i,j)=sum;
     }
+    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {

@@ -195,7 +195,7 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz,
   dvariable ln_unsigned_det, dvariable& sign)
 {
   RETURN_ARRAYS_INCREMENT();
-  int i,imax,j,k,n;
+  int i,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -244,6 +244,7 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz,
       //a[i][j]=sum;
       bb(i,j)=sum;
     }
+    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {

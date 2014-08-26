@@ -168,7 +168,6 @@ dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
 void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
 {
   int i=0;
-  int imax=0;
   int j=0;
   int k=0;
   int n=0;
@@ -218,6 +217,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
       }
       a[i][j]=sum;
     }
+    int imax=j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {
@@ -276,7 +276,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
 */
 void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 {
-  int i,imax,j,k,n;
+  int i,j,k,n;
   double& d=(double&)_d;
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
@@ -323,6 +323,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
       }
       a[i][j]=sum;
     }
+    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {
@@ -532,7 +533,6 @@ double ln_det(const dmatrix& m1, const int& _sgn)
 void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
 {
   int i=0;
-  int imax=0;
   int j=0;
   int k=0;
   int n=0;
@@ -583,8 +583,8 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
       }
       a[i][j]=sum;
     }
+    int imax=j;
     big=0.0;
-
     for (i=j;i<=ub;i++)
     {
       sum=a[i][j];

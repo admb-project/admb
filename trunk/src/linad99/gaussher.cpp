@@ -534,6 +534,8 @@ void imtqlx( const dvector& _d, const dvector& _e, const dvector& _z )
     }
   }
 
+  m = n;
+
   //  Sorting.
   for ( ii = 2; ii <= m; ii++ )
   {

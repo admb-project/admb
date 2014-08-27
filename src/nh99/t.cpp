@@ -295,12 +295,15 @@ typedef dvariable E_f;/* real function with -R not specified */
 #endif
 /* Common Block Declarations */
 
+#if !defined(__SUNPRO_CC) && !defined(__OPEN64__) && !defined(_MSC_VER)
+struct {
+    integer mp, lp;
+    double gtol, stpmin, stpmax;
+} lb4_1 = { .mp = 6, .lp = 6, .gtol = .9, .stpmin = 1e-20, .stpmax = 1e20};
+#else
 struct lb4_1_ {
     integer mp, lp;
     double gtol, stpmin, stpmax;
-#if !defined(__SUNPRO_C) && !defined(__OPEN64__) && !defined(_MSC_VER)
-} lb4_1 = { .mp = 6, .lp = 6, .gtol = .9, .stpmin = 1e-20, .stpmax = 1e20};
-#else
 };
 #define lb4_1 (*(struct lb4_1_ *) &lb4_)
 /* Initialized data */

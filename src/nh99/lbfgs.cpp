@@ -246,17 +246,16 @@ typedef doublereal E_f;/* real function with -R not specified */
 struct lb3_1_ {
     integer mp, lp;
     doublereal gtol, stpmin, stpmax;
-};
+} lb3_1 = { .mp = 6, .lp = 6, .gtol = .9, .stpmin = 1e-20, .stpmax = 1e20};
 
+/* 
+Initialized data
 #define lb3_1 (*(struct lb3_1_ *) &lb3_)
-
-/* Initialized data */
-
 struct {
     integer e_1[2];
     doublereal e_2[3];
     } lb3_ = { {6, 6}, {.9, 1e-20, 1e20}};
-
+*/
 
 /* Table of constant values */
 

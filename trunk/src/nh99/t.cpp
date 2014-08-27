@@ -298,16 +298,18 @@ typedef dvariable E_f;/* real function with -R not specified */
 struct lb4_1_ {
     integer mp, lp;
     double gtol, stpmin, stpmax;
+#if !defined(__SUNPRO_C) && !defined(__OPEN64__) && !defined(_MSC_VER)
 } lb4_1 = { .mp = 6, .lp = 6, .gtol = .9, .stpmin = 1e-20, .stpmax = 1e20};
-
-/*
-Initialized data
+#else
+};
 #define lb4_1 (*(struct lb4_1_ *) &lb4_)
+/* Initialized data */
 struct {
     integer e_1[2];
     double e_2[3];
     } lb4_ = { {6, 6}, {.9, 1e-20, 1e20}};
-*/
+#endif
+
 #ifdef __cplusplus
 }
 #endif

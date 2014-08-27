@@ -20,14 +20,16 @@
 #endif
 #include <stdlib.h>
 
-#if defined( __NDPX__) || defined(__SUN__)
-  void * _farptr_fromlong(long int i)
-#else
-  void * _farptr_fromlong(unsigned long int i)
-#endif
+#if defined(__ZTC__)
+  #if defined( __NDPX__) || defined(__SUN__)
+void * _farptr_fromlong(long int i)
+  #else
+void * _farptr_fromlong(unsigned long int i)
+  #endif
 {
   return( (void *) i);
 }
+#endif
 
 /**
  * Description not yet available.
@@ -40,6 +42,7 @@ long int _farptr_tolong(void * ptr)
 }
 #endif
 
+#if defined(__ZTC__)
 /**
  * Description not yet available.
  * \param
@@ -48,3 +51,4 @@ void * _farptr_norm(void * ptr)
 {
   return(ptr);
 }
+#endif

@@ -33,7 +33,7 @@ static void gser(double& gamser,double a,double x,double& gln);
 
 static double gammp(double a,double x)
 {
-  double gamser,gammcf,gln;
+  double gamser = 0.0,gammcf,gln;
 
   if (x < 0.0 || a <= 0.0)
     cerr << "Invalid arguments in routine gammp" << endl;

@@ -371,8 +371,6 @@ void check_derivative_values_break(const char * _s,int i,int b)
     set_gradient_stack(df_check_derivative_values_indexed_break);
 }
 
-void  rrkludge(double * temp_ptr){;}
-
 /**
  * Description not yet available.
  * \param

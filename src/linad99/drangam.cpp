@@ -95,9 +95,6 @@ double sgamma(double a,const random_number_generator& _rng)
 */
 {
   random_number_generator& rng=(random_number_generator&) _rng;
-#ifndef __OPENCC__
-extern double fsign( double num, double sign );
-#endif
 static double q1 = 4.166669E-2;
 static double q2 = 2.083148E-2;
 static double q3 = 8.01191E-3;

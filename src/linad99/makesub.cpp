@@ -35,6 +35,8 @@ using namespace std;
 #include <unistd.h>
 #endif
 
+#include <cassert>
+
 /**
  * Description not yet available.
  * \param
@@ -63,7 +65,8 @@ void ad_getcd(const adstring& _s)
 #else
   char tmp[101];
   tmp[0]='\0';
-  getcwd(tmp,100);
+  char* ret = getcwd(tmp,100);
+  assert(ret != 0);
   s=adstring(tmp);
 #endif
 }

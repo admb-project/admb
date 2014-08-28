@@ -9,6 +9,7 @@
  * Description not yet available.
  */
 #include <df1b2fun.h>
+#include <cassert>
 
 /**
  * Description not yet available.
@@ -107,8 +108,8 @@ void fixed_smartlist::rewind(void)
   {
     lseek(fp,0L,SEEK_SET);
     // get the record size
-    ::read(fp,&nbytes,sizeof(int));
-    //cout << nbytes << endl;
+    ssize_t ret = ::read(fp,&nbytes,sizeof(int));
+    assert(ret != -1);
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -118,7 +119,8 @@ void fixed_smartlist::rewind(void)
       ad_exit(1);
     }
     // now read the record into the buffer
-    /*int nr=*/::read(fp,buffer,nbytes);
+    ret = ::read(fp,buffer,nbytes);
+    assert(ret != -1);
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
@@ -214,7 +216,8 @@ void fixed_smartlist::write_buffer_one_less(void)
 
     // write the size of the next record into the file
     //cout << nbytes << endl;
-    ::write(fp,&nbytes,sizeof(int));
+    ssize_t ret = ::write(fp,&nbytes,sizeof(int));
+    assert(ret != -1);
 
     // write the record into the file
     int nw=::write(fp,buffer,nbytes);
@@ -233,7 +236,8 @@ void fixed_smartlist::write_buffer_one_less(void)
 
     // now write the previous file position into the file so we can back up
     // when we want to.
-    ::write(fp,&pos,sizeof(off_t));
+    ret = ::write(fp,&pos,sizeof(off_t));
+    assert(ret != -1);
 
     endof_file_ptr=lseek(fp,0L,SEEK_CUR);
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
@@ -259,7 +263,8 @@ void fixed_smartlist::write_buffer(void)
     off_t pos=lseek(fp,0L,SEEK_CUR);
 
     // write the size of the next record into the file
-    ::write(fp,&nbytes,sizeof(int));
+    ssize_t ret = ::write(fp,&nbytes,sizeof(int));
+    assert(ret != -1);
 
     // write the record into the file
     unsigned int nw=::write(fp,buffer,nbytes);
@@ -278,7 +283,8 @@ void fixed_smartlist::write_buffer(void)
 
     // now write the previous file position into the file so we can back up
     // when we want to.
-    ::write(fp,&pos,sizeof(off_t));
+    ret = ::write(fp,&pos,sizeof(off_t));
+    assert(ret != -1);
 
     endof_file_ptr=lseek(fp,0L,SEEK_CUR);
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
@@ -319,7 +325,8 @@ void fixed_smartlist::read_buffer(void)
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
-    ::read(fp,&nbytes,sizeof(int));
+    ssize_t ret = ::read(fp,&nbytes,sizeof(int));
+    assert(ret != -1);
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -329,7 +336,8 @@ void fixed_smartlist::read_buffer(void)
       ad_exit(1);
     }
     // now read the record into the buffer
-    unsigned int nr=::read(fp,buffer,nbytes);
+    ssize_t nr=::read(fp,buffer,nbytes);
+    assert(nr != -1);
     if (nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;

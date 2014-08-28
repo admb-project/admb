@@ -11,6 +11,10 @@
 #include <df1b2fun.h>
 #include <cassert>
 
+#ifdef _MSC_VER
+typedef int ssize_t;
+#endif
+
 /**
  * Description not yet available.
  * \param

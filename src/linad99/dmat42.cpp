@@ -260,6 +260,8 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
 /* accumulation of right-hand transformations */
   if (withv)
   {
+    //assert(l == n);
+    l = n;
     for (i=n-1;i>=0;i--)
     {
       if ( i < n-2 )
@@ -529,6 +531,8 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
 /* accumulation of right-hand transformations */
   if (withv)
   {
+    //assert(l == n);
+    l = n;
     for (i=n-1;i>=0;i--)
     {
       if (g != 0.0)

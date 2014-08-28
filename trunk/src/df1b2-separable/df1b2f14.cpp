@@ -262,7 +262,7 @@ void fixed_smartlist2::write_buffer(void)
     // write the record into the file
     ret = ::write(fp,buffer,nbytes);
     assert(ret != -1);
-    //cout << "Number of bytes written " << ret 
+    //cout << "Number of bytes written " << ret
      //    << " bptr value =  " << bptr << endl;
     //for (int ii=0;ii<=25;ii++)
     //  cout << int (*(buffer+ii)) << " ";

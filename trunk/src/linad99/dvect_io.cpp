@@ -50,8 +50,9 @@ void dvector::write_on(const ostream& _s) const
 {
   ostream& s=(ostream&) _s;
 #ifdef __USE_IOSTREAM__
-  int new_w = s.width();
-  int new_p = s.precision();
+  using std::streamsize;
+  streamsize new_w = s.width();
+  streamsize new_p = s.precision();
 #if !defined(__cplusplus)
   long new_form = s.flags();
 #else

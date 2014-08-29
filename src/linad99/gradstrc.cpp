@@ -244,7 +244,7 @@ void allocate_dvariable_space(void)
     cerr << "sizeof(dlink) is greater than 2*sizeof(double) --"
        " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
   }
-  char * tmp= (char*) malloc(2.0*sizeof(double)*(numlinks+1));
+  char * tmp= (char*) malloc(2*sizeof(double)*(numlinks+1));
   char * tmp1=tmp;
 
   dlink * dl=(dlink*)tmp1;

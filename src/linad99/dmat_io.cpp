@@ -18,14 +18,12 @@
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <iomanip.hpp>
   #include <fstream.hpp>
-  #define __USE_IOSTREAM__
 #endif
 
 #include <string.h>
@@ -47,32 +45,27 @@ ostream& operator<<(const ostream& _ostr, const dmatrix& z)
  */
 void dmatrix::write_on(const ostream& _s) const
 {
- ostream& s=(ostream&) _s;
-#ifdef __USE_IOSTREAM__
-  int new_w = s.width();
-  int new_p = s.precision();
+  using std::streamsize;
+
+  ostream& s=(ostream&) _s;
+  streamsize new_w = s.width();
+  streamsize new_p = s.precision();
 #if !defined(__cplusplus)
   long new_form = s.flags();
 #else
   ios::fmtflags new_form = s.flags();
 #endif
   char new_fill = s.fill();
-#endif
 
   for (int i=rowmin(); i <= rowmax(); i++)
   {
-  #ifdef __USE_IOSTREAM__
      s.width(new_w);
      s.precision(new_p);
      s.flags(new_form);
      s.fill(new_fill);
-  #endif
      s << (*this)[i];
      if (i<rowmax())
      {
-//#  if ( defined(__BORLANDC__) &&  __BORLANDC__  > 0x0520)
-
-//#  endif
        s << endl;
      }
   }

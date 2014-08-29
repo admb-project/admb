@@ -18,7 +18,7 @@
  */
 ostream& operator << (const ostream& ofs1,const banded_symmetric_dmatrix& S1)
 {
-  int w=ofs1.width();
+  std::streamsize w = ofs1.width();
   ostream& ofs=(ostream&) ofs1;
   banded_symmetric_dmatrix& S=(banded_symmetric_dmatrix&)(S1);
   int imin=S.indexmin();

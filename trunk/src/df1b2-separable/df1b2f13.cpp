@@ -323,7 +323,8 @@ void fixed_smartlist::read_buffer(void)
       // offset of the begining of the record is at the end
       // of the record
       lseek(fp,long(-sizeof(off_t)),SEEK_CUR);
-      read(fp,&pos,sizeof(off_t));
+      ssize_t ret = read(fp,&pos,sizeof(off_t));
+      assert(ret != -1);
       // back up to the beginning of the record (plus record size)
       lseek(fp,pos,SEEK_SET);
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);

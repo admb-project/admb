@@ -271,14 +271,16 @@ void test_smartlist::read_buffer(void)
       // offset of the begining of the record is at the end
       // of the record
       lseek(fp,long(-sizeof(off_t)),SEEK_CUR);
-      read(fp,&pos,sizeof(off_t));
+      ssize_t ret = read(fp,&pos,sizeof(off_t));
+      assert(ret != -1);
       // back up to the beginning of the record (plus record size)
       lseek(fp,pos,SEEK_SET);
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
     unsigned int nbytes = 0;
-    ::read(fp,&nbytes,sizeof(int));
+    ssize_t ret = ::read(fp,&nbytes,sizeof(int));
+    assert(ret != -1);
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -287,8 +289,9 @@ void test_smartlist::read_buffer(void)
         << nbytes << endl;
     }
     // now read the record into the buffer
-    unsigned int nr=::read(fp,buffer,nbytes);
-    if (nr != nbytes)
+    ssize_t nr = ::read(fp,buffer,nbytes);
+    assert(ret != -1);
+    if ((unsigned int)nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);

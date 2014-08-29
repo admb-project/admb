@@ -108,7 +108,7 @@ void fixed_smartlist2::rewind(void)
     lseek(fp,0L,SEEK_SET);
     // get the record size
     ssize_t ret = ::read(fp,&nbytes,sizeof(int));
-    //assert(ret == -1);
+    assert(ret != -1);
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -119,7 +119,7 @@ void fixed_smartlist2::rewind(void)
     }
     // now read the record into the buffer
     ret = ::read(fp,buffer,nbytes);
-    //assert(ret == -1);
+    assert(ret != -1);
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record

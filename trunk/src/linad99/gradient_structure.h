@@ -152,11 +152,11 @@ class gradient_structure
 
    static int Hybrid_bounded_flag;
    static double *hessian_ptr;
-   static int get_USE_FOR_HESSIAN(void)
+   static long int get_USE_FOR_HESSIAN()
    {
       return USE_FOR_HESSIAN;
    }
-   static void set_USE_FOR_HESSIAN(int i)
+   static void set_USE_FOR_HESSIAN(const long int i)
    {
       USE_FOR_HESSIAN = i;
    }

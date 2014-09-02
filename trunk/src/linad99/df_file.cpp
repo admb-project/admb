@@ -70,7 +70,7 @@
 
 char lastchar(char*);
 
-void byte_copy(void* dest, void* source, unsigned int num_bytes)
+void byte_copy(void* dest, void* source, const size_t num_bytes)
 {
 #if defined(__ADSGI__)
   char* pdest = (char*)dest;

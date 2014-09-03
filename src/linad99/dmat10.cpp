@@ -11,6 +11,8 @@
 #include "fvar.hpp"
 #include <string.h>
 #include <ctype.h>
+#include <cassert>
+#include <climits>
 
 /**
  * Description not yet available.
@@ -24,16 +26,23 @@
 const int MAXROWS = 5050;
 
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::fill( const char * s)
+Fill allocated dmatrix with values from input parameter s.
+
+    dmatrix m(1, 2, 1, 3);
+    char values[] = "{0, 1, 2} {3, 4, 5}";
+    m.fill(values);
+
+\param s values
+*/
+void dmatrix::fill(const char* s)
 {
   #ifdef DIAG
     myheapcheck("Entering dmatrix(const char * s)" );
   #endif
 
-  int n = strlen(s);
+  size_t len = strlen(s);
+  assert(len <= INT_MAX);
+  int n = (int)len;
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -108,8 +117,7 @@ void dmatrix::fill( const char * s)
     }
   }
 
-  int i;
-  for (i=1; i<=nrow; i++)
+  for (int i=1; i<=nrow; i++)
   {
     cout << "row  " << i << " matrix  "
        << ((*this)[rowmin()+i-1]).size()
@@ -132,7 +140,7 @@ void dmatrix::fill( const char * s)
     }
   }
 
-  for (i=rowmin(); i<=rowmax(); i++)
+  for (int i=rowmin(); i<=rowmax(); i++)
   {
     char *t = new char[strlen(s)+1];
     //t = (char*) new[strlen(s)+1];

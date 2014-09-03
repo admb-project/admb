@@ -50,8 +50,10 @@ int colsum(const imatrix& m, int col)
 }
 
 /**
- * Description not yet available.
- * \param
+Return copy of jth column vector from matrix m.
+
+/param m matrix
+/param j column index to return
  */
 ivector column(const imatrix& m, int col)
 {

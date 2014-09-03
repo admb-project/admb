@@ -12,13 +12,15 @@
 #include "admb_messages.h"
 
 /**
- * Description not yet available.
- * \param
- */
+Return copy of jth column vector from matrix m.
+
+/param m matrix
+/param j column index to return
+*/
 dvector column(const dmatrix& m, int j)
-  {
-    return extract_column(m,j);
-  }
+{
+  return extract_column(m,j);
+}
 
 /**
  * Description not yet available.
@@ -30,27 +32,29 @@ dvector row(const dmatrix& m, int j)
   }
 
 /**
- * Description not yet available.
- * \param
- */
+Extract copy of jth column vector from matrix m.
+
+/param m matrix
+/param j column index to return
+*/
 dvector extract_column(const dmatrix& m, int j)
+{
+  if (j < m.colmin() || j > m.colmax())
   {
-    if (j < m.colmin() || j > m.colmax())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified",
+    ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified",
       "dvector extract_column(const dmatrix& m,int j)",
       m.colmin(), m.colmax(), j);
-    }
-    int mmin=m.rowmin();
-    int mmax=m.rowmax();
-    dvector tmp(mmin,mmax);
-
-    for (int i=mmin; i<=mmax; i++)
-    {
-      tmp.elem(i)=m.elem(i,j);
-    }
-    return(tmp);
   }
+  int mmin=m.rowmin();
+  int mmax=m.rowmax();
+  dvector tmp(mmin,mmax);
+
+  for (int i=mmin; i<=mmax; i++)
+  {
+    tmp.elem(i)=m.elem(i,j);
+  }
+  return tmp;
+}
 
 /**
  * Description not yet available.

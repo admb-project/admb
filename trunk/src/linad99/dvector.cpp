@@ -160,7 +160,7 @@ dvector::dvector(const dvector& t)
 
  /**
  Explicit shallow copy.
- \param t %dvecotor to be copied
+ \param t %dvector to be copied
  */
 void dvector::shallow_copy(const dvector& t)
  {

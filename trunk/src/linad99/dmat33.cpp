@@ -9,6 +9,8 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
+#include <cassert>
+#include <climits>
 
 //class banded_symmetric_dmatrix;
 
@@ -16,9 +18,11 @@
  * Description not yet available.
  * \param
  */
-ostream& operator << (const ostream& ofs1,const banded_symmetric_dmatrix& S1)
+ostream& operator<<(const ostream& ofs1, const banded_symmetric_dmatrix& S1)
 {
-  std::streamsize w = ofs1.width();
+  std::streamsize width = ofs1.width();
+  assert(width <= INT_MAX);
+  int w= (int)width;
   ostream& ofs=(ostream&) ofs1;
   banded_symmetric_dmatrix& S=(banded_symmetric_dmatrix&)(S1);
   int imin=S.indexmin();

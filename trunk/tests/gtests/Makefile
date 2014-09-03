@@ -27,6 +27,7 @@ GTESTS=\
  test_param_init_bounded_number_vector.cpp\
  test_param_init_d3array.cpp\
  test_spline.cpp\
+ test_banded_symmetric_dmatrix.cpp\
  main.cpp
 
 ##Need to debug this

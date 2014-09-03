@@ -1589,7 +1589,7 @@ dvar_matrix operator*(double x, const dvar_matrix & m);
 dvector operator&(const dvector & t1, const dvector & t2);
 dvar_vector operator&(const dvar_vector & t1, const dvar_vector & t2);
 
-ivector column(const imatrix & m, int i);
+ivector column(const imatrix& m, int i);
 dvector extract_column(const dmatrix & m, int i);
 dvector column(const dmatrix & m, int i);
 dvector extract_row(const dmatrix & m, int j);

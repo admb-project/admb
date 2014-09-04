@@ -83,3 +83,9 @@ TEST_F(test_idea, if_double)
   {
   }
 }
+TEST_F(test_idea, casting)
+{
+  long actual = long(-sizeof(off_t));
+  long expected = -long(sizeof(off_t));
+  ASSERT_EQ(expected, actual);
+}

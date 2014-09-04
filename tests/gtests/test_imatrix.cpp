@@ -26,6 +26,8 @@ TEST_F(test_imatrix, column)
 }
 TEST_F(test_imatrix, multiply_wrongdimensions)
 {
+  ad_exit=&test_ad_exit;
+
   imatrix m(1, 2, 1, 3);
   try
   {

@@ -13,7 +13,7 @@
 #  include <windows.h>
 #endif
 
-void ADSleep(int x);
+void ADSleep(unsigned int x);
 
   void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
     int& next_flag);

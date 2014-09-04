@@ -139,7 +139,6 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
   return L;
 }
 */
-//static void xxx(double x){;}
 
 /**
  * Description not yet available.

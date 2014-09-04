@@ -37,7 +37,7 @@ sdmatrix::sdmatrix()
  */
 void sdmatrix::allocate(int irh)
 {
-   unsigned nrl = 1;
+   int nrl = 1;
    //unsigned nrh = irh;
    index_min=nrl;
    index_max=nrl;

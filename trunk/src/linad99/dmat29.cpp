@@ -29,7 +29,6 @@ dvector VEC(const dmatrix& _m)
       io(i)=ii;
     }
     dvector tmp(1,ii);
-    ii=0;
     for (i=mmin;i<=mmax;i++)
     {
       tmp(io(i-1)+1,io(i)).shift(m(i).indexmin())=m(i);

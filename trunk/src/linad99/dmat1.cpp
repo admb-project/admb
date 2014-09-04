@@ -129,7 +129,6 @@ dvector operator*(const dmatrix& m, const dvector& x)
      dvector m2col=column(m2,j);
      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
-       sum=0;
        //const dvector& temp_row = m1.elem(i);
        sum=m1.elem(i) * m2col;
        tmp.elem(i,j)=sum;

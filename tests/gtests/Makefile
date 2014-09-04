@@ -29,6 +29,7 @@ GTESTS=\
  test_spline.cpp\
  test_banded_symmetric_dmatrix.cpp\
  test_imatrix.cpp\
+ test_idea.cpp\
  main.cpp
 
 ##Need to debug this

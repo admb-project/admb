@@ -25,29 +25,36 @@ istream & operator >> (istream & c, adstring & t)
   return (c);
 }
 
-istream & operator >> (istream & c, line_adstring & t)
+/**
+Input string from stream c into line_adstring t.
+
+/param c input stream
+/param t ouput line_adstring
+*/
+istream& operator>>(istream& c, line_adstring& t)
 {
   const unsigned int max_length=1025;
   char* tmp = new char[max_length+1];
-  int ch = c.get();
+  char ch;
+  c.get(ch);
   // throw away the newline at the end of the last line if necessary
-  if (ch == '\n') ch=c.get();
+  if (ch == '\n') c.get(ch);
   unsigned int ii=0;
   while (ch != '\n' && ch != EOF)
   {
     if (ii==max_length)
     {
       cerr << "Error -- Maximum adstring length exceeded in"
-        " istream & operator >> (istream & c, adstring & t)"<<endl;
+        " istream& operator>>(istream& c, line_adstring& t)" <<endl;
       exit(1);
     }
     tmp[ii++]=ch;
-    ch=c.get();
+    c.get(ch);
   }
   tmp[ii]='\0';
   t=tmp;
   delete [] tmp;
   tmp = 0;
 
-  return (c);
+  return c;
 }

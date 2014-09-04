@@ -83,7 +83,7 @@ void ad_update_mcmc_report(dmatrix& m,int i,int j,int ff=0);
 void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
   dvector& mean_mcmc_values,dvector& h,int ff=0);
 
-void ADSleep(int);
+//void ADSleep(unsigned int);
 
 /**
  * Monte Carlo Markov Chain minimization routine

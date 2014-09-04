@@ -19,7 +19,7 @@
  * Description not yet available.
  * \param
  */
-void ADSleep(int t)
+void ADSleep(unsigned int t)
 {
 #if defined(_WIN32)
   Sleep(t);

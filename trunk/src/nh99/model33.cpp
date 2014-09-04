@@ -54,7 +54,7 @@ void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
   char * p=NULL;
   if (strlen(sp_options))
   {
-    int string_size= (strlen(sp_options)+5)*sizeof(char);
+    size_t string_size = (strlen(sp_options)+5)*sizeof(char);
     //int string_size= (strlen(sp_options)+1)*sizeof(char);
     p = (char *) malloc(string_size);
     char * ptmp=NULL;

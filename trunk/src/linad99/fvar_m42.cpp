@@ -146,7 +146,6 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
       }
     }
   }
-  double ldet=ld;
   if (bb(1,1)>0)
     part_prod(1)=ld+log(bb(1,1));
   else
@@ -164,7 +163,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
       sgn=-sgn;
     }
   }
-  ldet=part_prod(ub);
+  double ldet=part_prod(ub);
   dvariable rdet=nograd_assign(ldet);
   save_identifier_string("PLACE7");
   part_prod.save_dvector_value();

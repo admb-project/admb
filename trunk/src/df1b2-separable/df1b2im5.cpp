@@ -12,8 +12,6 @@
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 
-static void xxx(void){;}
-
 /**
  * Description not yet available.
  * \param
@@ -158,11 +156,6 @@ double calculate_importance_sample_block_diagonal_option_antithetical
      }
 
      *objective_function_value::pobjfun=0.0;
-     //int istop=0;
-     if (is==65)
-     {
-        xxx();
-     }
      pmin->AD_uf_outer();
 
      if (pmin->lapprox->use_outliers==0)

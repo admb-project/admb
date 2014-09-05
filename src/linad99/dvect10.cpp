@@ -36,6 +36,9 @@
 #include <sstream>
 using std::istringstream;
 
+#include <cassert>
+#include <climits>
+
 const int MAX_FIELD_LENGTH = 500;
 
 /**
@@ -44,7 +47,9 @@ const int MAX_FIELD_LENGTH = 500;
  */
 void dvector::fill(const char * s)
 {
-  int n = strlen(s);
+  const size_t len = strlen(s);
+  assert(len <= INT_MAX);
+  const int n = (int)len;
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;

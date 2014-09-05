@@ -24,6 +24,18 @@ TEST_F(test_dmatrix, fill)
   ASSERT_DOUBLE_EQ(4, m(2, 2));
   ASSERT_DOUBLE_EQ(5, m(2, 3));
 }
+TEST_F(test_dmatrix, fill_constructor)
+{
+  char array[] = "{0, 1, 2} {3, 4, 5}";
+  dmatrix m(array);
+
+  ASSERT_DOUBLE_EQ(0, m(1, 1));
+  ASSERT_DOUBLE_EQ(1, m(1, 2));
+  ASSERT_DOUBLE_EQ(2, m(1, 3));
+  ASSERT_DOUBLE_EQ(3, m(2, 1));
+  ASSERT_DOUBLE_EQ(4, m(2, 2));
+  ASSERT_DOUBLE_EQ(5, m(2, 3));
+}
 TEST_F(test_dmatrix, fill_extrabraces)
 {
   ad_exit=&test_ad_exit;
@@ -90,4 +102,11 @@ TEST_F(test_dmatrix, multiply)
   ASSERT_DOUBLE_EQ(1, mn(1, 2));
   ASSERT_DOUBLE_EQ(46, mn(2, 1));
   ASSERT_DOUBLE_EQ(10, mn(2, 2));
+}
+TEST_F(test_dmatrix, mystrlen)
+{
+  int mystrlen(const char* line);
+  char s[] = "12345678901234567\0";
+  int actual = mystrlen(s);
+  ASSERT_EQ(17, actual);
 }

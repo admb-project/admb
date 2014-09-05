@@ -21,6 +21,8 @@
 
 #include <string.h>
 #include <ctype.h>
+#include <cassert>
+#include <climits>
 
 /**
  * Description not yet available.
@@ -37,9 +39,11 @@ const int MAXROWS = 5050;
  * Description not yet available.
  * \param
  */
-void dvar_matrix::fill( const char * s)
+void dvar_matrix::fill(const char* s)
 {
-  int n = strlen(s);
+  const size_t len = strlen(s);
+  assert(len <= INT_MAX);
+  int n = (int)len;
   int braces = 0;
   int nrow = 0;
   int ncol = 0;

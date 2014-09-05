@@ -48,7 +48,10 @@
 #include <sstream>
 using std::istringstream;
 
-int mystrlen(char * line);
+#include <cassert>
+#include <climits>
+
+int mystrlen(const char* line);
 
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
@@ -73,14 +76,16 @@ const int MAXROWS = 5050;
  * Description not yet available.
  * \param
  */
-dmatrix::dmatrix(char * s)
+dmatrix::dmatrix(char* s)
 {
   int i;
   #ifdef DIAG
     myheapcheck("Entering dmatrix( char * s)" );
   #endif
 
-  int n = strlen(s);
+  const size_t len = strlen(s);
+  assert(len <= INT_MAX);
+  const int n = (int)len;
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -371,13 +376,13 @@ int get_non_blank_line(const ifstream& _infile,char * & line,
  * Description not yet available.
  * \param
  */
-   int mystrlen(char * line)
-   {
-     long int ii=0;
-     while(ii<1000000L)
-     {
-       if (line[ii]=='\0') return(ii);
-       ii++;
-     }
-     return(-1);
-   }
+int mystrlen(const char* line)
+{
+  int ii = 0;
+  while(ii < INT_MAX)
+  {
+    if (line[ii]=='\0') return ii;
+    ii++;
+  }
+  return -1;
+}

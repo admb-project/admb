@@ -197,3 +197,15 @@ TEST_F(test_adstring, operator_notequal)
   EXPECT_EQ(true, a != b);
   EXPECT_EQ(false, a != c);
 }
+TEST_F(test_adstring, val_hexadecimal)
+{
+  adstring a("0x2E6"); 
+  int actual = val(a);
+  EXPECT_EQ(742, actual);
+}
+TEST_F(test_adstring, val_integer)
+{
+  adstring a("-742"); 
+  int actual = val(a);
+  EXPECT_EQ(-742, actual);
+}

@@ -81,7 +81,6 @@ dmatrix trans(const dvector& x)
         }
       }
     }
-    double relsig=.5;
     initial_params::current_phase = initial_params::max_number_phases;
     // DF NOV 28 11
     if (random_effects_flag)
@@ -144,10 +143,10 @@ dmatrix trans(const dvector& x)
       {
         num_pp=sno;
       }
-      if (snz)
-      {
-        relsig=snz;
-      }
+      //snz (step size) must be greater than zero.
+      //Check "void likeprof_params::set_stepsize(double x)"
+      const double relsig = snz > 0 ? snz : 0.5;
+
       if (ip>0)
       {
         int ii=1;

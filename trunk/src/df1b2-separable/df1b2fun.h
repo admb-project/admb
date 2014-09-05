@@ -155,7 +155,7 @@ extern char AD_allocation_error_message[];
 #if defined(__BORLANDC__)
 int adptr_diff(void * x, void * y) { return int(x)-int(y); }
 #else
-ptrdiff_t adptr_diff(void* x, void* y);
+int adptr_diff(void* x, void* y);
 #endif
 
 void read_pass1_1(void);

@@ -686,15 +686,10 @@ void df1b2vector::allocate(int lb,int ub)
   {
     int mmin=indexmin();
     int mmax=indexmax();
-    int ind_1;
+    int ind_1 = 0;
     if (mmax>mmin)
     {
-      ind_1=ptrdiff_t((*this)(mmin+1).get_u())
-        -ptrdiff_t((*this)(mmin).get_u());
-    }
-    else
-    {
-      ind_1=0;
+      ind_1=adptr_diff((*this)(mmin+1).get_u(), (*this)(mmin).get_u());
     }
    /*
 #  if defined(SAFE_ALL)

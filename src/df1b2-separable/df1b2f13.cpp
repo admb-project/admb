@@ -254,7 +254,7 @@ void fixed_smartlist::write_buffer_one_less(void)
  */
 void fixed_smartlist::write_buffer(void)
 {
-  unsigned int nbytes=adptr_diff(bptr+1,buffer);
+  int nbytes=adptr_diff(bptr+1,buffer);
   if (nbytes>bufsize)
   {
     cerr << "n bytes > bufsize in "

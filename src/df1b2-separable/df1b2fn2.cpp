@@ -13,6 +13,8 @@
 #include <inttypes.h>
 #endif
 #include <df1b2fun.h>
+#include <cassert>
+#include <climits>
 #include "admb_messages.h"
 
 do_naught_kludge df1b2_init_number::do_naught_kludge_a;
@@ -103,11 +105,13 @@ int ad_dstar::n=0;
 void ad_read_pass2(void);
 // should inline this
 #if !defined(__BORLANDC__)
-ptrdiff_t adptr_diff(void* x, void* y)
+int adptr_diff(void* x, void* y)
 {
-  uintptr_t uintptrx = (uintptr_t)x;
-  uintptr_t uintptry = (uintptr_t)y;
-  return uintptrx - uintptry;
+  uintptr_t a = (uintptr_t)x;
+  uintptr_t b = (uintptr_t)y;
+  ptrdiff_t diff = a - b;
+  assert(diff <= INT_MAX);
+  return (int)diff;
 }
 #endif
 

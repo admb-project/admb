@@ -183,10 +183,8 @@ extern admb_javapointers * adjm_ptr;
             }
           }
 
-          int on=-1;
-          int on1=-1;
-          on=option_match(argc,argv,"-nohess");
-          on1=option_match(argc,argv,"-noest");
+          int on=option_match(argc,argv,"-nohess");
+          int on1=option_match(argc,argv,"-noest");
           if (on==-1 && on1==-1)
           {
             if (option_match(argc,argv,"-sdonly")==-1)

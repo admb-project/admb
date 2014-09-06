@@ -30,6 +30,7 @@ GTESTS=\
  test_banded_symmetric_dmatrix.cpp\
  test_imatrix.cpp\
  test_line_adstring.cpp\
+ test_dvar_vector.cpp\
  test_idea.cpp\
  main.cpp
 

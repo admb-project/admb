@@ -100,7 +100,7 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
  */
 void test_smartlist::write(int n)
 {
-  int nw=::write(fp,buffer,n);
+  ssize_t nw = ::write(fp,buffer,n);
   if (nw<n)
   {
     cerr << "Error writing to file " << filename << endl;
@@ -227,7 +227,7 @@ void test_smartlist::write_buffer(void)
     assert(ret != -1);
 
     // write the record into the file
-    int nw=::write(fp,buffer,nbytes);
+    ssize_t nw=::write(fp,buffer,nbytes);
     //cout << "Number of bytes written " << nw << endl;
     //cout << "buffer value = ";
     //for (int ii=0;ii<=25;ii++)

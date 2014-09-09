@@ -26,6 +26,11 @@ long int _farptr_tolong(void* px);
 long int farptr_tolong(void*);
 #endif
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 /**
 Default constructor
 */
@@ -202,32 +207,42 @@ ivector& ivector::operator=(const ivector& t)
  }
 
 /**
- * Description not yet available.
- * \param
- */
- ivector::ivector( unsigned int sz, long int * x )
- {
-   allocate(0,sz-1);
+Constructor
+*/
+ivector::ivector(unsigned int sz, long int* x )
+{
+  allocate(0,sz-1);
 
-   for (unsigned int i=0; i<sz; i++)
-   {
-     cout << "Doing the assignment in constructor\n";
-     v[i] = x[i];
-   }
- }
+  for (unsigned int i=0; i<sz; i++)
+  {
+    cout << "Doing the assignment in constructor\n";
+#ifdef OPT_LIB
+    v[i] = x[i];
+#else
+    long int xi = x[i]; 
+    assert(xi <= INT_MAX);
+    v[i] = (int)xi;
+#endif
+  }
+}
 
 /**
- * Description not yet available.
- * \param
- */
+Constructor
+*/
 ivector::ivector(const dvector& u)
- {
-   allocate(u);
-   for (int i=indexmin();i<=indexmax();i++)
-   {
-     elem(i)=int(u.elem(i));
-   }
- }
+{
+  allocate(u);
+  for (int i=indexmin();i<=indexmax();i++)
+  {
+#ifdef OPT_LIB
+    elem(i) = int(u.elem(i));
+#else
+    double ui = u.elem(i);
+    assert(ui <= INT_MAX);
+    v[i] = (int)ui;
+#endif
+  }
+}
 
 /**
  * Description not yet available.

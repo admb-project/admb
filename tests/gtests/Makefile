@@ -36,6 +36,8 @@ GTESTS=\
  test_idea.cpp\
  test_pow.cpp\
  test_ivector.cpp\
+ test_multi_index.cpp\
+ test_adtimer.cpp\
  main.cpp
 
 ##Need to debug this

@@ -5,6 +5,9 @@ ifeq ($(OS),Windows_NT)
     EXT=.sh
   endif
 endif
+
+ADMB_OPTIONS=-g
+
 GTEST_DIR=googletest-read-only
 
 GTESTS=\
@@ -32,6 +35,7 @@ GTESTS=\
  test_line_adstring.cpp\
  test_dvar_vector.cpp\
  test_idea.cpp\
+ test_pow.cpp\
  main.cpp
 
 ##Need to debug this
@@ -46,42 +50,42 @@ all: clean gtest-all
 ifeq ($(SHELL),cmd)
 	gtest-all
 else
-	./gtest-all
+	valgrind --tool=callgrind --dump-instr=yes ./gtest-all
 endif
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
 ifeq ($(SHELL),cmd)
-	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c -r -g test_df1b2atan2.cpp
+	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_df1b2atan2.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c -r -g test_df1b2atan2.cpp
+	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_df1b2atan2.cpp
 endif
 
 df1b2atan2.obj: df1b2atan2.cpp
 ifeq ($(SHELL),cmd)
-	..\\..\\admb -c -r -g $^
+	..\\..\\admb -c $(ADMB_OPTIONS) $^
 else
-	../../admb$(EXT) -c -r -g $^
+	../../admb$(EXT) -c $(ADMB_OPTIONS) $^
 endif
 
 test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
 ifeq ($(SHELL),cmd)
-	CXXFLAGS=-I$(GTEST_DIR)/include ..\\..\\admb -c -r -g test_scalefactor.cpp
+	CXXFLAGS=-I$(GTEST_DIR)/include ..\\..\\admb -c $(ADMB_OPTIONS) test_scalefactor.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c -r -g test_scalefactor.cpp
+	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_scalefactor.cpp
 endif
 
 scalefactor.obj: scalefactor.tpl
 ifeq ($(SHELL),cmd)
-	CXXFLAGS=-Dmain=scalefactor ..\\..\\admb -c -r -g $^
+	CXXFLAGS=-Dmain=scalefactor ..\\..\\admb -c $^
 else
-	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c -r -g $^
+	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c $^
 endif
 
 gtest-all: gtest-all.obj $(GTESTS)
 ifeq ($(SHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -g -r $^
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb$(EXT) -g -r $^
+	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
 gtest-all.obj: googletest-read-only

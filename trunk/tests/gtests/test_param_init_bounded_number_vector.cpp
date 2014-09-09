@@ -15,6 +15,7 @@ TEST_F(test_param_init_bounded_number_vector, default_constructor)
   EXPECT_EQ(-1, p.indexmin());
   EXPECT_EQ(-1, p.indexmax());
 }
+#ifndef OPT_LIB
 TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)
 {
   ad_exit=&test_ad_exit;
@@ -36,11 +37,12 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-      return;
     }
+      return;
   }
   FAIL();
 }
+#endif
 /*
 TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
 {

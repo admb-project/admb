@@ -58,6 +58,7 @@ TEST_F(test_dmatrix, fill_extrabraces)
   }
   FAIL();
 }
+#ifndef OPT_LIB
 TEST_F(test_dmatrix, fill_unallocated)
 {
   ad_exit=&test_ad_exit;
@@ -80,6 +81,7 @@ TEST_F(test_dmatrix, fill_unallocated)
   }
   FAIL();
 }
+#endif
 TEST_F(test_dmatrix, multiply)
 {
   dmatrix m(1, 2, 1, 3);

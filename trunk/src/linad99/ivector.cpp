@@ -219,7 +219,7 @@ ivector::ivector(unsigned int sz, long int* x )
 #ifdef OPT_LIB
     v[i] = x[i];
 #else
-    long int xi = x[i]; 
+    long int xi = x[i];
     assert(xi <= INT_MAX);
     v[i] = (int)xi;
 #endif

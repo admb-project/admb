@@ -14,63 +14,63 @@
 #include <iostream>
 
 /**
- * Description not yet available.
- * \param
- */
-  adtimer::adtimer (void)
-  {
-    gettimeofday(&tv,0);
+Default constructor
+*/
+adtimer::adtimer (void)
+{
+  gettimeofday(&tv,0);
 
-    tvold.tv_sec=tv.tv_sec;
-    tvold.tv_usec=tv.tv_usec;
-  }
-
-/**
- * Returns elapsed time in milliseconds of timer object and then 
- * resets the timer to 0.
- */
-  double adtimer::get_elapsed_time_and_reset(void)
-  {
-    gettimeofday(&tv,0);
-    //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
-    int nsec=0;
-    int nusec=0;
-    if ( tv.tv_usec< tvold.tv_usec)
-    {
-      nsec=tv.tv_sec-tvold.tv_sec-1;
-      nusec=tv.tv_usec-tvold.tv_usec+1000000;
-    }
-    else
-    {
-      nsec=tv.tv_sec-tvold.tv_sec;
-      nusec=tv.tv_usec-tvold.tv_usec;
-    }
-    tvold.tv_sec=tv.tv_sec;
-    tvold.tv_usec=tv.tv_usec;
-    return 1000.*nsec+nusec/1000.;
-  }
+  tvold.tv_sec=tv.tv_sec;
+  tvold.tv_usec=tv.tv_usec;
+}
 
 /**
- * Returns the elapsed time in milliseconds from the timer object.
- */
-  double adtimer::get_elapsed_time(void)
+Returns elapsed time in milliseconds of timer object and then 
+resets the timer to current time.
+*/
+double adtimer::get_elapsed_time_and_reset(void)
+{
+  long int nsec=0;
+  long int nusec=0;
+  gettimeofday(&tv,0);
+  if ( tv.tv_usec< tvold.tv_usec)
   {
-    int nsec=0;
-    int nusec=0;
-    gettimeofday(&tv,0);
-    //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
-    if ( tv.tv_usec< tvold.tv_usec)
-    {
-      nsec=tv.tv_sec-tvold.tv_sec-1;
-      nusec=tv.tv_usec-tvold.tv_usec+1000000;
-    }
-    else
-    {
-      nsec=tv.tv_sec-tvold.tv_sec;
-      nusec=tv.tv_usec-tvold.tv_usec;
-    }
-    return 1000.*nsec+nusec/1000.;
+    nsec=tv.tv_sec-tvold.tv_sec-1;
+    nusec=tv.tv_usec-tvold.tv_usec+1000000;
   }
+  else
+  {
+    nsec=tv.tv_sec-tvold.tv_sec;
+    nusec=tv.tv_usec-tvold.tv_usec;
+  }
+
+  //reset
+  tvold.tv_sec=tv.tv_sec;
+  tvold.tv_usec=tv.tv_usec;
+
+  return 1000.0 * (double)nsec + 0.001 * (double)nusec;
+}
+
+/**
+Returns the elapsed time in milliseconds from the timer object.
+*/
+double adtimer::get_elapsed_time(void)
+{
+  long int nsec=0;
+  long int nusec=0;
+  gettimeofday(&tv,0);
+  if ( tv.tv_usec< tvold.tv_usec)
+  {
+    nsec=tv.tv_sec-tvold.tv_sec-1;
+    nusec=tv.tv_usec-tvold.tv_usec+1000000;
+  }
+  else
+  {
+    nsec=tv.tv_sec-tvold.tv_sec;
+    nusec=tv.tv_usec-tvold.tv_usec;
+  }
+  return 1000.0 * (double)nsec + 0.001 * (double)nusec;
+}
 
 #else
 #include <windows.h>

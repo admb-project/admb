@@ -50,8 +50,11 @@ all: clean gtest-all
 ifeq ($(SHELL),cmd)
 	gtest-all
 else
-	valgrind --tool=callgrind --dump-instr=yes ./gtest-all
+	./gtest-all
 endif
+
+valgrind:
+	valgrind --tool=callgrind ./gtest-all
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
 ifeq ($(SHELL),cmd)

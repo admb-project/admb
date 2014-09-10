@@ -58,7 +58,7 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
 {
 #ifndef OPT_LIB
   //cerr << "need to modify test_smartlist class for multibyte char" << endl;
-  assert(!(sizeof(char) == 1));
+  assert(sizeof(char) == 1);
 #endif
 
   end_saved=0;

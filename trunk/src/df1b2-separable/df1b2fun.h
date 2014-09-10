@@ -572,7 +572,7 @@ public:
     void operator -- (void);
     int nentries;
     int direction;
-    int endof_file_ptr;
+    off_t endof_file_ptr;
     int written_flag;
     int noreadflag;
     void save_end(void);
@@ -638,7 +638,7 @@ public:
     void operator -- (void);
     int nentries;
     int direction;
-    int endof_file_ptr;
+    off_t endof_file_ptr;
     int written_flag;
     int noreadflag;
     void save_end(void);

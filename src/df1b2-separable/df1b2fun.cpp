@@ -136,11 +136,6 @@ initial_df1b2params::initial_df1b2params(void) : ind_index(0)
   add_to_list();
 }
 
-/*
-static void stupid_xxx(int){;}
-static void stupid_xxx(void *){;}
-*/
-
 typedef void (**ADprfptr)(void);
 typedef void (*ADrfptr)(void);
 
@@ -216,7 +211,6 @@ void df1b2_gradcalc1(void)
 #if defined(__DERCHECK__)
         //derchecker->counter--;
       mydercheckercounter--;
-       // stupid_xxx(derchecker->counter);
 #endif
         xcount++;
           tcount--;

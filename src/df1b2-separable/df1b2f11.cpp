@@ -9,6 +9,10 @@
  * Description not yet available.
  */
 #include <df1b2fun.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 /**
  * Description not yet available.
@@ -40,7 +44,11 @@ int df1b2_gradlist::write_pass1(const df1b2variable * _px,
 #endif
   int nvar=df1b2variable::nvar;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
+#ifndef OPT_LIB
+  assert(nvar > 0);
+#endif
+
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
     +sizeof(double)+nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
@@ -48,7 +56,12 @@ int df1b2_gradlist::write_pass1(const df1b2variable * _px,
   int slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= (size_t)INT_MAX);
+#endif
+
+  list.check_buffer_size((int)total_bytes);
   void * tmpptr=list.bptr;
 #if defined(SAFE_ALL)
   memcpy(list,ids,slen);

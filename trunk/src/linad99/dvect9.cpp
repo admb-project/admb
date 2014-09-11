@@ -52,7 +52,7 @@ const int MAX_FIELD_LENGTH = 500;
  */
 dvector::dvector(const char * s)
 {
-  int n = strlen(s);
+  const size_t n = strlen(s);
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;
@@ -60,8 +60,7 @@ dvector::dvector(const char * s)
   char *t = new char[n+1];
   t[n]=0;
 
-  int k;
-  for (k = 0; k < n; k++)
+  for (size_t k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -197,7 +196,6 @@ dvector::dvector(const char * s)
       ad_exit(1);
     }
 
-
     index_min=1;
     index_max=count;
     v -= indexmin();
@@ -250,7 +248,7 @@ dvector::dvector(const char * s)
  */
 void dvector::allocate(const char * s)
 {
-  int n = strlen(s);
+  const size_t n = strlen(s);
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;
@@ -258,8 +256,7 @@ void dvector::allocate(const char * s)
   char *t = new char[n+1];
   t[n+1]=0;
 
-  int k;
-  for (k = 0; k < n; k++)
+  for (size_t k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {

@@ -8,12 +8,23 @@
 #include <string.h>
 #include <stdlib.h>
 
-adstring::adstring(const char * t) : clist()
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
+adstring::adstring(const char* t): clist()
 {
   unsigned int sz = 0;
   if (t)
   {
-    sz = strlen (t);
+#ifdef OPT_LIB
+    sz = (unsigned int)strlen(t);
+#else
+    size_t len = strlen(t);
+    assert(len <= (size_t)UINT_MAX);
+    sz = (unsigned int)len;
+#endif
   }
   allocate(sz);
   for (unsigned int i = 1; i <= sz; i++)
@@ -23,7 +34,7 @@ adstring::adstring(const char * t) : clist()
   s[sz + 1] = '\0';
 }
 
-adstring::adstring(void) : clist()
+adstring::adstring(void): clist()
 {
   unsigned int sz = 0;
   allocate(sz);
@@ -35,7 +46,7 @@ int adstring::pos(const adstring& substr) const
 #if (defined __ZTC__) || (defined __NDPX__)
   char* ptr = strstr(*this, substr);
 #else
-  const char * ptr = strstr((const char *)(*this), (const char *)(substr));
+  const char* ptr = strstr((const char*)(*this), (const char*)(substr));
 #endif
   unsigned int i = 0;
 

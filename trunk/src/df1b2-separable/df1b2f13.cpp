@@ -86,13 +86,12 @@ void fixed_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+\todo Need test case
+*/
 void fixed_smartlist::write(int n)
 {
-  int nw=::write(fp,buffer,n);
-  if (nw<n)
+  ssize_t nw = ::write(fp, buffer, n);
+  if (nw < n)
   {
     cerr << "Error writing to file " << filename << endl;
     ad_exit(1);
@@ -219,12 +218,15 @@ void fixed_smartlist::write_buffer_one_less(void)
     off_t pos=lseek(fp,0L,SEEK_CUR);
 
     // write the size of the next record into the file
-    //cout << nbytes << endl;
-    ssize_t ret = ::write(fp,&nbytes,sizeof(int));
+#ifdef OPT_LIB
+    ::write(fp, &nbytes, sizeof(int));
+#else
+    ssize_t ret = ::write(fp, &nbytes, sizeof(int));
     assert(ret != -1);
+#endif
 
     // write the record into the file
-    int nw=::write(fp,buffer,nbytes);
+    ssize_t nw = ::write(fp,buffer,nbytes);
     //cout << "Number of bytes written 1less " << nw
      //    << " bptr value =  " << bptr << endl;
     //for (int ii=0;ii<=25;ii++)
@@ -240,8 +242,12 @@ void fixed_smartlist::write_buffer_one_less(void)
 
     // now write the previous file position into the file so we can back up
     // when we want to.
+#ifdef OPT_LIB
+    ::write(fp,&pos,sizeof(off_t));
+#else
     ret = ::write(fp,&pos,sizeof(off_t));
     assert(ret != -1);
+#endif
 
     endof_file_ptr=lseek(fp,0L,SEEK_CUR);
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
@@ -255,7 +261,8 @@ void fixed_smartlist::write_buffer_one_less(void)
 void fixed_smartlist::write_buffer(void)
 {
   int nbytes=adptr_diff(bptr+1,buffer);
-  if (nbytes>bufsize)
+  assert(nbytes >= 0);
+  if ((unsigned int)nbytes > bufsize)
   {
     cerr << "n bytes > bufsize in "
       "fixed_smartlist::write_buffer(void) this can't happen!" << endl;
@@ -271,7 +278,7 @@ void fixed_smartlist::write_buffer(void)
     assert(ret != -1);
 
     // write the record into the file
-    unsigned int nw=::write(fp,buffer,nbytes);
+    ssize_t nw=::write(fp,buffer,nbytes);
     //cout << "Number of bytes written " << nw
      //    << " bptr value =  " << bptr << endl;
     //for (int ii=0;ii<=25;ii++)
@@ -501,9 +508,8 @@ void fixed_smartlist::operator ++ (void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+\todo Need test case
+*/
 void fixed_smartlist::read_file(void)
 {
   //rewind the file
@@ -513,13 +519,13 @@ void fixed_smartlist::read_file(void)
   int offset=0;
   fixed_list_entry * b= (fixed_list_entry*) &(buffer[0]);
   cout << b << endl;
-  int nw=0;
+  ssize_t nw = 0;
   do
   {
-    nw=::read(fp,&nbytes,sizeof(int));
-    nw=::read(fp,buffer+offset,nbytes);
+    nw = ::read(fp,&nbytes,sizeof(int));
+    nw = ::read(fp,buffer+offset,nbytes);
     offset+=nbytes;
-    ::read(fp,&pos,sizeof(off_t));
+    nw = ::read(fp,&pos,sizeof(off_t));
   }
   while(nw);
 }

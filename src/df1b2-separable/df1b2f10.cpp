@@ -9,6 +9,10 @@
  * Description not yet available.
  */
 #include <df1b2fun.h>
+
+#ifdef OPT_LIB
+#define NDEBUG
+#endif
 #include <cassert>
 
 #ifdef _MSC_VER
@@ -56,10 +60,8 @@ test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename)
  */
 void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
 {
-#ifndef OPT_LIB
   //cerr << "need to modify test_smartlist class for multibyte char" << endl;
   assert(sizeof(char) == 1);
-#endif
 
   end_saved=0;
   eof_flag=0;
@@ -115,14 +117,15 @@ void test_smartlist::write(int n)
 void test_smartlist::rewind(void)
 {
   bptr=buffer;
-  unsigned int nbytes=0;
   if (written_flag)
   {
     lseek(fp,0L,SEEK_SET);
     // get the record size
+    int nbytes = 0;
     ssize_t ret = ::read(fp,&nbytes,sizeof(int));
     assert(ret != -1);
-    if (nbytes>bufsize)
+    assert(nbytes >= 0);
+    if ((unsigned int)nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl
@@ -278,10 +281,11 @@ void test_smartlist::read_buffer(void)
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
-    unsigned int nbytes = 0;
+    int nbytes = 0;
     ssize_t ret = ::read(fp,&nbytes,sizeof(int));
     assert(ret != -1);
-    if (nbytes>bufsize)
+    assert(nbytes >= 0);
+    if ((unsigned int)nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl
@@ -291,7 +295,7 @@ void test_smartlist::read_buffer(void)
     // now read the record into the buffer
     ssize_t nr = ::read(fp,buffer,nbytes);
     assert(ret != -1);
-    if ((unsigned int)nr != nbytes)
+    if (nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);

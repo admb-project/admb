@@ -12,7 +12,7 @@ void adstring::to_lower(void)
 #ifdef _MSC_VER
     s[i] = tolower(s[i]);
 #else
-    s[i] = std::tolower(s[i]);
+    s[i] = (unsigned char)std::tolower(s[i]);
 #endif
 }
 
@@ -22,7 +22,7 @@ void adstring::to_upper(void)
 #ifdef _MSC_VER
     s[i] = toupper(s[i]);
 #else
-    s[i] = std::toupper(s[i]);
+    s[i] = (unsigned char)std::toupper(s[i]);
 #endif
 }
 

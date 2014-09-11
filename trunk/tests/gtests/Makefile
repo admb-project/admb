@@ -33,11 +33,11 @@ GTESTS=\
  test_imatrix.cpp\
  test_line_adstring.cpp\
  test_dvar_vector.cpp\
- test_idea.cpp\
  test_pow.cpp\
  test_ivector.cpp\
  test_multi_index.cpp\
  test_adtimer.cpp\
+ test_idea.cpp\
  main.cpp
 
 ##Need to debug this

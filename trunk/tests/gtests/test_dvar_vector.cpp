@@ -26,3 +26,17 @@ TEST_F(test_dvar_vector, fill)
   ASSERT_DOUBLE_EQ(4, value(v(5)));
   ASSERT_DOUBLE_EQ(5, value(v(6)));
 }
+TEST_F(test_dvar_vector, constructor_fill)
+{
+  gradient_structure gs;
+
+  char array[] = "{0, 1, 2, 3, 4, 5}";
+  dvar_vector v(array);
+
+  ASSERT_DOUBLE_EQ(0, value(v(1)));
+  ASSERT_DOUBLE_EQ(1, value(v(2)));
+  ASSERT_DOUBLE_EQ(2, value(v(3)));
+  ASSERT_DOUBLE_EQ(3, value(v(4)));
+  ASSERT_DOUBLE_EQ(4, value(v(5)));
+  ASSERT_DOUBLE_EQ(5, value(v(6)));
+}

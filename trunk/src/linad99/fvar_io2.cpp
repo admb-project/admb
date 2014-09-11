@@ -16,7 +16,6 @@
   #include <strstrea.h>
 #endif
 
-
 #ifdef __ZTC__
   #include <iostream.hpp>
   #if (__ZTC__ < 0x310)
@@ -46,20 +45,18 @@ using std::istringstream;
 const int MAX_FIELD_LENGTH = 500;
 
 /**
- * Description not yet available.
- * \param
- */
+\todo Need Test case
+*/
 dvar_vector::dvar_vector(const char * s)
 {
-  int n = strlen(s);
+  size_t n = strlen(s);
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;
 
   char *t = new char[n];
 
-  int k;
-  for (k = 0; k < n; k++)
+  for (size_t k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -105,7 +102,7 @@ dvar_vector::dvar_vector(const char * s)
     allocate(ncl,nch);
     istringstream ss(t);
 
-    for (k = ncl; k <= nch; k++)
+    for (int k = ncl; k <= nch; k++)
     {
       ss >> this->elem(k);
       //va[k].nc=0.;

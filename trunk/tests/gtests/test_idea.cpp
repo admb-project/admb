@@ -128,3 +128,14 @@ TEST_F(test_idea, memcpy)
   ASSERT_EQ('9', s[10]);
   ASSERT_EQ('\0', s[11]);
 }
+TEST_F(test_idea, multichar)
+{
+  ASSERT_FALSE(!(sizeof(char) == 1));
+}
+TEST_F(test_idea, multiple_int_double)
+{
+  int i = 5; 
+  double d = 2.5; 
+  ASSERT_DOUBLE_EQ(d * i, 12.5);
+  ASSERT_DOUBLE_EQ(i * d, 12.5);
+}

@@ -81,13 +81,12 @@ void fixed_smartlist2::allocate(unsigned int _bufsize,
 }
 
 /**
- * Description not yet available.
- * \param
- */
+\todo Need Test case
+*/
 void fixed_smartlist2::write(int n)
 {
-  int nw=::write(fp,buffer,n);
-  if (nw<n)
+  ssize_t nw = ::write(fp, buffer, n);
+  if (nw < n)
   {
     cerr << "Error writing to file " << filename << endl;
     ad_exit(1);
@@ -95,21 +94,21 @@ void fixed_smartlist2::write(int n)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+\todo Need Test case
+*/
 void fixed_smartlist2::rewind(void)
 {
   bptr=buffer;
-  unsigned int nbytes=0;
   eof_flag=0;
   if (written_flag)
   {
     lseek(fp,0L,SEEK_SET);
     // get the record size
+    int nbytes=0;
     ssize_t ret = ::read(fp,&nbytes,sizeof(int));
     assert(ret != -1);
-    if (nbytes>bufsize)
+    assert(nbytes >= 0);
+    if ((unsigned int)nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl
@@ -217,7 +216,7 @@ void fixed_smartlist2::write_buffer_one_less(void)
     assert(ret != -1);
 
     // write the record into the file
-    int nw=::write(fp,buffer,nbytes);
+    ssize_t nw = ::write(fp,buffer,nbytes);
     //cout << "Number of bytes written " << nw
      //    << " bptr value =  " << bptr << endl;
     //for (int ii=0;ii<=25;ii++)
@@ -292,8 +291,6 @@ void fixed_smartlist2::write_buffer(void)
  */
 void fixed_smartlist2::read_buffer(void)
 {
-  off_t pos;
-  unsigned int nbytes;
   if (!written_flag)
   {
     if (direction ==-1)
@@ -303,6 +300,7 @@ void fixed_smartlist2::read_buffer(void)
   }
   else
   {
+    off_t pos = 0;
     if (direction ==-1) // we are going backwards
     {
       off_t ipos=lseek(fp,0L,SEEK_CUR);
@@ -321,9 +319,11 @@ void fixed_smartlist2::read_buffer(void)
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
+    int nbytes = 0;
     ssize_t ret = ::read(fp,&nbytes,sizeof(int));
     assert(ret != -1);
-    if (nbytes>bufsize)
+    assert(nbytes >= 0);
+    if ((unsigned int)nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl
@@ -334,7 +334,7 @@ void fixed_smartlist2::read_buffer(void)
     // now read the record into the buffer
     ssize_t nr=::read(fp,buffer,nbytes);
     assert(nr != -1);
-    if ((unsigned int)nr != nbytes)
+    if (nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);
@@ -349,7 +349,7 @@ void fixed_smartlist2::read_buffer(void)
     */
     // reset the pointer to the beginning of the buffer
     bptr=buffer;
-    int ns=nbytes/sizeof(int);
+    int ns=nbytes/(int)sizeof(int);
     recend=bptr+ns-1;
     //cout << "Number of bytes read " << nr
      //    << "  recend value = " << recend << endl;
@@ -504,9 +504,8 @@ void fixed_smartlist2::operator ++ (void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+\todo Need Test case
+*/
 void fixed_smartlist2::read_file(void)
 {
   //rewind the file
@@ -516,13 +515,13 @@ void fixed_smartlist2::read_file(void)
   int offset=0;
   fixed_list_entry * b= (fixed_list_entry*) &(buffer[0]);
   cout << b << endl;
-  int nw=0;
+  size_t nw = 0;
   do
   {
-    nw=::read(fp,&nbytes,sizeof(int));
-    nw=::read(fp,buffer+offset,nbytes);
+    nw = ::read(fp,&nbytes,sizeof(int));
+    nw = ::read(fp,buffer+offset,nbytes);
     offset+=nbytes;
-    ::read(fp,&pos,sizeof(off_t));
+    nw = ::read(fp,&pos,sizeof(off_t));
   }
   while(nw);
 }

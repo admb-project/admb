@@ -8,6 +8,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 void adstring::allocate(int sz)
 {
   shape = new adstring_shape(sz);
@@ -53,16 +58,23 @@ adstring::operator const char * () const
   return (const char*)(s + 1);
 }
 
-  unsigned int adstring::size(void) const
-  {
-    if (!s) return 0;
-    return (strlen((char*)(s+1)));
-  }
+unsigned int adstring::size(void) const
+{
+  if (!s) return 0;
 
-  unsigned int adstring::buff_size(void)
-  {
-    return (shape->size());
-  }
+#ifdef OPT_LIB
+  return (unsigned int)strlen((char*)(s+1));
+#else
+  size_t len = strlen((char*)(s+1));
+  assert(len <= (size_t)UINT_MAX);
+  return (unsigned int)len;
+#endif
+}
+
+unsigned int adstring::buff_size(void)
+{
+  return shape->size();
+}
 
 ostream& operator<<(ostream& c, const adstring& t)
 {

@@ -31,16 +31,19 @@ void cifstream::set_eof_bit(void)
 #endif
 }
 
+/**
+\todo Need Test case
+*/
 char* cifstream::signature()
 {
   if (strlen(signature_line) <= 0)
   {
-    char c = bp->sgetc();
+    int c = bp->sgetc();
     //COUT_TRACE(c)
     int n = 0;
     while ( (n < SIGNATURE_LENGTH) && (c != '\n') )
     {
-      signature_line[n++] = c;
+      signature_line[n++] = (unsigned char)c;
       c = bp->snextc();
      // cout << "in sig testc= " << c << endl;
     }
@@ -99,7 +102,7 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
 void cifstream::filter(void)
 {
   //char testc = bp->NEXTCHAR();
-  char testc = bp->sgetc();
+  int testc = bp->sgetc();
  // cout << "in filter testc= " << testc << endl;
   while (isspace(testc))
   {
@@ -114,7 +117,7 @@ void cifstream::filter(void)
     do
     {
       if (n < SIGNATURE_LENGTH)
-        comment_line[n++] = testc;
+        comment_line[n++] = (unsigned char)testc;
 
       testc = bp->snextc();
       //cout << "in filter testc= " << testc << endl;
@@ -148,7 +151,7 @@ void cifstream::get_field(char * s,int space_flag)
   filter();
 
   // remove leading blanks
-  char testc = bp->sgetc();
+  int testc = bp->sgetc();
   while (isspace(testc))
   {
     testc = bp->snextc();
@@ -159,7 +162,7 @@ void cifstream::get_field(char * s,int space_flag)
   {
     while ( (n < FILTER_BUF_SIZE) && !isspace(testc) && (testc != EOF))
     {
-      s[n++] = testc;
+      s[n++] = (unsigned char)testc;
       testc = bp->snextc();
     }
   }
@@ -167,7 +170,7 @@ void cifstream::get_field(char * s,int space_flag)
   {
     while ( (n < FILTER_BUF_SIZE) && (testc != EOF))
     {
-      s[n++] = testc;
+      s[n++] = (unsigned char)testc;
       testc = bp->snextc();
     }
   }
@@ -275,8 +278,8 @@ cifstream& cifstream::operator>>(long long & i)
 
 void js_strip_leading_zeros(char * s)
 {
-  int n = strlen(s) - 1;
-  int i = 0;
+  size_t n = strlen(s) - 1;
+  size_t i = 0;
 
   while ((i < n) && (s[i]=='0') )
   {
@@ -360,16 +363,19 @@ cifstream& cifstream::operator>>(const float& x)
   return *this;
 }
 
+/**
+\todo Need Test case
+*/
 cifstream& cifstream::getline(char* s, int k, char d)
 {
   filter();
 
   s[0] = '\0';
   int n = 0;
-  char testc = bp->sbumpc();
+  int testc = bp->sbumpc();
   while ( (!eof()) && (n < k) && (testc != d) && (testc != EOF))
   {
-    s[n++] = testc;
+    s[n++] = (unsigned char)testc;
     testc = bp->sbumpc();
   }
   s[n++] = '\0';

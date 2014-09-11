@@ -11,7 +11,7 @@
 #include <df1b2fun.h>
 
 #ifdef OPT_LIB
-#define NDEBUG
+  #define NDEBUG
 #endif
 #include <cassert>
 
@@ -122,9 +122,13 @@ void test_smartlist::rewind(void)
     lseek(fp,0L,SEEK_SET);
     // get the record size
     int nbytes = 0;
+#ifdef OPT_LIB
+    ::read(fp,&nbytes,sizeof(int));
+#else
     ssize_t ret = ::read(fp,&nbytes,sizeof(int));
     assert(ret != -1);
     assert(nbytes >= 0);
+#endif
     if ((unsigned int)nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -132,9 +136,13 @@ void test_smartlist::rewind(void)
         << " buffer size is " << bufsize << " record size is supposedly "
         << nbytes << endl;
     }
+#ifdef OPT_LIB
+    ::read(fp,buffer,nbytes);
+#else
     // now read the record into the buffer
     ret = ::read(fp,buffer,nbytes);
     assert(ret != -1);
+#endif
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
@@ -226,8 +234,12 @@ void test_smartlist::write_buffer(void)
     off_t pos=lseek(fp,0L,SEEK_CUR);
 
     // write the size of the next record into the file
+#ifdef OPT_LIB
+    ::write(fp,&nbytes,sizeof(int));
+#else
     ssize_t ret = ::write(fp,&nbytes,sizeof(int));
     assert(ret != -1);
+#endif
 
     // write the record into the file
     ssize_t nw=::write(fp,buffer,nbytes);
@@ -246,8 +258,12 @@ void test_smartlist::write_buffer(void)
 
     // now write the previous file position into the file so we can back up
     // when we want to.
+#ifdef OPT_LIB
+    ::write(fp,&pos,sizeof(off_t));
+#else
     ret = ::write(fp,&pos,sizeof(off_t));
     assert(ret != -1);
+#endif
 
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
   }
@@ -274,17 +290,25 @@ void test_smartlist::read_buffer(void)
       // offset of the begining of the record is at the end
       // of the record
       lseek(fp,-((long)sizeof(off_t)),SEEK_CUR);
+#ifdef OPT_LIB
+      ::read(fp, &pos, sizeof(off_t));
+#else
       ssize_t ret = read(fp,&pos,sizeof(off_t));
       assert(ret != -1);
+#endif
       // back up to the beginning of the record (plus record size)
       lseek(fp,pos,SEEK_SET);
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
     int nbytes = 0;
+#ifdef OPT_LIB
+    ::read(fp,&nbytes,sizeof(int));
+#else
     ssize_t ret = ::read(fp,&nbytes,sizeof(int));
     assert(ret != -1);
     assert(nbytes >= 0);
+#endif
     if ((unsigned int)nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -294,7 +318,7 @@ void test_smartlist::read_buffer(void)
     }
     // now read the record into the buffer
     ssize_t nr = ::read(fp,buffer,nbytes);
-    assert(ret != -1);
+    assert(nr != -1);
     if (nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;

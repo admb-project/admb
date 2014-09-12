@@ -11,6 +11,11 @@
 
 #include <df1b2fun.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 void ad_read_pass1_der_values(void);
 void read_pass1_1_dv(void);
 void read_pass1_2_dv(void);
@@ -35,7 +40,7 @@ int df1b2_gradlist::write_pass1(const df1b2variable * _px,
 #endif
   int nvar=df1b2variable::nvar;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)
    // +sizeof(char*)
     +4*sizeof(double)+nvar*sizeof(double);
 // string identifier debug stuff
@@ -44,7 +49,12 @@ int df1b2_gradlist::write_pass1(const df1b2variable * _px,
   int slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= (size_t)INT_MAX);
+#endif
+
+  list.check_buffer_size((int)total_bytes);
   void * tmpptr=list.bptr;
 #if defined(SAFE_ALL)
   memcpy(list,ids,slen);
@@ -65,7 +75,7 @@ int df1b2_gradlist::write_pass1(const df1b2variable * _px,
 
   memcpy(list,px->get_u(),sizeof(double));
   //list.bptr+=sizeof(double);
-  memcpy(list,px->get_u_dot(),nvar*sizeof(double));
+  memcpy(list,px->get_u_dot(),nvar*(int)sizeof(double));
   //list.bptr+=nvar*sizeof(double);
   // ***** write  record size
   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
@@ -154,8 +164,7 @@ void read_pass1_1_dv(void)
      fixed_smartlist2& nlist2=f1b2gradlist->nlist2;
      test_smartlist& list2=f1b2gradlist->list2;
 
-
-  int total_bytes=2*nvar*sizeof(double);
+  size_t total_bytes=2*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="JE";
@@ -163,15 +172,19 @@ void read_pass1_1_dv(void)
   total_bytes+=slen;
 #endif
 
-  list2.check_buffer_size(total_bytes);
+#ifndef OPT_LIB
+  assert(total_bytes <= (size_t)INT_MAX);
+#endif
+
+  list2.check_buffer_size((int)total_bytes);
   void * tmpptr2=list2.bptr;
 
 #if defined(SAFE_ALL)
   memcpy(list2,ids,slen);
 #endif
 
-   memcpy(list2,pz->get_u_bar(),nvar*sizeof(double));
-   memcpy(list2,pz->get_u_dot_bar(),nvar*sizeof(double));
+   memcpy(list2,pz->get_u_bar(),nvar*(int)sizeof(double));
+   memcpy(list2,pz->get_u_dot_bar(),nvar*(int)sizeof(double));
    *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
    ++nlist2;
   // }
@@ -232,7 +245,7 @@ void read_pass1_2_dv(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
     +sizeof(double)+nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
@@ -240,7 +253,12 @@ void read_pass1_2_dv(void)
   int slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= (size_t)INT_MAX);
+#endif
+
+  list.check_buffer_size((int)total_bytes);
 // end of string identifier debug stuff
 
   list.saveposition(); // save pointer to beginning of record;
@@ -293,18 +311,15 @@ void read_pass1_2_dv(void)
   xdot=(double*)list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
-  double * zbar;
-  double * zdotbar;
+  double* zbar = (double*)list2.bptr;
+  double* zdotbar = (double*)(list2.bptr+nvar*sizeof(double));
 
-  zbar=(double*)list2.bptr;
-  zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
-
-  double * x_tilde=px->get_u_tilde();
-  double * x_dot_tilde=px->get_u_dot_tilde();
-  double * x_bar_tilde=px->get_u_bar_tilde();
-  double * x_dot_bar_tilde=px->get_u_dot_bar_tilde();
-  double * z_bar_tilde=pz->get_u_bar_tilde();
-  double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
+  double* x_tilde=px->get_u_tilde();
+  double* x_dot_tilde=px->get_u_dot_tilde();
+  double* x_bar_tilde=px->get_u_bar_tilde();
+  double* x_dot_bar_tilde=px->get_u_dot_bar_tilde();
+  double* z_bar_tilde=pz->get_u_bar_tilde();
+  double* z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
 #if defined(PRINT_DERS)
  print_derivatives(pz,"z");
  print_derivatives(px,"x");

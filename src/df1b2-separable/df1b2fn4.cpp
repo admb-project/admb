@@ -18,6 +18,11 @@ void read_pass1_eq_3(void);
   extern int addebug_count;
 #endif
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -179,7 +184,6 @@ void read_pass1_eq_1(void)
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
   list.restoreposition(); // save pointer to beginning of record;
-  int i;
 
   // Do first reverse paSS calculations
   // ****************************************************************
@@ -188,37 +192,42 @@ void read_pass1_eq_1(void)
   // {
   // save for second reverse pass
   // save identifier 1
-     fixed_smartlist2& nlist2=f1b2gradlist->nlist2;
-     test_smartlist& list2=f1b2gradlist->list2;
+  fixed_smartlist2& nlist2=f1b2gradlist->nlist2;
+  test_smartlist& list2=f1b2gradlist->list2;
 
+  size_t total_bytes=2*nvar*sizeof(double);
 
-     int total_bytes=2*nvar*sizeof(double);
 #if defined(SAFE_ALL)
   char ids[]="HT";
   int slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list2.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= (size_t)INT_MAX);
+#endif
+
+  list2.check_buffer_size((int)total_bytes);
   void * tmpptr2=list2.bptr;
+
 #if defined(SAFE_ALL)
   memcpy(list2,ids,slen);
 #endif
 
-
-     memcpy(list2,pz->get_u_bar(),nvar*sizeof(double));
-     memcpy(list2,pz->get_u_dot_bar(),nvar*sizeof(double));
-     *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
-     ++nlist2;
+  memcpy(list2,pz->get_u_bar(),nvar*(int)sizeof(double));
+  memcpy(list2,pz->get_u_dot_bar(),nvar*(int)sizeof(double));
+  *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
+  ++nlist2;
   // }
   //
   // ****************************************************************
 #if defined(PRINT_DERS)
- print_derivatives(" assign ", 1 ,1 ,0, 0,1);
- print_derivatives(pz,"z");
- print_derivatives(px,"x");
+  print_derivatives(" assign ", 1 ,1 ,0, 0,1);
+  print_derivatives(pz,"z");
+  print_derivatives(px,"x");
 #endif
 
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     px->u_bar[i]+=pz->u_bar[i];
 #if defined(ADDEBUG_PRINT)
@@ -230,21 +239,21 @@ void read_pass1_eq_1(void)
     cout << px->u_bar[i] << " " << pz->u_bar[i] << " " << addebug_count << endl;
 #endif
   }
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     px->u_dot_bar[i]+=pz->u_dot_bar[i];
   }
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     pz->u_bar[i]=0;
   }
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     pz->u_dot_bar[i]=0;
   }
 #if defined(PRINT_DERS)
- print_derivatives(px,"x");
- print_derivatives(pz,"z");
+  print_derivatives(px,"x");
+  print_derivatives(pz,"z");
 #endif
 }
 
@@ -316,18 +325,17 @@ void read_pass1_eq_2(void)
  print_derivatives(px,"x");
 #endif
 
-  int i;
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     z_bar_tilde[i]+=x_bar_tilde[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     z_dot_bar_tilde[i]+=x_dot_bar_tilde[i];
   }

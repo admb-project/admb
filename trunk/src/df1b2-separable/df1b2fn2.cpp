@@ -87,7 +87,7 @@ int df1b2variable::get_blocksize(int n)
 void df1b2variable::set_blocksize(void)
 {
   blocksize=get_blocksize();
-  pool->set_size(sizeof(double)*blocksize);
+  pool->set_size((unsigned int)sizeof(double)*blocksize);
   pool->nvar=df1b2variable::get_nvar();
 }
 
@@ -143,7 +143,7 @@ void df1b2variable::initialize(int n)
 {
   //int bs=get_blocksize(n);
   //for (double * tmp=ptr+2;tmp<ptr+bs-1;*tmp++=0);
-  int nbytes = (get_blocksize(n) - 2) * sizeof(double);
+  size_t nbytes = (get_blocksize(n) - 2) * sizeof(double);
   memset(ptr + 2, 0, nbytes);
 }
 

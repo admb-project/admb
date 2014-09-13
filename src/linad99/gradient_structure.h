@@ -60,10 +60,6 @@ class grad_stack;
 class uostream;
 class dlist;
 
-#ifndef my_off_t
-#define my_off_t long int
-#endif
-
 /**
  * Description not yet available.
  * \param

@@ -65,8 +65,7 @@
  * Description not yet available.
  * \param
  */
-//int grad_stack::read_grad_stack_buffer(long int& lpos)
-int grad_stack::read_grad_stack_buffer(my_off_t& lpos)
+int grad_stack::read_grad_stack_buffer(off_t& lpos)
   {
     // check to see if we are past the beginning of this file
     if (lpos < 0)
@@ -100,7 +99,7 @@ int grad_stack::read_grad_stack_buffer(my_off_t& lpos)
       }
       // now back up the file one buffer size
       lpos = lseek(_GRADFILE_PTR,
-         -((long int)(sizeof(grad_stack_entry)*length)),SEEK_CUR);
+         -((off_t)(sizeof(grad_stack_entry)*length)),SEEK_CUR);
       if (lpos == -1L)
       {
         cerr << "Error positioning temporary gradient file "
@@ -110,11 +109,10 @@ int grad_stack::read_grad_stack_buffer(my_off_t& lpos)
       }
     }
     #if !defined( __NDPX__) && !defined( __SUN__)
-      int nread = read(_GRADFILE_PTR,ptr_first,
-        ((long int)(sizeof(grad_stack_entry)*length)) );
+      int nread = read(_GRADFILE_PTR,ptr_first, ((off_t)(sizeof(grad_stack_entry)*length)));
     #else
       int nread = read(_GRADFILE_PTR,
-        (char*)ptr_first,((long int)(sizeof(grad_stack_entry)*length)) );
+        (char*)ptr_first,((off_t)(sizeof(grad_stack_entry)*length)));
     #endif
     ptr = ptr_first + length-1;
 
@@ -122,12 +120,12 @@ int grad_stack::read_grad_stack_buffer(my_off_t& lpos)
     {
       perror("IO error trying to read temporary gradient file\n");
     }
-    if (nread <((long int)(sizeof(grad_stack_entry)*length)) )
+    if (nread <((int)(sizeof(grad_stack_entry)*length)) )
     {
      perror("End of file encountered trying to read temporary gradient file\n");
       cout << "Read " << nread << "bytes from temp. grad. file\n";
     }
-    lpos = lseek(_GRADFILE_PTR,-((long int)(sizeof(grad_stack_entry)*length)),
+    lpos = lseek(_GRADFILE_PTR,-((off_t)(sizeof(grad_stack_entry)*length)),
                                                            SEEK_CUR);
     // no break condition
     return 1;

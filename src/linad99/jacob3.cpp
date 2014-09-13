@@ -70,12 +70,12 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
 {
   dvector jac(1,nvar);
   unsigned int i;
-  my_off_t lpos;
+  off_t lpos;
   int depvar_count=DEPVARS_INFO->depvar_count;
 
   int& _GRADFILE_PTR=GRAD_STACK1->_GRADFILE_PTR;
   // check to see if anything has been written into the file
-  my_off_t last_gpos=lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  off_t last_gpos=lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 
   //save current contents of the buffer so we can get them later
   if (last_gpos)
@@ -84,7 +84,7 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
   }
 
   // check to see if anything has been written into the file
-  my_off_t last_cpos=lseek(fp->file_ptr,0L,SEEK_CUR);
+  off_t last_cpos=lseek(fp->file_ptr,0L,SEEK_CUR);
 
   //save current contents of the buffer so we can get them later
   if (last_cpos)
@@ -122,7 +122,7 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
     // position the cmpdif file correctly;
     if (last_cpos)
     {
-      my_off_t cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
+      off_t cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
       lseek(fp->file_ptr,cmp_lpos,SEEK_SET);
       fp->read_cmpdif_stack_buffer(cmp_lpos);
     }

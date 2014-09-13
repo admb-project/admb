@@ -103,7 +103,13 @@ endif
 override CXXFLAGS += $(ADCXXFLAGS)
 
 CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
+
+ifeq ($(CXX),c++)
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra -Wno-unused-result,$(CXXFLAGS_OPT_LIB))
+endif
+ifeq ($(CXX),g++)
+CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra -Wno-unused-result,$(CXXFLAGS_OPT_LIB))
+endif
 
 include df1b2-separable/objects.lst
 OBJECTS=$(addprefix optlp-df1b2-separable-,$(OBJ0)) $(addprefix saflp-df1b2-separable-,$(OBJ0))

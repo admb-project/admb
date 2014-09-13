@@ -81,7 +81,6 @@ void funnel_gradcalc(void)
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
   unsigned int i;
-  long int lpos;
   if(!gradient_structure::instances)
   {
     return;
@@ -92,7 +91,7 @@ void funnel_gradcalc(void)
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  off_t lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 
   if(gradient_structure::GRAD_STACK1->ptr
        <= gradient_structure::GRAD_STACK1->ptr_first)

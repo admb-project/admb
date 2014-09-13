@@ -183,7 +183,7 @@
     {
       // back up the file one buffer size and read forward
 
-      my_off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+      off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
 
@@ -216,7 +216,7 @@
       gradient_structure::GRAD_STACK1->ptr_first)
     {
       // back up the file one buffer size and read forward
-      my_off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+      off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
 

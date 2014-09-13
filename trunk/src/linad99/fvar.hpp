@@ -95,14 +95,6 @@ Macro definitions.
 */
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
-#define my_off_t long int
-
-#ifdef __BORLANDC__
-#   define my_u_off_t unsigned long int
-#else
-#   define my_u_off_t unsigned long long int
-#endif
-
 #define  MFCL2_CONSTRUCTORS
 
 #if defined(_ADEXEP)
@@ -970,7 +962,7 @@ class grad_stack
      double mult1, double *ind_addr2, double mult2,
      double *ind_addr3, double mult3);
 
-   int read_grad_stack_buffer(my_off_t & lpos);
+   int read_grad_stack_buffer(off_t & lpos);
    void set_gradient_stack(void (*ptr) (void));
    void set_gbuffer_pointers(void);
    //js

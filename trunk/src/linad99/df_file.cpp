@@ -68,6 +68,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 char lastchar(char*);
 
 void byte_copy(void* dest, void* source, const size_t num_bytes)
@@ -96,7 +100,9 @@ Constructor to allocate buffer.
 
 \param nbytes size of buffer
 */
-DF_FILE::DF_FILE(unsigned long long nbytes)
+DF_FILE::DF_FILE(const size_t nbytes):
+  buff_end(nbytes - sizeof(size_t) - 2),
+  buff_size(nbytes)
 {
 #if defined(__BORLANDC__)
   if (nbytes > INT_MAX)
@@ -122,15 +128,18 @@ DF_FILE::DF_FILE(unsigned long long nbytes)
   }
 #endif
 
-  buff_size = nbytes;
+///\todo Must add assert back in...
+/*
+#ifndef OPT_LIB
+  assert(nbytes > sizeof(size_t) + 2);
+#endif
+*/
 
   if ((buff = new char[buff_size]) == NULL)
   {
     cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;
     ad_exit(1);
   }
-  const int us = sizeof(unsigned long long);
-  buff_end = nbytes - us - 2;
   offset = 0;
   toffset = 0;
 
@@ -224,7 +233,7 @@ DF_FILE::~DF_FILE()
 
   if (ad_comm::global_logfile && repfs)
   {
-    my_off_t pos = lseek(file_ptr, 0, SEEK_END);
+    off_t pos = lseek(file_ptr, 0, SEEK_END);
     *ad_comm::global_logfile << "size of file " << cmpdif_file_name
         << " = " << pos << endl;
   }
@@ -254,7 +263,7 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
 {
   if (toffset < num_bytes)
   {
-    my_off_t lpos = lseek(file_ptr, -buff_size, SEEK_CUR);
+    off_t lpos = lseek(file_ptr, -((off_t)buff_size), SEEK_CUR);
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
     toffset = offset;
@@ -283,8 +292,7 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
   {
     if (num_bytes > buff_end)
     {
-      const unsigned long long us = toffset
-        + sizeof(unsigned long long) + 2L;
+      const size_t us = toffset + sizeof(size_t) + 2L;
       cerr << "Need to increase gradient_structure::CMPDIF_BUFFER_SIZE "
        "to at least" << us << endl;
     }
@@ -299,7 +307,7 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
  * Description not yet available.
  * \param
  */
-void DF_FILE::read_cmpdif_stack_buffer(my_off_t& lpos)
+void DF_FILE::read_cmpdif_stack_buffer(off_t& lpos)
 {
   if (lpos == -1L)
   {
@@ -311,8 +319,8 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t& lpos)
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
   }
-  lpos = lseek(file_ptr, -buff_size,SEEK_CUR);
-  for(unsigned int i = 0;i < sizeof(unsigned long long); i++)
+  lpos = lseek(file_ptr, -((off_t)buff_size),SEEK_CUR);
+  for (size_t i = 0;i < sizeof(size_t); i++)
   {
     fourb[i] = *(buff+buff_end+1+i);
   }
@@ -324,7 +332,7 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t& lpos)
 void DF_FILE::write_cmpdif_stack_buffer(void)
 {
   // save the offset at the end of the used part of the buffer
-  for (unsigned int i = 0;i < sizeof(unsigned long long); i++)
+  for (size_t i = 0; i < sizeof(size_t); i++)
   {
     *(buff+buff_end+1+i) = fourb[i];
   }

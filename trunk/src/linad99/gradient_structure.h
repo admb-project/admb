@@ -253,23 +253,18 @@ class gradient_structure
 class DF_FILE
 {
 public:
-  DF_FILE(unsigned long long nbytes);
+  DF_FILE(const size_t nbytes);
   ~DF_FILE();
 
   char* buff;
-  unsigned long long buff_end;
-  unsigned long long buff_size;
-  unsigned long long toffset;
+  size_t toffset;
   union
   {
-    unsigned long long offset;
-    char fourb[sizeof(unsigned long long)];
+    size_t offset;
+    char fourb[sizeof(size_t)];
   };
   char cmpdif_file_name[81];
   int file_ptr;
-
-  void write_cmpdif_stack_buffer(void);
-  void read_cmpdif_stack_buffer(my_off_t & lpos);
 
   void fwrite(const void *s, const size_t num_bytes);
   void fread(void *s, const size_t num_bytes);
@@ -282,5 +277,12 @@ public:
 
   void fread(void *&ptr);
   void fwrite(void *ptr);
+
+  void write_cmpdif_stack_buffer(void);
+  void read_cmpdif_stack_buffer(off_t & lpos);
+
+private:
+  const size_t buff_end;
+  const size_t buff_size;
 };
 #endif

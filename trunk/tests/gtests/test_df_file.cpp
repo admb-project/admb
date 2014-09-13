@@ -56,7 +56,6 @@ TEST_F(test_df_file, constructor_max)
     DF_FILE df_file(ULLONG_MAX)
   );
 }
-/*
 TEST_F(test_df_file, allocate_max)
 {
 #if defined(__GNUC__) && defined(__i686__)
@@ -78,7 +77,6 @@ TEST_F(test_df_file, allocate_max)
     FAIL();
   }
 }
-*/
 TEST_F(test_df_file, write_read_int)
 {
   size_t sizeofint = sizeof(int);
@@ -116,10 +114,9 @@ TEST_F(test_df_file, write_read_int_asvoidpointer)
   buffer.fread(&integer, sizeofint);
   ASSERT_EQ(expected, integer);
 }
-/*
 TEST_F(test_df_file, write_read_double)
 {
-  const size_t us = sizeof(unsigned int) + 2;
+  const size_t us = sizeof(size_t) + 2;
   size_t sizeofdouble = sizeof(double);
   DF_FILE buffer(sizeofdouble + us);
   ASSERT_EQ(0, buffer.offset);
@@ -138,7 +135,7 @@ TEST_F(test_df_file, write_read_double)
 }
 TEST_F(test_df_file, write_read_double_asvoidpointer)
 {
-  const size_t us = sizeof(unsigned int) + 2;
+  const size_t us = sizeof(size_t) + 2;
   size_t sizeofdouble = sizeof(double);
   DF_FILE buffer(sizeofdouble + us);
   ASSERT_EQ(0, buffer.offset);
@@ -155,7 +152,6 @@ TEST_F(test_df_file, write_read_double_asvoidpointer)
   buffer.fread(&value, sizeofdouble);
   ASSERT_EQ(expected, value);
 }
-*/
 TEST_F(test_df_file, memcpy_ptr)
 {
   const size_t size = sizeof(uintptr_t);
@@ -173,10 +169,9 @@ TEST_F(test_df_file, memcpy_ptr)
   size_t* value = (size_t*)dst;
   ASSERT_EQ(expected, *value);
 }
-/*
 TEST_F(test_df_file, write_read_voidpointer_asvoidpointer)
 {
-  const size_t us = sizeof(unsigned int) + 2;
+  const size_t us = sizeof(size_t) + 2;
   size_t size = sizeof(uintptr_t);
   DF_FILE buffer(size + us);
   ASSERT_EQ(0, buffer.offset);
@@ -202,7 +197,7 @@ TEST_F(test_df_file, write_read_voidpointer_asvoidpointer)
 }
 TEST_F(test_df_file, write_read_voidpointer)
 {
-  const size_t us = sizeof(unsigned int) + 2;
+  const size_t us = sizeof(size_t) + 2;
   size_t size = sizeof(uintptr_t);
   DF_FILE buffer(size + us);
   ASSERT_EQ(0, buffer.offset);
@@ -211,43 +206,138 @@ TEST_F(test_df_file, write_read_voidpointer)
   gradient_structure::no_derivatives = 0;
 
   size_t expected = __LINE__;
-  uintptr_t src = (uintptr_t)&expected;
-  buffer.fwrite(&src);
+  buffer.fwrite((void*)&expected);
   ASSERT_EQ(size, buffer.offset);
   ASSERT_EQ(size, buffer.toffset);
 
-  uintptr_t dst;
-  buffer.fread(&dst);
+/*
+  size_t* actual = 0;
+  buffer.fread((void*)&actual);
   ASSERT_EQ(0, buffer.offset);
   ASSERT_EQ(0, buffer.toffset);
 
-  ASSERT_EQ(src, dst);
-
-  size_t* pvalue = (size_t*)dst;
-  size_t value = *pvalue;
-  ASSERT_EQ(expected, value);
+  ASSERT_EQ(expected, actual);
+*/
 }
-TEST_F(test_df_file, write_read_int_3x)
+TEST_F(test_df_file, write_read_int_bigbuffer)
 {
-  const size_t us = sizeof(unsigned int) + 2;
-  const size_t size = sizeof(int);
+  //const size_t us = sizeof(size_t) + 2;
+  const size_t size = sizeof(int) * 2;
 
-  DF_FILE buffer(size + us);
+  DF_FILE buffer(size);
 
   const int expected = __LINE__;
   buffer.fwrite(expected);
-  ASSERT_EQ(size, buffer.offset);
-  ASSERT_EQ(size, buffer.toffset);
+  ASSERT_EQ(sizeof(int), buffer.offset);
+  ASSERT_EQ(sizeof(int), buffer.toffset);
+
+  int integer = 0;
+  buffer.fread(integer);
+  ASSERT_EQ(expected, integer);
+  ASSERT_EQ(0, buffer.offset);
+  ASSERT_EQ(0, buffer.toffset);
+}
+TEST_F(test_df_file, write_read_int_3x_bigbuffer)
+{
+  //const size_t us = sizeof(size_t) + 2;
+  const size_t size = sizeof(int) * 10;
+
+  DF_FILE buffer(size);
+
+  const int expected = __LINE__;
+  buffer.fwrite(expected);
+  ASSERT_EQ(sizeof(int), buffer.offset);
+  ASSERT_EQ(sizeof(int), buffer.toffset);
 
   const int expected2 = __LINE__;
   buffer.fwrite(expected2);
-  ASSERT_EQ(size, buffer.offset);
-  ASSERT_EQ(size, buffer.toffset);
+  ASSERT_EQ(sizeof(int) * 2, buffer.offset);
+  ASSERT_EQ(sizeof(int) * 2, buffer.toffset);
 
   const int expected3 = __LINE__;
   buffer.fwrite(expected3);
-  ASSERT_EQ(size, buffer.offset);
-  ASSERT_EQ(size, buffer.toffset);
+  ASSERT_EQ(sizeof(int) * 3, buffer.offset);
+  ASSERT_EQ(sizeof(int) * 3, buffer.toffset);
+
+  int integer3 = 0;
+  buffer.fread(integer3);
+  ASSERT_EQ(expected3, integer3);
+  ASSERT_EQ(sizeof(int) * 2, buffer.offset);
+  ASSERT_EQ(sizeof(int) * 2, buffer.toffset);
+
+  int integer2 = 0;
+  buffer.fread(integer2);
+  ASSERT_EQ(expected2, integer2);
+  ASSERT_EQ(sizeof(int), buffer.offset);
+  ASSERT_EQ(sizeof(int), buffer.toffset);
+
+  int integer = 0;
+  buffer.fread(integer);
+  ASSERT_EQ(expected, integer);
+  ASSERT_EQ(0, buffer.offset);
+  ASSERT_EQ(0, buffer.toffset);
+}
+TEST_F(test_df_file, write_read_int_3x_exactbuffer)
+{
+  const size_t us = sizeof(size_t) + 2;
+  const size_t size = sizeof(int) * 3 + us;
+
+  DF_FILE buffer(size);
+
+  const int expected = __LINE__;
+  buffer.fwrite(expected);
+  ASSERT_EQ(sizeof(int), buffer.offset);
+  ASSERT_EQ(sizeof(int), buffer.toffset);
+
+  const int expected2 = __LINE__;
+  buffer.fwrite(expected2);
+  ASSERT_EQ(sizeof(int) * 2, buffer.offset);
+  ASSERT_EQ(sizeof(int) * 2, buffer.toffset);
+
+  const int expected3 = __LINE__;
+  buffer.fwrite(expected3);
+  ASSERT_EQ(sizeof(int) * 3, buffer.offset);
+  ASSERT_EQ(sizeof(int) * 3, buffer.toffset);
+
+  int integer3 = 0;
+  buffer.fread(integer3);
+  ASSERT_EQ(expected3, integer3);
+  ASSERT_EQ(sizeof(int) * 2, buffer.offset);
+  ASSERT_EQ(sizeof(int) * 2, buffer.toffset);
+
+  int integer2 = 0;
+  buffer.fread(integer2);
+  ASSERT_EQ(expected2, integer2);
+  ASSERT_EQ(sizeof(int), buffer.offset);
+  ASSERT_EQ(sizeof(int), buffer.toffset);
+
+  int integer = 0;
+  buffer.fread(integer);
+  ASSERT_EQ(expected, integer);
+  ASSERT_EQ(0, buffer.offset);
+  ASSERT_EQ(0, buffer.toffset);
+}
+TEST_F(test_df_file, write_read_int_3x_nobuffer)
+{
+  const size_t us = sizeof(size_t) + 2;
+  const size_t size = sizeof(int) + us;
+
+  DF_FILE buffer(size);
+
+  const int expected = __LINE__;
+  buffer.fwrite(expected);
+  ASSERT_EQ(sizeof(int), buffer.offset);
+  ASSERT_EQ(sizeof(int), buffer.toffset);
+
+  const int expected2 = __LINE__;
+  buffer.fwrite(expected2);
+  ASSERT_EQ(sizeof(int), buffer.offset);
+  ASSERT_EQ(sizeof(int), buffer.toffset);
+
+  const int expected3 = __LINE__;
+  buffer.fwrite(expected3);
+  ASSERT_EQ(sizeof(int), buffer.offset);
+  ASSERT_EQ(sizeof(int), buffer.toffset);
 
   int integer3 = 0;
   buffer.fread(integer3);
@@ -269,7 +359,7 @@ TEST_F(test_df_file, write_read_int_3x)
 }
 TEST_F(test_df_file, write_read_double2)
 {
-  const size_t us = sizeof(unsigned int) + 2;
+  const size_t us = sizeof(size_t) + 2;
 
   DF_FILE buffer(sizeof(double) + us);
   const double expected = __LINE__;
@@ -281,7 +371,7 @@ TEST_F(test_df_file, write_read_double2)
 }
 TEST_F(test_df_file, write_read_char_array11)
 {
-  const size_t us = sizeof(unsigned int) + 2;
+  const size_t us = sizeof(size_t) + 2;
   DF_FILE buffer(us + 11);
   const char expected[11] = "12345-6789";
   buffer.fwrite(expected, 11);
@@ -290,4 +380,3 @@ TEST_F(test_df_file, write_read_char_array11)
   buffer.fread(&array[0], 11);
   ASSERT_STREQ(expected, array);
 }
-*/

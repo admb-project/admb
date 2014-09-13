@@ -211,7 +211,7 @@ grad_stack::~grad_stack()
   const int repfs = option_match(ad_comm::argc, ad_comm::argv, "-fsize");
   if (ad_comm::global_logfile && repfs)
   {
-     int pos = lseek(_GRADFILE_PTR1, 0, SEEK_END);
+     off_t pos = lseek(_GRADFILE_PTR1, 0, SEEK_END);
      *ad_comm::global_logfile << "size of file " << gradfile_name1
        << " = " << pos << endl;
 

@@ -70,11 +70,11 @@
  */
 void DF_FILE::fread(const double& _x)
 {
-  double& x = (double&) _x;
-  const unsigned int num_bytes=sizeof(double);
+  double& x = (double&)_x;
+  const size_t num_bytes = sizeof(double);
   if (toffset < num_bytes)
   {
-    my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
+    off_t lpos = lseek(file_ptr,-((off_t)buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
@@ -92,36 +92,12 @@ void DF_FILE::fread(const double& _x)
  * Description not yet available.
  * \param
  */
-void DF_FILE::fread(const int& _x)
-{
-  int& x = (int&) _x;
-  const unsigned int num_bytes=sizeof(int);
-  if (toffset < num_bytes)
-  {
-     my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
-    //cout << "In fread filepos = " << lpos << endl;
-    read_cmpdif_stack_buffer(lpos);
-    offset -= num_bytes;
-    toffset = offset;
-  }
-  else
-  {
-    toffset-=num_bytes; //decrement the temporary offset count
-  }
-  memcpy(&x, buff+toffset, sizeof(int));
-  offset=toffset;
-}
-
-/**
- * Description not yet available.
- * \param
- */
 void DF_FILE::fread(void* &x)
 {
-  const unsigned int num_bytes=sizeof(void*);
+  const size_t num_bytes = sizeof(void*);
   if (toffset < num_bytes)
   {
-     my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
+     off_t lpos = lseek(file_ptr,-((off_t)buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
@@ -147,7 +123,7 @@ void DF_FILE::fwrite(const double x)
     return;
   }
 #endif
-  const unsigned int num_bytes=sizeof(double);
+  const size_t num_bytes = sizeof(double);
   toffset+=num_bytes; //increment the temporary offset count
   if (toffset>buff_end)
   {
@@ -163,6 +139,29 @@ void DF_FILE::fwrite(const double x)
  * Description not yet available.
  * \param
  */
+void DF_FILE::fread(const int& _x)
+{
+  int& x = (int&)_x;
+  const size_t num_bytes = sizeof(int);
+  if (toffset < num_bytes)
+  {
+    off_t lpos = lseek(file_ptr, -((off_t)buff_size), SEEK_CUR);
+    read_cmpdif_stack_buffer(lpos);
+    offset -= num_bytes;
+    toffset = offset;
+  }
+  else
+  {
+    toffset-=num_bytes; //decrement the temporary offset count
+  }
+  memcpy(&x, buff+toffset, sizeof(int));
+  offset=toffset;
+}
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fwrite(const int& x)
 {
   #ifdef NO_DERIVS
@@ -171,7 +170,7 @@ void DF_FILE::fwrite(const int& x)
       return;
     }
   #endif
-  const unsigned int num_bytes=sizeof(int);
+  const size_t num_bytes = sizeof(int);
   toffset+=num_bytes; //increment the temporary offset count
   if (toffset>buff_end)
   {
@@ -195,7 +194,7 @@ void DF_FILE::fwrite(void * ptr)
       return;
     }
   #endif
-  const unsigned int num_bytes=sizeof(void*);
+  const size_t num_bytes = sizeof(void*);
   toffset+=num_bytes; //increment the temporary offset count
   if (toffset>buff_end)
   {

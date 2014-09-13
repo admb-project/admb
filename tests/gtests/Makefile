@@ -25,7 +25,6 @@ GTESTS=\
  test_adpool.cpp\
  test_dvector.cpp\
  test_dmatrix.cpp\
- test_df_file.cpp\
  test_param_init_bounded_number_vector.cpp\
  test_param_init_d3array.cpp\
  test_spline.cpp\
@@ -38,6 +37,7 @@ GTESTS=\
  test_multi_index.cpp\
  test_adtimer.cpp\
  test_idea.cpp\
+ test_df_file.cpp\
  main.cpp
 
 ##Need to debug this

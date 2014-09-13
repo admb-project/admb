@@ -108,12 +108,8 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
         ad_exit(1);
       }
     }
-    #if !defined( __NDPX__) && !defined( __SUN__)
-      int nread = read(_GRADFILE_PTR,ptr_first, ((off_t)(sizeof(grad_stack_entry)*length)));
-    #else
-      int nread = read(_GRADFILE_PTR,
+    int nread = read(_GRADFILE_PTR,
         (char*)ptr_first,((off_t)(sizeof(grad_stack_entry)*length)));
-    #endif
     ptr = ptr_first + length-1;
 
     if (nread == -1 )

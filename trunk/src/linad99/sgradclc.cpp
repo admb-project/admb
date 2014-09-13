@@ -109,7 +109,7 @@ void gradcalc(int nvar, const dvector& _g)
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  long int lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  off_t lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 
   if (gradient_structure::GRAD_STACK1->ptr <=
         gradient_structure::GRAD_STACK1->ptr_first)

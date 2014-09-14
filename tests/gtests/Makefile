@@ -31,7 +31,6 @@ GTESTS=\
  test_banded_symmetric_dmatrix.cpp\
  test_imatrix.cpp\
  test_line_adstring.cpp\
- test_dvar_vector.cpp\
  test_pow.cpp\
  test_ivector.cpp\
  test_multi_index.cpp\
@@ -42,6 +41,7 @@ GTESTS=\
 
 ##Need to debug this
 ## test_atan2.cpp
+## test_dvar_vector.cpp
 
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\

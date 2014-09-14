@@ -31,7 +31,7 @@ TEST_F(test_df_file, strtok)
 }
 TEST_F(test_df_file, allocate_INT_MAX)
 {
-  int size = INT_MAX/2;
+  size_t size = INT_MAX/2;
   char* a = 0;
   ASSERT_NO_THROW(a = new char[size]);
   delete [] a;
@@ -58,14 +58,7 @@ TEST_F(test_df_file, constructor_max)
 }
 TEST_F(test_df_file, allocate_max)
 {
-#if defined(__GNUC__) && defined(__i686__)
   size_t size = INT_MAX/2;
-#else
-  ASSERT_LT(INT_MAX, LONG_MAX);
-  ASSERT_LT(LONG_MAX, ULONG_MAX);
-  size_t size = INT_MAX;
-  //size_t size = ULLONG_MAX;
-#endif
   try
   {
     char* p = new char[size];

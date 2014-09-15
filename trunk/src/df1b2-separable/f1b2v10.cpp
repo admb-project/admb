@@ -266,7 +266,7 @@ void ad_read_pass2_prod_vector(void);
    memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
 
 
-   const int sizeofdouble = sizeof(double); 
+   const int sizeofdouble = sizeof(double);
    for (int i=mmin;i<=mmax;i++)
    {
      memcpy(list,(*px)(i).get_u(),sizeofdouble);

@@ -10,6 +10,11 @@
  */
 #include <df1b2fun.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -177,8 +182,7 @@ df1b2variable operator * (const df1b2vector& _x,const df1b2vector& _y)
   df1b2variable tmp=0.0;
   int mmin=x.indexmin();
   int mmax=x.indexmax();
-  int i;
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     *tmp.get_u() += *x(i).get_u() *  *y(i).get_u();
   }
@@ -187,7 +191,7 @@ df1b2variable operator * (const df1b2vector& _x,const df1b2vector& _y)
   {
     *zd++ = 0;
   }
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     double * zd=tmp.get_u_dot();
     double * xd=x(i).get_u_dot();
@@ -230,26 +234,31 @@ void ad_read_pass2_prod_vector(void);
 
    //int total_bytes=3*sizeof(df1b2_header)
     // +2*(nvar+1)*sizeof(double);
-   int total_bytes= 2*sizeof(int) + 2*(mmax-mmin+1)*sizeof(df1b2_header)
+  size_t total_bytes= 2*sizeof(int) + 2*(mmax-mmin+1)*sizeof(df1b2_header)
     + sizeof(df1b2_header) + 2*(mmax-mmin+1)*sizeof(double)
     + 2*(mmax-mmin+1)*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DL";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+
+  list.check_buffer_size((int)total_bytes);
+
   void * tmpptr=list.bptr;
 #if defined(SAFE_ALL)
   memcpy(list,ids,slen);
 #endif
 // end of string identifier debug stuff
 
-   int i;
    memcpy(list,&mmin,sizeof(int));
    memcpy(list,&mmax,sizeof(int));
-   for (i=mmin;i<=mmax;i++)
+   for (int i=mmin;i<=mmax;i++)
    {
      memcpy(list,(df1b2_header*)( &(*px)(i)  ),sizeof(df1b2_header));
      memcpy(list,(df1b2_header*)( &(*py)(i)  ),sizeof(df1b2_header));
@@ -257,15 +266,16 @@ void ad_read_pass2_prod_vector(void);
    memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
 
 
-   for (i=mmin;i<=mmax;i++)
+   const int sizeofdouble = sizeof(double); 
+   for (int i=mmin;i<=mmax;i++)
    {
-     memcpy(list,(*px)(i).get_u(),sizeof(double));
-     memcpy(list,(*py)(i).get_u(),sizeof(double));
+     memcpy(list,(*px)(i).get_u(),sizeofdouble);
+     memcpy(list,(*py)(i).get_u(),sizeofdouble);
    }
-   for (i=mmin;i<=mmax;i++)
+   for (int i=mmin;i<=mmax;i++)
    {
-     memcpy(list,(*px)(i).get_u_dot(),nvar*sizeof(double));
-     memcpy(list,(*py)(i).get_u_dot(),nvar*sizeof(double));
+     memcpy(list,(*px)(i).get_u_dot(),nvar*sizeofdouble);
+     memcpy(list,(*py)(i).get_u_dot(),nvar*sizeofdouble);
    }
    // ***** write  record size
    nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
@@ -331,8 +341,7 @@ void read_pass2_1_prod_vector(void)
   double_ptr_vector ydot(mmin,mmax);
   dvector xu(mmin,mmax);
   dvector yu(mmin,mmax);
-  int i;
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     // df1b2_header *
     px(i)=(df1b2_header *) bptr;
@@ -343,14 +352,14 @@ void read_pass2_1_prod_vector(void)
   }
   df1b2_header * pz=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     memcpy(&(xu(i)),bptr,sizeof(double));
     bptr+=sizeof(double);
     memcpy(&(yu(i)),bptr,sizeof(double));
     bptr+=sizeof(double);
   }
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     // double *
     xdot(i)=(double*)bptr;
@@ -370,67 +379,73 @@ void read_pass2_1_prod_vector(void)
   // save identifier 1
      test_smartlist & list2 = f1b2gradlist->list2;
 
-
-   int total_bytes=2*nvar*sizeof(double);
+  size_t total_bytes=2*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="QK";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list2.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+
+  list2.check_buffer_size((int)total_bytes);
+
   void * tmpptr=list2.bptr;
 #if defined(SAFE_ALL)
   memcpy(list2,ids,slen);
 #endif
 
   fixed_smartlist2 & nlist2 = f1b2gradlist->nlist2;
-  memcpy(list2,pz->get_u_bar(),nvar*sizeof(double));
-  memcpy(list2,pz->get_u_dot_bar(),nvar*sizeof(double));
+
+  const int sizeofdouble = sizeof(double);
+  memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
+  memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
   *nlist2.bptr=adptr_diff(list2.bptr,tmpptr);
   ++nlist2;
 
-  int j;
   // Do first reverse pass calculations
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    for (j=0;j<nvar;j++)
+    for (int j=0;j<nvar;j++)
     {
       px(i)->u_bar[j]+=yu(i)*pz->u_bar[j];
     }
-    for (j=0;j<nvar;j++)
+    for (int j=0;j<nvar;j++)
     {
       py(i)->u_bar[j]+=xu(i)*pz->u_bar[j];
     }
   }
 
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    for (j=0;j<nvar;j++)
+    for (int j=0;j<nvar;j++)
     {
       px(i)->u_bar[j]+=ydot(i)[j]*pz->u_dot_bar[j];
     }
 
-    for (j=0;j<nvar;j++)
+    for (int j=0;j<nvar;j++)
     {
       py(i)->u_bar[j]+=xdot(i)[j]*pz->u_dot_bar[j];
     }
-    for (j=0;j<nvar;j++)
+    for (int j=0;j<nvar;j++)
     {
       px(i)->u_dot_bar[j]+=yu(i)*pz->u_dot_bar[j];
     }
-    for (j=0;j<nvar;j++)
+    for (int j=0;j<nvar;j++)
     {
       py(i)->u_dot_bar[j]+=xu(i)*pz->u_dot_bar[j];
     }
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (j=0;j<nvar;j++)
+  for (int j=0;j<nvar;j++)
   {
     pz->u_bar[j]=0;
   }
-  for (j=0;j<nvar;j++)
+  for (int j=0;j<nvar;j++)
   {
     pz->u_dot_bar[j]=0;
   }

@@ -15,6 +15,11 @@
     int addebug_count=0;
 #endif
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 void ad_read_write_tilde_values(void);
 void read_tilde_values_1(void);
 void read_tilde_values_2(void);
@@ -151,21 +156,28 @@ void read_tilde_values_2(void)
   fixed_smartlist2& nlist3=f1b2gradlist->nlist3;
   test_smartlist& list3=f1b2gradlist->list3;
 
-  int total_bytes2=(nvar+1)*sizeof(double);
+  size_t total_bytes2=(nvar+1)*sizeof(double);
+
 #if defined(SAFE_ALL)
   char ids2[]="WF";
-  int slen2=strlen(ids2);
+  size_t slen2=strlen(ids2);
   total_bytes2+=slen2;
 #endif
-  list3.check_buffer_size(total_bytes2);
+
+#ifndef OPT_LIB
+  assert(total_bytes2 <= INT_MAX);
+#endif
+  
+  list3.check_buffer_size((int)total_bytes2);
+
   void * tmpptr3=list3.bptr;
 #if defined(SAFE_ALL)
   memcpy(list3,ids2,slen);
 #endif
 
-  memcpy(list3,px->get_u_tilde(),sizeof(double));
-  memcpy(list3,px->get_u_dot_tilde(),nvar*sizeof(double));
-
+  const int sizeofdouble = (int)sizeof(double);
+  memcpy(list3,px->get_u_tilde(),sizeofdouble);
+  memcpy(list3,px->get_u_dot_tilde(),nvar*sizeofdouble);
 
   zero_it(px->get_u_bar_tilde(),nvar);
   zero_it(px->get_u_dot_bar_tilde(),nvar);

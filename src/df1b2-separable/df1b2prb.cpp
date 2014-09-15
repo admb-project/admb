@@ -10,6 +10,11 @@
  */
 #include <df1b2fun.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -54,15 +59,19 @@ void ad_read_pass2_prodc2(void);
 
    //int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
    //  +2*(nvar+1)*sizeof(double);
-   int total_bytes=2*sizeof(df1b2_header)
+   size_t total_bytes=2*sizeof(df1b2_header)
      +(nvar+2)*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DL";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+  list.check_buffer_size((int)total_bytes);
   void * tmpptr=list.bptr;
 #if defined(SAFE_ALL)
   memcpy(list,ids,slen);
@@ -72,11 +81,12 @@ void ad_read_pass2_prodc2(void);
    memcpy(list,(df1b2_header*)(px),sizeof(df1b2_header));
    memcpy(list,&y,sizeof(double));
    memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
-   memcpy(list,px->get_u(),sizeof(double));
-   memcpy(list,px->get_u_dot(),nvar*sizeof(double));
+  const int sizeofdouble = sizeof(double);
+   memcpy(list,px->get_u(),sizeofdouble);
+   memcpy(list,px->get_u_dot(),nvar*sizeofdouble);
    // ***** write  record size
    nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
-   if (total_bytes != nlist.bptr->numbytes)
+   if ((int)total_bytes != nlist.bptr->numbytes)
    {
      cerr << "error in byte calculation in "
        " write_pass1_prod" << endl;
@@ -160,44 +170,48 @@ void read_pass2_1_prodc2(void)
   // save identifier 1
      test_smartlist & list2 = f1b2gradlist->list2;
 
-
-   int total_bytes=2*nvar*sizeof(double);
+  size_t total_bytes=2*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="QK";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list2.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+
+  list2.check_buffer_size((int)total_bytes);
   void * tmpptr=list2.bptr;
 #if defined(SAFE_ALL)
   memcpy(list2,ids,slen);
 #endif
 
   fixed_smartlist2 & nlist2 = f1b2gradlist->nlist2;
-  memcpy(list2,pz->get_u_bar(),nvar*sizeof(double));
-  memcpy(list2,pz->get_u_dot_bar(),nvar*sizeof(double));
+  const int sizeofdouble = sizeof(double);
+  memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
+  memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
   *nlist2.bptr=adptr_diff(list2.bptr,tmpptr);
   ++nlist2;
 
   // Do first reverse pass calculations
-  int i;
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     px->u_bar[i]+=yu*pz->u_bar[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     px->u_dot_bar[i]+=yu*pz->u_dot_bar[i];
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     pz->u_bar[i]=0;
   }
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     pz->u_dot_bar[i]=0;
   }
@@ -217,15 +231,19 @@ void read_pass2_2_prodc2(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-   int total_bytes=2*sizeof(df1b2_header)
+  size_t total_bytes=2*sizeof(df1b2_header)
      +(nvar+2)*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DL";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+  list.check_buffer_size((int)total_bytes);
 // end of string identifier debug stuff
 
   list.saveposition(); // save pointer to beginning of record;

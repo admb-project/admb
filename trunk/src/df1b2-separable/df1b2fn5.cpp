@@ -18,6 +18,11 @@ void read_pass1_init_3(void);
   extern int addebug_count;
 #endif
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 void ad_read_pass1_initialize(void);
 
 /**
@@ -182,16 +187,22 @@ int df1b2_gradlist::write_pass1_initialize(df1b2variable * pz)
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
+
   //int nvar=df1b2variable::nvar;
-  int total_bytes=sizeof(df1b2_header)+sizeof(char *);
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(char *);
 
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="AZ";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+
+  list.check_buffer_size((int)total_bytes);
   void * tmpptr=list.bptr;
 
 #if defined(SAFE_ALL)
@@ -242,7 +253,7 @@ void ad_read_pass1_initialize(void)
  */
 void checkidentiferstring(const char * ids,test_smartlist& list)
 {
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   char * s=(char*)list.bptr;
   int ss=strncmp(ids,s,slen);
   if (ss)
@@ -297,26 +308,33 @@ void read_pass1_init_1(void)
      fixed_smartlist2& nlist2=f1b2gradlist->nlist2;
      test_smartlist& list2=f1b2gradlist->list2;
 
-     int total_bytes=2*nvar*sizeof(double);
+  size_t total_bytes=2*nvar*sizeof(double);
 
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="EF";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list2.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+
+  list2.check_buffer_size((int)total_bytes);
+
   void * tmpptr2=list2.bptr;
 #if defined(SAFE_ALL)
   memcpy(list2,ids,slen);
 #endif
 
-     memcpy(list2,pz->get_u_bar(),nvar*sizeof(double));
-     //list2.bptr+=nvar*sizeof(double);
-     memcpy(list2,pz->get_u_dot_bar(),nvar*sizeof(double));
-     //list2.bptr+=nvar*sizeof(double);
-     *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
-     ++nlist2;
+  const int sizeofdouble = sizeof(double);
+  memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
+  //list2.bptr+=nvar*sizeof(double);
+  memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
+  //list2.bptr+=nvar*sizeof(double);
+  *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
+  ++nlist2;
   // }
   //
   // ****************************************************************

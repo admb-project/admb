@@ -76,7 +76,7 @@ int df1b2_gradlist::write_pass1(const df1b2variable * _px,
   //list.bptr+=sizeof(char*);
   memcpy(list,px->get_u(),sizeof(double));
   //list.bptr+=sizeof(double);
-  memcpy(list,px->get_u_dot(),nvar*sizeof(double));
+  memcpy(list,px->get_u_dot(),nvar*(int)sizeof(double));
   //list.bptr+=nvar*sizeof(double);
   // ***** write  record size
   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
@@ -162,23 +162,28 @@ void read_pass1_1(void)
      test_smartlist& list2=f1b2gradlist->list2;
 
 
-  int total_bytes=2*nvar*sizeof(double);
+  size_t total_bytes=2*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DU";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
 
-  list2.check_buffer_size(total_bytes);
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+
+  list2.check_buffer_size((int)total_bytes);
   void * tmpptr2=list2.bptr;
 
 #if defined(SAFE_ALL)
   memcpy(list2,ids,slen);
 #endif
 
-   memcpy(list2,pz->get_u_bar(),nvar*sizeof(double));
-   memcpy(list2,pz->get_u_dot_bar(),nvar*sizeof(double));
+   const int sizeofdouble = (int)sizeof(double);
+   memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
+   memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
    *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
    ++nlist2;
   // }
@@ -241,7 +246,7 @@ void read_pass1_2(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
     +sizeof(double)+nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
@@ -249,7 +254,12 @@ void read_pass1_2(void)
   int slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
+
+#ifndef OPT_LIB
+  assert(total_bytes <= INT_MAX);
+#endif
+
+  list.check_buffer_size((int)total_bytes);
 // end of string identifier debug stuff
 
   list.saveposition(); // save pointer to beginning of record;
@@ -294,11 +304,8 @@ void read_pass1_2(void)
   xdot=(double*)list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
-  double * zbar;
-  double * zdotbar;
-
-  zbar=(double*)list2.bptr;
-  zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
+  double* zbar=(double*)list2.bptr;
+  double* zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
 
   double * x_tilde=px->get_u_tilde();
   double * x_dot_tilde=px->get_u_dot_tilde();

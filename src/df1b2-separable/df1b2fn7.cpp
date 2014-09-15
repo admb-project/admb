@@ -167,7 +167,7 @@ void read_tilde_values_2(void)
 #ifndef OPT_LIB
   assert(total_bytes2 <= INT_MAX);
 #endif
-  
+
   list3.check_buffer_size((int)total_bytes2);
 
   void * tmpptr3=list3.bptr;

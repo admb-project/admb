@@ -278,7 +278,6 @@ public:
   void read_cmpdif_stack_buffer(off_t & lpos);
 
 private:
-
 #ifdef _MSC_VER
   const size_t buff_end;
   const size_t buff_size;

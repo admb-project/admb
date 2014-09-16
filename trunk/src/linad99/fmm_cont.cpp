@@ -21,6 +21,11 @@
 #endif
 #include <math.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -96,7 +101,11 @@ fmm_control::fmm_control(const lvector& ipar)
     crit   = pow(double(10), int(-ipar[3]));
   #endif
   imax   = ipar[4];
-  scroll_flag = ipar[5];
+  long ipar5 = ipar[5];
+#ifndef OPT_LIB
+  assert(ipar5 <= INT_MAX);
+#endif
+  scroll_flag = (int)ipar5;
 }
 
 /**

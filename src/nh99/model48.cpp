@@ -92,7 +92,8 @@ void param_init_bounded_number_vector::allocate(const data_matrix &m,
    int size=indexmax()-indexmin()+1;
    if (size>0)
    {
-     if (!(v=new param_init_bounded_number[size]))
+     v = new param_init_bounded_number[size];
+     if (!v)
      {
         cerr << " error trying to allocate memory in "
           "param_init_bounded_number_vector " << endl;

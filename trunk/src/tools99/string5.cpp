@@ -66,7 +66,6 @@ int adstring_array::indexmin() const
 
 int adstring_array::indexmax() const
   { return shape->indexmax();}
-
 void adstring_array::allocate(int min, int max)
 {
   if (min > max)
@@ -75,11 +74,13 @@ void adstring_array::allocate(int min, int max)
             " max must be >= min" << endl;
     exit(1);
   }
-  if (!(shape=new vector_shape(min,max)))
+  shape = new vector_shape(min, max);
+  if (!shape)
   {
     cerr << "Error allocating memory in adstring_array" << endl;
   }
-  if (!(ptr=new adstring* [max-min+1]))
+  ptr = new adstring*[max - min + 1];
+  if (!ptr)
   {
     cerr << "Error allocating memory in adstring_array" << endl;
   }

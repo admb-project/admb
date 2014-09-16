@@ -239,3 +239,4 @@ else
 	touch benchmarks-tests.txt
 endif
 	$(MAKE) --directory=beta_regression get-outputs >> benchmarks-tests.txt
+	$(MAKE) --directory=agemat get-outputs >> benchmarks-tests.txt

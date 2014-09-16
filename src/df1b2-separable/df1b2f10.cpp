@@ -284,12 +284,12 @@ void test_smartlist::read_buffer(void)
   }
   else
   {
-    off_t pos;
+    off_t pos = sizeof(off_t);
     if (direction ==-1) // we are going backwards
     {
       // offset of the begining of the record is at the end
       // of the record
-      lseek(fp,-((long)sizeof(off_t)),SEEK_CUR);
+      lseek(fp,-pos,SEEK_CUR);
 #ifdef OPT_LIB
       ::read(fp, &pos, sizeof(off_t));
 #else
@@ -343,7 +343,7 @@ void test_smartlist::read_buffer(void)
     else  // we are going forward
     {
       // skip over file postion entry in file
-      lseek(fp,long(sizeof(off_t)),SEEK_CUR);
+      lseek(fp, pos, SEEK_CUR);
     }
   }
 }

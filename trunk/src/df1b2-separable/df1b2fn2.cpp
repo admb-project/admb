@@ -658,19 +658,17 @@ smartlist::smartlist(void)
 }
 */
 
-#include <cassert>
 /**
  * Description not yet available.
  * \param
  */
 smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
 {
-assert(false);
-  if (sizeof(char)>1)
-  {
-    cerr << "need to modify smartlist class for multibyte char" << endl;
-    exit(1);
-  }
+#ifndef OPT_LIB
+  //cerr << "need to modify smartlist class for multibyte char" << endl;
+  assert(sizeof(char) == 1);
+#endif
+
   bufsize=_bufsize;
   filename=_filename;
   AD_ALLOCATE(buffer,char,bufsize,df1b2_gradlist)

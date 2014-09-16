@@ -658,12 +658,14 @@ smartlist::smartlist(void)
 }
 */
 
+#include <cassert>
 /**
  * Description not yet available.
  * \param
  */
 smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
 {
+assert(false);
   if (sizeof(char)>1)
   {
     cerr << "need to modify smartlist class for multibyte char" << endl;

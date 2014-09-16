@@ -18,7 +18,7 @@ void function_minimizer::mcmc_eval(void)
 {
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::current_phase=initial_params::max_number_phases;
-  uistream * pifs_psave = NULL;
+  uistream* pifs_psave = NULL;
 
   initial_params::set_active_random_effects();
 
@@ -57,7 +57,7 @@ void function_minimizer::mcmc_eval(void)
 
   independent_variables y(1,nvar);
 
-  do
+  for (;;)
   {
     if (pifs_psave->eof())
     {
@@ -76,11 +76,10 @@ void function_minimizer::mcmc_eval(void)
       /*double ll=-*/get_monte_carlo_value(nvar,y);
     }
   }
-  while(1);
+
   if (pifs_psave)
   {
     delete pifs_psave;
     pifs_psave=NULL;
   }
-  return;
 }

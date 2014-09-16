@@ -230,3 +230,12 @@ ifeq ($(SHELL),cmd)
 else
 	cp -Rvf ../tests ${DIST}
 endif
+
+benchmarks:
+ifeq ($(SHELL),cmd)
+	del benchmarks-tests.txt
+else
+	rm -vf benchmarks-tests.txt
+	touch benchmarks-tests.txt
+endif
+	$(MAKE) --directory=beta_regression get-outputs >> benchmarks-tests.txt

@@ -132,3 +132,32 @@ else
 	@rm -vf s2
 	@rm -vf sims
 endif
+
+get-outputs:
+ifeq ($(SHELL),cmd)
+	type b1
+	type b2
+	type beta_regression.cor
+	type beta_regression.eva
+	type beta_regression.p01
+	type beta_regression.par
+	type beta_regression.rhes
+	type beta_regression.std
+	type hesscheck
+	type hybrid_seed
+	type s1
+	type s2
+else
+	cat b1
+	cat b2
+	cat beta_regression.cor
+	cat beta_regression.eva
+	cat beta_regression.p01
+	cat beta_regression.par
+	cat beta_regression.rhes
+	cat beta_regression.std
+	cat hesscheck
+	cat hybrid_seed
+	cat s1
+	cat s2
+endif

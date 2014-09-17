@@ -2994,7 +2994,7 @@ class fmm_control
    long ialph;
    long ihflag;
    long ihang;
-   int scroll_flag;
+   long scroll_flag;
    int maxfn_flag;
    int quit_flag;
    double min_improve;
@@ -3439,13 +3439,13 @@ class fmmc
    double crit;
    double min_improve;
    int iprint;
-   int scroll_flag;
+   long scroll_flag;
    int j;
    int J;
    long int ifn;
    long int iter;
    int imax;
-   int ihang;
+   long ihang;
    int quit_flag;
    dvector *funval;
    dvector *left_bracket_gradient;
@@ -3492,8 +3492,8 @@ class fmmc
    void fmin(const double &f, const dvector & p, const dvector & gg);
    double dfn;
    int maxfn_flag;
-   int iexit;
-   int ihflag;
+   long iexit;
+   long ihflag;
 };
 
 class dd3_array;

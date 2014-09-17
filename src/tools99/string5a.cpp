@@ -64,7 +64,6 @@
   {
     int tmp_min;
     int tmp_max;
-    vector_shape * tmp_shape;
     if (!shape)
     {
       tmp_min=1;
@@ -75,13 +74,15 @@
       tmp_min=shape->indexmin();
       tmp_max=shape->indexmax()+1;
       delete shape;
+      shape = 0;
     }
-    if (!(tmp_shape=new vector_shape(tmp_min,tmp_max)))
+    vector_shape* tmp_shape = new vector_shape(tmp_min,tmp_max);
+    if (!tmp_shape)
     {
       cerr << "Error allocating memory in adstring_array" << endl;
     }
-    adstring ** tmp_ptr;
-    if (!(tmp_ptr=new adstring* [tmp_max-tmp_min+1]))
+    adstring** tmp_ptr=new adstring*[tmp_max-tmp_min+1];
+    if (!tmp_ptr)
     {
       cerr << "Error allocating memory in adstring_array +=" << endl;
     }
@@ -97,9 +98,11 @@
       for (int i=tmp_min;i<=tmp_max-1;i++)
       {
         delete ptr[i];
+        ptr[i] = 0;
       }
       ptr+=tmp_min;
       delete [] ptr;
+      ptr = 0;
     }
     ptr=tmp_ptr;
     shape=tmp_shape;
@@ -108,7 +111,7 @@
     {
       tmp->shape = shape;
       tmp->ptr = ptr;
-      tmp = (adstring_array *) tmp->next;
+      tmp = (adstring_array*)tmp->next;
     }
     return *this;
   }

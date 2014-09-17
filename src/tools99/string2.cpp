@@ -8,6 +8,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 adstring::adstring(int lb, int ub) : clist()
 {
   if (lb != 1)
@@ -29,7 +33,12 @@ adstring::adstring(const char ub) : clist()
 {
   unsigned int sz = 1;
   allocate(sz);
-  s[1] = ub;
+
+#ifndef OPT_LIB
+  assert(ub >= 0);
+#endif
+
+  s[1] = (unsigned char)ub;
   s[2] = '\0';
 }
 

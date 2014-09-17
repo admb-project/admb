@@ -23,11 +23,10 @@ void dvector::fill_multinomial(const int& seed, const dvector& p)
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
-    choose.fill_randu((const long&)seed);
+    choose.fill_randu(seed);
     tmp=p/sum;
     tmp1(pmin)=tmp(pmin);
-    int j;
-    for (j=pmin+1;j<=pmax-1;j++)
+    for (int j=pmin+1;j<=pmax-1;j++)
     {
       tmp1(j)=tmp1(j-1)+tmp(j);
     }
@@ -35,7 +34,7 @@ void dvector::fill_multinomial(const int& seed, const dvector& p)
 
     for (int i=indexmin();i<=indexmax();i++)
     {
-      j=pmin;
+      int j=pmin;
       while (choose(i)>tmp1(j))
       {
         j++;
@@ -57,11 +56,10 @@ void ivector::fill_multinomial(const int& seed, const dvector& p)
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
-    choose.fill_randu((const long&)seed);
+    choose.fill_randu(seed);
     tmp=p/sum;
     tmp1(pmin)=tmp(pmin);
-    int j;
-    for (j=pmin+1;j<=pmax-1;j++)
+    for (int j=pmin+1;j<=pmax-1;j++)
     {
       tmp1(j)=tmp1(j-1)+tmp(j);
     }
@@ -69,7 +67,7 @@ void ivector::fill_multinomial(const int& seed, const dvector& p)
 
     for (int i=indexmin();i<=indexmax();i++)
     {
-      j=pmin;
+      int j=pmin;
       while (choose(i)>tmp1(j))
       {
         j++;
@@ -91,11 +89,10 @@ void lvector::fill_multinomial(const int& seed, const dvector& p)
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
-    choose.fill_randu((const long&)seed);
+    choose.fill_randu(seed);
     tmp=p/sum;
     tmp1(pmin)=tmp(pmin);
-    int j;
-    for (j=pmin+1;j<=pmax-1;j++)
+    for (int j=pmin+1;j<=pmax-1;j++)
     {
       tmp1(j)=tmp1(j-1)+tmp(j);
     }
@@ -103,7 +100,7 @@ void lvector::fill_multinomial(const int& seed, const dvector& p)
 
     for (int i=indexmin();i<=indexmax();i++)
     {
-      j=pmin;
+      int j=pmin;
       while (choose(i)>tmp1(j))
       {
         j++;

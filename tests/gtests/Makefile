@@ -37,6 +37,7 @@ GTESTS=\
  test_adtimer.cpp\
  test_idea.cpp\
  test_df_file.cpp\
+ test_multinomial.cpp\
  main.cpp
 
 ##Need to debug this

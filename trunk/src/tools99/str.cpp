@@ -12,6 +12,10 @@
 #ifdef __NDPX__
   #include <dos.h> //itoa
 #endif
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 adstring str(double x, int minwidth, int decplaces)
 {
@@ -102,5 +106,8 @@ adstring str(const int a)
 
 adstring chr(int c)
 {
-   return adstring(c);
+#ifndef OPT_LIB
+  assert(0 <= c && c <= CHAR_MAX);
+#endif
+  return adstring((char)c);
 }

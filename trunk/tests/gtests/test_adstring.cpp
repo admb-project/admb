@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <adstring.hpp>
+#include <climits>
 
 class test_adstring: public ::testing::Test {};
 
@@ -208,4 +209,20 @@ TEST_F(test_adstring, val_integer)
   adstring a("-742"); 
   int actual = val(a);
   EXPECT_EQ(-742, actual);
+}
+TEST_F(test_adstring, chr)
+{
+  int c = (int)'c';
+  adstring actual = chr(c);
+  EXPECT_STREQ("c", (char*)actual);
+}
+TEST_F(test_adstring, chr_uchar_max_plus_1)
+{
+  int c = (int)UCHAR_MAX + 1;
+  EXPECT_DEATH(chr(c), "Assertion");
+}
+TEST_F(test_adstring, chr_negative)
+{
+  int c = -1;
+  EXPECT_DEATH(chr(c), "Assertion");
 }

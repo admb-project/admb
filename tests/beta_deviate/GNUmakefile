@@ -86,3 +86,22 @@ else
 	@rm -vf hessian.bin
 	@rm -vf minto.rhes
 endif
+
+get-outputs:
+ifeq ($(SHELL),cmd)
+	type hesscheck
+	type minto.cor
+	type minto.dat
+	type minto.eva
+	type minto.par
+	type minto.rhes
+	type minto.std
+else
+	cat hesscheck
+	cat minto.cor
+	cat minto.dat
+	cat minto.eva
+	cat minto.par
+	cat minto.rhes
+	cat minto.std
+endif

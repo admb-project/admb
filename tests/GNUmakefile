@@ -118,7 +118,7 @@ tpl-gradients_output:
 	$(MAKE) --directory=gradients_output
 
 tpl-geolocation:
-	$(MAKE) --directory=geolocation
+	PATH=../../..:$(PATH) $(MAKE) --directory=geolocation
 
 tpl-gmrf:
 	$(MAKE) --directory=gmrf
@@ -240,3 +240,4 @@ else
 endif
 	$(MAKE) --directory=beta_regression get-outputs >> benchmarks-tests.txt
 	$(MAKE) --directory=agemat get-outputs >> benchmarks-tests.txt
+	$(MAKE) --directory=beta_deviate get-outputs >> benchmarks-tests.txt

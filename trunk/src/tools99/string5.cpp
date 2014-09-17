@@ -59,13 +59,14 @@ adstring_array::~adstring_array()
 }
 
 int adstring_array::size() const
-  { return shape->indexmax()-shape->indexmin() + 1; }
+  { return shape ? shape->indexmax() - shape->indexmin() + 1 : 0; }
 
 int adstring_array::indexmin() const
-  { return shape->indexmin();}
+  { return shape ? shape->indexmin() : 0;}
 
 int adstring_array::indexmax() const
-  { return shape->indexmax();}
+  { return shape ? shape->indexmax() : 0;}
+
 void adstring_array::allocate(int min, int max)
 {
   if (min > max)

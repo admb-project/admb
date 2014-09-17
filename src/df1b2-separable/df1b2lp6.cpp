@@ -10,9 +10,9 @@
  */
 //#define USE_DD_STUFF
 //#define USE_DD
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,
@@ -354,7 +354,7 @@ dvector laplace_approximation_calculator::banded_calculations
   int no_converge_flag=0;
 
   // this is the main loop to do inner optimization
-  do
+  for (;;)
   {
     int icount=0;
     do
@@ -648,7 +648,6 @@ dvector laplace_approximation_calculator::banded_calculations
     }
     if (bHess_pd_flag==0) break;
   }
-  while(1);
 
   return xadjoint;
 }

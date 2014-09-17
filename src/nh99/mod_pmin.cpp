@@ -69,6 +69,26 @@ dmatrix trans(const dvector& x)
 #endif
   void function_minimizer::likeprof_routine(double global_min)
   {
+    int on1 = 0;
+    int nopt = 0;
+    if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-iprint",nopt))>-1)
+    {
+      if (!nopt)
+      {
+        cerr << "Usage -iprint option needs integer  -- ignored" << endl;
+        iprint = 10;
+      }
+      else
+      {
+        int jj=atoi(ad_comm::argv[on1+1]);
+        iprint = jj;
+      }
+    }
+    else
+    {
+      iprint = 10;
+    }
+
     dvector siglevel("{.90,.95,.975}");
     int num_pp=likeprof_params::likeprofptr[0]->get_stepnumber();
     {

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 adstring operator+(const adstring& u, const unsigned char v)
-    { return (u + adstring(  v)); }
+    { return (u + adstring(v)); }
 adstring operator+(const adstring& u, const signed char v)
     { return (u + adstring(v)); }
 adstring operator+(const adstring& u, const unsigned char* v)

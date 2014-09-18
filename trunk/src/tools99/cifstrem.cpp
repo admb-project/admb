@@ -39,13 +39,12 @@ char* cifstream::signature()
   if (strlen(signature_line) <= 0)
   {
     int c = bp->sgetc();
-    //COUT_TRACE(c)
+
     int n = 0;
-    while ( (n < SIGNATURE_LENGTH) && (c != '\n') )
+    while ((n < SIGNATURE_LENGTH) && (c != '\n'))
     {
-      signature_line[n++] = (unsigned char)c;
+      signature_line[n++] = (char)c;
       c = bp->snextc();
-     // cout << "in sig testc= " << c << endl;
     }
     signature_line[n++] = '\0';
     strcpy(comment_line, signature_line);
@@ -54,10 +53,9 @@ char* cifstream::signature()
     while (c != '\n')
     {
       c = bp->snextc();
-      //cout << "in sig testc= " << c << endl;
     }
 
-    // position buffer to first character of next  line
+    // position buffer to first character of next line
     c = bp->snextc();
     line ++;
   }
@@ -92,12 +90,11 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
   {
     line = 1;
     field = 0;
-    memset(comment_line, '\0', SIGNATURE_LENGTH);
-    memset(signature_line, '\0', SIGNATURE_LENGTH);
     ignore_eof = 1;
   }
+  memset(comment_line, '\0', SIGNATURE_LENGTH);
+  memset(signature_line, '\0', SIGNATURE_LENGTH);
 }
-//#define COUT_TRACE(x) cout << x << endl;
 
 void cifstream::filter(void)
 {
@@ -117,7 +114,7 @@ void cifstream::filter(void)
     do
     {
       if (n < SIGNATURE_LENGTH)
-        comment_line[n++] = (unsigned char)testc;
+        comment_line[n++] = (char)testc;
 
       testc = bp->snextc();
       //cout << "in filter testc= " << testc << endl;
@@ -146,7 +143,7 @@ void cifstream::filter(void)
   }
 }
 
-void cifstream::get_field(char * s,int space_flag)
+void cifstream::get_field(char* s,int space_flag)
 {
   filter();
 
@@ -162,7 +159,7 @@ void cifstream::get_field(char * s,int space_flag)
   {
     while ( (n < FILTER_BUF_SIZE) && !isspace(testc) && (testc != EOF))
     {
-      s[n++] = (unsigned char)testc;
+      s[n++] = (char)testc;
       testc = bp->snextc();
     }
   }
@@ -170,7 +167,7 @@ void cifstream::get_field(char * s,int space_flag)
   {
     while ( (n < FILTER_BUF_SIZE) && (testc != EOF))
     {
-      s[n++] = (unsigned char)testc;
+      s[n++] = (char)testc;
       testc = bp->snextc();
     }
   }
@@ -375,7 +372,7 @@ cifstream& cifstream::getline(char* s, int k, char d)
   int testc = bp->sbumpc();
   while ( (!eof()) && (n < k) && (testc != d) && (testc != EOF))
   {
-    s[n++] = (unsigned char)testc;
+    s[n++] = (char)testc;
     testc = bp->sbumpc();
   }
   s[n++] = '\0';

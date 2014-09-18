@@ -131,42 +131,43 @@ class cifstream : public ifstream
   void set_eof_bit(void);
 
 public:
-  adstring get_file_name(void);
-  ~cifstream(){/*cout << "In cifstream destructor" << endl;*/}
-#if defined(__BORLANDC__)
-#  if (__BORLANDC__  > 0x0520)
-      cifstream(const char*, int=0 , char cc = '#');
-#  else
-      cifstream(const char*, int = ios::nocreate, char cc = '#');
-#  endif
-#else
-#  if defined(__GNUC__)
-#    if (__GNUC__  >= 3)
-       cifstream(const char*, int = std::ios_base::in , char cc = '#');
-#    else
-       cifstream(const char*, int = ios::nocreate, char cc = '#');
-#    endif
-#  elif defined(_MSC_VER)
-       cifstream(const char*, int = std::ios_base::in , char cc = '#');
-#  else
-     cifstream(const char*, int = ios::nocreate, char cc = '#');
-#  endif
+#ifdef __BCPLUSPLUS__
+  cifstream() : ifstream() { ; }
 #endif
-  #ifdef __BCPLUSPLUS__
+#ifdef __NDPX__
   cifstream() : ifstream() { ; }
-  #endif
-  #ifdef __NDPX__
-  cifstream() : ifstream() { ; }
-  #endif
-  #ifdef __ZTC__
+#endif
+#ifdef __ZTC__
   cifstream() : ios(&buffer), ifstream() { ; }
+#endif
+
+#if defined(__BORLANDC__)
+  #if (__BORLANDC__  > 0x0520)
+  cifstream(const char*, int=0 , char cc = '#');
+  #else
+  cifstream(const char*, int = ios::nocreate, char cc = '#');
   #endif
+#else
+  #if defined(__GNUC__)
+    #if (__GNUC__  >= 3)
+  cifstream(const char*, int = std::ios_base::in , char cc = '#');
+    #else
+  cifstream(const char*, int = ios::nocreate, char cc = '#');
+    #endif
+  #elif defined(_MSC_VER)
+  cifstream(const char*, int = std::ios_base::in , char cc = '#');
+  #else
+  cifstream(const char*, int = ios::nocreate, char cc = '#');
+  #endif
+#endif
+
+  ~cifstream(){}
 
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  > 0x0520)
   void open(const char*, int );
 #  else
-    void open(const char*, int = ios::nocreate);
+  void open(const char*, int = ios::nocreate);
 #  endif
 #else // not BORLAND
 #  if defined(__GNUC__)
@@ -182,10 +183,9 @@ public:
 #  endif
 #endif
 
-#include <stdio.h>
-
-char* comment() { return comment_line; }
-char* signature();
+  adstring get_file_name(void);
+  char* comment() { return comment_line; }
+  char* signature();
 
   cifstream& operator>>(const dvariable& z);
  //  cifstream& operator>>(const prevariable& z);

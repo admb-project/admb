@@ -36,6 +36,17 @@ dvector square(const dvector& m)
      return tmp;
    }
 
+ivector square(const ivector& v)
+{
+  ivector tmp;
+  tmp.allocate(v);
+  for (int i = tmp.indexmin(); i <= tmp.indexmax(); i++)
+  {
+       tmp(i) = v(i) * v(i);
+  }
+  return tmp;
+}
+
 /** Square of a elements in a matrix; constant matrix object.
 \ingroup misc
 \param m matrix of numbers to be squared.

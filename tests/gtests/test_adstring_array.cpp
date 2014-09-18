@@ -59,3 +59,41 @@ TEST_F(test_adstring_array, append_distinct)
   EXPECT_STREQ((char*)a3, (char*)a(3));
   EXPECT_STREQ((char*)a2, (char*)a(4));
 }
+TEST_F(test_adstring_array, operator_plus_equal)
+{
+  adstring a1 = "one";
+  adstring a2 = "two";
+  adstring a3 = "three";
+
+  adstring_array a;
+  EXPECT_EQ(a.size(), 0);
+  EXPECT_EQ(a.indexmin(), 0);
+  EXPECT_EQ(a.indexmax(), 0);
+
+  a += a1;
+  EXPECT_EQ(a.size(), 1);
+  EXPECT_EQ(a.indexmin(), 1);
+  EXPECT_EQ(a.indexmax(), 1);
+  EXPECT_STREQ((char*)a1, (char*)a(1));
+
+  a += a2;
+  EXPECT_EQ(a.size(), 2);
+  EXPECT_EQ(a.indexmin(), 1);
+  EXPECT_EQ(a.indexmax(), 2);
+  EXPECT_STREQ((char*)a2, (char*)a(2));
+
+  a += a3;
+  EXPECT_EQ(a.size(), 3);
+  EXPECT_EQ(a.indexmin(), 1);
+  EXPECT_EQ(a.indexmax(), 3);
+  EXPECT_STREQ((char*)a3, (char*)a(3));
+
+  a += a2;
+  EXPECT_EQ(a.size(), 4);
+  EXPECT_EQ(a.indexmin(), 1);
+  EXPECT_EQ(a.indexmax(), 4);
+  EXPECT_STREQ((char*)a1, (char*)a(1));
+  EXPECT_STREQ((char*)a2, (char*)a(2));
+  EXPECT_STREQ((char*)a3, (char*)a(3));
+  EXPECT_STREQ((char*)a2, (char*)a(4));
+}

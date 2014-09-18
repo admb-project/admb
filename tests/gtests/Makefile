@@ -38,6 +38,7 @@ GTESTS=\
  test_idea.cpp\
  test_df_file.cpp\
  test_multinomial.cpp\
+ test_cifstream.cpp\
  main.cpp
 
 ##Need to debug this

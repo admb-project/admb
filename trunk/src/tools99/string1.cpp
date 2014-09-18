@@ -9,6 +9,11 @@
 #include <stdlib.h>
 #include "admb_messages.h"
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 adstring adstring::operator()(int i, int j)
 {
   if (i < 1 || i > (int) shape->size())
@@ -87,10 +92,13 @@ adstring& adstring::operator=(const adstring & t)
   return (* this);
 }
 
-void adstring::realloc(const char * t)
+void adstring::realloc(const char* t)
 {
-  int sz = strlen(t);
-  shape->size() = strlen(t);
+  size_t sz = strlen(t);
+#ifndef OPT_LIB
+  assert(sz <= INT_MAX);
+#endif
+  shape->size() = (int)sz;
   delete [] ++s;
   s=new unsigned char[sz+1];
   strcpy((char*)(s),t);

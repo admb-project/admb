@@ -252,3 +252,10 @@ TEST_F(test_adstring, itoa)
   EXPECT_DEATH(itoa(i, 1), "Assertion");
 #endif
 }
+TEST_F(test_adstring, realloc)
+{
+  adstring a("-742"); 
+  char expected[] = "Reallocation."; 
+  a.realloc(expected);
+  EXPECT_STREQ(expected, (char*)a);
+}

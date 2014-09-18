@@ -6,6 +6,9 @@
  */
 #include "param_init_bounded_number_matrix.h"
 #include "admb_messages.h"
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 param_init_bounded_number_matrix::param_init_bounded_number_matrix(): v(NULL),
   index_min(0), index_max(0)
@@ -26,16 +29,21 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
   const imatrix& phase_start,
   const char* s)
 {
-  index_min = rowmin;
-  index_max = rowmax;
-  int size  = index_max - index_min + 1;
+#ifndef OPT_LIB
+  assert(v == NULL);
+#endif
+
+  size_t size  = rowmax - rowmin + 1;
   if (size > 0)
   {
-    if (!(v = new param_init_bounded_number_vector[size]))
+    index_min = rowmin;
+    index_max = rowmax;
+    v = new param_init_bounded_number_vector[size];
+    if (!v)
     {
       cerr << " error trying to allocate memory in "
                "param_init_bounded_number_vector " << endl;
-      exit(1);
+      ad_exit(1);
     }
     v -= index_min;
 

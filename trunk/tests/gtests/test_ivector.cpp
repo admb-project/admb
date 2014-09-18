@@ -73,3 +73,16 @@ TEST_F(test_ivector, initialize_with_dvector_INT_MAX_plus_one)
   //EXPECT_EXIT(ivector v(1, expected), ::testing::ExitedWithCode(1), "Overflowed");
 }
 #endif
+TEST_F(test_ivector, square)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+  ivector actual = square(v);
+  EXPECT_EQ(0, actual(1));
+  EXPECT_EQ(1, actual(2));
+  EXPECT_EQ(4, actual(3));
+  EXPECT_EQ(16, actual(4));
+}

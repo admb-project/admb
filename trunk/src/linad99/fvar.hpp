@@ -2131,7 +2131,7 @@ class dvar_vector
    dvar_vector & shift(int min);
 
 #ifdef OPT_LIB
-#if defined(__NDPX__) || defined(__SUN__)
+  #if defined(__NDPX__) || defined(__SUN__)
    inline prevariable operator() (register int i)
    {
       return (va + i);
@@ -2148,7 +2148,7 @@ class dvar_vector
    {
       return (va + i);
    }
-#else
+  #else
    inline prevariable operator() (int i)
    {
       return (va + i);
@@ -2165,7 +2165,7 @@ class dvar_vector
    {
       return (va + i);
    }
-#endif
+  #endif
 #else
    prevariable operator[] (int i);
    prevariable operator() (int i);
@@ -4282,6 +4282,8 @@ dvar3_array operator*(const dvar3_array & m1, const dvariable & m2);
 dvar3_array operator*(const dvariable & m1, const d3_array & m2);
 dvar3_array operator*(const dvariable & m1, const dvar3_array & m2);
 dvar3_array operator*(double m1, const dvar3_array & m2);
+
+ivector square(const ivector& x);
 
 double square(double x);
 dvector square(const dvector & x);

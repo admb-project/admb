@@ -226,3 +226,29 @@ TEST_F(test_adstring, chr_negative)
   int c = -1;
   EXPECT_DEATH(chr(c), "Assertion");
 }
+TEST_F(test_adstring, itoa)
+{
+  int i = 701;
+  adstring actual = itoa(i, 10);
+  EXPECT_STREQ((char*)"701", (char*)actual);
+
+  adstring negative = itoa(-i, 10);
+  EXPECT_STREQ((char*)"-701", (char*)negative);
+
+  adstring actualrneg = itoa(i, -10);
+  EXPECT_STREQ((char*)"701", (char*)actualrneg);
+
+  adstring negativerneg = itoa(-i, -10);
+  EXPECT_STREQ((char*)"-701", (char*)negativerneg);
+
+  adstring base2 = itoa(i, 2);
+  EXPECT_STREQ((char*)"1010111101", (char*)base2);
+
+  adstring negbase2 = itoa(-i, 2);
+  EXPECT_STREQ((char*)"-1010111101", (char*)negbase2);
+
+#ifndef OPT_LIB
+  EXPECT_DEATH(itoa(i, 0), "Assertion");
+  EXPECT_DEATH(itoa(i, 1), "Assertion");
+#endif
+}

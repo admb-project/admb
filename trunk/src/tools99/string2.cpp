@@ -65,19 +65,38 @@ adstring operator+(const adstring& u, const adstring& v)
   return (tmp);
 }
 
-adstring itoa(int n,int r)
+adstring itoa(int n, int r)
 {
-  char buf[50];
+#ifndef OPT_LIB
+  assert(r != 0);
+  assert(r != 1);
+#endif
+
+  int sign = n <= 0 ? 1 : 0;
+  if (sign)
+  {
+    n *= -1;
+  }
+  unsigned char buf[50];
   int ii=0;
   do
   {
-    buf[ii++]=n%r;
-  } while (n/=r);
+    int nr = n % r;
+    buf[ii++] = (unsigned char)nr;
+  } while (n /= r);
 
-  adstring s(1,ii);
+  if (sign)
+  {
+    ii++;
+  }
+  adstring s(1, ii);
   for (int i=0;i<ii;i++)
   {
-    s[ii-i]=buf[i]+48;
+    s[ii-i]=(unsigned char)(buf[i]+48);
+  }
+  if (sign)
+  {
+    s(1) = '-';
   }
   return s;
 }

@@ -203,8 +203,8 @@ class vector_shape;
 
 class adstring_array : public clist
 {
-  vector_shape * shape;
-  adstring ** ptr;
+  vector_shape* shape;
+  adstring** ptr;
 public:
   int size() const;
   int indexmin(void) const;

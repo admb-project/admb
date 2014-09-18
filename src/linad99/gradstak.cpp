@@ -266,7 +266,7 @@ grad_stack::~grad_stack()
 
     #ifdef GRAD_DIAG
       {
-      long int lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+      off_t lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
       cout << "Offset in file before write is " << lpos
                               << " bytes from the beginning\n";
       }
@@ -323,7 +323,7 @@ grad_stack::~grad_stack()
 
     #ifdef GRAD_DIAG
     {
-      long int lpos = lseek(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
+      off_t lpos = lseek(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
       cout << "Offset in file after write is " << lpos
            << " bytes from the beginning\n";
     }

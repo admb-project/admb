@@ -40,6 +40,7 @@ GTESTS=\
  test_multinomial.cpp\
  test_cifstream.cpp\
  test_param_init_vector_vector.cpp\
+ test_param_init_matrix_vector.cpp\
  main.cpp
 
 ##Need to debug this

@@ -2517,43 +2517,44 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
  * Description not yet available.
  * \param
  */
- class param_init_vector_vector
- {
-   param_init_vector * v;
-   int index_min;
-   int index_max;
-   double_index_type * it;
+class param_init_vector_vector
+{
+  param_init_vector * v;
+  int index_min;
+  int index_max;
+  double_index_type * it;
 
- public:
+public:
+  param_init_vector_vector();
+  ~param_init_vector_vector();
+
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);
 
 #if defined(OPT_LIB)
-   param_init_vector& operator [] (int i) { return v[i];}
-   param_init_vector& operator () (int i) { return v[i];}
-   prevariable operator () (int i,int j) { return v[i][j];}
+  param_init_vector& operator [] (int i) { return v[i];}
+  param_init_vector& operator () (int i) { return v[i];}
+  prevariable operator () (int i,int j) { return v[i][j];}
 #else
-   param_init_vector& operator [] (int i);
-   param_init_vector& operator () (int i);
-   prevariable operator () (int i,int j);
+  param_init_vector& operator [] (int i);
+  param_init_vector& operator () (int i);
+  prevariable operator () (int i,int j);
 #endif
 
-   void allocate(int min1,int max1,const index_type& min,
+  void allocate(int min1,int max1,const index_type& min,
      const index_type& max,const index_type& phase_start,
      const char * s);
 
-   void allocate(int min1,int max1,const index_type& min,
+  void allocate(int min1,int max1,const index_type& min,
      const index_type& max,const char * s);
 
-   param_init_vector_vector();
-   int allocated(void) { return (v!=NULL); }
-   int indexmin(void) {return (index_min);}
-   int indexmax(void) {return (index_max);}
-   ~param_init_vector_vector();
-   void set_initial_value(const double_index_type& it);
-   void deallocate(void);
- };
+  bool allocated() const { return v != NULL; }
+  int indexmin(void) {return (index_min);}
+  int indexmax(void) {return (index_max);}
+  void set_initial_value(const double_index_type& it);
+  void deallocate(void);
+};
 
 /**
  * Description not yet available.

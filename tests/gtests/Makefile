@@ -42,6 +42,7 @@ GTESTS=\
  test_param_init_vector_vector.cpp\
  test_param_init_matrix_vector.cpp\
  test_param_init_bounded_vector_vector.cpp\
+ test_param_init_number_vector.cpp\
  main.cpp
 
 ##Need to debug this

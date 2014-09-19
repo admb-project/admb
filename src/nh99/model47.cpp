@@ -13,9 +13,12 @@
 /**
 Default constructor
 */
-param_init_number_vector::param_init_number_vector()
+param_init_number_vector::param_init_number_vector():
+  v(NULL),
+  index_min(0),
+  index_max(0),
+  it(NULL)
 {
-  it = NULL;
 }
 /**
 Destructor
@@ -25,7 +28,7 @@ param_init_number_vector::~param_init_number_vector()
   deallocate();
 }
 /**
-Free allocated memory.
+Free member allocated memory.
 */
 void param_init_number_vector::deallocate(void)
 {
@@ -42,37 +45,42 @@ void param_init_number_vector::deallocate(void)
   }
 }
 
- void param_init_number_vector::allocate(int min1,int max1,
-   const char * s)
- {
-   allocate(min1,max1,1,s);
- }
+void param_init_number_vector::allocate(
+  int min1,
+  int max1,
+  const char* s)
+{
+  allocate(min1,max1,1,s);
+}
 
- void param_init_number_vector::allocate(int min1,int max1,
-   const index_type& phase_start,const char * s)
- {
-   index_min=min1;
-   index_max=max1;
-   int size=indexmax()-indexmin()+1;
-   if (size>0)
-   {
-     if (!(v=new param_init_number[size]))
-     {
+void param_init_number_vector::allocate(
+  int min1,
+  int max1,
+  const index_type& phase_start,
+  const char* s)
+{
+  int size = max1 - min1 + 1;
+  if (size > 0)
+  {
+    v = new param_init_number[size];
+    if (!v)
+    {
         cerr << " error trying to allocate memory in "
           "param_init_vector_vector " << endl;
         exit(1);
-     }
-     v-=indexmin();
-     for (int i=indexmin();i<=indexmax();i++)
-     {
+    }
+
+    index_min=min1;
+    index_max=max1;
+    v-=indexmin();
+    for (int i=indexmin();i<=indexmax();i++)
+    {
        if (it) v[i].set_initial_value(ad_double((*it)[i]));
        adstring ss=s + adstring("[") + str(i) + adstring("]");
        v[i].allocate(ad_integer(phase_start[i]),(char*)(ss) );
-     }
-   }
-   else
-     v=NULL;
- }
+    }
+  }
+}
 
   dvector value(const param_init_number_vector& _t)
   {

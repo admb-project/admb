@@ -9,8 +9,8 @@ using std::istringstream;
 
 #include <admodel.h>
 
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
 
 void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
   int& next_flag);
@@ -148,7 +148,7 @@ void tracing_message(int traceflag,const char *s);
         }
       }
     }
-    double _crit=0;
+    int _crit=0;
     // set the maximum number of function evaluations by command line
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
     {
@@ -164,7 +164,7 @@ void tracing_message(int traceflag,const char *s);
         if (_crit<=0)
         {
           cerr << "Usage -crit option needs positive number  -- ignored.\n";
-          _crit=0.0;
+          _crit=0;
         }
       }
     }
@@ -183,7 +183,7 @@ void tracing_message(int traceflag,const char *s);
         if (bandwidth<=0)
         {
           cerr << "Usage -bw option needs positive number  -- ignored" << endl;
-          bandwidth=0.0;
+          bandwidth=0;
         }
         else
         {

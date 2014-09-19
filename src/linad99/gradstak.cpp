@@ -63,6 +63,10 @@ using namespace std;
 #include <string.h>
 #include <time.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 char lastchar(char *);
 char ad_random_part[6]="tmp";
 
@@ -89,11 +93,16 @@ grad_stack::grad_stack()
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
   true_length = gradient_structure::GRADSTACK_BUFFER_SIZE;
   length = true_length;
-  if ((true_ptr_first = new grad_stack_entry[(size_t)length]) == 0)
+
+#ifndef OPT_LIB
+  assert(length > 0);
+#endif
+
+  true_ptr_first = new grad_stack_entry[length];
+  if (!true_ptr_first)
   {
     cerr << "Memory allocation error in grad_stack constructor\n"
-         << " trying to allocate "
-         << length * sizeof(grad_stack_entry)<<" bytes\n";
+         << " trying to allocate grad_stack_entry[" << length << "] array.\n";
     ad_exit(1);
   }
 
@@ -255,7 +264,7 @@ grad_stack::~grad_stack()
  */
   void  grad_stack::write_grad_stack_buffer()
   {
-    unsigned int ierr;
+    ssize_t ierr;
 
     #ifdef GRAD_DIAG
       cout << "Grad_stack size exceeded\n ";

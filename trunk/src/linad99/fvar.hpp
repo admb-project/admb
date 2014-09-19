@@ -908,9 +908,9 @@ class grad_stack
    long end_pos1;
    long end_pos2;
 #else
-   long long end_pos;
-   long long end_pos1;
-   long long end_pos2;
+   off_t end_pos;
+   off_t end_pos1;
+   off_t end_pos2;
 #endif
    dmatrix *table;
  public:

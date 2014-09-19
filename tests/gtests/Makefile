@@ -39,6 +39,7 @@ GTESTS=\
  test_df_file.cpp\
  test_multinomial.cpp\
  test_cifstream.cpp\
+ test_param_init_vector_vector.cpp\
  main.cpp
 
 ##Need to debug this

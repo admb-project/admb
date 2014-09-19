@@ -12,8 +12,8 @@ TEST_F(test_param_init_bounded_number_vector, default_constructor)
 {
   param_init_bounded_number_vector p;
   EXPECT_EQ(0, p.allocated());
-  EXPECT_EQ(-1, p.indexmin());
-  EXPECT_EQ(-1, p.indexmax());
+  EXPECT_EQ(0, p.indexmin());
+  EXPECT_EQ(0, p.indexmax());
 }
 #ifndef OPT_LIB
 TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)

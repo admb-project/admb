@@ -2703,38 +2703,39 @@ public:
  * Description not yet available.
  * \param
  */
- class param_init_number_vector
- {
-   param_init_number * v;
-   int index_min;
-   int index_max;
-   double_index_type * it;
- public:
+class param_init_number_vector
+{
+  param_init_number* v;
+  int index_min;
+  int index_max;
+  double_index_type* it;
+public:
+  param_init_number_vector();
+  ~param_init_number_vector();
+
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);
-  param_init_number_vector();
 
 #if defined(OPT_LIB)
-   param_init_number& operator [] (int i) { return v[i];}
-   param_init_number& operator () (int i) { return v[i];}
+  param_init_number& operator[](int i) { return v[i];}
+  param_init_number& operator()(int i) { return v[i];}
 #else
-   param_init_number& operator [] (int i);
-   param_init_number& operator () (int i);
+  param_init_number& operator[](int i);
+  param_init_number& operator()(int i);
 #endif
 
-   void allocate(int min1,int max1,const index_type& phase_start,
+  void allocate(int min1,int max1,const index_type& phase_start,
      const char * s);
 
-   void allocate(int min1,int max1,const char * s);
+  void allocate(int min1,int max1,const char * s);
 
-   int allocated(void) { return (v!=NULL); }
-   int indexmin(void) {return (index_min);}
-   int indexmax(void) {return (index_max);}
-   ~param_init_number_vector();
-   void set_initial_value(const double_index_type& it);
-   void deallocate(void);
- };
+  bool allocated() const { return v != NULL; }
+  int indexmin() const { return index_min; }
+  int indexmax() const { return index_max; }
+  void set_initial_value(const double_index_type& it);
+  void deallocate(void);
+};
 
 /**
  * Class object for init_bounded_number vector

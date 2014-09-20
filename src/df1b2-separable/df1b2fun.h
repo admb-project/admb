@@ -131,6 +131,7 @@ extern dercheck_info * derchecker;
 
 typedef void * &  vreference;
 
+/*
 #if !defined(_MSC_VER)
 inline void increment_pointer(vreference p,int n)
 {
@@ -138,6 +139,7 @@ inline void increment_pointer(vreference p,int n)
   cs+=n;
 }
 #endif
+*/
 
 #include <df32fun.h>
 extern int global_nvar;

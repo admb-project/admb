@@ -701,7 +701,6 @@ laplace_approximation_calculator::laplace_approximation_calculator
   }
   fmc1.maxfn=inner_maxfn;
   // what sort of structure on the Hessian do we have
-  on=-1;
   nopt=0;
 
   rseed=3456;
@@ -870,7 +869,6 @@ laplace_approximation_calculator::laplace_approximation_calculator
     }
   }
 
-  on=-1;
   nopt=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ht",nopt))>-1)
   {

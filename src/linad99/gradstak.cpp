@@ -67,6 +67,10 @@ using namespace std;
   #include <cassert>
 #endif
 
+#ifdef _MSC_VER
+typedef int ssize_t;
+#endif
+
 char lastchar(char *);
 char ad_random_part[6]="tmp";
 

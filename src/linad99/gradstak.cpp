@@ -264,8 +264,6 @@ grad_stack::~grad_stack()
  */
   void  grad_stack::write_grad_stack_buffer()
   {
-    ssize_t ierr;
-
     #ifdef GRAD_DIAG
       cout << "Grad_stack size exceeded\n ";
       cout << "Writing to temporary file -- \n";
@@ -291,9 +289,9 @@ grad_stack::~grad_stack()
     // save the current end of file in case we can't write the whole buffer
     end_pos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 #if defined(_MSC_VER)
-    ierr = write(_GRADFILE_PTR, ptr_first, nbw);
+    ssize_t ierr = write(_GRADFILE_PTR, ptr_first, nbw);
 #else
-    ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
+    ssize_t ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
 #endif
 
     if  (ierr != nbw)

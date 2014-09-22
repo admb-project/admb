@@ -13,11 +13,11 @@ TEST_F(test_gradient_structure, checktypes)
 {
   ASSERT_EQ(sizeof(long long), sizeof(long long int));
 }
+/*
 TEST_F(test_gradient_structure, default_constructor)
 {
   gradient_structure gs;
 }
-/*
 TEST_F(test_gradient_structure, default_constructor2x)
 {
   {

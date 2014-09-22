@@ -38,6 +38,7 @@
   #define lseek _lseek
   #define  read _read
   #define write _write
+  #define ssize_t int
 #else
   #include <iostream>
   using namespace std;
@@ -66,6 +67,10 @@
   void _far * _cdecl _farptr_norm(void _far *);
   void _far * _cdecl _farptr_fromlong(unsigned long);
   long _cdecl _farptr_tolong(void _far *);
+#endif
+
+#ifndef OPT_LIB
+  #include <cassert>
 #endif
 
 /**
@@ -276,8 +281,14 @@ void gradient_structure::save_arrays()
      humungous_pointer src = ARRAY_MEMBLOCK_BASE;
      lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
-       write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
-         (char*)src,bytes_needed);
+  #ifdef OPT_LIB
+     write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
+       (char*)src, bytes_needed);
+  #else
+     ssize_t ret = write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
+       (char*)src, bytes_needed);
+     assert(ret != -1);
+  #endif
 #else
      unsigned long int max_move=500;
      unsigned long int left_to_move=bytes_needed;
@@ -331,8 +342,14 @@ void gradient_structure::restore_arrays()
     humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
     lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
-      read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
-       (char*)dest,bytes_needed);
+  #ifdef OPT_LIB
+    read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
+      (char*)dest,bytes_needed);
+  #else
+    ssize_t ret = read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
+      (char*)dest,bytes_needed);
+    assert(ret != -1);
+  #endif
 #else
      unsigned long int max_move=50000;
 
@@ -430,12 +447,9 @@ void grad_stack::set_gradient_stack1(void (* func)(void),
 }
 void test_the_pointer(void)
 {
-}
-/**
-static int inner_count = 0;
-static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
-void test_the_pointer(void)
-{
+/*
+  static int inner_count = 0;
+  static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
   inner_count++;
   if (inner_count == 404849)
   {
@@ -447,5 +461,5 @@ void test_the_pointer(void)
   pgse->func = (void (*)())(100);
   pgse->dep_addr = (double*) 100;
   pgse->ind_addr1 = (double*) 100;
-}
 */
+}

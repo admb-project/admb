@@ -114,7 +114,7 @@ void gradcalc(int nvar, const dvector& _g)
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  off_t lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 
   if (gradient_structure::GRAD_STACK1->ptr <=
         gradient_structure::GRAD_STACK1->ptr_first)
@@ -183,7 +183,7 @@ void gradcalc(int nvar, const dvector& _g)
 #endif
 
    // back up the file one buffer size and read forward
-   lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+   off_t lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
       -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
 

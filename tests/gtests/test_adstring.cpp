@@ -216,6 +216,7 @@ TEST_F(test_adstring, chr)
   adstring actual = chr(c);
   EXPECT_STREQ("c", (char*)actual);
 }
+/*
 #ifndef _WIN32
 TEST_F(test_adstring, chr_uchar_max_plus_1)
 {
@@ -228,6 +229,7 @@ TEST_F(test_adstring, chr_negative)
   EXPECT_DEATH(chr(c), "Assertion");
 }
 #endif
+*/
 TEST_F(test_adstring, itoa)
 {
   int i = 701;

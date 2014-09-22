@@ -79,6 +79,7 @@ void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
       //a[nopt]=(char *)malloc((strlen(ptmp)+5)*sizeof(char));
       strcpy(a[nopt++],ptmp);
     }
+
     do
     {
       ptmp = strtok(NULL, " ");
@@ -89,14 +90,20 @@ void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
       }
     }
     while(ptmp);
-    delete[] p;
-    p=NULL;
+
+    if (p)
+    {
+      free(p);
+      p=NULL;
+    }
   }
+/*
   else
   {
     //a=(char **)malloc((nopt+5)*sizeof(char *));
     //a[nopt]=NULL;
   }
+*/
   //a[0]=(char *)malloc((strlen(pname)+10)*sizeof(char));
   strcpy(a[0],pname);
   strcat(a[0],".exe");

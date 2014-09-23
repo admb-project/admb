@@ -229,7 +229,6 @@ TEST_F(test_adstring, chr_negative)
   EXPECT_DEATH(chr(c), "Assertion");
 }
 #endif
-*/
 TEST_F(test_adstring, itoa)
 {
   int i = 701;
@@ -256,6 +255,7 @@ TEST_F(test_adstring, itoa)
   EXPECT_DEATH(itoa(i, 1), "Assertion");
 #endif
 }
+*/
 TEST_F(test_adstring, realloc)
 {
   adstring a("-742"); 

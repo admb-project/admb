@@ -177,25 +177,24 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 
 static double Sn(double x,double a)
 {
-  int i=1;
-  double xp=x;
-  double prod=1.0;
   double summ=1.0;
-  double summand;
-  do
+
+  const double xp=x;
+  double prod=1.0;
+
+  int i=1;
+  for (; i <= 50; i++)
   {
     prod*=(a+i);
-    summand=xp/prod;
+    double summand=xp/prod;
     if (summand<1.e-4) break;
     summ+=summand;
-    i++;
-    if (i>50)
-    {
-      cerr << "convergence error" << endl;
-      ad_exit(1);
-    }
   }
-  while(1);
+  if (i > 50)
+  {
+    cerr << "convergence error" << endl;
+    ad_exit(1);
+  }
   return summ;
 }
 

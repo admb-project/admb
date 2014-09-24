@@ -10,6 +10,11 @@ Contains ivector sum and pow functions.
 */
 #include <fvar.hpp>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 /**
 Return integer sum of all the elements in ivector v.
 
@@ -37,10 +42,16 @@ ivector pow(const ivector& v1, int x)
   for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
 #if defined(_MSC_VER) || defined(__SUNPRO_CC)
-    tmp.elem(i) = pow(double(v1.elem(i)),x);
+    double value = pow(double(v1.elem(i)),x);
 #else
-    tmp.elem(i) = pow(v1.elem(i),x);
+    double value = pow(v1.elem(i),x);
 #endif
+
+#ifndef OPT_LIB
+    assert(value <= (double)INT_MAX);
+#endif
+
+    tmp.elem(i) = (int)value;
   }
   return tmp;
 }
@@ -57,10 +68,16 @@ ivector pow(int x, const ivector& v1)
   for (int i = v1.indexmin(); i <= v1.indexmax(); i++)
   {
 #if defined(_MSC_VER) || defined(__SUNPRO_CC)
-    tmp.elem(i) = pow(double(x), v1.elem(i));
+    double value = pow(double(x), v1.elem(i));
 #else
-    tmp.elem(i) = pow(x, v1.elem(i));
+    double value = pow(x, v1.elem(i));
 #endif
+
+#ifndef OPT_LIB
+    assert(value <= (double)INT_MAX);
+#endif
+
+    tmp.elem(i) = (int)value;
   }
   return tmp;
 }

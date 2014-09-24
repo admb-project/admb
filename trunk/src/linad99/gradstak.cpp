@@ -65,6 +65,7 @@ using namespace std;
 
 #ifndef OPT_LIB
   #include <cassert>
+  #include <climits>
 #endif
 
 #ifdef _MSC_VER
@@ -285,10 +286,9 @@ grad_stack::~grad_stack()
 
     // if the buffer is really large only write the end of it
     set_gbuffer_pointers();
-    unsigned nbw = (unsigned) sizeof(grad_stack_entry)* (unsigned) length;
+    size_t nbw = sizeof(grad_stack_entry) * length;
 
-    char * ttmp = (char *) ptr_first;
-    ttmp--;
+    //char * ttmp = (char *) ptr_first; ttmp--;
 
     // save the current end of file in case we can't write the whole buffer
     end_pos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
@@ -298,7 +298,11 @@ grad_stack::~grad_stack()
     ssize_t ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
 #endif
 
-    if  (ierr != nbw)
+#ifndef OPT_LIB
+  assert(nbw <= SSIZE_MAX);
+#endif
+
+    if  (ierr != (ssize_t)nbw)
     {
        cout << "Wrote " << ierr <<" not " << nbw << endl;
       lseek(_GRADFILE_PTR,end_pos,SEEK_SET);
@@ -311,7 +315,7 @@ grad_stack::~grad_stack()
       ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
 #endif
 
-      if  (ierr != nbw)
+      if  (ierr != (ssize_t)nbw)
       {
         perror("Error writing to temporary gradient stack file");
         cerr <<"   File name: " << gradfile_name << "\n";

@@ -70,6 +70,9 @@ using namespace std;
 
 #ifdef _MSC_VER
 typedef int ssize_t;
+  #ifndef SSIZE_MAX
+    #define SSIZE_MAX INT_MAX
+  #endif
 #endif
 
 char lastchar(char *);

@@ -886,8 +886,8 @@ class grad_stack
    long int length;
    long int true_length;
 #else
-   long long int length;
-   long long int true_length;
+   size_t length;
+   size_t true_length;
 #endif
  public:
    grad_stack_entry * ptr;

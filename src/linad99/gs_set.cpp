@@ -145,7 +145,7 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(const size_t i)
       "the\n GRADSTACK_BUFFER is > " << LLONG_MAX <<
       "This appears\n to be an error. The maximum size argument ";
 
-    size_t max_size = LLONG_MAX / sizeof(grad_stack_entry);
+    size_t max_size = size_t(LLONG_MAX) / sizeof(grad_stack_entry);
     cerr << "for the function\n"
       "--- gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i) ---\n"
       "should probably be  " << max_size << endl;

@@ -11,21 +11,24 @@
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-  void dvector::reallocate(double s)
+Reallocate size of array.
+
+\param percent change
+*/
+void dvector::reallocate(double s)
+{
+  if (::allocated(*this))
   {
-    if (::allocated(*this))
-    {
-      dvector tmp(indexmin(),indexmax());
-      tmp=(*this);
-      deallocate();
-      allocate(indexmin(),int(s*indexmax()));
-      *this=tmp;
-    }
-    else
-    {
-      dvector tmp(1,s);
-    }
+    int oldmin=indexmin();
+    int oldmax=indexmax();
+    dvector tmp(indexmin(),indexmax());
+    tmp=(*this);
+    deallocate();
+    allocate(indexmin(),int(s*indexmax()));
+#ifndef OPT_LIB
+    initialize();
+#endif
+    int max = oldmax < indexmax() ? oldmax : indexmax();
+    (*this)(oldmin, max) = tmp(oldmin, max);
   }
+}

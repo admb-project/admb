@@ -21,6 +21,10 @@ void ivector::reallocate(double s)
     tmp=(*this);
     deallocate();
     allocate(indexmin(),int(s*indexmax()));
-    (*this)(oldmin,oldmax)=tmp;
+#ifndef OPT_LIB
+    initialize();
+#endif
+    int max = oldmax < indexmax() ? oldmax : indexmax();
+    (*this)(oldmin, max) = tmp(oldmin, max);
   }
 }

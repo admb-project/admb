@@ -86,3 +86,30 @@ TEST_F(test_ivector, square)
   EXPECT_EQ(4, actual(3));
   EXPECT_EQ(16, actual(4));
 }
+TEST_F(test_ivector, reallocate)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+  EXPECT_EQ(1, v.indexmin());
+  EXPECT_EQ(4, v.indexmax());
+  EXPECT_EQ(4, v.size());
+  v.reallocate(2.5);
+  EXPECT_EQ(1, v.indexmin());
+  EXPECT_EQ(10, v.indexmax());
+  EXPECT_EQ(10, v.size());
+  v.reallocate(0.5);
+  EXPECT_EQ(1, v.indexmin());
+  EXPECT_EQ(5, v.indexmax());
+  EXPECT_EQ(5, v.size());
+}
+TEST_F(test_ivector, reallocate_empty)
+{
+  ivector empty;
+  empty.reallocate(1.5);
+  EXPECT_EQ(1, empty.indexmin());
+  EXPECT_EQ(-1, empty.indexmax());
+  EXPECT_EQ(0, empty.size());
+}

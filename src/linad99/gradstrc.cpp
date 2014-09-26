@@ -88,7 +88,7 @@ dvariable * gradient_structure::RETURN_PTR = NULL;
 long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
 long int gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
 #else
-long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
+size_t gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
 size_t gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
 #endif
 

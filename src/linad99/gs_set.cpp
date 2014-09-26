@@ -115,7 +115,7 @@ void gradient_structure::set_CMPDIF_BUFFER_SIZE(const size_t i)
 #ifdef __BORLANDC__
 void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long int i)
 #else
-void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
+void gradient_structure::set_GRADSTACK_BUFFER_SIZE(const size_t i)
 #endif
 {
 #ifdef __BORLANDC__
@@ -168,7 +168,7 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
 #ifdef __BORLANDC__
 void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long int i)
 #else
-void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i)
+void gradient_structure::set_GRADSTACK_BUFFER_BYTES(const size_t i)
 #endif
 {
 #ifdef __BORLANDC__

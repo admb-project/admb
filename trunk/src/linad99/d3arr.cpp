@@ -658,7 +658,6 @@ void d3_array::shallow_copy(const d3_array& m2)
      }
    }
  }
-static int testflag=0;
 
 /**
  * Description not yet available.
@@ -668,16 +667,14 @@ static int testflag=0;
  {
    if (shape)
    {
-     if (testflag)
-       test_the_pointer();
+     //static int testflag=0;
+     //if (testflag) test_the_pointer();
      t += slicemin();
      //int ss=slicesize();
      delete [] t;
-     if (testflag)
-       test_the_pointer();
+     //if (testflag) test_the_pointer();
      delete shape;
-     if (testflag)
-       test_the_pointer();
+     //if (testflag) test_the_pointer();
      t=NULL;
      shape=NULL;
    }

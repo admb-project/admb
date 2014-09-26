@@ -124,7 +124,7 @@ void verify_identifier_string(const char* str1)
 #if defined(CHK_ID_STRING)
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
-  long int num_bytes=strlen(str1);
+  size_t num_bytes=strlen(str1);
   char str[10];
   str[num_bytes]='\0';
   gradient_structure::get_fp()->fread(str,num_bytes);

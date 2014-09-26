@@ -288,7 +288,7 @@ int save_identifier_string(const char* str)
 {
 #if defined(CHK_ID_STRING)
   //int wsize=sizeof(char);
-  int length=strlen(str);
+  size_t length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
 #endif
   return 0;

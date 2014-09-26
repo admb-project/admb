@@ -88,7 +88,7 @@ void gradient_structure::set_CMPDIF_BUFFER_SIZE(const size_t i)
       "should probably be  " << max_size << endl;
   }
 #else
-  if (LLONG_MAX < i)
+  if (i > size_t(LLONG_MAX))
   {
     cerr << "\n\n It appears that the size you are setting for "
       "the\n CMPDIF_BUFFER is > " <<  LLONG_MAX <<
@@ -139,13 +139,13 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(const size_t i)
     cerr << " i*gs_size = " << i*gs_size << endl;
   }
 #else
-  if (LLONG_MAX < i)
+  if (i > size_t(LLONG_MAX))
   {
     cerr << "\n\n It appears that the size you are setting for "
       "the\n GRADSTACK_BUFFER is > " << LLONG_MAX <<
       "This appears\n to be an error. The maximum size argument ";
 
-    long long max_size = LLONG_MAX / sizeof(grad_stack_entry);
+    size_t max_size = LLONG_MAX / sizeof(grad_stack_entry);
     cerr << "for the function\n"
       "--- gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i) ---\n"
       "should probably be  " << max_size << endl;
@@ -191,7 +191,7 @@ void gradient_structure::set_GRADSTACK_BUFFER_BYTES(const size_t i)
       "      other compilers allow long long integers" << endl;
   }
 #else
-  if (LLONG_MAX < i)
+  if (i > size_t(LLONG_MAX))
   {
     long long int max_size=LLONG_MAX;
 
@@ -227,5 +227,5 @@ void gradient_structure::set_MAX_NVAR_OFFSET(unsigned int i)
 void gradient_structure::set_MAX_DLINKS(int i)
 {
   check_set_error("MAX_DLINKS");
-  MAX_DLINKS = i > 0 ? i : 0;
+  MAX_DLINKS = i > 0 ? (unsigned int)i : 0;
 }

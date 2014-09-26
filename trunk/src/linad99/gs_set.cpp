@@ -72,7 +72,7 @@ void gradient_structure::set_ARRAY_MEMBLOCK_SIZE(unsigned long i)
 #ifdef __BORLANDC__
 void gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i)
 #else
-void gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i)
+void gradient_structure::set_CMPDIF_BUFFER_SIZE(const size_t i)
 #endif
 {
 #ifdef __BORLANDC__

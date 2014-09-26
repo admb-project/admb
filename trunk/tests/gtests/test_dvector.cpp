@@ -44,3 +44,42 @@ TEST_F(test_dvector, fill)
   ASSERT_DOUBLE_EQ(4, v(5));
   ASSERT_DOUBLE_EQ(5, v(6));
 }
+TEST_F(test_dvector, reallocate)
+{
+  dvector v(1, 4);
+  v(1) = 0.5;
+  v(2) = 1.5;
+  v(3) = 2.5;
+  v(4) = -4.5;
+  EXPECT_DOUBLE_EQ(1, v.indexmin());
+  EXPECT_DOUBLE_EQ(4, v.indexmax());
+  EXPECT_DOUBLE_EQ(4, v.size());
+  v.reallocate(2.5);
+  EXPECT_DOUBLE_EQ(1, v.indexmin());
+  EXPECT_DOUBLE_EQ(10, v.indexmax());
+  EXPECT_DOUBLE_EQ(10, v.size());
+  EXPECT_DOUBLE_EQ(0.5, v(1));
+  EXPECT_DOUBLE_EQ(1.5, v(2));
+  EXPECT_DOUBLE_EQ(2.5, v(3));
+  EXPECT_DOUBLE_EQ(-4.5, v(4));
+  EXPECT_DOUBLE_EQ(0, v(5));
+  EXPECT_DOUBLE_EQ(0, v(6));
+  EXPECT_DOUBLE_EQ(0, v(7));
+  EXPECT_DOUBLE_EQ(0, v(8));
+  EXPECT_DOUBLE_EQ(0, v(9));
+  EXPECT_DOUBLE_EQ(0, v(10));
+  v.reallocate(0.2);
+  EXPECT_DOUBLE_EQ(1, v.indexmin());
+  EXPECT_DOUBLE_EQ(2, v.indexmax());
+  EXPECT_DOUBLE_EQ(2, v.size());
+  EXPECT_DOUBLE_EQ(0.5, v(1));
+  EXPECT_DOUBLE_EQ(1.5, v(2));
+}
+TEST_F(test_dvector, reallocate_empty)
+{
+  dvector empty;
+  empty.reallocate(1.5);
+  EXPECT_EQ(1, empty.indexmin());
+  EXPECT_EQ(0, empty.indexmax());
+  EXPECT_EQ(0, empty.size());
+}

@@ -122,7 +122,7 @@ class gradient_structure
    static long int GRADSTACK_BUFFER_SIZE;
 #else
    static size_t CMPDIF_BUFFER_SIZE;
-   static long long int GRADSTACK_BUFFER_SIZE;
+   static size_t GRADSTACK_BUFFER_SIZE;
 #endif
    static unsigned int MAX_NVAR_OFFSET;
    static int save_var_file_flag;
@@ -228,8 +228,8 @@ class gradient_structure
    static void set_GRADSTACK_BUFFER_BYTES(long int i);
 #else
    static void set_CMPDIF_BUFFER_SIZE(const size_t i);
-   static void set_GRADSTACK_BUFFER_SIZE(long long int i);
-   static void set_GRADSTACK_BUFFER_BYTES(long long int i);
+   static void set_GRADSTACK_BUFFER_SIZE(const size_t i);
+   static void set_GRADSTACK_BUFFER_BYTES(const size_t i);
 #endif
    static void set_MAX_NVAR_OFFSET(unsigned int i);
    static void set_MAX_DLINKS(int i);

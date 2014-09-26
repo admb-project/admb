@@ -358,19 +358,19 @@ class string_parser
   char * str;
   char * nt;
   char * ct;
-  int nlen;
+  size_t nlen;
 public:
-  string_parser(char * s,int n);
-  char * get_next_option(int & n);
+  string_parser(char* s, const size_t n);
+  char* get_next_option(size_t& n);
 };
 
-void davesnobullshitstrncpy(char * a,const char * b, int n);
+void davesnobullshitstrncpy(char * a,const char * b, const size_t n);
 char ** parse_dll_options(char * s,int& argc);
 
 
-string_parser::string_parser(char * s,int n)
+string_parser::string_parser(char * s, const size_t n)
 {
-  if (strlen(s) > (unsigned int)n)
+  if (strlen(s) > n)
   {
     cerr << "string too long in string_parser" << endl;
     exit(1);
@@ -388,7 +388,7 @@ string_parser::string_parser(char * s,int n)
 
   nt=ct;
 
-  int ii=0;
+  size_t ii=0;
   while (*nt != ' ' && *nt != '\0')
   {
     nt++;
@@ -402,7 +402,7 @@ string_parser::string_parser(char * s,int n)
   }
 }
 
-char * string_parser::get_next_option(int & n)
+char* string_parser::get_next_option(size_t& n)
 {
   n=nlen;
 
@@ -410,7 +410,7 @@ char * string_parser::get_next_option(int & n)
   if (nlen!=0)
   {
     ct=nt;
-    int ii=0;
+    size_t ii=0;
     while (*nt != ' ' && *nt != '\0')
     {
       nt++;
@@ -428,7 +428,7 @@ char * string_parser::get_next_option(int & n)
 
 typedef char * chararray;
 
-void davesnobullshitstrncpy(char * a,const char * b, int n)
+void davesnobullshitstrncpy(char * a,const char * b, const size_t n)
 {
   strncpy(a,b,n);
   a[n]=0;
@@ -447,7 +447,7 @@ char** parse_dll_options(char *pname, const int& _argc, char *s)
   }
   string_parser sp(s,1000);
 
-  int n=0;
+  size_t n=0;
   int ii=1;
   do
   {

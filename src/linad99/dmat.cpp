@@ -402,8 +402,6 @@ void dmatrix::shallow_copy(const dmatrix& m2)
  {
    deallocate();
  }
-static int testflag=0;
-static int ycounter=0;
 
 /**
  * Description not yet available.
@@ -441,12 +439,16 @@ dmatrix cube(const dmatrix& m)
  */
  void dmatrix::deallocate()
  {
+/*
+   static int testflag=0;
+   static int ycounter=0;
    if (testflag)
    {
      ycounter++;
      cout << " A " << ycounter << endl;
      test_the_pointer();
    }
+*/
    if (shape)
    {
      if (shape->ncopies)
@@ -462,11 +464,13 @@ dmatrix cube(const dmatrix& m)
        shape=NULL;
      }
    }
+/*
    if (testflag)
    {
      cout << " B " << ycounter << endl;
      test_the_pointer();
    }
+*/
 #ifdef SAFE_ALL
    else
    {

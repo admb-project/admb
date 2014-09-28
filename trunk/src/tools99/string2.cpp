@@ -12,7 +12,7 @@
   #include <cassert>
 #endif
 
-adstring::adstring(int lb, int ub) : clist()
+adstring::adstring(const size_t lb, const size_t ub) : clist()
 {
   if (lb != 1)
   {
@@ -20,9 +20,9 @@ adstring::adstring(int lb, int ub) : clist()
     " At present minimum index for adstring must equal 1\n";
     exit(1);
   }
-  unsigned int sz = ub;
+  size_t sz = ub;
   allocate(sz);
-  for (unsigned int i = 1; i <= sz; i++)
+  for (size_t i = 1; i <= sz; i++)
   {
     s[i] = '\0'; //' ';
   }
@@ -31,7 +31,7 @@ adstring::adstring(int lb, int ub) : clist()
 
 adstring::adstring(const char ub) : clist()
 {
-  unsigned int sz = 1;
+  size_t sz = 1;
   allocate(sz);
 
 #ifndef OPT_LIB
@@ -50,19 +50,18 @@ adstring::adstring(const adstring & v) : clist(v)
 
 adstring operator+(const adstring& u, const adstring& v)
 {
-  int us = u.size ();
-  int vs = v.size ();
+  size_t us = u.size();
+  size_t vs = v.size();
   adstring tmp(1, us + vs);
-  int i;
-  for (i = 1; i <= us; i++)
+  for (size_t i = 1; i <= us; i++)
   {
     tmp(i) = u(i);
   }
-  for (i = 1; i <= vs; i++)
+  for (size_t i = 1; i <= vs; i++)
   {
     tmp(i + us) = v(i);
   }
-  return (tmp);
+  return tmp;
 }
 
 adstring itoa(int n, int r)
@@ -78,7 +77,7 @@ adstring itoa(int n, int r)
     n *= -1;
   }
   unsigned char buf[50];
-  int ii=0;
+  size_t ii=0;
   do
   {
     int nr = n % r;
@@ -90,7 +89,7 @@ adstring itoa(int n, int r)
     ii++;
   }
   adstring s(1, ii);
-  for (int i=0;i<ii;i++)
+  for (size_t i=0;i<ii;i++)
   {
     s[ii-i]=(unsigned char)(buf[i]+48);
   }

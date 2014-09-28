@@ -6,7 +6,10 @@
  */
 #include <fvar.hpp>
 #include <stdlib.h>
-#include "admb_messages.h"
+
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 /**
 Default constructor
@@ -103,18 +106,11 @@ adstring& adstring_array::operator[](int i)
     cerr << "Error -- trying to acess unallocated adstring array" << endl;
     ad_exit(1);
   }
-  if (i < indexmin())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Error index too low",
-    "adstring& adstring_array::operator [] (int i)",
-    indexmin(), indexmax(), i);
-  }
-  if (i > indexmax())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Error index too high",
-    "adstring& adstring_array::operator [] (int i)",
-    indexmin(), indexmax(), i);
-  }
+
+#ifndef OPT_LIB
+  assert(indexmin() <= i && i <= indexmax());
+#endif
+
   return *(ptr[i]);
 }
 /**
@@ -129,18 +125,11 @@ adstring& adstring_array::operator()(int i)
     cerr << "Error -- trying to acess unallocated adstring array" << endl;
     ad_exit(1);
   }
-  if (i < indexmin())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Error index too low",
-    "adstring& adstring_array::operator () (int i)",
-    indexmin(), indexmax(), i);
-  }
-  if (i > indexmax())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Error index too high",
-    "adstring& adstring_array::operator () (int i)",
-    indexmin(), indexmax(), i);
-  }
+
+#ifndef OPT_LIB
+  assert(indexmin() <= i && i <= indexmax());
+#endif
+
   return *(ptr[i]);
 }
 /**
@@ -155,18 +144,11 @@ const adstring& adstring_array::operator[](int i) const
     cerr << "Error -- trying to acess unallocated adstring array" << endl;
     exit(1);
   }
-  if (i < indexmin())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Error index too low",
-    "adstring& adstring_array::operator [] (int i) const ",
-    indexmin(), indexmax(), i);
-  }
-  if (i > indexmax())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Error index too high",
-    "adstring& adstring_array::operator [] (int i) const ",
-    indexmin(), indexmax(), i);
-  }
+
+#ifndef OPT_LIB
+  assert(indexmin() <= i && i <= indexmax());
+#endif
+
   return *(ptr[i]);
 }
 /**
@@ -181,17 +163,10 @@ const adstring& adstring_array::operator()(int i) const
     cerr << "Error -- trying to acess unallocated adstring array" << endl;
     ad_exit(1);
   }
-  if (i < indexmin())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Error index too low",
-    "adstring& adstring_array::operator () (int i) const",
-    indexmin(), indexmax(), i);
-  }
-  if (i > indexmax())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Error index too high",
-    "adstring& adstring_array::operator () (int i) const",
-    indexmin(), indexmax(), i);
-  }
+
+#ifndef OPT_LIB
+  assert(indexmin() <= i && i <= indexmax());
+#endif
+
   return *(ptr[i]);
 }

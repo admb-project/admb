@@ -7,76 +7,54 @@
 #include <fvar.hpp>
 #include <string.h>
 #include <stdlib.h>
-#include "admb_messages.h"
 
 #ifndef OPT_LIB
   #include <cassert>
-  #include <climits>
 #endif
 
-adstring adstring::operator()(int i, int j)
+adstring adstring::operator()(const size_t i, const size_t j)
 {
-  if (i < 1 || i > (int) shape->size())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("First index out of bounds",
-    "adstring adstring::operator()(int i, int j)", 1, shape->size(), i);
-  }
-  if (i > j)
-  {
-    ADMB_ARRAY_BOUNDS_ERROR(
-    "First index must be less than or equal to second index",
-    "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
-  }
-  if (j > (int) shape->size())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Second index out of bounds",
-    "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
-  }
-  adstring tmp(1, size_t(j - i + 1));
-  for (int ii = i; ii <= j; ii++)
+#ifndef OPT_LIB
+  assert(1 <= i && i <= shape->size());
+  assert(i <= j);
+  assert(j <= shape->size());
+#endif
+
+  adstring tmp(1, j - i + 1);
+  for (size_t ii = i; ii <= j; ii++)
   {
     tmp(ii - i + 1) = (* this) (ii);
   }
-  return (tmp);
+  return tmp;
 }
 
-adstring adstring::operator()(int i, int j) const
+adstring adstring::operator()(const size_t i, const size_t j) const
 {
-  if (i < 1 || i > (int) shape->size())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("First index out of bounds",
-    "adstring adstring::operator()(int i, int j)", 1, shape->size(), i);
-  }
-  if (i > j)
-  {
-    ADMB_ARRAY_BOUNDS_ERROR(
-    "First index must be less than or equal to second index",
-    "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
-  }
-  if (j > (int) shape->size())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Second index out of bounds",
-    "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
-  }
-  adstring tmp(1, size_t(j - i + 1));
-  for (int ii = i; ii <= j; ii++)
+#ifndef OPT_LIB
+  assert(1 <= i && i <= shape->size());
+  assert(i <= j);
+  assert(j <= shape->size());
+#endif
+
+  adstring tmp(1, j - i + 1);
+  for (size_t ii = i; ii <= j; ii++)
   {
     tmp(ii - i + 1) = (* this) (ii);
   }
-  return (tmp);
+  return tmp;
 }
 
 adstring& adstring::operator=(const adstring & t)
 {
   if (s != t.s)
   {
-    int sz = t.size ();
-    shape->size() = t.size();
+    size_t sz = t.size();
+    shape->size() = sz;
     delete [] ++s;
     s=new unsigned char[sz+1];
     s--;
-    int size = t.size();
-    for (int i = 1; i <= size; i++)
+    size_t size = t.size();
+    for (size_t i = 1; i <= size; i++)
     {
       s[i] = t[i];
     }
@@ -95,10 +73,7 @@ adstring& adstring::operator=(const adstring & t)
 void adstring::realloc(const char* t)
 {
   size_t sz = strlen(t);
-#ifndef OPT_LIB
-  assert(sz <= INT_MAX);
-#endif
-  shape->size() = (int)sz;
+  shape->size() = sz;
   delete [] ++s;
   s=new unsigned char[sz+1];
   strcpy((char*)(s),t);
@@ -123,33 +98,39 @@ adstring::~adstring()
   }
 }
 
-unsigned char & adstring::operator()(const int i)
+unsigned char & adstring::operator()(const size_t i)
 {
-  if (i < 1 || i > (int) shape->size())
+/*
+  if (i < 1 || i > shape->size())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
     "unsigned char & adstring::operator()(int i)", 1, shape->size(), i);
   }
+*/
   return ( ((unsigned char *)s)[i]);
 }
 
-const unsigned char& adstring::operator()(const int i) const
+const unsigned char& adstring::operator()(const size_t i) const
 {
-  if (i < 1 || i > (int) shape->size())
+/*
+  if (i < 1 || i > shape->size())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
     "unsigned char & adstring::operator()(int i) const", 1, shape->size(), i);
   }
+*/
   return (s[i]);
 }
 
-const unsigned char& adstring::operator[](const int i) const
+const unsigned char& adstring::operator[](const size_t i) const
 {
-  if (i < 1 || i > (int) shape->size())
+/*
+  if (i < 1 || i > shape->size())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
     "unsigned char & adstring::operator[](int i) const ", 1, shape->size(), i);
   }
+*/
   return (s[i]);
 }
 
@@ -173,12 +154,12 @@ int adstring::operator!=(const adstring& v)
 */
 adstring& adstring::operator+=(const adstring& v)
 {
-  int us = size ();
-  int vs = v.size ();
-  int bs = buff_size();
+  size_t us = size();
+  size_t vs = v.size ();
+  size_t bs = buff_size();
   if (bs > us + vs)
   {
-    for (int i = 1; i <= vs; i++)
+    for (size_t i = 1; i <= vs; i++)
     {
       s[i + us] = v(i);
     }
@@ -186,12 +167,11 @@ adstring& adstring::operator+=(const adstring& v)
   else
   {
     adstring tmp(1, us + vs);
-    int i;
-    for (i = 1; i <= us; i++)
+    for (size_t i = 1; i <= us; i++)
     {
       tmp(i) = s[i];
     }
-    for (i = 1; i <= vs; i++)
+    for (size_t i = 1; i <= vs; i++)
     {
       tmp(i + us) = v(i);
     }
@@ -200,9 +180,9 @@ adstring& adstring::operator+=(const adstring& v)
   return (* this);
 }
 
-unsigned char& adstring::operator[](const int i)
+unsigned char& adstring::operator[](const size_t i)
 {
-  if (i < 1 || i > (int) shape->size())
+  if (i < 1 || i > shape->size())
   {
     cerr << "Index out of bounds in adstring::operator () (const int)\n"
     << "Index value was " << i << " The size of this adstring is "
@@ -212,7 +192,7 @@ unsigned char& adstring::operator[](const int i)
   return ( ((unsigned char *)s)[i]);
 }
 
-int length(const adstring& t)
+size_t length(const adstring& t)
 {
-  return (int(t.size()));
+  return t.size();
 }

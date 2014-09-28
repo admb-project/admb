@@ -50,17 +50,19 @@
 
 class adstring_shape
 {
-  unsigned int sz;
-protected :
+  size_t sz;
+
+protected:
+  adstring_shape(const size_t size)
+  {
+    sz = size;
+  }
+  size_t& size()
+  {
+    return sz;
+  }
+
   friend class adstring;
-  adstring_shape(unsigned int n)
-  {
-    sz = n;
-  }
-  unsigned int & size()
-  {
-    return (sz);
-  }
 };
 
 class adstring_array;
@@ -73,28 +75,27 @@ class adstring : public clist
 #else
   unsigned char * s;
 #endif
-  void allocate(int sz);
+  void allocate(const size_t sz);
   void deallocate(void);
   friend class adstring_array;
 public :
-  friend std::ostream & operator<<(std::ostream & c, const adstring & t);
-  friend std::istream & operator >> (std::istream & c, adstring & t);
-
-  adstring(const char *t);
-  void allocate(const char *t);
-  adstring(int lb, int ub);
+  adstring();
   adstring(const adstring &v);
+  adstring(const char v);
+  adstring(const char *t);
+  adstring(const size_t lb, const size_t ub);
+  ~adstring();
+
+  void allocate(const char *t);
   void realloc(const char * t);
   //adstring(const unsigned char v);
-  adstring(const char v);
-  adstring(void);
-  ~adstring();
-  unsigned int size(void) const;
-  unsigned int buff_size(void);
-  unsigned char &operator()(const int i);
-  unsigned char &operator[](const int i);
-  const unsigned char& operator()(const int i) const;
-  const unsigned char& operator[](const int i) const;
+
+  size_t size() const;
+  size_t buff_size() const;
+  unsigned char &operator()(const size_t i);
+  unsigned char &operator[](const size_t i);
+  const unsigned char& operator()(const size_t i) const;
+  const unsigned char& operator[](const size_t i) const;
 
 #ifdef __INTEL_COMPILER
   friend adstring operator+(const adstring &u, const char* v)
@@ -103,22 +104,6 @@ public :
     return u + a;
   }
 #endif
-
-  friend adstring operator+(const adstring &u, const adstring &v);
-
-  friend adstring operator+(const adstring &u, const unsigned char v);
-
-  friend adstring operator+(const adstring &u, const signed char v);
-
-  friend adstring operator+(const adstring &u, const unsigned char *v);
-
-  friend adstring operator+(const adstring & u, const signed char *v);
-
-  friend adstring operator+(const unsigned char *v, const adstring& u);
-
-  friend adstring operator+(const char *v, const adstring &u);
-
-  friend adstring operator+(const unsigned char u, const adstring &v);
 
   adstring& operator+=(const adstring &u);
   inline adstring& operator+=(const char u)
@@ -132,11 +117,11 @@ public :
   inline int operator!=(const adstring &u)
     { return(!(*this==u)); }
 
-  adstring operator()(int i, int j);
-  int operator==(const char* u) const;
+  adstring operator()(const size_t i, const size_t j);
+  adstring operator()(const size_t i, const size_t j) const;
 
+  int operator==(const char* u) const;
   int operator==(const adstring &u) const;
-  adstring operator()(int i, int j) const;
 
   adstring& operator=(const adstring &t);
   adstring& operator=(const char t);
@@ -150,7 +135,7 @@ public :
   // Pascal-like adstring functions
 
   // returns the starting position of substr
-  int pos(const adstring& substr) const;
+  size_t pos(const adstring& substr) const;
 
   // converts a double into a adstring
   friend adstring str(double x, int minwidth, int decplaces);
@@ -162,6 +147,17 @@ public :
   void to_lower(void);
   adstring to_upper(adstring& s);
   adstring to_lower(adstring& s);
+
+  friend std::ostream& operator<<(std::ostream& c, const adstring& t);
+  friend std::istream& operator>>(std::istream& c, adstring& t);
+  friend adstring operator+(const adstring &u, const adstring &v);
+  friend adstring operator+(const adstring &u, const unsigned char v);
+  friend adstring operator+(const adstring &u, const signed char v);
+  friend adstring operator+(const adstring &u, const unsigned char *v);
+  friend adstring operator+(const adstring & u, const signed char *v);
+  friend adstring operator+(const unsigned char *v, const adstring& u);
+  friend adstring operator+(const char *v, const adstring &u);
+  friend adstring operator+(const unsigned char u, const adstring &v);
 };
 adstring to_lower(adstring& s);
 adstring to_upper(adstring& s);
@@ -186,8 +182,8 @@ adstring itoa(int n,int d);
 
 void str(const int, adstring&);
 adstring chr(int c);
-int length(const adstring& t);
-int pos(const adstring& substr, const adstring& s);
+size_t length(const adstring& t);
+size_t pos(const adstring& substr, const adstring& s);
 
 //adstring operator+(const char u, const char v)
 //  { return (adstring(u) + adstring(v) ); }

@@ -8,26 +8,15 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 adstring::adstring(const char* t): clist()
 {
-  unsigned int sz = 0;
+  size_t sz = 0;
   if (t)
   {
-#ifdef OPT_LIB
-    sz = (unsigned int)strlen(t);
-#else
-    size_t len = strlen(t);
-    assert(len <= (size_t)UINT_MAX);
-    sz = (unsigned int)len;
-#endif
+    sz = strlen(t);
   }
   allocate(sz);
-  for (unsigned int i = 1; i <= sz; i++)
+  for (size_t i = 1; i <= sz; i++)
   {
     s[i] = t[i - 1];
   }
@@ -36,19 +25,19 @@ adstring::adstring(const char* t): clist()
 
 adstring::adstring(void): clist()
 {
-  unsigned int sz = 0;
+  size_t sz = 0;
   allocate(sz);
   s[sz + 1] = '\0';
 }
 
-int adstring::pos(const adstring& substr) const
+size_t adstring::pos(const adstring& substr) const
 {
 #if (defined __ZTC__) || (defined __NDPX__)
   char* ptr = strstr(*this, substr);
 #else
   const char* ptr = strstr((const char*)(*this), (const char*)(substr));
 #endif
-  unsigned int i = 0;
+  size_t i = 0;
 
   if (ptr != NULL)
   {
@@ -57,7 +46,7 @@ int adstring::pos(const adstring& substr) const
   return i;
 }
 
-int pos(const adstring& substr, const adstring& s)
+size_t pos(const adstring& substr, const adstring& s)
 {
-  return(s.pos(substr));
+  return s.pos(substr);
 }

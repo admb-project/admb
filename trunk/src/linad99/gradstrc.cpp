@@ -146,11 +146,11 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
  * Description not yet available.
  * \param
  */
- char lastchar(char * s)
- {
-   int k=strlen(s);
-   return s[k-1];
- }
+char lastchar(char* s)
+{
+  size_t k = strlen(s);
+  return s[k - 1];
+}
 
 /**
  * Description not yet available.

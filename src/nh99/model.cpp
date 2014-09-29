@@ -153,30 +153,30 @@ int initial_params::correct_for_dev_objects(const dmatrix& H)
     return ii-1;
   }
 
-  int initial_params::nvarcalc()
+size_t initial_params::nvarcalc()
+{
+  size_t nvar = 0;
+  for (int i = 0; i < num_initial_params; i++)
   {
-    int nvar=0;
-    for (int i=0;i<num_initial_params;i++)
+    //if ((varsptr[i])->phase_start <= current_phase)
+#if defined(USE_SHARE_FLAGS)
+    if (varsptr[i]->share_flags != 0)
     {
-      //if ((varsptr[i])->phase_start <= current_phase)
-#  if defined(USE_SHARE_FLAGS)
-       if (varsptr[i]->share_flags !=0)
-       {
-          nvar+=(varsptr[i])->shared_size_count();
-       }
-       else
-       {
-#  endif
-          if (withinbound(0,(varsptr[i])->phase_start,current_phase))
-          {
-            nvar+= (varsptr[i])->size_count();
-          }
-#  if defined(USE_SHARE_FLAGS)
-        }
-#  endif
+      nvar += (varsptr[i])->shared_size_count();
     }
-    return nvar;
+    else
+    {
+#endif
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+      {
+        nvar += (varsptr[i])->size_count();
+      }
+#if defined(USE_SHARE_FLAGS)
+    }
+#endif
   }
+  return nvar;
+}
 
   int initial_params::num_active_calc()
   {

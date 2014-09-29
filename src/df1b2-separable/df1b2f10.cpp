@@ -352,7 +352,7 @@ void test_smartlist::read_buffer(void)
  * Description not yet available.
  * \param
  */
-void memcpy(const test_smartlist & _list,void * p,int nsize)
+void memcpy(const test_smartlist& _list, void* p, const size_t nsize)
 {
   ADUNCONST(test_smartlist,list)
   if ( list.bptr+nsize-1 > list.buffend)
@@ -368,7 +368,7 @@ void memcpy(const test_smartlist & _list,void * p,int nsize)
  * Description not yet available.
  * \param
  */
-void memcpy(void * p,const test_smartlist & _list,int nsize)
+void memcpy(void* p, const test_smartlist & _list, const size_t nsize)
 {
   ADUNCONST(test_smartlist,list)
   if ( list.bptr+nsize-1 > list.buffend)

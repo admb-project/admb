@@ -698,8 +698,8 @@ public:
 
   void write(const test_smartlist &,void *,int nsize);
   void read(const test_smartlist &,void *,int nsize);
-  void memcpy(const test_smartlist &,void *,int nsize);
-  void memcpy(void *,const test_smartlist &,int nsize);
+  void memcpy(const test_smartlist &, void*, const size_t nsize);
+  void memcpy(void*, const test_smartlist&, const size_t nsize);
 
   class df1b2function2c;
 

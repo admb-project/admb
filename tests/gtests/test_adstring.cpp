@@ -32,7 +32,8 @@ TEST_F(test_adstring, assignment_operator_char)
   const char c = 'c';
   a = c;
 
-  EXPECT_EQ('c', a[1]);
+  char a1 = a[size_t(1)];
+  EXPECT_EQ('c', a1);
   EXPECT_EQ(1, length(a));
   EXPECT_EQ(1, a.size());
   EXPECT_EQ(1, a.buff_size());
@@ -46,20 +47,20 @@ TEST_F(test_adstring, to_upper_and_lower)
   a = "tests_adstring";
   a.to_upper();
 
-  EXPECT_EQ('T', a[1]);
-  EXPECT_EQ('E', a[2]);
-  EXPECT_EQ('S', a[3]);
-  EXPECT_EQ('T', a[4]);
-  EXPECT_EQ('S', a[5]);
-  EXPECT_EQ('_', a[6]);
-  EXPECT_EQ('A', a[7]);
-  EXPECT_EQ('D', a[8]);
-  EXPECT_EQ('S', a[9]);
-  EXPECT_EQ('T', a[10]);
-  EXPECT_EQ('R', a[11]);
-  EXPECT_EQ('I', a[12]);
-  EXPECT_EQ('N', a[13]);
-  EXPECT_EQ('G', a[14]);
+  EXPECT_EQ('T', a(1));
+  EXPECT_EQ('E', a(2));
+  EXPECT_EQ('S', a(3));
+  EXPECT_EQ('T', a(4));
+  EXPECT_EQ('S', a(5));
+  EXPECT_EQ('_', a(6));
+  EXPECT_EQ('A', a(7));
+  EXPECT_EQ('D', a(8));
+  EXPECT_EQ('S', a(9));
+  EXPECT_EQ('T', a(10));
+  EXPECT_EQ('R', a(11));
+  EXPECT_EQ('I', a(12));
+  EXPECT_EQ('N', a(13));
+  EXPECT_EQ('G', a(14));
 
   a.to_lower();
 

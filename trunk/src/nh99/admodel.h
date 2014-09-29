@@ -937,7 +937,7 @@ public:
   static dvariable reset(const dvar_vector& x, const dvector& pen);
   // get the number of active parameters
   static dvariable reset_all(const dvar_vector& x,const dvector& pen);
-  static int nvarcalc(void);
+  static size_t nvarcalc();
   static int nvarcalc_all(void);
   static int num_active_calc(void);
   static int stddev_scale(const dvector& d, const dvector& x);

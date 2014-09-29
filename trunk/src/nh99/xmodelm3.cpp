@@ -223,14 +223,15 @@ void tracing_message(int traceflag,const char *s);
       if (random_effects_flag)
         initial_params::set_inactive_random_effects();
 
-      int nvar=initial_params::nvarcalc(); // get the number of active
+      size_t _nvar=initial_params::nvarcalc(); // get the number of active
              // parameters
-      if (!nvar)
+      if (_nvar < 1)
       {
         cerr << "Error -- no active parameters. There must be at least 1"
              << endl;
         exit(1);
       }
+      const int nvar = (int)_nvar;
       dvector g(1,nvar);
       independent_variables x(1,nvar);
       tracing_message(traceflag,"B2");
@@ -551,7 +552,8 @@ void tracing_message(int traceflag,const char *s);
     nopt=get_option_number("-cbs",
       "-cbs option needs positive integer -- ignored",lssz);
     if (nopt>-1 && lssz>0) {
-      gradient_structure::set_CMPDIF_BUFFER_SIZE(lssz);
+      const size_t size = (size_t)lssz;
+      gradient_structure::set_CMPDIF_BUFFER_SIZE(size);
     }
 
     nopt=get_option_number("-gbs",

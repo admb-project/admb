@@ -9,20 +9,19 @@
 //#include <parallel.h>
 #include <signal.h>
 
-void vm_initialize(void);
-int have_jvm=0;
-
+#if defined(_MSC_VER)
 void strip_full_path(const adstring& _s)
 {
-  adstring& s = (adstring&) _s;
-  int n=s.size();
-  int i=0;
-  for (i=n-1;i>=1;i--)
+  adstring& s = (adstring&)_s;
+  size_t n = s.size();
+  size_t i = n - 1;
+  for (; i >= 1; i--)
   {
-    if ( s(i)=='\\' || s(i) == '/' || s(i)==':') break;
+    if ( s(i) == '\\' || s(i) == '/' || s(i) == ':') break;
   }
-  s=s(i+1,n);
+  s = s(i + 1, n);
 }
+#endif
 
 void set_signal_handlers(void)
 {
@@ -114,6 +113,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   /*
     if (option_match(_argc,_argv,"-gui")>-1)
     {
+      void vm_initialize(void);
       vm_initialize();
     }
   */
@@ -135,8 +135,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
      || option_match(_argc,_argv,"--help")>-1)
     {
       // remove path (if user runs -help)
-      unsigned int i;
-      for (i=adprogram_name.size();i>=1;i--)
+      for (size_t i = adprogram_name.size(); i >= 1; i--)
       {
 #ifdef _WIN32
         if (adprogram_name(i) == '\\')

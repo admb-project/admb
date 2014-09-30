@@ -8,7 +8,6 @@
 using std::istringstream;
 
 #include <admodel.h>
-
 #include <df1b2fun.h>
 #include <adrndeff.h>
 
@@ -559,8 +558,8 @@ void tracing_message(int traceflag,const char *s);
     nopt=get_option_number("-gbs",
       "-gbs option needs positive integer -- ignored",lssz);
     if (nopt>-1 && lssz>0) {
-      gradient_structure::set_GRADSTACK_BUFFER_SIZE
-        (lssz/sizeof(grad_stack_entry));
+      const size_t size = (size_t)lssz / sizeof(grad_stack_entry);
+      gradient_structure::set_GRADSTACK_BUFFER_SIZE(size);
     }
 
     if (!sz)

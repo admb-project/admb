@@ -59,7 +59,6 @@ endif
 
 get-outputs:
 ifeq ($(SHELL),cmd)
-	type agemat.b01
 	type agemat.bar
 	type agemat.cor
 	type agemat.eva
@@ -70,7 +69,6 @@ ifeq ($(SHELL),cmd)
 	type agemat.std
 	type Echo.Out
 else
-	cat agemat.b01
 	cat agemat.bar
 	cat agemat.cor
 	cat agemat.eva

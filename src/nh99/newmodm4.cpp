@@ -17,13 +17,14 @@ double function_minimizer::unrestricted_hess_determinant(void)
     cerr << "Error opening file " << (char*) tmpstring
       << " in unrestricted_hess_determinant" << endl;
   }
-  int nvar = 0;
 
+  int nvar = 0;
   ifs >> nvar;
   cout << "nvar =" << nvar << endl;
-  dmatrix S(1,nvar,1,nvar);
+  //dmatrix S(1,nvar,1,nvar);
+  if (nvar > 0)
   {
-    if (nvar != initial_params::nvarcalc())
+    if ((size_t)nvar != initial_params::nvarcalc())
     {
       cout << "the number of independent variables is wrong in admodel.hes"
          << endl;

@@ -21,7 +21,6 @@ double function_minimizer::unrestricted_hess_determinant(void)
   int nvar = 0;
   ifs >> nvar;
   cout << "nvar =" << nvar << endl;
-  //dmatrix S(1,nvar,1,nvar);
   if (nvar > 0)
   {
     if ((size_t)nvar != initial_params::nvarcalc())
@@ -29,31 +28,30 @@ double function_minimizer::unrestricted_hess_determinant(void)
       cout << "the number of independent variables is wrong in admodel.hes"
          << endl;
     }
-    dmatrix p(1,nvar,1,nvar);
-    dmatrix h(1,nvar,1,nvar);
-    ifs >> h;
-    if (!ifs)
-    {
-      cerr << "Error reading the hessian from file admodel.hes" << endl;
-    }
-
-    for (int i=1;i<=nvar;i++)
-    {
-      for (int j=1;j<i;j++)
-      {
-        double tmp=(h(i,j)+h(j,i))/2.;
-        h(i,j)=tmp;
-        h(j,i)=tmp;
-      }
-    }
-
-    int sgn=0;
-    double lndet=ln_det(h,sgn);
-    if (sgn <= 0)
-    {
-      cerr << "sgn = " << sgn << endl;
-      cerr << "Error Hessian is not positive definite" << endl;
-    }
-    return lndet;
   }
+  dmatrix h(1,nvar,1,nvar);
+  ifs >> h;
+  if (!ifs)
+  {
+    cerr << "Error reading the hessian from file admodel.hes" << endl;
+  }
+
+  for (int i=1;i<=nvar;i++)
+  {
+    for (int j=1;j<i;j++)
+    {
+      double tmp=(h(i,j)+h(j,i))/2.;
+      h(i,j)=tmp;
+      h(j,i)=tmp;
+    }
+  }
+
+  int sgn=0;
+  double lndet=ln_det(h,sgn);
+  if (sgn <= 0)
+  {
+    cerr << "sgn = " << sgn << endl;
+    cerr << "Error Hessian is not positive definite" << endl;
+  }
+  return lndet;
 }

@@ -17,7 +17,6 @@ void report_confidence_limits(const ofstream& ofs3,int numsig_levels,
 void report_onesided_confidence_limits(const ofstream& ofs3,int numsig_levels,
   dvector& siglevel, const dvector& left_bd, const dvector& right_bd,int ip);
 
-ofstream of5("eigv.rpt");
 
 dmatrix trans(const dvector& x)
 {
@@ -410,6 +409,7 @@ dmatrix trans(const dvector& x)
   }
 
 /*
+ofstream of5("eigv.rpt");
 void get_ee(const dmatrix& hh, const ofstream& _of5)
 {
   ofstream& of5= (ofstream&) _of5;

@@ -284,15 +284,11 @@ ostream& operator<<(const ostream& _ofs,
   return ofs;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 banded_lower_triangular_dmatrix choleski_decomp(
   const banded_symmetric_dmatrix& MM)
 {
-  //int ierr;
-  return choleski_decomp(MM);
+  int ierr = 0;
+  return choleski_decomp(MM, ierr);
 }
 
 /**

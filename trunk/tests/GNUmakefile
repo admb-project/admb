@@ -67,6 +67,7 @@ all-tpls:\
   tpl-priors\
   tpl-testminmax\
   tpl-orange_mvn\
+  tpl-lprof\
   tpl-SS3
 
 tpl-4darray:
@@ -134,6 +135,9 @@ tpl-testminmax:
 
 tpl-orange_mvn:
 	$(MAKE) --directory=orange_mvn
+
+tpl-lprof:
+	$(MAKE) --directory=lprof
 
 tpl-SS3:
 ifneq ($(CXX),openCC)
@@ -241,3 +245,4 @@ endif
 	$(MAKE) --directory=beta_regression get-outputs >> benchmarks-tests.txt
 	$(MAKE) --directory=agemat get-outputs >> benchmarks-tests.txt
 	$(MAKE) --directory=beta_deviate get-outputs >> benchmarks-tests.txt
+	$(MAKE) --directory=lprof get-outputs >> benchmarks-tests.txt

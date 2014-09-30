@@ -31,7 +31,6 @@ GTESTS=\
  test_banded_symmetric_dmatrix.cpp\
  test_imatrix.cpp\
  test_line_adstring.cpp\
- test_pow.cpp\
  test_ivector.cpp\
  test_multi_index.cpp\
  test_adtimer.cpp\
@@ -43,6 +42,7 @@ GTESTS=\
  test_param_init_matrix_vector.cpp\
  test_param_init_bounded_vector_vector.cpp\
  test_param_init_number_vector.cpp\
+ test_pow.cpp\
  main.cpp
 
 ##Need to debug this
@@ -96,7 +96,7 @@ gtest-all: gtest-all.obj $(GTESTS)
 ifeq ($(SHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
 gtest-all.obj: googletest-read-only

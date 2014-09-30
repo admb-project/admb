@@ -40,3 +40,17 @@ clean:
 	@rm -vf diags
 	@rm -vf est_a.plt
 	@rm -vf est_b.plt
+	@rm -vf cmpdiff.tmp gradfil1.tmp gradfil2.tmp varssave.tmp
+
+get-outputs:
+	cat dgs2
+	cat diags
+	cat est_a.plt
+	cat est_b.plt
+	cat simple.cor
+	cat simple.dat
+	cat simple.eva
+	cat simple.log
+	cat simple.par
+	cat simple.prf
+	cat simple.std

@@ -58,7 +58,7 @@ Check vectors v and w for single common value.
 int common(ivector& v, ivector& w)
 {
   if (!check_order(v)) v = sort(v);
-  if (!check_order(w)) w = sort(w); 
+  if (!check_order(w)) w = sort(w);
   //int vmin=v.indexmin();
   int wmin=w.indexmin();
   int vmax=v.indexmax();

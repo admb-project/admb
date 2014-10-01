@@ -5,19 +5,19 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
 
 double function_minimizer::projected_hess_determinant(const dvector& g,
   const int underflow_flag)
 {
- int sgn=0;
  double lndet=0.0;
  //double ld1=0.0;
  //double ld2=0.0;
  //char ch;
  if (!underflow_flag)
  {
+   int sgn=0;
     adstring tmpstring="admodel.hes";
     if (ad_comm::wd_flag)
        tmpstring = ad_comm::adprogram_name + ".hes";
@@ -30,8 +30,9 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
   int nvar = 0;
   ifs >> nvar;
   dmatrix S(1,nvar,1,nvar);
+  if (nvar > 0)
   {
-    if (nvar != initial_params::nvarcalc())
+    if ((size_t)nvar != initial_params::nvarcalc())
     {
       cout << "the number of independent variables is wrong in admodel.hes"
          << endl;

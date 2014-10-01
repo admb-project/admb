@@ -51,13 +51,14 @@ GTESTS=\
 
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\
-# test_scalefactor.obj\
 # scalefactor.obj\
 
-all: clean gtest-all
+all: clean gtest-all test_scalefactor test_finance
 ifeq ($(SHELL),cmd)
 	gtest-all
 else
+	./test_scalefactor
+	./test_finance
 	./gtest-all
 endif
 
@@ -90,6 +91,36 @@ ifeq ($(SHELL),cmd)
 	CXXFLAGS=-Dmain=scalefactor ..\\..\\admb -c $^
 else
 	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c $^
+endif
+
+test_scalefactor: test_scalefactor.obj main.obj gtest-all.obj scalefactor.obj
+ifeq ($(SHELL),cmd)
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
+else
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+endif
+
+test_finance.obj: test_finance.cpp finance.obj
+ifeq ($(SHELL),cmd)
+	CXXFLAGS=-I$(GTEST_DIR)/include ..\\..\\admb -c $(ADMB_OPTIONS) test_finance.cpp
+else
+	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_finance.cpp
+endif
+
+finance.obj: finance.tpl
+ifeq ($(SHELL),cmd)
+	CXXFLAGS=-Dmain=finance ..\\..\\admb -c $^
+else
+	CXXFLAGS=-Dmain=finance ../../admb$(EXT) -c $^
+endif
+
+test_finance: test_finance.obj main.obj gtest-all.obj finance.obj
+ifeq ($(SHELL),cmd)
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
+	copy ..\\..\\examples\\admb\\finance\\finance.dat
+else
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	cp ../../examples/admb/finance/finance.dat .
 endif
 
 gtest-all: gtest-all.obj $(GTESTS)
@@ -138,6 +169,7 @@ ifeq ($(SHELL),cmd)
 	@del scalefactor.cpp
 	@del scalefactor.htp
 	@del scalefactor.log
+	@del scalefactor.exe
 	@del varssave.tmp
 	@del admodel.cov
 	@del admodel.dep
@@ -152,6 +184,23 @@ ifeq ($(SHELL),cmd)
 	@del scalefactor.par
 	@del scalefactor.rhes
 	@del scalefactor.std
+	@del finance.dat
+	@del finance.dat
+	@del finance.b01
+	@del finance.b02
+	@del finance.bar
+	@del finance.cor
+	@del finance.cpp
+	@del finance.eva
+	@del finance.htp
+	@del finance.log
+	@del finance.p01
+	@del finance.p02
+	@del finance.par
+	@del finance.std
+	@del scalefactor.rep
+	@del test_finance.exe
+	@del test_scalefactor.exe
 else
 	@rm -vf gtest-all *.obj
 	@rm -vf eigv.rpt
@@ -168,6 +217,8 @@ else
 	@rm -vf nf1b2list12
 	@rm -vf nf1b2list13
 	@rm -vf scalefactor.cpp
+	@rm -vf scalefactor
+	@rm -vf scalefactor.exe
 	@rm -vf scalefactor.htp
 	@rm -vf scalefactor.log
 	@rm -vf varssave.tmp
@@ -184,4 +235,20 @@ else
 	@rm -vf scalefactor.par
 	@rm -vf scalefactor.rhes
 	@rm -vf scalefactor.std
+	@rm -vf finance.dat
+	@rm -vf finance.b01
+	@rm -vf finance.b02
+	@rm -vf finance.bar
+	@rm -vf finance.cor
+	@rm -vf finance.cpp
+	@rm -vf finance.eva
+	@rm -vf finance.htp
+	@rm -vf finance.log
+	@rm -vf finance.p01
+	@rm -vf finance.p02
+	@rm -vf finance.par
+	@rm -vf finance.std
+	@rm -vf scalefactor.rep
+	@rm -vf test_finance
+	@rm -vf test_scalefactor
 endif

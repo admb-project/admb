@@ -347,7 +347,7 @@ gggg03::~gggg03()
  * Description not yet available.
  * \param
  */
-gggg07::gggg07(double _jgh4,double _jgh5)
+gggg07::gggg07(doublereal _jgh4,doublereal _jgh5)
 {
   jgh4=_jgh4;
   jgh5=_jgh5;
@@ -710,7 +710,7 @@ void make_all_classes(int _n,int _numberw,int _numberv)
  inumber1=3500;
 
  doublereal _jgh4=0.1;
- int _jgh5=1e+4;
+ doublereal _jgh5=1e+4;
  logical _wwuq3=TRUE_;
  logical _te0=FALSE_;
  logical _te1=FALSE_;

@@ -264,7 +264,8 @@ adpool::~adpool(void)
  * Description not yet available.
  * \param
  */
-adpool::adpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
+adpool::adpool(const size_t sz):
+  size(sz < sizeof(link*) ? sizeof(link*) : sz)
 {
   num_adpools++;
   adpool_vector_flag=0;
@@ -281,10 +282,9 @@ adpool::adpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-adpool::adpool(void)
+Default constructor
+*/
+adpool::adpool()
 {
   num_adpools++;
   int i1=sizeof(twointsandptr);
@@ -312,7 +312,7 @@ Set size of adpool.
 
 /param sz is a non-negative integer
 */
-void adpool::set_size(unsigned int sz)
+void adpool::set_size(const size_t sz)
 {
   if (size != sz && size != 0)
   {
@@ -373,17 +373,20 @@ void adpool::grow(void)
   }
 #endif
 
-  if (!size)
+  const int overhead = 12 + sizeof(char*);
+  const int chunk_size = 16 * 65000 - overhead;
+  char* real_start = new char[chunk_size];
+
+  if (size > 0)
+  {
+    nelem = chunk_size / size;
+  }
+  else
   {
     cerr << "error in adpool object " // << poolname
          << " you must set the unit size " << endl;
     ad_exit(1);
   }
-
-  const int overhead = 12 + sizeof(char*);
-  const int chunk_size = 16 * 65000 - overhead;
-  char* real_start = new char[chunk_size];
-  nelem = chunk_size / size;
 
 #if defined(_USE_VALGRIND_)
    VALGRIND_MAKE_MEM_NOACCESS(realstart,chunk_size);

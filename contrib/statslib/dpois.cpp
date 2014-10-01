@@ -72,7 +72,8 @@ dvariable dpois(const dvector& k, const dvar_vector& lambda)
 	dvariable nll=0;
 	for(i = 1; i <= n; i++)
 	{
-		nll -= k(i)*log(lambda(i))+lambda(i)+gammln(k(i)+1.);
+		// nll -= k(i)*log(lambda(i))+lambda(i)+gammln(k(i)+1.);
+		nll += -k(i)*log(lambda(i))+lambda(i)+gammln(k(i)+1.);
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return nll;

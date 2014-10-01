@@ -32,43 +32,40 @@ void report_calling_set(laplace_approximation_calculator *lapprox)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void check_order(ivector& v)
+Check if v is ordered from low to high.
+
+\returns true if ordered, else false
+*/
+bool check_order(const ivector& v)
 {
   int mmin=v.indexmin();
   int mmax=v.indexmax();
-  int bad=0;
   for (int i=mmin;i<=mmax-1;i++)
   {
     if (v(i+1)<v(i))
     {
-      bad=1;
-      break;
-    }
-    if (bad)
-    {
-      v=sort(v);
+      return false;
     }
   }
+  return true;
 }
 
 /**
- * Description not yet available.
- * \param
- */
-int common(ivector& v,ivector& w)
+Check vectors v and w for single common value.
+
+\returns 1 if has a single common value, else 0.
+*/
+int common(ivector& v, ivector& w)
 {
-  check_order(v);
-  check_order(w);
+  if (!check_order(v)) v = sort(v);
+  if (!check_order(w)) w = sort(w); 
   //int vmin=v.indexmin();
   int wmin=w.indexmin();
   int vmax=v.indexmax();
   int wmax=w.indexmax();
   int common_flag=0;
   int i=wmin; int j=wmin;
-  do
+  for (;;)
   {
     if (v(i)==w(j))
     {
@@ -90,7 +87,6 @@ int common(ivector& v,ivector& w)
         break;
     }
   }
-  while(1);
   return common_flag;
 }
 

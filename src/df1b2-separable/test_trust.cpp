@@ -29,6 +29,7 @@ dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 //dvector laplace_approximation_calculator::default_calculations
  // (const dvector& _x,const double& _f,function_minimizer * pfmin)
 
+#if defined(USE_ADPVM)
 /**
  * Description not yet available.
  * \param
@@ -199,6 +200,7 @@ dvector laplace_approximation_calculator::test_trust_region_method
   while(outer_iter<=max_iteration);
   return xx;
 }
+#endif
 
 /**
  * Description not yet available.
@@ -529,7 +531,7 @@ double laplace_approximation_calculator::do_one_feval
   dvector g(1,usize);
   dvector ub(1,usize);
   initial_params::set_active_random_effects();
-  int nvar=initial_params::nvarcalc();
+  size_t nvar=initial_params::nvarcalc();
   int nvar1=initial_params::nvarcalc_all();
   cout << nvar << " " << nvar1 << endl;
   gradient_structure::set_NO_DERIVATIVES();
@@ -620,6 +622,7 @@ dvector laplace_approximation_calculator::lincg(dvector& xinit,
 }
 */
 
+#if defined(USE_ADPVM)
 /**
  * Description not yet available.
  * \param
@@ -659,3 +662,4 @@ dvector laplace_approximation_calculator::lincg(dvector& xinit,
   while(1);
   return 0;
 }
+#endif

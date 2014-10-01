@@ -61,8 +61,8 @@
  */
 struct doublestar
 {
-  int index_max;
-  int index_min;
+  integer index_max;
+  integer index_min;
   doublereal * d;
   doublestar(integer);
   doublestar(integer,integer);
@@ -493,7 +493,7 @@ extern "C" {
  */
 struct intstar
 {
-  int index_max;
+  integer index_max;
   integer * d;
   intstar(integer);
   ~intstar();

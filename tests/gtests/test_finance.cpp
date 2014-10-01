@@ -20,6 +20,9 @@ TEST_F(test_finance, hess_determinant)
     extern double global_hess_determinant;
     ASSERT_DOUBLE_EQ(43.839847514172448, global_hess_determinant);
 
+    extern double global_projected_hess_determinant;
+    ASSERT_DOUBLE_EQ(28.314961861611934, global_projected_hess_determinant);
+
     df1b2variable::pool = 0;
   }
   df1b2variable::pool = save;

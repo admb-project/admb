@@ -125,3 +125,74 @@ TEST_F(test_ivector, reallocate_empty)
   EXPECT_EQ(-1, empty.indexmax());
   EXPECT_EQ(0, empty.size());
 }
+TEST_F(test_ivector, check_order)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  bool check_order(const ivector& v);
+  ASSERT_FALSE(check_order(v));
+
+  v = sort(v);
+
+  ASSERT_TRUE(check_order(v));
+}
+TEST_F(test_ivector, common_same)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  int common(ivector& v,ivector& w);
+  EXPECT_TRUE(common(v, v) == 1); 
+
+  bool check_order(const ivector& v);
+  ASSERT_TRUE(check_order(v));
+}
+TEST_F(test_ivector, common_none)
+{
+  ivector v(1, 4);
+  v(1) = 3;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  ivector w(1, 4);
+  w(1) = -3;
+  w(2) = -1;
+  w(3) = -2;
+  w(4) = 4;
+
+  int common(ivector& v,ivector& w);
+  EXPECT_FALSE(common(v, w) == 1); 
+
+  bool check_order(const ivector& v);
+  ASSERT_TRUE(check_order(v));
+  ASSERT_TRUE(check_order(w));
+}
+TEST_F(test_ivector, common_one)
+{
+  ivector v(1, 4);
+  v(1) = 3;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  ivector w(1, 4);
+  w(1) = -3;
+  w(2) = 1;
+  w(3) = -2;
+  w(4) = 4;
+
+  int common(ivector& v,ivector& w);
+  EXPECT_TRUE(common(v, w) == 1); 
+
+  bool check_order(const ivector& v);
+  ASSERT_TRUE(check_order(v));
+  ASSERT_TRUE(check_order(w));
+}

@@ -34,6 +34,10 @@ void null_ptr_err_message(void);
   void _far * _cdecl farmalloc(unsigned long size);
 #endif
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 extern ofstream clogf;
 #ifndef __SUNPRO_CC
 typedef int (* fptr) (const char * format, ...) ;
@@ -215,7 +219,7 @@ void cleanup_temporary_files()
  * Description not yet available.
  * \param
  */
-void allocate_dvariable_space(void)
+void allocate_dvariable_space()
 {
   int on,nopt = 0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
@@ -234,16 +238,16 @@ void allocate_dvariable_space(void)
   unsigned int numlinks=gradient_structure::MAX_DLINKS;
   //cout << sizeof(dlink) << endl;
 
-  if (sizeof(char)!=1)
-  {
-    cerr << "sizeof(char) is not equal 1) --"
-       " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
-  }
-  if (sizeof(dlink)>2*sizeof(double))
-  {
-    cerr << "sizeof(dlink) is greater than 2*sizeof(double) --"
-       " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
-  }
+#ifndef OPT_LIB
+  //cerr << "sizeof(char) is not equal 1) --"
+  // " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
+  assert(sizeof(char) == 1);
+
+  //cerr << "sizeof(dlink) is greater than 2*sizeof(double) --"
+  // " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
+  assert(sizeof(dlink) == 2 * sizeof(double));
+#endif
+
   char * tmp= (char*) malloc(2*sizeof(double)*(numlinks+1));
   char * tmp1=tmp;
 

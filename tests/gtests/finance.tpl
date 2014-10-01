@@ -1,6 +1,8 @@
 GLOBALS_SECTION
   double global_hess_determinant = 0;
   double global_projected_hess_determinant = 0;
+  double global_projected_hess_determinant_xscale = 0;
+  double global_ln_det_proj_jac = 0;
 DATA_SECTION
   init_int T
   init_vector r(0,T)
@@ -42,3 +44,7 @@ FINAL_SECTION
   g(3) = 1.04664e-06;
   g(4) = -2.13850e-06;
   global_projected_hess_determinant = projected_hess_determinant(g, 0);
+  dvector xscale(1, 4);
+  xscale = 0.1;
+  global_projected_hess_determinant_xscale =
+    projected_hess_determinant(g, 0, xscale, global_ln_det_proj_jac);

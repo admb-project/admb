@@ -23,6 +23,12 @@ TEST_F(test_finance, hess_determinant)
     extern double global_projected_hess_determinant;
     ASSERT_DOUBLE_EQ(28.314961861611934, global_projected_hess_determinant);
 
+    extern double global_projected_hess_determinant_xscale;
+    ASSERT_DOUBLE_EQ(42.13010376845299, global_projected_hess_determinant_xscale);
+
+    extern double global_ln_det_proj_jac;
+    ASSERT_DOUBLE_EQ(-0.00036865112372874741, global_ln_det_proj_jac);
+
     df1b2variable::pool = 0;
   }
   df1b2variable::pool = save;

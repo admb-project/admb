@@ -482,15 +482,20 @@ void dfpool::grow(void)
     pvalues=new int[pvalues_size];
   }
 #endif
-  if (!size)
+  const int overhead = 12+sizeof(char*);
+  const int chunk_size= 65000-overhead;
+
+  if (size > 0)
+  {
+    nelem = chunk_size / size;
+  }
+  else
   {
     cerr << "error in dfpool object " // << poolname
          << " you must set the unit size " << endl;
     ad_exit(1);
   }
-  const int overhead = 12+sizeof(char*);
-  const int chunk_size= 65000-overhead;
-  nelem= chunk_size/size;
+
   char * real_start=new char[chunk_size+6];
   char * start=real_start+sizeof(char *);
   char *last = &start[(nelem-1)*size];

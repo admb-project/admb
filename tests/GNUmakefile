@@ -174,8 +174,9 @@ clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --directory=glmmadmb --file=Makefile clean
 	$(MAKE) --directory=agemat --file=Makefile clean
-endif
+else
 	$(MAKE) --directory=lprof clean
+endif
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean

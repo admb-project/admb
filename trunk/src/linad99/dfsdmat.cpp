@@ -43,6 +43,9 @@
 
 #ifndef OPT_LIB
   #include <cassert>
+  #ifdef _MSC_VER
+  typedef int ssize_t;
+  #endif
 #endif
 
 #ifdef __NDPX__

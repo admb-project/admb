@@ -57,8 +57,8 @@ class adpool
   static int num_adpools;
   int adpool_vector_flag;
 public:
-  adpool(void);
-  adpool(unsigned);
+  adpool();
+  adpool(const size_t);
  ~adpool();
 
   int depth_check(void);
@@ -69,7 +69,7 @@ public:
   int num_allocated;
   int num_chunks;
   int nelem;
-  unsigned int size;
+  size_t size;
   link* head;
   double* first;
   adpool(adpool&);  // copy protection
@@ -84,7 +84,7 @@ public:
 #endif
 public:
   void clean(void);
-  void set_size(unsigned);
+  void set_size(const size_t);
   void* alloc(void);
   void free(void* b);
   void deallocate(void);

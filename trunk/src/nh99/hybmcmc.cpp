@@ -19,6 +19,11 @@ using std::istringstream;
   #include <conio.h>
 #endif
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 double better_rand(long int&);
 void store_mcmc_values(const ofstream& ofs);
 void set_labels_for_mcmc(void);
@@ -562,8 +567,13 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          hstep2=0.5*hstep;
          // randomize the number of steps
          double rnd2=randn(rng);
-         int hnsteps=hybnstep*exp(.2*rnd2);
-
+#ifdef OPT_LIB
+         int hnsteps = (int)(exp(0.2 * rnd2) * hybnstep);
+#else
+         double _hnsteps=exp(0.2 * rnd2) * hybnstep;
+         assert(_hnsteps > 0 && _hnsteps <= (double)INT_MAX);
+         int hnsteps = (int)_hnsteps;
+#endif
          for (int i=1;i<=hnsteps;i++)
          {
            if (forflag==1)

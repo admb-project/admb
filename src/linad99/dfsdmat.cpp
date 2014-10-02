@@ -369,7 +369,12 @@ void dfsdmat::restore()
 {
   int _n=0;
   lseek(tmp_file,0L,SEEK_SET);
+#ifdef OPT_LIB
   read(tmp_file,&_n,sizeof(int));
+#else
+  ssize_t ret = read(tmp_file,&_n,sizeof(int));
+  assert(ret != -1);
+#endif
   int nn=(_n*(_n+1))/2;
   //if (!shared_memory) allocate(_n);
   size_t num_bytes=read(tmp_file,ptr,nn*sizeof(double));

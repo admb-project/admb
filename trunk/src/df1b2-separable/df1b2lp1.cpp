@@ -338,10 +338,6 @@ dvector laplace_approximation_calculator::default_calculations
         uhat_old=uhat;
         uhat+=step;
       }
-      else
-      {
-        trust_update_flag=0;
-      }
 
       double maxg_old=maxg;
       pmin->inner_opt_flag=1;

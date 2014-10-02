@@ -32,8 +32,8 @@ void df_xdet(void);
 */
 dvariable det(const dvar_matrix& aa)
 {
-  int i,j,k,n;
-  n=aa.colsize();
+  int i,j,k;
+  int n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
   ivector indx(lb,ub);
@@ -133,8 +133,7 @@ dvariable det(const dvar_matrix& aa)
       }
     }
   }
-  double det=d;
-
+  //double det=d;
   // SM Bug 129, issue appears to be at this line
   // part_prod is declared above as dvector(lb,ub)
   // cout<<"Bug 129 ="<<part_prod(lb)<<endl;
@@ -145,7 +144,7 @@ dvariable det(const dvar_matrix& aa)
   {
     part_prod(j)=part_prod(j-1)*bb(j,j);
   }
-  det=part_prod(ub);
+  double det=part_prod(ub);
   dvariable rdet=nograd_assign(det);
   save_identifier_string("PLACE7");
   part_prod.save_dvector_value();

@@ -8,16 +8,12 @@
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 
-//#define NO_MCMC
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
 
 void ADSleep(unsigned int x);
 
-  void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
-    int& next_flag);
-  void vm_initialize(void);
   void test_mcmc_options_window(void);
   void ad_open_mcmc_options_window(void);
   void ad_open_mcmchist_window(void);
@@ -40,6 +36,7 @@ extern admb_javapointers * adjm_ptr;
     tracing_message(traceflag,"A1");
     //if (option_match(argc,argv,"-gui")>-1)
     //{
+    //  void vm_initialize(void);
     //  vm_initialize();
     //  cout << " called vm_initialize() " << endl;
     //}
@@ -305,24 +302,12 @@ extern admb_javapointers * adjm_ptr;
               }
               if ( (on=option_match(argc,argv,"-mcr",nopt))>-1)
               {
-    #if defined(NO_MCMC)
-                cerr << "mcmc and sob option not supported you must purchase"
-                        " this as an add on" << endl;
-                exit(1);
-    #else
                 //sob_routine(nsob,dscale,1);
                 //sobol_importance_routine(nsob,iseed0,dscale,1);
-    #endif
               }
               else
               {
-    #if defined(NO_MCMC)
-                cerr << "mcmc and sob option not supported you must purchase"
-                        " this as an add on" << endl;
-                exit(1);
-    #else
                 //sobol_importance_routine(nsob,iseed0,dscale,0);
-    #endif
               }
             }
             initial_params::sd_phase=0;
@@ -546,28 +531,16 @@ void write_banner_stuff(void)
       }
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
       {
-#if defined(NO_MCMC)
-        cerr << "mcmc option not supported you must purchase"
-                " this as an add on" << endl;
-        exit(1);
-#else
         //mcmc_routine(nmcmc,iseed0,dscale,1);
-        #if defined(USE_ADPVM)
+#if defined(USE_ADPVM)
         pvm_master_mcmc_routine(nmcmc,iseed0,dscale,1);
-        #endif
 #endif
       }
       else
       {
-#if defined(NO_MCMC)
-        cerr << "mcmc option not supported you must purchase"
-                " this as an add on" << endl;
-        exit(1);
-#else
         //mcmc_routine(nmcmc,iseed0,dscale,0);
-        #if defined(USE_ADPVM)
+#if defined(USE_ADPVM)
         pvm_master_mcmc_routine(nmcmc,iseed0,dscale,0);
-        #endif
 #endif
       }
     }

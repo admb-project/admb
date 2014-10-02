@@ -94,7 +94,7 @@ dll_param_init_vector& dll_param_init_vector::operator =
 
 dll_param_init_vector& dll_param_init_vector::operator = (const double& x)
 {
-  dll_param_init_vector::operator = (x);
+  param_init_vector::operator = (x);
   return (*this);
 }
 

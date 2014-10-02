@@ -8,7 +8,10 @@ endif
 
 TARGET=beta_regression
 
-all: clean $(TARGET) run3 run2 run
+all: clean $(TARGET)
+	$(MAKE) run3
+	$(MAKE) run2
+	$(MAKE) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
 ifeq ($(SHELL),cmd)

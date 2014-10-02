@@ -22,7 +22,6 @@
 //  dvariable  *fbest=NULL;
 //  dvar_vector  *xlinebest=NULL;
 
-       void xgoofr(void){;}
 //dvariable sqrt(const prevariable&);
 dvariable fmax(double x,prevariable& y)
   { if (x>=value(y)) return x; else return y;}
@@ -30,13 +29,15 @@ dvariable fmax(prevariable& x,double y)
   { if (value(x)>=y) return x; else return y;}
 dvariable fmin(prevariable& x,double y)
   { if (value(x)<=y) return x; else return y;}
-dvariable fmax(double x,double * y)
+dvariable fmax(double x,double* y)
 {
-  //if (x>=y)
+/*
   if (1)
    return 1;
   else
     return 2;
+*/
+  return y && x < *y ? *y : x;
 }
 dvariable fmax(double x,double & y)
   { if (x>=y) return x; else return y;}
@@ -977,7 +978,8 @@ L172:
         return 0;
     }
     if (info != 1) {
-       xgoofr();
+       //void xgoofr(void){;}
+       //xgoofr();
         goto L190;
     }
     nfun += nfev;

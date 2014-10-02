@@ -88,7 +88,7 @@ endif
 
 scalefactor.obj: scalefactor.tpl
 ifeq ($(SHELL),cmd)
-	CXXFLAGS=-Dmain=scalefactor ..\\..\\admb -c $^
+	set CXXFLAGS="-Dmain=scalefactor" & ..\\..\\admb -c $^
 else
 	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c $^
 endif
@@ -109,7 +109,7 @@ endif
 
 finance.obj: finance.tpl
 ifeq ($(SHELL),cmd)
-	CXXFLAGS=-Dmain=finance ..\\..\\admb -c $^
+	set CXXFLAGS="-Dmain=finance" & ..\\..\\admb -c $^
 else
 	CXXFLAGS=-Dmain=finance ../../admb$(EXT) -c $^
 endif

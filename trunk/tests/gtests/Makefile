@@ -43,6 +43,7 @@ GTESTS=\
  test_param_init_bounded_vector_vector.cpp\
  test_param_init_number_vector.cpp\
  test_pow.cpp\
+ test_dvariable.cpp\
  main.cpp
 
 ##Need to debug this

@@ -82,7 +82,7 @@ endif
 
 test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
 ifeq ($(SHELL),cmd)
-	CXXFLAGS=-I$(GTEST_DIR)/include ..\\..\\admb -c $(ADMB_OPTIONS) test_scalefactor.cpp
+	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_scalefactor.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_scalefactor.cpp
 endif
@@ -103,7 +103,7 @@ endif
 
 test_finance.obj: test_finance.cpp finance.obj
 ifeq ($(SHELL),cmd)
-	CXXFLAGS=-I$(GTEST_DIR)/include ..\\..\\admb -c $(ADMB_OPTIONS) test_finance.cpp
+	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_finance.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_finance.cpp
 endif

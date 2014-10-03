@@ -103,3 +103,18 @@ else
 	@rm -f $(TARGET).mcm
 	@rm -f $(TARGET)
 endif
+
+get-outputs:
+ifeq ($(SHELL),cmd)
+	type simple_mcmc.cor
+	type simple_mcmc.eva
+	type simple_mcmc.par
+	type simple_mcmc.std
+	type sims
+else
+	cat simple_mcmc.cor
+	cat simple_mcmc.eva
+	cat simple_mcmc.par
+	cat simple_mcmc.std
+	cat sims
+endif

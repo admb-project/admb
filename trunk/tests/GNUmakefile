@@ -250,3 +250,4 @@ endif
 	$(MAKE) --directory=beta_regression get-outputs >> benchmarks-tests.txt
 	$(MAKE) --directory=agemat get-outputs >> benchmarks-tests.txt
 	$(MAKE) --directory=beta_deviate get-outputs >> benchmarks-tests.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> benchmarks-tests.txt

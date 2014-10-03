@@ -21,6 +21,11 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 int derchflag=0;
 double derch_stepsize=0.0;
 
@@ -51,10 +56,8 @@ void derch(const double& _f, const independent_variables & _x,
   else if (ireturn == 5) goto label5;
   g=gg;
   {
-    int maxind=0;
-    double  maxg;
-    maxind=g.indexmin();
-    maxg=fabs(g(maxind));
+    int maxind = g.indexmin();
+    double maxg=fabs(g(maxind));
     dmatrix tmp(1,3,g.indexmin(),g.indexmax());
     tmp(1).fill_seqadd(1,1);
     tmp(2)=g;
@@ -71,7 +74,7 @@ void derch(const double& _f, const independent_variables & _x,
       }
     }
     cout << "maxind = " << maxind << " maxg = " << maxg << endl;
-    index=ivector(column(dtmp,1));
+    index=column(dtmp,1);
   }
   while (j > 0)
   {
@@ -101,24 +104,25 @@ void derch(const double& _f, const independent_variables & _x,
       n1 = j;
       n2 = j;
     }
-    cout << "   Enter step size.\n";
+    cout << "\n   Enter step size.\n";
     cout << "      To quit derivative checker enter -1;\n";
-    cout << "      to check for unitialized variables enter 0): ";
+    cout << "      to check for uninitialized variables enter 0): ";
     flush(cout);
-#   if defined(__BORLANDC__)
-      char mystring[1000];
-      cin >> mystring;
-      s=atof(mystring);
-#   else
-      cin >> s;
-#   endif
-
+#if defined(__BORLANDC__)
+    char mystring[1000];
+    cin >> mystring;
+    s=atof(mystring);
+#else
+    cin >> s;
+#endif
     if (s < 0) ad_exit(0);
+
     if (j==0)
     {
-      cout << endl << "   If you want the derivatives approximated in order"
-        << endl << "   of decreasing magnitude enter 1"
-        << endl << "   Else enter 0" << endl;
+      cout << "\n   If you want the derivatives approximated in order\n"
+           << "   of decreasing magnitude enter 1;\n"
+           << "   else enter 0: ";
+      flush(cout);
       int tmpint=0;
       cin >> tmpint;
       if (tmpint==1)
@@ -126,19 +130,39 @@ void derch(const double& _f, const independent_variables & _x,
       else
         order_flag=0;
     }
-    else
+    if (s != 0)
     {
-cout << "\n       X           Function     Analytical     Finite Diff;  Index"
-         << endl;
+      cout << 
+        "\n   X             Function      Analytical    Finite Diff ; Index"
+        << endl;
     }
 
     for (ii=n1; ii<=n2; ii++)
     {
+      i = ii;
       if (order_flag==1)
-        i=index(ii);
-      else
-        i=ii;
-
+      {
+        int count = 0;
+        for (int _ii = index.indexmin(); _ii <= index.indexmax(); ++_ii)
+        {
+#ifdef OPT_LIB
+          int idx = index(_ii);
+#else
+          double _idx = index(_ii);
+          assert(_idx <= (double)INT_MAX);
+          int idx = (int)_idx;
+#endif
+          if (x.indexmin() <= idx && idx <= x.indexmax())
+          {
+            ++count;
+          }
+          if (count == ii)
+          {
+            i = idx;
+            break;
+          }
+        }
+      }
       derch_stepsize=s;
       derchflag=1;
       xsave=x(i);

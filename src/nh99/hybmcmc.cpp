@@ -70,9 +70,6 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
 //void newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,
 //double d);
 
-void newton_raftery_bayes_estimate_new(double cbf, int ic, const dvector& lk,
-  double d);
-
 void ad_update_mcmc_stats_report
   (int feval,int iter,double fval,double gmax);
 

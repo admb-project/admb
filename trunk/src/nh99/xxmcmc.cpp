@@ -71,8 +71,10 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
 
 //void newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,
 //  double d);
+#if defined(USE_BAYES_FACTORS)
 void newton_raftery_bayes_estimate_new(double cbf,int ic, const dvector& lk,
   double d);
+#endif
 
 void ad_update_mcmc_stats_report
   (int feval,int iter,double fval,double gmax);
@@ -1578,6 +1580,7 @@ void newton_raftery_bayes_estimate(double cbf, int ic, const dvector& lk,
 }
 */
 
+#if defined(USE_BAYES_FACTORS)
 void newton_raftery_bayes_estimate_new(double lcbf, int ic, const dvector& lk,
   double d)
 {
@@ -1604,6 +1607,7 @@ void newton_raftery_bayes_estimate_new(double lcbf, int ic, const dvector& lk,
   }
   while(1);
 }
+#endif
 
 /*
 void save_mcmc_for_gui(const dvector& mcmc_number_values,

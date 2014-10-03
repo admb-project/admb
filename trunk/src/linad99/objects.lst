@@ -134,7 +134,6 @@ OBJ1=\
  lmat_io.obj\
  fvar_a50.obj\
  fmmt1.obj\
- xfmmtr1.obj\
  dfsdmat.obj\
  cumdist.obj\
  vcumdist.obj\
@@ -483,6 +482,7 @@ PVM=\
  slgrdclc.obj\
  adcomm1.obj
 UNUSED=\
+ xfmmtr1.obj\
  denorm.obj\
  dvect21.obj\
  tsdfpool.obj\

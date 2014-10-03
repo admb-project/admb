@@ -137,7 +137,9 @@ tpl-orange_mvn:
 	$(MAKE) --directory=orange_mvn
 
 tpl-lprof:
+ifneq ($(SHELL),cmd)
 	$(MAKE) --directory=lprof
+endif
 
 tpl-SS3:
 ifneq ($(CXX),openCC)

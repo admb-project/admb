@@ -236,7 +236,7 @@ void tracing_message(int traceflag,const char *s);
       tracing_message(traceflag,"B2");
       initial_params::xinit(x);    // get the initial values into the
 
-      ///\todo What does the -uhess option do? 
+      ///\todo What does the -uhess option do?
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-uhess"))>-1)
       {
         int ierr=0;

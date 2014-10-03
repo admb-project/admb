@@ -12,15 +12,14 @@
   #define getch getchar
 #endif
 
-double better_rand(long int&);
-void store_mcmc_values(const ofstream& ofs);
-void set_labels_for_mcmc(void);
-void save_mcmc_for_gui(const dvector& mcmc_values,dmatrix &mdm,int& ids);
-void save_mcmc_for_gui1(const dvector& mcmc_values,
-  dmatrix &mdm,int& ids,int& iwrap,ivector& no);
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
-void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
-  int& next_flag);
+double better_rand(long int&);
+void set_labels_for_mcmc(void);
+
 void print_hist_data(const dmatrix& hist, const dmatrix& values,
   const dvector& h, dvector& m, const dvector& s, const dvector& parsave,
   long int iseed, double size_scale);
@@ -42,10 +41,6 @@ void make_preliminary_hist(const dvector& s, const dvector& m,int nsim,
 void add_hist_values(const dvector& s, const dvector& m, const dmatrix& hist,
   dvector& mcmc_values,double llc, const dvector& h,int nslots,
   double total_spreadd,int probflag=0);
-
-void add_guihist_values(const dvector& s, const dvector& m,
-  const dmatrix& _hist, dvector& mcmcnumber_values, double llc,
-  const dvector& h, int nslots, double total_spread);
 
 void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
   const dmatrix& s_covar, adstring& prog_name);
@@ -456,6 +451,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       llbest=-get_monte_carlo_value(nvar,y);
       lbmax=llbest;
       // store current mcmc variable values in param_values
+      //void store_mcmc_values(const ofstream& ofs);
       //dmatrix store_mcmc_values(1,number_sims,1,ndvar);
 #if defined(USE_BAYES_FACTORS)
       lkvector.allocate(1,number_sims);
@@ -645,6 +641,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 
             if (allocated(hist)) ad_update_mcmchist_report(hist,
               number_offsets,mean_mcmc_values,h);
+            void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
+              int& next_flag);
             check_java_flags(start_flag,java_quit_flag,der_flag,next_flag);
             ADSleep(50);
           }
@@ -786,6 +784,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
        /*
         if (adjm_ptr)
         {
+          void save_mcmc_for_gui1(const dvector& mcmc_values,
+            dmatrix &mdm,int& ids,int& iwrap,ivector& no);
           save_mcmc_for_gui1(mcmc_values,mcmc_display_matrix,
             mcmc_save_index,mcmc_wrap_flag,number_offsets);
         }
@@ -1014,12 +1014,18 @@ void print_hist_data(const dmatrix& hist, const dmatrix& values,
   ivector mmin(1,nsdvars);
   ivector mmax(1,nsdvars);
 
-  int nsim = sum(hist(1));
   for (i=1;i<=nsdvars;i++)
   {
     mmin(i)=minnz(hist(i));
     mmax(i)=maxnz(hist(i));
   }
+#ifdef OPT_LIB
+  int nsim = (int)sum(hist(1));
+#else
+  double _nsim = sum(hist(1));
+  assert(_nsim <= (double)INT_MAX);
+  int nsim = (int)_nsim;
+#endif
   ofs << "# samples sizes" << endl;
   ofs << nsim << endl;
   ofs << "# step size scaling factor" << endl;
@@ -1620,7 +1626,6 @@ void save_mcmc_for_gui(const dvector& mcmc_number_values,
     mdm(i,ids)=mcmc_number_values(i);
   ids++;
 }
-*/
 
 void save_mcmc_for_gui1(const dvector& mcmc_values,
   dmatrix &mdm,int& ids,int& iwrap,ivector& no)
@@ -1636,6 +1641,7 @@ void save_mcmc_for_gui1(const dvector& mcmc_values,
     mdm(i,ids)=mcmc_values(no(i));
   ids++;
 }
+*/
 
 dvector read_old_scale(int & old_nvar)
 {

@@ -235,6 +235,8 @@ void tracing_message(int traceflag,const char *s);
       independent_variables x(1,nvar);
       tracing_message(traceflag,"B2");
       initial_params::xinit(x);    // get the initial values into the
+
+      ///\todo What does the -uhess option do? 
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-uhess"))>-1)
       {
         int ierr=0;
@@ -257,7 +259,7 @@ void tracing_message(int traceflag,const char *s);
         if (ierr==0)
         {
           dvector xsave(1,x.indexmax());
-          do
+          for (;;)
           {
             double delta=0;
             cout << "enter delta" << endl;
@@ -268,7 +270,6 @@ void tracing_message(int traceflag,const char *s);
             userfunction();
             x=xsave;
           }
-          while(1);
         }
       }
 

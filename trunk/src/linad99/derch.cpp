@@ -132,7 +132,7 @@ void derch(const double& _f, const independent_variables & _x,
     }
     if (s != 0)
     {
-      cout << 
+      cout <<
         "\n   X             Function      Analytical    Finite Diff ; Index"
         << endl;
     }

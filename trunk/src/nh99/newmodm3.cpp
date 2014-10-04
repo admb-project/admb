@@ -6,16 +6,17 @@
  */
 #include <admodel.h>
 
-int xxxmax(int x,int y)
+int xxxmax(const int x, const int y)
 {
-  if (x<y) return y;
-  return x;
+  return x < y ? y : x;
 }
-int xxxmin(int x,int y)
+int xxxmin(const int x, const int y)
 {
-  if (x<y) return x;
-  return y;
+  return x < y ? x : y;
 }
+/**
+\todo need test case
+*/
 void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
   dmatrix& ms, const dvector& xs, const dvector& siglevel,
   const int& level_index, int index)
@@ -58,7 +59,7 @@ void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
       integral+=fval(i)*(xs(i)-xs(i-1));
     }
     cout << integral << endl;
-    do
+    for (;;)
     {
       if (lb <= fval.indexmin() &&  rb > fval.indexmax())
       {
@@ -118,7 +119,6 @@ void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
         rb++;
       }
     }
-    while (1);
   }
 
 void get_onesided_intervals(const dvector& _left_bd, const dvector& _right_bd,

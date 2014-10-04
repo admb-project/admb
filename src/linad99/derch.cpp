@@ -146,7 +146,7 @@ void derch(const double& _f, const independent_variables & _x,
         for (int _ii = index.indexmin(); _ii <= index.indexmax(); ++_ii)
         {
 #ifdef OPT_LIB
-          int idx = index(_ii);
+          int idx = (int)index(_ii);
 #else
           double _idx = index(_ii);
           assert(_idx <= (double)INT_MAX);

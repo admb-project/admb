@@ -150,24 +150,24 @@ verify:
 ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
 	del ..\benchmarks-opt.txt
+	del ..\benchmarks-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
-	del ..\benchmarks-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
   else
 	del ..\benchmarks-opt.txt
+	del ..\benchmarks-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
-	del ..\benchmarks-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
   endif
 else
 	rm -vf ../benchmarks-opt.txt
+	rm -vf ../benchmarks-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-opt.txt"
-	rm -vf ../benchmarks-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
 endif

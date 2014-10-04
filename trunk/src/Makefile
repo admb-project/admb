@@ -200,6 +200,7 @@ copy:
 clean:
 	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
+	if exist ..\admb.cmd del ..\admb.cmd
 	if exist ..\admb.bat del ..\admb.bat
 	if exist ..\admb.sh del ..\admb.sh
 	if exist ..\admb.zip del ..\admb.zip

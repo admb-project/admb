@@ -196,9 +196,8 @@ dvector safe_choleski_solver::solve
 }
 
 /**
- * Description not yet available.
- * \param
- */
+\todo Needs testing
+*/
 void laplace_approximation_calculator::
   do_newton_raphson_state_space(function_minimizer * pfmin,double f_from_1,
   int& no_converge_flag)
@@ -208,13 +207,12 @@ void laplace_approximation_calculator::
   double fval=1.e+100;
   double maxg=fabs(evaluate_function(fbest,uhat,pfmin));
 
-
   laplace_approximation_calculator::where_are_we_flag=0;
   dvector uhat_old(1,usize);
   safe_choleski_solver scs(0.1);
   //for(int ii=1;ii<=num_nr_iters;ii++)
   int ii=0;
-  do
+  for (;;)
   {
     bHess->initialize();
 
@@ -260,7 +258,7 @@ void laplace_approximation_calculator::
     int extra_try=0;
     dvector utry(1,usize);
     int smallshrink=0;
-    do
+    for (;;)
     {
       if (++iic>10)
       {
@@ -344,7 +342,6 @@ void laplace_approximation_calculator::
         }
       }
     }
-    while(1);
 
     ii++;
 
@@ -395,5 +392,4 @@ void laplace_approximation_calculator::
       }
     }
   }
-  while(1);
 }

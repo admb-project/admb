@@ -102,7 +102,8 @@ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator()(int i)
    int size=indexmax()-indexmin()+1;
    if (size>0)
    {
-     if (!(v=new df1b2_init_bounded_number[size]))
+     v = new df1b2_init_bounded_number[size];
+     if (!v)
      {
         cerr << " error trying to allocate memory in "
           "df1b2_init_bounded_number_vector " << endl;
@@ -295,7 +296,8 @@ void df1b2_init_bounded_number_vector::set_initial_value(
    int size=indexmax()-indexmin()+1;
    if (size>0)
    {
-     if (!(v=new df1b2_init_number[size]))
+     v = new df1b2_init_number[size];
+     if (!v)
      {
         cerr << " error trying to allocate memory in "
           "df1b2_init_number_vector " << endl;

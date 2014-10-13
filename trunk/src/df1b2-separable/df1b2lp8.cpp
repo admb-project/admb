@@ -145,7 +145,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
     }
   }
   int n=itmp(1);
-  double samplesize=num_importance_samples;
+  int samplesize=num_importance_samples;
 
   // mesh size
   double delta=0.01;
@@ -169,7 +169,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   int ii;
   for (x=mid-spread;x<=mid+spread;x+=delta)
   {
-    tsum+=exp((n-1)*log(x)-0.5*x*x-tmax)/ssum*samplesize;
+    tsum+=exp((n-1)*log(x)-0.5*x*x-tmax)/ssum*((double)samplesize);
     int ns=int(tsum);
     for (ii=1;ii<=ns;ii++)
     {

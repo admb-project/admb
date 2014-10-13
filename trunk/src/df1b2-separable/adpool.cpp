@@ -11,9 +11,12 @@
 
 #include <df1b2fun.h>
 #include <adpool.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 //#define (_USE_VALGRIND_)
 
-//ofstream xofs("allocation");
 /**
  * Description not yet available.
  * \param
@@ -147,7 +150,10 @@ void* adpool::alloc(void)
   }
 #endif
 
-  ((twointsandptr*)p)->nvar=nvar;
+#ifndef OPT_LIB
+  assert(nvar <= SHRT_MAX);
+#endif
+  ((twointsandptr*)p)->nvar=(short)nvar;
   ((twointsandptr*)p)->ptr=this;
 #if defined (INCLUDE_BLOCKSIZE)
   ((twointsandptr*)p)->blocksize=size;

@@ -20,8 +20,9 @@
 double fmm::minimize(const independent_variables & x,
   double (*pf)(const dvar_vector&))
 {
+  double f = 0.0;
+
   int nvar=x.size();
-  double f;
   dvector g(1,nvar);
 #ifndef SAFE_INITIALIZE
   g.initialize();
@@ -40,5 +41,5 @@ double fmm::minimize(const independent_variables & x,
       }
     }
   }
-  return(f);
+  return f;
 }

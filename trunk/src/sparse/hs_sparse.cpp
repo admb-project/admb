@@ -1515,7 +1515,10 @@ int cs_tdfs (int j, int k, ivector &head, XCONST ivector &next, ivector &post,
     return (k) ;
 }
 
-/* p = amd(A+A') if symmetric is true, or amd(A'A) otherwise */
+/**
+p = amd(A+A') if symmetric is true, or amd(A'A) otherwise
+\todo Need test case.
+*/
 ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
 {
     int d, dk, dext, lemax = 0, e, elenk, eln, i, j, k, k1,
@@ -1529,7 +1532,7 @@ ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
     hs_smatrix AT(n,A.nzmax);
     cs_transpose(A,0,AT);
 
-    dense = CS_MAX (16, 10 * sqrt ((double) n)) ;   /* find dense threshold */
+    dense = CS_MAX (16, (int)(10.0 * sqrt((double)n))) ;   /* find dense threshold */
     dense = CS_MIN (n-2, dense) ;
 
     hs_smatrix C = cs_add(A,AT);
@@ -1849,6 +1852,9 @@ ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
     return (P) ;
 }
 
+/**
+\todo Need test case.
+*/
 ivector cs_amd (XCONST dvar_hs_smatrix &A) /* Implements only order == 1: Chol*/
 {
     int d, dk, dext, lemax = 0, e, elenk, eln, i, j, k, k1,
@@ -1862,7 +1868,7 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A) /* Implements only order == 1: Chol*/
     dvar_hs_smatrix AT(n,A.nzmax);
     cs_transpose(A,0,AT);
 
-    dense = CS_MAX (16, 10 * sqrt ((double) n)) ;   /* find dense threshold */
+    dense = CS_MAX (16, (int)(10.0 * sqrt((double)n))) ;   /* find dense threshold */
     dense = CS_MIN (n-2, dense) ;
 
     dvar_hs_smatrix C = cs_add(A,AT);
@@ -3240,7 +3246,7 @@ static void dfcholeski_sparse(void)
     int p1=0;
 
     dvector xsave(0,nxcount);
-    dvector csave(0,nccount);
+    ivector csave(0,nccount);
     dvector lkisave(0,nlkicount);
 
     tccount=0;

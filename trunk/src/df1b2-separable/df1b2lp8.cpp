@@ -8,9 +8,13 @@
  * \file
  * Description not yet available.
  */
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
   dmatrix& M);
 
@@ -895,9 +899,8 @@ void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+\todo Need test case.
+*/
 void save_number_of_local_effects(int num_separable_calls,
   ivector ** num_local_re_array, ivector ** num_local_fixed_array,
   int num_local_re,int num_fixed_effects)
@@ -921,7 +924,13 @@ void save_number_of_local_effects(int num_separable_calls,
       ad_exit(1);
     }
     int old_max=(*num_local_re_array)->indexmax();
-    int new_max=old_max+100+10*sqrt(double(old_max));
+#ifdef OPT_LIB
+    int new_max=old_max+100+(int)(10.0*sqrt(double(old_max)));
+#else
+    double sqrt_oldmax = 10.0 * sqrt(double(old_max));
+    assert(sqrt_oldmax <= INT_MAX);
+    int new_max=old_max+100+(int)sqrt_oldmax;
+#endif
     ivector tmp(1,old_max);
     tmp=(**num_local_re_array);
     (*num_local_re_array)=new ivector(1,new_max);
@@ -960,7 +969,13 @@ void save_number_of_local_effects(int num_separable_calls,
       ad_exit(1);
     }
     int old_max=(*num_local_fixed_array)->indexmax();
-    int new_max=old_max+100+10*sqrt(double(old_max));
+#ifdef OPT_LIB
+    int new_max=old_max+100+(int)(10.0*sqrt(double(old_max)));
+#else
+    double sqrt_oldmax = 10.0 * sqrt(double(old_max));
+    assert(sqrt_oldmax <= INT_MAX);
+    int new_max=old_max+100+(int)sqrt_oldmax;
+#endif
     ivector tmp(1,old_max);
     tmp=(**num_local_fixed_array);
     (*num_local_fixed_array)=new ivector(1,new_max);

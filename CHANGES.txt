@@ -18,6 +18,7 @@ ADMB-trunk
 ----------
 
 ####Changes and Improvements
+* Default safe libs include overflows checks.
 * Changes to derivative checker prompts.
 * Added description documentation to the programming interface.
 * Improvements to admb scripts (see New Features).

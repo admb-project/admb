@@ -149,30 +149,6 @@ double inv_cumd_gamma(double y,double a)
 #undef ITMAX
 #undef EPS
 
-double Sn(double x,double a)
-{
-  int i=1;
-  double xp=x;
-  double prod=1.0;
-  double summ=1.0;
-  double summand;
-  do
-  {
-    prod*=(a+i);
-    summand=xp/prod;
-    if (summand<1.e-4) break;
-    summ+=summand;
-    i++;
-    if (i>50)
-    {
-      cerr << "convergence error" << endl;
-      ad_exit(1);
-    }
-  }
-  while(1);
-  return summ;
-}
-
 double get_initial_u(double a,double y)
 {
   const double c=0.57721;

@@ -1532,7 +1532,8 @@ ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
     hs_smatrix AT(n,A.nzmax);
     cs_transpose(A,0,AT);
 
-    dense = CS_MAX (16, (int)(10.0 * sqrt((double)n))) ;   /* find dense threshold */
+    /* find dense threshold */
+    dense = CS_MAX (16, (int)(10.0 * sqrt((double)n)));
     dense = CS_MIN (n-2, dense) ;
 
     hs_smatrix C = cs_add(A,AT);
@@ -1867,8 +1868,8 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A) /* Implements only order == 1: Chol*/
 
     dvar_hs_smatrix AT(n,A.nzmax);
     cs_transpose(A,0,AT);
-
-    dense = CS_MAX (16, (int)(10.0 * sqrt((double)n))) ;   /* find dense threshold */
+    /* find dense threshold */
+    dense = CS_MAX (16, (int)(10.0 * sqrt((double)n)));
     dense = CS_MIN (n-2, dense) ;
 
     dvar_hs_smatrix C = cs_add(A,AT);

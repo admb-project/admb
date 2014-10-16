@@ -115,7 +115,7 @@ static void gser(double& gamser,double a,double x,double& gln)
 
 static double get_initial_u(double a,double y);
 
-static double Sn(double x,double a);
+double Sn(double x,double a);
 
 #include <df32fun.h>
 df3_two_variable cumd_gamma(const df3_two_variable& x,
@@ -175,7 +175,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 #undef ITMAX
 #undef EPS
 
-static double Sn(double x,double a)
+double Sn(double x,double a)
 {
   double summ=1.0;
 

@@ -200,13 +200,7 @@ void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(
   }
   for (int i=min;i<=max;i++)
   {
-#if defined(_MSC_VER)
-    dvector& x=(dvector&)(*this)(i);
-#else
-    const dvector& cx=(const dvector&)(*this)(i);
-    dvector& x=(dvector&)(cx);
-    //dvector& x=(dvector&)(*this)(i);
-#endif
+    dvector& x=(dvector&)d(i);
     dvar_matrix_position& pos1= (dvar_matrix_position&) pos;
     x.save_dvector_derivatives(pos1(i));
   }

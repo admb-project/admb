@@ -1991,8 +1991,10 @@ public:
   double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
     dvector& g);
   void mcmc_computations(void);
+#if defined(USE_ADPVM)
   void pvm_slave_mcmc_computations(void);
   void pvm_master_mcmc_computations(void);
+#endif
   double get_monte_carlo_value(int nvar, const dvector& x);
   void sob_routine(int nmcmc,double dscale,int restart_flag);
   void sobol_importance_routine(int nmcmc,int iseed0,double dscale,

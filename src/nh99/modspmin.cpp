@@ -425,12 +425,15 @@ void write_banner_stuff(void)
       {
         if (nopt)
         {
-          char * end;
-          dscale=strtod(ad_comm::argv[on+1],&end);
-          if (!dscale)
+          char* end;
+          double _dscale = strtod(ad_comm::argv[on + 1], &end);
+          if (_dscale != 0.0)
           {
             cerr << "Invalid argument to option -mcmult" << endl;
-            dscale=1.0;
+          }
+          else
+          {
+            dscale = _dscale;
           }
         }
       }
@@ -438,12 +441,15 @@ void write_banner_stuff(void)
       {
         if (nopt)
         {
-          iseed0=atoi(ad_comm::argv[on+1]);
-          if (iseed0 <=0)
+          int _iseed0 = atoi(ad_comm::argv[on+1]);
+          if (_iseed0 <=0)
           {
             cerr << " Invalid option following command line option -mcseed -- "
               << endl << " ignored" << endl;
-            iseed0=0;
+          }
+          else
+          {
+            iseed0 = _iseed0;
           }
         }
       }
@@ -478,6 +484,7 @@ void write_banner_stuff(void)
     }
   }
 
+#if defined(USE_ADPVM)
   void function_minimizer::pvm_master_mcmc_computations(void)
   {
     int on,nopt = 0;
@@ -532,16 +539,12 @@ void write_banner_stuff(void)
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
       {
         //mcmc_routine(nmcmc,iseed0,dscale,1);
-#if defined(USE_ADPVM)
         pvm_master_mcmc_routine(nmcmc,iseed0,dscale,1);
-#endif
       }
       else
       {
         //mcmc_routine(nmcmc,iseed0,dscale,0);
-#if defined(USE_ADPVM)
         pvm_master_mcmc_routine(nmcmc,iseed0,dscale,0);
-#endif
       }
     }
   }
@@ -549,3 +552,4 @@ void write_banner_stuff(void)
   {
     pvm_slave_mcmc_routine();
   }
+#endif

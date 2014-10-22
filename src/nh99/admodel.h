@@ -65,10 +65,6 @@
 #include <adstring.hpp>
 class init_xml_doc;
 
-#if !defined(_MSC_VER)
-  #include <unistd.h>
-#endif
-
 //#define _ADSTD_ std::
 #define param_matrix named_dvar_matrix
 #define param_vector named_dvar_vector

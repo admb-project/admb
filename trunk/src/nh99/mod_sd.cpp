@@ -4,6 +4,9 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+#ifndef _MSC_VER
+  #include <unistd.h>
+#endif
 #if !defined(DOS386)
   #define DOS386
 #endif

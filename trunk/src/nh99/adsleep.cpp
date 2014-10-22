@@ -15,6 +15,10 @@
   #include <windows.h>
 #endif
 
+#ifndef _MSC_VER
+  #include <unistd.h>
+#endif
+
 /**
  * Description not yet available.
  * \param

@@ -9,6 +9,10 @@
  * Description not yet available.
  */
 #include <df1b2fun.h>
+
+#ifndef _MSC_VER
+  #include <unistd.h>
+#endif
 /**
  * Description not yet available.
  * \param

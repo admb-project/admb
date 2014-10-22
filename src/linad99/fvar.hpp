@@ -120,7 +120,6 @@ Macro definitions.
 #endif
 
 #if !defined(_MSC_VER)
-  #include <unistd.h>
   #include <fcntl.h> // to get fstreambase
   #if !defined(O_BINARY)
     #define O_BINARY 0

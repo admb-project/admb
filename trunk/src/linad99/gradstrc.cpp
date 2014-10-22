@@ -8,6 +8,9 @@
  * \file
  * Description not yet available.
  */
+#ifndef _MSC_VER
+  #include <unistd.h>
+#endif
 #include "fvar.hpp"
 
 //#define THREAD_SAFE

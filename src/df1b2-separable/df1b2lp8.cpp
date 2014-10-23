@@ -719,9 +719,9 @@ void laplace_approximation_calculator::
           delete block_diagonal_vch;
           block_diagonal_vch=0;
         }
-
         block_diagonal_vch = new dvar3_array(1,num_separable_calls,
           1,itmp,1,itmp);
+
         if (block_diagonal_ch)
         {
           delete block_diagonal_ch;
@@ -729,6 +729,7 @@ void laplace_approximation_calculator::
         }
         block_diagonal_ch = new d3_array(1,num_separable_calls,
           1,itmp,1,itmp);
+
         if (block_diagonal_hessian)
         {
           delete block_diagonal_hessian;
@@ -741,12 +742,24 @@ void laplace_approximation_calculator::
           cerr << "error_allocating d3_array" << endl;
           ad_exit(1);
         }
+
+        if (block_diagonal_re_list)
+        {
+          delete block_diagonal_re_list;
+          block_diagonal_re_list = 0;
+        }
         block_diagonal_re_list = new imatrix(1,num_separable_calls,
           1,itmp);
-        if (block_diagonal_re_list ==0)
+        if (block_diagonal_re_list == 0)
         {
           cerr << "error_allocating imatrix" << endl;
           ad_exit(1);
+        }
+
+        if (block_diagonal_fe_list)
+        {
+          delete block_diagonal_fe_list;
+          block_diagonal_fe_list = 0;
         }
         block_diagonal_fe_list = new imatrix(1,num_separable_calls,
           1,itmpf);
@@ -755,6 +768,7 @@ void laplace_approximation_calculator::
           cerr << "error_allocating imatrix" << endl;
           ad_exit(1);
         }
+
         // ****************************************************
         if (block_diagonal_Dux)
         {

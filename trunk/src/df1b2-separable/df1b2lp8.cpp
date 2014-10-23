@@ -804,6 +804,7 @@ void laplace_approximation_calculator::
   }
 }
 
+#include <cassert>
 /**
  * Description not yet available.
  * \param
@@ -841,12 +842,22 @@ void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
     cerr << "error_allocating d3_array" << endl;
     ad_exit(1);
   }
+  if (block_diagonal_re_list)
+  {
+    delete block_diagonal_re_list;
+    block_diagonal_re_list=0;
+  }
   block_diagonal_re_list = new imatrix(1,num_separable_calls,
     1,itmp);
   if (block_diagonal_re_list ==0)
   {
     cerr << "error_allocating imatrix" << endl;
     ad_exit(1);
+  }
+  if (block_diagonal_fe_list)
+  {
+    delete block_diagonal_fe_list;
+    block_diagonal_fe_list=0;
   }
   block_diagonal_fe_list = new imatrix(1,num_separable_calls,
     1,itmpf);

@@ -9,6 +9,9 @@
  * Description not yet available.
  */
 #include <fvar.hpp>
+#if defined(__x86_64)
+  #include <stdint.h>
+#endif
 
 /**
  * Description not yet available.

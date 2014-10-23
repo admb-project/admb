@@ -21,6 +21,9 @@
 #endif
 
 #include <stdlib.h>
+#if defined(__x86_64)
+  #include <stdint.h>
+#endif
 //#define MAX_DLINKS 1000
 /**
 \return previous node pointer.

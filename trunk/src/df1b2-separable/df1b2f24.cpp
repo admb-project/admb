@@ -11,6 +11,9 @@
  */
 
 #include <df1b2fun.h>
+#if defined(__x86_64)
+  #include <stdint.h>
+#endif
 
 /**
  * Description not yet available.

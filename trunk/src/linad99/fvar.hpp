@@ -47,6 +47,11 @@ Function prototypes for math functions.
 Macro definitions.
 */
 
+#ifdef __MINGW64__
+  //Define off_t to be off64_t for only mingw64 compiler
+  #define _FILE_OFFSET_BITS 64
+#endif
+
 #include <math.h>
 // Borrow definition of M_PI from GCC
 #ifndef M_PI
@@ -3269,11 +3274,8 @@ class uostream:public ofstream
    uostream & operator<<(long double);
 #endif
 
-
    // insert pointer
    uostream & operator<<(void *);
-
-   virtual void sss(void);
 };
 
 
@@ -3379,7 +3381,6 @@ class uistream:public ifstream
 #endif
    int get();
 
-
    // extract and discard chars but stop at delim
    uistream & ignore(int = 1, int = EOF);
 
@@ -3403,7 +3404,6 @@ class uistream:public ifstream
 #if defined(__TURBOC__) || defined (_MSC_VER)
    uistream & operator>>(const long double &);
 #endif
-   virtual void sss(void);
 };
 
   // inline void   uistream::open(const char* name, int m, int prot)

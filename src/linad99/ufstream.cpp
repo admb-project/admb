@@ -10,9 +10,6 @@
  */
 #include "fvar.hpp"
 
-void uistream::sss(void){}
-void uostream::sss(void){}
-
 #define INSERT_IMPLEMENT(TYPE) \
 uostream& uostream::operator<< (TYPE x) \
 { \

@@ -183,9 +183,9 @@ void gradcalc(int nvar, const dvector& _g)
 #endif
 
    // back up the file one buffer size and read forward
+   off_t offset = sizeof(grad_stack_entry)*gradient_structure::GRAD_STACK1->length;
    off_t lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
-      -((long int)(sizeof(grad_stack_entry)*gradient_structure::
-        GRAD_STACK1->length)),SEEK_CUR);
+      -offset,SEEK_CUR);
 
     break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
   } while (break_flag);

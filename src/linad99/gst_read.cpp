@@ -70,8 +70,8 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
     // check to see if we are past the beginning of this file
     if (lpos < 0)
     {
-      lpos = lseek(gradient_structure::
-        GRAD_STACK1->_GRADFILE_PTR,0L,SEEK_SET);
+      lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+        0L,SEEK_SET);
       // get the previous file
       if (gradient_structure::GRAD_STACK1->decrement_current_gradfile_ptr()
                         < 0)

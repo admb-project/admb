@@ -210,13 +210,17 @@ if "!CXX!"=="cl" (
       set libs="!ADMB_HOME!\lib\libadmb-contrib.a"
     )
   )
+  set CXXFLAGS=!CXXFLAGS! -fpermissive
+  for /f %%i in ('!CXX! -dumpmachine ^| findstr x86_64') do (
+     set CXXFLAGS=!CXXFLAGS! -D_FILE_OFFSET_BITS=64
+  )
   if defined d (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
   if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
-    set CXXFLAGS=!CXXFLAGS! -fpermissive -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
+    set CXXFLAGS=!CXXFLAGS! -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -fpermissive -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"
+    set CXXFLAGS=!CXXFLAGS! -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"
   )
 )
 set "PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!"

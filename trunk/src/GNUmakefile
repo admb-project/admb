@@ -81,7 +81,7 @@ else
 endif
 
 ifneq ($(CXX),CC)
-ADCXXFLAGS:= -Wall -Wextra -Wno-unused-parameter $(ADCXXFLAGS)
+ADCXXFLAGS:= -Wall -Wextra -Wno-unused-parameter -Wconversion $(ADCXXFLAGS)
 endif
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
@@ -97,6 +97,14 @@ else
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\dist\include
   else
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/dist/include
+  endif
+endif
+
+ifeq ($(SHELL),cmd)
+  ifeq ($(CXX),g++)
+    ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
+      ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
+    endif
   endif
 endif
 

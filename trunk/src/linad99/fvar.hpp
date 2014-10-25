@@ -47,11 +47,6 @@ Function prototypes for math functions.
 Macro definitions.
 */
 
-#ifdef __MINGW64__
-  //Define off_t to be off64_t for only mingw64 compiler
-  #define _FILE_OFFSET_BITS 64
-#endif
-
 #include <math.h>
 // Borrow definition of M_PI from GCC
 #ifndef M_PI

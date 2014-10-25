@@ -208,10 +208,12 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
       }
       #endif
 
-  // back up the file one buffer size and read forward
+      // \todo Need test
+      // back up the file one buffer size and read forward
+      off_t offset = sizeof(grad_stack_entry)
+        * gradient_structure::GRAD_STACK1->length;
       lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
-        -((long int)(sizeof(grad_stack_entry)*gradient_structure::
-        GRAD_STACK1->length)),SEEK_CUR);
+        -offset, SEEK_CUR);
 
        break_flag=gradient_structure::
                   GRAD_STACK1->read_grad_stack_buffer(lpos);

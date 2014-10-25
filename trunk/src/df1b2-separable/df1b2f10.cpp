@@ -148,7 +148,7 @@ void test_smartlist::rewind(void)
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
-    lseek(fp,long(sizeof(off_t)),SEEK_CUR);
+    lseek(fp, (off_t)sizeof(off_t),SEEK_CUR);
   }
 }
 

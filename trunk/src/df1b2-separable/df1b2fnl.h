@@ -55,6 +55,9 @@
 class funnel_init_var
 {
 public:
+  funnel_init_var() { /*add_to_list();*/ }
+  ~funnel_init_var() {}
+
   static laplace_approximation_calculator * lapprox;
   static df1b2variable * funnel_constraints_penalty;
   static void reset_counters(void) { num_vars=0; /*num_all_vars=0;*/}
@@ -68,7 +71,6 @@ public:
   static   funnel_init_var ** list;
   //static   funnel_init_var ** all_list;
   static   funnel_init_var ** inactive_list;
-  funnel_init_var(void) { /*add_to_list();*/ }
   void add_to_list(void);
   void delete_from_list(void);
   void add_to_inactive_list(void);
@@ -85,6 +87,7 @@ public:
   static void reset(init_df1b2vector& x);
 
   static void allocate_all(void);
+  static void deallocate_all(void);
   static int nvarcalc_all(void);
 };
 
@@ -162,6 +165,9 @@ class funnel_init_df1b2vector : public funnel_init_var, public df1b2vector
   const df1b2vector * p;
   //const df1b2_init_vector * p;
 public:
+  funnel_init_df1b2vector()
+    { p = 0; }
+  ~funnel_init_df1b2vector();
   int nvar_calc(void);
   //funnel_init_df1b2vector(const df1b2_init_vector & x);
   funnel_init_df1b2vector(const df1b2vector & x);

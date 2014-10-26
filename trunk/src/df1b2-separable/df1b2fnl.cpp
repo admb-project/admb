@@ -92,6 +92,26 @@ void check_pool_depths(void)
 }
 
 /**
+Release memory.
+*/
+void funnel_init_var::deallocate_all(void)
+{
+  if (plist) 
+  {
+    if (plist->indexmax() != num_active_parameters)
+    {
+    delete plist;
+    plist = 0;
+    }
+  }
+  if (py) 
+  {
+    delete py;
+    py = 0;
+  }
+}
+
+/**
  * Description not yet available.
  * \param
  */
@@ -747,6 +767,14 @@ funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2vector & _x)
   df1b2variable::noallocate=1;
   df1b2vector::allocate(mmin,mmax);
   df1b2variable::noallocate=0;
+}
+
+/**
+Destructor
+*/
+funnel_init_df1b2vector::~funnel_init_df1b2vector()
+{
+  //df1b2vector::deallocate();
 }
 
 /**

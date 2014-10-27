@@ -96,7 +96,7 @@ Release memory.
 */
 void funnel_init_var::deallocate_all(void)
 {
-  if (plist) 
+  if (plist)
   {
     if (plist->indexmax() != num_active_parameters)
     {
@@ -104,7 +104,7 @@ void funnel_init_var::deallocate_all(void)
     plist = 0;
     }
   }
-  if (py) 
+  if (py)
   {
     delete py;
     py = 0;

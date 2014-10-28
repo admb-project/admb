@@ -1,4 +1,5 @@
 OBJ0=\
+ f1b2lndt.obj\
  df1b2impspf.obj\
  df1b2lmn2.obj\
  dflogistic.obj\

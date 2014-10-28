@@ -294,15 +294,10 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a)
   }
   return df1b2matrix_pair(alpha,beta);
 }
-df1b2variable ln_det(df1b2matrix& M)
-{
-  int sgn;
-  return ln_det(M,sgn);
-}
 dmatrix reorder(const dmatrix& CM,ivector & indx);
 ivector getreindex(ivector & indx);
 
-df1b2variable ln_det(df1b2matrix& M,int & sgn)
+df1b2variable ln_det(const df1b2matrix& M,int & sgn)
 {
   int mmin=M.indexmin();
   int mmax=M.indexmax();
@@ -327,6 +322,12 @@ df1b2variable ln_det(df1b2matrix& M,int & sgn)
   cout << setprecision(16) << cld-value(ld) << "  ";
   //cout << dd << " " << isg << "  "  << dd*isg << endl;
   return ld;
+}
+
+df1b2variable ln_det(const df1b2matrix& M)
+{
+  int sgn;
+  return ln_det(M,sgn);
 }
 
 dmatrix reorder(const dmatrix& CM,ivector & indx)

@@ -22,9 +22,6 @@ double ffmin(double a,double b)
   return b;
 }
 
-//REMOVE
-void bull(double y) {;}
-
 double inv_cumd_exp(double x)
 {
   if (x>.5)
@@ -271,10 +268,6 @@ dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
       wght *= upper-lower;
       u=u*.9998+.0001;
       double y = inv_cumd_norm(u*(upper-lower)+lower);
-      if (y>3.5)
-      {
-        bull(y);
-      }
       for (int j=i;j<=nvar;j++)
       {
         double tmp=y*ch(j,i);
@@ -297,10 +290,6 @@ dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
       wght *= upper-lower;
       u=u*.9998+.0001;
       double y = inv_cumd_norm(u*(upper-lower)+lower);
-      if (y>3.5)
-      {
-        bull(y);
-      }
       for (int j=i;j<=nvar;j++)
       {
         double tmp=y*ch3(j,i);

@@ -164,7 +164,6 @@ void ludcmp(const df1b2matrix& M,int kludge)
   df1b2matrix RM=reorder(M,indx);
 
   ludcmp(RM);
-
 }
 
 df1b2matrix reorder(const df1b2matrix& M,const ivector& indx)
@@ -365,7 +364,6 @@ ivector getreindex(ivector & indx)
     xswitch(in1(i),in1(indx(i)));
   }
  return in1;
-
 }
 
 df1b2vector solve(df1b2matrix& M,df1b2vector& v)

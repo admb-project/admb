@@ -305,11 +305,9 @@ df1b2variable ln_det(const df1b2matrix& M,int & sgn)
   int ssgn=0;
   dmatrix CM=value(M);
   double cld=ln_det(CM,ssgn);
-  ssgn=0;
   ivector indx(1,mmax);
   double dd;
   ludcmp(CM,indx,dd);
-  ssgn=0;
   ivector reindex=getreindex(indx);
   df1b2matrix RM=reorder(M,indx);
   df1b2matrix_pair p=ludcmp(RM);

@@ -9,7 +9,11 @@
  * Description not yet available.
  */
 #include <df1b2fnl.h>
-//#include <df1b2fun.h>
+
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 int quadratic_prior::in_qp_calculations=0;
 
@@ -41,7 +45,13 @@ const int quadratic_prior::max_num_quadratic_prior=100;
 dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   function_minimizer * pfmin)
 {
-  int xsize=initial_params::nvarcalc();
+#ifdef OPT_LIB
+  int xsize = (int)initial_params::nvarcalc();
+#else
+  size_t _xsize = initial_params::nvarcalc();
+  assert(_xsize <= INT_MAX);
+  int xsize = (int)_xsize;
+#endif
   dvector g(1,xsize);
   gradcalc(0,g);
   //double f=0.0;

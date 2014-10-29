@@ -124,7 +124,7 @@ dvector get_solution_vector(int npts);
  * \param
  */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
-{ 
+{
 #ifdef OPT_LIB
   // get the number of active parameters
   int nvar = (int)initial_params::nvarcalc();

@@ -35,9 +35,9 @@ istream& operator>>(istream& c, line_adstring& t)
 {
   const unsigned int max_length=1025;
   char* tmp = new char[max_length+1];
-  char ch = c.get();
+  char ch = (char)c.get();
   // throw away the newline at the end of the last line if necessary
-  if (ch == '\n') c.get(ch);
+  if (ch == '\n') ch = (char)c.get(ch);
   unsigned int ii=0;
   while (ch != '\n' && ch != EOF)
   {
@@ -47,8 +47,8 @@ istream& operator>>(istream& c, line_adstring& t)
         " istream& operator>>(istream& c, line_adstring& t)" <<endl;
       exit(1);
     }
-    tmp[ii++]=ch;
-    ch = c.get();
+    tmp[ii++] = ch;
+    ch = (char)c.get();
   }
   tmp[ii]='\0';
   t=tmp;

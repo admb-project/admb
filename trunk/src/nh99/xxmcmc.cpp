@@ -837,7 +837,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       }
       if (!no_sd_mcmc && !have_hist_flag)
       {
-        have_hist_flag=1;
         delete pofs_sd;
         pofs_sd=NULL;
         mean_mcmc_values/=double(isim);

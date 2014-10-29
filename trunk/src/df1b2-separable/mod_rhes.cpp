@@ -15,6 +15,11 @@ using std::istringstream;
 #include <df1b2fun.h>
 #include <adrndeff.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
   uostream& ofs1,ofstream& ofs,int usize,int xsize,dvector& u);
 
@@ -119,8 +124,15 @@ dvector get_solution_vector(int npts);
  * \param
  */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
-{
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
+{ 
+#ifdef OPT_LIB
+  // get the number of active parameters
+  int nvar = (int)initial_params::nvarcalc();
+#else
+  size_t _nvar = initial_params::nvarcalc();
+  assert(_nvar <= INT_MAX);
+  int nvar = (int)_nvar;
+#endif
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector

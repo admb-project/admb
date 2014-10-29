@@ -22,6 +22,8 @@
 #include <string.h>
 
 #ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
   #define CHK_ID_STRING
 #endif
 
@@ -76,7 +78,13 @@ void set_gradstack_flag(char* str)
 {
 #if defined(CHK_ID_STRING)
   //int wsize=sizeof(char);
-  int length=strlen(str);
+#ifdef OPT_LIB
+  int length=(int)strlen(str);
+#else
+  size_t _length = strlen(str);
+  assert(_length <= INT_MAX);
+  int length=(int)_length;
+#endif
   gradient_structure::get_fp()->fwrite(str,length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
   gradient_structure::GRAD_STACK1->
@@ -99,7 +107,13 @@ void set_gradstack_flag(char* _str,int i,int j)
   ads+=str(j);
   //int wsize=sizeof(char);
   char * str=(char*)(ads);
-  int length=strlen(str);
+#ifdef OPT_LIB
+  int length=(int)strlen(str);
+#else
+  size_t _length = strlen(str);
+  assert(_length <= INT_MAX);
+  int length=(int)_length;
+#endif
   gradient_structure::get_fp()->fwrite(&i,sizeof(int));
   gradient_structure::get_fp()->fwrite(&j,sizeof(int));
   gradient_structure::get_fp()->fwrite(str,length);

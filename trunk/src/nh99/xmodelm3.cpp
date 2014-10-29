@@ -167,7 +167,6 @@ void tracing_message(int traceflag,const char *s);
         }
       }
     }
-    int bandwidth=0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-bw",nopt))>-1)
     {
       if (!nopt)
@@ -176,17 +175,18 @@ void tracing_message(int traceflag,const char *s);
       }
       else
       {
+        int bandwidth = 0;
         istringstream ist(ad_comm::argv[on+1]);
         ist >> bandwidth;
 
-        if (bandwidth<=0)
+        if (bandwidth <= 0)
         {
           cerr << "Usage -bw option needs positive number  -- ignored" << endl;
-          bandwidth=0;
+          ad_comm::bandwidth = 0;
         }
         else
         {
-          ad_comm::bandwidth=bandwidth;
+          ad_comm::bandwidth = bandwidth;
         }
       }
     }

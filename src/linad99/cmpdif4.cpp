@@ -161,9 +161,9 @@ ivector restore_ivector_value(const ivector_position& tmp)
   ivector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
-    int tmp = 0;
-    gradient_structure::get_fp()->fread(&tmp,sizeof(int));
-    temp_vec(i)=tmp;
+    int n = 0;
+    gradient_structure::get_fp()->fread(&n, sizeof(int));
+    temp_vec(i) = n;
   }
   return temp_vec;
   // Back up the stream again for the next function

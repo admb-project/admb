@@ -79,15 +79,15 @@ class vector_shapex
    void *trueptr;
 
 public:
-   int decr_ncopies(void)  ///< Decrement copy counter by 1.
+   unsigned int decr_ncopies(void)  ///< Decrement copy counter by 1.
    {
-      return --ncopies;
+      return ncopies == 0 ? 0 : --ncopies;
    }
-   int get_ncopies(void) ///< Return value of copy counter
+   unsigned int get_ncopies(void) ///< Return value of copy counter
    {
       return ncopies;
    }
-   int incr_ncopies(void)  ///< Increment copy counter by 1.
+   unsigned int incr_ncopies(void)  ///< Increment copy counter by 1.
    {
       return ++ncopies;
    }

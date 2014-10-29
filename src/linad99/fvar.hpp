@@ -502,15 +502,15 @@ class vector_shape
    friend class lvector;
    friend class ptr_vector;
  public:
-   int decr_ncopies(void)
+   unsigned int decr_ncopies(void)
    {
-      return --ncopies;
+      return ncopies == 0 ? 0 : --ncopies;
    }
-   int get_ncopies(void)
+   unsigned int get_ncopies(void)
    {
       return ncopies;
    }
-   int incr_ncopies(void)
+   unsigned int incr_ncopies(void)
    {
       return ++ncopies;
    }
@@ -1919,7 +1919,7 @@ class arr_list
    unsigned long int last_offset;
    unsigned long int max_last_offset;
  public:
-   long int number_arr_links;
+   unsigned long int number_arr_links;
    friend class arr_link;
 
  public:
@@ -1937,11 +1937,11 @@ class arr_list
    }
    unsigned long int get_number_arr_links()
    {
-      return (number_arr_links);
+      return number_arr_links;
    }
    unsigned long int get_max_last_offset()
    {
-      return (max_last_offset);
+      return max_last_offset;
    }
    void reset_max_last_offset()
    {
@@ -7382,14 +7382,14 @@ class lmatrix
       return (shape->row_max);
    }
    // returns the number of rows
-   int rowsize() const
+   unsigned int rowsize() const
    {
-      return (shape->nrows);
+      return shape->nrows;
    }
    // returns the number of columns
-   int colsize() const
+   unsigned int colsize() const
    {
-      return (shape->ncols);
+      return shape->ncols;
    }
 
    void write_on(const ostream &) const;

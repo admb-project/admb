@@ -37,7 +37,7 @@ istream& operator>>(istream& c, line_adstring& t)
   char* tmp = new char[max_length+1];
   char ch = (char)c.get();
   // throw away the newline at the end of the last line if necessary
-  if (ch == '\n') ch = (char)c.get(ch);
+  if (ch == '\n') ch = (char)c.get();
   unsigned int ii=0;
   while (ch != '\n' && ch != EOF)
   {

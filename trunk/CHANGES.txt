@@ -66,6 +66,7 @@ ADMB-trunk
   _Note: Option *-r* is no longer needed to build the random effects model._
 
 * Separate build/dist and build/debug for easily switching between the both.
+* Allow > 2GB buffers for MinGW-w64 builds.
 
 ####New Supported Compilers
 

@@ -38,7 +38,7 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a);
 df1b2vector lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   ivector & ,const df1b2vector& b)
 {
-  int i,ii=0,ip,j;
+  int i,ii=0,j;
   df1b2variable sum;
   int mmin=b.indexmin();
   int mmax=b.indexmax();
@@ -102,7 +102,7 @@ df1b2variable get_ln_det(const df1b2matrix& b,int& sgn)
 df1b2matrix lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   ivector & ,const df1b2matrix& B)
 {
-  int i,ii=0,ip,j;
+  int i,ii=0,j;
   int rmin=B.indexmin();
   int rmax=B.indexmin();
   df1b2matrix C(rmin,rmax);
@@ -229,9 +229,7 @@ df1b2vector reorder(const df1b2vector& M,const ivector& indx)
 
 df1b2matrix_pair ludcmp(const df1b2matrix& a)
 {
-  int i,imax,j,k;
-  double big,dum,temp;
-  double *vv;
+  int i,j;
 
   int n=a.indexmax();
   ivector ishape(1,n);
@@ -244,7 +242,6 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a)
   beta.initialize();
   gamma.initialize();
 
-  double d=1.0;
   df1b2variable sum;
   for (j=1;j<=n;j++)
   {
@@ -335,7 +332,6 @@ dmatrix reorder(const dmatrix& CM,ivector & indx)
   int mmax=CM.indexmax();
   dmatrix M(mmin,mmax,mmin,mmax);
   dvector tmp(mmin,mmax);
-  int itmp;
   dvector in(mmin,mmax);
   in.fill_seqadd(1,1);
   for (int i=mmin;i<=mmax;i++)

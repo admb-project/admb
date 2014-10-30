@@ -84,7 +84,7 @@ extern "C" {
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
 
-typedef long int integer;
+typedef int integer;
 typedef short int shortint;
 typedef float real;
 typedef double doublereal;

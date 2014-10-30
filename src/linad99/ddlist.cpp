@@ -203,6 +203,7 @@ void dlist::check_list(void)
   }
   cerr << "In check_list() number of free links is " << count << endl;
 }
+
 /**
 Append app to list.
 \param app node
@@ -215,9 +216,8 @@ dlink* dlist::append(dlink* app)
     ad_exit(1);
   }
 
-  dlink* tmp = last;
+  app->prev = last;
   last = app;
-  last->prev = tmp;
 
   return last;
 }

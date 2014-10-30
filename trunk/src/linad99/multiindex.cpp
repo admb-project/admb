@@ -9,19 +9,6 @@
  * Description not yet available.
  */
 #include <fvar.hpp>
- //   class multi_index
- //   {
- //     int mind;
- //     int maxd;
- //     int depth;
- //     ivector index;
- //   public:
- //     multi_index(int min,int max,int dim);
- //     ivector& operator () (void) {return index;}
- //     void operator ++ (void);
- //     int get_depth(void) { return depth;}
- //   };
- //
 
 /**
  * Description not yet available.
@@ -66,11 +53,7 @@
     int sz=maxd-mind+1;
     for (int i=imin+1;i<=mx;i++)
     {
-#if (defined(_MSC_VER) && (_MSC_VER >= 1400)) || defined(__SUNPRO_CC)
       offset+=int(pow(double(sz),i-imin))*(index(i)-mind);
-#else
-      offset+=pow(sz,i-imin)*(index(i)-mind);
-#endif
     }
     return offset;
   }
@@ -84,18 +67,3 @@
     index=mind;
     depth=mind;
   }
-
- //
- //   void main()
- //   {
- //     multi_index mi(1,3,4);
- //
- //     mi()=3;
- //     do
- //     {
- //       cout << mi() << "   " << mi.get_depth() << endl;
- //       ++mi;
- //     }
- //     while(mi.get_depth()<5);
- //   }
- //

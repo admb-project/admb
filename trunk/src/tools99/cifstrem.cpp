@@ -32,7 +32,7 @@ void cifstream::set_eof_bit(void)
 }
 
 /**
-\todo Need Test case
+Get the signature line of inputfile.
 */
 char* cifstream::signature()
 {
@@ -55,9 +55,10 @@ char* cifstream::signature()
       c = bp->snextc();
     }
 
-    // position buffer to first character of next line
-    c = bp->snextc();
-    line ++;
+    // just position buffer to first character of next line
+    bp->snextc();
+
+    line++;
   }
   return signature_line;
 }

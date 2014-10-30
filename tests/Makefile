@@ -26,6 +26,8 @@ clean:
 verify:
 	del ..\benchmarks-saf.txt
 	del ..\benchmarks-opt.txt
+	if not exist ..\build\dist\examples md  ..\build\dist\examples
+	xcopy ..\examples ..\build\dist\examples  /S /Y /D
 	pushd ..\build\dist\examples & $(MAKE) all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 	pushd ..\build\dist\examples & $(MAKE) FAST_OPTION=-f all

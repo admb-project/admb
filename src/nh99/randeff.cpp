@@ -10,7 +10,7 @@
 #  undef max
 #endif
 
-typedef long int integer;
+typedef int integer;
 typedef long int logical;
 
 #ifdef __cplusplus

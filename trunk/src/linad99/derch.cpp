@@ -42,11 +42,11 @@ void derch(const double& _f, const independent_variables & _x,
   double& f=(double&) _f;
   int& ireturn = (int&) _ireturn;
   independent_variables& x= (independent_variables&) _x;
-  static long int i, n1 ,n2,ii;
+  static int i, n1 ,n2,ii;
   static double fsave;
   static int order_flag;
   static double s, f1, f2, g2, xsave;
-  static long int j = 1;
+  static int j = 1;
   static int si;
   si=gg.indexmax();
   static dvector g(1,si);

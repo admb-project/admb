@@ -26,7 +26,7 @@ lvector& lmatrix::operator()(int i)
     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
     "lvector& lmatrix::operator() (int i)", rowmin(), rowmax(), i);
   }
-  if (i > rowsize() + rowmin() - 1)
+  if (i > rowmax())
   {
     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
     "lvector& lmatrix::operator() (int i)", rowmin(), rowmax(), i);
@@ -46,7 +46,7 @@ const lvector& lmatrix::operator()(int i) const
     "lmatrix::operator[]" << "value was" << i;
     ad_exit(21);
   }
-  if (i > rowsize() + rowmin() - 1)
+  if (i > rowmax())
   {
     cerr << "matrix bound exceeded -- row index too high in "
     "lmatrix::operator[]" << "value was" << i;

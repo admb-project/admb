@@ -293,8 +293,8 @@ Default constructor
 adpool::adpool()
 {
   num_adpools++;
-  int i1=sizeof(twointsandptr);
-  int i2=2*sizeof(double);
+  size_t i1=sizeof(twointsandptr);
+  size_t i2=2*sizeof(double);
   if (i1>i2)
   {
     cout << "Error because sizeof(twointsandptr)>2*sizeof(double)" << endl;
@@ -379,8 +379,8 @@ void adpool::grow(void)
   }
 #endif
 
-  const int overhead = 12 + sizeof(char*);
-  const int chunk_size = 16 * 65000 - overhead;
+  const size_t overhead = 12 + sizeof(char*);
+  const size_t chunk_size = 16 * 65000 - overhead;
   char* real_start = new char[chunk_size];
 
   if (size > 0)
@@ -458,7 +458,7 @@ void adpool::clean(void)
   //const int overhead = 12;
 
   double *ptr=first;
-  for (int i=1;i<=nelem;i++)
+  for (size_t i=1;i<=nelem;i++)
   {
     ptr++;
     for(unsigned int j=1;j<=size/sizeof(double)-2;j++) *ptr++=0.0;

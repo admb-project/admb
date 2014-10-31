@@ -237,7 +237,7 @@ class gradient_structure
    friend class dlist;
    friend class grad_stack;
    static void save_dependent_variable_position(const prevariable & v1);
-   static long int max_last_offset;
+   static unsigned long int max_last_offset;
    friend class function_minimizer;
    friend void funnel_derivatives(void);
 };

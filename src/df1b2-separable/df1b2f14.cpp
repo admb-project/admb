@@ -41,7 +41,7 @@ fixed_smartlist2::fixed_smartlist2(void)
  * Description not yet available.
  * \param
  */
-fixed_smartlist2::fixed_smartlist2(unsigned int _bufsize,
+fixed_smartlist2::fixed_smartlist2(const size_t _bufsize,
   const adstring& _filename)
 {
   allocate(_bufsize,_filename);
@@ -51,7 +51,7 @@ fixed_smartlist2::fixed_smartlist2(unsigned int _bufsize,
  * Description not yet available.
  * \param
  */
-void fixed_smartlist2::allocate(unsigned int _bufsize,
+void fixed_smartlist2::allocate(const size_t _bufsize,
   const adstring& _filename)
 {
   nentries=_bufsize/sizeof(int);
@@ -374,7 +374,7 @@ void fixed_smartlist2::read_buffer(void)
  * Description not yet available.
  * \param
  */
-void memcpy(const fixed_smartlist2 & _list,void * p,int nsize)
+void memcpy(const fixed_smartlist2 & _list,void * p, const size_t nsize)
 {
   ADUNCONST(fixed_smartlist2,list)
   if ( list.bptr+nsize-1 > list.buffend)
@@ -390,7 +390,7 @@ void memcpy(const fixed_smartlist2 & _list,void * p,int nsize)
  * Description not yet available.
  * \param
  */
-void memcpy(void * p,const fixed_smartlist2 & _list,int nsize)
+void memcpy(void * p,const fixed_smartlist2 & _list, const size_t nsize)
 {
   ADUNCONST(fixed_smartlist2,list)
   if ( list.bptr+nsize-1 > list.buffend)

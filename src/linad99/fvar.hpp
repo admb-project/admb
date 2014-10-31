@@ -2993,7 +2993,7 @@ class fmm_control
    long ialph;
    long ihflag;
    long ihang;
-   long scroll_flag;
+   int scroll_flag;
    int maxfn_flag;
    int quit_flag;
    double min_improve;
@@ -3433,7 +3433,7 @@ class fmmc
    double crit;
    double min_improve;
    int iprint;
-   long scroll_flag;
+   int scroll_flag;
    int j;
    int J;
    long int ifn;

@@ -63,12 +63,10 @@ public:
   struct link { link * next; };
   int num_allocated;
   int num_chunks;
-  int nelem;
-  unsigned size;
+  size_t nelem;
+  size_t size;
   link * head;
   double * first;
-  dfpool(dfpool&);  // copy protection
-  void operator = (dfpool&); // copy protection
   void grow(void);
 #if defined(__CHECK_MEMORY__)
   int maxchunks;
@@ -77,12 +75,17 @@ public:
   int * pvalues;
   int nalloc;
 #endif
+
 public:
-  void clean(void);
-  dfpool(unsigned);
-  void set_size(unsigned);
-  dfpool(void);
+  dfpool();
+  dfpool(dfpool&);  // copy protection
+  dfpool(const size_t);
  ~dfpool();
+
+  void operator = (dfpool&); // copy protection
+
+  void clean(void);
+  void set_size(const size_t);
   void * alloc(void);
   void free(void * b);
   void deallocate(void);

@@ -457,9 +457,9 @@ class kkludge_object{};
  */
 class vector_shape_pool:public dfpool
 {
- public:
-   vector_shape_pool(void);
-   vector_shape_pool(int);
+public:
+  vector_shape_pool();
+  vector_shape_pool(const size_t);
 };
 
 /**
@@ -469,7 +469,7 @@ class vector_shape_pool:public dfpool
 class ts_vector_shape_pool:public tsdfpool
 {
  public:
-   ts_vector_shape_pool(void);
+   ts_vector_shape_pool();
    ts_vector_shape_pool(int);
 };
 #endif

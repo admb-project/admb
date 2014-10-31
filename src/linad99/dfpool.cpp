@@ -37,7 +37,7 @@ ts_vector_shape_pool::ts_vector_shape_pool(int n) : tsdfpool(n)
 { ;}
 #endif
 
-vector_shape_pool::vector_shape_pool(int n) : dfpool(n)
+vector_shape_pool::vector_shape_pool(const size_t n) : dfpool(n)
 { ;}
 
 /**
@@ -386,7 +386,7 @@ dfpool::~dfpool(void)
  * Description not yet available.
  * \param
  */
-dfpool::dfpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
+dfpool::dfpool(const size_t sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 {
   dfpool_vector_flag=0;
   if (!sz) size=0;
@@ -423,7 +423,7 @@ dfpool::dfpool(void)
  * Description not yet available.
  * \param
  */
-void dfpool::set_size(unsigned int sz)
+void dfpool::set_size(const size_t sz)
 {
   if (size !=sz && size != 0)
     cerr << "You can not change the allocation size in mid stream" << endl;
@@ -482,8 +482,8 @@ void dfpool::grow(void)
     pvalues=new int[pvalues_size];
   }
 #endif
-  const int overhead = 12+sizeof(char*);
-  const int chunk_size= 65000-overhead;
+  const size_t overhead = 12+sizeof(char*);
+  const size_t chunk_size= 65000-overhead;
 
   if (size > 0)
   {
@@ -553,7 +553,7 @@ void dfpool::clean(void)
   //const int overhead = 12;
 
   double *ptr=first;
-  for (int i=1;i<=nelem;i++)
+  for (size_t i=1;i<=nelem;i++)
   {
     ptr++;
     for(unsigned int j=1;j<=size/sizeof(double)-2;j++) *ptr++=0.0;

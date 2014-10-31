@@ -244,11 +244,7 @@ void ad_read_pass2_prod_vector(void);
   total_bytes+=slen;
 #endif
 
-#ifndef OPT_LIB
-  assert(total_bytes <= INT_MAX);
-#endif
-
-  list.check_buffer_size((int)total_bytes);
+  list.check_buffer_size(total_bytes);
 
   void * tmpptr=list.bptr;
 #if defined(SAFE_ALL)
@@ -387,11 +383,7 @@ void read_pass2_1_prod_vector(void)
   total_bytes+=slen;
 #endif
 
-#ifndef OPT_LIB
-  assert(total_bytes <= INT_MAX);
-#endif
-
-  list2.check_buffer_size((int)total_bytes);
+  list2.check_buffer_size(total_bytes);
 
   void * tmpptr=list2.bptr;
 #if defined(SAFE_ALL)

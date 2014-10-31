@@ -544,7 +544,7 @@ public:
     void write(void * p,int n);
     void write(int n);
     void write_buffer(void);
-    void check_buffer_size(int);
+    void check_buffer_size(const size_t);
     void add_buffer_fringe(int n){buffend-=n;}
     int written(void){return written_flag;}
   };
@@ -623,7 +623,7 @@ public:
     void write(int n);
     void write_buffer(void);
     void write_buffer_one_less(void);
-    void check_buffer_size(int);
+    void check_buffer_size(const size_t);
     void add_buffer_fringe(int n){buffend-=n;}
     int written(void){return written_flag;}
   };
@@ -690,7 +690,7 @@ public:
     void write(int n);
     void write_buffer(void);
     void write_buffer_one_less(void);
-    void check_buffer_size(int);
+    void check_buffer_size(const size_t);
     void add_buffer_fringe(int n){buffend-=n;}
     int written(void){return written_flag;}
   };

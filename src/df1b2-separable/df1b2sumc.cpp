@@ -49,7 +49,7 @@ void ad_read_pass2_sumc(void);
 #endif
    //int nvar=df1b2variable::nvar;
 
-   int total_bytes=2*sizeof(df1b2_header);
+   size_t total_bytes=2*sizeof(df1b2_header);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="TU";
@@ -170,7 +170,7 @@ void read_pass2_2_sumc(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  int total_bytes=2*sizeof(df1b2_header);
+  size_t total_bytes=2*sizeof(df1b2_header);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="BY";

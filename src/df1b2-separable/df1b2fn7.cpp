@@ -24,7 +24,7 @@ void ad_read_write_tilde_values(void);
 void read_tilde_values_1(void);
 void read_tilde_values_2(void);
 void read_tilde_values_3(void);
-void zero_it(double * p,int n);
+void zero_it(double* p, const size_t n);
 
 /**
  * Description not yet available.
@@ -38,11 +38,11 @@ int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable* _px)
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-  int total_bytes=sizeof(df1b2_header);
+  size_t total_bytes=sizeof(df1b2_header);
 
 #if defined(SAFE_ALL)
   char ids[]="YS";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
   list.check_buffer_size(total_bytes);
@@ -129,13 +129,17 @@ void read_tilde_values_2(void)
   //
   // list 1
   //
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  int total_bytes=sizeof(df1b2_header);
+  size_t total_bytes=sizeof(df1b2_header);
 #if defined(SAFE_ALL)
   char ids[]="YS";
-  int slen=strlen(ids);
+  size_t slen=strlen(ids);
   total_bytes+=slen;
 #endif
   list.check_buffer_size(total_bytes);
@@ -164,11 +168,7 @@ void read_tilde_values_2(void)
   total_bytes2+=slen2;
 #endif
 
-#ifndef OPT_LIB
-  assert(total_bytes2 <= INT_MAX);
-#endif
-
-  list3.check_buffer_size((int)total_bytes2);
+  list3.check_buffer_size(total_bytes2);
 
   void * tmpptr3=list3.bptr;
 #if defined(SAFE_ALL)
@@ -197,7 +197,11 @@ void read_tilde_values_3(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -233,7 +237,7 @@ void read_tilde_values_3(void)
  * Description not yet available.
  * \param
  */
-void zero_it(double * p,int n)
+void zero_it(double* p, const size_t n)
 {
-  for (int i=0;i<n;i++) *p++=0.0;
+  for (size_t i=0;i<n;i++) *p++=0.0;
 }

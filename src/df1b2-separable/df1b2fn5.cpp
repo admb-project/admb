@@ -198,11 +198,7 @@ int df1b2_gradlist::write_pass1_initialize(df1b2variable * pz)
   total_bytes+=slen;
 #endif
 
-#ifndef OPT_LIB
-  assert(total_bytes <= INT_MAX);
-#endif
-
-  list.check_buffer_size((int)total_bytes);
+  list.check_buffer_size(total_bytes);
   void * tmpptr=list.bptr;
 
 #if defined(SAFE_ALL)
@@ -275,7 +271,12 @@ void read_pass1_init_1(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+   int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+   size_t nvar = (size_t)_nvar;
+
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -317,11 +318,7 @@ void read_pass1_init_1(void)
   total_bytes+=slen;
 #endif
 
-#ifndef OPT_LIB
-  assert(total_bytes <= INT_MAX);
-#endif
-
-  list2.check_buffer_size((int)total_bytes);
+  list2.check_buffer_size(total_bytes);
 
   void * tmpptr2=list2.bptr;
 #if defined(SAFE_ALL)
@@ -363,10 +360,14 @@ void read_pass1_init_2(void)
   //
   // list 1
   //
-  int nvar=df1b2variable::nvar;
+   int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+   size_t nvar = (size_t)_nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(char *);
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(char *);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="AZ";
@@ -417,12 +418,11 @@ void read_pass1_init_2(void)
   double * z_bar_tilde=pz->get_u_bar_tilde();
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
-  int i;
 
   // !!!! oct31 02
 
   *pz->get_u_tilde()=0.0;
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
@@ -438,7 +438,11 @@ void read_pass1_init_3(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+   int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+   size_t nvar = (size_t)_nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -459,7 +463,7 @@ void read_pass1_init_3(void)
   list.restoreposition(); // save pointer to beginning of record;
 
   *(pz->u_tilde)=0;
-  for (int i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     pz->u_dot_tilde[i]=0;
   }

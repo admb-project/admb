@@ -45,13 +45,7 @@ const int quadratic_prior::max_num_quadratic_prior=100;
 dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   function_minimizer * pfmin)
 {
-#ifdef OPT_LIB
-  int xsize = (int)initial_params::nvarcalc();
-#else
-  size_t _xsize = initial_params::nvarcalc();
-  assert(_xsize <= INT_MAX);
-  int xsize = (int)_xsize;
-#endif
+  int xsize = initial_params::nvarcalc();
   dvector g(1,xsize);
   gradcalc(0,g);
   //double f=0.0;

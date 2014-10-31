@@ -125,14 +125,8 @@ dvector get_solution_vector(int npts);
  */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
 {
-#ifdef OPT_LIB
   // get the number of active parameters
-  int nvar = (int)initial_params::nvarcalc();
-#else
-  size_t _nvar = initial_params::nvarcalc();
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
-#endif
+  int nvar = initial_params::nvarcalc();
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector

@@ -10,6 +10,10 @@
  */
 #include <df1b2fun.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 void ncount_checker(int ncount,int ncount_check);
 
 void ad_read_pass1x(void);
@@ -32,9 +36,13 @@ int df1b2_gradlist::write_pass1x(const df1b2variable * _px,
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
     +sizeof(double)+nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
@@ -99,7 +107,11 @@ void read_pass1_1x(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -130,7 +142,6 @@ void read_pass1_1x(void)
   list.bptr+=sizeof(double);
   xdot=(double*)list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
-  int i;
 
   // Do first reverse paSS calculations
   // ****************************************************************
@@ -143,7 +154,7 @@ void read_pass1_1x(void)
      test_smartlist& list2=f1b2gradlist->list2;
 
 
-  int total_bytes=2*nvar*sizeof(double);
+  size_t total_bytes=2*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DU";
@@ -176,28 +187,28 @@ void read_pass1_1x(void)
   double d2f=(pf->d2f)(xu);
   //double d3f=(pf->d3f)(xu);
 
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     //px->u_bar[i]+=(pf->df)(xu)* pz->u_bar[i];
     px->u_bar[i]+=df * pz->u_bar[i];
   }
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     //px->u_bar[i]+=(pf->d2f)(xu)*xdot[i]*pz->u_dot_bar[i];
     px->u_bar[i]+=d2f*xdot[i]*pz->u_dot_bar[i];
   }
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     //px->u_dot_bar[i]+=(pf->df)(xu)*pz->u_dot_bar[i];
     px->u_dot_bar[i]+=df*pz->u_dot_bar[i];
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     pz->u_bar[i]=0;
   }
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     pz->u_dot_bar[i]=0;
   }
@@ -219,10 +230,14 @@ void read_pass1_2x(void)
   //
   // list 1
   //
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
     +sizeof(double)+nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
@@ -294,10 +309,9 @@ void read_pass1_2x(void)
  print_derivatives(px,"x");
 #endif
   // Do second "reverse-reverse" pass calculations
-  int i;
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
@@ -306,7 +320,7 @@ void read_pass1_2x(void)
   double df=(pf->df)(xu);
   double d2f=(pf->d2f)(xu);
   double d3f=(pf->d3f)(xu);
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d2f)(xu)*zbar[i]*x_bar_tilde[i];
     *x_tilde+=d2f*zbar[i]*x_bar_tilde[i];
@@ -314,7 +328,7 @@ void read_pass1_2x(void)
     z_bar_tilde[i]+=df*x_bar_tilde[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d2f)(xu)*zdotbar[i]*x_dot_bar_tilde[i];
     *x_tilde+=d2f*zdotbar[i]*x_dot_bar_tilde[i];
@@ -322,7 +336,7 @@ void read_pass1_2x(void)
     z_dot_bar_tilde[i]+=df*x_dot_bar_tilde[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     //x_dot_tilde[i]+=(pf->d2f)(xu)*zdotbar[i]*x_bar_tilde[i];
     //z_dot_bar_tilde[i]+=(pf->d2f)(xu)*xdot[i]*x_bar_tilde[i];
@@ -347,7 +361,11 @@ void read_pass1_3x(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -376,7 +394,6 @@ void read_pass1_3x(void)
   list.bptr+=sizeof(double);
   xdot=(double*)list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
-  int i;
 
 #if defined(PRINT_DERS)
  print_derivatives(pf->funname,(pf->df)(xu),(pf->df)(xu),(pf->d2f)(xu),
@@ -389,18 +406,18 @@ void read_pass1_3x(void)
   double d2f=(pf->d2f)(xu);
   //*(px->u_tilde)+=(pf->df)(xu)* *(pz->u_tilde);
   *(px->u_tilde)+=df * *(pz->u_tilde);
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     //*(px->u_tilde)+=(pf->d2f)(xu)*xdot[i]*pz->u_dot_tilde[i];
     *(px->u_tilde)+=d2f*xdot[i]*pz->u_dot_tilde[i];
   }
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     //px->u_dot_tilde[i]+=(pf->df)(xu)*pz->u_dot_tilde[i];
     px->u_dot_tilde[i]+=df*pz->u_dot_tilde[i];
   }
   *(pz->u_tilde)=0;
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     pz->u_dot_tilde[i]=0;
   }

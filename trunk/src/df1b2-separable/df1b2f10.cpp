@@ -170,7 +170,7 @@ void test_smartlist::initialize(void)
  * Description not yet available.
  * \param
  */
-void test_smartlist::check_buffer_size(int nsize)
+void test_smartlist::check_buffer_size(const size_t nsize)
 {
   if ( bptr+nsize-1 > buffend)
   {
@@ -180,7 +180,7 @@ void test_smartlist::check_buffer_size(int nsize)
     }
     else
     {
-      if ((unsigned int)nsize>bufsize)
+      if (nsize>bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
          exit(1);

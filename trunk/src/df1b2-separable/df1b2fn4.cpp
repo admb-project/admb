@@ -109,7 +109,7 @@ int df1b2_gradlist::write_pass1_eq(const df1b2variable * _px,
 #endif
   //int nvar=df1b2variable::nvar;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="GV";
@@ -164,7 +164,11 @@ void read_pass1_eq_1(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -203,11 +207,7 @@ void read_pass1_eq_1(void)
   total_bytes+=slen;
 #endif
 
-#ifndef OPT_LIB
-  assert(total_bytes <= (size_t)INT_MAX);
-#endif
-
-  list2.check_buffer_size((int)total_bytes);
+  list2.check_buffer_size(total_bytes);
   void * tmpptr2=list2.bptr;
 
 #if defined(SAFE_ALL)
@@ -227,7 +227,7 @@ void read_pass1_eq_1(void)
   print_derivatives(px,"x");
 #endif
 
-  for (int i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     px->u_bar[i]+=pz->u_bar[i];
 #if defined(ADDEBUG_PRINT)
@@ -239,15 +239,15 @@ void read_pass1_eq_1(void)
     cout << px->u_bar[i] << " " << pz->u_bar[i] << " " << addebug_count << endl;
 #endif
   }
-  for (int i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     px->u_dot_bar[i]+=pz->u_dot_bar[i];
   }
-  for (int i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     pz->u_bar[i]=0;
   }
-  for (int i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     pz->u_dot_bar[i]=0;
   }
@@ -268,10 +268,14 @@ void read_pass1_eq_2(void)
   //
   // list 1
   //
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
 #if defined(SAFE_ALL)
   char ids[]="GV";
   int slen=strlen(ids);
@@ -325,17 +329,17 @@ void read_pass1_eq_2(void)
  print_derivatives(px,"x");
 #endif
 
-  for (int i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
-  for (int i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     z_bar_tilde[i]+=x_bar_tilde[i];
   }
 
-  for (int i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     z_dot_bar_tilde[i]+=x_dot_bar_tilde[i];
   }
@@ -354,7 +358,11 @@ void read_pass1_eq_3(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -373,7 +381,6 @@ void read_pass1_eq_3(void)
   list.bptr+=sizeof(df1b2_header);
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
-  int i;
 
 #if defined(PRINT_DERS)
  print_derivatives(" assign ", 1 ,1 ,0, 0,1);
@@ -392,7 +399,7 @@ void read_pass1_eq_3(void)
     cout << *(px->u_tilde) << " " << *(pz->u_tilde) << " " << addebug_count
          << endl;
 #endif
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     px->u_dot_tilde[i]+=pz->u_dot_tilde[i];
   }
@@ -401,7 +408,7 @@ void read_pass1_eq_3(void)
  print_derivatives(pz,"z");
 #endif
   *(pz->u_tilde)=0;
-  for (i=0;i<nvar;i++)
+  for (size_t i=0;i<nvar;i++)
   {
     pz->u_dot_tilde[i]=0;
   }

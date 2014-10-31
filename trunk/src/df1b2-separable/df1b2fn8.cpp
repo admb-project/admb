@@ -61,7 +61,7 @@ int df1b2_gradlist::write_pass1_minuseq(const df1b2variable * _px,
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
 #if defined(SAFE_ALL)
   char ids[]="LC";
   int slen=strlen(ids);
@@ -195,7 +195,7 @@ void read_pass1_minus_eq_2(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
 #if defined(SAFE_ALL)
   char ids[]="LC";
   int slen=strlen(ids);

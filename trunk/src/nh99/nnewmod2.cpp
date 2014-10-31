@@ -27,7 +27,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
   //dmatrix S(1,nvar,1,nvar);
   if (nvar > 0)
   {
-    if ((size_t)nvar != initial_params::nvarcalc())
+    if (nvar != initial_params::nvarcalc())
     {
       cout << "the number of independent variables is wrong in admodel.hes"
          << endl;

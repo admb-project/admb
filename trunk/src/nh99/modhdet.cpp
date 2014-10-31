@@ -22,7 +22,7 @@ double function_minimizer::hess_determinant(int underflow_flag)
     ifs >> nvar;
     if (nvar > 0)
     {
-      if ((size_t)nvar != initial_params::nvarcalc())
+      if (nvar != initial_params::nvarcalc())
       {
         cout << "the number of independent variables"
              << " is wrong in admodel.hes" << endl;

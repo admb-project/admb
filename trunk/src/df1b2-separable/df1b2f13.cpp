@@ -50,12 +50,12 @@ fixed_smartlist::fixed_smartlist(void)
  * Description not yet available.
  * \param
  */
-fixed_smartlist::fixed_smartlist(unsigned int _bufsize,
+fixed_smartlist::fixed_smartlist(const size_t _bufsize,
   const adstring& _filename)
 {
   allocate(_bufsize,_filename);
 }
-void fixed_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
+void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
 {
   nentries=_bufsize/sizeof(fixed_list_entry);
   end_saved=0;

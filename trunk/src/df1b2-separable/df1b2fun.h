@@ -569,10 +569,13 @@ public:
   class fixed_smartlist
   {
   public:
+    fixed_smartlist();
+    fixed_smartlist(const size_t bufsize,const adstring& filename);
     ~fixed_smartlist();
+
     void operator ++ (void);
     void operator -- (void);
-    int nentries;
+    size_t nentries;
     int direction;
     off_t endof_file_ptr;
     int written_flag;
@@ -589,7 +592,7 @@ public:
     fixed_list_entry * buffend;
     fixed_list_entry * bptr;
     fixed_list_entry * sbptr;
-    unsigned int bufsize;
+    size_t bufsize;
     adstring filename;
     int fp;
     void saveposition(void){sbptr=bptr;}
@@ -603,9 +606,7 @@ public:
     void set_noreadflag(int n){ noreadflag=n; }
     void restoreposition(void){bptr=sbptr;}
     void restoreposition(int offset){bptr=sbptr+offset;}
-    fixed_smartlist(unsigned int bufsize,const adstring& filename);
-    void allocate(unsigned int bufsize,const adstring& filename);
-    fixed_smartlist(void);
+    void allocate(const size_t bufsize,const adstring& filename);
     void read_buffer(void);
     void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}
@@ -635,10 +636,13 @@ public:
   class fixed_smartlist2
   {
   public:
+    fixed_smartlist2(void);
+    fixed_smartlist2(const size_t bufsize,const adstring& filename);
     ~fixed_smartlist2();
+
     void operator ++ (void);
     void operator -- (void);
-    int nentries;
+    size_t nentries;
     int direction;
     off_t endof_file_ptr;
     int written_flag;
@@ -655,7 +659,7 @@ public:
     int * buffend;
     int * bptr;
     int * sbptr;
-    unsigned int bufsize;
+    size_t bufsize;
     adstring filename;
     int fp;
     void saveposition(void){sbptr=bptr;}
@@ -670,9 +674,7 @@ public:
     void set_noreadflag(int n){ noreadflag=n; }
     void restoreposition(void){bptr=sbptr;}
     void restoreposition(int offset){bptr=sbptr+offset;}
-    fixed_smartlist2(unsigned int bufsize,const adstring& filename);
-    void allocate(unsigned int bufsize,const adstring& filename);
-    fixed_smartlist2(void);
+    void allocate(const size_t bufsize,const adstring& filename);
     void read_buffer(void);
     void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}

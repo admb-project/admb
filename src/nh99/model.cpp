@@ -153,9 +153,9 @@ int initial_params::correct_for_dev_objects(const dmatrix& H)
     return ii-1;
   }
 
-size_t initial_params::nvarcalc()
+int initial_params::nvarcalc()
 {
-  size_t nvar = 0;
+  int nvar = 0;
   for (int i = 0; i < num_initial_params; i++)
   {
     //if ((varsptr[i])->phase_start <= current_phase)

@@ -222,15 +222,14 @@ void tracing_message(int traceflag,const char *s);
       if (random_effects_flag)
         initial_params::set_inactive_random_effects();
 
-      size_t _nvar=initial_params::nvarcalc(); // get the number of active
-             // parameters
-      if (_nvar < 1)
+      // get the number of active parameters
+      int nvar=initial_params::nvarcalc();
+      if (nvar < 1)
       {
         cerr << "Error -- no active parameters. There must be at least 1"
              << endl;
         exit(1);
       }
-      const int nvar = (int)_nvar;
       dvector g(1,nvar);
       independent_variables x(1,nvar);
       tracing_message(traceflag,"B2");

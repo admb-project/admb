@@ -3152,8 +3152,8 @@ class fmmt1:public fmm_control
 
    long int llog, n1, ic, iconv, i1, link;
    double z, zz, gys, gs, sig, gso, alpha, tot, fy, dgs;
-   long int itn, icc, np, nn, is, iu, iv, ib;
-   int i, j;
+   long int icc, np, nn, iv, ib;
+   int i, j, iu, is, itn;
    double gmax;
    double fsave;
    dvector xx;

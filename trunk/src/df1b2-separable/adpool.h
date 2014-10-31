@@ -68,7 +68,7 @@ public:
   struct link { link * next; };
   int num_allocated;
   int num_chunks;
-  int nelem;
+  size_t nelem;
   size_t size;
   link* head;
   double* first;

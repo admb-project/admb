@@ -116,7 +116,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
     {
      {
       adstring profrep_name=(likeprof_params::likeprofptr[ip]->label());
-      int llen=length(profrep_name);
+      size_t llen = length(profrep_name);
       if (llen>8) profrep_name=profrep_name(1,8);
       ofstream ofs3((char*) (profrep_name+adstring(".plt")));
       sigma=likeprof_params::likeprofptr[ip]->get_sigma();

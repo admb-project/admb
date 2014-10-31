@@ -3101,8 +3101,8 @@ class fmm:public fmm_control
 
    long int llog, n1, ic, iconv, i1, xxlink;
    double z, zz, gys, gs, sig, gso, alpha, tot, fy, dgs;
-   long int itn, icc, np, nn, is, iu, iv, ib;
-   int i, j;
+   long int itn, icc, nn;
+   int i, j, is, iu, iv, np, ib;
    double gmax; ///< maximum gradient
    double fsave;
    dvector xx;

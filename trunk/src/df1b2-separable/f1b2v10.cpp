@@ -227,7 +227,11 @@ void ad_read_pass2_prod_vector(void);
   if (ncount >= ncount_check)
     cout << ncount << endl;
 #endif
-   int nvar=df1b2variable::nvar;
+   int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
 
    int mmin=px->indexmin();
    int mmax=px->indexmax();
@@ -262,7 +266,7 @@ void ad_read_pass2_prod_vector(void);
    memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
 
 
-   const int sizeofdouble = sizeof(double);
+   const size_t sizeofdouble = sizeof(double);
    for (int i=mmin;i<=mmax;i++)
    {
      memcpy(list,(*px)(i).get_u(),sizeofdouble);
@@ -317,7 +321,11 @@ void ad_read_pass2_prod_vector(void)
  */
 void read_pass2_1_prod_vector(void)
 {
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   test_smartlist& list=f1b2gradlist->list;
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
@@ -401,11 +409,11 @@ void read_pass2_1_prod_vector(void)
   // Do first reverse pass calculations
   for (int i=mmin;i<=mmax;i++)
   {
-    for (int j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       px(i)->u_bar[j]+=yu(i)*pz->u_bar[j];
     }
-    for (int j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       py(i)->u_bar[j]+=xu(i)*pz->u_bar[j];
     }
@@ -413,31 +421,31 @@ void read_pass2_1_prod_vector(void)
 
   for (int i=mmin;i<=mmax;i++)
   {
-    for (int j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       px(i)->u_bar[j]+=ydot(i)[j]*pz->u_dot_bar[j];
     }
 
-    for (int j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       py(i)->u_bar[j]+=xdot(i)[j]*pz->u_dot_bar[j];
     }
-    for (int j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       px(i)->u_dot_bar[j]+=yu(i)*pz->u_dot_bar[j];
     }
-    for (int j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       py(i)->u_dot_bar[j]+=xu(i)*pz->u_dot_bar[j];
     }
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (int j=0;j<nvar;j++)
+  for (size_t j=0;j<nvar;j++)
   {
     pz->u_bar[j]=0;
   }
-  for (int j=0;j<nvar;j++)
+  for (size_t j=0;j<nvar;j++)
   {
     pz->u_dot_bar[j]=0;
   }
@@ -454,7 +462,11 @@ void read_pass2_2_prod_vector(void)
   //
   // list 1
   //
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   test_smartlist & list=f1b2gradlist->list;
 
   //int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
@@ -509,7 +521,6 @@ void read_pass2_2_prod_vector(void)
   dvector xu(mmin,mmax);
   dvector yu(mmin,mmax);
   int i;
-  int j;
 
   for (i=mmin;i<=mmax;i++)
   {
@@ -551,7 +562,7 @@ void read_pass2_2_prod_vector(void)
   double * z_bar_tilde=pz->get_u_bar_tilde();
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
 
-  for (j=0;j<nvar;j++)
+  for (size_t j=0;j<nvar;j++)
   {
     z_bar_tilde[j]=0;
     z_dot_bar_tilde[j]=0;
@@ -568,40 +579,38 @@ void read_pass2_2_prod_vector(void)
     double * y_bar_tilde=py(i)->get_u_bar_tilde();
     double * y_dot_bar_tilde=py(i)->get_u_dot_bar_tilde();
 
-    int j;
-
     // start wjth x and add y
-    for (j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       z_bar_tilde[j]+=yu(i)*x_bar_tilde[j];
       *y_tilde+=zbar[j]*x_bar_tilde[j];
     }
 
-    for (j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       *y_tilde+=zdotbar[j]*x_dot_bar_tilde[j];
       z_dot_bar_tilde[j]+=yu(i)*x_dot_bar_tilde[j];
     }
 
     // start wjth y and add x
-    for (j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       *x_tilde+=zbar[j]*y_bar_tilde[j];
       z_bar_tilde[j]+=xu(i)*y_bar_tilde[j];
     }
 
-    for (j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       *x_tilde+=zdotbar[j]*y_dot_bar_tilde[j];
       z_dot_bar_tilde[j]+=xu(i)*y_dot_bar_tilde[j];
     }
 
-    for (j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       y_dot_tilde[j]+=zdotbar[j]*x_bar_tilde[j];
       z_dot_bar_tilde[j]+=ydot(i)[j]*x_bar_tilde[j];
     }
-    for (j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       x_dot_tilde[j]+=zdotbar[j]*y_bar_tilde[j];
       z_dot_bar_tilde[j]+=xdot(i)[j]*y_bar_tilde[j];
@@ -618,7 +627,11 @@ void read_pass2_3_prod_vector(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  int _nvar=df1b2variable::nvar;
+#ifndef OPT_LIB
+  assert(_nvar > 0);
+#endif
+  size_t nvar = (size_t)_nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -648,7 +661,6 @@ void read_pass2_3_prod_vector(void)
   dvector xu(mmin,mmax);
   dvector yu(mmin,mmax);
   int i;
-  int j;
   for (i=mmin;i<=mmax;i++)
   {
     // df1b2_header *
@@ -683,19 +695,19 @@ void read_pass2_3_prod_vector(void)
   {
     *(px(i)->u_tilde)+=yu(i) * *(pz->u_tilde);
     *(py(i)->u_tilde)+=xu(i) * *(pz->u_tilde);
-    for (j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       *(py(i)->u_tilde)+=xdot(i)[j]*pz->u_dot_tilde[j];
       *(px(i)->u_tilde)+=ydot(i)[j]*pz->u_dot_tilde[j];
     }
-    for (j=0;j<nvar;j++)
+    for (size_t j=0;j<nvar;j++)
     {
       px(i)->u_dot_tilde[j]+=yu(i)*pz->u_dot_tilde[j];
       py(i)->u_dot_tilde[j]+=xu(i)*pz->u_dot_tilde[j];
     }
   }
   *(pz->u_tilde)=0;
-  for (j=0;j<nvar;j++)
+  for (size_t j=0;j<nvar;j++)
   {
     pz->u_dot_tilde[j]=0;
   }

@@ -29,7 +29,6 @@ GTESTS=\
  test_param_init_d3array.cpp\
  test_spline.cpp\
  test_banded_symmetric_dmatrix.cpp\
- test_imatrix.cpp\
  test_line_adstring.cpp\
  test_ivector.cpp\
  test_multi_index.cpp\
@@ -45,6 +44,8 @@ GTESTS=\
  test_param_init_number_vector.cpp\
  test_pow.cpp\
  test_dvariable.cpp\
+ test_imatrix.cpp\
+ test_lmatrix.cpp\
  main.cpp
 
 ##Need to debug this

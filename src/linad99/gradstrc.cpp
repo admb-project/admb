@@ -76,7 +76,7 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
   int gradient_structure::no_derivatives = 0;
 #endif
-long int gradient_structure::max_last_offset = 0;
+unsigned long int gradient_structure::max_last_offset = 0;
 long int gradient_structure::NVAR = 0;
 long int gradient_structure::TOTAL_BYTES = 0;
 long int gradient_structure::PREVIOUS_TOTAL_BYTES = 0;

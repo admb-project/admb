@@ -173,9 +173,7 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
 
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
-  double *e;
-
-  e = (double *)calloc(n,sizeof(double));
+  double* e = (double*)calloc(n,sizeof(double));
   retval = 0;
 
   u=aa;

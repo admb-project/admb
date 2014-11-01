@@ -34,7 +34,7 @@
      ad_exit(21);
    }
 
-   int rs=rowsize();
+   size_t rs = rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
@@ -67,7 +67,7 @@
      "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
      ad_exit(1);
    }
-   int rs=rowsize();
+   size_t rs=rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
@@ -97,7 +97,7 @@
      cerr << " Error allocating memory in lmatrix contructor\n";
      ad_exit(21);
    }
-   int rs=rowsize();
+   size_t rs=rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";

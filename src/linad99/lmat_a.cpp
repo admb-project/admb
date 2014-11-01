@@ -34,7 +34,7 @@ lmatrix::lmatrix(const lmatrix_position& pos)
      ad_exit(21);
    }
 
-   int rs=rowsize();
+   size_t rs=rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";

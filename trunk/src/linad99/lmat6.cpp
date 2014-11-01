@@ -29,7 +29,7 @@ void lmatrix::allocate(const lmatrix& dm)
     ad_exit(21);
   }
 
-  int rs=rowsize();
+  size_t rs=rowsize();
   if ( (m = new lvector [rs]) == 0)
   {
     cerr << " Error allocating memory in imatrix contructor" << endl;

@@ -52,7 +52,9 @@ dlist::dlist(void)
   {
     if (nopt ==1)
     {
-      gradient_structure::MAX_DLINKS=atoi(ad_comm::argv[on+1]);
+      int i = atoi(ad_comm::argv[on+1]);
+      if (i > 0)
+        gradient_structure::MAX_DLINKS = (unsigned int)i;
     }
     else
     {

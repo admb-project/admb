@@ -33,7 +33,7 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
   assert(v == NULL);
 #endif
 
-  size_t size  = rowmax - rowmin + 1;
+  int size  = rowmax - rowmin + 1;
   if (size > 0)
   {
     index_min = rowmin;

@@ -45,7 +45,7 @@ double randn(long int& n);
 void reinitialize_auto_rand()
 {
   long int One=1;
-  auto_rand(One,-One);
+  auto_rand(One, -1);
 }
 
 /** Random number generator.
@@ -127,11 +127,9 @@ double auto_rand(long int& idum, int reset)
  */
 double randn(long int& n)
 {
-  long int nn;
-  nn=n;
-  double x,y;
-  x=auto_rand(nn,1);
-  y=auto_rand(nn,1);
+  long int nn=n;
+  double x=auto_rand(nn,1);
+  double y=auto_rand(nn,1);
   double u=sqrt(-2*log(x))*cos(2*PI*y);
   return(u);
 }
@@ -148,8 +146,7 @@ double randn(long int& n)
        " successes must lie between 0 and 1\n";
       ad_exit(1);
     }
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int i=indexmin(); i<=indexmax(); i++)
     {
       if (auto_rand(nn,1)<=p)
@@ -170,8 +167,7 @@ double randn(long int& n)
  */
   void dvector::fill_randu(long int& n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int i=indexmin(); i<=indexmax(); i++)
     {
       elem(i)=auto_rand(nn,1);
@@ -185,8 +181,7 @@ double randn(long int& n)
  */
 void dmatrix::colfill_randu(const int &j, long int &n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i,j)=auto_rand(nn,1);
@@ -200,8 +195,7 @@ void dmatrix::colfill_randu(const int &j, long int &n)
  */
 void dmatrix::rowfill_randu(const int& i, long int& n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int j=colmin(); j<=colmax(); j++)
     {
       elem(i,j)=auto_rand(nn,1);
@@ -215,8 +209,7 @@ void dmatrix::rowfill_randu(const int& i, long int& n)
  */
   void dvector::fill_randn(long int& n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int i=indexmin(); i<=indexmax(); i++)
     {
       (*this)(i)=randn(nn);
@@ -245,8 +238,7 @@ void dmatrix::rowfill_randu(const int& i, long int& n)
  */
   void d3_array::fill_randn(long int& n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
@@ -261,8 +253,7 @@ void dmatrix::rowfill_randu(const int& i, long int& n)
  */
   void d3_array::fill_randu(long int& n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
@@ -277,8 +268,7 @@ void dmatrix::rowfill_randu(const int& i, long int& n)
  */
   void dmatrix::fill_randu(long int& n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randu_ni(nn);
@@ -293,8 +283,7 @@ void dmatrix::rowfill_randu(const int& i, long int& n)
  */
 void dmatrix::colfill_randn(const int &j,long int &n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i,j)=randn(nn);
@@ -308,8 +297,7 @@ void dmatrix::colfill_randn(const int &j,long int &n)
  */
 void dmatrix::rowfill_randn(const int& i, long int& n)
   {
-    long int nn;
-    nn=n;
+    long int nn=n;
     for (int j=colmin(); j<=colmax(); j++)
     {
       elem(i,j)=randn(nn);

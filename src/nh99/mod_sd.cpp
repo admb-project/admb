@@ -10,7 +10,8 @@
 #if !defined(DOS386)
   #define DOS386
 #endif
-#  include <df1b2fun.h>
+
+#include <df1b2fun.h>
 #include <admodel.h>
 
 dmatrix * GAUSS_varcovariance_matrix = NULL;
@@ -50,7 +51,7 @@ void function_minimizer::sd_routine(void)
   param_size.allocate(1,num_sdrep_types);
 
   int ii=1;
-  unsigned int max_name_length = 0;
+  size_t max_name_length = 0;
   int i;
   for (i=0;i<initial_params::num_initial_params;i++)
   {
@@ -374,8 +375,8 @@ void function_minimizer::sd_routine(void)
     ofsd << " index  ";
     ofs << " name  ";
     ofsd << " name ";
-    unsigned int inmax = max_name_length > 5 ? max_name_length - 5 : 0;
-    for (unsigned int in = 1;in <= inmax; in++)
+    size_t inmax = max_name_length > 5 ? max_name_length - 5 : 0;
+    for (size_t in = 1;in <= inmax; in++)
     {
       ofs << " ";
       ofsd << " ";
@@ -432,10 +433,10 @@ void function_minimizer::sd_routine(void)
         }
       }
 
-      unsigned int inmax = max_name_length + 1 > param_labels[lc].size()
+      size_t inmax = max_name_length + 1 > param_labels[lc].size()
                            ? max_name_length + 1 - param_labels[lc].size()
                            : 0;
-      for (unsigned int in = 1; in <= inmax; in++)
+      for (size_t in = 1; in <= inmax; in++)
       {
         ofs << " ";
         ofsd << " ";

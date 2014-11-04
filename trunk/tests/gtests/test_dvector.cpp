@@ -83,3 +83,39 @@ TEST_F(test_dvector, reallocate_empty)
   EXPECT_EQ(0, empty.indexmax());
   EXPECT_EQ(0, empty.size());
 }
+TEST_F(test_dvector, cast_lvector)
+{
+  dvector dv(1, 4);
+  dv(1) = -LONG_MAX;
+  dv(2) = -(LONG_MAX/2);
+  dv(3) = LONG_MAX/2;
+  dv(4) = LONG_MAX;
+
+  lvector lv(1, 2);
+  lv(1) = 3;
+  lv(2) = 1;
+
+  dvector ret = dv(lv);
+  EXPECT_EQ(lv.indexmin(), ret.indexmin());
+  EXPECT_EQ(lv.indexmax(), ret.indexmax());
+  EXPECT_DOUBLE_EQ(dv((int)lv(1)), ret(1));
+  EXPECT_DOUBLE_EQ(dv((int)lv(2)), ret(2));
+}
+TEST_F(test_dvector, cast_ivector)
+{
+  dvector dv(1, 4);
+  dv(1) = -INT_MAX;
+  dv(2) = -(INT_MAX/2);
+  dv(3) = INT_MAX/2;
+  dv(4) = INT_MAX;
+
+  ivector iv(1, 2);
+  iv(1) = 3;
+  iv(2) = 1;
+
+  dvector ret = dv(iv);
+  EXPECT_EQ(iv.indexmin(), ret.indexmin());
+  EXPECT_EQ(iv.indexmax(), ret.indexmax());
+  EXPECT_DOUBLE_EQ(dv((int)iv(1)), ret(1));
+  EXPECT_DOUBLE_EQ(dv((int)iv(2)), ret(2));
+}

@@ -10,6 +10,11 @@
  */
 #include "fvar.hpp"
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -61,7 +66,13 @@ dvector dvector::operator ()(const lvector& u)
 
    for ( int i=u.indexmin(); i<=u.indexmax(); i++)
    {
-     tmp(i)=(*this)(u(i));
+#ifdef OPT_LIB
+     tmp(i)=(*this)((int)u(i));
+#else
+     const long ui = u(i);
+     assert(ui <= INT_MAX);
+     tmp(i)=(*this)((int)ui);
+#endif
    }
    return tmp;
  }

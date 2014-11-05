@@ -10,7 +10,12 @@
  */
 #include "fvar.hpp"
 
- void dv_subassign(void);
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
+void dv_subassign(void);
 
 /**
  * Description not yet available.
@@ -68,10 +73,15 @@ void dv_subassign(void)
 dvar_vector dvar_vector::operator()(const lvector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
-
    for ( int i=u.indexmin(); i<=u.indexmax(); i++)
    {
-     tmp(i)=(*this)(u(i));
+#ifdef OPT_LIB
+     tmp(i)=(*this)((int)u(i));
+#else
+     const long ui = u(i);
+     assert(ui <= INT_MAX);
+     tmp(i)=(*this)((int)ui);
+#endif
    }
    return tmp;
  }

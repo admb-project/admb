@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
+#include <climits>
 
 extern "C"
 {

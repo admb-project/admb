@@ -39,7 +39,11 @@ int initial_df1b2params::separable_flag=0;
 int initial_df1b2params::have_bounded_random_effects=0;
 int initial_df1b2params::separable_calculation_type=0;
 int df1b2variable::adpool_counter=0;
-imatrix * initial_df1b2params::pointer_table=0;
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+lmatrix* initial_df1b2params::pointer_table=0;
+#else
+imatrix* initial_df1b2params::pointer_table=0;
+#endif
 //int global_nvar=0;
 class df1b2_gradlist;
 

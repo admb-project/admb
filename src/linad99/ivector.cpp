@@ -217,7 +217,7 @@ ivector::ivector(unsigned int sz, long int* x )
   {
     cout << "Doing the assignment in constructor\n";
 #ifdef OPT_LIB
-    v[i] = x[i];
+    v[i] = (int)x[i];
 #else
     long int xi = x[i];
     assert(xi <= INT_MAX);

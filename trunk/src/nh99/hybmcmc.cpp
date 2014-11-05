@@ -364,9 +364,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
           ad_exit(1);
         }
         // get last x vector from file
-        int sz=parsave.size()*sizeof(double);
+        std::streamoff sz = parsave.size() * sizeof(double);
         // backup from end of file
-        uis.seekg(-sz,ios::end);
+        uis.seekg(-sz, ios::end);
         uis >> parsave;
        cout << " restored "  << parsave(parsave.indexmin()) << " "
             << parsave(parsave.indexmax()) << endl;

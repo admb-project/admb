@@ -108,7 +108,7 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
         ad_exit(1);
       }
     }
-    int nread = read(_GRADFILE_PTR,
+    ssize_t nread = read(_GRADFILE_PTR,
         (char*)ptr_first,((off_t)(sizeof(grad_stack_entry)*length)));
     ptr = ptr_first + length-1;
 

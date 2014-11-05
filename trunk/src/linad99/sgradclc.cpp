@@ -35,10 +35,14 @@
 #include <stdlib.h>
 
 #ifdef _MSC_VER
+  #ifdef _M_X64
+  typedef __int64 ssize_t;
+  #else
+  typedef int ssize_t;
+  #endif
   #define lseek _lseek
   #define  read _read
   #define write _write
-  #define ssize_t int
 #else
   #include <iostream>
   using namespace std;

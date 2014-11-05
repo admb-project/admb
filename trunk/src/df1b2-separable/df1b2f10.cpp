@@ -16,7 +16,11 @@
 #include <cassert>
 
 #ifdef _MSC_VER
-typedef int ssize_t;
+  #ifdef _M_X64
+  typedef __int64 ssize_t;
+  #else
+  typedef int ssize_t;
+  #endif
 #else
   #include <unistd.h>
 #endif

@@ -22,6 +22,11 @@
   #define write _write
   #define open _open
   #define close _close
+  #ifdef _M_X64
+  typedef __int64 ssize_t;
+  #else
+  typedef int ssize_t;
+  #endif
 #else
   #include <sys/stat.h>
   #include <sys/types.h>
@@ -43,9 +48,6 @@
 
 #ifndef OPT_LIB
   #include <cassert>
-  #ifdef _MSC_VER
-  typedef int ssize_t;
-  #endif
 #endif
 
 #ifdef __NDPX__

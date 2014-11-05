@@ -69,7 +69,11 @@ using namespace std;
 #endif
 
 #ifdef _MSC_VER
-typedef int ssize_t;
+  #ifdef _M_X64
+  typedef __int64 ssize_t;
+  #else
+  typedef int ssize_t;
+  #endif
   #ifndef SSIZE_MAX
     #define SSIZE_MAX INT_MAX
   #endif

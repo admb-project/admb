@@ -101,7 +101,7 @@ double_and_int * arr_new(unsigned int sz)
 
   arr_link * tmp = gradient_structure::ARR_LIST1->free_last;
 
-  unsigned int bytes_needed=sizeof(double_and_int)*sz;
+  unsigned int bytes_needed = sz * (unsigned int)sizeof(double_and_int);
   int ss=0;
   if (ss)
   {

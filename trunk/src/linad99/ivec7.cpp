@@ -32,9 +32,8 @@
    if (!v)
    {
        cerr << "\nattempting to acces non-allocated ivector in "
-       "ivector::operator[]";
+       "ivector::operator[]\n";
        ad_exit(1);
-       cerr << endl;
    }
    if (i > indexmax())
    {
@@ -58,8 +57,7 @@
    if (!v)
    {
      cerr << "\nattempting to acces non-allocated ivector in "
-     "ivector::operator()";
-     cerr << endl;
+     "ivector::operator()\n";
      ad_exit(1);
    }
    if (i > indexmax())
@@ -84,8 +82,7 @@ const int& ivector::operator[](int i) const
      if (!v)
      {
        cerr << "\nattempting to acces non-allocated ivector in "
-       "ivector::operator[]";
-       cerr << endl;
+       "ivector::operator[]\n";
        ad_exit(1);
      }
      if (i>indexmax())
@@ -115,8 +112,7 @@ const int& ivector::operator()(int i) const
      if (!v)
      {
        cerr << "\nattempting to acces non-allocated ivector in "
-       "ivector::operator()";
-       cerr << endl;
+       "ivector::operator()\n";
        ad_exit(1);
      }
      if (i>indexmax())
@@ -124,7 +120,6 @@ const int& ivector::operator()(int i) const
        cerr << "\narray bound exceeded -- index too high in "
        "ivector::operator()";
        cerr << "index value " << i << " max value " << indexmax() << endl;
-       cerr << endl;
        ad_exit(1);
      }
 

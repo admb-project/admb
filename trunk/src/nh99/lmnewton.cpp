@@ -6,6 +6,11 @@
  */
 #include <admodel.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -38,7 +43,17 @@ void function_minimizer::limited_memory_quasi_newton(
   {
     noprintx=1;
   }
-  int nvar=initial_params::nvarcalc(); // get the number of active
+
+  // get the number of active
+#ifdef OPT_LIB
+  int nvar=(int)initial_params::nvarcalc();
+#else
+assert(false);
+  size_t _nvar = initial_params::nvarcalc();
+  assert(_nvar <= INT_MAX);
+  int nvar = (int)_nvar;
+#endif
+
   double _crit=0;
   int itn=0;
   int ifn=0;
@@ -226,7 +241,16 @@ void function_minimizer::limited_memory_quasi_newton
   }
   int on;
 
-  int nvar=initial_params::nvarcalc(); // get the number of active
+  // get the number of active
+#ifdef OPT_LIB
+  int nvar=(int)initial_params::nvarcalc();
+#else
+assert(false);
+  size_t _nvar = initial_params::nvarcalc();
+  assert(_nvar <= INT_MAX);
+  int nvar = (int)_nvar;
+#endif
+
   double _crit=0;
   int itn=0;
   int ifn=0;

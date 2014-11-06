@@ -7726,13 +7726,15 @@ class spdll_exception
  */
 class random_number_generator /// Random number generator
 {
-   unsigned long *mt; ///< the array for the state vector
-   int mti; ///< mti==N+1 means mt[N] is not initialized
- public:
-   random_number_generator(int seed);
-   ~random_number_generator();
-   double better_rand(void);
-   void reinitialize(int seed);
+  unsigned long* mt; ///< the array for the state vector
+  int mti; ///< mti==N+1 means mt[N] is not initialized
+public:
+  random_number_generator(const long seed);
+  random_number_generator(const int seed);
+  ~random_number_generator();
+
+  double better_rand();
+  void reinitialize(const int seed);
 };
 
 double randpoisson(double lambda, const random_number_generator & rng);

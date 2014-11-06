@@ -61,8 +61,7 @@ double do_gauss_hermite_block_diagonal(const dvector& x,
     //dvar3_array(*pmin->lapprox->block_diagonal_ch);
   int ii=xs+us+1;
   d3_array& bdH=(*pmin->lapprox->block_diagonal_hessian);
-  int ic;
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)
@@ -115,7 +114,7 @@ double do_gauss_hermite_block_diagonal(const dvector& x,
      int offset=0;
      pmin->lapprox->num_separable_calls=0;
      pmin->lapprox->gh->is=is;
-     for (ic=1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        // will need vector stuff here when more than one random effect
@@ -217,7 +216,7 @@ double do_gauss_hermite_block_diagonal(const dvector& x,
     xadjoint(i)=g(ii++);
   for (i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)

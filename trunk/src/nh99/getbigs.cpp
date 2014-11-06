@@ -34,7 +34,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
   }
 
     int us=nvar1-nvar;
-    int xsize = 0, usize = 0;
+    int xsize = 0;
     dmatrix minv(1,us,1,us);
     dmatrix Dux(1,us,1,nvar);
     dmatrix uhat_prime(1,us,1,nvar);
@@ -43,6 +43,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     // get l_uu and l_xu for covariance calculations
     if (lapprox->hesstype !=2)
     {
+      int usize = 0;
       tmpstring = ad_comm::adprogram_name + ".luu";
       uistream ifs1((char*)(tmpstring));
       ifs1 >> usize >> xsize;
@@ -79,7 +80,6 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
         ad_exit(1);
       }
       xsize=lapprox->xsize;
-      usize=lapprox->usize;
       // calculate uhat_prime from the block diagnal matrix
       d3_array & H=*(lapprox->block_diagonal_hessian);
       d3_array & Dux=*(lapprox->block_diagonal_Dux);
@@ -172,9 +172,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     // random effects are never bounded?
     scale(xsize+1,Bnvar)=1.0;
 
-    int i;
-
-    for (i=1;i<=xsize;i++)
+    for (int i=1;i<=xsize;i++)
     {
       for (int j=1;j<=xsize;j++)
       {
@@ -182,7 +180,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
       }
     }
 
-    for (i=xsize+1;i<=Bnvar;i++)
+    for (int i=xsize+1;i<=Bnvar;i++)
     {
       for (int j=1;j<=xsize;j++)
       {
@@ -191,7 +189,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
       }
     }
 
-    for (i=xsize+1;i<=Bnvar;i++)
+    for (int i=xsize+1;i<=Bnvar;i++)
     {
       for (int j=xsize+1;j<=Bnvar;j++)
       {

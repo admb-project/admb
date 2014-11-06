@@ -61,8 +61,7 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
     //dvar3_array(*pmin->lapprox->block_diagonal_ch);
   int ii=xs+us+1;
   d3_array& bdH=(*pmin->lapprox->block_diagonal_hessian);
-  int ic;
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)
@@ -113,7 +112,7 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
    {
      int offset=0;
      pmin->lapprox->importance_sampling_counter=is;
-     for (ic=1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        if (lus>0)
@@ -189,7 +188,7 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
    for (is=1;is<=nsamp;is++)
    {
      int offset=0;
-     for (ic=1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        dvector e= pmin->lapprox->epsilon(is)(offset+1,offset+lus).shift(1);
@@ -257,7 +256,7 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
     xadjoint(i)=g(ii++);
   for (i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)

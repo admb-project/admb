@@ -12,8 +12,6 @@
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 
-static void xxx(void){;}
-
 /**
  * Description not yet available.
  * \param
@@ -63,8 +61,7 @@ double calculate_importance_sample_block_diagonal(const dvector& x,
     //dvar3_array(*pmin->lapprox->block_diagonal_ch);
   int ii=xs+us+1;
   d3_array& bdH=(*pmin->lapprox->block_diagonal_hessian);
-  int ic;
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)
@@ -114,7 +111,7 @@ double calculate_importance_sample_block_diagonal(const dvector& x,
    {
      int offset=0;
      pmin->lapprox->importance_sampling_counter=is;
-     for (ic=1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        tau(offset+1,offset+lus).shift(1)=block_diagonal_ch(ic)*
@@ -157,10 +154,7 @@ double calculate_importance_sample_block_diagonal(const dvector& x,
 
      *objective_function_value::pobjfun=0.0;
      //int istop=0;
-     if (is==65)
-     {
-        xxx();
-     }
+     //if (is==65) { }
      pmin->AD_uf_outer();
 
      if (pmin->lapprox->use_outliers==0)
@@ -194,7 +188,7 @@ double calculate_importance_sample_block_diagonal(const dvector& x,
    for (is=1;is<=nsamp;is++)
    {
      int offset=0;
-     for (ic=1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        dvector e= pmin->lapprox->epsilon(is)(offset+1,offset+lus).shift(1);
@@ -277,7 +271,7 @@ double calculate_importance_sample_block_diagonal(const dvector& x,
     xadjoint(i)=g(ii++);
   for (i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)

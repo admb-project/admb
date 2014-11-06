@@ -61,8 +61,7 @@ double calculate_importance_sample_block_diagonal_funnel(const dvector& x,
     //dvar3_array(*pmin->lapprox->block_diagonal_ch);
   int ii=xs+us+1;
   d3_array& bdH=(*pmin->lapprox->block_diagonal_hessian);
-  int ic;
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)
@@ -123,13 +122,12 @@ double calculate_importance_sample_block_diagonal_funnel(const dvector& x,
      ad_begin_funnel();
      int icount=0;
      dvar_vector tau(1,us);;
-     int ic;
      for (int is=lbound;is<=ubound;is++)
      {
        if (is>nsamp) break;
        icount++;
        int offset=0;
-       for (ic=1;ic<=nsc;ic++)
+       for (int ic=1;ic<=nsc;ic++)
        {
          int lus=lrea(ic);
          tau(offset+1,offset+lus).shift(1)=block_diagonal_ch(ic)*
@@ -247,7 +245,7 @@ double calculate_importance_sample_block_diagonal_funnel(const dvector& x,
     xadjoint(i)=g(ii++);
   for (i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)

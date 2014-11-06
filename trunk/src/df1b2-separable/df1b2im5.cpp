@@ -61,8 +61,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
     //dvar3_array(*pmin->lapprox->block_diagonal_ch);
   int ii=xs+us+1;
   d3_array& bdH=(*pmin->lapprox->block_diagonal_hessian);
-  int ic;
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)
@@ -84,8 +83,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
   }
   else
   {
-    int ic;
-    for (ic=1;ic<=nsc;ic++)
+    for (int ic=1;ic<=nsc;ic++)
     {
       int lus=lrea(ic);
       for (i=1;i<=lus;i++)
@@ -113,8 +111,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
    {
      int offset=0;
      pmin->lapprox->importance_sampling_counter=is;
-     int ic;
-     for (ic=1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        tau(offset+1,offset+lus).shift(1)=block_diagonal_ch(ic)*
@@ -191,8 +188,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
    for (is=1;is<=nsamp;is++)
    {
      int offset=0;
-     int ic;
-     for (ic=1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        // assumes that all spearable calls have the same number of
@@ -261,7 +257,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
     xadjoint(i)=g(ii++);
   for (i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
-  for (ic=1;ic<=nsc;ic++)
+  for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
     for (i=1;i<=lus;i++)

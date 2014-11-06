@@ -58,6 +58,11 @@
 
 #include <math.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 void funnel_derivatives(void);
 
 #if defined(__ZTC__)
@@ -192,9 +197,14 @@ do
 
   //if (gradient_structure::save_var_flag)
   {
-    long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
+    unsigned long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
       gradient_structure::ARRAY_MEMBLOCK_SIZE);
-    unsigned int dsize=bytes_needed/sizeof(double);
+    size_t _dsize = bytes_needed/sizeof(double);
+#ifndef OPT_LIB
+    assert(_dsize <= INT_MAX);
+#endif
+    int dsize = (int)_dsize;
+
     //dvector dtmp(0,dsize-1);
     //memcpy((char*)&(dtmp(0)),(char*)gradient_structure::ARRAY_MEMBLOCK_BASE,
       //dsize*sizeof(double));
@@ -222,7 +232,7 @@ do
       nzero++;
     }
 
-    for (unsigned int i1=1;i1<dsize;i1++)
+    for (int i1=1;i1<dsize;i1++)
     {
       if (*(++dptr))
       {

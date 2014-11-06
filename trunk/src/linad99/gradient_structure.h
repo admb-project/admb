@@ -66,23 +66,23 @@ class dlist;
  */
 class humungous_pointer
 {
+  size_t adjustment;
 public:
   humungous_pointer();
   ~humungous_pointer() {}
 
-  char *ptr;
-  int adjustment;
+  char* ptr;
   void free(void);
-  void adjust(int);
+  void adjust(const size_t);
   humungous_pointer operator +(unsigned long int &offset);
   humungous_pointer & operator +=(unsigned long int &offset);
   humungous_pointer & operator =(void *p);
   int operator ==(void *p);
-  int operator !=(void *p);
-  operator char *();
-  operator void *();
-  operator double_and_int *();
-  operator double *();
+  int operator!=(void *p);
+  operator char*();
+  operator void*();
+  operator double_and_int*();
+  operator double*();
 };
 
 /**

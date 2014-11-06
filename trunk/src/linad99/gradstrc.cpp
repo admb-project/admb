@@ -420,20 +420,12 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
 
    ARRAY_MEMBLOCK_BASE = temp_ptr;
 
-   //cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
-   //cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;
-#if defined(__x86_64)
-   intptr_t adjustment=(8-((intptr_t)ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
-#else
-   int adjustment=(8-((int) ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
-#endif
-   //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
+   const size_t adjustment = (8 -((size_t)ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
    ARRAY_MEMBLOCK_BASE.adjust(adjustment);
-   //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
 
    if (GRAD_STACK1 != NULL)
    {
-      cerr << " 3 Trying to allocate to a non NULL pointer\n";
+      cerr << "Trying to allocate to a non NULL pointer\n";
    }
    else
    {
@@ -447,7 +439,8 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
 
    if ( INDVAR_LIST!= NULL)
    {
-cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
+      cerr <<
+        "Trying to allocate to a non NULL pointer in gradient structure \n";
       ad_exit(1);
    }
    else

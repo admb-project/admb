@@ -294,8 +294,7 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
 
     minder(1)=1;
     maxder(1)=partition(1);
-    int i;
-    for (i=2;i<=num_der_blocks;i++)
+    for (int i=2;i<=num_der_blocks;i++)
     {
       minder(i)=maxder(i-1)+1;
       maxder(i)=minder(i)+partition(i)-1;
@@ -540,8 +539,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   fmc1.crit=1.e-3;
 
   //cout << "Need to fix Hess" << endl;
-  int i;
-  for (i=1;i<=num_der_blocks;i++)
+  for (int i=1;i<=num_der_blocks;i++)
   {
     if (minder(i)<1 || maxder(i) > nvariables || maxder(i) < minder(i))
     {
@@ -813,7 +811,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       {
         dmatrix os(1,num_importance_samples,1,usize);
         os.fill_randu(rng);
-        for (i=1;i<=num_importance_samples;i++)
+        for (int i=1;i<=num_importance_samples;i++)
         {
           for (int j=1;j<=usize;j++)
           {
@@ -833,7 +831,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       {
         dmatrix os(1,num_importance_samples,1,usize);
         os.fill_randu(rng);
-        for (i=1;i<=num_importance_samples;i++)
+        for (int i=1;i<=num_importance_samples;i++)
         {
           for (int j=1;j<=usize;j++)
           {
@@ -862,7 +860,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
           eps_mult=1.0;
         }
       }
-      for (i=1;i<=num_importance_samples;i++)
+      for (int i=1;i<=num_importance_samples;i++)
       {
         epsilon(i)*=eps_mult;
       }

@@ -30,8 +30,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)
-  //int i,j;
-  int i;
 
   initial_params::set_inactive_only_random_effects();
   gradient_structure::set_NO_DERIVATIVES();
@@ -79,7 +77,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
 
   if (sparse_hessian_flag==0)
   {
-    for (i=1;i<=xsize;i++)
+    for (int i=1;i<=xsize;i++)
     {
       y(i)=x(i);
     }
@@ -90,7 +88,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   }
   else
   {
-    for (i=1;i<=xsize;i++)
+    for (int i=1;i<=xsize;i++)
     {
       value(y(i))=x(i);
     }
@@ -190,8 +188,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
         int mmax=re_list.indexmax();
         dvector tmp(1,mmax);
 
-        int j;
-        for (j=1;j<=re_list.indexmax();j++)
+        for (int j=1;j<=re_list.indexmax();j++)
         {
           tmp(j)=uadjoint(re_list(j)-xmax);
         }
@@ -202,7 +199,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
           {
             dvector tmp1=solve(H,tmp);
             dvector xtmp=tmp1*Dux;
-            for (j=1;j<=fe_list.indexmax();j++)
+            for (int j=1;j<=fe_list.indexmax();j++)
             {
               x_con(fe_list(j))+=xtmp(j);
             }
@@ -295,8 +292,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
           int mmax=re_list.indexmax();
           dvector tmp(1,mmax);
 
-          int j;
-          for (j=1;j<=re_list.indexmax();j++)
+          for (int j=1;j<=re_list.indexmax();j++)
           {
             tmp(j)=uadjoint(re_list(j)-xmax);
           }
@@ -305,7 +301,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
           {
             dvector tmp1=solve(H,tmp);
             dvector xtmp=tmp1*Dux;
-            for (j=1;j<=fe_list.indexmax();j++)
+            for (int j=1;j<=fe_list.indexmax();j++)
             {
               x_con(fe_list(j))+=xtmp(j);
             }
@@ -391,7 +387,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     dvector scale1(1,xsize);   // need to get scale from somewhere
     initial_params::set_inactive_only_random_effects();
     /*int check=*/initial_params::stddev_scale(scale1,x);
-    for (i=1;i<=xadjoint.indexmax();i++)
+    for (int i=1;i<=xadjoint.indexmax();i++)
       xadjoint(i)*=scale1(i);
   }
   //cout << initial_df1b2params::cobjfun << endl;

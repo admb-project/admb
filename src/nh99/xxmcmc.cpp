@@ -22,7 +22,7 @@ void set_labels_for_mcmc(void);
 
 void print_hist_data(const dmatrix& hist, const dmatrix& values,
   const dvector& h, dvector& m, const dvector& s, const dvector& parsave,
-  long int iseed, double size_scale);
+  int iseed, double size_scale);
 
 int minnz(const dvector& x);
 int maxnz(const dvector& xa);
@@ -31,7 +31,7 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s,
   int mcmc2_flag);
 
 int read_hist_data(const dmatrix& hist, const dvector& h, dvector& m,
-  const dvector& s, const dvector& parsave, long int& iseed,
+  const dvector& s, const dvector& parsave, int& iseed,
   const double& size_scale);
 
 void make_preliminary_hist(const dvector& s, const dvector& m,int nsim,
@@ -340,16 +340,12 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     ofstream ofs_sd1((char*)(ad_comm::adprogram_name + adstring(".mc2")));
 
     {
-      long int iseed=0;
-      int number_sims;
-      if (nmcmc<=0)
+      int number_sims = 100000;
+      if (nmcmc > 0)
       {
-        number_sims=  100000;
+        number_sims = nmcmc;
       }
-      else
-      {
-        number_sims=  nmcmc;
-      }
+      int iseed=0;
       //cin >> iseed;
       if (iseed0<=0)
       {
@@ -983,7 +979,7 @@ void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
 
 void print_hist_data(const dmatrix& hist, const dmatrix& values,
   const dvector& h, dvector& m, const dvector& s, const dvector& parsave,
-  long int iseed, double size_scale)
+  int iseed, double size_scale)
 {
   ofstream ofs((char*)(ad_comm::adprogram_name + adstring(".hst")));
   int nsdvars=stddev_params::num_stddev_calc();
@@ -1068,7 +1064,7 @@ void print_hist_data(const dmatrix& hist, const dmatrix& values,
 }
 
 int read_hist_data(const dmatrix& _hist, const dvector& h, dvector& m,
-  const dvector& s, const dvector& parsave, long int& iseed,
+  const dvector& s, const dvector& parsave, int& iseed,
   const double& size_scale)
 {
   dmatrix& hist= (dmatrix&) _hist;

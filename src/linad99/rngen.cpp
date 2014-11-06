@@ -59,14 +59,6 @@
 #define UPPER_MASK 0x80000000UL /* most significant w-r bits */
 #define LOWER_MASK 0x7fffffffUL /* least significant r bits */
 
-#if defined (__cplusplus) && (__cplusplus == 201103L)
-random_number_generator::random_number_generator(const long lseed)
-  :random_number_generator((int)lseed)
-{
-  //DoNothing
-}
-#endif
-
 /**
   \ingroup RNG
   Constructor for random_number_generator class.

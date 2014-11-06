@@ -59,6 +59,12 @@
 #define UPPER_MASK 0x80000000UL /* most significant w-r bits */
 #define LOWER_MASK 0x7fffffffUL /* least significant r bits */
 
+random_number_generator::random_number_generator(const long lseed)
+  :random_number_generator((int)lseed)
+{
+  //DoNothing
+}
+
 /**
   \ingroup RNG
   Constructor for random_number_generator class.
@@ -67,7 +73,7 @@
   \param seed Integer used to initialize the random number generator.
   Using different values of seed will generat different series of random numbers.
 */
-random_number_generator::random_number_generator(int seed)
+random_number_generator::random_number_generator(const int seed)
 {
   unsigned long s=seed;
   mt=new unsigned long [N]; /* the array for the state vector  */

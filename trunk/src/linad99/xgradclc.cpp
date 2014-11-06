@@ -197,7 +197,8 @@ do
 
   //if (gradient_structure::save_var_flag)
   {
-    unsigned long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
+    unsigned long bytes_needed = min(
+      gradient_structure::ARR_LIST1->get_last_offset() + 1,
       gradient_structure::ARRAY_MEMBLOCK_SIZE);
     size_t _dsize = bytes_needed/sizeof(double);
 #ifndef OPT_LIB

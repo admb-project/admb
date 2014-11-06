@@ -104,8 +104,7 @@ double calculate_importance_sample_block_diagonal(const dvector& x,
    sample_value.initialize();
 
    dvar_vector tau(1,us);;
-   int is;
-   for (is=1;is<=nsamp;is++)
+   for (int is=1;is<=nsamp;is++)
    {
      int offset=0;
      pmin->lapprox->importance_sampling_counter=is;
@@ -182,7 +181,7 @@ double calculate_importance_sample_block_diagonal(const dvector& x,
 
    nsc=pmin->lapprox->num_separable_calls;
    dmatrix weights(1,nsc,1,nsamp);
-   for (is=1;is<=nsamp;is++)
+   for (int is=1;is<=nsamp;is++)
    {
      int offset=0;
      for (int ic=1;ic<=nsc;ic++)

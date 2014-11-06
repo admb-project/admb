@@ -7729,7 +7729,9 @@ class random_number_generator /// Random number generator
   unsigned long* mt; ///< the array for the state vector
   int mti; ///< mti==N+1 means mt[N] is not initialized
 public:
+#if defined (__cplusplus) && (__cplusplus == 201103L)
   random_number_generator(const long seed);
+#endif
   random_number_generator(const int seed);
   ~random_number_generator();
 

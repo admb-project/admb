@@ -42,8 +42,6 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
   // do we need this next line?
   y(1,xs)=x;
 
-  int i,j;
-
   // contribution for quadratic prior
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
@@ -64,8 +62,8 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
   for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
-    for (i=1;i<=lus;i++)
-      for (j=1;j<=lus;j++)
+    for (int i=1;i<=lus;i++)
+      for (int j=1;j<=lus;j++)
         y(ii++)=bdH(ic)(i,j);
   }
 
@@ -88,9 +86,9 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
       int lus=lrea(ic);
       if (lus>0)
       {
-        for (i=1;i<=lus;i++)
+        for (int i=1;i<=lus;i++)
         {
-          for (j=1;j<=lus;j++)
+          for (int j=1;j<=lus;j++)
           {
             block_diagonal_vhessian(ic,i,j)=vy(ii++);
           }
@@ -153,8 +151,7 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
      int mmax=ls.indexmax();
 
      int ii=1;
-     int i;
-     for (i=mmin;i<=mmax;i++)
+     for (int i=mmin;i<=mmax;i++)
      {
        int cmin=ls(i).indexmin();
        int cmax=ls(i).indexmax();
@@ -170,7 +167,7 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
      }
      initial_params::reset(vy);    // get the values into the model
      ii=1;
-     for (i=mmin;i<=mmax;i++)
+     for (int i=mmin;i<=mmax;i++)
      {
        int cmin=ls(i).indexmin();
        int cmax=ls(i).indexmax();
@@ -230,16 +227,16 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
    pmin->lapprox->in_gauss_hermite_phase=0;
 
   ii=1;
-  for (i=1;i<=xs;i++)
+  for (int i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);
-  for (i=1;i<=us;i++)
+  for (int i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
   for (int ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
-    for (i=1;i<=lus;i++)
+    for (int i=1;i<=lus;i++)
     {
-      for (j=1;j<=lus;j++)
+      for (int j=1;j<=lus;j++)
       {
         (*pmin->lapprox->block_diagonal_vhessianadjoint)(ic)(i,j)=g(ii++);
       }

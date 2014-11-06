@@ -40,11 +40,10 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
 
   fmm ** pfmc1 = new pfmm[num_separable_calls];
   pfmc1--;
-  int i;
   ivector ishape(1,num_separable_calls);
   dvector gmax(1,num_separable_calls);
 
-  for (i=1;i<=num_separable_calls;i++)
+  for (int i=1;i<=num_separable_calls;i++)
   {
     int m=(*derindex)(i).indexmax();
     ishape(i)=m;
@@ -100,7 +99,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   for (int ii=1;ii<=2;ii++)
   {
     // get the initial u into the uu's
-    for (i=1;i<=num_separable_calls;i++)
+    for (int i=1;i<=num_separable_calls;i++)
     {
       int m=(*derindex)(i).indexmax();
       for (int j=1;j<=m;j++)
@@ -265,7 +264,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     quadratic_prior::get_M_calculations();
   }
   gradient_structure::set_YES_DERIVATIVES();
-  for (i=1;i<=num_separable_calls;i++)
+  for (int i=1;i<=num_separable_calls;i++)
   {
     if (pfmc1[i])
     {

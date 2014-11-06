@@ -21,7 +21,7 @@
 double better_rand(long int& idum)
 {
 #ifndef OPT_LIB
-  assert(idum <= INT_MAX);  
+  assert(idum <= INT_MAX);
 #endif
   random_number_generator rng((int)idum);
   double rr = ((random_number_generator&) rng).better_rand();

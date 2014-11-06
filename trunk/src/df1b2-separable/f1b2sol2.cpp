@@ -57,7 +57,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
 {
   ADUNCONST(df1b2variable,ln_unsigned_det)
   ADUNCONST(df1b2vector,z)
-  int i,j,k,n;
+  int k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -76,10 +76,10 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
   df1b2vector vv(lb,ub);
 
   d=1.0;
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     big=0.0;
-    for (j=lb;j<=ub;j++)
+    for (int j=lb;j<=ub;j++)
     {
       temp=fabs(bb(i,j));
       if (value(temp) > value(big))
@@ -95,9 +95,9 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
     vv[i]=1.0/big;
   }
 
-  for (j=lb;j<=ub;j++)
+  for (int j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (int i=lb;i<j;i++)
     {
       sum=bb(i,j);
       for (k=lb;k<i;k++)
@@ -109,7 +109,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
     }
     int imax = j;
     big=0.0;
-    for (i=j;i<=ub;i++)
+    for (int i=j;i<=ub;i++)
     {
       sum=bb(i,j);
       for (k=lb;k<j;k++)
@@ -152,7 +152,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
     if (j != n)
     {
       dum=1.0/bb(j,j);
-      for (i=j+1;i<=ub;i++)
+      for (int i=j+1;i<=ub;i++)
       {
         bb(i,j) = bb(i,j) * dum;
       }
@@ -164,7 +164,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
   df1b2vector part_prod(lb,ub);
   part_prod(lb)=log(fabs(bb(lb,lb)));
   if (value(bb(lb,lb))<0) sign=-sign;
-  for (j=lb+1;j<=ub;j++)
+  for (int j=lb+1;j<=ub;j++)
   {
     if (value(bb(j,j))<0) sign=-sign;
     part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
@@ -177,17 +177,17 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
   //int ub=rowmax;
   df1b2matrix& b=bb;
   ivector indxinv(lb,ub);
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     indxinv(indx(i))=i;
   }
 
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     y(indxinv(i))=z(i);
   }
 
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     sum=y(i);
     for (int j=lb;j<=i-1;j++)
@@ -196,7 +196,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
     }
     y(i)=sum;
   }
-  for (i=ub;i>=lb;i--)
+  for (int i=ub;i>=lb;i--)
   {
     sum=y(i);
     for (int j=i+1;j<=ub;j++)

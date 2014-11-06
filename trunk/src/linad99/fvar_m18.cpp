@@ -19,6 +19,10 @@
   #include <iostream.hpp>
 #endif
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 void cmdm_prod(void);
 
 /**
@@ -35,8 +39,20 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
    }
    dmatrix cm2=value(m2);
    dmatrix tmp(cm1.rowmin(),cm1.rowmax(), m2.colmin(), m2.colmax());
-   double sum;
-   double * temp_col=(double *) malloc(m2.rowsize()*sizeof(double));
+
+#ifdef OPT_LIB
+   const size_t rowsize = (size_t)m2.rowsize();
+#else
+   const int _rowsize = m2.rowsize();
+   assert(_rowsize > 0);
+   const size_t rowsize = (size_t)_rowsize;
+#endif
+   double* temp_col=(double*)malloc(rowsize * sizeof(double));
+   if (!temp_col)
+   {
+     cerr << "Error: Unable to allocate array.\n";
+     ad_exit(21);
+   }
    temp_col-=cm2.rowmin();
 
    for (int j=cm2.colmin(); j<=cm2.colmax(); j++)
@@ -48,7 +64,7 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
 
      for (int i=cm1.rowmin(); i<=cm1.rowmax(); i++)
      {
-       sum=0.0;
+       double sum=0.0;
        const dvector& temp_row = cm1(i);
        for (int k=cm1.colmin(); k<=cm1.colmax(); k++)
        {

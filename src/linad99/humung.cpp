@@ -38,10 +38,10 @@ void humungous_pointer::free(void)
  * Description not yet available.
  * \param
  */
-void humungous_pointer::adjust(int a)
+void humungous_pointer::adjust(const size_t a)
 {
-  ptr+=a;
-  adjustment=a;
+  adjustment = a;
+  ptr+=adjustment;
   //ptr=NULL;
 }
 

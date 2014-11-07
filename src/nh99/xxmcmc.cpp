@@ -547,9 +547,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
                 uis >> nv1;
                 if (nv1 !=nvar)
                 {
-                  cerr << "wrong number of independent variables in" <<
-                    ad_comm::adprogram_name + adstring(".psv") <<
-                  cerr << " I am starting a new file " << endl;
+                  cerr << "wrong number of independent variables in"
+                       << ad_comm::adprogram_name + adstring(".psv")
+                       << "\n starting a new file " << endl;
                   psvflag=1;
                 }
               }

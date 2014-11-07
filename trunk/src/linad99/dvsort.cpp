@@ -40,25 +40,27 @@ void double_qsort2(double *arr, int *arr2, unsigned n)
 dvector sort(const dvector & v, int NSTACK)
 {
    int lb=v.indexmin();
-   int ub=v.indexmax();
    int size=v.size();
 
-   double *doublearray;
-   doublearray = new double[size];
-   int i;
-   for(i=0;i<size;i++)
+   double *doublearray = new double[size];
+   for(int i=0;i<size;i++)
    {
       doublearray[i] = v(lb+i);
    }
 
-   double_qsort(doublearray,size);
+   if (size > 0)
+   {
+     double_qsort(doublearray, (unsigned int)size);
+   }
 
+   int ub=v.indexmax();
    dvector arr(lb, ub);
-   for(i=0;i<size;i++) {
+   for(int i=0;i<size;i++) {
       arr(lb+i) = doublearray[i];
    }
 
    delete [] doublearray;
+   doublearray = 0;
 
    return arr;
 }
@@ -85,7 +87,6 @@ dvector sort(const dvector &_v, const ivector &_index, int NSTACK)
    }
 
    int lb=v.indexmin();
-   int ub=v.indexmax();
    int size=v.size();
 
    double *doublearray = new double[size];
@@ -100,8 +101,12 @@ dvector sort(const dvector &_v, const ivector &_index, int NSTACK)
       intarray[i] = lb + i;
    }
 
-   double_qsort2(doublearray,intarray,size);
+   if (size > 0)
+   {
+     double_qsort2(doublearray, intarray, (unsigned int)size);
+   }
 
+   int ub=v.indexmax();
    dvector arr(lb, ub);
    for(int i = 0;i < size; i++) {
       arr(lb+i) = doublearray[i];

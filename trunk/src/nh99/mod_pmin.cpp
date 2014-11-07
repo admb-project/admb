@@ -108,8 +108,10 @@ dmatrix trans(const dvector& x)
     }
     int nvar=initial_params::nvarcalc();
     dvector xsave(1,nvar);
-    int ii=1;
-    initial_params::copy_all_values(xsave,ii);
+    {
+      int ii=1;
+      initial_params::copy_all_values(xsave,ii);
+    }
     double old_value;  // this is where we were
     double new_value;  // this is where we want to go
     double fprof = 0.0;

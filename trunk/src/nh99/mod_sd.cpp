@@ -52,8 +52,7 @@ void function_minimizer::sd_routine(void)
 
   int ii=1;
   size_t max_name_length = 0;
-  int i;
-  for (i=0;i<initial_params::num_initial_params;i++)
+  for (int i=0;i<initial_params::num_initial_params;i++)
   {
     //if ((initial_params::varsptr[i])->phase_start
      // <= initial_params::current_phase)
@@ -73,7 +72,7 @@ void function_minimizer::sd_routine(void)
   }
 
   int start_stdlabels=ii;
-  for (i=0;i< stddev_params::num_stddev_params;i++)
+  for (int i=0;i< stddev_params::num_stddev_params;i++)
   {
     param_labels[ii]=
       stddev_params::stddevptr[i]->label();
@@ -125,7 +124,7 @@ void function_minimizer::sd_routine(void)
     {
       if (nvar==nvar1)  // no random effects
       {
-        for (i=1;i<=nvar;i++)
+        for (int i=1;i<=nvar;i++)
         {
           for (int j=1;j<=i;j++)
           {
@@ -153,16 +152,15 @@ void function_minimizer::sd_routine(void)
         {
           cif >> tv;
           dvector tmpsub(1,nvar);
-          for (i=1;i<=ndvar;i++)
+          for (int i=1;i<=ndvar;i++)
           {
-            int j;
-            for (j=1;j<=nvar;j++)
+            for (int j=1;j<=nvar;j++)
             {
               tmpsub(j)=(tv(i)*S(j))*scale(j);
             }
             ofs << tmpsub << "  ";
             tmpsub=tv(i)*S;
-            for (j=1;j<=i;j++)
+            for (int j=1;j<=i;j++)
             {
               tmp(nvar+j)=tmpsub*tv(j);
               ofs << tmp(nvar+j) << " ";
@@ -217,7 +215,7 @@ void function_minimizer::sd_routine(void)
           }
         }
 
-        for (i=1;i<=nvar1;i++)
+        for (int i=1;i<=nvar1;i++)
         {
           for (int j=1;j<=i;j++)
           {
@@ -232,16 +230,15 @@ void function_minimizer::sd_routine(void)
         {
           cif >> tv;
           dvector tmpsub(1,nvar1);
-          for (i=1;i<=ndvar;i++)
+          for (int i=1;i<=ndvar;i++)
           {
-            int j;
-            for (j=1;j<=nvar1;j++)
+            for (int j=1;j<=nvar1;j++)
             {
               tmpsub(j)=(tv(i)*BS(j))*scale(j);
             }
             ofs << tmpsub << "  ";
             tmpsub=tv(i)*BS;
-            for (j=1;j<=i;j++)
+            for (int j=1;j<=i;j++)
             {
               tmp(nvar1+j)=tmpsub*tv(j);
               ofs << tmp(nvar1+j) << " ";
@@ -266,7 +263,7 @@ void function_minimizer::sd_routine(void)
     #else
     // *******************************************************
     {
-      for (i=1;i<=nvar;i++)
+      for (int i=1;i<=nvar;i++)
       {
         for (int j=1;j<=i;j++)
         {
@@ -284,7 +281,7 @@ void function_minimizer::sd_routine(void)
       int tmp_nvar,tmp_ndvar;
       cif >> tmp_nvar >> tmp_ndvar;
       dvector tmpsub(1,nvar);
-      for (i=1;i<=ndvar;i++)
+      for (int i=1;i<=ndvar;i++)
       {
         cif >> tv;  // v(i)
         for (int j=1;j<=nvar;j++)
@@ -295,7 +292,7 @@ void function_minimizer::sd_routine(void)
         tmpsub=tv*S;
         cif.seekg(0,ios::beg);
         cif >> tmp_nvar >> tmp_ndvar;
-        for (j=1;j<=i;j++)
+        for (int j=1;j<=i;j++)
         {
           cif >> v;
           tmp(nvar+j)=tmpsub*v;
@@ -328,8 +325,7 @@ void function_minimizer::sd_routine(void)
     initial_params::copy_all_values(param_values,offset);
     stddev_params::copy_all_values(param_values,offset);
 
-    int i;
-    for (i=1;i<=nvar1;i++)
+    for (int i=1;i<=nvar1;i++)
     {
       if (diag(i)<=0.0)
       {
@@ -342,7 +338,7 @@ void function_minimizer::sd_routine(void)
         diag(i)=sqrt(diag(i));
       }
     }
-    for (i=nvar1+1;i<=nvar1+ndvar;i++)
+    for (int i=nvar1+1;i<=nvar1+ndvar;i++)
     {
       if (diag(i)<0.0)
       {
@@ -383,7 +379,7 @@ void function_minimizer::sd_routine(void)
     }
     ofs << "  value      std.dev   ";
     ofsd << "  value      std.dev";
-    for (i=1;i<=nvar+ndvar;i++)
+    for (int i=1;i<=nvar+ndvar;i++)
     {
       ofs << " " << setw(4) << i << "   ";
     }
@@ -392,14 +388,13 @@ void function_minimizer::sd_routine(void)
 
     if (GAUSS_varcovariance_matrix) (*GAUSS_varcovariance_matrix).initialize();
 
-    for (i=1;i<=nvar1+ndvar;i++)
+    for (int i=1;i<=nvar1+ndvar;i++)
     {
-      int j;
-      for (j=1;j<=i;j++)
+      for (int j=1;j<=i;j++)
       {
         cif >> tmp(j);
       }
-      for (j=1;j<=i;j++)
+      for (int j=1;j<=i;j++)
       {
         if (diag(i)==0.0 || diag(j)==0.0)
         {
@@ -459,7 +454,7 @@ void function_minimizer::sd_routine(void)
       ofsd << setscientific() << setw(11) << setprecision(4) << param_values(i)
            << " ";
       ofsd << setscientific() << setw(10) << setprecision(4) << diag(i);
-      for (j=1;j<=i;j++)
+      for (int j=1;j<=i;j++)
       {
         ofs << " " << setfixed() << setprecision(4) << setw(7)
             << tmp(j);

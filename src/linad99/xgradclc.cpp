@@ -63,6 +63,11 @@
   #include <climits>
 #endif
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 void funnel_derivatives(void);
 
 #if defined(__ZTC__)
@@ -219,7 +224,7 @@ do
     int zero_flag=0;
     ivector offset(0,dsize-1);
     save_identifier_string("ue");
-    if (*(++dptr))
+    if (!ISZERO(*(++dptr)))
     {
       save_double_value(*dptr);
       dcount++;
@@ -235,7 +240,7 @@ do
 
     for (int i1=1;i1<dsize;i1++)
     {
-      if (*(++dptr))
+      if (!ISZERO(*(++dptr)))
       {
         save_double_value(*dptr);
         dcount++;
@@ -349,7 +354,7 @@ void funnel_derivatives(void)
   int smax=stmp.indexmax();
   for (i=0;i<smax;i++)
   {
-    if (stmp(i))
+    if (!ISZERO(stmp(i)))
     {
       *(double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
         +=stmp(i)*df;

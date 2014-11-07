@@ -7,6 +7,11 @@
 #include "fvar.hpp"
 #include <math.h>
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 static double eps0=1.e-50;
 
 void lubksb(dvar_matrix a, const ivector&  indx,dvar_vector b);
@@ -140,7 +145,7 @@ void lubksb(dvar_matrix a, const ivector& indx,dvar_vector b)
         sum -= a.elem(i,j)*b.elem(j);
       }
     }
-    else if ( value(sum) )
+    else if (!ISZERO(value(sum)))
     {
       ii=i;
       iiflag=1;

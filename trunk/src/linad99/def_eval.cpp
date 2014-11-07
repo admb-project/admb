@@ -50,6 +50,11 @@
 #endif
 
 #include <math.h>
+
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
 //#define XXX 3.70255042e-17
 
   //ofstream gradlog("grad.log");
@@ -75,7 +80,7 @@
 #if defined(USE_DDOUBLE)
       if  ( grad_ptr->mult2 !=0)
 #else
-      if  ( grad_ptr->mult2)
+      if  (!ISZERO(grad_ptr->mult2))
 #endif
       {
         * grad_ptr->ind_addr2 += z * grad_ptr->mult2 ;

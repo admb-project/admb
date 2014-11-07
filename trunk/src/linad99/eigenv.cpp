@@ -12,6 +12,11 @@
 
 #include <fvar.hpp>
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 #if !defined(EIGEN_VECTORS)
 #  define EIGEN_VECTORS
 #endif
@@ -204,7 +209,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
   for (i=1;i<=n;i++)
   {
     l=i-1;
-    if (d[i])
+    if (!ISZERO(d[i]))
     {
       for (j=1;j<=l;j++)
       {

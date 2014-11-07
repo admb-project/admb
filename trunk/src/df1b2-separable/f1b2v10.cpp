@@ -233,14 +233,18 @@ void ad_read_pass2_prod_vector(void);
 #endif
   size_t nvar = (size_t)_nvar;
 
-   int mmin=px->indexmin();
-   int mmax=px->indexmax();
+  int mmin=px->indexmin();
+  int mmax=px->indexmax();
+#ifndef OPT_LIB
+  assert(mmax >= mmin);
+#endif
+  size_t size = mmax - mmin + 1;
+  const size_t sizeofdouble = sizeof(double);
 
-   //int total_bytes=3*sizeof(df1b2_header)
-    // +2*(nvar+1)*sizeof(double);
-  size_t total_bytes= 2*sizeof(int) + 2*(mmax-mmin+1)*sizeof(df1b2_header)
-    + sizeof(df1b2_header) + 2*(mmax-mmin+1)*sizeof(double)
-    + 2*(mmax-mmin+1)*nvar*sizeof(double);
+  //int total_bytes=3*sizeof(df1b2_header)+2*(nvar+1)*sizeof(double);
+  size_t total_bytes= 2*sizeof(int) + 2 * size * sizeof(df1b2_header)
+    + sizeof(df1b2_header) + 2 * size * sizeofdouble
+    + 2 * size * nvar * sizeofdouble;
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DL";
@@ -265,8 +269,6 @@ void ad_read_pass2_prod_vector(void);
    }
    memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
 
-
-   const size_t sizeofdouble = sizeof(double);
    for (int i=mmin;i<=mmax;i++)
    {
      memcpy(list,(*px)(i).get_u(),sizeofdouble);
@@ -482,7 +484,7 @@ void read_pass2_2_prod_vector(void)
 // end of string identifier debug stuff
 
   fixed_smartlist & nlist=f1b2gradlist->nlist;
-  int total_bytes=nlist.bptr->numbytes;
+  int total_bytes = nlist.bptr->numbytes;
   list.check_buffer_size(total_bytes);
   list.saveposition(); // save pointer to beginning of record;
   //cout << "YY " << total_bytes <<  endl;

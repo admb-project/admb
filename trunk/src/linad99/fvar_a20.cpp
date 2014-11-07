@@ -22,6 +22,10 @@ void dv_assign(void);
   #include <memory.h>
 #endif
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -32,17 +36,20 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
    {
      allocatec(t);
    }
-#  if defined (AD_FAST_ASSIGN)
+#if defined (AD_FAST_ASSIGN)
    else if (!(shape->ncopies))
    {
      deallocate();
      allocatec(t);
    }
-#  endif
+#endif
    else
    {
      int mmin=indexmin();
      int mmax=indexmax();
+#ifndef OPT_LIB
+     assert(mmax >= mmin);
+#endif
      if (mmin != t.indexmin() || mmax != t.indexmax())
      {
        cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator ="
@@ -51,12 +58,10 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
      }
      if (va != t.va)
      {
-     #ifdef OPT_LIB
-       int mmin=indexmin();
-       int mmax=indexmax();
-       memcpy(&elem_value(mmin),&t.elem_value(mmin),
-         (mmax-mmin+1)*sizeof(double));
-     #else
+#ifdef OPT_LIB
+       size_t size = (size_t)(mmax - mmin + 1);
+       memcpy(&elem_value(mmin), &t.elem_value(mmin), size * sizeof(double));
+#else
        #ifndef USE_ASSEMBLER
          for (int i=mmin; i<=mmax; i++)
          {
@@ -67,7 +72,7 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
          int n=t.indexmax()-min+1;
          dw_block_move(&(this->elem_value(min)),&(t.elem_value(min)),n);
        #endif
-      #endif
+#endif
 
        // The derivative list considerations
        save_identifier_string("bbbb");
@@ -176,13 +181,17 @@ void dv_assign(void)
   dvar_vector_position t_pos=restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dft(dftmp.indexmin(),dftmp.indexmax());
+#ifndef OPT_LIB
+  assert(dftmp.indexmax() >= dftmp.indexmin());
+#endif
 #ifdef OPT_LIB
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
-  memcpy(&dft.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
+  size_t size = (size_t)(mmax - mmin + 1);
+  memcpy(&dft.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
 
 #else
-#ifndef USE_ASSEMBLER
+  #ifndef USE_ASSEMBLER
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
   for (int i=mmin;i<=mmax;i++)
@@ -190,11 +199,11 @@ void dv_assign(void)
     //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
     dft.elem(i)=dftmp.elem(i);
   }
-#else
+  #else
   int mmin=dftmp.indexmin();
   int n=dftmp.indexmax()-mmin+1;
      dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
-#endif
+  #endif
 #endif
 
   dft.save_dvector_derivatives(t_pos);

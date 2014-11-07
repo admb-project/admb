@@ -10,7 +10,10 @@
  */
 #include "fvar.hpp"
 #ifdef _MSC_VER
-#include <memory.h>
+  #include <memory.h>
+#endif
+#ifndef OPT_LIB
+  #include <cassert>
 #endif
 
 void dvdv_add(void);
@@ -89,11 +92,15 @@ void dvdv_add(void)
   verify_identifier_string("bbbb");
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
+#ifndef OPT_LIB
+  assert(mmax >= mmin);
+#endif
   dvector dfv1(mmin,mmax);
   dvector dfv2(mmin,mmax);
 #ifdef OPT_LIB
-  memcpy(&dfv1.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
-  memcpy(&dfv2.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
+  size_t size = (size_t)(mmax - mmin + 1);
+  memcpy(&dfv1.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
+  memcpy(&dfv2.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
 #else
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
   {

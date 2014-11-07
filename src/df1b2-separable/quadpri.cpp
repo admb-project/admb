@@ -249,34 +249,35 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
  * Description not yet available.
  * \param
  */
-  void quadratic_prior::get_vHessian(dvar_matrix H,int xsize)
+void quadratic_prior::get_vHessian(dvar_matrix H,int xsize)
+{
+  if (!dfpMinv)
   {
-    int offset=get_offset(xsize);
-    if (dfpMinv==0)
-    {
       cerr << "This can't happen" << endl;
       ad_exit(1);
-    }
+  }
+  else
+  {
     int imin=dfpMinv->indexmin();
     int imax=dfpMinv->indexmax();
+    int offset=get_offset(xsize);
     if (offset==0)
     {
-      int i,j;
       switch(old_style_flag)
       {
       case 0:
-        for (i=imin;i<=imax;i++)
-          for (j=imin;j<=imax;j++)
+        for (int i=imin;i<=imax;i++)
+          for (int j=imin;j<=imax;j++)
             H(i,j)+=(*dfpMinv)(i,j);
         break;
       case 1:
-        for (i=imin;i<=imax;i++)
-          for (j=imin;j<=imax;j++)
+        for (int i=imin;i<=imax;i++)
+          for (int j=imin;j<=imax;j++)
             H(i,j)+=2.0*(*dfpMinv)(i,j);
         break;
       case 2:
-        for (i=imin;i<=imax;i++)
-          for (j=imin;j<=imax;j++)
+        for (int i=imin;i<=imax;i++)
+          for (int j=imin;j<=imax;j++)
             H(i,j)+=2.0*(*dfpMinv)(i,j);
          break;
       default:
@@ -286,22 +287,21 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     }
     else
     {
-      int i,j;
       switch(old_style_flag)
       {
       case 0:
-        for (i=imin;i<=imax;i++)
-          for (j=imin;j<=imax;j++)
+        for (int i=imin;i<=imax;i++)
+          for (int j=imin;j<=imax;j++)
             H(offset+i,offset+j)+=(*dfpMinv)(i,j);
         break;
       case 1:
-        for (i=imin;i<=imax;i++)
-          for (j=imin;j<=imax;j++)
+        for (int i=imin;i<=imax;i++)
+          for (int j=imin;j<=imax;j++)
             H(offset+i,offset+j)+=2.0*(*dfpMinv)(i,j);
         break;
       case 2:
-        for (i=imin;i<=imax;i++)
-          for (j=imin;j<=imax;j++)
+        for (int i=imin;i<=imax;i++)
+          for (int j=imin;j<=imax;j++)
             H(offset+i,offset+j)+=2.0*(*dfpMinv)(i,j);
          break;
       default:
@@ -310,6 +310,8 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
       }
     }
   }
+}
+
  /*
   dvar_matrix quadratic_prior::get_vHessian(void)
   {

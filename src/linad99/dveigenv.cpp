@@ -10,6 +10,12 @@
 #define EIGEN_VECTORS
 
 #include <fvar.hpp>
+
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 #ifdef EIGEN_VECTORS
   void tri_dagv(const dvar_matrix& ,const dvar_vector& , const dvar_vector& );
 #else
@@ -161,7 +167,7 @@ void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d,
   for (i=1;i<=n;i++)
   {
     l=i-1;
-    if (value( d[i]) )
+    if (!ISZERO(value(d[i])))
     {
       for (j=1;j<=l;j++)
       {
@@ -184,7 +190,7 @@ void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d,
   \param y Argument to test.
   \return The value of x with the sign of y.
 */
-  dvariable SIGNV(const prevariable& x, const prevariable& y)
+dvariable SIGNV(const prevariable& x, const prevariable& y)
 {
   if (y<0.)
   {

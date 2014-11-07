@@ -6,6 +6,11 @@
  */
 #include <admodel.h>
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 int initial_params::num_initial_params=0;
 
 #if !defined(BIG_INIT_PARAMS)
@@ -454,7 +459,7 @@ dvariable initial_params::reset(const dvector& x)
 void param_init_number::set_value(const dvar_vector& x, const int& ii,
    const dvariable& pen)
   {
-    if (!scalefactor)
+    if (ISZERO(scalefactor))
       ::set_value(*this,x,ii);
     else
       ::set_value(*this,x,ii,scalefactor);
@@ -462,7 +467,7 @@ void param_init_number::set_value(const dvar_vector& x, const int& ii,
 
 void param_init_number::set_value_inv(const dvector& x, const int& ii)
   {
-    if (!scalefactor)
+    if (ISZERO(scalefactor))
       ::set_value_inv(*this,(const dvector&)(x),ii);
     else
       ::set_value_inv(*this,(const dvector&)(x),ii,scalefactor);
@@ -544,7 +549,7 @@ estimation.
 void param_init_bounded_number::set_value(const dvar_vector& x,
   const int& ii, const dvariable& pen)
   {
-    if (!scalefactor)
+    if (ISZERO(scalefactor))
       ::set_value(*this,x,ii,minb,maxb,pen);
     else
       ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
@@ -552,7 +557,7 @@ void param_init_bounded_number::set_value(const dvar_vector& x,
 
 void param_init_bounded_number::set_value_inv(const dvector& x, const int& ii)
   {
-    if (!scalefactor)
+    if (ISZERO(scalefactor))
       ::set_value_inv(*this,x,ii,minb,maxb);
     else
       ::set_value_inv(*this,x,ii,minb,maxb,scalefactor);
@@ -676,7 +681,7 @@ data_number& data_number::operator=(const double& v)
 void param_init_vector::set_value(const dvar_vector& x,
   const int& ii, const dvariable& pen)
   {
-    if (!scalefactor)
+    if (ISZERO(scalefactor))
       ::set_value(*this,x,ii);
     else
       ::set_value(*this,x,ii,scalefactor);
@@ -697,7 +702,7 @@ void param_init_vector::set_value(const dvar_vector& x,
     else
     {
 #  endif
-    if (!scalefactor)
+    if (ISZERO(scalefactor))
       ::set_value_inv(*this,x,ii);
     else
       ::set_value_inv(*this,x,ii,scalefactor);
@@ -849,7 +854,7 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
       }
       else
       {
-        if (!scalefactor)
+        if (ISZERO(scalefactor))
           ::set_value(*this,x,ii,minb,maxb,pen);
         else
           ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
@@ -867,7 +872,7 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
       }
       else
       {
-        if (!scalefactor)
+        if (ISZERO(scalefactor))
           ::set_value_inv(*this,x,ii,minb,maxb);
         else
           ::set_value_inv(*this,x,ii,minb,maxb,scalefactor);
@@ -962,7 +967,7 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
 void param_init_matrix::set_value(const dvar_vector& x, const int& ii,
   const dvariable& pen)
   {
-    if (!scalefactor)
+    if (ISZERO(scalefactor))
       ::set_value(*this,x,ii);
     else
       ::set_value(*this,x,ii,scalefactor);
@@ -971,7 +976,7 @@ void param_init_matrix::set_value(const dvar_vector& x, const int& ii,
 
 void param_init_matrix::set_value_inv(const dvector& x, const int& ii)
   {
-    if (!scalefactor)
+    if (ISZERO(scalefactor))
       ::set_value_inv(*this,x,ii);
     else
       ::set_value_inv(*this,x,ii,scalefactor);

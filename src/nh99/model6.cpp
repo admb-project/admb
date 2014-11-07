@@ -6,12 +6,17 @@
  */
 #include <admodel.h>
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 void param_init_bounded_matrix::set_value(const dvar_vector& x,
   const int& ii, const dvariable& pen)
   {
     if (allocated(*this))
     {
-      if (!scalefactor)
+      if (ISZERO(scalefactor))
         ::set_value(*this,x,ii,minb,maxb,pen);
       else
         ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
@@ -23,7 +28,7 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
   {
     if (allocated(*this))
     {
-      if (!scalefactor)
+      if (ISZERO(scalefactor))
         ::set_value_inv(*this,x,ii,minb,maxb);
       else
         ::set_value_inv(*this,x,ii,minb,maxb,scalefactor);

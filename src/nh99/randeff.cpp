@@ -7,8 +7,13 @@
 #include <admodel.h>
 
 #if defined(max)
-#  undef max
+  #undef max
 #endif
+
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
 
 typedef int integer;
 typedef long int logical;
@@ -84,7 +89,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
     initial_params::current_phase);
     crit=convergence_criteria(ind);
   }
-  if (_crit)
+  if (!ISZERO(_crit))
   {
     crit = _crit;
   }

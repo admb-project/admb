@@ -88,25 +88,28 @@ Create unlinked new node.
 dlink* dlist::create()
 {
   dlink* tmp= (dlink*)(ddlist_spacea+2*sizeof(double)*nlinks);
-  if (tmp == 0)
+  // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
+
+  if (!tmp)
   {
     cerr << "Error allocating dlink in dlist::create()\n";
     ad_exit(21);
   }
-  // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
-
-  // keep track of the links so you can zero them out
-  dlink_addresses[nlinks]=tmp;
-  nlinks+=1;
-
-  if (nlinks > gradient_structure::MAX_DLINKS)
+  else
   {
-    cerr << "Need to increase the maximum number of dlinks" << endl;
-    ad_exit(1);
-  }
+    // keep track of the links so you can zero them out
+    dlink_addresses[nlinks]=tmp;
+    nlinks+=1;
 
-  //do not add to list.
-  tmp->prev=0;
+    if (nlinks > gradient_structure::MAX_DLINKS)
+    {
+      cerr << "Need to increase the maximum number of dlinks" << endl;
+      ad_exit(1);
+    }
+
+    //do not add to list.
+    tmp->prev=0;
+  }
 
   return tmp;
 }
@@ -212,15 +215,15 @@ Append app to list.
 */
 dlink* dlist::append(dlink* app)
 {
-  if (app)
-  {
-    app->prev = last;
-    last = app;
-  }
-  else
+  if (!app)
   {
     cerr << "Error: NULL pointer passed to  dlist::append()\n";
     ad_exit(1);
+  }
+  else
+  {
+    app->prev = last;
+    last = app;
   }
 
   return last;

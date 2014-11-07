@@ -238,7 +238,7 @@ void ad_read_pass2_prod_vector(void);
 #ifndef OPT_LIB
   assert(mmax >= mmin);
 #endif
-  size_t size = mmax - mmin + 1;
+  size_t size = (size_t)(mmax - mmin + 1);
   const size_t sizeofdouble = sizeof(double);
 
   //int total_bytes=3*sizeof(df1b2_header)+2*(nvar+1)*sizeof(double);
@@ -485,7 +485,10 @@ void read_pass2_2_prod_vector(void)
 
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   int total_bytes = nlist.bptr->numbytes;
-  list.check_buffer_size(total_bytes);
+  if (total_bytes > 0)
+  {
+    list.check_buffer_size((size_t)total_bytes);
+  }
   list.saveposition(); // save pointer to beginning of record;
   //cout << "YY " << total_bytes <<  endl;
   //

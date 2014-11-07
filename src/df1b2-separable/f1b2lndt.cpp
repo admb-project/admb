@@ -6,6 +6,11 @@
  */
 #include <df1b2fun.h>
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 class df1b2matrix_pair
 {
   df1b2matrix a;
@@ -62,7 +67,7 @@ df1b2vector lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
     }
     else
     {
-      if (value(sum)) ii=i;
+      if (!ISZERO(value(sum))) ii=i;
     }
     c(i)=sum;
   }
@@ -130,7 +135,7 @@ df1b2matrix lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
       }
       else
       {
-        if (value(sum)) ii=i;
+        if (!ISZERO(value(sum))) ii=i;
       }
       c(i)=sum;
     }

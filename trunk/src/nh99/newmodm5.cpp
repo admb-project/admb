@@ -4,9 +4,14 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
+
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
 
 void function_minimizer::prof_minimize_re(int iprof, double sigma,
   double new_value, const double& _fprof,const int underflow_flag,
@@ -69,14 +74,10 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
        }
        int itnsave=0;
        //double weight=pow(50.0,profile_phase)/(sigma*sigma);
-       double weight;
-       if (sigma)
+       double weight = pow(120.0,profile_phase);
+       if (!ISZERO(sigma))
        {
-         weight=pow(120.0,profile_phase)/(sigma*sigma);
-       }
-       else
-       {
-         weight=pow(120.0,profile_phase);
+         weight /= (sigma*sigma);
        }
        final_weight=weight;
 

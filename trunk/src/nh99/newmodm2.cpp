@@ -8,6 +8,11 @@
 #include <df1b2fun.h>
 #include <adrndeff.h>
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 double function_minimizer::projected_hess_determinant(const dvector& g,
   const int underflow_flag)
 {
@@ -255,14 +260,10 @@ void function_minimizer::prof_minimize(int iprof, double sigma,
        }
        int itnsave=0;
        //double weight=pow(50.0,profile_phase)/(sigma*sigma);
-       double weight;
-       if (sigma)
+       double weight = pow(120.0,profile_phase);
+       if (!ISZERO(sigma))
        {
-         weight=pow(120.0,profile_phase)/(sigma*sigma);
-       }
-       else
-       {
-         weight=pow(120.0,profile_phase);
+         weight /= (sigma*sigma);
        }
        final_weight=weight;
        while (fmc.ireturn>=0)

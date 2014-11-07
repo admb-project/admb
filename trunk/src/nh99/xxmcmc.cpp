@@ -17,6 +17,11 @@
   #include <climits>
 #endif
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 double better_rand(long int&);
 void set_labels_for_mcmc(void);
 
@@ -1122,7 +1127,7 @@ int minnz(const dvector& x)
   int m=mmin;
   for (int ii=mmin;ii<=mmax;ii++)
   {
-    if (x(ii))
+    if (!ISZERO(x(ii)))
     {
       m=ii;
       if (m>mmin) m--;
@@ -1139,7 +1144,7 @@ int maxnz(const dvector& x)
   int m=mmax;
   for (int ii=mmax;ii>=mmin;ii--)
   {
-    if (x(ii))
+    if (!ISZERO(x(ii)))
     {
       m=ii;
       if (m<mmax) m++;

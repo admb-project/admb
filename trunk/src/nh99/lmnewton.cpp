@@ -11,6 +11,11 @@
   #include <climits>
 #endif
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -45,14 +50,7 @@ void function_minimizer::limited_memory_quasi_newton(
   }
 
   // get the number of active
-#ifdef OPT_LIB
-  int nvar=(int)initial_params::nvarcalc();
-#else
-assert(false);
-  size_t _nvar = initial_params::nvarcalc();
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
-#endif
+  int nvar = initial_params::nvarcalc();
 
   double _crit=0;
   int itn=0;
@@ -85,7 +83,7 @@ assert(false);
     initial_params::current_phase);
     crit=convergence_criteria(ind);
   }
-  if (_crit)
+  if (!ISZERO(_crit))
   {
     crit = _crit;
   }
@@ -242,14 +240,7 @@ void function_minimizer::limited_memory_quasi_newton
   int on;
 
   // get the number of active
-#ifdef OPT_LIB
-  int nvar=(int)initial_params::nvarcalc();
-#else
-assert(false);
-  size_t _nvar = initial_params::nvarcalc();
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
-#endif
+  int nvar = initial_params::nvarcalc();
 
   double _crit=0;
   int itn=0;

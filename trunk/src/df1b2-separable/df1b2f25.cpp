@@ -12,6 +12,11 @@
 #include <df1b2fun.h>
 #include <admodel.h>
 
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 //double ndfboundp( double x, double fmin, double fmax,const double& fpen);
 
 /**
@@ -39,7 +44,7 @@ void df1b2_init_number::sd_scale(const dvector& _d,const dvector& x,
     int& ii=(int&) _ii;
     dvector& d=(dvector&) _d;
     d(ii)=1;
-    if (scalefactor) d(ii)/=scalefactor;
+    if (!ISZERO(scalefactor)) d(ii)/=scalefactor;
     ii++;
   }
 
@@ -55,14 +60,14 @@ void df1b2_init_bounded_number::sd_scale(const dvector& _d,const dvector& x,
     double pen=0;
     if(!initial_params::mc_phase)
     {
-      if (!scalefactor)
+      if (ISZERO(scalefactor))
         d(ii)=ndfboundp(x(ii),minb,maxb,pen);
       else
         d(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
     }
     else
     {
-      if (!scalefactor)
+      if (ISZERO(scalefactor))
         d(ii)=ndfboundp_mc(x(ii),minb,maxb,pen);
       else
         d(ii)=ndfboundp_mc(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
@@ -89,7 +94,7 @@ void df1b2_init_vector::sd_scale(const dvector& _v,const dvector& x,
       for (int i=mmin;i<=mmax;i++)
       {
         v(ii)=1.;
-        if (scalefactor) v(ii)/=scalefactor;
+        if (!ISZERO(scalefactor)) v(ii)/=scalefactor;
         ii++;
       }
     }
@@ -117,7 +122,7 @@ void df1b2_init_matrix::sd_scale(const dvector& _v,const dvector& x,
           for (int j=cmin;j<=cmax;j++)
           {
             v(ii)=1.;
-            if (scalefactor) v(ii)/=scalefactor;
+            if (!ISZERO(scalefactor)) v(ii)/=scalefactor;
             ii++;
           }
         }
@@ -143,7 +148,7 @@ void df1b2_init_bounded_vector::sd_scale(const dvector& _v,const dvector& x,
       {
         for (int i=mmin;i<=mmax;i++)
         {
-          if (!scalefactor)
+          if (ISZERO(scalefactor))
             v(ii)=ndfboundp(x(ii),minb,maxb,pen);
           else
             v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
@@ -183,7 +188,7 @@ void df1b2_init_bounded_matrix::sd_scale(const dvector& _v,const dvector& x,
           int cmax=(*this)(i).indexmax();
           for (int j=cmin;j<=cmax;j++)
           {
-            if (!scalefactor)
+            if (ISZERO(scalefactor))
               v(ii)=ndfboundp(x(ii),minb,maxb,pen);
             else
               v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/

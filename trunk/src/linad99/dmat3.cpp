@@ -9,6 +9,12 @@
 #ifndef __ZTC__
 //#include <iomanip.h>
 #endif
+
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
 /**
 \def TINY
 A small number. Used to avoid divide by zero in the LU decomposition. Locally defined,
@@ -400,7 +406,7 @@ void lubksb(dmatrix a, const ivector& indx, dvector b)
         sum -= a[i][j]*b[j];
       }
     }
-    else if ( sum )
+    else if (!ISZERO(sum))
     {
       ii=i;
       iiflag=1;

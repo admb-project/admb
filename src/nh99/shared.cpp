@@ -61,8 +61,7 @@
     //int mmax=share_flags->invflags->indexmax();
     int mmin=it.indexmin();
     int mmax=it.indexmax();
-    int i;
-    for (i=mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++)
     {
       x(ii++)=value((*this)(it(i)(1).integer(),it(i)(2).integer()));
     }
@@ -75,8 +74,7 @@
     index_type& it=*(share_flags->get_invflags());
     int mmin=it.indexmin();
     int mmax=it.indexmax();
-    int i;
-    for (i=mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++)
     {
       x(ii++)=value((*this)(it(i).integer()));
     }
@@ -90,8 +88,7 @@
     index_type& it=*(share_flags->get_invflags());
     int mmin=it.indexmin();
     int mmax=it.indexmax();
-    int i;
-    for (i=mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++)
     {
       x(ii++)=
         boundpin((*this)(it(i)(1).integer(),it(i)(2).integer()),
@@ -106,14 +103,13 @@
     ADUNCONST(dvar_vector,x)
     int mmin=indexmin();
     int mmax=indexmax();
-    int i,j;
     index_type& sf=*(share_flags->get_shareflags());
     index_type& af=*(share_flags->get_activeflags());
-    for (i=mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++)
     {
       int jmin=(*this)(i).indexmin();
       int jmax=(*this)(i).indexmax();
-      for (j=jmin;j<=jmax;j++)
+      for (int j=jmin;j<=jmax;j++)
       {
         int afvalue=integer(af(i)(j));
         if (afvalue && afvalue<=current_phase)
@@ -133,10 +129,9 @@
     ADUNCONST(dvar_vector,x)
     int mmin=indexmin();
     int mmax=indexmax();
-    int i;
     index_type& sf=*(share_flags->get_shareflags());
     index_type& af=*(share_flags->get_activeflags());
-    for (i=mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++)
     {
       int afvalue=integer(af(i));
       if (afvalue && afvalue<=current_phase)
@@ -155,14 +150,13 @@
     ADUNCONST(dvar_vector,x)
     int mmin=indexmin();
     int mmax=indexmax();
-    int i,j;
     index_type& sf=*(share_flags->get_shareflags());
     index_type& af=*(share_flags->get_activeflags());
-    for (i=mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++)
     {
       int jmin=(*this)(i).indexmin();
       int jmax=(*this)(i).indexmax();
-      for (j=jmin;j<=jmax;j++)
+      for (int j=jmin;j<=jmax;j++)
       {
         int afvalue=integer(af(i)(j));
         if (afvalue && afvalue<=current_phase)
@@ -285,10 +279,9 @@
       int imin= sf.indexmin();
       int imax= sf.indexmax();
       int fmin = 0, fmax = 0;
-      int i,k;
       int ibreak=0;
       // get intial values for min and max active flag values
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int jmin= sf(i).indexmin();
         int jmax= sf(i).indexmax();
@@ -310,7 +303,7 @@
       // flags -- not just active ones
       int fmax1=integer(sf(imin)(sf(imin).indexmin()));
       int fmin1=integer(sf(imin)(sf(imin).indexmin()));
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int jmin= sf(i).indexmin();
         int jmax= sf(i).indexmax();
@@ -329,7 +322,7 @@
       // set up info for sanity test on shared and active flags
       ivector icount2(fmin1,fmax1);
       icount2.initialize();
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int jmin= sf(i).indexmin();
         int jmax= sf(i).indexmax();
@@ -341,7 +334,7 @@
       }
       i3_array bmap2(fmin1,fmax1,1,icount2,1,2);
       icount2.initialize();
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int jmin= sf(i).indexmin();
         int jmax= sf(i).indexmax();
@@ -353,7 +346,7 @@
           bmap2(sfvalue,ind,2)=j;
         }
       }
-      for (k=fmin1;k<=fmax1;k++)
+      for (int k=fmin1;k<=fmax1;k++)
       {
         int lmin=bmap2(k).indexmin();
         int lmax=bmap2(k).indexmax();
@@ -389,7 +382,7 @@
       ivector mindx(imin,imax);
       ivector maxx(imin,imax);
       indirect.fill_seqadd(1,1);
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int jmin= sf(i).indexmin();
         int jmax= sf(i).indexmax();
@@ -404,7 +397,7 @@
             if (processed_flag(in)==0)
             {
               processed_flag(in)=1;
-              for (k=in;k<=fmax1;k++)
+              for (int k=in;k<=fmax1;k++)
               {
                 indirect(k)-=1;
               }
@@ -413,7 +406,7 @@
         }
       }
       imatrix tmp1(imin,imax,mindx,maxx);
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int jmin= sf(i).indexmin();
         int jmax= sf(i).indexmax();
@@ -434,7 +427,7 @@
       imatrix tmp(1,itmp,1,2);
       ivector counter(1,itmp);
       counter.initialize();
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int jmin= sf(i).indexmin();
         int jmax= sf(i).indexmax();
@@ -455,7 +448,7 @@
 
       counter.initialize();
       _bmap.initialize();
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int jmin= sf(i).indexmin();
         int jmax= sf(i).indexmax();
@@ -499,14 +492,13 @@
       }
       int imin= sf.indexmin();
       int imax= sf.indexmax();
-      int i,k;
       //int ibreak=0;
       // get intial values for min and max active flag values
       // get initial values for minimum and maximum shared
       // flags -- not just active ones
       int fmax1=integer(sf(imin));
       int fmin1=integer(sf(imin));
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         fmax1=max(fmax1,integer(sf(i)));
         fmin1=min(fmin1,integer(sf(i)));
@@ -516,7 +508,7 @@
       ivector processed_flag(fmin1,fmax1);
       processed_flag.initialize();
       indirect.fill_seqadd(1,1);
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         {
           int afvalue=integer(af(i));
@@ -526,7 +518,7 @@
             if (processed_flag(in)==0)
             {
               processed_flag(in)=1;
-              for (k=in;k<=fmax1;k++)
+              for (int k=in;k<=fmax1;k++)
               {
                 indirect(k)-=1;
               }
@@ -535,7 +527,7 @@
         }
       }
       ivector tmp1(imin,imax);
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         {
           int afvalue=integer(af(i));
@@ -553,7 +545,7 @@
       ivector tmp(1,itmp);
       ivector counter(1,itmp);
       counter.initialize();
-      for (i=imin;i<=imax;i++)
+      for (int i=imin;i<=imax;i++)
       {
         int afvalue=integer(af(i));
         if (afvalue && afvalue<=current_phase)

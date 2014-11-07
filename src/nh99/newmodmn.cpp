@@ -131,8 +131,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         ofstream ofs("dgs2");
         ofs << "lprof" << endl << lprof << endl;
       }
-      int j;
-      for (j=-num_pp;j<=num_pp;j++) //go in positive and negative directions
+      for (int j=-num_pp;j<=num_pp;j++) //go in positive and negative directions
       {
         all_values(j)=actual_value(ip,j-offset);
         double lp=lprof(ip,j);
@@ -147,7 +146,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         tempint2(j)=exp(-tempint2(j));
       }
       dmatrix m(1,3,-num_pp,num_pp);
-      for (j=-num_pp;j<=num_pp;j++)
+      for (int j=-num_pp;j<=num_pp;j++)
       {
       #if defined(DO_PROFILE)
         m(1,j)=tempint0(j)/xdist(ip,j);
@@ -273,7 +272,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
 
       dvector ssum(1,3);
       ssum.initialize();
-      for (j=lowlimit;j<=3;j++)
+      for (int j=lowlimit;j<=3;j++)
       {
         for (int i=7*min_ind;i<7*max_ind;i++)
         {
@@ -287,7 +286,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
           }
         }
       }
-      for (j=lowlimit;j<=3;j++)
+      for (int j=lowlimit;j<=3;j++)
       {
         if (ssum(j) !=0)
         {
@@ -300,7 +299,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         }
       }
       // now do the integrals
-      for (j=lowlimit;j<=3;j++)
+      for (int j=lowlimit;j<=3;j++)
       {
         int level_index=1;
         do
@@ -380,16 +379,15 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
     dvector tmp(mmin,mmax);
     tmp(mmin)=.8*v(mmin)+.2*v(mmin+1);
     tmp(mmin+1)=.2*v(mmin)+.6*v(mmin+1)+.2*v(mmin+2);
-    int i;
-    for (i=mmin+2;i<=mmin+diff/4;i++)
+    for (int i=mmin+2;i<=mmin+diff/4;i++)
     {
       tmp(i)=.1*v(i-2)+.2*v(i-1)+.4*v(i)+.2*v(i+1)+.1*v(i+2);
     }
-    for (i=mmin+diff/4+1;i<mmax-diff/4;i++)
+    for (int i=mmin+diff/4+1;i<mmax-diff/4;i++)
     {
       tmp(i)=v(i);
     }
-    for (i=mmax-diff/4;i<=mmax-2;i++)
+    for (int i=mmax-diff/4;i<=mmax-2;i++)
     {
       tmp(i)=.1*v(i-2)+.2*v(i-1)+.4*v(i)+.2*v(i+1)+.1*v(i+2);
     }

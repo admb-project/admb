@@ -24,7 +24,6 @@
 dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   int MAXIT)
 {
-  int m,m2;
   double qab,qam,qap;
   double a=value(_a);
   double b=value(_b);
@@ -45,10 +44,12 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   c1(0)=1.0;
   d1(0)=1.0/(1.0-qab*x/qap);
   h1(0)=d1(0);
-  for (m=1;m<=MAXIT;m++)
+
+  int m = 1;
+  for (; m <= MAXIT; m++)
   {
     int i=m;
-    m2=2*m;
+    int m2=2*m;
     aa(i)=m*(b-m)*x/((qam+m2)*(a+m2));
     d(i)=1.0/(1.0+aa(i)*d1(i-1));
     c(i)=1.0+aa(i)/c1(i-1);

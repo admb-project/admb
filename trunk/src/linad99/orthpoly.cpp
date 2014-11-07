@@ -16,20 +16,19 @@
  */
 dmatrix orthpoly(int n,int deg)
 {
-  int j; int is; int ik;
   dmatrix ocoff(0,deg,1,n);
   double sum;
   ocoff(0)=sqrt(double(n));
-  for (is=1; is<=deg; is++)
+  for (int is=1; is<=deg; is++)
   {
-    for (j=1; j<=n; j++)
+    for (int j=1; j<=n; j++)
     {
       ocoff(is,j)=pow(double(j),is);
     }
   }
-  for (is=0; is<=deg; is++) /* L1000  */
+  for (int is=0; is<=deg; is++) /* L1000  */
   {
-    for (ik=0; ik<=is-1; ik++) /* L2000  */
+    for (int ik=0; ik<=is-1; ik++) /* L2000  */
     {
       sum=ocoff(is)*ocoff(ik);
       ocoff(is)-=sum*ocoff(ik);
@@ -46,20 +45,19 @@ dmatrix orthpoly(int n,int deg)
  */
 dmatrix orthpoly(int n,int deg,int skip)
 {
-  int j; int is; int ik;
   dmatrix ocoff(0,deg,1,n);
   double sum;
   ocoff(0)=sqrt(double(n));
-  for (is=1; is<=deg; is++)
+  for (int is=1; is<=deg; is++)
   {
-    for (j=1; j<=n; j++)
+    for (int j=1; j<=n; j++)
     {
       ocoff(is,j)=pow(double(j),is);
     }
   }
-  for (is=0; is<=deg; is++) /* L1000  */
+  for (int is=0; is<=deg; is++) /* L1000  */
   {
-    for (ik=0; ik<=is-1; ik++) /* L2000  */
+    for (int ik=0; ik<=is-1; ik++) /* L2000  */
     {
       sum=ocoff(is)*ocoff(ik);
       ocoff(is)-=sum*ocoff(ik);
@@ -76,7 +74,6 @@ dmatrix orthpoly(int n,int deg,int skip)
  */
 dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
 {
-  int j; int is; int ik;
   dmatrix ocoff(0,deg,1,n);
   double sum;
   ocoff(0)=sqrt(double(n));
@@ -90,30 +87,30 @@ dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
     cerr << "deg too large in orthpoly_constant_begin"
          << endl;
   }
-  for (is=1; is<=deg; is++)
+  for (int is=1; is<=deg; is++)
   {
     if (nconst>1)
     {
-      for (j=1; j<=nconst; j++)
+      for (int j=1; j<=nconst; j++)
       {
         ocoff(is,j)=1.0;
       }
-      for (j=nconst+1; j<=n; j++)
+      for (int j=nconst+1; j<=n; j++)
       {
         ocoff(is,j)=pow(double(j-nconst+1),is);
       }
     }
     else
     {
-      for (j=1; j<=n; j++)
+      for (int j=1; j<=n; j++)
       {
         ocoff(is,j)=pow(double(j),is);
       }
     }
   }
-  for (is=0; is<=deg; is++) /* L1000  */
+  for (int is=0; is<=deg; is++) /* L1000  */
   {
-    for (ik=0; ik<=is-1; ik++) /* L2000  */
+    for (int ik=0; ik<=is-1; ik++) /* L2000  */
     {
       sum=ocoff(is)*ocoff(ik);
       ocoff(is)-=sum*ocoff(ik);
@@ -144,7 +141,6 @@ dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
 dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
   int end_degree,int nconst_end)
 {
-  int j; int is; int ik;
   dmatrix ocoff(0,deg,1,n);
   double sum;
   ocoff(0)=sqrt(double(n));
@@ -158,15 +154,15 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
     cerr << "deg too large in orthpoly_constant_begin"
          << endl;
   }
-  for (is=1; is<=deg; is++)
+  for (int is=1; is<=deg; is++)
   {
     if (nconst_begin>1)
     {
-      for (j=1; j<=nconst_begin; j++)
+      for (int j=1; j<=nconst_begin; j++)
       {
         ocoff(is,j)=1.0;
       }
-      for (j=nconst_begin+1; j<=n; j++)
+      for (int j=nconst_begin+1; j<=n; j++)
       {
         int jj=j;
         if (j>n-nconst_end+1 && is>=end_degree)
@@ -178,7 +174,7 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
     }
     else
     {
-      for (j=1; j<=n; j++)
+      for (int j=1; j<=n; j++)
       {
         int jj=j;
         if (j>n-nconst_end+1 && is>=end_degree)
@@ -189,9 +185,9 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
       }
     }
   }
-  for (is=0; is<=deg; is++) /* L1000  */
+  for (int is=0; is<=deg; is++) /* L1000  */
   {
-    for (ik=0; ik<=is-1; ik++) /* L2000  */
+    for (int ik=0; ik<=is-1; ik++) /* L2000  */
     {
       sum=ocoff(is)*ocoff(ik);
       ocoff(is)-=sum*ocoff(ik);
@@ -221,23 +217,22 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
  */
 dmatrix seldif_basis(int n)
 {
-  int i; int j;
   dmatrix ocoff(1,n,1,n);
   dmatrix ocoff1(1,n,1,n);
   ocoff.initialize();
   ocoff1.initialize();
-  for (i=1; i<=n; i++)
+  for (int i=1; i<=n; i++)
   {
-    for (j=i; j<=n; j++)
+    for (int j=i; j<=n; j++)
     {
       ocoff(i,j)=1;
     }
   }
   ocoff1=trans(ocoff);
 
-  for (i=1; i<=n; i++) /* L1000  */
+  for (int i=1; i<=n; i++) /* L1000  */
   {
-    for (j=1; j<=i-1; j++) /* L2000  */
+    for (int j=1; j<=i-1; j++) /* L2000  */
     {
       ocoff(i)-=(ocoff(i)*ocoff(j))*ocoff(j);
     }
@@ -251,12 +246,12 @@ dmatrix seldif_basis(int n)
   dvector a(1,n);
   dvector b(1,n);
 
-  for (i=1; i<=n; i++) /* L1000  */
+  for (int i=1; i<=n; i++) /* L1000  */
   {
     a(i)=tmp1(i,i);
   }
   b(1)=0.0;
-  for (i=2; i<=n; i++) /* L1000  */
+  for (int i=2; i<=n; i++) /* L1000  */
   {
     b(i)=tmp1(i-1,i);
   }

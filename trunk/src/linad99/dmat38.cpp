@@ -46,8 +46,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   const double& _ln_unsigned_det,double& sign)
 {
   double& ln_unsigned_det = (double&)_ln_unsigned_det;
-  int i,j,k,n;
-  n=aa.colsize();
+  int n = aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
   if (lb!=aa.rowmin()||ub!=aa.colmax())
@@ -60,17 +59,15 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   ivector indx(lb,ub);
   int One=1;
   indx.fill_seqadd(lb,One);
-  double d;
-  double big,dum,sum,temp;
   dvector vv(lb,ub);
 
-  d=1.0;
-  for (i=lb;i<=ub;i++)
+  double d = 1.0;
+  for (int i=lb;i<=ub;i++)
   {
-    big=0.0;
-    for (j=lb;j<=ub;j++)
+    double big=0.0;
+    for (int j=lb;j<=ub;j++)
     {
-      temp=fabs(bb(i,j));
+      double temp=fabs(bb(i,j));
       if (temp > big)
       {
         big=temp;
@@ -83,12 +80,12 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
     vv[i]=1.0/big;
   }
 
-  for (j=lb;j<=ub;j++)
+  for (int j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (int i=lb;i<j;i++)
     {
-      sum=bb(i,j);
-      for (k=lb;k<i;k++)
+      double sum=bb(i,j);
+      for (int k=lb;k<i;k++)
       {
         sum -= bb(i,k)*bb(k,j);
       }
@@ -96,17 +93,17 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
       bb(i,j)=sum;
     }
     int imax = j;
-    big=0.0;
-    for (i=j;i<=ub;i++)
+    double big=0.0;
+    for (int i=j;i<=ub;i++)
     {
-      sum=bb(i,j);
-      for (k=lb;k<j;k++)
+      double sum=bb(i,j);
+      for (int k=lb;k<j;k++)
       {
         sum -= bb(i,k)*bb(k,j);
       }
       bb(i,j)=sum;
-      dum=vv[i]*fabs(sum);
-      if ( dum >= big)
+      double dum=vv[i]*fabs(sum);
+      if (dum >= big)
       {
         big=dum;
         imax=i;
@@ -114,9 +111,9 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
     }
     if (j != imax)
     {
-      for (k=lb;k<=ub;k++)
+      for (int k=lb;k<=ub;k++)
       {
-        dum=bb(imax,k);
+        double dum=bb(imax,k);
         bb(imax,k)=bb(j,k);
         bb(j,k)=dum;
       }
@@ -139,8 +136,8 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
 
     if (j != n)
     {
-      dum=1.0/bb(j,j);
-      for (i=j+1;i<=ub;i++)
+      double dum=1.0/bb(j,j);
+      for (int i=j+1;i<=ub;i++)
       {
         bb(i,j) = bb(i,j) * dum;
       }
@@ -152,7 +149,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   dvector part_prod(lb,ub);
   part_prod(lb)=log(fabs(bb(lb,lb)));
   if (bb(lb,lb)<0) sign=-sign;
-  for (j=lb+1;j<=ub;j++)
+  for (int j=lb+1;j<=ub;j++)
   {
     if (bb(j,j)<0) sign=-sign;
     part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
@@ -170,29 +167,29 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   //int ub=rowmax;
   dmatrix& b=bb;
   ivector indxinv(lb,ub);
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     indxinv(indx(i))=i;
   }
   for (int kk=mmin;kk<=mmax;kk++)
   {
-    for (i=lb;i<=ub;i++)
+    for (int i=lb;i<=ub;i++)
     {
       y(indxinv(i))=z(kk)(i);
     }
 
-    for (i=lb;i<=ub;i++)
+    for (int i=lb;i<=ub;i++)
     {
-      sum=y(i);
+      double sum=y(i);
       for (int j=lb;j<=i-1;j++)
       {
         sum-=b(i,j)*y(j);
       }
       y(i)=sum;
     }
-    for (i=ub;i>=lb;i--)
+    for (int i=ub;i>=lb;i--)
     {
-      sum=y(i);
+      double sum=y(i);
       for (int j=i+1;j<=ub;j++)
       {
         sum-=b(i,j)*x(kk)(j);

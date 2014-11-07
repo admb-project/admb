@@ -212,14 +212,16 @@ Append app to list.
 */
 dlink* dlist::append(dlink* app)
 {
-  if (app == 0)
+  if (app)
   {
-    cerr << "NULL pointer passed to  dlist::append()\n";
+    app->prev = last;
+    last = app;
+  }
+  else
+  {
+    cerr << "Error: NULL pointer passed to  dlist::append()\n";
     ad_exit(1);
   }
-
-  app->prev = last;
-  last = app;
 
   return last;
 }

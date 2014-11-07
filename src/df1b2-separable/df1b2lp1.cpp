@@ -42,7 +42,6 @@ dvector laplace_approximation_calculator::default_calculations
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)
-  int i,j;
 
   initial_params::set_inactive_only_random_effects();
   gradient_structure::set_NO_DERIVATIVES();
@@ -110,11 +109,11 @@ dvector laplace_approximation_calculator::default_calculations
     }
   }
 
-  for (i=1;i<=xsize;i++)
+  for (int i=1;i<=xsize;i++)
   {
     y(i)=x(i);
   }
-  for (i=1;i<=usize;i++)
+  for (int i=1;i<=usize;i++)
   {
     y(i+xsize)=uhat(i);
   }
@@ -274,7 +273,7 @@ dvector laplace_approximation_calculator::default_calculations
             step=local_minimization(s,Hess,grad,lambda);
           }
           uhat+=step;
-          for (i=1;i<=usize;i++)
+          for (int i=1;i<=usize;i++)
           {
             y(i+xsize)=uhat(i);
           }
@@ -353,7 +352,7 @@ dvector laplace_approximation_calculator::default_calculations
         break;
       }
     }
-    for (i=1;i<=usize;i++)
+    for (int i=1;i<=usize;i++)
     {
       y(i+xsize)=uhat(i);
     }
@@ -364,7 +363,7 @@ dvector laplace_approximation_calculator::default_calculations
     evaluate_function(uhat,pfmin);
   }
 
-  for (i=1;i<=usize;i++)
+  for (int i=1;i<=usize;i++)
   {
     y(i+xsize)=uhat(i);
   }
@@ -472,9 +471,9 @@ dvector laplace_approximation_calculator::default_calculations
       int mind=y(1).minder;
       int jmin=max(mind,xsize+1);
       int jmax=min(y(1).maxder,xsize+usize);
-      for (i=1;i<=usize;i++)
+      for (int i=1;i<=usize;i++)
       {
-        for (j=jmin;j<=jmax;j++)
+        for (int j=jmin;j<=jmax;j++)
         {
           //Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
           y(i+xsize).get_u_bar_tilde()[j-mind]=Hessadjoint(i,j-xsize);
@@ -483,7 +482,7 @@ dvector laplace_approximation_calculator::default_calculations
 
       if (initial_df1b2params::separable_flag)
       {
-        for (j=1;j<=xsize+usize;j++)
+        for (int j=1;j<=xsize+usize;j++)
         {
           *y(j).get_u_tilde()=0;
         }
@@ -517,9 +516,9 @@ dvector laplace_approximation_calculator::default_calculations
           df1b2_gradcalc1();
         }
 
-        for (i=1;i<=usize;i++)
+        for (int i=1;i<=usize;i++)
         {
-          for (j=jmin;j<=jmax;j++)
+          for (int j=jmin;j<=jmax;j++)
           {
             //Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
             y(i+xsize).get_u_bar_tilde()[j-mind]=Hessadjoint(i,j-xsize);
@@ -556,7 +555,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
 
       dvector dtmp(1,xsize);
-      for (i=1;i<=xsize;i++)
+      for (int i=1;i<=xsize;i++)
       {
         dtmp(i)=*y(i).get_u_tilde();
       }
@@ -565,18 +564,18 @@ dvector laplace_approximation_calculator::default_calculations
         dvector scale(1,nvar);   // need to get scale from somewhere
         /*int check=*/initial_params::stddev_scale(scale,x);
         dvector sscale=scale(1,Dux(1).indexmax());
-        for (i=1;i<=usize;i++)
+        for (int i=1;i<=usize;i++)
         {
           Dux(i)=elem_prod(Dux(i),sscale);
         }
         dtmp=elem_prod(dtmp,sscale);
       }
 
-      for (i=1;i<=xsize;i++)
+      for (int i=1;i<=xsize;i++)
       {
         xadjoint(i)+=dtmp(i);
       }
-      for (i=1;i<=usize;i++)
+      for (int i=1;i<=usize;i++)
         uadjoint(i)+=*y(xsize+i).get_u_tilde();
     }
    // *****************************************************************
@@ -601,7 +600,7 @@ dvector laplace_approximation_calculator::default_calculations
         /*check=*/initial_params::stddev_scale(scale,x);
         dvector sscale=scale(1,Dux(1).indexmax());
 
-        for (i=1;i<=usize;i++)
+        for (int i=1;i<=usize;i++)
         {
           Dux(i)=elem_div(Dux(i),sscale);
         }
@@ -614,7 +613,7 @@ dvector laplace_approximation_calculator::default_calculations
         funnel_init_var::lapprox=0;
         laplace_approximation_calculator::where_are_we_flag=0;
 
-        for (i=1;i<=usize;i++)
+        for (int i=1;i<=usize;i++)
         {
           Dux(i)=elem_prod(Dux(i),sscale);
         }
@@ -623,7 +622,7 @@ dvector laplace_approximation_calculator::default_calculations
         if (xstuff>2)
         {
           dvector tmp=evaluate_function_with_quadprior(x,usize,pfmin);
-          for (i=1;i<=xsize;i++)
+          for (int i=1;i<=xsize;i++)
           {
             xadjoint(i)+=tmp(i);
           }
@@ -688,8 +687,6 @@ dvector laplace_approximation_calculator::default_calculations
 void laplace_approximation_calculator::get_newton_raphson_info
   (function_minimizer * pfmin)
 {
-  int i,j,ip;
-
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -699,7 +696,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
     }
   }
 
-  for (ip=1;ip<=num_der_blocks;ip++)
+  for (int ip=1;ip<=num_der_blocks;ip++)
   {
     df1b2variable::minder=minder(ip);
     df1b2variable::maxder=maxder(ip);
@@ -762,8 +759,8 @@ void laplace_approximation_calculator::get_newton_raphson_info
       int mind=y(1).minder;
       int jmin=max(mind,xsize+1);
       int jmax=min(y(1).maxder,xsize+usize);
-      for (i=1;i<=usize;i++)
-        for (j=jmin;j<=jmax;j++)
+      for (int i=1;i<=usize;i++)
+        for (int j=jmin;j<=jmax;j++)
           Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
      /*
       {
@@ -798,7 +795,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
     // ****************************************************************
     // ****************************************************************
     // ****************************************************************
-      for (j=jmin;j<=jmax;j++)
+      for (int j=jmin;j<=jmax;j++)
         grad(j-xsize)= re_objective_function_value::pobjfun->u_dot[j-mind];
     }
     if (ip<num_der_blocks)

@@ -114,7 +114,7 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
       }
     }
     ssize_t nread = read(_GRADFILE_PTR,
-        (char*)ptr_first,((off_t)(sizeof(grad_stack_entry)*length)));
+        (char*)ptr_first,sizeof(grad_stack_entry)*length);
     ptr = ptr_first + length-1;
 
     if (nread == -1 )

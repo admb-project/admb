@@ -48,7 +48,7 @@ dvector sort(const dvector & v, int NSTACK)
       doublearray[i] = v(lb+i);
    }
 
-   if (size > 0)
+   if (size > 1)
    {
      double_qsort(doublearray, (unsigned int)size);
    }
@@ -101,7 +101,7 @@ dvector sort(const dvector &_v, const ivector &_index, int NSTACK)
       intarray[i] = lb + i;
    }
 
-   if (size > 0)
+   if (size > 1)
    {
      double_qsort2(doublearray, intarray, (unsigned int)size);
    }

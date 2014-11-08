@@ -65,7 +65,7 @@ ad_dstar::~ad_dstar(void)
  * Description not yet available.
  * \param
  */
-int df1b2variable::get_blocksize(void)
+unsigned int df1b2variable::get_blocksize()
 {
   return get_blocksize(nvar);
 }
@@ -74,7 +74,7 @@ int df1b2variable::get_blocksize(void)
  * Description not yet available.
  * \param
  */
-int df1b2variable::get_blocksize(int n)
+unsigned int df1b2variable::get_blocksize(const unsigned int n)
 {
   return 6*n+5;
   //return 6*n+4;
@@ -84,19 +84,19 @@ int df1b2variable::get_blocksize(int n)
  * Description not yet available.
  * \param
  */
-void df1b2variable::set_blocksize(void)
+void df1b2variable::set_blocksize()
 {
   blocksize=get_blocksize();
-  pool->set_size((unsigned int)sizeof(double)*blocksize);
+  pool->set_size(sizeof(double)*blocksize);
   pool->nvar=df1b2variable::get_nvar();
 }
 
 //init_df1b2variable * init_df1b2variable::list[max_num_init_df1b2variable];
 init_df1b2variable ** init_df1b2variable::list=0;
-int df1b2variable::nvar=0;
+unsigned int df1b2variable::nvar = 0;
 int df1b2variable::minder=0;
 int df1b2variable::maxder=0;
-int df1b2variable::blocksize=0;
+unsigned int df1b2variable::blocksize=0;
 int init_df1b2variable::num_variables=0;
 int df1b2_gradlist::no_derivatives=0;
 int df1b2variable::passnumber=0;
@@ -542,7 +542,7 @@ void df1b2variable::deallocate(void)
     double * zd=z.get_u_dot();
     *z.get_u()=(*f)(xu);
     double dfx=(*df)(xu);
-    for (int i=0;i<df1b2variable::nvar;i++)
+    for (unsigned int i=0;i<df1b2variable::nvar;i++)
     {
       *zd++ =dfx * *xd++;
     }
@@ -579,7 +579,7 @@ void df1b2variable::deallocate(void)
     *z.get_u()=(*f)(xu,yu);
     double dfx=(*df1)(xu,yu);
     double dfy=(*df2)(xu,yu);
-    for (int i=0;i<df1b2variable::nvar;i++)
+    for (unsigned int i=0;i<df1b2variable::nvar;i++)
     {
       *zd++ =dfx * *xd++ + dfy * *yd++;
     }
@@ -708,7 +708,7 @@ void set_dependent_variable(const df1b2variable& _x)
 {
   df1b2variable& x=(df1b2variable&) (_x);
   //cout << "dep " << int(x.u) << endl;
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     x.u_dot_bar[i]=1.0;
   }
@@ -721,11 +721,11 @@ void set_dependent_variable(const df1b2variable& _x)
 dmatrix get_hessian(const init_df1b2vector& _x)
 {
   ADUNCONST(init_df1b2vector,x)
-  int nvar=df1b2variable::nvar;
+  unsigned int nvar=df1b2variable::nvar;
   dmatrix h(1,nvar,1,nvar);
-  for (int i=1;i<=nvar;i++)
+  for (unsigned int i=1;i<=nvar;i++)
   {
-    for (int j=1;j<=nvar;j++)
+    for (unsigned int j=1;j<=nvar;j++)
     {
       h(i,j)=x(i).u_bar[j-1];
     }

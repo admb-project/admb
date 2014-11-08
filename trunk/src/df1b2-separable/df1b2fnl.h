@@ -61,7 +61,7 @@ public:
   static laplace_approximation_calculator * lapprox;
   static df1b2variable * funnel_constraints_penalty;
   static void reset_counters(void) { num_vars=0; /*num_all_vars=0;*/}
-  static int num_vars;
+  static unsigned int num_vars;
   //static int num_all_vars;
   static int num_inactive_vars;
   static int num_active_parameters;

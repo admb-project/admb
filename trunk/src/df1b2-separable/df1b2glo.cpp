@@ -31,7 +31,7 @@ void df1b2variable::increment_adpool_counter(void)
  }
 }
 
-int df1b2variable::nvar_vector[_FIVE_];
+unsigned int df1b2variable::nvar_vector[_FIVE_];
 int df1b2variable::pool_allocation_number[_FIVE_];
 
 double initial_df1b2params::cobjfun=0.0;
@@ -65,4 +65,4 @@ int initial_df1b2params::current_phase=0;
 int df1b2variable::adpool_stack_pointer=0;
 const int df1b2variable::adpool_stack_size=50;
 adpool * df1b2variable::adpool_stack[50];
-int df1b2variable::adpool_nvar_stack[50];
+unsigned int df1b2variable::adpool_nvar_stack[50];

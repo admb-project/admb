@@ -70,7 +70,6 @@ void print_derivatives(const adstring& s, double f, double df1,
 void print_derivatives(df1b2_header * px,const char * s,
   int bflag)
 {
-  int i;
   ostream * derout;
   derout=&cout;
   //*derout << derprintcount << " " << endl;
@@ -85,17 +84,17 @@ void print_derivatives(df1b2_header * px,const char * s,
   *derout << endl;
 
   *derout << "udot\t\t = ";
-  for (i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
     *derout <<  px->u_dot[i] << " ";
   *derout << endl;
 
   *derout << "u_bar\t\t = ";
-  for (i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
     *derout <<  px->u_bar[i] << " ";
   *derout << endl;
 
   *derout << "u_dot_bar\t = ";
-  for (i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
     *derout <<  px->u_dot_bar[i] << " ";
   *derout << endl;
 
@@ -105,17 +104,17 @@ void print_derivatives(df1b2_header * px,const char * s,
     *derout << endl;
 
     *derout << "u_dot_tilde\t = ";
-    for (i=0;i<df1b2variable::nvar;i++)
+    for (unsigned int i=0;i<df1b2variable::nvar;i++)
       *derout <<  px->u_dot_tilde[i] << " ";
     *derout << endl;
 
     *derout << "u_bar_tilde\t = ";
-    for (i=0;i<df1b2variable::nvar;i++)
+    for (unsigned int i=0;i<df1b2variable::nvar;i++)
       *derout <<  px->u_bar_tilde[i] << " ";
     *derout << endl;
 
     *derout << "u_dot_bar_tilde\t = ";
-    for (i=0;i<df1b2variable::nvar;i++)
+    for (unsigned int i=0;i<df1b2variable::nvar;i++)
       *derout <<  px->u_dot_bar_tilde[i] << " ";
     *derout << endl;
   }
@@ -133,7 +132,7 @@ df1b2variable& df1b2variable::operator += (const df1b2variable& _x)
   double * xd=x.get_u_dot();
   double * zd=get_u_dot();
   *get_u()+=*x.get_u();
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ += *xd++;
   }
@@ -220,7 +219,7 @@ void read_pass1_plus_eq_1(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  unsigned int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -240,7 +239,6 @@ void read_pass1_plus_eq_1(void)
   df1b2_header * pz=(df1b2_header *) list.bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
-  int i;
 
   // Do first reverse paSS calculations
   // ****************************************************************
@@ -275,11 +273,11 @@ void read_pass1_plus_eq_1(void)
  print_derivatives(pz,"z");
 #endif
 
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     px->u_bar[i]+=pz->u_bar[i];
   }
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     px->u_dot_bar[i]+=pz->u_dot_bar[i];
   }
@@ -300,7 +298,7 @@ void read_pass1_plus_eq_2(void)
   //
   // list 1
   //
-  int nvar=df1b2variable::nvar;
+  unsigned int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
   size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
@@ -335,7 +333,6 @@ void read_pass1_plus_eq_2(void)
   //checkidentiferstring("IL",list2);
 #endif
 
-
   // get info from tape1
   df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
@@ -352,13 +349,12 @@ void read_pass1_plus_eq_2(void)
   double * z_bar_tilde=pz->get_u_bar_tilde();
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
-  int i;
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     z_bar_tilde[i]+=x_bar_tilde[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     z_dot_bar_tilde[i]+=x_dot_bar_tilde[i];
   }
@@ -378,7 +374,7 @@ void read_pass1_plus_eq_3(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  unsigned int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -399,9 +395,8 @@ void read_pass1_plus_eq_3(void)
 
   list.restoreposition(); // save pointer to beginning of record;
 
-  int i;
   *(px->u_tilde)+=*pz->u_tilde;
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     px->u_dot_tilde[i]+=pz->u_dot_tilde[i];
   }

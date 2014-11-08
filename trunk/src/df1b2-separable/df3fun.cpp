@@ -738,7 +738,7 @@ df1b2variable& df1b2variable::operator = (const df3_one_variable& v)
   double * xd=px->get_u_dot();
   double * zd=get_u_dot();
   *get_u()=*v.get_u();
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = df * *xd++;
   }

@@ -35,7 +35,7 @@ df1b2variable asin(const df1b2variable& _xx)
   double * xd=xx.get_u_dot();
   double * zd=z.get_u_dot();
   *z.get_u()=f;
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *xd++;
   }

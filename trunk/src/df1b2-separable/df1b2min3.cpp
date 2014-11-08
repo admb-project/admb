@@ -17,7 +17,7 @@
     double * yd=y.get_u_dot();
     double * zd=z.get_u_dot();
     *z.get_u()=*y.get_u()-x;
-    for (int i=0;i<df1b2variable::nvar;i++)
+    for (unsigned int i=0;i<df1b2variable::nvar;i++)
     {
       *zd++ = *yd++;
     }
@@ -95,7 +95,7 @@ void read_pass2_1_minusvc(void)
   // and  forward for bptr2 and nbptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  unsigned int nvar=df1b2variable::nvar;
   test_smartlist& list=f1b2gradlist->list;
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
@@ -119,22 +119,21 @@ void read_pass2_1_minusvc(void)
   // save for second reverse pass
   // save identifier 1
 
-  int i;
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     py->u_bar[i]+=pz->u_bar[i];
   }
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     py->u_dot_bar[i]+=pz->u_dot_bar[i];
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     pz->u_bar[i]=0;
   }
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     pz->u_dot_bar[i]=0;
   }
@@ -147,7 +146,7 @@ void read_pass2_2_minusvc(void)
   //
   // list 1
   //
-  int nvar=df1b2variable::nvar;
+  unsigned int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
   size_t total_bytes=2*sizeof(df1b2_header);
@@ -178,9 +177,8 @@ void read_pass2_2_minusvc(void)
   double * z_bar_tilde=pz->get_u_bar_tilde();
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
-  int i;
 
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
@@ -188,12 +186,12 @@ void read_pass2_2_minusvc(void)
 
 
   // start with y and add x
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     z_bar_tilde[i]+=y_bar_tilde[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     z_dot_bar_tilde[i]+=y_dot_bar_tilde[i];
   }
@@ -204,7 +202,7 @@ void read_pass2_3_minusvc(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  unsigned int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -227,17 +225,16 @@ void read_pass2_3_minusvc(void)
   list.bptr+=sizeof(df1b2_header);
 
   list.restoreposition(); // save pointer to beginning of record;
-  int i;
 
   // !!!!! changed sign DF feb 7 2010
   //*(py->u_tilde)-=*(pz->u_tilde);
   *(py->u_tilde)+=*(pz->u_tilde);
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     py->u_dot_tilde[i]+=pz->u_dot_tilde[i];
   }
   *(pz->u_tilde)=0;
-  for (i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     pz->u_dot_tilde[i]=0;
   }

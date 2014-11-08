@@ -20,7 +20,7 @@ typedef funnel_init_var  * PFUNNEL_INIT_VAR;
 class laplace_approximation_calculator;
 laplace_approximation_calculator * funnel_init_var::lapprox=0;
 df1b2variable * funnel_init_var::funnel_constraints_penalty=0;
-int funnel_init_var::num_vars=0;
+unsigned int funnel_init_var::num_vars=0;
 //int funnel_init_var::num_all_vars=0;
 int funnel_init_var::num_inactive_vars=0;
 int funnel_init_var::num_active_parameters=0;

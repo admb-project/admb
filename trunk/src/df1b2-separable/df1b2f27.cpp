@@ -36,11 +36,7 @@ int df1b2_gradlist::write_pass1x(const df1b2variable * _px,
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-  int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-  size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
 
   size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
     +sizeof(double)+nvar*sizeof(double);
@@ -107,11 +103,7 @@ void read_pass1_1x(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-  size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -230,11 +222,7 @@ void read_pass1_2x(void)
   //
   // list 1
   //
-  int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-  size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
   size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
@@ -361,11 +349,7 @@ void read_pass1_3x(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-  size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);

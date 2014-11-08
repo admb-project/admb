@@ -46,11 +46,7 @@ void ad_read_pass2_dvdvdv(void);
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-   int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-   size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
 
    size_t total_bytes=4*sizeof(df1b2_header)+sizeof(char*)
      +(3*nvar+22)*sizeof(double);
@@ -163,11 +159,7 @@ void read_pass2_1_dvdvdv(void)
   // points to the next record
   //char * bptr=f1b2gradlist->bptr;
   //char * bptr2=f1b2gradlist2->bptr;
-   int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-   size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
   test_smartlist& list=f1b2gradlist->list;
   //f1b2gradlist->nlist-=sizeof(int);
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
@@ -457,11 +449,7 @@ void read_pass2_2_dvdvdv(void)
   //
   // list 1
   //
-   int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-   size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
   size_t total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
@@ -815,11 +803,7 @@ void read_pass2_3_dvdvdv(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-   int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-   size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);

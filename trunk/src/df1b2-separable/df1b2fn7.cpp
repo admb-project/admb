@@ -95,7 +95,7 @@ void read_tilde_values_1(void)
   // and  forward for bptr2 and nbptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  unsigned int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
@@ -111,7 +111,7 @@ void read_tilde_values_1(void)
   list.restoreposition(); // save pointer to beginning of record;
 
   // don't need this here for = since it zeroes this out.
-  for (int i=0;i<nvar;i++)
+  for (unsigned int i=0;i<nvar;i++)
   {
     px->u_bar[i]=0;
     px->u_dot_bar[i]=0;
@@ -129,11 +129,7 @@ void read_tilde_values_2(void)
   //
   // list 1
   //
-  int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-  size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
   size_t total_bytes=sizeof(df1b2_header);
@@ -197,11 +193,7 @@ void read_tilde_values_3(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-  size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);

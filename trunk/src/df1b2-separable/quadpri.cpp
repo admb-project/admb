@@ -70,7 +70,7 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   for (int i=0;i<quadratic_prior::get_num_quadratic_prior();i++)
   {
     //Hess_all += quadratic_prior::get_ptr(i)->get_vHessian();
-    int nv=df1b2quadratic_prior::get_ptr(i)->get_num_active_parameters();
+    unsigned int nv=df1b2quadratic_prior::get_ptr(i)->get_num_active_parameters();
     if (nv>0)
       quadratic_prior::get_ptr(i)->get_vHessian(Hess_all,xsize);
     else
@@ -650,7 +650,7 @@ void quadratic_prior::get_cHessian_contribution_from_vHessian(dmatrix Hess,
  {
    for (int i=0;i<num_quadratic_prior;i++)
    {
-     int nv=df1b2quadratic_prior::get_ptr(i)->
+     unsigned int nv=df1b2quadratic_prior::get_ptr(i)->
        get_num_active_parameters();
      if (nv)
        ptr[i]->get_cHessian_from_vHessian(Hess,xsize);
@@ -733,7 +733,7 @@ void quadratic_prior::get_cHessian_contribution_from_vHessian(dmatrix Hess,
      }
      if (laplace_approximation_calculator::where_are_we_flag==3)
      {
-       int nv =
+       unsigned int nv =
          df1b2quadratic_prior::get_ptr(xmyindex)->get_num_active_parameters();
        //if (nv==0)
        if (nv!=0)

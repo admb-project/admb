@@ -41,11 +41,10 @@ df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
     int offset=mmin-M(M.indexmin()).indexmax()-1;  // subtract x offset
     int nvar=index->indexmax();
     {
-      int i;
       switch(old_style_flag)
       {
       case 0:
-        for (i=1;i<=nvar;i++)
+        for (int i=1;i<=nvar;i++)
         {
           int jcol=(*index)(i);
           for (int ii=1;ii<=size;ii++)
@@ -56,7 +55,7 @@ df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
         break;
       case 1:
         break;
-        for (i=1;i<=nvar;i++)
+        for (int i=1;i<=nvar;i++)
         {
           int jcol=(*index)(i);
           for (int ii=1;ii<=size;ii++)
@@ -65,7 +64,7 @@ df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
           }
         }
       case 2:
-        for (i=1;i<=nvar;i++)
+        for (int i=1;i<=nvar;i++)
         {
           int jcol=(*index)(i);
           for (int ii=1;ii<=size;ii++)

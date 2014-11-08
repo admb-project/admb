@@ -21,7 +21,7 @@ df1b2variable gammlnguts(const df1b2variable _zz)
   double  z = value(_zz);
   //double zdot=1.0;
   const double lpp =0.9189385332046727417803297;
-  int n=7;
+  unsigned int n=7;
   const double c[9]={0.99999999999980993,
     676.5203681218851,
     -1259.1392167224028,
@@ -36,8 +36,7 @@ df1b2variable gammlnguts(const df1b2variable _zz)
   double xdot=0.0;
   double x2dot=0.0;
   double x3dot=0.0;
-  int i;
-  for (i=1;i<=n+1;i++)
+  for (unsigned int i=1;i<=n+1;i++)
   {
     double zinv=1.0/(z+i);
     x+=c[i]*zinv;
@@ -62,7 +61,7 @@ df1b2variable gammlnguts(const df1b2variable _zz)
   double * xd=zz.get_u_dot();
   double * zd=u.get_u_dot();
   *u.get_u()=ans;
-  for (i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *xd++;
   }

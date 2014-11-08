@@ -62,7 +62,7 @@ public:
  ~adpool();
 
   int depth_check(void);
-  int nvar;
+  unsigned int nvar;
   int& on_adpool_vector(void) {return adpool_vector_flag;}
   char * last_chunk;
   struct link { link * next; };

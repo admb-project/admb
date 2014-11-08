@@ -176,7 +176,7 @@
      double * zd=_b.get_u_dot();
      double * tmpd=tmp.get_u_dot();
      *tmp.get_u()=cx;
-     for (int i=0;i<df1b2variable::nvar;i++)
+     for (unsigned int i=0;i<df1b2variable::nvar;i++)
      {
        *tmpd++ = F_x * *xd++ + F_y * *yd++ + F_z * *zd++;
      }

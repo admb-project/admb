@@ -55,7 +55,7 @@ test_smartlist::test_smartlist(void)
  * Description not yet available.
  * \param
  */
-test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename)
+test_smartlist::test_smartlist(const size_t _bufsize,const adstring& _filename)
 {
   allocate(_bufsize,_filename);
 }
@@ -64,7 +64,7 @@ test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename)
  * Description not yet available.
  * \param
  */
-void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
+void test_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
 {
   //cerr << "need to modify test_smartlist class for multibyte char" << endl;
   assert(sizeof(char) == 1);
@@ -106,10 +106,10 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
  * Description not yet available.
  * \param
  */
-void test_smartlist::write(int n)
+void test_smartlist::write(const size_t n)
 {
   ssize_t nw = ::write(fp,buffer,n);
-  if (nw<n)
+  if (nw <= -1 || n != (size_t)nw)
   {
     cerr << "Error writing to file " << filename << endl;
     ad_exit(1);
@@ -127,15 +127,15 @@ void test_smartlist::rewind(void)
   {
     lseek(fp,0L,SEEK_SET);
     // get the record size
-    int nbytes = 0;
+    unsigned int nbytes = 0;
 #ifdef OPT_LIB
-    ::read(fp,&nbytes,sizeof(int));
+    ::read(fp,&nbytes,sizeof(unsigned int));
 #else
-    ssize_t ret = ::read(fp,&nbytes,sizeof(int));
+    ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
     assert(ret != -1);
     assert(nbytes >= 0);
 #endif
-    if ((unsigned int)nbytes > bufsize)
+    if (nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl
@@ -152,7 +152,7 @@ void test_smartlist::rewind(void)
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
-    lseek(fp, (off_t)sizeof(off_t),SEEK_CUR);
+    lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
   }
 }
 
@@ -232,9 +232,11 @@ void test_smartlist::save_end(void)
  */
 void test_smartlist::write_buffer(void)
 {
-  int nbytes=adptr_diff(bptr,buffer);
-  if (nbytes)
+  int _nbytes=adptr_diff(bptr,buffer);
+  if (_nbytes > 0)
   {
+    const unsigned int nbytes = (unsigned int)_nbytes;
+
     written_flag=1;
     // get the current file position
     off_t pos=lseek(fp,0L,SEEK_CUR);
@@ -249,12 +251,7 @@ void test_smartlist::write_buffer(void)
 
     // write the record into the file
     ssize_t nw=::write(fp,buffer,nbytes);
-    //cout << "Number of bytes written " << nw << endl;
-    //cout << "buffer value = ";
-    //for (int ii=0;ii<=25;ii++)
-    //  cout << int (*(buffer+ii)) << " ";
-    //cout << endl;
-    if (nw<nbytes)
+    if (nw <= -1 || (unsigned int)nw != nbytes)
     {
       cerr << "Error writing to file " << filename << endl;
       ad_exit(1);
@@ -307,15 +304,14 @@ void test_smartlist::read_buffer(void)
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
-    int nbytes = 0;
+    unsigned int nbytes = 0;
 #ifdef OPT_LIB
-    ::read(fp,&nbytes,sizeof(int));
+    ::read(fp,&nbytes,sizeof(unsigned int));
 #else
-    ssize_t ret = ::read(fp,&nbytes,sizeof(int));
+    ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
     assert(ret != -1);
-    assert(nbytes >= 0);
 #endif
-    if ((unsigned int)nbytes > bufsize)
+    if (nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl
@@ -325,18 +321,11 @@ void test_smartlist::read_buffer(void)
     // now read the record into the buffer
     ssize_t nr = ::read(fp,buffer,nbytes);
     assert(nr != -1);
-    if (nr != nbytes)
+    if (nr <= -1 || nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);
     }
-   /*
-    cout << "Number of bytes read " << nr << endl;
-    cout << "buffer value = ";
-    for (int ii=0;ii<=25;ii++)
-      cout << int (*(buffer+ii)) << " ";
-    cout << endl;
-    */
     // reset the pointer to the beginning of the buffer
     bptr=buffer;
     recend=bptr+nbytes-1;
@@ -361,7 +350,7 @@ void test_smartlist::read_buffer(void)
 void memcpy(const test_smartlist& _list, void* p, const size_t nsize)
 {
   ADUNCONST(test_smartlist,list)
-  if ( list.bptr+nsize-1 > list.buffend)
+  if (list.bptr+nsize-1 > list.buffend)
   {
     cerr << " Trying to write outside list buffer" << endl;
     exit(1);
@@ -377,7 +366,7 @@ void memcpy(const test_smartlist& _list, void* p, const size_t nsize)
 void memcpy(void* p, const test_smartlist & _list, const size_t nsize)
 {
   ADUNCONST(test_smartlist,list)
-  if ( list.bptr+nsize-1 > list.buffend)
+  if (list.bptr+nsize-1 > list.buffend)
   {
     cerr << " Trying to write outside list buffer" << endl;
     exit(1);
@@ -390,7 +379,7 @@ void memcpy(void* p, const test_smartlist & _list, const size_t nsize)
  * Description not yet available.
  * \param
  */
-void test_smartlist::operator-=(int n)
+void test_smartlist::operator-=(const int n)
 {
   if (bptr-n<buffer)
   {
@@ -416,7 +405,7 @@ void test_smartlist::operator-=(int n)
  * Description not yet available.
  * \param
  */
-void test_smartlist::operator+=(int nsize)
+void test_smartlist::operator+=(const int nsize)
 {
   if ( bptr+nsize-1 > buffend)
   {

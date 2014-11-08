@@ -43,7 +43,7 @@ df1b2variable pow(const df1b2variable& x,const df1b2variable& y)
   double * yd=y.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ + dfy * *yd++;
   }
@@ -75,7 +75,7 @@ df1b2variable pow(double x,const df1b2variable& y)
   double * yd=y.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =  dfy * *yd++;
   }
@@ -116,7 +116,7 @@ df1b2variable operator / (const df1b2variable& x,const df1b2variable& y)
   double * yd=y.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ + dfy * *yd++;
   }
@@ -153,7 +153,7 @@ df1b2variable operator / (double x,const df1b2variable& y)
   double * yd=y.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =  dfy * *yd++;
   }
@@ -182,7 +182,7 @@ df1b2variable pow(const df1b2variable& x,double y)
   double * xd=x.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ ;
   }
@@ -208,7 +208,7 @@ df1b2variable square(const df1b2variable& x)
   double * xd=x.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ ;
   }

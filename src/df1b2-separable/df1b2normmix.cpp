@@ -94,7 +94,7 @@ df1b2variable inv_cumd_normal_mixture(const df1b2variable& _yy,double a)
   double * yd=yy.get_u_dot();
   double * zd=z.get_u_dot();
   *z.get_u()=x;
-  for (int i=0;i<df1b2variable::nvar;i++)
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *yd++;
   }

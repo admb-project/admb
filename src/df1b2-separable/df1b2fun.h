@@ -248,26 +248,26 @@ struct df1b2_header
     static const int adpool_stack_size;
     static adpool* adpool_vector[];
     static adpool* adpool_stack[];
-    static int adpool_nvar_stack[];
+    static unsigned int adpool_nvar_stack[];
     static int adpool_stack_pointer;
     static void save_adpool_pointer(void);
     static void restore_adpool_pointer(void);
-    static int nvar_vector[];
+    static unsigned int nvar_vector[];
     static int passnumber;
-    static int nvar;  // the number of independent variables
+    static unsigned int nvar;  // the number of independent variables
     static int minder;  // the number of independent variables
     static int maxder;  // the number of independent variables
-    static int blocksize;
+    static unsigned int blocksize;
     static int noallocate;
 
     static int get_passnumber(void){return passnumber;}
-    static void set_nvar(int n){nvar=n;}
-    static int get_nvar(void){return nvar;}
+    static void set_nvar(unsigned int n) { nvar = n;}
+    static unsigned int get_nvar() { return nvar; }
     static void set_minder(int n){minder=n;}
     static void set_maxder(int n){maxder=n;}
     static void set_blocksize(void);
-    static int get_blocksize(void);
-    static int get_blocksize(int n);
+    static unsigned int get_blocksize(void);
+    static unsigned int get_blocksize(const unsigned int n);
     int & get_ind_index(void){ return indindex;}
     const int& get_ind_index(void) const { return indindex;}
     short int* ncopies;
@@ -511,9 +511,13 @@ public:
     char * buffend;
     char * bptr;
     char * sbptr;
-    unsigned int bufsize;
+    size_t bufsize;
     adstring filename;
     int fp;
+public:
+    test_smartlist(void);
+    ~test_smartlist();
+
     void saveposition(void){sbptr=bptr;}
     void set_recend(){bptr=recend+1;} // one passed the end so that when
                                       // you back up n bytes it points to the
@@ -524,25 +528,23 @@ public:
     void set_noreadflag(int n){ noreadflag=n; }
     void restoreposition(void){bptr=sbptr;}
     void restoreposition(int offset){bptr=sbptr+offset;}
-    test_smartlist(unsigned int bufsize,const adstring& filename);
-    void allocate(unsigned int bufsize,const adstring& filename);
-    test_smartlist(void);
-    ~test_smartlist();
+    test_smartlist(const size_t bufsize,const adstring& filename);
+    void allocate(const size_t bufsize,const adstring& filename);
     void read_buffer(void);
     void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}
     void set_reverse(void){direction=-1;}
     void rewind(void);
     void initialize(void);
-    void operator -= (int);
-    void operator += (int);
+    void operator-=(const int);
+    void operator+=(const int);
     double report_usage(void)
     {
       return double(size_t(bptr)-size_t(buffer))
              / double(size_t(buffend)-size_t(buffer));
     }
-    void write(void * p,int n);
-    void write(int n);
+    //void write(void * p,const size_t n);
+    void write(const size_t n);
     void write_buffer(void);
     void check_buffer_size(const size_t);
     void add_buffer_fringe(int n){buffend-=n;}
@@ -620,8 +622,8 @@ public:
       return double(size_t(bptr)-size_t(buffer))
              / double(size_t(buffend)-size_t(buffer));
     }
-    void write(void * p,int n);
-    void write(int n);
+    //void write(void * p,int n);
+    void write(const size_t);
     void write_buffer(void);
     void write_buffer_one_less(void);
     void check_buffer_size(const size_t);
@@ -688,8 +690,8 @@ public:
       return double(size_t(bptr)-size_t(buffer)) /
              double(size_t(buffend)-size_t(buffer));
     }
-    void write(void * p,int n);
-    void write(int n);
+    //void write(void * p,int n);
+    void write(const size_t n);
     void write_buffer(void);
     void write_buffer_one_less(void);
     void check_buffer_size(const size_t);
@@ -1894,8 +1896,8 @@ public:
   void add_to_list(void);
 public:
   static df1b2quadratic_prior * get_ptr(int i){ return ptr[i];}
-  int num_active_parameters;
-  int get_num_active_parameters(void) { return num_active_parameters; }
+  unsigned int num_active_parameters;
+  unsigned int get_num_active_parameters(void) { return num_active_parameters; }
   int get_myindex(void) { return xmyindex;}
   void operator = (const df1b2matrix &);
   void operator = (const dmatrix &);

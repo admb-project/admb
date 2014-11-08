@@ -834,7 +834,7 @@ void laplace_approximation_calculator::set_u_dot(int ip)
  */
 void laplace_approximation_calculator::check_pool_size(void)
 {
-  int num_active_parameters=nvar;
+  unsigned int num_active_parameters=nvar;
   f1b2gradlist->reset();
 
   adpool * tmppool=df1b2variable::pool;
@@ -893,6 +893,6 @@ void laplace_approximation_calculator::check_pool_size(void)
       ad_exit(1);
     }
   }
-  df1b2variable::nvar=num_active_parameters;
+  df1b2variable::nvar = num_active_parameters;
   df1b2variable::set_blocksize();
 }

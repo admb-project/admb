@@ -107,7 +107,7 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
      double * zd=zz.get_u_dot();
      *zz.get_u()=x;
 
-     for (int i=0;i<df1b2variable::nvar;i++)
+     for (unsigned int i=0;i<df1b2variable::nvar;i++)
      {
        *zd++ = F_x * *xd++ + F_y * *yd++;
      }

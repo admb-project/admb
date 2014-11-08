@@ -271,11 +271,7 @@ void read_pass1_init_1(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-   int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-   size_t nvar = (size_t)_nvar;
+  unsigned int nvar=df1b2variable::nvar;
 
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
@@ -297,7 +293,6 @@ void read_pass1_init_1(void)
   //df1b2function1* pf = *(df1b2function1**)list.bptr;
   list.bptr+=sizeof(char*);
   list.restoreposition(); // save pointer to beginning of record;
-  //int i;
 
   // Do first reverse paSS calculations
   // ****************************************************************
@@ -360,11 +355,7 @@ void read_pass1_init_2(void)
   //
   // list 1
   //
-   int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-   size_t nvar = (size_t)_nvar;
+  unsigned int nvar = df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
   size_t total_bytes=sizeof(df1b2_header)+sizeof(char *);
@@ -438,11 +429,7 @@ void read_pass1_init_3(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-   int _nvar=df1b2variable::nvar;
-#ifndef OPT_LIB
-  assert(_nvar > 0);
-#endif
-   size_t nvar = (size_t)_nvar;
+  unsigned int nvar = df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);

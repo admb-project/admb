@@ -179,13 +179,13 @@ void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
           Lxu=new dmatrix(1,num_active_parameters,mmin-1,mmax);
         }
 
-        for (int i=1;i<=num_active_parameters;i++)
+        for (unsigned int i=1;i<=num_active_parameters;i++)
         {
           (*Lxu)(i,mmin-1)=(*funnel_init_var::plist)(i,1);
         }
         for (int j=mmin;j<=mmax;j++)
         {
-          for (int i=1;i<=num_active_parameters;i++)
+          for (unsigned int i=1;i<=num_active_parameters;i++)
           {
             switch (old_style_flag)
             {

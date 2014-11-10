@@ -133,7 +133,6 @@ void test_smartlist::rewind(void)
 #else
     ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
     assert(ret != -1);
-    assert(nbytes >= 0);
 #endif
     if (nbytes > bufsize)
     {

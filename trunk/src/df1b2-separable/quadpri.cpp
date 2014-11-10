@@ -70,7 +70,8 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   for (int i=0;i<quadratic_prior::get_num_quadratic_prior();i++)
   {
     //Hess_all += quadratic_prior::get_ptr(i)->get_vHessian();
-    unsigned int nv=df1b2quadratic_prior::get_ptr(i)->get_num_active_parameters();
+    unsigned int nv =
+      df1b2quadratic_prior::get_ptr(i)->get_num_active_parameters();
     if (nv>0)
       quadratic_prior::get_ptr(i)->get_vHessian(Hess_all,xsize);
     else

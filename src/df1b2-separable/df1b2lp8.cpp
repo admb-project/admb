@@ -138,8 +138,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   // number of random vectors
   const ivector & itmp=(*num_local_re_array)(1,num_separable_calls);
   //const ivector & itmpf=(*num_local_fixed_array)(1,num_separable_calls);
-  int i;
-  for (i=2;i<=num_separable_calls;i++)
+  for (int i=2;i<=num_separable_calls;i++)
   {
     if (itmp(i) != itmp(i-1))
     {
@@ -206,17 +205,16 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   dmatrix & M=*antiepsilon;
   M.fill_randn(rng);
 
-  for (i=1;i<=samplesize;i++)
+  for (int i=1;i<=samplesize;i++)
   {
     M(i)=M(i)/norm(M(i));
   }
   int nvar=(samplesize-1)*n;
   independent_variables xx(1,nvar);
   ii=0;
-  for (i=2;i<=samplesize;i++)
+  for (int i=2;i<=samplesize;i++)
   {
-    int j;
-    for (j=1;j<=n;j++)
+    for (int j=1;j<=n;j++)
     {
       xx(++ii)=M(i,j);
     }
@@ -262,15 +260,14 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
      xx=xbest;
   }
   ii=0;
-  for (i=2;i<=samplesize;i++)
+  for (int i=2;i<=samplesize;i++)
   {
-    int j;
-    for (j=1;j<=n;j++)
+    for (int j=1;j<=n;j++)
     {
       M(i,j)=xx(++ii);
     }
   }
-  for (i=1;i<=samplesize;i++)
+  for (int i=1;i<=samplesize;i++)
   {
     M(i)*=dist(i)/norm(M(i));
   }
@@ -296,21 +293,20 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
 
   double f=0.0;
   int ii=0;
-  int i,j;
   VM0(1)=M(1);
-  for (i=2;i<=samplesize;i++)
+  for (int i=2;i<=samplesize;i++)
   {
-    for (j=1;j<=n;j++)
+    for (int j=1;j<=n;j++)
     {
       VM0(i,j)=x(++ii);
     }
   }
-  for (i=1;i<=samplesize;i++)
+  for (int i=1;i<=samplesize;i++)
   {
     N(i)=norm(VM0(i));
     VM(i)=VM0(i)*(d(i)/N(i));
   }
-  for (i=1;i<=samplesize;i++)
+  for (int i=1;i<=samplesize;i++)
   {
     for (ii=i+1;ii<=samplesize;ii++)
     {
@@ -322,7 +318,7 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
     }
     f+=100.0*square(log(N(i)));
   }
-  for (i=1;i<=samplesize;i++)
+  for (int i=1;i<=samplesize;i++)
   {
     //f+=100.0*square(log(N(i)));
     dfN(i)+=200*log(N(i))/N(i);
@@ -336,7 +332,7 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
       dfVM(ii)-=vtmp;
     }
   }
-  for (i=1;i<=samplesize;i++)
+  for (int i=1;i<=samplesize;i++)
   {
     //VM(i)=VM0(i)*(d(i)/N(i));
     dfVM0(i)=dfVM(i)*d(i)/N(i);
@@ -346,9 +342,9 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
     dfVM0(i)+=dfN(i)/N(i)*VM0(i);
   }
   ii=0;
-  for (i=2;i<=samplesize;i++)
+  for (int i=2;i<=samplesize;i++)
   {
-    for (j=1;j<=n;j++)
+    for (int j=1;j<=n;j++)
     {
       //VM0(i,j)=vx(++ii);
       g(++ii)=dfVM0(i,j);
@@ -818,7 +814,6 @@ void laplace_approximation_calculator::
   }
 }
 
-#include <cassert>
 /**
  * Description not yet available.
  * \param
@@ -1030,11 +1025,13 @@ void laplace_approximation_calculator::
   imatrix& list=*funnel_init_var::plist;
   int num_local_re=0;
   int num_fixed_effects=0;
+#ifndef OPT_LIB
+  assert(funnel_init_var::num_active_parameters <= INT_MAX);
+#endif
+  ivector lre_index(1, (int)funnel_init_var::num_active_parameters);
+  ivector lfe_index(1, (int)funnel_init_var::num_active_parameters);
 
-  ivector lre_index(1,funnel_init_var::num_active_parameters);
-  ivector lfe_index(1,funnel_init_var::num_active_parameters);
-
-  for (int i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {

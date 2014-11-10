@@ -13,6 +13,12 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
+
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,
@@ -676,10 +682,13 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_fixed_effects=0;
 
-  ivector lre_index(1,funnel_init_var::num_active_parameters);
-  ivector lfe_index(1,funnel_init_var::num_active_parameters);
+#ifndef OPT_LIB
+  assert(funnel_init_var::num_active_parameters <= INT_MAX);
+#endif
+  ivector lre_index(1, (int)funnel_init_var::num_active_parameters);
+  ivector lfe_index(1, (int)funnel_init_var::num_active_parameters);
 
-  for (int i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {
@@ -870,10 +879,13 @@ void laplace_approximation_calculator::
   imatrix& list=*funnel_init_var::plist;
 
   int us=0; int xs=0;
-  ivector lre_index(1,funnel_init_var::num_active_parameters);
-  ivector lfe_index(1,funnel_init_var::num_active_parameters);
+#ifndef OPT_LIB
+  assert(funnel_init_var::num_active_parameters <= INT_MAX);
+#endif
+  ivector lre_index(1,(int)funnel_init_var::num_active_parameters);
+  ivector lfe_index(1,(int)funnel_init_var::num_active_parameters);
 
-  for (int i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {

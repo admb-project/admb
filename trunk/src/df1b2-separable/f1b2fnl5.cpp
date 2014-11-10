@@ -10,6 +10,10 @@
  */
 #include <df1b2fnl.h>
 #include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 /**
  * Description not yet available.
@@ -31,12 +35,14 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_fixed_effects=0;
 
-  int i;
   //cout << list << endl;
-  ivector lre_index(1,funnel_init_var::num_active_parameters);
-  ivector lfe_index(1,funnel_init_var::num_active_parameters);
+#ifndef OPT_LIB
+  assert(funnel_init_var::num_active_parameters <= INT_MAX);
+#endif
+  ivector lre_index(1,(int)funnel_init_var::num_active_parameters);
+  ivector lfe_index(1,(int)funnel_init_var::num_active_parameters);
 
-  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {
@@ -57,21 +63,20 @@ void laplace_approximation_calculator::
     local_re_list.initialize();
     local_fe_list.initialize();
     local_Hess.initialize();
-    int j;
-    for (i=1;i<=num_local_re;i++)
+    for (int i=1;i<=num_local_re;i++)
     {
       local_re_list(i)=list(lre_index(i),1);
     }
 
-    for (i=1;i<=num_fixed_effects;i++)
+    for (int i=1;i<=num_fixed_effects;i++)
     {
       local_fe_list(i)=list(lfe_index(i),1);
     }
 
-    for (i=1;i<=num_local_re;i++)
+    for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
-      for (j=1;j<=num_local_re;j++)
+      for (int j=1;j<=num_local_re;j++)
       {
         int lrej=lre_index(j);
         int i2=list(lrei,2);
@@ -80,9 +85,9 @@ void laplace_approximation_calculator::
       }
     }
 
-    for (i=1;i<=num_local_re;i++)
+    for (int i=1;i<=num_local_re;i++)
     {
-      for (j=1;j<=num_fixed_effects;j++)
+      for (int j=1;j<=num_fixed_effects;j++)
       {
         int i2=list(lre_index(i),2);
         int j2=list(lfe_index(j),2);
@@ -93,11 +98,11 @@ void laplace_approximation_calculator::
     have_bounded_random_effects=0;
     if (have_bounded_random_effects)
     {
-      for (i=1;i<=num_local_re;i++)
+      for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
         int i1=list(lrei,1);
-        for (j=1;j<=num_local_re;j++)
+        for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int j1=list(lrej,1);
@@ -136,11 +141,14 @@ void laplace_approximation_calculator::
   init_df1b2vector & locy= *funnel_init_var::py;
   imatrix& list=*funnel_init_var::plist;
 
-  int i; int j; int us=0; int xs=0;
-  ivector lre_index(1,funnel_init_var::num_active_parameters);
-  ivector lfe_index(1,funnel_init_var::num_active_parameters);
+  int us=0; int xs=0;
+#ifndef OPT_LIB
+  assert(funnel_init_var::num_active_parameters <= INT_MAX);
+#endif
+  ivector lre_index(1,(int)funnel_init_var::num_active_parameters);
+  ivector lfe_index(1,(int)funnel_init_var::num_active_parameters);
 
-  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {
@@ -161,9 +169,9 @@ void laplace_approximation_calculator::
     dmatrix local_Dux(1,us,1,xs);
     local_Hess.initialize();
     dvector local_uadjoint(1,us);
-    for (i=1;i<=us;i++)
+    for (int i=1;i<=us;i++)
     {
-      for (j=1;j<=us;j++)
+      for (int j=1;j<=us;j++)
       {
         int i2=list(lre_index(i),2);
         int j2=list(lre_index(j),2);
@@ -171,9 +179,9 @@ void laplace_approximation_calculator::
       }
     }
 
-    for (i=1;i<=us;i++)
+    for (int i=1;i<=us;i++)
     {
-      for (j=1;j<=xs;j++)
+      for (int j=1;j<=xs;j++)
       {
         int i2=list(lre_index(i),2);
         int j2=list(lfe_index(j),2);
@@ -184,9 +192,9 @@ void laplace_approximation_calculator::
     double f=0.0;
     initial_df1b2params::cobjfun+=f;
 
-    for (i=1;i<=us;i++)
+    for (int i=1;i<=us;i++)
     {
-      for (j=1;j<=us;j++)
+      for (int j=1;j<=us;j++)
       {
         int i2=list(lre_index(i),2);
         int j2=list(lre_index(j),2);
@@ -205,7 +213,7 @@ void laplace_approximation_calculator::
 
     local_uadjoint.initialize();
     local_xadjoint.initialize();
-    for (i=1;i<=xs;i++)
+    for (int i=1;i<=xs;i++)
     {
       int i2=list(lfe_index(i),2);
       xtmp(i)+=locy[i2].u_tilde[0];
@@ -213,7 +221,7 @@ void laplace_approximation_calculator::
     }
     dvector utmp(1,us);
     utmp.initialize();
-    for (i=1;i<=us;i++)
+    for (int i=1;i<=us;i++)
     {
       int i2=list(lre_index(i),2);
       utmp(i)+=locy[i2].u_tilde[0];
@@ -222,7 +230,7 @@ void laplace_approximation_calculator::
     if (xs>0)
       local_xadjoint -= solve(local_Hess,local_uadjoint)*local_Dux;
   }
-  for (i=1;i<=xs;i++)
+  for (int i=1;i<=xs;i++)
   {
     int ii=lfe_index(i);
     check_local_xadjoint2(list(ii,1))+=local_xadjoint(i);

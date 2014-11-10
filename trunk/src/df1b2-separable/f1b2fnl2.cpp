@@ -10,8 +10,12 @@
  */
 #include <df1b2fnl.h>
 #include <adrndeff.h>
-  int pool_check_flag=0;
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
+int pool_check_flag=0;
 
 extern int noboundepen_flag;
 
@@ -150,12 +154,14 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_fixed_effects=0;
 
-  int i;
   //cout << list << endl;
-  ivector lre_index(1,funnel_init_var::num_active_parameters);
-  ivector lfe_index(1,funnel_init_var::num_active_parameters);
+#ifndef OPT_LIB
+  assert(funnel_init_var::num_active_parameters <= INT_MAX);
+#endif
+  ivector lre_index(1, (int)funnel_init_var::num_active_parameters);
+  ivector lfe_index(1, (int)funnel_init_var::num_active_parameters);
 
-  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {
@@ -181,12 +187,11 @@ void laplace_approximation_calculator::
      // funnel_init_var::num_active_parameters-num_local_re);
     //dmatrix Hess1(1,funnel_init_var::num_vars,1,funnel_init_var::num_vars);
     local_Hess.initialize();
-    int j;
 
-    for (i=1;i<=num_local_re;i++)
+    for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
-      for (j=1;j<=num_local_re;j++)
+      for (int j=1;j<=num_local_re;j++)
       {
         int lrej=lre_index(j);
         int i2=list(lrei,2);
@@ -196,7 +201,7 @@ void laplace_approximation_calculator::
       }
     }
      // i<=funnel_init_var::num_vars;i++)
-    for (i=1;i<=num_local_re;i++)
+    for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
       //int i1=list(lrei,1);
@@ -209,11 +214,11 @@ void laplace_approximation_calculator::
     have_bounded_random_effects=0;
     if (have_bounded_random_effects)
     {
-      for (i=1;i<=num_local_re;i++)
+      for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
         int i1=list(lrei,1);
-        for (j=1;j<=num_local_re;j++)
+        for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int j1=list(lrej,1);
@@ -221,14 +226,14 @@ void laplace_approximation_calculator::
         }
       }
 
-      for (i=1;i<=num_local_re;i++)
+      for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
         int i1=list(lrei,1);
         local_Hess(i,i)+=local_grad(i)*curv(i1-xsize);
       }
 
-      for (i=1;i<=num_local_re;i++)
+      for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
         int i1=list(lrei,1);
@@ -240,7 +245,7 @@ void laplace_approximation_calculator::
     if (max_separable_g< mg) max_separable_g=mg;
     dvector local_step=-solve(local_Hess,local_grad);
 
-    for (i=1;i<=num_local_re;i++)
+    for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
       int i1=list(lrei,1);

@@ -30,11 +30,10 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_local_fe=0;
 
-  int i;
   ivector lre_index(1,funnel_init_var::num_active_parameters);
   ivector lfe_index(1,funnel_init_var::num_active_parameters);
 
-  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {
@@ -48,13 +47,12 @@ void laplace_approximation_calculator::
 
   if (num_local_re > 0)
   {
-    int j;
     if (hesstype==3)
     {
-      for (i=1;i<=num_local_re;i++)
+      for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
-        for (j=1;j<=num_local_re;j++)
+        for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int i1=list(lrei,1)-xsize;
@@ -69,10 +67,10 @@ void laplace_approximation_calculator::
     {
       if (sparse_hessian_flag==0)
       {
-        for (i=1;i<=num_local_re;i++)
+        for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (j=1;j<=num_local_re;j++)
+          for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -85,10 +83,10 @@ void laplace_approximation_calculator::
       }
       else
       {
-        for (i=1;i<=num_local_re;i++)
+        for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (j=1;j<=num_local_re;j++)
+          for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -112,13 +110,12 @@ void laplace_approximation_calculator::
 
   if (num_local_re > 0)
   {
-    int j;
     if (hesstype==3)
     {
-      for (i=1;i<=num_local_re;i++)
+      for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
-        for (j=1;j<=num_local_re;j++)
+        for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int i1=list(lrei,1)-xsize;
@@ -137,10 +134,10 @@ void laplace_approximation_calculator::
     {
       if (pmin->lapprox->sparse_hessian_flag==0)
       {
-        for (i=1;i<=num_local_re;i++)
+        for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (j=1;j<=num_local_re;j++)
+          for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -158,10 +155,10 @@ void laplace_approximation_calculator::
       {
         dcompressed_triplet * vsparse_triplet_adjoint =
           pmin->lapprox->vsparse_triplet_adjoint;
-        for (i=1;i<=num_local_re;i++)
+        for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (j=1;j<=num_local_re;j++)
+          for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -202,7 +199,7 @@ void laplace_approximation_calculator::
   f1b2gradlist->nlist3.initialize();
 
 
-  for (i=1;i<=num_local_fe;i++)
+  for (int i=1;i<=num_local_fe;i++)
   {
     int lfei=lfe_index(i);
     int i1=list(lfei,1);
@@ -220,7 +217,7 @@ void laplace_approximation_calculator::
 #endif
   }
 
-  for (i=1;i<=num_local_re;i++)
+  for (int i=1;i<=num_local_re;i++)
   {
     int i1=list(lre_index(i),1)-xsize;
     int i2=list(lre_index(i),2);

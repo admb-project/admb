@@ -676,11 +676,10 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_fixed_effects=0;
 
-  int i;
   ivector lre_index(1,funnel_init_var::num_active_parameters);
   ivector lfe_index(1,funnel_init_var::num_active_parameters);
 
-  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {
@@ -694,14 +693,13 @@ void laplace_approximation_calculator::
 
   if (num_local_re > 0)
   {
-    int j;
     switch(hesstype)
     {
     case 3:
-      for (i=1;i<=num_local_re;i++)
+      for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
-        for (j=1;j<=num_local_re;j++)
+        for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int i1=list(lrei,1)-xsize;
@@ -715,10 +713,10 @@ void laplace_approximation_calculator::
     case 4:
       if (sparse_hessian_flag==0)
       {
-        for (i=1;i<=num_local_re;i++)
+        for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (j=1;j<=num_local_re;j++)
+          for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -731,10 +729,10 @@ void laplace_approximation_calculator::
       }
       else
       {
-        for (i=1;i<=num_local_re;i++)
+        for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (j=1;j<=num_local_re;j++)
+          for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -757,7 +755,7 @@ void laplace_approximation_calculator::
       ad_exit(1);
     }
 
-    for (i=1;i<=num_local_re;i++)
+    for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
       int i1=list(lrei,1);
@@ -871,11 +869,11 @@ void laplace_approximation_calculator::
   init_df1b2vector & locy= *funnel_init_var::py;
   imatrix& list=*funnel_init_var::plist;
 
-  int i; int j; int us=0; int xs=0;
+  int us=0; int xs=0;
   ivector lre_index(1,funnel_init_var::num_active_parameters);
   ivector lfe_index(1,funnel_init_var::num_active_parameters);
 
-  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {
@@ -887,7 +885,7 @@ void laplace_approximation_calculator::
     }
   }
 
-  for (j=1;j<=xs;j++)
+  for (int j=1;j<=xs;j++)
   {
     int j1=list(lfe_index(j),1);
     int j2=list(lfe_index(j),2);
@@ -898,9 +896,9 @@ void laplace_approximation_calculator::
   {
     if (hesstype==3)
     {
-      for (i=1;i<=us;i++)
+      for (int i=1;i<=us;i++)
       {
-        for (j=1;j<=us;j++)
+        for (int j=1;j<=us;j++)
         {
           int i1=list(lre_index(i),1)-xsize;
           int i2=list(lre_index(i),2);
@@ -914,9 +912,9 @@ void laplace_approximation_calculator::
     {
       if (sparse_hessian_flag==0)
       {
-        for (i=1;i<=us;i++)
+        for (int i=1;i<=us;i++)
         {
-          for (j=1;j<=us;j++)
+          for (int j=1;j<=us;j++)
           {
             int i1=list(lre_index(i),1)-xsize;
             int i2=list(lre_index(i),2);
@@ -928,9 +926,9 @@ void laplace_approximation_calculator::
       }
       else
       {
-        for (i=1;i<=us;i++)
+        for (int i=1;i<=us;i++)
         {
-          for (j=1;j<=us;j++)
+          for (int j=1;j<=us;j++)
           {
             int i1=list(lre_index(i),1)-xsize;
             int i2=list(lre_index(i),2);
@@ -948,16 +946,16 @@ void laplace_approximation_calculator::
       }
     }
 
-    for (i=1;i<=us;i++)
+    for (int i=1;i<=us;i++)
     {
       int i1=list(lre_index(i),1)-xsize;
       int i2=list(lre_index(i),2);
       uadjoint(i1)+=ff.u_dot[i2-1];
     }
 
-    for (i=1;i<=us;i++)
+    for (int i=1;i<=us;i++)
     {
-      for (j=1;j<=xs;j++)
+      for (int j=1;j<=xs;j++)
       {
         int i1=list(lre_index(i),1)-xsize;
         int i2=list(lre_index(i),2);
@@ -1006,25 +1004,23 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   initial_params::xinit(y);    // get the initial values into the
   y(1,xs)=x;
 
-  int i,j;
-
  // Here need hooks for sparse matrix structures
   int ii=xs+us+1;
-  for (i=1;i<=us;i++)
+  for (int i=1;i<=us;i++)
   {
     int jmin=admax(1,i-bw+1);
-    for (j=jmin;j<=i;j++)
-    y(ii++)=bHess(i,j);
+    for (int j=jmin;j<=i;j++)
+      y(ii++)=bHess(i,j);
   }
 
   dvar_vector vy=dvar_vector(y);
   banded_symmetric_dvar_matrix vHess(1,us,bw);
   initial_params::reset(vy);    // get the initial values into the
   ii=xs+us+1;
-  for (i=1;i<=us;i++)
+  for (int i=1;i<=us;i++)
   {
     int jmin=admax(1,i-bw+1);
-    for (j=jmin;j<=i;j++)
+    for (int j=jmin;j<=i;j++)
       vHess(i,j)=vy(ii++);
   }
 
@@ -1062,14 +1058,14 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
    gradcalc(nvar,g);
 
   ii=1;
-  for (i=1;i<=xs;i++)
+  for (int i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);
-  for (i=1;i<=us;i++)
+  for (int i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
-  for (i=1;i<=us;i++)
+  for (int i=1;i<=us;i++)
   {
     int jmin=admax(1,i-bw+1);
-    for (j=jmin;j<=i;j++)
+    for (int j=jmin;j<=i;j++)
       bHessadjoint(i,j)=g(ii++);
   }
   return f;

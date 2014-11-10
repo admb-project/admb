@@ -273,7 +273,7 @@ struct df1b2_header
     short int* ncopies;
     // for fixed size n whole thing is 6n+2
     void initialize(void);
-    void initialize(int n);
+    void initialize(const unsigned int n);
 
     df1b2variable(const do_naught_kludge&){ ptr = 0; }
 

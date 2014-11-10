@@ -337,7 +337,7 @@ void fixed_smartlist2::read_buffer(void)
       assert(nr != -1);
       if (nr != _nbytes)
       {
-        cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
+        cerr << "Error: read only " << nr << " of " << nbytes << "bytes.\n";
         exit(1);
       }
       // reset the pointer to the beginning of the buffer
@@ -518,7 +518,6 @@ void fixed_smartlist2::read_file(void)
     {
       nw = ::read(fp, buffer + offset, (size_t)nbytes);
       offset+=nbytes;
- 
       nw = ::read(fp,&pos,sizeof(off_t));
     }
   }

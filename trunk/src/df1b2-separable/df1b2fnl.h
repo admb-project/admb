@@ -88,7 +88,7 @@ public:
 
   static void allocate_all(void);
   static void deallocate_all(void);
-  static int nvarcalc_all(void);
+  static unsigned int nvarcalc_all();
 };
 
 /**

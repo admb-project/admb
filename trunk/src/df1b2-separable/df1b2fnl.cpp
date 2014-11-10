@@ -260,19 +260,18 @@ void funnel_init_var::allocate_all(void)
   }
 
   int ii=1;
-  int i;
-  for(i=0;i<num_vars;i++)
+  for(unsigned int i=0;i<num_vars;i++)
   {
     list[i]->xinit(*py,ii);
   }
 
   ii=1;
-  for(i=0;i<num_vars;i++)
+  for(unsigned int i=0;i<num_vars;i++)
   {
     list[i]->set_index(*plist,ii);
   }
 
-  for(i=0;i<num_inactive_vars;i++)
+  for(int i=0;i<num_inactive_vars;i++)
   {
     inactive_list[i]->allocate();
   }
@@ -595,10 +594,10 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
  * Description not yet available.
  * \param
  */
-int funnel_init_var::nvarcalc_all(void)
+unsigned int funnel_init_var::nvarcalc_all(void)
 {
-  int n=0;
-  for (int i=0;i<num_vars;i++)
+  unsigned int n=0;
+  for (unsigned int i=0;i<num_vars;i++)
   {
     n+=list[i]->nvar_calc();
   }
@@ -701,7 +700,7 @@ void funnel_init_var::reset(init_df1b2vector& x)
 {
   int ii=1;
   df1b2variable pen=0.0;
-  for (int i=0;i<num_vars;i++)
+  for (unsigned int i=0;i<num_vars;i++)
   {
     list[i]->set_value(x,ii,pen);
     //list[i]->set_value(x,ii);

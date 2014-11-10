@@ -15,7 +15,6 @@ extern "C"
   int kbhit(void) { return 0;}
 }
 
-int global_nvar=0;
 class df1b2_gradlist;
 //df1b2_gradlist * f1b2gradlist = NULL;
 

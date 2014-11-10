@@ -142,7 +142,6 @@ inline void increment_pointer(vreference p,int n)
 */
 
 #include <df32fun.h>
-extern int global_nvar;
 class df1b2_gradlist;
 extern df1b2_gradlist* f1b2gradlist;
 extern df1b2_gradlist* localf1b2gradlist;

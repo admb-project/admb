@@ -221,7 +221,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     }
     else
     {
-      int i;
       //if (ad_comm::wd_flag)
       dmatrix m;
       tmpstring = ad_comm::adprogram_name + ".rhes";
@@ -238,7 +237,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
           m= inv(lapprox->Hess);
           int mmin=m.indexmin();
           int mmax=m.indexmax();
-          for (i=mmin;i<=mmax;i++)
+          for (int i=mmin;i<=mmax;i++)
           {
             ofs << setprecision(5) << setscientific()
                 << setw(14) << u(i) << " " << sqrt(m(i,i)) << endl;;

@@ -90,7 +90,6 @@ void funnel_gradcalc(void)
 #  endif
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-  unsigned int i;
   if(!gradient_structure::instances)
   {
     return;
@@ -122,7 +121,7 @@ void funnel_gradcalc(void)
 
   gradient_structure::GRAD_STACK1->ptr--;
 
-  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
   }
@@ -137,7 +136,7 @@ void funnel_gradcalc(void)
 
   double * zptr;
 
-   for (i = 0; i < (max_last_offset/size); i++)
+   for (unsigned int i = 0; i < (max_last_offset/size); i++)
    {
      tmp->x = 0;
 #if defined (__ZTC__)
@@ -217,7 +216,7 @@ do
 
     double* dptr=(double*) gradient_structure::ARRAY_MEMBLOCK_BASE;
     dptr-=1;
-    unsigned int ii=0;
+    int ii=0;
     int nzero=0;
     int nnzero=0;
     int dcount=0;
@@ -265,16 +264,20 @@ do
     }
     save_int_value(dcount);
 
-    for (i=0;i<ii;i++)
+    for (int i=0;i<ii;i++)
     {
       save_int_value(offset(i));
     }
     save_int_value(ii);
 
     unsigned int ssize=gradient_structure::GRAD_LIST->nlinks;
-    dvector stmp(0,ssize-1);
+#ifndef OPT_LIB
+    assert(ssize > 0);
+    assert(ssize <= INT_MAX);
+#endif
+    dvector stmp(0,(int)(ssize-1));
 
-    for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+    for (int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
     {
       memcpy((char*)&(stmp(i)),
         gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));

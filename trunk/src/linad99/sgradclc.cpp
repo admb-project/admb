@@ -100,7 +100,6 @@ void gradcalc(int nvar, const dvector& _g)
   dvector& g= (dvector&) _g;
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-  unsigned int i;
   if(!gradient_structure::instances)
   {
     g.initialize();
@@ -139,7 +138,7 @@ void gradcalc(int nvar, const dvector& _g)
 
   gradient_structure::GRAD_STACK1->ptr--;
 
-  for (i = 0; i < gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i = 0; i < gradient_structure::GRAD_LIST->nlinks; i++)
   {
     *(double*)(gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
   }
@@ -150,7 +149,7 @@ void gradcalc(int nvar, const dvector& _g)
   unsigned long int max_last_offset =
     gradient_structure::ARR_LIST1->get_max_last_offset();
   unsigned int size = sizeof(double_and_int);
-  for (i = 0; i < (max_last_offset/size); i++)
+  for (unsigned int i = 0; i < (max_last_offset/size); i++)
   {
      tmp->x = 0;
 #if defined (__ZTC__)
@@ -207,7 +206,7 @@ void gradcalc(int nvar, const dvector& _g)
   }
 
   int mindx = g.indexmin();
-  for (i=0; i < (unsigned int)nvar; i++)
+  for (unsigned int i=0; i < (unsigned int)nvar; i++)
   {
     g[i + mindx] = *gradient_structure::INDVAR_LIST->get_address(i);
   }

@@ -44,7 +44,6 @@ lmatrix* initial_df1b2params::pointer_table=0;
 #else
 imatrix* initial_df1b2params::pointer_table=0;
 #endif
-//int global_nvar=0;
 class df1b2_gradlist;
 
 df1b2_gradlist * f1b2gradlist = NULL;

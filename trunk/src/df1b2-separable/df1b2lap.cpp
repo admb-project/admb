@@ -22,6 +22,7 @@ static int write_sparse_flag=0;
       //int x=5;
     }
 int noboundepen_flag=1;
+int global_nvar=0;
 
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
 void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,

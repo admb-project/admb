@@ -9,6 +9,10 @@
  * Description not yet available.
  */
 #include <df1b2fnl.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 #define USE_BARD_PEN
 class newadkludge;
@@ -38,7 +42,10 @@ imatrix * funnel_init_var::plist=0;
  */
 void funnel_init_var::add_to_list(void)
 {
-  index=num_vars;
+#ifndef OPT_LIB
+  assert(num_vars <= INT_MAX);
+#endif
+  index = (int)num_vars;
   list[num_vars++]=this;
   //all_list[num_all_vars++]=this;
 }
@@ -49,7 +56,10 @@ void funnel_init_var::add_to_list(void)
  */
 void funnel_init_var::delete_from_list(void)
 {
-  if (index!=num_vars-1)
+#ifndef OPT_LIB
+  assert(num_vars <= INT_MAX);
+#endif
+  if (index != (int)(num_vars - 1))
   {
     cerr << "can only delete last member" << endl;
     ad_exit(1);
@@ -98,10 +108,13 @@ void funnel_init_var::deallocate_all(void)
 {
   if (plist)
   {
-    if (plist->indexmax() != num_active_parameters)
+#ifndef OPT_LIB
+  assert(num_active_parameters <= INT_MAX);
+#endif
+    if (plist->indexmax() != (int)num_active_parameters)
     {
-    delete plist;
-    plist = 0;
+      delete plist;
+      plist = 0;
     }
   }
   if (py)
@@ -126,9 +139,12 @@ void funnel_init_var::allocate_all(void)
     }
   }
   num_active_parameters=funnel_init_var::nvarcalc_all();
+#ifndef OPT_LIB
+  assert(num_active_parameters <= INT_MAX);
+#endif
   if (py)
   {
-    if (py->indexmax() != num_active_parameters)
+    if (py->indexmax() != (int)num_active_parameters)
     {
       delete py;
       py=0;
@@ -226,10 +242,10 @@ void funnel_init_var::allocate_all(void)
    // check_pool_depths();
   df1b2variable::minder=1;
   int maxdersave=df1b2variable::maxder;
-  df1b2variable::maxder=num_active_parameters;
+  df1b2variable::maxder=(int)num_active_parameters;
   if (!py)
   {
-    py = new init_df1b2vector(1,num_active_parameters);
+    py = new init_df1b2vector(1,(int)num_active_parameters);
   }
   //if (funnel_check_flag)
   //  check_pool_depths();
@@ -243,7 +259,7 @@ void funnel_init_var::allocate_all(void)
 
   if (plist)
   {
-    if (plist->indexmax() != num_active_parameters)
+    if (plist->indexmax() != (int)num_active_parameters)
     {
       delete plist;
       plist=0;
@@ -251,7 +267,7 @@ void funnel_init_var::allocate_all(void)
   }
   if (!plist)
   {
-    plist = new imatrix(1,num_active_parameters,1,2);
+    plist = new imatrix(1,(int)num_active_parameters,1,2);
   }
   if (!plist)
   {
@@ -599,7 +615,7 @@ unsigned int funnel_init_var::nvarcalc_all(void)
   unsigned int n=0;
   for (unsigned int i=0;i<num_vars;i++)
   {
-    n+=list[i]->nvar_calc();
+    n += list[i]->nvar_calc();
   }
   return n;
 }

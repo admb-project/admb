@@ -5,6 +5,10 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <df1b2fun.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 static char nullptrerror[] = " Trying to access null pointer"
  " in df1b2quadratic_prior";
@@ -150,11 +154,16 @@ void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
       int mmin=v.indexmin();
       int mmax=v.indexmax();
 
+#ifndef OPT_LIB
+      assert(num_active_parameters <= INT_MAX);
+#endif
       if (index)
       {
-        if (index->indexmax() != num_active_parameters)
-        delete index;
-        index=0;
+        if (index->indexmax() != (int)num_active_parameters)
+        {
+          delete index;
+          index=0;
+        }
       }
 
       if (num_active_parameters>0)
@@ -163,29 +172,29 @@ void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
         {
           index=new ivector(column(*funnel_init_var::plist,1));
         }
-
         if (Lxu)
         {
           int tmin = Lxu->indexmin();
-          if ( (Lxu->indexmin() != mmin)    ||
-               (Lxu->indexmax() != mmax) ||
-               ((*Lxu)(tmin).indexmin() != 1) ||
-               ((*Lxu)(tmin).indexmax() != num_active_parameters))
-          delete Lxu;
-          Lxu=0;
+          if ((Lxu->indexmin() != mmin)
+              || (Lxu->indexmax() != mmax)
+              || ((*Lxu)(tmin).indexmin() != 1)
+              || ((*Lxu)(tmin).indexmax() != (int)num_active_parameters))
+          {
+            delete Lxu;
+            Lxu=0;
+          }
         }
         if (!Lxu)
         {
-          Lxu=new dmatrix(1,num_active_parameters,mmin-1,mmax);
+          Lxu=new dmatrix(1, (int)num_active_parameters, mmin-1, mmax);
         }
-
-        for (unsigned int i=1;i<=num_active_parameters;i++)
+        for (int i=1;i<=(int)num_active_parameters;i++)
         {
           (*Lxu)(i,mmin-1)=(*funnel_init_var::plist)(i,1);
         }
         for (int j=mmin;j<=mmax;j++)
         {
-          for (unsigned int i=1;i<=num_active_parameters;i++)
+          for (int i=1;i<=(int)num_active_parameters;i++)
           {
             switch (old_style_flag)
             {

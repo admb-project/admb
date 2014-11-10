@@ -64,7 +64,7 @@ public:
   static unsigned int num_vars;
   //static int num_all_vars;
   static int num_inactive_vars;
-  static int num_active_parameters;
+  static unsigned int num_active_parameters;
   static init_df1b2vector * py;
   static imatrix * plist;
   int index;

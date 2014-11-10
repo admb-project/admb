@@ -277,7 +277,10 @@ do
 #endif
     dvector stmp(0,(int)(ssize-1));
 
-    for (int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+#ifndef OPT_LIB
+    assert(gradient_structure::GRAD_LIST->nlinks <= INT_MAX);
+#endif
+    for (int i=0; i < (int)gradient_structure::GRAD_LIST->nlinks; i++)
     {
       memcpy((char*)&(stmp(i)),
         gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));

@@ -107,8 +107,8 @@ void ad_read_pass2(void);
 #if !defined(__BORLANDC__)
 int adptr_diff(void* x, void* y)
 {
-  uintptr_t a = (uintptr_t)x;
-  uintptr_t b = (uintptr_t)y;
+  intptr_t a = (intptr_t)x;
+  intptr_t b = (intptr_t)y;
   ptrdiff_t diff = a - b;
   assert(diff <= INT_MAX);
   return (int)diff;
@@ -130,7 +130,7 @@ void df1b2variable::initialize(void)
     df1b2variable::pool->sanity_check();
   }
 #endif
-  int nvar=((twointsandptr*)ptr)->ptr->nvar;
+  unsigned int nvar=((twointsandptr*)ptr)->ptr->nvar;
   initialize(nvar);
 }
 
@@ -139,7 +139,7 @@ Initialize nvariables
 
 /param n nvariables
 */
-void df1b2variable::initialize(int n)
+void df1b2variable::initialize(const unsigned int n)
 {
   //int bs=get_blocksize(n);
   //for (double * tmp=ptr+2;tmp<ptr+bs-1;*tmp++=0);

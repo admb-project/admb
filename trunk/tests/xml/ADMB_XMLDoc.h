@@ -78,11 +78,17 @@ public:
    int createXMLelement(const adstring& name, const adstring& t, const adstring& title);
    int createXMLelement(const adstring& name, const adstring_array& t, const adstring& title);
    int createXMLelement(const adstring& name, const ivector& t, const adstring& title);
+<<<<<<< HEAD
    int createXMLelement(const adstring& name, const dvector& t, const adstring& title);
    int createXMLelement(const adstring& name, const param_init_bounded_number_vector& t, const adstring& title);
    int createXMLelement(const adstring& name, const param_init_bounded_number_matrix& t, const adstring& title, const int M);
    int createXMLelement(const adstring& name, const imatrix& t, const adstring& title);
    int createXMLelement(const adstring& name, const dmatrix& t, const adstring& title);
+=======
+   int createXMLelement(const adstring& name, const param_init_bounded_number_vector& t, const adstring& title);
+   int createXMLelement(const adstring& name, const param_init_bounded_number_matrix& t, const adstring& title, const int M);
+   int createXMLelement(const adstring& name, const imatrix& t, const adstring& title);
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
    /** @} */
 
    // -----------------------

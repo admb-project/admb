@@ -19,6 +19,7 @@
 //======================================================================================================================
 
 GLOBALS_SECTION
+<<<<<<< HEAD
   #include <string>
   #include "ADMB_XMLDoc.h"
   #include "trace.h"
@@ -28,6 +29,17 @@ GLOBALS_SECTION
   int phz;    // phase
   double lb;  // lower bound
   double ub;  // upper bound
+=======
+  #include "ADMB_XMLDoc.h"
+  #include <string>
+  #include "trace.h"  
+  using std::string;
+  const double pi = 3.141592654;
+  int mcmc_iteration = 0;
+  //int phz;    // phase
+  //double lb;  // lower bound
+  //double ub;  // upper bound
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
   ofstream mcmc_par("mcmc_par.csv");
   ofstream mcmc_bio("mcmc_bio.csv");
 
@@ -90,6 +102,15 @@ PRELIMINARY_CALCS_SECTION
   // save data and initial parameter values in xml file .x00
   neglogL = 0.0;
   saveXMLFile();
+<<<<<<< HEAD
+=======
+  TRACE(xml.getControlVector("logr"));
+  TRACE(xml.getControlVector("logk"));
+  TRACE(xml.getControlVector("loga"));
+  TRACE(xml.getControlVector("logp"));
+  TRACE(xml.getControlVector("logq"));
+  TRACE(xml.getControlVector("logsigma"));
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 
 PROCEDURE_SECTION
   get_fit();

@@ -19,14 +19,9 @@
 //======================================================================================================================
 
 GLOBALS_SECTION
-<<<<<<< HEAD
-  #include <string>
-  #include "ADMB_XMLDoc.h"
-=======
   #include "admodel.h"
   #include "ADMB_XMLDoc.h"
   #include <string>
->>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 
   using std::string;
   const double pi = 3.141592654;
@@ -37,10 +32,6 @@ GLOBALS_SECTION
   ofstream mcmc_par("mcmc_par.csv");
   ofstream mcmc_bio("mcmc_bio.csv");
 
-<<<<<<< HEAD
-=======
-
->>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 DATA_SECTION
   // Read data file
   init_int nc

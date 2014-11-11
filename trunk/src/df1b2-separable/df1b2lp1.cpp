@@ -8,10 +8,13 @@
  * \file
  * Description not yet available.
  */
-#  include <fvar.hpp>
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <fvar.hpp>
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 void evaluate_function_gradient(double& f,const dvector& x,
   function_minimizer * pfmin,dvector&,dvector&);
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
@@ -834,7 +837,10 @@ void laplace_approximation_calculator::set_u_dot(int ip)
  */
 void laplace_approximation_calculator::check_pool_size(void)
 {
-  unsigned int num_active_parameters=nvar;
+#ifndef OPT_LIB
+  assert(nvar >= 0);
+#endif
+  unsigned int num_active_parameters = (unsigned int)nvar;
   f1b2gradlist->reset();
 
   adpool * tmppool=df1b2variable::pool;

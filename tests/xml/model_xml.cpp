@@ -6,15 +6,35 @@ of .tpl file.
    \author John Sibert
 */
 
+#include <admodel.h>
 #include "ADMB_XMLDoc.h"
-#include "admodel.h"
 #include "trace.h"
+
+void init_adstring::operator = (const adstring& t);
+{ 
+   *this = t; 
+}
 
 void init_xml_doc::allocate(const char * s)
 {
    adstring run_name(ad_comm::adprogram_name);
    adstring xml_name = run_name+adstring(".xml");
-   int ret = read(xml_name);
+   read(xml_name);
+   //int ret = read(xml_name);
+}
+
+//   init_adstring::allocate(init_xml_doc&, const char [15])’
+
+void init_adstring::allocate(init_xml_doc& xml, const char* s)
+{
+   TRACE(s)
+   TRACE(xml.getString(s));
+   adstring tmp = xml.getString(s);
+   TRACE(tmp)
+   *this = tmp;
+   TRACE(*this)
+   model_name_tag::allocate(s);
+   HERE
 }
 
 void param_init_number::allocate(init_xml_doc& xml, char const* s)

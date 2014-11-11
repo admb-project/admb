@@ -583,7 +583,7 @@ int ADMB_XMLDoc::createXMLelement(const adstring& name, const ivector& t, const 
 {
    const int i1 = t.indexmin();
    const int i2 = t.indexmax();
-
+ 
    xmlNodePtr node = createNameNode(name, ADMB_XMLDoc::dataS);
    createTitleNode(node,title);
    createIndexNode(node,i1,i2);
@@ -664,6 +664,7 @@ int ADMB_XMLDoc::createIndexNode(xmlNodePtr parent, const int lb, const int ub)
    ostringstream ostr;
    ostr << lb << ends;
    xmlNewChild(node, NULL, BAD_CAST "lb", BAD_CAST ostr.str().c_str());
+   ostr.seekp(ios_base::beg);
    ostr << ub << ends;
    xmlNewChild(node, NULL, BAD_CAST "ub", BAD_CAST ostr.str().c_str());
    xmlNodePtr tnode = xmlAddChild(parent,node);
@@ -673,7 +674,6 @@ int ADMB_XMLDoc::createIndexNode(xmlNodePtr parent, const int lb, const int ub)
 int ADMB_XMLDoc::createIndexNode(xmlNodePtr parent, const int nrl, const int nrh,
                                            const int ncl, const int nch)
 {
-   // imat.cpp: imatrix::imatrix(int nrl, int nrh, int ncl, int nch)
    xmlNodePtr node = createNameNode("index",NULL);
    ostringstream ostr;
    ostr << nrl << ends;

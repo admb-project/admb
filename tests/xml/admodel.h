@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * $Id: admodel.h 1598 2014-02-03 21:21:41Z johnoel $
+=======
+ * $Id: admodel.h 1615 2014-02-07 00:24:51Z jsibert $
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California

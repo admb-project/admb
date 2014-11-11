@@ -124,8 +124,13 @@ int ADMB_XMLDoc::createXMLelement(const named_dvar_vector& _t, const adstring& t
 
    xmlNodePtr node = createNameNode(name, ADMB_XMLDoc::paramS);
    createTitleNode(node,title);
+<<<<<<< HEAD
    createIndexNode(node,i1,i2);
    createValueNode(node,value(t));
+=======
+   createValueNode(node,value(t));
+   createIndexNode(node,i1,i2);
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 
    xmlNodePtr tnode = xmlAddChild(RootNode,node);
    return ((tnode == NULL));
@@ -252,11 +257,18 @@ int ADMB_XMLDoc::createXMLelement(const adstring& name, const param_init_bounded
          active(i,j) =  (phase(i,j) > 0);
       }
    }
+<<<<<<< HEAD
+=======
+   createValueNode(node,vt);
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
    createIndexNode(node,i1,i2,j1,j2);
    createBoundsNode(node,minb,maxb);
    createPhaseNode(node,phase);
    createActiveNode(node,active);
+<<<<<<< HEAD
    createValueNode(node,vt);
+=======
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 
    xmlNodePtr nnode = xmlAddChild(RootNode,node);
    return ((nnode == NULL));
@@ -554,11 +566,18 @@ int ADMB_XMLDoc::createXMLelement(const adstring& name, const param_init_bounded
 
    xmlNodePtr node = createNameNode(name, ADMB_XMLDoc::paramS);
    createTitleNode(node,title);
+<<<<<<< HEAD
+=======
+   createValueNode(node,vt);
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
    createIndexNode(node,i1,i2);
    createBoundsNode(node,minb,maxb);
    createActiveNode(node,activef);
    createPhaseNode(node,phase);
+<<<<<<< HEAD
    createValueNode(node,vt);
+=======
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 
    xmlNodePtr tnode = xmlAddChild(RootNode,node);
    return ((tnode == NULL));
@@ -571,8 +590,13 @@ int ADMB_XMLDoc::createXMLelement(const adstring& name, const adstring_array& _t
    const int i2 = t.indexmax();
    xmlNodePtr node = createNameNode(name, ADMB_XMLDoc::dataS);
    createTitleNode(node,title);
+<<<<<<< HEAD
    createIndexNode(node,i1,i2);
    createValueNode(node,t);
+=======
+   createValueNode(node,t);
+   createIndexNode(node,i1,i2);
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
    
    xmlNodePtr tnode = xmlAddChild(RootNode,node);
    return ((tnode == NULL));
@@ -584,6 +608,7 @@ int ADMB_XMLDoc::createXMLelement(const adstring& name, const ivector& t, const 
    const int i1 = t.indexmin();
    const int i2 = t.indexmax();
 
+<<<<<<< HEAD
    xmlNodePtr node = createNameNode(name, ADMB_XMLDoc::dataS);
    createTitleNode(node,title);
    createIndexNode(node,i1,i2);
@@ -602,6 +627,12 @@ int ADMB_XMLDoc::createXMLelement(const adstring& name, const dvector& t, const 
    createTitleNode(node,title);
    createIndexNode(node,i1,i2);
    createValueNode(node,t);
+=======
+   xmlNodePtr node = createNameNode(name, ADMB_XMLDoc::paramS);
+   createTitleNode(node,title);
+   createValueNode(node,t);
+   createIndexNode(node,i1,i2);
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 
    xmlNodePtr tnode = xmlAddChild(RootNode,node);
    return ((tnode == NULL));
@@ -616,6 +647,7 @@ int ADMB_XMLDoc::createXMLelement(const adstring& name, const imatrix& _t, const
    const int i2 = t.colmax();
    const int j1 = t.rowmin();
    const int j2 = t.rowmax();
+<<<<<<< HEAD
    createIndexNode(node,j1,j2,i1,i2);
    createValueNode(node,t);
  
@@ -634,6 +666,10 @@ int ADMB_XMLDoc::createXMLelement(const adstring& name, const dmatrix& _t, const
    const int j2 = t.rowmax();
    createIndexNode(node,j1,j2,i1,i2);
    createValueNode(node,t);
+=======
+   createValueNode(node,t);
+   createIndexNode(node,j1,j2,i1,i2);
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
  
    xmlNodePtr nnode = xmlAddChild(RootNode,node);
    return ((nnode == NULL));
@@ -648,8 +684,13 @@ int ADMB_XMLDoc::createXMLelement(const param_init_bounded_vector& _t, const ads
 
    xmlNodePtr node = createNameNode(name, ADMB_XMLDoc::paramS);
    createTitleNode(node,title);
+<<<<<<< HEAD
    createIndexNode(node,i1,i2);
    createValueNode(node,value(t));
+=======
+   createValueNode(node,value(t));
+   createIndexNode(node,i1,i2);
+>>>>>>> eb3141094430ef5950422c9c35664b311e187a79
    createBoundsNode(node,t.get_minb(),t.get_maxb());
    createActiveNode(node,active(t));
    createPhaseNode(node,t.phase_start);

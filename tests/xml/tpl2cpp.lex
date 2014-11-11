@@ -595,14 +595,11 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  init_xml_doc ");
                      }
 
-<<<<<<< HEAD
 <DEFINE_DATA>friend_class {
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  friend class ");
                      }
 
-=======
->>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 <DEFINE_DATA>init_adstring {
 
     BEGIN IN_NUMBER_DEF;
@@ -812,10 +809,6 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  d7_array ");
                      }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> eb3141094430ef5950422c9c35664b311e187a79
 <IN_LOCAL_CALCS>^[ \t]END_CALCS |
 <IN_LOCAL_CALCS>^[ \t]END_CALCULATIONS {
 

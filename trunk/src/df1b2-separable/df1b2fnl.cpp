@@ -612,12 +612,15 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
  */
 unsigned int funnel_init_var::nvarcalc_all(void)
 {
-  unsigned int n=0;
+  int n = 0;
   for (unsigned int i=0;i<num_vars;i++)
   {
     n += list[i]->nvar_calc();
   }
-  return n;
+#ifndef OPT_LIB
+  assert(n >= 0);
+#endif
+  return (unsigned int)n;
 }
 
 /**

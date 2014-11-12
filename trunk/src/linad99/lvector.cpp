@@ -19,6 +19,10 @@
 
 #include <stdlib.h>
 #include "fvar.hpp"
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 /**
 Default constructor
@@ -114,24 +118,27 @@ lvector& lvector::operator=(const lvector& t)
  * Description not yet available.
  * \param
  */
- lvector::lvector( unsigned int sz, AD_LONG_INT * x )
- {
-   if ( (shape=new vector_shape(0,sz-1))==0 )
-   {
-     cerr << " Error trying to allocate memory for lvector\n";
-   }
-   if ( (v = new AD_LONG_INT [sz]) == NULL)
-   {
-     cerr << "Error trying to allocate memory for lvector\n";
-     ad_exit(1);
-   }
+lvector::lvector( unsigned int sz, AD_LONG_INT * x )
+{
+#ifndef OPT_LIB
+  assert(sz > 0 && sz - 1 <= INT_MAX);
+#endif
+  if ((shape=new vector_shape(0, (int)(sz - 1))) == 0)
+  {
+    cerr << " Error trying to allocate memory for lvector\n";
+  }
+  if ( (v = new AD_LONG_INT [sz]) == NULL)
+  {
+    cerr << "Error trying to allocate memory for lvector\n";
+    ad_exit(1);
+  }
 
-   for (unsigned int i=0; i<sz; i++)
-   {
-     cout << "Doing the assignment in constructor\n";
-     v[i] = x[i];
-   }
- }
+  for (unsigned int i = 0; i < sz; i++)
+  {
+    //cout << "Doing the assignment in constructor\n";
+    v[i] = x[i];
+  }
+}
 /**
  * Description not yet available.
  * \param
@@ -209,5 +216,9 @@ Intialize vector values to zero.
 void lvector::initialize(void)
 {
   //for (int i = indexmin(); i <= indexmax(); i++) { elem(i) = 0; }
-  memset((void*)(v + indexmin()), 0, sizeof(AD_LONG_INT) * size());
+#ifndef OPT_LIB
+  assert(size() > 0);
+#endif
+  memset((void*)(v + indexmin()), 0,
+    sizeof(AD_LONG_INT) * (unsigned int)size());
 }

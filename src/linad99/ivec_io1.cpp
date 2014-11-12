@@ -58,7 +58,7 @@ void ivector::read_from(const uistream& _s)
 #ifndef OPT_LIB
   assert(indexmax() >= indexmin());
 #endif
-  unsigned int n = indexmax() - indexmin() + 1;
+  unsigned int n = (unsigned int)(indexmax() - indexmin() + 1);
   char* p = (char*)(v + indexmin());
 
   s.read(p, n*sizeof(int) );
@@ -86,7 +86,7 @@ void ivector::write_on(const uostream& _s) const
 #ifndef OPT_LIB
   assert(indexmax() >= indexmin());
 #endif
-  unsigned int n = indexmax() - indexmin() + 1;
+  unsigned int n = (unsigned int)(indexmax() - indexmin() + 1);
   char* p = (char*)(v + indexmin());
 
   s.write(p, n*sizeof(int) );

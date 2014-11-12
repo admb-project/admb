@@ -319,8 +319,7 @@ void test_smartlist::read_buffer(void)
     }
     // now read the record into the buffer
     ssize_t nr = ::read(fp,buffer,nbytes);
-    assert(nr != -1);
-    if (nr <= -1 || nr != nbytes)
+    if (nr <= -1 || (size_t)nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);

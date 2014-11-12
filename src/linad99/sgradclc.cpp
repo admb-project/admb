@@ -205,8 +205,11 @@ void gradcalc(int nvar, const dvector& _g)
 #endif
   }
 
+#ifndef OPT_LIB
+  assert(g.indexmin() > 0);
+#endif
   int mindx = g.indexmin();
-  for (unsigned int i=0; i < (unsigned int)nvar; i++)
+  for (int i=0; i < nvar; i++)
   {
     g[i + mindx] = *gradient_structure::INDVAR_LIST->get_address(i);
   }
@@ -239,8 +242,9 @@ double gradcalc(int nvar, const dvector& _g, dvariable& f)
 void gradient_structure::save_arrays()
 {
   void * temp_ptr;
-  long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
-    ARRAY_MEMBLOCK_SIZE);
+  unsigned long bytes_needed =
+    min(gradient_structure::ARR_LIST1->get_last_offset() + 1,
+        ARRAY_MEMBLOCK_SIZE);
   gradient_structure::save_var_file_flag=0;
 #ifdef __ZTC__
    if ( (temp_ptr = farmalloc(bytes_needed) ) == 0)
@@ -312,8 +316,9 @@ void gradient_structure::save_arrays()
  */
 void gradient_structure::restore_arrays()
 {
-  long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
-    ARRAY_MEMBLOCK_SIZE);
+  unsigned long bytes_needed =
+    min(gradient_structure::ARR_LIST1->get_last_offset() + 1,
+        ARRAY_MEMBLOCK_SIZE);
   if (gradient_structure::save_var_file_flag==0)
   {
 #if defined(DOS386)

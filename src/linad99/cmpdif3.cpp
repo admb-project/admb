@@ -42,7 +42,10 @@ void report_gradstack_flag(void)
   gradient_structure::get_fp()->fread(&num_bytes,sizeof(int));
   char str1[100];
   str1[0]='\0';
-  gradient_structure::get_fp()->fread(str1,num_bytes);
+#ifndef OPT_LIB
+  assert(num_bytes > 0);
+#endif
+  gradient_structure::get_fp()->fread(str1,(size_t)num_bytes);
   cout << "in report_gradstack_flag  " << str1 << endl;
 }
 
@@ -60,13 +63,14 @@ static void report_gradstack_flag2(void)
   gradient_structure::get_fp()->fread(&num_bytes,sizeof(int));
   char str1[100];
   str1[0]='\0';
-  gradient_structure::get_fp()->fread(str1,num_bytes);
+#ifndef OPT_LIB
+  assert(num_bytes >= 0);
+#endif
+  gradient_structure::get_fp()->fread(str1, (size_t)num_bytes);
   int i,j;
   gradient_structure::get_fp()->fread(&j,sizeof(int));
   gradient_structure::get_fp()->fread(&i,sizeof(int));
   cout << "in report_gradstack_flag  " << str1 << endl;
-  if (i==3 && j==91)
-    cout << "HERE" << endl;
 }
 #endif
 
@@ -85,7 +89,10 @@ void set_gradstack_flag(char* str)
   assert(_length <= INT_MAX);
   int length=(int)_length;
 #endif
-  gradient_structure::get_fp()->fwrite(str,length);
+#ifndef OPT_LIB
+  assert(length >= 0);
+#endif
+  gradient_structure::get_fp()->fwrite(str, (size_t)length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
   gradient_structure::GRAD_STACK1->
     set_gradient_stack(report_gradstack_flag);
@@ -116,7 +123,10 @@ void set_gradstack_flag(char* _str,int i,int j)
 #endif
   gradient_structure::get_fp()->fwrite(&i,sizeof(int));
   gradient_structure::get_fp()->fwrite(&j,sizeof(int));
-  gradient_structure::get_fp()->fwrite(str,length);
+#ifndef OPT_LIB
+  assert(length >= 0);
+#endif
+  gradient_structure::get_fp()->fwrite(str, (size_t)length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
   gradient_structure::GRAD_STACK1->
     set_gradient_stack(report_gradstack_flag2);
@@ -164,7 +174,10 @@ adstring get_string_marker(void)
   long int num_bytes=5;
   char str[10];
   str[num_bytes]='\0';
-  gradient_structure::get_fp()->fread(str,num_bytes);
+#ifndef OPT_LIB
+  assert(num_bytes > 0);
+#endif
+  gradient_structure::get_fp()->fread(str,(size_t)num_bytes);
   //clogf << "in verify_id_string " << str1 << endl;
   str1=str;
 #endif

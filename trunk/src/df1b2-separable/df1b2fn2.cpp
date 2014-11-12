@@ -13,9 +13,11 @@
 #include <inttypes.h>
 #endif
 #include <df1b2fun.h>
-#include <cassert>
-#include <climits>
 #include "admb_messages.h"
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 do_naught_kludge df1b2_init_number::do_naught_kludge_a;
 
@@ -110,7 +112,9 @@ int adptr_diff(void* x, void* y)
   intptr_t a = (intptr_t)x;
   intptr_t b = (intptr_t)y;
   ptrdiff_t diff = a - b;
+#ifndef OPT_LIB
   assert(diff <= INT_MAX);
+#endif
   return (int)diff;
 }
 #endif
@@ -721,11 +725,17 @@ void set_dependent_variable(const df1b2variable& _x)
 dmatrix get_hessian(const init_df1b2vector& _x)
 {
   ADUNCONST(init_df1b2vector,x)
-  unsigned int nvar=df1b2variable::nvar;
+#ifdef OPT_LIB
+  int nvar = (int)df1b2variable::nvar;
+#else
+  unsigned int _nvar=df1b2variable::nvar;
+  assert(_nvar <= INT_MAX);
+  int nvar = (int)_nvar;
+#endif
   dmatrix h(1,nvar,1,nvar);
-  for (unsigned int i=1;i<=nvar;i++)
+  for (int i=1;i<=nvar;i++)
   {
-    for (unsigned int j=1;j<=nvar;j++)
+    for (int j=1;j<=nvar;j++)
     {
       h(i,j)=x(i).u_bar[j-1];
     }
@@ -809,13 +819,19 @@ double d3F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,int k,
 dmatrix check_second_derivatives(const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
-  dmatrix h(1,df1b2variable::nvar,1,df1b2variable::nvar);
+#ifdef OPT_LIB
+  int nvar = (int)df1b2variable::nvar;
+#else
+  unsigned int _nvar=df1b2variable::nvar;
+  assert(_nvar <= INT_MAX);
+  int nvar = (int)_nvar;
+#endif
+  dmatrix h(1, nvar, 1, nvar);
   //const double delta=1.e-3;
   h.initialize();
-  int i,j;
-  for (i=1;i<=init_df1b2variable::num_variables;i++)
+  for (int i=1;i<=init_df1b2variable::num_variables;i++)
   {
-    for (j=1;j<=init_df1b2variable::num_variables;j++)
+    for (int j=1;j<=init_df1b2variable::num_variables;j++)
     {
       //h(i,j)=d2F(user_function,x,i,j,delta);
     }
@@ -830,15 +846,21 @@ dmatrix check_second_derivatives(const init_df1b2vector& x)
 d3_array check_third_derivatives(const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
-  d3_array h(1,df1b2variable::nvar,1,df1b2variable::nvar,1,df1b2variable::nvar);
+#ifdef OPT_LIB
+  int nvar = (int)df1b2variable::nvar;
+#else
+  unsigned int _nvar=df1b2variable::nvar;
+  assert(_nvar <= INT_MAX);
+  int nvar = (int)_nvar;
+#endif
+  d3_array h(1, nvar, 1, nvar, 1, nvar);
   //const double delta=2.e-4;
   h.initialize();
-  int i,j,k;
-  for (i=1;i<=init_df1b2variable::num_variables;i++)
+  for (int i=1;i<=init_df1b2variable::num_variables;i++)
   {
-    for (j=1;j<=init_df1b2variable::num_variables;j++)
+    for (int j=1;j<=init_df1b2variable::num_variables;j++)
     {
-      for (k=1;k<=init_df1b2variable::num_variables;k++)
+      for (int k=1;k<=init_df1b2variable::num_variables;k++)
       {
         //h(i,j,k)=d3F(user_function,x,i,j,k,delta);
       }

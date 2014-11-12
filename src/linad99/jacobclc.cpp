@@ -125,7 +125,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     fp->write_cmpdif_stack_buffer();
   }
 
-  for (unsigned int i=jac.rowmin();i<=(unsigned int)jac.rowmax();i++)
+  for (int i=jac.rowmin();i<=jac.rowmax();i++)
   {
     if (jac(i).indexmin() !=1)
     {

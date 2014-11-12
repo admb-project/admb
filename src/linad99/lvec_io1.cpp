@@ -29,6 +29,9 @@
 #endif
 
 #include <string.h>
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 // unformatted
 
@@ -54,7 +57,10 @@ uistream& operator>>(const uistream& _istr, const lvector& _z)
 void lvector::read_from(const uistream& _s)
 {
   ADUNCONST(uistream,s)
-  int n = indexmax() - indexmin() + 1;
+#ifndef OPT_LIB
+  assert(indexmax() >= indexmin());
+#endif
+  unsigned int n = (unsigned int)(indexmax() - indexmin() + 1);
   char* p = (char*)(v + indexmin());
 
   s.read(p, n*sizeof(int) );
@@ -79,7 +85,10 @@ uostream& operator<<(const uostream& _ostr, const lvector& z)
 void lvector::write_on(const uostream& _s) const
 {
   ADUNCONST (uostream,s)
-  int n = indexmax() - indexmin() + 1;
+#ifndef OPT_LIB
+  assert(indexmax() >= indexmin());
+#endif
+  unsigned int n = (unsigned int)(indexmax() - indexmin() + 1);
   char* p = (char*)(v + indexmin());
 
   s.write(p, n*sizeof(int) );

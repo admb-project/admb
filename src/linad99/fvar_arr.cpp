@@ -16,6 +16,11 @@
 
 #include <stdlib.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
 //extern double * NULL_ADDRESS;
 //extern grad_stack  * GRAD_STACK1; //js
 //extern indvar_offset_list * INDVAR_LIST;
@@ -85,14 +90,17 @@ dvar_vector& dvar_vector::shift(int min)
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector( unsigned int sz, double * x )
- {
-   allocate(0,sz-1);
-   for (unsigned int i=0; i<sz; i++)
-   {
-     va[i].x = x[i];
-   }
- }
+dvar_vector::dvar_vector(unsigned int sz, double* x)
+{
+#ifndef OPT_LIB
+  assert(sz > 0 && sz <= INT_MAX);
+#endif
+  allocate(0, (int)(sz - 1));
+  for (unsigned int i = 0; i < sz; i++)
+  {
+    va[i].x = x[i];
+  }
+}
 
 /**
  * Description not yet available.
@@ -269,7 +277,11 @@ void dvar_vector::allocatec(const dvar_vector& t)
      {
        index_min=ncl;
        index_max=nch;
-       int itemp=nch-ncl+1;
+#ifndef OPT_LIB
+       assert(nch >= ncl);
+#endif
+       unsigned int itemp = (unsigned int)(nch - ncl + 1);
+/*
        if (itemp<=0)
        {
          cerr << "Error in dvar_vector constructor max index must be"
@@ -277,6 +289,7 @@ void dvar_vector::allocatec(const dvar_vector& t)
             << "minindex = " << ncl << " maxindex = " << nch <<endl;
          ad_exit(1);
        }
+*/
        if ( (va = arr_new(itemp)) ==0)
        {
          cerr << " Error trying to allocate memory for dvar_vector\n";

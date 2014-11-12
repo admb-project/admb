@@ -30,7 +30,9 @@
 #endif
 
 #include <string.h>
-
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 #ifdef __USE_IOSTREAM__
 
@@ -53,7 +55,10 @@ uistream& operator>>(const uistream& _istr, const ivector& _z)
 void ivector::read_from(const uistream& _s)
 {
   ADUNCONST(uistream,s);
-  int n = indexmax() - indexmin() + 1;
+#ifndef OPT_LIB
+  assert(indexmax() >= indexmin());
+#endif
+  unsigned int n = indexmax() - indexmin() + 1;
   char* p = (char*)(v + indexmin());
 
   s.read(p, n*sizeof(int) );
@@ -78,7 +83,10 @@ uostream& operator<<(const uostream& _ostr, const ivector& z)
 void ivector::write_on(const uostream& _s) const
 {
   ADUNCONST(uostream,s)
-  int n = indexmax() - indexmin() + 1;
+#ifndef OPT_LIB
+  assert(indexmax() >= indexmin());
+#endif
+  unsigned int n = indexmax() - indexmin() + 1;
   char* p = (char*)(v + indexmin());
 
   s.write(p, n*sizeof(int) );

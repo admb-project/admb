@@ -42,6 +42,10 @@
 #include <sstream>
 using std::istringstream;
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 const int MAX_FIELD_LENGTH = 500;
 
 /**
@@ -157,7 +161,10 @@ dvar_vector::dvar_vector(const char * s)
      cout << "Created a ncopies with address " << _farptr_tolong(ncopies)<<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
-   if ( (va = arr_new(size()))==0 )
+#ifndef OPT_LIB
+  assert(size() > 0);
+#endif
+   if ((va = arr_new((unsigned int)size()))==0 )
    {
      cerr << " Error trying to allocate memory for dvector\n";
      ad_exit(21);

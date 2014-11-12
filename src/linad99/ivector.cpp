@@ -197,25 +197,28 @@ ivector& ivector::operator=(const ivector& t)
  * Description not yet available.
  * \param
  */
- ivector& ivector::operator = (int u)
- {
-   for ( int i=indexmin(); i<=indexmax(); i++)
-   {
-     elem(i) = u;
-   }
-   return (*this);
- }
+ivector& ivector::operator=(int u)
+{
+  for (int i = indexmin(); i <= indexmax(); i++)
+  {
+    elem(i) = u;
+  }
+  return (*this);
+}
 
 /**
 Constructor
 */
 ivector::ivector(unsigned int sz, long int* x )
 {
-  allocate(0,sz-1);
+#ifndef OPT_LIB
+  assert(sz > 0 && sz <= INT_MAX);
+#endif
+  allocate(0, (int)(sz - 1));
 
-  for (unsigned int i=0; i<sz; i++)
+  for (unsigned int i = 0; i < sz; i++)
   {
-    cout << "Doing the assignment in constructor\n";
+    //cout << "Doing the assignment in constructor\n";
 #ifdef OPT_LIB
     v[i] = (int)x[i];
 #else

@@ -235,7 +235,10 @@ void fixed_smartlist::write_buffer_one_less(void)
 
     // write the record into the file
     ssize_t nw = ::write(fp,buffer,nbytes);
-    if (nw<nbytes)
+#ifndef OPT_LIB
+    assert(nw != -1);
+#endif
+    if ((size_t)nw < nbytes)
     {
       cerr << "Error writing to file " << filename << endl;
       ad_exit(1);
@@ -282,7 +285,10 @@ void fixed_smartlist::write_buffer(void)
 
     // write the record into the file
     ssize_t nw=::write(fp,buffer,nbytes);
-    if (nw < nbytes)
+#ifndef OPT_LIB
+    assert(nw != -1);
+#endif
+    if ((size_t)nw < nbytes)
     {
       cerr << "Error writing to file " << filename << endl;
       ad_exit(1);
@@ -347,8 +353,10 @@ void fixed_smartlist::read_buffer(void)
     }
     // now read the record into the buffer
     ssize_t nr = ::read(fp,buffer,nbytes);
+#ifndef OPT_LIB
     assert(nr != -1);
-    if (nr != nbytes)
+#endif
+    if ((size_t)nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);
@@ -513,7 +521,7 @@ void fixed_smartlist::read_file(void)
   {
     unsigned int nbytes=0;
     nw = ::read(fp,&nbytes,sizeof(unsigned int));
-    if (nw > 0 && nw == nbytes)
+    if (nw > 0 && (size_t)nw == nbytes)
     {
       nw = ::read(fp, buffer + offset, (size_t)nbytes);
       offset+=nbytes;

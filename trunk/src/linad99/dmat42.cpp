@@ -13,6 +13,10 @@
  */
 
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 #define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 
 int svd(int m, int n, int withu, int withv, double eps, double tol,
@@ -173,7 +177,12 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
 
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
-  double* e = (double*)calloc(n,sizeof(double));
+
+#ifndef OPT_LIB
+  assert(n > 0);
+#endif
+
+  double* e = (double*)calloc((size_t)n,sizeof(double));
   retval = 0;
 
   u=aa;
@@ -449,9 +458,11 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
 
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
-  double *e;
 
-  e = (double *)calloc(n,sizeof(double));
+#ifndef OPT_LIB
+  assert(n > 0);
+#endif
+  double* e = (double *)calloc((size_t)n, sizeof(double));
   retval = 0;
 
   u=aa;

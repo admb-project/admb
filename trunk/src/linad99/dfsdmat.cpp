@@ -332,8 +332,8 @@ void dfsdmat::save()
       ad_exit(1);
     }
   }
-  int _n=size();
-  int nn=(_n*(_n+1))/2;
+  unsigned int _n = (unsigned int)size();
+  unsigned int nn = (_n*(_n+1))/2;
   lseek(tmp_file,0L,SEEK_SET);
 #ifdef OPT_LIB
   write(tmp_file,&_n,sizeof(int));
@@ -376,8 +376,9 @@ void dfsdmat::restore()
 #else
   ssize_t ret = read(tmp_file,&_n,sizeof(int));
   assert(ret != -1);
+  assert(_n > 0);
 #endif
-  int nn=(_n*(_n+1))/2;
+  unsigned int nn = (unsigned int)((_n*(_n+1))/2);
   //if (!shared_memory) allocate(_n);
   ssize_t num_bytes=read(tmp_file,ptr,nn*sizeof(double));
   if (num_bytes < nn)

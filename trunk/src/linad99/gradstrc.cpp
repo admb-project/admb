@@ -229,7 +229,11 @@ void allocate_dvariable_space()
   {
     if (nopt ==1)
     {
-      gradient_structure::MAX_DLINKS=atoi(ad_comm::argv[on+1]);
+      const int i = atoi(ad_comm::argv[on+1]);
+      if (i > 0)
+      {
+        gradient_structure::MAX_DLINKS = (unsigned int)i;
+      }
     }
     else
     {
@@ -279,11 +283,14 @@ void allocate_dvariable_space()
  */
  gradient_structure::gradient_structure(long int _size)
  {
+#ifndef OPT_LIB
+  assert(_size > 0);
+#endif
    gradient_structure::NVAR=0;
    atexit(cleanup_temporary_files);
    fill_ad_random_part();
-   long int size;
-   size=_size;
+
+   const unsigned long int size = (unsigned long int)_size;
 
    if (instances++ > 0)
    {
@@ -456,7 +463,8 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
       {
         if (nopt ==1)
         {
-          MAX_NVAR_OFFSET=atoi(ad_comm::argv[on+1]);
+          const int i = atoi(ad_comm::argv[on+1]);
+          MAX_NVAR_OFFSET = (unsigned int)i;
         }
         else
         {

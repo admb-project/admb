@@ -83,7 +83,6 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 {
   ADUNCONST(dmatrix,jac)
 
-  unsigned int i;
   off_t lpos;
   if(!instances)
   {
@@ -126,7 +125,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     fp->write_cmpdif_stack_buffer();
   }
 
-  for (i=jac.rowmin();i<=(unsigned int)jac.rowmax();i++)
+  for (unsigned int i=jac.rowmin();i<=(unsigned int)jac.rowmax();i++)
   {
     if (jac(i).indexmin() !=1)
     {
@@ -212,7 +211,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 
     gradient_structure::GRAD_STACK1->ptr--;
 
-    for (i=0; i< GRAD_LIST->nlinks; i++)
+    for (unsigned int i=0; i< GRAD_LIST->nlinks; i++)
     {
       * (double*) (GRAD_LIST->dlink_addresses[i]) = 0;
     }
@@ -225,7 +224,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 
     unsigned int size = sizeof(double_and_int);
 
-    for (i = 0; i < (max_last_offset/size); i++)
+    for (unsigned int i = 0; i < (max_last_offset/size); i++)
     {
       tmp->x = 0;
 #if defined (__ZTC__)
@@ -268,7 +267,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 
     int mindx = g.indexmin();
     dvector & gg=(dvector&)(g);
-    for (i=0; i<(unsigned int)nvar; i++)
+    for (int i=0; i<nvar; i++)
     {
       gg[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
       //g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);

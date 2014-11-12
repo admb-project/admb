@@ -22,6 +22,10 @@ long int farptr_tolong(void *);
 #ifdef _MSC_VER
 #include <memory.h>
 #endif
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 /** Average of two numbers; constant objects.
 \ingroup misc
@@ -272,7 +276,11 @@ dvector& dvector::operator=(const dvector& t)
      {
          int min=indexmin();
          int max=indexmax();
-         memcpy(&elem(min),&t.elem(min),(max-min+1)*sizeof(double));
+#ifndef OPT_LIB
+         assert(max >= min);
+#endif
+         size_t size = (size_t)(max - min + 1);
+         memcpy(&elem(min), &t.elem(min), size * sizeof(double));
      }
    }
    return (*this);
@@ -315,22 +323,24 @@ dvector& dvector::operator=(const dvector& t)
    return (*this);
  }
 
- /**
- Construct a %dvector object from a C style array of doubles.
- \param sz Number of valid memory locations allocated in the array
- The range of valid subscripts for the %dvector object will be [0,sz-1].
- \param x Pointer to double pointing to the first element in the array.
- */
- dvector::dvector( unsigned int sz, double * x )
- {
-   allocate(0,sz-1);
-
-   for (unsigned int i=0; i<sz; i++)
-   {
-     cout << "Doing the assignment in constructor\n";
-     v[i] = x[i];
-   }
- }
+/**
+Construct a %dvector object from a C style array of doubles.
+\param sz Number of valid memory locations allocated in the array
+The range of valid subscripts for the %dvector object will be [0,sz-1].
+\param x Pointer to double pointing to the first element in the array.
+*/
+dvector::dvector(unsigned int sz, double* x)
+{
+#ifndef OPT_LIB
+  assert(sz > 0 && sz - 1 <= INT_MAX);
+#endif
+  allocate(0, (int)(sz - 1));
+  for (unsigned int i = 0; i < sz; i++)
+  {
+    //cout << "Doing the assignment in constructor\n";
+    v[i] = x[i];
+  }
+}
 
 /*
  dvector::operator double* ( )

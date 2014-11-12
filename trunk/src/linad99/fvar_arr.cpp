@@ -192,7 +192,7 @@ void make_indvar_list(const dvar_vector& t)
 
   for (int i=t.indexmin(); i<=t.indexmax(); i++)
   {
-    unsigned int tmp=i-t.indexmin();
+    unsigned int tmp = (unsigned int)(i - t.indexmin());
     gradient_structure::INDVAR_LIST->put_address(tmp,&(t.va[i].x));
   }
   gradient_structure::NVAR=t.indexmax()-t.indexmin()+1;

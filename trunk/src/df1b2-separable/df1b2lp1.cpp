@@ -844,10 +844,7 @@ void laplace_approximation_calculator::set_u_dot(int ip)
  */
 void laplace_approximation_calculator::check_pool_size(void)
 {
-#ifndef OPT_LIB
-  assert(nvar >= 0);
-#endif
-  unsigned int num_active_parameters = (unsigned int)nvar;
+  unsigned int num_active_parameters = nvar;
   f1b2gradlist->reset();
 
   adpool * tmppool=df1b2variable::pool;

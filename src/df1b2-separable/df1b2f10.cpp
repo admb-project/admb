@@ -110,7 +110,7 @@ void test_smartlist::write(const size_t n)
 {
 #ifdef __MINGW64__
   #ifndef OPT_LIB
-  assert(n <= UINT_MAX); 
+  assert(n <= UINT_MAX);
   #endif
   ssize_t nw = ::write(fp,buffer,(unsigned int)n);
 #else

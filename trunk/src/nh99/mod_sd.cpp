@@ -359,7 +359,7 @@ void function_minimizer::sd_routine(void)
     {
       dvector dd=diag(nvar1+1,nvar1+ndvar);
       dd.shift(1);
-      int ii=0;
+      ii=0;
       stddev_params::get_all_sd_values(dd,ii);
     }
 

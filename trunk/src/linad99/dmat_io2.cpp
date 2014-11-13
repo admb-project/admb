@@ -78,7 +78,6 @@ const int MAXROWS = 5050;
  */
 dmatrix::dmatrix(char* s)
 {
-  int i;
   #ifdef DIAG
     myheapcheck("Entering dmatrix( char * s)" );
   #endif
@@ -146,7 +145,7 @@ dmatrix::dmatrix(char* s)
   {
     ivector ub(1,nrow);
     ivector lb(1,nrow);
-    for (i=1; i<=nrow; i++)
+    for (int i=1; i<=nrow; i++)
     {
        ub[i] = columns[i];
        lb[i] = 1;
@@ -174,7 +173,7 @@ dmatrix::dmatrix(char* s)
 
     //char * t = (char*) new[strlen(s)+1];
     char *t = new char[strlen(s)+1];
-    for (i=rowmin(); i<=rowmax(); i++)
+    for (int i=rowmin(); i<=rowmax(); i++)
     {
       for (int k = k1[i]; k <= k2[i]; k++)
       {

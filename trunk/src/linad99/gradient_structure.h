@@ -253,11 +253,11 @@ public:
   ~DF_FILE();
 
   char* buff;
-  long toffset;
+  size_t toffset;
   union
   {
-    long offset;
-    char fourb[sizeof(long)];
+    size_t offset;
+    char fourb[sizeof(size_t)];
   };
   char cmpdif_file_name[81];
   int file_ptr;

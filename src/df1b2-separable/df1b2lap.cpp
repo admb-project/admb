@@ -10,10 +10,13 @@
  */
 #include <sstream>
 using std::istringstream;
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
 
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
         int fcount =0;
 static int no_stuff=0;
 static int write_sparse_flag=0;
@@ -22,7 +25,7 @@ static int write_sparse_flag=0;
       //int x=5;
     }
 int noboundepen_flag=1;
-int global_nvar=0;
+unsigned int global_nvar=0;
 
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
 void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
@@ -910,7 +913,10 @@ laplace_approximation_calculator::laplace_approximation_calculator
   }
 
   // !! need to check nvar calculation
-  nvar=maxder(1)-minder(1)+1;
+#ifndef OPT_LIB
+  assert(maxder(1) >= minder(1));
+#endif
+  nvar = (unsigned int)(maxder(1) - minder(1) + 1);
 
   switch (hesstype)
   {
@@ -964,7 +970,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
     }
     else
     {
-      int nsave=nvar;
+      unsigned int nsave=nvar;
       nvar=1;
       ad_dstar::allocate(nvar);
       global_nvar=nvar;
@@ -984,8 +990,11 @@ laplace_approximation_calculator::laplace_approximation_calculator
   }
   df1b2variable::adpool_vector[df1b2variable::adpool_counter]=
     df1b2variable::pool;
+#ifndef OPT_LIB
+  assert(nvariables >= 0);
+#endif
   df1b2variable::nvar_vector[df1b2variable::adpool_counter]=
-      nvariables;
+    (unsigned int)nvariables;
   //df1b2variable::adpool_counter++;
   df1b2variable::increment_adpool_counter();
 }
@@ -1079,7 +1088,10 @@ laplace_approximation_calculator::laplace_approximation_calculator(
       ad_exit(1);
     }
   }
-  nvar=maxder(1)-minder(1)+1;
+#ifndef OPT_LIB
+  assert(maxder(1) >= minder(1));
+#endif
+  nvar = (unsigned int)(maxder(1) - minder(1) + 1);
   Hessadjoint.allocate(1,usize,1,usize);
   Dux.allocate(1,usize,1,xsize);
   // !!! nov 12

@@ -243,7 +243,7 @@ public:
   int xsize;
   int usize;
   int nvariables;
-  int nvar;
+  unsigned int nvar;
   ivector minder;
   ivector maxder;
   int num_der_blocks;

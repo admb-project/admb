@@ -342,7 +342,7 @@ void dfsdmat::save()
   assert(ret != -1);
 #endif
   ssize_t num_bytes=write(tmp_file,ptr,nn*sizeof(double));
-  if (num_bytes < nn)
+  if (num_bytes <= 0)
   {
     cerr << "Error writing to temporary hess file in dfsdmat::save()"
          << endl;
@@ -381,7 +381,7 @@ void dfsdmat::restore()
   unsigned int nn = (unsigned int)((_n*(_n+1))/2);
   //if (!shared_memory) allocate(_n);
   ssize_t num_bytes=read(tmp_file,ptr,nn*sizeof(double));
-  if (num_bytes < nn)
+  if (num_bytes <= 0)
   {
     cerr << "Error reading from temporary hess file in dfsdmat::save()"
          << endl;

@@ -261,7 +261,7 @@ DF_FILE::~DF_FILE()
  */
 void DF_FILE::fread(void* s,const size_t num_bytes)
 {
-  if (toffset > 0 && (size_t)toffset < num_bytes)
+  if (toffset < num_bytes)
   {
     off_t lpos = lseek(file_ptr, -((off_t)buff_size), SEEK_CUR);
     read_cmpdif_stack_buffer(lpos);
@@ -288,7 +288,7 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
   }
 #endif
   toffset+=num_bytes; //increment the temporary offset count
-  if (toffset > 0 && (size_t)toffset > buff_end)
+  if (toffset>buff_end)
   {
     if (num_bytes > buff_end)
     {

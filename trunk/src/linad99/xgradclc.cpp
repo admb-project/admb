@@ -176,8 +176,8 @@ do
    if (funnel_flag) break;
 
   // back up the file one buffer size and read forward
-  off_t offset = sizeof(grad_stack_entry)
-    * gradient_structure::GRAD_STACK1->length;
+  off_t offset = (off_t)(sizeof(grad_stack_entry)
+    * gradient_structure::GRAD_STACK1->length);
   lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
     -offset, SEEK_CUR);
 

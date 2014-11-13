@@ -96,7 +96,14 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
 */
 void fixed_smartlist::write(const size_t n)
 {
+#ifdef __MINGW64__
+  #ifndef OPT_LIB
+  assert(n <= UINT_MAX); 
+  #endif
+  ssize_t nw = ::write(fp,buffer,(unsigned int)n);
+#else
   ssize_t nw = ::write(fp, buffer, n);
+#endif
   if (nw <= -1 || (size_t)nw != n)
   {
     cerr << "Error writing to file " << filename << endl;

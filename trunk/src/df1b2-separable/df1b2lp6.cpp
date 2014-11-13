@@ -13,7 +13,6 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-
 #ifndef OPT_LIB
   #include <cassert>
   #include <climits>
@@ -79,8 +78,6 @@ void laplace_approximation_calculator::
       cerr << "Illegal value for hesstype here" << endl;
       ad_exit(1);
     }
-
-
 
     grad.initialize();
     //int check=initial_params::stddev_scale(scale,uhat);
@@ -582,7 +579,10 @@ dvector laplace_approximation_calculator::banded_calculations
       //cout << initial_df1b2params::cobjfun << endl;
       //f=initial_df1b2params::cobjfun;
       block_diagonal_flag=0;
-      dvector scale1(1,nvar);   // need to get scale from somewhere
+#ifndef OPT_LIB
+      assert(nvar <= INT_MAX);
+#endif
+      dvector scale1(1,(int)nvar);   // need to get scale from somewhere
       initial_params::set_inactive_only_random_effects();
       /*int check=*/initial_params::stddev_scale(scale1,x);
       //for (i=1;i<=xadjoint.indexmax();i++)
@@ -603,7 +603,7 @@ dvector laplace_approximation_calculator::banded_calculations
       }
       if (initial_df1b2params::separable_flag)
       {
-        dvector scale(1,nvar);   // need to get scale from somewhere
+        dvector scale(1,(int)nvar);   // need to get scale from somewhere
         /*int check=*/initial_params::stddev_scale(scale,x);
         dvector sscale=scale(1,Dux(1).indexmax());
         for (i=1;i<=usize;i++)

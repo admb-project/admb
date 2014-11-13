@@ -808,9 +808,9 @@ public:
 class ad_dstar
 {
 public:
-  static int n;
-  static void allocate(int _n);
-  double * p;
+  static unsigned int n;
+  static void allocate(const unsigned int _n);
+  double* p;
   ad_dstar(void);
   ~ad_dstar(void);
   operator double* (){return p;}

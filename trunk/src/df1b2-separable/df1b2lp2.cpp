@@ -8,9 +8,13 @@
  * \file
  * Description not yet available.
  */
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
   dmatrix& Dux, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin,
   laplace_approximation_calculator* lap);
@@ -167,7 +171,10 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     int xmax=xadjoint.indexmax();
     dvector x_con(1,xmax);
     x_con.initialize();
-    dvector dscale(1,nvar);   // need to get scale from somewhere
+#ifndef OPT_LIB
+    assert(nvar <= INT_MAX);
+#endif
+    dvector dscale(1,(int)nvar);   // need to get scale from somewhere
     dscale=1.0;
     /*int check=*/initial_params::stddev_scale(dscale,x);
     dvector sscale=dscale(1,xsize);
@@ -269,7 +276,10 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     int xmax=xadjoint.indexmax();
     dvector x_con(1,xmax);
     x_con.initialize();
-    dvector dscale(1,nvar);   // need to get scale from somewhere
+#ifndef OPT_LIB
+    assert(nvar <= INT_MAX);
+#endif
+    dvector dscale(1,(int)nvar);   // need to get scale from somewhere
     dscale=1.0;
     /*int check=*/initial_params::stddev_scale(dscale,x);
     dvector sscale=dscale(1,xsize);

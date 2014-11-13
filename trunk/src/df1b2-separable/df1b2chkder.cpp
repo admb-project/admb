@@ -8,10 +8,14 @@
  * \file
  * Description not yet available.
  */
-#  include <fvar.hpp>
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <fvar.hpp>
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
 void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
   dmatrix& Dux, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin,
@@ -415,7 +419,10 @@ dvector laplace_approximation_calculator::
     }
     if (initial_df1b2params::separable_flag)
     {
-      dvector scale(1,nvar);   // need to get scale from somewhere
+#ifndef OPT_LIB
+      assert(nvar <= INT_MAX);
+#endif
+      dvector scale(1,(int)nvar);   // need to get scale from somewhere
       /*int check=*/initial_params::stddev_scale(scale,x);
       dvector sscale=scale(1,Dux(1).indexmax());
       for (i=1;i<=usize;i++)
@@ -442,7 +449,10 @@ dvector laplace_approximation_calculator::
       initial_params::straight_through_flag=0;
       funnel_init_var::lapprox=0;
       block_diagonal_flag=0;
-      dvector scale1(1,nvar);   // need to get scale from somewhere
+#ifndef OPT_LIB
+      assert(nvar <= INT_MAX);
+#endif
+      dvector scale1(1,(int)nvar);   // need to get scale from somewhere
       initial_params::set_inactive_only_random_effects();
       /*int check=*/initial_params::stddev_scale(scale1,x);
 
@@ -450,7 +460,7 @@ dvector laplace_approximation_calculator::
       quadratic_prior::in_qp_calculations=1;
       funnel_init_var::lapprox=this;
       df1b2_gradlist::set_no_derivatives();
-      dvector scale(1,nvar);   // need to get scale from somewhere
+      dvector scale(1,(int)nvar);   // need to get scale from somewhere
       /*check=*/initial_params::stddev_scale(scale,x);
       dvector sscale=scale(1,Dux(1).indexmax());
 

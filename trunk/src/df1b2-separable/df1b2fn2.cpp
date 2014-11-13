@@ -102,7 +102,7 @@ unsigned int df1b2variable::blocksize=0;
 int init_df1b2variable::num_variables=0;
 int df1b2_gradlist::no_derivatives=0;
 int df1b2variable::passnumber=0;
-int ad_dstar::n=0;
+unsigned int ad_dstar::n=0;
 
 void ad_read_pass2(void);
 // should inline this
@@ -688,7 +688,10 @@ smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
   }
 }
 
-void ad_dstar::allocate(int _n){n=_n;}
+void ad_dstar::allocate(const unsigned int _n)
+{
+  n = _n;
+}
 
 /**
  * Description not yet available.

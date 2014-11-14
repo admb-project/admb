@@ -82,7 +82,9 @@ public :
   adstring();
   adstring(const adstring &v);
   adstring(const char v);
-  adstring(const char *t);
+  adstring(const char* t);
+  adstring(const unsigned char v);
+  adstring(const unsigned char* t);
   adstring(const size_t lb, const size_t ub);
   ~adstring();
 
@@ -152,9 +154,9 @@ public :
   friend std::istream& operator>>(std::istream& c, adstring& t);
   friend adstring operator+(const adstring &u, const adstring &v);
   friend adstring operator+(const adstring &u, const unsigned char v);
-  friend adstring operator+(const adstring &u, const signed char v);
+  friend adstring operator+(const adstring &u, const char v);
   friend adstring operator+(const adstring &u, const unsigned char *v);
-  friend adstring operator+(const adstring & u, const signed char *v);
+  friend adstring operator+(const adstring & u, const char *v);
   friend adstring operator+(const unsigned char *v, const adstring& u);
   friend adstring operator+(const char *v, const adstring &u);
   friend adstring operator+(const unsigned char u, const adstring &v);

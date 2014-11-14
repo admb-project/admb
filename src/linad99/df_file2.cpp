@@ -63,10 +63,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
 
 /**
  * Description not yet available.
@@ -76,7 +72,7 @@ void DF_FILE::fread(const double& _x)
 {
   double& x = (double&)_x;
   const size_t num_bytes = sizeof(double);
-  if (toffset < (long)num_bytes)
+  if (toffset < num_bytes)
   {
     off_t lpos = lseek(file_ptr,-((off_t)buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
@@ -99,7 +95,7 @@ void DF_FILE::fread(const double& _x)
 void DF_FILE::fread(void* &x)
 {
   const size_t num_bytes = sizeof(void*);
-  if (toffset < (long)num_bytes)
+  if (toffset < num_bytes)
   {
      off_t lpos = lseek(file_ptr,-((off_t)buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
@@ -129,10 +125,7 @@ void DF_FILE::fwrite(const double x)
 #endif
   const size_t num_bytes = sizeof(double);
   toffset+=num_bytes; //increment the temporary offset count
-#ifndef OPT_LIB
-  assert(buff_end <= LONG_MAX);
-#endif
-  if (toffset > (long)buff_end)
+  if (toffset>buff_end)
   {
     write_cmpdif_stack_buffer();
     toffset=num_bytes;
@@ -150,7 +143,7 @@ void DF_FILE::fread(const int& _x)
 {
   int& x = (int&)_x;
   const size_t num_bytes = sizeof(int);
-  if (toffset < (long)num_bytes)
+  if (toffset < num_bytes)
   {
     off_t lpos = lseek(file_ptr, -((off_t)buff_size), SEEK_CUR);
     read_cmpdif_stack_buffer(lpos);
@@ -179,10 +172,7 @@ void DF_FILE::fwrite(const int& x)
   #endif
   const size_t num_bytes = sizeof(int);
   toffset+=num_bytes; //increment the temporary offset count
-#ifndef OPT_LIB
-  assert(buff_end <= LONG_MAX);
-#endif
-  if (toffset > (long)buff_end)
+  if (toffset>buff_end)
   {
     write_cmpdif_stack_buffer();
     toffset=num_bytes;
@@ -206,10 +196,7 @@ void DF_FILE::fwrite(void * ptr)
   #endif
   const size_t num_bytes = sizeof(void*);
   toffset+=num_bytes; //increment the temporary offset count
-#ifndef OPT_LIB
-  assert(buff_end <= LONG_MAX);
-#endif
-  if (toffset > (long)buff_end)
+  if (toffset>buff_end)
   {
     write_cmpdif_stack_buffer();
     toffset=num_bytes;

@@ -99,14 +99,6 @@ public :
   const unsigned char& operator()(const size_t i) const;
   const unsigned char& operator[](const size_t i) const;
 
-#ifdef __INTEL_COMPILER
-  friend adstring operator+(const adstring &u, const char* v)
-  {
-    adstring a(v);
-    return u + a;
-  }
-#endif
-
   adstring& operator+=(const adstring &u);
   inline adstring& operator+=(const char u)
     { return(*this += adstring(u)); }

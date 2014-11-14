@@ -65,8 +65,8 @@ else
 	./gtest-all
 endif
 
-valgrind:
-	valgrind --tool=callgrind ./gtest-all
+memcheck: gtest-all
+	valgrind -v --tool=memcheck ./gtest-all
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
 ifeq ($(SHELL),cmd)

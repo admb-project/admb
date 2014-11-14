@@ -254,8 +254,8 @@ void allocate_dvariable_space()
   // " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
   assert(sizeof(dlink) == 2 * sizeof(double));
 #endif
-
-  char * tmp= (char*) malloc(2*sizeof(double)*(numlinks+1));
+  const size_t size = 2 * sizeof(double) * (numlinks + 1);
+  char * tmp= (char*)malloc(size * sizeof(char));
   char * tmp1=tmp;
 
   dlink * dl=(dlink*)tmp1;

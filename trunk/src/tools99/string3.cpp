@@ -10,11 +10,18 @@
 
 adstring::adstring(const char* t): clist()
 {
-  size_t sz = 0;
-  if (t)
+  size_t sz = t ? strlen(t) : 0;
+  allocate(sz);
+  for (size_t i = 1; i <= sz; i++)
   {
-    sz = strlen(t);
+    s[i] = (unsigned char)t[i - 1];
   }
+  s[sz + 1] = '\0';
+}
+
+adstring::adstring(const unsigned char* t): clist()
+{
+  size_t sz = t ? strlen((char*)t) : 0;
   allocate(sz);
   for (size_t i = 1; i <= sz; i++)
   {

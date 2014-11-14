@@ -11,7 +11,7 @@ TEST_F(test_line_adstring, istreamoperator)
   std::string expected = "kdjfk";
   std::istringstream iss(expected + "\n");
 
-  line_adstring actual(10);
+  line_adstring actual;
 
   iss >> actual;
 

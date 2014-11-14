@@ -10,25 +10,32 @@
 #include <stdlib.h>
 
 adstring operator+(const adstring& u, const unsigned char v)
-    { return (u + adstring(v)); }
-adstring operator+(const adstring& u, const signed char v)
-    { return (u + adstring(v)); }
+{
+  return (u + adstring(v));
+}
+adstring operator+(const adstring& u, const char v)
+{
+  return (u + adstring(v));
+}
 adstring operator+(const adstring& u, const unsigned char* v)
-    { return (u + adstring( (const char *) v)); }
-adstring operator+(const adstring& u, const signed char* v)
-    { return (u + adstring((const char *) v)); }
-
+{
+  return (u + adstring(v));
+}
+adstring operator+(const adstring& u, const char* v)
+{
+  return (u + adstring(v));
+}
 adstring operator+(const unsigned char* v, const adstring& u)
-    { return (adstring( (const char *) v)+u); }
-
+{
+  return (adstring(v) + u);
+}
 adstring operator+(const char* v, const adstring& u)
-  {
-      adstring vv=v;
-      return (vv+u);
-  }
-
+{
+  adstring vv=v;
+  return (vv+u);
+}
 adstring operator+(const unsigned char u, const adstring& v)
-  {
-    adstring uu=u;
-    return (uu + v);
-  }
+{
+  adstring uu=u;
+  return (uu + v);
+}

@@ -34,11 +34,16 @@ adstring::adstring(const char ub) : clist()
   size_t sz = 1;
   allocate(sz);
 
-#ifndef OPT_LIB
-  assert(ub >= 0);
-#endif
-
   s[1] = (unsigned char)ub;
+  s[2] = '\0';
+}
+
+adstring::adstring(const unsigned char ub) : clist()
+{
+  size_t sz = 1;
+  allocate(sz);
+
+  s[1] = ub;
   s[2] = '\0';
 }
 

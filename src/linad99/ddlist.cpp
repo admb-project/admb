@@ -67,8 +67,8 @@ dlist::dlist(void)
   last_offset = 0;
   nlinks = 0;
   dlink_addresses = new dlink*[gradient_structure::MAX_DLINKS];
-  ddlist_space =
-    (char*)malloc(2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1));
+  const size_t size = 2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1);
+  ddlist_space = (char*)malloc(size * sizeof(char));
   //cout << (int) (ddlist_space) << endl;
   //cout << ((int) (ddlist_space))%8 << endl;
 #if defined(__x86_64)

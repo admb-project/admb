@@ -44,6 +44,8 @@
 #include <sstream>
 using std::istringstream;
 
+#include <cassert>
+
 const int MAX_FIELD_LENGTH = 500;
 
 /**
@@ -57,8 +59,9 @@ dvector::dvector(const char * s)
   int rbraces = 0;
   int commas  = 0;
 
-  char *t = new char[n+1];
-  t[n]=0;
+  char* t = new char[n+1];
+  assert(t);
+  t[n] = '\0';
 
   for (size_t k = 0; k < n; k++)
   {
@@ -253,8 +256,9 @@ void dvector::allocate(const char * s)
   int rbraces = 0;
   int commas  = 0;
 
-  char *t = new char[n+1];
-  t[n+1]=0;
+  char* t = new char[n+1];
+  assert(t);
+  t[n]= '\0';
 
   for (size_t k = 0; k < n; k++)
   {

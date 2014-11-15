@@ -36,12 +36,13 @@ adstring::adstring(const int sz) : clist()
     " At present size must be greater than zero.\n";
     exit(1);
   }
-  allocate(sz);
-  for (int i = 1; i <= sz; i++)
+  size_t size = sz > 0 ? (size_t)sz : 0;
+  allocate(size);
+  for (size_t i = 1; i <= size; i++)
   {
     s[i] = '\0'; //' ';
   }
-  s[sz + 1] = '\0';
+  s[size + 1] = '\0';
 }
 
 adstring::adstring(const char ub) : clist()

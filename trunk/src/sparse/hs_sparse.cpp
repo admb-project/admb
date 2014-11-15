@@ -3649,27 +3649,26 @@ dcompressed_triplet make_dcompressed_triplet(const dmatrix & M)
   int mmin=M.indexmin();
   int mmax=M.indexmax();
   int n=mmax-mmin+1;
-  int jmin=M(mmin).indexmin();
-  int jmax=M(mmax).indexmax();
-  int m=jmax-jmin+1;
+  int _jmin=M(mmin).indexmin();
+  int _jmax=M(mmax).indexmax();
+  int m=_jmax-_jmin+1;
   int ii=0;
-  int i,j;
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     int jmin=M(i).indexmin();
     int jmax=M(i).indexmax();
-    for (j=jmin;j<=jmax;j++)
+    for (int j=jmin;j<=jmax;j++)
     {
       if (M(i,j) !=0) ii++;
     }
   }
   dcompressed_triplet dct(1,ii,n,m);
   ii=0;
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     int jmin=M(i).indexmin();
     int jmax=M(i).indexmax();
-    for (j=jmin;j<=jmax;j++)
+    for (int j=jmin;j<=jmax;j++)
     {
       if (M(i,j) !=0)
       {

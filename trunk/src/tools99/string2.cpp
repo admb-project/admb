@@ -28,6 +28,21 @@ adstring::adstring(const size_t lb, const size_t ub) : clist()
   }
   s[sz + 1] = '\0';
 }
+adstring::adstring(const int sz) : clist()
+{
+  if (sz < 1)
+  {
+    cerr << " Error in adstring::adstring(const size_t size) : clist()\n"
+    " At present size must be greater than zero.\n";
+    exit(1);
+  }
+  allocate(sz);
+  for (int i = 1; i <= sz; i++)
+  {
+    s[i] = '\0'; //' ';
+  }
+  s[sz + 1] = '\0';
+}
 
 adstring::adstring(const char ub) : clist()
 {

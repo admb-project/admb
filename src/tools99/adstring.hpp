@@ -86,10 +86,11 @@ public :
   adstring(const unsigned char v);
   adstring(const unsigned char* t);
   adstring(const size_t lb, const size_t ub);
+  adstring(const int size);
   ~adstring();
 
-  void allocate(const char *t);
-  void realloc(const char * t);
+  void allocate(const char* t);
+  void realloc(const char* t);
   //adstring(const unsigned char v);
 
   size_t size() const;

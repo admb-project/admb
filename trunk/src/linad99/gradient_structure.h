@@ -104,8 +104,8 @@ class gradient_structure
    static dvariable **RETURN_ARRAYS;
    static int RETURN_ARRAYS_PTR;
    static dvariable **RETURN_PTR_CONTAINER;
-   static long int TOTAL_BYTES;
-   static long int PREVIOUS_TOTAL_BYTES;
+   static size_t TOTAL_BYTES;
+   static size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
    static humungous_pointer ARRAY_MEMBLOCK_BASE;
    static humungous_pointer ARRAY_MEMBLOCK_BASEA;
@@ -163,7 +163,7 @@ class gradient_structure
    static void restore_variables(void);
    static void save_arrays(void);
    static void restore_arrays(void);
-   static long int totalbytes(void);
+   static size_t totalbytes(void);
    friend dvector restore_dvar_vector_value(
      const dvar_vector_position& tmp);
    friend void cleanup_temporary_files();
@@ -233,7 +233,7 @@ class gradient_structure
 #endif
    static void set_MAX_NVAR_OFFSET(unsigned int i);
    static void set_MAX_DLINKS(int i);
-   static long int NUM_GRADSTACK_BYTES_WRITTEN(void);
+   static size_t NUM_GRADSTACK_BYTES_WRITTEN(void);
    friend class dlist;
    friend class grad_stack;
    static void save_dependent_variable_position(const prevariable & v1);

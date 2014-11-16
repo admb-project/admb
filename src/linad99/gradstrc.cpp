@@ -78,8 +78,8 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #endif
 unsigned long int gradient_structure::max_last_offset = 0;
 long int gradient_structure::NVAR = 0;
-long int gradient_structure::TOTAL_BYTES = 0;
-long int gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
+size_t gradient_structure::TOTAL_BYTES = 0;
+size_t gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 dvariable** gradient_structure::RETURN_ARRAYS = NULL;
 int gradient_structure::RETURN_ARRAYS_PTR;
@@ -142,9 +142,9 @@ void memory_allocate_error(const char * s, void * ptr);
  * Description not yet available.
  * \param
  */
-long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
+size_t gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
 {
-  long int tmp = TOTAL_BYTES - PREVIOUS_TOTAL_BYTES;
+  size_t tmp = TOTAL_BYTES - PREVIOUS_TOTAL_BYTES;
   PREVIOUS_TOTAL_BYTES = TOTAL_BYTES;
   return tmp;
 }
@@ -163,10 +163,10 @@ char lastchar(char* s)
  * Description not yet available.
  * \param
  */
- long int gradient_structure::totalbytes(void)
- {
-   return TOTAL_BYTES;
- }
+size_t gradient_structure::totalbytes(void)
+{
+  return TOTAL_BYTES;
+}
 
  void fill_ad_random_part(void);
  extern char ad_random_part[6];

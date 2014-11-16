@@ -8,6 +8,9 @@
 #  include <admodel.h>
 //#include <parallel.h>
 #include <signal.h>
+#ifdef __MINGW64__
+  #include <cassert>
+#endif
 
 #if defined(_MSC_VER)
 void strip_full_path(const adstring& _s)
@@ -372,9 +375,15 @@ void ad_comm::allocate(void)
 
 #endif
 
-#if defined (_WIN32)
+#if defined(_WIN32)
   // strip off the .exe
+  #if definded(__MINGW64__)
+  size_t _n = adprogram_name.size();
+  assert(_n <= INT_MAX);
+  int n = (int)_n;
+  #else
   int n = adprogram_name.size();
+  #endif
   if (n > 4)
   {
     if (adprogram_name(n - 3) == '.'

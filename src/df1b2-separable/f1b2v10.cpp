@@ -175,7 +175,7 @@ df1b2vector pow(const dvector& x,  const df1b2vector& a)
  * Description not yet available.
  * \param
  */
-df1b2variable operator * (const df1b2vector& _x,const df1b2vector& _y)
+df1b2variable operator*(const df1b2vector& _x, const df1b2vector& _y)
 {
   ADUNCONST(df1b2vector,x)
   ADUNCONST(df1b2vector,y)
@@ -186,10 +186,12 @@ df1b2variable operator * (const df1b2vector& _x,const df1b2vector& _y)
   {
     *tmp.get_u() += *x(i).get_u() *  *y(i).get_u();
   }
-  double * zd=tmp.get_u_dot();
-  for (unsigned int j=0;j<df1b2variable::nvar;j++)
   {
-    *zd++ = 0;
+    double* zd=tmp.get_u_dot();
+    for (unsigned int j=0;j<df1b2variable::nvar;j++)
+    {
+      *zd++ = 0;
+    }
   }
   for (int i=mmin;i<=mmax;i++)
   {

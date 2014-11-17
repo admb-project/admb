@@ -46,8 +46,13 @@
   #define S_IWRITE 0000200
 #endif
 
-#ifndef OPT_LIB
+#ifdef __MINGW64__
   #include <cassert>
+  #include <climits>
+#else
+  #ifndef OPT_LIB
+  #include <cassert>
+  #endif
 #endif
 
 #ifdef __NDPX__

@@ -249,7 +249,7 @@ void test_smartlist::write_buffer(void)
 
     // write the size of the next record into the file
 #ifdef OPT_LIB
-    write(fp,&nbytes,sizeof(int));
+    ::write(fp,&nbytes,sizeof(int));
 #else
     ssize_t ret = ::write(fp,&nbytes,sizeof(int));
     assert(ret != -1);
@@ -268,7 +268,7 @@ void test_smartlist::write_buffer(void)
     // now write the previous file position into the file so we can back up
     // when we want to.
 #ifdef OPT_LIB
-    write(fp,&pos,sizeof(off_t));
+    ::write(fp,&pos,sizeof(off_t));
 #else
     ret = ::write(fp,&pos,sizeof(off_t));
     assert(ret != -1);

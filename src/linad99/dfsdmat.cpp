@@ -341,7 +341,13 @@ void dfsdmat::save()
   ssize_t ret = write(tmp_file,&_n,sizeof(int));
   assert(ret != -1);
 #endif
+#ifdef __MINGW64__
+  size_t size = nn * sizeof(double);
+  assert(size <= UINT_MAX);
+  ssize_t num_bytes = write(tmp_file, ptr, (unsigned int)size);
+#else
   ssize_t num_bytes=write(tmp_file,ptr,nn*sizeof(double));
+#endif
   if (num_bytes <= 0)
   {
     cerr << "Error writing to temporary hess file in dfsdmat::save()"
@@ -380,7 +386,13 @@ void dfsdmat::restore()
 #endif
   unsigned int nn = (unsigned int)((_n*(_n+1))/2);
   //if (!shared_memory) allocate(_n);
+#ifdef __MINGW64__
+  size_t size = nn * sizeof(double);
+  assert(size <= UINT_MAX);
+  ssize_t num_bytes=read(tmp_file, ptr, (unsigned int)size);
+#else
   ssize_t num_bytes=read(tmp_file,ptr,nn*sizeof(double));
+#endif
   if (num_bytes <= 0)
   {
     cerr << "Error reading from temporary hess file in dfsdmat::save()"

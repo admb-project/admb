@@ -314,7 +314,12 @@ void DF_FILE::read_cmpdif_stack_buffer(off_t& lpos)
     cerr << "Error rewinding file in DF_FILE:fread"<<endl;
     ad_exit(1);
   }
+#ifdef __MINGW64__
+  assert(buff_size <= INT_MAX);
+  if (read(file_ptr, buff, (int)buff_size) < 0)
+#else
   if (read(file_ptr, buff, buff_size) < 0)
+#endif
   {
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
@@ -336,7 +341,12 @@ void DF_FILE::write_cmpdif_stack_buffer(void)
   {
     *(buff+buff_end+1+i) = fourb[i];
   }
+#ifdef __MINGW64__
+  assert(buff_size <= INT_MAX);
+  if (write(file_ptr, buff, (int)buff_size) < 0)
+#else
   if (write(file_ptr, buff, buff_size) < 0)
+#endif
   {
     cerr << "End of file trying to write to file "<< cmpdif_file_name << endl;
     cerr << "There is probably no more room on the TMP1 (if defined) device\n"

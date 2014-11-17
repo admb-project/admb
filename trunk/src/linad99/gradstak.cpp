@@ -63,7 +63,7 @@ using namespace std;
 #include <string.h>
 #include <time.h>
 
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) || defined(__MINGW64__)
   #include <cassert>
   #include <climits>
 #endif

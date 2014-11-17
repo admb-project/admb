@@ -73,8 +73,7 @@ ADMB-trunk
 * GNU C++ 4.8 compiler
 * Apple XCode 5
 * MinGW 64 Bit
-
-- [ ] Microsoft C++ 2013 - Still need to port it
+* Microsoft C++ 2013
 
  _Note: Borland 5.5 compiler is no longer supported._
 

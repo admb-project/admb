@@ -377,7 +377,7 @@ void ad_comm::allocate(void)
 
 #if defined(_WIN32)
   // strip off the .exe
-  #if definded(__MINGW64__)
+  #ifdef __MINGW64__
   size_t _n = adprogram_name.size();
   assert(_n <= INT_MAX);
   int n = (int)_n;

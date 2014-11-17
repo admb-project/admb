@@ -68,8 +68,13 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifndef OPT_LIB
+#ifdef __MINGW64__
   #include <cassert>
+  #include <climits>
+#else
+  #ifndef OPT_LIB
+    #include <cassert>
+  #endif
 #endif
 
 char lastchar(char*);

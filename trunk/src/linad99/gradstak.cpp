@@ -302,7 +302,12 @@ grad_stack::~grad_stack()
 #if defined(_MSC_VER)
     ssize_t ierr = write(_GRADFILE_PTR, ptr_first, nbw);
 #else
+  #ifdef __MINGW64__
+    assert(nbw <= UINT_MAX);
+    ssize_t ierr = write(_GRADFILE_PTR, (char*)ptr_first, (unsigned int)nbw);
+  #else
     ssize_t ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
+  #endif
 #endif
 
 #ifndef OPT_LIB
@@ -319,7 +324,12 @@ grad_stack::~grad_stack()
 #if defined(_MSC_VER)
       ierr = write(_GRADFILE_PTR, ptr_first, nbw);
 #else
+  #ifdef __MINGW64__
+      assert(nbw <= UINT_MAX);
+      ierr = write(_GRADFILE_PTR, (char*)ptr_first, (unsigned int)nbw);
+  #else
       ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
+  #endif
 #endif
 
       if  (ierr != (ssize_t)nbw)

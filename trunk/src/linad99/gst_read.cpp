@@ -121,7 +121,7 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
 #ifdef __MINGW64__
     size_t size = sizeof(grad_stack_entry) * length;
     assert(size <= UINT_MAX);
-    ssize_t nread = read(_GRADFILE_PTR, ptr_first, size);
+    ssize_t nread = read(_GRADFILE_PTR, ptr_first, (unsigned int)size);
 #else
     ssize_t nread = read(_GRADFILE_PTR,
         (char*)ptr_first,sizeof(grad_stack_entry)*length);

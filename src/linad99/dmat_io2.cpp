@@ -382,7 +382,7 @@ int get_non_blank_line(const ifstream& _infile,char * & line,
 int mystrlen(const char* line)
 {
   int ii = 0;
-  while(ii < INT_MAX)
+  while(ii < MAX_LINE_LENGTH)
   {
     if (line[ii]=='\0') return ii;
     ii++;

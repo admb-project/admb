@@ -55,13 +55,13 @@ uistream& operator>>(const uistream& _istr, const ivector& _z)
 void ivector::read_from(const uistream& _s)
 {
   ADUNCONST(uistream,s);
+  char* p = (char*)(v + indexmin());
 #ifndef OPT_LIB
   assert(indexmax() >= indexmin());
 #endif
-  unsigned int n = (unsigned int)(indexmax() - indexmin() + 1);
-  char* p = (char*)(v + indexmin());
-
-  s.read(p, n*sizeof(int) );
+  int n = indexmax() - indexmin() + 1;
+  n *= sizeof(int);
+  s.read(p, n);
 }
 
 /**
@@ -83,12 +83,12 @@ uostream& operator<<(const uostream& _ostr, const ivector& z)
 void ivector::write_on(const uostream& _s) const
 {
   ADUNCONST(uostream,s)
+  char* p = (char*)(v + indexmin());
 #ifndef OPT_LIB
   assert(indexmax() >= indexmin());
 #endif
-  unsigned int n = (unsigned int)(indexmax() - indexmin() + 1);
-  char* p = (char*)(v + indexmin());
-
-  s.write(p, n*sizeof(int) );
+  int n = indexmax() - indexmin() + 1;
+  n *= sizeof(int);
+  s.write(p, n);
 }
 #endif

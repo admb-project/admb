@@ -62,7 +62,7 @@ void lvector::read_from(const uistream& _s)
   assert(indexmax() >= indexmin());
 #endif
   int n = indexmax() - indexmin() + 1;
-  n *= sizeof(int);
+  n *= (int)sizeof(int);
   s.read(p, n);
 }
 
@@ -90,7 +90,7 @@ void lvector::write_on(const uostream& _s) const
   assert(indexmax() >= indexmin());
 #endif
   int n = indexmax() - indexmin() + 1;
-  n *= sizeof(int);
+  n *= (int)sizeof(int);
   s.write(p, n);
 }
 #endif

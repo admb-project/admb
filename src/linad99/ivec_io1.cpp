@@ -60,7 +60,7 @@ void ivector::read_from(const uistream& _s)
   assert(indexmax() >= indexmin());
 #endif
   int n = indexmax() - indexmin() + 1;
-  n *= sizeof(int);
+  n *= (int)sizeof(int);
   s.read(p, n);
 }
 
@@ -88,7 +88,7 @@ void ivector::write_on(const uostream& _s) const
   assert(indexmax() >= indexmin());
 #endif
   int n = indexmax() - indexmin() + 1;
-  n *= sizeof(int);
+  n *= (int)sizeof(int);
   s.write(p, n);
 }
 #endif

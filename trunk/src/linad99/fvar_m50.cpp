@@ -193,7 +193,7 @@ void dfcholeski_decomp_banded_positive(void)
       dftmp1(i,j)+=dfL(i,j)*linv;
       dfL(j,j)-=dfL(i,j)*tmp1(i,j)*linv*linv;
       dfL(i,j)=0.0;
-      int kmin=max(1,j-bw+1,i-bw+1);
+      kmin=max(1,j-bw+1,i-bw+1);
       for (k=j-1;k>=kmin;k--)
       {
         //tmp(i,j)-=L(i,k)*L(j,k);

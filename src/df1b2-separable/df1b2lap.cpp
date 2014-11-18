@@ -1668,6 +1668,9 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
            ofs <<  u0 << endl;
            ofs << "Matrix not positive definite in Ln_det_choleski"
                << endl;
+           cerr << "Matrix not positive definite in Ln_det_choleski\n"
+                << "see file hessian.diag for details"
+               << endl;
            ad_exit(1);
          }
        }

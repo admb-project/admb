@@ -71,18 +71,14 @@ extern int ctlc_flag;
 int* pointer_to_phase = 0;
 
 double dafsqrt( double x );
-  void tracing_message(int traceflag,const char *s);
-  void tracing_message(int traceflag,const char *s,int *pn);
-  void tracing_message(int traceflag,const char *s,double *pd);
-  void tracing_message(int traceflag,const char *s,double d);
 
 /**
  * Description not yet available.
  * \param
  */
-  void tracing_message(int traceflag,const char *s)
+  void tracing_message(int _traceflag,const char *s)
   {
-    if (traceflag)
+    if (_traceflag)
     {
       ofstream ofs;
       ofs.open("adtrace",ios::app);
@@ -95,9 +91,9 @@ double dafsqrt( double x );
  * Description not yet available.
  * \param
  */
-  void tracing_message(int traceflag,const char *s,int *pn)
+  void tracing_message(int _traceflag,const char *s,int *pn)
   {
-    if (traceflag)
+    if (_traceflag)
     {
       ofstream ofs;
       ofs.open("adtrace",ios::app);
@@ -110,9 +106,9 @@ double dafsqrt( double x );
  * Description not yet available.
  * \param
  */
-  void tracing_message(int traceflag,const char *s,double *pd)
+  void tracing_message(int _traceflag,const char *s,double *pd)
   {
-    if (traceflag)
+    if (_traceflag)
     {
       ofstream ofs;
       ofs.open("adtrace",ios::app);
@@ -125,9 +121,9 @@ double dafsqrt( double x );
  * Description not yet available.
  * \param
  */
-  void tracing_message(int traceflag,const char *s,double d)
+  void tracing_message(int _traceflag,const char *s,double d)
   {
-    if (traceflag)
+    if (_traceflag)
     {
       ofstream ofs;
       ofs.open("adtrace",ios::app);

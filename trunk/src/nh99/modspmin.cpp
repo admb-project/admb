@@ -249,7 +249,7 @@ extern admb_javapointers * adjm_ptr;
                 }
               }
             }
-            int nopt=0;
+            nopt=0;
             int on2=-1;
             int nopt2=-1;
 

@@ -150,7 +150,7 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
      int mmin=ls.indexmin();
      int mmax=ls.indexmax();
 
-     int ii=1;
+     ii=1;
      for (int i=mmin;i<=mmax;i++)
      {
        int cmin=ls(i).indexmin();

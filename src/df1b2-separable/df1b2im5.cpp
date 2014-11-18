@@ -122,7 +122,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
      int mmin=ls.indexmin();
      int mmax=ls.indexmax();
 
-     int ii=1;
+     ii=1;
      for (int i=mmin;i<=mmax;i++)
      {
        int cmin=ls(i).indexmin();

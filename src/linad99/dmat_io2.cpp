@@ -48,18 +48,20 @@
 #include <sstream>
 using std::istringstream;
 
-#include <cassert>
-#include <climits>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 int mystrlen(const char* line);
 
-const unsigned int MAX_LINE_LENGTH = 10000;
+const int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
 
 int get_non_blank_line(const ifstream& infile,char * & line,
-   const unsigned int& line_length);
+   const int& line_length);
 
 /**
  * Description not yet available.
@@ -82,9 +84,13 @@ dmatrix::dmatrix(char* s)
     myheapcheck("Entering dmatrix( char * s)" );
   #endif
 
+#ifdef OPT_LIB
+  const int n = (int)strlen(s);
+#else
   const size_t len = strlen(s);
   assert(len <= INT_MAX);
   const int n = (int)len;
+#endif
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -340,7 +346,7 @@ dmatrix::dmatrix(char* s)
  * \param
  */
 int get_non_blank_line(const ifstream& _infile,char * & line,
-     const unsigned int& line_length)
+     const int& line_length)
    {
      ifstream& infile=(ifstream&) _infile;
      char ch;

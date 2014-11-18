@@ -405,7 +405,8 @@ void tracing_message(int traceflag,const char *s);
             if (maxfn>0)
             {
               int nsteps=5;
-              lmnflag = option_match(ad_comm::argc,ad_comm::argv, "-lmn2", nopt);
+              lmnflag = option_match(ad_comm::argc,ad_comm::argv,
+                                     "-lmn2", nopt);
               if (lmnflag > -1)
               {
                 if (!nopt)

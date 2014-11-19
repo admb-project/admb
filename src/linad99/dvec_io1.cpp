@@ -179,7 +179,7 @@ int get_non_blank_line(const ifstream& infile, char* & line,
      {
        elem(i)=strtod(field,&err_ptr); // increment column counter
 
-       if (isalpha(err_ptr[0]))
+       if (isalpha((unsigned char)err_ptr[0]))
        {
          cerr << "Error decoding field " << filename
           << " in dmatrix::dmatrix(char * filename) " << "\n";

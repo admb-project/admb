@@ -169,7 +169,7 @@ void ghk_test(const dmatrix& eps,int i);
  * \param
  */
 dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
-  const dvar_matrix& Sigma, const dmatrix& eps,int i)
+  const dvar_matrix& Sigma, const dmatrix& eps,int _i)
 {
   RETURN_ARRAYS_INCREMENT();
   int n=lower.indexmax();
@@ -177,10 +177,10 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   dvar_vector l(1,n);
   dvar_vector u(1,n);
 
-  ghk_test(eps,i);
+  ghk_test(eps,_i);
 
   dvariable weight=1.0;
-  int k=i;
+  int k=_i;
   {
     l=lower;
     u=upper;

@@ -80,7 +80,7 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
      cerr << "Error: Unable to allocate array.\n";
      ad_exit(21);
    }
- 
+
    dvar_matrix vtmp=nograd_assign(tmp);
    save_identifier_string("TEST1");
    cm1.save_dmatrix_value();

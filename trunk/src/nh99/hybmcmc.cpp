@@ -240,7 +240,6 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int old_nvar;
     if (!diag_option)
     {
-      int on,nopt = 0;
       int rescale_bounded_flag=0;
       double rescale_bounded_power=0.5;
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcrb",nopt))>-1)

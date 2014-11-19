@@ -46,6 +46,7 @@ GTESTS=\
  test_dvariable.cpp\
  test_imatrix.cpp\
  test_lmatrix.cpp\
+ test_dvar_matrix.cpp\
  main.cpp
 
 ##Need to debug this

@@ -47,14 +47,10 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
    assert(_rowsize > 0);
    const size_t rowsize = (size_t)_rowsize;
 #endif
-   double* temp_col=(double*)malloc(rowsize * sizeof(double));
-   if (!temp_col)
+   try
    {
-     cerr << "Error: Unable to allocate array.\n";
-     ad_exit(21);
-   }
-   else
-   {
+     double* temp_col = new double[rowsize];
+
      temp_col-=cm2.rowmin();
 
      for (int j=cm2.colmin(); j<=cm2.colmax(); j++)
@@ -76,8 +72,15 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
        }
      }
      temp_col+=cm2.rowmin();
-     free(temp_col);
+     delete [] temp_col;
+     temp_col = 0;
    }
+   catch (std::bad_alloc& e)
+   {
+     cerr << "Error: Unable to allocate array.\n";
+     ad_exit(21);
+   }
+  
    dvar_matrix vtmp=nograd_assign(tmp);
    save_identifier_string("TEST1");
    cm1.save_dmatrix_value();

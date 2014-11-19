@@ -428,9 +428,8 @@ void function_minimizer::sd_routine(void)
         }
       }
 
-      size_t inmax = max_name_length + 1 > param_labels[lc].size()
-                           ? max_name_length + 1 - param_labels[lc].size()
-                           : 0;
+      inmax = max_name_length + 1 > param_labels[lc].size()
+              ? max_name_length + 1 - param_labels[lc].size() : 0;
       for (size_t in = 1; in <= inmax; in++)
       {
         ofs << " ";

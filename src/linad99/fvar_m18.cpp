@@ -53,30 +53,31 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
      cerr << "Error: Unable to allocate array.\n";
      ad_exit(21);
    }
-   temp_col-=cm2.rowmin();
-
-   for (int j=cm2.colmin(); j<=cm2.colmax(); j++)
+   else
    {
-     for (int k=cm2.rowmin(); k<=cm2.rowmax(); k++)
-     {
-       temp_col[k] = cm2.elem(k,j);
-     }
+     temp_col-=cm2.rowmin();
 
-     for (int i=cm1.rowmin(); i<=cm1.rowmax(); i++)
+     for (int j=cm2.colmin(); j<=cm2.colmax(); j++)
      {
-       double sum=0.0;
-       const dvector& temp_row = cm1(i);
-       for (int k=cm1.colmin(); k<=cm1.colmax(); k++)
+       for (int k=cm2.rowmin(); k<=cm2.rowmax(); k++)
        {
-          sum+=temp_row(k) * (temp_col[k]);
-         // sum+=temp_row(k) * cm2(k,j);
+         temp_col[k] = cm2.elem(k,j);
        }
-       tmp(i,j)=sum;
+       for (int i=cm1.rowmin(); i<=cm1.rowmax(); i++)
+       {
+         double sum=0.0;
+         const dvector& temp_row = cm1(i);
+         for (int k=cm1.colmin(); k<=cm1.colmax(); k++)
+         {
+            sum+=temp_row(k) * (temp_col[k]);
+           // sum+=temp_row(k) * cm2(k,j);
+         }
+         tmp(i,j)=sum;
+       }
      }
+     temp_col+=cm2.rowmin();
+     free(temp_col);
    }
-
-   temp_col+=cm2.rowmin();
-   free ((char*)temp_col);
    dvar_matrix vtmp=nograd_assign(tmp);
    save_identifier_string("TEST1");
    cm1.save_dmatrix_value();

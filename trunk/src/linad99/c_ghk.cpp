@@ -74,16 +74,16 @@ void ghk_test(const dmatrix& eps,int i)
  * \param
  */
 double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
-  const dmatrix& eps,int i)
+  const dmatrix& eps,int _i)
 {
   int n=lower.indexmax();
   dmatrix ch=choleski_decomp(Sigma);
   dvector l(1,n);
   dvector u(1,n);
 
-  ghk_test(eps,i); // test for valid i range
+  ghk_test(eps,_i); // test for valid i range
   double weight=1.0;
-  int k=i;
+  int k=_i;
   {
     l=lower;
     u=upper;

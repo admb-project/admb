@@ -139,7 +139,7 @@ void dvar_vector::fill(const char * s)
      ss >> field;
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha(err_ptr[0]))
+     if (isalpha((unsigned char)err_ptr[0]))
      {
        cerr << "Error decoding field "
          << " in dmatrix::dmatrix(char * filename) " << "\n";

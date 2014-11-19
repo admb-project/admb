@@ -118,7 +118,7 @@ dvector::dvector(const char * s)
      ss >> field;
      v[i]=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha(err_ptr[0]))
+     if (isalpha((unsigned char)err_ptr[0]))
      {
        cerr << "Error decoding field "
          << " in dvector::dvector(char * filename) " << "\n";
@@ -214,7 +214,7 @@ dvector::dvector(const char * s)
      infile >> field;
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha(err_ptr[0]))
+     if (isalpha((unsigned char)err_ptr[0]))
      {
        cerr << "Error decoding field " << filename
          << " in dvector::dvector(char * filename) " << "\n";
@@ -315,7 +315,7 @@ void dvector::allocate(const char * s)
      ss >> field;
      v[i]=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha(err_ptr[0]))
+     if (isalpha((unsigned char)err_ptr[0]))
      {
        cerr << "Error decoding field "
          << " in dvector::dvector(char * filename) " << "\n";
@@ -409,7 +409,7 @@ void dvector::allocate(const char * s)
      infile >> field;
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha(err_ptr[0]))
+     if (isalpha((unsigned char)err_ptr[0]))
      {
        cerr << "Error decoding field " << filename
          << " in dvector::dvector(char * filename) " << "\n";

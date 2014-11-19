@@ -528,13 +528,15 @@ void fixed_smartlist::read_file(void)
   {
     unsigned int nbytes=0;
     nw = ::read(fp,&nbytes,sizeof(unsigned int));
-    if (nw > 0 && (size_t)nw == nbytes)
+    if (nw != -1)
     {
       nw = ::read(fp, buffer + offset, (size_t)nbytes);
-      offset+=nbytes;
-
-      nw = ::read(fp, &pos, sizeof(off_t));
+      if (nw != -1)
+      {
+        offset+=nbytes;
+        nw = ::read(fp, &pos, sizeof(off_t));
+      }
     }
   }
-  while(nw);
+  while(nw != 1);
 }

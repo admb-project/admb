@@ -523,12 +523,15 @@ void fixed_smartlist2::read_file(void)
   {
     int nbytes = 0;
     nw = ::read(fp,&nbytes,sizeof(int));
-    if (nw >= 0 && nw == nbytes)
+    if (nw != -1)
     {
       nw = ::read(fp, buffer + offset, (size_t)nbytes);
-      offset+=nbytes;
-      nw = ::read(fp,&pos,sizeof(off_t));
+      if (nw != -1)
+      {
+        offset+=nbytes;
+        nw = ::read(fp,&pos,sizeof(off_t));
+      }
     }
   }
-  while(nw);
+  while(nw != -1);
 }

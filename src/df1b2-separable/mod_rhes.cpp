@@ -130,7 +130,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
-  double f;
   double delta=1.e-4;
   dvector g1(1,nvar);
   dvector g0(1,nvar);
@@ -150,6 +149,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
   {
     first_hessian_flag=1;
     {
+      double f = 0.0;
       g1=(*lapprox)(x,f,this);
       g0=g1;
     }
@@ -487,7 +487,6 @@ void function_minimizer::hess_routine_slave_random_effects(void)
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
-  double f;
   double delta=1.e-6;
   double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();

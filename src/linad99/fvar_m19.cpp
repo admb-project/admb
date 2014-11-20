@@ -78,8 +78,10 @@ dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& cm2)
    }
    catch (std::bad_alloc& e)
    {
-     cerr << "Error: Unable to allocate array.\n";
-     ad_exit(21);
+     cerr << "Error[" << __FILE__ << ':' << __LINE__
+          << "]: Unable to allocate array.\n";
+     //ad_exit(21);
+     throw e;
    }
    dvar_matrix vtmp=nograd_assign(tmp);
    save_identifier_string("TEST1");

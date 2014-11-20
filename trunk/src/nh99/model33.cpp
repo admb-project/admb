@@ -45,6 +45,8 @@ void ad_make_code_reentrant(void)
   }
 }
 
+#ifdef _WIN32
+
 void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
   char *** pargv)
 {
@@ -123,6 +125,7 @@ char** no_dll_options(char *pname, const int& _nopt)
   strcat(a[0],".exe");
   return a;
 }
+#endif
 
 void cleanup_argv(int nopt,char *** pa)
 {
@@ -144,9 +147,9 @@ void cleanup_argv(int nopt,char *** pa)
   }
 }
 
-#if !defined(_MSC_VER)
-  #if defined(_WIN32)
-    #include <windows.h>
+#if defined(_WIN32)
+  #include <windows.h>
+  #if !defined(_MSC_VER)
 void get_sp_printf(void)
 {
   ad_printf=NULL;
@@ -157,7 +160,6 @@ void get_sp_printf(void)
 */
 }
   #endif
-#endif
 
 void do_dll_housekeeping(int argc,char ** argv)
 {
@@ -186,6 +188,7 @@ void do_dll_housekeeping(int argc,char ** argv)
   if (!ad_printf) ad_printf=printf;
 #endif
 }
+#endif
 
 /*
 void ssbul_l(char * ptmp){;}
@@ -364,10 +367,6 @@ public:
   char* get_next_option(size_t& n);
 };
 
-void davesnobullshitstrncpy(char * a,const char * b, const size_t n);
-char ** parse_dll_options(char * s,int& argc);
-
-
 string_parser::string_parser(char * s, const size_t n)
 {
   if (strlen(s) > n)
@@ -428,6 +427,7 @@ char* string_parser::get_next_option(size_t& n)
 
 typedef char * chararray;
 
+#ifdef _WIN32
 void davesnobullshitstrncpy(char * a,const char * b, const size_t n)
 {
   strncpy(a,b,n);
@@ -437,9 +437,8 @@ void davesnobullshitstrncpy(char * a,const char * b, const size_t n)
 char** parse_dll_options(char *pname, const int& _argc, char *s)
 {
   int& argc=(int&)(_argc);
-  char ** a;
   const int maxargs=200;
-  a = (char **) malloc(sizeof(char*)*(maxargs+2));
+  char** a = (char**)malloc(sizeof(char*)*(maxargs+2));
 
   for (int i=0;i<=maxargs;i++)
   {
@@ -472,3 +471,4 @@ char** parse_dll_options(char *pname, const int& _argc, char *s)
   argc=ii;
   return a;
 }
+#endif

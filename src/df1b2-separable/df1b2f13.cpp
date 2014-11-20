@@ -538,5 +538,5 @@ void fixed_smartlist::read_file(void)
       }
     }
   }
-  while(nw != 1);
+  while(nw);
 }

@@ -64,6 +64,8 @@ TEST_F(test_dvar_matrix, multiplication)
 }
 TEST_F(test_dvar_matrix, incompatiblesize)
 {
+  ad_exit=&test_ad_exit;
+
   gradient_structure gs;
 
   dvar_matrix a(1, 6, 1, 6);

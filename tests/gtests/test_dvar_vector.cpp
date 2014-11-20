@@ -28,8 +28,6 @@ TEST_F(test_dvar_vector, fill)
 }
 TEST_F(test_dvar_vector, constructor_fill)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   char array[] = "{0, 1, 2, 3, 4, 5}";

@@ -81,7 +81,11 @@ double adtimer::get_elapsed_time(void)
  */
   adtimer::adtimer (void)
   {
+#ifdef _WIN64
+    t=GetTickCount64();
+#else
     t=GetCurrentTime();
+#endif
     told=t;
   }
 
@@ -91,7 +95,11 @@ double adtimer::get_elapsed_time(void)
  */
   double adtimer::get_elapsed_time_and_reset(void)
   {
+#ifdef _WIN64
+    t=GetTickCount64();
+#else
     t=GetCurrentTime();
+#endif
     //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
     double diff=t-told;
     told=t;
@@ -104,7 +112,11 @@ double adtimer::get_elapsed_time(void)
  */
   double adtimer::get_elapsed_time(void)
   {
+#ifdef _WIN64
+    t=GetTickCount64();
+#else
     t=GetCurrentTime();
+#endif
     //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
     double diff=t-told;
     return diff;

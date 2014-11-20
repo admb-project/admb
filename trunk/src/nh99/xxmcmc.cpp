@@ -590,7 +590,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 
       double pprobe=0.05;
       int probe_flag=0;
-      int nopt=0;
+      nopt=0;
       on = option_match(ad_comm::argc, ad_comm::argv, "-mcprobe", nopt);
       if (on == -1)
       {
@@ -730,7 +730,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         }
         else
         {
-          dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),
+          bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),
             chd, lprob,rng);
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);

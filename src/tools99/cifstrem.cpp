@@ -311,35 +311,39 @@ cifstream& cifstream::operator>>(const double& _x)
 {
   double& x = (double&)(_x);
   //char * s = new char[FILTER_BUF_SIZE];
-  char * s = (char*) malloc(8000*sizeof(char));
-  get_field(s);
-  if (s[0]=='#' && s[1] == '\0')
+  char* s = (char*)malloc(8000*sizeof(char));
+  if (s)
+  {
     get_field(s);
+    if (s[0]=='#' && s[1] == '\0')
+      get_field(s);
 
 #if !defined(__BORLANDC__)
-  istringstream is(s);
-  if (!is)
-  {
-    this->clear(is.rdstate());
-    report_error("double extraction operator");
-  }
-  is >> x;
+    istringstream is(s);
+    if (!is)
+    {
+      this->clear(is.rdstate());
+      report_error("double extraction operator");
+    }
+    is >> x;
 
-#  ifdef __NDPX__
-  if (is.eof()) is.clear();
-#  endif
-  if (!is)
-  {
-    this->clear(is.rdstate());
-    report_error("double extraction operator");
-  }
-  //delete []s;
+  #ifdef __NDPX__
+    if (is.eof()) is.clear();
+  #endif
+    if (!is)
+    {
+      this->clear(is.rdstate());
+      report_error("double extraction operator");
+    }
 #else
-  char * end=0;
-  x=strtod(s,&end);
+    char* end=0;
+    x=strtod(s,&end);
 #endif
 
-  free(s);
+    //delete [] s;
+    free(s);
+    s = 0;
+  } 
   return *this;
 }
 

@@ -56,9 +56,12 @@ adstring_array& adstring_array::append_distinct(const adstring& s)
   adstring_array* tmp = (adstring_array*)this->next;
   while (tmp != this)
   {
-    tmp->shape = shape;
-    tmp->ptr = ptr;
-    tmp = (adstring_array*)tmp->next;
+    if (tmp)
+    {
+      tmp->shape = shape;
+      tmp->ptr = ptr;
+      tmp = (adstring_array*)tmp->next;
+    }
   }
   return *this;
 }

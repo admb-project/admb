@@ -59,12 +59,15 @@ adstring& adstring::operator=(const adstring & t)
       s[i] = t[i];
     }
     s[sz + 1] = '\0';
-    adstring * tmp = (adstring *) this->next;
+    adstring* tmp = (adstring*)this->next;
     while (tmp != this)
     {
-      tmp->shape = shape;
-      tmp->s = s;
-      tmp = (adstring *) tmp->next;
+      if (tmp)
+      {
+        tmp->shape = shape;
+        tmp->s = s;
+        tmp = (adstring*)tmp->next;
+      }
     }
   }
   return (* this);
@@ -74,16 +77,20 @@ void adstring::realloc(const char* t)
 {
   size_t sz = strlen(t);
   shape->size() = sz;
-  delete [] ++s;
+  ++s;
+  delete [] s;
   s=new unsigned char[sz+1];
   strcpy((char*)(s),t);
   s--;
-  adstring * tmp = (adstring *) this->next;
+  adstring* tmp = (adstring*)this->next;
   while (tmp != this)
   {
-    tmp->shape = shape;
-    tmp->s = s;
-    tmp = (adstring *) tmp->next;
+    if (tmp)
+    {
+      tmp->shape = shape;
+      tmp->s = s;
+      tmp = (adstring *) tmp->next;
+    }
   }
 }
 

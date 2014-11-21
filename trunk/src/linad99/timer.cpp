@@ -81,7 +81,7 @@ double adtimer::get_elapsed_time(void)
  */
   adtimer::adtimer (void)
   {
-#ifdef _WIN64
+#if defined(_WIN64) && defined(_MSC_VER)
     t=GetTickCount64();
 #else
     t=GetCurrentTime();
@@ -95,7 +95,7 @@ double adtimer::get_elapsed_time(void)
  */
   double adtimer::get_elapsed_time_and_reset(void)
   {
-#ifdef _WIN64
+#if defined(_WIN64) && defined(_MSC_VER)
     t=GetTickCount64();
 #else
     t=GetCurrentTime();
@@ -112,7 +112,7 @@ double adtimer::get_elapsed_time(void)
  */
   double adtimer::get_elapsed_time(void)
   {
-#ifdef _WIN64
+#if defined(_WIN64) && defined(_MSC_VER)
     t=GetTickCount64();
 #else
     t=GetCurrentTime();

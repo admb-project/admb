@@ -347,33 +347,37 @@ dmatrix::dmatrix(char* s)
  */
 int get_non_blank_line(const ifstream& _infile,char * & line,
      const int& line_length)
-   {
-     ifstream& infile=(ifstream&) _infile;
-     char ch;
-     int tmp;
-     while ( (tmp=(infile.get(line,line_length)).good()) !=0)
-     {
-       //cout << line << endl;
-       infile >> ch; // get rid of the terminating character
-       if (ch != '\0') infile.putback(ch); // If character is not null
-                                           // put if back
-       int length=mystrlen(line);
-       if (length == -1)
-       {
-         cerr << "Error computing input line length field reading file\n";
-         ad_exit(1);
-       }
+{
+  ifstream& infile=(ifstream&)_infile;
+  char ch;
+  int tmp;
+  while ((tmp = (infile.get(line,line_length)).good()) != 0)
+  {
+    // get rid of the terminating character
+    bool good = (infile >> ch).good();
+    if (good)
+    {
+       // If character is not null put it back
+       if (ch != '\0') infile.putback(ch);
+    }
 
-       for (int i=0;i<length;i++)
-       {
-         if (line[i] != ' ')
-         {
-           return tmp;
-         }
-       }
-     }
-     return tmp;
-   }
+    int length = mystrlen(line);
+    if (length == -1)
+    {
+      cerr << "Error computing input line length field reading file\n";
+      ad_exit(1);
+    }
+
+    for (int i=0;i<length;i++)
+    {
+      if (line[i] != ' ')
+      {
+        return tmp;
+      }
+    }
+  }
+  return tmp;
+}
 
 /**
  * Description not yet available.

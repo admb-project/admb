@@ -46,3 +46,24 @@ TEST_F(test_cifstream, double)
   ASSERT_DOUBLE_EQ(7.8, d);
   cifs.close();
 }
+TEST_F(test_cifstream, get_non_blank_line)
+{
+  int get_non_blank_line(const ifstream& _infile, char*& line,
+     const int& line_length);
+
+  int MAX_LINE_LENGTH = 10000;
+  cifstream cifs("test_cifstream_get_non_blank_line.txt");
+  char* signature = cifs.signature();
+  ASSERT_STREQ("get_non_blank_line", signature);
+  char* line = new char[MAX_LINE_LENGTH];
+  get_non_blank_line(cifs, line, MAX_LINE_LENGTH);
+  ASSERT_STREQ("ONE", line);
+  get_non_blank_line(cifs, line, MAX_LINE_LENGTH);
+  ASSERT_STREQ("TWO", line);
+  get_non_blank_line(cifs, line, MAX_LINE_LENGTH);
+  ASSERT_STREQ("THREE", line);
+
+  ASSERT_EQ(get_non_blank_line(cifs, line, MAX_LINE_LENGTH), 0);
+
+  cifs.close();
+}

@@ -343,7 +343,7 @@ cifstream& cifstream::operator>>(const double& _x)
     //delete [] s;
     free(s);
     s = 0;
-  } 
+  }
   return *this;
 }
 

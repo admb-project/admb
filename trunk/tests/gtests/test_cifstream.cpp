@@ -36,3 +36,13 @@ TEST_F(test_cifstream, big_signature)
   cifs.getline(line, 5, '\n');
   ASSERT_STREQ("END", line);
 }
+TEST_F(test_cifstream, double)
+{
+  cifstream cifs("test_cifstream_getfield.txt");
+  double d;
+  cifs >> d;
+  ASSERT_DOUBLE_EQ(2.5, d);
+  cifs >> d;
+  ASSERT_DOUBLE_EQ(7.8, d);
+  cifs.close();
+}

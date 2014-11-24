@@ -101,8 +101,8 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all();
-    dvector y(1,nvar);
+    int ynvar=initial_params::nvarcalc_all();
+    dvector y(1,ynvar);
     initial_params::xinit_all(y);
     initial_df1b2params::reset_all(y);
 

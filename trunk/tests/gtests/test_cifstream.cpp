@@ -56,12 +56,15 @@ TEST_F(test_cifstream, get_non_blank_line)
   char* signature = cifs.signature();
   ASSERT_STREQ("get_non_blank_line", signature);
   char* line = new char[MAX_LINE_LENGTH];
-  get_non_blank_line(cifs, line, MAX_LINE_LENGTH);
+
+  ASSERT_EQ(get_non_blank_line(cifs, line, MAX_LINE_LENGTH), 3);
   ASSERT_STREQ("ONE", line);
-  get_non_blank_line(cifs, line, MAX_LINE_LENGTH);
+  ASSERT_EQ(get_non_blank_line(cifs, line, MAX_LINE_LENGTH), 3);
   ASSERT_STREQ("TWO", line);
-  get_non_blank_line(cifs, line, MAX_LINE_LENGTH);
+  ASSERT_EQ(get_non_blank_line(cifs, line, MAX_LINE_LENGTH), 5);
   ASSERT_STREQ("THREE", line);
+  ASSERT_EQ(get_non_blank_line(cifs, line, MAX_LINE_LENGTH), 4);
+  ASSERT_STREQ("FOUR", line);
 
   ASSERT_EQ(get_non_blank_line(cifs, line, MAX_LINE_LENGTH), 0);
 

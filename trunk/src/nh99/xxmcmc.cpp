@@ -239,7 +239,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     dvector sscale(1,nvar);
     if (!diag_option)
     {
-      int on,nopt = 0;
+      int nopt = 0;
       int rescale_bounded_flag=0;
       double rescale_bounded_power=0.5;
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcrb",nopt))>-1)
@@ -403,7 +403,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       }
       else
       {
-        int on=-1;
         int nopt=0;
         if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1)
         {

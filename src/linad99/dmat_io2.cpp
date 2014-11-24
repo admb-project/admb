@@ -336,6 +336,7 @@ dmatrix::dmatrix(char* s)
    }
    delete[] line;
    line = 0;
+
    delete[] field;
    field = 0;
   }
@@ -345,38 +346,23 @@ dmatrix::dmatrix(char* s)
  * Description not yet available.
  * \param
  */
-int get_non_blank_line(const ifstream& _infile,char * & line,
-     const int& line_length)
+int get_non_blank_line(
+  const ifstream& _infile,
+  char* &line,
+  const int& line_length)
 {
-  ifstream& infile=(ifstream&)_infile;
-  char ch;
-  int tmp;
-  while ((tmp = (infile.get(line,line_length)).good()) != 0)
+  ifstream& infile = (ifstream&)_infile;
+
+  int peek = infile.peek();
+  while (infile.good() && (iscntrl(peek) || isspace(peek)))
   {
-    // get rid of the terminating character
-    bool good = (infile >> ch).good();
-    if (good)
-    {
-       // If character is not null put it back
-       if (ch != '\0') infile.putback(ch);
-    }
-
-    int length = mystrlen(line);
-    if (length == -1)
-    {
-      cerr << "Error computing input line length field reading file\n";
-      ad_exit(1);
-    }
-
-    for (int i=0;i<length;i++)
-    {
-      if (line[i] != ' ')
-      {
-        return tmp;
-      }
-    }
+    infile.get();
+    peek = infile.peek();
   }
-  return tmp;
+
+  infile.get(line, line_length);
+
+  return infile.good() ? mystrlen(line) : 0;
 }
 
 /**
@@ -388,7 +374,10 @@ int mystrlen(const char* line)
   int ii = 0;
   while(ii < MAX_LINE_LENGTH)
   {
-    if (line[ii]=='\0') return ii;
+    if (line[ii]=='\0')
+    {
+      return ii;
+    }
     ii++;
   }
   return -1;

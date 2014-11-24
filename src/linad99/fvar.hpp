@@ -8669,12 +8669,20 @@ class adtimer
  */
 class adtimer
 {
-   DWORD t;
-   DWORD told;
- public:
-   double get_elapsed_time_and_reset(void);// return time in milliseconds;
-   double get_elapsed_time(void);// return time in milliseconds;
-   adtimer(void);
+#ifdef _MSC_VER
+  unsigned long long t;
+  unsigned long long told;
+#else
+  DWORD t;
+  DWORD told;
+#endif
+public:
+  adtimer();
+
+  // return time in milliseconds;
+  double get_elapsed_time_and_reset();
+  // return time in milliseconds;
+  double get_elapsed_time();
 };
 
 #endif

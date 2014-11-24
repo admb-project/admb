@@ -76,49 +76,48 @@ double adtimer::get_elapsed_time(void)
 #include <windows.h>
 
 /**
- * Description not yet available.
- * \param
- */
-  adtimer::adtimer (void)
-  {
+Default constructor
+*/
+adtimer::adtimer()
+{
 #if defined(_MSC_VER)
-    t=GetTickCount64();
+  t=GetTickCount64();
 #else
-    t=GetCurrentTime();
+  t=GetCurrentTime();
 #endif
-    told=t;
-  }
+  told=t;
+}
 
 /**
  * Description not yet available.
  * \param
  */
-  double adtimer::get_elapsed_time_and_reset(void)
-  {
+double adtimer::get_elapsed_time_and_reset()
+{
 #if defined(_MSC_VER)
-    t=GetTickCount64();
+  t=GetTickCount64();
 #else
-    t=GetCurrentTime();
+  t=GetCurrentTime();
 #endif
-    //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
-    double diff=t-told;
-    told=t;
-    return diff;
-  }
+  //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
+  double diff=t-told;
+  told=t;
+  return diff;
+}
 
 /**
  * Description not yet available.
  * \param
  */
-  double adtimer::get_elapsed_time(void)
-  {
+double adtimer::get_elapsed_time()
+{
 #if defined(_MSC_VER)
-    t=GetTickCount64();
+  t=GetTickCount64();
 #else
-    t=GetCurrentTime();
+  t=GetCurrentTime();
 #endif
-    //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
-    double diff=t-told;
-    return diff;
-  }
+  //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
+  double diff=t-told;
+  return diff;
+}
 #endif

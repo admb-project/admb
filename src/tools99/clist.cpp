@@ -6,35 +6,44 @@
  */
 #include "clist.h"
 
-clist * clist::prev(void)
+clist* clist::prev()
 {
-  clist * tmp = this->next;
-  while (tmp->next != this) tmp = tmp->next;
-  return (tmp);
+  clist* tmp = this->next;
+  while (tmp && tmp->next != this)
+  {
+    tmp = tmp->next;
+  }
+  return tmp;
 }
 
-int  clist::length(const int & max)
+int clist::length(const int& max)
 {
   int num = 1;
-  clist * tmp = this;
-  while (tmp->next != this)
+  clist* tmp = this;
+  while (tmp && tmp->next != this)
   {
     tmp = tmp->next;
     if (++num > max)
     {
-      return (-1);
+      return -1;
     }
   }
-  return (num);
+  return num;
 }
 
-clist::clist(const clist & t)
+/**
+Copy constructor
+*/
+clist::clist(const clist& t)
 {
   clist& tmp=*(clist *)(&t);
   next = t.next;
   tmp.next = this;
 }
 
+/**
+Destructor
+*/
 clist::~clist()
 {
   if (next == this)

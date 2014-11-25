@@ -46,18 +46,17 @@ dvar_vector& dvar_vector::shift(int min)
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector(const independent_variables& t)
- {
-   int i;
-   allocate(t.indexmin(),t.indexmax());
+dvar_vector::dvar_vector(const independent_variables& t)
+{
+  allocate(t.indexmin(),t.indexmax());
 
-   for ( i=indexmin(); i<=indexmax(); i++)
-   {
+  for (int i=indexmin(); i<=indexmax(); i++)
+  {
      va[i].x=(t.v)[i];
-   }
+  }
 
-   make_indvar_list(*this);
- }
+  make_indvar_list(*this);
+}
 
 /**
  * Description not yet available.
@@ -269,48 +268,50 @@ void dvar_vector::allocatec(const dvar_vector& t)
  * Description not yet available.
  * \param
  */
-   void dvar_vector::allocate(int ncl,int nch)
-   {
-     if (ncl>nch)
-       allocate();
-     else
-     {
-       index_min=ncl;
-       index_max=nch;
+void dvar_vector::allocate(int ncl, int nch)
+{
+  if (ncl > nch)
+  {
+    allocate();
+  }
+  else
+  {
+    index_min=ncl;
+    index_max=nch;
 #ifndef OPT_LIB
-       assert(nch >= ncl);
+    assert(nch >= ncl);
 #endif
-       unsigned int itemp = (unsigned int)(nch - ncl + 1);
+    unsigned int itemp = (unsigned int)(nch - ncl + 1);
 /*
-       if (itemp<=0)
-       {
+    if (itemp<=0)
+    {
          cerr << "Error in dvar_vector constructor max index must be"
                  " >= minindex\n"
             << "minindex = " << ncl << " maxindex = " << nch <<endl;
          ad_exit(1);
-       }
+    }
 */
-       if ( (va = arr_new(itemp)) ==0)
-       {
-         cerr << " Error trying to allocate memory for dvar_vector\n";
-         ad_exit(1);
-       }
-
-       if ( (shape=new vector_shapex(ncl,nch,va)) == NULL)
-       {
-         cerr << "Error trying to allocate memory for dvar_vector\n";
-         ad_exit(1);
-       }
-
-       link_ptr=* (arr_link **) va;
-       va -= indexmin();
-       // if ( ((int)va) %8) cerr << "Array is not QWORD alligned" << endl;
-
-       #ifdef DIAG
-         myheapcheck("Leaving dvar_vector::allocate(ncl,nch)");
-       #endif
-     }
-   }
+    if ((va = arr_new(itemp)) == 0)
+    {
+      cerr << " Error trying to allocate memory for dvar_vector\n";
+      ad_exit(1);
+    }
+    else
+    {
+      if ( (shape=new vector_shapex(ncl,nch,va)) == NULL)
+      {
+        cerr << "Error trying to allocate memory for dvar_vector\n";
+        ad_exit(1);
+      }
+      link_ptr=* (arr_link **) va;
+      va -= indexmin();
+      // if ( ((int)va) %8) cerr << "Array is not QWORD alligned" << endl;
+#ifdef DIAG
+      myheapcheck("Leaving dvar_vector::allocate(ncl,nch)");
+#endif
+    }
+  }
+}
 
 /**
  * Description not yet available.

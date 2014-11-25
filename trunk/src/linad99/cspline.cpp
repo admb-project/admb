@@ -478,8 +478,6 @@ dvector spline_cubic_set(int n, const dvector& t, const dvector& y, int ibcbeg,
 {
   dvector a(0,3*n-1);
   dvector b(0,n-1);
-  int i;
-  double *ypp;
 
   //  Check.
   if ( n <= 1 )
@@ -491,7 +489,7 @@ dvector spline_cubic_set(int n, const dvector& t, const dvector& y, int ibcbeg,
     //return NULL;
   }
 
-  for ( i = 0; i < n - 1; i++ )
+  for (int i = 0; i < n - 1; i++ )
   {
     if ( t[i+1] <= t[i] )
     {
@@ -531,7 +529,7 @@ dvector spline_cubic_set(int n, const dvector& t, const dvector& y, int ibcbeg,
   }
 
   //  Set up the intermediate equations.
-  for ( i = 1; i < n-1; i++ )
+  for (int  i = 1; i < n-1; i++ )
   {
     b[i] = ( y[i+1] - y[i] ) / ( t[i+1] - t[i] )
       - ( y[i] - y[i-1] ) / ( t[i] - t[i-1] );
@@ -577,17 +575,20 @@ dvector spline_cubic_set(int n, const dvector& t, const dvector& y, int ibcbeg,
   }
   else
   {
-    ypp = d3_np_fs ( n, a, b );
+    double* ypp = d3_np_fs( n, a, b );
     dvector ret(0,n-1);
-    if ( !ypp )
+    if (!ypp)
     {
       cout << "\n";
       cout << "SPLINE_CUBIC_SET - Fatal error!\n";
       cout << "  The linear system could not be solved.\n";
     }
-    for(i=0;i<n;i++)
+    else
     {
-       ret(i) =ypp[i];
+      for(int i=0;i<n;i++)
+      {
+        ret(i) = ypp[i];
+      }
     }
     return ret;
   }

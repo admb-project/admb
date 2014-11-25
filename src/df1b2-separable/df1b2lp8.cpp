@@ -1232,6 +1232,5 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
       ofs << setw(4) << M(i) << endl;
     }
   }
-  exit(1);
   return M;
 }

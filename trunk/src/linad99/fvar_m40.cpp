@@ -500,7 +500,7 @@ void dfcholeski_decomp_banded(void)
       dftmp1(i,j)+=dfL(i,j)*linv;
       dfL(j,j)-=dfL(i,j)*tmp1(i,j)*linv*linv;
       dfL(i,j)=0.0;
-      int kmin=max(1,j-bw+1,i-bw+1);
+      kmin=max(1,j-bw+1,i-bw+1);
       for (k=j-1;k>=kmin;k--)
       {
         //tmp(i,j)-=L(i,k)*L(j,k);
@@ -656,7 +656,7 @@ void check_choleski_decomp(const banded_symmetric_dvar_matrix& MM,
        " value was " << M(1,1) << " for index  1"   <<endl;
       ierr=1;
       return;
-      M(1,1)=1.0;
+      //M(1,1)=1.0;
     }
   L.elem_value(1,1)=sqrt(value(M(1,1)));
   for (i=2;i<=bw;i++)
@@ -689,7 +689,7 @@ void check_choleski_decomp(const banded_symmetric_dvar_matrix& MM,
        " value was " << tmp << " for index " << i    <<endl;
       ierr=1;
       return;
-      tmp=1.0;
+      //tmp=1.0;
     }
     L.elem_value(i,i)=sqrt(tmp);
   }

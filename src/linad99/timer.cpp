@@ -94,14 +94,8 @@ adtimer::adtimer()
  */
 double adtimer::get_elapsed_time_and_reset()
 {
-#if defined(_MSC_VER)
-  t=GetTickCount64();
-#else
-  t=GetCurrentTime();
-#endif
-  //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
-  double diff=t-told;
-  told=t;
+  double diff = get_elapsed_time();
+  told = t;
   return diff;
 }
 
@@ -113,11 +107,11 @@ double adtimer::get_elapsed_time()
 {
 #if defined(_MSC_VER)
   t=GetTickCount64();
+  unsigned long long diff = t - told;
 #else
   t=GetCurrentTime();
+  DWORD diff  = t - told;
 #endif
-  //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
-  double diff=t-told;
-  return diff;
+  return static_cast<double>(diff);
 }
 #endif

@@ -144,7 +144,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 
   dvector ddd(1,nvar);
   gradcalc(0,ddd);
-  adstring tmpstring;
 
   {
     first_hessian_flag=1;
@@ -161,7 +160,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       if (lapprox->block_diagonal_hessian)
       {
         //if (ad_comm::wd_flag)
-        tmpstring = ad_comm::adprogram_name + ".rhes";
+        adstring tmpstring = ad_comm::adprogram_name + ".rhes";
         ofstream ofs((char*)(tmpstring));
             ofs << "   value      std.dev" << endl;
         int mmin=lapprox->block_diagonal_hessian->indexmin();
@@ -191,7 +190,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       else if (lapprox->bHess)
       {
         //if (ad_comm::wd_flag)
-        tmpstring = ad_comm::adprogram_name + ".rhes";
+        adstring tmpstring = ad_comm::adprogram_name + ".rhes";
         ofstream ofs((char*)(tmpstring));
             ofs << "   value      std.dev" << endl;
         int mmin=lapprox->bHess->indexmin();
@@ -223,7 +222,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     {
       //if (ad_comm::wd_flag)
       dmatrix m;
-      tmpstring = ad_comm::adprogram_name + ".rhes";
+      adstring tmpstring = ad_comm::adprogram_name + ".rhes";
       ofstream ofs((char*)(tmpstring));
           ofs << "   value      std.dev" << endl;
       //int ii=1;
@@ -300,7 +299,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     }
 
     {
-      tmpstring = ad_comm::adprogram_name + ".luu";
+      adstring tmpstring = ad_comm::adprogram_name + ".luu";
       uistream uis1((char*)(tmpstring));
       int i = 0, j = 0;
       uis1 >> i >> j;

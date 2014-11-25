@@ -46,13 +46,9 @@
   #define S_IWRITE 0000200
 #endif
 
-#ifdef __MINGW64__
+#if !defined(OPT_LIB) || defined(__MINGW64__) || defined(_MSC_VER)
   #include <cassert>
   #include <climits>
-#else
-  #ifndef OPT_LIB
-  #include <cassert>
-  #endif
 #endif
 
 #ifdef __NDPX__

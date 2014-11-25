@@ -382,7 +382,7 @@ void dfsdmat::restore()
 {
   int _n=0;
   lseek(tmp_file,0L,SEEK_SET);
-#ifdef OPT_LIB
+#if defined(OPT_LIB) && !defined(_MSC_VER)
   read(tmp_file,&_n,sizeof(int));
 #else
   ssize_t ret = read(tmp_file,&_n,sizeof(int));

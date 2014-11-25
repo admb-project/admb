@@ -314,7 +314,7 @@ dmatrix trans(const dvector& x)
           // get the gradient for the profile likelihood variable at
           // the conditional maximum
           initial_params::current_phase = initial_params::max_number_phases;
-          int nvar=initial_params::nvarcalc();
+          nvar=initial_params::nvarcalc();
           dvector g(1,nvar);
           dvector fg(1,nvar);
           if (!underflow_flag)

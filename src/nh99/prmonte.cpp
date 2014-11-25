@@ -205,6 +205,7 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
     upper=cumd_norm(bl);
     lower=cumd_norm(ah);
     diff=upper-lower;
+/*
     if (diff>1.e-5)
     {
       expflag=0;
@@ -213,6 +214,7 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
     {
       expflag=1;
     }
+*/
     upper1=cumd_cauchy(bl);
     lower1=cumd_cauchy(ah);
     diff1=upper1-lower1;
@@ -238,7 +240,7 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   w.initialize();
   for (i=1;i<=nvar;i++)
   {
-    y=_y(i);
+    //y=_y(i);
     ah=a(i)/ch(i,i);
     bl=b(i)/ch(i,i);
     double u = rng.better_rand();

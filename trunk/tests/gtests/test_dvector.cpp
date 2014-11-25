@@ -87,8 +87,8 @@ TEST_F(test_dvector, reallocate_empty)
 TEST_F(test_dvector, cast_lvector)
 {
   dvector dv(1, 4);
-  dv(1) = -LONG_MAX;
-  dv(2) = -(LONG_MAX/2);
+  dv(1) = LONG_MIN;
+  dv(2) = LONG_MIN/2;
   dv(3) = LONG_MAX/2;
   dv(4) = LONG_MAX;
 
@@ -105,8 +105,8 @@ TEST_F(test_dvector, cast_lvector)
 TEST_F(test_dvector, cast_ivector)
 {
   dvector dv(1, 4);
-  dv(1) = -INT_MAX;
-  dv(2) = -(INT_MAX/2);
+  dv(1) = INT_MIN;
+  dv(2) = INT_MIN/2;
   dv(3) = INT_MAX/2;
   dv(4) = INT_MAX;
 
@@ -119,4 +119,18 @@ TEST_F(test_dvector, cast_ivector)
   EXPECT_EQ(iv.indexmax(), ret.indexmax());
   EXPECT_DOUBLE_EQ(dv((int)iv(1)), ret(1));
   EXPECT_DOUBLE_EQ(dv((int)iv(2)), ret(2));
+}
+TEST_F(test_dvector, with_lvector)
+{
+  lvector lv(1, 4);
+  lv(1) = LONG_MIN;
+  lv(2) = INT_MIN;
+  lv(3) = INT_MAX;
+  lv(4) = LONG_MAX;
+
+  dvector actual(lv);
+  EXPECT_DOUBLE_EQ(double(LONG_MIN), actual(1));
+  EXPECT_DOUBLE_EQ(double(INT_MIN), actual(2));
+  EXPECT_DOUBLE_EQ(double(INT_MAX), actual(3));
+  EXPECT_DOUBLE_EQ(double(LONG_MAX), actual(4));
 }

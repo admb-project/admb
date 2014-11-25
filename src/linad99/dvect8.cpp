@@ -33,13 +33,17 @@ dvector::dvector(const ivector& u)
  * \param
  */
 dvector::dvector(const lvector& u)
- {
-   allocate(u.indexmin(),u.indexmax());
-   for ( int i=indexmin(); i<=indexmax(); i++)
-   {
-     elem(i)=u.elem(i);
-   }
- }
+{
+  allocate(u.indexmin(), u.indexmax());
+  for (int i=indexmin(); i <= indexmax(); i++)
+  {
+#if defined(_WIN32)
+    elem(i) = u.elem(i);
+#else
+    elem(i) = static_cast<double>(u.elem(i));
+#endif
+  }
+}
 
 /**
  * Description not yet available.

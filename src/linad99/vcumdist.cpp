@@ -88,7 +88,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
   {
     cout << "can't happen" << endl;
     exit(1);
-    return 0.0;
+    //return 0.0;
   }
   else
   {

@@ -254,6 +254,17 @@ TEST_F(test_adstring, itoa)
   EXPECT_DEATH(itoa(i, 1), "Assertion");
 #endif
 }
+TEST_F(test_adstring, itoa_INT_MAX)
+{
+  adstring int_min = itoa(INT_MIN, 10);
+  EXPECT_STREQ((char*)"-2147483648", (char*)int_min);
+
+  adstring actual = itoa(INT_MAX, 10);
+  EXPECT_STREQ((char*)"2147483647", (char*)actual);
+
+  adstring negative = itoa(-INT_MAX, 10);
+  EXPECT_STREQ((char*)"-2147483647", (char*)negative);
+}
 #endif
 TEST_F(test_adstring, realloc)
 {

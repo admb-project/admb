@@ -128,7 +128,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all();
+    nvar=initial_params::nvarcalc_all();
     dvector y(1,nvar);
     initial_params::xinit_all(y);
     initial_df1b2params::reset_all(y);

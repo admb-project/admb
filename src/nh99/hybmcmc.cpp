@@ -445,15 +445,14 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       initial_params::mc_phase=0;
       initial_params::stddev_scale(current_scale,x);
       initial_params::mc_phase=mctmp;
-      int i;
-      for (i=1;i<=nvar;i++)
+      for (int i=1;i<=nvar;i++)
       {
         for (int j=1;j<=nvar;j++)
         {
           S(i,j)*=old_scale(i)*old_scale(j);
         }
       }
-      for (i=1;i<=nvar;i++)
+      for (int i=1;i<=nvar;i++)
       {
         for (int j=1;j<=nvar;j++)
         {

@@ -139,3 +139,23 @@ TEST_F(test_idea, multiple_int_double)
   ASSERT_DOUBLE_EQ(d * i, 12.5);
   ASSERT_DOUBLE_EQ(i * d, 12.5);
 }
+#ifdef _WIN32
+TEST_F(test_idea, no_dll_options)
+{
+  char** no_dll_options(char *pname, const int& _nopt);
+  const int nopt = 0;
+  char* pname = (char*)"pname";
+  char** ret = no_dll_options(pname, nopt);
+  if (ret)
+  {
+    ASSERT_STREQ((char*)"pname.exe", ret[0]);
+    delete [] ret;
+    ret = 0;
+  }
+  else
+  {
+    FAIL();
+  }
+  ASSERT_EQ(nopt, 1);
+}
+#endif

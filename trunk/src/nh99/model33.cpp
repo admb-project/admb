@@ -116,11 +116,9 @@ char** no_dll_options(char *pname, const int& _nopt)
 {
   int& nopt=(int&) _nopt;
   nopt=1;
-  char** a = 0;
-  //char * p=NULL;
-  //a=(char **)malloc((nopt+1)*sizeof(char *));
+  char** a = (char**)malloc((nopt+1)*sizeof(char*));
   a[nopt]=NULL;
-  //a[0]=(char *)malloc((strlen(pname)+5)*sizeof(char));
+  a[0]=(char *)malloc((strlen(pname)+5)*sizeof(char));
   strcpy(a[0],pname);
   strcat(a[0],".exe");
   return a;

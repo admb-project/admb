@@ -73,7 +73,7 @@
   long _cdecl _farptr_tolong(void _far *);
 #endif
 
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) || defined(_MSC_VER)
   #include <cassert>
 #endif
 
@@ -351,7 +351,7 @@ void gradient_structure::restore_arrays()
     humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
     lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
-  #ifdef OPT_LIB
+  #if defined(OPT_LIB) && !defined(_MSC_VER)
     read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
       (char*)dest,bytes_needed);
   #else

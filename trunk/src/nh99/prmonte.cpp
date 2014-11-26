@@ -41,9 +41,9 @@ dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1,
   double y;
   //int in=0;
   //int ie=0;
-  double u = rng.better_rand();
+  double _u = rng.better_rand();
   int rflag;
-  if (u>rob1)
+  if (_u>rob1)
   {
     rflag=1;
   }

@@ -10,11 +10,6 @@
   #include <climits>
 #endif
 
-static char nullptrerror[] = " Trying to access null pointer"
- " in df1b2quadratic_prior";
-static char unallocatederror[] = " Trying to access unallocated"
- " matrix in df1b2quadratic_prior";
-
 // this should be a resizeable array
 df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
 
@@ -28,22 +23,18 @@ df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
     xmyindex=num_quadratic_prior;
     ptr[num_quadratic_prior++]=this;
   }
-  void df1b2quadratic_prior::get_Lxu(dmatrix& M)
+void df1b2quadratic_prior::get_Lxu(dmatrix& M)
+{
+  bool isallocated = Lxu && allocated(*Lxu) && index;
+#ifndef OPT_LIB
+  assert(isallocated);
+#endif
+  if (isallocated)
   {
-    if (!Lxu || !index)
-    {
-      cerr << nullptrerror << endl;
-      ad_exit(1);
-    }
-    if (!allocated(*Lxu))
-    {
-      cerr << unallocatederror << endl;
-      ad_exit(1);
-    }
     int mmin=(*pu)(pu->indexmin()).get_ind_index();
     int size=pu->size();
     int offset=mmin-M(M.indexmin()).indexmax()-1;  // subtract x offset
-    int nvar=index->indexmax();
+    int nvar = index->indexmax();
     {
       switch(old_style_flag)
       {
@@ -59,6 +50,7 @@ df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
         break;
       case 1:
         break;
+        //@todo Check break statement
         for (int i=1;i<=nvar;i++)
         {
           int jcol=(*index)(i);
@@ -83,6 +75,7 @@ df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
       }
     }
   }
+}
 
   df1b2quadratic_prior::df1b2quadratic_prior(void)
   {

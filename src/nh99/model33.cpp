@@ -114,13 +114,19 @@ void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
 
 char** no_dll_options(char *pname, const int& _nopt)
 {
-  int& nopt=(int&) _nopt;
-  nopt=1;
   char** a = (char**)malloc((nopt+1)*sizeof(char*));
-  a[nopt]=NULL;
-  a[0]=(char *)malloc((strlen(pname)+5)*sizeof(char));
-  strcpy(a[0],pname);
-  strcat(a[0],".exe");
+  if (a)
+  {
+    a[nopt] = NULL;
+    a[0] = (char*)malloc((strlen(pname)+5)*sizeof(char));
+    if (a[0])
+    {
+      int& nopt=(int&) _nopt;
+      nopt=1;
+      strcpy(a[0],pname);
+      strcat(a[0],".exe");
+    }
+  }
   return a;
 }
 #endif

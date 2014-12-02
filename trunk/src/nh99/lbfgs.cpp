@@ -243,24 +243,11 @@ typedef doublereal E_f;/* real function with -R not specified */
 #endif
 /* Common Block Declarations */
 
-#if !defined(__SUNPRO_CC) && !defined(__OPEN64__) && !defined(_MSC_VER)
-struct {
-    integer mp, lp;
-    doublereal gtol, stpmin, stpmax;
-} lb3_1 = { .mp = 6, .lp = 6, .gtol = .9, .stpmin = 1e-20, .stpmax = 1e20};
-#else
-struct lb3_1_ {
-    integer mp, lp;
-    doublereal gtol, stpmin, stpmax;
+struct _lb3_1 {
+  integer mp, lp;
+  doublereal gtol, stpmin, stpmax;
 };
-
-#define lb3_1 (*(struct lb3_1_ *) &lb3_)
-/* Initialized data*/
-struct {
-    integer e_1[2];
-    doublereal e_2[3];
-    } lb3_ = { {6, 6}, {.9, 1e-20, 1e20}};
-#endif
+struct _lb3_1 lb3_1 = { 6, 6, .9, 1e-20, 1e20};
 
 /* Table of constant values */
 

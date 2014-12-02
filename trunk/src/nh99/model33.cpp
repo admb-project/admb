@@ -440,39 +440,43 @@ void davesnobullshitstrncpy(char * a,const char * b, const size_t n)
 
 char** parse_dll_options(char *pname, const int& _argc, char *s)
 {
-  int& argc=(int&)(_argc);
   const int maxargs=200;
   char** a = (char**)malloc(sizeof(char*)*(maxargs+2));
-
-  for (int i=0;i<=maxargs;i++)
+  if (a)
   {
-    a[i]=0;
-  }
-  string_parser sp(s,1000);
+    int& argc=(int&)(_argc);
+    for (int i=0;i<=maxargs;i++)
+    {
+      a[i]=0;
+    }
+    string_parser sp(s,1000);
 
-  size_t n=0;
-  int ii=1;
-  do
-  {
-     char * ss=sp.get_next_option(n);
-     if (n>0)
-     {
-       if (ii>maxargs)
-       {
-         cerr << "maximum number of command lne arguemtns exceeded"
-              << endl;
-       }
-       a[ii]=(char*)malloc(sizeof(char)*(n+2));
-       davesnobullshitstrncpy(a[ii],ss,n);
-       cout << a[ii] << endl;
-       ii++;
-     }
+    size_t n=0;
+    int ii=1;
+    do
+    {
+      char * ss=sp.get_next_option(n);
+      if (n>0)
+      {
+        if (ii>maxargs)
+        {
+          cerr << "maximum number of command lne arguemtns exceeded"
+               << endl;
+        }
+        a[ii]=(char*)malloc(sizeof(char)*(n+2));
+        davesnobullshitstrncpy(a[ii],ss,n);
+        cout << a[ii] << endl;
+        ii++;
+      }
+    } while (n > 0);
+    a[0]=(char*)malloc(sizeof(char)*(strlen(pname)+6));
+    if (a[0])
+    {
+      strcpy(a[0],pname);
+      strcat(a[0],".exe");
+      argc=ii;
+    }
   }
-  while (n>0);
-  a[0]=(char*)malloc(sizeof(char)*(strlen(pname)+6));
-  strcpy(a[0],pname);
-  strcat(a[0],".exe");
-  argc=ii;
   return a;
 }
 #endif

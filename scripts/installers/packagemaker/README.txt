@@ -8,8 +8,8 @@ Installation
 
 1. Download ADMB installer
 
-       [ADMB XCode 5 (64 Bit).dmg](http://www.admb-project.org/buildbot/snapshots/admb-latest-ADMBTerminal-macos10.9-xcode5-64bit.dmg)  
-       [ADMB XCode 5 (32 Bit).dmg](http://www.admb-project.org/buildbot/snapshots/admb-latest-ADMBTerminal-macos10.9-xcode5-32bit.dmg)  
+       [ADMB XCode (64 Bit).dmg](http://www.admb-project.org/buildbot/snapshots/admb-latest-ADMBTerminal-macos10.9-xcode6-64bit.dmg)  
+       [ADMB XCode (32 Bit).dmg](http://www.admb-project.org/buildbot/snapshots/admb-latest-ADMBTerminal-macos10.9-xcode6-32bit.dmg)  
 
 2. Double click downloaded ADMB dmg file. 
 

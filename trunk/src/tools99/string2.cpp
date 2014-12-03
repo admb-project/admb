@@ -92,16 +92,17 @@ adstring itoa(int n, int r)
   assert(r != 1);
 #endif
 
-  bool sign = n < 0;
+  bool sign = n < 0 ? true : false;
+  if (sign) n *= -1;
   unsigned char buf[50];
+  memset(&buf[0], ' ', 50);
   size_t ii=0;
   do
   {
     int nr = n % r;
-    if (sign) nr *= -1;
+    if (nr < 0) nr *= -1;
     buf[ii++] = (unsigned char)nr;
   } while (n /= r);
-
   if (sign)
   {
     ii++;

@@ -265,6 +265,17 @@ TEST_F(test_adstring, itoa_INT_MAX)
   adstring negative = itoa(-INT_MAX, 10);
   EXPECT_STREQ((char*)"-2147483647", (char*)negative);
 }
+TEST_F(test_adstring, itoa_INT_MAX_base2)
+{
+  adstring int_min = itoa(INT_MIN, 2);
+  EXPECT_STREQ((char*)"-10000000000000000000000000000000", (char*)int_min);
+
+  adstring actual = itoa(INT_MAX, 2);
+  EXPECT_STREQ((char*)"1111111111111111111111111111111", (char*)actual);
+
+  adstring negative = itoa(-INT_MAX, 2);
+  EXPECT_STREQ((char*)"-1111111111111111111111111111111", (char*)negative);
+}
 #endif
 TEST_F(test_adstring, realloc)
 {

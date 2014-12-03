@@ -258,7 +258,7 @@ void allocate_dvariable_space()
   char* tmp1 = (char*)malloc(size * sizeof(char));
   if (!tmp1)
   {
-    cerr << "Error[" << __FILE__ << ":" << __LINE__ 
+    cerr << "Error[" << __FILE__ << ":" << __LINE__
          << "]: unable to allocate memory.\n";
     ad_exit(1);
   }

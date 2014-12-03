@@ -9,9 +9,12 @@
 clist* clist::prev()
 {
   clist* tmp = this->next;
-  while (tmp && tmp->next != this)
+  while (tmp)
   {
-    tmp = tmp->next;
+    if (tmp->next != this)
+      tmp = tmp->next;
+    else
+      break;
   }
   return tmp;
 }

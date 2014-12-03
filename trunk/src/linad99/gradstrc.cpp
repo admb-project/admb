@@ -255,26 +255,33 @@ void allocate_dvariable_space()
   assert(sizeof(dlink) == 2 * sizeof(double));
 #endif
   const size_t size = 2 * sizeof(double) * (numlinks + 1);
-  char * tmp= (char*)malloc(size * sizeof(char));
-  char * tmp1=tmp;
-
-  dlink * dl=(dlink*)tmp1;
-  tmp1+=2*sizeof(double);
-  dl->prev=NULL;
-  dlink * prev=dl;
-  int& nlinks=(int&)gradient_structure::GRAD_LIST->nlinks;
-  gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
-  for (unsigned int i=1;i<=numlinks;i++)
+  char* tmp1 = (char*)malloc(size * sizeof(char));
+  if (!tmp1)
   {
-    dl=(dlink*)tmp1;
-    dl->prev=prev;
-    prev=dl;
+    cerr << "Error[" << __FILE__ << ":" << __LINE__ 
+         << "]: unable to allocate memory.\n";
+    ad_exit(1);
+  }
+  else
+  {
+    dlink * dl=(dlink*)tmp1;
     tmp1+=2*sizeof(double);
-
+    dl->prev=NULL;
+    dlink * prev=dl;
+    int& nlinks=(int&)gradient_structure::GRAD_LIST->nlinks;
     gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
-      // keep track of the links so you can
-  }                               // zero them out
-  gradient_structure::GRAD_LIST->last=dl;
+    for (unsigned int i=1;i<=numlinks;i++)
+    {
+      dl=(dlink*)tmp1;
+      dl->prev=prev;
+      prev=dl;
+      tmp1+=2*sizeof(double);
+
+      gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
+      // keep track of the links so you can zero them out
+    }
+    gradient_structure::GRAD_LIST->last=dl;
+  }
 }
 
 /**

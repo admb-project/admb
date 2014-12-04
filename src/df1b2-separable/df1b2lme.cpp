@@ -93,17 +93,24 @@ void laplace_approximation_calculator::get_hessian_components_banded_lme
       //(*bHess_components)(ic)= *bHess;
       break;
     case 4:
-      if (var_flag==1)
+      if (!tmpHess)
       {
-        (*Hess_components)(ic)= (Hess-*tmpHess)/0.2;
+        throw std::bad_alloc();
       }
       else
       {
-        double dfp=
-        exp(-2.0*value(*variance_components_vector)(ic));
-        (*Hess_components)(ic)= (Hess-*tmpHess)/(dfp-df0(ic));
+        if (var_flag==1)
+        {
+          (*Hess_components)(ic)= (Hess-*tmpHess)/0.2;
+        }
+        else
+        {
+          double dfp=
+          exp(-2.0*value(*variance_components_vector)(ic));
+          (*Hess_components)(ic)= (Hess-*tmpHess)/(dfp-df0(ic));
+        }
+        (*variance_components_vector)(ic)-=0.2;
       }
-      (*variance_components_vector)(ic)-=0.2;
       break;
     default:
       cerr << "Illegal value for hesstype here" << endl;

@@ -2589,11 +2589,17 @@ class dvar_matrix
 #ifdef OPT_LIB
 inline dvar_vector& dvar_matrix::operator[](int i)
 {
-  return m[i];
+  if (!m)
+    throw std::bad_alloc();
+  else
+    return m[i];
 }
 inline dvar_vector& dvar_matrix::operator()(int i)
 {
-  return m[i];
+  if (!m)
+    throw std::bad_alloc();
+  else
+    return m[i];
 }
 inline const dvar_vector& dvar_matrix::operator[](int i) const
 {

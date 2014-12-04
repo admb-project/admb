@@ -49,13 +49,14 @@ dvar_vector& dvar_vector::shift(int min)
 dvar_vector::dvar_vector(const independent_variables& t)
 {
   allocate(t.indexmin(),t.indexmax());
-
-  for (int i=indexmin(); i<=indexmax(); i++)
+  if (va)
   {
-     va[i].x=(t.v)[i];
+    for (int i=indexmin(); i<=indexmax(); i++)
+    {
+      va[i].x=(t.v)[i];
+    }
+    make_indvar_list(*this);
   }
-
-  make_indvar_list(*this);
 }
 
 /**

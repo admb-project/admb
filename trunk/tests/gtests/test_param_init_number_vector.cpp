@@ -24,14 +24,30 @@ TEST_F(test_param_init_number_vector, set_initial_value_only)
   {
     p[min];
   }
-  catch (const int exit_code)          
+  catch (const std::bad_alloc&)          
   {   
-    const int expected_exit_code = 1;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-    }
-      return;
+    return;
+  }
+  FAIL();
+}
+TEST_F(test_param_init_number_vector, set_initial_value_only_paren)
+{
+  ad_exit=&test_ad_exit;
+
+  const int min = 1;
+  const int max = 3;
+  dvector v(min, max); 
+  v.initialize();
+
+  param_init_bounded_number_vector p;
+  p.set_initial_value(v);
+  try
+  {
+    p(min);
+  }
+  catch (const std::bad_alloc&)          
+  {   
+    return;
   }
   FAIL();
 }

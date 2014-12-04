@@ -327,14 +327,15 @@ param_init_bounded_number& param_init_bounded_number_vector::operator[](int i)
   if (!v)
   {
     cerr << "Error: param_init_bounded_number_vector was not allocated.\n";
-    ad_exit(1);
+    throw std::bad_alloc();
   }
-  if (i < indexmin() || indexmax() < i) {
-    ADMB_ARRAY_BOUNDS_ERROR("Invalid index",
-      "param_init_number_vector::operator[](int i)",
-      indexmin(), indexmax(), i);
+  else if (i < indexmin() || indexmax() < i)
+  {
+    std::string what = "Invalid index in param_init_number_vector::operator[](int i)";
+    throw std::out_of_range(what);
   }
-  return v[i];
+  else
+    return v[i];
 }
 /**
  * Description not yet available.
@@ -345,13 +346,14 @@ param_init_bounded_number& param_init_bounded_number_vector::operator()(int i)
   if (!v)
   {
     cerr << "Error: param_init_bounded_number_vector was not allocated.\n";
-    ad_exit(1);
+    throw std::bad_alloc();
   }
-  if (i < indexmin() || indexmax() < i) {
-    ADMB_ARRAY_BOUNDS_ERROR("Invalid index",
-      "param_init_number_vector::operator()(int i)",
-      indexmin(), indexmax(), i);
+  else if (i < indexmin() || indexmax() < i)
+  {
+    std::string what = "Invalid index in param_init_number_vector::operator()(int i)";
+    throw std::out_of_range(what);
   }
-  return v[i];
+  else
+    return v[i];
 }
 #endif

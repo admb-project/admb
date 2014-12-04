@@ -420,12 +420,15 @@ dvector laplace_approximation_calculator::banded_calculations
       f=initial_df1b2params::cobjfun;
      if (pmin->lapprox->sparse_hessian_flag==0)
      {
-        if (bHess==0)
+        if (!bHess)
         {
           cerr << "Block diagonal Hessian is unallocated" << endl;
           ad_exit(1);
         }
-        f+=0.5*ln_det_choleski(*bHess,sgn);
+        else
+        {
+          f+=0.5*ln_det_choleski(*bHess,sgn);
+        }
       }
       else
       {

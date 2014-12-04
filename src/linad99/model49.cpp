@@ -331,7 +331,8 @@ param_init_bounded_number& param_init_bounded_number_vector::operator[](int i)
   }
   else if (i < indexmin() || indexmax() < i)
   {
-    std::string what = "Invalid index in param_init_number_vector::operator[](int i)";
+    std::string what =
+      "Invalid index in param_init_number_vector::operator[](int i)";
     throw std::out_of_range(what);
   }
   else
@@ -350,7 +351,8 @@ param_init_bounded_number& param_init_bounded_number_vector::operator()(int i)
   }
   else if (i < indexmin() || indexmax() < i)
   {
-    std::string what = "Invalid index in param_init_number_vector::operator()(int i)";
+    std::string what =
+      "Invalid index in param_init_number_vector::operator()(int i)";
     throw std::out_of_range(what);
   }
   else

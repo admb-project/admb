@@ -201,7 +201,10 @@ inline int& imatrix::operator()(int i, int j)
 }
 inline ivector& imatrix::operator[](int i)
 {
-  return m[i];
+  if (!m)
+    throw std::bad_alloc();
+  else
+    return m[i];
 }
 inline const ivector& imatrix::operator()(int i) const
 {

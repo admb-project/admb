@@ -50,7 +50,8 @@ void df1b2quadratic_prior::get_Lxu(dmatrix& M)
         break;
       case 1:
         break;
-        //@todo Check break statement
+        /**
+        @todo Unreachable code, check above break statement.
         for (int i=1;i<=nvar;i++)
         {
           int jcol=(*index)(i);
@@ -59,6 +60,7 @@ void df1b2quadratic_prior::get_Lxu(dmatrix& M)
             M(ii+offset,jcol)+=(*Lxu)(i,ii);
           }
         }
+        */
       case 2:
         for (int i=1;i<=nvar;i++)
         {

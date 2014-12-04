@@ -1181,6 +1181,8 @@ dvector laplace_approximation_calculator::
     //ad_exit(1);
   }
   return uhat_best;
+/**
+@todo Unreachable code, check above return statement.
   initial_params::set_active_only_random_effects();
   if (!inner_lmnflag)
   {
@@ -1200,4 +1202,5 @@ dvector laplace_approximation_calculator::
     uhat=get_uhat_lm_newton(uhat_new,pfmin);
   }
   return uhat;
+*/
 }

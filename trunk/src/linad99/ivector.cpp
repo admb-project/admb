@@ -209,23 +209,26 @@ ivector& ivector::operator=(int u)
 /**
 Constructor
 */
-ivector::ivector(unsigned int sz, long int* x )
+ivector::ivector(unsigned int sz, long int* x)
 {
 #ifndef OPT_LIB
   assert(sz > 0 && sz <= INT_MAX);
+  assert(x);
 #endif
   allocate(0, (int)(sz - 1));
 
-  for (unsigned int i = 0; i < sz; i++)
+  if (v)
   {
-    //cout << "Doing the assignment in constructor\n";
+    for (unsigned int i = 0; i < sz; i++)
+    {
 #ifdef OPT_LIB
-    v[i] = (int)x[i];
+      v[i] = (int)x[i];
 #else
-    long int xi = x[i];
-    assert(xi <= INT_MAX);
-    v[i] = (int)xi;
+      long int xi = x[i];
+      assert(xi <= INT_MAX);
+      v[i] = static_cast<int>(xi);
 #endif
+    }
   }
 }
 

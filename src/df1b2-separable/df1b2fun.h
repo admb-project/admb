@@ -1047,16 +1047,9 @@ public:
     const index_type& nch,const char *);
   void allocate(void);
   void deallocate(void);
-#if defined(OPT_LIB)
-  df1b2variable& operator () (int i,int j) const
-    { return (df1b2variable&)(v[i][j]);}
-  df1b2vector& operator [] (int i) const {return (df1b2vector&)(v[i]);}
-  df1b2vector& operator () (int i) const {return (df1b2vector&)(v[i]);}
-#else
-  df1b2variable& operator () (int i,int j) const;
-  df1b2vector& operator [] (int i) const;
-  df1b2vector& operator () (int i) const;
-#endif
+  df1b2variable& operator()(int i,int j) const;
+  df1b2vector& operator[](int i) const;
+  df1b2vector& operator()(int i) const;
   int colmin(void) const {return (*(df1b2matrix*)(this))(index_min).indexmin();}
   int colmax(void) const {return (*(df1b2matrix*)(this))(index_min).indexmax();}
   int colsize(void)const {return colmax()-colmin()+1;}
@@ -1065,6 +1058,23 @@ public:
   df1b2matrix& operator *= (double x);
   df1b2matrix& operator /= (double x);
 };
+#if defined(OPT_LIB)
+inline df1b2variable& df1b2matrix::operator()(int i,int j) const
+{
+  return (df1b2variable&)(v[i][j]);
+}
+inline df1b2vector& df1b2matrix::operator[](int i) const
+{
+  return (df1b2vector&)(v[i]);
+}
+inline df1b2vector& df1b2matrix::operator()(int i) const
+{
+  if (!v)
+    throw std::bad_alloc();
+  else
+    return v[i];
+}
+#endif
 
 /**
  * Description not yet available.

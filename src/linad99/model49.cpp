@@ -11,8 +11,8 @@
 #include <admodel.h>
 #include "admb_messages.h"
 
-
 #if !defined(OPT_LIB)
+#include <stdexcept>
 
 /**
  * Description not yet available.

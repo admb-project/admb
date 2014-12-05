@@ -87,12 +87,21 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
  * Description not yet available.
  * \param
  */
-  void quadratic_prior::add_to_list(void)
+void quadratic_prior::add_to_list(void)
+{
+  if (num_quadratic_prior>=max_num_quadratic_prior)
   {
-    if (num_quadratic_prior>=max_num_quadratic_prior) ad_exit(1);
+    cerr << "Error[" << __FILE__ << ':' << __LINE__
+         << "]: Max size exceeded.\n"; 
+
+    ad_exit(1);
+  }
+  else
+  {
     xmyindex=num_quadratic_prior;
     ptr[num_quadratic_prior++]=this;
   }
+}
 
 /**
  * Description not yet available.

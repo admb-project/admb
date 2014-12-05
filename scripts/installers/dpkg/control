@@ -1,6 +1,6 @@
 Package: admb
 Architecture: amd64
 Maintainer: ADMB Core Team <developers@admb-project.org>
-Version: 11.1
+Version: 11.2
 Installed-Size: 100
 Description: See http://www.admb-project.org/

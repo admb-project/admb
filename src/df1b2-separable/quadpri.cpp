@@ -92,7 +92,7 @@ void quadratic_prior::add_to_list(void)
   if (num_quadratic_prior>=max_num_quadratic_prior)
   {
     cerr << "Error[" << __FILE__ << ':' << __LINE__
-         << "]: Max size exceeded.\n"; 
+         << "]: Max size exceeded.\n";
 
     ad_exit(1);
   }

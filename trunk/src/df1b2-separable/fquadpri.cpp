@@ -17,12 +17,20 @@ df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
  const int df1b2quadratic_prior::max_num_quadratic_prior=100;
 
 
-  void df1b2quadratic_prior::add_to_list(void)
+void df1b2quadratic_prior::add_to_list(void)
+{
+  if (num_quadratic_prior >= max_num_quadratic_prior)
   {
-    if (num_quadratic_prior>=max_num_quadratic_prior) ad_exit(1);
+    cerr << "Error[" << __FILE__ << ':' << __LINE__
+         << "]: Max size exceeded.\n"; 
+    ad_exit(1);
+  }
+  else
+  {
     xmyindex=num_quadratic_prior;
     ptr[num_quadratic_prior++]=this;
   }
+}
 void df1b2quadratic_prior::get_Lxu(dmatrix& M)
 {
   bool isallocated = Lxu && allocated(*Lxu) && index;

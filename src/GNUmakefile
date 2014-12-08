@@ -81,7 +81,7 @@ else
 endif
 
 ifneq ($(CXX),CC)
-ADCXXFLAGS:= -Wall -Wextra -Wno-unused-parameter -Wconversion $(ADCXXFLAGS)
+ADCXXFLAGS:= -Wall -Wextra -Wconversion -Wno-unused-parameter $(ADCXXFLAGS)
 endif
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
@@ -113,10 +113,10 @@ override CXXFLAGS += $(ADCXXFLAGS)
 CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
 
 ifeq ($(CXX),c++)
-CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra -Wno-unused-result,$(CXXFLAGS_OPT_LIB))
+CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
 endif
 ifeq ($(CXX),g++)
-CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra -Wno-unused-result,$(CXXFLAGS_OPT_LIB))
+CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
 endif
 
 include df1b2-separable/objects.lst

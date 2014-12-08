@@ -1,0 +1,37 @@
+ADMB Project  
+============
+*ADMB-11.2*  
+*Released December ??, 2014*  
+
+ADMB Installation procedures
+
+---
+
+Installation
+------------
+
+For Windows computers, read the [QuickStartWindows](QuickStartWindows.html).  
+
+For Windows computers with Visual C++, read the [QuickStartWindowsVisualC++](QuickStartVisualC++.html).  
+
+For MacOS computers, read the [QuickStartMacOS](QuickStartMacOS.html).
+
+For Ubuntu14 computers, read the [QuickStartUbuntu14](QuickStartUbuntu14.html).
+
+For MinGW and Cygwin shells, read the [QuickStartUnix](QuickStartUnix.html).
+
+For all others, read the source installation procedure below.
+
+Source Installation
+-------------------
+
+For Windows computers, read the [QuickStartWindowsSource](QuickStartWindowsSource.html).  
+
+For Unix (Linux, MacOS, Solaris and BSD) computers, read the [QuickStartUnix](QuickStartUnix.html).
+
+For MinGW and Cygwin shells, read the [QuickStartUnix](QuickStartUnix.html).
+
+---
+For help and support, email <users@admb-project.org>.
+
+$Id$

@@ -1,0 +1,43 @@
+\documentclass{book}
+
+\RequirePackage{rawfonts}
+\RequirePackage{pictexwd}
+
+\ifx\undefined\eightrm
+  \font\eightrm=cmr8
+\fi 
+\ifx\undefined\ninerm
+  \font\ninerm=cmr9
+\fi 
+\ifx\undefined\twelverm
+  \font\twelverm=cmr12
+\fi  
+
+\begin{document}
+
+\beginpicture
+  %\ninerm
+  \tenrm
+    \setplotsymbol ({\eightrm .})
+  \setcoordinatesystem units <.8in,5in>
+  \setplotarea x from -1.400 to 5.600, y from 0 to .55 
+  \axis left 
+  /
+  \axis bottom
+   ticks
+    numbered from -.0100 to 5.50 by .50 
+  /
+\setdashpattern <2pt,2pt,2pt,3pt>
+%% \plot  "eprl.tex" 
+% \plot  "st.2" 
+ \twelverm
+ \put {\hbox{Prof. like.}} at 3.5 .45
+ \putrule from 4.2 .45 to 5.5 .45
+\setdashpattern <1pt,3pt,4pt,3pt>
+%% \plot  "esno.tex" 
+% \plot  "st.3" 
+ \put {\hbox{Normal approx.}} at 3.5 .40
+ \putrule from 4.2 .40 to 5.5 .40
+\endpicture
+
+\end{document}

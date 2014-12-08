@@ -1,0 +1,79 @@
+#ADMB Project
+*ADMB-trunk*  
+*Released Month DD, YYYY*  
+
+Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
+
+---
+_**Note** &mdash; For Microsoft Visual C++ 2010, read [installation][help] documentation._
+[help]: http://www.admb-project.org/documentation/installation/admb-installation-visual-c
+
+Prerequisites
+-------------
+
+The following programs should be installed on the local computer.
+
+* Visual C++ installed and updated
+* _**Optional**_ &mdash; Subversion Client to download from source version control.
+
+Quick Start
+-----------
+
+1. Open **Visual Studio Command Prompt** window
+
+2. **Download** ADMB
+
+       To get the most current code, download from directly from 
+       ADMB version control using the command below.
+
+        C:\> svn checkout http://www.admb-project.org/svn/trunk admb
+
+       This will copy admb trunk folder to _C:\admb\ _.
+
+       If **unable** to checkout, download [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest.zip).
+
+       Double click downloaded zip file and extract to _C:\admb\ _.
+
+3. Change to admb directory
+
+        C:\> cd admb
+
+4. **Build** ADMB
+
+       To build ADMB, use the commands below.
+
+        C:\admb\> nmake
+
+       If debug symbols are needed, use the command below.
+
+        C:\admb\> nmake debug
+
+       _**Note** &mdash; When completed, `C:\admb\build\dist` is the binary distribution directory._
+
+5. **Use** ADMB
+
+       The following commands build and run the simple example.
+
+        C:\admb\> cd examples\admb\simple
+        C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
+        C:\admb\examples\admb\simple\> simple.exe
+
+6. _**Optional**_ &mdash; Installation
+
+       Add the admb directory to the system PATH to avoid typing the directory 
+       when calling the admb script.
+
+       1. In the **System Properties** window, click on the **Enviroment Variables** button.
+
+       2. In the **Enviroment Variables** windows, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
+
+       3. Click the **OK** button when done and open a new command prompt.
+
+            C:\admb\> cd examples\admb\simple
+            C:\admb\examples\admb\simple\> admb simple.tpl
+            C:\admb\examples\admb\simple\> simple.exe
+
+---
+For help and support, contact <users@admb-project.org>.
+
+$Id$

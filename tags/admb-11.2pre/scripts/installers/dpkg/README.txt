@@ -1,7 +1,14 @@
+#ADMB Project
+*ADMB-11.2pre*  
+*Released December 9, 2014*  
+
 Describes the ADMB installation for Ubuntu operating system using Debian package manager _dpkg_.
+
+__Note__ &mdash; This is still experimental.
 
 Installation
 ============
+
 __Note__ &mdash; The installation will copy the admb script to /usr/local/bin and put the distribution in /usr/local/admb.  It is no longer necessary to append the PATH or to set ADMB_HOME system variables.
 
 1. Download ADMB debian package
@@ -11,7 +18,6 @@ __Note__ &mdash; The installation will copy the admb script to /usr/local/bin an
 2. Install ADMB using Debian package manager _dpkg_.
 
         $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.2.deb
-
 
 Quick Start
 ===========

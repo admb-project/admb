@@ -1,5 +1,6 @@
 all:\
   QuickStartWindows.html\
+  QuickStartWindowsZip.html\
   QuickStartWindowsSource.html\
   QuickStartVisualC++.html\
   QuickStartVisualC++Source.html\
@@ -13,6 +14,11 @@ all:\
   README.html
 
 QuickStartWindows.html: QuickStartWindows.txt
+	cat begin.html>$@
+	markdown_py $^>>$@
+	cat end.html>>$@
+
+QuickStartWindowsZip.html: QuickStartWindowsZip.txt
 	cat begin.html>$@
 	markdown_py $^>>$@
 	cat end.html>>$@

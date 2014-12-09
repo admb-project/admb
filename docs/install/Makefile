@@ -76,3 +76,5 @@ clean:
 	rm -vf QuickStartWindows.html QuickStartVisualC++.html QuickStartUnix.html
 	rm -vf CHANGES.html INSTALL.html README.html LICENSE.html
 	rm -vf QuickStartMacOS.html
+	rm -vf QuickStartUbuntu14.html QuickStartUnixSource.html
+	rm -vf QuickStartVisualC++Source.html QuickStartWindowsSource.html

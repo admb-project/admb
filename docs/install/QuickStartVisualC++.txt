@@ -25,7 +25,7 @@ Quick Start
 
 2. **Extract**
 
-       Extract the downloaded file to C:\.
+       Extract **admb** folder from downloaded file to **C:\>**.
 
 5. **Use** ADMB
 

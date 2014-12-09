@@ -30,15 +30,16 @@ Quick Start
 3. Open a **Terminal** window
 
 4. **Use**
+
        The following commands build and run the simple example.
 
-           [~/admb/]$ cd examples/admb/simple
+           [~]$ cd admb/examples/admb/simple
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 
        For MinGW and Cygwin shells, use the **'admb.sh'** script.
 
-           [~/admb/]$ cd examples/admb/simple
+           [~]$ cd admb/examples/admb/simple
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 
@@ -50,11 +51,11 @@ Quick Start
 
        Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
 
-           [~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
+           [~]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
        After copying, build and run the simple example.
 
-           [~/admb/]$ cd examples/admb/simple
+           [~]$ cd admb/examples/admb/simple
            [~/admb/examples/admb/simple/]$ admb simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 

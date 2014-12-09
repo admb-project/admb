@@ -30,7 +30,7 @@ help:
 installer:
 	rm -vf admb.zip build/admb
 	cd build && ln -sf dist/ admb
-	cd build && zip -r ../admb admb
+	cd build && zip -9 -r ../admb admb
 
 #Microsoft Visual C++
 cl: cl-all

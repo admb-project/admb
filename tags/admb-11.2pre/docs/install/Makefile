@@ -1,7 +1,9 @@
 all:\
   QuickStartWindows.html\
+  QuickStartWindowsSource.html\
   QuickStartVisualC++.html\
   QuickStartUnix.html\
+  QuickStartUnixSource.html\
   QuickStartMacOS.html\
   QuickStartUbuntu14.html\
   CHANGES.html\
@@ -9,7 +11,12 @@ all:\
   LICENSE.html\
   README.html
 
-QuickStartWindows.html: QuickStartWindows.txt
+QuickStartWindows.html: QuickStartWindowsSource.txt
+	cat begin.html>$@
+	markdown_py $^>>$@
+	cat end.html>>$@
+
+QuickStartWindowsSource.html: QuickStartWindows.txt
 	cat begin.html>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
@@ -20,6 +27,11 @@ QuickStartVisualC++.html: QuickStartVisualC++.txt
 	cat end.html>>$@
 
 QuickStartUnix.html: QuickStartUnix.txt
+	cat begin.html>$@
+	markdown_py $^>>$@
+	cat end.html>>$@
+
+QuickStartUnixSource.html: QuickStartUnixSource.txt
 	cat begin.html>$@
 	markdown_py $^>>$@
 	cat end.html>>$@

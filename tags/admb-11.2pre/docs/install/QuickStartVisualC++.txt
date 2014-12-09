@@ -1,6 +1,6 @@
 #ADMB Project
-*ADMB-trunk*  
-*Released Month DD, YYYY*  
+*ADMB-11.2pre*  
+*Released December 9, 2014*  
 
 Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
 

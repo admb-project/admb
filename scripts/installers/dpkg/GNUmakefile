@@ -1,11 +1,11 @@
 all:
 	$(MAKE) clean
-	$(MAKE) admb_11.2.deb
+	$(MAKE) admb_11.2pre.deb
 
-admb_11.2.deb: admb_11.2
+admb_11.2pre.deb: admb_11.2pre
 	dpkg-deb --build $^
 
-admb_11.2: control
+admb_11.2pre: control
 	mkdir -p $@/usr/local/bin
 	cp -Rvf ../../../build/dist $@/usr/local/admb
 	cd $@/usr/local/bin; ln -sf ../admb/bin/admb admb; cd ..
@@ -14,5 +14,5 @@ admb_11.2: control
 	cp -vf control $@/DEBIAN
 
 clean:
-	rm -rvf admb_11.2
-	rm -rvf admb_11.2.deb
+	rm -rvf admb_11.2pre
+	rm -rvf admb_11.2pre.deb

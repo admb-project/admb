@@ -1,6 +1,6 @@
 #ADMB Project
-*ADMB-11.2pre*  
-*Released December 9, 2014*  
+*ADMB-11.2*  
+*Released December X, 2014*  
 
 The installation procedure for installing ADMBTerminal app for the MacOS.
 
@@ -11,8 +11,8 @@ Installation
 
 1. Download ADMB installer
 
-       [ADMB-11.2pre XCode (64 Bit).dmg](http://ftp.admb-project.org/admb-11.2pre/admb-11.2pre-ADMBTerminal-macos10-xcode6-64bit.dmg)  
-       [ADMB-11.2pre XCode (32 Bit).dmg](http://ftp.admb-project.org/admb-11.2pre/admb-11.2pre-ADMBTerminal-macos10-xcode6-32bit.dmg)  
+       [ADMB-11.2 XCode (64 Bit).dmg](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-64bit.dmg)  
+       [ADMB-11.2 XCode (32 Bit).dmg](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-32bit.dmg)  
 
 2. Double click downloaded ADMB dmg file. 
 

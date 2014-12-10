@@ -82,7 +82,7 @@ clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --file=Makefile clean
 else
-	if [[ -d kfsst ]]; then $(MAKE) --directory=kfsst clean; fi;
+	if [[ -e kfsst/Makefile ]]; then $(MAKE) --directory=kfsst clean; fi;
 	@rm -vf kfsst/admodel.cov
 	@rm -vf kfsst/admodel.dep
 	@rm -vf kfsst/admodel.hes
@@ -106,7 +106,7 @@ else
 	@rm -vf kfsst/kftrack.log
 	@rm -vf kfsst/mpt_111011110%F3-9%C3%D6%C8.dat
 	@rm -vf kfsst/variance
-	if [[ -d kftrack ]]; then $(MAKE) --directory=kftrack clean; fi;
+	if [[ -e kftrack/Makefile ]]; then $(MAKE) --directory=kftrack clean; fi;
 	@rm -vf kftrack/admodel.cov
 	@rm -vf kftrack/admodel.dep
 	@rm -vf kftrack/admodel.hes
@@ -128,7 +128,7 @@ else
 	@rm -vf kftrack/kftrack.std
 	@rm -vf kftrack/mpt.dat
 	@rm -vf kftrack/variance
-	if [[ -d trackit ]]; then $(MAKE) --directory=trackit clean; fi;
+	if [[ -e trackit/Makefile ]]; then $(MAKE) --directory=trackit clean; fi;
 	@rm -vf trackit/admodel.cov
 	@rm -vf trackit/admodel.dep
 	@rm -vf trackit/admodel.hes
@@ -152,7 +152,7 @@ else
 	@rm -vf trackit/ukf.rep
 	@rm -vf trackit/ukf.std
 	@rm -vf trackit/variance
-	if [[ -d ukfsst ]]; then $(MAKE) --directory=ukfsst clean; fi;
+	if [[ -e ukfsst/Makefile ]]; then $(MAKE) --directory=ukfsst clean; fi;
 	@rm -vf ukfsst/admodel.cov
 	@rm -vf ukfsst/admodel.dep
 	@rm -vf ukfsst/admodel.hes

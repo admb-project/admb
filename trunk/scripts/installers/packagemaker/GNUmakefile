@@ -1,11 +1,14 @@
 CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
 
-all: ADMBTerminal.dmg
+all:
+	$(MAKE) clean
+	$(MAKE) ADMBTerminal.dmg
 
 ADMBTerminal.dmg: build/ADMBTerminal.app
 	cp -vf README.txt build
 	cp -rvf ../../../build/dist build/ADMBTerminal.app/admb
-	rm -vf raw$@
+	rm -vf build/raw$@
+	touch build/.Trash
 	hdiutil create build/raw$@ -volname "ADMBTerminal" -srcfolder build/
 	rm -vf $@
 	hdiutil convert build/raw$@ -format UDBZ -o $@

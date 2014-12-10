@@ -5,15 +5,13 @@
 Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
 
 ---
-_**Note** &mdash; For Microsoft Visual C++ 2010, read [installation][help] documentation._
-[help]: http://www.admb-project.org/documentation/installation/admb-installation-visual-c
 
 Prerequisites
 -------------
 
 The following programs should be installed on the local computer.
 
-* Visual C++ installed and updated
+* MinGW-w64 compiler installed
 
 Quick Start
 -----------

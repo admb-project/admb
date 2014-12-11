@@ -1069,23 +1069,26 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
  * Description not yet available.
  * \param
  */
-  init_df3_two_variable::init_df3_two_variable(const df1b2variable& _v)
+init_df3_two_variable::init_df3_two_variable(const df1b2variable& _v)
+{
+  /*
+  if (ind_var != 0)
+  {
+    cerr << " can only have 1 independent_variable in a reverse funnel"
+           << endl;
+    ad_exit(1);
+  }
+  */
+  if (num_ind_var>1)
+  {
+    cerr << "can only have 2 independent_variables in df3_two_variable"
+       " function" << endl;
+    ad_exit(1);
+  }
+  else
   {
     ADUNCONST(df1b2variable,v)
-    /*
-    if (ind_var != 0)
-    {
-      cerr << " can only have 1 independent_variable in a reverse funnel"
-           << endl;
-      ad_exit(1);
-    }
-    */
-    if (num_ind_var>1)
-    {
-      cerr << "can only have 2 independent_variables in df3_two_variable"
-       " function" << endl;
-      ad_exit(1);
-    }
+
     ind_var[num_ind_var++]=&v;
     *get_u() =  *v.get_u();
     switch(num_ind_var)
@@ -1111,6 +1114,7 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
     *get_u_xyy() = 0.0;
     *get_u_yyy() = 0.0;
   }
+}
 
 /**
  * Description not yet available.

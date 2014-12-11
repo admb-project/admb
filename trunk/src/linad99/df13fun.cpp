@@ -841,15 +841,17 @@ df1_three_variable pow(const df1_three_variable& x,const df1_three_variable& y)
  * Description not yet available.
  * \param
  */
-  init_df1_three_variable::init_df1_three_variable(const prevariable& _v)
+init_df1_three_variable::init_df1_three_variable(const prevariable& _v)
+{
+  if (num_ind_var > 2)
+  {
+    cerr << "can only have 2 independent_variables in df1_three_variable"
+       " function" << endl;
+    ad_exit(1);
+  }
+  else
   {
     ADUNCONST(prevariable,v)
-    if (num_ind_var>2)
-    {
-      cerr << "can only have 2 independent_variables in df1_three_variable"
-       " function" << endl;
-      ad_exit(1);
-    }
     ind_var[num_ind_var++]=&v;
     *get_u() =  value(v);
     switch(num_ind_var)
@@ -875,6 +877,7 @@ df1_three_variable pow(const df1_three_variable& x,const df1_three_variable& y)
       ad_exit(1);
     }
   }
+}
 
 /**
  * Description not yet available.

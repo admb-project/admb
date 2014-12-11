@@ -581,42 +581,45 @@ void quadratic_prior::get_vHessian(dvar_matrix H,int xsize)
  * Description not yet available.
  * \param
  */
- void quadratic_prior::get_cHessian_contribution(dmatrix H,int xsize)
- {
-   for (int i=0;i<num_quadratic_prior;i++)
-   {
-     if (!ptr[i])
-     {
+void quadratic_prior::get_cHessian_contribution(dmatrix H,int xsize)
+{
+  for (int i=0;i<num_quadratic_prior;i++)
+  {
+    if (!ptr[i])
+    {
        cerr << "ptr["<<i<<"] = 0 in"
          " quadratic_prior::get_cHessian_contribution" << endl;
        ad_exit(1);
-     }
-     if (!ptr[i]->pMinv)
-     {
+    }
+    else if (!ptr[i]->pMinv)
+    {
        cerr << "ptr["<<i<<"]->pMinv = 0 in"
          " quadratic_prior::get_cHessian_contribution" << endl;
        ad_exit(1);
-     }
-     if (!allocated(*(ptr[i]->pMinv)))
-     {
+    }
+    else if (!allocated(*(ptr[i]->pMinv)))
+    {
        cerr << "*ptr["<<i<<"] is unallocated in"
          " quadratic_prior::get_cHessian_contribution" << endl;
        ad_exit(1);
-     }
-     ptr[i]->get_cHessian(H,xsize);
-    /*
-     if (old_style_flag)
-     {
-       return 2.0*ptr[i]->get_cHessian();
-     }
-     else
-     {
-       return ptr[i]->get_cHessian();
-     }
-    */
-   }
-   //return f;
- }
+    }
+    else
+    {
+      ptr[i]->get_cHessian(H,xsize);
+      /*
+      if (old_style_flag)
+      {
+        return 2.0*ptr[i]->get_cHessian();
+      }
+      else
+      {
+        return ptr[i]->get_cHessian();
+      }
+      */
+    }
+  }
+  //return f;
+}
 
 /**
  * Description not yet available.

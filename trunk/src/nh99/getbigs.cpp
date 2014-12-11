@@ -36,13 +36,13 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     int us=nvar1-nvar;
     int xsize = 0;
     dmatrix minv(1,us,1,us);
-    dmatrix Dux(1,us,1,nvar);
     dmatrix uhat_prime(1,us,1,nvar);
     uhat_prime.initialize();
     int Bnvar=nvar+us;
     // get l_uu and l_xu for covariance calculations
     if (lapprox->hesstype !=2)
     {
+      dmatrix Dux(1,us,1,nvar);
       int usize = 0;
       tmpstring = ad_comm::adprogram_name + ".luu";
       uistream ifs1((char*)(tmpstring));

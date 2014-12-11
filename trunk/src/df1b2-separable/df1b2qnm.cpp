@@ -46,12 +46,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   // *********************************************************
   // block for quasi-newton minimization
   //int itnold=0;
-  int nx=nvar;
-  if (negdirections)
-  {
-    nx=negdirections->indexmax();
-  }
-  fmm fmc(nx);
+  fmm fmc(negdirections ? negdirections->indexmax() : nvar);
   int on1;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)
   {
@@ -230,7 +225,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     //cout << nvar << endl;
     initial_params::set_active_only_random_effects();
     //cout << nvar << endl;
-    int unvar=initial_params::nvarcalc(); // get the number of active
+    int _unvar=initial_params::nvarcalc(); // get the number of active
     //df1b2_gradlist::set_no_derivatives();
 
     if (funnel_init_var::py)
@@ -252,7 +247,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       }
       df1b2variable::adpool_counter=0;
     }
-    lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
+    lapprox=new laplace_approximation_calculator(nvar,_unvar,1,nvar+_unvar,
       this);
     if (lapprox==0)
     {
@@ -266,8 +261,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all();
-    dvector y(1,nvar);
+    dvector y(1,initial_params::nvarcalc_all());
     initial_params::xinit_all(y);
     initial_df1b2params::reset_all(y);
 

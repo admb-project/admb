@@ -750,15 +750,17 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
  * Description not yet available.
  * \param
  */
-  init_df1_two_variable::init_df1_two_variable(const prevariable& _v)
+init_df1_two_variable::init_df1_two_variable(const prevariable& _v)
+{
+  if (num_ind_var > 1)
+  {
+    cerr << "can only have 2 independent_variables in df1_two_variable"
+       " function" << endl;
+    ad_exit(1);
+  }
+  else
   {
     ADUNCONST(prevariable,v)
-    if (num_ind_var>1)
-    {
-      cerr << "can only have 2 independent_variables in df1_two_variable"
-       " function" << endl;
-      ad_exit(1);
-    }
     ind_var[num_ind_var++]=&v;
     *get_u() =  value(v);
     switch(num_ind_var)
@@ -777,6 +779,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
       ad_exit(1);
     }
   }
+}
 
 /**
  * Description not yet available.

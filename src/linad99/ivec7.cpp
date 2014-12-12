@@ -21,114 +21,129 @@
 
 #include <stdlib.h>
 #include "admb_messages.h"
+#include <stdexcept>
 
 #ifndef OPT_LIB
 /**
  * Description not yet available.
  * \param
  */
- int& ivector::operator[] (int i)
- {
-   if (!v)
-   {
-       cerr << "\nattempting to acces non-allocated ivector in "
+int& ivector::operator[](int i)
+{
+  if (!v)
+  {
+    cerr << "\nattempting to acces non-allocated ivector in "
        "ivector::operator[]\n";
-       ad_exit(1);
-   }
-   if (i > indexmax())
-   {
+    throw std::bad_alloc();
+  }
+  else if (i > indexmax())
+  {
      ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
      "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
-   }
-   if (i<indexmin())
-   {
+     throw std::out_of_range("array bound exceeded -- index too high");
+  }
+  else if (i<indexmin())
+  {
      ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
      "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
-   }
-   return(*(v+i));
- }
+     throw std::out_of_range("array bound exceeded -- index too low");
+  }
+  else
+  {
+    return *(v+i);
+  }
+}
 
 /**
  * Description not yet available.
  * \param
  */
- int& ivector::operator() (int i)
- {
-   if (!v)
-   {
-     cerr << "\nattempting to acces non-allocated ivector in "
+int& ivector::operator()(int i)
+{
+  if (!v)
+  {
+    cerr << "\nattempting to acces non-allocated ivector in "
      "ivector::operator()\n";
-     ad_exit(1);
-   }
-   if (i > indexmax())
-   {
+    throw std::bad_alloc();
+  }
+  else if (i > indexmax())
+  {
      ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
      "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
-   }
-   if (i < indexmin())
-   {
+     throw std::out_of_range("array bound exceeded -- index too high");
+  }
+  else if (i < indexmin())
+  {
      ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
      "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
-   }
-   return(*(v+i));
- }
+     throw std::out_of_range("array bound exceeded -- index too low");
+  }
+  else
+  {
+    return *(v+i);
+  }
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const int& ivector::operator[](int i) const
- {
-     if (!v)
-     {
-       cerr << "\nattempting to acces non-allocated ivector in "
+{
+  if (!v)
+  {
+    cerr << "\nattempting to acces non-allocated ivector in "
        "ivector::operator[]\n";
-       ad_exit(1);
-     }
-     if (i>indexmax())
-     {
-       cerr << "\narray bound exceeded -- index too high in "
+    throw std::bad_alloc();
+  }
+  else if (i > indexmax())
+  {
+    cerr << "\narray bound exceeded -- index too high in "
        "ivector::operator[]";
-       cerr << "index value " << i << " max value " << indexmax() << endl;
-       cerr << endl;
-       ad_exit(1);
-     }
-
-     if (i<indexmin())
-     {
-       cerr << "\narray bound exceeded -- index too low in ivector::operator[]";
-       cerr << endl;
-       ad_exit(1);
-     }
-   return(*(v+i));
- }
+    cerr << "index value " << i << " max value " << indexmax() << endl;
+    cerr << endl;
+    throw std::out_of_range("array bound exceeded -- index too high");
+  }
+  else if (i < indexmin())
+  {
+    cerr << "\narray bound exceeded -- index too low in ivector::operator[]";
+    cerr << endl;
+    throw std::out_of_range("array bound exceeded -- index too low");
+  }
+  else
+  {
+    return *(v+i);
+  }
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const int& ivector::operator()(int i) const
- {
-     if (!v)
-     {
-       cerr << "\nattempting to acces non-allocated ivector in "
+{
+  if (!v)
+  {
+    cerr << "\nattempting to acces non-allocated ivector in "
        "ivector::operator()\n";
-       ad_exit(1);
-     }
-     if (i>indexmax())
-     {
-       cerr << "\narray bound exceeded -- index too high in "
+    throw std::bad_alloc();
+  }
+  else if (i>indexmax())
+  {
+    cerr << "\narray bound exceeded -- index too high in "
        "ivector::operator()";
-       cerr << "index value " << i << " max value " << indexmax() << endl;
-       ad_exit(1);
-     }
-
-     if (i<indexmin())
-     {
-       cerr << "\narray bound exceeded -- index too low in ivector::operator[]";
-       cerr << endl;
-       ad_exit(1);
-     }
-   return(*(v+i));
- }
+    cerr << "index value " << i << " max value " << indexmax() << endl;
+    throw std::out_of_range("array bound exceeded -- index too high");
+  }
+  else if (i<indexmin())
+  {
+    cerr << "\narray bound exceeded -- index too low in ivector::operator[]";
+    cerr << endl;
+    throw std::out_of_range("array bound exceeded -- index too low");
+  }
+  else
+  {
+    return *(v+i);
+  }
+}
 #endif

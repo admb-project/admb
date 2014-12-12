@@ -651,7 +651,7 @@ dvector laplace_approximation_calculator::banded_calculations
           }
           else
           {
-          //dvector tmp=solve(*sparse_triplet,Hess,uadjoint,*sparse_symbolic)*Dux;
+       //dvector tmp=solve(*sparse_triplet,Hess,uadjoint,*sparse_symbolic)*Dux;
             dvector tmp=solve(*sparse_triplet2,uadjoint,*sparse_symbolic2)*Dux;
             xadjoint -= tmp;
           }

@@ -48,12 +48,7 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
   // *********************************************************
   // block for quasi-newton minimization
   //int itnold=0;
-  int nx=nvar;
-  if (negdirections)
-  {
-    nx=negdirections->indexmax();
-  }
-  fmmt1 fmc(nx,nsteps);
+  fmmt1 fmc(negdirections ? negdirections->indexmax() : nvar, nsteps);
   int on1;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)
   {
@@ -232,7 +227,7 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
     //cout << nvar << endl;
     initial_params::set_active_only_random_effects();
     //cout << nvar << endl;
-    int unvar=initial_params::nvarcalc(); // get the number of active
+    unvar=initial_params::nvarcalc(); // get the number of active
     //df1b2_gradlist::set_no_derivatives();
 
     if (funnel_init_var::py)
@@ -268,8 +263,7 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all();
-    dvector y(1,nvar);
+    dvector y(1,initial_params::nvarcalc_all());
     initial_params::xinit_all(y);
     initial_df1b2params::reset_all(y);
 

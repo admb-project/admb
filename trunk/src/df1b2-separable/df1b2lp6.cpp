@@ -416,7 +416,7 @@ dvector laplace_approximation_calculator::banded_calculations
     {
       do_newton_raphson_banded(pfmin,f_from_1,no_converge_flag);
       int sgn=0;
-      double& f = (double&) _f;
+      //double& f = (double&) _f;
       f=initial_df1b2params::cobjfun;
      if (pmin->lapprox->sparse_hessian_flag==0)
      {

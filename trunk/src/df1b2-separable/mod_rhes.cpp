@@ -135,7 +135,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
   dvector g0(1,nvar);
   dvector g2(1,nvar);
   dvector gbest(1,nvar);
-  dvector hess(1,nvar);
+  //dvector hess(1,nvar);
   dvector hess1(1,nvar);
   dvector hess2(1,nvar);
   //double eps=.1;

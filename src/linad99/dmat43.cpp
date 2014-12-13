@@ -116,7 +116,7 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
     int k=i;
     v.initialize();
     v(k)=1.0;
-    for (int i=k-1;i>=1;i--)
+    for (i=k-1;i>=1;i--)
     {
       double ssum=0.0;
       int jmax=admin(n,i+bw-1);

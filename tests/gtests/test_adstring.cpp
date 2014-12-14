@@ -284,3 +284,43 @@ TEST_F(test_adstring, realloc)
   a.realloc(expected);
   EXPECT_STREQ(expected, (char*)a);
 }
+TEST_F(test_adstring, clist_length_with_max_zero)
+{
+  adstring b;
+  EXPECT_EQ(-1, b.length(0));
+  adstring a(b);
+  EXPECT_EQ(-1, a.length(0));
+}
+TEST_F(test_adstring, clist_length_with_max_one)
+{
+  adstring b;
+  EXPECT_EQ(1, b.length(1));
+  adstring a(b);
+  EXPECT_EQ(-1, a.length(1));
+}
+TEST_F(test_adstring, clist_chain_list)
+{
+  adstring a;
+  EXPECT_EQ(1, a.length());
+  adstring b(a); 
+  EXPECT_EQ(2, b.length());
+  adstring c(b); 
+  EXPECT_EQ(3, c.length());
+  EXPECT_STREQ((char*)a, (char*)b);
+  EXPECT_STREQ((char*)a, (char*)c);
+}
+TEST_F(test_adstring, clist_nested_destructors)
+{
+  adstring a;
+  EXPECT_EQ(1, a.length());
+  {
+    adstring b(a); 
+    EXPECT_EQ(2, b.length());
+    {
+      adstring c(b); 
+      EXPECT_EQ(3, c.length());
+    }
+    EXPECT_EQ(2, b.length());
+  }
+  EXPECT_EQ(1, a.length());
+}

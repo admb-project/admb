@@ -42,16 +42,16 @@
 #define CLIST_H
 class clist
 {
-public :
-  int length(const int & max = 1000);
+public:
+  int length(const int& max = 1000) const;
 protected :
-  clist * next;
+  clist* next;
   clist()
   {
     next = this;
   }
-  clist(const clist & pt);
-  clist * prev(void);
+  clist(const clist& pt);
+  clist* prev() const;
 public:
   ~clist();
 };

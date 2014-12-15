@@ -5,13 +5,19 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include "clist.h"
+#include <new>
 
 clist* clist::prev() const
 {
   clist* t = this->next;
   while (t != this)
   {
-    if (t->next == this)
+    if (!t)
+    {
+      //unexpected
+      throw std::bad_alloc();
+    }
+    else if (t->next == this)
     {
       return t;
     }
@@ -29,7 +35,12 @@ int clist::length(const int& max) const
   clist* t = this->next;
   while (num <= max)
   {
-    if (t == this)
+    if (!t)
+    {
+      //unexpected
+      throw std::bad_alloc();
+    }
+    else if (t == this)
     {
       return num;
     }

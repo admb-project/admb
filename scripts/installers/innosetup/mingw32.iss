@@ -24,3 +24,5 @@ Source: "..\..\mingw\set-admb-mingw32.bat"; DestDir: "{app}\bin"
 
 [Icons]
 Name: "{commondesktop}\ADMB Command Prompt (MinGW 32Bit)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw32.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW 32Bit)"
+Name: "{group}\ADMB Command Prompt (MinGW 32Bit)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw32.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW 32Bit)"; OnlyBelowVersion: 6.1
+Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB (MinGW 32Bit)"; OnlyBelowVersion: 6.1

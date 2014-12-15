@@ -24,3 +24,5 @@ Source: "C:\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Excludes: ".svn,*\.s
 
 [Icons]
 Name: "{commondesktop}\ADMB Command Prompt (MinGW64)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw64.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW64)"
+Name: "{group}\ADMB Command Prompt (MinGW64)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw64.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW64)"; OnlyBelowVersion: 6.1
+Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB (MinGW64)"; OnlyBelowVersion: 6.1

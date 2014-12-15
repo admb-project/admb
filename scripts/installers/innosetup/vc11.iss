@@ -22,3 +22,5 @@ Source: "..\..\cl\set-admb-vc11.bat"; DestDir: "{app}\bin"
 
 [Icons]
 Name: "{commondesktop}\ADMB Command Prompt (Microsoft Visual C++ 2012)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-vc11.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (Microsoft Visual C++ 2012)"
+Name: "{group}\ADMB Command Prompt (Microsoft Visual C++ 2012)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-vcl1.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (Microsoft Visual C++ 2012)"; OnlyBelowVersion: 6.1
+Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB"; OnlyBelowVersion: 6.1

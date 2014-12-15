@@ -205,7 +205,11 @@ ifeq ($(SHELL),cmd)
 	@del scalefactor.rep
 	@del test_finance.exe
 	@del test_scalefactor.exe
+	@del finance.b0
+	@del finance.p0
 else
+	@rm -vf finance.b0
+	@rm -vf finance.p0
 	@rm -vf gtest-all *.obj
 	@rm -vf eigv.rpt
 	@rm -vf fmin.log

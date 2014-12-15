@@ -377,7 +377,6 @@ void allocate_dvariable_space()
 
    void * temp_ptr;
   // double_and_int * tmp;
-   int i;
    #ifdef DIAG
      cerr <<" In gradient_structure::gradient_structure()\n";
      cerr <<"  ARRAY_MEMBLOCK_SIZE = " << ARRAY_MEMBLOCK_SIZE << "\n";
@@ -501,7 +500,7 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
       memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
 
       //allocate_dvariable_space();
-      for (i=0; i< NUM_RETURN_ARRAYS; i++)
+      for (int i=0; i< NUM_RETURN_ARRAYS; i++)
       {
         RETURN_ARRAYS[i]=new dvariable[RETURN_ARRAYS_SIZE];
         memory_allocate_error("RETURN_ARRAYS[i]",RETURN_ARRAYS[i]);
@@ -516,7 +515,7 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
    RETURN_PTR_CONTAINER=new dvariable*[NUM_RETURN_ARRAYS];
    memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
 
-   for (i=0; i< NUM_RETURN_ARRAYS; i++)
+   for (int i=0; i< NUM_RETURN_ARRAYS; i++)
    {
      RETURN_PTR_CONTAINER[i]=0;
    }

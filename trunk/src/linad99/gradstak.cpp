@@ -299,15 +299,11 @@ grad_stack::~grad_stack()
 
     // save the current end of file in case we can't write the whole buffer
     end_pos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
-#if defined(_MSC_VER)
-    ssize_t ierr = write(_GRADFILE_PTR, ptr_first, nbw);
-#else
-  #ifdef __MINGW64__
+#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
     assert(nbw <= UINT_MAX);
-    ssize_t ierr = write(_GRADFILE_PTR, (char*)ptr_first, (unsigned int)nbw);
-  #else
-    ssize_t ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
-  #endif
+    ssize_t ierr = write(_GRADFILE_PTR, ptr_first, (unsigned int)nbw);
+#else
+    ssize_t ierr = write(_GRADFILE_PTR, ptr_first, nbw);
 #endif
 
 #ifndef OPT_LIB
@@ -321,15 +317,11 @@ grad_stack::~grad_stack()
       //save the end of file for this file so we can reposition later
       end_pos1 = end_pos;
       increment_current_gradfile_ptr();
-#if defined(_MSC_VER)
-      ierr = write(_GRADFILE_PTR, ptr_first, nbw);
-#else
-  #ifdef __MINGW64__
+#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
       assert(nbw <= UINT_MAX);
-      ierr = write(_GRADFILE_PTR, (char*)ptr_first, (unsigned int)nbw);
-  #else
-      ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
-  #endif
+      ierr = write(_GRADFILE_PTR, ptr_first, (unsigned int)nbw);
+#else
+      ierr = write(_GRADFILE_PTR, ptr_first, nbw);
 #endif
 
       if  (ierr != (ssize_t)nbw)

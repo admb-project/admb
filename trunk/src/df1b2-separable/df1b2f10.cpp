@@ -108,7 +108,7 @@ void test_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
  */
 void test_smartlist::write(const size_t n)
 {
-#ifdef __MINGW64__
+#if defined(__MINGW64__) || (defined(_MSC_VER) && defined(_WIN64))
   #ifndef OPT_LIB
   assert(n <= UINT_MAX);
   #endif

@@ -96,7 +96,7 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
 */
 void fixed_smartlist::write(const size_t n)
 {
-#ifdef __MINGW64__
+#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
   #ifndef OPT_LIB
   assert(n <= UINT_MAX);
   #endif

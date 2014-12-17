@@ -118,13 +118,12 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
         ad_exit(1);
       }
     }
-#ifdef __MINGW64__
+#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
     size_t size = sizeof(grad_stack_entry) * length;
     assert(size <= UINT_MAX);
     ssize_t nread = read(_GRADFILE_PTR, ptr_first, (unsigned int)size);
 #else
-    ssize_t nread = read(_GRADFILE_PTR,
-        (char*)ptr_first,sizeof(grad_stack_entry)*length);
+    ssize_t nread = read(_GRADFILE_PTR,ptr_first,sizeof(grad_stack_entry)*length);
 #endif
     ptr = ptr_first + length-1;
 

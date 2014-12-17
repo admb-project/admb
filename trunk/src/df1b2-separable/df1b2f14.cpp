@@ -91,7 +91,7 @@ void fixed_smartlist2::allocate(const size_t _bufsize,
 */
 void fixed_smartlist2::write(const size_t n)
 {
-#ifdef __MINGW64__
+#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
   assert(n <= INT_MAX);
   ssize_t nw = ::write(fp, buffer, (int)n);
 #else
@@ -338,7 +338,7 @@ void fixed_smartlist2::read_buffer(void)
         ad_exit(1);
       }
       // now read the record into the buffer
-#ifdef __MINGW64__
+#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
       ssize_t nr = ::read(fp,buffer,_nbytes);
 #else
       ssize_t nr = ::read(fp,buffer,nbytes);

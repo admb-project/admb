@@ -86,6 +86,7 @@ providing fixes and/or suggestions:
 * Jon Schnute
 * Jiashen Tang
 * William Stockhausen - NOAA
+* Allan Hicks
 * Johnoel Ancheta
 
 ---

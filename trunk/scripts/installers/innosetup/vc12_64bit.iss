@@ -8,13 +8,13 @@ DefaultDirName={pf}\ADMB
 DefaultGroupName=ADMB (Microsoft Visual C++ 2013 64Bit)
 UninstallDisplayIcon={app}\uninstall.exe
 OutputDir=..\..\..\build
-OutputBaseFilename=admb-vc12-64bit
+OutputBaseFilename=admb-vc12
 AppPublisher=www.admb-project.org
 AppPublisherURL=http://www.admb-project.org/
 LicenseFile=..\..\..\LICENSE.txt
 
 [Types]
-Name: "vc12-64bit"; Description: "ADMB (Microsoft Visual C++ 2013 64Bit)"
+Name: "vc12"; Description: "ADMB (Microsoft Visual C++ 2013 64Bit)"
 
 [Files]
 Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs

@@ -123,7 +123,8 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
     assert(size <= UINT_MAX);
     ssize_t nread = read(_GRADFILE_PTR, ptr_first, (unsigned int)size);
 #else
-    ssize_t nread = read(_GRADFILE_PTR,ptr_first,sizeof(grad_stack_entry)*length);
+    ssize_t nread = read(_GRADFILE_PTR, ptr_first,
+      sizeof(grad_stack_entry)*length);
 #endif
     ptr = ptr_first + length-1;
 

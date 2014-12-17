@@ -198,6 +198,8 @@ copy:
 	cd ..\tests $(MAKE) copy
 
 clean:
+	if exist ..\benchmarks-opt.txt del ..\benchmarks-opt.txt
+	if exist ..\benchmarks-saf.txt del ..\benchmarks-saf.txt
 	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
 	if exist ..\admb.cmd del ..\admb.cmd

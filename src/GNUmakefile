@@ -481,11 +481,15 @@ endif
 
 dist-clean:
 ifeq ($(SHELL),cmd)
+	if exist ..\benchmarks-opt.txt del ..\benchmarks-opt.txt
+	if exist ..\benchmarks-saf.txt del ..\benchmarks-saf.txt
 	if exist nh99\lex.yy.c del nh99\lex.yy.c
 	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
 	if exist df1b2-separable\lex.yy.c del df1b2-separable\lex.yy.c
 	if exist df1b2-separable\tpl2rem.c del df1b2-separable\tpl2rem.c
 else
+	@rm -vf ../benchmarks-opt.txt
+	@rm -vf ../benchmarks-saf.txt
 	@rm -vf nh99/lex.yy.c
 	@rm -vf nh99/tpl2cpp.c
 	@rm -vf nh99/tpl2cpp

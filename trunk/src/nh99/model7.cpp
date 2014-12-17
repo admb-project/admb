@@ -364,7 +364,7 @@ void ad_comm::allocate(void)
 
 #if defined(_MSC_VER)
   //remove path
-  for (int i = adprogram_name.size(); i >= 1; i--)
+  for (int i = (int)adprogram_name.size(); i >= 1; i--)
   {
     if (adprogram_name(i)==directory_prefix)
     {
@@ -372,7 +372,6 @@ void ad_comm::allocate(void)
       break;
     }
   }
-
 #endif
 
 #if defined(_WIN32)
@@ -382,7 +381,7 @@ void ad_comm::allocate(void)
   assert(_n <= INT_MAX);
   int n = (int)_n;
   #else
-  int n = adprogram_name.size();
+  int n = (int)adprogram_name.size();
   #endif
   if (n > 4)
   {

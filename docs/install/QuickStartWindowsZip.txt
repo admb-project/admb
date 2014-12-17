@@ -26,7 +26,7 @@ Quick Start
 
 5. **Use** ADMB
 
-       The following commands build and run the simple example.
+       Open **Command Prompt** window, then use following commands to build and run the simple example.
 
         C:\admb\> cd examples\admb\simple
         C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl

@@ -26,15 +26,14 @@ Quick Start
 
        Extract **admb** folder from downloaded file to **C:\>**.
 
-5. **Use** ADMB
-
-       The following commands build and run the simple example.
+3. **Use** ADMB
+       Open **Visual Studio Command Prompt** window, then use following commands to build and run the simple example.
 
         C:\admb\> cd examples\admb\simple
         C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
         C:\admb\examples\admb\simple\> simple.exe
 
-6. _**Optional**_ &mdash; Installation
+4. _**Optional**_ &mdash; Installation
 
        Add the admb directory to the system PATH to avoid typing the directory 
        when calling the admb script.

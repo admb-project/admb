@@ -63,11 +63,13 @@ using namespace std;
 #include <string.h>
 #include <time.h>
 
-#if !defined(OPT_LIB) 
-  #if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
+#if !defined(OPT_LIB)
   #include <cassert>
   #include <climits>
-  #endif
+#endif
+#if defined(__MINGW64__) || (defined(_MSC_VER) && defined(_M_X64))
+  #include <cassert>
+  #include <climits>
 #endif
 
 #ifdef _MSC_VER

@@ -57,7 +57,7 @@
   #include <unistd.h>
 #endif
 
-#ifdef __MINGW64__
+#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
   #include <cassert>
   #include <climits>
 #endif

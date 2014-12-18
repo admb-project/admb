@@ -54,6 +54,7 @@ SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\saflp-tools99-)
 !ENDIF
 
 all: dist
+	$(MAKE) copy
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.

@@ -21,7 +21,6 @@ clean:
 	pushd cov_re & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
-	pushd 4darray & $(MAKE) clean & popd
 
 verify:
 	del ..\benchmarks-saf.txt

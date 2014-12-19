@@ -7,6 +7,6 @@ all:
 !ENDIf
 
 clean:
-	del ad2csv.obj
-	del main.obj
-	del ad2csv.exe
+	if exist ad2csv.obj del /Q ad2csv.obj
+	if exist manin.obj del /Q main.obj
+	if exist ad2csv.exe del /Q ad2csv.exe

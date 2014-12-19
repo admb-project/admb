@@ -6,7 +6,7 @@ Set WshSysEnv = WshShell.Environment("SYSTEM")
 'Set the Target Path for the shortcut
 
 'Create a WshShortcut Object
-Set oShellLink = WshShell.CreateShortcut("ADMB Command Prompt (MinGW 64-Bit).lnk")
+Set oShellLink = WshShell.CreateShortcut("ADMB Command Prompt (MinGW 64Bit).lnk")
 oShellLink.TargetPath = "cmd"
 
 'Set the additional parameters for the shortcut

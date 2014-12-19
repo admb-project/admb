@@ -26,14 +26,13 @@ Quick Start
 
 2. **Download** ADMB
 
-       To get the most current code, download from directly from 
-       ADMB version control using the command below.
+       To download from directly from ADMB version control use the command below.
 
-           [~]$ svn checkout http://www.admb-project.org/svn/trunk admb
+           [~]$ svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
 
-       This will copy admb trunk folder to _~/admb/_.
+       This will copy admb-11.2 folder to _~/admb/_.
 
-       If **unable** to checkout, download [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip).
+       If **unable** to use Subversion to checkout, download [full source distribution](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
        Use the command below to extract to _~/admb/_. 
 

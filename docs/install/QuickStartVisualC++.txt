@@ -13,36 +13,40 @@ Prerequisites
 
 The following programs should be installed on the local computer.
 
-* Visual C++ installed and updated
+* Visual Studio C++ installed and updated
+    _**Note**_ &mdash; A free version is available from: [Visual Studio Express](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop)
 
 Quick Start
 -----------
 
 1. **Download**
 
-       Go to download page [ADMB-11.2pre](http://www.admb-project.org/downloads/admb-11.2pre/)  
+       Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
 
 2. **Extract**
 
        Extract **admb** folder from downloaded file to **C:\>**.
 
 3. **Use** ADMB
-       Open **Visual Studio Command Prompt** window, then use following commands to build and run the simple example.
+       
+     Using Windows Explorer, double click the shortcut **ADMB Command Prompt** located in **C:\admb\>**.
+       
+     In the **ADMB Comand Prompt**, type the following commands build and run the simple example.
 
-        C:\admb\> cd examples\admb\simple
-        C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
-        C:\admb\examples\admb\simple\> simple.exe
+           C:\admb\> cd examples\admb\simple
+           C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
+           C:\admb\examples\admb\simple\> simple.exe
 
 4. _**Optional**_ &mdash; Installation
 
        Add the admb directory to the system PATH to avoid typing the directory 
        when calling the admb script.
 
-       1. In the **System Properties** window, click on the **Enviroment Variables** button.
+       1. In the **System Properties** window, click on the **Enviroment Variables** button.  Or, **Control Panel/User Accounts** choose **Change my environment variables**.
 
-       2. In the **Enviroment Variables** windows, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
+       2. In the **Enviroment Variables** upper window (User Variables), check to see if `PATH` exists.  If it does not exist, click on the **New...** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb;`.  If **Environment Variables** already exists, click on **Edit...** and add `C:\admb;` to the start of the **Variable value** text, keeping all of the other text in the box.
 
-       3. Click the **OK** button when done and open a new command prompt.
+       3. Click the **OK** button when done and open a new Visual Studio command prompt.
 
             C:\admb\> cd examples\admb\simple
             C:\admb\examples\admb\simple\> admb simple.tpl

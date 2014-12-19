@@ -25,14 +25,13 @@ Quick Start
 
        _**Note** &mdash; SlikSVN is a command line Subversion Client._ 
 
-       To get the most current code, use the command below.
+       To download from directly from ADMB version control use the command below.
 
-        C:\> svn checkout http://www.admb-project.org/svn/trunk admb
+        C:\> svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
 
        This will copy admb trunk folder to _C:\admb\ _.
 
-       If **unable** to checkout code, download the
-       [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip).
+       If **unable** to use Subversion to checkout code, download the [full source distribution](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
        Double click downloaded zip file and extract to _C:\admb\ _.
 

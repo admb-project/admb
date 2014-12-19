@@ -1,6 +1,6 @@
 #ADMB Project
-*ADMB-11.2*  
-*Released December X, 2014*  
+*ADMB-11.2*
+*Released December X, 2014*
 
 Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
 
@@ -14,64 +14,58 @@ Prerequisites
 The following programs should be installed on the local computer.
 
 * Visual C++ installed and updated
-* _**Optional**_ &mdash; Subversion Client to download from source version control.
+    _**Note**_ &mdash; A free version is available from: [Visual Studio Express 2013](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop)
 
 Quick Start
 -----------
 
-1. Open **Visual Studio Command Prompt** window
+1. **Download** ADMB
 
-2. **Download** ADMB
-
-       To get the most current code, download from directly from 
-       ADMB version control using the command below.
-
-        C:\> svn checkout http://www.admb-project.org/svn/trunk admb
-
-       This will copy admb trunk folder to _C:\admb\ _.
-
-       If **unable** to checkout, download [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest.zip).
+       Download [full source distribution](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
        Double click downloaded zip file and extract to _C:\admb\ _.
 
+2. Open **Visual Studio Command Prompt** window
+       _**Note**_ &mdash; Located in **Start**->**All Programs**->**Visual Studio**->**Visual Studio Tools**
+
 3. Change to admb directory
 
-        C:\> cd admb
+	    C:\> cd admb
 
 4. **Build** ADMB
 
        To build ADMB, use the commands below.
 
-        C:\admb\> nmake
+	    C:\admb\> nmake
 
        If debug symbols are needed, use the command below.
 
-        C:\admb\> nmake debug
+	    C:\admb\> nmake debug
 
-       _**Note** &mdash; When completed, `C:\admb\build\dist` is the binary distribution directory._
+       _**Note**_ &mdash; When completed, `C:\admb\build\dist` is the binary distribution directory. Make sure to copy the folders and files from this directory into the `C:\admb` directory.
 
 5. **Use** ADMB
 
        The following commands build and run the simple example.
 
-        C:\admb\> cd examples\admb\simple
-        C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
-        C:\admb\examples\admb\simple\> simple.exe
+	    C:\admb\> cd examples\admb\simple
+	    C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
+	    C:\admb\examples\admb\simple\> simple.exe
 
 6. _**Optional**_ &mdash; Installation
 
-       Add the admb directory to the system PATH to avoid typing the directory 
+       Add the admb directory to the system PATH to avoid typing the directory
        when calling the admb script.
 
-       1. In the **System Properties** window, click on the **Enviroment Variables** button.
+       1. In the **System Properties** window, click on the **Enviroment Variables** button.  Or, **Control Panel/User Accounts** choose **Change my environment variables**.
 
-       2. In the **Enviroment Variables** windows, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
+       2. In the **Enviroment Variables** upper window (User Variables), check to see if `PATH` exists.  If it does not exist, click on the **New...** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb;`.  If **Environment Variables** already exists, click on **Edit...** and add `C:\admb;` to the start of the **Variable value** text, keeping all of the other text in the box.
 
        3. Click the **OK** button when done and open a new command prompt.
 
-            C:\admb\> cd examples\admb\simple
-            C:\admb\examples\admb\simple\> admb simple.tpl
-            C:\admb\examples\admb\simple\> simple.exe
+	    C:\admb\> cd examples\admb\simple
+	    C:\admb\examples\admb\simple\> admb simple.tpl
+	    C:\admb\examples\admb\simple\> simple.exe
 
 ---
 For help and support, contact <users@admb-project.org>.

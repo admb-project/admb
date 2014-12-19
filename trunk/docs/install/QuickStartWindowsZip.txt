@@ -18,7 +18,7 @@ Quick Start
 
 1. **Download**
 
-       Go to download page [ADMB-11.2pre](http://www.admb-project.org/downloads/admb-11.2pre/)  
+       Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
 
 2. **Extract**
 

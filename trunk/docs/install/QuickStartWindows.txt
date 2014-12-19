@@ -18,9 +18,9 @@ _**Warning** &mdash; Uninstall any existing installations of ADMB._
 
 1. **Download** ADMB installer
 
-       [ADMB Windows Installer (64 Bit)](http://www.admb-project.org/buildbot/snapshots/admb-latest-windows8-mingw64.exe)
+       [ADMB Windows Installer (64 Bit)](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw64.exe)
 
-       [ADMB Windows Installer (32 Bit)](http://www.admb-project.org/buildbot/snapshots/admb-latest-windows8-mingw32.exe)
+       [ADMB Windows Installer (32 Bit)](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw32.exe)
 
 2. **Install** 
 

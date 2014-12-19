@@ -65,7 +65,7 @@ void ad_getcd(const adstring& _s)
 #else
   char tmp[101];
   tmp[0]='\0';
-  #ifndef __SUNPRO_CC
+  #ifdef __GNUC__
   char* ret = getcwd(tmp,100);
   assert(ret != 0);
   #else

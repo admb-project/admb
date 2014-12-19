@@ -1,3 +1,5 @@
+DESTDIR=..\build\dist
+
 all:\
   test-agemat\
   test-cov_re\
@@ -31,3 +33,7 @@ verify:
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 	pushd ..\build\dist\examples & $(MAKE) FAST_OPTION=-f all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+
+copy:
+	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
+	pushd $(DESTDIR)\tests & $(MAKE) clean & popd

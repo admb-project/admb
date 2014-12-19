@@ -1,0 +1,13 @@
+adjoint.tex:\section{The necessity for adjoint code}
+admb-dll.tex:is generally much faster and easier to produce the code for
+admb.tex:\ADM\ provides a template-like approach to code generation.
+advectors.tex:\begin{code}
+advectors.tex:\end{code}
+advectors.tex:\end{code} 
+allfun.tex:\begin{code}
+commandl.tex:\begin{code}
+kal_lap.tex:\begin{code}
+kalman.tex:The \textsc{tpl} file for the random walk Kalman filter code
+magarch-april2000.tex:\end{code}
+simequat.tex:\begin{code}
+truncreg.tex:\end{code}

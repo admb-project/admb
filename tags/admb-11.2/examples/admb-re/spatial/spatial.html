@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0058)http://otter-rsch.com/admbre/examples/spatial/spatial.html -->
+<HTML><HEAD>
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<META content="MSHTML 6.00.2900.2802" name=GENERATOR></HEAD>
+<BODY><BR>
+<TABLE cellSpacing=2 cellPadding=2 align=center border=0>
+  <TBODY>
+  <TR>
+    <TD align=middle colSpan=2>
+      <DIV align=center>
+      <H1>Poisson regression with spatially correlated random effects 
+      <BR></H1></DIV><BR><BR></TD></TR>
+  <TR>
+    <TD width="30%">
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TBODY>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" color=white><B>ADMB 
+            Files</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD>Code: <A 
+                  href="spatial.tpl">spatial.tpl</A><BR>Data: 
+                  <A 
+                  href="spatial.dat">spatial.dat</A><BR>Initial 
+                  values: <A 
+                  href="spatial.pin">spatial.pin</A>
+<!--
+<BR>All 
+                  required files (DOS): <A 
+                  href="http://otter-rsch.com/admbre/examples/spatial/spatial.zip">spatial.zip</A><BR>All 
+                  required files (linux): <A 
+                  href="http://otter-rsch.com/admbre/examples/spatial/spatial.tar.gz">spatial.tar.gz</A><BR>
+-->
+Expected Results: 
+                  <A 
+                  href="spatial-expected-results.par">spatial.par</A><BR><BR></FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+<!--
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TBODY>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" 
+            color=white><B>Running ADMB-executables</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD>In a <A 
+                  href="http://otter-rsch.com/admbre/examples/admb_tutorial.html">DOS</A> 
+                  window<BR>Under <A 
+                  href="http://otter-rsch.com/admbre/examples/admb_tutorial.html">linux</A><BR></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TBODY>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" 
+            color=white><B>Results: Computation times</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD>ADMB-RE: 22 
+      seconds<BR></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TBODY>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" 
+            color=white><B>Navigation</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD><A href="http://otter-rsch.com/admbre/admbre.html">ADMB-RE 
+                  home</A> <BR><A href="http://otter-rsch.com/">Otter 
+                  Research</A> 
+      </FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TBODY></TBODY></TABLE>
+-->
+</TD>
+    <TD width="75%">
+      <H3><STRONG>Model description</STRONG></H3>Our data 
+      <EM>y<SUB>i,j</SUB></EM> are observed on a regular 10x10 grid of points: 
+      {<EM>i,j</EM>=1,...,10}. It is assumed that <EM>y<SUB>i,j</SUB></EM> ~ 
+      Poisson(<FONT face=Symbol>l</FONT><SUB><EM>i,j</EM></SUB>), where <BR><BR>
+      <DIV align=center>log(<FONT face=Symbol>l</FONT><SUB>i,j</SUB>) = 
+      X<SUB><EM>i,j</EM></SUB><FONT face=Symbol>b</FONT> + <FONT 
+      face=Symbol>e</FONT><SUB><EM>i,j</EM></SUB>. </DIV><BR>Here, 
+      <EM>X<SUB>i,j</SUB></EM><FONT face=Symbol>b</FONT> is a linear predictor 
+      and <FONT face=Symbol>e</FONT><SUB>i,j</SUB> are Gaussian random variables 
+      with covariance <BR>
+      <DIV align=center>cov(<FONT 
+      face=Symbol>e</FONT><SUB><EM>i1,j1</EM></SUB>,<FONT 
+      face=Symbol>e</FONT><SUB><EM>i2,j2</EM></SUB>) = <FONT 
+      face=Symbol>s</FONT><SUP>2</SUP> exp(<FONT 
+      face=Symbol>a</FONT><SUP>-1</SUP> <EM>d</EM>), </DIV><BR><BR>where 
+      <EM>d</EM> is the Euclidean distance. 
+
+  </TR></TBODY></TABLE></BODY></HTML>

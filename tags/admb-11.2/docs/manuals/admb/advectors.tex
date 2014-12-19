@@ -1,0 +1,98 @@
+% $Id$
+%
+% Author: David Fournier
+% Copyright (c) 2008 Regents of the University of California
+%
+
+\X{\fontindexentry{tt}{init\_number\_vector}}
+\X{\fontindexentry{tt}{init\_bounded\_number\_vector}}
+\X{\fontindexentry{tt}{init\_vector\_vector}}
+\X{\fontindexentry{tt}{init\_bounded\_vector\_vector}}
+\X{\fontindexentry{tt}{init\_matrix\_vector}}
+\X{\fontindexentry{tt}{init\_bounded\_matrix\_vector}}
+This chapter introduces three new \ADM\ types. They are
+\begin{lstlisting}
+init_number_vector
+init_vector_vector 
+init_matrix_vector
+\end{lstlisting}
+plus the bounded versions of these
+\begin{lstlisting}
+init_bounded_number_vector
+init_bounded_vector_vector 
+init_bounded_matrix_vector
+\end{lstlisting}
+To understand the usefulness of these objects, consider an application
+that has two \texttt{init\_number} objects:
+\begin{lstlisting}
+PARAMETER_SECTION
+  init_bounded_number a1(0.2,1.0,1)
+  init_bounded_number a2(-1.0,0.3,2)
+\end{lstlisting} 
+This creates two bounded numbers with different
+upper and lower bounds becoming active in different phases
+of the minimization.
+Now, however, suppose that the number of numbers we wish to
+have in the model depends on some integer read in at run time, such as:
+\begin{lstlisting}
+DATA_SECTION
+  init_int n
+ //  ...
+
+PARAMETER_SECTION
+  // want to have n numbers
+  init_bounded_number a1(0.2,1.0,1)
+  init_bounded_number a2(-1.0,0.3,2)
+  // ....
+  init_bounded_number an(-4.0,-3.0,n)
+\end{lstlisting} 
+The above code is a sketch of what we want to 
+achieve. It cannot be accomplished with that kind of coding,
+of course, because at compile time, we don't have the value for $n$,
+and in any event, if $n$ is large, this sort of coding is boring.
+Dynamic arrays are the answer to this problem. One could try
+the following:
+\begin{lstlisting}
+DATA_SECTION
+  init_int n
+ //  ...
+
+PARAMETER_SECTION
+  // want to have n numbers
+  init_bounded_vector a(1,n,-1.0,1.0,1)
+\end{lstlisting} 
+but this won't work, because for an \texttt{init\_bounded\_vector},
+the bounds and the starting phase are the same for all components of
+the vector. The \texttt{init\_bounded\_number\_vector} class
+is intended to solve this problem.
+\begin{lstlisting}
+DATA_SECTION
+  init_int n
+ //  ...
+
+PARAMETER_SECTION
+  // need to create some vectors to hold the bounds and
+  // phase numbers
+ LOC_CALCS
+  dvector lb(1,n); 
+  dvector ub(1,n); 
+  ivector ph(1,n); 
+  // get the desired values into lb,ub,ph somehow 
+  lb.fill_seqadd(1,0.5);
+  ub.fill_seqadd(2,0.5);
+  ph.fill_seqadd(1,1);
+ END_CALCS
+  init_bounded_number_vector a(1,n,lb,ub,ph)
+\end{lstlisting} 
+Then \texttt{a(1)} is an object of type
+\texttt{init\_bounded\_number} with bounds \texttt{lb(1)} and 
+\texttt{ub(1)} becoming active in phase \texttt{ph(1)}. 
+Any of these three fields can be replaced with a number or
+integer if the bound or phase number is constant, such as
+\begin{lstlisting}
+  init_bounded_number_vector a(1,n,1.0,ub,2)
+\end{lstlisting} 
+where the lower bound is \texttt{1.0} and the
+phase number is~\texttt{2}.
+
+

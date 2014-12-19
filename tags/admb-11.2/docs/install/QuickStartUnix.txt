@@ -1,0 +1,65 @@
+#ADMB Project
+*ADMB-11.2*  
+*Released December X, 2014*  
+
+Installing ADMB from prebuilt zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
+
+---
+
+Prerequisites
+-------------
+
+The following programs should be installed on the local computer.
+
+* GNU sed
+* C++ compiler
+
+_**Note** &mdash; For MacOS, install XCode with command line tools includes all the prerequistes._
+
+Quick Start
+-----------
+
+1. **Download**
+
+       Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
+
+2. **Extract**
+
+       Unzip the downloaded file to the HOME directory.
+
+3. Open a **Terminal** window
+
+4. **Use**
+
+       The following commands build and run the simple example.
+
+           [~]$ cd admb/examples/admb/simple
+           [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
+           [~/admb/examples/admb/simple/]$ ./simple
+
+       For MinGW and Cygwin shells, use the **'admb.sh'** script.
+
+           [~]$ cd admb/examples/admb/simple
+           [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
+           [~/admb/examples/admb/simple/]$ ./simple
+
+5. _**Optional**_ &mdash; Manual Installation    
+
+       Copy binary distribution folder to /usr/local/ as super-user.
+
+           [~]$ sudo cp -Rvf admb /usr/local/admb
+
+       Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
+
+           [~]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
+
+       After copying, build and run the simple example.
+
+           [~]$ cd admb/examples/admb/simple
+           [~/admb/examples/admb/simple/]$ admb simple.tpl
+           [~/admb/examples/admb/simple/]$ ./simple
+
+--------------------------------------------------------------------------------
+For help and support, contact <users@admb-project.org>.
+
+$Id$

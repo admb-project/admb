@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>ADMB tutorial</title>
+</head>
+
+<body>
+<div align="center"><h1>Tutorial: Running an ADMB program</h1></div>
+
+<h2>Obtaining the files</h2>
+	Download the files for the appropriate operating system (linux or DOS) from the "ADMB files" bar. 
+	After having unpacked the files (with winzip for the DOS version and gunzip/tar for the linux version)
+	you should have the following files:<br><br>
+	
+	<ul>
+	<li>The executable file itself, called <TT>program</TT> in this tutorial (<TT>program.exe</TT> under DOS).</li>
+	<li>A <TT>.dat</TT> file containing data. If your executable is called <TT>program</TT>, 
+	the name of this file will be <TT>program.dat</TT></li>
+	<li>A <TT>.pin</TT> file containing initial values for the optimization. 
+	If your executable is called <TT>program</TT>, the name of this file will be <TT>program.pin</TT></li>
+	</ul>
+<br>
+
+<h2>Invoking the program</h2>
+When the name of the executable is <TT>program</TT>, the command is:<br>
+<br>
+	<TT>./program</TT>
+<br><br>
+under linux, and 
+<br><br>
+	<TT>.\program</TT>
+<br><br>
+in a DOS window. Remember to substitute your program name for <TT>program</TT>. 
+<br><br><br>
+
+
+<h2>Command line options</h2>
+
+An ADMB executable accepts commmand line options. You may for instance use <TT>-est</TT> to prevent the computation of the 
+Hessian matrix at the end of the optimization process:
+<br><br>
+	<TT>.\program -est</TT>
+<br><br>
+
+For large applications, it may be necessary to allocate extra memory. When you see that large temporary
+files are being generated in the directory where you run the executable, you must use one (or more) of the following options:<br><br>
+
+
+<div align="center"><table cellspacing="2" cellpadding="2" border="1" rules="cols">
+<tr>
+    <td><strong>Temporary file</strong></td>
+    <td><strong>Option </strong></td>
+    <td><strong>Typical value of <TT>N</TT></strong></td>
+</tr>
+<tr>
+    <td>f1b2list1</td>
+    <td><TT>-l1 N</TT></td>
+    <td>10000000</td>
+</tr>
+<tr>
+    <td>f1b2list12</td>
+    <td><TT>-l2 N</TT></td>
+    <td>10000000</td>
+</tr>
+<tr>
+    <td>f1b2list13</td>
+    <td><TT>-l3 N</TT></td>
+    <td>10000000</td>
+</tr>
+<tr>
+    <td>nf1b2list1</td>
+    <td><TT>-nl1 N</TT></td>
+    <td>10000000</td>
+</tr>
+<tr>
+    <td>nf1b2list12</td>
+    <td><TT>-nl2 N</TT></td>
+    <td>10000000</td>
+</tr>
+<tr>
+    <td>nf1b2list13</td>
+    <td><TT>-nl3 N</TT></td>
+    <td>10000000</td>
+</tr>
+</table>
+</div>
+
+So, your command line may look like:
+
+<br><br>
+	<TT>.\program -est -l1 1000000 -l2 1000000 -l3 1000000 -nl1 1000000</TT>
+<br><br>
+
+
+<h2>Results</h2>
+The results are found in a file called <TT>program.par</TT> (in this case). Standard deviations of parameter estimates
+are given in <TT>program.std</TT> (when the option <TT>-est</TT> is not used).<br>
+<br><br>
+
+
+
+<h2>My program crashes without any further message. Why?</h2>
+Probably your computer has too little memory for this application. Try to reduce the numbers in 
+<TT>-l1 1000000 -l2 1000000 -l3 1000000 -nl1 1000000</TT><br>
+<br>
+
+</body>
+</html>

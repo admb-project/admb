@@ -1,0 +1,13 @@
+get_non_blank_line
+  
+ ONE
+      
+
+  TWO
+
+              
+
+   THREE
+
+
+FOUR

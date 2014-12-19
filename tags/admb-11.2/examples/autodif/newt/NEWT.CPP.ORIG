@@ -1,0 +1,56 @@
+//file: newt.cpp
+#include <fvar.hpp>
+//  function prototypes for user's functions
+void function1(dvar_vector& x,double& f);
+void function2(dvar_vector& x,double& f);
+#ifdef __BCPLUSPLUS__
+  extern unsigned _stklen = 20000;
+#endif
+#ifdef __ZTC__
+  long _stack = 20000;
+#endif
+void main()
+{
+  int nvar=2;
+  independent_variables x(1,nvar);
+  dvector g(1,nvar);
+  dvector f(1,nvar);
+  dmatrix jacobian(1,nvar,1,nvar);
+  gradient_structure gs;
+  x[1]=1;
+  x[2]=2;
+  do      // Iterate until the norm of the dvector f is < 1.e-12 
+  {
+    function1(x,f[1]);
+    gradcalc(nvar,g);
+    jacobian.rowfill(1,g);// Put the gradient for function 1 in the first row
+
+    function2(x,f[2]);
+    gradcalc(nvar,g);
+    jacobian.rowfill(2,g);// Put the gradient for function 2 in the second row
+    x=x-inv(jacobian)*f; // This is the Newton-Raphson step
+    cout << " The x vector = " << x << "\n"
+         << " f = " << f << "\n";
+  }
+  while (norm(f)>1.e-12);
+  cout << " The x vector = " << x << "\n" << " f = " << f << "\n";
+}
+
+void function1(dvar_vector& x,double& f)
+{
+  dvariable z,tmp;
+  z=100*x[1]*x[1];
+  tmp=x[2]*x[2];
+  z+=tmp;
+  z=z-1.;
+  f=value(z);
+}
+void function2(dvar_vector& x,double& f)
+{
+  dvariable z,tmp;
+  z=-100*x[2]*x[2];
+  tmp=-x[1]*x[1];
+  z+=tmp;
+  z=z+1;
+  f=value(z);
+}

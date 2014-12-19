@@ -1,0 +1,146 @@
+<br>
+<table align="center" cellspacing="2" cellpadding="2" border="0">
+<tr>
+    <td colspan="2" align="center">
+	<h1>Generalized additive models (GAM's)</h1>
+		<br><br>
+	</td>
+</tr>
+
+<tr>
+    <td width="30%">
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>ADMB Files</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     Code: <a href="union.tpl">union.tpl</a><br>
+                     Data: 		<a href="union.dat">union.dat</a><br>
+                     Initial values: <a href="union.pin">union.pin</a><br>
+<!--
+                     All required files (DOS): <a href="union.zip">union.zip</a><br>
+					 All required files (linux): <a href="union.tar.gz">union.tar.gz</a><br>					 
+-->
+                     Expected Results: <a href="union-expected-results.par">union.par</a><br>
+                     <a HREF="http://www.r-project.org/">R</a> (S-Plus) scripts: <a href="union.s">union.s</a><br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<!--
+<br>
+
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>Running ADMB-executables</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     In a <a href="../admb_tutorial.html">DOS</a> window<br> 
+					 Under <a href="../admb_tutorial.html">linux</a><br><br>
+					 
+					 Command line options:<br>
+					 -l1 10000000 -l2 100000000 <br>
+					 -l3 10000000 -nl1 10000000
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<br>
+
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>Results: Computation times</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     ADMB-RE: 165 seconds.<br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+	   
+      <br>
+	  
+	     <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" 
+            color=white><B>Navigation</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD>			  
+				<A href="http://otter-rsch.com/admbre/admbre.html">ADMB-RE home</A> <br>
+                <A href="http://otter-rsch.com/">Otter Research</A> 
+        </FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0></TABLE>
+
+	  
+	  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+-->
+	   
+	</td>
+
+	
+ <td width="75%">
+<h3><strong>Model description</strong></h3>
+Since their introduction by <A HREF="../citations.html#hast:tibs:1990">Hastie &amp; Tibshirani</A> in the late 80ies, GAM's have become very popular.
+This example shows how to fit a GAM using penalized splines. The reason why GAM's can easily
+be handled in ADMB-RE is that penalized splines are a special case of random effects.
+ADMB-RE automatically estimates the degrees of freedom for each spline component, as this only amounts to
+estimate the variance of the random effects. A more detailed discussion of the model and the estimation approach can be found 
+here:  <a href="union.pdf">union.pdf</a><br>
+<br>
+The data, which are available from Statlib (lib.stat.cmu.edu/), contain information for each of 534 workers about 
+whether they are members (y=1) of a workers union or not (y=0). The goal is to model the probability of membership as a 
+function of various covariates. <br>
+<br>
+The file <a href="union.s">union.s</a> shows how to create design matrices for B-splines 
+in <a HREF="http://www.r-project.org/">R</a> (S-Plus). When sourced into R, <a href="union.s">union.s</a> creates the input 
+file for ADMB <a href="union.dat">union.dat</a>. You can use it
+as a basis for you own spline models.<br>
+<br>
+If you find the R-function <TT>gam</TT> too restrictive, the following extensions are easily accommodated in ADMB-RE:
+<ul>
+<li>Mix spline component with `ordinary' random effects to account for 
+	correlation within groups/clusters.</li>
+<li>Add parametric nonlinear components to the linear predictor</li>	
+</ul>
+
+<h3><strong>Results</strong></h3>
+The probability of union membership as function of covariates (with all remaining covariate-effects fixed at their sample means):
+<img src="union.jpg" border="0" alt=""> 
+ 
+	</td>
+
+
+</table>
+

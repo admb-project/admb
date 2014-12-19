@@ -1,0 +1,48 @@
+#ADMB Project 
+*ADMB-11.2*  
+*Released December X, 2014*  
+
+Describe ADMB build and installation procedures for Windows and MinGW.
+
+---
+
+_For Windows computers with Visual C++ compiler already installed, 
+read and follow the instuctions in [QuickStart for Visual C++](QuickStartVisualC++.html)._
+
+_For builds within *Cygwin* and *MinGW-Msys* shells, read and follow the
+instructions in the [QuickStart for Unix](QuickStartUnix.html)._
+
+Quick Start
+-----------
+_**Warning** &mdash; Uninstall any existing installations of ADMB._
+
+1. **Download** ADMB installer
+
+       [ADMB Windows Installer (64 Bit)](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw64.exe)
+
+       [ADMB Windows Installer (32 Bit)](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw32.exe)
+
+2. **Install** 
+
+       Double click the ADMB installer and follow the installer instructions.
+
+3. **Open** ADMB Command Prompt
+
+       On the Desktop, double click ADMB Command Prompt.
+
+4. **Use** ADMB
+ 
+       Copy the simple example directory
+
+           C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
+
+       The build and run simple.
+
+           C:\> cd simple
+           C:\simple\> admb simple
+           C:\simple\> simple
+
+---
+For help and support, contact <users@admb-project.org>.
+
+$Id$

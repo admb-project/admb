@@ -1,0 +1,11 @@
+<table border="0" cellspacing="0" cellpadding="1" width="100%">
+<tr>
+  <td align="left"><font face="Verdana, Arial" size="-2" color="#007f00">
+    $TITLE$ Documentation by $AUTHOR$.<br>$COPYRIGHT$. All Rights Reserved.<br>Use and distribution are subjects to <a href="[main]-license.html" title="License terms" target="_blank">license terms</a>.</font></td>
+  <td align="right"><font face="Verdana, Arial" size="-2" color="#007f00"><a href="[main]-index.html" title="$TITLE$ v$VERSION$" target="_top">$TITLE$ v$VERSION$</a>.<br>Built on $BUILD$.<br>Submit a <a href="[main]-feedback.html" title="Report bugs" target="_blank">bug report</a> or <a href="[main]-feedback.html" title="Request a feature" target="_blank">feature request</a>.</font></td>
+	</tr>
+</table>
+<p class="doxTxt">
+more footer text
+ formatted as "doxTxt"
+</p>

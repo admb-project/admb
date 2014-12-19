@@ -1,0 +1,632 @@
+% $Id: ADMBrefcard-text.tex 390 2009-09-25 16:09:28Z jsibert $
+%
+% Author: John Sibert 
+% Copyright (c) 2009 ADMB Foundation
+%
+\usepackage{graphics}
+\usepackage{fancyhdr}
+\usepackage{color}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{{\tiny\today}}
+\cfoot{} %{\tiny\thepage}}
+\rfoot{{\tiny \copyright 2009 ADMB Foundation}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage[bookmarks=false]{hyperref}
+\hypersetup{pdfauthor={John Sibert and Anders Nielsen}}
+\hypersetup{pdfsubject={ADModel Builder}}
+\hypersetup{pdftitle={ADMB Reference Card}}
+\hypersetup{pdfkeywords={Automatic differentiation, AUTODIF, ADMB}}
+
+\definecolor{admbgreen}{rgb}{0.0,0.3125,0.0781}
+
+\title{\begin{minipage}[t]{0.98\textwidth}\begin{center}
+\includegraphics[width=\textwidth]{./cropped-logo-20080527.jpeg}
+{\color{admbgreen}Handy-dandy Reference Card}\\
+    \end{center}\end{minipage}}
+
+\author{John Sibert \and Anders Nielsen}
+
+\CutLine*{1}
+\CutLine*{2}
+\CutLine*{3}
+\CutLine*{4}
+\CutLine*{5}
+\CutLine*{6}
+
+\setmargins{3ex}{5ex}{1.5em}{1.5em}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\scriptsize
+\small
+\parindent=0pt
+
+\section{ADMB Syntax Notes}
+\begin{itemize}
+\item \verb+_SECTIONS+ must begin in the first position of a line.
+\item Other ADMB statements and variable declarations
+ must begin in the third position  of the line or beyond.
+\item \verb+LOCAL_CALCS+ and \verb+END_CALCS+ 
+must begin in the second position.
+\item Semicolons are not
+required after statements in either the \verb+DATA_SECTION+ or the
+\verb+PARAMETER_SECTION+, but should be used elsewhere. Since
+semicolons are required by C++, it is harmless to use them
+everywhere.
+\item \verb+!!+ preceding a statement indicates a line of C++ code
+that will be passed unchanged to the C++ compiler; a semicolon must
+end the line.
+\item Template file errors are indicated by the line number in the template
+file and the first letter of the offending text.
+\end{itemize}
+
+
+\section{Example Template File (linear regression)}
+\begin{verbatim}
+DATA_SECTION
+  init_int N
+  init_vector x(1,N)
+  init_vector Y(1,N)
+
+PARAMETER_SECTION
+  init_number a
+  init_number b
+  init_number logSigma
+  sdreport_number ss
+  objective_function_value nll
+
+PROCEDURE_SECTION
+  ss=exp(2.0*logSigma);
+  nll=0.5*(N*log(2.0*M_PI*ss)+sum(square(Y-(a+b*x)))/ss);
+\end{verbatim}
+{\bf Compile:} \verb|makeadm <programname>| creates a executable \\
+{\bf Run:} \verb|<programname>| runs the executable
+
+\section{Template File SECTIONs}
+Sections are discussed in detail in the ADMB manual.
+Every ADMB program must contain these three sections.
+
+\par{\everypar={\hangindent=1em \hangafter=1}
+\verb+DATA_SECTION+ Describes data and specifies how they are read 
+and possible transformed.
+
+\verb+PARAMETER_SECTION+ Describes model parameters, valid ranges and
+sequence of estimation. The variable holding the value of the
+objective function is specified here.
+
+\verb+PROCEDURE_SECTION+ Contains the details of the model and the
+likelihood computation.  Semi-colons are required at the end of each statement.
+Must include a declaration of one instance of a variable of type
+\verb|objective_function_value|.
+
+\par}
+
+Other sections have specialized purposes.
+
+\par{\everypar={\hangindent=1em \hangafter=1}
+\verb+FUNCTION+ Begins definition of a function or ``method'' in the \verb+PROCEDURE_SECTION+ 
+\verb+LOCAL_CALCS+ and \verb+END_CALCS+ bracket C++ code transmitted
+without modification to the compiler. 
+Semi-colons are required at the end of each statement.
+
+\verb+INITIALIZATION_SECTION+
+Used to initialize parameters declared in the \verb+PARAMETER_SECTION+. 
+
+\verb+REPORT_SECTION+
+Used to create a customized report. Uses the pre-defined
+\verb+ofstream+ variable \verb+report+ for output. For example
+\verb+report << "a = " << a << endl;+ would place the value of the
+variable \verb+a+ in the file \verb+<programname>.rep+.
+
+\verb+RUNTIME_SECTION+
+Used to control the behavior of the function minimizer. Useful to
+change stopping criteria during initial phases of an estimation.
+
+\verb+PRELIMINARY_CALCULATIONS_SECTION+ or \verb+PRELIMINARY_CALCS_SECTION+
+Intended to do preliminary calculations on the data prior to starting
+the model. Largely supplanted by 
+\verb+LOCAL_CALCS+ and \verb+END_CALCS+ code fragments.
+
+\verb+BETWEEN_PHASES_SECTION+
+Code executed between estimation phases.
+
+\verb+GLOBALS_SECTION+
+Used to insert any valid C++ statements prior to the defination of
+the \verb+main()+ function. Useful to include header files and to
+declare global objects.
+
+\verb+TOP_OF_MAIN_SECTION+
+Used to set AUTODIF global variables. Useful to reduce size of
+temporary gradient files.
+
+\verb+FINAL_SECTION+
+
+\verb+SLAVE_SECTION+
+
+}
+
+\section{ADMB Variable Types}
+ADMB uses two fundamental data types: the standard C++
+\verb+double+ for which no derivative information is generated, and the
+AUTODIF library \verb+dvariable+ for which derivative information is
+generated. See the AUTODIF manual for details. The prefix
+\verb+init_+ in the \verb+DATA_SECTION+ tells ADMB to read
+the value of the variable from the file \verb+<programname>.dat+. The prefix
+\verb+init_+ in the \verb+PARAMETER_SECTION+ tells ADMB to
+estimate the value of the parameter using the model. Qualifiers in
+brackets \verb+[...]+ are optional. Refer to the ADMB manual for a
+complete descriptions.
+{\scriptsize
+\begin{center}
+{\tt
+\begin{tabular}{@{}lll@{}}
+\hline
+Declaration in tpl & \verb+DATA_SECTION+ & \verb+PARAMETER_SECTION+\\
+\hline
+\verb+[init_]int+ & int & int\\
+\verb+[init_][bounded_]number+  & double & dvariable\\
+\verb+[init_][bounded_][dev_]vector+ & dvector & \verb+dvar_vector+\\
+\verb+[init_][bounded_]matrix+ & dmatrix & \verb+dvar_matrix+\\
+\verb+[init_]3darray+ & 3D double array & 3D dvariable array\\
+4darray & 4D double array & 4D dvariable array\\
+5darray & 5D double array & 5D dvariable array\\
+6darray & 6D double array & 6D dvariable array\\
+7darray & 7D double array & 7D dvariable array\\
+\verb+sdreport_number+ & na & dvariable\\
+\verb+likeprof_number+ & na & dvariable\\
+\verb+sdreport_vector+ & na & \verb+dvar_vector+\\
+\verb+sdreport_matrix+ & na & \verb+dvar_matrix+\\
+\verb|objective_function_value| & na & dvariable\\
+\hline
+\end{tabular}
+}
+\end{center}
+}
+
+\section {ADMB Utilities}
+\verb+ADMB_HOME+ environment variable is the folder in which ADMB was
+installed. Used by other utilities, compilers and make files to
+access ADMB. The folder \verb+$ADMB_HOME\bin+ contains executables
+files that can be used to build ADMB applications:
+
+\verb+admb+ Very handy tool for building ADMB applications. 
+Takes -s -r and -d command line
+options. Type \verb+admb --help+ for more information.
+
+\verb+adcomp+ and \verb+adlink+ Used by \verb+admb+ for compiling and
+linking.
+
+\verb+makeadm+ and \verb+makeadms+ build executable files from 
+\verb+.tpl+ files. The terminal letter `s' invokes the ``safe''
+library for subscript checking.
+
+\verb+tpl2cpp+ and \verb+tpl2rem+ translate \verb+.tpl+ to C++ code.
+
+\verb+mygcco+ \verb+mygccs+ \verb+mygccopt+ \verb+mygcco-re+ comple
+ADMB c++ code into object files.
+
+\verb+linkadm+ and \verb+linkadms+ link ADMB object files into
+executables.
+
+\section {ADMB Files}
+Every ADMB application requires a template file and a data file.
+
+\verb+<programname>.tpl+ ADMB template file specifying a complete
+model.
+
+\verb+<programname>.dat+ The default ADMB data file.
+ADMB application.
+
+\verb+<programname>.htp+ and \verb+<programname>.cpp+ C++ header and
+source code files produced by \verb+tpl2cpp+.
+
+\verb+<programname>.par+ Estimated values of parameters.
+
+\verb+<programname>.std+ Estimated values of parameters and the
+standard deviations of the parameter estimates computed by the the inverse
+Hessian method.
+
+\verb+<programname>.cor+ Correlation matrix of the estimated
+parameters.
+
+\verb+<programname>.pin+ File containing the initial values of the
+paramters to be used to start the numerical estimation. Format is the
+same as \verb+<programname>.par+ 
+
+\section{Run-time Interventions}
+Pressing Control-C (press the control key and~then~C) after the
+minimizer has started will interrupt the program and cause it to
+display the prompt, 
+``\verb|press q to quit or c to invoke derivative checker:|''.
+Pressing `q' and then ``Return'' (or ``Enter''), will cause the
+program to leave the minimizer and enter the report phase. Pressing
+`c' and then ``Return'' will invoke the derivative checker and
+additional prompts will be displayed.
+
+
+\section{Command-line Options}
+A large number of command line options are available for ADMB
+applications. For a complete list, type \verb|<programname> -?|.
+A few commonly used options are given below:
+\par{\everypar={\hangindent=1em \hangafter=1}
+\verb|-est| do the parameter estimation only (skip Hessian and S. D.
+computations)\par
+\verb|-dd N| derivatives after n function evaluations\par
+\verb|-lprof| profile likelihood calculations\par
+\verb|-mcmc [N]| chain monte carlo with N simulations\par
+\verb|-mcseed N| for random number generator for markov chain monte carlo\par
+\verb|-mcsave N| the parameters for every N'th simulation\par
+\verb|-mceval| throught the saved mcmc values from a previous mcsave\par
+}\par
+
+\section{Functions}
+ADMB contains a very large number of functions.
+``Pseudo-prototypes'' of some commonly used functions
+showing the general argument types and return types. ADMB has
+multiple overloads of many functions with different combinations of
+argument types.
+
+\begin{verbatim}
+number gammln(number); 
+vector gammln(vector);
+number square(number); 
+number cube(number); 
+\end{verbatim}
+
+A more complete, but only partially documented, list of functions can be found
+in rhe ``Modules'' tab of the draft API documentation at
+\href {http://admb-project.org/documentation/api/doxygen}
+{http://admb-project.org/documentation/api/doxygen}
+
+\section{Matrix and vector operations}
+The syntax of ADMB Matrix and vector operations follows normal
+mathematical conventions as much as possible. If u and v are
+vectors and M is a matrix, \verb|u*M| is a normal matrix
+multiplication and \verb|u*v| is a dot product. Element-wise
+multiplications and divisions are accomplished by
+\verb|elem_prod(u, v)| and \verb|elem_div(u, v)|
+respectively. Both functions return a vector.
+\verb|inv(M)| returns the inverse of a matrix.
+\verb|trans(M)| returns the transpose of a matrix.
+\verb|det(M)| returns the determinant of a matrix.
+\verb|norm(...)| returns the norm of a vector or matrix.
+\verb|norm2(...)| returns the square of the norm of a vector or matrix.
+
+\section{Gratuitous Advice}
+\begin{itemize}
+\item Beware of editors intended for word processing (e.g. WordPad)
+that may insert extra invisible formatting characters in files.
+\item Adopt a consistent programming style. Here are a couple of
+reasonable sets of guidlines:\\
+\url{http://corelinux.sourceforge.net/cppstnd/cppstnd.php}
+and
+\url{http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml}.
+\item Avoid directories (folders) and file names that contain
+spaces. They will only cause grief and tears. Some operating systems do
+not distinguish between upper-case and lower-case letters, so it's
+best not to mix.
+\end{itemize}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@ If Len(WshSysEnv("VS110COMNTOOLS")) > 0 Then
   oShellLink.TargetPath = "cmd"
 
   'Set the additional parameters for the shortcut
-  oShellLink.Arguments = "/K set ADMB_HOME=%CD%& set PATH=%CD%\bin;%PATH%& call ""pushd %VS110COMNTOOLS%\..\..\VC & vcvarsall.bat amd64 & popd"""
+  oShellLink.Arguments = "/K bin\set-admb-vc11-64bit.bat"
 
   oShellLink.WorkingDirectory = "%CD%"
 

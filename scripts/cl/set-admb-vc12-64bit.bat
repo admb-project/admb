@@ -1,6 +1,6 @@
 @echo off
 
-@pushd "%VS120COMNTOOLS%\..\..\VC" & call "vcvarsall.bat amd64" & popd
+@pushd "%VS120COMNTOOLS%\..\..\VC" & call vcvarsall.bat amd64 & popd
 
 @set "PATH=%CD%\bin;%CD%\utilities;%PATH%"
 

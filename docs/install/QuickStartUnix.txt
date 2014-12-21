@@ -12,8 +12,15 @@ Prerequisites
 
 The following programs are required to be installed on the local computer.
 
-* GNU sed
 * C++ compiler
+
+      Supported C++ Compilers for Unix
+
+      * GNU C++
+      * Intel C++ Compiler
+      * Oracle Solaris Studio 12.3
+
+* GNU stream editor (sed)
 
 _**Note** &mdash; For MacOS, install XCode with command line tools includes all the prerequistes._
 
@@ -24,11 +31,35 @@ Quick Start
 
 2. **Download** ADMB
 
-       Download binary zip distributions from [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/).
+       Download binary zip distribution
+
+           * For Ubuntu 14 (64Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ubuntu14-64bit.zip).
+           * For Fedora 20 (64Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-fedora20-gcc4.8-64bit.zip).
+           * For Fedora 20 (32Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-fedora20-gcc4.8-32bit.zip).
+           * For Centos 6 and Oracle Solaris Studio 12.3 (32Bit), [admb-11.2-centos6-solarisstudio12.3-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-centos6-solarisstudio12.3-32bit.zip).
+           * For Centos 6 and Intel C++ Compiler (64Bit), [admb-11.2-centos6-intelicpc2013-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-centos6-intelicpc2013-64bit.zip).
 
        Use the command below to extract contents of zip file to _~/admb/_. 
 
+       For Ubuntu 14 (64Bit),
+
            [~]$ unzip admb-11.2-ubuntu14-64bit.zip
+
+       For Fedora 20 (64Bit),
+
+           [~]$ unzip admb-11.2-fedora20-64bit.zip
+
+       For Fedora 20 (32Bit),
+
+           [~]$ unzip admb-11.2-fedora20-32bit.zip
+
+       For Centos 6 and Oracle Solaris Studio 12.3 (32Bit),
+
+           [~]$ unzip admb-11.2-centos6-solarisstudio12.3-32bit.zip
+
+       For Centos 6 and Intel C++ Compiler (64Bit),
+
+           [~]$ unzip admb-11.2-centos6-intelicpc2013-64bit.zip
 
 3. **Use** ADMB
 

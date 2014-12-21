@@ -23,7 +23,7 @@ _**Warning** &mdash; Uninstall any existing installations of ADMB._
 
        * For Windows 32Bit, download [admb-11.2-windows8-mingw32](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw32.exe).
 
-       _**Note**_ &mdash; All downloads include open source MinGW C++ compiler.
+       _**Note**_ &mdash; Installers include open source MinGW C++ compiler.
 
 2. **Install** ADMB 
 

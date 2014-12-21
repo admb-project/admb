@@ -3,7 +3,7 @@
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-Installing ADMB from binary zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
+Installing and using ADMB from binary zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 
 ---
 
@@ -26,11 +26,9 @@ Quick Start
 
        Download binary zip distributions from [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/).
 
-       Unzip the downloaded file in the HOME directory.
+       Use the command below to extract contents of zip file to _~/admb/_. 
 
            [~]$ unzip admb-11.2-ubuntu14-64bit.zip
-
-       _**Note**_ &mdash; Extracts admb directory to _~/admb/_.
 
 3. **Use** ADMB
 
@@ -60,7 +58,13 @@ Quick Start
 
            [~/admb/]$ sudo make install
 
-       _Use the Manual Installation below if the command above does not work._
+       Build and run the simple example without the directory prefix.
+
+           [~]$ cd admb/examples/admb/simple
+           [~/admb/examples/admb/simple/]$ admb simple.tpl
+           [~/admb/examples/admb/simple/]$ ./simple
+
+       _If unable to build simple example, then use the Manual Installation below._
 
        _**Alternative**_ &mdash; Manual Installation    
 
@@ -68,15 +72,11 @@ Quick Start
 
            [~]$ sudo cp -Rvf admb /usr/local/admb
 
+       _**Note**_ &mdash; The dist folder can be copied to other computers with similar configurations._
+
        Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
 
            [~]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
-
-       Build and run the simple example without the directory prefix.
-
-           [~]$ cd admb/examples/admb/simple
-           [~/admb/examples/admb/simple/]$ admb simple.tpl
-           [~/admb/examples/admb/simple/]$ ./simple
 
 --------------------------------------------------------------------------------
 For help and support, contact <users@admb-project.org>.

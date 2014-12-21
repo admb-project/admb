@@ -21,6 +21,7 @@ The following programs are required to be installed on the local computer.
 * C++ Compiler (see list below)
 
       Supported C++ Compilers
+
       * [MinGW](http://www.mingw.org/)
       * [MinGW-w64](http://mingw-w64.sourceforge.net/)
       * [Cygwin](http://www.cygwin.org/)

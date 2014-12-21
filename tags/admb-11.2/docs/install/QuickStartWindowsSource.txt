@@ -38,7 +38,7 @@ Quick Start
 
        Download source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Double click downloaded zip file and extract to **C:\\admb\\>**.
+       Double click downloaded zip file and copy admb directory to **C:\\admb\\>**.
 
        _**Optional**_ &mdash; To download from directly from ADMB version control use the command below.
 

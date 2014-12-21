@@ -26,23 +26,25 @@ Quick Start
 
 2. **Download** ADMB
 
-       Download [full source distribution](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
+       Download zipped source distribution[admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
        Use the command below to extract to _~/admb/_. 
 
-           [~]$ unzip admb.zip
+           [~]$ unzip admb-11.2-src.zip
+
+       This will extract source directory to _~/admb/_.
 
        _**Optional**_ &mdash; Use Subversion to download from version control. Use the command below.
 
            [~]$ svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
 
-       This will copy admb-11.2 source directory to _~/admb/_.
+       This will download source directory to _~/admb/_.
 
-3. Change to admb directory
+3. **Build** ADMB
+
+       Change to admb directory
 
            [~]$ cd admb
-
-4. **Build** ADMB
 
        To build ADMB, use the commands below.
 

@@ -23,11 +23,14 @@ Quick Start
 
        Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
 
-2. **Extract**
+2. Open a **Terminal** window
+
+3. **Extract**
 
        Unzip the downloaded file to the HOME directory.
 
-3. Open a **Terminal** window
+           [~]$ unzip file
+
 
 4. **Use**
 

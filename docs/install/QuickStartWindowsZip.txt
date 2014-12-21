@@ -10,9 +10,9 @@ ADMB binary installation procedure for Windows and MinGW C++ compiler using zip 
 Prerequisites
 -------------
 
-The following programs should be installed on the local computer.
+The following programs are required to be installed on the local computer.
 
-* MinGW C++ compiler installed
+* MinGW C++ compiler
 
 Quick Start
 -----------

@@ -12,9 +12,9 @@ _**Note** &mdash; For Microsoft Visual C++ 2010, read [installation][help] docum
 Prerequisites
 -------------
 
-The following programs should be installed on the local computer.
+The following programs are required to be installed on the local computer.
 
-* Visual Studio C++ installed and updated
+* Visual Studio C++
 
     _**Note**_ &mdash; A free version is available from: [Visual Studio Express](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop)
 

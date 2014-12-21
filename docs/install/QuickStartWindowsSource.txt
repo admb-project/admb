@@ -16,11 +16,18 @@ instructions in the [QuickStart for Unix](QuickStartUnix.html)._
 Prerequisites
 -------------
 
-* Installed C++ Compiler (see supported list below) and included the System Enviroment **PATH**.
-  * [MinGW](http://www.mingw.org/)
-  * [MinGW-w64](http://mingw-w64.sourceforge.net/)
-  * [Cygwin](http://www.cygwin.org/)
-  * [Rtools](http://cran.r-project.org/bin/windows/Rtools/) 
+The following programs are required to be installed on the local computer.
+
+* C++ Compiler (see list below)
+
+      Supported C++ Compilers
+      * [MinGW](http://www.mingw.org/)
+      * [MinGW-w64](http://mingw-w64.sourceforge.net/)
+      * [Cygwin](http://www.cygwin.org/)
+      * [Rtools](http://cran.r-project.org/bin/windows/Rtools/) 
+
+      _**Note**_ &mdash; Should be included in the System Enviroment **PATH**.
+
 * _**Optional** &mdash; Installed Subversion Client such as SlikSVN._ 
 
 Quick Start
@@ -28,15 +35,15 @@ Quick Start
 
 1. **Download** ADMB
 
-       Download source distribution[admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
+       Download source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Double click downloaded zip file and extract to _C:\admb\ _.
+       Double click downloaded zip file and extract to **C:\admb\**.
 
        _**Optional**_ &mdash; To download from directly from ADMB version control use the command below.
 
         C:\> svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
 
-       This will download admb-11.2 source directory to _C:\admb\ _.
+       This will download admb-11.2 source directory to **C:\admb\**.
 
 2. **Build** ADMB source
 
@@ -64,7 +71,7 @@ Quick Start
 
         C:\admb\> utilities\make CXXFLAGS=-m64 LDFLAGS=-m64
 
-       _**Note** &mdash; When completed, `C:\admb\build\dist` is the binary distribution directory._
+       _**Note** &mdash; When completed, **C:\admb\build\dist** is the binary distribution directory._
 
 3. **Use** ADMB
  

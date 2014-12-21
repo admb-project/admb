@@ -14,7 +14,7 @@ The following programs should be installed on the local computer.
 
 * C++ compiler
 * GNU make
-* GNU sed
+* GNU stream editor (sed)
 * GNU flex
 * _**Optional**_ &mdash; Subversion Client to download from source version control.
 

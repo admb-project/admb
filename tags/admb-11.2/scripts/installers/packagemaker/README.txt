@@ -23,13 +23,12 @@ Installation
 
 Quick Start
 ===========
-Describe the procedure for building and running the
-ADMB simple example.
+Describe the procedure for building and running the ADMB simple example.
 
 1. Open "ADMBTerminal" located in /Applications,
    then type admb for Usage options.
 
-        $ admb
+        [~]$ admb
 
         Builds AD Model Builder executable or library.
 
@@ -49,15 +48,15 @@ ADMB simple example.
 
 2. Copy simple example from ADMB_HOME.
 
-        $ cp -R $ADMB_HOME/examples/admb/simple .
+        [~]$ cp -R $ADMB_HOME/examples/admb/simple .
 
-3. Must change to the copied simple directory .
+3. Change to the simple example directory .
 
-        $ cd simple
+        [~]$ cd simple
 
 4. Build the simple example.
 
-        $ admb simple
+        [~/simple/]$ admb simple
 
         *** Parse tpl: simple.tpl
         tpl2cpp simple
@@ -72,7 +71,7 @@ ADMB simple example.
 
 5. Run the simple example.
 
-        $ ./simple 
+        [~/simple/]$ ./simple 
 
         Initial statistics: 2 variables; iteration 0; function evaluation 0; phase 1
         Function value   3.6493579e+01; maximum gradient component mag  -3.6127e+00

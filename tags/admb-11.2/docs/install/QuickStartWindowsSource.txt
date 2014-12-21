@@ -1,8 +1,9 @@
 #ADMB Project 
+
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-Describe ADMB build and installation procedures for Windows and MinGW.
+ADMB source build and installation procedures for Windows.
 
 ---
 
@@ -12,47 +13,40 @@ read and follow the instuctions in [QuickStart for Visual C++](QuickStartVisualC
 _For builds within *Cygwin* and *MinGW-Msys* shells, read and follow the
 instructions in the [QuickStart for Unix](QuickStartUnix.html)._
 
+Prerequisites
+-------------
+
+* Installed C++ Compiler (see supported list below) and included the System Enviroment **PATH**.
+  * [MinGW](http://www.mingw.org/)
+  * [MinGW-w64](http://mingw-w64.sourceforge.net/)
+  * [Cygwin](http://www.cygwin.org/)
+  * [Rtools](http://cran.r-project.org/bin/windows/Rtools/) 
+* _**Optional** &mdash; Installed Subversion Client such as SlikSVN._ 
 
 Quick Start
 -----------
 
-1. Open **Command Prompt** window  
-       _**Note** &mdash; 32 or 64 bit Command Prompt is required._
+1. **Download** ADMB
 
-2. **Download** ADMB
-
-       A installed Subversion Client is needed to download from ADMB source version control.
-
-       _**Note** &mdash; SlikSVN is a command line Subversion Client._ 
-
-       To download from directly from ADMB version control use the command below.
-
-        C:\> svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
-
-       This will copy admb-11.2 source folder to _C:\admb\ _.
-
-       If **unable** to use Subversion to checkout code, download the [full source distribution](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
+       Download source distribution[admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
        Double click downloaded zip file and extract to _C:\admb\ _.
 
-3. Change to admb directory
+       _**Optional**_ &mdash; To download from directly from ADMB version control use the command below.
+
+        C:\> svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
+
+       This will download admb-11.2 source directory to _C:\admb\ _.
+
+2. **Build** ADMB source
+
+       Open **Command Prompt** window.
+
+       Change to admb directory
 
         C:\> cd admb
 
-4. Install C++ compiler
-
-       If a C++ compiler has been installed such as [MinGW](http://www.mingw.org/), [MinGW-w64](http://mingw-w64.sourceforge.net/), [Cygwin](http://www.cygwin.org/) or [Rtools](http://cran.r-project.org/bin/windows/Rtools/) and is in the System Enviroment **PATH**, skip this step and go to the next step.
-
-       If C++ compiler has not been installed, use the command below to download
-   and install the MinGW C++ Compiler to the _C:\admb\utilities\mingw_ folder.
-
-        C:\admb\> utilities\get-mingw.bat
-
-       Downloads from MinGW website, then installs to the local computer.  This will also update existing MinGW installation.
-
-5. **Build** ADMB
-
-       If **MinGW** was installed with _get-mingw.bat_, use the command below.
+       To build with **MinGW** C++ compiler, use the command below.
 
         C:\admb\> utilities\make
 
@@ -60,44 +54,35 @@ Quick Start
 
         C:\admb\> utilities\make debug
 
-       If **Rtools** was installed and is included in System Enviroment PATH, use the command below.
-
-        C:\admb\> utilities\make
-
-       _**Note** &mdash; Do not use the make utility from Rtools because it is a older version which is incompatible with the current ADMB build files._
-
-       To build 64 bit with **Rtools**, use the command below 
-
-        C:\admb\> utilities\make CXXFLAGS=-m64 LDFLAGS=-m64
-
-       If **MinGW-Msys** was installed and is included in System Enviroment PATH, use the command below.
+       To build with **MinGW** C++ compiler and **Msys** , use the command below.
 
         C:\admb\> make
 
+       To build 64 bit with **Rtools**, use the command below
+
+       _**Note** &mdash; The outdated make utility from Rtools is incompatible with ADMB build files._
+
+        C:\admb\> utilities\make CXXFLAGS=-m64 LDFLAGS=-m64
+
        _**Note** &mdash; When completed, `C:\admb\build\dist` is the binary distribution directory._
 
-6. **Use** ADMB
+3. **Use** ADMB
  
-       The following commands build and run the simple example.
+       In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
+ 
+       Change directory       
 
-        C:\admb\> cd examples\admb\simple
-        C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
-        C:\admb\examples\admb\simple\> simple.exe
+           C:\admb\> cd examples\admb\simple
 
-7. _**Optional**_ &mdash; Installation
+       Build simple example
 
-       Add the admb directory to the system PATH to avoid typing the directory 
-       when calling the admb script.
+           C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
 
-       1. In the **System Properties** window, click on the **Enviroment Variables** button.
+       Run simple example
 
-       2. In the **Enviroment Variables** window, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
+           C:\admb\examples\admb\simple\> simple.exe
 
-       3. Click the **OK** button when done and open a new command prompt.  
-
-            C:\admb\> cd examples\admb\simple
-            C:\admb\examples\admb\simple\> admb simple.tpl
-            C:\admb\examples\admb\simple\> simple.exe
+       Read manuals for more documentation.
 
 ---
 For help and support, contact <users@admb-project.org>.

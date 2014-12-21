@@ -1,8 +1,9 @@
 #ADMB Project
+
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-Installing ADMB from prebuilt zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
+Installing ADMB from binary zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 
 ---
 
@@ -19,34 +20,49 @@ _**Note** &mdash; For MacOS, install XCode with command line tools includes all 
 Quick Start
 -----------
 
-1. **Download**
+1. Open a **Terminal** window
 
-       Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
+2. **Download** ADMB
 
-2. Open a **Terminal** window
+       Download binary zip distributions [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/).
 
-3. **Extract**
+       Unzip the downloaded file in the HOME directory.
 
-       Unzip the downloaded file to the HOME directory.
+           [~]$ unzip admb-11.2-ubuntu14-64bit.zip
 
-           [~]$ unzip file
+       _**Note** &mdash; Extracts admb directory to _~/admb/_.
 
+3. **Use** ADMB
 
-4. **Use**
+       In the **Terminal** window, use the steps below to build and run the simple example.
 
-       The following commands build and run the simple example.
+       Change to simple example directory       
 
            [~]$ cd admb/examples/admb/simple
+
+       Build simple example
+
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
-           [~/admb/examples/admb/simple/]$ ./simple
 
-       For MinGW and Cygwin shells, use the **'admb.sh'** script.
+       _**Note**_ &mdash; For MinGW and Cygwin shells, use the **'admb.sh'** script.
 
-           [~]$ cd admb/examples/admb/simple
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
+
+       Run simple example
+
            [~/admb/examples/admb/simple/]$ ./simple
 
-5. _**Optional**_ &mdash; Manual Installation    
+       Read manuals for more documentation.
+
+4. _**Optional**_ &mdash; Multi-User Installation    
+
+       Installs binary distribution folder to /usr/local/ as super-user.
+
+           [~/admb/]$ sudo make install
+
+       _Use the Manual Installation below if the command above does not work._
+
+       _**Alternative**_ &mdash; Manual Installation    
 
        Copy binary distribution folder to /usr/local/ as super-user.
 
@@ -56,7 +72,7 @@ Quick Start
 
            [~]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
-       After copying, build and run the simple example.
+       Build and run the simple example without the directory prefix.
 
            [~]$ cd admb/examples/admb/simple
            [~/admb/examples/admb/simple/]$ admb simple.tpl

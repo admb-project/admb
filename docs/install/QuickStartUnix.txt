@@ -30,7 +30,7 @@ Quick Start
 
            [~]$ unzip admb-11.2-ubuntu14-64bit.zip
 
-       _**Note** &mdash; Extracts admb directory to _~/admb/ _.
+       _**Note**_ &mdash; Extracts admb directory to _~/admb/_.
 
 3. **Use** ADMB
 

@@ -33,7 +33,7 @@ Quick Start
 
            [~]$ unzip admb-11.2-src.zip
 
-       _**Note** &mdash; Extracts admb directory to _~/admb/_.
+       _**Note** &mdash; Extracts admb directory to _~/admb/ _.
 
        _**Optional**_ &mdash; Use Subversion client to download from version control.
 

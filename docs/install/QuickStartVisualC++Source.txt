@@ -21,17 +21,17 @@ _**Note**_ &mdash; A free version is available from [Microsoft](http://www.visua
 
        Download source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Double click downloaded zip file and extract to **C:\\admb\\>**.
+       Double click downloaded zip file and copy admb directory to **C:\\admb\\>**.
 
 2. **Build** ADMB source
 
-       Open **Visual Studio Command Prompt** window
+       Open Visual Studio **Developer Command Prompt** window
 
-           * For Visual C++ 2013, Double click **Start**->**All Programs**->**Visual Studio**->**Visual Studio Tools**
+           * For Visual C++ 2013, Double click **Developer Command Prompt for VS2013** in **Visual Studio Tools**.
 
-           * For Visual C++ 2012, Double click **Start**->**All Programs**->**Visual Studio**->**Visual Studio Tools**
+           * For Visual C++ 2012, Double click **Developer Command Prompt for VS2012** in **Visual Studio Tools**.
 
-       In the **Visual Studio Command Prompt** window, use the steps below to build ADMB.
+       In the Visual Studio **Developer Command Prompt** window, use the steps below to build ADMB.
 
        Change to admb directory
 

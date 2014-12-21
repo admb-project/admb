@@ -12,6 +12,10 @@ Quick Start
 
 **Prerequisite** &mdash; MinGW C++ is installed on the local computer.
 
+   * Installed MinGW C++ 64Bit must support **posix threading** and **structured exception handling (seh)** .
+
+   * Installed MinGW C++ 32Bit must support **posix threading** and **dwarf exception handling** .
+
 1. **Download** ADMB
 
        * For Windows 64Bit, download [admb-11.2-windows8-mingw64](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw64.zip).
@@ -20,7 +24,7 @@ Quick Start
 
 2. **Install** ADMB
 
-       Double click downloaded file to open, then copy **admb** folder to **C:\\>**.
+       Double click downloaded file to open, then copy **admb** folder to Local Disk (**C:\\>**).
 
 3. **Use** ADMB
 
@@ -32,7 +36,7 @@ Quick Start
 
            C:\> g++ --version
 
-       If C++ compiler is not found, then configure search **PATH** with location of **g++.exe**.
+       If g++ compiler is not recognized, then configure search **PATH** with location of **g++.exe**.
 
            C:\> set PATH=C:\MinGW\bin;%PATH%
  

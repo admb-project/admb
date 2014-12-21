@@ -2,7 +2,7 @@
 *ADMB-11.2*  
 *Released December 19, 2014*  
 
-Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
+ADMB installation procedure for Windows and MinGW C++ compiler using zip file.
 
 ---
 
@@ -11,41 +11,43 @@ Prerequisites
 
 The following programs should be installed on the local computer.
 
-* MinGW-w64 compiler installed
+* MinGW C++ compiler installed
 
 Quick Start
 -----------
 
 1. **Download**
 
-       Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
+       For Windows (64Bit), download [admb-11.2-windows8-mingw64](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw64.zip).
+       For Windows (32Bit), download [admb-11.2-windows8-mingw32](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw32.zip).
 
 2. **Extract**
 
-       Extract **admb** folder from downloaded file to **C:\>**.
+       Double click downloaded file to open, then copy **admb** folder to **C:\>**.
 
 5. **Use** ADMB
 
-       Open **Command Prompt** window, then use following commands to build and run the simple example.
+       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\admb\**.
 
-	   C:\admb\> cd examples\admb\simple
-	   C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
-	   C:\admb\examples\admb\simple\> simple.exe
+       In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
+ 
+       Copy the simple example directory
 
-6. _**Optional**_ &mdash; Installation
+           C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
 
-       Add the admb directory to the system PATH to avoid typing the directory 
-       when calling the admb script.
+       Change directory       
 
-       1. In the **System Properties** window, click on the **Enviroment Variables** button.
+           C:\> cd simple
 
-       2. In the **Enviroment Variables** windows, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
+       Build simple example
 
-       3. Click the **OK** button when done and open a new command prompt.
+           C:\simple\> admb simple
 
-            C:\admb\> cd examples\admb\simple
-            C:\admb\examples\admb\simple\> admb simple.tpl
-            C:\admb\examples\admb\simple\> simple.exe
+       Run simple example
+
+           C:\simple\> simple
+
+       Read manuals for more documentation.
 
 ---
 For help and support, contact <users@admb-project.org>.

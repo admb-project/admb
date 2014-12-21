@@ -33,11 +33,11 @@ Quick Start
 
        Download binary zip distribution
 
-           * For Ubuntu 14 (64Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ubuntu14-64bit.zip).
-           * For Fedora 20 (64Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-fedora20-gcc4.8-64bit.zip).
-           * For Fedora 20 (32Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-fedora20-gcc4.8-32bit.zip).
-           * For Centos 6 and Oracle Solaris Studio 12.3 (32Bit), [admb-11.2-centos6-solarisstudio12.3-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-centos6-solarisstudio12.3-32bit.zip).
-           * For Centos 6 and Intel C++ Compiler (64Bit), [admb-11.2-centos6-intelicpc2013-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-centos6-intelicpc2013-64bit.zip).
+       * For Ubuntu 14 (64Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ubuntu14-64bit.zip).
+       * For Fedora 20 (64Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-fedora20-gcc4.8-64bit.zip).
+       * For Fedora 20 (32Bit), [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-fedora20-gcc4.8-32bit.zip).
+       * For Centos 6 and Oracle Solaris Studio 12.3 (32Bit), [admb-11.2-centos6-solarisstudio12.3-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-centos6-solarisstudio12.3-32bit.zip).
+       * For Centos 6 and Intel C++ Compiler (64Bit), [admb-11.2-centos6-intelicpc2013-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-centos6-intelicpc2013-64bit.zip).
 
        Use the command below to extract contents of zip file to _~/admb/_. 
 

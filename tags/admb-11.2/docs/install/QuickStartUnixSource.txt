@@ -29,7 +29,7 @@ Quick Start
 
        Download source distribution[admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Use the command below to extract to _~/admb/_. 
+       Use the command below to extract to _~/admb/ _. 
 
            [~]$ unzip admb-11.2-src.zip
 
@@ -55,7 +55,7 @@ Quick Start
 
            [~/admb/]$ make debug
 
-       _**Note** &mdash; When completed, `~/admb/build/dist` is the binary distribution directory._
+       _**Note** &mdash; When completed, **~/admb/build/dist** is the binary distribution directory._
 
 5. **Use** ADMB
 

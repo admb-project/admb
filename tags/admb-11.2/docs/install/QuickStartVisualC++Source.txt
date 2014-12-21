@@ -12,7 +12,9 @@ _**Note** &mdash; For Microsoft Visual C++ 2010, read [installation][help] docum
 Prerequisites
 -------------
 
-* Visual C++ should be installed and updated on the local computer.
+The following programs are required to be installed on the local computer.
+
+* Visual C++
 
     _**Note**_ &mdash; A free version is available from: [Visual Studio Express 2013](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop)
 
@@ -23,7 +25,7 @@ Quick Start
 
        Download source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Double click downloaded zip file and extract to _C:\admb\ _.
+       Double click downloaded zip file and extract to **C:\admb\**.
 
 2. Open **Visual Studio Command Prompt** window
 

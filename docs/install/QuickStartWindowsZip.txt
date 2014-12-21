@@ -1,8 +1,9 @@
 #ADMB Project
+
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-ADMB installation procedure for Windows and MinGW C++ compiler using zip file.
+ADMB binary installation procedure for Windows and MinGW C++ compiler using zip file.
 
 ---
 
@@ -16,34 +17,43 @@ The following programs should be installed on the local computer.
 Quick Start
 -----------
 
-1. **Download**
+1. **Download** ADMB
 
-       For Windows (64Bit), download [admb-11.2-windows8-mingw64](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw64.zip).
-       For Windows (32Bit), download [admb-11.2-windows8-mingw32](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw32.zip).
+       * For Windows 64Bit, download [admb-11.2-windows8-mingw64](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw64.zip).
 
-2. **Extract**
+       * For Windows 32Bit, download [admb-11.2-windows8-mingw32](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw32.zip).
+
+2. **Install** ADMB
 
        Double click downloaded file to open, then copy **admb** folder to **C:\>**.
 
-5. **Use** ADMB
+3. **Use** ADMB
 
        Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\admb\**.
 
        In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
+
+       Check C++ compiler (g++).
+
+           C:\> g++ --version
+
+       If C++ compiler is not found, then configure search **PATH** with location of **g++.exe**.
+
+           C:\> set PATH=C:\MinGW\bin;%PATH%
  
-       Copy the simple example directory
+       Copy the simple example directory.
 
            C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
 
-       Change directory       
+       Change directory.
 
            C:\> cd simple
 
-       Build simple example
+       Build simple example.
 
            C:\simple\> admb simple
 
-       Run simple example
+       Run simple example.
 
            C:\simple\> simple
 

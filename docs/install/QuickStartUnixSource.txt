@@ -12,10 +12,10 @@ Prerequisites
 
 The following programs should be installed on the local computer.
 
+* C++ compiler
+* GNU make
 * GNU sed
 * GNU flex
-* GNU make
-* C++ compiler
 * _**Optional**_ &mdash; Subversion Client to download from source version control.
 
 _**Note** &mdash; For MacOS, install XCode with command line tools includes all the prerequistes._
@@ -29,11 +29,11 @@ Quick Start
 
        Download source distribution[admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Use the command below to extract to _~/admb/ _. 
+       Use the command below to extract to _~/admb/_. 
 
            [~]$ unzip admb-11.2-src.zip
 
-       _**Note** &mdash; Extracts admb directory to _~/admb/ _.
+       _**Note**_ &mdash; Extracts admb directory to _~/admb/_.
 
        _**Optional**_ &mdash; Use Subversion client to download from version control.
 
@@ -55,7 +55,7 @@ Quick Start
 
            [~/admb/]$ make debug
 
-       _**Note** &mdash; When completed, **~/admb/build/dist** is the binary distribution directory._
+       _**Note**_ &mdash; When completed, **~/admb/build/dist** is the binary distribution directory.
 
 5. **Use** ADMB
 

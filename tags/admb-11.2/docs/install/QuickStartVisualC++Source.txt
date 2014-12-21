@@ -6,26 +6,22 @@
 ADMB source build and installation procedures for Windows and Visual C++ compilers.
 
 ---
+
 _**Note** &mdash; For Microsoft Visual C++ 2010, read [installation][help] documentation._
 [help]: http://www.admb-project.org/documentation/installation/admb-installation-visual-c
 
-Prerequisites
--------------
-
-The following programs are required to be installed on the local computer.
-
-* Visual C++
-
-    _**Note**_ &mdash; A free version is available from: [Visual Studio Express 2013](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop)
-
 Quick Start
 -----------
+
+**Prerequisite** &mdash; Visual Studio C++ is installed on the local computer.
+
+_**Note**_ &mdash; A free version is available from [Microsoft](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop).
 
 1. **Download** ADMB source
 
        Download source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Double click downloaded zip file and extract to **C:\admb\>**.
+       Double click downloaded zip file and extract to **C:\\admb\\>**.
 
 2. Open **Visual Studio Command Prompt** window
 

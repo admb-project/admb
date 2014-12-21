@@ -7,15 +7,10 @@ ADMB binary installation procedure for Windows and MinGW C++ compiler using zip 
 
 ---
 
-Prerequisites
--------------
-
-The following programs are required to be installed on the local computer.
-
-* MinGW C++ compiler
-
 Quick Start
 -----------
+
+**Prerequisite** &mdash; MinGW C++ is installed on the local computer.
 
 1. **Download** ADMB
 
@@ -25,11 +20,11 @@ Quick Start
 
 2. **Install** ADMB
 
-       Double click downloaded file to open, then copy **admb** folder to **C:\>**.
+       Double click downloaded file to open, then copy **admb** folder to **C:\\>**.
 
 3. **Use** ADMB
 
-       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\admb\>**.
+       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\\admb\\>**.
 
        In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
 

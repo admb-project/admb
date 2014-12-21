@@ -4,6 +4,8 @@
 
 The installation procedure for installing ADMBTerminal app for the MacOS.
 
+---
+
 Installation
 ============
 

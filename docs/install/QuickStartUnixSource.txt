@@ -3,7 +3,7 @@
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-ADMB source build and installation procedures for Unix operating systems such as Linux, MacOS, Solaris and BSD.
+ADMB source build and usage procedures for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 
 ---
 
@@ -25,17 +25,15 @@ Quick Start
 
 1. Open a **Terminal** window
 
-2. **Download** ADMB
+2. **Download** ADMB source distribution
 
-       Download source distribution[admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
+       Download ADMB source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Use the command below to extract to _~/admb/_. 
+       Use the command below to extract contents of zip file to _~/admb/_. 
 
            [~]$ unzip admb-11.2-src.zip
 
-       _**Note**_ &mdash; Extracts admb directory to _~/admb/_.
-
-       _**Optional**_ &mdash; Use Subversion client to download from version control.
+       _**Alternative**_ &mdash; Use Subversion client to download from version control.
 
            [~]$ svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
 
@@ -57,7 +55,7 @@ Quick Start
 
        _**Note**_ &mdash; When completed, **~/admb/build/dist/** is the binary distribution directory.
 
-5. **Use** ADMB
+4. **Use** ADMB
 
        In the **Terminal** window, use the steps below to build and run the simple example.
 
@@ -79,34 +77,31 @@ Quick Start
 
        Read manuals for more documentation.
 
-6. _**Optional**_ &mdash; Multi-User Installation    
+5. _**Optional**_ &mdash; Multi-User Installation    
 
        Installs binary distribution folder to /usr/local/ as super-user.
 
            [~/admb/]$ sudo make install
-
-       _Use the Manual Installation below if the command above does not work._
-
-       _**Alternative**_ &mdash; Manual Installation    
-
-       _The dist folder can be copied to other computers with similar configurations._
-
-       Follow the procedure below to avoid typing the directory 
-       when calling the admb script.
-
-       Copy binary distribution folder to /usr/local/ as super-user.
-
-           [~/admb/]$ sudo cp -Rvf build/dist /usr/local/admb
-
-       Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
-
-           [~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
        Build and run the simple example without the directory prefix.
 
            [~/admb/]$ cd examples/admb/simple
            [~/admb/examples/admb/simple/]$ admb simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
+
+       _If unable to build simple example, then use the Manual Installation below._
+
+       _**Alternative**_ &mdash; Manual Installation    
+
+       Copy binary distribution folder to /usr/local/ as super-user.
+
+           [~/admb/]$ sudo cp -Rvf build/dist /usr/local/admb
+
+       _**Note**_ &mdash; The dist folder can be copied to other computers with similar configurations._
+
+       Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
+
+           [~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
 --------------------------------------------------------------------------------
 For help and support, contact <users@admb-project.org>.

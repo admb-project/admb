@@ -3,7 +3,7 @@
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-ADMB source build and installation procedures for Windows.
+ADMB source build and usage procedures for Windows.
 
 ---
 
@@ -20,14 +20,14 @@ The following programs are required to be installed on the local computer.
 
 * C++ Compiler (see list below)
 
-      Supported C++ Compilers
+      Supported C++ Compilers for Windows
 
       * [MinGW](http://www.mingw.org/)
       * [MinGW-w64](http://mingw-w64.sourceforge.net/)
       * [Cygwin](http://www.cygwin.org/)
       * [Rtools](http://cran.r-project.org/bin/windows/Rtools/) 
 
-      _**Note**_ &mdash; Should be included in the System Enviroment **PATH**.
+      _**Note**_ &mdash; C++ Compilers should be included in the System Enviroment **PATH**.
 
 * _**Optional**_ &mdash; Installed Subversion Client such as SlikSVN.
 
@@ -76,17 +76,17 @@ Quick Start
 
 3. **Use** ADMB
  
-       In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
+       In the **Command Prompt** window, use the steps below to build and run the simple example.
  
-       Change directory       
+       Change to simple example directory.       
 
            C:\admb\> cd examples\admb\simple
 
-       Build simple example
+       Build simple example.
 
            C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
 
-       Run simple example
+       Run simple example.
 
            C:\admb\examples\admb\simple\> simple.exe
 

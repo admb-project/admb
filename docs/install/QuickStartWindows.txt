@@ -3,7 +3,7 @@
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-ADMB binary installation procedure for Windows using installer.
+ADMB binary installation and usage procedure for Windows using installer.
 
 ---
 
@@ -37,19 +37,19 @@ _**Warning** &mdash; Uninstall any existing installations of ADMB._
 
        In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
  
-       Copy the simple example directory
+       Copy the simple example directory.
 
            C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
 
-       Change directory       
+       Change to simple example directory.       
 
            C:\> cd simple
 
-       Build simple example
+       Build simple example.
 
            C:\simple\> admb simple
 
-       Run simple example
+       Run simple example.
 
            C:\simple\> simple
 

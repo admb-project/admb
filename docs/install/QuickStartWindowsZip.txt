@@ -3,7 +3,7 @@
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-ADMB binary installation procedure for Windows and MinGW C++ compiler using zip file.
+ADMB binary installation and usage procedure for Windows and MinGW C++ compiler using zip file.
 
 ---
 
@@ -40,7 +40,7 @@ Quick Start
 
            C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
 
-       Change directory.
+       Change simple example directory.
 
            C:\> cd simple
 

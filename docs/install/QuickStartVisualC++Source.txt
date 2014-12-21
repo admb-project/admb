@@ -3,7 +3,7 @@
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-ADMB source build and installation procedures for Windows and Visual C++ compilers.
+ADMB source build and usage procedures for Windows and Visual C++ compilers.
 
 ---
 
@@ -23,13 +23,13 @@ _**Note**_ &mdash; A free version is available from [Microsoft](http://www.visua
 
        Double click downloaded zip file and extract to **C:\\admb\\>**.
 
-2. Open **Visual Studio Command Prompt** window
+2. **Build** ADMB source
 
-       * For Visual C++ 2013, **Start**->**All Programs**->**Visual Studio**->**Visual Studio Tools**
+       Open **Visual Studio Command Prompt** window
 
-       * For Visual C++ 2012, **Start**->**All Programs**->**Visual Studio**->**Visual Studio Tools**
+           * For Visual C++ 2013, Double click **Start**->**All Programs**->**Visual Studio**->**Visual Studio Tools**
 
-3. **Build** ADMB source
+           * For Visual C++ 2012, Double click **Start**->**All Programs**->**Visual Studio**->**Visual Studio Tools**
 
        In the **Visual Studio Command Prompt** window, use the steps below to build ADMB.
 
@@ -47,25 +47,25 @@ _**Note**_ &mdash; A free version is available from [Microsoft](http://www.visua
 
        Close **Visual Studio Command Prompt**.
 
-4. **Use** ADMB
+3. **Use** ADMB
 
        Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\admb\>**.
 
        In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
  
-       Copy the simple example directory
+       Copy the simple example directory.
 
            C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
 
-       Change directory       
+       Change to simple example directory.       
 
            C:\> cd simple
 
-       Build simple example
+       Build simple example.
 
            C:\simple\> admb simple
 
-       Run simple example
+       Run simple example.
 
            C:\simple\> simple
 

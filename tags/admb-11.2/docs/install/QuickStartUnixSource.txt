@@ -55,7 +55,7 @@ Quick Start
 
            [~/admb/]$ make debug
 
-       _**Note**_ &mdash; When completed, **~/admb/build/dist** is the binary distribution directory.
+       _**Note**_ &mdash; When completed, **~/admb/build/dist/** is the binary distribution directory.
 
 5. **Use** ADMB
 

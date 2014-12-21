@@ -25,7 +25,7 @@ Quick Start
 
        Download source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Double click downloaded zip file and extract to **C:\admb\**.
+       Double click downloaded zip file and extract to **C:\admb\>**.
 
 2. Open **Visual Studio Command Prompt** window
 
@@ -53,7 +53,7 @@ Quick Start
 
 4. **Use** ADMB
 
-       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\admb\**.
+       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\admb\>**.
 
        In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
  

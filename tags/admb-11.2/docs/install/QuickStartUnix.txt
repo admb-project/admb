@@ -24,7 +24,7 @@ Quick Start
 
 2. **Download** ADMB
 
-       Download binary zip distributions [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/).
+       Download binary zip distributions from [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/).
 
        Unzip the downloaded file in the HOME directory.
 

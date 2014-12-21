@@ -29,7 +29,7 @@ Quick Start
 
 3. **Use** ADMB
 
-       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\admb\**.
+       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\admb\>**.
 
        In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
 

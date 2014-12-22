@@ -67,8 +67,7 @@ all-tpls:\
   tpl-priors\
   tpl-testminmax\
   tpl-orange_mvn\
-  tpl-lprof\
-  tpl-SS3
+  tpl-lprof
 
 tpl-4darray:
 	$(MAKE) --directory=4darray
@@ -141,11 +140,6 @@ ifneq ($(SHELL),cmd)
 	$(MAKE) --directory=lprof
 endif
 
-tpl-SS3:
-ifneq ($(CXX),openCC)
-	$(MAKE) --directory=SS3
-endif
-
 verify:
 ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
@@ -192,7 +186,6 @@ endif
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
 	$(MAKE) --directory=beta_deviate clean
-	$(MAKE) --directory=SS3 clean
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean
 	$(MAKE) --directory=agemat clean

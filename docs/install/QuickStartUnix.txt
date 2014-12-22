@@ -20,6 +20,7 @@ The following programs are required to be installed on the local computer.
       * Intel C++ Compiler
       * Oracle Solaris Studio 12.3
 
+
 * GNU stream editor (sed)
 
 _**Note** &mdash; For MacOS, install XCode with command line tools includes all the prerequistes._
@@ -73,7 +74,7 @@ Quick Start
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
 
-       _**Note**_ &mdash; For MinGW and Cygwin shells, use the **'admb.sh'** script.
+       For building with MinGW or Cygwin shells, use the **'admb.sh'** script.
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
 
@@ -103,7 +104,7 @@ Quick Start
 
            [~]$ sudo cp -Rvf admb /usr/local/admb
 
-       _**Note**_ &mdash; The dist folder can be copied to other computers with similar configurations._
+       _**Note**_ &mdash; The dist folder can be copied to other computers with similar configurations.
 
        Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
 

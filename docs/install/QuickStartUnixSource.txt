@@ -97,9 +97,9 @@ Quick Start
 
            [~/admb/]$ sudo cp -Rvf build/dist /usr/local/admb
 
-       _**Note**_ &mdash; The dist folder can be copied to other computers with similar configurations._
+       _**Note**_ &mdash; The dist folder can be copied to other computers with similar configurations.
 
-       Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
+       Create symlink to main admb script.  Directory **/usr/local/bin/** should already exist.
 
            [~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 

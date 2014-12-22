@@ -78,6 +78,19 @@ else
 	cd ukfsst; ./ukfsst; cd ..
 endif
 
+total-clean:
+ifeq ($(SHELL),cmd)
+	@rmdir /s /q ukfsst
+	@rmdir /s /q trackit
+	@rmdir /s /q kftrack
+	@rmdir /s /q kfsst
+else
+	@rm -rvf ukfsst
+	@rm -rvf trackit
+	@rm -rvf kftrack
+	@rm -rvf kfsst
+endif
+
 clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --file=Makefile clean

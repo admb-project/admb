@@ -53,21 +53,17 @@ _**Note**_ &mdash; A free version is available from [Microsoft](http://www.visua
 
        In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
  
-       Copy the simple example directory.
-
-           C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
-
        Change to simple example directory.       
 
-           C:\> cd simple
+           C:\> cd admb\examples\admb\simple
 
        Build simple example.
 
-           C:\simple\> admb simple
+           C:\admb\examples\admb\simple\> admb simple
 
        Run simple example.
 
-           C:\simple\> simple
+           C:\admb\examples\admb\simple\> simple
 
        Read manuals for more documentation.
 

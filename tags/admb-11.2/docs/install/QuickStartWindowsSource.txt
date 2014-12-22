@@ -38,9 +38,9 @@ Quick Start
 
        Download source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
 
-       Double click downloaded zip file and copy admb directory to **C:\\admb\\>**.
+       Double click downloaded zip file and copy admb directory to the Local Drive (**C:\\>)**.
 
-       _**Optional**_ &mdash; To download from directly from ADMB version control use the command below.
+       _**Alternative**_ &mdash; To download from directly from ADMB version control use the command below.
 
         C:\> svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
 
@@ -72,7 +72,7 @@ Quick Start
 
         C:\admb\> utilities\make CXXFLAGS=-m64 LDFLAGS=-m64
 
-       _**Note**_ &mdash; When completed, **C:\\admb\\build\\dist\\>** is the binary distribution directory.
+       _**Note**_ &mdash; When build is completed, **C:\\admb\\build\\dist\\>** is the binary distribution directory.
 
 3. **Use** ADMB
  

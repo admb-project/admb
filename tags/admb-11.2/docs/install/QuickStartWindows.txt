@@ -29,11 +29,9 @@ _**Warning** &mdash; Uninstall any existing installations of ADMB._
 
        Double click the downloaded **ADMB Windows Installer** and follow instructions.
 
-3. **Open** ADMB Command Prompt
+3. **Use** ADMB
 
        On the Desktop, double click **ADMB Command Prompt** shortcut to open command line window.
-
-4. **Use** ADMB
 
        In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
  

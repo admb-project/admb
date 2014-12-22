@@ -2,9 +2,9 @@
 *ADMB-11.2*  
 *Released December 22, 2014*  
 
-Describes the ADMB installation for Ubuntu operating system using Debian package manager (dpkg).
+ADMB installation for Ubuntu operating system using Debian package manager (dpkg).
 
-__Note__ &mdash; This is still experimental.
+__Note__ &mdash; Installing ADMB with dpkg is still experimental.
 
 ---
 
@@ -15,7 +15,7 @@ __Note__ &mdash; The installation will copy the admb script to /usr/local/bin an
 
 1. Download ADMB debian package
 
-       [ADMB Ubuntu14LTS 64Bit.deb](http://www.admb-project.org/buildbot/snapshots/admb-latest-ubuntu14-64bit_11.2.deb)
+       For Ubuntu 14LTS (64Bit), download [admb-11.2-ubuntu14-64bit_11.2.deb](http://ftp.admb-project.org/admb-11.2/admb-11.2-ubuntu14-64bit_11.2.deb).
 
 2. Install ADMB using Debian package manager (dpkg).
 
@@ -23,7 +23,8 @@ __Note__ &mdash; The installation will copy the admb script to /usr/local/bin an
 
 Quick Start
 ===========
-Procedure for building and running the ADMB simple example.
+
+Build and run the simple example.
 
 1. Open **Terminal**, then type **admb** for Usage options.
 
@@ -47,15 +48,15 @@ Procedure for building and running the ADMB simple example.
 
 2. Copy simple example to HOME directory.
 
-        ~$ cp -R /usr/local/admb/examples/admb/simple .
+        [~]$ cp -R /usr/local/admb/examples/admb/simple .
 
-3. Must change to the copied simple directory .
+3. Change simple example directory.
 
-        ~$ cd simple
+        [~]$ cd simple
 
 4. Build the simple example.
 
-        ~/simple$ admb simple
+        [~/simple/]$ admb simple
 
         *** Parse: simple.tpl
         tpl2cpp simple
@@ -70,7 +71,7 @@ Procedure for building and running the ADMB simple example.
 
 5. Run the simple example.
 
-        ~/simple$ ./simple 
+        [~/simple/]$ ./simple 
 
         Initial statistics: 2 variables; iteration 0; function evaluation 0; phase 1
         Function value   3.6493579e+01; maximum gradient component mag  -3.6127e+00
@@ -86,9 +87,7 @@ Procedure for building and running the ADMB simple example.
         Estimating row 1 out of 2 for hessian
         Estimating row 2 out of 2 for hessian
 
-6. Consult the [ADMB manuals][ADMB_manuals_link] for description of the simple output files.
-
-[ADMB_manuals_link]: http://www.admb-project.org/buildbot/manuals/
+  Consult the ADMB manuals for description of the simple output files.
 
 Help
 ====

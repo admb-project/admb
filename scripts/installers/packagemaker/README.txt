@@ -13,22 +13,23 @@ Installation
 
 1. Download ADMB installer
 
-       [ADMB-11.2 XCode (64 Bit).dmg](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-64bit.dmg)  
-       [ADMB-11.2 XCode (32 Bit).dmg](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-32bit.dmg)  
+       For 64Bit, download [admb-11.2-ADMBTerminal-macos10-xcode6-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-64bit.dmg)  
+       For 32Bit, download [admb-11.2-ADMBTerminal-macos10-xcode6-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-32bit.dmg)  
 
 2. Double click downloaded ADMB dmg file. 
 
-3. In the mounted disk image ADMBTerminal, copy **ADMBTerminal**
-   into the **Applications** folder.
+3. In the ADMBTerminal mounted disk image, copy **ADMBTerminal**
+   into the **/Applications** folder.
   
      **Note** &mdash; ADMBTerminal will set *ADMB_HOME* to **/Applications/ADMBTerminal.app/admb/ **.
 
 Quick Start
 ===========
-Describe the procedure for building and running the ADMB simple example.
 
-1. Open "ADMBTerminal" located in /Applications,
-   then type admb for Usage options.
+Build and run the simple example.
+
+1. Open **ADMBTerminal** located in **/Applications**,
+   then type **admb** for Usage options.
 
         [~]$ admb
 
@@ -67,7 +68,7 @@ Describe the procedure for building and running the ADMB simple example.
         c++ -c -O3 -I. -I"/Applications/ADMBTerminal.app/include" -I"/Applications/ADMBTerminal.app/contrib/include" -osimple.obj simple.cpp
 
         *** Linking: simple.obj 
-        c++ -O3 -osimple simple.obj "/Applications/ADMBTerminal.app/contrib/lib/libcontrib.a" "/Applications/ADMBTerminal.app/lib/libadmb.a"
+        c++ -O3 -osimple simple.obj "/Applications/ADMBTerminal.app/contrib/lib/libadmb-contrib.a"
 
         Successfully built executable.
 
@@ -89,7 +90,7 @@ Describe the procedure for building and running the ADMB simple example.
         Estimating row 1 out of 2 for hessian
         Estimating row 2 out of 2 for hessian
 
-6. Consult the ADMB manuals for description of the simple output files.
+    Consult the ADMB manuals for description of the simple output files.
 
 Help
 ====

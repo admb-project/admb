@@ -166,6 +166,9 @@ else
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
 endif
 
+total-clean:
+	$(MAKE) --directory=gtests total-clean
+
 clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --directory=glmmadmb --file=Makefile clean

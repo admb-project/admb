@@ -18,6 +18,9 @@ test-expm:
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd
 
+total-clean:
+	pushd gtests & $(MAKE) total-clean & popd
+
 clean:
 	pushd agemat& $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd

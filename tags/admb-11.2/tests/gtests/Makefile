@@ -153,6 +153,13 @@ init_bounded_number_matrix:
 df33_tester:
 	OPTIONS=-s $(MAKE) --directory=$@
 
+total-clean: clean
+ifeq ($(SHELL),cmd)
+	@rmdir /s /q googletest-read-only
+else
+	@rm -rvf googletest-read-only
+endif
+
 clean:
 ifeq ($(SHELL),cmd)
 	@del gtest-all.exe

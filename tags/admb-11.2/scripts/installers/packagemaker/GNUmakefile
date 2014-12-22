@@ -9,9 +9,9 @@ ADMBTerminal.dmg: build/ADMBTerminal.app
 	cp -rvf ../../../build/dist build/ADMBTerminal.app/admb
 	rm -vf raw$@
 	touch build/.Trash
-	hdiutil create raw$@ -volname "ADMBTerminal" -srcfolder build/
+	hdiutil create raw$@ -volname "ADMBTerminal" -srcfolder build/ -verbose
 	rm -vf $@
-	hdiutil convert raw$@ -format UDBZ -o $@
+	hdiutil convert raw$@ -format UDBZ -o $@ -verbose
 
 build/ADMBTerminal.app: ADMBTerminal.scpt
 	mkdir -p build

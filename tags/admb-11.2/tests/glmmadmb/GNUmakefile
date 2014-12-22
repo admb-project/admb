@@ -66,6 +66,16 @@ else
 	./glmmadmb
 endif
 
+total-clean: clean
+ifeq ($(SHELL),cmd)
+	$(MAKE) --file=Makefile total-clean
+else
+	@rm -rvf admb_tests
+	@rm -vf bvprobit.tpl
+	@rm -vf glmmadmb.tpl
+	@rm -vf nbmm.tpl
+endif
+
 clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --file=Makefile clean

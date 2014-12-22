@@ -18,8 +18,11 @@ test-expm:
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd
 
-total-clean:
+total-clean: clean
+	pushd glmmadmb & $(MAKE) total-clean & popd
 	pushd gtests & $(MAKE) total-clean & popd
+	pushd geolocation & $(MAKE) total-clean & popd
+	pushd agemat & $(MAKE) total-clean & popd
 
 clean:
 	pushd agemat& $(MAKE) clean & popd
@@ -39,4 +42,4 @@ verify:
 
 copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
-	pushd $(DESTDIR)\tests & $(MAKE) clean & popd
+	pushd $(DESTDIR)\tests & $(MAKE) total-clean & popd

@@ -166,8 +166,11 @@ else
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
 endif
 
-total-clean:
+total-clean: clean
+	$(MAKE) --directory=glmmadmb total-clean
 	$(MAKE) --directory=gtests total-clean
+	$(MAKE) --directory=geolocation total-clean
+	$(MAKE) --directory=agemat total-clean
 
 clean:
 ifeq ($(SHELL),cmd)
@@ -231,8 +234,10 @@ copy:
 ifeq ($(SHELL),cmd)
 	if not exist $(DIST)\tests md $(DIST)\tests
 	xcopy ..\tests $(DIST)\tests /S /Y /D
+	$(MAKE) --directory=$(DIST)\tests total-clean
 else
-	cp -Rvf ../tests ${DIST}
+	cp -Rvf ../tests $(DIST)
+	$(MAKE) --directory=$(DIST)/tests total-clean
 endif
 
 benchmarks:

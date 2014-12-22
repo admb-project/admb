@@ -87,7 +87,7 @@ Build and run the simple example.
         Estimating row 1 out of 2 for hessian
         Estimating row 2 out of 2 for hessian
 
-  Consult the ADMB manuals for description of the simple output files.
+  Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
 
 Help
 ====

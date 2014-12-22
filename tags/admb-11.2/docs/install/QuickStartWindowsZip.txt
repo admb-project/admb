@@ -12,9 +12,10 @@ Quick Start
 
 **Prerequisite** &mdash; MinGW C++ is installed on the local computer.
 
-   * Installed MinGW C++ 64Bit must support **posix threading** and **structured exception handling (seh)** .
+_**Note**_ &mdash; Installed MinGW C++ 64Bit must support **posix threading** and **structured exception handling (seh)** .
 
-   * Installed MinGW C++ 32Bit must support **posix threading** and **dwarf exception handling** .
+_**Note**_ &mdash; Installed MinGW C++ 32Bit must support **posix threading** and **dwarf exception handling** .
+
 
 1. **Download** ADMB
 

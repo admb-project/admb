@@ -53,7 +53,7 @@ _**Note**_ &mdash; Installed MinGW C++ 32Bit must support **posix threading** an
 
            C:\admb\examples\admb\simple\> simple
 
-       Read manuals for more documentation.
+       Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

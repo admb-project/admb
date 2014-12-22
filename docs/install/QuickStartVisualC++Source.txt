@@ -33,7 +33,7 @@ _**Note**_ &mdash; A free version is available from [Microsoft](http://www.visua
 
        In the Visual Studio **Developer Command Prompt** window, use the steps below to build ADMB.
 
-       Change to admb directory
+       Change to admb directory.
 
 	    C:\> cd admb
 

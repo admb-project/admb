@@ -50,7 +50,7 @@ Quick Start
 
        Open **Command Prompt** window.
 
-       Change to admb directory
+       Change to admb directory.
 
         C:\> cd admb
 
@@ -66,7 +66,7 @@ Quick Start
 
         C:\admb\> make
 
-       To build 64 bit with **Rtools**, use the command below
+       To build 64 bit with **Rtools**, use the command below.
 
        _**Note** &mdash; The outdated make utility from Rtools is incompatible with ADMB build files._
 

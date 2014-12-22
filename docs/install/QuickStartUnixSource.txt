@@ -41,7 +41,7 @@ Quick Start
 
 3. **Build** ADMB source
 
-       Change to admb directory
+       Change to admb directory.
 
            [~]$ cd admb
 
@@ -59,11 +59,11 @@ Quick Start
 
        In the **Terminal** window, use the steps below to build and run the simple example.
 
-       Change to simple example directory       
+       Change to simple example directory.       
 
            [~/admb/]$ cd examples/admb/simple
 
-       Build simple example
+       Build simple example.
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
 
@@ -71,7 +71,7 @@ Quick Start
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
 
-       Run simple example
+       Run simple example.
 
            [~/admb/examples/admb/simple/]$ ./simple
 

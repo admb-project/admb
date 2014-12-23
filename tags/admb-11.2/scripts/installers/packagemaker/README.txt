@@ -13,8 +13,10 @@ Installation
 
 1. Download ADMB installer
 
-       For 64Bit, download [admb-11.2-ADMBTerminal-macos10-xcode6-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-64bit.dmg)  
-       For 32Bit, download [admb-11.2-ADMBTerminal-macos10-xcode6-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-32bit.dmg)  
+       For 64Bit, download [admb-11.2-ADMBTerminal-macos10-xcode6-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-64bit.dmg).
+
+
+       For 32Bit, download [admb-11.2-ADMBTerminal-macos10-xcode6-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-32bit.dmg).  
 
 2. Double click downloaded ADMB dmg file. 
 
@@ -92,6 +94,5 @@ Build and run the simple example.
 
     Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
 
-Help
-====
-If help is needed, please email the ADMB users group <users@admb-project.org>.
+---
+For help and support, contact <users@admb-project.org>.

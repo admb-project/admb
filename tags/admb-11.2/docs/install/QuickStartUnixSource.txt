@@ -13,6 +13,13 @@ Prerequisites
 The following programs should be installed on the local computer.
 
 * C++ compiler
+
+      Supported C++ Compilers for Unix
+
+      * GNU C++
+      * Intel C++ Compiler
+      * Oracle Solaris Studio 12.3     
+
 * GNU make
 * GNU stream editor (sed)
 * GNU flex
@@ -53,7 +60,7 @@ Quick Start
 
            [~/admb/]$ make debug
 
-       _**Note**_ &mdash; When completed, **~/admb/build/dist/** is the binary distribution directory.
+       _**Note**_ &mdash; When the build is completed, **~/admb/build/dist/** is the binary distribution directory.
 
 4. **Use** ADMB
 
@@ -67,7 +74,7 @@ Quick Start
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
 
-       _**Note**_ &mdash; For MinGW and Cygwin shells, use the **'admb.sh'** script.
+       _**Note**_ &mdash; For MinGW-Msys and Cygwin shells, use the **'admb.sh'** script.
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
 

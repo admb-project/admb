@@ -17,9 +17,9 @@ __Note__ &mdash; The installation will copy the admb script to /usr/local/bin an
 
        For Ubuntu 14LTS (64Bit), download [admb-11.2-ubuntu14-64bit_11.2.deb](http://ftp.admb-project.org/admb-11.2/admb-11.2-ubuntu14-64bit_11.2.deb).
 
-2. Install ADMB using Debian package manager (dpkg).
+2. Install ADMB using Debian package manager (dpkg) as super-user.
 
-        $ sudo dpkg -i admb-latest-ubuntu14-64bit_11.2.deb
+        $ sudo dpkg -i admb-11.2-ubuntu14-64bit_11.2.deb
 
 Quick Start
 ===========
@@ -89,6 +89,5 @@ Build and run the simple example.
 
   Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
 
-Help
-====
-If help is needed, please email the ADMB users group <users@admb-project.org>.
+---
+For help and support, contact <users@admb-project.org>.

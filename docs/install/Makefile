@@ -3,7 +3,7 @@ all:\
   QuickStartWindowsZip.html\
   QuickStartWindowsSource.html\
   QuickStartVisualC++.html\
-  QuickStartVisualC++zip.html\
+  QuickStartVisualC++Zip.html\
   QuickStartVisualC++Source.html\
   QuickStartUnix.html\
   QuickStartUnixSource.html\

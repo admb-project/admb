@@ -29,6 +29,7 @@ clean:
 	pushd cov_re & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
+	rmdir /s /q SS3
 
 verify:
 	del ..\benchmarks-saf.txt

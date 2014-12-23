@@ -80,10 +80,7 @@ endif
 
 total-clean:
 ifeq ($(SHELL),cmd)
-	@rmdir /s /q ukfsst
-	@rmdir /s /q trackit
-	@rmdir /s /q kftrack
-	@rmdir /s /q kfsst
+	$(MAKE) --file=Makefile total-clean
 else
 	@rm -rvf ukfsst
 	@rm -rvf trackit

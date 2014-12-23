@@ -176,7 +176,7 @@ clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --directory=glmmadmb --file=Makefile clean
 	$(MAKE) --directory=agemat --file=Makefile clean
-	@rmdir /s /q SS3
+	@if exist SS3 rmdir /s /q SS3
 else
 	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3

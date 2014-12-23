@@ -532,6 +532,7 @@ ifeq ($(SHELL),cmd)
 	xcopy ..\src $(DIST)\src /S /Y /D
 	if not exist $(DIST)\scripts md $(DIST)\scripts 
 	xcopy ..\scripts $(DIST)\scripts /S /Y /D
+	$(MAKE) --directory=$(DIST)/scripts clean
 	if not exist $(DIST)\examples md $(DIST)\examples
 	xcopy ..\examples $(DIST)\examples /S /Y /D
 	$(MAKE) --directory=..\contrib copy
@@ -539,6 +540,7 @@ ifeq ($(SHELL),cmd)
 else
 	cp -R ../src $(DIST)
 	cp -R ../scripts $(DIST)
+	$(MAKE) --directory=$(DIST)/scripts clean
 	cp -R ../examples $(DIST)
 	$(MAKE) --directory=../contrib copy
 	$(MAKE) --directory=../tests copy

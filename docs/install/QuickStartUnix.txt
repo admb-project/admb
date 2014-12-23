@@ -19,7 +19,8 @@ The following programs are required to be installed on the local computer.
       * GNU C++
       * Intel C++ Compiler
       * Oracle Solaris Studio 12.3     
-
+    
+    
 * GNU stream editor (sed)
 
 _**Note** &mdash; For MacOS, install XCode with command line tools includes all the prerequistes._

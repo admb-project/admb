@@ -15,7 +15,7 @@ Quick Start
 
 **Prerequisite** &mdash; Visual Studio C++ is installed on the local computer.
 
-_**Note**_ &mdash; A free version is available from [Microsoft](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop).
+_**Note**_ &mdash; A free version is available go to [Visual Studio Express](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop).
 
 1. **Download** ADMB source
 

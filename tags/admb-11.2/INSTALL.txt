@@ -12,7 +12,9 @@ Installation
 
 For Windows computers, read the [QuickStartWindows](QuickStartWindows.html).  
 
-For Windows computers with Visual C++, read the [QuickStartWindowsVisualC++](QuickStartVisualC++.html).  
+For Windows computers with Visual C++ using installer, read the [QuickStartWindowsVisualC++](QuickStartVisualC++.html).  
+
+For Windows computers with Visual C++ using zip file, read the [QuickStartWindowsVisualC++](QuickStartVisualC++Zip.html).  
 
 For Windows computers install from zip, read the [QuickStartWindowsZip](QuickStartWindowsZip.html).  
 

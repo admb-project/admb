@@ -1,7 +1,7 @@
 #ADMB Project
 
 *ADMB-11.2*  
-*Released December 22, 2014*  
+*Released December 23, 2014*  
 
 Installing and using ADMB from binary zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 

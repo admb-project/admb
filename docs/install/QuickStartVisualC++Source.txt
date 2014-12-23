@@ -45,7 +45,7 @@ _**Note**_ &mdash; A free version is available from [Microsoft](http://www.visua
 
 	    C:\admb\> nmake debug
 
-       Close **Visual Studio Command Prompt**.
+       Close Visual Studio **Developer Command Prompt** window.
 
 3. **Use** ADMB
 

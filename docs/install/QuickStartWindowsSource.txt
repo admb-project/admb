@@ -25,7 +25,7 @@ The following programs are required to be installed on the local computer.
       * [MinGW](http://www.mingw.org/)
       * [MinGW-w64](http://mingw-w64.sourceforge.net/)
       * [Cygwin](http://www.cygwin.org/)
-      * [Rtools](http://cran.r-project.org/bin/windows/Rtools/) 
+      * [Rtools](http://cran.r-project.org/bin/windows/Rtools/)     
 
       _**Note**_ &mdash; C++ Compilers should be included in the System Enviroment **PATH**.
 
@@ -72,7 +72,7 @@ Quick Start
 
         C:\admb\> utilities\make CXXFLAGS=-m64 LDFLAGS=-m64
 
-       _**Note**_ &mdash; When build is completed, **C:\\admb\\build\\dist\\>** is the binary distribution directory.
+       _**Note**_ &mdash; When the build is completed, **C:\\admb\\build\\dist\\>** is the binary distribution directory.
 
 3. **Use** ADMB
  

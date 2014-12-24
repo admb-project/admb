@@ -13,8 +13,8 @@ agemat.dat:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/doc/agemat.dat > agemat.dat
 
 total-clean:
-	@del /Q agemat.dat
-	@del /Q agemat.tpl
+	@if exist agemat.dat del /Q agemat.dat
+	@if exist agemat.tpl del /Q agemat.tpl
 
 clean:
 	@del /Q agemat agemat.cpp agemat.htp agemat.obj

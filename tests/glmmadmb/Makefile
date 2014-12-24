@@ -37,10 +37,10 @@ run:
 	glmmadmb.exe
 
 total-clean: clean
-	@rmdir /s /q admb_tests
-	@del bvprobit.tpl
-	@del glmmadmb.tpl
-	@del nbmm.tpl
+	@if exist admb_tests rmdir /s /q admb_tests
+	@if exist bvprobit.tpl del bvprobit.tpl
+	@if exist glmmadmb.tpl del glmmadmb.tpl
+	@if exist nbmm.tpl del nbmm.tpl
 
 clean:
 	@del admodel.cov

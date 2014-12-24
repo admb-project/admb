@@ -1,8 +1,10 @@
 #ADMB Project
 *ADMB-11.2*  
-*Released December X, 2014*  
+*Released December 23, 2014*  
 
 The installation procedure for installing ADMBTerminal app for the MacOS.
+
+---
 
 Installation
 ============
@@ -11,25 +13,27 @@ Installation
 
 1. Download ADMB installer
 
-       [ADMB-11.2 XCode (64 Bit).dmg](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-64bit.dmg)  
-       [ADMB-11.2 XCode (32 Bit).dmg](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-32bit.dmg)  
+       For 64Bit, download [admb-11.2-ADMBTerminal-macos10-xcode6-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-64bit.dmg).
+
+
+       For 32Bit, download [admb-11.2-ADMBTerminal-macos10-xcode6-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ADMBTerminal-macos10-xcode6-32bit.dmg).  
 
 2. Double click downloaded ADMB dmg file. 
 
-3. In the mounted disk image ADMBTerminal, copy **ADMBTerminal**
-   into the **Applications** folder.
+3. In the ADMBTerminal mounted disk image, copy **ADMBTerminal**
+   into the **/Applications** folder.
   
-     **Note** &mdash; ADMBTerminal will set *ADMB_HOME* to _/Applications/ADMBTerminal.app/admb_.
+     **Note** &mdash; ADMBTerminal will set *ADMB_HOME* to **/Applications/ADMBTerminal.app/admb/ **.
 
 Quick Start
 ===========
-Describe the procedure for building and running the
-ADMB simple example.
 
-1. Open "ADMBTerminal" located in /Applications,
-   then type admb for Usage options.
+Build and run the simple example.
 
-        $ admb
+1. Open **ADMBTerminal** located in **/Applications**,
+   then type **admb** for Usage options.
+
+        [~]$ admb
 
         Builds AD Model Builder executable or library.
 
@@ -49,15 +53,15 @@ ADMB simple example.
 
 2. Copy simple example from ADMB_HOME.
 
-        $ cp -R $ADMB_HOME/examples/admb/simple .
+        [~]$ cp -R $ADMB_HOME/examples/admb/simple .
 
-3. Must change to the copied simple directory .
+3. Change to the simple example directory .
 
-        $ cd simple
+        [~]$ cd simple
 
 4. Build the simple example.
 
-        $ admb simple
+        [~/simple/]$ admb simple
 
         *** Parse tpl: simple.tpl
         tpl2cpp simple
@@ -66,13 +70,13 @@ ADMB simple example.
         c++ -c -O3 -I. -I"/Applications/ADMBTerminal.app/include" -I"/Applications/ADMBTerminal.app/contrib/include" -osimple.obj simple.cpp
 
         *** Linking: simple.obj 
-        c++ -O3 -osimple simple.obj "/Applications/ADMBTerminal.app/contrib/lib/libcontrib.a" "/Applications/ADMBTerminal.app/lib/libadmb.a"
+        c++ -O3 -osimple simple.obj "/Applications/ADMBTerminal.app/contrib/lib/libadmb-contrib.a"
 
         Successfully built executable.
 
 5. Run the simple example.
 
-        $ ./simple 
+        [~/simple/]$ ./simple 
 
         Initial statistics: 2 variables; iteration 0; function evaluation 0; phase 1
         Function value   3.6493579e+01; maximum gradient component mag  -3.6127e+00
@@ -88,8 +92,7 @@ ADMB simple example.
         Estimating row 1 out of 2 for hessian
         Estimating row 2 out of 2 for hessian
 
-6. Consult the ADMB manuals for description of the simple output files.
+    Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
 
-Help
-====
-If help is needed, please email the ADMB users group <users@admb-project.org>.
+---
+For help and support, contact <users@admb-project.org>.

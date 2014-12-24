@@ -27,6 +27,14 @@ agemat.tpl:
 agemat.dat:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/doc/agemat.dat > agemat.dat
 
+total-clean: clean
+ifeq ($(SHELL),cmd)
+	$(MAKE) --file=Makefile total-clean
+else
+	@rm -vf agemat.dat
+	@rm -vf agemat.tpl
+endif
+
 clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --file=Makefile clean

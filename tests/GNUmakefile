@@ -67,8 +67,7 @@ all-tpls:\
   tpl-priors\
   tpl-testminmax\
   tpl-orange_mvn\
-  tpl-lprof\
-  tpl-SS3
+  tpl-lprof
 
 tpl-4darray:
 	$(MAKE) --directory=4darray
@@ -141,11 +140,6 @@ ifneq ($(SHELL),cmd)
 	$(MAKE) --directory=lprof
 endif
 
-tpl-SS3:
-ifneq ($(CXX),openCC)
-	$(MAKE) --directory=SS3
-endif
-
 verify:
 ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
@@ -172,12 +166,20 @@ else
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
 endif
 
+total-clean: clean
+	$(MAKE) --directory=glmmadmb total-clean
+	$(MAKE) --directory=gtests total-clean
+	$(MAKE) --directory=geolocation total-clean
+	$(MAKE) --directory=agemat total-clean
+
 clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --directory=glmmadmb --file=Makefile clean
 	$(MAKE) --directory=agemat --file=Makefile clean
+	@if exist SS3 rmdir /s /q SS3
 else
 	$(MAKE) --directory=lprof clean
+	@rm -rvf SS3
 endif
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
@@ -192,7 +194,6 @@ endif
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
 	$(MAKE) --directory=beta_deviate clean
-	$(MAKE) --directory=SS3 clean
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean
 	$(MAKE) --directory=agemat clean
@@ -235,8 +236,10 @@ copy:
 ifeq ($(SHELL),cmd)
 	if not exist $(DIST)\tests md $(DIST)\tests
 	xcopy ..\tests $(DIST)\tests /S /Y /D
+	$(MAKE) --directory=$(DIST)\tests total-clean
 else
-	cp -Rvf ../tests ${DIST}
+	cp -Rvf ../tests $(DIST)
+	$(MAKE) --directory=$(DIST)/tests total-clean
 endif
 
 benchmarks:

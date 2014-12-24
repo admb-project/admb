@@ -1,7 +1,7 @@
 #ADMB Project  
 
 *ADMB-11.2*  
-*Released December X, 2014*  
+*Released December 23, 2014*  
 
 Describe changes and features for each release.
 
@@ -17,7 +17,7 @@ The goals for all releases are
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-trunk
+ADMB-11.2
 ----------
 
 ####Changes and Improvements
@@ -74,7 +74,7 @@ ADMB-trunk
 ####New Supported Compilers
 
 * GNU C++ 4.8 compiler
-* Apple XCode 5
+* Apple XCode 6
 * MinGW 64 Bit
 * Microsoft C++ 2013
 
@@ -136,14 +136,14 @@ ADMB-trunk
 
     _Note: This is the almost the same as using 'adcomp mysource'._
 
-####ToDo
+####Priorities: Next Release
 
 The following are planned or requested features for the next release.
 
-- [ ] Merge Threading Code to trunk
+- [ ] Add Threading Support (High)
+- [ ] Write Design Documentation (High)
+- [ ] Write Developer Documentation (High)
 - [ ] Atan2
-- [ ] Write Design Documentation
-- [ ] Write Developer Documentation
 
 ADMB-11.1
 ---------

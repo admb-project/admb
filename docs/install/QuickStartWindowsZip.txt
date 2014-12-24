@@ -1,51 +1,59 @@
 #ADMB Project
-*ADMB-11.2*  
-*Released December X, 2014*  
 
-Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
+*ADMB-11.2*  
+*Released December 23, 2014*  
+
+ADMB binary installation and usage procedure for Windows and MinGW C++ compiler using zip file.
 
 ---
-
-Prerequisites
--------------
-
-The following programs should be installed on the local computer.
-
-* MinGW-w64 compiler installed
 
 Quick Start
 -----------
 
-1. **Download**
+**Prerequisite** &mdash; MinGW C++ is installed on the local computer.
 
-       Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
+_**Note**_ &mdash; Installed MinGW C++ 64Bit must support **posix threading** and **structured exception handling (seh)** .
 
-2. **Extract**
+_**Note**_ &mdash; Installed MinGW C++ 32Bit must support **posix threading** and **dwarf exception handling** .
 
-       Extract **admb** folder from downloaded file to **C:\>**.
 
-5. **Use** ADMB
+1. **Download** ADMB
 
-       Open **Command Prompt** window, then use following commands to build and run the simple example.
+       * For Windows 64Bit, download [admb-11.2-windows8-mingw64](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw64.zip).
 
-        C:\admb\> cd examples\admb\simple
-        C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
-        C:\admb\examples\admb\simple\> simple.exe
+       * For Windows 32Bit, download [admb-11.2-windows8-mingw32](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-mingw32.zip).
 
-6. _**Optional**_ &mdash; Installation
+2. **Install** ADMB
 
-       Add the admb directory to the system PATH to avoid typing the directory 
-       when calling the admb script.
+       Double click downloaded file to open, then copy **admb** folder to Local Disk (**C:\\>**).
 
-       1. In the **System Properties** window, click on the **Enviroment Variables** button.
+3. **Use** ADMB
 
-       2. In the **Enviroment Variables** windows, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
+       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\\admb\\>**.
 
-       3. Click the **OK** button when done and open a new command prompt.
+       In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
 
-            C:\admb\> cd examples\admb\simple
-            C:\admb\examples\admb\simple\> admb simple.tpl
-            C:\admb\examples\admb\simple\> simple.exe
+       Check C++ compiler (g++).
+
+           C:\> g++ --version
+
+       If g++ compiler is not recognized, then configure search **PATH** with location of **g++.exe**.
+
+           C:\> set PATH=C:\MinGW\bin;%PATH%
+ 
+       Change simple example directory.
+
+           C:\> cd admb\examples\admb\simple
+
+       Build simple example.
+
+           C:\admb\examples\admb\simple\> admb simple
+
+       Run simple example.
+
+           C:\admb\examples\admb\simple\> simple
+
+       Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

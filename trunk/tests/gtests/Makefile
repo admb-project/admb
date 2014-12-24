@@ -11,42 +11,7 @@ ADMB_OPTIONS=-g
 GTEST_DIR=googletest-read-only
 
 GTESTS=\
- test_adstring_strcase.cpp\
- test_fmm_control.cpp\
  test_adstring.cpp\
- test_adstring_array.cpp\
- test_dlist.cpp\
- test_ad_comm.cpp\
- test_gradient_structure.cpp\
- test_option_match.cpp\
- test_lvector.cpp\
- test_df3_two_variable.cpp\
- test_adjson.cpp\
- test_adpool.cpp\
- test_dvector.cpp\
- test_dmatrix.cpp\
- test_param_init_bounded_number_vector.cpp\
- test_param_init_d3array.cpp\
- test_spline.cpp\
- test_banded_symmetric_dmatrix.cpp\
- test_line_adstring.cpp\
- test_ivector.cpp\
- test_multi_index.cpp\
- test_adtimer.cpp\
- test_idea.cpp\
- test_df_file.cpp\
- test_multinomial.cpp\
- test_multi_index.cpp\
- test_cifstream.cpp\
- test_param_init_vector_vector.cpp\
- test_param_init_matrix_vector.cpp\
- test_param_init_bounded_vector_vector.cpp\
- test_param_init_number_vector.cpp\
- test_pow.cpp\
- test_dvariable.cpp\
- test_imatrix.cpp\
- test_lmatrix.cpp\
- test_dvar_matrix.cpp\
  main.cpp
 
 ##Need to debug this
@@ -57,12 +22,10 @@ GTESTS=\
 # df1b2atan2.obj\
 # scalefactor.obj\
 
-all: clean gtest-all test_scalefactor test_finance
+all: clean gtest-all
 ifeq ($(SHELL),cmd)
 	gtest-all
 else
-	./test_scalefactor
-	./test_finance
 	./gtest-all
 endif
 
@@ -155,7 +118,7 @@ df33_tester:
 
 total-clean: clean
 ifeq ($(SHELL),cmd)
-	@rmdir /s /q googletest-read-only
+	@if exist googletest-read-only rmdir /s /q googletest-read-only
 else
 	@rm -rvf googletest-read-only
 endif

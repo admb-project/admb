@@ -1,57 +1,60 @@
 #ADMB Project
-*ADMB-11.2*  
-*Released December X, 2014*  
 
-Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
+*ADMB-11.2*  
+*Released December 23, 2014*  
+
+ADMB binary installation and usage procedure for Windows and Visual C++ compilers using installer.
 
 ---
 _**Note** &mdash; For Microsoft Visual C++ 2010, read [installation][help] documentation._
 [help]: http://www.admb-project.org/documentation/installation/admb-installation-visual-c
 
-Prerequisites
--------------
-
-The following programs should be installed on the local computer.
-
-* Visual Studio C++ installed and updated
-    _**Note**_ &mdash; A free version is available from: [Visual Studio Express](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop)
 
 Quick Start
 -----------
 
-1. **Download**
+**Prerequisite** &mdash; Visual Studio C++ is installed on the local computer.
 
-       Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
+_**Note**_ &mdash; A free version is available from: [Visual Studio Express](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop)
 
-2. **Extract**
+1. **Download** ADMB Windows Installer for Visual C++
 
-       Extract **admb** folder from downloaded file to **C:\>**.
+       * For Visual C++ 2013 (64Bit), download [admb-11.2-windows8-vc12-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-vc12-64bit.exe).
+
+       * For Visual C++ 2013 (32Bit), download [admb-11.2-windows8-vc12-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-vc12-32bit.exe).
+
+       * For Visual C++ 2012 (64Bit), download [admb-11.2-windows8-vc11-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-vc11-64bit.exe).
+
+       * For Visual C++ 2012 (32Bit), download [admb-11.2-windows8-vc11-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-vc11-32bit.exe).
+
+2. **Install** ADMB
+
+       Double click the downloaded **ADMB Windows Installer for Visual C++** and follow instructions.
 
 3. **Use** ADMB
        
-     Using Windows Explorer, double click the shortcut **ADMB Command Prompt** located in **C:\admb\>**.
+       On the Desktop, double click **ADMB Command Prompt** shortcut to open command line window.
+
+       In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
+ 
+       Copy the simple example directory.
+
+           C:\> xcopy /I /E "%ADMB_HOME%\examples\admb\simple" simple
+
+       Change to simple example directory.       
+
+           C:\> cd simple
+
+       Build simple example.
+
+           C:\simple\> admb simple
+
+       Run simple example.
+
+           C:\simple\> simple
+
+       Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
        
-     In the **ADMB Comand Prompt**, type the following commands build and run the simple example.
-
-           C:\admb\> cd examples\admb\simple
-           C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
-           C:\admb\examples\admb\simple\> simple.exe
-
-4. _**Optional**_ &mdash; Installation
-
-       Add the admb directory to the system PATH to avoid typing the directory 
-       when calling the admb script.
-
-       1. In the **System Properties** window, click on the **Enviroment Variables** button.  Or, **Control Panel/User Accounts** choose **Change my environment variables**.
-
-       2. In the **Enviroment Variables** upper window (User Variables), check to see if `PATH` exists.  If it does not exist, click on the **New...** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb;`.  If **Environment Variables** already exists, click on **Edit...** and add `C:\admb;` to the start of the **Variable value** text, keeping all of the other text in the box.
-
-       3. Click the **OK** button when done and open a new Visual Studio command prompt.
-
-            C:\admb\> cd examples\admb\simple
-            C:\admb\examples\admb\simple\> admb simple.tpl
-            C:\admb\examples\admb\simple\> simple.exe
-
 ---
 For help and support, contact <users@admb-project.org>.
 

@@ -1,7 +1,7 @@
 ADMB Project  
 ============
 *ADMB-11.2*  
-*Released December X, 2014*  
+*Released December 23, 2014*  
 
 ADMB Installation procedures
 
@@ -12,7 +12,11 @@ Installation
 
 For Windows computers, read the [QuickStartWindows](QuickStartWindows.html).  
 
-For Windows computers with Visual C++, read the [QuickStartWindowsVisualC++](QuickStartVisualC++.html).  
+For Windows computers with Visual C++ using installer, read the [QuickStartWindowsVisualC++](QuickStartVisualC++.html).  
+
+For Windows computers with Visual C++ using zip file, read the [QuickStartWindowsVisualC++](QuickStartVisualC++Zip.html).  
+
+For Windows computers install from zip, read the [QuickStartWindowsZip](QuickStartWindowsZip.html).  
 
 For MacOS computers, read the [QuickStartMacOS](QuickStartMacOS.html).
 

@@ -1,49 +1,104 @@
 #ADMB Project
-*ADMB-11.2*  
-*Released December X, 2014*  
 
-Installing ADMB from prebuilt zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
+*ADMB-11.2*  
+*Released December 23, 2014*  
+
+Installing and using ADMB from binary zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 
 ---
 
 Prerequisites
 -------------
 
-The following programs should be installed on the local computer.
+The following programs are required to be installed on the local computer.
 
-* GNU sed
 * C++ compiler
+
+      Supported C++ Compilers for Unix
+
+      * GNU C++
+      * Intel C++ Compiler
+      * Oracle Solaris Studio 12.3
+            
+
+* GNU stream editor (sed)
 
 _**Note** &mdash; For MacOS, install XCode with command line tools includes all the prerequistes._
 
 Quick Start
 -----------
 
-1. **Download**
+1. Open a **Terminal** window
 
-       Go to download page [ADMB-11.2](http://www.admb-project.org/downloads/admb-11.2/)  
+2. **Download** ADMB
 
-2. **Extract**
+       Download binary zip distribution
 
-       Unzip the downloaded file to the HOME directory.
+       * For Ubuntu 14 (64Bit), download [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-ubuntu14-64bit.zip).
+       * For Fedora 20 (64Bit), download [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-fedora20-gcc4.8-64bit.zip).
+       * For Fedora 20 (32Bit), download [admb-11.2-fedora20-gcc4.8-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-fedora20-gcc4.8-32bit.zip).
+       * For Centos 6 and Oracle Solaris Studio 12.3 (32Bit), download [admb-11.2-centos6-solarisstudio12.3-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-centos6-solarisstudio12.3-32bit.zip).
+       * For Centos 6 and Intel C++ Compiler (64Bit), download [admb-11.2-centos6-intelicpc2013-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-centos6-intelicpc2013-64bit.zip).   
 
-3. Open a **Terminal** window
+       Use the command below to extract contents of zip file to _~/admb/_. 
 
-4. **Use**
+       For Ubuntu 14 (64Bit),
 
-       The following commands build and run the simple example.
+           [~]$ unzip admb-11.2-ubuntu14-64bit.zip
+
+       For Fedora 20 (64Bit),
+
+           [~]$ unzip admb-11.2-fedora20-64bit.zip
+
+       For Fedora 20 (32Bit),
+
+           [~]$ unzip admb-11.2-fedora20-32bit.zip
+
+       For Centos 6 and Oracle Solaris Studio 12.3 (32Bit),
+
+           [~]$ unzip admb-11.2-centos6-solarisstudio12.3-32bit.zip
+
+       For Centos 6 and Intel C++ Compiler (64Bit),
+
+           [~]$ unzip admb-11.2-centos6-intelicpc2013-64bit.zip
+
+3. **Use** ADMB
+
+       In the **Terminal** window, use the steps below to build and run the simple example.
+
+       Change to simple example directory.       
 
            [~]$ cd admb/examples/admb/simple
+
+       Build simple example.
+
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
+
+       For building with MinGW or Cygwin shells, use the **'admb.sh'** script.
+
+           [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
+
+       Run simple example.
+
            [~/admb/examples/admb/simple/]$ ./simple
 
-       For MinGW and Cygwin shells, use the **'admb.sh'** script.
+       Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
+
+4. _**Optional**_ &mdash; Multi-User Installation    
+
+       Installs binary distribution folder to /usr/local/ as super-user.
+
+           [~/admb/]$ sudo make install
+
+       Build and run the simple example without the directory prefix.
 
            [~]$ cd admb/examples/admb/simple
-           [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
+           [~/admb/examples/admb/simple/]$ admb simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 
-5. _**Optional**_ &mdash; Manual Installation    
+       _If unable to build simple example, then use the Manual Installation below._
+
+       _**Alternative**_ &mdash; Manual Installation    
 
        Copy binary distribution folder to /usr/local/ as super-user.
 
@@ -52,12 +107,6 @@ Quick Start
        Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
 
            [~]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
-
-       After copying, build and run the simple example.
-
-           [~]$ cd admb/examples/admb/simple
-           [~/admb/examples/admb/simple/]$ admb simple.tpl
-           [~/admb/examples/admb/simple/]$ ./simple
 
 --------------------------------------------------------------------------------
 For help and support, contact <users@admb-project.org>.

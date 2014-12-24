@@ -191,6 +191,7 @@ copy:
 	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\scripts
 	IF NOT EXIST $(DESTDIR)\scripts xcopy /I /E /Y ..\scripts $(DESTDIR)\scripts
+	pushd ..\scripts & $(MAKE) clean
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\tests
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\src

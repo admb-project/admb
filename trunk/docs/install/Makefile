@@ -3,6 +3,7 @@ all:\
   QuickStartWindowsZip.html\
   QuickStartWindowsSource.html\
   QuickStartVisualC++.html\
+  QuickStartVisualC++Zip.html\
   QuickStartVisualC++Source.html\
   QuickStartUnix.html\
   QuickStartUnixSource.html\
@@ -29,6 +30,11 @@ QuickStartWindowsSource.html: QuickStartWindowsSource.txt
 	cat end.html>>$@
 
 QuickStartVisualC++.html: QuickStartVisualC++.txt
+	cat begin.html>$@
+	markdown_py $^>>$@
+	cat end.html>>$@
+
+QuickStartVisualC++Zip.html: QuickStartVisualC++Zip.txt
 	cat begin.html>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
@@ -80,6 +86,7 @@ LICENSE.html: ../../LICENSE.txt
 
 clean:
 	rm -vf QuickStartWindows.html QuickStartVisualC++.html QuickStartUnix.html
+	rm -vf QuickStartVisualC++Zip.html
 	rm -vf CHANGES.html INSTALL.html README.html LICENSE.html
 	rm -vf QuickStartMacOS.html
 	rm -vf QuickStartUbuntu14.html QuickStartUnixSource.html

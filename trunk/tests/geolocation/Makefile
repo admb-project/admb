@@ -40,6 +40,12 @@ run:
 	pushd trackit& ukf
 	pushd ukfsst& ukfsst
 
+total-clean:
+	@if exist ukfsst rmdir /s /q ukfsst
+	@if exist trackit rmdir /s /q trackit
+	@if exist kftrack rmdir /s /q kftrack
+	@if exist kfsst rmdir /s /q kfsst
+
 clean:
 	if exist kfsst $(MAKE) clean-kfsst
 	if exist kftrack $(MAKE) clean-kftrack

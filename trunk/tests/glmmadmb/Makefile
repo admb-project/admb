@@ -36,6 +36,12 @@ run:
 	pushd admb_tests & zi_owls
 	glmmadmb.exe
 
+total-clean: clean
+	@rmdir /s /q admb_tests
+	@del bvprobit.tpl
+	@del glmmadmb.tpl
+	@del nbmm.tpl
+
 clean:
 	@del admodel.cov
 	@del admodel.dep

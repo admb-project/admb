@@ -58,18 +58,18 @@ void ad_getcd(const adstring& _s)
 {
   adstring& s=(adstring&) (_s);
 #if defined(_WIN32)
-  char tmp[101];
+  char tmp[301];
   tmp[0]='\0';
-  GetCurrentDirectory(100,tmp);
+  GetCurrentDirectory(300,tmp);
   s=tmp;
 #else
-  char tmp[101];
+  char tmp[301];
   tmp[0]='\0';
-  #ifndef __SUNPRO_CC
-  char* ret = getcwd(tmp,100);
+  #ifdef __GNUC__
+  char* ret = getcwd(tmp,300);
   assert(ret != 0);
   #else
-  getcwd(tmp,100);
+  getcwd(tmp,300);
   #endif
   s=adstring(tmp);
 #endif

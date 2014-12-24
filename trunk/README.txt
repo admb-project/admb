@@ -1,7 +1,8 @@
 ADMB Project
 ============
+
 *ADMB-11.2*  
-*Released December X, 2014*  
+*Released December 23, 2014*  
 
 ---
 

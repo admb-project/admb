@@ -36,8 +36,9 @@
   \smalltitlepart{An Introduction to}
   \largetitlepart{AD MODEL BUILDER}
   \smalltitlepart{for Use in Nonlinear Modeling and Statistics}
-  \vspace{3ex}\textsf{\textit{Version \admbversion~~(2013-05-01)\\[3pt]
-      Revised manual~~(2014-05-30)}}\vspace{3ex}
+  \vspace{3ex}\textsf{\textit{Version \admbversion~~(2014-12-23)\\[3pt]
+      % Revised manual~~(2014-12-23)
+    }}\vspace{3ex}
 }
 \author{\textsf{\textit{David Fournier}}}
 \manualname{AD Model Builder}
@@ -49,7 +50,7 @@
 \noindent This is the manual for AD Model Builder (ADMB) version
 \admbversion.\\\\
 \noindent Copyright \copyright\ 1993, 1994, 1996, 2000, 2001, 2004, 2007, 2008,
-2011, 2013 David Fournier\\\\
+2011, 2013, 2014 David Fournier\\\\
 \noindent The latest edition of the manual is available at:\\
 \url{http://admb-project.org/documentation/manuals}
 
@@ -68,7 +69,7 @@ difficulties in nonlinear modeling, such as restricting the values that
 parameters can assume, carrying out the optimization in a stepwise manner, and
 producing a report of the estimates of the standard deviations of the parameter
 estimates. In addition, these techniques scale up to models with at least 5000
-independent parameters on a 1000 MHz Pentium III, and more on more powerful
+independent parameters on a basic laptop, and more on more powerful
 platforms. So, if you are interested in a really powerful environment for
 nonlinear modeling---read on!
 \X{template}
@@ -258,7 +259,7 @@ attempt describing the time series of returns from some market instrument.
 
 %\item{5.}
 \paragraph{A problem in natural resource management.} The
-Schaeffer-Pella-Tomlinson Model for investigating the response of an exploited
+Schaefer-Pella-Tomlinson Model for investigating the response of an exploited
 fish population is developed and extended to include a Bayesian times series
 treatment of time-varying carrying capacity. This example is interesting because
 the model is rather temperamental. Several techniques for producing reliable
@@ -1292,7 +1293,7 @@ minimizer in each stage of the minimization procedure.
 \XX{optimization}{phases}
 %xx \htmlnewfile
 
-\section{Natural resource management:\br the Schaeffer-Pella-Tomlinson Model}
+\section{Natural resource management:\br the Schaefer-Pella-Tomlinson Model}
 
 It is typical of many models in natural resource management that the model tends
 to be rather unstable numerically. In addition, some of the model parameters are
@@ -1302,9 +1303,9 @@ provided by these models. This example provides a good opportunity for
 presenting some more advanced features of \ADM\ that are designed to overcome
 these difficulties.
 
-\X{Schaeffer-Pella-Tomlinson model}
+\X{Schaefer-Pella-Tomlinson model}
 \X{fisheries management}
-The Schaeffer-Pella-Tomlinson model is employed in fisheries management. The
+The Schaefer-Pella-Tomlinson model is employed in fisheries management. The
 model assumes that the total biomass of an exploited fish stock satisfies an
 ordinary differential equation of the form
 \begin{equation}
@@ -1312,7 +1313,7 @@ ordinary differential equation of the form
            - FB  \qquad \hbox{\rm where}\quad m>1
 \label{chp3:xx3}
 \end{equation}
-(\cite{hilbornwalters1991}, page 303), where $B$ is the biomass, $F$ is the
+(\cite{hilbornwalters1992}, page 303), where $B$ is the biomass, $F$ is the
 instantaneous fishing mortality rate, $r$ is a parameter often referred to an
 the ``intrinsic rate of increase,'' $k$ is the unfished equilibrium stock size,
 \begin{equation}
@@ -1321,7 +1322,7 @@ the ``intrinsic rate of increase,'' $k$ is the unfished equilibrium stock size,
 \end{equation}
 is the catch rate, and $m$ is a parameter that determines where the maximum
 productivity of the stock occurs. If the value of $m$ is fixed at 2, the model
-is referred to as the ``Schaeffer model.'' The explicit form of the difference
+is referred to as the ``Schaefer model.'' The explicit form of the difference
 equation corresponding to this differential equation~is
 \XX{difference equation}{explicit form}
 \XX{difference equation}{semi-implicit form}
@@ -1351,9 +1352,9 @@ The catch $C_{t+\delta}$ over the period $(t,t+\delta)$ is given by
  {C_{t+\delta} =F_tB_{t+\delta}\delta }
   \label{chp3:xx8}
 \end{equation}
-\XX{Schaeffer-Pella-Tomlinson model}{Bayesian considerations}
-\XX{Schaeffer-Pella-Tomlinson model}{unfished equilibrium biomass level}
-\XX{Schaeffer-Pella-Tomlinson model}{optimal productivity}
+\XX{Schaefer-Pella-Tomlinson model}{Bayesian considerations}
+\XX{Schaefer-Pella-Tomlinson model}{unfished equilibrium biomass level}
+\XX{Schaefer-Pella-Tomlinson model}{optimal productivity}
 
 \section{Bayesian considerations in the Pella-Tomlinson Model}
 
@@ -1379,7 +1380,7 @@ question will depend on the particular situation. For our purposes, ``slowly''
 means ``slowly enough'' so that the model has some chance of supplying a useful
 analysis of the situation at hand. We refer to this as ``the assumption of
 manageability.'' The point is that since we are going to use this model anyways
-to try and mange a resource, we may as well assume that the model's assumptions
+to try and manage a resource, we may as well assume that the model's assumptions
 are satisfied---at least well enough that we have some hope of success. This may
 seem extremely arbitrary, and it is. However, it is not as arbitrary as assuming
 that the carrying capacity is constant.
@@ -1421,9 +1422,9 @@ independent variables in the function to be minimized) is~$2n+4$. For the
 halibut data, there are $56$ years of data, which gives $116$ parameters. As
 estimates of the model parameters, we use the mode of the posterior
 distribution, which can by found by minimizing $-1$ times
-expression~(\ref{chp3:xx3}). % \number\mychapno.8)
+expression~(\ref{ch1:xx7}).
 The covariance matrix of the model parameters are estimated by computing the
-inverse of the Hessian of expression~(\ref{chp3:xx3}) % \number\mychapno.8)
+inverse of the Hessian of expression~(\ref{ch1:xx7})
 at the minimum. The template for the model follows. To improve the readability,
 the entire template has been included. The various sections are discussed below.
 \X{\fontindexentry{tt}{init\_bounded\_vector}}
@@ -1703,9 +1704,9 @@ so that their average becomes~1. This is done so that we have a good idea what
 the catchability parameter~\texttt{q} should be to give reasonable values for
 the fishing mortality rate (since $F=qE$).
 
-\X{column}{extract a column from a matrix}
-Notice that the \PCS\ section is \cplus\ code, so that statements must be ended
-with a \texttt{;}.
+\XX{column}{extract a column from a matrix}
+Notice that the \PCS\ is \cplus\ code, so that statements must be ended
+with a semicolon.
 \begin{lstlisting}
 PRELIMINARY_CALCS_SECTION
   // get the data out of the data matrix into

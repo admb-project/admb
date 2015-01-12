@@ -2,29 +2,29 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- *
+ * Copyright (c) 2008-2011 Regents of the University of California
+ * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- *
+ * 
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- *
+ * 
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -43,7 +43,7 @@
  * Description not yet available.
  */
 #if !defined(__DF_POOL__)
-#define  __DF_POOL__
+#define  __DF_POOL__ 
 #include <fvar.hpp>
 extern void * pchecker;
 //#define __CHECK_MEMORY__
@@ -63,10 +63,12 @@ public:
   struct link { link * next; };
   int num_allocated;
   int num_chunks;
-  size_t nelem;
-  size_t size;
+  int nelem;
+  unsigned size;
   link * head;
   double * first;
+  dfpool(dfpool&);  // copy protection
+  void operator = (dfpool&); // copy protection
   void grow(void);
 #if defined(__CHECK_MEMORY__)
   int maxchunks;
@@ -75,17 +77,12 @@ public:
   int * pvalues;
   int nalloc;
 #endif
-
 public:
-  dfpool();
-  dfpool(dfpool&);  // copy protection
-  dfpool(const size_t);
- ~dfpool();
-
-  void operator = (dfpool&); // copy protection
-
   void clean(void);
-  void set_size(const size_t);
+  dfpool(unsigned);
+  void set_size(unsigned);
+  dfpool(void);
+ ~dfpool();
   void * alloc(void);
   void free(void * b);
   void deallocate(void);

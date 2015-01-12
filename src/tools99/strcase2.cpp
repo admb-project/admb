@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: John Sibert
- * Copyright (c) 2010-2012 ADMB Foundation
+ * Copyright (c) 2010-2011 ADMB Foundation
  */
 #include "adstring.hpp"
 
@@ -12,8 +12,8 @@ void adstring_array::to_lower(void)
   int i2 = indexmax();
   for (int i=i1; i <= i2; i++)
   {
-    (ptr[i])->to_lower();
-    //(*this[i]).adstring::to_lower();
+    (ptr[i])->to_lower(); 
+    //(*this[i]).adstring::to_lower(); 
   }
 }
 
@@ -23,7 +23,7 @@ void adstring_array::to_upper(void)
   int i2 = indexmax();
   for (int i=i1; i <= i2; i++)
   {
-    (ptr[i])->to_upper();
+    (ptr[i])->to_upper(); 
   }
 }
 

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -109,7 +109,7 @@ df1b2function2 ADf1b2_pow(ADpow_fun,
  AD_pow_111,AD_pow_112,AD_pow_122,
  AD_pow_222);
 /*
-df1b2variable pow(const df1b2variable& x,const df1b2variable& y)
+df1b2variable pow(const df1b2variable& x,const df1b2variable& y) 
 {
   return ADf1b2_pow(x,y);
 }

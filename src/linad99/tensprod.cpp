@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -11,15 +11,8 @@
 #include <fvar.hpp>
 
 /**
- * The tensor product of two dvar_matrixes
- * \param a first dvar_matrix
- * \param b second dvar_matrix
- * \return c a dvar_matrix of the tensor product.
- * 
- * Calcuates the tensor product of a and b.
- * \f$
- *  C = A \otimes B
- * \f$
+ * Description not yet available.
+ * \param
  */
   dvar_matrix tensor_prod(const dvar_matrix& a,const dvar_matrix & b)
   {

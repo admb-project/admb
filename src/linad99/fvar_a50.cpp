@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@ void DF_dvmfexp(void);
  * Description not yet available.
  * \param
  */
-dvar_vector mfexp(const dvar_vector& v1)
+dvar_vector mfexp(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   int mmin=v1.indexmin();

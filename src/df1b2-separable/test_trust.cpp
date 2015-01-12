@@ -2,12 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
+#if defined(USE_LAPLACE)
 #  include <fvar.hpp>
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -19,17 +20,16 @@ void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
-
+      
 double calculate_importance_sample(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
-
+      
 dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 
 //dvector laplace_approximation_calculator::default_calculations
  // (const dvector& _x,const double& _f,function_minimizer * pfmin)
 
-#if defined(USE_ADPVM)
 /**
  * Description not yet available.
  * \param
@@ -43,13 +43,13 @@ dvector laplace_approximation_calculator::test_trust_region_method
   //int i,j;
   int i;
 
-  initial_params::set_inactive_only_random_effects();
+  initial_params::set_inactive_only_random_effects(); 
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
   gradient_structure::set_YES_DERIVATIVES();
 
  /*
-  initial_params::set_active_only_random_effects();
+  initial_params::set_active_only_random_effects(); 
   int lmn_flag=0;
   if (ad_comm::time_flag)
   {
@@ -61,7 +61,7 @@ dvector laplace_approximation_calculator::test_trust_region_method
     {
       ad_comm::ptm->get_elapsed_time_and_reset();
     }
-  }
+  }  
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -74,7 +74,7 @@ dvector laplace_approximation_calculator::test_trust_region_method
       }
     }
   }
-
+  
   double maxg;
   double maxg_save;
   dvector uhat_old(1,usize);
@@ -138,29 +138,30 @@ dvector laplace_approximation_calculator::test_trust_region_method
     //int niters=0;
     dvector g(1,n);
     dmatrix H(1,n,1,n);
-
+       
     // test newton raphson
     get_complete_hessian(H,g,pfmin);
 
+  
     double tol=1.e-6;
     //int itmax=1000;
     //int itol=1;
     //int iter=0;
     //double err=0;
     //lambda=1;
-
+  
     //cout << "input Delta" << endl;
     //cin >> Delta;
     //cout << "input lambda" << endl;
     //cin >> lambda;
-
+  
     int i;
-
+   
     for (i=1;i<=n;i++)
     {
       H(i,i)+=lambda;
     }
-
+  
     cout << "initial fun value - " << double(0.5)*xx*(H*xx)+xx*g;
     double truef=do_one_feval(xx,pfmin);
     cout << "real function value = " << truef << endl;
@@ -172,9 +173,9 @@ dvector laplace_approximation_calculator::test_trust_region_method
     int maxfn=15;
     dvector xret=lincg(xx,g,H,tol,Delta,pfmin,truef,estdiff,
      truediff,bestf,iflag,inner_iter,maxfn);
-    cout << " norm(g) = " << norm(g)
-         << "  norm(H*xret+g) = " << norm(H*xret+g)
-         << "  norm(H*xret-g) = " << norm(H*xret-g)
+    cout << " norm(g) = " << norm(g) 
+         << "  norm(H*xret+g) = " << norm(H*xret+g)  
+         << "  norm(H*xret-g) = " << norm(H*xret-g)  
          << " inner_iter = " << inner_iter << endl;
     if (iflag==1)
     {
@@ -188,7 +189,8 @@ dvector laplace_approximation_calculator::test_trust_region_method
     {
       xx(i)=value(y(i));
     }
-
+      
+ 
     f1b2gradlist->reset();
     f1b2gradlist->list.initialize();
     f1b2gradlist->list2.initialize();
@@ -196,12 +198,12 @@ dvector laplace_approximation_calculator::test_trust_region_method
     f1b2gradlist->nlist.initialize();
     f1b2gradlist->nlist2.initialize();
     f1b2gradlist->nlist3.initialize();
+  
   }
   while(outer_iter<=max_iteration);
   return xx;
 }
-#endif
-
+  
 /**
  * Description not yet available.
  * \param
@@ -209,13 +211,13 @@ dvector laplace_approximation_calculator::test_trust_region_method
 void laplace_approximation_calculator::get_complete_hessian
   (dmatrix& H,dvector& g,function_minimizer * pfmin)
 {
-  int i,j,ip;
-
+  int i,j,ip; 
+  
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
     {
-        (*ad_comm::global_logfile) << " Starting Newton-Raphson "
+        (*ad_comm::global_logfile) << " Starting Newton-Raphson " 
           <<  endl;
     }
   }
@@ -251,26 +253,27 @@ void laplace_approximation_calculator::get_complete_hessian
       grad.initialize();
     }
 
-    double time1 = 0;
+    double time1;
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
       {
-        time1=ad_comm::ptm->get_elapsed_time();
+        /*double time1=*/ad_comm::ptm->get_elapsed_time();
       }
     }
 
     pfmin->user_function();
 
+
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
       {
+        double time=ad_comm::ptm->get_elapsed_time();
         if (ad_comm::global_logfile)
         {
-          double time=ad_comm::ptm->get_elapsed_time();
-          (*ad_comm::global_logfile) << "       Time in user_function() "
-            <<  ip << "  " << time-time1 << endl;
+          (*ad_comm::global_logfile) << "       Time in user_function() " <<  ip << "  "
+            << time-time1 << endl;
         }
       }
     }
@@ -280,7 +283,7 @@ void laplace_approximation_calculator::get_complete_hessian
 
     (*re_objective_function_value::pobjfun)+=pen;
     (*re_objective_function_value::pobjfun)+=zz;
-
+  
     //cout << setprecision(15) << *re_objective_function_value::pobjfun << endl;
     //cout << setprecision(15) << pen << endl;
     if (!initial_df1b2params::separable_flag)
@@ -295,11 +298,11 @@ void laplace_approximation_calculator::get_complete_hessian
       for (i=1;i<=xsize+usize;i++)
         for (j=jmin;j<=jmax;j++)
           H(i,j)=y(i).u_bar[j-mind];
-
+  
     // ****************************************************************
     // ****************************************************************
     // ****************************************************************
-    // temporary shit
+    // temporary shit  
      /*
       for (i=1;i<=usize;i++)
       {
@@ -312,7 +315,7 @@ void laplace_approximation_calculator::get_complete_hessian
       cout << Hess << endl;
       df1b2variable::passnumber=2;
       df1b2_gradcalc1();
-
+    
       df1b2variable::passnumber=3;
       df1b2_gradcalc1();
      */
@@ -389,7 +392,7 @@ int main(int argc,char * argv[])
 */
 
 /*
-dvector laplace_approximation_calculator::lincg(dvector& x,
+dvector laplace_approximation_calculator::lincg(dvector& x, 
   dvector& c, dmatrix& H,double tol,double Delta,function_minimizer * pfmin,
   double& truef,double& estdiff,double& truediff,double& bestf,
   int& iflag,int& inner_iter,int maxfn)
@@ -416,11 +419,11 @@ dvector laplace_approximation_calculator::lincg(dvector& x,
   {
     if (++inner_iter > maxfn)
       return xbest_k;
-
+    
     dvector v=H*p_k;
     double tmp2=p_k*v;
-    cout << tmp2 << endl;
-
+    cout << tmp2 << endl; 
+   
     if  (tmp2 <=0.0)
     {
       cout << "matrix not positive definite " << tmp2 << endl;
@@ -442,31 +445,31 @@ dvector laplace_approximation_calculator::lincg(dvector& x,
      {
        x_k=x_k+r2*p_k;
      }
-     cout << "function value = "  << 0.5*(x_k*(H*x_k)) + x_k*c <<
+     cout << "function value = "  << 0.5*(x_k*(H*x_k)) + x_k*c << 
        " norm(x_k) =  " << norm(x_k) << endl;
      break;
     }
-
+   
     alpha_k=n2gk/(tmp2);
     x_k+=alpha_k*p_k;
-
+    
     double nxk=norm(x_k);
     if (nxk>Delta)
     {
       // we have goneoutside the trust region
       cout << " we have gone outside the trust region " << endl;
       // find point at boubndary
-
+ 
       double a=norm2(p_k);
       double b=2.0*x_k*p_k;
       double cc=norm2(x_k)-square(Delta);
       double d=b*b-4*a*cc;
-      if (d<0)
+      if (d<0) 
         cout <<" d = " << d << endl;
       d=sqrt(d);
       double r1=(-b+d)/(2.0*a);
       double r2=(-b-d)/(2.0*a);
-
+ 
       cout << " the roots are " << r1 << "  " << r2 << endl;
       dvector y_1=x_k+r1*p_k;
       dvector y_2=x_k+r2*p_k;
@@ -479,18 +482,18 @@ dvector laplace_approximation_calculator::lincg(dvector& x,
         x_k=x_k+r2*p_k;
       }
       cout << norm(y_1) << " " << norm(y_2) << endl;
-      cout << "r1 function value = "  << 0.5*(y_1*(H*y_1)) + y_1*c <<
-          "  r2 functiomn value = "  << 0.5*(y_2*(H*y_2)) + y_2*c <<
+      cout << "r1 function value = "  << 0.5*(y_1*(H*y_1)) + y_1*c << 
+          "  r2 functiomn value = "  << 0.5*(y_2*(H*y_2)) + y_2*c << 
               " normp_k = " << norm(p_k)  << sqrt(n2gk) << endl;
       break;
     }
-
+   
     g_k+= alpha_k*v;
     double tmp=n2gk;
     n2gk=norm2(g_k);
     beta_k=n2gk/tmp;
     p_k=-g_k+beta_k*p_k;
-    cout << "estimated function value = "
+    cout << "estimated function value = "  
          << truef + 0.5*(x_k*(H*x_k)) + x_k*c << endl;
     double tf=do_one_feval(x+x_k,pfmin);
     cout << "real function value = " << tf << endl;
@@ -498,7 +501,7 @@ dvector laplace_approximation_calculator::lincg(dvector& x,
     {
      improve_flag=1;
      xbest_k=x_k;
-     cout << "norm(H*xbest_k+c)" << norm(H*xbest_k+c)  << endl;
+     cout << "norm(H*xbest_k+c)" << norm(H*xbest_k+c)  << endl; 
      bestf=tf;
     }
     else
@@ -509,14 +512,14 @@ dvector laplace_approximation_calculator::lincg(dvector& x,
   }
   while (n2gk>tol);
   estdiff=0.5*(x_k*(H*x_k)) + x_k*c;
-  cout << "estimated function value = "
+  cout << "estimated function value = "  
     << truef + estdiff << endl;
   double tf=do_one_feval(x+x_k,pfmin);
   truediff=tf-truef;
   truef=tf;
   cout << "real function value = " << tf << endl;
   return xbest_k;
-}
+}  
 */
 
 /**
@@ -546,7 +549,7 @@ double laplace_approximation_calculator::do_one_feval
 }
 
 /*
-dvector laplace_approximation_calculator::lincg(dvector& x,
+dvector laplace_approximation_calculator::lincg(dvector& x, 
   dvector& c, dmatrix& H,double tol,double Delta,function_minimizer * pfmin,
   double& truef,double& estdiff,double& truediff,double& bestf,
   int& iflag,int& inner_iter,int maxfn)
@@ -584,11 +587,11 @@ dvector laplace_approximation_calculator::lincg(dvector& x,
     cout << norm2(H*p_k+c) << endl;
   }
   while(1);
-}
+}  
 */
 
 /*
-dvector laplace_approximation_calculator::lincg(dvector& xinit,
+dvector laplace_approximation_calculator::lincg(dvector& xinit, 
   dvector& c, dmatrix& H,double tol,double Delta,function_minimizer * pfmin,
   double& truef,double& estdiff,double& truediff,double& bestf,
   int& iflag,int& inner_iter,int maxfn)
@@ -619,15 +622,14 @@ dvector laplace_approximation_calculator::lincg(dvector& xinit,
     cout << norm(H*x(k)+c) << endl;
   }
   while(1);
-}
+}  
 */
 
-#if defined(USE_ADPVM)
 /**
  * Description not yet available.
  * \param
  */
-dvector laplace_approximation_calculator::lincg(dvector& xinit,
+dvector laplace_approximation_calculator::lincg(dvector& xinit, 
   dvector& c, dmatrix& H1,double tol,double Delta,function_minimizer * pfmin,
   double& truef,double& estdiff,double& truediff,double& bestf,
   int& iflag,int& inner_iter,int maxfn)
@@ -661,5 +663,7 @@ dvector laplace_approximation_calculator::lincg(dvector& xinit,
   }
   while(1);
   return 0;
-}
-#endif
+}  
+
+
+#endif //#if defined(USE_LAPLACE)

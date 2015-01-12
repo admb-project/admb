@@ -2,24 +2,23 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
-int xxxmax(const int x, const int y)
+int xxxmax(int x,int y)
 {
-  return x < y ? y : x;
+  if (x<y) return y;
+  return x;
 }
-int xxxmin(const int x, const int y)
+int xxxmin(int x,int y)
 {
-  return x < y ? x : y;
+  if (x<y) return x;
+  return y;
 }
-/**
-\todo need test case
-*/
-void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
-  dmatrix& ms, const dvector& xs, const dvector& siglevel,
-  const int& level_index, int index)
+  void get_confidence_interval(BOR_CONST dvector& _left_bd,BOR_CONST dvector& _right_bd,
+    dmatrix& ms,BOR_CONST dvector& xs,BOR_CONST dvector& siglevel,BOR_CONST int& level_index,
+    int index)
   {
     dvector& left_bd=(dvector&) _left_bd;
     dvector& right_bd=(dvector&) _right_bd;
@@ -56,10 +55,10 @@ void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
 
     for (i=mmin+1;i<=mmax;i++)
     {
-      integral+=fval(i)*(xs(i)-xs(i-1));
+      integral+=fval(i)*(xs(i)-xs(i-1)); 
     }
     cout << integral << endl;
-    for (;;)
+    do
     {
       if (lb <= fval.indexmin() &&  rb > fval.indexmax())
       {
@@ -83,12 +82,12 @@ void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
         }
         double incr=fval(lb)*xdiff/integral;
         //double incr=fval(lb);
-        if ( incr >= (siglevel(level_index)-isum))
+        if ( incr >= (siglevel(level_index)-isum)) 
         {
           double diff = siglevel(level_index) - isum;
           double delta=diff/incr;
           if (lb>fval.indexmin())
-          {
+          { 
             left_bd(level_index)=xs(lb)-delta*(xdiff);
           }
           else
@@ -119,11 +118,12 @@ void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
         rb++;
       }
     }
+    while (1);
   }
 
-void get_onesided_intervals(const dvector& _left_bd, const dvector& _right_bd,
-  dmatrix& ms, const dvector& xs, const dvector& siglevel,
-  const int& level_index, int index)
+  void get_onesided_intervals(BOR_CONST dvector& _left_bd,BOR_CONST dvector& _right_bd,
+    dmatrix& ms,BOR_CONST dvector& xs,BOR_CONST dvector& siglevel,BOR_CONST int& level_index,
+    int index)
   {
     dvector& left_bd=(dvector&) _left_bd;
     dvector& right_bd=(dvector&) _right_bd;
@@ -169,3 +169,4 @@ void get_onesided_intervals(const dvector& _left_bd, const dvector& _right_bd,
       isum+=incr;
     }
   }
+

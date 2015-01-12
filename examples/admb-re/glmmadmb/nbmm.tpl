@@ -278,7 +278,7 @@ SEPARABLE_FUNCTION void f0(const dvar_vector& tmpL,int m,const dvar_vector& b,co
   g+=square(kkludge);
   
 SEPARABLE_FUNCTION void fu(const dvar_vector& ui)
-  g+=0.5*m*log(2.0*PI)+0.5*norm2(ui);
+  g+=0.5*m*log(2.0*3.1415926535)+0.5*norm2(ui);
 
 
 SEPARABLE_FUNCTION void easy_f1_nb(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& ui,const dvar_vector& b,const prevariable& log_alpha,const prevariable& pz)

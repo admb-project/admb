@@ -1,6 +1,6 @@
 echo Example:admb:ham4.tpl
 cat $1admb/buscycle/ham4.par
-cat $1admb/buscycle/ham4.std
+cat admb/buscycle/ham4.std
 
 echo Example:admb:ham5.tpl
 cat $1admb/buscycle/ham5.par
@@ -58,10 +58,6 @@ echo Example:admb-re:bvprobit.tpl
 cat $1admb-re/glmmadmb/bvprobit.par
 cat $1admb-re/glmmadmb/bvprobit.std
 
-echo Example:admb-re:glmmadmb.tpl
-cat $1admb-re/glmmadmb/glmmadmb.par
-cat $1admb-re/glmmadmb/glmmadmb.std
-
 echo Example:admb-re:caest.tpl
 cat $1admb-re/caest/caest.par
 cat $1admb-re/caest/caest.std
@@ -83,8 +79,8 @@ cat $1admb-re/logistic/logistic.par
 cat $1admb-re/logistic/logistic.std
 
 echo Example:admb-re:nbmm.tpl
-cat $1admb-re/nbmm/nbmm.par
-cat $1admb-re/nbmm/nbmm.std
+cat $1admb-re/glmmadmb/nbmm.par
+cat $1admb-re/glmmadmb/nbmm.std
 
 echo Example:admb-re:nested4.tpl
 cat $1admb-re/nested4/nested4.par
@@ -137,3 +133,7 @@ cat $1admb-re/union/union.std
 echo Example:admb-re:binomial.tpl
 cat $1admb-re/weights/binomial.par
 cat $1admb-re/weights/binomial.std
+
+echo Example:admb-re:binomial_w2.tpl
+cat $1admb-re/weights/binomial_w2.par
+cat $1admb-re/weights/binomial_w2.std

@@ -2,16 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 #include "fvar.hpp"
-#ifndef OPT_LIB
-  #include <cassert>
-#endif
 
 /**
  * Description not yet available.
@@ -19,16 +16,12 @@
  */
 mat_shape::mat_shape(int rl,int ru,int cl,int cu)
 {
-#ifndef OPT_LIB
-  assert(ru >= rl);
-  assert(cu >= cl);
-#endif
   row_min=rl;
   row_max=ru;
   col_min=cl;
   col_max=cu;
-  nrows=(unsigned int)(ru-rl+1);
-  ncols=(unsigned int)(cu-cl+1);
+  nrows=ru-rl+1;
+  ncols=cu-cl+1;
   ncopies=0;
 }
 

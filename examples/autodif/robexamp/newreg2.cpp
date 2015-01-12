@@ -55,7 +55,7 @@ dvariable robust_regression(dvector& obs, dvar_vector& pred, dvariable& a)
   dvar_vector diff = obs-pred;     // These are the residuals
   dvar_vector diff2 = pow(diff,2); // These are the squared residuals
   v_hat = mean(diff2)+1.e-80;
-  double b=2.*pcon/(width*sqrt(PI));  // This is the weight for the 
+  double b=2.*pcon/(width*sqrt(3.14159));  // This is the weight for the 
                                            // "robustifying" term
   // Use vector calculations to do the entire log-likelihood function in
   // two statements 

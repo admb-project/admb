@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -11,10 +11,10 @@
 #include "fvar.hpp"
 
 /**
-  The VEC operator concatenates the columns of matrix M into a column vector.
-  \param matrix M
+ * Description not yet available.
+ * \param
  */
-dvar_vector VEC(const dvar_matrix& _m)
+  dvar_vector VEC(_CONST dvar_matrix& _m)
   {
     dvar_matrix& m= (dvar_matrix&) _m;
     int i;
@@ -29,6 +29,7 @@ dvar_vector VEC(const dvar_matrix& _m)
       io(i)=ii;
     }
     dvar_vector tmp(1,ii);
+    ii=0;
     for (i=mmin;i<=mmax;i++)
     {
       tmp(io(i-1)+1,io(i)).shift(m(i).indexmin())=m(i);
@@ -37,13 +38,10 @@ dvar_vector VEC(const dvar_matrix& _m)
   }
 
 /**
-  The MAT operator is the inverse of the VEC operator.
-It takes the elements of vector v and sequentially fills in the columns of an n by m matrix.
-  \param vector v
-  \param integer n, the number of rows in the resulting matrix
-  \param integer m, the umber of columns in the resulting matrix
+ * Description not yet available.
+ * \param
  */
-dvar_matrix MAT(const dvar_vector& v, int n, int m)
+  dvar_matrix MAT(_CONST dvar_vector& v, int n,int m)
   {
     dvar_matrix tmp(1,n,1,m);
     int mmin=v.indexmin();
@@ -54,12 +52,12 @@ dvar_matrix MAT(const dvar_vector& v, int n, int m)
       cerr << " Vector and Matrix sizes don't match in function MAT" << endl;
       tmp.initialize();
       return tmp;
-    }
+    }  	  
     for (int i=1;i<=n;i++)
     {
       for (int j=1;j<=m;j++)
       {
-        tmp(i,j)=v(ii++);
+	tmp(i,j)=v(ii++);
       }
     }
     return tmp;

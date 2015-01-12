@@ -2,13 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 
 #include <admodel.h>
 
-double inv_cumd_norm(const double& x);
-double cumd_norm(const double& x);
+double inv_cumd_norm(_CONST double& x);
+double cumd_norm(_CONST double& x);
 double myran1(long int&);
 //double better_rand(long int&);
 double ffmax(double a,double b)
@@ -21,6 +21,10 @@ double ffmin(double a,double b)
   if (a<=b) return a;
   return b;
 }
+    
+
+
+void bull(double y) {;}
 
 double inv_cumd_exp(double x)
 {
@@ -32,7 +36,7 @@ double inv_cumd_exp(double x)
   {
     return -log(2.*x);
   }
-}
+} 
 
 double cumd_exp(double x)
 {
@@ -43,15 +47,14 @@ double cumd_exp(double x)
   else
   {
     return 1.0-0.5*exp(-x);
-  }
+  }                  
 }
 
-dvector bounded_multivariate_normal(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const double& _wght,
-  random_number_generator & rng)
+dvector bounded_multivariate_normal(int nvar, BOR_CONST dvector& a1, BOR_CONST dvector& b1,
+  dmatrix& ch, BOR_CONST double& _wght, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
-  const double sqrt_tpi =sqrt(2*PI);
+  const double sqrt_tpi =sqrt(2*3.14159);
   dvector w(1,nvar);
   //dvector ty(1,nvar);
   dvector a(1,nvar);
@@ -62,10 +65,10 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
   b=b1;
   wght=0;
   w.initialize();
-  double ah;
-  double bl;
+  double ah; 
+  double bl; 
   double upper;
-  double lower;
+  double lower; 
   double diff;
   int expflag;
   double y;
@@ -73,11 +76,11 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
   int ie=0;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i);
-    bl=b(i)/ch(i,i);
+    ah=a(i)/ch(i,i); 
+    bl=b(i)/ch(i,i); 
     double u = rng.better_rand();
     upper=cumd_norm(bl);
-    lower=cumd_norm(ah);
+    lower=cumd_norm(ah); 
     diff=upper-lower;
     if (diff>1.e-5)
     {
@@ -117,15 +120,15 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
   }
   //cout << ty << endl;
   wght +=  in*log(1./sqrt_tpi);
-  return w;
+  return w; 
 }
 
-dvector probing_bounded_multivariate_normal(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const double& _wght, double pprobe,
-  random_number_generator & rng)
+
+dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1, 
+  dmatrix& ch, BOR_CONST double& _wght, double pprobe, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
-  const double sqrt_tpi =sqrt(2*PI);
+  const double sqrt_tpi =sqrt(2*3.14159);
   dvector w(1,nvar);
   dvector a(1,nvar);
   dvector b(1,nvar);
@@ -135,24 +138,26 @@ dvector probing_bounded_multivariate_normal(int nvar, const dvector& a1,
   b=b1;
   wght=0;
   w.initialize();
-  double ah;
-  double bl;
+  double ah; 
+  double bl; 
   double upper;
-  double lower;
+  double lower; 
   double upper1;
-  double lower1;
+  double lower1; 
   double diff;
   double diff1;
   int expflag;
   double y;
+  int in=0;
+  int ie=0;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i);
-    bl=b(i)/ch(i,i);
+    ah=a(i)/ch(i,i); 
+    bl=b(i)/ch(i,i); 
     double u = rng.better_rand();
     double pp = rng.better_rand();
     upper=cumd_norm(bl);
-    lower=cumd_norm(ah);
+    lower=cumd_norm(ah); 
     diff=upper-lower;
     if (diff>1.e-5)
     {
@@ -196,12 +201,11 @@ dvector probing_bounded_multivariate_normal(int nvar, const dvector& a1,
       b(j)-=tmp;
     }
   }
-  return w;
+  return w; 
 }
 
-dvector bounded_multivariate_uniform(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const double& _wght,
-  random_number_generator & rng)
+dvector bounded_multivariate_uniform(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
+  dmatrix& ch, BOR_CONST double& _wght, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   dvector a(1,nvar);
@@ -211,16 +215,16 @@ dvector bounded_multivariate_uniform(int nvar, const dvector& a1,
   a=a1;
   b=b1;
   wght=0;
-  double ah;
-  double bl;
+  double ah; 
+  double bl; 
   double upper;
-  double lower;
+  double lower; 
   double diff;
   double y;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i);
-    bl=b(i)/ch(i,i);
+    ah=a(i)/ch(i,i); 
+    bl=b(i)/ch(i,i); 
     double u = rng.better_rand();
     lower=ffmax(-1.0,ah);
     upper=ffmin(1.0,bl);
@@ -239,9 +243,9 @@ dvector bounded_multivariate_uniform(int nvar, const dvector& a1,
   return w;
 }
 
-dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const dmatrix& ch3, double contaminant,
-  const double& _wght, random_number_generator & rng)
+dvector bounded_robust_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
+  dmatrix& ch,BOR_CONST dmatrix& ch3, double contaminant,BOR_CONST double& _wght, 
+  random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   dvector w(1,nvar);
@@ -253,21 +257,25 @@ dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
   b=b1;
   wght=1;
   w.initialize();
-  double ah;
-  double bl;
+  double ah; 
+  double bl; 
   double r = rng.better_rand();
   if (r>contaminant)
   {
     for (int i=1;i<=nvar;i++)
     {
-      ah=a(i)/ch(i,i);
-      bl=b(i)/ch(i,i);
+      ah=a(i)/ch(i,i); 
+      bl=b(i)/ch(i,i); 
       double u = rng.better_rand();
       double upper=cumd_norm(bl);
-      double lower=cumd_norm(ah);
+      double lower=cumd_norm(ah); 
       wght *= upper-lower;
       u=u*.9998+.0001;
-      double y = inv_cumd_norm(u*(upper-lower)+lower);
+      double y = inv_cumd_norm(u*(upper-lower)+lower); 
+      if (y>3.5)
+      {
+        bull(y);
+      }
       for (int j=i;j<=nvar;j++)
       {
         double tmp=y*ch(j,i);
@@ -282,14 +290,18 @@ dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
     // use the bigger variance normal
     for (int i=1;i<=nvar;i++)
     {
-      ah=a(i)/ch3(i,i);
-      bl=b(i)/ch3(i,i);
+      ah=a(i)/ch3(i,i); 
+      bl=b(i)/ch3(i,i); 
       double u = rng.better_rand();
       double upper=cumd_norm(bl);
-      double lower=cumd_norm(ah);
+      double lower=cumd_norm(ah); 
       wght *= upper-lower;
       u=u*.9998+.0001;
-      double y = inv_cumd_norm(u*(upper-lower)+lower);
+      double y = inv_cumd_norm(u*(upper-lower)+lower); 
+      if (y>3.5)
+      {
+        bull(y);
+      }
       for (int j=i;j<=nvar;j++)
       {
         double tmp=y*ch3(j,i);
@@ -299,5 +311,8 @@ dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
       }
     }
   }
-  return w;
+  return w; 
 }
+void sobseq(int*,BOR_CONST dvector&);
+
+

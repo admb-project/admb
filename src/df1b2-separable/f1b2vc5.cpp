@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -63,7 +63,7 @@ void check_shape(const df1b2vector & _x,const df1b2matrix & _y,const char * s)
 {
   ADUNCONST(df1b2vector,x)
   ADUNCONST(df1b2matrix,y)
-  if (x.indexmin() != y(y.indexmin()).indexmin() ||
+  if (x.indexmin() != y(y.indexmin()).indexmin() || 
     x.indexmax() != y(y.indexmin()).indexmax())
   {
     cerr << "Incompatible shapes in df1b2vector function" << s << endl;
@@ -80,13 +80,13 @@ df1b2vector& df1b2vector::operator = (const df1b2vector& _x)
   if (allocated())
   {
     ADUNCONST(df1b2vector,x)
-    check_shape(*this,x,"df1b2vector& df1b2vector::operator =");
+    check_shape(*this,x,"df1b2vector& df1b2vector::operator ="); 
     int mmin=x.indexmin();
     int mmax=x.indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++) 
     {
       (*this)(i)=x(i);
-    }
+    } 
   }
   else
   {
@@ -102,7 +102,7 @@ df1b2vector& df1b2vector::operator = (const df1b2vector& _x)
 df1b2vector& df1b2vector::operator = (const dvector& _x)
 {
   ADUNCONST(dvector,x)
-  check_shape(*this,x,"df1b2vector& df1b2vector::operator =");
+  check_shape(*this,x,"df1b2vector& df1b2vector::operator ="); 
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   for (int i=mmin;i<=mmax;i++) (*this)(i)=x(i);
@@ -149,7 +149,7 @@ df1b2vector operator * (const dmatrix& _M,const df1b2vector& _x)
   //int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
     tmp(i)=M(i)*x;
   }
@@ -171,7 +171,7 @@ df1b2vector operator * (const df1b2matrix& _M,const df1b2vector& _x)
   //int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
     tmp(i)=M(i)*x;
   }
@@ -193,9 +193,9 @@ df1b2vector operator * (const df1b2vector& _x,const df1b2matrix& _M)
   int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
-    for (int j=mmin;j<=mmax;j++)
+    for (int j=mmin;j<=mmax;j++) 
       tmp(i)+=M(j,i)*x(j);
   }
   return tmp;
@@ -216,9 +216,9 @@ df1b2vector operator * (const df1b2vector& _x,const dmatrix& _M)
   int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
-    for (int j=mmin;j<=mmax;j++)
+    for (int j=mmin;j<=mmax;j++) 
       tmp(i)+=M(j,i)*x(j);
   }
   return tmp;
@@ -239,9 +239,9 @@ df1b2vector operator * (const dvector& _x,const df1b2matrix& _M)
   int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
-    for (int j=mmin;j<=mmax;j++)
+    for (int j=mmin;j<=mmax;j++) 
       tmp(i)+=M(j,i)*x(j);
   }
   return tmp;
@@ -262,22 +262,22 @@ df1b2matrix operator * (const df1b2matrix& _MM,const df1b2matrix& _NN)
   int kmax=N.rowmax();
   int cmin=N(kmin).indexmin();
   int cmax=N(kmin).indexmax();
-  if (M(rmin).indexmin()!=N.indexmin() || M(rmin).indexmax()!=N.indexmax())
+  if (M(rmin).indexmin()!=N.indexmin() || M(rmin).indexmax()!=N.indexmax()) 
   {
     cerr << "incompatible matrix sizes" << endl;
     ad_exit(1);
   }
   df1b2matrix tmp(rmin,rmax,cmin,cmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
-    for (int j=cmin;j<=cmax;j++)
+    for (int j=cmin;j<=cmax;j++) 
     {
-      for (int k=kmin;k<=kmax;k++)
+      for (int k=kmin;k<=kmax;k++) 
       {
         tmp(i,j)+=M(i,k)*N(k,j);
       }
-    }
+    } 
   }
   return tmp;
 }
@@ -296,8 +296,8 @@ df1b2vector operator * (const df1b2matrix& _M,const dvector& _x)
   int cmin=x.indexmin();
   int cmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
-  for (int i=rmin;i<=rmax;i++)
-    for (int j=cmin;j<=cmax;j++)
+  for (int i=rmin;i<=rmax;i++) 
+    for (int j=cmin;j<=cmax;j++) 
       tmp(i)+=M(i,j)*x(j);
   return tmp;
 }
@@ -315,8 +315,8 @@ df1b2matrix elem_prod(const df1b2matrix& _MM,const df1b2matrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -339,8 +339,8 @@ df1b2matrix elem_prod(const dmatrix& _MM,const df1b2matrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -363,8 +363,8 @@ df1b2matrix elem_prod(const df1b2matrix& _MM,const dmatrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -387,8 +387,8 @@ df1b2matrix elem_div(const df1b2matrix& _MM,const df1b2matrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -411,8 +411,8 @@ df1b2matrix elem_div(const dmatrix& _MM,const df1b2matrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -435,8 +435,8 @@ df1b2matrix elem_div(const df1b2matrix& _MM,const dmatrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -776,19 +776,6 @@ void df1b2matrix::allocate(void)
 }
 
 /**
- * Copy values of vector v into column j.
- */
-void df1b2matrix::colfill(const int j, const df1b2vector& v)
-{
-  //RETURN_ARRAYS_INCREMENT();   makes no sense for df1b2 stuff
-  for (int i=rowmin(); i<=rowmax(); i++)
-  {
-    (*this)[i][j]=v[i];
-  }
-  //RETURN_ARRAYS_DECREMENT();
-}
-
-/**
  * Description not yet available.
  * \param
  */
@@ -842,7 +829,6 @@ df1b2variable norm2(const df1b2vector& _x)
   }
   return tmp;
 }
-df1b2variable sumsq(const df1b2vector& _x) {return(norm2(_x));}
 
 /**
  * Description not yet available.
@@ -879,7 +865,6 @@ df1b2variable norm2(const df1b2matrix& _x)
   }
   return tmp;
 }
-df1b2variable sumsq(const df1b2matrix& _x) {return(norm2(_x));}
 
 /**
  * Description not yet available.

@@ -1,461 +1,109 @@
 @echo off
-@REM
-@REM  Copyright 2013 (c) ADMB Foundation
-@REM
-
+setlocal
 if [%1]==[] goto HELP
-if [%1]==[-h] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
+REM #######################################################################################################################
+REM                                                                                                                       #
+REM Script:   admb [-d] [-g] [-r] [-s] model                                                                              #
+REM                                                                                                                       #
+REM Purpose:  Build ADMB executable from TPL, using tpl2cpp/tpl2rem, adcomp, and adlink                                   #
+REM                                                                                                                       #
+REM Args:     -d creates DLL                                                                                              #
+REM           -g inserts debugging symbols                                                                                #
+REM           -r creates ADMB-RE model                                                                                    #
+REM           -s creates model that enforces safe array bounds during runtime                                             #
+REM           model is the filename with or without extension, e.g. simple or simple.tpl                                  #
+REM                                                                                                                       #
+REM Notes:    The same admb.bat script is used for all Windows compilers: Borland, GCC, and Microsoft Visual C++          #
+REM                                                                                                                       #
+REM Requires: tpl2cpp, tpl2rem, adcomp, adlink                                                                            #
+REM                                                                                                                       #
+REM Returns:  Creates executable or DLL with same prefix                                                                  #
+REM                                                                                                                       #
+REM History:  24 May 2009  Arni Magnusson created                                                                         #
+REM           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.tpl                           #
+REM            8 Feb 2010  Johnoel Ancheta split the -s combo option into separate -g and -s options                      #
+REM           22 Feb 2010  Arni Magnusson merged forked versions                                                          #
+REM                                                                                                                       #
+REM #######################################################################################################################
 
-VERIFY OTHER 2>nul
-SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
-if ERRORLEVEL 1 (
-  echo "Error[%COMSPEC%]: setlocal is unable to EnableExtensions and EnableDelayedExpansion."
-  goto EOF
+rem Pop args until model=%1
+set bounds=
+set d=
+set dll=
+set g=
+set r=
+set s=
+set tpl2cpp=tpl2cpp
+:STARTLOOP
+if [%2]==[] goto ENDLOOP
+if %1==-d set d=-d& set dll=-dll& shift
+if %1==-g set g=-g& shift
+if %1==-r set r=-r& set tpl2cpp=tpl2rem& shift
+if %1==-s set s=-s& set bounds=-bounds& shift
+goto STARTLOOP
+:ENDLOOP
+
+set model=%~n1
+
+if not exist %model%.tpl (
+  goto ERROR
 )
 
-set ADMB_HOME=
-if not defined ADMB_HOME (
-  set "SCRIPT_PATH=%~dp0"
-  if defined SCRIPT_PATH (
-    pushd !SCRIPT_PATH!
-    pushd ..
-    set "ADMB_HOME=!CD!"
-    popd
-    popd
-  ) else (
-    for %%a in (admb.cmd) do (
-      set "HAS_PATH=%%~dp$PATH:a"
-      if defined HAS_PATH (
-        pushd !HAS_PATH!
-        pushd ..
-        set "ADMB_HOME=!CD!"
-        popd
-        popd
-      )
-    )
-  )
-) else (
-  pushd !ADMB_HOME!
-  set "ADMB_HOME=!CD!"
-  popd
+if exist %model%.htp (
+  del /Q %model%.htp
+)
+if exist %model%.cpp (
+  del /Q %model%.cpp
+)
+if exist %model%.obj (
+  del /Q %model%.obj
+)
+if exist %model%.exe (
+  del /Q %model%.exe
 )
 
-if not defined ADMB_HOME (
-  echo "Error: ADMB_HOME is not defined."
-  goto EOF
+echo *** Parsing: %model%.tpl
+echo.
+%tpl2cpp% %bounds% %dll% %model%
+if not exist %model%.htp (
+  goto ERROR
 )
+if not exist %model%.cpp (
+  goto ERROR
+)
+echo.
+echo *** Compiling: adcomp %d% %g% %r% %s% %model%
+call adcomp %d% %g% %r% %s% %model%
+if not exist %model%.obj (
+  goto ERROR
+)
+echo.
+echo *** Linking: adlink %d% %g% %r% %s% %model%
+call adlink %d% %g% %r% %s% %model%
+if not exist %model%.exe (
+  goto ERROR
+)
+echo.
+echo Successful build of executable: %model%.exe
 
-set tpls=
-set srcs=
-set objs=
-for %%a in (%*) do (
-  set arg=%%a
-  if "!arg:~0,1!"=="-" (
-    if "!arg!"=="-c" (
-      set compileonly= -c
-    )
-    if "!arg!"=="-d" (
-      set d= -d
-    )
-    if "!arg!"=="-g" (
-      set g= -g
-    )
-    if "!arg!"=="-r" (
-      set r = -r
-      set parser=tpl2rem
-    )
-    if "!arg!"=="-f" (
-      set fast= -f
-    )
-  ) else (
-    if "%%~xa"=="" (
-      if not defined tpls (
-        set tpls=!arg!
-      ) else (
-        set tpls=!tpls! !arg!
-      )
-    )
-    if "%%~xa"==".tpl" (
-      if not defined tpls (
-        set tpls=!arg!
-      ) else (
-        set tpls=!tpls! !arg!
-      )
-    )
-    if "%%~xa"==".c" (
-      if not defined srcs (
-        set srcs=!arg!
-      ) else (
-        set srcs=!srcs! !arg!
-      )
-    )
-    if "%%~xa"==".cpp" (
-      if not defined srcs (
-        set srcs=!arg!
-      ) else (
-        set srcs=!srcs! !arg!
-      )
-    )
-    if "%%~xa"==".o" (
-      if not defined objs (
-        set objs=!arg!
-      ) else (
-        set objs=!objs! !arg!
-      )
-    )
-    if "%%~xa"==".obj" (
-      if not defined objs (
-        set objs=!arg!
-      ) else (
-        set objs=!objs! !arg!
-      )
-    )
-  )
-)
-if exist "!ADMB_HOME!\bin\admb-cfg.bat" (
-  call "!ADMB_HOME!\bin\admb-cfg.bat"
-  if defined ADMB_CFG_CXX (
-    set CXX=!ADMB_CFG_CXX!
-  )
-  if defined ADMB_CFG_CXXFLAGS (
-    set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
-  )
-  if defined ADMB_CFG_LD (
-    if not defined d (
-      set LD=!ADMB_CFG_LD!
-    )
-  )
-  if defined ADMB_CFG_LDFLAGS (
-    set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
-  )
-)
-if "!CXX!"=="cl" (
-  set LD=!CXX!
-  if defined CXXFLAGS (
-    set CXXFLAGS= /c /nologo /EHsc !CXXFLAGS!
-  ) else (
-    set CXXFLAGS= /c /nologo /EHsc
-  )
-  if defined g (
-    set CXXFLAGS=!CXXFLAGS! /Z7
-  ) else (
-    set CXXFLAGS=!CXXFLAGS! /O2
-  )
-  if defined fast (
-    set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
-    if not exist "!ADMB_HOME!\lib\admb-contribo.lib" (
-      set libs="!ADMB_HOME!\lib\admbo.lib" /link
-    ) else (
-      set libs="!ADMB_HOME!\lib\admb-contribo.lib" /link
-    )
-  ) else (
-    if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
-      set libs="!ADMB_HOME!\lib\admb.lib" /link
-    ) else (
-      set libs="!ADMB_HOME!\lib\admb-contrib.lib" /link
-    )
-  )
-  if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
-    set CXXFLAGS=!CXXFLAGS! /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
-  ) else (
-    set CXXFLAGS=!CXXFLAGS! /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
-  )
-) else (
-  if not defined CXX (
-    set CXX=g++
-  )
-  if not defined LD (
-    if not defined d (
-      set LD=g++
-    ) else (
-      set LD=g++
-    )
-  )
-  if defined CXXFLAGS (
-    set CXXFLAGS= -c !CXXFLAGS!
-  ) else (
-    set CXXFLAGS= -c
-  )
-  if defined d (
-    if defined LDFLAGS (
-      set LDFLAGS= -shared !LDFLAGS!
-    ) else (
-      set LDFLAGS= -shared
-    )
-  )
-  if defined LDFLAGS (
-    set LDFLAGS= -static !LDFLAGS!
-  ) else (
-    set LDFLAGS= -static
-  )
-  if defined g (
-    set CXXFLAGS=!CXXFLAGS! -g
-    set LDFLAGS=!LDFLAGS! -g
-  ) else (
-    set CXXFLAGS=!CXXFLAGS! -O3
-  )
-  if defined fast (
-    set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-    if not exist "!ADMB_HOME!\lib\libadmb-contribo.a" (
-      set libs="!ADMB_HOME!\lib\libadmbo.a"
-    ) else (
-      set libs="!ADMB_HOME!\lib\libadmb-contribo.a"
-    )
-  ) else (
-    if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
-      set libs="!ADMB_HOME!\lib\libadmb.a"
-    ) else (
-      set libs="!ADMB_HOME!\lib\libadmb-contrib.a"
-    )
-  )
-  set CXXFLAGS=!CXXFLAGS! -fpermissive
-  for /f %%i in ('!CXX! -dumpmachine ^| findstr x86_64') do (
-     set CXXFLAGS=!CXXFLAGS! -D_FILE_OFFSET_BITS=64
-  )
-  if defined d (
-    set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
-  )
-  if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
-    set CXXFLAGS=!CXXFLAGS! -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
-  ) else (
-    set CXXFLAGS=!CXXFLAGS! -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"
-  )
-)
-set "PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!"
-if not defined tpls (
-  if not defined srcs (
-    if not defined objs (
-      echo.&echo Error: Nothing to build
-      echo.
-      goto HELP
-    )
-    goto linker
-  )
-  goto compiler
-)
-for %%a in (!tpls!) do (
-  set tpl=%%~na
-  if not exist %%~na.tpl (
-    echo.&echo Error: !tpl!.tpl not found
-    goto EOF
-  )
-  del classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp 2> NUL
-  del xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 2> NUL
-  del tfile1 tfile2 tfile3 tfile4 tfile5 2> NUL
-  del !tpl!.cpp !tpl!.htp !tpl!.obj !tpl!.exe 2> NUL
-  del admb.log 2> NUL
-  if defined d (
-    set dll= -dll
-  )
-  if defined g (
-    set debug= -debug
-  )
-  echo.&echo *** Parse: !tpl!.tpl
-  if defined parser (
-    set CMD=!parser! !debug! !dll! !tpl!
-    echo !CMD!
-    call !CMD!
-  ) else (
-    set CMD=tpl2cpp !debug! !dll! !tpl!
-    call !CMD! 2> admb.log
-    if not exist !tpl!.cpp (
-      set CMD=tpl2rem !debug! !dll! !tpl!
-      call !CMD! 2> admb.log
-    ) 
-    if exist !tpl!.cpp (
-      if exist !tpl!.htp (
-        echo !CMD!
-      )
-    )
-  )
-  if not exist !tpl!.cpp (
-    echo.&echo Error: Unable to parse "!tpl!.tpl".
-    type admb.log
-    goto ERROR
-  )
-  del admb.log 2> NUL
-)
-for %%b in (!tpls!) do (
-  set tpl=%%~nb
-  @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
-  if "!CXX!"=="cl" (
-    set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
-  ) else (
-    set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
-  )
-  echo.&echo *** Compile: !tpl!.cpp
-  echo !CMD!
-  call !CMD!
-  if not exist !tpl!.obj (
-    echo.&echo Error: Unable to build !tpl!.obj
-    goto EOF
-  )
-)
-:compiler
-if defined srcs (
-  for %%a in (!srcs!) do (
-    set src=%%a
-    if not exist !src! (
-      echo.&echo Error: !src! not found
-      goto ERROR
-    )
-    set filename=%%~na
-    @REM set CMD=adcomp!d!!g!!r!!fast! !src!
-    if "!CXX!"=="cl" (
-      set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
-    ) else (
-      set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
-    )
-    echo.&echo *** Compile: !src!
-    echo !CMD!
-    call !CMD!
-    if not exist !filename!.obj (
-      echo.&echo Error: Unable to build !src! to !filename!.obj
-      goto ERROR
-    ) else (
-      if not defined objs (
-        set objs=!filename!.obj
-      ) else (
-        set objs=!objs! !filename!.obj
-      )
-    )
-  )
-)
-:linker
-if defined compileonly (
-  echo.&echo Compiled !objs!.
-  goto EOF
-)
-if not defined tpls (
-  if not defined objs (
-    goto ERROR
-  ) else (
-    for %%a in (!objs!) do (
-      set obj=%%a
-      if not exist !obj! (
-        echo.&echo Error: !obj! not found
-        goto ERROR
-      )
-    )
-    for %%a in (!objs!) do (
-      set main=%%~na
-      @REM set CMD=adlink!d!!g!!r!!fast! !objs!
-      if defined d (
-        set CMD=!LD!!LDFLAGS! -o !main!.dll !objs! !libs!
-      ) else (
-        if "!CXX!"=="cl" (
-          set CMD=!LD!!LDFLAGS! /Fe!main!.exe !objs! !libs!
-        ) else (
-          set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
-        )
-      )
-      echo.&echo *** Linking: !objs!
-      echo !CMD!
-      call !CMD!
-      if defined d (
-        if not exist !main!.dll (
-          goto ERROR
-        )
-        echo.&echo Successfully built '!main!.dll'.
-        goto SUCCESS
-      ) else (
-        if not exist !main!.exe (
-          goto ERROR
-        )
-        echo.&echo Successfully built '!main!.exe'.
-        goto EOF
-      )
-    )
-  )
-) else (
-  for %%a in (!tpls!) do (
-    set tpl=%%~na
-    @REM set CMD=adlink!d!!g!!r!!fast! !tpl!.obj !objs!
-    if defined d (
-      if "!CXX!"=="cl" (
-        set CMD=!LD!!LDFLAGS! -o !tpl!.dll !objs! !libs!
-      ) else (
-        if defined objs (
-          set CMD=!LD!!LDFLAGS! -o !tpl!.dll !tpl!.obj !objs! !libs!
-        ) else (
-          set CMD=!LD!!LDFLAGS! -o !tpl!.dll !tpl!.obj !libs!
-        )
-      )
-    ) else (
-      if "!CXX!"=="cl" (
-        if defined objs (
-          set CMD=!LD!!LDFLAGS! /Fe!tpl!.exe !tpl!.obj !objs! !libs!
-        ) else (
-          set CMD=!LD!!LDFLAGS! /Fe!tpl!.exe !tpl!.obj !libs!
-        )
-      ) else (
-        if defined objs (
-          set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
-        ) else (
-          set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
-        )
-      )
-    )
-    if defined objs (
-      echo.&echo *** Linking: !tpl!.obj !objs!
-    ) else (
-      echo.&echo *** Linking: !tpl!.obj
-    )
-    echo !CMD!
-    call !CMD!
-    if defined d (
-      if not exist !tpl!.dll (
-        goto ERROR
-      )
-      echo.&echo Successfully built '!tpl!.dll'.
-      goto SUCCESS
-    ) else (
-      if not exist !tpl!.exe (
-        goto ERROR
-      )
-      echo.&echo Successfully built '!tpl!.exe'.
-      goto SUCCESS
-    )
-  )
-)
-:SUCCESS
 goto EOF
-:ERROR
-echo.&echo Error: Unable to build.
-echo.&echo COMSPEC=%COMSPEC%.
-echo.&echo PATH=%PATH%.
-echo.&echo ADMB_HOME: !ADMB_HOME!
-goto EOF
+
 :HELP
-echo Builds AD Model Builder executable or library.
+echo Usage: admb [-d] [-g] [-r] [-s] model
 echo.
-echo Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
+echo Build AD Model Builder executable from TPL.
 echo.
-echo  -c     Build only object file(s) (.obj).
-echo  -d     Build a dynamic library (.dll).
-echo  -g     Build with debug symbols.
-echo  -r     Build Random effects library (ADMB-RE).
-echo  -f     Build with Fast optimized mode library (no error checking).
-echo         By default, admb script will include error checking in the build.
-echo  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl
-echo         extension)
-echo  src(s) C/C++ Source file(s) containing classes, methods and variables that
-echo         are used in model.
+echo   -d     Create DLL
+echo   -g     Insert debugging symbols
+echo   -r     Create ADMB-RE
+echo   -s     Enforce safe bounds
+echo   model  Filename prefix, e.g. simple
 echo.
 goto EOF
-REM r982 [2011-02-16] arnima  rewrite, fixed bug when user option is not
-REM                           recognized, fixed spaces, improved messages
-REM r927 [2010-12-24] johnoel moved to 'admb' dir
-REM r917 [2010-12-24] johnoel pruned 'mingw' dir
-REM r914 [2010-12-24] johnoel changed script so it deletes cpp/htp/obj/exe and
-REM                           reports error or success, moved to 'g++' dir
-REM r629 [2010-05-20] johnoel changed .o to .obj
-REM r623 [2010-05-20] johnoel changed script so it exits if tpl/cpp/htp/o/exe do
-REM                           not exist
-REM r525 [2009-08-07] arnima  added support for filename extension like
-REM                           simple.tpl
-REM                   johnoel split -s option into separate -g and -s options
-REM r244 [2009-05-28] arnima  created
+
+:ERROR
+echo.
+echo Error: Failed to build executable.
 :EOF

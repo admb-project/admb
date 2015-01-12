@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -19,70 +19,49 @@
   #include <iostream.hpp>
 #endif
 
-#ifndef OPT_LIB
-  #include <cassert>
-#endif
-
 void cmdm_prod(void);
 
 /**
  * Description not yet available.
  * \param
  */
-dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
+ dvar_matrix  operator * (_CONST dmatrix& cm1,_CONST dvar_matrix& m2 )
  {
    if (cm1.colmin() != m2.rowmin() || cm1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in "
-     "dmatrix operator*(const dmatrix& x, const dvar_matrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dvar_matrix& m)\n";
      ad_exit(21);
    }
    dmatrix cm2=value(m2);
    dmatrix tmp(cm1.rowmin(),cm1.rowmax(), m2.colmin(), m2.colmax());
+   double sum;
+   double * temp_col=(double *) malloc(m2.rowsize()*sizeof(double));
+   temp_col-=cm2.rowmin();
 
-#ifdef OPT_LIB
-   const size_t rowsize = (size_t)m2.rowsize();
-#else
-   const int _rowsize = m2.rowsize();
-   assert(_rowsize > 0);
-   const size_t rowsize = (size_t)_rowsize;
-#endif
-   try
+   for (int j=cm2.colmin(); j<=cm2.colmax(); j++)
    {
-     double* temp_col = new double[rowsize];
 
-     temp_col-=cm2.rowmin();
-
-     for (int j=cm2.colmin(); j<=cm2.colmax(); j++)
+     for (int k=cm2.rowmin(); k<=cm2.rowmax(); k++)
      {
-       for (int k=cm2.rowmin(); k<=cm2.rowmax(); k++)
-       {
-         temp_col[k] = cm2.elem(k,j);
-       }
-       for (int i=cm1.rowmin(); i<=cm1.rowmax(); i++)
-       {
-         double sum=0.0;
-         const dvector& temp_row = cm1(i);
-         for (int k=cm1.colmin(); k<=cm1.colmax(); k++)
-         {
-            sum+=temp_row(k) * (temp_col[k]);
-           // sum+=temp_row(k) * cm2(k,j);
-         }
-         tmp(i,j)=sum;
-       }
+       temp_col[k] = cm2.elem(k,j);
      }
-     temp_col+=cm2.rowmin();
-     delete [] temp_col;
-     temp_col = 0;
-   }
-   catch (std::bad_alloc& e)
-   {
-     cerr << "Error[" << __FILE__ << ':' << __LINE__
-          << "]: Unable to allocate array.\n";
-     //ad_exit(21);
-     throw e;
+
+     for (int i=cm1.rowmin(); i<=cm1.rowmax(); i++)
+     {
+       sum=0.0;
+       _CONST dvector& temp_row = cm1(i);
+       for (int k=cm1.colmin(); k<=cm1.colmax(); k++)
+       {
+          sum+=temp_row(k) * (temp_col[k]);
+         // sum+=temp_row(k) * cm2(k,j);
+       }
+       tmp(i,j)=sum;
+     }
    }
 
+
+   temp_col+=cm2.rowmin();
+   free ((char*)temp_col);
    dvar_matrix vtmp=nograd_assign(tmp);
    save_identifier_string("TEST1");
    cm1.save_dmatrix_value();

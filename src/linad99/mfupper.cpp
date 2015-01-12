@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,9 +14,9 @@
  * Description not yet available.
  * \param
  */
-dvariable mf_upper_bound(const prevariable& x, double M, prevariable& fpen)
+  dvariable mf_upper_bound(_CONST prevariable& x,double M,prevariable& fpen)
   {
-    if (x<=M)
+    if (x<=M) 
     {
       return x;
     }

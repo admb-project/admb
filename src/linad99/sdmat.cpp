@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -37,7 +37,7 @@ sdmatrix::sdmatrix()
  */
 void sdmatrix::allocate(int irh)
 {
-   int nrl = 1;
+   unsigned nrl = 1;
    //unsigned nrh = irh;
    index_min=nrl;
    index_max=nrl;
@@ -68,11 +68,13 @@ void sdmatrix::allocate(int irh)
    #ifdef DIAG
      myheapcheck("Leaving sdmatrix(nrh)" );
    #endif
+
 }
 
 /**
-Destructor
-*/
+ * Description not yet available.
+ * \param
+ */
 sdmatrix::~sdmatrix()
 {
   #ifdef DIAG

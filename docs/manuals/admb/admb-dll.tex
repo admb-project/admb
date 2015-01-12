@@ -1,4 +1,4 @@
-% $Id$
+% $Id: admb-dll.tex 204 2009-04-20 01:59:36Z jsibert $
 %
 % Author: David Fournier
 % Copyright (c) 2008 Regents of the University of California
@@ -519,7 +519,7 @@ The estimated proportions were
     0.343  0.657
 \end{lstlisting}
 See Figure~\ref{fig:estimatedprop}.
-\begin{figure}[htbp]
+\begin{figure}[h]
   \includegraphics[height=4.5in, width=\textwidth]{datax.png}
   \emptycaption
   \label{fig:estimatedprop}
@@ -676,7 +676,7 @@ If the user desires, they can remove the \texttt{-nohess} option and have
 the program compute estimates 
 of the variances of the parameter estimates. %xx was nonsense.
 \begin{lstlisting}
- index   name   value      std.dev   
+ index   name   value      std dev   
     1   pcoff  3.5511e-01  1.5693e+00
     2   pcoff  6.7911e-01  2.9777e+00
     3   C1     1.1507e+00  7.9990e-02
@@ -696,7 +696,7 @@ of the variances of the parameter estimates. %xx was nonsense.
 The program also reports the correlation matrix
 \begin{tinycode}
 
- index   name    value     std.dev     1     2      3      4      5      6      7      8      9     10     11     12     13     14 
+ index   name    value     std dev     1     2      3      4      5      6      7      8      9     10     11     12     13     14 
      1   pcoff  3.551e-01 1.569e+00  1.000
     2   pcoff  6.791e-01 2.977e+00  0.997  1.000
     3   C1     1.150e+00 7.999e-02 -0.039 -0.021  1.000

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -11,27 +11,27 @@
 #include "fvar.hpp"
 
 /**
- * Divide elements of a vector by a constant  
- * \param x constant to divide vector by.
+ * Description not yet available.
+ * \param
  */
-dvector& dvector::operator/=(const double x)
-{
-  for (int i=indexmin(); i<=indexmax(); i++)
+  dvector& dvector::operator /= ( CGNU_DOUBLE x)
   {
-    elem(i)/=x;
+    for (int i=indexmin(); i<=indexmax(); i++)
+    {
+      elem(i)/=x;
+    }
+    return(*this);
   }
-  return(*this);
-}
 
 /**
- * Multiply elements of a vector by a constant.
- * \param x constant for multiplication.
+ * Description not yet available.
+ * \param
  */
-dvector& dvector::operator*=(const double x)
-{
-  for (int i=indexmin(); i<=indexmax(); i++)
+  dvector& dvector::operator *= ( CGNU_DOUBLE x)
   {
-    elem(i)*=x;
+    for (int i=indexmin(); i<=indexmax(); i++)
+    {
+      elem(i)*=x;
+    }
+    return(*this);
   }
-  return(*this);
-}

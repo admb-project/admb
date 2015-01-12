@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -16,12 +16,12 @@ void DF_first_diference(void);
  * Description not yet available.
  * \param
  */
-dvar_vector first_difference(const dvar_vector& x)
+ dvar_vector  first_difference(_CONST dvar_vector& x)
  {
    if (x.size()<=1)
    {
      cerr << "Error -- vector size too small"
-             " in first_difference(const dvar_vector&)" << endl;
+             " in first_difference(_CONST dvar_vector&)" << endl;
      ad_exit(1);
    }
 

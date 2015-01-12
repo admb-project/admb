@@ -1,0 +1,34 @@
+\HeaderA{anova.glmm.admb}{Anova for glmm.admb objects}{anova.glmm.admb}
+\keyword{models}{anova.glmm.admb}
+\begin{Description}\relax
+Calculate an anova table from a series of model fits
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+anova.glmm.admb(object, ...)
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{object}] A model fit returned from \code{glmm.admb}
+\item[\code{...}] One or more model fits with same random effects
+\end{ldescription}
+\end{Arguments}
+\begin{Details}\relax
+Basic anova table for testing the fixed effects (may be extended later)
+\end{Details}
+\begin{Value}
+An anova table
+\end{Value}
+\begin{Author}\relax
+H. Skaug skaug@mi.uib.no, David Fournier otter@otter-rsch.com and Anders Nielsen andersn@hawaii.edu
+\end{Author}
+\begin{Examples}
+\begin{ExampleCode}
+  data(epil2)
+  f1<-glmm.admb(y~Base*trt+Age+Visit,random=~Visit,group="subject",data=epil2,family="nbinom")
+  f2<-glmm.admb(y~Base*trt+Age,random=~Visit,group="subject",data=epil2,family="nbinom")
+  anova(f2,f1)
+\end{ExampleCode}
+\end{Examples}
+

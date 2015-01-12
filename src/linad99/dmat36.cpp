@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-lower_triangular_dmatrix::lower_triangular_dmatrix(int min,int max):
+lower_triangular_dmatrix::lower_triangular_dmatrix(int min,int max) : 
   dmatrix(min,max)
 {
   for (int i=min;i<=max;i++)
@@ -119,7 +119,7 @@ dmatrix fillout(const lower_triangular_dmatrix& M)
       tmp(j,i)=0;
     for (j=i;j<=mmax;j++)
       tmp(j,i)=M(j,i);
-  }
+  }      
   return tmp;
 }
 
@@ -139,6 +139,7 @@ dmatrix fillout_trans(const lower_triangular_dmatrix& M)
       tmp(i,j)=0;
     for (j=i;j<=mmax;j++)
       tmp(i,j)=M(j,i);
+        
   }
   return tmp;
 }

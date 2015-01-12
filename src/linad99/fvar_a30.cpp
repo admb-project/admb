@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@ void dv_xminuseq(void);
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator-=(const prevariable& d)
+ dvar_vector& dvar_vector::operator-= (_CONST prevariable& d)
  {
    {
      for (int i=indexmin();i<=indexmax();i++)
@@ -56,7 +56,7 @@ void dv_xpluseq(void);
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator+=(const prevariable& d)
+ dvar_vector& dvar_vector::operator+= (_CONST prevariable& d)
  {
    {
      for (int i=indexmin();i<=indexmax();i++)
@@ -69,7 +69,8 @@ dvar_vector& dvar_vector::operator+=(const prevariable& d)
    save_dvar_vector_position();  // for this->
    d.save_prevariable_position();
    save_identifier_string("Qxx");
-    gradient_structure::GRAD_STACK1->set_gradient_stack(dv_xpluseq);
+    gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(dv_xpluseq);
    return(*this);
  }
 

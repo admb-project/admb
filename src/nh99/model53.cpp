@@ -2,11 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
-//double ndfboundp( double x, double fmin, double fmax, const double& fpen);
+//double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
 
   void param_init_number::sd_vscale(const dvar_vector& _d,const dvar_vector& x,
     const int& _ii)
@@ -30,7 +30,7 @@
     const dvar_vector& x,const int& _ii)
   {
     if (allocated(*this))
-    {
+    {  
       int& ii=(int&) _ii;
       dvar_vector& d=(dvar_vector&) _d;
       int mmin=indexmin();
@@ -48,7 +48,7 @@
     const dvar_vector& x,const int& _ii)
   {
     if (allocated(*this))
-    {
+    {  
       int& ii=(int&) _ii;
       dvar_vector& d=(dvar_vector&) _d;
       int mmin=rowmin();
@@ -64,7 +64,7 @@
             d(ii)=1.0;
             ii++;
           }
-        }
+	}  
       }
     }
   }
@@ -73,7 +73,7 @@
     const dvar_vector& x,const int& _ii)
   {
     if (allocated(*this))
-    {
+    {  
       int& ii=(int&) _ii;
       dvar_vector& v=(dvar_vector&) _v;
       int mmin=indexmin();
@@ -91,7 +91,7 @@
     const dvar_vector& x,const int& _ii)
   {
     if (allocated(*this))
-    {
+    {  
       int& ii=(int&) _ii;
       dvar_vector& d=(dvar_vector&) _d;
       int mmin=rowmin();
@@ -107,7 +107,7 @@
             d(ii)=dfboundp(x(ii),minb,maxb);
             ii++;
           }
-        }
+	}  
       }
     }
   }

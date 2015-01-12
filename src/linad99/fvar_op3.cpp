@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -30,7 +30,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-int prevariable::operator==(const double v1) const
+    int prevariable::operator ==( CGNU_DOUBLE v1) _CONST
     {
       return(v->x==v1);
     }
@@ -39,7 +39,7 @@ int prevariable::operator==(const double v1) const
  * Description not yet available.
  * \param
  */
-int prevariable::operator<=(const double v1) const
+    int prevariable::operator <=( CGNU_DOUBLE v1) _CONST
     {
       return(v->x<=v1);
     }
@@ -48,7 +48,7 @@ int prevariable::operator<=(const double v1) const
  * Description not yet available.
  * \param
  */
-int prevariable::operator<(const double v1) const
+    int prevariable::operator <( CGNU_DOUBLE v1) _CONST
     {
       return(v->x<v1);
     }
@@ -57,7 +57,7 @@ int prevariable::operator<(const double v1) const
  * Description not yet available.
  * \param
  */
-int prevariable::operator>(const double v1) const
+    int prevariable::operator >( CGNU_DOUBLE v1) _CONST
     {
       return(v->x>v1);
     }
@@ -66,7 +66,7 @@ int prevariable::operator>(const double v1) const
  * Description not yet available.
  * \param
  */
-int prevariable::operator>=(const double v1) const
+    int prevariable::operator >=( CGNU_DOUBLE v1) _CONST
     {
       return(v->x >=v1);
     }
@@ -75,7 +75,7 @@ int prevariable::operator>=(const double v1) const
  * Description not yet available.
  * \param
  */
-int prevariable::operator!=(const double v1) const
+    int prevariable::operator !=( CGNU_DOUBLE v1) _CONST
     {
       return(v->x!=v1);
     }

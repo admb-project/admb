@@ -2,13 +2,16 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 #include "fvar.hpp"
+
+void uistream::sss(void){}
+void uostream::sss(void){}
 
 #define INSERT_IMPLEMENT(TYPE) \
 uostream& uostream::operator<< (TYPE x) \
@@ -18,16 +21,30 @@ uostream& uostream::operator<< (TYPE x) \
 }
 
 #define EXTRACT_IMPLEMENT(TYPE) \
-uistream& uistream::operator>> (const TYPE& x) \
+uistream& uistream::operator>> (BOR_CONST TYPE& x) \
 { \
   read((char*)&x, sizeof(TYPE)); \
   return *this; \
 }
 
+#if defined(__GNUDOS__) || defined(__MSVC32__) || defined (__WAT32__)
+#  define __BINFILE__ ios::binary
+#elif defined(__TURBOC__) 
+#  define __BINFILE__ ios::binary
+#else
+#  define __BINFILE__ 0
+#endif
+
+#if defined(__TURBOC__) || defined(__GNUDOS__) || defined(__MSVC32__) || defined (__WAT32__)
 uostream::uostream(const char* name, int  m, int prot)
-  :ofstream(name, std::ios::binary | std::ios::openmode(m))
-{
-}
+#  if defined(__GNU_NEWER__)
+    :ofstream(name, std::ios::binary | std::_Ios_Openmode(m)) 
+#  elif defined(__MSC_NEWER__) || (__BORLANDC__  > 0x0550) 
+    :ofstream(name, std::ios::binary | m) 
+#  else
+    :ofstream(name, m | __BINFILE__, prot) 
+#  endif
+{ }
 
 /**
  * Description not yet available.
@@ -35,7 +52,18 @@ uostream::uostream(const char* name, int  m, int prot)
  */
 void uistream::open(const char* name, int m, int prot)
 {
-  ifstream::open(name, std::ios::binary | std::ios::openmode(m));
+#if defined(__TURBOC__) && (__BORLANDC__  <= 0x0520) 
+  fstreambase::open(name, m, prot);
+#endif
+#ifdef __ZTC__
+  fstream_common::open(name, m, prot);
+#endif
+#ifdef __NDPX__
+  ifstream::open(name, m, prot);
+#endif
+#ifdef __SUN__
+  ifstream::open(name, m, prot);
+#endif
 }
 
 /**
@@ -44,7 +72,40 @@ void uistream::open(const char* name, int m, int prot)
  */
 void uostream::open(const char* name, int m, int prot)
 {
-  ofstream::open(name, std::ios::binary | std::ios::openmode(m));
+#if defined (__TURBOC__) &&   (__BORLANDC__  <= 0x0520) 
+  fstreambase::open(name, m, prot);
+#endif
+#if (__BORLANDC__  >= 0x0540 && __BORLANDC__  <= 0x0550) 
+  ofstream::open(name, m, prot);
+#else
+#  if defined(linux)
+#    if (__GNUC__  >= 3) 
+       ofstream::open(name, std::_Ios_Openmode(m));
+#    else
+       ofstream::open(name, m);
+#    endif     
+#  else
+     ofstream::open(name, m);
+#  endif
+#endif
+
+#ifdef __MSVC32__
+#  if (__MSVC32__>=8)
+  ofstream::open(name, m);
+#  else
+  //fstreambase::open(name, m, prot);
+  ofstream::open(name, m, prot);
+#  endif
+#endif
+#ifdef __ZTC__
+  fstream_common::open(name, m, prot);
+#endif
+#ifdef __NDPX__
+  ofstream::open(name, m, prot);
+#endif
+#ifdef __SUN__
+  ofstream::open(name, m, prot);
+#endif
 }
 
 /**
@@ -52,9 +113,16 @@ void uostream::open(const char* name, int m, int prot)
  * \param
  */
 uistream::uistream(const char* name, int m, int prot)
-  :ifstream(name, std::ios::binary | std::ios::openmode(m))
-{
-}
+#  if (__BORLANDC__  > 0x0520  && __BORLANDC__  < 0x0560) 
+  :ifstream(name, m | __BINFILE__ , prot) { }
+#  else
+#  if ( defined(__GNU_NEWER__) || defined(__MSC_NEWER__)  || __BORLANDC__  > 0x0550) 
+       :ifstream(name, std::ios::binary ) { }
+#    else
+       :ifstream(name, m | ios::nocreate | __BINFILE__ , prot) { }
+#    endif
+#  endif
+#endif
 
 #ifdef __ZTC__
 uostream::uostream(const char* name, int  m, int prot)
@@ -83,7 +151,7 @@ INSERT_IMPLEMENT(long double)
 
 // implement extraction operators for various types in class uistream
 #ifndef __SUN__
-//#  if (__BORLANDC__  > 0x0520 || defined(__linux__))
+//#  if (__BORLANDC__  > 0x0520 || defined(linux)) 
 EXTRACT_IMPLEMENT(signed char)
 EXTRACT_IMPLEMENT(unsigned char)
 EXTRACT_IMPLEMENT(char)
@@ -95,24 +163,24 @@ EXTRACT_IMPLEMENT(unsigned long)
 EXTRACT_IMPLEMENT(float)
 EXTRACT_IMPLEMENT(double)
  // #  else
- // EXTRACT_IMPLEMENT(const signed char)
- // EXTRACT_IMPLEMENT(const unsigned char)
- // EXTRACT_IMPLEMENT(const char)
- // EXTRACT_IMPLEMENT(const short)
- // EXTRACT_IMPLEMENT(const int)
- // EXTRACT_IMPLEMENT(const long)
- // EXTRACT_IMPLEMENT(const unsigned short)
- // EXTRACT_IMPLEMENT(const unsigned long)
- // EXTRACT_IMPLEMENT(const float)
- // EXTRACT_IMPLEMENT(const double)
+ // EXTRACT_IMPLEMENT(BOR_CONST signed char)
+ // EXTRACT_IMPLEMENT(BOR_CONST unsigned char)
+ // EXTRACT_IMPLEMENT(BOR_CONST char)
+ // EXTRACT_IMPLEMENT(BOR_CONST short)
+ // EXTRACT_IMPLEMENT(BOR_CONST int)
+ // EXTRACT_IMPLEMENT(BOR_CONST long)
+ // EXTRACT_IMPLEMENT(BOR_CONST unsigned short)
+ // EXTRACT_IMPLEMENT(BOR_CONST unsigned long)
+ // EXTRACT_IMPLEMENT(BOR_CONST float)
+ // EXTRACT_IMPLEMENT(BOR_CONST double)
  // #  endif
 #endif
 
 #ifdef __TURBOC__
-#  if (__BORLANDC__  > 0x0520)
+#  if (__BORLANDC__  > 0x0520) 
 EXTRACT_IMPLEMENT(long double)
 #  else
-EXTRACT_IMPLEMENT(const long double)
+EXTRACT_IMPLEMENT(BOR_CONST long double)
 #endif
 #endif
 

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -17,7 +17,7 @@
  * \param max
  * \param mscale
  */
-df1b2variable bounder(const df1b2variable&  x,double min,double max,
+df1b2variable bounder(const df1b2variable&  x,double min,double max, 
     double scale)
 {
   df1b2variable y=x/scale;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -15,13 +15,12 @@
  * Description not yet available.
  * \param
  */
-lmatrix& lmatrix::operator=(const lmatrix& m1)
+ lmatrix& lmatrix::operator= (_CONST lmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
      colmin() != m1.colmin() || colmax() != m1.colmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "imatrix& operator = (const imatrix&)\n";
+     cerr << " Incompatible array bounds in imatrix& operator = (_CONST imatrix&)\n";
      ad_exit(21);
    }
 
@@ -39,13 +38,12 @@ lmatrix& lmatrix::operator=(const lmatrix& m1)
  * Description not yet available.
  * \param
  */
-lmatrix& lmatrix::operator=(const imatrix& m1)
+ lmatrix& lmatrix::operator= (_CONST imatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
      colmin() != m1.colmin() || colmax() != m1.colmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "imatrix& operator=(const imatrix&)\n";
+     cerr << " Incompatible array bounds in imatrix& operator = (_CONST imatrix&)\n";
      ad_exit(21);
    }
 

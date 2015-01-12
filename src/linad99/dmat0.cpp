@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -20,13 +20,13 @@ void dmatrix::allocate(void)  //default constructor
   index_max=0;
   m=NULL;
   shape=NULL;
-}
+} 
 
 /**
  * Description not yet available.
  * \param
  */
-dmatrix::dmatrix()  //default constructor
+dmatrix::dmatrix()  //default constructor 
 {
   allocate();
-}
+} 

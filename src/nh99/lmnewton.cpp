@@ -2,34 +2,23 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California
  */
 #include <admodel.h>
-
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
-#ifdef ISZERO
-  #undef ISZERO
-#endif
-#define ISZERO(d) ((d)==0.0)
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-int lbfgs_(long int *, long int *, double *, double *, double *, long int *,
-  double *, long int *, double *, double *, double *, long int *,long int *,
-  long int *);
-
+  int lbfgs_(long int *, long int *, double *, 
+	    double *, double *, long int *, double *, long int *, 
+	    double *, double *, double *, long int *,long int *,
+            long int *);
 #ifdef __cplusplus
-}
+	}
 #endif
 
-void function_minimizer::limited_memory_quasi_newton(
-  const independent_variables& _x, int m)
+void function_minimizer::limited_memory_quasi_newton
+  (BOR_CONST independent_variables& _x,int m)
 {
   independent_variables& x = (independent_variables&) _x;
   if (m<=0)
@@ -48,14 +37,11 @@ void function_minimizer::limited_memory_quasi_newton(
   {
     noprintx=1;
   }
-
-  // get the number of active
-  int nvar = initial_params::nvarcalc();
-
+  int nvar=initial_params::nvarcalc(); // get the number of active
   double _crit=0;
   int itn=0;
   int ifn=0;
-  int nopt = 0;
+  int nopt;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {
@@ -64,14 +50,14 @@ void function_minimizer::limited_memory_quasi_newton(
       cerr << "Usage -crit option needs number  -- ignored" << endl;
     }
     else
-    {
+    {   
       char * end;
       _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
         _crit=0.0;
-      }
+      } 
     }
   }
 
@@ -83,10 +69,10 @@ void function_minimizer::limited_memory_quasi_newton(
     initial_params::current_phase);
     crit=convergence_criteria(ind);
   }
-  if (!ISZERO(_crit))
+  if (_crit)
   {
     crit = _crit;
-  }
+  } 
   if (!(!maximum_function_evaluations) && !maxfn_option)
   {
     int ind=min(maximum_function_evaluations.indexmax(),
@@ -105,7 +91,7 @@ void function_minimizer::limited_memory_quasi_newton(
   dvector xbest(1,nvar);
   dvector gbest(1,nvar);
   //double t1, t2;
-  long int diagco=0;
+  long int diagco=0.0;
   int iprintx[2];
   //double epsx;
   //m = 35;
@@ -119,7 +105,7 @@ void function_minimizer::limited_memory_quasi_newton(
       cerr << "Usage -iprint option needs integer  -- ignored" << endl;
     }
     else
-    {
+    {   
       int jj=atoi(ad_comm::argv[on1+1]);
       iprint=jj;
     }
@@ -146,49 +132,41 @@ L20:
     xbest=x;
     gbest=g;
   }
-
+  
   gradcalc(nvar,g);
   if(fmod(double(itn),double(iprint)) == 0)
   {
     if (iprint>0)
     {
       if (!itn)
-      {
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
-      }
       else
-      {
         if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
-      }
 
-      if (ad_printf) (*ad_printf)(
-        "%d variables; iteration %ld; function evaluation %ld\n",
+      if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
 
       if (!itn)
       {
-        if (ad_printf) (*ad_printf)(
-          "Function value %12.4le; maximum gradient component mag %12.4le\n",
+        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
           f, max(fabs(g)));
       }
       else
       {
-        if (ad_printf)
-          (*ad_printf)(
-            "Function value %12.4le; maximum gradient component mag %12.4le\n",
-            fbest, max(gbest)
-          );
+
+        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
+          fbest, max(gbest));
       }
       if (!noprintx)
       {
         if (!itn)
           fmmdisp(x, g, nvar, 0,noprintx);
-        else
+	else
           fmmdisp(xbest, gbest, nvar, 0,noprintx);
       }
     }
   }
-
+  
   long int lnvar=nvar;
   long int litn=itn;
   long int liprintx= *iprintx;
@@ -214,11 +192,9 @@ L50:
   {
     if (ad_printf) (*ad_printf)("\nfinal statistics: ");
 
-    if (ad_printf) (*ad_printf)(
-      "%d variables; iteration %ld; function evaluation %ld\n",
+    if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
       nvar, itn, ifn);
-    if (ad_printf) (*ad_printf)(
-      "Function value %12.4le; maximum gradient component mag %12.4le\n",
+    if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
       f, max(g));
     fmmdisp(x, g, nvar, 0,noprintx);
   }
@@ -228,8 +204,8 @@ L50:
 }
 
 void function_minimizer::limited_memory_quasi_newton
-  (double& f, const independent_variables& _x, int m, int noprintx,
-  int maxfn, double crit)
+  (double& f,BOR_CONST independent_variables& _x,int m,int noprintx,
+  int maxfn,double crit)
 {
   independent_variables& x = (independent_variables&) _x;
   if (m<=0)
@@ -239,13 +215,11 @@ void function_minimizer::limited_memory_quasi_newton
   }
   int on;
 
-  // get the number of active
-  int nvar = initial_params::nvarcalc();
-
+  int nvar=initial_params::nvarcalc(); // get the number of active
   double _crit=0;
   int itn=0;
   int ifn=0;
-  int nopt = 0;
+  int nopt;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {
@@ -254,13 +228,14 @@ void function_minimizer::limited_memory_quasi_newton
       cerr << "Usage -crit option needs number  -- ignored" << endl;
     }
     else
-    {
-      char* end;
+    {   
+      char * end;
       _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
-      }
+        _crit=0.0;
+      } 
     }
   }
   gradient_structure::set_YES_DERIVATIVES();
@@ -303,42 +278,36 @@ L20:
     xbest=x;
     gbest=g;
   }
-
+  
   gradcalc(nvar,g);
   if(fmod(double(itn),double(iprint)) == 0)
   {
     if (iprint>0)
     {
       if (!itn)
-      {
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
-      }
       else
-      {
         if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
-      }
 
-      if (ad_printf) (*ad_printf)(
-        "%d variables; iteration %ld; function evaluation %ld\n",
+      if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
 
       if (!itn)
       {
-        if (ad_printf) (*ad_printf)(
-          "Function value %12.4le; maximum gradient component mag %12.4le\n",
+        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
           f, max(g));
       }
       else
       {
-        if (ad_printf) (*ad_printf)(
-          "Function value %12.4le; maximum gradient component mag %12.4le\n",
+
+        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
           fbest, max(gbest));
       }
       if (!noprintx)
       {
         if (!itn)
           fmmdisp(x, g, nvar, 0,noprintx);
-        else
+	else
           fmmdisp(xbest, gbest, nvar, 0,noprintx);
       }
     }
@@ -366,16 +335,12 @@ L20:
 L50:
   if (iprint>0)
   {
-    if (ad_printf)
-    {
-      (*ad_printf)("\nfinal statistics: ");
-      (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-        nvar, itn, ifn);
-      (*ad_printf)(
-        "Function value %12.4le; maximum gradient component mag %12.4le\n",
-        f, max(g)
-      );
-    }
+    if (ad_printf) (*ad_printf)("\nfinal statistics: ");
+
+    if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+      nvar, itn, ifn);
+    if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
+      f, max(g));
     fmmdisp(x, g, nvar, 0,noprintx);
   }
   //gradient_structure::set_NO_DERIVATIVES();
@@ -383,3 +348,4 @@ L50:
   f=fbest;
   objective_function_value::gmax=fabs(max(gbest));
 }
+

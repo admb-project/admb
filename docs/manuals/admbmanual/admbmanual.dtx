@@ -95,8 +95,6 @@
 %
 % We recommend using \LaTeX\ commands in favor of plain \TeX\ commands.  For one thing, it makes your document more ``color-safe.''  For instance, use  |\sbox| rather than |\setbox|, |\mbox| rather than |\hbox|, and |\parbox| or the minipage environment rather than |\vbox|. Use  |\sbox| rather than |\setbox|.  If you're going to define macros, instead of using |\def|, use |\newcommand| or |\renewcommand|.  If you're going to define an environment, use  |\newenvironment| or |\renewenvironment| instead |\def\myenv{...}| and |\def\myenv{...}|.\footnote{Thanks to the \LaTeX3 Project's \textit{\LaTeXe\ for class and package writers}.}   When typesetting mathematics, try to avoid using plain \TeX's |$$...$$| for displays, and \textit{do} avoid using |eqnarray| and |eqnarray*|.\footnote{Thanks to \textit{Short Math Guide for \LaTeX} by Michael Downes.}
 %
-% We also recommend installing the ``cm-super'' package. It is part of most common \LaTeX\ distribution, is invoked automatically, and will improve the appearance of large fonts.
-%
 % 
 % \subsection{Read Some Good Guides}
 %
@@ -348,7 +346,7 @@
 \RequirePackage{xy}
 \RequirePackage{graphics}
 \RequirePackage[usenames]{color}
-\RequirePackage[pagebackref=true,linktocpage=true,colorlinks=true]{hyperref}
+\RequirePackage[letterpaper=true,pagebackref=true,linktocpage=true,colorlinks=true]{hyperref}
 \RequirePackage[all]{hypcap}
 \RequirePackage{chappg} 
 %    \end{macrocode}
@@ -486,8 +484,8 @@
     top=1.125truein,
     outer=.875truein,
     inner=1.125truein,
-    % textheight=8.5truein, % Allow LaTeX to infer this, both to get
-    % textwidth=6.5truein,  % rid of warnings and to allow any page size
+    textheight=8.5truein,
+    textwidth=6.5truein,
     footskip=.875truein
 ]{geometry}
 %    \end{macrocode}
@@ -535,17 +533,16 @@
   \fancyfoot{}
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
-  \fancyfoot[R]{\thepage} % basic one-sided footer, or alternatively:
 %    \end{macrocode}
-%    Define odd pages, left and right.
+% Define odd pages, left and right.
 %    \begin{macrocode}
-  % \fancyfoot[LO]{\small admb-project.org} 
-  % \fancyfoot[RO]{\thepage}
+  \fancyfoot[LO]{\small admb-project.org} 
+  \fancyfoot[RO]{\thepage}
 %    \end{macrocode}
 % Define even pages, left and right.
 %    \begin{macrocode}
-  % \fancyfoot[LE]{\thepage}
-  % \fancyfoot[RE]{\small\emph{\@manualname} User's Manual}
+  \fancyfoot[LE]{\thepage}
+  \fancyfoot[RE]{\small\emph{\@manualname} User's Manual}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -677,7 +674,6 @@
 %  We want a very large font for the main title.
 %    \begin{macrocode}
 \newcommand\largetitlepart[1]{%
-  %{\sffamily\slshape\bfseries
   {\sffamily\slshape
    \fontsize{36}{36}\selectfont
     #1\par
@@ -1163,7 +1159,7 @@
 % \begin{macro}{\cplus}
 % We want the plus signs in ``C++'' to not dominate because of their size.
 %    \begin{macrocode}
-\newcommand{\cplus}{C\raise.5ex\hbox{\relsize{-3}++}}
+\newcommand{\cplus}{C\raise.5ex\hbox{\relsize{-4}++}}
 %    \end{macrocode}
 % \end{macro}
 %

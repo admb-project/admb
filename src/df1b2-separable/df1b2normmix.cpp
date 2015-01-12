@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -12,7 +12,7 @@
 
 static double cc=0.39894228040143267794;
 
-typedef double (*pinit_f)(double y,double a);
+typedef double (*pinit_f)(double y,double a); 
 
 double  nr_generic(double y,pinit_f p_get_initial_x,
   pinit_f pfun,pinit_f pdfun);
@@ -94,7 +94,7 @@ df1b2variable inv_cumd_normal_mixture(const df1b2variable& _yy,double a)
   double * yd=yy.get_u_dot();
   double * zd=z.get_u_dot();
   *z.get_u()=x;
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *yd++;
   }

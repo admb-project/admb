@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -22,7 +22,7 @@
      {
        cerr << " Incompatible array sizes in ivector::operator +=" << endl;
        exit(1);
-     }
+     }    
      for (int i=mmin; i<=mmax; i++)
      {
        (*this)(i)+=j(i);

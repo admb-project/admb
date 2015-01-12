@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -28,13 +28,12 @@ void dvcv_dot(void);
  * Description not yet available.
  * \param
  */
-dvariable operator*(const dvar_vector& v2, const dvector& cv1)
+  dvariable operator * (_CONST dvar_vector& v2,_CONST dvector& cv1)
 {
   if (cv1.indexmin()!=v2.indexmin()||cv1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-    "prevariable operator*(const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+      "prevariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   //dvector cv1;

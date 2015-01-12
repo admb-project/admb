@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -12,7 +12,7 @@
 #include "admb_messages.h"
 
 /* JCA: Need sum(lvector)
-AD_LONG_INT sum(const lmatrix& m)
+AD_LONG_INT sum(_CONST lmatrix& m)
 {
   AD_LONG_INT ssum=0;
   int mmin=m.rowmin();
@@ -29,13 +29,11 @@ AD_LONG_INT sum(const lmatrix& m)
  * Description not yet available.
  * \param
  */
-AD_LONG_INT colsum(const lmatrix& m,int col)
-{
+AD_LONG_INT colsum(_CONST lmatrix& m,int col)
+{ 
   if (col < m.colmin() || col > m.colmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
-    "AD_LONG_INT colsum(const lmatrix& m,int col)",
-    m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "AD_LONG_INT colsum(_CONST lmatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   AD_LONG_INT isum=0;
   int mmin=m.rowmin();
@@ -51,13 +49,11 @@ AD_LONG_INT colsum(const lmatrix& m,int col)
  * Description not yet available.
  * \param
  */
-lvector column(const lmatrix& m,int col)
-{
+lvector column(_CONST lmatrix& m,int col)
+{ 
   if (col < m.colmin() || col > m.colmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
-    "lvector column(const lmatrix& m,int col)",
-    m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "lvector column(_CONST lmatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   int mmin=m.rowmin();
   int mmax=m.rowmax();

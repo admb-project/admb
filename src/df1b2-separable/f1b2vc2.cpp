@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -136,8 +136,8 @@ df1b2matrix square(const df1b2matrix& _M)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     // need special allocate so that = does not cause an assign.
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
@@ -158,8 +158,8 @@ void df1b2matrix::initialize(void)
   int rmax=indexmax();
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=(*this)(i).indexmin();
-    int cmax=(*this)(i).indexmax();
+    int cmin=(*this)(i).indexmin(); 
+    int cmax=(*this)(i).indexmax(); 
     // need special allocate so that = does not cause an assign.
     for (int j=cmin;j<=cmax;j++)
     {
@@ -180,8 +180,8 @@ df1b2matrix mfexp(const df1b2matrix& _M)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     // need special allocate so that = does not cause an assign.
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
@@ -204,8 +204,8 @@ df1b2matrix log(const df1b2matrix& _M)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     // need special allocate so that = does not cause an assign.
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
@@ -228,8 +228,8 @@ df1b2matrix sin(const df1b2matrix& _M)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     // need special allocate so that = does not cause an assign.
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
@@ -252,8 +252,8 @@ df1b2matrix cos(const df1b2matrix& _M)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     // need special allocate so that = does not cause an assign.
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
@@ -271,8 +271,8 @@ df1b2matrix tan(const df1b2matrix& M)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     // need special allocate so that = does not cause an assign.
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)

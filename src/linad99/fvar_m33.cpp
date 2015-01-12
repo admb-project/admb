@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-void dmatrix::allocate(const dvar_matrix& dm)
+void dmatrix::allocate(_CONST dvar_matrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();

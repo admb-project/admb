@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -25,9 +25,9 @@
  * Description not yet available.
  * \param
  */
-void save_double_derivative(const double x, const prevariable_position& _pos)
+void save_double_derivative( CGNU_DOUBLE x, BOR_CONST prevariable_position& _pos)
 {
-  prevariable_position& pos= (prevariable_position&) _pos;
+  prevariable_position& pos= (prevariable_position&) _pos; 
   // adds the derivative value in a double to a prevariables' guts
   pos.xval()+=x;
 }
@@ -47,7 +47,7 @@ prevariable_position restore_prevariable_position(void)
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_position(void) const
+void prevariable::save_prevariable_position(void) _CONST
 {
   double_and_int * tmp=get_v();
   int wsize=sizeof(double_and_int*);
@@ -58,7 +58,7 @@ void prevariable::save_prevariable_position(void) const
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_value(void) const
+void prevariable::save_prevariable_value(void) _CONST
 {
   //double_and_int * tmp=get_v();
   //const unsigned wsize=sizeof(double_and_int*);
@@ -72,7 +72,7 @@ void prevariable::save_prevariable_value(void) const
  * Description not yet available.
  * \param
  */
-void save_double_value(const double x)
+void save_double_value( CGNU_DOUBLE x)
 {
   //const unsigned wsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);
@@ -101,9 +101,9 @@ void save_pointer_value(void *ptr)
  * Description not yet available.
  * \param
  */
-double restore_prevariable_derivative(const prevariable_position& _pos)
+double restore_prevariable_derivative(BOR_CONST prevariable_position& _pos)
 {
-  prevariable_position& pos= (prevariable_position&) _pos;
+  prevariable_position& pos= (prevariable_position&) _pos; 
   double tmpout=pos.xval();
   pos.xval()=0.0;
   return tmpout;
@@ -132,7 +132,7 @@ double restore_prevariable_value(void)
 {
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
-  double tmpout = 0;
+  double tmpout;
   gradient_structure::get_fp()->fread(&tmpout,sizeof(double));
   return tmpout;
 }
@@ -143,7 +143,7 @@ double restore_prevariable_value(void)
  */
 double restore_double_value(void)
 {
-  double tmpout = 0;
+  double tmpout;
   gradient_structure::get_fp()->fread(tmpout);
   return tmpout;
 }
@@ -154,7 +154,7 @@ double restore_double_value(void)
  */
 int restore_int_value(void)
 {
-  int tmpout = 0;
+  int tmpout;
   gradient_structure::get_fp()->fread(tmpout);
   return tmpout;
 }

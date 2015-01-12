@@ -2,22 +2,25 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
-#define __USE_IOSTREAM__
-
 #include "fvar.hpp"
 
-#if defined(__TURBOC__)
+#if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
   #include <strstrea.h>
+  #define __USE_IOSTREAM__
+#endif
+
+#ifdef __GNU__
+  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __SUN__
@@ -25,7 +28,12 @@
   #include <iomanip.h>
   #include <fstream.h>
   #include <limits.h>
+#if !defined(__MSVC32__)
   #include <strstream.h>
+#else
+  #include <strstrea.h>
+#endif
+  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
@@ -35,33 +43,27 @@
   #else
     #include <strstream.h>
   #endif
+  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __NDPX__
   #include <iostream.h>
   #include <sstream.h>
+  #define __USE_IOSTREAM__
 #endif
 
 #include <string.h>
 #include <ctype.h>
 
-#include <sstream>
-using std::istringstream;
+int mystrlen(char * line);
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
-int mystrlen(const char* line);
-
-const int MAX_LINE_LENGTH = 10000;
+const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
 
-int get_non_blank_line(const ifstream& infile,char * & line,
-   const int& line_length);
+ int get_non_blank_line(BOR_CONST ifstream& infile,char * & line,
+   const unsigned int& line_length);
 
 /**
  * Description not yet available.
@@ -72,25 +74,24 @@ int get_non_blank_line(const ifstream& infile,char * & line,
    void ** m;
  };
 
+#if !defined(HUGE) 
+#define HUGE 1.e+100
+#endif
+
 const int MAXROWS = 5050;
 
 /**
  * Description not yet available.
  * \param
  */
-dmatrix::dmatrix(char* s)
+dmatrix::dmatrix(char * s)
 {
+  int i;
   #ifdef DIAG
     myheapcheck("Entering dmatrix( char * s)" );
   #endif
 
-#ifdef OPT_LIB
-  const int n = (int)strlen(s);
-#else
-  const size_t len = strlen(s);
-  assert(len <= INT_MAX);
-  const int n = (int)len;
-#endif
+  int n = strlen(s);
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -99,7 +100,8 @@ dmatrix::dmatrix(char* s)
   ivector k1(1, MAXROWS);
   ivector k2(1, MAXROWS);
 
-  for (int k = 0; k < n; k++)
+  int k;
+  for (k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -151,7 +153,7 @@ dmatrix::dmatrix(char* s)
   {
     ivector ub(1,nrow);
     ivector lb(1,nrow);
-    for (int i=1; i<=nrow; i++)
+    for (i=1; i<=nrow; i++)
     {
        ub[i] = columns[i];
        lb[i] = 1;
@@ -177,11 +179,12 @@ dmatrix::dmatrix(char* s)
 
     m -= rowmin();
 
+    k = 0;
     //char * t = (char*) new[strlen(s)+1];
-    char *t = new char[strlen(s)+1];
-    for (int i=rowmin(); i<=rowmax(); i++)
+    char * t = new char[strlen(s)+1];
+    for (i=rowmin(); i<=rowmax(); i++)
     {
-      for (int k = k1[i]; k <= k2[i]; k++)
+      for (k = k1[i]; k <= k2[i]; k++)
       {
         t[k-k1[i]] = s[k];
       }
@@ -189,8 +192,7 @@ dmatrix::dmatrix(char* s)
 
       m[i].allocate(t);
     }
-    delete[] t;
-    t = 0;
+    delete t;
   }
   else // no rows implies s is a file name
   {
@@ -202,8 +204,8 @@ dmatrix::dmatrix(char* s)
             << "dmatrix::dmatrix(char * filename)\n";
        ad_exit(1);
     }
-    char *line = new char [MAX_LINE_LENGTH+2];
-    char *field = new char [MAX_FIELD_LENGTH+1];
+    char * line=new char [MAX_LINE_LENGTH+2];
+    char * field=new char [MAX_FIELD_LENGTH+1];
 
     int i=0;
     ivector nc(1,MAX_NUMBER_ROWS);
@@ -221,7 +223,7 @@ dmatrix::dmatrix(char* s)
       }
 
       int j=0;              // j counts columns
-      istringstream f(line);
+      istrstream f(line);
       while ( (f >> field).good() )
       {
        //char * err_ptr;
@@ -240,11 +242,10 @@ dmatrix::dmatrix(char* s)
    if (nr == 0)
    {
      cerr << "Error in dmatrix constructor There doesn't seem to be any data\n"
-      << "in file " << filename
-      << " caled in dmatrix::dmatrix(char * filename)\n";
+      << "in file " << filename << " caled in dmatrix::dmatrix(char * filename)\n";
       ad_exit(1);
    }
-
+   
    infile.clear();
    infile.seekg(0,ios::beg);
 
@@ -298,7 +299,7 @@ dmatrix::dmatrix(char* s)
      i++;
 
      int j=0;              // j counts columns
-     istringstream f(line);
+     istrstream f(line);
      while ( (f >> field).good() )
      {
        char * err_ptr;
@@ -306,7 +307,7 @@ dmatrix::dmatrix(char* s)
        j++;
        elem(i,j)=strtod(field,&err_ptr); // increment column counter
 
-       if (isalpha((unsigned char)err_ptr[0]))
+       if (isalpha(err_ptr[0]))
        {
          cerr << "Error decoding field " << filename
                 << " in dmatrix::dmatrix(char * filename) " << "\n";
@@ -318,8 +319,12 @@ dmatrix::dmatrix(char* s)
          << err_ptr[3] << "\n";
          ad_exit(1);
        }
-
-       if (elem(i,j) == HUGE_VAL ||elem(i,j) == -HUGE_VAL)
+       
+       #ifdef __GNU__
+          if (elem(i,j)== HUGE ||elem(i,j)== -HUGE)
+       #else
+         if (elem(i,j)== HUGE_VAL ||elem(i,j)== -HUGE_VAL)
+       #endif
        {
          cerr << "Overflow Error decoding field " << filename
                 << " in dmatrix::dmatrix(char * filename) " << "\n";
@@ -334,11 +339,8 @@ dmatrix::dmatrix(char* s)
      }
      // Need to check error status f
    }
-   delete[] line;
-   line = 0;
-
-   delete[] field;
-   field = 0;
+   delete line;
+   delete field;
   }
 }
 
@@ -346,39 +348,47 @@ dmatrix::dmatrix(char* s)
  * Description not yet available.
  * \param
  */
-int get_non_blank_line(
-  const ifstream& _infile,
-  char* &line,
-  const int& line_length)
-{
-  ifstream& infile = (ifstream&)_infile;
+   int get_non_blank_line(BOR_CONST ifstream& _infile,char * & line,
+     const unsigned int& line_length)
+   {
+     ifstream& infile=(ifstream&) _infile;
+     char ch;
+     int tmp;
+     while ( (tmp=(infile.get(line,line_length)).good()) !=0)
+     {
+       //cout << line << endl;
+       infile >> ch; // get rid of the terminating character
+       if (ch != '\0') infile.putback(ch); // If character is not null 
+                                           // put if back
+       int length=mystrlen(line);
+       if (length == -1)
+       {
+         cerr << "Error computing input line length field reading file\n";
+         ad_exit(1);
+       }
 
-  int peek = infile.peek();
-  while (infile.good() && (iscntrl(peek) || isspace(peek)))
-  {
-    infile.get();
-    peek = infile.peek();
-  }
-
-  infile.get(line, line_length);
-
-  return infile.good() ? mystrlen(line) : 0;
-}
+       for (int i=0;i<length;i++)
+       {
+         if (line[i] != ' ')
+         {
+           return tmp;
+         }
+       }
+     }
+     return tmp;
+   }
 
 /**
  * Description not yet available.
  * \param
  */
-int mystrlen(const char* line)
-{
-  int ii = 0;
-  while(ii < MAX_LINE_LENGTH)
-  {
-    if (line[ii]=='\0')
-    {
-      return ii;
-    }
-    ii++;
-  }
-  return -1;
-}
+   int mystrlen(char * line)
+   {
+     long int ii=0;
+     while(ii<1000000L)
+     {
+       if (line[ii]=='\0') return(ii);
+       ii++;
+     }
+     return(-1);
+   }

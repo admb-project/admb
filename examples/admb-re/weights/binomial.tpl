@@ -21,12 +21,8 @@ PROCEDURE_SECTION
     f1(i,mu, sigma,u(i));
 
 SEPARABLE_FUNCTION void f1(const int& i, const prevariable & mu, const prevariable & sigma, const prevariable& ui)
-  #ifdef PI
-  g -= -0.5*log(2.0*PI) - 0.5*square(ui);
-  #else
-  g -= -0.5*log(2.0*3.14) - 0.5*square(ui);
-  #endif
 
+  g -= -0.5*log(2*3.1415927) - 0.5*square(ui);
 
   dvariable  eta = mu + sigma*ui;
   dvariable  p = mfexp(eta)/(1.0 + mfexp(eta));

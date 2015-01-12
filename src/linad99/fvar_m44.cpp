@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@ void dfmattrans(void);
  * Description not yet available.
  * \param
  */
-dvar_matrix trans(const dvar_matrix& m1)
+dvar_matrix trans(_CONST dvar_matrix& m1)
 {
   int rmin=m1.indexmin();
   int rmax=m1.indexmax();

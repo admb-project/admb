@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -31,7 +31,7 @@ void dfcholeski_decomp(void);
  * Description not yet available.
  * \param
  */
-dvar_matrix choleski_decomp(const dvar_matrix& MM)
+dvar_matrix choleski_decomp(_CONST dvar_matrix& MM)
 {
   // kludge to deal with constantness
   if (MM.colsize() != MM.rowsize())
@@ -289,6 +289,7 @@ void dfcholeski_decomp(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
+  
   dfM.rowshift(rowsave);
   dfM.colshift(colsave);
 

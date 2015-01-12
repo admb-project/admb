@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -12,7 +12,7 @@
 
 static double cc=0.39894228040143267794;   // 1/sqrt(2*pi)
 
-typedef double (*pinit_f)(double y,double a);
+typedef double (*pinit_f)(double y,double a); 
 
 /**
  * Description not yet available.

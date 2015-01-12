@@ -2,7 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
+ */
+/**
+ * \file
+ * Description not yet available.
  */
 #include "fvar.hpp"
 
@@ -10,10 +14,23 @@
  * Description not yet available.
  * \param
  */
-
  dvar_vector::~dvar_vector()
  {
-   deallocate();
+   if (shape)                  //if *ncopies == 0
+   {
+     if (shape->ncopies)                  //if *ncopies == 0
+     {
+       #ifdef DIAG
+         cout << " Decrementing copy flag for dvar_vector with ptr_address\n "
+	   << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
+       #endif
+       (shape->ncopies)--;
+     }
+     else
+     {
+       deallocate();
+     }
+   }
  }
 
 /**
@@ -24,31 +41,30 @@
  {
    if (shape)
    {
-#ifdef DIAG
-     cout << " Deallocating dvar_vector with ptr_address\n  "
-          << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
-#endif
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       va = (double_and_int*) shape->trueptr;
-       * (arr_link **) va = link_ptr;
-       arr_free(va);
-       delete shape;
-     }
+     #ifdef DIAG
+       cout << " Deallocating dvar_vector with ptr_address\n  "
+	 << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
+     #endif
+
+     va = (double_and_int*) shape->trueptr;
+     * (arr_link **) va = link_ptr;
+     arr_free(va);
+     delete shape;
      va=NULL;
      shape=NULL;
    }
- }
+   //else
+   //{
+   //  cerr << "Warning -- trying to delete an unallocated dvar_vector"
+    //	  << endl;
+   //}
+ } 
 
 /**
  * Description not yet available.
  * \param
  */
-dvar_vector::dvar_vector(const dvar_vector& t)
+ dvar_vector::dvar_vector(_CONST dvar_vector& t)
  {
    index_min=t.index_min;
    index_max=t.index_max;
@@ -57,7 +73,7 @@ dvar_vector::dvar_vector(const dvar_vector& t)
    if (shape) (shape->ncopies)++;
    va = t.va;
    #ifdef DIAG
-     cout << " Making copy for dvar_vector with ptr_address\n  "
+     cout << " Making copy for dvar_vector with ptr_address\n  " 
            << &va << "  pointing at  " << (va+indexmin()) << "\n";
    #endif
  }
@@ -75,7 +91,7 @@ dvar_vector::dvar_vector(const dvar_vector& t)
    if (shape) (shape->ncopies)++;
    va = t.va;
    #ifdef DIAG
-     cout << " Making copy for dvar_vector with ptr_address\n  "
+     cout << " Making copy for dvar_vector with ptr_address\n  " 
            << &va << "  pointing at  " << (va+indexmin()) << "\n";
    #endif
  }
@@ -84,10 +100,10 @@ dvar_vector::dvar_vector(const dvar_vector& t)
  * Description not yet available.
  * \param
  */
-dvar_vector::dvar_vector(const predvar_vector& pdv)
+ dvar_vector::dvar_vector(_CONST predvar_vector& pdv)
  {
-#ifndef OPT_LIB
-   if (pdv.ub<pdv.lb)
+ #ifdef SAFE_ALL
+   if (pdv.ub<pdv.lb) 
    {
      cerr << "lower index greater than upper index in dvar_vector::"
        " dvar-vector(const predvar_vector&) " << endl;
@@ -99,14 +115,14 @@ dvar_vector::dvar_vector(const predvar_vector& pdv)
        " operator(int lb,int ub) " << endl;
      ad_exit (1);
    }
-
+  
    if ((pdv.ub<pdv.p->indexmin()) || (pdv.ub>pdv.p->indexmax()))
    {
      cerr << " upper index out of bounds in dvar_vector::"
        " operator(int lb,int ub) " << endl;
      ad_exit (1);
    }
-#endif
+  #endif
    index_min=pdv.lb;
    index_max=pdv.ub;
    shape=pdv.p->shape;
@@ -114,16 +130,16 @@ dvar_vector::dvar_vector(const predvar_vector& pdv)
    (shape->ncopies)++;
    va = pdv.p->va;
    #ifdef DIAG
-     cout << " Making copy for dvar_vector with ptr_address\n  "
+     cout << " Making copy for dvar_vector with ptr_address\n  " 
            << &va << "  pointing at  " << (va+indexmin()) << "\n";
    #endif
  }
 
 /*
-dvar_vector::dvar_vector(const dvar_vector& t, int lb, int ub)
+ dvar_vector::dvar_vector(_CONST dvar_vector& t,int lb,int ub)
  {
-#ifndef OPT_LIB
-   if (ub<lb)
+ #ifdef SAFE_ALL
+   if (ub<lb) 
    {
      cerr << "lower index greater than upper index in dvar_vector::"
        " operator(int lb,int ub) " << endl;
@@ -135,14 +151,15 @@ dvar_vector::dvar_vector(const dvar_vector& t, int lb, int ub)
        " operator(int lb,int ub) " << endl;
      ad_exit (1);
    }
-
+  
    if ((ub<t.indexmin()) || (ub>t.indexmax()))
    {
      cerr << " upper index out of bounds in dvar_vector::"
        " operator(int lb,int ub) " << endl;
      ad_exit (1);
    }
-#endif
+  #endif
+  
 
    index_min=lb;
    index_max=ub;
@@ -151,9 +168,8 @@ dvar_vector::dvar_vector(const dvar_vector& t, int lb, int ub)
    (shape->ncopies)++;
    va = t.va;
    #ifdef DIAG
-     cout << " Making copy for dvar_vector with ptr_address\n  "
+     cout << " Making copy for dvar_vector with ptr_address\n  " 
            << &va << "  pointing at  " << (va+indexmin()) << "\n";
    #endif
  }
 */
-

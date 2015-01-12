@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -85,19 +85,19 @@ dvar_vector lower_triangular_solve(const dvar_matrix& a, const dvar_vector & b)
   int mmax=b.indexmax();
   dvar_vector x(mmin,mmax);
 
-  for (i=mmin;i<=mmax;i++)
+  for (i=mmin;i<=mmax;i++) 
   {
     sum=b[i];
-    for (k=i-1;k>=mmin;k--)
+    for (k=i-1;k>=mmin;k--) 
     {
       sum -= a[i][k]*x[k];
     }
     x[i]=sum/a[i][i];
   }
   return x;
-  for (i=mmax;i>=mmin;i--)
+  for (i=mmax;i>=mmin;i--) 
   {
-    for (sum=x[i],k=i+1;k<=mmax;k++)
+    for (sum=x[i],k=i+1;k<=mmax;k++) 
     {
       sum -= a[k][i]*x[k];
     }

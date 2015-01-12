@@ -2,14 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable
+// constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
 
@@ -29,14 +29,13 @@ void dvdv_elem_div(void);
  * Description not yet available.
  * \param
  */
-dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
+dvar_vector elem_div(_CONST dvar_vector& v1,_CONST dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-    "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+      "dvar_vector elem_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -60,7 +59,8 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
+  gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(dvdv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -104,14 +104,13 @@ void dvcv_elem_div(void);
  * Description not yet available.
  * \param
  */
-dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
+dvar_vector elem_div(_CONST dvar_vector& v1,_CONST dvector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-    "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+      "dvar_vector elem_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -133,7 +132,8 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
   save_identifier_string("vvvv");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
+  gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(dvcv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -170,14 +170,13 @@ void cvdv_elem_div(void);
  * Description not yet available.
  * \param
  */
-dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
+dvar_vector elem_div(_CONST dvector& v1,_CONST dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-    "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+      "dvar_vector elem_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -199,7 +198,8 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
+  gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(cvdv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }

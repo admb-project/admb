@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -11,12 +11,8 @@
 #include <fvar.hpp>
 
 /**
- * Beta density function
- * \param a shape parameter
- * \param b shape parameter
- * 
- * Note that the mean of the distribution is given by 
- * mu = a/(a+b), and the variance is ab/((a+b)^2 (a+b+1))
+ * Description not yet available.
+ * \param
  */
 dvariable beta(const prevariable& a,const prevariable& b )
 {

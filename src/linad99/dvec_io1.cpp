@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -10,7 +10,7 @@
  */
 #include "fvar.hpp"
 
-#if defined(__TURBOC__)
+#if defined(__TURBOC__) && !defined(__linux__)
    #include <iostream.h>
    #include <strstrea.h>
 #endif
@@ -21,17 +21,17 @@
 
 #include <string.h>
 #include <ctype.h>
-
-#include <sstream>
-using std::istringstream;
-
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
 
-int get_non_blank_line(const ifstream& infile, char* & line,
-   const int& line_length);
+#if !defined(HUGE) 
+#define HUGE 1.e+100
+#endif
+
+ int get_non_blank_line(BOR_CONST ifstream& infile,char * & line,
+   const unsigned int& line_length);
 
 /**
  * Description not yet available.
@@ -55,8 +55,8 @@ int get_non_blank_line(const ifstream& infile, char* & line,
       << "dmatrix::dmatrix(char * filename)\n";
       ad_exit(1);
    }
-   char *line = new char[MAX_LINE_LENGTH + 2];
-   char *field = new char[MAX_FIELD_LENGTH + 1];
+   char * line=new char [MAX_LINE_LENGTH+2];
+   char * field=new char [MAX_FIELD_LENGTH+1];
 
    int i=0;
    ivector nc(1,MAX_NUMBER_ROWS);
@@ -75,7 +75,7 @@ int get_non_blank_line(const ifstream& infile, char* & line,
      int j=0;              // j counts columns
 
      #ifndef __ZTC__
-       istringstream f(line);
+       istrstream f(line);
        while ( (f >> field).good() )
      #else
        while( sscanf(line,"%s",field)) // reads a field from line into field
@@ -95,7 +95,7 @@ int get_non_blank_line(const ifstream& infile, char* & line,
      // Need to check error status f
      if (j < column)
      {
-       cerr << "Error -- not enough columns in line " << i
+       cerr << "Error -- not enough columns in line " << i  
         << "\n in dvector::dvector(char * filename, const int& column) "
            " in file:  "
         << filename << "\n";
@@ -106,8 +106,7 @@ int get_non_blank_line(const ifstream& infile, char* & line,
    if (nr == 0)
    {
      cerr << "Error in dvector constructor There doesn't seem to be any data\n"
-      << "in file:  " << filename
-      << " called in dvector::dvector(char * filename,const const& column)\n";
+      << "in file:  " << filename << " called in dvector::dvector(char * filename,BOR_CONST const& column)\n";
       ad_exit(1);
    }
    infile.clear();
@@ -129,27 +128,24 @@ int get_non_blank_line(const ifstream& infile, char* & line,
    }
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
-          <<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
 
-/* Deprecated empty function
    if (sizeof(int)==sizeof(char*))
    {
-#if defined(__x86_64)
-     if ((intptr_t)v < indexmin() * sizeof(double))
+#if defined(__SUNPRO_CC) && defined(__x86_64)
+     if ( (long)v < indexmin() * sizeof(double) )
 #else
      if ( (unsigned) v < indexmin() * sizeof(double) )
 #endif
      {
-      //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
-      //cerr << "pointer = "<< (unsigned int) v <<
-      //" indexmin() = "<<indexmin()<<"\n";
+        //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
+        //cerr << "pointer = "<< (unsigned int) v <<
+                         //" indexmin() = "<<indexmin()<<"\n";
         denormalize_ptr(&v, indexmin() * sizeof(double));
      }
-   }
-*/
+   }  
 
    v -= indexmin();
 
@@ -163,7 +159,7 @@ int get_non_blank_line(const ifstream& infile, char* & line,
    i++;
    int j=0;              // j counts columns
    #ifndef __ZTC__
-     istringstream f(line);
+     istrstream f(line);
      while ( (f >> field).good() )
    #else
      while( sscanf(line,"%s",field)) // reads a field from line into field
@@ -179,7 +175,7 @@ int get_non_blank_line(const ifstream& infile, char* & line,
      {
        elem(i)=strtod(field,&err_ptr); // increment column counter
 
-       if (isalpha((unsigned char)err_ptr[0]))
+       if (isalpha(err_ptr[0]))
        {
          cerr << "Error decoding field " << filename
           << " in dmatrix::dmatrix(char * filename) " << "\n";
@@ -192,7 +188,11 @@ int get_non_blank_line(const ifstream& infile, char* & line,
          ad_exit(1);
        }
 
-       if (elem(i) == HUGE_VAL || elem(i) == -HUGE_VAL)
+     #ifdef __GNU__
+       if (elem(i)== HUGE ||elem(i)== -HUGE)
+     #else
+       if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
+     #endif
        {
          cerr << "Overflow Error decoding field " << filename
                 << " in dvector::dvector(char * filename) " << "\n";
@@ -204,8 +204,7 @@ int get_non_blank_line(const ifstream& infile, char* & line,
    // Need to check error status f
  }
 
- delete[] line;
- line = 0;
- delete[] field;
- field = 0;
+ delete line;
+ delete field;
+
 }

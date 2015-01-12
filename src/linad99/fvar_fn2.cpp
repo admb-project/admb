@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -26,7 +26,10 @@ dvariable avg( const prevariable& x,const prevariable& y)
   return 0.5*(x+y);
 }
 
-/*
+/**
+ * Description not yet available.
+ * \param
+ */
   prevariable& daves_kludge1(const prevariable& v1)
   {
     if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -52,8 +55,8 @@ dvariable avg( const prevariable& x,const prevariable& y)
       tmp2=tmp*tmp;
       tmp3=tmp*tmp*tmp;
       fval=1.-24*tmp3+64*tmp3*tmp-48*tmp3*tmp2;
-    }
-
+    } 
+  
     if (cx-i <= 0.5)
     {
       //fval= 24*tmp3-64*tmp3*tmp+48*tmp3*tmp2;
@@ -77,11 +80,10 @@ dvariable avg( const prevariable& x,const prevariable& y)
       dftmp+=2.*tmp*dftmp2;
       //double tmp=1-(cx-i);
       dftmp=-dftmp;
-    }
+    } 
 
     gradient_structure::RETURN_PTR->v->x=fval;
     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
       &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),dftmp);
    return(*gradient_structure::RETURN_PTR);
  }
-*/

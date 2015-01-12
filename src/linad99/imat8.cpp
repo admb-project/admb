@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-ivector colsum(const imatrix &v)
+  ivector colsum(_CONST imatrix&v)
   {
     int cmin=v.colmin();
     int cmax=v.colmax();
@@ -37,7 +37,7 @@ ivector colsum(const imatrix &v)
  * Description not yet available.
  * \param
  */
-ivector rowsum(const imatrix &v)
+  ivector rowsum(_CONST imatrix&v)
   {
     int rmin=v.rowmin();
     int rmax=v.rowmax();

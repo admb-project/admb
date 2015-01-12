@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -11,19 +11,19 @@
 #include "fvar.hpp"
 
 /**
- * Create a Identity matrix.
+ * Description not yet available.
  * \param
  */
-dmatrix identity_matrix(int min,int max)
-{
-  dmatrix tmp(min,max,min,max);
-  #ifndef SAFE_INITIALIZE
-  tmp.initialize();
-  #endif
+ dmatrix identity_matrix(int min,int max)
+ {
+   dmatrix tmp(min,max,min,max);
+   #ifndef SAFE_INITIALIZE
+     tmp.initialize();
+   #endif
 
-  for (int i=min; i<=max; i++)
-  {
-    tmp.elem(i,i)=1;
-  }
-  return(tmp);
-}
+   for (int i=min; i<=max; i++)
+   {
+     tmp.elem(i,i)=1;
+   }
+   return(tmp);
+ }      

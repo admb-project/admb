@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -21,7 +21,7 @@ dvector dvector::operator - (void)
   dvector tmp(mmin,mmax);
   for (int i=mmin;i<=mmax;i++)
   {
-    tmp(i)=-elem(i);
+    tmp(i)=-elem(i);  
   }
   return tmp;
 }

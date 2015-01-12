@@ -2,29 +2,29 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- *
+ * Copyright (c) 2008-2011 Regents of the University of California 
+ * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- *
+ * 
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- *
+ * 
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -44,9 +44,7 @@
 #include <fvar.hpp>
 
 #define ADMB_ERROR(x) admb::messages::error(x);
-#define ADMB_ARRAY_BOUNDS_ERROR(message,function,lower_bounds,upper_bounds,\
-index) admb::messages::array_bounds_error(message,function,lower_bounds,\
-upper_bounds,index);
+#define ADMB_ARRAY_BOUNDS_ERROR(message,function,lower_bounds,upper_bounds,index) admb::messages::array_bounds_error(message,function,lower_bounds,upper_bounds,index);
 
 namespace admb
 {
@@ -75,7 +73,7 @@ public:
   /**
    *
    */
-  static
+  static 
   void error(const adstring& message)
   {
     error(message, 1);
@@ -83,7 +81,7 @@ public:
   /**
    *
    */
-  static
+  static 
   void error(const int error_code)
   {
     adstring message  = "Error: ";
@@ -93,8 +91,7 @@ public:
       message += "allocating memory in dmatrix contructor";
       break;
     case 2:
-      message +=
-        "attempting to access non-allocated ivector in ivector::operator()";
+      message += "attempting to access non-allocated ivector in ivector::operator()";
       break;
     default:
       break;
@@ -104,9 +101,8 @@ public:
   /**
    *
    */
-  static
-  void error(const adstring& message, const adstring& function_name,
-    const int error_code)
+  static 
+  void error(const adstring& message, const adstring& function_name, const int error_code)
   {
     adstring m = message;
     if (function_name.size() > 0)
@@ -118,10 +114,10 @@ public:
   /**
    *
    */
-  static
+  static 
   void array_bounds_error(const adstring& message,
                           const adstring& function,
-                          const int lower_bounds,
+                          const int lower_bounds, 
                           const int upper_bounds,
                           const int index)
   {
@@ -149,13 +145,13 @@ public:
                  + ", "
                  + str(upper_bounds)
                  + "] in \"" + function +  "\".\n"
-                 + message + "\n";
+                 + message + "\n"; 
     error(m, ARRAY_BOUNDS_ERROR);
   }
   /**
    *
    */
-  static
+  static 
   void error(const adstring& message, const int error_code)
   {
     cerr << message << '\n';

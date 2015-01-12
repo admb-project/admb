@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvector operator&(const dvector& t1, const dvector& t2)
+  dvector operator & (_CONST dvector& t1,_CONST dvector& t2)
   {
     int size =t1.size()+t2.size();
     dvector tmp(1,size);
@@ -39,7 +39,7 @@ dvector operator&(const dvector& t1, const dvector& t2)
  * Description not yet available.
  * \param
  */
-dvar_vector operator&(const dvar_vector& t1, const dvar_vector& t2)
+  dvar_vector operator & (_CONST dvar_vector& t1,_CONST dvar_vector& t2)
   {
     int size =t1.size()+t2.size();
     dvar_vector tmp(1,size);

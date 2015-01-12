@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -37,7 +37,7 @@
  * Description not yet available.
  * \param
  */
-uostream& operator<<(const uostream& _ostr, const d3_array& z)
+uostream& operator<<(BOR_CONST uostream& _ostr,_CONST d3_array& z)
 {
   uostream & ostr = (uostream&) _ostr;
   for (int i=z.slicemin();i<=z.slicemax();i++)
@@ -51,7 +51,7 @@ uostream& operator<<(const uostream& _ostr, const d3_array& z)
  * Description not yet available.
  * \param
  */
-uistream& operator>>(const uistream& _istr, const d3_array& z)
+uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST d3_array& z)
 {
   uistream & istr = (uistream&) _istr;
   for (int i=z.slicemin();i<=z.slicemax();i++)
@@ -65,7 +65,7 @@ uistream& operator>>(const uistream& _istr, const d3_array& z)
  * Description not yet available.
  * \param
  */
-uostream& operator<<(const uostream& _ostr, const dvar3_array& z)
+uostream& operator<<(BOR_CONST uostream& _ostr,_CONST dvar3_array& z)
 {
   uostream & ostr = (uostream&) _ostr;
   for (int i=z.slicemin();i<=z.slicemax();i++)
@@ -79,7 +79,7 @@ uostream& operator<<(const uostream& _ostr, const dvar3_array& z)
  * Description not yet available.
  * \param
  */
-uistream& operator>>(const uistream& _istr, const dvar3_array& z)
+uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST dvar3_array& z)
 {
   uistream & istr = (uistream&) _istr;
   for (int i=z.slicemin();i<=z.slicemax();i++)

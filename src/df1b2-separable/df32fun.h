@@ -2,29 +2,29 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- *
+ * Copyright (c) 2008-2011 Regents of the University of California
+ * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- *
+ * 
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- *
+ * 
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -211,8 +211,7 @@ class df3_two_matrix
       return (df3_two_variable &) (*(v + i)) (j);
    }
    void initialize(void);
-   //df3_two_variable& operator () (int i,int j) const
-   //  { return *((v+i)->(v+j)); }
+   //df3_two_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
    void deallocate(void);
    ~df3_two_matrix();
     df3_two_matrix(const df3_two_matrix & m2);
@@ -254,16 +253,18 @@ df3_two_variable log(const df3_two_variable & x);
 df3_two_variable square(const df3_two_variable & x);
 df3_two_variable cube(const df3_two_variable & x);
 df3_two_variable pow(const df3_two_variable & x,
-                     const df3_two_variable & y);
+		     const df3_two_variable & y);
+
 df3_two_variable sqrt(const df3_two_variable & x);
 df3_two_variable exp(const df3_two_variable & x);
 df3_two_variable inv(const df3_two_variable & x);
 df3_two_variable operator *(const df3_two_variable & x,
-                            const df3_two_variable & y);
+			    const df3_two_variable & y);
 df3_two_variable operator *(double x, const df3_two_variable & y);
 df3_two_variable operator *(const df3_two_variable & x, double y);
 df3_two_variable operator /(const df3_two_variable & x,
-                            const df3_two_variable & y);
+			    const df3_two_variable & y);
+
 df3_two_variable operator /(const double x, const df3_two_variable & y);
 
 df3_two_variable operator /(const df3_two_variable & x, const double y);
@@ -273,11 +274,18 @@ df3_two_variable operator +(const double x, const df3_two_variable & y);
 df3_two_variable operator +(const df3_two_variable & x, const double y);
 
 df3_two_variable operator +(const df3_two_variable & x,
-                            const df3_two_variable & y);
+			    const df3_two_variable & y);
 df3_two_variable operator -(double x, const df3_two_variable & y);
 df3_two_variable operator -(const df3_two_variable & x, double y);
+
 df3_two_variable operator -(const df3_two_variable & x,
-                            const df3_two_variable & y);
+			    const df3_two_variable & y);
+df3_two_variable operator -(const df3_two_variable & x,
+			    const df3_two_variable & y);
+df3_two_variable operator /(const df3_two_variable & x,
+			    const df3_two_variable & y);
+df3_two_variable operator *(const df3_two_variable & x,
+			    const df3_two_variable & y);
 int operator <(const df3_two_variable & x, double n);
 int operator >(const df3_two_variable & x, double n);
 int operator >=(const df3_two_variable & x, double n);
@@ -291,7 +299,8 @@ df3_two_variable operator -(const df3_two_variable & v);
 df3_two_matrix choleski_decomp(const df3_two_matrix & MM);
 
 df3_two_variable cumd_gamma(const df3_two_variable & x,
-                            const df3_two_variable & a);
+			    const df3_two_variable & a);
+
 
 df3_two_variable gammln(const df3_two_variable & xx);
-#endif
+#endif				// __DF32FUN__

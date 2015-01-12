@@ -2,12 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
+#define HOME_VERSION
 #include "df1b2fun.h"
   df3_two_variable cumd_exponential(const df3_two_variable& x,
     const df3_two_variable& a);
@@ -56,7 +57,7 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
     //init_df3_two_variable aa(2.0);
     *xx.get_u_x()=1.0;
     *aa.get_u_y()=1.0;
-
+    
     df3_two_variable z=cumd_gamma(xx,aa);
 
     // now use the derivatives of z to get the
@@ -65,14 +66,14 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
     //double ca=value(a);
 
     double F_x=1.0/(*z.get_u_x());
-
+   
     double F_y=-F_x* *z.get_u_y();
     double F_xx=-F_x* *z.get_u_xx()/square(*z.get_u_x());
 
     double F_xy=-(F_xx * *z.get_u_x() * *z.get_u_y() + F_x * *z.get_u_xy())/
                 *z.get_u_x();
 
-    double F_yy=-(F_xx * square(*z.get_u_y())
+    double F_yy=-(F_xx * square(*z.get_u_y()) 
                 +2.0* F_xy* *z.get_u_y()
                 +F_x * *z.get_u_yy());
 
@@ -83,14 +84,14 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
     double F_xxy=-(F_xxx * square(*z.get_u_x())* *z.get_u_y()
                  + 2.0*F_xx* *z.get_u_x()* *z.get_u_xy()
                  + F_xx* *z.get_u_xx() * *z.get_u_y()
-                 + F_xy * *z.get_u_xx()
+                 + F_xy * *z.get_u_xx() 
                  + F_x * *z.get_u_xxy())/
                  square(*z.get_u_x());
 
     double F_xyy=-(F_xxx* *z.get_u_x() *square(*z.get_u_y())
                  +2.0* F_xx * *z.get_u_xy() * *z.get_u_y()
                  +2.0*F_xxy * *z.get_u_x() * *z.get_u_y()
-                 + 2.0*F_xy * *z.get_u_xy()
+                 + 2.0*F_xy * *z.get_u_xy() 
                  + F_xx * *z.get_u_x() * *z.get_u_yy()
                  + F_x * *z.get_u_xyy())/
                  *z.get_u_x();
@@ -107,13 +108,13 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
      double * zd=zz.get_u_dot();
      *zz.get_u()=x;
 
-     for (unsigned int i=0;i<df1b2variable::nvar;i++)
+     for (int i=0;i<df1b2variable::nvar;i++)
      {
        *zd++ = F_x * *xd++ + F_y * *yd++;
      }
      if (!df1b2_gradlist::no_derivatives)
      {
-       f1b2gradlist->write_pass1(&_y,&_a,&zz,
+       f1b2gradlist->write_pass1(&_y,&_a,&zz, 
         F_x,F_y,
         F_xx,F_xy,F_yy,
         F_xxx,F_xxy,F_xyy,F_yyy);

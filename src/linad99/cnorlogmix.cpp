@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -12,7 +12,7 @@
 
 static double cc=0.39894228040143267794;
 
-typedef double (*pinit_f)(double y,double a);
+typedef double (*pinit_f)(double y,double a); 
 
 /**
  * Description not yet available.
@@ -117,6 +117,7 @@ main()
  */
 double robust_normal_logistic_mixture_deviate(double x,double spread)
 {
+
   double y=cumd_norm(x);
   y = 0.99999999*y + 0.000000005; // To gain numerical stability
   double z = inv_cumd_normal_logistic_mixture(y,spread);

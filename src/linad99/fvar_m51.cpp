@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -34,7 +34,7 @@ void df_ln_det_choleski(void);
  * Description not yet available.
  * \param
  */
-dvariable ln_det_choleski(const dvar_matrix& MM)
+dvariable ln_det_choleski(_CONST dvar_matrix& MM)
 {
   // kludge to deal with constantness
   dmatrix M=value(MM);
@@ -63,6 +63,8 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
     L.initialize();
 #endif
 
+  int i,j,k;
+  double tmp;
     if (M(1,1)<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
@@ -70,25 +72,24 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
       ad_exit(1);
     }
   L(1,1)=sqrt(M(1,1));
-  for (int i=2;i<=n;i++)
+  for (i=2;i<=n;i++)
   {
     L(i,1)=M(i,1)/L(1,1);
   }
 
-  double tmp;
-  for (int i=2;i<=n;i++)
+  for (i=2;i<=n;i++)
   {
-    for (int j=2;j<=i-1;j++)
+    for (j=2;j<=i-1;j++)
     {
       tmp=M(i,j);
-      for (int k=1;k<=j-1;k++)
+      for (k=1;k<=j-1;k++)
       {
         tmp-=L(i,k)*L(j,k);
       }
       L(i,j)=tmp/L(j,j);
     }
     tmp=M(i,i);
-    for (int k=1;k<=i-1;k++)
+    for (k=1;k<=i-1;k++)
     {
       tmp-=L(i,k)*L(i,k);
     }
@@ -103,7 +104,7 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
   //L.rowshift(rowsave);
   //L.colshift(colsave);
   double log_det1=0.0;
-  for (int i=1;i<=n;i++)
+  for (i=1;i<=k;i++)
   {
     log_det1+=log(L(i,i));
   }
@@ -174,6 +175,7 @@ void df_ln_det_choleski(void)
     L.initialize();
 #endif
 
+  int i,j,k;
   if (M(1,1)<=0)
   {
     cerr << "Error matrix not positive definite in choleski_decomp"
@@ -181,24 +183,24 @@ void df_ln_det_choleski(void)
     ad_exit(1);
   }
   L(1,1)=sqrt(M(1,1));
-  for (int i=2;i<=n;i++)
+  for (i=2;i<=n;i++)
   {
     L(i,1)=M(i,1)/L(1,1);
   }
 
-  for (int i=2;i<=n;i++)
+  for (i=2;i<=n;i++)
   {
-    for (int j=2;j<=i-1;j++)
+    for (j=2;j<=i-1;j++)
     {
       tmp1(i,j)=M(i,j);
-      for (int k=1;k<=j-1;k++)
+      for (k=1;k<=j-1;k++)
       {
         tmp1(i,j)-=L(i,k)*L(j,k);
       }
       L(i,j)=tmp1(i,j)/L(j,j);
     }
     tmp(i)=M(i,i);
-    for (int k=1;k<=i-1;k++)
+    for (k=1;k<=i-1;k++)
     {
       tmp(i)-=L(i,k)*L(i,k);
     }
@@ -211,7 +213,7 @@ void df_ln_det_choleski(void)
     L(i,i)=sqrt(tmp(i));
   }
   double log_det1=0.0;
-  for (int i=1;i<=n;i++)
+  for (i=1;i<=n;i++)
   {
     log_det1+=log(L(i,i));
   }
@@ -223,18 +225,18 @@ void df_ln_det_choleski(void)
 
   //double log_det=2.0*log_det1;
   double dflog_det1=2.0*dflog_det;
-  for (int i=1;i<=n;i++)
+  for (i=1;i<=n;i++)
   {
     //log_det1+=log(L(i,i));
     dfL(i,i)=dflog_det1/L(i,i);
   }
 
-  for (int i=n;i>=2;i--)
+  for (i=n;i>=2;i--)
   {
     //L(i,i)=sqrt(tmp(i));
     dftmp(i)+=dfL(i,i)/(2.0*L(i,i));
     dfL(i,i)=0.0;
-    for (int k=i-1;k>=1;k--)
+    for (k=i-1;k>=1;k--)
     {
       //tmp(i)-=L(i,k)*L(i,k);
       dfL(i,k)-=2.*dftmp(i)*L(i,k);
@@ -242,14 +244,14 @@ void df_ln_det_choleski(void)
     //tmp(i)=M(i,i);
     dfM(i,i)+=dftmp(i);
     dftmp(i)=0.0;
-    for (int j=i-1;j>=2;j--)
+    for (j=i-1;j>=2;j--)
     {
       //L(i,j)=tmp1(i,j)/L(j,j);
       double linv=1./L(j,j);
       dftmp1(i,j)+=dfL(i,j)*linv;
       dfL(j,j)-=dfL(i,j)*tmp1(i,j)*linv*linv;
       dfL(i,j)=0.0;
-      for (int k=j-1;k>=1;k--)
+      for (k=j-1;k>=1;k--)
       {
         //tmp(i,j)-=L(i,k)*L(j,k);
         dfL(i,k)-=dftmp1(i,j)*L(j,k);
@@ -261,7 +263,7 @@ void df_ln_det_choleski(void)
     }
   }
   double linv=1./L(1,1);
-  for (int i=n;i>=2;i--)
+  for (i=n;i>=2;i--)
   {
     //L(i,1)=M(i,1)/L(1,1);
     dfM(i,1)+=dfL(i,1)*linv;
@@ -275,7 +277,7 @@ void df_ln_det_choleski(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
-
+  
   dfM.rowshift(rowsave);
   dfM.colshift(colsave);
 
@@ -292,7 +294,7 @@ static dvariable error_condition(int &onerror)
   dvariable v=0.0;
   return v;
 }
-
+  
 /**
  * Description not yet available.
  * \param
@@ -327,30 +329,31 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
     L.initialize();
 #endif
 
+  int i,j,k;
+  double tmp;
     if (M(1,1)<=0)
     {
       return error_condition(onerror);
     }
   L(1,1)=sqrt(M(1,1));
-  for (int i=2;i<=n;i++)
+  for (i=2;i<=n;i++)
   {
     L(i,1)=M(i,1)/L(1,1);
   }
 
-  double tmp;
-  for (int i=2;i<=n;i++)
+  for (i=2;i<=n;i++)
   {
-    for (int j=2;j<=i-1;j++)
+    for (j=2;j<=i-1;j++)
     {
       tmp=M(i,j);
-      for (int k=1;k<=j-1;k++)
+      for (k=1;k<=j-1;k++)
       {
         tmp-=L(i,k)*L(j,k);
       }
       L(i,j)=tmp/L(j,j);
     }
     tmp=M(i,i);
-    for (int k=1;k<=i-1;k++)
+    for (k=1;k<=i-1;k++)
     {
       tmp-=L(i,k)*L(i,k);
     }
@@ -363,7 +366,7 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
   //L.rowshift(rowsave);
   //L.colshift(colsave);
   double log_det1=0.0;
-  for (int i=1;i<=n;i++)
+  for (i=1;i<=k;i++)
   {
     log_det1+=log(L(i,i));
   }
@@ -375,6 +378,8 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
   }
   cout << "min in choleski = " << minL << endl;
  */
+
+
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
   save_identifier_string("ps");

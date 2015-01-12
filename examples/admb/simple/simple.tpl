@@ -45,4 +45,3 @@ PROCEDURE_SECTION
   f=(norm2(pred_Y-Y)); 
   f=nobs/2.*log(f);    // make it a likelihood function so that
                        // covariance matrix is correct
-

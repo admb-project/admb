@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -33,20 +33,16 @@ void gradfree(dlink *);
 //extern int RETURN_INDEX;
 //extern dlist * GRAD_LIST; //js
 
-void shape_check(const dvar_vector& v1, const dvar_vector& v2,
-  const char *function_name);
-void shape_check(const dvector& v1, const dvar_vector& v2,
-  const char *function_name);
-void shape_check(const dvector& v1, const dvector& v2,
-  const char *function_name);
-void shape_check(const dvar_vector& v1, const dvector& v2,
-  const char *function_name);
+ void shape_check(_CONST dvar_vector& v1,_CONST dvar_vector& v2, const char * function_name);
+ void shape_check(_CONST dvector& v1,_CONST dvar_vector& v2, const char * function_name);
+ void shape_check(_CONST dvector& v1,_CONST dvector& v2, const char * function_name);
+ void shape_check(_CONST dvar_vector& v1,_CONST dvector& v2, const char * function_name);
 
 /**
  * Description not yet available.
  * \param
  */
- dvar_vector sinh(const dvar_vector& v1)// ***
+ dvar_vector sinh(_CONST dvar_vector& v1)                            // ***
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -62,7 +58,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- dvar_vector cosh(const dvar_vector& v1)// ***
+ dvar_vector cosh(_CONST dvar_vector& v1)                            // ***
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -78,7 +74,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- dvar_vector tanh(const dvar_vector& v1)// ***
+ dvar_vector tanh(_CONST dvar_vector& v1)                            // ***
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -94,10 +90,9 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- dvar_vector pow(const dvar_vector& v1, const dvar_vector& v2)// ***
+ dvar_vector pow(_CONST dvar_vector& v1,_CONST dvar_vector& v2)              // ***
  {
-   shape_check(v1,v2,
-     "dvar_vector pow(const dvar_vector& v1,const dvar_vector& v2)");
+   shape_check(v1,v2,"dvar_vector pow(_CONST dvar_vector& v1,_CONST dvar_vector& v2)");
 
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -113,7 +108,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- dvar_vector pow(const prevariable& x, const dvar_vector& v2)// ***
+ dvar_vector pow(_CONST prevariable& x,_CONST dvar_vector& v2)                 // ***
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v2.indexmin(),v2.indexmax());
@@ -129,7 +124,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- dvar_vector asin(const dvar_vector& v1)// ***
+ dvar_vector asin(_CONST dvar_vector& v1)                            // ***
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -145,7 +140,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- dvar_vector acos(const dvar_vector& v1)// ***
+ dvar_vector acos(_CONST dvar_vector& v1)                            // ***
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -161,7 +156,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- dvar_vector log10(const dvar_vector& v1)// ***
+ dvar_vector log10(_CONST dvar_vector& v1)                            // ***
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -177,8 +172,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- void shape_check(const dvar_vector& v1, const dvar_vector& v2,
-   const char *function_name)
+ void shape_check(_CONST dvar_vector& v1,_CONST dvar_vector& v2, const char * function_name)
  {
    if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
    {
@@ -191,8 +185,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- void shape_check(const dvector& v1, const dvar_vector& v2,
-   const char *function_name)
+ void shape_check(_CONST dvector& v1,_CONST dvar_vector& v2, const char * function_name)
  {
    if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
    {
@@ -205,8 +198,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  * Description not yet available.
  * \param
  */
- void shape_check(const dvar_vector& v1, const dvector& v2,
-   const char *function_name)
+ void shape_check(_CONST dvar_vector& v1,_CONST dvector& v2, const char * function_name)
  {
    if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
    {

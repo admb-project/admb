@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -33,3 +33,4 @@ df1b2variable cumd_exponential(const df1b2variable& x)
   else
     return 1.0-0.5*exp(-x);
 }
+

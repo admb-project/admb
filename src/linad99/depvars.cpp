@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -11,14 +11,17 @@
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable
 #include "fvar.hpp"
+  #ifdef __MSC__
+    #define lseek _lseek
+    #define  read _read
+    #define write _write 
+    #define open _open
+    #define close _close 
+  #endif
+#if !defined(linux)
+#endif
 
-#ifdef _MSC_VER
-  #define lseek _lseek
-  #define read _read
-  #define write _write
-  #define open _open
-  #define close _close
-#else
+#ifdef __GNU__
   #include <unistd.h>
 #endif
 
@@ -26,7 +29,7 @@
  * Description not yet available.
  * \param
  */
-prevariable& operator<<(const prevariable& _v1, const prevariable& v2)
+  prevariable& operator << (BOR_CONST prevariable& _v1,_CONST prevariable& v2)
   {
     ADUNCONST(prevariable,v1)
     v1=v2;
@@ -38,16 +41,16 @@ prevariable& operator<<(const prevariable& _v1, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2)
+  dvar_vector& operator << (BOR_CONST dvar_vector& v1,_CONST dvar_vector& v2)
   {
     RETURN_ARRAYS_INCREMENT();
-
+    
     int mmin=v1.indexmin();
     int mmax=v1.indexmax();
     if (mmin != v2.indexmin() || mmax != v2.indexmax())
     {
       cerr << " Incompatible bounds in dvar_vector& operator"
-        " << (const dvar_vector& v1, const dvar_vector& v2)" << endl;
+        " << (BOR_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
       ad_exit(21);
     }
 
@@ -63,7 +66,7 @@ dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2)
  * Description not yet available.
  * \param
  */
-dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2)
+  dvar_matrix& operator << (BOR_CONST dvar_matrix& v1,_CONST dvar_matrix& v2)
   {
     int mmin=v1.rowmin();
     int mmax=v1.rowmax();
@@ -71,7 +74,7 @@ dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2)
     if (mmin != v2.rowmin() || mmax != v2.rowmax())
     {
       cerr << " Incompatible bounds in dvar_matrix& operator"
-        " << (const dvar_matrix& v1, const dvar_matrix& v2)" << endl;
+        " << (BOR_CONST dvar_matrix& v1,_CONST dvar_matrix& v2)" << endl;
       ad_exit(21);
     }
     for (int i=mmin;i<=mmax;i++)
@@ -108,7 +111,7 @@ dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2)
  * Description not yet available.
  * \param
  */
-void gradient_structure::save_dependent_variable_position(const prevariable& v1)
+    void gradient_structure::save_dependent_variable_position(_CONST prevariable& v1)
     {
       int depvar_count=++DEPVARS_INFO->depvar_count;
       //max_num_dependent_variables=ndv;

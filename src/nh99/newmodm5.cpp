@@ -2,20 +2,16 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
-#include <admodel.h>
-#include <df1b2fun.h>
-#include <adrndeff.h>
-
-#ifdef ISZERO
-  #undef ISZERO
-#endif
-#define ISZERO(d) ((d)==0.0)
-
-void function_minimizer::prof_minimize_re(int iprof, double sigma,
-  double new_value, const double& _fprof,const int underflow_flag,
-  double global_min, const double& _penalties, const double& _final_weight)
+#if defined(USE_LAPLACE)
+#  include <admodel.h>
+#  include <df1b2fun.h>
+#  include <adrndeff.h>
+ 
+   void function_minimizer::prof_minimize_re(int iprof, double sigma,
+     double new_value, BOR_CONST double& _fprof,const int underflow_flag,
+     double global_min,BOR_CONST double& _penalties,BOR_CONST double& _final_weight)
    {
      double& penalties=(double&) _penalties;
      double& fprof=(double&) _fprof;
@@ -32,11 +28,12 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
 // ****************************************************************
 // ****************************************************************
 // ****************************************************************
-       initial_params::set_active_only_random_effects();
+       int unvar=1;
+       initial_params::set_active_only_random_effects(); 
        //cout << nvar << endl;
-       /*int unvar=*/initial_params::nvarcalc(); // get the number of active
-       initial_params::restore_start_phase();
-       initial_params::set_inactive_random_effects();
+       unvar=initial_params::nvarcalc(); // get the number of active
+       initial_params::restore_start_phase(); 
+       initial_params::set_inactive_random_effects(); 
        int nvar=initial_params::nvarcalc(); // get the number of active
 
 // ****************************************************************
@@ -48,7 +45,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
        dvector g(1,nvar);
        independent_variables x(1,nvar);
        initial_params::xinit(x);    // get the initial values into the
-                                    // x vector
+ 	   // x vector
        fmm fmc(nvar);
        fmc.maxfn= maxfn;
        fmc.iprint= iprint;
@@ -68,16 +65,20 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
        }
        if (!(!maximum_function_evaluations))
        {
-         int ind=min(maximum_function_evaluations.indexmax(),
+ 	int ind=min(maximum_function_evaluations.indexmax(),
            initial_params::current_phase);
          fmc.maxfn=int(maximum_function_evaluations(ind));
        }
        int itnsave=0;
        //double weight=pow(50.0,profile_phase)/(sigma*sigma);
-       double weight = pow(120.0,profile_phase);
-       if (!ISZERO(sigma))
+       double weight;
+       if (sigma)
        {
-         weight /= (sigma*sigma);
+         weight=pow(120.0,profile_phase)/(sigma*sigma);
+       }
+       else
+       {
+         weight=pow(120.0,profile_phase);
        }
        final_weight=weight;
 
@@ -90,7 +91,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
     // this turns on random effects variables and turns off
     // everything else
     //cout << nvar << endl;
-    initial_params::set_active_only_random_effects();
+    initial_params::set_active_only_random_effects(); 
     //cout << nvar << endl;
     int unvar=initial_params::nvarcalc(); // get the number of active
     //df1b2_gradlist::set_no_derivatives();
@@ -115,22 +116,22 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       df1b2variable::adpool_counter=0;
     }
     lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
-      this);
+      this); 
     if (lapprox==0)
     {
       cerr << "Error allocating memory for lapprox" << endl;
       ad_exit(1);
     }
     initial_df1b2params::current_phase=initial_params::current_phase;
-
+    
     initial_df1b2params::save_varsptr();
     allocate();
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    nvar=initial_params::nvarcalc_all();
+    int nvar=initial_params::nvarcalc_all(); 
     dvector y(1,nvar);
-    initial_params::xinit_all(y);
+    initial_params::xinit_all(y); 
     initial_df1b2params::reset_all(y);
 
     gradient_structure::set_NO_DERIVATIVES();
@@ -138,10 +139,6 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
     // see what kind of hessian we are dealing with
     int on=0;
     int nopt=0;
-    //  DF Nov 27 11
-    initial_params::set_inactive_only_random_effects();
-    nvar=initial_params::nvarcalc(); // get the number of active
-
     if (lapprox->have_users_hesstype==0)
     {
       if (initial_df1b2params::separable_flag)
@@ -151,7 +148,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
           lapprox->check_hessian_type2(this);
         }
         else
-        {
+        { 
           lapprox->check_hessian_type(this);
         }
       }
@@ -165,7 +162,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
    */
 
     // linear mixed effects optimization
-    if (laplace_approximation_calculator::variance_components_vector)
+    if (laplace_approximation_calculator::variance_components_vector) 
     {
       if (!lapprox)
       {
@@ -194,21 +191,6 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
         dvariable vf=0.0;
         vf=initial_params::reset(dvar_vector(x));
         *objective_function_value::pobjfun=0.0;
-      //**********************************************************
-      //**********************************************************
-      //**********************************************************
-        if (lapprox)
-        {
-          if (lapprox->hesstype==2)
-          {
-            //lapprox->num_separable_calls=0;
-            lapprox->separable_calls_counter=0;
-          }
-        }
-      //**********************************************************
-      //**********************************************************
-      //**********************************************************
-      //**********************************************************
         userfunction();
         dvariable tv=likeprof_params::likeprofptr[iprof]->variable();
         vf+=weight*square(new_value-tv);
@@ -217,7 +199,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
         g+=g1;
       }
     }
-    initial_params::set_inactive_only_random_effects();
+    initial_params::set_inactive_only_random_effects(); 
   }
 
 
@@ -238,21 +220,6 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
        quit_flag=fmc.quit_flag;
        fprof=value(initial_params::reset(dvar_vector(x)));
        *objective_function_value::pobjfun=0.0;
-      //**********************************************************
-      //**********************************************************
-      //**********************************************************
-        if (lapprox)
-        {
-          if (lapprox->hesstype==2)
-          {
-            //lapprox->num_separable_calls=0;
-            lapprox->separable_calls_counter=0;
-          }
-        }
-      //**********************************************************
-      //**********************************************************
-      //**********************************************************
-      //**********************************************************
        userfunction();
        double tv=value(likeprof_params::likeprofptr[iprof]->variable());
        fprof+=value(*objective_function_value::pobjfun);
@@ -271,3 +238,5 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       fprof=global_min+20.0;
     }
    }
+
+#endif //#if defined(USE_LAPLACE)

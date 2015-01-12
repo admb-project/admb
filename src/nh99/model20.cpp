@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -28,25 +28,22 @@
     return *this;
   }
 
-param_init_bounded_vector& param_init_bounded_vector::operator=(
-  const dvector& v)
+  param_init_bounded_vector& param_init_bounded_vector::operator = (const dvector& v)
   {
     dvar_vector::operator =(v);
     return *this;
   }
-param_init_bounded_vector& param_init_bounded_vector::operator=(
-  const dvar_vector& v)
+  param_init_bounded_vector& param_init_bounded_vector::operator = (const dvar_vector& v)
   {
     dvar_vector::operator =(v);
     return *this;
   }
-param_init_bounded_vector& param_init_bounded_vector::operator=(
-  const prevariable& v)
+  param_init_bounded_vector& param_init_bounded_vector::operator = (const prevariable& v)
   {
     dvar_vector::operator =(v);
     return *this;
   }
-param_init_bounded_vector& param_init_bounded_vector::operator=(const double& v)
+  param_init_bounded_vector& param_init_bounded_vector::operator = (const double& v)
   {
     dvar_vector::operator = (v);
     return *this;
@@ -75,3 +72,4 @@ param_init_bounded_vector& param_init_bounded_vector::operator=(const double& v)
     dvar_matrix::operator = (m);
     return *this;
   }
+

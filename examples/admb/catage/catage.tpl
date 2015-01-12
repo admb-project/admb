@@ -32,7 +32,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 DATA_SECTION
-  init_int nyrs
+  init_int nyrs  
   init_int nages
   init_matrix obs_catch_at_age(1,nyrs,1,nages)
   init_vector effort(1,nyrs)

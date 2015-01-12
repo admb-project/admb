@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009-2011 ADMB Foundation
  */
 /**
  * \file
@@ -15,12 +15,12 @@
 dvar_vector spline(const dvector &x,const dvar_vector&y,double yp1,double ypn);
 dvar_vector spline(const dvector &x,const dvar_vector&y,dvariable yp1,
   dvariable ypn);
-dvariable spline_cubic_val2(int n, const dvector& t, const prevariable tval,
-  const dvar_vector& y, const dvar_vector& ypp);
-dvariable spline_cubic_val(int n, const dvector& t, double tval,
-  const dvar_vector& y, const dvar_vector& ypp);
+dvariable spline_cubic_val2(int n, _CONST dvector& t, const prevariable tval,
+  _CONST dvar_vector& y, _CONST dvar_vector& ypp);
+dvariable spline_cubic_val(int n, _CONST dvector& t, double tval,
+  _CONST dvar_vector& y, _CONST dvar_vector& ypp);
 
-dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
+dvar_vector spline_cubic_set (int n,_CONST dvector& t,_CONST dvar_vector& y,
   int ibcbeg, dvariable ybcbeg, int ibcend, dvariable ybcend );
 
 /** \ingroup cub_spline
@@ -164,8 +164,7 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
-    ybcend);
+  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend, ybcend);
   ret.shift(_x.indexmin());
   return ret;
 }
@@ -211,8 +210,7 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,double yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
-    ybcend);
+  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend, ybcend);
   ret.shift(_x.indexmin());
   return ret;
 }
@@ -258,13 +256,12 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
-    ybcend);
+  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend, ybcend);
   ret.shift(_x.indexmin());
   return ret;
 }
 
-/**
+/** 
  * \ingroup cub_spline
  *  Evaluates a piecewise cubic spline at a point.
  * \param n the number of knots
@@ -276,8 +273,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
 */
-dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
-  const dvar_vector& _y, const dvar_vector& _ypp)
+dvariable spline_cubic_val(int n, _CONST dvector& _t, double tval,
+    _CONST dvar_vector& _y, _CONST dvar_vector& _ypp)
 //
 //  Purpose:
 //
@@ -285,8 +282,7 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
 //
 //  Discussion:
 //
-//    SPLINE_CUBIC_SET must have already been called to define the values of
-//    YPP.
+//    SPLINE_CUBIC_SET must have already been called to define the values of YPP.
 //
 //    For any point T in the interval T(IVAL), T(IVAL+1), the form of
 //    the spline is
@@ -305,7 +301,7 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license.
+//    This code is distributed under the GNU LGPL license. 
 //
 //  Modified:
 //
@@ -389,7 +385,7 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
   return yval;
 }
 
-/**
+/** 
  * \ingroup cub_spline
  *  Evaluates a piecewise cubic spline at a point.
  * \param n the number of knots
@@ -401,8 +397,8 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
 */
-dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
-  const dvar_vector& _y, const dvar_vector& _ypp)
+dvariable spline_cubic_val2(int n, _CONST dvector& _t, const prevariable tval,
+  _CONST dvar_vector& _y, _CONST dvar_vector& _ypp)
 //
 //  Purpose:
 //
@@ -410,8 +406,7 @@ dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
 //
 //  Discussion:
 //
-//    SPLINE_CUBIC_SET must have already been called to define the values of
-//    YPP.
+//    SPLINE_CUBIC_SET must have already been called to define the values of YPP.
 //
 //    For any point T in the interval T(IVAL), T(IVAL+1), the form of
 //    the spline is
@@ -430,7 +425,7 @@ dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license.
+//    This code is distributed under the GNU LGPL license. 
 //
 //  Modified:
 //
@@ -522,7 +517,7 @@ dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
  * \param _b the right hand side
  * \return the solution of the linear system
  */
-dvar_vector d3_np_fs ( int n, const dvar_vector& _a, const dvar_vector& _b)
+dvar_vector d3_np_fs ( int n, _CONST dvar_vector& _a, _CONST dvar_vector& _b)
 //
 //  Purpose:
 //
@@ -549,7 +544,7 @@ dvar_vector d3_np_fs ( int n, const dvar_vector& _a, const dvar_vector& _b)
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license.
+//    This code is distributed under the GNU LGPL license. 
 //
 //  Modified:
 //
@@ -635,13 +630,12 @@ dvar_vector d3_np_fs ( int n, const dvar_vector& _a, const dvar_vector& _b)
  * \param ybcend the values to be used in the boundary conditions
  * \return the second derivatives of the cubic spline
  */
-dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
+dvar_vector spline_cubic_set (int n,_CONST dvector& t,_CONST dvar_vector& y,
   int ibcbeg, dvariable ybcbeg, int ibcend, dvariable ybcend )
 //
 //  Purpose:
 //
-//    SPLINE_CUBIC_SET computes the second derivatives of a piecewise cubic
-//    spline.
+//    SPLINE_CUBIC_SET computes the second derivatives of a piecewise cubic spline.
 //
 //  Discussion:
 //
@@ -706,12 +700,12 @@ dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
 //      6 * ( Y(IVAL+1) - Y(IVAL) ) / H(IVAL)
 //      - 6 * ( Y(IVAL) - Y(IVAL-1) ) / H(IVAL-1)
 //
-//    Boundary conditions must be applied at the first and last knots.
+//    Boundary conditions must be applied at the first and last knots.  
 //    The resulting tridiagonal system can be solved for the YPP values.
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license.
+//    This code is distributed under the GNU LGPL license. 
 //
 //  Modified:
 //
@@ -752,8 +746,7 @@ dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
 //    Input, double YBCEND, the values to be used in the boundary
 //    conditions if IBCEND is equal to 1 or 2.
 //
-//    Output, double SPLINE_CUBIC_SET[N], the second derivatives of the cubic
-//    spline.
+//    Output, double SPLINE_CUBIC_SET[N], the second derivatives of the cubic spline.
 //
 {
   dvar_vector a(0,3*n-1);

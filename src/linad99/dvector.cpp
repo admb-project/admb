@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -19,12 +19,8 @@ long int farptr_tolong(void *);
   int heapcheck(void);
 #endif
 
-#ifdef _MSC_VER
+#ifdef __MSVC32__
 #include <memory.h>
-#endif
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
 #endif
 
 /** Average of two numbers; constant objects.
@@ -52,53 +48,89 @@ dvector& dvector::shift(int min)
   return *this;
 }
 
-/**
-Default destructor. Invoked by the compiler. Only frees allocated memory
-if all shallow copies in scope have been removed.
-*/
-dvector::~dvector()
-{
-  if (shape)
+ /** 
+ Default destructor. Invoked by the compiler. Only frees allocated memory
+ if all shallow copies in scope have been removed.
+ */
+ dvector::~dvector()
+ {
+   if (shape)
+   {
+     if (shape->ncopies)
+     {
+       (shape->ncopies)--;
+     }
+     else
+     {
+  
+       #ifdef DIAG
+         myheapcheck(" Entering ~dvector");
+       #endif
+  
+       if ( v == NULL)
+       {
+         cerr << " Trying to delete NULL pointer in ~dvector\n";
+         ad_exit(21);
+       }
+       deallocate();
+     }
+   }
+ }
+
+static int testflag=0;
+static int ycounter=0;
+  /** Deallocates memory for a dvector object.
+  Called by the ~dvector(); produces an error if the double * member
+  is NULL.
+  */
+  void dvector::deallocate()
   {
-    if (shape->ncopies)
+   if (testflag)
+   {
+     ycounter++;
+     cout << " C " << ycounter << endl;
+     if (ycounter==41)
+       cout << "HERE" << endl;
+     test_the_pointer();
+   }
+    if(shape)
     {
-      (shape->ncopies)--;
+      v = (double*) (shape->trueptr);
+      if (v)
+      {
+       if (testflag)
+       {
+         test_the_pointer();
+       }
+        delete [] v;
+       if (testflag)
+       {
+         test_the_pointer();
+       }
+        v = NULL;
+      }
+      else
+      {
+        cerr << "error in dvector shape not zero but v=0" << endl;
+      }
+      delete shape;
+      if (testflag)
+      {
+        test_the_pointer();
+      }
     }
     else
     {
-      #ifdef DIAG
-      myheapcheck(" Entering ~dvector");
-      #endif
-      if (v == NULL)
-      {
-        cerr << " Trying to delete NULL pointer in ~dvector\n";
-        ad_exit(21);
-      }
-      deallocate();
+      //cerr << "Warning -- trying to deallocate an unitialized dvector"
+       //    << endl;
     }
+    shape=NULL;
+   if (testflag)
+   {
+     cout << " D " << ycounter << endl;
+     test_the_pointer();
+   }
   }
-}
-
-/**
-Deallocates memory for a dvector object.
-Called by the ~dvector(); produces an error if the double * member
-is NULL.
-*/
-void dvector::deallocate()
-{
-  if (shape)
-  {
-    v = (double*)(shape->trueptr);
-    if (v)
-    {
-      delete [] v;
-      v = NULL;
-    }
-
-    delete shape;
-    shape = NULL;
-  }
-}
 
   /**
   Deallocate memory safely. Checks if shallow copies are in scope.
@@ -120,30 +152,25 @@ void dvector::deallocate()
   }
 
   /**
-    Copy constructor. This constructor make a "shallow" copy.
+    Copy constructor. This constructor make a "shallow" copy. 
     Values of existing pointers are copied, and no memory is allocated.
-    Invoked by the compiler in some circumstances such as function
-    call containing an argument of class %dvector passed by value.
+    Invoked by the compiler in some circumstances such as function 
+    call containing an argument of class %dvector passed by value. 
 
-    The following code segments creates the \c dvector object \c x and fills it
-    with
-    uniform random numbers (using the constant 79 as seed; \ref fill_randu). The
-    new \c dvector
-    object \c y will reference the same memory locations as \c x, and any change
-    s in \c y
-    will also appear in \c x. The new \c dvector object \c z does not refer to
-    the same memory locations as \c x, and any changes in \c z will be unique to
-    \c z.
+    The following code segments creates the /dvector object x and fills it with
+    uniform random numbers (using the constant 79 as seed). The new /dvector 
+    object y will reference the same memory locations as x, and any changes in y
+    will also appear in x. The new /dvector object /z does not refer to the same    memory locations as x, and any changes in z will be unique to z.
 
-    \code
+    \verbatim
     dvector x(1,10);
     y.fill_randu(79L);
-    dvector y = x; // shallow copy
+    dvector y = x;
     dvector z;
-    z = x;         // "deep" copy
-    \endcode
-  */
-dvector::dvector(const dvector& t)
+    z = x;
+    \endverbatim
+    */
+ dvector::dvector(_CONST dvector& t)
  {
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
@@ -164,9 +191,9 @@ dvector::dvector(const dvector& t)
 
  /**
  Explicit shallow copy.
- \param t %dvector to be copied
+ \param t %dvecotor to be copied
  */
-void dvector::shallow_copy(const dvector& t)
+ void dvector::shallow_copy(_CONST dvector& t)
  {
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
@@ -185,36 +212,29 @@ void dvector::shallow_copy(const dvector& t)
    index_max=t.index_max;
  }
 
-/**
-Creates a %dvector from an instance of class %predvector.
-Creates a shallow copy.
-\param pdv an instance of class %predvector.
-Updated by Martell, March 10, 2014, from Dave's email
-*/
-dvector::dvector(const predvector& pdv)
-{
-  int mmin = pdv.p->indexmin();
-  int mmax = pdv.p->indexmax();
-  if (pdv.lb < mmin || pdv.ub > mmax)
-  {
-    cerr << "index out of bounds in dvector subvector operator" << endl;
-    ad_exit(1);
-  }
-
-  shape = pdv.p->shape;
-  if (shape)
-  {
-    (shape->ncopies)++;
-  }
-  else
-  {
-    cerr << "Waring: Taking a subvector of an unallocated dvector.\n";
-  }
-
-  v = pdv.p->v;
-  index_min = pdv.lb;
-  index_max = pdv.ub;
-}
+ /**
+ Creates a %dvector from an instance of class %predvector.
+ Creates a shallow copy.
+ \param pdv an instance of class %predvector.
+ */
+ dvector::dvector(_CONST predvector& pdv)
+ {
+   #ifdef DIAG
+    // cout << "starting out in dvector contructor\n";
+   #endif
+   shape=pdv.p->shape;
+   if (shape)
+   {
+     (shape->ncopies)++;
+   }
+   else
+   {
+     cerr << "Taking a subvector  of an unallocated dvector"<<endl;
+   }
+   v = pdv.p->v;
+   index_min=pdv.lb;
+   index_max=pdv.ub;
+ }
 
  /**
   Assignment operator for double argument.
@@ -223,8 +243,9 @@ dvector::dvector(const predvector& pdv)
   \param x A double constant.
   \return Reference to a %dvector object.
  */
-dvector& dvector::operator=(const double x)
+ dvector& dvector::operator = ( CGNU_DOUBLE x)
  {
+
    #ifdef DIAG
      myheapcheck("Entering dvector =");
    #endif
@@ -250,7 +271,7 @@ dvector& dvector::operator=(const double x)
   \param t A %dvector constant
   \return Reference to a %dvector object.
  */
-dvector& dvector::operator=(const dvector& t)
+ dvector& dvector::operator = (_CONST dvector& t)
  {
    if (!(*this))
    {
@@ -267,8 +288,7 @@ dvector& dvector::operator=(const dvector& t)
    {
      if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
      {
-       cerr << "Index bounds do not match in "
-       "dvector& operator = (const dvector&)\n";
+       cerr << "Index bounds do not match in dvector& operator = (_CONST dvector&)\n";
        ad_exit(1);
      }
 
@@ -276,11 +296,7 @@ dvector& dvector::operator=(const dvector& t)
      {
          int min=indexmin();
          int max=indexmax();
-#ifndef OPT_LIB
-         assert(max >= min);
-#endif
-         size_t size = (size_t)(max - min + 1);
-         memcpy(&elem(min), &t.elem(min), size * sizeof(double));
+         memcpy(&elem(min),&t.elem(min),(max-min+1)*sizeof(double));
      }
    }
    return (*this);
@@ -289,23 +305,22 @@ dvector& dvector::operator=(const dvector& t)
  /**
   \ingroup matop
   Assignment operator for %dvector argument.
-  Assigns the values of the argument to a %independent_variables target in the
-  LHS of the
+  Assigns the values of the argument to a %independent_variables target in the LHS of the
   assignment operator. The range of valid subscripts in the argument and the
   target must be identical.
   \param t A %dvector constant
   \return Reference to a %independent_variables object.
  */
- independent_variables& independent_variables::operator=(const dvector& t)
+ independent_variables& independent_variables::operator = (_CONST dvector& t)
  {
+
    #ifdef DIAG
      myheapcheck("Entering dvector =");
    #endif
 
    if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
    {
-     cerr << "Index bounds do not match in "
-  "independent_variables& independent_variables::operator=(const dvector& t)\n";
+     cerr << "Index bounds do not match in dvector& operator = (_CONST dvector&)\n";
      ad_exit(1);
    }
      //double tmp;
@@ -323,24 +338,22 @@ dvector& dvector::operator=(const dvector& t)
    return (*this);
  }
 
-/**
-Construct a %dvector object from a C style array of doubles.
-\param sz Number of valid memory locations allocated in the array
-The range of valid subscripts for the %dvector object will be [0,sz-1].
-\param x Pointer to double pointing to the first element in the array.
-*/
-dvector::dvector(unsigned int sz, double* x)
-{
-#ifndef OPT_LIB
-  assert(sz > 0 && sz - 1 <= INT_MAX);
-#endif
-  allocate(0, (int)(sz - 1));
-  for (unsigned int i = 0; i < sz; i++)
-  {
-    //cout << "Doing the assignment in constructor\n";
-    v[i] = x[i];
-  }
-}
+ /**
+ Construct a %dvector object from a C style array of doubles.
+ \param sz Number of valid memory locations allocated in the array
+ The range of valid subscripts for the %dvector object will be [0,sz-1].
+ \param x Pointer to double pointing to the first element in the array.
+ */
+ dvector::dvector( unsigned int sz, double * x )
+ {
+   allocate(0,sz-1);
+
+   for (unsigned int i=0; i<sz; i++)
+   {
+     cout << "Doing the assignment in constructor\n";
+     v[i] = x[i];
+   }
+ }
 
 /*
  dvector::operator double* ( )
@@ -352,11 +365,10 @@ dvector::dvector(unsigned int sz, double* x)
  /**
  Construct a %dvector object from a dvar_vector_position object.
  Used in writing adjoint functions callled by the autodif library,
- \param dvp Reference to a %dvar_vector_position object
- (usually read from stack)
+ \param dvp Reference to a %dvar_vector_position object (usually read from stack)
  \param kk Kludge to avoid ambiguous function references
  */
-dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
+ dvector::dvector(BOR_CONST dvar_vector_position& dvp,BOR_CONST kkludge_object& kk)
  {
    allocate(dvp.indexmin(),dvp.indexmax());
  }
@@ -375,7 +387,7 @@ dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
  }
 
  /**
- Construct a %dvector without allocating memory.
+ Construct a %dvector without allocating memory. 
  Useful in creating classes containing dvectors.
  */
  dvector::dvector(void)
@@ -385,8 +397,7 @@ dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
 
  /**
  Safely allocate memory for a %dvector.
- Exits with an error message if memory for this instance has already been
- allocated.
+ Exits with an error message if memory for this instance has already been allocated.
  \param ncl Integer specifying lowest valid subscript.
  \param nch Integer specifying highest valid subscript.
  */
@@ -436,13 +447,13 @@ dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
        cerr << "Error trying to allocate memory for dvector\n";
        ad_exit(1);
      }
-
+  
      //int align= ((int) v)%8 ;
      //if (align)
      //{
      //  int diff=(8-align)%8;
      //  v=(double*)( ((char*)v)+diff);
-     //}
+     //}     
 
      index_min=ncl;
      index_max=nch;
@@ -460,7 +471,7 @@ dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
  Allocate memory for a %dvector the same size as it's argument.
  \param dv Reference to a %dvector.
  */
-void dvector::allocate(const dvector& dv)
+void dvector::allocate(_CONST dvector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
@@ -469,7 +480,7 @@ void dvector::allocate(const dvector& dv)
  Allocate memory for a %dvector the same size as it's argument.
  \param dv Reference to a dvar_vector.
  */
-void dvector::allocate(const dvar_vector& dv)
+void dvector::allocate(_CONST dvar_vector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
@@ -479,9 +490,9 @@ Make shallow copy of %dvector shape.
 Copies the shape of its argument.
 \param t Reference to a %dvector.
 */
-void dvector::allocatec(const dvector& t)
+void dvector::allocatec(_CONST dvector& t)
 {
-  if (!(*this))
+  if (!(*this)) 
   {
     if (t.shape)
     {
@@ -516,15 +527,14 @@ void dvector::allocatec(const dvector& t)
   \ingroup matop
   \param t1 A %dvector, \f$a\f$.
   \param t2 A %dvector, \f$b\f$.
-  \return A double, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing
+  \return A double, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing 
   the value of the dot product of the two arguments.
   */
-double operator*(const dvector& t1, const dvector& t2)
+  double operator * (_CONST dvector& t1,_CONST dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
-       cerr << "Index bounds do not match in "
-       "dvector operator * (const dvector&, const dvector&)\n";
+       cerr << "Index bounds do not match in dvector operator * (_CONST dvector&,_CONST dvector&)\n";
        ad_exit(1);
      }
      double tmp;
@@ -553,7 +563,7 @@ double operator*(const dvector& t1, const dvector& t2)
        dp_dotproduct(&tmp,&(t1(min)),&(t2(min)),n);
      #endif
    #endif
-
+     
      return(tmp);
   }
 
@@ -563,15 +573,14 @@ double operator*(const dvector& t1, const dvector& t2)
   Exits with error if bounds of the two arguments differ.
   \param t1 %dvector reference, \f$a\f$.
   \param t2 %dvector reference, \f$b\f$.
-  \return A %dvector, \f$z_i = a_i + b_i\f$  containing
+  \return A %dvector, \f$z_i = a_i + b_i\f$  containing 
   the value of the sum of the two arguments.
   */
-dvector operator+(const dvector& t1, const dvector& t2)
+  dvector operator + (_CONST dvector& t1,_CONST dvector& t2)
   {
-     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
+     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
      {
-       cerr << "Index bounds do not match in "
-       "dvector operator+(const dvector&, const dvector&)\n";
+       cerr << "Index bounds do not match in dvector operator + (_CONST dvector&,_CONST dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -602,15 +611,14 @@ dvector operator+(const dvector& t1, const dvector& t2)
   Exits with error if bounds of the two arguments differ.
   \param t1 %dvector reference, \f$a\f$.
   \param t2 %dvector reference, \f$b\f$.
-  \return A %dvector, \f$z_i = a_i - b_i\f$  containing
+  \return A %dvector, \f$z_i = a_i - b_i\f$  containing 
   the value of the difference of the two arguments.
   */
-dvector operator-(const dvector& t1, const dvector& t2)
+  dvector operator - (_CONST dvector& t1,_CONST dvector& t2)
   {
-     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
+     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
      {
-       cerr << "Index bounds do not match in "
-       "dvector operator - (const dvector&, const dvector&)\n";
+       cerr << "Index bounds do not match in dvector operator - (_CONST dvector&,_CONST dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -642,7 +650,7 @@ dvector operator-(const dvector& t1, const dvector& t2)
   \param t1 %dvector reference, \f$y\f$.
   \return A %dvector \f$z_i = x*y_i\f$.
   */
-dvector operator*(const double x, const dvector& t1)
+  dvector operator * ( CGNU_DOUBLE x,_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
    #ifdef OPT_LIB
@@ -677,11 +685,10 @@ dvector operator*(const double x, const dvector& t1)
        cerr << msg << "Heap is OK.\n";
      }
    }
-#else
+#else 
 */
    /** Does nothing. This function is only defined for older Borland compilers.
-   The user could provide an implementation that might be useful in certain
-   circumstances.
+   The user could provide an implementation that might be useful in certain circumstances.
    \param msg Pointer to character array.
    */
    void myheapcheck(char * msg){}
@@ -709,7 +716,7 @@ int max(int a,int b)
 \param m Number to be cubed
 \return \f$m^3\f$
 */
-double cube(const double m)
+double cube( CGNU_DOUBLE m)
 {
   return m*m*m;
 }
@@ -719,7 +726,7 @@ double cube(const double m)
 \param m Number to be taken to the fourth power.
 \return \f$m^4\f$
 */
-double fourth(const double m)
+double fourth( CGNU_DOUBLE m)
 {
   double m2=m*m;
   return m2*m2;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -26,7 +26,7 @@ dll_data_3array::~dll_data_3array()
           *tmp++=(*this)(k,i,j);
         }
       }
-    }
+    }  
   }
 }
 
@@ -50,10 +50,10 @@ dll_param_d3array::~dll_param_d3array()
           *tmp++=::value((*this)(k,i,j));
         }
       }
-    }
+    }  
   }
 }
-
+  
 void dll_param_d3array::allocate(double * _d,int hmin,int hmax,
   int rmin,int rmax, int cmin,int cmax,const char * _s)
 {
@@ -71,7 +71,7 @@ void dll_param_d3array::allocate(double * _d,int hmin,int hmax,
           (*this)(k,i,j)=*tmp++;
         }
       }
-    }
+    }  
   }
 }
 
@@ -93,7 +93,7 @@ void dll_data_3array::allocate(double * _d,int hmin,int hmax,
           (*this)(k,i,j)=*tmp++;
         }
       }
-    }
+    }  
   }
 }
 
@@ -118,7 +118,7 @@ dll_param_init_d3array::~dll_param_init_d3array()
           *tmp++=::value((*this)(k,i,j));
         }
       }
-    }
+    }  
   }
 }
 
@@ -141,7 +141,7 @@ void dll_param_init_d3array::allocate(double* _d,int hmin,int hmax,
           (*this)(k,i,j)=*tmp++;
         }
       }
-    }
+    }  
   }
 }
 
@@ -152,33 +152,33 @@ void dll_param_init_d3array::allocate(double* _d,int hmin,int hmax,
     cmin,cmax,1,_s);
 }
 
-dll_data_3array& dll_data_3array::operator=(const d3_array &m)
+dll_data_3array& dll_data_3array::operator = (_CONST d3_array &m)
 {
   d3_array::operator = (m);
   return *this;
-}
+}   
 
-dll_param_d3array& dll_param_d3array::operator=(const dvar3_array &m)
+dll_param_d3array& dll_param_d3array::operator = (_CONST dvar3_array & m)
 {
   dvar3_array::operator = (m);
   return *this;
-}
+}   
 
-dll_param_d3array& dll_param_d3array::operator=(const d3_array &m)
+dll_param_d3array& dll_param_d3array::operator = (_CONST d3_array &m)
 {
   dvar3_array::operator = (m);
   return *this;
-}
+}   
 
-dll_param_init_d3array& dll_param_init_d3array::operator=(const dvar3_array &m)
+dll_param_init_d3array& dll_param_init_d3array::operator = (_CONST dvar3_array & m)
 {
   dvar3_array::operator = (m);
   return *this;
-}
+}   
 
 
-dll_param_init_d3array& dll_param_init_d3array::operator=(const d3_array &m)
+dll_param_init_d3array& dll_param_init_d3array::operator = (_CONST d3_array &m)
 {
   dvar3_array::operator = (m);
   return *this;
-}
+}   

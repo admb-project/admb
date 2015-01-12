@@ -2,20 +2,17 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
-#include <fvar.hpp>
-#include <admodel.h>
-#include <df1b2fun.h>
-#include <adrndeff.h>
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
+#if defined(USE_LAPLACE)
+#  include <fvar.hpp>
+#  include <admodel.h>
+#  include <df1b2fun.h>
+#  include <adrndeff.h>
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
 void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
   dmatrix& Dux, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin,
@@ -23,15 +20,15 @@ void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
-
+      
 double calculate_importance_sample(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
-
+      
 double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
-
+      
 dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 
 /**
@@ -51,14 +48,13 @@ void laplace_approximation_calculator::
  */
 dvector laplace_approximation_calculator::
   default_calculations_check_derivatives(const dvector& _x,
-    function_minimizer * pfmin, const double& _f)
+    function_minimizer * pfmin,double f)
 {
   // for use when there is no separability
   ADUNCONST(dvector,x)
   int i,j;
-  double& f = (double&)_f;
 
-  initial_params::set_inactive_only_random_effects();
+  initial_params::set_inactive_only_random_effects(); 
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
 
@@ -68,7 +64,7 @@ dvector laplace_approximation_calculator::
 
   gradient_structure::set_YES_DERIVATIVES();
 
-  initial_params::set_active_only_random_effects();
+  initial_params::set_active_only_random_effects(); 
   initial_params::xinit(uhat);    // get current x values into the model
   //int lmn_flag=0;
   if (ad_comm::time_flag)
@@ -81,7 +77,7 @@ dvector laplace_approximation_calculator::
     {
       ad_comm::ptm->get_elapsed_time_and_reset();
     }
-  }
+  }  
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -94,8 +90,9 @@ dvector laplace_approximation_calculator::
       }
     }
   }
-
-  double maxg = 0;
+  
+  double maxg;
+  //double maxg_save;
   dvector uhat_old(1,usize);
   //double f_from_1=0.0;
 
@@ -107,7 +104,7 @@ dvector laplace_approximation_calculator::
   {
     y(i+xsize)=uhat(i);
   }
-
+        
   int ierr=0;
   int niters=0;
   if (function_minimizer::first_hessian_flag)
@@ -131,14 +128,14 @@ dvector laplace_approximation_calculator::
       used_flags.safe_allocate(1,nv);
     }
   }
-
+  
   for(int ii=1;ii<=niters;ii++)
-  {
+  {  
     if (quadratic_prior::get_num_quadratic_prior()>0)
     {
       check_pool_size();
     }
-    {
+    {   
       // test newton raphson
       Hess.initialize();
       cout << "Checking derivatives " << ii << endl;
@@ -146,18 +143,19 @@ dvector laplace_approximation_calculator::
 
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
-        laplace_approximation_calculator::where_are_we_flag=2;
-        /*double maxg = */evaluate_function_quiet(uhat,pfmin);
-        laplace_approximation_calculator::where_are_we_flag=0;
+        laplace_approximation_calculator::where_are_we_flag=2; 
+        /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
+        laplace_approximation_calculator::where_are_we_flag=0; 
         quadratic_prior::get_cHessian_contribution(Hess,xsize);
         quadratic_prior::get_cgradient_contribution(grad,xsize);
       }
 
-      /*
-      if (ii == 1)
-        { double diff = fabs(re_objective_function_value::fun_without_pen - objective_function_value::fun_without_pen); }
-      */
-
+      if (ii==1)
+      {
+        /*double diff= */fabs(re_objective_function_value::fun_without_pen-
+          objective_function_value::fun_without_pen);
+      }
+  
       dvector step;
       int print_hess_in_newton_raphson_flag=0;
       if (print_hess_in_newton_raphson_flag)
@@ -165,15 +163,15 @@ dvector laplace_approximation_calculator::
         cout << norm2(Hess-trans(Hess)) << endl;
         if (ad_comm::global_logfile)
         {
-          (*ad_comm::global_logfile) << setprecision(4) << setscientific()
+          (*ad_comm::global_logfile) << setprecision(4) << setscientific()  
             << setw(12) << sort(eigenvalues(Hess)) << endl;
-          (*ad_comm::global_logfile) << setprecision(4) << setscientific()
+          (*ad_comm::global_logfile) << setprecision(4) << setscientific()  
             << setw(12) << Hess << endl;
         }
       }
-
-#if defined(USE_ATLAS)
-      if (!ad_comm::no_atlas_flag)
+     
+#if defined(USE_ATLAS)   
+      if (!ad_comm::no_atlas_flag) 
       {
         step=-atlas_solve_spd(Hess,grad,ierr);
       }
@@ -200,7 +198,7 @@ dvector laplace_approximation_calculator::
 #else
       step=-solve(Hess,grad);
 #endif
-
+  
       if (ad_comm::time_flag)
       {
         if (ad_comm::ptm)
@@ -213,7 +211,7 @@ dvector laplace_approximation_calculator::
           }
         }
       }
-
+     
       f1b2gradlist->reset();
       f1b2gradlist->list.initialize();
       f1b2gradlist->list2.initialize();
@@ -221,10 +219,11 @@ dvector laplace_approximation_calculator::
       f1b2gradlist->nlist.initialize();
       f1b2gradlist->nlist2.initialize();
       f1b2gradlist->nlist3.initialize();
-
+    
+    
       uhat_old=uhat;
       uhat+=step;
-
+    
       double maxg_old=maxg;
       maxg=fabs(evaluate_function(uhat,pfmin));
       if (maxg>maxg_old)
@@ -233,7 +232,7 @@ dvector laplace_approximation_calculator::
         evaluate_function(uhat,pfmin);
         break;
       }
-      if (maxg < 1.e-13)
+      if (maxg < 1.e-13) 
       {
         break;
       }
@@ -243,17 +242,18 @@ dvector laplace_approximation_calculator::
       y(i+xsize)=uhat(i);
     }
   }
-
+    
+  
   if (num_nr_iters<=0)
   {
     evaluate_function(uhat,pfmin);
   }
-
+  
   for (i=1;i<=usize;i++)
   {
     y(i+xsize)=uhat(i);
   }
-
+ 
 
   if (ad_comm::time_flag)
   {
@@ -269,7 +269,7 @@ dvector laplace_approximation_calculator::
   }
   get_second_ders(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
   //int sgn=0;
-
+  
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -284,6 +284,7 @@ dvector laplace_approximation_calculator::
   }
   if (!ierr)
   {
+  
     if (num_importance_samples==0)
     {
       //cout << "Hess " << endl << Hess << endl;
@@ -308,7 +309,7 @@ dvector laplace_approximation_calculator::
   {
     f=1.e+30;
   }
-
+ 
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -316,7 +317,7 @@ dvector laplace_approximation_calculator::
       double time=ad_comm::ptm->get_elapsed_time_and_reset();
       if (ad_comm::global_logfile)
       {
-        (*ad_comm::global_logfile) << "Time in calculate laplace approximation "
+        (*ad_comm::global_logfile) << " Time in calculate laplace approximation "
           << time << endl;
       }
     }
@@ -337,10 +338,10 @@ dvector laplace_approximation_calculator::
         y(i+xsize).get_u_bar_tilde()[j-mind]=Hessadjoint(i,j-xsize);
       }
     }
-
+  
     if (initial_df1b2params::separable_flag)
     {
-      for (j=1;j<=xsize+usize;j++)
+      for (j=1;j<=xsize+usize;j++) 
       {
         *y(j).get_u_tilde()=0;
       }
@@ -358,7 +359,7 @@ dvector laplace_approximation_calculator::
         (*re_objective_function_value::pobjfun)=0;
         df1b2variable pen=0.0;
         df1b2variable zz=0.0;
-
+   
         initial_df1b2params::reset(y,pen);
         pfmin->user_function();
 
@@ -367,7 +368,7 @@ dvector laplace_approximation_calculator::
 
         (*re_objective_function_value::pobjfun)+=pen;
         (*re_objective_function_value::pobjfun)+=zz;
-
+  
         set_dependent_variable(*re_objective_function_value::pobjfun);
         df1b2_gradlist::set_no_derivatives();
         df1b2variable::passnumber=1;
@@ -382,14 +383,14 @@ dvector laplace_approximation_calculator::
           y(i+xsize).get_u_bar_tilde()[j-mind]=Hessadjoint(i,j-xsize);
         }
       }
-
+    
       //int mind=y(1).minder;
       df1b2variable::passnumber=2;
       df1b2_gradcalc1();
-
+    
       df1b2variable::passnumber=3;
       df1b2_gradcalc1();
-
+    
       f1b2gradlist->reset();
       f1b2gradlist->list.initialize();
       f1b2gradlist->list2.initialize();
@@ -397,8 +398,8 @@ dvector laplace_approximation_calculator::
       f1b2gradlist->nlist.initialize();
       f1b2gradlist->nlist2.initialize();
       f1b2gradlist->nlist3.initialize();
-    }
-
+    } 
+   
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
@@ -419,10 +420,7 @@ dvector laplace_approximation_calculator::
     }
     if (initial_df1b2params::separable_flag)
     {
-#ifndef OPT_LIB
-      assert(nvar <= INT_MAX);
-#endif
-      dvector scale(1,(int)nvar);   // need to get scale from somewhere
+      dvector scale(1,nvar);   // need to get scale from somewhere
       /*int check=*/initial_params::stddev_scale(scale,x);
       dvector sscale=scale(1,Dux(1).indexmax());
       for (i=1;i<=usize;i++)
@@ -431,7 +429,7 @@ dvector laplace_approximation_calculator::
       }
       dtmp=elem_prod(dtmp,sscale);
     }
-
+  
     for (i=1;i<=xsize;i++)
     {
       xadjoint(i)+=dtmp(i);
@@ -449,19 +447,16 @@ dvector laplace_approximation_calculator::
       initial_params::straight_through_flag=0;
       funnel_init_var::lapprox=0;
       block_diagonal_flag=0;
-#ifndef OPT_LIB
-      assert(nvar <= INT_MAX);
-#endif
-      dvector scale1(1,(int)nvar);   // need to get scale from somewhere
-      initial_params::set_inactive_only_random_effects();
-      /*int check=*/initial_params::stddev_scale(scale1,x);
-
-      laplace_approximation_calculator::where_are_we_flag=3;
+      dvector scale1(1,nvar);   // need to get scale from somewhere
+      initial_params::set_inactive_only_random_effects(); 
+      int check=initial_params::stddev_scale(scale1,x);
+    
+      laplace_approximation_calculator::where_are_we_flag=3; 
       quadratic_prior::in_qp_calculations=1;
       funnel_init_var::lapprox=this;
       df1b2_gradlist::set_no_derivatives();
-      dvector scale(1,(int)nvar);   // need to get scale from somewhere
-      /*check=*/initial_params::stddev_scale(scale,x);
+      dvector scale(1,nvar);   // need to get scale from somewhere
+      check=initial_params::stddev_scale(scale,x);
       dvector sscale=scale(1,Dux(1).indexmax());
 
       for (i=1;i<=usize;i++)
@@ -475,14 +470,14 @@ dvector laplace_approximation_calculator::
       }
       quadratic_prior::in_qp_calculations=0;
       funnel_init_var::lapprox=0;
-      laplace_approximation_calculator::where_are_we_flag=0;
-
+      laplace_approximation_calculator::where_are_we_flag=0; 
+   
       for (i=1;i<=usize;i++)
       {
         Dux(i)=elem_prod(Dux(i),sscale);
       }
       //local_dtemp=elem_prod(local_dtemp,sscale);
-
+  
       if (xstuff>2)
       {
         dvector tmp=evaluate_function_with_quadprior(x,usize,pfmin);
@@ -491,13 +486,13 @@ dvector laplace_approximation_calculator::
           xadjoint(i)+=tmp(i);
         }
       }
-
+  
       if (xstuff>2)
       {
         quadratic_prior::get_cHessian_contribution_from_vHessian(Hess,xsize);
       }
     }
-
+  
  // *****************************************************************
  // new stuff to deal with quadraticprior
  // *****************************************************************
@@ -506,8 +501,8 @@ dvector laplace_approximation_calculator::
     /*double time=*/ad_comm::ptm->get_elapsed_time_and_reset();
   }
 
-#if defined(USE_ATLAS)
-      if (!ad_comm::no_atlas_flag)
+#if defined(USE_ATLAS)   
+      if (!ad_comm::no_atlas_flag) 
       {
         //xadjoint -= uadjoint*atlas_solve_spd_trans(Hess,Dux);
         xadjoint -= atlas_solve_spd_trans(Hess,uadjoint)*Dux;
@@ -544,3 +539,6 @@ dvector laplace_approximation_calculator::
 
   return xadjoint;
 }
+
+
+#endif //#if defined(USE_LAPLACE)

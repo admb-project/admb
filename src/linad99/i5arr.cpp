@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -145,7 +145,7 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-i5_array::i5_array(const i5_array& m2)
+ i5_array::i5_array(_CONST i5_array& m2)
  {
    if (m2.shape)
    {
@@ -200,11 +200,12 @@ i5_array::i5_array(const i5_array& m2)
  */
     i4_array& i5_array::operator ( ) (int i)
     {
+#     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i4_array& i5_array::operator ( ) (int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i4_array& i5_array::operator ( ) (int i)", indexmin(), indexmax(), i);
       }
+#     endif
       return t[i];
     }
 
@@ -214,11 +215,12 @@ i5_array::i5_array(const i5_array& m2)
  */
     i4_array& i5_array::operator [] (int i)
     {
+#     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i4_array& i5_array::operator [] (int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i4_array& i5_array::operator [] (int i)", indexmin(), indexmax(), i);
       }
+#     endif
       return t[i];
     }
 
@@ -258,18 +260,22 @@ i5_array::i5_array(const i5_array& m2)
       return ( ((*this)(i,j,k))(l,ll));
     }
 
+#if defined(USE_CONST)
+
 /**
  * Description not yet available.
  * \param
  */
-const i4_array& i5_array::operator()(int i) const
+    _CONST i4_array& i5_array::operator ( ) (int i)   _CONST 
     {
+#     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
-        cerr << "Index out of bounds in i5_array::operator () (int)"
-             << endl;
+	cerr << "Index out of bounds in i5_array::operator () (int)"
+	     << endl;
         ad_exit(1);
       }
+#     endif
       return t[i];
     }
 
@@ -277,14 +283,16 @@ const i4_array& i5_array::operator()(int i) const
  * Description not yet available.
  * \param
  */
-const i4_array& i5_array::operator[](int i) const
+    _CONST i4_array& i5_array::operator [] (int i) _CONST
     {
+#     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
-        cerr << "Index out of bounds in i5_array::operator () (int)"
-             << endl;
+	cerr << "Index out of bounds in i5_array::operator () (int)"
+	     << endl;
         ad_exit(1);
       }
+#     endif
       return t[i];
     }
 
@@ -292,7 +300,7 @@ const i4_array& i5_array::operator[](int i) const
  * Description not yet available.
  * \param
  */
-const i3_array& i5_array::operator()(int i, int j) const
+     _CONST i3_array& i5_array::operator ( ) (int i ,int j) _CONST
     {
       return ((*this)(i))(j);
     }
@@ -301,7 +309,7 @@ const i3_array& i5_array::operator()(int i, int j) const
  * Description not yet available.
  * \param
  */
-const imatrix& i5_array::operator()(int i, int j, int k) const
+    _CONST imatrix& i5_array::operator ( ) (int i,int j,int k) _CONST
     {
       return (((*this)(i,j))(k));
     }
@@ -310,7 +318,7 @@ const imatrix& i5_array::operator()(int i, int j, int k) const
  * Description not yet available.
  * \param
  */
-const ivector& i5_array::operator()(int i, int j, int k, int l) const
+    _CONST ivector&  i5_array::operator ( ) (int i,int j,int k,int l) _CONST
     {
       return ( ((*this)(i,j,k))(l));
     }
@@ -319,8 +327,10 @@ const ivector& i5_array::operator()(int i, int j, int k, int l) const
  * Description not yet available.
  * \param
  */
-const int& i5_array::operator()(int i, int j, int k, int l, int ll) const
+    _CONST int&  i5_array::operator ( ) (int i,int j,int k,int l,int ll) _CONST
     {
       return ( ((*this)(i,j,k))(l,ll));
     }
 #endif
+#endif
+

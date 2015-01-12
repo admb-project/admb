@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -35,7 +35,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& ostr, const lmatrix& z)
+ostream& operator<<(BOR_CONST ostream& ostr,_CONST lmatrix& z)
 {
   int min=z.rowmin();
   int max=z.rowmax();
@@ -52,7 +52,7 @@ ostream& operator<<(const ostream& ostr, const lmatrix& z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(const istream& istr, const lmatrix& z)
+istream& operator>>(BOR_CONST istream& istr,BOR_CONST lmatrix& z)
 {
   int min=z.rowmin();
   int max=z.rowmax();

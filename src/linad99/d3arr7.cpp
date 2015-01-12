@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-d3_array mfexp(const d3_array& m)
+   d3_array mfexp(_CONST d3_array& m)
    {
      d3_array tmp;
      tmp.allocate(m);
@@ -23,13 +23,13 @@ d3_array mfexp(const d3_array& m)
        tmp(i)=mfexp(m(i));
      }
      return tmp;
-   }
+   }  
 
 /**
  * Description not yet available.
  * \param
  */
-d3_array mfexp(const d3_array& m, const double d)
+   d3_array mfexp(_CONST d3_array& m, CGNU_DOUBLE d)
    {
      d3_array tmp;
      tmp.allocate(m);

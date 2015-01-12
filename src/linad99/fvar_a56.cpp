@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator*=(const double x)
+  dvar_vector& dvar_vector::operator *= ( CGNU_DOUBLE x)
   {
     for (int i=indexmin(); i<=indexmax(); i++)
     {
@@ -27,7 +27,7 @@ dvar_vector& dvar_vector::operator*=(const double x)
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator*=(const prevariable& x)
+  dvar_vector& dvar_vector::operator *= ( _CONST prevariable& x)
   {
     for (int i=indexmin(); i<=indexmax(); i++)
     {

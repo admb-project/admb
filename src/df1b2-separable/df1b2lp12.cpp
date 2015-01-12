@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -27,7 +27,7 @@ dvector solve(const dmatrix & _st,const dmatrix & Hess,
 
   hs_smatrix HS(n,st);  // Convert triplet to working format
 
-  hs_symbolic S(n,st,1);         // Fill reducing row-col permutation
+  hs_symbolic S(n,st,1);         // Fill reducing row-col permutation                 
   hs_smatrix L(S);              // Allocates cholesky factor
 
   chol(HS,S,L);                  // Does numeric factorization
@@ -43,3 +43,4 @@ dvector solve(const dmatrix & _st,const dmatrix & Hess,
   return x;
 }
 */
+

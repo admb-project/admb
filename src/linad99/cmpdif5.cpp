@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -29,7 +29,7 @@
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_value(void) const
+void dmatrix::save_dmatrix_value(void) _CONST
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
@@ -59,10 +59,10 @@ void d3_array::save_d3_array_value(void) const
  * Description not yet available.
  * \param
  */
-dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos)
+dmatrix restore_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
-  dmatrix out((const dvar_matrix_position&)mpos);
+  dmatrix out((BOR_CONST dvar_matrix_position&)mpos);
   //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
@@ -78,11 +78,11 @@ dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos)
  * Description not yet available.
  * \param
  */
-dmatrix restore_dmatrix_value(const dmatrix_position& mpos)
+dmatrix restore_dmatrix_value(BOR_CONST dmatrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
-  dmatrix out((const dmatrix_position&) mpos);
+  dmatrix out((BOR_CONST dmatrix_position&) mpos);
   //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
@@ -118,7 +118,7 @@ d3_array restore_d3_array_value(const d3_array_position& mpos)
  * Description not yet available.
  * \param
  */
-dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
+dvector restore_dvar_vector_derivatives(BOR_CONST dvar_vector_position& tmp)
 {
   // puts the derivative values from a dvar_vector's guts into a dvector
   dvector tempvec(tmp.indexmin(),tmp.indexmax());
@@ -140,11 +140,11 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 //  _dp_vector_add
 //  _dp_vector_elem_div
 //  _dp_dotproduct
-//  _dp_vector_elem_prod
+//  _dp_vector_elem_prod 
 //  _dp_scalar_product
-//  _dp_vector_sub
+//  _dp_vector_sub 
 //  _dw_block_move
-
+     
   return tempvec;
 }
 
@@ -152,7 +152,7 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
  * Description not yet available.
  * \param
  */
-dvector restore_dvar_vector_der_nozero(const dvar_vector_position& tmp)
+dvector restore_dvar_vector_der_nozero(BOR_CONST dvar_vector_position& tmp)
 {
   // puts the derivative values from a dvar_vector's guts into a dvector
   dvector tempvec(tmp.min,tmp.max);
@@ -175,7 +175,7 @@ dvector restore_dvar_vector_der_nozero(const dvar_vector_position& tmp)
  * Description not yet available.
  * \param
  */
-void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
+void dvector::save_dvector_derivatives(BOR_CONST dvar_vector_position& pos) _CONST
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=indexmin();
@@ -183,8 +183,8 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
   if (min!=pos.indexmin() || max!=pos.indexmax())
   {
     cerr << "Incompatible array sizes in " <<
-    "void dvector::save_dvector_derivatives(const dvar_vector_position& pos)"
-    << endl;
+     "void dvector::save_dvector_derivatives(BOR_CONST dvar_vector_position& pos)" <<
+     endl;
   }
   double_and_int * ptr=pos.va;
 
@@ -204,7 +204,7 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
  * Description not yet available.
  * \param
  */
-void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
+void dvector::save_dvector_derivatives_na(BOR_CONST dvar_vector_position& pos) _CONST
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=indexmin();
@@ -212,8 +212,8 @@ void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
   if (min!=pos.indexmin() || max!=pos.indexmax())
   {
     cerr << "Incompatible array sizes in " <<
-    "void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos)"
-    << endl;
+     "void dvector::save_dvector_derivatives_na(BOR_CONST dvar_vector_position& pos)" <<
+     endl;
   }
   double_and_int * ptr=pos.va;
 
@@ -232,16 +232,16 @@ void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
  * Description not yet available.
  * \param
  */
-void save_dmatrix_derivatives(const dvar_matrix_position& _pos, const double x,
-  const int& i, int& j)
+void save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& _pos, CGNU_DOUBLE x,BOR_CONST int& i,
+  int& j)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   if ( i<pos.rowmin()||i>pos.rowmax() ||
      j<(pos.colmin())(i) || j>(pos.colmax())(i) )
   {
     cerr << "Error -- Index out of bounds in routine\n"
-    " void save_dmatrix_derivatives(const dvar_matrix_position& pos"
-    "  , const double& x, const int& i, const int& j)" << endl;
+    " void save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& pos"
+    "  ,_CONST double& x,BOR_CONST int& i,BOR_CONST int& j)" << endl;
     ad_exit(1);
   }
   // puts the derivative values in a dvector into a dvar_vector's guts
@@ -252,7 +252,7 @@ void save_dmatrix_derivatives(const dvar_matrix_position& _pos, const double x,
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& _pos) const
+void dmatrix::save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& _pos) _CONST
 {
   dvar_matrix_position& pos=(dvar_matrix_position&) _pos;
   // puts the derivative values in a dvector into a dvar_vector's guts
@@ -261,8 +261,8 @@ void dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& _pos) const
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
-    "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
-    << endl;
+     "void dmatrix::save_dmatrix__derivatives(BOR_CONST dvar_matrix_position& pos)" <<
+     endl;
   }
   for (int i=min;i<=max;i++)
   {
@@ -275,8 +275,7 @@ void dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& _pos) const
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
-  const
+void dmatrix::save_dmatrix_derivatives_na(BOR_CONST dvar_matrix_position& _pos) _CONST
 {
   dvar_matrix_position& pos=(dvar_matrix_position&) _pos;
   // puts the derivative values in a dvector into a dvar_vector's guts
@@ -285,8 +284,8 @@ void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
-    "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
-    << endl;
+     "void dmatrix::save_dmatrix__derivatives(BOR_CONST dvar_matrix_position& pos)" <<
+     endl;
   }
   for (int i=min;i<=max;i++)
   {
@@ -299,7 +298,7 @@ void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::save_dvar_matrix_position(void) const
+void dvar_matrix::save_dvar_matrix_position(void) _CONST
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp(*this,1);

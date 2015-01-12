@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -34,19 +34,18 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _s, const d3_array& z)
+ostream& operator<<(BOR_CONST ostream& _s,_CONST d3_array& z)
 {
   ostream& s = (ostream&) _s;
 #ifdef __USE_IOSTREAM__
-  using std::streamsize;
-  streamsize new_w = s.width();
-  streamsize new_p = s.precision();
-#if !defined(__cplusplus)
-  long new_form = s.flags();
-#else
+  int new_w = s.width();
+  int new_p = s.precision();
+#if defined(GCC3)
   ios::fmtflags new_form = s.flags();
+#else
+  long new_form = s.flags();
 #endif
-
+  
   char new_fill = s.fill();
 #endif
 
@@ -71,7 +70,7 @@ ostream& operator<<(const ostream& _s, const d3_array& z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(const istream& _istr, const d3_array& z)
+istream& operator>>(BOR_CONST istream& _istr,BOR_CONST d3_array& z)
 {
   istream& istr = (istream&) _istr;
   for (int i=z.slicemin();i<=z.slicemax();i++)

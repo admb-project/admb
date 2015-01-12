@@ -2,13 +2,20 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 //#include "df3fun.h"
   df1b2variable * df3_one_variable::ind_var=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable::df3_one_variable(const df3_one_variable& x)
   {
     v[0]=x.v[0];
@@ -17,6 +24,10 @@
     v[3]=x.v[3];
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df3_one_vector::df3_one_vector(const df3_one_vector& m2)
  {
    index_min=m2.index_min;
@@ -29,11 +40,19 @@
    v = m2.v;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df3_one_vector::~df3_one_vector()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df3_one_vector::deallocate(void)
  {
    if(shape)
@@ -53,8 +72,13 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector value(const df3_one_vector& v)
  {
+   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -65,8 +89,13 @@
    return cv;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector first_derivatives(const df3_one_vector& v)
  {
+   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -76,9 +105,14 @@
    }
    return cv;
  }
-
+   
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector second_derivatives(const df3_one_vector& v)
  {
+   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -89,8 +123,13 @@
    return cv;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector third_derivatives(const df3_one_vector& v)
  {
+   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -100,7 +139,11 @@
    }
    return cv;
  }
-
+   
+/**
+ * Description not yet available.
+ * \param
+ */
   void df3_one_vector::initialize(void)
   {
     int mmin=indexmin();
@@ -111,16 +154,28 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_vector::df3_one_vector(void)
   {
     allocate();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_vector::df3_one_vector(int min,int max)
   {
     allocate(min,max);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df3_one_vector::allocate(int min,int max)
   {
     index_min=min;
@@ -133,13 +188,17 @@
     }
     if ( (shape=new vector_shapex(min,max,v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df3_one_vector"
+      cerr << "Error trying to allocate memory for df3_one_vector" 
            << endl;;
       ad_exit(1);
     }
     v-=min;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df3_one_vector::allocate(void)
   {
     index_min=0;
@@ -147,9 +206,14 @@
     v=0;
     shape=0;
   }
-
+    
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix value(const df3_one_matrix& v)
  {
+   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -157,7 +221,7 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax);
+     cm(i).allocate(cmin,cmax); 
      for (int j=cmin;j<=cmax;j++)
      {
        cm(i,j)=value(v(i,j));
@@ -166,8 +230,13 @@
    return cm;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix first_derivatives(const df3_one_matrix& v)
  {
+   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -175,12 +244,16 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax);
+     cm(i).allocate(cmin,cmax); 
      cm(i)=first_derivatives(v(i));
    }
    return cm;
  }
-
+   
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix second_derivatives(const df3_one_matrix& v)
  {
    int rmin=v.indexmin();
@@ -190,12 +263,16 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax);
+     cm(i).allocate(cmin,cmax); 
      cm(i)=second_derivatives(v(i));
    }
    return cm;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix third_derivatives(const df3_one_matrix& v)
  {
    int rmin=v.indexmin();
@@ -205,13 +282,16 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax);
+     cm(i).allocate(cmin,cmax); 
      cm(i)=third_derivatives(v(i));
    }
    return cm;
  }
-
-
+   
+/**
+ * Description not yet available.
+ * \param
+ */
  df3_one_matrix::df3_one_matrix(const df3_one_matrix& m2)
  {
    index_min=m2.index_min;
@@ -224,11 +304,19 @@
    v = m2.v;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df3_one_matrix::~df3_one_matrix()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df3_one_matrix::deallocate(void)
  {
    if (shape)
@@ -248,7 +336,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void df3_one_matrix::initialize(void)
   {
     int mmin=indexmin();
@@ -259,7 +350,10 @@
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_matrix::df3_one_matrix(int rmin,int rmax,int cmin,int cmax)
   {
     index_min=rmin;
@@ -272,17 +366,17 @@
     }
     if ( (shape=new mat_shapex(v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df3_one_vector"
+      cerr << "Error trying to allocate memory for df3_one_vector" 
            << endl;;
     }
     v-=rmin;
-
+    
     for (int i=rmin;i<=rmax;i++)
     {
       v[i].allocate(cmin,cmax);
     }
   }
-
+    
 /*
   df3_one_variable operator F(const df3_one_variable& x)
   {
@@ -303,13 +397,20 @@
 
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable& df3_one_variable::operator -= (double v)
   {
     *get_u() -= v;
     return *this;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable& df3_one_variable::operator -= (const df3_one_variable& v)
   {
     *get_u() -= *v.get_u();
@@ -320,17 +421,25 @@
     return *this;
   }
 
-df3_one_variable operator-(const df3_one_variable& v)
-{
-  df3_one_variable z;
-  *z.get_u() = -(*v.get_u());
+/**
+ * Description not yet available.
+ * \param
+ */
+  df3_one_variable operator - (const df3_one_variable& v)
+  {
+    df3_one_variable z;
+    *z.get_u() =- *v.get_u();
 
-  *z.get_udot() = -(*v.get_udot());
-  *z.get_udot2() = -(*v.get_udot2());
-  *z.get_udot3() = -(*v.get_udot3());
-  return z;
-}
+    *z.get_udot() =- *v.get_udot();
+    *z.get_udot2() =- *v.get_udot2();
+    *z.get_udot3() =- *v.get_udot3();
+    return z;
+  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable& df3_one_variable::operator += (const df3_one_variable& v)
   {
     *get_u() += *v.get_u();
@@ -341,6 +450,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable sqrt(const df3_one_variable& x)
   {
     df3_one_variable z;
@@ -364,8 +477,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable exp(const df3_one_variable& x)
   {
     df3_one_variable z;
@@ -378,18 +493,22 @@ df3_one_variable operator-(const df3_one_variable& v)
                    + ::exp(*x.get_u())* *x.get_udot2();
 
     *z.get_udot3() = ::exp(*x.get_u()) * cube(*x.get_udot())
-                   + 3.0 * ::exp(*x.get_u()) * *x.get_udot() * *x.get_udot2()
-                   + ::exp(*x.get_u()) * *x.get_udot3();
+                   + 3.0 * ::exp(*x.get_u()) * *x.get_udot() * *x.get_udot2();
+                   //+ ::exp(*x.get_u()) * *x.get_udot3();
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable log(const df3_one_variable& x)
   {
     df3_one_variable z;
 
     double xp=1.0/(*x.get_u());
     double xp2=-square(xp);
-    double xp3=-2.0*xp*xp2;
+    double xp3=2.0*xp*xp2;
 
     *z.get_u() = ::log(*x.get_u());
 
@@ -399,11 +518,15 @@ df3_one_variable operator-(const df3_one_variable& v)
                    + xp * *x.get_udot2();
 
     *z.get_udot3() = xp3 * cube(*x.get_udot())
-                   + 3.0 * xp2 * *x.get_udot() * *x.get_udot2()
-                   + xp * *x.get_udot3();
+                   + 3.0 * xp2 * *x.get_udot() * *x.get_udot2();
+                   //+ xp * *x.get_udot3();
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable inv(const df3_one_variable& x)
   {
     df3_one_variable z;
@@ -425,6 +548,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable& df3_one_variable::operator = (const df3_one_variable& x)
   {
     *get_u() = *x.get_u();
@@ -434,6 +561,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable& df3_one_variable::operator = (double x)
   {
     *get_u() = x;
@@ -443,7 +574,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return *this;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator * (const df3_one_variable& x,
     const df3_one_variable& y)
   {
@@ -455,7 +589,7 @@ df3_one_variable operator-(const df3_one_variable& v)
     *z.get_udot2() = *x.get_udot2() * *y.get_u()
                    + 2.0 * *x.get_udot() * *y.get_udot()
                    +  *x.get_u() * *y.get_udot2();
-
+    
     *z.get_udot3() = *x.get_udot3() * *y.get_u()
                    + 3.0 * *x.get_udot2() * *y.get_udot()
                    + 3.0 * *x.get_udot() * *y.get_udot2()
@@ -463,6 +597,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator * (double x,
     const df3_one_variable& y)
   {
@@ -471,11 +609,15 @@ df3_one_variable operator-(const df3_one_variable& v)
     *z.get_udot() = x * *y.get_udot();
 
     *z.get_udot2() = x * *y.get_udot2();
-
+    
     *z.get_udot3() = x * *y.get_udot3();
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator * (const df3_one_variable& x,
     double y)
   {
@@ -484,12 +626,15 @@ df3_one_variable operator-(const df3_one_variable& v)
     *z.get_udot() =  *x.get_udot() * y;
 
     *z.get_udot2() = *x.get_udot2() * y;
-
+    
     *z.get_udot3() = *x.get_udot3() * y;
     return z;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator / (const df3_one_variable& x,
     const df3_one_variable& y)
   {
@@ -497,6 +642,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return x*u;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator / (double x,
     const df3_one_variable& y)
   {
@@ -504,6 +653,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return x*u;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator + (double x,const df3_one_variable& y)
   {
     df3_one_variable z;
@@ -514,35 +667,38 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
- //
+ //  
  //   df3_one_variable operator / (const df3_one_variable& x,
  //     const df3_one_variable& y)
  //   {
  //     df3_one_variable z;
  //     double yinv =  1.0 / (*y.get_u());
- //     double yinv2 = yinv * yinv;
- //     double yinv3 = yinv * yinv2;
+ //     double yinv2 = yinv * yinv; 
+ //     double yinv3 = yinv * yinv2; 
  //     doubl yd = *y.get_udot();
- //
+ // 
  //     //*z.get_u() = *x.get_u() /  *y.get_u();
  //     *z.get_u() = *x.get_u() * yinv;
- //
+ // 
  //     *z.get_udot() =  - (*x.get_u()) * yinv2 * yd
  //                   + *x.get_udot() * yinv;
- //
+ // 
  //     *z.get_udot2() = *x.get_udot2() * yinv
  //                    - 2.0 * *x.get_udot() * yd * yinv2
  //                    + 2.0 * *x.get_u() * yinv3  * yd *yd
  //                    -  *x.get_u() * yinv2 * y.get_udot2();
- //
+ //     
  //     *z.get_udot3() = *x.get_udot3() * yinv
  //                    + 3.0 * *x.get_udot2() * *y.get_udot()
  //                    + 3.0 * *x.get_udot() * *y.get_udot2()
  //                    +  *x.get_u() * *y.get_udot3();
  //   }
- //
+ //  
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator + (const df3_one_variable& y,
     const double x)
   {
@@ -554,6 +710,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator + (const df3_one_variable& x,
     const df3_one_variable& y)
   {
@@ -565,6 +725,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator - (const df3_one_variable& x,
     const df3_one_variable& y)
   {
@@ -576,6 +740,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_one_variable operator - (const df3_one_variable& x,
     double y)
   {
@@ -587,6 +755,17 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
+  df3_one_variable operator - (const df3_one_variable& x,
+    const df3_one_variable& y);
+  df3_one_variable operator / (const df3_one_variable& x,
+    const df3_one_variable& y);
+  df3_one_variable operator * (const df3_one_variable& x,
+    const df3_one_variable& y);
+
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df3_one_variable::init_df3_one_variable(const df1b2variable& _v)
   {
     ADUNCONST(df1b2variable,v)
@@ -605,6 +784,10 @@ df3_one_variable operator-(const df3_one_variable& v)
     *get_udot3() = 0.0;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df3_one_variable::init_df3_one_variable(double v)
   {
     *get_u() =  v;
@@ -615,8 +798,14 @@ df3_one_variable operator-(const df3_one_variable& v)
 
   df3_one_variable::df3_one_variable(void)
   {
+     
+
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_one_matrix choleski_decomp(const df3_one_matrix& MM)
 {
   // kludge to deal with constantness
@@ -647,14 +836,14 @@ df3_one_matrix choleski_decomp(const df3_one_matrix& MM)
 
   int i,j,k;
   df3_one_variable tmp;
-
+   
     if (value(M(1,1))<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-
+   
   L(1,1)=sqrt(M(1,1));
   for (i=2;i<=n;i++)
   {
@@ -677,20 +866,24 @@ df3_one_matrix choleski_decomp(const df3_one_matrix& MM)
     {
       tmp-=L(i,k)*L(i,k);
     }
-
+   
     if (value(tmp)<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-
+   
     L(i,i)=sqrt(tmp);
   }
 
   return L;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix& df1b2matrix::operator = (const df3_one_matrix& M)
 {
   int rmin=M.indexmin();
@@ -710,6 +903,10 @@ df1b2matrix& df1b2matrix::operator = (const df3_one_matrix& M)
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector& df1b2vector::operator = (const df3_one_vector& M)
 {
   int rmin=M.indexmin();
@@ -728,7 +925,11 @@ df1b2vector& df1b2vector::operator = (const df3_one_vector& M)
   }
   return *this;
 }
-
+    
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable& df1b2variable::operator = (const df3_one_variable& v)
 {
   df1b2variable * px=df3_one_variable::ind_var;
@@ -738,11 +939,11 @@ df1b2variable& df1b2variable::operator = (const df3_one_variable& v)
   double * xd=px->get_u_dot();
   double * zd=get_u_dot();
   *get_u()=*v.get_u();
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = df * *xd++;
   }
-
+      
  /*
   cout << *v.get_u()  << " ";
   cout << *v.get_udot()  << " ";
@@ -751,11 +952,14 @@ df1b2variable& df1b2variable::operator = (const df3_one_variable& v)
   */
   f1b2gradlist->write_pass1(px,this,*v.get_udot(),*v.get_udot2(),
 
-    *v.get_udot3());
+    *v.get_udot3()); 
   return *this;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable cumd_norm(const df1b2variable& _x)
 {
   df1b2variable z;
@@ -766,13 +970,17 @@ df1b2variable cumd_norm(const df1b2variable& _x)
   const double b3=1.781477937;
   const double b4=-1.821255978;
   const double b5=1.330274429;
+  //const double b55=b5*5;
+  //const double b44=b4*4;
+  //const double b33=b3*3;
+  //const double b22=b2*2;
   const double p=.2316419;
-
+  
   if (value(x)>=0)
   {
     df3_one_variable u1=p*x;
-    df3_one_variable u2=1.+u1;
-    df3_one_variable u=1./u2;
+    df3_one_variable u2=1.+p*x;
+    df3_one_variable u=1./(1.+p*x);
     df3_one_variable y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     df3_one_variable tmp1=-0.3989422804*exp(-.5*x*x);
     z=1.0+tmp1*y;
@@ -788,6 +996,10 @@ df1b2variable cumd_norm(const df1b2variable& _x)
   return z;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable bounded_cumd_norm(const df1b2variable& _x, double beta)
 {
   df1b2variable z;
@@ -798,13 +1010,17 @@ df1b2variable bounded_cumd_norm(const df1b2variable& _x, double beta)
   const double b3=1.781477937;
   const double b4=-1.821255978;
   const double b5=1.330274429;
+  //const double b55=b5*5;
+  //const double b44=b4*4;
+  //const double b33=b3*3;
+  //const double b22=b2*2;
   const double p=.2316419;
-
+  
   if (value(x)>=0)
   {
     df3_one_variable u1=p*x;
-    df3_one_variable u2=1.+u1;
-    df3_one_variable u=1./u2;
+    df3_one_variable u2=1.+p*x;
+    df3_one_variable u=1./(1.+p*x);
     df3_one_variable y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     df3_one_variable tmp1=-0.3989422804*exp(-.5*x*x);
     z=1.0+tmp1*y;
@@ -820,5 +1036,3 @@ df1b2variable bounded_cumd_norm(const df1b2variable& _x, double beta)
   z=beta*(z-0.5)+0.5;
   return z;
 }
-
-

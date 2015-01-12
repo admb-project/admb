@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -37,7 +37,7 @@
  * Description not yet available.
  * \param
  */
-uistream& operator>>(const uistream& istr, const dvar_matrix& _z)
+uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_matrix& _z)
 {
   ADUNCONST(dvar_matrix,z)
   z.read_from(istr);
@@ -48,16 +48,16 @@ uistream& operator>>(const uistream& istr, const dvar_matrix& _z)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::read_from(const uistream& s)
+void dvar_matrix::read_from(BOR_CONST uistream& s)
 {
   if (allocated(*this))
-  {
+  {  
     int n = rowmin() + rowsize() - 1;
 
     for (int i=rowmin(); i <= n; i++)
     {
       s >> (*this)[i];
-      if (!s.good())
+      if (!s.good()) 
       {
         cerr << " Error in dvar_matrix read\n";
         ad_exit(1);
@@ -70,7 +70,7 @@ void dvar_matrix::read_from(const uistream& s)
  * Description not yet available.
  * \param
  */
-uostream& operator<<(const uostream& ostr, const dvar_matrix& z)
+uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_matrix& z)
 {
   if (allocated(z))
     z.write_on(ostr);
@@ -82,15 +82,15 @@ uostream& operator<<(const uostream& ostr, const dvar_matrix& z)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::write_on(const uostream& s) const
+void dvar_matrix::write_on(BOR_CONST uostream& s) _CONST
 {
   if (allocated(*this))
-  {
+  {  
     int n = rowmin() + rowsize() - 1;
     for (int i=rowmin(); i <= n; i++)
     {
       s << (*this)[i];
-      if (!s.good())
+      if (!s.good()) 
       {
         cerr << " Error in dvar_matrix write\n";
         ad_exit(1);

@@ -2,18 +2,15 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 #include "fvar.hpp"
-#ifdef _MSC_VER
-  #include <memory.h>
-#endif
-#ifndef OPT_LIB
-  #include <cassert>
+#ifdef __MSVC32__
+#include <memory.h>
 #endif
 
 void dvdv_add(void);
@@ -22,13 +19,12 @@ void dvdv_add(void);
  * Description not yet available.
  * \param
  */
-dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
+dvar_vector operator + (_CONST dvar_vector& v1,_CONST dvar_vector& v2)
 {
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-    "prevariable operator + (const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+      "prevariable operator + (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   //dvector cv1=value(v1);
@@ -92,15 +88,11 @@ void dvdv_add(void)
   verify_identifier_string("bbbb");
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
-#ifndef OPT_LIB
-  assert(mmax >= mmin);
-#endif
   dvector dfv1(mmin,mmax);
   dvector dfv2(mmin,mmax);
 #ifdef OPT_LIB
-  size_t size = (size_t)(mmax - mmin + 1);
-  memcpy(&dfv1.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
-  memcpy(&dfv2.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
+  memcpy(&dfv1.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
+  memcpy(&dfv2.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
 #else
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
   {

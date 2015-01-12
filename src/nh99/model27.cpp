@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -54,19 +54,19 @@ void named_d6_array::allocate(int l5,int h5,int hhsl,int hhsu,int hsl,
   model_name_tag::allocate(s);
 }
 
-named_d6_array& named_d6_array::operator=(const d6_array& m)
+named_d6_array& named_d6_array::operator = (_CONST d6_array& m)
 {
   this->d6_array::operator=(m);
   return *this;
 }
 
-named_dvar6_array& named_dvar6_array::operator=(const dvar6_array& m)
+named_dvar6_array& named_dvar6_array::operator = (_CONST dvar6_array& m)
 {
   this->dvar6_array::operator=(m);
   return *this;
 }
 
-named_dvar6_array& named_dvar6_array::operator=(const d6_array& m)
+named_dvar6_array& named_dvar6_array::operator = (_CONST d6_array& m)
 {
   this->dvar6_array::operator=(m);
   return *this;

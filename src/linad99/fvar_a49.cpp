@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-dvariable var(const dvar_vector& v)
+  dvariable var(_CONST dvar_vector& v)
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();
@@ -40,7 +40,7 @@ dvariable var(const dvar_vector& v)
  * Description not yet available.
  * \param
  */
-dvariable std_dev(const dvar_vector& v)
+  dvariable std_dev(_CONST dvar_vector& v)
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();
@@ -55,7 +55,7 @@ dvariable std_dev(const dvar_vector& v)
  * Description not yet available.
  * \param
  */
-dvariable mean(const dvar_vector& v)
+  dvariable mean(_CONST dvar_vector& v)
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();

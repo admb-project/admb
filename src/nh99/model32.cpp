@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -89,7 +89,7 @@ dll_data_matrix::~dll_data_matrix()
       {
         *tmp++=(*this)(i,j);
       }
-    }
+    }  
   }
   else
   {
@@ -99,7 +99,7 @@ dll_data_matrix::~dll_data_matrix()
       {
         *tmp++=(*this)(i,j);
       }
-    }
+    }  
   }
 }
 dll_param_init_matrix::~dll_param_init_matrix()
@@ -117,7 +117,7 @@ dll_param_init_matrix::~dll_param_init_matrix()
       {
         *tmp++=value((*this)(i,j));
       }
-    }
+    }  
   }
   else
   {
@@ -127,7 +127,7 @@ dll_param_init_matrix::~dll_param_init_matrix()
       {
         *tmp++=value((*this)(i,j));
       }
-    }
+    }  
   }
 }
 
@@ -146,7 +146,7 @@ dll_param_matrix::~dll_param_matrix()
       {
         *tmp++=value((*this)(i,j));
       }
-    }
+    }  
   }
   else
   {
@@ -156,6 +156,6 @@ dll_param_matrix::~dll_param_matrix()
       {
         *tmp++=value((*this)(i,j));
       }
-    }
+    }  
   }
 }

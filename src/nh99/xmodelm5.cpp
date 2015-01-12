@@ -2,13 +2,16 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
+#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
+#endif
 
+#if defined(USE_LAPLACE)
 dvariable function_minimizer::do_gauss_hermite_integration(void)
 {
   if (lapprox->gh->mi)
@@ -57,3 +60,4 @@ dvariable function_minimizer::do_gauss_hermite_integration_multi(void)
   }
   return fun;
 }
+#endif // #if defined(USE_LAPLACE)

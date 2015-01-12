@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -18,13 +18,13 @@ void dfcholeski_decomp_banded_positive(void);
  * \param
  */
 banded_lower_triangular_dvar_matrix choleski_decomp_positive(
-  const banded_symmetric_dvar_matrix& MM, double eps,
-  dvariable& _fpen)
+  _CONST banded_symmetric_dvar_matrix& MM,double eps,
+   dvariable& _fpen)
 {
   // kludge to deal with constantness
   banded_symmetric_dvar_matrix& M = (banded_symmetric_dvar_matrix&) MM;
   int n=M.indexmax();
-
+  
   int bw=M.bandwidth();
   banded_lower_triangular_dvar_matrix L(1,n,bw);
 #ifndef SAFE_INITIALIZE
@@ -68,7 +68,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
 
   if (fpen>0)
     cout << "fpen = " << fpen << endl;
-
+ 
    value(_fpen)=fpen;
   //banded_lower_triangular_dvar_matrix vc=nograd_assign(L);
   save_identifier_string("qs");
@@ -83,7 +83,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
   save_identifier_string("ro");
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfcholeski_decomp_banded_positive);
-
+  
   return L;
 }
 
@@ -163,7 +163,7 @@ void dfcholeski_decomp_banded_positive(void)
     ptmp(i)=posfun(tmp(i),eps,pen);
     L(i,i)=sqrt(ptmp(i));
   }
-
+ 
   dfptmp.initialize();
 
   for (i=n;i>=2;i--)
@@ -175,7 +175,7 @@ void dfcholeski_decomp_banded_positive(void)
     dftmp(i)=dfptmp(i)*dfposfun(tmp(i),eps);
     dftmp(i)+=dfpen*dfposfun1(tmp(i),eps);
     dfptmp(i)=0.0;
-
+    
     int kmin=admax(i-bw+1,1);
     for (k=i-1;k>=kmin;k--)
     {
@@ -193,7 +193,7 @@ void dfcholeski_decomp_banded_positive(void)
       dftmp1(i,j)+=dfL(i,j)*linv;
       dfL(j,j)-=dfL(i,j)*tmp1(i,j)*linv*linv;
       dfL(i,j)=0.0;
-      kmin=max(1,j-bw+1,i-bw+1);
+      int kmin=max(1,j-bw+1,i-bw+1);
       for (k=j-1;k>=kmin;k--)
       {
         //tmp(i,j)-=L(i,k)*L(j,k);

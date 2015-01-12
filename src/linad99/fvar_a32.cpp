@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -10,18 +10,13 @@
  */
 #include "fvar.hpp"
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
-void dv_subassign(void);
+ void dv_subassign(void);
 
 /**
  * Description not yet available.
  * \param
  */
-dvar_vector dvar_vector::operator()(const ivector& u)
+ dvar_vector dvar_vector::operator ()(_CONST ivector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
 
@@ -70,18 +65,13 @@ void dv_subassign(void)
  * Description not yet available.
  * \param
  */
-dvar_vector dvar_vector::operator()(const lvector& u)
+ dvar_vector dvar_vector::operator ()(_CONST lvector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
+
    for ( int i=u.indexmin(); i<=u.indexmax(); i++)
    {
-#ifdef OPT_LIB
-     tmp(i)=(*this)((int)u(i));
-#else
-     const long ui = u(i);
-     assert(ui <= INT_MAX);
-     tmp(i)=(*this)((int)ui);
-#endif
+     tmp(i)=(*this)(u(i));
    }
    return tmp;
  }

@@ -2,14 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable
+// constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
 
@@ -29,25 +29,25 @@
 #include <math.h>
 
 // dvar_matrix mathematical functions
-dvar_matrix exp(const dvar_matrix& m);
-dvar_matrix log(const dvar_matrix& m);
-dvar_matrix sin(const dvar_matrix& m);
-dvar_matrix cos(const dvar_matrix& m);
-dvar_matrix tan(const dvar_matrix& m);
-dvar_matrix pow(const dvar_matrix& m, const double e);
-dvar_matrix pow(const dvar_matrix& m, const prevariable& e);
-dvar_matrix pow(const dmatrix& m, const prevariable& e);
-dvar_matrix pow(const dvar_matrix& m, int e);
-dvar_matrix elem_prod(const dvar_matrix& m, const dvar_matrix& m2);
-dvar_matrix elem_prod(const dvar_matrix& m, const dmatrix& m2);
-dvar_matrix elem_prod(const dmatrix& m, const dvar_matrix& m2);
-dvar_matrix elem_div(const dvar_matrix& m, const dvar_matrix& m2);
-dvar_matrix elem_div(const dvar_matrix& m, const dmatrix& m2);
-dvar_matrix elem_div(const dmatrix& m, const dvar_matrix& m2);
+    dvar_matrix exp(_CONST dvar_matrix& m);
+    dvar_matrix log(_CONST dvar_matrix& m);
+    dvar_matrix sin(_CONST dvar_matrix& m);
+    dvar_matrix cos(_CONST dvar_matrix& m);
+    dvar_matrix tan(_CONST dvar_matrix& m);
+    dvar_matrix pow(_CONST dvar_matrix& m, CGNU_DOUBLE e);
+    dvar_matrix pow(_CONST dvar_matrix& m,_CONST prevariable& e);
+    dvar_matrix pow(_CONST dmatrix& m,_CONST prevariable& e);
+    dvar_matrix pow(_CONST dvar_matrix& m,int e);
+    dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dvar_matrix& m2);
+    dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dmatrix& m2);
+    dvar_matrix elem_prod(_CONST dmatrix& m,_CONST dvar_matrix& m2);
+    dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dvar_matrix& m2);
+    dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dmatrix& m2);
+    dvar_matrix elem_div(_CONST dmatrix& m,_CONST dvar_matrix& m2);
 // end of dvar_vector mathematical functions
 
 /*  "template form for editor
-dvar_matrix XXX(const dvar_matrix& m)
+dvar_matrix XXX(_CONST dvar_matrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -70,7 +70,7 @@ dvar_matrix XXX(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix use_shape(const dvar_matrix& m)
+dvar_matrix use_shape(_CONST dvar_matrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -87,7 +87,7 @@ dvar_matrix use_shape(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix use_shape(const dmatrix& m)
+dmatrix use_shape(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -104,7 +104,7 @@ dmatrix use_shape(const dmatrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix pow(const dvar_matrix& m, int e)
+dvar_matrix pow(_CONST dvar_matrix& m,int e)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -118,7 +118,7 @@ dvar_matrix pow(const dvar_matrix& m, int e)
  * Description not yet available.
  * \param
  */
-dvar_matrix pow(const dmatrix& m, const prevariable& e)
+dvar_matrix pow(_CONST dmatrix& m,_CONST prevariable& e)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -132,7 +132,7 @@ dvar_matrix pow(const dmatrix& m, const prevariable& e)
  * Description not yet available.
  * \param
  */
-dvar_matrix pow(const dvar_matrix& m, const prevariable& e)
+dvar_matrix pow(_CONST dvar_matrix& m,_CONST prevariable& e)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -146,7 +146,7 @@ dvar_matrix pow(const dvar_matrix& m, const prevariable& e)
  * Description not yet available.
  * \param
  */
-dvar_matrix pow(const dvar_matrix& m, const double e)
+dvar_matrix pow(_CONST dvar_matrix& m, CGNU_DOUBLE e)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -160,7 +160,7 @@ dvar_matrix pow(const dvar_matrix& m, const double e)
  * Description not yet available.
  * \param
  */
-dvar_matrix tan(const dvar_matrix& m)
+dvar_matrix tan(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -174,7 +174,7 @@ dvar_matrix tan(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix cos(const dvar_matrix& m)
+dvar_matrix cos(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -188,7 +188,7 @@ dvar_matrix cos(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix sin(const dvar_matrix& m)
+dvar_matrix sin(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -202,7 +202,7 @@ dvar_matrix sin(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix log(const dvar_matrix& m)
+dvar_matrix log(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -216,7 +216,7 @@ dvar_matrix log(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix sqrt(const dvar_matrix& m)
+dvar_matrix sqrt(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -230,7 +230,7 @@ dvar_matrix sqrt(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix sqr(const dvar_matrix& m)
+dvar_matrix sqr(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -244,7 +244,7 @@ dvar_matrix sqr(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix exp(const dvar_matrix& m)
+dvar_matrix exp(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -258,7 +258,7 @@ dvar_matrix exp(const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix elem_div(const dvar_matrix& m, const dvar_matrix& m2)
+dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dvar_matrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -272,7 +272,7 @@ dvar_matrix elem_div(const dvar_matrix& m, const dvar_matrix& m2)
  * Description not yet available.
  * \param
  */
-dvar_matrix elem_div(const dmatrix& m,const dvar_matrix& m2)
+dvar_matrix elem_div(_CONST dmatrix& m,_CONST dvar_matrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -286,7 +286,7 @@ dvar_matrix elem_div(const dmatrix& m,const dvar_matrix& m2)
  * Description not yet available.
  * \param
  */
-dvar_matrix elem_div(const dvar_matrix& m, const dmatrix& m2)
+dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dmatrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -300,7 +300,7 @@ dvar_matrix elem_div(const dvar_matrix& m, const dmatrix& m2)
  * Description not yet available.
  * \param
  */
-dvar_matrix elem_prod(const dvar_matrix& m, const dvar_matrix& m2)
+dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dvar_matrix& m2)
 {
   //dvar_matrix tmp=use_shape(m);
   dvar_matrix tmp(m.indexmin(),m.indexmax());
@@ -315,7 +315,7 @@ dvar_matrix elem_prod(const dvar_matrix& m, const dvar_matrix& m2)
  * Description not yet available.
  * \param
  */
-dvar_matrix elem_prod(const dmatrix& m, const dvar_matrix& m2)
+dvar_matrix elem_prod(_CONST dmatrix& m,_CONST dvar_matrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -329,7 +329,7 @@ dvar_matrix elem_prod(const dmatrix& m, const dvar_matrix& m2)
  * Description not yet available.
  * \param
  */
-dvar_matrix elem_prod(const dvar_matrix& m, const dmatrix& m2)
+dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dmatrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -343,7 +343,7 @@ dvar_matrix elem_prod(const dvar_matrix& m, const dmatrix& m2)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator+(const double x, const dvar_matrix& m)
+dvar_matrix operator + ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -357,7 +357,7 @@ dvar_matrix operator+(const double x, const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator*(const prevariable& x, const dvar_matrix& m)
+dvar_matrix operator * (_CONST prevariable& x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -371,7 +371,7 @@ dvar_matrix operator*(const prevariable& x, const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator+(const dvar_matrix& m, const double x)
+dvar_matrix operator + (_CONST dvar_matrix& m, CGNU_DOUBLE x)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -385,7 +385,7 @@ dvar_matrix operator+(const dvar_matrix& m, const double x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator+(const dvariable& x, const dvar_matrix& m)
+dvar_matrix operator + (_CONST dvariable& x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -399,7 +399,7 @@ dvar_matrix operator+(const dvariable& x, const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator+(const dvar_matrix& m, const dvariable& x)
+dvar_matrix operator + (_CONST dvar_matrix& m,_CONST dvariable& x)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -413,7 +413,7 @@ dvar_matrix operator+(const dvar_matrix& m, const dvariable& x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator*(const dvar_matrix& m, const prevariable& x)
+dvar_matrix operator * (_CONST dvar_matrix& m,_CONST prevariable& x)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -427,7 +427,7 @@ dvar_matrix operator*(const dvar_matrix& m, const prevariable& x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator-(const dvar_matrix& m, const double x)
+dvar_matrix operator - (_CONST dvar_matrix& m, CGNU_DOUBLE x)
 {
   dvar_matrix tmp=use_shape(m);
   double t=-x;
@@ -442,7 +442,7 @@ dvar_matrix operator-(const dvar_matrix& m, const double x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator-(const double x, const dvar_matrix& m)
+dvar_matrix operator - ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -456,7 +456,7 @@ dvar_matrix operator-(const double x, const dvar_matrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator-(const dvar_matrix& m, const dvariable& x)
+dvar_matrix operator - (_CONST dvar_matrix& m,_CONST dvariable& x)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)
@@ -470,7 +470,7 @@ dvar_matrix operator-(const dvar_matrix& m, const dvariable& x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator-(const dvariable& x, const dvar_matrix& m)
+dvar_matrix operator - (_CONST dvariable& x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
   for (int i=m.rowmin();i<=m.rowmax();i++)

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -170,8 +170,8 @@
  * Description not yet available.
  * \param
  */
-i3_array::i3_array(int sl, int sh, int nrl, const ivector& nrh,
-  int ncl, const imatrix& nch)
+ i3_array::i3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
+      int ncl,_CONST imatrix& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
@@ -189,8 +189,8 @@ i3_array::i3_array(int sl, int sh, int nrl, const ivector& nrh,
  * Description not yet available.
  * \param
  */
-void i3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
-  int ncl, const imatrix& nch)
+ void i3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
+      int ncl,_CONST imatrix& nch)
  {
    //int imin=nrh.indexmin();
    //int rmin=nch.rowmin();
@@ -209,15 +209,15 @@ void i3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
    t -= slicemin();
    for (int i=sl; i<=sh; i++)
    {
-     t[i].allocate(nrl,nrh(i),ncl,nch(i));
-   }
+     t[i].allocate(nrl,nrh(i),ncl,nch(i));  
+   } 
  }
 
 /**
  * Description not yet available.
  * \param
  */
-i3_array::i3_array(int _sl, int _sh, const imatrix& m1)
+ i3_array::i3_array(int _sl,int _sh,_CONST imatrix& m1)
  {
    int sl=_sl;
    int sh=_sh;
@@ -246,6 +246,7 @@ i3_array::i3_array(int _sl, int _sh, const imatrix& m1)
      }
      else
      {
+
        t[i].shape=NULL;
        t[i].m=NULL;
      }
@@ -256,7 +257,7 @@ i3_array::i3_array(int _sl, int _sh, const imatrix& m1)
  * Description not yet available.
  * \param
  */
-void i3_array::allocate(const i3_array& i3v)
+ void i3_array::allocate(_CONST i3_array& i3v)
  {
    int sl=i3v.slicemin();
    int sh=i3v.slicemax();

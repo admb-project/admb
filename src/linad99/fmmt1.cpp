@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -15,7 +15,7 @@
  * \param
  */
 extern  int ctlc_flag;
-fmmt1::fmmt1(int nvar, const lvector& ipar)
+fmmt1::fmmt1(int nvar,_CONST lvector& ipar)
 : fmm_control(ipar),
   w(1,4*nvar),
   funval(1,10),
@@ -36,7 +36,7 @@ fmmt1::fmmt1(int nvar,int _xm)
 : w(1,4*nvar),
   funval(1,10),
   xstep(0,_xm+1,1,nvar),
-  xrho(0,_xm+1),
+  xrho(0,_xm+1), 
   rrr(1,nvar),
   xy(0,_xm+1,1,nvar),
   xold(1,nvar),
@@ -50,6 +50,6 @@ fmmt1::fmmt1(int nvar,int _xm)
   n = nvar;
   xm=_xm;
   xrho.initialize();
-//  cout << " In fmm::fmm(int nvar) nvar = " << nvar
+//  cout << " In fmm::fmm(int nvar) nvar = " << nvar 
 //       << " and n = " << n << "\n";
 }

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -36,10 +36,12 @@ d4_array orthpoly2(int d1,int d2, int n,int m)
 #undef double
           A(alpha,beta,i,j)=pow(double(i-1)/double(n-1),alpha)*
             pow(double(j-1)/double(m-1),beta);
+      
 #define double dd_real
 #else
           A(alpha,beta,i,j)=pow(double(i-1)/double(n-1),alpha)*
             pow(double(j-1)/double(m-1),beta);
+     
 #endif
         }
       }
@@ -60,14 +62,14 @@ d4_array orthpoly2(int d1,int d2, int n,int m)
     //cout     << "X" << endl;
     if (ii>1)
     {
-//cout << dot(B(ialpha(ii-1),ibeta(ii-1)),A(ialpha(ii),ibeta(ii))) << endl;
+      //cout << dot(B(ialpha(ii-1),ibeta(ii-1)),A(ialpha(ii),ibeta(ii))) << endl;
       //cout << dot(B(ialpha(ii-1),ibeta(ii-1)),
-       //  A(ialpha(ii),ibeta(ii))/norm(A(ialpha(ii),ibeta(ii)))) << endl;
+       //  A(ialpha(ii),ibeta(ii))/norm(A(ialpha(ii),ibeta(ii)))) << endl; 
     }
     B(ialpha(ii),ibeta(ii))=A(ialpha(ii),ibeta(ii))/
       norm(A(ialpha(ii),ibeta(ii)));
     //if (ii>1)
-// cout << dot(B(ialpha(ii-1),ibeta(ii-1)),B(ialpha(ii),ibeta(ii))) << endl;
+     // cout << dot(B(ialpha(ii-1),ibeta(ii-1)),B(ialpha(ii),ibeta(ii))) << endl;
     //cout     << "Y" << endl;
     for (jj=ii+1;jj<=N;jj++)
     {

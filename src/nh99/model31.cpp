@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -20,18 +20,18 @@ void dll_data_number::allocate(double *_pd,const char * _s)
   val=*_pd;
 }
 
-dll_data_number& dll_data_number::operator=(const double& v)
+dll_data_number& dll_data_number::operator =(_CONST double& v)
 {
   data_number::operator =(v);
   return *this;
 }
-dll_param_number& dll_param_number::operator=(const prevariable& m)
+dll_param_number& dll_param_number::operator = (_CONST prevariable& m)
 {
   dvariable::operator = (m);
   return *this;
 }
 
-dll_param_number& dll_param_number::operator=(const double m)
+dll_param_number& dll_param_number::operator = (CGNU_DOUBLE m)
 {
   dvariable::operator = (m);
   return *this;
@@ -61,13 +61,13 @@ void dll_param_init_number::allocate
   allocate(_pd,1,_s);
 }
 
-dll_param_init_number& dll_param_init_number::operator=(const double m)
+dll_param_init_number& dll_param_init_number::operator = (CGNU_DOUBLE m)
 {
   dvariable::operator = (m);
   return *this;
 }
 
-dll_param_init_number& dll_param_init_number::operator=(const prevariable& m)
+dll_param_init_number& dll_param_init_number::operator = (_CONST prevariable& m)
 {
   dvariable::operator = (m);
   return *this;
@@ -94,7 +94,7 @@ dll_param_init_vector& dll_param_init_vector::operator =
 
 dll_param_init_vector& dll_param_init_vector::operator = (const double& x)
 {
-  param_init_vector::operator = (x);
+  dll_param_init_vector::operator = (x);
   return (*this);
 }
 
@@ -114,25 +114,29 @@ void dll_param_init_vector::allocate(double * _pd,int imin,int imax,
   }
 }
 
-dll_param_vector& dll_param_vector::operator=(const dvar_vector& m)
+dll_param_vector& dll_param_vector::operator =
+  (_CONST dvar_vector& m)
 {
   dvar_vector::operator = (m);
   return *this;
 }
 
-dll_param_vector& dll_param_vector::operator=(const dvector& m)
+dll_param_vector& dll_param_vector::operator =
+  (_CONST dvector& m)
 {
   dvar_vector::operator = (m);
   return *this;
 }
 
-dll_param_vector& dll_param_vector::operator=(const double m)
+dll_param_vector& dll_param_vector::operator =
+  (CGNU_DOUBLE m)
 {
   dvar_vector::operator = (m);
   return *this;
 }
 
-dll_param_vector& dll_param_vector::operator=(const prevariable& m)
+dll_param_vector& dll_param_vector::operator =
+  (_CONST prevariable& m)
 {
   dvar_vector::operator = (m);
   return *this;
@@ -151,7 +155,7 @@ void dll_param_vector::allocate(double *_pd,int imin,int imax,
       (*this)[i]=*tmp++;
     }
   }
-}
+}      
 void dll_param_init_vector::allocate(double * _pd,int imin,int imax,
   const char * _s)
 {
@@ -199,7 +203,7 @@ void dll_data_matrix::allocate(double * _d,int rmin,int rmax,
         {
           (*this)(i,j)=*tmp++;
         }
-      }
+      }    
     }
     else
     {
@@ -209,19 +213,19 @@ void dll_data_matrix::allocate(double * _d,int rmin,int rmax,
         {
           (*this)(i,j)=*tmp++;
         }
-      }
+      }    
     }
   }
 }
 
 
-dll_data_matrix& dll_data_matrix::operator=(const dmatrix& m)
+dll_data_matrix& dll_data_matrix::operator = (_CONST dmatrix& m)
 {
   data_matrix::operator = (m);
   return *this;
 }
 
-dll_data_matrix& dll_data_matrix::operator=(const double& m)
+dll_data_matrix& dll_data_matrix::operator = (_CONST double& m)
 {
   data_matrix::operator = (m);
   return *this;
@@ -251,7 +255,7 @@ void dll_param_init_matrix::allocate(double* _d,int rmin,int rmax,
         {
           (*this)(i,j)=*tmp++;
         }
-      }
+      }  
     }
     else
     {
@@ -261,7 +265,7 @@ void dll_param_init_matrix::allocate(double* _d,int rmin,int rmax,
         {
           (*this)(i,j)=*tmp++;
         }
-      }
+      }  
     }
   }
 }
@@ -282,7 +286,7 @@ void dll_param_matrix::allocate(double* _pd,int rmin,int rmax,
         {
           (*this)(i,j)=*tmp++;
         }
-      }
+      }  
     }
     else
     {
@@ -292,7 +296,7 @@ void dll_param_matrix::allocate(double* _pd,int rmin,int rmax,
         {
           (*this)(i,j)=*tmp++;
         }
-      }
+      }  
     }
   }
 }
@@ -360,53 +364,53 @@ dll_param_matrix& dll_param_matrix::operator =
 {
   param_matrix::operator = (m);
   return *this;
-}
+}      
 
 dll_param_matrix& dll_param_matrix::operator =
   (const double m)
 {
   param_matrix::operator = (m);
   return *this;
-}
+}      
 
 dll_param_matrix& dll_param_matrix::operator =
   (const dvariable& m)
 {
   param_matrix::operator = (m);
   return *this;
-}
+}      
 
 dll_param_matrix& dll_param_matrix::operator =
   (const dmatrix& m)
 {
   param_matrix::operator = (m);
   return *this;
-}
+}      
 
 dll_param_init_matrix& dll_param_init_matrix::operator =
   (const dmatrix& m)
 {
   param_init_matrix::operator = (m);
   return *this;
-}
+}      
 
 dll_param_init_matrix& dll_param_init_matrix::operator =
   (const dvar_matrix& m)
 {
   param_init_matrix::operator = (m);
   return *this;
-}
+}      
 
 dll_param_init_matrix& dll_param_init_matrix::operator =
   (const dvariable& m)
 {
   param_init_matrix::operator = (m);
   return *this;
-}
+}      
 
 dll_param_init_matrix& dll_param_init_matrix::operator =
   (const double& m)
 {
   param_init_matrix::operator = (m);
   return *this;
-}
+}      

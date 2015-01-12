@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-void lmatrix::allocate(const lmatrix& dm)
+void lmatrix::allocate(_CONST lmatrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();
@@ -29,7 +29,7 @@ void lmatrix::allocate(const lmatrix& dm)
     ad_exit(21);
   }
 
-  size_t rs=rowsize();
+  int rs=rowsize();
   if ( (m = new lvector [rs]) == 0)
   {
     cerr << " Error allocating memory in imatrix contructor" << endl;

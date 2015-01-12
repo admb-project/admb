@@ -1,14 +1,27 @@
 /*
  * $Id$
- *
+ * 
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
-#include <fvar.hpp>
+#include <fvar.hpp> 
+ //   class multi_index
+ //   {
+ //     int mind;
+ //     int maxd;
+ //     int depth;
+ //     ivector index;
+ //   public:
+ //     multi_index(int min,int max,int dim);
+ //     ivector& operator () (void) {return index;}
+ //     void operator ++ (void);
+ //     int get_depth(void) { return depth;}
+ //   };
+ // 
 
 /**
  * Description not yet available.
@@ -40,11 +53,12 @@
       {
         break;
       }
-    }
-    if (tmpdepth>depth)
+    } 
+    if (tmpdepth>depth) 
       depth =tmpdepth;
-  }
-  int multi_index::get_offset(void)
+      
+  }    
+  int multi_index::get_offset(void) 
   {
     int imin=index.indexmin();
     int imax=index.indexmax();
@@ -53,7 +67,11 @@
     int sz=maxd-mind+1;
     for (int i=imin+1;i<=mx;i++)
     {
+#  if (__MSVC32__>=8) || defined(__SUNPRO_CC)
       offset+=int(pow(double(sz),i-imin))*(index(i)-mind);
+#  else
+      offset+=pow(sz,i-imin)*(index(i)-mind);
+#  endif
     }
     return offset;
   }
@@ -67,3 +85,19 @@
     index=mind;
     depth=mind;
   }
+    
+ 
+ // 
+ //   void main()
+ //   {
+ //     multi_index mi(1,3,4);
+ // 
+ //     mi()=3;
+ //     do
+ //     {
+ //       cout << mi() << "   " << mi.get_depth() << endl;
+ //       ++mi;
+ //     }
+ //     while(mi.get_depth()<5);
+ //   }
+ //     

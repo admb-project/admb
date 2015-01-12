@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009-2011 ADMB Foundation
  */
 /**
  * \file
@@ -37,27 +37,28 @@ void int_qsort2(int *arr, int *arr2, unsigned n)
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
  */
-ivector sort(const ivector &v, int NSTACK)
+ivector sort(_CONST ivector & v, int NSTACK)
 {
    int lb=v.indexmin();
+   int ub=v.indexmax();
    int size=v.size();
 
-   ivector intarray(0,size-1);
-   for(int i=0;i<size;i++)
+   int *intarray;
+   intarray = new int[size];
+   int i;
+   for(i=0;i<size;i++)
    {
       intarray[i] = v(lb+i);
    }
 
-   if (size > 1)
-   {
-     int_qsort(&(intarray(0)), (unsigned int)size);
-   }
+   int_qsort(intarray,size);
 
-   int ub=v.indexmax();
    ivector arr(lb, ub);
-   for(int i=0;i<size;i++) {
+   for(i=0;i<size;i++) {
       arr(lb+i) = intarray[i];
    }
+
+   delete [] intarray;
 
    return arr;
 }
@@ -71,7 +72,7 @@ ivector sort(const ivector &v, int NSTACK)
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
  */
-ivector sort(const ivector &_v, const ivector &_index, int NSTACK)
+ivector sort(_CONST ivector & _v, BOR_CONST ivector & _index, int NSTACK)
 {
    ivector & index = (ivector &) _index;
    ivector & v = (ivector &) _v;
@@ -79,39 +80,42 @@ ivector sort(const ivector &_v, const ivector &_index, int NSTACK)
    if (v.size() != index.size())
    {
       cerr << " Incompatible array sizes in vector v and ivector index\n"
-           << " in ivector sort(const ivector& v, const ivector& index)\n";
+	 << " in ivector sort(_CONST ivector& v,_CONST ivector& index)\n";
       ad_exit(1);
    }
 
    int lb=v.indexmin();
+   int ub=v.indexmax();
    int size=v.size();
 
-   ivector intarray(0,size-1);
-   for(int i=0;i<size;i++)
+   int *intarray;
+   intarray = new int[size];
+   int i;
+   for(i=0;i<size;i++)
    {
       intarray[i] = v(lb+i);
    }
 
-   ivector intarray2(0,size-1);
-   for(int i=0;i<size;i++)
+   int *intarray2;
+   intarray2 = new int[size];
+   for(i=0;i<size;i++)
    {
       intarray2[i] = lb+i;
    }
 
-   if (size > 1)
-   {
-     int_qsort2(&(intarray[0]),&(intarray2[0]), (unsigned int)size);
-   }
+   int_qsort2(intarray,intarray2,size);
 
-   int ub=v.indexmax();
    ivector arr(lb, ub);
-   for(int i=0;i<size;i++) {
+   for(i=0;i<size;i++) {
       arr(lb+i) = intarray[i];
    }
 
-   for(int i=0;i<size;i++) {
+   for(i=0;i<size;i++) {
       index(index.indexmin()+i) = intarray2[i];
    }
+
+   delete intarray;
+   delete intarray2;
 
    return arr;
 }

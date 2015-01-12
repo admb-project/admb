@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -15,7 +15,7 @@
  * Description not yet available.
  * \param
  */
-int sum(const imatrix& m)
+int sum(_CONST imatrix& m)
 {
   int ssum=0;
   int mmin=m.rowmin();
@@ -31,13 +31,12 @@ int sum(const imatrix& m)
  * Description not yet available.
  * \param
  */
-int colsum(const imatrix& m, int col)
-{
+int colsum(_CONST imatrix& m,int col)
+{ 
   if (col < m.colmin() || col > m.colmax())
   {
     //JCA: Should be Column out of bounds
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
-    "int colsum(const imatrix& m,int col)", m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "int colsum(_CONST imatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   int isum=0;
   int mmin=m.rowmin();
@@ -50,18 +49,15 @@ int colsum(const imatrix& m, int col)
 }
 
 /**
-Return copy of jth column vector from matrix m.
-
-/param m matrix
-/param j column index to return
+ * Description not yet available.
+ * \param
  */
-ivector column(const imatrix& m, int col)
-{
+ivector column(_CONST imatrix& m,int col)
+{ 
   if (col < m.colmin() || col > m.colmax())
   {
     //JCA: Should be Column out of bounds
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
-    "int colsum(const imatrix& m,int col)", m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "int colsum(_CONST imatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   int mmin=m.rowmin();
   int mmax=m.rowmax();

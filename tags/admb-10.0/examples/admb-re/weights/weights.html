@@ -1,0 +1,96 @@
+<br>
+<table align="center" cellspacing="2" cellpadding="2" border="0">
+<tr>
+    <td colspan="2" align="center">
+	<h1>Frequency weighting to reduce the computational burden</h1>
+		<br><br>
+	</td>
+</tr>
+
+<tr>
+    <td width="30%">
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>ADMB Files</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     Code: <a href="binomial_w2.tpl">binomial_w2.tpl</a><br>
+                     Data: 		<a href="binomial_w2.dat">binomial_w2.dat</a><br>
+                     Initial values: <a href="binomial_w2.pin">binomial_w2.pin</a><br>
+                     Expected Results: <a href="binomial_w2.par">binomial_w2-expected-results.par</a><br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<br>
+
+<!--
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>Running ADMB-executables</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     In a <a href="../admb_tutorial.html">DOS</a> window<br> 
+					 Under <a href="../admb_tutorial.html">linux</a><br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<br>
+
+
+	   
+	   <br>
+	   
+	      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" 
+            color=white><B>Navigation</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD>			  
+				<A href="http://otter-rsch.com/admbre/admbre.html">ADMB-RE home</A> <br>
+                <A href="http://otter-rsch.com/">Otter Research</A> 
+        </FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0></TABLE>
+-->
+
+	   
+	</td>
+
+	
+ <td width="75%">
+<h3><strong>Model description</strong></h3>
+
+For categorical data with a small number of possible outcomes it is often possible use
+frequency weighting to reduce the computational burden. The basic idea is that you
+only have to evaluate the likelihood once for each outcome value, not once for each
+observation. Hence there is no limit to the number of observations you can handle, as long as the
+number outcome categories stays fixed. Further details are given in following <A href="binomial_w2.pdf">example</A>
+
+
+
+</table>
+

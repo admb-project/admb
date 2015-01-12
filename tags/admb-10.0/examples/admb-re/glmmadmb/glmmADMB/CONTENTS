@@ -1,0 +1,65 @@
+Entry: anova.glmm.admb
+Aliases: anova.glmm.admb
+Keywords: models
+Description: Anova for glmm.admb objects
+URL: ../../../library/glmmADMB/html/anova.glmm.admb.html
+
+Entry: epil2
+Aliases: epil2
+Keywords: datasets
+Description: Seizure Counts for Epileptics
+URL: ../../../library/glmmADMB/html/epil2.html
+
+Entry: glmm.admb
+Aliases: glmm.admb
+Keywords: models
+Description: Generalized Linear Mixed Models using AD Model Builder
+URL: ../../../library/glmmADMB/html/glmm.admb.html
+
+Entry: glmmADMB-internal
+Aliases: below cov2corr dat_write member par_read pin_write std_read
+Keywords: internal
+Description: Internal glmmADMB Functions
+URL: ../../../library/glmmADMB/html/glmmADMB-internal.html
+
+Entry: glmmADMB-package
+Aliases: glmmADMB-package glmmADMB
+Keywords: package
+Description: What the package does (short line) ~~ package title ~~
+URL: ../../../library/glmmADMB/html/glmmADMB-package.html
+
+Entry: glmmADMB-package
+Aliases: glmmADMB-package glmmADMB
+Keywords: models
+Description: Generalized Linear Mixed Models using AD Model Builder
+URL: ../../../library/glmmADMB/html/glmmADMB.package.html
+
+Entry: logLik.glmm.admb
+Aliases: logLik.glmm.admb
+Keywords: models
+Description: logLik.glmm.admb
+URL: ../../../library/glmmADMB/html/logLik.glmm.admb.html
+
+Entry: plot.glmm.admb
+Aliases: plot.glmm.admb
+Keywords: models
+Description: plot.glmm.admb
+URL: ../../../library/glmmADMB/html/plot.glmm.admb.html
+
+Entry: print.glmm.admb
+Aliases: print.glmm.admb
+Keywords: models
+Description: Print glmm.admb objects
+URL: ../../../library/glmmADMB/html/print.glmm.admb.html
+
+Entry: ranef.glmm.admb
+Aliases: ranef.glmm.admb
+Keywords: models
+Description: Extract Random Effects
+URL: ../../../library/glmmADMB/html/ranef.glmm.admb.html
+
+Entry: summary.glmm.admb
+Aliases: summary.glmm.admb
+Keywords: models
+Description: summary.glmm.admb
+URL: ../../../library/glmmADMB/html/summary.glmm.admb.html

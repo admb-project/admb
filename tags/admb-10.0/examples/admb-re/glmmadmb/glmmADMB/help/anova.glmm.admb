@@ -1,0 +1,39 @@
+anova.glmm.admb           package:glmmADMB           R Documentation
+
+_A_n_o_v_a _f_o_r _g_l_m_m._a_d_m_b _o_b_j_e_c_t_s
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Calculate an anova table from a series of model fits
+
+_U_s_a_g_e:
+
+     anova.glmm.admb(object, ...)
+
+_A_r_g_u_m_e_n_t_s:
+
+  object: A model fit returned from 'glmm.admb'
+
+     ...: One or more model fits with same random effects
+
+_D_e_t_a_i_l_s:
+
+     Basic anova table for testing the fixed effects (may be extended
+     later)
+
+_V_a_l_u_e:
+
+     An anova table
+
+_A_u_t_h_o_r(_s):
+
+     H. Skaug skaug@mi.uib.no, David Fournier otter@otter-rsch.com and
+     Anders Nielsen andersn@hawaii.edu
+
+_E_x_a_m_p_l_e_s:
+
+       data(epil2)
+       f1<-glmm.admb(y~Base*trt+Age+Visit,random=~Visit,group="subject",data=epil2,family="nbinom")
+       f2<-glmm.admb(y~Base*trt+Age,random=~Visit,group="subject",data=epil2,family="nbinom")
+       anova(f2,f1)
+

@@ -1,0 +1,9 @@
+Package: glmmADMB
+Title: Generalized Linear Mixed Models using AD Model Builder
+Version: 0.3
+Author: Hans Skaug <Hans.Skaug@mi.uib.no>, Dave Fournier
+        <otter@otter-rsch.com>, Anders Nielsen <andersn@hawaii.edu>
+Description: Fits mixed-effects models to count data using Poisson or
+        negative binomial response distributions.
+Maintainer: Hans Skaug <Hans.Skaug@mi.uib.no>
+License:

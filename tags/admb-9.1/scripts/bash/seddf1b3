@@ -1,0 +1,22 @@
+
+1i\
+  \
+class df1b2_pre_parameters : public model_parameters\
+{ \
+public: \
+  df1b2_pre_parameters(int sz,int argc, char * argv[]) : \
+    model_parameters(sz,argc,argv){;}
+$a\
+  void begin_df1b2_funnel(void); \
+  void setup_quadprior_calcs(void); \
+  void end_df1b2_funnel(void);
+# virtual void user_function(const init_df1b2vector& x,df1b2variable& f); \
+#/objective_function_value/d
+s/df_normal_prior_/df1b2_normal_prior_/p
+s/objective_function_value/re_objective_function_value/p
+s/quadratic_prior/df1b2quadratic_prior/g
+s/quadratic_re_penalty/df1b2quadratic_re_penalty/g
+/df1b2quadratic_re_penalty/p
+/normal_df1b2quadratic_prior/p
+/^SEPFUN3/p
+/^SEPFUN4/p

@@ -1,0 +1,215 @@
+% $Id$
+%
+% Author: David Fournier
+% Copyright (c) 2008 Regents of the University of California
+%
+
+\ADM\ has a number of options which can be invoked at the command line.
+A list of current options can be displayed by typing the name of the applicationfollowed by {\tt -?}. YOu will see a display like:
+
+\XX{command line arguments}{-ind NAME}
+\XX{command line arguments}{only estimate parameters}
+\beginexample
+ AD Model Builder Copyright (c) 2008 Regents of the University of California
+ USAGE--kalman options
+ where an option consists of -option_tag followed by arguments if necessary
+ -ainp NAME      change default ascii input parameter file name to NAME
+ -binp NAME      change default binary input parameter file name to NAME
+ -est            only do the parameter estimation
+ -ind NAME       change default input data file name to NAME
+ -lmn N          use limited memory quasi newton -- keep N steps
+ -lprof          perform profile likelihood calculations
+ -prsave         save the independent variables from the profile calculations
+ -maxph N        increase the maximum phase number to N
+ -mcdiag         use diagonal covariance matrix for mcmc with diagonal values 1
+ -mcmc [N]       perform markov chain monte carlo with N simulations
+ -mcmult N       multiplier N for mcmc default
+ -mcr            resume previous mcmc
+ -mcrb N         modify the covariance matrix to reduce extremely high correlation      
+ -mcnoscale      don't rescale step size for mcmc depending on acceptance rate
+ -mcgrope N      use probing strategy for mcmc with factor N
+ -mcseed N       seed for random number generator for markov chain monte carlo
+ -mccale N       rescale step size for first N evaluations
+ -mcsave N       save the parameters for every N'th simulation
+ -mceval         Go throught the saved mcmc values from a previous mcsave
+ -mcpin NAME      Read the starting values for MCMC from the file NAME
+ -crit N         set gradient magnitude convergence criterion to N
+ -iprint N       print out function minimizer report every N iterations
+ -maxfn N        set maximum number opf function eval's to N
+ -rs             if function minmimizer can't make progress rescale and try again
+ -nox            don't show vector and gradient values in function minimizer screen report
+ -phase N        start minimization in phase N
+ -simplex        use simplex algorithm for minimization (new test version)
+ -sdonly         do delta method for std dev estimates without redoing hessian
+ -ams N          set arrmblsize to n (ARRAY_MEMBLOCK_SIZE) 
+ -cbs N          set CMPDIF_BUFFER_SIZE TO N 
+ -mno N          set the maximum number of independent variables to N
+ -gbs N          set GRADSTACK_BUFFER_SIZE TO N 
+ -mdl N          set the maximum number of dvariables to N
+ -? or -help     this message
+\endexample
+The version of \ADM\ is printed. This can be useful to determine
+the version which the application was compiled with.
+
+\XX{command line arguments}{setting the maximum number of dvariables}
+\XX{command line arguments}{-mno N}
+\XX{command line arguments}{-mdl N}
+\XX{command line arguments}{-ind NAME}
+\XX{command line arguments}{changing the input data file name}
+\beginexample
+ -aind NAME 
+\endexample
+By default the program named {\tt xxxx(.exe)} tries to read in its data
+from the file {\tt xxxx.dat}. This option changes the data file to NAME.
+
+\XX{command line arguments}{-ainp NAME}
+\XX{command line arguments}{changing the input data file name}
+\beginexample
+ -ainp NAME 
+\endexample
+This option changes the file from which the inital parameter estimates
+are read in when to NAME. The program expects the parameters to
+be in  ASCII format with comment lines beginning with {\tt \#}.
+
+When a program is running it produces parameter estimates in ASCII
+format in files named {\tt xxxx.p01}, $\ldots$, {\tt xxxx.par}.
+These files are in the proper format to be input back into the model
+and permit restarts at any phase of the minimization.
+
+\XX{command line arguments}{-binp NAME}
+\XX{command line arguments}{changing the input data file name}
+\beginexample
+ -binp NAME 
+\endexample
+This option changes the file from which the inital parameter estimates
+are read in when to NAME. The program expects the parameters to
+be in  binary format.
+
+When a program is running it produces parameter estimates in binary
+format in files named {\tt xxxx.b01}, $\ldots$, {\tt xxxx.bar}.
+These files are in the proper format to be input back into the model
+and permit restarts at any phase of the minimization.
+
+Both ASCII and binary forms of the parameter files are supplied because
+they have different advantages and disadvantages. ASCII files can be
+easily examkned and edited. Binary files supply parameter values 
+to the limit of machine precision in a compact format.
+\XX{command line arguments}{-lmn}
+\XX{command line arguments}{limited memory Newton}
+\beginexample
+ -lmn N
+\endexample
+The limited memory Newton minimization option reduces the amount
+of memory necessary for holdinbg the approximate Hessian inverse.
+It is of use particularly in problems with a large number of
+parameters (typically > 1000). For man problems it is not as efficient
+per function evaluation as the default quasi-Newton method although
+this is not always the case. N is the number of pas steps of information
+kept for the quasi-Newton update. Typcially a value of about 5-20
+is good.
+\XX{command line arguments}{-likeprof}
+\XX{command line arguments}{likelihood profiles}
+\beginexample
+ -lprof     
+\endexample 
+This option turns on the profile likelihood calculations. 
+A variable for which profile likelihood calculations are performed
+must have been declared with the {\tt likeprof\_number} in the
+{\tt TPL} file.
+\XX{command line arguments}{-prsave}
+\beginexample
+ -prsave     
+\endexample 
+This option causes the values of the independent variables 
+for the profile likelihood points to be save in a file named
+{\tt xxx.pvl} where {\tt xxx} is the name of the variable
+being profiled. These values can be used later for starting
+the MCMC analysis at different values which is useful for
+testing the mixing of the chain with respect to that parameter.
+\XX{command line arguments}{-maxph N}
+\XX{command line arguments}{set maximum phase of minimization}
+\beginexample
+ -maxph N     
+\endexample 
+You may want to add extra phases to the minimization -- usually
+because the standard set of phases has not converged. This will
+set the number of phases to N.
+\XX{command line arguments}{-mcmc}
+\XX{command line arguments}{Markov Chain Monte Carlo}
+\beginexample
+ -mcmc [N]    
+\endexample 
+This option turns on the the calculation of the Markov chain Monte Carlo
+rotine. By default the model will recalculate the approximate Hessian
+so you may want to use the {\tt -nohess} option if you don't wish
+to recalculate the Hessian. It is your responsibility to ensure that
+the Hessian data in the current directory are current.
+The mcmc routine will perform {\tt N} simulations.
+\XX{command line arguments}{-mcr}
+\XX{command line arguments}{restart Markov Chain Monte Carlo}
+\beginexample
+ -mcr    
+\endexample 
+Restart (and continue) a previous Markov chain Monte Carlo
+routine. This will continue from where the previous routine
+left off.
+\XX{command line arguments}{-mcrb}
+\beginexample
+ -mcrb N  
+\endexample
+See discussion of this option elsewhere in the manual.
+
+\XX{command line arguments}{-mcsave}
+\XX{command line arguments}{save results from Markov Chain Monte Carlo}
+\beginexample
+ -mcsave N  
+\endexample
+For the usual MCMC routine the results from consecutive
+steps of the simulation are highly corellated. If the
+parameters of interest are expensive to compute it may be advantages to
+only compute every N'th one. This option saves the results so that they
+can be used in subsequent calculations.
+\XX{command line arguments}{-mceval}
+\XX{command line arguments}{use the saved results from Markov Chain Monte Carlo}
+\beginexample
+ -mcsave N  
+\endexample
+\X{mceval\_phase()}
+This option will use the previusly save results from MCMC to evaluate
+parameters of interest. The function {\tt mceval\_phase()} can
+be useful here to only calculate the parameters during this phase.
+\XX{command line arguments}{-nox}
+\XX{command line arguments}{suppressing printing}
+\beginexample
+ -nox  
+\endexample
+This option suppresses the printing of the current x vector
+being sampled by the function minimizer.
+Printing this out can be a siginifcant overhead for models with
+a large number of parameters -- also it simply irritates some users.
+\XX{command line arguments}{-ams N}
+\X{arrmblsize}
+\beginexample
+ -ams N          set arrmblsize to n (ARRAY_MEMBLOCK_SIZE) 
+\endexample
+This option has the same effect as setting arrmblsize in the
+program code, but has the advantage that it can be done at run time.
+\X{gradient\_structure::set\_CMPDIF\_BUFFER\_SIZE} 
+\XX{command line arguments}{-cbs N}
+\beginexample
+ -cbs N          set CMPDIF_BUFFER_SIZE to n 
+\endexample
+This option has the same effect as using the 
+\goodbreak
+{\tt gradient\_structure::set\_CMPDIF\_BUFFER\_SIZE } function in the code 
+program code, but has the advantage that it can be done at run time.
+\X{gradient\_structure::set\_GRADSTACK\_BUFFER\_SIZE} 
+\XX{command line arguments}{-gbs N}
+\beginexample
+ -gbs N          set GRADSTACK_BUFFER_SIZE 
+\endexample
+This option has the same effect as using the \goodbreak
+{\tt gradient\_structure::set\_GRADSTACK\_BUFFER\_SIZE } function in the code 
+program code, but has the advantage that it can be done at run time. 
+{\bf Also note that the size is in bytes here whereas for the included code it is inchunks of about 36 bytes.}
+

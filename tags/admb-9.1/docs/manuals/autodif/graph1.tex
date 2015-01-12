@@ -1,0 +1,46 @@
+% $Id$
+%
+% Author: David Fournier
+% Copyright (c) 2008 Regents of the University of California
+%
+\beginpicture
+  \setcoordinatesystem units <.22in,.008in>
+  \setplotarea x from 0 to 21, y from -150 to 225
+  \plotheading{Figure \number\mychapno.2}
+  \axis bottom % shiftedto y=-150 
+    ticks numbered from 0 to 20 by 4 /
+ \axis left ticks numbered from -100 to 225 by 50 /
+ \multiput {$\bullet$} at "data.sa1"
+ %\put {$\bullet$} at        2.0   192.45  
+ \put {$\circ$} at        2.0   -100.00  
+ \put {$\circ$} at       18.0  -75.00   
+ \setlinear
+ \plot 1  30  20  125 /
+  \setdashpattern <4pt,3pt>
+ \plot 1  21.93   20  102 /
+  \setdashpattern <2pt,4pt>
+ \plot 1  18.32  20 90.71 /
+  \setdashpattern <4pt,3pt,1pt,2pt>
+ \plot 1  17.4  20  87.69 /
+ % putin the explanations of the curves at the bottom
+ \setsolid
+ \plot 3  -190  8  -190 /
+ \put {\hbox to .5truein {\ninerm b=5.00\hfil}} at 9.5 -190 
+ \put {\hbox to 3truein {\ninerm true relationship\hfil}} at 16 -190 
+  \setdashpattern <4pt,3pt>
+ \put {\hbox to .5truein {\ninerm b=4.20\hfil}} at 9.5 -202 
+ \put {\hbox to 3truein {\ninerm robust fit --  ${\alpha}$ 
+     fixed = 0.7\hfil}}
+    at 16 -202 
+ \plot 3  -202  8  -202 /
+  \setdashpattern <2pt,4pt>
+ \put {\hbox to .5truein {\ninerm b=3.80\hfil}} at 9.5 -214 
+ \put {\hbox to 3truein{\ninerm robust fit -- ${\alpha}$ estimated = 0.94 \hfil}}
+     at 16 -214 
+ \plot 3  -214  8  -214 /
+  \setdashpattern <4pt,3pt,1pt,2pt>
+ \put {\hbox to .5truein {\ninerm b=3.70\hfil}} at 9.5 -226 
+ \put {\hbox to 3truein {\ninerm least squares fit including outliers\hfil}} 
+   at 16 -226 
+ \plot 3  -226  8  -226 /
+\endpicture 

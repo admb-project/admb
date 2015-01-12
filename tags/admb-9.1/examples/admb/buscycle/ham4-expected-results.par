@@ -1,0 +1,12 @@
+# Number of parameters = 11  Objective function value = 60.8934  Maximum gradient component = 8.73533e-09
+# f:
+ 0.0139731 -0.0569770 -0.246305 -0.212269
+# Pcoff:
+ 0.754756 0.0959403
+ 0.245243 0.904055
+# a0:
+-0.357983201249
+# a1:
+1.52139467716
+# smult:
+0.281322113224

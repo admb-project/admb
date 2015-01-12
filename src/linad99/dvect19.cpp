@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -11,11 +11,10 @@
 #include "fvar.hpp"
 
 /**
- * Safe version of exp that interpolates values greater than equal to 60 in each element 
- * of a vector v1.
- * \param v1 a data vector
+ * Description not yet available.
+ * \param
  */
-dvector mfexp(const dvector& v1)
+dvector mfexp(_CONST dvector& v1)
 {
   int mmin=v1.indexmin();
   int mmax=v1.indexmax();
@@ -36,12 +35,10 @@ dvector mfexp(const dvector& v1)
 }
 
 /**
- * Safe version of exp that interpolates values greater than equal to 60 in each element 
- * of a vector v1.
- * \param v1 a data vector
- * \param d macro for CGNU_DOUBLE
+ * Description not yet available.
+ * \param
  */
-dvector mfexp(const dvector& v1, const double d)
+dvector mfexp(_CONST dvector& v1, CGNU_DOUBLE d)
 {
   int mmin=v1.indexmin();
   int mmax=v1.indexmax();

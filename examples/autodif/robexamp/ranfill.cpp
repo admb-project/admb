@@ -145,7 +145,7 @@ double randn(long int& n)
   double x,y;
   x=auto_rand(nn,1);
   y=auto_rand(nn,1);
-  double u=sqrt(-2*log(x))*cos(2*PI*y);
+  double u=sqrt(-2*log(x))*cos(2*3.14159*y);
   return(u);
 }
   

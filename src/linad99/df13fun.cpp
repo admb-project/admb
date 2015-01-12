@@ -1,8 +1,8 @@
 /*
- * $Id$
+ * $Id:  $
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009-2011 ADMB Foundation
  *
  */
 /**
@@ -10,9 +10,11 @@
  * Description not yet available.
  */
 
-#include "df13fun.h"
+#include <df13fun.h>
 
   prevariable * df1_three_variable::ind_var[3];
+
+ 
 
   int df1_three_variable::num_ind_var=0;
 
@@ -59,12 +61,13 @@
  }
 
 /**
-Destructor
-*/
-df1_three_vector::~df1_three_vector()
-{
-  deallocate();
-}
+ * Description not yet available.
+ * \param
+ */
+ df1_three_vector::~df1_three_vector()
+ {
+   deallocate();
+ }
 
 /**
  * Description not yet available.
@@ -95,6 +98,7 @@ df1_three_vector::~df1_three_vector()
  */
  dvector value(const df1_three_vector& v)
  {
+   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -104,7 +108,7 @@ df1_three_vector::~df1_three_vector()
    }
    return cv;
  }
-
+   
 /**
  * Description not yet available.
  * \param
@@ -153,13 +157,13 @@ df1_three_vector::~df1_three_vector()
     }
     if ( (shape=new vector_shapex(min,max,v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df1_three_vector"
+      cerr << "Error trying to allocate memory for df1_three_vector" 
            << endl;;
       ad_exit(1);
     }
     v-=min;
   }
-
+  
 /**
  * Description not yet available.
  * \param
@@ -171,13 +175,14 @@ df1_three_vector::~df1_three_vector()
     v=0;
     shape=0;
   }
-
+    
 /**
  * Description not yet available.
  * \param
  */
  dmatrix value(const df1_three_matrix& v)
  {
+   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -185,7 +190,7 @@ df1_three_vector::~df1_three_vector()
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax);
+     cm(i).allocate(cmin,cmax); 
      for (int j=cmin;j<=cmax;j++)
      {
        cm(i,j)=value(v(i,j));
@@ -272,22 +277,22 @@ df1_three_vector::~df1_three_vector()
     }
     if ( (shape=new mat_shapex(v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df1_three_vector"
+      cerr << "Error trying to allocate memory for df1_three_vector" 
            << endl;;
     }
     v-=rmin;
-
+    
     for (int i=rmin;i<=rmax;i++)
     {
       v[i].allocate(cmin,cmax);
     }
   }
-
+    
 /**
  * Description not yet available.
  * \param
  */
-df1_three_variable& df1_three_variable::operator-=(const df1_three_variable& v)
+  df1_three_variable& df1_three_variable::operator -= (const df1_three_variable& v)
   {
     *get_u() -= *v.get_u();
     *get_u_x() -= *v.get_u_x();
@@ -300,23 +305,23 @@ df1_three_variable& df1_three_variable::operator-=(const df1_three_variable& v)
  * Description not yet available.
  * \param
  */
-df1_three_variable operator-(const df1_three_variable& v)
-{
-  df1_three_variable z;
+  df1_three_variable operator - (const df1_three_variable& v)
+  {
+    df1_three_variable z;
 
-  *z.get_u() = -(*v.get_u());
-  *z.get_u_x() = -(*v.get_u_x());
-  *z.get_u_y() = -(*v.get_u_y());
-  *z.get_u_z() = -(*v.get_u_z());
+    *z.get_u() =- *v.get_u();
+    *z.get_u_x() =- *v.get_u_x();
+    *z.get_u_y() =- *v.get_u_y();
+    *z.get_u_z() =- *v.get_u_z();
 
-  return z;
-}
+    return z;
+  }
 
 /**
  * Description not yet available.
  * \param
  */
-df1_three_variable& df1_three_variable::operator+=(const df1_three_variable& v)
+  df1_three_variable& df1_three_variable::operator += (const df1_three_variable& v)
   {
     *get_u() += *v.get_u();
     *get_u_x() += *v.get_u_x();
@@ -347,7 +352,7 @@ df1_three_variable& df1_three_variable::operator+=(const df1_three_variable& v)
  * Description not yet available.
  * \param
  */
-df1_three_variable& df1_three_variable::operator*=(const df1_three_variable& y)
+  df1_three_variable& df1_three_variable::operator *= (const df1_three_variable& y)
   {
    /*
     df1_three_variable x=*this * v;
@@ -397,7 +402,7 @@ df1_three_variable& df1_three_variable::operator*=(const df1_three_variable& y)
  * Description not yet available.
  * \param
  */
-df1_three_variable& df1_three_variable::operator/=(const df1_three_variable& y)
+  df1_three_variable& df1_three_variable::operator /= (const df1_three_variable& y)
   {
    /*
     df1_three_variable x=*this * inv(y);
@@ -439,8 +444,8 @@ df1_three_variable& df1_three_variable::operator/=(const df1_three_variable& y)
  * Description not yet available.
  * \param
  */
-void set_derivatives(df1_three_variable& z,const df1_three_variable& x,
-  double u, double zp)
+void set_derivatives( df1_three_variable& z,const df1_three_variable& x,double u,
+  double zp)
 {
     //*z.get_u() = u;
     *z.get_u_x() = zp* *x.get_u_x();
@@ -466,6 +471,7 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
 
     *z.get_u_z() = f_u* *x.get_u_z()
                  + f_v* *y.get_u_z();
+
 }
 
 /**
@@ -477,8 +483,9 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
     df1_three_variable z;
     double u=::sqrt(*x.get_u());
     *z.get_u()=u;
-    //double xinv=1.0/(*x.get_u());
+    double xinv=1.0/(*x.get_u());
     double zp=0.5/u;
+
 
     set_derivatives(z,x,u,zp);
 
@@ -494,7 +501,7 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
     df1_three_variable z;
     double cx=value(x);
     double d=1.0/(1+square(cx));
-    //double d2=square(d);
+    double d2=square(d);
     double u=::atan(cx);
     *z.get_u()=u;
     double zp=d;
@@ -528,7 +535,7 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
     double u=::tan(*x.get_u());
     *z.get_u()=u;
     double v=1.0/::cos(*x.get_u());
-    //double w=::sin(*x.get_u());
+    double w=::sin(*x.get_u());
     double v2=v*v;
     double zp=v2;
 
@@ -559,7 +566,7 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
   {
     df1_three_variable z;
     if (value(x)>=0.0)
-      z=x;
+      z=x; 
     else
       z=-x;
     return z;
@@ -614,7 +621,7 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
  * Description not yet available.
  * \param
  */
-df1_three_variable& df1_three_variable::operator=(const df1_three_variable& x)
+  df1_three_variable& df1_three_variable::operator = (const df1_three_variable& x)
   {
     *get_u() = *x.get_u();
     *get_u_x() = *x.get_u_x();
@@ -719,7 +726,7 @@ df1_three_variable& df1_three_variable::operator=(const df1_three_variable& x)
  * Description not yet available.
  * \param
  */
-df1_three_variable pow(const df1_three_variable& x,const df1_three_variable& y)
+  df1_three_variable pow(const df1_three_variable& x,const df1_three_variable& y)
   {
     return exp(y*log(x));
   }
@@ -841,20 +848,18 @@ df1_three_variable pow(const df1_three_variable& x,const df1_three_variable& y)
  * Description not yet available.
  * \param
  */
-init_df1_three_variable::init_df1_three_variable(const prevariable& _v)
-{
-  if (num_ind_var > 2)
-  {
-    cerr << "can only have 2 independent_variables in df1_three_variable"
-       " function" << endl;
-    ad_exit(1);
-  }
-  else
+  init_df1_three_variable::init_df1_three_variable(const prevariable& _v)
   {
     ADUNCONST(prevariable,v)
+    if (num_ind_var>2)
+    {
+      cerr << "can only have 2 independent_variables in df1_three_variable"
+       " function" << endl;
+      ad_exit(1);
+    }
     ind_var[num_ind_var++]=&v;
     *get_u() =  value(v);
-    switch(num_ind_var)
+    switch(num_ind_var) 
     {
     case 1:
       *get_u_x() = 1.0;
@@ -872,12 +877,11 @@ init_df1_three_variable::init_df1_three_variable(const prevariable& _v)
       *get_u_z() = 1.0;
       break;
     default:
-      cerr << "illegal num_ind_var value of " << num_ind_var
+      cerr << "illegal num_ind_var value of " << num_ind_var 
            << " in  df1_three_variable function" << endl;
       ad_exit(1);
     }
   }
-}
 
 /**
  * Description not yet available.
@@ -925,14 +929,14 @@ df1_three_matrix choleski_decomp(const df1_three_matrix& MM)
 
   int i,j,k;
   df1_three_variable tmp;
-
+   
     if (value(M(1,1))<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-
+   
   L(1,1)=sqrt(M(1,1));
   for (i=2;i<=n;i++)
   {
@@ -955,14 +959,14 @@ df1_three_matrix choleski_decomp(const df1_three_matrix& MM)
     {
       tmp-=L(i,k)*L(i,k);
     }
-
+   
     if (value(tmp)<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-
+   
     L(i,i)=sqrt(tmp);
   }
 
@@ -982,7 +986,7 @@ dvariable& dvariable::operator = (const df1_three_variable& v)
   double  dfy= *v.get_u_y();
   double  dfz= *v.get_u_z();
   value(*this)=*v.get_u();
-
+      
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
     &(value(*this)),&(value(*px)),dfx,&(value(*py)),dfy,&(value(*pz)),
     dfz);

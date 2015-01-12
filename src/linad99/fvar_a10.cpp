@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -19,14 +19,18 @@
   #endif
 #endif
 
-#if defined(__TURBOC__)
+#if defined(__TURBOC__) && !defined(__linux__)
    #include <iostream.h>
    #include <strstrea.h>
 #endif
 
 #ifdef __SUN__
    #include <iostream.h>
+#if !defined(__MSVC32__)
   #include <strstream.h>
+#else
+  #include <strstrea.h>
+#endif
   #define __USE_IOSTREAM__
 #endif
 
@@ -37,14 +41,13 @@
 
 #include <string.h>
 #include <ctype.h>
-
-#include <sstream>
-using std::istringstream;
-
-#include <cassert>
-#include <climits>
-
+const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
+const int MAX_NUMBER_COLUMNS = 6550;
+const int MAX_NUMBER_ROWS = 6550;
+#if !defined(HUGE) 
+#define HUGE 1.e+100
+#endif
 
 /**
  * Description not yet available.
@@ -52,9 +55,7 @@ const int MAX_FIELD_LENGTH = 500;
  */
 void dvar_vector::fill(const char * s)
 {
-  const size_t len = strlen(s);
-  assert(len <= INT_MAX);
-  const int n = (int)len;
+  int n = strlen(s);
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;
@@ -94,8 +95,7 @@ void dvar_vector::fill(const char * s)
 
   if (lbraces > 1)
   {
-    cerr << "Only one level of braces allowed in "
-    "dvar_vector::fill(const char * s)\n";
+    cerr << "Only one level of braces allowed in dvar_vector::fill(const char * s)\n";
     cerr << s << "\n";
     ad_exit(1);
   }
@@ -115,20 +115,18 @@ void dvar_vector::fill(const char * s)
     {
       if (nch < size())
       {
-        cerr << "Not enough elements to fill vector in "
-        "dvar_vector::fill(const char * s)\n";
+        cerr << "Not enough elements to fill vector in dvar_vector::fill(const char * s)\n";
         cerr << s << "\n";
         ad_exit(1);
       }
       else
       {
-        cerr << "Too many elements for size of vector in "
-        "dvar_vector::fill(const char * s)\n";
+        cerr << "Too many elements for size of vector in dvar_vector::fill(const char * s)\n";
         cerr << s << "\n";
         ad_exit(1);
       }
     }
-    istringstream ss(t);
+    istrstream ss(t);
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
@@ -139,7 +137,7 @@ void dvar_vector::fill(const char * s)
      ss >> field;
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha((unsigned char)err_ptr[0]))
+     if (isalpha(err_ptr[0]))
      {
        cerr << "Error decoding field "
          << " in dmatrix::dmatrix(char * filename) " << "\n";
@@ -151,7 +149,14 @@ void dvar_vector::fill(const char * s)
            << err_ptr[3] << "\n";
        ad_exit(1);
      }
-     if (elem(i) == HUGE_VAL || elem(i) == -HUGE_VAL)
+#if defined( __SUN__) && !defined(__GNUDOS__)
+  dvariable  cmp = elem(i);
+     if (cmp == HUGE_VAL || cmp== -HUGE_VAL)
+#elif defined( __GNU__) || defined( __GNUDOS__)
+     if (elem(i)== HUGE ||elem(i)== -HUGE)
+#else
+     if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
+#endif
      {
        cerr << "Overflow Error decoding field "
            " in dmatrix::dmatrix(char * ) " << "\n";
@@ -159,10 +164,8 @@ void dvar_vector::fill(const char * s)
        ad_exit(1);
      }
    }
-   delete[] field;
-   field = 0;
+   delete field;
 
-   delete[] t;
-   t = 0;
+   delete t;
   }
 }

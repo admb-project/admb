@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  */
 banded_lower_triangular_dmatrix::
   banded_lower_triangular_dmatrix(const banded_lower_triangular_dmatrix& mm) :
-  bw(mm.bw), d(mm.d)
+  bw(mm.bw), d(mm.d) 
 {}
 
 /**
@@ -40,7 +40,7 @@ banded_lower_triangular_dmatrix & banded_lower_triangular_dmatrix::operator =
   }
   return *this;
 }
-
+    
 /**
  * Description not yet available.
  * \param
@@ -53,7 +53,7 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
   int minsave=M.indexmin();
   M.shift(1);
   int n=M.indexmax();
-
+  
   double delta=0.0;
   int bw=M.bandwidth();
   banded_lower_triangular_dmatrix L(1,n,bw);
@@ -61,7 +61,7 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
     L.initialize();
 #endif
 
-  int i;
+  int i,j,k;
   double tmp;
     if (M(1,1)<=0)
     {
@@ -79,23 +79,23 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
 
   for (i=2;i<=n;i++)
   {
-    for (int j=i-bw+1;j<=i-1;j++)
+    for (j=i-bw+1;j<=i-1;j++)
     {
       if (j>1)
-      {
+      {	
         tmp=M(i,j);
-        for (int k=i-bw+1;k<=j-1;k++)
+        for (k=i-bw+1;k<=j-1;k++)
         {
-          if (k>0 && k>j-bw)
+	  if (k>0 && k>j-bw)
             tmp-=L(i,k)*L(j,k);
         }
         L(i,j)=tmp/L(j,j);
       }
     }
     tmp=M(i,i);
-    for (int k=i-bw+1;k<=i-1;k++)
+    for (k=i-bw+1;k<=i-1;k++)
     {
-      if (k>0)
+      if (k>0)	
         tmp-=L(i,k)*L(i,k);
     }
     if (tmp<=0)
@@ -113,10 +113,10 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
   dvector v(1,n);
   if (ierr==1)
   {
-    int k=i;
+    k=i;
     v.initialize();
     v(k)=1.0;
-    for (i=k-1;i>=1;i--)
+    for (int i=k-1;i>=1;i--)
     {
       double ssum=0.0;
       int jmax=admin(n,i+bw-1);
@@ -156,4 +156,4 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
 //***********************************************************
 //***********************************************************
 //***********************************************************
-
+ 

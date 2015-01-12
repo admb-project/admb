@@ -67,7 +67,7 @@ dvariable robust_regression(dvector& obs, dvar_vector& pred, dvariable& cutoff)
   v_hat = 1.e-80 + sum_square/nobs;
   sigma_hat=pow(v_hat,.5);
   sigma_tilde=a*sigma_hat;
-  double b=2.*pcon/(width*sqrt(PI));
+  double b=2.*pcon/(width*sqrt(3.14159));
   dvariable log_likelihood;
   dvariable div1;
   dvariable div2,div4;
@@ -120,7 +120,7 @@ dvariable robust_regression(dvector& obs, dvar_vector& pred,
   v_hat = 1.e-80 + sum_square/nobs;
   sigma_hat=pow(v_hat,.5);
   sigma_tilde=a*sigma_hat;
-  double b=2.*pcon/(width*sqrt(PI));
+  double b=2.*pcon/(width*sqrt(3.14159));
   dvariable log_likelihood;
   dvariable div1;
   dvariable div2,div4;

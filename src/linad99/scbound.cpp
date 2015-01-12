@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -26,11 +26,11 @@ double dmax(double, double);
  * Description not yet available.
  * \param
  */
-dvariable boundp(dvariable xx, double fmin, double fmax,
-  const prevariable& _fpen, const double& s)
+  dvariable boundp( dvariable xx, double fmin, double fmax, const prevariable& _fpen,
+    const double& s)
 {
   prevariable& fpen=(prevariable&) _fpen;
-
+  
   dvariable t,y,x;
   x=xx/s;
   const double l4=log(4.0);
@@ -40,8 +40,8 @@ dvariable boundp(dvariable xx, double fmin, double fmax,
 #ifdef USE_BARD_PEN
   //cout << "xxxxx" << endl;
   double pen=.00001/diff;
-  fpen=fpen-pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#else
+  fpen=fpen-pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
+#else 
 
   if (x < -.9999)
   {
@@ -83,8 +83,8 @@ double boundp( double xx, double fmin, double fmax, const double& _fpen,
 #ifdef USE_BARD_PEN
   //cout << "xxxxx" << endl;
   double pen=.00001/diff;
-  fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#else
+  fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
+#else 
   if (x < -.9999)
   {
     fpen+=(x+0.9999)*(x+0.9999);
@@ -118,8 +118,7 @@ double boundpin(double x, double fmin, double fmax,const double& s)
 
   if (x < fmin)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -128,8 +127,7 @@ double boundpin(double x, double fmin, double fmax,const double& s)
 
   if (x > fmax)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -141,16 +139,14 @@ double boundpin(double x, double fmin, double fmax,const double& s)
 }
 
 /*
-double boundpin(const prevariable& xx, double fmin, double fmax,
-  const double& s)
+double boundpin(BOR_CONST prevariable& xx, double fmin, double fmax,_CONST double& s)
 {
   double tinv;
   double x=value(xx);
 
   if (x < fmin)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -159,8 +155,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax,
 
   if (x > fmax)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -171,3 +166,4 @@ double boundpin(const prevariable& xx, double fmin, double fmax,
   return(s*tinv);
 }
 */
+

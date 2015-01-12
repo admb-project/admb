@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator/=(const double x)
+  dvar_vector& dvar_vector::operator /= ( CGNU_DOUBLE x)
   {
     RETURN_ARRAYS_INCREMENT();
     save_identifier_string("wctf");
@@ -29,7 +29,8 @@ dvar_vector& dvar_vector::operator/=(const double x)
     save_double_value(x);
     save_identifier_string("cmtu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diveq);
+    gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(DF_cdble_dv_diveq);
     return(*this);
   }
 
@@ -60,7 +61,7 @@ dvar_vector& dvar_vector::operator/=(const double x)
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator/=(const prevariable& x)
+  dvar_vector& dvar_vector::operator /= (_CONST prevariable& x)
   {
     RETURN_ARRAYS_INCREMENT();
     double xinv=1./value(x);
@@ -75,7 +76,8 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     x.save_prevariable_position();
     save_identifier_string("cmtu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);
+    gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(DF_vdble_dv_diveq);
     return(*this);
   }
 

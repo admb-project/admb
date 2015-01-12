@@ -2,12 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
- \file
-  More overloads of math library functions for variable arguments.
+ * \file
+ * Description not yet available.
  */
+// file fvar_fn.cpp
+// math.h functions involving prevariables
 #include "fvar.hpp"
 
 #include <stdio.h>
@@ -25,14 +27,14 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-prevariable& exp(const prevariable& v1)
+    prevariable& exp(_CONST prevariable& v1)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-      double tmp=::exp(v1.v->x);
+      double tmp;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      tmp=::exp(v1.v->x);
       gradient_structure::RETURN_PTR->v->x=tmp;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),tmp);
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                                    &(v1.v->x),tmp );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -40,14 +42,12 @@ prevariable& exp(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& atan(const prevariable& v1)
+    prevariable& atan(_CONST prevariable& v1)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x= ::atan(v1.v->x);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x),
-        &(v1.v->x),1./(1.+v1.v->x * v1.v->x) );
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                                    &(v1.v->x),1./(1.+v1.v->x * v1.v->x) );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -55,13 +55,12 @@ prevariable& atan(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& ldexp(const prevariable& v1, const int& exponent)
+    prevariable& ldexp(_CONST prevariable& v1, BOR_CONST int& exponent)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::ldexp(v1.v->x, exponent);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),pow(2.0,exponent));
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                                    &(v1.v->x),pow(2.0,exponent) );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -69,21 +68,20 @@ prevariable& ldexp(const prevariable& v1, const int& exponent)
  * Description not yet available.
  * \param
  */
-prevariable& sqrt(const prevariable& v1)
+    prevariable& sqrt(_CONST prevariable& v1)
     {
       double tmp=v1.v->x;
-      if (tmp==0.0)
+      if (tmp==0.0) 
       {
         cerr << "Attempting to take the derivative of sqrt(prevariable x)"
          " at x=0\n";
         ad_exit(1);
       }
       tmp=::sqrt(tmp);
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=tmp;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),1./(2.*tmp));
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                                    &(v1.v->x),1./(2.*tmp) );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -91,21 +89,20 @@ prevariable& sqrt(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& sqr(const prevariable& v1)
+    prevariable& sqr(_CONST prevariable& v1)
     {
       double tmp=v1.v->x;
-      if (tmp==0.0)
+      if (tmp==0.0) 
       {
         cerr << "Attempting to take the derivative of sqrt(prevariable x)"
          " at x=0\n";
         ad_exit(1);
       }
       tmp=::sqrt(tmp);
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=tmp;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),1./(2.*tmp));
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                                    &(v1.v->x),1./(2.*tmp) );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -113,14 +110,13 @@ prevariable& sqr(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& tan(const prevariable& v1)
+    prevariable& tan(_CONST prevariable& v1)
     {
       double t = ::tan(v1.v->x);
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x= t;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), 1+t*t);
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                          &(v1.v->x), 1+t*t);
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -128,14 +124,13 @@ prevariable& tan(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& tanh(const prevariable& v1)
+    prevariable& tanh(_CONST prevariable& v1)
     {
       double t = ::tanh(v1.v->x);
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x= t;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), 1-t*t);
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                          &(v1.v->x), 1-t*t);
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -143,14 +138,12 @@ prevariable& tanh(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& acos(const prevariable& v1)
+    prevariable& acos(_CONST prevariable& v1)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::acos(v1.v->x);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x),
-        &(v1.v->x),-1./::sqrt(1.- v1.v->x * v1.v->x));
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                          &(v1.v->x),-1./::sqrt(1.- v1.v->x * v1.v->x));
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -158,14 +151,12 @@ prevariable& acos(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& asin(const prevariable& v1)
+    prevariable& asin(_CONST prevariable& v1)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::asin(v1.v->x);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x),
-        &(v1.v->x),1./::sqrt(1.- v1.v->x * v1.v->x));
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                          &(v1.v->x),1./::sqrt(1.- v1.v->x * v1.v->x));
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -173,17 +164,16 @@ prevariable& asin(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& pow(const prevariable& v1, const prevariable& v2)
+    prevariable& pow(_CONST prevariable& v1,_CONST prevariable& v2)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-      double x=::pow(v1.v->x,(v2.v->x)-1);
-      double y=x* v1.v->x;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      double x,y;
+      x=::pow(v1.v->x,(v2.v->x)-1);
+      y=x* v1.v->x;
       gradient_structure::RETURN_PTR->v->x=y;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x),
-        &(v1.v->x), v2.v->x * x  ,&(v2.v->x),
-        y * ::log(v1.v->x));
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                            &(v1.v->x), v2.v->x * x  ,&(v2.v->x), 
+                                     y * ::log(v1.v->x) );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -191,16 +181,16 @@ prevariable& pow(const prevariable& v1, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& pow(const double u, const prevariable& v1)
+    prevariable& pow( CGNU_DOUBLE u,_CONST prevariable& v1)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-      double y=::pow(u,(v1.v->x));
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      double y;
+      y=::pow(u,(v1.v->x));
 
       gradient_structure::RETURN_PTR->v->x=y;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), y * ::log(u));
-
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                       &(v1.v->x), y * ::log(u) );
+ 
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -208,13 +198,12 @@ prevariable& pow(const double u, const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& sinh(const prevariable& v1)
+    prevariable& sinh(_CONST prevariable& v1)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::sinh(v1.v->x);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),::cosh(v1.v->x));
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                                    &(v1.v->x),::cosh(v1.v->x) );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -222,13 +211,12 @@ prevariable& sinh(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& cosh(const prevariable& v1)
+    prevariable& cosh(_CONST prevariable& v1)
     {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::cosh(v1.v->x);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),::sinh(v1.v->x));
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
+                                    &(v1.v->x),::sinh(v1.v->x) );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -236,12 +224,11 @@ prevariable& cosh(const prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& atan2(const prevariable& v1, const prevariable& v2)
+prevariable& atan2(_CONST prevariable& v1,_CONST prevariable& v2)
 {
   if (value(v1) == 0 && value(v2) == 0)
   {
-    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined "
-    "for y and x equal zero.\n";
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
     ad_exit(1);
   }
   if (value(v1) == 0 && value(v2) > 0)
@@ -256,12 +243,11 @@ prevariable& atan2(const prevariable& v1, const prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& atan2(const prevariable& v1, const double v2)
+prevariable& atan2(_CONST prevariable& v1, CGNU_DOUBLE v2)
 {
   if (value(v1) == 0 && v2 == 0)
   {
-    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined "
-    "for y and x equal zero.\n";
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
     ad_exit(1);
   }
   if (value(v1) == 0 && v2 > 0)
@@ -276,12 +262,11 @@ prevariable& atan2(const prevariable& v1, const double v2)
  * Description not yet available.
  * \param
  */
-prevariable& atan2(const double v1, const prevariable& v2)
+prevariable& atan2( CGNU_DOUBLE v1,_CONST prevariable& v2)
 {
   if (v1 == 0 && value(v2) == 0)
   {
-    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined "
-    "for y and x equal zero.\n";
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
     ad_exit(1);
   }
   if (v1 == 0 && value(v2) > 0)

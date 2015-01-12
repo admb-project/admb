@@ -2,19 +2,20 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 #include "fvar.hpp"
+#include <d4arr.hpp>
 
 /**
  * Description not yet available.
  * \param
  */
-d4_array sqrt(const d4_array& m)
+d4_array sqrt(_CONST d4_array& m)
 {
   d4_array tmp;
   tmp.allocate(m);
@@ -29,7 +30,7 @@ d4_array sqrt(const d4_array& m)
  * Description not yet available.
  * \param
  */
-d4_array exp(const d4_array& m)
+d4_array exp(_CONST d4_array& m)
 {
   d4_array tmp;
   tmp.allocate(m);
@@ -44,7 +45,7 @@ d4_array exp(const d4_array& m)
  * Description not yet available.
  * \param
  */
-d4_array mfexp(const d4_array& m)
+d4_array mfexp(_CONST d4_array& m)
 {
   d4_array tmp;
   tmp.allocate(m);
@@ -59,7 +60,7 @@ d4_array mfexp(const d4_array& m)
  * Description not yet available.
  * \param
  */
-d4_array log(const d4_array& m)
+d4_array log(_CONST d4_array& m)
 {
   d4_array tmp;
   tmp.allocate(m);

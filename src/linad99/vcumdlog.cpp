@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,15 +14,15 @@
  * Description not yet available.
  * \param
  */
-dvariable cumd_logistic(const prevariable& x)
+dvariable cumd_logistic(_CONST prevariable& x)
 {
-  if (value(x)>=0.0)
-  {
+  if (value(x)>=0.0)	
+  {	  
     return 1.0/(1.0+exp(-x));
   }
-  else
-  {
-    dvariable y=exp(x);
+  else  
+  {	  
+    dvariable y=exp(x);	   
     return y/(1.0+y);
   }
 }
@@ -31,7 +31,7 @@ dvariable cumd_logistic(const prevariable& x)
  * Description not yet available.
  * \param
  */
-dvariable inv_cumd_logistic(const prevariable& x)
+dvariable inv_cumd_logistic(_CONST prevariable& x)
 {
   return log(x/(1.0-x));
 }

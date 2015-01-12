@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvector log(const dvector& t1)
+  dvector log(_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -29,7 +29,7 @@ dvector log(const dvector& t1)
  * Description not yet available.
  * \param
  */
-dvector exp(const dvector& t1)
+  dvector exp(_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -44,7 +44,7 @@ dvector exp(const dvector& t1)
  * Description not yet available.
  * \param
  */
-dvector fabs(const dvector& t1)
+  dvector fabs(_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -59,7 +59,7 @@ dvector fabs(const dvector& t1)
  * Description not yet available.
  * \param
  */
-double max(const dvector& t1)
+  double max(_CONST dvector& t1)
   {
      double tmp;
      int mmin=t1.indexmin();
@@ -76,7 +76,7 @@ double max(const dvector& t1)
  * Description not yet available.
  * \param
  */
-double min(const dvector& t1)
+  double min(_CONST dvector& t1)
   {
      double tmp;
      int mmin=t1.indexmin();

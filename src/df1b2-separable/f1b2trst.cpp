@@ -2,12 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
+#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -22,13 +23,15 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
 {
   double & f= (double&)_f;
   dvector & g= (dvector&)_g;
+  int unvar=1;
   fmm fmc(nvar);
   if (random_effects_flag)
   {
-    initial_params::set_active_only_random_effects();
-    //int unvar=initial_params::nvarcalc(); // get the number of active
-    initial_params::restore_start_phase();
-    initial_params::set_inactive_random_effects();
+    initial_params::set_active_only_random_effects(); 
+    //cout << nvar << endl;
+    unvar=initial_params::nvarcalc(); // get the number of active
+    initial_params::restore_start_phase(); 
+    initial_params::set_inactive_random_effects(); 
     int nvar1=initial_params::nvarcalc(); // get the number of active
     if (nvar1 != nvar)
     {
@@ -44,7 +47,7 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
     cerr << "Error trying to open file admodel.hes" << endl;
     ad_exit(1);
   }
-  int hnvar = 0;
+  int hnvar;
   uis >> hnvar;
   dmatrix Hess(1,hnvar,1,hnvar);
   uis >> Hess;
@@ -67,13 +70,13 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
     tester(i,i)+=lambda;
   }
   dvector step =  x-solve(tester,g);
-
+  
   {
     // calculate the number of random effects unvar
     // this turns on random effects variables and turns off
     // everything else
     //cout << nvar << endl;
-    initial_params::set_active_only_random_effects();
+    initial_params::set_active_only_random_effects(); 
     //cout << nvar << endl;
     int unvar=initial_params::nvarcalc(); // get the number of active
     //df1b2_gradlist::set_no_derivatives();
@@ -93,19 +96,23 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
       }
     }
     lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
-      this);
+      this); 
     initial_df1b2params::current_phase=initial_params::current_phase;
-
+    
     initial_df1b2params::save_varsptr();
     allocate();
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    int ynvar=initial_params::nvarcalc_all();
-    dvector y(1,ynvar);
-    initial_params::xinit_all(y);
+    int nvar=initial_params::nvarcalc_all(); 
+    dvector y(1,nvar);
+    initial_params::xinit_all(y); 
     initial_df1b2params::reset_all(y);
 
     g=(*lapprox)(step,f,this);
+    
   }
+
 } // end block for quasi newton minimization
+
+#endif

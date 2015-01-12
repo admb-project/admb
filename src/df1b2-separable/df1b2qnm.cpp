@@ -2,19 +2,19 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
-#include <sstream>
-using std::istringstream;
-
+#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
+//#include <vmon.h>
 static int no_stuff=0;
+//static void xxxy(void) {}
 
 /**
  * Description not yet available.
@@ -31,11 +31,10 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   {
     if (nopt !=2)
     {
-      cerr <<
-        "Usage -fntrap option needs two non-negative integers  -- ignored.\n";
+      cerr << "Usage -fntrap option needs two non-negative integers  -- ignored" << endl;
     }
     else
-    {
+    {   
       ifn_trap=atoi(ad_comm::argv[on+1]);
       itn_trap=atoi(ad_comm::argv[on+2]);
     }
@@ -46,7 +45,12 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   // *********************************************************
   // block for quasi-newton minimization
   //int itnold=0;
-  fmm fmc(negdirections ? negdirections->indexmax() : nvar);
+  int nx=nvar;
+  if (negdirections) 
+  {
+    nx=negdirections->indexmax(); 
+  }
+  fmm fmc(nx);
   int on1;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)
   {
@@ -61,7 +65,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       //fmc.iprint=iprint;
     }
     else
-    {
+    {   
       int jj=atoi(ad_comm::argv[on1+1]);
       fmc.dcheck_flag=jj;
     }
@@ -75,7 +79,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       fmc.iprint=iprint;
     }
     else
-    {
+    {   
       int jj=atoi(ad_comm::argv[on1+1]);
       fmc.iprint=jj;
     }
@@ -96,18 +100,19 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       cerr << "Usage -dfn option needs number  -- ignored" << endl;
     }
     else
-    {
-      istringstream ist(ad_comm::argv[on+1]);
+    {   
+  
+      istrstream ist(ad_comm::argv[on+1]);
       ist >> _dfn;
-
+  
       if (_dfn<=0)
       {
         cerr << "Usage -dfn option needs positive number  -- ignored" << endl;
         _dfn=0.0;
-      }
+      } 
     }
   }
-  if (_dfn>0)
+  if (_dfn>0) 
   {
     fmc.dfn=_dfn;
   }
@@ -135,11 +140,11 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   int unvar=1;
   if (random_effects_flag)
   {
-    initial_params::set_active_only_random_effects();
+    initial_params::set_active_only_random_effects(); 
     //cout << nvar << endl;
     unvar=initial_params::nvarcalc(); // get the number of active
-    initial_params::restore_start_phase();
-    initial_params::set_inactive_random_effects();
+    initial_params::restore_start_phase(); 
+    initial_params::set_inactive_random_effects(); 
     int nvar1=initial_params::nvarcalc(); // get the number of active
     if (nvar1 != nvar)
     {
@@ -177,6 +182,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     }
     else
     {
+
       int i;
       int nx=negdirections->indexmax();
       independent_variables u(1,nx);
@@ -223,9 +229,9 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     // this turns on random effects variables and turns off
     // everything else
     //cout << nvar << endl;
-    initial_params::set_active_only_random_effects();
+    initial_params::set_active_only_random_effects(); 
     //cout << nvar << endl;
-    int _unvar=initial_params::nvarcalc(); // get the number of active
+    int unvar=initial_params::nvarcalc(); // get the number of active
     //df1b2_gradlist::set_no_derivatives();
 
     if (funnel_init_var::py)
@@ -247,22 +253,23 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       }
       df1b2variable::adpool_counter=0;
     }
-    lapprox=new laplace_approximation_calculator(nvar,_unvar,1,nvar+_unvar,
-      this);
+    lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
+      this); 
     if (lapprox==0)
     {
       cerr << "Error allocating memory for lapprox" << endl;
       ad_exit(1);
     }
     initial_df1b2params::current_phase=initial_params::current_phase;
-
+    
     initial_df1b2params::save_varsptr();
     allocate();
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    dvector y(1,initial_params::nvarcalc_all());
-    initial_params::xinit_all(y);
+    int nvar=initial_params::nvarcalc_all(); 
+    dvector y(1,nvar);
+    initial_params::xinit_all(y); 
     initial_df1b2params::reset_all(y);
 
     gradient_structure::set_NO_DERIVATIVES();
@@ -277,11 +284,11 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           lapprox->check_hessian_type2(this);
         }
         else
-        {
+        { 
           lapprox->check_hessian_type(this);
         }
 
-        // Print Hessian type and related info
+        // Print Hessian type and related info       
         switch(lapprox->hesstype)
         {
         case 1:
@@ -289,11 +296,10 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           break;
         case 2:
           cout << "\nBlock diagonal Hessian (Block size =" <<
-            (lapprox->usize)/(lapprox->num_separable_calls) << ")\n" << endl;
+		 (lapprox->usize)/(lapprox->num_separable_calls) << ")\n" << endl;
           break;
         case 3:
-          cout << "\nBanded Hessian (Band width = " << lapprox->bw << ")\n"
-               << endl;
+          cout << "\nBanded Hessian (Band width = " << lapprox->bw << ")\n" << endl;
           break;
         case 4:
           cout << "Hessian type 4 " << endl;
@@ -302,6 +308,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           cerr << "This can't happen" << endl;
           ad_exit(1);
         }
+
       }
     }
 
@@ -312,7 +319,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
    */
 
     // linear mixed effects optimization
-    if (laplace_approximation_calculator::variance_components_vector)
+    if (laplace_approximation_calculator::variance_components_vector) 
     {
       if (!lapprox)
       {
@@ -337,13 +344,6 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
             }
           }
           g=(*lapprox)(x,f,this);
-          if (bad_step_flag==1)
-          {
-            g=1.e+4;
-            f=2.*fmc.fbest;
-            bad_step_flag=0;
-          }
-
           if (lapprox->init_switch==0)
           {
             if (f<fmc.fbest)
@@ -385,7 +385,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       delete negdirections;
       negdirections=0;
     }
-    initial_params::set_inactive_only_random_effects();
+    initial_params::set_inactive_only_random_effects(); 
   }
 
   if (funnel_init_var::py)
@@ -404,3 +404,5 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   quit_flag=fmc.quit_flag;
   objective_function_value::gmax=fabs(fmc.gmax);
 } // end block for quasi newton minimization
+
+#endif

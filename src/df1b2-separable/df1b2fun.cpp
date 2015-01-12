@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -15,30 +15,29 @@ extern "C"
   int kbhit(void) { return 0;}
 }
 
+int global_nvar=0;
 class df1b2_gradlist;
 //df1b2_gradlist * f1b2gradlist = NULL;
 
 //int df1b2variable::noallocate=0;
 
-//initial_df1b2params ** initial_df1b2params::varsptr
+//initial_df1b2params ** initial_df1b2params::varsptr 
 //  =new P_INITIAL_DF1B2PARAMS[1000];
 //int initial_df1b2params::num_initial_df1b2params=0;         // array
 
 //int initial_df1b2params::num_initial_df1b2params_sav=0;         // array
-//initial_df1b2params ** initial_df1b2params::varsptr_sav=0;
+//initial_df1b2params ** initial_df1b2params::varsptr_sav=0; 
 
 //int initial_df1b2params::current_phase=0;
 
-#if defined(__DERCHECK__)
 int mydercheckercounter=0;
-#endif
 
 /**
  * Description not yet available.
  * \param
  */
-void df1b2variable::save_adpool_pointer(void)
-{
+void df1b2variable::save_adpool_pointer(void) 
+{ 
   if (adpool_stack_pointer> adpool_stack_size-1)
   {
     cerr << "overflow in save_adpool_pointer" << endl;
@@ -52,8 +51,8 @@ void df1b2variable::save_adpool_pointer(void)
  * Description not yet available.
  * \param
  */
-void df1b2variable::restore_adpool_pointer(void)
-{
+void df1b2variable::restore_adpool_pointer(void) 
+{ 
   if (adpool_stack_pointer<=0)
   {
     cerr << "underflow in save_adpool_pointer" << endl;
@@ -74,12 +73,12 @@ void initial_df1b2params::save_varsptr(void)
   varsptr=new P_INITIAL_DF1B2PARAMS[1000];
   if (varsptr == 0)
   {
-    cerr << "error allocating memory for "
+    cerr << "error allocating memory for " 
       "initial_df1b2params::varsptr  " << endl;
     ad_exit(1);
   }
 
-  num_initial_df1b2params_sav=num_initial_df1b2params;
+  num_initial_df1b2params_sav=num_initial_df1b2params; 
   num_initial_df1b2params =0;
 }
 
@@ -99,11 +98,12 @@ void initial_df1b2params::restore_varsptr(void)
     varsptr=initial_df1b2params::varsptr_sav;
     varsptr_sav=0;
 
-    num_initial_df1b2params= num_initial_df1b2params_sav;
-    num_initial_df1b2params_sav=0;
+    num_initial_df1b2params= num_initial_df1b2params_sav; 
+    num_initial_df1b2params_sav=0; 
   }
   else
   {
+
     if (num_initial_df1b2params+num_initial_df1b2params_sav
      > 1000)
     {
@@ -111,18 +111,18 @@ void initial_df1b2params::restore_varsptr(void)
            << endl;
       ad_exit(1);
     }
-
+ 
     for (int i=0;i<num_initial_df1b2params_sav;i++)
     {
       varsptr[i+num_initial_df1b2params]=varsptr_sav[i];
     }
-    num_initial_df1b2params+=num_initial_df1b2params_sav;
+    num_initial_df1b2params+=num_initial_df1b2params_sav; 
     delete varsptr_sav;
     varsptr_sav=0;
-    num_initial_df1b2params_sav=0;
+    num_initial_df1b2params_sav=0; 
   }
 }
-
+   
 /**
  * Description not yet available.
  * \param
@@ -134,6 +134,11 @@ initial_df1b2params::initial_df1b2params(void) : ind_index(0)
   phase_save=1;
   add_to_list();
 }
+
+/*
+static void stupid_xxx(int){;}
+static void stupid_xxx(void *){;}
+*/
 
 typedef void (**ADprfptr)(void);
 typedef void (*ADrfptr)(void);
@@ -151,7 +156,7 @@ void df1b2_gradcalc1(void)
   int xcount=0;
   int tmpcount;
   int tcount=f1b2gradlist->ncount;
-
+  
   //int check_pool_flag3=0;
   switch (df1b2variable::passnumber)
   {
@@ -161,13 +166,13 @@ void df1b2_gradcalc1(void)
   case 3:
 #if defined(__DERCHECK__)
     //  derchecker->counter=f1b2gradlist->ncount;
-    mydercheckercounter=f1b2gradlist->ncount;
-#endif
+      mydercheckercounter=f1b2gradlist->ncount;
+#   endif
     f1b2gradlist->list.set_reverse();
     f1b2gradlist->list.restore_end();
     f1b2gradlist->nlist.set_reverse();
     f1b2gradlist->nlist.restore_end();
-
+  
     if (df1b2variable::passnumber==3)
     {
       f1b2gradlist->nlist3.save_end();
@@ -186,14 +191,14 @@ void df1b2_gradcalc1(void)
       {
         cout << "B " << tmpcount << endl;
       }
-      if (tmpcount < 2)
+      if (tmpcount < 2) 
       {
         cout << "B " << tmpcount << endl;
       }
       */
       //nlist-=sizeof(char*);
       --nlist;
-      if (nlist.eof())
+      if (nlist.eof()) 
         break;
       ADrfptr rf=nlist.bptr->pf;
       (*rf)();
@@ -207,39 +212,41 @@ void df1b2_gradcalc1(void)
         }
       }
      */
-#if defined(__DERCHECK__)
+#if   defined(__DERCHECK__)
         //derchecker->counter--;
       mydercheckercounter--;
-#endif
+       // stupid_xxx(derchecker->counter);
+#     endif
         xcount++;
           tcount--;
        if (xcount > 99999999) cout << xcount << endl;
-       //if (tcount == 6599 )
+       //if (tcount == 6599 ) 
         //  cout << tcount << endl;
       /*
         if (initial_df1b2params::current_phase==2)
         {
           tcount--;
           if (rf2 != (nlist.buffer+122)->pf || xcount > 12488)
-             cout << tcount << " " << xcount << " "
+             cout << tcount << " " << xcount << " " 
                   << (nlist.buffer+122)->pf << endl;
         }
        */
+           
     }
-    while(nlist.bptr>=nlist.buffer);
-    break;
+    while(nlist.bptr>=nlist.buffer); 
+    break; 
   case 2:
-    {
+    { 
       f1b2gradlist->list2.save_end();
       f1b2gradlist->list2.set_reverse();
       f1b2gradlist->list2.restore_end();
       f1b2gradlist->nlist2.save_end();
       f1b2gradlist->nlist2.set_reverse();
       f1b2gradlist->nlist2.restore_end();
-#if defined(__DERCHECK__)
-      // derchecker->counter=0;
+#if   defined(__DERCHECK__)
+      //  derchecker->counter=0;
       mydercheckercounter=0;
-#endif
+#     endif
       f1b2gradlist->list.set_forward();
       f1b2gradlist->list.rewind();
       f1b2gradlist->nlist.set_forward();
@@ -250,35 +257,35 @@ void df1b2_gradcalc1(void)
       int icount=0;
       do
       {
-#if defined(__DERCHECK__)
-        // derchecker->counter++;
-        mydercheckercounter++;
-#endif
+#if     defined(__DERCHECK__)
+         // derchecker->counter++;
+          mydercheckercounter++;
+#       endif
         //ADrfptr rf=*ADprfptr(nlist.bptr);
         ADrfptr rf=nlist.bptr->pf;
         (*rf)();
         ++nlist;
-
+        
        /*
         if (initial_df1b2params::current_phase==2)
         {
           if (icount >=4579)
-          {
+          { 
             cout << icount << endl;
           }
         }
-
+        
         if (icount>28115)
         {
           cout << "icount = " << icount << endl;
         }
         */
       }
-      while(++icount<ncount);
+      while(++icount<ncount); 
       // need this to get pointer right for step 3?
        // nlist-=sizeof(int); // set nlist to point to second record;
       //nlist++;
-
+   
       break;
     }
 
@@ -341,8 +348,7 @@ double AD_df2_tan(double x)
  */
 double AD_df3_atan(double x)
 {
-  return double(-2.0)/square(double(1)+square(x))
-         + double(12.0)*square(x)/cube(double(1)+square(x));
+  return double(-2.0)/square(double(1)+square(x))+double(12.0)*square(x)/cube(double(1)+square(x));
 }
 
 /**
@@ -352,14 +358,13 @@ double AD_df3_atan(double x)
 double AD_df3_tan(double x)
 {
   double y=square(tan(x));
-
+ 
   return double(2.0) * (double(1.0)+double(3.0)*y) * (double(1) + y);
 }
 
 df1b2function1 ADf1b2_tan(::tan,::AD_df1_tan,::AD_df2_tan ,::AD_df3_tan,"tan");
 
-df1b2function1 ADf1b2_atan(::atan,::AD_df1_atan,::AD_df2_atan ,::AD_df3_atan,
-  "atan");
+df1b2function1 ADf1b2_atan(::atan,::AD_df1_atan,::AD_df2_atan ,::AD_df3_atan,"atan");
 
 /**
  * Description not yet available.
@@ -401,9 +406,9 @@ df1b2function1 ADf1b2_inv(AD_arg_inv,AD_minus_arg_inv2,AD_2arg_inv3,
   AD_minus6_arg_inv4);
 
 df1b2function1 ADf1b2_log(::log,AD_arg_inv,AD_minus_arg_inv2,AD_2arg_inv3);
-
+  
 /*
-df1b2variable sin(const df1b2variable& x)
+df1b2variable sin(const df1b2variable& x) 
 {
   return ADf1b2_sin(x);
 }
@@ -413,7 +418,7 @@ df1b2variable sin(const df1b2variable& x)
  * Description not yet available.
  * \param
  */
-df1b2variable atan(const df1b2variable& x)
+df1b2variable atan(const df1b2variable& x) 
 {
   return ADf1b2_atan(x);
 }
@@ -422,7 +427,7 @@ df1b2variable atan(const df1b2variable& x)
  * Description not yet available.
  * \param
  */
-df1b2variable tan(const df1b2variable& x)
+df1b2variable tan(const df1b2variable& x) 
 {
   return ADf1b2_tan(x);
 }
@@ -447,7 +452,7 @@ df1b2variable& df1b2variable::operator /= (const df1b2variable& v)
 
 
 /*
-df1b2variable cos(const df1b2variable& x)
+df1b2variable cos(const df1b2variable& x) 
 {
   cout << "cos not implemented yet" << endl;
   ad_exit(1);
@@ -459,7 +464,7 @@ df1b2variable cos(const df1b2variable& x)
  * Description not yet available.
  * \param
  */
-df1b2variable exp(const df1b2variable& x)
+df1b2variable exp(const df1b2variable& x) 
 {
   return ADf1b2_exp(x);
 }
@@ -468,10 +473,10 @@ df1b2variable exp(const df1b2variable& x)
  * Description not yet available.
  * \param
  */
-df1b2variable mfexp(const df1b2variable& x)
+df1b2variable mfexp(const df1b2variable& x) 
 {
   double b=60;
-  if (value(x)<=b && value(x)>=-b)
+  if (value(x)<=b && value(x)>=-b) 
   {
     return ADf1b2_exp(x);
   }
@@ -489,9 +494,9 @@ df1b2variable mfexp(const df1b2variable& x)
  * Description not yet available.
  * \param
  */
-df1b2variable mfexp(const df1b2variable& x,double b)
+df1b2variable mfexp(const df1b2variable& x,double b) 
 {
-  if (value(x)<=b && value(x)>=-b)
+  if (value(x)<=b && value(x)>=-b) 
   {
     return ADf1b2_exp(x);
   }
@@ -509,7 +514,7 @@ df1b2variable mfexp(const df1b2variable& x,double b)
  * Description not yet available.
  * \param
  */
-df1b2variable log(const df1b2variable& x)
+df1b2variable log(const df1b2variable& x) 
 {
   return ADf1b2_log(x);
 }
@@ -518,7 +523,7 @@ df1b2variable log(const df1b2variable& x)
  * Description not yet available.
  * \param
  */
-df1b2variable inv(const df1b2variable& x)
+df1b2variable inv(const df1b2variable& x) 
 {
   return ADf1b2_inv(x);
 }
@@ -835,7 +840,7 @@ df1b2function1 ADf1b2_square(ADsquare_fun,ADtwo_id_fun,ADtwo_fun,ADzero_fun,
  * Description not yet available.
  * \param
  */
-df1b2variable square(const df1b2variable& x)
+df1b2variable square(const df1b2variable& x) 
 {
   return ADf1b2_square(x);
 }
@@ -847,13 +852,13 @@ df1b2function1 ADf1b2_cube(ADcube_fun,ADthree_square_fun,ADsix_id_fun,ADsix_fun,
  * Description not yet available.
  * \param
  */
-df1b2variable cube(const df1b2variable& x)
+df1b2variable cube(const df1b2variable& x) 
 {
   return ADf1b2_cube(x);
 }
 
 /*
-df1b2variable fourth(const df1b2variable& _z)
+df1b2variable fourth(const df1b2variable& _z) 
 {
   ADUNCONST(df1b2variable,z)
   df1b2variable u;
@@ -862,7 +867,7 @@ df1b2variable fourth(const df1b2variable& _z)
   double dfx=4.0*cube(x);
   double d2fx=12.0*square(x);
   double d3fx=24.0*x;
-
+  
   double * xd=z.get_u_dot();
   double * zd=u.get_u_dot();
   *u.get_u()=f;
@@ -878,13 +883,13 @@ df1b2variable fourth(const df1b2variable& _z)
 */
 
 /*
-df1b2variable operator * (const df1b2variable& x,const df1b2variable& y)
+df1b2variable operator * (const df1b2variable& x,const df1b2variable& y) 
 {
   return ADf1b2_product(x,y);
 }
 
 
-df1b2variable operator / (const df1b2variable& x,const df1b2variable& y)
+df1b2variable operator / (const df1b2variable& x,const df1b2variable& y) 
 {
   return ADf1b2_div(x,y);
 }
@@ -892,20 +897,20 @@ df1b2variable operator / (const df1b2variable& x,const df1b2variable& y)
 
 
 /*
-df1b2variable operator - (const df1b2variable& x,const df1b2variable& y)
+df1b2variable operator - (const df1b2variable& x,const df1b2variable& y) 
 {
   return ADf1b2_diff(x,y);
 }
 */
 
 /*
-df1b2variable operator * (double x,const df1b2variable& y)
+df1b2variable operator * (double x,const df1b2variable& y) 
 {
   return ADf1b2_product(x,y);
 }
 */
 /*
-df1b2variable operator * (const df1b2variable& x,double y)
+df1b2variable operator * (const df1b2variable& x,double y) 
 {
   return ADf1b2_product(y,x);
 }
@@ -929,13 +934,13 @@ df1b2function1 ADf1b2_assign(AD_id,AD1_fun,ADzero_fun,ADzero_fun);
 /*
 df1b2function1 ADf1b2_pluseq(AD_id,AD1_fun,ADzero_fun,ADzero_fun);
 
-df1b2variable& df1b2variable::operator += (const df1b2variable& y)
+df1b2variable& df1b2variable::operator += (const df1b2variable& y) 
 {
   return ADf1b2_pluseq(*this,y,1); // 1 so that special function is used
 }
 
 
-df1b2variable operator + (const df1b2variable& x,const df1b2variable& y)
+df1b2variable operator + (const df1b2variable& x,const df1b2variable& y) 
 {
   return ADf1b2_sum(x,y);
 }
@@ -944,21 +949,22 @@ df1b2variable operator + (const df1b2variable& x,const df1b2variable& y)
 
 
 /*
-df1b2variable mysum(const df1b2variable& x,const df1b2variable& y)
+df1b2variable mysum(const df1b2variable& x,const df1b2variable& y) 
 {
   return ADf1b2_mysum(x,y);
 }
 */
 
 /*
-df1b2variable operator + (double x,const df1b2variable& y)
+df1b2variable operator + (double x,const df1b2variable& y) 
 {
   return ADf1b2_sum(x,y);
 }
 */
 /*
-df1b2variable operator + (const df1b2variable& x,double y)
+df1b2variable operator + (const df1b2variable& x,double y) 
 {
   return ADf1b2_sum(x,y);
 }
 */
+

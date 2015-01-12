@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-double max(const double u, const double v)
+double max(CGNU_DOUBLE u, CGNU_DOUBLE v)
 {
   return u > v ? u : v;
 }
@@ -23,7 +23,7 @@ double max(const double u, const double v)
  * Description not yet available.
  * \param
  */
-double min(const double u, const double v)
+double min(CGNU_DOUBLE u, CGNU_DOUBLE v)
 {
   return u < v ? u : v;
 }

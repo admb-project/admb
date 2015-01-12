@@ -2,24 +2,21 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 /*
-void param_init_d3array::set_simulation_bounds(const dmatrix& symbds,
-  const int& ii)
+void param_init_d3array::set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii)
 {
  cerr << " Error -- void param_init_d3array::set_simulation_bounds"
-   " (const dmatrix& symbds, const int& ii) has not yet been defined" << endl;
+   " (BOR_CONST dmatrix& symbds,BOR_CONST int& ii) has not yet been defined" << endl;
  exit(1);
 }
 */
 
-void param_init_d3array::get_jacobian(const dvector& y, const dvector& ndev,
-  const int& ii)
+void param_init_d3array::get_jacobian(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& ii)
 {
- cerr << " Error -- "
-   " void param_init_number::add_value(const dvector& ndev, const int& ii)"
+ cerr << " Error -- void param_init_number::add_value(BOR_CONST dvector& ndev,BOR_CONST int& ii)"
    " has not yet been defined" << endl;
  exit(1);
 }
@@ -56,29 +53,28 @@ void param_init_d3array::bsave_value(void)
   }
 }
 
-void param_init_d3array::set_value(const dvar_vector& x,
-  const int& ii, const dvariable& pen)
+  void param_init_d3array::set_value(const dvar_vector& x,
+    BOR_CONST int& ii,BOR_CONST dvariable& pen)
   {
     ::set_value(*this,x,ii);
   }
 
-void param_init_d3array::set_value_inv(const dvector& x, const int& ii)
+  void param_init_d3array::set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
     ::set_value_inv(*this,x,ii);
   }
 
-void param_init_d3array::copy_value_to_vector(const dvector& x, const int& ii)
+  void param_init_d3array::copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
     ::copy_value_to_vector(*this,x,ii);
   }
 
-void param_init_d3array::restore_value_from_vector(const dvector& x,
-  const int& ii)
+  void param_init_d3array::restore_value_from_vector(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
     ::restore_value_from_vector(*this,x,ii);
   }
 
-void param_init_d3array::save_value(const ofstream& _ofs,int prec)
+  void param_init_d3array::save_value(BOR_CONST ofstream& _ofs,int prec)
   {
     ofstream& ofs=(ofstream&) _ofs;
     ofs << setw(prec+6) << setprecision(prec) << dvar3_array(*this) << endl;
@@ -108,12 +104,12 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
     {
       for (int i=indexmin();i<=indexmax();i++)
       {
-        if (allocated((*this)(i)))
-        {
+	if (allocated((*this)(i)))
+	{  
           for (int j=(*this)(i).indexmin();j<=(*this)(i).indexmax();j++)
           {
             if (allocated((*this)(i,j)))
-            {
+	    {  
               if (ad_comm::global_bparfile)
               {
                 *(ad_comm::global_bparfile) >> (*this)(i,j);
@@ -125,10 +121,10 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
               else
               {
                 (*this)(i,j)=(initial_value);
-              }
-            }
-          }
-        }
+	      }
+	    }
+	  }  
+	}
       }
     }
   }
@@ -142,8 +138,8 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
     {
       for (int i=indexmin();i<=indexmax();i++)
       {
-        if (allocated((*this)(i)))
-        {
+	if (allocated((*this)(i)))
+	{
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -161,8 +157,7 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
     }
   }
 
-void param_init_d3array::curv_scale(const dvector& _v, const dvector& x,
-  const int& _ii)
+  void param_init_d3array::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -184,8 +179,7 @@ void param_init_d3array::curv_scale(const dvector& _v, const dvector& x,
     }
   }
 
-void param_init_d3array::hess_scale(const dvector& _v, const dvector& x,
-  const int& _ii)
+  void param_init_d3array::hess_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -207,8 +201,7 @@ void param_init_d3array::hess_scale(const dvector& _v, const dvector& x,
     }
   }
 
-void param_init_d3array::sd_scale(const dvector& _v, const dvector& x,
-  const int& _ii)
+  void param_init_d3array::sd_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -232,21 +225,21 @@ void param_init_d3array::sd_scale(const dvector& _v, const dvector& x,
               {
                 v(ii++)=1.;
               }
-            }
-          }
+	    }
+	  }
         }
       }
     }
   }
 
-cifstream& operator>>(const cifstream& _s, param_init_d3array& m)
+cifstream& operator >> (BOR_CONST cifstream& _s, param_init_d3array& m)
 {
   cifstream&  s=(cifstream&) _s;
   s >> dvar3_array(m);
   return s;
 }
 
-void param_init_d3array::restore_value(const ifstream& ofs)
+void param_init_d3array::restore_value(BOR_CONST ifstream& ofs)
 {
   ofs  >> dvar3_array(*this);
 }

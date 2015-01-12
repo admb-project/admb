@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -15,7 +15,7 @@
  * \param
  */
 banded_lower_triangular_dvar_matrix::banded_lower_triangular_dvar_matrix
-   (const banded_lower_triangular_dvar_matrix& S) : bw(S.bw), d(S.d)
+   (_CONST banded_lower_triangular_dvar_matrix& S) : bw(S.bw), d(S.d) 
 {}
 
 /**
@@ -23,9 +23,10 @@ banded_lower_triangular_dvar_matrix::banded_lower_triangular_dvar_matrix
  * \param
  */
 banded_symmetric_dvar_matrix::banded_symmetric_dvar_matrix
-   (const banded_symmetric_dvar_matrix& S) : bw(S.bw), d(S.d)
+   (_CONST banded_symmetric_dvar_matrix& S) : bw(S.bw), d(S.d)
 {}
 
+  
 #if !defined(OPT_LIB)
 /**
  * Description not yet available.
@@ -54,11 +55,13 @@ prevariable banded_lower_triangular_dvar_matrix::operator () (int i,int j)
   return d(i-j,i);
 }
 
-const prevariable banded_lower_triangular_dvar_matrix::operator()(int i, int j)
-  const
-{
-  return d(i-j,i);
-}
+#  if defined(USE_CONST)
+  const prevariable banded_lower_triangular_dvar_matrix::operator () 
+    (int i,int j) const 
+  {
+    return d(i-j,i);
+  }
+#  endif
 
 /**
  * Description not yet available.
@@ -69,6 +72,24 @@ dvar_vector banded_lower_triangular_dvar_matrix::operator () (int i)
   return d(i);
 }
 #endif
+
+/*
+void banded_symmetric_dmatrix::initialize(void)
+{
+  for (int i=rowmin();i<=rowmax();i++)
+  {
+    (*this)(i).initialize();
+  }
+}
+
+void banded_lower_triangular_dmatrix::initialize(void)
+{
+  for (int i=rowmin();i<=rowmax();i++)
+  {
+    (*this)(i).initialize();
+  }
+}
+*/
 
 /**
  * Description not yet available.
@@ -111,7 +132,7 @@ banded_symmetric_dvar_matrix::banded_symmetric_dvar_matrix
  * Description not yet available.
  * \param
  */
-banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix &v)
+banded_symmetric_dmatrix value(_CONST banded_symmetric_dvar_matrix&v)
 {
   int bw=v.bandwidth();
   banded_symmetric_dmatrix w(v.indexmin(),v.indexmax(),v.bw);
@@ -127,7 +148,7 @@ banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix &v)
  * \param
  */
 banded_lower_triangular_dmatrix value
-  (const banded_lower_triangular_dvar_matrix &v)
+  (_CONST banded_lower_triangular_dvar_matrix&v)
 {
   int bw=v.bandwidth();
   banded_lower_triangular_dmatrix w(v.indexmin(),v.indexmax(),v.bw);
@@ -142,11 +163,11 @@ banded_lower_triangular_dmatrix value
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _ofs, const banded_symmetric_dvar_matrix& S1)
+ostream& operator << (BOR_CONST ostream& _ofs,_CONST banded_symmetric_dvar_matrix& S1)
 {
   ostream& ofs= (ostream&) _ofs;
   banded_symmetric_dvar_matrix& S= (banded_symmetric_dvar_matrix&) S1;
-
+  
   int imin=S.indexmin();
   int imax=S.indexmax();
   int bw=S.bandwidth();
@@ -156,15 +177,15 @@ ostream& operator<<(const ostream& _ofs, const banded_symmetric_dvar_matrix& S1)
   {
     for (int j=imin;j<=imax;j++)
     {
-      if (j<i)
+      if (j<i) 
       {
-        j1=j;
-        i1=i;
+	j1=j;
+	i1=i;
       }
       else
       {
-        j1=i;
-        i1=j;
+	j1=i;
+	i1=j;
       }
       if ( (i1-j1) < bw)
         ofs << S(i1,j1) << " ";
@@ -193,12 +214,10 @@ banded_lower_triangular_dvar_matrix::banded_lower_triangular_dvar_matrix
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _ofs,
-  const banded_lower_triangular_dvar_matrix& S1)
+ostream& operator << (BOR_CONST ostream& _ofs,_CONST banded_lower_triangular_dvar_matrix& S1)
 {
   ostream& ofs= (ostream&) _ofs;
-  banded_lower_triangular_dvar_matrix& S =
-    (banded_lower_triangular_dvar_matrix&)S1;
+  banded_lower_triangular_dvar_matrix& S=(banded_lower_triangular_dvar_matrix&) S1;
   int imin=S.indexmin();
   int imax=S.indexmax();
   int bw=S.bandwidth();
@@ -258,7 +277,7 @@ dvariable ln_det_choleski(
   {
     return ld;
   }
-
+  
   int mmin=tmp.indexmin();
   int mmax=tmp.indexmax();
   for (int i=mmin;i<=mmax;i++)
@@ -280,7 +299,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
   ierr =0;
   banded_symmetric_dvar_matrix& M = (banded_symmetric_dvar_matrix&) MM;
   int n=M.indexmax();
-
+  
   int bw=M.bandwidth();
   banded_lower_triangular_dvar_matrix L(1,n,bw);
 #ifndef SAFE_INITIALIZE
@@ -340,14 +359,14 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
         dmatrix CMM=dmatrix(value(MM));
         ofstream ofs("hh");
         {
-          ofs << setprecision(3) << setscientific() << setw(11)
+          ofs << setprecision(3) << setscientific() << setw(11) 
               << CMM << endl<< endl;
         }
         dvector ev(CMM.indexmin(),CMM.indexmax());
         dmatrix evec=eigenvectors(CMM,ev);
-        ofs << setprecision(3) << setscientific() << setw(11)
+        ofs << setprecision(3) << setscientific() << setw(11) 
               << ev << endl<< endl;
-        ofs << setprecision(3) << setscientific() << setw(11)
+        ofs << setprecision(3) << setscientific() << setw(11) 
               << evec << endl<< endl;
         uostream uos("uos");
         uos << CMM.indexmax()-CMM.indexmin()+1;
@@ -358,12 +377,12 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
 
       for (int i=1;i<=4;i++)
       {
-        N(i,i)=value(M(i,i));
+	N(i,i)=value(M(i,i));
         for (int j=1;j<i;j++)
         {
-          N(i,j)=value(M(i,j));
-          N(j,i)=value(M(i,j));
-        }
+	  N(i,j)=value(M(i,j));
+	  N(j,i)=value(M(i,j));
+	}
       }
       cout << N << endl;
       cout << eigenvalues(N) << endl;
@@ -376,6 +395,8 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
     L.elem_value(i,i)=sqrt(tmp);
   }
 
+
+ 
   //banded_lower_triangular_dvar_matrix vc=nograd_assign(L);
   save_identifier_string("rs");
   L.save_dvar_matrix_position();
@@ -386,7 +407,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
   save_identifier_string("ro");
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfcholeski_decomp_banded);
-
+  
   return L;
 }
 
@@ -478,6 +499,7 @@ void dfcholeski_decomp_banded(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
+ 
   for (i=n;i>=2;i--)
   {
     //L(i,i)=sqrt(tmp(i));
@@ -500,7 +522,7 @@ void dfcholeski_decomp_banded(void)
       dftmp1(i,j)+=dfL(i,j)*linv;
       dfL(j,j)-=dfL(i,j)*tmp1(i,j)*linv*linv;
       dfL(i,j)=0.0;
-      kmin=max(1,j-bw+1,i-bw+1);
+      int kmin=max(1,j-bw+1,i-bw+1);
       for (k=j-1;k>=kmin;k--)
       {
         //tmp(i,j)-=L(i,k)*L(j,k);
@@ -527,6 +549,7 @@ void dfcholeski_decomp_banded(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
+  
 
   dfM.save_dmatrix_derivatives(MMpos);
 }
@@ -535,7 +558,7 @@ void dfcholeski_decomp_banded(void)
  * Description not yet available.
  * \param
  */
-dvar_matrix::dvar_matrix(const banded_symmetric_dvar_matrix& S1)
+dvar_matrix::dvar_matrix(_CONST banded_symmetric_dvar_matrix& S1)
 {
   banded_symmetric_dvar_matrix& S= (banded_symmetric_dvar_matrix&) S1;
   int imin=S.indexmin();
@@ -551,13 +574,13 @@ dvar_matrix::dvar_matrix(const banded_symmetric_dvar_matrix& S1)
     {
       if (j<=i)
       {
-        j1=j;
-        i1=i;
+	j1=j;
+	i1=i;
       }
       else
       {
-        j1=i;
-        i1=j;
+	j1=i;
+	i1=j;
       }
       if ( (i1-j1) < bw)
         (*this)(i,j)=S(i1,j1);
@@ -569,7 +592,7 @@ dvar_matrix::dvar_matrix(const banded_symmetric_dvar_matrix& S1)
  * Description not yet available.
  * \param
  */
-dvar_matrix::dvar_matrix(const banded_lower_triangular_dvar_matrix& S1)
+dvar_matrix::dvar_matrix(_CONST banded_lower_triangular_dvar_matrix& S1)
 {
   banded_lower_triangular_dvar_matrix& S=
     (banded_lower_triangular_dvar_matrix&) S1;
@@ -613,11 +636,10 @@ int max(int i,int j,int k)
  * Description not yet available.
  * \param
  */
-dmatrix restore_lower_triangular_dvar_matrix_value(
-  const dvar_matrix_position& mpos)
+dmatrix restore_lower_triangular_dvar_matrix_value(const dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
-  banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);
+  banded_lower_triangular_dmatrix out((BOR_CONST dvar_matrix_position&)mpos);
   //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
@@ -633,15 +655,15 @@ dmatrix restore_lower_triangular_dvar_matrix_value(
  * Description not yet available.
  * \param
  */
-void check_choleski_decomp(const banded_symmetric_dvar_matrix& MM,
-  const int& _ierr)
+void check_choleski_decomp(
+  _CONST banded_symmetric_dvar_matrix& MM, BOR_CONST int& _ierr)
 {
   int& ierr=(int&)(_ierr);
   // kludge to deal with constantness
   ierr =0;
   banded_symmetric_dvar_matrix& M = (banded_symmetric_dvar_matrix&) MM;
   int n=M.indexmax();
-
+  
   int bw=M.bandwidth();
   banded_lower_triangular_dvar_matrix L(1,n,bw);
 #ifndef SAFE_INITIALIZE
@@ -656,7 +678,7 @@ void check_choleski_decomp(const banded_symmetric_dvar_matrix& MM,
        " value was " << M(1,1) << " for index  1"   <<endl;
       ierr=1;
       return;
-      //M(1,1)=1.0;
+      M(1,1)=1.0;
     }
   L.elem_value(1,1)=sqrt(value(M(1,1)));
   for (i=2;i<=bw;i++)
@@ -689,7 +711,7 @@ void check_choleski_decomp(const banded_symmetric_dvar_matrix& MM,
        " value was " << tmp << " for index " << i    <<endl;
       ierr=1;
       return;
-      //tmp=1.0;
+      tmp=1.0;
     }
     L.elem_value(i,i)=sqrt(tmp);
   }
@@ -719,4 +741,3 @@ dvariable norm2(const banded_symmetric_dvar_matrix& B)
   nm+=norm2(B.d(0));
   return nm;
 }
-dvariable sumsq(const banded_symmetric_dvar_matrix& B) {return(norm2(B));}

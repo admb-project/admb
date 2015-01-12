@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -70,7 +70,7 @@ const int max_number_threads=10;
  * \param
  */
 void * ts_vector_shapex::operator new(size_t n)
-{
+{  
   if (xpool==0)
   {
     pthread_mutex_lock(&mutex_dfpool);
@@ -86,7 +86,7 @@ void * ts_vector_shapex::operator new(size_t n)
   }
 
   int pnum=get_pthread_number();
-  if (xpool[pnum]==0)
+  if (xpool[pnum]==0) 
   {
     xpool[pnum]=new ts_vector_shape_pool(sizeof(ts_vector_shapex));
   }
@@ -97,7 +97,7 @@ void * ts_vector_shapex::operator new(size_t n)
     ad_exit(1);
   }
 # endif
-  return xpool[pnum]->alloc();
+  return xpool[pnum]->alloc(); 
 }
 
 /**
@@ -105,8 +105,11 @@ void * ts_vector_shapex::operator new(size_t n)
  * \param
  */
   void ts_vector_shapex::operator delete(void * ptr,size_t n)
-  {
-    xpool[get_pthread_number()]->free(ptr);
+  {  
+    xpool[get_pthread_number()]->free(ptr); 
   }
+
+  void my_do_nothing(void * t);
+
 #endif // defined(THREAD_SAFE)
 #endif // defined(THREAD_SAFE)

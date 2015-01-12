@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -20,8 +20,8 @@ df1b2matrix outer_prod(const df1b2vector& _MM,const df1b2vector& _NN)
   df1b2vector& N = (df1b2vector&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
-  int cmin=N.indexmin();
-  int cmax=N.indexmax();
+  int cmin=N.indexmin(); 
+  int cmax=N.indexmax(); 
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
@@ -279,7 +279,7 @@ int size_count(const df1b2matrix& _x)
   }
   return tmp;
 }
-
+  
 /**
  * Description not yet available.
  * \param

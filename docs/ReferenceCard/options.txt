@@ -14,7 +14,7 @@
 \verb|-mcrb  N|        reduce the amount of correlation in the covariance matrix 1<=N<=9
 \verb|-mcnoscale|      don't rescale step size for mcmc depending on acceptance rate
 \verb|-nosdmcmc|       turn off mcmc histogram calcs to make mcsave run faster
-\verb|-mcprobe N|      use probing strategy for mcmc with factor N
+\verb|-mcgrope N|      use probing strategy for mcmc with factor N
 \verb|-mcseed N|       seed for random number generator for markov chain monte carlo
 \verb|-mcscale N|       rescale step size for first N evaluations
 \verb|-mcsave N|       save the parameters for every N'th simulation
@@ -39,7 +39,8 @@
 \verb|-slave|          run as PVM slave program
 \verb|-pvmtime|        record timing information for PVM performance analysis
 \verb|-info|           Contributors acknowledgements
-\verb|-? -help --help| list of options
+\verb|-?|     list of options
+\verb|-help|     list of option
 \verb|-nr N|           maximum number of Newton-Raphson steps
 \verb|-imaxfn N|       maximum number of fevals in quasi-Newton inner optimization
 \verb|-is N|           set importance sampling size to n for random effects

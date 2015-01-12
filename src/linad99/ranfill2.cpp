@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -66,7 +66,7 @@ double randn(long int& n);
       else
       {
         elem(i)=0.;
-      }
+      } 
     }
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
@@ -76,7 +76,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-void dvar_matrix::colfill_randu(const int &j, long int &n)
+  void dvar_matrix::colfill_randu(BOR_CONST int&j,long int&n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -93,7 +93,7 @@ void dvar_matrix::colfill_randu(const int &j, long int &n)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::rowfill_randu(const int& i, long int& n)
+  void dvar_matrix::rowfill_randu(BOR_CONST int& i,long int& n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -127,7 +127,7 @@ void dvar_matrix::rowfill_randu(const int& i, long int& n)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::colfill_randn(const int &j, long int &n)
+  void dvar_matrix::colfill_randn(BOR_CONST int&j,long int&n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -144,7 +144,7 @@ void dvar_matrix::colfill_randn(const int &j, long int &n)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::rowfill_randn(const int& i, long int& n)
+  void dvar_matrix::rowfill_randn(BOR_CONST int& i,long int& n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -202,7 +202,7 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
     reinitialize_auto_rand();
   }
@@ -218,7 +218,7 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
     reinitialize_auto_rand();
   }

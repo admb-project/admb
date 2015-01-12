@@ -1,92 +1,143 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 #include <df1b2fun.h>
+#include "df3fun.h"
+
+df3_one_variable lgam(const df3_one_variable& _x);
 
 /**
- * Description not yet available.
- * \param
- */
-df1b2variable gammlnguts(const df1b2variable _zz)
+ * Log Gamma Function
+ *
+ * Used to find the Natural log of the gamma function.
+ *
+ * \param _x the argument
+ *
+ */  
+df1b2variable lgam(const df1b2variable& _v1)
 {
-  ADUNCONST(df1b2variable,zz)
-  df1b2variable u;
-  double  z = value(_zz);
-  //double zdot=1.0;
-  const double lpp =0.9189385332046727417803297;
-  unsigned int n=7;
-  const double c[9]={0.99999999999980993,
-    676.5203681218851,
-    -1259.1392167224028,
-     771.32342877765313,
-    -176.61502916214059,
-    12.507343278686905,
-     -0.13857109526572012,
-    9.9843695780195716e-6,
-    1.5056327351493116e-7};
-  z-=1.0;
-  double x=c[0];
-  double xdot=0.0;
-  double x2dot=0.0;
-  double x3dot=0.0;
-  for (unsigned int i=1;i<=n+1;i++)
+  df1b2variable tmp;
+  tmp = 0.0;
+  const double phi = 0.5772156649015328606065121;
+  const double pi = 3.1415926535897932384626432;
+  const double zeta = 1.2020569031595942853997382;
+  init_df3_one_variable v1(_v1);
+
+  if (value(v1)==1.0)
   {
-    double zinv=1.0/(z+i);
-    x+=c[i]*zinv;
-    //xdot-=c[i]/square(z+i)*zdot;  since zdot=1.0
-    xdot-=c[i]*square(zinv);
-    x2dot+=2.0*c[i]*cube(zinv);
-    x3dot-=6.0*c[i]*fourth(zinv);
+    // value of lgam(1.0) is 0
+    // 1st derivative is -phi
+    // 2nd deriv is pi*pi/6
+    // 3rd deriv is -2*zeta
+    df3_one_variable v;
+    v = 0.0;
+    *v.get_udot() = -phi; 
+    *v.get_udot2() = pi*pi/6;
+    *v.get_udot3() = -2*zeta;
+    tmp=v;
+
   }
-  double t=z+n+0.5;
-  //return lpp + (z+0.5)*log(t) -t + log(x);
-  double ans= lpp + (z+0.5)*log(t) -t + log(x);
-  //double tdot=zdot;
-  //double dfx=zdot*log(t) + (z+0.5)/t*tdot -tdot +xdot/x;
-  // since tdot=1.0
-  // since zdot=1.0
-  double dfx=log(t) + (z+0.5)/t -1.0 +xdot/x;
-  double d2f=2.0/t -(z+0.5)/square(t)+x2dot/x
-    -square(xdot)/square(x);
-  double d3f=-3.0/square(t) + 2.0*(z+0.5)/cube(t)+ x3dot/x
-    -3.0*x2dot*xdot/square(x)+2.0*cube(xdot)/cube(x);
-
-  double * xd=zz.get_u_dot();
-  double * zd=u.get_u_dot();
-  *u.get_u()=ans;
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  else if (value(v1)==2.0)
   {
-    *zd++ =dfx * *xd++;
-  }
-
-  if (!df1b2_gradlist::no_derivatives)
-    f1b2gradlist->write_pass1(&zz,&u,dfx,d2f,d3f);
-  return(u);
-}
-
-/**
- * Description not yet available.
- * \param
- */
-df1b2variable gammln(const df1b2variable& z)
-{
-  const double lpi =1.1447298858494001741434272;
-  const double pi =3.1415926535897932384626432;
-  if (value(z)<0.5)
-  {
-    return lpi - log(sin(pi*z)) - gammlnguts(1.0-z);
+    // value of lgam(2.0) is 0 and
+    // 1st derivative is 1-phi
+    // 2nd deriv is pi*pi/6 - 1
+    // 3rd deriv is 2*(1-zeta)
+    df3_one_variable v;
+    v = 0.0;
+    *v.get_udot() = 1 - phi; 
+    *v.get_udot2() = pi*pi/6 - 1;
+    *v.get_udot3() = -2*(1-zeta);
+    tmp=v;
   }
   else
   {
-    return gammlnguts(z);
+     tmp=lgam(v1);
   }
+  return(tmp);
+}
+
+/**
+ * Log Gamma Function
+ *
+ * Used to find the Natural log of the gamma function.
+ *
+ *
+ * \n\n Modified from lgamma.cpp (http://www.crbond.com/download/lgamma.cpp),
+ *      an algorithm that was translated by C. Bond
+ *      from "Computation of Special Functions", Zhang and Jin, John Wiley and Sons, 1996.
+ */ 
+df3_one_variable lgam(const df3_one_variable& _x)
+{
+   df3_one_variable&  x = (df3_one_variable&)_x;
+   df3_one_variable x0;
+   df3_one_variable x2;
+   df3_one_variable xp;
+   df3_one_variable gl;
+   df3_one_variable gl0;
+   x0 = 0.0;
+   x2 = 0.0;
+   xp = 0.0;
+   gl = 0.0;
+   gl0 = 0.0;
+   int n = 0;
+   int k = 0;
+   const double pi = 3.1415926535897932384626432;
+   static double a[] = {
+       8.333333333333333e-02,
+      -2.777777777777778e-03,
+       7.936507936507937e-04,
+      -5.952380952380952e-04,
+       8.417508417508418e-04,
+      -1.917526917526918e-03,
+       6.410256410256410e-03,
+      -2.955065359477124e-02,
+       1.796443723688307e-01,
+      -1.39243221690590};
+
+    x0 = x;
+    if (value(x) <= 0.0)
+    {
+       df3_one_variable ret;
+       ret = 1e308;
+       return ret;
+    }
+    else if (value(x) <= 7.0)
+    {
+        n = (int)(7-value(x));
+        x0 = x+n;
+    }
+    x2 = 1.0/(x0*x0);
+    xp = 2.0*pi;
+    gl0 = a[9];
+    for (k=8;k>=0;k--)
+    {
+        gl0 = gl0*x2 + a[k];
+    }
+    gl = gl0/x0+0.5*log(xp)+(x0-0.5)*log(x0)-x0;
+    if (value(x) <= 7.0)
+    {
+        for (k=1;k<=n;k++)
+        {
+            gl -= log(x0-1.0);
+            x0 -= 1.0;
+        }
+    }
+    return gl;
+}
+
+
+
+df1b2variable gammln(const df1b2variable& z)
+{
+   return lgam(z);
 }
 
 /**
@@ -107,7 +158,7 @@ df1b2vector gammln(const df1b2vector&  z){
  * Description not yet available.
  * \param
  */
-df1b2variable log_comb(const df1b2variable& n, double k)
+df1b2variable log_comb(_CONST df1b2variable& n,double k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -116,7 +167,7 @@ df1b2variable log_comb(const df1b2variable& n, double k)
  * Description not yet available.
  * \param
  */
-df1b2variable log_comb(const df1b2variable& n, const df1b2variable& k)
+df1b2variable log_comb(_CONST df1b2variable& n,_CONST df1b2variable& k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -125,7 +176,7 @@ df1b2variable log_comb(const df1b2variable& n, const df1b2variable& k)
  * Description not yet available.
  * \param
  */
-df1b2variable log_comb(double n, const df1b2variable& k)
+df1b2variable log_comb(double n,_CONST df1b2variable& k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -134,7 +185,7 @@ df1b2variable log_comb(double n, const df1b2variable& k)
  * Description not yet available.
  * \param
  */
-df1b2variable factln(const df1b2variable& n)
+df1b2variable factln(_CONST df1b2variable& n)
 {
   return gammln(n+1.0);
 }

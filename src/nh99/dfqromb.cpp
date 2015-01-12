@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009-2011 ADMB Foundation
  */
 /**
  * \file
@@ -17,17 +17,13 @@
 
 class model_parameters;
 
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  double a,double b,int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b,int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,BOR_CONST dvariable& b,int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,BOR_CONST dvariable& b,int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,double b,int n);
 
-void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
-  const dvariable& y, const dvariable& dy);
+void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,
+  BOR_CONST dvariable& y,BOR_CONST dvariable& dy);
 
 /** Romberg integration.
   \param func Pointer to a member function of class model_parameters.
@@ -36,9 +32,37 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, double b, int ns)
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int ns)
+{
+  const double base = 4; 
+  int MAXN = min(JMAX, ns);
+  dvar_vector s(1,MAXN+1);
+
+  for(int j=1; j<=MAXN+1; j++)
+  {
+    s[j] = trapzd(func,a,b,j);
+  }
+
+  for(int iter=1; iter<=MAXN+1; iter++)
+  {
+    for(int j=1; j<=MAXN+1-iter; j++)
+    {
+      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
+    }
+  }
+
+  return s[1];
+}
+
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b using Romberg's method
+*/
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,
+  double b,int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -67,9 +91,8 @@ dvariable function_minimizer::adromb(
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int ns)
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
+  BOR_CONST dvariable& b,int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -98,40 +121,8 @@ dvariable function_minimizer::adromb(
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b, int ns)
-{
-  const double base = 4;
-  int MAXN = min(JMAX, ns);
-  dvar_vector s(1,MAXN+1);
-
-  for(int j=1; j<=MAXN+1; j++)
-  {
-    s[j] = trapzd(func,a,b,j);
-  }
-
-  for(int iter=1; iter<=MAXN+1; iter++)
-  {
-    for(int j=1; j<=MAXN+1-iter; j++)
-    {
-      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
-    }
-  }
-
-  return s[1];
-}
-
-/** Romberg integration.
-  \param func Pointer to a member function of class model_parameters.
-  \param a Lower limit of integration.
-  \param b Upper limit of inegration.
-  \param ns
-  \return The integral of the function from a to b using Romberg's method
-*/
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int ns)
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
+  BOR_CONST dvariable& a,BOR_CONST dvariable& b, int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -160,9 +151,7 @@ dvariable function_minimizer::adromb(
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
  *
  */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, double b, int n)
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n)
 {
   double x,num_interval,hn;
   dvariable sum;
@@ -191,9 +180,7 @@ dvariable function_minimizer::trapzd(
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
  *
  */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int n)
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,double b,int n)
 {
   double num_interval;
   dvariable x,sum,hn;
@@ -220,15 +207,14 @@ dvariable function_minimizer::trapzd(
  * This algorithm was adapted from function trapzd in
  * "Numerical Recipes in C", 2nd edition,
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
+ *
  */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b, int n)
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,BOR_CONST dvariable& b,int n)
 {
   double num_interval;
   dvariable sum,hn,x;
   static dvariable s;
-
+  
   static int interval;
   int j;
 
@@ -252,10 +238,9 @@ dvariable function_minimizer::trapzd(
  * This algorithm was adapted from function trapzd in
  * "Numerical Recipes in C", 2nd edition,
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
+ *
  */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int n)
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,BOR_CONST dvariable& b,int n)
 {
   double num_interval;
   dvariable sum,hn,x;
@@ -283,8 +268,7 @@ dvariable function_minimizer::trapzd(
 //#undef K
 
  //Not used elsewhere
-void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
-  const dvariable& _y, const dvariable& _dy)
+void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,BOR_CONST dvariable& _y,BOR_CONST dvariable& _dy)
 {
   dvariable& y=(dvariable&) _y;
   dvariable& dy=(dvariable&) _dy;
@@ -309,7 +293,7 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
       ho=xa[i]-x;
       hp=xa[i+m]-x;
       w=c[i+1]-d[i];
-      if ( (den=ho-hp) == 0.0)
+      if ( (den=ho-hp) == 0.0) 
       {
         cerr << "Error in routine POLINT" << endl;
         exit(1);
@@ -321,3 +305,5 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
     y += (dy=(2*ns < (n-m) ? c[ns+1] : d[ns--]));
   }
 }
+
+

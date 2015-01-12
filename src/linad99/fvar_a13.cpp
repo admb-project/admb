@@ -2,18 +2,20 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 #include "fvar.hpp"
-#include <stdlib.h>
-
 #ifdef __TURBOC__
   #pragma hdrstop
-  #include <alloc.h>
+#endif
+
+#include <stdlib.h>
+#if defined(__TURBOC__) && !defined(__linux__)
+   #include <alloc.h>
 #endif
 
 /**

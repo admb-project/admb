@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -19,7 +19,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix value(const dvar_matrix& m)
+  dmatrix value(_CONST dvar_matrix& m)
   {
     int nrl=m.rowmin();
     int nrh=m.rowmax();

@@ -2,12 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
+#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -26,11 +27,12 @@ void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
 
   double re_objective_function_value::fun_without_pen=0;
 
-int laplace_approximation_calculator::saddlepointflag=0;
+      
+int laplace_approximation_calculator::saddlepointflag=0; 
 int laplace_approximation_calculator::print_importance_sampling_weights_flag=0;
 
-int laplace_approximation_calculator::where_are_we_flag=0;
-dvar_vector *
+int laplace_approximation_calculator::where_are_we_flag=0; 
+dvar_vector * 
   laplace_approximation_calculator::variance_components_vector=0;
 */
 
@@ -41,14 +43,15 @@ dvar_vector *
 dvector laplace_approximation_calculator::local_minimization
 (dvector& s,dmatrix& H,dvector& grad,double lambda)
 {
-  dvector vbest(1,usize);
-  vbest.initialize();
-
   int better_flag=0;
   int counter=0;
+  //double fbest,f2;
+  double fbest;
+  dvector vbest(1,usize);
   s.initialize();
   s(1)=1.0;
-  double fbest=evaluate_function_no_derivatives(uhat,pmin);
+  vbest.initialize();
+  fbest=evaluate_function_no_derivatives(uhat,pmin);
   do
   {
     dvector v=local_minimization_routine(s,H,grad,lambda);
@@ -58,7 +61,7 @@ dvector laplace_approximation_calculator::local_minimization
     if(f2<fbest)
     {
       better_flag=1;
-      fbest=f2;
+      fbest=f2; 
       lambda*=5.0;
       vbest=v;
       s=v;
@@ -68,8 +71,8 @@ dvector laplace_approximation_calculator::local_minimization
       if (better_flag==1)
       {
         // we have a better value so go with it
-        break;
-      }
+        return vbest;
+      }  
       else
       {
         // try a smaller trust region
@@ -85,8 +88,6 @@ dvector laplace_approximation_calculator::local_minimization
     cerr << "Error cannot find better value to try and get a"
       " positive definite hessian" << endl;
   }
-
-  return vbest;
 }
 
 /**
@@ -107,9 +108,10 @@ dvector laplace_approximation_calculator::local_minimization_routine
   fmc1.ihang=0;
   fmc1.ihflag=0;
   fmc1.crit=1.e-12;
-  long fmsave = fmc1.maxfn;
+  double fmsave=fmc1.maxfn;
   fmc1.maxfn=1000;;
-
+  
+ 
   fmc1.dfn=1.e-2;
   while (fmc1.ireturn>=0)
   {
@@ -122,18 +124,19 @@ dvector laplace_approximation_calculator::local_minimization_routine
 
       dvector z=H*v;
       double vHv=v*z;
-
+        
       double gradv=grad*v;
       f=lambda*gradv+0.5*lambda*lambda*vHv+ square(ns2-1.0);
       //f=0.5*lambda*lambda*s*H*s;
-      if (f<fb)
+      if (f<fb) 
       {
         fb=f;
         ub=s;
       }
-      g=lambda*grad/ns -lambda * gradv*s/ns2
-           + lambda * lambda * z/ns
+      g=lambda*grad/ns -lambda * gradv*s/ns2 
+           + lambda * lambda * z/ns 
            - lambda * lambda * vHv*s/ns2 + 4.0*(ns2-1.0)*s;
+     
     }
   }
   s=ub;
@@ -162,9 +165,9 @@ dvector laplace_approximation_calculator::local_minimization_routine
  //  fmc1.ihflag=0;
  //  fmc1.crit=1.e-12;
  //  double beta=.1;
- //
+ //  
  //  s.initialize();
- //
+ // 
  //  fmc1.dfn=1.e-2;
  //  while (fmc1.ireturn>=0)
  //  {
@@ -180,7 +183,7 @@ dvector laplace_approximation_calculator::local_minimization_routine
  //      else
  //      {
  //        f=grad*s+0.5*(s*(H*s))+0.5*beta/den;
- //        if (f<fb)
+ //        if (f<fb) 
  //        {
  //          fb=f;
  //          ub=s;
@@ -196,3 +199,4 @@ dvector laplace_approximation_calculator::local_minimization_routine
  //  fmc1.fbest=fb;
  //  return ub;
  //}
+#endif  //#if defined(USE_LAPLACE)

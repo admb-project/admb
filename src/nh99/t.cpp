@@ -2,9 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  *
- * Derived from algoriths described in "On the limited memory BFGS method
+ * Derived from algoriths described in "On the limited memory BFGS method 
  * for large scale optimization", by D. Liu and J. Nocedal,
  * Mathematical Programming B 45 (1989) 503-528.
  */
@@ -17,34 +17,28 @@
 
 //  dvariable  *dgold=NULL;
 //  dvariable  *fold=NULL;
-//  dvar_vector  *xlineold=NULL;
+//  dvar_vector  *xlineold=NULL;    
 //  dvariable  *dgbest=NULL;
 //  dvariable  *fbest=NULL;
-//  dvar_vector  *xlinebest=NULL;
+//  dvar_vector  *xlinebest=NULL;    
 
+       void xgoofr(void){;}
 //dvariable sqrt(const prevariable&);
-dvariable fmax(double x,prevariable& y)
-  { if (x>=value(y)) return x; else return y;}
-dvariable fmax(prevariable& x,double y)
-  { if (value(x)>=y) return x; else return y;}
-dvariable fmin(prevariable& x,double y)
-  { if (value(x)<=y) return x; else return y;}
-dvariable fmax(double x,double* y)
-{
-/*
-  if (1)
-   return 1;
-  else
+dvariable fmax(double x,prevariable& y){ if (x>=value(y)) return x; else return y;}
+dvariable fmax(prevariable& x,double y){ if (value(x)>=y) return x; else return y;}
+dvariable fmin(prevariable& x,double y){ if (value(x)<=y) return x; else return y;}
+dvariable fmax(double x,double * y)
+{ 
+  //if (x>=y) 
+  if (1) 
+   return 1; 
+  else 
     return 2;
-*/
-  return y && x < *y ? *y : x;
 }
-dvariable fmax(double x,double & y)
-  { if (x>=y) return x; else return y;}
-int operator < (double& x,prevariable& y)
-  { if (x<value(y)) return 1;else return 0;}
-int operator <= (double& x,prevariable& y)
-  { if (x<=value(y)) return 1;else return 0;}
+dvariable fmax(double x,double & y){ if (x>=y) return x; else return y;}
+int operator < (double& x,prevariable& y){ if (x<value(y)) return 1;else return 0;}
+int operator <= (double& x,prevariable& y){ if (x<=value(y)) return 1;else return 0;}
+
 
 dvariable daves_kludge(prevariable& x)
 {
@@ -68,7 +62,7 @@ dvariable daves_kludge(prevariable& x)
     dvariable tmp2=tmp*tmp;
     dvariable tmp3=tmp*tmp*tmp;
     return (1.-24*tmp3+64*tmp3*tmp-48*tmp3*tmp2);
-  }
+  } 
 }
 
 #ifdef __cplusplus
@@ -79,12 +73,12 @@ extern "C" {
 
 /**  barf  [ba:rf]  2.  "He suggested using FORTRAN, and everybody barfed."
 
-- From The Shogakukan DICTIONARY OF NEW ENGLISH (Second edition) */
+	- From The Shogakukan DICTIONARY OF NEW ENGLISH (Second edition) */
 
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
 
-typedef int integer;
+typedef long int integer;
 typedef short int shortint;
 typedef float real;
 typedef double doublereal;
@@ -119,115 +113,109 @@ typedef long int ftnint;
 
 /*external read, write*/
 typedef struct
-{
-  flag cierr;
-  ftnint ciunit;
-  flag ciend;
-  char *cifmt;
-  ftnint cirec;
+{	flag cierr;
+	ftnint ciunit;
+	flag ciend;
+	char *cifmt;
+	ftnint cirec;
 } cilist;
 
 /*internal read, write*/
 typedef struct
-{
-  flag icierr;
-  char *iciunit;
-  flag iciend;
-  char *icifmt;
-  ftnint icirlen;
-  ftnint icirnum;
+{	flag icierr;
+	char *iciunit;
+	flag iciend;
+	char *icifmt;
+	ftnint icirlen;
+	ftnint icirnum;
 } icilist;
 
 /*open*/
 typedef struct
-{
-  flag oerr;
-  ftnint ounit;
-  char *ofnm;
-  ftnlen ofnmlen;
-  char *osta;
-  char *oacc;
-  char *ofm;
-  ftnint orl;
-  char *oblnk;
+{	flag oerr;
+	ftnint ounit;
+	char *ofnm;
+	ftnlen ofnmlen;
+	char *osta;
+	char *oacc;
+	char *ofm;
+	ftnint orl;
+	char *oblnk;
 } olist;
 
 /*close*/
 typedef struct
-{
-  flag cerr;
-  ftnint cunit;
-  char *csta;
+{	flag cerr;
+	ftnint cunit;
+	char *csta;
 } cllist;
 
 /*rewind, backspace, endfile*/
 typedef struct
-{
-  flag aerr;
-  ftnint aunit;
+{	flag aerr;
+	ftnint aunit;
 } alist;
 
 /* inquire */
 typedef struct
-{
-  flag inerr;
-  ftnint inunit;
-  char *infile;
-  ftnlen infilen;
-  ftnint *inex;/*parameters in standard's order*/
-  ftnint *inopen;
-  ftnint *innum;
-  ftnint *innamed;
-  char *inname;
-  ftnlen innamlen;
-  char *inacc;
-  ftnlen inacclen;
-  char *inseq;
-  ftnlen inseqlen;
-  char *indir;
-  ftnlen indirlen;
-  char *infmt;
-  ftnlen infmtlen;
-  char *inform;
-  ftnint informlen;
-  char *inunf;
-  ftnlen inunflen;
-  ftnint *inrecl;
-  ftnint *innrec;
-  char *inblank;
-  ftnlen inblanklen;
+{	flag inerr;
+	ftnint inunit;
+	char *infile;
+	ftnlen infilen;
+	ftnint	*inex;	/*parameters in standard's order*/
+	ftnint	*inopen;
+	ftnint	*innum;
+	ftnint	*innamed;
+	char	*inname;
+	ftnlen	innamlen;
+	char	*inacc;
+	ftnlen	inacclen;
+	char	*inseq;
+	ftnlen	inseqlen;
+	char 	*indir;
+	ftnlen	indirlen;
+	char	*infmt;
+	ftnlen	infmtlen;
+	char	*inform;
+	ftnint	informlen;
+	char	*inunf;
+	ftnlen	inunflen;
+	ftnint	*inrecl;
+	ftnint	*innrec;
+	char	*inblank;
+	ftnlen	inblanklen;
 } inlist;
 
 #define VOID void
- //
- // union Multitype {/* for multiple entry points */
- // integer1 g;
- // shortint h;
- // integer i;
- // /* longint j; */
- // real r;
- // double d;
- // complex c;
- // //doublecomplex z;
- // };
- //
+ // 
+ // union Multitype {	/* for multiple entry points */
+ // 	integer1 g;
+ // 	shortint h;
+ // 	integer i;
+ // 	/* longint j; */
+ // 	real r;
+ // 	double d;
+ // 	complex c;
+ // 	//doublecomplex z;
+ // 	};
+ // 
  // typedef union Multitype Multitype;
- //
-/*typedef long int Long;*//* No longer used; formerly in Namelist */
+ // 
+/*typedef long int Long;*/	/* No longer used; formerly in Namelist */
 
-struct Vardesc {/* for Namelist */
-  char *name;
-  char *addr;
-  ftnlen *dims;
-  int  type;
-};
+struct Vardesc {	/* for Namelist */
+	char *name;
+	char *addr;
+	ftnlen *dims;
+	int  type;
+	};
 typedef struct Vardesc Vardesc;
 
 struct Namelist {
-  char *name;
-  Vardesc **vars;
-  int nvars;
-};
+	char *name;
+	Vardesc **vars;
+	int nvars;
+	};
 typedef struct Namelist Namelist;
 
 //#define abs(x) ((x) >= 0 ? (x) : -(x))
@@ -266,10 +254,10 @@ typedef /* Character */ VOID (*H_fp)();
 typedef /* Subroutine */ int (*S_fp)();
 #endif
 /* E_fp is for real functions when -R is not specified */
-typedef VOID C_f;/* complex function */
-typedef VOID H_f;/* character function */
-typedef VOID Z_f;/* double complex function */
-typedef dvariable E_f;/* real function with -R not specified */
+typedef VOID C_f;	/* complex function */
+typedef VOID H_f;	/* character function */
+typedef VOID Z_f;	/* double complex function */
+typedef dvariable E_f;	/* real function with -R not specified */
 
 /* undef any lower-case symbols that your C compiler predefines, e.g.: */
 
@@ -296,28 +284,30 @@ typedef dvariable E_f;/* real function with -R not specified */
 #endif
 /* Common Block Declarations */
 
-struct _lb4_1
-{
-  integer mp, lp;
-  double gtol, stpmin, stpmax;
+struct lb4_1_ {
+    integer mp, lp;
+    double gtol, stpmin, stpmax;
 };
-struct _lb4_1 lb4_1 = { 6, 6, .9, 1e-20, 1e20};
 
+#define lb4_1 (*(struct lb4_1_ *) &lb4_)
+
+/* Initialized data */
+
+struct {
+    integer e_1[2];
+    double e_2[3];
+    } lb4_ = { 6, 6, .9, 1e-20, 1e20 };
 #ifdef __cplusplus
 }
 #endif
 
-int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx,
-  const dvar_vector & dy, integer *incy);
+int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx, const dvar_vector & dy, integer *incy);
 
-//int xdaxpy_(integer *n, double* da, dvar_vector & dx, integer *incx,
-//  dvar_vector& dy, integer *incy);
+//int xdaxpy_(integer *n, double* da, dvar_vector & dx, integer *incx, dvar_vector& dy, integer *incy);
 
-//int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx,
-//  const dvar_vector& dy, integer *incy);
+//int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx,const dvar_vector& dy, integer *incy);
 
-int xdaxpy_2(integer * n, dvariable *da,const dvar_vector& _dx,integer * incx,
-  const dvar_vector& _dy, integer* incy)
+int  xdaxpy_2(integer * n, dvariable *da,const dvar_vector& _dx,integer * incx,const dvar_vector& _dy, integer* incy)
 {
     /* System generated locals */
     integer i__1;
@@ -325,9 +315,11 @@ int xdaxpy_2(integer * n, dvariable *da,const dvar_vector& _dx,integer * incx,
     /* Local variables */
     static integer i, m, ix, iy, mp1;
 
+
 /*     constant times a vector plus a vector. */
 /*     uses unrolled loops for increments equal to one. */
 /*     jack dongarra, linpack, 3/11/78. */
+
 
     dvar_vector& dx = (dvar_vector&) _dx;
     dvar_vector& dy = (dvar_vector&) _dy;
@@ -397,8 +389,6 @@ L40:
     return 0;
 } /* xdaxpy_ */
 
-dvariable xddot_(integer *n,const dvar_vector & dx, integer *incx,
-  const dvar_vector & dy, integer *incy);
 
 #ifdef __cplusplus
 extern "C" {
@@ -415,10 +405,7 @@ static integer c__1 = 1;
 /*     LBFGS SUBROUTINE */
 /*     **************** */
 
-/* Subroutine */ int xlbfgs_(integer *n, integer *m, dvar_vector & x,
-   dvariable & f, dvar_vector & g, logical *diagco, dvar_vector & diag,
-   integer *iprint, double*  eps, double*  xtol, dvar_vector & w,
-   integer *iflag, integer* iter)
+/* Subroutine */ int xlbfgs_(integer *n, integer *m, dvar_vector & x, dvariable & f, dvar_vector & g, logical *diagco, dvar_vector & diag, integer *iprint, double*  eps, double*  xtol, dvar_vector & w, integer *iflag, integer* iter)
 {
     /* Initialized data */
 
@@ -426,7 +413,6 @@ static integer c__1 = 1;
     static dvariable zero = 0.;
 
     /* Format strings */
-/*
     static char fmt_245[] = "(/\002  GTOL IS LESS THAN OR EQUAL TO 1.D-04\
 \002,/\002 IT HAS BEEN RESET TO 9.D-01\002)";
     static char fmt_200[] = "(/\002 IFLAG= -1 \002,/\002 LINE SEARCH FAILED.\
@@ -438,7 +424,6 @@ IAGONAL ELEMENT OF THE\002,/,\002 INVERSE HESSIAN APPROXIMATION IS NOT POSIT\
 IVE\002)";
     static char fmt_240[] = "(/\002 IFLAG= -3\002,/\002 IMPROPER INPUT PARAM\
 ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
-*/
 
     /* System generated locals */
     integer i__1;
@@ -446,46 +431,41 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
 
     /* Builtin functions */
     //integer //s_wsfe(cilist *), e_wsfe();
-
+    
     //integer // do_fio(integer *, char *, ftnlen);
 
     /* Local variables */
     static dvariable beta;
     static integer inmc;
+    extern dvariable xddot_(integer *n,const dvar_vector & dx, integer *incx,const dvar_vector & dy, integer *incy);
     static integer info, iscn, nfev, iycn;
     static double ftol;
     static integer nfun, ispt, iypt, i, bound;
     static dvariable gnorm;
-    //extern /* Subroutine */
-//  int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx,
-// integer *incx, const dvar_vector & dy, integer *incy);
+    //extern /* Subroutine */ 
+//  int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx, const dvar_vector & dy, integer *incy);
     static integer point;
     //static dvariable xnorm;
     static integer cp;
     static dvariable sq, yr, ys;
-  extern /* Subroutine */ int xmcsrch_(integer *n, dvar_vector & x,
-   dvariable * f, dvar_vector & g,const dvar_vector & s, dvariable * stp,
-   double * ftol, double * xtol, integer *maxfev, integer *info,
-   integer *nfev, dvar_vector & wa);
+  extern /* Subroutine */ int xmcsrch_(integer *n, dvar_vector & x, dvariable * f, dvar_vector & g,const dvar_vector & s, dvariable * stp, double * ftol, double * xtol, integer *maxfev, integer *info, integer *nfev, dvar_vector & wa);
     static logical finish;
     static dvariable yy;
     static integer maxfev;
-/*
-//Subroutine 
-    extern int xlb1_(integer *, integer *, integer *,
-      dvar_vector & , integer *, integer *, dvar_vector & , dvar_vector & ,
+    extern /* Subroutine */ int xlb1_(integer *, integer *, integer *, 
+            dvar_vector & , integer *, integer *, dvar_vector & , dvar_vector & , 
             dvar_vector & , dvar_vector & , logical *);
-*/
     static integer npt;
     static dvariable stp, stp1;
 
     /* Fortran I/O blocks */
-/*
     static cilist io___4 = { 0, 0, 0, fmt_245, 0 };
     static cilist io___30 = { 0, 0, 0, fmt_200, 0 };
     static cilist io___31 = { 0, 0, 0, fmt_235, 0 };
     static cilist io___32 = { 0, 0, 0, fmt_240, 0 };
-*/
+
+
+
 
 /*        LIMITED MEMORY BFGS METHOD FOR LARGE SCALE OPTIMIZATION */
 /*                          JORGE NOCEDAL */
@@ -499,14 +479,14 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
 /*      using the limited memory BFGS method. The routine is especially */
 /*      effective on problems involving a large number of variables. In */
 /*      a typical iteration of this method an approximation Hk to the */
-/*      inverse of the Hessian is obtained by applying M BFGS updates to
+/*      inverse of the Hessian is obtained by applying M BFGS updates to 
 */
 /*     a diagonal matrix Hk0, using information from the previous M steps.
 */
 /*      The user specifies the number M, which determines the amount of */
 /*      storage required by the routine. The user may also provide the */
 /*      diagonal matrices Hk0 if not satisfied with the default choice. */
-/*      The algorithm is described in "On the limited memory BFGS method
+/*      The algorithm is described in "On the limited memory BFGS method 
 */
 /*      for large scale optimization", by D. Liu and J. Nocedal, */
 /*      Mathematical Programming B 45 (1989) 503-528. */
@@ -527,24 +507,24 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
 
 /*      where */
 
-/*     N       is an INTEGER variable that must be set by the user to the
+/*     N       is an INTEGER variable that must be set by the user to the 
 */
 /*             number of variables. It is not altered by the routine. */
 /*             Restriction: N>0. */
 
 /*     M       is an INTEGER variable that must be set by the user to */
 /*             the number of corrections used in the BFGS update. It */
-/*             is not altered by the routine. Values of M less than 3 are
+/*             is not altered by the routine. Values of M less than 3 are 
 */
 /*             not recommended; large values of M will result in excessive
  */
 /*             computing time. 3<= M <=7 is recommended. Restriction: M>0.
  */
 
-/*     X       is a DOUBLE PRECISION array of length N. On initial entry
+/*     X       is a DOUBLE PRECISION array of length N. On initial entry 
 */
 /*             it must be set by the user to the values of the initial */
-/*             estimate of the solution vector. On exit with IFLAG=0, it
+/*             estimate of the solution vector. On exit with IFLAG=0, it 
 */
 /*             contains the values of the variables at the best point */
 /*             found (usually a solution). */
@@ -561,23 +541,23 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
 
 /*     DIAGCO  is a LOGICAL variable that must be set to .TRUE. if the */
 /*             user  wishes to provide the diagonal matrix Hk0 at each */
-/*             iteration. Otherwise it should be set to .FALSE., in which
+/*             iteration. Otherwise it should be set to .FALSE., in which 
 */
 /*             case  LBFGS will use a default value described below. If */
 /*             DIAGCO is set to .TRUE. the routine will return at each */
-/*             iteration of the algorithm with IFLAG=2, and the diagonal
+/*             iteration of the algorithm with IFLAG=2, and the diagonal 
 */
 /*              matrix Hk0  must be provided in the array DIAG. */
 
 
-/*     DIAG    is a DOUBLE PRECISION array of length N. If DIAGCO=.TRUE.,
+/*     DIAG    is a DOUBLE PRECISION array of length N. If DIAGCO=.TRUE., 
 */
 /*             then on initial entry or on re-entry with IFLAG=2, DIAG */
 /*             it must be set by the user to contain the values of the */
 /*             diagonal matrix Hk0.  Restriction: all elements of DIAG */
 /*             must be positive. */
 
-/*     IPRINT  is an INTEGER array of length two which must be set by the
+/*     IPRINT  is an INTEGER array of length two which must be set by the 
 */
 /*             user. */
 
@@ -621,7 +601,7 @@ ty*/
 /*             is less than XTOL. */
 
 /*     W       is a DOUBLE PRECISION array of length N(2M+1)+2M used as */
-/*             workspace for LBFGS. This array must not be altered by the
+/*             workspace for LBFGS. This array must not be altered by the 
 */
 /*             user. */
 
@@ -631,7 +611,7 @@ y*/
 */
 /*            and IFLAG=0 indicates that the routine has terminated withou
 t*/
-/*             detecting errors. On a return with IFLAG=1, the user must
+/*             detecting errors. On a return with IFLAG=1, the user must 
 */
 /*             evaluate the function F and gradient G. On a return with */
 /*             IFLAG=2, the user must provide the diagonal matrix Hk0. */
@@ -650,7 +630,7 @@ t*/
 /*                       INFO = 2  RELATIVE WIDTH OF THE INTERVAL OF */
 /*                                 UNCERTAINTY IS AT MOST XTOL. */
 
-/*                       INFO = 3  MORE THAN 20 FUNCTION EVALUATIONS WERE
+/*                       INFO = 3  MORE THAN 20 FUNCTION EVALUATIONS WERE 
 */
 /*                                 REQUIRED AT THE PRESENT ITERATION. */
 
@@ -662,7 +642,7 @@ t*/
 .*/
 /*                                 THERE MAY NOT BE A STEP WHICH SATISFIES
  */
-/*                                 THE SUFFICIENT DECREASE AND CURVATURE
+/*                                 THE SUFFICIENT DECREASE AND CURVATURE 
 */
 /*                                CONDITIONS. TOLERANCES MAY BE TOO SMALL.
 */
@@ -673,7 +653,7 @@ t*/
 /*                        Hessian approximation, given in DIAG, is not */
 /*                        positive. */
 
-/*              IFLAG=-3  Improper input parameters for LBFGS (N or M are
+/*              IFLAG=-3  Improper input parameters for LBFGS (N or M are 
 */
 /*                        not positive). */
 
@@ -697,39 +677,39 @@ t*/
 /*    reference: */
 
 
-/*    MP  is an INTEGER variable with default value 6. It is used as the
+/*    MP  is an INTEGER variable with default value 6. It is used as the 
 */
 /*        unit number for the printing of the monitoring information */
 /*        controlled by IPRINT. */
 
-/*    LP  is an INTEGER variable with default value 6. It is used as the
+/*    LP  is an INTEGER variable with default value 6. It is used as the 
 */
 /*        unit number for the printing of error messages. This printing */
 /*        may be suppressed by setting LP to a non-positive value. */
 
 /*    GTOL is a DOUBLE PRECISION variable with default value 0.9, which */
-/*        controls the accuracy of the line search routine MCSRCH. If the
+/*        controls the accuracy of the line search routine MCSRCH. If the 
 */
-/*        function and gradient evaluations are inexpensive with respect
+/*        function and gradient evaluations are inexpensive with respect 
 */
-/*        to the cost of the iteration (which is sometimes the case when
+/*        to the cost of the iteration (which is sometimes the case when 
 */
-/*        solving very large problems) it may be advantageous to set GTOL
+/*        solving very large problems) it may be advantageous to set GTOL 
 */
 /*        to a small value. A typical small value is 0.1.  Restriction: */
 /*        GTOL should be greater than 1.D-04. */
 
-/*    STPMIN and STPMAX are non-negative DOUBLE PRECISION variables which
+/*    STPMIN and STPMAX are non-negative DOUBLE PRECISION variables which 
 */
-/*        specify lower and uper bounds for the step in the line search.
+/*        specify lower and uper bounds for the step in the line search. 
 */
-/*        Their default values are 1.D-20 and 1.D+20, respectively. These
+/*        Their default values are 1.D-20 and 1.D+20, respectively. These 
 */
-/*        values need not be modified unless the exponents are too large
+/*        values need not be modified unless the exponents are too large 
 */
-/*        for the machine being used, or unless the problem is extremely
+/*        for the machine being used, or unless the problem is extremely 
 */
-/*        badly scaled (in which case the exponents should be increased).
+/*        badly scaled (in which case the exponents should be increased). 
 */
 
 
@@ -747,7 +727,7 @@ t*/
 /*                     error messages on unit LP. */
 
 
-/*    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/*    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 -*/
 
 
@@ -777,7 +757,7 @@ L10:
     }
     if (lb4_1.gtol <= 1e-4) {
         if (lb4_1.lp > 0) {
-            //io___4.ciunit = lb4_1.lp;
+            io___4.ciunit = lb4_1.lp;
             //s_wsfe(&io___4);
             //e_wsfe();
         }
@@ -856,11 +836,9 @@ L80:
         bound = *m;
     }
 
-    ys = xddot_(n, w(iypt + npt+1,w.indexmax()), &c__1, w(ispt + npt+1,
-      w.indexmax()), &c__1);
+    ys = xddot_(n, w(iypt + npt+1,w.indexmax()), &c__1, w(ispt + npt+1,w.indexmax()), &c__1);
     if (! (*diagco)) {
-        yy = xddot_(n, w(iypt + npt+1,w.indexmax()), &c__1, w(iypt + npt+1,
-          w.indexmax()), &c__1);
+        yy = xddot_(n, w(iypt + npt+1,w.indexmax()), &c__1, w(iypt + npt+1,w.indexmax()), &c__1);
         i__1 = *n;
         for (i = 1; i <= i__1; ++i) {
 /* L90: */
@@ -960,15 +938,14 @@ L165:
         w[i] = g[i];
     }
 L172:
-   xmcsrch_(n, x, &f, g, w(ispt + point * *n+1,w.indexmax()), &stp, &ftol, xtol,
+    xmcsrch_(n, x, &f, g, w(ispt + point * *n+1,w.indexmax()), &stp, &ftol, xtol, 
             &maxfev, &info, &nfev, diag);
     if (info == -1) {
         *iflag = 1;
         return 0;
     }
     if (info != 1) {
-       //void xgoofr(void){;}
-       //xgoofr();
+       xgoofr();
         goto L190;
     }
     nfun += nfev;
@@ -1020,7 +997,7 @@ L172:
 L190:
     *iflag = -1;
     if (lb4_1.lp > 0) {
-        //io___30.ciunit = lb4_1.lp;
+        io___30.ciunit = lb4_1.lp;
         //s_wsfe(&io___30);
         //// do_fio(&c__1, (char *)&info, (ftnlen)sizeof(integer));
         //e_wsfe();
@@ -1029,7 +1006,7 @@ L190:
 L195:
     *iflag = -2;
     if (lb4_1.lp > 0) {
-        //io___31.ciunit = lb4_1.lp;
+        io___31.ciunit = lb4_1.lp;
         //s_wsfe(&io___31);
         //// do_fio(&c__1, (char *)&i, (ftnlen)sizeof(integer));
         //e_wsfe();
@@ -1038,7 +1015,7 @@ L195:
 L196:
     *iflag = -3;
     if (lb4_1.lp > 0) {
-        //io___32.ciunit = lb4_1.lp;
+        io___32.ciunit = lb4_1.lp;
         //s_wsfe(&io___32);
         //e_wsfe();
     }
@@ -1053,12 +1030,11 @@ L196:
 /*     LAST LINE OF SUBROUTINE LBFGS */
 
 
-/* 
-Subroutine int xlb1_(integer *iprint, integer *iter, integer *nfun,
-        dvar_vector & gnorm, integer *n, integer *m, dvar_vector & x,
-        dvar_vector & f, dvar_vector & g, dvar_vector & stp, logical *finish)
+/* Subroutine */ int xlb1_(integer *iprint, integer *iter, integer *nfun, 
+        dvar_vector & gnorm, integer *n, integer *m, dvar_vector & x, dvar_vector & 
+        f, dvar_vector & g, dvar_vector & stp, logical *finish)
 {
-    // Format strings
+    /* Format strings */
     static char fmt_10[] = "(\002*******************************************\
 ******\002)";
     static char fmt_20[] = "(\002  N=\002,i5,\002   NUMBER OF CORRECTIONS\
@@ -1075,16 +1051,16 @@ ORM\002,7x,\002STEPLENGTH\002/)";
     static char fmt_100[] = "(/\002 THE MINIMIZATION TERMINATED WITHOUT DETE\
 CTING ERRORS.\002,/\002 IFLAG = 0\002)";
 
-    // System generated locals
+    /* System generated locals */
     integer i__1;
 
-    // Builtin functions
-   //integer //s_wsfe(cilist *), e_wsfe(), // do_fio(integer *, char *, ftnlen);
+    /* Builtin functions */
+    //integer //s_wsfe(cilist *), e_wsfe(), // do_fio(integer *, char *, ftnlen);
 
-    // Local variables
+    /* Local variables */
     static integer i;
 
-    // Fortran I/O blocks
+    /* Fortran I/O blocks */
     static cilist io___33 = { 0, 0, 0, fmt_10, 0 };
     static cilist io___34 = { 0, 0, 0, fmt_20, 0 };
     static cilist io___35 = { 0, 0, 0, fmt_30, 0 };
@@ -1105,17 +1081,20 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
     static cilist io___51 = { 0, 0, 0, fmt_50, 0 };
     static cilist io___52 = { 0, 0, 0, fmt_100, 0 };
 
-//     -------------------------------------------------------------
-//     THIS ROUTINE PRINTS MONITORING INFORMATION. THE FREQUENCY AND
-//     AMOUNT OF OUTPUT ARE CONTROLLED BY IPRINT.
-//     -------------------------------------------------------------
 
-    // Parameter adjustments
+
+/*     ------------------------------------------------------------- */
+/*     THIS ROUTINE PRINTS MONITORING INFORMATION. THE FREQUENCY AND */
+/*     AMOUNT OF OUTPUT ARE CONTROLLED BY IPRINT. */
+/*     ------------------------------------------------------------- */
+
+
+    /* Parameter adjustments */
     --iprint;
     g.shift(1);
     x.shift(1);
 
-    // Function Body
+    /* Function Body */
     if (*iter == 0) {
         io___33.ciunit = lb4_1.mp;
         // s_wsfe(&io___33);
@@ -1232,11 +1211,12 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
         }
     }
 
+
     return 0;
-} 
-*/
+} /* xlb1_ */
 
 /*     ****** */
+
 
 /*   ---------------------------------------------------------- */
 /*     DATA */
@@ -1251,9 +1231,8 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
 }
 #endif
 
-/* Subroutine */
-int xdaxpy_(integer *n, dvariable* da,const dvar_vector & _dx, integer *incx,
-  const dvar_vector & _dy, integer *incy)
+/* Subroutine */ 
+int xdaxpy_(integer *n, dvariable* da,const dvar_vector & _dx, integer *incx, const dvar_vector & _dy, integer *incy)
 {
     /* System generated locals */
     integer i__1;
@@ -1261,9 +1240,11 @@ int xdaxpy_(integer *n, dvariable* da,const dvar_vector & _dx, integer *incx,
     /* Local variables */
     static integer i, m, ix, iy, mp1;
 
+
 /*     constant times a vector plus a vector. */
 /*     uses unrolled loops for increments equal to one. */
 /*     jack dongarra, linpack, 3/11/78. */
+
 
     dvar_vector& dx = (dvar_vector&) _dx;
     dvar_vector& dy = (dvar_vector&) _dy;
@@ -1304,6 +1285,7 @@ int xdaxpy_(integer *n, dvariable* da,const dvar_vector & _dx, integer *incx,
 
 /*        code for both increments equal to 1 */
 
+
 /*        clean-up loop */
 
 L20:
@@ -1332,11 +1314,14 @@ L40:
     return 0;
 } /* xdaxpy_ */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /*   ---------------------------------------------------------- */
 
-dvariable xddot_(integer *n,const dvar_vector & _dx, integer *incx,
-  const dvar_vector & _dy, integer *incy)
+dvariable xddot_(integer *n,const dvar_vector & _dx, integer *incx,const dvar_vector & _dy, integer *incy)
 {
     /* System generated locals */
     integer i__1;
@@ -1412,7 +1397,7 @@ L40:
     mp1 = m + 1;
     i__1 = *n;
     for (i = mp1; i <= i__1; i += 5) {
-        dtemp = dtemp + dx[i] * dy[i] + dx[i + 1] * dy[i + 1] + dx[i + 2] *
+        dtemp = dtemp + dx[i] * dy[i] + dx[i + 1] * dy[i + 1] + dx[i + 2] * 
                 dy[i + 2] + dx[i + 3] * dy[i + 3] + dx[i + 4] * dy[i + 4];
 /* L50: */
     }
@@ -1421,26 +1406,19 @@ L60:
     return ret_val;
 } /* xddot_ */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*    ------------------------------------------------------------------ */
 
 /*     ************************** */
 /*     LINE SEARCH ROUTINE MCSRCH */
 /*     ************************** */
 //  line search routine
-/* Subroutine */ int xmcsrch_(integer *n, dvar_vector & x, dvariable * f,
-   dvar_vector & g,const dvar_vector & _s, dvariable * stp, double * ftol,
-   double * xtol, integer *maxfev, integer *info, integer *nfev,
-   dvar_vector & wa)
+/* Subroutine */ int xmcsrch_(integer *n, dvar_vector & x, dvariable * f, dvar_vector & g,const dvar_vector & _s, dvariable * stp, double * ftol, double * xtol, integer *maxfev, integer *info, integer *nfev, dvar_vector & wa)
 {
     /* Initialized data */
 
     dvar_vector& s = (dvar_vector&)_s;
 
- // dvar_vector  *xlinebest=NULL;
+ // dvar_vector  *xlinebest=NULL;    
 
     static dvariable p5 = .5;
     static dvariable p66 = .66;
@@ -1448,10 +1426,8 @@ extern "C" {
     static dvariable zero = 0.;
 
     /* Format strings */
-/*
     static char fmt_15[] = "(/\002  THE SEARCH DIRECTION IS NOT A DESCENT DI\
 RECTION\002)";
-*/
 
     /* System generated locals */
     integer i__1;
@@ -1468,14 +1444,11 @@ RECTION\002)";
     static dvariable width1, ftest1, dg, fm, fx, fy;
     static logical brackt;
     static dvariable dginit, dgtest;
-extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx,
-   dvariable * dx, dvariable * sty, dvariable * fy, dvariable * dy,
-   dvariable * stp, dvariable * fp, dvariable * dp, logical *brackt,
-   dvariable * stpmin, dvariable * stpmax, integer *info);
+extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx, dvariable * dx, dvariable * sty, dvariable * fy, dvariable * dy, dvariable * stp, dvariable * fp, dvariable * dp, logical *brackt, dvariable * stpmin, dvariable * stpmax, integer *info);
     static dvariable dgm, dgx, dgy, fxm, fym, stx, sty;
 
     /* Fortran I/O blocks */
-    //static cilist io___71 = { 0, 0, 0, fmt_15, 0 };
+    static cilist io___71 = { 0, 0, 0, fmt_15, 0 };
 
 
 
@@ -1483,7 +1456,7 @@ extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx,
 
 /*     A slight modification of the subroutine CSRCH of More' and Thuente.
  */
-/*     The changes are to allow reverse communication, and do not affect
+/*     The changes are to allow reverse communication, and do not affect 
 */
 /*       NFEV IS AN INTEGER OUTPUT VARIABLE SET TO THE NUMBER OF */
 /*         CALLS TO FCN. */
@@ -1524,7 +1497,7 @@ extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx,
 
 /*     CHECK THE INPUT PARAMETERS FOR ERRORS. */
 
-    if (*n <= 0 || *stp <= zero || *ftol < zero || lb4_1.gtol < zero || *xtol
+    if (*n <= 0 || *stp <= zero || *ftol < zero || lb4_1.gtol < zero || *xtol 
             < zero || lb4_1.stpmin < zero || lb4_1.stpmax < lb4_1.stpmin || *
             maxfev <= 0) {
         return 0;
@@ -1546,10 +1519,10 @@ extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx,
   /*
     *fbest=fabs(dginit);
     *dgbest=fabs(dginit);
-    *xlinebest=x;
+    *xlinebest=x;    
  */
     if (dginit >= zero) {
-        //io___71.ciunit = lb4_1.lp;
+        io___71.ciunit = lb4_1.lp;
         // s_wsfe(&io___71);
         // e_wsfe();
         return 0;
@@ -1608,8 +1581,8 @@ L30:
 /*        IF AN UNUSUAL TERMINATION IS TO OCCUR THEN LET */
 /*        STP BE THE LOWEST POINT OBTAINED SO FAR. */
 
-    if ((brackt && (*stp <= stmin || *stp >= stmax)) || *nfev >= *maxfev - 1 ||
-            infoc == 0 || (brackt && stmax - stmin <= *xtol * stmax)) {
+    if (brackt && (*stp <= stmin || *stp >= stmax) || *nfev >= *maxfev - 1 || 
+            infoc == 0 || brackt && stmax - stmin <= *xtol * stmax) {
         *stp = stx;
     }
 
@@ -1638,7 +1611,7 @@ L45:
 
 /*        TEST FOR CONVERGENCE. */
     if (*nfev >= *maxfev) {
-        if (value(dg)>1.e-2)
+        if (value(dg)>1.e-2)   
           cout << "dg = " << value(dg) << endl;
         *info = 1;
         cout << "Exceeded maxfev" << endl;
@@ -1651,8 +1624,8 @@ L45:
       *fold=*fbest;
       *dgbest=fabs(dg);
 
-      *xlineold=*xlinebest;
-      *xlinebest=x;
+      *xlineold=*xlinebest;    
+      *xlinebest=x;    
       *fbest=*f;
     }
    */
@@ -1661,15 +1634,15 @@ L45:
     dvariable lambda;
     //cout << " dg = " << dg<< endl;
     //cout << " dg/(sn*gn)  = " << dg/(sn*gn) << endl;
-    //if (*f <= ftest1 && abs(dg) <= convcrit*(gn*sn))
-    if (*f <= ftest1 && fabs(dg) <= convcrit)
+    //if (*f <= ftest1 && abs(dg) <= convcrit*(gn*sn)) 
+    if (*f <= ftest1 && fabs(dg) <= convcrit) 
     {
       //cout << " dg = " << dg<< endl;
       //cout << " dg/(sn*gn)  = " << dg/(1.e-10+sn*gn) << endl;
       //lambda=(convcrit- *dgbest)/(*dgold- *dgbest);
       //lambda=daves_kludge(lambda);
       //cout << "lambda = " << lambda << endl;
-
+      
       //dvector xsave=value(x);
       //x= (1.0-lambda) * *xlinebest + lambda * *xlineold;
       //double tt=norm2(value(x)-xsave);
@@ -1679,7 +1652,7 @@ L45:
       *info = 1;
     }
 
-  /*
+  /* 
     if ( brackt && (*stp <= stmin || *stp >= stmax) || infoc == 0) {
         *info = 6;
     }
@@ -1698,14 +1671,14 @@ L45:
     if (*f <= ftest1 && fabs(dg) <= lb4_1.gtol * (-dginit)) {
         *info = 1;
     }
-
+  
    */
 
 /*        CHECK FOR TERMINATION. */
 
     if (*info != 0) {
       //if (*info !=3)
-        //cout << " *info = " << *info << endl;
+        //cout << " *info = " << *info << endl; 
         return 0;
     }
 
@@ -1723,6 +1696,7 @@ L45:
 /*        OBTAINED BUT THE DECREASE IS NOT SUFFICIENT. */
 
     if (stage1 && *f <= fx && *f > ftest1) {
+
 /*           DEFINE THE MODIFIED FUNCTION AND DERIVATIVE VALUES. */
 
         fm = *f - *stp * dgtest;
@@ -1737,12 +1711,15 @@ L45:
 
         xmcstep_(&stx, &fxm, &dgxm, &sty, &fym, &dgym, stp, &fm, &dgm, &brackt,
                  &stmin, &stmax, &infoc);
+
 /*           RESET THE FUNCTION AND GRADIENT VALUES FOR F. */
+
         fx = fxm + stx * dgtest;
         fy = fym + sty * dgtest;
         dgx = dgxm + dgtest;
         dgy = dgym + dgtest;
     } else {
+
 /*           CALL MCSTEP TO UPDATE THE INTERVAL OF UNCERTAINTY */
 /*           AND TO COMPUTE THE NEW STEP. */
 
@@ -1760,21 +1737,22 @@ L45:
         width1 = width;
         width = (d__1 = sty - stx, fabs(d__1));
     }
+
 /*        END OF ITERATION. */
+
     goto L30;
 
 /*     LAST LINE OF SUBROUTINE MCSRCH. */
+
 } /* xmcsrch_ */
 
-/* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx, dvariable * dx,
-  dvariable * sty, dvariable * fy, dvariable * dy, dvariable * stp,
-  dvariable * fp, dvariable * dp, logical *brackt, dvariable * stpmin,
-  dvariable * stpmax, integer *info)
+/* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx, dvariable * dx, dvariable * sty, dvariable * fy, dvariable * dy, dvariable * stp, dvariable * fp, dvariable * dp, logical *brackt, dvariable * stpmin, dvariable * stpmax, integer *info)
 {
     /* System generated locals */
     dvariable d__1, d__2, d__3;
 
     /* Builtin functions */
+    
 
     /* Local variables */
     static dvariable sgnd, stpc, stpf, stpq, p, q, gamma, r, s, theta;
@@ -1841,7 +1819,7 @@ L45:
 
 /*     CHECK THE INPUT PARAMETERS FOR ERRORS. */
 
-    if ((*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty))) || *dx *
+    if (*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty)) || *dx *
              (*stp - *stx) >= (float)0. || *stpmax < *stpmin) {
         return 0;
     }
@@ -1860,7 +1838,7 @@ L45:
         bound = TRUE_;
         theta = (*fx - *fp) * 3 / (*stp - *stx) + *dx + *dp;
 /* Computing MAX */
-       d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
+        d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
                 *dp);
         s = max(d__1,d__2);
 /* Computing 2nd power */
@@ -1873,7 +1851,7 @@ L45:
         q = gamma - *dx + gamma + *dp;
         r = p / q;
         stpc = *stx + r * (*stp - *stx);
-        stpq = *stx + *dx / ((*fx - *fp) / (*stp - *stx) + *dx) / 2 * (*stp -
+        stpq = *stx + *dx / ((*fx - *fp) / (*stp - *stx) + *dx) / 2 * (*stp - 
                 *stx);
         if ((d__1 = stpc - *stx, fabs(d__1)) < (d__2 = stpq - *stx, fabs(d__2)))
                  {
@@ -1893,7 +1871,7 @@ L45:
         bound = FALSE_;
         theta = (*fx - *fp) * 3 / (*stp - *stx) + *dx + *dp;
 /* Computing MAX */
-       d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
+        d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
                 *dp);
         s = max(d__1,d__2);
 /* Computing 2nd power */
@@ -1922,7 +1900,7 @@ L45:
 /*     IS BEYOND STP. OTHERWISE THE CUBIC STEP IS DEFINED TO BE */
 /*     EITHER STPMIN OR STPMAX. THE QUADRATIC (SECANT) STEP IS ALSO */
 /*     COMPUTED AND IF THE MINIMUM IS BRACKETED THEN THE THE STEP */
-/*     CLOSEST TO STX IS TAKEN, ELSE THE STEP FARTHEST AWAY IS TAKEN.
+/*     CLOSEST TO STX IS TAKEN, ELSE THE STEP FARTHEST AWAY IS TAKEN. 
 */
 
     } else if (fabs(*dp) < fabs(*dx)) {
@@ -1930,7 +1908,7 @@ L45:
         bound = TRUE_;
         theta = (*fx - *fp) * 3 / (*stp - *stx) + *dx + *dp;
 /* Computing MAX */
-       d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
+        d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
                 *dp);
         s = max(d__1,d__2);
 
@@ -1984,7 +1962,7 @@ L45:
         if (*brackt) {
             theta = (*fp - *fy) * 3 / (*sty - *stp) + *dy + *dp;
 /* Computing MAX */
-            d__1 = fabs(theta), d__2 = fabs(*dy), d__1 = max(d__1,d__2), d__2 =
+            d__1 = fabs(theta), d__2 = fabs(*dy), d__1 = max(d__1,d__2), d__2 = 
                     fabs(*dp);
             s = max(d__1,d__2);
 /* Computing 2nd power */
@@ -2024,6 +2002,7 @@ L45:
     }
 
 /*     COMPUTE THE NEW STEP AND SAFEGUARD IT. */
+
     stpf = min(*stpmax,stpf);
     stpf = max(*stpmin,stpf);
     *stp = stpf;
@@ -2039,8 +2018,14 @@ L45:
         }
     }
     return 0;
+
 /*     LAST LINE OF SUBROUTINE MCSTEP. */
+
 } /* xmcstep_ */
+
+
 #ifdef __cplusplus
-}
+	}
 #endif
+
+

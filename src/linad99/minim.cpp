@@ -2,27 +2,22 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
-  \file minim.pp
-  Minimize artibrary user-supplied function.
+ * \file
+ * Description not yet available.
  */
 #include <fvar.hpp>
 
 /**
-  Minimize artibrary user-supplied function.
-  \param x Vector of independent variables
-  \param pf Pointer to function to be minmized with prototype
-  double pf(const dvar_vector&);
-  \returns double containing value of the function at the minimum.
+ * Description not yet available.
+ * \param
  */
-double fmm::minimize(const independent_variables & x,
-  double (*pf)(const dvar_vector&))
-{
-  double f = 0.0;
-
+double fmm::minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&))
+{  
   int nvar=x.size();
+  double f;
   dvector g(1,nvar);
 #ifndef SAFE_INITIALIZE
   g.initialize();
@@ -41,5 +36,5 @@ double fmm::minimize(const independent_variables & x,
       }
     }
   }
-  return f;
+  return(f);
 }

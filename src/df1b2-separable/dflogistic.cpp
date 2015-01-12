@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -27,7 +27,7 @@
       return a+(b-a)*tmp/(1.0+tmp);
     }
   }
-
+  
 /**
  * Description not yet available.
  * \param

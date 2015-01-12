@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -10,21 +10,27 @@
  */
 #include <admodel.h>
 
+#ifdef __GNUDOS__
+  #include <gccmanip.h>
+#endif
+
+void useless(BOR_CONST double& sdelta2);
 // estimate the matrix of second derivatives
 
 /**
  * Description not yet available.
  * \param
  */
-dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
+dmatrix function_minimizer::dep_hess_routine(BOR_CONST dvariable& dep)
 {
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
   dvector scale(1,nvar);   // need to get scale from somewhere
   dvector tscale(1,nvar);   // need to get scale from somewhere
-  initial_params::stddev_scale(scale,x);
+  int check=initial_params::stddev_scale(scale,x);
   //check=initial_params::stddev_curvscale(curv,x);
+  double f;
   double delta=1.e-7;
   dvector g1(1,nvar);
   dvector depg(1,nvar);
@@ -42,7 +48,8 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    gradcalc(nvar, depg, vf);
+    f=value(vf);
+    gradcalc(nvar,depg);
   }
   double sdelta1;
   double sdelta2;
@@ -52,56 +59,65 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     cout << "Estimating row " << i << " out of " << nvar
          << " for dependent variable hessian" << endl;
 
+    double f=0.0;
     double xsave=x(i);
     sdelta1=x(i)+delta;
+    useless(sdelta1);
     sdelta1-=x(i);
     x(i)=xsave+sdelta1;
     dvariable vf=0.0;
-    initial_params::stddev_scale(tscale,x);
+    check=initial_params::stddev_scale(tscale,x);
     gradcalc(0,depg);
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    gradcalc(nvar, g1, vf);
+    f=value(vf);
+    gradcalc(nvar,g1);
     g1=elem_div(g1,tscale);
 
     sdelta2=x(i)-delta;
+    useless(sdelta2);
     sdelta2-=x(i);
     x(i)=xsave+sdelta2;
-    initial_params::stddev_scale(tscale,x);
+    check=initial_params::stddev_scale(tscale,x);
     //gradcalc(nvar,depg);
     vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    gradcalc(nvar, g2, vf);
+    f=value(vf);
+    gradcalc(nvar,g2);
     g2=elem_div(g2,tscale);
     x(i)=xsave;
     hess1=(g1-g2)/(sdelta1-sdelta2)/scale(i);
 
     sdelta1=x(i)+eps*delta;
+    useless(sdelta1);
     sdelta1-=x(i);
     x(i)=xsave+sdelta1;
-    initial_params::stddev_scale(tscale,x);
+    check=initial_params::stddev_scale(tscale,x);
     //gradcalc(nvar,depg);
     vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    gradcalc(nvar, g1, vf);
+    f=value(vf);
+    gradcalc(nvar,g1);
     g1=elem_div(g1,tscale);
 
     x(i)=xsave-eps*delta;
     sdelta2=x(i)-eps*delta;
+    useless(sdelta2);
     sdelta2-=x(i);
     x(i)=xsave+sdelta2;
-    initial_params::stddev_scale(tscale,x);
+    check=initial_params::stddev_scale(tscale,x);
     //gradcalc(nvar,depg);
     vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    gradcalc(nvar, g2, vf);
+    f=value(vf);
+    gradcalc(nvar,g2);
     g2=elem_div(g2,tscale);
     x(i)=xsave;
 
@@ -120,7 +136,7 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
       hess(j,i)=tmp;
     }
     hess(i,i)-=depg(i)*curv(i)/(scale(i)*scale(i)*scale(i));
-  }
+  }  
  */
   return hess;
 }

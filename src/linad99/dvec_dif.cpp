@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,12 +14,12 @@
  * Description not yet available.
  * \param
  */
-dvector first_difference(const dvector& x)
+ dvector first_difference(_CONST dvector& x)
  {
    if (x.size()<=1)
    {
      cerr << "Error -- vector size too small"
-             " in first_difference(const dvector&)" << endl;
+             " in first_difference(_CONST dvector&)" << endl;
      ad_exit(1);
    }
    int mmin=x.indexmin();

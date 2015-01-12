@@ -2,10 +2,10 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
-
+ 
 #  if defined(USE_SHARE_FLAGS)
 /*
   static int integer(const index_type& it)
@@ -68,15 +68,15 @@
     {
       int  jmin=bmap(i).indexmin();
       int  jmax=bmap(i).indexmax();
-
-      int ii1 = 0;
+  
+      int ii1;
       for (int j=jmin;j<=jmax;j++)
       {
         dvar_vector& v=(*this)(bmap(i,j,1),bmap(i,j,2));
-
+  
         int kmin=v.indexmin();
         int kmax=v.indexmax();
-
+  
         ii1=ii;
         for (int k=kmin;k<=kmax;k++)
         {
@@ -124,3 +124,5 @@
     }
   }
 #  endif
+ 
+

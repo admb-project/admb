@@ -2,29 +2,29 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- *
+ * Copyright (c) 2008-2011 Regents of the University of California
+ * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- *
+ * 
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- *
+ * 
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -44,10 +44,12 @@
  */
 
 #if !defined(__DF1B2FUN__)
-#  define __DF1B2FUN__
+#  define __DF1B2FUN__ 
 
-#if defined(__GNUC__) && (__GNUC__ < 3)
-  #pragma interface
+#if defined(__GNUC__)
+  #if (__GNUC__ < 3)
+    #pragma interface
+  #endif
 #endif
 
 #include <adpool.h>
@@ -55,9 +57,9 @@
 #  include <fvar.hpp>
 #endif
 #include <sys/stat.h>
-#if !defined(_MSC_VER)
-  #include <stddef.h>
-  #include <fcntl.h>
+#if defined(__CYGWIN__) || defined(linux)
+#include <stddef.h>
+#  include <fcntl.h>
 #endif
 
 #define USE_BARD_PEN
@@ -97,9 +99,9 @@ class dercheck_info
 {
   int ind_index;
 public:
-  virtual void get_ind_index(void)
-  {
-    cerr << "cannot use this type here" << endl; ad_exit(1);
+  virtual void get_ind_index(void) 
+  { 
+    cerr << "cannot use this type here" << endl; ad_exit(1); 
   }
 
   int node_number;
@@ -113,7 +115,7 @@ public:
   double f3;
   double fd;
   double delta;
-  dercheck_info(int _node_number,double _delta,int _index);
+  dercheck_info(int _node_number,double _delta,int _index); 
   void set_delta(double d){delta=d;}
   void set_node_number(int n){node_number=n;}
   void set_pass_number(int n){pass_number=n;}
@@ -131,32 +133,31 @@ extern dercheck_info * derchecker;
 
 typedef void * &  vreference;
 
-/*
-#if !defined(_MSC_VER)
-inline void increment_pointer(vreference p,int n)
+#if !defined(__MSVC32__)
+inline void increment_pointer(vreference p,int n) 
 {
   char * cs =(char*)(p);
   cs+=n;
 }
 #endif
-*/
 
 #include <df32fun.h>
+extern int global_nvar;
 class df1b2_gradlist;
-extern df1b2_gradlist* f1b2gradlist;
-extern df1b2_gradlist* localf1b2gradlist;
-extern df1b2_gradlist* globalf1b2gradlist;
-extern df1b2_gradlist** f1b2gradlist_stack;
+extern df1b2_gradlist * f1b2gradlist;
+extern df1b2_gradlist * localf1b2gradlist;
+extern df1b2_gradlist * globalf1b2gradlist;
+extern df1b2_gradlist ** f1b2gradlist_stack;
 extern int max_num_init_df1b2variable;
-
+  
 void df1b2_gradcalc1(void);
 
 extern char AD_allocation_error_message[];
 
-#if defined(__BORLANDC__)
-int adptr_diff(void * x, void * y) { return int(x)-int(y); }
+#if defined(__SUNPRO_CC) && defined(__x86_64)
+long adptr_diff(void * x, void * y);
 #else
-int adptr_diff(void* x, void* y);
+int adptr_diff(void * x, void * y);
 #endif
 
 void read_pass1_1(void);
@@ -178,30 +179,31 @@ void read_pass1_2(void);
  * Description not yet available.
  * \param
  */
-struct df1b2_header
-{
-  //double* ptr;
-  double* u;
-  double* u_dot;
-  double* u_bar;
-  double* u_dot_bar;
-  double* u_tilde;
-  double* u_dot_tilde;
-  double* u_bar_tilde;
-  double* u_dot_bar_tilde;
-  int indindex;
+  struct df1b2_header 
+  {
+    //double * ptr;
+    double * u;
+    double * u_dot;
+    double * u_bar;
+    double * u_dot_bar;
+    double * u_tilde;
+    double * u_dot_tilde;
+    double * u_bar_tilde;
+    double * u_dot_bar_tilde;
+    int indindex;
 
-  //double * get_ptr(void){return ptr;}
+    //double * get_ptr(void){return ptr;}
 
-  double* get_u(void) const {return (double*)u;}
-  double* get_u_dot(void) const {return (double*)u_dot;}
-  double* get_u_bar(void) const {return (double*)u_bar;}
-  double* get_u_dot_bar(void) const {return (double*)u_dot_bar;}
-  double* get_u_tilde(void) const {return (double*)u_tilde;}
-  double* get_u_dot_tilde(void) const {return (double*)u_dot_tilde;}
-  double* get_u_bar_tilde(void) const {return (double*)u_bar_tilde;}
-  double* get_u_dot_bar_tilde(void) const {return (double*)u_dot_bar_tilde;}
-};
+
+    double * get_u(void) const {return (double *) u;}
+    double * get_u_dot(void) const {return (double *) u_dot;}
+    double * get_u_bar(void) const {return (double *) u_bar;}
+    double * get_u_dot_bar(void) const {return (double *) u_dot_bar;}
+    double * get_u_tilde(void) const {return (double *) u_tilde;}
+    double * get_u_dot_tilde(void) const {return (double *) u_dot_tilde;}
+    double * get_u_bar_tilde(void) const {return (double *) u_bar_tilde;}
+    double * get_u_dot_bar_tilde(void) const {return (double *) u_dot_bar_tilde;}
+  };
   class adkludge1;
 
   class df1b2vector;
@@ -215,7 +217,7 @@ struct df1b2_header
     df1b2vector * p;
     int lb;
     int ub;
-    inline predf1b2vector(df1b2vector * _p,int _lb,int _ub)
+    inline predf1b2vector(df1b2vector * _p,int _lb,int _ub) 
       {p=_p;lb=_lb,ub=_ub;}
     friend class df1b2vector;
   };
@@ -231,12 +233,13 @@ struct df1b2_header
  */
   class df1b2variable : public df1b2_header
   {
+
   public:
-    double* ptr;
+    double * ptr;
     int get_local_nvar(void) const {return int(((twointsandptr*)ptr)->nvar);}
     int allocated(void){return ptr!=0;}
     int unallocated(void){return ptr==0;}
-    static adpool* pool;
+    static adpool * pool;
     static int current_allocation_index;
     static int adpool_use_index[];
     static int pool_allocation_number[];
@@ -245,36 +248,38 @@ struct df1b2_header
     static int adpool_counter;
     static void increment_adpool_counter(void);
     static const int adpool_stack_size;
-    static adpool* adpool_vector[];
-    static adpool* adpool_stack[];
-    static unsigned int adpool_nvar_stack[];
+    static adpool * adpool_vector[];
+    static adpool * adpool_stack[];
+    static int adpool_nvar_stack[];
     static int adpool_stack_pointer;
     static void save_adpool_pointer(void);
     static void restore_adpool_pointer(void);
-    static unsigned int nvar_vector[];
+    static int nvar_vector[];
     static int passnumber;
-    static unsigned int nvar;  // the number of independent variables
+    static int nvar;  // the number of independent variables
     static int minder;  // the number of independent variables
     static int maxder;  // the number of independent variables
-    static unsigned int blocksize;
+    static int blocksize;//
     static int noallocate;
-
+    
     static int get_passnumber(void){return passnumber;}
-    static void set_nvar(unsigned int n) { nvar = n;}
-    static unsigned int get_nvar() { return nvar; }
+    static void set_nvar(int n){nvar=n;}
+    static int get_nvar(void){return nvar;}
     static void set_minder(int n){minder=n;}
     static void set_maxder(int n){maxder=n;}
     static void set_blocksize(void);
-    static unsigned int get_blocksize(void);
-    static unsigned int get_blocksize(const unsigned int n);
+    static int get_blocksize(void);
+    static int get_blocksize(int n);
     int & get_ind_index(void){ return indindex;}
-    const int& get_ind_index(void) const { return indindex;}
-    short int* ncopies;
+    const int & get_ind_index(void) const { return indindex;}
+    short int * ncopies;
     // for fixed size n whole thing is 6n+2
-    void initialize(void);
-    void initialize(const unsigned int n);
 
-    df1b2variable(const do_naught_kludge&){ ptr = 0; }
+
+    void initialize(void);
+    void initialize(int n);
+        
+    df1b2variable(const do_naught_kludge& a){ptr=0;}
 
 #if defined(USE_DDOUBLE)
 #undef double
@@ -292,7 +297,7 @@ struct df1b2_header
     df1b2variable(const newadkludge * );
 
     df1b2variable(const df1b2variable& v);
-
+  
     df1b2variable& operator = (const df3_one_variable& v);
     df1b2variable& operator = (const df3_two_variable& v);
     df1b2variable& operator = (const df3_three_variable& v);
@@ -301,13 +306,13 @@ struct df1b2_header
     df1b2variable& operator -= (const df1b2variable& v);
     df1b2variable& operator *= (const df1b2variable& v);
     df1b2variable& operator /= (const df1b2variable& v);
-
+  
     void operator = (double x);
-
+  
     virtual ~df1b2variable();
     void deallocate(void);
   };
-
+  
 void print_dot_derivatives(df1b2_header * px,const char * s);
 void print_derivatives(const adstring&, double f, double df,
   double d2f,double d3f,int bflag=0);
@@ -322,16 +327,16 @@ void print_derivatives(df1b2_header * px,const char * s,
  * Description not yet available.
  * \param
  */
-  class init_df1b2variable : public df1b2variable
+  class init_df1b2variable : public df1b2variable  
   {
   public:
     int ind_index;
     int get_index(void){return ind_index;}
     static int num_variables;
-    static init_df1b2variable ** list;
+    static init_df1b2variable ** list;  
     init_df1b2variable(double v=0.0);
     void operator = (double x);
-    void set_u_dot(void);
+    void set_u_dot(void); 
   };
 
 /**
@@ -356,41 +361,42 @@ void print_derivatives(df1b2_header * px,const char * s,
     int indexmin(void) const {return index_min;}
     int indexmax(void) const {return index_max;}
 
-#if defined(OPT_LIB)
-    init_df1b2variable& operator () (int i) { return ptr[i];}
-    init_df1b2variable& operator [] (int i) { return ptr[i];}
-#else
-    init_df1b2variable& operator () (int i);
-    init_df1b2variable& operator [] (int i);
-#endif
+#  if defined(OPT_LIB)
+    init_df1b2variable& operator () (int i) { return ptr[i];}  
+    init_df1b2variable& operator [] (int i) { return ptr[i];}  
+#  else
+    init_df1b2variable& operator () (int i);  
+    init_df1b2variable& operator [] (int i);  
+#  endif
     void set_value(const dvector&);
     ~init_df1b2vector();
   };
 
+ 
 /**
- * This is a function object for a function of one variable which
- * stores the functions which calculate the first second and third
+ * This is a function object for a function of one variable which 
+ * stores the functions which calculate the first second and third 
  * derivatives
  */
-class df1b2function1
-{
-public:
-  double (*f)(double);
-  double (*df)(double);
-  double (*d2f)(double);
-  double (*d3f)(double);
-  adstring funname;
+  class df1b2function1
+  {
+  public:
+    double (*f)(double); 
+    double (*df)(double); 
+    double (*d2f)(double); 
+    double (*d3f)(double); 
+    adstring funname;
 
-  df1b2function1(double (*_f)(double),double (*_df)(double),
+    df1b2function1(double (*_f)(double),double (*_df)(double),
       double (*d2f)(double),double (*_d3f)(double),
       const adstring& s="unnamed");
 
-  df1b2variable operator () (const df1b2variable& x);
-  //df1b2variable& operator () (const df1b2variable& z,const df1b2variable& x);
-  df1b2variable& operator () (const df1b2variable& z,const df1b2variable& x,
-    int s); // s is a switch for picking special function for simple
+    df1b2variable operator () (const df1b2variable& x);
+    //df1b2variable& operator () (const df1b2variable& z,const df1b2variable& x);
+    df1b2variable& operator () (const df1b2variable& z,const df1b2variable& x,
+       int s); // s is a switch for picking special function for simple
                // operations like +=
-};
+  }; 
 
 /**
  * Description not yet available.
@@ -399,16 +405,16 @@ public:
   class df1b2function2
   {
   public:
-    double (*f)(double,double);
-    double (*df1)(double,double);
-    double (*df2)(double,double);
-    double (*d2f11)(double,double);
-    double (*d2f12)(double,double);
-    double (*d2f22)(double,double);
-    double (*d3f111)(double,double);
-    double (*d3f112)(double,double);
-    double (*d3f122)(double,double);
-    double (*d3f222)(double,double);
+    double (*f)(double,double); 
+    double (*df1)(double,double); 
+    double (*df2)(double,double); 
+    double (*d2f11)(double,double); 
+    double (*d2f12)(double,double); 
+    double (*d2f22)(double,double); 
+    double (*d3f111)(double,double); 
+    double (*d3f112)(double,double); 
+    double (*d3f122)(double,double); 
+    double (*d3f222)(double,double); 
     adstring funname;
 
     df1b2function2
@@ -416,8 +422,8 @@ public:
       double (*_f)(double,double),
       double (*_df1)(double,double),double (*_df2)(double,double),
       double (*d2f11)(double,double),
-      double (*d2f12)(double,double),
-      double (*d2f22)(double,double),
+      double (*d2f12)(double,double), 
+      double (*d2f22)(double,double), 
       double (*_d3f111)(double,double),
       double (*_d3f112)(double,double),
       double (*_d3f122)(double,double),
@@ -426,7 +432,7 @@ public:
     );
 
     df1b2variable operator () (const df1b2variable& x,const df1b2variable& y);
-  };
+  }; 
 
 /**
  * Description not yet available.
@@ -435,24 +441,24 @@ public:
   class mydf1b2function2
   {
   public:
-    double (*f)(double,double);
-    double (*df1)(double,double);
-    double (*df2)(double,double);
-    double (*d2f11)(double,double);
-    double (*d2f12)(double,double);
-    double (*d2f22)(double,double);
-    double (*d3f111)(double,double);
-    double (*d3f112)(double,double);
-    double (*d3f122)(double,double);
-    double (*d3f222)(double,double);
+    double (*f)(double,double); 
+    double (*df1)(double,double); 
+    double (*df2)(double,double); 
+    double (*d2f11)(double,double); 
+    double (*d2f12)(double,double); 
+    double (*d2f22)(double,double); 
+    double (*d3f111)(double,double); 
+    double (*d3f112)(double,double); 
+    double (*d3f122)(double,double); 
+    double (*d3f222)(double,double); 
 
     mydf1b2function2
     (
       double (*_f)(double,double),
       double (*_df1)(double,double),double (*_df2)(double,double),
       double (*d2f11)(double,double),
-      double (*d2f12)(double,double),
-      double (*d2f22)(double,double),
+      double (*d2f12)(double,double), 
+      double (*d2f22)(double,double), 
       double (*_d3f111)(double,double),
       double (*_d3f112)(double,double),
       double (*_d3f122)(double,double),
@@ -460,33 +466,32 @@ public:
     );
 
     df1b2variable operator () (const df1b2variable& x,const df1b2variable& y);
-  };
+  }; 
 
 /**
  * Description not yet available.
  * \param
  */
-class smartlist
-{
-public:
-  char* buffer;
-  char* buffend;
-  char* bptr;
-  char* sbptr;
-  unsigned int bufsize;
-  adstring filename;
-  int fp;
-  void saveposition(void){sbptr=bptr;}
-  void reset(void){bptr=buffer;}
-  void restoreposition(void){bptr=sbptr;}
-  void restoreposition(int offset){bptr=sbptr+offset;}
-  smartlist(unsigned int bufsize,const adstring& filename);
-  double report_usage(void)
+  class smartlist
   {
-    return double(size_t(bptr)-size_t(buffer))
-           / double(size_t(buffend)-size_t(buffer));
-  }
-};
+  public:
+    char * buffer;
+    char * buffend;
+    char * bptr;
+    char * sbptr;
+    unsigned int bufsize;
+    adstring filename;
+    int fp;
+    void saveposition(void){sbptr=bptr;}
+    void reset(void){bptr=buffer;}
+    void restoreposition(void){bptr=sbptr;}
+    void restoreposition(int offset){bptr=sbptr+offset;}
+    smartlist(unsigned int bufsize,const adstring& filename);
+    double report_usage(void) 
+    { 
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
+    }
+  };
 
 /**
  * Description not yet available.
@@ -510,13 +515,9 @@ public:
     char * buffend;
     char * bptr;
     char * sbptr;
-    size_t bufsize;
+    unsigned int bufsize;
     adstring filename;
     int fp;
-public:
-    test_smartlist(void);
-    ~test_smartlist();
-
     void saveposition(void){sbptr=bptr;}
     void set_recend(){bptr=recend+1;} // one passed the end so that when
                                       // you back up n bytes it points to the
@@ -527,25 +528,26 @@ public:
     void set_noreadflag(int n){ noreadflag=n; }
     void restoreposition(void){bptr=sbptr;}
     void restoreposition(int offset){bptr=sbptr+offset;}
-    test_smartlist(const size_t bufsize,const adstring& filename);
-    void allocate(const size_t bufsize,const adstring& filename);
+    test_smartlist(unsigned int bufsize,const adstring& filename);
+    void allocate(unsigned int bufsize,const adstring& filename);
+    test_smartlist(void);
+    ~test_smartlist();
     void read_buffer(void);
     void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}
     void set_reverse(void){direction=-1;}
     void rewind(void);
     void initialize(void);
-    void operator-=(const int);
-    void operator+=(const int);
-    double report_usage(void)
-    {
-      return double(size_t(bptr)-size_t(buffer))
-             / double(size_t(buffend)-size_t(buffer));
+    void operator -= (int);
+    void operator += (int);
+    double report_usage(void) 
+    { 
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
-    //void write(void * p,const size_t n);
-    void write(const size_t n);
+    void write(void * p,int n);
+    void write(int n);
     void write_buffer(void);
-    void check_buffer_size(const size_t);
+    void check_buffer_size(int);
     void add_buffer_fringe(int n){buffend-=n;}
     int written(void){return written_flag;}
   };
@@ -570,15 +572,12 @@ public:
   class fixed_smartlist
   {
   public:
-    fixed_smartlist();
-    fixed_smartlist(const size_t bufsize,const adstring& filename);
     ~fixed_smartlist();
-
     void operator ++ (void);
     void operator -- (void);
-    size_t nentries;
+    int nentries;
     int direction;
-    off_t endof_file_ptr;
+    int endof_file_ptr;
     int written_flag;
     int noreadflag;
     void save_end(void);
@@ -593,7 +592,7 @@ public:
     fixed_list_entry * buffend;
     fixed_list_entry * bptr;
     fixed_list_entry * sbptr;
-    size_t bufsize;
+    unsigned int bufsize;
     adstring filename;
     int fp;
     void saveposition(void){sbptr=bptr;}
@@ -607,7 +606,9 @@ public:
     void set_noreadflag(int n){ noreadflag=n; }
     void restoreposition(void){bptr=sbptr;}
     void restoreposition(int offset){bptr=sbptr+offset;}
-    void allocate(const size_t bufsize,const adstring& filename);
+    fixed_smartlist(unsigned int bufsize,const adstring& filename);
+    void allocate(unsigned int bufsize,const adstring& filename);
+    fixed_smartlist(void);
     void read_buffer(void);
     void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}
@@ -616,16 +617,15 @@ public:
     void initialize(void);
     void operator -= (int);
     void operator += (int);
-    double report_usage(void)
-    {
-      return double(size_t(bptr)-size_t(buffer))
-             / double(size_t(buffend)-size_t(buffer));
+    double report_usage(void) 
+    { 
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
-    //void write(void * p,int n);
-    void write(const size_t);
+    void write(void * p,int n);
+    void write(int n);
     void write_buffer(void);
     void write_buffer_one_less(void);
-    void check_buffer_size(const size_t);
+    void check_buffer_size(int);
     void add_buffer_fringe(int n){buffend-=n;}
     int written(void){return written_flag;}
   };
@@ -637,15 +637,12 @@ public:
   class fixed_smartlist2
   {
   public:
-    fixed_smartlist2(void);
-    fixed_smartlist2(const size_t bufsize,const adstring& filename);
     ~fixed_smartlist2();
-
     void operator ++ (void);
     void operator -- (void);
-    size_t nentries;
+    int nentries;
     int direction;
-    off_t endof_file_ptr;
+    int endof_file_ptr;
     int written_flag;
     int noreadflag;
     void save_end(void);
@@ -660,7 +657,7 @@ public:
     int * buffend;
     int * bptr;
     int * sbptr;
-    size_t bufsize;
+    unsigned int bufsize;
     adstring filename;
     int fp;
     void saveposition(void){sbptr=bptr;}
@@ -669,13 +666,15 @@ public:
                                       // beginning of an n byte record
     void reset(void){bptr=buffer;}
     int eof(void){ return eof_flag; /*eof_flag=0;*/}
-
+  
     void read_file(void);
     int get_noreadflag(void){ return noreadflag; }
     void set_noreadflag(int n){ noreadflag=n; }
     void restoreposition(void){bptr=sbptr;}
     void restoreposition(int offset){bptr=sbptr+offset;}
-    void allocate(const size_t bufsize,const adstring& filename);
+    fixed_smartlist2(unsigned int bufsize,const adstring& filename);
+    void allocate(unsigned int bufsize,const adstring& filename);
+    fixed_smartlist2(void);
     void read_buffer(void);
     void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}
@@ -684,16 +683,15 @@ public:
     void initialize(void);
     void operator -= (int);
     void operator += (int);
-    double report_usage(void)
-    {
-      return double(size_t(bptr)-size_t(buffer)) /
-             double(size_t(buffend)-size_t(buffer));
+    double report_usage(void) 
+    { 
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
-    //void write(void * p,int n);
-    void write(const size_t n);
+    void write(void * p,int n);
+    void write(int n);
     void write_buffer(void);
     void write_buffer_one_less(void);
-    void check_buffer_size(const size_t);
+    void check_buffer_size(int);
     void add_buffer_fringe(int n){buffend-=n;}
     int written(void){return written_flag;}
   };
@@ -701,8 +699,8 @@ public:
 
   void write(const test_smartlist &,void *,int nsize);
   void read(const test_smartlist &,void *,int nsize);
-  void memcpy(const test_smartlist &, void*, const size_t nsize);
-  void memcpy(void*, const test_smartlist&, const size_t nsize);
+  void memcpy(const test_smartlist &,void *,int nsize);
+  void memcpy(void *,const test_smartlist &,int nsize);
 
   class df1b2function2c;
 
@@ -710,7 +708,7 @@ public:
  * Description not yet available.
  * \param
  */
-  class df1b2_gradlist
+  class df1b2_gradlist 
   {
   public:
 #if defined(CHECK_COUNT)
@@ -718,12 +716,12 @@ public:
     static set_ncount_check(int n){ncount_check=n;}
 #endif
     int ncount;
-    test_smartlist list;
-    fixed_smartlist nlist;
-    test_smartlist list2;
-    fixed_smartlist2 nlist2;
-    test_smartlist list3;
-    fixed_smartlist2 nlist3;
+    test_smartlist list; 
+    fixed_smartlist nlist; 
+    test_smartlist list2; 
+    fixed_smartlist2 nlist2; 
+    test_smartlist list3; 
+    fixed_smartlist2 nlist3; 
     static int no_derivatives;
     static void set_no_derivatives(void) {no_derivatives=1;}
     static void set_yes_derivatives(void) {no_derivatives=0;}
@@ -740,7 +738,7 @@ public:
       df1b2variable * pz);
     int write_pass1_prod(const df1b2variable * px, double py,
       df1b2variable * pz);
-    int write_pass1x(const df1b2variable * _px, df1b2variable * pz,
+    int write_pass1x(const df1b2variable * _px, df1b2variable * pz, 
       df1b2function1 * pf);
 
     int write_pass1_prod(const df1b2vector * px, const df1b2vector * py,
@@ -762,12 +760,12 @@ public:
     int write_pass1_minuseq(const df1b2variable * px,df1b2variable * pz);
     int write_pass1_initialize(df1b2variable * pz);
     int write_pass1_eq(const df1b2variable * px,df1b2variable * pz);
-    int write_pass1(const df1b2variable * px,
+    int write_pass1(const df1b2variable * px, 
       df1b2variable * pz, df1b2function1 * pf);
-    int write_pass1(const df1b2variable * px,
+    int write_pass1(const df1b2variable * px, 
       df1b2variable * pz, double df, double d2f, double d3f );
 
-    int write_pass1(const df1b2variable * _px,
+    int write_pass1(const df1b2variable * _px, 
       const df1b2variable * _py,df1b2variable * pz,double df_x,
       double df_y,
       double df_xx,
@@ -778,10 +776,10 @@ public:
       double df_xyy,
       double df_yyy);
 
- int write_pass1(const df1b2variable * _px,
+ int write_pass1(const df1b2variable * _px, 
    const df1b2variable * _py,const df1b2variable * pw,
    const df1b2variable * pz,
-   double df_x, double df_y, double df_z,
+   double df_x, double df_y, double df_z, 
    double df_xx, double df_xy,double df_xz,double df_yy,
    double df_yz,double df_zz,
    double df_xxx,
@@ -808,9 +806,9 @@ public:
 class ad_dstar
 {
 public:
-  static unsigned int n;
-  static void allocate(const unsigned int _n);
-  double* p;
+  static int n;
+  static void allocate(int _n);
+  double * p;
   ad_dstar(void);
   ~ad_dstar(void);
   operator double* (){return p;}
@@ -835,7 +833,7 @@ df1b2variable mfexp(const df1b2variable& x,double b);
 
 // ************************************************************
 // ************************************************************
-
+    
 df1b2variable fabs(const df1b2variable& x);
 df1b2variable max(const df1b2vector& t1);
 df1b2variable sfabs(const df1b2variable& x);
@@ -873,19 +871,19 @@ inline df1b2variable operator + (const df1b2variable& x,double y)
 }
 
 df1b2variable operator - (const df1b2variable& x,const df1b2variable& y);
-df1b2variable operator - (double x,const df1b2variable& y);
+//df1b2variable operator - (double x,const df1b2variable& y);
 df1b2variable operator / (const df1b2variable& x,const df1b2variable& y);
 df1b2variable operator / (const df1b2variable& x,double y);
-df1b2variable operator - (const df1b2variable& x,double y);
+//df1b2variable operator - (const df1b2variable& x,double y);
 df1b2variable operator / (double x,const df1b2variable& y);
 
-df1b2variable lgamma2(const df1b2variable& _x);//new log gamma using forward AD
+df1b2variable lgamma2(const df1b2variable& _x);  // new log gamma using forward AD
 df1b2variable gammln(const df1b2variable& _xx);
 df1b2vector gammln(const df1b2vector&  _xx);
-df1b2variable log_comb(const df1b2variable& n, double k);
-df1b2variable log_comb(const df1b2variable& n, const df1b2variable& k);
-df1b2variable log_comb(double n, const df1b2variable& k);
-df1b2variable factln(const df1b2variable& n);
+df1b2variable log_comb(_CONST df1b2variable& n,double k);
+df1b2variable log_comb(_CONST df1b2variable& n,_CONST df1b2variable& k);
+df1b2variable log_comb(double n,_CONST df1b2variable& k);
+df1b2variable factln(_CONST df1b2variable& n);
 
 // vector and matrix stuff
 
@@ -910,7 +908,7 @@ class df3_two_vector;
  //   df1b2vector * p;
  //   int lb;
  //   int ub;
- //inline predf1b2vector(df1b2vector * _p,int _lb,int _ub) {p=_p;lb=_lb,ub=_ub;}
+ //   inline predf1b2vector(df1b2vector * _p,int _lb,int _ub) {p=_p;lb=_lb,ub=_ub;}
  //   friend class df1b2vector;
  // };
 
@@ -923,22 +921,21 @@ class df1b2vector : public df1b2vector_header
   df1b2variable * v;
   vector_shapex * shape;
 public:
-  inline df1b2vector& operator -- (void)
-  {
+  inline df1b2vector& operator -- (void) 
+  { 
     index_min--;index_max--;v++; return *this;
   }
-  inline df1b2vector& operator ++ (void)
-  {
+  inline df1b2vector& operator ++ (void)  
+  { 
     index_min++;index_max++;v--; return *this;
   }
-  virtual int pointersize(void) const { return sizeof(df1b2variable); }
+  virtual const int pointersize(void) const { return sizeof(df1b2variable); }
   inline df1b2variable * getv(void) {return v;}
   int allocated(void){return v!=0;}
   int indexmin(void)const {return index_min;}
   int indexmax(void)const {return index_max;}
   int size(){return index_max-index_min+1;}
   df1b2vector(int lb,int ub);
-  df1b2vector(const dvector& v);
   ~df1b2vector();
   df1b2vector(const df1b2vector&);
   void copy(const df1b2vector&);
@@ -959,12 +956,12 @@ public:
   df1b2vector& operator = (const df1b2variable&);
   df1b2vector& operator = (const df3_two_vector& M);
 #  if defined(OPT_LIB)
-  df1b2variable& operator () (int i) const
-  {
+  df1b2variable& operator () (int i) const 
+  { 
    return *((df1b2variable*)((char*)(v)+i*pointersize()));
   }
   df1b2variable& operator [] (int i) const
-  {
+  { 
    return *((df1b2variable*)((char*)(v)+i*pointersize()));
   }
  //  df1b2vector operator () (int i,int j)
@@ -991,7 +988,7 @@ public:
   df1b2vector& operator += (const df1b2variable& x);
   df1b2vector& operator /= (const df1b2variable& x);
   df1b2vector(const predf1b2vector&);
-  inline df1b2vector operator () (int lb,int ub)
+  inline df1b2vector operator () (int lb,int ub) 
   {
     return predf1b2vector(this,lb,ub);
   }
@@ -1007,7 +1004,7 @@ class df3_two_matrix;
  * Description not yet available.
  * \param
  */
-class df1b2matrix
+class df1b2matrix 
 {
   int index_min;
   int index_max;
@@ -1017,7 +1014,6 @@ public:
   int allocated(void){return v!=0;}
   void initialize(void);
   ~df1b2matrix();
-  void colfill(const int j, const df1b2vector& v);
   int rowmin(void) const {return index_min;}
   int indexmin(void) const {return index_min;}
   int indexmax(void) const {return index_max;}
@@ -1047,9 +1043,15 @@ public:
     const index_type& nch,const char *);
   void allocate(void);
   void deallocate(void);
-  df1b2variable& operator()(int i,int j) const;
-  df1b2vector& operator[](int i) const;
-  df1b2vector& operator()(int i) const;
+#  if defined(OPT_LIB)
+  df1b2variable& operator () (int i,int j) const {return (df1b2variable&)(v[i][j]);}
+  df1b2vector& operator [] (int i) const {return (df1b2vector&)(v[i]);}
+  df1b2vector& operator () (int i) const {return (df1b2vector&)(v[i]);}
+#else
+  df1b2variable& operator () (int i,int j) const;
+  df1b2vector& operator [] (int i) const;
+  df1b2vector& operator () (int i) const;
+#endif
   int colmin(void) const {return (*(df1b2matrix*)(this))(index_min).indexmin();}
   int colmax(void) const {return (*(df1b2matrix*)(this))(index_min).indexmax();}
   int colsize(void)const {return colmax()-colmin()+1;}
@@ -1058,29 +1060,12 @@ public:
   df1b2matrix& operator *= (double x);
   df1b2matrix& operator /= (double x);
 };
-#if defined(OPT_LIB)
-inline df1b2variable& df1b2matrix::operator()(int i,int j) const
-{
-  return (df1b2variable&)(v[i][j]);
-}
-inline df1b2vector& df1b2matrix::operator[](int i) const
-{
-  return (df1b2vector&)(v[i]);
-}
-inline df1b2vector& df1b2matrix::operator()(int i) const
-{
-  if (!v)
-    throw std::bad_alloc();
-  else
-    return v[i];
-}
-#endif
 
 /**
  * Description not yet available.
  * \param
  */
-class df1b23array
+class df1b23array 
 {
   int index_min;
   int index_max;
@@ -1112,7 +1097,7 @@ public:
 
   void allocate(int nrl,int nrh,
     const index_type& ncl, const index_type& nch);
-
+    
 
   void allocate(int nrl,int nrh,
     const index_type& ncl, const index_type& nch,
@@ -1242,10 +1227,7 @@ df1b2vector pow(const df1b2vector& x,double y);
 df1b2vector pow(const df1b2vector& v,const df1b2variable & x);
 df1b2vector pow(const df1b2vector& v,const df1b2vector & x);
 df1b2vector pow(const df1b2variable& v,const df1b2vector & x);
-df1b2vector pow(df1b2vector const& _x,dvector const& v);
 df1b2vector pow(double v,const df1b2vector & x);
-df1b2vector pow(const dvector& x,  const df1b2vector& a);
-df1b2vector pow(const dvector& x,  const df1b2variable& a);
 
 df1b2vector operator / (const dvector& x,const df1b2variable& y);
 df1b2vector operator + (const dvector& x,const df1b2variable& y);
@@ -1256,11 +1238,9 @@ df1b2vector operator * (const dvector& x,const df1b2variable& y);
 df1b2variable sum(const df1b2vector& x);
 df1b2variable mean(const df1b2vector& x);
 df1b2variable norm2(const df1b2vector& x);
-df1b2variable sumsq(const df1b2vector& x);
 df1b2variable norm(const df1b2vector& x);
 
 df1b2variable norm2(const df1b2matrix& x);
-df1b2variable sumsq(const df1b2matrix& x);
 df1b2variable norm(const df1b2matrix& x);
 df1b2variable mean(const df1b2matrix& x);
 df1b2variable sum(const df1b2matrix& x);
@@ -1300,23 +1280,19 @@ class initial_df1b2params
 {
 public:
   static int stddev_scale(const dvector& d,const dvector& x);
-  static int current_phase;
-  static int separable_flag;
+  static int current_phase;   
+  static int separable_flag; 
   static int separable_calculation_type;
   static int have_bounded_random_effects;
   int phase_start;
   int phase_save;
   int ind_index;
   double scalefactor;
-
+  
   static void save_varsptr(void);
   static double cobjfun;
   static void restore_varsptr(void);
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-  static lmatrix* pointer_table;
-#else
-  static imatrix* pointer_table;
-#endif
+  static imatrix * pointer_table;
   static initial_df1b2params **  varsptr;  // this should be a resizeable
   static initial_df1b2params **  varsptr_sav;  // this should be a resizeable
   static int num_initial_df1b2params;         // array
@@ -1326,15 +1302,13 @@ public:
   static int set_index(void);
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&)=0;
-  static void reset(const init_df1b2vector&,const df1b2variable&);
-  static void reset_all(const dvector&);
-  static void reset(const df1b2vector&,const df1b2variable&);
+  static void reset(const init_df1b2vector&,const df1b2variable&); 
+  static void reset_all(const dvector&); 
+  static void reset(const df1b2vector&,const df1b2variable&); 
   virtual void add_to_list(void);
   initial_df1b2params(void);
   void set_phase_start(int n){phase_start=n; phase_save=n;}
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii)=0;
-  double get_scalefactor();
-  void set_scalefactor(const double);
 };
 
 typedef initial_df1b2params * P_INITIAL_DF1B2PARAMS;
@@ -1354,8 +1328,6 @@ class do_naught_kludge
 class df1b2_init_vector : public df1b2vector, public initial_df1b2params
 {
 public:
-  virtual ~df1b2_init_vector() {;}
-
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
   void set_phase_start(int n){phase_start=n; phase_save=n;}
   virtual void set_value(const dvector& x,const int& _ii);
@@ -1402,8 +1374,8 @@ public:
   {
     df1b2matrix::allocate(rmin,rmax,cmin,cmax,s);
   }
-  inline void allocate(int rmin, int rmax, int cmin, int cmax, double, double,
-    const char* s)
+  inline void allocate(int rmin,int rmax,int cmin,int cmax,double fmin,double fmax,
+    const char * s)
   {
     df1b2matrix::allocate(rmin,rmax,cmin,cmax,s);
   }
@@ -1434,21 +1406,21 @@ public:
   void allocate(const adstring&);
   void allocate(int,const adstring&);
   df1b2_init_number();
-  void operator = (const df1b2variable& _x);
+  void operator = (const df1b2variable& _x); 
 };
 
 /**
  * Description not yet available.
  * \param
  */
-class df1b2_init_number_vector
+class df1b2_init_number_vector 
 {
   df1b2_init_number * v;
   int index_min;
   int index_max;
   double_index_type * it;
 public:
-  df1b2_init_number_vector();
+  df1b2_init_number_vector(); 
 
 #if defined(OPT_LIB)
    df1b2_init_number& operator [] (int i) { return v[i];}
@@ -1463,8 +1435,8 @@ public:
   void allocate(int min1,int max1,const char * s);
 
   int allocated(void) { return (v!=NULL); }
-  int indexmin(void) {return (index_min);}
-  int indexmax(void) {return (index_max);}
+  int indexmin(void) {return (index_min);} 
+  int indexmax(void) {return (index_max);} 
   ~df1b2_init_number_vector();
   void deallocate(void);
 };
@@ -1483,11 +1455,11 @@ public:
   void allocate(double _minb,double _maxb,int _phase_start,
     const char * s="UNNAMED");
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
-
+  
   void allocate(double _minb,double _maxb,const char * s="UNNAMED");
   //void allocate(const ad_double& _minb,const ad_double& _maxb,
    // const char * s="UNNAMED");
-
+  
   virtual void set_value(const dvector& x,const int& _ii);
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
@@ -1497,7 +1469,7 @@ public:
  * Description not yet available.
  * \param
  */
-class df1b2_init_bounded_number_vector
+class df1b2_init_bounded_number_vector 
 {
   df1b2_init_bounded_number * v;
   int index_min;
@@ -1505,7 +1477,7 @@ class df1b2_init_bounded_number_vector
   double_index_type * it;
 public:
   //virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
-  df1b2_init_bounded_number_vector();
+  df1b2_init_bounded_number_vector(); 
 
 #if defined(OPT_LIB)
    df1b2_init_bounded_number& operator [] (int i) { return v[i];}
@@ -1523,8 +1495,8 @@ public:
 
 
   int allocated(void) { return (v!=NULL); }
-  int indexmin(void) {return (index_min);}
-  int indexmax(void) {return (index_max);}
+  int indexmin(void) {return (index_min);} 
+  int indexmax(void) {return (index_max);} 
   ~df1b2_init_bounded_number_vector();
   void deallocate(void);
 };
@@ -1533,7 +1505,7 @@ public:
  * Description not yet available.
  * \param
  */
-class df1b2_init_bounded_vector : public df1b2_init_vector
+class df1b2_init_bounded_vector : public df1b2_init_vector 
 {
 protected:
   double minb;
@@ -1557,28 +1529,28 @@ class re_df1b2_init_bounded_vector;
  * Description not yet available.
  * \param
  */
-class random_effects_bounded_vector_info
+class random_effects_bounded_vector_info 
 {
   re_df1b2_init_bounded_vector * pv;
   int i;
 public:
   random_effects_bounded_vector_info
-    ( re_df1b2_init_bounded_vector * _pv,int _i) : pv(_pv), i(_i) {}
+    ( re_df1b2_init_bounded_vector * _pv,int _i) : pv(_pv), i(_i) {} 
   friend class funnel_init_df1b2variable;
   friend class df1b2variable;
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
-};
+}; 
 
 /**
  * Description not yet available.
  * \param
  */
-class re_df1b2_init_bounded_vector : public df1b2_init_bounded_vector
+class re_df1b2_init_bounded_vector : public df1b2_init_bounded_vector 
 {
 public:
-  random_effects_bounded_vector_info operator () (int i)
-  {
+  random_effects_bounded_vector_info operator () (int i) 
+  {  
     return random_effects_bounded_vector_info(this,i);
   }
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
@@ -1599,11 +1571,9 @@ protected:
 public:
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
   void allocate(int,int,int,int,double,double,int,const char *);
-  void allocate(int,int,const index_type& ,const index_type& ,double,double,int,
-    const char *);
+  void allocate(int,int,const index_type& ,const index_type& ,double,double,int,const char *);
   void allocate(int,int,int,int,double,double,const char *);
-  void allocate(int,int,const index_type& ,const index_type& ,double,double,
-    const char *);
+  void allocate(int,int,const index_type& ,const index_type& ,double,double,const char *);
   void allocate(int,int,int,int,double,double);
   //void allocate(int,int);
   virtual void set_value(const dvector& x,const int& _ii);
@@ -1615,7 +1585,7 @@ public:
  * Description not yet available.
  * \param
  */
-class df1b2_init_bounded_dev_vector : public df1b2_init_bounded_vector
+class df1b2_init_bounded_dev_vector : public df1b2_init_bounded_vector 
 {
 public:
   virtual void set_value(const dvector& x,const int& _ii);
@@ -1626,14 +1596,9 @@ public:
 void set_value(const df1b2variable& u,const init_df1b2vector& x,const int& _ii,
   double fmin,double fmax,const df1b2variable& fpen);
 
-void set_value(const df1b2variable& u,const init_df1b2vector& x,const int& _ii,
-  double fmin,double fmax,const df1b2variable& fpen,double s);
-
 df1b2variable boundp(const df1b2variable& x, double fmin, double fmax);
 df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
   const df1b2variable& _fpen);
-df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
-  const df1b2variable& _fpen,double s);
 
   ostream& operator << (const ostream& _os, const df1b2variable& _x);
   ostream& operator << (const ostream& _os, const df1b2vector& _x);
@@ -1643,7 +1608,7 @@ df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
   {
   public:
     static re_objective_function_value * pobjfun;
-    static double fun_without_pen;
+    static double fun_without_pen; 
     re_objective_function_value(void);
     ~re_objective_function_value();
     re_objective_function_value& operator = (const df1b2variable& v);
@@ -1685,18 +1650,19 @@ df1b2variable log_gamma_density(const df1b2variable& _x,const df1b2variable& _r,
   const  df1b2variable& _mu);
 
 
-df1b2variable log_negbinomial_density(double x,const df1b2variable& mu,
+df1b2variable log_negbinomial_density(double x,const df1b2variable& mu, 
   const df1b2variable& tau);
-
+    
 df1b2variable log_density_poisson(double x,const df1b2variable& mu);
+    
+
 
 ostream& operator << (const ostream& ostr,const df1b2variable& z);
 ostream& operator << (const ostream& ostr,const df1b2vector& z);
 ostream& operator << (const ostream& ostr,const df1b2matrix& z);
 ostream& operator << (const ostream& ostr,const df1b2_init_number_vector& z);
 ostream& operator << (const ostream& ostr,const init_df1b2vector& z);
-ostream& operator << (const ostream& ostr,
-  const df1b2_init_bounded_number_vector& z);
+ostream& operator << (const ostream& ostr,const df1b2_init_bounded_number_vector& z);
 
 class adkludge1;
 
@@ -1705,7 +1671,7 @@ class adkludge1;
  * Description not yet available.
  * \param
  */
-  class df1b2_header_ptr_vector
+  class df1b2_header_ptr_vector 
   {
     int index_min;
     int index_max;
@@ -1713,8 +1679,8 @@ class adkludge1;
   public:
     df1b2_header_ptr_vector(int mmin,int mmax);
     ~df1b2_header_ptr_vector();
-    inline df1b2_header * & operator () (int i) { return *(v+i); }
-    inline df1b2_header * & operator [] (int i) { return *(v+i); }
+    inline df1b2_header * & operator () (int i) { return *(v+i); }  
+    inline df1b2_header * & operator [] (int i) { return *(v+i); }  
     int indexmin(void) {return index_min;}
     int indexmax(void) {return index_max;}
   };
@@ -1723,7 +1689,7 @@ class adkludge1;
  * Description not yet available.
  * \param
  */
-  class double_ptr_vector
+  class double_ptr_vector 
   {
     int index_min;
     int index_max;
@@ -1731,8 +1697,8 @@ class adkludge1;
   public:
     double_ptr_vector(int mmin,int mmax);
     ~double_ptr_vector();
-    inline double * & operator () (int i) { return *(v+i); }
-    inline double * & operator [] (int i) { return *(v+i); }
+    inline double * & operator () (int i) { return *(v+i); } 
+    inline double * & operator [] (int i) { return *(v+i); } 
     int indexmin(void) {return index_min;}
     int indexmax(void) {return index_max;}
   };
@@ -1749,8 +1715,7 @@ int active(const df1b2_init_matrix& x);
 
 double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin);
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
-double evaluate_function(double& fval,const dvector& x,
-  function_minimizer * pfmin);
+double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmin);
 double evaluate_function(double& fval,const dvector& x,const dvector&,
   function_minimizer * pfmin);
 
@@ -1765,15 +1730,7 @@ int allocated(const df1b2vector&);
 int allocated(const df1b2_init_matrix&);
 #include <df3fun.h>
 
-/*
-df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
-		     const df1b2variable & _x);
-df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
-		     double _x);
-*/
-
-df1b2variable betai(const df1b2variable& a, const df1b2variable& b,
-  double x, int maxit=100);
+//df1b2variable betai(_CONST df1b2variable& a,_CONST df1b2variable& b, double x, int maxit=100);
 
 double do_gauss_hermite_block_diagonal(const dvector& x,
   const dvector& u0,const dmatrix& Hess,const dvector& _xadjoint,
@@ -1816,7 +1773,7 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,
   const banded_symmetric_dmatrix& _bHessadjoint,function_minimizer * pmin);
-
+      
 dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   function_minimizer * pfmin);
 
@@ -1843,7 +1800,7 @@ class quadratic_prior : public style_flag_class
   dvar_vector * pu;
   int xmyindex;
 public:
-  static int qflag;
+  static int qflag; 
   static quadratic_prior * ptr[]; // this should be a resizeable array
   static void get_M_calculations(void);
   static void cleanup_pMinv();
@@ -1852,17 +1809,17 @@ public:
   static const int max_num_quadratic_prior;
   void add_to_list(void);
 public:
-  static int in_qp_calculations;
+  static int in_qp_calculations; 
   int get_offset(int xs);
   int get_myindex(void) { return xmyindex;}
-  static quadratic_prior * get_ptr(int i){ return ptr[i];}
+  static quadratic_prior * get_ptr(int i){ return ptr[i];} 
   void operator = (const dvar_matrix &);
   void operator = (const dmatrix &);
   static int get_in_qp_calculations() { return in_qp_calculations; }
   static int get_num_quadratic_prior(void) { return num_quadratic_prior;}
   static dvariable get_quadratic_priors(void);
   dvariable get_function(void);
-  quadratic_prior(void);
+  quadratic_prior(void); 
   ~quadratic_prior(void);
   void allocate(const dvar_vector & _u,const char * s);
   void allocate(const dvar_vector & _u);
@@ -1873,9 +1830,9 @@ public:
   void get_cHessian(dvar_matrix,int);
   void get_cHessian_from_vHessian(dmatrix ,int);
   void get_vHessian(dvar_matrix ,int);
-  void get_cgradient(dvector,int);
+  void get_cgradient(dvector,int); 
   dvar_matrix get_Hessian(void);
-  dvar_vector get_gradient(void);
+  dvar_vector get_gradient(void); 
   static dvar_vector get_gradient_contribution(void);
   static dvar_matrix get_Hessian_contribution(void);
   static void get_cgradient_contribution(dvector,int);
@@ -1904,28 +1861,27 @@ public:
   static const int max_num_quadratic_prior;
   void add_to_list(void);
 public:
-  static df1b2quadratic_prior * get_ptr(int i){ return ptr[i];}
-  unsigned int num_active_parameters;
-  unsigned int get_num_active_parameters(void) { return num_active_parameters; }
+  static df1b2quadratic_prior * get_ptr(int i){ return ptr[i];} 
+  int num_active_parameters;
+  int get_num_active_parameters(void) { return num_active_parameters; } 
   int get_myindex(void) { return xmyindex;}
   void operator = (const df1b2matrix &);
   void operator = (const dmatrix &);
   static int get_num_quadratic_prior(void) { return num_quadratic_prior;}
   static dvariable get_quadratic_priors(void);
   df1b2variable get_function(void);
-  df1b2quadratic_prior(void);
+  df1b2quadratic_prior(void); 
   ~df1b2quadratic_prior(void);
   void allocate(const df1b2_init_vector & _u,const char * s);
   void allocate(const df1b2_init_vector & _u);
-  void allocate(const df1b2matrix & _M, const df1b2_init_vector & _u,
-    const char * s);
+  void allocate(const df1b2matrix & _M, const df1b2_init_vector & _u,const char * s);
   void allocate(const df1b2matrix & _M, const df1b2_init_vector & _u);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u,const char * s);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u);
   dmatrix get_cHessian(void);
-  dvector get_cgradient(void);
+  dvector get_cgradient(void); 
   dvar_matrix get_Hessian(void);
-  dvar_vector get_gradient(void);
+  dvar_vector get_gradient(void); 
   static dvar_vector get_gradient_contribution(void);
   static dvar_matrix get_Hessian_contribution(void);
   static dvector get_cgradient_contribution(void);
@@ -2017,29 +1973,19 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& ln_det);
 df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& ln_det,
   const int& sgn);
 df1b2vector lower_triangular_solve(const df1b2matrix& m,const df1b2vector& v);
-df1b2vector lower_triangular_solve_trans(const df1b2matrix& m,
-  const df1b2vector& v);
+df1b2vector lower_triangular_solve_trans(const df1b2matrix& m,const df1b2vector& v);
 
-//df1b2variable ln_det(df1b2matrix& M);
-// line above replaced with line below based on issue #37
-df1b2variable ln_det(const df1b2matrix & m1);
+df1b2variable ln_det(df1b2matrix& M);
 
 df1b2variable ln_det(df1b2matrix& M,int & sgn);
 
 //df1b2vector solve(df1b2matrix& M,df1b2vector& v);
 
-df1b2matrix expm(const df1b2matrix & A);
-df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
-  df1b2variable ln_unsigned_det,df1b2variable& sign);
-df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz);
-df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z,
-  const df1b2variable& ld, df1b2variable& sign);
-
 void check_pool_depths();
 
 df1b2variable lower_triangular_ln_det(const df1b2matrix& m);
 df1b2variable lower_triangular_ln_det(const df1b2matrix& m,int& sgn);
-df1b2variable bounder(const df1b2variable&  x,double min,double max,
+df1b2variable bounder(const df1b2variable&  x,double min,double max, 
   double scale);
 
 df1b2variable inv_cumd_beta_stable(const df1b2variable& a,
@@ -2052,8 +1998,7 @@ df1b2variable cumd_exponential(const df1b2variable& x);
 extern int make_sure_df1b2fun_gets_linked;
 
 df1b2variable inv_cumd_normal_mixture(const df1b2variable& _x,double _a);
-df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _x,
-  double _a);
+df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _x,double _a);
 
 df1b2variable beta_deviate(const df1b2variable& _x,const df1b2variable& _a,
   const df1b2variable& _b,double eps=1.e-7);
@@ -2083,7 +2028,7 @@ df1b2variable inv_cumd_t(const df1b2variable& n,const df1b2variable&  u,
     df1b2function_tweaker(double eps,double mult);
     df1b2variable operator () (const df1b2variable&);
   };
-
+    
 df1b2vector posfun(const df1b2vector& x,double eps,
   const df1b2variable& _pen);
 
@@ -2102,6 +2047,5 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox);
   void ADMB_getcallindex(const df1b2variable& x);
   void ADMB_getcallindex(const df1b2vector& x);
   void ADMB_getcallindex(const df1b2matrix& x);
-
-df1b2variable asin(const df1b2variable& xx);
 #endif //!defined(__DF1B2FUN__)
+

@@ -1,39 +1,45 @@
 @echo off
-
-REM History:  24 May 2009  Arni Magnusson created
-REM           23 May 2013  Chris Grandin fix DLL creation, got rid of deprecated MSSDK
-
-setlocal EnableExtensions EnableDelayedExpansion
+setlocal
 if [%1]==[] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
-set OBJS=
-for %%a in (%*) do (
-  set arg=%%a
-  if "!arg:~0,1!"=="-" (
-    if "!arg!"=="-s" (
-      set LIBS="%ADMB_HOME%"\lib\admb.lib "%ADMB_HOME%"\contrib\lib\contrib.lib
-    )
-    if "!arg!"=="-g" (
-      set DEBUG="/DEBUG"
-    )
-    if "!arg!"=="-d" (
-      set DLL="/DLL"
-      set FN="/OUT:%~n3.dll"
-    )
-  ) else (
-    if "%%~xa"=="" (
-      set OBJS=!OBJS! !arg!.obj
-    ) else (
-      set OBJS=!OBJS! !arg!
-    )
-  )
-)
+REM #######################################################################################################################
+REM                                                                                                                       #
+REM Script:   adlink [-d] [-r] [-s] model                                                                                 #
+REM                                                                                                                       #
+REM Purpose:  Link ADMB object code to executable, using the MinGW GCC 3.4.5 compiler                                     #
+REM                                                                                                                       #
+REM Args:     -d creates DLL                                                                                              #
+REM           -r creates ADMB-RE                                                                                          #
+REM           -s uses safe bounds and debugging symbols                                                                   #
+REM           model is the filename prefix, e.g. simple                                                                   #
+REM                                                                                                                       #
+REM Requires: ADMB libraries, g++, dllwrap                                                                                #
+REM                                                                                                                       #
+REM Returns:  Creates executable or DLL with same prefix                                                                  #
+REM                                                                                                                       #
+REM History:  24 May 2009  Arni Magnusson created                                                                         #
+REM                                                                                                                       #
+REM #######################################################################################################################
 
-if not defined LIBS set LIBS="%ADMB_HOME%"\lib\admbo.lib "%ADMB_HOME%"\contrib\lib\contribo.lib
+rem Pop args until model=%1
+set re=0
+set s=
+set df1b2lib=df1b2stubo.lib
+set adlib=ado32.lib
+:STARTLOOP
+if [%2]==[] goto ENDLOOP
+if %1==-r set re=1& shift
+if %1==-s set adlib=ads32.lib& set s=s& shift
+goto STARTLOOP
+:ENDLOOP
+
+if %adlib%==ado32.lib set df1b2lib=df1b2o.lib
+if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
+set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl %OBJS% %LIBS% /link %DEBUG% %DLL% %FN%
+cl  %1.obj %df1b2lib% admod32%s%.lib %adlib% adt32%s%.lib /link /libpath:"%ADMB_HOME%"\lib /libpath:"%MSSDK%"\lib
 @echo off
 
 goto EOF
@@ -41,7 +47,7 @@ goto EOF
 :HELP
 echo Usage: adlink [-d] [-r] [-s] model
 echo.
-echo Link AD Model Builder object code to executable, using the Microsoft Visual C++ compiler.
+echo Link AD Model Builder object code to executable, using the MinGW GCC 3.4.5 compiler.
 echo.
 echo   -d     Create DLL
 echo   -r     Create ADMB-RE

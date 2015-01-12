@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-double sum(const dvector &v)
+  double sum(_CONST dvector&v)
   {
     double tmp=0;
     for (int i=v.indexmin(); i<=v.indexmax(); i++)
@@ -28,7 +28,7 @@ double sum(const dvector &v)
  * Description not yet available.
  * \param
  */
-dvector colsum(const dmatrix &v)
+  dvector colsum(_CONST dmatrix&v)
   {
     int cmin=v.colmin();
     int cmax=v.colmax();
@@ -52,7 +52,7 @@ dvector colsum(const dmatrix &v)
  * Description not yet available.
  * \param
  */
-dvector rowsum(const dmatrix &v)
+  dvector rowsum(_CONST dmatrix&v)
   {
     //int cmin=v.colmin();
     //int cmax=v.colmax();
@@ -71,7 +71,7 @@ dvector rowsum(const dmatrix &v)
  * Description not yet available.
  * \param
  */
-double sum(const dmatrix& m)
+double sum(_CONST dmatrix& m)
 {
   double tmp=0.;
   for (int i=m.rowmin();i<=m.rowmax();i++)

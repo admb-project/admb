@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -17,7 +17,7 @@
  * Description not yet available.
  * \param
  */
-imatrix_position::imatrix_position(const imatrix& m)
+imatrix_position::imatrix_position(BOR_CONST imatrix& m)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
 {
@@ -52,7 +52,7 @@ imatrix_position::imatrix_position(int min,int max)
  * Description not yet available.
  * \param
  */
-imatrix_position::imatrix_position(const imatrix_position& p)
+imatrix_position::imatrix_position(BOR_CONST imatrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
 {

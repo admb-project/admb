@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -33,9 +33,9 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& ostr, const dvar_vector& z)
+ostream& operator<<(BOR_CONST ostream& ostr,_CONST dvar_vector& z)
 {
-  if (allocated(z))
+  if (allocated(z))  
     z.write_on(ostr);
 
   return (ostream&) ostr;
@@ -45,16 +45,16 @@ ostream& operator<<(const ostream& ostr, const dvar_vector& z)
  * Description not yet available.
  * \param
  */
-void dvar_vector::write_on(const ostream& _s) const
+void dvar_vector::write_on(BOR_CONST ostream& _s) _CONST
 {
   ostream& s =(ostream&) _s;
 #ifdef __USE_IOSTREAM__
-  std::streamsize new_w = s.width();
-  std::streamsize new_p = s.precision();
-#if !defined(__cplusplus)
-  long new_form = s.flags();
-#else
+  int new_w = s.width();
+  int new_p = s.precision();
+#if defined(GCC3)
   ios::fmtflags new_form = s.flags();
+#else
+  long new_form = s.flags();
 #endif
   char new_fill = s.fill();
 #endif
@@ -79,7 +79,7 @@ void dvar_vector::write_on(const ostream& _s) const
  * Description not yet available.
  * \param
  */
-istream& operator>>(const istream& istr, const dvar_vector& _z)
+istream& operator>>(BOR_CONST istream& istr,BOR_CONST dvar_vector& _z)
 {
   ADUNCONST(dvar_vector,z)
   if (allocated(z))
@@ -91,11 +91,11 @@ istream& operator>>(const istream& istr, const dvar_vector& _z)
  * Description not yet available.
  * \param
  */
-void dvar_vector::read_from(const istream& s)
+void dvar_vector::read_from(BOR_CONST istream& s)
 {
   if (allocated(*this))
     for (int i=indexmin(); i <= indexmax(); i++)
     {
-       s >> elem(i);
+       s >> elem(i); 
     }
 }

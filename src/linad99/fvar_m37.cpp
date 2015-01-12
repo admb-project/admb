@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -18,9 +18,9 @@
    const index_type& ncl,const index_type& nch)
  {
    allocate(nrl,nrh,ncl,nch);
-#ifndef OPT_LIB
+   #ifdef SAFE_ARRAYS
      initialize();
-#endif
+   #endif 
  }
 
 /**
@@ -30,6 +30,7 @@
  void dvar_matrix::allocate(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
  {
+   
    if (nrl>nrh)
      allocate();
    else
@@ -40,12 +41,12 @@
        (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
      {
        cerr << "Incompatible array bounds in dvar_matrix(int nrl,int nrh,"
-        "const ivector& ncl, const ivector& nch)" << endl;
+        "_CONST ivector& ncl,_CONST ivector& nch)" << endl;
        ad_exit(1);
      }
      index_min=int(nrl);
      index_max=int(nrh);
-
+  
      int rs=rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {

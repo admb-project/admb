@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -17,7 +17,7 @@
  * Description not yet available.
  * \param
  */
-function_tweaker::function_tweaker(double _eps,double _mult):
+function_tweaker::function_tweaker(double _eps,double _mult) : 
   mult(_mult), eps(_eps), coffs(1,3)
 {
   double e=eps;
@@ -25,7 +25,7 @@ function_tweaker::function_tweaker(double _eps,double _mult):
   double e3=e*e2;
   double e4=e*e3;
   double e5=e*e4;
-
+  
   dmatrix M(1,3,1,3);
   M(1,1)=e3;
   M(1,2)=e4;

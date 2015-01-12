@@ -2,51 +2,39 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California
  */
 /**
-  \file boundfun.cpp
-  \brief Code to implement placing constraints on parameters.
-  See in Section 10.1 of the AUTODIF manual.
-  The code in thse section of the AUTODIF manual appears to be
-  out of date with respect to some of the code in this file.
-*/
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
+//#ifdef __TURBOC__
+//#  pragma hdrstop
+//#endif
 
-/**
-\details
-Use penalties recomended in Bard, Y. (1974) Nonlinear parameter estimation.
-Academic Press, New York.
-*/
 #define USE_BARD_PEN
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
-// function prototypes duplicated in fvar.hpp
-// double dmin(double, double);
-// double dmax(double, double);
+double dmin(double,double);
+double dmax(double, double);
 
 /**
-  Scale input variable between upper and lower bounds
-  and compute a penalty for exceeding the bounds.
-  \param x Variable to be scaled
-  \param fmin Lower bound of x
-  \param fmin Upper bound of x
-  \param _fpen On return, contains penalty if x > fmax or x < fmin
-  \return Scaled value of x between fmin and fmax in the range [-1,1]
+ * Description not yet available.
+ * \param
  */
-dvariable dfatan1(dvariable x, double fmin, double fmax,
-  const prevariable&  _fpen)
+  dvariable dfatan1( dvariable x, double fmin, double fmax,BOR_CONST prevariable&  _fpen)
 {
   prevariable&  fpen=(prevariable&)  _fpen;
   dvariable t;
 
-  t= (atan(x)/PI);
+  t= (atan(x)/3.1415926);
   t=( t +.5 );
   t= t *( fmax-fmin ) + fmin;
-  t=( (atan(x)/PI) +.5 )*( fmax-fmin ) + fmin;
+  t=( (atan(x)/3.1415926) +.5 )*( fmax-fmin ) + fmin;
 
   if (x < -12.)
   {
@@ -59,54 +47,41 @@ dvariable dfatan1(dvariable x, double fmin, double fmax,
   }
   return(t);
 }
+
 /**
-Inverse of \ref dvariable dfatan1(dvariable x, double fmin, double fmax,
-  const prevariable&  _fpen)
-\param x Variable to be scaled
-\param fmin Lower bound of x
-\param fmin Upper bound of x
-*/
+ * Description not yet available.
+ * \param
+ */
 double dftinv(double x, double fmin, double fmax)
 {
+  double tinv;
   if (x <= fmin)
   {
-    if (ad_printf)
-    {
-      (*ad_printf)("variable out of bounds in dftinv\nvariable = %lg", x);
-      (*ad_printf)("lower bound = %lg", fmin);
-      (*ad_printf)("upper bound = %lg\n", fmax);
-    }
+    if (ad_printf) (*ad_printf)("variable out of bounds in dftinv\nvariable = %lg", x);
+    if (ad_printf) (*ad_printf)("lower bound = %lg", fmin);
+    if (ad_printf) (*ad_printf)("upper bound = %lg\n", fmax);
 
     x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
-  double tinv = tan( ((x-fmin)/(fmax-fmin) -.5) * PI);
-  return tinv;
+  tinv=tan( ((x-fmin)/(fmax-fmin) -.5) * 3.1415926);
+  return(tinv);
 }
+
 /**
-Compute penalty for exceeding bounds on parameter; variable ojbects.
-\param x Variable scaled between [-1,1]
-\param fmin Lower bound of x
-\param fmin Upper bound of x
-\param _fpen On return, contains penalty if x > 1 or x < -1
-\param s Divide x by s before scaling and setting bounds
-\return The variable x in original units
-*/
-dvariable boundp(const prevariable& x, double fmin, double fmax,
-  const prevariable& _fpen,double s)
+ * Description not yet available.
+ * \param
+ */
+dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen,double s)
 {
   return boundp(x/s,fmin,fmax,_fpen);
 }
+
 /**
-  Compute penalty for exceeding bounds on parameter; variable ojbects.
-  \param x Variable scaled between [-1,1]
-  \param fmin Lower bound of x
-  \param fmin Upper bound of x
-  \param _fpen On return, contains penalty if x > 1 or x < -1
-  \return The variable x in original units
-*/
-dvariable boundp(const prevariable& x, double fmin, double fmax,
-  const prevariable& _fpen)
+ * Description not yet available.
+ * \param
+ */
+dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
   {
@@ -116,11 +91,11 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,
     const double l4=log(4.0);
     dvariable ss=0.4999999999999999*sin(x*1.57079632679489661)+0.50;
     t=fmin + diff*ss;
-
+  
   #ifdef USE_BARD_PEN
     double pen=.000001/diff;
     fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-  #else
+  #else 
     if (x < -.9999)
     {
       fpen+=cube(-0.9999-x);
@@ -165,13 +140,11 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,
     return(t);
   }
 }
+void xxjunk10(double){;}
+
 /**
-Computes the derivative of \ref dvariable boundp(const prevariable& x,
-  double fmin, double fmax,const prevariable& _fpen)
-\param x Variable to be scaled
-\param fmin Lower bound of x
-\param fmin Upper bound of x
-\return Derivative of scaled variable
+ * Description not yet available.
+ * \param
  */
 dvariable dfboundp(const prevariable& x, double fmin,double fmax)
 {
@@ -202,17 +175,12 @@ dvariable dfboundp(const prevariable& x, double fmin,double fmax)
     }
     return diff*dfy;
   }
-}
+} 
 
 /**
-Derivatative code for \ref double nd2fboundp( double x, double fmin,
-  double fmax,const double& fpen)
-\param x Variable to be scaled
-\param fmin Lower bound of x
-\param fmin Upper bound of x
-\param fpen Unchanged on return.
-\return Derivative of scaled variable
-*/
+ * Description not yet available.
+ * \param
+ */
 double ndfboundp( double x, double fmin, double fmax,const double& fpen)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
@@ -238,14 +206,11 @@ double ndfboundp( double x, double fmin, double fmax,const double& fpen)
     }
     return diff*dfy;
   }
-}
+} 
 
 /**
-  Return scaled variable to original units; constant objects.
-  \param x Variable scaled between [-1,1]
-  \param fmin Lower bound of x
-  \param fmin Upper bound of x
-  \return The variable x in original units
+ * Description not yet available.
+ * \param
  */
 double boundp(double x, double fmin, double fmax)
 {
@@ -276,14 +241,8 @@ double boundp(double x, double fmin, double fmax)
 }
 
 /**
-  Scale input variable between upper and lower bounds
-  and compute a penalty for exceeding the bounds.
-  Intended for use with df1b2 variables.
-  \param x Variable to be scaled
-  \param fmin Lower bound of x
-  \param fmin Upper bound of x
-  \param _fpen On return, contains penalty if x > fmax or x < fmin
-  \return Scaled value of x between fmin and fmax in the range [-1,1]
+ * Description not yet available.
+ * \param
  */
 double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
 {
@@ -302,16 +261,11 @@ double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
     return (boundp(x+1.e-6,fmin,fmax,fpen)-2.*boundp(x,fmin,fmax,fpen)
       +boundp(x-1.e-6,fmin,fmax,fpen))/1.e-12;
   }
-}
+} 
+
 /**
-Compute penalty for exceeding bounds on parameter; constant ojbects.
-Inverse of \ref double boundp(const double& x, double fmin, double fmax,
-  const double& _fpen).
-\param x Model variable
-\param fmin Lower bound of x
-\param fmin Upper bound of x
-\param _fpen On return, contains penalty if x > fmax or x < fmin
-\return The variable x in original units
+ * Description not yet available.
+ * \param
  */
 double boundp( double x, double fmin, double fmax,const double& _fpen)
 {
@@ -325,8 +279,8 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
     t=fmin + diff*ss;
   #ifdef USE_BARD_PEN
     double pen=.001/diff;
-    fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-  #else
+    fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
+  #else 
     if (x < -.9999)
     {
       fpen+=(x+0.9999)*(x+0.9999);
@@ -373,51 +327,40 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
 }
 
 /**
-  Scale model variable over [-1,1]; constant objects.
-  Inverse of \ref double boundp(double x, double fmin, double fmax)
-  \param x Model variable
-  \param fmin Lower bound of x
-  \param fmin Upper bound of x
-  \param s Divide x by s before scaling and setting bounds
-  \return The variable x in original units
+ * Description not yet available.
+ * \param
  */
 double boundpin(double x, double fmin, double fmax,double s)
 {
-  return s*boundpin(x,fmin,fmax);
+  return s*boundpin(x,fmin,fmax); 
 }
 
 /**
-  Scale model variable over [-1,1]; constant objects.
-  Inverse of \ref double boundp(double x, double fmin, double fmax)
-  \param x Model variable
-  \param fmin Lower bound of x
-  \param fmin Upper bound of x
-  \return Scaled model variable over [-1,1].
+ * Description not yet available.
+ * \param
  */
 double boundpin(double x, double fmin, double fmax)
 {
+  double tinv;
+
   if (x < fmin)
   {
-    if (ad_printf)
-    {
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
-      (*ad_printf)("; min = %lg", fmin);
-      (*ad_printf)("; max = %lg\n", fmax);
-    }
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("; min = %lg", fmin);
+    if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
+
     x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
   if (x > fmax)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
     x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
 
-  double tinv;
   if (gradient_structure::Hybrid_bounded_flag==0)
   {
     tinv=::asin(2.*(x-fmin)/(fmax-fmin)-1.)/1.57079632679489661;
@@ -431,28 +374,19 @@ double boundpin(double x, double fmin, double fmax)
   }
   return(tinv);
 }
+
 /**
-Scale model variable over [-1,1]; variable objects.
-Inverse of \ref dvariable boundp(const prevariable& x, double fmin,
-double fmax,const prevariable& _fpen, double s).
-\param x Model variable
-\param fmin Lower bound of x
-\param fmin Upper bound of x
-\param s Divide x by s before scaling and setting bounds
-\return Scaled model variable over [-1,1].
-*/
+ * Description not yet available.
+ * \param
+ */
 double boundpin(const prevariable& x, double fmin, double fmax,double s)
 {
-  return s*boundpin(x,fmin,fmax);
+  return s*boundpin(x,fmin,fmax); 
 }
 
 /**
-  Scale model variable over [-1,1]; variable objects.
-  Inverse of \ref dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen).
-  \param x Model variable
-  \param fmin Lower bound of x
-  \param fmin Upper bound of x
-  \return Scaled model variable over [-1,1].
+ * Description not yet available.
+ * \param
  */
 double boundpin(const prevariable& xx, double fmin, double fmax)
 {
@@ -461,8 +395,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
 
   if (x < fmin)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -471,12 +404,9 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
 
   if (x > fmax)
   {
-    if (ad_printf)
-    {
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
-      (*ad_printf)("; min = %lg", fmin);
-      (*ad_printf)("; max = %lg\n", fmax);
-    }
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("; min = %lg", fmin);
+    if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
     x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
@@ -495,10 +425,10 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
 
   return(tinv);
 }
+
 /**
-  Returns the minimum of two numbers
-  \param x First number
-  \param y Second number
+ * Description not yet available.
+ * \param
  */
 double dmin(double x, double y)
 {
@@ -511,10 +441,10 @@ double dmin(double x, double y)
     return(y);
   }
 }
+
 /**
-  Returns the maximum of two numbers
-  \param x First number
-  \param y Second number
+ * Description not yet available.
+ * \param
  */
 double dmax(double x, double y)
 {
@@ -527,3 +457,4 @@ double dmax(double x, double y)
     return(y);
   }
 }
+

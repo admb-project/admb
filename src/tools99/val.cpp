@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <fvar.hpp>
 #include <stdio.h>
@@ -11,9 +11,9 @@ void val(const adstring& s, int& v, int& code)
 {
   int z;
   if ( (s.size() > 2) && (s(1,2) == adstring("0x") ))
-    z = sscanf((const char*)s, "%i", &v);
+    z = sscanf((_CONST char *)s,"%x",&v);
   else
-    z = sscanf((const char*)s, "%d", &v);
+    z = sscanf((_CONST char *)s,"%*d",&v);
 
   if (z != 1)
     code = 1;
@@ -23,10 +23,17 @@ void val(const adstring& s, int& v, int& code)
 
 int val(const adstring& s)
 {
-  int v;
   int code;
+  int v;
+  int z;
+  if ( (s.size() > 2) && (s(1,2) == adstring("0x") ))
+    z = sscanf((_CONST char *)s,"%x",&v);
+  else
+    z = sscanf((_CONST char *)s,"%*d",&v);
 
-  val(s, v, code);
-
-  return v;
+  if (z != 1)
+    code = 1;
+  else
+    code = 0;
+  return v;  
 }

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -12,7 +12,7 @@
 
 static double cc=0.39894228040143267794;
 
-typedef double (*pinit_f)(double y,double a);
+typedef double (*pinit_f)(double y,double a); 
 
 double  nr_generic(double y,double a,pinit_f p_get_initial_x,
   pinit_f pfun,pinit_f pdfun);
@@ -90,8 +90,7 @@ static double cumd_normal_logistic_mixture_initx(double y,double a)
  * Description not yet available.
  * \param
  */
-df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _yy,
-  double a)
+df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _yy,double a)
 {
   ADUNCONST(df1b2variable,yy)
   df1b2variable z;
@@ -122,8 +121,10 @@ df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _yy,
            +2.0*exp(-2.0*x/a)/cube(1.0+exp(-x/a)));
 
   double d3g=-cc*0.95*e1 +cc*x2*0.95*e1 +0.05/(a*a*a)*(
-     exp(-x/a)/square(1.0+exp(-x/a)) -6.0*exp(-2.0*x/a)/cube(1.0+exp(-x/a))
+     exp(-x/a)/square(1.0+exp(-x/a)) -6.0*exp(-2.0*x/a)/cube(1.0+exp(-x/a))  
      +6.0*exp(-3.0*x/a)/square(square(1.0+exp(-x/a))));
+   
+
 
   double dfx=1.0/dgx;
   double d2f=-d2g*cube(dfx);
@@ -132,7 +133,7 @@ df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _yy,
   double * yd=yy.get_u_dot();
   double * zd=z.get_u_dot();
   *z.get_u()=x;
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *yd++;
   }
@@ -141,3 +142,4 @@ df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _yy,
 
   return z;
 }
+

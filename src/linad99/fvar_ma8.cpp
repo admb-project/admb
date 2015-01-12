@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -19,18 +19,20 @@
  */
  dvar_vector& dvar_matrix::operator() (int i)
  {
+   #ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
-       cerr << "matrix bound exceeded -- row index too low in "
-       "dvar_matrix::operator()" << "value was" << i << endl;
+       cerr << "matrix bound exceeded -- row index too low in dvar_matrix::operator()"
+             << "value was" << i << endl;
        ad_exit(21);
      }
      if (i>rowmax())
      {
-       cerr << "matrix bound exceeded -- row index too high in "
-       "dvar_matrix::operator()" << "value was" << i << endl;
+       cerr << "matrix bound exceeded -- row index too high in dvar_matrix::operator()"
+             << "value was" << i << endl;
        ad_exit(22);
      }
-   return m[i];
+   #endif
+   return (m[i]);
  }
 #endif

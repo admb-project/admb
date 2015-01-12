@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -49,7 +49,7 @@ double randn(long int& n);
       else
       {
         elem(i)=0.0;
-      }
+      } 
     }
   }
 
@@ -71,7 +71,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-void dvar_matrix::colfill_randu_ni(const int &j, long int &n)
+  void dvar_matrix::colfill_randu_ni(BOR_CONST int&j,long int&n)
   {
     long int nn;
     nn=n;
@@ -85,7 +85,7 @@ void dvar_matrix::colfill_randu_ni(const int &j, long int &n)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
+  void dvar_matrix::rowfill_randu_ni(BOR_CONST int& i,long int& n)
   {
     long int nn;
     nn=n;
@@ -134,7 +134,7 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
   }
 
@@ -149,7 +149,7 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
   }
 
@@ -164,7 +164,7 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
   }
 
@@ -172,7 +172,7 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::colfill_randn_ni(const int &j,long int &n)
+  void dvar_matrix::colfill_randn_ni(BOR_CONST int&j,long int&n)
   {
     long int nn;
     nn=n;
@@ -186,7 +186,7 @@ void dvar_matrix::colfill_randn_ni(const int &j,long int &n)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::rowfill_randn_ni(const int& i, long int& n)
+  void dvar_matrix::rowfill_randn_ni(BOR_CONST int& i,long int& n)
   {
     long int nn;
     nn=n;

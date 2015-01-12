@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -77,7 +77,7 @@ void imatrix::rowshift(int min )
  * Description not yet available.
  * \param
  */
-imatrix::imatrix(int nrl, int nrh, const ivector& iv)
+ imatrix::imatrix(int nrl,int nrh,BOR_CONST ivector& iv)
  {
    allocate(nrl,nrh,iv);
  }
@@ -86,30 +86,30 @@ imatrix::imatrix(int nrl, int nrh, const ivector& iv)
  * Description not yet available.
  * \param
  */
-void imatrix::allocate(int nrl, int nrh, const ivector& iv)
+ void imatrix::allocate(int nrl,int nrh,BOR_CONST ivector& iv)
  {
    if (nrl>nrh)
    {
      allocate();
    }
    else
-   {
+   { 
      index_min=nrl;
      index_max=nrh;
-
+     
      int rs=rowsize();
      if ( (m = new ivector [rs]) == 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
        ad_exit(21);
      }
-
+  
      if ( (shape = new mat_shapex(m))== 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
        ad_exit(21);
      }
-
+  
      m -= rowmin();
      for (int i=rowmin(); i<=rowmax(); i++)
      {
@@ -136,7 +136,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      allocate();
    }
    else
-   {
+   { 
      index_min=nrl;
      index_max=nrh;
      int rs=rowsize();
@@ -145,13 +145,13 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
        cerr << " Error allocating memory in imatrix contructor\n";
        ad_exit(21);
      }
-
+  
      if ( (shape = new mat_shapex(m))== 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
        ad_exit(21);
      }
-
+  
      m -= rowmin();
      for (int i=rowmin(); i<=rowmax(); i++)
      {
@@ -183,7 +183,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      allocate();
    }
    else
-   {
+   { 
      index_min=nrl;
      index_max=nrh;
      int rs=rowsize();
@@ -200,8 +200,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
        nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in "
-       "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+       cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
        ad_exit(1);
      }
      m -= rowmin();
@@ -223,7 +222,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      allocate();
    }
    else
-   {
+   { 
      index_min=nrl;
      index_max=nrh;
      int rs=rowsize();
@@ -234,8 +233,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      }
      if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in "
-       "imatrix::allocate(int nrl,int nrh,int ncl, const ivector& nch)\n";
+       cerr << "Incompatible array bounds in imatrix::allocate(int nrl,int nrh,int ncl,_CONST ivector& nch)\n";
        ad_exit(1);
      }
      if ( (shape = new mat_shapex(m))== 0)
@@ -255,7 +253,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
  * Description not yet available.
  * \param
  */
-imatrix::imatrix(const imatrix& m2)
+ imatrix::imatrix(_CONST imatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -276,7 +274,7 @@ imatrix::imatrix(const imatrix& m2)
  * Description not yet available.
  * \param
  */
-void imatrix::shallow_copy(const imatrix& m2)
+ void imatrix::shallow_copy(_CONST imatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -297,7 +295,7 @@ void imatrix::shallow_copy(const imatrix& m2)
  * Description not yet available.
  * \param
  */
-imatrix::imatrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)
+ imatrix::imatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
@@ -306,7 +304,7 @@ imatrix::imatrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)
  * Description not yet available.
  * \param
  */
-imatrix::imatrix(int nrl, int nrh, int ncl, const ivector& nch)
+ imatrix::imatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }

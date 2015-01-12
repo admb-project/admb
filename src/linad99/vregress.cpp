@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvariable regression(const dvector& obs, const dvar_vector& pred)
+dvariable regression(_CONST dvector& obs,_CONST dvar_vector& pred)
 {
   double nobs=double(size_count(obs));
   dvariable vhat=norm2(obs-pred);

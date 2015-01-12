@@ -28,9 +28,11 @@ void main()
 */
 
 /**
-Transfers sign of argument sign to argument num 
-*/
+ * Description not yet available.
+ * \param
+ */
 static double fsign( double num, double sign )
+/* Transfers sign of argument sign to argument num */
 {
 if ( ( sign>0.0f && num<0.0f ) || ( sign<0.0f && num>0.0f ) )
     return -num;
@@ -44,46 +46,46 @@ else return num;
 double sgamma(double a,const random_number_generator& _rng)
 /*
 **********************************************************************
-
-
-     (STANDARD-)  G A M M A  DISTRIBUTION
-
-
+                                                                      
+                                                                      
+     (STANDARD-)  G A M M A  DISTRIBUTION                             
+                                                                      
+                                                                      
 **********************************************************************
 **********************************************************************
-
-               PARAMETER  A >= 1.0  !
-
+                                                                      
+               PARAMETER  A >= 1.0  !                                 
+                                                                      
 **********************************************************************
-
-     FOR DETAILS SEE:
-
-               AHRENS, J.H. AND DIETER, U.
-               GENERATING GAMMA VARIATES BY A
-               MODIFIED REJECTION TECHNIQUE.
-               COMM. ACM, 25,1 (JAN. 1982), 47 - 54.
-
-     STEP NUMBERS CORRESPOND TO ALGORITHM 'GD' IN THE ABOVE PAPER
-                                 (STRAIGHTFORWARD IMPLEMENTATION)
-
-     Modified by Barry W. Brown, Feb 3, 1988 to use RANF instead of
-     SUNIF.  The argument IR thus goes away.
-
+                                                                      
+     FOR DETAILS SEE:                                                 
+                                                                      
+               AHRENS, J.H. AND DIETER, U.                            
+               GENERATING GAMMA VARIATES BY A                         
+               MODIFIED REJECTION TECHNIQUE.                          
+               COMM. ACM, 25,1 (JAN. 1982), 47 - 54.                  
+                                                                      
+     STEP NUMBERS CORRESPOND TO ALGORITHM 'GD' IN THE ABOVE PAPER     
+                                 (STRAIGHTFORWARD IMPLEMENTATION)     
+                                                                      
+     Modified by Barry W. Brown, Feb 3, 1988 to use RANF instead of   
+     SUNIF.  The argument IR thus goes away.                          
+                                                                      
 **********************************************************************
-
-               PARAMETER  0.0 < A < 1.0  !
-
+                                                                      
+               PARAMETER  0.0 < A < 1.0  !                            
+                                                                      
 **********************************************************************
-
-     FOR DETAILS SEE:
-
-               AHRENS, J.H. AND DIETER, U.
-               COMPUTER METHODS FOR SAMPLING FROM GAMMA,
-               BETA, POISSON AND BINOMIAL DISTRIBUTIONS.
-               COMPUTING, 12 (1974), 223 - 246.
-
-     (ADAPTED IMPLEMENTATION OF ALGORITHM 'GS' IN THE ABOVE PAPER)
-
+                                                                      
+     FOR DETAILS SEE:                                                 
+                                                                      
+               AHRENS, J.H. AND DIETER, U.                            
+               COMPUTER METHODS FOR SAMPLING FROM GAMMA,              
+               BETA, POISSON AND BINOMIAL DISTRIBUTIONS.              
+               COMPUTING, 12 (1974), 223 - 246.                       
+                                                                      
+     (ADAPTED IMPLEMENTATION OF ALGORITHM 'GS' IN THE ABOVE PAPER)    
+                                                                      
 **********************************************************************
      INPUT: A =PARAMETER (MEAN) OF THE STANDARD GAMMA DISTRIBUTION
      OUTPUT: SGAMMA = SAMPLE FROM THE GAMMA-(A)-DISTRIBUTION
@@ -95,6 +97,7 @@ double sgamma(double a,const random_number_generator& _rng)
 */
 {
   random_number_generator& rng=(random_number_generator&) _rng;
+extern double fsign( double num, double sign );
 static double q1 = 4.166669E-2;
 static double q2 = 2.083148E-2;
 static double q3 = 8.01191E-3;
@@ -137,7 +140,7 @@ S10:
     t = gasdev(rng);
     x = s+0.5*t;
     sgamma = x*x;
-    if(t >= 0.0)
+    if(t >= 0.0) 
       return sgamma;
 /*
      STEP  3:  U= 0,1 -UNIFORM SAMPLE. SQUEEZE ACCEPTANCE (S)
@@ -294,7 +297,7 @@ double gasdev(const random_number_generator& _rng)
   random_number_generator& rng=(random_number_generator&) _rng;
   double fac,rsq,v1,v2;
 
-  do
+  do 
   {
     v1=2.0* rng.better_rand() -1.0;
     v2=2.0*rng.better_rand()-1.0;

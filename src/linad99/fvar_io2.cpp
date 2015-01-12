@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -10,11 +10,12 @@
  */
 #include "fvar.hpp"
 
-#if defined(__TURBOC__)
+#if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
   #include <iostream.h>
   #include <strstrea.h>
 #endif
+
 
 #ifdef __ZTC__
   #include <iostream.hpp>
@@ -32,35 +33,39 @@
 
 #ifdef __SUN__
   #include <iostream.h>
+#if !defined(__MSVC32__)
   #include <strstream.h>
+#else
+  #include <strstrea.h>
+#endif
   #define __USE_IOSTREAM__
 #endif
 
 #include <string.h>
 #include <ctype.h>
-
-#include <sstream>
-using std::istringstream;
-
-#ifndef OPT_LIB
-  #include <cassert>
+const unsigned int MAX_LINE_LENGTH = 10000;
+const int MAX_FIELD_LENGTH = 500;
+const int MAX_NUMBER_COLUMNS = 6550;
+const int MAX_NUMBER_ROWS = 6550;
+#if !defined(HUGE) 
+#define HUGE 1.e+100
 #endif
 
-const int MAX_FIELD_LENGTH = 500;
-
 /**
-\todo Need Test case
-*/
+ * Description not yet available.
+ * \param
+ */
 dvar_vector::dvar_vector(const char * s)
 {
-  size_t n = strlen(s);
+  int n = strlen(s);
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;
 
   char *t = new char[n];
 
-  for (size_t k = 0; k < n; k++)
+  int k;
+  for (k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -92,8 +97,7 @@ dvar_vector::dvar_vector(const char * s)
 
   if (lbraces > 1)
   {
-    cerr << "Only one level of braces allowed in "
-    "dvector::dvector(const char * s)\n";
+    cerr << "Only one level of braces allowed in dvector::dvector(const char * s)\n";
     cerr << s << "\n";
     ad_exit(1);
   }
@@ -104,15 +108,14 @@ dvar_vector::dvar_vector(const char * s)
     int nch = commas + 1;
 
     allocate(ncl,nch);
-    istringstream ss(t);
+    istrstream ss(t);
 
-    for (int k = ncl; k <= nch; k++)
+    for (k = ncl; k <= nch; k++)
     {
       ss >> this->elem(k);
       //va[k].nc=0.;
     }
-    delete[] t;
-    t = 0;
+    delete t;
   }
   else
   {
@@ -158,24 +161,21 @@ dvar_vector::dvar_vector(const char * s)
    allocate(1,count);
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)<<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
-#ifndef OPT_LIB
-  assert(size() > 0);
-#endif
-   if ((va = arr_new((unsigned int)size()))==0 )
+   if ( (va = arr_new(size()))==0 )
    {
      cerr << " Error trying to allocate memory for dvector\n";
      ad_exit(21);
    }
-   char* err_ptr;
+   char * err_ptr;
    for (i=1;i<=count;i++)
    {
      infile >> field;
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha((unsigned char)err_ptr[0]))
+     if (isalpha(err_ptr[0]))
      {
        cerr << "Error decoding field " << filename
          << " in dmatrix::dmatrix(char * filename) " << "\n";
@@ -187,7 +187,12 @@ dvar_vector::dvar_vector(const char * s)
            << err_ptr[3] << "\n";
        ad_exit(1);
      }
+     #if defined(__SUN__) || defined (__GNUDOS__)
+     double cmp = value(elem(i));
+     if (cmp == HUGE || cmp == -HUGE) 
+     #else
      if (value(elem(i))== HUGE_VAL ||value(elem(i))== -HUGE_VAL)
+     #endif
      {
        cerr << "Overflow Error decoding field " << filename
            << " in dmatrix::dmatrix(char * filename) " << "\n";
@@ -195,7 +200,6 @@ dvar_vector::dvar_vector(const char * s)
        ad_exit(1);
      }
    }
-   delete[] field;
-   field = 0;
+   delete field;
  }
 }

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -15,7 +15,7 @@
  \param m1 The matrix,\f$M\f$, to be transposed.
  \return \f$M^T\f$
  */
-dmatrix trans(const dmatrix& m1)
+ dmatrix trans(_CONST dmatrix& m1)
  {
    dmatrix tmp(m1.colmin(),m1.colmax(),m1.rowmin(),m1.rowmax());
 
@@ -35,7 +35,7 @@ dmatrix trans(const dmatrix& m1)
  \param m1 a matrix, \f$M\f$
  \return \f$||M||\f$
  */
-double norm(const dmatrix& m1)
+    double norm(_CONST dmatrix& m1)
     {
       double tmp = 0;
       //double tmp1;
@@ -51,7 +51,7 @@ double norm(const dmatrix& m1)
  \param m1 a matrix, \f$M\f$
  \return \f$||M||^2\f$
  */
-double norm2(const dmatrix& m1)
+    double norm2(_CONST dmatrix& m1)
     {
       double tmp = 0;
       for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
@@ -60,4 +60,3 @@ double norm2(const dmatrix& m1)
       }
       return(tmp);
     }
-double sumsq(const dmatrix& m1) { return(norm2(m1)); }

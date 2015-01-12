@@ -2,12 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
+#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -28,12 +29,12 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
   gradient_structure::set_YES_DERIVATIVES();
   int nvar=x.size()+u0.size()+u0.size()*u0.size();
   independent_variables y(1,nvar);
-
+  
   // need to set random effects active together with whatever
   // init parameters should be active in this phase
-  initial_params::set_inactive_only_random_effects();
-  initial_params::set_active_random_effects();
-  /*int onvar=*/initial_params::nvarcalc();
+  initial_params::set_inactive_only_random_effects(); 
+  initial_params::set_active_random_effects(); 
+  /*int onvar=*/initial_params::nvarcalc(); 
   initial_params::xinit(y);    // get the initial values into the
   // do we need this next line?
   y(1,xs)=x;
@@ -54,7 +55,7 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
     for (j=1;j<=us;j++)
     y(ii++)=Hess(i,j);
 
-  dvar_vector vy=dvar_vector(y);
+  dvar_vector vy=dvar_vector(y); 
   initial_params::stddev_vscale(d,vy);
   dvar_matrix vHess(1,us,1,us);
   ii=xs+us+1;
@@ -84,7 +85,7 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
    for (int is=1;is<=nsamp;is++)
    {
      dvar_vector tau=ch*pmin->lapprox->epsilon(is);
-
+    
      vy(xs+1,xs+us).shift(1)+=tau;
      initial_params::reset(vy);    // get the values into the model
      vy(xs+1,xs+us).shift(1)-=tau;
@@ -111,9 +112,9 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
 
 
    dvariable min_vf=min(sample_value);
-   vf=min_vf-log(mean(exp(min_vf-sample_value)));
-   vf-=us*0.91893853320467241;
-
+   vf=min_vf-log(mean(exp(min_vf-sample_value))); 
+   vf-=us*0.91893853320467241; 
+   
    int sgn=0;
    dvariable ld;
    if (ad_comm::no_ln_det_choleski_flag)
@@ -131,7 +132,7 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
    vy(xs+1,xs+us).shift(1)=u0;
    initial_params::reset(vy);    // get the values into the model
    gradient_structure::set_YES_DERIVATIVES();
-
+  
   ii=1;
   for (i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);
@@ -142,3 +143,5 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
       Hessadjoint(i,j)=g(ii++);
   return f;
 }
+
+#endif

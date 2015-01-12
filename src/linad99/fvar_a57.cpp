@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -31,7 +31,8 @@
     save_dvar_vector_position();
     save_identifier_string("d");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_unary_diff);
+    gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(DF_unary_diff);
     return(tmp);
   }
 

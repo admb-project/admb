@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvar_matrix operator*(const prevariable& x, const dmatrix& m)
+dvar_matrix operator * (_CONST prevariable& x,_CONST dmatrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
   int rmin=m.rowmin();
@@ -26,8 +26,8 @@ dvar_matrix operator*(const prevariable& x, const dmatrix& m)
   int i;
   for (i=rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();
-    cmax(i)=(m(i)).indexmax();
+    cmin(i)=(m(i)).indexmin();  
+    cmax(i)=(m(i)).indexmax();  
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
@@ -43,7 +43,7 @@ dvar_matrix operator*(const prevariable& x, const dmatrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator*(const dvar_matrix& m, const double x)
+dvar_matrix operator * (_CONST dvar_matrix& m,CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
   int rmin=m.rowmin();
@@ -55,8 +55,8 @@ dvar_matrix operator*(const dvar_matrix& m, const double x)
   int i;
   for (i=rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();
-    cmax(i)=(m(i)).indexmax();
+    cmin(i)=(m(i)).indexmin();  
+    cmax(i)=(m(i)).indexmax();  
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
@@ -72,7 +72,7 @@ dvar_matrix operator*(const dvar_matrix& m, const double x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator*(const double x, const dvar_matrix& m)
+dvar_matrix operator * ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
   int rmin=m.rowmin();
@@ -84,8 +84,8 @@ dvar_matrix operator*(const double x, const dvar_matrix& m)
   int i;
   for (i=rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();
-    cmax(i)=(m(i)).indexmax();
+    cmin(i)=(m(i)).indexmin();  
+    cmax(i)=(m(i)).indexmax();  
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 

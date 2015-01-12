@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -34,7 +34,8 @@ df1b2function1 ADf1b2_sqrt(::sqrt,::sqrt_m5,::sqrt_m32,::sqrt_m52,"sqrt");
  * Description not yet available.
  * \param
  */
-df1b2variable sqrt(const df1b2variable& x)
+
+df1b2variable sqrt(const df1b2variable& x) 
 {
   return ADf1b2_sqrt(x);
 }

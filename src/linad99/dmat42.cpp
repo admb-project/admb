@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009-2011 ADMB Foundation
  */
 /**
  * \file
@@ -13,23 +13,25 @@
  */
 
 #include <fvar.hpp>
-#ifndef OPT_LIB
-  #include <cassert>
-#endif
-
 #define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 
-int svd(int m, int n, int withu, int withv, double eps, double tol,
-        const dmatrix& a, const dvector& _q,
-        const dmatrix& _u, const dmatrix& _v);
-int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
-            const dmatrix& aa, const dvector& _q,
-            const dmatrix& _u, const dmatrix& _v);
-int svd_mln(int m, int n, int withu, int withv, double eps, double tol,
-            const dmatrix& aa, const dvector& _q,
-            const dmatrix& _u, const dmatrix& _v);
+int svd(int m,int n,int withu,int withv,double eps,double tol,
+        _CONST dmatrix& a,BOR_CONST dvector& _q,
+        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v);
+int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
+        _CONST dmatrix& aa,BOR_CONST dvector& _q,
+        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v);
+int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
+        _CONST dmatrix& aa,BOR_CONST dvector& _q,
+        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v);
 
-/*
+
+static const int  maxiter = 40;
+
+/**
+ * Description not yet available.
+ * \param
+ */
 static double pythag(double a, double b)
 {
   double fa=fabs(a);
@@ -39,10 +41,9 @@ static double pythag(double a, double b)
   else
     return fb*sqrt(1.0+square(fa/fb));
 }
-*/
 
 /*
-class sing_val_decomp
+class sing_val_decomp 
 {
   dmatrix a;
   dvector w;
@@ -84,7 +85,7 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
   dmatrix v(1,n,1,n);
 
   double eps = 1.e-12;
-  double tol = eps;
+  double tol = eps; 
   int k = svd(m,n,1,1,eps,tol,a,w,u,v);
   if(k!=0)
   {
@@ -116,8 +117,8 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
  *           so that \f$A = U\cdot\mbox{diag(q)}\cdot V^{T} \f$
  */
 int svd(int m,int n,int withu,int withv,double eps,double tol,
-        const dmatrix& aa, const dvector& _q,
-        const dmatrix& _u, const dmatrix& _v)
+        _CONST dmatrix& aa,BOR_CONST dvector& _q,
+        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
 {
   ADUNCONST(dmatrix,u)
   ADUNCONST(dmatrix,v)
@@ -167,9 +168,9 @@ int svd(int m,int n,int withu,int withv,double eps,double tol,
  *      to 'C' from the original Algol code in "Handbook for
  *      Automatic Computation, vol. II, Linear Algebra", Springer-Verlag.
  */
-int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
-            const dmatrix& aa, const dvector& _q,
-            const dmatrix& _u, const dmatrix& _v)
+int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
+        _CONST dmatrix& aa,BOR_CONST dvector& _q,
+        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
 {
   ADUNCONST(dmatrix,u)
   ADUNCONST(dmatrix,v)
@@ -177,18 +178,15 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
 
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
+  double *e;
 
-#ifndef OPT_LIB
-  assert(n > 0);
-#endif
-
-  double* e = (double*)calloc((size_t)n,sizeof(double));
+  e = (double *)calloc(n,sizeof(double));
   retval = 0;
 
   u=aa;
 
 /* Householder's reduction to bidiagonal form. */
-  g = x = 0.0;
+  g = x = 0.0;    
   for (i=0;i<n;i++)
   {
     e[i] = g;
@@ -267,8 +265,6 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
 /* accumulation of right-hand transformations */
   if (withv)
   {
-    //assert(l == n);
-    l = n;
     for (i=n-1;i>=0;i--)
     {
       if ( i < n-2 )
@@ -291,6 +287,7 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
             {
               v[k][j] += (s * v[k][i]);
             }
+
           } /* end j */
         } /* end g */
         for (j=l;j<n;j++)
@@ -302,6 +299,7 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
       g = e[i];
       l = i;
     } /* end i */
+ 
   } /* end withv, parens added for clarity */
 
 /* accumulation of left-hand transformations */
@@ -318,10 +316,10 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
           for (k=l;k<m;k++)
             s += (u[k][i] * u[k][j]);
           f = s / h;
-          for (k=i;k<m;k++)
+          for (k=i;k<m;k++) 
             u[k][j] += (f * u[k][i]);
         } /* end j */
-        for (j=i;j<m;j++)
+        for (j=i;j<m;j++) 
           u[j][i] /= g;
       } /* end g */
       else {
@@ -431,7 +429,7 @@ convergence:
       } /* end withv, parens added for clarity */
     } /* end z */
   } /* end k */
-
+  
   free(e);
 
   return retval;
@@ -448,26 +446,25 @@ convergence:
  *      to 'C' from the original Algol code in "Handbook for
  *      Automatic Computation, vol. II, Linear Algebra", Springer-Verlag.
  */
-int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
-            const dmatrix& aa, const dvector& _q,
-            const dmatrix& _u, const dmatrix& _v)
+int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
+        _CONST dmatrix& aa,BOR_CONST dvector& _q,
+        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
 {
+
   ADUNCONST(dmatrix,u)
   ADUNCONST(dmatrix,v)
   ADUNCONST(dvector,q)
 
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
+  double *e;
 
-#ifndef OPT_LIB
-  assert(n > 0);
-#endif
-  double* e = (double *)calloc((size_t)n, sizeof(double));
+  e = (double *)calloc(n,sizeof(double));
   retval = 0;
 
   u=aa;
 /* Householder's reduction to bidiagonal form. */
-  g = x = 0.0;
+  g = x = 0.0;    
   for (i=0;i<n;i++)
   {
     e[i] = g;
@@ -540,8 +537,6 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
 /* accumulation of right-hand transformations */
   if (withv)
   {
-    //assert(l == n);
-    l = n;
     for (i=n-1;i>=0;i--)
     {
       if (g != 0.0)
@@ -562,6 +557,7 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
           {
             v[k][j] += (s * v[k][i]);
           }
+
         } /* end j */
       } /* end g */
       for (j=l;j<n;j++)
@@ -572,6 +568,7 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
       g = e[i];
       l = i;
     } /* end i */
+ 
   } /* end withv, parens added for clarity */
 
 /* accumulation of left-hand transformations */
@@ -588,10 +585,10 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
           for (k=l;k<m;k++)
             s += (u[k][i] * u[k][j]);
           f = s / h;
-          for (k=i;k<m;k++)
+          for (k=i;k<m;k++) 
             u[k][j] += (f * u[k][i]);
         } /* end j */
-        for (j=i;j<m;j++)
+        for (j=i;j<m;j++) 
           u[j][i] /= g;
       } /* end g */
       else {
@@ -701,7 +698,7 @@ convergence:
       } /* end withv, parens added for clarity */
     } /* end z */
   } /* end k */
-
+  
   free(e);
 
   return retval;

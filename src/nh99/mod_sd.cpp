@@ -2,17 +2,16 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
-#ifndef _MSC_VER
-  #include <unistd.h>
+#if defined(USE_LAPLACE)
+#  include <df1b2fun.h>
 #endif
-#if !defined(DOS386)
-  #define DOS386
-#endif
-
-#include <df1b2fun.h>
 #include <admodel.h>
+
+#ifdef __GNUDOS__
+  #include <gccmanip.h>
+#endif
 
 dmatrix * GAUSS_varcovariance_matrix = NULL;
 
@@ -20,21 +19,23 @@ void  set_gauss_covariance_matrix(const dll_data_matrix& m)
 {
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
-
+ 
 void  set_gauss_covariance_matrix(const dmatrix& m)
 {
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
+ 
 
 void  set_covariance_matrix(const dll_data_matrix& m)
 {
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
-
+ 
 void  set_covariance_matrix(const dmatrix& m)
 {
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
+ 
 
 void function_minimizer::sd_routine(void)
 {
@@ -51,8 +52,9 @@ void function_minimizer::sd_routine(void)
   param_size.allocate(1,num_sdrep_types);
 
   int ii=1;
-  size_t max_name_length = 0;
-  for (int i=0;i<initial_params::num_initial_params;i++)
+  int max_name_length=0;
+  int i;
+  for (i=0;i<initial_params::num_initial_params;i++)
   {
     //if ((initial_params::varsptr[i])->phase_start
      // <= initial_params::current_phase)
@@ -72,7 +74,7 @@ void function_minimizer::sd_routine(void)
   }
 
   int start_stdlabels=ii;
-  for (int i=0;i< stddev_params::num_stddev_params;i++)
+  for (i=0;i< stddev_params::num_stddev_params;i++)
   {
     param_labels[ii]=
       stddev_params::stddevptr[i]->label();
@@ -86,13 +88,16 @@ void function_minimizer::sd_routine(void)
   }
   int end_stdlabels=ii-1;
 
+
+
+
   int ndvar=stddev_params::num_stddev_calc();
   dvector scale(1,nvar1);   // need to get scale from somewhere
   dvector v(1,nvar);  // need to read in v from model.rep
   dmatrix S(1,nvar,1,nvar);
   {
     uistream cif("admodel.cov");
-    int tmp_nvar = 0;
+    int tmp_nvar;
     cif >> tmp_nvar;
     if (nvar !=tmp_nvar)
     {
@@ -108,23 +113,25 @@ void function_minimizer::sd_routine(void)
     }
   }
   int sgn;
-  initial_params::stddev_scale(scale,x);
+  int check=initial_params::stddev_scale(scale,x);
   double lndet=-ln_det(S,sgn)-2.0*sum(log(scale));
-  initial_params::set_active_random_effects();
-  //int nvar1=initial_params::nvarcalc();
+  initial_params::set_active_random_effects(); 
+  //int nvar1=initial_params::nvarcalc(); 
   dvector diag(1,nvar1+ndvar);
   dvector tmp(1,nvar1+ndvar);
 
   {
     ofstream ofs("admodel.tmp");
 
+
     #if defined(__GNU__) || defined(DOS386)  || defined(__GNUDOS__)
     // *******************************************************
     // *******************************************************
     {
+      
       if (nvar==nvar1)  // no random effects
-      {
-        for (int i=1;i<=nvar;i++)
+      { 
+        for (i=1;i<=nvar;i++)
         {
           for (int j=1;j<=i;j++)
           {
@@ -139,8 +146,8 @@ void function_minimizer::sd_routine(void)
         if (ad_comm::wd_flag)
            tmpstring = ad_comm::adprogram_name + ".dep";
         cifstream cif((char*)tmpstring);
-
-        int tmp_nvar = 0, tmp_ndvar = 0;
+      
+        int tmp_nvar,tmp_ndvar;
         cif >> tmp_nvar >> tmp_ndvar;
         if (tmp_nvar!=nvar1)
         {
@@ -152,21 +159,22 @@ void function_minimizer::sd_routine(void)
         {
           cif >> tv;
           dvector tmpsub(1,nvar);
-          for (int i=1;i<=ndvar;i++)
+          for (i=1;i<=ndvar;i++)
           {
-            for (int j=1;j<=nvar;j++)
+            int j;
+            for (j=1;j<=nvar;j++)
             {
               tmpsub(j)=(tv(i)*S(j))*scale(j);
             }
             ofs << tmpsub << "  ";
             tmpsub=tv(i)*S;
-            for (int j=1;j<=i;j++)
+            for (j=1;j<=i;j++)
             {
               tmp(nvar+j)=tmpsub*tv(j);
               ofs << tmp(nvar+j) << " ";
             }
             diag(i+nvar)=tmp(i+nvar);
-
+  
             if (diag(i+nvar)<=0.0)
             {
               cerr << "Estimated covariance matrix may not"
@@ -178,14 +186,15 @@ void function_minimizer::sd_routine(void)
         }
       }
       else  // have random effects
-      {
+      { 
+#if   defined(USE_LAPLACE)
         dmatrix tv(1,ndvar,1,nvar1);
         adstring tmpstring="admodel.dep";
         if (ad_comm::wd_flag)
            tmpstring = ad_comm::adprogram_name + ".dep";
         cifstream cif((char*)tmpstring);
-
-        int tmp_nvar = 0, tmp_ndvar = 0;
+      
+        int tmp_nvar,tmp_ndvar;
         cif >> tmp_nvar >> tmp_ndvar;
         if (tmp_nvar!=nvar1)
         {
@@ -197,7 +206,7 @@ void function_minimizer::sd_routine(void)
         dmatrix BS(1,nvar1,1,nvar1);
         BS.initialize();
         get_bigS(ndvar,nvar1,nvar,S,BS,scale);
-
+        
         {
           tmpstring = ad_comm::adprogram_name + ".bgs";
           uostream uos((char*)(tmpstring));
@@ -215,7 +224,7 @@ void function_minimizer::sd_routine(void)
           }
         }
 
-        for (int i=1;i<=nvar1;i++)
+        for (i=1;i<=nvar1;i++)
         {
           for (int j=1;j<=i;j++)
           {
@@ -230,40 +239,39 @@ void function_minimizer::sd_routine(void)
         {
           cif >> tv;
           dvector tmpsub(1,nvar1);
-          for (int i=1;i<=ndvar;i++)
+          for (i=1;i<=ndvar;i++)
           {
-            for (int j=1;j<=nvar1;j++)
+            int j;
+            for (j=1;j<=nvar1;j++)
             {
               tmpsub(j)=(tv(i)*BS(j))*scale(j);
             }
             ofs << tmpsub << "  ";
             tmpsub=tv(i)*BS;
-            for (int j=1;j<=i;j++)
+            for (j=1;j<=i;j++)
             {
               tmp(nvar1+j)=tmpsub*tv(j);
               ofs << tmp(nvar1+j) << " ";
             }
             diag(i+nvar1)=tmp(i+nvar1);
-
+  
             if (diag(i+nvar1)<=0.0)
             {
-              if (norm(tv(i))>1.e-100)
-              {
-                cerr << "Estimated covariance matrix may not"
-                 " be positive definite" << endl;
-                cerr << sort(eigenvalues(BS)) << endl;
-              }
+              cerr << "Estimated covariance matrix may not"
+               " be positive definite" << endl;
+              cerr << sort(eigenvalues(BS)) << endl;
             }
             ofs << endl;
           }
         }
+#    endif
       }
     }
     // *******************************************************
     #else
     // *******************************************************
     {
-      for (int i=1;i<=nvar;i++)
+      for (i=1;i<=nvar;i++)
       {
         for (int j=1;j<=i;j++)
         {
@@ -281,7 +289,7 @@ void function_minimizer::sd_routine(void)
       int tmp_nvar,tmp_ndvar;
       cif >> tmp_nvar >> tmp_ndvar;
       dvector tmpsub(1,nvar);
-      for (int i=1;i<=ndvar;i++)
+      for (i=1;i<=ndvar;i++)
       {
         cif >> tv;  // v(i)
         for (int j=1;j<=nvar;j++)
@@ -292,7 +300,7 @@ void function_minimizer::sd_routine(void)
         tmpsub=tv*S;
         cif.seekg(0,ios::beg);
         cif >> tmp_nvar >> tmp_ndvar;
-        for (int j=1;j<=i;j++)
+        for (j=1;j<=i;j++)
         {
           cif >> v;
           tmp(nvar+j)=tmpsub*v;
@@ -325,7 +333,8 @@ void function_minimizer::sd_routine(void)
     initial_params::copy_all_values(param_values,offset);
     stddev_params::copy_all_values(param_values,offset);
 
-    for (int i=1;i<=nvar1;i++)
+    int i;
+    for (i=1;i<=nvar1;i++)
     {
       if (diag(i)<=0.0)
       {
@@ -338,7 +347,7 @@ void function_minimizer::sd_routine(void)
         diag(i)=sqrt(diag(i));
       }
     }
-    for (int i=nvar1+1;i<=nvar1+ndvar;i++)
+    for (i=nvar1+1;i<=nvar1+ndvar;i++)
     {
       if (diag(i)<0.0)
       {
@@ -359,7 +368,7 @@ void function_minimizer::sd_routine(void)
     {
       dvector dd=diag(nvar1+1,nvar1+ndvar);
       dd.shift(1);
-      ii=0;
+      int ii=0;
       stddev_params::get_all_sd_values(dd,ii);
     }
 
@@ -371,15 +380,14 @@ void function_minimizer::sd_routine(void)
     ofsd << " index  ";
     ofs << " name  ";
     ofsd << " name ";
-    size_t inmax = max_name_length > 5 ? max_name_length - 5 : 0;
-    for (size_t in = 1;in <= inmax; in++)
+    for (int in=1;in<=max_name_length-5;in++)
     {
       ofs << " ";
       ofsd << " ";
     }
-    ofs << "  value      std.dev   ";
-    ofsd << "  value      std.dev";
-    for (int i=1;i<=nvar+ndvar;i++)
+    ofs << "  value      std dev   ";
+    ofsd << "  value      std dev   ";
+    for (i=1;i<=nvar+ndvar;i++)
     {
       ofs << " " << setw(4) << i << "   ";
     }
@@ -388,13 +396,14 @@ void function_minimizer::sd_routine(void)
 
     if (GAUSS_varcovariance_matrix) (*GAUSS_varcovariance_matrix).initialize();
 
-    for (int i=1;i<=nvar1+ndvar;i++)
+    for (i=1;i<=nvar1+ndvar;i++)
     {
-      for (int j=1;j<=i;j++)
+      int j;
+      for (j=1;j<=i;j++)
       {
         cif >> tmp(j);
       }
-      for (int j=1;j<=i;j++)
+      for (j=1;j<=i;j++)
       {
         if (diag(i)==0.0 || diag(j)==0.0)
         {
@@ -428,9 +437,7 @@ void function_minimizer::sd_routine(void)
         }
       }
 
-      inmax = max_name_length + 1 > param_labels[lc].size()
-              ? max_name_length + 1 - param_labels[lc].size() : 0;
-      for (size_t in = 1; in <= inmax; in++)
+      for (int in=1;in<=max_name_length+1-param_labels[lc].size();in++)
       {
         ofs << " ";
         ofsd << " ";
@@ -453,9 +460,9 @@ void function_minimizer::sd_routine(void)
       ofsd << setscientific() << setw(11) << setprecision(4) << param_values(i)
            << " ";
       ofsd << setscientific() << setw(10) << setprecision(4) << diag(i);
-      for (int j=1;j<=i;j++)
+      for (j=1;j<=i;j++)
       {
-        ofs << " " << setfixed() << setprecision(4) << setw(7)
+        ofs << " " << setfixed() << setprecision(4) << setw(7) 
             << tmp(j);
         if (GAUSS_varcovariance_matrix)
         {
@@ -470,13 +477,20 @@ void function_minimizer::sd_routine(void)
       ofsd << endl;
     }
   }
-#if defined(_MSC_VER)
-  if (system("del admodel.tmp") == -1)
-#else
-  if (unlink("admodel.tmp") == -1)
-#endif
-  {
-    char msg[40] = {"Error trying to delete temporary file "};
-    cerr << msg << "admodel.tmp" << endl;
-  }
+  //cout << "GAUSS_varcovariance_matrix"<< endl;
+  //cout << *GAUSS_varcovariance_matrix << endl;
+
+  char msg[40]={"Error trying to delete temporary file "};
+  #if !defined(__GNUDOS__) && !defined(__GNU__)
+    if (system("del admodel.tmp")==-1)
+    {
+      cerr << msg << "admodel.tmp" << endl;
+    }
+  #else
+    if (unlink("admodel.tmp")==-1)
+    {
+      cerr << msg << "admodel.tmp" << endl;
+    }
+
+  #endif
 }

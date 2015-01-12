@@ -1,8 +1,3 @@
-% $Id$
-% Author: Dave Fournier
-% Copyright (c) 2008 Regents of the University of California
-
-
 \documentclass{admbmanual}
 \makeatletter\@twosidefalse\makeatother
 \hypersetup{urlcolor=black}
@@ -26,7 +21,6 @@
 \newcommand\Pone{P_{t|t-1}}
 \newcommand\diag{\textrm{diag}}
 \newcommand\ep{\textrm{elem\_prod}}
-\newcommand\admbversion{11.2}
 
 \makeindex
 
@@ -36,9 +30,7 @@
   \smalltitlepart{An Introduction to}
   \largetitlepart{AD MODEL BUILDER}
   \smalltitlepart{for Use in Nonlinear Modeling and Statistics}
-  \vspace{3ex}\textsf{\textit{Version \admbversion~~(2014-12-23)\\[3pt]
-      Revised manual~~(2015-01-07)
-    }}\vspace{3ex}
+  \vspace{3ex}\textsf{\textit{Version 10.0~~(2011-01-18)}}\vspace{3ex}
 }
 \author{\textsf{\textit{David Fournier}}}
 \manualname{AD Model Builder}
@@ -47,12 +39,11 @@
 
 ~\vfill
 \noindent ADMB Foundation, Honolulu.\\\\
-\noindent This is the manual for AD Model Builder (ADMB) version
-\admbversion.\\\\
+\noindent This is the manual for AD Model Builder (ADMB) version 10.0.\\\\
 \noindent Copyright \copyright\ 1993, 1994, 1996, 2000, 2001, 2004, 2007, 2008,
-2011, 2013, 2014, 2015 David~Fournier\\\\
+2011 David Fournier\\\\
 \noindent The latest edition of the manual is available at:\\
-\url{http://admb-project.org/documentation/manuals}
+\url{http://admb-project.org/documentation/manuals/admb-user-manuals}
 
 \tableofcontents
 
@@ -69,7 +60,7 @@ difficulties in nonlinear modeling, such as restricting the values that
 parameters can assume, carrying out the optimization in a stepwise manner, and
 producing a report of the estimates of the standard deviations of the parameter
 estimates. In addition, these techniques scale up to models with at least 5000
-independent parameters on a basic laptop, and more on more powerful
+independent parameters on a 1000 MHz Pentium III, and more on more powerful
 platforms. So, if you are interested in a really powerful environment for
 nonlinear modeling---read on!
 \X{template}
@@ -167,9 +158,8 @@ arising in least-squares problems. There are, however, various techniques that
 render the estimation of parameters in such nonlinear models more tractable. The
 \ADMS package is intended to organize these techniques in such a way that they
 are easy to employ (where possible, employing them in a way that the user does
-not need to be aware of them), so that investigating nonlinear statistical
-models becomes---so far as possible---as simple as for linear statistical
-models.
+not need to be aware of them), so that investigating nonlinear statical models
+becomes---so far as possible---as simple as for linear statistical models.
 
 \section{Installing the software}
 
@@ -259,10 +249,10 @@ attempt describing the time series of returns from some market instrument.
 
 %\item{5.}
 \paragraph{A problem in natural resource management.} The
-Schaefer-Pella-Tomlinson Model for investigating the response of an exploited
+Schaeffer-Pella-Tomlinson Model for investigating the response of an exploited
 fish population is developed and extended to include a Bayesian times series
 treatment of time-varying carrying capacity. This example is interesting because
-the model is rather temperamental. Several techniques for producing reliable
+the model is rather tempermental. Several techniques for producing reliable
 convergence of the estimation procedure to the correct answer are described. For
 one of the data sets, over 100~parameters are estimated.
 
@@ -562,7 +552,7 @@ correlation matrix for the model parameters are estimated. They are in the file
 \texttt{SIMPLE.COR}:
 \X{correlation matrix}
 \begin{lstlisting}
- index      value      std.dev       1       2
+ index      value      std dev       1       2
     1   a  1.9091e+00 1.5547e-01       1
     2   b  4.0782e+00 7.0394e-01  -0.773       1
 \end{lstlisting}
@@ -584,7 +574,7 @@ using \ADM's robust regression routine over standard nonlinear least square
 regression procedures. Further discussion about the underlying theory can be
 found in the \scAD\ user's manual, but it is not necessary to understand the
 theory to make use of the procedure.
-\begin{figure}[htbp]
+\begin{figure}[h]
   \centering\hskip1pt\beginpicture
   \setcoordinatesystem units <.18in,.04in>
   \setplotarea x from 0 to 16.5, y from 0 to 50
@@ -600,7 +590,7 @@ theory to make use of the procedure.
 \bigskip
 \medskip
 \begin{lstlisting}
- index         value      std.dev       1       2       3
+ index         value      std dev       1       2       3
     1   Linf  5.4861e+01 2.4704e+00  1.0000
     2   K     1.7985e-01 2.7127e-02 -0.9191  1.0000
     3   t0    1.8031e-01 2.9549e-01 -0.5856  0.7821  1.0000
@@ -676,7 +666,7 @@ close to ``cooking'' the data in order to obtain the desired result from the
 analysis. An alternative approach, which avoids these difficulties, is to employ
 \ADM's robust regression procedure, which removes the undue influence of
 outlying points without the need to expressly remove them from the data.
-\begin{figure}[htbp]
+\begin{figure}[h]
   \centering\hskip1pt\beginpicture
     \setcoordinatesystem units <.18in,.04in>
     \setplotarea x from 0 to 16.5, y from 0 to 50
@@ -693,7 +683,7 @@ outlying points without the need to expressly remove them from the data.
  \medskip
    \begin{lstlisting}
  Nonlinear regression with bad data set
- index         value      std.dev       1       2       3
+ index         value      std dev       1       2       3
     1   Linf  4.8905e+01 5.9938e+00  1.0000
     2   K     2.1246e-01 1.2076e-01 -0.8923  1.0000
     3   t0   -5.9153e-01 1.4006e+00 -0.6548  0.8707  1.0000
@@ -784,7 +774,7 @@ That's all there is to it! These three changes will convert any AD Model builder
 template from a nonlinear regression model to a robust nonlinear regression
 model.
 
-\begin{figure}[htbp]
+\begin{figure}[h]
 \centering\hskip1pt\beginpicture
   \setcoordinatesystem units <.18in,.04in>
   \setplotarea x from 0 to 16.5, y from 0 to 50
@@ -800,7 +790,7 @@ model.
 \bigskip
 \medskip
 \begin{lstlisting}
- index         value      std.dev       1       2       3       4
+ index         value      std dev       1       2       3       4
     1   Linf  5.6184e+01 3.6796e+00  1.0000
     2   K     1.6818e-01 3.4527e-02 -0.9173  1.0000
     3   t0    6.5129e-04 4.5620e-01 -0.5483  0.7724  1.0000
@@ -827,7 +817,7 @@ distributed errors in the statistical model is satisfied exactly. They do much
 better than least-square estimates in the presence of moderate or large
 outliers. You can lose only a little and you stand to gain a lot by using these
 estimators.
-\begin{figure}[htbp]
+\begin{figure}[h]
 \centering\hskip1pt\beginpicture
   \setcoordinatesystem units <.18in,.04in>
   \setplotarea x from 0 to 16.5, y from 0 to 50
@@ -843,7 +833,7 @@ estimators.
 \bigskip
 \medskip
 \begin{lstlisting}
- index         value      std.dev       1       2       3       4
+ index         value      std dev       1       2       3       4
     1   Linf  5.5707e+01 1.9178e+00  1.0000
     2   K     1.7896e-01 1.9697e-02 -0.9148  1.0000
     3   t0    2.1490e-01 2.0931e-01 -0.5604  0.7680  1.0000
@@ -890,7 +880,7 @@ the third run initially consisted of only the second reactant. The initial
 concentrations of the reactants are known only approximately.
 See~Table~\ref{tab:runs} for what they are.
 %xx \htmlbegintex
-\begin{table}[htbp]
+\begin{table}[h]
 \begin{center}
 \begin{tabular}{@{\extracolsep{1em}} l c  l}
  \bf Run 1&$s_1(0)=\theta_5=1\pm0.05$&$s_2(0)=\theta_6=1\pm0.05$\\
@@ -1096,7 +1086,7 @@ exclude parameters from the report, if desired.
 
 %xx \htmlbegintex
 \begin{smallcode}[commentchar=\%]
- index          value   std.dev     1     2     3     4     5     6     7%
+ index          value   std dev     1     2     3     4     5     6     7%
      8     9     10
     1   theta  1.37e+00 2.09e-01     1
     2   theta  1.12e+03 7.70e+01  0.95     1
@@ -1180,7 +1170,7 @@ element-wise operations. The parameter values and standard deviation report for
 this model appears below.
 \X{standard deviation report}
 \begin{lstlisting}
- index         value      std.dev       1       2       3       4
+ index         value      std dev       1       2       3       4
     1   a0    1.6034e-04 2.3652e-05  1.0000
     2   a1    9.3980e-02 2.0287e-02  0.1415  1.0000
     3   a2    3.7263e-01 8.2333e-02 -0.9640 -0.3309  1.0000
@@ -1293,7 +1283,7 @@ minimizer in each stage of the minimization procedure.
 \XX{optimization}{phases}
 %xx \htmlnewfile
 
-\section{Natural resource management:\br the Schaefer-Pella-Tomlinson Model}
+\section{Natural resource management:\br the Schaeffer-Pella-Tomlinson Model}
 
 It is typical of many models in natural resource management that the model tends
 to be rather unstable numerically. In addition, some of the model parameters are
@@ -1303,9 +1293,9 @@ provided by these models. This example provides a good opportunity for
 presenting some more advanced features of \ADM\ that are designed to overcome
 these difficulties.
 
-\X{Schaefer-Pella-Tomlinson model}
+\X{Schaeffer-Pella-Tomlinson model}
 \X{fisheries management}
-The Schaefer-Pella-Tomlinson model is employed in fisheries management. The
+The Schaeffer-Pella-Tomlinson model is employed in fisheries management. The
 model assumes that the total biomass of an exploited fish stock satisfies an
 ordinary differential equation of the form
 \begin{equation}
@@ -1313,7 +1303,7 @@ ordinary differential equation of the form
            - FB  \qquad \hbox{\rm where}\quad m>1
 \label{chp3:xx3}
 \end{equation}
-(\cite{hilbornwalters1992}, page 303), where $B$ is the biomass, $F$ is the
+(\cite{hilbornwalters1991}, page 303), where $B$ is the biomass, $F$ is the
 instantaneous fishing mortality rate, $r$ is a parameter often referred to an
 the ``intrinsic rate of increase,'' $k$ is the unfished equilibrium stock size,
 \begin{equation}
@@ -1322,7 +1312,7 @@ the ``intrinsic rate of increase,'' $k$ is the unfished equilibrium stock size,
 \end{equation}
 is the catch rate, and $m$ is a parameter that determines where the maximum
 productivity of the stock occurs. If the value of $m$ is fixed at 2, the model
-is referred to as the ``Schaefer model.'' The explicit form of the difference
+is referred to as the ``Schaeffer model.'' The explicit form of the difference
 equation corresponding to this differential equation~is
 \XX{difference equation}{explicit form}
 \XX{difference equation}{semi-implicit form}
@@ -1352,9 +1342,9 @@ The catch $C_{t+\delta}$ over the period $(t,t+\delta)$ is given by
  {C_{t+\delta} =F_tB_{t+\delta}\delta }
   \label{chp3:xx8}
 \end{equation}
-\XX{Schaefer-Pella-Tomlinson model}{Bayesian considerations}
-\XX{Schaefer-Pella-Tomlinson model}{unfished equilibrium biomass level}
-\XX{Schaefer-Pella-Tomlinson model}{optimal productivity}
+\XX{Schaeffer-Pella-Tomlinson model}{Bayesian considerations}
+\XX{Schaeffer-Pella-Tomlinson model}{unfished equilibrium biomass level}
+\XX{Schaeffer-Pella-Tomlinson model}{optimal productivity}
 
 \section{Bayesian considerations in the Pella-Tomlinson Model}
 
@@ -1380,7 +1370,7 @@ question will depend on the particular situation. For our purposes, ``slowly''
 means ``slowly enough'' so that the model has some chance of supplying a useful
 analysis of the situation at hand. We refer to this as ``the assumption of
 manageability.'' The point is that since we are going to use this model anyways
-to try and manage a resource, we may as well assume that the model's assumptions
+to try and mange a resource, we may as well assume that the model's assumptions
 are satisfied---at least well enough that we have some hope of success. This may
 seem extremely arbitrary, and it is. However, it is not as arbitrary as assuming
 that the carrying capacity is constant.
@@ -1422,9 +1412,9 @@ independent variables in the function to be minimized) is~$2n+4$. For the
 halibut data, there are $56$ years of data, which gives $116$ parameters. As
 estimates of the model parameters, we use the mode of the posterior
 distribution, which can by found by minimizing $-1$ times
-expression~(\ref{ch1:xx7}).
+expression~(\ref{chp3:xx3}). % \number\mychapno.8)
 The covariance matrix of the model parameters are estimated by computing the
-inverse of the Hessian of expression~(\ref{ch1:xx7})
+inverse of the Hessian of expression~(\ref{chp3:xx3}) % \number\mychapno.8)
 at the minimum. The template for the model follows. To improve the readability,
 the entire template has been included. The various sections are discussed below.
 \X{\fontindexentry{tt}{init\_bounded\_vector}}
@@ -1539,7 +1529,7 @@ FUNCTION calculate_biomass_and_predicted_catch
     pred_catch[i]=c_tmp;        // This is the catch for this year
     if (i<nobs)
     {
-      biomass[i+1]=bio_tmp;// This is the biomass at the beginning of the next
+      biomass[i+1]=bio_tmp;// This is the biomass at the begining of the next
     }                      // year
     else
     {
@@ -1704,9 +1694,9 @@ so that their average becomes~1. This is done so that we have a good idea what
 the catchability parameter~\texttt{q} should be to give reasonable values for
 the fishing mortality rate (since $F=qE$).
 
-\XX{column}{extract a column from a matrix}
-Notice that the \PCS\ is \cplus\ code, so that statements must be ended
-with a semicolon.
+\X{column}{extract a column from a matrix}
+Notice that the \PCS\ section is \cplus\ code, so that statements must be ended
+with a \texttt{;}.
 \begin{lstlisting}
 PRELIMINARY_CALCS_SECTION
   // get the data out of the data matrix into
@@ -2136,7 +2126,7 @@ The reports of the one and two-sided confidence limits for the parameter were
 produced this way. Also, a plot of $y_i$ versus $x_i$ gives the user an
 indication of what the probability distribution of the parameter looks like.
 (See Figure~\ref{fig:05}.)
-\begin{figure}[htbp]
+\begin{figure}[h]
 \centering\hskip1pt\beginpicture
     \setplotsymbol ({\eightrm .})
   %\setcoordinatesystem units <.7in,5in> Have to adjust so labels don't overlap.
@@ -2249,7 +2239,7 @@ this integral.
 
 This approach should be useful for a lot of applications based on the fact that
 the central limit theorem implies that for a lot of observations, the posterior
-probability distribution is more or less well approximated by a multivariate
+proability distribution is more or less well approximated by a multivariate
 normal distribution, and for such distributions, the assumptions holds exactly.
 So the profile likelihood is calculated by calculating the conditional maximum
 of the likelihood function and then normalizing it so that it integrates to $1$.
@@ -2257,9 +2247,9 @@ of the likelihood function and then normalizing it so that it integrates to $1$.
 For an arbitrary dependent variable, the situation is a bit more complicated. A
 good approximation to a probability distribution should have the property of
 parameter invariance, that is, $Pr \{a\le x\le b\}=Pr \{h(a)\le h(x)\le h(b)\}$
-for any monotonically increasing function~$h$. To achieve the property of
+for any montonically increasing function~$h$. To achieve the property of
 parameter invariance, we modify the definition of profile likelihood for
-dependent variables.
+dependent varialbes.
 
 Fix a value $g_0$ for $g$ and consider the integral
 $$\int_{\{x:g_0-\epsilon/2\le g(x)\le g_0+\epsilon/2\}} f(x_1,\ldots, x_n)
@@ -2315,7 +2305,7 @@ the file \texttt{catch.dat}. Then the effort data are read in from the file
 \texttt{catch.dat}. It is necessary to save the current file position in an
 object of type \texttt{streampos}. This object is used to position the file
 properly. The escape sequence {\tt!!} can be used to include one line of the
-user's code into the \DS\ or \PS. This is more compact than the
+users's code into the \DS\ or \PS. This is more compact than the
 \texttt{LOCAL\_CALCS} construction.
 \X{\fontindexentry{tt}{LOCAL\_CALCS}}
 \begin{lstlisting}
@@ -2494,7 +2484,7 @@ TOP_OF_MAIN_SECTION
 
 Note that within \ADM, one doesn't use the function
 \begin{lstlisting}
-  gradient_structure::set_ARRAY_MEMBLOCK_SIZE
+  gradient\_structure::set\_ARRAY\_MEMBLOCK\_SIZE
 \end{lstlisting}
 to set the amount of memory available for variable arrays. Instead, use the line
 of code
@@ -2526,7 +2516,7 @@ phase of the minimization is to begin, by using a \texttt{switch} statement (you
 can read about this in a book on C or \cplus), together with the
 \texttt{current\_phase()} function.
 \begin{lstlisting}
-switch (current_phase())
+switch (current_phase()
 {
 case 1:
   // some action
@@ -2562,7 +2552,7 @@ The Markov chain Monte Carlo method (\textsc{mcmc}) is a method for
 approximating the posterior distribution for parameters of interest in the
 Bayesian framework. This option is invoked by using the command line option
 \texttt{-mcmc N}, where \texttt{N} is the number of simulations performed. You
-will probably also want to include the option \texttt{-mcscale}, which
+will proabably also want to include the option \texttt{-mcscale}, which
 dynamically scales the covariance matrix until a reasonable acceptance rate is
 observed. You may also want to use the \texttt{-mcmult n} option, which scales
 the initial covariances matrix if the initial values are so large that
@@ -2579,7 +2569,7 @@ Figure~\ref{fig:06} compares the profile likelihood for the projected biomass to
 the estimates produced by the \textsc{mcmc} method, for different sample sizes
 (25,000 and 2,500,000 samples) for the \texttt{catage} example.
 %xx \htmlbeginignore
-\begin{figure}[htbp]
+\begin{figure}[h]
 %xx \htmlendignore
 \centering\hskip1pt\beginpicture
   \setplotsymbol ({\eightrm .})
@@ -2649,14 +2639,14 @@ the \texttt{-mcsave} phase, use the option \texttt{-nosdmcmc}. {\it Note: If you
   the program will try to read in the non-existent histogram data.}
 
 \ADM\ uses the Hessian to produce an (almost) multivariate normal distribution
-for the Metropolis-Hastings algorithm. It is not exactly multivariate normal,
+for the Metropolis-Hastings algorithm. It is not exacly multivariate normal,
 because the random vectors produced are modified to satisfy any bounds on the
 parameters.
 
 There is also an option for using a fatter-tailed distribution. This
 distribution is a mixture of the multivariate normal and a fat-tailed
-distribution. It is invoked with the \texttt{-mcprobe n} option, where
-\texttt{n} is the amount of fat-tailed distribution in the mixture. Probably, a
+distribution. It is invoked with the \texttt{-mcgrope n} option, where
+\texttt{n} is the amount of fat-tailed distribution in the mixture. Proabably, a
 value of \texttt{n} between~0.05 and~0.10 is best.
 
 \XX{binary files}{\fontindexentry{tt}{uistream}}
@@ -2870,8 +2860,8 @@ PROCEDURE_SECTION
   fink=k;
   finp=p;
   delta=(bio(1988)-bio(1978))/bio(1978);
-  f+=log(sqrt(2.*PI)*500)+square(bio(1988)-7635.)/(2.*square(500));
-  f+=log(sqrt(2.*PI)*.03)+square(delta-0.15)/(2.*square(.03));
+  f+=log(sqrt(2.*3.1415927)*500)+square(bio(1988)-7635.)/(2.*square(500));
+  f+=log(sqrt(2.*3.1415927)*.03)+square(delta-0.15)/(2.*square(.03));
 \end{lstlisting}
 This is a biomass dynamic model, where the biomass is assumed to satisfy the
 difference equation
@@ -2889,10 +2879,10 @@ better.
 
 It is not difficult to determine why the \textsc{mcmc} performed so poorly. The
 estimated covariance matrix for the parameters is shown below. To four
-significant figures, the correlation between $r$ and $k$ is $-1.0000$. Thus, the
+signficant figures, the correlation between $r$ and $k$ is $-1.0000$. Thus, the
 Hessian matrix is almost singular.
 \begin{lstlisting}
-   index   name    value      std.dev     1      2       3
+   index   name    value      std dev     1      2       3
      1   k     1.0404e+04 8.8390e+05   1.0000
      2   r     4.8838e-02 9.0337e+00  -1.0000  1.0000
      3   p     5.7293e-01 3.6946e+00   0.9998 -0.9998  1.0000
@@ -2909,10 +2899,10 @@ To deal with almost singular Hessians, we have added the \texttt{-mcrb N}
 option.
 \XX{command line arguments}{\fontindexentry{tt}{-mcrb}}
 This option reduces the amount of correlation in the Hessian, while leaving the
-standard deviations fixed. The number \texttt{N} should be between~1 and~9. The
+standard deviaions fixed. The number \texttt{N} should be between~1 and~9. The
 smaller the number, the more the correlation is reduced. For this example (see
 Figure~\ref{fig:07}), a value of~3 seemed to perform well.
-\begin{figure}[htbp]
+\begin{figure}[h]
 \includegraphics[height=3.5in, width=\textwidth]{mcrb3-50K.png}
 \emptycaption
 \label{fig:07}
@@ -2943,7 +2933,7 @@ wildfire in size category~$i$ is given by~$P_i$, where
 \begin{equation*}
   \log(P_i)=\ln\left(S_i-S_{i+1}\right)-\ln\big(S(1)\big).
 \end{equation*}
-If $f_i$ is the number of wildfires observed to lie in size category~$i$, the
+If $f_i$ is the number of widfires observed to lie in size category~$i$, the
 log-likelihood function for the problem is given by
 \begin{equation}
   {
@@ -3018,7 +3008,7 @@ PROCEDURE_SECTION
    {
      dvariable ff=0.0;
      // make the model stable for case when S(i)<=S(i+1)
-     // we have to subtract s(i+1) from S(i) first or roundoff will
+     // we have to subrtract s(i+1) from S(i) first or roundoff will
      // do away with the 1.e-50.
      f-=freq(i)*log(1.e-50+(S(i)-S(i+1)));
      f+=ff;
@@ -3057,8 +3047,8 @@ values $-3.0$ and $3.0$ are the limits of integration (effectively $-\infty$,
 $\infty$ for this example). The integer argument \texttt{nsteps} determines how
 accurate the integration will be. Higher values of \texttt{nsteps} will be more
 accurate, but greatly increase the amount of time necessary to fit the model.
-The basic strategy is to use a moderate value for \texttt{nsteps}, such as~6,
-and then to increase this value to see if the parameter estimates change much.
+The basic strategy is to use a moderate value for \texttt{nteps}, such as~6, and
+then to increase this value to see if the parameter estimates change much.
 \begin{lstlisting}
   FUNCTION dvariable h(const dvariable& z)
 \end{lstlisting}
@@ -3071,7 +3061,7 @@ when they must be computed to great accuracy. Such computations will require a
 lot of temporary storage in \ADM. Fortunately, the output from such a routine is
 just one number: the value of the integral. In automatic differentiation
 terminology, a long set of computations that produce just one number is known as
-a ``funnel.'' It is possible to exploit the properties of such a funnel to
+a ``funnel.'' It is possbile to exploit the properties of such a funnel to
 greatly reduce the amount of temporary storage required. All that is necessary
 is to declare an object of type \texttt{funnel\_dvariable}
 \XX{\fontindexentry{tt}{funnel\_dvariable}}%
@@ -3082,7 +3072,7 @@ funnel, a call to the function \texttt{ad\_begin\_funnel} is made. There is
 quite a bit of overhead associated with the funnel construction, so it should
 not be used for very small calculations. However, it is possible to put it in
 and test the program to see whether or not it runs more quickly. The following
-modified code will produce exactly the same results, but without the funnel
+modifed code will produce exactly the same results, but without the funnel
 construction:
 \begin{lstlisting}
   dvariable Integral;   // change the definition of Integral
@@ -3090,7 +3080,7 @@ construction:
   for (i=1;i<=k+1;i++)
   {
     a_index=i;
-    // ad_begin_funnel();  // comment out this line
+    // ad_begin_funnel();  // commment out this line
     Integral=adromb(&model_parameters::h,-3.0,3.0,nsteps);
     S(i)=Integral;
   }
@@ -3104,7 +3094,7 @@ should be removed, as in the above example, and the model run again.
 
 The following report shows the amount of time required to run the model with a
 fixed value of $\beta$ for different values of the parameter \texttt{nsteps}.
-For practical purposes, a value of \texttt{nsteps=8} gives enough accuracy so
+For practical purposes, a vlaue of \texttt{nsteps=8} gives enough accuracy so
 that the model could be fit in about 6~seconds.
 \begin{lstlisting}
 elapsed time = 2 seconds nsteps = 6 f = 629.9846518
@@ -3165,7 +3155,7 @@ a
 freq
  167 84 61 29 19 17 4 4 1 0 1 1
 \end{lstlisting}
-where the first line contains the bounds for the size categories and the second
+where the first line contains the bounds for the size catagories and the second
 line contains the number of observations in each size category. The Splus code
 with fixed beta for the example is
 \begin{lstlisting}
@@ -3231,7 +3221,7 @@ advantage, which is the ability to estimate parameters in models with a large
 number of independent variables. However, it does illustrate the efficacy of the
 use of higher (up to 7-dimensional) arrays in \ADM.
 
-\section{Analysis of economic data from \cite{hamilton1989}}
+\section{Anaylsis of economic data from \cite{hamilton1989}}
 
 For this model, the observed quantities are the $Y_t$, where
 \begin{equation}
@@ -3375,7 +3365,7 @@ value of the objective function has been found. The second quantity,
 \texttt{nperiods1}, is the number of data points in the file. Notice that as
 soon as a quantity has been defined, it is available to use for defining other
 quantities. The quantity \texttt{nperiod} does not have an \texttt{init\_}
-before it, so it will not be read in and must be calculated in terms of other
+before it, so it will not be read in and must be calulated in terms of other
 quantities at some point. Since we want it now, it is calculated immediately.
 \begin{lstlisting}
  !! nperiods=nperiods1-1;
@@ -3392,7 +3382,7 @@ defined and given a size, with indices going from \texttt{1} to
 and the resulting \texttt{nperiods} data points are put into~\texttt{y}.
 \begin{lstlisting}
 PARAMETER_SECTION
-  init_vector f(1,order,1)  // coefficients for the autoregressive
+  init_vector f(1,order,1)  // coefficients for the atuoregressive
                             // process
   init_bounded_matrix Pcoff(0,nstates-1,0,nstates-1,.01,.99,2)
         // determines the transition matrix for the markov process
@@ -3428,16 +3418,16 @@ dependent variables that must be calculated from the independent variables. The
 default behavior of \ADM\ is to read in initial parameter values for the
 parameters from a \texttt{PAR} file, if it finds one. Otherwise, they are given
 default values consistent with their type. The quantity~\texttt{f} is a vector
-of four coefficients for the autoregressive process. \texttt{Pcoff} is a
-$2\times 2$ matrix used to parameterize the transition matrix \texttt{P} for the
-Markov process. Its values are restricted to lie between~$0.01$ and~$0.99$.
+of four coefficents for the autoregressive process. \texttt{Pcoff} is a $2\times
+2$ matrix used to parameterize the transition matrix \texttt{P} for the Markov
+process. Its values are restricted to lie between~$0.01$ and~$0.99$.
 \texttt{smult} is a number used to parameterize \texttt{sigma} and \texttt{var}
 (which is the variance) as a multiple of the mean-squared residuals. This
 reparameterization undimensionalizes the calculation and is a good technique to
 employ for nonlinear modeling in general. The transition matrix~\texttt{P} is
 defined to be of type \texttt{sdreport\_matrix}, so the standard deviation
 estimates for its members will be included in the standard deviation report
-contained in the \textsc{std} file. To date, \ADM\ sports up to 7-dimensional
+contained in the \textsc{std} file. To date, \ADM\ suports up to 7-dimensional
 arrays. For historical reasons, 1 and 2-dimensional arrays are referred to as
 \texttt{vector} and \texttt{matrix}. This becomes a bit difficult for
 higher-dimensional arrays, so they are simply referred to as \texttt{3darray},
@@ -3506,7 +3496,7 @@ PROCEDURE_SECTION
     }
   }
 
-  // qb(5) is the probability of being in one of 32
+  // qb(5) is the probabilibility of being in one of 32
   // states (32=2x2x2x2x2) in periods 5,4,3,2,1 before observing
   // y(5)
   for (i=0;i<=1;i++) {
@@ -3621,9 +3611,9 @@ This does not affect the ``statistical'' properties of the parameters of
 interest. The matrix~\texttt{z} is calculated using a transformed matrix,
 because \ADM\ deals with vector rows better than columns. The probability
 distribution for the states in period~1, \texttt{qb1}, is set equal to the
-unconditional distribution for a Markov process in terms of its transition
-matrix \texttt{P}, as discussed in~\cite{hamilton1994}. The transition matrix is
-used to compute the probability distribution of the states in periods $(2,1)$,
+uncondtional distribution for a Markov process in terms of its transition matrix
+\texttt{P}, as discussed in~\cite{hamilton1994}. The transition matrix is used
+to compute the probability distribution of the states in periods $(2,1)$,
 $(3,2,1)$, $(4,3,2,1)$, and finally, $(5,4,3,2,1)$. For the last quintuplet,
 this is the probability distribution before observing~\texttt{y(5)}. The
 quantities \texttt{eps} in the code correspond to the possible realized values
@@ -3661,7 +3651,7 @@ REPORT_SECTION
 \end{lstlisting}
 \XX{\fontindexentry{tt}{REPORT\_SECTION}}{example of}
 The \RS\ is used to report any result in a manner not already carried out by the
-model's default behavior. The probabilities of being in state~$0$ before and
+model's default behavior. The probabilites of being in state~$0$ before and
 after observing \texttt{y(t)} are printed into the files \texttt{qbefore.rep}
 and \texttt{qafter.rep}. These vectors were stored in files, so they could be
 easily imported into graphing programs. The results are very similar to Figure~1
@@ -3681,7 +3671,7 @@ needed.) The statement
   convergence_criteria 1.e-6
 \end{lstlisting}
 was needed, because the default value of \texttt{1.e-4} caused the program to
-exit from the minimization before convergence had been achieved.
+exit from the miniization before convergence had been achieved.
 \X{\fontindexentry{tt}{arrmblsize}}
 \X{\fontindexentry{tt}{TOP\_OF\_MAIN} section}
 \XX{\fontindexentry{tt}{gradient\_structure::}}%
@@ -3730,7 +3720,7 @@ GLOBALS_SECTION
 The \texttt{GLOBALS\_SECTION} is used to include statements at the top of the
 file containing the \textsc{cpp} program. This is generally where global
 declarations are made in \cplus, hence its name. However, it may be used for any
-legal statements, such as including header files for the user's data structures,
+legal statments, such as including header files for the user's data structures,
 etc. In this case, it has been used to define the function~\texttt{phi}, which
 is used to simplify the code for the model's calculations. The header file
 \texttt{admodel.hpp} is included, to define the \scAD\ structures used in the
@@ -3759,7 +3749,7 @@ used to restart the model with more accurate parameters estimates.)
 0.281342
 \end{lstlisting}
 The estimates are almost identical to those reported in
-\cite{hamilton1989}\footnote{Our method for parameterizing the initial state
+\cite{hamilton1989}\footnote{Our method for parameterizing the intial state
   probability distribution \texttt{qb1} is slightly different from Hamilton's,
   which would explain the small discrepancy.} The first line reports the value
 of the log-likelihood function. This value can be used in hypothesis
@@ -3788,7 +3778,7 @@ significant.
 The plot of \texttt{qa} and \texttt{qb} demonstrates the extra information about
 the probability distribution of the current state contained in in the current
 value of~\texttt{y(t)}. (See Figure~\ref{fig:08}.)
-\begin{figure}[htbp]
+\begin{figure}[h]
 \centering\hskip1pt\beginpicture
   \setplotsymbol ({\eightrm .})
   \setcoordinatesystem units <3.2in,2.5in>
@@ -3866,7 +3856,7 @@ The standard deviation and correlation report for the model are in the file
 \centering
 %xx \htmlbegintex
 \begin{smallcode}[commentchar=\%]
- index name  value    std.dev    1     2     3     4     5     6     7     8%
+ index name  value    std dev    1     2     3     4     5     6     7     8%
      9    10    11    12    13    14   15
    1  f      1.39e-02 1.20e-01  1.00
    2  f     -5.69e-02 1.37e-01  0.33  1.00
@@ -3891,7 +3881,7 @@ The standard deviation and correlation report for the model are in the file
   15  P      9.04e-01 3.77e-02 -0.09 -0.10 -0.04 -0.06  0.02 -0.49 -0.08  0.05%
  -0.14  0.09 -0.11  0.16 -1.00 -0.16 1.00
 \end{smallcode}
-\caption{Apriori and aposteriori probabilities of being in state 0 in period
+\caption{Apriori and aposteriori probabilitites of being in state 0 in period
   $t$.}
 \label{fig:08}
 \end{figure}
@@ -3940,7 +3930,7 @@ DATA_SECTION
   int nstates  // the number of states (expansion and contraction)
  !! nstates=2;
 PARAMETER_SECTION
-  init_vector f(1,order,1)  // coefficients for the autoregressive
+  init_vector f(1,order,1)  // coefficients for the atuoregressive
                             // process
   init_bounded_matrix Pcoff(0,nstates-1,0,nstates-1,.01,.99,2)
         // determines the transition matrix for the markov process
@@ -4024,7 +4014,7 @@ PROCEDURE_SECTION
       }
     }
   }
-  // qb(6) is the probability of being in one of 64
+  // qb(6) is the probabilibility of being in one of 64
   // states (64=2x2x2x2x2x2) in periods 5,4,3,2,1 before observing
   // y(6)
   for (i=0;i<=1;i++) {
@@ -4302,88 +4292,6 @@ prefix \texttt{pad\_} inserted before the name of the object. The pointer to
 \end{lstlisting}
 The user can refer to the object in the code simply by using its name.
 
-%-- Added by Steve Martell, Mar 27, 2014
-\section{Using control files for bounded parameters}
-\X{\fontindexentry{tt}{init\_bounded\_number}}
-\XX{Using control file for bounded parameters in \ADM}{\fontindexentry{tt}{init\_bounded\_number}}
-Bounded parameters defined in the procedure section take the following format:
-\begin{lstlisting}
-  init_bounded_number a(lb,ub,i_phz);
-\end{lstlisting}
-where lb is the lower bound, ub is the upper bound and i\_phz is and integer representing 
-the phase of estimation.  There is also an option to pass a vector containing 3 elements
-set the lower and upper bounds and the phase of estimation.  This is often desirable as this
-vector can be read in from the data file and does not require recompiling of the code to change
-the parameter bounds or the phase of estimation.
-
-\begin{lstlisting}
-  init_bounded_number a(luphz_vector);
-\end{lstlisting}
-
-This has also been implemented for the \texttt{init\_bounded\_number\_vector}, where a matrix 
-read in from the data section is used to set the lower and upper bounds of each element and 
-phase of estimation.  The  following is a simple example implementing these new features.
-
-\begin{lstlisting}
-DATA_SECTION
-  init_int nobs;
-  init_vector y(1,nobs);
-  init_vector x(1,nobs);
-
-  // Controls for parameters.
-  init_vector a_lup(1,3);
-  init_vector b_lup(1,3);
-  init_vector sig_lup(1,3);
-
-  init_matrix theta_lup(1,3,1,3);
-PARAMETER_SECTION
-
-  init_bounded_number a(a_lup);
-  init_bounded_number b(b_lup);
-  init_bounded_number sig(sig_lup);
-
-  init_bounded_number_vector theta(theta_lup);
-  objective_function_value f;
-
-  vector y_hat(1,nobs);
-  vector y2_hat(1,nobs);
-
-INITIALIZATION_SECTION
-  sig 1.0;
-
-PROCEDURE_SECTION
-  
-  y_hat = a + b * x;
-  y2_hat = theta(1) + theta(2)*x;
-  f     = dnorm(y - y_hat, sig);
-  f    += dnorm(y-y2_hat,theta(3));
-\end{lstlisting} 
-
-And the input data file is here:
-
-\begin{lstlisting}
-# number of observations
-     10
-# observed Y values
-    1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18 
-# observed x values
-    -1  0 1  2  3  4  5  6  7  8        
-
-#a_lup
--5  5  1
-#b_lup
--10  10  1
-#sig_lup
-0.01  3.0  2
-#theta_lup
-# lower bound, upper bound, phase
--5  5  1
--10 10 1
-0.01 5.0 2
-\end{lstlisting}
-
-%-- End of Martell.
-
 \appendix
 
 \chapter{The Regression Function}\label{ch:appendix-regression-function}
@@ -4453,7 +4361,7 @@ init_4darray dxx(1,10,2,20,3,10)   // data section only
 Table~\ref{tab:type-declarations} contains a summary of declarations and the
 types of objects associated with them in \ADM. The types
 \texttt{dvariable, dvector, dmatrix, d3\_array, dvar\_vector, dvar\_matrix}, and
-\texttt{dvar3\_array} are described in the \scAD\ user's manual.
+\texttt{dvar3\_array} are described in the \scAD\ users's manual.
 
 %xx \htmlbegintex
 

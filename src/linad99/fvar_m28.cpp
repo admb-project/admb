@@ -2,14 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable
+// constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
 
@@ -32,7 +32,7 @@
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator/=(const double x)
+dvar_matrix& dvar_matrix::operator /= ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
@@ -47,7 +47,7 @@ dvar_matrix& dvar_matrix::operator/=(const double x)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator/=(const prevariable& x)
+dvar_matrix& dvar_matrix::operator /= ( _CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
@@ -62,7 +62,7 @@ dvar_matrix& dvar_matrix::operator/=(const prevariable& x)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator=(const double x)
+dvar_matrix& dvar_matrix::operator = ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
@@ -77,7 +77,7 @@ dvar_matrix& dvar_matrix::operator=(const double x)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator=(const prevariable& x)
+dvar_matrix& dvar_matrix::operator = (_CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
@@ -92,7 +92,7 @@ dvar_matrix& dvar_matrix::operator=(const prevariable& x)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator*=(const double x)
+dvar_matrix& dvar_matrix::operator *= ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
@@ -107,7 +107,7 @@ dvar_matrix& dvar_matrix::operator*=(const double x)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator*=(const prevariable& x)
+dvar_matrix& dvar_matrix::operator *= ( _CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)

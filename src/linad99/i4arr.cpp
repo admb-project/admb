@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -92,8 +92,8 @@ void i4_array::allocate(int hsl,int hsu)
  * Description not yet available.
  * \param
  */
-i4_array::i4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
-  const imatrix& nrh, int ncl, const i3_array& nch)
+i4_array::i4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
+    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
@@ -155,7 +155,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      t -= indexmin();
      for (int i=hsl; i<=hsu; i++)
      {
-       (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),
+       (*this)(i).allocate(ad_integer(sl),ad_integer(sh),nrl(i),nrh(i),
          ncl(i),nch(i));
      }
    }
@@ -170,7 +170,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-i4_array::i4_array(const i4_array& m2)
+ i4_array::i4_array(_CONST i4_array& m2)
  {
    if (m2.shape)
    {
@@ -225,11 +225,12 @@ i4_array::i4_array(const i4_array& m2)
  */
     i3_array& i4_array::operator ( ) (int i)
     {
+#     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i3_array& i4_array::operator ( ) (int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i3_array& i4_array::operator ( ) (int i)", indexmin(), indexmax(), i);
       }
+#     endif
       return t[i];
     }
 
@@ -239,11 +240,12 @@ i4_array::i4_array(const i4_array& m2)
  */
     i3_array& i4_array::operator [] (int i)
     {
+#     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i3_array& i4_array::operator [] (int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i3_array& i4_array::operator [] (int i)", indexmin(), indexmax(), i);
       }
+#     endif
       return t[i];
     }
 
@@ -274,18 +276,22 @@ i4_array::i4_array(const i4_array& m2)
       return ( ((*this)(i,j,k))(l));
     }
 
+#if defined(USE_CONST)
+
 /**
  * Description not yet available.
  * \param
  */
-const i3_array& i4_array::operator()(int i) const
+    _CONST i3_array& i4_array::operator ( ) (int i)   _CONST 
     {
+#     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
-        cerr << "Index out of bounds in i4_array::operator () (int)"
-             << endl;
+	cerr << "Index out of bounds in i4_array::operator () (int)"
+	     << endl;
         ad_exit(1);
       }
+#     endif
       return t[i];
     }
 
@@ -293,14 +299,16 @@ const i3_array& i4_array::operator()(int i) const
  * Description not yet available.
  * \param
  */
-const i3_array& i4_array::operator[](int i) const
+    _CONST i3_array& i4_array::operator [] (int i) _CONST
     {
+#     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
-        cerr << "Index out of bounds in i4_array::operator () (int)"
-             << endl;
+	cerr << "Index out of bounds in i4_array::operator () (int)"
+	     << endl;
         ad_exit(1);
       }
+#     endif
       return t[i];
     }
 
@@ -308,7 +316,7 @@ const i3_array& i4_array::operator[](int i) const
  * Description not yet available.
  * \param
  */
-const imatrix& i4_array::operator()(int i, int j) const
+     _CONST imatrix& i4_array::operator ( ) (int i ,int j) _CONST
     {
       return ((*this)(i))(j);
     }
@@ -317,7 +325,7 @@ const imatrix& i4_array::operator()(int i, int j) const
  * Description not yet available.
  * \param
  */
-const ivector& i4_array::operator()(int i, int j, int k) const
+    _CONST ivector& i4_array::operator ( ) (int i,int j,int k) _CONST
     {
       return (((*this)(i,j))(k));
     }
@@ -326,8 +334,10 @@ const ivector& i4_array::operator()(int i, int j, int k) const
  * Description not yet available.
  * \param
  */
-const int& i4_array::operator()(int i, int j, int k, int l) const
+    _CONST int& i4_array::operator ( ) (int i,int j,int k,int l) _CONST
     {
       return ( ((*this)(i,j,k))(l));
     }
 #endif
+#endif
+

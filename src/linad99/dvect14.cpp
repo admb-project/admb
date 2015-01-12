@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -17,23 +17,24 @@
  * Description not yet available.
  * \param
  */
-double sfabs(const double v1)
+ double sfabs( CGNU_DOUBLE v1)
  {
    #define cutoff 0.001
    #define cutoff2 0.000001
    double a = 2./cutoff;
-   double b = 1./cutoff2;
+   double b = 1./cutoff2;     
 
+   double tmp,tmp1,t2;
    double return_value;
-   double tmp1 = v1;
-   double tmp = ::fabs(tmp1);
+   tmp1=v1;
+   tmp=::fabs(tmp1);
    if (tmp > cutoff)
    {
         return_value=tmp;
    }
    else
    {
-     double t2 = tmp * tmp;
+     t2=tmp*tmp;
 
      if (tmp1 >=0)
      {
@@ -51,7 +52,7 @@ double sfabs(const double v1)
  * Description not yet available.
  * \param
  */
-dvector sfabs(const dvector& t1)
+  dvector sfabs(_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 

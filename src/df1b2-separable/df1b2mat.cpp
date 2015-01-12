@@ -2,8 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
+#define HOME_VERSION
 #include <df1b2fun.h>
 /**
  * \file
@@ -22,7 +23,7 @@ df1b2matrix choleski_decomp(const df1b2matrix& MM)
   int cmin=M(rmin).indexmin();
   int rmax=M.indexmax();
   int cmax=M(rmin).indexmax();
-
+ 
   if (rmin != cmin )
   {
     cerr << "minimum row and column inidices must equal 1 in "
@@ -36,6 +37,7 @@ df1b2matrix choleski_decomp(const df1b2matrix& MM)
       " Matrix not square" << endl;
     ad_exit(1);
   }
+ 
 
   //int n=rmax;
   df1b2matrix L(rmin,rmax,rmin,rmax);

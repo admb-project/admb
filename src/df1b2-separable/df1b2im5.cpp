@@ -2,15 +2,18 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
+#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
+
+static void xxx(void){;}
 
 /**
  * Description not yet available.
@@ -32,15 +35,17 @@ double calculate_importance_sample_block_diagonal_option_antithetical
   int hroom =  sum(square(lrea));
   int nvar=x.size()+u0.size()+hroom;
   independent_variables y(1,nvar);
-
+  
   // need to set random effects active together with whatever
   // init parameters should be active in this phase
-  initial_params::set_inactive_only_random_effects();
-  initial_params::set_active_random_effects();
-  /*int onvar=*/initial_params::nvarcalc();
+  initial_params::set_inactive_only_random_effects(); 
+  initial_params::set_active_random_effects(); 
+  /*int onvar=*/initial_params::nvarcalc(); 
   initial_params::xinit(y);    // get the initial values into the
   // do we need this next line?
   y(1,xs)=x;
+
+  int i,j;
 
   // contribution for quadratic prior
   if (quadratic_prior::get_num_quadratic_prior()>0)
@@ -50,7 +55,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
     quadratic_prior::get_cHessian_contribution(Hess,vxs);
   }
  // Here need hooks for sparse matrix structures
-
+  
   dvar3_array & block_diagonal_vhessian=
     *pmin->lapprox->block_diagonal_vhessian;
   block_diagonal_vhessian.initialize();
@@ -59,18 +64,19 @@ double calculate_importance_sample_block_diagonal_option_antithetical
     //dvar3_array(*pmin->lapprox->block_diagonal_ch);
   int ii=xs+us+1;
   d3_array& bdH=(*pmin->lapprox->block_diagonal_hessian);
-  for (int ic=1;ic<=nsc;ic++)
+  int ic;
+  for (ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
-    for (int i=1;i<=lus;i++)
-      for (int j=1;j<=lus;j++)
+    for (i=1;i<=lus;i++)
+      for (j=1;j<=lus;j++)
         y(ii++)=bdH(ic)(i,j);
   }
 
   dvector g(1,nvar);
   gradcalc(0,g);
   gradient_structure::set_YES_DERIVATIVES();
-  dvar_vector vy=dvar_vector(y);
+  dvar_vector vy=dvar_vector(y); 
   //initial_params::stddev_vscale(d,vy);
   ii=xs+us+1;
   if (initial_df1b2params::have_bounded_random_effects)
@@ -81,12 +87,13 @@ double calculate_importance_sample_block_diagonal_option_antithetical
   }
   else
   {
-    for (int ic=1;ic<=nsc;ic++)
+    int ic;
+    for (ic=1;ic<=nsc;ic++)
     {
       int lus=lrea(ic);
-      for (int i=1;i<=lus;i++)
+      for (i=1;i<=lus;i++)
       {
-        for (int j=1;j<=lus;j++)
+        for (j=1;j<=lus;j++)
         {
           block_diagonal_vhessian(ic,i,j)=vy(ii++);
         }
@@ -99,7 +106,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
    int nsamp=pmin->lapprox->num_importance_samples;
 
    dvariable vf=0.0;
-
+  
    dvar_vector sample_value(1,nsamp);
    sample_value.initialize();
 
@@ -109,21 +116,23 @@ double calculate_importance_sample_block_diagonal_option_antithetical
    {
      int offset=0;
      pmin->lapprox->importance_sampling_counter=is;
-     for (int ic=1;ic<=nsc;ic++)
+     int ic;
+     for (ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        tau(offset+1,offset+lus).shift(1)=block_diagonal_ch(ic)*
          (*pmin->lapprox->antiepsilon)(is);
        offset+=lus;
      }
-
+    
      // have to reorder the terms to match the block diagonal hessian
      imatrix & ls=*(pmin->lapprox->block_diagonal_re_list);
      int mmin=ls.indexmin();
      int mmax=ls.indexmax();
-
-     ii=1;
-     for (int i=mmin;i<=mmax;i++)
+    
+     int ii=1;
+     int i;
+     for (i=mmin;i<=mmax;i++)
      {
        int cmin=ls(i).indexmin();
        int cmax=ls(i).indexmax();
@@ -139,7 +148,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
      }
      initial_params::reset(vy);    // get the values into the model
      ii=1;
-     for (int i=mmin;i<=mmax;i++)
+     for (i=mmin;i<=mmax;i++)
      {
        int cmin=ls(i).indexmin();
        int cmax=ls(i).indexmax();
@@ -150,6 +159,11 @@ double calculate_importance_sample_block_diagonal_option_antithetical
      }
 
      *objective_function_value::pobjfun=0.0;
+     //int istop=0;
+     if (is==65)
+     {
+        xxx();
+     }
      pmin->AD_uf_outer();
 
      if (pmin->lapprox->use_outliers==0)
@@ -165,6 +179,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
 
         sample_value(is)=*objective_function_value::pobjfun
           -neps;
+
      }
      else
      {
@@ -176,7 +191,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
          neps-value(*objective_function_value::pobjfun);
 
        sample_value(is)=*objective_function_value::pobjfun
-         -neps;
+         -neps; 
      }
    }
 
@@ -185,7 +200,8 @@ double calculate_importance_sample_block_diagonal_option_antithetical
    for (is=1;is<=nsamp;is++)
    {
      int offset=0;
-     for (int ic=1;ic<=nsc;ic++)
+     int ic;
+     for (ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        // assumes that all spearable calls have the same number of
@@ -217,8 +233,9 @@ double calculate_importance_sample_block_diagonal_option_antithetical
    //double ns=lcomp.indexmax()-lcomp.indexmin()+1;
    //double min_vf=min(value(lcomp));
    vf= sum(lcomp);
-   vf-=us*0.91893853320467241;
-
+   vf-=us*0.91893853320467241; 
+   
+  
    int sgn=0;
    dvariable ld=0.0;
    if (ad_comm::no_ln_det_choleski_flag)
@@ -248,18 +265,19 @@ double calculate_importance_sample_block_diagonal_option_antithetical
    vy(xs+1,xs+us).shift(1)=u0;
    initial_params::reset(vy);    // get the values into the model
    gradient_structure::set_YES_DERIVATIVES();
-
+  
+  
   ii=1;
-  for (int i=1;i<=xs;i++)
+  for (i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);
-  for (int i=1;i<=us;i++)
+  for (i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
-  for (int ic=1;ic<=nsc;ic++)
+  for (ic=1;ic<=nsc;ic++)
   {
     int lus=lrea(ic);
-    for (int i=1;i<=lus;i++)
+    for (i=1;i<=lus;i++)
     {
-      for (int j=1;j<=lus;j++)
+      for (j=1;j<=lus;j++)
       {
         (*pmin->lapprox->block_diagonal_vhessianadjoint)(ic)(i,j)=g(ii++);
       }
@@ -267,3 +285,5 @@ double calculate_importance_sample_block_diagonal_option_antithetical
   }
   return f;
 }
+
+#endif

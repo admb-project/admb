@@ -2,47 +2,53 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
 int adkdelta(int i,int j)
 {
-  return i == j ? 1 : 0;
+  if (i==j)
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }
 
-void param_init_number::dev_correction(const dmatrix& H, const int& _ii)
+void param_init_number::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
 {
   int& ii=(int&) _ii;
   ii++;
 }
 
-void param_init_matrix::dev_correction(const dmatrix& H, const int& _ii)
+void param_init_matrix::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_d3array::dev_correction(const dmatrix& H, const int& _ii)
+void param_init_d3array::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_vector::dev_correction(const dmatrix& H, const int& _ii)
+void param_init_vector::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_bounded_vector::dev_correction(const dmatrix& H, const int& _ii)
+void param_init_bounded_vector::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H,
-  const int& _ii)
+void param_init_bounded_dev_vector::dev_correction(BOR_CONST dmatrix& _H,BOR_CONST int& _ii)
 {
   dmatrix& H=(dmatrix&) _H;
   int& ii=(int&) _ii;
@@ -62,10 +68,10 @@ void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H,
         for (l=lmin;l<=lmax;l++)
         {
           tmp+=(adkdelta(i,k)-ninv)*(adkdelta(j,l)-ninv)*H(k,l);
-        }
+	}
       }
       Htmp(i,j)=tmp;
-    }
+    }	    
   }
   for (i=lmin;i<=lmax;i++)
   {
@@ -75,4 +81,5 @@ void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H,
     }
   }
   ii+=n;
-}
+}    
+

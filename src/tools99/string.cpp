@@ -2,69 +2,62 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <fvar.hpp>
 #include <string.h>
 #include <stdlib.h>
+#include <safe_mem.h>
 
-void adstring::allocate(const size_t sz)
+void adstring::allocate(int sz)
 {
-  shape = new adstring_shape(sz);
-  s =  new unsigned char[sz+1];
+  shape = (adstring_shape*)mem_malloc(sizeof(adstring_shape));
+  shape->sz = sz;
+#if (defined __ZTC__) || (defined __NDPX__)
+  s =  (char*)mem_malloc(sz+1);
+#else
+  s =  (unsigned char*)mem_malloc(sz+1);
+#endif
   if (!s) {
     cerr << "Error allocating memory for adstring" << endl;
     exit(1);
   }
-  s--;
 }
 
-void adstring::deallocate()
-{
-  if (shape)
-  {
-    delete shape;
-    shape=0;
-  }
-  if (s)
-  {
-    s++;
-
-    delete [] s;
-    s=0;
-  }
-}
-adstring::operator unsigned char*()
+adstring::operator unsigned char * ()
 {
   return (unsigned char*)s + 1;
 }
 
-adstring::operator char*()
+adstring::operator char * ()
 {
   return (char*)(s + 1);
 }
 
-adstring::operator const unsigned char*() const
+#ifdef USE_CONST
+adstring::operator _CONST unsigned char * () _CONST
 {
-  return (const unsigned char*)s + 1;
+  return (_CONST unsigned char*)s + 1;
 }
 
-adstring::operator const char*() const
+adstring::operator _CONST char * () _CONST
 {
-  return (const char*)(s + 1);
+  return (_CONST char*)(s + 1);
 }
+#endif
 
-size_t adstring::size() const
-{
-  return s ? strlen((char*)(s+1)) : 0;
-}
+  unsigned int adstring::size(void) _CONST
+  {
+    if (!s) return 0;
+    return (strlen((char*)(s+1)));
+  }
 
-size_t adstring::buff_size() const
-{
-  return shape->size();
-}
+  unsigned int adstring::buff_size(void)
+  {
+    return (shape->size());
+  }
 
-ostream& operator<<(ostream& c, const adstring& t)
+ostream & operator << (ostream & c, _CONST adstring & t)
 {
   for (unsigned int i = 1; i <= t.size(); i++)
   {
@@ -77,8 +70,7 @@ ostream& operator<<(ostream& c, const adstring& t)
   return (c);
 }
 
-adstring& adstring::operator=(const char t)
-{
-  *this = adstring(t);
-  return *this;
+adstring & adstring::operator = (_CONST char t)
+{ 
+  return (*this = adstring(t)); 
 }

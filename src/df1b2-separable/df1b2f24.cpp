@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 
 /**
@@ -11,9 +11,6 @@
  */
 
 #include <df1b2fun.h>
-#if defined(__x86_64)
-  #include <stdint.h>
-#endif
 
 /**
  * Description not yet available.
@@ -101,25 +98,6 @@ void set_value(const df1b2matrix& _m,const init_df1b2vector& _v, const int& _ii,
   }
 }
 
-void set_value(const df1b2matrix& _m,const init_df1b2vector& _v, const int& _ii,
-  double fmin,double fmax,const df1b2variable& fpen,double s)
-{
-  ADUNCONST(int,ii)
-  ADUNCONST(df1b2matrix,m)
-  ADUNCONST(init_df1b2vector,v)
-  int min=m.indexmin();
-  int max=m.indexmax();
-  for (int i=min;i<=max;i++)
-  {
-    int cmin=m(i).indexmin();
-    int cmax=m(i).indexmax();
-    for (int j=cmin;j<=cmax;j++)
-    {
-      m(i,j)=boundp(v(ii++),fmin,fmax,fpen,s);
-    }
-  }
-}
-
 /**
  * Description not yet available.
  * \param
@@ -139,8 +117,8 @@ void df1b2_init_bounded_matrix::set_value(const init_df1b2vector& _x,
       int cmax=(*this)(i).indexmax();
       for (int j=cmin;j<=cmax;j++)
       {
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-        intptr_t tmp =(intptr_t)(&((*this)(i,j)));
+#if defined(__SUNPRO_CC) && defined(__x86_64)
+        long tmp= (long)( &((*this)(i,j)) );
 #else
         int tmp= (int)( &((*this)(i,j)) );
 #endif
@@ -150,14 +128,7 @@ void df1b2_init_bounded_matrix::set_value(const init_df1b2vector& _x,
       }
     }
   }
-  if (scalefactor==0.0)
-  {
-    ::set_value(*this,x,ii,minb,maxb,pen);
-  }
-  else
-  {
-    ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
-  }
+  ::set_value(*this,x,ii,minb,maxb,pen);
 }
 
 /**
@@ -179,26 +150,6 @@ void set_value(const df1b2_init_bounded_matrix & _v,const dvector& x,
     for (int j=cmin;j<=cmax;j++)
     {
       v(i,j)=boundp(x(ii++),fmin,fmax,fpen);
-    }
-  }
-}
-
-
-void set_value(const df1b2_init_bounded_matrix & _v,const dvector& x,
-  const int& _ii,double fmin,double fmax,double s)
-{
-  ADUNCONST(int,ii)
-  ADUNCONST(df1b2_init_bounded_matrix,v)
-  double fpen=0.0;
-  int mmin=v.indexmin();
-  int mmax=v.indexmax();
-  for (int i=mmin;i<=mmax;i++)
-  {
-    int cmin=v(i).indexmin();
-    int cmax=v(i).indexmax();
-    for (int j=cmin;j<=cmax;j++)
-    {
-      v(i,j)=boundp(x(ii++),fmin,fmax,fpen,s);
     }
   }
 }

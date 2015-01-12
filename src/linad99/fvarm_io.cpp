@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -34,9 +34,9 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _ostr, const dvar_matrix& z)
+ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar_matrix& z)
 {
-  ostream& ostr= (ostream&) _ostr;
+  ostream& ostr= (ostream&) _ostr; 
   z.write_on(ostr);
 
   return ostr;
@@ -46,17 +46,16 @@ ostream& operator<<(const ostream& _ostr, const dvar_matrix& z)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::write_on(const ostream& _s) const
+void dvar_matrix::write_on(BOR_CONST ostream& _s) _CONST
 {
-  ostream& s = (ostream&)_s;
+  ostream& s=(ostream&) _s;
 #ifdef __USE_IOSTREAM__
-  using std::streamsize;
-  streamsize new_w = s.width();
-  streamsize new_p = s.precision();
-#if !defined(__cplusplus)
-  long new_form = s.flags();
-#else
+  int new_w = s.width();
+  int new_p = s.precision();
+#if defined(GCC3)
   ios::fmtflags new_form = s.flags();
+#else
+  long new_form = s.flags();
 #endif
   char new_fill = s.fill();
 #endif
@@ -81,10 +80,10 @@ void dvar_matrix::write_on(const ostream& _s) const
  * Description not yet available.
  * \param
  */
-istream& operator>>(const istream& _istr, const dvar_matrix& _z)
+istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvar_matrix& _z)
 {
   dvar_matrix& z = (dvar_matrix&)_z;
-  istream& istr= (istream&) _istr;
+  istream& istr= (istream&) _istr; 
   z.read_from(istr);
 
   return istr;
@@ -94,7 +93,7 @@ istream& operator>>(const istream& _istr, const dvar_matrix& _z)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::read_from(const istream& s)
+void dvar_matrix::read_from(BOR_CONST istream& s)
 {
   int n = rowmin() + rowsize() - 1;
 
@@ -102,7 +101,7 @@ void dvar_matrix::read_from(const istream& s)
   {
     s >> (*this)[i];
     /*
-    if (!s.good())
+    if (!s.good()) 
     {
       cerr << " Error in dvar_matrix read\n";
       ad_exit(1);

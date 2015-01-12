@@ -2,38 +2,36 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
  int stddev_params::num_stddev_params=0;
  int stddev_params::num_stddev_number_params=0;
+ stddev_params * stddev_params::stddev_number_ptr[150]; // this should be a resizeable array
 
-// this should be a resizeable array
-stddev_params* stddev_params::stddev_number_ptr[150];
-// this should be a resizeable array
-stddev_params* stddev_params::stddevptr[150];
+ stddev_params * stddev_params::stddevptr[150]; // this should be a resizeable array
 
   void stddev_params::add_to_list(void)
   {
-    if (num_stddev_params>=150)
+    if (num_stddev_params>=150) 
     {
       cerr << "This version of ADMB only supports " << num_stddev_params
            << " stddev_params." << endl;
       exit(1);
-    }
-    stddevptr[num_stddev_params++]= this; // this is the list of
+    } 
+    stddevptr[num_stddev_params++]= this; // this is the list of 
   }
 
   void stddev_params::add_to_gui_list(void)
   {
-    if (num_stddev_number_params>=150)
+    if (num_stddev_number_params>=150) 
     {
       cerr << "This version of ADMB only supports " << num_stddev_params
            << " stddev_params." << endl;
       exit(1);
-    }
-    stddev_number_ptr[num_stddev_number_params++]= this; // this is the list of
+    } 
+    stddev_number_ptr[num_stddev_number_params++]= this; // this is the list of 
   }
 
   ivector stddev_params::copy_all_number_offsets(void)
@@ -168,7 +166,7 @@ stddev_params* stddev_params::stddevptr[150];
 
 
 /*
-dvar_vector& operator<<(const dvar_vector& v, const dvar_vector& w)
+dvar_vector& operator << (BOR_CONST dvar_vector& v,_CONST dvar_vector& w)
 {
   int mmin=v.indexmin();
   int mmax=v.indexmax();
@@ -179,7 +177,7 @@ dvar_vector& operator<<(const dvar_vector& v, const dvar_vector& w)
   return v;
 }
 
-dvar_matrix& operator<<(const dvar_matrix& v, const dvar_matrix& w)
+dvar_matrix& operator << (BOR_CONST dvar_matrix& v,_CONST dvar_matrix& w)
 {
   int mmin=v.rowmin();
   int mmax=v.rowmax();
@@ -209,7 +207,7 @@ dvar_matrix& operator<<(const dvar_matrix& v, const dvar_matrix& w)
   /*
 class param_stddev_number: public named_dvariable , stddev_params
 {
-  param_stddev_number& operator=(const prevariable&);
+  param_stddev_number& operator = (_CONST prevariable&);
   param_stddev_number& operator = (CGNU_DOUBLE);
   void allocate(const char *s="UNNAMED");
   virtual int size_count(void); // get the number of active parameters

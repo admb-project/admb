@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -23,7 +23,7 @@
  * Description not yet available.
  * \param
  */
- dmatrix::dmatrix(const dvar_matrix_position& pos)
+ dmatrix::dmatrix(BOR_CONST dvar_matrix_position& pos)
  {
    int nrl=pos.row_min;
    int nrh=pos.row_max;
@@ -35,8 +35,7 @@
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -77,7 +76,7 @@
  * Description not yet available.
  * \param
  */
- dmatrix::dmatrix(const dmatrix_position& pos)
+ dmatrix::dmatrix(BOR_CONST dmatrix_position& pos)
  {
    int nrl=pos.row_min;
    int nrh=pos.row_max;
@@ -89,8 +88,7 @@
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -123,3 +121,4 @@
      myheapcheck("Leaving dmatrix(nrl,nrh,ncl,nch)" );
    #endif
  }
+

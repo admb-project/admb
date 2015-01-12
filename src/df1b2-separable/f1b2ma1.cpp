@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -38,7 +38,7 @@ df1b2vector column(const df1b2matrix& _M,int n)
  * Description not yet available.
  * \param
  */
- df1b2matrix trans(const df1b2matrix& _m1)
+ df1b2matrix trans(_CONST df1b2matrix& _m1)
  {
    ADUNCONST(df1b2matrix,m1)
    int rmin=m1.indexmin();

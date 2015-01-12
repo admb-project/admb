@@ -2,14 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
 #include "fvar.hpp"
-#if defined(__TURBOC__)
+#if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
    #include <alloc.h>
 #endif
@@ -18,50 +18,45 @@
 
 void dv_assign(void);
 
-#ifdef _MSC_VER
-  #include <memory.h>
-#endif
-
-#ifndef OPT_LIB
-  #include <cassert>
+#ifdef __MSVC32__
+#include <memory.h>
 #endif
 
 /**
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator=(const dvar_vector& t)
+ dvar_vector& dvar_vector::operator = (_CONST dvar_vector& t)
  {
    if (!(*this))
    {
      allocatec(t);
    }
-#if defined (AD_FAST_ASSIGN)
+#  if defined (AD_FAST_ASSIGN)
    else if (!(shape->ncopies))
    {
      deallocate();
      allocatec(t);
    }
-#endif
+#  endif
    else
    {
      int mmin=indexmin();
      int mmax=indexmax();
-#ifndef OPT_LIB
-     assert(mmax >= mmin);
-#endif
      if (mmin != t.indexmin() || mmax != t.indexmax())
      {
        cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator ="
-         " (const dvar_vector& t)\n";
+         " (_CONST dvar_vector& t)\n";
        ad_exit(21);
      }
      if (va != t.va)
      {
-#ifdef OPT_LIB
-       size_t size = (size_t)(mmax - mmin + 1);
-       memcpy(&elem_value(mmin), &t.elem_value(mmin), size * sizeof(double));
-#else
+     #ifdef OPT_LIB
+       int mmin=indexmin();
+       int mmax=indexmax();
+       memcpy(&elem_value(mmin),&t.elem_value(mmin),
+         (mmax-mmin+1)*sizeof(double));
+     #else 
        #ifndef USE_ASSEMBLER
          for (int i=mmin; i<=mmax; i++)
          {
@@ -72,8 +67,8 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
          int n=t.indexmax()-min+1;
          dw_block_move(&(this->elem_value(min)),&(t.elem_value(min)),n);
        #endif
-#endif
-
+      #endif
+  
        // The derivative list considerations
        save_identifier_string("bbbb");
        t.save_dvar_vector_position();
@@ -84,7 +79,7 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
      }
    }
    return (*this);
- }
+ } 
 
 void dv_eqprev(void);
 
@@ -92,7 +87,7 @@ void dv_eqprev(void);
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator=(const prevariable& t)
+ dvar_vector& dvar_vector::operator = (_CONST prevariable& t)
  {
    int mmin=indexmin();
    int mmax=indexmax();
@@ -117,7 +112,7 @@ void dv_eqdoub(void);
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::operator=(const double t)
+ dvar_vector& dvar_vector::operator = ( CGNU_DOUBLE t)
  {
    int mmin=indexmin();
    int mmax=indexmax();
@@ -181,17 +176,13 @@ void dv_assign(void)
   dvar_vector_position t_pos=restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dft(dftmp.indexmin(),dftmp.indexmax());
-#ifndef OPT_LIB
-  assert(dftmp.indexmax() >= dftmp.indexmin());
-#endif
 #ifdef OPT_LIB
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
-  size_t size = (size_t)(mmax - mmin + 1);
-  memcpy(&dft.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
+  memcpy(&dft.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
 
 #else
-  #ifndef USE_ASSEMBLER
+#ifndef USE_ASSEMBLER
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
   for (int i=mmin;i<=mmax;i++)
@@ -199,12 +190,12 @@ void dv_assign(void)
     //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
     dft.elem(i)=dftmp.elem(i);
   }
-  #else
+#else
   int mmin=dftmp.indexmin();
   int n=dftmp.indexmax()-mmin+1;
      dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
-  #endif
 #endif
-
+#endif
+     
   dft.save_dvector_derivatives(t_pos);
 }

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -13,7 +13,7 @@
 
 /*
 funnel_init_df1b2vector::funnel_init_df1b2vector
-  (const df1b2_init_bounded_vector & _x)
+  (const df1b2_init_bounded_vector & _x) 
 {
   ADUNCONST(df1b2_init_bounded_vector,x)
   type=1;

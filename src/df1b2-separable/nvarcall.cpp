@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -52,7 +52,9 @@
     {
       (varsptr[i])->set_value(x,ii,pen1);
       _pen(ii-1)=value(pen1);
-      pen+=pen1;
+      pen+=pen1; 
     }
     return pen;
   }
+
+#undef HOME_VERSION

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2012 ADMB Foundation
+ * Copyright (c) 2011 ADMB Foundation
  */
 
 #include <df1b2fun.h>
@@ -17,8 +17,8 @@ df1b2vector df1b2vector::operator() (const ivector & iv)
 
   for (int i=lb;i<=ub;i++)
   {
-    tmp(i)=(*this)(iv(i));
-    tmp(i).get_ind_index()=(*this)(iv(i)).get_ind_index();
+    tmp(i)=(*this)(iv(i));    
+    tmp(i).get_ind_index()=(*this)(iv(i)).get_ind_index();    
   }
   return tmp;
 }

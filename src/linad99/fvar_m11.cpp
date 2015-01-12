@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,12 +14,11 @@
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator+=(const dvar_matrix& m1)
+ dvar_matrix& dvar_matrix::operator+= (_CONST dvar_matrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "dvar_matrix& operator += (const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvar_matrix& operator += (_CONST dvar_vector&)\n";
      ad_exit(21);
    }
 
@@ -34,12 +33,11 @@ dvar_matrix& dvar_matrix::operator+=(const dvar_matrix& m1)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator+=(const dmatrix& m1)
+ dvar_matrix& dvar_matrix::operator+= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "dvar_matrix& operator+=(const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvar_matrix& operator += (_CONST dvar_vector&)\n";
      ad_exit(21);
    }
 
@@ -54,12 +52,11 @@ dvar_matrix& dvar_matrix::operator+=(const dmatrix& m1)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator-=(const dvar_matrix& m1)
+ dvar_matrix& dvar_matrix::operator-= (_CONST dvar_matrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "dvar_matrix& operator -= (const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvar_matrix& operator -= (_CONST dvar_vector&)\n";
      ad_exit(21);
    }
 
@@ -74,12 +71,11 @@ dvar_matrix& dvar_matrix::operator-=(const dvar_matrix& m1)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator-=(const dmatrix& m1)
+ dvar_matrix& dvar_matrix::operator-= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "dvar_matrix& operator-=(const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvar_matrix& operator -= (_CONST dvar_vector&)\n";
      ad_exit(21);
    }
 

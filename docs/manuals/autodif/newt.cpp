@@ -38,7 +38,7 @@ void main()
   cout << " The angle between the rows of the jacobian = "
        << acos(jacobian(1)*jacobian(2)
           /(norm(jacobian(1))*norm(jacobian(2))))
-          *180/PI << " degrees" << endl;
+          *180/3.14159 << " degrees" << endl;
   cout << " Final inverse jacobian matrix value = "
        << inv(jacobian)(1) << endl
        << " "

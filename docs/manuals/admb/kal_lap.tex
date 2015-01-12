@@ -1,4 +1,4 @@
-% $Id$
+% $Id: kal_lap.tex 204 2009-04-20 01:59:36Z jsibert $
 %
 % Author: David Fournier
 % Copyright (c) 2008 Regents of the University of California
@@ -223,7 +223,7 @@ be estimated in the model, if desired.
 The model was fit with various combinations of the parameters,
 and the log-likelihood was examined to investigate the improvement in
 fit due to the addition of the parameters.  See Table~\ref{tab:parameters}.
-\begin{table}[htbp]
+\begin{table}[h]
 \begin{center}
 \begin{tabular}{@{\vrule height 16pt depth 6pt width0pt}@{\extracolsep{1em}}c c c}
 \\
@@ -251,7 +251,7 @@ in the response of the variance to positive and negative shocks.
 Here are the parameter estimates and their standard deviations for
 the model with $w,\delta,R,\sigma^2_\eta$, and $\lambda_1$:
 \begin{lstlisting}
- index   name    value      std.dev   
+ index   name    value      std dev   
     1   w(1)       -1.3749e-001 4.9434e-002
     2   w(2)       -6.5649e-001 1.6161e-001
     3   w(3)        3.1693e-002 1.0574e-002
@@ -405,7 +405,7 @@ PROCEDURE_SECTION
     int sgn;
     f+=lmin(i)+0.5*ln_det(sh,sgn);  // Laplace approximation
   }
-  f-=0.5*nobs*ndim*log(2.*PI);
+  f-=0.5*nobs*ndim*log(2.*3.14159);
   Omega=S;
 
 FUNCTION  dvar_vector update_the_means(dvar_vector& w,dvar_vector& m,dvector& e)

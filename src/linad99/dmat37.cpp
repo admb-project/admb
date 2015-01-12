@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -70,7 +70,7 @@ dmatrix solve(const banded_symmetric_dmatrix& m,const dmatrix& n)
 {
   int ierr=0;
   return solve(m,n,ierr);
-}
+} 
 
 /**
  * Description not yet available.

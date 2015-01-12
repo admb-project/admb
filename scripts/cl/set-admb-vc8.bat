@@ -12,10 +12,8 @@ REM
 REM
 REM Adds the bin folder to ADMB_HOME to system path.
 REM
-@set PATH="%ADMB_HOME%"\bin;"%ADMB_HOME%"\utilities;%PATH%
-@echo Setting ADMB Home enviroment to "%ADMB_HOME%".
+@set PATH=%ADMB_HOME%\bin;%PATH%
 
-@cd "%USERPROFILE%"
+@echo Set ADMB Home directory to %ADMB_HOME%
 
-@echo.
-@echo For help, type command "admb".
+@cd "%ADMB_HOME%/examples/admb"

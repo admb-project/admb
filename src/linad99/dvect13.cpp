@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix column_vector(const dvector& v)
+dmatrix column_vector(_CONST dvector& v)
 {
   int min=v.indexmin();
   int max=v.indexmax();
@@ -30,7 +30,7 @@ dmatrix column_vector(const dvector& v)
  * Description not yet available.
  * \param
  */
-dmatrix row_vector(const dvector& v)
+dmatrix row_vector(_CONST dvector& v)
 {
   int min=v.indexmin();
   int max=v.indexmax();
@@ -46,7 +46,7 @@ dmatrix row_vector(const dvector& v)
  * Description not yet available.
  * \param
  */
-dvar_matrix column_vector(const dvar_vector& v)
+dvar_matrix column_vector(_CONST dvar_vector& v)
 {
   int min=v.indexmin();
   int max=v.indexmax();
@@ -62,7 +62,7 @@ dvar_matrix column_vector(const dvar_vector& v)
  * Description not yet available.
  * \param
  */
-dvar_matrix row_vector(const dvar_vector& v)
+dvar_matrix row_vector(_CONST dvar_vector& v)
 {
   int min=v.indexmin();
   int max=v.indexmax();

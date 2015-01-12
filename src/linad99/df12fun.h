@@ -2,29 +2,29 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- *
+ * Copyright (c) 2008-2011 Regents of the University of California
+ * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- *
+ * 
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- *
+ * 
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -63,7 +63,6 @@
     df1_two_variable& operator = (const df1_two_variable& v);
     df1_two_variable& operator = (double v);
     df1_two_variable& operator += (const df1_two_variable& v);
-    df1_two_variable& operator *= (double v);
     df1_two_variable& operator *= (const df1_two_variable& v);
     df1_two_variable& operator += (double v);
     df1_two_variable& operator -= (const df1_two_variable& v);
@@ -73,7 +72,7 @@
     df1_two_variable(const df1_two_variable& );
   };
 
-  inline double value(const df1_two_variable& x) { return double(*x.get_u()); }
+  inline  double value(const df1_two_variable& x) { return double(*x.get_u()); }
 
 /**
  * Description not yet available.
@@ -105,12 +104,12 @@
     df1_two_vector(void);
     void allocate(void);
     void allocate(int min,int max);
-    df1_two_variable& operator () (int i) const
-    {
+    df1_two_variable& operator () (int i) const 
+    { 
       return (df1_two_variable&) (*(v+i));
     }
-    df1_two_variable& operator [] (int i) const
-    {
+    df1_two_variable& operator [] (int i) const 
+    { 
       return (df1_two_variable&) (*(v+i));
     }
     void initialize(void);
@@ -138,31 +137,31 @@
     int indexmin(void) const { return int(index_min); }
     int indexmax(void) const { return int(index_max); }
     df1_two_matrix(int rmin,int rmax,int cmin,int cmax);
-    df1_two_vector& operator () (int i) const
-    {
-      return (df1_two_vector&) *(v+i);
+    df1_two_vector& operator () (int i) const 
+    { 
+      return (df1_two_vector&) *(v+i); 
     }
-    df1_two_vector& operator [] (int i) const
-    {
-      return (df1_two_vector&) *(v+i);
+    df1_two_vector& operator [] (int i) const 
+    { 
+      return (df1_two_vector&) *(v+i); 
     }
-    df1_two_variable& operator () (int i,int j) const
-    {
-      return (df1_two_variable&) (*(v+i))(j);
+    df1_two_variable& operator () (int i,int j) const 
+    { 
+      return (df1_two_variable&) (*(v+i))(j); 
     }
     void initialize(void);
-//df1_two_variable& operator()(int i,int j) const { return *((v+i)->(v+j)); }
+    //df1_two_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_two_matrix();
     df1_two_matrix(const df1_two_matrix& m2);
   };
 
  dmatrix value(const df1_two_matrix& v);
-
+   
  dmatrix first_derivatives(const df1_two_matrix& v);
  dmatrix second_derivatives(const df1_two_matrix& v);
  dmatrix third_derivatives(const df1_two_matrix& v);
-
+    
 /*
   df1_two_variable operator F(const df1_two_variable& x)
   {
@@ -185,7 +184,6 @@
 
   df1_two_variable sin(const df1_two_variable& x);
   df1_two_variable sqrt(const df1_two_variable& x);
-  df1_two_variable fabs(const df1_two_variable& x);
   df1_two_variable atan(const df1_two_variable& x);
   df1_two_variable cos(const df1_two_variable& x);
   df1_two_variable tan(const df1_two_variable& x);
@@ -194,7 +192,6 @@
   df1_two_variable cube(const df1_two_variable& x);
   df1_two_variable pow(const df1_two_variable& x,
     const df1_two_variable& y);
-  df1_two_variable pow(double x,const df1_two_variable& y);
 
   df1_two_variable sqrt(const df1_two_variable& x);
   df1_two_variable exp(const df1_two_variable& x);
@@ -233,11 +230,14 @@
   df1_two_variable operator * (const df1_two_variable& x,
     const df1_two_variable& y);
 
+
   df1_two_variable operator - (const df1_two_variable& v);
   df1_two_matrix choleski_decomp(const df1_two_matrix& MM);
-
+ 
   df1_two_variable cumd_gamma(const df1_two_variable& x,
     const df1_two_variable& a);
 
+
   df1_two_variable gammln(const df1_two_variable& xx);
 #endif  // __DF12FUN__
+

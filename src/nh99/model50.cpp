@@ -2,11 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 #include <admodel.h>
 
-//double ndfboundp( double x, double fmin, double fmax, const double& fpen);
+//double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
 
   void param_init_bounded_number::set_maxb(double x)
   {

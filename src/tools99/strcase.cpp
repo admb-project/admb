@@ -2,27 +2,27 @@
  * $Id$
  *
  * Author: John Sibert
- * Copyright (c) 2010-2012 ADMB Foundation
+ * Copyright (c) 2010-2011 ADMB Foundation
  */
 #include "adstring.hpp"
 
 void adstring::to_lower(void)
 {
   for (unsigned int i=1; i <= size(); i++)
-#ifdef _MSC_VER
-    s[i] = (unsigned char)tolower(s[i]);
+#ifdef _MSC_VER  
+    s[i] = tolower(s[i]);
 #else
-    s[i] = (unsigned char)std::tolower(s[i]);
+    s[i] = std::tolower(s[i]);
 #endif
 }
 
 void adstring::to_upper(void)
 {
   for (unsigned int i=1; i <= size(); i++)
-#ifdef _MSC_VER
-    s[i] = (unsigned char)toupper(s[i]);
+#ifdef _MSC_VER  
+    s[i] = toupper(s[i]);
 #else
-    s[i] = (unsigned char)std::toupper(s[i]);
+    s[i] = std::toupper(s[i]);
 #endif
 }
 

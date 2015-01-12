@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -36,7 +36,7 @@
  * Description not yet available.
  * \param
  */
-uistream& operator>>(const uistream& istr, const dmatrix& _z)
+uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dmatrix& _z)
 {
   ADUNCONST(dmatrix,z)
   z.read_from(istr);
@@ -48,14 +48,14 @@ uistream& operator>>(const uistream& istr, const dmatrix& _z)
  * Description not yet available.
  * \param
  */
-void dmatrix::read_from(const uistream& s)
+void dmatrix::read_from(BOR_CONST uistream& s)
 {
   int n = rowmin() + rowsize() - 1;
 
   for (int i=rowmin(); i <= n; i++)
   {
      s >> (*this)[i];
-     if (!s.good())
+     if (!s.good()) 
      {
        cerr << " Error in dmatrix read\n";
        ad_exit(1);
@@ -67,7 +67,7 @@ void dmatrix::read_from(const uistream& s)
  * Description not yet available.
  * \param
  */
-uostream& operator<<(const uostream& ostr, const dmatrix& z)
+uostream& operator<<(BOR_CONST uostream& ostr,_CONST dmatrix& z)
 {
   z.write_on(ostr);
 
@@ -78,12 +78,12 @@ uostream& operator<<(const uostream& ostr, const dmatrix& z)
  * Description not yet available.
  * \param
  */
-void dmatrix::write_on(const uostream& s) const
+void dmatrix::write_on(BOR_CONST uostream& s) _CONST
 {
   for (int i=rowmin(); i <= rowmax(); i++)
   {
      s << (*this)[i];
-     if (!s.good())
+     if (!s.good()) 
      {
        cerr << " Error in dmatrix write\n";
        ad_exit(1);

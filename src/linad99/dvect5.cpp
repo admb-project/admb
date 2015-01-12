@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -13,13 +13,13 @@
 /**
  * Sets all elements to zero.
  */
-void dvector::initialize(void)
-{
-  if (!(!(*this)))  // only initialize allocated objects
+  void dvector::initialize(void)
   {
-    for (int i=indexmin();i<=indexmax();i++)
+    if (!(!(*this)))  // only initialize allocated objects
     {
-      elem(i)=0.0;
+      for (int i=indexmin();i<=indexmax();i++)
+      {
+        elem(i)=0.0;
+      }
     }
   }
-}

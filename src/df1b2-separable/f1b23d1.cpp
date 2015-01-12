@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -312,9 +312,7 @@ df1b2variable& df1b23array::operator () (int i,int j,int k)
 {
   if (i < indexmin() || i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "df1b2variable& df1b23array::operator () (int i,int j,int k)",
-    indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "df1b2variable& df1b23array::operator () (int i,int j,int k)", indexmin(), indexmax(), i);
   }
   return v[i][j][k];
 }
@@ -327,9 +325,7 @@ df1b2vector& df1b23array::operator () (int i,int j)
 {
   if (i < indexmin() || i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "df1b2vector& df1b23array::operator () (int i,int j)",
-    indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "df1b2vector& df1b23array::operator () (int i,int j)", indexmin(), indexmax(), i);
   }
   return v[i][j];
 }
@@ -342,9 +338,7 @@ df1b2matrix& df1b23array::operator () (int i)
 {
   if (i < indexmin() || i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "df1b2matrix& df1b23array::operator () (int i)",
-    indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "df1b2matrix& df1b23array::operator () (int i)", indexmin(), indexmax(), i);
   }
   return v[i];
 }
@@ -357,9 +351,7 @@ df1b2matrix& df1b23array::operator [] (int i)
 {
   if (i < indexmin() || i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "df1b2matrix& df1b23array::operator [] (int i)",
-    indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "df1b2matrix& df1b23array::operator [] (int i)", indexmin(), indexmax(), i);
   }
   return v[i];
 }

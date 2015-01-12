@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -26,5 +26,5 @@ double randnegbinomial(double mu,double tau,
   double c=r/mu;
   double z=sgamma(r,rng);
   double lambda=z/c;
-  return randpoisson(lambda,rng);
+  return randpoisson(lambda,rng); 
 }

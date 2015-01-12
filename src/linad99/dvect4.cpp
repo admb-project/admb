@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -14,8 +14,9 @@
  * Description not yet available.
  * \param
  */
-dvector operator*(const dvector& t1, const double x)
+  dvector operator * (_CONST dvector& t1, CGNU_DOUBLE x)
   {
+
      dvector tmp(t1.indexmin(),t1.indexmax());
 
      for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
@@ -29,7 +30,7 @@ dvector operator*(const dvector& t1, const double x)
  * Description not yet available.
  * \param
  */
-dvector operator/(const double x, const dvector& t1)
+  dvector operator / ( CGNU_DOUBLE x,_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -44,7 +45,7 @@ dvector operator/(const double x, const dvector& t1)
  * Description not yet available.
  * \param
  */
-dvector operator/(const dvector& t1, const double x)
+  dvector operator / (_CONST dvector& t1, CGNU_DOUBLE x)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -59,7 +60,7 @@ dvector operator/(const dvector& t1, const double x)
  * Description not yet available.
  * \param
  */
-dvector operator+(const double x, const dvector& t1)
+  dvector operator + ( CGNU_DOUBLE x,_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -74,7 +75,7 @@ dvector operator+(const double x, const dvector& t1)
  * Description not yet available.
  * \param
  */
-dvector operator+(const dvector& t1, const double x)
+  dvector operator + (_CONST dvector& t1, CGNU_DOUBLE x)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -89,7 +90,7 @@ dvector operator+(const dvector& t1, const double x)
  * Description not yet available.
  * \param
  */
-dvector operator-(const double x, const dvector& t1)
+  dvector operator - ( CGNU_DOUBLE x,_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -104,7 +105,7 @@ dvector operator-(const double x, const dvector& t1)
  * Description not yet available.
  * \param
  */
-dvector operator-(const dvector& t1, const double x)
+  dvector operator - (_CONST dvector& t1, CGNU_DOUBLE x)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -10,10 +10,14 @@
  */
 #include <fvar.hpp>
 
-typedef double (*pinit_f)(double y,double a);
-
-/*
 static double cc=0.39894228040143267794;
+
+typedef double (*pinit_f)(double y,double a); 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 static double cumd_normal_logistic_mixture(double x,double a)
 {
   // "normal" value for a is 3.0
@@ -29,6 +33,10 @@ static double cumd_normal_logistic_mixture(double x,double a)
   return y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double df_cumd_normal_logistic_mixture(double x,double a)
 {
   // "normal" value for a is 3.0
@@ -47,6 +55,10 @@ static double df_cumd_normal_logistic_mixture(double x,double a)
   return dfx;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double cumd_normal_logistic_mixture_initx(double y,double a)
 {
   double x;
@@ -64,7 +76,6 @@ static double cumd_normal_logistic_mixture_initx(double y,double a)
   }
   return x;
 }
-*/
 
 /**
  * Description not yet available.
@@ -95,7 +106,25 @@ double  nr_generic(double y,double a,pinit_f p_get_initial_x,
     cerr << "shit" << endl;
   }
 
+
   return x;
+}
+
+/**
+ * Description not yet available.
+ * \param
+ */
+dvariable inv_cumd_normal_logistic_mixture(const prevariable& _yy,double a)
+{
+  ADUNCONST(dvariable,yy)
+  double  x=nr_generic(value(yy),a,cumd_normal_logistic_mixture_initx,
+    cumd_normal_logistic_mixture,df_cumd_normal_logistic_mixture);
+  dvariable z;
+  value(z)=x;
+  double dfx=1.0/df_cumd_normal_logistic_mixture(x,a);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+     &(value(z)), &(value(yy)),dfx);
+  return z;
 }
 
 /*

@@ -1,39 +1,20 @@
-// $Id$
 /**
- \mainpage Comprehensive Documentation of Functions and Classes
+ \mainpage Applications Programming Interface
 <br><center>
 \image html admb-logo-notext-72.png
 </center><br>
-
-<B>
-<ul>
-  <li> Documentation of mathematical functions can be found in the 
-"Function Reference" tab.</li>
-  <li> C++ class documentation can be found in the "Classes" tab. </li>
-  <li> Documentation for global funtions and source code listings can be found in the "Source Code" tab. </li>
-  <li> The "Related Pages" tab contains a list of deprecated code and is under construction. </li>
-</ul>
-</B>
-
+Documentation of mathematical functions can be found on the "Modules" tab.
 <br>
 <br>
-This version of the API documentation is a work in progress.
 Partial documentation of some of the AUTODIF Library and ADMB classes can
-found on the "Classes" and "Source Code" tabs. Most classes are not
-fully documented, but see class \ref dvector for an example of 
-how it might look.
-If you would like to contribute your expertize to the enterprize please 
-contact developers@admb-project.org.
-
-<HR width="20%" align=center>
-<center>
-<H3>
-For up-to-date information and download and installation instructions
-consult the 
-<a href="http://www.admb-project.org/buildbot/documentation/INSTALL.html">Installation Guide</a>.
-</H3>
-</center>
-
+found on the "Classes" tab. No class is 
+fully documented. See class \ref dvector for an example of 
+how it might look and how to insert documentation.
+<br>
+<br>
+This preliminary version of the API documentation is a work in progress.
+If you would like ton contribute you expertize to the enterprize please contact
+developers@admb-project.org.
 */
 
 /*
@@ -57,7 +38,7 @@ types are optimized for efficient derivative computation.
 Only the constant types are currently documented here.
 */
 
-/**  \defgroup PDF Probability Density Functions.
+/**  \defgroup PDF Probability Distribution Functions.
 */
 
 /**  \defgroup RNG Random Numbers.
@@ -69,16 +50,12 @@ typically optimized for automatic differentiation and automatically
 invoke custom adjoint code.
 */
 
-/**  \defgroup prepros Preprosessor (tpl2cpp & tpl2rem)
-\details Document "tpl2cpp" and "tpl2rem" as well as their output files (.cpp and .htp)
-*/
-
 /** \defgroup DEVEL Development Utilities
 \details ADMB functions of use to developers of ADMB code.
 */
 
 /**
- * \defgroup gammafunc Factorial, gamma and related functions.
+ * \defgroup gammafunc Gamma and related functions.
  */
 
 /**
@@ -88,105 +65,4 @@ invoke custom adjoint code.
 /**
  * \defgroup cub_spline Class and methods for cubic splines.
  */
-
-/**
-  \defgroup RA RETURN_ARRAY_INCREMENT and RETURN_ARRAY_DECREMENT 
-   \details
-  These functions must be called in any function that returns
-  a "variable" object, ie dvariable, dvar_vector, ... Failure to do so
-  may generate an error message related to an overflow in the 
-  RETURN_ARRAYS stack, or even worse cause derivatives to be incorrect.
- */
-
-/**
-  \defgroup FMM Numerical Function Minimization
-*/
-
-/**
-  \defgroup AD Classes for Automatic Differentiation.
-   \details
-   The algorithms for AD  in ADMB are invoked by declaring variables to be
-   instances of specific classes, usually of type dvariable. Operations on instances of these classes invoke specialized overloaded 
-   operators and functions to the required computations and to automatically 
-   compute the required deravitives.
-*/
-
-/** \defgroup BAD Reverse mode Automatic Differentiation.
-    \ingroup AD
-*/
-
-/** \defgroup FAD Forward mode Automatic Differentiation.
-     \ingroup AD
-*/
-
-/** \defgroup CONTRIB User-Contributed Libraries.
-    \details 
-     Collections of C++ and source code for implementing specialized
-     models in ADMB. These modules are maintained by the original authors.
-*/
-
-/** \defgroup STATLIB Statistical Fuctions.
-    \ingroup CONTRIB
-    \details Contributed by Steven Martell.
-*/
-
-/** \defgroup ECOL Functions Useful in Ecology.
-    \ingroup CONTRIB
-    \details Contributed by Mollie Brooks.
-*/
-
-/** \defgroup QFC Functions created at the Quantitative Fisheries Center(QFC), Michigan State University.
- 
-    \ingroup CONTRIB
-    \details Contributed by Weihai Liu
-*/
-
-/** \defgroup  GDBPRINTLIB Dubugging aids.
-    \ingroup CONTRIB
-    \details Functions for printing ADMB objects during GDB sessions.
-  This functioniality was added to allow easy
-  viewing of ADMB variables of all types during a GDB debugging session, but
-  the functions can be used in code.
-  To use the functions in a GDB session, ADMB must have been built from source
-  in debug mode, typically using the command 'make debug'. Also, the model
-  TPL must have been compiled using the debug flag, typically using the command
-  'admb -g '.
- 
-  Contributed by Chris Grandin and Dave Fournier
-*/
-
-
-// generate dox for directories
-/** \dir src
-Main AUTODIF and ADMB source code directories.
-*/
-/** \dir linad99
-Home of \ref fvar.hpp and the source files for most of th AUTODIF library.
-*/
-/** \dir nh99
-Source files for ADMB
-*/
-/** \dir df1b2-separable
-Source files for random effects models.
-*/
-/** \dir tools99
-Source files for "tools" such as the \ref cifstream and \ref adstring classes.
-*/
-/** \dir sparse
-Sparse matrix routines used for some special random effects models.
-*/
-/** \dir contrib
-Houses the contributed libraries
-*/
-/** \dir ecolib
-Source code for ECOL Functions Useful in Ecology;
-contributed by Mollie Brooks.
-*/
-/** \dir qfclib
-QFC Functions created at the Quantitative Fisheries Center(QFC), 
-Michigan State University; Contributed by Weihai Liu.
-*/ 
-/** \dir statslib
-STATLIB Statistical Fuctions; contributed by Steven Martell.
-*/
 

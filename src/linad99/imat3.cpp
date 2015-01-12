@@ -1,22 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
  void imatrix::initialize (void)
  {
    for (int i=rowmin();i<=rowmax();i++)
@@ -25,10 +17,7 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  imatrix trans(const imatrix& m1)
  {
    imatrix tmp(m1.colmin(),m1.colmax(),m1.rowmin(),m1.rowmax());
@@ -42,3 +31,5 @@
    }
    return (tmp);
  }
+
+

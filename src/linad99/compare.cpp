@@ -1,65 +1,40 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
+   int operator ==(double v0,_CONST prevariable& v1)
+   { 
+     return (v0==value(v1));
+   }
 
-/**
- * Description not yet available.
- * \param
- */
-int operator==(double v0, const prevariable& v1)
-{
-  return (v0==value(v1));
-}
+   int operator <=(double v0,_CONST prevariable& v1)
+   { 
+     return (v0<=value(v1));
+   }
 
-/**
- * Description not yet available.
- * \param
- */
-int operator<=(double v0, const prevariable& v1)
-{
-  return (v0<=value(v1));
-}
-
-/**
- * Description not yet available.
- * \param
- */
-int operator>=(double v0, const prevariable& v1)
-   {
+   int operator >=(double v0,_CONST prevariable& v1)
+   { 
      return (v0>=value(v1));
    }
 
-/**
- * Description not yet available.
- * \param
- */
-int operator>(double v0, const prevariable& v1)
-   {
+   int operator >(double v0,_CONST prevariable& v1)
+   { 
      return (v0>value(v1));
    }
 
-/**
- * Description not yet available.
- * \param
- */
-int operator<(double v0, const prevariable& v1)
-   {
+   int operator <(double v0,_CONST prevariable& v1)
+   { 
      return (v0<value(v1));
    }
 
-/**
- * Description not yet available.
- * \param
- */
-int operator!=(double v0, const prevariable& v1)
-   {
+   int operator !=(double v0,_CONST prevariable& v1)
+   { 
      return (v0!=value(v1));
    }
+
+
+
+

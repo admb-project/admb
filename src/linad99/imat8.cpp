@@ -1,20 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
-ivector colsum(const imatrix &v)
+
+  ivector colsum(_CONST imatrix&v)
   {
     int cmin=v.colmin();
     int cmax=v.colmax();
@@ -33,11 +26,7 @@ ivector colsum(const imatrix &v)
     return tmp;
   }
 
-/**
- * Description not yet available.
- * \param
- */
-ivector rowsum(const imatrix &v)
+  ivector rowsum(_CONST imatrix&v)
   {
     int rmin=v.rowmin();
     int rmax=v.rowmax();
@@ -50,10 +39,6 @@ ivector rowsum(const imatrix &v)
     return tmp;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void imatrix::fill_seqadd(int i2,int j)
   {
     int mmin=indexmin();
@@ -69,3 +54,7 @@ ivector rowsum(const imatrix &v)
       }
     }
   }
+      
+    
+
+

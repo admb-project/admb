@@ -1,29 +1,21 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 void dmcv_prod(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector operator*(const dvar_matrix& m, const dvector& x)
+ dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvector& x )
  {
    RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
-     cerr << " Incompatible array bounds in "
-     "dvar_vector operator * (const dvar_matrix& m, const dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x)\n";
      ad_exit(21);
    }
 
@@ -34,7 +26,7 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
    for (int i=m.rowmin(); i<=m.rowmax(); i++)
    {
      sum=0.0;
-     const dvar_vector& tt=m.elem(i);
+     _CONST dvar_vector& tt=m.elem(i);
      for (int j=x.indexmin(); j<=x.indexmax(); j++)
      {
        //sum+=m[i][j]*x[j];
@@ -54,10 +46,6 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void dmcv_prod(void)
 {
   verify_identifier_string("PLX");
@@ -67,12 +55,12 @@ void dmcv_prod(void)
   dvector x=restore_dvar_vector_value(x_pos);
   verify_identifier_string("PL4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-
+  
   dmatrix dfm(m_pos);
   dfm.initialize();
-
+  
    double dfsum;
-   int mmin=dfm.rowmin();
+   int mmin=dfm.rowmin(); 
    int mmax=dfm.rowmax();
    for (int i=mmax; i>=mmin; i--)
    {
@@ -89,3 +77,4 @@ void dmcv_prod(void)
    }
    dfm.save_dmatrix_derivatives(m_pos);
 }
+

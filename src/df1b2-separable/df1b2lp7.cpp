@@ -1,24 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
+#if defined(USE_LAPLACE)
 #include <df1b2fun.h>
-
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
-/**
- * Description not yet available.
- * \param
- */
+  
 void laplace_approximation_calculator::
    do_separable_stuff_laplace_approximation_banded_adjoint
    (const df1b2variable& ff)
@@ -29,38 +19,38 @@ void laplace_approximation_calculator::
   df1b2_gradlist::set_no_derivatives();
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();
-
+   
   init_df1b2vector & locy= *funnel_init_var::py;
   imatrix& list=*funnel_init_var::plist;
   int num_local_re=0;
   int num_local_fe=0;
 
-#ifndef OPT_LIB
-  assert(funnel_init_var::num_active_parameters <= INT_MAX);
-#endif
-  ivector lre_index(1,(int)funnel_init_var::num_active_parameters);
-  ivector lfe_index(1,(int)funnel_init_var::num_active_parameters);
+  int i;
+  ivector lre_index(1,funnel_init_var::num_active_parameters);
+  ivector lfe_index(1,funnel_init_var::num_active_parameters);
 
-  for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
+  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize)
+    if (list(i,1)>xsize) 
     {
       lre_index(++num_local_re)=i;
     }
-    else if (list(i,1)>0)
+    else if (list(i,1)>0) 
     {
       lfe_index(++num_local_fe)=i;
     }
   }
-
+ 
+  
   if (num_local_re > 0)
   {
+    int j;
     if (hesstype==3)
     {
-      for (int i=1;i<=num_local_re;i++)
+      for (i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
-        for (int j=1;j<=num_local_re;j++)
+        for (j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int i1=list(lrei,1)-xsize;
@@ -75,10 +65,10 @@ void laplace_approximation_calculator::
     {
       if (sparse_hessian_flag==0)
       {
-        for (int i=1;i<=num_local_re;i++)
+        for (i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (int j=1;j<=num_local_re;j++)
+          for (j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -91,17 +81,17 @@ void laplace_approximation_calculator::
       }
       else
       {
-        for (int i=1;i<=num_local_re;i++)
+        for (i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (int j=1;j<=num_local_re;j++)
+          for (j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
             int i2=list(lrei,2);
             int j1=list(lrej,1)-xsize;
             int j2=list(lrej,2);
-
+            
             if (i1<=j1)
             {
               sparse_count++;
@@ -113,24 +103,25 @@ void laplace_approximation_calculator::
       }
     }
   }
-
+  
   // Now the adjoint code
 
   if (num_local_re > 0)
   {
+    int j;
     if (hesstype==3)
     {
-      for (int i=1;i<=num_local_re;i++)
+      for (i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
-        for (int j=1;j<=num_local_re;j++)
+        for (j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int i1=list(lrei,1)-xsize;
           int i2=list(lrei,2);
           int j1=list(lrej,1)-xsize;
           int j2=list(lrej,2);
-          if (i1>=j1)
+          if (i1>=j1) 
           {
             //(*bHess)(i1,j1)+=locy(i2).u_bar[j2-1];
             locy(i2).get_u_bar_tilde()[j2-1]=(*bHessadjoint)(i1,j1);
@@ -142,10 +133,10 @@ void laplace_approximation_calculator::
     {
       if (pmin->lapprox->sparse_hessian_flag==0)
       {
-        for (int i=1;i<=num_local_re;i++)
+        for (i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (int j=1;j<=num_local_re;j++)
+          for (j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -161,12 +152,12 @@ void laplace_approximation_calculator::
       }
       else
       {
-        dcompressed_triplet * vsparse_triplet_adjoint =
+        dcompressed_triplet * vsparse_triplet_adjoint = 
           pmin->lapprox->vsparse_triplet_adjoint;
-        for (int i=1;i<=num_local_re;i++)
+        for (i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (int j=1;j<=num_local_re;j++)
+          for (j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -191,13 +182,13 @@ void laplace_approximation_calculator::
       }
     }
   }
-
+  
   df1b2variable::passnumber=2;
   df1b2_gradcalc1();
-
+  
   df1b2variable::passnumber=3;
   df1b2_gradcalc1();
-
+  
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();
   f1b2gradlist->list2.initialize();
@@ -207,16 +198,16 @@ void laplace_approximation_calculator::
   f1b2gradlist->nlist3.initialize();
 
 
-  for (int i=1;i<=num_local_fe;i++)
+  for (i=1;i<=num_local_fe;i++)
   {
     int lfei=lfe_index(i);
     int i1=list(lfei,1);
     //if (lfei - list(lfei,2))
      // cout << lfei << " " <<  list(lfei,2) << endl;
     local_dtemp(i1)+=*locy(lfei).get_u_tilde();
-#if !defined(OPT_LIB)
     int mmin=xadjoint.indexmin();
     int mmax=xadjoint.indexmax();
+#if !defined(OPT_LIB)
     if (i1<mmin || i1> mmax)
     {
        cerr << "this can't happen" << endl;
@@ -225,7 +216,7 @@ void laplace_approximation_calculator::
 #endif
   }
 
-  for (int i=1;i<=num_local_re;i++)
+  for (i=1;i<=num_local_re;i++)
   {
     int i1=list(lre_index(i),1)-xsize;
     int i2=list(lre_index(i),2);
@@ -243,3 +234,4 @@ void laplace_approximation_calculator::
   funnel_init_var::num_active_parameters=0;
   funnel_init_var::num_inactive_vars=0;
 }
+#endif // if defined(USE_LAPLACE)

@@ -1,84 +1,61 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
+#if !defined (__NDPX__) && !defined(__SUN__) && !defined(__GNU__)
+#endif
+
 
 #include <string.h>
-int save_identifier_string(const char*);
-void verify_identifier_string(const char*);
+int save_identifier_string(char*);
+void verify_identifier_string(char*);
 
-//struct dvar_matrix_position;
-//struct dvector_position;
+struct dvar_matrix_position;
+struct dvector_position;
 long int reset_gs_stack(void);
 void reset_gs_stack(long int);
 
-#ifndef OPT_LIB
-  #define CHK_ID_STRING
-#endif
-
-/**
-Copy index and pointer to values from v.
-
-\param vv a dvar_vector
-*/
-dvar_vector_position::dvar_vector_position(const dvar_vector& v)
+dvar_vector_position::dvar_vector_position(_CONST dvar_vector& v)
 {
   min=v.indexmin();
   max=v.indexmax();
   va=v.get_va();
 }
 
-/**
-Copy index and pointer to values from vv.
-
-\param vv a dvector
-*/
-dvector_position::dvector_position(const dvector& vv)
+dvector_position::dvector_position(_CONST dvector& vv)
 {
   min=vv.indexmin();
   max=vv.indexmax();
   v=vv.get_v();
 }
-/**
-Copy constructor
-*/
-dvar_vector_position::dvar_vector_position(const dvar_vector_position& dvp)
+
+dvar_vector_position::dvar_vector_position(BOR_CONST dvar_vector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
   va=dvp.va;
 }
-/**
-Copy constructor
-*/
-dvector_position::dvector_position(const dvector_position& dvp)
+
+dvector_position::dvector_position(BOR_CONST dvector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
   v=dvp.v;
 }
-/**
-Default constructor
-*/
+
 dvar_vector_position::dvar_vector_position(void)
 {
   min=0;
   max=-1;
   va=0;
 }
-/**
-Default constructor
-*/
+
 dvector_position::dvector_position(void)
 {
   min=0;
@@ -86,54 +63,39 @@ dvector_position::dvector_position(void)
   v=0;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-ivector_position::ivector_position(const ivector& iv)
+ivector_position::ivector_position(_CONST ivector& iv)
 {
   min=iv.indexmin();
   max=iv.indexmax();
   v=iv.get_v();
 }
-/**
-Copy constructor
-*/
-ivector_position::ivector_position(const ivector_position& dvp)
+
+ivector_position::ivector_position(BOR_CONST ivector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
   v=dvp.v;
 }
-/**
-Default constructor
-*/
+
 ivector_position::ivector_position(void)
 {
   min=0;
   max=-1;
   v=0;
 }
-/**
- * Description not yet available.
- * \param
- */
-double& dvar_vector_position::operator()(const int& i)
+
+double& dvar_vector_position::operator () (BOR_CONST int& i)
 {
   if (i<min||i>max)
   {
     cerr << "Error -- Index out of bounds in\n"
-     "double_and_int& dvar_vector_position::operator()(const int& i)"
+     "double_and_int& dvar_vector_position::operator () (BOR_CONST int& i)"
      << endl;
      ad_exit(1);
    }
    return va[i].x;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvar_vector_position dvar_matrix_position::operator () (int i)
 {
   if (i<row_min||i>row_max)
@@ -149,10 +111,6 @@ dvar_vector_position dvar_matrix_position::operator () (int i)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvector_position dmatrix_position::operator () (int i)
 {
   if (i<row_min||i>row_max)
@@ -168,11 +126,7 @@ dvector_position dmatrix_position::operator () (int i)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x)
+dvar_matrix_position::dvar_matrix_position(_CONST dvar_matrix& m,int x)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
 
@@ -196,11 +150,7 @@ dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix_position::dmatrix_position(const dmatrix& m)
+dmatrix_position::dmatrix_position(_CONST dmatrix& m)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
 {
@@ -214,10 +164,6 @@ dmatrix_position::dmatrix_position(const dmatrix& m)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvar_matrix_position::dvar_matrix_position(int min,int max)
   : lb(min,max), ub(min,max), ptr(min,max)
 {
@@ -231,10 +177,6 @@ dvar_matrix_position::dvar_matrix_position(int min,int max)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dmatrix_position::dmatrix_position(int min,int max)
   : lb(min,max), ub(min,max), ptr(min,max)
 {
@@ -248,11 +190,7 @@ dmatrix_position::dmatrix_position(int min,int max)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix_position::dvar_matrix_position(const dvar_matrix_position& p)
+dvar_matrix_position::dvar_matrix_position(BOR_CONST dvar_matrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
 {
@@ -263,10 +201,8 @@ dvar_matrix_position::dvar_matrix_position(const dvar_matrix_position& p)
   ptr=p.ptr;
   // cout << "ptr= " << ptr ;
 }
-/**
-Copy constructor
-*/
-dmatrix_position::dmatrix_position(const dmatrix_position& p)
+
+dmatrix_position::dmatrix_position(BOR_CONST dmatrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
 {
@@ -275,21 +211,16 @@ dmatrix_position::dmatrix_position(const dmatrix_position& p)
   lb=p.lb;
   ub=p.ub;
   ptr=p.ptr;
+  // cout << "ptr= " << ptr ;
 }
-/**
-\ingroup DEVEL
-Writes a gradient stack verification string.
-Writes a character string to the adjoint code variable stack.
-Only available in the "safe" library.
-Used primarily for debugging adjoint coide.
-\param str Character sting to saved on the stack.
-*/
-int save_identifier_string(const char* str)
+
+int save_identifier_string(char* str)
 {
 #if defined(CHK_ID_STRING)
-  //int wsize=sizeof(char);
-  size_t length=strlen(str);
+  int wsize=sizeof(char);
+  int length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
 #endif
   return 0;
 }
+

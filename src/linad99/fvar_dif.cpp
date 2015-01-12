@@ -1,27 +1,19 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
 void DF_first_diference(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector first_difference(const dvar_vector& x)
+ dvar_vector  first_difference(_CONST dvar_vector& x)
  {
    if (x.size()<=1)
    {
      cerr << "Error -- vector size too small"
-             " in first_difference(const dvar_vector&)" << endl;
+             " in first_difference(_CONST dvar_vector&)" << endl;
      ad_exit(1);
    }
 
@@ -43,10 +35,6 @@ dvar_vector first_difference(const dvar_vector& x)
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void DF_first_diference(void)
 {
   verify_identifier_string("CE1");

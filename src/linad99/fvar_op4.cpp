@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 // file: fvar_ops.cpp
 // operators involving prevariables
@@ -29,93 +25,90 @@
 
 void gradfree(dlink *);
 
-#ifndef OPT_LIB
+int xxx_uuu_a(void)
+{
+  return 1;
+}
 
-/**
- * Description not yet available.
- * \param
- */
+#ifndef OPT_LIB
     prevariable dvar_vector::operator[] (int i)
     {
+      #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
-          cerr << "array bound exceeded -- index too low in "
-          "prevariable::operator[]";
+          cerr << "array bound exceeded -- index too low in prevariable::operator[]";
           ad_exit(1);
         }
         if (i>indexmax())
         {
-          cerr << "array bound exceeded -- index too high in "
-          "prevariable::operator[]";
+          cerr << "array bound exceeded -- index too high in prevariable::operator[]";
           ad_exit(1);
         }
+      #endif
       //((va+i)->nc)++;
       return (va+i);
+
     }
 
-/**
- * Description not yet available.
- * \param
- */
     prevariable dvar_vector::operator() (int i)
     {
+      #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
-          cerr << "array bound exceeded -- index too low in "
-          "prevariable::operator()";
+          cerr << "array bound exceeded -- index too low in prevariable::operator[]";
           ad_exit(1);
         }
         if (i>indexmax())
         {
-          cerr << "array bound exceeded -- index too high in "
-          "prevariable::operator()";
+          cerr << "array bound exceeded -- index too high in prevariable::operator[]";
           ad_exit(1);
         }
+      #endif
       //((va+i)->nc)++;
       return (va+i);
-    }
 
-/**
- * Description not yet available.
- * \param
- */
-const prevariable dvar_vector::operator[](int i) const
-    {
-        if (i<indexmin())
-        {
-          cerr << "array bound exceeded -- index too low in "
-          "prevariable::operator[]";
-          ad_exit(1);
-        }
-        if (i>indexmax())
-        {
-          cerr << "array bound exceeded -- index too high in "
-          "prevariable::operator[]";
-          ad_exit(1);
-        }
-      //((va+i)->nc)++;
-      return (va+i);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const prevariable dvar_vector::operator()(int i) const
-    {
-        if (i<indexmin())
-        {
-          cerr << "array bound exceeded -- index too low in "
-          "prevariable::operator()";
-          ad_exit(1);
-        }
-        if (i>indexmax())
-        {
-          cerr << "array bound exceeded -- index too high in "
-          "prevariable::operator()";
-          ad_exit(1);
-        }
-      //((va+i)->nc)++;
-      return (va+i);
     }
 #endif
+
+#ifdef USE_CONST
+  #ifndef OPT_LIB
+    _CONST prevariable dvar_vector::operator[] (int i) _CONST
+    {
+      #ifdef SAFE_ARRAYS
+        if (i<indexmin())
+        {
+          cerr << "array bound exceeded -- index too low in prevariable::operator[]";
+          ad_exit(1);
+        }
+        if (i>indexmax())
+        {
+          cerr << "array bound exceeded -- index too high in prevariable::operator[]";
+          ad_exit(1);
+        }
+      #endif
+      //((va+i)->nc)++;
+      return (va+i);
+
+    }
+
+    _CONST prevariable dvar_vector::operator() (int i) _CONST
+    {
+      #ifdef SAFE_ARRAYS
+        if (i<indexmin())
+        {
+          cerr << "array bound exceeded -- index too low in prevariable::operator[]";
+          ad_exit(1);
+        }
+        if (i>indexmax())
+        {
+          cerr << "array bound exceeded -- index too high in prevariable::operator[]";
+          ad_exit(1);
+        }
+      #endif
+      //((va+i)->nc)++;
+      return (va+i);
+
+    }
+  #endif
+#endif
+

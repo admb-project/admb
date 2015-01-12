@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-void dmatrix::allocate(const dvar_matrix& dm)
+void dmatrix::allocate(_CONST dvar_matrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();
@@ -38,3 +30,4 @@ void dmatrix::allocate(const dvar_matrix& dm)
     m[i].allocate(dm(i));
   }
 }
+

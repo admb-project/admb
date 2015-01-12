@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 // file: dvect_io.cpp
 #include "fvar.hpp"
@@ -30,33 +26,26 @@
 
 #include <string.h>
 
-/**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& _ostr, const lvector& z)
+ostream& operator<<(BOR_CONST ostream& _ostr,_CONST lvector& z)
 {
   ostream & ostr = (ostream&) _ostr;
   z.write_on(ostr);
   return ostr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void lvector::write_on(const ostream& _s) const
+void lvector::write_on(BOR_CONST ostream& _s) _CONST
 {
-  ostream& s = (ostream&)_s;
+  ostream & s = (ostream&) _s;
 #ifdef __USE_IOSTREAM__
-  using std::streamsize;
-  streamsize new_w = s.width();
-  streamsize new_p = s.precision();
-#if !defined(__cplusplus)
-  long new_form = s.flags();
-#else
+  int new_w = s.width();
+  int new_p = s.precision();
+#if defined(GCC3)
   ios::fmtflags new_form = s.flags();
+#else
+  long new_form = s.flags();
 #endif
+
+
   char new_fill = s.fill();
 #endif
   for (int i=indexmin(); i <= indexmax(); i++)
@@ -70,7 +59,7 @@ void lvector::write_on(const ostream& _s) const
      s.fill(new_fill);
      s << (*this)[i];
      /*
-     if (!s.good())
+     if (!s.good()) 
      {
        cerr << " Error in lvector write\n";
        ad_exit(1);
@@ -79,7 +68,7 @@ void lvector::write_on(const ostream& _s) const
   #else
      s << " " << (*this)[i];
      /*
-     if (!s.good())
+     if (!s.good()) 
      {
        cerr << " Error in lvector write\n";
        ad_exit(1);
@@ -89,11 +78,7 @@ void lvector::write_on(const ostream& _s) const
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& _istr, const lvector& _z)
+istream& operator>>(BOR_CONST istream& _istr,BOR_CONST lvector& _z)
 {
   ADUNCONST(lvector,z)
   istream & istr = (istream&) _istr;
@@ -102,11 +87,7 @@ istream& operator>>(const istream& _istr, const lvector& _z)
   return istr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void lvector::read_from(const istream& _s)
+void lvector::read_from(BOR_CONST istream& _s)
 {
   istream& s=(istream&) _s;
   int n = indexmax() - indexmin() + 1;

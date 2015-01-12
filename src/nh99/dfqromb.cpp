@@ -2,62 +2,103 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
- */
-/**
- * \file
- * Contains routines for numerical integration
+ * Copyright (c) 2009 ADMB Foundation
  */
 
 #include <admodel.h>
-//#define EPS 1.0e-4
+#define EPS 1.0e-4
 #define JMAX 50
-//#define JMAXP JMAX+1
-//#define K 5
+#define JMAXP JMAX+1
+#define K 5
 
 class model_parameters;
 
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  double a,double b,int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b,int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,BOR_CONST dvariable& b,int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,BOR_CONST dvariable& b,int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,double b,int n);
 
-void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
-  const dvariable& y, const dvariable& dy);
+void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,
+  BOR_CONST dvariable& y,BOR_CONST dvariable& dy);
+
 
 /** Romberg integration.
   \param func Pointer to a member function of class model_parameters.
   \param a Lower limit of integration.
   \param b Upper limit of inegration.
   \param ns
-  \return The integral of the function from a to b using Romberg's method
+  \return The integral of the function from a to b
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+   \deprecated Scheduled for replacement by 2010.
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, double b, int ns)
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
+  double b,int ns)
 {
-  const double base = 4;
-  int MAXN = min(JMAX, ns);
-  dvar_vector s(1,MAXN+1);
+  dvariable ss,dss;
+  //double s[JMAXP+1],h[JMAXP+1];
+  dvar_vector s(0,JMAXP+1);
+  dvector h(0,JMAXP+1);
+  int j;
 
-  for(int j=1; j<=MAXN+1; j++)
+  h[1]=1.0;
+  for (j=1;j<=JMAX;j++) 
   {
-    s[j] = trapzd(func,a,b,j);
-  }
-
-  for(int iter=1; iter<=MAXN+1; iter++)
-  {
-    for(int j=1; j<=MAXN+1-iter; j++)
+    s[j]=trapzd(func,a,b,j);
+    if (j >= K) 
     {
-      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
+      polint(h(j-K,JMAXP+1).shift(0),s(j-K,JMAXP+1).shift(0),K,0.0,ss,dss);
+      //if (fabs(value(dss)) < EPS*fabs(value(ss))) return ss;
+      if (j==ns) return ss;
     }
+    s[j+1]=s[j];
+    h[j+1]=0.25*h[j];
   }
+  cerr << "Too many steps in routine QROMB" << endl;
+  return 0.0;
+}
 
-  return s[1];
+
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
+*/
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,
+  double b,int ns)
+{
+  dvariable ss,dss;
+  //double s[JMAXP+1],h[JMAXP+1];
+  dvar_vector s(0,JMAXP+1);
+  dvector h(0,JMAXP+1);
+  int j;
+
+  h[1]=1.0;
+  for (j=1;j<=JMAX;j++) 
+  {
+    s[j]=trapzd(func,a,b,j);
+    if (j >= K) 
+    {
+      polint(h(j-K,JMAXP+1).shift(0),s(j-K,JMAXP+1).shift(1),K,0.0,ss,dss);
+      //if (fabs(value(dss)) < EPS*fabs(value(ss))) return ss;
+      if (j==ns) return ss;
+    }
+    s[j+1]=s[j];
+    h[j+1]=0.25*h[j];
+  }
+  cerr << "Too many steps in routine QROMB" << endl;
+  return 0.0;
 }
 
 /** Romberg integration.
@@ -65,226 +106,188 @@ dvariable function_minimizer::adromb(
   \param a Lower limit of integration.
   \param b Upper limit of inegration.
   \param ns
-  \return The integral of the function from a to b using Romberg's method
+  \return The integral of the function from a to b
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int ns)
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
+  BOR_CONST dvariable& b,int ns)
 {
-  const double base = 4;
-  int MAXN = min(JMAX, ns);
-  dvar_vector s(1,MAXN+1);
+  dvariable ss,dss;
+  //double s[JMAXP+1],h[JMAXP+1];
+  dvar_vector s(0,JMAXP+1);
+  dvector h(0,JMAXP+1);
+  int j;
 
-  for(int j=1; j<=MAXN+1; j++)
+  h[1]=1.0;
+  for (j=1;j<=JMAX;j++) 
   {
-    s[j] = trapzd(func,a,b,j);
-  }
-
-  for(int iter=1; iter<=MAXN+1; iter++)
-  {
-    for(int j=1; j<=MAXN+1-iter; j++)
+    s[j]=trapzd(func,a,b,j);
+    if (j >= K) 
     {
-      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
+      polint(h(j-K,JMAXP+1).shift(0),s(j-K,JMAXP+1).shift(1),K,0.0,ss,dss);
+      //if (fabs(value(dss)) < EPS*fabs(value(ss)))
+      if (j==ns) return ss;
     }
+    s[j+1]=s[j];
+    h[j+1]=0.25*h[j];
   }
-
-  return s[1];
+  cerr << "Too many steps in routine QROMB" << endl;
+  return 0.0;
 }
+
 
 /** Romberg integration.
   \param func Pointer to a member function of class model_parameters.
   \param a Lower limit of integration.
   \param b Upper limit of inegration.
   \param ns
-  \return The integral of the function from a to b using Romberg's method
+  \return The integral of the function from a to b
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b, int ns)
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
+  BOR_CONST dvariable& a,BOR_CONST dvariable& b, int ns)
 {
-  const double base = 4;
-  int MAXN = min(JMAX, ns);
-  dvar_vector s(1,MAXN+1);
+  dvariable ss,dss;
+  //double s[JMAXP+1],h[JMAXP+1];
+  dvar_vector s(0,JMAXP+1);
+  dvector h(0,JMAXP+1);
+  int j;
 
-  for(int j=1; j<=MAXN+1; j++)
+  h[1]=1.0;
+  for (j=1;j<=JMAX;j++) 
   {
-    s[j] = trapzd(func,a,b,j);
-  }
-
-  for(int iter=1; iter<=MAXN+1; iter++)
-  {
-    for(int j=1; j<=MAXN+1-iter; j++)
+    s[j]=trapzd(func,a,b,j);
+    if (j >= K) 
     {
-      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
+      polint(h(j-K,JMAXP+1).shift(0),s(j-K,JMAXP+1).shift(1),K,0.0,ss,dss);
+      //if (fabs(value(dss)) < EPS*fabs(value(ss))) return ss;
+      if (j==ns) return ss;
     }
+    s[j+1]=s[j];
+    h[j+1]=0.25*h[j];
   }
-
-  return s[1];
+  cerr << "Too many steps in routine QROMB" << endl;
+  return 0.0;
 }
 
-/** Romberg integration.
-  \param func Pointer to a member function of class model_parameters.
-  \param a Lower limit of integration.
-  \param b Upper limit of inegration.
-  \param ns
-  \return The integral of the function from a to b using Romberg's method
-*/
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int ns)
-{
-  const double base = 4;
-  int MAXN = min(JMAX, ns);
-  dvar_vector s(1,MAXN+1);
-
-  for(int j=1; j<=MAXN+1; j++)
-  {
-    s[j] = trapzd(func,a,b,j);
-  }
-
-  for(int iter=1; iter<=MAXN+1; iter++)
-  {
-    for(int j=1; j<=MAXN+1-iter; j++)
-    {
-      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
-    }
-  }
-
-  return s[1];
-}
 
 /** Extended trapezoid rule.
- *
- * This algorithm was adapted from function trapzd in
- * "Numerical Recipes in C", 2nd edition,
- * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
- *
- */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, double b, int n)
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
+*/
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n)
 {
-  double x,num_interval,hn;
+  double x,tnm,del;
   dvariable sum;
   static dvariable s;
-  static int interval;
+  static int it;
   int j;
   model_parameters * ptr= (model_parameters *) mycast();
+
   if (n == 1) {
-    interval=1;
+    it=1;
     return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    num_interval=interval;
-    hn=(b-a)/num_interval;
-    x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
-    interval *= 2;
-    s=0.5*(s+(b-a)*sum/num_interval);
+    tnm=it;
+    del=(b-a)/tnm;
+    x=a+0.5*del;
+    for (sum=0.0,j=1;j<=it;j++,x+=del) sum += (ptr->*func)(x);
+    it *= 2;
+    s=0.5*(s+(b-a)*sum/tnm);
     return s;
   }
 }
 
-/** Extended trapezoid rule.
- *
- * This algorithm was adapted from function trapzd in
- * "Numerical Recipes in C", 2nd edition,
- * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
- *
- */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int n)
+
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,double b,int n)
 {
-  double num_interval;
-  dvariable x,sum,hn;
+  double tnm;
+  dvariable x,sum,del;
   static dvariable s;
-  static int interval;
+  static int it;
   int j;
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    interval=1;
+    it=1;
     return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    num_interval=interval;
-    hn=(b-a)/num_interval;
-    x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
-    interval *= 2;
-    s=0.5*(s+(b-a)*sum/num_interval);
+    tnm=it;
+    del=(b-a)/tnm;
+    x=a+0.5*del;
+    for (sum=0.0,j=1;j<=it;j++,x+=del) sum += (ptr->*func)(x);
+    it *= 2;
+    s=0.5*(s+(b-a)*sum/tnm);
     return s;
   }
 }
 
-/** Extended trapezoid rule.
- *
- * This algorithm was adapted from function trapzd in
- * "Numerical Recipes in C", 2nd edition,
- * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
- */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b, int n)
+
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,BOR_CONST dvariable& b,int n)
 {
-  double num_interval;
-  dvariable sum,hn,x;
+  double tnm;
+  dvariable sum,del,x;
   static dvariable s;
-
-  static int interval;
+  
+  static int it;
   int j;
 
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    interval=1;
+    it=1;
     return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    num_interval=interval;
-    hn=(b-a)/num_interval;
-    x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
-    interval *= 2;
-    s=0.5*(s+(b-a)*sum/num_interval);
+    tnm=it;
+    del=(b-a)/tnm;
+    x=a+0.5*del;
+    for (sum=0.0,j=1;j<=it;j++,x+=del) sum += (ptr->*func)(x);
+    it *= 2;
+    s=0.5*(s+(b-a)*sum/tnm);
     return s;
   }
 }
 
-/** Extended trapezoid rule.
- *
- * This algorithm was adapted from function trapzd in
- * "Numerical Recipes in C", 2nd edition,
- * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
- */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int n)
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,BOR_CONST dvariable& b,int n)
 {
-  double num_interval;
-  dvariable sum,hn,x;
+  double tnm;
+  dvariable sum,del,x;
   static dvariable s;
-  static int interval;
+  static int it;
   int j;
 
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    interval=1;
+    it=1;
     return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    num_interval=interval;
-    hn=(b-a)/num_interval;
-    x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
-    interval *= 2;
-    s=0.5*(s+(b-a)*sum/num_interval);
+    tnm=it;
+    del=(b-a)/tnm;
+    x=a+0.5*del;
+    for (sum=0.0,j=1;j<=it;j++,x+=del) sum += (ptr->*func)(x);
+    it *= 2;
+    s=0.5*(s+(b-a)*sum/tnm);
     return s;
   }
 }
-//#undef EPS
+#undef EPS
 #undef JMAX
-//#undef JMAXP
-//#undef K
+#undef JMAXP
+#undef K
 
- //Not used elsewhere
-void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
-  const dvariable& _y, const dvariable& _dy)
+void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,BOR_CONST dvariable& _y,BOR_CONST dvariable& _dy)
 {
   dvariable& y=(dvariable&) _y;
   dvariable& dy=(dvariable&) _dy;
@@ -309,7 +312,7 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
       ho=xa[i]-x;
       hp=xa[i+m]-x;
       w=c[i+1]-d[i];
-      if ( (den=ho-hp) == 0.0)
+      if ( (den=ho-hp) == 0.0) 
       {
         cerr << "Error in routine POLINT" << endl;
         exit(1);
@@ -321,3 +324,5 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
     y += (dy=(2*ns < (n-m) ? c[ns+1] : d[ns--]));
   }
 }
+
+

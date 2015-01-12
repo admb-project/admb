@@ -1,20 +1,15 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-double trace(const dmatrix& M)
+
+#include "fvar.hpp"
+
+double trace(_CONST dmatrix& M)
 {
   double tmp;
   tmp=0.0;
@@ -29,3 +24,4 @@ double trace(const dmatrix& M)
   }
   return tmp;
 }
+

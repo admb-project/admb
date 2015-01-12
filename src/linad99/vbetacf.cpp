@@ -1,8 +1,8 @@
-/**
- * $Id: vbetacf.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 #include <math.h>
@@ -20,10 +20,13 @@
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
+dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
   int MAXIT)
 {
+  int m,m2;
   double qab,qam,qap;
   double a=value(_a);
   double b=value(_b);
@@ -44,12 +47,10 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   c1(0)=1.0;
   d1(0)=1.0/(1.0-qab*x/qap);
   h1(0)=d1(0);
-
-  int m = 1;
-  for (; m <= MAXIT; m++)
+  for (m=1;m<=MAXIT;m++) 
   {
     int i=m;
-    int m2=2*m;
+    m2=2*m;
     aa(i)=m*(b-m)*x/((qam+m2)*(a+m2));
     d(i)=1.0/(1.0+aa(i)*d1(i-1));
     c(i)=1.0+aa(i)/c1(i-1);
@@ -61,7 +62,7 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
     h1(i) = h(i)*del(i);
     if (fabs(del(i)-1.0) < EPS) break;
   }
-  if (m > MAXIT)
+  if (m > MAXIT) 
   {
     cerr << "a or b too big, or MAXIT too small in cumulative beta function"
       " routine" << endl;
@@ -81,7 +82,7 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   dvector dfaa(1,MAXIT);
   dvector dfaa1(1,MAXIT);
   dvector dfdel(1,MAXIT);
-
+  
   dfc1.initialize();
   dfc.initialize();
   dfaa1.initialize();
@@ -99,7 +100,7 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   double dfb=0.0;
   double dfx=0.0;
 
-  for (m=mmax;m>=1;m--)
+  for (m=mmax;m>=1;m--) 
   {
    /*
     int i=m;
@@ -117,13 +118,13 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
 
     int i=m;
     int m2=2*m;
-
+  
     //h1(i) = h(i)*del(i);
 
     dfh(i)+=dfh1(i)*del(i);
     dfdel(i)+=dfh1(i)*h(i);
     dfh1(i)=0.0;
-
+   
     //del(i)=d1(i)*c1(i);
 
     dfd1(i)+=dfdel(i)*c1(i);
@@ -141,9 +142,9 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
     dfaa1(i)-=dfd1(i)*sq*d(i);
     dfd(i)-=dfd1(i)*sq*aa1(i);
     dfd1(i)=0.0;
-
+    
     //aa1(i) = -(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
-    dfx -= dfaa1(i) *
+    dfx -= dfaa1(i) * 
      (a+m)*(qab+m)/((a+m2)*(qap+m2));
 
     dfa += dfaa1(i) * aa1(i)* (1.0/(a+m) - 1.0/(a+m2));
@@ -180,6 +181,7 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
     dfa-=dfaa(i)*aa(i)/(a+m2);
     dfqam-=dfaa(i)*aa(i)/(qam+m2);
     dfaa(i)=0.0;
+
   }
   /*
   c1(0)=1.0;

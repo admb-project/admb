@@ -1,8 +1,8 @@
-/**
- * $Id: fvar_m24.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
+/*
+ * $Id$
  * Author: Unknown
  */
+
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -22,15 +22,15 @@
 #define TINY 1.0e-20;
 void dmdv_solve(void);
 
-dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
-  prevariable& ln_unsigned_det, const prevariable& sign);
+dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
+  prevariable& ln_unsigned_det,BOR_CONST prevariable& sign);
 /** Solve a linear system using LU decomposition.
-\param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
+    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 
     \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \return A dvar_vector containing solution vector \f$X\f$.
 */
-dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z)
+dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
 {
   dvariable ln_unsigned_det;
   dvariable sign;
@@ -39,7 +39,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z)
 }
 
 /** Solve a linear sysgem using LU decomposition.
-\param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
+    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 
     \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \param _ln_unsigned_deg
@@ -48,14 +48,17 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
-  prevariable& ln_unsigned_det, const prevariable& _sign)
+dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
+  prevariable& ln_unsigned_det,BOR_CONST prevariable& _sign)
 {
   prevariable& sign=(prevariable&) _sign;
-
+  
   RETURN_ARRAYS_INCREMENT();
-  int n=aa.colsize();
+  int i,imax,j,k,n;
+  n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
   if (lb!=aa.rowmin()||ub!=aa.colmax())
@@ -75,10 +78,10 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   dvector vv(lb,ub);
 
   d=1.0;
-  for (int i=lb;i<=ub;i++)
+  for (i=lb;i<=ub;i++)
   {
     big=0.0;
-    for (int j=lb;j<=ub;j++)
+    for (j=lb;j<=ub;j++)
     {
       temp=fabs(bb.elem(i,j));
       if (temp > big)
@@ -88,32 +91,30 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
     }
     if (big == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in "
-      "solve(dvar_dmatrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in solve(dvar_dmatrix)\n";
     }
     vv[i]=1.0/big;
   }
 
-  for (int j=lb;j<=ub;j++)
+  for (j=lb;j<=ub;j++)
   {
-    for (int i=lb;i<j;i++)
+    for (i=lb;i<j;i++)
     {
       sum=bb.elem(i,j);
-      for (int k=lb;k<i;k++)
+      for (k=lb;k<i;k++)
       {
-        sum -= bb.elem(i,k)*bb.elem(k,j);
+	sum -= bb.elem(i,k)*bb.elem(k,j);
       }
       //a[i][j]=sum;
       bb.elem(i,j)=sum;
     }
-    int imax = j;
     big=0.0;
-    for (int i=j;i<=ub;i++)
+    for (i=j;i<=ub;i++)
     {
       sum=bb.elem(i,j);
-      for (int k=lb;k<j;k++)
+      for (k=lb;k<j;k++)
       {
-        sum -= bb.elem(i,k)*bb.elem(k,j);
+	sum -= bb.elem(i,k)*bb.elem(k,j);
       }
       bb.elem(i,j)=sum;
       dum=vv[i]*fabs(sum);
@@ -125,7 +126,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
     }
     if (j != imax)
     {
-      for (int k=lb;k<=ub;k++)
+      for (k=lb;k<=ub;k++)
       {
         dum=bb.elem(imax,k);
         bb.elem(imax,k)=bb.elem(j,k);
@@ -151,9 +152,9 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
     if (j != n)
     {
       dum=1.0/bb.elem(j,j);
-      for (int i=j+1;i<=ub;i++)
+      for (i=j+1;i<=ub;i++)
       {
-        bb.elem(i,j) = bb.elem(i,j) * dum;
+	bb.elem(i,j) = bb.elem(i,j) * dum;
       }
     }
   }
@@ -163,7 +164,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   dvector part_prod(lb,ub);
   part_prod(lb)=log(fabs(bb(lb,lb)));
   if (bb(lb,lb)<0) sign=-sign;
-  for (int j=lb+1;j<=ub;j++)
+  for (j=lb+1;j<=ub;j++)
   {
     if (bb(j,j)<0) sign=-sign;
     part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
@@ -176,17 +177,17 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   //int ub=rowmax;
   dmatrix& b=bb;
   ivector indxinv(lb,ub);
-  for (int i=lb;i<=ub;i++)
+  for (i=lb;i<=ub;i++)
   {
     indxinv(indx.elem(i))=i;
   }
 
-  for (int i=lb;i<=ub;i++)
+  for (i=lb;i<=ub;i++)
   {
     y.elem(indxinv(i))=z.elem_value(i);
   }
 
-  for (int i=lb;i<=ub;i++)
+  for (i=lb;i<=ub;i++)
   {
     sum=y.elem(i);
     for (int j=lb;j<=i-1;j++)
@@ -195,7 +196,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
     }
     y.elem(i)=sum;
   }
-  for (int i=ub;i>=lb;i--)
+  for (i=ub;i>=lb;i--)
   {
     sum=y.elem(i);
     for (int j=i+1;j<=ub;j++)
@@ -238,8 +239,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   return vc;
 }
 
-/// Adjoint code for
-/// dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
+/// Adjoint code for dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
 void dmdv_solve(void)
 {
   verify_identifier_string("PLACE0");
@@ -276,7 +276,8 @@ void dmdv_solve(void)
   dvector dfy(lb,ub);
   dvector dfpart_prod(lb,ub);
   ivector indxinv(lb,ub);
-  for (int i=lb;i<=ub;i++)
+  int i;
+  for (i=lb;i<=ub;i++)
   {
     indxinv(indx.elem(i))=i;
   }
@@ -289,7 +290,7 @@ void dmdv_solve(void)
     dfpart_prod.initialize();
   #endif
 
-  for (int i=lb;i<=ub;i++)
+  for (i=lb;i<=ub;i++)
   {
     // x.elem(i)=sum/b.elem(i,i);
     dfsum+=dfx.elem(i)/b.elem(i,i);
@@ -306,7 +307,7 @@ void dmdv_solve(void)
     dfsum=0.;
   }
 
-  for (int i=ub;i>=lb;i--)
+  for (i=ub;i>=lb;i--)
   {
     // y.elem(i)=sum;
     dfsum+=dfy.elem(i);
@@ -322,7 +323,7 @@ void dmdv_solve(void)
     dfsum=0.;
   }
 
-  for (int i=ub;i>=lb;i--)
+  for (i=ub;i>=lb;i--)
   {
     //y.elem(indxinv(i))=z.elem_value(i);
     dfz.elem(i)=dfy.elem(indxinv(i));
@@ -334,7 +335,8 @@ void dmdv_solve(void)
   dfpart_prod(ub)+=df_ln_det;
   df_ln_det=0.0;
 
-  for (int j=ub;j>=lb+1;j--)
+  int j;
+  for (j=ub;j>=lb+1;j--)
   {
     //part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j));
     dfpart_prod(j-1)+=dfpart_prod(j);
@@ -346,7 +348,7 @@ void dmdv_solve(void)
   dfb(lb,lb)+=dfpart_prod(lb)/b(lb,lb);
   dfpart_prod(lb)=0.0;
 
-  for (int j=ub;j>=lb;j--)
+  for (j=ub;j>=lb;j--)
   {
     for (int i=ub;i>=lb;i--)
     {
@@ -361,7 +363,7 @@ void dmdv_solve(void)
         // b.elem(i,j)=sum/b.elem(j,j);
         dfsum+=dfb.elem(i,j)/b.elem(j,j);
         dfb.elem(j,j)-=dfb.elem(i,j)*b.elem(i,j)/b.elem(j,j);
-        dfb.elem(i,j)=0.;
+	dfb.elem(i,j)=0.;
       }
 
       for (int k=min(i-1,j-1);k>=lb;k--)
@@ -376,4 +378,7 @@ void dmdv_solve(void)
     }
   }
 }
+
+
 #undef TINY
+

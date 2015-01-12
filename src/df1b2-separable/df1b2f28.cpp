@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <df1b2fun.h>
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable pow(const df1b2variable& x,const df1b2variable& y)
 {
   df1b2variable z;
@@ -31,7 +24,7 @@ df1b2variable pow(const df1b2variable& x,const df1b2variable& y)
 
   double dfx= yu*xpy1;
   double dfy= zu*logx;
-  double dfxx=yy1*xpy2;
+  double dfxx=yy1*xpy2; 
   double dfxy=xpy1*(1.0+yu*logx);
   double dfyy=dfy*logx;
   double dfxxx=yy1*y2*xpy3;
@@ -43,23 +36,19 @@ df1b2variable pow(const df1b2variable& x,const df1b2variable& y)
   double * yd=y.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ + dfy * *yd++;
   }
-
+      
   f1b2gradlist->write_pass1(&x,&y,&z,
     dfx,
     dfy,
     dfxx,dfxy,dfyy,
-    dfxxx,dfxxy,dfxyy,dfyyy);
+    dfxxx,dfxxy,dfxyy,dfyyy); 
   return z;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable pow(double x,const df1b2variable& y)
 {
   df1b2variable z;
@@ -75,22 +64,18 @@ df1b2variable pow(double x,const df1b2variable& y)
   double * yd=y.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =  dfy * *yd++;
   }
-
+      
   f1b2gradlist->write_pass1(&y,&z,
     dfy,
     dfyy,
-    dfyyy);
+    dfyyy); 
   return z;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable operator / (const df1b2variable& x,const df1b2variable& y)
 {
   df1b2variable z;
@@ -98,7 +83,7 @@ df1b2variable operator / (const df1b2variable& x,const df1b2variable& y)
   double yu=*y.get_u();
   double yinv=1.0/yu;
   *z.get_u()=xu*yinv;
-  //double zu=*z.get_u();
+  double zu=*z.get_u();
   double yinv2=yinv*yinv;
   double yinv3=yinv2*yinv;
 
@@ -116,23 +101,19 @@ df1b2variable operator / (const df1b2variable& x,const df1b2variable& y)
   double * yd=y.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ + dfy * *yd++;
   }
-
+      
   f1b2gradlist->write_pass1(&x,&y,&z,
     dfx,
     dfy,
     dfxx,dfxy,dfyy,
-    dfxxx,dfxxy,dfxyy,dfyyy);
+    dfxxx,dfxxy,dfxyy,dfyyy); 
   return z;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable operator / (double x,const df1b2variable& y)
 {
   df1b2variable z;
@@ -153,28 +134,25 @@ df1b2variable operator / (double x,const df1b2variable& y)
   double * yd=y.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =  dfy * *yd++;
   }
-
+      
   f1b2gradlist->write_pass1(&y,&z,
     dfy,
     dfyy,
-    dfyyy);
+    dfyyy); 
   return z;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2variable pow(const df1b2variable& x,double y)
 {
   df1b2variable z;
   double xu=*x.get_u();
   *z.get_u()=::pow(xu,y);
-  //double zu=*z.get_u();
+  double zu=*z.get_u();
 
   double dfx= y*::pow(xu,y-1.0);
   double dfxx= y*(y-1.0)*::pow(xu,y-2.0);
@@ -182,11 +160,11 @@ df1b2variable pow(const df1b2variable& x,double y)
   double * xd=x.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ ;
   }
-
+      
   f1b2gradlist->write_pass1(&x,&z,
     dfx,
     dfxx,
@@ -202,17 +180,17 @@ df1b2variable square(const df1b2variable& x)
   *z.get_u()=xu*xu
   double zu=*z.get_u();
 
-  double dfx=2.0*xu
-  double dfxx=2.0;
+  double dfx=2.0*xu 
+  double dfxx=2.0; 
   double dfxxx=0.0;
   double * xd=x.get_u_dot();
   double * zd=z.get_u_dot();
 
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ ;
   }
-
+      
   f1b2gradlist->write_pass1(&x,&z,
     dfx,
     dfxx,

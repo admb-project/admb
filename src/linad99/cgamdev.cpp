@@ -1,16 +1,8 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * This file deals with the Incomplete Gamma Functions
- * of constant types. All supporting mathematical functions
- * required to compute the Inmomplete Gamma Function
- * are included. They being: log gamma,
- * and some polynomial evaluation functions.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 
 #include <fvar.hpp>
@@ -25,7 +17,7 @@ double gammp(double a,double x)
 {
   double gamser,gammcf,gln;
 
-  if (x < 0.0 || a <= 0.0)
+  if (x < 0.0 || a <= 0.0) 
     cerr << "Invalid arguments in routine gammp" << endl;
   if (x < (a+1.0)) {
     gser(gamser,a,x,gln);
@@ -40,7 +32,7 @@ double cumd_gamma(double x,double a)
 {
   double gamser,gammcf,gln;
 
-  if (x < 0.0 || a <= 0.0)
+  if (x < 0.0 || a <= 0.0) 
     cerr << "Invalid arguments in routine gammp" << endl;
   if (x < (a+1.0)) {
     gser(gamser,a,x,gln);
@@ -56,6 +48,8 @@ double cumd_gamma(double x,double a)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void gcf(double& gammcf,double a,double x,double &gln)
 {
@@ -79,7 +73,7 @@ void gcf(double& gammcf,double a,double x,double &gln)
     h *= del;
     if (fabs(del-1.0) < EPS) break;
   }
-  if (i > ITMAX)
+  if (i > ITMAX) 
     cerr << "a too large, ITMAX too small in gcf" << endl;
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
@@ -89,6 +83,8 @@ void gcf(double& gammcf,double a,double x,double &gln)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void gser(double& gamser,double a,double x,double& gln)
 {
@@ -97,7 +93,7 @@ void gser(double& gamser,double a,double x,double& gln)
 
   gln=gammln(a);
   if (x <= 0.0) {
-    if (x < 0.0)
+    if (x < 0.0) 
       cerr << "x less than 0 in routine gser" << endl;
     gamser=0.0;
     return;
@@ -149,6 +145,32 @@ double inv_cumd_gamma(double y,double a)
 #undef ITMAX
 #undef EPS
 
+double Sn(double x,double a)
+{
+  int i=1;
+  double xp=x;
+  double prod=1.0;
+  double summ=1.0;
+  double summand;
+  do
+  {
+    prod*=(a+i);
+    summand=xp/prod;
+    if (summand<1.e-4) break;
+    summ+=summand;
+    i++;
+    if (i>50)
+    {
+      cerr << "convergence error" << endl;
+      ad_exit(1);
+    }
+  } 
+  while(1);
+  return summ;
+}
+    
+    
+
 double get_initial_u(double a,double y)
 {
   const double c=0.57721;
@@ -191,7 +213,7 @@ double get_initial_u(double a,double y)
     {
       double y=-logB;
       double v=y-(1-a)*log(y);
-      x0=y-(1-a)*log(v)-log(1+(1.0-a)/(1.0+v));
+      x0=y-(1-a)*log(v)-log(1+(1.0-a)/(1.0+v));  
       log_x0=log(x0);
     }
     else if (log(.01)<logB && logB < log(.15))
@@ -214,7 +236,7 @@ double get_initial_u(double a,double y)
       ad_exit(1);
     }
   }
-  else  if (a>=1.0)
+  else  if (a>=1.0) 
   {
     const double a0 = 3.31125922108741;
     const double b1 = 6.61053765625462;
@@ -224,7 +246,7 @@ double get_initial_u(double a,double y)
     const double b3 = 1.27364489782223;
     const double a3 = .213623493715853;
     const double b4 = .03611708101884203;
-
+  
     int sgn=1;
     double logtau;
     if (logP< log(0.5))
@@ -237,9 +259,10 @@ double get_initial_u(double a,double y)
       logtau=logQ;
       sgn=1;
     }
-
+  
     double t=sqrt(-2.0*logtau);
-
+  
+  
     double num = (((a3*t+a2)*t+a1)*t)+a0;
     double den = ((((b4*t+b3)*t+b2)*t)+b1)*t+1;
     double s=sgn*(t-num/den);
@@ -278,6 +301,7 @@ double get_initial_u(double a,double y)
           double zbar=exp((v+z-log(sn))/a);
           x0=zbar*(1.0-(a*log(zbar)-zbar-v+log(sn))/(a-zbar));
         }
+       
       }
       log_x0=log(x0);
     }
@@ -295,3 +319,4 @@ double get_initial_u(double a,double y)
   }
   return log_x0-log(a);
 }
+

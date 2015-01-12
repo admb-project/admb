@@ -1,21 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-
-/**
- * Description not yet available.
- * \param
- */
 void report_calling_set(laplace_approximation_calculator *lapprox)
 {
   ofstream ofs("callset.rpt");
@@ -24,48 +17,43 @@ void report_calling_set(laplace_approximation_calculator *lapprox)
 
   ofs << "Total num_separable calls " <<  callset(0,0)-1 << endl;
 
-  for (int i=1;i<=callset.indexmax();i++)
+  int i;
+  for (i=1;i<=callset.indexmax();i++)
   {
     ofs << "Variable " << i << " num calls = " << callset(i)(0) << endl;
     ofs << callset(i)(1,callset(i).indexmax())<< endl;
   }
 }
-
-/**
-Check if v is ordered from low to high.
-
-\returns true if ordered, else false
-*/
-bool check_order(const ivector& v)
+void check_order(ivector& v)
 {
   int mmin=v.indexmin();
   int mmax=v.indexmax();
+  int bad=0;
   for (int i=mmin;i<=mmax-1;i++)
   {
     if (v(i+1)<v(i))
     {
-      return false;
+      bad=1;
+      break;
+    }
+    if (bad)
+    {
+      v=sort(v);
     }
   }
-  return true;
 }
 
-/**
-Check vectors v and w for single common value.
-
-\returns 1 if has a single common value, else 0.
-*/
-int common(ivector& v, ivector& w)
+int common(ivector& v,ivector& w)
 {
-  if (!check_order(v)) v = sort(v);
-  if (!check_order(w)) w = sort(w);
-  //int vmin=v.indexmin();
+  check_order(v);
+  check_order(w);
+  int vmin=v.indexmin();
   int wmin=w.indexmin();
   int vmax=v.indexmax();
   int wmax=w.indexmax();
   int common_flag=0;
   int i=wmin; int j=wmin;
-  for (;;)
+  do
   {
     if (v(i)==w(j))
     {
@@ -87,17 +75,15 @@ int common(ivector& v, ivector& w)
         break;
     }
   }
+  while(1);
   return common_flag;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 void laplace_approximation_calculator::
   check_hessian_type2(function_minimizer * pfmin)
 {
-  int ip = 0;
+  int i,j,ip; 
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     hesstype=4;
@@ -129,6 +115,7 @@ void laplace_approximation_calculator::
   }
   else
   {
+    
     int nv=initial_df1b2params::set_index();
     if (allocated(used_flags))
     {
@@ -141,7 +128,7 @@ void laplace_approximation_calculator::
     {
       used_flags.safe_allocate(1,nv);
     }
-
+    
     //for (ip=1;ip<=num_der_blocks;ip++)
     {
       used_flags.initialize();
@@ -153,27 +140,27 @@ void laplace_approximation_calculator::
       (*re_objective_function_value::pobjfun)=0;
       df1b2variable pen=0.0;
       df1b2variable zz=0.0;
-
+  
       initial_df1b2params::reset(y,pen);
       // call function to do block diagonal newton-raphson
       // the step vector from the newton-raphson is in the vector step
       df1b2_gradlist::set_no_derivatives();
-
+      
       funnel_init_var::lapprox=this;
       block_diagonal_flag=5;
-
-      quadratic_prior::in_qp_calculations=1;
+  
+      quadratic_prior::in_qp_calculations=1; 
       pfmin->pre_user_function();
-      quadratic_prior::in_qp_calculations=0;
-
+      quadratic_prior::in_qp_calculations=0; 
+  
       int non_block_diagonal=0;
-      for (int i=xsize+1;i<=xsize+usize;i++)
+      for (i=xsize+1;i<=xsize+usize;i++)
       {
         if (used_flags(i)>1)
         {
           non_block_diagonal=1;
           break;
-        }
+        } 
       }
       if (non_block_diagonal)
       {
@@ -252,7 +239,7 @@ void laplace_approximation_calculator::
           else
           {
             Hess.allocate(1,usize,1,usize);
-          }
+          } 
           if (allocated(Hessadjoint))
           {
             if (Hessadjoint.indexmax() != usize)
@@ -264,7 +251,7 @@ void laplace_approximation_calculator::
           else
           {
             Hessadjoint.allocate(1,usize,1,usize);
-          }
+          } 
         }
       }
       else
@@ -299,9 +286,9 @@ void laplace_approximation_calculator::
         (*calling_set)(0,0)=1;
       }
       used_flags.initialize();
-      quadratic_prior::in_qp_calculations=1;
+      quadratic_prior::in_qp_calculations=1; 
       pfmin->pre_user_function();
-      quadratic_prior::in_qp_calculations=0;
+      quadratic_prior::in_qp_calculations=0; 
       report_calling_set(this);
 
       if (hesstype==2 && (num_importance_samples>0 || use_gauss_hermite>0))
@@ -327,7 +314,7 @@ void laplace_approximation_calculator::
           delete block_diagonal_vch;
           block_diagonal_vch=0;
         }
-
+        
         block_diagonal_vch = new dvar3_array(1,num_separable_calls,
           1,itmp,1,itmp);
         if (block_diagonal_ch)
@@ -404,10 +391,14 @@ void laplace_approximation_calculator::
           cerr << "error_allocating d3_array" << endl;
           ad_exit(1);
         }
-      }
+
+
+      } 
       funnel_init_var::lapprox=0;
       block_diagonal_flag=0;
       pen.deallocate();
     }
   }
 }
+
+#endif // if defined(USE_LAPLACE)

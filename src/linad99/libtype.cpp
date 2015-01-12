@@ -1,22 +1,18 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
-/** Get ADMB library mode.
-\ingroup misc
-\return char containing 'o' if compiled with the OPT_LIB macro;
-contains 's' otherwise.
-*/
+#if defined SAFE_ALLOCATE && defined SAFE_INITIALIZE
+void safe_library() { ; }
+#else
+void optimized_library() { ; }
+#endif
 char which_library()
 {
-#ifndef OPT_LIB
+#if defined SAFE_ALLOCATE && defined SAFE_INITIALIZE
   return 's';
 #else
   return 'o';

@@ -4,23 +4,24 @@
 % Copyright (c) 2008 Regents of the University of California
 %
 
-For performance reasons, many nonlinear modeling routines for packages
-such as Splus or Gauss, or spreadsheets such as Excel,
-are written in other languages, such as C or \textsc{fortran}, and
-compiled as \textsc{dll}s or shared libraries. Due to 
-\ADM's support for nonlinear statistical modeling, it
-is generally much faster and easier to produce the code for
-a nonlinear statistical model with \textsc{admb} rather than C or \textsc{fortran}.
-This code can then be put into a shared library (\textsc{dll}) and called
+For performance reasons many nonlinear modeling routines for packages
+such as Splus or Gauss or spreadsheets such as Excel
+are writtten in other languages such as C or FORTRAN and
+compiled as DLL's or shared libraries. Due to 
+AD Model builder's support for nonlinear statistical modeling, it
+is generaly much faster and easier to produce the code for
+a nonlinear statistical model with ADMB rather than C or FORTRAN.
+This code can then be put into a shared library (DLL) and called
 from Splus as though it were a part of the language. 
 
-This section focuses on creating \textsc{dll}s for Splus Version~4 Release~3, Gauss
-under Windows 95/NT,
+This section focuses on creating DLL's for Splus version 4 release 3 or Gauss
+under
+Windows 95/NT,
 or for the R programming environment under Windows 95/NT or Linux. 
-The construction can be easily modified to produce \textsc{dll}s, which can be
-used by other programs, such as Visual Basic, or spreadsheets like Excel.
+The construction can be easily modified to produce DLL's which can be
+used by other programs such as Visual Basic or spreadsheets like Excel.
 
-There are two example programs: a very 
+There are two example programs, a very 
 simple example to illustrate the ideas,
 and a program to estimate the parameters from a mixture of two bivariate
 normal distributions.
@@ -28,45 +29,45 @@ normal distributions.
 We begin with the simple example. We
 wish to minimize the function $f$ given by
 $$ f=(x_1-1.0)^2+\sum_{i=1}^{n-1}(x_{i+1}-x_i)^2$$
-with respect to the $n$-dimensional vector $x$. The
+with respect to the $n$ dimensional vector $x$. The
 starting values are $x=(0,0,\ldots,0)$.
    
-While this is a quadratic function that can be solved by special methods,
-we do not use this special structure, because we want to illustrate
+While this is a quadratic function which can be solved by special methods
+we do not use this special structure because we want to illustrate
 the technique on general nonlinear models. 
 
-There are three modifications to a stand-alone \ADM\ program
-that must be made to produce a~\textsc{dll}.
-\begin{enumerate}
+There are three modifications to a stand alone \ADM\ program
+which must be made to produce a DLL.
 
-\item The command line option \texttt{-dll} is given to the
-\texttt{tpl2cpp} program, which translates the template file into a
-\cplus\ file. For Gauss, replace the \texttt{-dll} option with
-the \texttt{-gausdll} option.
-\XX{\fontindexentry{tt}{-dll}}{command line option}
-\XX{command line arguments}{\fontindexentry{tt}{-dll}}
+\begin{description}
+\item{1.} The command line option {\tt -dll} is given to the
+{\tt tpl2cpp} program which translates the template file into a
+\cplus\ file. For Gauss replace the {\tt -dll} option with
+the {\tt -gausdll} option.
+\XX{-dll}{command line option}
+\XX{command line arguments}{-dll}
 
-\item The user must decide what data and parameter
-objects are to be passed to, or returned from, the \textsc{dll},
-and modify the \textsc{tpl} file accordingly.
+\item{2.} The user must decide which data and parameter
+objects are to be passed to or returned from the DLL
+and the {\tt TPL} file modified accordingly.
 
-\item The interface code must be written in the
+\item{3.} The interface code must be written in the
 calling language. 
-\end{enumerate}
+\end{description}
 
-Objects that are to be passed into, or returned from, the
-\textsc{dll} are identified by putting the prefix \texttt{dll\_}
+Objects which are to be passed into or returned from the
+DLL are identified by putting the prefix {\tt dll\_}
 before their declarations.
 
-In this example, the number of independent variables
-is passed from the calling program to the \textsc{dll}.
-Thus, \texttt{init\_int nvar} is modified to 
-\texttt{dll\_init\_int nvar}. The calling program
-expects to get the minimum value \texttt{freturn}
+In this  example the number of independent variables
+is p[assed from the calling program to the DLL.
+Thus the {\tt init\_int nvar} is modified to 
+{\tt dll\_init\_int nvar}. The calling program
+expects to get the minimum value {\tt freturn}
 and the minimizing values
-of the {init\_vector x} returned to it, so they are declared to be
-of type \texttt{dll\_number} and \texttt{dll\_init\_vector}.
-\begin{lstlisting}
+of the {init\_vector x} returned to it so they are declared to be
+of type {\tt dll\_number} and {\tt dll\_init\_vector}.
+\beginexample
 DATA_SECTION
   dll_int nvar
 PARAMETER_SECTION
@@ -80,72 +81,73 @@ PROCEDURE_SECTION
     f+=square(x(i+1)-x(i));
   }
   freturn=f;
-\end{lstlisting}
+\endexample
 
+\XX{DLL}{commands for producing}
+\mysection{Compiling the code to produce a DLL}
 
-\XX{\fontindexentry{sc}{dll}}{commands for producing}
-\section{Compiling the code to produce a \textsc{dll}}
-
-The exact form of the commands used to produce a \textsc{dll}, or shared library,
+The exact form of the commands used to produce a DLL or shared library
 depend on the compiler used and the operating system.
 
-Assuming that the template file is named \texttt{xxxx.tpl|}
-for NT/9?, then using the gcc2.95-mingw32 compiler, the 
-commands are 
-\begin{lstlisting}
+assuming that the template file is named xxxx.tpl
+for NT/9? using the gcc2.95-mingw32 compiler the 
+commands are:
+
+\beginexample
 tpl2cpp -dll  %1
 
- C++ -fpermissive -O3 -c -DBUILDING_DLL=1 -D__GNUDOS__ -I. i
+c++ -fpermissive -O3 -c -DBUILDING_DLL=1 -D__GNUDOS__ -I. i
   -If:/admodel/include   -o %1.o %1.cpp
 
-dllwrap -def %1.def --implib lib%1.a --driver-name \cplus\ -o %1.dll  %1.o 
+dllwrap -def %1.def --implib lib%1.a --driver-name c++ -o %1.dll  %1.o 
    -Lf:/admodel/lib -ladmod -ladt -lado -lm 
-\end{lstlisting}
-where the symbol \texttt{\%1} (this is a batch file argument, which would
-be \texttt{\$1} for Linux) should be replaced by \texttt{xxxx}.
 
-Of course, you don't want to type all this every time, so the commands
-should be replaced in a \texttt{.bat} file,
-such as \texttt{makedll.bat}.
-Then, to compile the \textsc{tpl} into a \textsc{dll}, it is only necessary to type
-\begin{lstlisting}
-  makeadll xxxx
-\end{lstlisting}
-where \texttt{xxxx.tpl} is the template file.
-For debugging purposes, you may find that you want to edit the
-\texttt{.cpp} file, so you will not want to run \texttt{tpl2cpp}
-every time. In that case, the first line should be removed from
-the \texttt{.bat} file.
+\endexample
+\noindent where the symbol %1 (this is a batch file argument which would
+be replaced by \$1 in Linux) should be replaced by xxxx
 
-To call the \textsc{dll} from Splus, the \texttt{dll.load} function is used to
+Of course you don't want to type all this every time so the commands
+should be replaced in a bat file
+such as {\tt makedll.bat}.
+Then to compile the TPL into a DLL it is only necessary to type
+
+\beginexample
+makeadll xxxx
+\endexample
+\noindent where {\tt xxxx.tpl} is the template file.
+For debugging purposes you may find that you want to edit the
+{\tt cpp} file so you will not want to run {\tt tpl2cpp}
+every time. In that case the first line should be removed from
+the bat file.
+
+
+To call the  DLL from SPLUS the dll.load function is used to
 load the library. 
-\begin{smallcode}
+\beginexample
 dll.load("simpdll.dll",symbol="simpdll")
 n<-100
 x<-rep(0,n)
 freturn<-0
 ans<-.C("simpdll",as.integer(n),x = as.double(x),as.double(f)," -sp -crit 1.e-8 -nohess")
-\end{smallcode}
-The final parameter, \texttt{-sp -crit 1.e-8 -nohess}, is a string that serves the same function as command
+\endexample
+The final parameter " -sp -crit 1.e-8 -nohess" is a string which serves the same function as command
 line options in AD Model Builder programs. 
-The \texttt{-sp} option tells the \textsc{dll} that it is being run from Splus, so 
-it can print into the Splus command window. The \texttt{-crit} option sets the
+the -sp option tellls the DLL that it is being run from SPLUS so that
+it can print into the Splus command window. The -crit option sets the
 convergence criterion for the magnitude of the components of the
-gradient, and the \texttt{-nohess} option suppresses the calculation of the 
-Hessian at the minimum. It must be present, although it can be blank.
+gradient and the -nohess option suppresses the calculation of the 
+hessian at the minimum. It must be present although it can be blank.
 
-It is necessary for Splus to find the \textsc{dll}. If it has trouble doing so, a full
-path name can be used as in:
-\begin{lstlisting}
-  dll.load("c://mydlls//simpdll.dll",symbol="simpdll")
-\end{lstlisting}
+It is necessary that SPLUS can find the DLL. If there is trouble a full
+path name can be used as in
+\beginexample
+dll.load("c://mydlls//simpdll.dll",symbol="simpdll")
+\endexample
 
-
-\section{The Splus objects}
-
-At present, the objects for communication
-with Splus that can be put in the \DS\ of the \textsc{tpl} file are
-\begin{lstlisting}
+\mysection{The splus objects}
+At present the objects which can be put in the TPL file for communication
+with Splus in the data section are
+\beginexample
 dll_init_int
 dll_iinit_number
 dll_iinit_vector
@@ -154,9 +156,9 @@ dll_int
 dll_number
 dll_vector
 dll_matrix
-\end{lstlisting}
-while in the \texttt{PARAMETER\_SECTION}, they are
-\begin{lstlisting}
+\endexample
+while in the PARAMETER\_SECTION they are
+\beginexample
 dll_init_number
 dll_init_bounded_number
 dll_init_vector
@@ -165,53 +167,48 @@ dll_init_matrix
 dll_number
 dll_vector
 dll_matrix
-\end{lstlisting}
+\endexample
 These objects act the same as the corresponding AD Model Builder objects
-without the \texttt{dll\_} prefix. For initial parameters, the difference is that
+without the dll\_ prefix. For initial parameters the difference is that
 they are assumed to get their initial values from Splus.
 
-Note that by default, Splus stores elements of a matrix by columns, that
-is, contiguous areas of memory run down the columns. AD Model Builder stores
-its elements by rows, so that when a matrix objects is passed to it from
-Splus, it expects the object to be stored by column and does a transpose
-operation on it. At the conclusion of the AD Model Builder program,
+Note that by default Splus stores elements of a Matrix by columns, that
+is contiguous areas of memory run down columns. AD Model Builder stores
+its elements by rows so that when a matrix objects passed to it from
+Splus it expects the object to be stored by column and does a transpose
+operation on it. At the  conclusion of the AD Model Builder program
 the object is passed back to Splus via the inverse operation. This
 process should be transparent to the user. 
 
-Gauss, on the other hand, stores a matrix by rows. 
-In addition, Gauss passes a string as a \texttt{char *} rather than the
-\texttt{char **} employed by Splus.
-Using the \texttt{-gaussdll}
+Gauss on the other hand stores a matrix by rows. 
+In addition Gauss passes a string as a {\tt char *} rather than the
+{\tt char **} employed by Splus.
+Using the {\tt -gaussdll}
 option ensures that Gauss matrices and strings will be handled properly.
-\XX{\fontindexentry{tt}{-gaussdll}}{command line option}
-\XX{command line arguments}{\fontindexentry{tt}{-gaussdll}}
+\XX{-gaussdll}{command line option}
+\XX{command line arguments}{-gaussdll}
 
-
-\section{Debugging the \textsc{dll}s}
-\XX{\fontindexentry{sc}{dll}}{debugging}
-
-Before you compile your program as a \textsc{dll}, it is easiest if you
-first compile it as a stand-alone application and debug it.
-Then you can simply put the \texttt{dll\_} prefix before
-those objects you wish to have passed to and from
+\XX{DLL}{debugging}
+\mysection{Debugging the DLL's}
+Before you compile your program as a DLL it is easiest if you
+first compile it as a stand alone application and debug it.
+then you can simply put the {\tt dll\_} prefix before
+those objects which you wish to have passed to and from
 the calling program.
-Also is inconvenient to debug the \textsc{dll}s from Splus directly.
+Also is inconvenient to debug the DLL's from Splus directly.
 Errors in the code usually cause Splus to crash. 
-Also, printing results to the screen from a \textsc{dll} can
+Also printing results to the screen from a DLL can
 be problematic if the calling program does not
-provide for it. To alleviate this
-problem, it is possible to call the function in the \textsc{dll}
-from a C or \cplus\ routine. This enables the use of symbolic debuggers, etc.,
-to debug the code, and enables screen I/O. 
-Here is C code that can load the \textsc{dll} and call the function:
-\begin{lstlisting}
+probvide for it. To alleviate this
+problem it is possible to call the function in the DLL
+from a C or C++ routine. This enables the use of symbolic debuggers etc.
+to debug the code and enables screen IO. 
+Here is C code which can load the DLL and call the function.
+\beginexample
 #include <stdio.h>
 #include <windows.h>
 
-typedef __declspec(dllexport) void _export (*MYPROC)(int *_nvar,
-  double *_x, 
-  double *_freturn,
-  char ** sp_options);
+typedef __declspec(dllexport) void _export (*MYPROC)(int *_nvar,double *_x,double *_freturn,char ** sp_options);
 
 VOID main(int argc,char * argv[])
 {
@@ -248,33 +245,32 @@ VOID main(int argc,char * argv[])
   else
    printf("Can't load simdll.dll\n");
 }
-\end{lstlisting}
+\endexample
 This code can be compiled with the command
-\begin{lstlisting}
+\beginexample
   gcc -otestsim.exe testsim.c
-\end{lstlisting}
-which will produce the program
-\texttt{testsim.exe}. Running this program will 
-load the \textsc{dll}, find the function in it, and call it.
-At the end, it will report the results obtained.
+\endexample
+\noindent which will produce the program
+{\tt testsim.exe}. running this program will 
+load the DLL, find the function in it and call it.
+at the end it will report the results obtained.
 
-
-\section{Understanding what is being passed to the \textsc{dll}}
-
-The most difficult part of calling a \cplus\ \textsc{dll} from some other
-type of application is understanding the correct formalism 
+\mysection{Understanding what is being passed to the DLL}
+The most difficult part of calling a C++ DLL from some other
+type of application is understanding what the correct formalism 
 for passing different objects between the two.
-For example, a string in Visual Basic
-may be a very different object from the simple \texttt{char *}
-(pointer to char) of the C and \cplus\ languages. If you get it wrong,
-then the program will usually crash when the code in the \textsc{dll}
-tries to access the object.  The easiest way to debug this is
-to have the \textsc{dll} code print out the values of the passed
-objects. (However, keep in mind that simply trying to access the
-values for printing may cause the program to crash.)
+passingthje various objects. for example a string in Visual Basic
+may be a very different object from the simple {\tt char *}
+(pointer to char) od the C and C++ languages. If you get it wrong
+then the program will usually crash when the code in the DLL
+tries to access the object.  The simplest way to debug this is
+to have the DLL code simple print out the values of the passed
+objects. (However keep in mind that simply trying to access the
+values for printing may cause the program to crash).
 
-Consider the \cplus\ for the example \textsc{tpl} code given above:
-\begin{lstlisting}
+Consider the {\tt CPP} for the example {\tt TPL} code given above.
+
+\beginexample
 #include <admodel.h>
 
 #include <simpdll.htp>
@@ -284,10 +280,7 @@ model_data::model_data(splus_args& ad_spa)
   nvar.allocate(ad_spa.nvar,"nvar");
 }
 
-model_parameters::model_parameters(int sz,
-  int argc, 
-  char * argv[], 
-  splus_args& ad_spa) : 
+model_parameters::model_parameters(int sz,int argc,char * argv[], splus_args& ad_spa) : 
  ad_comm(argc,argv), model_data(ad_spa) , function_minimizer(sz)
 {
   initializationfunction();
@@ -340,10 +333,7 @@ extern "C" {
 #  define _export
 #endif
 
-__declspec(dllexport) void _export simpdll(int *_nvar,
-  double *_x,
-  double *_freturn,
-  char ** sp_options)
+__declspec(dllexport) void _export simpdll(int *_nvar,double *_x,double *_freturn,char ** sp_options)
 {
   int argc=1;
   try {
@@ -370,40 +360,32 @@ __declspec(dllexport) void _export simpdll(int *_nvar,
   }
 }
 }
-\end{lstlisting}
-For now, we are only interested in the 
-part of the code after the beginning of the function
-\begin{lstlisting}
-__declspec(dllexport) void _export simpdll(int *_nvar,
-  double *_x,
-  double *_freturn,
-  char ** sp_options)
+\endexample
+\noindent For now we are only interested in the 
+part of the code after the befginning of the function
+
+\beginexample
+__declspec(dllexport) void _export simpdll(int *_nvar,double *_x,double *_freturn,char ** sp_options)
 {
   int argc=1;
   try {
   .....
-\end{lstlisting}
+\endexample
 Modify this code to:
-\begin{lstlisting}
-__declspec(dllexport) void _export simpdll(int *_nvar,
-  double *_x,
-  double *_freturn,
-  char ** sp_options)
+\beginexample
+__declspec(dllexport) void _export simpdll(int *_nvar,double *_x,double *_freturn,char ** sp_options)
 {
   cout << " nvar = " << *_nvar << endl;
   return; 
   int argc=1;
   try {
    .....
-\end{lstlisting}
-If everything is OK, this will simply print out the value of \texttt{nvar}
+\endexample
+If everything is OK this will simply print out the value of {\tt nvar}
 and return to the calling program.
-Then the value of \texttt{x} can be printed out as well, with code like:
-\begin{lstlisting}
-__declspec(dllexport) void _export simpdll(int *_nvar,
-  double *_x,
-  double *_freturn,
-  char ** sp_options)
+Then the value of x can be printed out as well with code like
+\beginexample
+__declspec(dllexport) void _export simpdll(int *_nvar,double *_x,double *_freturn,char ** sp_options)
 {
   cout << " nvar = " << *_nvar << endl;
   cout << " x = " << endl;
@@ -415,13 +397,10 @@ __declspec(dllexport) void _export simpdll(int *_nvar,
   int argc=1;
   try {
    .....
-\end{lstlisting}
-If you don't have access to the screen, the above code can be modified to print to a file.
-\begin{lstlisting}
-__declspec(dllexport) void _export simpdll(int *_nvar,
-  double *_x,
-  double *_freturn,
-  char ** sp_options)
+\endexample
+If you don't have access to the screen the above code can be modified to print to a file.
+\beginexample
+__declspec(dllexport) void _export simpdll(int *_nvar,double *_x,double *_freturn,char ** sp_options)
 {
   ofstream ofs("logfile");
   ofs << " nvar = " << *_nvar << endl;
@@ -434,136 +413,135 @@ __declspec(dllexport) void _export simpdll(int *_nvar,
   int argc=1;
   try {
    .....
-\end{lstlisting}
-After running the program, you should find the values of the 
-objects printed into a file named \texttt{logfile}.
+\endexample
+After running the program you should find the values of the 
+objects printed into a file named {\tt logfile}.
 
-Splus passes objects to the \textsc{dll} by address, that is, it
+Splus passes objects to the DLL by address, that is it
 finds the address in memory of the object and passes that value.
-So the integer \texttt{nvar} is not passed itself, but the address is. In
-C or \cplus, you get the address of an object with the \texttt{\&}
-operator.  Given the address of an object, you access the 
-object with the \texttt{*} operator. In the above code,
-\texttt{\_nvar} is the address of an integer passed by 
-the calling program to the \textsc{dll} and \texttt{*\_nvar}
-accesses the object. So, the line of code
-\begin{lstlisting}
+So the integer nvar is not passed itself but the address. In
+C or C++ you take the address of an object with the {\tt \&}
+operator.a given the address of an object you access the 
+object with the {\tt *} operator. In the above code
+{\tt \_nvar} is the address of an integer passed by 
+the calling program to the DLL and {\tt *\_nvar}
+accesses the object. So the line of code
+\beginexample
   *_nvar=5;
-\end{lstlisting}
-will set the values of the integer to 5 back in the calling 
+\endexample
+\noindent will set the values of the integer to 5 back in the calling 
 program.
-When Splus passes a vector object, it passes the address of the
-first element in the vector. So, if the vector is a vector of
-double precision numbers (an object of type \texttt{double} in C),
-it will pass a pointer to \texttt{double}. So in the above code,
-\texttt{\_x} is the address of the first element of the vector
-and \texttt{*\_x} is the first element, so
-\begin{lstlisting}
+when Splus passes a vector object it passes the address of the
+first element in the vector. So if the vector is a vector of
+double precision numbers (an object of type {\tt double} in C)
+it will pass a pointer to {\tt double}. So in the above code
+{\tt \_x} is the address of the first element of the vector
+and {\tt *\_x} is the first element so that
+\beginexample
   *_x=12.55;
-\end{lstlisting}
-will set the first element in the vector equal to \texttt{12.55}.
-To access other  elements of the vector, use the \texttt{[]} operators.
-\begin{lstlisting}
-x[0]=12.55;  // same as *_x=12.55
-x[4]=-2.5;  // sets the 5 element equal to -2.5
-\end{lstlisting}
-
-
-\section{Passing strings from Splus to a \textsc{dll}}
-
-A string in C is a pointer to an array of elements of type \texttt{char}.
+\endexample
+will set the first element in the vector equal to {\tt 12.55}.
+To access other  elements of the vector use the $[]$ operators.
+\beginexample
+  x[0]=12.55;  // same as *_x=12.55
+  x[4]=-2.5;  // sets the 5 element equal to -2.5
+\endexample
+\mysection{Passing strings from Splus to a DLL}
+A string in C is a  pointer to an array of elements of type char {\tt char}.
 It might be logical to conclude that Splus would pass the
-address of the first element of the array. This is not
-the case.  Splus passes the address of the object pointing to the 
-first element of the array (a \texttt{char **} in C).
-So in the above code, if you want to print the second element of the
-string, point \texttt{sp\_options} to the standard output
-device:
-\begin{lstlisting}
+address of the first elementa of the array. This is not
+the case -- Splus passes the address of the object pointing to the 
+first element of the array (a {\tt char **} in C).
+So in the above code if you want to print the second element of the
+string point to by {\tt sp\_options} to the standard output
+device you would use the code
+\beginexample
   cout << (*sp_options)[1] << endl; // print the second element of the string
-\end{lstlisting}
-You must use the parentheses, because the \texttt{[]} operation has
-higher precedence than does the \texttt{*}~operation.
+\endexample
+You must use the parentheses because the $[]$ operation has
+higher precendence than the {\tt *} operation.
 
 
-\section{A mixture of two bivariate normal distributions}
-
+\mysection{A mixture of two bivariate normal distributions}
 This is a more complicated example.
-Let $x_i$ be a collection of 2-dimensional vectors drawn  
+Let $x_i$ be a collection of two dimensional vectors drawn  
 at random from a mixture of two bivariate normal distributions with
 means $\mu_i$ and covariance matrices $\Sigma_i$.
 The data to be analyzed are shown here. They consist of 500
-points from the mixture, with 25\% in one component and 75\% in the other
-component. Both samples have positively correlated components, so
-they both lie near the line $y=x$.
-This makes them difficult to separate.
+point from the mixture  with 25% in one component and 75% in the other
+component. Both samples have positively corellated components so
+that they both lie near the line y=x.
+this makes them difficult to separate.
 The means used for the simulations were
-\begin{lstlisting}
+\beginexample
   (0,0)     (1,0)
-\end{lstlisting}
-while the covariance matrices used for the simulation were
-\begin{lstlisting}
-1.77778 4.74074     1.77778 2.37037
-4.74074 14.4198     2.37037 4.93827
-\end{lstlisting}
+\endexample
+while the covariance matrices used for the simulation were.
+\beginexample
+ 1.77778 4.74074     1.77778 2.37037
+ 4.74074 14.4198     2.37037 4.93827
+\endexample
 The estimates for these parameters obtained by the model were
-\begin{lstlisting}
-(0.026,0.059)   (1.266,0.287)
+\beginexample
+   (0.026,0.059)   (1.266,0.287)
 
-1.42409 3.86336    1.66321 2.34985
-3.86336 12.2286    2.34985 4.94363
-\end{lstlisting}
+  1.42409 3.86336    1.66321 2.34985
+  3.86336 12.2286    2.34985 4.94363
+\endexample
 
 The estimated proportions were
-\begin{lstlisting}
+\beginexample
     0.343  0.657
-\end{lstlisting}
-See Figure~\ref{fig:estimatedprop}.
-\begin{figure}[htbp]
-  \includegraphics[height=4.5in, width=\textwidth]{datax.png}
-  \emptycaption
-  \label{fig:estimatedprop}
-\end{figure}
+\endexample
+\smallskip
+\hrule
+\smallskip
+\pdfximage  height 4.5in width 7in depth 0in {datax.png}
+\smallskip
+\hrule
+\smallskip
 
-The minimization is carried out in three phases. For the first phase, only
-the proportions of the mixture are estimated, with the parameters that
+The minimization is carried out in three phases. For the first phase only
+the proportions of the mixture are estimated, with the parameters which
 determine the covariance matrices and the means held fixed. For the second
-phase, the covariance matrices are estimated as well, with the means held fixed.
-For the third and final phase, all the parameters are estimated.
+phase the covariance matrices are estimated as well, with the means held fixed.
+For the third and final phase all the parameters are estimated.
 The idea is that the user should start with some good estimates for
-the means.  Of course, the model could be run several times with different
-initial estimates and if different solutions are obtained, then the
-one with the best fit would be chosen.
+the means.  Of course the model could be run several times with different
+initial estimates and if different solutions are obtained then the
+one with the best fit would be chosen. 
 
 The initial values used for the means and standard deviations were
-\begin{lstlisting}
-(-1,0)   (2,0)
+\beginexample
+  (-1,0)   (2,0)
 
-1  0     1  0
-0  1     0  1
-\end{lstlisting}
+    1  0     1  0
+    0  1     0  1
+\endexample
 The initial values used for the proportions were
-\begin{lstlisting}
+\beginexample
     0.5      0.5
-\end{lstlisting}
+\endexample
 The log-likelihood  function for the sample is
- \begin{align}
-  \nonumber \sum_{i=1}^n \log \Big\{&\,p_1|\Sigma_1|^{-1/2}\exp\big(\kern-.1em -0.5(x_i-\mu_1)^{\prime}\,
-  \Sigma_1^{-1}(x_i-\mu_1)\big) \\
-   &+p_2|\Sigma_2|^{-1/2}\exp\big(\kern-.1em -0.5(x_i-\mu_2)^{\prime}\,
-  \Sigma_2^{-1}(x_i-\mu_2)\big) \Big\}
- \end{align}
+%$$\eqalign{
+ \begin{eqnarray}
+  \sum_{i=1}^n \log\Big\{&\,p_1|\Sigma_1|^{-1/2}\exp\big(-0.5(x_i-\mu_1)^{\prime}\,
+  \Sigma_1^{-1}(x_i-\mu_1)\big) \cr
+   &+p_2|\Sigma_2|^{-1/2}\exp\big(-0.5(x_i-\mu_2)^{\prime}\,
+  \Sigma_2^{-1}(x_i-\mu_2)\big)\Big\}
+ \end{eqnarray}
+%\cr}$$
 The main technical difficulty in maximizing the log-likelihood
 function is parameterizing the covariance matrices in such a way
 that they will be positive definite. This is done by employing a
-``positivized'' Choleksi decomposition.
-$\Sigma_i$ as $\Sigma_i=C_iC_i^{\prime}+\lambda I$, where
-$C_i$ is a lower triangular matrix, $\lambda>0$ is a ``small''
-positive number, and $I$ is the identity matrix. 
+"positivized" Choleksi decomposition.
+$\Sigma_i$ as $\Sigma_i=C_iC_i^{\prime}+\lambda I$ where
+$C_i$ is a lower triangular matrix, $\lambda>0$ is a "small"
+positive number  and $I$ is the identity matrix. 
 The proportions in the mixture are parameterized by a bounded vector
-of parameters that is normalized so that the components will sum to~1.
-The code for the example follows:
-\begin{lstlisting}
+of parameters which is normalized so that the components will sum to 1.
+The code for the example follows.
+\beginexample
 DATA_SECTION
   dll_int nobs
   dll_matrix obs(1,nobs,1,2) 
@@ -617,10 +595,10 @@ REPORT_SECTION
   report << "First covariance matrix = " << endl<< S1 << endl;
   report << "Second mean = " << endl << mu2 << endl;
   report << "Second covariance matrix = " << endl << S2 << endl;
-\end{lstlisting}
+\endexample
 
-This example can be run by using the following Splus source code:
-\begin{lstlisting}
+Ths example can be run by using the following Splus source code.
+\beginexample
  nobs<-scan("bimix.dat",n=1)
  x<-matrix(scan("bimix.dat",skip=1),nrow=nobs,ncol=2,byrow=TRUE)
  pcoff<-rep(.5,2)
@@ -655,28 +633,26 @@ This example can be run by using the following Splus source code:
  print(S1)
  print ("Estimated covariance matrix for component 2")
  print(S2)
-\end{lstlisting}
-This code  only works under NT/95 for Version 4 Release~3.
-Assuming that you have put the code where Splus can find it, you can
+\endexample
+This code  only works under NT/95 for version 4 release 3.
+Assuming that you have put the code where Splus can find it you can
 run the example from Splus by typing
-\begin{lstlisting}
-  source("bimix.spl")
-\end{lstlisting}
-There is also a file, \texttt{bimix.r}, which will run the program under~R.
-However, at present for Windows, the R version will not print out any
-intermediate results.  So, be patient and the final estimates will appear
+\beginexample
+source("bimix.spl")
+\endexample
+There is also a file, bimix.r, which will run the program under R.
+However at present for Windows the R version will not print out any
+intermeidate results so be patient and the final estimates will appear
 when the minimization has converged.
-After the program executes, the parameter estimates can be found in
-the Splus variables \texttt{p}, \texttt{mu1}, \texttt{mu2}, \texttt{S1}, and~\texttt{S2}.
+After the program executes the parameter estimates can be found in
+the Splus variables p, mu1, mu2, S1, and S2.
+\mysection{Interpretation of the parameter estimates}
+If the user desires, (remove the -nohess option)
+the program computes estimates 
+of the variances of the parameter estimates.
 
-
-\section{Interpretation of the parameter estimates}
-
-If the user desires, they can remove the \texttt{-nohess} option and have
-the program compute estimates 
-of the variances of the parameter estimates. %xx was nonsense.
-\begin{lstlisting}
- index   name   value      std.dev   
+\beginexample
+ index   name   value      std dev   
     1   pcoff  3.5511e-01  1.5693e+00
     2   pcoff  6.7911e-01  2.9777e+00
     3   C1     1.1507e+00  7.9990e-02
@@ -691,13 +667,14 @@ of the variances of the parameter estimates. %xx was nonsense.
    12   mu     2.8665e-01  1.7818e-01
    13   p      3.4336e-01  6.7238e-02
    14   p      6.5664e-01  6.7238e-02
-\end{lstlisting}
+\endexample
 
 The program also reports the correlation matrix
-\begin{tinycode}
 
- index   name    value     std.dev     1     2      3      4      5      6      7      8      9     10     11     12     13     14 
-     1   pcoff  3.551e-01 1.569e+00  1.000
+{ 
+\beginexample \ttsix
+ index   name    value     std dev     1     2      3      4      5      6      7      8      9     10     11     12     13     14   
+    1   pcoff  3.551e-01 1.569e+00  1.000
     2   pcoff  6.791e-01 2.977e+00  0.997  1.000
     3   C1     1.150e+00 7.999e-02 -0.039 -0.021  1.000
     4   C1     3.357e+00 2.824e-01 -0.094 -0.052  0.736  1.000
@@ -711,4 +688,5 @@ The program also reports the correlation matrix
    12   mu     2.866e-01 1.781e-01  0.063  0.034 -0.237 -0.247  0.071 -0.482 -0.265  0.003 -0.363 -0.460  0.803  1.000
    13   p      3.433e-01 6.723e-02  0.148  0.081 -0.266 -0.636  0.450 -0.482 -0.111 -0.487 -0.001 -0.302  0.773  0.426  1.000
    14   p      6.566e-01 6.723e-02 -0.148 -0.081  0.266  0.636 -0.450  0.482  0.111  0.487  0.001  0.302 -0.773 -0.426 -1.000  1.000
-\end{tinycode}
+\endexample }
+

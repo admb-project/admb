@@ -1,4 +1,4 @@
-// Copyright (c) 2008, 2009, 2010 Regents of the University of California.
+// Copyright (c) 2008, 2009 Regents of the University of California.
 //
 // ADModelbuilder and associated libraries and documentations are
 // provided under the general terms of the "BSD" license.
@@ -56,12 +56,6 @@ INITIALIZATION_SECTION
   log_nu 0  
   log_sigma -2
 PROCEDURE_SECTION
-  cout << endl;
-  cout << "ifn = " << ifn << endl;
-  cout << "quit_flag = " << quit_flag << endl;
-  cout << "ihflag = " << ihflag << endl;
-  cout << "last_phase() " << last_phase() << endl; 
-  cout << "iexit = " << iexit << endl;
   tau=exp(log_tau);
   nu=exp(log_nu);
   sigma=exp(log_sigma);
@@ -88,13 +82,6 @@ FUNCTION dvariable h(const dvariable& z)
   tmp=exp(-.5*z*z + tau*(-1.+exp(-nu*pow(a(a_index),beta)*exp(sigma*z))) );  
   return tmp;
 REPORT_SECTION
-  report << "report:" << endl;
-  report << "ifn = " << ifn << endl;
-  report << "quit_flag = " << quit_flag << endl;
-  report << "ihflag = " << ihflag << endl;
-  report << "last_phase() " << last_phase() << endl; 
-  report << "iexit = " << iexit << endl;
-  tau=exp(log_tau);
   report << "nsteps = " << std::setprecision(10) <<  nsteps << endl;
   report << "f = " << std::setprecision(10) <<  f << endl;
   report << "a" << endl << a << endl;

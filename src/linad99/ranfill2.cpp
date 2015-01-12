@@ -1,14 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <fvar.hpp>
+
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -25,10 +23,6 @@ double auto_rand(long int& idum, int reset);
 void reinitialize_auto_rand();
 double randn(long int& n);
 
-/**
- * Description not yet available.
- * \param
- */
   void dvar_vector::fill_randu(long int& n)
   {
     long int nn;
@@ -42,10 +36,7 @@ double randn(long int& n);
     RETURN_ARRAYS_DECREMENT();
   }
 
-/**
- * Description not yet available.
- * \param
- */
+
   void dvar_vector::fill_randbi(long int& n, double p)
   {
     if ( p<0 || p>1)
@@ -66,17 +57,13 @@ double randn(long int& n);
       else
       {
         elem(i)=0.;
-      }
+      } 
     }
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::colfill_randu(const int &j, long int &n)
+  void dvar_matrix::colfill_randu(BOR_CONST int&j,long int&n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -89,11 +76,8 @@ void dvar_matrix::colfill_randu(const int &j, long int &n)
     RETURN_ARRAYS_DECREMENT();
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::rowfill_randu(const int& i, long int& n)
+
+  void dvar_matrix::rowfill_randu(BOR_CONST int& i,long int& n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -106,10 +90,6 @@ void dvar_matrix::rowfill_randu(const int& i, long int& n)
     reinitialize_auto_rand();
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void dvar_vector::fill_randn(long int& n)
   {
     long int nn;
@@ -122,12 +102,7 @@ void dvar_matrix::rowfill_randu(const int& i, long int& n)
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
   }
-
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::colfill_randn(const int &j, long int &n)
+  void dvar_matrix::colfill_randn(BOR_CONST int&j,long int&n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -140,11 +115,8 @@ void dvar_matrix::colfill_randn(const int &j, long int &n)
     RETURN_ARRAYS_DECREMENT();
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::rowfill_randn(const int& i, long int& n)
+
+  void dvar_matrix::rowfill_randn(BOR_CONST int& i,long int& n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -157,10 +129,7 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
     RETURN_ARRAYS_DECREMENT();
   }
 
-/**
- * Description not yet available.
- * \param
- */
+
   void dvar_matrix::fill_randn(long int& n)
   {
     long int nn=n;
@@ -174,10 +143,7 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
     RETURN_ARRAYS_DECREMENT();
   }
 
-/**
- * Description not yet available.
- * \param
- */
+
   void dvar_matrix::fill_randu(long int& n)
   {
     long int nn=n;
@@ -190,11 +156,6 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
   }
-
-/**
- * Description not yet available.
- * \param
- */
   void dvar3_array::fill_randn(long int& n)
   {
     long int nn;
@@ -202,15 +163,11 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
     reinitialize_auto_rand();
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void dvar3_array::fill_randu(long int& n)
   {
     long int nn;
@@ -218,7 +175,8 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
     reinitialize_auto_rand();
   }
+

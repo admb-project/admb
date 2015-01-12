@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
-#include "admb_messages.h"
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b23array::df1b23array(int nrl,int nrh,int ncl,int nch,int nxl,int nxh)
 {
   if (nrl>nrh)
@@ -27,10 +19,6 @@ df1b23array::df1b23array(int nrl,int nrh,int ncl,int nch,int nxl,int nxh)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b23array::df1b23array(int nrl,int nrh,int ncl,int nch)
 {
   if (nrl>nrh)
@@ -43,10 +31,6 @@ df1b23array::df1b23array(int nrl,int nrh,int ncl,int nch)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b23array::df1b23array(int nrl,int nrh)
 {
   if (nrl>nrh)
@@ -59,19 +43,11 @@ df1b23array::df1b23array(int nrl,int nrh)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b23array::df1b23array(void)
 {
   allocate();
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b23array::allocate(int nrl,int nrh,int ncl,int nch,
   int nxl,int nxh,const char * s)
 {
@@ -91,10 +67,6 @@ void df1b23array::allocate(int nrl,int nrh,const index_type& ncl,
 }
 */
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b23array::allocate(int nrl,int nrh,
   const index_type& ncl, const index_type& nch,
   const index_type& nxl, const index_type& nxh,
@@ -103,10 +75,6 @@ void df1b23array::allocate(int nrl,int nrh,
   allocate(nrl,nrh,ncl,nch,nxl,nxh);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b23array::allocate(int nrl,int nrh,int ncl,int nch,
   int nxl,int nxh)
 {
@@ -129,15 +97,11 @@ void df1b23array::allocate(int nrl,int nrh,int ncl,int nch,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b23array::allocate(int nrl,int nrh,int ncl,int nch)
 {
   index_min=nrl;
   index_max=nrh;
-  //int rs=size();
+  int rs=size();
   if ( (shape=new vector_shapex(nrl,nrh,v)) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";
@@ -150,10 +114,6 @@ void df1b23array::allocate(int nrl,int nrh,int ncl,int nch)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b23array::allocate(int nrl,int nrh,const index_type& ncl,
   const index_type& nch)
 {
@@ -176,10 +136,6 @@ void df1b23array::allocate(int nrl,int nrh,const index_type& ncl,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b23array::allocate(int nrl,int nrh,
   const index_type& ncl,const index_type& nch,
   const index_type& nxl,const index_type& nxh)
@@ -203,10 +159,6 @@ void df1b23array::allocate(int nrl,int nrh,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b23array::df1b23array(const df1b23array & x)
 {
   index_min=x.index_min;
@@ -216,10 +168,6 @@ df1b23array::df1b23array(const df1b23array & x)
   if (shape) (shape->ncopies)++;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b23array::allocate(int nrl,int nrh)
 {
   index_min=nrl;
@@ -237,10 +185,6 @@ void df1b23array::allocate(int nrl,int nrh)
   v -= indexmin();
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b23array::~df1b23array()
 {
   if (shape)
@@ -255,11 +199,6 @@ df1b23array::~df1b23array()
     }
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
 void df1b23array::deallocate()
 {
   if (shape)
@@ -272,10 +211,7 @@ void df1b23array::deallocate()
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 void df1b23array::allocate(void)
 {
   index_min=1;
@@ -284,10 +220,7 @@ void df1b23array::allocate(void)
   shape=0;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2variable sum(const df1b23array& _x)
 {
   ADUNCONST(df1b23array,x)
@@ -303,73 +236,49 @@ df1b2variable sum(const df1b23array& _x)
 }
 
 #if !defined(OPT_LIB)
-
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable& df1b23array::operator () (int i,int j,int k)
 {
-  if (i < indexmin() || i > indexmax())
+  if (i<indexmin() || i>indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "df1b2variable& df1b23array::operator () (int i,int j,int k)",
-    indexmin(), indexmax(), i);
+    cerr << "Index out of bounds in access operator" << endl;
+    ad_exit(1);
   }
   return v[i][j][k];
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector& df1b23array::operator () (int i,int j)
 {
-  if (i < indexmin() || i > indexmax())
+  if (i<indexmin() || i>indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "df1b2vector& df1b23array::operator () (int i,int j)",
-    indexmin(), indexmax(), i);
+    cerr << "Index out of bounds in access operator" << endl;
+    ad_exit(1);
   }
   return v[i][j];
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix& df1b23array::operator () (int i)
 {
-  if (i < indexmin() || i > indexmax())
+  if (i<indexmin() || i>indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "df1b2matrix& df1b23array::operator () (int i)",
-    indexmin(), indexmax(), i);
+    cerr << "Index out of bounds in access operator" << endl;
+    ad_exit(1);
   }
   return v[i];
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix& df1b23array::operator [] (int i)
 {
-  if (i < indexmin() || i > indexmax())
+  if (i<indexmin() || i>indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "df1b2matrix& df1b23array::operator [] (int i)",
-    indexmin(), indexmax(), i);
+    cerr << "Index out of bounds in access operator" << endl;
+    ad_exit(1);
   }
   return v[i];
 }
 
 #endif // #if !defined(OPT_LIB)
 
-/**
- * Description not yet available.
- * \param
- */
+
 void df1b23array::initialize(void)
 {
   int rmin=indexmin();
@@ -379,3 +288,4 @@ void df1b23array::initialize(void)
     (*this)(i).initialize();
   }
 }
+

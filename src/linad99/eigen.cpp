@@ -1,8 +1,8 @@
-/**
- * $Id: eigen.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB foundation
+ * copyright (c) 2009 ADMB foundation
  */
 
 //#define eigen_vectors
@@ -10,33 +10,35 @@
 #include <fvar.hpp>
 
 
-void tri_dag(const dmatrix& m, const dvector& d,const dvector& e);
-void get_eigen(const dvector& d, const dvector& e, const dmatrix& z);
+void tri_dag(BOR_CONST dmatrix& m,BOR_CONST dvector& d,BOR_CONST dvector& e);
+void get_eigen(BOR_CONST dvector& d,BOR_CONST dvector& e,_CONST dmatrix& z);
 
 /** Eigenvalues.
   \param m Input matrix (unchanged on return).
   \return Vector of eigenvalues.
 */
-dvector eigenvalues(const dmatrix& m)
+dvector eigenvalues(_CONST dmatrix& m)
 {
   if (m.rowsize()!=m.colsize())
   {
-    cerr << "error -- non square matrix passed to "
-    "dvector eigen(const dmatrix& m)\n";
+    cerr << "error -- non square matrix passed to dvector eigen(_CONST dmatrix& m)\n";
     ad_exit(1);
   }
   dmatrix m1=symmetrize(m);
+  int n=m1.rowsize();
+  int cmin=m1.colmin();
+  int rmin=m1.rowmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
-  int n=m1.rowsize();
   dvector diag(1,n);
   dvector off_diag(1,n);
-
+  
   tri_dag(m1,diag,off_diag);
 
   get_eigen(diag,off_diag,m1); // eigenvalues are returned in diag
            // eigenvalues are returned in columns of z
   return diag;
+
 }
 
 /** Householder transformation for eigenvalue computation.
@@ -48,27 +50,27 @@ dvector eigenvalues(const dmatrix& m)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+  \deprecated Scheduled for replacement by 2010.
 */
-void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
+void tri_dag(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
 {
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
   dmatrix& m = (dmatrix&) _m;
   if (m.rowsize() != m.colsize())
   {
-    cerr << "Error -- non square matrix passed to "
-    "void tridag(const dmatrix& m)\n";
+    cerr << "Error -- non square matrix passed to void tridag(_CONST dmatrix& m)\n";
     ad_exit(1);
   }
   if (m.rowsize() != d.size() || m.rowsize() != e.size()
     || d.indexmin() != 1 || e.indexmin() !=1 )
   {
-    cerr <<"Error -- incorrect vector size passed to "
-    "void tridag(const dmatrix& m)\n";
+    cerr <<"Error -- incorrect vector size passed to void tridag(_CONST dmatrix& m)\n";
     ad_exit(1);
   }
   int n=m.rowsize();
-  int l,j,i;
+  int l,k,j,i;
   double scale,hh,h,g,f;
 
   for (i=n;i>=2;i--)
@@ -77,13 +79,13 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
     h=scale=0.0;
     if (l > 1)
     {
-      for (int k=1;k<=l;k++)
+      for (k=1;k<=l;k++)
         scale += fabs(m[i][k]);
       if (scale == 0.0)
         e[i]=m[i][l];
-      else
+      else 
       {
-        for (int k=1;k<=l;k++)
+        for (k=1;k<=l;k++)
         {
           m[i][k] /= scale;
           h += m[i][k]*m[i][k];
@@ -94,26 +96,26 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
         h -= f*g;
         m[i][l]=f-g;
         f=0.0;
-        for (j=1;j<=l;j++)
+        for (j=1;j<=l;j++) 
         {
         #ifdef EIGEN_VECTORS
         /* Next statement can be omitted if eigenvectors not wanted */
           m[j][i]=m[i][j]/h;
         #endif
           g=0.0;
-          for (int k=1;k<=j;k++)
+          for (k=1;k<=j;k++)
             g += m[j][k]*m[i][k];
-          for (int k=j+1;k<=l;k++)
+          for (k=j+1;k<=l;k++)
             g += m[k][j]*m[i][k];
           e[j]=g/h;
           f += e[j]*m[i][j];
         }
         hh=f/(h+h);
-        for (j=1;j<=l;j++)
+        for (j=1;j<=l;j++) 
         {
           f=m[i][j];
           e[j]=g=e[j]-hh*f;
-          for (int k=1;k<=j;k++)
+          for (k=1;k<=j;k++)
             m[j][k] -= (f*e[k]+g*m[i][k]);
         }
       }
@@ -130,17 +132,17 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
   /* Contents of this loop can be omitted if eigenvectors not
       wanted except for statement d[i]=a[i][i]; */
   #ifdef EIGEN_VECTORS
-  for (i=1;i<=n;i++)
+  for (i=1;i<=n;i++) 
   {
     l=i-1;
-    if (d[i])
+    if (d[i]) 
     {
       for (j=1;j<=l;j++)
       {
         g=0.0;
-        for (int k=1;k<=l;k++)
+        for (k=1;k<=l;k++)
           g += m[i][k]*m[k][j];
-        for (int k=1;k<=l;k++)
+        for (k=1;k<=l;k++)
           m[k][j] -= g*m[k][i];
       }
     }
@@ -149,14 +151,14 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
     for (j=1;j<=l;j++) m[j][i]=m[i][j]=0.0;
   }
   #else
-  for (i=1;i<=n;i++)
+  for (i=1;i<=n;i++) 
   {
     d[i]=m[i][i];
   }
   #endif
 }
 
-double SIGN(const double x, double y)
+double SIGN( CGNU_DOUBLE x, double y)
 {
   if (y<0)
   {
@@ -170,26 +172,25 @@ double SIGN(const double x, double y)
 //#define SIGN(a,b) ((b)<0 ? -fabs(a) : fabs(a))
 
 /** Eigenvalues.
-  \param _d Diagonal elements of the matrix computed by Householder
-  transformation.
+  \param _d Diagonal elements of the matrix computed by Householder transformation.
   \param _e Off-diagonal elements.
   \param _z On output contains nothing useful.
 
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+  \deprecated Scheduled for replacement by 2010.
 */
-void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
+void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,_CONST dmatrix& _z)
 {
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
-#ifdef EIGEN_VECTORS
   dmatrix& z = (dmatrix&) _z;
-#endif
   int max_iterations=30;
   int n=d.size();
   max_iterations+=10*(n/100);
-  int m,l,iter,i;
+  int m,l,iter,i,k;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -206,7 +207,7 @@ void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
         if (iter++ == max_iterations)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(const dmatrix& m)\n";
+          " dvector eigen(_CONST dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);
@@ -235,7 +236,7 @@ void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
           #ifdef EIGEN_VECTORS
-            for (int k=1;k<=n;k++)
+            for (k=1;k<=n;k++) 
             {
               f=z[k][i+1];
               z[k][i+1]=s*z[k][i]+c*f;
@@ -252,14 +253,16 @@ void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
 }
 
 /** Eigenvalues.
-  \param _d Diagonal elements of the matrix computed by Householder
-  transformation.
+  \param _d Diagonal elements of the matrix computed by Householder transformation.
   \param _e Off-diagonal elements.
   \return Vector of eigenvalues.
+
 
  \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+  \deprecated Scheduled for replacement by 2010.
 */
 dvector get_eigen_values(const dvector& _d,const dvector& _e)
 {
@@ -269,7 +272,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
   int max_iterations=30;
   int n=d.size();
   max_iterations+=10*(n/100);
-  int m,l,iter,i;
+  int m,l,iter,i,k;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -286,7 +289,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
         if (iter++ == max_iterations)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(const dmatrix& m)\n";
+          " dvector eigen(_CONST dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);
@@ -324,8 +327,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
 }
 
 /** Eigenvalues and eigenvectors.
-  \param _d Diagonal elements of the matrix computed by Householder
-  transformation.
+  \param _d Diagonal elements of the matrix computed by Householder transformation.
   \param _e Off-diagonal elements.
   \param _z On return containses eigenvectors.
   \return Vector of eigenvalues.
@@ -333,6 +335,8 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
  \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvector get_eigen_values(const dvector& _d,const dvector& _e,
   const dmatrix& _z)
@@ -351,7 +355,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
   int max_iterations=30;
   int n=d.size();
   max_iterations+=10*(n/100);
-  int m,l,iter,i;
+  int m,l,iter,i,k;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -368,7 +372,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
         if (iter++ == max_iterations)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(const dmatrix& m)\n";
+          " dvector eigen(_CONST dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);
@@ -396,7 +400,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
           d[i+1]=g+p;
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
-          for (int k=1;k<=n;k++)
+          for (k=1;k<=n;k++) 
           {
             f=z[k][i+1];
             z[k][i+1]=s*z[k][i]+c*f;
@@ -411,4 +415,6 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
   }
   return d;
 }
+
 #undef EIGEN_VECTORS
+

@@ -2,19 +2,18 @@
  * $Id$
  *
  * Author: Unknown
- * Copyright (c) 2009-2012 ADMB Foundation
- *
  * This file was originally written in FORTRAN II by and unknown author.
  * In the 1980s, it was ported to C and C++ and extensively modified by
- * David Fournier.
+ * David Fournier. 
  *
+ *  Copyright (c) 2009 ADMB Foundation
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #ifdef __ZTC__
   #include <conio.h>
+#endif
+#ifdef __GNUDOS__
+  #define ADGETCH getch
 #endif
 #include <fvar.hpp>
 extern int ctlc_flag;
@@ -23,48 +22,51 @@ extern int ctlc_flag;
   #include <iostream.h>
   #include <conio.h>
 #endif
-#if defined (__WAT32__) || defined(_MSC_VER)
+#if defined (__WAT32__) || defined(__MSVC32__)
   #include <conio.h>
 #endif
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <disp.h>
   #define endl "\n"
+  void clrscr(void);
 #endif
 #ifdef __SUN__
   #include <iostream.h>
   #include <signal.h>
   #define getch getchar
+  void clrscr(void); 
   #ifdef __HP__
   extern "C" void onintr(int k);
   #endif
 #endif
-#ifdef __NDPX__
-  #include <iostream.hxx>
-#endif
-#if defined (_MSC_VER)
-  void __cdecl clrscr();
-#else
+#if defined(__GNU__) || defined(UNIXKLUDGE)
   #include <iostream>
   #include <signal.h>
   #define getch getchar
+#if !defined(UNIXKLUDGE) && !defined(linux)
   extern "C" void onintr(int k);
-  extern "C" void clrscr();
+#else
+  extern "C" void onintr(int k);
+#endif
+#endif
+#ifdef __NDPX__
+  #include <iostream.hxx>
+  extern "C" {
+    void clrscr();
+  };
+#endif
+#if defined (__MSVC32__)
+  void __cdecl clrscr(void);
 #endif
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-dvector update(int nvar, int iter, int m, const dvector& g,
-  const dmatrix& xalpha, dmatrix& y, const dvector& x, const dvector& xold,
-  const dvector& gold, const dvector& xrho);
+  dvector update(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& xalpha,
+    dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& xold,BOR_CONST dvector& gold,BOR_CONST dvector& xrho);
 double dafsqrt( double x );
-
-/**
- * Description not yet available.
- * \param
- */
-void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
+void fmmt1::fmin(BOR_CONST double& _f, BOR_CONST dvector & _x,BOR_CONST dvector& _g)
 {
   double& f=(double&) _f;
   independent_variables & x=(independent_variables &) _x;
@@ -74,17 +76,17 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
     #endif
   if (use_control_c)
   {
-#if !defined (_MSC_VER)
+#if !defined (__MSVC32__)
     #if defined( __SUN__) && !(defined __GNU__)
       #if defined( __HP__)
         if (ireturn <= 0 )
         {
-          signal(SIGINT, &onintr);
+	   signal(SIGINT, &onintr);
         }
       #else
         if (ireturn <= 0 )
         {
-          signal(SIGINT, (SIG_PF)&onintr);
+	   signal(SIGINT, (SIG_PF)&onintr);
         }
       #endif
     #endif
@@ -92,15 +94,15 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
   }
   if (use_control_c)
   {
-    #if defined( __GNU__)
-      if (ireturn <= 0 )
+    #if defined( __GNU__) 
+      if (ireturn <= 0 ) 
       {
-        signal(SIGINT, &onintr);
+	 signal(SIGINT, &onintr);
       }
     #endif
   }
     #ifdef __ZTC__
-      if (ireturn <= 0 )
+      if (ireturn <= 0 ) 
       {
         if (disp_inited == 0)
         {
@@ -117,42 +119,42 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
       if (ireturn == 1) goto call1;
       if (ireturn == 2) goto call2;
       ihflag=0;
-     if (n==0)
-     {
+     if (n==0) 
+     { 
        cerr << "Error -- the number of active parameters"
          " fmin must be > 0\n";
        ad_exit(1);
-     }
-     if (x.indexmin() !=1)
-     {
+     } 
+     if (x.indexmin() !=1) 
+     { 
        cerr << "Error -- minimum valid index"
          " for independent_variables in fmin must be 1\n"
         << " it is " << x.indexmin() << "\n";
         ad_exit(1);
-     }
-     if (x.size() <n)
-     {
+     } 
+     if (x.size() <n) 
+     { 
        cerr << "Error -- the size of the independent_variables"
         " which is " << x.size() << " must be >= " << n << "\n"
         << " the number of independent variables in fmin\n";
         ad_exit(1);
-     }
-     if (g.indexmin() !=1)
-     {
+     } 
+     if (g.indexmin() !=1) 
+     { 
        cerr << "Error -- minimum valid index"
          " for the gradient vector in fmin must be 1\n"
         << " it is " << g.indexmin() << "\n";
         ad_exit(1);
-     }
-     if (g.size() <n)
-     {
+     } 
+     if (g.size() <n) 
+     { 
        cerr << "Error -- the size of the gradient vector"
         " which is " << g.size() << " must be >=\n"
         << " the number of independent variables in fmin\n";
         ad_exit(1);
-     }
+     } 
      for (i=1; i<=n; i++)
-           xx.elem(i)=x.elem(i);
+           xx.elem(i)=x.elem(i); 
       itn=0;
       icc=0;
        for (i=1; i< 11; i++)
@@ -171,7 +173,7 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
       if (dmin <= 0.)
          goto label7020;
       if(dfn == 0.)
-         z = 0.0;
+         z = 0.0; 
       for (i=1; i<=n; i++)
       {
         xsave.elem(i)=x.elem(i);
@@ -222,22 +224,19 @@ label20:
       if( (itn%iprint) != 0)
          goto label21;
       if (llog) goto label7010;
-#if !defined (_MSC_VER)  && !defined (__GNUC__)
+#     if   !defined (__MSVC32__)  && !defined (__WAT32__) && !defined(__GNUDOS__)  
         if (!scroll_flag) clrscr();
-#endif
+#     endif
 label7003:
       if (iprint!=0)
       {
-        if (ad_printf)
-          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+	if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
               n, itn, ifn);
-        if (ad_printf)
-(*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
+        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
             f, gmax);
       }
-/*label7002:*/
-      /* Printing Statistics table */
-      if(iprint>0)
+label7002:
+      if(iprint>0) 
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
       }
@@ -325,16 +324,17 @@ label30:
           gbest.elem(i)=w.elem(i);
         }
       }
-#if defined(_MSC_VER)
-       if (kbhit())
-#else
+#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux)
        if(ctlc_flag && use_control_c)
+#else
+       if ( kbhit() )
 #endif
        {
-          #if defined(__DJGPP__)
-            int c = toupper(getxkey());
-          #else
+          #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
+	      || defined(__CYGWIN32__)
             int c = toupper(getch());
+          #else
+            int c = toupper(getxkey());
           #endif
           if ( c == 'C')
           {
@@ -346,9 +346,9 @@ label30:
             derch(f, x , w, n, ireturn);
             return;
           }
-          else
+          else 
           {
-            if ( c == 'Q'|| c == 'N')
+            if ( c == 'Q'|| c == 'N') 
             {
               quit_flag=c;
               goto label92;
@@ -367,8 +367,7 @@ label30:
       {
          if (iprint>0)
          {
-           if (ad_printf)
-             (*ad_printf)("  ic > imax  in fminim is answer attained ?\n" );
+           if (ad_printf) (*ad_printf)("  ic > imax  in fminim is answer attained ?\n" );
            fmmdisp(x, g, n, this->scroll_flag,noprintx);
          }
          ihflag=1;
@@ -471,36 +470,32 @@ label65:
 label70:
       if (link == 1) goto label60;
       if (link == 2) goto label65;
-/*label90:*/
+label90:
       for (i=1;i<=n;i++)
          g.elem(i)=w.elem(i);
 label92:
       if (iprint>0)
       {
         if (ihang == 1)
-          if (ad_printf)
-            (*ad_printf)(
-           "Function minimizer not making progress ... is minimum attained?\n");
+	   if (ad_printf) (*ad_printf)("Function minimizer not making progress ... is minimum attained?\n");
       }
       if(iexit == 2)
       {
         if (iprint>0)
         {
-          if (ad_printf)
-            (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
+          if (ad_printf) (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
            " --- convergence critera may be too strict\n");
           ireturn=-1;
         }
       }
-#     if defined (_MSC_VER)  && !defined (__WAT32__)
+#     if defined (__MSVC32__)  && !defined (__WAT32__)
         if (scroll_flag == 0) clrscr();
 #     endif
       if (maxfn_flag == 1)
       {
         if (iprint>0)
         {
-          if (ad_printf)
-            (*ad_printf)("Maximum number of function evaluations exceeded");
+	  if (ad_printf) (*ad_printf)("Maximum number of function evaluations exceeded");
         }
       }
       if (iprint>0)
@@ -510,16 +505,11 @@ label92:
       }
       if(iprint == 0) goto label777;
       if (ad_printf) (*ad_printf)(" - final statistics:\n");
-      if (ad_printf)
-        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-          n, itn, ifn);
-      if (ad_printf)
-        (*ad_printf)(
-        "Function value %12.4le; maximum gradient component mag %12.4le\n",
-        f, gmax);
-      if (ad_printf)
-        (*ad_printf)("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
-
+      if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+	      n, itn, ifn);
+      if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
+              f, gmax);
+      if (ad_printf) (*ad_printf)("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
       fmmdisp(x, g, n, this->scroll_flag,noprintx);
 label777:
          if (ireturn <= 0)
@@ -536,7 +526,7 @@ label777:
 label7000:
       if (iprint>0)
       {
-#     if defined (_MSC_VER)  && !defined (__WAT32__)
+#     if defined (__MSVC32__)  && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
         if (ad_printf) (*ad_printf)("Initial statistics: ");
@@ -545,7 +535,7 @@ label7000:
 label7010:
    if (iprint>0)
    {
-#     if defined (_MSC_VER)  && !defined (__WAT32__)
+#     if defined (__MSVC32__)  && !defined (__WAT32__)
      if (!scroll_flag)  clrscr();
 #endif
      if (ad_printf) (*ad_printf)("Intermediate statistics: ");
@@ -556,7 +546,7 @@ label7020:
    if (iprint>0)
    {
      if (ad_printf) (*ad_printf)("*** hessian not positive definite\n");
-   }
+   } 
          #ifdef __ZTC__
          if (ireturn <= 0)
          {
@@ -565,14 +555,8 @@ label7020:
          #endif
          return;
    }
-
-/**
- * Description not yet available.
- * \param
- */
-dvector update(int nvar, int iter, int m, const dvector& g, const dmatrix& _s,
-  dmatrix& y, const dvector& x, const dvector& _xold, const dvector& _gold,
-  const dvector& _xrho)
+  dvector update(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& _s,
+    dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& _xold,BOR_CONST dvector& _gold,BOR_CONST dvector& _xrho)
   {
     dvector& xold= (dvector&) _xold;
     dmatrix& s= (dmatrix&) _s;
@@ -605,7 +589,7 @@ dvector update(int nvar, int iter, int m, const dvector& g, const dmatrix& _s,
       for (i=k;i>=lb;i--)
       {
         int i1=i%(m1);
-        //int i2=(i+1)%(m1);
+        int i2=(i+1)%(m1);
         {
           alpha(i-lb)=xrho(i1)*(s(i1)*t);
         }

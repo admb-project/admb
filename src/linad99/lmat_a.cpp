@@ -1,20 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-lmatrix::lmatrix(const lmatrix_position& pos)
+ lmatrix::lmatrix(BOR_CONST lmatrix_position& pos)
  {
    int nrl=pos.row_min;
    int nrh=pos.row_max;
@@ -23,8 +16,7 @@ lmatrix::lmatrix(const lmatrix_position& pos)
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in "
-     " lmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in lmatrix(int nrl,int nrh,BOR_CONST ivector& ncl,BOR_CONST ivector& nch)\n";
      ad_exit(1);
    }
 
@@ -34,7 +26,7 @@ lmatrix::lmatrix(const lmatrix_position& pos)
      ad_exit(21);
    }
 
-   size_t rs=rowsize();
+   int rs=rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
@@ -52,3 +44,5 @@ lmatrix::lmatrix(const lmatrix_position& pos)
      m[i].allocate(ncl[i],nch[i]);
    }
  }
+
+

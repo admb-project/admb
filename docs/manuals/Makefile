@@ -1,85 +1,25 @@
-#!/bin/bash
-# $Id: Makefile 655 2010-06-09 01:10:00Z jsibert $
+# $Id:   $
 #
 # Author: John Sibert
-# Copyright (c) 2008, 2009, 2010 ADMB Foundation
+# Copyright (c) 2008 ADMB Foundation
 #
-.PHONY: MANUALS WRITERS_GUIDE ALL INSTALLATION clean
-
 ADMB_PATH=admb
 ADMB_RE_PATH=admb-re
 AUTODIF_PATH=autodif
-SAMPLE_PATH=admb-sample
-ADMBMANUAL_PATH=admbmanual
 
-ALL: WRITERS_GUIDE MANUALS 
+MANUALS: admb.pdf admb-re.pdf autodif.pdf
 
-WRITERS_GUIDE: admbmanual.pdf admb-sample.pdf
+admb.pdf: $(ADMB_PATH)/all_ad.tex
+	make -C $(ADMB_PATH) all_ad.pdf
+	cp -v $(ADMB_PATH)/all_ad.pdf $@
 
-MANUALS: admb.pdf admbre.pdf autodif.pdf
+autodif.pdf: $(AUTODIF_PATH)/all_au.tex
+	make -C $(AUTODIF_PATH) all_au.pdf
+	cp -v $(AUTODIF_PATH)/all_au.pdf $@
 
-# YOU NEED TO BE SUPERUSER TO DO THIS
-INSTALLATION:
-	cp -vf ./share/license.tex $(ADMBMANUAL_PATH)
-	cp -vf ./share/ADMB-logo.png $(ADMBMANUAL_PATH) 
-	$(MAKE) -C $(ADMBMANUAL_PATH) INSTALLATION
-
-admbmanual.pdf : $(ADMBMANUAL_PATH)/admbmanual.dtx
-	cp -vf ./share/license.tex $(ADMBMANUAL_PATH)
-	cp -vf ./share/ADMB-logo.png $(ADMBMANUAL_PATH) 
-	$(MAKE) -C $(ADMBMANUAL_PATH) all
-
-admb-sample.pdf: $(SAMPLE_PATH)/admb-sample.tex
-	cp -vf $(ADMBMANUAL_PATH)/admbmanual.cls $(SAMPLE_PATH) 
-	cp -vf ./share/ADMB-logo.png $(SAMPLE_PATH) 
-	$(MAKE) -C $(SAMPLE_PATH) -f ../share/Makefile.DC filename=admb-sample
-	mv -v $(SAMPLE_PATH)/admb-sample.pdf $@
-
-admbre.pdf: $(ADMB_RE_PATH)/admbre.tex
-	cp -vf $(ADMBMANUAL_PATH)/admbmanual.cls $(ADMB_RE_PATH) 
-	cp -vf ./share/ADMB-logo.png $(ADMB_RE_PATH) 
-	$(MAKE) -C $(ADMB_RE_PATH) -f ../share/Makefile.DC filename=admbre
-	mv -v $(ADMB_RE_PATH)/admbre.pdf $@
-
-admb.pdf: $(ADMB_PATH)/admb.tex
-	cp -vf $(ADMBMANUAL_PATH)/admbmanual.cls $(ADMB_PATH) 
-	cp -vf ./share/ADMB-logo.png $(ADMB_PATH) 
-	$(MAKE) -C $(ADMB_PATH) -f ../share/Makefile.DC filename=admb
-	mv -v $(ADMB_PATH)/admb.pdf $@
-
-autodif.pdf: $(AUTODIF_PATH)/autodif.tex
-	cp -vf $(ADMBMANUAL_PATH)/admbmanual.cls $(AUTODIF_PATH) 
-	cp -vf ./share/ADMB-logo.png $(AUTODIF_PATH) 
-	$(MAKE) -C $(AUTODIF_PATH) -f ../share/Makefile.DC filename=autodif
-	mv -v $(AUTODIF_PATH)/autodif.pdf $@
+admb-re.pdf: $(ADMB_RE_PATH)/admbre.tex
+	make -C $(ADMB_RE_PATH) admbre.pdf
+	cp -v $(ADMB_RE_PATH)/admbre.pdf $@
 
 clean:
-	@$(MAKE) -C $(ADMB_PATH)    -f ../share/Makefile.DC clean filename=admb
-	@$(MAKE) -C $(AUTODIF_PATH) -f ../share/Makefile.DC clean filename=autodif
-	@$(MAKE) -C $(ADMB_RE_PATH) -f ../share/Makefile.DC clean filename=admbre
-	@$(MAKE) -C $(SAMPLE_PATH)  -f ../share/Makefile.DC clean filename=admb-sample
-#	$(MAKE) -C $(ADMBMANUAL_PATH) clean
-	@rm -fv admb.pdf autodif.pdf admbre.pdf admbmanual.pdf admb-sample.pdf
-	@rm -vf admbmanual/admbmanual.cls
-	@rm -vf admbmanual/admbmanual.glo
-	@rm -vf admbmanual/admbmanual.log
-	@rm -vf admbmanual/license.tex
-	@rm -vf admbmanual/ADMB-logo.png
-	@rm -vf admbmanual/admbmanual.idx
-	@rm -vf admbmanual/admbmanual.aux
-	@rm -vf admb-sample/admb-sample.1.log
-	@rm -vf admb-sample/admbmanual.cls
-	@rm -vf admb-sample/admb-sample.2.log
-	@rm -vf admb-sample/ADMB-logo.png
-	@rm -vf admb/admbmanual.cls
-	@rm -vf admb/admb.1.log
-	@rm -vf admb/admb.2.log
-	@rm -vf admb/ADMB-logo.png
-	@rm -vf admb-re/admbmanual.cls
-	@rm -vf admb-re/ADMB-logo.png
-	@rm -vf admb-re/admbre.1.log
-	@rm -vf admb-re/admbre.2.log
-	@rm -vf autodif/admbmanual.cls
-	@rm -vf autodif/ADMB-logo.png
-	@rm -vf autodif/autodif.1.log
-	@rm -vf autodif/autodif.2.log
+	make -C $(AUTODIF_PATH) clean

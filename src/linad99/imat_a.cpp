@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-imatrix::imatrix(const imatrix_position& pos)
+ imatrix::imatrix(BOR_CONST imatrix_position& pos)
  {
    int nrl=pos.row_min;
    int nrh=pos.row_max;
@@ -25,8 +17,7 @@ imatrix::imatrix(const imatrix_position& pos)
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in "
-     "imatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in imatrix(int nrl,int nrh,BOR_CONST ivector& ncl,BOR_CONST ivector& nch)\n";
      ad_exit(1);
    }
 
@@ -55,3 +46,5 @@ imatrix::imatrix(const imatrix_position& pos)
      m[i].allocate(ncl[i],nch[i]);
    }
  }
+
+

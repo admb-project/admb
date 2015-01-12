@@ -2,29 +2,29 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- *
+ * Copyright (c) 2008, 2009 Regents of the University of California
+ * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- *
+ * 
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- *
+ * 
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -38,29 +38,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-/**
-\file cifstrem.h
-Definition of the cifstream class.
-*/
+
 
 #ifndef CIFSTREM_H
-#define CIFSTREM_H
+  #define CIFSTREM_H
+#  include <fvar.hpp>
 
-#include <fvar.hpp>
-
-#if defined(__GNUC__) && (__GNUC__ < 3)
-  #pragma interface
+#if defined(__GNUDOS__)
+#  pragma interface
 #endif
+
+#if defined(linux) || defined(__GNUDOS__)
+#define USE_LONG_LONG
+#endif
+
 
 #include <stdio.h>
 
-#ifdef __WAT32__
+
+#if defined (__WAT32__)
   #include <iostream.h>
   #include <strstrea.h>
 #endif
-#ifdef __BCPLUSPLUS__
+
+#if  defined( __BCPLUSPLUS__) && !defined(__linux__)
   #include <strstrea.h>
 #endif
+
 #ifdef __ZTC__
   #include <iomanip.hpp>
   #include <strstrea.hpp>
@@ -71,12 +75,17 @@ Definition of the cifstream class.
   #include <dos.h>
   }
 #endif
-#if defined(__GNUC__)
-  #if (__GNUC__  < 3)
-    #include <strstream.h>
-  #else
-    #include <sstream>
-  #endif
+
+#if defined(__GNU__) || defined(__GNUDOS__)
+#if !defined(linux) && !defined(__CYGWIN32__) && !defined(__MINGW32__)
+  #include <strstrea.h>
+#else
+#  if (__GNUC__  >= 3) 
+#    include <sstream>
+#  else
+#    include <strstream.h>
+#  endif
+#endif
 #endif
 
 #include <ctype.h>
@@ -114,9 +123,21 @@ Definition of the cifstream class.
 #define FILTER_BUF_SIZE 8000
 #define SIGNATURE_LENGTH  80
 
+//#define HERE cout << "reached line " << __LINE__ << " in " << __FILE__ << endl;
 class cifstream : public ifstream
 {
+#if defined(__ZTC__) || defined(__GNUDOS__) || defined (__WAT32__)
   streambuf* bp;
+#endif
+#if defined(__BORLANDC__)
+#  if (__BORLANDC__  >= 0x0520) 
+  streambuf* bp;
+#  endif
+#endif
+
+#if ( defined(__MSVC32__) && __MSVC32__ >=7 )
+  streambuf* bp;
+#endif
   char COMMENT_CHAR;
   char comment_line[SIGNATURE_LENGTH+1];
   char signature_line[SIGNATURE_LENGTH+1];
@@ -131,69 +152,77 @@ class cifstream : public ifstream
   void set_eof_bit(void);
 
 public:
-#ifdef __BCPLUSPLUS__
-  cifstream() : ifstream() { ; }
-#endif
-#ifdef __NDPX__
-  cifstream() : ifstream() { ; }
-#endif
-#ifdef __ZTC__
-  cifstream() : ios(&buffer), ifstream() { ; }
-#endif
-
+  adstring get_file_name(void);
+  ~cifstream(){/*cout << "In cifstream destructor" << endl;*/}
 #if defined(__BORLANDC__)
-  #if (__BORLANDC__  > 0x0520)
-  cifstream(const char*, int=0 , char cc = '#');
-  #else
-  cifstream(const char*, int = ios::nocreate, char cc = '#');
-  #endif
+#  if (__BORLANDC__  > 0x0520) 
+      cifstream(const char*, int=0 , char cc = '#');
+#  else
+      cifstream(const char*, int = ios::nocreate, char cc = '#');
+#  endif
 #else
-  #if defined(__GNUC__)
-    #if (__GNUC__  >= 3)
-  cifstream(const char*, int = std::ios_base::in , char cc = '#');
-    #else
-  cifstream(const char*, int = ios::nocreate, char cc = '#');
-    #endif
-  #elif defined(_MSC_VER)
-  cifstream(const char*, int = std::ios_base::in , char cc = '#');
-  #else
-  cifstream(const char*, int = ios::nocreate, char cc = '#');
-  #endif
+#  if defined(__GNUC__) 
+#    if (__GNUC__  >= 3) 
+       cifstream(const char*, int = std::ios_base::in , char cc = '#');
+#    else
+       cifstream(const char*, int = ios::nocreate, char cc = '#');
+#    endif
+#  elif ( defined(__MSVC32__) && __MSVC32__ >=7)
+       cifstream(const char*, int = std::ios_base::in , char cc = '#');
+#  else  
+     cifstream(const char*, int = ios::nocreate, char cc = '#');
+#  endif
 #endif
-
-  ~cifstream(){}
+  #ifdef __BCPLUSPLUS__
+  cifstream() : ifstream() { ; }
+  #endif
+  #ifdef __NDPX__
+  cifstream() : ifstream() { ; }
+  #endif
+  #ifdef __ZTC__
+  cifstream() : ios(&buffer), ifstream() { ; }
+  #endif
 
 #if defined(__BORLANDC__)
-#  if (__BORLANDC__  > 0x0520)
+#  if (__BORLANDC__  > 0x0520) 
   void open(const char*, int );
 #  else
-  void open(const char*, int = ios::nocreate);
+    void open(const char*, int = ios::nocreate);
 #  endif
 #else // not BORLAND
-#  if defined(__GNUC__)
-#    if (__GNUC__  >= 3)
+#  if defined(__GNUC__) 
+#    if (__GNUC__  >= 3) 
        void open(const char*, int);
 #    else
        void open(const char*, int = ios::nocreate);
 #    endif
-#  elif defined(_MSC_VER)
+#  elif ( defined(__MSVC32__) && __MSVC32__ >=7)
        void open(const char*, int);
-#  else
+#  else  
      void open(const char*, int = ios::nocreate);
 #  endif
 #endif
 
-  adstring get_file_name(void);
+
+#include <stdio.h>
+
+
+
+
+
+
   char* comment() { return comment_line; }
   char* signature();
 
-  cifstream& operator>>(const dvariable& z);
- //  cifstream& operator>>(const prevariable& z);
+  cifstream& operator>>(BOR_CONST dvariable& z);
+ //  cifstream& operator>>(BOR_CONST prevariable& z);
+#if defined(USE_LONG_LONG)
   cifstream& operator >> (long long& i);
-  cifstream& operator>>(const long& i);
-  cifstream& operator>>(const int& i);
-  cifstream& operator>>(const double& x);
-  cifstream& operator>>(const float& x);
+#endif
+  cifstream& operator >> (BOR_CONST long& i);
+  cifstream& operator >> (BOR_CONST int& i);
+  cifstream& operator >> (BOR_CONST double& x);
+  cifstream& operator >> (BOR_CONST float& x);
   cifstream& operator >> (char* x);
   cifstream& operator >> (const char* x);
   cifstream& operator >> (const adstring& x);
@@ -201,30 +230,30 @@ public:
   cifstream& operator >> (const line_adstring& x);
   cifstream& getline(char*, int, char = '\n');
 
-  cifstream& operator>>(const dvar_vector& z);
-  cifstream& operator>>(const dvector& z);
+  cifstream& operator>>(BOR_CONST dvar_vector& z);
+  cifstream& operator>>(BOR_CONST dvector& z);
   //cifstream& operator>>(svector& z);
-  cifstream& operator>>(const lvector& z);
-  cifstream& operator>>(const ivector& z);
+  cifstream& operator>>(BOR_CONST lvector& z);
+  cifstream& operator>>(BOR_CONST ivector& z);
 
   void set_ignore_eof() {ignore_eof = 0;}
   void set_use_eof() {ignore_eof = 1;}
 };
 
-cifstream& operator>>(cifstream& istr, const prevariable& z);
-cifstream& operator>>(cifstream& istr, const dvar_matrix& z);
-cifstream& operator>>(cifstream& istr, const d3_array& z);
-cifstream& operator>>(cifstream& istr, const d4_array& z);
-cifstream& operator>>(cifstream& istr, const d5_array& z);
-cifstream& operator>>(cifstream& istr, const dvar3_array& z);
-cifstream& operator>>(cifstream& istr, const dvar4_array& z);
-cifstream& operator>>(cifstream& istr, const dvar5_array& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  prevariable& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  dvar_matrix& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  d3_array& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  d4_array& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  d5_array& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  dvar3_array& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  dvar4_array& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  dvar5_array& z);
 //cifstream& operator>>(cifstream& istr, s3_array& z);
-cifstream& operator>>(cifstream& istr, const dmatrix& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  dmatrix& z);
 //cifstream& operator>>(cifstream& istr,smatrix& z);
-cifstream& operator>>(cifstream& istr, const imatrix& z);
-cifstream& operator>>(cifstream& istr, const i3_array& z);
-cifstream& operator>>(cifstream& istr, const i4_array& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  imatrix& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  i3_array& z);
+cifstream& operator>>(cifstream& istr,BOR_CONST  i4_array& z);
 //cifstream& operator>>(cifstream& istr, lmatrix& z);
 
 #endif //#define CIFSTREM_H

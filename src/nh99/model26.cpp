@@ -1,10 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
+
 #include <admodel.h>
+
 
 void named_dvar5_array::allocate(
     const ad_integer& hhsl,const ad_integer& hhsu,
@@ -45,20 +48,21 @@ void named_d5_array::allocate(int l5,int h5,int hhsl,int hhsu,int hsl,
   model_name_tag::allocate(_s);
 }
 
-named_d5_array& named_d5_array::operator=(const d5_array& m)
+named_d5_array& named_d5_array::operator = (_CONST d5_array& m)
 {
   this->d5_array::operator=(m);
   return *this;
 }
 
-named_dvar5_array& named_dvar5_array::operator=(const dvar5_array& m)
+named_dvar5_array& named_dvar5_array::operator = (_CONST dvar5_array& m)
 {
   this->dvar5_array::operator=(m);
   return *this;
 }
 
-named_dvar5_array& named_dvar5_array::operator=(const d5_array& m)
+named_dvar5_array& named_dvar5_array::operator = (_CONST d5_array& m)
 {
   this->dvar5_array::operator=(m);
   return *this;
 }
+

@@ -1,0 +1,564 @@
+\twocolumn
+\begin{theindex}\indexsection{Symbols}
+\indexchapter{Index}
+  \item * /, \hrefname{41}{{\bf4}-5}
+  \item \_\-stack, \hrefname{74}{{\bf9}-4}
+  \item \_\-stklen, \hrefname{73}{{\bf9}-3}
+  \item \tt  inv, \hrefname{42}{{\bf4}-6}
+  \item \tt  sum, \hrefname{54}{{\bf5}-2}
+
+  \indexspace
+\indexsection{A}
+  \item access functions
+    \subitem array elements, \hrefname{32}{{\bf3}-8}
+    \subitem for a d3array, \hrefname{35}{{\bf3}-11}
+    \subitem for dmatrix and dvar\_\-matrix class, \hrefname{35}{{\bf3}-11}
+    \subitem for global objects, \hrefname{73}{{\bf9}-3}
+  \item accuracy
+    \subitem of derivative calculations, \hrefname{7}{{\bf1}-1}
+  \item acos, \hrefname{50}{{\bf4}-14}
+  \item addition of vectors, \hrefname{37}{{\bf4}-1}
+  \item array
+    \subitem of dvariables, \hrefname{27}{{\bf3}-3}
+  \item ARRAY\_\-MEMBLOCK\_\-SIZE, \hrefname{72}{{\bf9}-2}
+  \item asin, \hrefname{50}{{\bf4}-14}
+  \item atan, \hrefname{50}{{\bf4}-14}
+  \item AUTDIF
+    \subitem libraries, \hrefname{61}{{\bf6}-1}
+  \item automatic differentiation, \hrefname{7}{{\bf1}-1}
+  \item AVOID
+    \subitem Calling {\tt  RETURN\_\-ARRAYS\_\-DECREMENT()}, \hrefname{32}{{\bf3}-8}
+    \subitem Calling {\tt  RETURN\_\-ARRAYS\_\-INCREMENT()}, \hrefname{32}{{\bf3}-8}
+    \subitem only creating a version of a function which takes a variable argument, 
+		\hrefname{30}{{\bf3}-6}
+    \subitem using a shallow copy when a distinct object is desired, 
+		\hrefname{28}{{\bf3}-4}
+
+  \indexspace
+\indexsection{B}
+  \item BEGIN\_\-MINIMIZATION, \hrefname{13}{{\bf1}-7}, \hrefname{78}{{\bf10}-4}
+    \subitem number of arguments, \hrefname{79}{{\bf10}-5}
+  \item bootstrap sample
+    \subitem code for, \hrefname{48}{{\bf4}-12}
+  \item Borland, \hrefname{22}{{\bf2}-2}, \hrefname{62}{{\bf6}-2}, \hrefname{73}{{\bf9}-3}
+  \item bounding functions
+    \subitem boundp, \hrefname{81}{{\bf10}-7}, \hrefname{94}{{\bf12}-6}, \hrefname{114}{{\bf14}-4}
+    \subitem boundpin, \hrefname{82}{{\bf10}-8}, \hrefname{94}{{\bf12}-6}, \hrefname{116}{{\bf14}-6}
+    \subitem inverse function for, \hrefname{82}{{\bf10}-8}
+  \item boundp, \hrefname{81}{{\bf10}-7}, \hrefname{114, 115}
+  \item boundpin, \hrefname{82}{{\bf10}-8}, \hrefname{116}{{\bf14}-6}
+  \item bounds checking
+    \subitem for container objects, \hrefname{16}{{\bf1}-10}
+
+  \indexspace
+\indexsection{C}
+  \item cast
+    \subitem from {\tt  independent\_\-variables} to {\tt  dvar\_\-vector}, 
+		\hrefname{13}{{\bf1}-7}
+  \item choleski decomposition of a symmetric matrix, \hrefname{44}{{\bf4}-8}
+  \item CMPDIF\_\-BUFFER\_\-SIZE, \hrefname{71}{{\bf9}-1}
+  \item cmpdiff.tmp, \hrefname{69}{{\bf8}-1}
+  \item colfill
+    \subitem filling a matrix column with a vector, \hrefname{46}{{\bf4}-10}
+  \item colfill\_\-randu
+    \subitem filling a matrix with random numbers, \hrefname{46}{{\bf4}-10}
+  \item colfill\_\-seqadd
+    \subitem filling a matrix, \hrefname{46}{{\bf4}-10}
+  \item colmax(), \hrefname{35}{{\bf3}-11}
+  \item colmin(), \hrefname{35}{{\bf3}-11}
+  \item colshift(int\&), \hrefname{35}{{\bf3}-11}
+  \item colsize(), \hrefname{35}{{\bf3}-11}
+  \item colsum
+    \subitem operation on a matrix, \hrefname{43}{{\bf4}-7}
+  \item column\_\-vector function, \hrefname{32}{{\bf3}-8}
+  \item compiler options
+    \subitem Borland, \hrefname{22}{{\bf2}-2}
+    \subitem Zortech, \hrefname{23}{{\bf2}-3}
+  \item concatenation
+    \subitem of vector objects, \hrefname{41}{{\bf4}-5}
+  \item conjugate gradient function minimizer, \hrefname{16}{{\bf1}-10}
+  \item conjugate gradient method, \hrefname{75}{{\bf10}-1}
+  \item constant objects, \hrefname{25}{{\bf3}-1}
+  \item constructor
+    \subitem copy initializer, \hrefname{26}{{\bf3}-2}
+    \subitem d3array, \hrefname{35}{{\bf3}-11}
+    \subitem dmatrix, \hrefname{32}{{\bf3}-8}
+    \subitem dvector, \hrefname{29}{{\bf3}-5}
+    \subitem from {\tt  independent\_\-variables} to {\tt  dvar\_\-vector}, 
+		\hrefname{13}{{\bf1}-7}
+  \item container classes, \hrefname{25}{{\bf3}-1}
+  \item controlling memory allocation, \hrefname{71}{{\bf9}-1}
+  \item convergence criteria for function minimizer, \hrefname{80}{{\bf10}-6}
+  \item conversion
+    \subitem between between integer and floating point objects, 
+		\hrefname{35}{{\bf3}-11}
+    \subitem implicit, \hrefname{36}{{\bf3}-12}
+  \item copy operation, \hrefname{26}{{\bf3}-2}
+    \subitem shallow, \hrefname{26}{{\bf3}-2}
+  \item cos, \hrefname{50}{{\bf4}-14}
+  \item cosh, \hrefname{50}{{\bf4}-14}
+  \item Counting the number of elements in container classes, 
+		\hrefname{127}{{\bf15}-3}
+
+  \indexspace
+\indexsection{D}
+  \item d3array, \hrefname{25}{{\bf3}-1}
+    \subitem access functions, \hrefname{35}{{\bf3}-11}
+  \item d3array and dvar3\_\-array classes, \hrefname{35}{{\bf3}-11}
+  \item data structures
+    \subitem ragged matrices, \hrefname{55}{{\bf5}-3}
+    \subitem ragged three dimensional arrays, \hrefname{55}{{\bf5}-3}
+  \item dependent variables
+    \subitem set\_\-NUM\_\-DEPENDENT\_\-VARIABLES(int i);, \hrefname{105}{{\bf13}-1}
+  \item Derivative checker
+    \subitem checking correctness of derivatives with, \hrefname{82}{{\bf10}-8}
+    \subitem invoking explicitly, \hrefname{83}{{\bf10}-9}
+    \subitem invoking from the function minimizer, \hrefname{82}{{\bf10}-8}
+  \item det, \hrefname{42}{{\bf4}-6}
+  \item determinant, \hrefname{42}{{\bf4}-6}
+  \item dmatrix, \hrefname{16}{{\bf1}-10}, \hrefname{25}{{\bf3}-1}
+    \subitem access functions, \hrefname{35}{{\bf3}-11}
+    \subitem sorting a, \hrefname{49}{{\bf4}-13}
+  \item dot product, \hrefname{38}{{\bf4}-2}
+    \subitem of vectors, \hrefname{31}{{\bf3}-7}
+  \item double, \hrefname{25}{{\bf3}-1}
+  \item dvar3\_\-array, \hrefname{25}{{\bf3}-1}
+  \item dvar\_\-matrix, \hrefname{16}{{\bf1}-10}, \hrefname{25}{{\bf3}-1}
+  \item dvar\_\-vector, \hrefname{7}{{\bf1}-1}, \hrefname{11}{{\bf1}-5}, \hrefname{16}{{\bf1}-10}, 
+		\hrefname{25}{{\bf3}-1}, \hrefname{77}{{\bf10}-3}
+  \item dvariable, \hrefname{7}{{\bf1}-1}, \hrefname{11}{{\bf1}-5}, \hrefname{25}{{\bf3}-1}, 
+		\hrefname{77}{{\bf10}-3}
+    \subitem controlling the maximum number of with set\_\-MAX\_\-DLINKS, 
+		\hrefname{73}{{\bf9}-3}
+  \item dvariable(dvariable\&), \hrefname{26}{{\bf3}-2}
+  \item dvector, \hrefname{16}{{\bf1}-10}, \hrefname{25}{{\bf3}-1}
+    \subitem sorting a, \hrefname{49}{{\bf4}-13}
+
+  \indexspace
+\indexsection{E}
+  \item eigenvalues
+    \subitem not differentiable, \hrefname{44}{{\bf4}-8}
+    \subitem of a symmetric matrix, \hrefname{44}{{\bf4}-8}
+  \item eigenvectors
+    \subitem not differentiable, \hrefname{44}{{\bf4}-8}
+    \subitem of a symmetric matrix, \hrefname{44}{{\bf4}-8}
+  \item elem\_\-div
+    \subitem element-wise division, \hrefname{42}{{\bf4}-6}
+  \item elem\_\-prod
+    \subitem element-wise product, \hrefname{42}{{\bf4}-6}
+  \item END\_\-MINIMIZATION, \hrefname{13}{{\bf1}-7}, \hrefname{78}{{\bf10}-4}
+    \subitem number of arguments, \hrefname{79}{{\bf10}-5}
+  \item environment string
+    \subitem specifying directory for temporary files, \hrefname{69}{{\bf8}-1}
+  \item Error messages
+    \subitem  Need to increase the maximum number of dlinks, 
+		\hrefname{73}{{\bf9}-3}
+    \subitem Need to increase ARRAY\_\-MEMBLOCK\_\-SIZE parameter, 
+		\hrefname{73}{{\bf9}-3}
+    \subitem Overflow in RETURN\_\-ARRAYS stack -- Increase NUM\_\-RETURN\_\-ARRAYS, 
+		\hrefname{71}{{\bf9}-1}
+    \subitem You need to increase the global variable MAX\_\-NVAR\_\-OFFSET to xxx, 
+		\hrefname{72}{{\bf9}-2}
+  \item examples, \hrefname{24}{{\bf2}-4}
+  \item exp, \hrefname{50}{{\bf4}-14}
+  \item extract\_\-column
+    \subitem from a matrix, \hrefname{47}{{\bf4}-11}
+  \item extract\_\-diagonal
+    \subitem from a matrix, \hrefname{47}{{\bf4}-11}
+  \item extract\_\-row
+    \subitem from a matrix, \hrefname{47}{{\bf4}-11}
+  \item extracting a subvector, \hrefname{47}{{\bf4}-11}, \hrefname{86}{{\bf11}-2}
+  \item extracting data from arrays and matrices, \hrefname{47}{{\bf4}-11}
+
+  \indexspace
+\indexsection{F}
+  \item fabs, \hrefname{50}{{\bf4}-14}
+  \item fill
+    \subitem filling a vector, \hrefname{45}{{\bf4}-9}
+  \item fill\_\-multinomial
+    \subitem filling a vector with random numbers, \hrefname{47}{{\bf4}-11}
+  \item fill\_\-randbi
+    \subitem filling a vector with random numbers, \hrefname{46}{{\bf4}-10}
+  \item fill\_\-randn
+    \subitem filling a vector with random numbers, \hrefname{46}{{\bf4}-10}
+  \item fill\_\-randu
+    \subitem filling a vector with random numbers, \hrefname{46}{{\bf4}-10}
+  \item fill\_\-seqadd
+    \subitem filling a vector, \hrefname{45}{{\bf4}-9}
+  \item fill\_\-multinomial, \hrefname{85}{{\bf11}-1}
+  \item fill\_\-randbi, \hrefname{85}{{\bf11}-1}
+  \item fill\_\-randn, \hrefname{85}{{\bf11}-1}
+  \item fill\_\-randu, \hrefname{85}{{\bf11}-1}
+  \item filling arrays and matrices, \hrefname{45}{{\bf4}-9}
+  \item filling vectors
+    \subitem with random numbers, \hrefname{85}{{\bf11}-1}
+  \item finding roots of equations
+    \subitem Newton--Raphson method, \hrefname{106}{{\bf13}-2}
+  \item float, \hrefname{25}{{\bf3}-1}
+    \subitem no corresponding AUTODIF\ type, \hrefname{27}{{\bf3}-3}
+  \item fmm class
+    \subitem controlling minimization with, \hrefname{79}{{\bf10}-5}
+    \subitem crit, \hrefname{79}{{\bf10}-5}
+    \subitem imax, \hrefname{79}{{\bf10}-5}
+    \subitem iprint, \hrefname{79}{{\bf10}-5}
+    \subitem ireturn, \hrefname{79}{{\bf10}-5}
+    \subitem maxfn, \hrefname{79}{{\bf10}-5}
+    \subitem min\_\-improve, \hrefname{79}{{\bf10}-5}
+    \subitem scroll\_\-flag, \hrefname{79}{{\bf10}-5}
+  \item fmmc class
+    \subitem controlling minimization with, \hrefname{79}{{\bf10}-5}
+  \item formatting, \hrefname{63}{{\bf7}-1}
+  \item function minimizer
+    \subitem conjugate gradient, \hrefname{16}{{\bf1}-10}
+    \subitem convergence criteria for, \hrefname{80}{{\bf10}-6}
+
+  \indexspace
+\indexsection{G}
+  \item global variables
+    \subitem access functions for, \hrefname{71}{{\bf9}-1}
+  \item GRADFIL1.TMP, \hrefname{130}{{\bf15}-6}
+  \item gradfil1.tmp, \hrefname{69}{{\bf8}-1}
+  \item gradfil2.tmp, \hrefname{69}{{\bf8}-1}
+  \item gradient\_\-structure, \hrefname{13}{{\bf1}-7}, \hrefname{71}{{\bf9}-1}, 
+		\hrefname{106}{{\bf13}-2}
+  \item GRADSTACK\_\-BUFFER\_\-SIZE, \hrefname{71}{{\bf9}-1}
+
+  \indexspace
+\indexsection{H}
+  \item hardware, \hrefname{21}{{\bf2}-1}
+
+  \indexspace
+\indexsection{I}
+  \item I/O Error checking, \hrefname{64}{{\bf7}-2}
+  \item IDE
+    \subitem Borland, \hrefname{22}{{\bf2}-2}
+    \subitem Zortech, \hrefname{23}{{\bf2}-3}
+  \item imatrix, \hrefname{25}{{\bf3}-1}
+  \item implicit conversion, \hrefname{36}{{\bf3}-12}
+  \item independent variables, \hrefname{13}{{\bf1}-7}
+    \subitem maximum number of, \hrefname{72}{{\bf9}-2}
+  \item independent\_\-variables
+    \subitem declaration of, \hrefname{76}{{\bf10}-2}
+    \subitem initialization of, \hrefname{76}{{\bf10}-2}
+  \item initializing AUTODIF classes, \hrefname{61}{{\bf6}-1}
+  \item Input and Output, \hrefname{63}{{\bf7}-1}
+    \subitem binary, \hrefname{65}{{\bf7}-3}
+    \subitem example, \hrefname{65}{{\bf7}-3}
+    \subitem formatted, \hrefname{63}{{\bf7}-1}
+    \subitem unformatted, \hrefname{65}{{\bf7}-3}
+  \item int, \hrefname{25}{{\bf3}-1}
+  \item inverse, \hrefname{42}{{\bf4}-6}
+  \item iostream, \hrefname{63}{{\bf7}-1}
+  \item ivector, \hrefname{25}{{\bf3}-1}
+
+  \indexspace
+\indexsection{J}
+  \item jacobcalc, \hrefname{106}{{\bf13}-2}
+
+  \indexspace
+\indexsection{L}
+  \item least squares
+    \subitem parameter estimation, \hrefname{89}{{\bf12}-1}
+  \item libraries, \hrefname{21}{{\bf2}-1}
+    \subitem optimized, \hrefname{32}{{\bf3}-8}, \hrefname{61}{{\bf6}-1}
+    \subitem safe, \hrefname{32}{{\bf3}-8}, \hrefname{61}{{\bf6}-1}
+  \item linker options
+    \subitem Borland, \hrefname{23}{{\bf2}-3}
+  \item linking
+    \subitem Borland linkers, \hrefname{23}{{\bf2}-3}
+  \item lmatrix, \hrefname{25}{{\bf3}-1}
+  \item log, \hrefname{50}{{\bf4}-14}
+  \item log10, \hrefname{50}{{\bf4}-14}
+  \item long int, \hrefname{25}{{\bf3}-1}
+  \item lvector, \hrefname{25}{{\bf3}-1}
+
+  \indexspace
+\indexsection{M}
+  \item macros
+    \subitem BEGIN\_\-MINIMIZATION, \hrefname{13}{{\bf1}-7}
+    \subitem END\_\-MINIMIZATION, \hrefname{13}{{\bf1}-7}
+  \item make, \hrefname{22}{{\bf2}-2}
+  \item manipulators
+    \subitem setf, \hrefname{64}{{\bf7}-2}
+    \subitem setfixex, \hrefname{63}{{\bf7}-1}
+    \subitem setprecision, \hrefname{63}{{\bf7}-1}
+    \subitem setscientific, \hrefname{63}{{\bf7}-1}
+    \subitem setw, \hrefname{63}{{\bf7}-1}
+  \item matrix
+    \subitem colfill, \hrefname{46}{{\bf4}-10}
+    \subitem colfill\_\-randu, \hrefname{46}{{\bf4}-10}
+    \subitem colfill\_\-seqadd, \hrefname{46}{{\bf4}-10}
+    \subitem colsum of, \hrefname{43}{{\bf4}-7}
+    \subitem dividing by a number, \hrefname{41}{{\bf4}-5}
+    \subitem element-wise division, \hrefname{42}{{\bf4}-6}
+    \subitem element-wise product of, \hrefname{42}{{\bf4}-6}
+    \subitem extract\_\-column, \hrefname{47}{{\bf4}-11}
+    \subitem extract\_\-row, \hrefname{47}{{\bf4}-11}
+    \subitem multiplication by a number, \hrefname{39}{{\bf4}-3}
+    \subitem multiplication of two, \hrefname{39}{{\bf4}-3}
+    \subitem multiplying a vector by a, \hrefname{39}{{\bf4}-3}
+    \subitem multiplying a vector times a, \hrefname{39}{{\bf4}-3}
+    \subitem rowfill, \hrefname{46}{{\bf4}-10}
+    \subitem rowfill\_\-randn, \hrefname{47}{{\bf4}-11}
+    \subitem rowfill\_\-randu, \hrefname{46}{{\bf4}-10}
+    \subitem rowfill\_\-seqadd, \hrefname{46}{{\bf4}-10}
+    \subitem rowsum of, \hrefname{43}{{\bf4}-7}
+    \subitem subtracting a number from a, \hrefname{38}{{\bf4}-2}
+    \subitem the determinant of, \hrefname{42}{{\bf4}-6}
+    \subitem the identity matrix function, \hrefname{42}{{\bf4}-6}
+    \subitem the inverse of, \hrefname{42}{{\bf4}-6}
+    \subitem the norm of, \hrefname{43}{{\bf4}-7}
+    \subitem the norm squared of, \hrefname{43}{{\bf4}-7}
+  \item matrix multiplication, \hrefname{39}{{\bf4}-3}
+  \item max
+    \subitem operation on a vector, \hrefname{44}{{\bf4}-8}, \hrefname{50}{{\bf4}-14}
+  \item MAX\_\-NVAR\_\-OFFSET, \hrefname{72}{{\bf9}-2}
+  \item maximum likelihood estimation
+    \subitem for robust regression, \hrefname{91}{{\bf12}-3}
+  \item maximum size
+    \subitem of a dvar\_\-vector, \hrefname{27}{{\bf3}-3}
+  \item mean
+    \subitem mean of a vector object, \hrefname{87}{{\bf11}-3}
+  \item memory model, \hrefname{22, 23}
+  \item min
+    \subitem operation on a vector, \hrefname{43}{{\bf4}-7}, \hrefname{50}{{\bf4}-14}
+  \item minimization
+    \subitem of a function, \hrefname{13}{{\bf1}-7}
+  \item minimization of functions
+    \subitem conjugate gradient method, \hrefname{75}{{\bf10}-1}
+    \subitem quasi--Newton method, \hrefname{75}{{\bf10}-1}
+    \subitem user interface, \hrefname{75}{{\bf10}-1}
+  \item minimize function, \hrefname{75}{{\bf10}-1}
+  \item mixture of normal distributions, \hrefname{86}{{\bf11}-2}
+  \item multinomial fill
+    \subitem of an ivector object, \hrefname{86}{{\bf11}-2}
+  \item multivariate normal distribution
+    \subitem calculation of the log-likelihood function for, 
+		\hrefname{45}{{\bf4}-9}
+    \subitem log-likelihood function, \hrefname{19}{{\bf1}-13}
+
+  \indexspace
+\indexsection{N}
+  \item neural net, \hrefname{125}{{\bf15}-1}
+    \subitem bias terms, \hrefname{125}{{\bf15}-1}, \hrefname{127}{{\bf15}-3}
+    \subitem feed-forward, \hrefname{125}{{\bf15}-1}
+    \subitem input layer, \hrefname{125}{{\bf15}-1}
+    \subitem nodes, \hrefname{125}{{\bf15}-1}
+    \subitem output layer, \hrefname{125}{{\bf15}-1}
+    \subitem squashing function, \hrefname{125}{{\bf15}-1}
+    \subitem training set, \hrefname{127}{{\bf15}-3}
+    \subitem weights, \hrefname{127}{{\bf15}-3}
+  \item Newton--Raphson method
+    \subitem example of, \hrefname{106}{{\bf13}-2}
+    \subitem Roots of equations, \hrefname{106}{{\bf13}-2}
+  \item nonlinear parameter estimation, \hrefname{85}{{\bf11}-1}
+  \item norm, \hrefname{43}{{\bf4}-7}
+  \item NUM\_\-RETURN\_\-ARRAYS
+    \subitem default value, \hrefname{71}{{\bf9}-1}
+
+  \indexspace
+\indexsection{O}
+  \item operator , \hrefname{64}{{\bf7}-2}
+  \item operator (), \hrefname{47}{{\bf4}-11}, \hrefname{49}{{\bf4}-13}, \hrefname{86}{{\bf11}-2}
+  \item operator ++, \hrefname{48}{{\bf4}-12}
+    \subitem for {\tt  dvectors}, \hrefname{48}{{\bf4}-12}
+    \subitem use with subvectors, \hrefname{48}{{\bf4}-12}
+  \item operator --, \hrefname{48}{{\bf4}-12}
+    \subitem for {\tt  dvectors}, \hrefname{48}{{\bf4}-12}
+    \subitem use with subvectors, \hrefname{48}{{\bf4}-12}
+  \item operators
+    \subitem <<, \hrefname{33}{{\bf3}-9}
+    \subitem <<\ \ >>, \hrefname{26}{{\bf3}-2}
+  \item operators () [], \hrefname{32}{{\bf3}-8}
+  \item operators + - * , \hrefname{37}{{\bf4}-1}
+  \item operators += -= *= /=, \hrefname{40}{{\bf4}-4}
+  \item operators << >>, \hrefname{63}{{\bf7}-1}
+  \item optimization considerations
+    \subitem Accessing container class elements, \hrefname{54}{{\bf5}-2}
+    \subitem temporary files, \hrefname{53}{{\bf5}-1}
+  \item optimizing performance
+    \subitem using the best operators for a calculation, \hrefname{37}{{\bf4}-1}, 
+		\hrefname{44}{{\bf4}-8}, \hrefname{54}{{\bf5}-2}
+  \item outer product
+    \subitem of two vectors, \hrefname{39}{{\bf4}-3}
+  \item outliers
+    \subitem in robust regression, \hrefname{93}{{\bf12}-5}
+  \item overlays
+    \subitem BORLAND C\raise 1pt\hbox {\rmsmall ++}\ compiler and, 
+		\hrefname{62}{{\bf6}-2}
+  \item overloaded operators, \hrefname{17}{{\bf1}-11}
+  \item overloading
+    \subitem of functions in C++, \hrefname{16}{{\bf1}-10}
+
+  \indexspace
+\indexsection{P}
+  \item parameter estimation
+    \subitem least squares, \hrefname{89}{{\bf12}-1}
+    \subitem robust nonlinear, \hrefname{89}{{\bf12}-1}
+  \item penalty function, \hrefname{114, 115}, \hrefname{123}{{\bf14}-13}
+    \subitem getting the sign correct, \hrefname{82}{{\bf10}-8}
+    \subitem use wish bounding functions, \hrefname{81}{{\bf10}-7}
+  \item pow, \hrefname{50}{{\bf4}-14}
+  \item precompiled derivative code, \hrefname{9}{{\bf1}-3}
+
+  \indexspace
+\indexsection{Q}
+  \item quasi--Newton method, \hrefname{75}{{\bf10}-1}
+
+  \indexspace
+\indexsection{R}
+  \item ragged matrices, \hrefname{55}{{\bf5}-3}
+  \item ragged matrix, \hrefname{125}{{\bf15}-1}
+  \item ragged three dimensional arrays, \hrefname{55}{{\bf5}-3}
+  \item RAM disk
+    \subitem and temporary files, \hrefname{69}{{\bf8}-1}
+  \item random number generator
+    \subitem example of the use of, \hrefname{86}{{\bf11}-2}
+  \item random numbers
+    \subitem filling vectors with, \hrefname{85}{{\bf11}-1}
+  \item resizeable arrays, \hrefname{41}{{\bf4}-5}
+  \item RETURN\_\-ARRAYS\_\-DECREMENT, \hrefname{31}{{\bf3}-7}, \hrefname{71}{{\bf9}-1}
+  \item RETURN\_\-ARRAYS\_\-INCREMENT, \hrefname{31}{{\bf3}-7}, \hrefname{71}{{\bf9}-1}
+  \item RETURN\_\-ARRAYS\_\-SIZE, \hrefname{72}{{\bf9}-2}
+  \item ridge regression, \hrefname{128}{{\bf15}-4}
+  \item robust estimation, \hrefname{86}{{\bf11}-2}
+    \subitem in nonlinear parameter estimation, \hrefname{89}{{\bf12}-1}
+  \item robust regression
+    \subitem a simple example, \hrefname{94}{{\bf12}-6}
+  \item row\_\-vector function, \hrefname{32}{{\bf3}-8}
+  \item rowfill
+    \subitem filling a matrix row with a vector, \hrefname{46}{{\bf4}-10}
+  \item rowfill\_\-randn
+    \subitem filling a matrix with random numbers, \hrefname{47}{{\bf4}-11}
+  \item rowfill\_\-randu
+    \subitem filling a matrix with random numbers, \hrefname{46}{{\bf4}-10}
+  \item rowfill\_\-seqadd
+    \subitem filling a matrix, \hrefname{46}{{\bf4}-10}
+  \item rowmax(), \hrefname{35}{{\bf3}-11}
+  \item rowmin(), \hrefname{35}{{\bf3}-11}
+  \item rowshift(int\&), \hrefname{35}{{\bf3}-11}
+  \item rowsize(), \hrefname{35}{{\bf3}-11}
+  \item rowsum
+    \subitem operation on a matrix, \hrefname{43}{{\bf4}-7}
+
+  \indexspace
+\indexsection{S}
+  \item safe arrays, \hrefname{16}{{\bf1}-10}, \hrefname{27}{{\bf3}-3}
+  \item scalar product, \hrefname{39}{{\bf4}-3}
+  \item set\_\-CMPDIF\_\-BUFFER\_\-SIZE, \hrefname{71}{{\bf9}-1}
+  \item set\_\-MAX\_\-DLINKS
+    \subitem setting the maximum number of dvariable objects, 
+		\hrefname{73}{{\bf9}-3}
+  \item set\_\-NUM\_\-DEPENDENT\_\-VARIABLES(int i);, \hrefname{105}{{\bf13}-1}
+  \item set\_\-value, \hrefname{127}{{\bf15}-3}
+  \item set\_\-value\_\-inv, \hrefname{127}{{\bf15}-3}
+  \item several dependent variables, \hrefname{105}{{\bf13}-1}
+    \subitem default number of, \hrefname{105}{{\bf13}-1}
+    \subitem use of the operator {\tt  <<}, \hrefname{105}{{\bf13}-1}
+  \item sfabs, \hrefname{50}{{\bf4}-14}
+  \item simulation models, \hrefname{85}{{\bf11}-1}
+  \item sin, \hrefname{50}{{\bf4}-14}
+  \item sinh, \hrefname{50}{{\bf4}-14}
+  \item size\_\-count, \hrefname{127}{{\bf15}-3}
+  \item slice
+    \subitem of a d3array, \hrefname{35}{{\bf3}-11}
+  \item slicehift(int\&), \hrefname{35}{{\bf3}-11}
+  \item slicemax(), \hrefname{35}{{\bf3}-11}
+  \item slicemin(), \hrefname{35}{{\bf3}-11}
+  \item slicesize(), \hrefname{35}{{\bf3}-11}
+  \item solve function, \hrefname{44}{{\bf4}-8}
+  \item Solving a system of linear equations, \hrefname{44}{{\bf4}-8}
+  \item sorting, \hrefname{49}{{\bf4}-13}
+    \subitem dmatrix, \hrefname{49}{{\bf4}-13}
+    \subitem dvector, \hrefname{49}{{\bf4}-13}
+  \item speed
+    \subitem of calculations, \hrefname{8}{{\bf1}-2}
+  \item sqrt, \hrefname{50}{{\bf4}-14}
+  \item squashing function
+    \subitem use of inverse tangent for, \hrefname{128}{{\bf15}-4}
+  \item stack
+    \subitem allocating sufficient space for the, \hrefname{73}{{\bf9}-3}
+    \subitem checking for overflow of the, \hrefname{73}{{\bf9}-3}
+    \subitem setting the stack size for Borland \cplus, \hrefname{73}{{\bf9}-3}
+    \subitem setting the stack size for Zortech \cplus, \hrefname{74}{{\bf9}-4}
+  \item statistical functions, \hrefname{85}{{\bf11}-1}
+  \item std\_\-dev
+    \subitem standard deviation a vector object, \hrefname{87}{{\bf11}-3}
+  \item stream input and output
+    \subitem of dvariables, \hrefname{26}{{\bf3}-2}
+  \item stream operators
+    \subitem <<\ \ >>, \hrefname{26}{{\bf3}-2}
+  \item subtraction of vectors, \hrefname{38}{{\bf4}-2}
+  \item subvectors
+    \subitem using to remove loops from code, \hrefname{48}{{\bf4}-12}
+  \item sum
+    \subitem operation on a vector, \hrefname{43}{{\bf4}-7}
+  \item symmetric matrix
+    \subitem choleski decomposition, \hrefname{44}{{\bf4}-8}
+  \item System Requirements, \hrefname{21}{{\bf2}-1}
+
+  \indexspace
+\indexsection{T}
+  \item tan, \hrefname{50}{{\bf4}-14}
+  \item tanh, \hrefname{50}{{\bf4}-14}
+  \item temporary files
+    \subitem {\tt  cmpdiff.tmp}, \hrefname{69}{{\bf8}-1}
+    \subitem {\tt  gradfil1.tmp}, \hrefname{69}{{\bf8}-1}
+    \subitem {\tt  gradfil2.tmp}, \hrefname{69}{{\bf8}-1}
+    \subitem default directory for, \hrefname{69}{{\bf8}-1}
+    \subitem effect of abnormal program termination on, \hrefname{69}{{\bf8}-1}
+    \subitem for saving derivative information, \hrefname{69}{{\bf8}-1}
+    \subitem use of the DOS environment string TMP, \hrefname{69}{{\bf8}-1}
+    \subitem use of the DOS environment string TMP1, \hrefname{69}{{\bf8}-1}
+  \item three dimensional ragged array, \hrefname{126}{{\bf15}-2}
+  \item two dimensional ragged array, \hrefname{125}{{\bf15}-1}
+  \item two-sided exponential distribution, \hrefname{91}{{\bf12}-3}
+
+  \indexspace
+\indexsection{V}
+  \item value function, \hrefname{26}{{\bf3}-2}
+  \item variable objects, \hrefname{25}{{\bf3}-1}
+  \item vector
+    \subitem component-wise difference of, \hrefname{38}{{\bf4}-2}
+    \subitem component-wise sum of, \hrefname{37}{{\bf4}-1}
+    \subitem dividing a number by, \hrefname{41}{{\bf4}-5}
+    \subitem dividing by a number, \hrefname{41}{{\bf4}-5}
+    \subitem dot product of two, \hrefname{38}{{\bf4}-2}
+    \subitem element-wise division, \hrefname{42}{{\bf4}-6}
+    \subitem element-wise product of, \hrefname{42}{{\bf4}-6}
+    \subitem extracting a subvector, \hrefname{47}{{\bf4}-11}, \hrefname{86}{{\bf11}-2}
+    \subitem fill, \hrefname{45}{{\bf4}-9}
+    \subitem fill\_\-multinomial, \hrefname{47}{{\bf4}-11}
+    \subitem fill\_\-randbi, \hrefname{46}{{\bf4}-10}
+    \subitem fill\_\-randn, \hrefname{46}{{\bf4}-10}
+    \subitem fill\_\-randu, \hrefname{46}{{\bf4}-10}
+    \subitem fill\_\-seqadd, \hrefname{45}{{\bf4}-9}
+    \subitem function call () to extract subvector, \hrefname{47}{{\bf4}-11}, 
+		\hrefname{86}{{\bf11}-2}
+    \subitem I/O operations, \hrefname{63}{{\bf7}-1}
+    \subitem maximum element of, \hrefname{44}{{\bf4}-8}, \hrefname{50}{{\bf4}-14}
+    \subitem minimum element of, \hrefname{43}{{\bf4}-7}, \hrefname{50}{{\bf4}-14}
+    \subitem multiplying a matrix by a, \hrefname{39}{{\bf4}-3}
+    \subitem multiplying a matrix times a, \hrefname{39}{{\bf4}-3}
+    \subitem multiplying a number by a, \hrefname{39}{{\bf4}-3}
+    \subitem outer product of two, \hrefname{39}{{\bf4}-3}
+    \subitem subtracting a number from a, \hrefname{38}{{\bf4}-2}
+    \subitem sum over the elements of, \hrefname{43}{{\bf4}-7}
+    \subitem the norm of, \hrefname{43}{{\bf4}-7}
+    \subitem the norm squared of, \hrefname{43}{{\bf4}-7}
+  \item vector objects
+    \subitem concatenation, \hrefname{41}{{\bf4}-5}
+  \item vector operations
+    \subitem example of, \hrefname{93}{{\bf12}-5}
+    \subitem to reduce the amount of temporary storage required, 
+		\hrefname{93}{{\bf12}-5}
+
+  \indexspace
+\indexsection{W}
+  \item Warning messages
+    \subitem Temporary used for type xxx in function yyy, 
+		\hrefname{13}{{\bf1}-7}
+
+  \indexspace
+\indexsection{Z}
+  \item Zortech, \hrefname{23}{{\bf2}-3}, \hrefname{74}{{\bf9}-4}\end{theindex}

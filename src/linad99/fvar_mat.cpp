@@ -1,77 +1,37 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include "fvar.hpp"
-#include "param_init_bounded_number_matrix.h"
 
-/**
- * Description not yet available.
- * \param
- */
+#include "fvar.hpp"
+
+
  dvar_matrix::dvar_matrix(int nrl,int nrh,int ncl,int nch)
  {
    allocate(nrl,nrh,ncl,nch);
-#ifndef OPT_LIB
-   initialize();
-#endif
+   #ifdef SAFE_ARRAYS
+     initialize();
+   #endif 
  }
 
-/**
- * Description not yet available.
- * \param
- */
  dvar_matrix::dvar_matrix(int nrl,int nrh,kkludge_object kk)
  {
    allocate(nrl,nrh);
-#ifndef OPT_LIB
-   initialize();
-#endif
+   #ifdef SAFE_ARRAYS
+     initialize();
+   #endif 
  }
 
-/**
- * Description not yet available.
- * \param
- */
  dvar_matrix::dvar_matrix(int nrl,int nrh)
  {
    allocate(nrl,nrh);
-#ifndef OPT_LIB
-   initialize();
-#endif
+   #ifdef SAFE_ARRAYS
+     initialize();
+   #endif 
  }
 
-/**
- * Description not yet available.
- * \param
- */
- dvar_matrix::dvar_matrix(const param_init_bounded_number_matrix& pibnm)
- {
-   int indexmin = pibnm.indexmin();
-   int indexmax = pibnm.indexmax();
-   allocate(indexmin, indexmax);
-
-#ifndef OPT_LIB
-   initialize();
-#endif
-
-   for (int i = indexmin; i <= indexmax; i++)
-   {
-     dvar_vector v(pibnm(i));
-     this->operator()(i) = v;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
  dvar_matrix dvar_matrix::sub(int nrl,int nrh)
  {
    if (allocated(*this))
@@ -89,10 +49,6 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dvar_matrix::allocate(int nrl,int nrh)
  {
    if (nrl>nrh)
@@ -115,10 +71,7 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  void dvar_matrix::allocate(int nrl,int nrh,int ncl,int nch)
  {
    if (nrl>nrh)
@@ -144,11 +97,6 @@
      }
    }
  }
-
-/**
- * Description not yet available.
- * \param
- */
  void dvar_matrix::allocate(ad_integer nrl,ad_integer nrh)
  {
    if (nrl>nrh)
@@ -170,11 +118,8 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
- void dvar_matrix::allocate(const dmatrix& m1)
+
+ void dvar_matrix::allocate(_CONST dmatrix& m1)
  {
    if (m1.shape)
    {
@@ -205,12 +150,8 @@
      allocate();
    }
  }
-
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::allocate(const dvar_matrix& m1)
+ 
+ void dvar_matrix::allocate(_CONST dvar_matrix& m1)
  {
    if (m1.shape)
    {
@@ -243,25 +184,15 @@ void dvar_matrix::allocate(const dvar_matrix& m1)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix::dvar_matrix(int nrl, int nrh, const ivector& ncl,
-  const ivector& nch)
+ dvar_matrix::dvar_matrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
-#ifndef OPT_LIB
-   initialize();
-#endif
+   #ifdef SAFE_ARRAYS
+     initialize();
+   #endif 
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl,
-  const ivector& nch)
+ void dvar_matrix::allocate(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    if (nrl>nrh)
      allocate();
@@ -270,14 +201,13 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl,
      if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
        nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in "
-       "dvar_matrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)"
-            << endl ;
+       cerr << "Incompatible array bounds in dvar_matrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)"
+  	  << endl ;
        ad_exit(1);
      }
      index_min=nrl;
      index_max=nrh;
-
+  
      int rs=rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
@@ -288,9 +218,9 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl,
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
-
+  
      m -= rowmin();
-
+  
      for (int i=nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl[i],nch[i]);
@@ -298,51 +228,42 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix::dvar_matrix(int nrl, int nrh, int ncl, const ivector& nch)
+ dvar_matrix::dvar_matrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
-#ifndef OPT_LIB
-   initialize();
-#endif
+   #ifdef SAFE_ARRAYS
+     initialize();
+   #endif 
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
- {
+ void dvar_matrix::allocate(int nrl,int nrh,int ncl,_CONST ivector& nch)
+ {  
    if (nrl>nrh)
      allocate();
    else
    {
      if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in "
-       "dvar_matrix(int nrl, int nrh, const int& ncl, const ivector& nch)"
-       << endl;
+       cerr << "Incompatible array bounds in dvar_matrix(int nrl,int nrh,BOR_CONST int& ncl,_CONST ivector& nch)"
+  	  << endl;
        ad_exit(1);
      }
      index_min=nrl;
      index_max=nrh;
-
+  
      int rs=rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
        ad_exit(21);
      }
-
+  
      if ( (shape=new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
      m -= rowmin();
-
+  
      for (int i=nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl,nch[i]);
@@ -350,11 +271,7 @@ void dvar_matrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
+ void dvar_matrix::allocate(int nrl,int nrh,_CONST ivector& ncl,int nch)
  {
    if (nrl>nrh)
      allocate();
@@ -362,27 +279,26 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
    {
      if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())
      {
-       cerr << "Incompatible array bounds in "
-       "dvar_matrix(int nrl, int nrh, const ivector& ncl,int nch)"
-       << endl;
+       cerr << "Incompatible array bounds in dvar_matrix(int nrl,int nrh,_CONST ivector& ncl,int nch)"
+  	  << endl;
        ad_exit(1);
      }
      index_min=nrl;
      index_max=nrh;
-
+  
      int rs=rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
        ad_exit(21);
      }
-
+  
      if ( (shape=new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
      m -= rowmin();
-
+  
      for (int i=nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl[i],nch);
@@ -390,11 +306,8 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix::dvar_matrix(const dvar_matrix& m2)
+
+ dvar_matrix::dvar_matrix(_CONST dvar_matrix& m2)
  {
    if (!(m2))
    {
@@ -414,10 +327,6 @@ dvar_matrix::dvar_matrix(const dvar_matrix& m2)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dvar_matrix::shallow_copy(const dvar_matrix& m2)
  {
    if (!(m2))
@@ -438,10 +347,6 @@ dvar_matrix::dvar_matrix(const dvar_matrix& m2)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dvar_matrix::allocate(void)
  {
    index_min=1;
@@ -450,20 +355,13 @@ dvar_matrix::dvar_matrix(const dvar_matrix& m2)
    m = NULL;
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  dvar_matrix::dvar_matrix(void)
  {
    allocate();
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix::dvar_matrix(const dmatrix& m2)
+ dvar_matrix::dvar_matrix(_CONST dmatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -486,10 +384,7 @@ dvar_matrix::dvar_matrix(const dmatrix& m2)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  dvar_matrix::~dvar_matrix()
  {
    if (shape)
@@ -505,10 +400,7 @@ dvar_matrix::dvar_matrix(const dmatrix& m2)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  void dvar_matrix::deallocate()
  {
    if (shape)
@@ -525,11 +417,7 @@ dvar_matrix::dvar_matrix(const dmatrix& m2)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix& dvar_matrix::operator=(const dvar_matrix& m1)
+ dvar_matrix& dvar_matrix::operator= (_CONST dvar_matrix& m1)
  {
    if (!allocated(*this))
    {
@@ -540,10 +428,10 @@ dvar_matrix& dvar_matrix::operator=(const dvar_matrix& m1)
      if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax())
      {
        cerr << " Incompatible array bounds in dvar_matrix& operator = "
-         "(const dvar_matrix&)\n";
+         "(_CONST dvar_matrix&)\n";
        ad_exit(21);
      }
-
+  
      if (m != m1.m)            // check for condition that both matrices
      {                         // don't point to the same object
        for (int i=rowmin(); i<=rowmax(); i++)
@@ -555,17 +443,12 @@ dvar_matrix& dvar_matrix::operator=(const dvar_matrix& m1)
    return(*this);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix& dvar_matrix::operator=(const dmatrix& m1)
+ dvar_matrix& dvar_matrix::operator= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
      colmin() != m1.colmin() || colmax() != m1.colmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "dvar_matrix& operator = (const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvar_matrix& operator = (_CONST dvar_vector&)\n";
      ad_exit(21);
    }
 
@@ -576,11 +459,9 @@ dvar_matrix& dvar_matrix::operator=(const dmatrix& m1)
    return(*this);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void copy_status(const ostream& _s, const dvar_matrix& m1)
+
+
+  void copy_status(BOR_CONST ostream& _s,_CONST dvar_matrix& m1)
   {
     ostream& s= (ostream&) _s;
     s << " matrix_copy flags \n";

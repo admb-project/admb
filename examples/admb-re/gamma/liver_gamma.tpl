@@ -25,7 +25,8 @@ DATA_SECTION
       ic++;
     }
   }
-  nump(nh)=ic;  
+  nump(nh)=ic;
+    
 
 PARAMETER_SECTION
   init_vector beta(0,2);
@@ -35,6 +36,7 @@ PARAMETER_SECTION
   objective_function_value f
 
 PROCEDURE_SECTION
+
   int i;
   int j=0;
   for (i=1;i<=nh;i++) 
@@ -60,3 +62,9 @@ SEPARABLE_FUNCTION void fun( int i,int & j ,const prevariable& ui, const prevari
    dvariable lambda=mfexp(log_lambda);
    f += lambda*S(j) - log_lambda;
  }
+
+
+
+
+
+

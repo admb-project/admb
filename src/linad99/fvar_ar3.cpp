@@ -1,20 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector fabs(const dvar_vector& t1)
+
+  dvar_vector fabs(_CONST dvar_vector& t1)
   {
      RETURN_ARRAYS_INCREMENT();
 
@@ -28,11 +21,7 @@ dvar_vector fabs(const dvar_vector& t1)
      return(tmp);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector value(const dvar_vector& t1)
+  dvector value(_CONST dvar_vector& t1)
   {
      RETURN_ARRAYS_INCREMENT();
 
@@ -46,11 +35,7 @@ dvector value(const dvar_vector& t1)
      return(tmp);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable norm(const dvar_vector& t1)
+  dvariable norm(_CONST dvar_vector& t1)
   {
     RETURN_ARRAYS_INCREMENT();
     dvariable tmp;
@@ -63,11 +48,7 @@ dvariable norm(const dvar_vector& t1)
     return(tmp);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable norm2(const dvar_vector& t1)
+  dvariable norm2(_CONST dvar_vector& t1)
   {
     RETURN_ARRAYS_INCREMENT();
     dvariable tmp;
@@ -75,13 +56,9 @@ dvariable norm2(const dvar_vector& t1)
     RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
-dvariable sumsq(const dvar_vector& t1) {return(norm2(t1));}
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector sfabs(const dvar_vector& t1)
+
+  dvar_vector sfabs(_CONST dvar_vector& t1)
   {
      RETURN_ARRAYS_INCREMENT();
 

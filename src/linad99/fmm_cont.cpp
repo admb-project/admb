@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
@@ -21,15 +17,6 @@
 #endif
 #include <math.h>
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
-/**
- * Description not yet available.
- * \param
- */
 void fmm_control::set_defaults()
 {
   noprintx=0;
@@ -53,13 +40,9 @@ void fmm_control::set_defaults()
   use_control_c=1;
 }
 
-/**
- * fmm_control Function minimizer copy constructor
- * \param t object
- */
-fmm_control::fmm_control(const fmm_control & t)
+fmm_control::fmm_control(BOR_CONST fmm_control & t)
 {
-  fringe = t.fringe;
+  fringe = fringe;
   maxfn  = t.maxfn;
   iprint = t.iprint;
   crit   = t.crit;
@@ -77,20 +60,13 @@ fmm_control::fmm_control(const fmm_control & t)
   ireturn = t.ireturn;
 }
 
-/**
- * fmm_control Function minimizer null constructor
- * \param
- */
 fmm_control::fmm_control()
 {
   set_defaults();
 }
 
-/**
- * fmm_control Function minimizer constructor sets extended defaults
- * \param ipar vector of settings
- */
-fmm_control::fmm_control(const lvector& ipar)
+
+fmm_control::fmm_control(_CONST lvector& ipar)
 {
   set_defaults();
   maxfn  = ipar[1];
@@ -101,30 +77,16 @@ fmm_control::fmm_control(const lvector& ipar)
     crit   = pow(double(10), int(-ipar[3]));
   #endif
   imax   = ipar[4];
-  long ipar5 = ipar[5];
-#ifndef OPT_LIB
-  assert(ipar5 <= INT_MAX);
-#endif
-  scroll_flag = (int)ipar5;
+  scroll_flag = ipar[5];
 }
 
-/**
- * << operator to write function minimizer details
- * \param s string of details
- * \param fmc function minimizer control object
- * \return output stream of details.
- */
-ostream& operator<<(const ostream& s, const fmm_control& fmc)
+ostream& operator<<(BOR_CONST ostream& s, const fmm_control& fmc)
 {
   fmc.writeon(s);
   return (ostream&)s;
 }
 
-/**
- * writeon Writes function minimizing status
- * \param s string that contains results
- */
-void fmm_control::writeon(const ostream& _s) const
+void fmm_control::writeon(BOR_CONST ostream& _s) const
 {
   ostream& s = (ostream&) _s;
   s << "values of fmm_control structure:\n";
@@ -141,3 +103,4 @@ void fmm_control::writeon(const ostream& _s) const
   s << "  scroll_flag  =  " << scroll_flag  << endl;
   s << "  ireturn  = " << ireturn  << endl;
 }
+

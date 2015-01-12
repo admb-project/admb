@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
 dvariable beta_deviate(const prevariable& _a,const prevariable& _b,
   const prevariable& _x,double eps)
 {

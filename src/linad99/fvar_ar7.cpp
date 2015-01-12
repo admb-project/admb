@@ -1,46 +1,33 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include "fvar.hpp"
-#include "admb_messages.h"
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector column(const dvar_matrix& m,int j)
+
+#include "fvar.hpp"
+
+  dvar_vector column(_CONST dvar_matrix& m,int j)
   {
     return extract_column(m,j);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector row(const dvar_matrix& m,int j)
+  dvar_vector row(_CONST dvar_matrix& m,int j)
   {
     return extract_row(m,j);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector extract_column(const dvar_matrix& m, int j)
+  dvar_vector extract_column(_CONST dvar_matrix& m,int j)
   {
     if (j < m.colmin() || j > m.colmax())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified",
-      "dvar_vector extract_column(const dvar_matrix& m,int j)",
-       m.colmin(), m.colmax(), j);
-    }
+      cerr << " Invalid matrix column specified in "
+        "dvar_vector extract_column(_CONST dvar_matrix& m,int j)\n value specified "
+        "was " << j << " valid range is " << m.colmin() <<
+        " to " << m.colmax() << "\n";
+      ad_exit(1);
+    }  
     dvar_vector tmp(m.rowmin(),m.rowmax());
 
     for (int i=m.rowmin(); i<=m.rowmax(); i++)
@@ -49,19 +36,16 @@ dvar_vector extract_column(const dvar_matrix& m, int j)
     }
     return(tmp);
   }
-
-/**
- * Description not yet available.
- * \param
- */
-dvector column_value(const dvar_matrix& m, int j)
+  dvector column_value(_CONST dvar_matrix& m,int j)
   {
     if (j < m.colmin() || j > m.colmax())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified",
-      "dvector column_value(const dvar_matrix& m,int j)",
-      m.colmin(), m.colmax(), j);
-    }
+      cerr << " Invalid matrix column specified in "
+        "dvar_vector extract_column(_CONST dvar_matrix& m,int j)\n value specified "
+        "was " << j << " valid range is " << m.colmin() <<
+        " to " << m.colmax() << "\n";
+      ad_exit(1);
+    }  
     dvector tmp(m.rowmin(),m.rowmax());
 
     for (int i=m.rowmin(); i<=m.rowmax(); i++)
@@ -71,18 +55,17 @@ dvector column_value(const dvar_matrix& m, int j)
     return(tmp);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector extract_row(const dvar_matrix& m, int i)
+
+  dvar_vector extract_row(_CONST dvar_matrix& m,int i)
   {
     if (i < m.rowmin() || i > m.rowmax())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix row specified",
-      "dvar_vector extract_row(const dvar_matrix& m,int i)",
-      m.rowmin(), m.rowmax(), i);
-    }
+      cerr << " Invalid matrix row specified in "
+        "dvar_vector extract_row(_CONST dvar_matrix& m,int i)\n value specified "
+        "was " << i << " valid range is " << m.rowmin() <<
+        " to " << m.rowmax() << "\n";
+      ad_exit(1);
+    }  
     dvar_vector tmp(m.colmin(),m.colmax());
 
     for (int j=m.colmin(); j<=m.colmax(); j++)

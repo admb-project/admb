@@ -1,69 +1,51 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
-#include "admb_messages.h"
 
-/**
-Default constructor
-*/
-df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
-{
-  it = NULL;
-}
 
-#if !defined(OPT_LIB)
-/**
- * Description not yet available.
- * \param
- */
-df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator[](int i)
+ df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
  {
-   if (i < indexmin() || i > indexmax())
+   it=NULL;
+ }
+
+#if defined(SAFE_ALL)
+ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] 
+   (int i) 
+ { 
+   if (i< indexmin() || i>indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("Index out of range",
-     "df1b2_init_bounded_number_vector::operator [] (int i)",
-     indexmin(), indexmax(), i);
+     cerr << "Index out of randge in "
+      "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator []"
+     << " value was " << i << endl;
+     ad_exit(1);
    }
    return v[i];
  }
 
-/**
- * Description not yet available.
- * \param
- */
-df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator()(int i)
- {
-   if (i < indexmin() || i > indexmax())
+ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator ()
+   (int i) 
+ { 
+   if (i< indexmin() || i>indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("Index out of range",
-     "df1b2_init_bounded_number_vector::operator () (int i)",
-     indexmin(), indexmax(), i);
+     cerr << "Index out of randge in "
+      "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator ()"
+     << " value was " << i << endl;
+     ad_exit(1);
    }
    return v[i];
  }
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
+     
  df1b2_init_bounded_number_vector::~df1b2_init_bounded_number_vector()
  {
    deallocate();
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void df1b2_init_bounded_number_vector::deallocate(void)
  {
    if(it)
@@ -79,20 +61,12 @@ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator()(int i)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void df1b2_init_bounded_number_vector::allocate(int min1,int max1,
    const double_index_type & bmin,const double_index_type & bmax,const char * s)
  {
    allocate(min1,max1,bmin,bmax,1,s);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void df1b2_init_bounded_number_vector::allocate(int min1,int max1,
    const double_index_type & bmin,const double_index_type & bmax,
    const index_type& phase_start,const char * s)
@@ -102,8 +76,7 @@ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator()(int i)
    int size=indexmax()-indexmin()+1;
    if (size>0)
    {
-     v = new df1b2_init_bounded_number[size];
-     if (!v)
+     if (!(v=new df1b2_init_bounded_number[size]))
      {
         cerr << " error trying to allocate memory in "
           "df1b2_init_bounded_number_vector " << endl;
@@ -140,7 +113,7 @@ void df1b2_init_number_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in"
+    cerr << "non matching vector bounds in" 
      " init_number_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -178,7 +151,7 @@ void df1b2_init_bounded_number_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in"
+    cerr << "non matching vector bounds in" 
      " init_bounded_number_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -199,66 +172,50 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
   }
 }
 
-void df1b2_init_bounded_number_vector::set_initial_value(
-  const double_index_type& _it)
+ void df1b2_init_bounded_number_vector::set_initial_value(const double_index_type& _it)
  {
     it=new double_index_type(_it);
  }
 */
-#if !defined(OPT_LIB)
-/**
- * Description not yet available.
- * \param
- */
- df1b2_init_number& df1b2_init_number_vector::operator [] (int i)
- {
-   if (i < indexmin() || i > indexmax())
+#if defined(SAFE_ALL)
+ df1b2_init_number& df1b2_init_number_vector::operator [] 
+   (int i) 
+ { 
+   if (i< indexmin() || i>indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("Index out of range",
-     "df1b2_init_number_vector::operator [] (int i)",
-     indexmin(), indexmax(), i);
+     cerr << "Index out of randge in "
+      "df1b2_init_number& df1b2_init_number_vector::operator []"
+     << " value was " << i << endl;
+     ad_exit(1);
    }
    return v[i];
  }
 
-/**
- * Description not yet available.
- * \param
- */
- df1b2_init_number& df1b2_init_number_vector::operator () (int i)
- {
-   if (i < indexmin() || i > indexmax())
+ df1b2_init_number& df1b2_init_number_vector::operator ()
+   (int i) 
+ { 
+   if (i< indexmin() || i>indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("Index out of range",
-     "df1b2_init_number_vector::operator () (int i)",
-     indexmin(), indexmax(), i);
+     cerr << "Index out of randge in "
+      "df1b2_init_number& df1b2_init_number_vector::operator ()"
+     << " value was " << i << endl;
+     ad_exit(1);
    }
    return v[i];
  }
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
  df1b2_init_number_vector::df1b2_init_number_vector()
  {
    it=NULL;
  }
 
-/**
- * Description not yet available.
- * \param
- */
+     
  df1b2_init_number_vector::~df1b2_init_number_vector()
  {
    deallocate();
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void df1b2_init_number_vector::deallocate(void)
  {
    if(it)
@@ -274,20 +231,12 @@ void df1b2_init_bounded_number_vector::set_initial_value(
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void df1b2_init_number_vector::allocate(int min1,int max1,
    const char * s)
  {
    allocate(min1,max1,1,s);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void df1b2_init_number_vector::allocate(int min1,int max1,
    const index_type& phase_start,const char * s)
  {
@@ -296,8 +245,7 @@ void df1b2_init_bounded_number_vector::set_initial_value(
    int size=indexmax()-indexmin()+1;
    if (size>0)
    {
-     v = new df1b2_init_number[size];
-     if (!v)
+     if (!(v=new df1b2_init_number[size]))
      {
         cerr << " error trying to allocate memory in "
           "df1b2_init_number_vector " << endl;
@@ -314,3 +262,4 @@ void df1b2_init_bounded_number_vector::set_initial_value(
    else
      v=NULL;
  }
+

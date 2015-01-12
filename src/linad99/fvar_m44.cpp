@@ -1,22 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
 void dfmattrans(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix trans(const dvar_matrix& m1)
+dvar_matrix trans(_CONST dvar_matrix& m1)
 {
   int rmin=m1.indexmin();
   int rmax=m1.indexmax();
@@ -40,10 +32,6 @@ dvar_matrix trans(const dvar_matrix& m1)
   return (t1);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void dfmattrans(void)
 {
   verify_identifier_string("vv");
@@ -67,3 +55,6 @@ void dfmattrans(void)
   }
   dfm1.save_dmatrix_derivatives(m1pos);
 }
+
+
+

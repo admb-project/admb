@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
+
+#include "fvar.hpp"
 dvector solve(const banded_symmetric_dmatrix& _m,const dvector&_v,
   const int& _ierr)
 {
@@ -30,21 +23,13 @@ dvector solve(const banded_symmetric_dmatrix& _m,const dvector&_v,
   v.shift(mmin);
   return w;
 }
-
-/**
- * Description not yet available.
- * \param
- */
 dvector solve(const banded_symmetric_dmatrix& m,const dvector&v)
 {
   int ierr=0;
   return solve(m,v,ierr);
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 dmatrix solve(const banded_symmetric_dmatrix& m,const dmatrix& n,
   const int& _ierr)
 {
@@ -62,20 +47,14 @@ dmatrix solve(const banded_symmetric_dmatrix& m,const dmatrix& n,
   return trans(w);
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 dmatrix solve(const banded_symmetric_dmatrix& m,const dmatrix& n)
 {
   int ierr=0;
   return solve(m,n,ierr);
-}
+} 
 
-/**
- * Description not yet available.
- * \param
- */
+
 dvector solve(const banded_lower_triangular_dmatrix& m,const dvector&v)
 {
   int bw=m.bandwidth();
@@ -101,10 +80,6 @@ dvector solve(const banded_lower_triangular_dmatrix& m,const dvector&v)
   return x;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvector solve_trans(const banded_lower_triangular_dmatrix& M,const dvector& y)
 {
   int mmin=M.indexmin();
@@ -133,10 +108,6 @@ dvector solve_trans(const banded_lower_triangular_dmatrix& M,const dvector& y)
   return x;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvector lower_triangular_solve_trans(const dmatrix& M,const dvector& y)
 {
   int mmin=M.indexmin();
@@ -163,10 +134,6 @@ dvector lower_triangular_solve_trans(const dmatrix& M,const dvector& y)
   return x;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvector lower_triangular_solve(const dmatrix& m,const dvector&v)
 {
   int imin=m.indexmin();
@@ -191,10 +158,6 @@ dvector lower_triangular_solve(const dmatrix& m,const dvector&v)
   return x;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvector choleski_solve_error(dmatrix M,dvector& v,int& ierror)
 {
   dmatrix C=choleski_decomp_error(M,ierror);
@@ -209,10 +172,6 @@ dvector choleski_solve_error(dmatrix M,dvector& v,int& ierror)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvector choleski_solve_neghess_error(dmatrix M,dvector& v,int& ierror)
 {
   dmatrix C=choleski_decomp_neghess_error(M,ierror);
@@ -226,3 +185,4 @@ dvector choleski_solve_neghess_error(dmatrix M,dvector& v,int& ierror)
     return lower_triangular_solve_trans(C,lower_triangular_solve(C,v));
   }
 }
+

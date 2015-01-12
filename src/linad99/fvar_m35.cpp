@@ -1,27 +1,23 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include "fvar.hpp"
-#include "admb_messages.h"
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable colsum(const dvar_matrix& m, int col)
-{
-  if (col < m.rowmin() || col > m.rowmax())
+
+
+
+#include "fvar.hpp"
+
+
+dvariable colsum(_CONST dvar_matrix& m,int col)
+{ 
+  if (col<m.rowmin() || col>m.rowmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
-    "dvariable colsum(const dvar_matrix& m, int col)",
-    m.rowmin(), m.rowmax(), col);
+    cerr << "Row out of bounds in function"
+            " colsum(_CONST imatrix& m,int col)" << endl;
+    ad_exit(1);
   }
   dvariable isum=0.0;
   int mmin=m.rowmin();
@@ -32,3 +28,4 @@ dvariable colsum(const dvar_matrix& m, int col)
   }
   return isum;
 }
+

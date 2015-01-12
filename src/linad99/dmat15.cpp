@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
@@ -26,11 +22,7 @@
 #include <iostream.h>
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix choleski_decomp(const dmatrix& MM)
+dmatrix choleski_decomp(_CONST dmatrix& MM)
 {
   // kludge to deal with constantness
   dmatrix & M= * (dmatrix *) &MM;
@@ -93,22 +85,13 @@ dmatrix choleski_decomp(const dmatrix& MM)
 
   return L;
 }
-
-/**
- * Description not yet available.
- * \param
- */
 static dmatrix onerror(dmatrix& L,int & ierror)
 {
   ierror=1;
   return L;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix choleski_decomp_error(const dmatrix& MM,int& ierror)
+dmatrix choleski_decomp_error(_CONST dmatrix& MM,int& ierror)
 {
   ierror=0;
   // kludge to deal with constantness
@@ -169,11 +152,7 @@ dmatrix choleski_decomp_error(const dmatrix& MM,int& ierror)
   return L;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix choleski_decomp_neghess_error(const dmatrix& MM, int& ierror)
+dmatrix choleski_decomp_neghess_error(_CONST dmatrix& MM,int& ierror)
 {
   ierror=0;
   // kludge to deal with constantness
@@ -233,3 +212,4 @@ dmatrix choleski_decomp_neghess_error(const dmatrix& MM, int& ierror)
 
   return L;
 }
+

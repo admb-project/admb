@@ -1,31 +1,23 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
-#if defined(__TURBOC__)
+#if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
-  #include <alloc.h>
+   #include <alloc.h>
 #endif
 
 #include <stdlib.h>
 
-/**
- * Description not yet available.
- * \param
- */
- dvar_vector& dvar_vector::operator=(const dvector& t)
+ dvar_vector& dvar_vector::operator = (_CONST dvector& t)
  {
    if (indexmin() != t.indexmin() || indexmax() != t.indexmax())
    {
-     cerr << " Incompatible bounds in "
-     "dvar_vector& dvar_vector::operator = (const dvector& t)\n";
+     cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator = (_CONST dvector& t)\n";
      ad_exit(21);
    }
 
@@ -40,3 +32,5 @@
      set_gradient_stack(dv_init);
    return(*this);
  }
+
+

@@ -1,178 +1,112 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const ivector& v)
+
+int allocated(_CONST ivector& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const lvector& v)
+int allocated(_CONST lvector& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const dvector& v)
+int allocated(_CONST dvector& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar_vector& v)
+int allocated(_CONST dvar_vector& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const imatrix& v)
+
+int allocated(_CONST imatrix& v)
 {
   return !(!(v));
 }
 
-int allocated(const dmatrix& v)
+int allocated(_CONST dmatrix& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar_matrix& v)
+int allocated(_CONST dvar_matrix& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const i3_array& v)
+
+int allocated(_CONST i3_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const d3_array& v)
+int allocated(_CONST d3_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar3_array& v)
+int allocated(_CONST dvar3_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const i4_array& v)
+
+int allocated(_CONST i4_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const d4_array& v)
+int allocated(_CONST d4_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar4_array& v)
+int allocated(_CONST dvar4_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const d5_array& v)
+
+int allocated(_CONST d5_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar5_array& v)
+int allocated(_CONST dvar5_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const d6_array& v)
+
+int allocated(_CONST d6_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar6_array& v)
+int allocated(_CONST dvar6_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const d7_array& v)
+int allocated(_CONST d7_array& v)
 {
   return !(!(v));
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar7_array& v)
+int allocated(_CONST dvar7_array& v)
 {
   return !(!(v));
 }
+
+
+

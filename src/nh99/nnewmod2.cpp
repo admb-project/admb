@@ -1,20 +1,22 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
+
 #include <admodel.h>
 
-double function_minimizer::projected_hess_determinant(const dvector& g,
-  const int underflow_flag, const dvector& xscale,
-  const double& _ln_det_proj_jac)
+
+double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
+  const int underflow_flag,BOR_CONST dvector& xscale, BOR_CONST double& _ln_det_proj_jac)
 {
  double& ln_det_proj_jac=(double&) _ln_det_proj_jac;
  int ibreak=-1;
  int sgn=0;
  double lndet=0.0;
- //char ch;
+ char ch;
  if (!underflow_flag)
  {
   uistream ifs("admodel.hes");
@@ -22,10 +24,10 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
   {
     cerr << "Error opening file admodel.hes" << endl;
   }
-  int nvar = 0;
+  int nvar;
+
   ifs >> nvar;
-  //dmatrix S(1,nvar,1,nvar);
-  if (nvar > 0)
+  dmatrix S(1,nvar,1,nvar);
   {
     if (nvar != initial_params::nvarcalc())
     {
@@ -36,6 +38,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     dmatrix p1(1,nvar-1,1,nvar);
     dmatrix h(1,nvar,1,nvar);
     dvector ss(1,nvar);
+    double minsize;
     ifs >> h;
     if (!ifs)
     {
@@ -54,16 +57,17 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     {
       ss(i)=norm(p(i));
     }
-    double minsize = min(ss);
+    minsize=min(ss);
 
+  
     for (i=1;i<=nvar;i++)
     {
-      if (ss(i) == minsize)
+      if (ss(i)==minsize) 
       {
         ibreak = i;
         break;
       }
-      p1(i)=p(i);
+      p1(i)=p(i); 
     }
 
     int ii;
@@ -71,9 +75,9 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     {
       p1(ii-1)=p(ii);
     }
-
+    
     dmatrix tmpS(1,nvar-1,1,nvar-1);
-
+    
     //for (ii=1;ii<=nvar-1;ii++)
     //{
       //for (i=1;i<=nvar;i++)
@@ -81,7 +85,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
         //p1(ii,i)*=xscale(i);
       //}
     //}
-
+   
     for (i=1;i<=nvar-1;i++)
     {
       tmpS(i,i)=p1(i)*p1(i);
@@ -92,26 +96,26 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
       }
     }
     ln_det_proj_jac=ln_det(tmpS,sgn);
-
+ 
     // reset the p1 basis
     for (i=1;i<=nvar;i++)
     {
       if (i==ibreak) break;
-      p1(i)=p(i);
+      p1(i)=p(i); 
     }
 
     for (ii=i+1;ii<=nvar;ii++)
     {
       p1(ii-1)=p(ii);
     }
-
+    
     for (i=1;i<=nvar;i++)
     {
       for (int j=1;j<i;j++)
       {
         double tmp=(h(i,j)+h(j,i))/2.;
         h(i,j)=tmp;
-        h(j,i)=tmp;
+	h(j,i)=tmp;
       }
     }
 

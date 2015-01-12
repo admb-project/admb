@@ -1,21 +1,15 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #include "fvar.hpp"
 
  void DF_unary_diff(void);
 
-/**
- * Description not yet available.
- * \param
- */
   dvar_vector dvar_vector::operator- (void)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -31,14 +25,11 @@
     save_dvar_vector_position();
     save_identifier_string("d");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_unary_diff);
+    gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(DF_unary_diff);
     return(tmp);
   }
 
-/**
- * Description not yet available.
- * \param
- */
  void DF_unary_diff(void)
  {
     verify_identifier_string("d");
@@ -56,3 +47,5 @@
     }
     dft1.save_dvector_derivatives(t1_pos);
  }
+
+

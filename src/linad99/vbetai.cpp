@@ -1,8 +1,8 @@
-/**
- * $Id: vbetai.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 #include <math.h>
@@ -17,8 +17,10 @@
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-dvariable betai(const dvariable a, const dvariable b, const dvariable x,
+dvariable betai(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x,
   int maxit)
 {
   dvariable bt;

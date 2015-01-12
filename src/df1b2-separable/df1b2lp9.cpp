@@ -1,13 +1,11 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -18,16 +16,12 @@
               }
               static void crap(double ff,dvector& uuu,dvector& gg)
               {
-                //cout << setprecision(10) << setw(19) << ff << " "
+                //cout << setprecision(10) << setw(19) << ff << " " 
                  //    << setw(19) << uuu   << "  "  << setw(19) << gg << endl;
               }
 
 typedef fmm * pfmm;
 
-/**
- * Description not yet available.
- * \param
- */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   (const dvector& x,function_minimizer * pfmin)
 {
@@ -37,13 +31,14 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     separable_function_difference=0;
   }
   separable_function_difference = new dvector(1,num_separable_calls);
-
+  
   fmm ** pfmc1 = new pfmm[num_separable_calls];
   pfmc1--;
+  int i;
   ivector ishape(1,num_separable_calls);
   dvector gmax(1,num_separable_calls);
 
-  for (int i=1;i<=num_separable_calls;i++)
+  for (i=1;i<=num_separable_calls;i++)
   {
     int m=(*derindex)(i).indexmax();
     ishape(i)=m;
@@ -60,7 +55,6 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     pfmc1[i]->ihflag=0;
     pfmc1[i]->maxfn=100;
     pfmc1[i]->gmax=1.e+100;
-    pfmc1[i]->use_control_c=0;
     }
     else
     {
@@ -90,16 +84,16 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   fmc1.ialph=0;
   fmc1.ihang=0;
   fmc1.ihflag=0;
-
+  
   if (init_switch)
   {
     u.initialize();
   }
-
+ 
   for (int ii=1;ii<=2;ii++)
   {
     // get the initial u into the uu's
-    for (int i=1;i<=num_separable_calls;i++)
+    for (i=1;i<=num_separable_calls;i++)
     {
       int m=(*derindex)(i).indexmax();
       for (int j=1;j<=m;j++)
@@ -113,7 +107,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     int initrun_flag=1;
     int loop_counter=0;
     int loop_flag=0;
-
+  
     while (converged==0)
     {
       if (loop_flag) loop_counter++;
@@ -161,15 +155,15 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           u((*derindex)(i2)(j))=uu(i2,j);
         }
       }
-      // put the
+      // put the 
       //if (fmc1.ireturn>0)
       {
         dvariable vf=0.0;
         pen=initial_params::reset(dvar_vector(u));
         *objective_function_value::pobjfun=0.0;
-
+  
         //num_separable_calls=0;
-
+  
         pmin->inner_opt_flag=1;
         pfmin->AD_uf_inner();
         pmin->inner_opt_flag=0;
@@ -183,10 +177,10 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           quadratic_prior::get_M_calculations();
         }
         vf+=*objective_function_value::pobjfun;
-
+       
         objective_function_value::fun_without_pen=value(vf);
         vf+=pen;
-
+          
         gradcalc(usize,g);
         for (int i=1;i<=num_separable_calls;i++)
         {
@@ -208,7 +202,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
             ff[i]=-(*separable_function_difference)(i);
             //ff[i]=-(*separable_function_difference)(i)
              // +(*separable_function_difference)(i-1);
-
+  
             if (ff[i] < ffb[i])
             {
               ffb[i]=ff[i];
@@ -225,7 +219,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
             ff[i]=(*separable_function_difference)(i);
             //ff[i]=(*separable_function_difference)(i)
              // -(*separable_function_difference)(i-1);
-
+  
             if (ff[i] < ffb[i])
             {
               ffb[i]=ff[i];
@@ -239,7 +233,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
         {
           f+=ff[i2];
         }
-        if (f<fb)
+        if (f<fb) 
         {
           fb=f;
           ub=u;
@@ -247,9 +241,9 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
       }
       u=ub;
     }
-    double tmax=max(gmax);
-    cout <<  " inner maxg = " << tmax << endl;
-
+    double tmax=max(gmax); 
+    cout <<  " inner maxg = " << tmax << endl; 
+  
     if (tmax< 1.e-4) break;
   }
   fmc1.ireturn=0;
@@ -264,7 +258,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     quadratic_prior::get_M_calculations();
   }
   gradient_structure::set_YES_DERIVATIVES();
-  for (int i=1;i<=num_separable_calls;i++)
+  for (i=1;i<=num_separable_calls;i++)
   {
     if (pfmc1[i])
     {
@@ -276,3 +270,4 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   pfmc1 = 0;
   return u;
 }
+#endif  // #if defined(USE_LAPLACE)

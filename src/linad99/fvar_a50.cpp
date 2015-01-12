@@ -1,22 +1,15 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 void DF_dvmfexp(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector mfexp(const dvar_vector& v1)
+dvar_vector mfexp(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   int mmin=v1.indexmin();
@@ -46,10 +39,6 @@ dvar_vector mfexp(const dvar_vector& v1)
   return vtmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void DF_dvmfexp(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -77,3 +66,6 @@ void DF_dvmfexp(void)
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
+
+
+

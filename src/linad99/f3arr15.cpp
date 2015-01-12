@@ -1,37 +1,27 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
  dvar3_array::dvar3_array(ad_integer sl,ad_integer  sh,
      const index_type& nrl, const index_type& nrh,
      const index_type& ncl, const index_type& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
-#ifndef OPT_LIB
-   initialize();
-#endif
+   #ifdef SAFE_ARRAYS
+     initialize();
+   #endif
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dvar3_array::allocate(ad_integer sl,ad_integer  sh,
      const index_type& nrl, const index_type& nrh,
      const index_type& ncl, const index_type& nch)
  {
+  
    if (sh<sl)
    {
      allocate();
@@ -50,11 +40,11 @@
        cerr << sl << " " << nrh.indexmin() << endl;
        cerr << sh << " " << nrh.indexmax() << endl;
        cerr << "Incompatible array bounds in dvar3_array(int nrl,int nrh,"
-        "const index_type& nrl,const index_type& nrh,"
-        "const index_type& ncl,const index_type& nch)" << endl;
+        "_CONST index_type& nrl,_CONST index_type& nrh," 
+        "_CONST index_type& ncl,_CONST index_type& nch)" << endl;
        ad_exit(1);
      }
-
+  
      if ( (shape=new three_array_shape(sl,sh)) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
@@ -73,10 +63,6 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dvar3_array::allocate(ad_integer sl,ad_integer  sh,
      const index_type& nrl, const index_type& nrh)
  {
@@ -97,11 +83,11 @@
        cerr << sh << " " << nrl.indexmax() << endl;
        cerr << sl << " " << nrh.indexmin() << endl;
        cerr << "Incompatible array bounds in dvar3_array(int nrl,int nrh,"
-        "const index_type& nrl,const index_type& nrh,"
-        "const index_type& ncl,const index_type& nch)" << endl;
+        "_CONST index_type& nrl,_CONST index_type& nrh," 
+        "_CONST index_type& ncl,_CONST index_type& nch)" << endl;
        ad_exit(1);
      }
-
+  
      if ( (shape=new three_array_shape(sl,sh)) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
@@ -120,22 +106,20 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dvar3_array::allocate(ad_integer sl,ad_integer  sh)
  {
+  
    if (sh<sl)
    {
      allocate();
    }
    else
+   
    {
      #ifdef DIAG
        myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
      #endif
-
+  
      if ( (shape=new three_array_shape(sl,sh)) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
@@ -153,3 +137,4 @@
      }
    }
  }
+

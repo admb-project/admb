@@ -1,24 +1,24 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <admodel.h>
 
  int likeprof_params::num_likeprof_params=0;
- likeprof_params * likeprof_params::likeprofptr[500]; // this should be
+ likeprof_params * likeprof_params::likeprofptr[50]; // this should be 
                                                  // a resizeable array
 
   likeprof_params::likeprof_params(void)
-  {
+  { 
     stepsize=0.5;
     stepnumber=8;
   }
 
   void likeprof_params::add_to_list(void)
   {
-    likeprofptr[num_likeprof_params++]= this; // this is the list of
+    likeprofptr[num_likeprof_params++]= this; // this is the list of 
                                          // likelihood profile objects
   }
 
@@ -36,14 +36,14 @@
   }
 
 /*
-        void param_likeprof_number::set_dependent_variables(void)
-        {
-                #ifndef __ZTC__
-                dvariable(*this) << dvariable(*this);
-                #else
-                *this << *this;
-                #endif
-        }
+	void param_likeprof_number::set_dependent_variables(void)
+	{
+		#ifndef __ZTC__
+		dvariable(*this) << dvariable(*this);
+		#else
+		*this << *this;
+		#endif
+	}
 */
 
   void param_likeprof_number::allocate(const char * _s)
@@ -57,19 +57,19 @@
     return model_name_tag::label().mychar();
   }
 
-param_likeprof_number& param_likeprof_number::operator=(const prevariable& v)
-        {
-                this->param_stddev_number::operator = (v);
-                return *this;
-        }
+	param_likeprof_number& param_likeprof_number::operator = (_CONST prevariable& v)
+	{
+		this->param_stddev_number::operator = (v);
+		return *this;
+	}
 
-param_likeprof_number& param_likeprof_number::operator=(const double v)
-        {
-                this->param_stddev_number::operator = (v);
-                return *this;
-        }
+	param_likeprof_number& param_likeprof_number::operator = (CGNU_DOUBLE v)
+	{
+		this->param_stddev_number::operator = (v);
+		return *this;
+	}
 
-        // for now only do likelihood profiles for numbers
+	// for now only do likelihood profiles for numbers
   /*
   int likeprof_params::num_likeprof_calc(void)
   {
@@ -136,3 +136,4 @@ param_likeprof_number& param_likeprof_number::operator=(const double v)
     return model_name_tag::label();
   }
 */
+

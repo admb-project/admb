@@ -1,23 +1,15 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
 void dfempirical_covarv_partial(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix empirical_covariance(const dvar_matrix& _v1,
-  const imatrix& _missflags)
+ dvar_matrix empirical_covariance(_CONST dvar_matrix& _v1,
+  _CONST imatrix& _missflags)
  {
    dvar_matrix& v1 = (dvar_matrix&) (_v1);
    imatrix& missflags=(imatrix&) (_missflags);
@@ -28,6 +20,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
    int rmax=v1.indexmax();
    int nobs=rmax-rmin+1;
 
+   
    tmp.initialize();
    for (int ii=rmin; ii<=rmax; ii++)
    {
@@ -63,12 +56,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfempirical_covarv_partial);
    return(tmp);
- }
-
-/**
- * Description not yet available.
- * \param
- */
+ }      
 void dfempirical_covarv_partial(void)
 {
   verify_identifier_string("rv");
@@ -118,11 +106,7 @@ void dfempirical_covarv_partial(void)
 
 void dfempirical_covarv(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix empirical_covariance(const dvar_matrix& v1)
+ dvar_matrix empirical_covariance(_CONST dvar_matrix& v1)
  {
    int mmin=v1(v1.indexmin()).indexmin();
    int mmax=v1(v1.indexmin()).indexmax();
@@ -130,6 +114,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
    int rmin=v1.indexmin();
    int rmax=v1.indexmax();
 
+   
    tmp.initialize();
    int nobs=rmax-rmin+1;
    for (int ii=rmin; ii<=rmax; ii++)
@@ -157,12 +142,8 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfempirical_covarv);
    return(tmp);
- }
+ }      
 
-/**
- * Description not yet available.
- * \param
- */
 void dfempirical_covarv(void)
 {
   verify_identifier_string("rv");
@@ -204,11 +185,7 @@ void dfempirical_covarv(void)
 
 void dfouter_prodvv(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
+ dvar_matrix outer_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2 )
  {
    dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
 
@@ -229,12 +206,8 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfouter_prodvv);
    return(tmp);
- }
+ }      
 
-/**
- * Description not yet available.
- * \param
- */
 void dfouter_prodvv(void)
 {
   verify_identifier_string("tv");
@@ -262,11 +235,8 @@ void dfouter_prodvv(void)
   dfv2.save_dvector_derivatives(v2pos);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
+
+ dvar_matrix outer_prod(_CONST dvector& v1,_CONST dvar_vector& v2 )
  {
    RETURN_ARRAYS_INCREMENT();
 
@@ -281,13 +251,10 @@ dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
- }
+ }      
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
+
+ dvar_matrix outer_prod(_CONST dvar_vector& v1,_CONST dvector& v2 )
  {
    RETURN_ARRAYS_INCREMENT();
 
@@ -302,4 +269,5 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
- }
+ }      
+

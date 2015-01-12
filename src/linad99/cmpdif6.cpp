@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
@@ -21,11 +17,8 @@
 
 #include <string.h>
 
-/**
- * Description not yet available.
- * \param
- */
-void dmatrix::save_dmatrix_position(void) const
+
+void dmatrix::save_dmatrix_position(void) _CONST
 {
   // saves the size and address information for a dvar_vector
   dmatrix_position tmp(*this);
@@ -44,10 +37,6 @@ void dmatrix::save_dmatrix_position(void) const
   gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void d3_array::save_d3_array_position(void) const
 {
   // saves the size and address information for a dvar_vector
@@ -70,10 +59,6 @@ void d3_array::save_d3_array_position(void) const
   gradient_structure::get_fp()->fwrite(&(mmax),wsize);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 d3_array_position restore_d3_array_position(void)
 {
   // saves the size and address information for a dvar_vector
@@ -85,10 +70,7 @@ d3_array_position restore_d3_array_position(void)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 dvar_matrix_position restore_dvar_matrix_position(void)
 {
   // reads back the size and address information for a dvar_matrix
@@ -108,10 +90,7 @@ dvar_matrix_position restore_dvar_matrix_position(void)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 dmatrix_position restore_dmatrix_position(void)
 {
   // reads back the size and address information for a dvar_matrix
@@ -131,13 +110,9 @@ dmatrix_position restore_dmatrix_position(void)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& _pos)
+dmatrix restore_dvar_matrix_derivatives(BOR_CONST dvar_matrix_position& _pos)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   dmatrix tmp(pos);
   for (int i=pos.row_max;i>=pos.row_min;i--)
   {
@@ -146,13 +121,9 @@ dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& _pos)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& _pos)
+dmatrix restore_dvar_matrix_der_nozero(BOR_CONST dvar_matrix_position& _pos)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   dmatrix tmp(pos);
   for (int i=pos.row_max;i>=pos.row_min;i--)
   {
@@ -161,26 +132,20 @@ dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& _pos)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos,
-  const int& ii)
+
+dvector restore_dvar_matrix_derivative_row(BOR_CONST dvar_matrix_position& _pos,BOR_CONST int& ii)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   dvector tmp=restore_dvar_vector_derivatives(pos(ii));
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos,
-  const int& ii)
+
+
+
+dvector restore_dvar_matrix_derivative_column(BOR_CONST dvar_matrix_position& _pos,BOR_CONST int& ii)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   dvector tmpvec(pos.rowmin(),pos.rowmax());
   int min=tmpvec.indexmin();
   int max=tmpvec.indexmax();
@@ -192,10 +157,7 @@ dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos,
   return tmpvec;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 dvar_vector nograd_assign(dvector tmp)
 {
   kkludge_object kg;
@@ -210,14 +172,11 @@ dvar_vector nograd_assign(dvector tmp)
   return out;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix nograd_assign(const dmatrix& m)
+
+dvar_matrix nograd_assign(_CONST dmatrix& m)
 {
   // cout << "Entering nograd assign"<<endl;
-  //kkludge_object kg;
+  kkludge_object kg;
   int nrl=m.rowmin();
   int nrh=m.rowmax();
   ivector ncl(nrl,nrh);
@@ -242,14 +201,11 @@ dvar_matrix nograd_assign(const dmatrix& m)
   return out;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix nograd_assign_trans(const dmatrix& m)
+
+dvar_matrix nograd_assign_trans(_CONST dmatrix& m)
 {
   // cout << "Entering nograd assign"<<endl;
-  //kkludge_object kg;
+  kkludge_object kg;
   int nrl=m.rowmin();
   int nrh=m.rowmax();
   ivector ncl(nrl,nrh);
@@ -274,20 +230,16 @@ dvar_matrix nograd_assign_trans(const dmatrix& m)
   return out;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void nograd_assign_column(const dvar_matrix& m, const dvector& v, const int& ii)
+void nograd_assign_column(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
-  //kkludge_object kg;
+  kkludge_object kg;
   if (ii<m.colmin()||ii>m.colmax()  ||
    (v.indexmin()!=m.rowmin()) ||
    (v.indexmax()!=m.rowmax()) )
   {
     cerr << "Error -- Index out of bounds in\n"
-      "void nograd_assign(const dvar_matrix& m,const dvector& v, const int& ii)"
+      "void nograd_assign(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)"
       << endl;
     ad_exit(1);
   }
@@ -300,10 +252,6 @@ void nograd_assign_column(const dvar_matrix& m, const dvector& v, const int& ii)
     // out(i)=nograd_assign(m(i));
 }
 
-/**
- * Description not yet available.
- * \param
- */
   d3_array_position::d3_array_position(int mmin,int mmax) :
     min(mmin), max(mmax)
   {}

@@ -1,26 +1,23 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
+
+
 #include "fvar.hpp"
 void cvdv_sub(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector operator-(const dvector& v1, const dvar_vector& v2)
+
+dvar_vector operator - (_CONST dvector& v1,_CONST dvar_vector& v2)
 {
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "prevariable operator-(const dvector& v1, const dvar_vector& v2)" << endl;
+      "prevariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   //dvector cv1=value(v1);
@@ -42,11 +39,6 @@ dvar_vector operator-(const dvector& v1, const dvar_vector& v2)
             set_gradient_stack(cvdv_sub);
   return vtmp;
 }
-
-/**
- * Description not yet available.
- * \param
- */
 void cvdv_sub(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -64,3 +56,5 @@ void cvdv_sub(void)
   dfv2.save_dvector_derivatives(v2pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
+
+

@@ -1,0 +1,115 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}
+\BOOKMARK [1][-]{section.1.1}{A simple example of a derivative calculation}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{Modifying fcomp to use AUTODIF}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{Interfacing with the rest of the program}{chapter.1}
+\BOOKMARK [1][-]{section.1.4}{Using AUTODIF's built in vector and matrix calculations}{chapter.1}
+\BOOKMARK [1][-]{section.1.5}{The log-likelihood function for a multivariate normal distribution}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{Getting Started}{}
+\BOOKMARK [1][-]{section.2.1}{System Requirements -- PC implementations}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{System Requirements -- other implementations}{chapter.2}
+\BOOKMARK [1][-]{section.2.3}{Installation}{chapter.2}
+\BOOKMARK [1][-]{section.2.4}{Setting Up the Borland Compilers for AUTODIF}{chapter.2}
+\BOOKMARK [1][-]{section.2.5}{Setting Up the Zortech Compilers for AUTODIF}{chapter.2}
+\BOOKMARK [1][-]{section.2.6}{Examples}{chapter.2}
+\BOOKMARK [0][-]{chapter.3}{The AUTODIF Classes}{}
+\BOOKMARK [1][-]{section.3.1}{The dvariable class}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{The dvector and dvar\137vector classes}{chapter.3}
+\BOOKMARK [1][-]{section.3.3}{Creating dvectors and dvar\137vectors}{chapter.3}
+\BOOKMARK [1][-]{section.3.4}{The dvector and dvar\137vector access functions}{chapter.3}
+\BOOKMARK [1][-]{section.3.5}{Accessing array elements}{chapter.3}
+\BOOKMARK [1][-]{section.3.6}{Creating column vectors and row vectors}{chapter.3}
+\BOOKMARK [1][-]{section.3.7}{The dmatrix and dvar\137matrix classes}{chapter.3}
+\BOOKMARK [1][-]{section.3.8}{The dmatrix access functions}{chapter.3}
+\BOOKMARK [1][-]{section.3.9}{The three-dimensional arrays d3array and dvar3\137array}{chapter.3}
+\BOOKMARK [1][-]{section.3.10}{The d3array access functions}{chapter.3}
+\BOOKMARK [1][-]{section.3.11}{Converting between the integer and floating point container objects}{chapter.3}
+\BOOKMARK [0][-]{chapter.4}{Operations and Functions}{}
+\BOOKMARK [1][-]{section.4.1}{The operators + - * }{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{The operators += -= *= /=}{chapter.4}
+\BOOKMARK [1][-]{section.4.3}{The operators \040* /}{chapter.4}
+\BOOKMARK [1][-]{section.4.4}{The concatenation of vector objects}{chapter.4}
+\BOOKMARK [1][-]{section.4.5}{Element-wise operations}{chapter.4}
+\BOOKMARK [1][-]{section.4.6}{The identity matrix function identity\137matrix}{chapter.4}
+\BOOKMARK [1][-]{section.4.7}{The operations det inv norm norm2 min max sum}{chapter.4}
+\BOOKMARK [1][-]{section.4.8}{Eigenvalues and eigenvectors of a symmetric matrix}{chapter.4}
+\BOOKMARK [1][-]{section.4.9}{The choleski decomposition of a positive definite symmetric matrix}{chapter.4}
+\BOOKMARK [1][-]{section.4.10}{Solving a system of linear equations}{chapter.4}
+\BOOKMARK [1][-]{section.4.11}{Methods for filling arrays and matrices}{chapter.4}
+\BOOKMARK [1][-]{section.4.12}{Methods for extracting from arrays and matrices}{chapter.4}
+\BOOKMARK [1][-]{section.4.13}{Making a bootstrap sample}{chapter.4}
+\BOOKMARK [1][-]{section.4.14}{Sorting vectors and matrices}{chapter.4}
+\BOOKMARK [1][-]{section.4.15}{Mathematical Functions}{chapter.4}
+\BOOKMARK [1][-]{section.4.16}{Using the smoothed absolute value function sfabs}{chapter.4}
+\BOOKMARK [0][-]{chapter.5}{Advanced concepts}{}
+\BOOKMARK [1][-]{section.5.1}{Reducing the size of the temporary files}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{Creating efficient code when accessing arrays}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{Ragged matrices and 3 dimensional arrays}{chapter.5}
+\BOOKMARK [1][-]{section.5.4}{Specifying ragged matrices}{chapter.5}
+\BOOKMARK [1][-]{section.5.5}{Specifying ragged three dimensional arrays}{chapter.5}
+\BOOKMARK [1][-]{section.5.6}{Complex data structures --- making order out of chaos}{chapter.5}
+\BOOKMARK [1][-]{section.5.7}{Default constructors for complex data structures}{chapter.5}
+\BOOKMARK [0][-]{chapter.6}{The AUTODIF libraries}{}
+\BOOKMARK [0][-]{chapter.7}{Input and Output}{}
+\BOOKMARK [1][-]{section.7.1}{Formatted Stream I/O}{chapter.7}
+\BOOKMARK [1][-]{section.7.2}{Error checking}{chapter.7}
+\BOOKMARK [1][-]{section.7.3}{Unformatted Stream I/O}{chapter.7}
+\BOOKMARK [1][-]{section.7.4}{An example of input and output for AUTODIF classes}{chapter.7}
+\BOOKMARK [0][-]{chapter.8}{Temporary Files}{}
+\BOOKMARK [0][-]{chapter.9}{Global Variables}{}
+\BOOKMARK [1][-]{section.9.1}{Adjusting the AUTODIF System Global Variables}{chapter.9}
+\BOOKMARK [1][-]{section.9.2}{Stack Size}{chapter.9}
+\BOOKMARK [0][-]{chapter.10}{The AUTODIF function minimizing routines}{}
+\BOOKMARK [1][-]{section.10.1}{Putting bounds on parameters}{chapter.10}
+\BOOKMARK [1][-]{section.10.2}{The derivative checker}{chapter.10}
+\BOOKMARK [0][-]{chapter.11}{Statistical functions}{}
+\BOOKMARK [1][-]{section.11.1}{Filling vectors with random numbers}{chapter.11}
+\BOOKMARK [1][-]{section.11.2}{Generating a sample from a mixture of n normal distributions}{chapter.11}
+\BOOKMARK [1][-]{section.11.3}{Functions which provide summary statistics}{chapter.11}
+\BOOKMARK [0][-]{chapter.12}{Robust Nonlinear Regression}{}
+\BOOKMARK [1][-]{section.12.1}{Statistical Theory for robust regression}{chapter.12}
+\BOOKMARK [1][-]{section.12.2}{Using the AUTODIF robust nonlinear regression routines}{chapter.12}
+\BOOKMARK [1][-]{section.12.3}{A simple example of robust regression}{chapter.12}
+\BOOKMARK [1][-]{section.12.4}{Setting the cutoff point in the robust regression routines}{chapter.12}
+\BOOKMARK [1][-]{section.12.5}{A Monte Carlo evaluation of the robust regression routine}{chapter.12}
+\BOOKMARK [1][-]{section.12.6}{Investigating extremely bad data with the robust-mixture estimator}{chapter.12}
+\BOOKMARK [0][-]{chapter.13}{Problems with more than one dependent variable}{}
+\BOOKMARK [1][-]{section.13.1}{Using more than one dependent variable}{chapter.13}
+\BOOKMARK [1][-]{section.13.2}{Finding roots of systems of equations with Newton-Raphson}{chapter.13}
+\BOOKMARK [1][-]{section.13.3}{Implementation of the Newton--Raphson technique}{chapter.13}
+\BOOKMARK [0][-]{chapter.14}{A Complete Nonlinear Parameter Estimation Program}{}
+\BOOKMARK [1][-]{section.14.1}{Finite Mixture Problems}{chapter.14}
+\BOOKMARK [1][-]{section.14.2}{Putting bounds on parameter values}{chapter.14}
+\BOOKMARK [1][-]{section.14.3}{Getting the initial x vector}{chapter.14}
+\BOOKMARK [1][-]{section.14.4}{Saving the parameter estimates}{chapter.14}
+\BOOKMARK [0][-]{chapter.15}{A Neural Network}{}
+\BOOKMARK [1][-]{section.15.1}{Description of the neural network}{chapter.15}
+\BOOKMARK [1][-]{section.15.2}{Implementation of the neural network}{chapter.15}
+\BOOKMARK [1][-]{section.15.3}{ Initializing the vector of active parameters and resetting active parameter values with the set\137value functions}{chapter.15}
+\BOOKMARK [1][-]{section.15.4}{Training the Network}{chapter.15}
+\BOOKMARK [1][-]{section.15.5}{The squashing function}{chapter.15}
+\BOOKMARK [1][-]{section.15.6}{Specifying the structure of the neural net and getting initial parameter estimates}{chapter.15}
+\BOOKMARK [1][-]{section.15.7}{A three spiral problem}{chapter.15}
+\BOOKMARK [1][-]{section.15.8}{Symbols}{chapter.15}
+\BOOKMARK [0][-]{chapter.16}{Index}{}
+\BOOKMARK [1][-]{section.16.1}{A}{chapter.16}
+\BOOKMARK [1][-]{section.16.2}{B}{chapter.16}
+\BOOKMARK [1][-]{section.16.3}{C}{chapter.16}
+\BOOKMARK [1][-]{section.16.4}{D}{chapter.16}
+\BOOKMARK [1][-]{section.16.5}{E}{chapter.16}
+\BOOKMARK [1][-]{section.16.6}{F}{chapter.16}
+\BOOKMARK [1][-]{section.16.7}{G}{chapter.16}
+\BOOKMARK [1][-]{section.16.8}{H}{chapter.16}
+\BOOKMARK [1][-]{section.16.9}{I}{chapter.16}
+\BOOKMARK [1][-]{section.16.10}{J}{chapter.16}
+\BOOKMARK [1][-]{section.16.11}{L}{chapter.16}
+\BOOKMARK [1][-]{section.16.12}{M}{chapter.16}
+\BOOKMARK [1][-]{section.16.13}{N}{chapter.16}
+\BOOKMARK [1][-]{section.16.14}{O}{chapter.16}
+\BOOKMARK [1][-]{section.16.15}{P}{chapter.16}
+\BOOKMARK [1][-]{section.16.16}{Q}{chapter.16}
+\BOOKMARK [1][-]{section.16.17}{R}{chapter.16}
+\BOOKMARK [1][-]{section.16.18}{S}{chapter.16}
+\BOOKMARK [1][-]{section.16.19}{T}{chapter.16}
+\BOOKMARK [1][-]{section.16.20}{V}{chapter.16}
+\BOOKMARK [1][-]{section.16.21}{W}{chapter.16}
+\BOOKMARK [1][-]{section.16.22}{Z}{chapter.16}

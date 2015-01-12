@@ -1,21 +1,17 @@
-/**
- * $Id: fvar_ma4.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
+
 #include "fvar.hpp"
 #include <math.h>
 
-#ifdef ISZERO
-  #undef ISZERO
-#endif
-#define ISZERO(d) ((d)==0.0)
-
 static double eps0=1.e-50;
 
-void lubksb(dvar_matrix a, const ivector&  indx,dvar_vector b);
-void ludcmp(const dvar_matrix& a, const ivector& indx, const prevariable& d);
+void lubksb(dvar_matrix a,_CONST ivector&  indx,dvar_vector b);
+void ludcmp(BOR_CONST dvar_matrix& a,BOR_CONST ivector& indx,_CONST prevariable& d);
 
 /** Lu decomposition of a variable matrix.
     \param _a  A dmatrix; replaced by the by its resulting LU decomposition
@@ -24,13 +20,15 @@ void ludcmp(const dvar_matrix& a, const ivector& indx, const prevariable& d);
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
+void ludcmp(BOR_CONST dvar_matrix& _a,BOR_CONST ivector& _indx,BOR_CONST prevariable& _d)
 {
   ADUNCONST(dvar_matrix,a)
   ADUNCONST(prevariable,d)
   ivector& indx= (ivector&) _indx;
-  int i,j,k,n;
+  int i,imax,j,k,n;
 
   n=a.colsize();
   int lb=a.colmin();
@@ -54,7 +52,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
         big=temp;
       }
     }
-    if (big == 0.0)
+    if (big == 0.0) 
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
     }
@@ -63,7 +61,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (i=lb;i<j;i++) 
     {
       sum=a(i,j);
       for (k=lb;k<i;k++)
@@ -72,9 +70,8 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
       }
       a(i,j)=sum;
     }
-    int imax = j;
     big=0.0;
-    for (i=j;i<=ub;i++)
+    for (i=j;i<=ub;i++) 
     {
       sum=a(i,j);
       for (k=lb;k<j;k++)
@@ -119,21 +116,24 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
 }
 
 /** LU decomposition back susbstitution alogrithm for variable object.
-    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$.
+    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
     \param indx Permutation vector from ludcmp.
     \param b A dvector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved, and containing on return the solution vector \f$X\f$.
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-void lubksb(dvar_matrix a, const ivector& indx,dvar_vector b)
+void lubksb(dvar_matrix a,_CONST ivector& indx,dvar_vector b)
 {
   int i,ii=0,ip,j,iiflag=0;
   dvariable sum;
+  int n=a.colsize();
   int lb=a.colmin();
   int ub=a.colmax();
-  for (i=lb;i<=ub;i++)
+  for (i=lb;i<=ub;i++) 
   {
     ip=indx(i);
     sum=b(ip);
@@ -145,18 +145,18 @@ void lubksb(dvar_matrix a, const ivector& indx,dvar_vector b)
         sum -= a.elem(i,j)*b.elem(j);
       }
     }
-    else if (!ISZERO(value(sum)))
+    else if ( value(sum) )
     {
       ii=i;
       iiflag=1;
     }
     b(i)=sum;
   }
-
-  for (i=ub;i>=lb;i--)
+ 
+  for (i=ub;i>=lb;i--) 
   {
     sum=b(i);
-    for (j=i+1;j<=ub;j++)
+    for (j=i+1;j<=ub;j++) 
     {                        // !!! remove to show bug
       sum -= a.elem(i,j)*b.elem(j);
     }                        // !!! remove to show bug

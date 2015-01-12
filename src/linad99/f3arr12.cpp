@@ -1,22 +1,15 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
-#ifndef OPT_LIB
-
-/**
- * Description not yet available.
- * \param
- */
-const prevariable dvar3_array::operator()(int k, int i, int j) const
+#ifdef USE_CONST
+  #ifndef OPT_LIB
+    _CONST prevariable dvar3_array::operator () (int k, int i, int j) _CONST 
     {
+      #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
           cerr << "array bound exceeded -- slice index too"
@@ -34,14 +27,15 @@ const prevariable dvar3_array::operator()(int k, int i, int j) const
           ad_exit(1);
         }
         return ( ((t[k].m[i]).va)+j );
+      #else
+        return ( ((t[k].m[i]).va)+j );
+      #endif
     }
 
-/**
- * Description not yet available.
- * \param
- */
-const dvar_vector& dvar3_array::operator()(int k, int i) const
+
+     _CONST dvar_vector& dvar3_array::operator () (int k, int i) _CONST 
     {
+      #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
           cerr << "array bound exceeded -- slice index too"
@@ -58,6 +52,14 @@ const dvar_vector& dvar3_array::operator()(int k, int i) const
            << k << "\n";
           ad_exit(1);
         }
+      #endif
       return ( t[k].m[i]);
     }
+
+
+
+  #endif
 #endif
+
+
+

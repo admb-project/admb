@@ -1,15 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 // file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable
+// constructors, destructors and misc functions involving class dvariable 
 
 #include "fvar.hpp"
 
@@ -28,11 +26,7 @@
 #endif
 #include <math.h>
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix mfexp(const dmatrix& m)
+dmatrix mfexp(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -50,11 +44,7 @@ dmatrix mfexp(const dmatrix& m)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix mfexp(const dmatrix& m, const double d)
+dmatrix mfexp(_CONST dmatrix& m, CGNU_DOUBLE d)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -71,3 +61,4 @@ dmatrix mfexp(const dmatrix& m, const double d)
   }
   return tmp;
 }
+

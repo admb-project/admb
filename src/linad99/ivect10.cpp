@@ -1,29 +1,19 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-int Max(const ivector& t1)
+
+
+#include "fvar.hpp"
+  int Max(_CONST ivector& t1)
   {
     return max(t1);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-int max(const ivector& t1)
+  int max(_CONST ivector& t1)
   {
      int tmp;
      int mmin=t1.indexmin();
@@ -36,11 +26,7 @@ int max(const ivector& t1)
      return(tmp);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-int min(const ivector& t1)
+  int min(_CONST ivector& t1)
   {
      int tmp;
      int mmin=t1.indexmin();
@@ -52,3 +38,5 @@ int min(const ivector& t1)
      }
      return(tmp);
   }
+
+

@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
@@ -21,13 +17,12 @@
 
 #include <string.h>
 #include <ctype.h>
-#include <cassert>
-#include <climits>
 
-/**
- * Description not yet available.
- * \param
- */
+const unsigned int MAX_LINE_LENGTH = 10000;
+const int MAX_FIELD_LENGTH = 500;
+const int MAX_NUMBER_COLUMNS = 6550;
+const int MAX_NUMBER_ROWS = 6550;
+
  struct dvec_ptr_ptr
  {
    void ** m;
@@ -35,15 +30,10 @@
 
 const int MAXROWS = 5050;
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::fill(const char* s)
+void dvar_matrix::fill( const char * s)
 {
-  const size_t len = strlen(s);
-  assert(len <= INT_MAX);
-  int n = (int)len;
+
+  int n = strlen(s);
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -52,7 +42,8 @@ void dvar_matrix::fill(const char* s)
   ivector k1(1, MAXROWS);
   ivector k2(1, MAXROWS);
 
-  for (int k = 0; k < n; k++)
+  int k;
+  for (k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -104,14 +95,12 @@ void dvar_matrix::fill(const char* s)
   {
     if (nrow < rowsize())
     {
-      cerr << " Not enough rows in the data for "
-      "dvar_matrix::fill(const char *) \n";
+      cerr << " Not enough rows in the data for dvar_matrix::fill(const char *) \n";
       ad_exit(1);
     }
     else
     {
-      cerr << " Too many rows in the data for "
-      "dvar_matrix::fill(const char *) \n";
+      cerr << " Too many rows in the data for dvar_matrix::fill(const char *) \n";
       ad_exit(1);
     }
   }
@@ -135,14 +124,15 @@ void dvar_matrix::fill(const char* s)
       }
     }
   }
-
+    
+  k = 0;
   for (i=rowmin(); i<=rowmax(); i++)
   {
     char * t;
 //    t = (char*) new[strlen(s)+1];
     t = new char[strlen(s)+1];
 
-    for (int k = k1[i]; k <= k2[i]; k++)
+    for (k = k1[i]; k <= k2[i]; k++)
     {
       t[k-k1[i]] = s[k];
     }
@@ -153,7 +143,7 @@ void dvar_matrix::fill(const char* s)
 
     (*this)(i)=tt;
 
-    delete[] t;
-    t = 0;
+    delete t;
   }
 }
+

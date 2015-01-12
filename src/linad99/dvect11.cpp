@@ -1,20 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
-void dvector::fill_multinomial(const int& seed, const dvector& p)
+  void dvector::fill_multinomial(BOR_CONST int& seed,_CONST dvector& p)
   // Fils a dvector with random numbers drawn from a multinomial distribution
   {
     double sum=mean(p)*p.size();
@@ -23,10 +17,11 @@ void dvector::fill_multinomial(const int& seed, const dvector& p)
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
-    choose.fill_randu(seed);
+    choose.fill_randu((BOR_CONST long&)seed);
     tmp=p/sum;
     tmp1(pmin)=tmp(pmin);
-    for (int j=pmin+1;j<=pmax-1;j++)
+    int j;
+    for (j=pmin+1;j<=pmax-1;j++)
     {
       tmp1(j)=tmp1(j-1)+tmp(j);
     }
@@ -34,7 +29,7 @@ void dvector::fill_multinomial(const int& seed, const dvector& p)
 
     for (int i=indexmin();i<=indexmax();i++)
     {
-      int j=pmin;
+      j=pmin;
       while (choose(i)>tmp1(j))
       {
         j++;
@@ -43,11 +38,7 @@ void dvector::fill_multinomial(const int& seed, const dvector& p)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void ivector::fill_multinomial(const int& seed, const dvector& p)
+  void ivector::fill_multinomial(BOR_CONST int& seed,_CONST dvector& p)
   // Fills a dvector with random numbers drawn from a multinomial distribution
   {
     double sum=mean(p)*p.size();
@@ -56,10 +47,11 @@ void ivector::fill_multinomial(const int& seed, const dvector& p)
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
-    choose.fill_randu(seed);
+    choose.fill_randu((BOR_CONST long&)seed);
     tmp=p/sum;
     tmp1(pmin)=tmp(pmin);
-    for (int j=pmin+1;j<=pmax-1;j++)
+    int j;
+    for (j=pmin+1;j<=pmax-1;j++)
     {
       tmp1(j)=tmp1(j-1)+tmp(j);
     }
@@ -67,7 +59,7 @@ void ivector::fill_multinomial(const int& seed, const dvector& p)
 
     for (int i=indexmin();i<=indexmax();i++)
     {
-      int j=pmin;
+      j=pmin;
       while (choose(i)>tmp1(j))
       {
         j++;
@@ -76,11 +68,7 @@ void ivector::fill_multinomial(const int& seed, const dvector& p)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void lvector::fill_multinomial(const int& seed, const dvector& p)
+  void lvector::fill_multinomial(BOR_CONST int& seed,_CONST dvector& p)
   // Fils a dvector with random numbers drawn from a multinomial distribution
   {
     double sum=mean(p)*p.size();
@@ -89,10 +77,11 @@ void lvector::fill_multinomial(const int& seed, const dvector& p)
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
-    choose.fill_randu(seed);
+    choose.fill_randu((BOR_CONST long&)seed);
     tmp=p/sum;
     tmp1(pmin)=tmp(pmin);
-    for (int j=pmin+1;j<=pmax-1;j++)
+    int j;
+    for (j=pmin+1;j<=pmax-1;j++)
     {
       tmp1(j)=tmp1(j-1)+tmp(j);
     }
@@ -100,7 +89,7 @@ void lvector::fill_multinomial(const int& seed, const dvector& p)
 
     for (int i=indexmin();i<=indexmax();i++)
     {
-      int j=pmin;
+      j=pmin;
       while (choose(i)>tmp1(j))
       {
         j++;

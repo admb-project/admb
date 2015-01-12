@@ -1,29 +1,17 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
-#include "admb_messages.h"
-
-/**
- * Description not yet available.
- * \param
- */
+#include <d4arr.hpp>
  d4_array::d4_array(int nrl,int nrh)
  {
    allocate(nrl,nrh);
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
 four_array_shape::four_array_shape(int hsl,int hsu) //,int sl,int su,int rl,
  // int ru,int cl,int cu)
 {
@@ -38,11 +26,7 @@ four_array_shape::four_array_shape(int hsl,int hsu) //,int sl,int su,int rl,
   ncopies=0;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-double sum(const d4_array& m)
+double sum(_CONST d4_array& m)
 {
   double tmp=0.;
   for (int i=m.indexmin();i<=m.indexmax();i++)
@@ -51,11 +35,7 @@ double sum(const d4_array& m)
   }
   return tmp;
 }
-
-/**
- * Description not yet available.
- * \param
- */
+    
  d4_array d4_array::sub(int nrl,int nrh)
  {
    if (allocated(*this))
@@ -73,10 +53,6 @@ double sum(const d4_array& m)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  d4_array::d4_array(const d4_array& m2)
  {
    if (m2.shape)
@@ -92,10 +68,6 @@ double sum(const d4_array& m)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void d4_array::shallow_copy(const d4_array& m2)
  {
    if (m2.shape)
@@ -111,10 +83,6 @@ double sum(const d4_array& m)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void d4_array::deallocate()
  {
    if (shape)
@@ -130,34 +98,27 @@ double sum(const d4_array& m)
        delete shape;
      }
    }
-#if defined(SAFE_ALL)
    else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
+   { 
+#    if defined(SAFE_ALL)
+   //  cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
+#    endif 
    }
-#endif
  }
 
-/**
-Destructor
-*/
-d4_array::~d4_array()
-{
-  deallocate();
-}
+ d4_array::~d4_array() 
+ {
+   deallocate();
+ }
 
-/**
- * Description not yet available.
- * \param
- */
-d4_array& d4_array::operator=(const d4_array& m)
+ d4_array& d4_array::operator =  (_CONST d4_array& m)
  {
    int mmin=hslicemin();
    int mmax=hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   {
+   { 
      cerr << "Incompatible bounds in"
-      " d4_array& d4_array:: operator =  (const d4_array& m)"
+      " d4_array& d4_array:: operator =  (_CONST d4_array& m)"
       << endl;
      ad_exit(1);
     }
@@ -168,11 +129,7 @@ d4_array& d4_array::operator=(const d4_array& m)
    return *this;
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(const d4_array& m1)
+ void d4_array::allocate(_CONST d4_array& m1)
  {
    if ( (shape=new four_array_shape(m1.hslicemin(),m1.hslicemax()))
        == 0)
@@ -194,156 +151,133 @@ void d4_array::allocate(const d4_array& m1)
 
   #ifndef OPT_LIB
 
-/**
- * Description not yet available.
- * \param
- */
-    d3_array& d4_array::operator () (int i)
+    d3_array& d4_array::operator ( ) (int i)
     {
-      if (i < hslicemin() || i > hslicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "d3_array& d4_array::operator() (int i)", hslicemin(), hslicemax(), i);
-      }
+      #ifdef SAFE_ARRAYS
+        if (i<hslicemin()||i>hslicemax())
+        { cerr << "Error hslice index out of bounds in\n"
+            "d3_array& d4_array::operator ( )" << endl;
+          ad_exit(1);
+        }
+      #endif
       return t[i];
     }
 
-/**
- * Description not yet available.
- * \param
- */
     d3_array& d4_array::operator [] (int i)
     {
-      if (i < hslicemin() || i > hslicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "d3_array& d4_array::operator[] (int i)",
-        hslicemin(), hslicemax(), i);
-      }
+      #ifdef SAFE_ARRAYS
+        if (i<hslicemin()||i>hslicemax())
+        { cerr << "Error hslice index out of bounds in\n"
+            "d3_array& d4_array::operator ( )" << endl;
+          ad_exit(1);
+        }
+      #endif
       return t[i];
     }
 
-/**
- * Description not yet available.
- * \param
- */
+
     dmatrix& d4_array::operator ( ) (int i ,int j)
     {
-      if (i < hslicemin() || i > hslicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "dmatrix& d4_array::operator() (int i, int j)",
-        hslicemin(), hslicemax(), i);
-      }
-      return ((*this)(i))(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    dvector& d4_array::operator ( ) (int i,int j,int k)
-    {
-      if (i < hslicemin() || i > hslicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "dvector& d4_array::operator() (int i, int j, int k)",
-        hslicemin(), hslicemax(), i);
-      }
-      return (((*this)(i,j))(k));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    double& d4_array::operator ( ) (int i,int j,int k,int l)
-    {
-      if (i < hslicemin() || i > hslicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "double& d4_array::operator() (int i, int j, int k, int l)",
-        hslicemin(), hslicemax(), i);
-      }
-      return ( ((*this)(i,j,k))(l));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const d3_array& d4_array::operator()(int i) const
-    {
-        if (i<hslicemin()||i>hslicemax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "d3_array& d4_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const d3_array& d4_array::operator[](int i) const
-    {
-        if (i<hslicemin()||i>hslicemax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "d3_array& d4_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const dmatrix& d4_array::operator()(int i, int j) const
-    {
+      #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
             "dmatrix& d4_array::operator ( )" << endl;
           ad_exit(1);
         }
+      #endif
       return ((*this)(i))(j);
     }
-
-/**
- * Description not yet available.
- * \param
- */
-const dvector& d4_array::operator()(int i, int j, int k) const
+    dvector& d4_array::operator ( ) (int i,int j,int k)
     {
+      #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
-          "dvector& d4_array::operator ( )" << endl;
+	    "dvector& d4_array::operator ( )" << endl;
           ad_exit(1);
         }
+      #endif
       return (((*this)(i,j))(k));
     }
-
-/**
- * Description not yet available.
- * \param
- */
-const double& d4_array::operator()(int i, int j, int k, int l) const
+    double& d4_array::operator ( ) (int i,int j,int k,int l)
     {
+      #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
             "double& d4_array::operator ( )"  << endl;
           ad_exit(1);
         }
+      #endif
       return ( ((*this)(i,j,k))(l));
     }
 
-#endif
+   #ifdef USE_CONST
 
-/**
- * Description not yet available.
- * \param
- */
+    _CONST d3_array& d4_array::operator ( ) (int i) _CONST
+    {
+      #ifdef SAFE_ARRAYS
+        if (i<hslicemin()||i>hslicemax())
+        { cerr << "Error hslice index out of bounds in\n"
+            "d3_array& d4_array::operator ( )" << endl;
+          ad_exit(1);
+        }
+      #endif
+      return t[i];
+    }
+
+    _CONST d3_array& d4_array::operator [] (int i) _CONST
+    {
+      #ifdef SAFE_ARRAYS
+        if (i<hslicemin()||i>hslicemax())
+        { cerr << "Error hslice index out of bounds in\n"
+            "d3_array& d4_array::operator ( )" << endl;
+          ad_exit(1);
+        }
+      #endif
+      return t[i];
+    }
+
+
+    _CONST dmatrix& d4_array::operator ( ) (int i ,int j) _CONST
+    {
+      #ifdef SAFE_ARRAYS
+        if (i<hslicemin()||i>hslicemax())
+        { cerr << "Error hslice index out of bounds in\n"
+            "dmatrix& d4_array::operator ( )" << endl;
+          ad_exit(1);
+        }
+      #endif
+      return ((*this)(i))(j);
+    }
+
+    _CONST dvector& d4_array::operator ( ) (int i,int j,int k) _CONST
+    {
+      #ifdef SAFE_ARRAYS
+        if (i<hslicemin()||i>hslicemax())
+        { cerr << "Error hslice index out of bounds in\n"
+	    "dvector& d4_array::operator ( )" << endl;
+          ad_exit(1);
+        }
+      #endif
+      return (((*this)(i,j))(k));
+    }
+
+    _CONST double& d4_array::operator ( ) (int i,int j,int k,int l) _CONST
+    {
+      #ifdef SAFE_ARRAYS
+        if (i<hslicemin()||i>hslicemax())
+        { cerr << "Error hslice index out of bounds in\n"
+            "double& d4_array::operator ( )"  << endl;
+          ad_exit(1);
+        }
+      #endif
+      return ( ((*this)(i,j,k))(l));
+    }
+
+   #endif
+  #endif
+
+
+
 void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch)
  {
@@ -365,12 +299,8 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh, const ivector& ncl, const ivector& nch)
+   int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    if ( (shape=new four_array_shape (hsl,hsu)) == 0)
    {
@@ -390,12 +320,8 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
-  const ivector& nrh, const ivector& ncl, const ivector& nch)
+ void d4_array::allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,
+   _CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
    {
@@ -415,25 +341,17 @@ void d4_array::allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh,
-  int nrl, const imatrix& nrh, int ncl, int nch)
-{
-  allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
-}
-
-/**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
-  int nrl, const imatrix& nrh, int ncl, int nch)
+ d4_array::d4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
+   int nrl, _CONST imatrix& nrh,int ncl,int nch)
  {
-   //int rmin=nrh.rowmin();
-   //int cmin=nrh(rmin).indexmin();
+   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
+ }
+
+ void d4_array::allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
+   int nrl, _CONST imatrix& nrh,int ncl,int nch)
+ {
+   int rmin=nrh.rowmin();
+   int cmin=nrh(rmin).indexmin();
    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d4_array contructor\n";
@@ -452,30 +370,22 @@ void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
+
  d4_array::d4_array(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch)
  {
    allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-d4_array::d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
-  ivector ncl,ivector nch)
-{
-  allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
-}
 
-/**
- * Description not yet available.
- * \param
- */
+ d4_array::d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
+    ivector ncl,ivector nch)
+ {
+   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
+
+ }
+
  void d4_array::initialize()
  {
    if (!(!(*this)))  // only initialize allocated objects
@@ -487,28 +397,21 @@ d4_array::d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
-  const imatrix& nrh, int ncl, const i3_array& nch)
+d4_array::d4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
+  _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
-  const imatrix& nrh, int ncl, const i3_array& nch)
+
+void d4_array::allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
+  _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
 {
-  //int rmin=nrh.rowmin();
-  //int cmin=nrh(rmin).indexmin();
-  //int sl1=nch.slicemin();
-  //int rmin1=nch(sl1).rowmin();
-  //int cmin1=nch(sl1,rmin1).indexmin();
+  int rmin=nrh.rowmin();
+  int cmin=nrh(rmin).indexmin();
+  int sl1=nch.slicemin();
+  int rmin1=nch(sl1).rowmin();
+  int cmin1=nch(sl1,rmin1).indexmin();
   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
   {
     cerr << " Error allocating memory in d4_array contructor\n";
@@ -525,11 +428,6 @@ void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
     (*this)(i).allocate(sl,sh(i),nrl,nrh(i),ncl,nch(i));
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
 d4_array::d4_array(int hsl,int hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch)
@@ -537,10 +435,6 @@ d4_array::d4_array(int hsl,int hsu,const index_type& sl,
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch)
@@ -580,10 +474,6 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void d4_array::allocate(int hsl,int hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch)
@@ -623,10 +513,6 @@ void d4_array::allocate(int hsl,int hsu,const index_type& sl,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh)
 {
@@ -659,10 +545,6 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
     const index_type& sh)
 {
@@ -693,10 +575,6 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu)
 {
    if (hsl>hsu)
@@ -721,3 +599,5 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu)
     (*this)(i).allocate();
   }
 }
+
+

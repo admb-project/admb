@@ -1,0 +1,17 @@
+% $Id$
+%
+% Author: David Fournier
+% Copyright (c) 2008 Regents of the University of California
+%
+\beginpicture
+  \setcoordinatesystem units <.35in,2in>
+  \setplotarea x from -5 to 5, y from -.01 to 1.0
+  \plotheading{Figure \number\chapno.1}
+  \axis bottom  
+    ticks numbered from -5 to 5 by 1 /
+ \setquadratic
+ \plot "normal.dat" 
+ \plot "rational.dat" 
+ \setplotsymbol({\rm .})
+ \plot "comb.dat" 
+\endpicture

@@ -1,15 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 // file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable
+// constructors, destructors and misc functions involving class dvariable 
 
 #include "fvar.hpp"
 
@@ -28,11 +25,7 @@
 #endif
 #include <math.h>
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix operator/(const double e, const dvar_matrix& m)
+dvar_matrix operator / ( CGNU_DOUBLE e,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -43,11 +36,7 @@ dvar_matrix operator/(const double e, const dvar_matrix& m)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix operator/(const prevariable& e, const dvar_matrix& m)
+dvar_matrix operator / (_CONST prevariable& e,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -58,11 +47,7 @@ dvar_matrix operator/(const prevariable& e, const dvar_matrix& m)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix operator/(const prevariable& e, const dmatrix& m)
+dvar_matrix operator / (_CONST prevariable& e,_CONST dmatrix& m)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -72,3 +57,4 @@ dvar_matrix operator/(const prevariable& e, const dmatrix& m)
   }
   return tmp;
 }
+

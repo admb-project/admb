@@ -1,27 +1,21 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
+
 #include "fvar.hpp"
 
 void dv_pluseq(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector& dvar_vector::operator+=(const dvar_vector& v1)
+ dvar_vector& dvar_vector::operator += (_CONST dvar_vector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in "
-     "dvector& operator += (const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvector& operator += (_CONST dvar_vector&)\n";
      ad_exit(21);
    }
 
@@ -41,10 +35,6 @@ dvar_vector& dvar_vector::operator+=(const dvar_vector& v1)
    return(*this);
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void dv_pluseq(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -56,16 +46,11 @@ void dv_pluseq(void)
   dfthis.save_dvector_derivatives(v1_pos);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector& dvar_vector::operator+=(const dvector& v1)
+ dvar_vector& dvar_vector::operator += (_CONST dvector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in "
-     "dvector& operator += (const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvector& operator += (_CONST dvar_vector&)\n";
      ad_exit(21);
    }
 
@@ -77,3 +62,6 @@ dvar_vector& dvar_vector::operator+=(const dvector& v1)
    }
    return(*this);
  }
+
+
+

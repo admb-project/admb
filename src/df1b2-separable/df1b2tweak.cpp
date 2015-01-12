@@ -1,28 +1,23 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #include <df1b2fun.h>
 
-/**
- * Description not yet available.
- * \param
- */
-df1b2function_tweaker::df1b2function_tweaker(double _eps,double _mult):
-  mult(_mult), eps(_eps), coffs(1, 3)
+
+df1b2function_tweaker::df1b2function_tweaker(double _eps,double _mult) : 
+  coffs(1,3), eps(_eps) , mult(_mult)
 {
   double e=eps;
   double e2=e*e;
   double e3=e*e2;
   double e4=e*e3;
   double e5=e*e4;
-
+  
   dmatrix M(1,3,1,3);
   M(1,1)=e3;
   M(1,2)=e4;
@@ -44,10 +39,7 @@ df1b2function_tweaker::df1b2function_tweaker(double _eps,double _mult):
   coffs=solve(M,y);
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2variable df1b2function_tweaker::operator () (const df1b2variable& x)
 {
   if (value(x)>=eps &&value(x)<=1-eps)

@@ -1,9 +1,9 @@
-/**
- * $Id: fvar_m20.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: Steve Martell made Changes on Dec 30, 2013
- * 
+/*
+ * $Id$
+ * Author: Unknown
  */
+
+
 #include <fvar.hpp>
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -27,13 +27,12 @@ void df_xdet(void);
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 
-    Edited by Steve Martell on Dec 30, 2013 to address a bug
-    where the lower bound of the square dvar_matrix was greater than 1.
+    \deprecated Scheduled for replacement by 2010.
 */
-dvariable det(const dvar_matrix& aa)
+dvariable det(_CONST dvar_matrix& aa)
 {
-  int i,j,k;
-  int n=aa.colsize();
+  int i,imax,j,k,n;
+  n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
   ivector indx(lb,ub);
@@ -82,7 +81,6 @@ dvariable det(const dvar_matrix& aa)
       //a[i][j]=sum;
       bb(i,j)=sum;
     }
-    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {
@@ -133,18 +131,13 @@ dvariable det(const dvar_matrix& aa)
       }
     }
   }
-  //double det=d;
-  // SM Bug 129, issue appears to be at this line
-  // part_prod is declared above as dvector(lb,ub)
-  // cout<<"Bug 129 ="<<part_prod(lb)<<endl;
-  // part_prod(1)=d*bb(1,1);  // replaced this line with:
-  part_prod(lb) = d*bb(lb,lb);
-  // cout<<"Ok got this far; det = "<<det<<endl;
+  double det=d;
+  part_prod(1)=d*bb(1,1);
   for (j=lb+1;j<=ub;j++)
   {
     part_prod(j)=part_prod(j-1)*bb(j,j);
   }
-  double det=part_prod(ub);
+  det=part_prod(ub);
   dvariable rdet=nograd_assign(det);
   save_identifier_string("PLACE7");
   part_prod.save_dvector_value();
@@ -167,7 +160,7 @@ dvariable det(const dvar_matrix& aa)
   return rdet;
 }
 
-/** Adjoint code for dvariable det(const dvar_matrix& aa) */
+/** Adjoint code for dvariable det(_CONST dvar_matrix& aa) */
 void df_xdet(void)
 {
   verify_identifier_string("PLACE0");

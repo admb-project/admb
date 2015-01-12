@@ -1,30 +1,37 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
 #include <admodel.h>
 
 double polint(double * xa,double * ya,double x);
 
-void get_confidence_interval(const dvector& left_bd, const dvector& right_bd,
-  dmatrix& ms, const dvector& xs, const dvector& siglevel,
-  const int& level_index, int index);
-void get_onesided_intervals(const dvector& left_bd, const dvector& right_bd,
-  dmatrix& ms, const dvector& xs, const dvector& siglevel,
-  const int& level_index, int index);
-void report_confidence_limits(const ofstream& ofs3,int numsig_levels,
-  const dvector& siglevel, const dvector& left_bd, const dvector& right_bd);
-void report_onesided_confidence_limits(const ofstream& ofs3,int numsig_levels,
-  const dvector& siglevel, const dvector& left_bd, const dvector& right_bd,
-  int ip);
+void get_confidence_interval(BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,
+  dmatrix& ms,BOR_CONST dvector& xs,BOR_CONST dvector& siglevel,BOR_CONST int& level_index,
+  int index);
+void get_onesided_intervals(BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,
+  dmatrix& ms,BOR_CONST dvector& xs,BOR_CONST dvector& siglevel,BOR_CONST int& level_index,
+  int index);
+void report_confidence_limits(BOR_CONST ofstream& ofs3,int numsig_levels,
+  const dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd);
+void report_onesided_confidence_limits(BOR_CONST ofstream& ofs3,int numsig_levels,
+  const dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,int ip);
 
-void report_confidence_limits(const ofstream& _ofs3,int numsig_levels,
-  const dvector& siglevel, const dvector& left_bd, const dvector& right_bd)
+  double max(double x,double y)
+  {
+    if (x>y) return x;
+    return y;
+  }
+
+
+void report_confidence_limits(BOR_CONST ofstream& _ofs3,int numsig_levels,
+  const dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd)
 {
   ofstream& ofs3=(ofstream&) _ofs3;
-  ofs3 << "Minimum width confidence limits:" << endl
+  ofs3 << "Minimum width confidence limits:" << endl 
        <<                    " significance level  lower bound"
        << "  upper bound" << endl;
   for (int i=1;i<=numsig_levels;i++)
@@ -35,61 +42,59 @@ void report_confidence_limits(const ofstream& _ofs3,int numsig_levels,
   ofs3 << endl;
 }
 
-void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
-  const dvector& siglevel, const dvector& left_bd, const dvector& right_bd,
-  int ip)
+void report_onesided_confidence_limits(BOR_CONST ofstream& _ofs3,int numsig_levels,
+  const dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,int ip)
 {
   ofstream& ofs3=(ofstream&) _ofs3;
   int i;
   for (i=1;i<=numsig_levels;i++)
   {
     ofs3 << "The probability is " << setw(7) << siglevel(i) << " that "
-         << likeprof_params::likeprofptr[ip]->label()
+         << likeprof_params::likeprofptr[ip]->label() 
          << " is greater than " << left_bd(i) << endl;
   }
   ofs3 << endl;
   for (i=1;i<=numsig_levels;i++)
   {
     ofs3 << "The probability is " << setw(7) << siglevel(i) << " that "
-         << likeprof_params::likeprofptr[ip]->label()
+         << likeprof_params::likeprofptr[ip]->label() 
          << " is less than " << right_bd(i) << endl;
   }
   ofs3 << endl;
 }
 
-  dvector smooth(const dvector& v);
+  dvector smooth(BOR_CONST dvector& v);
 
 #ifndef CURVE_CORRECT
   void function_minimizer::normalize_posterior_distribution(double udet,
-    const dvector& siglevel, const ofstream& _ofs2,int num_pp,
-    const dvector& _all_values, const dmatrix& actual_value,double global_min,
-    int offset, const dmatrix& lprof, const dmatrix& ldet, const dmatrix& xdist,
-    const dmatrix& penalties)
+    BOR_CONST dvector& siglevel,BOR_CONST ofstream& _ofs2,int num_pp,
+    BOR_CONST dvector& _all_values,BOR_CONST dmatrix& actual_value,double global_min,
+    int offset,BOR_CONST dmatrix& lprof,BOR_CONST dmatrix& ldet,BOR_CONST dmatrix& xdist,
+    BOR_CONST dmatrix& penalties)
   /*
   void function_minimizer::normalize_posterior_distribution(double udet,
-    dvector& siglevel, const ofstream& ofs2,int num_pp, const dvector& all_values,
-    dmatrix& actual_value,double global_min,int offset, const dmatrix& lprof,
-    dmatrix& ldet, const dmatrix& xdist, const dmatrix& penalties)
+    dvector& siglevel,BOR_CONST ofstream& ofs2,int num_pp,BOR_CONST dvector& all_values,
+    dmatrix& actual_value,double global_min,int offset,BOR_CONST dmatrix& lprof,
+    dmatrix& ldet,BOR_CONST dmatrix& xdist,BOR_CONST dmatrix& penalties)
    */
-   // dmatrix& ldet, const dmatrix& xdist, const dmatrix& penalties,
-   // const dmatrix& lg_jacob)
+   // dmatrix& ldet,BOR_CONST dmatrix& xdist,BOR_CONST dmatrix& penalties,BOR_CONST dmatrix& lg_jacob)
 #else
 
   void function_minimizer::normalize_posterior_distribution(double udet,
-    const dvector& siglevel, const ofstream& ofs2,int num_pp,
-    const dvector& all_values, const dmatrix& actual_value,
+    BOR_CONST dvector& siglevel,BOR_CONST ofstream& ofs2,int num_pp,
+    BOR_CONST dvector& all_values,BOR_CONST dmatrix& actual_value,
     double global_min,
-    int offset, const dmatrix& lprof, const dmatrix& ldet,
-    const dmatrix& xdist,
-    const d3_array& eigenvals,d3_array& curvcor)
+    int offset,BOR_CONST dmatrix& lprof,BOR_CONST dmatrix& ldet,
+    BOR_CONST dmatrix& xdist,
+    BOR_CONST d3_array& eigenvals,d3_array& curvcor)
 /*
   void function_minimizer::normalize_posterior_distribution(double udet,
-    const dvector& siglevel, const ofstream& ofs2,int num_pp,
-    const dvector& all_values,
-    const dmatrix& actual_value,double global_min,int offset,
-    const dmatrix& lprof,
-    const dmatrix& ldet, const dmatrix& xdist,
-    const d3_array& eigenvals,d3_array& curvcor)
+    BOR_CONST dvector& siglevel,BOR_CONST ofstream& ofs2,int num_pp,
+    BOR_CONST dvector& all_values,
+    BOR_CONST dmatrix& actual_value,double global_min,int offset,
+    BOR_CONST dmatrix& lprof,
+    BOR_CONST dmatrix& ldet,BOR_CONST dmatrix& xdist,
+    BOR_CONST d3_array& eigenvals,d3_array& curvcor)
 */
 #endif
   {
@@ -110,17 +115,17 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
     dmatrix upper_bd(0,3,1,3);
 #endif
     double sigma;
-    /*int nvar=*/initial_params::nvarcalc();
+    int nvar=initial_params::nvarcalc();
     int numsig_levels=siglevel.indexmax();
     for (int ip=0;ip<likeprof_params::num_likeprof_params;ip++)
     {
      {
       adstring profrep_name=(likeprof_params::likeprofptr[ip]->label());
-      size_t llen = length(profrep_name);
+      int llen=length(profrep_name);
       if (llen>8) profrep_name=profrep_name(1,8);
       ofstream ofs3((char*) (profrep_name+adstring(".plt")));
       sigma=likeprof_params::likeprofptr[ip]->get_sigma();
-      //double diff;
+      double diff;
       ofs2 << likeprof_params::likeprofptr[ip]->label() << ":" << endl;
       ofs3 << likeprof_params::likeprofptr[ip]->label() << ":" << endl;
       ofs2 << sigma << endl  << global_min << " " << udet << endl;
@@ -131,7 +136,8 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         ofstream ofs("dgs2");
         ofs << "lprof" << endl << lprof << endl;
       }
-      for (int j=-num_pp;j<=num_pp;j++) //go in positive and negative directions
+      int j;
+      for (j=-num_pp;j<=num_pp;j++) //go in positive and negative directions
       {
         all_values(j)=actual_value(ip,j-offset);
         double lp=lprof(ip,j);
@@ -146,7 +152,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         tempint2(j)=exp(-tempint2(j));
       }
       dmatrix m(1,3,-num_pp,num_pp);
-      for (int j=-num_pp;j<=num_pp;j++)
+      for (j=-num_pp;j<=num_pp;j++)
       {
       #if defined(DO_PROFILE)
         m(1,j)=tempint0(j)/xdist(ip,j);
@@ -160,8 +166,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         }
         else
         {
-          // profile likelihood adjusted for gradient of dep var
-          m(2,j)=tempint1(j)/xdist(ip,j);
+          m(2,j)=tempint1(j)/xdist(ip,j); // profile likelihood adjusted for gradient of dep var
         }
         //m(2,j)=tempint1(j);
       }
@@ -169,12 +174,12 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
       m(3)=tempint2; //+ 1.e-4*max(tempint2);
 
      /*
-      savef << "penalties" << endl << setw(9) << setprecision(4)
+      savef << "penalties" << endl << setw(9) << setprecision(4) 
             << penalties(ip) << endl;
-      savef << "normalized exp(lg_jacob)" << endl << setw(9) << setprecision(4)
+      savef << "normalized exp(lg_jacob)" << endl << setw(9) << setprecision(4) 
             << exp(2.*(lg_jacob(ip)-lg_jacob(ip,0))) << endl;
      */
-      savef << "tempint1 " << endl << setw(9) << setprecision(3)
+      savef << "tempint1 " << endl << setw(9) << setprecision(3) 
             << tempint1 << endl;
      #if defined(DO_PROFILE)
       savef << "m(1) " << endl << setw(9) << setprecision(3) << m(1) << endl;
@@ -208,15 +213,15 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         int mmin=m.rowmin();
         int mmax=m.rowmax();
         for (int i=mmin;i<=mmax;i++)
-        {
+        { 
           int cmin=m(i).indexmin();
           int cmax=m(i).indexmax();
           for (int j=cmin;j<=cmax;j++)
-          {
+          { 
             if (m(i,j)<=0.0) m(i,j)=1.e-50;
           }
         }
-      }
+      }     
       //dmatrix lm=log(m);
       dmatrix lm=m;
       int lowlimit=2;
@@ -231,8 +236,8 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         int k;
         for (k=min_ind;k<=0;k++)
         {
-          //double * xa=(&all_values(k))-1;
-          //double * ya=(&lm(ii,k))-1;
+          double * xa=(&all_values(k))-1;
+          double * ya=(&lm(ii,k))-1;
           //ms(ii,kmult*k)=exp(lm(ii,k));
           ms(ii,kmult*k)=lm(ii,k);
           if (k<max_ind)
@@ -249,14 +254,14 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
 
         for (k=1;k<=max_ind;k++)
         {
-          //double * xa=(&all_values(k))-2;
-          //double * ya=(&lm(ii,k))-2;
+          double * xa=(&all_values(k))-2;
+          double * ya=(&lm(ii,k))-2;
           //ms(ii,kmult*k)=exp(lm(ii,k));
           ms(ii,kmult*k)=lm(ii,k);
           if (k<max_ind)
           {
-            double l=lm(ii,k);
-            double u=lm(ii,k+1);
+	    double l=lm(ii,k);
+	    double u=lm(ii,k+1);
             for (int i=1;i<kmult;i++)
             {
               ms(ii,kmult*k+i)=l+double(i)/kmult*(u-l);
@@ -272,7 +277,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
 
       dvector ssum(1,3);
       ssum.initialize();
-      for (int j=lowlimit;j<=3;j++)
+      for (j=lowlimit;j<=3;j++)
       {
         for (int i=7*min_ind;i<7*max_ind;i++)
         {
@@ -286,10 +291,10 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
           }
         }
       }
-      for (int j=lowlimit;j<=3;j++)
+      for (j=lowlimit;j<=3;j++)
       {
         if (ssum(j) !=0)
-        {
+        { 
         /*
           cout << ms(j) << endl << ssum(j) << endl << endl;
           char ch;
@@ -299,7 +304,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         }
       }
       // now do the integrals
-      for (int j=lowlimit;j<=3;j++)
+      for (j=lowlimit;j<=3;j++)
       {
         int level_index=1;
         do
@@ -329,6 +334,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
 
       output(1)=xs(new_min_ind,new_max_ind);
 
+     
     #if defined(DO_PROFILE)
       output(2)=ms(1)(new_min_ind,new_max_ind);
       {
@@ -341,7 +347,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         report_onesided_confidence_limits(ofs3,numsig_levels,siglevel,
           lower_bd(1),upper_bd(1),ip);
       }
-     #endif
+     #endif 
 
       output(2)=ms(2)(new_min_ind,new_max_ind);
       {
@@ -371,7 +377,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
   }
 
 
-  dvector smooth(const dvector& v)
+  dvector smooth(BOR_CONST dvector& v)
   {
     int mmin=v.indexmin();
     int mmax=v.indexmax();
@@ -379,15 +385,16 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
     dvector tmp(mmin,mmax);
     tmp(mmin)=.8*v(mmin)+.2*v(mmin+1);
     tmp(mmin+1)=.2*v(mmin)+.6*v(mmin+1)+.2*v(mmin+2);
-    for (int i=mmin+2;i<=mmin+diff/4;i++)
+    int i;
+    for (i=mmin+2;i<=mmin+diff/4;i++)
     {
       tmp(i)=.1*v(i-2)+.2*v(i-1)+.4*v(i)+.2*v(i+1)+.1*v(i+2);
     }
-    for (int i=mmin+diff/4+1;i<mmax-diff/4;i++)
+    for (i=mmin+diff/4+1;i<mmax-diff/4;i++)
     {
       tmp(i)=v(i);
     }
-    for (int i=mmax-diff/4;i<=mmax-2;i++)
+    for (i=mmax-diff/4;i<=mmax-2;i++)
     {
       tmp(i)=.1*v(i-2)+.2*v(i-1)+.4*v(i)+.2*v(i+1)+.1*v(i+2);
     }
@@ -395,6 +402,8 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
     tmp(mmax-1)=.2*v(mmax)+.6*v(mmax-1)+.2*v(mmax-2);
     return tmp;
   }
+     
+
 
 double polint(double * xa,double * ya,double x)
 {
@@ -421,3 +430,4 @@ double polint(double * xa,double * ya,double x)
            +(x-xa[1])*(x-xa[2])/prod3*ya[3];
   return y;
 }
+

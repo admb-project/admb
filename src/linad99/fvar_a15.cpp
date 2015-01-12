@@ -1,15 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable
+// constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
 
@@ -25,17 +22,12 @@
 
 void cvdv_dot(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable operator*(const dvector& cv1, const dvar_vector& v2)
+  dvariable operator * (_CONST dvector& cv1,_CONST dvar_vector& v2)
 {
   if (cv1.indexmin()!=v2.indexmin()||cv1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "prevariable operator * (const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+      "prevariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
     double tmp=0;
@@ -76,10 +68,6 @@ dvariable operator*(const dvector& cv1, const dvar_vector& v2)
   return vtmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void cvdv_dot(void)
 {
   verify_identifier_string("aaaa");
@@ -109,3 +97,5 @@ void cvdv_dot(void)
   //dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);
 }
+
+

@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
 dvar_vector diagonal(const dvar_matrix& m)
 {
   if (m.indexmin() != m.colmin() || m.indexmax() != m.colmax())
@@ -27,4 +20,6 @@ dvar_vector diagonal(const dvar_matrix& m)
   for (int i=mmin;i<=mmax;i++)
     tmp(i)=m(i,i);
   return tmp;
-}
+} 
+
+

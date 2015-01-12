@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 // file: dmat_io.cpp
 
@@ -30,11 +26,7 @@
 
 #include <string.h>
 
-/**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& _ostr, const imatrix& z)
+ostream& operator<<(BOR_CONST ostream& _ostr,_CONST imatrix& z)
 {
   ostream& ostr= (ostream&) _ostr;
   int min=z.rowmin();
@@ -47,11 +39,7 @@ ostream& operator<<(const ostream& _ostr, const imatrix& z)
   return ostr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& _istr,const imatrix& z)
+istream& operator>>(BOR_CONST istream& _istr,BOR_CONST imatrix& z)
 {
   istream& istr= (istream&) _istr;
   int min=z.rowmin();
@@ -62,3 +50,4 @@ istream& operator>>(const istream& _istr,const imatrix& z)
   }
   return istr;
 }
+

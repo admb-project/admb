@@ -1,96 +1,87 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
-#include "admb_messages.h"
 //#include "i3_array.h"
 
 #ifndef OPT_LIB
-
-/**
- * Description not yet available.
- * \param
- */
     int& i3_array::operator () (int k, int i, int j)
     {
-      if (k < slicemin())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-        "ivector& i3_array::operator() (int k, int i, int j)",
-        slicemin(), slicemax(), k);
-      }
-      if (k > slicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-        "ivector& i3_array::operator() (int k, int i, int j)",
-        slicemin(), slicemax(), k);
-      }
+      #ifdef SAFE_ARRAYS
+        if (k<slicemin())
+        {
+	  cerr << "array bound exceeded -- slice index too low in i3_array::operator(int,int)";
+          ad_exit(1);
+        }
+        if (k>slicemax())
+        {
+	  cerr << "array bound exceeded -- slice index too high in i3_array::operator(int,int)";
+          ad_exit(1);
+        }
+      #endif
       return ( (elem(k))(i,j) );
     }
 
-/**
- * Description not yet available.
- * \param
- */
+
     ivector& i3_array::operator () (int k, int i)
     {
-      if (k < slicemin())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-        "ivector& i3_array::operator() (int k, int i)",
-        slicemin(), slicemax(), k);
-      }
-      if (k > slicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-        "ivector& i3_array::operator() (int k, int i)",
-        slicemin(), slicemax(), k);
-      }
+      #ifdef SAFE_ARRAYS
+        if (k<slicemin())
+        {
+	  cerr << "array bound exceeded -- slice index too low in i3_array::operator(int,int)";
+          ad_exit(1);
+        }
+        if (k>slicemax())
+        {
+	  cerr << "array bound exceeded -- slice index too high in i3_array::operator(int,int)";
+          ad_exit(1);
+        }
+      #endif
       return ( (elem(k))(i) );
     }
 
-/**
- * Description not yet available.
- * \param
- */
  imatrix& i3_array::operator[] (int i)
  {
-   if (i < slicemin())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-     "imatrix& i3_array::operator[] (int i)", slicemin(), slicemax(), i);
-   }
-   if (i > slicemax())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-     "imatrix& i3_array::operator[] (int i)", slicemin(), slicemax(), i);
-   }
+   #ifdef SAFE_ARRAYS
+     if (i<slicemin())
+     {
+       cerr << "matrix bound exceeded -- row index too low in 3d_array::operator[]"
+             << "value was" << i;
+       ad_exit(21);
+     }
+     if (i>slicemax())
+     {
+       cerr << "matrix bound exceeded -- row index too high in 3d_array::operator[]"
+             << "value was" << i;
+       ad_exit(22);
+     }
+   #endif
    return(t[i]);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  imatrix& i3_array::operator() (int i)
  {
-   if (i < slicemin())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-     "imatrix& i3_array::operator() (int i)", slicemin(), slicemax(), i);
-   }
-   if (i > slicemax())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-     "imatrix& i3_array::operator() (int i)", slicemin(), slicemax(), i);
-   }
+   #ifdef SAFE_ARRAYS
+     if (i<slicemin())
+     {
+       cerr << "matrix bound exceeded -- row index too low in 3d_array::operator[]"
+             << "value was" << i;
+       ad_exit(21);
+     }
+     if (i>slicemax())
+     {
+       cerr << "matrix bound exceeded -- row index too high in 3d_array::operator[]"
+             << "value was" << i;
+       ad_exit(22);
+     }
+   #endif
    return(t[i]);
  }
 #endif
+
+//void ee51qo(void){int i=1;}
+
+

@@ -1,29 +1,21 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
+#include "fvar.hpp"
 double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
   const dmatrix& eps)
 {
-  int m=eps.indexmax();
+  int m=eps.indexmax();	 
   int n=lower.indexmax();
   double ssum=0.0;
   dmatrix ch=choleski_decomp(Sigma);
   dvector l(1,n);
   dvector u(1,n);
-
+  
   for (int k=1;k<=m;k++)
   {
     double weight=1.0;
@@ -46,44 +38,36 @@ double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
     }
     ssum+=weight;
   }
-  return ssum/m;
-}
+  return ssum/m;  
+} 
 
-/**
- * Description not yet available.
- * \param
- */
 void ghk_test(const dmatrix& eps,int i)
-{
+{	
   if (i<eps.indexmin())
-  {
-    cerr << "Index too low in function ghk -- min is "
-         << eps.indexmin() << " you have " << i << endl;
+  {	   
+    cerr << "Index too low in function ghk -- min is " 
+         << eps.indexmin() << " you have " << i << endl;	    
     exit(21);
-  }
+  }  
   else  if (i>eps.indexmax())
-  {
-    cerr << "Index too high in function ghk -- max is "
-         << eps.indexmax() << " you have " << i << endl;
+  {	   
+    cerr << "Index too high in function ghk -- max is " 
+         << eps.indexmax() << " you have " << i << endl;	    
     exit(21);
-  }
-}
+  }   
+}  
 
-/**
- * Description not yet available.
- * \param
- */
 double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
-  const dmatrix& eps,int _i)
+  const dmatrix& eps,int i)
 {
   int n=lower.indexmax();
   dmatrix ch=choleski_decomp(Sigma);
   dvector l(1,n);
   dvector u(1,n);
 
-  ghk_test(eps,_i); // test for valid i range
+  ghk_test(eps,i); // test for valid i range
   double weight=1.0;
-  int k=_i;
+  int k=i;
   {
     l=lower;
     u=upper;
@@ -103,5 +87,5 @@ double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
       }
     }
   }
-  return weight;
-}
+  return weight;  
+} 

@@ -1,0 +1,1 @@
+gs -sDEVICE=cdj880 -sOutputFile=yyy%d -q -dNOPAUSE $1

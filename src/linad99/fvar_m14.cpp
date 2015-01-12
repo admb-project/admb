@@ -1,14 +1,11 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-// constructors, destructors and misc functions involving class prevariable
+
+// constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
 
@@ -21,12 +18,13 @@
   #include <iostream.hpp>
 #endif
 
+
 /*
- dvar_matrix  operator*(const dvar_matrix& m1, const dvar_matrix& m2 )
+ dvar_matrix  operator * (_CONST dvar_matrix& m1,_CONST dvar_matrix& m2 )
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dmatrix& m)\n";
      ad_exit(21);
    }
    //dmatrix cm1=value(m1);
@@ -74,17 +72,11 @@
    return vtmp;
  }
 */
-
-/**
- * Description not yet available.
- * \param
- */
- dvar_matrix operator*(const dvar_matrix& m1, const dvar_matrix& m2)
+ dvar_matrix  operator * (_CONST dvar_matrix& m1,_CONST dvar_matrix& m2 )
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in "
-     "dmatrix operator*(const dmatrix& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dmatrix& m)\n";
      ad_exit(21);
    }
    //dmatrix cm1=value(m1);
@@ -95,8 +87,9 @@
 
    for (int j=m2.colmin(); j<=m2.colmax(); j++)
    {
-     dvector m2col=column_value(m2,j);
 
+     dvector m2col=column_value(m2,j);
+     
      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
        sum=value(m1(i))*m2col;
@@ -117,10 +110,6 @@
    return vtmp;
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void dmdm_prod(void)
 {
   verify_identifier_string("TEST6");
@@ -154,3 +143,5 @@ void dmdm_prod(void)
   dfm2.save_dmatrix_derivatives(m2pos);
   // cout << "leaving dmdm_prod"<<endl;
 }
+
+

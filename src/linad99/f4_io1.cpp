@@ -1,18 +1,16 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 // file: dmat_io.cpp
 
 // i/o operations for class dmatrix
 
 #include "fvar.hpp"
+#include  "d4arr.hpp"
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -33,11 +31,8 @@
 
 #ifdef __USE_IOSTREAM__
 
-/**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& ostr, const dvar4_array &z)
+
+uostream& operator<<(BOR_CONST uostream& ostr,BOR_CONST dvar4_array & z)
 {
   for (int i=z.hslicemin();i<=z.hslicemax();i++)
   {
@@ -46,11 +41,7 @@ uostream& operator<<(const uostream& ostr, const dvar4_array &z)
   return (uostream&) ostr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& istr,const dvar4_array &z)
+uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST  dvar4_array & z)
 {
   for (int i=z.hslicemin();i<=z.hslicemax();i++)
   {
@@ -58,4 +49,6 @@ uistream& operator>>(const uistream& istr,const dvar4_array &z)
   }
   return (uistream&) istr;
 }
+
 #endif
+

@@ -1,9 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
   #include <admodel.h>
 
   objective_function_value * objective_function_value::pobjfun=NULL;
@@ -11,12 +12,13 @@
 
   objective_function_value::objective_function_value() {pobjfun=this;}
   objective_function_value& objective_function_value::operator =
-    (const prevariable& v)
+    (_CONST prevariable& v)
   {
     prevariable::operator = (v);
     return *this;
   }
-objective_function_value& objective_function_value::operator=(const double v)
+  objective_function_value& objective_function_value::operator =
+    (CGNU_DOUBLE v)
   {
     prevariable::operator = (v);
     return *this;

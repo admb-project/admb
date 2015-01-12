@@ -4,58 +4,58 @@
 % Copyright (c) 2008 Regents of the University of California
 %
 
-\section{The necessity for adjoint code}
-
-When you write code for variable objects in \ADM, all the
-derivatives are calculated for you in a transparent manner. 
-To accomplish this, \ADM\ must save certain information for
+\mysection{The necessity for adjoint code}
+When you write code for variable objects in \ADM\ all the
+derivatives are calculated for you in a tranparent manner. 
+to accomplish this \ADM\ must save certain information for
 later use. We shall refer to this as derivative information.
-Each arithmetic operation generates about 32~bytes of
-derivative information.  If you have some simple function that
-has 20 arithmetic operations, it will therefore
+Each arithmetic operation generates about 32 bytes of
+derivative information.  If you have some simple function which
+has 20 arithmetic operations it will therefore
 generate 640 bytes of derivative information every time
 it is called. The purpose of writing adjoint code is to
-reduce the amount of derivative information that must
-be calculated. For a function that is called many times,
-this can greatly reduce the amount of derivative information that
+reduce the amount of derivative information which must
+be calculated. For a function which is called many times
+this can greatly reduce the amount of derivative information which
 must be stored.
 
-In this chapter, we investigate how to write and debug
-adjoint code. To begin, we investigate how to write adjoint code for a
-simple function that takes 1--4 independent variables and returns 1~dependent variable. 
-The adjoint code for such functions is
-simpler to write than that for a general function---such as the
-singular value decomposition of a matrix, which we will consider later.
+In this chapter we investiage how to write and debug
+adjoint code. To begin we investigate how to write adjoint code for a
+simple functioin which takes 1--4 independent variables and returns
+one dependent variable. The adjoint code for such functions is
+simpler to write than that for a general function such as the
+singular value decomposition of a matrix which we will consider later.
 
+\mysection{Writing Adjoint Code -- a simple case}
 
-\section{Writing adjoint code: a simple case}
-
-Consider a simple function $f$ which takes 1~independent variable $x$
-and returns a dependent variable $y$, i.e.,
+Consider a simple function $f$ which takes 1 independent variable $x$
+and returns a dependent variable $y$. i.e.
 $$y=f(x)$$
 where $f(x)=\exp(-x^2/2)$. The code for this example can be written like
-\begin{lstlisting}
+\beginexample
   dvariable errf(const prevariable& x)
   {
     return exp(-0.5*square(x));
   }
-\end{lstlisting}
-There are three arithmetic operations here: square, multiplication, and exponentiation,
-so 96 bytes of derivative information will be generated. (Actually, the \texttt{return} operation
-also generates 32 bytes of derivative information, but we will ignore that for now.)
+\endexample
+\noindent
+There are three arithmetic operations here, square, multiplication, and exponentiation
+so that 96 bytes of derivative information will be generated. (Actually the return operation
+also generates 32 bytes of derivative information but we will ignore that for now.)
 A less efficient way to write the code (but more useful for 
-showing adjoint code for this simple example) would be:
-\begin{lstlisting}
+showing adjoint code for this simple example) would be
+\beginexample
   dvariable errf(const prevariable& x)
   {
     dvariable y;
     y=exp(-0.5*square(x));
     return y;
   }
-\end{lstlisting}
+\endexample
+\noindent
 Here is the same code with the derivative calculated by the one line of adjoint
-code \texttt{double dfx=-value(x)*value(y);}:
-\begin{lstlisting}
+code {\tt double dfx=-value(x)*value(y);}.
+\beginexample
   dvariable errf(const prevariable& x)
   {
     dvariable y;
@@ -64,40 +64,33 @@ code \texttt{double dfx=-value(x)*value(y);}:
     AD_SET_DERIVATIVES(y,x,dfx);  // 1 dependent variable 
     return y;
   }
-\end{lstlisting}
+\endexample
 So what is going on here? Consider the line
-\begin{lstlisting}
-  value(y)=exp(-0.5*square(value(x))); 
-\end{lstlisting}
-The \texttt{value} function returns a constant type, that is, a double, 
-that has the same value as the corresponding \texttt{dvariable} or prevariable.
-In fact, it is the {\it same} object.  That is, it shares the same address,
-but the type has been changed to double. So, the above line of
-code assigns the value \texttt{exp(-0.5*square(value(x)))} to \texttt{y},
-but without generating any derivative code. Similarly, since
-the calculations are made on \texttt{value(x)}, these calculations
-will not generate any derivative code. So, it is the responsibility of the
+    {\tt value(y)=exp(-0.5*square(value(x))); }
+The {\tt value} function returns a constant type, that is, a double
+which has the same value as the corresponding dvariable or prevariable.
+In fact it is the {\bf same} object that is shares the same address,
+but the type has been changed to double so that the above line of
+code assigns the value {\tt exp(-0.5*square(value(x))); } to y
+but without generating any derivative code. Simliarily sincd
+the calculations are made on {\tt value(x)} these calculations
+will not generate any derivative code. So it is the responsibility of the
 programmer to calculate the derivative code and store it where it
 can be used later. The line
-\begin{lstlisting}
-  double dfx=-value(x)*value(y);
-\end{lstlisting}
-calculates the derivative $f^\prime(x)$
+    {\tt double dfx=-value(x)*value(y);} calculates the derivative $f^\prime(x)$
 of $y$ with respect to $x$ and stores it with the line of code
-\begin{lstlisting}
-  AD_SET_DERIVATIVES(y,x,dfx);
-\end{lstlisting}
+    {\tt AD\_SET\_DERIVATIVES(y,x,dfx);} 
 This code will only generate 32 bytes of derivative information.
 
 
-\section{Debugging adjoint code: a simple case}
+\mysection{Debugging Adjoint Code -- a simple case}
 
 The simplest way to debug the adjoint code is to put your new
-function into an \ADM\ template file and use the \texttt{-dd 1}
+function into an \ADM\ template file and use the {\tt -dd 1}
 command line option to call the derivative checker.
-\XX{\fontindexentry{tt}{-dd}}{command line argument}
-\XX{command line arguments}{\fontindexentry{tt}{-dd}}
-\begin{lstlisting}
+\XX{-dd}{command line argument}
+\XX{command line arguments}{-dd}
+\beginexample
 DATA_SECTION
 PARAMETER_SECTION
   init_number x
@@ -116,14 +109,12 @@ GLOBALS_SECTION
     AD_SET_DERIVATIVES(y,x,dfx);  // 1 dependent variable 
     return y;
   }
-\end{lstlisting}
-
-
-\section{Adjoint code for more than\br one independent variable}
+\endexample
+\mysection{Adjoint code for more than one indepdendent variable}
 
 The following code shows how to write the adjoint code for a function with two
-independent variables:
-\begin{lstlisting}
+\beginexample
+independent variables.
 DATA_SECTION
   vector lengths(1,10)
   vector ages(1,10)
@@ -154,10 +145,11 @@ GLOBALS_SECTION
     AD_SET_DERIVATIVES2(len,rho,dfrho,linf,dflinf);  // 3 dependent variable 
     return len;
   }
-\end{lstlisting}
-This approach to writing adjoint code has been implemented for functions of
-up to four independent variables.
-\begin{lstlisting}
+\endexample
+This approach to writing adjoint code has been implemented for function of
+up to 4 independent variables.
+\beginexample
+
 DATA_SECTION
   vector lengths(1,10)
   vector ages(1,10)
@@ -192,22 +184,21 @@ GLOBALS_SECTION
     double dft0=tmp*(clinf*log(crho)*pow(crho,t-ct0));
     double dfrho=-tmp*clinf*(t-ct0)*pow(crho,t-ct0-1);
     double dfgamma=value(len)*log(clinf*(1-pow(crho,t-ct0)));
-    AD_SET_DERIVATIVES4(len,t0,dft0,rho,dfrho,linf,dflinf,gamma,dfgamma); 
-       // 4 dependent variable 
+    AD_SET_DERIVATIVES4(len,t0,dft0,rho,dfrho,linf,dflinf,gamma,dfgamma);  // 4 dependent variable 
     return len;
   }
-\end{lstlisting}
+\endexample
 
+\mysection{Structured calculation of derivatives in adjoint code}
+Until now we have deliberately calculated the derivatives with respect to the independent
+variables in an {\it ad hoc} fashion. While this approach worsk for simple functions
+it radidly becomes untenable when the functiuon is more complicated. In the following example
+we have calculated the deivatives in a more structured fashion. Notice that to calculate the
+derivatives every line of code in the function is repeated in the oposite
+order (commented out of course) and the corresponding derivatves are calculated.
 
-\section{Structured calculation of derivatives in adjoint code}
+\beginexample
 
-Until now, we have deliberately calculated the derivatives with respect to the independent
-variables in an {\it ad-hoc} fashion. While this approach works for simple functions,
-it rapidly becomes untenable when the function is more complicated. In the following example,
-we have calculated the derivatives in a more structured fashion. Notice that to calculate the
-derivatives, every line of code in the function is repeated in the opposite
-order (commented out, of course) and the corresponding derivatives are calculated.
-\begin{lstlisting}
 DATA_SECTION
   vector lengths(1,10)
   vector ages(1,10)
@@ -250,28 +241,24 @@ GLOBALS_SECTION
     double dfrho=dfu1*(t-ct0)*pow(crho,t-ct0-1.0);
     double dft0=-dfu1*u1*log(crho);
 
-    AD_SET_DERIVATIVES4(len,t0,dft0,rho,dfrho,linf,dflinf,gamma,dfgamma);  
-      // 4 dependent variable 
+    AD_SET_DERIVATIVES4(len,t0,dft0,rho,dfrho,linf,dflinf,gamma,dfgamma);  // 4 dependent variable 
     return len;
   }
-\end{lstlisting}
-
-
-\section{General adjoint code}
-
-So far, the adjoint code has been for a simple function which has from~1 to~4
-independent variables and returns 1~dependent variable. 
-Now we consider the general case where the function can take
+\endexample
+\mysection{General Adjoint Code}
+So far the adjoint code has been for a simple function which has from 1 to 4
+independent variables and returns one dependent variable. 
+Now we condsider the general case where the function can take
 any number of dependent variables and return any number of 
-dependent variables, and these variables can be in the form of numbers, 
+dependent variables and these variables can be in the form of numbers, 
 vectors, or matrices.
-\begin{lstlisting}
+
+\beginexample
  dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x )
  {
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector  operator * "
-            << "(_CONST dvar_matrix& m,_CONST dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x)\n";
      ad_exit(21);
    }
 
@@ -300,50 +287,51 @@ vectors, or matrices.
   ADJOINT_CODE(dmdv_prod);
    return(tmp);
  }
-\end{lstlisting}
-To calculate the adjoint code, it will be necessary to have the
-values of the matrix \texttt{m} and the vector \texttt{x}.
-This is accomplished with the instructions
-\begin{lstlisting}
+\endexample
+To calculate the adjoint code it will be necessary to have the
+values of the matrix {\tt m} and the vector {\tt x}.
+This is accompolshed with the
+\beginexample
   x.save_dvar_vector_value();
   m.save_dvar_matrix_value();
-\end{lstlisting}
-Also, to calculate the derivatives, it will be necessary to know where the
-derivatives with respect to the independent and dependent variables are 
+\endexample
+\noindent instructions.
+also to calculate the derivatves it will be necessary to know where the
+derivatives with repsect to the independent and dependent variables are 
 located. This information is saved with the instructions
-\begin{lstlisting}
+\beginexample
   x.save_dvar_vector_position();
   m.save_dvar_matrix_position();
   tmp.save_dvar_vector_position();
-\end{lstlisting}
-Finally, we need to save the name of the routine that calculates
-the adjoint code, so that it can be called at the appropriate time. To write the
-code for the adjoint calculations, keep in mind that everything must be recovered
-from the stack in the reverse order from which it was put on the stack.
-This process can be a bit confusing and if you don't do it properly, the 
-stack will become corrupted and nothing will work.  To help diagnose
-problems, function \texttt{save\_identifier\_string} can be
+\endexample
+\noindent Finally we need to save the name of the routine which calculates
+the adjoint code so that it can be called at the appropriate time. To write the
+code for the adjoint calculations keep in mind tha everything must be recovered
+from the stack in the reverse order to which it was put on the stack.
+this p;rocess can be a bit confusing and if you don't do it properly the 
+stack will become corrupted and nothng will work. to help diagnose
+problems function {\tt save\_identifier\_string} can be
 used to put a string on the stack. This string value can be checked in the
-adjoint code with the \texttt{verify\_identifier\_string} function. At least two of
-these functions should be left in any adjoint code, so that stack
-integrity can be monitored if problems show up later. For optimized code,
-they are not used, and so contribute almost nothing to the overhead.
+adjoint code with the {\tt verify\_identifier\_string} function. At least two of
+these functions should be left in any adjoint code so that stack
+integrity can be monitored if problems show up later. For optimized code
+they are not used and so contribute almost nothing to the overhead.
 
-The adjoint code begins by reading the information that was saved on the stack.
-An object of type \texttt{dvar\_vector\_position} contains both the size and
-address information associated with a \texttt{dvar\_vector}---which are needed to
-recover or store derivative values, or to build a \texttt{dvector} with the
+The adjoint code begins by reading the information which was saved on the stack.
+An object of type {\tt dvar\_vector\_position} contains both the size and
+address information associated with a {\tt dvar\_vector} which are needed to
+recover or store derivative values or to build a {\tt dvector} with the
 same shape as the {\t dvar\_vector}.
-The function \texttt{restore\_dvar\_vector\_der\-ivatives} gets the values of the
-derivatives with respect to the dependent variables, so they can be used in the
-adjoint code. The functions
-\begin{lstlisting}
+The function {\tt restore\_dvar\_vector\_derivatives} gets the values of the
+derivatves with respect to the dependent variables sop that they can be used in the
+adjoint code. the functions
+\beginexample
    dfx.save_dvector_derivatives(x_pos);
    dfm.save_dmatrix_derivatives(m_pos);
-\end{lstlisting}
-use the position information to save the derivatives with respect to the
+\endexample
+\noindent use the position information to save the derivatives with respect to the
 independent variables in the appropriate places.
-\begin{lstlisting}
+\beginexample
 void dmdv_prod(void)
 {
   verify_identifier_string("PLACE1");
@@ -379,4 +367,4 @@ void dmdv_prod(void)
    dfx.save_dvector_derivatives(x_pos);
    dfm.save_dmatrix_derivatives(m_pos);
 }
-\end{lstlisting}
+\endexample

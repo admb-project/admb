@@ -1,22 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 void dfbltsolve(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
-  const dvar_vector &v)
+dvar_vector solve(BOR_CONST banded_lower_triangular_dvar_matrix& m,BOR_CONST dvar_vector&v)
 {
   int bw=m.bandwidth();
   int imin=m.indexmin();
@@ -46,8 +37,8 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
 }
 
 /*
-dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
-  const dvar_vector &v, dvariable& lndet)
+dvar_vector solve(BOR_CONST banded_lower_triangular_dvar_matrix& m,BOR_CONST dvar_vector&v,
+  dvariable& lndet)
 {
   int bw=m.bandwidth();
   int imin=m.indexmin();
@@ -77,10 +68,6 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
 }
 */
 
-/**
- * Description not yet available.
- * \param
- */
 void dfbltsolve(void)
 {
   verify_identifier_string("ww");
@@ -146,3 +133,5 @@ void dfbltsolve(void)
   dfm.save_dmatrix_derivatives(mpos);
   dfv.save_dvector_derivatives(vpos);
 }
+
+

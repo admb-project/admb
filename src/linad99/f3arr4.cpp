@@ -1,20 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array operator-(const double d, const dvar3_array& m2)
+   dvar3_array operator - ( CGNU_DOUBLE d,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -25,13 +18,9 @@ dvar3_array operator-(const double d, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable mean(const dvar3_array& m)
+   dvariable mean(_CONST dvar3_array& m)
    {
      dvariable tmp;
      tmp=sum(m)/double(size_count(m));

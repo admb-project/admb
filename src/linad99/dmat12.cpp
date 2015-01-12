@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix symmetrize(const dmatrix& m)
+dmatrix symmetrize(_CONST dmatrix& m)
 {
   if (m.rowmin() != m.colmin() || m.rowmax() != m.colmax() )
   {
@@ -28,7 +20,7 @@ dmatrix symmetrize(const dmatrix& m)
   for (int i=rmin;i<=rmax;i++)
   {
     s(i,i)=m(i,i);
-
+  
     for (int j=rmin;j<i;j++)
     {
       s(i,j)=(m(i,j)+m(j,i))/2.;
@@ -37,3 +29,7 @@ dmatrix symmetrize(const dmatrix& m)
   }
   return s;
 }
+
+
+
+

@@ -1,19 +1,11 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
 double randnegbinomial(double mu,double tau,
   const random_number_generator& rng)
 {
@@ -26,5 +18,5 @@ double randnegbinomial(double mu,double tau,
   double c=r/mu;
   double z=sgamma(r,rng);
   double lambda=z/c;
-  return randpoisson(lambda,rng);
+  return randpoisson(lambda,rng); 
 }

@@ -2,18 +2,15 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <fvar.hpp>
 
-dvariable inv_cumd_norm(const prevariable& x);
-prevariable& cumd_norm(const prevariable& x);
+dvariable inv_cumd_norm(_CONST prevariable& x);
+prevariable& cumd_norm(_CONST prevariable& x);
 /*
-double normal_tail_right(const double& x)
+double normal_tail_right(_CONST double& x)
 {
   const double a3=5;
   const double a4=9;
@@ -29,12 +26,9 @@ double normal_tail_right(const double& x)
   return tmp;
 }
 */
+  
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable inv_cumd_norm_inner(const prevariable& x)
+dvariable inv_cumd_norm_inner(_CONST prevariable& x)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
    gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -45,13 +39,13 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
   const double d1=1.432788;
   const double d2=0.189269;
   const double d3=0.001308;
-  if (x<=0 || x>=1.0)
+  if (x<=0 || x>=1.0) 
   {
     //cerr << "Illegal argument to inv_cumd_norm = " << x << endl;
     RETURN_ARRAYS_DECREMENT();
     return 0.0;
   }
-
+   
   if (x<=0.5)
   {
     //dvariable t = sqrt(-2.*log(x));
@@ -87,8 +81,8 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
   else if (x==0.5)
   {
     cout << "can't happen" << endl;
-    exit(1);
-    //return 0.0;
+    exit(1);    
+    return 0.0;
   }
   else
   {
@@ -105,7 +99,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
     double v=((d3*tt+d2)*tt+d1)*tt+1;
     double vinv=1/v;
     double pp=tt-u*vinv;
-
+    
     //double pp=tt-u*vinv;
     double dfu=-vinv;
     double dfvinv=-u;
@@ -126,14 +120,10 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::RETURN_PTR->v->x), &(x.v->x),dfx);
     return(*gradient_structure::RETURN_PTR);
-  }
+  } 
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable inv_cumd_norm(const prevariable& x)
+dvariable inv_cumd_norm(_CONST prevariable& x)
 {
   dvariable y=inv_cumd_norm_inner(x);
   if (x>1.e-30)
@@ -141,11 +131,7 @@ dvariable inv_cumd_norm(const prevariable& x)
   return y;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable old_cumd_norm(const prevariable& x)
+dvariable old_cumd_norm(_CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
   const double b1=0.319381530;
@@ -174,11 +160,11 @@ dvariable old_cumd_norm(const prevariable& x)
 }
 
 /** Culative normal distribution; variable objects.
-\param _x Normalized "Z" score (subtact the mean and divide by the stdard deviation).
+\param x Normalized "Z" score (subtact the mean and divide by the stdard deviation).
 \return Probablity that of an observation will exceed the argument.
 \ingroup PDF
 */
-prevariable& cumd_norm(const prevariable& _x)
+prevariable& cumd_norm(_CONST prevariable& _x)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
    gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -212,7 +198,7 @@ prevariable& cumd_norm(const prevariable& _x)
 
     //double y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     double dfu=  ((((b55*u+b44)*u+b33)*u+b22)*u+b1)*dfy;
-
+    
     //double u=1./(1+p*x);
     dfx-=u*u*p*dfu;
 
@@ -249,12 +235,7 @@ prevariable& cumd_norm(const prevariable& _x)
   }
   return(*gradient_structure::RETURN_PTR);
 }
-
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector inv_cumd_norm(const dvar_vector& x)
+dvar_vector inv_cumd_norm(_CONST dvar_vector& x)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
@@ -266,11 +247,7 @@ dvar_vector inv_cumd_norm(const dvar_vector& x)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
+prevariable& bounded_cumd_norm(_CONST prevariable& _x,double beta)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
    gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -307,7 +284,7 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
 
     //double y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     double dfu=  ((((b55*u+b44)*u+b33)*u+b22)*u+b1)*dfy;
-
+    
     //double u=1./(1+p*x);
     dfx-=u*u*p*dfu;
 
@@ -349,31 +326,24 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
   return(*gradient_structure::RETURN_PTR);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable inv_cumd_norm_logistic(const prevariable& x,double p)
+
+dvariable inv_cumd_norm_logistic(_CONST prevariable& x,double p)
 {
-#if !defined(OPT_LIB)
+#if defined(SAFE_ALL)
   if (0.0<p || 1.0>p)
   {
-    cerr << "Error in dvariable inv_cumd_norm_logistic -- illegal p value = "
+    cerr << "Error in dvariable inv_cumd_norm_logistic -- illegal p value = " 
          << p << endl;
     exit(1);
-  }
-#endif
+  }    
+#endif   
   dvariable y=inv_cumd_norm_inner(x);
-  y+=( (1.0-p)*2.50662827*exp(.5*y*y) +
+  y+=( (1.0-p)*2.50662827*exp(.5*y*y) + 
     p*exp(-x)/square(1.0+exp(-x)) ) * (x-cumd_norm_logistic (y,p));
   return y;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-prevariable& cumd_norm_logistic(const prevariable& _x,double p)
+prevariable& cumd_norm_logistic(_CONST prevariable& _x,double p)
 {
   return (1.0-p)*cumd_norm(_x)+p*cumd_logistic(_x);
-}
+}  

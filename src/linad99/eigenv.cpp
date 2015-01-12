@@ -1,8 +1,8 @@
-/**
- * $Id: eigenv.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB foundation
+ * Copyright (c) 2009 ADMB foundation
  */
 
 /** \def EIGEN_VECTORS
@@ -12,24 +12,19 @@
 
 #include <fvar.hpp>
 
-#ifdef ISZERO
-  #undef ISZERO
-#endif
-#define ISZERO(d) ((d)==0.0)
-
 #if !defined(EIGEN_VECTORS)
 #  define EIGEN_VECTORS
 #endif
 
 #ifdef EIGEN_VECTORS
-  void tri_dagv(const dmatrix& m,const dvector& d,const dvector& e);
+  void tri_dagv(BOR_CONST dmatrix& m,BOR_CONST dvector& d,BOR_CONST dvector& e);
 #else
-  void tri_dag(const dmatrix& m,const dvector& d,const dvector& e);
+  void tri_dag(BOR_CONST dmatrix& m,BOR_CONST dvector& d,BOR_CONST dvector& e);
 #endif
 #ifdef EIGEN_VECTORS
   void get_eigenv(const dvector& d,const dvector& e,const dmatrix& z);
 #else
-  void get_eigen(const dvector& d,const dvector& e,const dmatrix& z);
+  void get_eigen(BOR_CONST dvector& d,BOR_CONST dvector& e,BOR_CONST dmatrix& z);
 #endif
 
 /** Eigenvectors.
@@ -37,17 +32,18 @@
     \param m Real square matrix.
     \return Matrix of eigenvectors.
 */
-dmatrix eigenvectors(const dmatrix& m)  //,_CONST dvector& diag)
+dmatrix eigenvectors(_CONST dmatrix& m)  //,_CONST dvector& diag)
 {
   if (m.rowsize()!=m.colsize())
   {
     cerr << "Error -- non square matrix passed to dvector"
-           " eigen(const dmatrix& m)" << endl;
+           " eigen(_CONST dmatrix& m)" << endl;
     ad_exit(1);
   }
 
   dmatrix m1=symmetrize(m);
   int n=m1.rowsize();
+  int imin=m.colmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvector diag(1,n);
@@ -73,8 +69,7 @@ dmatrix eigenvectors(const dmatrix& m)  //,_CONST dvector& diag)
     \param _diag
     \return Matrix of eigenvectors.
 */
-dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
-  //,_CONST dvector& diag)
+dmatrix eigenvectors(_CONST dmatrix& m,BOR_CONST dvector& _diag)  //,_CONST dvector& diag)
 {
   ADUNCONST(dvector,diag)
   if (m.rowsize()!=m.colsize())
@@ -86,6 +81,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
 
   dmatrix m1=symmetrize(m);
   int n=m1.rowsize();
+  int imin=m.colmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   diag.shift(1);
@@ -120,11 +116,13 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+    \deprecated Scheduled for replacement by 2010.
 */
 #ifdef EIGEN_VECTORS
-  void tri_dagv(const dmatrix& _m,const dvector& _d,const dvector& _e)
+  void tri_dagv(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
 #else
-  void tri_dagv(const dmatrix& _m,const dvector& _d,const dvector& _e)
+  void tri_dagv(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
 #endif
 {
   dvector& d = (dvector&) _d;
@@ -132,15 +130,13 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
   dmatrix& m = (dmatrix&) _m;
   if (m.rowsize() != m.colsize())
   {
-    cerr << "Error -- non square matrix passed to "
-    "void tridag(const dmatrix& m)\n";
+    cerr << "Error -- non square matrix passed to void tridag(_CONST dmatrix& m)\n";
     ad_exit(1);
   }
   if (m.rowsize() != d.size() || m.rowsize() != e.size()
     || d.indexmin() != 1 || e.indexmin() !=1 )
   {
-    cerr <<"Error -- incorrect vector size passed to "
-    "void tridag(const dmatrix& m)\n";
+    cerr <<"Error -- incorrect vector size passed to void tridag(_CONST dmatrix& m)\n";
     ad_exit(1);
   }
   int n=m.rowsize();
@@ -157,7 +153,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
         scale += fabs(m[i][k]);
       if (scale == 0.0)
         e[i]=m[i][l];
-      else
+      else 
       {
         for (k=1;k<=l;k++)
         {
@@ -170,7 +166,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
         h -= f*g;
         m[i][l]=f-g;
         f=0.0;
-        for (j=1;j<=l;j++)
+        for (j=1;j<=l;j++) 
         {
         #ifdef EIGEN_VECTORS
         /* Next statement can be omitted if eigenvectors not wanted */
@@ -185,7 +181,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
           f += e[j]*m[i][j];
         }
         hh=f/(h+h);
-        for (j=1;j<=l;j++)
+        for (j=1;j<=l;j++) 
         {
           f=m[i][j];
           e[j]=g=e[j]-hh*f;
@@ -206,10 +202,10 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
   /* Contents of this loop can be omitted if eigenvectors not
       wanted except for statement d[i]=a[i][i]; */
   #ifdef EIGEN_VECTORS
-  for (i=1;i<=n;i++)
+  for (i=1;i<=n;i++) 
   {
     l=i-1;
-    if (!ISZERO(d[i]))
+    if (d[i])
     {
       for (j=1;j<=l;j++)
       {
@@ -232,7 +228,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
   \param y Argument to test.
   \return The value of x with the sign of y.
 */
-double SIGNV(const double x, double y)
+double SIGNV( CGNU_DOUBLE x, double y)
 {
   if (y<0)
   {
@@ -252,18 +248,20 @@ double SIGNV(const double x, double y)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+  \deprecated Scheduled for replacement by 2010.
 */
 #ifdef EIGEN_VECTORS
   void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z)
 #else
-  void get_eigen(const dvector& _d,const dvector& _e,const dmatrix& _z)
+  void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,BOR_CONST dmatrix& _z)
 #endif
 {
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
   dmatrix& z = (dmatrix&) _z;
   int n=d.size();
-  int m,l,iter,i;
+  int m,l,iter,i,k;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -280,7 +278,7 @@ double SIGNV(const double x, double y)
         if (iter++ == 30)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(const dmatrix& m)\n";
+          " dvector eigen(_CONST dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);
@@ -309,7 +307,7 @@ double SIGNV(const double x, double y)
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
           #ifdef EIGEN_VECTORS
-            for (int k=1;k<=n;k++)
+            for (k=1;k<=n;k++) 
             {
               f=z[k][i+1];
               z[k][i+1]=s*z[k][i]+c*f;
@@ -324,4 +322,9 @@ double SIGNV(const double x, double y)
     } while (m != l);
   }
 }
+
 #undef EIGEN_VECTORS
+
+
+
+

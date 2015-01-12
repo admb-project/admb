@@ -2,22 +2,15 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <fvar.hpp>
 
-double inv_cumd_norm(const double& x);
-double cumd_norm(const double& x);
+double inv_cumd_norm(_CONST double& x);
+double cumd_norm(_CONST double& x);
 
-/**
- * Description not yet available.
- * \param
- */
-double normal_tail_right(const double& x)
+double normal_tail_right(_CONST double& x)
 {
   const double a3=5;
   const double a4=9;
@@ -32,11 +25,8 @@ double normal_tail_right(const double& x)
   double tmp=z/x*(1.0 -1.0/b1 +1.0/b2 - a3/b3 +a4/b4 -a5/b5);
   return tmp;
 }
+  
 
-/**
- * Description not yet available.
- * \param
- */
 double inv_cumd_norm_inner(double x)
 {
   const double c0=2.515517;
@@ -45,12 +35,12 @@ double inv_cumd_norm_inner(double x)
   const double d1=1.432788;
   const double d2=0.189269;
   const double d3=0.001308;
-  if (x<=0 || x>=1.0)
+  if (x<=0 || x>=1.0) 
   {
     cerr << "Illegal argument to inv_cumd_norm = " << x << endl;
     return 0;
   }
-
+   
   if (x<0.5)
   {
     double t = sqrt(-2.*log(x));
@@ -68,14 +58,9 @@ double inv_cumd_norm_inner(double x)
     double t = sqrt(-2.*log(y));
     double p=t-((c2*t+c1)*t+c0)/((((d3*t+d2)*t+d1)*t)+1);
     return p;
-  }
+  } 
 }
-
-/**
- * Description not yet available.
- * \param
- */
-double inv_cumd_norm(const double& x)
+double inv_cumd_norm(_CONST double& x)
 {
   double y=inv_cumd_norm_inner(x);
   y+=2.50662827*exp(.5*y*y)*(x-cumd_norm(y));
@@ -87,7 +72,7 @@ double inv_cumd_norm(const double& x)
 \return Probablity that of an observation will exceed the argument.
 \ingroup PDF
 */
-double cumd_norm(const double& x)
+double cumd_norm(_CONST double& x)
 {
   const double b1=0.319381530;
   const double b2=-0.356563782;
@@ -112,10 +97,6 @@ double cumd_norm(const double& x)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 double bounded_cumd_norm(const double x,double beta)
 {
   const double b1=0.319381530;

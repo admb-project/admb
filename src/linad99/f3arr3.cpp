@@ -1,21 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-d3_array value(const dvar3_array& ar)
- {
+ d3_array value(_CONST dvar3_array& ar)
+ { 
    d3_array tmp;
    tmp.allocate(ar);
    for (int i=tmp.slicemin(); i<=tmp.slicemax(); i++)
@@ -25,18 +17,14 @@ d3_array value(const dvar3_array& ar)
    return tmp;
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void d3_array::allocate(const dvar3_array& d3v)
+ void d3_array::allocate(_CONST dvar3_array& d3v)
  {
    int sl=d3v.slicemin();
    int sh=d3v.slicemax();
-   //int nrl=d3v.rowmin();
-   //int nrh=d3v.rowmax();
-   //int ncl=d3v.colmin();
-   //int nch=d3v.colmax();
+   int nrl=d3v.rowmin();
+   int nrh=d3v.rowmax();
+   int ncl=d3v.colmin();
+   int nch=d3v.colmax();
    if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor\n";
@@ -53,3 +41,5 @@ void d3_array::allocate(const dvar3_array& d3v)
      t[i].allocate(d3v(i));
    }
  }
+
+

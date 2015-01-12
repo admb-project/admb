@@ -1,17 +1,15 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 #include <math.h>
 
-#if defined(__TURBOC__)
+
+#if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
   #include <iostream.h>
   #include <strstrea.h>
@@ -34,36 +32,37 @@
 
 #ifdef __SUN__
   #include <iostream.h>
+#if !defined(__MSVC32__)
   #include <strstream.h>
+#else
+  #include <strstrea.h>
+#endif
   #define __USE_IOSTREAM__
 #endif
 
 #include <string.h>
 #include <ctype.h>
-
-#include <sstream>
-using std::istringstream;
-
-#include <cassert>
-
+const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
+const int MAX_NUMBER_COLUMNS = 6550;
+const int MAX_NUMBER_ROWS = 6550;
+#if !defined(HUGE) 
+#define HUGE 1.e+100
+#endif
 
-/**
- * Description not yet available.
- * \param
- */
+
 dvector::dvector(const char * s)
 {
-  const size_t n = strlen(s);
+  int n = strlen(s);
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;
 
-  char* t = new char[n+1];
-  assert(t);
-  t[n] = '\0';
+  char *t = new char[n+1];
+  t[n]=0;
 
-  for (size_t k = 0; k < n; k++)
+  int k;
+  for (k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -95,8 +94,7 @@ dvector::dvector(const char * s)
 
   if (lbraces > 1)
   {
-    cerr << "Only one level of braces allowed in "
-    "dvector::dvector(const char * s)\n";
+    cerr << "Only one level of braces allowed in dvector::dvector(const char * s)\n";
     cerr << s << "\n";
     ad_exit(1);
   }
@@ -108,17 +106,17 @@ dvector::dvector(const char * s)
 
     allocate(ncl,nch);
 
-    istringstream ss(t);
+    istrstream ss(t);
 
-   char *field =  new char[size_t(MAX_FIELD_LENGTH+1)];
-   char *err_ptr;
+   char * field =  new char[size_t(MAX_FIELD_LENGTH+1)];
+   char * err_ptr;
 
    for (int i=ncl;i<=nch;i++)
    {
      ss >> field;
      v[i]=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha((unsigned char)err_ptr[0]))
+     if (isalpha(err_ptr[0]))
      {
        cerr << "Error decoding field "
          << " in dvector::dvector(char * filename) " << "\n";
@@ -128,7 +126,11 @@ dvector::dvector(const char * s)
        ad_exit(1);
      }
 
-     if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
+     #ifdef __GNU__
+       if (elem(i)== HUGE ||elem(i)== -HUGE)
+     #else
+       if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
+     #endif
      {
        cerr << "Overflow Error decoding field "
            " in dvector::dvector(char * ) " << "\n";
@@ -199,13 +201,13 @@ dvector::dvector(const char * s)
       ad_exit(1);
     }
 
+
     index_min=1;
     index_max=count;
     v -= indexmin();
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
-          <<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
    char * err_ptr;
@@ -214,7 +216,7 @@ dvector::dvector(const char * s)
      infile >> field;
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha((unsigned char)err_ptr[0]))
+     if (isalpha(err_ptr[0]))
      {
        cerr << "Error decoding field " << filename
          << " in dvector::dvector(char * filename) " << "\n";
@@ -227,7 +229,11 @@ dvector::dvector(const char * s)
        ad_exit(1);
      }
 
-     if (elem(i) == HUGE_VAL ||elem(i) == -HUGE_VAL)
+     #ifdef __GNU__
+       if (elem(i)== HUGE ||elem(i)== -HUGE)
+     #else
+       if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
+     #endif
      {
        cerr << "Overflow Error decoding field " << filename
            << " in dvector::dvector(char * filename) " << "\n";
@@ -240,27 +246,23 @@ dvector::dvector(const char * s)
        ad_exit(1);
      }
    }
-   delete[] field;
-   field = 0;
+   delete field;
+   field=0;
  }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void dvector::allocate(const char * s)
 {
-  const size_t n = strlen(s);
+  int n = strlen(s);
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;
 
-  char* t = new char[n+1];
-  assert(t);
-  t[n]= '\0';
+  char *t = new char[n+1];
+  t[n+1]=0;
 
-  for (size_t k = 0; k < n; k++)
+  int k;
+  for (k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -292,8 +294,7 @@ void dvector::allocate(const char * s)
 
   if (lbraces > 1)
   {
-    cerr << "Only one level of braces allowed in "
-    "dvector::dvector(const char * s)\n";
+    cerr << "Only one level of braces allowed in dvector::dvector(const char * s)\n";
     cerr << s << "\n";
     ad_exit(1);
   }
@@ -305,7 +306,7 @@ void dvector::allocate(const char * s)
 
     allocate(ncl,nch);
 
-    istringstream ss(t);
+    istrstream ss(t);
 
    char * field =  new char[size_t(MAX_FIELD_LENGTH+1)];
    char * err_ptr;
@@ -315,7 +316,7 @@ void dvector::allocate(const char * s)
      ss >> field;
      v[i]=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha((unsigned char)err_ptr[0]))
+     if (isalpha(err_ptr[0]))
      {
        cerr << "Error decoding field "
          << " in dvector::dvector(char * filename) " << "\n";
@@ -328,7 +329,11 @@ void dvector::allocate(const char * s)
        ad_exit(1);
      }
 
-     if (elem(i) == HUGE_VAL ||elem(i) == -HUGE_VAL)
+     #ifdef __GNU__
+       if (elem(i)== HUGE ||elem(i)== -HUGE)
+     #else
+       if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
+     #endif
      {
        cerr << "Overflow Error decoding field "
            " in dvector::dvector(char * ) " << "\n";
@@ -398,8 +403,7 @@ void dvector::allocate(const char * s)
    }
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
-          <<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
    v -= indexmin();
@@ -409,7 +413,7 @@ void dvector::allocate(const char * s)
      infile >> field;
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
-     if (isalpha((unsigned char)err_ptr[0]))
+     if (isalpha(err_ptr[0]))
      {
        cerr << "Error decoding field " << filename
          << " in dvector::dvector(char * filename) " << "\n";
@@ -422,7 +426,11 @@ void dvector::allocate(const char * s)
        ad_exit(1);
      }
 
-     if (elem(i) == HUGE_VAL ||elem(i) == -HUGE_VAL)
+     #ifdef __GNU__
+       if (elem(i)== HUGE ||elem(i)== -HUGE)
+     #else
+       if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
+     #endif
      {
        cerr << "Overflow Error decoding field " << filename
            << " in dvector::dvector(char * filename) " << "\n";
@@ -440,3 +448,4 @@ void dvector::allocate(const char * s)
    field=0;
  }
 }
+

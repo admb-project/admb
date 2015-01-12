@@ -1,22 +1,14 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
+ * $Id$
+ * 
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 #if defined(__cpluscplus)
 extern "C" {
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
 void exit_handler(int k)
 {
   exit(1);
@@ -25,3 +17,4 @@ void exit_handler(int k)
 #if defined(__cpluscplus)
 }
 #endif
+

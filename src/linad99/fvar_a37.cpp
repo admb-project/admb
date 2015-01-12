@@ -1,31 +1,20 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector operator+(const dvar_vector& t1, const prevariable& x)
+
+  dvar_vector operator + (_CONST dvar_vector& t1,_CONST prevariable& x)
   {
     return x+t1;
   }
 
   void DF_dble_dv_add(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector operator+(const prevariable& x, const dvar_vector& t1)
+  dvar_vector operator + (_CONST prevariable& x,_CONST dvar_vector& t1)
   {
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -39,14 +28,11 @@ dvar_vector operator+(const prevariable& x, const dvar_vector& t1)
     t1.save_dvar_vector_position();
     save_identifier_string("dduu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dble_dv_add);
+    gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(DF_dble_dv_add);
     return(tmp);
   }
 
-/**
- * Description not yet available.
- * \param
- */
  void DF_dble_dv_add(void)
  {
     verify_identifier_string("dduu");
@@ -68,3 +54,4 @@ dvar_vector operator+(const prevariable& x, const dvar_vector& t1)
     save_double_derivative(dfx,xpos);
     dft1.save_dvector_derivatives(t1_pos);
  }
+

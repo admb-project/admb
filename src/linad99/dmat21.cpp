@@ -1,15 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 // file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable
+// constructors, destructors and misc functions involving class dvariable 
 
 #include "fvar.hpp"
 
@@ -28,11 +26,8 @@
 #endif
 #include <math.h>
 
-/**
- * Description not yet available.
- * \param
- */
-double dmatrix::fill_seqadd(const double x, const double d)
+
+double dmatrix::fill_seqadd( CGNU_DOUBLE x, CGNU_DOUBLE d)
 {
   double x1=x;
   double d1=d;

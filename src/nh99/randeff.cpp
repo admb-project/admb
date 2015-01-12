@@ -1,34 +1,28 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
 #include <admodel.h>
 
 #if defined(max)
-  #undef max
+#  undef max
 #endif
 
-#ifdef ISZERO
-  #undef ISZERO
-#endif
-#define ISZERO(d) ((d)==0.0)
-
-typedef int integer;
+typedef long int integer;
 typedef long int logical;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-int xlbfgs_(integer *n, integer *m, dvar_vector & x, dvariable & f,
-  dvar_vector & g, logical *diagco, dvar_vector & diag, integer *iprint,
-  double*  eps, double*  xtol, dvar_vector & w, integer *iflag, integer* iter);
-
+ int xlbfgs_(integer *n, integer *m, dvar_vector & x, dvariable & f, dvar_vector & g, logical *diagco, dvar_vector & diag, integer *iprint, double*  eps, double*  xtol, dvar_vector & w, integer *iflag, integer* iter);
 #ifdef __cplusplus
-}
+	}
 #endif
+
+ void goofr(void){;}
 
 dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
 {
@@ -39,7 +33,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   int maxiter=50;
   int iprint=-10;
 
-  dvar_vector& x = (dvar_vector&)(_x);
+  dvar_vector& x = (dvar_vector&)(_x); 
 
   integer nvar=x.indexmax()-x.indexmin()+1; // get the number of active
   if (m<=0)
@@ -61,7 +55,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   double _crit=0;
   integer itn=0;
   int ifn=0;
-  int nopt = 0;
+  int nopt;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {
@@ -70,14 +64,14 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
       cerr << "Usage -crit option needs number  -- ignored" << endl;
     }
     else
-    {
+    {   
       char * end;
       _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
         _crit=0.0;
-      }
+      } 
     }
   }
   gradient_structure::set_YES_DERIVATIVES();
@@ -89,10 +83,10 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
     initial_params::current_phase);
     crit=convergence_criteria(ind);
   }
-  if (!ISZERO(_crit))
+  if (_crit)
   {
     crit = _crit;
-  }
+  } 
   dvector maximum_function_evaluations;
   if (!(!maximum_function_evaluations) && !maxfn_option)
   {
@@ -105,18 +99,17 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   double xtol;
   dvariable f;
   dvar_vector diag(1,nvar);
-  //int j, n, icall;
-  int icall;
+  int j, n, icall;
   integer iflag;
   dvariable fbest=1.e+100;
   dvar_vector g(1,nvar);
   dvar_vector xbest(1,nvar);
   dvar_vector gbest(1,nvar);
   g.initialize();
-  //double t1, t2;
-  long int diagco = 0;
+  double t1, t2;
+  long int diagco=0.0;
   integer iprintx[2];
-  //double epsx;
+  double epsx;
   //m = 35;
   dvar_vector w(1,nvar+2*m+2*nvar*m);
   iprintx[0] = iprint;
@@ -137,10 +130,9 @@ L20:
     xbest=x;
     gbest=g;
   }
-
+  
   //gradcalc(nvar,g);
   g=user_dfrandeff(x);
-
 #if defined(USE_DDOUBLE)
 #undef double
   if(fmod(double(itn),double(iprint)) == 0)
@@ -152,41 +144,33 @@ L20:
     if (iprint>0)
     {
       if (!itn)
-      {
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
-      }
       else
-      {
         if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
-      }
 
-      if (ad_printf)
-        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+      if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
 
       if (!itn)
       {
         double xf=value(f);
         double xg=max(value(g));
-        if (ad_printf)
-          (*ad_printf)(
-            "Function value %12.4le; maximum gradient component mag %12.4le\n",
-            xf, xg);
+        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
+          xf, xg);
       }
       else
       {
+
         double xf=value(fbest);
         double xg=max(value(gbest));
-        if (ad_printf)
-          (*ad_printf)(
-            "Function value %12.4le; maximum gradient component mag %12.4le\n",
-            xf, xg);
+        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
+          xf, xg);
       }
       if (!noprintx)
       {
         if (!itn)
           fmmdisp(value(x), value(g), nvar, 0,noprintx);
-        else
+	else
           fmmdisp(value(xbest), value(gbest), nvar, 0,noprintx);
       }
     }
@@ -197,10 +181,12 @@ L20:
 
   if (iflag <= 0)
   {
+    goofr();
     goto L50;
   }
   if (iflag > 1)
   {
+    goofr();
     goto L50;
   }
   ++icall;
@@ -208,6 +194,7 @@ L20:
   if (itn > maxiter)
   {
     cout << "Exceeded maxiter" << endl;
+    goofr();
     goto L50;
   }
   goto L20;
@@ -222,15 +209,12 @@ L50:
   {
     double xf=value(f);
     double xg=max(value(g));
-    if (ad_printf)
-    {
-      (*ad_printf)("\nfinal statistics: ");
-      (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-        nvar, itn, ifn);
-      (*ad_printf)(
-        "Function value %12.4le; maximum gradient component mag %12.4le\n",
-        xf, xg);
-    }
+    if (ad_printf) (*ad_printf)("\nfinal statistics: ");
+
+    if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+      nvar, itn, ifn);
+    if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
+      xf, xg);
     fmmdisp(value(x),value(g), nvar, 0,noprintx);
   }
   //gradient_structure::set_NO_DERIVATIVES();

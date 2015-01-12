@@ -1,13 +1,11 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #if defined(THREAD_SAFE)
 #include <fvar.hpp>
 //#undef USE_VECTOR_SHAPE_POOL
@@ -32,10 +30,6 @@ typedef ts_vector_shape_pool * pts_vector_shape_pool;
 ts_vector_shape_pool ** ts_vector_shapex::xpool = 0;
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
   void ts_vector_shapex::shift(int min)
   {
     index_max=index_max-index_min+min;
@@ -44,10 +38,6 @@ ts_vector_shape_pool ** ts_vector_shapex::xpool = 0;
 
 const int max_number_threads=10;
 
-/**
- * Description not yet available.
- * \param
- */
   int get_pthread_number(void)
   {
     int* p_keyval = (int*)pthread_getspecific(admb_pthread_key);
@@ -64,13 +54,8 @@ const int max_number_threads=10;
   }
 
 #if defined(USE_VECTOR_SHAPE_POOL)
-
-/**
- * Description not yet available.
- * \param
- */
 void * ts_vector_shapex::operator new(size_t n)
-{
+{  
   if (xpool==0)
   {
     pthread_mutex_lock(&mutex_dfpool);
@@ -86,7 +71,7 @@ void * ts_vector_shapex::operator new(size_t n)
   }
 
   int pnum=get_pthread_number();
-  if (xpool[pnum]==0)
+  if (xpool[pnum]==0) 
   {
     xpool[pnum]=new ts_vector_shape_pool(sizeof(ts_vector_shapex));
   }
@@ -97,16 +82,17 @@ void * ts_vector_shapex::operator new(size_t n)
     ad_exit(1);
   }
 # endif
-  return xpool[pnum]->alloc();
+  return xpool[pnum]->alloc(); 
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
+
   void ts_vector_shapex::operator delete(void * ptr,size_t n)
-  {
-    xpool[get_pthread_number()]->free(ptr);
+  {  
+    xpool[get_pthread_number()]->free(ptr); 
   }
+
+  void my_do_nothing(void * t);
+
 #endif // defined(THREAD_SAFE)
 #endif // defined(THREAD_SAFE)

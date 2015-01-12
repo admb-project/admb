@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array pow(const dvar3_array& m, int e)
+   dvar3_array pow(_CONST dvar3_array& m, int e)
    {
      dvar3_array tmp;
      tmp.allocate(m);
@@ -24,3 +16,5 @@ dvar3_array pow(const dvar3_array& m, int e)
      }
      return tmp;
    }
+
+

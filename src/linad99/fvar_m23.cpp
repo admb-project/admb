@@ -1,30 +1,23 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #include "fvar.hpp"
 
 void dvdm_prod(void);
 void dvcm_prod(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
+ dvar_vector  operator * (_CONST dvar_vector& x ,_CONST dvar_matrix& m )
  {
    RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
-     cerr << " Incompatible array bounds in "
-     "dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x)\n";
      ad_exit(21);
    }
 
@@ -57,10 +50,6 @@ dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void dvdm_prod(void)
 {
   verify_identifier_string("PLACE1");
@@ -73,12 +62,12 @@ void dvdm_prod(void)
   dvector x=restore_dvar_vector_value(x_pos);
   verify_identifier_string("PLACE4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-
+  
   dmatrix dfm(m_pos);
   dvector dfx(x_pos.indexmin(),x_pos.indexmax());
   dfm.initialize();
   dfx.initialize();
-
+  
    double dfsum;
    for (int j=m.colmax(); j>=m.colmin(); j--)
    {
@@ -98,18 +87,13 @@ void dvdm_prod(void)
    dfm.save_dmatrix_derivatives(m_pos);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
+ dvar_vector  operator * (_CONST dvar_vector& x ,_CONST dmatrix& m )
  {
    RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
-     cerr << " Incompatible array bounds in "
-     "dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x)\n";
      ad_exit(21);
    }
 
@@ -141,10 +125,6 @@ dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void dvcm_prod(void)
 {
   verify_identifier_string("PLACE1");
@@ -156,10 +136,10 @@ void dvcm_prod(void)
   dvar_vector_position x_pos=restore_dvar_vector_position();
   verify_identifier_string("P4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-
+  
   dvector dfx(x_pos.indexmin(),x_pos.indexmax());
   dfx.initialize();
-
+  
    double dfsum;
    int imax=dfx.indexmax();
    int imin=dfx.indexmin();
@@ -178,3 +158,4 @@ void dvcm_prod(void)
    }
    dfx.save_dvector_derivatives(x_pos);
 }
+

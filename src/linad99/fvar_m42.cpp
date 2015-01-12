@@ -1,9 +1,11 @@
-/**
- * $Id: fvar_m42.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
+
+
 #include <fvar.hpp>
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -32,16 +34,18 @@ dvariable ln_det(const dvar_matrix& a)
   int sgn;
   return ln_det(a,sgn);
 }
-/**
+/** 
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 {
   int& sgn=(int&)(_sgn);
   int errflag=0;
-  int i,j,k,n;
+  int i,imax,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -74,8 +78,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
     }
     if (big == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in "
-      "inv(dvar_matrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in inv(dvar_matrix)\n";
       big=1.e+10;
       errflag=1;
     }
@@ -94,7 +97,6 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
       //a[i][j]=sum;
       bb(i,j)=sum;
     }
-    int imax = j;
     big=0.0;
     for (i=j;i<=ub;i++)
     {
@@ -146,6 +148,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
       }
     }
   }
+  double ldet=ld;
   if (bb(1,1)>0)
     part_prod(1)=ld+log(bb(1,1));
   else
@@ -163,7 +166,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
       sgn=-sgn;
     }
   }
-  double ldet=part_prod(ub);
+  ldet=part_prod(ub);
   dvariable rdet=nograd_assign(ldet);
   save_identifier_string("PLACE7");
   part_prod.save_dvector_value();
@@ -189,7 +192,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 void df_xldet(void)
 {
   verify_identifier_string("PLACE0");
-  /*double ld=*/restore_double_value();
+  double ld=restore_double_value();
   verify_identifier_string("PLACE1");
   dmatrix_position bpos=restore_dmatrix_position();
   verify_identifier_string("PLACE2");

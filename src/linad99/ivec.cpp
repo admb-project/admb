@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
+
 ivector& ivector::shift(int min)
 {
   v += indexmin()-min;
@@ -23,12 +16,9 @@ ivector& ivector::shift(int min)
   return *this;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void lvector::shift(int min)
 {
   v += indexmin()-min;
   shape->shift(min);
 }
+

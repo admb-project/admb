@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2variable inv_cumd_t(const df1b2variable& n,const df1b2variable&  u,
   double eps)
 {

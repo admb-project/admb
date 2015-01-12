@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix dmatrix::operator()(const ivector& t)
+dmatrix dmatrix::operator() (_CONST ivector& t)
 {
   dmatrix tmp(t.indexmin(), t.indexmax(), t.indexmin(), t.indexmax());
 

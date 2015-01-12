@@ -3,255 +3,283 @@
 % Author: David Fournier
 % Copyright (c) 2008 Regents of the University of California
 %
+%\magnification=1200
+%\input docmacpdf.tex
+%\def{1}
+\def\diag{\hbox{\rm diag}}
+\def\ep{\hbox{\rm elem\_prod}}
 
-Let $y_i$ be an $N$-dimensional multivariate time series for
-$i=1,\ldots,n$, where $y_i$ is a random vector with probability
+%\mysection{Applying the Laplace approximation to the Generalized 
+%Kalman Filter -- with an application to Stochastic Volatility Models}
+
+
+Let $y_i$ be an $N$ dimensional multivariate time series for
+$i=1,\ldots,n$ where $y_i$ is a random vector with probability
 density function $p(y_i | \alpha_i)$.  For each $i$,
-the $\alpha_i$ are random vectors that satisfy the condition
-\begin{equation}
-  \alpha_i=T_i(\alpha_{i-1},y_{i-1})+\eta_i
-\end{equation}
+the $\alpha_i$ are random vectors which satisfy the condition
+%$$
+\begin{equation}\myeq{
+\alpha_i=T_i(\alpha_{i-1},y_{i-1})+\eta_i
+}\end{equation}
+%$$.
 where $\mu_{\eta_i}=0$ and $\sigma^2_{\eta_i}=\sigma^2_\eta$.
 
+
 Let $p(\alpha_1)$ be the probability density function for 
-$\alpha_1$ before $y_1$ is observed. After observing 
-$y_1$, we want to calculate the probability distribution of $\alpha_1$
+$\alpha_1$ before $y_1$ is oberved. After observing 
+$y_1$ we want to calculate the probability distribution of $\alpha_1$
 given $y_1$. This is given by
-\begin{equation}
-  p(\alpha_1 | y_1)=p(y_1|\alpha_1)\,p(\alpha_1)\big/p(y_1)
-\end{equation}
+%$$
+\begin{equation}\myeq{
+p(\alpha_1 | y_1)=p(y_1|\alpha_1)p(\alpha_1)/p(y_1)
+}\end{equation}
+%$$
 where
-\begin{equation}\label{eq:xx6}
-  p(y_1)=\int_{-\infty}^\infty p(y_1|\alpha_1)\, p(\alpha_1) \,\,\textrm{d}\alpha_1
-\end{equation}
-Let $\phi(y_1,\alpha_1)=\log(p(y_1|\alpha_1)p(\alpha_1))$ and
-$\hat\alpha_1(y_1)=\max_{\alpha_1} \{\phi(y_1,\alpha_1)\}$.
-Approximate $\phi$ by its second-order Taylor expansion in
+%$$
+\begin{equation}\label{eq:xx6}\myeq{
+p(y_1)=\int_{-\infty}^\infty p(y_1|\alpha_1)p(\alpha_1)
+  \,d\alpha_1
+}\end{equation}
+%$$
+
+let $\phi(y_1,\alpha_1)=\log(p(y_1|\alpha_1)p(\alpha_1))$ 
+Let $\hat\alpha_1(y_1)=\max_{\alpha_1} \{\phi(y_1,\alpha_1)\}$.
+Approximate $\phi$ by its second order taylor expansion in
 $\alpha_1$ at $\hat\alpha_1$.
-\begin{equation}
-  \phi(y_1,\alpha_1)\approx \phi(y_1,\hat\alpha_1) 
-  + D^2_{\alpha_1\alpha_1}\phi \big(y_1,\hat\alpha_1(y_1)\big) \big(\alpha_1-\hat\alpha_1(y),
-  \alpha_1-\hat\alpha_1(y) \big)
-\end{equation}
+%$$
+\begin{equation}\myeq{
+\phi(y_1,\alpha_1)\approx \phi(y_1,\hat\alpha_1) 
+  + D^2_{\alpha_1\alpha_1}\phi(y_1,\hat\alpha_1(y_1))(\alpha_1-\hat\alpha_1(y),
+  \alpha_1-\hat\alpha_1(y))
+}\end{equation}
+%$$
 so that 
-\begin{equation}\label{eq:xx5}
-  p(y)\approx e^{\phi(y_1,\hat\alpha_1(y_1))} \kern-.5em 
-  \int_{-\infty}^\infty \kern-.25em \exp\bigg\{- 
-  \Big(-D^2_{\alpha_1\alpha_1}\phi 
-      \big(y_1,\hat\alpha_1(y_1) \big)\,
-      \big (\alpha_1-\hat\alpha_1(y),  \alpha_1-\hat\alpha_1(y) \big) \,
-   \Big) \bigg\}\,\textrm{d}\alpha_1
-\end{equation}
-Making a change of variables and integrating, we obtain
-\begin{equation}\label{eq:xx4}
-  p(y_1)\approx e^{\phi (y_1,\hat\alpha_1(y_1) )}  (2\pi)^{n/2} 
-  \Big | -D^2_{\alpha_1\alpha_1} \phi \big(y_1,\hat\alpha_1(y_1) \big) \Big |^{-1/2}
-\end{equation}
+%$$
+\begin{equation}\label{eq:xx5}\myeq{
+p(y)\approx e^{\phi(y_1,\hat\alpha_1(y_1))}  
+\int_{-\infty}^\infty \exp\bigg\{- \big(-D^2_{\alpha_1\alpha_1}\phi(y_1,\hat\alpha_1(y_1))(\alpha_1-\hat\alpha_1(y),
+  \alpha_1-\hat\alpha_1(y))\big)\bigg\}\,d\alpha_1
+}\end{equation}
+%$$
+Making a change of variables and integrating we obtain
+%$$
+\begin{equation}\myeq{\label{eq:xx4}
+p(y_1)\approx e^{\phi(y_1,\hat\alpha_1(y_1))}  (2\pi)^{n/2} 
+  | -D^2_{\alpha_1\alpha_1}\phi(y_1,\hat\alpha_1(y_1)))|^{-1/2}
+}\end{equation}
+%$$
 \X{Laplace approximation}
 \XX{Laplace approximation}{in Kalman filter}
 \X{robust Kalman filter}
-This is the Laplace approximation to the integral in equation~(\ref{eq:xx6}).
+This is the Laplace approximation to the integral in (\ref{eq:xx6}).
 
 If the distribution of $\alpha_1$ is (multivariate) normal and
-the distribution of $y_1|\alpha_1$ is multivariate normal,
-then $\phi(y_1,\alpha_1)$ is a quadratic function of $\alpha_1$, so
-the Laplace approximation is exact. The advantage of the
-Laplace approximation is that it can be employed for non-normal distributions.
+the distribution of $y_1|\alpha_1$ is multivariate normal
+then $\phi(y_1,\alpha_1)$ is a quadratic function of $\alpha_1$ so
+that the Laplace approximation is exact. The advantage of the
+Laplace approximation is that it can be employed for non normal distributions.
 
-To illustrate this advantage, consider the simple 1-dimensional case where
-$\alpha_1$ has a (univariate) normal distribution with mean~0 and
-variance~$\sigma_\alpha^2$.
+To illustrate this advantage consider the simple one dimensional case  where
+$\alpha_1$ has a (univiariate) normal distribution with mean 0 and
+variance $\sigma_\alpha^2$.
 Assume that the distribution of $y_1|\alpha_1$ is a fat-tailed
-distribution, which is a mixture of $0.95$  normal distribution and $0.05$ Cauchy
-distribution. Then,
-\begin{align}
-\nonumber \phi(y_1,\alpha_1)=& \log \bigg[ 0.95\exp \Big(\kern-.1em -0.5 (y_1-\alpha_1)^2  \Big/  \sigma_y^2 \Big)
-     + 0.05\sqrt{2/\pi} \Big/ \Big(1+ (y-\alpha_1)^2 \big/ \sigma_y^2 \Big) \bigg] \\
-   & -0.5\alpha_1^2 \big/ \sigma_\alpha^2 + \textrm{const}
-   \label{eq:xx9.7}
-\end{align}
-whereas if $y_1$ is assumed to have a normal distribution,
-\begin{equation}
-  \phi(y_1,\alpha_1)=-0.5(y_1-\alpha_1)^2 \big/  \sigma_y^2
-    -0.5\alpha_1^2 \big/ \sigma_\alpha^2\ + \textrm{const}
-    \label{eq:xx9.8}
-\end{equation}
-where ``$\textrm{const}$'' denotes some constant independent of~$\alpha_1$.
-There are two drawbacks to the use of equation~(\ref{eq:xx9.8}). %fixed $5.b$
+distribution which is a mixture of $0.95$  normal distribution and $0.05$ cauchy
+distribution. Then 
+%$$
+\begin{equation}\myeq{
+\phi(y_1,\alpha_1)=\log\Big[0.95\exp(-0.5(y_1-\alpha_1)^2/\sigma_y^2)
+   +0.05\sqrt{2/\pi}/(1+ (y-\alpha_1)^2/\sigma_y^2)\Big] -0.5\alpha_1^2/\sigma_\alpha^2
++ const
+}\end{equation}
+%$$
+whereas if $y_1$ is assumed to have a normal distribution
+%$$
+\begin{equation}\myeq{
+\phi(y_1,\alpha_1)=-0.5(y_1-\alpha_1)^2/\sigma_y^2
+    -0.5\alpha_1^2/\sigma_\alpha^2\ + const 
+}\end{equation}
+%$$
+where $const$ denotes some constant independent of $\alpha_1$.
+There are two drawbacks to the use of $5.b$
 If the value of $y_1$ is an outlier from the point of the normal
-model, then it will have too much influence on the mode of the estimate of
-$p(\alpha_1 | y_1)$.  Also, since the variance %xx added a { to middle term:
-\begin{equation}
-  \sigma_{\alpha_1|y_1}^2=\big\{D^2_{\alpha_1\alpha_1}\phi(y_1,\beta_i)\big\}^{-1}=\Big[1/\sigma_y^2 + 1/\sigma_\alpha^2\Big]^{-1}
-\end{equation}
-is independent of the value of $y_1$ observed, 
-$\sigma_{\alpha_1|y_1}^2$ will be underestimated.  This is incorrect behavior,
-since if $y_1$ is an outlier, it contains (almost) no information
-about the value of $p(\alpha_1|y_1)$.  So, 
-$p(\alpha_1|y_1)$ should be almost equal to~$p(\alpha_1)$.
-The likelihood function based on equation~(\ref{eq:xx9.7}) %fixed $5a$
-has the desired behavior.
+model then it will have too much influence on the mode of the estimate of
+$p(\alpha_1 | y_1)$.  Also since the variance 
+ %$$
+\begin{equation}\myeq{
+\sigma_{\alpha_1|y_1}^2=D^2_{\alpha_1\alpha_1}\phi(y_1,\beta_i)\big\}^{-1}=\Big[1/\sigma_y^2 + 1/\sigma_\alpha^2\Big]^{-1}
+}\end{equation}
+%$$ 
+the variance is independent of the value of $y_1$ observed and
+$\sigma_{\alpha_1|y_1}^2$ will be underestimated.  This is incorrect behaviour
+since if $y_1$ is an outlier it contains (almost) no information
+about the value of $p(\alpha_1|y_1)$ so that 
+$p(\alpha_1|y_1)$ should be almost equal to  $p(\alpha_1)$.
+The likelihood function based on $5a$ has the desired behaviour.
 
-To calculate expression~(\ref{eq:xx4}), it is necessary to maximize $\phi(y_1,\alpha_1)$ with respect to $\alpha_1$,
-and to calculate its Hessian matrix with respect to $\alpha_1$.
 
-For the maximization, we employ the Newton-Raphson algorithm. 
+To calculate (\ref{eq:xx4}) it is necessary to maximize $\phi(y_1,\alpha_1)$ with respect to $\alpha_1$
+and to calculate its hessian matrix with respect to $\alpha_1$.
+
+For the maximization we employ the Newton-Raphson algorithm. 
 Let $\beta_0=\mu_{\alpha_1}$
-\begin{equation}
+%$$
+\begin{equation}\myeq{
  \beta_{i+1}=\beta_i-\big\{D^2_{\alpha_1\alpha_1}\phi(y_1,\beta_i)\big\}^{-1}
-  \big(D_{\alpha_1}\phi(y_1,\beta_i) \big)
-\end{equation}
-This operation is carried out a fixed number, $r$, times and then
+  (D_{\alpha_1}\phi(y_1,\beta_i))
+}\end{equation}
+%$$
+This operation is carried out a fixed number $r$ times  and then
 $\hat\alpha_1(y_1)\approx\beta_r$.
-For ``well behaved'' problems, the sequence $\beta_i$ converges
+For ``well behaved'' problems the sequence $\beta_i$ converges
 quadratically to $\hat\alpha_1(y_1)$.
 We approximate $p(\alpha_1|y_1)$ by a multivariate normal with
-\begin{align*}
-  \mu_{\alpha_1|y_1}&=\beta_r\\[6pt]
-  \sigma^2_{\alpha_1|y_1}&=
-  \big\{-D^2_{\alpha_1\alpha_1}\phi(y_1,\beta_r)\big\}^{-1}\\
-\end{align*}
+%$$\eqalign{
+\begin{eqnarray*}
+\mu_{\alpha_1|y_1}&=&\beta_r\cr 
+\sigma^2_{\alpha_1|y_1}&=&
+  \big\{-D^2_{\alpha_1\alpha_1}\phi(y_1,\beta_r)\big\}^{-1}\cr
+\end{eqnarray*}
+%}$$
 and approximate $p(\alpha_2|y_1)$ by a multivariate normal with
-\begin{align*}
-  \mu_{\alpha_2|y_1}&=T(\beta_r,y_1)\cr 
-  \sigma^2_{\alpha_2|y_1}&= 
-  D_{\alpha_1}\, T_1(\beta_r,y_1)\sigma^2_{\alpha_1|y_1}
-  D_{\alpha_1}\, T_1(\beta_r,y_1) ^{\prime}+
+%$$\eqalign{
+\begin{eqnarray*}
+\mu_{\alpha_2|y_1}&=&T(\beta_r,y_1)\cr 
+\sigma^2_{\alpha_2|y_1}&=& 
+  D_{\alpha_1} T_1(\beta_r,y_1)\sigma^2_{\alpha_1|y_1}
+  D_{\alpha_1} T_1(\beta_r,y_1) ^{\prime}+
   \sigma^2_\eta\cr
-\end{align*}
-Now,
-\begin{equation}\label{eq:xx3}
-  p(y_2|y_1)=\int_{-\infty}^\infty p(y_2|\alpha_2)\, p(\alpha_2|y_1)
-  \,\textrm{d}\alpha_2
-\end{equation}
-As above, we maximize the integrand of equation~(\ref{eq:xx3}) with respect to
+\end{eqnarray*}
+%}$$
+Now
+\begin{equation}\myeq{\label{eq:xx3}
+p(y_2|y_1)=\int_{-\infty}^\infty p(y_2|\alpha_2)p(\alpha_2|y_1)
+  \,d\alpha_2
+}\end{equation}
+As above we maximize the integrand of (\ref{eq:xx3}) with respect to
 $\alpha_2$ and use the Laplace approximation to the integral.
-This produces the sequence of conditional probabilities $p(y_i|y_{i-1})$.
+This produces the sequence of conditional probabilities, $p(y_i|y_{i-1})$.
 The log-likelihood function for the observed sequence ${y_i}$
 is given by 
-\begin{equation}
-  \sum_{i=1}^n \log\Big(p(y_i|y_{i-1})\Big)
-\end{equation}
+\begin{equation}\myeq{
+\sum_{i=1}^n \log\big(p(y_i|y_{i-1})\big)
+}\end{equation}
 
+\mysection{Parameter estimation}
 
-\section{Parameter estimation}
-
-Although we have not explicitly shown them, the conditional likelihood
+Although we have not explicitly shown them the conditional likelihood
 functions $p(y_i|y_{i-1})$  depend on a number of 
 parameters. These parameters include the specification of $T$, other
-parameters in the probability density $p(y_i|\alpha_i)$, and parameters
-that determine $\sigma^2_\eta$. If we denote these parameters by
+parameters in the probability density $p(y_i|\alpha_i)$ and parameters
+which determine $\sigma^2_\eta$. If we denote these parameters by
 $\theta$ and write $\big(p(y_i|y_{i-1},\theta)\big)$ to indicate this
-dependence, the log-likelihood function becomes
-\begin{equation}\label{eq:xx1}
-  \sum_{i=1}^n \log\Big(p(y_i|y_{i-1},\theta)\Big)
-\end{equation}
-The maximum likelihood estimates for the parameter vector $\theta$ are
-found by maximizing expression~(\ref{eq:xx1}) with respect to~$\theta$.
-
+dependence the log-likelihood function becomes
+\begin{equation}\label{eq:xx1}\myeq{
+\sum_{i=1}^n \log\big(p(y_i|y_{i-1},\theta)\big)
+}\end{equation}
+the maximum likelihood estimates for the parameter vector $\theta$ are
+found by maximizing (\ref{eq:xx1}) with respect to~$\theta$.
 
 \X{stochastic volatility model}
-\section{The stochastic volatility model}
-
+\mysection{The stochastic volatility model}
 The version of the stochastic volatility model presented here is from
-\cite{RePEc:eee:empfin:v:5:y:1998:i:2:p:155-173}.
+the paper Multivariate Stochastic Volatility Models:
+Estimation and a comparison with VGARCH Models by  Danielsson.
 
 It is assumed that $y_i$ has a multivariate normal distribution with
 $\mu_{y_i}=0$ and covariance matrix 
-$\Omega_i(\alpha_i)=H_i(\alpha_i)RH_i(\alpha_i)$.
-$H_i(\alpha_i)$ is an $m\times m$ diagonal matrix whose $j^\textrm{th}$ element
-on the diagonal is given by $\exp(\alpha_{ij})/2$, where the
+$\Omega_i(\alpha_i)=H_i(\alpha_i)RH_i(\alpha_i)$
+where   $H_i(\alpha_i)$ is an $m\times m$ diagonal matrix whose $j$'th element
+on the diagonal is given by $\exp(\alpha_{ij})/2$ where the
 $\alpha_{ij}$ satisfy the relationship
-\begin{equation}
-  \alpha_i=w+\ep(\delta,\alpha_{i-1}) +\ep(\lambda_1,y_{i-1}) 
+%$$
+\begin{equation}\myeq{
+\alpha_i=w+\ep(\delta,\alpha_{i-1}) +\ep(\lambda_1,y_{i-1}) 
    + \ep(\lambda_2,|y_{i-1}|) + \eta_i
-\end{equation}
-where, in turn, $\eta_i$ is a multivariate normal random variable with
+}\end{equation}
+%$$ 
+where $\eta_i$ is a multivariate normal random variable with
 $\mu_{\eta_i}=0$ and $\sigma^2_{\eta_i}=\sigma^2_\eta$.
-If $u$ and $v$ are two vectors with $j^\textrm{th}$ component $u_j$ and $v_j$,
-$\ep(i,v)$ is the vector with $j^\textrm{th}$ component $u_jv_j$.
-$R$ is an  $m\times m$ positive definite matrix satisfying $r_{jj}=1$,
-that is, a correlation matrix.
-Then,
-\begin{equation}
-  \log\big(p(y_i | \alpha_i)\big)=
-     -0.5\log|\Omega_i(\alpha_i)|-0.5y^\prime_i\,\,\Omega_i(\alpha_i)^{-1}y_i
-\end{equation}
-and the distribution of $\alpha_i|y_{i-1}$ is multivariate normal, with
+If $u$ and $v$ are two vectors with $j$'th component $u_j$ and $v_j$
+$\ep(i,v)$ is the vector with $j$'th componment $u_jv_j$.
+$R$ is an  $m\times m$ postive definite matrix satisfying $r_{jj}=1$,
+that is a corellation matrix.
+Then 
+%$$
+\begin{equation}\myeq{
+\log\big(p(y_i|\alpha_i)\big)=
+     -0.5\log|\Omega_i(\alpha_i)|-0.5y^\prime_i\Omega_i(\alpha_i)^{-1}y_i
+}\end{equation}
+%$$
+and the distribution of $\alpha_i|y_{i-1}$ is multivariate normal with
 mean vector and covariance matrix given by
-\begin{align}
-  \mu_{\alpha_i|y_{i-1}}&=w+\ep(\delta,\mu_{\alpha_{i-1}|y_{i-1}})
-     +\ep(\lambda,y_{i-1})\\[4pt]
-  \sigma^2_{\alpha_i|y_{i-1}}&=i\,\diag(\delta)
+%$$ \eqalign{
+\begin{eqnarray}
+\mu_{\alpha_i|y_{i-1}}&=&w+\ep(\delta,\mu_{\alpha_{i-1}|y_{i-1}})
+     +\ep(\lambda,y_{i-1})\cr
+  \sigma^2_{\alpha_i|y_{i-1}}&=i&\diag(\delta)
    \sigma^2_{\alpha_{i-1}|y_{i-1}}\diag(\delta) 
   +\sigma^2_\eta 
-\end{align}
+\end{eqnarray}
+%}$$
 $\diag(\delta)$ is the diagonal matrix whose diagonal is equal to the vector
 $\delta$. 
-\begin{align} \label{eq:xx2}
-  \log\big(p(y_i|\alpha_i)\,p(\alpha_i|y_{i-1})\big)&=
+%$$\eqalignno{
+\begin{eqnarray} \label{eq:xx2}
+  \log\big(p(y_i|\alpha_i)p(\alpha_i|y_{i-1})\big)&=&
      -0.5\log|\Omega_i(\alpha_i)|-0.5y_i^\prime\Omega_i(\alpha_i)^{-1}y_i
-     -0.5\log|\sigma^2_{\alpha_i|y_{i-1}}|\\[6pt]
-     &\quad   -0.5(\alpha_i-\mu_{\alpha_i|y_{i-1}})^\prime
+     -0.5\log|\sigma^2_{\alpha_i|y_{i-1}}|\cr
+     &\quad&   -0.5(\alpha_i-\mu_{\alpha_i|y_{i-1}})^\prime
           (\sigma^2_{\alpha_i|y_{i-1}})^{-1}
              (\alpha_i-\mu_{\alpha_i|y_{i-1}}) 
-\end{align}
-To perform the Newton-Raphson calculations, it is necessary to calculate
-the first and second derivatives of expression~(\ref{eq:xx2}) with respect
-to the parameter vector~$\alpha$. This is the most involved part of the
+\end{eqnarray}
+%}$$
+To perform the Newton-Raphson calculations it is necessary to calculate
+the first and second derivatives of expression (\ref{eq:xx2}) with respect
+to the parameter vector $\alpha$. This is the most involved part of the
 calculations and will depend on the particular form of the model. In the present
-case, the calculations are simplified by the fact that $\Omega_i$ only depends on
+case the calculations are simplified by the fact that $\Omega_i$ only depends on
 $\alpha$ through the diagonal matrix $H(\alpha_i)$.
 
 The probability density function $p(\alpha_1)$ is 
 assumed to be multivariate normal with $\mu_{\alpha_1}=\theta_0$
 and $\sigma^2_{\alpha_1}=0$.
 
-
-\section{The data}
-
+\mysection{The Data}
 The data consist of the daily Mark/Dollar and Yen/dollar exchange rates
-and the U.S. and Japanese stock index data. There are 1301
-time periods, with some missing data. The missing data, which are denoted by the
-impossibly large value of 10,000, were replaced with
-the average from the period before and after. They can, however, easily
-be estimated in the model, if desired.
-
-
-\section{The results}
-
-The model was fit with various combinations of the parameters,
+and the US and Japaneese stock index data. There are  1301
+time periods with some missing data. The missing data which are denoted by the
+impossibly large value of 10,000 were replaced with
+the average from the period before and after. They can howerever easily
+be estimated in the model is desired.
+\mysection{The Results}
+The model was fit with various combinations of the parameters
 and the log-likelihood was examined to investigate the improvement in
-fit due to the addition of the parameters.  See Table~\ref{tab:parameters}.
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{@{\vrule height 16pt depth 6pt width0pt}@{\extracolsep{1em}}c c c}
-\\
-\hline 
-\bf Parameters in model & \bf Number of parameters & \bf Log-likelihood \\[3pt]
-\hline 
-%\noalign{\medskip}
- $w,\delta,R,\sigma^2_\eta$ & 24 & 3774.7 \\
- $w,\delta,R,\sigma^2_\eta,\lambda_1$ & 28 & 3806.6 \\
- $w,\delta,R,\sigma^2_\eta,\lambda_1,\theta_0$ & 32 & 3808.6 \\
- $w,\delta,R,\sigma^2_\eta,\lambda_1,\theta_0,\lambda_2$ & 36 & 3811.2 \\[6pt]
-\hline
-\\
-\end{tabular}
-\end{center}
-\emptycaption
-\label{tab:parameters}
-\end{table}
+fit due to the addition of the parameters.
 
-
+\bigskip
+\vbox{ 
+\hrule 
+\bigskip
+\tabskip=1in plus 1in minus 1in
+\halign to\hsize{\hfil#\hfil& \hfil#\hfil&\hfil#\hfil \cr
+ Parameters in model & number of parameters & log-likelihood\cr
+\noalign{\medskip}
+ $w,\delta,R,\sigma^2_\eta$ & 24 & 3774.7 \cr
+ $w,\delta,R,\sigma^2_\eta,\lambda_1$ & 28 & 3806.6 \cr
+ $w,\delta,R,\sigma^2_\eta,\lambda_1,\theta_0$ & 32 & 3808.6 \cr
+ $w,\delta,R,\sigma^2_\eta,\lambda_1,\theta_0,\lambda_2$ & 36 & 3811.2 \cr}
+\bigskip
+\hrule }
+\bigskip
 The parameters $\theta_0$ and $\lambda_2$ did not produce a significant
 improvement to the fit.  $\lambda_2$ measures the asymmetry 
 in the response of the variance to positive and negative shocks.
 
 Here are the parameter estimates and their standard deviations for
-the model with $w,\delta,R,\sigma^2_\eta$, and $\lambda_1$:
-\begin{lstlisting}
- index   name    value      std.dev   
+the model with $w,\delta,R,\sigma^2_\eta$, and $\lambda_1$.
+
+\beginexample
+ index   name    value      std dev   
     1   w(1)       -1.3749e-001 4.9434e-002
     2   w(2)       -6.5649e-001 1.6161e-001
     3   w(3)        3.1693e-002 1.0574e-002
@@ -312,10 +340,11 @@ the model with $w,\delta,R,\sigma^2_\eta$, and $\lambda_1$:
    74   Z(4,2)      9.6831e-003 2.9999e-002
    75   Z(4,3)      2.4602e-002 1.1053e-002
    76   Z(4,4)      9.6109e-002 3.4268e-002
-\end{lstlisting}
+\endexample
 
-The AD Model Builder \textsc{tpl} file for the model is given below:
-\begin{lstlisting}
+The AD Model Builder TPL file for the model is given below.
+
+\beginexample
 DATA_SECTION
   init_int ndim
   init_int nobs
@@ -405,7 +434,7 @@ PROCEDURE_SECTION
     int sgn;
     f+=lmin(i)+0.5*ln_det(sh,sgn);  // Laplace approximation
   }
-  f-=0.5*nobs*ndim*log(2.*PI);
+  f-=0.5*nobs*ndim*log(2.*3.14159);
   Omega=S;
 
 FUNCTION  dvar_vector update_the_means(dvar_vector& w,dvar_vector& m,dvector& e)
@@ -448,8 +477,7 @@ FUNCTION dvariable fp(dvar_vector& h, dvector& y, dvar_vector& m,dvar_matrix& v)
   l+=.5*lndet+.5*(w1*hm);
   return l;
 
-FUNCTION void xfp12(dvar_vector& h, dvector& y,dvar_vector& m,dvar_matrix& v,
- dvar_vector gr,dvar_matrix& hess)
+FUNCTION void xfp12(dvar_vector& h, dvector& y,dvar_vector& m,dvar_matrix& v, dvar_vector gr,dvar_matrix& hess)
   dvar_vector ehinv=exp(-.5*h);
   dvariable lndet;
   dvariable sgn;
@@ -517,5 +545,5 @@ TOP_OF_MAIN_SECTION
   arrmblsize=20000000;
   gradient_structure::set_CMPDIF_BUFFER_SIZE(25000000);
   gradient_structure::set_GRADSTACK_BUFFER_SIZE(1000000);
-\end{lstlisting}
-
+\endexample
+ 

@@ -1,17 +1,14 @@
-/**
- * $Id: f1b2lndt.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+
 #include <df1b2fun.h>
 
-#ifdef ISZERO
-  #undef ISZERO
-#endif
-#define ISZERO(d) ((d)==0.0)
 
-class df1b2matrix_pair
+
+class df1b2matrix_pair 
 {
   df1b2matrix a;
   df1b2matrix b;
@@ -29,7 +26,7 @@ void ludcmp(const df1b2matrix& a,int k);
 df1b2matrix_pair ludcmp(const df1b2matrix& a);
 
 /** LU decomposition back susbstitution alogrithm for df1b2matrix object.
-    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$.
+    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
     \param indx Permutation vector from ludcmp.
     \param b A dvector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved, and containing on return the solution vector \f$X\f$.
@@ -43,7 +40,7 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a);
 df1b2vector lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   ivector & ,const df1b2vector& b)
 {
-  int i,ii=0,j;
+  int i,ii=0,ip,j;
   df1b2variable sum;
   int mmin=b.indexmin();
   int mmax=b.indexmax();
@@ -56,7 +53,7 @@ df1b2vector lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   df1b2vector c(mmin,mmax);
   c=b;
 
-  for (i=1;i<=n;i++)
+  for (i=1;i<=n;i++) 
   {
     sum=c(i);
     if (ii)
@@ -65,13 +62,13 @@ df1b2vector lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
       df1b2vector at=alpha(i)(ii,i-1);
       sum-=at*bt;
     }
-    else
+    else 
     {
-      if (!ISZERO(value(sum))) ii=i;
+      if (value(sum)) ii=i;
     }
     c(i)=sum;
   }
-  for (i=n;i>=1;i--)
+  for (i=n;i>=1;i--) 
   {
     sum=c(i);
     for (j=i+1;j<=n;j++) sum -= beta(j)(i)*c(j);
@@ -79,6 +76,7 @@ df1b2vector lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   }
   return c;
 }
+
 
 df1b2variable get_ln_det(const df1b2matrix& b,int& sgn)
 {
@@ -104,10 +102,11 @@ df1b2variable get_ln_det(const df1b2matrix& b,int& sgn)
   return ln_det;
 }
 
+
 df1b2matrix lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   ivector & ,const df1b2matrix& B)
 {
-  int i,ii=0,j;
+  int i,ii=0,ip,j;
   int rmin=B.indexmin();
   int rmax=B.indexmin();
   df1b2matrix C(rmin,rmax);
@@ -124,7 +123,7 @@ df1b2matrix lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
     int n=mmax;
     df1b2vector c(mmin,mmax);
     c=B(k);
-
+  
     for (i=1;i<=n;i++) {
       sum=c(i);
       if (ii)
@@ -133,13 +132,13 @@ df1b2matrix lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
         df1b2vector at=alpha(i)(ii,i-1);
         sum-=at*bt;
       }
-      else
+      else 
       {
-        if (!ISZERO(value(sum))) ii=i;
+        if (value(sum)) ii=i;
       }
       c(i)=sum;
     }
-    for (i=n;i>=1;i--)
+    for (i=n;i>=1;i--) 
     {
       sum=c(i);
       for (j=i+1;j<=n;j++) sum -= beta(j)(i)*c(j);
@@ -149,10 +148,11 @@ df1b2matrix lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   }
   return C;
 }
-
 df1b2matrix_pair::df1b2matrix_pair(const df1b2matrix& _a,
-  const df1b2matrix& _b) : a(_a), b(_b)
+  const df1b2matrix& _b) : a(_a), b(_b) 
 {}
+
+
 
 void ludcmp(const df1b2matrix& M,int kludge)
 {
@@ -169,6 +169,7 @@ void ludcmp(const df1b2matrix& M,int kludge)
   df1b2matrix RM=reorder(M,indx);
 
   ludcmp(RM);
+  
 }
 
 df1b2matrix reorder(const df1b2matrix& M,const ivector& indx)
@@ -176,7 +177,7 @@ df1b2matrix reorder(const df1b2matrix& M,const ivector& indx)
   int i;
   int mmin=M.indexmin();
   int mmax=M.indexmax();
-  if ( (indx.indexmin() != mmin) || (indx.indexmax() != mmax)
+  if ( (indx.indexmin() != mmin) || (indx.indexmax() != mmax) 
     || (M(mmin).indexmin() != mmin)
     || (M(mmin).indexmax() != mmax) )
   {
@@ -186,7 +187,7 @@ df1b2matrix reorder(const df1b2matrix& M,const ivector& indx)
     ad_exit(1);
   }
   df1b2matrix RM(mmin,mmax);
-  ivector ir(mmin,mmax);
+  ivector ir(mmin,mmax);  
   ir.fill_seqadd(mmin,1);
 
   for (i=mmin;i<=mmax;i++)
@@ -215,7 +216,7 @@ df1b2vector reorder(const df1b2vector& M,const ivector& indx)
     ad_exit(1);
   }
   df1b2vector RM(mmin,mmax);
-  ivector ir(mmin,mmax);
+  ivector ir(mmin,mmax);  
   ir.fill_seqadd(mmin,1);
 
   for (i=mmin;i<=mmax;i++)
@@ -231,10 +232,13 @@ df1b2vector reorder(const df1b2vector& M,const ivector& indx)
   }
   return RM;
 }
+  
 
 df1b2matrix_pair ludcmp(const df1b2matrix& a)
 {
-  int i,j;
+  int i,imax,j,k;
+  double big,dum,temp;
+  double *vv;
 
   int n=a.indexmax();
   ivector ishape(1,n);
@@ -247,10 +251,11 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a)
   beta.initialize();
   gamma.initialize();
 
+  double d=1.0;
   df1b2variable sum;
-  for (j=1;j<=n;j++)
+  for (j=1;j<=n;j++) 
   {
-    for (i=1;i<j;i++)
+    for (i=1;i<j;i++) 
     {
       df1b2vector& ai=alpha(i);
       df1b2vector& bj=beta(j);
@@ -259,7 +264,7 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a)
       sum-=ai(1,i)*bj(1,i);
       beta(j,i)=sum;
     }
-    for (i=j;i<=n;i++)
+    for (i=j;i<=n;i++) 
     {
       df1b2vector& ai=alpha(i);
       df1b2vector& bj=beta(j);
@@ -283,10 +288,10 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a)
         }
       }
     }
-    if (j != n)
+    if (j != n) 
     {
       gamma(j)=1.0/beta(j,j);
-      for (i=j+1;i<=n;i++)
+      for (i=j+1;i<=n;i++) 
       {
         alpha(i,j)*=gamma(j);
         //alpha(i,j) = delta(i,j)*gamma(j);
@@ -295,10 +300,15 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a)
   }
   return df1b2matrix_pair(alpha,beta);
 }
+df1b2variable ln_det(df1b2matrix& M)
+{
+  int sgn;
+  return ln_det(M,sgn);
+}
 dmatrix reorder(const dmatrix& CM,ivector & indx);
 ivector getreindex(ivector & indx);
 
-df1b2variable ln_det(const df1b2matrix& M,int & sgn)
+df1b2variable ln_det(df1b2matrix& M,int & sgn)
 {
   int mmin=M.indexmin();
   int mmax=M.indexmax();
@@ -310,10 +320,12 @@ df1b2variable ln_det(const df1b2matrix& M,int & sgn)
   int ssgn=0;
   dmatrix CM=value(M);
   double cld=ln_det(CM,ssgn);
+  ssgn=0;
   ivector indx(1,mmax);
   double dd;
   ludcmp(CM,indx,dd);
-  ivector reindex=getreindex(indx);
+  ssgn=0;
+  ivector reindex=getreindex(indx); 
   df1b2matrix RM=reorder(M,indx);
   df1b2matrix_pair p=ludcmp(RM);
   int isg=0;
@@ -323,18 +335,13 @@ df1b2variable ln_det(const df1b2matrix& M,int & sgn)
   return ld;
 }
 
-df1b2variable ln_det(const df1b2matrix& M)
-{
-  int sgn;
-  return ln_det(M,sgn);
-}
-
 dmatrix reorder(const dmatrix& CM,ivector & indx)
 {
   int mmin=CM.indexmin();
   int mmax=CM.indexmax();
   dmatrix M(mmin,mmax,mmin,mmax);
   dvector tmp(mmin,mmax);
+  int itmp;
   dvector in(mmin,mmax);
   in.fill_seqadd(1,1);
   for (int i=mmin;i<=mmax;i++)
@@ -350,7 +357,8 @@ void xswitch(int & i1,int & i2)
   i2=tmp;
 }
 
-ivector getreindex(ivector & indx)
+  
+ivector getreindex(ivector & indx) 
 {
   int mmin=indx.indexmin();
   int mmax=indx.indexmax();
@@ -363,6 +371,7 @@ ivector getreindex(ivector & indx)
     xswitch(in1(i),in1(indx(i)));
   }
  return in1;
+
 }
 
 df1b2vector solve(df1b2matrix& M,df1b2vector& v)
@@ -428,3 +437,4 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det,
   ln_det=get_ln_det(p.get_b(),isg);
   return lubksb(p.get_a(),p.get_b(),indx,rb);
 }
+

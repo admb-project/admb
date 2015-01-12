@@ -1,26 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
-
-/**
- * The tensor product of two dvar_matrixes
- * \param a first dvar_matrix
- * \param b second dvar_matrix
- * \return c a dvar_matrix of the tensor product.
- * 
- * Calcuates the tensor product of a and b.
- * \f$
- *  C = A \otimes B
- * \f$
- */
   dvar_matrix tensor_prod(const dvar_matrix& a,const dvar_matrix & b)
   {
     int lba=a.indexmin();
@@ -35,3 +19,6 @@
         c(i,j)=ta(i)*tb(j);
     return c;
   }
+
+
+

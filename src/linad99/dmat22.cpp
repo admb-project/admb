@@ -1,15 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
+
 // file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable
+// constructors, destructors and misc functions involving class dvariable 
 
 #include "fvar.hpp"
 
@@ -28,11 +27,7 @@
 #endif
 #include <math.h>
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix& dmatrix::operator=(const double x)
+dmatrix& dmatrix::operator = ( CGNU_DOUBLE x)
 {
   for (int i=rowmin();i<=rowmax();i++)
   {
@@ -41,11 +36,7 @@ dmatrix& dmatrix::operator=(const double x)
   return (*this);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix& dmatrix::operator/=(const double x)
+dmatrix& dmatrix::operator /= ( CGNU_DOUBLE x)
 {
   for (int i=rowmin();i<=rowmax();i++)
   {
@@ -54,11 +45,7 @@ dmatrix& dmatrix::operator/=(const double x)
   return (*this);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix& dmatrix::operator*=(const double x)
+dmatrix& dmatrix::operator *= ( CGNU_DOUBLE x)
 {
   for (int i=rowmin();i<=rowmax();i++)
   {
@@ -66,3 +53,4 @@ dmatrix& dmatrix::operator*=(const double x)
   }
   return (*this);
 }
+

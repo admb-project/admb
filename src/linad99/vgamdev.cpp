@@ -1,9 +1,10 @@
 /*
-  $Id$
-
-  Author: David Fournier
-  Copyright (c) 2008, 2009, 2010 Regents of the University of California
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
 #include <fvar.hpp>
 #define ITMAX 100
 //#define EPS 3.0e-7
@@ -11,10 +12,6 @@
 #define FPMIN 1.0e-30
 static void gcf(double& gammcf,double a,double x,double &gln);
 static void gser(double& gamser,double a,double x,double& gln);
-
-/**
-  \file gamma functions for differentiable objects.
-*/
 
   dvariable gamma_deviate(const prevariable& _x,const prevariable& _a)
   {
@@ -33,9 +30,9 @@ static void gser(double& gamser,double a,double x,double& gln);
 
 static double gammp(double a,double x)
 {
-  double gamser = 0.0,gammcf,gln;
+  double gamser,gammcf,gln;
 
-  if (x < 0.0 || a <= 0.0)
+  if (x < 0.0 || a <= 0.0) 
     cerr << "Invalid arguments in routine gammp" << endl;
   if (x < (a+1.0)) {
     gser(gamser,a,x,gln);
@@ -51,6 +48,8 @@ static double gammp(double a,double x)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 static void gcf(double& gammcf,double a,double x,double &gln)
 {
@@ -74,7 +73,7 @@ static void gcf(double& gammcf,double a,double x,double &gln)
     h *= del;
     if (fabs(del-1.0) < EPS) break;
   }
-  if (i > ITMAX)
+  if (i > ITMAX) 
     cerr << "a too large, ITMAX too small in gcf" << endl;
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
@@ -84,6 +83,8 @@ static void gcf(double& gammcf,double a,double x,double &gln)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 static void gser(double& gamser,double a,double x,double& gln)
 {
@@ -92,7 +93,7 @@ static void gser(double& gamser,double a,double x,double& gln)
 
   gln=gammln(a);
   if (x <= 0.0) {
-    if (x < 0.0)
+    if (x < 0.0) 
       cerr << "x less than 0 in routine gser" << endl;
     gamser=0.0;
     return;
@@ -115,11 +116,13 @@ static void gser(double& gamser,double a,double x,double& gln)
 
 static double get_initial_u(double a,double y);
 
-double Sn(double x,double a);
+static double Sn(double x,double a);
 
-#include <df32fun.h>
+#if defined(USE_LAPLACE)
+#include <df1b2fun.h>
 df3_two_variable cumd_gamma(const df3_two_variable& x,
   const df3_two_variable& a);
+
 
 dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 {
@@ -151,7 +154,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
     }
   }
   while(fabs(h)>1.e-12);
-
+  
   double x=a*exp(u);
 
   init_df3_two_variable xx(x);
@@ -159,44 +162,51 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
   *xx.get_u_x()=1.0;
   *aa.get_u_y()=1.0;
 
+
   df3_two_variable z=cumd_gamma(xx,aa);
   double F_x=1.0/(*z.get_u_x());
   double F_y=-F_x*(*z.get_u_y());
-
+  
   dvariable vz=0.0;
   value(vz)=x;
 
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
     &(vz.v->x),&(_y.v->x),F_x,&(_a.v->x),F_y);
 
+
   return vz;
 }
+
+#endif
 
 #undef ITMAX
 #undef EPS
 
-double Sn(double x,double a)
+static double Sn(double x,double a)
 {
-  double summ=1.0;
-
-  const double xp=x;
-  double prod=1.0;
-
   int i=1;
-  for (; i <= 50; i++)
+  double xp=x;
+  double prod=1.0;
+  double summ=1.0;
+  double summand;
+  do
   {
     prod*=(a+i);
-    double summand=xp/prod;
+    summand=xp/prod;
     if (summand<1.e-4) break;
     summ+=summand;
-  }
-  if (i > 50)
-  {
-    cerr << "convergence error" << endl;
-    ad_exit(1);
-  }
+    i++;
+    if (i>50)
+    {
+      cerr << "convergence error" << endl;
+      ad_exit(1);
+    }
+  } 
+  while(1);
   return summ;
 }
+    
+    
 
 static double get_initial_u(double a,double y)
 {
@@ -240,7 +250,7 @@ static double get_initial_u(double a,double y)
     {
       double y=-logB;
       double v=y-(1-a)*log(y);
-      x0=y-(1-a)*log(v)-log(1+(1.0-a)/(1.0+v));
+      x0=y-(1-a)*log(v)-log(1+(1.0-a)/(1.0+v));  
       log_x0=log(x0);
     }
     else if (log(.01)<logB && logB < log(.15))
@@ -263,7 +273,7 @@ static double get_initial_u(double a,double y)
       ad_exit(1);
     }
   }
-  else  if (a>=1.0)
+  else  if (a>=1.0) 
   {
     const double a0 = 3.31125922108741;
     const double b1 = 6.61053765625462;
@@ -273,7 +283,7 @@ static double get_initial_u(double a,double y)
     const double b3 = 1.27364489782223;
     const double a3 = .213623493715853;
     const double b4 = .03611708101884203;
-
+  
     int sgn=1;
     double logtau;
     if (logP< log(0.5))
@@ -286,9 +296,10 @@ static double get_initial_u(double a,double y)
       logtau=logQ;
       sgn=1;
     }
-
+  
     double t=sqrt(-2.0*logtau);
-
+  
+  
     double num = (((a3*t+a2)*t+a1)*t)+a0;
     double den = ((((b4*t+b3)*t+b2)*t)+b1)*t+1;
     double s=sgn*(t-num/den);
@@ -327,6 +338,7 @@ static double get_initial_u(double a,double y)
           double zbar=exp((v+z-log(sn))/a);
           x0=zbar*(1.0-(a*log(zbar)-zbar-v+log(sn))/(a-zbar));
         }
+       
       }
       log_x0=log(x0);
     }
@@ -344,3 +356,4 @@ static double get_initial_u(double a,double y)
   }
   return log_x0-log(a);
 }
+

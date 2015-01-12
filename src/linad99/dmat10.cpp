@@ -1,23 +1,18 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 #include <string.h>
 #include <ctype.h>
-#include <cassert>
-#include <climits>
 
-/**
- * Description not yet available.
- * \param
- */
+const unsigned int MAX_LINE_LENGTH = 10000;
+const int MAX_FIELD_LENGTH = 500;
+const int MAX_NUMBER_COLUMNS = 6550;
+const int MAX_NUMBER_ROWS = 6550;
+
  struct dvec_ptr_ptr
  {
    void ** m;
@@ -25,24 +20,13 @@
 
 const int MAXROWS = 5050;
 
-/**
-Fill allocated dmatrix with values from input parameter s.
-
-    dmatrix m(1, 2, 1, 3);
-    char values[] = "{0, 1, 2} {3, 4, 5}";
-    m.fill(values);
-
-\param s values
-*/
-void dmatrix::fill(const char* s)
+void dmatrix::fill( const char * s)
 {
   #ifdef DIAG
     myheapcheck("Entering dmatrix(const char * s)" );
   #endif
 
-  size_t len = strlen(s);
-  assert(len <= INT_MAX);
-  int n = (int)len;
+  int n = strlen(s);
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -55,7 +39,8 @@ void dmatrix::fill(const char* s)
   ivector k1(1, MAXROWS);
   ivector k2(1, MAXROWS);
 
-  for (int k = 0; k < n; k++)
+  int k;
+  for (k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -117,7 +102,8 @@ void dmatrix::fill(const char* s)
     }
   }
 
-  for (int i=1; i<=nrow; i++)
+  int i;
+  for (i=1; i<=nrow; i++)
   {
     cout << "row  " << i << " matrix  "
        << ((*this)[rowmin()+i-1]).size()
@@ -139,13 +125,15 @@ void dmatrix::fill(const char* s)
       }
     }
   }
-
-  for (int i=rowmin(); i<=rowmax(); i++)
+    
+  k = 0;
+  for (i=rowmin(); i<=rowmax(); i++)
   {
-    char *t = new char[strlen(s)+1];
+    char * t;
     //t = (char*) new[strlen(s)+1];
+    t = new char[strlen(s)+1];
 
-    for (int k = k1[i]; k <= k2[i]; k++)
+    for (k = k1[i]; k <= k2[i]; k++)
     {
       t[k-k1[i]] = s[k];
     }
@@ -157,8 +145,8 @@ void dmatrix::fill(const char* s)
    //    (*this)(i)=dvector(tt);
     (*this)(i)=tt;
 
-    delete[] t;
-    t = 0;
+    delete t;
+
   }
   rowshift(minrow);
   colshift(mincolumn);

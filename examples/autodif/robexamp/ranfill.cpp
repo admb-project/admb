@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -145,7 +145,7 @@ double randn(long int& n)
   double x,y;
   x=auto_rand(nn,1);
   y=auto_rand(nn,1);
-  double u=sqrt(-2*log(x))*cos(2*PI*y);
+  double u=sqrt(-2*log(x))*cos(2*3.14159*y);
   return(u);
 }
   

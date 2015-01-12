@@ -1,20 +1,15 @@
-/**
- * $Id: dmat3.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
+
 #include "fvar.hpp"
 #include <math.h>
 #ifndef __ZTC__
 //#include <iomanip.h>
 #endif
-
-#ifdef ISZERO
-  #undef ISZERO
-#endif
-#define ISZERO(d) ((d)==0.0)
-
 /**
 \def TINY
 A small number. Used to avoid divide by zero in the LU decomposition. Locally defined,
@@ -22,8 +17,8 @@ undefined, redefined and undefined in this file.
 */
 #define TINY 1.0e-20;
 
-void lubksb(dmatrix a, const ivector&  indx,dvector b);
-void ludcmp(const dmatrix& a, const ivector& indx, const double& d);
+void lubksb(dmatrix a,_CONST ivector&  indx,dvector b);
+void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
 
 /** Inverse of a constant matrix by LU decomposition.
     \ingroup matop
@@ -32,15 +27,17 @@ void ludcmp(const dmatrix& a, const ivector& indx, const double& d);
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-dmatrix inv(const dmatrix& m1)
+dmatrix inv(_CONST dmatrix& m1)
 {
   double d;
   if (m1.rowmin()!=m1.colmin() || m1.rowmax() != m1.colmax())
   {
-    cerr << " Error in dmatrix inv(const dmatrix&) -- matrix not square \n";
+    cerr << " Error in dmatrix inv(_CONST dmatrix&) -- matrix not square \n";
   }
-
+ 
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 
   int i;
@@ -68,7 +65,7 @@ dmatrix inv(const dmatrix& m1)
     col[j]=1;
 
     lubksb(a,indx,col);
-
+  
     for (i=m1.rowmin(); i<=m1.rowmax(); i++)
     {
       y[i][j]=col[i];
@@ -85,19 +82,21 @@ dmatrix inv(const dmatrix& m1)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
+dmatrix inv(_CONST dmatrix& m1,const double& _ln_det, const int& _sgn)
 {
-  double d = 0.0;
+  double d;
   double& ln_det=(double&)(_ln_det);
   ln_det=0.0;
   int& sgn=(int&)(_sgn);
-
+  
   if (m1.rowmin()!=m1.colmin() || m1.rowmax() != m1.colmax())
   {
-    cerr << " Error in dmatrix inv(const dmatrix&) -- matrix not square \n";
+    cerr << " Error in dmatrix inv(_CONST dmatrix&) -- matrix not square \n";
   }
-
+ 
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 
   int i;
@@ -112,7 +111,7 @@ dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
   //int indx[30];
 
   ludcmp(a,indx,d);
-  if (d>.1)
+  if (d>.1) 
   {
     sgn=1;
   }
@@ -154,7 +153,7 @@ dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
     col[j]=1;
 
     lubksb(a,indx,col);
-
+  
     for (i=m1.rowmin(); i<=m1.rowmax(); i++)
     {
       y[i][j]=col[i];
@@ -170,10 +169,13 @@ dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
+void ludcmp(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double& _d)
 {
   int i=0;
+  int imax=0;
   int j=0;
   int k=0;
   int n=0;
@@ -203,7 +205,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
         big=temp;
       }
     }
-    if (big == 0.0)
+    if (big == 0.0) 
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
     }
@@ -214,7 +216,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (i=lb;i<j;i++) 
     {
       sum=a[i][j];
       for (k=lb;k<i;k++)
@@ -223,9 +225,8 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
       }
       a[i][j]=sum;
     }
-    int imax=j;
     big=0.0;
-    for (i=j;i<=ub;i++)
+    for (i=j;i<=ub;i++) 
     {
       sum=a[i][j];
       for (k=lb;k<j;k++)
@@ -268,7 +269,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
     }
   }
 }
-#undef TINY
+#undef TINY 
 
 #define TINY 1.0e-50;
 
@@ -279,10 +280,12 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
+void ludcmp_det(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double& _d)
 {
-  int i,j,k,n;
+  int i,imax,j,k,n;
   double& d=(double&)_d;
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
@@ -309,7 +312,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
         big=temp;
       }
     }
-    if (big == 0.0)
+    if (big == 0.0) 
     {
       d=0.;
     }
@@ -320,7 +323,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (i=lb;i<j;i++) 
     {
       sum=a[i][j];
       for (k=lb;k<i;k++)
@@ -329,9 +332,8 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
       }
       a[i][j]=sum;
     }
-    int imax = j;
     big=0.0;
-    for (i=j;i<=ub;i++)
+    for (i=j;i<=ub;i++) 
     {
       sum=a[i][j];
       for (k=lb;k<j;k++)
@@ -377,7 +379,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 
 
 /** LU decomposition back susbstitution alogrithm for constant object.
-    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$.
+    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
     \param indx Permutation vector from ludcmp.
     \param b A dvector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved, and containing on return the solution vector \f$X\f$.
@@ -388,7 +390,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 
     \deprecated Scheduled for replacement by 2010.
 */
-void lubksb(dmatrix a, const ivector& indx, dvector b)
+void lubksb(dmatrix a,_CONST ivector& indx,dvector b)
 {
   int i,ii=0,ip,j,iiflag=0;
   double sum;
@@ -406,18 +408,18 @@ void lubksb(dmatrix a, const ivector& indx, dvector b)
         sum -= a[i][j]*b[j];
       }
     }
-    else if (!ISZERO(sum))
+    else if ( sum )
     {
       ii=i;
       iiflag=1;
     }
     b[i]=sum;
   }
-
-  for (i=ub;i>=lb;i--)
+ 
+  for (i=ub;i>=lb;i--) 
   {
     sum=b[i];
-    for (j=i+1;j<=ub;j++)
+    for (j=i+1;j<=ub;j++) 
     {                        // !!! remove to show bug
       sum -= a[i][j]*b[j];
     }                        // !!! remove to show bug
@@ -435,9 +437,9 @@ void lubksb(dmatrix a, const ivector& indx, dvector b)
 
     \deprecated Scheduled for replacement by 2010.
 */
-double det(const dmatrix& m1)
+double det(_CONST dmatrix& m1)
 {
-  double d = 0.0;
+  double d;
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 
   if (m1.rowmin()!=m1.colmin()||m1.rowmax()!=m1.colmax())
@@ -474,9 +476,9 @@ double det(const dmatrix& m1)
 
     \deprecated Scheduled for replacement by 2010.
 */
-double ln_det(const dmatrix& m1, const int& _sgn)
+double ln_det(_CONST dmatrix& m1,BOR_CONST int& _sgn)
 {
-  double d = 0.0;
+  double d;
   int& sgn=(int&)_sgn;
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 
@@ -497,8 +499,8 @@ double ln_det(const dmatrix& m1, const int& _sgn)
   ivector indx(m1.rowmin(),m1.rowmax());
   ludcmp_det(a,indx,d);
   double ln_det=0.0;
-
-  if (d>.1)
+   
+  if (d>.1) 
   {
     sgn=1;
   }
@@ -529,16 +531,18 @@ double ln_det(const dmatrix& m1, const int& _sgn)
   return(ln_det);
 }
 
-/** LU decomposition.
+/** LU decomposition. 
     \deprecated This function may be completely unused?
 
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
+void ludcmp_index(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,
+  BOR_CONST double& _d)
 {
   int i=0;
+  int imax=0;
   int j=0;
   int k=0;
   int n=0;
@@ -569,7 +573,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
         big=temp;
       }
     }
-    if (big == 0.0)
+    if (big == 0.0) 
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
     }
@@ -580,7 +584,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (i=lb;i<j;i++) 
     {
       sum=a[i][j];
       for (k=lb;k<i;k++)
@@ -589,9 +593,9 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
       }
       a[i][j]=sum;
     }
-    int imax=j;
     big=0.0;
-    for (i=j;i<=ub;i++)
+
+    for (i=j;i<=ub;i++) 
     {
       sum=a[i][j];
       for (k=lb;k<j;k++)

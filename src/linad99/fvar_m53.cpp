@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
+
 dvar_vector lower_triangular_solve(const dvar_matrix& m,const dvar_vector&v)
 {
   int imin=m.indexmin();
@@ -38,20 +31,14 @@ dvar_vector lower_triangular_solve(const dvar_matrix& m,const dvar_vector&v)
   return x;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
+
 dvariable lower_triangular_ln_det(const dvar_matrix& m)
 {
   int sgn;
   return lower_triangular_ln_det(m,sgn);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 dvariable lower_triangular_ln_det(const dvar_matrix& m,int& sgn)
 {
   sgn=1;
@@ -85,19 +72,19 @@ dvar_vector lower_triangular_solve(const dvar_matrix& a, const dvar_vector & b)
   int mmax=b.indexmax();
   dvar_vector x(mmin,mmax);
 
-  for (i=mmin;i<=mmax;i++)
+  for (i=mmin;i<=mmax;i++) 
   {
     sum=b[i];
-    for (k=i-1;k>=mmin;k--)
+    for (k=i-1;k>=mmin;k--) 
     {
       sum -= a[i][k]*x[k];
     }
     x[i]=sum/a[i][i];
   }
   return x;
-  for (i=mmax;i>=mmin;i--)
+  for (i=mmax;i>=mmin;i--) 
   {
-    for (sum=x[i],k=i+1;k<=mmax;k++)
+    for (sum=x[i],k=i+1;k<=mmax;k++) 
     {
       sum -= a[k][i]*x[k];
     }

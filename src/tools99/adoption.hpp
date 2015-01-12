@@ -2,29 +2,31 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008 Regents of the University of California
+ * 
+ * License:
  *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "New BSD" license
- *
- * License:
- *
+ * 
+ * Copyright (c)  2008 Regents of the University of California.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- *
+ * 
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- *
+ * 
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -67,7 +69,7 @@ class command_line_options_list
 {
   int num_options
   command_line_options * options;
-  command_line_options_list(int argc, char * argv[],
+  command_line_options_list(int argc, char * argv[],  
     possible_options& po)
   {
     int i=1;
@@ -104,7 +106,13 @@ class command_line_options_list
                  << tmp << endl;
               exit(1);
             }
-      }
+        
+ 
+      }   
     }
+    
 }
+
+
+
 #endif

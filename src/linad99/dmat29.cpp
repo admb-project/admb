@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
-    The VEC operator concatenates the columns of matrix M into a column vector.
-    \param matrix M
- */
-dvector VEC(const dmatrix& _m)
+  dvector VEC(_CONST dmatrix& _m)
   {
     dmatrix& m= (dmatrix&) _m;
     int i;
@@ -29,6 +21,7 @@ dvector VEC(const dmatrix& _m)
       io(i)=ii;
     }
     dvector tmp(1,ii);
+    ii=0;
     for (i=mmin;i<=mmax;i++)
     {
       tmp(io(i-1)+1,io(i)).shift(m(i).indexmin())=m(i);
@@ -36,13 +29,7 @@ dvector VEC(const dmatrix& _m)
     return tmp;
   }
 
-/**
-  The MAT operator is the inverse of the VEC operator.
-It takes the elements of vector v and sequentially fills in the columns of an n by m matrix.
-  \param vector v
-  \param integer n, the number of rows in the resulting matrix
-  \param integer m, the umber of columns in the resulting matrix */
-dmatrix MAT(const dvector& v, int n, int m)
+  dmatrix MAT(_CONST dvector& v, int n,int m)
   {
     dmatrix tmp(1,n,1,m);
     int mmin=v.indexmin();
@@ -53,13 +40,16 @@ dmatrix MAT(const dvector& v, int n, int m)
       cerr << " Vector and Matrix sizes don't match in function MAT" << endl;
       tmp.initialize();
       return tmp;
-    }
+    }  	  
     for (int i=1;i<=n;i++)
     {
       for (int j=1;j<=m;j++)
       {
-        tmp(i,j)=v(ii++);
+	tmp(i,j)=v(ii++);
       }
     }
     return tmp;
   }
+
+
+

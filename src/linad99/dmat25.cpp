@@ -1,15 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 // file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable
+// constructors, destructors and misc functions involving class dvariable 
 
 #include "fvar.hpp"
 
@@ -28,11 +26,7 @@
 #endif
 #include <math.h>
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix operator/(const dmatrix& m, const double e)
+dmatrix operator / (_CONST dmatrix& m, CGNU_DOUBLE e)
 {
   dmatrix tmp;
   tmp.allocate(m);
@@ -43,11 +37,7 @@ dmatrix operator/(const dmatrix& m, const double e)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix operator/(const double e, const dmatrix& m)
+dmatrix operator / ( CGNU_DOUBLE e,_CONST dmatrix& m)
 {
   dmatrix tmp;
   tmp.allocate(m);
@@ -57,3 +47,4 @@ dmatrix operator/(const double e, const dmatrix& m)
   }
   return tmp;
 }
+

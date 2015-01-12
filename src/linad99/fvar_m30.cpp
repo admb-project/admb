@@ -1,15 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
+
 // file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable
+// constructors, destructors and misc functions involving class dvariable 
 
 #include "fvar.hpp"
 
@@ -28,11 +27,7 @@
 #endif
 #include <math.h>
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix operator/(const dvar_matrix& m, const double e)
+dvar_matrix operator / (_CONST dvar_matrix& m, CGNU_DOUBLE e)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -43,11 +38,7 @@ dvar_matrix operator/(const dvar_matrix& m, const double e)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix operator/(const dvar_matrix& m, const prevariable& e)
+dvar_matrix operator / (_CONST dvar_matrix& m,_CONST prevariable& e)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -58,11 +49,7 @@ dvar_matrix operator/(const dvar_matrix& m, const prevariable& e)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix operator/(const dmatrix& m, const prevariable& e)
+dvar_matrix operator / (_CONST dmatrix& m,_CONST prevariable& e)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -73,11 +60,7 @@ dvar_matrix operator/(const dmatrix& m, const prevariable& e)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix symmetrize(const dvar_matrix& m)
+dvar_matrix symmetrize(_CONST dvar_matrix& m)
 {
   if (m.rowmin() != m.colmin() || m.rowmax() != m.colmax() )
   {
@@ -102,3 +85,4 @@ dvar_matrix symmetrize(const dvar_matrix& m)
 
   return s;
 }
+

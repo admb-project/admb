@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <admodel.h>
 #ifdef __cplusplus
@@ -54,42 +50,15 @@ int inumber1=0;
 int number3=0;
 int number31=0;
 
-/**
- * Description not yet available.
- * \param
- */
 gggg01::gggg01(logical _wwuq3, logical _te0, logical _te1,
   logical _te2, logical _te3, logical _cold) :
-  te0(_te0),
-  te1(_te1),
-  te2(_te2),
-  te3(_te3),
-  wwuq3(_wwuq3),
-  cold(_cold)
-{
-}
+  wwuq3(_wwuq3), te0(_te0), te1(_te1), te2(_te2),
+  te3(_te3), cold(_cold) {}
 
-/**
- * Description not yet available.
- * \param
- */
 gggg24::gggg24()
 {
   accinf = new doublereal[(inumber1+1)*32];
 }
-gggg24::~gggg24()
-{
-  if (accinf != 0)
-  {
-    delete[] accinf;
-    accinf = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg25::gggg25()
 {
   x = new doublereal[nx];
@@ -102,59 +71,6 @@ gggg25::gggg25()
   dd = new doublereal[nx];
   difx = new doublereal[nx];
 }
-gggg25::~gggg25()
-{
-  if (x != 0)
-  {
-    delete[] x;
-    x = 0;
-  }
-  if (x0 != 0)
-  {
-    delete[] x0;
-    x0 = 0;
-  }
-  if (x1 != 0)
-  {
-    delete[] x1;
-    x1 = 0;
-  }
-  if (xmin != 0)
-  {
-    delete[] xmin;
-    xmin = 0;
-  }
-  if (resmin != 0)
-  {
-    delete[] resmin;
-    resmin = 0;
-  }
-  if (d != 0)
-  {
-    delete[] d;
-    d = 0;
-  }
-  if (d0 != 0)
-  {
-    delete[] d0;
-    d0 = 0;
-  }
-  if (dd != 0)
-  {
-    delete[] dd;
-    dd = 0;
-  }
-  if (difx != 0)
-  {
-    delete[] difx;
-    difx = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg26::gggg26() : gphi0(nx), gphi1(nx)
 {
   gradf = new doublereal[nx];
@@ -162,34 +78,6 @@ gggg26::gggg26() : gphi0(nx), gphi1(nx)
   gres = new doublereal[nx*number3];
   gresn = new doublereal[number3];
 }
-gggg26::~gggg26()
-{
-  if (gradf != 0)
-  {
-    delete[] gradf;
-    gradf = 0;
-  }
-  if (qgf != 0)
-  {
-    delete[] qgf;
-    qgf = 0;
-  }
-  if (gres != 0)
-  {
-    delete[] gres;
-    gres = 0;
-  }
-  if (gresn != 0)
-  {
-    delete[] gresn;
-    gresn = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg27::gggg27()
 {
   qr = new doublereal[nx*number3];
@@ -201,54 +89,6 @@ gggg27::gggg27()
   perm = new integer[nx];
   perm1 = new integer[nx];
 }
-gggg27::~gggg27()
-{
-  if (qr != 0)
-  {
-    delete[] qr;
-    qr = 0;
-  }
-  if (betaq != 0)
-  {
-    delete[] betaq;
-    betaq = 0;
-  }
-  if (diag != 0)
-  {
-    delete[] diag;
-    diag = 0;
-  }
-  if (cscal != 0)
-  {
-    delete[] cscal;
-    cscal = 0;
-  }
-  if (colle != 0)
-  {
-    delete[] colle;
-    colle = 0;
-  }
-  if (colno != 0)
-  {
-    delete[] colno;
-    colno = 0;
-  }
-  if (perm != 0)
-  {
-    delete[] perm;
-    perm = 0;
-  }
-  if (perm1 != 0)
-  {
-    delete[] perm1;
-    perm1 = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg00::gggg00()
 {
   val = new logical[number3+1];
@@ -257,60 +97,12 @@ gggg00::gggg00()
   llow = new logical[nx];
   lup = new integer[nx];
 }
-gggg00::~gggg00()
-{
-  if (val != 0)
-  {
-    delete[] val;
-    val = 0;
-  }
-  if (gconst != 0)
-  {
-    delete[] gconst;
-    gconst = 0;
-  }
-  if (gunit != 0)
-  {
-    delete[] gunit;
-    gunit = 0;
-  }
-  if (llow != 0)
-  {
-    delete[] llow;
-    llow = 0;
-  }
-  if (lup != 0)
-  {
-    delete[] lup;
-    lup = 0;
-  }
-}
 
-/**
- * Description not yet available.
- * \param
- */
 gggg02::gggg02()
 {
   a = new doublereal[nx*nx];
   diag0 = new doublereal[nx];
 }
-gggg02::~gggg02()
-{
-  if (a != 0)
-  {
-    a = 0;
-  }
-  if (diag0 != 0)
-  {
-    diag0 = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg03::gggg03()
 {
   bind = new integer[number3];
@@ -319,44 +111,13 @@ gggg03::gggg03()
   alist__ = new integer[number3+1];
   sort = new integer[number3];
 }
-gggg03::~gggg03()
-{
-  if (bind != 0)
-  {
-    bind = 0;
-  }
-  if (bind0 != 0)
-  {
-    bind0 = 0;
-  }
-  if (violis != 0)
-  {
-    violis = 0;
-  }
-  if (alist__ != 0)
-  {
-    alist__ = 0;
-  }
-  if (sort != 0)
-  {
-    sort = 0;
-  }
-}
 
-/**
- * Description not yet available.
- * \param
- */
-gggg07::gggg07(doublereal _jgh4,doublereal _jgh5)
+gggg07::gggg07(double _jgh4,double _jgh5)
 {
   jgh4=_jgh4;
   jgh5=_jgh5;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 gggg04::gggg04()
 {
   res = new doublereal[number3];
@@ -371,228 +132,50 @@ gggg04::gggg04()
   yu = new doublereal[nx+number3];
   slack = new doublereal[number3];
 }
-gggg04::~gggg04()
-{
-  if (res != 0)
-  {
-    delete[] res;
-    res = 0;
-  }
-  if (res0 != 0)
-  {
-    delete[] res0;
-    res0 = 0;
-  }
-  if (res1 != 0)
-  {
-    delete[] res1;
-    res1 = 0;
-  }
-  if (resst != 0)
-  {
-    delete[] resst;
-    resst = 0;
-  }
-  if (u != 0)
-  {
-    delete[] u;
-    u = 0;
-  }
-  if (u0 != 0)
-  {
-    delete[] u0;
-    u0 = 0;
-  }
-  if (w != 0)
-  {
-    delete[] w;
-    w = 0;
-  }
-  if (w1 != 0)
-  {
-    delete[] w1;
-    w1 = 0;
-  }
-  if (work != 0)
-  {
-    delete[] work;
-    work = 0;
-  }
-  if (yu != 0)
-  {
-    delete[] yu;
-    yu = 0;
-  }
-  if (slack != 0)
-  {
-    delete[] slack;
-    slack = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg05::gggg05(int _n,int _numberw,int _numberv) :
  n(_n), numberw(_numberw), numberv(_numberv) {}
-
-/**
- * Description not yet available.
- * \param
- */
+ 
 gggg09::gggg09()
 {
   cres = new integer[number3];
   cgres = new integer[number3];
 }
-
-/**
- * Description not yet available.
- * \param
- */
 gggg10::gggg10()
 {
   cfuerr = new logical[number3];
 }
-gggg10::~gggg10()
-{
-  if (cfuerr != 0)
-  {
-    delete[] cfuerr;
-    cfuerr = 0;
-  }
-}
-
-
-/**
- * Description not yet available.
- * \param
- */
 gggg12::gggg12()
 {
   name = new char[40];
 }
-gggg12::~gggg12()
-{
-  if (name != 0)
-  {
-    delete[] name;
-    name = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg15::gggg15()
 {
   ug = new doublereal[nx];
   og = new doublereal[nx];
   delfac = new doublereal[number3];
 }
-gggg15::~gggg15()
-{
-  if (ug != 0)
-  {
-    delete[] ug;
-    ug = 0;
-  }
-  if (ug != 0)
-  {
-    delete[] og;
-    og = 0;
-  }
-  if (ug != 0)
-  {
-    delete[] delfac;
-    delfac = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg17::gggg17()
 {
   xst = new doublereal[nx];
 }
-gggg17::~gggg17()
-{
-  if (xst != 0)
-  {
-    delete[] xst;
-    xst = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg18::gggg18(int _nx, doublereal _wwuq5, doublereal _wdg5bnd) :
     xtr(0,_nx-1), wwuq5(_wwuq5), wdg5bnd(_wdg5bnd)
 {
   //xtr = new doublereal[nx];
   xsc = new doublereal[_nx];
   fu = new doublereal[number3+1];
-  fugrad = new doublereal[_nx*(number3+1)];
+  fugrad = new doublereal[_nx*(number3+1)];	
   fud = new doublereal[(number3+1)*6];
 }
-gggg18::~gggg18()
-{
-  if (xsc != 0)
-  {
-    delete[] xsc;
-    xsc = 0;
-  }
-  if (fu != 0)
-  {
-    delete[] fu;
-    fu = 0;
-  }
-  if (fugrad != 0)
-  {
-    delete[] fugrad;
-    fugrad = 0;
-  }
-  if (fud != 0)
-  {
-    delete[] fud;
-    fud = 0;
-  }
-}
 
-/**
- * Description not yet available.
- * \param
- */
+
 gggg19::gggg19(logical _wwuq2,logical _wwuq4, integer _wwuq6) :
       wwuq2(_wwuq2), wwuq4(_wwuq4), wwuq6(_wwuq6){}
 
-/**
- * Description not yet available.
- * \param
- */
 gggg21::gggg21()
 {
   aitr = new integer[2*number3];
 }
-gggg21::~gggg21()
-{
-  if (aitr != 0)
-  {
-    delete[] aitr;
-    aitr = 0;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
 gggg23::gggg23()
 {
   xj = new doublereal[(nx+number3)*(nx+number3)];
@@ -602,36 +185,9 @@ gggg23::gggg23()
   ud = new doublereal[2*number3];
   ud1 = new doublereal[2*number3];
 }
-gggg23::~gggg23()
-{
-  if (xj != 0)
-  {
-    xj = 0;
-  }
-  if (ddual != 0)
-  {
-    ddual = 0;
-  }
-  if (r != 0)
-  {
-    r  = 0;
-  }
-  if (np != 0)
-  {
-    np = 0;
-  }
-  if (ud != 0)
-  {
-    ud = 0;
-  }
-  if (ud1 != 0)
-  {
-    ud1 = 0;
-  }
-}
 
 #ifdef __cplusplus
-}
+	}
 #endif
 
 /*
@@ -669,39 +225,35 @@ donlp2.o(.text+0xeb82): undefined reference to `user_eval__'
 #ifdef __cplusplus
 extern "C" {
 #endif
-gggg23 *gggg23_1 = 0;
-gggg24 *gggg24_1 = 0;
-gggg25 *gggg25_1 = 0;
-gggg26 *gggg26_1 = 0;
-gggg27 *gggg27_1 = 0;
-gggg00 *gggg00_1 = 0;
-gggg01 *gggg01_1 = 0;
-gggg02 *gggg02_1 = 0;
-gggg03 *gggg03_1 = 0;
-gggg04 *gggg04_1 = 0;
-gggg05 *gggg05_1 = 0;
-gggg06 *gggg06_1 = 0;
-gggg07 *gggg07_1 = 0;
-gggg08 *gggg08_1 = 0;
-gggg09 *gggg09_1 = 0;
-gggg10 *gggg10_1 = 0;
-gggg11 *gggg11_1 = 0;
-gggg12 *gggg12_1 = 0;
-gggg13 *gggg13_1 = 0;
-gggg14 *gggg14_1 = 0;
-gggg15 *gggg15_1 = 0;
-gggg16 *gggg16_1 = 0;
-gggg17 *gggg17_1 = 0;
-gggg18 *gggg18_1 = 0;
-gggg19 *gggg19_1 = 0;
-gggg20 *gggg20_1 = 0;
-gggg21 *gggg21_1 = 0;
-gggg22 *gggg22_1 = 0;
+gggg23 * gggg23_1 = 0;
+gggg24 * gggg24_1 = 0;
+gggg25 * gggg25_1 = 0;
+gggg26 * gggg26_1 = 0;
+gggg27 * gggg27_1 = 0;
+gggg00 * gggg00_1 = 0;
+gggg01 * gggg01_1 = 0;
+gggg02 * gggg02_1 = 0;
+gggg03 * gggg03_1 = 0;
+gggg04 * gggg04_1 = 0;
+gggg05 * gggg05_1 = 0;
+gggg06 * gggg06_1 = 0;
+gggg07 * gggg07_1 = 0;
+gggg08 * gggg08_1 = 0;
+gggg09 * gggg09_1 = 0;
+gggg10 * gggg10_1 = 0;
+gggg11 * gggg11_1 = 0;
+gggg12 * gggg12_1 = 0;
+gggg13 * gggg13_1 = 0;
+gggg14 * gggg14_1 = 0;
+gggg15 * gggg15_1 = 0;
+gggg16 * gggg16_1 = 0;
+gggg17 * gggg17_1 = 0;
+gggg18 * gggg18_1 = 0;
+gggg19 * gggg19_1 = 0;
+gggg20 * gggg20_1 = 0;
+gggg21 * gggg21_1 = 0;
+gggg22 * gggg22_1 = 0;
 
-/**
- * Description not yet available.
- * \param
- */
 void make_all_classes(int _n,int _numberw,int _numberv)
 {
  nx=_n;
@@ -710,7 +262,7 @@ void make_all_classes(int _n,int _numberw,int _numberv)
  inumber1=3500;
 
  doublereal _jgh4=0.1;
- doublereal _jgh5=1e+4;
+ int _jgh5=1.e+4;
  logical _wwuq3=TRUE_;
  logical _te0=FALSE_;
  logical _te1=FALSE_;
@@ -757,7 +309,7 @@ void make_all_classes(int _n,int _numberw,int _numberv)
   stj5 = 0;
   stj23 = 13;
   stj210 = nx;
- //logical stj8 = FALSE_;
+ logical stj8 = FALSE_;
   stj9 = 5;
   stj2800 = number3;
   stj21 = 11;
@@ -783,15 +335,13 @@ void make_all_classes(int _n,int _numberw,int _numberv)
   stj29 = 19;
   stj123 = .33333333333333331;
   stj124 = .14285714285714285;
+
 }
+
 #ifdef __cplusplus
-}
+	}
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
 doublestar::doublestar(integer n)
 {
   index_max=n;
@@ -807,10 +357,6 @@ doublestar::doublestar(integer n)
 #endif
 }
 
-/**
- * Description not yet available.
- * \param
- */
 doublestar::doublestar(integer m,integer n)
 {
   index_max=n;
@@ -826,15 +372,11 @@ doublestar::doublestar(integer m,integer n)
 #endif
 }
 
-/**
- * Description not yet available.
- * \param
- */
 doublestar::~doublestar()
 {
 #if defined(SAFE_ALL)
   d+=index_min-1;
-  if ( fabs(d[0]-123456789.12) >1.e-10
+  if ( fabs(d[0]-123456789.12) >1.e-10 
     || fabs(d[index_max-index_min+1]-123456789.12) > 1.e-10 )
   {
     cerr << "Memory error in doublestar" << endl;
@@ -848,7 +390,7 @@ doublestar::~doublestar()
 
 /*
 doublereal& doublestar::operator[] (int i)
-{
+{ 
   if (i<index_min | i>=index_max)
   {
     cout << "Index too high in doublestar access = " << i << endl;
@@ -857,7 +399,7 @@ doublereal& doublestar::operator[] (int i)
   return *(d+i);
 }
 integer& intstar::operator[] (int i)
-{
+{ 
   if (i<0 | i>=index_max)
   {
     cout << "Index too high in intstar access = " << i << endl;
@@ -867,16 +409,8 @@ integer& intstar::operator[] (int i)
 }
 */
 
-/**
- * Description not yet available.
- * \param
- */
 doublestar::operator doublereal * () { return d;}
 
-/**
- * Description not yet available.
- * \param
- */
 intstar::intstar(integer n)
 {
   index_max=n;
@@ -890,19 +424,16 @@ intstar::intstar(integer n)
 #endif
 }
 
-/**
-Destructor
-*/
 intstar::~intstar()
 {
 #if defined(SAFE_ALL)
-  d -= 1;
-  if (abs(d[0] - 123456789) > 0 || abs(d[index_max + 1] - 123456789) > 0)
+  d-=1;
+  if (abs(d[0]-123456789) >0 ||  abs(d[index_max+1]-123456789>0) )
   {
     cerr << "Memory error in intstar" << endl;
   }
 #endif
-
   delete [] d;
-  d = 0;
+  d=0;
 }
+

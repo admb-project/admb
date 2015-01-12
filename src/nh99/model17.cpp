@@ -1,12 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
 #include <admodel.h>
 
-streampos ad_comm::change_datafile_name(const adstring& s,
+
+streampos ad_comm::change_datafile_name(_CONST adstring& s,
   const streampos& off)
 {
   streampos tmp=0;
@@ -35,7 +37,7 @@ streampos ad_comm::change_datafile_name(const adstring& s,
   return tmp;
 }
 
-streampos ad_comm::change_pinfile_name(const adstring& s,
+streampos ad_comm::change_pinfile_name(_CONST adstring& s,
   const streampos& off)
 {
   streampos tmp=0;
@@ -58,3 +60,4 @@ streampos ad_comm::change_pinfile_name(const adstring& s,
   }
   return tmp;
 }
+

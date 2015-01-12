@@ -1,15 +1,11 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Dot-product fpor dvar_vector and sum for dvar_vector and dvar_matrix.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable
+// constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
 
@@ -22,28 +18,17 @@
   #include <iostream.hpp>
 #endif
 
-
-/** Compute the dot product of two variable type vectors. The minimum and maxium
-  legal subscripts of the arguments must agree; otherwize an error message
-   is printed and execution terminates.
-  \ingroup matop
-  \param v1 A dvar_vector, \f$a\f$.
-  \param v2 A dvar_vector, \f$b\f$.
-  \return A dvariable, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing
-  the value of the dot product of the two arguments.
-*/
-dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
+  dvariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "prevariable operator * (const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+      "prevariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   double tmp=0;
-
+ 
   #ifndef USE_ASSEMBLER
     int mmin=v1.indexmin();
     int mmax=v1.indexmax();
@@ -67,7 +52,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
     int n=v1.indexmax()-mmin+1;
     dp_dotproduct(&tmp,&(v1.elem_value(mmin)),&(v2.elem_value(mmin)),n);
   #endif
-
+  
   dvariable vtmp=nograd_assign(tmp);
 
   // The derivative list considerations
@@ -83,11 +68,6 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
   RETURN_ARRAYS_DECREMENT();
   return vtmp;
 }
-
-/*
- * Description not yet available.
- * \param
- */
 void dvdv_dot(void)
 {
   verify_identifier_string("aaaa");
@@ -109,6 +89,7 @@ void dvdv_dot(void)
   {
     *pdf1++ = dftmp * *pc2++;
     *pdf2++ = dftmp * *pc1++;
+
   }
   while (pdf1<=pdf1m);
 #else
@@ -125,12 +106,7 @@ void dvdv_dot(void)
 
 void X_dv_sum(void);
 
-/** Compute the sum of a variable type vector.
-  \ingroup matop
-  \param v1 A dvar_vector, \f$a\f$.
-  \return A dvariable, \f$s = \sum a \f$  containing the sum of the vector.
-*/
-dvariable sum(const dvar_vector& v1)
+dvariable sum(_CONST dvar_vector& v1)
 {
   if (allocated(v1))
   {
@@ -140,9 +116,9 @@ dvariable sum(const dvar_vector& v1)
     {
       tmp+=cv1.elem(i);
     }
-
+  
     dvariable vtmp=nograd_assign(tmp);
-
+  
     // The derivative list considerations
     save_identifier_string("bbbb");
     v1.save_dvar_vector_position();
@@ -159,10 +135,6 @@ dvariable sum(const dvar_vector& v1)
   }
 }
 
-/*
- * Description not yet available.
- *
- */
 void X_dv_sum(void)
 {
   verify_identifier_string("aaaa");
@@ -178,13 +150,7 @@ void X_dv_sum(void)
   dfv1.save_dvector_derivatives(v1pos);
 }
 
-/** Compute the sum of a variable type matrix.
-  \ingroup matop
-  \param v1 A dvar_matrix, \f$A\f$.
-  \return A dvariable, \f$s = \sum A \f$  containing the sum of the matrix.
-*/
-
-dvariable sum(const dvar_matrix& m)
+dvariable sum(_CONST dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;
@@ -195,3 +161,4 @@ dvariable sum(const dvar_matrix& m)
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
+

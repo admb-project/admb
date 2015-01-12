@@ -1,18 +1,18 @@
-/**
- * $Id: df1b2bet.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
 //#define EPS double(3.0e-7)
 #define EPS double(1.0e-9)
 #define FPMIN double(1.0e-30)
-df1b2variable betacf(const df1b2variable& a,const df1b2variable& b,
+df1b2variable betacf(_CONST df1b2variable& a,_CONST df1b2variable& b,
   double x, int MAXIT);
 
 
-//df1b2variable betai(const df1b2variable& a,const df1b2variable& b,
+//df1b2variable betai(_CONST df1b2variable& a,_CONST df1b2variable& b,
  // double x, int maxit=100);
 
 /** Incomplete beta function for df1b2variable objects.
@@ -25,8 +25,10 @@ df1b2variable betacf(const df1b2variable& a,const df1b2variable& b,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-df1b2variable betai(const df1b2variable & a,const df1b2variable & b,double x,
+df1b2variable betai(_CONST df1b2variable & a,_CONST df1b2variable & b,double x,
   int maxit)
 {
   df1b2variable bt;
@@ -52,8 +54,10 @@ df1b2variable betai(const df1b2variable & a,const df1b2variable & b,double x,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-df1b2variable betacf(const df1b2variable& a,const df1b2variable& b,
+df1b2variable betacf(_CONST df1b2variable& a,_CONST df1b2variable& b,
   double x, int MAXIT)
 {
   int m,m2;

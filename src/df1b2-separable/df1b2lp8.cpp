@@ -1,30 +1,20 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include <admodel.h>
-#include <df1b2fun.h>
-#include <adrndeff.h>
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
+
+#if defined(USE_LAPLACE)
+#  include <admodel.h>
+#  include <df1b2fun.h>
+#  include <adrndeff.h>
 double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
   dmatrix& M);
 
-/**
- * Description not yet available.
- * \param
- */
 void laplace_approximation_calculator::make_sparse_triplet(void)
 {
-  //int i;
+  int i;
   /*
   int mmax=Hess.indexmax();
   int nz=sum(Hess);
@@ -57,19 +47,19 @@ void laplace_approximation_calculator::make_sparse_triplet(void)
     }
   }
   //cout << nz2-nz << endl;
-
+ 
   if (sparse_triplet)
   {
     delete sparse_triplet;
     sparse_triplet=0;
   }
-  //sparse_triplet = new dcompressed_triplet(1,nz2,usize,usize);
+  //sparse_triplet = new dcompressed_triplet(1,nz2,usize);
   if (sparse_triplet2)
   {
     delete sparse_triplet2;
     sparse_triplet2=0;
   }
-  sparse_triplet2 = new dcompressed_triplet(1,nz2,usize,usize);
+  sparse_triplet2 = new dcompressed_triplet(1,nz2,usize);
 
   if (compressed_triplet_information)
   {
@@ -106,8 +96,7 @@ void laplace_approximation_calculator::make_sparse_triplet(void)
       (*sparse_iterator)(cti(3,i))=ii;
     }
   }
-  //cout << setw(8) << setprecision(2) << setscientific() << rowsum(Hess)
-  //     << endl;
+  //cout << setw(8) << setprecision(2) << setscientific() << rowsum(Hess) << endl;
   //cout << setw(8) << setprecision(2) << setscientific() << Hess << endl;
  /*
   int ii=0;
@@ -125,20 +114,18 @@ void laplace_approximation_calculator::make_sparse_triplet(void)
     }
   }
   */
-  //sparse_symbolic = new hs_symbolic(*sparse_triplet,1);
-  sparse_symbolic2 = new hs_symbolic(*sparse_triplet2,1);
-}
+        
+  //sparse_symbolic = new hs_symbolic(*sparse_triplet,1); 
+  sparse_symbolic2 = new hs_symbolic(*sparse_triplet2,1); 
 
-/**
- * Description not yet available.
- * \param
- */
+}
 void laplace_approximation_calculator::generate_antithetical_rvs()
 {
   // number of random vectors
   const ivector & itmp=(*num_local_re_array)(1,num_separable_calls);
-  //const ivector & itmpf=(*num_local_fixed_array)(1,num_separable_calls);
-  for (int i=2;i<=num_separable_calls;i++)
+  const ivector & itmpf=(*num_local_fixed_array)(1,num_separable_calls);
+  int i;
+  for (i=2;i<=num_separable_calls;i++)
   {
     if (itmp(i) != itmp(i-1))
     {
@@ -148,8 +135,8 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
     }
   }
   int n=itmp(1);
-  int samplesize=num_importance_samples;
-
+  double samplesize=num_importance_samples;
+  
   // mesh size
   double delta=0.01;
   // maximum of distribution is near here
@@ -189,9 +176,9 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
     cerr << "This can't happen" << endl;
     exit(1);
   }
-
-  // get random numbers
-
+      
+  // get random numbers    
+    
   random_number_generator rng(rseed);
   if (antiepsilon)
   {
@@ -204,17 +191,18 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   antiepsilon=new dmatrix(1,samplesize,1,n);
   dmatrix & M=*antiepsilon;
   M.fill_randn(rng);
-
-  for (int i=1;i<=samplesize;i++)
+  
+  for (i=1;i<=samplesize;i++)
   {
     M(i)=M(i)/norm(M(i));
   }
   int nvar=(samplesize-1)*n;
   independent_variables xx(1,nvar);
   ii=0;
-  for (int i=2;i<=samplesize;i++)
+  for (i=2;i<=samplesize;i++)
   {
-    for (int j=1;j<=n;j++)
+    int j;
+    for (j=1;j<=n;j++)
     {
       xx(++ii)=M(i,j);
     }
@@ -237,14 +225,14 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   {
     while (fmc.ireturn>=0)
     {
-      //int badflag=0;
+      int badflag=0;
       fmc.fmin(f,xx,g);
       if (fmc.ihang)
       {
-        //int hang_flag=fmc.ihang;
-        //double maxg=max(g);
-        //double ccrit=fmc.crit;
-        //int current_ifn=fmc.ifn;
+        int hang_flag=fmc.ihang;
+        double maxg=max(g);
+        double ccrit=fmc.crit;
+        int current_ifn=fmc.ifn;
       }
       if (fmc.ireturn>0)
       {
@@ -260,23 +248,20 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
      xx=xbest;
   }
   ii=0;
-  for (int i=2;i<=samplesize;i++)
+  for (i=2;i<=samplesize;i++)
   {
-    for (int j=1;j<=n;j++)
+    int j;
+    for (j=1;j<=n;j++)
     {
       M(i,j)=xx(++ii);
     }
   }
-  for (int i=1;i<=samplesize;i++)
+  for (i=1;i<=samplesize;i++)
   {
     M(i)*=dist(i)/norm(M(i));
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
   dmatrix& M)
 {
@@ -293,20 +278,21 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
 
   double f=0.0;
   int ii=0;
+  int i,j;
   VM0(1)=M(1);
-  for (int i=2;i<=samplesize;i++)
+  for (i=2;i<=samplesize;i++)
   {
-    for (int j=1;j<=n;j++)
+    for (j=1;j<=n;j++)
     {
       VM0(i,j)=x(++ii);
     }
   }
-  for (int i=1;i<=samplesize;i++)
+  for (i=1;i<=samplesize;i++)
   {
     N(i)=norm(VM0(i));
     VM(i)=VM0(i)*(d(i)/N(i));
   }
-  for (int i=1;i<=samplesize;i++)
+  for (i=1;i<=samplesize;i++)
   {
     for (ii=i+1;ii<=samplesize;ii++)
     {
@@ -318,7 +304,7 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
     }
     f+=100.0*square(log(N(i)));
   }
-  for (int i=1;i<=samplesize;i++)
+  for (i=1;i<=samplesize;i++)
   {
     //f+=100.0*square(log(N(i)));
     dfN(i)+=200*log(N(i))/N(i);
@@ -332,19 +318,19 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
       dfVM(ii)-=vtmp;
     }
   }
-  for (int i=1;i<=samplesize;i++)
+  for (i=1;i<=samplesize;i++)
   {
     //VM(i)=VM0(i)*(d(i)/N(i));
     dfVM0(i)=dfVM(i)*d(i)/N(i);
     dfN(i)-=(dfVM(i)*VM0(i))*d(i)/square(N(i));
-
+    
     //N(i)=norm(VM0(i));
     dfVM0(i)+=dfN(i)/N(i)*VM0(i);
   }
   ii=0;
-  for (int i=2;i<=samplesize;i++)
+  for (i=2;i<=samplesize;i++)
   {
-    for (int j=1;j<=n;j++)
+    for (j=1;j<=n;j++)
     {
       //VM0(i,j)=vx(++ii);
       g(++ii)=dfVM0(i,j);
@@ -353,34 +339,26 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
   return f;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void laplace_approximation_calculator::check_hessian_type(const dvector& _x,
   function_minimizer * pfmin)
-{
+{  
   pfmin->pre_user_function();
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void function_minimizer::pre_user_function(void)
-{
+{  
   if (lapprox)
   {
-    if (lapprox->hesstype==2)
+    if (lapprox->hesstype==2) 
     {
       lapprox->separable_calls_counter=0;
     }
   }
   user_function();
- /*
+ /* 
   if (lapprox)
   {
-    if (lapprox->hesstype==2)
+    if (lapprox->hesstype==2) 
     {
       lapprox->nested_shape.trim();
       cout << lapprox->nested_shape;
@@ -392,14 +370,10 @@ void function_minimizer::pre_user_function(void)
  */
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void laplace_approximation_calculator::
   check_hessian_type(function_minimizer * pfmin)
 {
-  int ip = 0;
+  int i,j,ip; 
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     hesstype=4;
@@ -431,6 +405,7 @@ void laplace_approximation_calculator::
   }
   else
   {
+    
     int nv=initial_df1b2params::set_index();
     if (allocated(used_flags))
     {
@@ -443,7 +418,7 @@ void laplace_approximation_calculator::
     {
       used_flags.safe_allocate(1,nv);
     }
-
+    
     //for (ip=1;ip<=num_der_blocks;ip++)
     {
       used_flags.initialize();
@@ -455,16 +430,16 @@ void laplace_approximation_calculator::
       (*re_objective_function_value::pobjfun)=0;
       df1b2variable pen=0.0;
       df1b2variable zz=0.0;
-
+  
       initial_df1b2params::reset(y,pen);
       // call function to do block diagonal newton-raphson
       // the step vector from the newton-raphson is in the vector step
       df1b2_gradlist::set_no_derivatives();
-
+      
       funnel_init_var::lapprox=this;
       block_diagonal_flag=5;
-
-      quadratic_prior::in_qp_calculations=1;
+  
+      quadratic_prior::in_qp_calculations=1; 
 
       if (sparse_hessian_flag)
       {
@@ -474,11 +449,11 @@ void laplace_approximation_calculator::
         // allocate space for uncompressed sparse hessian information
 
         //num_separable_calls=separable_calls_counter;
-        if (triplet_information==0)
+        if (triplet_information==0) 
         {
           triplet_information =new i3_array(1,separable_calls_counter);
         }
-        else if ( triplet_information->indexmax() != separable_calls_counter)
+        else if ( triplet_information->indexmax() != separable_calls_counter) 
         {
           delete triplet_information;
           triplet_information =new i3_array(1,separable_calls_counter);
@@ -492,11 +467,12 @@ void laplace_approximation_calculator::
 
       if (sparse_hessian_flag)
       {
-        // turn triplet_informaiton into  compressed_triplet_information
+        // turn triplet_informaiton into  compressed_triplet_information 
         int mmin= triplet_information->indexmin();
         int mmax= triplet_information->indexmax();
+        int i;
         int ndim=0;
-        for (int i=mmin;i<=mmax;i++)
+        for (i=mmin;i<=mmax;i++)
         {
           if (allocated((*triplet_information)(i)))
           {
@@ -511,13 +487,14 @@ void laplace_approximation_calculator::
         compressed_triplet_information=new imatrix(1,ndim,1,3);
         (*compressed_triplet_information)(3).fill_seqadd(1,1);
         int ii=0;
-        for (int i=mmin;i<=mmax;i++)
+        for (i=mmin;i<=mmax;i++)
         {
           if (allocated((*triplet_information)(i)))
           {
             int jmin=(*triplet_information)(i,1).indexmin();
             int jmax=(*triplet_information)(i,1).indexmax();
-            for (int j=jmin;j<=jmax;j++)
+            int j;
+            for (j=jmin;j<=jmax;j++)
             {
               ii++;
               (*compressed_triplet_information)(ii,1)=
@@ -532,7 +509,7 @@ void laplace_approximation_calculator::
         cti=sort(cti,1);
         int lmin=1;
         int lmax=0;
-        for (int i=2;i<=ndim;i++)
+        for (i=2;i<=ndim;i++)
         {
           if (cti(i,1)>cti(i-1,1))
           {
@@ -540,23 +517,24 @@ void laplace_approximation_calculator::
             cti.sub(lmin,lmax)=sort(cti.sub(lmin,lmax),2);
             lmin=i;
           }
-        }
+        } 
         cti.sub(lmin,ndim)=sort(cti.sub(lmin,ndim),2);
         imatrix tmp=trans(cti);
         delete compressed_triplet_information;
         compressed_triplet_information=new imatrix(tmp);
-      }
+          
+      }  
 
-      quadratic_prior::in_qp_calculations=0;
-
+      quadratic_prior::in_qp_calculations=0; 
+  
       int non_block_diagonal=0;
-      for (int i=xsize+1;i<=xsize+usize;i++)
+      for (i=xsize+1;i<=xsize+usize;i++)
       {
         if (used_flags(i)>1)
         {
           non_block_diagonal=1;
           break;
-        }
+        } 
       }
       if (non_block_diagonal)
       {
@@ -643,7 +621,7 @@ void laplace_approximation_calculator::
           {
             if (sparse_hessian_flag==0)
               Hess.allocate(1,usize,1,usize);
-          }
+          } 
           if (sparse_hessian_flag)
           {
             make_sparse_triplet();
@@ -668,7 +646,7 @@ void laplace_approximation_calculator::
           {
             if (sparse_hessian_flag==0)
               Hessadjoint.allocate(1,usize,1,usize);
-          }
+          } 
         }
       }
       else
@@ -715,9 +693,9 @@ void laplace_approximation_calculator::
           delete block_diagonal_vch;
           block_diagonal_vch=0;
         }
+        
         block_diagonal_vch = new dvar3_array(1,num_separable_calls,
           1,itmp,1,itmp);
-
         if (block_diagonal_ch)
         {
           delete block_diagonal_ch;
@@ -725,7 +703,6 @@ void laplace_approximation_calculator::
         }
         block_diagonal_ch = new d3_array(1,num_separable_calls,
           1,itmp,1,itmp);
-
         if (block_diagonal_hessian)
         {
           delete block_diagonal_hessian;
@@ -738,24 +715,12 @@ void laplace_approximation_calculator::
           cerr << "error_allocating d3_array" << endl;
           ad_exit(1);
         }
-
-        if (block_diagonal_re_list)
-        {
-          delete block_diagonal_re_list;
-          block_diagonal_re_list = 0;
-        }
         block_diagonal_re_list = new imatrix(1,num_separable_calls,
           1,itmp);
-        if (block_diagonal_re_list == 0)
+        if (block_diagonal_re_list ==0)
         {
           cerr << "error_allocating imatrix" << endl;
           ad_exit(1);
-        }
-
-        if (block_diagonal_fe_list)
-        {
-          delete block_diagonal_fe_list;
-          block_diagonal_fe_list = 0;
         }
         block_diagonal_fe_list = new imatrix(1,num_separable_calls,
           1,itmpf);
@@ -764,7 +729,6 @@ void laplace_approximation_calculator::
           cerr << "error_allocating imatrix" << endl;
           ad_exit(1);
         }
-
         // ****************************************************
         if (block_diagonal_Dux)
         {
@@ -806,7 +770,9 @@ void laplace_approximation_calculator::
           cerr << "error_allocating d3_array" << endl;
           ad_exit(1);
         }
-      }
+
+
+      } 
       funnel_init_var::lapprox=0;
       block_diagonal_flag=0;
       pen.deallocate();
@@ -814,10 +780,7 @@ void laplace_approximation_calculator::
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
 {
   const ivector & itmp=(*num_local_re_array)(1,num_separable_calls);
@@ -851,22 +814,12 @@ void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
     cerr << "error_allocating d3_array" << endl;
     ad_exit(1);
   }
-  if (block_diagonal_re_list)
-  {
-    delete block_diagonal_re_list;
-    block_diagonal_re_list=0;
-  }
   block_diagonal_re_list = new imatrix(1,num_separable_calls,
     1,itmp);
   if (block_diagonal_re_list ==0)
   {
     cerr << "error_allocating imatrix" << endl;
     ad_exit(1);
-  }
-  if (block_diagonal_fe_list)
-  {
-    delete block_diagonal_fe_list;
-    block_diagonal_fe_list=0;
   }
   block_diagonal_fe_list = new imatrix(1,num_separable_calls,
     1,itmpf);
@@ -918,10 +871,7 @@ void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
   }
 }
 
-/**
-\todo Need test case.
-*/
-void save_number_of_local_effects(int num_separable_calls,
+void save_number_of_local_effects(int num_separable_calls, 
   ivector ** num_local_re_array, ivector ** num_local_fixed_array,
   int num_local_re,int num_fixed_effects)
   //ivector& lre_index,ivector& lfe_index)
@@ -944,17 +894,11 @@ void save_number_of_local_effects(int num_separable_calls,
       ad_exit(1);
     }
     int old_max=(*num_local_re_array)->indexmax();
-#ifdef OPT_LIB
-    int new_max=old_max+100+(int)(10.0*sqrt(double(old_max)));
-#else
-    double sqrt_oldmax = 10.0 * sqrt(double(old_max));
-    assert(sqrt_oldmax <= INT_MAX);
-    int new_max=old_max+100+(int)sqrt_oldmax;
-#endif
+    int new_max=old_max+100+10*sqrt(double(old_max));
     ivector tmp(1,old_max);
     tmp=(**num_local_re_array);
     (*num_local_re_array)=new ivector(1,new_max);
-
+  
     delete *num_local_re_array;
     *num_local_re_array=new ivector(1,new_max);
     if (*num_local_re_array==0)
@@ -989,17 +933,11 @@ void save_number_of_local_effects(int num_separable_calls,
       ad_exit(1);
     }
     int old_max=(*num_local_fixed_array)->indexmax();
-#ifdef OPT_LIB
-    int new_max=old_max+100+(int)(10.0*sqrt(double(old_max)));
-#else
-    double sqrt_oldmax = 10.0 * sqrt(double(old_max));
-    assert(sqrt_oldmax <= INT_MAX);
-    int new_max=old_max+100+(int)sqrt_oldmax;
-#endif
+    int new_max=old_max+100+10*sqrt(double(old_max));
     ivector tmp(1,old_max);
     tmp=(**num_local_fixed_array);
     (*num_local_fixed_array)=new ivector(1,new_max);
-
+  
     delete *num_local_fixed_array;
     *num_local_fixed_array=new ivector(1,new_max);
     if (*num_local_fixed_array==0)
@@ -1013,10 +951,7 @@ void save_number_of_local_effects(int num_separable_calls,
 }
 
 
-/**
- * Description not yet available.
- * \param
- */
+
 void laplace_approximation_calculator::
   do_separable_stuff_hessian_type_information(void)
 {
@@ -1025,42 +960,42 @@ void laplace_approximation_calculator::
   imatrix& list=*funnel_init_var::plist;
   int num_local_re=0;
   int num_fixed_effects=0;
-#ifndef OPT_LIB
-  assert(funnel_init_var::num_active_parameters <= INT_MAX);
-#endif
-  ivector lre_index(1, (int)funnel_init_var::num_active_parameters);
-  ivector lfe_index(1, (int)funnel_init_var::num_active_parameters);
 
-  for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
+  int i;
+  ivector lre_index(1,funnel_init_var::num_active_parameters);
+  ivector lfe_index(1,funnel_init_var::num_active_parameters);
+
+  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize)
+    if (list(i,1)>xsize) 
     {
       lre_index(++num_local_re)=i;
     }
-    else if (list(i,1)>0)
+    else if (list(i,1)>0) 
     {
       lfe_index(++num_fixed_effects)=i;
     }
   }
-
+  
   //if (num_local_re > 0)
   {
+    int j;
     switch(hesstype)
     {
     case 3:
-      num_separable_calls++;
+      num_separable_calls++; 
       save_number_of_local_effects(num_separable_calls,
         &num_local_re_array,&num_local_fixed_array,num_local_re,
         num_fixed_effects); //,lre_index,lfe_index);
-      for (int i=1;i<=num_local_re;i++)
+      for (i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
-        for (int j=1;j<=num_local_re;j++)
+        for (j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int i1=list(lrei,1)-xsize;
           int j1=list(lrej,1)-xsize;
-          if (i1>=j1)
+          if (i1>=j1) 
           {
             //(*bHess)(i1,j1)+=locy(i2).u_bar[j2-1];
             int w=i1-j1+1;
@@ -1074,7 +1009,7 @@ void laplace_approximation_calculator::
         if (allocated(Hess))
         {
           Hess.deallocate();
-         /*
+         /* 
           if (Hess.indexmax() !=usize)
           {
             Hess.deallocate();
@@ -1092,12 +1027,12 @@ void laplace_approximation_calculator::
         */
         int dim= num_local_re*num_local_re;
         imatrix tmp(1,2,1,dim);
-
+          
         int ii=0;
-        for (int i=1;i<=num_local_re;i++)
+        for (i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (int j=1;j<=num_local_re;j++)
+          for (j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -1106,7 +1041,7 @@ void laplace_approximation_calculator::
             {
               cout << "cant happen?" << endl;
             }
-            if (i1<=j1)
+            if (i1<=j1) 
             {
               //Hess(i1,j1)=1;
               ii++;
@@ -1130,22 +1065,22 @@ void laplace_approximation_calculator::
         }
       }
     }
-  }
+  } 
   if (derindex)
   {
     if (num_separable_calls> derindex->indexmax())
     {
        cerr << "Need to increase the maximum number of separable calls allowed"
-            << " to at least " << num_separable_calls
+            << " to at least " << num_separable_calls 
             << endl << "Current value is " <<  derindex->indexmax() << endl;
        cerr << "Use the -ndi N command line option" << endl;
        ad_exit(1);
     }
-
+       
     if (allocated((*derindex)(num_separable_calls)))
       (*derindex)(num_separable_calls).deallocate();
     (*derindex)(num_separable_calls).allocate(1,num_local_re);
-    for (int i=1;i<=num_local_re;i++)
+    for (i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
       int i1=list(lrei,1)-xsize;
@@ -1161,30 +1096,27 @@ void laplace_approximation_calculator::
   f1b2gradlist->nlist.initialize();
   f1b2gradlist->nlist2.initialize();
   f1b2gradlist->nlist3.initialize();
-  funnel_init_var::num_vars=0;
-  funnel_init_var::num_active_parameters=0;
-  funnel_init_var::num_inactive_vars=0;
+  funnel_init_var::num_vars=0; 
+  funnel_init_var::num_active_parameters=0; 
+  funnel_init_var::num_inactive_vars=0; 
 }
 
-/**
- * Description not yet available.
- * \param
- */
 imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
 {
+  int i,ii;
   ivector rowsize(1,usize);
   rowsize.initialize();
 
   imatrix tmp(1,usize,1,usize);
   tmp.initialize();
-  for (int ii=1;ii<=num_separable_calls;ii++)
+  for (ii=1;ii<=num_separable_calls;ii++)
   {
     if (allocated((*derindex)(ii)))
     {
       ivector   iv = sort((*derindex)(ii));
       int n=iv.indexmax();
       if (n>1)                     // so we have off diagonal elements
-      {
+      { 
         for (int i=1;i<=n;i++)
         {
           int row=iv(i);
@@ -1196,7 +1128,7 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
               int  foundmatch=0;
               for (int k=1;k<=rowsize(row);k++)
               {
-                if (tmp(row,k)==col)
+                if (tmp(row,k)==col) 
                 {
                   foundmatch=1;
                   break;
@@ -1216,7 +1148,7 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
         }
       }
     }
-  }
+  }     
   imatrix M(1,usize,1,rowsize);
   ofstream ofs("sparseness.info");
   ofs << "# Number of parameters" << endl;
@@ -1224,7 +1156,7 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
   ofs << "# Number of off diagonal elements in each row" << endl;
   ofs << rowsize << endl;
   ofs << "# The nonempty rows of M" << endl;
-  for (int i=1;i<=usize;i++)
+  for (i=1;i<=usize;i++)
   {
     if (rowsize(i)>0)
     {
@@ -1232,5 +1164,14 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
       ofs << setw(4) << M(i) << endl;
     }
   }
+  exit(1);
   return M;
-}
+}      
+      
+
+
+
+
+
+
+#endif // if defined(USE_LAPLACE)

@@ -4,689 +4,602 @@
 % Copyright (c) 2008 Regents of the University of California
 %
 
+\def\leftset#1{#1\hfill}
 This chapter attempts to list and document all the functions
-available in \ADM. It will always be incomplete, since functions are
-continually being added. If you are aware of a function that is
-not documented please, contact me at \href{mailto:otter@otter-rsch.com}{otter@otter-rsch.com} and
+available in \ADM. It will always be incomplete since functions are
+continually being added. If you are aware of a function which is
+not documented please contact me at otter@otter-rsch.com and
 let me know.
 
+\mysection{Naming conventions for documenting functions}
+Wherever applicable the name function has been supplied for
+constant and variable objects (such as {\tt double} and {\tt dvariable}).
+Instead of repeating the description for both kinds of objects
+the convention of referring to both types as ``number'', ``vector'',
+``matrix'', etc. with be observed.
 
-\section{Naming conventions for documenting functions}
-
-Wherever applicable, the \texttt{name} function has been supplied for
-constant and variable objects (such as \texttt{double} and \texttt{dvariable}).
-Instead of repeating the description for both kinds of objects,
-the convention of referring to both types as ``number,'' ``vector,''
-``matrix,'' etc., will be observed.
-
-
-\section{Mathematical functions}
-
- The following functions have been included in \scAD, by overloading the 
-\cplus\ library functions or adding additional functions where necessary:
-\begin{lstlisting}
+\mysection{Mathematical Functions}
+ The following functions have been included in \AD\ by overloading the 
+\cplus\ library functions or adding additional functions where necessary
+\beginexamplea
   acos atan  cos cosh cube exp (mfexp) fabs gammln (sfabs) log log_comb 
   log10 log_density_poisson pow square sqrt sin sinh tan tanh
-\end{lstlisting}
-\X{\fontindexentry{tt}{sin}} \X{\fontindexentry{tt}{cos}} \X{\fontindexentry{tt}{tan}} \X{\fontindexentry{tt}{asin}} \X{\fontindexentry{tt}{atan}} \X{\fontindexentry{tt}{acos}} \X{\fontindexentry{tt}{sinh}} 
-\X{\fontindexentry{tt}{cosh}} \X{\fontindexentry{tt}{tanh}} \X{\fontindexentry{tt}{fabs}} \X{\fontindexentry{tt}{sfabs}} \X{\fontindexentry{tt}{exp}} \X{\fontindexentry{tt}{log}} 
-\X{\fontindexentry{tt}{log10}} \X{\fontindexentry{tt}{sqrt}} \X{\fontindexentry{tt}{pow}} 
-\X{\fontindexentry{tt}{gammln}}\X{\fontindexentry{tt}{log\_comb}}
-\XX{functions}{\fontindexentry{tt}{sin}} \XX{functions}{\fontindexentry{tt}{cos}} \XX{functions}{\fontindexentry{tt}{tan}} 
-\XX{functions}{\fontindexentry{tt}{asin}} \XX{functions}{\fontindexentry{tt}{atan}} \XX{functions}{\fontindexentry{tt}{acos}} 
-\XX{functions}{\fontindexentry{tt}{sinh}} \XX{functions}{\fontindexentry{tt}{cosh}} \XX{functions}{\fontindexentry{tt}{tanh}} 
-\XX{functions}{\fontindexentry{tt}{fabs}} \XX{functions}{\fontindexentry{tt}{sfabs}} \XX{functions}{\fontindexentry{tt}{exp}} 
-\XX{functions}{\fontindexentry{tt}{log}} \XX{functions}{\fontindexentry{tt}{log10}} \XX{functions}{\fontindexentry{tt}{sqrt}} 
-\XX{functions}{\fontindexentry{tt}{pow}} 
-\XX{functions}{\fontindexentry{tt}{gammln}}\XX{functions}{\fontindexentry{tt}{log\_comb}}
-These functions can be used on \texttt{number}s or \texttt{vector\_object}s
-in the form
-\begin{lstlisting}
+\endexample
+\X{sin} \X{cos} \X{tan} \X{asin} \X{atan} \X{acos} \X{sinh} 
+\X{cosh} \X{tanh} \X{fabs} \X{sfabs} \X{exp} \X{log} 
+\X{log10} \X{sqrt} \X{pow} 
+\X{gammln}\X{log\_comb}
+\XX{functions}{sin} \XX{functions}{cos} \XX{functions}{tan} 
+\XX{functions}{asin} \XX{functions}{atan} \XX{functions}{acos} 
+\XX{functions}{sinh} \XX{functions}{cosh} \XX{functions}{tanh} 
+\XX{functions}{fabs} \XX{functions}{sfabs} \XX{functions}{exp} 
+\XX{functions}{log} \XX{functions}{log10} \XX{functions}{sqrt} 
+\XX{functions}{pow} 
+\XX{functions}{gammln}\XX{functions}{log\_comb}
+\noindent These functions can be used on numbers or vector\_objects
+in the form 
+\beginexample
 number = function(number);
 vector_object = function(vector_object);
-\end{lstlisting}
-When operating on \texttt{vector\_object}s, the functions operate  
-elemen-by-element, so if \texttt{y} is a \texttt{dvector} whose
-elements are $(y_1,\ldots,y_n)$, then \texttt{exp(y)} is a 
-\texttt{dvector} whose elements are $(\exp(y_1),\ldots,\exp(y_n))$.
+\endexample
+\noindent When operating on {\tt vector\_objects} the functions operate  
+element by element, so that if {\tt y} is a {\tt dvector} whose
+elements are $(y_1,\ldots,y_n)$ then {\tt exp(y)} is a 
+{\tt dvector} whose elements are $(\exp(y_1),\ldots,\exp(y_n))$.
 
-\XX{vector}{maximum element}\XX{\fontindexentry{tt}{max}}{operation on a vector}
-\XX{vector}{minimum element}\XX{\fontindexentry{tt}{min}}{operation on a vector}
-The functions \texttt{min} and \texttt{max}, when applied to a \texttt{vector\_object},
-return a \texttt{number} that is equal to the minimum or maximum element of the
-\texttt{vector\_object}.
+\XX{vector}{maximum element}\XX{max}{operation on a vector}
+\XX{vector}{minimum element}\XX{min}{operation on a vector}
+The functions {\tt min} and {\tt max} when applied to a {\tt vector\_object}
+return a {\tt number} which is equal to the minimum or maximum element of the
+{\tt vector\_object}
 
-The function \texttt{gammln} is the logarithm of the gamma function.
+The function {\tt gammln} is the logarithm, of the gamma function.
 \XX{gamma function}{logarithm}
 
-The function \texttt{log\_comb(n,k)} is the logarithm of the  function,
-the combination of \texttt{n} things taken \texttt{k} at a time.
+The function {\tt log\_comb(n,k)} is the logarithm, of the  function
+the combination of {\tt n} things taken {\tt k} at a time.
 It is defined via the logarithm of the gamma function 
-for non-integer values,
+for non-integer values 
 and is differentiable.
 
-\X{\fontindexentry{tt}{log\_comb} function}
+\X{log\_comb function}
 
-
-\section{Operations on arrays}
-
+\mysection{operations on arrays}
 \subsection{Element-wise operations}
-
-There are several operations familiar to users of spreadsheets that do
-not appear as often in classical mathematical
-calculations. For example, spreadsheet users often
+There are several operations familiar to users of spreadsheets which do
+not appear as often in classical mathematical 
+calculations. For example spreadsheet users often
 wish to multiply one column in a spreadsheet by the corresponding
-elements of another column. Spreadsheet users might find it much more
-natural to define the product of matrices as an element-wise operation,
+elements of another column. Spread sheet users might find it much more
+natural to define the product of matrices as an element-wise operation
 such as
-$$z_{ij}= x_{ij}*y_{ij}$$
+$$\leftset{z_{ij}= x_{ij}*y_{ij}}$$
 The ``classical'' mathematical definition for the
-matrix product has been assigned to the overloaded operator `\texttt{*},'
-so large mathematical formulas involving
+matrix product has been assigned to the overloaded operator ``{\tt *}''
+so that large mathematical formulas involving
 vector and matrix operations can be written in a concise notation.
 Typically, spreadsheet-type calculations are not so complicated
 and do not suffer so much from being forced to adopt a
-``function style'' of notation.
+``function-style'' of notation.
 
 Since addition and subtraction are already defined in an element-wise manner,
 it is only necessary to define element-wise operations 
 for multiplication and
-division. We have named these functions \texttt{elem\_prod} and \texttt{elem\_div}.
-
+division. We have name these functions {\tt elem\_prod} and {\tt elem\_div}.
 \XX{functions}{element-wise product of vectors}
-\XX{vector}{element-wise product}\XX{\fontindexentry{tt}{elem\_prod}}{element-wise product}
-\begin{lstlisting}
+\XX{vector}{element-wise product}\XX{elem\_prod}{element-wise product}
+\beginexample
 vector_object = elem_prod(vector_object,vector_object) // element-wise multiply 
-\end{lstlisting}
-\afterlistingthing{$z_i= x_i*y_i $}
-
-\XX{vector}{element-wise division}\XX{\fontindexentry{tt}{elem\_div}}{element-wise division}
+\endexampledf
+$$\leftset{z_i= x_i*y_i}$$
+\XX{vector}{element-wise division}\XX{elem\_div}{element-wise division}
 \XX{functions}{element-wise division of vectors}
-\begin{lstlisting}
+\beginexample
 vector_object = elem_div(vector_object,vector_object) // element-wise divide
-\end{lstlisting}
-\afterlistingthing{$z_i= x_i/y_i $}
-
+\endexampledf
+$$\leftset{z_i= x_i/y_i}$$
 \XX{functions}{element-wise product of matrices}
 \XX{matrix}{element-wise product}
-\begin{lstlisting}
+\beginexample
 matrix_object = elem_prod(matrix_object,matrix_object) // element-wise multiply 
-\end{lstlisting}
-\afterlistingthing{$z_{ij}= x_{ij}*y_{ij} $}
-
+\endexampledf
+$$\leftset{z_{ij}= x_{ij}*y_{ij}}$$
 \XX{matrix}{element-wise division}
 \XX{functions}{element-wise division of matrices}
-\begin{lstlisting}
+\beginexample
 matrix_object = elem_div(matrix_object,matrix_object) // element-wise divide
-\end{lstlisting}
-\afterlistingthing{$z_{ij}= x_{ij}/y_{ij} $}
-
-
-\section{The identity matrix function \texttt{identity\_matrix}}
+\endexampledf
+$$\leftset{z_{ij}= x_{ij}/y_{ij}}$$
+\mysection{The identity matrix function {\tt identity\_matrix}}
 \XX{functions}{identity matrix function}
 \XX{matrix}{identity matrix function}
-
-\begin{lstlisting}
+\beginexample
 matrix_object = identity_matrix(int min,int max)
-\end{lstlisting}
-\afterlistingthing{creates a square identity matrix with minimum valid index \texttt{min} and 
-maximum valid index \texttt{max}.}
+\endexample
+\noindent Creates a square identity matrix with minimum valid indices min and 
+maximum valid index max.
 
-
-\section{Probability densities and related functions:\BR \texttt{poisson negative binomial cauchy}}
-\XX{functions}{Cauchy density}
-\XX{probability densities}{Cauchy}
-
-\begin{lstlisting}
+\mysection{Probability densities and related functions {\tt poisson negative binomial cauchy}}
+\XX{functions}{cauchy density}
+\XX{probility densities}{cauchy}
+\beginexample
 number log_density_cauchy(number x);
-\end{lstlisting}
-\afterlistingthing{returns the logarithm of the Cauchy density function 
-at \texttt{x}.}
-
-\XX{functions}{Poisson density}
-\XX{probability densities}{Poisson}
-\begin{lstlisting}
+\endexample
+\noindent returns the logarithm of the cauchy density function 
+at {\tt x}.
+\XX{functions}{poisson density}
+\XX{probility densities}{poisson}
+\beginexample
 number log_density_poisson(number x,number mu);
-\end{lstlisting}
-\afterlistingthing{returns the logarithm of the Poisson density function 
-at \texttt{x}
-with mean \texttt{mu}.}
-
-\XX{functions}{negative binomial density}
-\XX{probability densities}{negative binomial density}
-\begin{lstlisting}
+\endexample
+\noindent returns the logarithm of the poisson density function 
+at {\tt x}
+with mean {\tt mu}.
+\XX{functions}{negative binomail density}
+\XX{probility densities}{negative binomail density}
+\beginexample
 number log_negbinomial_density(number x,number mu,number tau);
-\end{lstlisting}
-\afterlistingthing{returns the logarithm of the negative  binomial density function 
-with mean \texttt{mu} and over-dispersion (variance/mean) \texttt{tau}.
-\texttt{tau} must be greater than~1.}
+\endexample
+\noindent returns the logarithm of the negative  binomial density fucntion 
+with mean {\tt mu} and overdispersion (variance/mean) {\tt tau}.
+{\tt tau} must be greater than 1.
 
-
-\section{The operations \texttt{det inv norm norm2 min max sum}}
-
-
-\subsubsection{The determinant of a matrix object} 
+\mysection{The operations {\tt det inv norm norm2 min max sum}}
+\noindent The determinant of a matrix object (The matrix must be square, that 
+is the number of row must equal the number of columns)
 \XX{matrix}{determinant}\X{determinant}
 \XX{functions}{determinant of a matrix}
-\X{\fontindexentry{tt}{det}}
-
-(The matrix must be square, that is, the number of rows must equal the number of columns.)
-\begin{lstlisting}
+\X{det}
+\beginexample
 matrix_object = det(matrix_object)
-\end{lstlisting}
-
-
-\subsubsection{The inverse of a matrix object} 
-\XX{matrix}{inverse}\X{inverse} \X{\fontindexentry{tt}{inv}}
+\endexample
+\noindent The inverse of a matrix object (The matrix must be square, that 
+is the number of row must equal the number of columns)
+\XX{matrix}{inverse}\X{inverse} \X{\tt inv}
 \XX{functions}{inverse of a matrix}
-
-(The matrix must be square, that is, the number of rows must equal the number of columns.)
-\begin{lstlisting}
+\beginexample
 matrix_object = inv(matrix_object)
-\end{lstlisting}
-
-
-\subsubsection{The norm of a vector object}
+\endexample
+\noindent The norm of a vector\_object
 \XX{functions}{norm of a vector}
-\XX{vector}{\fontindexentry{tt}{norm}}
-
-\begin{lstlisting}
+\XX{vector}{norm}
+\XX{vector}{norm squared}\X{norm}
+\XX{matrix}{norm}\X{norm}
+\XX{matrix}{norm squared}\X{norm}
+\beginexample
 number = norm(vector_object)
-\end{lstlisting}
-\afterlistingthing{$z=\sqrt{\sum_{i} x_{i}^2} $}
-\bigskip %zzz
-
-
-\subsubsection{The norm squared of a vector object}
-\XX{vector}{norm squared}\X{\fontindexentry{tt}{norm2}}
-\XX{matrix}{norm squared}\X{\fontindexentry{tt}{norm2}}
+\endexampledf
+$$\leftset{z=\sqrt{\sum_{i} x_{i}^2} }$$
+\noindent The norm squared of a vector\_object
+\XX{matrix}{norm squared}\X{norm}
 \XX{functions}{norm squared of a vector}
-
-\begin{lstlisting}
+\beginexample
 number = norm2(vector_object)
-\end{lstlisting}
-\afterlistingthing{$z=\sum_{i} x_{i}^2 $}
-\bigskip 
-
-
-\subsubsection{The norm of a matrix object}
-\XX{matrix}{\fontindexentry{tt}{norm}}\X{\fontindexentry{tt}{norm}}
+\endexampledf
+$$\leftset{z=\sum_{i} x_{i}^2 }$$
+The norm of a matrix\_object
 \XX{functions}{norm of a matrix}
-
-\begin{lstlisting}
+\beginexample
 number = norm(matrix_object)
-\end{lstlisting}
-\afterlistingthing{$z=\sqrt{\sum_{ij} x_{ij}^2} $}
-\bigskip 
-
-
-\subsubsection{The norm squared of a matrix object}
+\endexampledf
 \XX{functions}{norm squared of a matrix}
-\XX{matrix}{norm squared}\X{\fontindexentry{tt}{norm2}}
-
-\begin{lstlisting}
+$$\leftset{z=\sqrt{\sum_{ij} x_{ij}^2} }$$
+The norm squared of a matrix\_object
+\beginexample
 number = norm2(matrix_object)
-\end{lstlisting}
-\afterlistingthing{$z_{ij}=x_{ji} $}
-\bigskip 
-
-
-\subsubsection{The transpose of a matrix object}
+\endexampledf
+$$\leftset{z_{ij}=x_{ji} }$$
 \XX{functions}{transpose of a matrix}
 \XX{matrix}{transpose}
-
-\begin{lstlisting}
+The transpose of a matrix\_object
+\beginexample
 matrix_object = trans(matrix_object)
-\end{lstlisting}
-\afterlistingthing{$z=\sum_{ij} x_{ij}^2 $}
-\bigskip 
-
-
-\subsubsection{The sum over the elements of a vector object}
+\endexampledf
+$$\leftset{z=\sum_{ij} x_{ij}^2 }$$
+\goodbreak
+\noindent The sum over the elements of a vector object
 \XX{functions}{sum over the elements of a vector}
-\XX{vector}{sum over the elements}\XX{\fontindexentry{tt}{sum}}{operation on a vector}
-
-\begin{lstlisting}
+\XX{vector}{sum over the elements}\XX{sum}{operation on a vector}
+\beginexample
 number = sum(vector_object)
-\end{lstlisting}
-\afterlistingthing{$z=\sum_i x_i $}
-\bigskip 
-
-
-\subsubsection{The row sums of a matrix object}
-\XX{matrix}{\fontindexentry{tt}{rowsum}}\XX{\fontindexentry{tt}{rowsum}}{operation on a matrix}
-
-\begin{lstlisting}
+\endexample
+$$\leftset{z=\sum_i x_i }$$
+\noindent The row sums of a matrix object
+\XX{matrix}{rowsum}\XX{rowsum}{operation on a matrix}
+\beginexample
 vector = rowsum(matrix_object)
-\end{lstlisting}
-\afterlistingthing{$z_i=\sum_j x_{ij} $}
-\bigskip 
-
-
-\subsubsection{The column sums of a matrix object}
-\XX{matrix}{\fontindexentry{tt}{colsum}}\XX{\fontindexentry{tt}{colsum}}{operation on a matrix}
+\endexampledf
+$$\leftset{z_i=\sum_j x_{ij} }$$
+\noindent The column sums of a matrix object
+\XX{matrix}{colsum}\XX{colsum}{operation on a matrix}
 \XX{functions}{sum over the columns of a matrix}
-
-\begin{lstlisting}
+\beginexample
 vector = colsum(matrix_object)
-\end{lstlisting}
-\afterlistingthing{$z_j=\sum_i x_{ij} $}
-\bigskip 
-
-
-\subsubsection{The minimum element of a vector object}
-\XX{vector}{minimum element}\XX{\fontindexentry{tt}{min}}{operation on a vector}
+\endexampledf
+$$\leftset{z_j=\sum_i x_{ij} }$$
+\noindent The minimum element of a vector object
+\XX{vector}{minimum element}\XX{min}{operation on a vector}
 \XX{functions}{minimum element of a vector}
-
-\begin{lstlisting}
+\beginexample
 number = min(vector_object)
-\end{lstlisting}
-\bigskip 
-
-
-\subsubsection{The maximum element of a vector object}
-\XX{vector}{maximum element}\XX{\fontindexentry{tt}{max}}{operation on a vector}
+\endexample
+\XX{vector}{maximum element}\XX{max}{operation on a vector}
 \XX{functions}{maximum element of a vector}
-
-\begin{lstlisting}
+\noindent The maximum element of a vector object
+\beginexample
 number = max(vector_object)
-\end{lstlisting}
-\bigskip 
-
-
-
-\section{Eigenvalues and eigenvectors of a symmetric matrix}
-
+\endexample
+\mysection{Eigenvalues and eigenvectors of a symmetric matrix}
 \XX{eigenvalues}{not differentiable}
 \XX{eigenvectors}{not differentiable}
 \XX{functions}{eigenvalues of symmetric matrix}
 \XX{functions}{eigenvectors of symmetric matrix}
-
 While we have included eigenvalue and eigenvector routines for
-both constant and variable matrix objects, you should be aware
-that, in general, the eigenvectors and eigenvalues are not differentiable
+both constant and variable matrix objects you should be aware
+that in general the eigenvectors and eigenvalues are not differentiable
 functions of the variables determining the matrix.  
 
-\XX{eigenvectors} {of a symmetric matrix}
-\begin{lstlisting}
-matrix_object = eigenvectors(matrix_object)
-\end{lstlisting}
-\afterlistingthing{returns in a matrix the eigenvectors of a symmetric matrix.}
-
- It is the user's responsibility to 
+The eigenvalues of a symmetric matrix 
+\XX{eigenvalues} {of a symmetric matrix}
+\beginexample
+vector_object = eigenvalues(matrix_object)
+\endexample
+\noindent are returned in a vector. It is the users responsibility to 
 ensure that the matrix is actually symmetric. The routine symmetrizes 
-the matrix, so the eigenvectors returned are actually those for
+the matrix so that the eigenvalues returned are actually those for
+the symmetrized matrix.
+
+The eigenvectors of a symmetric matrix 
+\XX{eigenvectors} {of a symmetric matrix}
+\beginexample
+matrix_object = eigenvectors(matrix_object)
+\endexample
+\noindent are returned in a matrix. It is the users responsibility to 
+ensure that the matrix is actually symmetric. The routine symmetrizes 
+the matrix so that the eigenvectors returned are actually those for
 the symmetrized matrix. The eigenvectors are located in the
-columns of the matrix. The $i^\textrm{th}$ eigenvalue returned by the
-function \texttt{eigenvalues} corresponds to the $i^\textrm{th}$ eigenvector  
-returned by the function \texttt{eigenvectors}.
+columns of the matrix. The $i$'th eigenvalue returned by the
+function {\tt eigenvalues} corresponds to the $i$'th eigenvector  
+returned by the function {\tt eigenvector}.
 
-
-\section{The Choleski decomposition of a\br positive definite symmetric matrix}
-\X{Choleski decomposition of a symmetric matrix}
-\XX{functions}{Choleski decomposition}
-\XX{symmetric matrix}{Choleski decomposition}
-
-For a positive definite symmetric matrix \texttt{S}, the
-Choleski decomposition of \texttt{S} is a lower triangular matrix \texttt{T}
-satisfying the relationship \texttt{S=T*trans(T)}. 
-If \texttt{S} is a (positive definite symmetric) matrix object and
-\texttt{T} is a matrix object, the line of code
-\begin{lstlisting}
-  T=choleski_decomp(S);
-\end{lstlisting}
-will calculate the Choleski decomposition of \texttt{S} and put it
-into \texttt{T}.
-\X{solving a system of linear equations}
-\X{solve@\texttt{solve} function}
+\X{choleski decomposition of a symmetric matrix}
+\XX{functions}{choleski decomposition}
+\XX{symmetric matrix}{choleski decomposition}
+\mysection{The choleski decomposition of a positive definite symmetric matrix}
+For a positive definite symmetric matrix {\tt S}, the
+choleski decomposition of {\tt S} ia a lower triangular matrix {\tt T}
+satifying the relationship {\tt S=T*trans(T)}. 
+If {\tt S} is a (positive definite symmetric) matrix object and
+{\tt T} is a matrix object, the line of code
+\beginexample
+T=choleski_decomp(S);
+\endexample
+\noindent will calculate the choleski decomposition of {\tt S} and put it
+into {\tt T}.
+\X{Solving a system of linear equations}
+\X{solve function}
 \XX{functions}{solving linear system of equations}
 \XX{optimizing performance}{using the best operators for a calculation}
-
-
-\section{Solving a system of linear equations}
-
-If \texttt{y} is a vector and \texttt{M} is an invertible matrix, then finding
-a vector \texttt{x} such that
-\begin{lstlisting}
-  x=inv(M)*y
-\end{lstlisting}
-will be referred to as ``solving the system of linear equations
-determined by \texttt{y} and \texttt{M}.'' Of course, it is possible
-to use the \texttt{inv} function to accomplish this task, but it is much
-more efficient to use the \texttt{solve} function:
-\begin{lstlisting}
-  vector x=solve(M,y); // x will satisfy x=inv(M)*y;
-\end{lstlisting}
+\mysection{Solving a system of linear equations}
+If {\tt y} is a vector and {\tt M} is an invertible matrix then finding
+a vector {\tt x} such that
+\beginexample
+x=inv(M)*y
+\endexample
+\noindent will be referred to as solving the system of linear equations
+determined by {\tt y} and {\tt M}. Of course it is possible
+to use the {\tt inv} function to accomplish this task but it is much
+more efficient to use the {\tt solve} function.
+\beginexample
+vector x=solve(M,y); // x will satisfy x=inv(M)*y;
+\endexample
 It turns out that it is a simple matter to calculate the determinant
-of the matrix \texttt{M} while solving the system of linear
-equations.  Since this is useful in multivariate
-analysis, we have also included a function that returns the 
-determinant when the system of equations is solved.
-To avoid floating point overflow, or underflow when working with
-large matrices, the logarithm of the absolute value of the
-determinant, together with the sign of the determinant, are returned.
-The constant form of the \texttt{solve} function is
-\begin{lstlisting}
+of the matrix {\tt M} at the same time as the system of linear
+equations is solved, and since this is useful in multivariate
+analysis we have also included a function which returns the 
+determinant at the same time as the system of equations is solved.
+To avoid floating point overflow or underflow when working with
+large matrices the logarithm of the absolute value of the
+determinant together with the sign of the determinant are returned 
+The constant form of the solve function is
+\beginexample
 double ln_det;
 double sign;
 dvector x=solve(M,y,ln_det,sign);
-\end{lstlisting}
-while the variable form is
-\begin{lstlisting}
+\endexample
+\noindent while the variable form is
+\beginexample
 dvariable ln_det;
 dvariable sign;
 dvar_vector x=solve(M,y,ln_det,sign);
-\end{lstlisting}
-The \texttt{solve} function is useful for calculating the log-likelihood
+\endexample
+The solve function is useful for calculating the log-likelihood
 function for a multivariate normal distribution.
 Such a log-likelihood function involves a calculation similar to
-\begin{lstlisting}
+\beginexample
   l = -.5*log(det(S)) -.5*y*inv(S)*y
-\end{lstlisting}
-where \texttt{S} is a matrix object and \texttt{y} is a vector object.
+\endexample
+\noindent where Sis a matrix object and y is a vector object.
 It is much more efficient to carry out this calculation using
-the \texttt{solve} function. The following code illustrates the
-calculations for variable objects:
+the solve function. The following code illustrates the
+calculations for variable objects. 
 \XX{multivariate normal distribution}{calculation of 
   the log-likelihood function for}
-\begin{lstlisting}
-dvariable ln_det;
-dvariable sign;
-dvariable l;
-dvar_vector tmp=solve(M,y,ln_det,sign);
-l=-.5*ln_det-y*tmp;
-\end{lstlisting}
+\beginexample
+   dvariable ln_det;
+   dvariable sign;
+   dvariable l;
+   dvar_vector tmp=solve(M,y,ln_det,sign);
+   l=-.5*ln_det-y*tmp;
+\endexample
 
-
-\section{Methods for filling arrays and matrices}
-
+\mysection{Methods for filling arrays and matrices}
 While it is always possible to fill vectors and matrices by
 using loops and filling them element by element, this is tedious
-and prone to error. To simplify this task, a selection 
+and prone to error. To simplify this task a selection 
 of methods for filling vectors and
-matrices with either random numbers, or a specified sequence of numbers, is available.
+matrices with random numbers or a specified sequence of numbers is available.
 There are also methods for filling row and columns of matrices with
-vectors. In this section, the symbol \texttt{vector} can refer to either
-a \texttt{dvector} or a \texttt{dvar\_vector},
-while the symbol \texttt{matrix} can refer to either
-a \texttt{dmatrix} or a \texttt{dvar\_matrix}.
+vectors. In this section the symbol {\tt vector} can refer to either
+a {\tt dvector} or a {\tt dvar\_vector}.
+while the symbol {\tt matrix} can refer to either
+a {\tt dmatrix} or a {\tt dvar\_matrix}.
 
 \XX{functions}{filling arrays and matrices}
 \X{filling arrays and matrices}
-\XX{vector}{\fontindexentry{tt}{fill}}\XX{\fontindexentry{tt}{fill}}{filling a vector}
-\begin{lstlisting}
-void vector::fill("{m,n,...,}")
-\end{lstlisting}
-\afterlistingthing{fills a vector with a sequence of the form
-\texttt{n, m, $\ldots$} The number of elements in the string must match the
-size of the vector.}
+\beginexample
+  void vector::fill("{m,n,...,}")
+\endexample
+\XX{vector}{fill}\XX{fill}{filling a vector} 
+\noindent fills a vector with a sequence of the form
+{\tt n, m, $\ldots$} The number of elements in the string must match the
+size of the vector.
 
-\XX{vector}{\fontindexentry{tt}{fill\_seqadd}} \XX{\fontindexentry{tt}{fill\_seqadd}}{filling a vector} 
-\begin{lstlisting}
-void vector::fill_seqadd(double& base, double& offset)
-\end{lstlisting}
-\afterlistingthing{fills a vector with a sequence of the form
-\texttt{base, base+offset, base+2*offset,$\ldots$}}
+\XX{vector}{fill\_seqadd} \XX{fill\_seqadd}{filling a vector} 
+\beginexample
+  void vector::fill_seqadd(double& base, double& offset)
+\endexample
+\noindent fills a vector with a sequence of the form
+{\tt base, base+offset, base+2*offset,$\ldots$}
 
-For example, if \texttt{v} is a \texttt{dvector} created by the statement
-\begin{lstlisting}
-  dvector v(0,4);
-\end{lstlisting}
-then the statement
-\begin{lstlisting}
-  v.fill_seqadd(-1,.5);
-\end{lstlisting}
-will fill \texttt{v} with the numbers $(-1.0,-0.5,0.0,0.5,1.0)$.
+For example if {\tt v} is a {\tt dvector} created by the statement
+\beginexample
+dvector v(0,4);
+\endexample
+\noindent then the statement
+\beginexample
+v.fill_seqadd(-1,.5);
+\endexample
+\noindent will fill {\tt v} with the numbers $(-1.0,-0.5,0.0,0.5,1.0)$.
+\XX{matrix}{rowfill\_seqadd} \XX{rowfill\_seqadd}{filling a matrix} 
+\beginexample
+  void matrix::rowfill_seqadd(int& i,double& base, double& offset)
+\endexample
+\noindent fills row {\tt i} of a matrix with a sequence of the form
+{\tt base, base+offset, base+2*offset,$\ldots$}
 
-\XX{matrix}{\fontindexentry{tt}{rowfill\_seqadd}} \XX{\fontindexentry{tt}{rowfill\_seqadd}}{filling a matrix} 
-\begin{lstlisting}
-void matrix::rowfill_seqadd(int& i,double& base, double& offset)
-\end{lstlisting}
-\afterlistingthing{fills row \texttt{i} of a matrix with a sequence of the form
-\texttt{base, base+offset, base+2*offset,$\ldots$}}
+\XX{matrix}{colfill\_seqadd} \XX{colfill\_seqadd}{filling a matrix} 
+\beginexample
+  void matrix::colfill_seqadd(int& j,double& base, double& offset)
+\endexample
+\noindent fills column {\tt j} of a matrix with a sequence of the form
+{\tt base, base+offset, base+2*offset,$\ldots$}
 
-\XX{matrix}{\fontindexentry{tt}{colfill\_seqadd}} \XX{\fontindexentry{tt}{colfill\_seqadd}}{filling a matrix} 
-\begin{lstlisting}
-void matrix::colfill_seqadd(int& j,double& base, double& offset)
-\end{lstlisting}
-\afterlistingthing{fills column \texttt{j} of a matrix with a sequence of the form
-\texttt{base, base+offset, base+2*offset,$\ldots$}}
-
-\XX{matrix}{\fontindexentry{tt}{colfill}} \XX{\fontindexentry{tt}{colfill}}{filling a matrix column with a vector} 
-\XX{matrix}{\fontindexentry{tt}{rowfill}}\XX{\fontindexentry{tt}{rowfill}}{filling a matrix row with a vector} 
-\begin{lstlisting}
+\XX{matrix}{colfill} \XX{colfill}{filling a matrix column with a vector} 
+\XX{matrix}{rowfill}\XX{rowfill}{filling a matrix row with a vector} 
+\beginexample
 void matrix::colfill(int& j,vector&)
-\end{lstlisting}
-\afterlistingthing{fills the $j^\textrm{th}$ column of a matrix with a vector.}
+\endexample
+\noindent fills the j'th column of a matrix with a vector 
 
-\begin{lstlisting}
+\beginexample
 void matrix::rowfill(int& i,vector&)
-\end{lstlisting}
-\afterlistingthing{fills the $i^\textrm{th}$ row of a matrix with a vector.}
+\endexample
+\noindent fills the i'th row of a matrix with a vector 
 
-
-\section{Methods for filling arrays and matrices\br with random numbers}
-
-This method of filling containers with random numbers is becoming
-obsolete. The preferred method is to use the
-\texttt{random\_number\_generator} class.
-See Section~\ref{rng} for instructions on using this class.
-In this section, a uniformly distributed random number is assumed to have
-a uniform distribution on~$[0,1]$. A normally distributed random number
-is assumed to have mean~$0$ and variance~$1$.
-A binomially distributed random number is assumed to have a parameter~$p$,
-where $1$ is returned with probability~$p$, and $0$ is returned with
-probability~$1-p$.
+\mysection{Methods for filling arrays and matrices with random numbers}
+This mehtiod of filling containers with random numbers is becoming
+obsolete. the preferred method is to use the
+{\tt random\_number\_generator} class.
+See section \ref{rng} for instructions on using this class.
+In this section a uniformly distributed random number is assumed to have
+a uniform distribution on $[0,1]$. A normally distributed random number
+is assumed to have mean $0$ and variance $1$.
+A binomially distributed random number is assumed to have a parameter $p$
+where $1$ is returned with probability $p$ and $0$ is returned with
+probability $1-p$.
 A multinomially distributed random variable is assumed to have a vector
-of parameters $P$, where $i$ is returned with probability $p_i$.
-If the components of $P$ do not sum to~$1$, the vector will be normalized
-so that the components {\it do} sum to~$1$.
+of parameters $P$ where $i$ is returned with probability $p_i$.
+If the components of $P$ do not sum to $1$ the vector will be normalized
+so that the components do sum to $1$.
 
-\XX{vector}{\fontindexentry{tt}{fill\_randu}} \XX{\fontindexentry{tt}{fill\_randu}}{filling a vector with random numbers} 
-\begin{lstlisting}
+\XX{vector}{fill\_randu} \XX{fill\_randu}{filling a vector with random numbers} 
+\beginexample
 void vector::fill_randu(long int& n)
-\end{lstlisting}
-\afterlistingthing{fills a vector with a sequence of uniformly distributed 
-random numbers. The \texttt{long int n} is a seed for the random number
-generator. Changing \texttt{n} will produce a different sequence of
+\endexample
+\noindent fills a vector with a sequence of uniformly distributed 
+random numbers. The {\tt long int n} is a seed for the random number
+generator. Changing {\tt n} will produce a different sequence of
 random numbers. 
-{\it This function is now obsolete. You should use the}
-\texttt{random\_number\_generator} \textit{class to generate random numbers.}}
+This function is now obsolete. You should use the
+{\tt random\_number\_generator} class to generate random numbers. 
 
-\XX{matrix}{\fontindexentry{tt}{colfill\_randu}} 
-\XX{\fontindexentry{tt}{colfill\_randu}}{filling a matrix with random numbers} 
-\begin{lstlisting}
+\XX{matrix}{colfill\_randu} 
+\XX{colfill\_randu}{filling a matrix with random numbers} 
+\beginexample
 void matrix::colfill_randu(int& j,long int& n)
-\end{lstlisting}
-\afterlistingthing{fills column \texttt{j} of a matrix with a sequence of uniformly 
+\endexample
+\noindent fills column {\tt j} of a matrix with a sequence of uniformly 
 distributed random numbers
-The \texttt{long int n} is a seed for the random number
-generator. Changing \texttt{n} will produce a different sequence of
-random numbers.}
-
-\XX{matrix}{\fontindexentry{tt}{rowfill\_randu}}
-\XX{\fontindexentry{tt}{rowfill\_randu}}{filling a matrix with random numbers} 
-\begin{lstlisting}
-void matrix::rowfill_randu(int& i,long int& n)
-\end{lstlisting}
-\afterlistingthing{fills row \texttt{i} of a matrix with a sequence of uniformly 
-distributed random numbers.}
-
-\XX{vector}{\fontindexentry{tt}{fill\_randbi}} \XX{\fontindexentry{tt}{fill\_randbi}}{filling a vector with random numbers} 
-\begin{lstlisting}
-void vector::fill_randbi(long int& n, double& p)
-\end{lstlisting}
-\afterlistingthing{fills a vector with a sequence of random numbers from
-a binomial distribution.}
-
-\XX{vector}{\fontindexentry{tt}{fill\_randn}} \XX{\fontindexentry{tt}{fill\_randn}}{filling a vector with random numbers} 
-\begin{lstlisting}
-void vector::fill_randn(long int& n)
-\end{lstlisting}
-\afterlistingthing{fills a vector with a sequence of normally distributed 
+The {\tt long int n} is a seed for the random number
+generator. Changing {\tt n} will produce a different sequence of
 random numbers.
-{\it This function is now obsolete. You should use the}
-\texttt{random\_number\_generator} \textit{class to generate random numbers.}}
 
-\XX{matrix}{\fontindexentry{tt}{rowfill\_randn}} 
-\XX{\fontindexentry{tt}{rowfill\_randn}}{filling a matrix with random numbers} 
-\begin{lstlisting}
+\XX{matrix}{rowfill\_randu} 
+\XX{rowfill\_randu}{filling a matrix with random numbers} 
+\beginexample
+void matrix::rowfill_randu(int& i,long int& n)
+\endexample
+\noindent fills row {\tt i} of a matrix with a sequence of uniformly 
+distributed random numbers
+
+\XX{vector}{fill\_randbi} \XX{fill\_randbi}{filling a vector with random numbers} 
+\beginexample
+void vector::fill_randbi(long int& n, double& p)
+\endexample
+\noindent fills a vector with a sequence random numbers from
+a binomial distribution.
+
+\XX{vector}{fill\_randn} \XX{fill\_randn}{filling a vector with random numbers} 
+\beginexample
+void vector::fill_randn(long int& n)
+\endexample
+\noindent fills a vector with a sequence of normally distributed 
+random numbers
+This function is now obsolete. You should use the
+{\tt random\_number\_generator} class to generato random numbers. 
+
+\XX{matrix}{rowfill\_randn} 
+\XX{rowfill\_randn}{filling a matrix with random numbers} 
+\beginexample
 void matrix::colfill_randn(int& j,long int& n)
-\end{lstlisting}
-\afterlistingthing{fills column \texttt{j} of a matrix with a sequence of normally 
-distributed random numbers.}
+\endexample
+\noindent fills column {\tt j} of a matrix with a sequence of normally 
+distributed random numbers
 
-\begin{lstlisting}
+\beginexample
 void matrix::rowfill_randn(int& i,long int& n)
-\end{lstlisting}
-\afterlistingthing{fills row \texttt{i} of a matrix with a sequence of normally 
-distributed random numbers.}
+\endexample
+\noindent fills row {\tt i} of a matrix with a sequence of normally 
+distributed random numbers
 
-\XX{vector}{\fontindexentry{tt}{fill\_multinomial}} \XX{\fontindexentry{tt}{fill\_multinomial}}{filling a vector with random numbers} 
-\begin{lstlisting}
+\XX{vector}{fill\_multinomial} \XX{fill\_multinomial}{filling a vector with random numbers} 
+\beginexample
 void vector::fill_multinomial(long int& n, dvector& p)
-\end{lstlisting}
-\afterlistingthing{fills a vector with a sequence random numbers from
-a multinomial distribution. The parameter~$p$ is a \texttt{dvector} such that
-\texttt{p[i]} is the probability of returning~$i$. The elements of \texttt{p}
-must sum to~$1$.}
+\endexample
+\noindent fills a vector with a sequence random numbers from
+a multinomial distribution. The parameter $p$ is a {\tt dvector} such that
+{\tt p[i]} is the probability of returning $i$. The elements of {\tt p}
+must sum to $1$.
 
-
-\section{Methods for obtaining shape information\br from containers}
-
-When this code was first written, the maximum dimension of arrays
-was about four. At this level, it perhaps make sense to think of
-a 1-dimensional array as a vector, a 2-dimensional array as
-a matrix, etc. For a matrix, one thinks in terms of rows and columns.
-However, with the adoption of ragged container objects up to
-eight dimensions (at present), a more generic method of obtaining
+\mysection{Methods for obtaining shape information from containers}
+When this code was first written the maximum dimnsion of arrays
+was about 4. At this level it perhaps make sense to think of
+a one dimensional array as a vector, a two dimensional array as
+a matrix etc. For a matrix one thinks in terms of rows and columns.
+However with the adoption of ragged container objects up to
+eight dimensions (at present) a more generic method of obtaining
 shape information of these objects was called for.
 
-If \texttt{v} is a vector object, then
-\begin{lstlisting}
+If {\tt v} is a vector object then
+\beginexample
 int v.indexmin()
 int v.indexmax()
-\end{lstlisting}
-return the minimum and maximum valid indices for \texttt{v}.
-If \texttt{m} is a matrix object, then
-\begin{lstlisting}
+\endexample
+\noindent
+return the minimum and maximum valid indices for v.
+If {\tt m} is a matrix object then
+\beginexample
 int v.rowmin()
 int v.rowmax()
 int v.colmin()
 int v.colmax()
-\end{lstlisting}
+\endexample
+\noindent
 return the minimum and maximum valid row and column indices
-for \texttt{m}. These functions make sense for a matrix where every
+for m. These functions make sense for a matrix where every
 row is a vector with the same minimum and maximum valid
-indices.  For a ragged matrix, this is no longer the case, so
-the \texttt{rowmin()} and \texttt{rowmax()} functions don't make sense.
-To deal with a ragged matrix, one may need to calculate
+indices.  For a ragged matrix this is no longer the case so that
+the {\tt rowmin} and {\tt rowmax()} functions don't make sense
+in this case. To deal with a ragged matrix one may need to calculate
 the minimum and maximum valid indices for each row of the ragged matrix. 
-To facilitate this approach, the functions \texttt{indexmin} and 
-\texttt{indexmax} have been defined for all container classes.  So,
-for example, if \texttt{w} is a 6-dimensional array, then
-\begin{lstlisting}
+To facilitate this approach the functions {\tt indexmin} and 
+{\tt indexmax} have been defined for all container classes so that
+for example if {\tt w} is a six dimensional array then
+\beginexample
 int w.indexmin()
 int w.indexmax()
-\end{lstlisting}
+\endexample
 return the minimum and maximum valid indices for the first
-index of \texttt{w}. For a matrix object \texttt{m},
-\texttt{m.indexmin()} and \texttt{m.colmin()} are the same
-and as long as \texttt{m} is not ragged, 
-\begin{lstlisting}
-  m(m.indexmin()).indexmin()
-\end{lstlisting}
-is the same as
-\begin{lstlisting}
-  m.colmin()
-\end{lstlisting}
-and 
-\begin{lstlisting}
-  m(m.indexmin()).indexmax()
-\end{lstlisting}
-is the same as
-\begin{lstlisting}
-  m.colmax()
-\end{lstlisting}
+index of {\tt w}. For a matrix object {\tt m} 
+{\tt m.indexmin()} and {\tt m.colmin()} are the same
+and as long as {\tt m} is not ragged then
+{\tt m(m.indexmin()).indexmin()} is the same as {\tt m.colmin()}
+and {\tt m(m.indexmin()).indexmax()} is the same as {\tt m.colmax()}.
 
 
-\section{Methods for extracting from arrays and matrices}
-
+\mysection{Methods for extracting from arrays and matrices}
 \X{extracting data from arrays and matrices}
-\XX{matrix}{\fontindexentry{tt}{extract\_column}}\XX{\fontindexentry{tt}{extract\_column}}{from a matrix}
-\XX{matrix}{\fontindexentry{tt}{column}}
-\begin{lstlisting}
+\XX{matrix} {extract\_column}\XX{extract\_column}{from a matrix}
+\XX{matrix} {column}
+\beginexample
 vector column(matrix& M,int& j)
-\end{lstlisting}
-\afterlistingthing{extracts the $j^\textrm{th}$ column from a matrix and puts it into a vector.}
-
-
-\begin{lstlisting}
+\endexample
+\noindent extracts the j'th column from a matrix and puts it into a vector 
+\beginexample
 vector extract_row(matrix& M,int& i)
-\end{lstlisting}
-\afterlistingthing{extracts a row from a matrix and puts it into a vector.
-Note that the operation \texttt{M(i)} has the same effect.}
-
-\XX{\fontindexentry{tt}{extract\_diagonal}}{from a matrix}
-\begin{lstlisting}
+\endexample
+\noindent extracts a row from a matrix and puts it into a vector.
+Note that the operation {\tt M(i)} has the same effect.
+\XX{extract\_diagonal}{from a matrix}
+\beginexample
 vector extract_diagonal(matrix& M)
-\end{lstlisting}
-\afterlistingthing{extracts the diagonal elements from a matrix and puts them into
- a vector.}
+\endexample
+\noindent extracts the diagonal elements from a matrix and puts them into
+ a vector.
 
-\X{operator \fontindexentry{tt}{()}}
-The function call operator \texttt{()} has been overloaded in two ways to
-provide for the extraction of a subvector. 
-\XX{\fontindexentry{tt}{vector}}{extracting a subvector}
+\X{operator ()}
+The function call operator {\tt (\ )} has been overloaded inv two ways to
+provide for the extraction of a subvector. \XX{vector}{extracting a subvector}
 \X{extracting a subvector}
-\XX{matrix} {\fontindexentry{tt}{extract\_row}}\XX{\fontindexentry{tt}{extract\_row}}{from a matrix}
-\XX{vector}{function call \fontindexentry{tt}{()} to extract subvector} 
-\begin{lstlisting}
-  vector(ivector&)
-\end{lstlisting}
-An \texttt{ivector} object is
+\XX{matrix} {extract\_row}\XX{extract\_row}{from a matrix}
+\XX{vector}{function call () to extract subvector} 
+\beginexample
+vector(ivector&)
+\endexample
+\noindent An {\tt ivector} object is
 used to specify the elements of the vector to be chosen. If 
-\texttt{u} and \texttt{v} are \texttt{dvectors}  and \texttt{i} is an \texttt{ivector},
+{\tt u} and {\tt v} are {\tt dvectors}  and {\tt i} is an {\tt ivector}
 the construction
-\begin{lstlisting}
-  dvector u = v(i);
-\end{lstlisting}
-will extract the members of \texttt{v} indexed by \texttt{i} and put them in the
-\texttt{dvector u}. The size of \texttt{u}
-is equal to the size of \texttt{i}. The \texttt{dvector u} will have
+\beginexample
+dvector u = v(i);
+\endexample
+\noindent will extract the members of v indexed by i and put them in the
+{\tt dvector u}. The size of {\tt u}
+is equal to the size of {\tt i}. The {\tt dvector u} will have
 minimum valid index and maximum valid index equal to the minimum
-valid index and maximum valid index of \texttt{i}. 
-The size of \texttt{i} can be larger than the size of \texttt{v},
-in which case some elements of \texttt{v} must be repeated. The elements of
-the \texttt{ivector i} must lie in the valid index range for~\texttt{v}. 
+valid index and maximum valid index of {\tt i}. 
+The size of {\tt i} can be larger than the size of {\tt v} 
+in which case some elements of {\tt v} must be repeated. The elements of
+the {\tt ivector i} must lie in the valid index range for {\tt v}. 
 
-If \texttt{v} is a \texttt{dvector} and \texttt{i1} and \texttt{i2} are two integers,
-\begin{lstlisting}
-  u(i1,i2)
-\end{lstlisting}
-is a \texttt{dvector}, which is a subvector of \texttt{v} (provided, of
-course, that \texttt{i1} and \texttt{i2} are valid indices for \texttt{v}). Subvectors
-can appear on both the left and right hand side of an assignment:
-\begin{lstlisting}
+If {\tt v} is a {\tt dvector} and {\tt i1} and {\tt i2} are two integers  
+\beginexample
+ u(i1,i2)
+\endexample
+\noindent is a {\tt dvector} which is a subvector of {\tt v} (provided of
+course that {\tt i1} and {\tt i2} are valid indices for {\tt v}). Subvectors
+can appear on both the left and right hand side of an assignment.
+\beginexample
 dvector  u(1,20);
 dvector v(1,19);
 v = 2.0;   // assigns the value 2 to all elements of v
 u(1,19) = v; // assigns the value 2 to elements 1 through 19 of u
-\end{lstlisting}
-\X{operator \fontindexentry{tt}{++}}
-\X{operator\fontindexentry{tt}{-{}-}}
-\XX{operator \fontindexentry{tt}{++}}{use with subvectors}
-\XX{operator \fontindexentry{tt}{-{}-}}{use with subvectors}
-\XX{operator \fontindexentry{tt}{++}}{for \fontindexentry{tt}{dvectors}}
-\XX{operator \fontindexentry{tt}{-{}-}}{for \fontindexentry{tt}{dvectors}}
-\XX{functions}{\fontindexentry{tt}{++} use with vectors}
-\XX{functions}{\fontindexentry{tt}{-{}-} use with vectors}
-\XX{functions}{\fontindexentry{tt}{shift} use with vectors}
-In the above example, suppose that we wanted to assign the vector \texttt{v}
-to elements~2 through~20 of the vector \texttt{u}. To do this, we must first ensure that
-they have the same valid index ranges. The operators \texttt{++} and \texttt{-{}-}
-increment and decrement the index ranges by~1.
-\begin{lstlisting}
+\endexample
+\X{operator ++}
+\X{operator --}
+\XX{operator ++}{use with subvectors}
+\XX{operator --}{use with subvectors}
+\XX{operator ++}{for {\tt dvectors}}
+\XX{operator --}{for {\tt dvectors}}
+\XX{functions}{++ use with vectors}
+\XX{functions}{-- use with vectors}
+\XX{functions}{shift use with vectors}
+In the above example suppose that we wanted to assign the vector {\tt v}
+to elements 2 through 20 of the vector {\tt u}. To do this we must first ensure that
+they have the same valid index ranges. The operators {\tt ++} and {\tt --}
+increment and decrement the index ranges by 1. The code fragment
+\beginexample
 dvector  u(1,20);
 dvector  w(1,19);
 dvector v(1,19);
@@ -698,22 +611,22 @@ v = 2.0;   // assigns the value 2 to all elements of v
 u(2,20) = ++v; // assigns the value 2 to elements 2 through 20 of u
                // probably not what you want
 w=v;   // error different index ranges
-\end{lstlisting}
-It is important to realize that from the point of view of the vector
-\texttt{u}, both of the above assignments have the same effect. It will have
-elements~2 through~20 set equal to~2. The difference is in the side
-effects on the vector \texttt{v}. The operation \texttt{++v}
+\endexample
+\noindent It is important to realize that from the point of view of the vector
+{\tt u} both of the above assigments have the same effect. It will have
+elements 2 through 20 set equal to 2. The difference is in the side
+effects on the vector {\tt v}. The operation {\tt ++v}
 will increase the minimum and maximum valid index range of the vector 
-\texttt{v} by~1. This increase is permanent. On the other hand,
-the operation \texttt{-{}-u(2,20)} decrements the valid index bounds of
-the {\it subvector} \texttt{u(2,20)}. This is a distinct object from
-the vector \texttt{u}, although both objects share a common area for their
-components. Thus, the valid index bounds of \texttt{u} are not
-affected by this process.  
-The use of subvectors, along with increment and decrement
-operations, can be used to remove loops from the code. Note that
+{\tt v} by one. This increase is permanent. On the other hand
+the operation {\tt --u(2,20)} decrements the valid index bounds of
+the {\it subvector} {\tt u(2,20)}. This is a distinct object from
+the vector {\tt u} although both objects share a common area for their
+components. Thus the valid index bounds of {\tt u} are not
+effected by this process.  
+The use of subvectors and increment and decrement
+operations can be used to remove loops from the code. Note that
 \XX{subvectors}{using to remove loops from code}
-\begin{lstlisting}
+\beginexample
 dvector x(1,n)
 dvector y(1,n)
 dvector z(1,n)
@@ -721,82 +634,79 @@ for (int i=2;i<=n;i++)
 {
   x(i)=y(i-1)*z(i-1);
 }
-\end{lstlisting}
-can be written as
-\begin{lstlisting}
+\endexample
+\noindent can be written as
+\beginexample
 dvector x(1,n)
 dvector y(1,n)
 dvector z(1,n)
 x(2,n)=++elem_prod(y(1,n-1),z(1,n-1));  // elem_prod is element-wise 
                                        // multiplication of vectors
-\end{lstlisting}
-
-\XX{functions}{\fontindexentry{tt}{shift} use with vectors}
-The \texttt{shift} function can be used to set the minimum (and maximum)
+\endexample
+\XX{functions}{shift use with vectors}
+Ths {\tt shift} function can be sued to set the minimum (and maximum)
 valid index for a vector.
-\begin{lstlisting}
+\beginexample
 dvector u(10,100);  // minimum valid index is 10
                     // maximum valid index is 100
 u.shift(25);        // minimum valid index is 25
                     // maximum valid index is 115
-\end{lstlisting}
-In particular, the operators \texttt{-{}-} and \texttt{++}
-are just convenient shorthand for using the \texttt{shift}
-function to change the minimum valid index by~1.
-\begin{lstlisting}
+\endexample
+\noindent In particular the operators {\tt --} and {\tt ++}
+are just convenient shorthand for using the {\tt shift}
+function to change the minimum valid index by 1.
+\beginexample
 dvector u(10,100);     // minimum valid index is 10
                        // maximum valid index is 100
 u.shift(u.indexmin()-1); // minimum valid index is 9
 --u;                   // same result as u.shift(u.indexmin()-1) 
 u.shift(u.indexmin()+1); // minimum valid index is 11
 ++u;                   // same result as u.shift(u.indexmin()+1) 
-\end{lstlisting}
+\endexample
  
-\XX{subobjects}{accessing with\fontindexentry{tt}{sub}}
-\XX{\fontindexentry{tt}{sub}}{accessing subobjects}
-
-
-\section{Accessing subobjects of higher-dimensional arrays}
-
-The  \texttt{()} operator cannot be used to access subobjects of
-arrays of dimension~2 or greater, because this operator has
-already been defined to do something else. For example,
-for a \texttt{dmatrix M}, \texttt{M(1,2)} is an {\it element}
-of \texttt{M}.  To access subobjects of higher-dimensional arrays,
-use the \texttt{sub} member function. If \texttt{M} is a matrix object,
-then \texttt{M.sub(2,6)} is a matrix object with minimum valid
-index~2 and maximum valid index~6 (provided, of course, that the
-minimum valid index for \texttt{M} is less than or equal to~2 and
-the maximum valid index is greater than or equal to~6).
-If \texttt{T} is a 3-dimensional object, then
-\texttt{T.sub(2,5)} is a 3-dimensional object, provided that
+\XX{subobjects}{accessing with sub}
+\XX{sub}{accessing subobjects}
+\mysection{Accessing subobjects of higher dimensional arrays}
+The  () operator can not be used to access subobjects of
+arrays of dimension 2 or greater, because this operator has
+already been defined to do something else. For example
+for a {\tt dmatrix M} then {\tt M(1,2)} is an {\it element}
+of {\tt M}.  To access subobjects of higher dimensional arrays
+use the {\tt sub} member function. If {\tt M} is a matrix object
+then {\tt M.sub(2,6)} is a matrix object with with minimum valid
+index 2 and maximum valid index 6 (provided of course that the
+minimum valid index for {\tt M} is less than or equal to 2 and
+the maximum valid index is greater than or equal to 6.
+If {\tt T} is a three dimensional object then
+{\tt T.sub(2,5)} is a three dimensional object provided that
 the index bounds are legal. 
 
 
-\section{Sorting vectors and matrices}
+
+\mysection{Sorting vectors and matrices}
 \X{sorting}
-\XX{\fontindexentry{tt}{dvector}}{sorting a}
-\XX{\fontindexentry{tt}{dmatrix}}{sorting a}
-\XX{sorting}{\fontindexentry{tt}{dvector}}
-\XX{sorting}{\fontindexentry{tt}{dmatrix}}
+\XX{dvector}{sorting a}
+\XX{dmatrix}{sorting a}
+\XX{sorting}{dvector}
+\XX{sorting}{dmatrix}
 
 While sorting is not strictly a part of methods for calculating the
 derivatives of differentiable functions (it is a highly non-differentiable
-operation), it is so useful for pre and post-processing data that we
-have included some functions for sorting \texttt{dvector} and \texttt{dmatrix}
-objects. If \texttt{v} is a \texttt{dvector} the statement
-\begin{lstlisting}
-  dvector w=sort(v);
-\end{lstlisting}
-will sort the elements of \texttt{v} in ascending order and 
-put them in the \texttt{dvector} object \texttt{w}. The minimum and
-maximum valid indices of \texttt{w} will be the same as those of \texttt{v}.
-If desired, an index table for the sort can be constructed by passing
-an \texttt{ivector} along with the \texttt{dvector}. This index table can be
+operation) it is so useful for pre- and post-processing data that we
+have included some functions for sorting {\tt dvector} and {\tt dmatrix}
+objects. If {\tt v} is a {\tt dvector} the statement
+\beginexample
+dvector w=sort(v);
+\endexample
+\noindent will sort the elements of {\tt v} in ascending order and 
+put them in the {\tt dvector} object {\tt w}. The minimum and
+maximum valid indices of {\tt w} will be the same as those of {\tt v}.
+If desired an index table for the sort can be constructed by passing
+and {\tt ivector} along with the {\tt dvector}. This index tables can be
 used to sort other vectors in the same order as the original vector
-by using the \texttt{()} operator.
-\X{operator \fontindexentry{tt}{()}}
-\begin{lstlisting}
+by using the {\tt ()} operator.
+\X{operator ()}
+\beginexample
 dvector u={4,2,1};
 dvector v={1,6,5}
 ivector ind(1,3);
@@ -805,136 +715,127 @@ dvector w=sort(u,ind); // ind will contain an index table for the sort
 dvector ww=v(ind);     // This is the use of the ( ) operator for subset
                        // selection. 
 // Now ww=(5,6,1)
-\end{lstlisting}
+\endexample
 
-The \texttt{sort} function for a \texttt{dmatrix} object sorts the columns of the
-\texttt{dmatrix} into ascending order, using the column specified to do the
-sorting. For example,
-\begin{lstlisting}
-  dmatrix MM = sort(M,3);
-\end{lstlisting}
-will put the sorted matrix into \texttt{MM}, and the third column of
-\texttt{MM} will be sorted in ascending order.
+The sort function for a {\tt dmatrix} object sort the columns of the
+dmatrix into ascending order, using the column specified to do the
+sorting. For example
+\beginexample
+dmatrix MM = sort(M,3);
+\endexample
+\noindent will put the sorted matrix into {\tt MM} and the third column of
+{\tt MM} will be sorted in ascending order.
 
-
-\section{Statistical functions}
-
-\begin{lstlisting}
+\mysection{Statistical Functions}
+\beginexamplea
 cumd_norm
 inv_cumd_norm
 cumd_cauchy
 inv_cumd_cauchy
-\end{lstlisting}
-These are the cumulative distribution function and the inverse cumulative distribution 
-function for the normal and Cauchy distributions.
-
-
-\section{The random number generator class}\label{rng}
+\endexample
+The cumulative distribution function and the inverse cumulative distribution 
+function for the normal and cauchy distributions.
+\mysection{The random number generator class}
+\label{rng}
 \XX{cumulative distribution function}{normal}
-\XX{cumulative distribution function}{Cauchy}
-\XX{\fontindexentry{tt}{random\_number\_generator}}{class}
-\XX{function}{\fontindexentry{tt}{random\_number\_generator}}
-
+\XX{cumulative distribution function}{cauchy}
+\XX{random\_number\_generator\_}{class}
+\XX{function}{random\_number\_generator}
 The random number generator class is used to manage the generation of
 random numbers. A random number generator object is created with the
 declaration
-\begin{lstlisting}
-  random_number_generator r(n);
-\end{lstlisting}
-where \texttt{n} is the seed that initializes the random number generator.
+\beginexamplea
+random_number_generator r(n);
+\endexample
+where n is the seed which initializes the random number generator.
 Any number of random number generators may be declared.
-This class can be used to manage random number generation with the following functions:
-\begin{lstlisting}
-randpoisson(lambda,r);  // generate a Poisson with mean lambda
-randnegbinomiual(mu,tau,r);  // generate a negative binomial with mean mu
-                            // and over-dispersion tau (tau>1)
+This class can be used to manage random number generation with the folowing functions.
+\beginexamplea
+randpoisson(lambda,r);  // generate a poisson with mean lambda
+randnegbinomiual(mu,tau,r);  // generate a negative binomail with mean mu
+                            // and overdispersion tau (tau>1)
 randn(r);     // generate a normally distributed random number
 randu(r);    // generate a uniformly distributed random number
 v.fill_randu(r)  // fill a vector v
 v.fill_randn(r)  // fill a vector v
-v.fill_randpoisson(mu,r)  // fill a vector v with Poisson distributed
+v.fill_randpoisson(mu,r)  // fill a vector v with poisson distributed
                           // random variables with mean mu
 v.fill_rand(mu,tau,r)  // fill a vector v with negative binomial distributed
-            // random variables with mean mu and over-dispersion var/mu = tau
+            // random variables with mean mu and overdispersion var/mu = tau
 v.fill_multinomial(r,p)  // fill a vector v 
                       // p is a vector of probabilities
 m.fill_randu(r)  // fill a matrix m
 m.fill_randn(r)  // fill matrix m
 m.fill_randpoisson(lambda,r)  // fill a matrix m
-\end{lstlisting}
+\endexample
 The incomplete beta function $I_x(a,b)$ is defined by
 \begin{equation}
-  I_x(a,b)=\frac{1}{B(a,b)}\int_0^x t^{a-1}(1-t)^{b-1}\,\textrm{d}t\qquad (a,b,>0)
+I_x(a,b)=\myover{1}{B(a,b)}\int_0^x t^{a-1}(1-t)^{b-1}\,dt\qquad (a,b,>0)
 \end{equation}
 This is also the cumulative distribution function for the beta family
 of probability distributions.
-The function is named \texttt{betai} and is invoked by
-\XX{cumulative distribution function}{\fontindexentry{tt}{beta}}
-\XX{functions}{\fontindexentry{tt}{beta} function, incomplete}
-\begin{lstlisting}
-\\ .....
-dvariable p=betai(a,b,x);
-\end{lstlisting}
+The function is named {\tt betai} and is invoked by
+\XX{cumulative distribution function}{beta}
+\XX{functions}{beta function, incomplete}
+\beginexamplea
+  \\ .....
+ dvariable p=betai(a,b,x);
+\endexample
 
-
-\section{The \texttt{adstring} class operations}
-\XX{\fontindexentry{tt}{adstring} class}{operations on}
+\mysection{The adstring class operations}
+\XX{adstring class}{operations on}
 \X{operations on strings}
-\X{string operations}
-
-The \texttt{adstring} class was defined before there was a standardized
+\X{strings operations}
+The {\tt adstring} class was defined before there was a standardized
 \cplus\ string class. It does not contain all the features
-that a full string class should have. It is, however, easier to use
+that a full string class should have. It is however easier to use
 in many cases than the standard C string operations.
-\begin{lstlisting}
-adstring s;
-adstring t;
-s="first_part";
-t="second_part";
-adstring u = s + " ___ " + t;
-cout << u << endl;
-\end{lstlisting}
-should print out
-\begin{lstlisting}
-  first_part ___ second_part
-\end{lstlisting}
-The operation \texttt{+} concatenates two \texttt{adstring} objects.
-It can be used to concatenate C-style strings by first
-turning them into \texttt{adstring} objects, as in
-\begin{lstlisting}
-  adstring u = adstring("xxx") + adstring("yyy");
-\end{lstlisting}
-One can also append to a string with the \texttt{+=}
-operator, as in
-\begin{lstlisting}
-adstring u = "abc"; 
-u += v; 
-adstring w = "abc"; 
-w += 'f'; 
-\end{lstlisting}
-which adds the \texttt{adstring} object \texttt{v} to \texttt{u} and the
-character `f' to \texttt{w}.
-It is also possible to cast an \texttt{adstring} object to
-a C-like \texttt{char *} string, as in
-\begin{lstlisting}
-adstring u = "abc"
-char * c = (char*)(u);
-\end{lstlisting}
-Then it may be used as you would use a C-like string.
+\beginexamplea
+  adstring s;
+  adstring t;
+  s="first_part";
+  t="second_par";
+  adstring u = s + " ___ " + t;
+  cout << u << endl;
+\endexample
+  should print out
+\beginexamplea
+   first_part ___ second_part
+\endexample
+The operation {\tt +} concatenates two {\tt adstring} objects.
+It can be used to concatenate C style strings by first
+turning them into {\tt adstring} objects as in
+\beginexamplea
+   adstring u = adstring("xxx") + adstring("yyy");
+\endexample
+\noindent One can also append to a string with the {\tt +=}
+operator as in
+\beginexamplea
+   adstring u = "abc"; 
+   u += v; 
+   adstring w = "abc"; 
+   w += 'f'; 
+\endexample
+\noindent which adds the {\tt adstring} object to {\tt u} and the
+character `f' to {\tt w}.
+It is also possible to cast an {\tt adstring} object to
+a C like {\tt char *} string as in
+\beginexamplea
+   adstring u = "abc"
+   char * c = (char*)(u);
+\endexample
+\noindent Then it may be used as you would use a C like string.
 
-
-\section{Miscellaneous functions}
-
-\begin{lstlisting}
+\mysection{Miscelaneous Functions}
+\beginexamplea
 posfun(x,eps,pen)
-\end{lstlisting}
-\afterlistingthing{The \texttt{posfun} function constrains the argument \texttt{x} to be positive.
-For $\texttt{x} > \texttt{eps}$, it is the identity function.}
-
-The current source code for the \texttt{posfun} function appears below:
-\XX{functions}{\fontindexentry{tt}{posfun}}
-\X{\fontindexentry{tt}{posfun} function}
-\begin{lstlisting}
+\endexample
+\noindent The {\tt posfun} function constrains the argument {\tt x} to be positive.
+For {\tt x > eps} is it the identity function.
+The current source code for the {\tt posfun} function appears below.
+\XX{functions}{posfun}
+\X{posfun function}
+\beginexamplea
 dvariable posfun(const dvariable&x,const double eps,dvariable& pen)
 {
   if (x>=eps) {
@@ -944,18 +845,18 @@ dvariable posfun(const dvariable&x,const double eps,dvariable& pen)
     return eps/(2-x/eps);
   }
 }
-\end{lstlisting}
+\endexample
 
-\begin{lstlisting}
+\beginexamplea
 mfexp(_CONST prevariable& x)
-\end{lstlisting}
-\afterlistingthing{The \texttt{mfexp} function is the exponential function 
-that is modified for large values of its argument, to prevent
-floating point overflows.}
-The current source code for the \texttt{mfexp} function appears below:
-\XX{functions}{\fontindexentry{tt}{mfexp}}
-\X{\fontindexentry{tt}{mfexp} function}
-\begin{lstlisting}
+\endexample
+\noindent The {\tt mfexp} function is the exponential function 
+which is modified for large values of its argument to prevent
+floating point overflows. 
+The current source code for the {\tt mfexp} function appears below.
+\XX{functions}{mfexp}
+\X{mfexp function}
+\beginexamplea
   dvariable mfexp(_CONST prevariable& x)
   {
     double b=60;
@@ -968,5 +869,5 @@ The current source code for the \texttt{mfexp} function appears below:
       return exp(b)*(1.+2.*(x-b))/(1.+x-b);
     }
   }
-\end{lstlisting}
+\endexample
 

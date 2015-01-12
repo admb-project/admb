@@ -1,32 +1,22 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include <sstream>
-using std::istringstream;
 
+
+#if defined(USE_LAPLACE)
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
+#ifdef __GNUDOS__
+  #include <gccmanip.h>
 #endif
 
 void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
   uostream& ofs1,ofstream& ofs,int usize,int xsize,dvector& u);
 
-/**
- * Description not yet available.
- * \param
- */
 banded_lower_triangular_dmatrix quiet_choleski_decomp(
   const banded_symmetric_dmatrix& _M,const int& _ierr)
 {
@@ -35,7 +25,7 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
   int minsave=M.indexmin();
   M.shift(1);
   int n=M.indexmax();
-
+  
   int bw=M.bandwidth();
   banded_lower_triangular_dmatrix L(1,n,bw);
 #ifndef SAFE_INITIALIZE
@@ -60,11 +50,11 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
     for (j=i-bw+1;j<=i-1;j++)
     {
       if (j>1)
-      {
+      {	
         tmp=M(i,j);
         for (k=i-bw+1;k<=j-1;k++)
         {
-          if (k>0 && k>j-bw)
+	  if (k>0 && k>j-bw)
             tmp-=L(i,k)*L(j,k);
         }
         L(i,j)=tmp/L(j,j);
@@ -73,7 +63,7 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
     tmp=M(i,i);
     for (k=i-bw+1;k<=i-1;k++)
     {
-      if (k>0)
+      if (k>0)	
         tmp-=L(i,k)*L(i,k);
     }
     if (tmp<=0)
@@ -89,10 +79,7 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
   return L;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+void useless(BOR_CONST double& sdelta2);
 void function_minimizer::hess_routine_random_effects(void)
 {
 #if defined(USE_ADPVM)
@@ -119,50 +106,48 @@ void function_minimizer::hess_routine_random_effects(void)
 }
 dvector get_solution_vector(int npts);
 
-/**
- * Description not yet available.
- * \param
- */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
 {
-  // get the number of active parameters
-  int nvar = initial_params::nvarcalc();
+
+  int nvar=initial_params::nvarcalc(); // get the number of active parameters
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
+  double f;
   double delta=1.e-4;
   dvector g1(1,nvar);
   dvector g0(1,nvar);
   dvector g2(1,nvar);
   dvector gbest(1,nvar);
-  //dvector hess(1,nvar);
+  dvector hess(1,nvar);
   dvector hess1(1,nvar);
   dvector hess2(1,nvar);
-  //double eps=.1;
+  double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
+    
   dvector ddd(1,nvar);
   gradcalc(0,ddd);
+  adstring tmpstring;
 
   {
     first_hessian_flag=1;
     {
-      double f = 0.0;
       g1=(*lapprox)(x,f,this);
       g0=g1;
     }
     // modify so thaqt we have l_uu and dux for delta method
     // DF feb 15 05
-    //if (lapprox->hesstype==2 || lapprox->hesstype==3)
-    if (lapprox->hesstype==2 )
+    //if (lapprox->hesstype==2 || lapprox->hesstype==3) 
+    if (lapprox->hesstype==2 ) 
     {
       if (lapprox->block_diagonal_hessian)
       {
         //if (ad_comm::wd_flag)
-        adstring tmpstring = ad_comm::adprogram_name + ".rhes";
+        tmpstring = ad_comm::adprogram_name + ".rhes";
         ofstream ofs((char*)(tmpstring));
-            ofs << "   value      std.dev" << endl;
+            ofs << "   value      std dev" << endl;
         int mmin=lapprox->block_diagonal_hessian->indexmin();
         int mmax=lapprox->block_diagonal_hessian->indexmax();
         int i,j;
@@ -180,7 +165,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
             {
               //if (ii<=u.indexmax())
               {
-                ofs << setprecision(5) << setscientific()
+                ofs << setprecision(5) << setscientific() 
                     << setw(14) << u(ii++) << " " << d(j) << endl;;
               }
             }
@@ -190,19 +175,18 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       else if (lapprox->bHess)
       {
         //if (ad_comm::wd_flag)
-        adstring tmpstring = ad_comm::adprogram_name + ".rhes";
+        tmpstring = ad_comm::adprogram_name + ".rhes";
         ofstream ofs((char*)(tmpstring));
-            ofs << "   value      std.dev" << endl;
+            ofs << "   value      std dev" << endl;
         int mmin=lapprox->bHess->indexmin();
         int mmax=lapprox->bHess->indexmax();
-        //int i,j;
-        int i;
-        //int ii=1;
+        int i,j;
+        int ii=1;
         dvector & u= lapprox->uhat;
         dvector e(mmin,mmax);
         //choleski_decomp(*lapprox->bHess);
         int ierr;
-
+        
         banded_lower_triangular_dmatrix tmp=choleski_decomp(*lapprox->bHess,
           ierr);
         e.initialize();
@@ -211,21 +195,22 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
           e(i)=1.0;
           dvector v=solve(tmp,e);
           e(i)=0;
-
+          
           double d=sqrt(v*v);
-            ofs << setprecision(5) << setscientific()
+            ofs << setprecision(5) << setscientific() 
                 << setw(14) << u(i) << " " << d << endl;;
         }
       }
     }
     else
     {
+      int i;
       //if (ad_comm::wd_flag)
       dmatrix m;
-      adstring tmpstring = ad_comm::adprogram_name + ".rhes";
+      tmpstring = ad_comm::adprogram_name + ".rhes";
       ofstream ofs((char*)(tmpstring));
-          ofs << "   value      std.dev" << endl;
-      //int ii=1;
+          ofs << "   value      std dev" << endl;
+      int ii=1;
       tmpstring = ad_comm::adprogram_name + ".luu";
       uostream ofs1((char*)(tmpstring));
       dvector & u= lapprox->uhat;
@@ -236,9 +221,9 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
           m= inv(lapprox->Hess);
           int mmin=m.indexmin();
           int mmax=m.indexmax();
-          for (int i=mmin;i<=mmax;i++)
+          for (i=mmin;i<=mmax;i++)
           {
-            ofs << setprecision(5) << setscientific()
+            ofs << setprecision(5) << setscientific() 
                 << setw(14) << u(i) << " " << sqrt(m(i,i)) << endl;;
           }
           // save l_uu and l_xu for covariance calculations
@@ -273,7 +258,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
               if (i>1) e(i-1)=0;
               e(i)=1;
               dvector w=solve_trans(C,solve(C,e));
-              ofs << setprecision(5) << setscientific()
+              ofs << setprecision(5) << setscientific() 
                   << setw(14) << u(i) << " " << sqrt(w(i)) << endl;;
               ofs1 << w;
             }
@@ -299,23 +284,23 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     }
 
     {
-      adstring tmpstring = ad_comm::adprogram_name + ".luu";
+      int i,j;
+      tmpstring = ad_comm::adprogram_name + ".luu";
       uistream uis1((char*)(tmpstring));
-      int i = 0, j = 0;
       uis1 >> i >> j;
       cout << i << " " << j << endl;
     }
-
+      
     int npts=2;
-    int on,nopt = 0;
+    int on,nopt;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hpts",nopt))>-1)
     {
       if (nopt !=1)
       {
-        cerr << "Usage -hpts option needs non-negative integer  -- ignored.\n";
+        cerr << "Usage -hpts option needs non-negative integer  -- ignored" << endl;
       }
       else
-      {
+      {   
         npts=atoi(ad_comm::argv[on+1]);
       }
     }
@@ -329,25 +314,29 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         cerr << "Usage -hsize option needs number  -- ignored" << endl;
       }
       else
-      {
-        istringstream ist(ad_comm::argv[on+1]);
+      {   
+    
+        istrstream ist(ad_comm::argv[on+1]);
         ist >> _delta;
-
+    
         if (_delta<=0)
         {
-          cerr << "Usage -hsize option needs positive number  -- ignored.\n";
+          cerr << "Usage -hsize option needs positive number  -- ignored" << endl;
           _delta=0.0;
-        }
+        } 
       }
-      if (_delta>0)
+      if (_delta>0) 
       {
         delta=_delta;
       }
     }
-
+        
     // get a number which is exactly representable
     double sdelta=1.0+delta;
+    useless(sdelta);
     sdelta-=1.0;
+
+    
     {
       //
       uostream uos("hessian.bin");
@@ -355,8 +344,8 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       for (int i=1;i<=nvar;i++)
       {
         cout << "Estimating row " << i << " out of " << nvar
-             << " for hessian" << endl;
-
+  	   << " for hessian" << endl;
+  
         for (int j=-npts;j<=npts;j++)
         {
           if (j !=0)
@@ -377,6 +366,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     }
     // check for accuracy
     {
+      double sd;
       uistream uis("hessian.bin");
       uis >> npts;
       dvector v=get_solution_vector(npts);
@@ -385,7 +375,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       dmatrix hess(1,nvar,1,nvar);
       ivector iind(-npts,npts);
       ivector jind(-npts,npts);
-      double sd = 0;
       int i;
       for (i=1;i<=nvar;i++)
       {
@@ -421,9 +410,9 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         ofs1 << setw(10) << shess << endl;
         ofs << hess;
         ofs << gradient_structure::Hybrid_bounded_flag;
-        initial_params::set_inactive_only_random_effects();
+        initial_params::set_inactive_only_random_effects(); 
         dvector tscale(1,nvar);   // need to get scale from somewhere
-        /*int check=*/initial_params::stddev_scale(tscale,x);
+        int check=initial_params::stddev_scale(tscale,x);
         ofs << tscale;
       }
     }
@@ -434,40 +423,49 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     lapprox->fmc1.fringe=1.e-9;
     for (int i=1;i<=nvar;i++)
     {
+#if defined (__SPDLL__)
       hess_calcreport(i,nvar);
+#else
+      cout << "Estimating row " << i << " out of " << nvar
+	   << " for hessian" << endl;
+#endif
 
       double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       g1=(*lapprox)(x,f,this);
 
       sdelta2=x(i)-delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       g2=(*lapprox)(x,f,this);
       x(i)=xsave;
       hess1=(g1-g2)/(sdelta1-sdelta2);
-
+ 
       sdelta1=x(i)+eps*delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       g1=(*lapprox)(x,f,this);
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       g2=(*lapprox)(x,f,this);
       x(i)=xsave;
 
-      initial_params::set_inactive_only_random_effects();
+      initial_params::set_inactive_only_random_effects(); 
       initial_params::reset(dvar_vector(x));
       double eps2=eps*eps;
       hess2=(g1-g2)/(sdelta1-sdelta2);
       hess=(eps2*hess1-hess2) /(eps2-1.);
-
+   
       ofs << hess;
     }
    */
@@ -475,21 +473,19 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 }
 
 #if defined(USE_ADPVM)
-
-/**
- * Description not yet available.
- * \param
- */
 void function_minimizer::hess_routine_slave_random_effects(void)
 {
+
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
+  double f;
   double delta=1.e-6;
   double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
 
+    
   dvector ddd(1,nvar);
   gradcalc(0,ddd);
   {
@@ -504,39 +500,40 @@ void function_minimizer::hess_routine_slave_random_effects(void)
       double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       (*lapprox)(x,f,this);
 
       sdelta2=x(i)-delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       (*lapprox)(x,f,this);
       x(i)=xsave;
-
+ 
       sdelta1=x(i)+eps*delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       (*lapprox)(x,f,this);
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       (*lapprox)(x,f,this);
       x(i)=xsave;
 
-      initial_params::set_inactive_only_random_effects();
+      initial_params::set_inactive_only_random_effects(); 
       initial_params::reset(dvar_vector(x));
+   
     }
   }
 }
 #endif // #if defined(USE_ADPVM)
 
-/**
- * Description not yet available.
- * \param
- */
 dvector get_solution_vector(int n)
 {
   int i;
@@ -544,7 +541,7 @@ dvector get_solution_vector(int n)
   dmatrix tmp(1,n1,1,n1);
   dvector v(1,n1);
   v.initialize();
-  v(2)=1.0;
+  v(2)=1.0; 
   dvector c(1,n1);
   c.fill_seqadd(-n,1);
   tmp.initialize();
@@ -557,3 +554,5 @@ dvector get_solution_vector(int n)
   dmatrix tmp1=inv(tmp);
   return tmp1*v;
 }
+
+#endif

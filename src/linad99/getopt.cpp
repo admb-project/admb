@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <admodel.h>
 
-/**
- * Description not yet available.
- * \param
- */
 int get_option_number(const char * option_name,const char * error_message,
   int& option_value)
 {
@@ -30,9 +23,10 @@ int get_option_number(const char * option_name,const char * error_message,
       on1=-1;
     }
     else
-    {
+    {   
       option_value=atoi(ad_comm::argv[on1+1]);
     }
   }
   return on1;
 }
+

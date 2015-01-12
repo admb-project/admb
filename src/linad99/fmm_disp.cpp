@@ -1,21 +1,20 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+#if defined(__SPDLL__)
+#  if !defined(linux)
+#    include <windows.h>
+#  endif
+#include <admodel.h>
+#endif
+
 #include "fvar.hpp"
 
-#if defined(_WIN32)
-  #include <windows.h>
-#endif
-#include <admodel.h>
-
-#if defined(__TURBOC__)
+#if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
   #include <conio.h>
 #endif
@@ -30,19 +29,11 @@
 
 //  #define if (ad_printf) (*ad_printf) disp_if (ad_printf) (*ad_printf)
 
-/**
- * Description not yet available.
- * \param
- */
   void gotoxy(int x, int y)
   {
     disp_move(y-1, x-1);
   }
 
-/**
- * Description not yet available.
- * \param
- */
   struct text_info
   {
     unsigned char  winleft,   wintop;
@@ -54,10 +45,6 @@
     unsigned char  curx, cury;
   };
 
-/**
- * Description not yet available.
- * \param
- */
   void gettextinfo(struct text_info *r)
   {
      r->winleft = 1;
@@ -74,13 +61,9 @@
 
 #endif
 
-#if !defined(_MSC_VER)
+#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)  
   void gotoxy(int x, int y) { ; }
 
-/**
- * Description not yet available.
- * \param
- */
   struct text_info
   {
     unsigned char  winleft,   wintop;
@@ -97,17 +80,23 @@
 
 #include <string.h>
 
-/**
- * Description not yet available.
- * \param
- */
-void fmmdisp(const dvector& x, const dvector& g,
+void fmmdisp(_CONST dvector& x,_CONST dvector& g,
              const int& nvar, int scroll_flag,int noprintx)
 {
   if (!noprintx)
   {
-    //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
-
+    int      headings = 3;     /* number of heading lines */
+    int      cols = 3;     /* number of columns to display  */
+  
+    int      rownum;       /* row number to print */
+    static int colnum[3] = {1, 28, 55}; /* position in line for each column */
+    int      i, j, ij;
+    int      imax;         /* number of lines to display */
+    int      wmax;         /* number of lines in current window */
+  
+  
+    char     colhead[30];
+  
     char format[20];
     char format1[20];
     char format2[20];
@@ -119,11 +108,11 @@ void fmmdisp(const dvector& x, const dvector& g,
       strcpy(format2,"%3d%9.3lf %12.4le");
       strcpy(format3,"%3d%9.2lf %12.4le");
                  /*  12345678901234567 */
-    #elif defined(_WIN32)
-      strcpy(format,"%3d%9.5lf %12.4le");
-      strcpy(format1,"%3d%9.4lf %12.4le");
-      strcpy(format2,"%3d%9.3lf %12.4le");
-      strcpy(format3,"%3d%9.2lf %12.4le");
+    #elif defined(__MSVC32__)
+      strcpy(format,"%3d%8.4lf %12.4le");
+      strcpy(format1,"%3d%8.3lf %12.4le");
+      strcpy(format2,"%3d%8.2lf %12.4le");
+      strcpy(format3,"%3d%8.1lf %12.4le");
               /*  12345678901234567 */
     #else
       strcpy(format,"%3d%9.5lf %12.5le");
@@ -132,50 +121,40 @@ void fmmdisp(const dvector& x, const dvector& g,
       strcpy(format3,"%3d%9.2lf %12.5le");
               /*  12345678901234567 */
     #endif
-
-    char colhead[30];
-    char colhead2[30];
+  
+    wmax = 22;
     strcpy(colhead,"Var   Value    Gradient   ");
-    strcpy(colhead2,"Var   Value    Gradient");
-    if (ad_printf) (*ad_printf)("%26s|%26s|%23s\n",colhead,colhead,colhead2);
-
-    // number of columns to display
-    const int cols = 3;
-    // number of lines to display
-    int imax = nvar / cols;
-    // number of lines in current window
-    const int wmax = 22;
-    // number of heading lines
-    const int headings = 3;
+    if (ad_printf) (*ad_printf)("%26s|%26s|%26s\n",colhead,colhead,colhead);
+    imax = nvar / cols;
     if (nvar % cols > 0) imax++;
     if ( (scroll_flag == 0) && (imax > wmax-headings) )
       imax = wmax - headings - 1;
-
-    //int rownum = headings;       /* row number to print */
-
-    for (int i=1; i<=imax; i++)
+    rownum = headings;
+  
+    
+    for (i=1; i<=imax; i++)
     {
-      for (int j=0; j<cols; j++)
+      for (j=0; j<cols; j++)
       {
-        int ij = cols*(i-1)+(j+1);
+        ij = cols*(i-1)+(j+1);
         if (ij <= nvar)
         {
-          if (fabs(x[ij])<100)
-          {
+	  if (fabs(x[ij])<100)
+	  {  
             if (ad_printf) (*ad_printf)(format, ij, x[ij], g[ij]);
-          }
-          else if (fabs(x[ij])<1000)
-          {
+	  }
+	  else if (fabs(x[ij])<1000)
+	  {  
             if (ad_printf) (*ad_printf)(format1, ij, x[ij], g[ij]);
-          }
-          else if (fabs(x[ij])<10000)
-          {
+	  }
+	  else if (fabs(x[ij])<10000)
+	  {  
             if (ad_printf) (*ad_printf)(format2, ij, x[ij], g[ij]);
-          }
-          else
-          {
+	  }
+	  else
+	  {  
             if (ad_printf) (*ad_printf)(format3, ij, x[ij], g[ij]);
-          }
+	  }
           if (j<cols-1)
           {
             if (ad_printf) (*ad_printf)(" |");
@@ -186,27 +165,25 @@ void fmmdisp(const dvector& x, const dvector& g,
     }  // i loop
     if (ad_printf) fflush(stdout);
   }
-}
-
-/**
- * Description not yet available.
- * \param
- */
-void fmmdisp(const double *x, const double *g,
+} 
+  
+void fmmdisp(_CONST double * x,_CONST double * g,
              const int& nvar, int scroll_flag,int noprintx)
 {
   if (!noprintx)
   {
     int      headings = 3;     /* number of heading lines */
     int      cols = 3;     /* number of columns to display  */
-
-    //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
+  
+    int      rownum;       /* row number to print */
+    static int colnum[3] = {1, 28, 55}; /* position in line for each column */
     int      i, j, ij;
     int      imax;         /* number of lines to display */
     int      wmax;         /* number of lines in current window */
-
+  
+  
     char     colhead[30];
-
+  
     char format[30];
     char format1[30];
     char format2[30];
@@ -218,7 +195,7 @@ void fmmdisp(const double *x, const double *g,
       strcpy(format2,"%3d%9.3lf            ");
       strcpy(format3,"%3d%9.2lf            ");
                  /*  12345678901234567 */
-    #elif defined(_MSC_VER)
+    #elif defined(__MSVC32__)
       strcpy(format,"%3d%8.4lf             ");
       strcpy(format1,"%3d%8.3lf            ");
       strcpy(format2,"%3d%8.2lf            ");
@@ -231,7 +208,7 @@ void fmmdisp(const double *x, const double *g,
       strcpy(format3,"%3d%9.2lf            ");
               /*  12345678901234567 */
     #endif
-
+  
     wmax = 22;
     strcpy(colhead,"Var   Value               ");
     if (ad_printf) (*ad_printf)("%26s|%26s|%26s\n",colhead,colhead,colhead);
@@ -239,9 +216,9 @@ void fmmdisp(const double *x, const double *g,
     if (nvar % cols > 0) imax++;
     if ( (scroll_flag == 0) && (imax > wmax-headings) )
       imax = wmax - headings - 1;
-
-    //int rownum = headings;       /* row number to print */
-
+    rownum = headings;
+  
+    
     for (i=1; i<=imax; i++)
     {
       for (j=0; j<cols; j++)
@@ -249,22 +226,22 @@ void fmmdisp(const double *x, const double *g,
         ij = cols*(i-1)+(j+1);
         if (ij <= nvar)
         {
-          if (fabs(x[ij])<100)
-          {
+	  if (fabs(x[ij])<100)
+	  {  
             if (ad_printf) (*ad_printf)(format, ij, x[ij]);
-          }
-          else if (fabs(x[ij])<1000)
-          {
+	  }
+	  else if (fabs(x[ij])<1000)
+	  {  
             if (ad_printf) (*ad_printf)(format1, ij, x[ij]);
-          }
-          else if (fabs(x[ij])<10000)
-          {
+	  }
+	  else if (fabs(x[ij])<10000)
+	  {  
             if (ad_printf) (*ad_printf)(format2, ij, x[ij]);
-          }
-          else
-          {
+	  }
+	  else
+	  {  
             if (ad_printf) (*ad_printf)(format3, ij, x[ij]);
-          }
+	  }
           if (j<cols-1)
           {
             if (ad_printf) (*ad_printf)(" |");
@@ -275,9 +252,10 @@ void fmmdisp(const double *x, const double *g,
     }  // i loop
     if (ad_printf) fflush(stdout);
   }
-}
-
-//void fmmdisp(const dvector& x, const dvector& g,
+} 
+  
+  
+//void fmmdisp(_CONST dvector& x,_CONST dvector& g,
 //             const int& nvar, int scroll_flag)
 //{
 //  int      headings = 3;     /* number of heading lines */
@@ -302,16 +280,14 @@ void fmmdisp(const double *x, const double *g,
 //            /*  12345678901234567 */
 //  #endif
 //
-//#if defined(__NDPX__) || defined(__SUN__) || defined(__GNU__)
-// || defined(_Windows)
+//#if defined(__NDPX__) || defined(__SUN__) || defined(__GNU__) || defined(_Windows)
 //  wmax = 22;
 //#if  defined(__SUN__) || defined(__GNU__) || defined(_WINDOWS)
 //  strcpy(colhead,"Var   Value    Gradient   ");
 //  if (ad_printf) (*ad_printf)("%26s|%26s|%26s\n",colhead,colhead,colhead);
 //#else
 //  strcpy(colhead,"Var   Value    Gradient");
-//  if (ad_printf)
-//    (*ad_printf)("%23s   |%23s   |%23s\n",colhead,colhead,colhead);
+//  if (ad_printf) (*ad_printf)("%23s   |%23s   |%23s\n",colhead,colhead,colhead);
 //#endif
 //  imax = nvar / cols;
 //  // cout << "imax = " << imax << endl;
@@ -340,8 +316,7 @@ void fmmdisp(const double *x, const double *g,
 //
 //  for (i=1; i<=imax; i++)
 //  {
-//#if !defined(__NDPX__) && !defined(__SUN__) && !defined(__GNU__)
-// && !defined(_Windows)
+//#if !defined(__NDPX__) && !defined(__SUN__) && !defined(__GNU__) && !defined(_Windows)
 //    rownum++;
 //    if (rownum > ti.winbottom)
 //    {
@@ -356,7 +331,7 @@ void fmmdisp(const double *x, const double *g,
 //      ij = cols*(i-1)+(j+1);
 //      if (ij <= nvar)
 //      {
-//#if !defined(__NDPX__) && !defined(__SUN__)  && !defined(__SUN__)
+//#if !defined(__NDPX__) && !defined(__SUN__)  && !defined(__SUN__) 
 //        gotoxy(colnum[j], rownum);
 //#endif
 //        if (ad_printf) (*ad_printf)(format, ij, x[ij], g[ij]);
@@ -366,14 +341,13 @@ void fmmdisp(const double *x, const double *g,
 //        }
 //      }
 //    } // j loop
-//#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)
+//#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__) 
 //    if (ad_printf) (*ad_printf)("\n");
 //#endif
 //  }  // i loop
 //
 //  if  (scroll_flag)
-//#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)
-//  || defined(_Windows)
+//#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)  || defined(_Windows)
 //    if (ad_printf) (*ad_printf)("\n");
 //#else
 //    if (ad_printf) (*ad_printf)("\n\n");
@@ -382,3 +356,4 @@ void fmmdisp(const double *x, const double *g,
 //#endif
 //}
 //
+

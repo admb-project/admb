@@ -1,24 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-
-/** \file posfunc.cpp 
-  posfun(...) source code for constant arguments.
-*/
-
-
 #include <fvar.hpp>
 
-/**
-   Adjoint code for posfun; possibly not used.
-   Retained in source code to support legacy models with user-written adjoint code.
- */
-double dfposfun(const double &x, const double eps)
+double dfposfun(_CONST double&x,_CONST double eps)
 {
-  if (x>=eps)
+  if (x>=eps) 
   {
     return 1;
   }
@@ -32,13 +22,9 @@ double dfposfun(const double &x, const double eps)
   }
 }
 
-/**
-   \brief \copybrief dfposfun(const double&, const double)
-   \details \copydetails dfposfun(const double&, const double)
-*/
-double dfposfun1(const double &x, const double eps)
+double dfposfun1(_CONST double&x,_CONST double eps)
 {
-  if (x>=eps)
+  if (x>=eps) 
   {
     return 0;
   }
@@ -49,15 +35,10 @@ double dfposfun1(const double &x, const double eps)
   }
 }
 
-/**
- \brief \copybrief posfun(const dvariable&, const double, const prevariable&)
- \details \copydetails posfun(const dvariable&, const double, const prevariable&)
- \ingroup misc
-*/
-double posfun(const double &x, const double eps, const double& _pen)
+double posfun(_CONST double&x,const double eps,BOR_CONST double& _pen)
 {
   double& pen=(double&)_pen;
-  if (x>=eps)
+  if (x>=eps) 
   {
     return x;
   }
@@ -68,16 +49,10 @@ double posfun(const double &x, const double eps, const double& _pen)
     return eps/(2.0-x/eps);
   }
 }
-
-/**
- \brief \copybrief posfun2(const dvariable&, const double, const prevariable&)
- \details \copydetails posfun2(const dvariable&, const double, const prevariable&)
-  \ingroup misc
- */
-double posfun2(const double &x, const double eps, const double& _pen)
+double posfun2(_CONST double&x,const double eps,BOR_CONST double& _pen)
 {
   double& pen=(double&)_pen;
-  if (x>=eps)
+  if (x>=eps) 
   {
     return x;
   }

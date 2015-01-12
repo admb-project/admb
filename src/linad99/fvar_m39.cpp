@@ -1,13 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -27,11 +24,7 @@
 #endif
 void dfcholeski_decomp(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix choleski_decomp(const dvar_matrix& MM)
+dvar_matrix choleski_decomp(_CONST dvar_matrix& MM)
 {
   // kludge to deal with constantness
   if (MM.colsize() != MM.rowsize())
@@ -160,10 +153,6 @@ dvar_matrix choleski_decomp(const dvar_matrix& MM)
   return vc;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void dfcholeski_decomp(void)
 {
   verify_identifier_string("ro");
@@ -289,8 +278,10 @@ void dfcholeski_decomp(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
+  
   dfM.rowshift(rowsave);
   dfM.colshift(colsave);
 
   dfM.save_dmatrix_derivatives(MMpos);
 }
+

@@ -1,13 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 //#define THREAD_SAFE
 #include <fvar.hpp>
 
@@ -19,14 +16,15 @@
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
+  void my_do_nothing(void * t){}
 //ofstream xofs("allocation");
-vector_shape_pool * vector_shape::xpool =
+vector_shape_pool * vector_shape::xpool = 
     new vector_shape_pool(sizeof(vector_shape));
 
-vector_shape_pool * vector_shapex::xpool =
+vector_shape_pool * vector_shapex::xpool = 
     new vector_shape_pool(sizeof(vector_shapex));
 
-vector_shape_pool  * arr_link::xpool =
+vector_shape_pool  * arr_link::xpool = 
     new vector_shape_pool (sizeof(arr_link));
 
 vector_shape_pool::vector_shape_pool(void) : dfpool(sizeof(vector_shape))
@@ -37,16 +35,12 @@ ts_vector_shape_pool::ts_vector_shape_pool(int n) : tsdfpool(n)
 { ;}
 #endif
 
-vector_shape_pool::vector_shape_pool(const size_t n) : dfpool(n)
+vector_shape_pool::vector_shape_pool(int n) : dfpool(n)
 { ;}
 
-/**
- * Description not yet available.
- * \param
- */
 void * vector_shape::operator new(size_t n)
-{
-  if (xpool==0)
+{  
+  if (xpool==0) 
   {
     xpool=new vector_shape_pool(sizeof(vector_shape));
   }
@@ -57,16 +51,12 @@ void * vector_shape::operator new(size_t n)
     ad_exit(1);
   }
 # endif
-  return xpool->alloc();
+  return xpool->alloc(); 
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void * arr_link::operator new(size_t n)
-{
-  if (xpool==0)
+{  
+  if (xpool==0) 
   {
     xpool=new vector_shape_pool(sizeof(vector_shape));
   }
@@ -77,16 +67,12 @@ void * arr_link::operator new(size_t n)
     ad_exit(1);
   }
 # endif
-  return xpool->alloc();
+  return xpool->alloc(); 
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void * vector_shapex::operator new(size_t n)
-{
-  if (xpool==0)
+{  
+  if (xpool==0) 
   {
     xpool=new vector_shape_pool(sizeof(vector_shapex));
   }
@@ -97,14 +83,10 @@ void * vector_shapex::operator new(size_t n)
     ad_exit(1);
   }
 # endif
-  return xpool->alloc();
+  return xpool->alloc(); 
 }
 
 #if defined(__CHECK_MEMORY__)
-/**
- * Description not yet available.
- * \param
- */
 void dfpool::sanity_check(void)
 {
   link * p=head;
@@ -119,10 +101,6 @@ void dfpool::sanity_check(void)
   cout << "Depth = " << depth << endl;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void dfpool::sanity_check2(void)
 {
   link * p=head;
@@ -137,10 +115,6 @@ void dfpool::sanity_check2(void)
   cout << "Depth = " << depth << endl;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void dfpool::sanity_check(void * ptr)
 {
   link * p=head;
@@ -150,7 +124,7 @@ void dfpool::sanity_check(void * ptr)
     depth++;
     if (p == ptr)
     {
-      cerr << "both allocated and unallocated memory at entry "
+      cerr << "both allocated and unallocated memory at entry " 
            << depth << endl;
       break;
     }
@@ -158,10 +132,6 @@ void dfpool::sanity_check(void * ptr)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void dfpool::write_pointers(int mmin,int mmax)
 {
   link * p=head;
@@ -178,10 +148,7 @@ void dfpool::write_pointers(int mmin,int mmax)
 
 dfpool::link ** global_p=0;
 
-/**
- * Description not yet available.
- * \param
- */
+
 void * dfpool::alloc(void)
 {
 #if defined(THREAD_SAFE)
@@ -220,10 +187,6 @@ void * dfpool::alloc(void)
   return p;
 }
 #if defined(THREAD_SAFE)
-/**
- * Description not yet available.
- * \param
- */
 void * tsdfpool::alloc(void)
 {
 #if defined(THREAD_SAFE)
@@ -264,11 +227,6 @@ void * tsdfpool::alloc(void)
 #endif
 
 #if defined(__CHECK_MEMORY__)
-
-/**
- * Description not yet available.
- * \param
- */
 int dfpool::bad(link * p)
 {
   int flag=1;
@@ -295,10 +253,6 @@ int dfpool::bad(link * p)
   return flag;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 int dfpool::badaddress(link * p)
 {
   int flag=1;
@@ -316,12 +270,11 @@ int dfpool::badaddress(link * p)
 void * pchecker=0;
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
 void dfpool::free(void * b)
 {
+#if defined(SAFE_ALL)
+#endif
+
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_dfpool);
 #endif
@@ -332,7 +285,7 @@ void dfpool::free(void * b)
      {
        cout << "trying to deallocate allocated object " << endl;
      }
-   }
+   }  
 #endif
   //cout << "freeing " << b << endl;
   link * p = (link*) b;
@@ -344,13 +297,11 @@ void dfpool::free(void * b)
 #endif
 }
 #if defined(THREAD_SAFE)
-
-/**
- * Description not yet available.
- * \param
- */
 void tsdfpool::free(void * b)
 {
+#if defined(SAFE_ALL)
+#endif
+
 #if defined(THREAD_SAFE)
   //pthread_mutex_lock(&mutex_dfpool);
 #endif
@@ -361,7 +312,7 @@ void tsdfpool::free(void * b)
      {
        cout << "trying to deallocate allocated object " << endl;
      }
-   }
+   }  
 #endif
   //cout << "freeing " << b << endl;
   link * p = (link*) b;
@@ -374,19 +325,11 @@ void tsdfpool::free(void * b)
 }
 #endif
 
-/**
-Destructor
-*/
 dfpool::~dfpool(void)
 {
   deallocate();
 }
-
-/**
- * Description not yet available.
- * \param
- */
-dfpool::dfpool(const size_t sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
+dfpool::dfpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 {
   dfpool_vector_flag=0;
   if (!sz) size=0;
@@ -401,10 +344,7 @@ dfpool::dfpool(const size_t sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 #endif
 }
 
-/**
-Default constructor
-*/
-dfpool::dfpool(void)
+dfpool::dfpool(void) 
 {
   dfpool_vector_flag=0;
   size=0;
@@ -419,11 +359,7 @@ dfpool::dfpool(void)
 #endif
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void dfpool::set_size(const size_t sz)
+void dfpool::set_size(unsigned int sz)
 {
   if (size !=sz && size != 0)
     cerr << "You can not change the allocation size in mid stream" << endl;
@@ -431,10 +367,9 @@ void dfpool::set_size(const size_t sz)
     size=sz;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
+//void xxiieeuu(void * tmp0){;}
+
 void dfpool::deallocate(void)
 {
 #if defined(__CHECK_MEMORY__)
@@ -467,14 +402,10 @@ void dfpool::deallocate(void)
 }
 */
 
-/**
- * Description not yet available.
- * \param
- */
+ const int pvalues_size=500000;
 void dfpool::grow(void)
 {
 #if defined(__CHECK_MEMORY__)
-  const int pvalues_size=500000;
   if (!pvalues)
   {
     maxchunks=100;
@@ -482,20 +413,15 @@ void dfpool::grow(void)
     pvalues=new int[pvalues_size];
   }
 #endif
-  const size_t overhead = 12+sizeof(char*);
-  const size_t chunk_size= 65000-overhead;
-
-  if (size > 0)
-  {
-    nelem = chunk_size / size;
-  }
-  else
+  if (!size)
   {
     cerr << "error in dfpool object " // << poolname
          << " you must set the unit size " << endl;
     ad_exit(1);
   }
-
+  const int overhead = 12+sizeof(char*);
+  const int chunk_size= 65000-overhead;
+  nelem= chunk_size/size;
   char * real_start=new char[chunk_size+6];
   char * start=real_start+sizeof(char *);
   char *last = &start[(nelem-1)*size];
@@ -507,7 +433,7 @@ void dfpool::grow(void)
     maxaddress[num_chunks]=real_start+chunk_size-1;
   }
 #endif
-  if (last_chunk == 0 )
+  if (last_chunk == 0 ) 
   {
     last_chunk=real_start;
     *(char**) real_start=0;
@@ -517,7 +443,7 @@ void dfpool::grow(void)
     *(char**) real_start=last_chunk;
     last_chunk=real_start;
   }
-
+  
 #if defined(__CHECK_MEMORY__)
   if (nalloc>pvalues_size-1)
   {
@@ -538,11 +464,6 @@ void dfpool::grow(void)
   head = (link*) start;
   first= (double*) start;
 }
-
-/**
- * Description not yet available.
- * \param
- */
 void dfpool::clean(void)
 {
   if (!size)
@@ -550,15 +471,16 @@ void dfpool::clean(void)
     cerr << "error in dfpool object " // << poolname
          << " you must set the unit size " << endl;
   }
-  //const int overhead = 12;
-
+  const int overhead = 12;
+  
   double *ptr=first;
-  for (size_t i=1;i<=nelem;i++)
+  for (int i=1;i<=nelem;i++)
   {
     ptr++;
-    for(unsigned int j=1;j<=size/sizeof(double)-2;j++) *ptr++=0.0;
+    for(int j=1;j<=size/sizeof(double)-2;j++) *ptr++=0.0;
     ptr++;
   }
 }
+
 
 #endif  // #if defined(USE_VECTOR_SHAPE_POOL)

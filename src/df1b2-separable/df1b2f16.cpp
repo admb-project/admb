@@ -1,21 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
-
-/**
- * Description not yet available.
- * \param
- */
   ostream& operator << (const ostream& _os, const df1b2variable& _x)
   {
+      
     ADUNCONST(df1b2variable,x)
     ADUNCONST(ostream,os)
     os << *x.u;
@@ -27,10 +19,6 @@
     return os;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   ostream& operator << (const ostream& _os, const df1b2vector& _x)
   {
     ADUNCONST(ostream,os)
@@ -40,14 +28,10 @@
     for (int i=mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
-    }
+    }  
     return os;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   ostream& operator << (const ostream& _os, const df1b2matrix& _x)
   {
     ADUNCONST(ostream,os)
@@ -58,14 +42,10 @@
     {
       os << x(i) << " ";
       if (i<mmax) os << endl;
-    }
+    }  
     return os;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   ostream& operator << (const ostream& _os, const df1b2_init_number_vector& _x)
   {
     ADUNCONST(ostream,os)
@@ -75,15 +55,11 @@
     for (int i=mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
-    }
+    }  
     return os;
   }
 
-/**
- * Description not yet available.
- * \param
- */
-  ostream& operator << (const ostream& _os,
+  ostream& operator << (const ostream& _os, 
     const df1b2_init_bounded_number_vector& _x)
   {
     ADUNCONST(ostream,os)
@@ -93,15 +69,11 @@
     for (int i=mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
-    }
+    }  
     return os;
   }
 
-/**
- * Description not yet available.
- * \param
- */
-  ostream& operator << (const ostream& _os,
+  ostream& operator << (const ostream& _os, 
     const init_df1b2vector& _x)
   {
     ADUNCONST(ostream,os)
@@ -111,6 +83,7 @@
     for (int i=mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
-    }
+    }  
     return os;
   }
+

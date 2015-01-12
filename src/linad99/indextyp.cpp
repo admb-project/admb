@@ -1,71 +1,46 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
+ * $Id$
+ * 
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009 Regents of the University of California
  */
+
 #include <admodel.h>
 
-/**
- * Description not yet available.
- * \param
- */
-  int * smart_counter::get_ncopies(void)
-  {
+  int * smart_counter::get_ncopies(void) 
+  { 
     return ncopies;
   }
-
-/**
-Default constructor
-*/
-smart_counter::smart_counter(void)
-{
-  ncopies = new int;
-  *ncopies = 0;
-}
-/**
-Copy constructor
-*/
-smart_counter::smart_counter(const smart_counter& sc)
-{
-    ncopies = sc.ncopies;
+  smart_counter::smart_counter(void) 
+  { 
+    ncopies=new int; 
+    *ncopies=0; 
+  }
+  smart_counter::smart_counter(const smart_counter & sc) 
+  { 
+    ncopies=sc.ncopies; 
     (*ncopies)++;
-}
-/**
-Destructor
-*/
-smart_counter::~smart_counter(void)
-{
-  if (*ncopies == 0)
-  {
-    delete ncopies;
-    ncopies = 0;
   }
-  else
-  {
-    (*ncopies)--;
+  smart_counter::~smart_counter(void) 
+  { 
+    if (*ncopies==0) 
+    {
+      delete ncopies;
+      ncopies=0;
+    }
+    else
+    {
+      (*ncopies)--;
+    }
   }
-}
 
   ad_integer::ad_integer(const index_type& it) : d(it.integer()) {}
 
-/**
- * Description not yet available.
- * \param
- */
   index_guts * matrix_index::operator [] (int i)
   {
     return new vector_index(imatrix::operator [](i));
   }
-
-/**
- * Description not yet available.
- * \param
- */
+ 
   int index_type::integer(void) const
   {
     return int(*p);
@@ -76,125 +51,65 @@ smart_counter::~smart_counter(void)
     p = new number_index(int(data_int(x)));
   }
    */
-
-/**
- * Description not yet available.
- * \param
- */
   index_type::index_type(const index_type & it) : smart_counter(it)
   {
     p = it.p;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   index_type::index_type(int x)
   {
     p = new number_index(x);
   }
-
-/**
- * Description not yet available.
- * \param
- */
-index_type::index_type(const ivector& x)
+  index_type::index_type(BOR_CONST ivector& x)
   {
-    p = new vector_index((const ivector&)(x));
+    p = new vector_index((BOR_CONST ivector&)(x));
   }
-
-/**
- * Description not yet available.
- * \param
- */
-index_type::index_type(const imatrix& x)
+  index_type::index_type(BOR_CONST imatrix& x)
   {
-    p = new matrix_index((const imatrix&)(x));
+    p = new matrix_index((BOR_CONST imatrix&)(x));
   }
-
-/**
- * Description not yet available.
- * \param
- */
+  
   matrix_index::~matrix_index()
   {
     //cout << "in ~matrix_index()" << endl;
   }
 
-/**
- * Description not yet available.
- * \param
- */
-  index_type::index_type(const i3_array& x)
+  index_type::index_type(BOR_CONST  i3_array& x)
   {
     p = new i3_index((i3_array&)(x));
   }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type::index_type(const i4_array& x)
+  index_type::index_type(BOR_CONST  i4_array& x)
   {
     p = new i4_index((i4_array&)(x));
   }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type::index_type(const pre_index_type& pit)
-  {
+  index_type::index_type(BOR_CONST pre_index_type& pit)
+  { 
     p = (*(*(pit.a)).p)[pit.i];
   // Dave uncommented this august 1998 because program crashed
    // (*p->ncopies)++;
   }
 
-/**
- * Description not yet available.
- * \param
- */
-  index_type index_type::operator [] (int i) const
-  {
+  index_type index_type::operator [] (int i) const 
+  { 
     return pre_index_type(this,i);
   }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type index_type::operator () (int i) const
-  {
+  index_type index_type::operator () (int i) const 
+  { 
     return pre_index_type(this,i);
   }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type index_type::operator [] (int i)
-  {
+  index_type index_type::operator [] (int i) 
+  { 
     return pre_index_type(this,i);
   }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type index_type::operator () (int i)
-  {
+  index_type index_type::operator () (int i) 
+  { 
     return pre_index_type(this,i);
   }
 
   vector_index::~vector_index() {}
 
-/**
- * Description not yet available.
- * \param
- */
-  index_type::~index_type ()
-  {
+  index_type::~index_type () 
+  { 
     if (*get_ncopies()==0)
     {
       if (!p)
@@ -204,8 +119,8 @@ index_type::index_type(const imatrix& x)
       else
       {
         if (!(*(p->ncopies)))
-        {
-          delete p;
+        { 
+          delete p; 
           p = NULL;
         }
         else
@@ -216,20 +131,12 @@ index_type::index_type(const imatrix& x)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
  dmatrix::dmatrix(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dmatrix::allocate(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
  {
@@ -243,7 +150,7 @@ index_type::index_type(const imatrix& x)
      (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
-      "const ivector& ncl, const ivector& nch)" << endl;
+      "_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
    index_min=int(nrl);
@@ -267,10 +174,6 @@ index_type::index_type(const imatrix& x)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  d3_array::d3_array(const ad_integer& sl,const ad_integer& sh,
    const index_type& nrl,const index_type& nrh,
    const index_type& ncl,const index_type& nch)
@@ -278,30 +181,24 @@ index_type::index_type(const imatrix& x)
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  i3_array::i3_array(int sl,int sh,const index_type& nrl,const index_type& nrh,
    const index_type& ncl,const index_type& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void i3_array::allocate(int sl,int sh,const index_type& nrl,
   const index_type& nrh,const index_type& ncl,const index_type& nch)
  {
+
    if (sl>sh)
    {
      allocate();
      return;
    }
 
-   //int imin=nrh.indexmin();
+   int imin=nrh.indexmin();
    //int rmin=nch.rowmin();
    //int cmin=nch(rmin).indexmin();
    if ( (nrl.isinteger() && (sl !=nrl.indexmin() || sh !=nrl.indexmax())) ||
@@ -322,8 +219,8 @@ index_type::index_type(const imatrix& x)
      cout << nch.indexmin() << endl;
      cout << nch.indexmax() << endl;
      cerr << "Incompatible array bounds in i3_array(int nrl,int nrh,"
-      "const index_type& nrl, const index_type& nrh,"
-      "const index_type& ncl, const index_type& nch)" << endl;
+      "_CONST index_type& nrl,_CONST index_type& nrh," 
+      "_CONST index_type& ncl,_CONST index_type& nch)" << endl;
      cout << sl << " " << nrl.indexmin() << endl
           << sh << " " << nrl.indexmax() << endl
           << sl << " " << nrh.indexmin() << endl
@@ -332,7 +229,7 @@ index_type::index_type(const imatrix& x)
           << sh << " " << ncl.indexmax() << endl
           << sl << " " << nch.indexmin() << endl
           << sh << " " << nch.indexmax() << endl;
-
+           
      ad_exit(1);
    }
 
@@ -349,18 +246,16 @@ index_type::index_type(const imatrix& x)
    t -= slicemin();
    for (int i=sl; i<=sh; i++)
    {
-     t[i].allocate(nrl(i),nrh(i),ncl(i),nch(i));
-   }
+     t[i].allocate(nrl(i),nrh(i),ncl(i),nch(i));  
+   } 
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
-  const index_type& nrl, const index_type& nrh, const index_type& ncl,
-  const index_type& nch)
+
+ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
+   _CONST index_type& nrl,_CONST index_type& nrh,_CONST index_type& ncl,
+   _CONST index_type& nch)
  {
+  
    if (int(sl)>int(sh))
    {
      allocate();
@@ -371,8 +266,8 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
        (nrh.isinteger() && (sl !=nrh.indexmin() || sh !=nrh.indexmax())) )
    {
      cerr << "Incompatible array bounds in i3_array(int nrl,int nrh,"
-      "const index_type& nrl, const index_type& nrh,"
-      "const index_type& ncl, const index_type& nch)" << endl;
+      "_CONST index_type& nrl,_CONST index_type& nrh," 
+      "_CONST index_type& ncl,_CONST index_type& nch)" << endl;
      ad_exit(1);
    }
 
@@ -394,10 +289,7 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  void imatrix::allocate(const ad_integer& nrl,const ad_integer& nrh,
     const index_type& ncl,const index_type& nch)
  {
@@ -411,8 +303,7 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
    if ( (ncl.isinteger() && (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())) ||
      (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
    {
-     cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
    int ss=nrh-nrl+1;
@@ -433,32 +324,21 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
 index_guts::~index_guts()
-{
-  if (!(*ncopies))
+{ 
+  if (!(*ncopies)) 
   {
-    delete ncopies;
+    delete ncopies; 
     ncopies=NULL;
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
  dvector::dvector(const ad_integer& ncl,const index_type& nch)
  {
    allocate(ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dvector::allocate(const ad_integer& _ncl,const index_type& _nch)
  {
    int ncl=_ncl;
@@ -495,19 +375,12 @@ index_guts::~index_guts()
    #endif
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  ivector::ivector(const ad_integer& ncl,const index_type& nch)
  {
    allocate(ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void ivector::allocate(const ad_integer& _ncl,const index_type& _nch)
  {
    index_min=_ncl;
@@ -538,38 +411,27 @@ index_guts::~index_guts()
    #endif
  }
 
-/**
- * Description not yet available.
- * \param
- */
-vector_index::vector_index(const ivector& v) : ivector(v)
+void xxjj(void);
+
+vector_index::vector_index(BOR_CONST ivector& v) : ivector(v)
 {
+  //xxjj();
 }
 
-/**
- * Description not yet available.
- * \param
- */
+void xxjj(void){;}
+
 index_guts::index_guts()
 {
   ncopies = new int;
   *ncopies=0;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 index_guts::index_guts(const index_guts& ig)
 {
   ncopies = ig.ncopies;
   (*ncopies)++;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 index_guts * number_index::operator [] (int i)
 {
   return new number_index(int(*this));

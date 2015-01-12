@@ -1,19 +1,11 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
 double inv_cumd_exponential(double y)
 {
   if (y<=0.5)
@@ -22,10 +14,7 @@ double inv_cumd_exponential(double y)
     return log(2.0*(1-y));
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 double cumd_exponential(double x)
 {
   if (x<=0.0)
@@ -33,3 +22,4 @@ double cumd_exponential(double x)
   else
     return 1.0-0.5*exp(-x);
 }
+

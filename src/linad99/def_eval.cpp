@@ -1,13 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -23,46 +20,49 @@
   #include <iostream.hpp>
 #endif
 
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #ifdef __SUN__
   #include <iostream.h>
+  #include <fcntl.h>
+  #include <sys/stat.h>
+  #include <sys/types.h>
+  #ifndef __MSVC32__
+    #include <unistd.h>
+  #endif
+#endif
+
+#ifdef __GNU__
+ #if (__GNUC__ >3)
+   #include <iostream>
+   using namespace std;
+  #else   
+    #include <iostream.h>
+  #endif
+  #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
 #endif
 
-#ifdef _MSC_VER
+#ifdef __MSVC32__
   #define lseek _lseek
   #define  read _read
-  #define write _write
-#else
-  #include <iostream>
-  using namespace std;
-  #include <sys/stat.h>
-  #include <sys/types.h>
-  #include <unistd.h>
+  #define write _write 
 #endif
 
 #if defined (__WAT32__)
   #include <io.h>
+  #include <fcntl.h>
 #endif
 
 #include <math.h>
-
-#ifdef ISZERO
-  #undef ISZERO
-#endif
-#define ISZERO(d) ((d)==0.0)
-//#define XXX 3.70255042e-17
+#define XXX 3.70255042e-17
 
   //ofstream gradlog("grad.log");
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation(void)
   {
     // checks to see how many independent variables there are
@@ -80,7 +80,7 @@
 #if defined(USE_DDOUBLE)
       if  ( grad_ptr->mult2 !=0)
 #else
-      if  (!ISZERO(grad_ptr->mult2))
+      if  ( grad_ptr->mult2)
 #endif
       {
         * grad_ptr->ind_addr2 += z * grad_ptr->mult2 ;
@@ -91,10 +91,6 @@
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation1(void)
   {
     // there is one independent variable
@@ -103,15 +99,10 @@
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z;
     //gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
-    //if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
-    //cout << setscientific() <<  setprecision(13) << * grad_ptr->ind_addr1
-    //<< endl;
+     //   if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
+      //    cout << setscientific() <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation1m(void)
   {
     // there is one independent variable
@@ -124,23 +115,15 @@
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation0(void)
   {
     // there is one independent variable
     * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation2(void)
   {
-    //char ch;
+    char ch;
     // there is one independent variable
     grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     //cout << setprecision(16) << *grad_ptr->dep_addr << endl;
@@ -155,10 +138,6 @@
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation3(void)
   {
     // there are two independent variables
@@ -172,10 +151,6 @@
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation3ind(void)
   {
     // there are three independent variables
@@ -183,15 +158,14 @@
 
     double mult3=grad_ptr->mult1 ;
     double * ind_addr3=grad_ptr->ind_addr1;
-    if (gradient_structure::GRAD_STACK1->ptr-- ==
+    if (gradient_structure::GRAD_STACK1->ptr-- == 
       gradient_structure::GRAD_STACK1->ptr_first)
     {
-      // \todo Need test
       // back up the file one buffer size and read forward
-      off_t offset = (off_t)(sizeof(grad_stack_entry)
-        * gradient_structure::GRAD_STACK1->length);
-      off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
-        -offset, SEEK_CUR);
+     
+      my_off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+        -((long int)(sizeof(grad_stack_entry)*gradient_structure::
+        GRAD_STACK1->length)),SEEK_CUR);
 
       gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
       //gradient_structure::GRAD_STACK1->ptr++;
@@ -205,10 +179,6 @@
     * ind_addr3 += z * mult3 ;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation4ind(void)
   {
     // there are three independent variables
@@ -218,15 +188,13 @@
     double mult3=grad_ptr->mult1 ;
     double * ind_addr4=grad_ptr->ind_addr2;
     double mult4=grad_ptr->mult2 ;
-    if (gradient_structure::GRAD_STACK1->ptr-- ==
+    if (gradient_structure::GRAD_STACK1->ptr-- == 
       gradient_structure::GRAD_STACK1->ptr_first)
     {
-      // \todo Need test
       // back up the file one buffer size and read forward
-      off_t offset = (off_t)(sizeof(grad_stack_entry)
-        * gradient_structure::GRAD_STACK1->length);
-      off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
-        -offset, SEEK_CUR);
+      my_off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+        -((long int)(sizeof(grad_stack_entry)*gradient_structure::
+        GRAD_STACK1->length)),SEEK_CUR);
 
       gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
       //gradient_structure::GRAD_STACK1->ptr++;
@@ -253,10 +221,6 @@
       //    cout <<  setprecision(13) << * ind_addr4  << endl;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation4(void)
   {
     // there are two independent variables
@@ -267,10 +231,6 @@
     * grad_ptr->ind_addr2 += z;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void default_evaluation4m(void)
   {
     // there are two independent variables
@@ -280,3 +240,4 @@
     * grad_ptr->ind_addr1 += z;
     * grad_ptr->ind_addr2 -= z;
   }
+

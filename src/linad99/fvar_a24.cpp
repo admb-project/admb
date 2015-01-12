@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
   void dvar_vector::initialize(void)
   {
     if (!(!(*this)))  // only initialize allocated objects
@@ -32,10 +25,6 @@
   }
 
 
-/**
- * Description not yet available.
- * \param
- */
 void dv_init(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -53,19 +42,18 @@ void dv_init(void)
 }
 
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_vector::initialize(const dvector& ww)
+
+  void dvar_vector::initialize(_CONST dvector& ww)
   {
-      if (indexmin() != ww.indexmin() ||  indexmax() != ww.indexmax())
+    #ifdef SAFE_ARRAYS
+      if (indexmin() != ww.indexmin() ||  indexmax() != ww.indexmax())  
       {
         cerr << "Index bounds do not match in "
-              "void dvar_vector::initialize(const dvector& ww)"<<endl;
+              "void dvar_vector::initialize(_CONST dvector& ww)"<<endl;
         ad_exit(1);
       }
-
+    #endif
+     
     for (int i=indexmin();i<=indexmax();i++)
     {
       //this->elem(i)=0.0;
@@ -77,3 +65,6 @@ void dvar_vector::initialize(const dvector& ww)
     gradient_structure::GRAD_STACK1->
       set_gradient_stack(dv_init);
   }
+
+
+

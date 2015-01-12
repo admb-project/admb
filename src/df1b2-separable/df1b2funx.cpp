@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <df1b2fun.h>
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable sin(const df1b2variable& _xx)
 {
   ADUNCONST(df1b2variable,xx)
@@ -26,7 +19,7 @@ df1b2variable sin(const df1b2variable& _xx)
   double * xd=xx.get_u_dot();
   double * zd=z.get_u_dot();
   *z.get_u()=f;
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *xd++;
   }
@@ -36,10 +29,6 @@ df1b2variable sin(const df1b2variable& _xx)
   return z;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable cos(const df1b2variable& _xx)
 {
   ADUNCONST(df1b2variable,xx)
@@ -52,7 +41,7 @@ df1b2variable cos(const df1b2variable& _xx)
   double * xd=xx.get_u_dot();
   double * zd=z.get_u_dot();
   *z.get_u()=f;
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *xd++;
   }

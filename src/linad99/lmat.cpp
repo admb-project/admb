@@ -1,31 +1,21 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
+
  lmatrix::lmatrix(int nrl, int nrh, int ncl, int nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void lmatrix::allocate(int nrl,int nrh,int ncl,int nch)
  {
    if ( (shape = new mat_shape(nrl,nrh,ncl,nch))== 0)
@@ -34,7 +24,7 @@
      ad_exit(21);
    }
 
-   size_t rs = rowsize();
+   int rs=rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
@@ -48,14 +38,10 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void lmatrix::allocate(int nrl,int nrh,const ivector& ncl,const ivector& nch)
  {
-   if ((shape = new mat_shape(nrl,nrh,ncl(ncl.indexmin()),
-                      nch(nch.indexmin()) ))== 0)
+   if ( (shape = new mat_shape(nrl,nrh,ncl(ncl.indexmin()),
+					       nch(nch.indexmin()) ))== 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
      ad_exit(21);
@@ -63,11 +49,10 @@
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
-   size_t rs=rowsize();
+   int rs=rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
@@ -80,16 +65,11 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void lmatrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
  {
    if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in "
-     "lmatrix::allocate(int nrl,int nrh,int ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in lmatrix::allocate(int nrl,int nrh,int ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
    if ( (shape = new mat_shape(nrl,nrh,ncl,nch(nch.indexmin())))== 0)
@@ -97,7 +77,7 @@
      cerr << " Error allocating memory in lmatrix contructor\n";
      ad_exit(21);
    }
-   size_t rs=rowsize();
+   int rs=rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
@@ -110,11 +90,8 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-lmatrix::lmatrix(const lmatrix& m2)
+
+ lmatrix::lmatrix(_CONST lmatrix& m2)
  {
    if (m2.shape)
    {
@@ -129,42 +106,27 @@ lmatrix::lmatrix(const lmatrix& m2)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-lmatrix::lmatrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)
+ lmatrix::lmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-lmatrix::lmatrix(int nrl, int nrh, int ncl, const ivector& nch)
+ lmatrix::lmatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
-/**
-Default constructor
-*/
-lmatrix::lmatrix(void)
-{
+
+ lmatrix::lmatrix(void)
+ {
    shape = NULL;
    m=NULL;
-}
-/**
-Destructor
-*/
-lmatrix::~lmatrix()
-{
-  deallocate();
-}
-/**
- * Description not yet available.
- * \param
- */
+ }
+
+ lmatrix::~lmatrix()
+ {
+   deallocate();
+ }
+
  void lmatrix::deallocate()
  {
    if (shape)
@@ -175,7 +137,7 @@ lmatrix::~lmatrix()
      }
      else
      {
-       //int offset = rowmin();
+       int offset = rowmin();   
        m += rowmin();
        delete [] m;
        m=NULL;
@@ -188,3 +150,4 @@ lmatrix::~lmatrix()
      //cerr << "Warning -- trying to deallocate an unallocated lmatrix"<<endl;
    }
  }
+

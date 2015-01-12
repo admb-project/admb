@@ -1,4 +1,4 @@
-// Copyright (c) 2008, 2009, 2010 Regents of the University of California.
+// Copyright (c) 2008, 2009 Regents of the University of California.
 //
 // ADModelbuilder and associated libraries and documentations are
 // provided under the general terms of the "BSD" license.
@@ -127,7 +127,7 @@ PROCEDURE_SECTION
     int sgn;
     f+=lmin(i)+0.5*ln_det(sh,sgn);
   }
-  f-=0.5*nobs*ndim*log(2.*M_PI);
+  f-=0.5*nobs*ndim*log(2.*3.14159);
   Omega=S;
 
 FUNCTION  dvar_vector update_the_means(dvar_vector& w,dvar_vector& m,dvector& e)
@@ -244,10 +244,6 @@ REPORT_SECTION
   report<< Z << endl;
   report<< "R " << endl;
   report<< R << endl;
-
-GLOBALS_SECTION
-  #define _USE_MATH_DEFINES
-  #include <math.h>
 
 TOP_OF_MAIN_SECTION
   //gradient_structure::set_MAX_NVAR_OFFSET(1200);

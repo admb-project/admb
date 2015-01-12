@@ -1,13 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -16,14 +13,9 @@
 
 #include <math.h>
 
-void shape_check(const dvector& v1, const dvector& v2,
-  const char *function_name);
+ void shape_check(_CONST dvector& v1,_CONST dvector& v2,char * function_name);
 
-/**
- * Description not yet available.
- * \param
- */
-dvector sin(const dvector& v1)// ***
+ dvector sin(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -33,11 +25,7 @@ dvector sin(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector cos(const dvector& v1)// ***
+ dvector cos(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -47,11 +35,7 @@ dvector cos(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector tan(const dvector& v1)// ***
+ dvector tan(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -61,11 +45,7 @@ dvector tan(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector sinh(const dvector& v1)// ***
+ dvector sinh(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -75,11 +55,7 @@ dvector sinh(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector cosh(const dvector& v1)// ***
+ dvector cosh(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -89,11 +65,7 @@ dvector cosh(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector tanh(const dvector& v1)// ***
+ dvector tanh(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -103,11 +75,7 @@ dvector tanh(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector pow(const dvector& v1, const double x)// ***
+ dvector pow(_CONST dvector& v1, CGNU_DOUBLE x)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -117,11 +85,7 @@ dvector pow(const dvector& v1, const double x)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector pow(const dvector& v1, int x)// ***
+ dvector pow(_CONST dvector& v1,int x)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -131,13 +95,10 @@ dvector pow(const dvector& v1, int x)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector pow(const dvector& v1, const dvector& v2)// ***
+
+ dvector pow(_CONST dvector& v1,_CONST dvector& v2)              // ***
  {
-   shape_check(v1,v2,"dvector pow(const dvector& v1,constdvector& v2)");
+   shape_check(v1,v2,"dvector pow(_CONST dvector& v1,_CONST dvector& v2)");
 
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -147,11 +108,7 @@ dvector pow(const dvector& v1, const dvector& v2)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector pow(const double x, const dvector& v2)// ***
+ dvector pow( CGNU_DOUBLE x,_CONST dvector& v2)                 // ***
  {
    dvector tmp(v2.indexmin(),v2.indexmax());
    for (int i=v2.indexmin();i<=v2.indexmax();i++)
@@ -161,11 +118,7 @@ dvector pow(const double x, const dvector& v2)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector asin(const dvector& v1)// ***
+ dvector asin(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -175,11 +128,7 @@ dvector asin(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector acos(const dvector& v1)// ***
+ dvector acos(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -189,11 +138,7 @@ dvector acos(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector atan(const dvector& v1)// ***
+ dvector atan(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -203,11 +148,7 @@ dvector atan(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector log10(const dvector& v1)// ***
+ dvector log10(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -217,11 +158,7 @@ dvector log10(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector sqrt(const dvector& v1)// ***
+ dvector sqrt(_CONST dvector& v1)                            // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -231,11 +168,7 @@ dvector sqrt(const dvector& v1)// ***
    return(tmp);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dvector sqr(const dvector& v1)// ***
+ dvector sqr(_CONST dvector& v1)                       // ***
  {
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -244,3 +177,5 @@ dvector sqr(const dvector& v1)// ***
    }
    return(tmp);
  }
+
+

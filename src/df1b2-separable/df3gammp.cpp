@@ -1,8 +1,8 @@
-/**
- * $Id$
- *
+/*
+  * $Id$
+  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <df1b2fun.h>
 #define ITMAX 100
@@ -12,7 +12,7 @@
 double get_values(double x,double y,int print_switch);
 
 
-df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu,
+df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu, 
   const df1b2variable& _xtau)
 {
   ADUNCONST(df1b2variable,xmu)
@@ -42,6 +42,8 @@ df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 df3_two_variable gammln(const df3_two_variable& xx)
 {
@@ -53,7 +55,7 @@ df3_two_variable gammln(const df3_two_variable& xx)
   tmp=x+5.5;
   tmp -= (x+0.5)*log(tmp);
   ser=1.0;
-  for (j=0;j<=5;j++)
+  for (j=0;j<=5;j++) 
   {
     x += 1.0;
     ser += cof[j]/x;
@@ -95,7 +97,7 @@ void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
     h *= del;
     if (fabs(value(del)-1.0) < EPS) break;
   }
-  if (i > ITMAX)
+  if (i > ITMAX) 
     cerr << "a too large, ITMAX too small in gcf" << endl;
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
@@ -119,12 +121,12 @@ void gser(const df3_two_variable& _gamser,const df3_two_variable& a,
   gln=gammln(a);
 
   if (value(x) <= 0.0) {
-    if (value(x) < 0.0)
+    if (value(x) < 0.0) 
       cerr << "x less than 0 in routine gser" << endl;
     gamser=0.0;
     return;
-  }
-  else
+  } 
+  else 
   {
     ap=a;
     del=sum=1.0/a;
@@ -148,7 +150,7 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
 {
   df3_two_variable gamser,gammcf,gln;
 
-  if (value(x) < 0.0 || value(a) <= 0.0)
+  if (value(x) < 0.0 || value(a) <= 0.0) 
     cerr << "Invalid arguments in routine gammp" << endl;
   if (value(x) < (value(a)+1.0)) {
     gser(gamser,a,x,gln);
@@ -167,8 +169,7 @@ df3_two_variable cumd_exponential(const df3_two_variable& x,
   else
     return 1.0-0.5*exp(-x);
 }
-df3_two_variable cumd_cauchy(const df3_two_variable& x,
-  const df3_two_variable& a)
+df3_two_variable cumd_cauchy(const df3_two_variable& x,const df3_two_variable& a)
 {
   return atan(x/a);
 }

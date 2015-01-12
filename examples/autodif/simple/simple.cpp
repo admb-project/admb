@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -35,13 +35,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-/** \file simple.cpp
-   simple example from the AUTODIF manual using macros 
-   Example from the AUTODIF manual,  pp 1-7 - 1-8
-   Updated to get rid of some warnings.
-*/
-
 //file: simple.cpp
 #include <fvar.hpp>
 
@@ -62,7 +55,7 @@ int main()
   fmm fmc(nvar);      // Create structure to manage minimization
   BEGIN_MINIMIZATION(nvar,f,x,g,fmc) // Macro to set up beginning of
                                      // minimization loop
-  f=fcomp(nvar,x);
+    f=fcomp(nvar,x);
   END_MINIMIZATION(nvar,g)    // Macro to set up end of minimization loop
   cout << " The minimizing values are\n" << x << "\n"; //Print out the answer
   return 0;

@@ -1,17 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #if defined(USE_DD)
 #  define USE_DD_STUFF
 #endif
 
+#if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -24,7 +21,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
 
 #if defined(USE_DD_STUFF)
-#  if defined(_MSC_VER)
+#  if defined(__MSVC32__)
     extern "C" _export  void dd_newton_raphson(int n,double * v,double * diag,
       double * ldiag, double * yy);
 #  else
@@ -33,10 +30,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
 #  endif
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
+
 void positivize(const banded_symmetric_dmatrix& _m,double id)
 {
   ADUNCONST(banded_symmetric_dmatrix,m)
@@ -47,11 +41,6 @@ void positivize(const banded_symmetric_dmatrix& _m,double id)
     m(i,i)+=id;
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
 class safe_choleski_solver
 {
 public:
@@ -63,10 +52,6 @@ public:
   dvector solve(const banded_symmetric_dmatrix& _m,const dvector&_v);
 };
 
-/**
- * Description not yet available.
- * \param
- */
 safe_choleski_solver::safe_choleski_solver(double _id)
 {
   id=_id;
@@ -85,7 +70,7 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
   int minsave=M.indexmin();
   M.shift(1);
   int n=M.indexmax();
-
+  
   int bw=M.bandwidth();
   banded_lower_triangular_dmatrix L(1,n,bw);
 #ifndef SAFE_INITIALIZE
@@ -139,11 +124,8 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
   return L;
 }
 */
+static void xxx(double x){;}
 
-/**
- * Description not yet available.
- * \param
- */
 dvector safe_choleski_solver::solve
   (const banded_symmetric_dmatrix& _m,const dvector&_v)
 {
@@ -151,7 +133,7 @@ dvector safe_choleski_solver::solve
   ADUNCONST(dvector,v)
   ADUNCONST(banded_symmetric_dmatrix,m)
   int mmin=m.indexmin();
-  //int mmax=m.indexmax();
+  int mmax=m.indexmax();
   if (hadbad && id>0.0)
   {
     positivize(m,id);
@@ -166,7 +148,7 @@ dvector safe_choleski_solver::solve
     const banded_lower_triangular_dmatrix& C=quiet_choleski_decomp(m,ierr);
     if (ierr==0)
     {
-      id/=2.0;
+      id/=2.0; 
       w=solve_trans(C,::solve(C,v));
       dvector delta=m*w;
       dvector err=solve_trans(C,::solve(C,v-delta));
@@ -181,7 +163,7 @@ dvector safe_choleski_solver::solve
     }
     else
     {
-      id*=2.0;
+      id*=2.0; 
       positivize(m,id);
       ierr=0;
       dirty=1;
@@ -195,25 +177,25 @@ dvector safe_choleski_solver::solve
   return w;
 }
 
-/**
-\todo Needs testing
-*/
+
+
 void laplace_approximation_calculator::
   do_newton_raphson_state_space(function_minimizer * pfmin,double f_from_1,
   int& no_converge_flag)
 {
-  laplace_approximation_calculator::where_are_we_flag=2;
+  laplace_approximation_calculator::where_are_we_flag=2; 
   double fbest=1.e+100;
   double fval=1.e+100;
   double maxg=fabs(evaluate_function(fbest,uhat,pfmin));
 
-  laplace_approximation_calculator::where_are_we_flag=0;
+
+  laplace_approximation_calculator::where_are_we_flag=0; 
   dvector uhat_old(1,usize);
   safe_choleski_solver scs(0.1);
   //for(int ii=1;ii<=num_nr_iters;ii++)
   int ii=0;
-  for (;;)
-  {
+  do
+  {  
     bHess->initialize();
 
     grad.initialize();
@@ -237,7 +219,7 @@ void laplace_approximation_calculator::
       quadratic_prior::get_cgradient_contribution(grad,xsize);
     }
 
-    //int ierr=0;
+    int ierr=0;
 
     dvector g1(1,usize);
     maxg=fabs(evaluate_function(fval,uhat,g1,pfmin));
@@ -247,21 +229,23 @@ void laplace_approximation_calculator::
     {
       cout << " grad compare " << norm(g1-grad)  << endl;
     }
-    step=scs.solve(*bHess,g1);
-    //step=scs.solve(*bHess,grad);
+    step=scs.solve(*bHess,g1); 
+    //step=scs.solve(*bHess,grad); 
     if (nr_debug==1)
     {
       cout << " angle = " << step*grad/(norm(step)*norm(grad)) << endl;
     }
     int iic=0;
+    int ibad=0;
     double testangle=-1;
     int extra_try=0;
     dvector utry(1,usize);
     int smallshrink=0;
-    for (;;)
+    do
     {
-      if (++iic>10)
+      if (++iic>10) 
       {
+        ibad=1;
         break;
       }
       if (extra_try==0)
@@ -276,7 +260,7 @@ void laplace_approximation_calculator::
       maxg=fabs(evaluate_function(fval,utry,g,pfmin));
       if (nr_debug==1)
       {
-        cout << "  fbest-fval = " << setprecision(15)
+        cout << "  fbest-fval = " << setprecision(15) 
            <<  fbest-fval  << endl;
       }
       if (fval>fbest && maxg>1.e-10)
@@ -287,12 +271,11 @@ void laplace_approximation_calculator::
           smallshrink=2;
         else if (maxg<1.e-8)
           smallshrink=1;
-
+          
         if (nr_debug==1)
         {
           testangle=g*step/(norm(g)*norm(step));
-          cout << fval-fbest << " step too large  angle = " << testangle
-               << endl;
+          cout << fval-fbest << " step too large  angle = " << testangle << endl;
         }
       }
       if (fval==fbest)
@@ -316,7 +299,7 @@ void laplace_approximation_calculator::
           {
             cout << extra_try << endl;
           }
-        }
+        }          
         else
         {
           break;
@@ -342,8 +325,9 @@ void laplace_approximation_calculator::
         }
       }
     }
+    while(1);
 
-    ii++;
+    ii++; 
 
     if (scs.dirty==1)
     {
@@ -354,7 +338,7 @@ void laplace_approximation_calculator::
       {
         ofstream ofs("hh1");
         ofs << setw(12) << setscientific() << setprecision(3) << endl;
-      }
+      } 
 
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
@@ -363,16 +347,17 @@ void laplace_approximation_calculator::
       }
       if (ii>=num_nr_iters || maxg < 1.e-13 )
       {
-        step=scs.solve(*bHess,g1);
+        step=scs.solve(*bHess,g1); 
       }
       //solve(*bHess,grad);
     }
 
+    
     for (int i=1;i<=usize;i++)
     {
       y(i+xsize)=uhat(i);
     }
-
+    
     if (scs.dirty==0)
     {
       if (ii>=num_nr_iters || maxg < 1.e-13 )
@@ -391,5 +376,9 @@ void laplace_approximation_calculator::
         break;
       }
     }
+    
   }
+  while(1);
 }
+
+#endif  //#if defined(USE_LAPLACE)

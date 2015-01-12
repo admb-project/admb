@@ -1,22 +1,18 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
+
 #include "fvar.hpp"
+
 
   void DF_dv_cdble_diff(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector operator-(const dvar_vector& t1, const double x)
+  dvar_vector operator - (_CONST dvar_vector& t1, CGNU_DOUBLE x)
   {
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -29,14 +25,11 @@ dvar_vector operator-(const dvar_vector& t1, const double x)
     t1.save_dvar_vector_position();
     save_identifier_string("dduu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dv_cdble_diff);
+    gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(DF_dv_cdble_diff);
     return(tmp);
   }
 
-/**
- * Description not yet available.
- * \param
- */
  void DF_dv_cdble_diff(void)
  {
     verify_identifier_string("dduu");
@@ -54,3 +47,4 @@ dvar_vector operator-(const dvar_vector& t1, const double x)
     }
     dft1.save_dvector_derivatives(t1_pos);
  }
+

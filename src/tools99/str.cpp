@@ -1,8 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 #include <string.h>
@@ -11,10 +11,6 @@
 #include <math.h>
 #ifdef __NDPX__
   #include <dos.h> //itoa
-#endif
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
 #endif
 
 adstring str(double x, int minwidth, int decplaces)
@@ -79,9 +75,9 @@ adstring str(double x, int minwidth, int decplaces)
    return (tmp);
 }
 
-void str(const int a, adstring& s)
+void str(_CONST int a, adstring& s)
 {
-#if defined(_MSC_VER)
+ #if !defined(__GNUDOS__) && !defined(linux)
   char  buffer[50];
   itoa(a, buffer, 10);
   s = adstring(buffer);
@@ -90,9 +86,9 @@ void str(const int a, adstring& s)
 #endif
 }
 
-adstring str(const int a)
+adstring str(_CONST int a)
 {
-#if defined(_MSC_VER)
+ #if !defined(__GNUDOS__) && !defined(linux)
   char  buffer[50];
   itoa(a, buffer, 10);
   //adstring* tmp = new adstring(1,strlen(buffer));
@@ -106,8 +102,5 @@ adstring str(const int a)
 
 adstring chr(int c)
 {
-#ifndef OPT_LIB
-  assert(0 <= c && c <= CHAR_MAX);
-#endif
-  return adstring((char)c);
+   return adstring(c);
 }

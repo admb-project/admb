@@ -1,30 +1,16 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
-#include "admb_messages.h"
-
-/**
- * Description not yet available.
- * \param
- */
 void i4_array::allocate(void)
 {
   t=0;
   shape=0;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void i4_array::initialize(void)
 {
   if (allocated(*this))
@@ -38,28 +24,18 @@ void i4_array::initialize(void)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
+
 i4_array::i4_array(void)
 {
   allocate();
 }
 
-/**
- * Description not yet available.
- * \param
- */
 i4_array::i4_array(int hsl,int hsu)
 {
   allocate(hsl,hsu);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void i4_array::allocate(int hsl,int hsu)
 {
   int ss=hsu-hsl+1;
@@ -88,20 +64,12 @@ void i4_array::allocate(int hsl,int hsu)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
-i4_array::i4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
-  const imatrix& nrh, int ncl, const i3_array& nch)
+i4_array::i4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
+    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch)
  {
@@ -130,11 +98,6 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      shape=0;
    }
  }
-
-/**
- * Description not yet available.
- * \param
- */
  void i4_array::allocate(const ad_integer& hsl,const ad_integer& hsu,
    const index_type& sl,const index_type& sh,const index_type& nrl,
    const index_type& nrh,const index_type& ncl,const index_type& nch)
@@ -155,7 +118,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      t -= indexmin();
      for (int i=hsl; i<=hsu; i++)
      {
-       (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),
+       (*this)(i).allocate(ad_integer(sl),ad_integer(sh),nrl(i),nrh(i),
          ncl(i),nch(i));
      }
    }
@@ -166,11 +129,8 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
-i4_array::i4_array(const i4_array& m2)
+
+ i4_array::i4_array(_CONST i4_array& m2)
  {
    if (m2.shape)
    {
@@ -185,19 +145,11 @@ i4_array::i4_array(const i4_array& m2)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  i4_array::~i4_array()
  {
    deallocate();
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void i4_array::deallocate()
  {
    if (shape)
@@ -218,116 +170,83 @@ i4_array::i4_array(const i4_array& m2)
  }
 
 #if !defined (OPT_LIB)
-
-/**
- * Description not yet available.
- * \param
- */
     i3_array& i4_array::operator ( ) (int i)
     {
-      if (i < indexmin() || i > indexmax())
+#     if defined(SAFE_ARRAYS)
+      if (i<indexmin() || i>indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i3_array& i4_array::operator ( ) (int i)", indexmin(), indexmax(), i);
+	cerr << "Index out of bounds in i4_array::operator () (int)"
+	     << endl;
+        ad_exit(1);
       }
+#     endif
       return t[i];
     }
 
-/**
- * Description not yet available.
- * \param
- */
     i3_array& i4_array::operator [] (int i)
     {
-      if (i < indexmin() || i > indexmax())
+#     if defined(SAFE_ARRAYS)
+      if (i<indexmin() || i>indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i3_array& i4_array::operator [] (int i)", indexmin(), indexmax(), i);
+	cerr << "Index out of bounds in i4_array::operator () (int)"
+	     << endl;
+        ad_exit(1);
       }
+#     endif
       return t[i];
     }
-
-/**
- * Description not yet available.
- * \param
- */
     imatrix& i4_array::operator ( ) (int i ,int j)
     {
       return ((*this)(i))(j);
     }
 
-/**
- * Description not yet available.
- * \param
- */
     ivector& i4_array::operator ( ) (int i,int j,int k)
     {
       return (((*this)(i,j))(k));
     }
-
-/**
- * Description not yet available.
- * \param
- */
     int& i4_array::operator ( ) (int i,int j,int k,int l)
     {
       return ( ((*this)(i,j,k))(l));
     }
 
-/**
- * Description not yet available.
- * \param
- */
-const i3_array& i4_array::operator()(int i) const
+#if defined(USE_CONST)
+    _CONST i3_array& i4_array::operator ( ) (int i)   _CONST 
     {
+#     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
-        cerr << "Index out of bounds in i4_array::operator () (int)"
-             << endl;
+	cerr << "Index out of bounds in i4_array::operator () (int)"
+	     << endl;
         ad_exit(1);
       }
+#     endif
       return t[i];
     }
 
-/**
- * Description not yet available.
- * \param
- */
-const i3_array& i4_array::operator[](int i) const
+    _CONST i3_array& i4_array::operator [] (int i) _CONST
     {
+#     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
-        cerr << "Index out of bounds in i4_array::operator () (int)"
-             << endl;
+	cerr << "Index out of bounds in i4_array::operator () (int)"
+	     << endl;
         ad_exit(1);
       }
+#     endif
       return t[i];
     }
-
-/**
- * Description not yet available.
- * \param
- */
-const imatrix& i4_array::operator()(int i, int j) const
+     _CONST imatrix& i4_array::operator ( ) (int i ,int j) _CONST
     {
       return ((*this)(i))(j);
     }
-
-/**
- * Description not yet available.
- * \param
- */
-const ivector& i4_array::operator()(int i, int j, int k) const
+    _CONST ivector& i4_array::operator ( ) (int i,int j,int k) _CONST
     {
       return (((*this)(i,j))(k));
     }
-
-/**
- * Description not yet available.
- * \param
- */
-const int& i4_array::operator()(int i, int j, int k, int l) const
+    _CONST int& i4_array::operator ( ) (int i,int j,int k,int l) _CONST
     {
       return ( ((*this)(i,j,k))(l));
     }
 #endif
+#endif
+

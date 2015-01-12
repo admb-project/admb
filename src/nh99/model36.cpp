@@ -1,10 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <admodel.h>
+
+
 
 void named_adstring::allocate(const char * s1,const char * _s)
 {
@@ -35,7 +37,7 @@ void dll_named_adstring::operator = (const adstring& _s)
 void dll_named_adstring::allocate(char ** ps1,const char * _s)
 {
   named_adstring::allocate(*ps1,_s);
-}
+}    
 
 dll_named_adstring::~dll_named_adstring()
 {

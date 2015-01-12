@@ -1,23 +1,26 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
 #include <admodel.h>
 
-double inv_cumd_norm(const double& x);
-double cumd_norm(const double& x);
+double inv_cumd_norm(_CONST double& x);
+double cumd_norm(_CONST double& x);
 double myran1(long int&);
-//double better_rand(long int&);
+double better_rand(long int&);
 
-void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
-  const random_number_generator& rng)
+
+
+
+void bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
+  dmatrix& ch,long int& iseed,BOR_CONST double& _wght,BOR_CONST dvector& y)
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
-  const double sqrt_tpi =sqrt(2*PI);
+  const double sqrt_tpi =sqrt(2*3.14159);
   dvector a(1,nvar);
   dvector b(1,nvar);
   dvector alpha(1,nvar);
@@ -25,20 +28,20 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   a=a1;
   b=b1;
   wght=0;
-  double ah;
-  double bl;
+  double ah; 
+  double bl; 
   double upper;
-  double lower;
+  double lower; 
   double diff;
   int expflag;
   int in=0;
   int ie=0;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i);
-    bl=b(i)/ch(i,i);
+    ah=a(i)/ch(i,i); 
+    bl=b(i)/ch(i,i); 
     upper=cumd_norm(bl);
-    lower=cumd_norm(ah);
+    lower=cumd_norm(ah); 
     diff=upper-lower;
     if (diff>1.e-5)
     {
@@ -76,13 +79,13 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   wght +=  in*log(1./sqrt_tpi);
 }
 
-void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
-  double pprobe, const random_number_generator& rng)
+
+void probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
+  dmatrix& ch,long int& iseed,BOR_CONST double& _wght,BOR_CONST dvector& y,double pprobe)
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
-  const double sqrt_tpi =sqrt(2*PI);
+  const double sqrt_tpi =sqrt(2*3.14159);
   dvector a(1,nvar);
   dvector b(1,nvar);
   dvector alpha(1,nvar);
@@ -90,20 +93,20 @@ void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   a=a1;
   b=b1;
   wght=0;
-  double ah;
-  double bl;
+  double ah; 
+  double bl; 
   double upper;
-  double lower;
+  double lower; 
   double diff;
   double diff1;
-  //int in=0;
-  //int ie=0;
+  int in=0;
+  int ie=0;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i);
-    bl=b(i)/ch(i,i);
+    ah=a(i)/ch(i,i); 
+    bl=b(i)/ch(i,i); 
     upper=cumd_norm(bl);
-    lower=cumd_norm(ah);
+    lower=cumd_norm(ah); 
     diff=upper-lower;
     upper=cumd_cauchy(bl);
     lower=cumd_cauchy(ah);
@@ -127,9 +130,9 @@ void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   }
 }
 
-void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
-  const random_number_generator& rng)
+
+void bounded_multivariate_uniform_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
+  dmatrix& ch,long int& iseed,BOR_CONST double& _wght,BOR_CONST dvector& y)
 {
   double& wght=(double&) _wght;
   dvector a(1,nvar);
@@ -137,15 +140,15 @@ void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1,
   a=a1;
   b=b1;
   wght=0;
-  double ah;
-  double bl;
+  double ah; 
+  double bl; 
   double upper;
-  double lower;
+  double lower; 
   double diff;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i);
-    bl=b(i)/ch(i,i);
+    ah=a(i)/ch(i,i); 
+    bl=b(i)/ch(i,i); 
     lower=ffmax(-1.0,ah);
     upper=ffmin(1.0,bl);
     diff=upper-lower;
@@ -158,3 +161,5 @@ void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1,
     }
   }
 }
+
+

@@ -1,11 +1,14 @@
-/**
- * $Id: vcumdbetainv.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
+/*
+ * $Id$
  * Author: Unknown
  */
 
+#if defined(USE_LAPLACE)
+#  include <df1b2fun.h>
+#endif
+
 #include <admodel.h>
-#include "df12fun.h"
+#include <df12fun.h>
 
 //#define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
@@ -14,8 +17,17 @@ static double lnbeta(double a,double b)
   return gammln(a)+gammln(b)-gammln(a+b);
 }
 
+static int sgn(double z)
+{
+  if (z>=0)
+    return 1;
+  else
+    return -1;
+}
+
 df1_two_variable betai(const df1_two_variable& a,
   const df1_two_variable& b,double x,int maxit=100);
+
 
 dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
   const prevariable& _y,double eps)
@@ -37,7 +49,7 @@ dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
 
   df1_two_variable z=(betai(va,vb,cx)-betai(va,vb,eps))/
     (betai(va,vb,eps1)-betai(va,vb,eps));
-
+   
   double dga=*z.get_u_x();
   double dgb=*z.get_u_y();
 
@@ -60,9 +72,9 @@ dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
   return tmp;
 }
 
-df1_two_variable betacf(const df1_two_variable& a,const df1_two_variable& b,
+df1_two_variable betacf(const df1_two_variable& a,const df1_two_variable& b, 
   double x);
-
+  
 
 df1_two_variable betai(const df1_two_variable& a,
   const df1_two_variable& b,double x,int maxit)
@@ -71,7 +83,7 @@ df1_two_variable betai(const df1_two_variable& a,
 
   if (x < 0.0 || x > 1.0) cerr << "Bad x in routine betai" << endl;
   double z=1.0-x;
-  if (x == 0.0 || x==1.0)
+  if (x == 0.0 || x==1.0) 
     bt=0.0;
   else
   {
@@ -82,14 +94,14 @@ df1_two_variable betai(const df1_two_variable& a,
   else
     return 1.0-bt*betacf(b,a,1.0-x)/b;
 }
-
+  
 /*
 main()
 {
   double a,b,x;
 
   a=2.0;
-  b=3.0;
+  b=3.0; 
   x=.80;
   do
   {
@@ -137,8 +149,8 @@ main()
 const double tiny=1.0e-8;
 const double maxn=150;
 const double lowerbd=1.0e-40;
-
-df1_two_variable betacf(const df1_two_variable& a, const df1_two_variable& b,
+   
+df1_two_variable betacf(const df1_two_variable& a, const df1_two_variable& b, 
   double x)
 {
   df1_two_variable v;
@@ -149,7 +161,7 @@ df1_two_variable betacf(const df1_two_variable& a, const df1_two_variable& b,
   df1_two_variable um;
   df1_two_variable d;
   df1_two_variable ssum;
-
+   
   up=a+1.0;
   um=a-1.0;
   v=1.0;
@@ -159,7 +171,7 @@ df1_two_variable betacf(const df1_two_variable& a, const df1_two_variable& b,
   d=1.0/d;
   h=d;
   int m;
-  for (m=1;m<=maxn;m++)
+  for (m=1;m<=maxn;m++) 
   {
     int m2=2*m;
     aa=m*(b-m)*x/((um+m2)*(a+m2));
@@ -180,7 +192,7 @@ df1_two_variable betacf(const df1_two_variable& a, const df1_two_variable& b,
     h *= yy;
     if (fabs(value(yy)-1.0) < tiny) break;
   }
-  if (m > maxn)
+  if (m > maxn) 
   {
     cerr << "num interations exceeded " << endl;
     ad_exit(1);
@@ -200,7 +212,7 @@ df1_two_variable gammln(const df1_two_variable& xx)
   tmp=x+5.5;
   tmp -= (x+0.5)*log(tmp);
   ser=1.0;
-  for (j=0;j<=5;j++)
+  for (j=0;j<=5;j++) 
   {
     x += 1.0;
     ser += cof[j]/x;
@@ -213,16 +225,18 @@ df1_two_variable gammln(const df1_two_variable& xx)
 static df1_two_variable gammlnguts(const df1_two_variable& _z)
 {
   df1_two_variable x;
+  const double lpi =1.1447298858494001741434272;
+  const double pi =3.1415926535897932384626432;
   const double lpp =0.9189385332046727417803297;
   int n=7;
-  const double c[9]={0.99999999999980993,
-    676.5203681218851,
+  const double c[9]={0.99999999999980993, 
+    676.5203681218851, 
     -1259.1392167224028,
-     771.32342877765313,
-    -176.61502916214059,
+     771.32342877765313, 
+    -176.61502916214059, 
     12.507343278686905,
-     -0.13857109526572012,
-    9.9843695780195716e-6,
+     -0.13857109526572012, 
+    9.9843695780195716e-6, 
     1.5056327351493116e-7};
   df1_two_variable z=_z-1.0;
   x=c[0];
@@ -230,7 +244,7 @@ static df1_two_variable gammlnguts(const df1_two_variable& _z)
   {
     df1_two_variable zinv=1.0/(z+i);
     x+=c[i]*zinv;
-  }
+  }    
   df1_two_variable t=z+n+0.5;
   df1_two_variable ans= lpp + (z+0.5)*log(t) -t + log(x);
   return(ans);

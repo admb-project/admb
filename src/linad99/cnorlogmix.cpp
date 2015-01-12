@@ -1,23 +1,18 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #include <fvar.hpp>
 
 static double cc=0.39894228040143267794;
 
-typedef double (*pinit_f)(double y,double a);
+typedef double (*pinit_f)(double y,double a); 
 
-/**
- * Description not yet available.
- * \param
- */
+
 static double cumd_normal_logistic_mixture(double x,double a)
 {
   // "normal" value for a is 3.0
@@ -33,10 +28,6 @@ static double cumd_normal_logistic_mixture(double x,double a)
   return y;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 static double df_cumd_normal_logistic_mixture(double x,double a)
 {
   // "normal" value for a is 3.0
@@ -55,10 +46,6 @@ static double df_cumd_normal_logistic_mixture(double x,double a)
   return dfx;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 static double cumd_normal_logistic_mixture_initx(double y,double a)
 {
   double x;
@@ -77,10 +64,6 @@ static double cumd_normal_logistic_mixture_initx(double y,double a)
   return x;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 double  nr_generic(double y,double a,pinit_f p_get_initial_x,
   pinit_f pfun,pinit_f pdfun);
 
@@ -111,22 +94,15 @@ main()
 //********************************************************
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
 double robust_normal_logistic_mixture_deviate(double x,double spread)
 {
+
   double y=cumd_norm(x);
   y = 0.99999999*y + 0.000000005; // To gain numerical stability
   double z = inv_cumd_normal_logistic_mixture(y,spread);
   return z;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 double robust_normal_mixture_deviate(double x,double spread)
 {
   double y=cumd_norm(x);
@@ -135,13 +111,11 @@ double robust_normal_mixture_deviate(double x,double spread)
   return z;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 double inv_cumd_normal_logistic_mixture(double yy,double a)
 {
   double  x=nr_generic(yy,a,cumd_normal_logistic_mixture_initx,
     cumd_normal_logistic_mixture,df_cumd_normal_logistic_mixture);
   return x;
 }
+

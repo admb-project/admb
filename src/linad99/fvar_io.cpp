@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 // file: fvar_io.cpp
 
@@ -29,26 +25,18 @@
   #define __USE_IOSTREAM__
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& _ostr, const prevariable& f)
+ostream& operator<<(BOR_CONST ostream& _ostr,_CONST prevariable& f)
 {
   ostream& ostr=(ostream&) _ostr;
   ostr << value(f);
   return ostr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& _istr, const prevariable& _f)
+istream& operator>>(BOR_CONST istream& _istr,BOR_CONST prevariable& _f)
 {
   prevariable& f = (prevariable&)_f;
   istream& istr=(istream&) _istr;
-  double tmp = 0;
+  double tmp;
   istr >> tmp;
   f=tmp;
   return istr;
@@ -56,28 +44,22 @@ istream& operator>>(const istream& _istr, const prevariable& _f)
 
 
 #ifdef __USE_IOSTREAM__
-/**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& _ostr, const prevariable& f)
+uostream& operator<<(BOR_CONST uostream& _ostr,_CONST prevariable& f)
 {
   uostream& ostr=(uostream&) _ostr;
   ostr << value(f);
   return ostr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& _istr, const prevariable& _f)
+uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST prevariable& _f)
 {
   prevariable& f = (prevariable&)_f;
   uistream& istr=(uistream&) _istr;
-  double tmp = 0;
+  double tmp;
   istr >> tmp;
   f=tmp;
   return istr;
 }
 #endif
+
+

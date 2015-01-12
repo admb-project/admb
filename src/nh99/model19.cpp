@@ -1,13 +1,15 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
 #include <admodel.h>
 
-void param_init_number::curv_scale(const dvector& _d, const dvector& x,
-  const int& _ii)
+
+
+  void param_init_number::curv_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
     dvector& d=(dvector&) _d;
     int& ii=(int&) _ii;
@@ -15,22 +17,20 @@ void param_init_number::curv_scale(const dvector& _d, const dvector& x,
     ii++;
   }
 
-void param_init_bounded_number::curv_scale(const dvector& _d, const dvector& x,
-  const int& _ii)
-{
-  dvector& d=(dvector&) _d;
-  int& ii=(int&) _ii;
-  double pen=0;
-  d(ii)=nd2fboundp(x(ii),minb,maxb,pen);
+  void param_init_bounded_number::curv_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
+  {
+    dvector& d=(dvector&) _d;
+    int& ii=(int&) _ii;
+    double pen=0;
+    d(ii)=nd2fboundp(x(ii),minb,maxb,pen);
 
-  //d(ii)=(boundp(x(ii)+1.e-6,minb,maxb,pen)-
-  //      2.*boundp(x(ii),minb,maxb,pen)+
-  //boundp(x(ii)-1.e-6,minb,maxb,pen))/1.e-12;
-  ii++;
-}
+    //d(ii)=(boundp(x(ii)+1.e-6,minb,maxb,pen)-
+      //      2.*boundp(x(ii),minb,maxb,pen)+
+	//boundp(x(ii)-1.e-6,minb,maxb,pen))/1.e-12;
+    ii++;
+  }
 
-void param_init_vector::curv_scale(const dvector& _v, const dvector& x,
-  const int& _ii)
+  void param_init_vector::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -42,8 +42,7 @@ void param_init_vector::curv_scale(const dvector& _v, const dvector& x,
     }
   }
 
-void param_init_matrix::curv_scale(const dvector& _v,const dvector& x,
-  const int& _ii)
+  void param_init_matrix::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -60,8 +59,7 @@ void param_init_matrix::curv_scale(const dvector& _v,const dvector& x,
     }
   }
 
-void param_init_bounded_vector::curv_scale(const dvector& _v, const dvector& x,
-  const int& _ii)
+  void param_init_bounded_vector::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -75,8 +73,7 @@ void param_init_bounded_vector::curv_scale(const dvector& _v, const dvector& x,
     }
   }
 
-void param_init_bounded_matrix::curv_scale(const dvector& _v, const dvector& x,
-  const int& _ii)
+  void param_init_bounded_matrix::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -90,7 +87,8 @@ void param_init_bounded_matrix::curv_scale(const dvector& _v, const dvector& x,
       for (int j=cmin;j<=cmax;j++)
       {
         v(ii)=nd2fboundp(x(ii),minb,maxb,pen);
-        ii++;
+	ii++;
       }
     }
   }
+

@@ -1,37 +1,22 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
+
  struct dvec_ptr_ptr
  {
    void ** m;
  };
 
-/**
- * Description not yet available.
- * \param
- */
  dmatrix::dmatrix( int nrl,  int nrh, int ncl,  int nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dmatrix::allocate(int nrl,int nrh,int ncl,int nch)
  {
    if (nrh<nrl)
@@ -58,10 +43,6 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  dmatrix dmatrix::sub(int nrl,int nrh)
  {
    if (allocated(*this))
@@ -78,20 +59,11 @@
      return *this;
    }
  }
-
-/**
- * Description not yet available.
- * \param
- */
  dmatrix::dmatrix(int nrl,int nrh)
  {
    allocate(nrl,nrh);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dmatrix::allocate(int nrl,int nrh)
  {
    if (nrh<nrl)
@@ -114,10 +86,6 @@
    m -= rowmin();
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dmatrix::allocate(ad_integer nrl,ad_integer nrh)
  {
    if (nrh<nrl)
@@ -140,10 +108,6 @@
    m -= rowmin();
  }
 
-/**
- * Description not yet available.
- * \param
- */
 double min(const dmatrix& m)
 {
   double tmp=max(m(m.rowmin()));
@@ -155,11 +119,7 @@ double min(const dmatrix& m)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-double max(const dmatrix& m)
+double max(_CONST dmatrix& m)
 {
   double tmp=max(m(m.rowmin()));
   for (int i=m.rowmin()+1;i<=m.rowmax();i++)
@@ -170,11 +130,7 @@ double max(const dmatrix& m)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void dmatrix::allocate(const dmatrix& dm)
+void dmatrix::allocate(_CONST dmatrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();
@@ -199,20 +155,15 @@ void dmatrix::allocate(const dmatrix& dm)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
-int ivector_check(const ivector& v, int l, int u)
+
+
+  int ivector_check(_CONST ivector& v,int l,int u)
   {
     if (v.indexmin()!=l||v.indexmax()!=u) return 1;
     return 0;
   }
 
-/**
- * Description not yet available.
- * \param
- */
+
  void dmatrix::allocate(int nrl,int nrh,const ivector& ncl,const ivector& nch)
  {
    if (nrh<nrl)
@@ -224,8 +175,7 @@ int ivector_check(const ivector& v, int l, int u)
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)\n";
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -248,10 +198,8 @@ int ivector_check(const ivector& v, int l, int u)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
+
  void dmatrix::allocate(int nrl,int nrh,int ncl,const ivector& nch)
  {
    if (nrh<nrl)
@@ -262,7 +210,7 @@ int ivector_check(const ivector& v, int l, int u)
    if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
-       "int ncl,const ivector& nch)\n";
+       "int ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -284,10 +232,6 @@ int ivector_check(const ivector& v, int l, int u)
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
  void dmatrix::allocate(int nrl,int nrh,const ivector& ncl,int nch)
  {
    if (nrh<nrl)
@@ -298,7 +242,7 @@ int ivector_check(const ivector& v, int l, int u)
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
-       " int ncl,const ivector& nch)\n";
+       " int ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -332,29 +276,17 @@ int ivector_check(const ivector& v, int l, int u)
  }
 */
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix::dmatrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)
+ dmatrix::dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix::dmatrix(int nrl, int nrh, int ncl, const ivector& nch)
+ dmatrix::dmatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix::dmatrix(const dmatrix& m2)
+ dmatrix::dmatrix(_CONST dmatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -363,20 +295,16 @@ dmatrix::dmatrix(const dmatrix& m2)
    {
      (shape->ncopies)++;
    }
-#ifdef SAFE_ALL
+#ifdef  SAFE_ARRAYS
    else
    {
      cerr << "Making a copy of an unallocated dmatrix"<<endl;
    }
-#endif
+#endif 
    m = m2.m;
  }
 
-/**
- * Description not yet available.
- * \param
- */
-void dmatrix::shallow_copy(const dmatrix& m2)
+ void dmatrix::shallow_copy(_CONST dmatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -385,29 +313,23 @@ void dmatrix::shallow_copy(const dmatrix& m2)
    {
      (shape->ncopies)++;
    }
-#ifdef SAFE_ALL
+#ifdef  SAFE_ARRAYS
    else
    {
      cerr << "Making a copy of an unallocated dmatrix"<<endl;
    }
-#endif
+#endif 
    m = m2.m;
  }
 
-/**
- * Description not yet available.
- * \param
- */
  dmatrix::~dmatrix()
  {
    deallocate();
  }
+static int testflag=0;
+static int ycounter=0;
 
-/**
- * Description not yet available.
- * \param
- */
-dvector cube(const dvector& m)
+   dvector cube(_CONST dvector& m)
    {
      dvector tmp;
      tmp.allocate(m);
@@ -416,13 +338,9 @@ dvector cube(const dvector& m)
        tmp(i)=cube(m(i));
      }
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix cube(const dmatrix& m)
+   dmatrix cube(_CONST dmatrix& m)
    {
      dmatrix tmp;
      tmp.allocate(m);
@@ -431,24 +349,17 @@ dmatrix cube(const dmatrix& m)
        tmp(i)=cube(m(i));
      }
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
+
  void dmatrix::deallocate()
  {
-/*
-   static int testflag=0;
-   static int ycounter=0;
    if (testflag)
    {
      ycounter++;
      cout << " A " << ycounter << endl;
      test_the_pointer();
    }
-*/
    if (shape)
    {
      if (shape->ncopies)
@@ -463,18 +374,18 @@ dmatrix cube(const dmatrix& m)
        delete shape;
        shape=NULL;
      }
+  
    }
-/*
    if (testflag)
    {
      cout << " B " << ycounter << endl;
      test_the_pointer();
    }
-*/
-#ifdef SAFE_ALL
+     
+#ifdef  SAFE_ARRAYS
    else
    {
-     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+     //cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
    }
-#endif
+#endif 
  }

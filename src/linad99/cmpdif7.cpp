@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
@@ -21,21 +17,17 @@
 
 #include <string.h>
 
-/**
- * Description not yet available.
- * \param
- */
-void nograd_assign_row(const dvar_matrix& m, const dvector& v, const int& ii)
+void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
-  //kkludge_object kg;
+  kkludge_object kg;
   if (ii<m.rowmin()||ii>m.rowmax()  ||
    (v.indexmin()!=m(ii).indexmin()) ||
    (v.indexmax()!=m(ii).indexmax()) )
   {
     cerr << "Error -- Index out of bounds in\n"
-    "void nograd_assign(const dvar_matrix& m, const dvector& v, const int& ii)"
-    << endl;
+      "void nograd_assign(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)"
+      << endl;
     ad_exit(1);
   }
   int min=v.indexmin();
@@ -47,14 +39,11 @@ void nograd_assign_row(const dvar_matrix& m, const dvector& v, const int& ii)
     // out(i)=nograd_assign(m(i));
   }
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable nograd_assign(double tmp)
+  dvariable nograd_assign(double tmp)
 {
   kkludge_object kg;
   dvariable tmpout(kg);
   value(tmpout)=tmp;
   return tmpout;
 }
+

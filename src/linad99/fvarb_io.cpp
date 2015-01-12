@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 // file: fvara_io.cpp
 
@@ -31,12 +27,7 @@
 
 
 #ifdef __USE_IOSTREAM__
-
-/**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& istr, const dvar_vector& _z)
+uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_vector& _z)
 {
   ADUNCONST(dvar_vector,z)
   if (allocated(z))
@@ -44,14 +35,10 @@ uistream& operator>>(const uistream& istr, const dvar_vector& _z)
   return (uistream&) istr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_vector::read_from(const uistream& _s)
+void dvar_vector::read_from(BOR_CONST uistream& _s)
 {
   if (allocated(*this))
-  {
+  {  
     uistream& s = (uistream&) _s;
     int n = indexmax() - indexmin() + 1;
     double_and_int * p = va + indexmin();
@@ -63,25 +50,17 @@ void dvar_vector::read_from(const uistream& _s)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& ostr, const dvar_vector& z)
+uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_vector& z)
 {
   if (allocated(z))
     z.write_on(ostr);
   return (uostream&) ostr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_vector::write_on(const uostream& _s) const
+void dvar_vector::write_on(BOR_CONST uostream& _s) _CONST
 {
   if (allocated(*this))
-  {
+  {  
     uostream& s = (uostream&) _s;
     int n = indexmax() - indexmin() + 1;
     double_and_int * p = va + indexmin();

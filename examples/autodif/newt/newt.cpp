@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -73,7 +73,7 @@ int main()
     cout << " The angle between the rows of the jacobian = "
          << acos(jacobian(1)*jacobian(2)
               /(norm(jacobian(1))*norm(jacobian(2))))
-              *180/PI << " degrees" << endl;
+              *180/3.14159 << " degrees" << endl;
     cout << " Final inverse jacobian matrix value = "
          << inv(jacobian)(1) << endl
          << "                                       "

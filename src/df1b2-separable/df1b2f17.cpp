@@ -1,22 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
-
-#ifndef _MSC_VER
-  #include <unistd.h>
-#endif
-/**
- * Description not yet available.
- * \param
- */
 fixed_smartlist::~fixed_smartlist()
 {
   delete [] true_buffer;
@@ -27,22 +15,18 @@ fixed_smartlist::~fixed_smartlist()
   {
     if (ad_comm::global_logfile)
     {
-      *ad_comm::global_logfile << "size of file " << filename
+      *ad_comm::global_logfile << "size of file " << filename 
         << " = " << pos << endl;
     }
   }
   close(fp);
-#if defined (_MSC_VER)
-  remove(filename);
-#else
-  unlink(filename);
-#endif
+  #if defined ( __SUN__) ||  defined ( __GNU__)
+   unlink(filename);
+  #else
+   remove(filename);
+  #endif
 }
 
-/**
- * Description not yet available.
- * \param
- */
 fixed_smartlist2::~fixed_smartlist2()
 {
   delete [] true_buffer;
@@ -53,14 +37,15 @@ fixed_smartlist2::~fixed_smartlist2()
   {
     if (ad_comm::global_logfile)
     {
-      *ad_comm::global_logfile << "size of file " << filename
+      *ad_comm::global_logfile << "size of file " << filename 
         << " = " << pos << endl;
     }
   }
   close(fp);
-#if defined (_MSC_VER)
-  remove(filename);
-#else
-  unlink(filename);
-#endif
+  #if defined ( __SUN__) ||  defined ( __GNU__)
+   unlink(filename);
+  #else
+   remove(filename);
+  #endif
 }
+

@@ -1,6 +1,5 @@
-/**
- * $Id: ccumdbetainv.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
+/*
+ * $Id$
  * Author: Unknown
  */
 #include <admodel.h>
@@ -10,7 +9,6 @@ static double lnbeta(double a,double b)
   return gammln(a)+gammln(b)-gammln(a+b);
 }
 
-/*
 static int sgn(double z)
 {
   if (z>=0)
@@ -18,10 +16,11 @@ static int sgn(double z)
   else
     return -1;
 }
-*/
+
 
 double inv_cumd_beta_stable(double a,double b,double y,double eps)
 {
+  double u;
   double eps1=1.0-eps;
 
   int icount=0;
@@ -30,7 +29,7 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
     cerr << "Illegal value in inv_cumd_beta" << endl;
     ad_exit(1);
   }
-
+ 
   double mu=a/(a+b);
   double x=mu;
   if (x<=eps)
@@ -59,6 +58,7 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
   double d=0.0;
   do
   {
+    double xm;
     double f,dx; // der of x wrt s
     x=1.0/(1.0+exp(-s));  //transform from s to x
 
@@ -97,7 +97,7 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
       else
         s=stry;
     }
-    else
+    else 
     if (h>0.0)
     {
       if (stry>upper)
@@ -112,8 +112,9 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
 
   return x;
 }
-
+  
 /*
+  
 main()
 {
   double eps=0.000001;

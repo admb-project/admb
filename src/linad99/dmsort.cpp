@@ -2,19 +2,12 @@
  * $Id$
  * Author: David Fournier
  *
- * Copyright (c) 2009-2012 ADMB Foundation
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix sort(const dmatrix& m, int column, int NSTACK)
+
+dmatrix sort(_CONST dmatrix& m,int column,int NSTACK)
 {
   ivector ind(m.rowmin(),m.rowmax());
   ivector ind1(m.rowmin(),m.rowmax());
@@ -33,3 +26,6 @@ dmatrix sort(const dmatrix& m, int column, int NSTACK)
   }
   return tmp;
 }
+
+
+

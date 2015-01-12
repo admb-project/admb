@@ -1,13 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -22,10 +19,7 @@ double dmax(double, double);
 
 #define USE_BARD_PEN
 
-/**
- * Description not yet available.
- * \param
- */
+
 double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
 {
   double tinv;
@@ -33,8 +27,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
 
   if (x < fmin)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -43,8 +36,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
 
   if (x > fmax)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -54,3 +46,4 @@ double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
   tinv=::asin(2.*(x-fmin)/(fmax-fmin)-1.)/1.57079632679489661;
   return(s*tinv);
 }
+

@@ -1,13 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 /*
@@ -20,13 +17,10 @@ void dvar_matrix::initialize(void)
       elem(i).initialize();
     }
   }
-}
+} 
 */
 
-/**
- * Description not yet available.
- * \param
- */
+
 void dfmatinit(void)
 {
   verify_identifier_string("q");
@@ -37,10 +31,8 @@ void dfmatinit(void)
   tmp.save_dmatrix_derivatives_na(tmp_pos);
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
+
 void dvar_matrix::initialize(void)
 {
   if (!(!(*this)))  // only initialize allocated objects
@@ -69,4 +61,5 @@ void dvar_matrix::initialize(void)
       set_gradient_stack(dfmatinit);
     save_identifier_string("q");
   }
-}
+} 
+

@@ -1,16 +1,18 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
 #include "fvar.hpp"
+
 /*
     dvar_vector dvar_vector::operator()(int low,int high)
     {
       if (low>high)
       {
-        cerr << " low index > high index in"
+        cerr << " low index > high index in" 
                  " dvar_vector::operator()(int low,int high)"  << endl;
         ad_exit(1);
       }

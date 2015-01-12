@@ -1,54 +1,37 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable norm(const dvar3_array& m)
+    dvariable norm(_CONST dvar3_array& m)
     {
       RETURN_ARRAYS_INCREMENT();
       dvariable tmp=0.0;
       for (int k=m.slicemin();k<=m.slicemax();k++)
       {
-        tmp+=norm2(m(k));
+	tmp+=norm2(m(k));
       }
       tmp=sqrt(tmp);
       RETURN_ARRAYS_DECREMENT();
       return tmp;
     }
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable norm2(const dvar3_array& m)
+    dvariable norm2(_CONST dvar3_array& m)
     {
       RETURN_ARRAYS_INCREMENT();
       dvariable tmp=0.0;
       for (int k=m.slicemin();k<=m.slicemax();k++)
       {
-        tmp+=norm2(m(k));
+	tmp+=norm2(m(k));
       }
       RETURN_ARRAYS_DECREMENT();
       return tmp;
     }
-dvariable sumsq(const dvar3_array& m) {return(norm2(m));}
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array exp(const dvar3_array& m)
+   dvar3_array exp(_CONST dvar3_array& m)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -61,11 +44,7 @@ dvar3_array exp(const dvar3_array& m)
      return tmp;
    }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array log(const dvar3_array& m)
+   dvar3_array log(_CONST dvar3_array& m)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -78,11 +57,7 @@ dvar3_array log(const dvar3_array& m)
      return tmp;
    }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array sin(const dvar3_array& m)
+   dvar3_array sin(_CONST dvar3_array& m)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -93,13 +68,10 @@ dvar3_array sin(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array cos(const dvar3_array& m)
+
+   dvar3_array cos(_CONST dvar3_array& m)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -110,13 +82,9 @@ dvar3_array cos(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array sqrt(const dvar3_array& m)
+   dvar3_array sqrt(_CONST dvar3_array& m)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -127,13 +95,9 @@ dvar3_array sqrt(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array sqr(const dvar3_array& m)
+   dvar3_array sqr(_CONST dvar3_array& m)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -144,13 +108,9 @@ dvar3_array sqr(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array tan(const dvar3_array& m)
+   dvar3_array tan(_CONST dvar3_array& m)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -161,13 +121,9 @@ dvar3_array tan(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
-
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array elem_prod(const dvar3_array& m1, const dvar3_array& m2)
+   } 
+ 
+   dvar3_array elem_prod(_CONST dvar3_array& m1,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -178,13 +134,9 @@ dvar3_array elem_prod(const dvar3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array elem_div(const dvar3_array& m1, const dvar3_array& m2)
+   dvar3_array elem_div(_CONST dvar3_array& m1,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -195,13 +147,9 @@ dvar3_array elem_div(const dvar3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array operator+(const dvar3_array& m1,const dvar3_array& m2)
+   dvar3_array operator + (_CONST dvar3_array& m1,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -212,13 +160,9 @@ dvar3_array operator+(const dvar3_array& m1,const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array operator-(const dvar3_array& m1, const dvar3_array& m2)
+   dvar3_array operator - (_CONST dvar3_array& m1,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -229,13 +173,9 @@ dvar3_array operator-(const dvar3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array elem_prod(const d3_array& m1, const dvar3_array& m2)
+   dvar3_array elem_prod(_CONST d3_array& m1,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -246,13 +186,9 @@ dvar3_array elem_prod(const d3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array elem_div(const d3_array& m1, const dvar3_array& m2)
+   dvar3_array elem_div(_CONST d3_array& m1,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -263,13 +199,9 @@ dvar3_array elem_div(const d3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array operator+(const d3_array& m1, const dvar3_array& m2)
+   dvar3_array operator + (_CONST d3_array& m1,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -280,13 +212,9 @@ dvar3_array operator+(const d3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar3_array operator-(const d3_array& m1, const dvar3_array& m2)
+   dvar3_array operator - (_CONST d3_array& m1,_CONST dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -297,4 +225,4 @@ dvar3_array operator-(const d3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  

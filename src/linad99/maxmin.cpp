@@ -1,47 +1,39 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+//#define DIAG
 #include <fvar.hpp>
+#if defined(__TURBOC__) && !defined(__linux__)
+#pragma hdrstop
+#include <conio.h>
+#include <iomanip.h>
+#endif
 
-/**
- * Description not yet available.
- * \param
- */
-double max(const double u, const double v)
+double max( CGNU_DOUBLE u, CGNU_DOUBLE v)
 {
-  return u > v ? u : v;
+  if (u > v)
+  {
+    return u;
+  }
+  else
+  {
+    return v;
+  }
 }
 
-/**
- * Description not yet available.
- * \param
- */
-double min(const double u, const double v)
+double min( CGNU_DOUBLE u, CGNU_DOUBLE v)
 {
-  return u < v ? u : v;
+  if (u < v)
+  {
+    return u;
+  }
+  else
+  {
+    return v;
+  }
 }
 
-/**
- * Description not yet available.
- * \param
- */
-unsigned long max(unsigned long u, unsigned long v)
-{
-  return u > v ? u : v;
-}
-
-/**
- * Description not yet available.
- * \param
- */
-unsigned long min(unsigned long u, unsigned long v)
-{
-  return u < v ? u : v;
-}
+// #undef DIAG

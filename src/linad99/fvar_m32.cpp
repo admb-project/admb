@@ -1,15 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable
+// constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
 
@@ -28,11 +26,7 @@
 #endif
 #include <math.h>
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix mfexp(const dvar_matrix& m)
+dvar_matrix mfexp(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -43,11 +37,7 @@ dvar_matrix mfexp(const dvar_matrix& m)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix mfexp(const dvar_matrix& m, const double d)
+dvar_matrix mfexp(_CONST dvar_matrix& m, CGNU_DOUBLE d)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -57,3 +47,5 @@ dvar_matrix mfexp(const dvar_matrix& m, const double d)
   }
   return tmp;
 }
+
+

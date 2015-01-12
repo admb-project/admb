@@ -1,50 +1,55 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 #include <string.h>
 #include <stdlib.h>
+#include <safe_mem.h>
 
-adstring::adstring(const char* t): clist()
+adstring::adstring(_CONST char * t) : clist()
 {
-  size_t sz = t ? strlen(t) : 0;
-  allocate(sz);
-  for (size_t i = 1; i <= sz; i++)
+  unsigned int sz;
+  if (t)
   {
-    s[i] = (unsigned char)t[i - 1];
+    sz = strlen (t);
   }
-  s[sz + 1] = '\0';
-}
-
-adstring::adstring(const unsigned char* t): clist()
-{
-  size_t sz = t ? strlen((char*)t) : 0;
+  else
+  {
+    sz=0;
+  }
+//  shape = new adstring_shape(sz);
+//  s = new char[size_t(sz + 1)];
   allocate(sz);
-  for (size_t i = 1; i <= sz; i++)
+  s--;
+  for (int i = 1; i <= sz; i++)
   {
     s[i] = t[i - 1];
   }
   s[sz + 1] = '\0';
 }
 
-adstring::adstring(void): clist()
+//js
+adstring::adstring(void) : clist()
 {
-  size_t sz = 0;
+  unsigned int sz = 0;
+//  shape = new adstring_shape(sz);
+//  s = new char[size_t(sz + 1)];
   allocate(sz);
+  s--;
   s[sz + 1] = '\0';
 }
 
-size_t adstring::pos(const adstring& substr) const
+int adstring::pos(_CONST adstring& substr) _CONST
 {
 #if (defined __ZTC__) || (defined __NDPX__)
   char* ptr = strstr(*this, substr);
 #else
-  const char* ptr = strstr((const char*)(*this), (const char*)(substr));
+  const char * ptr = strstr((const char *)(*this), (const char *)(substr));
 #endif
-  size_t i = 0;
+  int i = 0;
 
   if (ptr != NULL)
   {
@@ -53,7 +58,7 @@ size_t adstring::pos(const adstring& substr) const
   return i;
 }
 
-size_t pos(const adstring& substr, const adstring& s)
+int pos(_CONST adstring& substr,_CONST  adstring& s)
 {
-  return s.pos(substr);
+  return(s.pos(substr));
 }

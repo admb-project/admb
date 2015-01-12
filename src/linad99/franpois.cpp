@@ -1,24 +1,21 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_vector::fill_randpoisson(double lambda,
-  const random_number_generator& rng)
-{
-  for (int i=indexmin(); i<=indexmax(); i++)
+
+  void dvar_vector::fill_randpoisson( double lambda,
+    BOR_CONST random_number_generator& rng)
   {
-    elem(i)=randpoisson(lambda,rng);
+    for (int i=indexmin(); i<=indexmax(); i++)
+    {
+      elem(i)=randpoisson(lambda,rng);
+    }
   }
-}
+
+
+
+

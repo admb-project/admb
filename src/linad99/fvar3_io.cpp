@@ -1,13 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * i/o operations for class dmatrix.
- */
+// file: dmat_io.cpp
+
+// i/o operations for class dmatrix
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -27,11 +26,7 @@
 
 #include <string.h>
 
-/**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& _ostr, const dvar3_array& z)
+ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar3_array& z)
 {
   ostream& ostr= (ostream&) _ostr;
   for (int i=z.slicemin();i<=z.slicemax();i++)
@@ -45,11 +40,7 @@ ostream& operator<<(const ostream& _ostr, const dvar3_array& z)
   return ostr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& _istr,const dvar3_array& z)
+istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvar3_array& z)
 {
   istream& istr= (istream&) _istr;
   for (int i=z.slicemin();i<=z.slicemax();i++)

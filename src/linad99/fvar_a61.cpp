@@ -1,19 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <admodel.h>
-
-/**
- * Description not yet available.
- * \param
- */
  dvar_vector::dvar_vector(const param_init_number_vector& _t)
  {
    param_init_number_vector& t=(param_init_number_vector&) (_t);
@@ -27,10 +18,7 @@
    }
  }
 
-/**
- * Description not yet available.
- * \param
- */
+
  dvar_vector::dvar_vector(const param_init_bounded_number_vector& _t)
  {
    param_init_bounded_number_vector& t=(param_init_bounded_number_vector&) (_t);
@@ -43,3 +31,5 @@
      (*this)(i)=t(i);
    }
  }
+
+

@@ -1,13 +1,11 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -26,25 +24,17 @@
 #include <iostream.h>
 #endif
 void dfcholeski_decomp_positive(void);
-dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
+dvar_matrix choleski_decomp_positive(_CONST dvar_matrix& MM,double eps,
   dvariable& _fpen);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix positive_definite_matrix(const dvar_matrix& MM, double eps,
+dvar_matrix positive_definite_matrix(_CONST dvar_matrix& MM,double eps,
   dvariable& _fpen)
 {
   dvar_matrix ch_m=choleski_decomp_positive(MM,eps,_fpen);
   return ch_m*trans(ch_m);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
+dvar_matrix choleski_decomp_positive(_CONST dvar_matrix& MM,double eps,
   dvariable& _fpen)
 {
   // kludge to deal with constantness
@@ -117,10 +107,6 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
   return vc;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void dfcholeski_decomp_positive(void)
 {
   verify_identifier_string("lo");
@@ -208,7 +194,7 @@ void dfcholeski_decomp_positive(void)
     dftmp(i)=dfptmp(i)*dfposfun(tmp(i),eps);
     dftmp(i)+=dfpen*dfposfun1(tmp(i),eps);
     dfptmp(i)=0.0;
-
+    
     for (k=i-1;k>=1;k--)
     {
       //tmp(i)-=L(i,k)*L(i,k);
@@ -255,8 +241,10 @@ void dfcholeski_decomp_positive(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
+  
   dfM.rowshift(rowsave);
   dfM.colshift(colsave);
 
   dfM.save_dmatrix_derivatives(MMpos);
 }
+

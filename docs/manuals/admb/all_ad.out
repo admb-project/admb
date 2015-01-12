@@ -1,0 +1,151 @@
+\BOOKMARK [0][-]{chapter.1}{Getting started with AD Model Builder}{}
+\BOOKMARK [1][-]{section.1.1}{What are nonlinear statistical models?}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{Installing the software}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{The sections in an AD Model Builder TPL file}{chapter.1}
+\BOOKMARK [1][-]{section.1.4}{The Original AD Model Builder examples}{chapter.1}
+\BOOKMARK [1][-]{section.1.5}{Example 1 -- linear least-squares}{chapter.1}
+\BOOKMARK [1][-]{section.1.6}{The DATA SECTION}{chapter.1}
+\BOOKMARK [1][-]{section.1.7}{The Parameter Section}{chapter.1}
+\BOOKMARK [1][-]{section.1.8}{The Procedure Section}{chapter.1}
+\BOOKMARK [1][-]{section.1.9}{The Preliminary Calcs Section}{chapter.1}
+\BOOKMARK [1][-]{section.1.10}{The use of loops and element-wise operations}{chapter.1}
+\BOOKMARK [1][-]{section.1.11}{The default output from AD Model Builder}{chapter.1}
+\BOOKMARK [1][-]{section.1.12}{Robust Nonlinear regression with AD Model Builder}{chapter.1}
+\BOOKMARK [1][-]{section.1.13}{Modifying the model to use robust nonlinear regression}{chapter.1}
+\BOOKMARK [1][-]{section.1.14}{Chemical engineering -- a chemical kinetics problem}{chapter.1}
+\BOOKMARK [1][-]{section.1.15}{Financial Modelling -- A Generalized Autoregressive Conditional Heteroskedasticity or GARCH model}{chapter.1}
+\BOOKMARK [1][-]{section.1.16}{Carrying out the minimization in a number of phases}{chapter.1}
+\BOOKMARK [1][-]{section.1.17}{Natural resource management -- the Schaeffer-Pella-Tomlinson Model}{chapter.1}
+\BOOKMARK [1][-]{section.1.18}{Bayesian considerations in the Pella--Tomlinson model}{chapter.1}
+\BOOKMARK [1][-]{section.1.19}{Using FUNCTIONS to improve code organization}{chapter.1}
+\BOOKMARK [1][-]{section.1.20}{A fisheries catch-at-age model}{chapter.1}
+\BOOKMARK [1][-]{section.1.21}{Bayesian inference and the profile likelihood}{chapter.1}
+\BOOKMARK [1][-]{section.1.22}{Saving the output from profile likelihoodto use as starting values for MCMC analysis}{chapter.1}
+\BOOKMARK [1][-]{section.1.23}{The profile likelihood Calculations}{chapter.1}
+\BOOKMARK [1][-]{section.1.24}{Modifying the profile likelihood approximation procedure}{chapter.1}
+\BOOKMARK [1][-]{section.1.25}{Changing the default file names for data and parameter input}{chapter.1}
+\BOOKMARK [1][-]{section.1.26}{Using the subvector operation to avoid writing loops}{chapter.1}
+\BOOKMARK [1][-]{section.1.27}{The use of higher dimensional arrays}{chapter.1}
+\BOOKMARK [1][-]{section.1.28}{The TOP\137OF\137MAIN section}{chapter.1}
+\BOOKMARK [1][-]{section.1.29}{The GLOBALS\137SECTION}{chapter.1}
+\BOOKMARK [1][-]{section.1.30}{The BETWEEN\137PHASES\137SECTION}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{Markov Chain Simulation}{}
+\BOOKMARK [1][-]{section.2.1}{Introduction to the Markov Chain Monte Carlo approach in Bayesian Anaylsis}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Reading AD Model Builder binary files}{chapter.2}
+\BOOKMARK [1][-]{section.2.3}{Convergence diagnostics for MCMC analysis}{chapter.2}
+\BOOKMARK [0][-]{chapter.3}{A forestry model -- estimating the size distribution of wildfires}{}
+\BOOKMARK [1][-]{section.3.1}{Model description}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{The numerical integration routine}{chapter.3}
+\BOOKMARK [1][-]{section.3.3}{Using the ad\137begin\137funnel routine to reduce the amount of temporary storage required}{chapter.3}
+\BOOKMARK [1][-]{section.3.4}{Effect of the accuracy switch on the running time for numerical integration}{chapter.3}
+\BOOKMARK [1][-]{section.3.5}{A comparison with Splus for the forestry model}{chapter.3}
+\BOOKMARK [0][-]{chapter.4}{Economic Models -- regime switching}{}
+\BOOKMARK [1][-]{section.4.1}{Anaylsis of economic data from Hamilton's 1989 paper}{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{The code for Hamilton's fourth order autoregressive model}{chapter.4}
+\BOOKMARK [1][-]{section.4.3}{Results of the analysis}{chapter.4}
+\BOOKMARK [1][-]{section.4.4}{Extending Hamilton's model to a fifth order autoregressive process}{chapter.4}
+\BOOKMARK [0][-]{chapter.5}{Econometric Models -- simultaneous equations}{}
+\BOOKMARK [1][-]{section.5.1}{Simultaneous Equations Models}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{Full Information Maximum Likelihood \(FIML\)}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{Concentrating out D for the FIML}{chapter.5}
+\BOOKMARK [1][-]{section.5.4}{Evaluating the model's performance}{chapter.5}
+\BOOKMARK [1][-]{section.5.5}{Results of \(FIML\) for unconstrained D}{chapter.5}
+\BOOKMARK [1][-]{section.5.6}{Results of \(FIML\) for constrained D}{chapter.5}
+\BOOKMARK [1][-]{section.5.7}{Code for \(FIML\) for constrained D}{chapter.5}
+\BOOKMARK [0][-]{chapter.6}{Truncated Regression}{}
+\BOOKMARK [1][-]{section.6.1}{Truncated Linear Regression}{chapter.6}
+\BOOKMARK [1][-]{section.6.2}{The AD Model Builder Truncated Regression Program}{chapter.6}
+\BOOKMARK [0][-]{chapter.7}{Multivariate GARCH}{}
+\BOOKMARK [1][-]{section.7.1}{Formulation of the VARMA GARCH process}{chapter.7}
+\BOOKMARK [1][-]{section.7.2}{Setting a value for 1}{chapter.7}
+\BOOKMARK [1][-]{section.7.3}{Ensuring that the t are postive definite}{chapter.7}
+\BOOKMARK [1][-]{section.7.4}{Missing data}{chapter.7}
+\BOOKMARK [1][-]{section.7.5}{The likelihood function}{chapter.7}
+\BOOKMARK [1][-]{section.7.6}{Model Selection}{chapter.7}
+\BOOKMARK [1][-]{section.7.7}{The Box-Ljung statistic}{chapter.7}
+\BOOKMARK [1][-]{section.7.8}{Analysis of Simulated data}{chapter.7}
+\BOOKMARK [1][-]{section.7.9}{Analysis of Real Data}{chapter.7}
+\BOOKMARK [1][-]{section.7.10}{Input Format}{chapter.7}
+\BOOKMARK [1][-]{section.7.11}{Output Files}{chapter.7}
+\BOOKMARK [1][-]{section.7.12}{The code for the BEKKGARCH model}{chapter.7}
+\BOOKMARK [0][-]{chapter.8}{The Kalman filter}{}
+\BOOKMARK [1][-]{section.8.1}{The Kalman Filter}{chapter.8}
+\BOOKMARK [1][-]{section.8.2}{Equations for the Kalman filter}{chapter.8}
+\BOOKMARK [1][-]{section.8.3}{Parameterizing the covariance matrix parameterizations}{chapter.8}
+\BOOKMARK [0][-]{chapter.9}{ Applying the Laplace approximation to the Generalized Kalman Filter -- with an application to Stochastic Volatility Models}{}
+\BOOKMARK [1][-]{section.9.1}{Parameter estimation}{chapter.9}
+\BOOKMARK [1][-]{section.9.2}{The stochastic volatility model}{chapter.9}
+\BOOKMARK [1][-]{section.9.3}{The Data}{chapter.9}
+\BOOKMARK [1][-]{section.9.4}{The Results}{chapter.9}
+\BOOKMARK [0][-]{chapter.10}{ Using Vectors of initial parameter types}{}
+\BOOKMARK [0][-]{chapter.11}{Creating Dynamic Link Libraries with AD Model Builder}{}
+\BOOKMARK [1][-]{section.11.1}{Compiling the code to produce a DLL}{chapter.11}
+\BOOKMARK [1][-]{section.11.2}{The splus objects}{chapter.11}
+\BOOKMARK [1][-]{section.11.3}{Debugging the DLL's}{chapter.11}
+\BOOKMARK [1][-]{section.11.4}{Understanding what is being passed to the DLL}{chapter.11}
+\BOOKMARK [1][-]{section.11.5}{Passing strings from Splus to a DLL}{chapter.11}
+\BOOKMARK [1][-]{section.11.6}{A mixture of two bivariate normal distributions}{chapter.11}
+\BOOKMARK [1][-]{section.11.7}{Interpretation of the parameter estimates}{chapter.11}
+\BOOKMARK [0][-]{chapter.12}{Command line options}{}
+\BOOKMARK [0][-]{chapter.13}{Writing Adjoint Code}{}
+\BOOKMARK [1][-]{section.13.1}{The necessity for adjoint code}{chapter.13}
+\BOOKMARK [1][-]{section.13.2}{Writing Adjoint Code -- a simple case}{chapter.13}
+\BOOKMARK [1][-]{section.13.3}{Debugging Adjoint Code -- a simple case}{chapter.13}
+\BOOKMARK [1][-]{section.13.4}{Adjoint code for more than one indepdendent variable}{chapter.13}
+\BOOKMARK [1][-]{section.13.5}{Structured calculation of derivatives in adjoint code}{chapter.13}
+\BOOKMARK [1][-]{section.13.6}{General Adjoint Code}{chapter.13}
+\BOOKMARK [0][-]{chapter.14}{Truncated Regression}{}
+\BOOKMARK [1][-]{section.14.1}{Truncated Linear Regression}{chapter.14}
+\BOOKMARK [1][-]{section.14.2}{The AD Model Builder Truncated Regression Program}{chapter.14}
+\BOOKMARK [0][-]{chapter.15}{All the functions in AD Model Builder}{}
+\BOOKMARK [1][-]{section.15.1}{Naming conventions for documenting functions}{chapter.15}
+\BOOKMARK [1][-]{section.15.2}{Mathematical Functions}{chapter.15}
+\BOOKMARK [1][-]{section.15.3}{operations on arrays}{chapter.15}
+\BOOKMARK [2][-]{subsection.15.3.1}{Element-wise operations}{section.15.3}
+\BOOKMARK [1][-]{section.15.4}{The identity matrix function identity\137matrix}{chapter.15}
+\BOOKMARK [1][-]{section.15.5}{Probability densities and related functions poisson negative binomial cauchy}{chapter.15}
+\BOOKMARK [1][-]{section.15.6}{The operations det inv norm norm2 min max sum}{chapter.15}
+\BOOKMARK [1][-]{section.15.7}{Eigenvalues and eigenvectors of a symmetric matrix}{chapter.15}
+\BOOKMARK [1][-]{section.15.8}{The choleski decomposition of a positive definite symmetric matrix}{chapter.15}
+\BOOKMARK [1][-]{section.15.9}{Solving a system of linear equations}{chapter.15}
+\BOOKMARK [1][-]{section.15.10}{Methods for filling arrays and matrices}{chapter.15}
+\BOOKMARK [1][-]{section.15.11}{Methods for filling arrays and matrices with random numbers}{chapter.15}
+\BOOKMARK [1][-]{section.15.12}{Methods for obtaining shape information from containers}{chapter.15}
+\BOOKMARK [1][-]{section.15.13}{Methods for extracting from arrays and matrices}{chapter.15}
+\BOOKMARK [1][-]{section.15.14}{Accessing subobjects of higher dimensional arrays}{chapter.15}
+\BOOKMARK [1][-]{section.15.15}{Sorting vectors and matrices}{chapter.15}
+\BOOKMARK [1][-]{section.15.16}{Statistical Functions}{chapter.15}
+\BOOKMARK [1][-]{section.15.17}{The random number generator class}{chapter.15}
+\BOOKMARK [1][-]{section.15.18}{The adstring class operations}{chapter.15}
+\BOOKMARK [1][-]{section.15.19}{Miscelaneous Functions}{chapter.15}
+\BOOKMARK [0][-]{chapter.16}{Miscellaneous and Advanced Features of AD Model Builder}{}
+\BOOKMARK [1][-]{section.16.1}{Using strings and labels in the TPL file}{chapter.16}
+\BOOKMARK [1][-]{section.16.2}{Using other class libraries in AD Model Builder programs}{chapter.16}
+\BOOKMARK [1][-]{section.16.3}{Appendix 1 -- The regression function}{chapter.16}
+\BOOKMARK [1][-]{section.16.4}{Appendix 2 -- AD Model Builder types}{chapter.16}
+\BOOKMARK [1][-]{section.16.5}{Appendix 3 -- The profile likelihood}{chapter.16}
+\BOOKMARK [1][-]{section.16.6}{Appendix 4 -- Concentrated Likelihoods}{chapter.16}
+\BOOKMARK [1][-]{section.16.7}{References}{chapter.16}
+\BOOKMARK [1][-]{section.16.8}{How to order AD Model Builder}{chapter.16}
+\BOOKMARK [0][-]{chapter.17}{Index}{}
+\BOOKMARK [1][-]{section.17.1}{Symbols}{chapter.17}
+\BOOKMARK [1][-]{section.17.2}{A}{chapter.17}
+\BOOKMARK [1][-]{section.17.3}{B}{chapter.17}
+\BOOKMARK [1][-]{section.17.4}{C}{chapter.17}
+\BOOKMARK [1][-]{section.17.5}{D}{chapter.17}
+\BOOKMARK [1][-]{section.17.6}{E}{chapter.17}
+\BOOKMARK [1][-]{section.17.7}{F}{chapter.17}
+\BOOKMARK [1][-]{section.17.8}{G}{chapter.17}
+\BOOKMARK [1][-]{section.17.9}{H}{chapter.17}
+\BOOKMARK [1][-]{section.17.10}{I}{chapter.17}
+\BOOKMARK [1][-]{section.17.11}{K}{chapter.17}
+\BOOKMARK [1][-]{section.17.12}{L}{chapter.17}
+\BOOKMARK [1][-]{section.17.13}{M}{chapter.17}
+\BOOKMARK [1][-]{section.17.14}{N}{chapter.17}
+\BOOKMARK [1][-]{section.17.15}{O}{chapter.17}
+\BOOKMARK [1][-]{section.17.16}{P}{chapter.17}
+\BOOKMARK [1][-]{section.17.17}{R}{chapter.17}
+\BOOKMARK [1][-]{section.17.18}{S}{chapter.17}
+\BOOKMARK [1][-]{section.17.19}{T}{chapter.17}
+\BOOKMARK [1][-]{section.17.20}{U}{chapter.17}
+\BOOKMARK [1][-]{section.17.21}{V}{chapter.17}

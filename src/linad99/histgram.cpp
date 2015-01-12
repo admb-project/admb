@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
 
-/**
- * Description not yet available.
- * \param
- */
-ivector histogram(double min, double max, int nbin, const dvector& v)
+ivector histogram(double min,double max,int nbin,_CONST dvector& v)
 {
   ivector tmp(1,nbin);
   int mmin=v.indexmin();
@@ -30,3 +22,7 @@ ivector histogram(double min, double max, int nbin, const dvector& v)
   }
   return tmp;
 }
+
+
+
+

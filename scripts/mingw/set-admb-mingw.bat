@@ -1,9 +1,31 @@
 @echo off
 
-@set "PATH=%CD%\bin;%CD%\utilities;%CD%\utilities\mingw32\bin;%PATH%"
+REM
+REM Sets the ADMB Home directory.
+REM
+@set ADMB_HOME=%CD%
 
-@cd "%USERPROFILE%"
+REM
+REM
+REM
+@set CYGWIN_HOME=C:\cygwin
 
-@echo.
-@echo ADMB Command Prompt for MinGW 32Bit
-@echo For help, type command "admb".
+REM
+REM
+REM
+@set GNUWIN32_HOME=%ProgramFiles%\GNUWIN32
+
+REM
+REM
+REM
+@set MINGW_HOME=C:\MinGW
+
+
+REM
+REM Adds the bin folder to ADMB_HOME to system path.
+REM
+@set PATH=.;%ADMB_HOME%\bin;%GNUWIN32_HOME%\bin;%MINGW_HOME%\bin;%CYGWIN_HOME%\bin;%PATH%
+
+@echo Set ADMB Home directory to %ADMB_HOME%
+
+@cd "%HOMEDRIVE%%HOMEPATH%"

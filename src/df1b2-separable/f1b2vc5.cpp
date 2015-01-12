@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
 
-/**
- * Description not yet available.
- * \param
- */
+
 void check_shape(const df1b2vector & _x,const dvector & _y,const char * s)
 {
   ADUNCONST(df1b2vector,x)
@@ -25,10 +18,6 @@ void check_shape(const df1b2vector & _x,const dvector & _y,const char * s)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void check_shape(const df1b2vector & _x,const df1b2vector & _y,const char * s)
 {
   ADUNCONST(df1b2vector,x)
@@ -40,10 +29,6 @@ void check_shape(const df1b2vector & _x,const df1b2vector & _y,const char * s)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void check_shape(const dvector & _x,const df1b2vector & _y,const char * s)
 {
   ADUNCONST(dvector,x)
@@ -55,15 +40,11 @@ void check_shape(const dvector & _x,const df1b2vector & _y,const char * s)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void check_shape(const df1b2vector & _x,const df1b2matrix & _y,const char * s)
 {
   ADUNCONST(df1b2vector,x)
   ADUNCONST(df1b2matrix,y)
-  if (x.indexmin() != y(y.indexmin()).indexmin() ||
+  if (x.indexmin() != y(y.indexmin()).indexmin() || 
     x.indexmax() != y(y.indexmin()).indexmax())
   {
     cerr << "Incompatible shapes in df1b2vector function" << s << endl;
@@ -71,22 +52,18 @@ void check_shape(const df1b2vector & _x,const df1b2matrix & _y,const char * s)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector& df1b2vector::operator = (const df1b2vector& _x)
 {
   if (allocated())
   {
     ADUNCONST(df1b2vector,x)
-    check_shape(*this,x,"df1b2vector& df1b2vector::operator =");
+    check_shape(*this,x,"df1b2vector& df1b2vector::operator ="); 
     int mmin=x.indexmin();
     int mmax=x.indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++) 
     {
       (*this)(i)=x(i);
-    }
+    } 
   }
   else
   {
@@ -95,24 +72,16 @@ df1b2vector& df1b2vector::operator = (const df1b2vector& _x)
   return *this;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector& df1b2vector::operator = (const dvector& _x)
 {
   ADUNCONST(dvector,x)
-  check_shape(*this,x,"df1b2vector& df1b2vector::operator =");
+  check_shape(*this,x,"df1b2vector& df1b2vector::operator ="); 
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   for (int i=mmin;i<=mmax;i++) (*this)(i)=x(i);
   return *this;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector& df1b2vector::operator = (const df1b2variable& _x)
 {
   ADUNCONST(df1b2variable,x)
@@ -122,10 +91,6 @@ df1b2vector& df1b2vector::operator = (const df1b2variable& _x)
   return *this;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector& df1b2vector::operator = (double x)
 {
   int mmin=indexmin();
@@ -134,10 +99,7 @@ df1b2vector& df1b2vector::operator = (double x)
   return *this;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2vector operator * (const dmatrix& _M,const df1b2vector& _x)
 {
   ADUNCONST(dmatrix,M)
@@ -145,21 +107,18 @@ df1b2vector operator * (const dmatrix& _M,const df1b2vector& _x)
   //check_shape(x,M,"operator *");
   int rmin=M.indexmin();
   int rmax=M.indexmax();
-  //int mmin=x.indexmin();
-  //int mmax=x.indexmax();
+  int mmin=x.indexmin();
+  int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
     tmp(i)=M(i)*x;
   }
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2vector operator * (const df1b2matrix& _M,const df1b2vector& _x)
 {
   ADUNCONST(df1b2matrix,M)
@@ -167,21 +126,17 @@ df1b2vector operator * (const df1b2matrix& _M,const df1b2vector& _x)
   //check_shape(x,M,"operator *");
   int rmin=M.indexmin();
   int rmax=M.indexmax();
-  //int mmin=x.indexmin();
-  //int mmax=x.indexmax();
+  int mmin=x.indexmin();
+  int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
     tmp(i)=M(i)*x;
   }
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector operator * (const df1b2vector& _x,const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
@@ -193,18 +148,14 @@ df1b2vector operator * (const df1b2vector& _x,const df1b2matrix& _M)
   int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
-    for (int j=mmin;j<=mmax;j++)
+    for (int j=mmin;j<=mmax;j++) 
       tmp(i)+=M(j,i)*x(j);
   }
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector operator * (const df1b2vector& _x,const dmatrix& _M)
 {
   ADUNCONST(dmatrix,M)
@@ -216,18 +167,14 @@ df1b2vector operator * (const df1b2vector& _x,const dmatrix& _M)
   int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
-    for (int j=mmin;j<=mmax;j++)
+    for (int j=mmin;j<=mmax;j++) 
       tmp(i)+=M(j,i)*x(j);
   }
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector operator * (const dvector& _x,const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
@@ -239,18 +186,15 @@ df1b2vector operator * (const dvector& _x,const df1b2matrix& _M)
   int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
-    for (int j=mmin;j<=mmax;j++)
+    for (int j=mmin;j<=mmax;j++) 
       tmp(i)+=M(j,i)*x(j);
   }
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2matrix operator * (const df1b2matrix& _MM,const df1b2matrix& _NN)
 {
   df1b2matrix& M = (df1b2matrix&)_MM;
@@ -262,30 +206,26 @@ df1b2matrix operator * (const df1b2matrix& _MM,const df1b2matrix& _NN)
   int kmax=N.rowmax();
   int cmin=N(kmin).indexmin();
   int cmax=N(kmin).indexmax();
-  if (M(rmin).indexmin()!=N.indexmin() || M(rmin).indexmax()!=N.indexmax())
+  if (M(rmin).indexmin()!=N.indexmin() || M(rmin).indexmax()!=N.indexmax()) 
   {
     cerr << "incompatible matrix sizes" << endl;
     ad_exit(1);
   }
   df1b2matrix tmp(rmin,rmax,cmin,cmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=rmin;i<=rmax;i++) 
   {
-    for (int j=cmin;j<=cmax;j++)
+    for (int j=cmin;j<=cmax;j++) 
     {
-      for (int k=kmin;k<=kmax;k++)
+      for (int k=kmin;k<=kmax;k++) 
       {
         tmp(i,j)+=M(i,k)*N(k,j);
       }
-    }
+    } 
   }
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector operator * (const df1b2matrix& _M,const dvector& _x)
 {
   ADUNCONST(df1b2matrix,M)
@@ -296,16 +236,12 @@ df1b2vector operator * (const df1b2matrix& _M,const dvector& _x)
   int cmin=x.indexmin();
   int cmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
-  for (int i=rmin;i<=rmax;i++)
-    for (int j=cmin;j<=cmax;j++)
+  for (int i=rmin;i<=rmax;i++) 
+    for (int j=cmin;j<=cmax;j++) 
       tmp(i)+=M(i,j)*x(j);
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix elem_prod(const df1b2matrix& _MM,const df1b2matrix& _NN)
 {
   df1b2matrix& M = (df1b2matrix&)_MM;
@@ -315,8 +251,8 @@ df1b2matrix elem_prod(const df1b2matrix& _MM,const df1b2matrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -326,10 +262,6 @@ df1b2matrix elem_prod(const df1b2matrix& _MM,const df1b2matrix& _NN)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix elem_prod(const dmatrix& _MM,const df1b2matrix& _NN)
 {
   dmatrix& M = (dmatrix&)_MM;
@@ -339,8 +271,8 @@ df1b2matrix elem_prod(const dmatrix& _MM,const df1b2matrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -350,10 +282,6 @@ df1b2matrix elem_prod(const dmatrix& _MM,const df1b2matrix& _NN)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix elem_prod(const df1b2matrix& _MM,const dmatrix& _NN)
 {
   df1b2matrix& M = (df1b2matrix&)_MM;
@@ -363,8 +291,8 @@ df1b2matrix elem_prod(const df1b2matrix& _MM,const dmatrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -374,10 +302,6 @@ df1b2matrix elem_prod(const df1b2matrix& _MM,const dmatrix& _NN)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix elem_div(const df1b2matrix& _MM,const df1b2matrix& _NN)
 {
   df1b2matrix& M = (df1b2matrix&)_MM;
@@ -387,8 +311,8 @@ df1b2matrix elem_div(const df1b2matrix& _MM,const df1b2matrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -398,10 +322,6 @@ df1b2matrix elem_div(const df1b2matrix& _MM,const df1b2matrix& _NN)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix elem_div(const dmatrix& _MM,const df1b2matrix& _NN)
 {
   dmatrix& M = (dmatrix&)_MM;
@@ -411,8 +331,8 @@ df1b2matrix elem_div(const dmatrix& _MM,const df1b2matrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -422,10 +342,6 @@ df1b2matrix elem_div(const dmatrix& _MM,const df1b2matrix& _NN)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix elem_div(const df1b2matrix& _MM,const dmatrix& _NN)
 {
   df1b2matrix& M = (df1b2matrix&)_MM;
@@ -435,8 +351,8 @@ df1b2matrix elem_div(const df1b2matrix& _MM,const dmatrix& _NN)
   df1b2matrix tmp(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=M(i).indexmin();
-    int cmax=M(i).indexmax();
+    int cmin=M(i).indexmin(); 
+    int cmax=M(i).indexmax(); 
     tmp(i).noallocate(cmin,cmax);
     for (int j=cmin;j<=cmax;j++)
     {
@@ -446,10 +362,6 @@ df1b2matrix elem_div(const df1b2matrix& _MM,const dmatrix& _NN)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector elem_div(const dvector& _v,const df1b2vector& _w)
 {
   ADUNCONST(dvector,v)
@@ -465,10 +377,6 @@ df1b2vector elem_div(const dvector& _v,const df1b2vector& _w)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector elem_div(const df1b2vector& _v,const df1b2vector& _w)
 {
   ADUNCONST(df1b2vector,v)
@@ -484,10 +392,6 @@ df1b2vector elem_div(const df1b2vector& _v,const df1b2vector& _w)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector elem_prod(const df1b2vector& _v,const df1b2vector& _w)
 {
   ADUNCONST(df1b2vector,v)
@@ -503,10 +407,6 @@ df1b2vector elem_prod(const df1b2vector& _v,const df1b2vector& _w)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector elem_prod(const df1b2vector& _v,const dvector& _w)
 {
   ADUNCONST(df1b2vector,v)
@@ -522,10 +422,6 @@ df1b2vector elem_prod(const df1b2vector& _v,const dvector& _w)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector elem_prod(const dvector& _v,const df1b2vector& _w)
 {
   ADUNCONST(dvector,v)
@@ -541,10 +437,6 @@ df1b2vector elem_prod(const dvector& _v,const df1b2vector& _w)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2vector elem_div(const df1b2vector& _v,const dvector& _w)
 {
   ADUNCONST(df1b2vector,v)
@@ -560,10 +452,7 @@ df1b2vector elem_div(const df1b2vector& _v,const dvector& _w)
   return tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2matrix::df1b2matrix(int nrl,int nrh,int ncl,int nch)
 {
   if (nrl>nrh)
@@ -576,10 +465,6 @@ df1b2matrix::df1b2matrix(int nrl,int nrh,int ncl,int nch)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix::df1b2matrix(int nrl,int nrh)
 {
   if (nrl>nrh)
@@ -592,10 +477,6 @@ df1b2matrix::df1b2matrix(int nrl,int nrh)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix::df1b2matrix(int nrl,int nrh,const index_type& ncl,
   const index_type& nch)
 {
@@ -609,38 +490,22 @@ df1b2matrix::df1b2matrix(int nrl,int nrh,const index_type& ncl,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix::df1b2matrix(void)
 {
   allocate();
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b2matrix::allocate(int nrl,int nrh,int ncl,int nch,const char * s)
 {
   allocate(nrl,nrh,ncl,nch);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b2matrix::allocate(int nrl,int nrh,const index_type& ncl,
   const index_type& nch,const char * s)
 {
   allocate(nrl,nrh,ncl,nch);
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b2matrix::allocate(int nrl,int nrh,int ncl,int nch)
 {
   index_min=nrl;
@@ -662,10 +527,6 @@ void df1b2matrix::allocate(int nrl,int nrh,int ncl,int nch)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b2matrix::allocate(int nrl,int nrh,const index_type& ncl,
   const index_type& nch)
 {
@@ -688,10 +549,6 @@ void df1b2matrix::allocate(int nrl,int nrh,const index_type& ncl,
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix::df1b2matrix(const df1b2matrix & x)
 {
   index_min=x.index_min;
@@ -701,10 +558,6 @@ df1b2matrix::df1b2matrix(const df1b2matrix & x)
   if (shape) (shape->ncopies)++;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b2matrix::allocate(int nrl,int nrh)
 {
   index_min=nrl;
@@ -728,10 +581,6 @@ void df1b2matrix::allocate(int nrl,int nrh)
   */
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2matrix::~df1b2matrix()
 {
   if (shape)
@@ -746,11 +595,6 @@ df1b2matrix::~df1b2matrix()
     }
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
 void df1b2matrix::deallocate()
 {
   if (shape)
@@ -763,10 +607,7 @@ void df1b2matrix::deallocate()
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 void df1b2matrix::allocate(void)
 {
   index_min=1;
@@ -775,23 +616,7 @@ void df1b2matrix::allocate(void)
   shape=0;
 }
 
-/**
- * Copy values of vector v into column j.
- */
-void df1b2matrix::colfill(const int j, const df1b2vector& v)
-{
-  //RETURN_ARRAYS_INCREMENT();   makes no sense for df1b2 stuff
-  for (int i=rowmin(); i<=rowmax(); i++)
-  {
-    (*this)[i][j]=v[i];
-  }
-  //RETURN_ARRAYS_DECREMENT();
-}
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable sum(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -805,11 +630,6 @@ df1b2variable sum(const df1b2vector& _x)
   }
   return tmp;
 }
-
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable mean(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -825,10 +645,7 @@ df1b2variable mean(const df1b2vector& _x)
   return tmp/fn;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2variable norm2(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -842,12 +659,8 @@ df1b2variable norm2(const df1b2vector& _x)
   }
   return tmp;
 }
-df1b2variable sumsq(const df1b2vector& _x) {return(norm2(_x));}
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2variable norm(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -862,10 +675,9 @@ df1b2variable norm(const df1b2vector& _x)
   return sqrt(tmp);
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
+
+
 df1b2variable norm2(const df1b2matrix& _x)
 {
   ADUNCONST(df1b2matrix,x)
@@ -879,12 +691,7 @@ df1b2variable norm2(const df1b2matrix& _x)
   }
   return tmp;
 }
-df1b2variable sumsq(const df1b2matrix& _x) {return(norm2(_x));}
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable norm(const df1b2matrix& _x)
 {
   ADUNCONST(df1b2matrix,x)
@@ -899,10 +706,7 @@ df1b2variable norm(const df1b2matrix& _x)
   return sqrt(tmp);
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2variable sum(const df1b2matrix& _x)
 {
   ADUNCONST(df1b2matrix,x)
@@ -916,11 +720,6 @@ df1b2variable sum(const df1b2matrix& _x)
   }
   return tmp;
 }
-
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable mean(const df1b2matrix& _x)
 {
   ADUNCONST(df1b2matrix,x)
@@ -936,3 +735,4 @@ df1b2variable mean(const df1b2matrix& _x)
   }
   return tmp/nitems;
 }
+

@@ -1,29 +1,45 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
+#if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
+#else
 #  include <admodel.h>
+#endif
 //#include <parallel.h>
+
+#ifdef __GNUDOS__
+  #include <gccmanip.h>
+#endif
 
 void hess_calcreport(int i,int nvar);
 void hess_errorreport(void);
 void set_labels_for_hess(int);
 
+class admb_javapointers;
+extern admb_javapointers * adjm_ptr;
+void useless(BOR_CONST double& sdelta2);
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
 void function_minimizer::hess_routine(void)
 {
+#if defined(USE_LAPLACE)
   if (random_effects_flag && lapprox !=0 )
   {
     hess_routine_random_effects();
   }
   else
   {
-#if defined(USE_ADPVM)
+#endif
+#    if !defined(USE_ADPVM)
+        hess_routine_noparallel();
+#    else
+
     if (!ad_comm::pvm_manager)
     {
       hess_routine_noparallel();
@@ -39,22 +55,25 @@ void function_minimizer::hess_routine(void)
         hess_routine_slave();
         break;
       default:
-        cerr << "Error: Illegal value for pvm_manager->mode." << endl;
+        cerr << "error illega value for pvm_manager->mode" << endl;
         ad_exit(1);
       }
       cout << "finished hess routine" << endl;
     }
-#else
-    hess_routine_noparallel();
-#endif
+#    endif
+#if defined(USE_LAPLACE)
   }
+#endif
 }
+
 void function_minimizer::hess_routine_noparallel(void)
 {
+
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
+  double f;
   double delta=1.e-5;
   dvector g1(1,nvar);
   dvector g2(1,nvar);
@@ -70,7 +89,7 @@ void function_minimizer::hess_routine_noparallel(void)
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes";
   uostream ofs((char*)tmpstring);
-
+    
   ofs << nvar;
   {
     {
@@ -79,16 +98,24 @@ void function_minimizer::hess_routine_noparallel(void)
       *objective_function_value::pobjfun=0.0;
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
-      gradcalc(nvar, g1, vf);
+      f=value(vf);
+      gradcalc(nvar,g1);
     }
     double sdelta1;
     double sdelta2;
     for (int i=1;i<=nvar;i++)
     {
+#if defined (__SPDLL__)
       hess_calcreport(i,nvar);
+#else
+      cout << "Estimating row " << i << " out of " << nvar
+	   << " for hessian" << endl;
+#endif
 
+      double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       dvariable vf=0.0;
@@ -96,9 +123,11 @@ void function_minimizer::hess_routine_noparallel(void)
       *objective_function_value::pobjfun=0.0;
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
-      gradcalc(nvar, g1, vf);
+      f=value(vf);
+      gradcalc(nvar,g1);
 
       sdelta2=x(i)-delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -106,11 +135,13 @@ void function_minimizer::hess_routine_noparallel(void)
       *objective_function_value::pobjfun=0.0;
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
-      gradcalc(nvar, g2, vf);
+      f=value(vf);
+      gradcalc(nvar,g2);
       x(i)=xsave;
       hess1=(g1-g2)/(sdelta1-sdelta2);
-
+ 
       sdelta1=x(i)+eps*delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       vf=0.0;
@@ -118,41 +149,46 @@ void function_minimizer::hess_routine_noparallel(void)
       *objective_function_value::pobjfun=0.0;
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
-      gradcalc(nvar, g1, vf);
+      f=value(vf);
+      gradcalc(nvar,g1);
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
+      vf=0.0;
       vf=0.0;
       vf=initial_params::reset(dvar_vector(x));
       *objective_function_value::pobjfun=0.0;
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
-      gradcalc(nvar, g2, vf);
+      f=value(vf);
+      gradcalc(nvar,g2);
       x(i)=xsave;
 
       vf=initial_params::reset(dvar_vector(x));
       double eps2=eps*eps;
       hess2=(g1-g2)/(sdelta1-sdelta2);
       hess=(eps2*hess1-hess2) /(eps2-1.);
-
+   
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
     }
   }
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
-  /*int check=*/initial_params::stddev_scale(tscale,x);
+  int check=initial_params::stddev_scale(tscale,x);
   ofs << tscale;
 }
 
-void function_minimizer::hess_routine_and_constraint(int iprof,
-  const dvector& g, dvector& fg)
+void function_minimizer::hess_routine_and_constraint(int iprof,BOR_CONST dvector& g,
+  dvector& fg)
 {
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
+  double f;
   double delta=1.e-6;
   dvector g1(1,nvar);
   dvector g2(1,nvar);
@@ -160,7 +196,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
   dvector hess(1,nvar);
   dvector hess1(1,nvar);
   dvector hess2(1,nvar);
-  //double eps=.1;
+  double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
   uostream ofs("admodel.hes");
@@ -177,17 +213,25 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
       vf-=lambda*likeprof_params::likeprofptr[iprof]->variable();
-      gradcalc(nvar, g1, vf);
+      f=value(vf);
+      gradcalc(nvar,g1);
     }
     double sdelta1;
     double sdelta2;
 
     for (int i=1;i<=nvar;i++)
     {
+#if defined (__SPDLL__)
       hess_calcreport(i,nvar);
+#else
+      cout << "Estimating row " << i << " out of " << nvar
+	   << " for hessian" << endl;
+#endif
 
+      double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       dvariable vf=0.0;
@@ -196,9 +240,11 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
       vf-=lambda*likeprof_params::likeprofptr[iprof]->variable();
-      gradcalc(nvar, g1, vf);
+      f=value(vf);
+      gradcalc(nvar,g1);
 
       sdelta2=x(i)-delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -207,11 +253,13 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
       vf-=lambda*likeprof_params::likeprofptr[iprof]->variable();
-      gradcalc(nvar, g2, vf);
+      f=value(vf);
+      gradcalc(nvar,g2);
       x(i)=xsave;
       hess1=(g1-g2)/(sdelta1-sdelta2);
   /*
       sdelta1=x(i)+eps*delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       vf=0.0;
@@ -225,6 +273,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -278,14 +327,18 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       f=value(vf);
       gradcalc(nvar,g1);
     }
+    double sdelta1;
+    double sdelta2;
+
     for (int i=1;i<=nvar;i++)
     {
       cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
+	   << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
-      double sdelta1=x(i)+delta;
+      sdelta1=x(i)+delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       dvariable vf=0.0;
@@ -296,7 +349,8 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       f=value(vf);
       gradcalc(nvar,g1);
 
-      double sdelta2=x(i)-delta;
+      sdelta2=x(i)-delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -310,6 +364,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       hess1=(g1-g2)/(sdelta1-sdelta2);
 
       sdelta1=x(i)+eps*delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       vf=0.0;
@@ -322,6 +377,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -345,11 +401,12 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     for (i=1;i<=nvar;i++)
     {
       cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
+	   << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       dvariable vf=0.0;
@@ -361,6 +418,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       gradcalc(nvar,g1);
 
       sdelta2=x(i)-delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -374,6 +432,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       hess1=(g1-g2)/(sdelta1-sdelta2);
 
       sdelta1=x(i)+eps*delta;
+      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       vf=0.0;
@@ -386,6 +445,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
+      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -407,32 +467,33 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 }
 */
 
-/**
-Calculate the derivatives of dependent variables with respect to
-the independent variables.
-*/
+// calculate the derivatives of dependent variables with respect to
+// the independent variables
+
 void function_minimizer::depvars_routine(void)
 {
   reset_gradient_stack();
   dvector ggg(1,1);
   gradcalc(0,ggg);
   gradient_structure::set_YES_DERIVATIVES();
-  initial_params::restore_start_phase();
+  initial_params::restore_start_phase(); 
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
-  //double f;
-  //double delta=1.e-7;
+  double f;
+  double delta=1.e-7;
   adstring tmpstring="admodel.dep";
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".dep";
   ofstream ofs((char*)tmpstring);
+#if defined(USE_LAPLACE)
   if (lapprox)
   {
     lapprox->no_function_component_flag=1;
   }
-
+#endif
+    
   dvariable vf;
   vf=initial_params::reset(dvar_vector(x));
   *objective_function_value::pobjfun=0.0;
@@ -451,55 +512,57 @@ void function_minimizer::depvars_routine(void)
      ofs << stddev_params::stddevptr[i]->label() << "  ";
      ofs << stddev_params::stddevptr[i]->size_count() << endl;
   }
+#if defined(USE_LAPLACE)
   if (lapprox)
   {
     lapprox->no_function_component_flag=0;
   }
+#endif
   gradient_structure::set_NO_DERIVATIVES();
 }
-/**
-Symmetrize and invert the hessian
-*/
+
+// symmetrize and invert the hessian
 void function_minimizer::hess_inv(void)
 {
-  initial_params::set_inactive_only_random_effects();
+  initial_params::set_inactive_only_random_effects(); 
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);
 
   initial_params::xinit(x);        // get the initial values into the x vector
-  //double f;
+  double f;
   dmatrix hess(1,nvar,1,nvar);
   uistream ifs("admodel.hes");
-  int file_nvar = 0;
-  ifs >> file_nvar;
-  if (nvar != file_nvar)
+  int file_nvar;
+  ifs  >> file_nvar;
+  if (nvar !=file_nvar)
   {
     cerr << "Number of active variables in file mod_hess.rpt is wrong"
-         << endl;
+	 << endl;
   }
 
-  for (int i = 1;i <= nvar; i++)
+  int i;
+  for (i=1;i<=nvar;i++)
   {
     ifs >> hess(i);
     if (!ifs)
     {
       cerr << "Error reading line " << i  << " of the hessian"
-           << " in routine hess_inv()" << endl;
+	   << " in routine hess_inv()" << endl;
       exit(1);
     }
   }
-  int hybflag = 0;
+  int hybflag;
   ifs >> hybflag;
   dvector sscale(1,nvar);
   ifs >> sscale;
   if (!ifs)
   {
-    cerr << "Error reading sscale"
+    cerr << "Error reading sscale" 
          << " in routine hess_inv()" << endl;
   }
 
   double maxerr=0.0;
-  for (int i = 1;i <= nvar; i++)
+  for (i=1;i<=nvar;i++)
   {
     for (int j=1;j<i;j++)
     {
@@ -518,14 +581,14 @@ void function_minimizer::hess_inv(void)
   }
  */
 
-  for (int i = 1;i <= nvar; i++)
+  for (i=1;i<=nvar;i++)
   {
     int zero_switch=0;
     for (int j=1;j<=nvar;j++)
     {
-      if (hess(i,j)!=0.0)
+      if (hess(i,j)!=0.0) 
       {
-        zero_switch=1;
+	zero_switch=1;
       }
     }
     if (!zero_switch)
@@ -537,29 +600,32 @@ void function_minimizer::hess_inv(void)
   }
 
   int ssggnn;
-  ln_det(hess,ssggnn);
+  double llss=ln_det(hess,ssggnn);
   int on1=0;
-  {
+  useless(llss);
+  { 
     ofstream ofs3((char*)(ad_comm::adprogram_name + adstring(".eva")));
     {
-      dvector se=eigenvalues(hess);
+      dvector se=sort(eigenvalues(hess));
       ofs3 << setshowpoint() << setw(14) << setprecision(10)
-           << "unsorted:\t" << se << endl;
-     se=sort(se);
-     ofs3 << setshowpoint() << setw(14) << setprecision(10)
-     << "sorted:\t" << se << endl;
-     if (se(se.indexmin())<=0.0)
+	 << se << endl;
+      if (se(se.indexmin())<=0.0)
       {
-        negative_eigenvalue_flag=1;
+#if defined(USE_LAPLACE)
+        negative_eigenvalue_flag=1;    
+#endif
         cout << "Warning -- Hessian does not appear to be"
          " positive definite" << endl;
       }
     }
+    int on=0;
     ivector negflags(0,hess.indexmax());
     int num_negflags=0;
+    int on2;
     {
-      int on = option_match(ad_comm::argc,ad_comm::argv,"-eigvec");
+      on=option_match(ad_comm::argc,ad_comm::argv,"-eigvec");
       on1=option_match(ad_comm::argc,ad_comm::argv,"-spmin");
+      on2=option_match(ad_comm::argc,ad_comm::argv,"-cross");
       if (on > -1 || on1 >-1 )
       {
         ofs3 << setshowpoint() << setw(14) << setprecision(10)
@@ -578,9 +644,9 @@ void function_minimizer::hess_inv(void)
             negflags(num_negflags)=i;
           }
         }
-        if ( (on1>-1) && (num_negflags>0))   // we will try to get away from
+        if ( (on1>-1) && (num_negflags>0))   // we will try to get away from 
         {                                     // saddle point
-          negative_eigenvalue_flag=0;
+          negative_eigenvalue_flag=0;    
           spminflag=1;
           if(negdirections)
           {
@@ -592,11 +658,10 @@ void function_minimizer::hess_inv(void)
             (*negdirections)(i)=ev(negflags(i));
           }
         }
-        int on2 = option_match(ad_comm::argc,ad_comm::argv,"-cross");
-        if (on2>-1)
+        if (on2>-1)  
         {                                     // saddle point
           dmatrix cross(1,ev.indexmax(),1,ev.indexmax());
-          for (int i = 1;i <= ev.indexmax(); i++)
+          for (i=1;i<=ev.indexmax();i++)
           {
             for (int j=1;j<=ev.indexmax();j++)
             {
@@ -608,7 +673,7 @@ void function_minimizer::hess_inv(void)
         }
       }
     }
-
+         
     if (spminflag==0)
     {
       if (num_negflags==0)
@@ -636,11 +701,13 @@ void function_minimizer::hess_inv(void)
   {
     if (on1<0)
     {
-      for (int i = 1;i <= nvar; i++)
+      for (i=1;i<=nvar;i++)
       {
         if (hess(i,i) <= 0.0)
         {
+    #if defined (__SPDLL__)
           hess_errorreport();
+    #endif
           ad_exit(1);
         }
       }
@@ -656,18 +723,18 @@ void function_minimizer::hess_inv(void)
     }
   }
 }
-void hess_calcreport(int i,int nvar)
-{
-  if (ad_printf)
-    (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
-  else
-    cout << "Estimating row " << i << " out of " << nvar << " for hessian"
-         << endl;
-}
-void hess_errorreport(void)
-{
-  if (ad_printf)
-    (*ad_printf)("Hessian does not appear to be positive definite\n");
-  else
-    cout << "Hessian does not appear to be positive definite\n" << endl;
-}
+
+void useless(BOR_CONST double& sdelta2){int i=0;}
+
+#if defined (__SPDLL__)
+ void hess_calcreport(int i,int nvar)
+ {
+   if (ad_printf) (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
+ }
+ void hess_errorreport(void)
+ {
+   if (ad_printf) (*ad_printf)("Hessian does not appear to be positive definite\n");
+ }
+#endif
+
+

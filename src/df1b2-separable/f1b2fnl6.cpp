@@ -1,19 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <df1b2fnl.h>
 
-/**
- * Description not yet available.
- * \param
- */
 funnel_init_df1b2matrix::funnel_init_df1b2matrix(const df1b2matrix & _x)
 {
   //ADUNCONST(df1b2_init_matrix,x)
@@ -21,10 +14,10 @@ funnel_init_df1b2matrix::funnel_init_df1b2matrix(const df1b2matrix & _x)
   p=&_x;
   int mmin=p->indexmin();
   int mmax=p->indexmax();
-
+  
   int jmin=(*p)(mmin).indexmin();
   int ind_index = x(mmin,jmin).get_ind_index();
-  if (ind_index<0)
+  if (ind_index<0) 
   {
     add_to_inactive_list();
   }
@@ -32,8 +25,7 @@ funnel_init_df1b2matrix::funnel_init_df1b2matrix(const df1b2matrix & _x)
   {
     add_to_list();
   }
-  //int i,j;
-  int i;
+  int i,j;
   ivector lb(mmin,mmax);
   ivector ub(mmin,mmax);
   lb(mmin)=(*p)(mmin).indexmin();
@@ -76,10 +68,7 @@ funnel_init_df1b2matrix::funnel_init_df1b2matrix(const df1b2matrix & _x)
   df1b2variable::noallocate=0;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 int funnel_init_df1b2matrix::nvar_calc(void)
 {
   int mmin=p->indexmin();
@@ -92,12 +81,8 @@ int funnel_init_df1b2matrix::nvar_calc(void)
   return n;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void funnel_init_df1b2matrix::xinit(init_df1b2vector& y,int& ii)
-{
+{ 
   df1b2_init_matrix * vp = (df1b2_init_matrix *) p;
   int mmin=vp->indexmin();
   int mmax=vp->indexmax();
@@ -114,12 +99,10 @@ void funnel_init_df1b2matrix::xinit(init_df1b2vector& y,int& ii)
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
+  
 void funnel_init_df1b2matrix::set_index(imatrix& y,int& ii)
 {
+  
   df1b2_init_matrix * vp = (df1b2_init_matrix *) p;
   int mmin=vp->indexmin();
   int mmax=vp->indexmax();
@@ -136,11 +119,7 @@ void funnel_init_df1b2matrix::set_index(imatrix& y,int& ii)
     }
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
+  
 void funnel_init_df1b2matrix::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& _pen)
 {
@@ -172,7 +151,7 @@ funnel_init_bounded_df1b2vector::funnel_init_bounded_df1b2vector(const df1b2_ini
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   int ind_index = x(mmin).get_ind_index();
-  if (ind_index<0)
+  if (ind_index<0) 
   {
     add_to_inactive_list();
   }
@@ -192,7 +171,7 @@ int funnel_init_bounded_df1b2vector::nvar_calc(void)
 }
 
 void funnel_init_bounded_df1b2vector::xinit(init_df1b2vector& y,int& ii)
-{
+{ 
   df1b2_init_bounded_vector * vp = (df1b2_init_bounded_vector *) p;
   int mmin=p->indexmin();
   int mmax=p->indexmax();
@@ -204,8 +183,10 @@ void funnel_init_bounded_df1b2vector::xinit(init_df1b2vector& y,int& ii)
   }
 }
 
+  
 void funnel_init_bounded_df1b2vector::set_index(imatrix& y,int& ii)
 {
+  
   int mmin=p->indexmin();
   int mmax=p->indexmax();
   int i;
@@ -216,7 +197,7 @@ void funnel_init_bounded_df1b2vector::set_index(imatrix& y,int& ii)
     ii++;
   }
 }
-
+  
 void funnel_init_bounded_df1b2vector::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& _pen)
 {
@@ -238,7 +219,7 @@ void funnel_init_bounded_df1b2vector::set_value(const init_df1b2vector& _x,
     else
     {
       (*this)(i) = (x(ii));
-      *((*this)(i).get_u()) =
+      *((*this)(i).get_u()) = 
         boundp(*(x(ii++).get_u()),vp->getminb(),vp->getmaxb());
     }
   }

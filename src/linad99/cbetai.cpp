@@ -1,8 +1,8 @@
-/**
- * $Id: cbetai.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 #include <math.h>
@@ -17,6 +17,8 @@
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 double betai(const double a,const double b,const double x,int maxit)
 {
@@ -31,3 +33,4 @@ double betai(const double a,const double b,const double x,int maxit)
   else
     return 1.0-bt*betacf(b,a,1.0-x,maxit)/b;
 }
+

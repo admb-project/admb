@@ -1,17 +1,14 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 #include <stdio.h>
 #include  <stdlib.h>
 #ifndef EXIT_FAILURE
   #define EXIT_FAILURE 1
 #endif
 
-//#define NEAR near
-#define NEAR
+//#if defined(__NDPX__) || defined (__GNUDOS__) || defined(DOS386) || defined(__MSVC32__)
+  #define NEAR
+//#else
+//  #define NEAR near
+//#endif
 
 #if defined (__WAT32__)
   #include <io.h>
@@ -31,7 +28,7 @@
   #include  <assert.h>
 #endif
 
-#if defined(_MSC_VER)
+#if defined(__MSVC32__)
   #include  <dos.h>
 #endif
 
@@ -59,7 +56,7 @@ static int mem_scount;    /* # of sallocs that haven't been free'd */
 #else
   #define ferr  stderr
 #endif
-
+
 /*******************************/
 
 void mem_setexception(
@@ -97,7 +94,7 @@ static int NEAR mem_exception()
       case MEM_ABORTMSG:
       #if defined (MSDOS) || defined (__OS2__)
     /* Avoid linking in buffered I/O */
-        {
+        {  
           static char msg[] = "Fatal error: out of memory\r\n";
           write(1,msg,sizeof(msg) - 1);
         }
@@ -152,7 +149,7 @@ char *mem_strdup(const char *s)
 }
 
 #endif /* MEM_DEBUG */
-
+
 #ifdef MEM_DEBUG
 
 static long mem_maxalloc;  /* max # of bytes allocated    */
@@ -310,7 +307,8 @@ void *mem_realloc(void* p, unsigned u)
 void mem_free(void *p)
 {
   mem_free_debug(p,__FILE__,__LINE__);
-}
+}    
+
 
 /**************************/
 
@@ -325,6 +323,7 @@ void mem_freefp(void* p)
 
 void *mem_malloc_debug(unsigned n, char *fil, int lin)
 {   void *p;
+
     p = mem_calloc_debug(n,fil,lin);
     if (p)
   memset(p,MALLOCVAL,n);
@@ -468,6 +467,7 @@ void *mem_realloc_debug(void *oldp, unsigned n, char *fil, int lin)
 
 void mem_check()
 {   register struct mem_debug *dl;
+
     for (dl = mem_alloclist.next; dl != NULL; dl = dl->next)
   mem_checkptr(mem_dltoptr(dl));
 }
@@ -476,6 +476,7 @@ void mem_check()
 
 void mem_checkptr(register void *p)
 {   register struct mem_debug *dl;
+
     for (dl = mem_alloclist.next; dl != NULL; dl = dl->next)
     {
   if (p >= (void *) &(dl->data[0]) &&
@@ -513,6 +514,7 @@ err2:
 
 void *mem_malloc(unsigned numbytes)
 {  void *p;
+
   if (numbytes == 0)
     return NULL;
   while (1)
@@ -533,11 +535,10 @@ void *mem_malloc(unsigned numbytes)
 /***************************/
 
 void *mem_calloc(unsigned numbytes)
-{
+{  void *p;
+
   if (numbytes == 0)
     return NULL;
-
-  void *p;
   while (1)
   {
     p = calloc(numbytes,1);
@@ -557,6 +558,7 @@ void *mem_calloc(unsigned numbytes)
 
 void *mem_realloc(void* oldmem_ptr, unsigned newnumbytes)
 {   void *p;
+
     if (oldmem_ptr == NULL)
   p = mem_malloc(newnumbytes);
     else if (newnumbytes == 0)
@@ -582,8 +584,9 @@ void mem_free(void* ptr)
     {  assert(mem_count != 0);
   mem_count--;
 #if DLC
-  {
-    int i = free(ptr);
+  {  int i;
+
+    i = free(ptr);
     assert(i == 0);
   }
 #else
@@ -603,6 +606,7 @@ void mem_free(void* ptr)
 
 void *mem_scalloc(size_t numbytes)
 {   size_t *p;
+
     if (numbytes == 0)
   return NULL;
     if (numbytes < MINBLKSIZE)
@@ -664,6 +668,7 @@ void mem_init()
 
 void mem_term()
 {
+
   if (mem_inited)
   {
 #if MEM_DEBUG
@@ -694,3 +699,4 @@ void mem_term()
 #undef line
 #undef nbytes
 #undef beforeval
+

@@ -51,11 +51,6 @@ SEPARABLE_FUNCTION void fit_individual_tree(const dvar_vector& beta, const dvar_
   int j;
 
   dvar_matrix L(1,3,1,3);
-
-  #ifdef OPT_LIB
-  L.initialize();
-  #endif
-
   L(1,1) = 1.0;
   int k = 1;
   for(int i1=2;i1<=3;i1++)

@@ -1,14 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <admodel.h>
+
 
  int initial_params::straight_through_flag=0;
  unsigned char ad_comm::directory_prefix='\\';
@@ -16,10 +14,7 @@
  adtimer * ad_comm::ptm=0;
  adtimer * ad_comm::ptm1=0;
  int ad_comm::bandwidth=0;
-
-#if defined(USE_ADPVM)
-adpvm_manager* ad_comm::pvm_manager = NULL;
-#endif
+ adpvm_manager * ad_comm::pvm_manager=NULL;
 
  int ad_comm::time_flag=0;
  adstring ad_comm::subdir;
@@ -39,3 +34,4 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  int ad_comm::no_ln_det_choleski_flag=0;
  char ** ad_comm::argv=NULL;
  double objective_function_value::fun_without_pen=0;
+

@@ -4,249 +4,258 @@
 % Copyright (c) 2008 Regents of the University of California
 %
 
+
+
 The Vector Autoregressive Moving Average Garch process combines
-the Vector Autoregressive Moving Average (\textsc{varma})
+the Vector Autoregressive Moving Average (VARMA)
 processes with the Vector Garch (generalized 
 autoregressive conditional heteroscedastic) processes.
 
+\tracingmacros=1
+\mysection{Formulation of the VARMA GARCH process}
+\tracingmacros=0
 
-\section{Formulation of the \textsc{varma garch} process}
-
-The \textsc{varma garch} process of type $(p,q,r,s)$ is given by a 
-series $Y_t$ for $t=-p+1,\ldots,n$, where for each value of $t$,
-$Y_t$ is an $m$-dimensional vector.
-For $t>0$, the $Y_t$ are assumed to satisfy a relationship of the form
+The VARMA GARCH process of type $(p,q,r,s)$ is given by a 
+series $Y_t$ for \hbox{$t=-p+1,\ldots,n$} where for each value of $t$,
+$Y_t$ is an $m$ dimensional vector.
+For $t>0$ the $Y_t$ are assumed to satisfy a relationship of the form
 \begin{equation}
-  Y_t=\mu +\sum_{l=1}^p A_l (Y_{t-l}-\mu)
-    +\sum_{l=0}^q B_l \epsilon_{t-l}            
-  \label{eq1}
+\myeq{Y_t=\mu +\sum_{l=1}^p A_l (Y_{t-l}-\mu)
+    +\sum_{l=0}^q B_l \epsilon_{t-l}}            \label{eq1}
 \end{equation}
-where the $\mu$ is an $m$-dimensional vector, 
+where the $\mu$ is an $m$ dimensional vector, 
 $A_l$ and $B_l$ are $m\times m$ matrices, $B_0$ is the identity
-matrix,  and the
-$\epsilon_t$ are multivariate (normal) random vectors,
-with means~$0$.  Covariance matrices $\Sigma_t$ and
+matrix,  and the 
+$\epsilon_t$ are multivariate (normal) random vectors
+with means $0$, covariance matrices $\Sigma_t$, and
  $\hbox{\rm E}(\epsilon_t\epsilon_{t^\prime})=0$ if $t\ne t^\prime$.
 Let
 \begin{equation}
+\myeq{
   r_t=Y_t-\mu -\sum_{l=1}^p A_l (Y_{t-l}-\mu)
-  \label{eqc1}
+}\label{eqc1}
 \end{equation}
-be the vector of model residuals or ``shocks.''\footnote{For the moving
-average model ($q>0$), one might argue that since the previous values
-of $r_t$ have been observed, the shock part of $r_t$, say,
-$d_t$, is given by $d_t=r_t-\sum_{l=1}^q B_l r_{t-l}$,
+be the vector of model residuals or ``shocks"\footnote{For the moving
+average model ($q>0$) one might argue that since the previous values
+of $r_t$ have been observed the shock part of $r_t$ say 
+$d_t$ is given by $d_t=r_t-\sum_{l=1}^q B_l r_{t-l}$  
 but this has not been done at present.}
 These residuals are
-assumed to contribute to the covariance matrix in the next time period.
+assumed to contibute to the covariance matrix in the next time period.
 The $\Sigma_t$ evolve according to one of several relationships.
-
-\subsubsection{The \textsc{dvec} relationship}
+\noindent The DVEC relationship:
 \begin{equation}
-  \Sigma_t=\Omega+
+\myeq{
+\Sigma_t=\Omega+
         \sum_{l=1}^r F_l\bigotimes r_{t-l}r_{t-l}^\prime  
          +\sum_{l=1}^sG_l\bigotimes \Sigma_{t-l}
-  \label{eqc}
+}\label{eqc}
 \end{equation}
-In equation~(\ref{eqc}), the matrices 
+In equation \ref{eqc} the matrices 
 $F_l$ and $G_l$ are symmetric and the operator
-`$\bigotimes$' denotes the element-wise product of matrices.
+$\bigotimes$ denotes the element-wise product of matrices.
 This parameterization does not restrict the resulting matrix to
-be positive definite, so some care is necessary to ensure the
-stability of the resulting~model.
-
-\subsubsection{The \textsc{bekk} relationship}
+be positive definite so that some care is necessary to ensure the
+stability of the resulting model.
+The  BEKK relationship:
 \begin{equation}
+\myeq{
 \Sigma_t=\Omega+
-       \sum_{l=1}^r F_l\, r_{t-l}\, r_{t-l}^\prime\, F_l^\prime 
-        + \sum_{l=1}^s\, G_l\, \Sigma_{t-l}\, G_l^\prime
-  \label{eq2}
+       \sum_{l=1}^r F_lr_{t-l}r_{t-l}^\prime F_l^\prime 
+        + \sum_{l=1}^sG_l\Sigma_{t-l}G_l^\prime
+}  \label{eq2}
 \end{equation}
 
-\subsubsection{\textsc{dveci} and \textsc{bekkai} parameterizations}
-The basic \textsc{dvec} and \textsc{bekk} parameterizations can be extended by  modifying
+The basic DVEC and BEKK parameterization can be extended by  modifying
 components of the $r_t$ to reflect the asymmetric response
 to positive and negative values.
-\begin{align}
-    \nonumber \eta_{ij} =&\epsilon_{ij}/\alpha_j &\textrm{if } \epsilon_{ij} \ge 0\\
-    \eta_{ij} =&\epsilon_{ij}\alpha_j                    &\textrm{if }  \epsilon_{ij} < 0
-\end{align}
-This modified form will be referred to as the \textsc{dveci} and \textsc{bekkai} parameterizations.
+\begin{eqnarray}
+    \eta_{ij}&=&\epsilon_{ij}/\alpha_j\qquad\hbox{\rm if } \epsilon_{ij} \ge 0\cr
+    \eta_{ij}&=&\epsilon_{ij}\alpha_j\ \qquad\hbox{\rm if } 
+  \epsilon_{ij} < 0
+\end{eqnarray}
+This modifed form will be referred to as the DVECI and BEKKAI parameterizations.
 \begin{equation}
+\myeq{
 \Sigma_t=\Omega+
-        \sum_{l=1}^r F_t\bigotimes \eta_{t-l}\, \eta_{t-l}^\prime  
+        \sum_{l=1}^r F_t\bigotimes \eta_{t-l}\eta_{t-l}^\prime  
          +\sum_{l=1}^sG_l\bigotimes \Sigma_{t-l}
-  \label{eqd}
+}\label{eqd}
 \end{equation}
 \begin{equation}
-  \Sigma_t=\Omega+
-       \sum_{l=1}^r F_l\, \eta_{t-l}\, \eta_{t-l}^\prime\, F_l^\prime 
-        + \sum_{l=1}^sG_l\, \Sigma_{t-l}\, G_l^\prime
-   \label{eqe}
+\myeq{
+\Sigma_t=\Omega+
+       \sum_{l=1}^r F_l\eta_{t-l}\eta_{t-l}^\prime F_l^\prime 
+        + \sum_{l=1}^sG_l\Sigma_{t-l}G_l^\prime
+  }\label{eqe}
 \end{equation}
 
-
-\section{Setting a value for $\Sigma_1$}
-
+\mysection{Setting a value for $\Sigma_1$}
 The value for the parameters in $\Sigma_1$ are often poorly determined 
 and simply letting them be free parameters can lead to 
 instability and initial
-transient effects in the model. To stabilize the parameterization, we have 
+transient effects in the model. To stabilize the parameterization we have 
 calculated $\Sigma_1$ through $\Sigma_{\max\{r,s\}}$ from the condition
 \begin{equation}
-  \widehat\Omega=\Sigma+\sum_{l=1}^q B_l\Sigma B_l^\prime 
+\myeq{
+\widehat\Omega=\Sigma+\sum_{l=1}^q B_l\Sigma B_l^\prime 
+}
 \end{equation}
 where 
 \begin{equation}
-  \widehat\Omega=\frac{1}{n}\sum_{t=1}^n\hat\epsilon_t\, \hat\epsilon_t^\prime 
+\myeq{
+\widehat\Omega=\frac{1}{n}\sum_{t=1}^n\hat\epsilon_t\hat\epsilon_t^\prime 
+}
 \end{equation} 
-denotes the empirical covariance matrix formed from the
+denotes the emprical covariance matrix formed from the
 models residuals 
 \begin{equation}
-  \hat\epsilon_t=Y_t-\mu-\sum_{l=1}^p A_l (Y_{t-l}-\mu).
+\myeq{
+\hat\epsilon_t=Y_t-\mu-\sum_{l=1}^p A_l (Y_{t-l}-\mu).
+}
 \end{equation}
-
-
-\section{Ensuring that the $\Sigma_t$ are positive definite}
-
-The \textsc{dvec} parameterization can produce matrices that are not
-positive definite, and the \textsc{bekk} parameterization can produce matrices
-that are almost not positive definite (much as a positive number can
-get arbitrarily close to zero). At worst, this will lead to a failure
-in the model to converge and at best, it makes the estimation somewhat
-unstable. To improve model performance, the \textsc{bekk} and \textsc{dvec}
-operations are followed by a modification of the resulting $\Sigma_t$ that
- makes them more positive definite. The first problem is to get a notion of what is meant by ``small'' for a particular problem. 
+\mysection{Ensuring that the $\Sigma_t$ are postive definite}
+The DVEC parameterization can produce matrices which are not
+positive definite and the BEKK parameterization can produce matrices
+which are almost not positive definite (much as a positive number can
+get arbitrarily close to 0). At worst this will lead to a failure
+in the model to converge and at best it makes the estimation somewhat
+unstable. To improve model performance the BEKK and DVEC 
+operations are followed by a modification of the resulting $\Sigma_t$
+which makes them more positive definite. The first problem is to get a notion of what is meant by small for a particular problem. 
 This is accomplished by first scaling the 
 $\Sigma_t$ to produce a matrix $\Lambda_t$ where
 \begin{equation}
-  \Lambda_{ij}=\frac{\Sigma_{t_{ij}}}{\sqrt{\Sigma_{t_{ij}}\Sigma_{t_{ij}}}}
+\myeq{
+\Lambda_{ij}=\Sigma_{t_{ij}}/\sqrt{\Sigma_{t_{ij}}\Sigma_{t_{ij}}}
+}
 \end{equation}
-The terms $\Lambda_{ii}$ are then bounded above {$1.0\e{-3}$,  i.e., they are replaced in a differentiable fashion with numbers that are $\ge 1.0\e{-3}$ using
-the \texttt{posfun} function.
-In addition, the correlation matrix 
+The terms $\Lambda_{ii}$ are then bounded above 1.e-3 ie they are replaced in a differentiable fashion with numbers that are $/ge$ 1.e-3. using
+the {\tt posfun} function.
+In addition the correlation matrix 
 $\Lambda_{ij}/\sqrt{\Lambda_{t_{ij}}\Lambda_{t_{ij}}}$ is
-decomposed via a Choleski decomposition, the divisors of
- which is forced to be $> 0.3$ in a differentiable fashion using the
-\texttt{posfun} function.
-\X{\fontindexentry{tt}{posfun} function}
-The
-above operations leave a matrix that is sufficiently positive definite
-and close enough to $\Sigma_1$ unchanged.
+decomposed via a choleski decompositioni, the divisors of
+ which is forced to be $gt>$ 0.3 in a differentiable fashion using the
+{\tt posfun} function.
+\X{posfun function}.
+
+the above operations leave a matrix which is sufficiently positive definite
+and close enough to $Sigma_1$ unchanged.
 
 
-\section{Missing data}
-
+\mysection{Missing data}
 Missing data points are included into the model as parameters to
 be estimated. If there are a substantial number of missing data
-points, this will induce bias into the estimates.
+points this will induce bias into the estimates.
 
-
-\section{The likelihood function}
-
-The model was fit by maximum-likelihood or, more correctly, by
+\mysection{The likelihood function}
+The model was fit by maximum-likelihood or more correctly by
 finding the mode of the Bayesian posterior distribution.
-A robust likelihood function that is a mixture of a normal
+A robust likelihood function which is a mixture of a normal
 distribution and a Cauchy distribution is employed.  The amount of robustness
 can be changed by the user.
 
 
-\section{Model selection}
+\mysection{Model Selection}
 
 Model selection consists of fitting the model to the data for various values
 of the parameters $(p,q,r,s)$ and trying to determine the simplest model
-that adequately fits the data, if any. 
+which adequately fits the data, if any. 
 
 The two criteria which are used for this are the likelihood ratio test
 and investigation of the residuals in the form of the Box-Ljung statistic.
 The likelihood-ratio test is used for general model selection, while
-the Box-Ljung statistic is used to investigate whether or not the model
+The Box-Ljung statistic is used to investigate whether the model
 can adequately fit the changes in the covariance matrices $\Sigma_t$
-that occur over time.
+which occur over time.
 
 
-\section{The Box-Ljung statistic}
-
+\mysection{The Box-Ljung statistic}
 The following Box-Ljung
-Statistic was employed 
+Statistic was eployed 
 to test the ability of the model to model the time varying covariance
-structure of the time series. This statistic is calculated from the
-estimated standardized residuals $z_t$, for $t=1,\ldots n$,
-where for each $t$, $z_t$ is an $m$-dimensional vector.
+structure of the time series. This statisic is calculated from the
+estimated standardized residuals $z_t$ for $t=1,\ldots n$
+where for each $t$ $z_t$ is an $m$ dimensional vector.
 The $z_i$ are obtained in the calculations necessary to calculate the
-log-likelihood~\mbox{function}.
-\begin{align}
-  \hat\mu_j&=\frac{1}{ n}\sum_{i=1}^n z_{ij}\\
-  z_{ij}^{\prime}&=z_{ij}-\hat\mu_j\\
-  \hat\sigma_{jk}&=\frac{1}{ n}\sum_{i=1}^n z_{ij}^\prime z_{ik}^\prime\\
-  \gamma_{ijk}&=
-       \frac{
-            \frac{1}{ n-l}\sum_{i=1}^{n-l}
+log-likelihood function.
+\begin{eqnarray}
+  \hat\mu_j&=&{1\over n}\sum_{i=1}^n z_{ij}\cr
+  z_{ij}^{\prime}&=&z_{ij}-\hat\mu_j\cr
+  \hat\sigma_{jk}&=&{1\over n}\sum_{i=1}^n z_{ij}^\prime z_{ik}^\prime\cr
+  \gamma_{ijk}&=&
+       {
+            {1\over n-l}\sum_{i=1}^{n-l}
          (z_{ij}^\prime z_{ik}^\prime-\hat\sigma_{jk})
          (z_{i,j+l}^\prime z_{i,k+l}^\prime-\hat\sigma_{jk})
-            }{                              
-            \frac{1}{ n}\sum_{i=1}^n
+            \over                              
+            {1\over n}\sum_{i=1}^n
          (z_{ij}^\prime z_{ik}^\prime-\hat\sigma_{jk})^2
        }
-\end{align}
+\end{eqnarray}
 
-Under the null hypothesis that the model is adequate, and if the
-$z_i$ are normally distributed, then the sum
+Under the null hypothesis that the model is adequate and if the
+$z_i$ are normally distributed then the sum
 $$LB(K)_{ij}=n\sum_{k=1}^k w_k \gamma_{ijk}^2$$
-is asymptotically distributed as a $\chi^2$ random variables 
-with~$K$ degrees of freedom. Here, $w_k=(n+2)/(n-k)$.
+is assymptotically distributed as a $\chi^2$ random variable 
+with~$K$ degrees of freedom. Here $w_k=(n+2)/(n-k)$.
 
-
-\section{Analysis of simulated data}
+\mysection{Analysis of Simulated data}
 
 One method to get an idea how well a statistical model works is to
-use it with simulated data where the true values of the parameters being estimated
+use it with simulated data wehre the true values of the parameters being estimated
 are known.
-A simple simulator that can generate data sets is included with the
-\texttt{mgarch} package. The simulator generated a 4-dimensional set of
-1,000 observations. A type~$1,1,1,1$ process was simulated and
+A simple simulator which can generate data sets is included with the
+mgarch package. The simulator generated a four dimensional set of
+1,000 observations. A type 1,1,1,1 process was simulated and
 analyzed.
 
+\eject
+\vbox{
 The following plots show the actual and predicted values for the
 diagonal variance and correlation terms for the analysis with
-a type $1,1,1,1$~model.
-
-\includegraphics[height=2.5in, width=\textwidth]{covarplot11.png}
-
-
-
-\includegraphics[height=2.5in, width=\textwidth]{covarplot11.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{covarplot22.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{covarplot33.png}
-
-
-\includegraphics[height=2.5in, width=\textwidth]{covarplot44.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{corrplot21.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{corrplot31.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{corrplot32.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{corrplot41.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{corrplot42.png}
-
-
-\includegraphics[height=2.5in, width=\textwidth]{corrplot43.png}
-
-
-
-\section{Analysis of real data}
-
-The data consist of daily observations of the German Mark/US Dollar and Japanese Yen/US dollar exchange rates, as well as the SP-500 and Tokyo 
- (\textsc{tokyose}) stock exchange indices. For this data set, $m=4$, and there
+a type 1,1,1,1 model.\par
+\medskip
+\pdfximage  height 2.5in width 6.5in depth 0in {covarplot11.png}
+\vfill
+\pdfximage  height 2.5in width 6.5in depth 0in {covarplot22.png}
+\medskip
+\pdfximage  height 2.5in width 6.5in depth 0in {covarplot33.png}
+\medskip
+}
+\vbox{
+\pdfximage  height 2.7in width 6.5in depth 0in {covarplot44.png}
+\medskip
+\pdfximage  height 2.7in width 6.5in depth 0in {corrplot21.png}
+\medskip
+\pdfximage  height 2.7in width 6.5in depth 0in {corrplot31.png}
+}
+\vfill
+\vbox{
+\pdfximage  height 2.7in width 6.5in depth 0in {corrplot32.png}
+\medskip
+\pdfximage  height 2.7in width 6.5in depth 0in {corrplot41.png}
+\medskip
+\pdfximage  height 2.7in width 6.5in depth 0in {corrplot42.png}
+}
+\vfill
+\medskip
+\vbox{
+\pdfximage  height 2.7in width 6.5in depth 0in {corrplot43.png}
+}
+\par
+\medskip
+\vskip .5in
+\par
+\mysection{Analysis of Real Data}
+The data consist of daily observations of the German Mark-US Dollar and Japanese Yen-US dollar exchange rates as well as the SP-500 and Tokyo 
+ (TOKYOSE) stock exchange indices. For this data set $m=4$ and there
 were $1301$ time periods with $211$ missing values.  
 
-\subsection{Model Parameters log-likelihood directory $p,q,r,s$.}
-\begin{lstlisting}
+{\obeylines\obeyspaces
+Model Parameters  log-likelihood  directory
+p,q,r,s
+
 VARMA
 0,0,0,0   221         -1382.56      000
 1,0,0,0   241         -1322.47      100
@@ -260,11 +269,10 @@ VARMA with DVEC
 VARMA with DVECI
 1,1,2,1a  287         -887.764 
 1,2,1,1a  293         -888.531 
-\end{lstlisting}
 
-\bigskip
-\subsection{Ljung-Box statistic (chi${}^2$ with 10 degrees of freedom).}
-\begin{lstlisting}
+Ljung-Box statistic (chi${}^2$ with 10 degrees of freedom)
+
+
 VARMA
 0,0,0,0         138.953  52.902  26.351 19.171
                  52.902 222.502 154.708 59.681
@@ -301,7 +309,7 @@ VARMA with DVEC
 
 VARMA with DVECI
 1,2,1,1a          4.352  9.658  9.402  8.542
-                  9.658  7.646 17.516  8.416O
+                  9.658  7.646 17.516  8.416
                   9.402 17.516  5.795  7.108
                   8.542  8.416  7.108 10.483
 
@@ -309,67 +317,70 @@ VARMA with DVECI
                  17.077  6.718 18.563  9.736
                   8.760 18.563  3.270  8.525
                  10.487  9.736  8.525 10.253
-\end{lstlisting}
-
-While the model $1,1,2,1a$ produced almost as high a
-log-likelihood value as model $1,2,1,1a$, the superior
-performance of the latter model with respect to the 
+}
+While the model 1,1,2,1a produced almost as high a
+log-likelihood value as model 1,2,1,1a, the superior
+performance of the latter model with repsect to the 
 Box-Ljung statistic might prompt us to consider it the model of choice.
-
-The following plots show the actual and predicted values for the diagonal variance and
-correlation terms. %fixed
-
-\includegraphics[height=2.5in, width=\textwidth]{example/covarplot11.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{example/covarplot22.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{example/covarplot33.png}
-
-
-\includegraphics[height=2.5in, width=\textwidth]{example/covarplot44.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{example/corrplot21.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{example/corrplot31.png}
-
-
-\includegraphics[height=2.5in, width=\textwidth]{example/corrplot32.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{example/corrplot41.png}
-
-\includegraphics[height=2.5in, width=\textwidth]{example/corrplot42.png}
-
-
-\includegraphics[height=2.5in, width=\textwidth]{example/corrplot43.png}
-
-
-\bigskip
-
-
-\section{Input format}
-
-By default, the stand-alone version of the model attempts to read in the
-data from a file named \texttt{mgarch.dat}.  This can be changed by a command line option.
-A reasonable command line option would be:
-\begin{lstlisting}
-  mgarch -ind datafile -nox -nohess
-\end{lstlisting}
-The command
-\begin{lstlisting}
-  mgarch -?
-\end{lstlisting}
+\vbox{
+The following plots show the predicted values for the
+and the diagonal variance terms.\par
+\medskip
+\pdfximage  height 2.5in width 6.5in depth 0in {example/covarplot11.png}
+\vfill
+\pdfximage  height 2.5in width 6.5in depth 0in {example/covarplot22.png}
+\medskip
+\pdfximage  height 2.5in width 6.5in depth 0in {example/covarplot33.png}
+\medskip
+}
+\vbox{
+\pdfximage  height 2.7in width 6.5in depth 0in {example/covarplot44.png}
+\medskip
+\pdfximage  height 2.7in width 6.5in depth 0in {example/corrplot21.png}
+\medskip
+\pdfximage  height 2.7in width 6.5in depth 0in {example/corrplot31.png}
+}
+\vfill
+\vbox{
+\pdfximage  height 2.7in width 6.5in depth 0in {example/corrplot32.png}
+\medskip
+\pdfximage  height 2.7in width 6.5in depth 0in {example/corrplot41.png}
+\medskip
+\pdfximage  height 2.7in width 6.5in depth 0in {example/corrplot42.png}
+}
+\vfill
+\medskip
+\vbox{
+\pdfximage  height 2.7in width 6.5in depth 0in {example/corrplot43.png}
+}
+\par
+\medskip
+\vskip .5in
+\par
+\mysection{Input Format}
+By default the stand alone version of the model attempts to read in the
+data from a file named mgarch.dat This can be changed by a command line option.
+a reasonable command line option would be
+\beginexample
+    mgarch -ind datafile -nox -nohess
+\endexample
+\noindent The command
+\beginexample
+    mgarch -?
+\endexample
 will print out a list of command line options.
-
 Part of a data file is shown below. The first line describes the data
-and specifies the form of the model. The \texttt{delta} flag determines whether or not
-the parameters that measure asymmetric response in the \textsc{arch} component of the
+and specifies the form of the model. The delta flag determines whether
+the parameters which measure asymmetric response in the ARCH component of the
 model are estimated. The robustness number controls the amount of
-robustness in the likelihood function. A value between~0.0 and~0.5 is
-probably appropriate. A value of~10,000 is used to indicate missing values
-in the~data.
-\begin{lstlisting}
-# number of     dimension    p q r s  delta  robustness
-# observations                        flag
+robustness in the likelihood function. A value between 0.0 and 0.5 is
+probably appropriate. A value 0f 10,000 is used to indicate missing values
+in the data.
+
+{\obeylines\obeyspaces
+
+\# number of     dimension    p q r s  delta  robustness
+\# observations                        flag
   1301            4          0 0 1 1   0        0
 -0.473592      -0.30815      -0.199577      -0.154677
 0.140859      -0.256788      -0.823379      -0.947582
@@ -393,57 +404,54 @@ in the~data.
 2.971906      -1.704494      0.835319      0.286408
 -3.451449      1.233715      -1.144007      -0.322157
 1.342827      0.376409      0.279213      0.226602
-\end{lstlisting}
+}
 
 
-\section{Output files}
+\mysection{Output Files}
+Since the model produces a lot of output it is a good idea to run it its own directory
+so that files can be easily deleted. The independent variables of the
+optimization are in a file named mgarch.par (mgarch.bar is an equivalent binary file.)
+A more user friendly report is in the file mgarch.rep.
+The estimated covariances and correlations are in files named covar.XX and correl.XX
 
-Since the model produces a lot of output, it is a good idea to run it in its own directory,
-so files can be easily deleted. The independent variables of the
-optimization are in a file named \texttt{mgarch.par}. (\texttt{mgarch.bar} is an equivalent binary file.)
-A more user-friendly report is in the file \texttt{mgarch.rep}.
-The estimated covariances and correlations are in files named \texttt{covar.XX} and \texttt{correl.XX}.
-
-The model selection criteria have identified the model~1.1.1a
+The model selection criteria have identified the mode 1.1.1ai
 as the best of the models considered for these data.
 
 Some parameters of interest are:
-\begin{lstlisting}
-# alpha:
+{\obeylines\obeyspaces
+\# alpha:
  0.394461 0.538978 1.19337 0.969918
-# A1:
+\# A1:
  -0.0531276 0.772529 -0.187692 -0.131215
  0.0898897 -0.399746 -0.142294 -0.106079
  0.0740065 0.248345 -0.0629680 -0.212928
  0.0918460 -0.0575289 -0.0700786 0.0537302
-# B1:
+\# B1:
  -0.00719450 -0.344793 0.115020 0.00516664
  -0.0943230 0.474330 0.147845 0.0936166
  -0.0860047 -0.243294 0.0187986 0.217280
  -0.0815394 0.0843289 0.00782384 -0.0539808
-# F:
+\# F:
  -0.109526 -0.0292127 -0.122395 0.0548869
  0.000332929 -0.0964482 0.0153865 -0.0346829
  -0.0148848 -0.0146167 -0.117961 -0.0529385
  -0.00504663 -0.000547068 0.00413882 -0.133956
-# G:
+\# G:
  0.930026 -0.269741 0.136401 0.427047
  -0.0345549 -0.981606 0.00281003 -0.00411475
  0.0976783 -0.0132467 -0.976596 0.0306139
  0.117971 -0.0134465 0.00647385 -0.955173
-\end{lstlisting}
-For the four parameters $\alpha_i$, a value $<1$ indicates
+}
+For the four parameters $\alpha_i$ a value $<1$ indicates
 that negative values seem to have a larger effect on changes
-in the covariance structure than do positive ones. This effect seems
+in the covariance structure than positive ones. This effect seems
 to be much larger in the dollar cross rates than in the
-stock exchanges indices.
+stock exhanges indices.
 
-
-\section{The code for the \textsc{bekkgarch} model}
-
-The code for the \textsc{bekkgarch} model follows. Additional
-comments have been added to the~code.
-\begin{lstlisting}
+\mysection{The code for the BEKKGARCH model}
+The code for the BEKKGARCH model follows. Additional
+comments have been added to the code.
+\beginexample
 DATA_SECTION
   // This section describes the data inputs to the model.
   // By default they are read in from the file bekkgarch.dat.
@@ -1160,5 +1168,5 @@ TOP_OF_MAIN_SECTION
   gradient_structure::set_GRADSTACK_BUFFER_SIZE(560000);
   gradient_structure::set_CMPDIF_BUFFER_SIZE(15000000);
   gradient_structure::set_MAX_NVAR_OFFSET(1000);
-\end{lstlisting}
+\endexample
 

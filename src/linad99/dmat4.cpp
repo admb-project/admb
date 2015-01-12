@@ -1,40 +1,27 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
  struct dvec_ptr_ptr
  {
    void ** m;
  };
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix& dmatrix::operator=(const dmatrix& m1)
+ dmatrix& dmatrix::operator= (_CONST dmatrix& m1)
  {
    if (allocated(*this))
    {
      if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
        colmin() != m1.colmin() || colmax() != m1.colmax() )
      {
-       cerr << " Incompatible array bounds in "
-       "dmatrix& operator = (const dmatrix&)\n";
+       cerr << " Incompatible array bounds in dmatrix& operator = (_CONST dmatrix&)\n";
        ad_exit(21);
      }
-
+  
      if (m != m1.m)            // check for condition that both matrices
      {                         // point to the same object
        for (int i=rowmin();i<=rowmax();i++)
@@ -57,16 +44,11 @@ dmatrix& dmatrix::operator=(const dmatrix& m1)
    return(*this);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix& dmatrix::operator+=(const dmatrix& m1)
+ dmatrix& dmatrix::operator+= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "dmatrix& operator += (const dmatrix&)\n";
+     cerr << " Incompatible array bounds in dmatrix& operator += (_CONST dmatrix&)\n";
      ad_exit(21);
    }
 
@@ -77,16 +59,11 @@ dmatrix& dmatrix::operator+=(const dmatrix& m1)
    return(*this);
  }
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix& dmatrix::operator-=(const dmatrix& m1)
+ dmatrix& dmatrix::operator-= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in "
-     "dmatrix& operator -= (const dmatrix&)\n";
+     cerr << " Incompatible array bounds in dmatrix& operator -= (_CONST dmatrix&)\n";
      ad_exit(21);
    }
 
@@ -96,3 +73,4 @@ dmatrix& dmatrix::operator-=(const dmatrix& m1)
    }
    return(*this);
  }
+

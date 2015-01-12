@@ -1,19 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
+
   ivector& ivector::operator +=(const ivector& j)
   {
      int mmin=indexmin();
@@ -22,7 +17,7 @@
      {
        cerr << " Incompatible array sizes in ivector::operator +=" << endl;
        exit(1);
-     }
+     }    
      for (int i=mmin; i<=mmax; i++)
      {
        (*this)(i)+=j(i);
@@ -30,10 +25,6 @@
      return(*this);
   }
 
-/**
- * Description not yet available.
- * \param
- */
   ivector& ivector::operator +=(int j)
   {
      int mmin=indexmin();
@@ -44,3 +35,4 @@
      }
      return(*this);
   }
+

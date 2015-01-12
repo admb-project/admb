@@ -81,6 +81,7 @@ NORMAL_PRIOR_FUNCTION void get_M(const dvariable& _a)
   M=tmpM;
 
 FUNCTION void evaluate_M(void)
+
   get_M(a);
 
 REPORT_SECTION

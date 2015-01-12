@@ -1,0 +1,2 @@
+echo $1 >> diff.out
+diff $1 sub/$1 >> diff.out

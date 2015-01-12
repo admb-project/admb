@@ -1,12 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 // file: dvect_io.cpp
 
@@ -32,34 +28,21 @@
 
 
 #ifdef __USE_IOSTREAM__
-
-/**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& istr, const dvector& _z)
+uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvector& _z)
 {
   ADUNCONST(dvector,z)
   z.read_from(istr);
   return (uistream&)istr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& ostr,const dvector& z)
+uostream& operator<<(BOR_CONST uostream& ostr,const dvector& z)
 {
   z.write_on(ostr);
 
   return (uostream&)ostr;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvector::write_on(const uostream& _s) const
+void dvector::write_on(BOR_CONST uostream& _s) _CONST
 {
   ADUNCONST(uostream,s)
   int mmin = indexmin();
@@ -69,14 +52,9 @@ void dvector::write_on(const uostream& _s) const
     s.write((char*)&((*this)[i]), sizeof(double) );
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
-void dvector::read_from(const uistream& _s)
+void dvector::read_from(BOR_CONST uistream& _s) 
 {
-  ADUNCONST(uistream,s)
+  ADUNCONST(uistream,s) 
   int mmin = indexmin();
   int mmax = indexmax();
   for (int i=mmin;i<=mmax;i++)
@@ -85,3 +63,5 @@ void dvector::read_from(const uistream& _s)
   }
 }
 #endif
+
+

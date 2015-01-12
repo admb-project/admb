@@ -1,0 +1,230 @@
+% $Id$
+%
+% Author: David Fournier
+% Copyright (c) 2008 Regents of the University of California
+%
+\def\kerntwo{\kern -4pt}
+
+\mysection{The use of simulation to test
+the adequecy of a model}
+
+\ADMS greatly facilitates the estimation of parameters for
+nonlinear stochastic models. As a result the \ADM\ user may
+be tempted to construct ever more complex models. One should keep
+in mind that ``just because something can be done doesn't mean
+that it should be done''. Put another way a model should be
+just as complicated as necessary to do the job and no
+more complicated. Of course learning to construct the 
+appropriate model in a given situation is not simple. 
+Certainly one needs to accumulate experience by building
+various models and seeing how they behave. A good method to
+test a model candidate is to generate simulated data 
+and to use the data as inputs to investagate the performance
+of the model. In this chapter methods for rapidly developing
+appropriate simulators and testing are discussed. The main idea
+is that given an \ADMS model there are a series of more or less
+well defined steps which can turn the code into a simulator. 
+
+
+
+\mysection{A simple example -- estimating population size by removal}
+
+Consider a population which is assumed to consist originally of
+$N_1$ individuals. Let $C_i$ for $1\le i\le n$ be the number of
+individuals removed in time period $i$. If $N_i$ is the number
+of individuals in the population at the beginning of time period~$i$
+assume that $N_{i+1}=N_i-C_i$ for $1\le i< n$, that is there is
+no production or other sources of mortality for the
+population. Let $E_i$ be the amount of ``effort'' expended
+to produce the catch $C_i$ in time period $i$. Assume that
+$$N_{i+1}=N_i\exp(-qE_ie^\epsilon_i)$$ 
+where $q$ is an
+unknown parameter, the catchability and the $\epsilon_i$
+are independent normally distributed random variables with
+standard deviations $\sigma_\epsilon$.
+The input data for the model are the $C_i$ and $E_i$.
+
+
+\mysection{Code for the analyzer}
+In the anayzer we make the simplifying assumption that
+$$C=qE_iN_i\exp(\epsilon_i)$$
+and simply minimize 
+$$n/2\log\big(\sum_i \log(C_i/(qE_iN_i))^2\big)$$
+which is minus the concentrated likelihood. 
+\X{concentrated likelihood}
+The simulation results will indicate whether this simpler model
+works well for data generated according to the more complicated
+statistical assumption.
+\beginexample
+DATA_SECTION
+  init_int nobs
+  init_int iflag  // read in the random number seed
+  init_vector C(1,nobs)
+  init_vector E(1,nobs)
+  number sumC
+ LOC_CALCS
+  sumC=sum(C);
+  E/=mean(E);   // normalize the effort
+ END_CALCS
+PARAMETER_SECTION
+  init_bounded_number q(.01,10);
+  init_bounded_number alpha(1,1000);
+  sdreport_number N0
+  vector N(1,nobs);
+  vector qEN(1,nobs);
+  vector tmp(1,nobs);
+  objective_function_value f
+PROCEDURE_SECTION
+  N0=sumC*alpha;
+  N(1)=N0;
+  for (int i=1;i<nobs;i++)
+  {
+    N(i+1)=N(i)-C(i);
+  }
+  qEN=q*elem_prod(E,N);
+  tmp=elem_div(C,qEN);
+  f= 0.5*nobs*log(norm2(log(tmp))); // concentrated likelihood
+FINAL_SECTION
+  ofstream ofs("sim-results",ios::app);
+  ofs << N0 << "  "  << iflag << endl;
+\endexample
+
+The model is quite straightforward. Since the intial population must be
+larger than the catches we have parameterzed it as some number $\alpha$
+greater than 1
+multiplied by the sum of the catches. This ensures that $\alpha$ is dimensionless
+which is usually a good way to parameterize a quantity.
+The estimate {\tt N0} for the initial population is appended to a
+file named {\tt sim-results}. 
+
+\mysection{Code for the simulator}
+TO produice a simulator all the code is moved to the \DS.
+at the same time it is modified a bit. 
+
+First find initial parameters
+in the code for the anayzer.  They are the parameters being
+estimated in the analyzer. They are {\tt N0} and {\tt q}.
+In the simulator they become inputs. To accomplish this 
+the declarations for them are moved to the \DS. Now consider the catches,
+{\tt C}. They are produced through the application of the model's
+assumptions so they should not be read in. Instead they are to be 
+calculated. So remove the {init\_} prefix from them.
+
+\beginexample
+DATA_SECTION
+  init_int nobs
+  vector C(1,nobs)   // 1.) remove init_
+  init_vector E(1,nobs)
+  init_number N0     // 2.) change from sdreport_number
+  init_number q   // change from init_bounded_number
+  init_number std_eps   // std dev of error in catch effort relationship
+  vector N(1,nobs);
+  int iflag
+ LOC_CALCS
+  ifstream ifs("depletion.seed");
+  ifs >> iflag;
+  random_number_generator rng(iflag);
+  dvector eps(1,nobs);
+  eps.fill_randn(rng); // fill eps with normals
+  N(1)=N0;
+  eps*=std_eps; // scale to get desired std dev
+  for (int i=1;i<=nobs;i++)
+  {
+    // Here we generate C with the more complicated model
+    C(i)=(1.0-exp(-q*E(i)*exp(eps(i))))*N(i);
+    if (i<nobs) N(i+1)=N(i)-C(i);
+  }
+  // write the DAT file for the analyzer
+  ofstream ofs("depletion.dat");
+  ofs << "# nobs" << endl;
+  ofs << nobs << endl;
+  ofs << "# iflag" << endl;
+  ofs << iflag << endl;
+  ofs << "# Catch" << endl;
+  ofs << C << endl;
+  ofs << "# Effort" << endl;
+  ofs << E << endl;
+  exit(0);  // just quit
+
+ END_CALCS
+PARAMETER_SECTION
+  objective_function_value f // need to declare this
+PROCEDURE_SECTION
+  // Don't need anything here
+\endexample
+
+\mysection{Running the simulator and analyzer}
+The following program will run the simulator and anlyzer {\tt n}
+times where {\tt n} is input on the command line.
+It uses the {\tt system} function which is available
+on WIN32 and Linux. the seed which controls the simulation is kep in a file
+named {\tt depletion.seed} which is incremented each time to get
+a new simulation.
+\beginexample
+#include <stdlib.h>
+#include <fstream.h>
+int main(int argc,char * argv[])
+{
+  if (argc<2)
+  {
+    cerr << "Usage: test-depletion ntimes" << endl;
+    exit(1);
+  }
+  int nsim=atoi(argv[1]); 
+
+  for (int i=1;i<=nsim;i++)
+  {
+    // run the simulator
+    system("depletion-sim");
+    // run the analyzer
+    system("depletion");
+    // increment the seed
+    int iseed;
+    {
+      ifstream ifs("depletion.seed");
+      ifs >> iseed;
+    }
+    {
+      ofstream ofs("depletion.seed");
+      ofs << iseed+2 << endl;
+    }
+  }
+  return 0;
+}
+\endexample
+\mysection{evaluating the results of the simulation}
+\beginexample
+#include <admodel.h>
+The following program read in the estimates for the intial populaiton
+size which have been produced by the analyzer and computes their
+mean and standard error. This result can be used to detect bias
+in the estimate. Roughly speaking if the difference between the mean of the estimates
+and the true value is greater than twice the value of the standard errors this
+is an indication that the model produces biased estimates for data produced
+according to the method employed by the simulator.
+int main(int argc,char * argv[])
+{
+  if (argc<2) exit(1);
+  int n=atoi(argv[1]);
+  dmatrix data(1,n,1,2);
+  ifstream ifs("sim-results");
+  ifs >> data;
+  dvector x=column(data,2);
+
+  cout << " mean(x) " << mean(x) << "  std err " << std_dev(x)/sqrt(x.size()) << endl;
+} 
+\endexample
+for example the simulator-anayzer pair were run 1,000 times and the results
+obtained were
+\beginexample
+ mean(x) 10696.8  std err 141.991
+\endexample
+the value used in the simulation was 10,000
+so that there is a postive bias in {\tt N0}.  
+
+
+
+\mysection{Using resampling schemes to estimate
+the variability of the model's parameter estimates}
+
+

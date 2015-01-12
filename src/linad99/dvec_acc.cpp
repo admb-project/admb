@@ -1,87 +1,106 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+//#undef OPT_LIB
 #include "fvar.hpp"
-#include "admb_messages.h"
 
 #if !defined(OPT_LIB)
-/**
-Returns a reference to the element at index __i__ in the array.
+ double& dvector::operator[] (int i)
+ {
+   #ifdef SAFE_ARRAYS
+     if (i>indexmax())
+     {
+#if defined(USE_EXCEPTIONS)
+       throw vector_range_exception(i,indexmin(),indexmax());
+#else
+       cerr << "array bound exceeded -- index too high in dvector::operator[]"
+         << "\n";
+       cerr << " index value is " << i << " indexmax() is "<< indexmax() <<"\n";
+#endif
+       ad_exit(1);
+     }
+     
+     if (i<indexmin())
+     {
+#if defined(USE_EXCEPTIONS)
+       throw vector_range_exception(i,indexmin(),indexmax());
+#else
+       cerr << "array bound exceeded -- index too low in dvector::operator[]";
+       cerr << " index value is " << i << " indexmin() is "<< indexmin() <<"\n";
+#endif
+       ad_exit(1);
+     }
+   #endif
+   return(*(v+i));
+ }
 
-\param __i__ index
-*/
-double& dvector::operator[](int i)
-{
-  if (i < index_min || index_max < i)
-  {
-  #if defined(USE_EXCEPTIONS)
-    throw vector_range_exception(i,index_min,index_max);
-  #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
-    "double& dvector::operator[] (int i)", index_min, index_max, i);
-  #endif
-  }
-  return *(v+i);
-}
-/**
-Returns a reference to the element at index __i__ in the array.
+ double& dvector::operator() (int i)
+ {
+   #ifdef SAFE_ARRAYS
+     if (i>indexmax())
+     {
+       cerr << "array bound exceeded -- index too high in dvector::operator()"
+         << "\n";
+       cerr << " index value is " << i << " indexmax() is "<< indexmax() <<"\n";
+       ad_exit(1);
+     }
+     
+     if (i<indexmin())
+     {
+       cerr << "array bound exceeded -- index too low in dvector::operator[]";
+       cerr << " index value is " << i << " indexmin() is "<< indexmin() <<"\n";
+       ad_exit(1);
+     }
+   #endif
+   return(*(v+i));
+ }
 
-\param __i__ index
-*/
-double& dvector::operator()(int i)
-{
-  if (i < index_min || index_max < i)
-  {
-  #if defined(USE_EXCEPTIONS)
-    throw vector_range_exception(i,index_min,index_max);
-  #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
-    "double& dvector::operator[] (int i)", index_min, index_max, i);
-  #endif
-  }
-  return *(v+i);
-}
-/**
-Returns a reference to the element at index __i__ in the array.
 
-\param __i__ index
-*/
-const double& dvector::operator[](int i) const
-{
-  if (i < index_min || index_max < i)
-  {
-  #if defined(USE_EXCEPTIONS)
-    throw vector_range_exception(i,index_min,index_max);
-  #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
-    "double& dvector::operator[] (int i)", index_min, index_max, i);
-  #endif
-  }
-  return *(v+i);
-}
-/**
-Returns a reference to the element at index __i__ in the array.
+#ifdef USE_CONST
+ _CONST double& dvector::operator[] (int i) _CONST
+ {
+   #ifdef SAFE_ARRAYS
+     if (i>indexmax())
+     {
+       cerr << "array bound exceeded -- index too high in dvector::operator[]"
+         << "\n";
+       cerr << " index value is " << i << " indexmax() is "<< indexmax() <<"\n";
+       ad_exit(1);
+     }
+     
+     if (i<indexmin())
+     {
+       cerr << "array bound exceeded -- index too low in dvector::operator[]";
+       cerr << " index value is " << i << " indexmin() is "<< indexmin() <<"\n";
+       ad_exit(1);
+     }
+   #endif
+   return(*(v+i));
+ }
 
-\param __i__ index
-*/
-const double& dvector::operator()(int i) const
-{
-  if (i < index_min || index_max < i)
-  {
-  #if defined(USE_EXCEPTIONS)
-    throw vector_range_exception(i,index_min,index_max);
-  #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
-    "double& dvector::operator[] (int i)", index_min, index_max, i);
-  #endif
-  }
-  return *(v+i);
-}
+ _CONST double& dvector::operator() (int i) _CONST
+ {
+   #ifdef SAFE_ARRAYS
+     if (i>indexmax())
+     {
+       cerr << "array bound exceeded -- index too high in dvector::operator()"
+         << "\n";
+       cerr << " index value is " << i << " indexmax() is "<< indexmax() <<"\n";
+       ad_exit(1);
+     }
+     
+     if (i<indexmin())
+     {
+       cerr << "array bound exceeded -- index too low in dvector::operator[]";
+       cerr << " index value is " << i << " indexmin() is "<< indexmin() <<"\n";
+       ad_exit(1);
+     }
+   #endif
+   return(*(v+i));
+ }
+
+ #endif
 #endif

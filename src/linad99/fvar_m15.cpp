@@ -1,9 +1,11 @@
-/**
- * $Id: fvar_m15.cpp 789 2010-10-05 01:01:09Z johnoel $
+/*
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
+
+
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -23,22 +25,25 @@ void dfinvpret(void);
 \param b An integer
 \return A integer \f$ z = \min(a,b)\f$
 */
-int min(const int a, const int b)
+int min(int a,int b)
 {
-  return a <= b ? a : b;
+  if (a>b) return b;
+  return a;
 }
 
-/** Inverse of a varaiable matrix.
+/** Inverse of a varaiable matrix.    
     \param aa dvar_matrix conaining matrix to be inverted,\f$A\f$.
     \return dvar_matrix containing \f$A^{-1}\f$.
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
-dvar_matrix inv(const dvar_matrix& aa)
+dvar_matrix inv(_CONST dvar_matrix& aa)
 {
-  int imax = 0;
-  int n = aa.colsize();
+  int i,imax,j,k,n;
+  n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
   dvar_matrix vc(lb,ub,lb,ub);
@@ -65,10 +70,10 @@ dvar_matrix inv(const dvar_matrix& aa)
   dvector vv(lb,ub);
 
   d=1.0;
-  for (int i=lb;i<=ub;i++)
+  for (i=lb;i<=ub;i++)
   {
     big=0.0;
-    for (int j=lb;j<=ub;j++)
+    for (j=lb;j<=ub;j++)
     {
       temp=fabs(bb.elem(i,j));
       if (temp > big)
@@ -84,12 +89,12 @@ dvar_matrix inv(const dvar_matrix& aa)
     vv[i]=1.0/big;
   }
 
-  for (int j=lb;j<=ub;j++)
+  for (j=lb;j<=ub;j++)
   {
-    for (int i=lb;i<j;i++)
+    for (i=lb;i<j;i++)
     {
       sum=bb.elem(i,j);
-      for (int k=lb;k<i;k++)
+      for (k=lb;k<i;k++)
       {
         sum = sum - bb.elem(i,k)*bb.elem(k,j);
       }
@@ -97,10 +102,10 @@ dvar_matrix inv(const dvar_matrix& aa)
       bb.elem(i,j)=sum;
     }
     big=0.0;
-    for (int i=j;i<=ub;i++)
+    for (i=j;i<=ub;i++)
     {
       sum=bb.elem(i,j);
-      for (int k=lb;k<j;k++)
+      for (k=lb;k<j;k++)
       {
         sum = sum - bb.elem(i,k)*bb.elem(k,j);
       }
@@ -114,7 +119,7 @@ dvar_matrix inv(const dvar_matrix& aa)
     }
     if (j != imax)
     {
-      for (int k=lb;k<=ub;k++)
+      for (k=lb;k<=ub;k++)
       {
         dum=bb.elem(imax,k);
         bb.elem(imax,k)=bb.elem(j,k);
@@ -140,7 +145,7 @@ dvar_matrix inv(const dvar_matrix& aa)
     if (j != n)
     {
       dum=1.0/bb.elem(j,j);
-      for (int i=j+1;i<=ub;i++)
+      for (i=j+1;i<=ub;i++)
       {
         bb.elem(i,j) = bb.elem(i,j) * dum;
       }
@@ -153,7 +158,7 @@ dvar_matrix inv(const dvar_matrix& aa)
   //int ub=rowmax;
   dmatrix& b=bb;
   ivector indxinv(lb,ub);
-  for (int i=lb;i<=ub;i++)
+  for (i=lb;i<=ub;i++)
   {
     indxinv(indx.elem(i))=i;
   }
@@ -178,7 +183,7 @@ dvar_matrix inv(const dvar_matrix& aa)
       }
       y.elem(i)=sum;
     }
-    for (int i=ub;i>=lb;i--)
+    for (i=ub;i>=lb;i--)
     {
       sum=y.elem(i);
       for (int j=i+1;j<=ub;j++)
@@ -207,7 +212,7 @@ dvar_matrix inv(const dvar_matrix& aa)
   return vc;
 }
 
-/** Adjoint code for dvar_matrix inv(const dvar_matrix& aa).
+/** Adjoint code for dvar_matrix inv(_CONST dvar_matrix& aa).
 */
 void dfinvpret(void)
 {

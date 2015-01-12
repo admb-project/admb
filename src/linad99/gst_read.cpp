@@ -1,13 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -34,32 +31,29 @@
   #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-  #include <unistd.h>
+  #ifndef __MSVC32__
+    #include <unistd.h>
+  #endif
+  #ifdef __MSVC32__
+    #define lseek _lseek
+    #define  read _read
+    #define write _write 
+    #define open _open
+    #define close _close 
+  #endif
 #endif
 
-#ifdef _MSC_VER
-  #ifdef _M_X64
-  typedef __int64 ssize_t;
-  #else
-  typedef int ssize_t;
+#ifdef __GNU__
+  #if (__GNUC__ >3)
+     #include <iostream>
+     using namespace std;
+  #else   
+    #include <iostream.h>
   #endif
-  #define lseek _lseek
-  #define read _read
-  #define write _write
-  #define open _open
-  #define close _close
-#else
-  #include <iostream>
-  using namespace std;
   #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
-#endif
-
-#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-  #include <cassert>
-  #include <climits>
 #endif
 
 #if defined(__NDPX__ )
@@ -71,17 +65,17 @@
 
 #include <math.h>
 
-/**
- * Description not yet available.
- * \param
- */
-int grad_stack::read_grad_stack_buffer(off_t& lpos)
+#     if defined(__GNU__)
+  int  grad_stack::read_grad_stack_buffer(my_off_t& lpos)
+#     else
+  int  grad_stack::read_grad_stack_buffer(long int& lpos)
+#     endif
   {
     // check to see if we are past the beginning of this file
     if (lpos < 0)
     {
-      lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
-        0L,SEEK_SET);
+      lpos = lseek(gradient_structure::
+        GRAD_STACK1->_GRADFILE_PTR,0L,SEEK_SET);
       // get the previous file
       if (gradient_structure::GRAD_STACK1->decrement_current_gradfile_ptr()
                         < 0)
@@ -109,36 +103,35 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
       }
       // now back up the file one buffer size
       lpos = lseek(_GRADFILE_PTR,
-         -((off_t)(sizeof(grad_stack_entry)*length)),SEEK_CUR);
+         -((long int)(sizeof(grad_stack_entry)*length)),SEEK_CUR);
       if (lpos == -1L)
       {
         cerr << "Error positioning temporary gradient file "
-             << gradient_structure::GRAD_STACK1->get_gradfile_name()
-             << " after open.\n";
+           << gradient_structure::GRAD_STACK1->get_gradfile_name() << " after open.\n";
         ad_exit(1);
       }
     }
-#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-    size_t size = sizeof(grad_stack_entry) * length;
-    assert(size <= UINT_MAX);
-    ssize_t nread = read(_GRADFILE_PTR, ptr_first, (unsigned int)size);
-#else
-    ssize_t nread = read(_GRADFILE_PTR, ptr_first,
-      sizeof(grad_stack_entry)*length);
-#endif
+    #if !defined( __NDPX__) && !defined( __SUN__)
+      unsigned int nread = read(_GRADFILE_PTR,ptr_first,
+        ((long int)(sizeof(grad_stack_entry)*length)) );
+    #else
+      unsigned int nread = read(_GRADFILE_PTR,
+        (char*)ptr_first,((long int)(sizeof(grad_stack_entry)*length)) );
+    #endif
     ptr = ptr_first + length-1;
 
     if (nread == -1 )
     {
       perror("IO error trying to read temporary gradient file\n");
     }
-    if (nread <((int)(sizeof(grad_stack_entry)*length)) )
+    if (nread <((long int)(sizeof(grad_stack_entry)*length)) )
     {
-     perror("End of file encountered trying to read temporary gradient file\n");
+      perror("End of file encountered trying to read temporary gradient file\n");
       cout << "Read " << nread << "bytes from temp. grad. file\n";
     }
-    lpos = lseek(_GRADFILE_PTR,-((off_t)(sizeof(grad_stack_entry)*length)),
+    lpos = lseek(_GRADFILE_PTR,-((long int)(sizeof(grad_stack_entry)*length)),
                                                            SEEK_CUR);
     // no break condition
     return 1;
   }
+

@@ -1,37 +1,26 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
-#include <cstring>
-#if !defined(__BORLANDC__) && !defined(_MSC_VER)
-#include <inttypes.h>
-#endif
 #include <df1b2fun.h>
-#include "admb_messages.h"
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
+
+void myderkludge(void);
 
 do_naught_kludge df1b2_init_number::do_naught_kludge_a;
 
-//#define  ADDEBUG_PRINT
+//#define  ADDEBUG_PRINT 
 #if defined(ADDEBUG_PRINT)
     int addebug_count=0;
 #endif
 
 //df1b2_gradlist * f1b2gradlist = NULL;
 int max_num_init_df1b2variable=500;
-
+  
 char AD_allocation_error_message[]="Error tryng to allocate memory for ";
 
-unsigned int get_f1b2buffer_size(const char* s);
+int get_f1b2buffer_size(const char * s);
 
 #if defined(CHECK_COUNT)
   int df1b2_gradlist::ncount_check=-1;
@@ -39,10 +28,7 @@ unsigned int get_f1b2buffer_size(const char* s);
 
 adpool * df1b2variable::pool= new adpool();
 
-/**
- * Description not yet available.
- * \param
- */
+
 df1b2function1::df1b2function1(double (*_f)(double),double (*_df)(double),
     double (*_d2f)(double),double (*_d3f)(double), const adstring& _s )
 {
@@ -53,40 +39,24 @@ df1b2function1::df1b2function1(double (*_f)(double),double (*_df)(double),
   funname=_s;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 ad_dstar::~ad_dstar(void)
 {
   if (p) delete []p;
   p = 0;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-unsigned int df1b2variable::get_blocksize()
+int df1b2variable::get_blocksize(void)
 {
   return get_blocksize(nvar);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-unsigned int df1b2variable::get_blocksize(const unsigned int n)
+int df1b2variable::get_blocksize(int n)
 {
-  return 6*n+5;
-  //return 6*n+4;
+  return 6*n+5; 
+  //return 6*n+4; 
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void df1b2variable::set_blocksize()
+void df1b2variable::set_blocksize(void)
 {
   blocksize=get_blocksize();
   pool->set_size(sizeof(double)*blocksize);
@@ -95,69 +65,51 @@ void df1b2variable::set_blocksize()
 
 //init_df1b2variable * init_df1b2variable::list[max_num_init_df1b2variable];
 init_df1b2variable ** init_df1b2variable::list=0;
-unsigned int df1b2variable::nvar = 0;
-int df1b2variable::minder=0;
-int df1b2variable::maxder=0;
-unsigned int df1b2variable::blocksize=0;
+int df1b2variable::nvar=0; 
+int df1b2variable::minder=0; 
+int df1b2variable::maxder=0; 
+int df1b2variable::blocksize=0; 
 int init_df1b2variable::num_variables=0;
 int df1b2_gradlist::no_derivatives=0;
 int df1b2variable::passnumber=0;
-unsigned int ad_dstar::n=0;
+int ad_dstar::n=0;
 
 void ad_read_pass2(void);
 // should inline this
-#if !defined(__BORLANDC__)
-int adptr_diff(void* x, void* y)
-{
-  intptr_t a = (intptr_t)x;
-  intptr_t b = (intptr_t)y;
-  ptrdiff_t diff = a - b;
-#ifndef OPT_LIB
-  assert(diff <= INT_MAX);
-#endif
-  return (int)diff;
-}
-#endif
-
+int adptr_diff(void * x, void * y) { return int(x)-int(y); }
 #if defined(__CHECK_MEMORY__)
   int sanity_flag=0;
 #endif
 
-/**
-Initialize
-*/
-void df1b2variable::initialize(void)
-{
+  void df1b2variable::initialize(void)
+  {
+    //double * tmp=ptr+1;
 #if defined(__CHECK_MEMORY__)
-  if (sanity_flag)
-  {
-    df1b2variable::pool->sanity_check();
-  }
+    if (sanity_flag)
+      df1b2variable::pool->sanity_check();
 #endif
-  unsigned int nvar=((twointsandptr*)ptr)->ptr->nvar;
-  initialize(nvar);
-}
+    int nvar=((twointsandptr*)ptr)->ptr->nvar;
+    int blocksize=get_blocksize(nvar);
+    for (double * tmp=ptr+2;tmp<ptr+blocksize-1;*tmp++=0);
+   /*
+    for (int i=1;i<blocksize;i++)
+    {
+      *tmp++=0.0;
+    }
+   */
+  }
+        
 
-/**
-Initialize nvariables
-
-/param n nvariables
-*/
-void df1b2variable::initialize(const unsigned int n)
-{
-  //int bs=get_blocksize(n);
-  //for (double * tmp=ptr+2;tmp<ptr+bs-1;*tmp++=0);
-  size_t nbytes = (get_blocksize(n) - 2) * sizeof(double);
-  memset(ptr + 2, 0, nbytes);
-}
-
-/**
- * Description not yet available.
- * \param
- */
-  void init_df1b2variable::set_u_dot(void)
+  void df1b2variable::initialize(int n)
   {
-    //int j;
+    int bs=get_blocksize(n);
+    for (double * tmp=ptr+2;tmp<ptr+bs-1;*tmp++=0);
+  }
+        
+
+  void init_df1b2variable::set_u_dot(void) 
+  {
+    int j;
     double uvalue=*get_u();
     initialize();
     int nder=maxder-minder+1;
@@ -173,11 +125,7 @@ void df1b2variable::initialize(const unsigned int n)
     *get_u()=uvalue;
   }
 
-/**
- * Description not yet available.
- * \param
- */
-  void init_df1b2variable::operator = (double d)
+  void init_df1b2variable::operator = (double d) 
   {
     //int nc=*ncopies;
     initialize();
@@ -190,12 +138,7 @@ void df1b2variable::initialize(const unsigned int n)
     get_ind_index()=-1;
     *u=d;
   }
-
-/**
- * Description not yet available.
- * \param
- */
-  df1b2variable::df1b2variable(const df1b2variable& v)
+  df1b2variable::df1b2variable(const df1b2variable& v) 
   {
 #if defined(__CHECK_MEMORY__)
     if (pchecker)
@@ -213,7 +156,7 @@ void df1b2variable::initialize(const unsigned int n)
       (*ncopies)++;
       u=v.u;
       u_dot=v.u_dot;
-      u_bar=v.u_bar;
+      u_bar=v.u_bar;         
       u_dot_bar=v.u_dot_bar;
       u_tilde=v.u_tilde;
       u_dot_tilde=v.u_dot_tilde;
@@ -236,18 +179,14 @@ void df1b2variable::initialize(const unsigned int n)
   }
 
   adkludge1 * adkludgexxx;
-
+    
 typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
 
-/**
- * Description not yet available.
- * \param
- */
   init_df1b2variable::init_df1b2variable(double v) : df1b2variable(adkludgexxx)
   {
     ++num_variables;
    /*
-    if (list==0)
+    if (list==0)  
     {
       list =new PINIT_DF1B2VARIABLE[max_num_init_df1b2variable];
     }
@@ -255,70 +194,60 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     {
       cerr << "Need to increase the maximum number of init_df1b2variables"
        << endl << "Use command line option -mni N" << endl;
-    }
-
+    }  
+      
     if (num_variables>=df1b2variable::nvar)
     {
       cerr << "Maximum number of independent variables exceeded"
            << endl;
       cerr << "current max is " << df1b2variable::nvar << endl;
     }
-    list[num_variables]=this;
+    list[num_variables]=this;  
     */
     ind_index=num_variables;
     *get_u()=v;
     if (num_variables>=minder && num_variables<=maxder)
     {
-      //int offset= num_variables-minder;
-      //u_dot[offset]=1.0;
+      int offset= num_variables-minder;
+      u_dot[offset]=1.0;
     }
   }
 
   int no_destruct=0;
-
-/**
-Destructor
-*/
-df1b2variable::~df1b2variable()
-{
-    deallocate();
-}
-
-/**
-If no other copies exist, free df1b2variable::ptr.
-*/
-void df1b2variable::deallocate(void)
-{
-  if (ptr)
+  df1b2variable::~df1b2variable() 
   {
-#if defined(__CHECK_MEMORY__)
-    if (pchecker)
+    deallocate();
+  }
+
+  void df1b2variable::deallocate(void) 
+  {
+    if (ptr)
     {
-      if (ptr == pchecker)
+#if defined(__CHECK_MEMORY__)
+      if (pchecker)
       {
-        cout << "destructor called  " << endl;
+        if (ptr == pchecker)
+        {
+          cout << "destructor called  " << endl;
+        }
+      }
+#endif
+      if (*ncopies)
+      {
+        (*ncopies)--;
+      }
+      else
+      {
+        
+        if (!df1b2_gradlist::no_derivatives)
+          f1b2gradlist->write_save_pass2_tilde_values(this);
+        ((twointsandptr*)ptr)->ptr->free(ptr);
+        
+        ptr=0;
       }
     }
-#endif
-    if (ncopies && *ncopies)
-    {
-      (*ncopies)--;
-    }
-    else
-    {
-      if (!df1b2_gradlist::no_derivatives)
-        f1b2gradlist->write_save_pass2_tilde_values(this);
-      ((twointsandptr*)ptr)->ptr->free(ptr);
-
-      ptr = 0;
-    }
   }
-}
-
-/**
- * Description not yet available.
- * \param
- */
+  
   void init_df1b2vector::set_value(const dvector& v)
   {
     int mmin=indexmin();
@@ -328,44 +257,33 @@ void df1b2variable::deallocate(void)
       cerr << "incompatible shape in "
         "init_df1b2vector::set_value(const dvector& v)" << endl;
     }
-
+    
     for (int i=mmin;i<=mmax;i++)
     {
       (*this)(i)=v(i);
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
   init_df1b2vector::init_df1b2vector(void)
   {
     allocate();
   }
-
-/**
- * Description not yet available.
- * \param
- */
+    
   init_df1b2vector::init_df1b2vector(int lb,int ub)
   {
     allocate(lb,ub);
   }
+    
 
-/**
- * Description not yet available.
- * \param
- */
   void init_df1b2vector::allocate(int lb,int ub)
   {
-    init_df1b2variable::num_variables= 0;
+    init_df1b2variable::num_variables= 0; 
     index_min=lb;
     index_max=ub;
     ncopies=new int;
     *ncopies=0;
     int size=indexmax()-indexmin()+1;
-    if (init_df1b2variable::list==0)
+    if (init_df1b2variable::list==0)  
     {
       max_num_init_df1b2variable
         =max(size,max_num_init_df1b2variable);
@@ -388,17 +306,13 @@ void df1b2variable::deallocate(void)
            << endl;
       ad_exit(1);
     }
-    //AD_ALLOCATE(trueptr,init_df1b2variable,size,df1b2_gradlist)
+    //AD_ALLOCATE(trueptr,init_df1b2variable,size,df1b2_gradlist) 
   // ****************************************
 
     ptr=trueptr;
     ptr-=lb;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void init_df1b2vector::reallocate()
   {
     int mmin=indexmin();
@@ -409,10 +323,6 @@ void df1b2variable::deallocate(void)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void init_df1b2vector::allocate(void)
   {
     //deallocate(); a// don;t know why this was ever here DF 6june09
@@ -422,16 +332,12 @@ void df1b2variable::deallocate(void)
     ptr=0;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   init_df1b2vector::~init_df1b2vector()
   {
     if (ncopies)
     {
       if (*ncopies)
-        (*ncopies)--;
+        *(ncopies--);
       else
       {
         if (trueptr)
@@ -444,17 +350,12 @@ void df1b2variable::deallocate(void)
       }
     }
   }
-
-/**
- * Description not yet available.
- * \param
- */
   void init_df1b2vector::deallocate(void)
   {
     if (ncopies)
     {
       if (*ncopies)
-        (*ncopies)--;
+        *(ncopies--);
       else
       {
         delete [] trueptr;
@@ -464,15 +365,10 @@ void df1b2variable::deallocate(void)
       }
     }
   }
-
-/**
- * Description not yet available.
- * \param
- */
   init_df1b2vector::init_df1b2vector(const init_df1b2vector & v)
   {
     ncopies=v.ncopies;
-    if (v.ncopies)
+    if (v.ncopies) 
     {
       (*ncopies)++;
       trueptr=v.trueptr;
@@ -489,20 +385,15 @@ void df1b2variable::deallocate(void)
     //cout << *ncopies << endl;
   }
 
-/**
- * Description not yet available.
- * \param
- */
-  double& value(const df1b2variable& _x)
+
+    
+
+  double& value(const df1b2variable& _x) 
   {
     ADUNCONST(df1b2variable,x)
     return *x.u;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   df1b2function2::df1b2function2(double (*_f)(double,double),
   double (*_df1)(double,double),double (*_df2)(double,double),
   double (*_d2f11)(double,double),
@@ -524,19 +415,11 @@ void df1b2variable::deallocate(void)
   }
   typedef double (* PTDF)(double);
 
-/**
- * Description not yet available.
- * \param
- */
   PTDF tan_address()
   {
     return &tan;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   df1b2variable df1b2function1::operator () (const df1b2variable& _x)
   {
     ADUNCONST(df1b2variable,x)
@@ -546,11 +429,11 @@ void df1b2variable::deallocate(void)
     double * zd=z.get_u_dot();
     *z.get_u()=(*f)(xu);
     double dfx=(*df)(xu);
-    for (unsigned int i=0;i<df1b2variable::nvar;i++)
+    for (int i=0;i<df1b2variable::nvar;i++)
     {
       *zd++ =dfx * *xd++;
     }
-
+    
     // WRITE WHATEVER ON TAPE
     //df1b2tape->set_tapeinfo_header(&x,&z,this,xd);
     // save stuff for first reverse pass
@@ -565,10 +448,6 @@ void df1b2variable::deallocate(void)
     return z;
   }
 
-/**
- * Description not yet available.
- * \param
- */
   df1b2variable df1b2function2::operator () (const df1b2variable& _x,
     const df1b2variable& _y)
   {
@@ -583,21 +462,17 @@ void df1b2variable::deallocate(void)
     *z.get_u()=(*f)(xu,yu);
     double dfx=(*df1)(xu,yu);
     double dfy=(*df2)(xu,yu);
-    for (unsigned int i=0;i<df1b2variable::nvar;i++)
+    for (int i=0;i<df1b2variable::nvar;i++)
     {
       *zd++ =dfx * *xd++ + dfy * *yd++;
     }
-
+    
     // WRITE WHATEVER ON TAPE
     if (!df1b2_gradlist::no_derivatives)
       f1b2gradlist->write_pass1(&x,&y,&z,this);
     return z;
   }
 
-/**
- * Description not yet available.
- * \param
- */
 void df1b2_gradlist::reset(void)
 {
   ncount=0;
@@ -609,39 +484,32 @@ void df1b2_gradlist::reset(void)
   nlist3.reset();
 }
 
-/**
- * Description not yet available.
- * \param
- */
-df1b2_gradlist::df1b2_gradlist
-(
-  unsigned int _bs, unsigned int _nbs,
-  unsigned int _bs2, unsigned int _nbs2,
-  unsigned int _bs3, unsigned int _nbs3,
-  const adstring& _filename
-)
+df1b2_gradlist::df1b2_gradlist(unsigned int _bs,unsigned int _nbs,
+  unsigned int _bs2,unsigned int _nbs2,
+  unsigned int _bs3,unsigned int _nbs3,
+  const adstring& _filename)  
 {
-  unsigned int bs=get_f1b2buffer_size("-l1");
+  int bs=get_f1b2buffer_size("-l1");
   if (!bs) bs=_bs;
   list.allocate(bs,_filename);
 
-  unsigned int nbs=get_f1b2buffer_size("-nl1");
+  int nbs=get_f1b2buffer_size("-nl1");
   if (!nbs) nbs=_nbs;
   nlist.allocate(nbs,"n"+_filename);
 
-  unsigned int bs2=get_f1b2buffer_size("-l2");
+  int bs2=get_f1b2buffer_size("-l2");
   if (!bs2) bs2=_bs2;
   list2.allocate(bs2,_filename+"2");
 
-  unsigned int nbs2=get_f1b2buffer_size("-nl2");
+  int nbs2=get_f1b2buffer_size("-nl2");
   if (!nbs2) nbs2=_nbs2;
   nlist2.allocate(nbs2,"n"+_filename+"2");
 
-  unsigned int bs3=get_f1b2buffer_size("-l3");
+  int bs3=get_f1b2buffer_size("-l3");
   if (!bs3) bs3=_bs3;
   list3.allocate(bs3,_filename+"3");
 
-  unsigned int nbs3=get_f1b2buffer_size("-nl3");
+  int nbs3=get_f1b2buffer_size("-nl3");
   if (!nbs3) nbs3=_nbs3;
   nlist3.allocate(nbs3,"n"+_filename+"3");
 
@@ -651,52 +519,40 @@ df1b2_gradlist::df1b2_gradlist
   ncount=0;
 }
 /*
-smartlist::smartlist(void)
+smartlist::smartlist(void) 
 {
   bufsize=0;
   filename=0;
-  buffer=0;
+  buffer=0; 
   buffend=0;
   bptr=buffer;
   fp=-1;
 }
 */
 
-/**
- * Description not yet available.
- * \param
- */
-smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
+smartlist::smartlist(unsigned int _bufsize,const adstring& _filename) 
 {
-#ifndef OPT_LIB
-  //cerr << "need to modify smartlist class for multibyte char" << endl;
-  assert(sizeof(char) == 1);
-#endif
-
+  if (sizeof(char)>1)
+  {
+    cerr << "need to modify smartlist class for multibyte char" << endl;
+    exit(1);
+  }
   bufsize=_bufsize;
   filename=_filename;
-  AD_ALLOCATE(buffer,char,bufsize,df1b2_gradlist)
+  AD_ALLOCATE(buffer,char,bufsize,df1b2_gradlist) 
   buffend=buffer+bufsize-1;
   bptr=buffer;
-  fp = open((char*)filename,
-    O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
-  if (fp == -1)
+  if ( (fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
+                   O_BINARY, S_IREAD | S_IWRITE) == -1) )
   {
-    cerr << "Error trying to open file " << filename
+    cerr << "Error trying to open file " << filename 
          << " in class smartlist " << endl;
     exit(1);
   }
 }
 
-void ad_dstar::allocate(const unsigned int _n)
-{
-  n = _n;
-}
-
-/**
- * Description not yet available.
- * \param
- */
+void ad_dstar::allocate(int _n){n=_n;}
+  
 ad_dstar::ad_dstar(void)
 {
   if (!n)
@@ -707,34 +563,23 @@ ad_dstar::ad_dstar(void)
   p = new double[n];
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void set_dependent_variable(const df1b2variable& _x)
+void junk(void* a ,void* b,void* c,void* d,void * e){;}
+
+void set_dependent_variable(const df1b2variable& _x) 
 {
   df1b2variable& x=(df1b2variable&) (_x);
   //cout << "dep " << int(x.u) << endl;
-  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     x.u_dot_bar[i]=1.0;
   }
 }
 
-/**
- * Description not yet available.
- * \param
- */
+  
 dmatrix get_hessian(const init_df1b2vector& _x)
 {
   ADUNCONST(init_df1b2vector,x)
-#ifdef OPT_LIB
-  int nvar = (int)df1b2variable::nvar;
-#else
-  unsigned int _nvar=df1b2variable::nvar;
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
-#endif
+  int nvar=df1b2variable::nvar;
   dmatrix h(1,nvar,1,nvar);
   for (int i=1;i<=nvar;i++)
   {
@@ -748,10 +593,6 @@ dmatrix get_hessian(const init_df1b2vector& _x)
 
 typedef df1b2variable (*P_USER_FUNCTION)(const init_df1b2vector& x);
 
-/**
- * Description not yet available.
- * \param
- */
 double d1F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,double _delta)
 {
   ADUNCONST(init_df1b2vector,x)
@@ -773,10 +614,6 @@ double d1F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,double _delta)
   return d1f;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 double d2F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,
   double delta)
 {
@@ -797,10 +634,6 @@ double d2F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,
   return d1f;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 double d3F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,int k,
   double delta)
 {
@@ -815,55 +648,36 @@ double d3F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,int k,
   return d1f;
 }
 
-/**
- * Description not yet available.
- * \param
- */
+
 dmatrix check_second_derivatives(const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
-#ifdef OPT_LIB
-  int nvar = (int)df1b2variable::nvar;
-#else
-  unsigned int _nvar=df1b2variable::nvar;
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
-#endif
-  dmatrix h(1, nvar, 1, nvar);
-  //const double delta=1.e-3;
+  dmatrix h(1,df1b2variable::nvar,1,df1b2variable::nvar);
+  const double delta=1.e-3;
   h.initialize();
-  for (int i=1;i<=init_df1b2variable::num_variables;i++)
+  int i,j;
+  for (i=1;i<=init_df1b2variable::num_variables;i++)
   {
-    for (int j=1;j<=init_df1b2variable::num_variables;j++)
+    for (j=1;j<=init_df1b2variable::num_variables;j++)
     {
       //h(i,j)=d2F(user_function,x,i,j,delta);
     }
   }
   return h;
 }
-
-/**
- * Description not yet available.
- * \param
- */
+ 
 d3_array check_third_derivatives(const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
-#ifdef OPT_LIB
-  int nvar = (int)df1b2variable::nvar;
-#else
-  unsigned int _nvar=df1b2variable::nvar;
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
-#endif
-  d3_array h(1, nvar, 1, nvar, 1, nvar);
-  //const double delta=2.e-4;
+  d3_array h(1,df1b2variable::nvar,1,df1b2variable::nvar,1,df1b2variable::nvar);
+  const double delta=2.e-4;
   h.initialize();
-  for (int i=1;i<=init_df1b2variable::num_variables;i++)
+  int i,j,k;
+  for (i=1;i<=init_df1b2variable::num_variables;i++)
   {
-    for (int j=1;j<=init_df1b2variable::num_variables;j++)
+    for (j=1;j<=init_df1b2variable::num_variables;j++)
     {
-      for (int k=1;k<=init_df1b2variable::num_variables;k++)
+      for (k=1;k<=init_df1b2variable::num_variables;k++)
       {
         //h(i,j,k)=d3F(user_function,x,i,j,k,delta);
       }
@@ -871,13 +685,9 @@ d3_array check_third_derivatives(const init_df1b2vector& x)
   }
   return h;
 }
-
+ 
 #if defined(__DERCHECK__)
 
-/**
- * Description not yet available.
- * \param
- */
 dercheck_info::dercheck_info(int _node_number,double _delta,int _index) :
   node_number(_node_number), delta(_delta), index(_index)
 {
@@ -894,114 +704,84 @@ dercheck_info * derchecker;
 
 re_objective_function_value * re_objective_function_value::pobjfun=0;
 
-/**
- * Description not yet available.
- * \param
- */
 re_objective_function_value::re_objective_function_value(void)
 {
   pobjfun=this;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 re_objective_function_value::~re_objective_function_value()
 {
   pobjfun=0;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-re_objective_function_value& re_objective_function_value::operator =
+re_objective_function_value& re_objective_function_value::operator = 
   (const df1b2variable& v)
 {
   df1b2variable::operator = (v);
   return *this;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-re_objective_function_value& re_objective_function_value::operator =
+re_objective_function_value& re_objective_function_value::operator = 
   (double v)
 {
   df1b2variable::operator = (v);
   return *this;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void re_objective_function_value::allocate(void)
 {
   df1b2variable::allocate();
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void re_objective_function_value::allocate(const char * s)
 {
   pobjfun=this;
   df1b2variable::allocate();
 }
 
-#if !defined(OPT_LIB)
-/**
- * Description not yet available.
- * \param
- */
-init_df1b2variable& init_df1b2vector::operator () (int i)
-{
-  if (i < indexmin())
+#if defined(SAFE_ARRAYS)
+init_df1b2variable& init_df1b2vector::operator () (int i) 
+{ 
+  if (i<indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
-    "init_df1b2variable& init_df1b2vector::operator () (int i)",
-    indexmin(), indexmax(), i);
+    cerr << "Index too low in init_df1b2variable& operator () (int i);"
+       " value is " << i << endl;
+    ad_exit(1);
   }
-  if (i > indexmax())
+  if (i>indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
-    "init_df1b2variable& init_df1b2vector::operator () (int i)",
-    indexmin(), indexmax(), i);
+    cerr << "Index too high in init_df1b2variable& operator () (int i);"
+       " value is " << i << endl;
+    ad_exit(1);
   }
-  return ptr[i];
+  return ptr[i]; 
 }
-
-/**
- * Description not yet available.
- * \param
- */
-init_df1b2variable& init_df1b2vector::operator [] (int i)
-{
-  if (i < indexmin())
+init_df1b2variable& init_df1b2vector::operator [] (int i) 
+{ 
+  if (i<indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
-    "init_df1b2variable& init_df1b2vector::operator [] (int i)",
-    indexmin(), indexmax(), i);
+    cerr << "Index too low in init_df1b2variable& operator () (int i);"
+       " value is " << i << endl;
+    ad_exit(1);
   }
-  if (i > indexmax())
+  if (i>indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
-    "init_df1b2variable& init_df1b2vector::operator [] (int i)",
-    indexmin(), indexmax(), i);
+    cerr << "Index too high in init_df1b2variable& operator () (int i);"
+       " value is " << i << endl;
+    ad_exit(1);
   }
-  return ptr[i];
+  return ptr[i]; 
 }
 #endif
-/**
-Get f1b2buffer size from commandline options.
-*/
-unsigned int get_f1b2buffer_size(const char* s)
+//int active (const df1b2_init_vector &){return 1;}
+//int active(const initial_df1b2params& x){return 1;}
+//int active(const df1b2vector& x){return 1;}
+//int active(const df1b2matrix& x){return 1;}
+
+
+int get_f1b2buffer_size(const char * s)
 {
-  unsigned int n = 0;
+  int n=0;
   int on1=-1;
   int nopt=0;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,s,nopt))>-1)
@@ -1011,21 +791,13 @@ unsigned int get_f1b2buffer_size(const char* s)
       cerr << "Usage " << s << " option needs integer  -- ignored" << endl;
     }
     else
-    {
-      int i = atoi(ad_comm::argv[on1+1]);
-      if (i > 0)
-      {
-        n = (unsigned int)i;
-      }
+    {   
+      n=atoi(ad_comm::argv[on1+1]);
     }
   }
   return n;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 df1b2variable::df1b2variable(const random_effects_bounded_vector_info& rebv)
 {
   df1b2variable& v= *(rebv.pv->v+rebv.i);
@@ -1036,7 +808,7 @@ df1b2variable::df1b2variable(const random_effects_bounded_vector_info& rebv)
     (*ncopies)++;
     u=v.u;
     u_dot=v.u_dot;
-    u_bar=v.u_bar;
+    u_bar=v.u_bar;         
     u_dot_bar=v.u_dot_bar;
     u_tilde=v.u_tilde;
     u_dot_tilde=v.u_dot_tilde;
@@ -1056,4 +828,5 @@ df1b2variable::df1b2variable(const random_effects_bounded_vector_info& rebv)
     u_bar_tilde=NULL;
     u_dot_bar_tilde=NULL;
   }
-}
+}   
+

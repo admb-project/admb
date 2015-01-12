@@ -1,20 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-dvar5_array operator/(const d5_array& m, const prevariable& d)
+   dvar5_array operator / (_CONST d5_array& m,_CONST prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar5_array tmp;
@@ -25,13 +17,9 @@ dvar5_array operator/(const d5_array& m, const prevariable& d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar5_array operator/(const dvar5_array& m, const double d)
+   dvar5_array operator / (_CONST dvar5_array& m, CGNU_DOUBLE d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar5_array tmp;
@@ -42,13 +30,9 @@ dvar5_array operator/(const dvar5_array& m, const double d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-dvar5_array operator/(const dvar5_array& m, const prevariable& d)
+   dvar5_array operator / (_CONST dvar5_array& m,_CONST prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar5_array tmp;
@@ -59,13 +43,9 @@ dvar5_array operator/(const dvar5_array& m, const prevariable& d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar5_array::operator/=(const prevariable& d)
+   void dvar5_array::operator /=(_CONST prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
@@ -73,13 +53,9 @@ void dvar5_array::operator/=(const prevariable& d)
        (*this)(i)/=d;
      }
      RETURN_ARRAYS_DECREMENT();
-   }
+   }  
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar5_array::operator/=(const double& d)
+   void dvar5_array::operator /=(_CONST double& d)
    {
      RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
@@ -87,4 +63,5 @@ void dvar5_array::operator/=(const double& d)
        (*this)(i)/=d;
      }
      RETURN_ARRAYS_DECREMENT();
-   }
+   }  
+

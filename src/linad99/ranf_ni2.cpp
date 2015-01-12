@@ -1,14 +1,13 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #include <fvar.hpp>
+
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -26,10 +25,6 @@ double auto_rand(long int& idum, int reset);
 void reinitialize_auto_rand();
 double randn(long int& n);
 
-/**
- * Description not yet available.
- * \param
- */
   void dvar_vector::fill_randbi_ni(long int& n, double p)
   {
     if ( p<0 || p>1)
@@ -49,14 +44,11 @@ double randn(long int& n);
       else
       {
         elem(i)=0.0;
-      }
+      } 
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
+
   void dvar_vector::fill_randu_ni(long int& n)
   {
     long int nn;
@@ -67,11 +59,7 @@ double randn(long int& n);
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::colfill_randu_ni(const int &j, long int &n)
+  void dvar_matrix::colfill_randu_ni(BOR_CONST int&j,long int&n)
   {
     long int nn;
     nn=n;
@@ -81,11 +69,8 @@ void dvar_matrix::colfill_randu_ni(const int &j, long int &n)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
+
+  void dvar_matrix::rowfill_randu_ni(BOR_CONST int& i,long int& n)
   {
     long int nn;
     nn=n;
@@ -95,10 +80,7 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
+
   void dvar_vector::fill_randn_ni(long int& n)
   {
     long int nn;
@@ -109,10 +91,6 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void dvar_matrix::fill_randn_ni(long int& n)
   {
     long int nn=n;
@@ -123,10 +101,6 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void dvar3_array::fill_randn_ni(long int& n)
   {
     long int nn;
@@ -134,14 +108,10 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
   void dvar3_array::fill_randu_ni(long int& n)
   {
     long int nn;
@@ -149,14 +119,11 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
+
   void dvar_matrix::fill_randu_ni(long int& n)
   {
     long int nn;
@@ -164,15 +131,12 @@ void dvar_matrix::rowfill_randu_ni(const int& i, long int& n)
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;
+      nn+=2;  
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::colfill_randn_ni(const int &j,long int &n)
+
+  void dvar_matrix::colfill_randn_ni(BOR_CONST int&j,long int&n)
   {
     long int nn;
     nn=n;
@@ -182,11 +146,8 @@ void dvar_matrix::colfill_randn_ni(const int &j,long int &n)
     }
   }
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar_matrix::rowfill_randn_ni(const int& i, long int& n)
+
+  void dvar_matrix::rowfill_randn_ni(BOR_CONST int& i,long int& n)
   {
     long int nn;
     nn=n;
@@ -195,3 +156,4 @@ void dvar_matrix::rowfill_randn_ni(const int& i, long int& n)
       elem(i,j)=randn(nn);
     }
   }
+

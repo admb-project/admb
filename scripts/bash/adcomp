@@ -1,0 +1,45 @@
+#!/bin/bash
+shopt -s expand_aliases
+alias help='echo -e "Usage: adcomp [-d] [-r] [-s] model\n
+Compile AD Model Builder C++ to object code.\n
+  -d     Create object file for DLL
+  -r     Create object file for ADMB-RE
+  -s     Create object file with safe bounds and debugging symbols
+  model  Filename prefix, e.g. simple\n"'
+if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-help" ]]; then help; exit; fi
+if [[ "$1" == "--help" ]]; then help; exit; fi
+###########################################################################################################################
+###                                                                                                                       #
+### Script:   adcomp [-d] [-r] [-s] model                                                                                 #
+###                                                                                                                       #
+### Purpose:  Compile ADMB C++ to object code                                                                             #
+###                                                                                                                       #
+### Args:     -d creates object file for DLL                                                                              #
+###           -r creates object file for ADMB-RE                                                                          #
+###           -s creates object file with safe bounds and debugging symbols                                               #
+###           model is the filename prefix, e.g. simple                                                                   #
+###                                                                                                                       #
+### Requires: ADMB header files, g++                                                                                      #
+###                                                                                                                       #
+### Returns:  Creates object file with same prefix                                                                        #
+###                                                                                                                       #
+### History:  23 May 2009  Arni Magnusson created                                                                         #
+###                                                                                                                       #
+###########################################################################################################################
+
+# Pop args until model=$1
+unset g
+unset dll
+opt=-DOPT_LIB
+while getopts "drs" A; do
+  case $A in
+    d) dll=-DBUILDING_DLL;;
+    r) ;;
+    s) g=-g; opt=;;
+  esac
+done
+shift $[OPTIND-1]
+
+echo -e "g++ -c $g -O3 -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $1.cpp\n"
+         g++ -c $g -O3 -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $1.cpp

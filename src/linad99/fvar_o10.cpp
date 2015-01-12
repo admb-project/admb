@@ -1,13 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -30,12 +27,8 @@
   void df_eq_pvpv(void);
 
 #if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0540)
-/**
- * Description not yet available.
- * \param
- */
-prevariable& prevariable::operator=(const double t) const
+#  if (__BORLANDC__  >= 0x0540) 
+    prevariable& prevariable::operator=( CGNU_DOUBLE t) _CONST
     {
       (*v).x=t;
       gradient_structure::GRAD_STACK1->
@@ -43,11 +36,7 @@ prevariable& prevariable::operator=(const double t) const
       return((prevariable&)(*this));
     }
 
-/**
- * Description not yet available.
- * \param
- */
-prevariable& prevariable::operator=(const prevariable& t) const
+    prevariable& prevariable::operator=(_CONST prevariable& t) _CONST
     {
       (*v).x=(*t.v).x;
       gradient_structure::GRAD_STACK1->
@@ -57,12 +46,7 @@ prevariable& prevariable::operator=(const prevariable& t) const
 #  endif
 #endif
 
-/**
-  Assigns a value to a prevariable object.
-  \param t constant reference to an object of type prevariable.
-  \return prevariable reference
- */
-prevariable& prevariable::operator=(const prevariable& t)
+    prevariable& prevariable::operator=(_CONST prevariable& t)
     {
       (*v).x=(*t.v).x;
       gradient_structure::GRAD_STACK1->
@@ -70,12 +54,7 @@ prevariable& prevariable::operator=(const prevariable& t)
       return(*this);
     }
 
-/**
-  Assigns a value to a dvariable object.
-  \param t constant reference to an object of type prevariable.
-  \return dvariable reference
- */
-dvariable& dvariable::operator=(const prevariable& t)
+    dvariable& dvariable::operator=(_CONST prevariable& t)
     {
       (*v).x=(*t.v).x;
       gradient_structure::GRAD_STACK1->
@@ -83,12 +62,7 @@ dvariable& dvariable::operator=(const prevariable& t)
       return(*this);
     }
 
-/**
-  Assigns a value to a dvariable object.
-  \param t constant object of type double.
-  \return prevariable reference
- */
-dvariable& dvariable::operator=(const double t)
+    dvariable& dvariable::operator=( CGNU_DOUBLE t)
     {
       (*v).x=t;
       gradient_structure::GRAD_STACK1->
@@ -96,12 +70,7 @@ dvariable& dvariable::operator=(const double t)
       return(*this);
     }
 
-/**
-  Assigns a value to a prevariable object.
-  \param t constant object of type double.
-  \return prevariable reference
- */
-prevariable& prevariable::operator=(const double t)
+    prevariable& prevariable::operator=( CGNU_DOUBLE t)
     {
       (*v).x=t;
       gradient_structure::GRAD_STACK1->
@@ -109,9 +78,7 @@ prevariable& prevariable::operator=(const double t)
       return(*this);
     }
 
-/**
-  ?
- */
+
   void df_eq_pvdoub(void)
   {
     * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;

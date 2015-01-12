@@ -1,22 +1,18 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
+
+
 #include "fvar.hpp"
 
 void dv_xminuseq(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector& dvar_vector::operator-=(const prevariable& d)
+ dvar_vector& dvar_vector::operator-= (_CONST prevariable& d)
  {
    {
      for (int i=indexmin();i<=indexmax();i++)
@@ -34,10 +30,6 @@ dvar_vector& dvar_vector::operator-=(const prevariable& d)
    return(*this);
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void dv_xminuseq(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -50,13 +42,11 @@ void dv_xminuseq(void)
   save_double_derivative(temp,d_pos);
 }
 
+
+
 void dv_xpluseq(void);
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector& dvar_vector::operator+=(const prevariable& d)
+ dvar_vector& dvar_vector::operator+= (_CONST prevariable& d)
  {
    {
      for (int i=indexmin();i<=indexmax();i++)
@@ -69,14 +59,11 @@ dvar_vector& dvar_vector::operator+=(const prevariable& d)
    save_dvar_vector_position();  // for this->
    d.save_prevariable_position();
    save_identifier_string("Qxx");
-    gradient_structure::GRAD_STACK1->set_gradient_stack(dv_xpluseq);
+    gradient_structure::GRAD_STACK1->
+	    set_gradient_stack(dv_xpluseq);
    return(*this);
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void dv_xpluseq(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -89,10 +76,6 @@ void dv_xpluseq(void)
   save_double_derivative(temp,d_pos);
 }
 
-/**
- * Description not yet available.
- * \param
- */
  dvar_vector& dvar_vector::operator-= (double d)
  {
    {
@@ -105,10 +88,6 @@ void dv_xpluseq(void)
    return(*this);
  }
 
-/**
- * Description not yet available.
- * \param
- */
  dvar_vector& dvar_vector::operator+= (double d)
  {
    {
@@ -120,3 +99,5 @@ void dv_xpluseq(void)
 
    return(*this);
  }
+
+

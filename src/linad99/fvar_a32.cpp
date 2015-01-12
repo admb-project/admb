@@ -1,27 +1,14 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
+ void dv_subassign(void);
 
-void dv_subassign(void);
-
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector dvar_vector::operator()(const ivector& u)
+ dvar_vector dvar_vector::operator ()(_CONST ivector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
 
@@ -40,10 +27,6 @@ dvar_vector dvar_vector::operator()(const ivector& u)
    return tmp;
  }
 
-/**
- * Description not yet available.
- * \param
- */
 void dv_subassign(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -66,22 +49,14 @@ void dv_subassign(void)
   dft.save_dvector_derivatives(t_pos);
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvar_vector dvar_vector::operator()(const lvector& u)
+
+ dvar_vector dvar_vector::operator ()(_CONST lvector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
+
    for ( int i=u.indexmin(); i<=u.indexmax(); i++)
    {
-#ifdef OPT_LIB
-     tmp(i)=(*this)((int)u(i));
-#else
-     const long ui = u(i);
-     assert(ui <= INT_MAX);
-     tmp(i)=(*this)((int)ui);
-#endif
+     tmp(i)=(*this)(u(i));
    }
    return tmp;
  }

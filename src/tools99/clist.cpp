@@ -1,71 +1,45 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "clist.h"
-#include <new>
 
-clist* clist::prev() const
+#ifdef HERE
+  #undef HERE
+#endif
+#define HERE cout << "reached line " << __LINE__ << " in " << __FILE__ << endl;
+clist * clist::prev(void)
 {
-  clist* t = this->next;
-  while (t != this)
-  {
-    if (!t)
-    {
-      //unexpected
-      throw std::bad_alloc();
-    }
-    else if (t->next == this)
-    {
-      return t;
-    }
-    else
-    {
-      t = t->next;
-    }
-  }
-  return 0;
+  clist * tmp = this->next;
+  while (tmp->next != this) tmp = tmp->next;
+  return (tmp);
 }
-
-int clist::length(const int& max) const
+ 
+int  clist::length(const int & max)
 {
   int num = 1;
-  clist* t = this->next;
-  while (num <= max)
+  clist * tmp = this;
+  while (tmp->next != this)
   {
-    if (!t)
+    tmp = tmp->next;
+    if (++num > max)
     {
-      //unexpected
-      throw std::bad_alloc();
+      return (-1);
     }
-    else if (t == this)
-    {
-      return num;
-    }
-    else
-    {
-      t = t->next;
-    }
-    ++num;
   }
-  return -1;
+  return (num);
 }
 
-/**
-Copy constructor
-*/
-clist::clist(const clist& t)
+clist::clist(const clist & t)
 {
-  clist& tmp=*(clist *)(&t);
+  clist& tmp=*(clist *)(&t); 
   next = t.next;
   tmp.next = this;
 }
-
-/**
-Destructor
-*/
+ 
+ 
 clist::~clist()
 {
   if (next == this)
@@ -77,3 +51,4 @@ clist::~clist()
     prev()->next = next;
   }
 }
+ 

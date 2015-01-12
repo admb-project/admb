@@ -1,8 +1,0 @@
-TOTAL_LINES_DIFFER=`diff -w $1.par $1-expected-results.par | wc -l`
-if [ "$TOTAL_LINES_DIFFER" -ne "0" ] ; then
-  printf "\nWarning: Expected results differ in \"`pwd`\".\n"
-  printf "\n***** Results ***** \n"
-  cat $1.par
-  printf "\n***** Expected Results ***** \n"
-  cat $1-expected-results.par
-fi

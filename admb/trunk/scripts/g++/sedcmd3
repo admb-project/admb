@@ -1,5 +1,0 @@
-s/smartlist \& nlist2=f1b2gradlist->nlist2;/fixed_smartlist2 \& nlist2=f1b2gradlist->nlist2;/
-s/smartlist\& nlist2=f1b2gradlist->nlist2;/fixed_smartlist2\& nlist2=f1b2gradlist->nlist2;/ 
-s/\*(int\*)(nlist2.bptr)/\*nlist2.bptr/
-s/nlist2.bptr+=sizeof(int);/nlist2++;/
-s/nlist2.bptr-=sizeof(int);/nlist2--;/

@@ -1,3 +1,0 @@
-#valgrind --db-attach=yes --db-command="ddd %f %p"  ./gmrf -est -ilmn 5 -ind gmrf10.dat -shess -ndi 10000000  -gbs 100000000
- ./gmrf -est -ilmn 5 -ind gmrf100.dat -shess -ndi 10000000  -gbs 500000000 -noinit
-

@@ -1,4 +1,0 @@
-# you may not want the -mcpu=pentiumpro -- see gcc docs
-# change /admodel/include to be the right directory
-g++ -w -fpermissive  -I. -I$ADMB_HOME/include \
-    -c -O3 -x c++ -D__GNUDOS__ -DOPT_LIB -Dlinux $1.cpp -o $1.obj

@@ -1,8 +1,0 @@
-The example is a beta regression which came from the bugs list.
-
-https://www.jiscmail.ac.uk/cgi-bin/webadmin?A2=ind0911&L=BUGS&F=&S=&P=810
-
-There is a file myrun which runs the hybrid mcmc and saves the results, then 
-it uses -mceval to print out the results for b1, b2 and s1, s2 into separate files 
-of the same name.  There are additional options -hyeps and -hynstep which control 
-the number of steps and the stepsize for the integration. 

@@ -20,7 +20,7 @@ The goals for all releases are
 ADMB-trunk
 ----------
 
-####Todo Priorities:
+####Todo Priorities
 
 - [ ] Add Threading Support (High)
 - [ ] Write Design Documentation (High)

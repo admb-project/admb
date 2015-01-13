@@ -17,6 +17,16 @@ The goals for all releases are
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+ADMB-trunk
+----------
+
+####Todo Priorities:
+
+- [ ] Add Threading Support (High)
+- [ ] Write Design Documentation (High)
+- [ ] Write Developer Documentation (High)
+- [ ] Atan2
+
 ADMB-11.2
 ----------
 

@@ -65,7 +65,7 @@ Mailing list archives
 
 Contributors
 ------------
-This software was originally developed by David Fournier of Otter Research Ltd.
+The ADMB software was originally developed by David Fournier of Otter Research Ltd.
 
 Thanks to the following who have contributed to the ADMB Project by
 providing fixes and/or suggestions:

@@ -118,6 +118,9 @@ endif
 ifeq ($(CXX),g++)
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
 endif
+ifneq ($(CXX),CC)
+CXXFLAGS_OPT_LIB:=$(subst -Wno-,-Wno-unused-result -Wno-,$(CXXFLAGS_OPT_LIB))
+endif
 
 include df1b2-separable/objects.lst
 OBJECTS=$(addprefix optlp-df1b2-separable-,$(OBJ0)) $(addprefix saflp-df1b2-separable-,$(OBJ0))

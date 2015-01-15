@@ -236,5 +236,3 @@ Changes 9.2 to 11.0
 
 ---
 For help and support, email <users@admb-project.org>.
-
-$Id$

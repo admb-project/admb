@@ -92,5 +92,3 @@ providing fixes and/or suggestions:
 
 ---
 For help and support, email <users@admb-project.org>.
-
-$Id$

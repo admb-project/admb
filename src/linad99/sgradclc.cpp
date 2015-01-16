@@ -148,7 +148,7 @@ void gradcalc(int nvar, const dvector& _g)
 
   unsigned long int max_last_offset =
     gradient_structure::ARR_LIST1->get_max_last_offset();
-  unsigned int size = sizeof(double_and_int);
+  size_t size = sizeof(double_and_int);
   for (unsigned int i = 0; i < (max_last_offset/size); i++)
   {
      tmp->x = 0;

@@ -28,7 +28,7 @@
 void dvector::save_dvector_position(void) const
 {
   // saves the size and address information for a dvar_vector
-  const unsigned wsize=sizeof(dvector_position);
+  size_t wsize=sizeof(dvector_position);
   dvector_position tmp(*this);
   //int num_rec;
   gradient_structure::get_fp()->fwrite(&tmp,wsize);
@@ -118,7 +118,7 @@ Saves the size, address, and value information for a ivector.
 void ivector::save_ivector_value(void) const
 {
   // int ierr=save_ivector_position();
-  const unsigned wsize=sizeof(int);
+  size_t wsize=sizeof(int);
   int min=indexmin();
   int max=indexmax();
   for (int i=min;i<=max;i++)

@@ -303,8 +303,8 @@ void dvar_matrix::save_dvar_matrix_position(void) const
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp(*this,1);
-  const int wsize=sizeof(int);
-  const int wsize1=sizeof(void*);
+  size_t wsize=sizeof(int);
+  size_t wsize1=sizeof(void*);
 
   int min=rowmin();
   int max=rowmax();

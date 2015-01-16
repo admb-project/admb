@@ -382,7 +382,7 @@ void df_check_derivative_values(void)
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
     gradient_structure::ARR_LIST1->get_max_last_offset();
-     unsigned int size = sizeof(double_and_int );
+  size_t size = sizeof(double_and_int);
 
   int icount=0;
   int exit_flag=0;
@@ -447,7 +447,7 @@ void df_check_derivative_values_indexed(void)
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
     gradient_structure::ARR_LIST1->get_max_last_offset();
-     unsigned int size = sizeof(double_and_int );
+  size_t size = sizeof(double_and_int);
 
   int icount=0;
   int exit_flag=0;
@@ -497,7 +497,7 @@ void df_check_derivative_values_indexed_break(void)
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
     gradient_structure::ARR_LIST1->get_max_last_offset();
-     unsigned int size = sizeof(double_and_int );
+  size_t size = sizeof(double_and_int);
 
   if (index<=b)
   {

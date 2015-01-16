@@ -132,7 +132,7 @@ void funnel_gradcalc(void)
      unsigned long int max_last_offset =
        gradient_structure::ARR_LIST1->get_max_last_offset();
 
-     unsigned int size = sizeof(double_and_int );
+  size_t size = sizeof(double_and_int);
 
   double * zptr;
 
@@ -291,8 +291,8 @@ do
     stmp.save_dvector_position();
 
     // save the address of the dependent variable for the funnel
-    int wsize=sizeof(double_and_int*);
-    gradient_structure::get_fp()->fwrite(&zptr,size_t(wsize));
+    size_t wsize=sizeof(double_and_int*);
+    gradient_structure::get_fp()->fwrite(&zptr, wsize);
     save_identifier_string("ae");
 
     gradient_structure::GRAD_STACK1->set_gradient_stack(funnel_derivatives);

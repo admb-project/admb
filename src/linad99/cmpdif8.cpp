@@ -38,8 +38,8 @@ void save_double_derivative(const double x, const prevariable_position& _pos)
  */
 prevariable_position restore_prevariable_position(void)
 {
-  double_and_int * tmp;
-  gradient_structure::get_fp()->fread(&tmp,sizeof(double_and_int *));
+  double_and_int* tmp;
+  gradient_structure::get_fp()->fread(&tmp, sizeof(double_and_int*));
   return prevariable_position(tmp);
 }
 
@@ -47,11 +47,11 @@ prevariable_position restore_prevariable_position(void)
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_position(void) const
+void prevariable::save_prevariable_position() const
 {
-  double_and_int * tmp=get_v();
-  int wsize=sizeof(double_and_int*);
-  gradient_structure::get_fp()->fwrite(&tmp,size_t(wsize));
+  double_and_int* tmp = get_v();
+  size_t wsize = sizeof(double_and_int*);
+  gradient_structure::get_fp()->fwrite(&tmp, wsize);
 }
 
 /**
@@ -117,7 +117,7 @@ double restore_prevariable_derivative(void)
 {
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
-  double_and_int * tmp;
+  double_and_int* tmp;
   gradient_structure::get_fp()->fread(&tmp,sizeof(double_and_int *));
   double tmpout=tmp->x;
   tmp->x=0.0;

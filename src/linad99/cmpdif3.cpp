@@ -191,9 +191,9 @@ adstring get_string_marker(void)
 void ivector::save_ivector_position(void) const
 {
   // saves the size and address information for a ivector
-  unsigned wsize=sizeof(ivector_position);
+  size_t wsize=sizeof(ivector_position);
   ivector_position tmp(*this);
-  gradient_structure::get_fp()->fwrite(&tmp,wsize);
+  gradient_structure::get_fp()->fwrite(&tmp, wsize);
 }
 
 /**
@@ -203,9 +203,9 @@ void ivector::save_ivector_position(void) const
 void dvar_vector::save_dvar_vector_position(void) const
 {
   // saves the size and address information for a dvar_vector
-  unsigned wsize=sizeof(dvar_vector_position);
+  size_t wsize=sizeof(dvar_vector_position);
   dvar_vector_position tmp(*this);
-  gradient_structure::get_fp()->fwrite(&tmp,size_t(wsize));
+  gradient_structure::get_fp()->fwrite(&tmp, wsize);
 }
 
 /**
@@ -215,8 +215,8 @@ void dvar_vector::save_dvar_vector_position(void) const
 void save_ad_pointer(void * p)
 {
   // saves the size and address information for a dvar_vector
-  unsigned wsize=sizeof(void *);
-  gradient_structure::get_fp()->fwrite(&p,size_t(wsize));
+  size_t wsize=sizeof(void *);
+  gradient_structure::get_fp()->fwrite(&p, wsize);
 }
 
 /**
@@ -227,7 +227,7 @@ void * restore_ad_pointer(void)
 {
   void * p=0;
   // saves the size and address information for a dvar_vector
-  unsigned wsize=sizeof(void *);
-  gradient_structure::get_fp()->fread(&p,size_t(wsize));
+  size_t wsize=sizeof(void *);
+  gradient_structure::get_fp()->fread(&p, wsize);
   return p;
 }

@@ -31,8 +31,8 @@ Saves the size and address information for a imatrix.
 void imatrix::save_imatrix_position(void)
 {
   imatrix_position tmp(*this);
-  const int wsize=sizeof(int);
-  const int wsize1=sizeof(void*);
+  size_t wsize=sizeof(int);
+  size_t wsize1=sizeof(void*);
 
   int min=rowmin();
   int max=rowmax();

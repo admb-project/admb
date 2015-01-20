@@ -120,7 +120,9 @@ CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
 endif
 ifneq ($(CXX),CC)
   ifneq ($(CXX),openCC)
+    ifneq ($(CXX),icpc)
 CXXFLAGS_OPT_LIB:=$(subst -Wno-,-Wno-unused-result -Wno-,$(CXXFLAGS_OPT_LIB))
+    endif
   endif
 endif
 

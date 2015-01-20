@@ -152,7 +152,7 @@ void read_pass2_1_prodc1(void)
   // points to the next record
   //char * bptr=f1b2gradlist->bptr;
   //char * bptr2=f1b2gradlist2->bptr;
-  unsigned int nvar=df1b2variable::nvar;
+  size_t nvar = df1b2variable::nvar;
   test_smartlist& list=f1b2gradlist->list;
   //f1b2gradlist->nlist-=sizeof(int);
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
@@ -210,7 +210,7 @@ void read_pass2_1_prodc1(void)
   else
   */
   {
-    const int sizeofdouble = sizeof(double);
+    size_t sizeofdouble = sizeof(double);
     memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
     memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
   }

@@ -321,7 +321,7 @@ void ad_read_pass2_prod_vector(void)
  */
 void read_pass2_1_prod_vector(void)
 {
-  unsigned int nvar=df1b2variable::nvar;
+  size_t nvar = df1b2variable::nvar;
   test_smartlist& list=f1b2gradlist->list;
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
@@ -396,7 +396,7 @@ void read_pass2_1_prod_vector(void)
 
   fixed_smartlist2 & nlist2 = f1b2gradlist->nlist2;
 
-  const int sizeofdouble = sizeof(double);
+  size_t sizeofdouble = sizeof(double);
   memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
   memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
   *nlist2.bptr=adptr_diff(list2.bptr,tmpptr);

@@ -39,7 +39,7 @@ void ad_read_pass2_dvdv(void);
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-  unsigned int nvar=df1b2variable::nvar;
+  size_t nvar=df1b2variable::nvar;
 
   size_t total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
      +(2*nvar+11)*sizeof(double);
@@ -65,7 +65,7 @@ void ad_read_pass2_dvdv(void);
    //memcpy(list,&pf,sizeof(char *));
    //*(char**)(list.bptr)=(char*)pf;
 
-  const int sizeofdouble = sizeof(double);
+   size_t sizeofdouble = sizeof(double);
 
    memcpy(list,&df_x,sizeofdouble);
    memcpy(list,&df_y,sizeofdouble);

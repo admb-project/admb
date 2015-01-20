@@ -271,7 +271,7 @@ void read_pass1_init_1(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  unsigned int nvar=df1b2variable::nvar;
+  size_t nvar = df1b2variable::nvar;
 
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
@@ -320,7 +320,7 @@ void read_pass1_init_1(void)
   memcpy(list2,ids,slen);
 #endif
 
-  const int sizeofdouble = sizeof(double);
+  size_t sizeofdouble = sizeof(double);
   memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
   //list2.bptr+=nvar*sizeof(double);
   memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);

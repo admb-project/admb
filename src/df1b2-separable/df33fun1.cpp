@@ -46,7 +46,7 @@ void ad_read_pass2_dvdvdv(void);
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-  unsigned int nvar=df1b2variable::nvar;
+  size_t nvar=df1b2variable::nvar;
 
    size_t total_bytes=4*sizeof(df1b2_header)+sizeof(char*)
      +(3*nvar+22)*sizeof(double);
@@ -84,7 +84,7 @@ void ad_read_pass2_dvdvdv(void);
    memcpy(list,&df_xyy,sizeof(double));
    memcpy(list,&df_yyy,sizeof(double));
   */
-   const int sizeofdouble = sizeof(double);
+   size_t sizeofdouble = sizeof(double);
    memcpy(list,&df_x,sizeofdouble);
    memcpy(list,&df_y,sizeofdouble);
    memcpy(list,&df_z,sizeofdouble);
@@ -159,7 +159,7 @@ void read_pass2_1_dvdvdv(void)
   // points to the next record
   //char * bptr=f1b2gradlist->bptr;
   //char * bptr2=f1b2gradlist2->bptr;
-  unsigned int nvar=df1b2variable::nvar;
+  size_t nvar = df1b2variable::nvar;
   test_smartlist& list=f1b2gradlist->list;
   //f1b2gradlist->nlist-=sizeof(int);
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
@@ -300,7 +300,7 @@ void read_pass2_1_dvdvdv(void)
 #endif
 
      fixed_smartlist2 & nlist2 = f1b2gradlist->nlist2;
-  const int sizeofdouble = sizeof(double);
+     size_t sizeofdouble = sizeof(double);
      memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
      memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
      *nlist2.bptr=adptr_diff(list2.bptr,tmpptr);

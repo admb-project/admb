@@ -119,7 +119,9 @@ ifeq ($(CXX),g++)
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
 endif
 ifneq ($(CXX),CC)
+  ifneq ($(CXX),openCC)
 CXXFLAGS_OPT_LIB:=$(subst -Wno-,-Wno-unused-result -Wno-,$(CXXFLAGS_OPT_LIB))
+  endif
 endif
 
 include df1b2-separable/objects.lst

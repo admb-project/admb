@@ -55,7 +55,7 @@ void ad_read_pass2_prodc2(void);
   if (ncount >= ncount_check)
     cout << ncount << endl;
 #endif
-   unsigned int nvar=df1b2variable::nvar;
+   size_t nvar=df1b2variable::nvar;
 
    //int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
    //  +2*(nvar+1)*sizeof(double);
@@ -78,7 +78,7 @@ void ad_read_pass2_prodc2(void);
    memcpy(list,(df1b2_header*)(px),sizeof(df1b2_header));
    memcpy(list,&y,sizeof(double));
    memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
-  const int sizeofdouble = sizeof(double);
+   size_t sizeofdouble = sizeof(double);
    memcpy(list,px->get_u(),sizeofdouble);
    memcpy(list,px->get_u_dot(),nvar*sizeofdouble);
    // ***** write  record size

@@ -48,13 +48,13 @@ void dmatrix::save_dmatrix_position(void) const
  * Description not yet available.
  * \param
  */
-void d3_array::save_d3_array_position(void) const
+void d3_array::save_d3_array_position() const
 {
   // saves the size and address information for a dvar_vector
   int mmin=indexmin();
   int mmax=indexmax();
-  const int wsize=sizeof(int);
- /*
+  size_t wsize = sizeof(int);
+/*
   dmatrix_position tmp(*this);
   const int wsize=sizeof(int);
   const int wsize1=sizeof(void*);
@@ -65,7 +65,7 @@ void d3_array::save_d3_array_position(void) const
     gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
     gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
    }
- */
+*/
   gradient_structure::get_fp()->fwrite(&(mmin),wsize);
   gradient_structure::get_fp()->fwrite(&(mmax),wsize);
 }

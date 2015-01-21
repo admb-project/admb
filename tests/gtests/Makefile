@@ -11,7 +11,42 @@ ADMB_OPTIONS=-g
 GTEST_DIR=googletest-read-only
 
 GTESTS=\
+ test_adstring_strcase.cpp\
+ test_fmm_control.cpp\
  test_adstring.cpp\
+ test_adstring_array.cpp\
+ test_dlist.cpp\
+ test_ad_comm.cpp\
+ test_gradient_structure.cpp\
+ test_option_match.cpp\
+ test_lvector.cpp\
+ test_df3_two_variable.cpp\
+ test_adjson.cpp\
+ test_adpool.cpp\
+ test_dvector.cpp\
+ test_dmatrix.cpp\
+ test_param_init_bounded_number_vector.cpp\
+ test_param_init_d3array.cpp\
+ test_spline.cpp\
+ test_banded_symmetric_dmatrix.cpp\
+ test_line_adstring.cpp\
+ test_ivector.cpp\
+ test_multi_index.cpp\
+ test_adtimer.cpp\
+ test_idea.cpp\
+ test_df_file.cpp\
+ test_multinomial.cpp\
+ test_multi_index.cpp\
+ test_cifstream.cpp\
+ test_param_init_vector_vector.cpp\
+ test_param_init_matrix_vector.cpp\
+ test_param_init_bounded_vector_vector.cpp\
+ test_param_init_number_vector.cpp\
+ test_pow.cpp\
+ test_dvariable.cpp\
+ test_imatrix.cpp\
+ test_lmatrix.cpp\
+ test_dvar_matrix.cpp\
  main.cpp
 
 ##Need to debug this

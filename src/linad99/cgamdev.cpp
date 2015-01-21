@@ -14,7 +14,7 @@
  */
 
 #include <fvar.hpp>
-#define ITMAX 100
+#define ITMAX 200
 #define EPS 1.e-9
 //#define EPS 3.0e-7
 #define FPMIN 1.0e-30

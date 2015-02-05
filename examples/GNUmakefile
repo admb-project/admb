@@ -17,9 +17,7 @@ endif
 ifdef FAST_OPTION
 OPTIONS:= $(OPTIONS) -f
 endif
-ifdef PROG_VALGRIND
-PROG=valgrind -v --leak-check=full --show-reachable=no --track-origins=yes
-else
+ifndef PROG
 PROG=time
 endif
 

@@ -1,4 +1,4 @@
-#perf stat -e task-clock,cycles,instructions,cache-references,cache-misses ./$1
-perf record -e cycles,cache-references,cache-misses,alignment-faults ./$1 &> /dev/null
-perf report --stdio &> perf-report.txt
-cat perf-report.txt
+perf stat -e task-clock,cycles,instructions,cache-references,cache-misses $1
+#perf record -e cycles,cache-references,cache-misses,alignment-faults ./$1 &> /dev/null
+#perf report --stdio &> perf-report.txt
+#cat perf-report.txt

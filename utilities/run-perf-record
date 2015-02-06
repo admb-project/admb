@@ -1,0 +1,3 @@
+perf record -e cycles,cache-references,cache-misses,alignment-faults $1 &> /dev/null
+perf report --stdio &> perf-report.txt
+cat perf-report.txt

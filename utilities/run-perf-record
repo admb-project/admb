@@ -1,4 +1,4 @@
 rm -f perf.data
-perf record -q -e cache-misses $1
+perf record -e cache-misses $1
 perf report --stdio &> perf-report.txt
 cat perf-report.txt

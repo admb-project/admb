@@ -114,7 +114,9 @@ bcb:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
+ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 bvprobit:
 	@#Do not catch for admb-9.x

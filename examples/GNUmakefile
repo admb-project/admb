@@ -82,7 +82,9 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
+ifeq ($(PROG),time)
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+endif
 
 admb-re:\
  bcb\
@@ -112,11 +114,15 @@ bcb:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
+ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 bvprobit:
+ifeq ($(PROG),time)
 	@#Do not catch for admb-9.x
 	-cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 glmmadmb:
 	@#Do not catch for admb-9.x
@@ -150,7 +156,9 @@ orange2:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 orange_cor:
+ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -nohess
+endif
 
 pheno:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@

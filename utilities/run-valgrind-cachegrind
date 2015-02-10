@@ -1,2 +1,2 @@
-valgrind --tool=cachegrind --cachegrind-out-file=valgrind-cachegrind.txt ./$1 &> /dev/null
+valgrind --tool=cachegrind --cachegrind-out-file=valgrind-cachegrind.txt $1 &> /dev/null
 cg_annotate valgrind-cachegrind.txt

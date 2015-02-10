@@ -119,8 +119,10 @@ ifeq ($(PROG),time)
 endif
 
 bvprobit:
+ifeq ($(PROG),time)
 	@#Do not catch for admb-9.x
 	-cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 glmmadmb:
 	@#Do not catch for admb-9.x

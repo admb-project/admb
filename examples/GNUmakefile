@@ -17,9 +17,6 @@ endif
 ifdef FAST_OPTION
 OPTIONS:= $(OPTIONS) -f
 endif
-ifndef PROG
-PROG=time
-endif
 
 default: simple
 

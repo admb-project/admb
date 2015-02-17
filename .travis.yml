@@ -1,0 +1,20 @@
+language: cpp
+
+compiler:
+  - gcc
+  - clang
+
+script: make
+
+branches:
+  only:
+    - master
+
+notifications:
+  email: false
+
+os:
+  - linux
+  - osx
+
+osx_image: xcode61

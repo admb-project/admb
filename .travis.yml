@@ -13,5 +13,7 @@ branches:
 notifications:
   email: false
 
+env: PROG=
+
 os:
   - linux

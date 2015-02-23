@@ -17,9 +17,6 @@ endif
 ifdef FAST_OPTION
 OPTIONS:= $(OPTIONS) -f
 endif
-ifndef PROG
-PROG=time
-endif
 
 default: simple
 
@@ -119,17 +116,19 @@ ifeq ($(PROG),time)
 endif
 
 bvprobit:
-ifeq ($(PROG),time)
 	@#Do not catch for admb-9.x
 	-cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-endif
 
 glmmadmb:
+ifeq ($(PROG),time)
 	@#Do not catch for admb-9.x
 	-cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
+endif
 
 caest:
+ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 gamma:
 	-cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) liver_$@ && $(PROG) ./liver_$@
@@ -167,7 +166,9 @@ polio:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 sdv:
+ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 skewed:
 	$(MAKE) diet

@@ -22,7 +22,7 @@ ADMB-trunk
 
 ####Todo Priorities
 
-- [ ] Add Threading Support (High)
+- [ ] Add Multi-CPU Support (High)
 - [ ] Write Design Documentation (High)
 - [ ] Write Developer Documentation (High)
 - [ ] Atan2

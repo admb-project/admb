@@ -83,7 +83,9 @@ truncreg:
 vol: n2mvol
 n2mvol:
 ifndef TRAVIS_CI
+  ifeq ($(PROG),time)
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+  endif
 endif
 
 admb-re:\

@@ -117,7 +117,9 @@ bcb:
 
 biglog:
 ifndef TRAVIS_CI
+  ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+  endif
 endif
 
 bvprobit:
@@ -161,7 +163,9 @@ orange2:
 
 orange_cor:
 ifndef TRAVIS_CI
+  ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -nohess
+  endif
 endif
 
 pheno:

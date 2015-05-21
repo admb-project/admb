@@ -8,21 +8,20 @@
  * \file
  * Description not yet available.
  */
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
-        //int fcount =0;
-  static int no_stuff=0;
-              static void crap(void)
-              {
-              }
-              static void crap(double ff,dvector& uuu,dvector& gg)
-              {
-                //cout << setprecision(10) << setw(19) << ff << " "
-                 //    << setw(19) << uuu   << "  "  << setw(19) << gg << endl;
-              }
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
 
-typedef fmm * pfmm;
+static int no_stuff=0;
+/*
+static void print(double ff,dvector& uuu,dvector& gg)
+{
+  cout << setprecision(10) << setw(19) << ff << " "
+       << setw(19) << uuu   << "  "  << setw(19) << gg << endl;
+}
+*/
+
+typedef fmm* pfmm;
 
 /**
  * Description not yet available.
@@ -38,7 +37,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   }
   separable_function_difference = new dvector(1,num_separable_calls);
 
-  fmm ** pfmc1 = new pfmm[num_separable_calls];
+  fmm** pfmc1 = new pfmm[num_separable_calls];
   pfmc1--;
   ivector ishape(1,num_separable_calls);
   dvector gmax(1,num_separable_calls);
@@ -133,11 +132,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           if (!icon(i))
           {
             independent_variables& uuu=*(independent_variables*)(&(uu(i)));
-            if (i==19)
-              crap(ff[i],uuu,gg[i]);
             (pfmc1[i])->fmin(ff[i],uuu,gg(i));
-            if (i==19)
-              crap();
             gmax(i)=fabs(pfmc1[i]->gmax);
             if (!initrun_flag)
             {

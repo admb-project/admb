@@ -178,7 +178,9 @@ polio:
 
 sdv:
 ifndef TRAVIS_CI
+  ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+  endif
 endif
 
 skewed:

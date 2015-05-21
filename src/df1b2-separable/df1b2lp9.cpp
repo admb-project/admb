@@ -42,6 +42,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   pfmc1--;
   ivector ishape(1,num_separable_calls);
   dvector gmax(1,num_separable_calls);
+  gmax.initialize();
 
   for (int i=1;i<=num_separable_calls;i++)
   {

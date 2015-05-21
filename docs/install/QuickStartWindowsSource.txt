@@ -1,7 +1,6 @@
 #ADMB Project 
-
-*ADMB-11.2*  
-*Released December 23, 2014*  
+*ADMB-11.3*  
+*Released May 22, 2015*  
 
 ADMB source build and usage procedures for Windows.
 
@@ -36,15 +35,15 @@ Quick Start
 
 1. **Download** ADMB
 
-       Download source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
+       Download source distribution [admb-11.3-src.zip](https://github.com/admb-project/admb/releases/download/admb-11.3/admb-11.3-src.zip).
 
        Double click downloaded zip file and copy admb directory to the Local Drive (**C:\\>)**.
 
        _**Alternative**_ &mdash; To download from directly from ADMB version control use the command below.
 
-        C:\> svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
+        C:\> svn checkout http://www.admb-project.org/svn/tags/admb-11.3 admb
 
-       This will download admb-11.2 source directory to **C:\\admb\\>**.
+       This will download admb-11.3 source directory to **C:\\admb\\>**.
 
 2. **Build** ADMB source
 
@@ -90,7 +89,7 @@ Quick Start
 
            C:\admb\examples\admb\simple\> simple.exe
 
-       Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.3/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

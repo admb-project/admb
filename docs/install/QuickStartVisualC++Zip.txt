@@ -1,7 +1,6 @@
 #ADMB Project
-
-*ADMB-11.2*  
-*Released December 23, 2014*  
+*ADMB-11.3*  
+*Released May 22, 2015*  
 
 ADMB binary installation and usage procedure for Windows and Visual C++ compilers using zip file.
 
@@ -16,13 +15,13 @@ _**Note**_ &mdash; A free version is available from: [Visual Studio Express](htt
 
 1. **Download** ADMB
 
-       * For Visual C++ 2013 (64Bit), download [admb-11.2-windows8-vc12-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-vc12-64bit.zip).
+       * For Visual C++ 2013 (64Bit), download [admb-11.3-windows8-vc12-64bit](https://github.com/admb-project/admb/releases/download/admb-11.3/admb-11.3-windows8-vc12-64bit.zip).
 
-       * For Visual C++ 2013 (32Bit), download [admb-11.2-windows8-vc12-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-vc12-32bit.zip).
+       * For Visual C++ 2013 (32Bit), download [admb-11.3-windows8-vc12-32bit](https://github.com/admb-project/admb/releases/download/admb-11.3/admb-11.3-windows8-vc12-32bit.zip).
 
-       * For Visual C++ 2012 (64Bit), download [admb-11.2-windows8-vc11-64bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-vc11-64bit.zip).
+       * For Visual C++ 2012 (64Bit), download [admb-11.3-windows8-vc11-64bit](https://github.com/admb-project/admb/releases/download/admb-11.3/admb-11.3-windows8-vc11-64bit.zip).
 
-       * For Visual C++ 2012 (32Bit), download [admb-11.2-windows8-vc11-32bit](http://ftp.admb-project.org/admb-11.2/admb-11.2-windows8-vc11-32bit.zip).
+       * For Visual C++ 2012 (32Bit), download [admb-11.3-windows8-vc11-32bit](https://github.com/admb-project/admb/releases/download/admb-11.3/admb-11.3-windows8-vc11-32bit.zip).
 
 2. **Install** ADMB
 
@@ -46,7 +45,7 @@ _**Note**_ &mdash; A free version is available from: [Visual Studio Express](htt
 
            C:\admb\examples\admb\simple\> simple
 
-       Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.3/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

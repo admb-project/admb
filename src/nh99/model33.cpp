@@ -45,8 +45,6 @@ void ad_make_code_reentrant(void)
   }
 }
 
-#ifdef _WIN32
-
 void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
   char *** pargv)
 {
@@ -108,7 +106,9 @@ void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
 */
   //a[0]=(char *)malloc((strlen(pname)+10)*sizeof(char));
   strcpy(a[0],pname);
+#ifdef _WIN32
   strcat(a[0],".exe");
+#endif
   //return a;
 }
 
@@ -124,12 +124,13 @@ char** no_dll_options(char *pname, const int& _nopt)
     if (a[0])
     {
       strcpy(a[0],pname);
+#ifdef _WIN32
       strcat(a[0],".exe");
+#endif
     }
   }
   return a;
 }
-#endif
 
 void cleanup_argv(int nopt,char *** pa)
 {
@@ -153,6 +154,8 @@ void cleanup_argv(int nopt,char *** pa)
 
 #if defined(_WIN32)
   #include <windows.h>
+#endif
+
   #if !defined(_MSC_VER)
 void get_sp_printf(void)
 {
@@ -192,7 +195,6 @@ void do_dll_housekeeping(int argc,char ** argv)
   if (!ad_printf) ad_printf=printf;
 #endif
 }
-#endif
 
 /*
 void ssbul_l(char * ptmp){;}
@@ -431,7 +433,6 @@ char* string_parser::get_next_option(size_t& n)
 
 typedef char * chararray;
 
-#ifdef _WIN32
 void davesnobullshitstrncpy(char * a,const char * b, const size_t n)
 {
   strncpy(a,b,n);
@@ -460,7 +461,7 @@ char** parse_dll_options(char *pname, const int& _argc, char *s)
       {
         if (ii>maxargs)
         {
-          cerr << "maximum number of command lne arguemtns exceeded"
+          cerr << "maximum number of command line arguments exceeded"
                << endl;
         }
         a[ii]=(char*)malloc(sizeof(char)*(n+2));
@@ -473,10 +474,11 @@ char** parse_dll_options(char *pname, const int& _argc, char *s)
     if (a[0])
     {
       strcpy(a[0],pname);
+#ifdef _WIN32
       strcat(a[0],".exe");
+#endif
       argc=ii;
     }
   }
   return a;
 }
-#endif

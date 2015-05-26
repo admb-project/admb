@@ -136,7 +136,9 @@ endif
 
 caest:
 ifndef TRAVIS_CI
+  ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+  endif
 endif
 
 gamma:

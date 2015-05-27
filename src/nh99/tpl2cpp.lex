@@ -4271,12 +4271,12 @@ TOP_OF_MAIN_SECTION {
 
       if (!makegaussdll)
       {
-        fprintf(ftopmain,"    char **argv=parse_dll_options(\"%s\",argc,"
+        fprintf(ftopmain,"    char **argv=parse_dll_options((char*)\"%s\",argc,"
           "*dll_options);\n",infile_root);
       }
       else
       {
-        fprintf(ftopmain,"    char **argv=parse_dll_options(\"%s\",argc,"
+        fprintf(ftopmain,"    char **argv=parse_dll_options((char*)\"%s\",argc,"
           "dll_options);\n", infile_root);
       }
       fprintf(ftopmain,"    do_dll_housekeeping(argc,argv);\n");

@@ -358,5 +358,9 @@ if [[ "$tplobjs" == "" ]]; then
   fi
 fi
 
-echo -e "\\nSuccessfully built executable.\\n"
+if [ ! -z "$dll" ]; then
+  echo -e "\\nSuccessfully built.\\n"
+else
+  echo -e "\\nSuccessfully built executable.\\n"
+fi
 exit 0

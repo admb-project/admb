@@ -9,10 +9,10 @@ all: admb admb-re
 admb:\
 buscycle \
 catage \
-chem-eng \
+chem_eng \
 forest \
 finance \
-pella-t \
+pella_t \
 robreg \
 truncreg \
 simple \
@@ -31,7 +31,7 @@ catage:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb\\$@ & $@
 
-chem-eng:
+chem_eng:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb\\$@ & $@
 
@@ -43,7 +43,7 @@ forest:
 	@REM pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	@REM pushd admb\\$@ & $@
 
-pella-t:
+pella_t:
 	@REM pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	@REM pushd admb\\$@ & $@
 

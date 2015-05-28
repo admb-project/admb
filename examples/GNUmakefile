@@ -8,8 +8,8 @@ endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
-ifdef OPTIONS
-OPTIONS:= $(OPTIONS)
+ifdef ADMB_OPTIONS
+OPTIONS:= $(ADMB_OPTIONS)
 endif
 ifeq ($(DEBUG),yes)
 OPTIONS:= $(OPTIONS) -g
@@ -32,10 +32,10 @@ endif
 admb:\
  buscycle\
  catage\
- chem-eng\
+ chem_eng\
  forest\
  finance\
- pella-t\
+ pella_t\
  robreg\
  truncreg\
  simple\
@@ -45,46 +45,46 @@ buscycle:
 	$(MAKE) ham4 
 	$(MAKE) ham5
 ham4:
-	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -version && $(PROG) ./$@
+	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -version && $(PROG) ./$@
 
 ham5:
-	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 catage:
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
-chem-eng:
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+chem_eng:
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 finance:
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 forest:
-	-cd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	-cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
-pella-t:
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+pella_t:
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 robreg:
 	$(MAKE) vonb
 	$(MAKE) vonbr
 vonb:
-	cd admb/robreg && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/robreg && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 vonbr:
-	cd admb/robreg && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/robreg && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 simple:
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 truncreg:
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
 
 vol: n2mvol
 n2mvol:
 ifndef TRAVIS_CI
   ifeq ($(PROG),time)
-	cd admb/vol && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -nohess
   endif
 endif
 
@@ -113,12 +113,12 @@ admb-re:\
  weights
 
 bcb:
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
 ifndef TRAVIS_CI
   ifeq ($(PROG),time)
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
   endif
 endif
 
@@ -201,7 +201,9 @@ spatial:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 union:
+ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 weights: binomial
 binomial:

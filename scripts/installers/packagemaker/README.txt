@@ -1,6 +1,6 @@
 #ADMB Project
-*ADMB-11.3*  
-*Released May 22, 2015*  
+*ADMB-11.4*  
+*Released May 29, 2015*  
 
 The installation procedure for installing ADMBTerminal app for the MacOS.
 
@@ -13,10 +13,10 @@ Installation
 
 1. Download ADMB installer
 
-       For 64Bit, download [admb-11.3-ADMBTerminal-macos10-xcode6-64bit](https://github.com/admb-project/admb/releases/download/admb-11.3/admb-11.3-ADMBTerminal-macos10-xcode6-64bit.dmg).
+       For 64Bit, download [admb-11.4-ADMBTerminal-macos10-xcode6-64bit](https://github.com/admb-project/admb/releases/download/admb-11.4/admb-11.4-ADMBTerminal-macos10-xcode6-64bit.dmg).
 
 
-       For 32Bit, download [admb-11.3-ADMBTerminal-macos10-xcode6-32bit](https://github.com/admb-project/admb/releases/download/admb-11.3/admb-11.3-ADMBTerminal-macos10-xcode6-32bit.dmg).  
+       For 32Bit, download [admb-11.4-ADMBTerminal-macos10-xcode6-32bit](https://github.com/admb-project/admb/releases/download/admb-11.4/admb-11.4-ADMBTerminal-macos10-xcode6-32bit.dmg).  
 
 2. Double click downloaded ADMB dmg file. 
 
@@ -92,7 +92,7 @@ Build and run the simple example.
         Estimating row 1 out of 2 for hessian
         Estimating row 2 out of 2 for hessian
 
-    Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.3/) for more information.
+    Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.4/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

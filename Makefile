@@ -276,3 +276,6 @@ bcc-install:
 	cd src& $(MAKE) -fbcc.mak install
 bcc-clean:
 	cd src& $(MAKE) -fbcc.mak clean
+
+counter:
+	python scripts/admb-download-counter.py

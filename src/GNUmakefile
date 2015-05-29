@@ -525,10 +525,27 @@ endif
 
 install:
 	@#echo "Read INSTALL.txt for installation instructions."
-	rm -rvf $(INSTALL_DIR)admb
 ifeq ($(DEBUG),yes)
+  ifeq ($(INSTALL_DIR),/usr/local/)
+	chmod a+rx ../build/debug/bin/admb
+	chmod a+rx ../build/debug/bin/adlink
+	chmod a+rx ../build/debug/bin/adcomp
+	chmod a+rx ../build/debug/contrib
+	chmod a+r ../build/debug/bin/sed*
+	chmod a+r ../build/debug/include/*.*
+	chmod a+r ../build/debug/contrib/include/*.*
+  endif
 	cp -Rvf ../build/debug $(INSTALL_DIR)admb
 else
+  ifeq ($(INSTALL_DIR),/usr/local/)
+	chmod a+rx ../build/dist/bin/admb
+	chmod a+rx ../build/dist/bin/adlink
+	chmod a+rx ../build/dist/bin/adcomp
+	chmod a+rx ../build/dist/contrib
+	chmod a+r ../build/dist/bin/sed*
+	chmod a+r ../build/dist/include/*.*
+	chmod a+r ../build/dist/contrib/include/*.*
+  endif
 	cp -Rvf ../build/dist $(INSTALL_DIR)admb
 endif
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb

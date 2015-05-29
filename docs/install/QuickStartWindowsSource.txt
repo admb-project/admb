@@ -41,9 +41,9 @@ Quick Start
 
        _**Alternative**_ &mdash; To download from directly from ADMB version control use the command below.
 
-        C:\> svn checkout http://www.admb-project.org/svn/tags/admb-11.4 admb
+        C:\> git clone https://github.com/admb-project/admb.git
 
-       This will download admb-11.4 source directory to **C:\\admb\\>**.
+       This will download latest admb source repository to **C:\\admb\\>**.
 
 2. **Build** ADMB source
 

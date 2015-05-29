@@ -40,11 +40,11 @@ Quick Start
 
            [~]$ unzip admb-11.4-src.zip
 
-       _**Alternative**_ &mdash; Use Subversion client to download from version control.
+       _**Alternative**_ &mdash; Use git client to download from version control.
 
-           [~]$ svn checkout http://www.admb-project.org/svn/tags/admb-11.4 admb
+           [~]$ git clone https://github.com/admb-project/admb.git
 
-       This will download source directory to _~/admb/_.
+       This will download latest source repository to _~/admb/_.
 
 3. **Build** ADMB source
 

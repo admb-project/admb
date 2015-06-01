@@ -277,5 +277,5 @@ bcc-install:
 bcc-clean:
 	cd src& $(MAKE) -fbcc.mak clean
 
-counter:
-	python scripts/admb-download-counter.py
+counts:
+	python scripts/get-download-counts.py

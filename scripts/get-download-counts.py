@@ -1,8 +1,10 @@
 import datetime
+import time
 import urllib2
 import json
 
 print datetime.date.today()
+print time.strftime("%H:%M:%S")
 
 data = urllib2.urlopen("https://api.github.com/repos/admb-project/admb/releases/1355046/assets").read()
 for o in json.loads(data):

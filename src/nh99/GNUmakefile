@@ -20,9 +20,13 @@ else
 endif
 
 tpl2cpp.c: lex.yy.c
-	if [ "`cat $^ | wc -l`" -ne 0 ]; then sed -f sedflex $^ > $@; else rm -vf $@; fi
+	rm -vf $@
+	if [ "`cat $^ | wc -l`" -ne 0 ]; then sed -f sedflex $^ > $@; fi
 	@#if [ ! -f $@ ]; then cp -vf tpl2cpp-unixflex.c $@; fi
+
 lex.yy.c: tpl2cpp.lex
-	if [ `command -v flex` ]; then flex -v -w $^; else rm -vf $@; fi
-	if [ ! -f $@ ]; then echo "Error: Unable to find flex."; exit 2; fi
+	rm -vf $@
+	if [ -z "`command -v flex`" ]; then echo "Error: Unable to find flex."; exit 1; fi
+	flex -v -w $^
+
 endif

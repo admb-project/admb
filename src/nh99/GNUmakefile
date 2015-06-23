@@ -24,5 +24,5 @@ tpl2cpp.c: lex.yy.c
 	@#if [ ! -f $@ ]; then cp -vf tpl2cpp-unixflex.c $@; fi
 lex.yy.c: tpl2cpp.lex
 	if [ `command -v flex` ]; then flex -v -w $^; else rm -vf $@; fi
-	if [ ! -f $@ ]; then touch $@; fi
+	if [ ! -f $@ ]; then echo "Error: Unable to find flex."; exit 2; fi
 endif

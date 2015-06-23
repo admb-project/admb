@@ -22,5 +22,5 @@ tpl2rem.c: lex.yy.c
 
 lex.yy.c: tpl2rem.lex
 	if [ `command -v flex` ]; then flex -v -w $^; else rm -vf $@; fi
-	if [ ! -f $@ ]; then touch $@; fi
+	if [ ! -f $@ ]; then echo "Error: Unable to find flex."; exit 2; fi
 endif

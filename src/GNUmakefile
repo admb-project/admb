@@ -217,6 +217,7 @@ endif
 
 
 dist: bins
+	$(MAKE) libs
 ifeq ($(SHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
 	copy /Y ..\README.txt ${DIST}
@@ -231,7 +232,7 @@ else
 	cp -f ../Makefile ${DIST}
 endif
 
-bins: libs
+bins:
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\bin md ${DIST}\bin
 	copy df1b2-separable\seddf1b* ${DIST}\bin

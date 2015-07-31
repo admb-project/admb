@@ -26,18 +26,22 @@ ADMB-trunk
 - [ ] Write Developer Documentation (High)
 - [ ] Atan2
 
+####Changes and Improvements
+
 ####New Supported Compilers
 * Microsoft Visual C++ 14.0
 
 ADMB-11.4
 ----------
 
+####Changes and Improvements
 * Fixed unix shared builds. 
 * Other bug fixes and improvements
 
 ADMB-11.3
 ----------
 
+####Changes and Improvements
 * Steve Martell's changes to gamma function.
 * Other bug fixes and improvements
 

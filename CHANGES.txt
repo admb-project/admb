@@ -26,6 +26,9 @@ ADMB-trunk
 - [ ] Write Developer Documentation (High)
 - [ ] Atan2
 
+####New Supported Compilers
+* Microsoft Visual C++ 14.0
+
 ADMB-11.4
 ----------
 

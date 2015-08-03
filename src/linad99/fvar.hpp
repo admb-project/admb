@@ -7518,7 +7518,7 @@ class index_type:public smart_counter
       return p->dimension();
    }
    index_type(int x);
-   //index_type(const data_int& x);
+   index_type(const data_int& x);
    index_type(const ivector & x);
    index_type(const imatrix & x);
    index_type(const i3_array & x);

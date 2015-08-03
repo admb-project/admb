@@ -279,15 +279,22 @@ protected:
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * s);
   void allocate(int rmin,int rmax,const char * s);
   void allocate(const char * s);
-  //void allocate(int rmin,int rmax,int,const ivector&,
-    //const char * s);
-  void allocate(int rmin,int rmax,const index_type&,const index_type&,
-    const char * s);
+  //void allocate(int rmin,int rmax,int,const ivector&, const char * s);
+  void allocate(int rmin, int rmax, const index_type& cmin, const index_type& cmax,
+    const char* s);
+  void allocate(
+    int rmin, int rmax,
+    const data_int& cmin, const data_int& cmax,
+    const char* s)
+  {
+    allocate(rmin, rmax, index_type(cmin), index_type(cmax), s);
+  }
 public:
   named_dvar_matrix& operator=(const double m);
   named_dvar_matrix& operator=(const dmatrix& m);
   named_dvar_matrix& operator=(const dvar_matrix& m);
   named_dvar_matrix& operator=(const dvariable& m);
+
   friend class model_parameters;
 };
 
@@ -1452,25 +1459,26 @@ public:
  * Description not yet available.
  * \param
  */
-class data_int : public model_name_tag
+class data_int: public model_name_tag
 {
 protected:
   int val;
+
   data_int& operator=(const int);
+
   void allocate(int n,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
   void allocate(init_xml_doc&, const char * s="UNNAMED");
+
+public:
+  virtual ~data_int(){;}
+  operator int() const { return val; }
+
   friend class model_data;
   friend class model_parameters;
   friend int operator + (int n,data_int v);
   friend int operator + (data_int v,int n);
   friend int operator + (data_int v,data_int n);
-public:
-  operator int() {return val;}
-#if !defined (__BORLANDC__)
-  //operator const int() const {return val;}
-#endif
-  virtual ~data_int(){;}
 };
 
 /**

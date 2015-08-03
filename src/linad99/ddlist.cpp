@@ -21,7 +21,7 @@
 #endif
 
 #include <stdlib.h>
-#if defined(__x86_64)
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
   #include <stdint.h>
 #endif
 //#define MAX_DLINKS 1000
@@ -71,8 +71,8 @@ dlist::dlist(void)
   ddlist_space = (char*)malloc(size * sizeof(char));
   //cout << (int) (ddlist_space) << endl;
   //cout << ((int) (ddlist_space))%8 << endl;
-#if defined(__x86_64)
-  intptr_t adjust=(8 - ((intptr_t)(ddlist_space))%8)%8;
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+  intptr_t adjust = (8 - ((intptr_t)(ddlist_space)) % 8) % 8;
 #else
   int adjust=(8- ((int) (ddlist_space))%8)%8;
 #endif

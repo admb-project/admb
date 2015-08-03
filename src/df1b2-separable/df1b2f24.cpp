@@ -11,11 +11,6 @@
  */
 
 #include <df1b2fun.h>
-/*
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-  #include <stdint.h>
-#endif
-*/
 
 /**
  * Description not yet available.

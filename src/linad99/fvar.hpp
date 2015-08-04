@@ -7445,25 +7445,27 @@ class ad_integer
 {
 protected:
   int d;
+
 public:
-  operator int () const
+  operator int() const
   {
     return d;
   }
   ad_integer(const int &_d, const adkludge&): d(_d)
   {
   }
-  ad_integer(int _d):d(_d)
+  ad_integer(int _d): d(_d)
   {
   }
+  ad_integer(const data_int& _d);
   ad_integer(const index_type& it);
+
   ad_integer make_ad_integer(int _d)
   {
     adkludge adk;
-    //??Should parameter be d or _d?
-    return ad_integer(d, adk);
+
+    return ad_integer(_d, adk);
   }
-  ad_integer(const data_int & _d);
 };
 
 /**

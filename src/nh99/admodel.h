@@ -280,7 +280,9 @@ protected:
   void allocate(int rmin,int rmax,const char * s);
   void allocate(const char * s);
   //void allocate(int rmin,int rmax,int,const ivector&, const char * s);
-  void allocate(int rmin, int rmax, const index_type& cmin, const index_type& cmax,
+  void allocate(
+    int rmin, int rmax,
+    const index_type& cmin, const index_type& cmax,
     const char* s);
   void allocate(
     int rmin, int rmax,

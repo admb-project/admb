@@ -23,14 +23,12 @@ GTESTS=\
  test_df3_two_variable.cpp\
  test_adjson.cpp\
  test_adpool.cpp\
- test_dvector.cpp\
  test_dmatrix.cpp\
  test_param_init_bounded_number_vector.cpp\
  test_param_init_d3array.cpp\
  test_spline.cpp\
  test_banded_symmetric_dmatrix.cpp\
  test_line_adstring.cpp\
- test_ivector.cpp\
  test_multi_index.cpp\
  test_adtimer.cpp\
  test_idea.cpp\
@@ -48,6 +46,8 @@ GTESTS=\
  test_lmatrix.cpp\
  test_dvar_matrix.cpp\
  test_ad_integer.cpp\
+ test_ivector.cpp\
+ test_dvector.cpp\
  main.cpp
 
 ##Need to debug this

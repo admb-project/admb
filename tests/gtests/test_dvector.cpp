@@ -19,8 +19,8 @@ TEST_F(test_dvector, constructor)
     dvector w(0, 1000);
     v(0, 1000) = w;
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     const int expected_exit_code = 1;
     if (exit_code == expected_exit_code)
     {
@@ -133,4 +133,48 @@ TEST_F(test_dvector, with_lvector)
   EXPECT_DOUBLE_EQ(double(INT_MIN), actual(2));
   EXPECT_DOUBLE_EQ(double(INT_MAX), actual(3));
   EXPECT_DOUBLE_EQ(double(LONG_MAX), actual(4));
+}
+TEST_F(test_dvector, safe_deallocate)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector dv(1, 4);
+  unsigned int dv_ncopies = dv.get_ncopies();
+  ASSERT_EQ(dv_ncopies, 0);
+
+  bool has_exception = false;
+  {
+    dvector copy = dv;
+    dv_ncopies = dv.get_ncopies();
+    ASSERT_EQ(dv_ncopies, 1);
+    unsigned int copy_ncopies = copy.get_ncopies();
+    ASSERT_EQ(dv_ncopies, copy_ncopies);
+
+    try
+    {
+      dv.safe_deallocate();
+    }
+    catch (const int exit_code)
+    {
+      const int expected_exit_code = 1;
+      if (exit_code == expected_exit_code)
+      {
+        has_exception = true;
+      }
+    }
+  }
+
+  ASSERT_EQ(has_exception, true);
+
+  dv_ncopies = dv.get_ncopies();
+  ASSERT_EQ(dv_ncopies, 0);
+
+  try
+  {
+    dv.safe_deallocate();
+  }
+  catch (const int exit_code)
+  {
+    FAIL();
+  }
 }

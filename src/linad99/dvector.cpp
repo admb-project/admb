@@ -55,6 +55,7 @@ dvector& dvector::shift(int min)
 /**
 Default destructor. Invoked by the compiler. Only frees allocated memory
 if all shallow copies in scope have been removed.
+Produces an error if the double* member v is NULL.
 */
 dvector::~dvector()
 {
@@ -66,23 +67,22 @@ dvector::~dvector()
     }
     else
     {
-      #ifdef DIAG
+#ifdef SAFE_ALL
+  #ifdef DIAG
       myheapcheck(" Entering ~dvector");
-      #endif
+  #endif
       if (v == NULL)
       {
         cerr << " Trying to delete NULL pointer in ~dvector\n";
         ad_exit(21);
       }
+#endif
       deallocate();
     }
   }
 }
-
 /**
-Deallocates memory for a dvector object.
-Called by the ~dvector(); produces an error if the double * member
-is NULL.
+Called by destructor to deallocate memory for a dvector object.
 */
 void dvector::deallocate()
 {
@@ -99,68 +99,65 @@ void dvector::deallocate()
     shape = NULL;
   }
 }
-
-  /**
-  Deallocate memory safely. Checks if shallow copies are in scope.
-  */
-  void dvector::safe_deallocate()
+/**
+Safely deallocates memory by reporting if shallow copies are still in scope.
+*/
+void dvector::safe_deallocate()
+{
+  if (shape)
   {
-    if (shape)
+    if (shape->ncopies)
     {
-      if (shape->ncopies)
-      {
-        cerr << "trying to deallocate a dvector with copies" << endl;
-        ad_exit(1);
-      }
+      cerr << "trying to deallocate a dvector with copies" << endl;
+      ad_exit(1);
     }
-    else
-    {
-      deallocate();
-    }
+
+    deallocate();
   }
+}
 
-  /**
-    Copy constructor. This constructor make a "shallow" copy.
-    Values of existing pointers are copied, and no memory is allocated.
-    Invoked by the compiler in some circumstances such as function
-    call containing an argument of class %dvector passed by value.
+/**
+Copy constructor. This constructor make a "shallow" copy.
+Values of existing pointers are copied, and no memory is allocated.
+Invoked by the compiler in some circumstances such as function
+call containing an argument of class %dvector passed by value.
 
-    The following code segments creates the \c dvector object \c x and fills it
-    with
-    uniform random numbers (using the constant 79 as seed; \ref fill_randu). The
-    new \c dvector
-    object \c y will reference the same memory locations as \c x, and any change
-    s in \c y
-    will also appear in \c x. The new \c dvector object \c z does not refer to
-    the same memory locations as \c x, and any changes in \c z will be unique to
-    \c z.
+The following code segments creates the \c dvector object \c x and fills it
+with
+uniform random numbers (using the constant 79 as seed; \ref fill_randu). The
+new \c dvector
+object \c y will reference the same memory locations as \c x, and any change
+s in \c y
+will also appear in \c x. The new \c dvector object \c z does not refer to
+the same memory locations as \c x, and any changes in \c z will be unique to
+\c z.
 
-    \code
-    dvector x(1,10);
-    y.fill_randu(79L);
-    dvector y = x; // shallow copy
-    dvector z;
-    z = x;         // "deep" copy
-    \endcode
-  */
+\code
+dvector x(1,10);
+y.fill_randu(79L);
+dvector y = x; // shallow copy
+dvector z;
+z = x;         // "deep" copy
+\endcode
+*/
 dvector::dvector(const dvector& t)
- {
-   #ifdef DIAG
-    // cout << "starting out in dvector contructor\n";
-   #endif
-   shape=t.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   else
-   {
-     cerr << "Making a copy of an unallocated dvector"<<endl;
-   }
-   v = t.v;
-   index_min=t.index_min;
-   index_max=t.index_max;
- }
+{
+#ifdef DIAG
+  cout << "starting out in dvector contructor\n";
+#endif
+  shape=t.shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+  }
+  else
+  {
+    cerr << "Making a copy of an unallocated dvector"<<endl;
+  }
+  v = t.v;
+  index_min = t.index_min;
+  index_max = t.index_max;
+}
 
  /**
  Explicit shallow copy.
@@ -241,50 +238,50 @@ dvector& dvector::operator=(const double x)
    return (*this);
  }
 
- /**
-  \ingroup matop
-  Assignment operator for %dvector argument.
-  Assigns the values of the argument to a target %dvector in the LHS of the
-  assignment operator. The range of valid subscripts in the argument and the
-  target must be identical.
-  \param t A %dvector constant
-  \return Reference to a %dvector object.
- */
+/**
+\ingroup matop
+Assignment operator for %dvector argument.
+Assigns the values of the argument to a target %dvector in the LHS of the
+assignment operator. The range of valid subscripts in the argument and the
+target must be identical.
+\param t A %dvector constant
+\return Reference to a %dvector object.
+*/
 dvector& dvector::operator=(const dvector& t)
- {
-   if (!(*this))
-   {
-     allocatec(t);
-   }
-#  if defined (AD_FAST_ASSIGN)
-   else if (!(t.shape->ncopies))
-   {
-     deallocate();
-     allocatec(t);
-   }
-#  endif
-   else
-   {
-     if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
-     {
+{
+  if (!(*this))
+  {
+    allocatec(t);
+  }
+#if defined (AD_FAST_ASSIGN)
+  else if (!(t.shape->ncopies))
+  {
+    deallocate();
+    allocatec(t);
+  }
+#endif
+  else
+  {
+    if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
+    {
        cerr << "Index bounds do not match in "
        "dvector& operator = (const dvector&)\n";
        ad_exit(1);
-     }
+    }
 
-     if (v != t.v)
-     {
-         int min=indexmin();
-         int max=indexmax();
+    if (v != t.v)
+    {
+      int min=indexmin();
+      int max=indexmax();
 #ifndef OPT_LIB
-         assert(max >= min);
+      assert(max >= min);
 #endif
-         size_t size = (size_t)(max - min + 1);
-         memcpy(&elem(min), &t.elem(min), size * sizeof(double));
-     }
-   }
-   return (*this);
- }
+      size_t size = (size_t)(max - min + 1);
+      memcpy(&elem(min), &t.elem(min), size * sizeof(double));
+    }
+  }
+  return *this;
+}
 
  /**
   \ingroup matop

@@ -41,6 +41,8 @@
 #ifndef __ADMB_IVECTOR_H__
 #define __ADMB_IVECTOR_H__
 
+#include "vector_shapex.h"
+
 /**
 */
 class ivector
@@ -79,6 +81,11 @@ public:
    int operator!() const
    {
       return (shape == NULL);
+   }
+
+   unsigned int get_ncopies() const
+   {
+     return shape ? shape->get_ncopies() : 0;
    }
 
    int& elem(int i)

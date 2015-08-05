@@ -193,6 +193,11 @@ class dvector
       return shape->index_max;
    }
 
+   unsigned int get_ncopies() const
+   {
+     return shape ? shape->get_ncopies() : 0;
+   }
+
    /// Get minimum valid index.
    int indexmin() const
    {

@@ -31,18 +31,6 @@ void ad_make_code_reentrant(void)
     delete ad_comm::global_bparfile;
     ad_comm::global_bparfile=NULL;
   }
-
-  if (ad_comm::global_savefile)
-  {
-    delete ad_comm::global_savefile;
-    ad_comm::global_savefile=NULL;
-  }
-
-  if (ad_comm::global_bsavefile)
-  {
-    delete ad_comm::global_bsavefile;
-    ad_comm::global_bsavefile=NULL;
-  }
 }
 
 void parse_dll_options(char *pname, const int& _nopt, char *sp_options,

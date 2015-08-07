@@ -40,19 +40,18 @@ int param_init_d3array::size_count(void)
   return ::size_count(*this);
 }
 
-void param_init_d3array::save_value(void)
+void param_init_d3array::save_value(ofstream& ofs)
 {
   if (!(!(*this)))
-    *(ad_comm::global_savefile) << label_class(this->label())
-      << dvar3_array(*this) << endl;
+    ofs << label_class(this->label()) << dvar3_array(*this) << endl;
 }
 
-void param_init_d3array::bsave_value(void)
+void param_init_d3array::bsave_value(uostream& uos)
 {
   if (!(!(*this)))
   {
-    dvar3_array& tmp=*this;
-    *(ad_comm::global_bsavefile) << tmp;
+    dvar3_array& tmp = *this;
+    uos << tmp;
   }
 }
 

@@ -8613,9 +8613,7 @@ class ad_comm
      const streampos & off = 0);
    static cifstream *global_datafile;
    static cifstream *global_parfile;
-   static ofstream *global_savefile;
    static ofstream *global_logfile;
-   static uostream *global_bsavefile;
    static uistream *global_bparfile;
    static adstring adprogram_name;
    static adstring working_directory_path;

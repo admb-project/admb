@@ -36,17 +36,15 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   initial_params::xinit(u);    // get the initial values into the
   u.initialize();
 
-  ofstream * tmpfile= ad_comm::global_savefile;
-  ad_comm::global_savefile=new ofstream("catageqd.ppp");
-  if (ad_comm::global_savefile)
+  ofstream ofs("catageqd.ppp");
+  if (ofs.good())
   {
     for (int i=0;i<initial_params::num_initial_params;i++)
     {
-       (initial_params::varsptr[i])->save_value();
+      initial_params::varsptr[i]->save_value(ofs);
     }
-    delete ad_comm::global_savefile;
-    ad_comm::global_savefile=tmpfile;
   }
+  ofs.close();
 
   int ret = system(" catageqd -nox -nohess -crit 1.e-10 -ainp catageqd.ppp ");
   assert(ret == 0);
@@ -54,6 +52,8 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   uistream ifs("uval.dat");
 
   ifs >> u;
+
+  ifs.close();
 
   return u;
 }

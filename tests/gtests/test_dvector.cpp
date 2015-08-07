@@ -178,3 +178,26 @@ TEST_F(test_dvector, safe_deallocate)
     FAIL();
   }
 }
+TEST_F(test_dvector, allocate)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector dv;
+  ASSERT_EQ(dv.indexmin(), 1);
+  ASSERT_EQ(dv.indexmax(), 0);
+
+  dv.allocate(5, 2);
+  ASSERT_EQ(dv.indexmin(), 1);
+  ASSERT_EQ(dv.indexmax(), 0);
+
+  dv.allocate(2, 5);
+  ASSERT_EQ(dv.indexmin(), 2);
+  ASSERT_EQ(dv.indexmax(), 5);
+
+#ifndef OPT_LIB
+  for (int i = 2; i <= 5; ++i)
+  {
+    ASSERT_DOUBLE_EQ(0, dv(i));
+  }
+#endif
+}

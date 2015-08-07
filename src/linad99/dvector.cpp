@@ -400,58 +400,55 @@ dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
    }
  }
 
- /**
- Allocate memory for a %dvector.
- Exits with an error message if subscript range makes no sense.
- \param ncl Integer specifying lowest valid subscript.
- \param nch Integer specifying highest valid subscript.
- */
- void dvector::allocate(int ncl,int nch)
- {
-   if (ncl>nch)
-     allocate();
-   else
-   {
-     int itemp=nch-ncl;
-     if (itemp<0)
-     {
-       cerr << "Error in dvector constructor max index must be >= minindex\n"
-            << "minindex = " << ncl << " maxindex = " << nch <<endl;
-       ad_exit(1);
-     }
-     if ( (v = new double [itemp+2]) ==0)
-     {
-       cerr << " Error trying to allocate memory for dvector\n";
-       ad_exit(21);
-     }
-#if defined(THREAD_SAFE)
-   if ( (shape=new ts_vector_shapex(ncl,nch,v)) == NULL)
-#else
-   if ( (shape=new vector_shapex(ncl,nch,v)) == NULL)
+/**
+Allocate memory for a %dvector.
+Exits with an error message if subscript range makes no sense.
+\param ncl Integer specifying lowest valid subscript.
+\param nch Integer specifying highest valid subscript.
+*/
+void dvector::allocate(int ncl, int nch)
+{
+  //\todo Should check if v and shape are already allocated.
+
+  if (nch < ncl)
+  {
+    allocate();
+  }
+  else
+  {
+    //Originally +2
+    //int size = nch - ncl + 2;
+
+    int size = nch - ncl + 1;
+
+    v = new double[size];
+    if (v == NULL)
+    {
+      cerr << " Error trying to allocate memory for dvector\n";
+      ad_exit(21);
+    }
+#ifndef OPT_LIB
+    std::fill_n(v, size, 0);
 #endif
-     {
-       cerr << "Error trying to allocate memory for dvector\n";
-       ad_exit(1);
-     }
 
-     //int align= ((int) v)%8 ;
-     //if (align)
-     //{
-     //  int diff=(8-align)%8;
-     //  v=(double*)( ((char*)v)+diff);
-     //}
+#if defined(THREAD_SAFE)
+    shape = new ts_vector_shapex(ncl, nch, v);
+#else
+    shape = new vector_shapex(ncl, nch, v);
+#endif
+    if (shape == NULL)
+    {
+      cerr << "Error trying to allocate memory for dvector\n";
+      ad_exit(1);
+    }
 
-     index_min=ncl;
-     index_max=nch;
-     v -= indexmin();
-     #ifdef SAFE_INITIALIZE
-       for ( int i=indexmin(); i<=indexmax(); i++)
-       {
-         v[i]=0.;
-       }
-     #endif
-   }
- }
+    index_min = ncl;
+    index_max = nch;
+
+    //reset v(index_min) to v[0]
+    v -= index_min;
+  }
+}
 
  /**
  Allocate memory for a %dvector the same size as it's argument.
@@ -495,17 +492,17 @@ void dvector::allocatec(const dvector& t)
   }
 }
 
- /**
- Allocate %dvector without allocating memory.
- All pointers set to NULL and subscript range is invalid.
- */
- void dvector::allocate(void)
- {
-   shape=NULL;
-   v = NULL;
-  index_min=1;
-  index_max=0;
- }
+/**
+Allocate %dvector without allocating memory.
+All pointers set to NULL and subscript range is invalid.
+*/
+void dvector::allocate()
+{
+  shape = NULL;
+  v = NULL;
+  index_min = 1;
+  index_max = 0;
+}
 
   /** Compute the dot product of two vectors. The minimum and maxium
   legal subscripts of the arguments must agree; otherwize an error message

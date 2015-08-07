@@ -129,8 +129,6 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #endif
   adstring workdir;
   ad_getcd(workdir);
-//#define STR(x) STR2(x)
-//#define STR2(x) #x
   if (_argc>1)
   {
     if (option_match(_argc,_argv,"-?")>-1
@@ -347,12 +345,13 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   }
   allocate();
 }
-
-ad_comm::ad_comm(void)
+/**
+Default constructor.
+*/
+ad_comm::ad_comm()
 {
   allocate();
 }
-
 void ad_comm::allocate(void)
 {
 #if defined (_WIN32)

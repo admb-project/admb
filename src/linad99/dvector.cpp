@@ -8,6 +8,14 @@
  * \file
  * Description not yet available.
  */
+
+#ifndef OPT_LIB
+  #ifndef __SUNPRO_CC
+    #include <algorithm>
+    using std::fill_n;
+  #endif
+#endif
+
 #include "fvar.hpp"
 
 long int farptr_tolong(void *);
@@ -428,7 +436,9 @@ void dvector::allocate(int ncl, int nch)
       ad_exit(21);
     }
 #ifndef OPT_LIB
-    std::fill_n(v, size, 0);
+  #ifndef __SUNPRO_CC
+    fill_n(v, size, 0);
+  #endif
 #endif
 
 #if defined(THREAD_SAFE)

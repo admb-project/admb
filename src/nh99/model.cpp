@@ -134,7 +134,7 @@ void initial_params::add_to_list()
   if (num_initial_params >= initial_params::max_num_initial_params)
   {
     cerr << " This version of ADMB only supports "
-         << initial_params::max_num_initial_params 
+         << initial_params::max_num_initial_params
          << " initial parameter objects.\n";
     ad_exit(1);
   }
@@ -485,7 +485,7 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
 /**
 Use a data_vector to allocate an init_bounded_number
 \author Steve Martell
-\param v vector containing the lower bound, upper bound, and phase of 
+\param v vector containing the lower bound, upper bound, and phase of
 estimation.
 */
   void param_init_bounded_number::allocate(const data_vector & v,

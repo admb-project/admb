@@ -1,30 +1,15 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
-/// file ddlist.cpp
+\file
+
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
-
-#ifdef __ZTC__
-   #include <iostream.hpp>
-#endif
-
-#ifdef __TURBOC__
-   #pragma hdrstop
-   #include <iostream.h>
-#endif
 
 #include <stdlib.h>
 #if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
   #include <stdint.h>
 #endif
-//#define MAX_DLINKS 1000
 /**
 \return previous node pointer.
 */
@@ -33,19 +18,10 @@ dlink* dlink::previous()
   return prev;
 }
 
-//////////////////////////////
-// global list names
-//dlist * GRAD_LIST;
-//extern dlist * GRAD_LIST; //js
-/////////////////////////////
-
-char* ddlist_space;
-char* ddlist_spacea;
-
 /**
 Default constructor
 */
-dlist::dlist(void)
+dlist::dlist()
 {
   int on,nopt = 0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
@@ -64,20 +40,10 @@ dlist::dlist(void)
     }
   }
   last = 0;
-  last_offset = 0;
   nlinks = 0;
   dlink_addresses = new dlink*[gradient_structure::MAX_DLINKS];
   const size_t size = 2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1);
   ddlist_space = (char*)malloc(size * sizeof(char));
-  //cout << (int) (ddlist_space) << endl;
-  //cout << ((int) (ddlist_space))%8 << endl;
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-  intptr_t adjust = (8 - ((intptr_t)(ddlist_space)) % 8) % 8;
-#else
-  int adjust=(8- ((int) (ddlist_space))%8)%8;
-#endif
-
-  ddlist_spacea=ddlist_space+adjust;
 
   //Initialize addresses to zero
   memset(dlink_addresses, 0, sizeof(dlink*) * gradient_structure::MAX_DLINKS);
@@ -87,7 +53,7 @@ Create unlinked new node.
 */
 dlink* dlist::create()
 {
-  dlink* tmp= (dlink*)(ddlist_spacea+2*sizeof(double)*nlinks);
+  dlink* tmp= (dlink*)(ddlist_space+2*sizeof(double)*nlinks);
   // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
 
   if (!tmp)
@@ -161,10 +127,10 @@ dlist::~dlist()
   }
 */
   ::free(ddlist_space);
-  ddlist_space=NULL;
+  ddlist_space = NULL;
 
   delete [] dlink_addresses;
-  dlink_addresses = 0;
+  dlink_addresses = NULL;
 }
 /**
 Get total addresses stored.

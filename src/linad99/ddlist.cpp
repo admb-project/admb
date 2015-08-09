@@ -228,3 +228,11 @@ dlink* dlist::append(dlink* app)
 
   return last;
 }
+
+void dlist::initialize()
+{
+  for (unsigned int i = 0; i < nlinks; ++i)
+  {
+    *(double*)dlink_addresses[i] = 0;
+  }
+}

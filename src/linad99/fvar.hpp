@@ -820,6 +820,7 @@ public:
   // add a link
   dlink* append(dlink*);
   dlink* last_remove();
+  void initialize();
 
   // check list integrity
   void check_list(void);

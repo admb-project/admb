@@ -121,10 +121,7 @@ void funnel_gradcalc(void)
 
   gradient_structure::GRAD_STACK1->ptr--;
 
-  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
-  {
-    * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
-  }
+  gradient_structure::GRAD_LIST->initialize();
 
   double_and_int* tmp =
     (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;

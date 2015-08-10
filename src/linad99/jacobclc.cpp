@@ -211,10 +211,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 
     gradient_structure::GRAD_STACK1->ptr--;
 
-    for (unsigned int i=0; i< GRAD_LIST->nlinks; i++)
-    {
-      * (double*) (GRAD_LIST->dlink_addresses[i]) = 0;
-    }
+    GRAD_LIST->initialize();
 
     double_and_int* tmp =
       (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;

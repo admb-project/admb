@@ -802,9 +802,11 @@ Link list
 class dlist
 {
   dlink* last;
-  unsigned int last_offset;
   unsigned int nlinks;
   dlink** dlink_addresses;
+  char* ddlist_space;
+  double* variables_save;
+
   friend double_and_int *gradnew();
   friend void df_check_derivative_values(void);
   friend void df_check_derivative_values_indexed(void);
@@ -820,6 +822,9 @@ public:
   // add a link
   dlink* append(dlink*);
   dlink* last_remove();
+  void initialize();
+  void save_variables();
+  void restore_variables();
 
   // check list integrity
   void check_list(void);

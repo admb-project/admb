@@ -62,7 +62,6 @@ extern "C"{
   }
 }
 
-//char * MY_BUF=NULL;
 // *************************************************************
 // *************************************************************
 int ctlc_flag = 0;
@@ -133,7 +132,6 @@ unsigned int gradient_structure::MAX_DLINKS = 5000;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASEA;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
-double * gradient_structure::variables_save=NULL;
 void * farptr_norm(void *);
 long int farptr_tolong(void *) ;
 void memory_allocate_error(const char * s, void * ptr);

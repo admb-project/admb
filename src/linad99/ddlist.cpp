@@ -45,6 +45,14 @@ dlist::dlist()
   const size_t size = 2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1);
   ddlist_space = (char*)malloc(size * sizeof(char));
 
+  variables_save = new double[gradient_structure::MAX_DLINKS];
+  if (variables_save == NULL)
+  {
+    cerr << "insufficient memory to allocate space for dvariables"
+         << " save buffer " << endl;
+    ad_exit(1);
+  }
+
   //Initialize addresses to zero
   memset(dlink_addresses, 0, sizeof(dlink*) * gradient_structure::MAX_DLINKS);
 }
@@ -126,11 +134,14 @@ dlist::~dlist()
     ad_exit(1);
   }
 */
+  delete [] dlink_addresses;
+  dlink_addresses = NULL;
+
   ::free(ddlist_space);
   ddlist_space = NULL;
 
-  delete [] dlink_addresses;
-  dlink_addresses = NULL;
+  delete [] variables_save;
+  variables_save = NULL;
 }
 /**
 Get total addresses stored.
@@ -200,5 +211,25 @@ void dlist::initialize()
   for (unsigned int i = 0; i < nlinks; ++i)
   {
     *(double*)dlink_addresses[i] = 0;
+  }
+}
+/**
+Save variables to a buffer.
+*/
+void dlist::save_variables()
+{
+  for (unsigned int i = 0; i < nlinks; ++i)
+  {
+    variables_save[i] = *(double*)(dlink_addresses[i]);
+  }
+}
+/**
+Restore variables from buffer.
+*/
+void dlist::restore_variables()
+{
+  for (unsigned int i = 0; i < nlinks; ++i)
+  {
+    *(double*)(dlink_addresses[i]) = variables_save[i];
   }
 }

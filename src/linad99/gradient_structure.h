@@ -116,7 +116,6 @@ class gradient_structure
       return (double*)ARRAY_MEMBLOCK_BASE;
    }
  private:
-   static double *variables_save;
 #ifdef __BORLANDC__
    static long int CMPDIF_BUFFER_SIZE;
    static long int GRADSTACK_BUFFER_SIZE;

@@ -377,36 +377,14 @@ Save variables to a buffer.
 */
 void gradient_structure::save_variables()
 {
-  if ((variables_save = new double[gradient_structure::MAX_DLINKS])==NULL)
-  {
-    //_VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC ,
-    //               S_IREAD | S_IWRITE);
-    cerr << "insufficient memory to allocate space for dvariables"
-         << " save buffer " << endl;
-    ad_exit(1);
-  }
-  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
-  {
-    //variables_save[i]= * (double*)
-    //    (gradient_structure::GRAD_LIST->dlink_addresses[i]);
-    memcpy(&(variables_save[i]),
-       gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
-  }
+  GRAD_LIST->save_variables();
 }
 /**
 Restore variables from buffer.
 */
 void gradient_structure::restore_variables()
 {
-  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
-  {
-    //* (double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
-    //  = variables_save[i];
-    memcpy(gradient_structure::GRAD_LIST->dlink_addresses[i],
-       &(variables_save[i]),sizeof(double));
-  }
-  delete [] variables_save;
-  variables_save = 0;
+  GRAD_LIST->restore_variables();
 }
 /**
 Rewind buffer.

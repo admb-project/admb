@@ -10,13 +10,7 @@ Copyright (c) 2008-2012 Regents of the University of California
 #ifndef OPT_LIB
   #include <cassert>
 #endif
-/**
-\return previous node pointer.
-*/
-dlink* dlink::previous()
-{
-  return prev;
-}
+
 /**
 Default constructor
 */
@@ -80,13 +74,13 @@ Create unlinked new node.
 */
 dlink* dlist::create()
 {
-  dlink* tmp = (dlink*)(ddlist_space+2*sizeof(double)*nlinks);
+  dlink* link = (dlink*)(ddlist_space+2*sizeof(double)*nlinks);
 #ifndef OPT_LIB
-  assert(tmp);
+  assert(link);
 #endif
 
   //do not add to list.
-  tmp->prev=0;
+  link->prev=0;
 
 #ifndef OPT_LIB
   //If fails, then need to increase the maximum number of dlinks.
@@ -94,10 +88,10 @@ dlink* dlist::create()
 #endif
 
   // keep track of the links so you can zero them out
-  dlink_addresses[nlinks] = tmp;
+  dlink_addresses[nlinks] = link;
   ++nlinks;
 
-  return tmp;
+  return link;
 }
 /**
 If list is not empty, pop and return last node.

@@ -7,9 +7,6 @@ Copyright (c) 2008-2012 Regents of the University of California
 #include "fvar.hpp"
 
 #include <stdlib.h>
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-  #include <stdint.h>
-#endif
 #ifndef OPT_LIB
   #include <cassert>
 #endif

@@ -839,6 +839,7 @@ public:
   friend void gradient_structure::restore_variables();
   friend void gradient_structure::save_variables();
   friend void gradient_structure::jacobcalc(int nvar,
+    const dmatrix& jac);
   friend void allocate_dvariable_space(void);
   //friend void gradient_structure::funnel_jacobcalc(void);
   friend void gradient_structure::jacobcalc(int nvar,

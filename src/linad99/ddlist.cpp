@@ -127,9 +127,11 @@ dlink* dlist::append(dlink* link)
 }
 void dlist::initialize()
 {
+  dlink** dest = dlink_addresses;
   for (unsigned int i = 0; i < nlinks; ++i)
   {
-    *(double*)dlink_addresses[i] = 0;
+    (*dest)->di.x = 0;
+    ++dest;
   }
 }
 /**
@@ -137,9 +139,13 @@ Save variables to a buffer.
 */
 void dlist::save_variables()
 {
+  dlink** src = dlink_addresses;
+  double* dest = variables_save;
   for (unsigned int i = 0; i < nlinks; ++i)
   {
-    variables_save[i] = *(double*)(dlink_addresses[i]);
+    *dest = (*src)->di.x;
+    ++dest;
+    ++src;
   }
 }
 /**
@@ -147,9 +153,13 @@ Restore variables from buffer.
 */
 void dlist::restore_variables()
 {
+  dlink** dest = dlink_addresses;
+  double* src = variables_save;
   for (unsigned int i = 0; i < nlinks; ++i)
   {
-    *(double*)(dlink_addresses[i]) = variables_save[i];
+    (*dest)->di.x = *src;
+    ++dest;
+    ++src;
   }
 }
 /**

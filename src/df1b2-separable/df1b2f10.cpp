@@ -349,35 +349,31 @@ void test_smartlist::read_buffer(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void memcpy(const test_smartlist& _list, void* p, const size_t nsize)
+memcpy for test_smartlist
+*/
+void memcpy(test_smartlist& dest, void* source, const size_t nsize)
 {
-  ADUNCONST(test_smartlist,list)
-  if (list.bptr+nsize-1 > list.buffend)
-  {
-    cerr << " Trying to write outside list buffer" << endl;
-    exit(1);
-  }
-  memcpy(list.bptr,p,nsize);
-  list.bptr+=nsize;
+#ifndef OPT_LIB
+  //Trying to write outside list buffer
+  assert(dest.bptr + nsize - 1 <= dest.buffend);
+#endif
+
+  memcpy(dest.bptr, source, nsize);
+  dest.bptr += nsize;
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void memcpy(void* p, const test_smartlist & _list, const size_t nsize)
+memcpy for test_smartlist
+*/
+void memcpy(void* dest, test_smartlist& source, const size_t nsize)
 {
-  ADUNCONST(test_smartlist,list)
-  if (list.bptr+nsize-1 > list.buffend)
-  {
-    cerr << " Trying to write outside list buffer" << endl;
-    exit(1);
-  }
-  memcpy(p,list.bptr,nsize);
-  list.bptr+=nsize;
+#ifndef OPT_LIB
+  //Trying to write outside list buffer
+  assert(source.bptr + nsize - 1 <= source.buffend);
+#endif
+
+  memcpy(dest, source.bptr, nsize);
+  source.bptr += nsize;
 }
 
 /**

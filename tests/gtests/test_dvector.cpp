@@ -201,3 +201,25 @@ TEST_F(test_dvector, allocate)
   }
 #endif
 }
+TEST_F(test_dvector, save_dvector_derivatives_not_matching)
+{
+  dvar_vector_position pos;
+  dvector dv(1, 4);
+  ASSERT_DEATH(dv.save_dvector_derivatives(pos), "Assertion");
+}
+TEST_F(test_dvector, save_dvector_derivatives)
+{
+  gradient_structure gs;
+  dvar_vector dvar(1, 4);
+  dvar_vector_position pos(dvar);
+  dvector dv(1, 4);
+  dv(1) = 1.5;
+  dv(2) = -2.5;
+  dv(3) = 3.5;
+  dv(4) = -4.5;
+  dv.save_dvector_derivatives(pos);
+  for (int i = 1; i <= 4; ++i)
+  {
+    ASSERT_DOUBLE_EQ(value(dvar(i)), dv(i));
+  }
+}

@@ -162,21 +162,25 @@ public:
 };
 
 /**
-  Holds the data for the prevariable class.
-  \ingroup BAD
+Holds the data for the prevariable class.
+
+\ingroup BAD
  */
 class double_and_int
 {
- public:
-   ///< value of the variable
-   double x;
-    /** Return the value of the variable.
-    \return double reference containing the value of the variable.
-    */
-   inline double &xvalue(void)
-   {
-      return x;
-   }
+public:
+  ///< value of the variable
+  double x;
+
+  /**
+  Return the value of the variable.
+
+  \return double reference containing the value of the variable.
+  */
+  inline double &xvalue()
+  {
+    return x;
+  }
 };
 
 
@@ -4547,23 +4551,26 @@ dvector gammln(const dvector & n);
  */
 class dvar_vector_position
 {
- public:
-   int min;
-   int max;
-   double_and_int *va;
-   int indexmin() const
-   {
-      return min;
-   }
-   int indexmax() const
-   {
-      return max;
-   }
-   dvar_vector_position(const dvar_vector & v);
-   dvar_vector_position(const dvar_vector_position & dvp);
-   dvar_vector_position(void);
-   double &operator() (const int &i);
-   friend class dvar_matrix_position;
+public:
+  dvar_vector_position();
+  dvar_vector_position(const dvar_vector& v);
+  dvar_vector_position(const dvar_vector_position& dvp);
+
+  double &operator() (const int &i);
+
+  int min;
+  int max;
+  double_and_int* va;
+  int indexmin() const
+  {
+    return min;
+  }
+  int indexmax() const
+  {
+    return max;
+  }
+
+  friend class dvar_matrix_position;
 };
 
 /**

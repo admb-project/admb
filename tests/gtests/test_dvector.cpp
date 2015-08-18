@@ -211,6 +211,7 @@ TEST_F(test_dvector, save_dvector_derivatives)
 {
   gradient_structure gs;
   dvar_vector dvar(1, 4);
+  dvar.initialize();
   dvar_vector_position pos(dvar);
   dvector dv(1, 4);
   dv(1) = 1.5;

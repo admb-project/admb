@@ -172,7 +172,8 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
 #ifdef USE_ASSEMBLER
   double_and_int* ptr = pos.va;
   int n=max-min+1;
-  dp_vector_add(&(ptr[min].xvalue()),&(ptr[min].xvalue()), &(this->elem(min)),n);
+  dp_vector_add(&(ptr[min].xvalue()), &(ptr[min].xvalue()),
+    &(this->elem(min)), n);
 #else
   double_and_int* dest = &pos.va[min];
   double* source = &v[min];

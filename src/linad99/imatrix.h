@@ -47,16 +47,16 @@
  */
 class imatrix_position
 {
- public:
-   int row_min;
-   int row_max;
-   ivector lb;
-   ivector ub;
-   ptr_vector ptr;
-   imatrix_position(const imatrix &);
-   imatrix_position(int min, int max);
-   imatrix_position(const imatrix_position &);
-   ivector_position operator () (int i);
+public:
+  int row_min;
+  int row_max;
+  ivector lb;
+  ivector ub;
+  ptr_vector ptr;
+  imatrix_position(const imatrix &);
+  imatrix_position(int min, int max);
+  imatrix_position(const imatrix_position &);
+  ivector_position operator()(int i);
 };
 
 imatrix_position restore_imatrix_position(void);
@@ -71,8 +71,8 @@ class imatrix
 protected:
    int index_min;
    int index_max;
-   ivector *m;
-   mat_shapex *shape;
+   ivector* m;
+   mat_shapex* shape;
 
 public:
    int operator!(void) const
@@ -185,6 +185,8 @@ public:
    void initialize(void);
    void fill_seqadd(int, int);
    void colfill_seqadd(int, int, int);
+
+  bool is_valid_row(const int i) const;
 
    friend char* fform(const char*, const dmatrix&);
    friend class i3_array;

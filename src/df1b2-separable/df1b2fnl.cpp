@@ -786,15 +786,13 @@ funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2vector & _x)
   df1b2vector::allocate(mmin,mmax);
   df1b2variable::noallocate=0;
 }
-
 /**
 Destructor
 */
 funnel_init_df1b2vector::~funnel_init_df1b2vector()
 {
-  //df1b2vector::deallocate();
+  df1b2vector::deallocate();
 }
-
 /**
  * Description not yet available.
  * \param

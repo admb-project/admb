@@ -746,20 +746,16 @@ void df1b2vector::noallocate(int lb,int ub)
   v-=index_min;
   offset=0;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 df1b2vector::~df1b2vector()
 {
   deallocate();
 }
-
 /**
- * Description not yet available.
- * \param
- */
+If no other copies exists, free allocated memory.
+*/
 void df1b2vector::deallocate()
 {
   if (shape)
@@ -770,25 +766,25 @@ void df1b2vector::deallocate()
     }
     else
     {
-      v = (df1b2variable*) shape->trueptr;
-      delete [] v;
-      v=NULL;
+      if (shape->trueptr)
+      {
+        v = (df1b2variable*)shape->trueptr;
+        delete [] v;
+        v = NULL;
+      }
+
       delete shape;
-      shape=0;
+      shape = NULL;
     }
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Copy constructor
+*/
 df1b2vector::df1b2vector(const df1b2vector& _x)
 {
  copy(_x);
 }
-
-
 /**
  * Description not yet available.
  * \param

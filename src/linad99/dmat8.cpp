@@ -75,7 +75,7 @@ const double& dmatrix::operator()(int i, int j) const
   assert((index_min <= i && i <= index_max) || is_valid_row(i));
 
   const dvector& dvi = elem(i);
- 
+
   //check that index j is in range
   assert(dvi.is_valid_index(j));
 

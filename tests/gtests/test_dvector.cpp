@@ -224,3 +224,19 @@ TEST_F(test_dvector, save_dvector_derivatives)
     ASSERT_DOUBLE_EQ(value(dvar(i)), dv(i));
   }
 }
+TEST_F(test_dvector, is_valid_index)
+{
+  dvector dv(1, 4);
+  ASSERT_EQ(false, dv.is_valid_index(0));
+  ASSERT_EQ(true, dv.is_valid_index(1));
+  ASSERT_EQ(true, dv.is_valid_index(2));
+  ASSERT_EQ(true, dv.is_valid_index(3));
+  ASSERT_EQ(true, dv.is_valid_index(4));
+  ASSERT_EQ(false, dv.is_valid_index(5));
+  ASSERT_EQ(false, false || dv.is_valid_index(0));
+  ASSERT_EQ(true, false || dv.is_valid_index(1));
+  ASSERT_EQ(true, false || dv.is_valid_index(4));
+  ASSERT_EQ(false, false || dv.is_valid_index(5));
+  ASSERT_DEATH(dv(0), "Assertion");
+  ASSERT_DEATH(dv(5), "Assertion");
+}

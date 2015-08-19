@@ -9,8 +9,28 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#include "admb_messages.h"
+#include <cassert>
 
+
+/**
+Check index i is in dvector bounds [index_min, index_max]
+
+\param i row index
+*/
+bool dvector::is_valid_index(const int i) const
+{
+  bool valid = index_min <= i && i <= index_max;
+  if (!valid)
+  {
+#if defined(USE_EXCEPTIONS)
+    throw vector_range_exception(i, index_min, index_max);
+#else
+    cerr << "Error: Used invalid i = " << i << " for dvector bounded by ["
+         << index_min << ", " << index_max << "].\n";
+#endif
+  }
+  return valid;
+}
 #if !defined(OPT_LIB)
 /**
 Returns a reference to the element at index __i__ in the array.
@@ -19,16 +39,9 @@ Returns a reference to the element at index __i__ in the array.
 */
 double& dvector::operator[](int i)
 {
-  if (i < index_min || index_max < i)
-  {
-  #if defined(USE_EXCEPTIONS)
-    throw vector_range_exception(i,index_min,index_max);
-  #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
-    "double& dvector::operator[] (int i)", index_min, index_max, i);
-  #endif
-  }
-  return *(v+i);
+  assert((index_min <= i && i <= index_max) || is_valid_index(i));
+
+  return *(v + i);
 }
 /**
 Returns a reference to the element at index __i__ in the array.
@@ -37,16 +50,9 @@ Returns a reference to the element at index __i__ in the array.
 */
 double& dvector::operator()(int i)
 {
-  if (i < index_min || index_max < i)
-  {
-  #if defined(USE_EXCEPTIONS)
-    throw vector_range_exception(i,index_min,index_max);
-  #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
-    "double& dvector::operator[] (int i)", index_min, index_max, i);
-  #endif
-  }
-  return *(v+i);
+  assert((index_min <= i && i <= index_max) || is_valid_index(i));
+
+  return *(v + i);
 }
 /**
 Returns a reference to the element at index __i__ in the array.
@@ -55,16 +61,9 @@ Returns a reference to the element at index __i__ in the array.
 */
 const double& dvector::operator[](int i) const
 {
-  if (i < index_min || index_max < i)
-  {
-  #if defined(USE_EXCEPTIONS)
-    throw vector_range_exception(i,index_min,index_max);
-  #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
-    "double& dvector::operator[] (int i)", index_min, index_max, i);
-  #endif
-  }
-  return *(v+i);
+  assert((index_min <= i && i <= index_max) || is_valid_index(i));
+
+  return *(v + i);
 }
 /**
 Returns a reference to the element at index __i__ in the array.
@@ -73,15 +72,8 @@ Returns a reference to the element at index __i__ in the array.
 */
 const double& dvector::operator()(int i) const
 {
-  if (i < index_min || index_max < i)
-  {
-  #if defined(USE_EXCEPTIONS)
-    throw vector_range_exception(i,index_min,index_max);
-  #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
-    "double& dvector::operator[] (int i)", index_min, index_max, i);
-  #endif
-  }
-  return *(v+i);
+  assert((index_min <= i && i <= index_max) || is_valid_index(i));
+
+  return *(v + i);
 }
 #endif

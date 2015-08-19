@@ -329,6 +329,8 @@ class dvector
 
    dvector & operator =(double x);
 
+  bool is_valid_index(const int i) const;
+
    friend dvector exp(const dvector &);
 
    friend dvector log(const dvector &);

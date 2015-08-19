@@ -9,8 +9,6 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-
-#if !defined(OPT_LIB)
 #include <cassert>
 
 /**
@@ -28,6 +26,7 @@ bool imatrix::is_valid_row(const int i) const
   }
   return valid;
 }
+#if !defined(OPT_LIB)
 /**
 Returns a reference to the ivector element at specified row i in imatrix.
 Bounds checking is performed.
@@ -36,7 +35,7 @@ Bounds checking is performed.
 */
 ivector& imatrix::operator()(int i)
 {
-  assert(is_valid_row(i));
+  assert((index_min <= i && i <= index_max) || is_valid_row(i));
 
   return elem(i);
 }
@@ -48,7 +47,7 @@ Bounds checking is performed.
 */
 const ivector& imatrix::operator()(int i) const
 {
-  assert(is_valid_row(i));
+  assert((index_min <= i && i <= index_max) || is_valid_row(i));
 
   return elem(i);
 }

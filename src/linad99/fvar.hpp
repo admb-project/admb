@@ -2786,8 +2786,6 @@ class dmatrix
    void fill_randu(long int &n);
    void rowfill_randn(const int &i, long int &n);
 
-
-
    void colfill_randu(const int &j, const random_number_generator & rng);
    void rowfill_randu(const int &i, const random_number_generator & rng);
    void fill_randn(const random_number_generator & rng);
@@ -2802,8 +2800,6 @@ class dmatrix
    void fill_randn_ni(long int &n);
    void fill_randu_ni(long int &n);
    void rowfill_randn_ni(const int &i, long int &n);
-
-
 
    void colfill_seqadd(const int &, const int &, const int &);
    void colfill_seqadd(const int &, double, double);
@@ -2897,6 +2893,8 @@ class dmatrix
 
    dmatrix & operator /=(double d);
    dmatrix & operator *=(double d);
+
+  bool is_valid_row(const int i) const;
 };
 
 #if defined(OPT_LIB)

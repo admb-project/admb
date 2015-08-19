@@ -112,3 +112,21 @@ TEST_F(test_dmatrix, mystrlen)
   int actual = mystrlen(s);
   ASSERT_EQ(17, actual);
 }
+TEST_F(test_dmatrix, is_valid_row)
+{
+  dmatrix m(1, 4, 1, 3);
+  m.initialize();
+  ASSERT_EQ(false, m.is_valid_row(-1));
+  ASSERT_EQ(false, m.is_valid_row(0));
+  ASSERT_EQ(true, m.is_valid_row(1));
+  ASSERT_EQ(true, m.is_valid_row(2));
+  ASSERT_EQ(true, m.is_valid_row(3));
+  ASSERT_EQ(true, m.is_valid_row(4));
+  ASSERT_EQ(false, m.is_valid_row(5));
+  ASSERT_DEATH(m(0), "Assertion");
+  ASSERT_DEATH(m(5), "Assertion");
+  ASSERT_DEATH(m(1, 0), "Assertion");
+  ASSERT_DOUBLE_EQ(0, m(1, 1));
+  ASSERT_DOUBLE_EQ(0, m(1, 3));
+  ASSERT_DEATH(m(1, 4), "Assertion");
+}

@@ -203,9 +203,11 @@ TEST_F(test_dvector, allocate)
 }
 TEST_F(test_dvector, save_dvector_derivatives_not_matching)
 {
+#ifndef _WIN32
   dvar_vector_position pos;
   dvector dv(1, 4);
   ASSERT_DEATH(dv.save_dvector_derivatives(pos), "Assertion");
+#endif
 }
 TEST_F(test_dvector, save_dvector_derivatives)
 {

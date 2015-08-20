@@ -4,7 +4,7 @@ compiler:
   - gcc
   - clang
 
-script: make clean all test counter
+script: make clean all test
 
 branches:
   only:

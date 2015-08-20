@@ -201,13 +201,12 @@ TEST_F(test_dvector, allocate)
   }
 #endif
 }
+#ifndef _WIN32
 TEST_F(test_dvector, save_dvector_derivatives_not_matching)
 {
-#ifndef _WIN32
   dvar_vector_position pos;
   dvector dv(1, 4);
   ASSERT_DEATH(dv.save_dvector_derivatives(pos), "Assertion");
-#endif
 }
 TEST_F(test_dvector, save_dvector_derivatives)
 {
@@ -226,6 +225,7 @@ TEST_F(test_dvector, save_dvector_derivatives)
     ASSERT_DOUBLE_EQ(value(dvar(i)), dv(i));
   }
 }
+#endif
 TEST_F(test_dvector, is_valid_index)
 {
   dvector dv(1, 4);

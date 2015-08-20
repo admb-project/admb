@@ -239,6 +239,8 @@ TEST_F(test_dvector, is_valid_index)
   ASSERT_EQ(true, false || dv.is_valid_index(1));
   ASSERT_EQ(true, false || dv.is_valid_index(4));
   ASSERT_EQ(false, false || dv.is_valid_index(5));
+#ifndef _WIN32
   ASSERT_DEATH(dv(0), "Assertion");
   ASSERT_DEATH(dv(5), "Assertion");
+#endif
 }

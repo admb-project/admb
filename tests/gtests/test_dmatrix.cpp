@@ -125,10 +125,8 @@ TEST_F(test_dmatrix, is_valid_row)
   ASSERT_EQ(false, m.is_valid_row(5));
   ASSERT_DOUBLE_EQ(0, m(1, 1));
   ASSERT_DOUBLE_EQ(0, m(1, 3));
-#ifndef _WIN32
   ASSERT_DEATH(m(0), "Assertion");
   ASSERT_DEATH(m(5), "Assertion");
   ASSERT_DEATH(m(1, 0), "Assertion");
   ASSERT_DEATH(m(1, 4), "Assertion");
-#endif
 }

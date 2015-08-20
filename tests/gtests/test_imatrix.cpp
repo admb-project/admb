@@ -33,8 +33,6 @@ TEST_F(test_imatrix, is_valid_row)
   ASSERT_EQ(true, m.is_valid_row(3));
   ASSERT_EQ(true, m.is_valid_row(4));
   ASSERT_EQ(false, m.is_valid_row(5));
-#ifndef _WIN32
   ASSERT_DEATH(m(0), "Assertion");
   ASSERT_DEATH(m(5), "Assertion");
-#endif
 }

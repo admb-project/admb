@@ -287,7 +287,7 @@ TEST_F(test_adstring, realloc)
 TEST_F(test_adstring, clist_length_with_max_zero)
 {
   adstring b;
-  EXPECT_EQ(-1, b.length(0));
+  EXPECT_EQ(1, b.length(0));
   adstring a(b);
   EXPECT_EQ(-1, a.length(0));
 }

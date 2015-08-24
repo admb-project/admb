@@ -926,10 +926,10 @@ void save_number_of_local_effects(int num_separable_calls,
   int num_local_re,int num_fixed_effects)
   //ivector& lre_index,ivector& lfe_index)
 {
-  if (*num_local_re_array==0)
+  if (*num_local_re_array == NULL)
   {
-    *num_local_re_array=new ivector(1,1000);
-    if (*num_local_re_array==0)
+    *num_local_re_array = new ivector(1,1000);
+    if (*num_local_re_array == NULL)
     {
       cerr << "error allocating ivector" << endl;
       ad_exit(1);
@@ -956,8 +956,8 @@ void save_number_of_local_effects(int num_separable_calls,
     (*num_local_re_array)=new ivector(1,new_max);
 
     delete *num_local_re_array;
-    *num_local_re_array=new ivector(1,new_max);
-    if (*num_local_re_array==0)
+    *num_local_re_array = new ivector(1,new_max);
+    if (*num_local_re_array == NULL)
     {
       cerr << "error allocating ivector" << endl;
       ad_exit(1);
@@ -971,10 +971,10 @@ void save_number_of_local_effects(int num_separable_calls,
  //***********************************************************
  //***********************************************************
 
-  if (*num_local_fixed_array==0)
+  if (*num_local_fixed_array == NULL)
   {
-    *num_local_fixed_array=new ivector(1,1000);
-    if (*num_local_fixed_array==0)
+    *num_local_fixed_array = new ivector(1,1000);
+    if (*num_local_fixed_array == NULL)
     {
       cerr << "error allocating ivector" << endl;
       ad_exit(1);
@@ -1000,9 +1000,9 @@ void save_number_of_local_effects(int num_separable_calls,
     tmp=(**num_local_fixed_array);
     (*num_local_fixed_array)=new ivector(1,new_max);
 
-    delete *num_local_fixed_array;
-    *num_local_fixed_array=new ivector(1,new_max);
-    if (*num_local_fixed_array==0)
+    delete* num_local_fixed_array;
+    *num_local_fixed_array = new ivector(1,new_max);
+    if (*num_local_fixed_array == NULL)
     {
       cerr << "error allocating ivector" << endl;
       ad_exit(1);
@@ -1050,7 +1050,7 @@ void laplace_approximation_calculator::
     case 3:
       num_separable_calls++;
       save_number_of_local_effects(num_separable_calls,
-        &num_local_re_array,&num_local_fixed_array,num_local_re,
+        &num_local_re_array, &num_local_fixed_array, num_local_re,
         num_fixed_effects); //,lre_index,lfe_index);
       for (int i=1;i<=num_local_re;i++)
       {

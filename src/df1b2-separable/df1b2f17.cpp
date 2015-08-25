@@ -14,19 +14,21 @@
   #include <unistd.h>
 #endif
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 fixed_smartlist::~fixed_smartlist()
 {
-  delete [] true_buffer;
-  true_buffer=0;
-  off_t pos=lseek(fp,0L,SEEK_END);
-  int on1=-1;
-  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-fsize"))>-1)
+  if (true_buffer)
+  {
+    delete [] true_buffer;
+    true_buffer = NULL;
+  }
+  int on1 = -1;
+  if ((on1 = option_match(ad_comm::argc, ad_comm::argv, "-fsize")) > -1)
   {
     if (ad_comm::global_logfile)
     {
+      off_t pos = lseek(fp, 0L, SEEK_END);
       *ad_comm::global_logfile << "size of file " << filename
         << " = " << pos << endl;
     }
@@ -38,21 +40,22 @@ fixed_smartlist::~fixed_smartlist()
   unlink(filename);
 #endif
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 fixed_smartlist2::~fixed_smartlist2()
 {
-  delete [] true_buffer;
-  true_buffer=0;
-  off_t pos=lseek(fp,0L,SEEK_END);
-  int on1=-1;
-  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-fsize"))>-1)
+  if (true_buffer)
+  {
+    delete [] true_buffer;
+    true_buffer = NULL;
+  }
+  int on1 = -1;
+  if ((on1 = option_match(ad_comm::argc, ad_comm::argv, "-fsize")) > -1)
   {
     if (ad_comm::global_logfile)
     {
+      off_t pos = lseek(fp, 0L, SEEK_END);
       *ad_comm::global_logfile << "size of file " << filename
         << " = " << pos << endl;
     }

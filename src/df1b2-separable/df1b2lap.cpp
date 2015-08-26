@@ -1251,6 +1251,16 @@ laplace_approximation_calculator::~laplace_approximation_calculator()
     delete sparse_symbolic2;
     sparse_symbolic2=0;
   }
+  if (num_local_re_array)
+  {
+    delete num_local_re_array;
+    num_local_re_array = NULL;
+  }
+  if (num_local_fixed_array)
+  {
+    delete num_local_fixed_array;
+    num_local_fixed_array = NULL;
+  }
 }
 
 /**

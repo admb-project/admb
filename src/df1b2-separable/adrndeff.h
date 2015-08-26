@@ -200,14 +200,18 @@ public:
   int rseed;
   static int print_importance_sampling_weights_flag;
   static dvar_vector * variance_components_vector;
-  static int where_are_we_flag; // 1 in inner opt 2 in newton-raphson 3 in
-                                // laplace approximation
-  int num_separable_calls; // 1 in inner opt 2 in newton-raphson 3 in
-  int separable_calls_counter; // 1 in inner opt 2 in newton-raphson 3 in
+  // 1 in inner opt 2 in newton-raphson 3 in laplace approximation
+  static int where_are_we_flag;
+  // 1 in inner opt 2 in newton-raphson 3 in
+  int num_separable_calls;
+  // 1 in inner opt 2 in newton-raphson 3 in
+  int separable_calls_counter;
   ivector nested_separable_calls_counter;
   ivector nested_tree_position;
-  ivector * num_local_re_array; // 1 in inner opt 2 in newton-raphson 3 in
-  ivector * num_local_fixed_array; // 1 in inner opt 2 in newton-raphson 3 in
+  // 1 in inner opt 2 in newton-raphson 3 in
+  ivector* num_local_re_array;
+  // 1 in inner opt 2 in newton-raphson 3 in
+  ivector* num_local_fixed_array;
   int use_outliers;
   int use_gauss_hermite;
   int in_gauss_hermite_phase;

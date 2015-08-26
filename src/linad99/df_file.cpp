@@ -140,11 +140,16 @@ DF_FILE::DF_FILE(const size_t nbytes):
 #endif
 */
 
-  if ((buff = new char[buff_size]) == NULL)
+  buff = new char[buff_size];
+  if (buff == NULL)
   {
     cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;
     ad_exit(1);
   }
+#ifndef OPT_LIB
+  memset(buff, 0, buff_size);
+#endif
+
   offset = 0;
   toffset = 0;
 

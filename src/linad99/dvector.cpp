@@ -436,9 +436,7 @@ void dvector::allocate(int ncl, int nch)
       ad_exit(21);
     }
 #ifndef OPT_LIB
-  #ifndef __SUNPRO_CC
-    fill_n(v, size, 0);
-  #endif
+    memset(v, 0, sizeof(double) * size);
 #endif
 
 #if defined(THREAD_SAFE)

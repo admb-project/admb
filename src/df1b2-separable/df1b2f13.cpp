@@ -22,6 +22,20 @@
 #endif
 
 /**
+Default constructor
+*/
+fixed_smartlist::fixed_smartlist()
+{
+  nentries=0;
+  bufsize=0;
+  buffer=0;
+  true_buffer=0;
+  buffend=0;
+  bptr=0;
+  fp=-1;
+}
+
+/**
  * Description not yet available.
  * \param
  */
@@ -34,22 +48,6 @@ void fixed_smartlist::reset(void)
   endof_file_ptr=lseek(fp,0L,SEEK_SET);
   written_flag=0;
 }
-
-/**
- * Description not yet available.
- * \param
- */
-fixed_smartlist::fixed_smartlist(void)
-{
-  nentries=0;
-  bufsize=0;
-  buffer=0;
-  true_buffer=0;
-  buffend=0;
-  bptr=0;
-  fp=-1;
-}
-
 /**
  * Description not yet available.
  * \param

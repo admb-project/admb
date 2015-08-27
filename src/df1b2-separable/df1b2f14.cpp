@@ -22,10 +22,9 @@
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
-fixed_smartlist2::fixed_smartlist2(void)
+Default constructor
+*/
+fixed_smartlist2::fixed_smartlist2()
 {
   nentries=0;
   end_saved=0;

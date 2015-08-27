@@ -70,15 +70,10 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
   bufsize=_bufsize;
   filename=_filename;
   AD_ALLOCATE(true_buffer,fixed_list_entry,nentries+2,df1b2_gradlist)
-  doubleptr=(double*)true_buffer;
   true_buffend=true_buffer+nentries+1;
   buffer=true_buffer+1;
   buffend=true_buffend-2;
   bptr=buffer;
-  true_buffer->numbytes=5678;
-  //int(true_buffer->pf)=1234;
-  true_buffend->numbytes=9999;
-  //int(true_buffend->pf)=6666;
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
   if (fp == -1)

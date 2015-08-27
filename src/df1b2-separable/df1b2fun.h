@@ -502,7 +502,6 @@ public:
     void restore_end(void);
     int eof_flag;
     int end_saved;
-    double * doubleptr;
     char * true_buffer;
     char * true_buffend;
     char * recend;
@@ -585,7 +584,6 @@ public:
     void restore_end(void);
     int eof_flag;
     int end_saved;
-    double * doubleptr;
     fixed_list_entry * true_buffer;
     fixed_list_entry * true_buffend;
     fixed_list_entry * recend;
@@ -652,7 +650,6 @@ public:
     void restore_end(void);
     int eof_flag;
     int end_saved;
-    double * doubleptr;
     int * true_buffer;
     int * true_buffend;
     int * recend;

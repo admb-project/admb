@@ -189,7 +189,11 @@ struct df1b2_header
   double* u_dot_tilde;
   double* u_bar_tilde;
   double* u_dot_bar_tilde;
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+  long indindex;
+#else
   int indindex;
+#endif
 
   //double * get_ptr(void){return ptr;}
 
@@ -267,8 +271,13 @@ struct df1b2_header
     static void set_blocksize(void);
     static unsigned int get_blocksize(void);
     static unsigned int get_blocksize(const unsigned int n);
-    int & get_ind_index(void){ return indindex;}
-    const int& get_ind_index(void) const { return indindex;}
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+    long& get_ind_index() { return indindex; }
+    const long& get_ind_index() const { return indindex; }
+#else
+    int& get_ind_index() { return indindex; }
+    const int& get_ind_index() const { return indindex; }
+#endif
     short int* ncopies;
     // for fixed size n whole thing is 6n+2
     void initialize(void);

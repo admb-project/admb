@@ -170,7 +170,6 @@ void read_pass1_2(void);
     ad_exit(1); \
   }
 
-
 #undef ADUNCONST
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
@@ -194,29 +193,30 @@ struct df1b2_header
 #else
   int indindex;
 #endif
-  df1b2_header()
+
+  /// Default constructor
+  df1b2_header():
+    u(NULL),
+    u_dot(NULL),
+    u_bar(NULL),
+    u_dot_bar(NULL),
+    u_tilde(NULL),
+    u_dot_tilde(NULL),
+    u_bar_tilde(NULL),
+    u_dot_bar_tilde(NULL),
+    indindex(0)
   {
-    u = NULL;
-    u_dot = NULL;
-    u_bar = NULL;
-    u_dot_bar = NULL;
-    u_tilde = NULL;
-    u_dot_tilde = NULL;
-    u_bar_tilde = NULL;
-    u_dot_bar_tilde = NULL;
-    indindex = 0;
   }
 
-  //double * get_ptr(void){return ptr;}
-
-  double* get_u(void) const {return (double*)u;}
-  double* get_u_dot(void) const {return (double*)u_dot;}
-  double* get_u_bar(void) const {return (double*)u_bar;}
-  double* get_u_dot_bar(void) const {return (double*)u_dot_bar;}
-  double* get_u_tilde(void) const {return (double*)u_tilde;}
-  double* get_u_dot_tilde(void) const {return (double*)u_dot_tilde;}
-  double* get_u_bar_tilde(void) const {return (double*)u_bar_tilde;}
-  double* get_u_dot_bar_tilde(void) const {return (double*)u_dot_bar_tilde;}
+  //double* get_ptr(){ return ptr; }
+  double* get_u() const { return u; }
+  double* get_u_dot() const { return u_dot; }
+  double* get_u_bar() const { return u_bar; }
+  double* get_u_dot_bar() const { return u_dot_bar; }
+  double* get_u_tilde() const { return u_tilde; }
+  double* get_u_dot_tilde() const { return u_dot_tilde; }
+  double* get_u_bar_tilde() const { return u_bar_tilde; }
+  double* get_u_dot_bar_tilde() const { return u_dot_bar_tilde; }
 };
   class adkludge1;
 

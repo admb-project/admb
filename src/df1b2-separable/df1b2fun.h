@@ -194,6 +194,18 @@ struct df1b2_header
 #else
   int indindex;
 #endif
+  df1b2_header()
+  {
+    u = NULL;
+    u_dot = NULL;
+    u_bar = NULL;
+    u_dot_bar = NULL;
+    u_tilde = NULL;
+    u_dot_tilde = NULL;
+    u_bar_tilde = NULL;
+    u_dot_bar_tilde = NULL;
+    indindex = 0;
+  }
 
   //double * get_ptr(void){return ptr;}
 

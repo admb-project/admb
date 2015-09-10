@@ -64,8 +64,8 @@ public:
   int depth_check(void);
   unsigned int nvar;
   int& on_adpool_vector(void) {return adpool_vector_flag;}
-  char * last_chunk;
-  struct link { link * next; };
+  char* last_chunk;
+  struct link { link* next; };
   int num_allocated;
   int num_chunks;
   size_t nelem;

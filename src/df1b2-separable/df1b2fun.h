@@ -936,10 +936,10 @@ class df3_two_vector;
  * Description not yet available.
  * \param
  */
-class df1b2vector : public df1b2vector_header
+class df1b2vector: public df1b2vector_header
 {
-  df1b2variable * v;
-  vector_shapex * shape;
+  df1b2variable* v;
+  vector_shapex* shape;
 public:
   inline df1b2vector& operator -- (void)
   {
@@ -950,7 +950,7 @@ public:
     index_min++;index_max++;v--; return *this;
   }
   int pointersize() const { return (int)sizeof(df1b2variable); }
-  inline df1b2variable * getv(void) {return v;}
+  inline df1b2variable* getv() { return v; }
   int allocated(void){return v!=0;}
   int indexmin(void)const {return index_min;}
   int indexmax(void)const {return index_max;}

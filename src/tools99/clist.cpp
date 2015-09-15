@@ -23,7 +23,7 @@ clist::~clist()
 {
   if (next == this)
   {
-    next = NULL;
+    next = 0;
   }
   else
   {

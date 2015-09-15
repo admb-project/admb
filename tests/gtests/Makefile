@@ -10,7 +10,7 @@ ADMB_OPTIONS=-g
 
 GTEST_DIR=googletest-read-only
 
-GTESTS=\
+GTESTS2=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
  test_adstring.cpp\
@@ -48,6 +48,9 @@ GTESTS=\
  test_ad_integer.cpp\
  test_ivector.cpp\
  test_dvector.cpp\
+00
+GTESTS=\
+ test_df1b2variable.cpp\
  main.cpp
 
 ##Need to debug this

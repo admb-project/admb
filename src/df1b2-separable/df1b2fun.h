@@ -170,7 +170,6 @@ void read_pass1_2(void);
     ad_exit(1); \
   }
 
-
 #undef ADUNCONST
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
@@ -189,18 +188,35 @@ struct df1b2_header
   double* u_dot_tilde;
   double* u_bar_tilde;
   double* u_dot_bar_tilde;
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+  long indindex;
+#else
   int indindex;
+#endif
 
-  //double * get_ptr(void){return ptr;}
+  /// Default constructor
+  df1b2_header():
+    u(NULL),
+    u_dot(NULL),
+    u_bar(NULL),
+    u_dot_bar(NULL),
+    u_tilde(NULL),
+    u_dot_tilde(NULL),
+    u_bar_tilde(NULL),
+    u_dot_bar_tilde(NULL),
+    indindex(0)
+  {
+  }
 
-  double* get_u(void) const {return (double*)u;}
-  double* get_u_dot(void) const {return (double*)u_dot;}
-  double* get_u_bar(void) const {return (double*)u_bar;}
-  double* get_u_dot_bar(void) const {return (double*)u_dot_bar;}
-  double* get_u_tilde(void) const {return (double*)u_tilde;}
-  double* get_u_dot_tilde(void) const {return (double*)u_dot_tilde;}
-  double* get_u_bar_tilde(void) const {return (double*)u_bar_tilde;}
-  double* get_u_dot_bar_tilde(void) const {return (double*)u_dot_bar_tilde;}
+  //double* get_ptr(){ return ptr; }
+  double* get_u() const { return u; }
+  double* get_u_dot() const { return u_dot; }
+  double* get_u_bar() const { return u_bar; }
+  double* get_u_dot_bar() const { return u_dot_bar; }
+  double* get_u_tilde() const { return u_tilde; }
+  double* get_u_dot_tilde() const { return u_dot_tilde; }
+  double* get_u_bar_tilde() const { return u_bar_tilde; }
+  double* get_u_dot_bar_tilde() const { return u_dot_bar_tilde; }
 };
   class adkludge1;
 
@@ -267,8 +283,13 @@ struct df1b2_header
     static void set_blocksize(void);
     static unsigned int get_blocksize(void);
     static unsigned int get_blocksize(const unsigned int n);
-    int & get_ind_index(void){ return indindex;}
-    const int& get_ind_index(void) const { return indindex;}
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+    long& get_ind_index() { return indindex; }
+    const long& get_ind_index() const { return indindex; }
+#else
+    int& get_ind_index() { return indindex; }
+    const int& get_ind_index() const { return indindex; }
+#endif
     short int* ncopies;
     // for fixed size n whole thing is 6n+2
     void initialize(void);
@@ -502,7 +523,6 @@ public:
     void restore_end(void);
     int eof_flag;
     int end_saved;
-    double * doubleptr;
     char * true_buffer;
     char * true_buffend;
     char * recend;
@@ -585,7 +605,6 @@ public:
     void restore_end(void);
     int eof_flag;
     int end_saved;
-    double * doubleptr;
     fixed_list_entry * true_buffer;
     fixed_list_entry * true_buffend;
     fixed_list_entry * recend;
@@ -652,7 +671,6 @@ public:
     void restore_end(void);
     int eof_flag;
     int end_saved;
-    double * doubleptr;
     int * true_buffer;
     int * true_buffend;
     int * recend;
@@ -918,10 +936,10 @@ class df3_two_vector;
  * Description not yet available.
  * \param
  */
-class df1b2vector : public df1b2vector_header
+class df1b2vector: public df1b2vector_header
 {
-  df1b2variable * v;
-  vector_shapex * shape;
+  df1b2variable* v;
+  vector_shapex* shape;
 public:
   inline df1b2vector& operator -- (void)
   {
@@ -932,7 +950,7 @@ public:
     index_min++;index_max++;v--; return *this;
   }
   int pointersize() const { return (int)sizeof(df1b2variable); }
-  inline df1b2variable * getv(void) {return v;}
+  inline df1b2variable* getv() { return v; }
   int allocated(void){return v!=0;}
   int indexmin(void)const {return index_min;}
   int indexmax(void)const {return index_max;}

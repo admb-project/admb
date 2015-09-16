@@ -30,6 +30,7 @@ ADMB-trunk
 
 ####New Supported Compilers
 * Microsoft Visual C++ 14.0
+* Intel C++ 2016
 
 ####New Features
 

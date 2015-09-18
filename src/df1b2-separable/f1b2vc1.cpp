@@ -583,34 +583,36 @@ df1b2variable& df1b2vector::operator [] (int i) const
 }
 #endif
 
+/// Default constructor
+df1b2vector::df1b2vector():
+  v(NULL), shape(NULL)
+{
+}
 /**
  * Description not yet available.
  * \param
  */
-df1b2vector::df1b2vector(int lb,int ub)
+df1b2vector::df1b2vector(int lb, int ub):
+  v(NULL), shape(NULL)
 {
-  if (lb<=ub)
-    allocate(lb,ub);
-  else
-    allocate();
+  if (lb <= ub)
+  {
+    allocate(lb, ub);
+  }
 }
-
 /**
  * Construct df1b2vector from dvector v.
  */
-df1b2vector::df1b2vector(const dvector& v)
+df1b2vector::df1b2vector(const dvector& v):
+  v(NULL), shape(NULL)
 {
-  if (!v)
-  {
-    allocate();
-  }
-  else
+  if (v.allocated())
   {
     const int lb = v.indexmin();
     const int ub = v.indexmax();
-    if (lb<=ub)
+    if (lb <= ub)
     {
-      allocate(lb,ub);
+      allocate(lb, ub);
       for (int i = lb; i <= ub; i++)
       {
         (*this)[i] = v[i];
@@ -618,16 +620,6 @@ df1b2vector::df1b2vector(const dvector& v)
     }
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
-df1b2vector::df1b2vector(void)
-{
-  allocate();
-}
-
 /**
  * Description not yet available.
  * \param
@@ -673,8 +665,12 @@ void df1b2vector::allocate(int lb,int ub)
   }
   else
   {
+    if (v)
+    {
+      deallocate();
+    }
     //AD_ALLOCATE(v,df1b2variable,sz,df1b2vector);
-    v=new df1b2variable[sz];
+    v = new df1b2variable[sz];
     if ( (shape=new vector_shapex(lb,ub,v)) == NULL)
     {
       cerr << "Error trying to allocate memory for df1b2vector\n";
@@ -770,20 +766,21 @@ void df1b2vector::deallocate()
       {
         v = (df1b2variable*)shape->trueptr;
         delete [] v;
-        v = NULL;
       }
 
       delete shape;
-      shape = NULL;
     }
+    v = NULL;
+    shape = NULL;
   }
 }
 /**
-Copy constructor
+Copy from constructor
 */
-df1b2vector::df1b2vector(const df1b2vector& _x)
+df1b2vector::df1b2vector(const df1b2vector& from):
+  v(NULL), shape(NULL)
 {
- copy(_x);
+  copy(from);
 }
 /**
  * Description not yet available.
@@ -792,18 +789,15 @@ df1b2vector::df1b2vector(const df1b2vector& _x)
 void df1b2vector::copy(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
-  index_min=x.index_min;
-  index_max=x.index_max;
   if (x.shape)
   {
     shape=x.shape;
     (shape->ncopies)++;
+
     v=x.v;
-  }
-  else
-  {
-    shape=0;
-    v=0;
+
+    index_min=x.index_min;
+    index_max=x.index_max;
   }
 }
 
@@ -811,21 +805,21 @@ void df1b2vector::copy(const df1b2vector& _x)
  * Description not yet available.
  * \param
  */
- df1b2vector::df1b2vector(const predf1b2vector& pdv)
- {
-   shape=pdv.p->shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   else
-   {
-     cerr << "Taking a subvector  of an unallocated dvector"<<endl;
-   }
-   v = pdv.p->v;
-   index_min=pdv.lb;
-   index_max=pdv.ub;
- }
+df1b2vector::df1b2vector(const predf1b2vector& pdv)
+{
+  shape=pdv.p->shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+  }
+  else
+  {
+    cerr << "Taking a subvector  of an unallocated dvector"<<endl;
+  }
+  v = pdv.p->v;
+  index_min=pdv.lb;
+  index_max=pdv.ub;
+}
 
 /**
  * Description not yet available.

@@ -75,8 +75,7 @@ df1b2variable::df1b2variable(double d)
 /**
 Default constructor
 */
-df1b2variable::df1b2variable():
-  ptr(NULL), ncopies(NULL)
+df1b2variable::df1b2variable(void)
 {
   if (!df1b2variable::noallocate)
   {
@@ -84,6 +83,8 @@ df1b2variable::df1b2variable():
   }
   else
   {
+    ptr=0;
+    ncopies=0;
     u=0;
     u_dot=0;
     u_bar=0;
@@ -99,10 +100,11 @@ df1b2variable::df1b2variable():
  * Description not yet available.
  * \param
  */
-df1b2variable::df1b2variable(const newadkludge* z):
-  ptr(NULL), ncopies(NULL)
+df1b2variable::df1b2variable(const newadkludge* z)
 {
+  ptr=0;
 #if defined(SAFE_ALL)
+  ncopies=0;
   u=0;
   u_dot=0;
   u_bar=0;
@@ -118,7 +120,7 @@ df1b2variable::df1b2variable(const newadkludge* z):
  * Description not yet available.
  * \param
  */
-void df1b2variable::allocate()
+void df1b2variable::allocate(void)
 {
   // vectors are all 1,...,nvar
   ptr = (double*) pool->alloc();

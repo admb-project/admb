@@ -88,7 +88,6 @@ public:
   void* alloc(void);
   void free(void* b);
   void deallocate(void);
-  bool find(char* ptr) const;
 #if defined(__CHECK_MEMORY__)
   int bad(link * p);
   int badaddress(link * p);

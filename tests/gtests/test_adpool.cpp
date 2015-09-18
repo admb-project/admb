@@ -358,24 +358,3 @@ TEST_F(test_adpool, alloc_free2xend_deallocate)
   ASSERT_EQ(0, a.num_allocated);
   ASSERT_EQ(0, a.depth_check());
 }
-TEST_F(test_adpool, find)
-{
-  adpool a;
-  const size_t n = 2;
-  size_t size = sizeof(double) * (6 * n + 5);
-  a.set_size(size);
-
-  void* b1 = a.alloc();
-  void* b2 = a.alloc();
-  void* end = a.alloc();
-
-  ASSERT_TRUE(a.find((char*)b1)); 
-  ASSERT_TRUE(a.find((char*)b2)); 
-  ASSERT_TRUE(a.find((char*)end)); 
-
-  a.deallocate();
-
-  ASSERT_FALSE(a.find((char*)b1)); 
-  ASSERT_FALSE(a.find((char*)b2)); 
-  ASSERT_FALSE(a.find((char*)end)); 
-}

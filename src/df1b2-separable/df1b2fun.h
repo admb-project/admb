@@ -84,7 +84,7 @@ public:
 #if defined (INCLUDE_BLOCKSIZE)
   int blocksize;
 #endif
-  adpool* ptr;
+  adpool * ptr;
 };
 
 

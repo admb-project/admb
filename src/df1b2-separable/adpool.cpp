@@ -214,24 +214,6 @@ int adpool::badaddress(link * p)
 void * pchecker=0;
 #endif
 
-bool adpool::find(char* ptr) const
-{
-  const size_t overhead = sizeof(intptr_t);
-  intptr_t address;
-  char* chunk = last_chunk;
-  while (chunk)
-  {
-    char* start = &chunk[0] + overhead;
-    char* last = start + (size * nelem - 1);
-    if (start <= ptr && ptr <= last)
-    {
-      return true;
-    }
-    memcpy(&address, &chunk[0], overhead);
-    chunk = (char*)address;
-  }
-  return false;
-}
 /**
 Put back ptr from adpool::alloc to adpool space.
 */

@@ -606,10 +606,10 @@ df1b2vector::df1b2vector(int lb, int ub):
 df1b2vector::df1b2vector(const dvector& v):
   v(NULL), shape(NULL)
 {
+  const int lb = v.indexmin();
+  const int ub = v.indexmax();
   if (v.allocated())
   {
-    const int lb = v.indexmin();
-    const int ub = v.indexmax();
     if (lb <= ub)
     {
       allocate(lb, ub);
@@ -618,6 +618,11 @@ df1b2vector::df1b2vector(const dvector& v):
         (*this)[i] = v[i];
       }
     }
+  }
+  else
+  {
+    index_min = lb;
+    index_max = ub;
   }
 }
 /**
@@ -795,10 +800,9 @@ void df1b2vector::copy(const df1b2vector& _x)
     (shape->ncopies)++;
 
     v=x.v;
-
-    index_min=x.index_min;
-    index_max=x.index_max;
   }
+  index_min = x.index_min;
+  index_max = x.index_max;
 }
 
 /**

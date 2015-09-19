@@ -292,7 +292,7 @@ void df1b2variable::deallocate()
   if (ptr)
   {
     bool found = false;
-    for (int i = 1; i < df1b2variable::adpool_counter; ++i)
+    for (int i = 0; i < df1b2variable::adpool_counter; ++i)
     {
       if (df1b2variable::adpool_vector[i]->find((char*)ptr))
       {

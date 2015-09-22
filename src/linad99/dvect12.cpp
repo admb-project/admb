@@ -24,12 +24,9 @@ double sum(const dvector &v)
     return tmp;
   }
 
-/** \ingroup matop
-  Sum of the elements in each row of a matrix; constant object.
-  \param v Reference to a matrix.
-  \return A dvector, \f$s\f$, of length equal to the number of columns 
-   in the matrix.
-   \f$s_j=\sum_i v_{ij}\f$
+/**
+ * Description not yet available.
+ * \param
  */
 dvector colsum(const dmatrix &v)
   {
@@ -51,12 +48,9 @@ dvector colsum(const dmatrix &v)
     return tmp;
   }
 
-/** \ingroup matop
-  Sum of the elements in each column of a matrix; constant object.
-  \param v Reference to a matrix.
-  \return A dvector, \f$s\f$, of length equal to the number of rows 
-   in the matrix.
-   \f$s_i=\sum_j v_{ij}\f$
+/**
+ * Description not yet available.
+ * \param
  */
 dvector rowsum(const dmatrix &v)
   {

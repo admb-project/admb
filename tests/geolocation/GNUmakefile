@@ -49,24 +49,24 @@ else
 endif
 
 kfsst:
-	svn checkout https://github.com/positioning/kalmanfilter/trunk/deprecated/kfsst/kfsst/source kfsst
-	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/kfsst/kfsst.dat > kfsst/kfsst.dat
-	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/kfsst/sst.dat > kfsst/sst.dat
+	svn checkout http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source kfsst
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/kfsst.dat > kfsst/kfsst.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/sst.dat > kfsst/sst.dat
 
 kftrack:
-	svn checkout https://github.com/positioning/kalmanfilter/trunk/kftrack/inst/admb/src kftrack
-	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/kftrack/kftrack.dat > kftrack/kftrack.dat
+	svn checkout http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src kftrack
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kftrack/kftrack.dat > kftrack/kftrack.dat
 
 trackit:
-	svn checkout https://github.com/positioning/kalmanfilter/trunk/trackit/inst/admb/src trackit
-	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/trackit/ukf.dat > trackit/ukf.dat
-	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/trackit/sstsim.dat > trackit/sstsim.dat
-	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/trackit/model.cfg > trackit/model.cfg
+	svn checkout http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src trackit
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/ukf.dat > trackit/ukf.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/sstsim.dat > trackit/sstsim.dat
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/model.cfg > trackit/model.cfg
 
 ukfsst:
-	svn checkout https://github.com/positioning/kalmanfilter/trunk/ukfsst/inst/admb/src ukfsst
-	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/ukfsst/ukfsst.dat > ukfsst/ukfsst.dat
-	svn export https://github.com/positioning/kalmanfilter/trunk/testdir/ukfsst/sst_files ukfsst/sst_files
+	svn checkout http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src ukfsst
+	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/ukfsst.dat > ukfsst/ukfsst.dat
+	svn export http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/sst_files ukfsst/sst_files
 
 run:
 ifeq ($(SHELL),cmd)

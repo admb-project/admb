@@ -22,9 +22,10 @@
 #endif
 
 /**
-Default constructor
-*/
-fixed_smartlist2::fixed_smartlist2()
+ * Description not yet available.
+ * \param
+ */
+fixed_smartlist2::fixed_smartlist2(void)
 {
   nentries=0;
   end_saved=0;
@@ -66,10 +67,13 @@ void fixed_smartlist2::allocate(const size_t _bufsize,
   bufsize=_bufsize;
   filename=_filename;
   AD_ALLOCATE(true_buffer,int,nentries+2,df1b2_gradlist)
+  doubleptr=(double*)true_buffer;
   true_buffend=true_buffer+nentries+1;
   buffer=true_buffer+1;
   buffend=true_buffend-1;
   bptr=buffer;
+  *true_buffer=5678;
+  *true_buffend=9999;
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
   if (fp == -1)

@@ -9,7 +9,6 @@
  * Description not yet available.
  */
 
-#include <stdint.h>
 #include <df1b2fun.h>
 #include <adpool.h>
 #ifndef OPT_LIB
@@ -17,25 +16,25 @@
   #include <climits>
 #endif
 //#define (_USE_VALGRIND_)
-int adpool::num_adpools = 0;
 
 /**
  * Description not yet available.
  * \param
  */
-int adpool::depth_check()
+int adpool::depth_check(void)
 {
-  int depth = 0;
-
-  link* p = head;
+  link * p=head;
+  int depth=0;
   while (p)
   {
-    ++depth;
-    p = p->next;
+    depth++;
+    p=p->next;
   }
-
   return depth;
 }
+
+
+  int adpool::num_adpools=0;
 
 #if defined(__CHECK_MEMORY__)
 /**
@@ -44,8 +43,8 @@ int adpool::depth_check()
  */
 void adpool::sanity_check(void)
 {
-  link* p = head;
-  int depth = 0;
+  link * p=head;
+  int depth=0;
   while (p)
   {
     depth++;
@@ -102,7 +101,7 @@ void adpool::sanity_check(void * ptr)
  */
 void adpool::write_pointers(int mmin,int mmax)
 {
-  link* p = head;
+  link * p=head;
   int index=0;
   while (p)
   {
@@ -115,9 +114,9 @@ void adpool::write_pointers(int mmin,int mmax)
 #endif
 
 /**
-Return a ptr from adpool space.
+Allocate memory for link*.
 */
-void* adpool::alloc()
+void* adpool::alloc(void)
 {
   if (!head)
   {
@@ -142,7 +141,7 @@ void* adpool::alloc()
 #endif
 
   head = p->next;
-  ++num_allocated;
+  num_allocated++;
 
 #if defined(__CHECK_MEMORY__)
   if (p == pchecker)
@@ -214,28 +213,11 @@ int adpool::badaddress(link * p)
 void * pchecker=0;
 #endif
 
-bool adpool::find(char* ptr) const
-{
-  const size_t overhead = sizeof(intptr_t);
-  intptr_t address;
-  char* chunk = last_chunk;
-  while (chunk)
-  {
-    char* start = &chunk[0] + overhead;
-    char* last = start + (size * nelem - 1);
-    if (start <= ptr && ptr <= last)
-    {
-      return true;
-    }
-    memcpy(&address, &chunk[0], overhead);
-    chunk = (char*)address;
-  }
-  return false;
-}
 /**
-Put back ptr from adpool::alloc to adpool space.
-*/
-void adpool::free(void* b)
+ * Description not yet available.
+ * \param
+ */
+void adpool::free(void * b)
 {
 #if defined(SAFE_ALL)
   twointsandptr* tmp = (twointsandptr*)(b);
@@ -267,66 +249,68 @@ void adpool::free(void* b)
      }
    }
 #endif
-  ((link*)b)->next = head;
-  head = (link*)b;
+  //cout << "freeing " << b << endl;
+  link * p = (link*) b;
+  p->next = head;
   num_allocated--;
+  head = p;
 }
-/**
-Default constructor
-*/
-adpool::adpool()
-{
-#ifndef OPT_LIB
-  //Error because sizeof(twointsandptr)>2*sizeof(double)
-  assert(sizeof(twointsandptr) <= sizeof(double) * 2);
-#endif
 
-  ++num_adpools;
-  adpool_vector_flag=0;
-  size=0;
-  last_chunk = NULL;
-  head = 0;
-  num_allocated=0;
-  num_chunks=0;
-  first = NULL;
-  nelem = 0;
-  nvar = 0;
-#if defined(__CHECK_MEMORY__)
-  nalloc=0;
-  pvalues=0;
-  maxchunks=0;
-#endif
+/**
+ * Description not yet available.
+ * \param
+ */
+adpool::~adpool(void)
+{
+  num_adpools--;
+  deallocate();
 }
+
 /**
  * Description not yet available.
  * \param
  */
 adpool::adpool(const size_t sz):
-  size(sizeof(link*))
+  size(sz < sizeof(link*) ? sizeof(link*) : sz)
 {
   num_adpools++;
   adpool_vector_flag=0;
-  if (sz > size) size = sz;
-  last_chunk = NULL;
+  if (!sz) size=0;
+  last_chunk=0;
   head = 0;
   num_allocated=0;
   num_chunks=0;
-  first = NULL;
-  nelem = 0;
-  nvar = 0;
 #if defined(__CHECK_MEMORY__)
   nalloc=0;
   pvalues=0;
   maxchunks=0;
 #endif
 }
+
 /**
-Destructor
+Default constructor
 */
-adpool::~adpool()
+adpool::adpool()
 {
-  num_adpools--;
-  deallocate();
+  num_adpools++;
+  size_t i1=sizeof(twointsandptr);
+  size_t i2=2*sizeof(double);
+  if (i1>i2)
+  {
+    cout << "Error because sizeof(twointsandptr)>2*sizeof(double)" << endl;
+    ad_exit(1);
+  }
+  adpool_vector_flag=0;
+  size=0;
+  last_chunk=0;
+  head = 0;
+  num_allocated=0;
+  num_chunks=0;
+#if defined(__CHECK_MEMORY__)
+  nalloc=0;
+  pvalues=0;
+  maxchunks=0;
+#endif
 }
 
 /**
@@ -346,69 +330,118 @@ void adpool::set_size(const size_t sz)
 }
 
 /**
-Free all adpool space.
-*/
-void adpool::deallocate()
+ * Description not yet available.
+ * \param
+ */
+void adpool::deallocate(void)
 {
 #if defined(__CHECK_MEMORY__)
   sanity_check();
   sanity_check2();
 #endif
-  intptr_t address;
   while (last_chunk)
   {
-    --num_chunks;
-    memcpy(&address, &last_chunk[0], sizeof(intptr_t));
+    num_chunks--;
+    char * tmp=*(char**) last_chunk;
     delete [] last_chunk;
-    last_chunk = (char*)address;
+    last_chunk=tmp;
   }
-  size = 0;
-  head = NULL;
-  num_allocated = 0;
-  first = NULL;
-  nelem = 0;
+  size=0;
+  head=0;
+  num_allocated=0;
+  first=0;
 #if defined(__CHECK_MEMORY__)
   nalloc=0;
   delete [] pvalues;
   pvalues=0;
 #endif
 }
-/**
-Allocate more adpool space.
-*/
-void adpool::grow()
+/*
+void adpool::deallocate(void)
 {
-#ifndef OPT_LIB
-  //error in adpool object you must set the unit size
-  assert(size > 0);
+  last_chunk=0
+  size=0;
+  head = 0;
+}
+*/
+
+/**
+*/
+void adpool::grow(void)
+{
+#if defined(__CHECK_MEMORY__)
+  const int pvalues_size=500000;
+  if (!pvalues)
+  {
+    maxchunks=20000;
+    nalloc=0;
+    pvalues=new int[pvalues_size];
+  }
 #endif
 
-  const size_t overhead = sizeof(intptr_t);
-  const size_t chunk_size = 16 * 65000;
-  nelem = (chunk_size - overhead)/ size;
+  const size_t overhead = 12 + sizeof(char*);
+  const size_t chunk_size = 16 * 65000 - overhead;
+  char* real_start = new char[chunk_size];
 
-  size_t length = overhead + nelem * size;
-  char* real_start = new char[length];
-  memset(real_start, 0, length);
-
-  if (last_chunk)
+  if (size > 0)
   {
-    intptr_t address = (intptr_t)&last_chunk[0];
-    memcpy(&real_start[0], &address, overhead);
+    nelem = chunk_size / size;
   }
-  last_chunk = real_start;
-  ++num_chunks;
+  else
+  {
+    cerr << "error in adpool object " // << poolname
+         << " you must set the unit size " << endl;
+    ad_exit(1);
+  }
 
-  char* start = real_start + overhead;
-  head = (link*)start;
-  first = (double*)start;
+#if defined(_USE_VALGRIND_)
+   VALGRIND_MAKE_MEM_NOACCESS(realstart,chunk_size);
+#endif
 
-  char* last = start + size * (nelem - 1);
+  char* start = real_start + sizeof(char*);
+  char* last = &start[(nelem - 1) * size];
+  num_chunks++;
+
+#if defined(__CHECK_MEMORY__)
+  if (num_chunks<maxchunks)
+  {
+    minaddress[num_chunks]=(real_start);
+    maxaddress[num_chunks]=(real_start+chunk_size-1);
+  }
+#endif
+
+  if (last_chunk == 0)
+  {
+    last_chunk = real_start;
+    *(char**)real_start = 0;
+  }
+  else
+  {
+    *(char**)real_start = last_chunk;
+    last_chunk = real_start;
+  }
+
+#if defined(__CHECK_MEMORY__)
+  if (nalloc>pvalues_size-1)
+  {
+    cerr << "Error in check memory need to make pvalues bigger than "
+      << pvalues_size << endl;
+    ad_exit(1);
+  }
+  pvalues[nalloc++]=int(start);
+#endif
+
   for (char* p = start; p < last; p += size)
   {
-    ((link*)p)->next = (link*)(p + size);
+    ((link *)p)->next = (link*)(p+size);
+#if defined(__CHECK_MEMORY__)
+    pvalues[nalloc++]=int((link*)(p+size));
+#endif
   }
-  ((link*)last)->next = NULL;
+
+  ((link*)last)->next = 0;
+  head = (link*)start;
+  first = (double*)start;
 }
 
 /**

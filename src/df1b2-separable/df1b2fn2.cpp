@@ -281,42 +281,37 @@ Destructor
 */
 df1b2variable::~df1b2variable()
 {
-  deallocate();
+    deallocate();
 }
 
 /**
 If no other copies exist, free df1b2variable::ptr.
 */
-void df1b2variable::deallocate()
+void df1b2variable::deallocate(void)
 {
   if (ptr)
   {
-    bool found = false;
-    for (int i = 0; i < df1b2variable::adpool_counter; ++i)
+#if defined(__CHECK_MEMORY__)
+    if (pchecker)
     {
-      if (df1b2variable::adpool_vector[i]->find((char*)ptr))
+      if (ptr == pchecker)
       {
-        found = true;
-        break;
+        cout << "destructor called  " << endl;
       }
     }
-    if (found)
+#endif
+    if (ncopies && *ncopies)
     {
-      if (*ncopies)
-      {
-        --(*ncopies);
-      }
-      else
-      {
-        if (!df1b2_gradlist::no_derivatives)
-        {
-          f1b2gradlist->write_save_pass2_tilde_values(this);
-        }
-        ((twointsandptr*)ptr)->ptr->free(ptr);
-      }
+      (*ncopies)--;
     }
-    ptr = NULL;
-    ncopies = NULL;
+    else
+    {
+      if (!df1b2_gradlist::no_derivatives)
+        f1b2gradlist->write_save_pass2_tilde_values(this);
+      ((twointsandptr*)ptr)->ptr->free(ptr);
+
+      ptr = 0;
+    }
   }
 }
 

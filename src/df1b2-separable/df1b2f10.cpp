@@ -82,8 +82,12 @@ void test_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
     cerr << "Allocation error in df1b2_gradlist" << endl;
     ad_exit(1);
   }
+  doubleptr=(double*)true_buffer;
   true_buffend=true_buffer+bufsize+2*sizeof(double)-1;
   buffer=true_buffer+sizeof(double);
+  *(double*)(true_buffer)=5678.9;
+  *(double*)(true_buffer+bufsize+sizeof(double))=9876.5;
+  //buffend=true_buffer+bufsize-1+sizeof(double);
   buffend=true_buffer+bufsize-1;
   bptr=buffer;
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |

@@ -43,8 +43,7 @@
 class clist
 {
 public:
-  int length(const int& max = 1000);
-
+  int length(const int& max = 1000) const;
 protected :
   clist* next;
   clist()
@@ -52,9 +51,7 @@ protected :
     next = this;
   }
   clist(const clist& pt);
-
-  clist* prev();
-
+  clist* prev() const;
 public:
   ~clist();
 };

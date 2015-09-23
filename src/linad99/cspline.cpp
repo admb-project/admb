@@ -89,8 +89,8 @@ dvector spline(const dvector &_x,const dvector&_y,double yp1,double ypn)
   return y2;
 }
 
-
-double splint(const dvector& _xa,const dvector& _ya,const dvector& _y2a,double x)
+double splint(const dvector& _xa,const dvector& _ya,const dvector& _y2a,
+  double x)
 {
   dvector& xa=(dvector&) _xa;
   dvector& ya=(dvector&) _ya;

@@ -31,8 +31,12 @@ ADMB-trunk
 ####New Supported Compilers
 * Microsoft Visual C++ 14.0
 * Intel C++ 2016
+* GNU C++ 5.2
 
 ####New Features
+
+####Changes and Improvements
+* Change to Dave Fournier's version of cspline.cpp.
 
 ADMB-11.4
 ----------

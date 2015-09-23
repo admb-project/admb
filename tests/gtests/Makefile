@@ -48,6 +48,7 @@ GTESTS=\
  test_ad_integer.cpp\
  test_ivector.cpp\
  test_dvector.cpp\
+ test_cspline.cpp\
  main.cpp
 
 ##Need to debug this

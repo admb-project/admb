@@ -3,6 +3,8 @@ VERSION=11.4
 all:
 	$(MAKE) clean
 	$(MAKE) admb_$(VERSION).deb
+	lintian -v -i admb_$(VERSION).deb
+
 
 admb_$(VERSION).deb: admb_$(VERSION)
 	dpkg-deb --build $^

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 rm -f perf.data
 perf record -e cache-misses $1
 perf report --stdio &> perf-report.txt

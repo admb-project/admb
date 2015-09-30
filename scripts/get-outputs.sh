@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo Example:admb:ham4.tpl
 cat $1admb/buscycle/ham4.par
 cat $1admb/buscycle/ham4.std

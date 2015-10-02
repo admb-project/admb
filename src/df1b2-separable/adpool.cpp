@@ -381,8 +381,6 @@ void adpool::grow(void)
 
   const size_t overhead = 12 + sizeof(char*);
   const size_t chunk_size = 16 * 65000 - overhead;
-  char* real_start = new char[chunk_size];
-
   if (size > 0)
   {
     nelem = chunk_size / size;
@@ -393,12 +391,14 @@ void adpool::grow(void)
          << " you must set the unit size " << endl;
     ad_exit(1);
   }
+  char* real_start = new char[overhead + nelem * size];
+  memset(real_start, 0, overhead + nelem * size);
 
 #if defined(_USE_VALGRIND_)
    VALGRIND_MAKE_MEM_NOACCESS(realstart,chunk_size);
 #endif
 
-  char* start = real_start + sizeof(char*);
+  char* start = real_start + overhead;
   char* last = &start[(nelem - 1) * size];
   num_chunks++;
 

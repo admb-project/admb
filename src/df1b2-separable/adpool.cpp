@@ -391,14 +391,15 @@ void adpool::grow(void)
          << " you must set the unit size " << endl;
     ad_exit(1);
   }
-  char* real_start = new char[overhead + nelem * size];
-  memset(real_start, 0, overhead + nelem * size);
+  const size_t total_size = overhead + nelem * size;
+  char* real_start = new char[total_size];
+  memset(real_start, 0, total_size);
 
 #if defined(_USE_VALGRIND_)
    VALGRIND_MAKE_MEM_NOACCESS(realstart,chunk_size);
 #endif
 
-  char* start = real_start + overhead;
+  char* start = real_start + sizeof(char*);
   char* last = &start[(nelem - 1) * size];
   num_chunks++;
 

@@ -11,6 +11,7 @@
 
 #include <df1b2fun.h>
 #include <adpool.h>
+#include <stdint.h>
 #ifndef OPT_LIB
   #include <cassert>
   #include <climits>
@@ -379,7 +380,7 @@ void adpool::grow(void)
   }
 #endif
 
-  const size_t overhead = 12 + sizeof(char*);
+  const size_t overhead = sizeof(intptr_t);
   const size_t chunk_size = 16 * 65000 - overhead;
   if (size > 0)
   {
@@ -399,7 +400,7 @@ void adpool::grow(void)
    VALGRIND_MAKE_MEM_NOACCESS(realstart,chunk_size);
 #endif
 
-  char* start = real_start + sizeof(char*);
+  char* start = real_start + overhead;
   char* last = &start[(nelem - 1) * size];
   num_chunks++;
 

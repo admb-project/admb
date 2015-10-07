@@ -9,6 +9,7 @@ public: \
   { \
     return df1b2_parameters_ptr; \
   } \
+  void deallocate(); \
   df1b2_parameters(int sz,int argc, char * argv[], dll_args& ad_dll) : \
     df1b2_pre_parameters(sz,argc,argv, ad_dll) \
   { \

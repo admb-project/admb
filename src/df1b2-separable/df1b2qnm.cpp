@@ -237,6 +237,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     {
       delete lapprox;
       lapprox=0;
+      deallocate();
       df1b2variable::pool->deallocate();
 
       for (int i=1;i<df1b2variable::adpool_counter;i++)

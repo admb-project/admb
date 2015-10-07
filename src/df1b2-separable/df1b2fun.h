@@ -1922,6 +1922,7 @@ public:
   void allocate(const df1b2matrix & _M, const df1b2_init_vector & _u);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u,const char * s);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u);
+  void deallocate() {}
   dmatrix get_cHessian(void);
   dvector get_cgradient(void);
   dvar_matrix get_Hessian(void);

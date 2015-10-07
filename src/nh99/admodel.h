@@ -1850,7 +1850,8 @@ public:
   double min_improve;
   void pre_userfunction(void);
   virtual void userfunction(void)=0;
-  virtual void allocate(void){;}
+  virtual void allocate() {}
+  virtual void deallocate() {}
   static named_dvar_vector * ph;
   static named_dvar_vector * pg;
 protected:

@@ -4980,7 +4980,6 @@ TOP_OF_MAIN_SECTION {
     }
     if (!errcopy)
     {
-/*
         unlink("classdef.tmp");
         unlink("xxdata.tmp");
         unlink("xxhtop.tmp");
@@ -4999,7 +4998,6 @@ TOP_OF_MAIN_SECTION {
         unlink("tfile2");
         unlink("tfile3");
         unlink("tfile4");
-*/
         if (makedll)
         {
           unlink("tfile5");

@@ -21,8 +21,14 @@
   *     see matrix2vector(), vector2matrix() \n
   *  =============================================================\n
   *
-  *  found any bug , contact Weihai Liu at liuweih@msu.edu \n
-  *  Quantitative Fisheries Center(QFC), Michigan State University \n
+  *  Update: Oct 8, 2015  (N.Dobiesz) \n
+  *  Error found in Inverse Gamma NLL functions \n
+  *     function was: nll= - a*log(b)+gammln(a)-(a-1.)*log(x+EPS) + b/(x+EPS); \n
+  *     changed to: nll=   - a*log(b)+gammln(a)+(a+1.)*log(x+EPS) + b/(x+EPS); \n
+  *
+  *  If you encounter an error, contact the Quantitative Fisheries Center(QFC) at \n
+  *  Michigan State University at qfc@msu.edu \n
+
   */
 
 #ifndef _QFCLIB_H_

@@ -460,30 +460,37 @@ void quadratic_prior::get_vHessian(dvar_matrix H,int xsize)
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  quadratic_prior::quadratic_prior(void)
-  {
-    pMinv=0;
-    dfpMinv=0;
-    pu=0;
-    add_to_list();
-  }
-
+Default constructor
+*/
+quadratic_prior::quadratic_prior():
+  pMinv(NULL),
+  dfpMinv(NULL),
+  pu(NULL),
+  xmyindex(0)
+{
+  add_to_list();
+}
 /**
- * Description not yet available.
- * \param
- */
-  quadratic_prior::~quadratic_prior(void)
+Destructor
+*/
+quadratic_prior::~quadratic_prior()
+{
+  if (pMinv)
   {
-    if (pMinv) delete pMinv;
-    pMinv=0;
-    if (pu) delete pu;
-    pu=0;
-    if (dfpMinv) delete pMinv;
-    dfpMinv=0;
+    delete pMinv;
+    pMinv = NULL;
   }
+  if (pu)
+  {
+    delete pu;
+    pu = NULL;
+  }
+  if (dfpMinv)
+  {
+    delete dfpMinv;
+    dfpMinv = NULL;
+  }
+}
 
 /**
  * Description not yet available.

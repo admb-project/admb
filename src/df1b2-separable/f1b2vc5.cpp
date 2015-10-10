@@ -211,12 +211,13 @@ df1b2vector operator * (const df1b2vector& _x,const dmatrix& _M)
   ADUNCONST(df1b2vector,x)
   //check_shape(x,M,"operator *");
   int rmin=M.indexmin();
-  int rmax=M.indexmax();
+  int cmin=M(rmin).indexmin();
+  int cmax=M(rmin).indexmax();
   int mmin=x.indexmin();
   int mmax=x.indexmax();
-  df1b2vector tmp(rmin,rmax);
+  df1b2vector tmp(cmin,cmax);
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+  for (int i=cmin;i<=cmax;i++)
   {
     for (int j=mmin;j<=mmax;j++)
       tmp(i)+=M(j,i)*x(j);

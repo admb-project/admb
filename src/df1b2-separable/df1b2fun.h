@@ -191,6 +191,25 @@ struct df1b2_header
   double* u_dot_bar_tilde;
   int indindex;
 
+#ifndef OPT_LIB
+  #if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+  int padding;
+  df1b2_header():
+    u(NULL),
+    u_dot(NULL),
+    u_bar(NULL),
+    u_dot_bar(NULL),
+    u_tilde(NULL),
+    u_dot_tilde(NULL),
+    u_bar_tilde(NULL),
+    u_dot_bar_tilde(NULL),
+    indindex(0),
+    padding(0)
+  {
+  }
+  #endif
+#endif
+
   //double * get_ptr(void){return ptr;}
 
   double* get_u(void) const {return (double*)u;}

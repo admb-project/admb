@@ -17,9 +17,17 @@ void ad_update_hess_stats_report(int i,int nvar);
 
 void function_minimizer::hess_routine(void)
 {
-  if (random_effects_flag && lapprox !=0 )
+  if (random_effects_flag && lapprox !=0)
   {
+    if (laplace_approximation_calculator::alternative_user_function_flag == 1)
+    {
+      laplace_approximation_calculator::alternative_user_function_flag = 2;
+    }
     hess_routine_random_effects();
+    if (laplace_approximation_calculator::alternative_user_function_flag == 2)
+    {
+      laplace_approximation_calculator::alternative_user_function_flag = 1;
+    }
   }
   else
   {
@@ -418,6 +426,10 @@ void function_minimizer::depvars_routine(void)
   gradcalc(0,ggg);
   gradient_structure::set_YES_DERIVATIVES();
   initial_params::restore_start_phase();
+  if (lapprox && lapprox->no_re_ders_flag)
+  {
+    initial_params::set_inactive_random_effects();
+  }
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
   independent_variables x(1,nvar);

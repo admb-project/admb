@@ -187,6 +187,7 @@ public:
   nested_calls_shape nested_shape;
   int separable_call_level;
   int dd_nr_flag;
+  int no_re_ders_flag;
   dmatrix * antiepsilon;
   i3_array * triplet_information;
   imatrix * compressed_triplet_information;
@@ -195,6 +196,7 @@ public:
   dvector *  importance_sampling_weights;
   int is_diagnostics_flag;
   static int saddlepointflag;
+  static int alternative_user_function_flag;
   static int sparse_hessian_flag;
   static int antiflag;
   int rseed;

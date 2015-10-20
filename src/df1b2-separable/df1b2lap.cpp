@@ -1475,7 +1475,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   }
 
   if (laplace_approximation_calculator::alternative_user_function_flag==0)
-  { 
+  {
     if (pmin->lapprox->sparse_hessian_flag==0)
     {
       nvar=x.size()+u0.size()+u0.size()*u0.size();
@@ -1722,7 +1722,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
          {
            //double ld1=0.5*ln_det(*(pmin->lapprox->sparse_triplet),
            //  *(pmin->lapprox->sparse_symbolic));
-  
+
            if (write_sparse_flag)
            {
              //ofstream ofs("sparse");
@@ -1801,7 +1801,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
     uadjoint(i)=g(ii++);
 
   if (laplace_approximation_calculator::alternative_user_function_flag==0)
-  { 
+  {
     if (pmin->lapprox->sparse_hessian_flag==0)
     {
       if (allocated(Hessadjoint))

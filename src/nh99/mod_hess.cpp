@@ -4,8 +4,8 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#  include <df1b2fun.h>
-#  include <admodel.h>
+#include <df1b2fun.h>
+#include <admodel.h>
 //#include <parallel.h>
 
 void hess_calcreport(int i,int nvar);
@@ -17,7 +17,7 @@ void ad_update_hess_stats_report(int i,int nvar);
 
 void function_minimizer::hess_routine(void)
 {
-  if (random_effects_flag && lapprox !=0)
+  if (random_effects_flag && lapprox != 0)
   {
     if (laplace_approximation_calculator::alternative_user_function_flag == 1)
     {
@@ -29,32 +29,27 @@ void function_minimizer::hess_routine(void)
       laplace_approximation_calculator::alternative_user_function_flag = 1;
     }
   }
+#if defined(USE_ADPVM)
+  else if (ad_comm::pvm_manager)
+  {
+    switch (ad_comm::pvm_manager->mode)
+    {
+    case 1: // master
+      hess_routine_master();
+      break;
+    case 2: // slave
+      hess_routine_slave();
+      break;
+    default:
+      cerr << "Error: Illegal value for pvm_manager->mode." << endl;
+      ad_exit(1);
+    }
+    cout << "finished hess routine" << endl;
+  }
+#endif
   else
   {
-#if defined(USE_ADPVM)
-    if (!ad_comm::pvm_manager)
-    {
-      hess_routine_noparallel();
-    }
-    else
-    {
-      switch (ad_comm::pvm_manager->mode)
-      {
-      case 1: // master
-        hess_routine_master();
-        break;
-      case 2: // slave
-        hess_routine_slave();
-        break;
-      default:
-        cerr << "Error: Illegal value for pvm_manager->mode." << endl;
-        ad_exit(1);
-      }
-      cout << "finished hess routine" << endl;
-    }
-#else
     hess_routine_noparallel();
-#endif
   }
 }
 void function_minimizer::hess_routine_noparallel(void)

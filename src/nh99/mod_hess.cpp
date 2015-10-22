@@ -66,6 +66,7 @@ void function_minimizer::hess_routine_noparallel(void)
   dvector hess1(1,nvar);
   dvector hess2(1,nvar);
   double eps=.1;
+  double eps2=eps*eps;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
@@ -135,15 +136,15 @@ void function_minimizer::hess_routine_noparallel(void)
       gradcalc(nvar, g2, vf);
       x(i)=xsave;
 
-      vf=initial_params::reset(dvar_vector(x));
-      double eps2=eps*eps;
       hess2=(g1-g2)/(sdelta1-sdelta2);
+
       hess=(eps2*hess1-hess2) /(eps2-1.);
 
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
     }
   }
+  initial_params::reset(dvar_vector(x));
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
   /*int check=*/initial_params::stddev_scale(tscale,x);

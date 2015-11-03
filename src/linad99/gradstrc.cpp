@@ -130,7 +130,6 @@ unsigned int gradient_structure::MAX_DLINKS = 5000;
 
 //unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
-humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASEA;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
 void * farptr_norm(void *);
 long int farptr_tolong(void *) ;

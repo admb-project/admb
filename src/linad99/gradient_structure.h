@@ -108,7 +108,6 @@ class gradient_structure
    static size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
    static humungous_pointer ARRAY_MEMBLOCK_BASE;
-   static humungous_pointer ARRAY_MEMBLOCK_BASEA;
    static humungous_pointer ARRAY_MEMBLOCK_SAVE;
  public:
    static double *get_ARRAY_MEMBLOCK_BASE()

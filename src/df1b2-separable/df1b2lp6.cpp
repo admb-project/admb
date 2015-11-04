@@ -423,6 +423,7 @@ dvector laplace_approximation_calculator::banded_calculations
         if (!bHess)
         {
           cerr << "Block diagonal Hessian is unallocated" << endl;
+          cerr << "  Try -shess command line option, perhaps." << endl;
           ad_exit(1);
         }
         else

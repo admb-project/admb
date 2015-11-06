@@ -27,9 +27,9 @@ data_int& data_int::operator=(const int xx)
   return *this;
 }
 
+/*
 ad_integer::ad_integer(const data_int& _d) : d(int(*(data_int*)(&_d))) {}
 
-/*
 index_type::index_type(const data_int& _x)
 {
   p = new number_index(int((data_int&)(_x)));

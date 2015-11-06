@@ -284,13 +284,6 @@ protected:
     int rmin, int rmax,
     const index_type& cmin, const index_type& cmax,
     const char* s);
-  void allocate(
-    int rmin, int rmax,
-    const data_int& cmin, const data_int& cmax,
-    const char* s)
-  {
-    allocate(rmin, rmax, index_type(cmin), index_type(cmax), s);
-  }
 public:
   named_dvar_matrix& operator=(const double m);
   named_dvar_matrix& operator=(const dmatrix& m);
@@ -1477,7 +1470,7 @@ protected:
   void allocate(init_xml_doc&, const char * s="UNNAMED");
 
 public:
-  virtual ~data_int(){;}
+  ~data_int() { }
   operator int() const { return val; }
 
   friend class model_data;

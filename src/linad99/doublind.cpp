@@ -40,10 +40,12 @@
     return double(*p);
   }
 
+/*
 index_type::index_type(const data_int& x)
 {
   p = new number_index(x);
 }
+*/
 
 /**
  * Description not yet available.

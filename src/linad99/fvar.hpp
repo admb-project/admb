@@ -7466,10 +7466,9 @@ public:
   ad_integer(const int &_d, const adkludge&): d(_d)
   {
   }
-  ad_integer(int _d): d(_d)
+  ad_integer(const int _d): d(_d)
   {
   }
-  ad_integer(const data_int& _d);
   ad_integer(const index_type& it);
 
   ad_integer make_ad_integer(int _d)
@@ -7531,8 +7530,7 @@ class index_type:public smart_counter
    {
       return p->dimension();
    }
-   index_type(int x);
-   index_type(const data_int& x);
+   index_type(const int x);
    index_type(const ivector & x);
    index_type(const imatrix & x);
    index_type(const i3_array & x);

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
+#include <admodel.h>
 #include <climits>
 
 extern "C"
@@ -239,4 +240,16 @@ TEST_F(test_dvector, is_valid_index)
   ASSERT_EQ(false, false || dv.is_valid_index(5));
   ASSERT_DEATH(dv(0), "Assertion");
   ASSERT_DEATH(dv(5), "Assertion");
+}
+TEST_F(test_dvector, data_int)
+{
+  dvector dv;
+
+  data_int begin;
+  data_int end;
+
+  dv.allocate(begin, end);
+
+  //ASSERT_EQ(dv.indexmin(), 1);
+  //ASSERT_EQ(dv.indexmax(), 4);
 }

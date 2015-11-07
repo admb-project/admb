@@ -148,20 +148,6 @@ extern "C"
 }
 
 /**
- * Description not yet available.
- * \param
- */
-class smart_counter
-{
-  int *ncopies;
-public:
-  int *get_ncopies();
-  smart_counter();
-  smart_counter(const smart_counter& sc);
-  ~smart_counter();
-};
-
-/**
 Holds the data for the prevariable class.
 
 \ingroup BAD
@@ -7485,73 +7471,86 @@ public:
  */
 class index_guts
 {
-   friend class ad_integer;
- protected:
-   int *ncopies;
- public:
-   virtual index_guts * operator [] (int) = 0;
-   virtual int isinteger(void) const
-   {
-      return 1;
-   }
-   virtual int dimension(void) const
-   {
-      return -1;
-   }
-   virtual operator  int ()
-   {
-      cerr << "Error in index_type"
-      " -- object not dereferenced enough" << endl;
-      ad_exit(1);
-      return 1;
-   }
-   virtual int indexmin(void) = 0;
-   virtual int indexmax(void) = 0;
-   index_guts();
-   index_guts(const index_guts & ig);
-   virtual ~ index_guts();
-   friend class index_type;
-};
+protected:
+  int* ncopies;
 
-/**
- * Description not yet available.
- * \param
- */
-class index_type:public smart_counter
+public:
+  index_guts();
+  index_guts(const index_guts& ig);
+  virtual ~index_guts();
+
+  virtual index_guts* operator[](int) = 0;
+  virtual int isinteger() const
+  {
+    return 1;
+  }
+  virtual int dimension() const
+  {
+    return -1;
+  }
+  virtual operator int()
+  {
+    cerr << "Error in index_type"
+    " -- object not dereferenced enough" << endl;
+    ad_exit(1);
+    return 1;
+  }
+  virtual int indexmin() = 0;
+  virtual int indexmax() = 0;
+
+  friend class ad_integer;
+  friend class index_type;
+};
+class smart_counter
 {
-   index_guts *p;
- public:
-   int integer(void) const;
-   int isinteger(void) const
-   {
-      return p->isinteger();
-   }
-   int dimension(void) const
-   {
-      return p->dimension();
-   }
-   index_type(const int x);
-   index_type(const ivector & x);
-   index_type(const imatrix & x);
-   index_type(const i3_array & x);
-   index_type(const i4_array & x);
-   index_type(const pre_index_type & pit);
-   index_type(const index_type & pit);
-   //index_type (i4_array& x) { p = new i4_index(x);}
-   ~index_type();
-   index_type operator [] (int i);
-   index_type operator () (int i);
-   index_type operator [] (int i) const;
-   index_type operator () (int i) const;
-   int indexmin(void) const
-   {
-      return p->indexmin();
-   }
-   int indexmax(void) const
-   {
-      return p->indexmax();
-   }
-   friend class ad_integer;
+  int* ncopies;
+
+public:
+  smart_counter();
+  smart_counter(const smart_counter& sc);
+  ~smart_counter();
+
+  int* get_ncopies();
+};
+class index_type: public smart_counter
+{
+  index_guts* p;
+
+public:
+  index_type(const int x);
+  index_type(const ivector & x);
+  index_type(const imatrix & x);
+  index_type(const i3_array & x);
+  index_type(const i4_array & x);
+  index_type(const pre_index_type & pit);
+  index_type(const index_type & pit);
+  //index_type (i4_array& x) { p = new i4_index(x);}
+  ~index_type();
+
+  index_type operator[](int i);
+  index_type operator()(int i);
+  index_type operator[](int i) const;
+  index_type operator()(int i) const;
+
+  int integer() const;
+  int isinteger() const
+  {
+    return p->isinteger();
+  }
+  int dimension() const
+  {
+    return p->dimension();
+  }
+  int indexmin() const
+  {
+    return p->indexmin();
+  }
+  int indexmax() const
+  {
+    return p->indexmax();
+  }
+
+  friend class ad_integer;
 };
 
 /**

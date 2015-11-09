@@ -1814,8 +1814,6 @@ class independent_variables:public dvector
    independent_variables & operator=(const dvector & t);
 };
 
-
-
 dvariable dfatan1(dvariable, double, double, const prevariable & fpen);
 
 double boundp(double x, double fmin, double fmax, const double &fpen);
@@ -7452,6 +7450,7 @@ public:
   ad_integer(const int &_d, const adkludge&): d(_d)
   {
   }
+  ad_integer(const data_int& di);
   ad_integer(const int _d): d(_d)
   {
   }

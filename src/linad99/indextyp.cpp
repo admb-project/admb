@@ -183,6 +183,10 @@ int index_type::integer(void) const
   return int(*p);
 }
 
+/// Constructor for ivector
+vector_index::vector_index(const ivector& v): ivector(v)
+{
+}
 /// Destructor
 vector_index::~vector_index() {}
 
@@ -495,13 +499,6 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
    #endif
  }
 
-/**
- * Description not yet available.
- * \param
- */
-vector_index::vector_index(const ivector& v) : ivector(v)
-{
-}
 /**
  * Description not yet available.
  * \param

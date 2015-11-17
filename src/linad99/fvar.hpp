@@ -7464,10 +7464,7 @@ public:
   }
 };
 
-/**
- * Description not yet available.
- * \param
- */
+/// Abstract base class for different index types.
 class index_guts
 {
 protected:
@@ -7479,6 +7476,9 @@ public:
   virtual ~index_guts();
 
   virtual index_guts* operator[](int) = 0;
+  virtual int indexmin() = 0;
+  virtual int indexmax() = 0;
+
   virtual int isinteger() const
   {
     return 1;
@@ -7494,12 +7494,11 @@ public:
     ad_exit(1);
     return 1;
   }
-  virtual int indexmin() = 0;
-  virtual int indexmax() = 0;
 
   friend class ad_integer;
   friend class index_type;
 };
+/// Keeps track of total number of copies.
 class smart_counter
 {
   int* ncopies;
@@ -7511,18 +7510,22 @@ public:
 
   int* get_ncopies();
 };
+/**
+Uses polymorphism to get index information from various data types
+to be used in constructing and allocating admb matrices and vectors.
+*/
 class index_type: public smart_counter
 {
   index_guts* p;
 
 public:
   index_type(const int x);
-  index_type(const ivector & x);
-  index_type(const imatrix & x);
-  index_type(const i3_array & x);
-  index_type(const i4_array & x);
-  index_type(const pre_index_type & pit);
-  index_type(const index_type & pit);
+  index_type(const ivector& x);
+  index_type(const imatrix& x);
+  index_type(const i3_array& x);
+  index_type(const i4_array& x);
+  index_type(const pre_index_type& pit);
+  index_type(const index_type& pit);
   //index_type (i4_array& x) { p = new i4_index(x);}
   ~index_type();
 
@@ -7551,162 +7554,153 @@ public:
 
   friend class ad_integer;
 };
-
-/**
- * Description not yet available.
- * \param
- */
-class number_index:public ad_integer, public index_guts
+/// Derived class of index types for ad_integer.
+class number_index: public ad_integer, public index_guts
 {
- private:
-   virtual int isinteger(void) const
-   {
-      return 0;
-   }
-   virtual int dimension(void) const
-   {
-      return 0;
-   }
-   virtual index_guts *operator [] (int i);
-   virtual int indexmin(void)
-   {
-      return 1;
-   }
-   virtual int indexmax(void)
-   {
-      return 1;
-   }
- public:
-   virtual ~ number_index()
-   {
-   }
- number_index(int i):ad_integer(i)
-   {
-   }
-   // only overload this for number_index ... will fail for other classes
-   virtual operator  int ()
-   {
-      return d;
-   }
-   friend class index_type;
+private:
+  virtual int isinteger() const
+  {
+    return 0;
+  }
+  virtual int dimension() const
+  {
+    return 0;
+  }
+  virtual index_guts* operator[](int i);
+  virtual int indexmin()
+  {
+    return 1;
+  }
+  virtual int indexmax()
+  {
+    return 1;
+  }
+public:
+  number_index(int i): ad_integer(i)
+  {
+  }
+  /// Destructor
+  virtual ~number_index()
+  {
+  }
+  /// only overload this for number_index ... will fail for other classes
+  virtual operator int()
+  {
+    return d;
+  }
+
+  friend class index_type;
 };
-
-/**
- * Description not yet available.
- * \param
- */
-class vector_index:public ivector, public index_guts
+/// Derived class of index types for ivector.
+class vector_index: public ivector, public index_guts
 {
-   virtual index_guts *operator [] (int i)
-   {
-      return new number_index(ivector::operator [](i));
-   }
- public:
-   virtual int dimension(void) const
-   {
-      return 1;
-   }
-   //vector_index(const ivector& v) : ivector(v){}
-   vector_index(const ivector & v);
-   virtual ~ vector_index();
-   virtual int indexmin(void)
-   {
-      return ivector::indexmin();
-   }
-   virtual int indexmax(void)
-   {
-      return ivector::indexmax();
-   }
-   friend class index_type;
+  virtual index_guts* operator[](int i)
+  {
+    return new number_index(ivector::operator[](i));
+  }
+public:
+  //vector_index(const ivector& v) : ivector(v){}
+
+  vector_index(const ivector& v);
+  virtual ~vector_index();
+
+  virtual int dimension() const
+  {
+    return 1;
+  }
+  virtual int indexmin()
+  {
+    return ivector::indexmin();
+  }
+  virtual int indexmax()
+  {
+    return ivector::indexmax();
+  }
+
+  friend class index_type;
 };
-
-/**
- * Description not yet available.
- * \param
- */
-class matrix_index:public imatrix, public index_guts
+/// Derived class of index types for imatrix.
+class matrix_index: public imatrix, public index_guts
 {
- private:
-   virtual index_guts * operator [] (int i);
-   //{
-   //  return new vector_index(imatrix::operator [](i));
-   //}
- public:
-   virtual int dimension(void) const
-   {
-      return 2;
-   }
-   virtual ~ matrix_index();
-   matrix_index(const imatrix & v):imatrix(v)
-   {
-   }
-   virtual int indexmin(void)
-   {
-      return imatrix::rowmin();
-   }
-   virtual int indexmax(void)
-   {
-      return imatrix::rowmax();
-   }
-   friend class index_type;
+private:
+  virtual index_guts* operator[](int i);
+  //{
+  //  return new vector_index(imatrix::operator [](i));
+  //}
+public:
+  matrix_index(const imatrix& v): imatrix(v)
+  {
+  }
+  virtual ~matrix_index();
+
+  virtual int dimension() const
+  {
+    return 2;
+  }
+  virtual int indexmin()
+  {
+    return imatrix::rowmin();
+  }
+  virtual int indexmax()
+  {
+    return imatrix::rowmax();
+  }
+
+  friend class index_type;
 };
-
-/**
- * Description not yet available.
- * \param
- */
-class i3_index:public i3_array, public index_guts
+/// Derived class of index types for i3_array.
+class i3_index: public i3_array, public index_guts
 {
-   virtual index_guts *operator [] (int i)
-   {
-      return new matrix_index(i3_array::operator [](i));
-   }
- public:
-   i3_index(i3_array & v):i3_array(v)
-   {
-   }
-   virtual int dimension(void) const
-   {
-      return 3;
-   }
-   virtual int indexmin(void)
-   {
-      return i3_array::slicemin();
-   }
-   virtual int indexmax(void)
-   {
-      return i3_array::slicemax();
-   }
-   friend class index_type;
+  virtual index_guts* operator[](int i)
+  {
+    return new matrix_index(i3_array::operator[](i));
+  }
+public:
+  i3_index(i3_array& v): i3_array(v)
+  {
+  }
+
+  virtual int dimension() const
+  {
+    return 3;
+  }
+  virtual int indexmin()
+  {
+    return i3_array::slicemin();
+  }
+  virtual int indexmax()
+  {
+    return i3_array::slicemax();
+  }
+
+  friend class index_type;
 };
-
-/**
- * Description not yet available.
- * \param
- */
-class i4_index:public i4_array, public index_guts
+/// Derived class of index types for i4_array.
+class i4_index: public i4_array, public index_guts
 {
-   virtual index_guts *operator [] (int i)
-   {
-      return new i3_index(i4_array::operator [](i));
-   }
- public:
-   virtual int dimension(void) const
-   {
-      return 4;
-   }
-   i4_index(i4_array & v):i4_array(v)
-   {
-   }
-   virtual int indexmin(void)
-   {
-      return i4_array::slicemin();
-   }
-   virtual int indexmax(void)
-   {
-      return i4_array::slicemax();
-   }
-   friend class index_type;
+  virtual index_guts* operator[](int i)
+  {
+    return new i3_index(i4_array::operator[](i));
+  }
+public:
+  i4_index(i4_array& v): i4_array(v)
+  {
+  }
+
+  virtual int dimension() const
+  {
+    return 4;
+  }
+  virtual int indexmin()
+  {
+    return i4_array::slicemin();
+  }
+  virtual int indexmax()
+  {
+    return i4_array::slicemax();
+  }
+
+  friend class index_type;
 };
 
 void ad_begin_funnel(void);

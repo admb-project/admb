@@ -50,6 +50,8 @@ GTESTS=\
  test_dvector.cpp\
  test_cspline.cpp\
  test_dvar_vector.cpp\
+ test_index_type.cpp\
+ test_smart_counter.cpp\
  main.cpp
 
 ##Need to debug this

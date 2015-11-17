@@ -60,9 +60,7 @@ void dvar_vector::fill(const char * s)
   int commas  = 0;
 
   char *t = new char[n];
-
-  int k;
-  for (k = 0; k < n; k++)
+  for (int k = 0; k < n; k++)
   {
     if (s[k] == '{')
     {
@@ -85,29 +83,7 @@ void dvar_vector::fill(const char * s)
     }
   }
 
-  if (lbraces != rbraces)
-  {
-    cerr << "Unbalanced braces in dvar_vector::fill(const char * s)\n";
-    cerr << s << "\n";
-    ad_exit(1);
-  }
-
-  if (lbraces > 1)
-  {
-    cerr << "Only one level of braces allowed in "
-    "dvar_vector::fill(const char * s)\n";
-    cerr << s << "\n";
-    ad_exit(1);
-  }
-
-  if (lbraces ==0)
-  {
-    cerr << "Missing braces { ... } in dvar_vector::fill(const char * s)\n";
-    cerr << s << "\n";
-    ad_exit(1);
-  }
-
-  if (lbraces == 1)
+  if (lbraces == 1 && rbraces == 1)
   {
     int nch = commas + 1;
 
@@ -131,8 +107,8 @@ void dvar_vector::fill(const char * s)
     istringstream ss(t);
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
-   char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
-   char * err_ptr;
+   char* field = new char[size_t(MAX_FIELD_LENGTH+1)];
+   char* err_ptr = NULL;
 
    for (int i=indexmin();i<=indexmax();i++)
    {
@@ -159,10 +135,34 @@ void dvar_vector::fill(const char * s)
        ad_exit(1);
      }
    }
-   delete[] field;
-   field = 0;
-
-   delete[] t;
-   t = 0;
+   delete [] field;
+   field = NULL;
   }
+  else
+  {
+    delete [] t;
+    t = NULL;
+
+    if (lbraces != rbraces)
+    {
+      cerr << "Unbalanced braces in dvar_vector::fill(const char * s)\n";
+      cerr << s << "\n";
+      ad_exit(1);
+    }
+    if (lbraces > 1)
+    {
+      cerr << "Only one level of braces allowed in "
+      "dvar_vector::fill(const char * s)\n";
+      cerr << s << "\n";
+      ad_exit(1);
+    }
+    if (lbraces == 0)
+    {
+      cerr << "Missing braces { ... } in dvar_vector::fill(const char * s)\n";
+      cerr << s << "\n";
+      ad_exit(1);
+    }
+  }
+  delete [] t;
+  t = NULL;
 }

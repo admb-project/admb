@@ -49,11 +49,11 @@ GTESTS=\
  test_ivector.cpp\
  test_dvector.cpp\
  test_cspline.cpp\
+ test_dvar_vector.cpp\
  main.cpp
 
 ##Need to debug this
 ## test_atan2.cpp
-## test_dvar_vector.cpp
 
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\

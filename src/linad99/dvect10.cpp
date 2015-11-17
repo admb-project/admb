@@ -147,8 +147,8 @@ void dvector::fill(const char* s)
     }
     if (lbraces > 1)
     {
-      cerr << "Only one level of braces allowed in dvector::fill(const char * s)\n";
-      cerr << s << "\n";
+      cerr << "Only one level of braces allowed in dvector::fill(const char* s)"
+           << '\n' << s << '\n';
       ad_exit(1);
     }
     if (lbraces == 0)

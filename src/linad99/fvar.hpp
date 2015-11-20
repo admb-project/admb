@@ -7476,8 +7476,8 @@ public:
   virtual ~index_guts();
 
   virtual index_guts* operator[](int) = 0;
-  virtual int indexmin() = 0;
-  virtual int indexmax() = 0;
+  virtual int indexmin() const = 0;
+  virtual int indexmax() const = 0;
 
   virtual int isinteger() const
   {
@@ -7567,11 +7567,11 @@ private:
     return 0;
   }
   virtual index_guts* operator[](int i);
-  virtual int indexmin()
+  virtual int indexmin() const
   {
     return 1;
   }
-  virtual int indexmax()
+  virtual int indexmax() const
   {
     return 1;
   }
@@ -7608,11 +7608,11 @@ public:
   {
     return 1;
   }
-  virtual int indexmin()
+  virtual int indexmin() const
   {
     return ivector::indexmin();
   }
-  virtual int indexmax()
+  virtual int indexmax() const
   {
     return ivector::indexmax();
   }
@@ -7637,11 +7637,11 @@ public:
   {
     return 2;
   }
-  virtual int indexmin()
+  virtual int indexmin() const
   {
     return imatrix::rowmin();
   }
-  virtual int indexmax()
+  virtual int indexmax() const
   {
     return imatrix::rowmax();
   }
@@ -7664,11 +7664,11 @@ public:
   {
     return 3;
   }
-  virtual int indexmin()
+  virtual int indexmin() const
   {
     return i3_array::slicemin();
   }
-  virtual int indexmax()
+  virtual int indexmax() const
   {
     return i3_array::slicemax();
   }
@@ -7691,11 +7691,11 @@ public:
   {
     return 4;
   }
-  virtual int indexmin()
+  virtual int indexmin() const
   {
     return i4_array::slicemin();
   }
-  virtual int indexmax()
+  virtual int indexmax() const
   {
     return i4_array::slicemax();
   }

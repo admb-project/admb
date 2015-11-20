@@ -58,7 +58,7 @@ dvar_vector::dvar_vector(const char * s)
   int rbraces = 0;
   int commas  = 0;
 
-  char *t = new char[n];
+  char* t = new char[n];
 
   for (size_t k = 0; k < n; k++)
   {
@@ -116,7 +116,7 @@ dvar_vector::dvar_vector(const char * s)
   }
   else
   {
-    const char * filename=s;
+    const char* filename = s;
     ifstream infile(filename);
     if (!infile)
     {

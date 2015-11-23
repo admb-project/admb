@@ -46,6 +46,7 @@ ifneq ($(USE_GTESTS),no)
 endif
 
 all-tpls:\
+  tpl-f1b2vc5\
   tpl-4darray\
   tpl-glmmadmb\
   tpl-agemat\
@@ -68,6 +69,9 @@ all-tpls:\
   tpl-testminmax\
   tpl-orange_mvn\
   tpl-lprof
+
+tpl-f1b2vc5:
+	$(MAKE) --directory=f1b2vc5
 
 tpl-4darray:
 	$(MAKE) --directory=4darray

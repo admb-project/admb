@@ -66,6 +66,8 @@ TEST_F(test_dvariable, exp_1)
   }
 }
 #ifndef OPT_LIB
+  ///\todo Must remove below macro once support for MSVC++11 and Solaris Studio 12.3 are removed.
+  #if !defined(__SUNPRO_C) && !(defined(_MSC_VER) && (_MSC_VER > 1700))
 TEST_F(test_dvariable, exp_max)
 {
   gradient_structure gs;
@@ -86,4 +88,91 @@ TEST_F(test_dvariable, exp_max)
   }
   FAIL();
 }
+  #endif
 #endif
+TEST_F(test_dvariable, mfexp)
+{
+  gradient_structure gs;
+  
+  {
+  double input = 100; 
+  double result = mfexp(input);
+
+  dvariable vinput = 100; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+  {
+  double input = -100; 
+  double result = mfexp(input);
+
+  dvariable vinput = -100; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+  {
+  double input = 60; 
+  double result = mfexp(input);
+
+  dvariable vinput = 60; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+  {
+  double input = -60; 
+  double result = mfexp(input);
+
+  dvariable vinput = -60; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+  {
+  double input = 61; 
+  double result = mfexp(input);
+
+  dvariable vinput = 61; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+  {
+  double input = -61; 
+  double result = mfexp(input);
+
+  dvariable vinput = -61; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+  {
+  double input = 10; 
+  double result = mfexp(input);
+
+  dvariable vinput = 10; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+  {
+  double input = -10; 
+  double result = mfexp(input);
+
+  dvariable vinput = -10; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+  {
+  double input = 0; 
+  double result = mfexp(input);
+
+  dvariable vinput = 0; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  }
+}

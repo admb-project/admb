@@ -575,7 +575,7 @@ coding-standard: cpplint.py
 	python cpplint.py --linelength=80 --extension=c,cpp,h,hpp --filter=-,+whitespace/tab,+whitespace/blank_line,+whitespace/line_length,+whitespace/end_of_line df1b2-separable/*.h* linad99/*.h* nh99/*.h* sparse/*.h* tools99/*.h* df1b2-separable/*.cpp linad99/*.cpp nh99/*.cpp sparse/*.cpp tools99/*.cpp
 
 cpplint.py:
-	svn cat http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py > cpplint.py
+	svn cat https://github.com/google/styleguide/trunk/cpplint/cpplint.py > cpplint.py
 
 check: coding-standard
 	@echo "SHELL: $(SHELL)"

@@ -2,7 +2,7 @@ all: f1b2vc5
 	./f1b2vc5 -nohess
 
 f1b2vc5: f1b2vc5.tpl
-	../../admb ^
+	../../admb -g f1b2vc5.tpl
 
 clean:
 	rm -vf admodel.hes

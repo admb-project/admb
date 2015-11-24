@@ -1,5 +1,12 @@
 #include <gtest/gtest.h>
+#include <cmath>
+#include <limits>
 #include <fvar.hpp>
+
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
 
 class test_dvariable: public ::testing::Test {};
 
@@ -38,3 +45,45 @@ TEST_F(test_dvariable, det)
   double cdet = det(m);
   ASSERT_DOUBLE_EQ(-14, cdet);
 }
+TEST_F(test_dvariable, exp_1)
+{
+  gradient_structure gs;
+  
+  dvariable v = 1;
+  try
+  {
+    double expected = ::exp(1);
+    dvariable result = exp(v);
+    ASSERT_DOUBLE_EQ(expected, value(result));
+  }
+  catch (const int exit_code)          
+  {   
+    const int expected_exit_code = 1;
+    if (exit_code == expected_exit_code)
+    {
+      FAIL();
+    }
+  }
+}
+#ifndef OPT_LIB
+TEST_F(test_dvariable, exp_max)
+{
+  gradient_structure gs;
+  
+  dvariable v = std::numeric_limits< double >::max();
+  try
+  {
+    exp(v);
+  }
+  catch (const int exit_code)          
+  {   
+    const int expected_exit_code = 1;
+    if (exit_code == expected_exit_code)
+    {
+      SUCCEED();
+      return;
+    }
+  }
+  FAIL();
+}
+#endif

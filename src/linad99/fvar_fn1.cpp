@@ -34,11 +34,14 @@ prevariable& exp(const prevariable& v1)
   double tmp = ::exp(v1.v->x);
 
 #ifndef OPT_LIB
-  ///\todo Must remove macros below once support for MSVC++11 and Solaris Studio 12.3 are removed.
+  /** \todo Must remove macros below once support
+  for MSVC++11 and Solaris Studio 12.3 are removed.
+  */
   #if !defined(__SUNPRO_CC) && !(defined(_MSC_VER) && (_MSC_VER <= 1700))
   if (!std::isfinite(tmp))
   {
-    cerr << "Error: Result of \"exp(prevariable(" << value(v1) << ")) = " << tmp << "\" is not finite.\n";
+    cerr << "Error: Result of \"exp(prevariable(" << value(v1) << ")) = "
+         << tmp << "\" is not finite.\n";
     ad_exit(1);
   }
   #endif

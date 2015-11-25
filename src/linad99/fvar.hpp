@@ -348,8 +348,10 @@ void RETURN_ARRAYS_INCREMENT(void);
 void RETURN_ARRAYS_DECREMENT(void);
 
 void *farptr_norm(void *);
+#ifdef DIAG
 long int farptr_tolong(void *);
 long int _farptr_tolong(void *);
+#endif
 
 class i3_array;
 

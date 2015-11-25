@@ -37,6 +37,13 @@ ADMB-trunk
 
 ####Changes and Improvements
 * Change to Dave Fournier's version of cspline.cpp.
+* Added Dave Fournier's memory leak patches.
+* Fixed memory leaks reported by Valgrind and XCode.
+* Added more api documentation.
+* mfexp will call ad_exit if computed result is not in range.
+* Added more unit tests for better code coverage.
+* Fixed MacOS ADMBTerminal from opening two terminals.
+* Other bug fixes and improvements
 
 ADMB-11.4
 ----------

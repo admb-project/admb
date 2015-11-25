@@ -35,7 +35,7 @@ prevariable& exp(const prevariable& v1)
 
 #ifndef OPT_LIB
   ///\todo Must remove macros below once support for MSVC++11 and Solaris Studio 12.3 are removed.
-  #if !defined(__SUNPRO_C) && !(defined(_MSC_VER) && (_MSC_VER <= 1700))
+  #if !defined(__SUNPRO_CC) && !(defined(_MSC_VER) && (_MSC_VER <= 1700))
   if (!std::isfinite(tmp))
   {
     cerr << "Error: Result of \"exp(prevariable(" << value(v1) << ")) = " << tmp << "\" is not finite.\n";

@@ -374,7 +374,6 @@ OBJ3=\
  vregress.obj\
  cregress.obj\
  ptr_vec.obj\
- ptr2.obj\
  ranfill.obj\
  d3arr.obj\
  ranf_ni.obj\
@@ -481,6 +480,8 @@ OBJ16=\
 PVM=\
  slgrdclc.obj\
  adcomm1.obj
+DIAG=\
+ ptr2.obj
 UNUSED=\
  xfmmtr1.obj\
  denorm.obj\

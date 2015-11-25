@@ -131,8 +131,9 @@ unsigned int gradient_structure::MAX_DLINKS = 5000;
 //unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
-void * farptr_norm(void *);
+#ifdef DIAG
 long int farptr_tolong(void *) ;
+#endif
 void memory_allocate_error(const char * s, void * ptr);
 
 /**

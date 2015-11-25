@@ -26,9 +26,6 @@
 //extern indvar_offset_list * INDVAR_LIST;
 //extern unsigned  MAX_NVAR_OFFSET;
 
-void * farptr_norm(void *);
-long int farptr_tolong(void *) ;
-
 /**
  * Description not yet available.
  * \param

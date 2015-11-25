@@ -21,8 +21,10 @@
 
 #include <stdlib.h>
 
+#ifdef DIAG
 long int _farptr_tolong(void * px);
 long int farptr_tolong(void *);
+#endif
 
 /**
  * Description not yet available.
@@ -33,9 +35,7 @@ struct void_ptr
   void * t;
 };
 
-/**
-Destructor
-*/
+/// Destructor
 ptr_vector::~ptr_vector()
 {
 #ifdef DIAG

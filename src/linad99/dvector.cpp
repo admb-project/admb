@@ -18,8 +18,6 @@
 
 #include "fvar.hpp"
 
-long int farptr_tolong(void *);
-
 #ifdef DOSX286
   int heapcheck(void){return 0;}
 #else

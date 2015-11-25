@@ -285,8 +285,6 @@
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
   df3_three_variable betacf(const df3_three_variable& a,
     const df3_three_variable& b, const df3_three_variable& x)

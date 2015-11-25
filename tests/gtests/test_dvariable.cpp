@@ -102,6 +102,7 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_TRUE(result > ::exp(60));
   }
   {
   double input = -100; 
@@ -111,6 +112,7 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_TRUE(result < ::exp(-60));
   }
   {
   double input = 60; 
@@ -120,6 +122,7 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(60));
   }
   {
   double input = -60; 
@@ -129,6 +132,7 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(-60));
   }
   {
   double input = 61; 
@@ -138,6 +142,8 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_TRUE(result > ::exp(60));
+  ASSERT_TRUE(result < ::exp(61));
   }
   {
   double input = -61; 
@@ -147,6 +153,8 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_TRUE(result < ::exp(-60));
+  ASSERT_TRUE(result > ::exp(-61));
   }
   {
   double input = 10; 
@@ -156,6 +164,7 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(10));
   }
   {
   double input = -10; 
@@ -165,6 +174,7 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(-10));
   }
   {
   double input = 0; 
@@ -174,5 +184,6 @@ TEST_F(test_dvariable, mfexp)
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(0));
   }
 }

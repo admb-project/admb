@@ -66,6 +66,12 @@ void banner(const adstring& program_name)
   ss << "2008 9.0";
   #elif (_MSC_VER==1600)
   ss << "2010 10.0";
+  #elif (_MSC_VER==1700)
+  ss << "2012 11.0";
+  #elif (_MSC_VER==1800)
+  ss << "2013 12.0";
+  #else
+  ss << "2015 14.0";
   #endif
   #if defined(_M_X64)
   ss <<  "(64bit)";
@@ -112,7 +118,7 @@ void banner(const adstring& program_name)
   ss << "unknown compiler";
 #endif
   ss << "\n";
-  ss << "Copyright (c) 2008-2013 ADMB Foundation"
+  ss << "Copyright (c) 2008-2015 ADMB Foundation"
      << " and Regents of the University of California\n";
   ss << "Build date: " << __DATE__ << "\n";
 #if defined(ADMB_REVISION)

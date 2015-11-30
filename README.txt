@@ -1,8 +1,8 @@
 ADMB Project
 ============
 
-*ADMB-11.4*  
-*Released May 29, 2015*  
+*ADMB-11.5pre*  
+*Released December 1, 2015*  
 
 ---
 
@@ -45,7 +45,7 @@ Read the installation procedures in [INSTALL](INSTALL.html) for Unix and Windows
 User manuals for AD Model Builder, the AUTODIF library and the ADMB-RE nonlinear
 random effects module are in the [ADMB downloads][ADMB_downloads_link].
 
-[ADMB_downloads_link]: http://www.admb-project.org/downloads/admb-11.4/
+[ADMB_downloads_link]: http://www.admb-project.org/downloads/admb-11.5pre/
 
 Additional documentation is also available on the [ADMB website][ADMB_link].
 

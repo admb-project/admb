@@ -1,6 +1,6 @@
 #ADMB Project  
-*ADMB-11.4*  
-*Released May 29, 2015*  
+*ADMB-11.5pre*  
+*Released December 1, 2015*  
 
 Describe changes and features for each release.
 
@@ -16,24 +16,13 @@ The goals for all releases are
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-trunk
-----------
-
-####Todo Priorities
-
-- [ ] Add Multi-CPU Support (High)
-- [ ] Write Design Documentation (High)
-- [ ] Write Developer Documentation (High)
-- [ ] Atan2
-
-####Changes and Improvements
+ADMB-11.5pre
+------------
 
 ####New Supported Compilers
 * Microsoft Visual C++ 14.0
 * Intel C++ 2016
 * GNU C++ 5.2
-
-####New Features
 
 ####Changes and Improvements
 * Change to Dave Fournier's version of cspline.cpp.

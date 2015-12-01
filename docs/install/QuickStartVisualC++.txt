@@ -18,6 +18,8 @@ _**Note**_ &mdash; A free version is available from: [Visual Studio Express](htt
 
 1. **Download** ADMB Windows Installer for Visual C++
 
+       * For Visual C++ 2015 (64Bit), download [admb-11.5pre-windows8-vc14-64bit](https://github.com/admb-project/admb/releases/download/admb-11.5pre/admb-11.5pre-windows8-vc14-64bit.exe).
+
        * For Visual C++ 2013 (64Bit), download [admb-11.5pre-windows8-vc12-64bit](https://github.com/admb-project/admb/releases/download/admb-11.5pre/admb-11.5pre-windows8-vc12-64bit.exe).
 
        * For Visual C++ 2013 (32Bit), download [admb-11.5pre-windows8-vc12-32bit](https://github.com/admb-project/admb/releases/download/admb-11.5pre/admb-11.5pre-windows8-vc12-32bit.exe).

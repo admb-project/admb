@@ -7,5 +7,5 @@
 @cd "%USERPROFILE%"
 
 @echo.
-@echo ADMB Command Prompt for Microsoft Visual C++ 14.0 (64 Bit)
+@echo ADMB Command Prompt for Microsoft Visual C++ 2015 (64 Bit)
 @echo For help, type command "admb".

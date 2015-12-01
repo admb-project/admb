@@ -7,7 +7,7 @@ Set WshSysEnv = WshShell.Environment("SYSTEM")
 
 If Len(WshSysEnv("VS140COMNTOOLS")) > 0 Then
   'Create a WshShortcut Object
-  Set oShellLink = WshShell.CreateShortcut("ADMB Command Prompt(Visual C++ 14.0 64Bit).lnk")
+  Set oShellLink = WshShell.CreateShortcut("ADMB Command Prompt(Visual C++ 2015 64Bit).lnk")
   oShellLink.TargetPath = "cmd"
 
   'Set the additional parameters for the shortcut

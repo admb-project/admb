@@ -40,7 +40,7 @@ Quick Start
 
            [~]$ unzip admb-11.5pre-src.zip
 
-       _**Alternative**_ &mdash; Use git client to download from version control.
+       _**Alternative**_ &mdash; Use Git client (see command below) to download directly from ADMB version control repository.
 
            [~]$ git clone https://github.com/admb-project/admb.git
 

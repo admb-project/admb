@@ -39,7 +39,7 @@ Quick Start
 
        Double click downloaded zip file and copy admb directory to the Local Drive (**C:\\>)**.
 
-       _**Alternative**_ &mdash; To download from directly from ADMB version control use the command below.
+       _**Alternative**_ &mdash; Use Git client (see command below) to download directly from ADMB version control repository.
 
         C:\> git clone https://github.com/admb-project/admb.git
 

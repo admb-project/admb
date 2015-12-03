@@ -1,7 +1,6 @@
 ADMB Project
 ============
-
-*ADMB-11.5pre*  
+*ADMB-11.5*  
 *Released December 1, 2015*  
 
 ---

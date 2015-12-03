@@ -7,7 +7,7 @@ ADMB binary installation and usage procedure for Windows using installer.
 ---
 
 _For Windows computers with Visual C++ compiler already installed, 
-read and follow the instuctions in [QuickStart for Visual C++](QuickStartVisualC++.html)._
+read and follow the instuctions in [QuickStart for Visual C++](QuickStartVisualC.html)._
 
 _For builds within *Cygwin* and *MinGW-Msys* shells, read and follow the
 instructions in the [QuickStart for Unix](QuickStartUnix.html)._

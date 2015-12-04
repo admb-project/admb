@@ -1,17 +1,26 @@
 #include <gtest/gtest.h>
-#include <df1b2fun.h>
+#include "df1b2fun.h"
 
 class test_df1b2vector: public ::testing::Test {};
 
-TEST_F(test_df1b2vector, operator_div)
+TEST_F(test_df1b2vector, constructor)
 {
-  df1b2vector vector(1, 4);
-  vector.initialize();
-  dvariable variable;
-  variable = 5;
-  const df1b2vector& result = vector / varible;
-  ASSERT_DOUBLE_EQ(1.0/5.0, value(result(1)));
-  ASSERT_DOUBLE_EQ(2.0/5.0, value(result(2)));
-  ASSERT_DOUBLE_EQ(3.0/5.0, value(result(3)));
-  ASSERT_DOUBLE_EQ(4.0/5.0, value(result(4)));
+  adpool* save = df1b2variable::pool;
+
+  extern df1b2_gradlist* f1b2gradlist;
+  df1b2_gradlist* save2 = f1b2gradlist;
+  {
+    adpool a;
+    const size_t n = 10;
+    size_t size = sizeof(double) * df1b2variable::get_blocksize(n);
+    a.set_size(size);
+    df1b2variable::pool = &a;
+
+    df1b2_gradlist gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
+    f1b2gradlist = &gradlist;;
+
+    df1b2vector v(1, 5);
+  }
+  df1b2variable::pool = save;
+  f1b2gradlist = save2;
 }

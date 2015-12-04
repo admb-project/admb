@@ -8,7 +8,11 @@ endif
 
 ADMB_OPTIONS=-g
 
-GTEST_DIR=googletest-read-only
+ifeq ($(SHELL),cmd)
+GTEST_DIR=googletest-read-only\\googletest
+else
+GTEST_DIR=googletest-read-only/googletest
+endif
 
 GTESTS=\
  test_adstring_strcase.cpp\

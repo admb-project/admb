@@ -1,5 +1,5 @@
 #ADMB Project
-*ADMB-11.5pre*  
+*ADMB-11.5*  
 *Released December 1, 2015*  
 
 ADMB installation for Ubuntu operating system using Debian package manager (dpkg).
@@ -15,11 +15,11 @@ __Note__ &mdash; The installation will copy the admb script to /usr/local/bin an
 
 1. Download ADMB debian package
 
-       For Ubuntu 14LTS (64Bit), download [admb-11.5pre-ubuntu14-64bit_11.5pre.deb](https://github.com/admb-project/admb/releases/download/admb-11.5pre/admb-11.5pre-ubuntu14-64bit_11.5pre.deb).
+       For Ubuntu 14LTS (64Bit), download [admb-11.5-ubuntu14-64bit_11.5.deb](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-ubuntu14-64bit_11.5.deb).
 
 2. Install ADMB using Debian package manager (dpkg) as super-user.
 
-        $ sudo dpkg -i admb-11.5pre-ubuntu14-64bit_11.5pre.deb
+        $ sudo dpkg -i admb-11.5-ubuntu14-64bit_11.5.deb
 
 Quick Start
 ===========
@@ -87,7 +87,7 @@ Build and run the simple example.
         Estimating row 1 out of 2 for hessian
         Estimating row 2 out of 2 for hessian
 
-  Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.5pre/) for more information.
+  Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.5/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

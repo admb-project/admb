@@ -1,5 +1,5 @@
 #ADMB Project
-*ADMB-11.5pre*  
+*ADMB-11.5*  
 *Released December 1, 2015*  
 
 Installing and using ADMB from binary zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
@@ -114,5 +114,3 @@ Quick Start
 
 --------------------------------------------------------------------------------
 For help and support, contact <users@admb-project.org>.
-
-$Id$

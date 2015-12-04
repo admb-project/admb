@@ -1,5 +1,5 @@
 #ADMB Project
-*ADMB-11.5pre*  
+*ADMB-11.5*  
 *Released December 1, 2015*  
 
 ADMB binary installation and usage procedure for Windows and Visual C++ compilers using installer.
@@ -58,5 +58,3 @@ _**Note**_ &mdash; A free version is available from: [Visual Studio Express](htt
        
 ---
 For help and support, contact <users@admb-project.org>.
-
-$Id$

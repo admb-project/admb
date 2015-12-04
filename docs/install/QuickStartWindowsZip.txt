@@ -1,5 +1,5 @@
 #ADMB Project
-*ADMB-11.5pre*  
+*ADMB-11.5*  
 *Released December 1, 2015*  
 
 ADMB binary installation and usage procedure for Windows and MinGW C++ compiler using zip file.
@@ -56,5 +56,3 @@ _**Note**_ &mdash; Installed MinGW C++ 32Bit must support **posix threading** an
 
 ---
 For help and support, contact <users@admb-project.org>.
-
-$Id$

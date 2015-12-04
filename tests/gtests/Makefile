@@ -148,7 +148,7 @@ else
 endif
 
 googletest-read-only:
-	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
+	git clone --depth=1 https://github.com/google/googletest.git googletest-read-only
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@

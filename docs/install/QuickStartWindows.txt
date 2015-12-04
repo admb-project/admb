@@ -18,9 +18,9 @@ _**Warning** &mdash; Uninstall any existing installations of ADMB._
 
 1. **Download** ADMB Windows Installer
 
-       * For Windows 64Bit, download [admb-11.5pre-windows8-mingw64](https://github.com/admb-project/admb/releases/download/admb-11.5pre/admb-11.5pre-windows8-mingw64.exe).
+       * For Windows 64Bit, download [admb-11.5-windows8-mingw64](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-windows8-mingw64.exe).
 
-       * For Windows 32Bit, download [admb-11.5pre-windows8-mingw32](https://github.com/admb-project/admb/releases/download/admb-11.5pre/admb-11.5pre-windows8-mingw32.exe).
+       * For Windows 32Bit, download [admb-11.5-windows8-mingw32](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-windows8-mingw32.exe).
 
        _**Note**_ &mdash; Installers include open source MinGW C++ compiler.
 
@@ -50,7 +50,7 @@ _**Warning** &mdash; Uninstall any existing installations of ADMB._
 
            C:\simple\> simple
 
-       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.5pre/) for more information.
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.5/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

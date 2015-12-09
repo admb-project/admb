@@ -1,6 +1,6 @@
 #ADMB Project
 *ADMB-11.5*  
-*Released December 1, 2015*  
+*Released December 11, 2015*  
 
 ADMB binary installation and usage procedure for Windows and Visual C++ compilers using zip file.
 

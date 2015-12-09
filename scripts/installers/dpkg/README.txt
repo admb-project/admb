@@ -1,6 +1,6 @@
 #ADMB Project
 *ADMB-11.5*  
-*Released December 1, 2015*  
+*Released December 11, 2015*  
 
 ADMB installation for Ubuntu operating system using Debian package manager (dpkg).
 

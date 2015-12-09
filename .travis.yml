@@ -1,5 +1,11 @@
 language: cpp
 
+before_install:
+  - pip install codecov
+
+after_success:
+  - codecov
+
 compiler:
   - gcc
   - clang

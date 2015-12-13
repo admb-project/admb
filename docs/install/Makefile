@@ -16,71 +16,99 @@ all:\
 
 QuickStartWindows.html: QuickStartWindows.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartWindowsZip.html: QuickStartWindowsZip.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartWindowsSource.html: QuickStartWindowsSource.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartVisualC.html: QuickStartVisualC.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartVisualCZip.html: QuickStartVisualCZip.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartVisualCSource.html: QuickStartVisualCSource.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartUnix.html: QuickStartUnix.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartUnixSource.html: QuickStartUnixSource.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartMacOS.html: ../../scripts/installers/packagemaker/README.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartUbuntu14.html: ../../scripts/installers/dpkg/README.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 CHANGES.html: ../../CHANGES.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 INSTALL.html: ../../INSTALL.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 README.html: ../../README.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 LICENSE.html: ../../LICENSE.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 

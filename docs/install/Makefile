@@ -119,3 +119,4 @@ clean:
 	rm -vf QuickStartMacOS.html
 	rm -vf QuickStartUbuntu14.html QuickStartUnixSource.html
 	rm -vf QuickStartVisualCSource.html QuickStartWindowsSource.html
+	rm -vf QuickStartWindowsZip.html

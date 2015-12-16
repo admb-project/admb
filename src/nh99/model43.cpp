@@ -62,34 +62,34 @@ void param_init_vector_vector::allocate(
     }
   }
 }
-
- void param_init_vector::allocate(const ad_integer& imin,
-   const ad_integer&imax,const ad_integer& phase_start,
-    const char * s)
- {
-   named_dvar_vector::allocate(imin,imax,s);
-   if (!(!(*this)))
-   {
-     initial_params::allocate(phase_start);
-     if (ad_comm::global_bparfile)
-     {
-       *(ad_comm::global_bparfile) >> dvar_vector(*this);
-     }
-     else if (ad_comm::global_parfile)
-     {
-       *(ad_comm::global_parfile) >> dvar_vector(*this);
-     }
-     else
-     {
-       dvar_vector::operator=(initial_value);
-     }
-   }
-   else
-   {
-     initial_params::allocate(-1);
-   }
- }
-
+void param_init_vector::allocate(
+  const ad_integer& imin,
+  const ad_integer& imax,
+  const ad_integer& _phase_start,
+  const char* s)
+{
+  named_dvar_vector::allocate(imin, imax, s);
+  if (!(!(*this)))
+  {
+    initial_params::allocate(_phase_start);
+    if (ad_comm::global_bparfile)
+    {
+      *(ad_comm::global_bparfile) >> dvar_vector(*this);
+    }
+    else if (ad_comm::global_parfile)
+    {
+      *(ad_comm::global_parfile) >> dvar_vector(*this);
+    }
+    else
+    {
+      dvar_vector::operator=(initial_value);
+    }
+  }
+  else
+  {
+    initial_params::allocate(-1);
+  }
+}
 /**
 Destructor
 */

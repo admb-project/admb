@@ -19,6 +19,8 @@ TEST_F(test_param_init_vector_vector, allocate)
   ASSERT_TRUE(p.allocated());
   ASSERT_EQ(1, p.indexmin());
   ASSERT_EQ(4, p.indexmax());
+  for (int i = 1; i <= 4; i++)
+    ASSERT_EQ(1, p[i].get_phase_start());
 }
 TEST_F(test_param_init_vector_vector, allocate_error)
 {

@@ -140,9 +140,6 @@ dvector::dvector(const char * s)
    }
    delete [] field;
    field=0;
-
-    delete [] t;
-    t=0;
   }
   else // if lbraces == 0
   {
@@ -243,6 +240,8 @@ dvector::dvector(const char * s)
    delete[] field;
    field = 0;
  }
+ delete [] t;
+ t = 0;
 }
 
 /**
@@ -338,9 +337,6 @@ void dvector::allocate(const char * s)
    }
    delete [] field;
    field=0;
-
-    delete [] t;
-    t=0;
   }
   else // if lbraces == 0
   {
@@ -439,4 +435,6 @@ void dvector::allocate(const char * s)
    delete [] field;
    field=0;
  }
+ delete [] t;
+ t = 0;
 }

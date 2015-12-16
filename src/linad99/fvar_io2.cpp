@@ -111,8 +111,6 @@ dvar_vector::dvar_vector(const char * s)
       ss >> this->elem(k);
       //va[k].nc=0.;
     }
-    delete[] t;
-    t = 0;
   }
   else
   {
@@ -198,4 +196,6 @@ dvar_vector::dvar_vector(const char * s)
    delete[] field;
    field = 0;
  }
+ delete [] t;
+ t = 0;
 }

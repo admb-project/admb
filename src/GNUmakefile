@@ -428,6 +428,7 @@ endif
 includes: dirs
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\include md ${DIST}\include
+	copy linad99\df13fun.h ${DIST}\include
 	copy linad99\fvar.hpp ${DIST}\include
 	copy linad99\gradient_structure.h ${DIST}\include
 	copy linad99\dvector.h ${DIST}\include
@@ -452,6 +453,7 @@ ifeq ($(SHELL),cmd)
 	copy nh99\param_init_bounded_number_matrix.h ${DIST}\include
 else
 	mkdir -p ${DIST}/include
+	cp linad99/df13fun.h ${DIST}/include
 	cp linad99/fvar.hpp ${DIST}/include
 	cp linad99/gradient_structure.h ${DIST}/include
 	cp linad99/dvector.h ${DIST}/include

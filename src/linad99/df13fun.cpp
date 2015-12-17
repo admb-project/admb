@@ -20,43 +20,44 @@
  * Description not yet available.
  * \param
  */
-  void df1_three_variable::initialize(void)
-  {
-    v[0]=0;
-    v[1]=0;
-    v[2]=0;
-    v[3]=0;
-  }
-
+void df1_three_variable::initialize()
+{
+  v[0] = 0;
+  v[1] = 0;
+  v[2] = 0;
+  v[3] = 0;
+}
 /**
- * Description not yet available.
- * \param
- */
-  df1_three_variable::df1_three_variable(const df1_three_variable& x)
-  {
-    v[0]=x.v[0];
-    v[1]=x.v[1];
-    v[2]=x.v[2];
-    v[3]=x.v[3];
-  }
-
-  df1_three_variable::df1_three_variable(void){}
-
+Default constructor
+*/
+df1_three_variable::df1_three_variable()
+{
+  initialize();
+}
 /**
- * Description not yet available.
- * \param
- */
- df1_three_vector::df1_three_vector(const df1_three_vector& m2)
- {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   shape=m2.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   v = m2.v;
- }
+Copy constructor
+*/
+df1_three_variable::df1_three_variable(const df1_three_variable& x)
+{
+  v[0] = x.v[0];
+  v[1] = x.v[1];
+  v[2] = x.v[2];
+  v[3] = x.v[3];
+}
+/**
+Copy constructor
+*/
+df1_three_vector::df1_three_vector(const df1_three_vector& m2)
+{
+  index_min=m2.index_min;
+  index_max=m2.index_max;
+  shape=m2.shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+  }
+  v = m2.v;
+}
 
 /**
 Destructor
@@ -287,14 +288,15 @@ df1_three_vector::~df1_three_vector()
  * Description not yet available.
  * \param
  */
-df1_three_variable& df1_three_variable::operator-=(const df1_three_variable& v)
-  {
-    *get_u() -= *v.get_u();
-    *get_u_x() -= *v.get_u_x();
-    *get_u_y() -= *v.get_u_y();
-    *get_u_z() -= *v.get_u_z();
-    return *this;
-  }
+df1_three_variable& df1_three_variable::operator-=(const df1_three_variable& _v)
+{
+  *get_u() -= *_v.get_u();
+  *get_u_x() -= *_v.get_u_x();
+  *get_u_y() -= *_v.get_u_y();
+  *get_u_z() -= *_v.get_u_z();
+
+  return *this;
+}
 
 /**
  * Description not yet available.
@@ -316,32 +318,34 @@ df1_three_variable operator-(const df1_three_variable& v)
  * Description not yet available.
  * \param
  */
-df1_three_variable& df1_three_variable::operator+=(const df1_three_variable& v)
-  {
-    *get_u() += *v.get_u();
-    *get_u_x() += *v.get_u_x();
-    *get_u_y() += *v.get_u_y();
-    *get_u_z() += *v.get_u_z();
-    return *this;
-  }
+df1_three_variable& df1_three_variable::operator+=(const df1_three_variable& _v)
+{
+  *get_u() += *_v.get_u();
+  *get_u_x() += *_v.get_u_x();
+  *get_u_y() += *_v.get_u_y();
+  *get_u_z() += *_v.get_u_z();
+
+  return *this;
+}
 
 /**
  * Description not yet available.
  * \param
  */
-  df1_three_variable& df1_three_variable::operator *= (double v)
-  {
-   /*
-    df1_three_variable x=*this * v;
-    *this=x;
-    return *this;
-   */
-    *get_u()*=v;
-    *get_u_x() = *get_u_x()*v;
-    *get_u_y() = *get_u_y()*v;
-    *get_u_z() = *get_u_z()*v;
-    return *this;
-  }
+df1_three_variable& df1_three_variable::operator*=(double _v)
+{
+/*
+df1_three_variable x=*this * v;
+*this=x;
+return *this;
+*/
+  *get_u() *= _v;
+  *get_u_x() = *get_u_x() * _v;
+  *get_u_y() = *get_u_y() * _v;
+  *get_u_z() = *get_u_z() * _v;
+
+  return *this;
+}
 
 /**
  * Description not yet available.
@@ -417,23 +421,23 @@ df1_three_variable& df1_three_variable::operator/=(const df1_three_variable& y)
  * Description not yet available.
  * \param
  */
-  df1_three_variable& df1_three_variable::operator += (double v)
-  {
-    *get_u() += v;
+df1_three_variable& df1_three_variable::operator+=(double _v)
+{
+  *get_u() += _v;
 
-    return *this;
-  }
+  return *this;
+}
 
 /**
  * Description not yet available.
  * \param
  */
-  df1_three_variable& df1_three_variable::operator -= (double v)
-  {
-    *get_u() -= v;
+df1_three_variable& df1_three_variable::operator-=(double _v)
+{
+  *get_u() -= _v;
 
-    return *this;
-  }
+  return *this;
+}
 
 /**
  * Description not yet available.

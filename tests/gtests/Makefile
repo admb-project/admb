@@ -57,6 +57,7 @@ GTESTS=\
  test_index_type.cpp\
  test_smart_counter.cpp\
  test_df1_three_variable.cpp\
+ test_df1_one_variable.cpp\
  main.cpp
 
 ##Need to debug this

@@ -162,6 +162,7 @@ includes: objdestdir
 	copy df1b2-separable\df3fun.h $(DESTDIR)\include
 	copy df1b2-separable\df32fun.h $(DESTDIR)\include
 	copy df1b2-separable\df1b2loc.h $(DESTDIR)\include
+	copy linad99\df11fun.h $(DESTDIR)\include
 	copy linad99\df13fun.h $(DESTDIR)\include
 	copy linad99\fvar.hpp $(DESTDIR)\include
 	copy linad99\gradient_structure.h $(DESTDIR)\include

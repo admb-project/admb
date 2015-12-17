@@ -13,24 +13,36 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
 
   int df1_one_variable::num_ind_var=0;
 
-  df1_one_variable::df1_one_variable(const df1_one_variable& x)
+/**
+Default constructor
+*/
+df1_one_variable::df1_one_variable()
+{
+  v[0] = 0;
+  v[1] = 0;
+}
+/**
+Copy constructor
+*/
+df1_one_variable::df1_one_variable(const df1_one_variable& x)
+{
+  v[0] = x.v[0];
+  v[1] = x.v[1];
+}
+/**
+Copy constructor
+*/
+df1_one_vector::df1_one_vector(const df1_one_vector& m2)
+{
+  index_min = m2.index_min;
+  index_max = m2.index_max;
+  shape = m2.shape;
+  if (shape)
   {
-    v[0]=x.v[0];
-    v[1]=x.v[1];
+    (shape->ncopies)++;
   }
-
- df1_one_vector::df1_one_vector(const df1_one_vector& m2)
- {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   shape=m2.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   v = m2.v;
- }
-
+  v = m2.v;
+}
 /**
 Destructor
 */
@@ -206,50 +218,48 @@ df1_one_vector::~df1_one_vector()
     }
   }
 
-  df1_one_variable& df1_one_variable::operator -= (const df1_one_variable& v)
-  {
-    *get_u() -= *v.get_u();
-    *get_u_x() -= *v.get_u_x();
-    return *this;
-  }
+df1_one_variable& df1_one_variable::operator-=(const df1_one_variable& _v)
+{
+  *get_u() -= *_v.get_u();
+  *get_u_x() -= *_v.get_u_x();
 
-  df1_one_variable operator-(const df1_one_variable& v)
-  {
-    df1_one_variable z;
+  return *this;
+}
+df1_one_variable operator-(const df1_one_variable& v)
+{
+  df1_one_variable z;
 
-    *z.get_u() = -(*v.get_u());
-    *z.get_u_x() = -(*v.get_u_x());
+  *z.get_u() = -(*v.get_u());
+  *z.get_u_x() = -(*v.get_u_x());
 
-    return z;
-  }
+  return z;
+}
+df1_one_variable& df1_one_variable::operator+=(const df1_one_variable& _v)
+{
+  *get_u() += *_v.get_u();
+  *get_u_x() += *_v.get_u_x();
 
-  df1_one_variable& df1_one_variable::operator += (const df1_one_variable& v)
-  {
-    *get_u() += *v.get_u();
-    *get_u_x() += *v.get_u_x();
-    return *this;
-  }
+  return *this;
+}
+df1_one_variable& df1_one_variable::operator*=(const df1_one_variable& _v)
+{
+  df1_one_variable x = *this * _v;
+  *this = x;
 
-  df1_one_variable& df1_one_variable::operator *= (const df1_one_variable& v)
-  {
-    df1_one_variable x=*this * v;
-    *this=x;
-    return *this;
-  }
+  return *this;
+}
+df1_one_variable& df1_one_variable::operator+=(double _v)
+{
+  *get_u() += _v;
 
-  df1_one_variable& df1_one_variable::operator += (double v)
-  {
-    *get_u() += v;
+  return *this;
+}
+df1_one_variable& df1_one_variable::operator-=(double _v)
+{
+  *get_u() -= _v;
 
-    return *this;
-  }
-
-  df1_one_variable& df1_one_variable::operator -= (double v)
-  {
-    *get_u() -= v;
-
-    return *this;
-  }
+  return *this;
+}
 
 void set_derivatives( df1_one_variable& z,const df1_one_variable& x,double u,
   double zp)
@@ -416,17 +426,18 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
   }
 
 
-  df1_one_variable operator * (const df1_one_variable& x,
-    const df1_one_variable& y)
-  {
-    df1_one_variable z;
-    double u= *x.get_u() * *y.get_u();
-    *z.get_u() = u;
-    double f_u=*y.get_u();
-    double f_v=*x.get_u();
-    set_derivatives(z,x,y,u, f_u, f_v);
-    return z;
-  }
+df1_one_variable operator*(
+  const df1_one_variable& x,
+  const df1_one_variable& y)
+{
+  df1_one_variable z;
+  double u= *x.get_u() * *y.get_u();
+  *z.get_u() = u;
+  double f_u=*y.get_u();
+  double f_v=*x.get_u();
+  set_derivatives(z,x,y,u, f_u, f_v);
+  return z;
+}
 
   df1_one_variable operator * (double x,
     const df1_one_variable& y)
@@ -533,10 +544,13 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
   df1_one_variable operator * (const df1_one_variable& x,
     const df1_one_variable& y);
 
-  init_df1_one_variable::~init_df1_one_variable()
-  {
-    deallocate();
-  }
+/**
+Destructor
+*/
+init_df1_one_variable::~init_df1_one_variable()
+{
+  deallocate();
+}
 
   void init_df1_one_variable::deallocate(void)
   {
@@ -570,10 +584,6 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
   {
     *get_u() =  v;
     *get_u_x() = 0.0;
-  }
-
-  df1_one_variable::df1_one_variable(void)
-  {
   }
 
 df1_one_matrix choleski_decomp(const df1_one_matrix& MM)

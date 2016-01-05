@@ -536,14 +536,6 @@ df1_one_variable operator*(
     return z;
   }
 
-
-  df1_one_variable operator - (const df1_one_variable& x,
-    const df1_one_variable& y);
-  df1_one_variable operator / (const df1_one_variable& x,
-    const df1_one_variable& y);
-  df1_one_variable operator * (const df1_one_variable& x,
-    const df1_one_variable& y);
-
 /**
 Destructor
 */

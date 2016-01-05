@@ -16,14 +16,21 @@ objective_function_value::objective_function_value()
 {
   pobjfun = this;
 }
+/**
+Assigment operator for prevariable.
+*/
 objective_function_value& objective_function_value::operator=
-  (const prevariable& v)
+  (const prevariable& _v)
 {
-  prevariable::operator=(v);
+  prevariable::operator=(_v);
   return *this;
 }
-objective_function_value& objective_function_value::operator=(const double v)
+/**
+Assigment operator for double.
+*/
+objective_function_value& objective_function_value::operator=
+  (const double _v)
 {
-  prevariable::operator=(v);
+  prevariable::operator=(_v);
   return *this;
 }

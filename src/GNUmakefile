@@ -448,6 +448,7 @@ ifeq ($(SHELL),cmd)
 	copy df1b2-separable\adrndeff.h ${DIST}\include
 	copy df1b2-separable\df1b2fun.h ${DIST}\include
 	copy df1b2-separable\df32fun.h ${DIST}\include
+	copy df1b2-separable\df33fun.h ${DIST}\include
 	copy df1b2-separable\df3fun.h ${DIST}\include
 	copy df1b2-separable\df1b2fnl.h ${DIST}\include
 	copy df1b2-separable\df1b2loc.h ${DIST}\include
@@ -475,6 +476,7 @@ else
 	cp df1b2-separable/adrndeff.h ${DIST}/include
 	cp df1b2-separable/df1b2fun.h ${DIST}/include
 	cp df1b2-separable/df32fun.h ${DIST}/include
+	cp df1b2-separable/df33fun.h ${DIST}/include
 	cp df1b2-separable/df3fun.h ${DIST}/include
 	cp df1b2-separable/df1b2fnl.h ${DIST}/include
 	cp df1b2-separable/df1b2loc.h ${DIST}/include

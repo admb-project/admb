@@ -161,6 +161,7 @@ includes: objdestdir
 	copy df1b2-separable\df1b2fnl.h $(DESTDIR)\include
 	copy df1b2-separable\df3fun.h $(DESTDIR)\include
 	copy df1b2-separable\df32fun.h $(DESTDIR)\include
+	copy df1b2-separable\df33fun.h $(DESTDIR)\include
 	copy df1b2-separable\df1b2loc.h $(DESTDIR)\include
 	copy linad99\df11fun.h $(DESTDIR)\include
 	copy linad99\df12fun.h $(DESTDIR)\include

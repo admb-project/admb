@@ -4,10 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2009-2012 ADMB Foundation
  */
-/**
- * \file
- * Description not yet available.
- */
 #include <df1b2fun.h>
 #include "df33fun.h"
   df1b2variable * df3_three_variable::ind_var[3];
@@ -15,29 +11,36 @@
   int df3_three_variable::num_local_ind_var=0;
 
 /**
- * Description not yet available.
- * \param
- */
-  df3_three_variable::df3_three_variable(const df3_three_variable& x)
+Default constructor
+*/
+df3_three_variable::df3_three_variable()
+{
+  for (int i = 0; i < 20; ++i)
   {
-    memcpy(&(v[0]),&(x.v[0]),20*sizeof(double));
+    v[i] = 0;
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
- df3_three_vector::df3_three_vector(const df3_three_vector& m2)
- {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   shape=m2.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   v = m2.v;
- }
+Copy constructor
+*/
+df3_three_variable::df3_three_variable(const df3_three_variable& x)
+{
+  memcpy(&(v[0]),&(x.v[0]),20*sizeof(double));
+}
+/**
+Copy constructor
+*/
+df3_three_vector::df3_three_vector(const df3_three_vector& m2)
+{
+  index_min=m2.index_min;
+  index_max=m2.index_max;
+  shape=m2.shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+  }
+  v = m2.v;
+}
 
 /**
  * Description not yet available.
@@ -1559,14 +1562,6 @@ Copy constructor
     *get_u_yzz() = 0.0;
     *get_u_zzz() = 0.0;
   }
-
-/**
-Default constructor
-*/
-df3_three_variable::df3_three_variable()
-{
-}
-
 /**
  * Description not yet available.
  * \param

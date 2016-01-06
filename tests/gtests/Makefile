@@ -62,6 +62,7 @@ GTESTS=\
  test_param_init_matrix.cpp\
  test_objective_function_value.cpp\
  test_df3_one_variable.cpp\
+ test_df3_three_variable.cpp\
  main.cpp
 
 ##Need to debug this

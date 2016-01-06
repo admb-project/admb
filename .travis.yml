@@ -17,3 +17,9 @@ env: PROG=
 
 os:
   - linux
+
+before_install:
+  - pip install --user codecov
+
+after_success:
+  - codecov

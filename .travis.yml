@@ -14,7 +14,8 @@ notifications:
   email: false
 
 env:
-  - CXXFLAGS=-coverage LDFLAGS=-coverage PROG=
+  global:
+    - CODECOV_TOKEN=:uuid-repo-token CXXFLAGS=-coverage LDFLAGS=-coverage PROG=
 
 os:
   - linux

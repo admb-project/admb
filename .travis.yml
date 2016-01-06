@@ -13,7 +13,8 @@ branches:
 notifications:
   email: false
 
-env: PROG=
+env:
+  - CXXFLAGS=-coverage LDFLAGS=-coverage PROG=
 
 os:
   - linux

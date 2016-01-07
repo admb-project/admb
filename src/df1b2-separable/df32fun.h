@@ -54,61 +54,64 @@ class df1b2variable;
  */
 class df3_two_variable
 {
-   double v[10];
- public:
-   static df1b2variable *ind_var[];
-   static int num_ind_var;
-   double *get_u(void) const
-   {
-      return (double *) (&(v[0]));
-   }
-   double *get_u_x(void) const
-   {
-      return (double *) (&(v[1]));
-   }
-   double *get_u_y(void) const
-   {
-      return (double *) (&(v[2]));
-   }
-   double *get_u_xx(void) const
-   {
-      return (double *) (&(v[3]));
-   }
-   double *get_u_xy(void) const
-   {
-      return (double *) (&(v[4]));
-   }
-   double *get_u_yy(void) const
-   {
-      return (double *) (&(v[5]));
-   }
-   double *get_u_xxx(void) const
-   {
-      return (double *) (&(v[6]));
-   }
-   double *get_u_xxy(void) const
-   {
-      return (double *) (&(v[7]));
-   }
-   double *get_u_xyy(void) const
-   {
-      return (double *) (&(v[8]));
-   }
-   double *get_u_yyy(void) const
-   {
-      return (double *) (&(v[9]));
-   }
-   df3_two_variable & operator =(const df3_two_variable & v);
-    df3_two_variable & operator =(double v);
-    df3_two_variable & operator +=(const df3_two_variable & v);
-    df3_two_variable & operator *=(const df3_two_variable & v);
-    df3_two_variable & operator *=(double v);
-    df3_two_variable & operator +=(double v);
-    df3_two_variable & operator -=(double v);
-    df3_two_variable & operator -=(const df3_two_variable & v);
-    df3_two_variable & operator /=(const df3_two_variable & v);
-    df3_two_variable(void);
-    df3_two_variable(const df3_two_variable &);
+  double v[10];
+
+public:
+  static df1b2variable* ind_var[];
+  static int num_ind_var;
+
+  df3_two_variable();
+  df3_two_variable(const df3_two_variable &);
+
+  double *get_u(void) const
+  {
+    return (double*)(&(v[0]));
+  }
+  double *get_u_x(void) const
+  {
+    return (double*)(&(v[1]));
+  }
+  double *get_u_y(void) const
+  {
+    return (double*)(&(v[2]));
+  }
+  double *get_u_xx(void) const
+  {
+    return (double*)(&(v[3]));
+  }
+  double *get_u_xy(void) const
+  {
+    return (double*)(&(v[4]));
+  }
+  double *get_u_yy(void) const
+  {
+    return (double*)(&(v[5]));
+  }
+  double *get_u_xxx(void) const
+  {
+    return (double*)(&(v[6]));
+  }
+  double *get_u_xxy(void) const
+  {
+    return (double*)(&(v[7]));
+  }
+  double *get_u_xyy(void) const
+  {
+    return (double*)(&(v[8]));
+  }
+  double *get_u_yyy(void) const
+  {
+    return (double*)(&(v[9]));
+  }
+  df3_two_variable& operator=(const df3_two_variable & v);
+  df3_two_variable& operator=(double v);
+  df3_two_variable& operator+=(const df3_two_variable & v);
+  df3_two_variable& operator*=(const df3_two_variable & v);
+  df3_two_variable& operator*=(double v);
+  df3_two_variable& operator+=(double v);
+  df3_two_variable& operator-=(double v);
+  df3_two_variable& operator-=(const df3_two_variable & v);
+  df3_two_variable& operator/=(const df3_two_variable & v);
 };
 
 /**

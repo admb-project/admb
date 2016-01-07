@@ -43,10 +43,10 @@ TEST_F(test_param_init_d3array, allocate_phase_start_int)
   int sl = 1;
   int sh = 2;
   int nrl = 3;
-  int nrh = 3;
-  int ncl = 4;
-  int nch = 5;
-  int expected_phase_start = 6;
+  int nrh = 4;
+  int ncl = 5;
+  int nch = 6;
+  int expected_phase_start = 7;
   
   p.allocate(sl, sh, nrl, nrh, ncl, nch, expected_phase_start, "p");
 

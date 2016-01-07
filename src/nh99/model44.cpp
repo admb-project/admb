@@ -66,37 +66,40 @@ void param_init_matrix_vector::allocate(
     }
   }
 }
-
- void param_init_matrix::allocate(
-   const ad_integer& imin,
-   const ad_integer&imax,
-   const index_type& imin2,
-   const index_type& imax2,
-   const ad_integer& phase_start,
-   const char * s)
- {
-   named_dvar_matrix::allocate(imin,imax,imin2,imax2,s);
-   if (!(!(*this)))
-   {
-     initial_params::allocate(phase_start);
-     if (ad_comm::global_bparfile)
-     {
-       *(ad_comm::global_bparfile) >> dvar_matrix(*this);
-     }
-     else if (ad_comm::global_parfile)
-     {
-       *(ad_comm::global_parfile) >> dvar_matrix(*this);
-     }
-     else
-     {
-       dvar_matrix::operator=(initial_value);
-     }
-   }
-   else
-   {
-     initial_params::allocate(-1);
-   }
- }
+/**
+Allocates matrix with row dimensions imin to imax and column dimensions
+imin2 to imax2 using specified phase_start.
+*/
+void param_init_matrix::allocate(
+  const ad_integer& imin,
+  const ad_integer& imax,
+  const index_type& imin2,
+  const index_type& imax2,
+  const ad_integer& _phase_start,
+  const char* s)
+{
+  named_dvar_matrix::allocate(imin,imax,imin2,imax2,s);
+  if (!(!(*this)))
+  {
+    initial_params::allocate(_phase_start);
+    if (ad_comm::global_bparfile)
+    {
+      *(ad_comm::global_bparfile) >> dvar_matrix(*this);
+    }
+    else if (ad_comm::global_parfile)
+    {
+      *(ad_comm::global_parfile) >> dvar_matrix(*this);
+    }
+    else
+    {
+      dvar_matrix::operator=(initial_value);
+    }
+  }
+  else
+  {
+    initial_params::allocate(-1);
+  }
+}
 /**
 Destructor
 */

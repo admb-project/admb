@@ -164,6 +164,20 @@ TEST_F(test_param_init_matrix, allocate_phase_start)
 
   ASSERT_EQ(p.get_phase_start(), expected_phase_start);
 }
+TEST_F(test_param_init_matrix, allocate_phase_start2)
+{
+  gradient_structure gs;
+  param_init_matrix p;
+
+  ad_integer rmin = 1;
+  ad_integer rmax = 2;
+  index_type cmin = 1;
+  index_type cmax = 3;
+  ad_integer expected_phase_start = 5;
+  p.allocate(rmin, rmax, cmin, cmax, expected_phase_start, "p");
+
+  ASSERT_EQ(p.get_phase_start(), expected_phase_start);
+}
 TEST_F(test_param_init_matrix, allocate_default_phase_start)
 {
   gradient_structure gs;

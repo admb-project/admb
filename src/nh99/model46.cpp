@@ -79,43 +79,46 @@ void param_init_bounded_matrix_vector::allocate(
     }
   }
 }
-
- void param_init_bounded_matrix::allocate(const ad_integer& imin,
-   const ad_integer& imax, const ad_integer& imin2,
-   const ad_integer& imax2, const ad_double& _bmin,
-   const ad_double& _bmax, const ad_integer& phase_start,
-   const char * s)
- {
-   minb=_bmin;
-   maxb=_bmax;
-   named_dvar_matrix::allocate(imin,imax,imin2,imax2,s);
-   if (!(!(*this)))
-   {
-     initial_params::allocate(phase_start);
-     if (ad_comm::global_bparfile)
-     {
-       *(ad_comm::global_bparfile) >> dvar_matrix(*this);
-     }
-     else if (ad_comm::global_parfile)
-     {
-       *(ad_comm::global_parfile) >> dvar_matrix(*this);
-     }
-     else
-     {
-       if ((!initial_value_flag) || initial_value <=minb
-            || initial_value >= maxb)
-       {
-         //cerr << "Initial value out of bounds -- using halfway value" << endl;
-         initial_value=(minb+maxb)/2.;
-       }
-       dvar_matrix::operator=(initial_value);
-     }
-   }
-   else
-   {
-     initial_params::allocate(-1);
-   }
- }
+/**
+Allocates matrix with row dimensions imin to imax, column dimensions
+imin2 to imax2 and bounded by bmin and bmax using specified phase_start.
+*/
+void param_init_bounded_matrix::allocate(
+  const ad_integer& imin, const ad_integer& imax,
+  const ad_integer& imin2, const ad_integer& imax2,
+  const ad_double& _bmin, const ad_double& _bmax,
+  const ad_integer& _phase_start, const char* s)
+{
+  minb = _bmin;
+  maxb = _bmax;
+  named_dvar_matrix::allocate(imin,imax,imin2,imax2,s);
+  if (!(!(*this)))
+  {
+    initial_params::allocate(_phase_start);
+    if (ad_comm::global_bparfile)
+    {
+      *(ad_comm::global_bparfile) >> dvar_matrix(*this);
+    }
+    else if (ad_comm::global_parfile)
+    {
+      *(ad_comm::global_parfile) >> dvar_matrix(*this);
+    }
+    else
+    {
+      if ((!initial_value_flag)
+        || initial_value <=minb || initial_value >= maxb)
+      {
+        //cerr << "Initial value out of bounds -- using halfway value" << endl;
+        initial_value=(minb+maxb)/2.;
+      }
+      dvar_matrix::operator=(initial_value);
+    }
+  }
+  else
+  {
+    initial_params::allocate(-1);
+  }
+}
 
 /**
 Destructor

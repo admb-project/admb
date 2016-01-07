@@ -967,40 +967,34 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
 
     return z;
   }
-
 /**
- * Description not yet available.
- * \param
- */
-df3_three_variable& df3_three_variable::operator=(const df3_three_variable& v)
-  {
-    *get_u() =  *v.get_u();
-    *get_u_x() = *v.get_u_x();
-    *get_u_y() = *v.get_u_y();
-    *get_u_z() = *v.get_u_z();
-    *get_u_xx() = *v.get_u_xx();
-    *get_u_xy() = *v.get_u_xy();
-    *get_u_xz() = *v.get_u_xz();
-    *get_u_yy() = *v.get_u_yy();
-    *get_u_yz() = *v.get_u_yz();
-    *get_u_zz() = *v.get_u_zz();
-    *get_u_xxx() = *v.get_u_xxx();
-    *get_u_xxy() = *v.get_u_xxy();
-    *get_u_xxz() = *v.get_u_xxz();
-    *get_u_xyy() = *v.get_u_xyy();
-    *get_u_xyz() = *v.get_u_xyz();
-    *get_u_xzz() = *v.get_u_xzz();
-    *get_u_yyy() = *v.get_u_yyy();
-    *get_u_yyz() = *v.get_u_yyz();
-    *get_u_yzz() = *v.get_u_yzz();
-    *get_u_zzz() = *v.get_u_zzz();
+Assignment operator sets values from _v to df3_three_variable.
+*/
+df3_three_variable& df3_three_variable::operator=(const df3_three_variable& _v)
+{
+  *get_u() =  *_v.get_u();
+  *get_u_x() = *_v.get_u_x();
+  *get_u_y() = *_v.get_u_y();
+  *get_u_z() = *_v.get_u_z();
+  *get_u_xx() = *_v.get_u_xx();
+  *get_u_xy() = *_v.get_u_xy();
+  *get_u_xz() = *_v.get_u_xz();
+  *get_u_yy() = *_v.get_u_yy();
+  *get_u_yz() = *_v.get_u_yz();
+  *get_u_zz() = *_v.get_u_zz();
+  *get_u_xxx() = *_v.get_u_xxx();
+  *get_u_xxy() = *_v.get_u_xxy();
+  *get_u_xxz() = *_v.get_u_xxz();
+  *get_u_xyy() = *_v.get_u_xyy();
+  *get_u_xyz() = *_v.get_u_xyz();
+  *get_u_xzz() = *_v.get_u_xzz();
+  *get_u_yyy() = *_v.get_u_yyy();
+  *get_u_yyz() = *_v.get_u_yyz();
+  *get_u_yzz() = *_v.get_u_yzz();
+  *get_u_zzz() = *_v.get_u_zzz();
 
-
-
-
-    return *this;
-  }
-
+  return *this;
+}
 /**
  * Description not yet available.
  * \param

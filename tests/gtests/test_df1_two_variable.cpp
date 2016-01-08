@@ -83,3 +83,19 @@ TEST_F(test_df1_two_variable, minus_equal_double_operator)
   ASSERT_EQ(2, *x.get_u_x());
   ASSERT_EQ(3, *x.get_u_y());
 }
+TEST_F(test_df1_two_variable, multiplication_equal_double_operator)
+{
+  df1_two_variable x;
+  double y = 5;
+
+  *x.get_u() = 1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = 3;
+
+  x *= y;
+  
+  ASSERT_EQ(*x.get_u(), value(x));
+  ASSERT_EQ(5, *x.get_u());
+  ASSERT_EQ(-10, *x.get_u_x());
+  ASSERT_EQ(15, *x.get_u_y());
+}

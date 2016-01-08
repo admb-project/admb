@@ -333,20 +333,22 @@ df1_two_variable& df1_two_variable::operator += (const df1_two_variable& _v)
   return *this;
 }
 
-  df1_two_variable& df1_two_variable::operator *= (double v)
-  {
-   /*
-    df1_three_variable x=*this * v;
-    *this=x;
-    return *this;
-   */
-    *get_u()*=v;
-    *get_u_x() = *get_u_x()*v;
-    *get_u_y() = *get_u_y()*v;
-    return *this;
-  }
+/**
+Mulitiply value v with values in df1_two_variable.
+*/
+df1_two_variable& df1_two_variable::operator*=(double _v)
+{
+/*
+  df1_three_variable x=*this * v;
+  *this=x;
+  return *this;
+*/
+  *get_u() *= _v;
+  *get_u_x() *= _v;
+  *get_u_y() *= _v;
 
-
+  return *this;
+}
 /**
  * Description not yet available.
  * \param

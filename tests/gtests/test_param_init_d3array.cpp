@@ -18,6 +18,8 @@ TEST_F(test_param_init_d3array, allocate_phase_start)
 {
   ad_exit=&test_ad_exit;
 
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
   gradient_structure gs;
   param_init_d3array p;
 
@@ -37,6 +39,8 @@ TEST_F(test_param_init_d3array, allocate_phase_start_int)
 {
   ad_exit=&test_ad_exit;
 
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
   gradient_structure gs;
   param_init_d3array p;
 
@@ -56,6 +60,8 @@ TEST_F(test_param_init_d3array, allocate_phase_start_default)
 {
   ad_exit=&test_ad_exit;
 
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
   gradient_structure gs;
   param_init_d3array p;
 
@@ -75,6 +81,8 @@ TEST_F(test_param_init_d3array, allocate_phase_start_int_default)
 {
   ad_exit=&test_ad_exit;
 
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
   gradient_structure gs;
   param_init_d3array p;
 

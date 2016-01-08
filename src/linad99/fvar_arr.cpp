@@ -138,13 +138,14 @@ dvar_vector::dvar_vector(unsigned int sz, double* x)
  */
 
 /**
- * Description not yet available.
- * \param
- */
- dvar_vector::dvar_vector(void)
- {
-   allocate();
- }
+Default constructor
+*/
+dvar_vector::dvar_vector():
+  index_min(1),
+  index_max(0)
+{
+  allocate();
+}
 
 /**
  * Description not yet available.
@@ -207,14 +208,13 @@ void copy_status(const ostream& _s, const dvar_vector& v)
    }
 
 /**
- * Description not yet available.
- * \param
- */
-   void dvar_vector::allocate(void)
-   {
-     shape=NULL;
-     va=NULL;
-   }
+Does not allocate, but initializes members variables.
+*/
+void dvar_vector::allocate()
+{
+  shape = NULL;
+  va = NULL;
+}
 
 /**
  * Description not yet available.

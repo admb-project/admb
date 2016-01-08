@@ -63,6 +63,7 @@ GTESTS=\
  test_df3_one_variable.cpp\
  test_df3_three_variable.cpp\
  test_df3_two_variable.cpp\
+ test_param_init_bounded_matrix.cpp\
  main.cpp
 
 ##Need to debug this

@@ -263,7 +263,6 @@ TEST_F(test_df3_three_variable, muliplication_equal_double)
   ASSERT_DOUBLE_EQ(*y.get_u_yzz(), 38);
   ASSERT_DOUBLE_EQ(*y.get_u_zzz(), 40);
 }
-/*
 TEST_F(test_df3_three_variable, multiply_equal_df3_three_variable)
 {
   df3_three_variable y;
@@ -309,29 +308,32 @@ TEST_F(test_df3_three_variable, multiply_equal_df3_three_variable)
   *x.get_u_yyz() = 2;
   *x.get_u_yzz() = 2;
   *x.get_u_zzz() = 2;
+
   y *= x;
-  ASSERT_DOUBLE_EQ(*y.get_u(), 2);
-  ASSERT_DOUBLE_EQ(*y.get_u_x(), 4);
-  ASSERT_DOUBLE_EQ(*y.get_u_y(), 6);
-  ASSERT_DOUBLE_EQ(*y.get_u_z(), 8);
-  ASSERT_DOUBLE_EQ(*y.get_u_xx(), 10);
-  ASSERT_DOUBLE_EQ(*y.get_u_xy(), 12);
-  ASSERT_DOUBLE_EQ(*y.get_u_xz(), 14);
-  ASSERT_DOUBLE_EQ(*y.get_u_yy(), 16);
-  ASSERT_DOUBLE_EQ(*y.get_u_yz(), 18);
-  ASSERT_DOUBLE_EQ(*y.get_u_zz(), 20);
-  ASSERT_DOUBLE_EQ(*y.get_u_xxx(), 22);
-  ASSERT_DOUBLE_EQ(*y.get_u_xxy(), 24);
-  ASSERT_DOUBLE_EQ(*y.get_u_xxz(), 26);
-  ASSERT_DOUBLE_EQ(*y.get_u_xyy(), 28);
-  ASSERT_DOUBLE_EQ(*y.get_u_xyz(), 30);
-  ASSERT_DOUBLE_EQ(*y.get_u_xzz(), 32);
-  ASSERT_DOUBLE_EQ(*y.get_u_yyy(), 34);
-  ASSERT_DOUBLE_EQ(*y.get_u_yyz(), 36);
-  ASSERT_DOUBLE_EQ(*y.get_u_yzz(), 38);
-  ASSERT_DOUBLE_EQ(*y.get_u_zzz(), 40);
-}
+
+  ASSERT_DOUBLE_EQ(1.0 * *x.get_u(), *y.get_u());
+  ASSERT_DOUBLE_EQ(1.0 * *x.get_u_x() + 2.0 * 2.0, *y.get_u_x());
+  ASSERT_DOUBLE_EQ(1.0 * *x.get_u_y() + 2.0 * 3.0, *y.get_u_y());
+  ASSERT_DOUBLE_EQ(1.0 * *x.get_u_z() + 2.0 * 4.0, *y.get_u_z());
+/*
+  ASSERT_DOUBLE_NE(*y.get_u_xx(), 10);
+  ASSERT_DOUBLE_NE(*y.get_u_xy(), 12);
+  ASSERT_DOUBLE_NE(*y.get_u_xz(), 14);
+  ASSERT_DOUBLE_NE(*y.get_u_yy(), 16);
+  ASSERT_DOUBLE_NE(*y.get_u_yz(), 18);
+  ASSERT_DOUBLE_NE(*y.get_u_zz(), 20);
+  ASSERT_DOUBLE_NE(*y.get_u_xxx(), 22);
+  ASSERT_DOUBLE_NE(*y.get_u_xxy(), 24);
+  ASSERT_DOUBLE_NE(*y.get_u_xxz(), 26);
+  ASSERT_DOUBLE_NE(*y.get_u_xyy(), 28);
+  ASSERT_DOUBLE_NE(*y.get_u_xyz(), 30);
+  ASSERT_DOUBLE_NE(*y.get_u_xzz(), 32);
+  ASSERT_DOUBLE_NE(*y.get_u_yyy(), 34);
+  ASSERT_DOUBLE_NE(*y.get_u_yyz(), 36);
+  ASSERT_DOUBLE_NE(*y.get_u_yzz(), 38);
+  ASSERT_DOUBLE_NE(*y.get_u_zzz(), 40);
 */
+}
 TEST_F(test_df3_three_variable, assignment_operator)
 {
   df3_three_variable y;

@@ -100,16 +100,16 @@ df1b2variable& df1b2variable::operator = (const df3_three_variable& v)
     *v.get_u_zzz());
   return *this;
 }
-
 /**
-Intialize values (v) to zero.
+Intialize values in v to zero.
 */
-void df3_three_variable::initialize(void)
+void df3_three_variable::initialize()
 {
-  for (int i=0;i<20;i++)
-    v[i]=0.0;
+  for (int i = 0; i < 20; ++i)
+  {
+    v[i] = 0.0;
+  }
 }
-
 /**
 Destructor
 */
@@ -170,24 +170,20 @@ df3_three_vector::~df3_three_vector()
       (*this)(i)=0.0;
     }
   }
-
 /**
- * Description not yet available.
- * \param
- */
-  df3_three_vector::df3_three_vector(void)
-  {
-    allocate();
-  }
-
+Default constructor
+*/
+df3_three_vector::df3_three_vector()
+{
+  allocate();
+}
 /**
- * Description not yet available.
- * \param
- */
-  df3_three_vector::df3_three_vector(int min,int max)
-  {
-    allocate(min,max);
-  }
+Constructs df3_three_vector with dimensions min to max.
+*/
+df3_three_vector::df3_three_vector(int min,int max)
+{
+  allocate(min, max);
+}
 
 /**
  * Description not yet available.
@@ -211,18 +207,16 @@ df3_three_vector::~df3_three_vector()
     }
     v-=min;
   }
-
 /**
- * Description not yet available.
- * \param
- */
-  void df3_three_vector::allocate(void)
-  {
-    index_min=0;
-    index_max=-1;
-    v=0;
-    shape=0;
-  }
+Does not allocate, but initializes member variables and pointers to NULL.
+*/
+void df3_three_vector::allocate(void)
+{
+  index_min = 0;
+  index_max = -1;
+  v = NULL;
+  shape = NULL;
+}
 
 /**
  * Description not yet available.
@@ -456,27 +450,23 @@ df3_three_variable& df3_three_variable::operator*=(double _v)
   return *this;
 }
 /**
-Multiply values in v to df3_three_variable.
+Multiply values in v to df3_three_variable which calls set_derivatives.
 */
 df3_three_variable& df3_three_variable::operator*=(const df3_three_variable& v)
 {
-  ///\todo needs a test case
   df3_three_variable x = *this * v;
   *this = x;
   return *this;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Divide values in v to df3_three_variable which calls set_derivatives.
+*/
 df3_three_variable& df3_three_variable::operator/=(const df3_three_variable& v)
-  {
-    ///\todo needs a test case
-    df3_three_variable x=*this / v;
-    *this=x;
-    return *this;
-  }
+{
+  df3_three_variable x = *this / v;
+  *this = x;
+  return *this;
+}
 /**
 Add value _v to only df3_three_variable u.  All other values unchanged.
 */
@@ -996,60 +986,58 @@ df3_three_variable& df3_three_variable::operator=(const df3_three_variable& _v)
   return *this;
 }
 /**
- * Description not yet available.
- * \param
- */
-  df3_three_variable& df3_three_variable::operator = (double x)
-  {
-    *get_u() =x;
-    *get_u_x() =0.0;
-    *get_u_y() =0.0;
-    *get_u_z() =0.0;
-    *get_u_xx() =0.0;
-    *get_u_xy() =0.0;
-    *get_u_xz() =0.0;
-    *get_u_yy() =0.0;
-    *get_u_yz() =0.0;
-    *get_u_zz() =0.0;
-    *get_u_xxx() =0.0;
-    *get_u_xxy() =0.0;
-    *get_u_xxz() =0.0;
-    *get_u_xyy() =0.0;
-    *get_u_xyz() =0.0;
-    *get_u_xzz() =0.0;
-    *get_u_yyy() =0.0;
-    *get_u_yyz() =0.0;
-    *get_u_yzz() =0.0;
-    *get_u_zzz() =0.0;
+Assigns x to u in df3_three_variable, then zeros the other values.
+*/
+df3_three_variable& df3_three_variable::operator=(double x)
+{
+  *get_u() = x;
+  *get_u_x() = 0.0;
+  *get_u_y() = 0.0;
+  *get_u_z() = 0.0;
+  *get_u_xx() = 0.0;
+  *get_u_xy() = 0.0;
+  *get_u_xz() = 0.0;
+  *get_u_yy() = 0.0;
+  *get_u_yz() = 0.0;
+  *get_u_zz() = 0.0;
+  *get_u_xxx() = 0.0;
+  *get_u_xxy() = 0.0;
+  *get_u_xxz() = 0.0;
+  *get_u_xyy() = 0.0;
+  *get_u_xyz() = 0.0;
+  *get_u_xzz() = 0.0;
+  *get_u_yyy() = 0.0;
+  *get_u_yyz() = 0.0;
+  *get_u_yzz() = 0.0;
+  *get_u_zzz() = 0.0;
 
-    return *this;
-  }
-
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
-  df3_three_variable operator * (const df3_three_variable& x,
-    const df3_three_variable& y)
-  {
-    df3_three_variable z;
-    double u= *x.get_u() * *y.get_u();
-    *z.get_u() = u;
-    double f_u=*y.get_u();
-    double f_v=*x.get_u();
-    double f_uu=0.0;
-    double f_uv=1.0;
-    double f_vv=0.0;
-    double f_uuu=0.0;
-    double f_uuv=0.0;
-    double f_uvv=0.0;
-    double f_vvv=0.0;
-    set_derivatives(z,x,y,u,
-      f_u, f_v,
-      f_uu, f_uv, f_vv,
-      f_uuu, f_uuv, f_uvv, f_vvv);
-    return z;
-  }
+Multiply x and y and returns the results to df3_three_variable.
+*/
+df3_three_variable operator*(
+  const df3_three_variable& x,
+  const df3_three_variable& y)
+{
+  df3_three_variable z;
+  double u = *x.get_u() * *y.get_u();
+  *z.get_u() = u;
+  double f_u = *y.get_u();
+  double f_v = *x.get_u();
+  double f_uu = 0.0;
+  double f_uv = 1.0;
+  double f_vv = 0.0;
+  double f_uuu = 0.0;
+  double f_uuv = 0.0;
+  double f_uvv = 0.0;
+  double f_vvv = 0.0;
+  set_derivatives(z,x,y,u,
+    f_u, f_v,
+    f_uu, f_uv, f_vv,
+    f_uuu, f_uuv, f_uvv, f_vvv);
+  return z;
+}
 
 /**
  * Description not yet available.

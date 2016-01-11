@@ -345,17 +345,15 @@ df3_two_variable& df3_two_variable::operator-=(double _v)
   *get_u() -= _v;
   return *this;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-  df3_two_variable& df3_two_variable::operator *= (const df3_two_variable& v)
-  {
-    df3_two_variable x=*this * v;
-    *this=x;
-    return *this;
-  }
+Multiply df3_two_variable and v which calls set_derivatives. 
+*/
+df3_two_variable& df3_two_variable::operator*=(const df3_two_variable& _v)
+{
+  df3_two_variable x = *this * _v;
+  *this = x;
+  return *this;
+}
 /**
 Multiply value _v to value in df3_two_variable.
 */

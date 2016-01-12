@@ -66,6 +66,8 @@ GTESTS=\
  test_param_init_bounded_matrix.cpp\
  test_param_init_vector.cpp\
  test_data_matrix.cpp\
+ test_init_adstring.cpp\
+ test_init_line_adstring.cpp\
  main.cpp
 
 ##Need to debug this

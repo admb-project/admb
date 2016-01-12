@@ -65,6 +65,7 @@ GTESTS=\
  test_df3_two_variable.cpp\
  test_param_init_bounded_matrix.cpp\
  test_param_init_vector.cpp\
+ test_data_matrix.cpp\
  main.cpp
 
 ##Need to debug this

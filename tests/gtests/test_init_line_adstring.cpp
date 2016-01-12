@@ -11,6 +11,7 @@ TEST_F(test_init_line_adstring, constructor)
   ASSERT_EQ(0, s.size());
   ASSERT_STREQ("", (char*)s);
 }
+/*
 TEST_F(test_init_line_adstring, allocate)
 {
   init_line_adstring s;
@@ -27,3 +28,4 @@ TEST_F(test_init_line_adstring, allocate)
 
   ad_comm::global_datafile = NULL;
 }
+*/

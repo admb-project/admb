@@ -75,19 +75,23 @@ initial_params::~initial_params()
 }
 
 extern int* pointer_to_phase;
-  initial_params::initial_params(void)
-  {
-#  if defined(USE_SHARE_FLAGS)
-     share_flags=0;
-#  endif
-    phase_start=0;
-    phase_save=-9999;
-    initial_value=0;
-    initial_value_flag=0;
-    active_flag=0;
-    scalefactor=0;
-    pointer_to_phase=&initial_params::current_phase;
-  }
+
+/**
+Default constructor
+*/
+initial_params::initial_params()
+{
+#if defined(USE_SHARE_FLAGS)
+  share_flags = 0;
+#endif
+  phase_start = 0;
+  phase_save = -9999;
+  initial_value = 0;
+  initial_value_flag = 0;
+  active_flag = 0;
+  scalefactor = 0;
+  pointer_to_phase=&initial_params::current_phase;
+}
 
   void initial_params::set_initial_value(double x)
   {
@@ -110,7 +114,6 @@ extern int* pointer_to_phase;
   {
     return phase_start;
   }
-
 
   void model_name_tag::allocate(const char * s)
   {

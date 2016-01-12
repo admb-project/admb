@@ -434,7 +434,8 @@ void dvector::allocate(int ncl, int nch)
       ad_exit(21);
     }
 #ifndef OPT_LIB
-    memset(v, 0, sizeof(double) * size);
+    assert(size >= 0);
+    memset(v, 0, sizeof(double) * (unsigned int)size);
 #endif
 
 #if defined(THREAD_SAFE)

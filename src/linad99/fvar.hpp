@@ -910,7 +910,7 @@ class grad_stack
    off_t end_pos1;
    off_t end_pos2;
 #endif
-   dmatrix *table;
+   //dmatrix *table;
  public:
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);
@@ -1247,19 +1247,22 @@ void gradfree(dlink *);
 class prevariable_position;
 
 /**
-  Base class for dvariable.
-  Principle role is to avoid calling a descructor when a pevariable or dvariable
-  object is passed on the stack.
-  (There is no destructor, ~prevariable().)
-  \ingroup BAD
- */
+Base class for dvariable.
+Principle role is to avoid calling a destructor when a pevariable or dvariable
+object is passed on the stack.
+(There is no destructor, ~prevariable().)
+\ingroup BAD
+*/
 class prevariable
 {
- protected:
+protected:
 #ifndef __SUN__
-   prevariable(void)
-   {
-   }
+  /**
+  Default constructor
+  */
+  prevariable()
+  {
+  }
 #endif
 #ifndef __NDPX__
    prevariable(double_and_int * u)
@@ -1268,8 +1271,9 @@ class prevariable
    }
 #endif
 
- public:
-   double_and_int * v; ///< pointer to the data
+public:
+  double_and_int* v; ///< pointer to the data
+
    friend class dvar_vector_iterator;
    friend class dvar_vector;
    friend class dvar_matrix;

@@ -68,10 +68,12 @@ GTESTS=\
  test_data_matrix.cpp\
  test_init_adstring.cpp\
  test_init_line_adstring.cpp\
+ test_dll_param_matrix.cpp\
  main.cpp
 
 ##Need to debug this
 ## test_atan2.cpp
+## test_dll_param_init_bounded_vector.cpp
 
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\

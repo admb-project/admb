@@ -84,13 +84,12 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
   //int(true_buffend->pf)=6666;
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
-  if (fp == -1)
+  if (fp < 0)
   {
     cerr << "Error trying to open file " << filename
          << " in class fixed_smartlist " << endl;
     ad_exit(1);
   }
-
   /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
 }
 

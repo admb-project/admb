@@ -76,7 +76,7 @@ void fixed_smartlist2::allocate(const size_t _bufsize,
   *true_buffend=9999;
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
-  if (fp == -1)
+  if (fp < 0)
   {
     cerr << "Error trying to open file " << filename
          << " in class fixed_smartlist2 " << endl;

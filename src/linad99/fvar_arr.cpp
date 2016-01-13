@@ -208,12 +208,15 @@ void copy_status(const ostream& _s, const dvar_vector& v)
    }
 
 /**
-Does not allocate, but initializes members variables.
+Does not allocate, but initializes all class member variables.
 */
 void dvar_vector::allocate()
 {
-  shape = NULL;
   va = NULL;
+  index_min = 1;
+  index_max = 0;
+  link_ptr = NULL;
+  shape = NULL;
 }
 
 /**

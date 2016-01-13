@@ -1993,17 +1993,17 @@ class param_init_bounded_vector_vector;
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
+ADMB variable vector
+*/
 class dvar_vector
 {
- public:
-   double_and_int * va;
-   int index_min;
-   int index_max;
-   arr_link *link_ptr;
-   vector_shapex *shape;
+public:
+  double_and_int* va;
+  int index_min;
+  int index_max;
+  arr_link* link_ptr;
+  vector_shapex* shape;
+
  public:
    dvar_vector operator -();
 

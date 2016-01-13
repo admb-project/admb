@@ -8,6 +8,26 @@ extern "C"
 
 class test_dvar_vector:public ::testing::Test {};
 
+TEST_F(test_dvar_vector, default_constructor)
+{
+  dvar_vector v;
+
+  ASSERT_TRUE(v.va == NULL);
+  ASSERT_EQ(v.index_min, 1);
+  ASSERT_EQ(v.index_max, 0);
+  ASSERT_TRUE(v.link_ptr == NULL);
+  ASSERT_TRUE(v.shape == NULL);
+}
+TEST_F(test_dvar_vector, incorrect_range)
+{
+  dvar_vector v(5, 1);
+
+  ASSERT_TRUE(v.va == NULL);
+  ASSERT_EQ(v.index_min, 1);
+  ASSERT_EQ(v.index_max, 0);
+  ASSERT_TRUE(v.link_ptr == NULL);
+  ASSERT_TRUE(v.shape == NULL);
+}
 TEST_F(test_dvar_vector, fill)
 {
   gradient_structure gs;

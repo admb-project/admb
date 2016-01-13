@@ -329,14 +329,24 @@ void dll_param_init_bounded_number::allocate(double *_pd,double _minb,
   }
 }
 
-void dll_param_init_bounded_vector::allocate(double* _pd,int imin,int imax,
-  double _minb,double _maxb,int phase_start,const char * s)
+/**
+Allocates dll_param_init_bounded_vector.
+\param imin lower index value
+\param imax upper index value
+\param minb elements lower value bound
+\param maxb elements upper value bound
+\param phase_start
+\param s id name
+*/
+void dll_param_init_bounded_vector::allocate(double* _pd,
+  int imin, int imax, double _minb, double _maxb,
+  int _phase_start, const char* s)
 {
   pd=_pd;
   minb=_minb;
   maxb=_maxb;
   named_dvar_vector::allocate(imin,imax,s);
-  initial_params::allocate(phase_start);
+  initial_params::allocate(_phase_start);
   if (pd && allocated(*this))
   {
     double * tmp=_pd;

@@ -265,8 +265,8 @@ TEST_F(test_dvector, fill_lbraces_zero)
   {
     v.fill(array);
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -283,8 +283,8 @@ TEST_F(test_dvector, fill_lbraces_greater_than_one)
   {
     v.fill(array);
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -301,8 +301,8 @@ TEST_F(test_dvector, fill_lbraces_not_equal_rbraces)
   {
     v.fill(array);
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -319,8 +319,92 @@ TEST_F(test_dvector, fill_lbraces1_not_equal_rbraces)
   {
     v.fill(array);
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
+    return;
+  }
+  FAIL();
+}
+TEST_F(test_dvector, filename_goodcolumn)
+{
+  ofstream ofs("test_dvector.txt");
+  ofs << "1 2 3\n";
+  ofs << "4 5 6\n";
+  ofs << "7 8 9\n";
+  ofs.close();
+
+  dvector v("test_dvector.txt", 2);
+  ASSERT_EQ(1, v.indexmin());
+  ASSERT_EQ(3, v.indexmax());
+  ASSERT_EQ(3, v.size());
+  ASSERT_DOUBLE_EQ(2, v(1));
+  ASSERT_DOUBLE_EQ(5, v(2));
+  ASSERT_DOUBLE_EQ(8, v(3));
+}
+TEST_F(test_dvector, filename_badcolumn)
+{
+  ofstream ofs("test_dvector.txt");
+  ofs << "1 2 3\n";
+  ofs << "4 5 6\n";
+  ofs << "7 8 9\n";
+  ofs.close();
+  try
+  {
+    dvector v("test_dvector.txt", 4);
+  }
+  catch (const int exit_code)
+  {
+    return;
+  }
+  FAIL();
+}
+TEST_F(test_dvector, filename_negativebadcolumn)
+{
+  ofstream ofs("test_dvector.txt");
+  ofs << "1 2 3\n";
+  ofs << "4 5 6\n";
+  ofs << "7 8 9\n";
+  ofs.close();
+  try
+  {
+    dvector v("test_dvector.txt", -1);
+  }
+  catch (const int exit_code)
+  {
+    return;
+  }
+  FAIL();
+}
+TEST_F(test_dvector, filename_zerobadcolumn)
+{
+  ofstream ofs("test_dvector.txt");
+  ofs << "1 2 3\n";
+  ofs << "4 5 6\n";
+  ofs << "7 8 9\n";
+  ofs.close();
+  try
+  {
+    dvector v("test_dvector.txt", 0);
+  }
+  catch (const int exit_code)
+  {
+    return;
+  }
+  FAIL();
+}
+TEST_F(test_dvector, filename_raggedcolumn)
+{
+  ofstream ofs("test_dvector.txt");
+  ofs << "1 2 3\n";
+  ofs << "4\n";
+  ofs << "7 8 9\n";
+  ofs.close();
+  try
+  {
+    dvector v("test_dvector.txt", 2);
+  }
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();

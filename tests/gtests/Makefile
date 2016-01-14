@@ -50,7 +50,6 @@ GTESTS=\
  test_dvar_matrix.cpp\
  test_ad_integer.cpp\
  test_ivector.cpp\
- test_dvector.cpp\
  test_cspline.cpp\
  test_dvar_vector.cpp\
  test_index_type.cpp\
@@ -69,6 +68,7 @@ GTESTS=\
  test_init_adstring.cpp\
  test_init_line_adstring.cpp\
  test_dll_param_matrix.cpp\
+ test_dvector.cpp\
  main.cpp
 
 ##Need to debug this
@@ -234,6 +234,7 @@ ifeq ($(SHELL),cmd)
 	@del test_scalefactor.exe
 	@del finance.b0
 	@del finance.p0
+	@del test_dvector.txt
 else
 	@rm -vf finance.b0
 	@rm -vf finance.p0
@@ -286,4 +287,5 @@ else
 	@rm -vf scalefactor.rep
 	@rm -vf test_finance
 	@rm -vf test_scalefactor
+	@rm -vf test_dvector.txt
 endif

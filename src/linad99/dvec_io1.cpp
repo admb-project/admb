@@ -50,7 +50,7 @@ dvector::dvector(char* filename, const int& column)
 {
   if (column < 1)
   {
-    cerr << "Error[" << __FILE__ << ':' << __LINE__ 
+    cerr << "Error[" << __FILE__ << ':' << __LINE__
          << "]: column should be positive number.\n";
     ad_exit(1);
   }

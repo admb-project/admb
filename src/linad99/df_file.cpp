@@ -184,7 +184,7 @@ DF_FILE::DF_FILE(const size_t nbytes):
   }
 #endif
 
-  if (path != NULL)
+  if (path != NULL && strlen(path) <= 45)
 #if !defined (_WIN32)
   {
       sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,

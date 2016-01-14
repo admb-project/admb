@@ -307,7 +307,7 @@ void allocate_dvariable_space()
    gradient_structure::ARRAY_MEMBLOCK_SIZE=size; //js
 
    char * path = getenv("ADTMP1"); // NULL if not defined
-   if (path != NULL)
+   if (path != NULL && strlen(path) <= 45)
    {
      #ifdef __SUN__
      sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,

@@ -164,7 +164,7 @@ grad_stack::grad_stack()
   }
 #endif
 
-  if (path != NULL)
+  if (path != NULL && strlen(path) <= 45)
   {
 #if !defined (_WIN32)
     sprintf(&gradfile_name1[0],"%s/gradfil1.%s", path, ad_random_part);
@@ -191,7 +191,7 @@ grad_stack::grad_stack()
   string_path2+=ad_comm::subdir;
   path=(char*) string_path2;
 #endif
-  if (path != NULL)
+  if (path != NULL && strlen(path) <= 45)
   {
 #if !defined (_WIN32)
     if (strlen(path) > 0)

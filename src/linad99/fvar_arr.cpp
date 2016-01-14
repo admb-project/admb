@@ -218,24 +218,20 @@ void dvar_vector::allocate()
   link_ptr = NULL;
   shape = NULL;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Allocate dvar_vector using indexes from v1.
+*/
 void dvar_vector::allocate(const dvector& v1)
-   {
-     allocate(v1.indexmin(),v1.indexmax());
-   }
-
+{
+  allocate(v1.indexmin(), v1.indexmax());
+}
 /**
- * Description not yet available.
- * \param
- */
+Allocate dvar_vector using indexes from v1.
+*/
 void dvar_vector::allocate(const dvar_vector& v1)
-   {
-     allocate(v1.indexmin(),v1.indexmax());
-   }
+{
+  allocate(v1.indexmin(), v1.indexmax());
+}
 
 /**
  * Description not yet available.
@@ -266,9 +262,8 @@ void dvar_vector::allocatec(const dvar_vector& t)
    }
 
 /**
- * Description not yet available.
- * \param
- */
+Allocate dvar_vector with indexmin = ncl and indexmax = nch.
+*/
 void dvar_vector::allocate(int ncl, int nch)
 {
   if (ncl > nch)

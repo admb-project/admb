@@ -90,7 +90,10 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
          << " in class fixed_smartlist " << endl;
     ad_exit(1);
   }
-  /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
+  else
+  {
+    /*off_t pos=*/lseek(fp, 0L, SEEK_CUR);
+  }
 }
 
 /**

@@ -244,11 +244,9 @@ gggg27::~gggg27()
     perm1 = 0;
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 gggg00::gggg00()
 {
   val = new logical[number3+1];
@@ -257,60 +255,64 @@ gggg00::gggg00()
   llow = new logical[nx];
   lup = new integer[nx];
 }
+/**
+Destructor
+*/
 gggg00::~gggg00()
 {
-  if (val != 0)
+  if (val)
   {
-    delete[] val;
-    val = 0;
+    delete [] val;
+    val = NULL;
   }
-  if (gconst != 0)
+  if (gconst)
   {
-    delete[] gconst;
-    gconst = 0;
+    delete [] gconst;
+    gconst = NULL;
   }
-  if (gunit != 0)
+  if (gunit)
   {
-    delete[] gunit;
-    gunit = 0;
+    delete [] gunit;
+    gunit = NULL;
   }
-  if (llow != 0)
+  if (llow)
   {
-    delete[] llow;
-    llow = 0;
+    delete [] llow;
+    llow = NULL;
   }
-  if (lup != 0)
+  if (lup)
   {
-    delete[] lup;
-    lup = 0;
+    delete [] lup;
+    lup = NULL;
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 gggg02::gggg02()
 {
   a = new doublereal[nx*nx];
   diag0 = new doublereal[nx];
 }
+/**
+Destructor
+*/
 gggg02::~gggg02()
 {
-  if (a != 0)
+  if (a)
   {
-    a = 0;
+    delete [] a;
+    a = NULL;
   }
-  if (diag0 != 0)
+  if (diag0)
   {
-    diag0 = 0;
+    delete [] diag0;
+    diag0 = NULL;
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 gggg03::gggg03()
 {
   bind = new integer[number3];
@@ -319,27 +321,35 @@ gggg03::gggg03()
   alist__ = new integer[number3+1];
   sort = new integer[number3];
 }
+/**
+Destructor
+*/
 gggg03::~gggg03()
 {
-  if (bind != 0)
+  if (bind)
   {
-    bind = 0;
+    delete [] bind;
+    bind = NULL;
   }
-  if (bind0 != 0)
+  if (bind0)
   {
-    bind0 = 0;
+    delete [] bind0;
+    bind0 = NULL;
   }
-  if (violis != 0)
+  if (violis)
   {
-    violis = 0;
+    delete [] violis;
+    violis = NULL;
   }
-  if (alist__ != 0)
+  if (alist__)
   {
-    alist__ = 0;
+    delete [] alist__;
+    alist__ = NULL;
   }
-  if (sort != 0)
+  if (sort)
   {
-    sort = 0;
+    delete [] sort;
+    sort = NULL;
   }
 }
 
@@ -483,31 +493,33 @@ gggg12::~gggg12()
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 gggg15::gggg15()
 {
   ug = new doublereal[nx];
   og = new doublereal[nx];
   delfac = new doublereal[number3];
 }
+/**
+Destructor
+*/
 gggg15::~gggg15()
 {
-  if (ug != 0)
+  if (ug)
   {
-    delete[] ug;
-    ug = 0;
+    delete [] ug;
+    ug = NULL;
   }
-  if (ug != 0)
+  if (og)
   {
-    delete[] og;
-    og = 0;
+    delete [] og;
+    og = NULL;
   }
-  if (ug != 0)
+  if (delfac)
   {
-    delete[] delfac;
-    delfac = 0;
+    delete [] delfac;
+    delfac = NULL;
   }
 }
 
@@ -573,26 +585,26 @@ gggg19::gggg19(logical _wwuq2,logical _wwuq4, integer _wwuq6) :
       wwuq2(_wwuq2), wwuq4(_wwuq4), wwuq6(_wwuq6){}
 
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 gggg21::gggg21()
 {
   aitr = new integer[2*number3];
 }
+/**
+Destructor
+*/
 gggg21::~gggg21()
 {
-  if (aitr != 0)
+  if (aitr)
   {
-    delete[] aitr;
-    aitr = 0;
+    delete [] aitr;
+    aitr = NULL;
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 gggg23::gggg23()
 {
   xj = new doublereal[(nx+number3)*(nx+number3)];
@@ -602,31 +614,40 @@ gggg23::gggg23()
   ud = new doublereal[2*number3];
   ud1 = new doublereal[2*number3];
 }
+/**
+Destructor
+*/
 gggg23::~gggg23()
 {
-  if (xj != 0)
+  if (xj)
   {
-    xj = 0;
+    delete [] xj;
+    xj = NULL;
   }
-  if (ddual != 0)
+  if (ddual)
   {
-    ddual = 0;
+    delete [] ddual;
+    ddual = NULL;
   }
-  if (r != 0)
+  if (r)
   {
-    r  = 0;
+    delete [] r;
+    r  = NULL;
   }
-  if (np != 0)
+  if (np)
   {
-    np = 0;
+    delete [] np;
+    np = NULL;
   }
-  if (ud != 0)
+  if (ud)
   {
-    ud = 0;
+    delete [] ud;
+    ud = NULL;
   }
-  if (ud1 != 0)
+  if (ud1)
   {
-    ud1 = 0;
+    delete [] ud1;
+    ud1 = NULL;
   }
 }
 

@@ -1,22 +1,25 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+\file
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
+Return the variable mean of matrix m.
+*/
 dvariable mean(const dvar_matrix& m)
 {
   dvariable tmp;
-  tmp=sum(m)/double(size_count(m));
+  const int size = size_count(m);
+  if (size > 0)
+  {
+    tmp = sum(m) / double(size);
+  }
+  else
+  {
+    cerr << "Error: Unable to compute mean of dvar_matrix.\n";
+    ad_exit(1);
+  }
   return tmp;
 }

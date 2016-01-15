@@ -78,3 +78,29 @@ TEST_F(test_dvar_matrix, incompatiblesize)
     dvar_matrix ba = b * a;
   );
 }
+TEST_F(test_dvar_matrix, mean_nullmatrix)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a;
+  ASSERT_ANY_THROW(
+    mean(a);
+  );
+}
+TEST_F(test_dvar_matrix, mean_matrix)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a(1, 2, 1, 2);
+  a(1, 1) = 1;
+  a(1, 2) = 1;
+  a(2, 1) = 1;
+  a(2, 2) = 1;
+  dvariable d = mean(a);
+
+  ASSERT_DOUBLE_EQ(1, value(d));
+}

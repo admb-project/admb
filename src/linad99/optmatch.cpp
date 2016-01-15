@@ -39,9 +39,10 @@ int option_match(int argc, char* argv[], const char* option)
   return match;
 }
 /**
- * Description not yet available.
- * \param
- */
+Search for option in _s.
+
+\return If found return index (starts at 1), else return -1.
+*/
 int option_match(char* _s, const char* option)
 {
   adstring ss = _s;
@@ -49,7 +50,8 @@ int option_match(char* _s, const char* option)
   int rval = -1;
   int i = 1;
   char* p = strtok(s," ");
-  do {
+  while (p != NULL)
+  {
     if (!strcmp(p, option))
     {
       rval = i;
@@ -58,14 +60,15 @@ int option_match(char* _s, const char* option)
     i++;
     p = strtok(NULL, " ");
   }
-  while (p);
 
   return rval;
 }
 /**
- * Description not yet available.
- * \param
- */
+Search for option in _s and returns number of option args
+in _nopt.
+
+\return If found return index (starts at 1), else return -1.
+*/
 int option_match(char* _s, const char* option, const int& _nopt)
 {
   adstring ss = _s;
@@ -75,7 +78,8 @@ int option_match(char* _s, const char* option, const int& _nopt)
   int i = 1;
   nopt = 0;
   char* p = strtok(s," ");
-  do {
+  while (p)
+  {
     if (!strcmp(p, option))
     {
       rval = i;
@@ -84,7 +88,6 @@ int option_match(char* _s, const char* option, const int& _nopt)
     p = strtok(NULL, " ");
     i++;
   }
-  while (p);
 
   bool found = false;
   do

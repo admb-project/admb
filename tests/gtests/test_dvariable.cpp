@@ -10,6 +10,12 @@ extern "C"
 
 class test_dvariable: public ::testing::Test {};
 
+TEST_F(test_dvariable, default_constructor)
+{
+  gradient_structure gs;
+  dvariable d;
+  ASSERT_TRUE(d.v != NULL);
+}
 TEST_F(test_dvariable, fmax)
 {
   gradient_structure gs;

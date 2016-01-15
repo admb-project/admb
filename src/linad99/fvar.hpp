@@ -3932,10 +3932,10 @@ class param_init_bounded_matrix_vector;
  */
 class dvar3_array
 {
-   dvar_matrix *t;
-   three_array_shape *shape;
+  dvar_matrix* t;
+  three_array_shape* shape;
 
- public:
+public:
    void shallow_copy(const dvar3_array &);
    dvar3_array sub(int, int);
    dvar3_array(int, int);

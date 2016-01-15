@@ -34,7 +34,7 @@ long int farptr_tolong(void*);
 /**
 Default constructor
 */
-ivector::ivector(void)
+ivector::ivector()
 {
   allocate();
 }
@@ -42,20 +42,26 @@ ivector::ivector(void)
 Copy constructor
 */
 ivector::ivector(const ivector& t)
- {
-   index_min=t.index_min;
-   index_max=t.index_max;
-   #ifdef DIAG
+{
+#ifdef DIAG
     cout << "Copy constructor called for ivector with address "
          << _farptr_tolong(t.v) <<"\n";
-   #endif
-   shape=t.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-     v = t.v;
-   }
- }
+#endif
+
+  index_min = t.index_min;
+  index_max = t.index_max;
+
+  shape=t.shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+    v = t.v;
+  }
+  else
+  {
+    v = NULL;
+  }
+}
 /**
 Default destructor. Invoked by the compiler. Only frees allocated memory
 if all shallow copies in scope have been removed.
@@ -317,16 +323,14 @@ void ivector::allocate(const ivector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void ivector::allocate(void)
+Does not allocate, but initializes class members.
+*/
+void ivector::allocate()
 {
-  shape=NULL;
-  index_min=1;
-  index_max=-1;
+  shape = NULL;
+  index_min = 1;
+  index_max = -1;
   v = NULL;
 }
 

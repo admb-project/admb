@@ -245,3 +245,19 @@ TEST_F(test_ivector, safe_deallocate)
     FAIL();
   }
 }
+TEST_F(test_ivector, copy_constructor_empty)
+{
+  ivector orig;
+  ASSERT_FALSE(orig.allocated());
+  ASSERT_TRUE(orig.get_v() == NULL);
+  ASSERT_EQ(0, orig.get_ncopies());
+
+  ivector copy(orig);
+  ASSERT_FALSE(orig.allocated());
+  ASSERT_FALSE(copy.allocated());
+  ASSERT_TRUE(copy.get_v() == NULL);
+  ASSERT_EQ(0, copy.get_ncopies());
+  ASSERT_EQ(0, orig.get_ncopies());
+  ASSERT_EQ(copy.indexmin(), orig.indexmin());
+  ASSERT_EQ(copy.indexmax(), orig.indexmax());
+}

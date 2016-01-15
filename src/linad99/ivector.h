@@ -44,6 +44,7 @@
 #include "vector_shapex.h"
 
 /**
+Array of integers(int) with indexes from index_min to indexmax.
 */
 class ivector
 {
@@ -111,10 +112,10 @@ public:
   {
     return v ? index_max - index_min + 1 : 0;
   }
-   int *get_v() const
-   {
-      return v;
-   }
+  int* get_v() const
+  {
+    return v;
+  }
    ivector& shift(int min);
    //ivector(unsigned int sz); //makes an array [0..sz]
    //inline allocated(void) {return ::allocated(this);}

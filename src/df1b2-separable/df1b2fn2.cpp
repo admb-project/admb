@@ -338,15 +338,13 @@ init_df1b2vector::init_df1b2vector()
 {
   allocate();
 }
-
 /**
- * Description not yet available.
- * \param
- */
-  init_df1b2vector::init_df1b2vector(int lb,int ub)
-  {
-    allocate(lb,ub);
-  }
+Constructs vector with range lb to ub.
+*/
+init_df1b2vector::init_df1b2vector(int lb, int ub)
+{
+  allocate(lb, ub);
+}
 
 /**
  * Description not yet available.
@@ -412,6 +410,7 @@ void init_df1b2vector::allocate(void)
   index_min = 0;
   index_max = -1;
   ncopies = NULL;
+  trueptr = NULL;
   ptr = NULL;
 }
 /**
@@ -453,30 +452,26 @@ void init_df1b2vector::deallocate()
     }
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
-  init_df1b2vector::init_df1b2vector(const init_df1b2vector & v)
+Copy constructor
+*/
+init_df1b2vector::init_df1b2vector(const init_df1b2vector& v)
+{
+  ncopies = v.ncopies;
+  if (v.ncopies)
   {
-    ncopies=v.ncopies;
-    if (v.ncopies)
-    {
-      (*ncopies)++;
-      trueptr=v.trueptr;
-      ptr=v.ptr;
-      index_min=v.index_min;
-      index_max=v.index_max;
-    }
-    else
-    {
-      trueptr=0;
-      index_min=1;
-      index_max=0;
-    }
-    //cout << *ncopies << endl;
+    (*ncopies)++;
+    trueptr = v.trueptr;
+    ptr = v.ptr;
+    index_min = v.index_min;
+    index_max = v.index_max;
   }
+  else
+  {
+    allocate();
+  }
+  //cout << *ncopies << endl;
+}
 
 /**
  * Description not yet available.

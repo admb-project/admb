@@ -71,6 +71,7 @@ GTESTS=\
  test_dvector.cpp\
  test_dvar3_array.cpp\
  test_arr_link.cpp\
+ test_df1b2_init_number_vector.cpp\
  main.cpp
 
 ##Need to debug this

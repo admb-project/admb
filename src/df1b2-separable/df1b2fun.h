@@ -1462,12 +1462,14 @@ public:
  */
 class df1b2_init_number_vector
 {
-  df1b2_init_number * v;
+  df1b2_init_number* v;
   int index_min;
   int index_max;
-  double_index_type * it;
+  double_index_type* it;
+
 public:
   df1b2_init_number_vector();
+  ~df1b2_init_number_vector();
 
 #if defined(OPT_LIB)
    df1b2_init_number& operator [] (int i) { return v[i];}
@@ -1484,7 +1486,6 @@ public:
   int allocated(void) { return (v!=NULL); }
   int indexmin(void) {return (index_min);}
   int indexmax(void) {return (index_max);}
-  ~df1b2_init_number_vector();
   void deallocate(void);
 };
 

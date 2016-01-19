@@ -70,6 +70,7 @@ GTESTS=\
  test_dll_param_matrix.cpp\
  test_dvector.cpp\
  test_dvar3_array.cpp\
+ test_arr_link.cpp\
  main.cpp
 
 ##Need to debug this

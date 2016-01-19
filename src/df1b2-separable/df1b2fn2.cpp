@@ -273,17 +273,13 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
       //u_dot[offset]=1.0;
     }
   }
-
-  int no_destruct=0;
-
 /**
 Destructor
 */
 df1b2variable::~df1b2variable()
 {
-    deallocate();
+  deallocate();
 }
-
 /**
 If no other copies exist, free df1b2variable::ptr.
 */
@@ -336,13 +332,12 @@ void df1b2variable::deallocate(void)
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  init_df1b2vector::init_df1b2vector(void)
-  {
-    allocate();
-  }
+Default constructor
+*/
+init_df1b2vector::init_df1b2vector()
+{
+  allocate();
+}
 
 /**
  * Description not yet available.
@@ -408,62 +403,56 @@ void df1b2variable::deallocate(void)
       ptr[i].allocate();
     }
   }
-
 /**
- * Description not yet available.
- * \param
- */
-  void init_df1b2vector::allocate(void)
-  {
-    //deallocate(); a// don;t know why this was ever here DF 6june09
-    index_min=0;
-    index_max=-1;
-    ncopies=0;
-    ptr=0;
-  }
-
+Do not allocate, but just initialize class members.
+*/
+void init_df1b2vector::allocate(void)
+{
+  //deallocate(); a// don;t know why this was ever here DF 6june09
+  index_min = 0;
+  index_max = -1;
+  ncopies = NULL;
+  ptr = NULL;
+}
 /**
- * Description not yet available.
- * \param
- */
-  init_df1b2vector::~init_df1b2vector()
+Destructor
+*/
+init_df1b2vector::~init_df1b2vector()
+{
+  if (ncopies)
   {
-    if (ncopies)
+    if (*ncopies)
+      (*ncopies)--;
+    else
     {
-      if (*ncopies)
-        (*ncopies)--;
-      else
-      {
-        if (trueptr)
-        {
-          delete [] trueptr;
-          trueptr=0;
-        }
-        delete ncopies;
-        ncopies=0;
-      }
-    }
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  void init_df1b2vector::deallocate(void)
-  {
-    if (ncopies)
-    {
-      if (*ncopies)
-        (*ncopies)--;
-      else
+      if (trueptr)
       {
         delete [] trueptr;
-        trueptr=0;
-        delete ncopies;
-        ncopies=0;
+        trueptr = NULL;
       }
+      delete ncopies;
+      ncopies = NULL;
     }
   }
+}
+/**
+Similar to destructor.
+*/
+void init_df1b2vector::deallocate()
+{
+  if (ncopies)
+  {
+    if (*ncopies)
+      (*ncopies)--;
+    else
+    {
+      delete [] trueptr;
+      trueptr = NULL;
+      delete ncopies;
+      ncopies = NULL;
+    }
+  }
+}
 
 /**
  * Description not yet available.

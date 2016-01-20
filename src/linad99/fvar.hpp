@@ -8633,8 +8633,8 @@ class ad_comm
 };
 
 int option_match(int argc, char *argv[], const char *string);
-int option_match(int argc, char *argv[], const char *string, const int &nopt);
-int option_match(char *s, const char *string, const int &_nopt);
+int option_match(int argc, char *argv[], const char *string, int& nopt);
+int option_match(char *s, const char *string, int& nopt);
 int option_match(char *s, const char *string);
 int ad_chdir(const char *s);
 void ad_getcd(const adstring & s);

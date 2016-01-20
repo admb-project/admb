@@ -69,11 +69,10 @@ in _nopt.
 
 \return If found return index (starts at 1), else return -1.
 */
-int option_match(char* _s, const char* option, const int& _nopt)
+int option_match(char* _s, const char* option, int& nopt)
 {
   adstring ss = _s;
   char* s = (char*)ss;
-  int& nopt = (int&)_nopt;
   int rval = -1;
   int i = 1;
   nopt = 0;
@@ -116,11 +115,9 @@ program.
 \return An index into "argv" where the match with "string" is obtained. In case
 of no match, the value "-1" is returned.
 */
-int option_match(int argc, char *argv[], const char *option, const int& _nopt)
+int option_match(int argc, char *argv[], const char *option, int& nopt)
 {
   int match = -1;
-
-  int& nopt = (int&)_nopt;
   nopt=0;
 
   int i = option_match(argc, argv, option);

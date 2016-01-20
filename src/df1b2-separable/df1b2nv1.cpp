@@ -243,7 +243,7 @@ Default constructor
 df1b2_init_number_vector::df1b2_init_number_vector():
   v(NULL),
   index_min(0),
-  index_max(1),
+  index_max(-1),
   it(NULL)
 {
 }

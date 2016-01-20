@@ -107,20 +107,25 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
         uu(i,j)=u((*derindex)(i)(j));
       }
     }
+
+#ifdef DIAG
+    bool loop_flag = false;
+    int loop_counter = 0;
+#endif
+
     fmc1.dfn=1.e-2;
     dvariable pen=0.0;
     int converged=0;
     int initrun_flag=1;
-    int loop_counter=0;
-    int loop_flag=0;
-
     while (converged==0)
     {
+#ifdef DIAG
       if (loop_flag) loop_counter++;
-      if (loop_counter>18)
+      if (loop_counter > 18)
       {
         cout << loop_counter;
       }
+#endif
       if (!initrun_flag)
       {
         converged=1;

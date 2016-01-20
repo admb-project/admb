@@ -670,11 +670,11 @@ void param_init_number::save_value(ofstream& ofs)
 #ifdef __ZTC__
   ofs << label_class(this->label()) << *this << endl;
 #else
-  std::streamsize save = ofs.precision();
+  //std::streamsize save = ofs.precision();
   ofs << label_class(this->label())
       << setprecision(12) << dvariable(*this)
       << endl;
-  ofs.precision(save);
+  //ofs.precision(save);
 #endif
 }
 

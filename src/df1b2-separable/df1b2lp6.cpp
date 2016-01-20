@@ -1056,6 +1056,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
    int sgn=0;
    dvariable ld;
 
+#ifdef DIAG
    int eigswitch=0;
    if (eigswitch)
    {
@@ -1066,6 +1067,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
          << endl << endl;
      ofs << ev << endl << endl << evecs << endl;
    }
+#endif
+
    ld=0.5*ln_det_choleski(vHess,sgn);
    if (sgn==1)
    {

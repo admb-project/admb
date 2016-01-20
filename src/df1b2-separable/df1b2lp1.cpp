@@ -201,6 +201,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
 
       dvector step;
+#ifdef DIAG
       int print_hess_in_newton_raphson_flag=0;
       if (print_hess_in_newton_raphson_flag)
       {
@@ -213,6 +214,7 @@ dvector laplace_approximation_calculator::default_calculations
             << setw(12) << Hess << endl;
         }
       }
+#endif
 
 #if defined(USE_ATLAS)
       if (!ad_comm::no_atlas_flag)

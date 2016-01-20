@@ -662,13 +662,19 @@ data_number& data_number::operator=(const double& v)
     allocate(1,_s);
   }
 
+/**
+Saves value param_init_number to ofs.
+*/
 void param_init_number::save_value(ofstream& ofs)
 {
 #ifdef __ZTC__
   ofs << label_class(this->label()) << *this << endl;
 #else
+  std::streamsize save = ofs.precision();
   ofs << label_class(this->label())
-      << setprecision(12) << dvariable(*this) << endl;
+      << setprecision(12) << dvariable(*this)
+      << endl;
+  ofs.precision(save);
 #endif
 }
 

@@ -14,9 +14,12 @@
 /**
 Default constructor
 */
-df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
+df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector():
+  v(NULL),
+  index_min(1),
+  index_max(0),
+  it(NULL)
 {
-  it = NULL;
 }
 
 #if !defined(OPT_LIB)

@@ -75,6 +75,7 @@ GTESTS=\
  test_init_df1b2vector.cpp\
  test_param_init_bounded_number.cpp\
  test_param_init_bounded_vector.cpp\
+ test_df1b2_init_bounded_number_vector.cpp\
  main.cpp
 
 ##Need to debug this

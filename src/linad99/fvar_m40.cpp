@@ -334,6 +334,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
        " value was " << tmp << " for index " << i    <<endl;
       ierr=1;
 
+#ifdef DIAG
       int print_switch=0;
       if (print_switch)
       {
@@ -353,6 +354,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
         uos << CMM.indexmax()-CMM.indexmin()+1;
         uos << CMM;
       }
+#endif
       /*
       dmatrix N(1,4,1,4);
 

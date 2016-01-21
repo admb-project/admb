@@ -890,17 +890,27 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
     return ::size_count(*this);
   }
 
-  param_init_bounded_vector::param_init_bounded_vector(void) :
-    named_dvar_vector() , initial_params()
-  {
-    //add_to_list();
-  }
-
-  param_init_bounded_number::param_init_bounded_number(void) :
-    param_init_number() {}
-  //{
-   // add_to_list();
-  //}
+/**
+Default constructor
+*/
+param_init_bounded_vector::param_init_bounded_vector():
+  named_dvar_vector(),
+  initial_params(),
+  minb(0),
+  maxb(0)
+{
+  //add_to_list();
+}
+/**
+Default constructor
+*/
+param_init_bounded_number::param_init_bounded_number():
+  param_init_number(),
+  minb(0),
+  maxb(0)
+{
+  //add_to_list();
+}
 
   void param_init_bounded_vector::allocate(int imin,int imax,
     double _minb,double _maxb,int _phase_start,const char * s)

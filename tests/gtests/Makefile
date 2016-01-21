@@ -73,6 +73,8 @@ GTESTS=\
  test_arr_link.cpp\
  test_df1b2_init_number_vector.cpp\
  test_init_df1b2vector.cpp\
+ test_param_init_bounded_number.cpp\
+ test_param_init_bounded_vector.cpp\
  main.cpp
 
 ##Need to debug this

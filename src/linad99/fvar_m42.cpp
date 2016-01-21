@@ -27,19 +27,20 @@ void df_xldet(void);
 #undef min
 #endif
 
+dvariable ln_det(const dvar_matrix& aa, int& sgn);
+
 dvariable ln_det(const dvar_matrix& a)
 {
   int sgn;
-  return ln_det(a,sgn);
+  return ln_det(a, sgn);
 }
 /**
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 2
+\n\n The implementation of this algorithm was inspired by
+"Numerical Recipes in C", 2nd edition,
+Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
+dvariable ln_det(const dvar_matrix& aa, int& sgn)
 {
-  int& sgn=(int&)(_sgn);
   int errflag=0;
   int i,j,k,n;
   n=aa.colsize();
@@ -185,7 +186,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
   return rdet;
 }
 
-/// Adjoint code for dvariable ln_det(const dvar_matrix& aa,const int& _sgn).
+/// Adjoint code for dvariable ln_det(const dvar_matrix& aa, int& sgn).
 void df_xldet(void)
 {
   verify_identifier_string("PLACE0");

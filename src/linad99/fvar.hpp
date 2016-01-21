@@ -2574,7 +2574,7 @@ class dvar_matrix
    friend dvar_matrix inv(const dvar_matrix &);
 
    friend dvariable det(const dvar_matrix &);
-   friend dvariable ln_det(const dvar_matrix &, const int &sgn);
+   friend dvariable ln_det(const dvar_matrix &, int& sgn);
 
    //friend dvar_matrix testsub(dvar_matrix);
 

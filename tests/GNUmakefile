@@ -77,7 +77,7 @@ tpl-4darray:
 	$(MAKE) --directory=4darray
 
 tpl-glmmadmb:
-	$(MAKE) --directory=glmmadmb
+	-$(MAKE) --directory=glmmadmb
 
 tpl-agemat:
 	$(MAKE) --directory=agemat

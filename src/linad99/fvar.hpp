@@ -2863,7 +2863,7 @@ class dmatrix
      const int &_sgn);
 
    friend double det(const dmatrix &);
-   friend double ln_det(const dmatrix & m1, const int &sgn);
+   friend double ln_det(const dmatrix & m1, int& sgn);
 
    friend double norm(const dmatrix &);
    friend double norm2(const dmatrix &);

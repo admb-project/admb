@@ -1749,6 +1749,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
        }
      }
 
+#ifdef DIAG
      int ps1=0;
      if (ps1)
      {
@@ -1777,6 +1778,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
        cout << "   " << setprecision(3) << ss2(2)(1,5) << endl;
        //cout << " t " << t(1) << " " << t(1)*cHess*t(2) << endl;
      }
+#endif
 
      int nx=0;
      if (nx==0)

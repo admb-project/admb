@@ -17,7 +17,6 @@ endif
 GTESTS=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
- test_adstring.cpp\
  test_adstring_array.cpp\
  test_dlist.cpp\
  test_ad_comm.cpp\
@@ -76,6 +75,8 @@ GTESTS=\
  test_param_init_bounded_number.cpp\
  test_param_init_bounded_vector.cpp\
  test_df1b2_init_bounded_number_vector.cpp\
+ test_adstring.cpp\
+ test_df1b23array.cpp\
  main.cpp
 
 ##Need to debug this

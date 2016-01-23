@@ -104,7 +104,8 @@ char** no_dll_options(char *pname, const int& _nopt)
 {
   int& nopt=(int&) _nopt;
   nopt=1;
-  char** a = (char**)malloc((nopt+1)*sizeof(char*));
+  unsigned int nopt2 = 2;
+  char** a = (char**)malloc(nopt2 * sizeof(char*));
   if (a)
   {
     a[nopt] = NULL;
@@ -358,6 +359,8 @@ class string_parser
   size_t nlen;
 public:
   string_parser(char* s, const size_t n);
+  ~string_parser();
+
   char* get_next_option(size_t& n);
 };
 
@@ -393,6 +396,20 @@ string_parser::string_parser(char * s, const size_t n)
   {
     nt++;
   }
+}
+/**
+Destructor
+*/
+string_parser::~string_parser()
+{
+  if (str != NULL)
+  {
+    delete [] str;
+    str = NULL;
+  }
+  nt = NULL;
+  ct = NULL;
+  nlen = 0;
 }
 
 char* string_parser::get_next_option(size_t& n)

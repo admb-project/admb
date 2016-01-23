@@ -128,6 +128,14 @@ TEST_F(test_idea, memcpy)
   ASSERT_EQ('9', s[10]);
   ASSERT_EQ('\0', s[11]);
 }
+TEST_F(test_idea, make_sub_directory)
+{
+  int make_sub_directory(const char* s);
+  int ret = make_sub_directory("make_sub_directory");
+  ASSERT_EQ(0, ret);
+  ret = make_sub_directory("make_sub_directory");
+  ASSERT_EQ(0, ret);
+}
 TEST_F(test_idea, multichar)
 {
   ASSERT_FALSE(!(sizeof(char) == 1));
@@ -138,6 +146,66 @@ TEST_F(test_idea, multiple_int_double)
   double d = 2.5; 
   ASSERT_DOUBLE_EQ(d * i, 12.5);
   ASSERT_DOUBLE_EQ(i * d, 12.5);
+}
+TEST_F(test_idea, parse_dll_options)
+{
+  char** parse_dll_options(char *pname, const int& _argc, char *s);
+
+  char* pname = "one two three four";
+
+  int argc = 4;
+  char** ret = parse_dll_options(pname, argc, "one");
+  ASSERT_STREQ(pname, ret[0]);
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 4;
+  ret = parse_dll_options(pname, argc, "two");
+  ASSERT_STREQ(pname, ret[0]);
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 4;
+  ret = parse_dll_options(pname, argc, "three");
+  ASSERT_STREQ(pname, ret[0]);
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 4;
+  ret = parse_dll_options(pname, argc, "four");
+  ASSERT_STREQ(pname, ret[0]);
+  ASSERT_EQ(2, argc);
+  free(ret);
+}
+TEST_F(test_idea, parse_dll_options_same)
+{
+  char** parse_dll_options(char *pname, const int& _argc, char *s);
+
+  char* pname = "one two three four one two three four";
+
+  int argc = 8;
+  char** ret = parse_dll_options(pname, argc, "one");
+  ASSERT_STREQ(pname, ret[0]);
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 8;
+  ret = parse_dll_options(pname, argc, "two");
+  ASSERT_STREQ(pname, ret[0]);
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 8;
+  ret = parse_dll_options(pname, argc, "three");
+  ASSERT_STREQ(pname, ret[0]);
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 8;
+  ret = parse_dll_options(pname, argc, "four");
+  ASSERT_STREQ(pname, ret[0]);
+  ASSERT_EQ(2, argc);
+  free(ret);
 }
 #ifdef _WIN32
 TEST_F(test_idea, no_dll_options)

@@ -31,7 +31,7 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn);
 
 dvariable ln_det(const dvar_matrix& a)
 {
-  int sgn;
+  int sgn = 1;
   return ln_det(a, sgn);
 }
 /**

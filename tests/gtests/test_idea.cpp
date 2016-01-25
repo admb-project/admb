@@ -151,7 +151,11 @@ TEST_F(test_idea, parse_dll_options)
 {
   char** parse_dll_options(char *pname, const int& _argc, char *s);
 
+#ifdef _WIN32
+  char* pname = "one two three four.exe";
+#else
   char* pname = "one two three four";
+#endif
 
   int argc = 4;
   char** ret = parse_dll_options(pname, argc, "one");
@@ -181,7 +185,11 @@ TEST_F(test_idea, parse_dll_options_same)
 {
   char** parse_dll_options(char *pname, const int& _argc, char *s);
 
+#ifdef _WIN32
+  char* pname = "one two three four one two three four.exe";
+#else
   char* pname = "one two three four one two three four";
+#endif
 
   int argc = 8;
   char** ret = parse_dll_options(pname, argc, "one");

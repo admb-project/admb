@@ -89,10 +89,9 @@ int ad_mkdir(const char * s)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-int make_sub_directory(const char * s)
+Create a sub-director at path s.
+*/
+int make_sub_directory(const char* s)
 {
   adstring currdir;
   adstring currdir1;
@@ -100,11 +99,12 @@ int make_sub_directory(const char * s)
   //const int len=100;
   //char dirname[len+1];
 #if defined(_WIN32)
-  int ierr=SetCurrentDirectory(s);
+  int ierr = SetCurrentDirectory(s);
+  if (!ierr) // zero means failed
 #else
-  DIR * ierr=opendir(s);
+  DIR* dirp = opendir(s);
+  if (!dirp) // NULL means failed
 #endif
-  if (!ierr) // NULL means failed
   {
     ad_getcd(currdir);
     return ad_mkdir(s);
@@ -114,7 +114,11 @@ int make_sub_directory(const char * s)
     ad_getcd(currdir1);
     ad_chdir(currdir);
     ad_getcd(currdir1);
-    return 1;
   }
+#if defined(_WIN32)
+  return 1;
+#else
+  return closedir(dirp);
+#endif
 }
 

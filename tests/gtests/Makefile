@@ -190,6 +190,7 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
+	@if exist make_sub_directory rmdir /s /q make_sub_directory
 	@del gtest-all.exe
 	@del gtest-all *.obj
 	@del eigv.rpt
@@ -296,4 +297,5 @@ else
 	@rm -vf test_finance
 	@rm -vf test_scalefactor
 	@rm -vf test_dvector.txt
+	@rm -rvf make_sub_directory
 endif

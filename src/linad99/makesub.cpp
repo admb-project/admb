@@ -116,7 +116,7 @@ int make_sub_directory(const char* s)
     ad_getcd(currdir1);
   }
 #if defined(_WIN32)
-  return ierr != 0;
+  return ierr == 0;
 #else
   return closedir(dirp);
 #endif

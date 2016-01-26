@@ -9,9 +9,8 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
 
 #include "df11fun.h"
 
-  prevariable * df1_one_variable::ind_var[1];
-
-  int df1_one_variable::num_ind_var=0;
+prevariable* df1_one_variable::ind_var[1] = { NULL };
+int df1_one_variable::num_ind_var = 0;
 
 /**
 Default constructor
@@ -543,21 +542,25 @@ init_df1_one_variable::~init_df1_one_variable()
 {
   deallocate();
 }
+/**
+Resets num_ind_var count to zero.
+*/
+void init_df1_one_variable::deallocate(void)
+{
+  num_ind_var=0;
+}
 
-  void init_df1_one_variable::deallocate(void)
+init_df1_one_variable::init_df1_one_variable(const prevariable& _v)
+{
+  ADUNCONST(prevariable,v)
+  if (num_ind_var > 0)
   {
-    num_ind_var=0;
-  }
-
-  init_df1_one_variable::init_df1_one_variable(const prevariable& _v)
-  {
-    ADUNCONST(prevariable,v)
-    if (num_ind_var>1)
-    {
-      cerr << "can only have 1 independent_variables in df1_one_variable"
+    cerr << "can only have 1 independent_variables in df1_one_variable"
        " function" << endl;
-      ad_exit(1);
-    }
+    ad_exit(1);
+  }
+  else
+  {
     ind_var[num_ind_var++]=&v;
     *get_u() =  value(v);
     switch(num_ind_var)
@@ -571,6 +574,7 @@ init_df1_one_variable::~init_df1_one_variable()
       ad_exit(1);
     }
   }
+}
 
   init_df1_one_variable::init_df1_one_variable(double v)
   {

@@ -103,3 +103,22 @@ TEST_F(test_df1_one_variable, operator_equal_multiply)
   //\todo can't understand how it got 16???
   ASSERT_EQ(16, *x.get_u_x());
 }
+TEST_F(test_df1_one_variable, init_df1_one_variable)
+{
+  gradient_structure gs;
+  dvariable variable;
+  ASSERT_EQ(0, df1_one_variable::num_ind_var);
+  ASSERT_TRUE(df1_one_variable::ind_var[0] == NULL);
+  init_df1_one_variable n(variable);
+  ASSERT_EQ(1, df1_one_variable::num_ind_var);
+  ASSERT_TRUE(&variable == df1_one_variable::ind_var[0]);
+  try
+  {
+    init_df1_one_variable n2(variable);
+  }
+  catch (const int exit_code)
+  {
+    return;
+  }
+  FAIL();
+}

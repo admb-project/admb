@@ -278,58 +278,65 @@ grad_stack::~grad_stack()
  * Description not yet available.
  * \param
  */
-  void  grad_stack::write_grad_stack_buffer()
+void  grad_stack::write_grad_stack_buffer()
+{
+#ifdef GRAD_DIAG
+  cout << "Grad_stack size exceeded\n ";
+  cout << "Writing to temporary file -- \n";
+#endif
+
+  ptr--;
+
+#ifdef GRAD_DIAG
   {
-    #ifdef GRAD_DIAG
-      cout << "Grad_stack size exceeded\n ";
-      cout << "Writing to temporary file -- \n";
-    #endif
+    off_t lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+    cout << "Offset in file before write is " << lpos
+         << " bytes from the beginning\n";
+  }
+#endif
 
-    ptr--;
+  // if the buffer is really large only write the end of it
+  set_gbuffer_pointers();
+  size_t nbw = sizeof(grad_stack_entry) * length;
 
-    #ifdef GRAD_DIAG
-      {
-      off_t lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
-      cout << "Offset in file before write is " << lpos
-                              << " bytes from the beginning\n";
-      }
-    #endif
+  //char * ttmp = (char *) ptr_first; ttmp--;
 
-    // if the buffer is really large only write the end of it
-    set_gbuffer_pointers();
-    size_t nbw = sizeof(grad_stack_entry) * length;
-
-    //char * ttmp = (char *) ptr_first; ttmp--;
-
-    // save the current end of file in case we can't write the whole buffer
-    end_pos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  // save the current end of file in case we can't write the whole buffer
+  end_pos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 #if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-    assert(nbw <= UINT_MAX);
-    ssize_t ierr = write(_GRADFILE_PTR, ptr_first, (unsigned int)nbw);
+  assert(nbw <= UINT_MAX);
+  ssize_t ierr = write(_GRADFILE_PTR, ptr_first, (unsigned int)nbw);
 #else
-    ssize_t ierr = write(_GRADFILE_PTR, ptr_first, nbw);
+  ssize_t ierr = write(_GRADFILE_PTR, ptr_first, nbw);
 #endif
 
 #ifndef OPT_LIB
   assert(nbw <= SSIZE_MAX);
 #endif
 
-    if  (ierr != (ssize_t)nbw)
-    {
-       cout << "Wrote " << ierr <<" not " << nbw << endl;
-      lseek(_GRADFILE_PTR,end_pos,SEEK_SET);
-      //save the end of file for this file so we can reposition later
-      end_pos1 = end_pos;
-      increment_current_gradfile_ptr();
-#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-      assert(nbw <= UINT_MAX);
-      ierr = write(_GRADFILE_PTR, ptr_first, (unsigned int)nbw);
+  if  (ierr != (ssize_t)nbw)
+  {
+    cout << "Wrote " << ierr << " not " << nbw << endl;
+
+#ifndef OPT_LIB
+    off_t offset = lseek(_GRADFILE_PTR, end_pos, SEEK_SET);
+    assert(offset != -1);
 #else
-      ierr = write(_GRADFILE_PTR, ptr_first, nbw);
+    lseek(_GRADFILE_PTR, end_pos, SEEK_SET);
 #endif
 
-      if  (ierr != (ssize_t)nbw)
-      {
+    //save the end of file for this file so we can reposition later
+    end_pos1 = end_pos;
+    increment_current_gradfile_ptr();
+#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
+    assert(nbw <= UINT_MAX);
+    ierr = write(_GRADFILE_PTR, ptr_first, (unsigned int)nbw);
+#else
+    ierr = write(_GRADFILE_PTR, ptr_first, nbw);
+#endif
+
+    if  (ierr != (ssize_t)nbw)
+    {
         perror("Error writing to temporary gradient stack file");
         cerr <<"   File name: " << gradfile_name << "\n";
 #if defined(_MSC_VER)
@@ -337,29 +344,26 @@ grad_stack::~grad_stack()
              << filelength(_GRADFILE_PTR)
              << " bytes.\n";
 #endif
-        cerr <<"   Attempting to write " << nbw <<" bytes; wrote " << ierr
-        << ".\n";
-        exit(1);
-      }
+      cerr << "   Attempting to write " << nbw <<" bytes; wrote "
+           << ierr << ".\n";
+      ad_exit(1);
     }
-    else
-    {
-      #ifdef GRAD_DIAG
-      cout << "Wrote " << ierr << "bytes into temp. grad. file\n";
-      #endif
-    }
-
-    #ifdef GRAD_DIAG
-    {
-      off_t lpos = lseek(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
-      cout << "Offset in file after write is " << lpos
-           << " bytes from the beginning\n";
-    }
-    #endif
-    //keep track of the size of the grad_stack
-    gradient_structure::TOTAL_BYTES+=nbw;
-    ptr = ptr_first;
   }
+#ifdef GRAD_DIAG
+  else
+  {
+    cout << "Wrote " << ierr << "bytes into temp. grad. file\n";
+  }
+  {
+    off_t lpos = lseek(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
+    cout << "Offset in file after write is " << lpos
+         << " bytes from the beginning\n";
+  }
+#endif
+  //keep track of the size of the grad_stack
+  gradient_structure::TOTAL_BYTES+=nbw;
+  ptr = ptr_first;
+}
 
 /**
  * Description not yet available.

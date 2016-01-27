@@ -328,7 +328,8 @@ void DF_FILE::read_cmpdif_stack_buffer(off_t& lpos)
   assert(buff_size <= UINT_MAX);
   if (read(file_ptr, buff, (unsigned int)buff_size) < 0)
 #else
-  if (read(file_ptr, buff, buff_size) < 0)
+  ssize_t bytes_read = read(file_ptr, buff, buff_size);
+  if (bytes_read < 0)
 #endif
   {
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;

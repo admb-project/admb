@@ -132,9 +132,9 @@ TEST_F(test_idea, make_sub_directory)
 {
   int make_sub_directory(const char* s);
   int ret = make_sub_directory("make_sub_directory");
-  ASSERT_EQ(0, ret);
+  ASSERT_EQ(1, ret);
   ret = make_sub_directory("make_sub_directory");
-  ASSERT_EQ(0, ret);
+  ASSERT_EQ(1, ret);
 }
 TEST_F(test_idea, multichar)
 {

@@ -76,28 +76,28 @@ void ad_getcd(const adstring& _s)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-int ad_mkdir(const char * s)
+Make directory s.
+
+\return 1 if successful, 0 otherwise.
+*/
+int ad_mkdir(const char* s)
 {
 #if defined(_WIN32)
-  return CreateDirectory(s,NULL);
+  return CreateDirectory(s, NULL) != 0;
 #else
-  return mkdir(s,S_IREAD | S_IWRITE);
+  return mkdir(s,S_IREAD | S_IWRITE) == 0;
 #endif
 }
-
 /**
-Create a sub-director at path s.
+Create a sub directory s.
+
+\return 1 if successful, 0 otherwise.
 */
 int make_sub_directory(const char* s)
 {
   adstring currdir;
   adstring currdir1;
   ad_getcd(currdir);
-  //const int len=100;
-  //char dirname[len+1];
 #if defined(_WIN32)
   int ierr = SetCurrentDirectory(s);
   if (!ierr) // zero means failed
@@ -118,7 +118,6 @@ int make_sub_directory(const char* s)
 #if defined(_WIN32)
   return ierr != 0;
 #else
-  return closedir(dirp);
+  return closedir(dirp) != -1;
 #endif
 }
-

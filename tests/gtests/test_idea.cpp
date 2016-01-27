@@ -170,19 +170,31 @@ TEST_F(test_idea, parse_dll_options)
 
   argc = 4;
   ret = parse_dll_options(pname, argc, "two");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
   ASSERT_STREQ(pname, ret[0]);
+#endif
   ASSERT_EQ(2, argc);
   free(ret);
 
   argc = 4;
   ret = parse_dll_options(pname, argc, "three");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
   ASSERT_STREQ(pname, ret[0]);
+#endif
   ASSERT_EQ(2, argc);
   free(ret);
 
   argc = 4;
   ret = parse_dll_options(pname, argc, "four");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
   ASSERT_STREQ(pname, ret[0]);
+#endif
   ASSERT_EQ(2, argc);
   free(ret);
 }
@@ -210,19 +222,31 @@ TEST_F(test_idea, parse_dll_options_same)
 
   argc = 8;
   ret = parse_dll_options(pname, argc, "two");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
   ASSERT_STREQ(pname, ret[0]);
+#endif
   ASSERT_EQ(2, argc);
   free(ret);
 
   argc = 8;
   ret = parse_dll_options(pname, argc, "three");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
   ASSERT_STREQ(pname, ret[0]);
+#endif
   ASSERT_EQ(2, argc);
   free(ret);
 
   argc = 8;
   ret = parse_dll_options(pname, argc, "four");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
   ASSERT_STREQ(pname, ret[0]);
+#endif
   ASSERT_EQ(2, argc);
   free(ret);
 }

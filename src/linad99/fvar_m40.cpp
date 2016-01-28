@@ -245,16 +245,13 @@ ostream& operator<<(const ostream& _ofs,
 void dfcholeski_decomp(void);
 void dfcholeski_decomp_banded(void);
 
-/**
- * Description not yet available.
- * \param
- */
 dvariable ln_det_choleski(
-  const banded_symmetric_dvar_matrix& MM, const int& _ierr)
+  const banded_symmetric_dvar_matrix& MM,
+  int& ierr)
 {
-  banded_lower_triangular_dvar_matrix tmp=choleski_decomp(MM,_ierr);
+  banded_lower_triangular_dvar_matrix tmp=choleski_decomp(MM, ierr);
   dvariable ld=0.0;
-  if (_ierr==1)
+  if (ierr==1)
   {
     return ld;
   }
@@ -267,17 +264,12 @@ dvariable ln_det_choleski(
   }
   return 2.0*ld;
 }
-
-/**
- * Description not yet available.
- * \param
- */
 banded_lower_triangular_dvar_matrix choleski_decomp(
-  const banded_symmetric_dvar_matrix& MM, const int& _ierr)
+  const banded_symmetric_dvar_matrix& MM,
+  int& ierr)
 {
-  int& ierr=(int&)(_ierr);
   // kludge to deal with constantness
-  ierr =0;
+  ierr = 0;
   banded_symmetric_dvar_matrix& M = (banded_symmetric_dvar_matrix&) MM;
   int n=M.indexmax();
 

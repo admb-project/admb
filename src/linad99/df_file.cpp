@@ -68,6 +68,17 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef _MSC_VER
+  #ifdef _M_X64
+  typedef __int64 ssize_t;
+  #else
+  typedef int ssize_t;
+  #endif
+  #ifndef SSIZE_MAX
+    #define SSIZE_MAX INT_MAX
+  #endif
+#endif
+
 #if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
   #include <cassert>
   #include <climits>

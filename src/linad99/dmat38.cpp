@@ -200,10 +200,14 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   return trans(x);
 }
 
+/**
+\todo Need test
+*/
 double ln_det_choleski(
-  const banded_symmetric_dmatrix& MM, const int& _ierr)
+  const banded_symmetric_dmatrix& MM,
+  int& ierr)
 {
-  banded_lower_triangular_dmatrix tmp=choleski_decomp(MM,_ierr);
+  banded_lower_triangular_dmatrix tmp = choleski_decomp(MM, ierr);
 
   int mmin=tmp.indexmin();
   int mmax=tmp.indexmax();

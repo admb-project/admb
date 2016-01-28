@@ -8061,18 +8061,26 @@ dmatrix solve(const banded_symmetric_dmatrix & m, const dmatrix & M);
 dmatrix solve(const dmatrix & m, const dmatrix & M);
 dvector solve(const banded_symmetric_dmatrix & m, const dvector & v);
 
-banded_lower_triangular_dmatrix choleski_decomp
-   (const banded_symmetric_dmatrix & S, const int &ierr);
+banded_lower_triangular_dmatrix choleski_decomp(
+  const banded_symmetric_dmatrix& S,
+  int& ierr
+);
 
 banded_lower_triangular_dvar_matrix choleski_decomp_positive
    (const banded_symmetric_dvar_matrix & S, double eps, dvariable & fpen);
 
-dvariable ln_det_choleski(const banded_symmetric_dvar_matrix & S,
-  const int &ierr);
-double ln_det_choleski(const banded_symmetric_dmatrix & S, const int &ierr);
-
-banded_lower_triangular_dvar_matrix choleski_decomp
-   (const banded_symmetric_dvar_matrix & S, const int &ierr);
+dvariable ln_det_choleski(
+  const banded_symmetric_dvar_matrix& S,
+  int &ierr
+);
+double ln_det_choleski(
+  const banded_symmetric_dmatrix& S,
+  int& ierr
+);
+banded_lower_triangular_dvar_matrix choleski_decomp(
+  const banded_symmetric_dvar_matrix& S,
+  int &ierr
+);
 
 banded_lower_triangular_dmatrix
    restore_banded_lower_triangular_dvar_matrix_derivatives

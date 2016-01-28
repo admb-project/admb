@@ -290,15 +290,9 @@ banded_lower_triangular_dmatrix choleski_decomp(
   int ierr = 0;
   return choleski_decomp(MM, ierr);
 }
-
-/**
- * Description not yet available.
- * \param
- */
 banded_lower_triangular_dmatrix choleski_decomp(
-  const banded_symmetric_dmatrix& _M,const int& _ierr)
+  const banded_symmetric_dmatrix& _M, int& ierr)
 {
-  int & ierr = (int &) _ierr;
   ADUNCONST(banded_symmetric_dmatrix,M)
   int minsave=M.indexmin();
   M.shift(1);

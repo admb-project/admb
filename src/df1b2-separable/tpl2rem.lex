@@ -5054,10 +5054,12 @@ char * get_directory_name(const char * s)
   char file_separator='/';
   char file_separator_string[]="/";
 #endif
-  if (path1==0)
+  if (path1 == NULL)
   {
+    //ADMB_HOME contains sed scripts needed for parsers.
     printf("ADMB_HOME environment string is not set\n");
     exit(1);
+/*
     len=strlen(s);
     for (i=1;i<=len;i++)
     {
@@ -5069,6 +5071,7 @@ char * get_directory_name(const char * s)
       path[j]=s[j];
     }
     path[len-i+1]=0;
+*/
   }
   else
   {

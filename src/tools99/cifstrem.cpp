@@ -93,6 +93,12 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
     field = 0;
     ignore_eof = 1;
   }
+  else
+  {
+    line = 0;
+    field = 0;
+    ignore_eof = 0;
+  }
   memset(comment_line, '\0', SIGNATURE_LENGTH);
   memset(signature_line, '\0', SIGNATURE_LENGTH);
 }

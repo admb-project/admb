@@ -1079,7 +1079,7 @@ laplace_approximation_calculator::laplace_approximation_calculator(
   maxder.allocate(mmin,mmax);
   minder=_minder;
   maxder=_maxder;
-  inner_print = 0;
+  inner_iprint = 0;
   fmc1.iprint = inner_iprint;
   fmc1.crit=1.e-3;
   nvariables=xsize+usize;

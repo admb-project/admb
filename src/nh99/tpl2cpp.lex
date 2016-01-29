@@ -4609,9 +4609,9 @@ char * after_part(char * d, char * s, char c)
       d[i-ipos]=s[i];
     }
     d[strlen(s)-ipos]='\0';
-    index = index - ipos - 1;
-    if (index >= 0)
+    if (index >= ipos + 1)
     {
+      index = index - ipos - 1;
       if (d[index] == 13)   // crtl M
         d[index] = '\0';
     }
@@ -4646,9 +4646,9 @@ char * strict_after_part(char * d, char * s, char c)
       d[i-ipos-1]=s[i];
     }
     d[strlen(s)-ipos-1]='\0';
-    index = index - ipos - 1;
-    if (index >= 0)
+    if (index >= ipos + 1)
     {
+      index = index - ipos - 1;
       if (d[index] == 13)   // crtl M
         d[index] = '\0';
     }
@@ -4685,9 +4685,9 @@ char * after_partb(char * d, char * s, char c)
       d[i-ipos]=s[i];
     }
     d[strlen(s)-ipos]='\0';
-    index = index - ipos - 1;
-    if (index >= 0)
+    if (index >= ipos + 1)
     {
+      index = index - ipos - 1;
       if (d[index] == 13)   // crtl M
         d[index] = '\0';
     }

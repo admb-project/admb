@@ -5191,14 +5191,23 @@ int main(int argc, char * argv[])
     if (debug_flag) fprintf(stderr,"Opened file %s for input\n", infile_name);
     if (makedll)
     {
-      strcpy(tmp_string1,argv[ioff]);
-      strcat(tmp_string1,".def");
-      f1=fopen(tmp_string1,"w");
-      fprintf(f1,"LIBRARY %s\n\n",argv[ioff]);
-      fprintf(f1,"EXPORTS\n");
-      fprintf(f1,"\t%s\n",argv[ioff]);
-      fclose(f1);
-      f1=NULL;
+      size_t len = strlen(argv[ioff]) + 5;
+      if (len > MAX_TMP_STRING)
+      {
+        fprintf(stderr,"Error:%s exceeds MAX_TMP_STRING.\n", argv[ioff]);
+        exit(1);
+      }
+      else
+      {
+        strcpy(tmp_string1,argv[ioff]);
+        strcat(tmp_string1,".def");
+        f1=fopen(tmp_string1,"w");
+        fprintf(f1,"LIBRARY %s\n\n",argv[ioff]);
+        fprintf(f1,"EXPORTS\n");
+        fprintf(f1,"\t%s\n",argv[ioff]);
+        fclose(f1);
+        f1=NULL;
+      }
     }
   }
   else

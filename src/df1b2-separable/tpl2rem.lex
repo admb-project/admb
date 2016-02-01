@@ -5169,6 +5169,17 @@ int main(int argc, char * argv[])
   }
   if (argc>1)
   {
+    size_t len = strlen(argv[ioff]);
+    if (len + 5 > 1000)
+    {
+      fprintf(stderr,"Error:%s exceeds sizeof infile_name[1000].\n", argv[ioff]);
+      exit(1);
+    }
+    if (len + 5 > 125)
+    {
+      fprintf(stderr,"Error:%s exceeds sizeof deffile_name[1000].\n", argv[ioff]);
+      exit(1);
+    }
     strcpy(infile_name,argv[ioff]);
     strcpy(deffile_name,argv[ioff]);
     strcpy(infile_root,infile_name);
@@ -5191,8 +5202,7 @@ int main(int argc, char * argv[])
     if (debug_flag) fprintf(stderr,"Opened file %s for input\n", infile_name);
     if (makedll)
     {
-      size_t len = strlen(argv[ioff]) + 5;
-      if (len > MAX_TMP_STRING)
+      if (len + 5 > MAX_TMP_STRING)
       {
         fprintf(stderr,"Error:%s exceeds MAX_TMP_STRING.\n", argv[ioff]);
         exit(1);

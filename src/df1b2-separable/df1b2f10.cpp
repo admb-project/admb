@@ -317,12 +317,13 @@ void test_smartlist::read_buffer(void)
     ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
     assert(ret != -1);
 #endif
-    if (nbytes > bufsize)
+    if (nbytes <= 0 || nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl
         << " buffer size is " << bufsize << " record size is supposedly "
         << nbytes << endl;
+      ad_exit(1);
     }
     // now read the record into the buffer
     ssize_t nr = ::read(fp,buffer,nbytes);

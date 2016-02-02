@@ -89,7 +89,7 @@ void derch(const double& _f, const independent_variables & _x,
       ireturn = -1;
       return;
     }
-    if (j == 0)
+    else if (j == 0)
     {
       cout << "\n   Checking all derivatives. Press X to terminate checking.\n";
       flush(cout);
@@ -99,10 +99,16 @@ void derch(const double& _f, const independent_variables & _x,
       n1 = 1;
       n2 = n;
     }
-    else
+    else if (j >= 1 && j <= n)
     {
       n1 = j;
       n2 = j;
+    }
+    else
+    {
+      cout << "Error: Invalid derivative index \"" << j
+           << "\" entered which is not in range (1 ... "<< n <<").\n";
+      ad_exit(1);
     }
     cout << "\n   Enter step size.\n";
     cout << "      To quit derivative checker enter -1;\n";

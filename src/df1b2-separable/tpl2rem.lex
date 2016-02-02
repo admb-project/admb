@@ -5098,7 +5098,7 @@ char * get_directory_name(const char * s)
     }
     else
     {
-      path = (char*) malloc(sizeof(char*)*(len+9));
+      path = (char*)malloc((len + 9) * sizeof(char*));
       if (bflag==0)
       {
         strcpy(path,path1);

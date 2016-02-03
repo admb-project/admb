@@ -1,14 +1,12 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+\file
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include <df1b2fun.h>
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 /**
  * Description not yet available.
@@ -955,5 +953,8 @@ df1b2variable mean(const df1b2matrix& _x)
     tmp+=sum(x(i));
     nitems+=x(i).indexmax()-x(i).indexmin()+1;
   }
+#ifndef OPT_LIB
+  assert(nitems > 0);
+#endif
   return tmp/nitems;
 }

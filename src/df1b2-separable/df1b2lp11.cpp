@@ -220,6 +220,7 @@ void laplace_approximation_calculator::
 
     step=get_newton_raphson_info_banded(pfmin);
 
+#ifdef DIAG
     // check for degenerate Hessian
     int check_hessian=0;
     if (check_hessian)
@@ -227,6 +228,7 @@ void laplace_approximation_calculator::
       ofstream ofs("hh");
       ofs << colsum(dmatrix(*bHess)) << endl;
     }
+#endif
 
     if (!initial_params::mc_phase)
       cout << "Newton raphson " << ii << "  ";

@@ -28,9 +28,8 @@ void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
  * \param
  */
 banded_lower_triangular_dmatrix quiet_choleski_decomp(
-  const banded_symmetric_dmatrix& _M,const int& _ierr)
+  const banded_symmetric_dmatrix& _M, int& ierr)
 {
-  int & ierr = (int &) _ierr;
   ADUNCONST(banded_symmetric_dmatrix,M)
   int minsave=M.indexmin();
   M.shift(1);

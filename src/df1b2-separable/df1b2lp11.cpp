@@ -75,7 +75,7 @@ safe_choleski_solver::safe_choleski_solver(double _id)
 }
 
 banded_lower_triangular_dmatrix quiet_choleski_decomp(
-  const banded_symmetric_dmatrix& _M,const int& _ierr);
+  const banded_symmetric_dmatrix& _M, int& ierr);
 /*
 banded_lower_triangular_dmatrix quiet_choleski_decomp(
   const banded_symmetric_dmatrix& _M,const int& _ierr)

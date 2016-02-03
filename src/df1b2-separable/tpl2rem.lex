@@ -5043,7 +5043,6 @@ char * get_directory_name(const char * s)
   char quote[]="\"";
   char eol[]="\0";
   int bflag=0;
-  int len;
   int i,j;
   char* path1=getenv("ADMB_HOME");
   /* char sed_file_separator='/'; */
@@ -5076,10 +5075,10 @@ char * get_directory_name(const char * s)
   else
   {
     bflag=check_for_blanks(path1);
-    len=strlen(path1);
+    size_t len = strlen(path1);
+    path = (char*)malloc((len + 9) * sizeof(char*));
     if (path1[len-1]==file_separator)
     {
-      path = (char*) malloc(sizeof(char*)*(len+9));
       if (bflag==0)
       {
         strcpy(path,path1);
@@ -5098,7 +5097,6 @@ char * get_directory_name(const char * s)
     }
     else
     {
-      path = (char*)malloc((len + 9) * sizeof(char*));
       if (bflag==0)
       {
         strcpy(path,path1);

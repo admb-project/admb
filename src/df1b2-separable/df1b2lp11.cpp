@@ -349,12 +349,15 @@ void laplace_approximation_calculator::
     {
       scs.dirty=0;
       step=get_newton_raphson_info_banded(pfmin);
+
+#ifdef DIAG
       int print_hessian=0;
       if (print_hessian)
       {
         ofstream ofs("hh1");
         ofs << setw(12) << setscientific() << setprecision(3) << endl;
       }
+#endif
 
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {

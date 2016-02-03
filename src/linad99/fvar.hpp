@@ -3384,6 +3384,8 @@ class uistream:public ifstream
    // extract and discard chars but stop at delim
    uistream & ignore(int = 1, int = EOF);
 
+   uistream& operator>>(int&);
+
 #ifndef __SUN__
    uistream & operator>>(const signed char *);
 #endif

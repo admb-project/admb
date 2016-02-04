@@ -5044,7 +5044,8 @@ char * get_directory_name(const char * s)
   char eol[]="\0";
   int bflag=0;
   int i,j;
-  size_t len = 0;
+  int len;
+  len = 0;
   char* path1=getenv("ADMB_HOME");
   /* char sed_file_separator='/'; */
 #if defined(_WIN32)

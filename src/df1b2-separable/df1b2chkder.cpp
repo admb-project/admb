@@ -158,7 +158,7 @@ dvector laplace_approximation_calculator::
         { double diff = fabs(re_objective_function_value::fun_without_pen - objective_function_value::fun_without_pen); }
       */
 
-      dvector step;
+#ifdef DIAG
       int print_hess_in_newton_raphson_flag=0;
       if (print_hess_in_newton_raphson_flag)
       {
@@ -171,7 +171,9 @@ dvector laplace_approximation_calculator::
             << setw(12) << Hess << endl;
         }
       }
+#endif
 
+      dvector step;
 #if defined(USE_ATLAS)
       if (!ad_comm::no_atlas_flag)
       {

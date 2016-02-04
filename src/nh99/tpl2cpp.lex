@@ -3822,7 +3822,7 @@ FUNCTION[ ]*{name}[ ]*{name}\( {
     char c;
     int i = 0;
     tmp_string5[i] = '\0';
-    while ((c = input()) != ')' || i >= MAX_TMP_STRING - 1)
+    while ((c = input()) != ')' || i < MAX_TMP_STRING)
     {
       tmp_string5[i] = c;
       i++;

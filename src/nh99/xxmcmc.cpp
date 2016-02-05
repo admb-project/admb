@@ -854,6 +854,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         if (iac>5)
           print_hist_data(hist,values,h,mean_mcmc_values,s,parsave,iseed,
             size_scale);
+#ifndef OPT_LIB
+      assert(isim != 0);
+#endif
       cout << iac/double(isim) << endl;
       initial_params::mc_phase=0;
      /*

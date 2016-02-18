@@ -5458,7 +5458,7 @@ char * strip_leading_blanks(char * d, char * s)
         d[j++]=s[i];
       }
     }
-    else
+    else if (s[i]!='\r')
     {
       d[j++]=s[i];
     }
@@ -5487,7 +5487,7 @@ char * strip_leading_blanks_and_tabs(char * d, char * s)
         d[j++]=s[i];
       }
     }
-    else
+    else if (s[i]!='\r')
     {
       d[j++]=s[i];
     }

@@ -17,6 +17,10 @@
   #include <climits>
 #endif
 
+/**
+Convert x to adstring with minimum width and total number
+of decimal places.
+*/
 adstring str(double x, int minwidth, int decplaces)
 {
    int w = 0;
@@ -63,6 +67,8 @@ adstring str(double x, int minwidth, int decplaces)
        w++;
      //tmp = new adstring(1,w-1);
 
+     sprintf(buffer,"%*.*f",w,d,x);
+/*
      if (d>=0)
      {
        //sprintf(tmp->s,"%*.*f",w,d,x);
@@ -73,6 +79,7 @@ adstring str(double x, int minwidth, int decplaces)
        //sprintf(tmp->s,"%*.f",w,x);
        sprintf(buffer,"%*.f",w,x);
      }
+*/
    }
    //return (*tmp);
    adstring tmp(buffer);

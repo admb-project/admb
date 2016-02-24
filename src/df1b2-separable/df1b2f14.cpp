@@ -176,18 +176,21 @@ void fixed_smartlist2::check_buffer_size(const size_t nsize)
     }
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void fixed_smartlist2::restore_end(void)
+Set to end of file ptr.
+*/
+void fixed_smartlist2::restore_end()
 {
   if (written_flag)
   {
     if (end_saved)
     {
-      /*off_t ipos=*/lseek(fp,endof_file_ptr,SEEK_SET);
+#ifdef OPT_LIB
+      lseek(fp, endof_file_ptr, SEEK_SET);
+#else
+      off_t ret = lseek(fp, endof_file_ptr, SEEK_SET);
+      assert(ret >= 0);
+#endif
       read_buffer();
       set_recend();
     }

@@ -187,19 +187,24 @@ void fixed_smartlist::check_buffer_size(const size_t nsize)
     }
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Restore end
+*/
 void fixed_smartlist::restore_end(void)
 {
   if (written_flag)
   {
     if (end_saved)
     {
-      /*off_t ipos=*/lseek(fp,0L,SEEK_END);
-      lseek(fp,endof_file_ptr,SEEK_SET);
+#ifdef OPT_LIB
+      lseek(fp, 0L, SEEK_END);
+      lseek(fp, endof_file_ptr, SEEK_SET);
+#else
+      off_t ret = lseek(fp, 0L, SEEK_END);
+      assert(ret >= 0);
+      ret = lseek(fp, endof_file_ptr, SEEK_SET);
+      assert(ret >= 0);
+#endif
       read_buffer();
       set_recend();
     }

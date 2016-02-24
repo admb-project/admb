@@ -117,9 +117,8 @@ void fixed_smartlist::write(const size_t n)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Rewind buffer
+*/
 void fixed_smartlist::rewind(void)
 {
   bptr=buffer;
@@ -142,10 +141,15 @@ void fixed_smartlist::rewind(void)
     // now read the record into the buffer
     ret = ::read(fp,buffer,nbytes);
     assert(ret != -1);
-    //cout << "Number of bytes read " << nr << endl;
+
     // skip over file postion entry in file
     // so we are ready to read second record
-    lseek(fp,(off_t)sizeof(off_t),SEEK_CUR);
+#ifdef OPT_LIB
+    lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+#else
+    ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+    assert(ret >= 0);
+#endif
   }
 }
 

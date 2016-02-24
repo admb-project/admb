@@ -324,6 +324,7 @@ TEST_F(test_adstring, clist_nested_destructors)
   }
   EXPECT_EQ(1, a.length());
 }
+#ifndef __MINGW32__
 TEST_F(test_adstring, str_greater_than_zero)
 {
   adstring str(double x, int minwidth, int decplaces);
@@ -567,3 +568,4 @@ TEST_F(test_adstring, str_less_than_zero)
   a = str(x, 1, 9);
   EXPECT_STREQ((char*)"0.123456789", (char*)a);
 }
+#endif

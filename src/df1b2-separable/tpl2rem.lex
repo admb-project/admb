@@ -5040,7 +5040,7 @@ unsigned _stklen = 16000;
 char * get_directory_name(const char * s)
 {
   size_t len;
-  char * path;
+  char* path;
   char quote[]="\"";
   char eol[]="\0";
   int bflag=0;
@@ -5077,7 +5077,7 @@ char * get_directory_name(const char * s)
   {
     bflag=check_for_blanks(path1);
     len = strlen(path1);
-    path = (char*)malloc((len + 9) * sizeof(char*));
+    path = (char*)malloc((len + 9) * sizeof(char));
     if (path1[len-1]==file_separator)
     {
       if (bflag==0)

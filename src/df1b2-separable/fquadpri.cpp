@@ -298,7 +298,7 @@ void df1b2quadratic_prior::operator = (const dmatrix & M)
 
   if (laplace_approximation_calculator::where_are_we_flag==3)
   {
-    df1b2variable::noallocate=1;
+    //df1b2variable::noallocate=1;
     //df1b2vector v(M.indexmin(),M.indexmax());
     df1b2variable::noallocate=0;
     switch (old_style_flag)

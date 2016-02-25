@@ -278,6 +278,7 @@ void test_smartlist::write_buffer(void)
   }
 }
 
+#include <cassert>
 /**
  * Description not yet available.
  * \param
@@ -338,13 +339,23 @@ void test_smartlist::read_buffer(void)
     if (direction ==-1) // we are going backwards
     {
       // backup the file pointer again
+#ifdef OPT_LIB
       lseek(fp,pos,SEEK_SET);
+#else
+      off_t ret = lseek(fp,pos,SEEK_SET);
+      assert(ret >= 0);
+#endif
       // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     else  // we are going forward
     {
       // skip over file postion entry in file
+#ifdef OPT_LIB
       lseek(fp, pos, SEEK_CUR);
+#else
+      off_t ret = lseek(fp, pos, SEEK_CUR);
+      assert(ret >= 0);
+#endif
     }
   }
 }

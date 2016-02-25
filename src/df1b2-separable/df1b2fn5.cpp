@@ -103,8 +103,8 @@ df1b2variable::df1b2variable(void)
 df1b2variable::df1b2variable(const newadkludge* z)
 {
   ptr=0;
-#if defined(SAFE_ALL)
   ncopies=0;
+#if defined(SAFE_ALL)
   u=0;
   u_dot=0;
   u_bar=0;

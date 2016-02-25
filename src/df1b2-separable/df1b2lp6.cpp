@@ -575,8 +575,7 @@ dvector laplace_approximation_calculator::banded_calculations
       }
 
       block_diagonal_flag=0;
-      initial_params::straight_through_flag=1;
-
+      //initial_params::straight_through_flag=1;
       //dmatrix tHess=dmatrix(*bHess);
       initial_params::straight_through_flag=0;
       funnel_init_var::lapprox=0;

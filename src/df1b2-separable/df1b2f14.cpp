@@ -295,9 +295,8 @@ void fixed_smartlist2::write_buffer(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Read buffer
+*/
 void fixed_smartlist2::read_buffer(void)
 {
   if (!written_flag)
@@ -320,11 +319,22 @@ void fixed_smartlist2::read_buffer(void)
       }
       // offset of the begining of the record is at the end
       // of the record
+#ifdef OPT_LIB
       lseek(fp,-((off_t)sizeof(off_t)),SEEK_CUR);
+#else
+      off_t ret2 = lseek(fp,-((off_t)sizeof(off_t)),SEEK_CUR);
+      assert(ret2 >= 0);
+#endif
       ssize_t ret = read(fp,&pos,sizeof(off_t));
       assert(ret != -1);
+
       // back up to the beginning of the record (plus record size)
+#ifdef OPT_LIB
       lseek(fp,pos,SEEK_SET);
+#else
+      ret2 = lseek(fp,pos,SEEK_SET);
+      assert(ret2 >= 0);
+#endif
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
@@ -363,14 +373,25 @@ void fixed_smartlist2::read_buffer(void)
       if (direction ==-1) // we are going backwards
       {
         // backup the file pointer again
+#ifdef OPT_LIB
         lseek(fp,pos,SEEK_SET);
+#else
+        off_t ret = lseek(fp,pos,SEEK_SET);
+        assert(ret >= 0);
+#endif
         // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
       }
       else  // we are going forward
       {
         //\todo need test
+
         // skip over file postion entry in file
-        lseek(fp,(off_t)sizeof(off_t),SEEK_CUR);
+#ifdef OPT_LIB
+        lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+#else
+        off_t ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+        assert(ret >= 0);
+#endif
       }
     }
   }

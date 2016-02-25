@@ -155,10 +155,15 @@ void test_smartlist::rewind(void)
     ret = ::read(fp,buffer,nbytes);
     assert(ret != -1);
 #endif
-    //cout << "Number of bytes read " << nr << endl;
+
     // skip over file postion entry in file
     // so we are ready to read second record
+#ifdef OPT_LIB
     lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+#else
+    ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+    assert(ret >= 0);
+#endif
   }
 }
 

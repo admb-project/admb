@@ -77,7 +77,7 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     else
       quadratic_prior::get_ptr(i)->get_cHessian(Hess_all,xsize);
   }
-  int sgn;
+  int sgn = 0;
   vf=0.5*ln_det(Hess_all,sgn);
   gradcalc(xsize,g);
   return g;

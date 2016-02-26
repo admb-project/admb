@@ -41,7 +41,7 @@ void test_smartlist::reset(void)
 /**
 Default constructor
 */
-test_smartlist::test_smartlist(void)
+test_smartlist::test_smartlist()
 {
   bufsize=0;
   buffer=0;
@@ -50,12 +50,12 @@ test_smartlist::test_smartlist(void)
   bptr=0;
   fp=-1;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-test_smartlist::test_smartlist(const size_t _bufsize,const adstring& _filename)
+Constructor
+*/
+test_smartlist::test_smartlist(const size_t _bufsize,const adstring& _filename):
+  recend(NULL),
+  sbptr(NULL)
 {
   allocate(_bufsize,_filename);
 }

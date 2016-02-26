@@ -148,7 +148,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     s_covar.initialize();
 
     int ndvar=stddev_params::num_stddev_calc();
-    /*int numdvar=*/stddev_params::num_stddev_number_calc();
+    //int numdvar=stddev_params::num_stddev_number_calc();
 
     if (mcmc2_flag==0)
     {

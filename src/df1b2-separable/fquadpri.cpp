@@ -86,27 +86,45 @@ void df1b2quadratic_prior::get_Lxu(dmatrix& M)
     }
   }
 }
-
-  df1b2quadratic_prior::df1b2quadratic_prior(void)
+/**
+Default constructor
+*/
+df1b2quadratic_prior::df1b2quadratic_prior():
+  CM(NULL)
+{
+  add_to_list();
+  num_active_parameters=0;
+  M = NULL;
+  pu = NULL;
+  index = NULL;
+  Lxu = NULL;
+}
+/**
+Destructor
+*/
+df1b2quadratic_prior::~df1b2quadratic_prior(void)
+{
+  if (index)
   {
-    add_to_list();
-    num_active_parameters=0;
-    M=0;
-    pu=0;
-    index=0;
-    Lxu=0;
+    delete index;
+    index = NULL;
   }
-  df1b2quadratic_prior::~df1b2quadratic_prior(void)
+  if (Lxu)
   {
-    if (index) delete index;
-    index=0;
-    if (Lxu) delete Lxu;
-    Lxu=0;
-    if (M) delete M;
-    M=0;
-    if (pu) delete pu;
-    pu=0;
+    delete Lxu;
+    Lxu = NULL;
   }
+  if (M)
+  {
+    delete M;
+    M = NULL;
+  }
+  if (pu)
+  {
+    delete pu;
+    pu = NULL;
+  }
+}
 
 void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
   const char* s)

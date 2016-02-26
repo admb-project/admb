@@ -317,11 +317,13 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   else
   {
     add_to_list();
+#ifdef DIAG
     if (lapprox==0)
     {
       cout << "This can't happen" << endl;
       ad_exit(1);
     }
+#endif
     lapprox->used_flags(ind_index)+=1;
   }
   //cout << "ind_index = " << ind_index << endl;

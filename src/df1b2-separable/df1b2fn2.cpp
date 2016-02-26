@@ -647,10 +647,10 @@ smartlist::smartlist(void)
 */
 
 /**
- * Description not yet available.
- * \param
- */
-smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
+Constructor
+*/
+smartlist::smartlist(unsigned int _bufsize,const adstring& _filename):
+  sbptr(NULL)
 {
 #ifndef OPT_LIB
   //cerr << "need to modify smartlist class for multibyte char" << endl;

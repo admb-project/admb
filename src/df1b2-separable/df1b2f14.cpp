@@ -22,10 +22,14 @@
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
-fixed_smartlist2::fixed_smartlist2(void)
+Default constructor
+*/
+fixed_smartlist2::fixed_smartlist2():
+  endof_file_ptr(-1),
+  doubleptr(NULL),
+  recend(NULL),
+  sbptr(NULL),
+  fp(-1)
 {
   nentries=0;
   end_saved=0;
@@ -40,13 +44,14 @@ fixed_smartlist2::fixed_smartlist2(void)
   buffend=0;
   bptr=buffer;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Constructor
+*/
 fixed_smartlist2::fixed_smartlist2(const size_t _bufsize,
-  const adstring& _filename)
+  const adstring& _filename):
+  endof_file_ptr(-1),
+  recend(NULL),
+  sbptr(NULL)
 {
   allocate(_bufsize,_filename);
 }

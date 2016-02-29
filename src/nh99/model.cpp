@@ -79,7 +79,8 @@ extern int* pointer_to_phase;
 /**
 Default constructor
 */
-initial_params::initial_params()
+initial_params::initial_params():
+  phase_stop(0)
 {
 #if defined(USE_SHARE_FLAGS)
   share_flags = 0;

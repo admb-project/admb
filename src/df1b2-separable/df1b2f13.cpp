@@ -36,10 +36,9 @@ void fixed_smartlist::reset(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-fixed_smartlist::fixed_smartlist(void)
+Default constructor
+*/
+fixed_smartlist::fixed_smartlist()
 {
   nentries=0;
   bufsize=0;
@@ -51,11 +50,13 @@ fixed_smartlist::fixed_smartlist(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Constructor
+*/
 fixed_smartlist::fixed_smartlist(const size_t _bufsize,
-  const adstring& _filename)
+  const adstring& _filename):
+  endof_file_ptr(-1),
+  recend(NULL),
+  sbptr(NULL)
 {
   allocate(_bufsize,_filename);
 }

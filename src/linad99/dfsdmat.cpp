@@ -314,26 +314,25 @@ uistream& operator>>(const uistream& _ifs, const dfsdmat& _m)
   }
   return ifs;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Save values to file.
+*/
 void dfsdmat::save()
 {
-  if (!tmp_file)
+  if (tmp_file < 0)
   {
     tmp_file=open("fmm_tmp.tmp", O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
-    if (tmp_file == -1)
+    if (tmp_file < 0)
     {
       cerr << "error trying to open temporary hessian file\n";
       ad_exit(1);
     }
   }
+  lseek(tmp_file, 0L, SEEK_SET);
+
   unsigned int _n = (unsigned int)size();
   unsigned int nn = (_n*(_n+1))/2;
-  lseek(tmp_file,0L,SEEK_SET);
 #ifdef OPT_LIB
   write(tmp_file,&_n,sizeof(int));
 #else
@@ -367,11 +366,9 @@ void dfsdmat::save()
   n=0;
  */
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Restore values to file.
+*/
 void dfsdmat::restore()
 {
   int _n=0;
@@ -383,7 +380,7 @@ void dfsdmat::restore()
   assert(ret != -1);
   assert(_n > 0);
 #endif
-  unsigned int nn = (unsigned int)((_n*(_n+1))/2);
+  size_t nn = (size_t)((_n * (_n + 1))/2);
   //if (!shared_memory) allocate(_n);
 #ifdef __MINGW64__
   size_t size = nn * sizeof(double);

@@ -185,6 +185,7 @@ else
 	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3
 endif
+	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean

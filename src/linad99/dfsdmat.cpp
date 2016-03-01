@@ -105,20 +105,18 @@ public:
 */
 
 /**
- * Description not yet available.
- * \param
- */
-dfsdmat::dfsdmat(void)
+Default constructor
+*/
+dfsdmat::dfsdmat():
+  disk_save_flag(1)
 {
-  tmp_file=0;
+  tmp_file = 0;
   allocate();
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void dfsdmat::allocate(void)
+Initialize members but does not allocate.
+*/
+void dfsdmat::allocate()
 {
   shared_memory=0;
   ptr=NULL;

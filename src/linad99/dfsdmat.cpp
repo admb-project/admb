@@ -380,6 +380,9 @@ void dfsdmat::restore()
   assert(ret != -1);
   assert(_n > 0);
 #endif
+#ifndef OPT_LIB
+  assert(_n < INT_MAX / 2);
+#endif
   size_t nn = (size_t)((_n * (_n + 1))/2);
   //if (!shared_memory) allocate(_n);
 #ifdef __MINGW64__

@@ -381,7 +381,7 @@ void dfsdmat::restore()
   assert(_n > 0);
 #endif
 #ifndef OPT_LIB
-  assert(_n < INT_MAX / 2);
+  assert(_n < sqrt(INT_MAX));
 #endif
   size_t nn = (size_t)((_n * (_n + 1))/2);
   //if (!shared_memory) allocate(_n);

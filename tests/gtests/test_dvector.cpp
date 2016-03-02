@@ -241,6 +241,7 @@ TEST_F(test_dvector, is_valid_index)
   ASSERT_DEATH(dv(0), "Assertion");
   ASSERT_DEATH(dv(5), "Assertion");
 }
+/*
 TEST_F(test_dvector, data_int)
 {
   dvector dv;
@@ -253,6 +254,7 @@ TEST_F(test_dvector, data_int)
   //ASSERT_EQ(dv.indexmin(), 1);
   //ASSERT_EQ(dv.indexmax(), 4);
 }
+*/
 TEST_F(test_dvector, fill_lbraces_zero)
 {
   dvector v(1, 6);

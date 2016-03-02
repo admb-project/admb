@@ -381,7 +381,9 @@ void dfsdmat::restore()
   assert(_n > 0);
 #endif
 #ifndef OPT_LIB
+  #ifndef __SUNPRO_CC
   assert(_n < sqrt(INT_MAX));
+  #endif
 #endif
   size_t nn = (size_t)((_n * (_n + 1))/2);
   //if (!shared_memory) allocate(_n);

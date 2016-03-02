@@ -20,7 +20,7 @@ env:
 os:
   - linux
 
-install:
+before_install:
   - pip install codecov
 
 after_success:

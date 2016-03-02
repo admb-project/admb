@@ -20,8 +20,8 @@ env:
 os:
   - linux
 
-before_install:
-  - pip install --user codecov
+install:
+  - pip install codecov
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - codecov

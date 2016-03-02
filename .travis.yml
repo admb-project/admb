@@ -21,7 +21,6 @@ os:
   - linux
 
 install:
-  - pip install --upgrade pip
   - pip install codecov
 
 after_success:

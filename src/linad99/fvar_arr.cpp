@@ -140,9 +140,7 @@ dvar_vector::dvar_vector(unsigned int sz, double* x)
 /**
 Default constructor
 */
-dvar_vector::dvar_vector():
-  index_min(1),
-  index_max(0)
+dvar_vector::dvar_vector()
 {
   allocate();
 }
@@ -213,10 +211,10 @@ Does not allocate, but initializes all class member variables.
 void dvar_vector::allocate()
 {
   va = NULL;
-  index_min = 1;
-  index_max = 0;
   link_ptr = NULL;
   shape = NULL;
+  index_min = 0;
+  index_max = 0;
 }
 /**
 Allocate dvar_vector using indexes from v1.

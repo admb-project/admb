@@ -13,8 +13,8 @@ TEST_F(test_dvar_vector, default_constructor)
   dvar_vector v;
 
   ASSERT_TRUE(v.va == NULL);
-  ASSERT_EQ(v.index_min, 1);
-  ASSERT_EQ(v.index_max, 0);
+  ASSERT_EQ(v.index_min, 0);
+  ASSERT_EQ(v.index_max, -1);
   ASSERT_TRUE(v.link_ptr == NULL);
   ASSERT_TRUE(v.shape == NULL);
 }
@@ -23,8 +23,8 @@ TEST_F(test_dvar_vector, incorrect_range)
   dvar_vector v(5, 1);
 
   ASSERT_TRUE(v.va == NULL);
-  ASSERT_EQ(v.index_min, 1);
-  ASSERT_EQ(v.index_max, 0);
+  ASSERT_EQ(v.index_min, 0);
+  ASSERT_EQ(v.index_max, -1);
   ASSERT_TRUE(v.link_ptr == NULL);
   ASSERT_TRUE(v.shape == NULL);
 }

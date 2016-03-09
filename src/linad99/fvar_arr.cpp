@@ -214,7 +214,7 @@ void dvar_vector::allocate()
   link_ptr = NULL;
   shape = NULL;
   index_min = 0;
-  index_max = 0;
+  index_max = -1;
 }
 /**
 Allocate dvar_vector using indexes from v1.

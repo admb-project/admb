@@ -7,8 +7,8 @@ class test_param_init_vector: public ::testing::Test {};
 TEST_F(test_param_init_vector, constructor)
 {
   param_init_vector p;
-  ASSERT_EQ(1, p.indexmin());
-  ASSERT_EQ(0, p.indexmax());
+  ASSERT_EQ(0, p.indexmin());
+  ASSERT_EQ(-1, p.indexmax());
 }
 /*
 TEST_F(test_param_init_vector, allocate_phase_start)

@@ -67,7 +67,7 @@ truncreg:
 vol: n2mvol
 n2mvol:
 	pushd admb\\vol & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\vol & $@ -nohess
+	pushd admb\\vol & $@
 
 admb-re:\
 bcb \
@@ -147,7 +147,7 @@ orange2:
 
 orange_cor:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@ -nohess
+	pushd admb-re\\$@ & $@
 
 pheno:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
@@ -189,4 +189,4 @@ binomial:
 
 binomial_w2:
 	pushd admb-re\\weights & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\weights & $@ -nohess
+	pushd admb-re\\weights & $@

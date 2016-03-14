@@ -170,7 +170,7 @@ orange2:
 orange_cor:
 ifndef TRAVIS_CI
   ifeq ($(PROG),time)
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -nohess
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif
 endif
 
@@ -211,7 +211,7 @@ weights: binomial
 binomial:
 	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 binomial_w2:
-	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -nohess
+	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 copy:
 ifneq ($(DEBUG),yes)

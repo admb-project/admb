@@ -122,7 +122,9 @@ grad_stack::grad_stack()
     ad_exit(1);
   }
 
+#ifdef DIAG
   test_the_pointer();
+#endif
 
   ptr_first=true_ptr_first;
   ptr = ptr_first;

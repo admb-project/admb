@@ -429,6 +429,7 @@ void grad_stack::set_gradient_stack1(void (* func)(void),
   }
 #endif
 }
+#ifdef DIAG
 void test_the_pointer(void)
 {
 /*
@@ -447,3 +448,4 @@ void test_the_pointer(void)
   pgse->ind_addr1 = (double*) 100;
 */
 }
+#endif

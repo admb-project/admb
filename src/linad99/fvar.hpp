@@ -8937,7 +8937,9 @@ dmatrix orthpoly_constant_begin_end(int n, int deg, int nconst_begin,
 #  include <qdfvar.hpp>
 #endif
 
+#ifdef DIAG
 void test_the_pointer(void);
+#endif
 
 // stuff for debugging the grad stack
 void set_gradstack_flag(char *str, int i, int j);

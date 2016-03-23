@@ -34,13 +34,13 @@ ifeq ($(SHELL),cmd)
 else
   INSTALL_DIR=/usr/local/
   ifeq ($(DEBUG),yes)
-  DIST=../build/debug
+  DIST=$(shell pwd)/../build/debug
   else
   DIST=../build/dist
   endif
   LIBSDIR=$(DIST)/lib/
   ifeq ($(DEBUG),yes)
-  OBJSDIR=../build/objects/debug/
+  OBJSDIR=$(shell pwd)/../build/objects/debug/
   else
   OBJSDIR=../build/objects/dist/
   endif
@@ -90,7 +90,7 @@ ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\debug\include
   else
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/debug/include
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I$(shell pwd)/../build/debug/include
   endif
 else
   ifeq ($(SHELL),cmd)
@@ -304,8 +304,13 @@ else
   endif
 	mkdir -p $(DIST)/include/contrib
 	touch $(DIST)/include/contrib/contrib.h
+    ifeq ($(DEBUG),yes)
+	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=${DIST} bins
+	$(MAKE) --directory=nh99 CC=$(CC) DIST=${DIST} bins
+    else
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} bins
+    endif
 endif
 
 libs: objects
@@ -394,34 +399,74 @@ else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS)) -o $@ $<
 endif
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
+else
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-$(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
+else
+$(OBJSDIR)saflp-sparse-hs_sparse.obj:sparse/hs_sparse.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
+else
 $(OBJSDIR)optlp-df1b2-separable-%.obj:df1b2-separable/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
+else
 $(OBJSDIR)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
+else
 $(OBJSDIR)optlp-linad99-%.obj:linad99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
+else
 $(OBJSDIR)saflp-linad99-%.obj:linad99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
+else
 $(OBJSDIR)optlp-nh99-%.obj:nh99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
+else
 $(OBJSDIR)saflp-nh99-%.obj:nh99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
+else
 $(OBJSDIR)optlp-tools99-%.obj:tools99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
+else
 $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 endif
 

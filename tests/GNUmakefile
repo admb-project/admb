@@ -40,6 +40,8 @@ else
 all: all-gtests all-tpls
 endif
 
+coverage: all-gtests
+
 all-gtests:
 ifneq ($(USE_GTESTS),no)
 	$(MAKE) --directory=gtests

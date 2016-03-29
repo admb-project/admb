@@ -23,6 +23,7 @@ check: $(CXX)-check
 	@echo "MAKE: $(MAKE)"
 	@echo "CXX: $(CXX)"
 clean: $(CXX)-clean
+coverage: $(CXX)-coverage
 
 help:
 	@echo Read INSTALL.txt for installation help.
@@ -82,6 +83,8 @@ g++-docs:
 	$(MAKE) --directory=docs CC=gcc CXX=g++ all
 g++-test:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ all
+g++-coverage:
+	$(MAKE) --directory=tests CC=gcc CXX=g++ coverage
 g++-verify:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ verify
 g++-shared:
@@ -115,6 +118,8 @@ clang++-docs:
 	$(MAKE) --directory=docs CC=clang CXX=clang++ all
 clang++-test:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ all
+clang++-coverage:
+	$(MAKE) --directory=tests CC=clang CXX=clang++ coverage
 clang++-verify:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ verify
 clang++-shared:

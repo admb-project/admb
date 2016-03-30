@@ -337,6 +337,8 @@ ifndef COVERAGE
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-nh99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-tools99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-sparse-*.obj
+else
+	$(MAKE) --directory=../contrib copy
 endif
 
 objects: $(OBJECTS)

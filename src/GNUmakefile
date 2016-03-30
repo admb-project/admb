@@ -148,6 +148,10 @@ OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools9
 
 OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 
+ifdef COVERAGE
+OBJECTS:=$(filter-out saflp-,$(OBJECTS))
+endif
+
 all: dist
 ifeq ($(SHELL),cmd)
 	if not exist $(DIST)\utilities md $(DIST)\utilities

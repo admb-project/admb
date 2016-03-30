@@ -146,11 +146,11 @@ OBJECTS:=$(OBJECTS) $(addprefix saflp-nh99-,$(OBJ6)) saflp-sparse-hs_sparse.obj
 include tools99/objects.lst
 OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools99-,$(OBJ7))
 
-OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
-
 ifeq ($(COVERAGE),yes)
-OBJECTS:=$(filter-out optlp-,$(OBJECTS))
+OBJECTS:=$(filter-out optlp-%,$(OBJECTS))
 endif
+
+OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 
 all: dist
 ifeq ($(SHELL),cmd)
@@ -218,7 +218,6 @@ else
 	$(CXX) -shared -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo.a -Wl,--no-whole-archive
   endif
 endif
-
 
 dist: bins
 	$(MAKE) libs

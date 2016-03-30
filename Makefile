@@ -84,7 +84,7 @@ g++-docs:
 g++-test:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ all
 g++-coverage:
-	$(MAKE) --directory=src CC=gcc CXX=g++ COVERAGE=yes all
+	$(MAKE) --directory=src CC=gcc CXX=g++ COVERAGE=yes dist
 	$(MAKE) --directory=tests CC=gcc CXX=g++ coverage
 g++-verify:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ verify
@@ -120,7 +120,7 @@ clang++-docs:
 clang++-test:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ all
 clang++-coverage:
-	$(MAKE) --directory=src CC=clang CXX=clang++ COVERAGE=yes all
+	$(MAKE) --directory=src CC=clang CXX=clang++ COVERAGE=yes dist
 	$(MAKE) --directory=tests CC=clang CXX=clang++ coverage
 clang++-verify:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ verify
@@ -154,7 +154,7 @@ c++-contrib:
 c++-docs:
 	$(MAKE) --directory=docs CC=cc CXX=c++ all
 c++-coverage:
-	$(MAKE) --directory=src CC=cc CXX=c++ COVERAGE=yes all
+	$(MAKE) --directory=src CC=cc CXX=c++ COVERAGE=yes dist
 	$(MAKE) --directory=tests CC=cc CXX=c++ coverage
 c++-test:
 	$(MAKE) --directory=tests CC=cc CXX=c++ all

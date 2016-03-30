@@ -60,7 +60,6 @@ coverage: all-gtests
 	$(MAKE) tpl-geolocation
 	$(MAKE) tpl-simple_mcmc
 	$(MAKE) tpl-hysimple
-	$(MAKE) tpl-priors
 	$(MAKE) tpl-testminmax
 	$(MAKE) tpl-orange_mvn
 	$(MAKE) tpl-lprof

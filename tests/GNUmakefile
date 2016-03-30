@@ -44,6 +44,29 @@ coverage: all-gtests
 	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/debug/include includes
 	$(MAKE) --directory=../examples all
 	$(MAKE) all-tpls
+	$(MAKE) tpl-f1b2vc5
+	$(MAKE) tpl-4darray
+	$(MAKE) tpl-glmmadmb
+	@#$(MAKE) tpl-agemat
+	$(MAKE) tpl-betai
+	$(MAKE) tpl-beta2
+	$(MAKE) tpl-beta3
+	$(MAKE) tpl-beta_deviate
+	$(MAKE) tpl-betareg
+	$(MAKE) tpl-beta_regression
+	$(MAKE) tpl-changepoint
+	$(MAKE) tpl-colfill
+	$(MAKE) tpl-cov_re
+	$(MAKE) tpl-ctl
+	$(MAKE) tpl-expm
+	$(MAKE) tpl-gradients_output
+	$(MAKE) tpl-geolocation
+	$(MAKE) tpl-simple_mcmc
+	$(MAKE) tpl-hysimple
+	$(MAKE) tpl-priors
+	$(MAKE) tpl-testminmax
+	$(MAKE) tpl-orange_mvn
+	$(MAKE) tpl-lprof
 
 all-gtests:
 ifneq ($(USE_GTESTS),no)

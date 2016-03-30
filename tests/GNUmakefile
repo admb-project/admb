@@ -55,7 +55,6 @@ coverage: all-gtests
 	$(MAKE) tpl-changepoint
 	$(MAKE) tpl-colfill
 	$(MAKE) tpl-cov_re
-	$(MAKE) tpl-ctl
 	$(MAKE) tpl-expm
 	$(MAKE) tpl-gradients_output
 	$(MAKE) tpl-geolocation

@@ -41,7 +41,7 @@ all: all-gtests all-tpls
 endif
 
 coverage: all-gtests
-	$(MAKE) --directory=../contrib/gdbprintlib includes
+	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../build/debug/include includes
 	$(MAKE) --directory=../examples all
 
 all-gtests:

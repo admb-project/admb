@@ -41,7 +41,8 @@ all: all-gtests all-tpls
 endif
 
 coverage: all-gtests
-	$(MAKE) --directory=../examples
+	$(MAKE) --directory=../contrib/gdbprintlib includes
+	$(MAKE) --directory=../examples all
 
 all-gtests:
 ifneq ($(USE_GTESTS),no)

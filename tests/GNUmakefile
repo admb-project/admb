@@ -41,6 +41,7 @@ all: all-gtests all-tpls
 endif
 
 coverage: all-gtests
+	$(MAKE) --directory=../examples
 
 all-gtests:
 ifneq ($(USE_GTESTS),no)

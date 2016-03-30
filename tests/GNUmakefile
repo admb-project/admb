@@ -43,6 +43,7 @@ endif
 coverage: all-gtests
 	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/debug/include includes
 	$(MAKE) --directory=../examples all
+	$(MAKE) all-tpls
 
 all-gtests:
 ifneq ($(USE_GTESTS),no)

@@ -2,6 +2,11 @@
 #include <adstring.hpp>
 #include <climits>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_adstring: public ::testing::Test {};
 
 TEST_F(test_adstring, default_constructor)
@@ -578,4 +583,30 @@ TEST_F(test_adstring, default_constructor_int)
   EXPECT_EQ(10, a.buff_size());
   //clist length includes '\0'
   EXPECT_EQ(1, a.length());
+}
+TEST_F(test_adstring, default_constructor_unsigned_char)
+{
+  unsigned char ub = 'a';
+  adstring a(ub);
+
+  EXPECT_EQ(1, length(a));
+  EXPECT_EQ(1, a.size());
+  EXPECT_EQ(1, a.buff_size());
+  //clist length includes '\0'
+  EXPECT_EQ(1, a.length());
+  EXPECT_EQ(ub, a(1));
+}
+TEST_F(test_adstring, default_constructor_unsigned_char_array)
+{
+  unsigned char t[] = "abc\0";
+  adstring a(t);
+
+  EXPECT_EQ(3, length(a));
+  EXPECT_EQ(3, a.size());
+  EXPECT_EQ(3, a.buff_size());
+  //clist length includes '\0'
+  EXPECT_EQ(1, a.length());
+  EXPECT_EQ('a', a(1));
+  EXPECT_EQ('b', a(2));
+  EXPECT_EQ('c', a(3));
 }

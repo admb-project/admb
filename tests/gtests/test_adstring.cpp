@@ -569,3 +569,13 @@ TEST_F(test_adstring, str_less_than_zero)
   EXPECT_STREQ((char*)"0.123456789", (char*)a);
 }
 #endif
+TEST_F(test_adstring, default_constructor_int)
+{
+  adstring a(10);
+
+  EXPECT_EQ(0, length(a));
+  EXPECT_EQ(0, a.size());
+  EXPECT_EQ(10, a.buff_size());
+  //clist length includes '\0'
+  EXPECT_EQ(1, a.length());
+}

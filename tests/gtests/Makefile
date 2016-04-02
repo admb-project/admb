@@ -77,6 +77,7 @@ GTESTS=\
  test_df1b2_init_bounded_number_vector.cpp\
  test_adstring.cpp\
  test_df1b23array.cpp\
+ test_d3_array.cpp\
  main.cpp
 
 ##Need to debug this

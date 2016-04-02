@@ -130,3 +130,16 @@ TEST_F(test_dmatrix, is_valid_row)
   ASSERT_DEATH(m(1, 0), "Assertion");
   ASSERT_DEATH(m(1, 4), "Assertion");
 }
+TEST_F(test_dmatrix, multiply_d3a_array_dvector)
+{
+  dvector v(1, 2);
+  v = 3;
+  d3_array t(1, 2, 1, 2, 1, 2);
+  t(1) = 1;
+  t(2) = 2;
+  dmatrix m = t * v;
+  ASSERT_EQ(6, m(1, 1));
+  ASSERT_EQ(6, m(1, 2));
+  ASSERT_EQ(12, m(2, 1));
+  ASSERT_EQ(12, m(2, 2));
+}

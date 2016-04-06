@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <inttypes.h>
+#include <climits>
 
 class test_idea: public ::testing::Test {};
 
@@ -272,9 +273,9 @@ TEST_F(test_idea, no_dll_options)
 TEST_F(test_idea, off_t)
 {
   #if (defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS == 64))
-  ASSERT_EQ(64, sizeof(off_t));
+  ASSERT_EQ(64, sizeof(off_t) * CHAR_BIT);
   #else
-  ASSERT_EQ(32, sizeof(off_t));
+  ASSERT_EQ(32, sizeof(off_t) * CHAR_BIT);
   #endif
 }
 #endif

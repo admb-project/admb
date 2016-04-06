@@ -53,6 +53,10 @@
 
 #include <math.h>
 
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -123,7 +127,12 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
     if (last_cpos)
     {
       off_t cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
+#ifndef OPT_LIB
+      off_t ret = lseek(fp->file_ptr,cmp_lpos,SEEK_SET);
+      assert(ret >= 0);
+#else
       lseek(fp->file_ptr,cmp_lpos,SEEK_SET);
+#endif
       fp->read_cmpdif_stack_buffer(cmp_lpos);
     }
     GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();

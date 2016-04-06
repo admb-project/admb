@@ -269,4 +269,12 @@ TEST_F(test_idea, no_dll_options)
   }
   ASSERT_EQ(nopt, 1);
 }
+TEST_F(test_idea, off_t)
+{
+  #if (defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS == 64))
+  ASSERT_EQ(64, sizeof(off_t));
+  #else
+  ASSERT_EQ(32, sizeof(off_t));
+  #endif
+}
 #endif

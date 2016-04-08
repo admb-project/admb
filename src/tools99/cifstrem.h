@@ -190,6 +190,7 @@ public:
   cifstream& operator>>(const dvariable& z);
  //  cifstream& operator>>(const prevariable& z);
   cifstream& operator >> (long long& i);
+  cifstream& operator >> (const long long& i);
   cifstream& operator>>(const long& i);
   cifstream& operator>>(const int& i);
   cifstream& operator>>(const double& x);

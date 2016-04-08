@@ -31,7 +31,7 @@
 #include <stdlib.h>
 
 #ifdef _MSC_VER
-  #define lseek _lseek
+  #define LSEEK _LSEEK
   #define  read _read
   #define write _write
 #else
@@ -51,7 +51,7 @@
 
 #if defined(__NDPX__ )
   extern "C" {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int read(int, char*, int);
   };
 #endif
@@ -100,7 +100,7 @@ void funnel_gradcalc(void)
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  off_t lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  OFF_T lpos = LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
   if(gradient_structure::GRAD_STACK1->ptr
        <= gradient_structure::GRAD_STACK1->ptr_first)
@@ -176,9 +176,9 @@ do
    if (funnel_flag) break;
 
   // back up the file one buffer size and read forward
-  off_t offset = (off_t)(sizeof(grad_stack_entry)
+  OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
     * gradient_structure::GRAD_STACK1->length);
-  lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+  lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
     -offset, SEEK_CUR);
 
   break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
@@ -188,9 +188,9 @@ do
    if (lpos<0)
    {
      #ifdef GRAD_DIAG
-      off_t ttmp =
+      OFF_T ttmp =
      #endif
-      lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
+      LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
 
      #ifdef GRAD_DIAG
       cout << "Offset in file at end of gradcalc is " << ttmp

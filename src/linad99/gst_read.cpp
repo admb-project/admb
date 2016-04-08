@@ -43,7 +43,7 @@
   #else
   typedef int ssize_t;
   #endif
-  #define lseek _lseek
+  #define LSEEK _LSEEK
   #define read _read
   #define write _write
   #define open _open
@@ -64,7 +64,7 @@
 
 #if defined(__NDPX__ )
   extern "C" {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int read(int, char*, int);
   };
 #endif
@@ -75,12 +75,12 @@
  * Description not yet available.
  * \param
  */
-int grad_stack::read_grad_stack_buffer(off_t& lpos)
+int grad_stack::read_grad_stack_buffer(OFF_T& lpos)
   {
     // check to see if we are past the beginning of this file
     if (lpos < 0)
     {
-      lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+      lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         0L,SEEK_SET);
       // get the previous file
       if (gradient_structure::GRAD_STACK1->decrement_current_gradfile_ptr()
@@ -105,11 +105,11 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
         // get the end of file for the first file
         end_pos = end_pos1;
         // repostion the first file to end of pointer
-        lseek(_GRADFILE_PTR,end_pos,SEEK_SET);
+        LSEEK(_GRADFILE_PTR,end_pos,SEEK_SET);
       }
       // now back up the file one buffer size
-      lpos = lseek(_GRADFILE_PTR,
-         -((off_t)(sizeof(grad_stack_entry)*length)),SEEK_CUR);
+      lpos = LSEEK(_GRADFILE_PTR,
+         -((OFF_T)(sizeof(grad_stack_entry)*length)),SEEK_CUR);
       if (lpos == -1L)
       {
         cerr << "Error positioning temporary gradient file "
@@ -118,6 +118,14 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
         ad_exit(1);
       }
     }
+#ifdef DIAG
+    {
+      OFF_T lpos = LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
+      cout << "Offset in file before read is " << lpos
+           << " bytes from the beginning\n";
+    }
+#endif
+
 #if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
     size_t size = sizeof(grad_stack_entry) * length;
     assert(size <= UINT_MAX);
@@ -137,7 +145,7 @@ int grad_stack::read_grad_stack_buffer(off_t& lpos)
      perror("End of file encountered trying to read temporary gradient file\n");
       cout << "Read " << nread << "bytes from temp. grad. file\n";
     }
-    lpos = lseek(_GRADFILE_PTR,-((off_t)(sizeof(grad_stack_entry)*length)),
+    lpos = LSEEK(_GRADFILE_PTR,-((OFF_T)(sizeof(grad_stack_entry)*length)),
                                                            SEEK_CUR);
     // no break condition
     return 1;

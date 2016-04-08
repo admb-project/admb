@@ -34,7 +34,7 @@
 #endif
 
 #ifdef _MSC_VER
-  #define lseek _lseek
+  #define LSEEK _LSEEK
   #define  read _read
   #define write _write
 #else
@@ -188,9 +188,9 @@
     {
       // \todo Need test
       // back up the file one buffer size and read forward
-      off_t offset = (off_t)(sizeof(grad_stack_entry)
+      OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
         * gradient_structure::GRAD_STACK1->length);
-      off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+      OFF_T lpos=LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         -offset, SEEK_CUR);
 
       gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
@@ -223,9 +223,9 @@
     {
       // \todo Need test
       // back up the file one buffer size and read forward
-      off_t offset = (off_t)(sizeof(grad_stack_entry)
+      OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
         * gradient_structure::GRAD_STACK1->length);
-      off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+      OFF_T lpos=LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         -offset, SEEK_CUR);
 
       gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);

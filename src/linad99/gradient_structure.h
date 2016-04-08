@@ -275,15 +275,15 @@ public:
   void fwrite(void *ptr);
 
   void write_cmpdif_stack_buffer(void);
-  void read_cmpdif_stack_buffer(off_t & lpos);
+  void read_cmpdif_stack_buffer(OFF_T & lpos);
 
 private:
 #ifdef _MSC_VER
-  size_t buff_end;
-  size_t buff_size;
+  OFF_T buff_end;
+  OFF_T buff_size;
 #else
-  const size_t buff_end;
-  const size_t buff_size;
+  const OFF_T buff_end;
+  const OFF_T buff_size;
 #endif
 };
 #endif

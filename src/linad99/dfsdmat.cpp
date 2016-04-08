@@ -17,7 +17,7 @@
 
 #ifdef _MSC_VER
   #include <io.h>
-  #define lseek _lseek
+  #define LSEEK _LSEEK
   #define  read _read
   #define write _write
   #define open _open
@@ -57,7 +57,7 @@
   #define O_RDWR 2
   extern "C"
   {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int open(const char*, int);
     int creat(const char*, int);
     int close(int);
@@ -70,7 +70,7 @@
   #include <sys/stat.h>
   #include <sys/types.h>
   #ifdef _MSC_VER
-    #define lseek _lseek
+    #define LSEEK _LSEEK
     #define  read _read
     #define write _write
     #define open _open
@@ -335,7 +335,7 @@ void dfsdmat::save()
   }
   unsigned int _n = (unsigned int)size();
   unsigned int nn = (_n*(_n+1))/2;
-  lseek(tmp_file,0L,SEEK_SET);
+  LSEEK(tmp_file,0L,SEEK_SET);
 #ifdef OPT_LIB
   write(tmp_file,&_n,sizeof(int));
 #else
@@ -377,7 +377,7 @@ void dfsdmat::save()
 void dfsdmat::restore()
 {
   int _n=0;
-  lseek(tmp_file,0L,SEEK_SET);
+  LSEEK(tmp_file,0L,SEEK_SET);
 #if defined(OPT_LIB) && !defined(_MSC_VER)
   read(tmp_file,&_n,sizeof(int));
 #else

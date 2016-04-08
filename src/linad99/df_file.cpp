@@ -12,7 +12,7 @@
 #include <fcntl.h>
 
 #ifdef _MSC_VER
-  #define lseek _lseek
+  #define LSEEK _LSEEK
   #define  read _read
   #define write _write
   #include <sys\stat.h>
@@ -44,7 +44,7 @@
   #define O_RDWR 2
   extern "C"
   {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int open(const char*, int);
     int creat(const char*, int);
     int close(int);
@@ -238,7 +238,7 @@ DF_FILE::~DF_FILE()
 
   if (ad_comm::global_logfile && repfs)
   {
-    off_t pos = lseek(file_ptr, 0, SEEK_END);
+    OFF_T pos = LSEEK(file_ptr, 0, SEEK_END);
     *ad_comm::global_logfile << "size of file " << cmpdif_file_name
         << " = " << pos << endl;
   }
@@ -268,7 +268,7 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
 {
   if (toffset < num_bytes)
   {
-    off_t lpos = lseek(file_ptr, -((off_t)buff_size), SEEK_CUR);
+    OFF_T lpos = LSEEK(file_ptr, -((OFF_T)buff_size), SEEK_CUR);
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
     toffset = offset;
@@ -312,7 +312,7 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
  * Description not yet available.
  * \param
  */
-void DF_FILE::read_cmpdif_stack_buffer(off_t& lpos)
+void DF_FILE::read_cmpdif_stack_buffer(OFF_T& lpos)
 {
   if (lpos == -1L)
   {
@@ -329,7 +329,7 @@ void DF_FILE::read_cmpdif_stack_buffer(off_t& lpos)
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
   }
-  lpos = lseek(file_ptr, -((off_t)buff_size),SEEK_CUR);
+  lpos = LSEEK(file_ptr, -((OFF_T)buff_size),SEEK_CUR);
   for (size_t i = 0;i < sizeof(size_t); i++)
   {
     fourb[i] = *(buff+buff_end+1+i);

@@ -40,7 +40,7 @@
   #else
   typedef int ssize_t;
   #endif
-  #define lseek _lseek
+  #define LSEEK _LSEEK
   #define  read _read
   #define write _write
 #else
@@ -60,7 +60,7 @@
 
 #if defined(__NDPX__ )
   extern "C" {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int read(int, char*, int);
   };
 #endif
@@ -117,7 +117,7 @@ void gradcalc(int nvar, const dvector& _g)
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
   if (gradient_structure::GRAD_STACK1->ptr <=
         gradient_structure::GRAD_STACK1->ptr_first)
@@ -186,9 +186,9 @@ void gradcalc(int nvar, const dvector& _g)
 #endif
 
    // back up the file one buffer size and read forward
-   off_t offset = (off_t)(sizeof(grad_stack_entry)
+   OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
                   * gradient_structure::GRAD_STACK1->length);
-   off_t lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+   OFF_T lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
       -offset,SEEK_CUR);
 
     break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
@@ -198,7 +198,7 @@ void gradcalc(int nvar, const dvector& _g)
 #ifdef GRAD_DIAG
     long int ttmp =
 #endif
-    lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
+    LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
 #ifdef GRAD_DIAG
     cout << "Offset in file at end of gradcalc is " << ttmp
          << " bytes from the beginning\n";
@@ -287,7 +287,7 @@ void gradient_structure::save_arrays()
   else
   {
      humungous_pointer src = ARRAY_MEMBLOCK_BASE;
-     lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+     LSEEK(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
   #ifdef OPT_LIB
      write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
@@ -349,7 +349,7 @@ void gradient_structure::restore_arrays()
   else
   {
     humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
-    lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+    LSEEK(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
   #if defined(OPT_LIB) && !defined(_MSC_VER)
     read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
@@ -421,7 +421,7 @@ void reset_gradient_stack(void)
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  lseek(_GRADFILE_PTR,0L,SEEK_SET);
+  LSEEK(_GRADFILE_PTR,0L,SEEK_SET);
 }
 /**
   Sets the gradient stack entry for a function or operator with a single

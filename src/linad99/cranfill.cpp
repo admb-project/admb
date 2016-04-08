@@ -95,7 +95,7 @@ double mean(const dvector& v)
  */
 void lvector::fill_seqadd(const AD_LONG_INT& base, const AD_LONG_INT& offset)
   {
-    long int temp=0;
+    AD_LONG_INT temp=0;
     for (int i=indexmin(); i<=indexmax(); i++)
     {
        elem(i)=base+temp;

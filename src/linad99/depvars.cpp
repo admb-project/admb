@@ -13,7 +13,7 @@
 #include "fvar.hpp"
 
 #ifdef _MSC_VER
-  #define lseek _lseek
+  #define LSEEK _LSEEK
   #define read _read
   #define write _write
   #define open _open
@@ -128,7 +128,7 @@ void gradient_structure::save_dependent_variable_position(const prevariable& v1)
                                 GRAD_STACK1->_GRADFILE_PTR;
       DEPVARS_INFO->cmpdif_file_count(depvar_count)=fp->file_ptr;
       DEPVARS_INFO->grad_file_position(depvar_count)
-        =lseek(GRAD_STACK1->_GRADFILE_PTR,0,SEEK_CUR);
+        =LSEEK(GRAD_STACK1->_GRADFILE_PTR,0,SEEK_CUR);
       DEPVARS_INFO->cmpdif_file_position(depvar_count)
-        =lseek(fp->file_ptr,0,SEEK_CUR);
+        =LSEEK(fp->file_ptr,0,SEEK_CUR);
     }

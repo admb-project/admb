@@ -291,7 +291,7 @@ void  grad_stack::write_grad_stack_buffer()
 
 #ifdef GRAD_DIAG
   {
-    off_t lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+    OFF_T lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
     cout << "Offset in file before write is " << lpos
          << " bytes from the beginning\n";
   }
@@ -321,7 +321,7 @@ void  grad_stack::write_grad_stack_buffer()
     cout << "Wrote " << ierr << " not " << nbw << endl;
 
 #ifndef OPT_LIB
-    off_t offset = LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
+    OFF_T offset = LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
     assert(offset != -1);
 #else
     lseek(_GRADFILE_PTR, end_pos, SEEK_SET);

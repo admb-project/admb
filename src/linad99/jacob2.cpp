@@ -128,7 +128,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
     {
       OFF_T cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
 #ifndef OPT_LIB
-      off_t ret = LSEEK(fp->file_ptr,cmp_lpos,SEEK_SET);
+      OFF_T ret = LSEEK(fp->file_ptr,cmp_lpos,SEEK_SET);
       assert(ret >= 0);
 #else
       LSEEK(fp->file_ptr,cmp_lpos,SEEK_SET);

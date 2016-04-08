@@ -19,7 +19,7 @@ using namespace std;
 #endif
 
 #ifdef _MSC_VER
-  #define lseek _lseek
+  #define LSEEK _LSEEK
   #define  read _read
   #define write _write
   #define open _open
@@ -50,7 +50,7 @@ using namespace std;
   #define O_RDWR 2
   extern "C"
   {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int open(const char*, int);
     int creat(const char*, int);
     int close(int);
@@ -238,15 +238,15 @@ grad_stack::~grad_stack()
   const int repfs = option_match(ad_comm::argc, ad_comm::argv, "-fsize");
   if (ad_comm::global_logfile && repfs)
   {
-     off_t pos = lseek(_GRADFILE_PTR1, 0, SEEK_END);
+     OFF_T pos = LSEEK(_GRADFILE_PTR1, 0, SEEK_END);
      *ad_comm::global_logfile << "size of file " << gradfile_name1
        << " = " << pos << endl;
 
-     pos = lseek(_GRADFILE_PTR2, 0, SEEK_END);
+     pos = LSEEK(_GRADFILE_PTR2, 0, SEEK_END);
      *ad_comm::global_logfile << "size of file " << gradfile_name2
        << " = " << pos << endl;
 
-     pos = lseek(_VARSSAV_PTR, 0, SEEK_END);
+     pos = LSEEK(_VARSSAV_PTR, 0, SEEK_END);
      *ad_comm::global_logfile << "size of file " << var_store_file_name
        << " = " << pos << endl;
   }
@@ -321,10 +321,11 @@ void  grad_stack::write_grad_stack_buffer()
     cout << "Wrote " << ierr << " not " << nbw << endl;
 
 #ifndef OPT_LIB
-    off_t offset = lseek(_GRADFILE_PTR, end_pos, SEEK_SET);
+    off_t offset = LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
     assert(offset != -1);
 #else
     lseek(_GRADFILE_PTR, end_pos, SEEK_SET);
+    LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
 #endif
 
     //save the end of file for this file so we can reposition later
@@ -357,7 +358,7 @@ void  grad_stack::write_grad_stack_buffer()
     cout << "Wrote " << ierr << "bytes into temp. grad. file\n";
   }
   {
-    off_t lpos = lseek(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
+    OFF_T lpos = LSEEK(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
     cout << "Offset in file after write is " << lpos
          << " bytes from the beginning\n";
   }

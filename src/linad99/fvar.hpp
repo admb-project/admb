@@ -40,12 +40,26 @@
  */
 #ifndef FVAR_HPP
 #define FVAR_HPP
+//#define __MINGW64__
 /** \file fvar.hpp
 AUTODIF classes.
 Class definitions for reverse mode automatic differentiation.
 Function prototypes for math functions.
 Macro definitions.
 */
+#if defined(__MINGW64__ )
+#  define OFF_T off64_t
+#  define LSEEK lseek64
+#  if !defined(AD_LONG_INT)
+#    define AD_LONG_INT long long int
+#  endif
+#else
+#  define OFF_T off_t
+#  define LSEEK lseek
+#  if !defined(AD_LONG_INT)
+#    define AD_LONG_INT long int
+#  endif
+#endif
 
 #include <math.h>
 // Borrow definition of M_PI from GCC
@@ -906,9 +920,9 @@ class grad_stack
    long end_pos1;
    long end_pos2;
 #else
-   off_t end_pos;
-   off_t end_pos1;
-   off_t end_pos2;
+   OFF_T end_pos;
+   OFF_T end_pos1;
+   OFF_T end_pos2;
 #endif
    //dmatrix *table;
  public:
@@ -960,7 +974,7 @@ class grad_stack
      double mult1, double *ind_addr2, double mult2,
      double *ind_addr3, double mult3);
 
-   int read_grad_stack_buffer(off_t & lpos);
+   int read_grad_stack_buffer(OFF_T & lpos);
    void set_gradient_stack(void (*ptr) (void));
    void set_gbuffer_pointers(void);
    //js

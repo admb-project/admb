@@ -41,7 +41,6 @@
 #ifndef __ADMB_GRADIENT_STRUCTURE_H__
 #define __ADMB_GRADIENT_STRUCTURE_H__
 
-#include <fvar.hpp>
 #include <fstream>
 using std::ofstream;
 

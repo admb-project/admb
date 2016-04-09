@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <gradient_structure.h>
+#include <fvar.hpp>
 #include <gradient_structure.h>
 
 extern "C"

@@ -48,17 +48,19 @@ Function prototypes for math functions.
 Macro definitions.
 */
 #if defined(__MINGW64__ )
-#  define OFF_T off64_t
-#  define LSEEK lseek64
-#  if !defined(AD_LONG_INT)
-#    define AD_LONG_INT long long int
-#  endif
+  #define OFF_T off64_t
+  #define LSEEK lseek64
+  #if !defined(AD_LONG_INT)
+    #define AD_LONG_INT long long int
+  #endif
 #else
-#  define OFF_T off_t
-#  define LSEEK lseek
-#  if !defined(AD_LONG_INT)
-#    define AD_LONG_INT long int
-#  endif
+  #define OFF_T off_t
+  #ifndef _MSC_VER
+    #define LSEEK lseek
+  #endif
+  #if !defined(AD_LONG_INT)
+    #define AD_LONG_INT long int
+  #endif
 #endif
 
 #include <math.h>

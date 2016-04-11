@@ -12,7 +12,7 @@
 #include <fcntl.h>
 
 #ifdef _MSC_VER
-  #define LSEEK _LSEEK
+  #define LSEEK _lseek
   #define  read _read
   #define write _write
   #include <sys\stat.h>

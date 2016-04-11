@@ -27,13 +27,13 @@
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
-  #ifdef _MSC_VER
-    #define LSEEK _lseek
-    #define  read _read
-    #define write _write
-    #define open _open
-    #define close _close
-  #endif
+#endif
+#ifdef _MSC_VER
+  #define LSEEK _lseek
+  #define  read _read
+  #define write _write
+  #define open _open
+  #define close _close
 #endif
 
 #if !defined(_MSC_VER)

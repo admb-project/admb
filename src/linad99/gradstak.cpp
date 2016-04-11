@@ -324,7 +324,6 @@ void  grad_stack::write_grad_stack_buffer()
     OFF_T offset = LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
     assert(offset != -1);
 #else
-    lseek(_GRADFILE_PTR, end_pos, SEEK_SET);
     LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
 #endif
 

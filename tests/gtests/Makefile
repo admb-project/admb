@@ -79,12 +79,14 @@ GTESTS=\
  test_d3_array.cpp\
  test_data_matrix.cpp\
  test_data_number.cpp\
- test_cfenv.cpp\
  main.cpp
 
 ##Need to debug this
 ## test_atan2.cpp
 ## test_dll_param_init_bounded_vector.cpp
+
+#cfenv is not completely supported by most compilers
+#  test_cfenv.cpp
 
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\

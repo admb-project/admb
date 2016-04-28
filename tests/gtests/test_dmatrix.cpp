@@ -143,3 +143,59 @@ TEST_F(test_dmatrix, multiply_d3a_array_dvector)
   ASSERT_EQ(12, m(2, 1));
   ASSERT_EQ(12, m(2, 2));
 }
+TEST_F(test_dmatrix, extract_diagonal)
+{
+  dmatrix m(1, 3, 1, 3);
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 3; ++j)
+    {
+      m(i, j) = i + j;
+    }
+  }
+  dvector v(1, 3);
+  v.initialize();
+  dvector extract_diagonal(const dmatrix& m);
+  v = extract_diagonal(m);
+  ASSERT_DOUBLE_EQ(2, v(1));
+  ASSERT_DOUBLE_EQ(4, v(2));
+  ASSERT_DOUBLE_EQ(6, v(3));
+}
+TEST_F(test_dmatrix, extract_diagonal_error)
+{
+  ad_exit=&test_ad_exit;
+  dmatrix m(2, 3, 1, 3);
+  try
+  {
+    dvector extract_diagonal(const dmatrix& m);
+    extract_diagonal(m);
+  }
+  catch (const int exit_code)
+  {
+    const int expected_exit_code = 1;
+    if (exit_code == expected_exit_code)
+    {
+      return;
+    }
+  }
+  FAIL();
+}
+TEST_F(test_dmatrix, extract_diagonal_error2)
+{
+  ad_exit=&test_ad_exit;
+  dmatrix m(1, 3, 1, 4);
+  try
+  {
+    dvector extract_diagonal(const dmatrix& m);
+    extract_diagonal(m);
+  }
+  catch (const int exit_code)
+  {
+    const int expected_exit_code = 1;
+    if (exit_code == expected_exit_code)
+    {
+      return;
+    }
+  }
+  FAIL();
+}

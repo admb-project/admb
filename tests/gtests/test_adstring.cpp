@@ -610,3 +610,17 @@ TEST_F(test_adstring, default_constructor_unsigned_char_array)
   EXPECT_EQ('b', a(2));
   EXPECT_EQ('c', a(3));
 }
+TEST_F(test_adstring, operator_plus_char)
+{
+  adstring u("-742"); 
+  char v = 'v';
+  adstring actual = u + v;
+  EXPECT_STREQ("-742v", actual);
+}
+TEST_F(test_adstring, operator_plus_unsigned_char)
+{
+  adstring u("-742"); 
+  unsigned char v = 'v';
+  adstring actual = u + v;
+  EXPECT_STREQ("-742v", actual);
+}

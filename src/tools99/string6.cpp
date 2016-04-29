@@ -9,10 +9,18 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <cassert>
+
+/**
+Concatenate adstring u with unsigned char v.
+*/
 adstring operator+(const adstring& u, const unsigned char v)
 {
   return (u + adstring(v));
 }
+/**
+Concatenate adstring u with char v.
+*/
 adstring operator+(const adstring& u, const char v)
 {
   return (u + adstring(v));

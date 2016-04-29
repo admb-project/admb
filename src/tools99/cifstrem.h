@@ -161,7 +161,7 @@ public:
   #endif
 #endif
 
-  ~cifstream(){}
+  virtual ~cifstream();
 
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  > 0x0520)

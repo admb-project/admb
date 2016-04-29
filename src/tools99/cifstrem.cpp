@@ -19,6 +19,12 @@ using std::istringstream;
 
 #include "cifstrem.h"
 
+/**
+Destructor
+*/
+cifstream::~cifstream()
+{
+}
 void cifstream::set_eof_bit(void)
 {
 #ifdef __BCPLUSPLUS__

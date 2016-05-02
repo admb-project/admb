@@ -210,3 +210,28 @@ TEST_F(test_dmatrix, mean)
   double mean(const dmatrix& m);
   ASSERT_DOUBLE_EQ(10, mean(m));
 }
+TEST_F(test_dmatrix, colsum)
+{
+  dmatrix m(1, 3, 1, 3);
+  m(1, 1) = 1;
+  m(1, 2) = 2;
+  m(1, 3) = 3;
+  m(2, 1) = 4;
+  m(2, 2) = 5;
+  m(2, 3) = 6;
+  m(3, 1) = 7;
+  m(3, 2) = 8;
+  m(3, 3) = 9;
+
+  double colsum(const dmatrix& m, int col);
+  ASSERT_DOUBLE_EQ(12, colsum(m, 1));
+  ASSERT_DOUBLE_EQ(15, colsum(m, 2));
+  ASSERT_DOUBLE_EQ(18, colsum(m, 3));
+
+  ASSERT_ANY_THROW({
+    colsum(m, 0);
+  });
+  ASSERT_ANY_THROW({
+    colsum(m, 4);
+  });
+}

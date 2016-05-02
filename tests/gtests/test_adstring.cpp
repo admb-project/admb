@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <fvar.hpp>
 #include <adstring.hpp>
 #include <climits>
 
@@ -623,4 +624,18 @@ TEST_F(test_adstring, operator_plus_unsigned_char)
   unsigned char v = 'v';
   adstring actual = u + v;
   EXPECT_STREQ("-742v", actual);
+}
+TEST_F(test_adstring, constructor_zero)
+{
+  ad_exit=&test_ad_exit;
+  ASSERT_EXIT({
+    adstring u(0); 
+  }, ::testing::ExitedWithCode(1), "Error");
+}
+TEST_F(test_adstring, constructor_not_one)
+{
+  ad_exit=&test_ad_exit;
+  ASSERT_EXIT({
+    adstring u(0, 1); 
+  }, ::testing::ExitedWithCode(1), "Error");
 }

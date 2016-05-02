@@ -131,3 +131,20 @@ TEST_F(test_adstring_array, ifstream)
   EXPECT_STREQ((char*)a2, (char*)ret2(2));
   EXPECT_STREQ((char*)a3, (char*)ret2(3));
 }
+TEST_F(test_adstring_array, allocate_min_greaterthan_max)
+{
+  adstring_array a;
+  ASSERT_EXIT({
+    a.allocate(4, 1);
+  }, ::testing::ExitedWithCode(1), " Error");
+}
+TEST_F(test_adstring_array, null_index1)
+{
+  adstring_array a;
+  ASSERT_ANY_THROW({
+    a(1);
+  });
+  ASSERT_ANY_THROW({
+    a[1];
+  });
+}

@@ -199,3 +199,14 @@ TEST_F(test_dmatrix, extract_diagonal_error2)
   }
   FAIL();
 }
+TEST_F(test_dmatrix, mean)
+{
+  dmatrix m(1, 2, 1, 2);
+  m(1, 1) = 4;
+  m(1, 2) = 8;
+  m(2, 1) = 12;
+  m(2, 2) = 16;
+
+  double mean(const dmatrix& m);
+  ASSERT_DOUBLE_EQ(10, mean(m));
+}

@@ -411,3 +411,19 @@ TEST_F(test_dvector, filename_raggedcolumn)
   }
   FAIL();
 }
+TEST_F(test_dvector, sgn)
+{
+  dvector d(1, 5);
+  d(1) = -1;
+  d(2) = 0.1;
+  d(3) = 3;
+  d(4) = -0.1;
+  d(5) = 5;
+
+  ivector v = sgn(d);
+  ASSERT_EQ(-1, v(1));
+  ASSERT_EQ(1, v(2));
+  ASSERT_EQ(1, v(3));
+  ASSERT_EQ(-1, v(4));
+  ASSERT_EQ(1, v(5));
+}

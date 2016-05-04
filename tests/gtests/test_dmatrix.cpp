@@ -235,3 +235,43 @@ TEST_F(test_dmatrix, colsum)
     colsum(m, 4);
   });
 }
+TEST_F(test_dmatrix, column_vector)
+{
+  dvector v(1, 4);
+  v(1) = 4;
+  v(2) = 3;
+  v(3) = 2;
+  v(4) = 1;
+  dmatrix ret = column_vector(v);
+  ASSERT_EQ(1, ret.rowmin());
+  ASSERT_EQ(4, ret.rowmax());
+  ASSERT_EQ(1, ret(1).indexmin());
+  ASSERT_EQ(1, ret(2).indexmin());
+  ASSERT_EQ(1, ret(3).indexmin());
+  ASSERT_EQ(1, ret(4).indexmin());
+  ASSERT_EQ(1, ret(1).indexmax());
+  ASSERT_EQ(1, ret(2).indexmax());
+  ASSERT_EQ(1, ret(3).indexmax());
+  ASSERT_EQ(1, ret(4).indexmax());
+  ASSERT_DOUBLE_EQ(4, ret(1, 1));
+  ASSERT_DOUBLE_EQ(3, ret(2, 1));
+  ASSERT_DOUBLE_EQ(2, ret(3, 1));
+  ASSERT_DOUBLE_EQ(1, ret(4, 1));
+}
+TEST_F(test_dmatrix, row_vector)
+{
+  dvector v(1, 4);
+  v(1) = 4;
+  v(2) = 3;
+  v(3) = 2;
+  v(4) = 1;
+  dmatrix ret = row_vector(v);
+  ASSERT_EQ(1, ret.rowmin());
+  ASSERT_EQ(1, ret.rowmax());
+  ASSERT_EQ(1, ret(1).indexmin());
+  ASSERT_EQ(4, ret(1).indexmax());
+  ASSERT_DOUBLE_EQ(4, ret(1, 1));
+  ASSERT_DOUBLE_EQ(3, ret(1, 2));
+  ASSERT_DOUBLE_EQ(2, ret(1, 3));
+  ASSERT_DOUBLE_EQ(1, ret(1, 4));
+}

@@ -1,75 +1,62 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include <fvar.hpp>
 
 /**
- * Description not yet available.
- * \param
- */
+Returns dmatrix with a single column using values from v.
+*/
 dmatrix column_vector(const dvector& v)
 {
-  int min=v.indexmin();
-  int max=v.indexmax();
-  dmatrix tmp(min,max,1,1);
-  for (int i=min;i<=max;i++)
+  int min = v.indexmin();
+  int max = v.indexmax();
+  dmatrix ret(min, max, 1, 1);
+  for (int i = min; i <= max; ++i)
   {
-    tmp.elem(i,1)=v.elem(i);
+    ret.elem(i, 1) = v.elem(i);
   }
-  return tmp;
+  return ret;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Returns dvar_matrix with a single row using values from v.
+*/
 dmatrix row_vector(const dvector& v)
 {
-  int min=v.indexmin();
-  int max=v.indexmax();
-  dmatrix tmp(1,1,min,max);
-  for (int i=min;i<=max;i++)
+  int min = v.indexmin();
+  int max = v.indexmax();
+  dmatrix ret(1, 1, min, max);
+  for (int i = min; i <= max; ++i)
   {
-    tmp.elem(1,i)=v.elem(i);
+    ret.elem(1, i) = v.elem(i);
   }
-  return tmp;
+  return ret;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Returns dmatrix with a single column using values from v.
+*/
 dvar_matrix column_vector(const dvar_vector& v)
 {
-  int min=v.indexmin();
-  int max=v.indexmax();
-  dvar_matrix tmp(min,max,1,1);
-  for (int i=min;i<=max;i++)
+  int min = v.indexmin();
+  int max = v.indexmax();
+  dvar_matrix ret(min, max, 1, 1);
+  for (int i = min; i <= max; ++i)
   {
-    tmp.elem(i,1)=v.elem(i);
+    ret.elem(i, 1) = v.elem(i);
   }
-  return tmp;
+  return ret;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Returns dvar_matrix with a single row using values from v.
+*/
 dvar_matrix row_vector(const dvar_vector& v)
 {
-  int min=v.indexmin();
-  int max=v.indexmax();
-  dvar_matrix tmp(1,1,min,max);
-  for (int i=min;i<=max;i++)
+  int min = v.indexmin();
+  int max = v.indexmax();
+  dvar_matrix ret(1, 1, min, max);
+  for (int i = min; i <= max; ++i)
   {
-    tmp.elem(1,i)=v.elem(i);
+    ret.elem(1, i) = v.elem(i);
   }
-  return tmp;
+  return ret;
 }

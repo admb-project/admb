@@ -137,8 +137,13 @@ if [ ! -z "$dll" ]; then
   LDFLAGS="-shared $LDFLAGS"
 fi
 if [ ! -z "$debug" ]; then
-  CXXFLAGS="-g -std=c++11 -DDEBUG $CXXFLAGS"
-  LDFLAGS="-g -std=c++11 -DDEBUG $LDFLAGS"
+  if [ "$CXX" == "openCC" ]; then
+    CXXFLAGS="-g $CXXFLAGS"
+    LDFLAGS="-g $LDFLAGS"
+  else
+    CXXFLAGS="-g -std=c++11 -DDEBUG $CXXFLAGS"
+    LDFLAGS="-g -std=c++11 -DDEBUG $LDFLAGS"
+  fi
 else
   if [ "$CXX" == "openCC" ]; then
     CXXFLAGS="-O2 $CXXFLAGS"

@@ -236,20 +236,14 @@ class vector_shapex;
 class predvar_vector;
 class independent_variables;
 
-#if defined(__GNUC__)
-#   if (__GNUC__  >= 3)
-#      include <fstream>
-#   else
-#      include <fstream.h>
-#   endif
-#elif defined(_MSC_VER)
-#   if (_MSC_VER >= 1300)
-#      include <fstream>
-#   else
-#      include <fstream.h>
-#   endif
+#if defined(__GNUC__) && (__GNUC__ < 3)
+  #include <fstream.h>
+#elif defined(_MSC_VER) && (_MSC_VER < 1300)
+  #include <fstream.h>
+#elif defined(__SUNPRO_CC) && (__SUNPRO_CC < 0x5140)
+  #include <fstream.h>
 #else
-#   include <fstream.h>
+  #include <fstream>
 #endif
 
 #include <stdio.h>

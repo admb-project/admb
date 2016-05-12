@@ -148,16 +148,10 @@ public:
   cifstream(const char*, int = ios::nocreate, char cc = '#');
   #endif
 #else
-  #if defined(__GNUC__)
-    #if (__GNUC__  >= 3)
-  cifstream(const char*, int = std::ios_base::in , char cc = '#');
-    #else
+  #if defined(__GNUC__) && (__GNUC__  < 3)
   cifstream(const char*, int = ios::nocreate, char cc = '#');
-    #endif
-  #elif defined(_MSC_VER)
-  cifstream(const char*, int = std::ios_base::in , char cc = '#');
   #else
-  cifstream(const char*, int = ios::nocreate, char cc = '#');
+  cifstream(const char*, int = std::ios_base::in , char cc = '#');
   #endif
 #endif
 
@@ -170,17 +164,11 @@ public:
   void open(const char*, int = ios::nocreate);
 #  endif
 #else // not BORLAND
-#  if defined(__GNUC__)
-#    if (__GNUC__  >= 3)
-       void open(const char*, int);
-#    else
+  #if defined(__GNUC__) && (__GNUC__ < 3)
        void open(const char*, int = ios::nocreate);
-#    endif
-#  elif defined(_MSC_VER)
+  #else
        void open(const char*, int);
-#  else
-     void open(const char*, int = ios::nocreate);
-#  endif
+  #endif
 #endif
 
   adstring get_file_name(void);

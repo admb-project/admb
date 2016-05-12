@@ -4291,6 +4291,7 @@ TOP_OF_MAIN_SECTION {
       //fprintf(ftopmain,"  model_parameters * model_parameters::model_parameters_ptr=0;\n");
       need_prior_globals=0;
     }
+
     fprintf(ftopmain,"  long int arrmblsize=0;\n");
     if (makedll) fprintf(ftopmain,"extern \"C\" {\n");
     if (splus_debug_flag)
@@ -4308,6 +4309,9 @@ TOP_OF_MAIN_SECTION {
 
       fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
       fprintf(ftopmain,"  %s",infile_root);
+      fprintf(ftopmain,"#ifdef DEBUG\n");
+      fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
+      fprintf(ftopmain,"#endif\n");
       fprintf(ftopmain,"    ad_set_new_handler();\n");
       if (bound_flag) fprintf(ftopmain,"    ad_exit=&ad_boundf;\n");
       fprintf(ftopmain,"(%s,dll_options);\n}\n",arglist1);
@@ -4336,6 +4340,9 @@ TOP_OF_MAIN_SECTION {
       else
       {
         fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
+        fprintf(ftopmain,"#ifdef DEBUG\n");
+        fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
+        fprintf(ftopmain,"#endif\n");
         fprintf(ftopmain,"  ad_set_new_handler();\n");
         if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
       }
@@ -4480,6 +4487,9 @@ TOP_OF_MAIN_SECTION {
             fprintf(ftopmain,"(%s,char * dll_options);\n\n",arglist);
 
           fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
+          fprintf(ftopmain,"#ifdef DEBUG\n");
+          fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
+          fprintf(ftopmain,"#endif\n");
           fprintf(ftopmain,"  ad_set_new_handler();\n");
           if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
           fprintf(ftopmain,"  %s",infile_root);
@@ -4531,6 +4541,9 @@ TOP_OF_MAIN_SECTION {
       else
       {
         fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
+        fprintf(ftopmain,"#ifdef DEBUG\n");
+        fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
+        fprintf(ftopmain,"#endif\n");
         fprintf(ftopmain,"  ad_set_new_handler();\n");
         if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
       }
@@ -4625,6 +4638,19 @@ TOP_OF_MAIN_SECTION {
        fprintf(ftopmain,"    initial_df1b2params::separable_flag=1;\n");
 
      fprintf(ftopmain,"    mp.computations(argc,argv);\n");
+
+    fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"bool failedtest = false;\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_DIVBYZERO))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected division by zero.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_INVALID))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected invalid argument.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_OVERFLOW))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected overflow.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_UNDERFLOW))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected underflow.\" << endl; }\n");
+    fprintf(ftopmain,"if (failedtest) { std::abort(); } \n");
+    fprintf(ftopmain,"#endif\n");
 
     fprintf(htop,"#include <admodel.h>\n");
     fprintf(htop,"#include <contrib.h>\n\n");
@@ -5249,6 +5275,11 @@ int main(int argc, char * argv[])
   {
     fprintf(stderr,"Error trying to open file %s\n","xxglobal.tmp");
   }
+  fprintf(fglobals,"#ifdef DEBUG\n");
+  fprintf(fglobals,"  #include <cfenv>\n");
+  fprintf(fglobals,"  #include <cstdlib>\n");
+  fprintf(fglobals,"#endif\n");
+
   //fdat=fopen(headerfile_name,"w+");
   fdat=fopen("tfile1","w+");
   if (fdat==NULL)

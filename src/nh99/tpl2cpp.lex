@@ -4298,6 +4298,9 @@ TOP_OF_MAIN_SECTION {
     // default settings, but I don't have the skills to do that right now.
     // - Ian Taylor, May 1, 2012
 
+    fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
+    fprintf(ftopmain,"#endif\n");
     if (makedll)
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
@@ -4313,10 +4316,21 @@ TOP_OF_MAIN_SECTION {
         "    mp.iprint=10;\n");
     }
 
+    fprintf(ftopmain,"    mp.preliminary_calculations();\n");
+    fprintf(ftopmain,"    mp.computations(argc,argv);\n");
 
-     fprintf(ftopmain,"    mp.preliminary_calculations();\n");
-
-     fprintf(ftopmain,"    mp.computations(argc,argv);\n");
+    fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"bool failedtest = false;\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_DIVBYZERO))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected division by zero.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_INVALID))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected invalid argument.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_OVERFLOW))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected overflow.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_UNDERFLOW))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected underflow.\" << endl; }\n");
+    fprintf(ftopmain,"if (failedtest) { std::abort(); } \n");
+    fprintf(ftopmain,"#endif\n");
 
     fprintf(htop,"#include <admodel.h>\n");
     fprintf(htop,"#include <contrib.h>\n\n");
@@ -4521,6 +4535,11 @@ int main(int argc, char * argv[])
   {
     fprintf(stderr,"Error trying to open file %s\n","xxglobal.tmp");
   }
+  //fprintf(fglobals,"#ifdef DEBUG\n");
+  fprintf(fglobals,"  #include <cfenv>\n");
+  fprintf(fglobals,"  #include <cstdlib>\n");
+  //fprintf(fglobals,"#endif\n");
+
   fdat=fopen(headerfile_name,"w+");
   if (fdat==NULL)
   {

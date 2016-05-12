@@ -4535,10 +4535,10 @@ int main(int argc, char * argv[])
   {
     fprintf(stderr,"Error trying to open file %s\n","xxglobal.tmp");
   }
-  //fprintf(fglobals,"#ifdef DEBUG\n");
+  fprintf(fglobals,"#ifdef DEBUG\n");
   fprintf(fglobals,"  #include <cfenv>\n");
   fprintf(fglobals,"  #include <cstdlib>\n");
-  //fprintf(fglobals,"#endif\n");
+  fprintf(fglobals,"#endif\n");
 
   fdat=fopen(headerfile_name,"w+");
   if (fdat==NULL)

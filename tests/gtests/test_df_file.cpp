@@ -26,7 +26,7 @@ TEST_F(test_df_file, strtok)
   strcpy(args, "aaaa bbbb cccc dddd eeee ffff gggg\0");
   ASSERT_STREQ("aaaa", strtok(args, " "));
   ASSERT_STREQ("bbbb", strtok(NULL, " "));
-  ASSERT_STREQ("cccc", strtok('\0', " "));
+  ASSERT_STREQ("cccc", strtok("\0", " "));
   //Does not work -> strtok((char*)"\0", " ")
 }
 TEST_F(test_df_file, allocate_INT_MAX)

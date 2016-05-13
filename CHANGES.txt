@@ -21,6 +21,7 @@ ADMB-X
 
 ####New Supported Compilers
 * Oracle Solaris Studio 12.5 Beta (64 Bit)
+* GNU C++ 5.3
 
 ####Changes and Improvements
 * Added floating point checking into tpl2cpp and tpl2rem.

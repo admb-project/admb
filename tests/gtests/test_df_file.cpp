@@ -31,6 +31,7 @@ TEST_F(test_df_file, strtok)
   ASSERT_STREQ("eeee", strtok(NULL, " "));
   ASSERT_STREQ("ffff", strtok(NULL, " "));
   ASSERT_STREQ("gggg", strtok(NULL, " "));
+  ASSERT_TRUE(strtok(NULL, " ") == NULL);
 }
 TEST_F(test_df_file, allocate_INT_MAX)
 {

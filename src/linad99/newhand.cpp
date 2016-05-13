@@ -6,6 +6,9 @@ Copyright (c) 2008-2012 Regents of the University of California
 #if defined(__GNUC__) && (__GNUC__ < 4)
   #include <iostream.h>
   #include <new.h>
+#elif defined(_MSC_VER)
+  #include <iostream>
+  #include <new.h>
 #else
   #include <iostream>
   using namespace std;

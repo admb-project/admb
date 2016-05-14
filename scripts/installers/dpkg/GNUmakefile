@@ -3,7 +3,9 @@ VERSION=11.5
 all:
 	$(MAKE) clean
 	$(MAKE) admb_$(VERSION).deb
-	-lintian -v -i admb_$(VERSION).deb
+
+check:
+	lintian -v -i admb_$(VERSION).deb
 
 
 admb_$(VERSION).deb: admb_$(VERSION)

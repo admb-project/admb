@@ -16,7 +16,7 @@ admb_$(VERSION): control
 	cd $@/usr/local/bin; ln -sf ../admb/bin/admb admb; cd ..
 	ls -al $@/usr/local/bin/*
 	mkdir -p $@/DEBIAN
-	cp -pvf control $@/DEBIAN
+	cp -vf control $@/DEBIAN
 
 clean:
 	rm -rvf admb_$(VERSION)*

@@ -16,6 +16,17 @@ The goals for all releases are
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+ADMB-X
+---------
+
+####New Supported Compilers
+* Oracle Solaris Studio 12.5 Beta (64 Bit)
+* GNU C++ 6.1 and 5.3
+
+####Changes and Improvements
+* Added floating point checking into tpl2cpp and tpl2rem.
+* Numerous bug fixes and improvements
+
 ADMB-11.5
 ---------
 

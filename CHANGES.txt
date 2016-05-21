@@ -20,7 +20,6 @@ ADMB-X
 ---------
 
 ####New Supported Compilers
-* Oracle Solaris Studio 12.5 Beta (64 Bit)
 * GNU C++ 6.1 and 5.3
 
 ####Changes and Improvements

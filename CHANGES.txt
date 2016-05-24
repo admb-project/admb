@@ -24,6 +24,11 @@ ADMB-X
 
 ####Changes and Improvements
 * Added floating point checking into tpl2cpp and tpl2rem.
+
+  To check for floating point errors, build executable with -g option.
+
+  $ admb -g "model.tpl"
+
 * Numerous bug fixes and improvements
 
 ADMB-11.5

@@ -4520,6 +4520,9 @@ double factln(double n);
 dvar_vector factln(const dvar_vector & n);
 dvector factln(const dvector & n);
 
+dvariable invlogit(dvariable x);
+
+
 dvar_vector posfun(const dvar_vector & x, double eps, const prevariable & pen);
 dvariable posfun(const dvariable& x, const double eps, const prevariable & pen);
 dvariable posfun2(const dvariable& x, const double eps, const prevariable& pen);

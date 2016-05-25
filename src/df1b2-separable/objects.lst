@@ -115,6 +115,7 @@ OBJ0=\
  f1b23d1.obj\
  df1b2negb.obj\
  expm.obj\
+ invlogit.obj\
  f1b2sol2.obj\
  f1b2solv.obj\
  mod_rhes.obj

@@ -448,6 +448,7 @@ OBJ3=\
 OBJ4=\
  mfexp.obj\
  expm.obj\
+ invlogit.obj\
  factors.obj\
  orthpoly.obj\
  makesub.obj\

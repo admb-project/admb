@@ -2049,6 +2049,8 @@ df1b2variable ln_det(df1b2matrix& M,int & sgn);
 
 //df1b2vector solve(df1b2matrix& M,df1b2vector& v);
 
+df1b2variable invlogit(df1b2variable x);
+
 df1b2matrix expm(const df1b2matrix & A);
 df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   df1b2variable ln_unsigned_det,df1b2variable& sign);

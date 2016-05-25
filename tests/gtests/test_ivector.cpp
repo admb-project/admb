@@ -261,3 +261,11 @@ TEST_F(test_ivector, copy_constructor_empty)
   ASSERT_EQ(copy.indexmin(), orig.indexmin());
   ASSERT_EQ(copy.indexmax(), orig.indexmax());
 }
+TEST_F(test_ivector, fill)
+{
+  ivector v(1, 3);
+  v.fill("{3, 2, 1}");
+  ASSERT_EQ(3, v(1));
+  ASSERT_EQ(2, v(2));
+  ASSERT_EQ(1, v(3));
+}

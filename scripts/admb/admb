@@ -137,7 +137,10 @@ if [ ! -z "$dll" ]; then
   LDFLAGS="-shared $LDFLAGS"
 fi
 if [ ! -z "$debug" ]; then
-  if [ "$CXX" == "openCC" -o "$CXX" == "CC" ]; then
+  if [ "$CXX" == "g++" -a "$(shell expr `g++ -dumpversion | cut -f1 -d.` \< 5)" ]; then
+    GCC4="true"
+  fi
+  if [ "$CXX" == "openCC" -o "$GCC4" == "true" ]; then
     CXXFLAGS="-g $CXXFLAGS"
     LDFLAGS="-g $LDFLAGS"
   else

@@ -138,7 +138,7 @@ if [ ! -z "$dll" ]; then
 fi
 if [ ! -z "$debug" ]; then
   if [ "$CXX" == "g++" ]; then
-    GCCVER="$(shell expr `gcc -dumpversion | cut -f1 -d.`)"
+    GCCVER="`gcc -dumpversion | cut -f1 -d.`"
   fi
   if [ "$CXX" == "openCC" -o "$CXX" == "CC" -o "$GCCVER" == "4" ]; then
     CXXFLAGS="-g $CXXFLAGS"

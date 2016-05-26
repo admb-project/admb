@@ -13,6 +13,11 @@ struct getScalarType{
 };
 
 template<>
+struct getScalarType<dvector>{
+  typedef double scalar;
+};
+
+template<>
 struct getScalarType<dvar_vector>{
   typedef dvariable scalar;
 };

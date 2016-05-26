@@ -31,3 +31,19 @@ double betai(const double a,const double b,const double x,int maxit)
   else
     return 1.0-bt*betacf(b,a,1.0-x,maxit)/b;
 }
+
+
+/** beta distribution function for constant objects (alias of ibeta function with same arguments order as in R).
+    \param x \f$x\f$
+    \param a \f$a\f$
+    \param b \f$b\f$
+    \param maxit Maximum number of iterations for the continued fraction approximation in betacf.
+    \return Incomplete beta function \f$I_x(a,b)\f$
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
+double pbeta(const double x, const double a, const double b, int maxit){
+  return betai(a,b,x,maxit);
+}

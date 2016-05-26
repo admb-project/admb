@@ -8250,9 +8250,10 @@ double betacf(const double _a, const double _b, double _x, int maxit = 100);
 dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   int maxit = 100);
 
-dvariable betai(const dvariable a, const dvariable b, const dvariable x,
-  int maxit = 100);
+dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
 double betai(const double a,const double b,const double x, int maxit=100);
+dvariable pbeta( const dvariable x, const dvariable a, const dvariable b, int maxit = 100);
+double pbeta(const double x, const double a,const double b, int maxit=100);
 
 /*
 double betai(double _aa, double _bb, double _xx);
@@ -9268,5 +9269,4 @@ dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &,
 dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
-
 #endif//#ifndef FVAR_HPP

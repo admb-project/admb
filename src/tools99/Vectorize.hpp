@@ -5,6 +5,8 @@
 /** 	\file
 	\brief Macros to do vectorization.
 	*/
+#ifndef _VFUN
+  #define _VFUN
 
 #include <df1b2fun.h>
 
@@ -149,5 +151,12 @@ VectorType FUN( declare##Type1(arg1) comma##Type2			\
   GVECTORIZE(FUN,T,V,V,T,T,I)			\
   GVECTORIZE(FUN,V,T,V,T,T,I)			\
   GVECTORIZE(FUN,V,V,V,T,T,I)
+
+
+
+// functions vectorized 
+  VECTORIZE3_ttt(pbeta);
+#endif
+
 
 

@@ -1,22 +1,14 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
+Return computed mean of d3_array m.
+*/
 double mean(const d3_array& m)
-   {
-     double tmp;
-     tmp=sum(m)/size_count(m);
-     return tmp;
-   }
+{
+  double ret = sum(m) / size_count(m);
+  return ret;
+}

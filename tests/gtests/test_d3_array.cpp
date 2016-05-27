@@ -196,3 +196,49 @@ TEST_F(test_d3_array, log)
     }
   }
 }
+TEST_F(test_d3_array, exp)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        a(i, j, k) = d;
+        d += 2.0;
+      }
+    }
+  }
+
+  d3_array ret = exp(a);
+
+  d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        ASSERT_DOUBLE_EQ(std::exp(d), ret(i, j, k));
+        d += 2.0;
+      }
+    }
+  }
+}
+TEST_F(test_d3_array, mean)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 5;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  ASSERT_DOUBLE_EQ(5, mean(a));
+}

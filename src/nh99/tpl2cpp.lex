@@ -4299,7 +4299,9 @@ TOP_OF_MAIN_SECTION {
     // - Ian Taylor, May 1, 2012
 
     fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
     fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
+    fprintf(ftopmain,"  #endif\n");
     fprintf(ftopmain,"#endif\n");
     if (makedll)
     {
@@ -4320,6 +4322,7 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"    mp.computations(argc,argv);\n");
 
     fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
     fprintf(ftopmain,"bool failedtest = false;\n");
     fprintf(ftopmain,"if (std::fetestexcept(FE_DIVBYZERO))\n");
     fprintf(ftopmain,"  { cerr << \"Error: Detected division by zero.\" << endl; failedtest = true; }\n");
@@ -4330,6 +4333,7 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"if (std::fetestexcept(FE_UNDERFLOW))\n");
     fprintf(ftopmain,"  { cerr << \"Error: Detected underflow.\" << endl; }\n");
     fprintf(ftopmain,"if (failedtest) { std::abort(); } \n");
+    fprintf(ftopmain,"  #endif\n");
     fprintf(ftopmain,"#endif\n");
 
     fprintf(htop,"#include <admodel.h>\n");
@@ -4536,8 +4540,10 @@ int main(int argc, char * argv[])
     fprintf(stderr,"Error trying to open file %s\n","xxglobal.tmp");
   }
   fprintf(fglobals,"#ifdef DEBUG\n");
-  fprintf(fglobals,"  #include <cfenv>\n");
-  fprintf(fglobals,"  #include <cstdlib>\n");
+  fprintf(fglobals,"  #ifndef __SUNPRO_C\n");
+  fprintf(fglobals,"    #include <cfenv>\n");
+  fprintf(fglobals,"    #include <cstdlib>\n");
+  fprintf(fglobals,"  #endif\n");
   fprintf(fglobals,"#endif\n");
 
   fdat=fopen(headerfile_name,"w+");

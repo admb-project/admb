@@ -79,6 +79,7 @@ GTESTS=\
  test_d3_array.cpp\
  test_data_matrix.cpp\
  test_data_number.cpp\
+ test_df1b2variable.cpp\
  main.cpp
 
 ##Need to debug this

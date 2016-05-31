@@ -8255,6 +8255,13 @@ double betai(const double a,const double b,const double x, int maxit=100);
 dvariable pbeta( const dvariable x, const dvariable a, const dvariable b, int maxit = 100);
 double pbeta(const double x, const double a,const double b, int maxit=100);
 
+dvariable bessi0(dvariable x);
+dvariable bessk0(dvariable x);
+dvariable bessi1(dvariable x);
+dvariable bessk1(dvariable x);
+dvariable bessk(int n, dvariable x);
+dvariable bessi(int n, dvariable x);
+
 /*
 double betai(double _aa, double _bb, double _xx);
 dvariable betai(const dvariable & _a, const dvariable & _b,

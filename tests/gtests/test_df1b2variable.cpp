@@ -1,7 +1,16 @@
 #include <gtest/gtest.h>
 #include <df1b2fun.h>
 
-class test_df1b2variable: public ::testing::Test {};
+class test_df1b2variable: public ::testing::Test
+{
+public:
+  virtual ~test_df1b2variable() {}
+  virtual void TearDown()
+  {
+    f1b2gradlist = NULL;
+    df1b2variable::pool = NULL;
+  }
+};
 
 TEST_F(test_df1b2variable, default_constructor)
 {
@@ -49,8 +58,6 @@ TEST_F(test_df1b2variable, default_constructor)
     delete initial_df1b2params::varsptr;
     initial_df1b2params::varsptr = NULL;
   }
-  //f1b2gradlist = NULL;
-  //df1b2variable::pool = NULL;
 }
 /*
 TEST_F(test_df1b2variable, default_constructor)

@@ -267,3 +267,52 @@ dvariable bessi(int n, dvariable x)
     return value(x) < 0.0 && (n & 1) ? -ans : ans;
   }
 }
+
+dvariable besselI(dvariable x, int nu){
+  if(nu==0){ 
+    return bessi0(x);
+  }else{
+    if(nu==1){ 
+      return bessi1(x);
+    }else{
+      return bessi(nu,x);
+    } 
+  }
+}
+
+dvariable besselK(dvariable x, int nu){
+  if(nu==0){ 
+    return bessk0(x);
+  }else{
+    if(nu==1){ 
+      return bessk1(x);
+    }else{
+      return bessk(nu,x);
+    } 
+  }
+}
+
+
+dvariable besselJ(dvariable x, int nu){
+  if(nu==0){ 
+    return bessj0(x);
+  }else{
+    if(nu==1){ 
+      return bessj1(x);
+    }else{
+      return bessj(nu,x);
+    } 
+  }
+}
+
+dvariable besselY(dvariable x, int nu){
+  if(nu==0){ 
+    return bessy0(x);
+  }else{
+    if(nu==1){ 
+      return bessy1(x);
+    }else{
+      return bessy(nu,x);
+    } 
+  }
+}

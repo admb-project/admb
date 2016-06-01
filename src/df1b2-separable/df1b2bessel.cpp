@@ -10,15 +10,15 @@
  * \file
  * Description not yet available.
  */
-#include <fvar.hpp>
+#include <df1b2fun.h>
 
 #define ACC 40.0 
 #define BIGNO 1.0e10
 #define BIGNI 1.0e-10
 
-dvariable bessj0(dvariable x){
-  dvariable ax,z;
-  dvariable xx,y,ans,ans1,ans2; 
+df1b2variable bessj0(df1b2variable x){
+  df1b2variable ax,z;
+  df1b2variable xx,y,ans,ans1,ans2; 
   if (value(ax=fabs(x)) < 8.0) { 
     y=x*x;
     ans1=57568490574.0+y*(-13362590354.0+y*(651619640.7+y*(-11214424.18+y*(77392.33017+y*(-184.9052456)))));
@@ -35,11 +35,11 @@ dvariable bessj0(dvariable x){
   return ans;
 }
 
-dvariable bessy0(dvariable x)
+df1b2variable bessy0(df1b2variable x)
 {
-  dvariable bessj0(dvariable x);
-  dvariable z;
-  dvariable xx,y,ans,ans1,ans2; 
+  df1b2variable bessj0(df1b2variable x);
+  df1b2variable z;
+  df1b2variable xx,y,ans,ans1,ans2; 
   if (value(x) < 8.0) {
     y=x*x;
     ans1 = -2957821389.0+y*(7062834065.0+y*(-512359803.6+y*(10879881.29+y*(-86327.92757+y*228.4622733))));
@@ -56,10 +56,10 @@ dvariable bessy0(dvariable x)
   return ans;
 }
 
-dvariable bessj1(dvariable x)
+df1b2variable bessj1(df1b2variable x)
 {
-  dvariable ax,z;
-  dvariable xx,y,ans,ans1,ans2; 
+  df1b2variable ax,z;
+  df1b2variable xx,y,ans,ans1,ans2; 
   if (value(ax=fabs(x)) < 8.0) { 
     y=x*x;
     ans1=x*(72362614232.0+y*(-7895059235.0+y*(242396853.1+y*(-2972611.439+y*(15704.48260+y*(-30.16036606))))));
@@ -77,11 +77,11 @@ dvariable bessj1(dvariable x)
   return ans;
 }
 
-dvariable bessy1(dvariable x)
+df1b2variable bessy1(df1b2variable x)
 {
-  dvariable bessj1(dvariable x);
-  dvariable z;
-  dvariable xx,y,ans,ans1,ans2; 
+  df1b2variable bessj1(df1b2variable x);
+  df1b2variable z;
+  df1b2variable xx,y,ans,ans1,ans2; 
   if (value(x) < 8.0) {
     y=x*x;
     ans1=x*(-0.4900604943e13+y*(0.1275274390e13+y*(-0.5153438139e11+y*(0.7349264551e9+y*(-0.4237922726e7+y*0.8511937935e4)))));
@@ -98,12 +98,12 @@ dvariable bessy1(dvariable x)
   return ans;
 }
 
-dvariable bessy(int n, dvariable x)
+df1b2variable bessy(int n, df1b2variable x)
 {
-  dvariable bessy0(dvariable x);
-  dvariable bessy1(dvariable x);
+  df1b2variable bessy0(df1b2variable x);
+  df1b2variable bessy1(df1b2variable x);
   int j;
-  dvariable by,bym,byp,tox;
+  df1b2variable by,bym,byp,tox;
   if (n < 2) cerr << "Index n less than 2 in bessy" << endl;
   tox=2.0/x;
   by=bessy1(x); 
@@ -116,14 +116,14 @@ dvariable bessy(int n, dvariable x)
   return by;
 }
 
-dvariable bessj(int n, dvariable x)
+df1b2variable bessj(int n, df1b2variable x)
 {
-  dvariable bessj0(dvariable x);
-  dvariable bessj1(dvariable x);
+  df1b2variable bessj0(df1b2variable x);
+  df1b2variable bessj1(df1b2variable x);
   int j,jsum,m;
-  dvariable ax,bj,bjm,bjp,sum,tox,ans;
+  df1b2variable ax,bj,bjm,bjp,sum,tox,ans;
   if (n < 2) cerr << "Index n less than 2 in bessj" << endl;
-  ax=sfabs(x);
+  ax=fabs(x);
   if (value(ax) == 0.0) 
     return 0.0;
   else if (value(ax) > (double) n) { 
@@ -162,10 +162,10 @@ dvariable bessj(int n, dvariable x)
   return value(x) < 0.0 && (n & 1) ? -ans : ans;
 }
 
-dvariable bessi0(dvariable x)
+df1b2variable bessi0(df1b2variable x)
 {
-  dvariable ax,ans;
-  dvariable y; 
+  df1b2variable ax,ans;
+  df1b2variable y; 
   if (value(ax=fabs(x)) < 3.75) {
     y=x/3.75;
     y*=y;
@@ -177,10 +177,10 @@ dvariable bessi0(dvariable x)
   return ans;
 }
 
-dvariable bessk0(dvariable x)
+df1b2variable bessk0(df1b2variable x)
 {
-  dvariable bessi0(dvariable x);
-  dvariable y,ans;
+  df1b2variable bessi0(df1b2variable x);
+  df1b2variable y,ans;
   if (value(x) <= 2.0) { 
     y=x*x/4.0;
     ans=(-log(x/2.0)*bessi0(x))+(-0.57721566+y*(0.42278420+y*(0.23069756+y*(0.3488590e-1+y*(0.262698e-2+y*(0.10750e-3+y*0.74e-5))))));
@@ -191,10 +191,10 @@ dvariable bessk0(dvariable x)
   return ans;
 }
 
-dvariable bessi1(dvariable x)
+df1b2variable bessi1(df1b2variable x)
 {
-  dvariable ax,ans;
-  dvariable y;
+  df1b2variable ax,ans;
+  df1b2variable y;
   if (value(ax=fabs(x)) < 3.75) {
     y=x/3.75;
     y*=y;
@@ -208,10 +208,10 @@ dvariable bessi1(dvariable x)
   return value(x) < 0.0 ? -ans : ans;
 }
 
-dvariable bessk1(dvariable x)
+df1b2variable bessk1(df1b2variable x)
 {
-  dvariable bessi1(dvariable x);
-  dvariable y,ans;
+  df1b2variable bessi1(df1b2variable x);
+  df1b2variable y,ans;
   if (value(x) <= 2.0) { 
     y=x*x/4.0;
     ans=(log(x/2.0)*bessi1(x))+(1.0/x)*(1.0+y*(0.15443144+y*(-0.67278579+y*(-0.18156897+y*(-0.1919402e-1+y*(-0.110404e-2+y*(-0.4686e-4)))))));
@@ -222,12 +222,12 @@ dvariable bessk1(dvariable x)
   return ans;
 }
 
-dvariable bessk(int n, dvariable x)
+df1b2variable bessk(int n, df1b2variable x)
 {
-  dvariable bessk0(dvariable x);
-  dvariable bessk1(dvariable x);
+  df1b2variable bessk0(df1b2variable x);
+  df1b2variable bessk1(df1b2variable x);
   int j;
-  dvariable bk,bkm,bkp,tox;
+  df1b2variable bk,bkm,bkp,tox;
   if (n < 2) cerr<<"Index n less than 2 in bessk"<<endl;
   tox=2.0/x;
   bkm=bessk0(x); 
@@ -240,11 +240,11 @@ dvariable bessk(int n, dvariable x)
   return bk;
 }
 
-dvariable bessi(int n, dvariable x)
+df1b2variable bessi(int n, df1b2variable x)
 {
-  dvariable bessi0(dvariable x);
+  df1b2variable bessi0(df1b2variable x);
   int j;
-  dvariable bi,bim,bip,tox,ans;
+  df1b2variable bi,bim,bip,tox,ans;
   if (n < 2) cerr<<"Index n less than 2 in bessi"<<endl;
   if (value(x) == 0.0)
     return 0.0;
@@ -268,7 +268,7 @@ dvariable bessi(int n, dvariable x)
   }
 }
 
-dvariable besselI(dvariable x, int nu){
+df1b2variable besselI(df1b2variable x, int nu){
   if(nu==0){ 
     return bessi0(x);
   }else{
@@ -280,7 +280,7 @@ dvariable besselI(dvariable x, int nu){
   }
 }
 
-dvariable besselK(dvariable x, int nu){
+df1b2variable besselK(df1b2variable x, int nu){
   if(nu==0){ 
     return bessk0(x);
   }else{
@@ -293,7 +293,7 @@ dvariable besselK(dvariable x, int nu){
 }
 
 
-dvariable besselJ(dvariable x, int nu){
+df1b2variable besselJ(df1b2variable x, int nu){
   if(nu==0){ 
     return bessj0(x);
   }else{
@@ -305,7 +305,7 @@ dvariable besselJ(dvariable x, int nu){
   }
 }
 
-dvariable besselY(dvariable x, int nu){
+df1b2variable besselY(df1b2variable x, int nu){
   if(nu==0){ 
     return bessy0(x);
   }else{

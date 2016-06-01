@@ -7,6 +7,7 @@ OBJ0=\
  dfinvcumdt.obj\
  df1b2norlogmix.obj\
  df1b2bet.obj\
+ df1b2bessel.obj\
  df1b2betdev.obj\
  df33fun1.obj\
  df33fun.obj\

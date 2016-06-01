@@ -1796,6 +1796,11 @@ df1b2variable betai(const df1b2variable& a, const df1b2variable& b, double x, in
 df1b2variable pbeta(double x, const df1b2variable& a, const df1b2variable& b, int maxit=100);
 df1b2variable pbeta(const df1b2variable& x, const df1b2variable& a, const df1b2variable& b, int maxit=100);
 
+df1b2variable besselI(df1b2variable x, int nu);
+df1b2variable besselK(df1b2variable x, int nu);
+df1b2variable besselJ(df1b2variable x, int nu);
+df1b2variable besselY(df1b2variable x, int nu);
+
 double do_gauss_hermite_block_diagonal(const dvector& x,
   const dvector& u0,const dmatrix& Hess,const dvector& _xadjoint,
   const dvector& _uadjoint,const dmatrix& _Hessadjoint,

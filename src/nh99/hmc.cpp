@@ -7,84 +7,15 @@
 /**
  * \file
  * This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo 
- * samplers (static HMC and No-u-turn)
+ * samplers (static HMC and No-u-turn).
+
  */
-#include <sstream>
-using std::istringstream;
-
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
-#include <admodel.h>
-
-#if defined(_MSC_VER)
-  #include <conio.h>
-#endif
-
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
-double better_rand(long int&);
-void store_mcmc_values(const ofstream& ofs);
-void set_labels_for_mcmc(void);
-
-void print_hist_data(const dmatrix& hist, const dmatrix& values,
-  const dvector& h, dvector& m, const dvector& s, const dvector& parsave,
-  long int iseed, double size_scale);
-
-int minnz(const dvector& x);
-int maxnz(const dvector& xa);
-
-void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,double s,
-  int mcmc2_flag);
-
-int read_hist_data(const dmatrix& hist, const dvector& h,
-  dvector& m, const dvector& s, const dvector& parsave,long int& iseed,
-  const double& size_scale);
-
-void make_preliminary_hist(const dvector& s, const dvector& m,int nsim,
-  const dmatrix& values, dmatrix& hist, const dvector& h,int slots,
-  double total_spread,int probflag=0);
-
-void add_hist_values(const dvector& s, const dvector& m, const dmatrix& hist,
-  dvector& mcmc_values,double llc, const dvector& h,int nslots,
-  double total_spreadd,int probflag=0);
-
-void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
-  const dmatrix& s_covar, adstring& prog_name);
-
-void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
-  const adstring& prog_name);
-
-void read_hessian_matrix_and_scale(int nvar, const dmatrix& S,
-  const dvector& pen_vector);
-
-dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const double& wght,double pprobe,
-  random_number_generator& rng);
-
-void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
-  const dvector& b1, dmatrix& ch, const double& wght, const dvector& _y,
-  double pprobe, random_number_generator& rng);
-
-//void newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,
-//double d);
-
-void ad_update_mcmc_stats_report
-  (int feval,int iter,double fval,double gmax);
-
-void ad_update_function_minimizer_report(int feval,int iter,int phase,
-  double fval,double gmax,const char * cbuf);
-void ad_update_mcmc_report(dmatrix& m,int i,int j,int ff=0);
-void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
-  dvector& mean_mcmc_values,dvector& h,int ff=0);
 
 /**
  * Description not yet available.
  * \param
  */
-void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
+void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int restart_flag)
 {
   robust_hybrid_flag=0;
@@ -105,12 +36,12 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     //nvar1=initial_params::nvarcalc(); // get the number of active parameters
   }
 
-  if (stddev_params::num_stddev_params==0)
-  {
-    cerr << " You must declare at least one object of type sdreport "
-         << endl << " to do the mcmc calculations" << endl;
-     return;
-  }
+  // if (stddev_params::num_stddev_params==0)
+  // {
+  //   cerr << " You must declare at least one object of type sdreport "
+  //        << endl << " to do the mcmc calculations" << endl;
+  //    return;
+  // }
   {
     //ofstream of_bf("testbf");
 
@@ -672,7 +603,8 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
            F=Fbegin;
          }
          (*pofs_psave) << parsave;
-       }
+       } // end of MCMC iterations loop
+       
       // cout << " saved  " << parsave(parsave.indexmin()) << " "
         //    << parsave(parsave.indexmax()) << endl;
        //double ll=get_hybrid_monte_carlo_value(nvar,parsave,g);
@@ -689,36 +621,36 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       pofs_psave=NULL;
     }
   }
-}
+} // end of HMC routine
 
-/**
- * Description not yet available.
- * \param
- */
-double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
-  const independent_variables& x,dvector& g)
-{
-  //initial_params::xinit(x);
-  double f=0.0;
-  if (mcmc2_flag==0 && lapprox)
-  {
-    cerr << "error not implemented" << endl;
-    ad_exit(1);
-    g=(*lapprox)(x,f,this);
-  }
-  else
-  {
-    dvariable vf=0.0;
-    dvar_vector vx=dvar_vector(x);
-    vf=initial_params::reset(vx);
-    *objective_function_value::pobjfun=0.0;
-    userfunction();
-    dvar_vector d(1,nvar);
-    initial_params::stddev_vscale(d,vx);
-    vf-=sum(log(d));
-    vf+=*objective_function_value::pobjfun;
-    f=value(vf);
-    gradcalc(nvar,g);
-  }
-  return f;
-}
+// /**
+//  * Description not yet available.
+//  * \param
+//  */
+// double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
+//   const independent_variables& x,dvector& g)
+// {
+//   //initial_params::xinit(x);
+//   double f=0.0;
+//   if (mcmc2_flag==0 && lapprox)
+//   {
+//     cerr << "error not implemented" << endl;
+//     ad_exit(1);
+//     g=(*lapprox)(x,f,this);
+//   }
+//   else
+//   {
+//     dvariable vf=0.0;
+//     dvar_vector vx=dvar_vector(x);
+//     vf=initial_params::reset(vx);
+//     *objective_function_value::pobjfun=0.0;
+//     userfunction();
+//     dvar_vector d(1,nvar);
+//     initial_params::stddev_vscale(d,vx);
+//     vf-=sum(log(d));
+//     vf+=*objective_function_value::pobjfun;
+//     f=value(vf);
+//     gradcalc(nvar,g);
+//   }
+//   return f;
+// }

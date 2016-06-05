@@ -19,6 +19,7 @@
 void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int restart_flag)
 {
+  cout << "yes it worked" << endl << endl;
   robust_hybrid_flag=0;
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;

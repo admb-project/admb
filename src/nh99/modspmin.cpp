@@ -459,6 +459,7 @@ void write_banner_stuff(void)
         gradient_structure::Hybrid_bounded_flag=1;
       }
 
+      // start addition
       // temporarily adding this here, need to fully merge in with other options still
       int hmc_flag=0;
       if (option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)
@@ -469,6 +470,9 @@ void write_banner_stuff(void)
 	}
       if(hmc_flag==1)
 	{
+	  cout << "detected HMC" <<endl;
+	  // the call for this routine throws an error when building a
+	  // model but not from source. ???
 	  hmc_mcmc_routine(nmcmc,iseed0,dscale,0);
 	}
       // end addition

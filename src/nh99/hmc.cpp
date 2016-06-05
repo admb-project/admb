@@ -15,6 +15,7 @@
  * Description not yet available.
  * \param
  */
+
 void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int restart_flag)
 {
@@ -36,12 +37,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     //nvar1=initial_params::nvarcalc(); // get the number of active parameters
   }
 
-  // if (stddev_params::num_stddev_params==0)
-  // {
-  //   cerr << " You must declare at least one object of type sdreport "
-  //        << endl << " to do the mcmc calculations" << endl;
-  //    return;
-  // }
+  if (stddev_params::num_stddev_params==0)
+  {
+    cerr << " You must declare at least one object of type sdreport "
+         << endl << " to do the mcmc calculations" << endl;
+     return;
+  }
   {
     //ofstream of_bf("testbf");
 
@@ -603,8 +604,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
            F=Fbegin;
          }
          (*pofs_psave) << parsave;
-       } // end of MCMC iterations loop
-       
+       }
       // cout << " saved  " << parsave(parsave.indexmin()) << " "
         //    << parsave(parsave.indexmax()) << endl;
        //double ll=get_hybrid_monte_carlo_value(nvar,parsave,g);
@@ -621,7 +621,9 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       pofs_psave=NULL;
     }
   }
-} // end of HMC routine
+}
+
+
 
 // /**
 //  * Description not yet available.

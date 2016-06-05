@@ -458,6 +458,22 @@ void write_banner_stuff(void)
         hybrid_flag=1;
         gradient_structure::Hybrid_bounded_flag=1;
       }
+
+      // temporarily adding this here, need to fully merge in with other options still
+      int hmc_flag=0;
+      if (option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)
+	{
+	  cout << "HMC yes!" << endl << endl << endl;
+	  hmc_flag=1;
+	  gradient_structure::Hybrid_bounded_flag=1;
+	}
+      if(hmc_flag==1)
+	{
+	  hmc_mcmc_routine(nmcmc,iseed0,dscale,0);
+	}
+      // end addition
+	
+
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
       {
         if (hybrid_flag==0)

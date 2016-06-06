@@ -1,20 +1,19 @@
-/*
- * $Id$
- *
- * Author: Cole Monnahan
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo 
- * samplers (static HMC and No-u-turn).
+Author: Cole Monnahan
+Copyright (c) 2016 ADMB Foundation
 
- */
+\file
+This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo 
+samplers (static HMC and No-u-turn).
+*/
 
-/**
- * Description not yet available.
- * \param
- */
+#include "admodel.h"
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
+
+void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
+void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
 
 void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int restart_flag)

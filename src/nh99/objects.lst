@@ -1,4 +1,5 @@
 OBJ6=\
+ hmc.obj\
  banner.obj\
  param_init_bounded_number_matrix.obj\
  newmodm5.obj\

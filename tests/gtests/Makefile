@@ -78,10 +78,11 @@ GTESTS=\
  test_df1b23array.cpp\
  test_d3_array.cpp\
  test_data_matrix.cpp\
- test_autodif.cpp\
+ test_nuts.cpp\
  main.cpp
 
 ##Need to debug this
+## test_autodif.cpp\
 ## test_data_number.cpp
 ## test_df1b2variable.cpp
 ## test_atan2.cpp

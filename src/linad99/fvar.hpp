@@ -8908,9 +8908,12 @@ double inv_cumd_t(double n, double y, double eps = 1.e-7);
 dvariable inv_cumd_t(const prevariable & n, const prevariable & y,
   double eps = 1.e-7);
 
-double inv_cumd_beta_stable(double a, double b, double y, double eps = 1.e-7);
-dvariable inv_cumd_beta_stable(const prevariable & _a, const prevariable & _b,
-  const prevariable & _y, double eps = 1.e-7);
+double old_inv_cumd_beta_stable(double a, double b, double y, double eps = 1.e-7);
+double inv_cumd_beta_stable(double a, double b, double y, double eps = 0);
+dvariable inv_cumd_beta_stable(const prevariable & _a, const prevariable & _b, const prevariable & _y, double eps = 0);
+
+double qbeta(double x, double a, double b, double eps = 0);
+dvariable qbeta(dvariable x, dvariable a, dvariable b, double eps = 0);
 
 dvariable norm_to_gamma(const prevariable & v, const prevariable & alpha,
   double bound = 0.999999);

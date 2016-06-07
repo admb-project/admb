@@ -368,3 +368,8 @@ df3_three_variable gammln(const df3_three_variable& z)
     return gammlnguts(z);
   }
 }
+
+
+df1b2variable qbeta(df1b2variable x, df1b2variable a, df1b2variable b, double eps){
+  return inv_cumd_beta_stable(a,b,x,eps);
+}

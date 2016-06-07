@@ -156,6 +156,7 @@ VectorType FUN( declare##Type1(arg1) comma##Type2			\
 
 // functions vectorized 
   VECTORIZE3_ttt(pbeta);
+  VECTORIZE3_ttt(qbeta);
 #endif
 
 

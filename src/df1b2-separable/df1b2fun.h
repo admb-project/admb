@@ -2071,8 +2071,9 @@ df1b2variable lower_triangular_ln_det(const df1b2matrix& m,int& sgn);
 df1b2variable bounder(const df1b2variable&  x,double min,double max,
   double scale);
 
-df1b2variable inv_cumd_beta_stable(const df1b2variable& a,
-  const df1b2variable& b,const df1b2variable& x,double eps=1.e-7);
+df1b2variable inv_cumd_beta_stable(const df1b2variable& a, const df1b2variable& b,const df1b2variable& x,double eps=0);
+
+df1b2variable qbeta(df1b2variable x, df1b2variable a, df1b2variable b, double eps=0);
 
 df1b2variable bounded_cumd_norm(const df1b2variable& _x,double beta);
 df1b2variable cumd_norm(const df1b2variable& _x);

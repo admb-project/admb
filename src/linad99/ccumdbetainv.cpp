@@ -28,6 +28,9 @@ double old_inv_cumd_beta_stable(double a,double b,double y,double eps)
   if (y<0.0 || y>1.0 || a<=0.0 || b<=0.0 )
   {
     cerr << "Illegal value in inv_cumd_beta" << endl;
+    cerr<<"y: "<<y<<endl;
+    cerr<<"a: "<<a<<endl;
+    cerr<<"b: "<<b<<endl;
     ad_exit(1);
   }
 
@@ -122,16 +125,14 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
   if (y<0.0 || y>1.0 || a<=0.0 || b<=0.0 )
   {
     cerr << "Illegal value in inv_cumd_beta" << endl;
+    cerr<<"y: "<<y<<endl;
+    cerr<<"a: "<<a<<endl;
+    cerr<<"b: "<<b<<endl;
     ad_exit(1);
   }
 
   double mu=a/(a+b);
   double x=mu;
-  //if (x<=eps)
-  //  x=1.1*eps;
-
-  //if(x>=eps1)
-  //  x=eps1-0.1*eps;
 
   double lower=0.0;
   double upper=1.0; // bracket the minimum
@@ -167,11 +168,9 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
       }
     }
     double xa1=pow(x,a-1);
-    double xb1;
-    xb1=pow(1-x,b-1);
+    double xb1=pow(1-x,b-1);
 
-    double fp=(xa1*xb1/bet); // derivative of cumulative dist fun
-                           // wrt x
+    double fp=(xa1*xb1/bet); // derivative of cumulative dist fun wrt x
      
     double h=d/fp;
     double stry=x+h;

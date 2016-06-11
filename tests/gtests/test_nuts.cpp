@@ -38,22 +38,28 @@ typedef double** matrix;
 class nuts
 {
   matrix _samples;
+  double* _r0;
   double* _thetaminus;
   double* _thetaplus;
   double* _thetaprime;
+  double* _thetaprime2;
+  double* _thetavec;
   double* _rminus;
   double* _rplus;
   double* _rprime;
   double* _gradprime;
+  double* _gradprime2;
   double _logpprime;
   double* _gradminus;
   double* _gradplus;
+  double* _grad;
   int _nprime;
   bool _sprime;
+  size_t _M;
+  size_t _D;
   void f(const double*) {}
   bool stop_criterion
   (
-    const size_t D,
     double* thetaminus,
     double* thetaplus,
     double* rminus,
@@ -61,7 +67,6 @@ class nuts
   );
   void leapfrog
   (
-    const size_t D,
     double* theta, 
     double* r,
     double* grad,
@@ -69,7 +74,6 @@ class nuts
   );
   void build_tree
   (
-    const size_t D,
     double* theta,
     double* r,
     double* grad,
@@ -80,12 +84,12 @@ class nuts
   );
 public:
   nuts();
+  nuts(const size_t M, const size_t D);
   ~nuts();
 
   void compute
   (
     const double epsilon,
-    const size_t M,
     const vector<double>& theta0
   );
 
@@ -98,19 +102,80 @@ public:
 Default constructor
 */
 nuts::nuts():
+  _r0(NULL),
+  _grad(NULL),
+  _samples(NULL),
   _thetaprime(NULL),
+  _thetaprime2(NULL),
+  _thetavec(NULL),
   _rprime(NULL),
   _gradprime(NULL),
+  _gradprime2(NULL),
   _logpprime(0),
   _nprime(0),
+  _thetaminus(NULL),
+  _thetaplus(NULL),
+  _rminus(NULL),
+  _rplus(NULL),
+  _gradminus(NULL),
+  _gradplus(NULL),
   _sprime(false)
 {
+}
+nuts::nuts(const size_t M, const size_t D):
+  _D(D),
+  _M(M)
+{
+  _grad = new double[_D];
+  _thetaminus = new double[_D];
+  _thetaplus = new double[_D];
+  _rminus = new double[_D];
+  _rplus = new double[_D];
+  _gradminus = new double[_D];
+  _gradplus = new double[_D];
+  _r0 = new double[_D];
+  _thetavec = new double[_D];
+  _rprime = new double[_D];
+  _thetaprime = new double[_D];
+  _thetaprime2 = new double[_D];
+  _gradprime = new double[_D];
+  _gradprime2 = new double[_D];
+  _samples = new double*[_M];
+  for (int m = 0; m < _M; ++m)
+  {
+    double* v = new double[_M];
+    for (int d = 0; d < _D; ++d)
+    {
+      v[d] = 0;
+    }
+    _samples[m] = v;
+  }
 }
 /**
 Destructor
 */
 nuts::~nuts()
 {
+  if (_grad != NULL)
+  {
+    delete [] _grad;
+    _grad = NULL;
+  }
+  if (_samples != NULL)
+  {
+    delete [] _samples;
+    _samples = NULL;
+  }
+  if (_gradprime2 != NULL)
+  {
+    delete [] _gradprime2;
+    _gradprime2 = NULL;
+  }
+  if (_thetaprime2 != NULL)
+  {
+    delete [] _thetaprime2;
+    _thetaprime2 = NULL;
+  }
   if (_rprime != NULL)
   {
     delete [] _rprime;
@@ -121,86 +186,102 @@ nuts::~nuts()
     delete [] _thetaprime;
     _thetaprime = NULL;
   }
+  if (_thetavec != NULL)
+  {
+    delete [] _thetavec;
+    _thetavec = NULL;
+  }
   if (_gradprime != NULL)
   {
     delete [] _gradprime;
     _gradprime = NULL;
   }
+  if (_r0 != NULL)
+  {
+    delete [] _r0;
+    _r0 = NULL;
+  }
+  if (_gradminus != NULL)
+  {
+    delete [] _gradminus;
+    _gradminus = NULL;
+  }
+  if (_gradplus != NULL)
+  {
+    delete [] _gradplus;
+    _gradplus = NULL;
+  }
+  if (_rminus != NULL)
+  {
+    delete [] _rminus;
+    _rminus = NULL;
+  }
+  if (_rplus != NULL)
+  {
+    delete [] _rplus;
+    _rplus = NULL;
+  }
+  if (_thetaminus != NULL)
+  {
+    delete [] _thetaminus;
+    _thetaminus = NULL;
+  }
+  if (_thetaplus != NULL)
+  {
+    delete [] _thetaplus;
+    _thetaplus = NULL;
+  }
 }
 bool nuts::stop_criterion
 (
-  const size_t D,
   double* thetaminus,
   double* thetaplus,
   double* rminus,
   double* rplus
 )
 {
-  double* thetavec = new double[D];
-  for (size_t d = 0; d < D; ++d)
+  for (size_t d = 0; d < _D; ++d)
   {
-    thetavec[d] = thetaplus[d] - thetaminus[d];
+    _thetavec[d] = thetaplus[d] - thetaminus[d];
   }
   double minus = 0;
   double plus = 0;
-  for (size_t d = 0; d < D; ++d)
+  for (size_t d = 0; d < _D; ++d)
   {
-    minus += thetavec[d] * thetaminus[d];
-    plus += thetavec[d] * thetaplus[d];
+    minus += _thetavec[d] * thetaminus[d];
+    plus += _thetavec[d] * thetaplus[d];
   }
   return minus >= 0 && plus >= 0;
 }
 void nuts::leapfrog
 (
-  const size_t D,
   double* theta, 
   double* r,
   double* grad,
   double epsilon
 )
 {
-  if (_rprime != NULL)
-  {
-    delete [] _rprime;
-    _rprime = NULL;
-  }
-  _rprime = new double[D];
-  for (size_t d = 0; d < D; ++d)
+  for (size_t d = 0; d < _D; ++d)
   {
     _rprime[d] = r[d] + 0.5 * epsilon * grad[d];
   }
-  if (_thetaprime != NULL)
-  {
-    delete [] _thetaprime;
-    _thetaprime = NULL;
-  }
-  _thetaprime = new double[D];
-  for (size_t d = 0; d < D; ++d)
+  for (size_t d = 0; d < _D; ++d)
   {
     _thetaprime[d] = theta[d] + epsilon * _rprime[d];
   }
-
-  if (_gradprime != NULL)
-  {
-    delete [] _gradprime;
-    _gradprime = NULL;
-  }
-  _gradprime = new double[D];
   //[logpprime, gradprime] = f(thetaprime);
   f(_thetaprime);
-
-  for (size_t d = 0; d < D; ++d)
+  for (size_t d = 0; d < _D; ++d)
   {
     _gradprime[d] = 0;
   }
-  for (size_t d = 0; d < D; ++d)
+  for (size_t d = 0; d < _D; ++d)
   {
     _rprime[d] += 0.5 * epsilon * _gradprime[d];
   }
 }
 void nuts::build_tree
 (
-  const size_t D,
   double* theta,
   double* r,
   double* grad,
@@ -213,12 +294,12 @@ void nuts::build_tree
   if (j == 0)
   {
     //Base case: Take a single leapfrog step in the direction v.
-    leapfrog(D, theta, r, grad, v * epsilon);
+    leapfrog(theta, r, grad, v * epsilon);
     //joint = logpprime - 0.5 * (rprime * rprime');
     double joint = 0;
-    for (size_t d = 0; d < D; ++d)
+    for (size_t d = 0; d < _D; ++d)
     {
-      joint += _rprime[d] * 2.0;
+      joint += _rprime[d] * _rprime[d];
     }
     joint *= -0.5;
     joint += _logpprime;
@@ -228,7 +309,7 @@ void nuts::build_tree
     _sprime = (logu - 1000) < joint;
     //Set the return values---minus=plus for all things here, since the
     //"tree" is of depth 0.
-    for (size_t d = 0; d < D; ++d)
+    for (size_t d = 0; d < _D; ++d)
     {
       _thetaminus[d] = _thetaprime[d];
       _thetaplus[d] = _thetaprime[d];
@@ -242,93 +323,73 @@ void nuts::build_tree
   {
     //Recursion: Implicitly build the height j-1 left and right subtrees.
     //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime]
-    build_tree(D, theta, r, grad, logu, v, j - 1, epsilon);
+    build_tree(theta, r, grad, logu, v, j - 1, epsilon);
     //No need to keep going if the stopping criteria were met in the first
     //subtree.
     if (_sprime == 1)
     {
       int nprime2 = 0;
       bool sprime2 = false;
+      double logpprime2 = 0;
       if (v == -1)
       {
         //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2]
-        build_tree(D, _thetaminus, _rminus, _gradminus, logu, v, j - 1, epsilon);
+        build_tree(_thetaminus, _rminus, _gradminus, logu, v, j - 1, epsilon);
       }
       else
       {
         //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2]
-        build_tree(D, _thetaplus, _rplus, _gradplus, logu, v, j - 1, epsilon);
+        build_tree(_thetaplus, _rplus, _gradplus, logu, v, j - 1, epsilon);
       }
-/*
-      % Choose which subtree to propagate a sample up from.
-      if (rand() < nprime2 / (nprime + nprime2))
-            thetaprime = thetaprime2;
-            gradprime = gradprime2;
-            logpprime = logpprime2;
-      end
-*/
+      //Choose which subtree to propagate a sample up from.
+      if (rand() < nprime2 / (_nprime + nprime2))
+      {
+        for (size_t d = 0; d < _D; ++d)
+        {
+          _thetaprime[d] = _thetaprime2[d];
+          _gradprime[d] = _gradprime2[d];
+        }
+        _logpprime = logpprime2;
+      }
       //Update the number of valid points.
       _nprime += nprime2;
       //Update the stopping criterion.
-      _sprime = sprime2 && stop_criterion(D, _thetaminus, _thetaplus, _rminus, _rplus);
+      _sprime = sprime2 && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
     }
   }
 }
 void nuts::compute
 (
   const double epsilon,
-  const size_t M,
   const vector<double>& theta0
 )
 {
-  size_t D = theta0.size();
-  _samples = new double*[M];
-  for (int m = 0; m < M; ++m)
-  {
-    double* v = new double[M];
-    for (int d = 0; d < D; ++d)
-    {
-      v[d] = 0;
-    }
-    _samples[m] = v;
-  }
-  for (int d = 0; d < D; ++d)
+  for (int d = 0; d < _D; ++d)
   {
     _samples[0][d] = theta0[d];
   }
-
-  for (int m = 0; m < M; ++m)
+  for (int m = 1; m < _M; ++m)
   {
-    for (int d = 0; d < D; ++d)
+    for (int d = 0; d < _D; ++d)
     {
-      cout <<  _samples[m][d] << ' ';
+      _samples[m][d] = 0;
     }
-    cout <<  endl;
   }
- 
   double logp = 0;
-  double* grad = new double[D];
   f(theta0.data());
 
-  double* r0 = new double[D];
-  _thetaminus = new double[D];
-  _thetaplus = new double[D];
-  _rminus = new double[D];
-  _rplus = new double[D];
-  _gradminus = new double[D];
-  _gradplus = new double[D];
-  for (int m = 1; m < M; ++m)
+  for (int m = 1; m < _M; ++m)
   {
     //Resample momenta.
-    for (int d = 0; d < D; ++d)
+    for (int d = 0; d < _D; ++d)
     {
-      r0[d] = randn();
+      _r0[d] = randn();
     }
     //Joint log-probability of theta and momenta r.
     double joint = 0;
-    for (int d = 0; d < D; ++d)
+    for (int d = 0; d < _D; ++d)
     {
-      joint += r0[d] * r0[d];
+      joint += _r0[d] * _r0[d];
     }
     joint *= -0.5;
     joint += logp;
@@ -336,28 +397,27 @@ void nuts::compute
     //Equivalent to (log(u) - joint) ~ exponential(1).
     double logu = joint - exprnd(1);
     //Initialize tree.
-    for (int d = 0; d < D; ++d)
+    for (int d = 0; d < _D; ++d)
     {
       double value = _samples[m - 1][d];
       _thetaminus[d] = value;
       _thetaplus[d] = value;
     }
-    for (int d = 0; d < D; ++d)
+    for (int d = 0; d < _D; ++d)
     {
-      int value = r0[d];
+      int value = _r0[d];
       _rminus[d] = value;
       _rplus[d] = value;
     }
-    for (int d = 0; d < D; ++d)
+    for (int d = 0; d < _D; ++d)
     {
-      _gradminus[d] = grad[d];
-      _gradplus[d] = grad[d];
+      _gradminus[d] = _grad[d];
+      _gradplus[d] = _grad[d];
     }
-
     //Initial height.
     int j = 0;
     //If all else fails, the next sample is the previous sample.
-    for (int d = 0; d < D; ++d)
+    for (int d = 0; d < _D; ++d)
     {
       _samples[m][d] = _samples[m - 1][d];
     }
@@ -372,110 +432,63 @@ void nuts::compute
       //Double the size of the tree.
       if (v == -1)
       {
-        build_tree(D, _thetaminus, _rminus, _gradminus, logu, v, j, epsilon);
+        build_tree(_thetaminus, _rminus, _gradminus, logu, v, j, epsilon);
       }
       else
       {
-        build_tree(D, _thetaplus, _rplus, _gradplus, logu, v, j, epsilon);
+        build_tree(_thetaplus, _rplus, _gradplus, logu, v, j, epsilon);
       }
       //Use Metropolis-Hastings to decide whether or not to move to a
       //point from the half-tree we just generated.
       if (_sprime && (n * rand() < _nprime))
       {
-        for (int d = 0; d < D; ++d)
+        for (int d = 0; d < _D; ++d)
         {
           //samples(m, :) = thetaprime;
           _samples[m][d] = _thetaprime[d];
-          grad[d] = _gradprime[d];
+          _grad[d] = _gradprime[d];
         }
         logp = _logpprime;
       }
       //Update number of valid points we've seen.
       n += _nprime;
       //Decide if it's time to stop.
-      s = _sprime && stop_criterion(D, _thetaminus, _thetaplus, _rminus, _rplus);
+      s = _sprime && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
       s = 0;
       //Increment depth.
       ++j;
     }
   }
-  delete [] grad;
-  grad = NULL;
-  delete [] _gradminus;
-  _gradminus = NULL;
-  delete [] _gradplus;
-  _gradplus = NULL;
-  delete [] _rminus;
-  _rminus = NULL;
-  delete [] _rplus;
-  _rplus = NULL;
-  delete [] _thetaminus;
-  _thetaminus = NULL;
-  delete [] _thetaplus;
-  _thetaplus = NULL;
-  delete [] r0;
-  r0 = NULL;
 }
-
-TEST_F(test_nuts, nuts)
+TEST_F(test_nuts, default_constructor)
 {
   nuts o;
-
-  double epsilon = 0.5;
+}
+TEST_F(test_nuts, constructor_M_D)
+{
   size_t M = 10;
   size_t D = 2;
+  nuts o(M, D);
+}
+TEST_F(test_nuts, nuts)
+{
+  size_t M = 10;
+  size_t D = 2;
+  nuts o(M, D);
   vector<double> theta0;
   theta0.push_back(randn());
   theta0.push_back(randn());
-  o.compute(epsilon, M, theta0);
-  double** m = o.get_samples();
+  double epsilon = 0.5;
+  o.compute(epsilon, theta0);
+  double** samples = o.get_samples();
 
-  ASSERT_DOUBLE_EQ(m[0][0], theta0[0]);
-  ASSERT_DOUBLE_EQ(m[0][1], theta0[1]);
-  for (int i = 1; i < M; ++i)
+  for (int m = 1; m < M; ++m)
   {
-    for (int j = 0; j < D; ++j)
+    for (int d = 0; d < D; ++d)
     {
-      //ASSERT_DOUBLE_EQ(m[i][j], 0);
+      cout <<  samples[m][d] << ' ';
     }
+    cout << endl;
   }
-  m = NULL;
+  samples = NULL;
 }
-/*
-TEST_F(test_nuts, leapfrog)
-{
-  leapfrog o;
-  ASSERT_TRUE(o.get_thetaprime() == NULL);
-  ASSERT_TRUE(o.get_rprime() == NULL);
-  ASSERT_TRUE(o.get_gradprime() == NULL);
-  ASSERT_DOUBLE_EQ(o.get_logpprime(), 0);
-
-  const size_t D = 2;
-  double thetaprime[D] = {0, 0};
-  double rprime[D] = {0, 0};
-  double gradprime[D] = {0, 0};
-  o.compute(D, &thetaprime[0], &rprime[0], &gradprime[0], 1, -1);
-  for (size_t d = 0; d < D; ++d)
-  {
-    ASSERT_DOUBLE_EQ(o.get_thetaprime()[d], 0);
-    ASSERT_DOUBLE_EQ(o.get_rprime()[d], 0);
-    ASSERT_DOUBLE_EQ(o.get_gradprime()[d], 0);
-  }
-  ASSERT_DOUBLE_EQ(o.get_logpprime(), 0);
-
-  thetaprime[0] = 1;
-  thetaprime[1] = 1;
-  rprime[0] = 1;
-  rprime[1] = 1;
-  gradprime[0] = 1;
-  gradprime[1] = 1;
-  o.compute(D, &thetaprime[0], &rprime[0], &gradprime[0], 1, -1);
-  for (size_t d = 0; d < D; ++d)
-  {
-    ASSERT_DOUBLE_EQ(o.get_thetaprime()[d], 2.5);
-    ASSERT_DOUBLE_EQ(o.get_rprime()[d], 1.5);
-    ASSERT_DOUBLE_EQ(o.get_gradprime()[d], 0);
-  }
-  ASSERT_DOUBLE_EQ(o.get_logpprime(), 0);
-}
-*/

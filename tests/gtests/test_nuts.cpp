@@ -43,6 +43,35 @@ double exprnd(double p)
   std::exponential_distribution<> d(p);
   return d(gen);
 }
+//[logpprime, gradprime] = f(thetaprime);
+void f(const size_t D, const double* theta, double& logp, double* grad)
+{
+  //Precision matrix with covariance [1, 1.98; 1.98, 4].
+  //A = [50.251256, -24.874372; -24.874372, 12.562814];
+  //A = inv([1, 1.98; 1.98, 4]);
+  double A[2][2];
+  A[0][0] = 50.251256;
+  A[0][1] = -24.874372;
+  A[1][0] = -24.874372;
+  A[1][1] = 12.562814;
+
+  //grad = -theta * A;
+  for (int d = 0; d < D; ++d)
+  {
+    grad[d] = 0;
+    for (int j = 0; j < D; ++j)
+    {
+      grad[d] -= theta[j] * A[d][j];
+    }
+  }
+  //logp = 0.5 * grad * theta';
+  logp = 0;
+  for (int d = 0; d < D; ++d)
+  {
+    logp += grad[d] * theta[d];
+  }
+  logp *= 0.5;
+}
 
 typedef double** matrix;
 class nuts
@@ -69,35 +98,6 @@ public:
   size_t _M;
   size_t _D;
 
-  //[logpprime, gradprime] = f(thetaprime);
-  void f(const double* theta)
-  {
-    //Precision matrix with covariance [1, 1.98; 1.98, 4].
-    //A = [50.251256, -24.874372; -24.874372, 12.562814];
-    //A = inv([1, 1.98; 1.98, 4]);
-    double A[2][2];
-    A[0][0] = 50.251256;
-    A[0][1] = -24.874372;
-    A[1][0] = -24.874372;
-    A[1][1] = 12.562814;
-
-    //grad = -theta * A;
-    for (int d = 0; d < _D; ++d)
-    {
-      _gradprime[d] = 0;
-      for (int j = 0; j < _D; ++j)
-      {
-        _gradprime[d] -= theta[j] * A[d][j];
-      }
-    }
-    //logp = 0.5 * grad * theta';
-    _logpprime = 0;
-    for (int d = 0; d < _D; ++d)
-    {
-      _logpprime += _gradprime[d] * theta[d];
-    }
-    _logpprime *= 0.5;
-  }
   bool stop_criterion
   (
     double* thetaminus,
@@ -310,7 +310,7 @@ void nuts::leapfrog
     _thetaprime[d] = theta[d] + epsilon * _rprime[d];
   }
   //[logpprime, gradprime] = f(thetaprime);
-  f(_thetaprime);
+  f(_D, _thetaprime, _logpprime, _gradprime);
   for (size_t d = 0; d < _D; ++d)
   {
     _rprime[d] += 0.5 * epsilon * _gradprime[d];
@@ -397,7 +397,7 @@ void nuts::build_tree
       //Update the number of valid points.
       _nprime += nprime2;
       //Update the stopping criterion.
-      _sprime = sprime2 && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
+      _sprime = _sprime && sprime2 && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
     }
   }
 }
@@ -407,10 +407,7 @@ void nuts::compute
   const vector<double>& theta0
 )
 {
-  for (int d = 0; d < _D; ++d)
-  {
-    _samples[0][d] = theta0[d];
-  }
+  //samples = zeros(M, D);
   for (int m = 1; m < _M; ++m)
   {
     for (int d = 0; d < _D; ++d)
@@ -418,12 +415,15 @@ void nuts::compute
       _samples[m][d] = 0;
     }
   }
-  f(theta0.data());
-  double logp = _logpprime;
+  //[logp grad] = f(theta0);
+  double logp = 0;
+  f(_D, theta0.data(), logp, _grad);
+  //samples(1, :) = theta0;
   for (int d = 0; d < _D; ++d)
   {
-    _grad[d] = _gradprime[d];
+    _samples[0][d] = theta0[d];
   }
+  //for m = 2:M,
   for (int m = 1; m < _M; ++m)
   {
     //Resample momenta.
@@ -533,8 +533,7 @@ TEST_F(test_nuts, f)
   double theta[2];
   theta[0] = -0.366410276756522;
   theta[1] = 0.673482475958359;
-  o.f(theta);
-
+  f(D, theta, o._logpprime, o._gradprime);
   ASSERT_DOUBLE_EQ(o._logpprime, -12.360661901158696);
   ASSERT_DOUBLE_EQ(o._gradprime[0], 35.165030260792108);
   ASSERT_DOUBLE_EQ(o._gradprime[1], -17.575060606389016);
@@ -577,6 +576,35 @@ TEST_F(test_nuts, build_tree)
   int j = 3;
   double epsilon = 0.191665695786453;
   o.build_tree(theta, r, grad, logu, v, j, epsilon);
+}
+TEST_F(test_nuts, build_tree2)
+{
+  size_t M = 5;
+  size_t D = 2;
+  nuts o(M, D);
+  double theta[2];
+  theta[0] = -1.184149365398408;
+  theta[1] = -1.879783074522205;
+  double r[2];
+  r[0] = -1.250274784716743;
+  r[1] = -0.177547924046123;
+  double grad[2];
+  grad[0] = 12.746569427903886;
+  grad[1] = -5.839606692913332;
+  double logu = -3.907755346153537;
+  int v = 1;
+  int j = 0;
+  double epsilon = 0.196260851195362;
+  o.build_tree(theta, r, grad, logu, v, j, epsilon);
+  ASSERT_DOUBLE_EQ(o._thetaprime[0], -1.184041127901299);
+  ASSERT_DOUBLE_EQ(o._thetaprime[1], -2.027094705857849);
+  ASSERT_DOUBLE_EQ(o._rprime[0], 0.89126626313958324);
+  ASSERT_DOUBLE_EQ(o._rprime[1], -1.141764966641634);
+  ASSERT_DOUBLE_EQ(o._gradprime[0], 9.0768460399582551);
+  ASSERT_DOUBLE_EQ(o._gradprime[1], -3.9862657286396512);
+  ASSERT_EQ(o._sprime, 1);
+  ASSERT_EQ(o._nprime, 1);
+  ASSERT_DOUBLE_EQ(o._logpprime, -1.543893231081825);
 }
 TEST_F(test_nuts, compute)
 {

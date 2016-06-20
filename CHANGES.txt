@@ -21,6 +21,7 @@ ADMB-X
 
 ####New Supported Compilers
 * GNU C++ 6.1 and 5.3
+* Rtools 3.4
 
 ####Changes and Improvements
 * Added floating point checking into tpl2cpp and tpl2rem.

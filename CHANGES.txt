@@ -24,6 +24,7 @@ ADMB-X
 * Rtools 3.4
 
 ####Changes and Improvements
+* ADMB-IDE
 * Added floating point checking into tpl2cpp and tpl2rem.
 
   To check for floating point errors, build executable with -g option.

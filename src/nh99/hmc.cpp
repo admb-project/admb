@@ -37,12 +37,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     //nvar1=initial_params::nvarcalc(); // get the number of active parameters
   }
 
-  if (stddev_params::num_stddev_params==0)
-  {
-    cerr << " You must declare at least one object of type sdreport "
-         << endl << " to do the mcmc calculations" << endl;
-     return;
-  }
+  // if (stddev_params::num_stddev_params==0)
+  // {
+  //   cerr << " You must declare at least one object of type sdreport "
+  //        << endl << " to do the mcmc calculations" << endl;
+  //    return;
+  // }
   {
     //ofstream of_bf("testbf");
 

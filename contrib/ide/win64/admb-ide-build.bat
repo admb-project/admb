@@ -62,9 +62,7 @@ xcopy /iqs c:\emacs temp\emacs
 xcopy /iqs c:\Rtools temp\Rtools
 echo.
 echo *** Creating admb-ide.zip
-cd temp
-zip -qrS ..\admb-ide.zip .\admb .\Rtools
-cd ..
+zip -qrS admb-ide.zip temp\admb temp\Rtools
 rd /q /s temp 2>NUL
 echo Done
 goto EOF

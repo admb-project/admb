@@ -1,8 +1,65 @@
 #include <gtest/gtest.h>
 #include <df1b2fun.h>
 
-class test_df1b2variable: public ::testing::Test {};
+class test_df1b2variable: public ::testing::Test
+{
+public:
+  virtual ~test_df1b2variable() {}
+  virtual void TearDown()
+  {
+    f1b2gradlist = NULL;
+    df1b2variable::pool = NULL;
+  }
+};
 
+TEST_F(test_df1b2variable, default_constructor)
+{
+  if (df1b2variable::pool)
+  {
+    delete df1b2variable::pool;
+    df1b2variable::pool = NULL;
+  }
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  if (f1b2gradlist)
+  {
+    delete f1b2gradlist;
+    f1b2gradlist = NULL;
+  }
+  ASSERT_TRUE(f1b2gradlist == NULL);
+
+  if (initial_df1b2params::varsptr)
+  {
+    delete initial_df1b2params::varsptr;
+    initial_df1b2params::varsptr = NULL;
+  }
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  adpool a;
+  const size_t n = 10;
+  size_t size = sizeof(double) * df1b2variable::get_blocksize(n);
+  a.set_size(size);
+  df1b2variable::pool = &a;
+
+  df1b2_gradlist gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
+  f1b2gradlist = &gradlist;;
+
+  initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1];
+
+  df1b2variable::noallocate = 1;
+  df1b2_init_number number;
+  initial_df1b2params::varsptr[0] = &number;
+
+  int ii = 0;
+  dvector y(0, 1);
+  (initial_df1b2params::varsptr[0])->set_value(y, ii);
+
+  if (initial_df1b2params::varsptr)
+  {
+    delete initial_df1b2params::varsptr;
+    initial_df1b2params::varsptr = NULL;
+  }
+}
+/*
 TEST_F(test_df1b2variable, default_constructor)
 {
   adpool* save = df1b2variable::pool;
@@ -223,7 +280,6 @@ TEST_F(test_df1b2variable, constructor_double)
   df1b2variable::pool = save;
   f1b2gradlist = save2;
 }
-/*
 TEST_F(test_df1b2variable, df1b2vector)
 {
   adpool* save = df1b2variable::pool;

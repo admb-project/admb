@@ -313,7 +313,9 @@ void  grad_stack::write_grad_stack_buffer()
 #endif
 
 #ifndef OPT_LIB
+  #ifdef _MSC_VER
   assert(nbw <= SSIZE_MAX);
+  #endif
 #endif
 
   if  (ierr != (ssize_t)nbw)

@@ -1,0 +1,52 @@
+======================
+Step 1: Get components
+======================
+
+  ADMB-IDE version 11.2 consisted of eight components, as listed on the
+  copyright page of the ADMB-IDE 11.2 manual
+
+  ADMB     http://admb-project.org/downloads/
+  GCC      https://cran.r-project.org/bin/windows/Rtools/
+  GDB      https://cran.r-project.org/bin/windows/Rtools/
+  Emacs    ftp://ftp.gnu.org/gnu/emacs/windows/
+  AUCTeX   https://www.gnu.org/software/auctex/download-for-windows.html
+  ESS      http://ess.r-project.org/index.php?Section=download
+  admb.el  http://admb-project.org/tools/editors/emacs
+  .emacs   http://admb-project.org/tools/admb-ide
+
+  ADMB-IDE 11.5 should add one more component, so it can also work with
+  TMB models:
+
+  tmb.el   https://github.com/kaskr/adcomp/blob/master/emacs/tmb.el
+
+
+===============================
+Step 2: Install helper programs
+===============================
+
+  Inno   http://jrsoftware.org/isdl.php
+  LaTeX  http://miktex.org/download
+     or  https://tug.org/texlive/acquire-netinstall.html
+
+
+======================
+Step 3: Compile manual
+======================
+
+  admb-ide.texi -> admb-ide.pdf
+
+
+======================
+Step 4: Modify scripts
+======================
+
+  admb-ide-build.bat
+  admb-ide-build.iss
+
+
+===========================
+Step 5: Package zip and exe
+===========================
+
+  admb-ide-build.bat -> admb-ide-112-win64.zip
+  admb-ide-build.iss -> admb-ide-112-win64.exe

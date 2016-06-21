@@ -33,6 +33,7 @@ Step 2: Install helper programs
 Step 3: Compile manual
 ======================
 
+  texi2dvi -c -p -t @finalout admb-ide.texi
   admb-ide.texi -> admb-ide.pdf
 
 

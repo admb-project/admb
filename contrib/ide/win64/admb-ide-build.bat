@@ -42,14 +42,14 @@ set WIN=%3
 
 rd /q /s temp 2>NUL
 echo.
-@REM echo *** Populating ~ ...
-@REM xcopy /iqh ..\dot\.emacs*           temp\~
+echo *** Populating ~ ...
+xcopy /iqh dot\_emacs temp
 @REM xcopy /iq  c:\~\emacs\lisp\admb     temp\~\emacs\lisp\admb
 @REM xcopy /iqs c:\~\emacs\lisp\auctex   temp\~\emacs\lisp\auctex
 @REM xcopy /iqs c:\~\emacs\lisp\ess      temp\~\emacs\lisp\ess
-xcopy /iq  icons\admb*         temp\icons
-@REM echo.
-@REM echo *** Populating admb ...
+xcopy /iq  icons temp
+echo.
+echo *** Populating admb ...
 @REM xcopy /iq  ..\*.pdf                 temp\admb
 xcopy /iqs ..\..\build\dist temp\admb
 @REM xcopy /iq  ..\manual\admb-ide.pdf*  temp\admb

@@ -1,7 +1,7 @@
 [Setup]
-OutputBaseFilename=admb-ide-101-win64
+OutputBaseFilename=admb-ide-112-win64
 AppName=ADMB-IDE
-AppVerName=ADMB-IDE 10.1 win64
+AppVerName=ADMB-IDE 11.2 win64
 ChangesAssociations=yes
 ChangesEnvironment=yes
 DefaultDirName=c:\admb\ide
@@ -16,12 +16,14 @@ Name: full;   Description: "Full installation"
 Name: custom; Description: "Custom installation"; Flags: iscustom
 
 [Components]
-Name: admb;  Description: "AD Model Builder for GCC [c:/admb]";         Types: full
-Name: gcc;   Description: "GCC C++ compiler [c:/gnu/gcc452-win64]";     Types: full
-Name: gdb;   Description: "GDB debugger [c:/gnu/gdb]";                  Types: full
-Name: emacs; Description: "GNU Emacs editor [c:/gnu/emacs]";            Types: full
-Name: mode;  Description: "ADMB mode for Emacs [c:/~/emacs/lisp/admb]"; Types: full
-Name: ide;   Description: "ADMB-IDE settings [c:/~]";                   Types: full
+Name: admb;   Description: "AD Model Builder for GCC [c:/admb]";         Types: full
+Name: gcc;    Description: "GCC C++ compiler [c:/gnu/gcc492-win64]";     Types: full
+Name: gdb;    Description: "GDB debugger [c:/gnu/gdb]";                  Types: full
+Name: emacs;  Description: "GNU Emacs editor [c:/gnu/emacs]";            Types: full
+Name: mode;   Description: "ADMB mode for Emacs [c:/~/emacs/lisp/admb]"; Types: full
+Name: auctex; Description: "AUCTeX for Emacs [c:/~/emacs/lisp/auctex]";  Types: full
+Name: ess;    Description: "ESS for Emacs [c:/~/emacs/lisp/ess]";        Types: full
+Name: ide;    Description: "ADMB-IDE settings [c:/~]";                   Types: full
 
 [Tasks]
 Name: desktop;   Description: "Create Desktop shortcut to ADMB-IDE";                                              GroupDescription: "Shortcuts:"
@@ -29,23 +31,24 @@ Name: startmenu; Description: "Create Start Menu shortcut to ADMB-IDE";         
 Name: assoc1;    Description: "Associate ADMB files (cor, ctl, dat, par, pin, psv, rep, std, tpl) with ADMB-IDE"; GroupDescription: "Registry:"
 Name: assoc2;    Description: "Associate Emacs files (el, elc, emacs) with ADMB-IDE";                             GroupDescription: "Registry:"
 Name: path;      Description: "Add ADMB, GCC, GDB, and Emacs to PATH, so they can find each other";               GroupDescription: "Registry:"
-Name: admbhome;  Description: "Define ADMB_HOME as c:/admb/admb101-gcc452-win64, so ADMB scripts work";           GroupDescription: "Registry:"
+Name: admbhome;  Description: "Define ADMB_HOME as c:/admb/admb112-gcc492-win64, so ADMB scripts work";           GroupDescription: "Registry:"
 Name: home;      Description: "Define HOME directory as c:/~, to store configuration files";                      GroupDescription: "Registry:"
 
 [Files]
-Source: "..\dot\.emacs";                DestDir: "c:\~";                 Components: ide;   Flags: confirmoverwrite
-Source: "c:\~\emacs\lisp\admb\*";       DestDir: "c:\~\emacs\lisp\admb"; Components: mode
-Source: "c:\~\icons\admb*";             DestDir: "c:\~\icons";           Components: ide
-Source: "..\*.pdf";                     DestDir: "c:\admb";              Components: admb
-Source: "admb\*";                       DestDir: "c:\admb";              Components: admb;  Flags: recursesubdirs
-Source: "..\manual\admb-ide.pdf";       DestDir: "c:\admb";              Components: ide
-Source: "..\manual\admb-ide.texi";      DestDir: "c:\admb\ide\inst";     Components: ide
-Source: "..\NEWS";                      DestDir: "c:\admb\ide";          Components: ide
-Source: "admb-ide-build.bat";           DestDir: "c:\admb\ide\inst";     Components: ide
-Source: "admb-ide-build.iss";           DestDir: "c:\admb\ide\inst";     Components: ide
-Source: "c:\gnu\emacs\*";               DestDir: "c:\gnu\emacs";         Components: emacs; Flags: recursesubdirs
-Source: "c:\gnu\gcc452-win64\*";        DestDir: "c:\gnu\gcc452-win64";  Components: gcc;   Flags: recursesubdirs
-Source: "c:\gnu\gdb\*";                 DestDir: "c:\gnu\gdb";           Components: gdb;   Flags: recursesubdirs
+Source: "..\dot\.emacs";            DestDir: "c:\~";                   Components: ide;    Flags: confirmoverwrite
+Source: "c:\~\emacs\lisp\admb\*";   DestDir: "c:\~\emacs\lisp\admb";   Components: mode
+Source: "c:\~\emacs\lisp\auctex\*"; DestDir: "c:\~\emacs\lisp\auctex"; Components: auctex; Flags: recursesubdirs
+Source: "c:\~\emacs\lisp\ess\*";    DestDir: "c:\~\emacs\lisp\ess";    Components: ess;    Flags: recursesubdirs
+Source: "c:\~\icons\admb*";         DestDir: "c:\~\icons";             Components: ide
+Source: "..\*.pdf";                 DestDir: "c:\admb";                Components: admb
+Source: "admb\*";                   DestDir: "c:\admb";                Components: admb;   Flags: recursesubdirs
+Source: "..\manual\admb-ide.pdf";   DestDir: "c:\admb";                Components: ide
+Source: "..\manual\admb-ide.texi";  DestDir: "c:\admb\ide\inst";       Components: ide
+Source: "..\NEWS";                  DestDir: "c:\admb\ide";            Components: ide
+Source: "admb-ide-build.*";         DestDir: "c:\admb\ide\inst";       Components: ide
+Source: "c:\gnu\emacs\*";           DestDir: "c:\gnu\emacs";           Components: emacs;  Flags: recursesubdirs
+Source: "c:\gnu\gcc492-win64\*";    DestDir: "c:\gnu\gcc492-win64";    Components: gcc;    Flags: recursesubdirs
+Source: "c:\gnu\gdb\*";             DestDir: "c:\gnu\gdb";             Components: gdb;    Flags: recursesubdirs
 
 [Icons]
 Name: "{userdesktop}\ADMB-IDE";     Filename: "c:\gnu\emacs\bin\runemacs.exe"; IconFilename: "c:\~\icons\admb64.ico"; Tasks: desktop
@@ -58,14 +61,14 @@ Name: "{group}\Uninstall ADMB-IDE"; Filename: "{uninstallexe}";                 
 
 [Registry]
 ; Environment variables
-Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "PATH";      ValueData: "c:/ADMB/admb101-gcc452-win64/bin;c:/gnu/GCC452-WIN64/bin;c:/gnu/GDB/bin;c:/gnu/EMACS/bin"; Tasks: path;     Flags: uninsdeletevalue
+Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "PATH";      ValueData: "c:/ADMB/admb112-gcc492-win64/bin;c:/gnu/GCC492-win64/bin;c:/gnu/GDB/bin;c:/gnu/EMACS/bin"; Tasks: path;     Flags: uninsdeletevalue
 Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "HOME";      ValueData: "c:/~";                                                                                     Tasks: home;     Flags: uninsdeletevalue
-Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "ADMB_HOME"; ValueData: "c:/ADMB/admb101-gcc452-win64";                                                             Tasks: admbhome; Flags: uninsdeletevalue
+Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "ADMB_HOME"; ValueData: "c:/ADMB/admb112-gcc492-win64";                                                             Tasks: admbhome; Flags: uninsdeletevalue
 ; File associations
-Root: HKCR; Subkey: ".cor";                                           ValueType: string; ValueName: ""; ValueData: "ADMB Estimates";                      Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty
-Root: HKCR; Subkey: "ADMB Estimates";                                 ValueType: string; ValueName: ""; ValueData: "ADMB Estimates";                      Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty
-Root: HKCR; Subkey: "ADMB Estimates\DefaultIcon";                     ValueType: string; ValueName: ""; ValueData: "shell32.dll,105";                     Tasks: assoc1; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "ADMB Estimates\Shell\Open\command";              ValueType: string; ValueName: ""; ValueData: "c:\gnu\emacs\bin\runemacs ""%1""";    Tasks: assoc1; Flags: uninsdeletevalue
+Root: HKCR; Subkey: ".cor";                                           ValueType: string; ValueName: ""; ValueData: "ADMB Correlation";                    Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty
+Root: HKCR; Subkey: "ADMB Correlation";                               ValueType: string; ValueName: ""; ValueData: "ADMB Correlation";                    Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty
+Root: HKCR; Subkey: "ADMB Correlation\DefaultIcon";                   ValueType: string; ValueName: ""; ValueData: "shell32.dll,105";                     Tasks: assoc1; Flags: uninsdeletevalue
+Root: HKCR; Subkey: "ADMB Correlation\Shell\Open\command";            ValueType: string; ValueName: ""; ValueData: "c:\gnu\emacs\bin\runemacs ""%1""";    Tasks: assoc1; Flags: uninsdeletevalue
 Root: HKCR; Subkey: ".ctl";                                           ValueType: string; ValueName: ""; ValueData: "Control File";                        Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty
 Root: HKCR; Subkey: "Control File";                                   ValueType: string; ValueName: ""; ValueData: "Control File";                        Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty
 Root: HKCR; Subkey: "Control File\DefaultIcon";                       ValueType: string; ValueName: ""; ValueData: "shell32.dll,211";                     Tasks: assoc1; Flags: uninsdeletevalue

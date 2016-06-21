@@ -42,29 +42,28 @@ set WIN=%3
 
 rd /q /s temp 2>NUL
 echo.
-echo *** Populating ~ ...
-xcopy /iqh ..\dot\.emacs*           temp\~
-xcopy /iq  c:\~\emacs\lisp\admb     temp\~\emacs\lisp\admb
-xcopy /iqs c:\~\emacs\lisp\auctex   temp\~\emacs\lisp\auctex
-xcopy /iqs c:\~\emacs\lisp\ess      temp\~\emacs\lisp\ess
-xcopy /iq  c:\~\icons\admb*         temp\~\icons
+@REM echo *** Populating ~ ...
+@REM xcopy /iqh ..\dot\.emacs*           temp\~
+@REM xcopy /iq  c:\~\emacs\lisp\admb     temp\~\emacs\lisp\admb
+@REM xcopy /iqs c:\~\emacs\lisp\auctex   temp\~\emacs\lisp\auctex
+@REM xcopy /iqs c:\~\emacs\lisp\ess      temp\~\emacs\lisp\ess
+xcopy /iq  icons\admb*         temp\icons
+@REM echo.
+@REM echo *** Populating admb ...
+@REM xcopy /iq  ..\*.pdf                 temp\admb
+xcopy /iqs ..\..\build\dist temp\admb
+@REM xcopy /iq  ..\manual\admb-ide.pdf*  temp\admb
+@REM xcopy /iq  ..\manual\admb-ide.texi* temp\admb\ide\inst
+@REM xcopy /iq  admb-ide-build.*         temp\admb\ide\inst
+xcopy /iq  NEWS temp\admb\ide
 echo.
-echo *** Populating admb ...
-xcopy /iq  ..\*.pdf                 temp\admb
-xcopy /iqs admb                     temp\admb
-xcopy /iq  ..\manual\admb-ide.pdf*  temp\admb
-xcopy /iq  ..\manual\admb-ide.texi* temp\admb\ide\inst
-xcopy /iq  admb-ide-build.*         temp\admb\ide\inst
-xcopy /iq  ..\NEWS                  temp\admb\ide
+echo *** Populating emacs and Rtools ...
+xcopy /iqs c:\emacs temp\emacs
+xcopy /iqs c:\Rtools temp\Rtools
 echo.
-echo *** Populating gnu ...
-xcopy /iqs c:\gnu\emacs             temp\gnu\emacs
-xcopy /iqs c:\gnu\gcc%GCC%-%WIN%    temp\gnu\gcc%GCC%-%WIN%
-xcopy /iqs c:\gnu\gdb               temp\gnu\gdb
-echo.
-echo *** Creating admb-ide-%ADMB%-%WIN%.zip
+echo *** Creating admb-ide.zip
 cd temp
-zip -qrS ..\admb-ide-%ADMB%-%WIN%.zip .\~ .\admb .\gnu
+zip -qrS ..\admb-ide.zip .\admb .\Rtools
 cd ..
 rd /q /s temp 2>NUL
 echo Done

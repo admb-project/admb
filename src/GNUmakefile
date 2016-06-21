@@ -635,7 +635,7 @@ coding-standard: cpplint.py
 cpplint.py:
 	svn cat https://github.com/google/styleguide/trunk/cpplint/cpplint.py > cpplint.py
 
-check: coding-standard
+check:
 	@echo "SHELL: $(SHELL)"
 	@echo "PATH: $(PATH)"
 	@echo "TERM: $(TERM)"

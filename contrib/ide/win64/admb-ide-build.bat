@@ -37,6 +37,7 @@ REM                                                                             
 REM ####################################################################################################################
 
 rd /q /s temp\ 2>NUL
+mkdir /p temp\admb\ide\
 echo.
 echo *** Populating ~ ...
 copy /Y dot\_emacs temp\.emacs

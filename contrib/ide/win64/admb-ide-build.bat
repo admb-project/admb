@@ -48,7 +48,7 @@ xcopy /E /Y icons temp\
 echo.
 echo *** Populating admb ...
 @REM xcopy /iq  ..\*.pdf                 temp\admb
-xcopy /E /Y ..\..\build\dist temp\admb
+xcopy /E /Y ..\..\build\dist\* temp\admb\
 @REM xcopy /iq  ..\manual\admb-ide.pdf*  temp\admb
 @REM xcopy /iq  ..\manual\admb-ide.texi* temp\admb\ide\inst
 @REM xcopy /iq  admb-ide-build.*         temp\admb\ide\inst

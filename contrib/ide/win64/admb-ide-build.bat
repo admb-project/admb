@@ -1,6 +1,6 @@
 @echo off
 setlocal
-if [%1]==[] goto HELP
+REM if [%1]==[] goto HELP
 if [%1]==[--help] goto HELP
 REM ####################################################################################################################
 REM                                                                                                                    #
@@ -36,14 +36,10 @@ REM            3 Jun 2009 Arni Magnusson created                                
 REM                                                                                                                    #
 REM ####################################################################################################################
 
-set ADMB=%1
-set GCC=%2
-set WIN=%3
-
 rd /q /s temp 2>NUL
 echo.
 echo *** Populating ~ ...
-xcopy /iqh dot\_emacs temp
+xcopy /iqh dot\_emacs temp\.emacs
 @REM xcopy /iq  c:\~\emacs\lisp\admb     temp\~\emacs\lisp\admb
 @REM xcopy /iqs c:\~\emacs\lisp\auctex   temp\~\emacs\lisp\auctex
 @REM xcopy /iqs c:\~\emacs\lisp\ess      temp\~\emacs\lisp\ess
@@ -68,6 +64,9 @@ echo Done
 goto EOF
 
 :HELP
+set ADMB=%1
+set GCC=%2
+set WIN=%3
 echo Usage: admb-ide-build ADMB GCC WIN
 echo.
 echo ADMB is the ADMB version number, e.g. 101

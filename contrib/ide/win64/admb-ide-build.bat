@@ -36,14 +36,14 @@ REM            3 Jun 2009 Arni Magnusson created                                
 REM                                                                                                                    #
 REM ####################################################################################################################
 
-rd /q /s temp 2>NUL
+rd /q /s temp\ 2>NUL
 echo.
 echo *** Populating ~ ...
 copy /Y dot\_emacs temp\.emacs
 @REM xcopy /iq  c:\~\emacs\lisp\admb     temp\~\emacs\lisp\admb
 @REM xcopy /iqs c:\~\emacs\lisp\auctex   temp\~\emacs\lisp\auctex
 @REM xcopy /iqs c:\~\emacs\lisp\ess      temp\~\emacs\lisp\ess
-xcopy /E /Y   icons temp
+xcopy /E /Y icons temp\
 echo.
 echo *** Populating admb ...
 @REM xcopy /iq  ..\*.pdf                 temp\admb
@@ -51,11 +51,11 @@ xcopy /E /Y ..\..\build\dist temp\admb
 @REM xcopy /iq  ..\manual\admb-ide.pdf*  temp\admb
 @REM xcopy /iq  ..\manual\admb-ide.texi* temp\admb\ide\inst
 @REM xcopy /iq  admb-ide-build.*         temp\admb\ide\inst
-xcopy /E /Y NEWS temp\admb\ide
+xcopy /E /Y NEWS temp\admb\ide\
 echo.
 echo *** Populating emacs and Rtools ...
-xcopy /E /Y c:\emacs temp\emacs
-xcopy /E /Y c:\Rtools temp\Rtools
+xcopy /E /Y c:\emacs temp\
+xcopy /E /Y c:\Rtools temp\
 echo.
 echo *** Creating admb-ide.zip
 7z a -tzip -mx9 admb-dist.zip temp\admb temp\Rtools

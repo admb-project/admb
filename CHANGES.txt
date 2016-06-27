@@ -29,6 +29,7 @@ ADMB-X
 
   $ admb -g "model.tpl"
 
+* Configure automated builds for ADMB-IDE.
 * Numerous bug fixes and improvements
 
 ADMB-11.5

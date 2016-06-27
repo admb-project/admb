@@ -1,9 +1,13 @@
-SRCS=hem_func.cpp
-run: hemholtz
-	@./hemholtz
+all:
+	$(MAKE) clean
+	../../../admb hemholtz.cpp hem_func.cpp
+	$(MAKE) run
 
-hemholtz: $(SRCS) hemholtz.cpp
-	@printf "Compiling executable $@ ...";g++ $^ -I. -fpermissive -Wno-deprecated -I$(ADMB_HOME)/include -L$(ADMB_HOME)/lib -DUSE_LAPLACE -D__GNUDOS__ -Dlinux -DOPT_LIB -O3 -ldf1b2o -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -o$@; printf "\n"
+run:
+	./hemholtz
 
 clean:
-	@rm -vf hemholtz
+	rm -vf hemholtz
+	rm -vf fmin.log
+	rm -vf hem_func.obj
+	rm -vf hemholtz.obj

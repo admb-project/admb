@@ -27,6 +27,7 @@ ifdef PROG_VALGRIND
 all: simple caest
 else
 all: admb admb-re
+	cd autodif && $(MAKE)
 endif
 
 admb:\

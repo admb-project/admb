@@ -1,4 +1,3 @@
-@echo off
 setlocal
 REM if [%1]==[] goto HELP
 if [%1]==[--help] goto HELP
@@ -36,31 +35,30 @@ REM            3 Jun 2009 Arni Magnusson created                                
 REM                                                                                                                    #
 REM ####################################################################################################################
 
-rd /q /s admb-ide \ 2>NUL
-mkdir /p admb-ide\admb\ide\
+rd /q /s admb-ide
+mkdir admb-ide
 echo.
 echo *** Populating ~ ...
 copy /Y dot\_emacs admb-ide\.emacs
 @REM xcopy /iq  c:\~\emacs\lisp\admb     temp\~\emacs\lisp\admb
 @REM xcopy /iqs c:\~\emacs\lisp\auctex   temp\~\emacs\lisp\auctex
 @REM xcopy /iqs c:\~\emacs\lisp\ess      temp\~\emacs\lisp\ess
-xcopy /E /Y icons admb-ide\
+xcopy /E /Y icons admb-ide
 echo.
 echo *** Populating admb ...
 @REM xcopy /iq  ..\*.pdf                 temp\admb
-xcopy /E /Y ..\..\build\dist\* admb-ide\admb\
+xcopy /E /Y ..\..\build\dist admb-ide\admb\
 @REM xcopy /iq  ..\manual\admb-ide.pdf*  temp\admb
 @REM xcopy /iq  ..\manual\admb-ide.texi* temp\admb\ide\inst
 @REM xcopy /iq  admb-ide-build.*         temp\admb\ide\inst
 xcopy /E /Y NEWS admb-ide\
 echo.
 echo *** Populating emacs and Rtools ...
-xcopy /E /Y c:\emacs admb-ide\
-xcopy /E /Y c:\Rtools admb-ide\
+xcopy /E /Y C:\emacs-24.5-bin-i686-mingw32 admb-ide\emacs\
+xcopy /E /Y c:\Rtools admb-ide\Rtools\
 echo.
 echo *** Creating admb-ide.zip
-7z a -tzip -mx9 admb-dist.zip admb-ide
-rd /q /s admb-ide 2>NUL
+7z a -tzip -mx9 admb-ide.zip admb-ide
 echo Done
 goto EOF
 

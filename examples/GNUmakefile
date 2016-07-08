@@ -85,7 +85,7 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif
@@ -119,7 +119,7 @@ bcb:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
   endif
@@ -130,7 +130,7 @@ bvprobit:
 	cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 glmmadmb:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	@#Do not catch for admb-9.x
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
@@ -138,7 +138,7 @@ ifndef TRAVIS_CI
 endif
 
 caest:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif
@@ -169,7 +169,7 @@ orange2:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 orange_cor:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif
@@ -182,7 +182,7 @@ polio:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 sdv:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif

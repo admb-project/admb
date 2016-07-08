@@ -1,6 +1,4 @@
 setlocal
-REM if [%1]==[] goto HELP
-if [%1]==[--help] goto HELP
 REM ####################################################################################################################
 REM                                                                                                                    #
 REM Script:   admb-ide-build ADMB GCC WIN                                                                              #
@@ -59,18 +57,4 @@ xcopy /E /Y c:\Rtools admb-ide\Rtools\
 echo.
 echo *** Creating admb-ide.zip
 7z a -tzip -mx9 admb-ide.zip admb-ide
-echo Done
-goto EOF
-
-:HELP
-set ADMB=%1
-set GCC=%2
-set WIN=%3
-echo Usage: admb-ide-build ADMB GCC WIN
-echo.
-echo ADMB is the ADMB version number, e.g. 101
-echo GCC is the GCC version number, e.g. 452
-echo WIN is the ADMB version number, e.g. win32
-echo.
-
-:EOF
+echo *** Done

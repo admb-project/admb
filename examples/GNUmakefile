@@ -17,7 +17,7 @@ endif
 ifdef FAST_OPTION
 OPTIONS:= $(OPTIONS) -f
 endif
-ifndef TRAVIS_CI
+ifndef TRAVIS
 PROG=time
 endif
 

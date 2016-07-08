@@ -8260,6 +8260,11 @@ dvariable besselK(dvariable x, int nu);
 dvariable besselJ(dvariable x, int nu);
 dvariable besselY(dvariable x, int nu);
 
+double besselI(double x, int nu);
+double besselK(double x, int nu);
+double besselJ(double x, int nu);
+double besselY(double x, int nu);
+
 /*
 double betai(double _aa, double _bb, double _xx);
 dvariable betai(const dvariable & _a, const dvariable & _b,

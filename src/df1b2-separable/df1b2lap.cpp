@@ -27,6 +27,8 @@ static int write_sparse_flag=0;
 int noboundepen_flag=1;
 unsigned int global_nvar=0;
 
+double BIGFATPENALTY=0.0;
+
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
 void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
   dmatrix& Hess, dvector& grad,
@@ -1434,10 +1436,18 @@ void get_second_ders(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
 
   if  (ad_comm::print_hess_and_exit_flag)
   {
-    cout << "Hess" << endl;
-    cout << Hess << endl;
+    for (i=1;i<=usize;i++)Hess(i,i) -= 2*BIGFATPENALTY;
+    cout<< "--------------------------------------------------------------------"<<endl;
+    cout << "param:" << endl;
+    for (i=1;i<=usize;i++)cout << y(i+xsize)<<" ";
+    cout << endl;
+    cout<< "--------------------------------------------------------------------"<<endl;
+    cout << "Hess:" << endl;
+    cout <<  Hess << endl;
+    cout<< "--------------------------------------------------------------------"<<endl;
     ad_exit(0);
   }
+
   //cout << "Dux" << endl;
   //cout << setprecision(16) << Dux << endl;
 }

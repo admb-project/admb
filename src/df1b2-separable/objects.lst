@@ -7,6 +7,7 @@ OBJ0=\
  dfinvcumdt.obj\
  df1b2norlogmix.obj\
  df1b2bet.obj\
+ df1b2bessel.obj\
  df1b2betdev.obj\
  df33fun1.obj\
  df33fun.obj\
@@ -115,6 +116,7 @@ OBJ0=\
  f1b23d1.obj\
  df1b2negb.obj\
  expm.obj\
+ invlogit.obj\
  f1b2sol2.obj\
  f1b2solv.obj\
  mod_rhes.obj

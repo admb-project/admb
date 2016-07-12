@@ -4520,6 +4520,9 @@ double factln(double n);
 dvar_vector factln(const dvar_vector & n);
 dvector factln(const dvector & n);
 
+dvariable invlogit(dvariable x);
+
+
 dvar_vector posfun(const dvar_vector & x, double eps, const prevariable & pen);
 dvariable posfun(const dvariable& x, const double eps, const prevariable & pen);
 dvariable posfun2(const dvariable& x, const double eps, const prevariable& pen);
@@ -8247,9 +8250,20 @@ double betacf(const double _a, const double _b, double _x, int maxit = 100);
 dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   int maxit = 100);
 
-dvariable betai(const dvariable a, const dvariable b, const dvariable x,
-  int maxit = 100);
+dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
 double betai(const double a,const double b,const double x, int maxit=100);
+dvariable pbeta( const dvariable x, const dvariable a, const dvariable b, int maxit = 100);
+double pbeta(const double x, const double a,const double b, int maxit=100);
+
+dvariable besselI(dvariable x, int nu);
+dvariable besselK(dvariable x, int nu);
+dvariable besselJ(dvariable x, int nu);
+dvariable besselY(dvariable x, int nu);
+
+double besselI(double x, int nu);
+double besselK(double x, int nu);
+double besselJ(double x, int nu);
+double besselY(double x, int nu);
 
 /*
 double betai(double _aa, double _bb, double _xx);
@@ -8899,9 +8913,12 @@ double inv_cumd_t(double n, double y, double eps = 1.e-7);
 dvariable inv_cumd_t(const prevariable & n, const prevariable & y,
   double eps = 1.e-7);
 
-double inv_cumd_beta_stable(double a, double b, double y, double eps = 1.e-7);
-dvariable inv_cumd_beta_stable(const prevariable & _a, const prevariable & _b,
-  const prevariable & _y, double eps = 1.e-7);
+double old_inv_cumd_beta_stable(double a, double b, double y, double eps = 1.e-7);
+double inv_cumd_beta_stable(double a, double b, double y, double eps = 0);
+dvariable inv_cumd_beta_stable(const prevariable & _a, const prevariable & _b, const prevariable & _y, double eps = 0);
+
+double qbeta(double x, double a, double b, double eps = 0);
+dvariable qbeta(dvariable x, dvariable a, dvariable b, double eps = 0);
 
 dvariable norm_to_gamma(const prevariable & v, const prevariable & alpha,
   double bound = 0.999999);

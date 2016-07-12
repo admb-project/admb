@@ -1792,8 +1792,14 @@ df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
 		     double _x);
 */
 
-df1b2variable betai(const df1b2variable& a, const df1b2variable& b,
-  double x, int maxit=100);
+df1b2variable betai(const df1b2variable& a, const df1b2variable& b, double x, int maxit=100);
+df1b2variable pbeta(double x, const df1b2variable& a, const df1b2variable& b, int maxit=100);
+df1b2variable pbeta(const df1b2variable& x, const df1b2variable& a, const df1b2variable& b, int maxit=100);
+
+df1b2variable besselI(df1b2variable x, int nu);
+df1b2variable besselK(df1b2variable x, int nu);
+df1b2variable besselJ(df1b2variable x, int nu);
+df1b2variable besselY(df1b2variable x, int nu);
 
 double do_gauss_hermite_block_diagonal(const dvector& x,
   const dvector& u0,const dmatrix& Hess,const dvector& _xadjoint,
@@ -2049,6 +2055,8 @@ df1b2variable ln_det(df1b2matrix& M,int & sgn);
 
 //df1b2vector solve(df1b2matrix& M,df1b2vector& v);
 
+df1b2variable invlogit(df1b2variable x);
+
 df1b2matrix expm(const df1b2matrix & A);
 df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   df1b2variable ln_unsigned_det,df1b2variable& sign);
@@ -2063,8 +2071,9 @@ df1b2variable lower_triangular_ln_det(const df1b2matrix& m,int& sgn);
 df1b2variable bounder(const df1b2variable&  x,double min,double max,
   double scale);
 
-df1b2variable inv_cumd_beta_stable(const df1b2variable& a,
-  const df1b2variable& b,const df1b2variable& x,double eps=1.e-7);
+df1b2variable inv_cumd_beta_stable(const df1b2variable& a, const df1b2variable& b,const df1b2variable& x,double eps=0);
+
+df1b2variable qbeta(df1b2variable x, df1b2variable a, df1b2variable b, double eps=0);
 
 df1b2variable bounded_cumd_norm(const df1b2variable& _x,double beta);
 df1b2variable cumd_norm(const df1b2variable& _x);

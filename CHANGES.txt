@@ -33,6 +33,7 @@ ADMB-X
   $ admb -g "model.tpl"
 
 * Configure automated builds for ADMB-IDE.
+* Merged Anders Nielsen bug fixes and new features such as vectorize.
 * Numerous bug fixes and improvements
 
 ADMB-11.5

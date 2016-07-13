@@ -54,8 +54,6 @@ Name: "{group}\Uninstall ADMB-IDE"; Filename: "{uninstallexe}"; Tasks: startmenu
 ;Name: "{group}\Manual (AUTODIF)"; Filename: "c:\admb-ide\autodif.pdf"; Tasks: startmenu
 
 ;[Registry]
-; Environment variables
-;Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "PATH"; ValueData: "c:/admb-ide/admb/bin;c:/admb-ide/Rtools/mingw_64/bin;c:/admb-ide/emacs/bin"; Tasks: path; Flags: uninsdeletevalue
 ; File associations
 ;Root: HKCR; Subkey: ".cor";                                           ValueType: string; ValueName: ""; ValueData: "ADMB Correlation";                    Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty
 ;Root: HKCR; Subkey: "ADMB Correlation";                               ValueType: string; ValueName: ""; ValueData: "ADMB Correlation";                    Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty

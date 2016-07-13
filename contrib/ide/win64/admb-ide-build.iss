@@ -21,8 +21,8 @@ Name: admb; Description: "AD Model Builder [c:/admb-ide/admb]"; Types: full
 Name: gcc; Description: "Rtools [c:/admb-ide/Rtools]"; Types: full
 Name: emacs; Description: "GNU Emacs editor [c:/admb-ide/emacs]"; Types: full
 Name: mode; Description: "ADMB mode for Emacs [c:/admb-ide/emacs/lisp/admb]"; Types: full
-Name: auctex; Description: "AUCTeX for Emacs [c:/admb-ide/emacs/lisp/auctex]"; Types: full
-Name: ess; Description: "ESS for Emacs [c:/admb-ide/emacs/lisp/ess]"; Types: full
+;Name: auctex; Description: "AUCTeX for Emacs [c:/admb-ide/emacs/lisp/auctex]"; Types: full
+;Name: ess; Description: "ESS for Emacs [c:/admb-ide/emacs/lisp/ess]"; Types: full
 
 [Tasks]
 Name: desktop; Description: "Create Desktop shortcut to ADMB-IDE"; GroupDescription: "Shortcuts:"

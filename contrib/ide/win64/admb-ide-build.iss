@@ -46,8 +46,8 @@ Source: "..\NEWS"; DestDir: "c:\admb-ide"; Components: ide
 
 [Icons]
 Name: "{userdesktop}\ADMB-IDE"; Filename: "set PATH=%PATH% && c:\admb-ide\emacs\bin\runemacs.exe"; IconFilename: "c:\admb-ide\icons\admb64.ico"; Tasks: desktop
-Name: "{group}\ADMB-IDE"; Filename: "c:\admb-ide\emacs\bin\runemacs.exe"; IconFilename: "c:\admb-ide\icons\admb.ico"; Tasks: startmenu
-Name: "{group}\Uninstall ADMB-IDE"; Filename: "{uninstallexe}"; Tasks: startmenu
+;Name: "{group}\ADMB-IDE"; Filename: "c:\admb-ide\emacs\bin\runemacs.exe"; IconFilename: "c:\admb-ide\icons\admb.ico"; Tasks: startmenu
+;Name: "{group}\Uninstall ADMB-IDE"; Filename: "{uninstallexe}"; Tasks: startmenu
 ;Name: "{group}\Manual (ADMB)"; Filename: "c:\admb-ide\admb.pdf"; Tasks: startmenu
 ;Name: "{group}\Manual (ADMB-IDE)"; Filename: "c:\admb-ide\admb-ide.pdf"; Tasks: startmenu
 ;Name: "{group}\Manual (ADMB-RE)"; Filename: "c:\admb-ide\admb-re.pdf"; Tasks: startmenu

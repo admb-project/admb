@@ -407,7 +407,8 @@ void read_pass2_1_dvdvdv(void)
   {
     py->u_bar[i]+=(d2f12)*xdot[i]*pz->u_dot_bar[i];
     py->u_bar[i]+=(d2f22)*ydot[i]*pz->u_dot_bar[i];
-    py->u_bar[i]+=(d2f13)*wdot[i]*pz->u_dot_bar[i];
+    //py->u_bar[i]+=(d2f13)*wdot[i]*pz->u_dot_bar[i];
+    py->u_bar[i]+=(d2f23)*wdot[i]*pz->u_dot_bar[i];
   }
   for (size_t i=0;i<nvar;i++)
   {

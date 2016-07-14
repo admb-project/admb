@@ -185,8 +185,8 @@
      {
        f1b2gradlist->write_pass1(&_y,&_a,&_b,&tmp,
         F_x,F_y,F_z,
-        F_xx,F_xy,F_xz,F_yy,F_yz,F_zz,F_xxx,F_xxy,F_xxz,F_xyy,F_xyz,
-        F_xzz,F_yyy,F_yyz,F_yzz,F_zzz);
+        F_xx,F_xy,F_xz,F_yy,F_yz,F_zz,
+	F_xxx,F_xxy,F_xxz,F_xyy,F_xyz,F_xzz,F_yyy,F_yyz,F_yzz,F_zzz);
      }
      //  cout<<endl<<"-----------"<<endl;
      //  cout<<_a<<"\t"<<_b<<"\t"<<_y<<endl;

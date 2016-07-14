@@ -27,7 +27,7 @@ static int write_sparse_flag=0;
 int noboundepen_flag=1;
 unsigned int global_nvar=0;
 
-double BIGFATPENALTY=0.0;
+double CHECK_HESSIAN_PENALTY=0.0;
 
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
 void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
@@ -1409,21 +1409,20 @@ void get_second_ders(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
     //pfmin->user_function(y,zz);
     (*re_objective_function_value::pobjfun)+=pen;
     (*re_objective_function_value::pobjfun)+=zz;
-
     if (!initial_df1b2params::separable_flag)
     {
       set_dependent_variable(*re_objective_function_value::pobjfun);
       df1b2_gradlist::set_no_derivatives();
       df1b2variable::passnumber=1;
       df1b2_gradcalc1();
-
       int mind=y(1).minder;
       int jmin=max(mind,xsize+1);
       int jmax=min(y(1).maxder,xsize+usize);
       for (i=1;i<=usize;i++)
-        for (j=jmin;j<=jmax;j++)
+        for (j=jmin;j<=jmax;j++){
+          //cout<<i<<" "<<j<<" "<<mind<<" "<<xsize<<" "<<usize<<endl; 
           Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
-
+        }
       jmin=max(mind,1);
       jmax=min(y(1).maxder,xsize);
       for (i=1;i<=usize;i++)
@@ -1436,7 +1435,7 @@ void get_second_ders(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
 
   if  (ad_comm::print_hess_and_exit_flag)
   {
-    for (i=1;i<=usize;i++)Hess(i,i) -= 2*BIGFATPENALTY;
+    for (i=1;i<=usize;i++)Hess(i,i) -= 2*CHECK_HESSIAN_PENALTY;
     cout<< "--------------------------------------------------------------------"<<endl;
     cout << "param:" << endl;
     for (i=1;i<=usize;i++)cout << y(i+xsize)<<" ";

@@ -278,7 +278,7 @@ dvector laplace_approximation_calculator::default_calculations
           {
             step=local_minimization(s,Hess,grad,lambda);
           }
-          uhat+=step;
+          //uhat+=step;
           for (int i=1;i<=usize;i++)
           {
             y(i+xsize)=uhat(i);
@@ -341,7 +341,7 @@ dvector laplace_approximation_calculator::default_calculations
       if (trust_update_flag==0)
       {
         uhat_old=uhat;
-        uhat+=step;
+        //uhat+=step;
       }
 
       double maxg_old=maxg;
@@ -349,7 +349,7 @@ dvector laplace_approximation_calculator::default_calculations
       maxg=fabs(evaluate_function(uhat,pfmin));
       if (maxg>maxg_old)
       {
-        uhat=uhat_old;
+        //uhat=uhat_old;
         evaluate_function(uhat,pfmin);
         break;
       }

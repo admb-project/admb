@@ -32,7 +32,7 @@ Name: path; Description: "Add ADMB, GCC, GDB, and Emacs to PATH, so they can fin
 
 [Files]
 Source: "..\dot\_emacs"; DestDir: "c:\admb-ide"; Components: ide; Flags: confirmoverwrite
-Source: "..\..\..\build\dist"; DestDir: "c:\admb-ide\admb"; Components: admb; Flags: recursesubdirs
+Source: "..\..\..\build\dist\"; DestDir: "c:\admb-ide\admb"; Components: admb; Flags: recursesubdirs
 Source: "c:\Rtools"; DestDir: "c:\admb-ide\Rtools"; Components: mode Flags: recursesubdirs
 Source: "c:\emacs-24.5-bin-i686-mingw32"; DestDir: "c:\admb-ide\emacs"; Components: mode
 Source: "icons"; DestDir: "c:\admb-ide\icons"; Components: ide

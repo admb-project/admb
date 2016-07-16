@@ -6,6 +6,7 @@ ifeq ($(OS),Windows_NT)
     override SHELL:=cmd
     override MAKE:=$(SRCDIR)\..\utitities\make
   else
+
     ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
       SHELL = cmd
       ifeq ($(SHELL),cmd)

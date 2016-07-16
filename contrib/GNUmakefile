@@ -15,8 +15,8 @@ ifeq ($(OS),Windows_NT)
       endif
       PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
     else
+      MYPWD=$(shell pwd)
       ifneq ($(TERM),xterm)
-        MYPWD=$(shell pwd)
         PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
       endif
       PATH:=$(PATH):$(MYPWD)/../utilities

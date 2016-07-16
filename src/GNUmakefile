@@ -4,7 +4,7 @@ ifeq ($(OS),Windows_NT)
     PATH:=/cygdrive/c/Rtools/bin:/cygdrive/c/Rtools/mingw_64/bin:$(PATH)
     PATH:=$(PATH):$(shell /cygdrive/c/Rtools/bin/cygpath $(SRCDIR))/../utilities
     override SHELL:=cmd
-    override MAKE:=$(SRCDIR)\..\utitities\make
+    override MAKE:=$(SRCDIR)\..\utilities\make
   else
     ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
       SHELL = cmd

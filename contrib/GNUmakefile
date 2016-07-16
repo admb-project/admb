@@ -1,18 +1,26 @@
 ifeq ($(OS),Windows_NT)
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL = cmd
-    ifeq ($(SHELL),cmd)
-      MYPWD=$(shell cd)
-    else
-      MYPWD=$(shell cmd /C cd)
-    endif
-    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
+  ifeq ("$(TERM)","cygwin")
+    SRCDIR:=$(shell cd)
+    PATH:=/cygdrive/c/Rtools/bin:/cygdrive/c/Rtools/mingw_64/bin:$(PATH)
+    PATH:=$(PATH):$(shell /cygdrive/c/Rtools/bin/cygpath $(SRCDIR))/../utilities
+    override SHELL:=cmd
+    override MAKE:=$(SRCDIR)\..\utitities\make
   else
-    ifneq ($(TERM),xterm)
-      MYPWD=$(shell pwd)
-      PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
+    ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+      SHELL = cmd
+      ifeq ($(SHELL),cmd)
+        MYPWD=$(shell cd)
+      else
+        MYPWD=$(shell cmd /C cd)
+      endif
+      PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
+    else
+      ifneq ($(TERM),xterm)
+        MYPWD=$(shell pwd)
+        PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
+      endif
+      PATH:=$(PATH):$(MYPWD)/../utilities
     endif
-    PATH:=$(PATH):$(MYPWD)/../utilities
   endif
 endif
 ifeq ($(SHELL),cmd)

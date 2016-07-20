@@ -79,8 +79,7 @@ extern int* pointer_to_phase;
 /**
 Default constructor
 */
-initial_params::initial_params():
-  phase_stop(0)
+initial_params::initial_params()
 {
 #if defined(USE_SHARE_FLAGS)
   share_flags = 0;
@@ -418,7 +417,7 @@ void initial_params::save()
     ofstream parfile((char*)tadstring);
     if (parfile.good())
     {
-      parfile << setshowpoint()
+      parfile << setshowpoint() << setprecision(15)
         <<  "# Number of parameters = " << initial_params::nvarcalc()
         <<  " Objective function value = " << *objective_function_value::pobjfun
         <<  "  Maximum gradient component = " << objective_function_value::gmax

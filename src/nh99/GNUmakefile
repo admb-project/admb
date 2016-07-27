@@ -8,18 +8,24 @@ ifeq ("$(CC)","cc")
 else
 	$(CC) $(CFLAGS) -Wno-format -o $@ $<
 endif
+
+tpl2cpp.c: lex.yy.c
+	../../utilities/sed -f sedflex lex.yy.c > $@
+
+lex.yy.c: tpl2cpp.lex
+	../../utilities/flex tpl2cpp.lex
 else
 bins: $(DIST)\bin\tpl2cpp.exe
 
 $(DIST)\bin\tpl2cpp.exe: tpl2cpp.c
 	$(CC) $(CFLAGS) -Wno-format -o $@ $<
-endif
 
 tpl2cpp.c: lex.yy.c
 	sed -f sedflex lex.yy.c > $@
 
 lex.yy.c: tpl2cpp.lex
 	flex tpl2cpp.lex
+endif
 else
 bins: $(DIST)/bin/tpl2cpp
 

@@ -1,8 +1,5 @@
 ifeq ($(OS),Windows_NT)
   ifeq ($(TERM),cygwin)
-    ifneq ($(origin PATH),override)
-    PATH:=$(PATH):/cygdrive/c/Users/buildslave/admb/utilities
-    endif
   else
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL = cmd

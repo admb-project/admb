@@ -4,19 +4,24 @@ bins: $(DIST)/bin/tpl2rem
 
 $(DIST)/bin/tpl2rem: tpl2rem.c
 	$(CC) $(CFLAGS) -o $@ $<
+
+tpl2rem.c: lex.yy.c
+	../../utilities/sed -f sedflex lex.yy.c > $@
+
+lex.yy.c: tpl2rem.lex
+	../../utilities/flex -w tpl2rem.lex
 else
 bins: $(DIST)\bin\tpl2rem.exe
 
 $(DIST)\bin\tpl2rem.exe: tpl2rem.c
 	$(CC) $(CFLAGS) -o $@ $<
-endif
 
 tpl2rem.c: lex.yy.c
 	sed -f sedflex lex.yy.c > $@
 
 lex.yy.c: tpl2rem.lex
 	flex -w tpl2rem.lex
-
+endif
 else
 bins: $(DIST)/bin/tpl2rem
 

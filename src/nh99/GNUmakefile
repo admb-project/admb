@@ -1,4 +1,4 @@
-ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+ifeq ($(OS),Windows_NT)
 ifeq (cygwin,$(TERM))
 bins: $(DIST)/bin/tpl2cpp
 
@@ -15,16 +15,19 @@ tpl2cpp.c: lex.yy.c
 lex.yy.c: tpl2cpp.lex
 	../../utilities/flex tpl2cpp.lex
 else
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+SHELL:=cmd
 bins: $(DIST)\bin\tpl2cpp.exe
 
 $(DIST)\bin\tpl2cpp.exe: tpl2cpp.c
 	$(CC) $(CFLAGS) -Wno-format -o $@ $<
 
 tpl2cpp.c: lex.yy.c
-	sed -f sedflex lex.yy.c > $@
+	..\..\utilities\sed -f sedflex lex.yy.c > $@
 
 lex.yy.c: tpl2cpp.lex
-	flex tpl2cpp.lex
+	..\..\utilities\flex tpl2cpp.lex
+endif
 endif
 else
 bins: $(DIST)/bin/tpl2cpp

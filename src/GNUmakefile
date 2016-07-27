@@ -8,13 +8,12 @@ ifeq ($(OS),Windows_NT)
     else
       MYPWD=$(shell cmd /C cd)
     endif
-    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
+    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH)
   else
     ifneq ($(TERM),xterm)
       MYPWD=$(shell pwd)
       PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
     endif
-    PATH:=$(PATH):$(MYPWD)/../utilities
   endif
   endif
 endif

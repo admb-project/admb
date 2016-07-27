@@ -1,4 +1,8 @@
 .ONESHELL:
+ifeq ($(TERM),cygwin)
+EXT=.cmd
+ADMB_HOME=../../..
+else
 ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
 SHELL = cmd
 ADMB_HOME=$(shell cmd /C cd .. && cd)
@@ -7,6 +11,7 @@ ADMB_HOME=$(shell cd .. && pwd)
 endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
+endif
 endif
 ifdef ADMB_OPTIONS
 OPTIONS:= $(ADMB_OPTIONS)
@@ -18,7 +23,9 @@ ifdef FAST_OPTION
 OPTIONS:= $(OPTIONS) -f
 endif
 ifndef TRAVIS
+ifneq ($(TERM),cygwin)
 PROG=time
+endif
 endif
 
 default: simple
@@ -27,7 +34,9 @@ ifdef PROG_VALGRIND
 all: simple caest
 else
 all: admb admb-re
+ifneq ($(TERM),cygwin)
 	cd autodif && $(MAKE)
+endif
 endif
 
 admb:\

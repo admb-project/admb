@@ -1,9 +1,12 @@
+ifeq ($(TERM),cygwin)
+else
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
   else
     EXT=.sh
   endif
+endif
 endif
 
 all: 
@@ -68,7 +71,6 @@ endif
 
 total-clean: clean
 ifeq ($(SHELL),cmd)
-	$(MAKE) --file=Makefile total-clean
 else
 	@rm -rvf admb_tests
 	@rm -vf bvprobit.tpl
@@ -78,7 +80,6 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	$(MAKE) --file=Makefile clean
 else
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

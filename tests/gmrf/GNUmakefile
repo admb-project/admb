@@ -1,11 +1,14 @@
 .PHONY: run run2
 
+ifeq ($(TERM),cygwin)
+else
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
   else
     EXT=.sh
   endif
+endif
 endif
 
 TARGET=gmrf

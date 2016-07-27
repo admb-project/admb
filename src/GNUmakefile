@@ -1,4 +1,9 @@
 ifeq ($(OS),Windows_NT)
+  ifeq ($(TERM),cygwin)
+    ifneq ($(origin PATH),override)
+    PATH:=$(PATH):/cygdrive/c/Users/buildslave/admb/utilities
+    endif
+  else
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL = cmd
     ifeq ($(SHELL),cmd)
@@ -13,6 +18,7 @@ ifeq ($(OS),Windows_NT)
       PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
     endif
     PATH:=$(PATH):$(MYPWD)/../utilities
+  endif
   endif
 endif
 
@@ -100,12 +106,20 @@ ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/dist/include
   endif
 endif
 
+ifeq ($(TERM),cygwin)
+  ifeq ($(CXX),g++)
+    ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
+      ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
+    endif
+  endif
+else
 ifeq ($(SHELL),cmd)
   ifeq ($(CXX),g++)
     ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
       ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
     endif
   endif
+endif
 endif
 
 override CXXFLAGS += $(ADCXXFLAGS)
@@ -174,7 +188,8 @@ endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
-shared: $(OBJECTS)
+shared: dirs
+	$(MAKE) objects
 ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-shared.a -Wl,--no-whole-archive
@@ -200,22 +215,6 @@ else
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
     endif
-  endif
-endif
-
-shared: | dirs
-
-shared2:
-ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo.a -Wl,--no-whole-archive
-else
-  ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
-	$(CXX) -shared -o ../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb.a
-	$(CXX) -shared -o ../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo.a
-  else
-	$(CXX) -shared -o ../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb.a -Wl,--no-whole-archive
-	$(CXX) -shared -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo.a -Wl,--no-whole-archive
   endif
 endif
 
@@ -316,7 +315,12 @@ else
     endif
 endif
 
-libs: objects
+ifndef SHARED
+libs:  includes
+else
+libs: dirs
+endif
+	$(MAKE) objects
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
 	if exist ${DIST}\lib\libadmb$(SHARED).a del ${DIST}\lib\libadmb$(SHARED).a
@@ -340,12 +344,6 @@ ifndef COVERAGE
 endif
 
 objects: $(OBJECTS)
-
-ifndef SHARED
-$(OBJECTS): | includes
-else
-$(OBJECTS): | dirs
-endif
 
 ifeq ($(SHELL),cmd)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp

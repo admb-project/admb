@@ -1,4 +1,6 @@
 ifeq ($(OS),Windows_NT)
+  ifeq ($(TERM),cygwin)
+  else
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL = cmd
     ifeq ($(SHELL),cmd)
@@ -13,6 +15,7 @@ ifeq ($(OS),Windows_NT)
       PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
     endif
     PATH:=$(PATH):$(MYPWD)/../utilities
+  endif
   endif
 endif
 ifeq ($(SHELL),cmd)

@@ -1,8 +1,15 @@
 ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+ifeq (cygwin,$(TERM))
+bins: $(DIST)/bin/tpl2rem
+
+$(DIST)/bin/tpl2rem: tpl2rem.c
+	$(CC) $(CFLAGS) -o $@ $<
+else
 bins: $(DIST)\bin\tpl2rem.exe
 
 $(DIST)\bin\tpl2rem.exe: tpl2rem.c
 	$(CC) $(CFLAGS) -o $@ $<
+endif
 
 tpl2rem.c: lex.yy.c
 	sed -f sedflex lex.yy.c > $@

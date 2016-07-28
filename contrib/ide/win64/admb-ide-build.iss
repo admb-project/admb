@@ -31,12 +31,12 @@ Name: assoc2; Description: "Associate Emacs files (el, elc, emacs) with ADMB-IDE
 Name: path; Description: "Add ADMB, GCC, GDB, and Emacs to PATH, so they can find each other"; GroupDescription: "Registry:"
 
 [Files]
-Source: "..\dot\_emacs"; DestDir: "c:\admb-ide"; Components: ide; Flags: confirmoverwrite
-Source: "..\..\..\build\dist\"; DestDir: "c:\admb-ide\admb"; Components: admb; Flags: recursesubdirs
-Source: "c:\Rtools"; DestDir: "c:\admb-ide\Rtools"; Components: mode Flags: recursesubdirs
-Source: "c:\emacs-24.5-bin-i686-mingw32"; DestDir: "c:\admb-ide\emacs"; Components: mode
-Source: "icons"; DestDir: "c:\admb-ide\icons"; Components: ide
-Source: "..\NEWS"; DestDir: "c:\admb-ide"; Components: ide
+Source: "..\..\..\build\dist\*"; DestDir: "{app}\admb"; Components:admb; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "C:\Rtools\*"; DestDir: "{app}\Rtools"; Components: gcc; Flags: recursesubdirs
+Source: "C:\emacs-24.5-bin-i686-mingw32\*"; DestDir: "{app}\emacs"; Components: emacs; Flags: recursesubdirs
+Source: "..\dot\_emacs"; DestDir: "{app}"; Components: ide
+Source: "..\icons\*"; DestDir: "{app}\icons"; Components: ide; Flags: recursesubdirs
+Source: "..\NEWS"; DestDir: "{app}"; Components: ide
 ;Source: "c:\~\emacs\lisp\auctex\*"; DestDir: "c:\~\emacs\lisp\auctex"; Components: auctex; Flags: recursesubdirs
 ;Source: "c:\~\emacs\lisp\ess\*";    DestDir: "c:\~\emacs\lisp\ess";    Components: ess;    Flags: recursesubdirs
 ;Source: "..\*.pdf";                 DestDir: "c:\admb";                Components: admb

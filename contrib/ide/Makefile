@@ -5,7 +5,9 @@ SHELL = cmd
 endif
 endif
 
-all: admb-ide.zip
+all:
+	$(MAKE) clean
+	$(MAKE) admb-ide.zip
 
 admb-ide.zip:
 ifeq ($(SHELL),cmd)
@@ -13,3 +15,8 @@ ifeq ($(SHELL),cmd)
 else
 	win64/admb-ide-build.bat
 endif
+
+clean:
+	$(RM) admb-ide.zip
+	$(RM) admb-ide.exe
+	$(RM) -r admb-ide

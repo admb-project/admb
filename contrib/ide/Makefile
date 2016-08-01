@@ -5,8 +5,7 @@ SHELL = cmd
 endif
 endif
 
-all:
-	$(MAKE) clean
+all: clean
 	$(MAKE) admb-ide.zip
 
 admb-ide.zip:
@@ -18,5 +17,9 @@ endif
 
 clean:
 	$(RM) admb-ide.zip
-	$(RM) admb-ide.exe
+ifeq ($(SHELL),cmd)
+	$(RM) win64\admb-ide.exe
+else
+	$(RM) win64/admb-ide.exe
+endif
 	$(RM) -r admb-ide

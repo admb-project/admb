@@ -6,13 +6,19 @@ endif
 endif
 
 all: clean
-	$(MAKE) admb-ide.zip
 
-admb-ide.zip:
+admb-ide.zip: clean
 ifeq ($(SHELL),cmd)
 	win64\admb-ide-build.bat
 else
 	win64/admb-ide-build.bat
+endif
+
+admb-ide.exe: clean
+ifeq ($(SHELL),cmd)
+	iscc win64\admb-ide-build.iss
+else
+	iscc win64/admb-ide-build.iss
 endif
 
 clean:

@@ -37,7 +37,6 @@ rd /q /s admb-ide
 mkdir admb-ide
 echo.
 echo *** Populating ~ ...
-copy /Y dot\_emacs admb-ide\.emacs
 @REM xcopy /iq  c:\~\emacs\lisp\admb     temp\~\emacs\lisp\admb
 @REM xcopy /iqs c:\~\emacs\lisp\auctex   temp\~\emacs\lisp\auctex
 @REM xcopy /iqs c:\~\emacs\lisp\ess      temp\~\emacs\lisp\ess
@@ -53,7 +52,9 @@ xcopy /E /Y NEWS admb-ide\
 echo.
 echo *** Populating emacs and Rtools ...
 xcopy /E /Y C:\emacs-24.5-bin-i686-mingw32 admb-ide\emacs\
+copy /Y dot\_emacs admb-ide\emacs\share\emacs\site-lisp\default.el
 xcopy /E /Y c:\Rtools admb-ide\Rtools\
+pushd admb-ide & cscript ..\win64\create-admb-ide-shortcut.vbs & popd
 echo.
 echo *** Creating admb-ide.zip
 7z a -tzip -mx9 admb-ide.zip admb-ide

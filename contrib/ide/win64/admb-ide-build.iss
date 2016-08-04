@@ -34,7 +34,7 @@ Name: path; Description: "Add ADMB, GCC, GDB, and Emacs to PATH, so they can fin
 Source: "..\..\..\build\dist\*"; DestDir: "{app}\admb"; Components:admb; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "C:\Rtools\*"; DestDir: "{app}\Rtools"; Components: gcc; Flags: recursesubdirs
 Source: "C:\emacs-24.5-bin-i686-mingw32\*"; DestDir: "{app}\emacs"; Components: emacs; Flags: recursesubdirs
-Source: "..\dot\_emacs"; DestDir: "{app}"; Components: ide
+Source: "..\dot\_emacs"; DestDir: "{app}\emacs\share\emacs\site-lisp\default.el"; Components: ide
 Source: "..\icons\*"; DestDir: "{app}\icons"; Components: ide; Flags: recursesubdirs
 Source: "..\NEWS"; DestDir: "{app}"; Components: ide
 ;Source: "c:\~\emacs\lisp\auctex\*"; DestDir: "c:\~\emacs\lisp\auctex"; Components: auctex; Flags: recursesubdirs
@@ -45,7 +45,7 @@ Source: "..\NEWS"; DestDir: "{app}"; Components: ide
 ;Source: "admb-ide-build.*";         DestDir: "c:\admb-ide\inst";       Components: ide
 
 [Icons]
-Name: "{userdesktop}\ADMB-IDE"; Filename: "set PATH=%PATH% && c:\admb-ide\emacs\bin\runemacs.exe"; IconFilename: "c:\admb-ide\icons\admb64.ico"; Tasks: desktop
+Name: "{userdesktop}\ADMB-IDE"; Filename: "set PATH=emacs\bin;Rtools\bin;Rtools\mingw_64\bin;admb\bin;%PATH% & runemacs"; IconFilename: "c:\admb-ide\icons\admb64.ico"; Tasks: desktop
 ;Name: "{group}\ADMB-IDE"; Filename: "c:\admb-ide\emacs\bin\runemacs.exe"; IconFilename: "c:\admb-ide\icons\admb.ico"; Tasks: startmenu
 ;Name: "{group}\Uninstall ADMB-IDE"; Filename: "{uninstallexe}"; Tasks: startmenu
 ;Name: "{group}\Manual (ADMB)"; Filename: "c:\admb-ide\admb.pdf"; Tasks: startmenu

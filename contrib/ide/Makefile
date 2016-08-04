@@ -23,11 +23,11 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	$(RM) win64\admb-ide.exe
-	$(RM) admb-ide.zip
-	$(RM) -r admb-ide
-else
 	del win64/admb-ide.exe
 	del admb-ide.zip
 	@if exist admb-ide rmdir /s /q admb-ide
+else
+	$(RM) win64\admb-ide.exe
+	$(RM) admb-ide.zip
+	$(RM) -r admb-ide
 endif

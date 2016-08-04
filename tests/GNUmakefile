@@ -52,6 +52,7 @@ coverage: all-gtests
 	$(MAKE) tpl-betai
 	$(MAKE) tpl-beta2
 	$(MAKE) tpl-beta3
+	$(MAKE) tpl-vonmises
 	$(MAKE) tpl-beta_deviate
 	$(MAKE) tpl-betareg
 	$(MAKE) tpl-beta_regression
@@ -80,6 +81,7 @@ all-tpls:\
   tpl-betai\
   tpl-beta2\
   tpl-beta3\
+  tpl-vonmises\
   tpl-beta_deviate\
   tpl-betareg\
   tpl-beta_regression\
@@ -117,6 +119,9 @@ tpl-beta2:
 
 tpl-beta3:
 	$(MAKE) --directory=beta3
+
+tpl-vonmises:
+	$(MAKE) --directory=vonmises
 
 tpl-beta_deviate:
 	$(MAKE) --directory=beta_deviate
@@ -223,6 +228,7 @@ endif
 	$(MAKE) --directory=betai clean
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
+	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=beta_deviate clean
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean

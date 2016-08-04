@@ -22,10 +22,12 @@ else
 endif
 
 clean:
-	$(RM) admb-ide.zip
 ifeq ($(SHELL),cmd)
 	$(RM) win64\admb-ide.exe
-else
-	$(RM) win64/admb-ide.exe
-endif
+	$(RM) admb-ide.zip
 	$(RM) -r admb-ide
+else
+	del win64/admb-ide.exe
+	del admb-ide.zip
+	@if exist admb-ide rmdir /s /q admb-ide
+endif

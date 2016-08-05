@@ -2,50 +2,6 @@
 #include <contrib.h>
 #include <time.h>
 
-namespace gsl
-{
-double rgamma(double alpha, random_number_generator& rng) 
-{
-  double b=1.0;
-  double a=alpha;
-
-  if (a<1)
-    {
-      double u = randu(rng);
-      return gsl::rgamma (1.0 + a,rng) * pow (u, 1.0 / a);
-    }
- 
-  {
-    double x, v, u;
-    double d = a - 1.0 / 3.0;
-    double c = (1.0 / 3.0) / sqrt (d);
- 
-    while (1)
-      {
-        do
-          {
-            x = randn(rng);
-            v = 1.0 + c * x;
-          }
-        while (v<0);
- 
-        v = v * v * v;
-        u = randu(rng);
-        //v = v * v * v;
-        //u = randu(rng);
- 
-        if (u < (1 - 0.0331 * x * x * x * x)) 
-          break;
- 
-        if (log (u) < (0.5 * x * x + d * (1 - v + log (v))))
-          break;
-      }
- 
-    return b * d * v;
-  }
-}
-}
-
 double rgamma1(double aa,const random_number_generator & rng)
 {
   double a=aa;
@@ -74,9 +30,6 @@ double rgamma1(double aa,const random_number_generator & rng)
    while(1);
 }
 
-
-
-
 int main()
 {
   double alpha=10;
@@ -92,7 +45,7 @@ int main()
   begin = clock();
   for (int i=1;i<=n;i++)
   {
-    v(i)=gsl::rgamma(alpha,rng);
+    v(i)=rgamma(alpha,rng);
     ssum+=v(i);
     ssum2+=square(v(i));
   }
@@ -128,7 +81,7 @@ int main()
   begin = clock();
   for (int i=1;i<=n;i++)
   {
-    v(i)=rgamma(alpha,rng3);
+    v(i)=qfclib::rgamma(alpha,rng3);
     ssum+=v(i);
     ssum2+=square(v(i));
   }

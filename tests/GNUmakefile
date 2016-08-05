@@ -46,6 +46,7 @@ endif
 coverage: all-gtests
 	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/debug/include includes
 	$(MAKE) --directory=../examples all
+	$(MAKE) test-rgamma
 	$(MAKE) tpl-f1b2vc5
 	$(MAKE) tpl-4darray
 	$(MAKE) tpl-glmmadmb
@@ -73,7 +74,11 @@ ifneq ($(USE_GTESTS),no)
 	$(MAKE) --directory=gtests
 endif
 
+test-rgamma:
+	$(MAKE) --directory=rgamma
+
 all-tpls:\
+  test-rgamma\
   tpl-f1b2vc5\
   tpl-4darray\
   tpl-glmmadmb\

@@ -22,9 +22,9 @@ endif
 
 run:
 ifeq ($(SHELL),cmd)
-	$(TARGET)
+	$(TARGET) -imaxfn 0 -noinit
 else
-	./$(TARGET)
+	./$(TARGET) -imaxfn 0 -noinit
 endif
 
 clean:
@@ -54,6 +54,12 @@ ifeq ($(SHELL),cmd)
 	@del $(TARGET).rhes
 	@del hesscheck
 	@del hessian.bin
+	@del f1b2list1
+	@del f1b2list12
+	@del f1b2list13
+	@del nf1b2list1
+	@del nf1b2list12
+	@del nf1b2list13
 else
 	@rm -vf $(TARGET)
 	@rm -vf admodel.*
@@ -82,4 +88,10 @@ else
 	@rm -vf $(TARGET).rhes
 	@rm -vf hesscheck
 	@rm -vf hessian.bin
+	@rm -vf f1b2list1
+	@rm -vf f1b2list12
+	@rm -vf f1b2list13
+	@rm -vf nf1b2list1
+	@rm -vf nf1b2list12
+	@rm -vf nf1b2list13
 endif

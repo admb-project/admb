@@ -61,7 +61,6 @@ test:
 	pushd qfclib& $(MAKE) test
 
 clean:
-	pushd ide& $(MAKE) clean
 	pushd ecolib& $(MAKE) clean
 	pushd gdbprintlib& $(MAKE) clean
 	pushd qfclib& $(MAKE) clean

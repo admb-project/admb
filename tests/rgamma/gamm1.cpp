@@ -21,8 +21,8 @@ double rgamma1(double aa,const random_number_generator & rng)
        double y=d*v;
        if (aa<1.0)
        {
-         double u=randu(rng);
-         y*=pow(u,1.0/aa);
+	 double u=randu(rng);
+	 y*=pow(u,1.0/aa);
        }
        return y;
      }
@@ -50,7 +50,7 @@ int main()
     ssum2+=square(v(i));
   }
   end = clock();
-   
+
   x1=ssum/n;
   x2=ssum2/n;
   cout<<endl<<"GSL:"<<endl;
@@ -86,7 +86,7 @@ int main()
     ssum2+=square(v(i));
   }
   end = clock();
-   
+
   x1=ssum/n;
   x2=ssum2/n;
   cout<<endl<<"QFC:"<<endl;

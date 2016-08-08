@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern char* ddlist_space;
-
 class test_dlist: public ::testing::Test {};
 
+/*
+extern char* ddlist_space;
 TEST_F(test_dlist, constructor)
 {
   dlist lst;
@@ -19,12 +19,6 @@ TEST_F(test_dlist, destructor)
 
   EXPECT_EQ(0, ddlist_space);
 }
-TEST_F(test_dlist, last_remove_empty_list)
-{
-  dlist lst;
-  EXPECT_EQ(0, lst.last_remove());
-}
-/*
 TEST_F(test_dlist, create)
 {
   dlist lst;
@@ -47,6 +41,11 @@ TEST_F(test_dlist, create)
   EXPECT_EQ(0, (intptr_t)c->previous());
 }
 */
+TEST_F(test_dlist, last_remove_empty_list)
+{
+  dlist lst;
+  EXPECT_EQ(0, lst.last_remove());
+}
 TEST_F(test_dlist, append)
 {
   dlist lst;

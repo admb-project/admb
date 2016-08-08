@@ -12,7 +12,7 @@
 #include <fcntl.h>
 
 #ifdef _MSC_VER
-  #define lseek _lseek
+  #define LSEEK _lseek
   #define  read _read
   #define write _write
   #include <sys\stat.h>
@@ -44,7 +44,7 @@
   #define O_RDWR 2
   extern "C"
   {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int open(const char*, int);
     int creat(const char*, int);
     int close(int);
@@ -67,6 +67,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+#ifdef _MSC_VER
+  #ifdef _M_X64
+  typedef __int64 ssize_t;
+  #else
+  typedef int ssize_t;
+  #endif
+  #ifndef SSIZE_MAX
+    #define SSIZE_MAX INT_MAX
+  #endif
+#endif
 
 #if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
   #include <cassert>
@@ -140,11 +151,16 @@ DF_FILE::DF_FILE(const size_t nbytes):
 #endif
 */
 
-  if ((buff = new char[buff_size]) == NULL)
+  buff = new char[buff_size];
+  if (buff == NULL)
   {
     cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;
     ad_exit(1);
   }
+#ifndef OPT_LIB
+  memset(buff, 0, buff_size);
+#endif
+
   offset = 0;
   toffset = 0;
 
@@ -179,7 +195,7 @@ DF_FILE::DF_FILE(const size_t nbytes):
   }
 #endif
 
-  if (path != NULL)
+  if (path != NULL && strlen(path) <= 45)
 #if !defined (_WIN32)
   {
       sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
@@ -238,7 +254,7 @@ DF_FILE::~DF_FILE()
 
   if (ad_comm::global_logfile && repfs)
   {
-    off_t pos = lseek(file_ptr, 0, SEEK_END);
+    OFF_T pos = LSEEK(file_ptr, 0, SEEK_END);
     *ad_comm::global_logfile << "size of file " << cmpdif_file_name
         << " = " << pos << endl;
   }
@@ -268,7 +284,7 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
 {
   if (toffset < num_bytes)
   {
-    off_t lpos = lseek(file_ptr, -((off_t)buff_size), SEEK_CUR);
+    OFF_T lpos = LSEEK(file_ptr, -((OFF_T)buff_size), SEEK_CUR);
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
     toffset = offset;
@@ -312,7 +328,7 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
  * Description not yet available.
  * \param
  */
-void DF_FILE::read_cmpdif_stack_buffer(off_t& lpos)
+void DF_FILE::read_cmpdif_stack_buffer(OFF_T& lpos)
 {
   if (lpos == -1L)
   {
@@ -323,13 +339,14 @@ void DF_FILE::read_cmpdif_stack_buffer(off_t& lpos)
   assert(buff_size <= UINT_MAX);
   if (read(file_ptr, buff, (unsigned int)buff_size) < 0)
 #else
-  if (read(file_ptr, buff, buff_size) < 0)
+  ssize_t bytes_read = read(file_ptr, buff, buff_size);
+  if (bytes_read < 0)
 #endif
   {
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
   }
-  lpos = lseek(file_ptr, -((off_t)buff_size),SEEK_CUR);
+  lpos = LSEEK(file_ptr, -((OFF_T)buff_size),SEEK_CUR);
   for (size_t i = 0;i < sizeof(size_t); i++)
   {
     fourb[i] = *(buff+buff_end+1+i);

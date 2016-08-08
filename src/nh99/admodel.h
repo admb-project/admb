@@ -279,15 +279,17 @@ protected:
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * s);
   void allocate(int rmin,int rmax,const char * s);
   void allocate(const char * s);
-  //void allocate(int rmin,int rmax,int,const ivector&,
-    //const char * s);
-  void allocate(int rmin,int rmax,const index_type&,const index_type&,
-    const char * s);
+  //void allocate(int rmin,int rmax,int,const ivector&, const char * s);
+  void allocate(
+    int rmin, int rmax,
+    const index_type& cmin, const index_type& cmax,
+    const char* s);
 public:
   named_dvar_matrix& operator=(const double m);
   named_dvar_matrix& operator=(const dmatrix& m);
   named_dvar_matrix& operator=(const dvar_matrix& m);
   named_dvar_matrix& operator=(const dvariable& m);
+
   friend class model_parameters;
 };
 
@@ -892,13 +894,17 @@ public:
   virtual void hess_scale(const dvector& d, const dvector& x,
     const int& ii) = 0;
   virtual int size_count(void)=0; // get the number of active parameters
-  virtual void save_value(void)=0; // save the objects value in a ascii file
-  virtual void bsave_value(void)=0; // save the objects value in a binary file
+
+  // save the objects value in to a text file
+  virtual void save_value(ofstream& ofs) = 0;
+
+  // save the objects value in a binary file
+  virtual void bsave_value(uostream& uos) = 0;
+
   virtual void save_value(const ofstream& ofs, int prec) = 0;
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
     int& offset)=0;
-  //virtual void bsave_value(const uostream& ofs) = 0;
-    virtual const char * label()=0;
+  virtual const char* label() = 0;
   void allocate(int _phase_start);
   void set_active_flag(void);
   void set_inactive_flag(void);
@@ -968,7 +974,7 @@ void pvm_unpack(const dvar_matrix&);
  * Description not yet available.
  * \param
  */
-class param_init_vector: public named_dvar_vector , public initial_params
+class param_init_vector: public named_dvar_vector, public initial_params
 {
 public:
 #if defined(USE_SHARE_FLAGS)
@@ -1006,8 +1012,8 @@ private:
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x,const int&);
   virtual void hess_scale(const dvector&, const dvector&, const int&){}
-  virtual void save_value(void);
-  virtual void bsave_value(void);
+  virtual void save_value(ofstream& ofs);
+  virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec);
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
     int& offset);
@@ -1056,7 +1062,7 @@ public:
  * Description not yet available.
  * \param
  */
-class param_init_bounded_vector: public named_dvar_vector,public initial_params
+class param_init_bounded_vector: public named_dvar_vector, public initial_params
 {
   virtual void* parent_this(void){return this;}
 public:
@@ -1103,8 +1109,8 @@ private:
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
     int& offset);
   virtual void restore_value(const ifstream& ifs);
-  virtual void save_value(void);
-  virtual void bsave_value(void);
+  virtual void save_value(ofstream& ofs);
+  virtual void bsave_value(uostream& uos);
   void report_value(void);
   //virtual void read_value(void);
 public:
@@ -1153,7 +1159,7 @@ public:
  * Description not yet available.
  * \param
  */
-class param_init_number: public named_dvariable , public initial_params
+class param_init_number: public named_dvariable, public initial_params
 {
   virtual void dev_correction(const dmatrix&, const int&);
   virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
@@ -1179,8 +1185,8 @@ class param_init_number: public named_dvariable , public initial_params
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
     int& offset);
   virtual void restore_value(const ifstream& ifs);
-  virtual void save_value(void);
-  virtual void bsave_value(void);
+  virtual void save_value(ofstream& ofs);
+  virtual void bsave_value(uostream& uos);
   void report_value(void);
   virtual const char * label(void);
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
@@ -1321,10 +1327,10 @@ public:
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
-  virtual void save_value(void);
+  virtual void save_value(ofstream& ofs);
+  virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
     int& offset);
-  virtual void bsave_value(void);
   virtual void save_value(const ofstream& ofs, int prec);
   virtual void restore_value(const ifstream& ifs);
   void report_value(void);
@@ -1452,25 +1458,26 @@ public:
  * Description not yet available.
  * \param
  */
-class data_int : public model_name_tag
+class data_int: public model_name_tag
 {
 protected:
   int val;
+
   data_int& operator=(const int);
+
   void allocate(int n,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
   void allocate(init_xml_doc&, const char * s="UNNAMED");
+
+public:
+  ~data_int() { }
+  operator int() const { return val; }
+
   friend class model_data;
   friend class model_parameters;
   friend int operator + (int n,data_int v);
   friend int operator + (data_int v,int n);
   friend int operator + (data_int v,data_int n);
-public:
-  operator int() {return val;}
-#if !defined (__BORLANDC__)
-  //operator const int() const {return val;}
-#endif
-  virtual ~data_int(){;}
 };
 
 /**
@@ -1836,7 +1843,8 @@ public:
   double min_improve;
   void pre_userfunction(void);
   virtual void userfunction(void)=0;
-  virtual void allocate(void){;}
+  virtual void allocate() {}
+  virtual void deallocate() {}
   static named_dvar_vector * ph;
   static named_dvar_vector * pg;
 protected:
@@ -2267,7 +2275,7 @@ double inv_cumd_mixture_02(const double& y);
  * Description not yet available.
  * \param
  */
-class param_init_matrix: public named_dvar_matrix,public initial_params
+class param_init_matrix: public named_dvar_matrix, public initial_params
 {
   virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
 //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds,
@@ -2283,8 +2291,8 @@ public:
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
-  virtual void save_value(void);
-  virtual void bsave_value(void);
+  virtual void save_value(ofstream& ofs);
+  virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec);
   virtual void restore_value(const ifstream& ifs);
   void report_value(void);
@@ -2312,7 +2320,7 @@ public:
  * Description not yet available.
  * \param
  */
-class param_init_d3array: public named_dvar3_array,public initial_params
+class param_init_d3array: public named_dvar3_array, public initial_params
 {
 public:
 #if defined(USE_SHARE_FLAGS)
@@ -2340,8 +2348,8 @@ public:
   virtual void restore_value_from_vector(const dvector&,const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
-  virtual void save_value(void);
-  virtual void bsave_value(void);
+  virtual void save_value(ofstream& ofs);
+  virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec);
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
     int& offset){}
@@ -2842,5 +2850,7 @@ int withinbound(int lb,int n,int ub);
 #endif
 
 #include "param_init_bounded_number_matrix.h"
+
+#include <Vectorize.hpp>
 
 #endif

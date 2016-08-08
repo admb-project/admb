@@ -9,21 +9,8 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-
-
-//#undef TRACE
-//#define TRACE
-
-#ifdef __TURBOC__
-  #pragma hdrstop
-  #include <iostream.h>
-#endif
-
-#ifdef __ZTC__
-  #include <iostream.hpp>
-#endif
-
 #include <string.h>
+#include <cassert>
 
 /**
  * Description not yet available.
@@ -172,32 +159,31 @@ dvector restore_dvar_vector_der_nozero(const dvar_vector_position& tmp)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Puts the derivative values in a dvector into a dvar_vector's guts.
+*/
 void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
 {
-  // puts the derivative values in a dvector into a dvar_vector's guts
-  int min=indexmin();
-  int max=indexmax();
-  if (min!=pos.indexmin() || max!=pos.indexmax())
-  {
-    cerr << "Incompatible array sizes in " <<
-    "void dvector::save_dvector_derivatives(const dvar_vector_position& pos)"
-    << endl;
-  }
-  double_and_int * ptr=pos.va;
+  const int min = indexmin();
+  const int max = indexmax();
 
-  #ifndef USE_ASSEMBLER
-    for (int i=min;i<=max;i++)
-    {
-      ptr[i].xvalue()+=(*this)(i);
-    }
-  #else
-    int n=max-min+1;
-    dp_vector_add(&(ptr[min].xvalue()),&(ptr[min].xvalue()),
-      &(this->elem(min)),n);
-  #endif
+  //Check for incompatible array sizes
+  assert(min == pos.indexmin() && max == pos.indexmax());
+
+#ifdef USE_ASSEMBLER
+  double_and_int* ptr = pos.va;
+  int n=max-min+1;
+  dp_vector_add(&(ptr[min].xvalue()), &(ptr[min].xvalue()),
+    &(this->elem(min)), n);
+#else
+  double_and_int* dest = &pos.va[min];
+  double* source = &v[min];
+  for (int i = min; i <= max; ++i)
+  {
+    dest->x += *source;
+    ++source;
+    ++dest;
+  }
+#endif
 }
 
 /**

@@ -41,7 +41,7 @@ void test_smartlist::reset(void)
 /**
 Default constructor
 */
-test_smartlist::test_smartlist(void)
+test_smartlist::test_smartlist()
 {
   bufsize=0;
   buffer=0;
@@ -50,12 +50,12 @@ test_smartlist::test_smartlist(void)
   bptr=0;
   fp=-1;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-test_smartlist::test_smartlist(const size_t _bufsize,const adstring& _filename)
+Constructor
+*/
+test_smartlist::test_smartlist(const size_t _bufsize,const adstring& _filename):
+  recend(NULL),
+  sbptr(NULL)
 {
   allocate(_bufsize,_filename);
 }
@@ -155,10 +155,15 @@ void test_smartlist::rewind(void)
     ret = ::read(fp,buffer,nbytes);
     assert(ret != -1);
 #endif
-    //cout << "Number of bytes read " << nr << endl;
+
     // skip over file postion entry in file
     // so we are ready to read second record
+#ifdef OPT_LIB
     lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+#else
+    ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+    assert(ret >= 0);
+#endif
   }
 }
 
@@ -278,6 +283,7 @@ void test_smartlist::write_buffer(void)
   }
 }
 
+#include <cassert>
 /**
  * Description not yet available.
  * \param
@@ -317,12 +323,13 @@ void test_smartlist::read_buffer(void)
     ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
     assert(ret != -1);
 #endif
-    if (nbytes > bufsize)
+    if (nbytes <= 0 || nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl
         << " buffer size is " << bufsize << " record size is supposedly "
         << nbytes << endl;
+      ad_exit(1);
     }
     // now read the record into the buffer
     ssize_t nr = ::read(fp,buffer,nbytes);
@@ -337,47 +344,53 @@ void test_smartlist::read_buffer(void)
     if (direction ==-1) // we are going backwards
     {
       // backup the file pointer again
+#ifdef OPT_LIB
       lseek(fp,pos,SEEK_SET);
+#else
+      off_t ret = lseek(fp,pos,SEEK_SET);
+      assert(ret >= 0);
+#endif
       // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     else  // we are going forward
     {
       // skip over file postion entry in file
+#ifdef OPT_LIB
       lseek(fp, pos, SEEK_CUR);
+#else
+      off_t ret = lseek(fp, pos, SEEK_CUR);
+      assert(ret >= 0);
+#endif
     }
   }
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void memcpy(const test_smartlist& _list, void* p, const size_t nsize)
+memcpy for test_smartlist
+*/
+void memcpy(test_smartlist& dest, void* source, const size_t nsize)
 {
-  ADUNCONST(test_smartlist,list)
-  if (list.bptr+nsize-1 > list.buffend)
-  {
-    cerr << " Trying to write outside list buffer" << endl;
-    exit(1);
-  }
-  memcpy(list.bptr,p,nsize);
-  list.bptr+=nsize;
+#ifndef OPT_LIB
+  //Trying to write outside list buffer
+  assert(dest.bptr + nsize - 1 <= dest.buffend);
+#endif
+
+  memcpy(dest.bptr, source, nsize);
+  dest.bptr += nsize;
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void memcpy(void* p, const test_smartlist & _list, const size_t nsize)
+memcpy for test_smartlist
+*/
+void memcpy(void* dest, test_smartlist& source, const size_t nsize)
 {
-  ADUNCONST(test_smartlist,list)
-  if (list.bptr+nsize-1 > list.buffend)
-  {
-    cerr << " Trying to write outside list buffer" << endl;
-    exit(1);
-  }
-  memcpy(p,list.bptr,nsize);
-  list.bptr+=nsize;
+#ifndef OPT_LIB
+  //Trying to write outside list buffer
+  assert(source.bptr + nsize - 1 <= source.buffend);
+#endif
+
+  memcpy(dest, source.bptr, nsize);
+  source.bptr += nsize;
 }
 
 /**

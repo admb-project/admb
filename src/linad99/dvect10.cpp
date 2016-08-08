@@ -41,16 +41,17 @@ using std::istringstream;
 const int MAX_FIELD_LENGTH = 500;
 
 /**
- * Description not yet available.
- * \param
- */
-void dvector::fill(const char * s)
+Fill vectors from values in string s.
+
+\param s should be in {v1, ..., vn} format.
+*/
+void dvector::fill(const char* s)
 {
-  const size_t n = strlen(s);
   int lbraces = 0;
   int rbraces = 0;
   int commas  = 0;
 
+  const size_t n = strlen(s);
   char* t = new char[n + 1];
   assert(t);
   t[n] = '\0';
@@ -59,17 +60,17 @@ void dvector::fill(const char * s)
   {
     if (s[k] == '{')
     {
-      lbraces ++;
+      lbraces++;
       t[k] = ' ';
     }
     else if (s[k] == '}')
     {
-      rbraces ++;
+      rbraces++;
       t[k] = ' ';
     }
     else if (s[k] == ',')
     {
-      commas ++;
+      commas++;
       t[k] = ' ';
     }
     else
@@ -78,28 +79,7 @@ void dvector::fill(const char * s)
     }
   }
 
-  if (lbraces != rbraces)
-  {
-    cerr << "Unbalanced braces in dvector::fill(const char * s)\n";
-    cerr << s << "\n";
-    ad_exit(1);
-  }
-
-  if (lbraces > 1)
-  {
-  cerr << "Only one level of braces allowed in dvector::fill(const char * s)\n";
-    cerr << s << "\n";
-    ad_exit(1);
-  }
-
-  if (lbraces ==0)
-  {
-    cerr << "Missing braces { ... } in dvector::fill(const char * s)\n";
-    cerr << s << "\n";
-    ad_exit(1);
-  }
-
-  if (lbraces == 1)
+  if (lbraces == 1 && rbraces == 1)
   {
     int nch = commas + 1;
 
@@ -123,8 +103,8 @@ void dvector::fill(const char * s)
     istringstream ss(t);
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
-   char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
-   char * err_ptr;
+   char* field = new char[size_t(MAX_FIELD_LENGTH+1)];
+   char* err_ptr = NULL;
 
    for (int i=indexmin();i<=indexmax();i++)
    {
@@ -153,8 +133,31 @@ void dvector::fill(const char * s)
    }
    delete[] field;
    field = 0;
-
-   delete[] t;
-   t = 0;
   }
+  else
+  {
+    delete[] t;
+    t = 0;
+
+    if (lbraces != rbraces)
+    {
+      cerr << "Unbalanced braces in dvector::fill(const char * s)\n";
+      cerr << s << "\n";
+      ad_exit(1);
+    }
+    if (lbraces > 1)
+    {
+      cerr << "Only one level of braces allowed in dvector::fill(const char* s)"
+           << '\n' << s << '\n';
+      ad_exit(1);
+    }
+    if (lbraces == 0)
+    {
+      cerr << "Missing braces { ... } in dvector::fill(const char * s)\n";
+      cerr << s << "\n";
+      ad_exit(1);
+    }
+  }
+  delete[] t;
+  t = 0;
 }

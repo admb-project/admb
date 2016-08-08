@@ -8,6 +8,26 @@ extern "C"
 
 class test_dvar_vector:public ::testing::Test {};
 
+TEST_F(test_dvar_vector, default_constructor)
+{
+  dvar_vector v;
+
+  ASSERT_TRUE(v.va == NULL);
+  ASSERT_EQ(v.index_min, 0);
+  ASSERT_EQ(v.index_max, -1);
+  ASSERT_TRUE(v.link_ptr == NULL);
+  ASSERT_TRUE(v.shape == NULL);
+}
+TEST_F(test_dvar_vector, incorrect_range)
+{
+  dvar_vector v(5, 1);
+
+  ASSERT_TRUE(v.va == NULL);
+  ASSERT_EQ(v.index_min, 0);
+  ASSERT_EQ(v.index_max, -1);
+  ASSERT_TRUE(v.link_ptr == NULL);
+  ASSERT_TRUE(v.shape == NULL);
+}
 TEST_F(test_dvar_vector, fill)
 {
   gradient_structure gs;
@@ -39,4 +59,64 @@ TEST_F(test_dvar_vector, constructor_fill)
   ASSERT_DOUBLE_EQ(3, value(v(4)));
   ASSERT_DOUBLE_EQ(4, value(v(5)));
   ASSERT_DOUBLE_EQ(5, value(v(6)));
+}
+TEST_F(test_dvar_vector, fill_lbraces_zero)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 6);
+  v.initialize();
+
+  char array[] = "0, 1, 2, 3, 4, 5}";
+
+  ad_exit=&test_ad_exit;
+  try
+  {
+    v.fill(array);
+  }
+  catch (const int exit_code)          
+  {   
+    return;
+  }
+  FAIL();
+}
+TEST_F(test_dvar_vector, fill_lbraces_greater_than_one)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 6);
+  v.initialize();
+
+  char array[] = "{{0, 1, 2, 3, 4, 5}}";
+
+  ad_exit=&test_ad_exit;
+  try
+  {
+    v.fill(array);
+  }
+  catch (const int exit_code)          
+  {   
+    return;
+  }
+  FAIL();
+}
+TEST_F(test_dvar_vector, fill_lbraces_not_equal_rbraces)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 6);
+  v.initialize();
+
+  char array[] = "{{0, 1, 2, 3, 4, 5}}}";
+
+  ad_exit=&test_ad_exit;
+  try
+  {
+    v.fill(array);
+  }
+  catch (const int exit_code)          
+  {   
+    return;
+  }
+  FAIL();
 }

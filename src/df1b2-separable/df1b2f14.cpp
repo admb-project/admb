@@ -22,10 +22,14 @@
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
-fixed_smartlist2::fixed_smartlist2(void)
+Default constructor
+*/
+fixed_smartlist2::fixed_smartlist2():
+  endof_file_ptr(-1),
+  doubleptr(NULL),
+  recend(NULL),
+  sbptr(NULL),
+  fp(-1)
 {
   nentries=0;
   end_saved=0;
@@ -40,13 +44,14 @@ fixed_smartlist2::fixed_smartlist2(void)
   buffend=0;
   bptr=buffer;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Constructor
+*/
 fixed_smartlist2::fixed_smartlist2(const size_t _bufsize,
-  const adstring& _filename)
+  const adstring& _filename):
+  endof_file_ptr(-1),
+  recend(NULL),
+  sbptr(NULL)
 {
   allocate(_bufsize,_filename);
 }
@@ -76,14 +81,16 @@ void fixed_smartlist2::allocate(const size_t _bufsize,
   *true_buffend=9999;
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
-  if (fp == -1)
+  if (fp < 0)
   {
     cerr << "Error trying to open file " << filename
          << " in class fixed_smartlist2 " << endl;
     ad_exit(1);
   }
-
-  /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
+  else
+  {
+    /*off_t pos=*/lseek(fp, 0L, SEEK_CUR);
+  }
 }
 
 /**
@@ -174,18 +181,21 @@ void fixed_smartlist2::check_buffer_size(const size_t nsize)
     }
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void fixed_smartlist2::restore_end(void)
+Set to end of file ptr.
+*/
+void fixed_smartlist2::restore_end()
 {
   if (written_flag)
   {
     if (end_saved)
     {
-      /*off_t ipos=*/lseek(fp,endof_file_ptr,SEEK_SET);
+#ifdef OPT_LIB
+      lseek(fp, endof_file_ptr, SEEK_SET);
+#else
+      off_t ret = lseek(fp, endof_file_ptr, SEEK_SET);
+      assert(ret >= 0);
+#endif
       read_buffer();
       set_recend();
     }
@@ -290,9 +300,8 @@ void fixed_smartlist2::write_buffer(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Read buffer
+*/
 void fixed_smartlist2::read_buffer(void)
 {
   if (!written_flag)
@@ -315,11 +324,22 @@ void fixed_smartlist2::read_buffer(void)
       }
       // offset of the begining of the record is at the end
       // of the record
+#ifdef OPT_LIB
       lseek(fp,-((off_t)sizeof(off_t)),SEEK_CUR);
+#else
+      off_t ret2 = lseek(fp,-((off_t)sizeof(off_t)),SEEK_CUR);
+      assert(ret2 >= 0);
+#endif
       ssize_t ret = read(fp,&pos,sizeof(off_t));
       assert(ret != -1);
+
       // back up to the beginning of the record (plus record size)
+#ifdef OPT_LIB
       lseek(fp,pos,SEEK_SET);
+#else
+      ret2 = lseek(fp,pos,SEEK_SET);
+      assert(ret2 >= 0);
+#endif
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
@@ -358,14 +378,25 @@ void fixed_smartlist2::read_buffer(void)
       if (direction ==-1) // we are going backwards
       {
         // backup the file pointer again
+#ifdef OPT_LIB
         lseek(fp,pos,SEEK_SET);
+#else
+        off_t ret = lseek(fp,pos,SEEK_SET);
+        assert(ret >= 0);
+#endif
         // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
       }
       else  // we are going forward
       {
         //\todo need test
+
         // skip over file postion entry in file
-        lseek(fp,(off_t)sizeof(off_t),SEEK_CUR);
+#ifdef OPT_LIB
+        lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+#else
+        off_t ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+        assert(ret >= 0);
+#endif
       }
     }
   }

@@ -1,4 +1,6 @@
 ifeq ($(OS),Windows_NT)
+  ifeq ($(TERM),cygwin)
+  else
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL = cmd
     ifeq ($(SHELL),cmd)
@@ -6,13 +8,13 @@ ifeq ($(OS),Windows_NT)
     else
       MYPWD=$(shell cmd /C cd)
     endif
-    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
+    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH)
   else
     ifneq ($(TERM),xterm)
       MYPWD=$(shell pwd)
       PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
     endif
-    PATH:=$(PATH):$(MYPWD)/../utilities
+  endif
   endif
 endif
 
@@ -34,13 +36,13 @@ ifeq ($(SHELL),cmd)
 else
   INSTALL_DIR=/usr/local/
   ifeq ($(DEBUG),yes)
-  DIST=../build/debug
+  DIST=$(shell pwd)/../build/debug
   else
   DIST=../build/dist
   endif
   LIBSDIR=$(DIST)/lib/
   ifeq ($(DEBUG),yes)
-  OBJSDIR=../build/objects/debug/
+  OBJSDIR=$(shell pwd)/../build/objects/debug/
   else
   OBJSDIR=../build/objects/dist/
   endif
@@ -90,7 +92,7 @@ ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\debug\include
   else
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/debug/include
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I$(shell pwd)/../build/debug/include
   endif
 else
   ifeq ($(SHELL),cmd)
@@ -100,12 +102,20 @@ ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/dist/include
   endif
 endif
 
+ifeq ($(TERM),cygwin)
+  ifeq ($(CXX),g++)
+    ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
+      ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
+    endif
+  endif
+else
 ifeq ($(SHELL),cmd)
   ifeq ($(CXX),g++)
     ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
       ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
     endif
   endif
+endif
 endif
 
 override CXXFLAGS += $(ADCXXFLAGS)
@@ -146,6 +156,10 @@ OBJECTS:=$(OBJECTS) $(addprefix saflp-nh99-,$(OBJ6)) saflp-sparse-hs_sparse.obj
 include tools99/objects.lst
 OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools99-,$(OBJ7))
 
+ifeq ($(COVERAGE),yes)
+OBJECTS:=$(filter-out optlp-%,$(OBJECTS))
+endif
+
 OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 
 all: dist
@@ -170,7 +184,8 @@ endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
-shared: $(OBJECTS)
+shared: dirs
+	$(MAKE) objects
 ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-shared.a -Wl,--no-whole-archive
@@ -199,24 +214,8 @@ else
   endif
 endif
 
-shared: | dirs
-
-shared2:
-ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo.a -Wl,--no-whole-archive
-else
-  ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
-	$(CXX) -shared -o ../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb.a
-	$(CXX) -shared -o ../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo.a
-  else
-	$(CXX) -shared -o ../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb.a -Wl,--no-whole-archive
-	$(CXX) -shared -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo.a -Wl,--no-whole-archive
-  endif
-endif
-
-
 dist: bins
+	$(MAKE) libs
 ifeq ($(SHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
 	copy /Y ..\README.txt ${DIST}
@@ -231,7 +230,7 @@ else
 	cp -f ../Makefile ${DIST}
 endif
 
-bins: libs
+bins:
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\bin md ${DIST}\bin
 	copy df1b2-separable\seddf1b* ${DIST}\bin
@@ -303,11 +302,21 @@ else
   endif
 	mkdir -p $(DIST)/include/contrib
 	touch $(DIST)/include/contrib/contrib.h
+    ifeq ($(DEBUG),yes)
+	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=${DIST} bins
+	$(MAKE) --directory=nh99 CC=$(CC) DIST=${DIST} bins
+    else
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} bins
+    endif
 endif
 
-libs: objects
+ifndef SHARED
+libs:  includes
+else
+libs: dirs
+endif
+	$(MAKE) objects
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
 	if exist ${DIST}\lib\libadmb$(SHARED).a del ${DIST}\lib\libadmb$(SHARED).a
@@ -322,19 +331,15 @@ endif
 	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-nh99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-tools99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-sparse-*.obj
+ifndef COVERAGE
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-linad99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-df1b2-separable-*.obj
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-nh99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-tools99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-sparse-*.obj
+endif
 
 objects: $(OBJECTS)
-
-ifndef SHARED
-$(OBJECTS): | includes
-else
-$(OBJECTS): | dirs
-endif
 
 ifeq ($(SHELL),cmd)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
@@ -393,40 +398,83 @@ else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS)) -o $@ $<
 endif
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
+else
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-$(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
+else
+$(OBJSDIR)saflp-sparse-hs_sparse.obj:sparse/hs_sparse.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
+else
 $(OBJSDIR)optlp-df1b2-separable-%.obj:df1b2-separable/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
+else
 $(OBJSDIR)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
+else
 $(OBJSDIR)optlp-linad99-%.obj:linad99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
+else
 $(OBJSDIR)saflp-linad99-%.obj:linad99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
+else
 $(OBJSDIR)optlp-nh99-%.obj:nh99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
+else
 $(OBJSDIR)saflp-nh99-%.obj:nh99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)optlp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
+else
 $(OBJSDIR)optlp-tools99-%.obj:tools99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
+ifeq ($(DEBUG),yes)
+$(OBJSDIR)saflp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
+else
 $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
+endif
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 endif
 
 includes: dirs
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\include md ${DIST}\include
+	copy linad99\df11fun.h ${DIST}\include
+	copy linad99\df12fun.h ${DIST}\include
+	copy linad99\df13fun.h ${DIST}\include
 	copy linad99\fvar.hpp ${DIST}\include
 	copy linad99\gradient_structure.h ${DIST}\include
 	copy linad99\dvector.h ${DIST}\include
@@ -440,10 +488,12 @@ ifeq ($(SHELL),cmd)
 	copy tools99\cifstrem.h ${DIST}\include
 	copy tools99\clist.h ${DIST}\include
 	copy tools99\admb_messages.h ${DIST}\include
+	copy tools99\Vectorize.hpp ${DIST}\include
 	copy df1b2-separable\adpool.h ${DIST}\include
 	copy df1b2-separable\adrndeff.h ${DIST}\include
 	copy df1b2-separable\df1b2fun.h ${DIST}\include
 	copy df1b2-separable\df32fun.h ${DIST}\include
+	copy df1b2-separable\df33fun.h ${DIST}\include
 	copy df1b2-separable\df3fun.h ${DIST}\include
 	copy df1b2-separable\df1b2fnl.h ${DIST}\include
 	copy df1b2-separable\df1b2loc.h ${DIST}\include
@@ -451,6 +501,9 @@ ifeq ($(SHELL),cmd)
 	copy nh99\param_init_bounded_number_matrix.h ${DIST}\include
 else
 	mkdir -p ${DIST}/include
+	cp linad99/df11fun.h ${DIST}/include
+	cp linad99/df12fun.h ${DIST}/include
+	cp linad99/df13fun.h ${DIST}/include
 	cp linad99/fvar.hpp ${DIST}/include
 	cp linad99/gradient_structure.h ${DIST}/include
 	cp linad99/dvector.h ${DIST}/include
@@ -464,10 +517,12 @@ else
 	cp tools99/cifstrem.h ${DIST}/include
 	cp tools99/clist.h ${DIST}/include
 	cp tools99/admb_messages.h ${DIST}/include
+	cp tools99/Vectorize.hpp ${DIST}/include
 	cp df1b2-separable/adpool.h ${DIST}/include
 	cp df1b2-separable/adrndeff.h ${DIST}/include
 	cp df1b2-separable/df1b2fun.h ${DIST}/include
 	cp df1b2-separable/df32fun.h ${DIST}/include
+	cp df1b2-separable/df33fun.h ${DIST}/include
 	cp df1b2-separable/df3fun.h ${DIST}/include
 	cp df1b2-separable/df1b2fnl.h ${DIST}/include
 	cp df1b2-separable/df1b2loc.h ${DIST}/include
@@ -525,10 +580,27 @@ endif
 
 install:
 	@#echo "Read INSTALL.txt for installation instructions."
-	rm -rvf $(INSTALL_DIR)admb
 ifeq ($(DEBUG),yes)
+  ifeq ($(INSTALL_DIR),/usr/local/)
+	chmod a+rx ../build/debug/bin/admb
+	chmod a+rx ../build/debug/bin/adlink
+	chmod a+rx ../build/debug/bin/adcomp
+	chmod a+rx ../build/debug/contrib
+	chmod a+r ../build/debug/bin/sed*
+	chmod a+r ../build/debug/include/*.*
+	chmod a+r ../build/debug/contrib/include/*.*
+  endif
 	cp -Rvf ../build/debug $(INSTALL_DIR)admb
 else
+  ifeq ($(INSTALL_DIR),/usr/local/)
+	chmod a+rx ../build/dist/bin/admb
+	chmod a+rx ../build/dist/bin/adlink
+	chmod a+rx ../build/dist/bin/adcomp
+	chmod a+rx ../build/dist/contrib
+	chmod a+r ../build/dist/bin/sed*
+	chmod a+r ../build/dist/include/*.*
+	chmod a+r ../build/dist/contrib/include/*.*
+  endif
 	cp -Rvf ../build/dist $(INSTALL_DIR)admb
 endif
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
@@ -557,9 +629,9 @@ coding-standard: cpplint.py
 	python cpplint.py --linelength=80 --extension=c,cpp,h,hpp --filter=-,+whitespace/tab,+whitespace/blank_line,+whitespace/line_length,+whitespace/end_of_line df1b2-separable/*.h* linad99/*.h* nh99/*.h* sparse/*.h* tools99/*.h* df1b2-separable/*.cpp linad99/*.cpp nh99/*.cpp sparse/*.cpp tools99/*.cpp
 
 cpplint.py:
-	svn cat http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py > cpplint.py
+	svn cat https://github.com/google/styleguide/trunk/cpplint/cpplint.py > cpplint.py
 
-check: coding-standard
+check:
 	@echo "SHELL: $(SHELL)"
 	@echo "PATH: $(PATH)"
 	@echo "TERM: $(TERM)"

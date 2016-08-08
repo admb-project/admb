@@ -40,12 +40,28 @@
  */
 #ifndef FVAR_HPP
 #define FVAR_HPP
+//#define __MINGW64__
 /** \file fvar.hpp
 AUTODIF classes.
 Class definitions for reverse mode automatic differentiation.
 Function prototypes for math functions.
 Macro definitions.
 */
+#if defined(__MINGW64__ )
+  #define OFF_T off64_t
+  #define LSEEK lseek64
+  #if !defined(AD_LONG_INT)
+    #define AD_LONG_INT long long int
+  #endif
+#else
+  #define OFF_T off_t
+  #ifndef _MSC_VER
+    #define LSEEK lseek
+  #endif
+  #if !defined(AD_LONG_INT)
+    #define AD_LONG_INT long int
+  #endif
+#endif
 
 #include <math.h>
 // Borrow definition of M_PI from GCC
@@ -148,35 +164,25 @@ extern "C"
 }
 
 /**
- * Description not yet available.
- * \param
- */
-class smart_counter
-{
-  int *ncopies;
-public:
-  int *get_ncopies();
-  smart_counter();
-  smart_counter(const smart_counter& sc);
-  ~smart_counter();
-};
+Holds the data for the prevariable class.
 
-/**
-  Holds the data for the prevariable class.
-  \ingroup BAD
+\ingroup BAD
  */
 class double_and_int
 {
- public:
-   ///< value of the variable
-   double x;
-    /** Return the value of the variable.
-    \return double reference containing the value of the variable.
-    */
-   inline double &xvalue(void)
-   {
-      return x;
-   }
+public:
+  ///< value of the variable
+  double x;
+
+  /**
+  Return the value of the variable.
+
+  \return double reference containing the value of the variable.
+  */
+  inline double &xvalue()
+  {
+    return x;
+  }
 };
 
 
@@ -230,20 +236,14 @@ class vector_shapex;
 class predvar_vector;
 class independent_variables;
 
-#if defined(__GNUC__)
-#   if (__GNUC__  >= 3)
-#      include <fstream>
-#   else
-#      include <fstream.h>
-#   endif
-#elif defined(_MSC_VER)
-#   if (_MSC_VER >= 1300)
-#      include <fstream>
-#   else
-#      include <fstream.h>
-#   endif
+#if defined(__GNUC__) && (__GNUC__ < 3)
+  #include <fstream.h>
+#elif defined(_MSC_VER) && (_MSC_VER < 1300)
+  #include <fstream.h>
+#elif defined(__SUNPRO_CC) && (__SUNPRO_CC < 0x5140)
+  #include <fstream.h>
 #else
-#   include <fstream.h>
+  #include <fstream>
 #endif
 
 #include <stdio.h>
@@ -358,8 +358,10 @@ void RETURN_ARRAYS_INCREMENT(void);
 void RETURN_ARRAYS_DECREMENT(void);
 
 void *farptr_norm(void *);
+#ifdef DIAG
 long int farptr_tolong(void *);
 long int _farptr_tolong(void *);
+#endif
 
 class i3_array;
 
@@ -770,61 +772,68 @@ void jacobcalc(int nvar, const uostream & ofs);
 //class dvect_ptr_ptr { dvector **m; };
 
 /**
- * Description not yet available.
- * \param
- */
+Node in dlist
+*/
 class dlink
 {
-   double_and_int di;
-   dlink *prev;
- public:// comments
-   dlink * previous();
-   //access function
-   inline double_and_int *get_address()
-   {
-      return &di;
-   }
+  double_and_int di;
+  dlink* prev;
 
-   //friend tempvar();
-   //friend class prevariable;
-   //friend class tempvar;
-   friend class dlist;
-   friend void gradcalc(int nvar, const dvector & g);
-   friend void slave_gradcalc(void);
-   friend void gradloop();
-   friend double_and_int *gradnew();
-   friend void allocate_dvariable_space(void);
+public:
+  dlink* previous() const
+  {
+    return prev;
+  }
+
+  //access function
+  inline double_and_int* get_address()
+  {
+    return &di;
+  }
+
+  //friend tempvar();
+  //friend class prevariable;
+  //friend class tempvar;
+  friend class dlist;
+  friend void gradcalc(int nvar, const dvector & g);
+  friend void slave_gradcalc(void);
+  friend void gradloop();
+  friend double_and_int *gradnew();
+  friend void allocate_dvariable_space(void);
 };
-
 /**
 Link list
 */
 class dlist
 {
   dlink* last;
-  unsigned int last_offset;
   unsigned int nlinks;
   dlink** dlink_addresses;
-  friend double_and_int *gradnew();
-  friend void df_check_derivative_values(void);
-  friend void df_check_derivative_values_indexed(void);
-  friend void df_check_derivative_values_indexed_break(void);
+  char* ddlist_space;
+  double* variables_save;
 
 public:
   // constructor
   dlist();
   // destructor
   ~dlist();
-  //create a new link
+  // create a new link
   dlink* create();
-  // add a link
-  dlink* append(dlink*);
+  // append link
+  dlink* append(dlink* link);
   dlink* last_remove();
+  void initialize();
+  void save_variables();
+  void restore_variables();
 
   // check list integrity
   void check_list(void);
   size_t total_addresses() const;
 
+  friend double_and_int *gradnew();
+  friend void df_check_derivative_values(void);
+  friend void df_check_derivative_values_indexed(void);
+  friend void df_check_derivative_values_indexed_break(void);
   friend void funnel_gradcalc(void);
   friend void slave_gradcalc(void);
   friend void gradcalc(int nvar, const dvector& g);
@@ -832,14 +841,14 @@ public:
   friend void gradient_structure::restore_variables();
   friend void gradient_structure::save_variables();
   friend void gradient_structure::jacobcalc(int nvar,
-                                            const dmatrix& jac);
-   friend void allocate_dvariable_space(void);
-   //friend void gradient_structure::funnel_jacobcalc(void);
-   friend void gradient_structure::jacobcalc(int nvar,
-     const ofstream& jac);
-   friend void gradient_structure::jacobcalc(int nvar,
-     const uostream& jac);
-   friend void funnel_derivatives(void);
+    const dmatrix& jac);
+  friend void allocate_dvariable_space(void);
+  //friend void gradient_structure::funnel_jacobcalc(void);
+  friend void gradient_structure::jacobcalc(int nvar,
+    const ofstream& jac);
+  friend void gradient_structure::jacobcalc(int nvar,
+    const uostream& jac);
+  friend void funnel_derivatives(void);
 };
 
 class indvar_offset_list;
@@ -907,11 +916,11 @@ class grad_stack
    long end_pos1;
    long end_pos2;
 #else
-   off_t end_pos;
-   off_t end_pos1;
-   off_t end_pos2;
+   OFF_T end_pos;
+   OFF_T end_pos1;
+   OFF_T end_pos2;
 #endif
-   dmatrix *table;
+   //dmatrix *table;
  public:
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);
@@ -961,7 +970,7 @@ class grad_stack
      double mult1, double *ind_addr2, double mult2,
      double *ind_addr3, double mult3);
 
-   int read_grad_stack_buffer(off_t & lpos);
+   int read_grad_stack_buffer(OFF_T & lpos);
    void set_gradient_stack(void (*ptr) (void));
    void set_gbuffer_pointers(void);
    //js
@@ -1248,19 +1257,22 @@ void gradfree(dlink *);
 class prevariable_position;
 
 /**
-  Base class for dvariable.
-  Principle role is to avoid calling a descructor when a pevariable or dvariable
-  object is passed on the stack.
-  (There is no destructor, ~prevariable().)
-  \ingroup BAD
- */
+Base class for dvariable.
+Principle role is to avoid calling a destructor when a pevariable or dvariable
+object is passed on the stack.
+(There is no destructor, ~prevariable().)
+\ingroup BAD
+*/
 class prevariable
 {
- protected:
+protected:
 #ifndef __SUN__
-   prevariable(void)
-   {
-   }
+  /**
+  Default constructor
+  */
+  prevariable()
+  {
+  }
 #endif
 #ifndef __NDPX__
    prevariable(double_and_int * u)
@@ -1269,8 +1281,9 @@ class prevariable
    }
 #endif
 
- public:
-   double_and_int * v; ///< pointer to the data
+public:
+  double_and_int* v; ///< pointer to the data
+
    friend class dvar_vector_iterator;
    friend class dvar_vector;
    friend class dvar_matrix;
@@ -1817,8 +1830,6 @@ class independent_variables:public dvector
    independent_variables & operator=(const dvector & t);
 };
 
-
-
 dvariable dfatan1(dvariable, double, double, const prevariable & fpen);
 
 double boundp(double x, double fmin, double fmax, const double &fpen);
@@ -1996,17 +2007,17 @@ class param_init_bounded_vector_vector;
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
+ADMB variable vector
+*/
 class dvar_vector
 {
- public:
-   double_and_int * va;
-   int index_min;
-   int index_max;
-   arr_link *link_ptr;
-   vector_shapex *shape;
+public:
+  double_and_int* va;
+  int index_min;
+  int index_max;
+  arr_link* link_ptr;
+  vector_shapex* shape;
+
  public:
    dvar_vector operator -();
 
@@ -2573,7 +2584,7 @@ class dvar_matrix
    friend dvar_matrix inv(const dvar_matrix &);
 
    friend dvariable det(const dvar_matrix &);
-   friend dvariable ln_det(const dvar_matrix &, const int &sgn);
+   friend dvariable ln_det(const dvar_matrix &, int& sgn);
 
    //friend dvar_matrix testsub(dvar_matrix);
 
@@ -2775,8 +2786,6 @@ class dmatrix
    void fill_randu(long int &n);
    void rowfill_randn(const int &i, long int &n);
 
-
-
    void colfill_randu(const int &j, const random_number_generator & rng);
    void rowfill_randu(const int &i, const random_number_generator & rng);
    void fill_randn(const random_number_generator & rng);
@@ -2791,8 +2800,6 @@ class dmatrix
    void fill_randn_ni(long int &n);
    void fill_randu_ni(long int &n);
    void rowfill_randn_ni(const int &i, long int &n);
-
-
 
    void colfill_seqadd(const int &, const int &, const int &);
    void colfill_seqadd(const int &, double, double);
@@ -2866,7 +2873,7 @@ class dmatrix
      const int &_sgn);
 
    friend double det(const dmatrix &);
-   friend double ln_det(const dmatrix & m1, const int &sgn);
+   friend double ln_det(const dmatrix & m1, int& sgn);
 
    friend double norm(const dmatrix &);
    friend double norm2(const dmatrix &);
@@ -2886,6 +2893,8 @@ class dmatrix
 
    dmatrix & operator /=(double d);
    dmatrix & operator *=(double d);
+
+  bool is_valid_row(const int i) const;
 };
 
 #if defined(OPT_LIB)
@@ -3384,6 +3393,8 @@ class uistream:public ifstream
 
    // extract and discard chars but stop at delim
    uistream & ignore(int = 1, int = EOF);
+
+   uistream& operator>>(int&);
 
 #ifndef __SUN__
    uistream & operator>>(const signed char *);
@@ -3933,10 +3944,10 @@ class param_init_bounded_matrix_vector;
  */
 class dvar3_array
 {
-   dvar_matrix *t;
-   three_array_shape *shape;
+  dvar_matrix* t;
+  three_array_shape* shape;
 
- public:
+public:
    void shallow_copy(const dvar3_array &);
    dvar3_array sub(int, int);
    dvar3_array(int, int);
@@ -4509,6 +4520,9 @@ double factln(double n);
 dvar_vector factln(const dvar_vector & n);
 dvector factln(const dvector & n);
 
+dvariable invlogit(dvariable x);
+
+
 dvar_vector posfun(const dvar_vector & x, double eps, const prevariable & pen);
 dvariable posfun(const dvariable& x, const double eps, const prevariable & pen);
 dvariable posfun2(const dvariable& x, const double eps, const prevariable& pen);
@@ -4540,23 +4554,26 @@ dvector gammln(const dvector & n);
  */
 class dvar_vector_position
 {
- public:
-   int min;
-   int max;
-   double_and_int *va;
-   int indexmin() const
-   {
-      return min;
-   }
-   int indexmax() const
-   {
-      return max;
-   }
-   dvar_vector_position(const dvar_vector & v);
-   dvar_vector_position(const dvar_vector_position & dvp);
-   dvar_vector_position(void);
-   double &operator() (const int &i);
-   friend class dvar_matrix_position;
+public:
+  dvar_vector_position();
+  dvar_vector_position(const dvar_vector& v);
+  dvar_vector_position(const dvar_vector_position& dvp);
+
+  double &operator() (const int &i);
+
+  int min;
+  int max;
+  double_and_int* va;
+  int indexmin() const
+  {
+    return min;
+  }
+  int indexmax() const
+  {
+    return max;
+  }
+
+  friend class dvar_matrix_position;
 };
 
 /**
@@ -7445,258 +7462,266 @@ class ad_integer
 {
 protected:
   int d;
+
 public:
-  operator int () const
+  operator int() const
   {
     return d;
   }
   ad_integer(const int &_d, const adkludge&): d(_d)
   {
   }
-  ad_integer(int _d):d(_d)
+  ad_integer(const data_int& di);
+  ad_integer(const int _d): d(_d)
   {
   }
   ad_integer(const index_type& it);
+
   ad_integer make_ad_integer(int _d)
   {
     adkludge adk;
-    //??Should parameter be d or _d?
-    return ad_integer(d, adk);
+
+    return ad_integer(_d, adk);
   }
-  ad_integer(const data_int & _d);
 };
 
-/**
- * Description not yet available.
- * \param
- */
+/// Abstract base class for different index types.
 class index_guts
 {
-   friend class ad_integer;
- protected:
-   int *ncopies;
- public:
-   virtual index_guts * operator [] (int) = 0;
-   virtual int isinteger(void) const
-   {
-      return 1;
-   }
-   virtual int dimension(void) const
-   {
-      return -1;
-   }
-   virtual operator  int ()
-   {
-      cerr << "Error in index_type"
-      " -- object not dereferenced enough" << endl;
-      ad_exit(1);
-      return 1;
-   }
-   virtual int indexmin(void) = 0;
-   virtual int indexmax(void) = 0;
-   index_guts();
-   index_guts(const index_guts & ig);
-   virtual ~ index_guts();
-   friend class index_type;
-};
+protected:
+  int* ncopies;
 
-/**
- * Description not yet available.
- * \param
- */
-class index_type:public smart_counter
-{
-   index_guts *p;
- public:
-   int integer(void) const;
-   int isinteger(void) const
-   {
-      return p->isinteger();
-   }
-   int dimension(void) const
-   {
-      return p->dimension();
-   }
-   index_type(int x);
-   //index_type(const data_int& x);
-   index_type(const ivector & x);
-   index_type(const imatrix & x);
-   index_type(const i3_array & x);
-   index_type(const i4_array & x);
-   index_type(const pre_index_type & pit);
-   index_type(const index_type & pit);
-   //index_type (i4_array& x) { p = new i4_index(x);}
-   ~index_type();
-   index_type operator [] (int i);
-   index_type operator () (int i);
-   index_type operator [] (int i) const;
-   index_type operator () (int i) const;
-   int indexmin(void) const
-   {
-      return p->indexmin();
-   }
-   int indexmax(void) const
-   {
-      return p->indexmax();
-   }
-   friend class ad_integer;
-};
+public:
+  index_guts();
+  index_guts(const index_guts& ig);
+  virtual ~index_guts();
 
-/**
- * Description not yet available.
- * \param
- */
-class number_index:public ad_integer, public index_guts
-{
- private:
-   virtual int isinteger(void) const
-   {
-      return 0;
-   }
-   virtual int dimension(void) const
-   {
-      return 0;
-   }
-   virtual index_guts *operator [] (int i);
-   virtual int indexmin(void)
-   {
-      return 1;
-   }
-   virtual int indexmax(void)
-   {
-      return 1;
-   }
- public:
-   virtual ~ number_index()
-   {
-   }
- number_index(int i):ad_integer(i)
-   {
-   }
-   // only overload this for number_index ... will fail for other classes
-   virtual operator  int ()
-   {
-      return d;
-   }
-   friend class index_type;
-};
+  virtual index_guts* operator[](int) = 0;
+  virtual int indexmin() const = 0;
+  virtual int indexmax() const = 0;
 
-/**
- * Description not yet available.
- * \param
- */
-class vector_index:public ivector, public index_guts
-{
-   virtual index_guts *operator [] (int i)
-   {
-      return new number_index(ivector::operator [](i));
-   }
- public:
-   virtual int dimension(void) const
-   {
-      return 1;
-   }
-   //vector_index(const ivector& v) : ivector(v){}
-   vector_index(const ivector & v);
-   virtual ~ vector_index();
-   virtual int indexmin(void)
-   {
-      return ivector::indexmin();
-   }
-   virtual int indexmax(void)
-   {
-      return ivector::indexmax();
-   }
-   friend class index_type;
-};
+  virtual int isinteger() const
+  {
+    return 1;
+  }
+  virtual int dimension() const
+  {
+    return -1;
+  }
+  virtual operator int()
+  {
+    cerr << "Error in index_type"
+    " -- object not dereferenced enough" << endl;
+    ad_exit(1);
+    return 1;
+  }
 
-/**
- * Description not yet available.
- * \param
- */
-class matrix_index:public imatrix, public index_guts
-{
- private:
-   virtual index_guts * operator [] (int i);
-   //{
-   //  return new vector_index(imatrix::operator [](i));
-   //}
- public:
-   virtual int dimension(void) const
-   {
-      return 2;
-   }
-   virtual ~ matrix_index();
-   matrix_index(const imatrix & v):imatrix(v)
-   {
-   }
-   virtual int indexmin(void)
-   {
-      return imatrix::rowmin();
-   }
-   virtual int indexmax(void)
-   {
-      return imatrix::rowmax();
-   }
-   friend class index_type;
+  friend class ad_integer;
+  friend class index_type;
 };
-
-/**
- * Description not yet available.
- * \param
- */
-class i3_index:public i3_array, public index_guts
+/// Keeps track of total number of copies.
+class smart_counter
 {
-   virtual index_guts *operator [] (int i)
-   {
-      return new matrix_index(i3_array::operator [](i));
-   }
- public:
-   i3_index(i3_array & v):i3_array(v)
-   {
-   }
-   virtual int dimension(void) const
-   {
-      return 3;
-   }
-   virtual int indexmin(void)
-   {
-      return i3_array::slicemin();
-   }
-   virtual int indexmax(void)
-   {
-      return i3_array::slicemax();
-   }
-   friend class index_type;
+  int* ncopies;
+
+public:
+  smart_counter();
+  smart_counter(const smart_counter& sc);
+  ~smart_counter();
+
+  int* get_ncopies();
 };
-
 /**
- * Description not yet available.
- * \param
- */
-class i4_index:public i4_array, public index_guts
+Uses polymorphism to get index information from various data types
+to be used in constructing and allocating admb matrices and vectors.
+*/
+class index_type: public smart_counter
 {
-   virtual index_guts *operator [] (int i)
-   {
-      return new i3_index(i4_array::operator [](i));
-   }
- public:
-   virtual int dimension(void) const
-   {
-      return 4;
-   }
-   i4_index(i4_array & v):i4_array(v)
-   {
-   }
-   virtual int indexmin(void)
-   {
-      return i4_array::slicemin();
-   }
-   virtual int indexmax(void)
-   {
-      return i4_array::slicemax();
-   }
-   friend class index_type;
+  index_guts* p;
+
+public:
+  index_type(const int x);
+  index_type(const ivector& x);
+  index_type(const imatrix& x);
+  index_type(const i3_array& x);
+  index_type(const i4_array& x);
+  index_type(const pre_index_type& pit);
+  index_type(const index_type& pit);
+  //index_type (i4_array& x) { p = new i4_index(x);}
+  ~index_type();
+
+  index_type operator[](int i);
+  index_type operator()(int i);
+  index_type operator[](int i) const;
+  index_type operator()(int i) const;
+
+  int integer() const;
+  int isinteger() const
+  {
+    return p->isinteger();
+  }
+  int dimension() const
+  {
+    return p->dimension();
+  }
+  int indexmin() const
+  {
+    return p->indexmin();
+  }
+  int indexmax() const
+  {
+    return p->indexmax();
+  }
+
+  friend class ad_integer;
+};
+/// Derived class of index types for ad_integer.
+class number_index: public ad_integer, public index_guts
+{
+private:
+  virtual int isinteger() const
+  {
+    return 0;
+  }
+  virtual int dimension() const
+  {
+    return 0;
+  }
+  virtual index_guts* operator[](int i);
+  virtual int indexmin() const
+  {
+    return 1;
+  }
+  virtual int indexmax() const
+  {
+    return 1;
+  }
+public:
+  number_index(int i): ad_integer(i)
+  {
+  }
+  /// Destructor
+  virtual ~number_index()
+  {
+  }
+  /// only overload this for number_index ... will fail for other classes
+  virtual operator int()
+  {
+    return d;
+  }
+
+  friend class index_type;
+};
+/// Derived class of index types for ivector.
+class vector_index: public ivector, public index_guts
+{
+  virtual index_guts* operator[](int i)
+  {
+    return new number_index(ivector::operator[](i));
+  }
+public:
+  //vector_index(const ivector& v) : ivector(v){}
+
+  vector_index(const ivector& v);
+  virtual ~vector_index();
+
+  virtual int dimension() const
+  {
+    return 1;
+  }
+  virtual int indexmin() const
+  {
+    return ivector::indexmin();
+  }
+  virtual int indexmax() const
+  {
+    return ivector::indexmax();
+  }
+
+  friend class index_type;
+};
+/// Derived class of index types for imatrix.
+class matrix_index: public imatrix, public index_guts
+{
+private:
+  virtual index_guts* operator[](int i);
+  //{
+  //  return new vector_index(imatrix::operator [](i));
+  //}
+public:
+  matrix_index(const imatrix& v): imatrix(v)
+  {
+  }
+  virtual ~matrix_index();
+
+  virtual int dimension() const
+  {
+    return 2;
+  }
+  virtual int indexmin() const
+  {
+    return imatrix::rowmin();
+  }
+  virtual int indexmax() const
+  {
+    return imatrix::rowmax();
+  }
+
+  friend class index_type;
+};
+/// Derived class of index types for i3_array.
+class i3_index: public i3_array, public index_guts
+{
+  virtual index_guts* operator[](int i)
+  {
+    return new matrix_index(i3_array::operator[](i));
+  }
+public:
+  i3_index(i3_array& v): i3_array(v)
+  {
+  }
+
+  virtual int dimension() const
+  {
+    return 3;
+  }
+  virtual int indexmin() const
+  {
+    return i3_array::slicemin();
+  }
+  virtual int indexmax() const
+  {
+    return i3_array::slicemax();
+  }
+
+  friend class index_type;
+};
+/// Derived class of index types for i4_array.
+class i4_index: public i4_array, public index_guts
+{
+  virtual index_guts* operator[](int i)
+  {
+    return new i3_index(i4_array::operator[](i));
+  }
+public:
+  i4_index(i4_array& v): i4_array(v)
+  {
+  }
+
+  virtual int dimension() const
+  {
+    return 4;
+  }
+  virtual int indexmin() const
+  {
+    return i4_array::slicemin();
+  }
+  virtual int indexmax() const
+  {
+    return i4_array::slicemax();
+  }
+
+  friend class index_type;
 };
 
 void ad_begin_funnel(void);
@@ -8051,18 +8076,26 @@ dmatrix solve(const banded_symmetric_dmatrix & m, const dmatrix & M);
 dmatrix solve(const dmatrix & m, const dmatrix & M);
 dvector solve(const banded_symmetric_dmatrix & m, const dvector & v);
 
-banded_lower_triangular_dmatrix choleski_decomp
-   (const banded_symmetric_dmatrix & S, const int &ierr);
+banded_lower_triangular_dmatrix choleski_decomp(
+  const banded_symmetric_dmatrix& S,
+  int& ierr
+);
 
 banded_lower_triangular_dvar_matrix choleski_decomp_positive
    (const banded_symmetric_dvar_matrix & S, double eps, dvariable & fpen);
 
-dvariable ln_det_choleski(const banded_symmetric_dvar_matrix & S,
-  const int &ierr);
-double ln_det_choleski(const banded_symmetric_dmatrix & S, const int &ierr);
-
-banded_lower_triangular_dvar_matrix choleski_decomp
-   (const banded_symmetric_dvar_matrix & S, const int &ierr);
+dvariable ln_det_choleski(
+  const banded_symmetric_dvar_matrix& S,
+  int &ierr
+);
+double ln_det_choleski(
+  const banded_symmetric_dmatrix& S,
+  int& ierr
+);
+banded_lower_triangular_dvar_matrix choleski_decomp(
+  const banded_symmetric_dvar_matrix& S,
+  int &ierr
+);
 
 banded_lower_triangular_dmatrix
    restore_banded_lower_triangular_dvar_matrix_derivatives
@@ -8217,9 +8250,20 @@ double betacf(const double _a, const double _b, double _x, int maxit = 100);
 dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   int maxit = 100);
 
-dvariable betai(const dvariable a, const dvariable b, const dvariable x,
-  int maxit = 100);
+dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
 double betai(const double a,const double b,const double x, int maxit=100);
+dvariable pbeta( const dvariable x, const dvariable a, const dvariable b, int maxit = 100);
+double pbeta(const double x, const double a,const double b, int maxit=100);
+
+dvariable besselI(dvariable x, int nu);
+dvariable besselK(dvariable x, int nu);
+dvariable besselJ(dvariable x, int nu);
+dvariable besselY(dvariable x, int nu);
+
+double besselI(double x, int nu);
+double besselK(double x, int nu);
+double besselJ(double x, int nu);
+double besselY(double x, int nu);
 
 /*
 double betai(double _aa, double _bb, double _xx);
@@ -8611,9 +8655,7 @@ class ad_comm
      const streampos & off = 0);
    static cifstream *global_datafile;
    static cifstream *global_parfile;
-   static ofstream *global_savefile;
    static ofstream *global_logfile;
-   static uostream *global_bsavefile;
    static uistream *global_bparfile;
    static adstring adprogram_name;
    static adstring working_directory_path;
@@ -8625,8 +8667,8 @@ class ad_comm
 };
 
 int option_match(int argc, char *argv[], const char *string);
-int option_match(int argc, char *argv[], const char *string, const int &nopt);
-int option_match(char *s, const char *string, const int &_nopt);
+int option_match(int argc, char *argv[], const char *string, int& nopt);
+int option_match(char *s, const char *string, int& nopt);
 int option_match(char *s, const char *string);
 int ad_chdir(const char *s);
 void ad_getcd(const adstring & s);
@@ -8871,9 +8913,12 @@ double inv_cumd_t(double n, double y, double eps = 1.e-7);
 dvariable inv_cumd_t(const prevariable & n, const prevariable & y,
   double eps = 1.e-7);
 
-double inv_cumd_beta_stable(double a, double b, double y, double eps = 1.e-7);
-dvariable inv_cumd_beta_stable(const prevariable & _a, const prevariable & _b,
-  const prevariable & _y, double eps = 1.e-7);
+double old_inv_cumd_beta_stable(double a, double b, double y, double eps = 1.e-7);
+double inv_cumd_beta_stable(double a, double b, double y, double eps = 0);
+dvariable inv_cumd_beta_stable(const prevariable & _a, const prevariable & _b, const prevariable & _y, double eps = 0);
+
+double qbeta(double x, double a, double b, double eps = 0);
+dvariable qbeta(dvariable x, dvariable a, dvariable b, double eps = 0);
 
 dvariable norm_to_gamma(const prevariable & v, const prevariable & alpha,
   double bound = 0.999999);
@@ -8919,7 +8964,9 @@ dmatrix orthpoly_constant_begin_end(int n, int deg, int nconst_begin,
 #  include <qdfvar.hpp>
 #endif
 
+#ifdef DIAG
 void test_the_pointer(void);
+#endif
 
 // stuff for debugging the grad stack
 void set_gradstack_flag(char *str, int i, int j);

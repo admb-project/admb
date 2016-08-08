@@ -75,19 +75,23 @@ initial_params::~initial_params()
 }
 
 extern int* pointer_to_phase;
-  initial_params::initial_params(void)
-  {
-#  if defined(USE_SHARE_FLAGS)
-     share_flags=0;
-#  endif
-    phase_start=0;
-    phase_save=-9999;
-    initial_value=0;
-    initial_value_flag=0;
-    active_flag=0;
-    scalefactor=0;
-    pointer_to_phase=&initial_params::current_phase;
-  }
+
+/**
+Default constructor
+*/
+initial_params::initial_params()
+{
+#if defined(USE_SHARE_FLAGS)
+  share_flags = 0;
+#endif
+  phase_start = 0;
+  phase_save = -9999;
+  initial_value = 0;
+  initial_value_flag = 0;
+  active_flag = 0;
+  scalefactor = 0;
+  pointer_to_phase=&initial_params::current_phase;
+}
 
   void initial_params::set_initial_value(double x)
   {
@@ -111,37 +115,42 @@ extern int* pointer_to_phase;
     return phase_start;
   }
 
-
   void model_name_tag::allocate(const char * s)
   {
     name=s;
   }
 
-  void initial_params::allocate(int _phase_start)
+void initial_params::allocate(int _phase_start)
+{
+  add_to_list();
+
+  phase_start = _phase_start;
+  phase_save = phase_start;
+  if (max_number_phases < _phase_start)
   {
-#if !defined(BIG_INIT_PARAMS)
-    add_to_list();
-#else
-    varsptr.add_to_list(this);
-    num_initial_params++;
-#endif
-    phase_start=_phase_start;
-    phase_save=phase_start;
-    if (max_number_phases<_phase_start) max_number_phases=_phase_start;
+    max_number_phases = _phase_start;
+  }
+}
+
+void initial_params::add_to_list()
+{
+  if (num_initial_params >= initial_params::max_num_initial_params)
+  {
+    cerr << " This version of ADMB only supports "
+         << initial_params::max_num_initial_params
+         << " initial parameter objects.\n";
+    ad_exit(1);
   }
 
-  void initial_params::add_to_list(void)
-  {
-    if (num_initial_params>=initial_params::max_num_initial_params)
-    {
-      cerr << " This version of ADMB only supports "
-          << initial_params::max_num_initial_params << " initial parameter"
-        " objects" << endl;
-      ad_exit(1);
-    }
-    varsptr[num_initial_params++]= this; // this is the list of
-                                         // fundamental objects
-  }
+  // this is the list of fundamental objects
+#if !defined(BIG_INIT_PARAMS)
+  varsptr[num_initial_params] = this;
+#else
+  varsptr.add_to_list(this);
+#endif
+
+  num_initial_params++;
+}
 
 int initial_params::correct_for_dev_objects(const dmatrix& H)
   {
@@ -320,7 +329,7 @@ void initial_params::xinit1(const dvector& _x, const dvector& g)
 
 dvariable initial_params::reset(const dvar_vector& x, const dvector& __pen)
   {
-    dvector& _pen=(dvector&) __pen;
+    dvector& _pen = (dvector&)__pen;
     int ii=1;
     dvariable pen=0.0;
     dvariable pen1;
@@ -388,58 +397,50 @@ dvariable initial_params::reset(const dvector& x)
     return pen;
   }
 
-  void initial_params::save()
+void initial_params::save()
+{
+  adstring extension;
+  if (current_phase == max_number_phases)
   {
-    adstring tmp;
-    if (current_phase==max_number_phases)
+    extension = "ar";
+  }
+  else if (current_phase >= 10)
+  {
+    extension = str(current_phase);
+  }
+  else
+  {
+    extension = "0" + str(current_phase);
+  }
+  {
+    adstring tadstring=ad_comm::adprogram_name + adstring(".p") + extension;
+    ofstream parfile((char*)tadstring);
+    if (parfile.good())
     {
-      tmp="ar";
-    }
-    else if (current_phase>=10)
-    {
-      tmp=str(current_phase);
-    }
-    else
-    {
-      tmp="0" + str(current_phase);
-    }
-    {
-      adstring tadstring=ad_comm::adprogram_name + adstring(".p") + tmp;
-      ad_comm::global_savefile = new ofstream((char*)tadstring);
-      if (ad_comm::global_savefile)
-      {
-        *(ad_comm::global_savefile) << setshowpoint();
-        *(ad_comm::global_savefile) <<  "# Number of parameters = "
-           << initial_params::nvarcalc() << " ";
-        *(ad_comm::global_savefile) <<  " Objective function value = "
-           << *objective_function_value::pobjfun;
-        *(ad_comm::global_savefile) <<  "  Maximum gradient component = "
-           << objective_function_value::gmax << endl;
-        *(ad_comm::global_savefile) << setshowpoint();
+      parfile << setshowpoint() << setprecision(15)
+        <<  "# Number of parameters = " << initial_params::nvarcalc()
+        <<  " Objective function value = " << *objective_function_value::pobjfun
+        <<  "  Maximum gradient component = " << objective_function_value::gmax
+        << endl;
 
-        for (int i=0;i<num_initial_params;i++)
-        {
-           (varsptr[i])->save_value();
-        }
-        delete ad_comm::global_savefile;
-        ad_comm::global_savefile=NULL;
-      }
-    }
-    {
-      adstring tadstring=ad_comm::adprogram_name + adstring(".b") + tmp;
-      ad_comm::global_bsavefile = new uostream((char*)tadstring);
-
-      if (ad_comm::global_bsavefile)
+      for (int i = 0; i < num_initial_params; ++i)
       {
-        for (int i=0;i<num_initial_params;i++)
-        {
-           (varsptr[i])->bsave_value();
-        }
-        delete ad_comm::global_bsavefile;
-        ad_comm::global_bsavefile=NULL;
+        varsptr[i]->save_value(parfile);
       }
     }
   }
+  {
+    adstring tadstring = ad_comm::adprogram_name + adstring(".b") + extension;
+    uostream barfile((char*)tadstring);
+    if (barfile.good())
+    {
+      for (int i = 0; i < num_initial_params; ++i)
+      {
+        (varsptr[i])->bsave_value(barfile);
+      }
+    }
+  }
+}
 
   void initial_params::set_active_flag(void)
   {
@@ -487,7 +488,7 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
 /**
 Use a data_vector to allocate an init_bounded_number
 \author Steve Martell
-\param v vector containing the lower bound, upper bound, and phase of 
+\param v vector containing the lower bound, upper bound, and phase of
 estimation.
 */
   void param_init_bounded_number::allocate(const data_vector & v,
@@ -661,22 +662,27 @@ data_number& data_number::operator=(const double& v)
     allocate(1,_s);
   }
 
-  void param_init_number::save_value(void)
-  {
-    #ifndef __ZTC__
-      *(ad_comm::global_savefile) << label_class(this->label())
-        << setprecision(12) << dvariable(*this) << endl;
-    #else
-      *(ad_comm::global_savefile) <<  label_class(this->label())
-        << *this << endl;
-    #endif
-  }
+/**
+Saves value param_init_number to ofs.
+*/
+void param_init_number::save_value(ofstream& ofs)
+{
+#ifdef __ZTC__
+  ofs << label_class(this->label()) << *this << endl;
+#else
+  //std::streamsize save = ofs.precision();
+  ofs << label_class(this->label())
+      << setprecision(12) << dvariable(*this)
+      << endl;
+  //ofs.precision(save);
+#endif
+}
 
-  void param_init_number::bsave_value(void)
-  {
-    dvariable tmp=*this;
-    *(ad_comm::global_bsavefile) << tmp;
-  }
+void param_init_number::bsave_value(uostream& uos)
+{
+  dvariable tmp = *this;
+  uos << tmp;
+}
 
 void param_init_vector::set_value(const dvar_vector& x,
   const int& ii, const dvariable& pen)
@@ -722,21 +728,20 @@ void param_init_vector::set_value(const dvar_vector& x,
     //add_to_list();
   }
 
-  void param_init_vector::save_value(void)
-  {
-    if (!(!(*this)))
-      *(ad_comm::global_savefile) << label_class(this->label())
-        << dvar_vector(*this) << endl;
-  }
+void param_init_vector::save_value(ofstream& ofs)
+{
+  if (!(!(*this)))
+    ofs << label_class(this->label()) << dvar_vector(*this) << endl;
+}
 
-  void param_init_vector::bsave_value(void)
+void param_init_vector::bsave_value(uostream& uos)
+{
+  if (!(!(*this)))
   {
-    if (!(!(*this)))
-    {
-      dvar_vector& tmp=*this;
-      *(ad_comm::global_bsavefile) << tmp;
-    }
+    dvar_vector& tmp = *this;
+    uos << tmp;
   }
+}
 
  /*
   void param_init_vector::allocate(int imin,int imax,
@@ -885,17 +890,27 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
     return ::size_count(*this);
   }
 
-  param_init_bounded_vector::param_init_bounded_vector(void) :
-    named_dvar_vector() , initial_params()
-  {
-    //add_to_list();
-  }
-
-  param_init_bounded_number::param_init_bounded_number(void) :
-    param_init_number() {}
-  //{
-   // add_to_list();
-  //}
+/**
+Default constructor
+*/
+param_init_bounded_vector::param_init_bounded_vector():
+  named_dvar_vector(),
+  initial_params(),
+  minb(0),
+  maxb(0)
+{
+  //add_to_list();
+}
+/**
+Default constructor
+*/
+param_init_bounded_number::param_init_bounded_number():
+  param_init_number(),
+  minb(0),
+  maxb(0)
+{
+  //add_to_list();
+}
 
   void param_init_bounded_vector::allocate(int imin,int imax,
     double _minb,double _maxb,int _phase_start,const char * s)
@@ -948,21 +963,20 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
     allocate(imin,imax,_minb,_maxb,1,s);
   }
 
-  void param_init_bounded_vector::save_value(void)
-  {
-    if (!(!(*this)))
-      *(ad_comm::global_savefile) << label_class(this->label())
-                    << dvar_vector(*this) << endl;
-  }
+void param_init_bounded_vector::save_value(ofstream& ofs)
+{
+  if (!(!(*this)))
+    ofs << label_class(this->label()) << dvar_vector(*this) << endl;
+}
 
-  void param_init_bounded_vector::bsave_value(void)
+void param_init_bounded_vector::bsave_value(uostream& uos)
+{
+  if (!(!(*this)))
   {
-    if (!(!(*this)))
-    {
-      dvar_vector& tmp=*this;
-      *(ad_comm::global_bsavefile) << tmp;
-    }
+    dvar_vector& tmp = *this;
+    uos << tmp;
   }
+}
 
 void param_init_matrix::set_value(const dvar_vector& x, const int& ii,
   const dvariable& pen)
@@ -993,22 +1007,20 @@ void param_init_matrix::set_value_inv(const dvector& x, const int& ii)
     return ::size_count(*this);
   }
 
-  void param_init_matrix::save_value(void)
-  {
-    if (!(!(*this)))
-      *(ad_comm::global_savefile) << label_class(this->label())
-        << dvar_matrix(*this) << endl;
-  }
+void param_init_matrix::save_value(ofstream& ofs)
+{
+  if (!(!(*this)))
+    ofs << label_class(this->label()) << dvar_matrix(*this) << endl;
+}
 
-  void param_init_matrix::bsave_value(void)
+void param_init_matrix::bsave_value(uostream& uos)
+{
+  if (!(!(*this)))
   {
-    if (!(!(*this)))
-    {
-      dvar_matrix& tmp=*this;
-      *(ad_comm::global_bsavefile) << tmp;
-    }
+    dvar_matrix& tmp = *this;
+    uos << tmp;
   }
-
+}
 
   void data_matrix::allocate(int rmin,int rmax,int cmin,int cmax,
     const char * s)

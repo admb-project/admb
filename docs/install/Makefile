@@ -2,9 +2,9 @@ all:\
   QuickStartWindows.html\
   QuickStartWindowsZip.html\
   QuickStartWindowsSource.html\
-  QuickStartVisualC++.html\
-  QuickStartVisualC++Zip.html\
-  QuickStartVisualC++Source.html\
+  QuickStartVisualC.html\
+  QuickStartVisualCZip.html\
+  QuickStartVisualCSource.html\
   QuickStartUnix.html\
   QuickStartUnixSource.html\
   QuickStartMacOS.html\
@@ -16,78 +16,107 @@ all:\
 
 QuickStartWindows.html: QuickStartWindows.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartWindowsZip.html: QuickStartWindowsZip.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartWindowsSource.html: QuickStartWindowsSource.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
-QuickStartVisualC++.html: QuickStartVisualC++.txt
+QuickStartVisualC.html: QuickStartVisualC.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
-QuickStartVisualC++Zip.html: QuickStartVisualC++Zip.txt
+QuickStartVisualCZip.html: QuickStartVisualCZip.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
-QuickStartVisualC++Source.html: QuickStartVisualC++Source.txt
+QuickStartVisualCSource.html: QuickStartVisualCSource.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartUnix.html: QuickStartUnix.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartUnixSource.html: QuickStartUnixSource.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartMacOS.html: ../../scripts/installers/packagemaker/README.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 QuickStartUbuntu14.html: ../../scripts/installers/dpkg/README.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 CHANGES.html: ../../CHANGES.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 INSTALL.html: ../../INSTALL.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 README.html: ../../README.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 LICENSE.html: ../../LICENSE.txt
 	cat begin.html>$@
+	cat admarkdown.css>>$@
+	cat begin2.html>>$@
 	markdown_py $^>>$@
 	cat end.html>>$@
 
 clean:
-	rm -vf QuickStartWindows.html QuickStartVisualC++.html QuickStartUnix.html
-	rm -vf QuickStartVisualC++Zip.html
+	rm -vf QuickStartWindows.html QuickStartVisualC.html QuickStartUnix.html
+	rm -vf QuickStartVisualCZip.html
 	rm -vf CHANGES.html INSTALL.html README.html LICENSE.html
 	rm -vf QuickStartMacOS.html
 	rm -vf QuickStartUbuntu14.html QuickStartUnixSource.html
-	rm -vf QuickStartVisualC++Source.html QuickStartWindowsSource.html
+	rm -vf QuickStartVisualCSource.html QuickStartWindowsSource.html
+	rm -vf QuickStartWindowsZip.html

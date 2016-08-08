@@ -1,16 +1,13 @@
-/*
- * $Id$
+/**
+ * \file
  *
+ * Constructors, destructors and misc functions involving class dvariable
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable
 
+#include <stdio.h>
+#include <math.h>
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -22,47 +19,36 @@
   #include <iostream.hpp>
 #endif
 
-
-#include <stdio.h>
-#ifndef __SUN__
-#endif
-#include <math.h>
-
 /**
- * Description not yet available.
- * \param
- */
+Assign value x to all elements in dmatrix.
+*/
 dmatrix& dmatrix::operator=(const double x)
 {
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    elem(i)=x;
+    elem(i) = x;
   }
-  return (*this);
+  return *this;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Divide value x to all elements in dmatrix.
+*/
 dmatrix& dmatrix::operator/=(const double x)
 {
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    elem(i)/=x;
+    elem(i) /= x;
   }
-  return (*this);
+  return *this;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Multiply value x to all elements in dmatrix.
+*/
 dmatrix& dmatrix::operator*=(const double x)
 {
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    elem(i)*=x;
+    elem(i) *= x;
   }
-  return (*this);
+  return *this;
 }

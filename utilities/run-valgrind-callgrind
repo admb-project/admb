@@ -1,2 +1,4 @@
+#!/bin/sh
+
 valgrind --tool=callgrind --callgrind-out-file=valgrind-callgrind.txt $1 &> /dev/null
 callgrind_annotate valgrind-callgrind.txt

@@ -50,61 +50,50 @@ class df1b2variable;
  * Description not yet available.
  * \param
  */
-  class df3_three_variable
-  {
-    double v[20];
-  public:
-    df3_three_variable();
-    df3_three_variable(const df3_three_variable& );
+class df3_three_variable
+{
+  double v[20];
+public:
+  static df1b2variable* ind_var[];
+  static int num_ind_var;
+  static int num_local_ind_var;
 
-    static df1b2variable * ind_var[];
-    static int num_ind_var;
-    static int num_local_ind_var;
+  df3_three_variable();
+  df3_three_variable(const df3_three_variable&);
 
-    double * get_u(void) const {return (double*) (&(v[0]));}
-    double * get_u_x(void)const {return (double*) (&(v[1]));}
-    double * get_u_y(void)const {return (double*) (&(v[2]));}
+  double* get_u() const { return (double*)(&(v[0])); }
+  double* get_u_x() const { return (double*)(&(v[1])); }
+  double* get_u_y() const { return (double*)(&(v[2])); }
+  double* get_u_z() const { return (double*)(&(v[3])); }
+  double* get_u_xx() const { return (double*)(&(v[4])); }
+  double* get_u_xy() const { return (double*)(&(v[5])); }
+  double* get_u_xz() const { return (double*)(&(v[6])); }
+  double* get_u_yy() const { return (double*)(&(v[7])); }
+  double* get_u_yz() const { return (double*)(&(v[8])); }
+  double* get_u_zz() const { return (double*)(&(v[9])); }
+  double* get_u_xxx() const { return (double*)(&(v[10])); }
+  double* get_u_xxy() const { return (double*)(&(v[11])); }
+  double* get_u_xxz() const { return (double*)(&(v[12])); }
+  double* get_u_xyy() const { return (double*)(&(v[13])); }
+  double* get_u_xyz() const { return (double*)(&(v[14])); }
+  double* get_u_xzz() const { return (double*)(&(v[15])); }
+  double* get_u_yyy() const { return (double*)(&(v[16])); }
+  double* get_u_yyz() const { return (double*)(&(v[17])); }
+  double* get_u_yzz() const { return (double*)(&(v[18])); }
+  double* get_u_zzz() const { return (double*)(&(v[19])); }
 
-    double * get_u_z(void)const {return (double*) (&(v[3]));}
+  df3_three_variable& operator=(const df3_three_variable& v);
+  df3_three_variable& operator=(double v);
+  df3_three_variable& operator+=(const df3_three_variable& v);
+  df3_three_variable& operator*=(const df3_three_variable& v);
+  df3_three_variable& operator*=(double v);
+  df3_three_variable& operator+=(double v);
+  df3_three_variable& operator-=(const df3_three_variable& v);
+  df3_three_variable& operator-=(double v);
+  df3_three_variable& operator/=(const df3_three_variable& v);
 
-    double * get_u_xx(void)const {return (double*) (&(v[4]));}
-
-    double * get_u_xy(void)const {return (double*) (&(v[5]));}
-    double * get_u_xz(void)const {return (double*) (&(v[6]));}
-
-    double * get_u_yy(void)const {return (double*) (&(v[7]));}
-
-    double * get_u_yz(void)const {return (double*) (&(v[8]));}
-    double * get_u_zz(void)const {return (double*) (&(v[9]));}
-
-    double * get_u_xxx(void)const {return (double*) (&(v[10]));}
-
-    double * get_u_xxy(void)const {return (double*) (&(v[11]));}
-
-    double * get_u_xxz(void)const {return (double*) (&(v[12]));}
-
-    double * get_u_xyy(void)const {return (double*) (&(v[13]));}
-
-    double * get_u_xyz(void)const {return (double*) (&(v[14]));}
-    double * get_u_xzz(void)const {return (double*) (&(v[15]));}
-
-    double * get_u_yyy(void)const {return (double*) (&(v[16]));}
-    double * get_u_yyz(void)const {return (double*) (&(v[17]));}
-    double * get_u_yzz(void)const {return (double*) (&(v[18]));}
-
-    double * get_u_zzz(void)const {return (double*) (&(v[19]));}
-
-    df3_three_variable& operator = (const df3_three_variable& v);
-    df3_three_variable& operator = (double v);
-    df3_three_variable& operator += (const df3_three_variable& v);
-    df3_three_variable& operator *= (const df3_three_variable& v);
-    df3_three_variable& operator *= (double v);
-    df3_three_variable& operator += (double v);
-    df3_three_variable& operator -= (const df3_three_variable& v);
-    df3_three_variable& operator -= (double v);
-    df3_three_variable& operator /= (const df3_three_variable& v);
-    void initialize(void);
-  };
+  void initialize();
+};
 
 /**
  * Description not yet available.

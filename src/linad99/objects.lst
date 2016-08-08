@@ -13,6 +13,8 @@ OBJ1=\
  vbetacf.obj\
  vbetai.obj\
  cbetai.obj\
+ vbessel.obj\
+ cbessel.obj\
  cgamdev.obj\
  fmmtr1.obj\
  df13fun.obj\
@@ -374,7 +376,6 @@ OBJ3=\
  vregress.obj\
  cregress.obj\
  ptr_vec.obj\
- ptr2.obj\
  ranfill.obj\
  d3arr.obj\
  ranf_ni.obj\
@@ -449,6 +450,7 @@ OBJ3=\
 OBJ4=\
  mfexp.obj\
  expm.obj\
+ invlogit.obj\
  factors.obj\
  orthpoly.obj\
  makesub.obj\
@@ -481,6 +483,8 @@ OBJ16=\
 PVM=\
  slgrdclc.obj\
  adcomm1.obj
+DIAG=\
+ ptr2.obj
 UNUSED=\
  xfmmtr1.obj\
  denorm.obj\

@@ -43,7 +43,7 @@ lvector lvector::operator()(const lvector& u)
 #ifdef OPT_LIB
      tmp(i)=(*this)((int)u(i));
 #else
-     const long ui = u(i);
+     const AD_LONG_INT ui = u(i);
      assert(ui <= INT_MAX);
      tmp(i)=(*this)((int)ui);
 #endif

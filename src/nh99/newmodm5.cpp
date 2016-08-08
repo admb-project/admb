@@ -116,7 +116,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
     }
     lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
       this);
-    if (lapprox==0)
+    if (!lapprox)
     {
       cerr << "Error allocating memory for lapprox" << endl;
       ad_exit(1);
@@ -167,11 +167,6 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
     // linear mixed effects optimization
     if (laplace_approximation_calculator::variance_components_vector)
     {
-      if (!lapprox)
-      {
-        cerr << "this can't happen" << endl;
-        ad_exit(1);
-      }
       lapprox->get_hessian_components_banded_lme(this);
     }
 

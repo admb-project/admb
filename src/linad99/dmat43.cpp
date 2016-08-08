@@ -1,30 +1,23 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
+
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-banded_lower_triangular_dmatrix::
-  banded_lower_triangular_dmatrix(const banded_lower_triangular_dmatrix& mm) :
+Copy constructor
+*/
+banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix(
+  const banded_lower_triangular_dmatrix& mm):
   bw(mm.bw), d(mm.d)
 {}
-
 /**
- * Description not yet available.
- * \param
- */
-banded_lower_triangular_dmatrix & banded_lower_triangular_dmatrix::operator =
-  (const banded_lower_triangular_dmatrix& mm)
+Assigment operator
+*/
+banded_lower_triangular_dmatrix&
+banded_lower_triangular_dmatrix::operator=(
+  const banded_lower_triangular_dmatrix& mm)
 {
   if (mm.bw!=bw)
   {

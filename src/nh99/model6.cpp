@@ -11,6 +11,14 @@
 #endif
 #define ISZERO(d) ((d)==0.0)
 
+/**
+Default constructor
+*/
+param_init_bounded_matrix::param_init_bounded_matrix():
+  param_init_matrix(), minb(0), maxb(0)
+{
+}
+
 void param_init_bounded_matrix::set_value(const dvar_vector& x,
   const int& ii, const dvariable& pen)
   {
@@ -34,10 +42,6 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
         ::set_value_inv(*this,x,ii,minb,maxb,scalefactor);
     }
   }
-
-  param_init_bounded_matrix::param_init_bounded_matrix() :
-    param_init_matrix()
-  {;}
 
   void param_init_bounded_matrix::allocate(int rmin,int rmax,
     int cmin,int cmax,

@@ -23,6 +23,7 @@ check: $(CXX)-check
 	@echo "MAKE: $(MAKE)"
 	@echo "CXX: $(CXX)"
 clean: $(CXX)-clean
+coverage: $(CXX)-coverage
 
 help:
 	@echo Read INSTALL.txt for installation help.
@@ -82,6 +83,9 @@ g++-docs:
 	$(MAKE) --directory=docs CC=gcc CXX=g++ all
 g++-test:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ all
+g++-coverage:
+	$(MAKE) --directory=src CC=gcc CXX=g++ COVERAGE=yes dist
+	$(MAKE) --directory=tests CC=gcc CXX=g++ coverage
 g++-verify:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ verify
 g++-shared:
@@ -115,6 +119,9 @@ clang++-docs:
 	$(MAKE) --directory=docs CC=clang CXX=clang++ all
 clang++-test:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ all
+clang++-coverage:
+	$(MAKE) --directory=src CC=clang CXX=clang++ COVERAGE=yes dist
+	$(MAKE) --directory=tests CC=clang CXX=clang++ coverage
 clang++-verify:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ verify
 clang++-shared:
@@ -146,6 +153,9 @@ c++-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=c++ SHARED=-shared libs
 c++-docs:
 	$(MAKE) --directory=docs CC=cc CXX=c++ all
+c++-coverage:
+	$(MAKE) --directory=src CC=cc CXX=c++ COVERAGE=yes dist
+	$(MAKE) --directory=tests CC=cc CXX=c++ coverage
 c++-test:
 	$(MAKE) --directory=tests CC=cc CXX=c++ all
 c++-verify:
@@ -276,3 +286,8 @@ bcc-install:
 	cd src& $(MAKE) -fbcc.mak install
 bcc-clean:
 	cd src& $(MAKE) -fbcc.mak clean
+
+counter: counts
+
+counts:
+	python scripts/get-download-counts.py

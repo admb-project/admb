@@ -4,7 +4,7 @@ compiler:
   - gcc
   - clang
 
-script: make clean all test
+script: make clean coverage
 
 branches:
   only:
@@ -13,7 +13,12 @@ branches:
 notifications:
   email: false
 
-env: PROG=
+env:
+  global:
+    - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
 
 os:
   - linux
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -a "--object-directory=build/objects/debug"

@@ -26,9 +26,6 @@
 //extern indvar_offset_list * INDVAR_LIST;
 //extern unsigned  MAX_NVAR_OFFSET;
 
-void * farptr_norm(void *);
-long int farptr_tolong(void *) ;
-
 /**
  * Description not yet available.
  * \param
@@ -141,13 +138,12 @@ dvar_vector::dvar_vector(unsigned int sz, double* x)
  */
 
 /**
- * Description not yet available.
- * \param
- */
- dvar_vector::dvar_vector(void)
- {
-   allocate();
- }
+Default constructor
+*/
+dvar_vector::dvar_vector()
+{
+  allocate();
+}
 
 /**
  * Description not yet available.
@@ -210,32 +206,30 @@ void copy_status(const ostream& _s, const dvar_vector& v)
    }
 
 /**
- * Description not yet available.
- * \param
- */
-   void dvar_vector::allocate(void)
-   {
-     shape=NULL;
-     va=NULL;
-   }
-
+Does not allocate, but initializes all class member variables.
+*/
+void dvar_vector::allocate()
+{
+  va = NULL;
+  link_ptr = NULL;
+  shape = NULL;
+  index_min = 0;
+  index_max = -1;
+}
 /**
- * Description not yet available.
- * \param
- */
+Allocate dvar_vector using indexes from v1.
+*/
 void dvar_vector::allocate(const dvector& v1)
-   {
-     allocate(v1.indexmin(),v1.indexmax());
-   }
-
+{
+  allocate(v1.indexmin(), v1.indexmax());
+}
 /**
- * Description not yet available.
- * \param
- */
+Allocate dvar_vector using indexes from v1.
+*/
 void dvar_vector::allocate(const dvar_vector& v1)
-   {
-     allocate(v1.indexmin(),v1.indexmax());
-   }
+{
+  allocate(v1.indexmin(), v1.indexmax());
+}
 
 /**
  * Description not yet available.
@@ -266,9 +260,8 @@ void dvar_vector::allocatec(const dvar_vector& t)
    }
 
 /**
- * Description not yet available.
- * \param
- */
+Allocate dvar_vector with indexmin = ncl and indexmax = nch.
+*/
 void dvar_vector::allocate(int ncl, int nch)
 {
   if (ncl > nch)

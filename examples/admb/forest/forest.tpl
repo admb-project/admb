@@ -62,9 +62,9 @@ PROCEDURE_SECTION
   cout << "ihflag = " << ihflag << endl;
   cout << "last_phase() " << last_phase() << endl; 
   cout << "iexit = " << iexit << endl;
-  tau=exp(log_tau);
-  nu=exp(log_nu);
-  sigma=exp(log_sigma);
+  tau=mfexp(log_tau);
+  nu=mfexp(log_nu);
+  sigma=mfexp(log_sigma);
    funnel_dvariable Integral;
    int i;
    for (i=1;i<=k+1;i++)
@@ -85,7 +85,7 @@ PROCEDURE_SECTION
    f+=sum_freq*log(1.e-50+S(1));
 FUNCTION dvariable h(const dvariable& z)
   dvariable tmp;
-  tmp=exp(-.5*z*z + tau*(-1.+exp(-nu*pow(a(a_index),beta)*exp(sigma*z))) );  
+  tmp=mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(a(a_index),beta)*mfexp(sigma*z))) );  
   return tmp;
 REPORT_SECTION
   report << "report:" << endl;
@@ -94,7 +94,7 @@ REPORT_SECTION
   report << "ihflag = " << ihflag << endl;
   report << "last_phase() " << last_phase() << endl; 
   report << "iexit = " << iexit << endl;
-  tau=exp(log_tau);
+  tau=mfexp(log_tau);
   report << "nsteps = " << std::setprecision(10) <<  nsteps << endl;
   report << "f = " << std::setprecision(10) <<  f << endl;
   report << "a" << endl << a << endl;

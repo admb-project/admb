@@ -118,6 +118,7 @@ dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
     sum=norm2(ocoff(is));
     ocoff(is)=ocoff(is)/sqrt(sum);
   }
+#ifdef DIAG
   int ps=0;
   if (ps)
   {
@@ -131,6 +132,7 @@ dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
     }
     cout << tmp << endl;
   }
+#endif
   return trans(ocoff);
 }
 
@@ -195,6 +197,7 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
     sum=norm2(ocoff(is));
     ocoff(is)=ocoff(is)/sqrt(sum);
   }
+#ifdef DIAG
   int ps=0;
   if (ps)
   {
@@ -208,6 +211,7 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
     }
     cout << tmp << endl;
   }
+#endif
   return trans(ocoff);
 }
 

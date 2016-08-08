@@ -57,18 +57,27 @@ istream& operator>>(const istream& istr, const dvar4_array &z)
   }
   return (istream&) istr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& ostr, const dvar5_array &z)
+Outputs dvar5_array z.
+*/
+ostream& operator<<(ostream& ostr, const dvar5_array& z)
 {
-  for (int i=z.indexmin();i<=z.indexmax();i++)
+  for (int i = z.indexmin(); i <= z.indexmax(); i++)
   {
     ostr << z[i];
+    if (i < z.indexmax())
+    {
+      ostr << '\n';
+    }
   }
-  return (ostream&) ostr;
+  return ostr;
+}
+/**
+Outputs dvar5_array z.
+*/
+ostream& operator<<(const ostream& ostr, const dvar5_array& z)
+{
+  return operator<<((ostream&)ostr, z);
 }
 
 /**

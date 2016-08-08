@@ -19,10 +19,6 @@ void ADSleep(unsigned int x);
   void ad_open_mcmchist_window(void);
   void ad_update_mcmc_report(double * v,int l);
   void write_banner_stuff(void);
-  void calljunk(double x){;}
-//#if defined (AD_DEMO)
-  void adwait(double sec);
-//#endif
   int function_minimizer::have_constraints=0;
   int function_minimizer::first_hessian_flag=0;
   //int function_minimizer::in_likeprof_flag=0;
@@ -345,7 +341,10 @@ void write_banner_stuff(void)
     (*ad_printf)("%s\n", banner0);
     (*ad_printf)("%s\n\n", banner0);
   }
+#if defined (AD_DEMO)
+  void adwait(double sec);
   adwait(2.5);
+#endif
 }
 
   void test_mcmc_options_window(void)

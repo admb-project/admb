@@ -34,7 +34,7 @@ long int farptr_tolong(void*);
 /**
 Default constructor
 */
-ivector::ivector(void)
+ivector::ivector()
 {
   allocate();
 }
@@ -42,22 +42,30 @@ ivector::ivector(void)
 Copy constructor
 */
 ivector::ivector(const ivector& t)
- {
-   index_min=t.index_min;
-   index_max=t.index_max;
-   #ifdef DIAG
+{
+#ifdef DIAG
     cout << "Copy constructor called for ivector with address "
          << _farptr_tolong(t.v) <<"\n";
-   #endif
-   shape=t.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-     v = t.v;
-   }
- }
+#endif
+
+  index_min = t.index_min;
+  index_max = t.index_max;
+
+  shape=t.shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+    v = t.v;
+  }
+  else
+  {
+    v = NULL;
+  }
+}
 /**
-Destructor
+Default destructor. Invoked by the compiler. Only frees allocated memory
+if all shallow copies in scope have been removed.
+Produces an error if the double* member v is NULL.
 */
 ivector::~ivector()
 {
@@ -69,21 +77,20 @@ ivector::~ivector()
     }
     else
     {
-      if (v != NULL)
-      {
-        deallocate();
-      }
 #ifdef SAFE_ALL
-      else
+  #ifdef DIAG
+      myheapcheck(" Entering ~dvector");
+  #endif
+      if (v == NULL)
       {
-         cerr << " Trying to delete NULL pointer in ~ivector\n";
-         ad_exit(21);
+        cerr << " Trying to delete NULL pointer in ~ivector\n";
+        ad_exit(21);
       }
 #endif
+      deallocate();
     }
   }
 }
-
 /**
  * Description not yet available.
  * \param
@@ -100,46 +107,46 @@ ivector::~ivector()
      allocate(ncl,nch);
    }
  }
-
 /**
- * Description not yet available.
- * \param
- */
-  void ivector::safe_deallocate()
+Called by destructor to deallocate memory for a ivector object.
+Produces an error if the int* member is NULL.
+*/
+void ivector::deallocate()
+{
+  if (shape)
   {
-    if (shape)
+    v = (int*)(shape->trueptr);
+
+    if (v)
     {
-      if (shape->ncopies)
-      {
-        cerr << "trying to deallocate a dvector with copies" << endl;
-        ad_exit(1);
-      }
+      delete [] v;
+      v = NULL;
     }
-    else
-    {
-      deallocate();
-    }
+
+    delete shape;
+    shape = NULL;
   }
+}
+/**
+Safely deallocates memory by reporting if shallow copies are still in scope.
+*/
+void ivector::safe_deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      cerr << "trying to deallocate a ivector with copies" << endl;
+      ad_exit(1);
+    }
+    deallocate();
+  }
+}
 
 /**
  * Description not yet available.
  * \param
  */
- void ivector::deallocate()
- {
-   if (shape)
-   {
-     v = (int*) (shape->trueptr);
-     delete [] v;
-     v=NULL;
-     delete  shape;
-   }
-   else
-   {
-     //cerr << "Warning -- trying to deallocate an unitialized ivector" << endl;
-   }
-   shape=NULL;
- }
 
 
 /**
@@ -316,16 +323,14 @@ void ivector::allocate(const ivector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void ivector::allocate(void)
+Does not allocate, but initializes class members.
+*/
+void ivector::allocate()
 {
-  shape=NULL;
-  index_min=1;
-  index_max=-1;
+  shape = NULL;
+  index_min = 1;
+  index_max = -1;
   v = NULL;
 }
 

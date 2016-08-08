@@ -1,56 +1,25 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
-/// file ddlist.cpp
+\file
+
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
 
-#ifdef __ZTC__
-   #include <iostream.hpp>
-#endif
-
-#ifdef __TURBOC__
-   #pragma hdrstop
-   #include <iostream.h>
-#endif
-
 #include <stdlib.h>
-#if defined(__x86_64)
-  #include <stdint.h>
+#ifndef OPT_LIB
+  #include <cassert>
 #endif
-//#define MAX_DLINKS 1000
-/**
-\return previous node pointer.
-*/
-dlink* dlink::previous()
-{
-  return prev;
-}
-
-//////////////////////////////
-// global list names
-//dlist * GRAD_LIST;
-//extern dlist * GRAD_LIST; //js
-/////////////////////////////
-
-char* ddlist_space;
-char* ddlist_spacea;
 
 /**
 Default constructor
 */
-dlist::dlist(void)
+dlist::dlist()
 {
   int on,nopt = 0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
-    if (nopt ==1)
+    if (nopt == 1)
     {
       int i = atoi(ad_comm::argv[on+1]);
       if (i > 0)
@@ -64,54 +33,65 @@ dlist::dlist(void)
     }
   }
   last = 0;
-  last_offset = 0;
   nlinks = 0;
   dlink_addresses = new dlink*[gradient_structure::MAX_DLINKS];
   const size_t size = 2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1);
   ddlist_space = (char*)malloc(size * sizeof(char));
-  //cout << (int) (ddlist_space) << endl;
-  //cout << ((int) (ddlist_space))%8 << endl;
-#if defined(__x86_64)
-  intptr_t adjust=(8 - ((intptr_t)(ddlist_space))%8)%8;
-#else
-  int adjust=(8- ((int) (ddlist_space))%8)%8;
-#endif
 
-  ddlist_spacea=ddlist_space+adjust;
+  variables_save = new double[gradient_structure::MAX_DLINKS];
+
+#ifndef OPT_LIB
+  //fails for insufficient memory to allocate space for dvariables save buffer
+  assert(variables_save != NULL);
+#endif
 
   //Initialize addresses to zero
   memset(dlink_addresses, 0, sizeof(dlink*) * gradient_structure::MAX_DLINKS);
+}
+/**
+Destructor
+*/
+dlist::~dlist()
+{
+  if (dlink_addresses)
+  {
+    delete [] dlink_addresses;
+    dlink_addresses = NULL;
+  }
+  if (ddlist_space)
+  {
+    ::free(ddlist_space);
+    ddlist_space = NULL;
+  }
+  if (variables_save)
+  {
+    delete [] variables_save;
+    variables_save = NULL;
+  }
 }
 /**
 Create unlinked new node.
 */
 dlink* dlist::create()
 {
-  dlink* tmp= (dlink*)(ddlist_spacea+2*sizeof(double)*nlinks);
-  // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
+  dlink* link = (dlink*)(ddlist_space+2*sizeof(double)*nlinks);
+#ifndef OPT_LIB
+  assert(link);
+#endif
 
-  if (!tmp)
-  {
-    cerr << "Error allocating dlink in dlist::create()\n";
-    ad_exit(21);
-  }
-  else
-  {
-    // keep track of the links so you can zero them out
-    dlink_addresses[nlinks]=tmp;
-    nlinks+=1;
+  //do not add to list.
+  link->prev=0;
 
-    if (nlinks > gradient_structure::MAX_DLINKS)
-    {
-      cerr << "Need to increase the maximum number of dlinks" << endl;
-      ad_exit(1);
-    }
+#ifndef OPT_LIB
+  //If fails, then need to increase the maximum number of dlinks.
+  assert(nlinks <= gradient_structure::MAX_DLINKS);
+#endif
 
-    //do not add to list.
-    tmp->prev=0;
-  }
+  // keep track of the links so you can zero them out
+  dlink_addresses[nlinks] = link;
+  ++nlinks;
 
-  return tmp;
+  return link;
 }
 /**
 If list is not empty, pop and return last node.
@@ -120,51 +100,67 @@ If list is not empty, pop and return last node.
 */
 dlink* dlist::last_remove()
 {
-  if (last)
+  dlink* link = last;
+  if (link)
   {
-    dlink* tmp = last;
-    last = last->prev;
-    return tmp;
+    last = link->prev;
+    link->prev = NULL;
   }
-  return 0;
+  return link;
 }
 /**
-Destructor
+Append link to list.
+
+\param link node
 */
-dlist::~dlist()
+dlink* dlist::append(dlink* link)
 {
-/*
-  dlink * tmp;
-//   cout << "used the dlist destructor\n";
-//   cout << "entered ~dlist   last =" << _farptr_tolong(last) << "\n";
+#ifndef OPT_LIB
+  //Should fail if link is NULL.
+  assert(link);
+#endif
 
-  unsigned int count=0;
+  link->prev = last;
+  last = link;
 
-  while(last)
+  return last;
+}
+void dlist::initialize()
+{
+  dlink** dest = dlink_addresses;
+  for (unsigned int i = 0; i < nlinks; ++i)
   {
-    count+=1;
-    tmp=last->prev;
-
-//  cout << "last =" << _farptr_tolong(last) << "\n";
-//  cout << "last->prev =" << _farptr_tolong(last->prev) << "\n";
-//  cout << "deleted dlink with address" << _farptr_tolong(last) << "\n";
-
-    //delete last;
-    last=tmp;
+    (*dest)->di.x = 0;
+    ++dest;
   }
-  if (count != nlinks)
-  {
-    cerr << "In ~dlist() number of links destroyed not equal to number created\n";
-    cerr << " The number created was "<< nlinks << " The number destroyed was "
-         << count << "\n";
-    ad_exit(1);
-  }
+}
+/**
+Save variables to a buffer.
 */
-  ::free(ddlist_space);
-  ddlist_space=NULL;
-
-  delete [] dlink_addresses;
-  dlink_addresses = 0;
+void dlist::save_variables()
+{
+  dlink** src = dlink_addresses;
+  double* dest = variables_save;
+  for (unsigned int i = 0; i < nlinks; ++i)
+  {
+    *dest = (*src)->di.x;
+    ++dest;
+    ++src;
+  }
+}
+/**
+Restore variables from buffer.
+*/
+void dlist::restore_variables()
+{
+  dlink** dest = dlink_addresses;
+  double* src = variables_save;
+  for (unsigned int i = 0; i < nlinks; ++i)
+  {
+    (*dest)->di.x = *src;
+    ++dest;
+    ++src;
+  }
 }
 /**
 Get total addresses stored.
@@ -207,24 +203,4 @@ void dlist::check_list(void)
     tmp_last = tmp;
   }
   cerr << "In check_list() number of free links is " << count << endl;
-}
-
-/**
-Append app to list.
-\param app node
-*/
-dlink* dlist::append(dlink* app)
-{
-  if (!app)
-  {
-    cerr << "Error: NULL pointer passed to  dlist::append()\n";
-    ad_exit(1);
-  }
-  else
-  {
-    app->prev = last;
-    last = app;
-  }
-
-  return last;
 }

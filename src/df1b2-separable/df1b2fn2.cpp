@@ -273,17 +273,13 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
       //u_dot[offset]=1.0;
     }
   }
-
-  int no_destruct=0;
-
 /**
 Destructor
 */
 df1b2variable::~df1b2variable()
 {
-    deallocate();
+  deallocate();
 }
-
 /**
 If no other copies exist, free df1b2variable::ptr.
 */
@@ -336,22 +332,19 @@ void df1b2variable::deallocate(void)
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  init_df1b2vector::init_df1b2vector(void)
-  {
-    allocate();
-  }
-
+Default constructor
+*/
+init_df1b2vector::init_df1b2vector()
+{
+  allocate();
+}
 /**
- * Description not yet available.
- * \param
- */
-  init_df1b2vector::init_df1b2vector(int lb,int ub)
-  {
-    allocate(lb,ub);
-  }
+Constructs vector with range lb to ub.
+*/
+init_df1b2vector::init_df1b2vector(int lb, int ub)
+{
+  allocate(lb, ub);
+}
 
 /**
  * Description not yet available.
@@ -408,86 +401,77 @@ void df1b2variable::deallocate(void)
       ptr[i].allocate();
     }
   }
-
 /**
- * Description not yet available.
- * \param
- */
-  void init_df1b2vector::allocate(void)
-  {
-    //deallocate(); a// don;t know why this was ever here DF 6june09
-    index_min=0;
-    index_max=-1;
-    ncopies=0;
-    ptr=0;
-  }
-
+Do not allocate, but just initialize class members.
+*/
+void init_df1b2vector::allocate(void)
+{
+  //deallocate(); a// don;t know why this was ever here DF 6june09
+  index_min = 0;
+  index_max = -1;
+  ncopies = NULL;
+  trueptr = NULL;
+  ptr = NULL;
+}
 /**
- * Description not yet available.
- * \param
- */
-  init_df1b2vector::~init_df1b2vector()
+Destructor
+*/
+init_df1b2vector::~init_df1b2vector()
+{
+  if (ncopies)
   {
-    if (ncopies)
-    {
-      if (*ncopies)
-        (*ncopies)--;
-      else
-      {
-        if (trueptr)
-        {
-          delete [] trueptr;
-          trueptr=0;
-        }
-        delete ncopies;
-        ncopies=0;
-      }
-    }
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  void init_df1b2vector::deallocate(void)
-  {
-    if (ncopies)
-    {
-      if (*ncopies)
-        (*ncopies)--;
-      else
-      {
-        delete [] trueptr;
-        trueptr=0;
-        delete ncopies;
-        ncopies=0;
-      }
-    }
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  init_df1b2vector::init_df1b2vector(const init_df1b2vector & v)
-  {
-    ncopies=v.ncopies;
-    if (v.ncopies)
-    {
-      (*ncopies)++;
-      trueptr=v.trueptr;
-      ptr=v.ptr;
-      index_min=v.index_min;
-      index_max=v.index_max;
-    }
+    if (*ncopies)
+      (*ncopies)--;
     else
     {
-      trueptr=0;
-      index_min=1;
-      index_max=0;
+      if (trueptr)
+      {
+        delete [] trueptr;
+        trueptr = NULL;
+      }
+      delete ncopies;
+      ncopies = NULL;
     }
-    //cout << *ncopies << endl;
   }
+}
+/**
+Similar to destructor.
+*/
+void init_df1b2vector::deallocate()
+{
+  if (ncopies)
+  {
+    if (*ncopies)
+      (*ncopies)--;
+    else
+    {
+      delete [] trueptr;
+      trueptr = NULL;
+      delete ncopies;
+      ncopies = NULL;
+    }
+  }
+}
+/**
+Copy constructor
+*/
+init_df1b2vector::init_df1b2vector(const init_df1b2vector& v)
+{
+  ncopies = v.ncopies;
+  if (v.ncopies)
+  {
+    (*ncopies)++;
+    trueptr = v.trueptr;
+    ptr = v.ptr;
+    index_min = v.index_min;
+    index_max = v.index_max;
+  }
+  else
+  {
+    allocate();
+  }
+  //cout << *ncopies << endl;
+}
 
 /**
  * Description not yet available.
@@ -663,10 +647,10 @@ smartlist::smartlist(void)
 */
 
 /**
- * Description not yet available.
- * \param
- */
-smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
+Constructor
+*/
+smartlist::smartlist(unsigned int _bufsize,const adstring& _filename):
+  sbptr(NULL)
 {
 #ifndef OPT_LIB
   //cerr << "need to modify smartlist class for multibyte char" << endl;

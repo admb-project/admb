@@ -1,9 +1,12 @@
+ifeq ($(TERM),cygwin)
+else
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
   else
     EXT=.sh
   endif
+endif
 endif
 
 ifndef ADMB_HOME
@@ -49,24 +52,24 @@ else
 endif
 
 kfsst:
-	svn checkout http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source kfsst
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/kfsst.dat > kfsst/kfsst.dat
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kfsst/sst.dat > kfsst/sst.dat
+	svn checkout https://github.com/positioning/kalmanfilter/trunk/kfsst/kfsst/source kfsst
+	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/kfsst/kfsst.dat > kfsst/kfsst.dat
+	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/kfsst/sst.dat > kfsst/sst.dat
 
 kftrack:
-	svn checkout http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src kftrack
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/kftrack/kftrack.dat > kftrack/kftrack.dat
+	svn checkout https://github.com/positioning/kalmanfilter/trunk/kftrack/inst/admb/src kftrack
+	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/kftrack/kftrack.dat > kftrack/kftrack.dat
 
 trackit:
-	svn checkout http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src trackit
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/ukf.dat > trackit/ukf.dat
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/sstsim.dat > trackit/sstsim.dat
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/trackit/model.cfg > trackit/model.cfg
+	svn checkout https://github.com/positioning/kalmanfilter/trunk/trackit/inst/admb/src trackit
+	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/trackit/ukf.dat > trackit/ukf.dat
+	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/trackit/sstsim.dat > trackit/sstsim.dat
+	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/trackit/model.cfg > trackit/model.cfg
 
 ukfsst:
-	svn checkout http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src ukfsst
-	svn cat http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/ukfsst.dat > ukfsst/ukfsst.dat
-	svn export http://geolocation.googlecode.com/svn/trunk/testdir/ukfsst/sst_files ukfsst/sst_files
+	svn checkout https://github.com/positioning/kalmanfilter/trunk/ukfsst/inst/admb/src ukfsst
+	svn cat https://github.com/positioning/kalmanfilter/trunk/testdir/ukfsst/ukfsst.dat > ukfsst/ukfsst.dat
+	svn export https://github.com/positioning/kalmanfilter/trunk/testdir/ukfsst/sst_files ukfsst/sst_files
 
 run:
 ifeq ($(SHELL),cmd)
@@ -80,7 +83,6 @@ endif
 
 total-clean:
 ifeq ($(SHELL),cmd)
-	$(MAKE) --file=Makefile total-clean
 else
 	@rm -rvf ukfsst
 	@rm -rvf trackit
@@ -90,9 +92,14 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	$(MAKE) --file=Makefile clean
+else
+ifeq (cygwin,$(TERM))
 else
 	if [[ -e kfsst/Makefile ]]; then $(MAKE) --directory=kfsst clean; fi;
+	if [[ -e kftrack/Makefile ]]; then $(MAKE) --directory=kftrack clean; fi;
+	if [[ -e trackit/Makefile ]]; then $(MAKE) --directory=trackit clean; fi;
+	if [[ -e ukfsst/Makefile ]]; then $(MAKE) --directory=ukfsst clean; fi;
+endif
 	@rm -vf kfsst/admodel.cov
 	@rm -vf kfsst/admodel.dep
 	@rm -vf kfsst/admodel.hes
@@ -116,7 +123,6 @@ else
 	@rm -vf kfsst/kftrack.log
 	@rm -vf kfsst/mpt_111011110%F3-9%C3%D6%C8.dat
 	@rm -vf kfsst/variance
-	if [[ -e kftrack/Makefile ]]; then $(MAKE) --directory=kftrack clean; fi;
 	@rm -vf kftrack/admodel.cov
 	@rm -vf kftrack/admodel.dep
 	@rm -vf kftrack/admodel.hes
@@ -138,7 +144,6 @@ else
 	@rm -vf kftrack/kftrack.std
 	@rm -vf kftrack/mpt.dat
 	@rm -vf kftrack/variance
-	if [[ -e trackit/Makefile ]]; then $(MAKE) --directory=trackit clean; fi;
 	@rm -vf trackit/admodel.cov
 	@rm -vf trackit/admodel.dep
 	@rm -vf trackit/admodel.hes
@@ -162,7 +167,6 @@ else
 	@rm -vf trackit/ukf.rep
 	@rm -vf trackit/ukf.std
 	@rm -vf trackit/variance
-	if [[ -e ukfsst/Makefile ]]; then $(MAKE) --directory=ukfsst clean; fi;
 	@rm -vf ukfsst/admodel.cov
 	@rm -vf ukfsst/admodel.dep
 	@rm -vf ukfsst/admodel.hes

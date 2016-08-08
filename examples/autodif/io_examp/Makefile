@@ -1,10 +1,14 @@
-PROG_NAME=io_examp
+all:
+	$(MAKE) clean
+	../../../admb io_examp.cpp
+	$(MAKE) run
 
-run: $(PROG_NAME)
-	@./$(PROG_NAME)
-
-$(PROG_NAME):
-	@printf "Compiling executable ...";$(ADMB_HOME)/bin/mygcco $@
+run:
+	./io_examp
 
 clean:
-	@rm -vf $(PROG_NAME) file1.tmp  file2.tmp
+	rm -vf file1.tmp
+	rm -vf file2.tmp
+	rm -vf fmin.log
+	rm -vf io_examp
+	rm -vf io_examp.obj

@@ -1,14 +1,12 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+\file
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include <df1b2fun.h>
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 /**
  * Description not yet available.
@@ -177,72 +175,93 @@ df1b2vector operator * (const df1b2matrix& _M,const df1b2vector& _x)
   }
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-df1b2vector operator * (const df1b2vector& _x,const df1b2matrix& _M)
+Vector and Matrix Multiplication
+
+\param _x is a vector with dimensions (m_min, m_max).
+\param _M is a matrix with dimensions (m_min, m_max, n_min, n_max).
+\return vector result of _x * _M with dimensions (n_min, n_max)
+*/
+df1b2vector operator*(const df1b2vector& _x, const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
   ADUNCONST(df1b2vector,x)
   //check_shape(x,M,"operator *");
-  int rmin=M.indexmin();
-  int rmax=M.indexmax();
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
-  df1b2vector tmp(rmin,rmax);
+  int rmin = M.indexmin();
+  int cmin = M(rmin).indexmin();
+  int cmax = M(rmin).indexmax();
+  int mmin = x.indexmin();
+  int mmax = x.indexmax();
+  df1b2vector tmp(cmin, cmax);
+#ifndef OPT_LIB
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+#endif
+  for (int i = cmin; i <= cmax; ++i)
   {
-    for (int j=mmin;j<=mmax;j++)
-      tmp(i)+=M(j,i)*x(j);
+    for (int j = mmin; j <= mmax; ++j)
+    {
+      tmp(i) += M(j, i) * x(j);
+    }
   }
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-df1b2vector operator * (const df1b2vector& _x,const dmatrix& _M)
+Vector and Matrix Multiplication
+
+\param _x is a vector with dimensions (m_min, m_max).
+\param _M is a matrix with dimensions (m_min, m_max, n_min, n_max).
+\return vector result of _x * _M with dimensions (n_min, n_max)
+*/
+df1b2vector operator*(const df1b2vector& _x, const dmatrix& _M)
 {
   ADUNCONST(dmatrix,M)
   ADUNCONST(df1b2vector,x)
   //check_shape(x,M,"operator *");
-  int rmin=M.indexmin();
-  int rmax=M.indexmax();
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
-  df1b2vector tmp(rmin,rmax);
+  int rmin = M.indexmin();
+  int cmin = M(rmin).indexmin();
+  int cmax = M(rmin).indexmax();
+  int mmin = x.indexmin();
+  int mmax = x.indexmax();
+  df1b2vector tmp(cmin, cmax);
+#ifndef OPT_LIB
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+#endif
+  for (int i = cmin; i <= cmax; ++i)
   {
-    for (int j=mmin;j<=mmax;j++)
-      tmp(i)+=M(j,i)*x(j);
+    for (int j = mmin; j <= mmax; ++j)
+    {
+      tmp(i) += M(j, i) * x(j);
+    }
   }
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-df1b2vector operator * (const dvector& _x,const df1b2matrix& _M)
+Vector and Matrix Multiplication
+
+\param _x is a vector with dimensions (m_min, m_max).
+\param _M is a matrix with dimensions (m_min, m_max, n_min, n_max).
+\return vector result of _x * _M with dimensions (n_min, n_max)
+*/
+df1b2vector operator*(const dvector& _x, const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
   ADUNCONST(dvector,x)
   //check_shape(x,M,"operator *");
-  int rmin=M.indexmin();
-  int rmax=M.indexmax();
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
-  df1b2vector tmp(rmin,rmax);
+  int rmin = M.indexmin();
+  int cmin = M(rmin).indexmin();
+  int cmax = M(rmin).indexmax();
+  int mmin = x.indexmin();
+  int mmax = x.indexmax();
+  df1b2vector tmp(cmin, cmax);
+#ifndef OPT_LIB
   tmp.initialize();
-  for (int i=rmin;i<=rmax;i++)
+#endif
+  for (int i = cmin; i <= cmax; ++i)
   {
-    for (int j=mmin;j<=mmax;j++)
-      tmp(i)+=M(j,i)*x(j);
+    for (int j = mmin; j <= mmax; ++j)
+    {
+      tmp(i) += M(j, i) * x(j);
+    }
   }
   return tmp;
 }
@@ -934,5 +953,8 @@ df1b2variable mean(const df1b2matrix& _x)
     tmp+=sum(x(i));
     nitems+=x(i).indexmax()-x(i).indexmin()+1;
   }
+#ifndef OPT_LIB
+  assert(nitems > 0);
+#endif
   return tmp/nitems;
 }

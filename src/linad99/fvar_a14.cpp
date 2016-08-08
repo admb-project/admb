@@ -132,6 +132,7 @@ void X_dv_sum(void);
 */
 dvariable sum(const dvar_vector& v1)
 {
+  dvariable vtmp = 0.0;
   if (allocated(v1))
   {
     dvector cv1=value(v1);
@@ -141,7 +142,7 @@ dvariable sum(const dvar_vector& v1)
       tmp+=cv1.elem(i);
     }
 
-    dvariable vtmp=nograd_assign(tmp);
+    vtmp = nograd_assign(tmp);
 
     // The derivative list considerations
     save_identifier_string("bbbb");
@@ -150,13 +151,8 @@ dvariable sum(const dvar_vector& v1)
     save_identifier_string("aaaa");
     gradient_structure::GRAD_STACK1->
               set_gradient_stack(X_dv_sum);
-    return vtmp;
   }
-  else
-  {
-    dvariable vtmp=0.0;
-    return vtmp;
-  }
+  return vtmp;
 }
 
 /*

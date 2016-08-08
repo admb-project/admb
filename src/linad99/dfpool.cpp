@@ -375,36 +375,9 @@ void tsdfpool::free(void * b)
 #endif
 
 /**
-Destructor
-*/
-dfpool::~dfpool(void)
-{
-  deallocate();
-}
-
-/**
- * Description not yet available.
- * \param
- */
-dfpool::dfpool(const size_t sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
-{
-  dfpool_vector_flag=0;
-  if (!sz) size=0;
-  last_chunk=0;
-  head = 0;
-  num_allocated=0;
-  num_chunks=0;
-#if defined(__CHECK_MEMORY__)
-  nalloc=0;
-  pvalues=0;
-  maxchunks=0;
-#endif
-}
-
-/**
 Default constructor
 */
-dfpool::dfpool(void)
+dfpool::dfpool()
 {
   dfpool_vector_flag=0;
   size=0;
@@ -417,8 +390,38 @@ dfpool::dfpool(void)
   pvalues=0;
   maxchunks=0;
 #endif
+  nvar = 0;
+  nelem = 0;
+  first = NULL;
 }
-
+/**
+Constructor
+*/
+dfpool::dfpool(const size_t sz):
+  size(sz < sizeof(link *)?sizeof(link*):sz)
+{
+  dfpool_vector_flag=0;
+  if (!sz) size=0;
+  last_chunk=0;
+  head = 0;
+  num_allocated=0;
+  num_chunks=0;
+#if defined(__CHECK_MEMORY__)
+  nalloc=0;
+  pvalues=0;
+  maxchunks=0;
+#endif
+  nvar = 0;
+  nelem = 0;
+  first = NULL;
+}
+/**
+Destructor
+*/
+dfpool::~dfpool()
+{
+  deallocate();
+}
 /**
  * Description not yet available.
  * \param

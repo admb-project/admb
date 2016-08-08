@@ -40,7 +40,7 @@
   #else
   typedef int ssize_t;
   #endif
-  #define lseek _lseek
+  #define LSEEK _lseek
   #define  read _read
   #define write _write
 #else
@@ -60,7 +60,7 @@
 
 #if defined(__NDPX__ )
   extern "C" {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int read(int, char*, int);
   };
 #endif
@@ -117,7 +117,7 @@ void gradcalc(int nvar, const dvector& _g)
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
   if (gradient_structure::GRAD_STACK1->ptr <=
         gradient_structure::GRAD_STACK1->ptr_first)
@@ -138,10 +138,7 @@ void gradcalc(int nvar, const dvector& _g)
 
   gradient_structure::GRAD_STACK1->ptr--;
 
-  for (unsigned int i = 0; i < gradient_structure::GRAD_LIST->nlinks; i++)
-  {
-    *(double*)(gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
-  }
+  gradient_structure::GRAD_LIST->initialize();
 
   double_and_int* tmp =
     (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
@@ -186,9 +183,9 @@ void gradcalc(int nvar, const dvector& _g)
 #endif
 
    // back up the file one buffer size and read forward
-   off_t offset = (off_t)(sizeof(grad_stack_entry)
+   OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
                   * gradient_structure::GRAD_STACK1->length);
-   off_t lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+   OFF_T lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
       -offset,SEEK_CUR);
 
     break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
@@ -198,7 +195,7 @@ void gradcalc(int nvar, const dvector& _g)
 #ifdef GRAD_DIAG
     long int ttmp =
 #endif
-    lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
+    LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
 #ifdef GRAD_DIAG
     cout << "Offset in file at end of gradcalc is " << ttmp
          << " bytes from the beginning\n";
@@ -287,7 +284,7 @@ void gradient_structure::save_arrays()
   else
   {
      humungous_pointer src = ARRAY_MEMBLOCK_BASE;
-     lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+     LSEEK(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
   #ifdef OPT_LIB
      write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
@@ -349,7 +346,7 @@ void gradient_structure::restore_arrays()
   else
   {
     humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
-    lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+    LSEEK(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
   #if defined(OPT_LIB) && !defined(_MSC_VER)
     read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
@@ -380,36 +377,14 @@ Save variables to a buffer.
 */
 void gradient_structure::save_variables()
 {
-  if ((variables_save = new double[gradient_structure::MAX_DLINKS])==NULL)
-  {
-    //_VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC ,
-    //               S_IREAD | S_IWRITE);
-    cerr << "insufficient memory to allocate space for dvariables"
-         << " save buffer " << endl;
-    ad_exit(1);
-  }
-  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
-  {
-    //variables_save[i]= * (double*)
-    //    (gradient_structure::GRAD_LIST->dlink_addresses[i]);
-    memcpy(&(variables_save[i]),
-       gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
-  }
+  GRAD_LIST->save_variables();
 }
 /**
 Restore variables from buffer.
 */
 void gradient_structure::restore_variables()
 {
-  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
-  {
-    //* (double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
-    //  = variables_save[i];
-    memcpy(gradient_structure::GRAD_LIST->dlink_addresses[i],
-       &(variables_save[i]),sizeof(double));
-  }
-  delete [] variables_save;
-  variables_save = 0;
+  GRAD_LIST->restore_variables();
 }
 /**
 Rewind buffer.
@@ -421,7 +396,7 @@ void reset_gradient_stack(void)
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  lseek(_GRADFILE_PTR,0L,SEEK_SET);
+  LSEEK(_GRADFILE_PTR,0L,SEEK_SET);
 }
 /**
   Sets the gradient stack entry for a function or operator with a single
@@ -454,6 +429,7 @@ void grad_stack::set_gradient_stack1(void (* func)(void),
   }
 #endif
 }
+#ifdef DIAG
 void test_the_pointer(void)
 {
 /*
@@ -472,3 +448,4 @@ void test_the_pointer(void)
   pgse->ind_addr1 = (double*) 100;
 */
 }
+#endif

@@ -1,3 +1,5 @@
+ifeq ($(TERM),cygwin)
+else
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL=cmd
@@ -5,32 +7,33 @@ ifeq ($(OS),Windows_NT)
     EXT=.sh
   endif
 endif
+endif
 
 ADMB_OPTIONS=-g
 
-GTEST_DIR=googletest-read-only
+ifeq ($(SHELL),cmd)
+GTEST_DIR=googletest-read-only\\googletest
+else
+GTEST_DIR=googletest-read-only/googletest
+endif
 
 GTESTS=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
- test_adstring.cpp\
  test_adstring_array.cpp\
  test_dlist.cpp\
  test_ad_comm.cpp\
  test_gradient_structure.cpp\
  test_option_match.cpp\
  test_lvector.cpp\
- test_df3_two_variable.cpp\
  test_adjson.cpp\
  test_adpool.cpp\
- test_dvector.cpp\
  test_dmatrix.cpp\
  test_param_init_bounded_number_vector.cpp\
  test_param_init_d3array.cpp\
  test_spline.cpp\
  test_banded_symmetric_dmatrix.cpp\
  test_line_adstring.cpp\
- test_ivector.cpp\
  test_multi_index.cpp\
  test_adtimer.cpp\
  test_idea.cpp\
@@ -47,11 +50,48 @@ GTESTS=\
  test_imatrix.cpp\
  test_lmatrix.cpp\
  test_dvar_matrix.cpp\
+ test_ad_integer.cpp\
+ test_ivector.cpp\
+ test_cspline.cpp\
+ test_dvar_vector.cpp\
+ test_index_type.cpp\
+ test_smart_counter.cpp\
+ test_df1_three_variable.cpp\
+ test_df1_one_variable.cpp\
+ test_df1_two_variable.cpp\
+ test_param_init_matrix.cpp\
+ test_objective_function_value.cpp\
+ test_df3_one_variable.cpp\
+ test_df3_three_variable.cpp\
+ test_df3_two_variable.cpp\
+ test_param_init_bounded_matrix.cpp\
+ test_param_init_vector.cpp\
+ test_init_adstring.cpp\
+ test_init_line_adstring.cpp\
+ test_dll_param_matrix.cpp\
+ test_dvector.cpp\
+ test_dvar3_array.cpp\
+ test_arr_link.cpp\
+ test_df1b2_init_number_vector.cpp\
+ test_init_df1b2vector.cpp\
+ test_param_init_bounded_number.cpp\
+ test_param_init_bounded_vector.cpp\
+ test_df1b2_init_bounded_number_vector.cpp\
+ test_adstring.cpp\
+ test_df1b23array.cpp\
+ test_d3_array.cpp\
+ test_data_matrix.cpp\
  main.cpp
 
 ##Need to debug this
+## test_autodif.cpp\
+## test_data_number.cpp
+## test_df1b2variable.cpp
 ## test_atan2.cpp
-## test_dvar_vector.cpp
+## test_dll_param_init_bounded_vector.cpp
+
+#cfenv is not completely supported by most compilers
+#  test_cfenv.cpp
 
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\
@@ -140,7 +180,7 @@ else
 endif
 
 googletest-read-only:
-	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
+	git clone --depth=1 https://github.com/google/googletest.git googletest-read-only
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -160,6 +200,7 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
+	@if exist make_sub_directory rmdir /s /q make_sub_directory
 	@del gtest-all.exe
 	@del gtest-all *.obj
 	@del eigv.rpt
@@ -212,6 +253,7 @@ ifeq ($(SHELL),cmd)
 	@del test_scalefactor.exe
 	@del finance.b0
 	@del finance.p0
+	@del test_dvector.txt
 else
 	@rm -vf finance.b0
 	@rm -vf finance.p0
@@ -264,4 +306,6 @@ else
 	@rm -vf scalefactor.rep
 	@rm -vf test_finance
 	@rm -vf test_scalefactor
+	@rm -vf test_dvector.txt
+	@rm -rvf make_sub_directory
 endif

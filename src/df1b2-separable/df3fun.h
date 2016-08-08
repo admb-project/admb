@@ -43,25 +43,28 @@
 #if !defined(__DF3FUN__)
 #  define __DF3FUN__
 
-  class df3_one_variable
-  {
-    double v[4];
-  public:
-    static df1b2variable * ind_var;
-    double * get_u(void) const {return (double*) (&(v[0]));}
-    double * get_udot(void)const {return (double*) (&(v[1]));}
-    double * get_udot2(void) const {return (double*) (&(v[2]));}
-    double * get_udot3(void) const {return (double*) (&(v[3]));}
-    df3_one_variable& operator = (const df3_one_variable& v);
-    df3_one_variable& operator = (double v);
-    df3_one_variable& operator += (const df3_one_variable& v);
-    df3_one_variable& operator -= (const df3_one_variable& v);
-    df3_one_variable& operator -= (double);
-    df3_one_variable& operator *= (const df3_one_variable& v);
-    df3_one_variable& operator /= (const df3_one_variable& v);
-    df3_one_variable(void);
-    df3_one_variable(const df3_one_variable& );
-  };
+class df3_one_variable
+{
+  double v[4];
+public:
+  static df1b2variable* ind_var;
+
+  df3_one_variable();
+  df3_one_variable(const df3_one_variable&);
+
+  double* get_u(void) const {return (double*)(&(v[0])); }
+  double* get_udot(void) const {return (double*)(&(v[1])); }
+  double* get_udot2(void) const {return (double*)(&(v[2])); }
+  double* get_udot3(void) const {return (double*)(&(v[3])); }
+
+  df3_one_variable& operator=(const df3_one_variable& v);
+  df3_one_variable& operator=(double v);
+  df3_one_variable& operator+=(const df3_one_variable& v);
+  df3_one_variable& operator-=(const df3_one_variable& v);
+  df3_one_variable& operator-=(double);
+  df3_one_variable& operator*=(const df3_one_variable& v);
+  df3_one_variable& operator/=(const df3_one_variable& v);
+};
 
   inline  double value(const df3_one_variable& x) { return double(*x.get_u()); }
 

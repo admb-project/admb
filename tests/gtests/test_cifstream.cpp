@@ -10,6 +10,11 @@ TEST_F(test_cifstream, signature)
   cifstream cifs("test_cifstream.cpp");
   ASSERT_STREQ("//MY Signature", cifs.signature());
 }
+TEST_F(test_cifstream, get_file_name)
+{
+  cifstream cifs("test_cifstream.cpp");
+  ASSERT_STREQ("test_cifstream.cpp", cifs.get_file_name());
+}
 TEST_F(test_cifstream, getline)
 {
   cifstream cifs("test_cifstream.cpp");

@@ -1,8 +1,21 @@
 #include <gtest/gtest.h>
+#include <cmath>
+#include <limits>
 #include <fvar.hpp>
+
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
 
 class test_dvariable: public ::testing::Test {};
 
+TEST_F(test_dvariable, default_constructor)
+{
+  gradient_structure gs;
+  dvariable d;
+  ASSERT_TRUE(d.v != NULL);
+}
 TEST_F(test_dvariable, fmax)
 {
   gradient_structure gs;
@@ -37,4 +50,146 @@ TEST_F(test_dvariable, det)
   m(2, 2) = 6;
   double cdet = det(m);
   ASSERT_DOUBLE_EQ(-14, cdet);
+}
+TEST_F(test_dvariable, exp_1)
+{
+  gradient_structure gs;
+  
+  dvariable v = 1;
+  try
+  {
+    double expected = ::exp(1);
+    dvariable result = exp(v);
+    ASSERT_DOUBLE_EQ(expected, value(result));
+  }
+  catch (const int exit_code)          
+  {   
+    const int expected_exit_code = 1;
+    if (exit_code == expected_exit_code)
+    {
+      FAIL();
+    }
+  }
+}
+#ifndef OPT_LIB
+  ///\todo Must remove macros below once support for MSVC++11 and Solaris Studio 12.3 are removed.
+  #if !defined(__SUNPRO_CC) && !(defined(_MSC_VER) && (_MSC_VER <= 1700))
+TEST_F(test_dvariable, exp_max)
+{
+  gradient_structure gs;
+  
+  dvariable v = std::numeric_limits< double >::max();
+  try
+  {
+    exp(v);
+  }
+  catch (const int exit_code)          
+  {   
+    const int expected_exit_code = 1;
+    if (exit_code == expected_exit_code)
+    {
+      SUCCEED();
+      return;
+    }
+  }
+  FAIL();
+}
+  #endif
+#endif
+TEST_F(test_dvariable, mfexp)
+{
+  gradient_structure gs;
+  
+  {
+  double input = 100; 
+  double result = mfexp(input);
+
+  dvariable vinput = 100; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_TRUE(result > ::exp(60));
+  }
+  {
+  double input = -100; 
+  double result = mfexp(input);
+
+  dvariable vinput = -100; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_TRUE(result < ::exp(-60));
+  }
+  {
+  double input = 60; 
+  double result = mfexp(input);
+
+  dvariable vinput = 60; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(60));
+  }
+  {
+  double input = -60; 
+  double result = mfexp(input);
+
+  dvariable vinput = -60; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(-60));
+  }
+  {
+  double input = 61; 
+  double result = mfexp(input);
+
+  dvariable vinput = 61; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_TRUE(result > ::exp(60));
+  ASSERT_TRUE(result < ::exp(61));
+  }
+  {
+  double input = -61; 
+  double result = mfexp(input);
+
+  dvariable vinput = -61; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_TRUE(result < ::exp(-60));
+  ASSERT_TRUE(result > ::exp(-61));
+  }
+  {
+  double input = 10; 
+  double result = mfexp(input);
+
+  dvariable vinput = 10; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(10));
+  }
+  {
+  double input = -10; 
+  double result = mfexp(input);
+
+  dvariable vinput = -10; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(-10));
+  }
+  {
+  double input = 0; 
+  double result = mfexp(input);
+
+  dvariable vinput = 0; 
+  dvariable vresult = mfexp(vinput);
+
+  ASSERT_DOUBLE_EQ(result, value(vresult));
+  ASSERT_DOUBLE_EQ(result, ::exp(0));
+  }
 }

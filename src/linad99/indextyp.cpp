@@ -10,35 +10,41 @@
  */
 #include <admodel.h>
 
-/**
- * Description not yet available.
- * \param
- */
-  int * smart_counter::get_ncopies(void)
+/// Default constructor
+index_guts::index_guts()
+{
+  ncopies = new int;
+  *ncopies=0;
+}
+/// Copy constructor
+index_guts::index_guts(const index_guts& ig)
+{
+  ncopies = ig.ncopies;
+  (*ncopies)++;
+}
+/// Destructor
+index_guts::~index_guts()
+{
+  if (!(*ncopies))
   {
-    return ncopies;
+    delete ncopies;
+    ncopies = NULL;
   }
-
-/**
-Default constructor
-*/
-smart_counter::smart_counter(void)
+}
+/// Default constructor
+smart_counter::smart_counter()
 {
   ncopies = new int;
   *ncopies = 0;
 }
-/**
-Copy constructor
-*/
+/// Copy constructor
 smart_counter::smart_counter(const smart_counter& sc)
 {
     ncopies = sc.ncopies;
     (*ncopies)++;
 }
-/**
-Destructor
-*/
-smart_counter::~smart_counter(void)
+/// Destructor
+smart_counter::~smart_counter()
 {
   if (*ncopies == 0)
   {
@@ -50,171 +56,139 @@ smart_counter::~smart_counter(void)
     (*ncopies)--;
   }
 }
-
-  ad_integer::ad_integer(const index_type& it) : d(it.integer()) {}
-
+int* smart_counter::get_ncopies()
+{
+  return ncopies;
+}
+/// Copy constructor
+index_type::index_type(const index_type& it): smart_counter(it)
+{
+  p = it.p;
+}
+/*
+index_type::index_type(const data_int& x)
+{
+  p = new number_index(int(data_int(x)));
+}
+*/
 /**
  * Description not yet available.
  * \param
  */
-  index_guts * matrix_index::operator [] (int i)
-  {
-    return new vector_index(imatrix::operator [](i));
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  int index_type::integer(void) const
-  {
-    return int(*p);
-  }
-  /*
-  index_type::index_type(const data_int& x)
-  {
-    p = new number_index(int(data_int(x)));
-  }
-   */
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type::index_type(const index_type & it) : smart_counter(it)
-  {
-    p = it.p;
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type::index_type(int x)
-  {
-    p = new number_index(x);
-  }
-
+index_type::index_type(int x)
+{
+  p = new number_index(x);
+}
 /**
  * Description not yet available.
  * \param
  */
 index_type::index_type(const ivector& x)
-  {
-    p = new vector_index((const ivector&)(x));
-  }
-
+{
+  p = new vector_index((const ivector&)(x));
+}
 /**
  * Description not yet available.
  * \param
  */
 index_type::index_type(const imatrix& x)
-  {
-    p = new matrix_index((const imatrix&)(x));
-  }
-
+{
+  p = new matrix_index((const imatrix&)(x));
+}
 /**
  * Description not yet available.
  * \param
  */
-  matrix_index::~matrix_index()
-  {
-    //cout << "in ~matrix_index()" << endl;
-  }
-
+index_type::index_type(const i3_array& x)
+{
+  p = new i3_index((i3_array&)(x));
+}
 /**
  * Description not yet available.
  * \param
  */
-  index_type::index_type(const i3_array& x)
-  {
-    p = new i3_index((i3_array&)(x));
-  }
-
+index_type::index_type(const i4_array& x)
+{
+  p = new i4_index((i4_array&)(x));
+}
 /**
  * Description not yet available.
  * \param
  */
-  index_type::index_type(const i4_array& x)
-  {
-    p = new i4_index((i4_array&)(x));
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type::index_type(const pre_index_type& pit)
-  {
-    p = (*(*(pit.a)).p)[pit.i];
+index_type::index_type(const pre_index_type& pit)
+{
+  p = (*(*(pit.a)).p)[pit.i];
   // Dave uncommented this august 1998 because program crashed
-   // (*p->ncopies)++;
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type index_type::operator [] (int i) const
+  // (*p->ncopies)++;
+}
+/// Destructor
+index_type::~index_type()
+{
+  if (*get_ncopies()==0)
   {
-    return pre_index_type(this,i);
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type index_type::operator () (int i) const
-  {
-    return pre_index_type(this,i);
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type index_type::operator [] (int i)
-  {
-    return pre_index_type(this,i);
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type index_type::operator () (int i)
-  {
-    return pre_index_type(this,i);
-  }
-
-  vector_index::~vector_index() {}
-
-/**
- * Description not yet available.
- * \param
- */
-  index_type::~index_type ()
-  {
-    if (*get_ncopies()==0)
+    if (!p)
     {
-      if (!p)
+      cerr << "trying to delete a NULL optr in ~index_type()"  << endl;
+    }
+    else
+    {
+      if (!(*(p->ncopies)))
       {
-        cerr << "trying to delete a NULL optr in ~index_type()"  << endl;
+        delete p;
+        p = NULL;
       }
       else
       {
-        if (!(*(p->ncopies)))
-        {
-          delete p;
-          p = NULL;
-        }
-        else
-        {
-          (*(p->ncopies))--;
-        }
+        (*(p->ncopies))--;
       }
     }
   }
+}
+/**
+ * Description not yet available.
+ * \param
+ */
+index_type index_type::operator[](int i) const
+{
+  return pre_index_type(this,i);
+}
+
+/**
+ * Description not yet available.
+ * \param
+ */
+index_type index_type::operator()(int i) const
+{
+  return pre_index_type(this,i);
+}
+
+/**
+ * Description not yet available.
+ * \param
+ */
+index_type index_type::operator[](int i)
+{
+  return pre_index_type(this,i);
+}
+/**
+ * Description not yet available.
+ * \param
+ */
+index_type index_type::operator()(int i)
+{
+  return pre_index_type(this,i);
+}
+int index_type::integer(void) const
+{
+  return int(*p);
+}
+
+/// Constructor for ivector
+vector_index::vector_index(const ivector& v): ivector(v)
+{
+}
+/// Destructor
+vector_index::~vector_index() {}
 
 /**
  * Description not yet available.
@@ -437,19 +411,6 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
  * Description not yet available.
  * \param
  */
-index_guts::~index_guts()
-{
-  if (!(*ncopies))
-  {
-    delete ncopies;
-    ncopies=NULL;
-  }
-}
-
-/**
- * Description not yet available.
- * \param
- */
  dvector::dvector(const ad_integer& ncl,const index_type& nch)
  {
    allocate(ncl,nch);
@@ -542,35 +503,19 @@ index_guts::~index_guts()
  * Description not yet available.
  * \param
  */
-vector_index::vector_index(const ivector& v) : ivector(v)
-{
-}
-
-/**
- * Description not yet available.
- * \param
- */
-index_guts::index_guts()
-{
-  ncopies = new int;
-  *ncopies=0;
-}
-
-/**
- * Description not yet available.
- * \param
- */
-index_guts::index_guts(const index_guts& ig)
-{
-  ncopies = ig.ncopies;
-  (*ncopies)++;
-}
-
-/**
- * Description not yet available.
- * \param
- */
 index_guts * number_index::operator [] (int i)
 {
   return new number_index(int(*this));
 }
+ad_integer::ad_integer(const index_type& it) : d(it.integer()) {}
+index_guts* matrix_index::operator [] (int i)
+{
+  return new vector_index(imatrix::operator [](i));
+}
+
+/// Destructor
+matrix_index::~matrix_index()
+{
+  //cout << "in ~matrix_index()" << endl;
+}
+

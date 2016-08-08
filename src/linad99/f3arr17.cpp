@@ -1,30 +1,22 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+\file
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array::dvar3_array(void)
+Default constructor
+*/
+dvar3_array::dvar3_array()
 {
   allocate();
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void dvar3_array::allocate(void)
+Does not allocte, but initialize class members.
+*/
+void dvar3_array::allocate()
 {
-  shape=NULL;
+  shape = NULL;
   t = NULL;
 }

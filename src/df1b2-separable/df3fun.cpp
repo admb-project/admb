@@ -9,30 +9,47 @@
 //#include "df3fun.h"
   df1b2variable * df3_one_variable::ind_var=0;
 
-  df3_one_variable::df3_one_variable(const df3_one_variable& x)
+/**
+Default constructor
+*/
+df3_one_variable::df3_one_variable()
+{
+  v[0] = 0;
+  v[1] = 0;
+  v[2] = 0;
+  v[3] = 0;
+}
+/**
+Copy constructor
+*/
+df3_one_variable::df3_one_variable(const df3_one_variable& x)
+{
+  v[0] = x.v[0];
+  v[1] = x.v[1];
+  v[2] = x.v[2];
+  v[3] = x.v[3];
+}
+/**
+Copy constructor
+*/
+df3_one_vector::df3_one_vector(const df3_one_vector& m2)
+{
+  index_min = m2.index_min;
+  index_max = m2.index_max;
+  shape = m2.shape;
+  if (shape)
   {
-    v[0]=x.v[0];
-    v[1]=x.v[1];
-    v[2]=x.v[2];
-    v[3]=x.v[3];
+    (shape->ncopies)++;
   }
-
- df3_one_vector::df3_one_vector(const df3_one_vector& m2)
- {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   shape=m2.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   v = m2.v;
- }
-
- df3_one_vector::~df3_one_vector()
- {
-   deallocate();
- }
+  v = m2.v;
+}
+/**
+Destructor
+*/
+df3_one_vector::~df3_one_vector()
+{
+  deallocate();
+}
 
  void df3_one_vector::deallocate(void)
  {
@@ -303,22 +320,25 @@
 
 */
 
-  df3_one_variable& df3_one_variable::operator -= (double v)
-  {
-    *get_u() -= v;
-    return *this;
-  }
-
-
-  df3_one_variable& df3_one_variable::operator -= (const df3_one_variable& v)
-  {
-    *get_u() -= *v.get_u();
-
-    *get_udot() -= *v.get_udot();
-    *get_udot2() -= *v.get_udot2();
-    *get_udot3() -= *v.get_udot3();
-    return *this;
-  }
+/**
+Subtract d from the value at u.
+*/
+df3_one_variable& df3_one_variable::operator-=(double d)
+{
+  *get_u() -= d;
+  return *this;
+}
+/**
+Subtract _v values from df3_one_variable u, udot, udot2 and udot3.
+*/
+df3_one_variable& df3_one_variable::operator-=(const df3_one_variable& _v)
+{
+  *get_u() -= *_v.get_u();
+  *get_udot() -= *_v.get_udot();
+  *get_udot2() -= *_v.get_udot2();
+  *get_udot3() -= *_v.get_udot3();
+  return *this;
+}
 
 df3_one_variable operator-(const df3_one_variable& v)
 {
@@ -330,16 +350,17 @@ df3_one_variable operator-(const df3_one_variable& v)
   *z.get_udot3() = -(*v.get_udot3());
   return z;
 }
-
-  df3_one_variable& df3_one_variable::operator += (const df3_one_variable& v)
-  {
-    *get_u() += *v.get_u();
-
-    *get_udot() += *v.get_udot();
-    *get_udot2() += *v.get_udot2();
-    *get_udot3() += *v.get_udot3();
-    return *this;
-  }
+/**
+Subtract v values from df3_one_variable u, udot, udot2 and udot3.
+*/
+df3_one_variable& df3_one_variable::operator+=(const df3_one_variable& _v)
+{
+  *get_u() += *_v.get_u();
+  *get_udot() += *_v.get_udot();
+  *get_udot2() += *_v.get_udot2();
+  *get_udot3() += *_v.get_udot3();
+  return *this;
+}
 
   df3_one_variable sqrt(const df3_one_variable& x)
   {
@@ -611,10 +632,6 @@ df3_one_variable operator-(const df3_one_variable& v)
     *get_udot() = 1.0;
     *get_udot2() = 0.0;
     *get_udot3() = 0.0;
-  }
-
-  df3_one_variable::df3_one_variable(void)
-  {
   }
 
 df3_one_matrix choleski_decomp(const df3_one_matrix& MM)

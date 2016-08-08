@@ -1,44 +1,37 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
+
 #include "fvar.hpp"
+#include <cassert>
 
 /**
- * Description not yet available.
- * \param
- */
+Returns d3_array with computed logs from elements in m.
+*/
 d3_array log(const d3_array& m)
-   {
-     d3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=log(m(i));
-     }
-     return tmp;
-   }
-
+{
+  d3_array ret;
+  ret.allocate(m);
+  for (int i = ret.slicemin(); i <= ret.slicemax(); ++i)
+  {
+    ret(i) = log(m(i));
+  }
+  return ret;
+}
 /**
- * Description not yet available.
- * \param
- */
+Returns d3_array with computed e from elements in m.
+*/
 d3_array exp(const d3_array& m)
-   {
-     d3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=exp(m(i));
-     }
-     return tmp;
-   }
+{
+  d3_array ret;
+  ret.allocate(m);
+  for (int i = ret.slicemin(); i <= ret.slicemax(); ++i)
+  {
+    ret(i) = exp(m(i));
+  }
+  return ret;
+}
 
 /**
  * Description not yet available.

@@ -10,9 +10,9 @@
 @type examples\admb\catage\catage.par
 @type examples\admb\catage\catage.std
 
-@echo Example:admb:chem-eng.tpl
-@type examples\admb\chem-eng\chem-eng.par
-@type examples\admb\chem-eng\chem-eng.std
+@echo Example:admb:chem_eng.tpl
+@type examples\admb\chem_eng\chem_eng.par
+@type examples\admb\chem_eng\chem_eng.std
 
 @echo Example:admb:finance.tpl
 @type examples\admb\finance\finance.par
@@ -22,9 +22,9 @@
 @type examples\admb\forest\forest.par
 @type examples\admb\forest\forest.std
 
-@echo Example:admb:pella-t.tpl
-@type examples\admb\pella-t\pella-t.par
-@type examples\admb\pella-t\pella-t.std
+@echo Example:admb:pella_t.tpl
+@type examples\admb\pella_t\pella_t.par
+@type examples\admb\pella_t\pella_t.std
 
 @echo Example:admb:vonb.tpl
 @type examples\admb\robreg\vonb.par

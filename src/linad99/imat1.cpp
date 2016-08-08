@@ -9,50 +9,46 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#include "admb_messages.h"
-#ifdef __TURBOC__
-  #pragma hdrstop
-#endif
+#include <cassert>
 
+/**
+Check index i is in matrix row bounds [index_min, index_max]
+
+\param i row index
+*/
+bool imatrix::is_valid_row(const int i) const
+{
+  const bool valid = index_min <= i && i <= index_max;
+  if (!valid)
+  {
+    cerr << "Error: Used invalid i = " << i << " for imatrix rows bounded by ["
+         << index_min << ", " << index_max << "].\n";
+  }
+  return valid;
+}
 #if !defined(OPT_LIB)
-
 /**
- * Description not yet available.
- * \param
- */
- ivector& imatrix::operator() (int i)
- {
-   if (i < rowmin())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-     "ivector& imatrix::operator() (int i)", rowmin(), rowmax(), i);
-   }
-   if (i > rowsize() + rowmin() - 1)
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-     "ivector& imatrix::operator() (int i)", rowmin(), rowmax(), i);
-   }
-   return m[i];
- }
+Returns a reference to the ivector element at specified row i in imatrix.
+Bounds checking is performed.
 
+\param i row index
+*/
+ivector& imatrix::operator()(int i)
+{
+  assert((index_min <= i && i <= index_max) || is_valid_row(i));
+
+  return elem(i);
+}
 /**
- * Description not yet available.
- * \param
- */
+Returns a const reference to the ivector element at specified row i in imatrix.
+Bounds checking is performed.
+
+\param i row index
+*/
 const ivector& imatrix::operator()(int i) const
- {
-     if (i<rowmin())
-     {
-       cerr << "matrix bound exceeded -- row index too low in "
-       "imatrix::operator[]" << "value was" << i;
-       ad_exit(21);
-     }
-     if (i>rowsize()+rowmin()-1)
-     {
-       cerr << "matrix bound exceeded -- row index too high in "
-       "imatrix::operator[]" << "value was" << i;
-       ad_exit(22);
-     }
-   return m[i];
- }
+{
+  assert((index_min <= i && i <= index_max) || is_valid_row(i));
+
+  return elem(i);
+}
 #endif

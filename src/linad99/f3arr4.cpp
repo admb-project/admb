@@ -1,13 +1,8 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+\file
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
@@ -26,14 +21,23 @@ dvar3_array operator-(const double d, const dvar3_array& m2)
      RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
-
 /**
- * Description not yet available.
- * \param
- */
+Return computed variable mean of variable 3-dimensional array m.
+*/
 dvariable mean(const dvar3_array& m)
-   {
-     dvariable tmp;
-     tmp=sum(m)/double(size_count(m));
-     return tmp;
-   }
+{
+  dvariable tmp;
+  const int count = size_count(m);
+  if (count > 0)
+  {
+    tmp = sum(m) / count;
+  }
+  else
+  {
+    cerr << "Error[" << __FILE__ << ':' << __LINE__ << "]:"
+            "Division by zero in mean(dvar3_array)."
+         << '\n';
+    ad_exit(1);
+  }
+  return tmp;
+}

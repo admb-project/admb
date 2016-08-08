@@ -35,11 +35,13 @@ void * _farptr_fromlong(unsigned long int i)
  * Description not yet available.
  * \param
  */
-#if !defined(__MINGW64__)
+#ifdef DIAG
+  #if !defined(__MINGW64__)
 long int _farptr_tolong(void * ptr)
 {
   return( (long int) ptr);
 }
+  #endif
 #endif
 
 #if defined(__ZTC__)

@@ -137,7 +137,12 @@ void df1b23array::allocate(int nrl,int nrh,int ncl,int nch)
 {
   index_min=nrl;
   index_max=nrh;
-  //int rs=size();
+  int rs=size();
+  if ( (v = new df1b2matrix[rs]) == 0)
+  {
+      cerr << " Error allocating memory in df1b23array contructor\n";
+      ad_exit(21);
+  }
   if ( (shape=new vector_shapex(nrl,nrh,v)) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";
@@ -238,9 +243,8 @@ void df1b23array::allocate(int nrl,int nrh)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 df1b23array::~df1b23array()
 {
   if (shape)
@@ -255,11 +259,9 @@ df1b23array::~df1b23array()
     }
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Deallocates class memory memory.
+*/
 void df1b23array::deallocate()
 {
   if (shape)
@@ -269,13 +271,13 @@ void df1b23array::deallocate()
     v=0;
     delete shape;
     shape=0;
+    index_min=1;
+    index_max=0;
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Does not allocate, but initialize member variables.
+*/
 void df1b23array::allocate(void)
 {
   index_min=1;

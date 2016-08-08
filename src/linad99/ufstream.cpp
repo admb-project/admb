@@ -56,6 +56,12 @@ uistream::uistream(const char* name, int m, int prot)
 {
 }
 
+uistream& uistream::operator>>(int& x)
+{
+  read((char*)&x, sizeof(int));
+  return *this;
+}
+
 #ifdef __ZTC__
 uostream::uostream(const char* name, int  m, int prot)
 :ios(&buffer), ofstream(name, m, prot) { }

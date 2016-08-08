@@ -78,3 +78,73 @@ TEST_F(test_dvar_matrix, incompatiblesize)
     dvar_matrix ba = b * a;
   );
 }
+TEST_F(test_dvar_matrix, mean_nullmatrix)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a;
+  ASSERT_ANY_THROW(
+    mean(a);
+  );
+}
+TEST_F(test_dvar_matrix, mean_matrix)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a(1, 2, 1, 2);
+  a(1, 1) = 1;
+  a(1, 2) = 1;
+  a(2, 1) = 1;
+  a(2, 2) = 1;
+  dvariable d = mean(a);
+
+  ASSERT_DOUBLE_EQ(1, value(d));
+}
+TEST_F(test_dvar_matrix, column_vector)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 4);
+  v(1) = 4;
+  v(2) = 3;
+  v(3) = 2;
+  v(4) = 1;
+  dvar_matrix ret = column_vector(v);
+  ASSERT_EQ(1, ret.rowmin());
+  ASSERT_EQ(4, ret.rowmax());
+  ASSERT_EQ(1, ret(1).indexmin());
+  ASSERT_EQ(1, ret(2).indexmin());
+  ASSERT_EQ(1, ret(3).indexmin());
+  ASSERT_EQ(1, ret(4).indexmin());
+  ASSERT_EQ(1, ret(1).indexmax());
+  ASSERT_EQ(1, ret(2).indexmax());
+  ASSERT_EQ(1, ret(3).indexmax());
+  ASSERT_EQ(1, ret(4).indexmax());
+  ASSERT_DOUBLE_EQ(4, value(ret(1, 1)));
+  ASSERT_DOUBLE_EQ(3, value(ret(2, 1)));
+  ASSERT_DOUBLE_EQ(2, value(ret(3, 1)));
+  ASSERT_DOUBLE_EQ(1, value(ret(4, 1)));
+}
+TEST_F(test_dvar_matrix, row_vector)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 4);
+  v(1) = 4;
+  v(2) = 3;
+  v(3) = 2;
+  v(4) = 1;
+  dvar_matrix ret = row_vector(v);
+  ASSERT_EQ(1, ret.rowmin());
+  ASSERT_EQ(1, ret.rowmax());
+  ASSERT_EQ(1, ret(1).indexmin());
+  ASSERT_EQ(4, ret(1).indexmax());
+  ASSERT_DOUBLE_EQ(4, value(ret(1, 1)));
+  ASSERT_DOUBLE_EQ(3, value(ret(1, 2)));
+  ASSERT_DOUBLE_EQ(2, value(ret(1, 3)));
+  ASSERT_DOUBLE_EQ(1, value(ret(1, 4)));
+}

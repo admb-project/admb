@@ -1,7 +1,9 @@
+#!/bin/sh
+
 # get the mcmc info  note -mcmc2 and not -mcmc  thois means that RE's are part of the mcmc
- ./betareg  -mcmc2 300 -hybrid -mno 1000  -shess 
- ./betareg  -nohess -phase 10 -binp betareg.bar -mcmc2 2000 -hybrid -mno 1000 -shess 
+./betareg  -mcmc2 300 -hybrid -mno 1000  -shess 
+./betareg  -nohess -phase 10 -binp betareg.bar -mcmc2 2000 -hybrid -mno 1000 -shess 
 # test the restart
- ./betareg  -nohess -phase 10 -binp betareg.bar -mcmc2 2000 -hybrid -mno 1000 -mcr -shess 
+./betareg  -nohess -phase 10 -binp betareg.bar -mcmc2 2000 -hybrid -mno 1000 -mcr -shess 
 # do the mceval part
- ./betareg  -nohess -phase 10 -binp betareg.bar -mcmc2 25 -hybrid -mno 1000 -mceval -shess 
+./betareg  -nohess -phase 10 -binp betareg.bar -mcmc2 25 -hybrid -mno 1000 -mceval -shess 

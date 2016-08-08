@@ -1,29 +1,24 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
-#include <admodel.h>
-#if !defined(__GNUG__)
-#  include <new.h>
-#else
-#  if __GNUG__>=3
-#    include <iostream>
-     using namespace std;
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 
-#     if __GNUG__<4
-#       include <new.h>
-#     endif
-#  endif
+#if defined(__GNUC__) && (__GNUC__ < 4)
+  #include <iostream.h>
+  #include <new.h>
+#elif defined(_MSC_VER)
+  #include <iostream>
+  #include <new.h>
+#else
+  #include <iostream>
+  using namespace std;
+  #include <new>
 #endif
 
-#if !defined(__GNUG__) ||   (defined(__GNUG__) && __GNUG__>=3)
+#include <admodel.h>
+
 extern "C"  {
+
 #if defined(_MSC_VER)   // will need to deal with different VC versions
 int adnewhandler(size_t i)
 #else
@@ -37,6 +32,7 @@ void adnewhandler(void)
    return 0;
 #endif
 }
+
 } // extern "C"
 
 /**
@@ -51,4 +47,3 @@ void ad_set_new_handler (void)
   set_new_handler (adnewhandler);
 #endif
 }
-#endif

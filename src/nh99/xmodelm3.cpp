@@ -514,7 +514,11 @@ void tracing_message(int traceflag,const char *s);
     multinomial_weights=new dvector(d);
   }
 
-  function_minimizer::function_minimizer(long int sz)
+function_minimizer::function_minimizer(long int sz):
+  mcmc2_flag(-1),
+  robust_hybrid_flag(0),
+  ffbest(0),
+  ifn(0)
   {
     lapprox=0;
     multinomial_weights=0;

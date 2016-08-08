@@ -19,6 +19,12 @@ using std::istringstream;
 
 #include "cifstrem.h"
 
+/**
+Destructor
+*/
+cifstream::~cifstream()
+{
+}
 void cifstream::set_eof_bit(void)
 {
 #ifdef __BCPLUSPLUS__
@@ -77,7 +83,7 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
 #elif defined (__INTEL_COMPILER)
  : ifstream(fn) , file_name(fn)
-#elif defined(__SUNPRO_CC)
+#elif defined(__SUNPRO_CC) && (__SUNPRO_CC < 0x5140)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
 #elif defined (__ZTC__)
  : ios(&buffer), ifstream(fn, ios::in | open_m) , file_name(fn)
@@ -92,6 +98,12 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
     line = 1;
     field = 0;
     ignore_eof = 1;
+  }
+  else
+  {
+    line = 0;
+    field = 0;
+    ignore_eof = 0;
   }
   memset(comment_line, '\0', SIGNATURE_LENGTH);
   memset(signature_line, '\0', SIGNATURE_LENGTH);
@@ -255,6 +267,24 @@ istream& istream::operator>>(long long & x)
   return *this;
 }
 #else
+cifstream& cifstream::operator>>(const long long & _i)
+{
+  ADUNCONST(long long,i)
+  char * s = new char[FILTER_BUF_SIZE];
+  get_field(s);
+  istringstream is(s);
+  is >> i;
+#ifdef __NDPX__
+  if (is.eof()) is.clear();
+#endif
+  if (!is)
+  {
+    this->clear(is.rdstate());
+    report_error("lont int extraction operator");
+  }
+  delete []s;
+  return *this;
+}
 cifstream& cifstream::operator>>(long long & i)
 {
   char * s = new char[FILTER_BUF_SIZE];

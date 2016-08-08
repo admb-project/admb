@@ -317,11 +317,13 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   else
   {
     add_to_list();
+#ifdef DIAG
     if (lapprox==0)
     {
       cout << "This can't happen" << endl;
       ad_exit(1);
     }
+#endif
     lapprox->used_flags(ind_index)+=1;
   }
   //cout << "ind_index = " << ind_index << endl;
@@ -781,20 +783,18 @@ funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2vector & _x)
       ind_index = x(i).get_ind_index();
       lapprox->used_flags(ind_index)+=1;
     }
+    df1b2variable::noallocate=1;
+    df1b2vector::allocate(mmin,mmax);
+    df1b2variable::noallocate=0;
   }
-  df1b2variable::noallocate=1;
-  df1b2vector::allocate(mmin,mmax);
-  df1b2variable::noallocate=0;
 }
-
 /**
 Destructor
 */
 funnel_init_df1b2vector::~funnel_init_df1b2vector()
 {
-  //df1b2vector::deallocate();
+  df1b2vector::deallocate();
 }
-
 /**
  * Description not yet available.
  * \param

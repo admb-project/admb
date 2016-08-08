@@ -12,7 +12,7 @@
 #include <fcntl.h>
 
 #ifdef _MSC_VER
-  #define lseek _lseek
+  #define LSEEK _lseek
   #define  read _read
   #define write _write
 #else
@@ -42,7 +42,7 @@
 #define O_RDWR 2
   extern "C"
   {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int open(const char*, int);
     int creat(const char*, int);
     int close(int);
@@ -74,7 +74,7 @@ void DF_FILE::fread(const double& _x)
   const size_t num_bytes = sizeof(double);
   if (toffset < num_bytes)
   {
-    off_t lpos = lseek(file_ptr,-((off_t)buff_size),SEEK_CUR);
+    OFF_T lpos = LSEEK(file_ptr,-((OFF_T)buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
@@ -97,7 +97,7 @@ void DF_FILE::fread(void* &x)
   const size_t num_bytes = sizeof(void*);
   if (toffset < num_bytes)
   {
-     off_t lpos = lseek(file_ptr,-((off_t)buff_size),SEEK_CUR);
+     OFF_T lpos = LSEEK(file_ptr,-((OFF_T)buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
@@ -145,7 +145,7 @@ void DF_FILE::fread(const int& _x)
   const size_t num_bytes = sizeof(int);
   if (toffset < num_bytes)
   {
-    off_t lpos = lseek(file_ptr, -((off_t)buff_size), SEEK_CUR);
+    OFF_T lpos = LSEEK(file_ptr, -((OFF_T)buff_size), SEEK_CUR);
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
     toffset = offset;

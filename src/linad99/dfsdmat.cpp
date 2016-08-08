@@ -17,7 +17,7 @@
 
 #ifdef _MSC_VER
   #include <io.h>
-  #define lseek _lseek
+  #define LSEEK _lseek
   #define  read _read
   #define write _write
   #define open _open
@@ -57,7 +57,7 @@
   #define O_RDWR 2
   extern "C"
   {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int open(const char*, int);
     int creat(const char*, int);
     int close(int);
@@ -70,7 +70,7 @@
   #include <sys/stat.h>
   #include <sys/types.h>
   #ifdef _MSC_VER
-    #define lseek _lseek
+    #define LSEEK _lseek
     #define  read _read
     #define write _write
     #define open _open
@@ -105,20 +105,18 @@ public:
 */
 
 /**
- * Description not yet available.
- * \param
- */
-dfsdmat::dfsdmat(void)
+Default constructor
+*/
+dfsdmat::dfsdmat():
+  disk_save_flag(1)
 {
-  tmp_file=0;
+  tmp_file = 0;
   allocate();
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void dfsdmat::allocate(void)
+Initialize members but does not allocate.
+*/
+void dfsdmat::allocate()
 {
   shared_memory=0;
   ptr=NULL;
@@ -316,26 +314,24 @@ uistream& operator>>(const uistream& _ifs, const dfsdmat& _m)
   }
   return ifs;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Save values to file.
+*/
 void dfsdmat::save()
 {
-  if (!tmp_file)
+  if (tmp_file < 0)
   {
     tmp_file=open("fmm_tmp.tmp", O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
-    if (tmp_file == -1)
+    if (tmp_file < 0)
     {
       cerr << "error trying to open temporary hessian file\n";
       ad_exit(1);
     }
   }
+  LSEEK(tmp_file,0L,SEEK_SET);
   unsigned int _n = (unsigned int)size();
   unsigned int nn = (_n*(_n+1))/2;
-  lseek(tmp_file,0L,SEEK_SET);
 #ifdef OPT_LIB
   write(tmp_file,&_n,sizeof(int));
 #else
@@ -369,15 +365,13 @@ void dfsdmat::save()
   n=0;
  */
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Restore values to file.
+*/
 void dfsdmat::restore()
 {
   int _n=0;
-  lseek(tmp_file,0L,SEEK_SET);
+  LSEEK(tmp_file,0L,SEEK_SET);
 #if defined(OPT_LIB) && !defined(_MSC_VER)
   read(tmp_file,&_n,sizeof(int));
 #else
@@ -385,7 +379,12 @@ void dfsdmat::restore()
   assert(ret != -1);
   assert(_n > 0);
 #endif
-  unsigned int nn = (unsigned int)((_n*(_n+1))/2);
+#ifndef OPT_LIB
+  #ifndef __SUNPRO_CC
+  assert(_n < sqrt(INT_MAX));
+  #endif
+#endif
+  size_t nn = (size_t)((_n * (_n + 1))/2);
   //if (!shared_memory) allocate(_n);
 #ifdef __MINGW64__
   size_t size = nn * sizeof(double);

@@ -58,7 +58,7 @@ dvar_vector::dvar_vector(const char * s)
   int rbraces = 0;
   int commas  = 0;
 
-  char *t = new char[n];
+  char* t = new char[n];
 
   for (size_t k = 0; k < n; k++)
   {
@@ -111,12 +111,10 @@ dvar_vector::dvar_vector(const char * s)
       ss >> this->elem(k);
       //va[k].nc=0.;
     }
-    delete[] t;
-    t = 0;
   }
   else
   {
-    const char * filename=s;
+    const char* filename = s;
     ifstream infile(filename);
     if (!infile)
     {
@@ -198,4 +196,6 @@ dvar_vector::dvar_vector(const char * s)
    delete[] field;
    field = 0;
  }
+ delete [] t;
+ t = 0;
 }

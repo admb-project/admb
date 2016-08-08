@@ -19,10 +19,7 @@ sdmatrix::sdmatrix(int irh)
   allocate(irh);
 }
 
-/**
- * Description not yet available.
- * \param
- */
+/// Default constructor
 sdmatrix::sdmatrix()
 {
    //unsigned nrl = 0;

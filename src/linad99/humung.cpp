@@ -19,19 +19,28 @@
 #endif
 
 /**
+Default constructor
+*/
+humungous_pointer::humungous_pointer():
+  adjustment(0),
+  ptr(NULL)
+{
+}
+
+/**
  * Description not yet available.
  * \param
  */
-void humungous_pointer::free(void)
+void humungous_pointer::free()
 {
-  ptr-=adjustment;
-  adjustment=0;
+  ptr -= adjustment;
+  adjustment = 0;
 #if defined(__BORLANDC__) || defined(__ZTC__)
   farfree(ptr);
 #else
   ::free(ptr);
 #endif
-  ptr=NULL;
+  ptr = NULL;
 }
 
 /**
@@ -41,18 +50,7 @@ void humungous_pointer::free(void)
 void humungous_pointer::adjust(const size_t a)
 {
   adjustment = a;
-  ptr+=adjustment;
-  //ptr=NULL;
-}
-
-/**
- * Description not yet available.
- * \param
- */
-humungous_pointer::humungous_pointer()
-{
-  adjustment=0;
-  //ptr=NULL;
+  ptr += adjustment;
 }
 
 /**
@@ -88,7 +86,7 @@ humungous_pointer::operator char* ()
  */
 humungous_pointer::operator void* ()
 {
-  return (void *) ptr;
+  return (void*)ptr;
 }
 
 /**
@@ -97,7 +95,7 @@ humungous_pointer::operator void* ()
  */
 humungous_pointer::operator double_and_int* ()
 {
-  return (double_and_int *)ptr;
+  return (double_and_int*)ptr;
 }
 
 /**
@@ -106,39 +104,32 @@ humungous_pointer::operator double_and_int* ()
  */
 humungous_pointer::operator double* ()
 {
-  return (double *)ptr;
+  return (double*)ptr;
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Note that pointer addition is in bytes not the size of the object pointed to
+*/
 humungous_pointer humungous_pointer::operator + (unsigned long int& offset)
-// Note that pointer addition is in bytes not the size of the
-// object pointed to
 {
   humungous_pointer tmp;
 #if defined(__ZTC__)
-    tmp.ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
+  tmp.ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
 #else
-    tmp.ptr=(ptr+offset);
+  tmp.ptr=(ptr+offset);
 #endif
   return tmp;
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Note that pointer addition is in bytes not the size of the object pointed to
+*/
 humungous_pointer& humungous_pointer::operator += (unsigned long int& offset)
-// Note that pointer addition is in bytes not the size of the
-// object pointed to
 {
-  //char * tmp;
 #if defined(__ZTC__)
-    ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
+  ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
 #else
-    ptr=(ptr+offset);
+  ptr=(ptr+offset);
 #endif
   return *this;
 }
@@ -150,9 +141,9 @@ humungous_pointer& humungous_pointer::operator += (unsigned long int& offset)
 humungous_pointer& humungous_pointer::operator = (void * p)
 {
 #if defined(__BORLANDC__)
-    ptr = (char huge *) p;
+  ptr = (char huge *) p;
 #else
-    ptr = (char *) p;
+  ptr = (char*) p;
 #endif
   return *this;
 }

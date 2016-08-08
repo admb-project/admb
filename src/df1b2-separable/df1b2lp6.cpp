@@ -423,6 +423,7 @@ dvector laplace_approximation_calculator::banded_calculations
         if (!bHess)
         {
           cerr << "Block diagonal Hessian is unallocated" << endl;
+          cerr << "  Try -shess command line option, perhaps." << endl;
           ad_exit(1);
         }
         else
@@ -574,8 +575,7 @@ dvector laplace_approximation_calculator::banded_calculations
       }
 
       block_diagonal_flag=0;
-      initial_params::straight_through_flag=1;
-
+      //initial_params::straight_through_flag=1;
       //dmatrix tHess=dmatrix(*bHess);
       initial_params::straight_through_flag=0;
       funnel_init_var::lapprox=0;
@@ -1055,6 +1055,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
    int sgn=0;
    dvariable ld;
 
+#ifdef DIAG
    int eigswitch=0;
    if (eigswitch)
    {
@@ -1065,6 +1066,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
          << endl << endl;
      ofs << ev << endl << endl << evecs << endl;
    }
+#endif
+
    ld=0.5*ln_det_choleski(vHess,sgn);
    if (sgn==1)
    {

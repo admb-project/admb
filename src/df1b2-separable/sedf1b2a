@@ -45,6 +45,7 @@ void df1b2_pre_parameters::end_df1b2_funnel(void) \
 {  \
   lapprox->do_separable_stuff(); \
   other_separable_stuff_end(); \
+  funnel_init_var::deallocate_all(); \
 } \
   \
 void model_parameters::begin_df1b2_funnel(void) \

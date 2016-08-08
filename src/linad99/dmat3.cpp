@@ -385,8 +385,6 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
 void lubksb(dmatrix a, const ivector& indx, dvector b)
 {
@@ -432,8 +430,6 @@ void lubksb(dmatrix a, const ivector& indx, dvector b)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
 double det(const dmatrix& m1)
 {
@@ -471,13 +467,10 @@ double det(const dmatrix& m1)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
-double ln_det(const dmatrix& m1, const int& _sgn)
+double ln_det(const dmatrix& m1, int& sgn)
 {
   double d = 0.0;
-  int& sgn=(int&)_sgn;
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 
   if (m1.rowmin()!=m1.colmin()||m1.rowmax()!=m1.colmax())

@@ -201,6 +201,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
 
       dvector step;
+#ifdef DIAG
       int print_hess_in_newton_raphson_flag=0;
       if (print_hess_in_newton_raphson_flag)
       {
@@ -213,6 +214,7 @@ dvector laplace_approximation_calculator::default_calculations
             << setw(12) << Hess << endl;
         }
       }
+#endif
 
 #if defined(USE_ATLAS)
       if (!ad_comm::no_atlas_flag)
@@ -276,7 +278,9 @@ dvector laplace_approximation_calculator::default_calculations
           {
             step=local_minimization(s,Hess,grad,lambda);
           }
-          uhat+=step;
+          if(!ad_comm::print_hess_and_exit_flag){
+            uhat+=step;
+          }
           for (int i=1;i<=usize;i++)
           {
             y(i+xsize)=uhat(i);
@@ -339,7 +343,9 @@ dvector laplace_approximation_calculator::default_calculations
       if (trust_update_flag==0)
       {
         uhat_old=uhat;
-        uhat+=step;
+        if(!ad_comm::print_hess_and_exit_flag){
+          uhat+=step;
+        }
       }
 
       double maxg_old=maxg;
@@ -347,7 +353,9 @@ dvector laplace_approximation_calculator::default_calculations
       maxg=fabs(evaluate_function(uhat,pfmin));
       if (maxg>maxg_old)
       {
-        uhat=uhat_old;
+        if(!ad_comm::print_hess_and_exit_flag){
+          uhat=uhat_old;
+        }
         evaluate_function(uhat,pfmin);
         break;
       }

@@ -14,9 +14,7 @@ using std::istringstream;
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-//#include <vmon.h>
 static int no_stuff=0;
-//static void xxxy(void) {}
 
 /**
  * Description not yet available.
@@ -251,7 +249,7 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
     }
     lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
       this);
-    if (lapprox==0)
+    if (!lapprox)
     {
       cerr << "Error allocating memory for lapprox" << endl;
       ad_exit(1);
@@ -295,11 +293,6 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
     // linear mixed effects optimization
     if (laplace_approximation_calculator::variance_components_vector)
     {
-      if (!lapprox)
-      {
-        cerr << "this can't happen" << endl;
-        ad_exit(1);
-      }
       lapprox->get_hessian_components_banded_lme(this);
     }
 

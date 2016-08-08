@@ -1,54 +1,47 @@
 /*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
+
 #include <fvar.hpp>
 
 /**
- * Description not yet available.
- * \param
- */
-ivector colsum(const imatrix &v)
+Returns sum of the columns in matrix m.
+*/
+ivector colsum(const imatrix& m)
+{
+  int cmin = m.colmin();
+  int cmax = m.colmax();
+  ivector ret(cmin, cmax);
+  ret.initialize();
+
+  int rmin = m.rowmin();
+  int rmax = m.rowmax();
+  for (int j=cmin; j<=cmax; j++)
   {
-    int cmin=v.colmin();
-    int cmax=v.colmax();
-    int rmin=v.rowmin();
-    int rmax=v.rowmax();
-
-    ivector tmp(cmin,cmax);
-    tmp.initialize();
-    for (int j=cmin; j<=cmax; j++)
-    {
-      for (int i=rmin; i<=rmax; i++)
-      {
-        tmp(j)+=v(i,j);
-      }
-    }
-    return tmp;
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-ivector rowsum(const imatrix &v)
-  {
-    int rmin=v.rowmin();
-    int rmax=v.rowmax();
-
-    ivector tmp(rmin,rmax);
     for (int i=rmin; i<=rmax; i++)
     {
-      tmp(i)=sum(v(i));
+      ret(j) += m(i,j);
     }
-    return tmp;
   }
+  return ret;
+}
+/**
+Returns sum of the rows in matrix m.
+*/
+ivector rowsum(const imatrix& m)
+{
+  int rmin = m.rowmin();
+  int rmax = m.rowmax();
+  ivector ret(rmin, rmax);
+
+  for (int i=rmin; i<=rmax; ++i)
+  {
+    ret(i) = sum(m(i));
+  }
+
+  return ret;
+}
 
 /**
  * Description not yet available.

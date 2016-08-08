@@ -1,6 +1,7 @@
 build/
 contrib/**/*.obj
-admb
+tests/gtests/*.obj
+/admb
 contrib/ad2csv/ad2csv
 src/**/lex.yy.c
 src/df1b2-separable/tpl2rem.c

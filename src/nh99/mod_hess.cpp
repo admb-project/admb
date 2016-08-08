@@ -4,8 +4,8 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#  include <df1b2fun.h>
-#  include <admodel.h>
+#include <df1b2fun.h>
+#include <admodel.h>
 //#include <parallel.h>
 
 void hess_calcreport(int i,int nvar);
@@ -17,36 +17,39 @@ void ad_update_hess_stats_report(int i,int nvar);
 
 void function_minimizer::hess_routine(void)
 {
-  if (random_effects_flag && lapprox !=0 )
+  if (random_effects_flag && lapprox != 0)
   {
+    if (laplace_approximation_calculator::alternative_user_function_flag == 1)
+    {
+      laplace_approximation_calculator::alternative_user_function_flag = 2;
+    }
     hess_routine_random_effects();
+    if (laplace_approximation_calculator::alternative_user_function_flag == 2)
+    {
+      laplace_approximation_calculator::alternative_user_function_flag = 1;
+    }
   }
+#if defined(USE_ADPVM)
+  else if (ad_comm::pvm_manager)
+  {
+    switch (ad_comm::pvm_manager->mode)
+    {
+    case 1: // master
+      hess_routine_master();
+      break;
+    case 2: // slave
+      hess_routine_slave();
+      break;
+    default:
+      cerr << "Error: Illegal value for pvm_manager->mode." << endl;
+      ad_exit(1);
+    }
+    cout << "finished hess routine" << endl;
+  }
+#endif
   else
   {
-#if defined(USE_ADPVM)
-    if (!ad_comm::pvm_manager)
-    {
-      hess_routine_noparallel();
-    }
-    else
-    {
-      switch (ad_comm::pvm_manager->mode)
-      {
-      case 1: // master
-        hess_routine_master();
-        break;
-      case 2: // slave
-        hess_routine_slave();
-        break;
-      default:
-        cerr << "Error: Illegal value for pvm_manager->mode." << endl;
-        ad_exit(1);
-      }
-      cout << "finished hess routine" << endl;
-    }
-#else
     hess_routine_noparallel();
-#endif
   }
 }
 void function_minimizer::hess_routine_noparallel(void)
@@ -63,6 +66,7 @@ void function_minimizer::hess_routine_noparallel(void)
   dvector hess1(1,nvar);
   dvector hess2(1,nvar);
   double eps=.1;
+  double eps2=eps*eps;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
@@ -132,15 +136,15 @@ void function_minimizer::hess_routine_noparallel(void)
       gradcalc(nvar, g2, vf);
       x(i)=xsave;
 
-      vf=initial_params::reset(dvar_vector(x));
-      double eps2=eps*eps;
       hess2=(g1-g2)/(sdelta1-sdelta2);
+
       hess=(eps2*hess1-hess2) /(eps2-1.);
 
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
     }
   }
+  initial_params::reset(dvar_vector(x));
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
   /*int check=*/initial_params::stddev_scale(tscale,x);
@@ -418,6 +422,10 @@ void function_minimizer::depvars_routine(void)
   gradcalc(0,ggg);
   gradient_structure::set_YES_DERIVATIVES();
   initial_params::restore_start_phase();
+  if (lapprox && lapprox->no_re_ders_flag)
+  {
+    initial_params::set_inactive_random_effects();
+  }
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
   independent_variables x(1,nvar);

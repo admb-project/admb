@@ -43,98 +43,105 @@ int get_non_blank_line(const ifstream& infile, char* & line,
  };
 
 /**
- * Description not yet available.
- * \param
- */
- dvector::dvector(char * filename, const int& column)
- {
-   ifstream infile(filename);
-   if (!infile)
-   {
+Construct dvector using matrix input from text filename.
+Select column from matrix.
+*/
+dvector::dvector(char* filename, const int& column)
+{
+  if (column < 1)
+  {
+    cerr << "Error[" << __FILE__ << ':' << __LINE__
+         << "]: column should be positive number.\n";
+    ad_exit(1);
+  }
+  ifstream infile(filename);
+  if (!infile)
+  {
      cerr << "Error opening file " << filename << " in dmatrix constructor "
       << "dmatrix::dmatrix(char * filename)\n";
       ad_exit(1);
-   }
-   char *line = new char[MAX_LINE_LENGTH + 2];
-   char *field = new char[MAX_FIELD_LENGTH + 1];
+  }
+  char* line = new char[MAX_LINE_LENGTH + 2];
+  char* field = new char[MAX_FIELD_LENGTH + 1];
 
-   int i=0;
-   ivector nc(1,MAX_NUMBER_ROWS);
+  int i = 0;
+  ivector nc(1, MAX_NUMBER_ROWS);
 
-   //while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
-   while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
-   {
-     strcat(line," ");
-     // increment row counter
-     if ( i++ > MAX_NUMBER_ROWS)
-     {
+  //while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
+  while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
+  {
+    strcat(line, " ");
+
+    // increment row counter
+    if ( i++ > MAX_NUMBER_ROWS)
+    {
        cerr << " MAX_NUMBER_ROWS exceeded in "
                " dmatrix::dmatrix(char * filename)\n";
        ad_exit(21);
-     }
-     int j=0;              // j counts columns
+    }
+    int j=0;              // j counts columns
 
-     #ifndef __ZTC__
-       istringstream f(line);
-       while ( (f >> field).good() )
-     #else
-       while( sscanf(line,"%s",field)) // reads a field from line into field
-     #endif
-     {
+#ifdef __ZTC__
+    while( sscanf(line,"%s",field)) // reads a field from line into field
+#else
+    istringstream f(line);
+    while ( (f >> field).good() )
+#endif
+    {
        // f >> field;      // Need to derive a class so that this thing stops at
                            // , or maybe deals with strings
        //char * err_ptr;
        // increment row counter
-       if ( ++j > MAX_NUMBER_COLUMNS)
-       {
+      if ( ++j > MAX_NUMBER_COLUMNS)
+      {
          cerr << " MAX_NUMBER_COLUMNS exceeded in "
                  " dmatrix::dmatrix(char * filename)\n";
          ad_exit(21);
-       }
-     }
-     // Need to check error status f
-     if (j < column)
-     {
+      }
+    }
+    // Need to check error status f
+    if (j < column)
+    {
        cerr << "Error -- not enough columns in line " << i
         << "\n in dvector::dvector(char * filename, const int& column) "
            " in file:  "
         << filename << "\n";
        ad_exit(1);
-     }
-   }
-   int nr=i;
-   if (nr == 0)
-   {
+    }
+  }
+  int nr = i;
+  if (nr == 0)
+  {
      cerr << "Error in dvector constructor There doesn't seem to be any data\n"
       << "in file:  " << filename
       << " called in dvector::dvector(char * filename,const const& column)\n";
       ad_exit(1);
-   }
-   infile.clear();
-   infile.seekg(0,ios::beg);
+  }
+  infile.clear();
+  infile.seekg(0,ios::beg);
 
-   if ( (v = new double [(size_t) size()]) ==0)
-   {
+  index_min = 1;
+  index_max = nr;
+
+  if ((v = new double[(size_t) size()]) == 0)
+  {
      cerr << " Error trying to allocate memory for dvector\n";
      ad_exit(21);
-   }
+  }
 #if defined(THREAD_SAFE)
-   if ( (shape=new ts_vector_shapex(1,nr,v)) == NULL)
+  if ( (shape=new ts_vector_shapex(1,nr,v)) == NULL)
 #else
-   if ( (shape=new vector_shapex(1,nr,v)) == NULL)
+  if ( (shape=new vector_shapex(1,nr,v)) == NULL)
 #endif
-   {
+  {
      cerr << "Error trying to allocate memory for dvector\n";
      ad_exit(21);
-   }
+  }
 
-   #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
-          <<"\n";
-     cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
-   #endif
-
-/* Deprecated empty function
+#ifdef DIAG
+   cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
+        <<"\n";
+   cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    if (sizeof(int)==sizeof(char*))
    {
 #if defined(__x86_64)
@@ -149,63 +156,62 @@ int get_non_blank_line(const ifstream& infile, char* & line,
         denormalize_ptr(&v, indexmin() * sizeof(double));
      }
    }
-*/
+#endif
 
-   v -= indexmin();
+  v -= indexmin();
 
-
- i=0;
- // while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
- while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
- {
-   strcat(line," ");
-   // increment row counter
-   i++;
-   int j=0;              // j counts columns
-   #ifndef __ZTC__
-     istringstream f(line);
-     while ( (f >> field).good() )
-   #else
-     while( sscanf(line,"%s",field)) // reads a field from line into field
-   #endif
+  i=0;
+  // while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
+  while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
+  {
+    strcat(line," ");
+    // increment row counter
+    i++;
+    int j=0;              // j counts columns
+#ifdef __ZTC__
+   while( sscanf(line,"%s",field)) // reads a field from line into field
+#else
+   istringstream f(line);
+   while ( (f >> field).good() )
+#endif
    {
      // f >> field;      // Need to derive a class so that this thing stops at
-           // , or maybe deals with strings
-     char * err_ptr;
+     // , or maybe deals with strings
      // increment row counter
      j++;
 
      if (j==column)
      {
+       char* err_ptr;
        elem(i)=strtod(field,&err_ptr); // increment column counter
 
        if (isalpha((unsigned char)err_ptr[0]))
        {
-         cerr << "Error decoding field " << filename
-          << " in dmatrix::dmatrix(char * filename) " << "\n";
-         cerr << "Error occurred in line " << i << " at field " << j << "\n";
-         cerr << "Offending characters start with "
-           << err_ptr[0]
-           << err_ptr[1]
-           << err_ptr[2]
-           << err_ptr[3] << "\n";
-         ad_exit(1);
-       }
+          cerr << "Error decoding field " << filename
+               << " in dmatrix::dmatrix(char * filename) " << "\n";
+          cerr << "Error occurred in line " << i << " at field " << j << "\n";
+          cerr << "Offending characters start with "
+               << err_ptr[0]
+               << err_ptr[1]
+               << err_ptr[2]
+               << err_ptr[3] << "\n";
+          ad_exit(1);
+        }
+        if (elem(i) == HUGE_VAL || elem(i) == -HUGE_VAL)
+        {
+          cerr << "Overflow Error decoding field " << filename
+               << " in dvector::dvector(char * filename) " << "\n";
+          cerr << "Error occurred in line " << i << " at field " << j << "\n";
+          ad_exit(1);
+        }
+      }
+    }
+    // Need to check error status f
+  }
 
-       if (elem(i) == HUGE_VAL || elem(i) == -HUGE_VAL)
-       {
-         cerr << "Overflow Error decoding field " << filename
-                << " in dvector::dvector(char * filename) " << "\n";
-         cerr << "Error occurred in line " << i << " at field " << j << "\n";
-         ad_exit(1);
-       }
-     }
-   }
-   // Need to check error status f
- }
+  delete [] line;
+  line = NULL;
 
- delete[] line;
- line = 0;
- delete[] field;
- field = 0;
+  delete [] field;
+  field = NULL;
 }

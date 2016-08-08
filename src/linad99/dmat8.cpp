@@ -9,110 +9,76 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#include "admb_messages.h"
-
-#if !defined(OPT_LIB)
+#include <cassert>
 
 /**
- * Description not yet available.
- * \param
- */
- dvector& dmatrix::operator() (int i)
- {
-     if (i<rowmin())
-     {
-       ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-       "dvector& dmatrix::operator() (int i)", rowmin(), rowmax(), i);
-     }
-     if (i>rowmax())
-     {
-       ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-       "dvector& dmatrix::operator() (int i)", rowmin(), rowmax(), i);
-     }
-   return *(m+i);
- }
+Check index i is in matrix row bounds [index_min, index_max]
+
+\param i row index
+*/
+bool dmatrix::is_valid_row(const int i) const
+{
+  const bool valid = index_min <= i && i <= index_max;
+  if (!valid)
+  {
+    cerr << "Error: Used invalid i = " << i << " for dmatrix rows bounded by ["
+         << index_min << ", " << index_max << "].\n";
+  }
+  return valid;
+}
+#if !defined(OPT_LIB)
+/**
+Returns a reference to the dvector element at specified location (i) in dmatrix.
+Bounds checking is performed.
+
+\param i row index
+*/
+dvector& dmatrix::operator()(int i)
+{
+  //check that index i is in range
+  assert((index_min <= i && i <= index_max) || is_valid_row(i));
+
+  return *(m + i);
+}
 #endif
 
 #if !defined(OPT_LIB) || defined(__INTEL_COMPILER)
 /**
- * Description not yet available.
- * \param
- */
- double& dmatrix::operator() (int i, int j)
- {
-     if (i<rowmin())
-     {
-       cerr << "matrix bound exceeded -- row index too low in "
-               "dmatrix::operator()"
-             << "value was" << i;
-       ad_exit(21);
-     }
-     if (i>rowmax())
-     {
-       cerr << "matrix bound exceeded -- row index too high in "
-               "dmatrix::operator()"
-             << "value was" << i;
-       ad_exit(22);
-     }
+Returns a reference to the element at specified location (i, j) in dmatrix.
+Bounds checking is performed.
 
-     // if (j<colmin())
-     if (j<elem(i).indexmin())
-     {
-       cerr << "matrix bound exceeded -- column index too low in "
-               "dmatrix::operator()"
-             << "value was" << j;
-       ad_exit(21);
-     }
+\param i row index
+\param j col index
+*/
+double& dmatrix::operator()(int i, int j)
+{
+  //check that index i is in range
+  assert((index_min <= i && i <= index_max) || is_valid_row(i));
 
-     // if (j>colmax())
-     if (j>elem(i).indexmax())
-     {
-       cerr << "matrix bound exceeded -- column index too high in "
-               "dmatrix::operator()"
-             << "value was" << j;
-       ad_exit(22);
-     }
-   return( *((m[i]).v+j) );
- }
+  dvector& dvi = elem(i);
 
+  //check that index j is in range
+  assert(dvi.is_valid_index(j));
+
+  return *(dvi.v + j);
+}
 /**
- * Description not yet available.
- * \param
- */
+Returns a const reference to the element at specified location (i, j) in dmatrix.
+Bounds checking is performed.
+
+\param i row index
+\param j col index
+*/
 const double& dmatrix::operator()(int i, int j) const
- {
-     if (i<rowmin())
-     {
-       cerr << "matrix bound exceeded -- row index too low in "
-               "dmatrix::operator()"
-             << "value was" << i;
-       ad_exit(21);
-     }
-     if (i>rowmax())
-     {
-       cerr << "matrix bound exceeded -- row index too high in "
-               "dmatrix::operator()"
-             << "value was" << i;
-       ad_exit(22);
-     }
+{
+  //check that index i is in range
+  assert((index_min <= i && i <= index_max) || is_valid_row(i));
 
-     // if (j<colmin())
-     if (j<elem(i).indexmin())
-     {
-       cerr << "matrix bound exceeded -- column index too low in "
-               "dmatrix::operator()"
-             << "value was" << j;
-       ad_exit(21);
-     }
+  const dvector& dvi = elem(i);
 
-     // if (j>colmax())
-     if (j>elem(i).indexmax())
-     {
-       cerr << "matrix bound exceeded -- column index too high in "
-               "dmatrix::operator()"
-             << "value was" << j;
-       ad_exit(22);
-     }
-   return( *((m[i]).v+j) );
- }
+  //check that index j is in range
+  assert(dvi.is_valid_index(j));
+
+  return *(dvi.v + j);
+}
 #endif

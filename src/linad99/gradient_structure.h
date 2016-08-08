@@ -72,13 +72,13 @@ public:
   ~humungous_pointer() {}
 
   char* ptr;
-  void free(void);
+  void free();
   void adjust(const size_t);
-  humungous_pointer operator +(unsigned long int &offset);
-  humungous_pointer & operator +=(unsigned long int &offset);
-  humungous_pointer & operator =(void *p);
-  int operator ==(void *p);
-  int operator!=(void *p);
+  humungous_pointer operator+(unsigned long int& offset);
+  humungous_pointer& operator+=(unsigned long int& offset);
+  humungous_pointer& operator=(void* p);
+  int operator==(void* p);
+  int operator!=(void* p);
   operator char*();
   operator void*();
   operator double_and_int*();
@@ -108,7 +108,6 @@ class gradient_structure
    static size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
    static humungous_pointer ARRAY_MEMBLOCK_BASE;
-   static humungous_pointer ARRAY_MEMBLOCK_BASEA;
    static humungous_pointer ARRAY_MEMBLOCK_SAVE;
  public:
    static double *get_ARRAY_MEMBLOCK_BASE()
@@ -116,7 +115,6 @@ class gradient_structure
       return (double*)ARRAY_MEMBLOCK_BASE;
    }
  private:
-   static double *variables_save;
 #ifdef __BORLANDC__
    static long int CMPDIF_BUFFER_SIZE;
    static long int GRADSTACK_BUFFER_SIZE;
@@ -275,15 +273,15 @@ public:
   void fwrite(void *ptr);
 
   void write_cmpdif_stack_buffer(void);
-  void read_cmpdif_stack_buffer(off_t & lpos);
+  void read_cmpdif_stack_buffer(OFF_T & lpos);
 
 private:
 #ifdef _MSC_VER
-  size_t buff_end;
-  size_t buff_size;
+  OFF_T buff_end;
+  OFF_T buff_size;
 #else
-  const size_t buff_end;
-  const size_t buff_size;
+  const OFF_T buff_end;
+  const OFF_T buff_size;
 #endif
 };
 #endif

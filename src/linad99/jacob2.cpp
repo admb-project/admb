@@ -27,13 +27,13 @@
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
-  #ifdef _MSC_VER
-    #define lseek _lseek
-    #define  read _read
-    #define write _write
-    #define open _open
-    #define close _close
-  #endif
+#endif
+#ifdef _MSC_VER
+  #define LSEEK _lseek
+  #define  read _read
+  #define write _write
+  #define open _open
+  #define close _close
 #endif
 
 #if !defined(_MSC_VER)
@@ -46,12 +46,16 @@
 
 #if defined(__NDPX__ )
   extern "C" {
-    int lseek(int, int, int);
+    int LSEEK(int, int, int);
     int read(int, char*, int);
   };
 #endif
 
 #include <math.h>
+
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 /**
  * Description not yet available.
@@ -70,12 +74,12 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 {
   ADUNCONST(ofstream,ofs)
   dvector jac(1,nvar);
-  off_t lpos;
+  OFF_T lpos;
   int depvar_count=DEPVARS_INFO->depvar_count;
 
   int& _GRADFILE_PTR=GRAD_STACK1->_GRADFILE_PTR;
   // check to see if anything has been written into the file
-  off_t last_gpos=lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  OFF_T last_gpos=LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
   //save current contents of the buffer so we can get them later
   if (last_gpos)
@@ -84,7 +88,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
   }
 
   // check to see if anything has been written into the file
-  off_t last_cpos=lseek(fp->file_ptr,0L,SEEK_CUR);
+  OFF_T last_cpos=LSEEK(fp->file_ptr,0L,SEEK_CUR);
 
   //save current contents of the buffer so we can get them later
   if (last_cpos)
@@ -122,8 +126,13 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
     // position the cmpdif file correctly;
     if (last_cpos)
     {
-      off_t cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
-      lseek(fp->file_ptr,cmp_lpos,SEEK_SET);
+      OFF_T cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
+#ifndef OPT_LIB
+      OFF_T ret = LSEEK(fp->file_ptr,cmp_lpos,SEEK_SET);
+      assert(ret >= 0);
+#else
+      LSEEK(fp->file_ptr,cmp_lpos,SEEK_SET);
+#endif
       fp->read_cmpdif_stack_buffer(cmp_lpos);
     }
     GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();
@@ -143,7 +152,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
         lpos=0;
       }
       // and position the file to the begginig of the buffer image
-      lseek(_GRADFILE_PTR,lpos,SEEK_SET);
+      LSEEK(_GRADFILE_PTR,lpos,SEEK_SET);
       // now fill the buffer with the appropriate stuff
       GRAD_STACK1->read_grad_stack_buffer(lpos);
       // now reposition the grad_buffer pointer
@@ -163,10 +172,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 
     gradient_structure::GRAD_STACK1->ptr--;
 
-    for (unsigned int i=0; i< GRAD_LIST->nlinks; i++)
-    {
-      * (double*) (GRAD_LIST->dlink_addresses[i]) = 0;
-    }
+    GRAD_LIST->initialize();
 
     double_and_int* tmp =
       (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
@@ -210,9 +216,9 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
       #endif
 
   // back up the file one buffer size and read forward
-      off_t offset = (off_t)(sizeof(grad_stack_entry)
+      OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
         * gradient_structure::GRAD_STACK1->length);
-      lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+      lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         -offset, SEEK_CUR);
 
        break_flag=gradient_structure::

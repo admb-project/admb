@@ -1,7 +1,6 @@
 #ADMB Project  
-
-*ADMB-11.2*  
-*Released December 23, 2014*  
+*ADMB-11.5*  
+*Released December 11, 2015*  
 
 Describe changes and features for each release.
 
@@ -17,18 +16,68 @@ The goals for all releases are
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-trunk
-----------
+ADMB-X
+---------
 
-####Todo Priorities
+####New Supported Compilers
+* GNU C++ 6.1 and 5.3
+* Rtools 3.4
 
-- [ ] Add Threading Support (High)
-- [ ] Write Design Documentation (High)
-- [ ] Write Developer Documentation (High)
-- [ ] Atan2
+####Changes and Improvements
+* Added floating point checking into tpl2cpp and tpl2rem.
+
+  To check for floating point errors, build executable with -g option.
+
+  $ admb -g "model.tpl"
+
+  Run executable with debugger (such as gdb) to locate file and line number
+  where error occured.
+
+  $ gdb ./model
+
+* Configured and automated builds for ADMB-IDE.
+* Merged Anders Nielsen bug fixes and new features such as vectorize.
+* Able to use Rtools\bin\make to build admb from source.
+* Replaced rgamma function.
+* Fixed numerous bugs and added various improvements.
+
+####Developers changes
+* Added tool for checking for testing code coverage.
+
+ADMB-11.5
+---------
+
+####New Supported Compilers
+* Microsoft Visual C++ 14.0
+* Intel C++ 2016
+* GNU C++ 5.1
+
+####Changes and Improvements
+* Change to Dave Fournier's version of cspline.cpp.
+* Added Dave Fournier's memory leak patches.
+* Fixed memory leaks reported by Valgrind and XCode.
+* Added more api documentation.
+* mfexp will call ad_exit if computed result is not in range.
+* Added more unit tests for better code coverage.
+* Fixed MacOS ADMBTerminal from opening two terminals.
+* Other bug fixes and improvements
+
+ADMB-11.4
+---------
+
+####Changes and Improvements
+* Fixed unix shared builds. 
+* Other bug fixes and improvements
+
+ADMB-11.3
+---------
+
+####Changes and Improvements
+* Steve Martell's changes to gamma function.
+* Other bug fixes and improvements
 
 ADMB-11.2
-----------
+---------
 
 ####Changes and Improvements
 * Default safe libs include overflows checks.

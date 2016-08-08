@@ -97,3 +97,54 @@ TEST_F(test_adstring_array, operator_plus_equal)
   EXPECT_STREQ((char*)a3, (char*)a(3));
   EXPECT_STREQ((char*)a2, (char*)a(4));
 }
+#include <cifstrem.h>
+TEST_F(test_adstring_array, ifstream)
+{
+  adstring a1 = "one";
+  adstring a2 = "two";
+  adstring a3 = "three";
+
+  adstring_array a;
+  a += a1;
+  a += a2;
+  a += a3;
+
+  ofstream ofs("test_adstring_array.txt");
+  ofs << a;
+  ofs.close();
+
+  adstring_array ret(1, 4);
+  ifstream ifs("test_adstring_array.txt");
+  ifs >> ret;
+  ifs.close();
+
+  EXPECT_STREQ((char*)a1, (char*)ret(1));
+  EXPECT_STREQ((char*)a2, (char*)ret(2));
+  EXPECT_STREQ((char*)a3, (char*)ret(3));
+
+  adstring_array ret2(1, 4);
+  cifstream cifs("test_adstring_array.txt");
+  cifs >> ret2;
+  cifs.close();
+
+  EXPECT_STREQ((char*)a1, (char*)ret2(1));
+  EXPECT_STREQ((char*)a2, (char*)ret2(2));
+  EXPECT_STREQ((char*)a3, (char*)ret2(3));
+}
+TEST_F(test_adstring_array, allocate_min_greaterthan_max)
+{
+  adstring_array a;
+  ASSERT_EXIT({
+    a.allocate(4, 1);
+  }, ::testing::ExitedWithCode(1), " Error");
+}
+TEST_F(test_adstring_array, null_index1)
+{
+  adstring_array a;
+  ASSERT_ANY_THROW({
+    a(1);
+  });
+  ASSERT_ANY_THROW({
+    a[1];
+  });
+}

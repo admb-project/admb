@@ -1,33 +1,26 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
+Return computed column(col) sum for dmatrix m.
+*/
 double colsum(const dmatrix& m, int col)
 {
-  if (col<m.rowmin() || col>m.rowmax())
+  int mmin = m.rowmin();
+  int mmax = m.rowmax();
+  if (col < mmin || col > mmax)
   {
     cerr << "Row out of bounds in function"
             " colsum(const imatrix& m,int col)" << endl;
     ad_exit(1);
   }
-  double isum=0;
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  for (int i=mmin;i<=mmax;i++)
+  double sum = 0;
+  for (int i = mmin; i <= mmax; ++i)
   {
-    isum+=m(i,col);
+    sum += m(i, col);
   }
-  return isum;
+  return sum;
 }

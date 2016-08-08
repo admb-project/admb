@@ -236,7 +236,9 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     if (lapprox)
     {
       delete lapprox;
-      lapprox=0;
+      lapprox = NULL;
+
+      deallocate();
       df1b2variable::pool->deallocate();
 
       for (int i=1;i<df1b2variable::adpool_counter;i++)
@@ -249,7 +251,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     }
     lapprox=new laplace_approximation_calculator(nvar,_unvar,1,nvar+_unvar,
       this);
-    if (lapprox==0)
+    if (lapprox == NULL)
     {
       cerr << "Error allocating memory for lapprox" << endl;
       ad_exit(1);
@@ -314,11 +316,13 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     // linear mixed effects optimization
     if (laplace_approximation_calculator::variance_components_vector)
     {
+#ifdef DIAG
       if (!lapprox)
       {
         cerr << "this can't happen" << endl;
         ad_exit(1);
       }
+#endif
       lapprox->get_hessian_components_banded_lme(this);
     }
 

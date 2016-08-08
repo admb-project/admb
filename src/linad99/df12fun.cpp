@@ -17,6 +17,16 @@ prevariable* df1_two_variable::ind_var[2];
 int df1_two_variable::num_ind_var=0;
 
 /**
+Default constructor
+*/
+df1_two_variable::df1_two_variable()
+{
+  v[0] = 0;
+  v[1] = 0;
+  v[2] = 0;
+}
+
+/**
 Copy constructor
 */
 df1_two_variable::df1_two_variable(const df1_two_variable& x)
@@ -268,13 +278,14 @@ df1_two_vector::~df1_two_vector()
  * Description not yet available.
  * \param
  */
-  df1_two_variable& df1_two_variable::operator -= (const df1_two_variable& v)
-  {
-    *get_u() -= *v.get_u();
-    *get_u_x() -= *v.get_u_x();
-    *get_u_y() -= *v.get_u_y();
-    return *this;
-  }
+df1_two_variable& df1_two_variable::operator-=(const df1_two_variable& _v)
+{
+  *get_u() -= *_v.get_u();
+  *get_u_x() -= *_v.get_u_x();
+  *get_u_y() -= *_v.get_u_y();
+
+  return *this;
+}
 
 /**
  * Description not yet available.
@@ -314,28 +325,30 @@ df1_two_variable operator-(const df1_two_variable& v)
  * Description not yet available.
  * \param
  */
-  df1_two_variable& df1_two_variable::operator += (const df1_two_variable& v)
-  {
-    *get_u() += *v.get_u();
-    *get_u_x() += *v.get_u_x();
-    *get_u_y() += *v.get_u_y();
-    return *this;
-  }
+df1_two_variable& df1_two_variable::operator += (const df1_two_variable& _v)
+{
+  *get_u() += *_v.get_u();
+  *get_u_x() += *_v.get_u_x();
+  *get_u_y() += *_v.get_u_y();
+  return *this;
+}
 
-  df1_two_variable& df1_two_variable::operator *= (double v)
-  {
-   /*
-    df1_three_variable x=*this * v;
-    *this=x;
-    return *this;
-   */
-    *get_u()*=v;
-    *get_u_x() = *get_u_x()*v;
-    *get_u_y() = *get_u_y()*v;
-    return *this;
-  }
+/**
+Mulitiply value v with values in df1_two_variable.
+*/
+df1_two_variable& df1_two_variable::operator*=(double _v)
+{
+/*
+  df1_three_variable x=*this * v;
+  *this=x;
+  return *this;
+*/
+  *get_u() *= _v;
+  *get_u_x() *= _v;
+  *get_u_y() *= _v;
 
-
+  return *this;
+}
 /**
  * Description not yet available.
  * \param
@@ -351,23 +364,23 @@ df1_two_variable operator-(const df1_two_variable& v)
  * Description not yet available.
  * \param
  */
-  df1_two_variable& df1_two_variable::operator += (double v)
-  {
-    *get_u() += v;
+df1_two_variable& df1_two_variable::operator+=(double _v)
+{
+  *get_u() += _v;
 
-    return *this;
-  }
+  return *this;
+}
 
 /**
  * Description not yet available.
  * \param
  */
-  df1_two_variable& df1_two_variable::operator -= (double v)
-  {
-    *get_u() -= v;
+df1_two_variable& df1_two_variable::operator-=(double _v)
+{
+  *get_u() -= _v;
 
-    return *this;
-  }
+  return *this;
+}
 
 /**
  * Description not yet available.
@@ -792,13 +805,6 @@ init_df1_two_variable::init_df1_two_variable(const prevariable& _v)
     *get_u_y() = 0.0;
   }
 
-/**
- * Description not yet available.
- * \param
- */
-  df1_two_variable::df1_two_variable(void)
-  {
-  }
 
 /**
  * Description not yet available.

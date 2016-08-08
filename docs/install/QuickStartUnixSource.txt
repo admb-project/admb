@@ -1,7 +1,6 @@
 #ADMB Project
-
-*ADMB-11.2*  
-*Released December 23, 2014*  
+*ADMB-11.5*  
+*Released December 11, 2015*  
 
 ADMB source build and usage procedures for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 
@@ -35,17 +34,17 @@ Quick Start
 
 2. **Download** ADMB source distribution
 
-       Download ADMB source distribution [admb-11.2-src.zip](http://ftp.admb-project.org/admb-11.2/admb-11.2-src.zip).
+       Download ADMB source distribution [admb-11.5-src.zip](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-src.zip).
 
        Use the command below to extract contents of zip file to _~/admb/_. 
 
-           [~]$ unzip admb-11.2-src.zip
+           [~]$ unzip admb-11.5-src.zip
 
-       _**Alternative**_ &mdash; Use Subversion client to download from version control.
+       _**Alternative**_ &mdash; Use Git client (see command below) to download directly from ADMB version control repository.
 
-           [~]$ svn checkout http://www.admb-project.org/svn/tags/admb-11.2 admb
+           [~]$ git clone https://github.com/admb-project/admb.git
 
-       This will download source directory to _~/admb/_.
+       This will download latest source repository to _~/admb/_.
 
 3. **Build** ADMB source
 
@@ -83,7 +82,7 @@ Quick Start
 
            [~/admb/examples/admb/simple/]$ ./simple
 
-       Read [manuals](http://ftp.admb-project.org/admb-11.2/manuals/) for more information.
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.5/) for more information.
 
 5. _**Optional**_ &mdash; Multi-User Installation    
 
@@ -113,5 +112,3 @@ Quick Start
 
 --------------------------------------------------------------------------------
 For help and support, contact <users@admb-project.org>.
-
-$Id$

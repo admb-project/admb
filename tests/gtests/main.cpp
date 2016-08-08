@@ -1,4 +1,7 @@
 #include <gtest/gtest.h>
+#ifdef __MINGW32__
+#include <windows.h>
+#endif
 
 extern "C"
 {
@@ -10,6 +13,9 @@ extern "C"
 
 int main(int argc, char** argv)
 {
+#ifdef __MINGW32__
+  SetErrorMode(SEM_NOGPFAULTERRORBOX);
+#endif
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

@@ -15,31 +15,26 @@
   #include <iostream.h>
 #endif
 #include <stdlib.h>
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 int num_free_obj=0;
-extern char demo_capacity[];
-extern char please_buy[];
-extern char otter_address1[];
-extern char otter_address2[];
-extern char otter_address3[];
-extern char otter_address4[];
-extern char otter_address5[];
 int ad_kill_flag=0;
 
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 arr_link::arr_link()
 {
-  prev=NULL;
-  next=NULL;
-  free_prev=NULL;
-  free_next=NULL;
-  status=0;
+  prev = NULL;
+  next = NULL;
+  free_prev = NULL;
+  free_next = NULL;
+  status = 0;
   // free_list_status=0;
-  size=0;
-  offset=0;
+  size = 0;
+  offset = 0;
 }
 
 /**
@@ -102,12 +97,15 @@ double_and_int * arr_new(unsigned int sz)
   arr_link * tmp = gradient_structure::ARR_LIST1->free_last;
 
   unsigned int bytes_needed = sz * (unsigned int)sizeof(double_and_int);
+
+#ifdef DIAG
   int ss=0;
   if (ss)
   {
-    double_and_int * tt=0;
+    double_and_int* tt=0;
     return tt;
   }
+#endif
 
   while (tmp)
   {
@@ -539,22 +537,15 @@ void df_check_derivative_values_indexed_break(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void arr_remove(arr_link ** pptr)
+Remove and delete arr_link node pptr from gradient_structure::ARR_LIST1.
+*/
+void arr_remove(arr_link** pptr)
 {
-  arr_link * tmp = *pptr;
-  // This routine removes the link pointed to by tmp
-  if (tmp->next)  // Make the one after it point to tmp->prev
-  {
-    tmp->next->prev = tmp->prev;
-  }
+#ifndef OPT_LIB
+  assert(pptr != NULL);
+#endif
 
-  if (tmp->prev)  // Make the one before it point to tmp->next
-  {
-    tmp->prev->next = tmp->next;
-  }
+  arr_link* tmp = *pptr;
 
   if (tmp == NULL)
   {
@@ -563,15 +554,28 @@ void arr_remove(arr_link ** pptr)
   }
   else
   {
+    // This routine removes the link pointed to by tmp
+    if (tmp->next)  // Make the one after it point to tmp->prev
+    {
+      tmp->next->prev = tmp->prev;
+    }
+    if (tmp->prev)  // Make the one before it point to tmp->next
+    {
+      tmp->prev->next = tmp->next;
+    }
+
 #ifdef DIAG
-#ifdef __ZTC__
-      cout <<"Deleting an arr_link with adress  "<<_farptr_tolong(tmp)<<"\n";
-#else
-      cout <<"Deleting an arr_link with adress  "<<farptr_tolong(tmp)<<"\n";
+    cout << "Deleting an arr_link with adress  "
+  #ifdef __ZTC__
+         << _farptr_tolong(tmp)
+  #else
+         << farptr_tolong(tmp)
+  #endif
+         << "\n";
 #endif
-#endif
+
     delete tmp;
-    tmp=NULL;
+    tmp = NULL;
   }
   gradient_structure::ARR_LIST1->number_arr_links -= 1;
   //cout <<  "after delete number_arr_links = "

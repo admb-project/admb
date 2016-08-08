@@ -90,13 +90,18 @@ stddev_params* stddev_params::stddevptr[150];
     return stddev_params::num_stddev_number_params;
   }
 
-  param_stddev_number::param_stddev_number() : named_dvariable() ,
-    stddev_params()
-  {
-    add_to_list();
-    add_to_gui_list();
-    setindex(0);
-  }
+/**
+Default constructor
+*/
+param_stddev_number::param_stddev_number():
+  named_dvariable(),
+  stddev_params(),
+  sd(0)
+{
+  add_to_list();
+  add_to_gui_list();
+  setindex(0);
+}
 
   int param_stddev_number::size_count(void)
   {

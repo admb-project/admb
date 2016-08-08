@@ -1,19 +1,13 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+\file
+Author: David Fournier
+Copyright (c) 2008-2015 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 d4_array::d4_array()
 {
   allocate();
@@ -25,6 +19,6 @@ d4_array::d4_array()
  */
 void d4_array::allocate(void)
 {
-  shape=NULL;
+  shape = NULL;
   t = NULL;
 }

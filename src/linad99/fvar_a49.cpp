@@ -52,14 +52,16 @@ dvariable std_dev(const dvar_vector& v)
   }
 
 /**
- * Description not yet available.
- * \param
- */
+Compute mean of v.
+*/
 dvariable mean(const dvar_vector& v)
+{
+  dvariable tmp = 0.0;
+  if (allocated(v))
   {
-    dvariable tmp;
     RETURN_ARRAYS_INCREMENT();
-    tmp=sum(v)/double(v.size());
+    tmp = sum(v) / double(v.size());
     RETURN_ARRAYS_DECREMENT();
-    return(tmp);
   }
+  return tmp;
+}

@@ -1,10 +1,12 @@
-PROG_NAME=newt
+all:
+	$(MAKE) clean
+	../../../admb newt.cpp
+	$(MAKE) run
 
-run: $(PROG_NAME)
-	@./newt
-
-$(PROG_NAME):
-	@printf "Compiling executable ...";$(ADMB_HOME)/bin/mygcco $@
+run:
+	./newt
 
 clean:
-	@rm -vf $(PROG_NAME)
+	rm -vf fmin.log
+	rm -vf newt
+	rm -vf newt.obj

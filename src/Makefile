@@ -161,7 +161,11 @@ includes: objdestdir
 	copy df1b2-separable\df1b2fnl.h $(DESTDIR)\include
 	copy df1b2-separable\df3fun.h $(DESTDIR)\include
 	copy df1b2-separable\df32fun.h $(DESTDIR)\include
+	copy df1b2-separable\df33fun.h $(DESTDIR)\include
 	copy df1b2-separable\df1b2loc.h $(DESTDIR)\include
+	copy linad99\df11fun.h $(DESTDIR)\include
+	copy linad99\df12fun.h $(DESTDIR)\include
+	copy linad99\df13fun.h $(DESTDIR)\include
 	copy linad99\fvar.hpp $(DESTDIR)\include
 	copy linad99\gradient_structure.h $(DESTDIR)\include
 	copy linad99\dvector.h $(DESTDIR)\include
@@ -176,6 +180,7 @@ includes: objdestdir
 	copy tools99\cifstrem.h $(DESTDIR)\include
 	copy tools99\adstring.hpp $(DESTDIR)\include
 	copy tools99\admb_messages.h $(DESTDIR)\include
+	copy tools99\Vectorize.hpp $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
 	copy nh99\nocontrib.h $(DESTDIR)\include\contrib\contrib.h
 

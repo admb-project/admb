@@ -26,8 +26,13 @@
   *  10. nll for lognormal LN(m,sigma0 and its tau version LN(m,tau), see nllLognormal(), nllLognormal2()  \n 
   *  =============================================================\n
   *
-  *  found any bug , contact Weihai Liu at liuweih@msu.edu \n
-  *  Quantitative Fisheries Center(QFC), Michigan State University
+  *  Update: Oct 8, 2015 (N.Dobiesz) \n
+  *  Error found in Inverse Gamma NLL functions \n
+  *     function was: nll= - a*log(b)+gammln(a)-(a-1.)*log(x+EPS) + b/(x+EPS); \n
+  *     changed to: nll=   - a*log(b)+gammln(a)+(a+1.)*log(x+EPS) + b/(x+EPS); \n
+  *
+  *  If you encounter an error, contact the Quantitative Fisheries Center(QFC) at \n
+  *  Michigan State University at qfc@msu.edu \n
   */
 
 
@@ -2259,7 +2264,7 @@
   ///////////////////////////////////////////////////////////////////////////////////////////
 
   /** nll for inverse gamma for one sample
-   * \f$ -a \ln(b) + \ln(\Gamma(a)) - (a-1)\ln(x)+ b/x   \f$
+   * \f$ -a \ln(b) + \ln(\Gamma(a)) + (a+1)\ln(x)+ b/x   \f$
    * \ingroup QFC
    * \param x :  data   
    * \param a : alpha parameter,>0
@@ -2269,14 +2274,14 @@
   double nllInverseGamma(const double x, const double a, const double b)
   {
     double nll=0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     return nll;
   }
   dvariable nllInverseGamma(const dvariable & x, const double a, const double b)
   {
     RETURN_ARRAYS_INCREMENT();
     dvariable nll=0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     RETURN_ARRAYS_DECREMENT();
     return nll;
   }
@@ -2284,7 +2289,7 @@
   {
     RETURN_ARRAYS_INCREMENT();
     dvariable nll=0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     RETURN_ARRAYS_DECREMENT();
     return nll;
   }
@@ -2292,13 +2297,13 @@
   {
     RETURN_ARRAYS_INCREMENT();
     dvariable nll=0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     RETURN_ARRAYS_DECREMENT();
     return nll;
   }
 
   /** nll for inverse gamma for one sample for random effect
-   * \f$ -a \ln(b) + \ln(\Gamma(a)) - (a-1)\ln(x)+ b/x   \f$
+   * \f$ -a \ln(b) + \ln(\Gamma(a)) + (a+1)\ln(x)+ b/x   \f$
    * \ingroup QFC
    * \param x :  data   
    * \param a : alpha parameter,>0
@@ -2308,31 +2313,31 @@
   df1b2variable nllInverseGamma(const df1b2variable & x, const double a, const double b)
   {
     df1b2variable nll=.0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     return nll;
   }
   df1b2variable nllInverseGamma(const double x, const df1b2variable & a, const df1b2variable & b)
   {
     df1b2variable nll=.0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     return nll;
   }
   df1b2variable nllInverseGamma(const df1b2variable & x, const df1b2variable & a, const double b)
   {
     df1b2variable nll=.0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     return nll;
   }
   df1b2variable nllInverseGamma(const df1b2variable & x, const double a, const df1b2variable & b)
   {
     df1b2variable nll=.0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     return nll;
   }
   df1b2variable nllInverseGamma(const df1b2variable & x, const df1b2variable & a, const df1b2variable & b)
   {
     df1b2variable nll=.0;  
-    nll= - a*log(b)+gammln(a)  -(a-1.)*log(x+EPS) + b/(x+EPS);
+    nll= - a*log(b)+gammln(a)  +(a+1.)*log(x+EPS) + b/(x+EPS);
     return nll;
   }
 
@@ -2340,7 +2345,7 @@
 
 
   /** nll for inverse gamma for many samples
-   * \f$ -na \ln(b) + n\ln(\Gamma(a)) - (a-1)\sum(\ln(x))+ b/\sum(x)   \f$
+   * \f$ -na \ln(b) + n\ln(\Gamma(a)) + (a+1)\sum(\ln(x))+ b/\sum(x)   \f$
    * \ingroup QFC
    * \param x :  data   
    * \param a : alpha parameter,>0
@@ -2352,7 +2357,7 @@
     RETURN_ARRAYS_INCREMENT();
     dvariable nll=0;  
     double n=double(x.size());
-    nll= - n*a*log(b)+ n*gammln(a)  -(a-1.)*sum(log(x+EPS)) + b/sum(x+EPS);
+    nll= - n*a*log(b)+ n*gammln(a)  +(a+1.)*sum(log(x+EPS)) + b/sum(x+EPS);
     RETURN_ARRAYS_DECREMENT();
     return nll;
   }
@@ -2361,7 +2366,7 @@
     RETURN_ARRAYS_INCREMENT();
     dvariable nll=0;  
     double n=double(x.size());
-    nll= - n*a*log(b)+ n*gammln(a)  -(a-1.)*sum(log(x+EPS)) + b/sum(x+EPS);
+    nll= - n*a*log(b)+ n*gammln(a)  +(a+1.)*sum(log(x+EPS)) + b/sum(x+EPS);
     RETURN_ARRAYS_DECREMENT();
     return nll;
   }
@@ -2370,13 +2375,13 @@
     RETURN_ARRAYS_INCREMENT();
     dvariable nll=0;  
     double n=double(x.size());
-    nll= - n*a*log(b)+ n*gammln(a)  -(a-1.)*sum(log(x+EPS)) + b/sum(x+EPS);
+    nll= - n*a*log(b)+ n*gammln(a)  +(a+1.)*sum(log(x+EPS)) + b/sum(x+EPS);
     RETURN_ARRAYS_DECREMENT();
     return nll;
   }
 
   /** nll for inverse gamma for many samples for random effect
-   * \f$ -na \ln(b) + n\ln(\Gamma(a)) - (a-1)\sum(\ln(x))+ b/\sum(x)   \f$
+   * \f$ -na \ln(b) + n\ln(\Gamma(a)) + (a+1)\sum(\ln(x))+ b/\sum(x)   \f$
    * \ingroup QFC
    * \param x :  data   
    * \param a : alpha parameter,>0
@@ -2387,20 +2392,20 @@
   {
     df1b2variable nll=.0;  
     double n=double(size_count(x)); 
-    nll= - n*a*log(b)+ n*gammln(a)  -(a-1.)*sum(log(x+EPS)) + b/sum(x+EPS);
+    nll= - n*a*log(b)+ n*gammln(a)  +(a+1.)*sum(log(x+EPS)) + b/sum(x+EPS);
     return nll;
   }
   df1b2variable nllInverseGamma(const df1b2vector & x, const double a, const double b)
   {
     df1b2variable nll=.0;  
     double n=double(size_count(x)); 
-    nll= - n*a*log(b)+ n*gammln(a)  -(a-1.)*sum(log(x+EPS)) + b/sum(x+EPS);
+    nll= - n*a*log(b)+ n*gammln(a)  +(a+1.)*sum(log(x+EPS)) + b/sum(x+EPS);
     return nll;
   }
   df1b2variable nllInverseGamma(const df1b2vector & x, const df1b2variable & a, const df1b2variable & b)
   {
     df1b2variable nll=.0;  
     double n=double(size_count(x)); 
-    nll= - n*a*log(b)+ n*gammln(a)  -(a-1.)*sum(log(x+EPS)) + b/sum(x+EPS);
+    nll= - n*a*log(b)+ n*gammln(a)  +(a+1.)*sum(log(x+EPS)) + b/sum(x+EPS);
     return nll;
   }

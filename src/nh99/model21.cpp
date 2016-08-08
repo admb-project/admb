@@ -40,19 +40,18 @@ int param_init_d3array::size_count(void)
   return ::size_count(*this);
 }
 
-void param_init_d3array::save_value(void)
+void param_init_d3array::save_value(ofstream& ofs)
 {
   if (!(!(*this)))
-    *(ad_comm::global_savefile) << label_class(this->label())
-      << dvar3_array(*this) << endl;
+    ofs << label_class(this->label()) << dvar3_array(*this) << endl;
 }
 
-void param_init_d3array::bsave_value(void)
+void param_init_d3array::bsave_value(uostream& uos)
 {
   if (!(!(*this)))
   {
-    dvar3_array& tmp=*this;
-    *(ad_comm::global_bsavefile) << tmp;
+    dvar3_array& tmp = *this;
+    uos << tmp;
   }
 }
 
@@ -84,82 +83,100 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
     ofs << setw(prec+6) << setprecision(prec) << dvar3_array(*this) << endl;
   }
 
-  void param_init_d3array::allocate(int smin,int smax,int rmin,int rmax,
-    int cmin,int cmax,const char * s)
+/**
+Allocates param_init_d3array with row dimensions smin to smax,
+column dimensions rmin to rmax and height dimensions cmin to cmax
+using default phase_start = 1.
+*/
+void param_init_d3array::allocate(int smin, int smax, int rmin, int rmax,
+  int cmin, int cmax, const char* s)
+{
+  allocate(smin, smax, rmin, rmax, cmin, cmax, 1, s);
+}
+/**
+Allocates param_init_d3array with row dimensions sl to sh,
+column dimensions nrl to nrh and height dimensions ncl to nch
+using default phase_start = 1.
+*/
+void param_init_d3array::allocate(const ad_integer& sl,
+  const ad_integer& sh,const index_type& nrl,const index_type& nrh,
+  const index_type& ncl,const index_type& nch,const char * s)
+{
+  allocate(sl, sh, nrl, nrh, ncl, nch, 1, s);
+}
+/**
+Allocates param_init_d3array with row dimensions sl to sh,
+column dimensions nrl to nrh and height dimensions ncl to nch
+using specified phase_start.
+*/
+void param_init_d3array::allocate(
+  const ad_integer& sl, const ad_integer& sh,
+  const index_type& nrl, const index_type& nrh,
+  const index_type& ncl, const index_type& nch,
+  int _phase_start, const char * s)
+{
+  named_dvar3_array::allocate(sl,sh,nrl,nrh,ncl,nch,s);
+  initial_params::allocate(_phase_start);
+  if (!(!(*this)))
   {
-    allocate(smin,smax,rmin,rmax,cmin,cmax,1,s);
-  }
-
-  void param_init_d3array::allocate(const ad_integer& sl,
-    const ad_integer& sh,const index_type& nrl,const index_type& nrh,
-    const index_type& ncl,const index_type& nch,const char * s)
-  {
-    allocate(sl,sh,nrl,nrh,ncl,nch,1,s);
-  }
-
-  void param_init_d3array::allocate(const ad_integer& sl,
-    const ad_integer& sh,const index_type& nrl,const index_type& nrh,
-    const index_type& ncl,const index_type& nch,int phase_start,
-    const char * s)
-  {
-    named_dvar3_array::allocate(sl,sh,nrl,nrh,ncl,nch,s);
-    initial_params::allocate(phase_start);
-    if (!(!(*this)))
+    for (int i=indexmin();i<=indexmax();i++)
     {
-      for (int i=indexmin();i<=indexmax();i++)
+      if (allocated((*this)(i)))
       {
-        if (allocated((*this)(i)))
+        for (int j=(*this)(i).indexmin();j<=(*this)(i).indexmax();j++)
         {
-          for (int j=(*this)(i).indexmin();j<=(*this)(i).indexmax();j++)
+          if (allocated((*this)(i,j)))
           {
-            if (allocated((*this)(i,j)))
+            if (ad_comm::global_bparfile)
             {
-              if (ad_comm::global_bparfile)
-              {
-                *(ad_comm::global_bparfile) >> (*this)(i,j);
-              }
-              else if (ad_comm::global_parfile)
-              {
-                *(ad_comm::global_parfile) >> (*this)(i,j);
-              }
-              else
-              {
-                (*this)(i,j)=(initial_value);
-              }
+              *(ad_comm::global_bparfile) >> (*this)(i,j);
+            }
+            else if (ad_comm::global_parfile)
+            {
+              *(ad_comm::global_parfile) >> (*this)(i,j);
+            }
+            else
+            {
+              (*this)(i,j)=(initial_value);
             }
           }
         }
       }
     }
   }
-
-  void param_init_d3array::allocate(int smin,int smax,int rmin,int rmax,
-    int cmin,int cmax,int phase_start, const char * s)
+}
+/**
+Allocates param_init_d3array with row dimensions smin to smax,
+column dimensions rmin to rmax and height dimensions cmin to cmax
+using default phase_start = 1.
+*/
+void param_init_d3array::allocate( int smin, int smax, int rmin, int rmax,
+  int cmin, int cmax, int _phase_start, const char* s)
+{
+  named_dvar3_array::allocate(smin,smax,rmin,rmax,cmin,cmax,s);
+  initial_params::allocate(_phase_start);
+  if (!(!(*this)))
   {
-    named_dvar3_array::allocate(smin,smax,rmin,rmax,cmin,cmax,s);
-    initial_params::allocate(phase_start);
-    if (!(!(*this)))
+    for (int i=indexmin();i<=indexmax();i++)
     {
-      for (int i=indexmin();i<=indexmax();i++)
+      if (allocated((*this)(i)))
       {
-        if (allocated((*this)(i)))
+        if (ad_comm::global_bparfile)
         {
-          if (ad_comm::global_bparfile)
-          {
-            *(ad_comm::global_bparfile) >> (*this)(i);
-          }
-          else if (ad_comm::global_parfile)
-          {
-            *(ad_comm::global_parfile) >> (*this)(i);
-          }
-          else
-          {
-            (*this)(i)=(initial_value);
-          }
+          *(ad_comm::global_bparfile) >> (*this)(i);
+        }
+        else if (ad_comm::global_parfile)
+        {
+          *(ad_comm::global_parfile) >> (*this)(i);
+        }
+        else
+        {
+          (*this)(i) = (initial_value);
         }
       }
     }
   }
+}
 
 void param_init_d3array::curv_scale(const dvector& _v, const dvector& x,
   const int& _ii)

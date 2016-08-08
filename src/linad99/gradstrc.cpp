@@ -62,7 +62,6 @@ extern "C"{
   }
 }
 
-//char * MY_BUF=NULL;
 // *************************************************************
 // *************************************************************
 int ctlc_flag = 0;
@@ -131,11 +130,10 @@ unsigned int gradient_structure::MAX_DLINKS = 5000;
 
 //unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
-humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASEA;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
-double * gradient_structure::variables_save=NULL;
-void * farptr_norm(void *);
+#ifdef DIAG
 long int farptr_tolong(void *) ;
+#endif
 void memory_allocate_error(const char * s, void * ptr);
 
 /**
@@ -285,114 +283,111 @@ void allocate_dvariable_space()
 }
 
 /**
- * Description not yet available.
- * \param
- */
- gradient_structure::gradient_structure(long int _size)
- {
+Constructor
+*/
+gradient_structure::gradient_structure(long int _size):
+  x(0)
+{
 #ifndef OPT_LIB
   assert(_size > 0);
 #endif
-   gradient_structure::NVAR=0;
-   atexit(cleanup_temporary_files);
-   fill_ad_random_part();
+  gradient_structure::NVAR=0;
+  atexit(cleanup_temporary_files);
+  fill_ad_random_part();
 
-   const unsigned long int size = (unsigned long int)_size;
+  const unsigned long int size = (unsigned long int)_size;
 
-   if (instances++ > 0)
-   {
-     cerr << "More than one gradient_structure object has been declared.\n"
-          << "  Only one gradient_structure object can exist. Check the scope\n"
-          << "  of the objects declared.\n";
-     ad_exit(1);
-   }
-   gradient_structure::ARRAY_MEMBLOCK_SIZE=size; //js
+  if (instances++ > 0)
+  {
+    cerr << "More than one gradient_structure object has been declared.\n"
+         << "  Only one gradient_structure object can exist. Check the scope\n"
+         << "  of the objects declared.\n";
+    ad_exit(1);
+  }
+  gradient_structure::ARRAY_MEMBLOCK_SIZE=size; //js
 
-   char * path = getenv("ADTMP1"); // NULL if not defined
-   if (path != NULL)
-   {
-     #ifdef __SUN__
-     sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
-          ad_random_part);
-     #else
-        if (lastchar(path)!='\\')
-        {
-          sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
+  char* path = getenv("ADTMP1"); // NULL if not defined
+  if (path != NULL && strlen(path) <= 45)
+  {
+#ifdef __SUN__
+    sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
             ad_random_part);
+#else
+    if (lastchar(path)!='\\')
+    {
+      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
+              ad_random_part);
+    }
+    else
+    {
+      sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
+              ad_random_part);
+    }
+#endif
+  }
+  else
+  {
+    sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
+  }
+  if (DEPVARS_INFO!= NULL)
+  {
+    cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
+            "_structure" << endl;
+  }
+  else
+  {
+    int on,nopt = 0;
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
+    {
+      if (!nopt)
+      {
+        cerr << "Usage -ndv option needs integer  -- ignored" << endl;
+      }
+      else
+      {
+        int jj=atoi(ad_comm::argv[on+1]);
+        if (jj<=0)
+        {
+          cerr << "Usage -ndv option needs positive integer -- ignored"
+               << endl;
         }
         else
         {
-          sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
-            ad_random_part);
+          NUM_DEPENDENT_VARIABLES=jj;
         }
-     #endif
-   }
-   else
-   {
-      sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
-   }
+      }
+    }
+    DEPVARS_INFO=new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
+    memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
+  }
 
-   if (DEPVARS_INFO!= NULL)
-   {
-      cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
-              "_structure" << endl;
-   }
-   else
-   {
-     int on,nopt = 0;
-     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
-     {
-       if (!nopt)
-       {
-         cerr << "Usage -ndv option needs integer  -- ignored" << endl;
-       }
-       else
-       {
-         int jj=atoi(ad_comm::argv[on+1]);
-         if (jj<=0)
-         {
-           cerr << "Usage -ndv option needs positive integer"
-              "  -- ignored" << endl;
-         }
-         else
-         {
-           NUM_DEPENDENT_VARIABLES=jj;
-         }
-       }
-     }
-     DEPVARS_INFO=new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
-     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
-   }
+  if (fp!= NULL)
+  {
+    cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
+            "_structure" << endl;
+  }
+  else
+  {
+    fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+    memory_allocate_error("fp", (void *) fp);
+  }
 
-   if (fp!= NULL)
-   {
-      cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
-              "_structure" << endl;
-   }
-   else
-   {
-     fp=new DF_FILE(CMPDIF_BUFFER_SIZE);
-     memory_allocate_error("fp", (void *) fp);
-   }
-
-   void * temp_ptr;
   // double_and_int * tmp;
-   #ifdef DIAG
-     cerr <<" In gradient_structure::gradient_structure()\n";
-     cerr <<"  ARRAY_MEMBLOCK_SIZE = " << ARRAY_MEMBLOCK_SIZE << "\n";
-   #endif
+#ifdef DIAG
+  cerr <<" In gradient_structure::gradient_structure()\n";
+  cerr <<"  ARRAY_MEMBLOCK_SIZE = " << ARRAY_MEMBLOCK_SIZE << "\n";
+#endif
 
-   if ( GRAD_LIST!= NULL)
+   if (GRAD_LIST!= NULL)
    {
-    cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
+     cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
    }
    else
    {
-      GRAD_LIST = new dlist;
-      memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
+     GRAD_LIST = new dlist;
+     memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
    }
-
-   if ( ARR_LIST1!= NULL)
+   if (ARR_LIST1!= NULL)
    {
      cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
    }
@@ -402,7 +397,7 @@ void allocate_dvariable_space()
       memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
    }
 
- /*
+/*
    if ( ARR_FREE_LIST1!= NULL)
    {
 cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
@@ -412,8 +407,9 @@ cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
       ARR_FREE_LIST1 = new arr_list;
       memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
    }
- */
+*/
 
+   void* temp_ptr = NULL;
 #ifdef __ZTC__
    if ((temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE)) == 0)
 #else
@@ -438,7 +434,7 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
 
    if (GRAD_STACK1 != NULL)
    {
-      cerr << "Trying to allocate to a non NULL pointer\n";
+     cerr << "Trying to allocate to a non NULL pointer\n";
    }
    else
    {
@@ -446,11 +442,11 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
      memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
      gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
    }
-    #ifdef DIAG
-        cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
-    #endif
+#ifdef DIAG
+   cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
+#endif
 
-   if ( INDVAR_LIST!= NULL)
+   if (INDVAR_LIST!= NULL)
    {
       cerr <<
         "Trying to allocate to a non NULL pointer in gradient structure \n";
@@ -489,37 +485,37 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
 
    //allocate_dvariable_space();
 
-   if ( RETURN_ARRAYS!= NULL)
-   {
+  if ( RETURN_ARRAYS!= NULL)
+  {
 cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
-      ad_exit(1);
-   }
-   else
-   {
-      RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
-      memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
+    ad_exit(1);
+  }
+  else
+  {
+    RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
+    memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
 
-      //allocate_dvariable_space();
-      for (int i=0; i< NUM_RETURN_ARRAYS; i++)
-      {
-        RETURN_ARRAYS[i]=new dvariable[RETURN_ARRAYS_SIZE];
-        memory_allocate_error("RETURN_ARRAYS[i]",RETURN_ARRAYS[i]);
-      }
-      RETURN_ARRAYS_PTR=0;
-      MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
-      MAX_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
-      RETURN_PTR = MIN_RETURN;
-   }
-   //RETURN_INDEX = 0;
+    //allocate_dvariable_space();
+    for (int i=0; i< NUM_RETURN_ARRAYS; i++)
+    {
+      RETURN_ARRAYS[i]=new dvariable[RETURN_ARRAYS_SIZE];
+      memory_allocate_error("RETURN_ARRAYS[i]",RETURN_ARRAYS[i]);
+    }
+    RETURN_ARRAYS_PTR = 0;
+    MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
+    MAX_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
+    RETURN_PTR = MIN_RETURN;
+  }
+  //RETURN_INDEX = 0;
 
-   RETURN_PTR_CONTAINER=new dvariable*[NUM_RETURN_ARRAYS];
-   memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
+  RETURN_PTR_CONTAINER=new dvariable*[NUM_RETURN_ARRAYS];
+  memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
 
-   for (int i=0; i< NUM_RETURN_ARRAYS; i++)
-   {
-     RETURN_PTR_CONTAINER[i]=0;
-   }
- }
+  for (int i=0; i< NUM_RETURN_ARRAYS; i++)
+  {
+    RETURN_PTR_CONTAINER[i]=0;
+  }
+}
 
 /**
 Increments gradient_structure::RETURN_ARRAYS_PTR.
@@ -583,21 +579,19 @@ void RETURN_ARRAYS_DECREMENT(void)
   pthread_mutex_unlock(&mutex_return_arrays);
 #endif
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 gradient_structure::~gradient_structure()
 {
-   gradient_structure::NVAR=0;
-   if (RETURN_ARRAYS == NULL)
-   {
-     null_ptr_err_message();
-     ad_exit(1);
-   }
-   else
-   {
+  gradient_structure::NVAR=0;
+  if (RETURN_ARRAYS == NULL)
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+  else
+  {
      for (int i=0; i< NUM_RETURN_ARRAYS; i++)
      {
        delete [] RETURN_ARRAYS[i];
@@ -607,86 +601,83 @@ gradient_structure::~gradient_structure()
      RETURN_ARRAYS = NULL;
      delete [] RETURN_PTR_CONTAINER;
      RETURN_PTR_CONTAINER = NULL;
-   }
-   if (INDVAR_LIST == NULL)
-   {
+  }
+  if (INDVAR_LIST == NULL)
+  {
      null_ptr_err_message();
      ad_exit(1);
-   }
-   else
-   {
+  }
+  else
+  {
      delete [] INDVAR_LIST->address;
      delete INDVAR_LIST;
      INDVAR_LIST = NULL;
-   }
+  }
+  if (GRAD_STACK1 == NULL)
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+  else
+  {
+    delete GRAD_STACK1;
+    GRAD_STACK1 = NULL;
+  }
+  if (ARRAY_MEMBLOCK_BASE == NULL)
+  {
+    cerr << "Trying to farfree a NULL pointer in ~gradient_structure\n";
+    ad_exit(1);
+  }
+  else
+  {
+    ARRAY_MEMBLOCK_BASE.free();
+  }
+  if (ARR_LIST1 == NULL)
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+  else
+  {
+    delete ARR_LIST1;
+    ARR_LIST1 = NULL;
+  }
+  if (GRAD_LIST == NULL)
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+  else
+  {
+    delete GRAD_LIST;
+    GRAD_LIST = NULL;
+  }
 
-   if (GRAD_STACK1 == NULL)
-   {
-     null_ptr_err_message();
-     ad_exit(1);
-   }
-   else
-   {
-     delete GRAD_STACK1;
-     GRAD_STACK1 = NULL;
-   }
+  instances--;
 
-   if (ARRAY_MEMBLOCK_BASE == NULL)
-   {
-     cerr << "Trying to farfree a NULL pointer in ~gradient_structure\n";
-     ad_exit(1);
-   }
-   else
-   {
-     ARRAY_MEMBLOCK_BASE.free();
-   }
+  if (DEPVARS_INFO==NULL)
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
 
-   if (ARR_LIST1 == NULL)
-   {
-     null_ptr_err_message();
-     ad_exit(1);
-   }
-   else
-   {
-      delete ARR_LIST1;
-      ARR_LIST1 = NULL;
-   }
+  delete DEPVARS_INFO;
+  DEPVARS_INFO=NULL;
 
-   if (GRAD_LIST == NULL)
-   {
-     null_ptr_err_message();
-     ad_exit(1);
-   }
-   else
-   {
-      delete GRAD_LIST;
-      GRAD_LIST = NULL;
-   }
+  if (fp == NULL)
+  {
+    cerr << "Trying to close stream referenced by a NULL pointer\n"
+            " in ~gradient_structure\n";
+    ad_exit(1);
+  }
 
-   instances--;
-
-   if (DEPVARS_INFO==NULL)
-   {
-     null_ptr_err_message();
-     ad_exit(1);
-   }
-   delete DEPVARS_INFO;
-   DEPVARS_INFO=NULL;
-
-   if (fp == NULL)
-   {
-     cerr << "Trying to close stream referenced by a NULL pointer\n"
-       " in ~gradient_structure\n";
-     ad_exit(1);
-   }
-   delete fp;
-   fp = NULL;
+  delete fp;
+  fp = NULL;
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Outputs null error message.
+*/
 void null_ptr_err_message(void)
 {
    cerr << "Trying to delete a NULL pointer in ~gradient_structure" << endl;

@@ -75,7 +75,7 @@ safe_choleski_solver::safe_choleski_solver(double _id)
 }
 
 banded_lower_triangular_dmatrix quiet_choleski_decomp(
-  const banded_symmetric_dmatrix& _M,const int& _ierr);
+  const banded_symmetric_dmatrix& _M, int& ierr);
 /*
 banded_lower_triangular_dmatrix quiet_choleski_decomp(
   const banded_symmetric_dmatrix& _M,const int& _ierr)
@@ -220,6 +220,7 @@ void laplace_approximation_calculator::
 
     step=get_newton_raphson_info_banded(pfmin);
 
+#ifdef DIAG
     // check for degenerate Hessian
     int check_hessian=0;
     if (check_hessian)
@@ -227,6 +228,7 @@ void laplace_approximation_calculator::
       ofstream ofs("hh");
       ofs << colsum(dmatrix(*bHess)) << endl;
     }
+#endif
 
     if (!initial_params::mc_phase)
       cout << "Newton raphson " << ii << "  ";
@@ -349,12 +351,15 @@ void laplace_approximation_calculator::
     {
       scs.dirty=0;
       step=get_newton_raphson_info_banded(pfmin);
+
+#ifdef DIAG
       int print_hessian=0;
       if (print_hessian)
       {
         ofstream ofs("hh1");
         ofs << setw(12) << setscientific() << setprecision(3) << endl;
       }
+#endif
 
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {

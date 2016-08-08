@@ -24,7 +24,6 @@ void ad_read_write_tilde_values(void);
 void read_tilde_values_1(void);
 void read_tilde_values_2(void);
 void read_tilde_values_3(void);
-void zero_it(double* p, const size_t n);
 
 /**
  * Description not yet available.
@@ -149,7 +148,7 @@ void read_tilde_values_2(void)
   // get record size
   //int num_bytes=nlist.bptr->numbytes;
     // nlist+=nlist_record_size;
-  df1b2_header * px=(df1b2_header *) list.bptr;
+  df1b2_header* px = (df1b2_header*)list.bptr;
   //
   // list 3
   //
@@ -171,14 +170,16 @@ void read_tilde_values_2(void)
   memcpy(list3,ids2,slen);
 #endif
 
-  const int sizeofdouble = (int)sizeof(double);
-  memcpy(list3,px->get_u_tilde(),sizeofdouble);
-  memcpy(list3,px->get_u_dot_tilde(),nvar*sizeofdouble);
+  const size_t sizeofdouble = sizeof(double);
+  const size_t size = sizeofdouble * nvar;
+  memcpy(list3, px->get_u_tilde(), sizeofdouble);
+  memcpy(list3, px->get_u_dot_tilde(), size);
 
-  zero_it(px->get_u_bar_tilde(),nvar);
-  zero_it(px->get_u_dot_bar_tilde(),nvar);
-  zero_it(px->get_u_dot_tilde(),nvar);
-  zero_it(px->get_u_tilde(),1);
+  memset(px->get_u_bar_tilde(), 0, size);
+  memset(px->get_u_dot_bar_tilde(), 0, size);
+  memset(px->get_u_dot_tilde(), 0, size);
+  memset(px->get_u_tilde(), 0, sizeofdouble);
+
   *nlist3.bptr=adptr_diff(list3.bptr,tmpptr3);
   list.bptr+=sizeof(df1b2_header);
   ++nlist3;
@@ -223,13 +224,4 @@ void read_tilde_values_3(void)
   list3.bptr+=sizeof(double);
   memcpy(px->get_u_dot_tilde(),list3.bptr,nvar*sizeof(double));
   list3.restoreposition(); // save pointer to beginning of record;
-}
-
-/**
- * Description not yet available.
- * \param
- */
-void zero_it(double* p, const size_t n)
-{
-  for (size_t i=0;i<n;i++) *p++=0.0;
 }

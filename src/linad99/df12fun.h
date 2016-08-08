@@ -57,9 +57,9 @@
   public:
     static prevariable * ind_var[];
     static int num_ind_var;
-    double * get_u(void) const {return (double*) (&(v[0]));}
-    double * get_u_x(void)const {return (double*) (&(v[1]));}
-    double * get_u_y(void)const {return (double*) (&(v[2]));}
+    double* get_u() const {return (double*) (&(v[0]));}
+    double* get_u_x() const {return (double*) (&(v[1]));}
+    double* get_u_y() const {return (double*) (&(v[2]));}
     df1_two_variable& operator = (const df1_two_variable& v);
     df1_two_variable& operator = (double v);
     df1_two_variable& operator += (const df1_two_variable& v);
@@ -69,7 +69,7 @@
     df1_two_variable& operator -= (const df1_two_variable& v);
     df1_two_variable& operator -= (double v);
     df1_two_variable& operator /= (const df1_two_variable& v);
-    df1_two_variable(void);
+    df1_two_variable();
     df1_two_variable(const df1_two_variable& );
   };
 

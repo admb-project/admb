@@ -1,30 +1,21 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
+Return ivector filled with flags for 1 positive and -1 negative
+for values in dvector v.
+*/
 ivector sgn(const dvector& v)
 {
-  int mmin=v.indexmin();
-  int mmax=v.indexmax();
-  ivector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  int mmin = v.indexmin();
+  int mmax = v.indexmax();
+  ivector ret(mmin, mmax);
+  for (int i = mmin; i <= mmax; ++i)
   {
-    if (v(i)>0.0)
-      tmp(i)=1;
-    else
-      tmp(i)=-1;
+    ret(i)= v(i) > 0 ? 1 : -1;
   }
-  return tmp;
+  return ret;
 }

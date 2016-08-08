@@ -14,9 +14,12 @@
 /**
 Default constructor
 */
-df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
+df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector():
+  v(NULL),
+  index_min(1),
+  index_max(0),
+  it(NULL)
 {
-  it = NULL;
 }
 
 #if !defined(OPT_LIB)
@@ -238,22 +241,22 @@ void df1b2_init_bounded_number_vector::set_initial_value(
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
- df1b2_init_number_vector::df1b2_init_number_vector()
- {
-   it=NULL;
- }
-
+Default constructor
+*/
+df1b2_init_number_vector::df1b2_init_number_vector():
+  v(NULL),
+  index_min(0),
+  index_max(-1),
+  it(NULL)
+{
+}
 /**
- * Description not yet available.
- * \param
- */
- df1b2_init_number_vector::~df1b2_init_number_vector()
- {
-   deallocate();
- }
+Destructor
+*/
+df1b2_init_number_vector::~df1b2_init_number_vector()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.

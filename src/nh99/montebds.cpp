@@ -6,19 +6,21 @@
  */
 #include <admodel.h>
 
- const double simbdsmax=1.e+90;
- ofstream ofss("variance");
+/*
+ofstream ofss("variance");
+double ssmin(double x, double y)
+{
+  if (x<y) return x;
+  return y;
+}
+double ssmax(double y, double x)
+{
+  if (x>y) return x;
+  return y;
+}
+*/
 
- double ssmin(double x,double y)
- {
-   if (x<y) return x;
-   return y;
- }
- double ssmax(double y,double x)
- {
-   if (x>y) return x;
-   return y;
- }
+const double simbdsmax=1.e+90;
 
   void initial_params::set_all_simulation_bounds(const dmatrix& symbds)
   {

@@ -1,21 +1,14 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
- * Compute the mean of the matrix m.
- * \param
- */
+Return computed mean of matrix m.
+*/
 double mean(const dmatrix& m)
 {
-  double tmp = sum(m) / size_count(m);
-  return tmp;
+  double ret = sum(m) / size_count(m);
+  return ret;
 }

@@ -9,26 +9,25 @@
  * Description not yet available.
  */
 #include <df1b2fun.h>
-  df1b2variable * df3_two_variable::ind_var[2];
-  int df3_two_variable::num_ind_var=0;
+df1b2variable* df3_two_variable::ind_var[2];
+int df3_two_variable::num_ind_var = 0;
 
 /**
- * Description not yet available.
- * \param
- */
-  df3_two_variable::df3_two_variable(const df3_two_variable& x)
-  {
-    v[0]=x.v[0];
-    v[1]=x.v[1];
-    v[2]=x.v[2];
-    v[3]=x.v[3];
-    v[4]=x.v[4];
-    v[5]=x.v[5];
-    v[6]=x.v[6];
-    v[7]=x.v[7];
-    v[8]=x.v[8];
-    v[9]=x.v[9];
-  }
+Copy constructor
+*/
+df3_two_variable::df3_two_variable(const df3_two_variable& x)
+{
+  v[0] = x.v[0];
+  v[1] = x.v[1];
+  v[2] = x.v[2];
+  v[3] = x.v[3];
+  v[4] = x.v[4];
+  v[5] = x.v[5];
+  v[6] = x.v[6];
+  v[7] = x.v[7];
+  v[8] = x.v[8];
+  v[9] = x.v[9];
+}
 
 /**
  * Description not yet available.
@@ -271,26 +270,23 @@
       v[i].allocate(cmin,cmax);
     }
   }
-
 /**
- * Description not yet available.
- * \param
- */
-  df3_two_variable& df3_two_variable::operator -= (const df3_two_variable& v)
-  {
-    *get_u() -= *v.get_u();
-
-    *get_u_x() -= *v.get_u_x();
-    *get_u_y() -= *v.get_u_y();
-    *get_u_xx() -= *v.get_u_xx();
-    *get_u_xy() -= *v.get_u_xy();
-    *get_u_yy() -= *v.get_u_yy();
-    *get_u_xxx() -= *v.get_u_xxx();
-    *get_u_xxy() -= *v.get_u_xxy();
-    *get_u_xyy() -= *v.get_u_xyy();
-    *get_u_yyy() -= *v.get_u_yyy();
-    return *this;
-  }
+Subtract values in _v from df3_two_variable.
+*/
+df3_two_variable& df3_two_variable::operator-=(const df3_two_variable& _v)
+{
+  *get_u() -= *_v.get_u();
+  *get_u_x() -= *_v.get_u_x();
+  *get_u_y() -= *_v.get_u_y();
+  *get_u_xx() -= *_v.get_u_xx();
+  *get_u_xy() -= *_v.get_u_xy();
+  *get_u_yy() -= *_v.get_u_yy();
+  *get_u_xxx() -= *_v.get_u_xxx();
+  *get_u_xxy() -= *_v.get_u_xxy();
+  *get_u_xyy() -= *_v.get_u_xyy();
+  *get_u_yyy() -= *_v.get_u_yyy();
+  return *this;
+}
 
 /**
  * Description not yet available.
@@ -314,76 +310,68 @@ df3_two_variable operator-(const df3_two_variable& v)
 
   return z;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-  df3_two_variable& df3_two_variable::operator += (const df3_two_variable& v)
-  {
-    *get_u() += *v.get_u();
-    *get_u_x() += *v.get_u_x();
-    *get_u_y() += *v.get_u_y();
-    *get_u_xx() += *v.get_u_xx();
-    *get_u_xy() += *v.get_u_xy();
-    *get_u_yy() += *v.get_u_yy();
-    *get_u_xxx() += *v.get_u_xxx();
-    *get_u_xxy() += *v.get_u_xxy();
-    *get_u_xyy() += *v.get_u_xyy();
-    *get_u_yyy() += *v.get_u_yyy();
+Add values from _v to df3_two_variable.
+*/
+df3_two_variable& df3_two_variable::operator+=(const df3_two_variable& _v)
+{
+  *get_u() += *_v.get_u();
+  *get_u_x() += *_v.get_u_x();
+  *get_u_y() += *_v.get_u_y();
+  *get_u_xx() += *_v.get_u_xx();
+  *get_u_xy() += *_v.get_u_xy();
+  *get_u_yy() += *_v.get_u_yy();
+  *get_u_xxx() += *_v.get_u_xxx();
+  *get_u_xxy() += *_v.get_u_xxy();
+  *get_u_xyy() += *_v.get_u_xyy();
+  *get_u_yyy() += *_v.get_u_yyy();
 
-    return *this;
-  }
-
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
-  df3_two_variable& df3_two_variable::operator += (double v)
-  {
-    *get_u() += v;
-    return *this;
-  }
+Add value _v to only df3_two_variable u with the rest of the values unchanged.
+*/
+df3_two_variable& df3_two_variable::operator+=(double _v)
+{
+  *get_u() += _v;
 
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
-  df3_two_variable& df3_two_variable::operator -= (double v)
-  {
-    *get_u() -= v;
-    return *this;
-  }
+Subtract value _v from only df3_two_variable u with the rest of the values unchanged.
+*/
+df3_two_variable& df3_two_variable::operator-=(double _v)
+{
+  *get_u() -= _v;
+  return *this;
+}
+/**
+Multiply df3_two_variable and v which calls set_derivatives. 
+*/
+df3_two_variable& df3_two_variable::operator*=(const df3_two_variable& _v)
+{
+  df3_two_variable x = *this * _v;
+  *this = x;
+  return *this;
+}
+/**
+Multiply value _v to value in df3_two_variable.
+*/
+df3_two_variable& df3_two_variable::operator*=(double _v)
+{
+  *get_u() *= _v;
+  *get_u_x() *= _v;
+  *get_u_y() *= _v;
+  *get_u_xx() *= _v;
+  *get_u_xy() *= _v;
+  *get_u_yy() *= _v;
+  *get_u_xxx() *= _v;
+  *get_u_xxy() *= _v;
+  *get_u_xyy() *= _v;
+  *get_u_yyy() *= _v;
 
-/**
- * Description not yet available.
- * \param
- */
-  df3_two_variable& df3_two_variable::operator *= (const df3_two_variable& v)
-  {
-    df3_two_variable x=*this * v;
-    *this=x;
-    return *this;
-  }
-
-/**
- * Description not yet available.
- * \param
- */
-  df3_two_variable& df3_two_variable::operator *= (double v)
-  {
-    *get_u() *= v;
-    *get_u_x() *= v;
-    *get_u_y() *= v;
-    *get_u_xx() *= v;
-    *get_u_xy() *= v;
-    *get_u_yy() *= v;
-    *get_u_xxx() *= v;
-    *get_u_xxy() *= v;
-    *get_u_xyy() *= v;
-    *get_u_yyy() *= v;
-    return *this;
-  }
+  return *this;
+}
 
 /**
  * Description not yet available.

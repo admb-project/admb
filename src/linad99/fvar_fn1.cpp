@@ -11,8 +11,7 @@
 #include "fvar.hpp"
 
 #include <stdio.h>
-#include <math.h>
-
+#include <cmath>
 
 void gradfree(dlink *);
 
@@ -22,19 +21,38 @@ void gradfree(dlink *);
 //extern grad_stack  * GRAD_STACK1;
 
 /**
- * Description not yet available.
- * \param
- */
+Compute exponential variable
+
+\param v1 is the input value.
+\return exponential variable of v1.
+*/
 prevariable& exp(const prevariable& v1)
-    {
-      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-      double tmp=::exp(v1.v->x);
-      gradient_structure::RETURN_PTR->v->x=tmp;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),tmp);
-      return(*gradient_structure::RETURN_PTR);
-    }
+{
+  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
+    gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+
+  double tmp = ::exp(v1.v->x);
+
+#ifndef OPT_LIB
+  /** \todo Must remove macros below once support
+  for MSVC++11 and Solaris Studio 12.3 are removed.
+  */
+  #if !defined(__SUNPRO_CC) && !(defined(_MSC_VER) && (_MSC_VER <= 1700))
+  if (!std::isfinite(tmp))
+  {
+    cerr << "Error: Result of \"exp(prevariable(" << value(v1) << ")) = "
+         << tmp << "\" is not finite.\n";
+    ad_exit(1);
+  }
+  #endif
+#endif
+
+  gradient_structure::RETURN_PTR->v->x=tmp;
+  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),tmp);
+
+  return *gradient_structure::RETURN_PTR;
+}
 
 /**
  * Description not yet available.

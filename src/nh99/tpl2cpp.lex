@@ -3822,7 +3822,7 @@ FUNCTION[ ]*{name}[ ]*{name}\( {
     char c;
     int i = 0;
     tmp_string5[i] = '\0';
-    while ((c = input()) != ')' || i >= MAX_TMP_STRING - 1)
+    while ((c = input()) != ')' && i < MAX_TMP_STRING - 1)
     {
       tmp_string5[i] = c;
       i++;
@@ -4271,12 +4271,12 @@ TOP_OF_MAIN_SECTION {
 
       if (!makegaussdll)
       {
-        fprintf(ftopmain,"    char **argv=parse_dll_options(\"%s\",argc,"
+        fprintf(ftopmain,"    char **argv=parse_dll_options((char*)\"%s\",argc,"
           "*dll_options);\n",infile_root);
       }
       else
       {
-        fprintf(ftopmain,"    char **argv=parse_dll_options(\"%s\",argc,"
+        fprintf(ftopmain,"    char **argv=parse_dll_options((char*)\"%s\",argc,"
           "dll_options);\n", infile_root);
       }
       fprintf(ftopmain,"    do_dll_housekeeping(argc,argv);\n");
@@ -4298,6 +4298,11 @@ TOP_OF_MAIN_SECTION {
     // default settings, but I don't have the skills to do that right now.
     // - Ian Taylor, May 1, 2012
 
+    fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
+    fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
+    fprintf(ftopmain,"  #endif\n");
+    fprintf(ftopmain,"#endif\n");
     if (makedll)
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
@@ -4313,10 +4318,23 @@ TOP_OF_MAIN_SECTION {
         "    mp.iprint=10;\n");
     }
 
+    fprintf(ftopmain,"    mp.preliminary_calculations();\n");
+    fprintf(ftopmain,"    mp.computations(argc,argv);\n");
 
-     fprintf(ftopmain,"    mp.preliminary_calculations();\n");
-
-     fprintf(ftopmain,"    mp.computations(argc,argv);\n");
+    fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
+    fprintf(ftopmain,"bool failedtest = false;\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_DIVBYZERO))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected division by zero.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_INVALID))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected invalid argument.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_OVERFLOW))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected overflow.\" << endl; failedtest = true; }\n");
+    fprintf(ftopmain,"if (std::fetestexcept(FE_UNDERFLOW))\n");
+    fprintf(ftopmain,"  { cerr << \"Error: Detected underflow.\" << endl; }\n");
+    fprintf(ftopmain,"if (failedtest) { std::abort(); } \n");
+    fprintf(ftopmain,"  #endif\n");
+    fprintf(ftopmain,"#endif\n");
 
     fprintf(htop,"#include <admodel.h>\n");
     fprintf(htop,"#include <contrib.h>\n\n");
@@ -4444,6 +4462,17 @@ int main(int argc, char * argv[])
   }
   if (argc>1)
   {
+    size_t len = strlen(argv[ioff]);
+    if (len + 5 > 1000)
+    {
+      fprintf(stderr,"Error:%s exceeds sizeof infile_name[1000].\n", argv[ioff]);
+      exit(1);
+    }
+    if (len + 5 > 125)
+    {
+      fprintf(stderr,"Error:%s exceeds sizeof deffile_name[1000].\n", argv[ioff]);
+      exit(1);
+    }
     strcpy(infile_name,argv[ioff]);
     strcpy(infile_root,infile_name);
     strcpy(outfile_name,argv[ioff]);
@@ -4462,14 +4491,22 @@ int main(int argc, char * argv[])
     if (debug_flag) fprintf(stderr,"Opened file %s for input\n", infile_name);
     if (makedll)
     {
-      strcpy(tmp_string1,argv[ioff]);
-      strcat(tmp_string1,".def");
-      f1=fopen(tmp_string1,"w");
-      fprintf(f1,"LIBRARY %s\n\n",argv[ioff]);
-      fprintf(f1,"EXPORTS\n");
-      fprintf(f1,"\t%s\n",argv[ioff]);
-      fclose(f1);
-      f1=NULL;
+      if (len + 5 > MAX_TMP_STRING)
+      {
+        fprintf(stderr,"Error:%s exceeds MAX_TMP_STRING.\n", argv[ioff]);
+        exit(1);
+      }
+      else
+      {
+        strcpy(tmp_string1,argv[ioff]);
+        strcat(tmp_string1,".def");
+        f1=fopen(tmp_string1,"w");
+        fprintf(f1,"LIBRARY %s\n\n",argv[ioff]);
+        fprintf(f1,"EXPORTS\n");
+        fprintf(f1,"\t%s\n",argv[ioff]);
+        fclose(f1);
+        f1=NULL;
+      }
     }
   }
   else
@@ -4502,6 +4539,13 @@ int main(int argc, char * argv[])
   {
     fprintf(stderr,"Error trying to open file %s\n","xxglobal.tmp");
   }
+  fprintf(fglobals,"#ifdef DEBUG\n");
+  fprintf(fglobals,"  #ifndef __SUNPRO_C\n");
+  fprintf(fglobals,"    #include <cfenv>\n");
+  fprintf(fglobals,"    #include <cstdlib>\n");
+  fprintf(fglobals,"  #endif\n");
+  fprintf(fglobals,"#endif\n");
+
   fdat=fopen(headerfile_name,"w+");
   if (fdat==NULL)
   {
@@ -4609,9 +4653,9 @@ char * after_part(char * d, char * s, char c)
       d[i-ipos]=s[i];
     }
     d[strlen(s)-ipos]='\0';
-    index = index - ipos - 1;
-    if (index >= 0)
+    if (index >= ipos + 1)
     {
+      index = index - ipos - 1;
       if (d[index] == 13)   // crtl M
         d[index] = '\0';
     }
@@ -4646,9 +4690,9 @@ char * strict_after_part(char * d, char * s, char c)
       d[i-ipos-1]=s[i];
     }
     d[strlen(s)-ipos-1]='\0';
-    index = index - ipos - 1;
-    if (index >= 0)
+    if (index >= ipos + 1)
     {
+      index = index - ipos - 1;
       if (d[index] == 13)   // crtl M
         d[index] = '\0';
     }
@@ -4685,9 +4729,9 @@ char * after_partb(char * d, char * s, char c)
       d[i-ipos]=s[i];
     }
     d[strlen(s)-ipos]='\0';
-    index = index - ipos - 1;
-    if (index >= 0)
+    if (index >= ipos + 1)
     {
+      index = index - ipos - 1;
       if (d[index] == 13)   // crtl M
         d[index] = '\0';
     }
@@ -4719,7 +4763,7 @@ char * strip_leading_blanks(char * d, char * s)
         d[j++]=s[i];
       }
     }
-    else
+    else if (s[i]!='\r')
     {
       d[j++]=s[i];
     }
@@ -4748,7 +4792,7 @@ char * strip_leading_blanks_and_tabs(char * d, char * s)
         d[j++]=s[i];
       }
     }
-    else
+    else if (s[i]!='\r')
     {
       d[j++]=s[i];
     }

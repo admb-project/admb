@@ -125,8 +125,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     //uostream * pofs_sd = NULL;
 
     initial_params::set_inactive_random_effects();
-    //int nvar_x=initial_params::nvarcalc();
+    int nvar_x=initial_params::nvarcalc();
     initial_params::set_active_random_effects();
+    int nvar_re=initial_params::nvarcalc();
 
     int nvar=initial_params::nvarcalc(); // get the number of active parameters
     dmatrix s_covar;
@@ -147,7 +148,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     s_covar.initialize();
 
     int ndvar=stddev_params::num_stddev_calc();
-    /*int numdvar=*/stddev_params::num_stddev_number_calc();
+    //int numdvar=stddev_params::num_stddev_number_calc();
 
     if (mcmc2_flag==0)
     {
@@ -155,7 +156,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       nvar=initial_params::nvarcalc(); // get the number of active parameters
     }
 
-    independent_variables parsave(1,nvar);
+    independent_variables parsave(1,nvar_re);
     initial_params::restore_start_phase();
 
     dvector x(1,nvar);

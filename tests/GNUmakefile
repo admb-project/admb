@@ -1,4 +1,6 @@
 ifeq ($(OS),Windows_NT)
+  ifeq ($(TERM),cygwin)
+  else
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL = cmd
     ifeq ($(SHELL),cmd)
@@ -13,6 +15,7 @@ ifeq ($(OS),Windows_NT)
       PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
     endif
     PATH:=$(PATH):$(MYPWD)/../utilities
+  endif
   endif
 endif
 
@@ -40,18 +43,53 @@ else
 all: all-gtests all-tpls
 endif
 
+coverage: all-gtests
+	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/debug/include includes
+	$(MAKE) --directory=../examples all
+	$(MAKE) tpl-f1b2vc5
+	$(MAKE) tpl-4darray
+	$(MAKE) tpl-glmmadmb
+	$(MAKE) tpl-betai
+	$(MAKE) tpl-beta2
+	$(MAKE) tpl-beta3
+	$(MAKE) tpl-vonmises
+	$(MAKE) tpl-vectorize
+	$(MAKE) tpl-dd2
+	$(MAKE) tpl-beta_deviate
+	$(MAKE) tpl-betareg
+	$(MAKE) tpl-beta_regression
+	$(MAKE) tpl-changepoint
+	$(MAKE) tpl-colfill
+	$(MAKE) tpl-cov_re
+	$(MAKE) tpl-expm
+	$(MAKE) tpl-gradients_output
+	$(MAKE) tpl-geolocation
+	$(MAKE) tpl-simple_mcmc
+	$(MAKE) tpl-hysimple
+	$(MAKE) tpl-testminmax
+	$(MAKE) tpl-orange_mvn
+	$(MAKE) tpl-lprof
+
 all-gtests:
 ifneq ($(USE_GTESTS),no)
 	$(MAKE) --directory=gtests
 endif
 
+test-rgamma:
+	$(MAKE) --directory=rgamma
+
 all-tpls:\
+  test-rgamma\
+  tpl-f1b2vc5\
   tpl-4darray\
   tpl-glmmadmb\
   tpl-agemat\
   tpl-betai\
   tpl-beta2\
   tpl-beta3\
+  tpl-vonmises\
+  tpl-vectorize\
+  tpl-dd2\
   tpl-beta_deviate\
   tpl-betareg\
   tpl-beta_regression\
@@ -69,11 +107,14 @@ all-tpls:\
   tpl-orange_mvn\
   tpl-lprof
 
+tpl-f1b2vc5:
+	$(MAKE) --directory=f1b2vc5
+
 tpl-4darray:
 	$(MAKE) --directory=4darray
 
 tpl-glmmadmb:
-	$(MAKE) --directory=glmmadmb
+	-$(MAKE) --directory=glmmadmb
 
 tpl-agemat:
 	$(MAKE) --directory=agemat
@@ -86,6 +127,15 @@ tpl-beta2:
 
 tpl-beta3:
 	$(MAKE) --directory=beta3
+
+tpl-vonmises:
+	$(MAKE) --directory=vonmises
+
+tpl-vectorize:
+	$(MAKE) --directory=vectorize
+
+tpl-dd2:
+	$(MAKE) --directory=dd2
 
 tpl-beta_deviate:
 	$(MAKE) --directory=beta_deviate
@@ -174,13 +224,12 @@ total-clean: clean
 
 clean:
 ifeq ($(SHELL),cmd)
-	$(MAKE) --directory=glmmadmb --file=Makefile clean
-	$(MAKE) --directory=agemat --file=Makefile clean
 	@if exist SS3 rmdir /s /q SS3
 else
 	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3
 endif
+	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean
@@ -193,6 +242,9 @@ endif
 	$(MAKE) --directory=betai clean
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
+	$(MAKE) --directory=vonmises clean
+	$(MAKE) --directory=vectorize clean
+	$(MAKE) --directory=dd2 clean
 	$(MAKE) --directory=beta_deviate clean
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <inttypes.h>
+#include <climits>
 
 class test_idea: public ::testing::Test {};
 
@@ -128,6 +129,14 @@ TEST_F(test_idea, memcpy)
   ASSERT_EQ('9', s[10]);
   ASSERT_EQ('\0', s[11]);
 }
+TEST_F(test_idea, make_sub_directory)
+{
+  int make_sub_directory(const char* s);
+  int ret = make_sub_directory("make_sub_directory");
+  ASSERT_EQ(1, ret);
+  ret = make_sub_directory("make_sub_directory");
+  ASSERT_EQ(1, ret);
+}
 TEST_F(test_idea, multichar)
 {
   ASSERT_FALSE(!(sizeof(char) == 1));
@@ -138,6 +147,109 @@ TEST_F(test_idea, multiple_int_double)
   double d = 2.5; 
   ASSERT_DOUBLE_EQ(d * i, 12.5);
   ASSERT_DOUBLE_EQ(i * d, 12.5);
+}
+TEST_F(test_idea, parse_dll_options)
+{
+  char** parse_dll_options(char *pname, const int& _argc, char *s);
+
+#ifdef _WIN32
+  char* pname = "one two three four";
+  char* pname_exe = "one two three four.exe";
+#else
+  char* pname = "one two three four";
+#endif
+
+  int argc = 4;
+  char** ret = parse_dll_options(pname, argc, "one");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
+  ASSERT_STREQ(pname, ret[0]);
+#endif
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 4;
+  ret = parse_dll_options(pname, argc, "two");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
+  ASSERT_STREQ(pname, ret[0]);
+#endif
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 4;
+  ret = parse_dll_options(pname, argc, "three");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
+  ASSERT_STREQ(pname, ret[0]);
+#endif
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 4;
+  ret = parse_dll_options(pname, argc, "four");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
+  ASSERT_STREQ(pname, ret[0]);
+#endif
+  ASSERT_EQ(2, argc);
+  free(ret);
+}
+TEST_F(test_idea, parse_dll_options_same)
+{
+  char** parse_dll_options(char *pname, const int& _argc, char *s);
+
+#ifdef _WIN32
+  char* pname = "one two three four one two three four";
+  char* pname_exe = "one two three four one two three four.exe";
+#else
+  char* pname = "one two three four one two three four";
+#endif
+
+  int argc = 8;
+  char** ret = parse_dll_options(pname, argc, "one");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
+  ASSERT_STREQ(pname, ret[0]);
+#endif
+
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 8;
+  ret = parse_dll_options(pname, argc, "two");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
+  ASSERT_STREQ(pname, ret[0]);
+#endif
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 8;
+  ret = parse_dll_options(pname, argc, "three");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
+  ASSERT_STREQ(pname, ret[0]);
+#endif
+  ASSERT_EQ(2, argc);
+  free(ret);
+
+  argc = 8;
+  ret = parse_dll_options(pname, argc, "four");
+#ifdef _WIN32
+  ASSERT_STREQ(pname_exe, ret[0]);
+#else
+  ASSERT_STREQ(pname, ret[0]);
+#endif
+  ASSERT_EQ(2, argc);
+  free(ret);
 }
 #ifdef _WIN32
 TEST_F(test_idea, no_dll_options)
@@ -157,5 +269,13 @@ TEST_F(test_idea, no_dll_options)
     FAIL();
   }
   ASSERT_EQ(nopt, 1);
+}
+TEST_F(test_idea, off_t)
+{
+  #if (defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS == 64))
+  ASSERT_EQ(64, sizeof(off_t) * CHAR_BIT);
+  #else
+  ASSERT_EQ(32, sizeof(off_t) * CHAR_BIT);
+  #endif
 }
 #endif

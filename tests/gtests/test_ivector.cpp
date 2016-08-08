@@ -2,6 +2,11 @@
 #include <fvar.hpp>
 #include <climits>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_ivector: public ::testing::Test {};
 
 TEST_F(test_ivector, constructor)
@@ -149,7 +154,7 @@ TEST_F(test_ivector, common_same)
   v(4) = -4;
 
   int common(ivector& v,ivector& w);
-  EXPECT_TRUE(common(v, v) == 1); 
+  EXPECT_TRUE(common(v, v) == 1);
 
   bool check_order(const ivector& v);
   ASSERT_TRUE(check_order(v));
@@ -169,7 +174,7 @@ TEST_F(test_ivector, common_none)
   w(4) = 4;
 
   int common(ivector& v,ivector& w);
-  EXPECT_FALSE(common(v, w) == 1); 
+  EXPECT_FALSE(common(v, w) == 1);
 
   bool check_order(const ivector& v);
   ASSERT_TRUE(check_order(v));
@@ -190,9 +195,77 @@ TEST_F(test_ivector, common_one)
   w(4) = 4;
 
   int common(ivector& v,ivector& w);
-  EXPECT_TRUE(common(v, w) == 1); 
+  EXPECT_TRUE(common(v, w) == 1);
 
   bool check_order(const ivector& v);
   ASSERT_TRUE(check_order(v));
   ASSERT_TRUE(check_order(w));
+}
+TEST_F(test_ivector, safe_deallocate)
+{
+  ad_exit=&test_ad_exit;
+
+  ivector iv(1, 4);
+  unsigned int iv_ncopies = iv.get_ncopies();
+  ASSERT_EQ(iv_ncopies, 0);
+
+  bool has_exception = false;
+  {
+    ivector copy = iv;
+    iv_ncopies = iv.get_ncopies();
+    ASSERT_EQ(iv_ncopies, 1);
+    unsigned int copy_ncopies = copy.get_ncopies();
+    ASSERT_EQ(iv_ncopies, copy_ncopies);
+
+    try
+    {
+      iv.safe_deallocate();
+    }
+    catch (const int exit_code)
+    {
+      const int expected_exit_code = 1;
+      if (exit_code == expected_exit_code)
+      {
+        has_exception = true;
+      }
+    }
+  }
+
+  ASSERT_EQ(has_exception, true);
+
+  iv_ncopies = iv.get_ncopies();
+  ASSERT_EQ(iv_ncopies, 0);
+
+  try
+  {
+    iv.safe_deallocate();
+  }
+  catch (const int exit_code)
+  {
+    FAIL();
+  }
+}
+TEST_F(test_ivector, copy_constructor_empty)
+{
+  ivector orig;
+  ASSERT_FALSE(orig.allocated());
+  ASSERT_TRUE(orig.get_v() == NULL);
+  ASSERT_EQ(0, orig.get_ncopies());
+
+  ivector copy(orig);
+  ASSERT_FALSE(orig.allocated());
+  ASSERT_FALSE(copy.allocated());
+  ASSERT_TRUE(copy.get_v() == NULL);
+  ASSERT_EQ(0, copy.get_ncopies());
+  ASSERT_EQ(0, orig.get_ncopies());
+  ASSERT_EQ(copy.indexmin(), orig.indexmin());
+  ASSERT_EQ(copy.indexmax(), orig.indexmax());
+}
+TEST_F(test_ivector, fill)
+{
+  ivector v(1, 3);
+  v.fill("{3, 2, 1}");
+  ASSERT_EQ(3, v(1));
+  ASSERT_EQ(2, v(2));
+  ASSERT_EQ(1, v(3));
 }

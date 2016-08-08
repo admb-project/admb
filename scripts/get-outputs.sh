@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo Example:admb:ham4.tpl
 cat $1admb/buscycle/ham4.par
 cat $1admb/buscycle/ham4.std
@@ -10,9 +12,9 @@ echo Example:admb:catage.tpl
 cat $1admb/catage/catage.par
 cat $1admb/catage/catage.std
 
-echo Example:admb:chem-eng.tpl
-cat $1admb/chem-eng/chem-eng.par
-cat $1admb/chem-eng/chem-eng.std
+echo Example:admb:chem_eng.tpl
+cat $1admb/chem_eng/chem_eng.par
+cat $1admb/chem_eng/chem_eng.std
 
 echo Example:admb:finance.tpl
 cat $1admb/finance/finance.par
@@ -22,9 +24,9 @@ echo Example:admb:forest.tpl
 cat $1admb/forest/forest.par
 cat $1admb/forest/forest.std
 
-echo Example:admb:pella-t.tpl
-cat $1admb/pella-t/pella-t.par
-cat $1admb/pella-t/pella-t.std
+echo Example:admb:pella_t.tpl
+cat $1admb/pella_t/pella_t.par
+cat $1admb/pella_t/pella_t.std
 
 echo Example:admb:vonb.tpl
 cat $1admb/robreg/vonb.par

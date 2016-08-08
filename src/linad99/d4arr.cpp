@@ -699,13 +699,14 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
  */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu)
 {
-   if (hsl>hsu)
-   {
-     allocate();
-     return;
-   }
+  if (hsl>hsu)
+  {
+    allocate();
+    return;
+  }
+
   int ss=hsu-hsl+1;
-  if ( (t = new d3_array[ss]) == 0)
+  if ((t = new d3_array[ss]) == 0)
   {
     cerr << " Error allocating memory in d3_array contructor\n";
     ad_exit(21);

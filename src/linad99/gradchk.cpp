@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include <fvar.hpp>
-#if defined(__x86_64)
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
   #include <stdint.h>
 #endif
 
@@ -26,7 +26,7 @@ void grad_chk(void)
   }    // current is one past the end so -- it
   else
   {
-#if defined(__x86_64)
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
     cout << intptr_t(gradient_structure::GRAD_STACK1->ptr)
             - intptr_t(gradient_structure::GRAD_STACK1->ptr_first)
 #else

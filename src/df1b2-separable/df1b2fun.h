@@ -191,6 +191,25 @@ struct df1b2_header
   double* u_dot_bar_tilde;
   int indindex;
 
+#ifndef OPT_LIB
+  #if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+  int padding;
+  df1b2_header():
+    u(NULL),
+    u_dot(NULL),
+    u_bar(NULL),
+    u_dot_bar(NULL),
+    u_tilde(NULL),
+    u_dot_tilde(NULL),
+    u_bar_tilde(NULL),
+    u_dot_bar_tilde(NULL),
+    indindex(0),
+    padding(0)
+  {
+  }
+  #endif
+#endif
+
   //double * get_ptr(void){return ptr;}
 
   double* get_u(void) const {return (double*)u;}
@@ -701,8 +720,8 @@ public:
 
   void write(const test_smartlist &,void *,int nsize);
   void read(const test_smartlist &,void *,int nsize);
-  void memcpy(const test_smartlist &, void*, const size_t nsize);
-  void memcpy(void*, const test_smartlist&, const size_t nsize);
+  void memcpy(test_smartlist&, void*, const size_t nsize);
+  void memcpy(void*, test_smartlist&, const size_t nsize);
 
   class df1b2function2c;
 
@@ -1443,12 +1462,14 @@ public:
  */
 class df1b2_init_number_vector
 {
-  df1b2_init_number * v;
+  df1b2_init_number* v;
   int index_min;
   int index_max;
-  double_index_type * it;
+  double_index_type* it;
+
 public:
   df1b2_init_number_vector();
+  ~df1b2_init_number_vector();
 
 #if defined(OPT_LIB)
    df1b2_init_number& operator [] (int i) { return v[i];}
@@ -1465,7 +1486,6 @@ public:
   int allocated(void) { return (v!=NULL); }
   int indexmin(void) {return (index_min);}
   int indexmax(void) {return (index_max);}
-  ~df1b2_init_number_vector();
   void deallocate(void);
 };
 
@@ -1772,8 +1792,14 @@ df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
 		     double _x);
 */
 
-df1b2variable betai(const df1b2variable& a, const df1b2variable& b,
-  double x, int maxit=100);
+df1b2variable betai(const df1b2variable& a, const df1b2variable& b, double x, int maxit=100);
+df1b2variable pbeta(double x, const df1b2variable& a, const df1b2variable& b, int maxit=100);
+df1b2variable pbeta(const df1b2variable& x, const df1b2variable& a, const df1b2variable& b, int maxit=100);
+
+df1b2variable besselI(df1b2variable x, int nu);
+df1b2variable besselK(df1b2variable x, int nu);
+df1b2variable besselJ(df1b2variable x, int nu);
+df1b2variable besselY(df1b2variable x, int nu);
 
 double do_gauss_hermite_block_diagonal(const dvector& x,
   const dvector& u0,const dmatrix& Hess,const dvector& _xadjoint,
@@ -1922,6 +1948,7 @@ public:
   void allocate(const df1b2matrix & _M, const df1b2_init_vector & _u);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u,const char * s);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u);
+  void deallocate() {}
   dmatrix get_cHessian(void);
   dvector get_cgradient(void);
   dvar_matrix get_Hessian(void);
@@ -2028,6 +2055,8 @@ df1b2variable ln_det(df1b2matrix& M,int & sgn);
 
 //df1b2vector solve(df1b2matrix& M,df1b2vector& v);
 
+df1b2variable invlogit(df1b2variable x);
+
 df1b2matrix expm(const df1b2matrix & A);
 df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   df1b2variable ln_unsigned_det,df1b2variable& sign);
@@ -2042,8 +2071,9 @@ df1b2variable lower_triangular_ln_det(const df1b2matrix& m,int& sgn);
 df1b2variable bounder(const df1b2variable&  x,double min,double max,
   double scale);
 
-df1b2variable inv_cumd_beta_stable(const df1b2variable& a,
-  const df1b2variable& b,const df1b2variable& x,double eps=1.e-7);
+df1b2variable inv_cumd_beta_stable(const df1b2variable& a, const df1b2variable& b,const df1b2variable& x,double eps=0);
+
+df1b2variable qbeta(df1b2variable x, df1b2variable a, df1b2variable b, double eps=0);
 
 df1b2variable bounded_cumd_norm(const df1b2variable& _x,double beta);
 df1b2variable cumd_norm(const df1b2variable& _x);

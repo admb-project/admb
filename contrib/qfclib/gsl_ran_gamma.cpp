@@ -5,9 +5,13 @@ Copyright (c) 2016 ADMB Foundation
 #include <admodel.h>
 
 /**
-Return computed random gamma number.
+Compute random gamma number using Marsaglia and Tsang’s method.
 
-Function copied and modified from GNU Scientific Library 
+\param alpha Shape parameter 
+\param rng Random number genertor
+\return Computed random gamma number.
+
+Function code modified from GNU Scientific Library 
 http://git.savannah.gnu.org/cgit/gsl.git/tree/randist/gamma.c
 */
 double rgamma(double alpha, random_number_generator& rng) 

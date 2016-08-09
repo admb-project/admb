@@ -241,9 +241,9 @@ class gradient_structure
 };
 
 /**
- * Description not yet available.
- * \param
- */
+Stores the adjoint gradient data that will be processed
+by gradcalc.
+*/
 class DF_FILE
 {
 public:
@@ -280,8 +280,8 @@ private:
   OFF_T buff_end;
   OFF_T buff_size;
 #else
-  const OFF_T buff_end;
-  const OFF_T buff_size;
+  const size_t buff_end;
+  const size_t buff_size;
 #endif
 };
 #endif

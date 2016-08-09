@@ -1,13 +1,8 @@
 /*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2016 ADMB Foundation and
+  Regents of the University of California
+*/
 #include "fvar.hpp"
 #include <fcntl.h>
 
@@ -90,9 +85,17 @@
 
 char lastchar(char*);
 
+#if defined(__ADSGI__)
+/**
+Copies count bytes from the object pointed to by src to the
+object pointed to by dest.
+
+\param dest pointer to the memory location to copy to
+\param source pointer to the memory location to copy from
+\param num_bytes number of bytes to copy
+*/
 void byte_copy(void* dest, void* source, const size_t num_bytes)
 {
-#if defined(__ADSGI__)
   char* pdest = (char*)dest;
   char* psource = (char*)source;
   int ii=0;
@@ -104,10 +107,9 @@ void byte_copy(void* dest, void* source, const size_t num_bytes)
     psource++;
     ii++;
   }
-#else
-  memcpy((char*)dest, (char*)source, num_bytes);
-#endif
+  //memcpy((char*)dest, (char*)source, num_bytes);
 }
+#endif
 
 extern char ad_random_part[6];
 
@@ -277,10 +279,12 @@ DF_FILE::~DF_FILE()
 #endif
 }
 /**
- * Description not yet available.
- * \param
- */
-void DF_FILE::fread(void* s,const size_t num_bytes)
+Reads num_bytes from buffer and copies to s.
+
+\param s pointer to copy bytes from.
+\param num_bytes number of bytes to read from buffer.
+*/
+void DF_FILE::fread(void* s, const size_t num_bytes)
 {
   if (toffset < num_bytes)
   {
@@ -293,13 +297,19 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
   {
     toffset-=num_bytes; //decrement the temporary offset count
   }
-  byte_copy((char*)s, buff+toffset,num_bytes);
+#if defined(__ADSGI__)
+  byte_copy((char*)s, buff + toffset, num_bytes);
+#else
+  memcpy(s, buff + toffset, num_bytes);
+#endif
   offset=toffset;
 }
 /**
- * Description not yet available.
- * \param
- */
+Reads num_bytes from s and writes to buffer.
+
+\param s pointer to read bytes from.
+\param num_bytes number of bytes to write to buffer.
+*/
 void DF_FILE::fwrite(const void* s, const size_t num_bytes)
 {
 #ifdef NO_DERIVS
@@ -321,7 +331,11 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
     toffset=num_bytes;
     offset=0;
   }
+#if defined(__ADSGI__)
   byte_copy(buff+offset,(char *) s,num_bytes);
+#else
+  memcpy(buff + offset, s, num_bytes);
+#endif
   offset=toffset;
 }
 /**

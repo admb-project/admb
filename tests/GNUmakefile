@@ -55,6 +55,7 @@ coverage: all-gtests
 	$(MAKE) tpl-vonmises
 	$(MAKE) tpl-vectorize
 	$(MAKE) tpl-bessel
+	$(MAKE) tpl-qbeta
 	$(MAKE) tpl-dd2
 	$(MAKE) tpl-beta_deviate
 	$(MAKE) tpl-betareg
@@ -91,6 +92,7 @@ all-tpls:\
   tpl-vonmises\
   tpl-vectorize\
   tpl-bessel\
+  tpl-qbeta\
   tpl-dd2\
   tpl-beta_deviate\
   tpl-betareg\
@@ -138,6 +140,9 @@ tpl-vectorize:
 
 tpl-bessel:
 	$(MAKE) --directory=bessel
+
+tpl-qbeta:
+	$(MAKE) --directory=qbeta
 
 tpl-dd2:
 	$(MAKE) --directory=dd2
@@ -250,6 +255,7 @@ endif
 	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=vectorize clean
 	$(MAKE) --directory=bessel clean
+	$(MAKE) --directory=qbeta clean
 	$(MAKE) --directory=dd2 clean
 	$(MAKE) --directory=beta_deviate clean
 	$(MAKE) --directory=cov_re clean

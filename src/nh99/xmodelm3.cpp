@@ -517,8 +517,8 @@ void tracing_message(int traceflag,const char *s);
 function_minimizer::function_minimizer(long int sz):
   mcmc2_flag(-1),
   robust_hybrid_flag(0),
-  ffbest(0),
-  ifn(0)
+  ifn(0),
+  ffbest(0)
   {
     lapprox=0;
     multinomial_weights=0;

@@ -88,6 +88,14 @@ public:
 };
 
 
+#ifndef TINY_AD_USE_TINY_VEC
+  #define TINY_AD_USE_TINY_VEC 1
+  #include <tiny_ad.hpp>
+#endif
+
+
+
+
 #if defined(__DERCHECK__)
 /**
  * Description not yet available.

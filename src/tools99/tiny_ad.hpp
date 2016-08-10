@@ -1,6 +1,6 @@
 // Copyright (C) 2016 Kasper Kristensen
 // License: GPL-2
-  double sign(const double &x);
+
 /* Standalone ? */
 #ifndef R_RCONFIG_H
 #include <cmath>
@@ -130,8 +130,7 @@ namespace tiny_ad {
     return F(x.value);				\
   }
   using ::fabs; using ::floor; using ::trunc;
-  //double sign(const double &x){return (x > 0) - (x < 0);}
-  using ::sign;
+  template<class T> double sign(const T &x) {return (x > 0) - (x < 0);}
   UNARY_MATH_ZERO_DERIV(sign)
   UNARY_MATH_ZERO_DERIV(floor)
   UNARY_MATH_ZERO_DERIV(trunc)

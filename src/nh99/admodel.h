@@ -2853,9 +2853,4 @@ int withinbound(int lb,int n,int ub);
 
 #include <Vectorize.hpp>
 
-#ifndef TINY_AD_USE_TINY_VEC
-#define TINY_AD_USE_TINY_VEC 1
-#include <tiny_ad.hpp>  
-#endif
-
 #endif

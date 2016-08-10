@@ -123,18 +123,19 @@ namespace tiny_ad {
     T value = x / y.value;
     return ad<T, V>(value, (-value / y.value) * y.deriv);
   }
-  /* Unary operators */
+  /* Unary operators with trivial derivatives */
 #define UNARY_MATH_ZERO_DERIV(F)		\
   template<class T, class V>			\
   double F (const ad<T, V> &x){			\
     return F(x.value);				\
   }
-  using ::fabs; using ::floor; using ::trunc;
-  template<class T> double sign(const T &x) {return (x > 0) - (x < 0);}
-  UNARY_MATH_ZERO_DERIV(sign)
+  using ::floor; using ::trunc;
   UNARY_MATH_ZERO_DERIV(floor)
   UNARY_MATH_ZERO_DERIV(trunc)
+  template<class T>
+  double sign(const T &x){return (x > 0) - (x < 0);}
 #undef UNARY_MATH_ZERO_DERIV
+  /* Unary operators with non-trivial derivatives */
 #define UNARY_MATH_DERIVATIVE(F,DF)		\
   template<class T, class V>			\
   ad<T, V> F (const ad<T, V> &x){		\
@@ -144,7 +145,7 @@ namespace tiny_ad {
   using ::exp;  using ::log;
   using ::sin;  using ::cos;
   using ::sinh; using ::cosh;
-  using ::sqrt;
+  using ::sqrt; using ::fabs;
   UNARY_MATH_DERIVATIVE(exp, exp)
   UNARY_MATH_DERIVATIVE(log, 1.0/)
   UNARY_MATH_DERIVATIVE(sin, cos)

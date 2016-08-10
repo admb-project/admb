@@ -489,6 +489,8 @@ ifeq ($(SHELL),cmd)
 	copy tools99\clist.h ${DIST}\include
 	copy tools99\admb_messages.h ${DIST}\include
 	copy tools99\Vectorize.hpp ${DIST}\include
+	copy tools99\tiny_ad.hpp ${DIST}\include
+	copy tools99\tiny_vec.hpp ${DIST}\include
 	copy df1b2-separable\adpool.h ${DIST}\include
 	copy df1b2-separable\adrndeff.h ${DIST}\include
 	copy df1b2-separable\df1b2fun.h ${DIST}\include
@@ -518,6 +520,8 @@ else
 	cp tools99/clist.h ${DIST}/include
 	cp tools99/admb_messages.h ${DIST}/include
 	cp tools99/Vectorize.hpp ${DIST}/include
+	cp tools99/tiny_ad.hpp ${DIST}/include
+	cp tools99/tiny_vec.hpp ${DIST}/include
 	cp df1b2-separable/adpool.h ${DIST}/include
 	cp df1b2-separable/adrndeff.h ${DIST}/include
 	cp df1b2-separable/df1b2fun.h ${DIST}/include

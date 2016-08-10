@@ -1129,9 +1129,14 @@ public:
   void allocate(int nrl,int nrh);
   void allocate(int nrl,int nrh,int ncl,int nch,int,int,const char *);
 
+  void allocate(
+    const int nrl, const int nrh,
+    const ivector& ncl, const ivector& nch,
+    const int nxl, const int nxh,
+    const char*);
+
   void allocate(int nrl,int nrh,
     const index_type& ncl, const index_type& nch);
-
 
   void allocate(int nrl,int nrh,
     const index_type& ncl, const index_type& nch,
@@ -1140,7 +1145,9 @@ public:
   void allocate(int nrl,int nrh,
     const index_type& ncl,const index_type& nch,
     const index_type& nxl,const index_type& nxh,
-    const char *);
+    const char*);
+
+
   void allocate(void);
   void deallocate(void);
 #  if defined(OPT_LIB)

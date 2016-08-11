@@ -54,6 +54,7 @@ coverage: all-gtests
 	$(MAKE) tpl-beta3
 	$(MAKE) tpl-vonmises
 	$(MAKE) tpl-tiny_ad_fe
+	$(MAKE) tpl-tiny_ad_re
 	$(MAKE) tpl-vectorize
 	$(MAKE) tpl-bessel
 	$(MAKE) tpl-qbeta
@@ -92,6 +93,7 @@ all-tpls:\
   tpl-beta3\
   tpl-vonmises\
   tpl-tiny_ad_fe\
+  tpl-tiny_ad_re\
   tpl-vectorize\
   tpl-bessel\
   tpl-qbeta\
@@ -139,6 +141,9 @@ tpl-vonmises:
 
 tpl-tiny_ad_fe:
 	$(MAKE) --directory=tiny_ad_fe
+
+tpl-tiny_ad_re:
+	$(MAKE) --directory=tiny_ad_re
 
 tpl-vectorize:
 	$(MAKE) --directory=vectorize
@@ -259,6 +264,7 @@ endif
 	$(MAKE) --directory=beta3 clean
 	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=tiny_ad_fe clean
+	$(MAKE) --directory=tiny_ad_re clean
 	$(MAKE) --directory=vectorize clean
 	$(MAKE) --directory=bessel clean
 	$(MAKE) --directory=qbeta clean

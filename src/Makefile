@@ -181,6 +181,7 @@ includes: objdestdir
 	copy tools99\adstring.hpp $(DESTDIR)\include
 	copy tools99\admb_messages.h $(DESTDIR)\include
 	copy tools99\Vectorize.hpp $(DESTDIR)\include
+	copy tools99\tiny_ad.hpp $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
 	copy nh99\nocontrib.h $(DESTDIR)\include\contrib\contrib.h
 

@@ -5,14 +5,42 @@
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
 #include <df1b2fun.h>
-//#define EPS double(3.0e-7)
-#define EPS double(1.0e-9)
-#define FPMIN double(1.0e-30)
+#include "../linad99/betacf_val.hpp"
+
 df1b2variable betacf(const df1b2variable& a,const df1b2variable& b, double x, int MAXIT);
 df1b2variable betacf(const df1b2variable& a,const df1b2variable& b, const df1b2variable& x, int MAXIT);
 
-//df1b2variable betai(const df1b2variable& a,const df1b2variable& b,
- // double x, int maxit=100);
+df1b2variable betacf(const df1b2variable& a,const df1b2variable& b, const df1b2variable& x, int MAXIT)
+{
+  typedef tiny_ad::variable<3, 3> Float;
+  Float a_ (value(a), 0);
+  Float b_ (value(b), 1);
+  Float x_ (value(x), 2);
+  Float ans = betacf<Float>(a_, b_, x_, MAXIT);  
+  double val=ans.value.value.value;
+  tiny_vec<double, 3> der1 = ans.value.value.getDeriv();
+  tiny_vec<double, 9> der2 = ans.value.getDeriv();
+  tiny_vec<double, 27> der3 = ans.getDeriv();
+
+  df1b2variable tmp;
+  value(tmp)=val;
+  double * xd=a.get_u_dot();
+  double * yd=b.get_u_dot();
+  double * zd=x.get_u_dot();
+  double * tmpd=tmp.get_u_dot();
+  for (unsigned int i=0;i<df1b2variable::nvar;i++)
+  {
+    *tmpd++ = der1[0] * *xd++ + der1[1] * *yd++ + der1[2] * *zd++;
+  }
+  if (!df1b2_gradlist::no_derivatives)
+  {
+    f1b2gradlist->write_pass1(&a,&b,&x,&tmp,
+     der1[0],der1[1],der1[2],
+     der2[0],der2[1],der2[2],der2[4],der2[5],der2[8],
+     der3[0],der3[1],der3[2],der3[4],der3[5],der3[8],der3[13],der3[14],der3[17],der3[26]);
+  }
+  return tmp;
+}
 
 /** Incomplete beta function for df1b2variable objects.
     \param a \f$a\f$
@@ -66,48 +94,12 @@ df1b2variable pbeta(double x, const df1b2variable & a,const df1b2variable & b, i
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-df1b2variable betacf(const df1b2variable& a,const df1b2variable& b,
-  double x, int MAXIT)
+df1b2variable betacf(const df1b2variable& a,const df1b2variable& b, double x, int MAXIT)
 {
-  int m,m2;
-  df1b2variable aa,c,d,del,h,qab,qam,qap;
-
-  qab=a+b;
-  qap=a+double(1.0);
-  qam=a-double(1.0);
-  c=double(1.0);
-  d=double(1.0)-qab*x/qap;
-  if (fabs(value(d)) < FPMIN) d=FPMIN;
-  d=double(1.0)/d;
-  h=d;
-  for (m=1;m<=MAXIT;m++) {
-    m2=2*m;
-    aa=double(m)*(b-double(m))*x/((qam+double(m2))*(a+double(m2)));
-    d=double(1.0)+aa*d;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=double(1.0)+aa/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=double(1.0)/d;
-    h *= d*c;
-    aa = -(a+double(m))*(qab+double(m))*x/((a+double(m2))*(qap+double(m2)));
-    d=double(1.0)+aa*d;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=double(1.0)+aa/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=double(1.0)/d;
-    del=d*c;
-    h *= del;
-    if (fabs(value(del)-double(1.0)) < EPS) break;
-  }
-  if (m > MAXIT) cerr << "a or b too big, or MAXIT too small in betacf"
-         << endl;
-  return h;
+  df1b2variable xx;
+  xx=x;
+  return betacf(a,b,xx,MAXIT);
 }
-
-
-
-
-
 
 df1b2variable pbeta(const df1b2variable & x, const df1b2variable & a, const df1b2variable & b, int maxit)
 {
@@ -123,45 +115,5 @@ df1b2variable pbeta(const df1b2variable & x, const df1b2variable & a, const df1b
     return 1.0-bt*betacf(b,a,1.0-x,maxit)/b;
 }
 
-df1b2variable betacf(const df1b2variable& a,const df1b2variable& b, const df1b2variable& x, int MAXIT)
-{
-  int m,m2;
-  df1b2variable aa,c,d,del,h,qab,qam,qap;
-
-  qab=a+b;
-  qap=a+double(1.0);
-  qam=a-double(1.0);
-  c=double(1.0);
-  d=double(1.0)-qab*x/qap;
-  if (fabs(value(d)) < FPMIN) d=FPMIN;
-  d=double(1.0)/d;
-  h=d;
-  for (m=1;m<=MAXIT;m++) {
-    m2=2*m;
-    aa=double(m)*(b-double(m))*x/((qam+double(m2))*(a+double(m2)));
-    d=double(1.0)+aa*d;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=double(1.0)+aa/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=double(1.0)/d;
-    h *= d*c;
-    aa = -(a+double(m))*(qab+double(m))*x/((a+double(m2))*(qap+double(m2)));
-    d=double(1.0)+aa*d;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=double(1.0)+aa/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=double(1.0)/d;
-    del=d*c;
-    h *= del;
-    if (fabs(value(del)-double(1.0)) < EPS) break;
-  }
-  if (m > MAXIT) cerr << "a or b too big, or MAXIT too small in betacf"
-         << endl;
-  return h;
-}
 
 
-
-#undef MAXIT
-#undef EPS
-#undef FPMIN

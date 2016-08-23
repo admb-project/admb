@@ -8250,10 +8250,8 @@ void gauss_legendre(const dvector & _x, const dvector & _w);
 
 //dvariable beta(const prevariable&,const prevariable&);
 
-double betacf(const double _a, const double _b, double _x, int maxit = 100);
-
-dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
-  int maxit = 100);
+double betacf(const double a, const double b, double x, int maxit = 100);
+dvariable betacf(const dvariable& a, const dvariable& b, const dvariable& x, int maxit = 100);
 
 dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
 double betai(const double a,const double b,const double x, int maxit=100);

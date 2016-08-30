@@ -472,15 +472,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	double hstep,hstep2;
 	hstep=hybeps;		// step size
 	hstep2=0.5*hstep;	// half step size
-	// randomize the number of steps
-	double rnd2=randn(rng);
-#ifdef OPT_LIB
-	int hnsteps = (int)(exp(0.2 * rnd2) * hybnstep);
-#else
-	double _hnsteps=exp(0.2 * rnd2) * hybnstep;
-	assert(_hnsteps > 0 && _hnsteps <= (double)INT_MAX);
-	int hnsteps = (int)_hnsteps;
-#endif
 	// Start of single trajectory
 	for (int i=1;i<=hnsteps;i++)
 	  {

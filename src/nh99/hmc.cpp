@@ -19,7 +19,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					  int restart_flag)
 {
   cout << "yes it worked" << endl << endl;
-  robust_hybrid_flag=0;
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
   //int mcmc_save_index=1;
@@ -458,27 +457,11 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     dvector F(1,nvar);
     F=Fbegin;
     p.fill_randn(rng);
-    if (robust_hybrid_flag)
-      {
-	double choice=randu(rng);
-	if (choice<0.05)
-	  {
-	    p*=3.0;
-	  }
-      }
     dmatrix xvalues(1,number_sims,1,nvar);
     dvector yold(1,nvar);
     yold=y;
-    double pprob;
-    if (robust_hybrid_flag==0)
-      {
-	pprob=0.5*norm2(p);
-      }
-    else
-      {
-	double r2=0.5*norm2(p);
-	pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
-      }
+    double pprob=0.5*norm2(p);
+
     double Hbegin=beginprior+pprob;
     double tmpprior = 0;
     int ii=1;
@@ -511,56 +494,19 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    cout <<
 	      cout << y << endl;
 	    dvector phalf=p-hstep2*F;
-	    if (robust_hybrid_flag==0)
-	      {
-		y+=hstep*phalf;
-	      }
-	    else
-	      {
-		//pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
-		double r2=0.5*norm2(phalf);
-		double z=0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
-		double xx=(0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/z;
-		dvector zz=xx*phalf;
-		y+=hstep*zz;
-	      }
+	    y+=hstep*phalf;
 	    z=x0+chd*y;
 	    tmpprior=get_hybrid_monte_carlo_value(nvar,z,g);
 	    F=g*chd;
 	    //F=tchd*g;
 	    p=phalf-hstep2*F;
 	  }
-	if (robust_hybrid_flag==0)
-	  {
-	    pprob=0.5*norm2(p);
-	  }
-	else
-	  {
-	    double r2=0.5*norm2(p);
-	    pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
-	  }
+	pprob=0.5*norm2(p);
 	double Ham=tmpprior+pprob;
 	double rr=randu(rng);
 	double pp=exp(Hbegin-Ham);
 	p.fill_randn(rng);
-	//p*=1.2;
-	if (robust_hybrid_flag)
-	  {
-	    double choice=randu(rng);
-	    if (choice<0.05)
-	      {
-		p*=3.0;
-	      }
-	  }
-	if (robust_hybrid_flag==0)
-	  {
-	    pprob=0.5*norm2(p);
-	  }
-	else
-	  {
-	    double r2=0.5*norm2(p);
-	    pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
-	  }
+	pprob=0.5*norm2(p);
 	if ((is%50)==1)
 	  //  cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
 	  cout << " hybrid sim " << is <<  "  accept rate " << iaccept/is

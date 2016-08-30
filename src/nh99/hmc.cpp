@@ -508,8 +508,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 #endif
          for (int i=1;i<=hnsteps;i++)
          {
-           if (forflag==1)
-           {
+	   cout <<
+	   cout << y << endl;
              dvector phalf=p-hstep2*F;
              if (robust_hybrid_flag==0)
              {
@@ -530,27 +530,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
              //F=tchd*g;
              p=phalf-hstep2*F;
            }
-           else
-           {
-             dvector phalf=p+hstep2*F;
-             if (robust_hybrid_flag==0)
-             {
-               y-=hstep*phalf;
-             }
-             else
-             {
-               double r2=0.5*norm2(phalf);
-               double z=0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
-               dvector zz=(0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/z*phalf;
-               y-=hstep*phalf;
-             }
-             z=x0+chd*y;
-             tmpprior=get_hybrid_monte_carlo_value(nvar,z,g);
-             F=g*chd;
-             //F=tchd*g;
-             p=phalf+hstep2*F;
-           }
-         }
          if (robust_hybrid_flag==0)
          {
            pprob=0.5*norm2(p);

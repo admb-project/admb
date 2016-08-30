@@ -438,18 +438,15 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     /*double llc=*/get_hybrid_monte_carlo_value(nvar,z,g);
     /*double llbest=*/get_hybrid_monte_carlo_value(nvar,z,g);
     //lbmax=llbest;
-
-
     int number_sims;
     if (nmcmc<=0)
       {
-	number_sims=  100000;
+	number_sims=  1000;
       }
     else
       {
 	number_sims=  nmcmc;
       }
-    //double hybeps2=0.5*hybeps;
     double beginprior=get_hybrid_monte_carlo_value(nvar,z,g);
     dvector Fbegin=g*chd;
     // use trand(chd) ?
@@ -459,27 +456,22 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     p.fill_randn(rng);
     dmatrix xvalues(1,number_sims,1,nvar);
     dvector yold(1,nvar);
+    // Initialize the algorithm: momenta and position, H
     yold=y;
     double pprob=0.5*norm2(p);
-
     double Hbegin=beginprior+pprob;
     double tmpprior = 0;
+    
     int ii=1;
     initial_params::copy_all_values(parsave,ii);
-    // detmine whether to go forward or backward
 
+    // Start of MCMC chain
     double iaccept=0.0;
     for (int is=1;is<=number_sims;is++)
       {
-	int forflag=1;
-	//double rnd=randu(rng);
-	//if (rnd<0.5) forflag=0;
 	double hstep,hstep2;
-	//if (forflag)
-	hstep=hybeps;
-	//else
-	// hstep=-hybeps;
-	hstep2=0.5*hstep;
+	hstep=hybeps;		// step size
+	hstep2=0.5*hstep;	// half step size
 	// randomize the number of steps
 	double rnd2=randn(rng);
 #ifdef OPT_LIB
@@ -489,29 +481,30 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	assert(_hnsteps > 0 && _hnsteps <= (double)INT_MAX);
 	int hnsteps = (int)_hnsteps;
 #endif
+	// Start of single trajectory
 	for (int i=1;i<=hnsteps;i++)
 	  {
-	    cout <<
-	      cout << y << endl;
-	    dvector phalf=p-hstep2*F;
-	    y+=hstep*phalf;
-	    z=x0+chd*y;
+	    dvector phalf=p-hstep2*F; // update momentum by half step (why negative?)
+	    y+=hstep*phalf;	      // update parameters by full step
+	    z=x0+chd*y;		      // transform?
 	    tmpprior=get_hybrid_monte_carlo_value(nvar,z,g);
 	    F=g*chd;
-	    //F=tchd*g;
-	    p=phalf-hstep2*F;
-	  }
-	pprob=0.5*norm2(p);
-	double Ham=tmpprior+pprob;
-	double rr=randu(rng);
-	double pp=exp(Hbegin-Ham);
+	    p=phalf-hstep2*F; // update momentum by half step (why negatiev?)
+	  } // end of trajectory
+	pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
+	double Ham=tmpprior+pprob; // H at proposed state
+	double rr=randu(rng);	   // Runif(1)
+	double pp=exp(Hbegin-Ham); // acceptance ratio, alpha
+	// this looks like a bug -- should leave momentum alone here
 	p.fill_randn(rng);
 	pprob=0.5*norm2(p);
+	//
+	
 	if ((is%50)==1)
 	  //  cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
 	  cout << " hybrid sim " << is <<  "  accept rate " << iaccept/is
 	       << "  Hbegin-Ham " << Hbegin-Ham << "  Ham " << Ham << endl;
-	if (rr<pp)
+	if (rr<pp) // accept proposed value
 	  {
 	    iaccept++;
 	    yold=y;
@@ -521,7 +514,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    ii=1;
 	    initial_params::copy_all_values(parsave,ii);
 	  }
-	else
+	else // reject proposed value and reuse state
 	  {
 	    y=yold;
 	    z=x0+chd*y;
@@ -529,7 +522,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    F=Fbegin;
 	  }
 	(*pofs_psave) << parsave;
-      }
+      } // end of MCMC chain
+    
     // cout << " saved  " << parsave(parsave.indexmin()) << " "
     //    << parsave(parsave.indexmax()) << endl;
     //double ll=get_hybrid_monte_carlo_value(nvar,parsave,g);

@@ -61,7 +61,7 @@ code \texttt{double dfx=-value(x)*value(y);}:
     dvariable y;
     value(y)=exp(-0.5*square(value(x)));
     double dfx=-value(x)*value(y);
-    AD_SET_DERIVATIVES(y,x,dfx);  // 1 dependent variable 
+    AD_SET_DERIVATIVES1(y,x,dfx);  // 1 dependent variable 
     return y;
   }
 \end{lstlisting}
@@ -85,7 +85,7 @@ can be used later. The line
 calculates the derivative $f^\prime(x)$
 of $y$ with respect to $x$ and stores it with the line of code
 \begin{lstlisting}
-  AD_SET_DERIVATIVES(y,x,dfx);
+  AD_SET_DERIVATIVES1(y,x,dfx);
 \end{lstlisting}
 This code will only generate 32 bytes of derivative information.
 
@@ -104,7 +104,7 @@ PARAMETER_SECTION
  !! x=2;
   objective_function_value f;
 PROCEDURE_SECTION
-  f=square(errf(x);
+  f=square(errf(x));
   
 GLOBALS_SECTION
   #include <admodel.h>
@@ -113,7 +113,7 @@ GLOBALS_SECTION
     dvariable y;
     value(y)=exp(-0.5*square(value(x)));
     double dfx=-value(x)*value(y);
-    AD_SET_DERIVATIVES(y,x,dfx);  // 1 dependent variable 
+    AD_SET_DERIVATIVES1(y,x,dfx);  // 1 dependent variable 
     return y;
   }
 \end{lstlisting}
@@ -151,7 +151,7 @@ GLOBALS_SECTION
     value(len)=clinf*(1-pow(crho,t));
     double dflinf=1-pow(crho,t);
     double dfrho=-clinf*t*pow(crho,t-1);
-    AD_SET_DERIVATIVES2(len,rho,dfrho,linf,dflinf);  // 3 dependent variable 
+    AD_SET_DERIVATIVES2(len,rho,dfrho,linf,dflinf);  // 2 dependent variable 
     return len;
   }
 \end{lstlisting}

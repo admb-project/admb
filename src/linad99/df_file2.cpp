@@ -134,11 +134,11 @@ void DF_FILE::fwrite(const double x)
   memcpy(buff+offset, &x, sizeof(double));
   offset=toffset;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Read _x from buffer.
+
+\param x int to read.
+*/
 void DF_FILE::fread(const int& _x)
 {
   int& x = (int&)_x;
@@ -157,11 +157,11 @@ void DF_FILE::fread(const int& _x)
   memcpy(&x, buff+toffset, sizeof(int));
   offset=toffset;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Write _x to buffer.
+
+\param x int to write.
+*/
 void DF_FILE::fwrite(const int& x)
 {
   #ifdef NO_DERIVS

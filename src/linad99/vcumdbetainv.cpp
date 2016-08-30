@@ -250,3 +250,6 @@ df1_two_variable gammln(const df1_two_variable& z)
   }
 }
 
+dvariable qbeta(dvariable x, dvariable a, dvariable b, double eps){
+  return inv_cumd_beta_stable(a,b,x,eps);
+}

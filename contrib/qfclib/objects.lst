@@ -1,4 +1,5 @@
 HEADERS=qfclib.h
 OBJECTS=\
+ gsl_ran_gamma.obj\
  qfc_est.obj\
  qfc_sim.obj

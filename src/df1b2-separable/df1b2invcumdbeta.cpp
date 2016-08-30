@@ -159,7 +159,8 @@
                  +2.0*F_xx* *z.get_u_z() * *z.get_u_yz()
                  +F_xx* *z.get_u_y() * *z.get_u_zz()
                  +2.0*F_xz* *z.get_u_yz()
-                 +F_xy * *z.get_u_zz()* *z.get_u_y()
+		 // +F_xy * *z.get_u_zz()* *z.get_u_y() //** got it!
+                 +F_xy * *z.get_u_zz() //**
                  +F_xzz * *z.get_u_y()
                  +F_x * *z.get_u_yzz());
 
@@ -184,10 +185,16 @@
      {
        f1b2gradlist->write_pass1(&_y,&_a,&_b,&tmp,
         F_x,F_y,F_z,
-        F_xx,F_xy,F_xz,F_yy,F_yz,F_zz,F_xxx,F_xxy,F_xxz,F_xyy,F_xyz,
-        F_xzz,F_yyy,F_yyz,F_yzz,F_zzz);
+        F_xx,F_xy,F_xz,F_yy,F_yz,F_zz,
+	F_xxx,F_xxy,F_xxz,F_xyy,F_xyz,F_xzz,F_yyy,F_yyz,F_yzz,F_zzz);
      }
-
+     //  cout<<endl<<"-----------"<<endl;
+     //  cout<<_a<<"\t"<<_b<<"\t"<<_y<<endl;
+     //  cout<<F_x<<"\t"<<F_y<<"\t"<<F_z<<endl;
+     //  cout<<F_xx<<"\t"<<F_xy<<"\t"<<F_xz<<"\t"<<F_yy<<"\t"<<F_yz<<"\t"<<F_zz<<endl;
+     //  cout<<F_xxx<<"\t"<<F_xxy<<"\t"<<F_xxz<<"\t"<<F_xyy<<"\t"<<F_xyz<<"\t"<<F_xzz<<"\t"<<F_yyy<<"\t"<<F_yyz<<"\t"<<F_yzz<<"\t"<<F_zzz<<endl;
+     //  cout<<endl<<"-----------"<<endl;
+     //  ad_exit(1);
     return tmp;
   }
 
@@ -367,4 +374,9 @@ df3_three_variable gammln(const df3_three_variable& z)
   {
     return gammlnguts(z);
   }
+}
+
+
+df1b2variable qbeta(df1b2variable x, df1b2variable a, df1b2variable b, double eps){
+  return inv_cumd_beta_stable(a,b,x,eps);
 }

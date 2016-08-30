@@ -1,4 +1,34 @@
 --------------------------------------------------------------------------------
+ADMB-IDE 11.2-0 (2015-01-12)
+--------------------------------------------------------------------------------
+o Updated ADMB from 10.1 to 11.2.
+
+o Updated GCC from 4.5.2 to 4.8.1 (win32) and 4.9.2 (win64).
+
+o Updated GDB from 7.4 to 7.6.1.1 (win32) and 7.8.1 (win64).
+
+o Updated Emacs from 23.4.1 to 24.4.1.
+
+o Updated admb-mode from 6.8 to 11.2-0.
+
+o Updated ADMB template to demonstrate PI and sumsq().
+
+o Adapted ADMB-IDE to new compilation flags. Safe compilation is now the
+  default, with an optional flag -f to build a fast (and not safe) model.
+
+o Added Emacs packages AUCTeX (for editing LaTeX documents) and ESS (for working
+  with R and other statistical software).
+
+o Added menu entry to stop a running process.
+
+o Enabled shortcut key C-h to access the Emacs help system.
+
+o Added section on conflicting compilers and libraries to manual.
+
+
+
+
+--------------------------------------------------------------------------------
 ADMB-IDE 10.1-0 (2012-03-01)
 --------------------------------------------------------------------------------
 o Updated ADMB from 10.0 to 10.1.
@@ -91,7 +121,7 @@ o Improved code template.
 
 o Improved C-S-home and C-S-end selection.
 
-o Added chapter about Emacs configuration to manual.
+o Added section about Emacs configuration to manual.
 
 
 

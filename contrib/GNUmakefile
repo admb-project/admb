@@ -1,4 +1,6 @@
 ifeq ($(OS),Windows_NT)
+  ifeq ($(TERM),cygwin)
+  else
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL = cmd
     ifeq ($(SHELL),cmd)
@@ -13,6 +15,7 @@ ifeq ($(OS),Windows_NT)
       PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
     endif
     PATH:=$(PATH):$(MYPWD)/../utilities
+  endif
   endif
 endif
 ifeq ($(SHELL),cmd)
@@ -56,7 +59,7 @@ ifeq ($(DEBUG),yes)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb-contrib.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-contrib-shared.a -Wl,--no-whole-archive
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb-contribo.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-contribo-shared.a -Wl,--no-whole-archive
   else
-    ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
+    ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contrib.so -Wl,-force_load ../build/debug/lib/libadmb-contrib-shared.a
 	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contribo.so -Wl,-force_load ../build/debug/lib/libadmb-contribo-shared.a
     else
@@ -69,7 +72,7 @@ else
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb-contrib.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-contrib-shared.a -Wl,--no-whole-archive
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb-contribo.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-contribo-shared.a -Wl,--no-whole-archive
   else
-    ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
+    ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contrib.so -Wl,-force_load ../build/dist/lib/libadmb-contrib-shared.a
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contribo.so -Wl,-force_load ../build/dist/lib/libadmb-contribo-shared.a
     else
@@ -204,6 +207,7 @@ else
 endif
 
 clean:
+	$(MAKE) --directory=ide clean
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=gdbprintlib clean
 	$(MAKE) --directory=qfclib clean

@@ -207,6 +207,45 @@ void df1b23array::allocate(int nrl,int nrh,
     v[i].allocate(ad_integer(ncl(i)),ad_integer(nch(i)),nxl(i),nxh(i));
   }
 }
+/**
+Allocate 3array with specified indexes.
+
+\param nrl 3array lower row index
+\param nrh 3array upper row index
+\param ncl vector of lower row indexes
+           for each row element in 3array
+\param nch vector of upper row indexes
+           for each row element in 3array
+\param nxl lower row index
+           for each row and column element in 3array
+\param nxh upper row index
+           for each row and column element in 3array
+\param s id
+*/
+void df1b23array::allocate(
+  const int nrl, const int nrh,
+  const ivector& ncl, const ivector& nch,
+  const int nxl, const int nxh,
+  const char* s)
+{
+  index_min=nrl;
+  index_max=nrh;
+  int rs=size();
+  if ( (v = new df1b2matrix[rs]) == 0)
+  {
+      cerr << " Error allocating memory in df1b23array contructor\n";
+      ad_exit(21);
+  }
+  if ( (shape=new vector_shapex(nrl,nrh,v)) == 0)
+  {
+    cerr << " Error allocating memory in df1b23array contructor\n";
+  }
+  v -= indexmin();
+  for (int i=nrl; i<=nrh; i++)
+  {
+    v[i].allocate(ncl(i), nch(i), nxl, nxh);
+  }
+}
 
 /**
  * Description not yet available.

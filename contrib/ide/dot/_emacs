@@ -1,13 +1,13 @@
 ;;; .emacs --- configuration file for AD Model Builder IDE
 
-;; Copyright (C) 2009, 2010, 2011, 2012 Arni Magnusson
+;; Copyright (C) 2009, 2010, 2011, 2012, 2015 Arni Magnusson
 
 ;; Author:   Arni Magnusson
-;; Version:  10.1
+;; Version:  11.2
 ;; Keywords: emulations
 ;; URL:      http://admb-project.org/community/editing-tools/admb-ide/core
 
-(defconst admb-ide-version "10.1" "ADMB-IDE version number.")
+(defconst admb-ide-version "11.2" "ADMB-IDE version number.")
 
 ;; This .emacs file is provided under the general terms of the Simplified BSD License.
 ;; Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
@@ -39,7 +39,9 @@
 
 ;;; History:
 ;;
-;; 01 Mar 2012  10.1     Commented out `recentf-mode', which had been causing long delays for many users. This feature
+;; 12 Jan 2013  11.2     Reactivated C-h to access help system. Removed dependency on `pc-selection-mode'. Set encoding
+;;                       to UTF-8 on Windows. Let Linux decide encoding and initial window size. Added ESS and AUCTeX.
+;; 29 Feb 2012  4.5.2-1  Commented out `recentf-mode', which had been causing long delays for many users. This feature
 ;;                       can be turned back on by uncommenting the line.
 ;; 17 Feb 2011  4.5.0-1  Added functions `admb-ide-version', `delete-trailing-spc-tab-m', and
 ;;                       `toggle-trailing-whitespace'. Bound C-p to open model file in other window, C-- to toggle
@@ -74,10 +76,9 @@
 ;;
 ;;======================================================================================================================
 (defvar easy-default-directory "~" "Directory where `find-file' and `write-file' start looking.")
-(if (string-match "windows" (prin1-to-string system-type))
-    (progn (w32-send-sys-command 61488)(setq easy-default-directory "c:/"))
-  (progn (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
-         (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))))
+(if (string-match "windows" (prin1-to-string system-type)) ; if Windows maximize and UTF-8, Linux takes care of itself
+    (progn (modify-frame-parameters nil '((fullscreen . maximized)))(prefer-coding-system 'utf-8)
+           (setq-default buffer-file-coding-system 'utf-8)(setq easy-default-directory "c:/")))
 ;;======================================================================================================================
 ;;
 ;; 2  INTERFACE
@@ -95,6 +96,7 @@
 (setq-default truncate-lines t   )
 (show-paren-mode t               )
 (setq tool-bar-map (make-sparse-keymap))
+(setq tool-bar-style 'image) ; suppress fixed text labels on toolbar in Linux
 (let ((undo-form '(and (not buffer-read-only)(not (eq t buffer-undo-list)) ; from menu-bar.el
                        (if (eq last-command 'undo)(listp pending-undo-list)(consp buffer-undo-list)))))
   (tool-bar-add-item "new"   'new-buffer          'new-buffer          :help "New"                              )
@@ -109,6 +111,7 @@
 ;; 2.2  Editing
 ;;--------------
 (cua-mode t                                  )
+(delete-selection-mode 1                     )
 (setq cua-prefix-override-inhibit-delay 0.001)
 (defalias 'yes-or-no-p 'y-or-n-p             )
 (require 'imenu)(setq imenu-max-items 43     )
@@ -152,18 +155,28 @@
 ;;----------------
 (if (file-directory-p "~/emacs/lisp/")
     (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)(cd easy-default-directory)))
-(require 'pc-select) ; beginning-of-buffer-nomark, end-of-buffer-nomark
-(autoload 'admb-mode "admb" "Edit ADMB code." t)
+(autoload 'admb-mode      "admb"     "Edit ADMB code."        t)
+(autoload 'R              "ess-site" "Interactive R session." t)
+(autoload 'R-mode         "ess-site" "Edit R code."           t)(autoload 'r-mode "ess-site") ;*-R-*
+(autoload 'Rd-mode        "ess-site" "Edit R documentation."  t)
+(autoload 'Rnw-mode       "ess-site" "Edit Sweave document."  t)
+(autoload 'TeX-latex-mode "tex-site" "Edit LaTeX document."   t) ; "latex" in Win, "auctex" in Linux
 ;;-------------------
 ;; 3.6  Associations
 ;;-------------------
-(setq file-name-buffer-file-type-alist nil)
-(add-to-list 'auto-mode-alist '("\\.ctl$" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.dat$" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.par$" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.pin$" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.rep$" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl$" . admb-mode     ))
+(add-to-list 'auto-mode-alist '("\\.tpl$"      . admb-mode     ))
+(add-to-list 'auto-mode-alist '("\\.ctl$"      . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("\\.dat$"      . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("\\.par$"      . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("\\.pin$"      . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("\\.rep$"      . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("\\.R$"        . R-mode        ))
+(add-to-list 'auto-mode-alist '("\\.Rprofile$" . R-mode        ))
+(add-to-list 'auto-mode-alist '("/Redit"       . R-mode        ))
+(add-to-list 'auto-mode-alist '("/tmp/Rtmp"    . R-mode        ))
+(add-to-list 'auto-mode-alist '("\\.Rd$"       . Rd-mode       ))
+(add-to-list 'auto-mode-alist '("\\.Rnw$"      . Rnw-mode      ))
+(add-to-list 'auto-mode-alist '("\\.tex$"      . TeX-latex-mode))
 ;;======================================================================================================================
 ;;
 ;; 4  KEYBINDINGS
@@ -199,7 +212,6 @@
 ;;--------------
 ;; 4.3  Special
 ;;--------------
-(require 'delsel)
 (global-set-key [escape]      'keyboard-escape-quit    ) ; prefix
 (global-set-key [f1]          'admb-help               ) ; prefix
 (global-set-key [S-f1]        'admb-ide-version        )
@@ -212,8 +224,8 @@
 (global-set-key [f6]          'other-window            )
 (global-set-key [C-f6]        'next-buffer             )
 (global-set-key [M-f6]        'next-buffer             )
+;; Function keys [f7]-[f10] are set in `easy-admb-hook' and [f11]-[f12] in `admb-mode'
 (global-set-key [C-backspace] 'backward-delete-word    ) ; backward-kill-word
-(global-set-key [delete]      'delete-char             ) ; explicitly different from C-d
 (global-set-key [C-delete]    'delete-word             ) ; kill-line
 (global-set-key [S-return]    'comment-indent-new-line )
 (global-set-key [?\C- ]       'dabbrev-expand          ) ; set-mark-command
@@ -234,7 +246,6 @@
 (global-set-key [?\C-e]    'ignore                    ) ; move-end-of-line
 (global-set-key [?\C-f]    'isearch-forward           ) ; forward-char
 (global-set-key [?\C-g]    'goto-line                 ) ; keyboard-quit
-(global-set-key [?\C-h]    'ignore                    ) ; prefix
 (global-set-key [?\C-j]    'ignore                    ) ; eval-print-last-sexp
 (global-set-key [?\C-k]    'ignore                    ) ; kill-line
 (global-set-key [?\C-l]    'recenter                  ) ; recenter-top-bottom
@@ -271,35 +282,35 @@
 ;;-----------
 (defun kill-this-buffer () "Kill current buffer." (interactive)(kill-buffer (current-buffer)))
 (defun kill-buffer-maybe-window () "Kill current buffer and window." (interactive)
-  (kill-this-buffer)(if (> (length (window-list)) 1)(delete-window)))
+       (kill-this-buffer)(if (> (length (window-list)) 1)(delete-window)))
 (defun new-buffer () "Create new buffer." (interactive)
-  (switch-to-buffer (generate-new-buffer "Untitled"))(eval (list (default-value 'major-mode))))
+       (switch-to-buffer (generate-new-buffer "Untitled"))(eval (list (default-value 'major-mode))))
 ;;-----------
 ;; 5.2  Edit
 ;;-----------
 (defun backward-delete-word (N) "Delete previous N words." (interactive "*p")(delete-word (- N)))
 (defun delete-word (N) "Delete following N words." (interactive "*p")
-  (delete-region (point)(save-excursion (forward-word N)(point))))
+       (delete-region (point)(save-excursion (forward-word N)(point))))
 (defun mouse-extend-region (click) "Extend region to mouse position." (interactive "e")
-  (if (and mark-active transient-mark-mode)(mouse-set-point click)(mouse-save-then-kill click)))
+       (if (and mark-active transient-mark-mode)(mouse-set-point click)(mouse-save-then-kill click)))
 ;;-----------
 ;; 5.3  View
 ;;-----------
 (defun toggle-trailing-whitespace () "Toggle highlighting of trailing whitespace." (interactive)
-  (setq show-trailing-whitespace (not show-trailing-whitespace))(redraw-display)
-  (message "Trailing whitespace highlighting %s" (if show-trailing-whitespace "ON" "OFF")))
+       (setq show-trailing-whitespace (not show-trailing-whitespace))(redraw-display)
+       (message "Trailing whitespace highlighting %s" (if show-trailing-whitespace "ON" "OFF")))
 ;;-------------
 ;; 5.5  Format
 ;;-------------
 (defun delete-trailing-spc-tab-m () "Delete spaces, tabs, and ^M glyphs from line ends." (interactive "*")
-  (let ((count 0))(save-excursion (goto-char (point-min))
-                                  (while (re-search-forward "[ \t\r]+$" nil t)(replace-match "")
-                                         (setq count (+ count 1)))(message "Cleaned %d lines" count))))
+       (let ((count 0))(save-excursion (goto-char (point-min))
+                                       (while (re-search-forward "[ \t\r]+$" nil t)(replace-match "")
+                                              (setq count (+ count 1)))(message "Cleaned %d lines" count))))
 ;;-----------
 ;; 5.8  Help
 ;;-----------
 (defun admb-ide-version () "Show ADMB IDE version number." (interactive)
-  (message (concat "ADMB-IDE version " admb-ide-version)))
+       (message (concat "ADMB-IDE version " admb-ide-version)))
 ;;======================================================================================================================
 ;;
 ;; 6  LANGUAGE MODES
@@ -327,10 +338,12 @@
   (local-unset-key [?\C-c ?\C-m]      )
   (local-unset-key [?\C-c ?\C-o]      )
   (local-unset-key [?\C-c ?\C-p]      )
+  (local-unset-key [?\C-c ?\C-q]      )
   (local-unset-key [?\C-c ?\C-r]      )
   (local-unset-key [?\C-c ?\C-s]      )
   (local-unset-key [?\C-c ?\C-v]      )
   (local-unset-key [?\C-c ?\C-w]      )
+  ;; Keybindings that should only be active in an ADMB buffer
   (local-set-key [f7]    'admb-tpl2cpp        )
   (local-set-key [f8]    'admb-build          )
   (local-set-key [f9]    'admb-run            )
@@ -340,7 +353,7 @@
   (local-set-key [?\C-.] 'admb-toggle-section))
 (add-hook 'admb-mode-hook 'easy-admb-hook)
 ;;----------
-;; 6.4  C++
+;; 6.5  C++
 ;;----------
 (defun easy-gdb-hook ()
   (message nil)(setq indent-line-function 'gud-gdb-complete-command)(setq gdb-show-main t)
@@ -362,7 +375,7 @@
 (defun easy-help-hook ()(local-set-key [escape] 'kill-buffer-maybe-window))
 (add-hook 'help-mode-hook 'easy-help-hook)
 ;;--------------
-;; 7.25 Outline
+;; 7.26 Outline
 ;;--------------
 (defvar outline-previous-mode '(admb-mode) "Mode to return to. See `outline-return'.")
 (defun easy-outline-hook ()
@@ -379,18 +392,18 @@
   (local-set-key [left]    'hide-entry              )
   (local-set-key [right]   'show-entry              )
   (defun outline-mouse-select () "Select position and return to `outline-previous-mode'." (interactive)
-    (outline-return)(beginning-of-line))
+         (outline-return)(beginning-of-line))
   (defun outline-return () "Return to `outline-previous-mode'." (interactive)(eval outline-previous-mode))
   (defun outline-window-or-return () "Delete other windows or return to `outline-previous-mode'." (interactive)
-    (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
+         (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
 (add-hook 'outline-mode-hook 'easy-outline-hook)
 ;;--------------
-;; 7.28 Recentf
+;; 7.29 Recentf
 ;;--------------
 (defun easy-recentf-hook ()(local-set-key [escape] 'recentf-cancel-dialog))
 (add-hook 'recentf-dialog-mode-hook 'easy-recentf-hook)
 ;;-------------
-;; 7.30 Search
+;; 7.32 Search
 ;;-------------
 (defun easy-isearch-hook ()
   (define-key isearch-mode-map [escape] 'isearch-exit           )

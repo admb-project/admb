@@ -18,8 +18,7 @@
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-dvariable betai(const dvariable a, const dvariable b, const dvariable x,
-  int maxit)
+dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit)
 {
   dvariable bt;
 
@@ -31,4 +30,19 @@ dvariable betai(const dvariable a, const dvariable b, const dvariable x,
     return bt*betacf(a,b,x,maxit)/a;
   else
     return 1.0-bt*betacf(b,a,1.0-x,maxit)/b;
+}
+
+/** beta distribution function for variable objects (alias of ibeta function with same arguments order as in R).
+    \param x \f$x\f$
+    \param a \f$a\f$
+    \param b \f$b\f$
+    \param maxit Maximum number of iterations for the continued fraction approximation in betacf.
+    \return Incomplete beta function \f$I_x(a,b)\f$
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
+dvariable pbeta(const dvariable x, const dvariable a, const dvariable b, int maxit){
+  return betai(a, b, x, maxit);
 }

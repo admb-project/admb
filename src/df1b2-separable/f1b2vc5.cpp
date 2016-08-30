@@ -73,7 +73,7 @@ void check_shape(const df1b2vector & _x,const df1b2matrix & _y,const char * s)
  * Description not yet available.
  * \param
  */
-df1b2vector& df1b2vector::operator = (const df1b2vector& _x)
+df1b2vector& df1b2vector::operator=(const df1b2vector& _x)
 {
   if (allocated())
   {
@@ -119,12 +119,12 @@ df1b2vector& df1b2vector::operator = (const df1b2variable& _x)
   for (int i=mmin;i<=mmax;i++) (*this)(i)=x;
   return *this;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-df1b2vector& df1b2vector::operator = (double x)
+Assign value x to each element of df1b2vector.
+
+\param x assigment value
+*/
+df1b2vector& df1b2vector::operator=(double x)
 {
   int mmin=indexmin();
   int mmax=indexmax();
@@ -706,12 +706,10 @@ void df1b2matrix::allocate(int nrl,int nrh,const index_type& ncl,
     v[i].allocate(ncl(i),nch(i));
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
-df1b2matrix::df1b2matrix(const df1b2matrix & x)
+Copy constructor
+*/
+df1b2matrix::df1b2matrix(const df1b2matrix& x)
 {
   index_min=x.index_min;
   index_max=x.index_max;
@@ -719,11 +717,11 @@ df1b2matrix::df1b2matrix(const df1b2matrix & x)
   shape=x.shape;
   if (shape) (shape->ncopies)++;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Allocate square matrix.
+\param nrl lower index
+\param nrh upper index
+*/
 void df1b2matrix::allocate(int nrl,int nrh)
 {
   index_min=nrl;

@@ -1,4 +1,8 @@
 .ONESHELL:
+ifeq ($(TERM),cygwin)
+EXT=.cmd
+ADMB_HOME=../../..
+else
 ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
 SHELL = cmd
 ADMB_HOME=$(shell cmd /C cd .. && cd)
@@ -7,6 +11,7 @@ ADMB_HOME=$(shell cd .. && pwd)
 endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
+endif
 endif
 ifdef ADMB_OPTIONS
 OPTIONS:= $(ADMB_OPTIONS)
@@ -17,8 +22,10 @@ endif
 ifdef FAST_OPTION
 OPTIONS:= $(OPTIONS) -f
 endif
-ifndef TRAVIS_CI
+ifndef TRAVIS
+ifneq ($(TERM),cygwin)
 PROG=time
+endif
 endif
 
 default: simple
@@ -27,6 +34,9 @@ ifdef PROG_VALGRIND
 all: simple caest
 else
 all: admb admb-re
+ifneq ($(TERM),cygwin)
+	cd autodif && $(MAKE)
+endif
 endif
 
 admb:\
@@ -84,7 +94,7 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif
@@ -118,7 +128,7 @@ bcb:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
   endif
@@ -129,7 +139,7 @@ bvprobit:
 	cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 glmmadmb:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	@#Do not catch for admb-9.x
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
@@ -137,7 +147,7 @@ ifndef TRAVIS_CI
 endif
 
 caest:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif
@@ -168,7 +178,7 @@ orange2:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 orange_cor:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif
@@ -181,7 +191,7 @@ polio:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 sdv:
-ifndef TRAVIS_CI
+ifndef TRAVIS
   ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
   endif

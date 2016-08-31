@@ -1,3 +1,10 @@
+all:
+	$(MAKE) --directory hemholtz
+	$(MAKE) --directory io_examp
+	$(MAKE) --directory newt
+	$(MAKE) --directory simple
+	$(MAKE) --directory struct
+
 run:
 	#@make -C b
 	#@make -C bigmin

@@ -16,6 +16,7 @@ implements reverse mode automatic differentiation. A closely related software
 package, ADMB-RE, implements random effects in nonlinear models.
 
 ADMB is an open source project.  Read the AD Model Builder [LICENSE](LICENSE.html).
+[LICENSE_link]: https://github.com/admb-project/admb/releases/download/admb-11.5/LICENSE.html
 
 Donations
 ---------
@@ -37,9 +38,11 @@ The abstract and publication can be freely [downloaded][publisher_link] from the
 
 Documentation
 -------------
-Read release notes for changes and features in [CHANGES](CHANGES.html).
+Read release notes for changes and features in [CHANGES][CHANGES_link].
+[CHANGES_link]: https://github.com/admb-project/admb/releases/download/admb-11.5/CHANGES.html
 
-Read the installation procedures in [INSTALL](INSTALL.html) for Unix and Windows computers.
+Read the installation procedures in [INSTALL][INSTALL_link] for Unix and Windows computers.
+[INSTALL_link]: https://github.com/admb-project/admb/releases/download/admb-11.5/INSTALL.html
 
 User manuals for AD Model Builder, the AUTODIF library and the ADMB-RE nonlinear
 random effects module are in the [ADMB downloads][ADMB_downloads_link].
@@ -59,8 +62,8 @@ Mailing list archives
 + [Users][ADMB_users] is the general mailing list.
 + [Developers][ADMB_developers] is core team mailing list.
 
-[ADMB_users]: http://lists.admb-project.org/pipermail/users/
-[ADMB_developers]: http://lists.admb-project.org/pipermail/developers/
+[ADMB_users]: https://groups.google.com/a/admb-project.org/forum/#!forum/users
+[ADMB_developers]: https://groups.google.com/a/admb-project.org/forum/#!forum/developers
 
 Contributors
 ------------

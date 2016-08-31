@@ -435,10 +435,8 @@
     return mfexp(mu + randn(rng)*sigma); 
   }
 
-
-
-
-
+namespace qfclib
+{
   /** generate random gamma number, pseudo code see http://en.wikipedia.org/wiki/Gamma_distribution ,
    * Gamma(alpha, belta)=x^(alpha-1)*belta^alpha*exp(-belta*x)/gamma(alpha)
    * \ingroup QFC
@@ -481,10 +479,9 @@
 
     return (em + gam_n1);
   }
+}
 
-
-
-
+  double rgamma(double alpha, random_number_generator& rng);
 
   /** generate random gamma number, 
    * mean is alpha/belta,  variance is alpha/(belta^2)

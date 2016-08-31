@@ -2852,4 +2852,6 @@ int withinbound(int lb,int n,int ub);
 
 #include "param_init_bounded_number_matrix.h"
 
+#include <Vectorize.hpp>
+
 #endif

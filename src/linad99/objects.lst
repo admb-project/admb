@@ -13,6 +13,8 @@ OBJ1=\
  vbetacf.obj\
  vbetai.obj\
  cbetai.obj\
+ vbessel.obj\
+ cbessel.obj\
  cgamdev.obj\
  fmmtr1.obj\
  df13fun.obj\
@@ -448,6 +450,7 @@ OBJ3=\
 OBJ4=\
  mfexp.obj\
  expm.obj\
+ invlogit.obj\
  factors.obj\
  orthpoly.obj\
  makesub.obj\

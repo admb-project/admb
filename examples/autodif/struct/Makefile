@@ -1,12 +1,16 @@
-run: oldstr struct
-	@./oldstr
-	@./struct
+all:
+	$(MAKE) clean
+	../../../admb oldstr.cpp
+	../../../admb struct.cpp
+	$(MAKE) run
 
-oldstr: oldstr.cpp
-	@printf "Compiling executable $@ ...";$(ADMB_HOME)/bin/mygcco $@; printf "\n"
-
-struct: struct.cpp
-	@printf "Compiling executable $@ ...";$(ADMB_HOME)/bin/mygcco $@; printf "\n"
+run:
+	./oldstr
+	./struct
 
 clean:
-	@rm -vf oldstr struct fmin.log
+	rm -vf fmin.log
+	rm -vf oldstr
+	rm -vf oldstr.obj
+	rm -vf struct
+	rm -vf struct.obj

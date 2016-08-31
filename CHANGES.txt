@@ -24,14 +24,25 @@ ADMB-X
 * Rtools 3.4
 
 ####Changes and Improvements
-* ADMB-IDE
 * Added floating point checking into tpl2cpp and tpl2rem.
 
   To check for floating point errors, build executable with -g option.
 
   $ admb -g "model.tpl"
 
-* Numerous bug fixes and improvements
+  Run executable with debugger (such as gdb) to locate file and line number
+  where error occured.
+
+  $ gdb ./model
+
+* Configured and automated builds for ADMB-IDE.
+* Merged Anders Nielsen bug fixes and new features such as vectorize.
+* Able to use Rtools\bin\make to build admb from source.
+* Replaced rgamma function.
+* Fixed numerous bugs and added various improvements.
+
+####Developers changes
+* Added tool for checking for testing code coverage.
 
 ADMB-11.5
 ---------

@@ -521,36 +521,34 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
 }
 
-
-
-// /**
-//  * Description not yet available.
-//  * \param
-//  */
-// double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
-//   const independent_variables& x,dvector& g)
-// {
-//   //initial_params::xinit(x);
-//   double f=0.0;
-//   if (mcmc2_flag==0 && lapprox)
-//   {
-//     cerr << "error not implemented" << endl;
-//     ad_exit(1);
-//     g=(*lapprox)(x,f,this);
-//   }
-//   else
-//   {
-//     dvariable vf=0.0;
-//     dvar_vector vx=dvar_vector(x);
-//     vf=initial_params::reset(vx);
-//     *objective_function_value::pobjfun=0.0;
-//     userfunction();
-//     dvar_vector d(1,nvar);
-//     initial_params::stddev_vscale(d,vx);
-//     vf-=sum(log(d));
-//     vf+=*objective_function_value::pobjfun;
-//     f=value(vf);
-//     gradcalc(nvar,g);
-//   }
-//   return f;
-// }
+/**
+ * Description not yet available.
+ * \param
+ */
+double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
+  const independent_variables& x,dvector& g)
+{
+  //initial_params::xinit(x);
+  double f=0.0;
+  if (mcmc2_flag==0 && lapprox)
+  {
+    cerr << "error not implemented" << endl;
+    ad_exit(1);
+    g=(*lapprox)(x,f,this);
+  }
+  else
+  {
+    dvariable vf=0.0;
+    dvar_vector vx=dvar_vector(x);
+    vf=initial_params::reset(vx);
+    *objective_function_value::pobjfun=0.0;
+    userfunction();
+    dvar_vector d(1,nvar);
+    initial_params::stddev_vscale(d,vx);
+    vf-=sum(log(d));
+    vf+=*objective_function_value::pobjfun;
+    f=value(vf);
+    gradcalc(nvar,g);
+  }
+  return f;
+}

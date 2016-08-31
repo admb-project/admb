@@ -447,7 +447,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       {
 	number_sims=  nmcmc;
       }
-    double beginprior=get_hybrid_monte_carlo_value(nvar,z,g);
+    double nll=get_hybrid_monte_carlo_value(nvar,z,g);
     dvector Fbegin=g*chd;
     // use trand(chd) ?
     //dvector Fbegin=tchd*g;
@@ -456,11 +456,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     p.fill_randn(rng);
     dmatrix xvalues(1,number_sims,1,nvar);
     dvector yold(1,nvar);
+
     // Initialize the algorithm: momenta and position, H
     yold=y;
     double pprob=0.5*norm2(p);
-    double Hbegin=beginprior+pprob;
-    double tmpprior = 0;
+    double H0=nll+pprob;
+    double nll = 0;
     
     int ii=1;
     initial_params::copy_all_values(parsave,ii);
@@ -473,34 +474,29 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	hstep=hybeps;		// step size
 	hstep2=0.5*hstep;	// half step size
 	// Start of single trajectory
-	for (int i=1;i<=hnsteps;i++)
+	for (int i=1;i<=hybnstep;i++)
 	  {
 	    dvector phalf=p-hstep2*F; // update momentum by half step (why negative?)
 	    y+=hstep*phalf;	      // update parameters by full step
 	    z=x0+chd*y;		      // transform?
-	    tmpprior=get_hybrid_monte_carlo_value(nvar,z,g);
+	    nll=get_hybrid_monte_carlo_value(nvar,z,g);
 	    F=g*chd;
 	    p=phalf-hstep2*F; // update momentum by half step (why negatiev?)
 	  } // end of trajectory
 	pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
-	double Ham=tmpprior+pprob; // H at proposed state
-	double rr=randu(rng);	   // Runif(1)
-	double pp=exp(Hbegin-Ham); // acceptance ratio, alpha
-	// this looks like a bug -- should leave momentum alone here
+	double Ham=nll+pprob; // H at proposed state
+	double alpha=exp(H0-Ham); // acceptance ratio
+	// this looks like a bug -- should leave momentum alone here until after saving values?
 	p.fill_randn(rng);
 	pprob=0.5*norm2(p);
 	//
 	
-	if ((is%50)==1)
-	  //  cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
-	  cout << " hybrid sim " << is <<  "  accept rate " << iaccept/is
-	       << "  Hbegin-Ham " << Hbegin-Ham << "  Ham " << Ham << endl;
-	if (rr<pp) // accept proposed value
+	double rr=randu(rng);	   // Runif(1)
+	if (rr<alpha) // accept proposed value
 	  {
 	    iaccept++;
 	    yold=y;
-	    beginprior=tmpprior;
-	    Hbegin=beginprior+pprob;
+	    H0=nll+pprob;
 	    Fbegin=F;
 	    ii=1;
 	    initial_params::copy_all_values(parsave,ii);
@@ -509,9 +505,11 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  {
 	    y=yold;
 	    z=x0+chd*y;
-	    Hbegin=beginprior+pprob;
+	    H0=nll+pprob;
 	    F=Fbegin;
 	  }
+	if ((is%5)==1)
+	  cout << "iteration" << is <<  "accept ratio " << alpha
 	(*pofs_psave) << parsave;
       } // end of MCMC chain
     

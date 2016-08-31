@@ -118,8 +118,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int diag_option=0;
     //int topt=0;
     int hybnstep=10;
-    double hybeps=0.1;
-    double _hybeps=-1.0;
+    double eps=0.1;
+    double _eps=-1.0;
     int old_Hybrid_bounded_flag=-1;
 
     int on,nopt = 0;
@@ -132,17 +132,17 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	else
 	  {
 	    istringstream ist(ad_comm::argv[on+1]);
-	    ist >> _hybeps;
+	    ist >> _eps;
 
-	    if (_hybeps<=0)
+	    if (_eps<=0)
 	      {
 		cerr << "Usage -hyeps option needs positive number  -- ignored\n";
-		_hybeps=-1.0;
+		_eps=-1.0;
 	      }
 	  }
       }
-    if (_hybeps>0.0)
-      hybeps=_hybeps;
+    if (_eps>0.0)
+      eps=_eps;
 
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1)
       {
@@ -460,24 +460,35 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int ii=1;
     initial_params::copy_all_values(parsave,ii); // does bounding??
     double iaccept=0.0;
+    int accepted;		// boolean for whether iteration accepted
     dvector phalf;
-    double hstep,hstep2;
-    hstep=hybeps;		// step size
-    hstep2=0.5*hstep;		// half step size
-
+    // Dual averaging components
+    int useDA=1;
+    double gamma=0.5;
+    double t0=10;
+    double kappa=0.75;
+    double mu=log(10*eps);
+    dvector epsvec(1,number_sims+1), epsbar(1,number_sims+1), Hbar(1,number_sims+1);
+    epsvec.initialize();
+    epsbar.initialize();
+    Hbar.initialize();
+    epsvec(1)=eps;
+    epsbar(1)=eps;
+    Hbar(1)=0;
+    double delta=.8;
     // Start of MCMC chain
     for (int is=1;is<=number_sims;is++)
       {
 	// Start of single trajectory
 	for (int i=1;i<=hybnstep;i++)
 	  {
-	    phalf=p-hstep2*gr2; // update momentum by half step (why negative?)
-	    y+=hstep*phalf;	      // update parameters by full step
+	    phalf=p-eps/2*gr2; // update momentum by half step (why negative?)
+	    y+=eps*phalf;	      // update parameters by full step
 	    z=chd*y;		      // transform parameters via mass matrix
 	    // This function returns the negative log density/likelihood but also sets gradients in gr
 	    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	    gr2=gr*chd;		// transform gradient via mass matrix
-	    p=phalf-hstep2*gr2; // update momentum by half step (why negatiev?)
+	    p=phalf-eps/2*gr2; // update momentum by half step (why negatiev?)
 	  } // end of trajectory
 	pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
 	double Ham=nll+pprob; // H at proposed state
@@ -485,11 +496,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// this looks like a bug -- should leave momentum alone here until after saving values?
 	p.fill_randn(rng);
 	pprob=0.5*norm2(p);
-
+	
 	// Test whether to accept the proposed state
 	double rr=randu(rng);	   // Runif(1)
 	if (rr<alpha) // accept 
 	  {
+	    accepted=1;
 	    iaccept++;
 	    yold=y;		// Update parameters
 	    H0=nll+pprob;	// 
@@ -499,16 +511,28 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  }
 	else // reject 
 	  {
+	    accepted=0;
 	    y=yold;		// Don't update params
-	    z=chd*y;
+	    z=chd*y;		// 
 	    H0=nll+pprob;
 	    gr2=gr2begin;	// don't update gradients
 	  }
+	// Do dual averaging to adapt step size
+	if(useDA){
+	  Hbar(is+1)=
+	    (1-1/(is+t0))*Hbar(is) + (delta-min(1.0,alpha))/(is+t0);
+	  double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
+	  epsvec(is+1)=exp(logeps);
+	  double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
+	  epsbar(is+1)=exp(logepsbar);
+	  eps=epsvec(is+1);	// this is the adapted step size for the next iteration
+	}
 	if ((is%5)==1)
-	  cout << "iteration=" << is <<  "; accept ratio " << alpha << endl;
+	  cout << "iteration=" << is << "; eps=" << eps << "; accepted="<< accepted<< "; accept ratio " << alpha << endl;
 	// Copy parameters to the .psv file
 	(*pofs_psave) << parsave;
       } // end of MCMC chain
+    cout << "Final acceptance ratio=" << 100*iaccept/number_sims << endl;
 
     // This saves a new seed for if the chain is restarted, making it
     // reproducible.

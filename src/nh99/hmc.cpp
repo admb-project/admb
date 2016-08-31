@@ -57,7 +57,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     //uostream * pofs_sd = NULL;
 
     initial_params::set_inactive_random_effects();
-    int nvar_x=initial_params::nvarcalc();
+    // int nvar_x=initial_params::nvarcalc();
     initial_params::set_active_random_effects();
     int nvar_re=initial_params::nvarcalc();
 
@@ -447,7 +447,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       {
 	number_sims=  nmcmc;
       }
-    double nll=get_hybrid_monte_carlo_value(nvar,z,g);
     dvector Fbegin=g*chd;
     // use trand(chd) ?
     //dvector Fbegin=tchd*g;
@@ -459,9 +458,9 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // Initialize the algorithm: momenta and position, H
     yold=y;
-    double pprob=0.5*norm2(p);
-    double H0=nll+pprob;
-    double nll = 0;
+    double pprob=0.5*norm2(p);	// probability of momenta
+    double nll=get_hybrid_monte_carlo_value(nvar,z,g); // probability of position
+    double H0=nll+pprob;			       // initial Hamiltonian
     
     int ii=1;
     initial_params::copy_all_values(parsave,ii);
@@ -478,7 +477,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  {
 	    dvector phalf=p-hstep2*F; // update momentum by half step (why negative?)
 	    y+=hstep*phalf;	      // update parameters by full step
-	    z=x0+chd*y;		      // transform?
+	    z=x0+chd*y;		      // transform via mass matrix?
 	    nll=get_hybrid_monte_carlo_value(nvar,z,g);
 	    F=g*chd;
 	    p=phalf-hstep2*F; // update momentum by half step (why negatiev?)
@@ -509,17 +508,11 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    F=Fbegin;
 	  }
 	if ((is%5)==1)
-	  cout << "iteration" << is <<  "accept ratio " << alpha
+	  cout << "iteration=" << is <<  "; accept ratio " << alpha << endl;
+	// Update parameters for some reason?
 	(*pofs_psave) << parsave;
       } // end of MCMC chain
     
-    // cout << " saved  " << parsave(parsave.indexmin()) << " "
-    //    << parsave(parsave.indexmax()) << endl;
-    //double ll=get_hybrid_monte_carlo_value(nvar,parsave,g);
-    //cout << "ll  " << ll << endl;
-    // ***************************************************************
-    // ***************************************************************
-    // ***************************************************************
     ofstream ofs("hybrid_seed");
     int seed=(int) (10000*randu(rng));
     ofs << seed;

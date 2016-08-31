@@ -265,7 +265,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  }
 	*/
       }
-    else
+    else			// set covariance to be diagonal
       {
 	S.initialize();
 	for (int i=1;i<=nvar;i++)
@@ -394,7 +394,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
 
     //cout << sort(eigenvalues(S)) << endl;
-    dmatrix chd = choleski_decomp(S);
     //dmatrix tchd = trans(chd);
     //dmatrix chdinv=inv(chd);
     //int sgn;
@@ -403,21 +402,23 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // NEW HYBRID MCMC
     // ***************************************************************
     // ***************************************************************
-    independent_variables z(1,nvar);
-    z=x0;
+    int number_sims;
+    if (nmcmc<=0)
+      {
+	number_sims=  1000;
+      }
+    else
+      {
+	number_sims=  nmcmc;
+      }
+
     gradient_structure::set_NO_DERIVATIVES();
-    dvector g(1,nvar);
-    //cout << "initial ll value " << get_hybrid_monte_carlo_value(nvar,z,g)
-    //     << endl;
-    dvector y(1,nvar);
-    y.initialize();
 
     if (mcmc2_flag==0)
       {
         initial_params::set_inactive_random_effects();
       }
 
-    dvector p(1,nvar);  // momentum
     int iseed=2197;
     if (iseed0) iseed=iseed0;
     if ( mcrestart_flag>-1)
@@ -431,39 +432,34 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     random_number_generator rng(iseed);
     gradient_structure::set_YES_DERIVATIVES();
-    ofstream ogs("sims");
     initial_params::xinit(x0);
 
-    z=x0+chd*y;
-    /*double llc=*/get_hybrid_monte_carlo_value(nvar,z,g);
-    /*double llbest=*/get_hybrid_monte_carlo_value(nvar,z,g);
-    //lbmax=llbest;
-    int number_sims;
-    if (nmcmc<=0)
-      {
-	number_sims=  1000;
-      }
-    else
-      {
-	number_sims=  nmcmc;
-      }
-    dvector Fbegin=g*chd;
-    // use trand(chd) ?
-    //dvector Fbegin=tchd*g;
-    dvector F(1,nvar);
-    F=Fbegin;
+    // Declare the variables needed
+    dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
+    dvector y(1,nvar); // unbounded parameters
+    y.initialize();    
+    dvector yold(1,nvar);	// unbounded parameters 2
+    dvector gr(1,nvar);		// gradients in unbounded space
+    dvector gr2begin=gr*chd; // rotated gradient
+    dvector gr2(1,nvar);	  // rotated gradient
+    independent_variables z(1,nvar); // rotated bounded parameters???
+    dvector p(1,nvar);  // momentum
     p.fill_randn(rng);
-    dmatrix xvalues(1,number_sims,1,nvar);
-    dvector yold(1,nvar);
+    //    dmatrix xvalues(1,number_sims,1,nvar);
 
     // Initialize the algorithm: momenta and position, H
     yold=y;
+    z=x0+chd*y;			     // rotated unbounded parameters
+    // This 
+    get_hybrid_monte_carlo_value(nvar,z,gr);
+    gr2=gr2begin;		// rotated gradient
     double pprob=0.5*norm2(p);	// probability of momenta
-    double nll=get_hybrid_monte_carlo_value(nvar,z,g); // probability of position
+    double nll=get_hybrid_monte_carlo_value(nvar,z,gr); // probability of position
     double H0=nll+pprob;			       // initial Hamiltonian
     
+
     int ii=1;
-    initial_params::copy_all_values(parsave,ii);
+    initial_params::copy_all_values(parsave,ii); // does bounding??
 
     // Start of MCMC chain
     double iaccept=0.0;
@@ -475,12 +471,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// Start of single trajectory
 	for (int i=1;i<=hybnstep;i++)
 	  {
-	    dvector phalf=p-hstep2*F; // update momentum by half step (why negative?)
+	    dvector phalf=p-hstep2*gr2; // update momentum by half step (why negative?)
 	    y+=hstep*phalf;	      // update parameters by full step
 	    z=x0+chd*y;		      // transform via mass matrix?
-	    nll=get_hybrid_monte_carlo_value(nvar,z,g);
-	    F=g*chd;
-	    p=phalf-hstep2*F; // update momentum by half step (why negatiev?)
+	    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	    gr2=gr*chd;
+	    p=phalf-hstep2*gr2; // update momentum by half step (why negatiev?)
 	  } // end of trajectory
 	pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
 	double Ham=nll+pprob; // H at proposed state
@@ -496,7 +492,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    iaccept++;
 	    yold=y;
 	    H0=nll+pprob;
-	    Fbegin=F;
+	    gr2begin=gr2;
 	    ii=1;
 	    initial_params::copy_all_values(parsave,ii);
 	  }
@@ -505,7 +501,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    y=yold;
 	    z=x0+chd*y;
 	    H0=nll+pprob;
-	    F=Fbegin;
+	    gr2=gr2begin;
 	  }
 	if ((is%5)==1)
 	  cout << "iteration=" << is <<  "; accept ratio " << alpha << endl;

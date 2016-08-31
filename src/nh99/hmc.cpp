@@ -457,26 +457,26 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double pprob=0.5*norm2(p);	// probability of momenta
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr); // probability of position
     double H0=nll+pprob;			       // initial Hamiltonian
-    
-
     int ii=1;
     initial_params::copy_all_values(parsave,ii); // does bounding??
+    double iaccept=0.0;
+    dvector phalf;
+    double hstep,hstep2;
+    hstep=hybeps;		// step size
+    hstep2=0.5*hstep;		// half step size
 
     // Start of MCMC chain
-    double iaccept=0.0;
     for (int is=1;is<=number_sims;is++)
       {
-	double hstep,hstep2;
-	hstep=hybeps;		// step size
-	hstep2=0.5*hstep;	// half step size
 	// Start of single trajectory
 	for (int i=1;i<=hybnstep;i++)
 	  {
-	    dvector phalf=p-hstep2*gr2; // update momentum by half step (why negative?)
+	    phalf=p-hstep2*gr2; // update momentum by half step (why negative?)
 	    y+=hstep*phalf;	      // update parameters by full step
-	    z=chd*y;		      // transform via mass matrix?
+	    z=chd*y;		      // transform parameters via mass matrix
+	    // This function returns the negative log density/likelihood but also sets gradients in gr
 	    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	    gr2=gr*chd;
+	    gr2=gr*chd;		// transform gradient via mass matrix
 	    p=phalf-hstep2*gr2; // update momentum by half step (why negatiev?)
 	  } // end of trajectory
 	pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
@@ -485,31 +485,33 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// this looks like a bug -- should leave momentum alone here until after saving values?
 	p.fill_randn(rng);
 	pprob=0.5*norm2(p);
-	//
-	
+
+	// Test whether to accept the proposed state
 	double rr=randu(rng);	   // Runif(1)
-	if (rr<alpha) // accept proposed value
+	if (rr<alpha) // accept 
 	  {
 	    iaccept++;
-	    yold=y;
-	    H0=nll+pprob;
+	    yold=y;		// Update parameters
+	    H0=nll+pprob;	// 
 	    gr2begin=gr2;
 	    ii=1;
 	    initial_params::copy_all_values(parsave,ii);
 	  }
-	else // reject proposed value and reuse state
+	else // reject 
 	  {
-	    y=yold;
+	    y=yold;		// Don't update params
 	    z=chd*y;
 	    H0=nll+pprob;
-	    gr2=gr2begin;
+	    gr2=gr2begin;	// don't update gradients
 	  }
 	if ((is%5)==1)
 	  cout << "iteration=" << is <<  "; accept ratio " << alpha << endl;
-	// Update parameters for some reason?
+	// Copy parameters to the .psv file
 	(*pofs_psave) << parsave;
       } // end of MCMC chain
-    
+
+    // This saves a new seed for if the chain is restarted, making it
+    // reproducible.
     ofstream ofs("hybrid_seed");
     int seed=(int) (10000*randu(rng));
     ofs << seed;

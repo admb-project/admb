@@ -439,19 +439,20 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     dvector y(1,nvar); // unbounded parameters
     y.initialize();    
     dvector yold(1,nvar);	// unbounded parameters 2
+    independent_variables z(1,nvar); // rotated bounded parameters???
+    z=x0+chd*y;			     
+    // This 
     dvector gr(1,nvar);		// gradients in unbounded space
+    get_hybrid_monte_carlo_value(nvar,z,gr);
     dvector gr2begin=gr*chd; // rotated gradient
     dvector gr2(1,nvar);	  // rotated gradient
-    independent_variables z(1,nvar); // rotated bounded parameters???
+
     dvector p(1,nvar);  // momentum
     p.fill_randn(rng);
     //    dmatrix xvalues(1,number_sims,1,nvar);
 
     // Initialize the algorithm: momenta and position, H
     yold=y;
-    z=x0+chd*y;			     // rotated unbounded parameters
-    // This 
-    get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr2begin;		// rotated gradient
     double pprob=0.5*norm2(p);	// probability of momenta
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr); // probability of position

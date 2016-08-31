@@ -120,6 +120,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int hybnstep=10;
     double eps=0.1;
     double _eps=-1.0;
+    double adapt_delta=0.8; // target acceptance rate specified by the user
     int old_Hybrid_bounded_flag=-1;
 
     int on,nopt = 0;
@@ -161,6 +162,27 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  }
       }
 
+      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_delta",nopt))>-1)
+      {
+	if (nopt)
+	  {
+	    istringstream ist(ad_comm::argv[on+1]);
+	    double delta;
+	    ist >> delta;
+	    cout << "delta=" << delta << endl;
+
+	    if (delta < 0 || delta > 1 )
+	      {
+		cerr << " -adapt_delta argument must be between 0 and 1"
+                  " using default of 0.8" << endl;
+	      }
+	    else
+	      {
+		adapt_delta=delta;
+	      }
+	  }
+      }
+      
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
       {
 	diag_option=1;
@@ -475,7 +497,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     epsvec(1)=eps;
     epsbar(1)=eps;
     Hbar(1)=0;
-    double delta=.8;
+    
     // Start of MCMC chain
     for (int is=1;is<=number_sims;is++)
       {
@@ -520,7 +542,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// Do dual averaging to adapt step size
 	if(useDA){
 	  Hbar(is+1)=
-	    (1-1/(is+t0))*Hbar(is) + (delta-min(1.0,alpha))/(is+t0);
+	    (1-1/(is+t0))*Hbar(is) + (adapt_delta-min(1.0,alpha))/(is+t0);
 	  double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
 	  epsvec(is+1)=exp(logeps);
 	  double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
@@ -528,11 +550,13 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  eps=epsvec(is+1);	// this is the adapted step size for the next iteration
 	}
 	if ((is%5)==1)
-	  cout << "iteration=" << is << "; eps=" << eps << "; accepted="<< accepted<< "; accept ratio " << alpha << endl;
+	  cout << "iteration=" << is << "; eps=" << eps << "; accepted="<< accepted<<
+	    "; accept ratio " << min(1.0,alpha) << endl;
 	// Copy parameters to the .psv file
 	(*pofs_psave) << parsave;
       } // end of MCMC chain
-    cout << "Final acceptance ratio=" << 100*iaccept/number_sims << endl;
+    // This final ratio should closely match adapt_delta
+    cout << "Final acceptance ratio=" << iaccept/number_sims << " and target is " << adapt_delta<<endl;
 
     // This saves a new seed for if the chain is restarted, making it
     // reproducible.

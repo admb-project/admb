@@ -440,7 +440,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     y.initialize();    
     dvector yold(1,nvar);	// unbounded parameters 2
     independent_variables z(1,nvar); // rotated bounded parameters???
-    z=x0+chd*y;			     
+    z=chd*y;			     
     // This 
     dvector gr(1,nvar);		// gradients in unbounded space
     get_hybrid_monte_carlo_value(nvar,z,gr);
@@ -474,7 +474,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  {
 	    dvector phalf=p-hstep2*gr2; // update momentum by half step (why negative?)
 	    y+=hstep*phalf;	      // update parameters by full step
-	    z=x0+chd*y;		      // transform via mass matrix?
+	    z=chd*y;		      // transform via mass matrix?
 	    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	    gr2=gr*chd;
 	    p=phalf-hstep2*gr2; // update momentum by half step (why negatiev?)
@@ -500,7 +500,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	else // reject proposed value and reuse state
 	  {
 	    y=yold;
-	    z=x0+chd*y;
+	    z=chd*y;
 	    H0=nll+pprob;
 	    gr2=gr2begin;
 	  }

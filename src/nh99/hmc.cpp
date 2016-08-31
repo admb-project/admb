@@ -522,8 +522,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 }
 
 /**
+ * Written by Dave, commented by Cole starting 8/31/2016
  * Description not yet available.
  * \param
+ * x is vector of Choleski decomposed parameters (i.e., x=y*chd).
+ * g is a vector of empty gradients
+ * returns the negative log likelihood (density), but also stores gradients for x in g
  */
 double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
   const independent_variables& x,dvector& g)
@@ -532,7 +536,7 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
   double f=0.0;
   if (mcmc2_flag==0 && lapprox)
   {
-    cerr << "error not implemented" << endl;
+    cerr << "HMC not implemented for random effects models" << endl;
     ad_exit(1);
     g=(*lapprox)(x,f,this);
   }
@@ -540,7 +544,7 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
   {
     dvariable vf=0.0;
     dvar_vector vx=dvar_vector(x);
-    vf=initial_params::reset(vx);
+    vf=initial_params::reset(vx); 
     *objective_function_value::pobjfun=0.0;
     userfunction();
     dvar_vector d(1,nvar);

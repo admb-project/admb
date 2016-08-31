@@ -423,7 +423,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // NEW HYBRID MCMC
   // ***************************************************************
   // ***************************************************************
-  int number_sims;
+  int number_sims; 		// total MCMC iterations
   if (nmcmc<=0)
     {
       number_sims=  1000;
@@ -432,7 +432,24 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     {
       number_sims=  nmcmc;
     }
-
+  int nwarmup= (int)number_sims/2;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nwarmup",nopt))>-1)
+    {
+      if (nopt)
+        {
+          int iii=atoi(ad_comm::argv[on+1]);
+          if (iii <=0 || iii > number_sims)
+	    {
+	      cerr << " Invalid option following command line option -nwarmup -- "
+		   << endl << " ignored" << endl;
+	    }
+          else
+	    {
+	      nwarmup=iii;
+	    }
+        }
+    }
+  
   gradient_structure::set_NO_DERIVATIVES();
 
   if (mcmc2_flag==0)
@@ -537,7 +554,13 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	gr2=gr2begin;	// don't update gradients
       }
     // Do dual averaging to adapt step size
-    if(useDA){
+    int sampling;
+    if(is <= nwarmup){
+      sampling=0;
+    } else {
+      sampling=1;
+    }
+    if(useDA && is <= nwarmup){
       Hbar(is+1)=
 	(1-1/(is+t0))*Hbar(is) + (adapt_delta-min(1.0,alpha))/(is+t0);
       double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
@@ -547,13 +570,14 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       eps=epsvec(is+1);	// this is the adapted step size for the next iteration
     }
     if ((is%5)==1)
-      cout << "iteration=" << is << "; eps=" << eps << "; accepted="<< accepted<<
+      cout << "iteration=" << is << "; sampling=" << sampling << "; eps=" << eps << "; accepted="<< accepted<<
 	"; accept ratio " << min(1.0,alpha) << endl;
     // Copy parameters to the .psv file
     (*pofs_psave) << parsave;
   } // end of MCMC chain
     // This final ratio should closely match adapt_delta
   cout << "Final acceptance ratio=" << iaccept/number_sims << " and target is " << adapt_delta<<endl;
+  cout << "nwarmup= " << nwarmup << endl;
 
   // This saves a new seed for if the chain is restarted, making it
   // reproducible.

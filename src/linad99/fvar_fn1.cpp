@@ -42,7 +42,7 @@ prevariable& exp(const prevariable& v1)
   {
     cerr << "Error: Result of \"exp(prevariable(" << value(v1) << ")) = "
          << tmp << "\" is not finite.\n";
-    ad_exit(1);
+    //  ad_exit(1);
   }
   #endif
 #endif

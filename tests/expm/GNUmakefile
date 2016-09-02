@@ -66,9 +66,9 @@ ifeq ($(SHELL),cmd)
 	@del f1b2list1 gradfil1.tmp nf1b2list12 2>nul
 	@del f1b2list12 gradfil2.tmp nf1b2list13 2>nul
 	@del cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp 2>nul
-	@del admodel.cov
-	@del admodel.dep
-	@del admodel.hes
+	@del admodel.cov 2>nul
+	@del admodel.dep 2>nul
+	@del admodel.hes 2>nul
 else
 	@rm -vf a
 	@rm -vf $(TARGET).p02

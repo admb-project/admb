@@ -201,59 +201,59 @@ endif
 clean:
 ifeq ($(SHELL),cmd)
 	@if exist make_sub_directory rmdir /s /q make_sub_directory
-	@del gtest-all.exe
-	@del gtest-all *.obj
-	@del eigv.rpt
-	@del fmin.log
-	@del simple.log
-	@del variance
-	@del cmpdiff.tmp
-	@del f1b2list1
-	@del f1b2list12
-	@del f1b2list13
-	@del gradfil1.tmp
-	@del gradfil2.tmp
-	@del nf1b2list1
-	@del nf1b2list12
-	@del nf1b2list13
-	@del scalefactor.cpp
-	@del scalefactor.htp
-	@del scalefactor.log
-	@del scalefactor.exe
-	@del varssave.tmp
-	@del admodel.cov
-	@del admodel.dep
-	@del admodel.hes
-	@del hesscheck
-	@del hessian.bin
-	@del scalefactor.bar
-	@del scalefactor.bgs
-	@del scalefactor.cor
-	@del scalefactor.eva
-	@del scalefactor.luu
-	@del scalefactor.par
-	@del scalefactor.rhes
-	@del scalefactor.std
-	@del finance.dat
-	@del finance.dat
-	@del finance.b01
-	@del finance.b02
-	@del finance.bar
-	@del finance.cor
-	@del finance.cpp
-	@del finance.eva
-	@del finance.htp
-	@del finance.log
-	@del finance.p01
-	@del finance.p02
-	@del finance.par
-	@del finance.std
-	@del scalefactor.rep
-	@del test_finance.exe
-	@del test_scalefactor.exe
-	@del finance.b0
-	@del finance.p0
-	@del test_dvector.txt
+	@del gtest-all.exe 2>NUL
+	@del gtest-all *.obj 2>NUL
+	@del eigv.rpt 2>NUL
+	@del fmin.log 2>NUL
+	@del simple.log 2>NUL
+	@del variance 2>NUL
+	@del cmpdiff.tmp 2>NUL
+	@del f1b2list1 2>NUL
+	@del f1b2list12 2>NUL
+	@del f1b2list13 2>NUL
+	@del gradfil1.tmp 2>NUL
+	@del gradfil2.tmp 2>NUL
+	@del nf1b2list1 2>NUL
+	@del nf1b2list12 2>NUL
+	@del nf1b2list13 2>NUL
+	@del scalefactor.cpp 2>NUL
+	@del scalefactor.htp 2>NUL
+	@del scalefactor.log 2>NUL
+	@del scalefactor.exe 2>NUL
+	@del varssave.tmp 2>NUL
+	@del admodel.cov 2>NUL
+	@del admodel.dep 2>NUL
+	@del admodel.hes 2>NUL
+	@del hesscheck 2>NUL
+	@del hessian.bin 2>NUL
+	@del scalefactor.bar 2>NUL
+	@del scalefactor.bgs 2>NUL
+	@del scalefactor.cor 2>NUL
+	@del scalefactor.eva 2>NUL
+	@del scalefactor.luu 2>NUL
+	@del scalefactor.par 2>NUL
+	@del scalefactor.rhes 2>NUL
+	@del scalefactor.std 2>NUL
+	@del finance.dat 2>NUL
+	@del finance.dat 2>NUL
+	@del finance.b01 2>NUL
+	@del finance.b02 2>NUL
+	@del finance.bar 2>NUL
+	@del finance.cor 2>NUL
+	@del finance.cpp 2>NUL
+	@del finance.eva 2>NUL
+	@del finance.htp 2>NUL
+	@del finance.log 2>NUL
+	@del finance.p01 2>NUL
+	@del finance.p02 2>NUL
+	@del finance.par 2>NUL
+	@del finance.std 2>NUL
+	@del scalefactor.rep 2>NUL
+	@del test_finance.exe 2>NUL
+	@del test_scalefactor.exe 2>NUL
+	@del finance.b0 2>NUL
+	@del finance.p0 2>NUL
+	@del test_dvector.txt 2>NUL
 else
 	@rm -vf finance.b0
 	@rm -vf finance.p0

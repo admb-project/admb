@@ -29,37 +29,37 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del $(TARGET)
-	@del variance
-	@del fmin.log
-	@del $(TARGET).eva
-	@del $(TARGET).exe
-	@del $(TARGET).htp
-	@del $(TARGET).bar
-	@del $(TARGET).bgs
-	@del $(TARGET).cor
-	@del $(TARGET).cpp
-	@del $(TARGET).log
-	@del $(TARGET).o
-	@del $(TARGET).obj
-	@del $(TARGET).par
-	@del $(TARGET).std
-	@del tests_$(TARGET).o
-	@del tests_$(TARGET)
-	@del eigv.rpt
-	@del admodel.cov
-	@del admodel.dep
-	@del admodel.hes
-	@del $(TARGET).luu
-	@del $(TARGET).rhes
-	@del hesscheck
-	@del hessian.bin
-	@del f1b2list1
-	@del f1b2list12
-	@del f1b2list13
-	@del nf1b2list1
-	@del nf1b2list12
-	@del nf1b2list13
+	@del $(TARGET) 2>nul
+	@del variance 2>nul
+	@del fmin.log 2>nul
+	@del $(TARGET).eva 2>nul
+	@del $(TARGET).exe 2>nul
+	@del $(TARGET).htp 2>nul
+	@del $(TARGET).bar 2>nul
+	@del $(TARGET).bgs 2>nul
+	@del $(TARGET).cor 2>nul
+	@del $(TARGET).cpp 2>nul
+	@del $(TARGET).log 2>nul
+	@del $(TARGET).o 2>nul
+	@del $(TARGET).obj 2>nul
+	@del $(TARGET).par 2>nul
+	@del $(TARGET).std 2>nul
+	@del tests_$(TARGET).o 2>nul
+	@del tests_$(TARGET) 2>nul
+	@del eigv.rpt 2>nul
+	@del admodel.cov 2>nul
+	@del admodel.dep 2>nul
+	@del admodel.hes 2>nul
+	@del $(TARGET).luu 2>nul
+	@del $(TARGET).rhes 2>nul
+	@del hesscheck 2>nul
+	@del hessian.bin 2>nul
+	@del f1b2list1 2>nul
+	@del f1b2list12 2>nul
+	@del f1b2list13 2>nul
+	@del nf1b2list1 2>nul
+	@del nf1b2list12 2>nul
+	@del nf1b2list13 2>nul
 else
 	@rm -vf $(TARGET)
 	@rm -vf admodel.*

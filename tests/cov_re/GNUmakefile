@@ -39,44 +39,44 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del $(TARGET)
-	@del variance
-	@del fmin.log
-	@del $(TARGET).eva
-	@del $(TARGET).exe
-	@del $(TARGET).htp
-	@del $(TARGET).bar
-	@del $(TARGET).bgs
-	@del $(TARGET).cor
-	@del $(TARGET).cpp
-	@del $(TARGET).log
-	@del $(TARGET).o
-	@del $(TARGET).obj
-	@del $(TARGET).par
-	@del $(TARGET).std
-	@del tests_$(TARGET).o
-	@del tests_$(TARGET)
-	@del eigv.rpt
-	@del admodel.cov
-	@del admodel.dep
-	@del admodel.hes
-	@del cov_re.luu
-	@del cov_re.rhes
-	@del cov_re_sep
-	@del cov_re_sep.exe
-	@del cov_re_sep.bar
-	@del cov_re_sep.bgs
-	@del cov_re_sep.cor
-	@del cov_re_sep.cpp
-	@del cov_re_sep.eva
-	@del cov_re_sep.htp
-	@del cov_re_sep.log
-	@del cov_re_sep.obj
-	@del cov_re_sep.par
-	@del cov_re_sep.rhes
-	@del cov_re_sep.std
-	@del hesscheck
-	@del hessian.bin
+	@del $(TARGET) 2>nul
+	@del variance 2>nul
+	@del fmin.log 2>nul
+	@del $(TARGET).eva 2>nul
+	@del $(TARGET).exe 2>nul
+	@del $(TARGET).htp 2>nul
+	@del $(TARGET).bar 2>nul
+	@del $(TARGET).bgs 2>nul
+	@del $(TARGET).cor 2>nul
+	@del $(TARGET).cpp 2>nul
+	@del $(TARGET).log 2>nul
+	@del $(TARGET).o 2>nul
+	@del $(TARGET).obj 2>nul
+	@del $(TARGET).par 2>nul
+	@del $(TARGET).std 2>nul
+	@del tests_$(TARGET).o 2>nul
+	@del tests_$(TARGET) 2>nul
+	@del eigv.rpt 2>nul
+	@del admodel.cov 2>nul
+	@del admodel.dep 2>nul
+	@del admodel.hes 2>nul
+	@del cov_re.luu 2>nul
+	@del cov_re.rhes 2>nul
+	@del cov_re_sep 2>nul
+	@del cov_re_sep.exe 2>nul
+	@del cov_re_sep.bar 2>nul
+	@del cov_re_sep.bgs 2>nul
+	@del cov_re_sep.cor 2>nul
+	@del cov_re_sep.cpp 2>nul
+	@del cov_re_sep.eva 2>nul
+	@del cov_re_sep.htp 2>nul
+	@del cov_re_sep.log 2>nul
+	@del cov_re_sep.obj 2>nul
+	@del cov_re_sep.par 2>nul
+	@del cov_re_sep.rhes 2>nul
+	@del cov_re_sep.std 2>nul
+	@del hesscheck 2>nul
+	@del hessian.bin 2>nul
 else
 	@rm -vf cov_re.o
 	@rm -vf cov_re.obj

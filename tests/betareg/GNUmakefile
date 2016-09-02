@@ -29,44 +29,44 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del $(TARGET)
-	@del variance
-	@del fmin.log
-	@del $(TARGET).eva
-	@del $(TARGET).exe
-	@del $(TARGET).htp
-	@del $(TARGET).bar
-	@del $(TARGET).bgs
-	@del $(TARGET).cor
-	@del $(TARGET).cpp
-	@del $(TARGET).log
-	@del $(TARGET).o
-	@del $(TARGET).obj
-	@del $(TARGET).par
-	@del $(TARGET).std
-	@del tests_$(TARGET).o
-	@del tests_$(TARGET)
-	@del eigv.rpt
-	@del a
-	@del admodel.cov
-	@del admodel.dep
-	@del admodel.hes
-	@del b1
-	@del b2
-	@del betareg.b01
-	@del betareg.b02
-	@del betareg.luu
-	@del betareg.p01
-	@del betareg.p02
-	@del betareg.r01
-	@del betareg.r02
-	@del betareg.rep
-	@del betareg.rhes
-	@del data
-	@del hesscheck
-	@del hessian.bin
-	@del s1
-	@del s2
+	@del $(TARGET) 2>nul
+	@del variance 2>nul
+	@del fmin.log 2>nul
+	@del $(TARGET).eva 2>nul
+	@del $(TARGET).exe 2>nul
+	@del $(TARGET).htp 2>nul
+	@del $(TARGET).bar 2>nul
+	@del $(TARGET).bgs 2>nul
+	@del $(TARGET).cor 2>nul
+	@del $(TARGET).cpp 2>nul
+	@del $(TARGET).log 2>nul
+	@del $(TARGET).o 2>nul
+	@del $(TARGET).obj 2>nul
+	@del $(TARGET).par 2>nul
+	@del $(TARGET).std 2>nul
+	@del tests_$(TARGET).o 2>nul
+	@del tests_$(TARGET) 2>nul
+	@del eigv.rpt 2>nul
+	@del a 2>nul
+	@del admodel.cov 2>nul
+	@del admodel.dep 2>nul
+	@del admodel.hes 2>nul
+	@del b1 2>nul
+	@del b2 2>nul
+	@del betareg.b01 2>nul
+	@del betareg.b02 2>nul
+	@del betareg.luu 2>nul
+	@del betareg.p01 2>nul
+	@del betareg.p02 2>nul
+	@del betareg.r01 2>nul
+	@del betareg.r02 2>nul
+	@del betareg.rep 2>nul
+	@del betareg.rhes 2>nul
+	@del data 2>nul
+	@del hesscheck 2>nul
+	@del hessian.bin 2>nul
+	@del s1 2>nul
+	@del s2 2>nul
 else
 	@rm -vf a
 	@rm -vf betareg.p02

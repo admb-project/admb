@@ -25,27 +25,27 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del admodel.hes
-	@del f1b2vc5.b01
-	@del f1b2vc5.cor
-	@del f1b2vc5.htp
-	@del f1b2vc5.p01
-	@del f1b2vc5.std
-	@del hesscheck
-	@del admodel.cov
-	@del admodel.tmp
-	@del f1b2vc5.bar
-	@del f1b2vc5.cpp
-	@del f1b2vc5.log
-	@del f1b2vc5.par
-	@del hessian.bin
-	@del admodel.dep
-	@del f1b2vc5.exe
-	@del f1b2vc5.bgs
-	@del f1b2vc5.eva
-	@del f1b2vc5.obj
-	@del f1b2vc5.rhes
-	@del fmin.log
+	@del admodel.hes 2>nul
+	@del f1b2vc5.b01 2>nul
+	@del f1b2vc5.cor 2>nul
+	@del f1b2vc5.htp 2>nul
+	@del f1b2vc5.p01 2>nul
+	@del f1b2vc5.std 2>nul
+	@del hesscheck 2>nul
+	@del admodel.cov 2>nul
+	@del admodel.tmp 2>nul
+	@del f1b2vc5.bar 2>nul
+	@del f1b2vc5.cpp 2>nul
+	@del f1b2vc5.log 2>nul
+	@del f1b2vc5.par 2>nul
+	@del hessian.bin 2>nul
+	@del admodel.dep 2>nul
+	@del f1b2vc5.exe 2>nul
+	@del f1b2vc5.bgs 2>nul
+	@del f1b2vc5.eva 2>nul
+	@del f1b2vc5.obj 2>nul
+	@del f1b2vc5.rhes 2>nul
+	@del fmin.log 2>nul
 else
 	@rm -vf admodel.hes
 	@rm -vf f1b2vc5.b01

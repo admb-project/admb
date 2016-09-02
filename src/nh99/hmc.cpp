@@ -464,21 +464,33 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double hstep,hstep2;
     hstep=hybeps;		// step size
     hstep2=0.5*hstep;		// half step size
+    int divergence;		// boolean for whether divergence occured
 
     // Start of MCMC chain
     for (int is=1;is<=number_sims;is++)
       {
+	divergence=0;
 	// Start of single trajectory
 	for (int i=1;i<=hybnstep;i++)
 	  {
+	    cout << is << " " << i << " " << nll << endl;
 	    phalf=p-hstep2*gr2; // update momentum by half step (why negative?)
 	    y+=hstep*phalf;	      // update parameters by full step
 	    z=chd*y;		      // transform parameters via mass matrix
 	    // This function returns the negative log density/likelihood but also sets gradients in gr
 	    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	    // If numerical error occurs, mark it as a divergence and stop
+	    // this trajectory, staying at the current state
+	    if(std::isnan(nll))
+	      {
+		divergence=1;
+		cout << "nan for iteration " << is << "; " << i << endl;
+		break;
+	      }
 	    gr2=gr*chd;		// transform gradient via mass matrix
 	    p=phalf-hstep2*gr2; // update momentum by half step (why negatiev?)
 	  } // end of trajectory
+	if(divergence) break;
 	pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
 	double Ham=nll+pprob; // H at proposed state
 	double alpha=exp(H0-Ham); // acceptance ratio
@@ -504,7 +516,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    H0=nll+pprob;
 	    gr2=gr2begin;	// don't update gradients
 	  }
-	if ((is%5)==1)
+	if ((is%1)==1)
 	  cout << "iteration=" << is <<  "; accept ratio " << alpha << endl;
 	// Copy parameters to the .psv file
 	(*pofs_psave) << parsave;
@@ -558,3 +570,9 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
   }
   return f;
 }
+
+#ifndef isnan
+inline bool isnan(double x) {
+    return x != x;
+}
+#endif

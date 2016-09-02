@@ -17,27 +17,27 @@ total-clean:
 	@if exist agemat.tpl del /Q agemat.tpl
 
 clean:
-	@del /Q agemat agemat.cpp agemat.htp agemat.obj
-	@del /Q Echo.Out
-	@del /Q admodel.cov
-	@del /Q admodel.dep
-	@del /Q admodel.hes
-	@del /Q agemat.b01
-	@del /Q agemat.bar
-	@del /Q agemat.cor
-	@del /Q agemat.eva
-	@del /Q agemat.log
-	@del /Q agemat.p01
-	@del /Q agemat.par
-	@del /Q agemat.r01
-	@del /Q agemat.rep
-	@del /Q agemat.std
-	@del /Q agemat
-	@del /Q agemat.exe
-	@del /Q cmpdiff.tmp
-	@del /Q eigv.rpt
-	@del /Q fmin.log
-	@del /Q gradfil1.tmp
-	@del /Q gradfil2.tmp
-	@del /Q variance
-	@del /Q varssave.tmp
+	@del /Q agemat agemat.cpp agemat.htp agemat.obj 2>nul
+	@del /Q Echo.Out 2>nul
+	@del /Q admodel.cov 2>nul
+	@del /Q admodel.dep 2>nul
+	@del /Q admodel.hes 2>nul
+	@del /Q agemat.b01 2>nul
+	@del /Q agemat.bar 2>nul
+	@del /Q agemat.cor 2>nul
+	@del /Q agemat.eva 2>nul
+	@del /Q agemat.log 2>nul
+	@del /Q agemat.p01 2>nul
+	@del /Q agemat.par 2>nul
+	@del /Q agemat.r01 2>nul
+	@del /Q agemat.rep 2>nul
+	@del /Q agemat.std 2>nul
+	@del /Q agemat 2>nul
+	@del /Q agemat.exe 2>nul
+	@del /Q cmpdiff.tmp 2>nul
+	@del /Q eigv.rpt 2>nul
+	@del /Q fmin.log 2>nul
+	@del /Q gradfil1.tmp 2>nul
+	@del /Q gradfil2.tmp 2>nul
+	@del /Q variance 2>nul
+	@del /Q varssave.tmp 2>nul

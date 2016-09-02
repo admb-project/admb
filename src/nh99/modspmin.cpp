@@ -475,33 +475,35 @@ void write_banner_stuff(void)
 	  // model but not from source. ???
 	  hmc_mcmc_routine(nmcmc,iseed0,dscale,0);
 	}
-      // end addition
-	
-
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
-      {
-        if (hybrid_flag==0)
-        {
-          mcmc_routine(nmcmc,iseed0,dscale,1);
-        }
-        else
-        {
-          hybrid_mcmc_routine(nmcmc,iseed0,dscale,1);
-        }
-      }
-      else
-      {
-        if (hybrid_flag==0)
-        {
-          mcmc_routine(nmcmc,iseed0,dscale,0);
-        }
-        else
-        {
-          hybrid_mcmc_routine(nmcmc,iseed0,dscale,0);
-        }
-      }
+      // Temporarily turn off this chunk if using HMC
+     else
+	{
+	  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
+	    {
+	      if (hybrid_flag==0)
+		{
+		  mcmc_routine(nmcmc,iseed0,dscale,1);
+		}
+	      else
+		{
+		  hybrid_mcmc_routine(nmcmc,iseed0,dscale,1);
+		}
+	    }
+	  else
+	    {
+	      if (hybrid_flag==0)
+		{
+		  mcmc_routine(nmcmc,iseed0,dscale,0);
+		}
+	      else
+		{
+		  hybrid_mcmc_routine(nmcmc,iseed0,dscale,0);
+		}
+	    }
+	}
     }
   }
+
 
 #if defined(USE_ADPVM)
   void function_minimizer::pvm_master_mcmc_computations(void)

@@ -539,7 +539,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  gr2=gr*chd;		// transform gradient via mass matrix
 	  p=phalf-eps/2*gr2; // update momentum by half step (why negatiev?)
 	} // end of trajectory
-      if(divergence) break;
       pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
       double Ham=nll+pprob; // H at proposed state
       double alpha=exp(H0-Ham); // acceptance ratio
@@ -549,7 +548,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
       // Test whether to accept the proposed state
       double rr=randu(rng);	   // Runif(1)
-      if (rr<alpha) // accept 
+      if (rr<alpha & !divergence) // accept 
 	{
 	  iaccept++;
 	  yold=y;		// Update parameters
@@ -587,7 +586,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta
   cout << "Final acceptance ratio=" << iaccept/number_sims << " and target is " << adapt_delta<<endl;
-  cout << "nwarmup= " << nwarmup << endl;
+  cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
 
   // This saves a new seed for if the chain is restarted, making it
   // reproducible.

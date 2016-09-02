@@ -513,69 +513,79 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   epsvec(1)=eps;
   epsbar(1)=eps;
   Hbar(1)=0;
-    
+  int divergence;		// boolean for whether divergence occured
+
   // Start of MCMC chain
-  for (int is=1;is<=number_sims;is++) {
-    // Start of single trajectory
-    for (int i=1;i<=L;i++) {
-      phalf=p-eps/2*gr2; // update momentum by half step (why negative?)
-      y+=eps*phalf;	      // update parameters by full step
-      z=chd*y;		      // transform parameters via mass matrix
-      // This function returns the negative log density/likelihood but also sets gradients in gr
-      nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-      gr2=gr*chd;		// transform gradient via mass matrix
-      p=phalf-eps/2*gr2; // update momentum by half step (why negatiev?)
-    } // end of trajectory
-    pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
-    double Ham=nll+pprob; // H at proposed state
-    double alpha=exp(H0-Ham); // acceptance ratio
-    // this looks like a bug -- should leave momentum alone here until after saving values?
-    p.fill_randn(rng);
-    pprob=0.5*norm2(p);
-	
-    // Test whether to accept the proposed state
-    double rr=randu(rng);	   // Runif(1)
-    if (rr<alpha) // accept 
-      {
-	accepted=1;
-	iaccept++;
-	yold=y;		// Update parameters
-	H0=nll+pprob;	// 
-	gr2begin=gr2;
-	ii=1;
-	initial_params::copy_all_values(parsave,ii);
+  for (int is=1;is<=number_sims;is++)
+    {
+      divergence=0;
+      // Start of single trajectory
+      for (int i=1;i<=L;i++)
+	{
+	  cout << is << " " << i << " " << nll << endl;
+	  phalf=p-eps/2*gr2; // update momentum by half step (why negative?)
+	  y+=eps*phalf;	      // update parameters by full step
+	  z=chd*y;		      // transform parameters via mass matrix
+	  // This function returns the negative log density/likelihood but also sets gradients in gr
+	  nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	  // If numerical error occurs, mark it as a divergence and stop
+	  // this trajectory, staying at the current state
+	  if(std::isnan(nll))
+	    {
+	      divergence=1;
+	      cout << "nan for iteration " << is << "; " << i << endl;
+	      break;
+	    }
+	  gr2=gr*chd;		// transform gradient via mass matrix
+	  p=phalf-eps/2*gr2; // update momentum by half step (why negatiev?)
+	} // end of trajectory
+      if(divergence) break;
+      pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
+      double Ham=nll+pprob; // H at proposed state
+      double alpha=exp(H0-Ham); // acceptance ratio
+      // this looks like a bug -- should leave momentum alone here until after saving values?
+      p.fill_randn(rng);
+      pprob=0.5*norm2(p);
+
+      // Test whether to accept the proposed state
+      double rr=randu(rng);	   // Runif(1)
+      if (rr<alpha) // accept 
+	{
+	  iaccept++;
+	  yold=y;		// Update parameters
+	  H0=nll+pprob;	// 
+	  gr2begin=gr2;
+	  ii=1;
+	  initial_params::copy_all_values(parsave,ii);
+	}
+      else // reject 
+	{
+	  y=yold;		// Don't update params
+	  z=chd*y;
+	  H0=nll+pprob;
+	  gr2=gr2begin;	// don't update gradients
+	}
+      if ((is%1)==1)
+	cout << "iteration=" << is <<  "; accept ratio " << alpha << endl;
+
+      // Do dual averaging to adapt step size
+      int sampling;
+      if(is <= nwarmup){
+	sampling=0;
+      } else {
+	sampling=1;
       }
-    else // reject 
-      {
-	accepted=0;
-	y=yold;		// Don't update params
-	z=chd*y;		// 
-	H0=nll+pprob;
-	gr2=gr2begin;	// don't update gradients
+      if(useDA && is <= nwarmup){
+	Hbar(is+1)=
+	  (1-1/(is+t0))*Hbar(is) + (adapt_delta-min(1.0,alpha))/(is+t0);
+	double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
+	epsvec(is+1)=exp(logeps);
+	double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
+	epsbar(is+1)=exp(logepsbar);
+	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
       }
-    // Do dual averaging to adapt step size
-    int sampling;
-    if(is <= nwarmup){
-      sampling=0;
-    } else {
-      sampling=1;
-    }
-    if(useDA && is <= nwarmup){
-      Hbar(is+1)=
-	(1-1/(is+t0))*Hbar(is) + (adapt_delta-min(1.0,alpha))/(is+t0);
-      double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
-      epsvec(is+1)=exp(logeps);
-      double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
-      epsbar(is+1)=exp(logepsbar);
-      eps=epsvec(is+1);	// this is the adapted step size for the next iteration
-    }
-    if ((is%5)==1)
-      cout << "iteration=" << is << "; sampling=" << sampling << "; eps=" << eps << "; accepted="<< accepted<<
-	"; accept ratio " << min(1.0,alpha) << endl;
-    // Copy parameters to the .psv file
-    (*pofs_psave) << parsave;
-  } // end of MCMC chain
-    // This final ratio should closely match adapt_delta
+    } // end of MCMC chain
+  // This final ratio should closely match adapt_delta
   cout << "Final acceptance ratio=" << iaccept/number_sims << " and target is " << adapt_delta<<endl;
   cout << "nwarmup= " << nwarmup << endl;
 
@@ -589,18 +599,17 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       delete pofs_psave;
       pofs_psave=NULL;
     }
-}
+} // end of HMC function
 
-/**
- * Written by Dave, commented by Cole starting 8/31/2016
- * Description not yet available.
- * \param
- * x is vector of Choleski decomposed parameters (i.e., x=y*chd).
- * g is a vector of empty gradients
- * returns the negative log likelihood (density), but also stores gradients for x in g
- */
-double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
-							const independent_variables& x,dvector& g)
+  /**
+   * Written by Dave, commented by Cole starting 8/31/2016
+   * Description not yet available.
+   * \param
+   * x is vector of Choleski decomposed parameters (i.e., x=y*chd).
+   * g is a vector of empty gradients
+   * returns the negative log likelihood (density), but also stores gradients for x in g
+   */
+double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independent_variables& x,dvector& g)
 {
   //initial_params::xinit(x);
   double f=0.0;
@@ -626,3 +635,9 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
     }
   return f;
 }
+
+#ifndef isnan
+inline bool isnan(double x) {
+  return x != x;
+}
+#endif

@@ -502,7 +502,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector phalf;
   // Dual averaging components
   int useDA=1;
-  double gamma=0.5;
+  double gamma=0.05;
   double t0=10;
   double kappa=0.75;
   double mu=log(10*eps);
@@ -515,6 +515,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   Hbar(1)=0;
   int divergence;		// boolean for whether divergence occured
 
+
   // Start of MCMC chain
   for (int is=1;is<=number_sims;is++)
     {
@@ -522,7 +523,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Start of single trajectory
       for (int i=1;i<=L;i++)
 	{
-	  cout << is << " " << i << " " << nll << endl;
+	  //cout << is << " " << i << " " << nll << endl;
 	  phalf=p-eps/2*gr2; // update momentum by half step (why negative?)
 	  y+=eps*phalf;	      // update parameters by full step
 	  z=chd*y;		      // transform parameters via mass matrix
@@ -541,15 +542,16 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	} // end of trajectory
       pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
       double Ham=nll+pprob; // H at proposed state
-      double alpha=exp(H0-Ham); // acceptance ratio
+      double alpha=min(1.0, exp(H0-Ham)); // acceptance ratio
       // this looks like a bug -- should leave momentum alone here until after saving values?
       p.fill_randn(rng);
       pprob=0.5*norm2(p);
 
       // Test whether to accept the proposed state
       double rr=randu(rng);	   // Runif(1)
-      if (rr<alpha & !divergence) // accept 
+      if (rr<alpha && !divergence) // accept 
 	{
+	  accepted=1;
 	  iaccept++;
 	  yold=y;		// Update parameters
 	  H0=nll+pprob;	// 
@@ -559,13 +561,15 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
       else // reject 
 	{
+	  accepted=0;
 	  y=yold;		// Don't update params
 	  z=chd*y;
 	  H0=nll+pprob;
 	  gr2=gr2begin;	// don't update gradients
 	}
-      if ((is%1)==1)
-	cout << "iteration=" << is <<  "; accept ratio " << alpha << endl;
+      //      if ((is%2)==1)
+      cout << "iteration=" << is << "; eps=" << eps <<"; accept ratio="
+	   << min(1.0,alpha) << "; accepted=" << accepted << endl;
 
       // Do dual averaging to adapt step size
       int sampling;
@@ -574,14 +578,16 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       } else {
 	sampling=1;
       }
-      if(useDA && is <= nwarmup){
-	Hbar(is+1)=
-	  (1-1/(is+t0))*Hbar(is) + (adapt_delta-min(1.0,alpha))/(is+t0);
+      if(useDA && !sampling){
+	// If a divergence occurs, make step size smaller so it doesn't get stuck.
+	if(divergence) alpha=.1;
+	Hbar(is+1)= (1-1/(is+t0))*Hbar(is) + (adapt_delta-alpha)/(is+t0);
 	double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
 	epsvec(is+1)=exp(logeps);
 	double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
 	epsbar(is+1)=exp(logepsbar);
 	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
+	cout << "Hbar= " << Hbar(is) << endl;
       }
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta

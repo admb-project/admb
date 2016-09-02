@@ -515,7 +515,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   Hbar(1)=0;
   int divergence;		// boolean for whether divergence occured
   ofstream adaptation("adaptation.csv", ios::trunc); // write adaptation to file
-  adaptation << "iteration" << "," << "Hbar" << "," <<  "epsvec" << "," << "epsbar" << "," << "alpha" << endl;
+  adaptation << "iteration" << "," << "Hbar" << "," <<  "epsvec" << ","
+	     << "epsbar" << "," << "alpha" << "," << "accepted"<< "," << "divergence" << endl;
 
 
   // Start of MCMC chain
@@ -593,7 +594,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
 	epsbar(is+1)=exp(logepsbar);
 	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
-	adaptation << is << "," << Hbar(is) << "," << epsvec(is) << "," <<epsbar(is) << "," << alpha << endl;
+	adaptation << is << "," << Hbar(is) << "," << epsvec(is) << ","
+		   <<epsbar(is) << "," << alpha << "," << accepted << "," << divergence << endl;
       }
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta

@@ -3,7 +3,7 @@
    Copyright (c) 2016 ADMB Foundation
 
    \file
-   This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo 
+   This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo
    samplers (static HMC and No-u-turn).
 */
 
@@ -178,7 +178,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    }
 	}
     }
-      
+
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
     {
       diag_option=1;
@@ -449,7 +449,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    }
         }
     }
-  
+
   gradient_structure::set_NO_DERIVATIVES();
 
   if (mcmc2_flag==0)
@@ -475,11 +475,11 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Declare the variables needed
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   dvector y(1,nvar); // unbounded parameters
-  y.initialize();    
+  y.initialize();
   dvector yold(1,nvar);	// unbounded parameters 2
   independent_variables z(1,nvar); // rotated bounded parameters???
-  z=chd*y;			     
-  // This 
+  z=chd*y;
+  // This
   dvector gr(1,nvar);		// gradients in unbounded space
   get_hybrid_monte_carlo_value(nvar,z,gr);
   dvector gr2begin=gr*chd; // rotated gradient
@@ -514,6 +514,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   epsbar(1)=eps;
   Hbar(1)=0;
   int divergence;		// boolean for whether divergence occured
+  ofstream adaptation("adaptation.csv", ios::trunc); // write adaptation to file
+  adaptation << "iteration" << "," << "Hbar" << "," <<  "epsvec" << "," << "epsbar" << "," << "alpha" << endl;
 
 
   // Start of MCMC chain
@@ -549,17 +551,17 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
       // Test whether to accept the proposed state
       double rr=randu(rng);	   // Runif(1)
-      if (rr<alpha && !divergence) // accept 
+      if (rr<alpha && !divergence) // accept
 	{
 	  accepted=1;
 	  iaccept++;
 	  yold=y;		// Update parameters
-	  H0=nll+pprob;	// 
+	  H0=nll+pprob;	//
 	  gr2begin=gr2;
 	  ii=1;
 	  initial_params::copy_all_values(parsave,ii);
 	}
-      else // reject 
+      else // reject
 	{
 	  accepted=0;
 	  y=yold;		// Don't update params
@@ -567,7 +569,9 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  H0=nll+pprob;
 	  gr2=gr2begin;	// don't update gradients
 	}
-      //      if ((is%2)==1)
+      // Save parameters to psv file
+      (*pofs_psave) << parsave;
+      if ((is%100)==1)
       cout << "iteration=" << is << "; eps=" << eps <<"; accept ratio="
 	   << min(1.0,alpha) << "; accepted=" << accepted << endl;
 
@@ -579,15 +583,17 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	sampling=1;
       }
       if(useDA && !sampling){
-	// If a divergence occurs, make step size smaller so it doesn't get stuck.
-	if(divergence) alpha=.1;
+	// If a divergence occurs, make step size smaller so it doesn't get
+	// stuck. This is very ad hoc and not in the NUTS paper. But it
+	// seems to make it more robust to divergences.
+	if(std::isnan(alpha)) alpha=.5;
 	Hbar(is+1)= (1-1/(is+t0))*Hbar(is) + (adapt_delta-alpha)/(is+t0);
 	double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
 	epsvec(is+1)=exp(logeps);
 	double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
 	epsbar(is+1)=exp(logepsbar);
 	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
-	cout << "Hbar= " << Hbar(is) << endl;
+	adaptation << is << "," << Hbar(is) << "," << epsvec(is) << "," <<epsbar(is) << "," << alpha << endl;
       }
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta
@@ -628,7 +634,7 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
     {
       dvariable vf=0.0;
       dvar_vector vx=dvar_vector(x);
-      vf=initial_params::reset(vx); 
+      vf=initial_params::reset(vx);
       *objective_function_value::pobjfun=0.0;
       userfunction();
       dvar_vector d(1,nvar);

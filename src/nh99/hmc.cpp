@@ -518,6 +518,81 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   adaptation << "iteration" << "," << "Hbar" << "," <<  "epsvec" << ","
 	     << "epsbar" << "," << "alpha" << "," << "accepted"<< "," << "divergence" << endl;
 
+  //// -----------------------------------------------------------------
+  //First pass at .find.epsilon. Need to be careful to reset all position
+  //and momentum and gradient values before each iteration
+
+  // !!!!!! currently broken... revisit H1 and why that is always the same for -hmc but not -hybrid???
+
+
+  // Draw random momentum (used for all iterations)
+  dvector pp(1,nvar);
+  pp.fill_randn(rng);
+  dvector pp2(1,nvar);
+  dvector yy(1,nvar);
+  yy.initialize();
+
+  // Calculate initial Hamiltonian value
+  double pprob1=0.5*norm2(p);
+  // negative log density at initial state
+  z=chd*y;
+  double nll1=get_hybrid_monte_carlo_value(nvar,z,gr);
+  double H1=nll1+pprob1;
+
+  // Make one leapfrog step
+  phalf=pp-eps/2*gr2begin;
+  yy+=eps*phalf;
+  z=chd*yy;
+  double nll2=get_hybrid_monte_carlo_value(nvar,z,gr);
+  gr2=gr*chd;
+  pp2=phalf-eps/2*gr2; // this leaves pp untouched
+  // Calculate new Hamiltonian value
+  double pprob2=0.5*norm2(pp2);
+  double H2=nll2+pprob2;
+  // Determine initial acceptance ratio
+  double a;
+  bool result = exp(-H2+H1)>0.5;
+  double ptemp=exp(-H2+H1);
+  // If a=1, then it'll keep doubling until it passes 0.5; otherwise it halves until that happens.
+  if(result) a=1; else a=-1;
+  cout << "eps=" << eps << " ptemp=" << ptemp << " result=" << result << "; H1:" << H1 << "; H2:"
+       << H2 << "; H0:" << H0 << "; a:" << a << endl;
+  if(std::isnan(a)) a=-1;
+
+  double eps2=eps;
+  for(int k=1; k<20; k++){
+    // Reset the position and momentum variables and gradients
+    yy.initialize();
+    z=chd*yy;
+    gr2=gr2begin;
+
+    // Either halve or double eps
+    eps2=pow(2,a)*eps2;
+
+    // Make one leapfrog step
+    phalf=pp-eps2/2*gr2; // update momentum by half step (why negative?)
+    yy+=eps2*phalf;	      // update parameters by full step
+    z=chd*yy;		      // transform parameters via mass matrix
+    double nll2=get_hybrid_monte_carlo_value(nvar,z,gr);
+    gr2=gr*chd;		// transform gradient via mass matrix
+    pp2=phalf-eps2/2*gr2; // update momentum by half step (why negatiev?)
+    // End of leapfrog step
+    double H2=nll2+pprob2;
+    double ptemp=exp(-H2+H1);
+
+    // Check if the 1/2 threshold has been crossed
+    double x1=pow(ptemp,a);
+    double x2=pow(2,-a);
+    cout << "iteration:" << k << "; H1: "<< H1 << "; H2:"
+	 << H2 << "; a:" << a << "; ptemp: " << ptemp << "; eps2: "
+	 << eps2 << "; x1:" << x1 << "; x2:" << x2 << endl;
+    if(x1 < x2) break;
+
+  }
+
+//// --------------------------------------------------
+
+
 
   // Start of MCMC chain
   for (int is=1;is<=number_sims;is++)

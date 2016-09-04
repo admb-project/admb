@@ -89,6 +89,7 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
+
 #define USE_VECTOR_SHAPE_POOL
 
 #if defined(USE_DDOUBLE)
@@ -9285,5 +9286,9 @@ dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &,
 dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
+
+#ifndef TINY_AD_INTEGRATE_H
+  #include <integrate_wrap.hpp>
+#endif
 
 #endif//#ifndef FVAR_HPP

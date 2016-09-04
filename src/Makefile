@@ -183,6 +183,9 @@ includes: objdestdir
 	copy tools99\Vectorize.hpp $(DESTDIR)\include
 	copy tools99\tiny_ad.hpp $(DESTDIR)\include
 	copy tools99\tiny_vec.hpp $(DESTDIR)\include
+	copy tools99\integrate.cpp $(DESTDIR)\include
+	copy tools99\integrate.hpp $(DESTDIR)\include
+	copy tools99\integrate_wrap.hpp $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
 	copy nh99\nocontrib.h $(DESTDIR)\include\contrib\contrib.h
 

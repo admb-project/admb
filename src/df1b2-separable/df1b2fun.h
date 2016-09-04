@@ -93,8 +93,9 @@ public:
   #include <tiny_ad.hpp>
 #endif
 
-
-
+#ifndef TINY_AD_INTEGRATE_H
+  #include <integrate_wrap.hpp>
+#endif
 
 #if defined(__DERCHECK__)
 /**

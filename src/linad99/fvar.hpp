@@ -9287,8 +9287,4 @@ dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
 
-#ifndef TINY_AD_INTEGRATE_H
-  #include <integrate_wrap.hpp>
-#endif
-
 #endif//#ifndef FVAR_HPP

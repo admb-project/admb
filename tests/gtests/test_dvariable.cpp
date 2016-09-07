@@ -71,7 +71,7 @@ TEST_F(test_dvariable, exp_1)
     }
   }
 }
-#ifndef OPT_LIB
+#ifdef DIAG
   ///\todo Must remove macros below once support for MSVC++11 and Solaris Studio 12.3 are removed.
   #if !defined(__SUNPRO_CC) && !(defined(_MSC_VER) && (_MSC_VER <= 1700))
 TEST_F(test_dvariable, exp_max)

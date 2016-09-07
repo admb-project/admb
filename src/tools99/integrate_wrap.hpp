@@ -1,3 +1,5 @@
+#ifndef TINY_AD_INTEGRATE_H
+#define TINY_AD_INTEGRATE_H
 #include <df1b2fun.h>
 #define FALSE false
 #define TRUE  true
@@ -282,3 +284,5 @@ df1b2variable ltail##FUN(df1b2variable to){				\
   }									\
   return tmp;								\
 }
+
+#endif

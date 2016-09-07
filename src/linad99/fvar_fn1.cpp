@@ -33,7 +33,7 @@ prevariable& exp(const prevariable& v1)
 
   double tmp = ::exp(v1.v->x);
 
-#ifdef DIAG
+#ifndef OPT_LIB
   /** \todo Must remove macros below once support
   for MSVC++11 and Solaris Studio 12.3 are removed.
   */

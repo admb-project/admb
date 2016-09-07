@@ -1,7 +1,5 @@
 // Copyright (C) 2016 Kasper Kristensen
 // License: GPL-2
-#ifndef __tiny_vec_hpp__
-#define __tiny_vec_hpp__
 
 /* Simple vector class that can be used with tiny_ad */
 template <class Type>
@@ -91,5 +89,3 @@ std::ostream &operator<<(std::ostream &os, tiny_vec<Type, n> const &x) {
   os << "]";
   return os;
 }
-
-#endif

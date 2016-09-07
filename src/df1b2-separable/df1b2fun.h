@@ -87,11 +87,7 @@ public:
   adpool * ptr;
 };
 
-
-#ifndef TINY_AD_USE_TINY_VEC
-  #define TINY_AD_USE_TINY_VEC 1
-  #include <tiny_ad.hpp>
-#endif
+#include <tiny_ad.hpp>
 
 #ifndef TINY_AD_INTEGRATE_H
   #include <integrate_wrap.hpp>

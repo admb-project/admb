@@ -84,7 +84,11 @@ Macro definitions.
 #   include <pthread.h>
 #endif
 
-#include <tiny_ad.hpp>
+#ifndef TINY_AD_USE_TINY_VEC
+  #define TINY_AD_USE_TINY_VEC 1
+  #include <tiny_ad.hpp>
+#endif
+
 
 #define USE_VECTOR_SHAPE_POOL
 

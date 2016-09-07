@@ -1,7 +1,5 @@
 // Copyright (C) 2016 Kasper Kristensen
 // License: GPL-2
-#ifndef TINY_AD_USE_TINY_VEC
-#define TINY_AD_USE_TINY_VEC
 
 /* Standalone ? */
 #ifndef R_RCONFIG_H
@@ -246,5 +244,3 @@ namespace tiny_ad {
   };
 #undef TINY_VECTOR
 } // End namespace tiny_ad
-
-#endif

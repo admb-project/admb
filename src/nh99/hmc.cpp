@@ -524,15 +524,14 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// If a divergence occurs, make step size smaller so it doesn't get
 	// stuck. This is very ad hoc and not in the NUTS paper. But it
 	// seems to make it more robust to divergences.
-	if(std::isnan(alpha)) alpha=.5;
+	if(std::isnan(alpha)) alpha=0;
 	Hbar(is+1)= (1-1/(is+t0))*Hbar(is) + (adapt_delta-alpha)/(is+t0);
 	double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
 	epsvec(is+1)=exp(logeps);
 	double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
 	epsbar(is+1)=exp(logepsbar);
 	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
-	adaptation << alpha << "," <<  eps << ","
-		   << eps*L << "," << H0 << "," << -nll << endl;
+	adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
       }
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta

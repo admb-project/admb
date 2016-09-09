@@ -11,7 +11,7 @@
 #ifndef OPT_LIB
 #include <cassert>
 #endif
-
+#include<ctime>
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
 
@@ -456,6 +456,10 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Get a reasonable starting step size if the user didn't specify one
   if(useDA) eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
 
+  double time_warmup=0;
+  double time_total=0;
+  std::clock_t start =clock();
+
   // Start of MCMC chain
   for (int is=1;is<=number_sims;is++)
     {
@@ -533,6 +537,9 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
 	adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
       }
+      if(is ==nwarmup){
+	time_warmup = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+      }
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta
   if(useDA){
@@ -542,6 +549,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << "Final acceptance ratio=" << iaccept/number_sims << endl;
   }
 
+  time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+  print_mcmc_timing(time_warmup, time_total);
   // This saves a new seed for if the chain is restarted, making it
   // reproducible.
   ofstream ofs("hybrid_seed");
@@ -594,6 +603,23 @@ inline bool isnan(double x) {
   return x != x;
 }
 #endif
+
+void function_minimizer::print_mcmc_timing(double time_warmup, double time_total)
+{
+  std::string title(" Elapsed Time: ");
+  std::stringstream ss;
+  ss.str("");
+  ss << title << time_warmup << " seconds (Warm-up)";
+  cout << ss.str() << endl;
+  ss.str("");
+  ss << std::string(title.size(), ' ') << time_total-time_warmup << " seconds (Sampling)";
+  cout << ss.str() << endl;
+  ss.str("");
+  ss << std::string(title.size(), ' ') << time_total << " seconds (Total)";
+  cout << ss.str() << endl;
+  cout << "Model took: " << time_warmup << " seconds to run." << endl;
+
+}
 
 double function_minimizer::find_reasonable_stepsize(int nvar, const independent_variables& x,dvector& gr,
 						    dmatrix& chd, double eps, dvector pp)

@@ -1912,6 +1912,7 @@ public:
   void hybrid_mcmc_routine(int,int,double,int);
   void hmc_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
+  void print_mcmc_progress(int is, int nmcmc, int nwarmup);
   double find_reasonable_stepsize(int nvar, const independent_variables& x,
     dvector& gr, dmatrix& chd, double eps, dvector pp);
   double pvm_master_get_monte_carlo_value(int nvar,

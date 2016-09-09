@@ -12,6 +12,7 @@
 #include <cassert>
 #endif
 #include<ctime>
+
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
 
@@ -513,9 +514,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
       // Save parameters to psv file
       (*pofs_psave) << parsave;
-      if ((is%100)==1)
-	cout << "iteration=" << is << "; eps=" << eps <<"; accept ratio="
-	     << min(1.0,alpha) << "; accepted=" << accepted << endl;
 
       // Do dual averaging to adapt step size
       int sampling;
@@ -540,6 +538,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       if(is ==nwarmup){
 	time_warmup = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
       }
+      print_mcmc_progress(is, nmcmc, nwarmup);
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta
   if(useDA){
@@ -598,6 +597,19 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
   return f;
 }
 
+void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup)
+{
+  // Modified from Stan: sample::progress.hpp; 9/9/2016
+  int refresh = floor(nmcmc/10);
+  if (is==1 || is == nmcmc || is % refresh ==0 ){
+    int width=1+std::ceil(std::log10(static_cast<double>(nmcmc)));
+    cout << "Chain 1, " << "Iteration: " << std::setw(width) << is
+	 << " / " << nmcmc << " [" << std::setw(3)
+	 << static_cast<int>( (100.0 * (is / nmcmc )))
+	 << "%] " << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
+  }
+}
+
 void function_minimizer::print_mcmc_timing(double time_warmup, double time_total)
 {
   std::string title(" Elapsed Time: ");
@@ -611,8 +623,6 @@ void function_minimizer::print_mcmc_timing(double time_warmup, double time_total
   ss.str("");
   ss << std::string(title.size(), ' ') << time_total << " seconds (Total)";
   cout << ss.str() << endl;
-  cout << "Model took: " << time_warmup << " seconds to run." << endl;
-
 }
 
 double function_minimizer::find_reasonable_stepsize(int nvar, const independent_variables& x,dvector& gr,

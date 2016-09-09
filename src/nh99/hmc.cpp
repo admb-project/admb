@@ -445,8 +445,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	     << "epsbar" << "," << "alpha" << "," << "accepted"<< "," << "divergence" << endl;
 
   //// -----------------------------------------------------------------
-  //First pass at .find.epsilon. Need to be careful to reset all position
-  //and momentum and gradient values before each iteration
 
   // Draw random momentum (used for all iterations)
   dvector pp(1,nvar);
@@ -461,26 +459,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   z=chd*y;
   double nll1=get_hybrid_monte_carlo_value(nvar,z,gr);
   double H1=nll1+pprob1;
-
-  // Make one leapfrog step
-  phalf=pp-eps/2*gr2begin;
-  yy+=eps*phalf;
-  z=chd*yy;
-  double nll2=get_hybrid_monte_carlo_value(nvar,z,gr);
-  gr2=gr*chd;
-  pp2=phalf-eps/2*gr2; // this leaves pp untouched
-  // Calculate new Hamiltonian value
-  double pprob2=0.5*norm2(pp2);
-  double H2=nll2+pprob2;
-  // Determine initial acceptance ratio
-  bool result = exp(H1-H2)>0.5;
-  double accept_temp=min(1.0, exp(H1-H2));
-  double a;
-  // If a=1, then it'll keep doubling until it passes 0.5; otherwise it halves until that happens.
-  if(result) a=1; else a=-1;
-  if(std::isnan(a)) a=-1;
-
   double eps2=eps;
+  bool success=0; // whether or not algorithm worked after 50 iterations
   for(int k=1; k<50; k++){
     // Reset the position and momentum variables and gradients
     yy.initialize();
@@ -497,21 +477,33 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double H2=nll2+pprob2;
     double accept_temp=exp(H1-H2);
 
+    // On first step, determine whether to halve or double. If a=1, then
+    // eps2 keeps doubling until alpha passes 0.5; otherwise it halves until
+    // that happens.
+    double a;
+    if(k==1){
+      // Determine initial acceptance ratio is too big or too small
+      bool result = exp(H1-H2)>0.5;
+      if(std::isnan(result)) result=0; // if divergence occurs, acceptance prob is 0 so a=-1
+      if(result) a=1; else a=-1;
+    }
     // Check if the 1/2 threshold has been crossed
     double x1=pow(accept_temp,a);
     double x2=pow(2,-a);
-    cout << "i:" << k << "nll1: " << nll1 << "; pprob1:" << pprob1 << "nll2: " << nll2 << "; pprob2:" << pprob2 <<
-      "; H1: "<< H1 << "; H2:"
-	 << H2 << "; a:" << a << "; accept_temp: " << accept_temp << "; eps2: "
-	 << eps2 << "; x1 < x2:" << (x1 < x2) << endl;
     if(x1 < x2){
       cout << "Found reasonable step size of " << eps2 << " after " << k << " steps." << endl;
+      eps=eps2;
+      success=1;
       break;
     }
-    // Either halve or double eps
+    // Otherwise either halve or double eps and do another iteration
     eps2=pow(2,a)*eps2;
   }
-
+  if(success==0) {
+    cerr << "Did not find reasonable initial step size after 50 iterations -- " <<
+      "is something wrong with model?" << endl;
+    ad_exit(1);
+  }
   //// --------------------------------------------------
 
 

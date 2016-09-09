@@ -598,12 +598,6 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
   return f;
 }
 
-#ifndef isnan
-inline bool isnan(double x) {
-  return x != x;
-}
-#endif
-
 void function_minimizer::print_mcmc_timing(double time_warmup, double time_total)
 {
   std::string title(" Elapsed Time: ");

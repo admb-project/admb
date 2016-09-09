@@ -18,7 +18,6 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
 
 void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					  int restart_flag) {
-  cout << "yes it worked" << endl << endl;
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
   //int mcmc_save_index=1;
@@ -460,8 +459,9 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double time_warmup=0;
   double time_total=0;
   std::clock_t start =clock();
+  cout << "/n Starting model " << ad_comm::adprogram_name << " at " << start << endl;
 
-  // Start of MCMC chain
+    // Start of MCMC chain
   for (int is=1;is<=number_sims;is++)
     {
       divergence=0;

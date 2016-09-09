@@ -464,13 +464,11 @@ void write_banner_stuff(void)
       int hmc_flag=0;
       if (option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)
 	{
-	  cout << "HMC yes!" << endl << endl << endl;
 	  hmc_flag=1;
 	  gradient_structure::Hybrid_bounded_flag=1;
 	}
       if(hmc_flag==1)
 	{
-	  cout << "detected HMC" <<endl;
 	  // the call for this routine throws an error when building a
 	  // model but not from source. ???
 	  hmc_mcmc_routine(nmcmc,iseed0,dscale,0);

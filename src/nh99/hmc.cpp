@@ -35,43 +35,17 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       //nvar1=initial_params::nvarcalc(); // get the number of active parameters
     }
 
-  // if (stddev_params::num_stddev_params==0)
-  // {
-  //   cerr << " You must declare at least one object of type sdreport "
-  //        << endl << " to do the mcmc calculations" << endl;
-  //    return;
-  // }
-  //ofstream of_bf("testbf");
-
-  //if (adjm_ptr) set_labels_for_mcmc();
-
   ivector number_offsets;
   dvector lkvector;
-  //double current_bf=0;
-  //double lcurrent_bf=0;
-  //double size_scale=1.0;
-  //double total_spread=200;
-  //double total_spread=2500;
-  //uostream * pofs_sd = NULL;
 
   initial_params::set_inactive_random_effects();
-  // int nvar_x=initial_params::nvarcalc();
   initial_params::set_active_random_effects();
   int nvar_re=initial_params::nvarcalc();
 
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dmatrix s_covar;
   dvector s_mean;
-  //int ncsim=25000;
-  //int nslots=800;
-  //int nslots=3600;
-  //int initial_nsim=4800;
-  //int ntmp=0;
-  //int ncor=0;
-  //double bfsum=0;
-  //int ibfcount=0;
-  //double lbmax;
-
+ 
   s_covar.allocate(1,nvar,1,nvar);
   s_mean.allocate(1,nvar);
   s_mean.initialize();
@@ -265,23 +239,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					 mcmc2_flag);
 	  //read_hessian_matrix_and_scale(nvar,S,pen_vector);
 	}
-
-      // maybe we dont want to do this?
-      /*
-	{  // scale covariance matrix for model space
-	dmatrix tmp(1,nvar,1,nvar);
-	for (int i=1;i<=nvar;i++)
-	{
-	tmp(i,i)=S(i,i)*(scale(i)*scale(i));
-	for (int j=1;j<i;j++)
-	{
-	tmp(i,j)=S(i,j)*(scale(i)*scale(j));
-	tmp(j,i)=tmp(i,j);
-	}
-	}
-	S=tmp;
-	}
-      */
     }
   else			// set covariance to be diagonal
     {
@@ -335,11 +292,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	int ii=1;
 	dvector x0(1,nvar);
 	initial_params::restore_all_values(parsave,ii);
-	//x0.initialize();
-	//dvector pen_vector(1,nvar);
-	//initial_params::reset(dvar_vector(parsave),pen_vector);
-	//initial_params::xinit(x0);
-	//cout << " x0 " << x0(x0.indexmin()) << endl;
       }
     }
 
@@ -348,28 +300,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     {
       pofs_psave= new uostream( (char*)(ad_comm::adprogram_name
 					+ adstring(".psv")),ios::app);
-      /*
-	pofs_psave->seekp(0,std::ios::end);
-	*pofs_psave << 123;
-	delete pofs_psave;
-	uistream uis((char*)(ad_comm::adprogram_name + adstring(".psv")));
-	if (!uis)
-	{
-	cerr << "Error trying to open file" <<
-	ad_comm::adprogram_name + adstring(".psv") <<
-	" for mcrestart" <<   endl;
-	ad_exit(1);
-	} else {
-	int nv1;
-	uis >> nv1;
-	if (nv1 !=nvar) {
-	cerr << "wrong number of independent variables in" <<
-	ad_comm::adprogram_name + adstring(".psv") << endl
-	<< " I found " << nv1 << " instead of " << nvar  << endl;
-	ad_exit(1);
-	}
-	}
-      */
     }
   else
     {
@@ -414,10 +344,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
     }
 
-  //cout << sort(eigenvalues(S)) << endl;
-  //dmatrix tchd = trans(chd);
-  //dmatrix chdinv=inv(chd);
-  //int sgn;
   // ***************************************************************
   // ***************************************************************
   // NEW HYBRID MCMC

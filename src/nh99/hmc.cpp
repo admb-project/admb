@@ -358,22 +358,18 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // NEW HYBRID MCMC
   // ***************************************************************
   // ***************************************************************
-  int number_sims; 		// total MCMC iterations
   if (nmcmc<=0)
     {
-      number_sims=  1000;
+      cerr << "Negative iterations for MCMC";
+      ad_exit(1)
     }
-  else
-    {
-      number_sims=  nmcmc;
-    }
-  int nwarmup= (int)number_sims/2;
+  int nwarmup= (int)nmcmc/2; // default to half of sims being warmup
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nwarmup",nopt))>-1)
     {
       if (nopt)
         {
           int iii=atoi(ad_comm::argv[on+1]);
-          if (iii <=0 || iii > number_sims)
+          if (iii <=0 || iii > nmcmc)
 	    {
 	      cerr << " Invalid option following command line option -nwarmup -- "
 		   << endl << " ignored" << endl;
@@ -422,7 +418,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   dvector p(1,nvar);  // momentum
   p.fill_randn(rng);
-  //    dmatrix xvalues(1,number_sims,1,nvar);
+  //    dmatrix xvalues(1,nmcmc,1,nvar);
 
   // Initialize the algorithm: momenta and position, H
   yold=y;
@@ -440,7 +436,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double t0=10;
   double kappa=0.75;
   double mu=log(10*eps);
-  dvector epsvec(1,number_sims+1), epsbar(1,number_sims+1), Hbar(1,number_sims+1);
+  dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize();
   epsbar.initialize();
   Hbar.initialize();
@@ -463,10 +459,10 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   time_t now = time(0);
   // Convert now to tm struct for local timezone
   tm* localtm = localtime(&now);
-  cout << endl << "...Starting static HMC for model " << ad_comm::adprogram_name << " at " << asctime(localtm);
+  cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name << "' at " << asctime(localtm);
 
   // Start of MCMC chain
-  for (int is=1;is<=number_sims;is++)
+  for (int is=1;is<=nmcmc;is++)
     {
       divergence=0;
       // Start of single trajectory
@@ -479,11 +475,10 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  // This function returns the negative log density/likelihood but also sets gradients in gr
 	  nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	  // If numerical error occurs, mark it as a divergence and stop
-	  // this trajectory, staying at the current state
+	  // this trajectory early, staying at the current state
 	  if(std::isnan(nll))
 	    {
 	      divergence=1;
-	      cout << "nan for iteration " << is << "; " << i << endl;
 	      break;
 	    }
 	  gr2=gr*chd;		// transform gradient via mass matrix
@@ -538,10 +533,10 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta
   if(useDA){
-    cout << "Final acceptance ratio=" << iaccept/number_sims << " and target is " << adapt_delta<<endl;
+    cout << "Final acceptance ratio=" << iaccept/nmcmc << " and target is " << adapt_delta<<endl;
     cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
   } else {
-    cout << "Final acceptance ratio=" << iaccept/number_sims << endl;
+    cout << "Final acceptance ratio=" << iaccept/nmcmc << endl;
   }
 
   time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;

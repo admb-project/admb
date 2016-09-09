@@ -102,6 +102,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       if (!nopt)
 	{
 	  cerr << "Usage -hyeps option needs number  -- ignored" << endl;
+	  useDA=1;
 	}
       else
 	{
@@ -113,9 +114,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	      cerr << "Usage -hyeps option needs positive number  -- ignored\n";
 	      _eps=-1.0;
 	    }
+	  useDA=1;
 	}
-      if (_eps>0.0) eps=_eps;
-      useDA=0;
+      if (_eps>0.0){
+	eps=_eps;
+	useDA=0;
+      }
     } else {
     // If not supplied by user, set to one and find reasonable one below and adapt it
     eps=1;
@@ -451,7 +455,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector pp(1,nvar);
   pp.fill_randn(rng);
   // Get a reasonable starting step size if the user didn't specify one
-  eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
+  if(useDA) eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
   
   // Start of MCMC chain
   for (int is=1;is<=number_sims;is++)
@@ -533,8 +537,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta
-  cout << "Final acceptance ratio=" << iaccept/number_sims << " and target is " << adapt_delta<<endl;
-  cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
+  if(useDA){
+    cout << "Final acceptance ratio=" << iaccept/number_sims << " and target is " << adapt_delta<<endl;
+    cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
+  } else {
+    cout << "Final acceptance ratio=" << iaccept/number_sims << endl;
+  }
 
   // This saves a new seed for if the chain is restarted, making it
   // reproducible.
@@ -608,6 +616,7 @@ double function_minimizer::find_reasonable_stepsize(int nvar, const independent_
   dvector gr2begin=gr*chd; // rotated gradient
   double H1=nll1+pprob1;
   double eps2=eps;
+  double a;
   bool success=0; // whether or not algorithm worked after 50 iterations
 
   for(int k=1; k<50; k++){
@@ -629,7 +638,6 @@ double function_minimizer::find_reasonable_stepsize(int nvar, const independent_
     // On first step, determine whether to halve or double. If a=1, then
     // eps2 keeps doubling until alpha passes 0.5; otherwise it halves until
     // that happens.
-    double a;
     if(k==1){
       // Determine initial acceptance ratio is too big or too small
       bool result = exp(H1-H2)>0.5;

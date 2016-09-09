@@ -614,7 +614,7 @@ double function_minimizer::find_reasonable_stepsize(int nvar, const independent_
   dvector gr2begin=gr*chd; // rotated gradient
   double H1=nll1+pprob1;
   double eps2=eps;
-  double a;
+  double a=-1;
   bool success=0; // whether or not algorithm worked after 50 iterations
 
   for(int k=1; k<50; k++){
@@ -640,7 +640,7 @@ double function_minimizer::find_reasonable_stepsize(int nvar, const independent_
       // Determine initial acceptance ratio is too big or too small
       bool result = exp(H1-H2)>0.5;
       if(std::isnan(result)) result=0; // if divergence occurs, acceptance prob is 0 so a=-1
-      if(result) a=1; else a=-1;
+      if(result) a=1;
     }
     // Check if the 1/2 threshold has been crossed
     double x1=pow(accept_temp,a);

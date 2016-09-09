@@ -465,8 +465,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   tm* localtm = localtime(&now);
   cout << endl << "...Starting static HMC for model " << ad_comm::adprogram_name << " at " << asctime(localtm);
 
-
-    // Start of MCMC chain
+  // Start of MCMC chain
   for (int is=1;is<=number_sims;is++)
     {
       divergence=0;
@@ -501,7 +500,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       double rr=randu(rng);	   // Runif(1)
       if (rr<alpha && !divergence) // accept
 	{
-	  accepted=1;
 	  iaccept++;
 	  yold=y;		// Update parameters
 	  H0=nll+pprob;	//
@@ -511,7 +509,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
       else // reject
 	{
-	  accepted=0;
 	  y=yold;		// Don't update params
 	  z=chd*y;
 	  H0=nll+pprob;
@@ -521,13 +518,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       (*pofs_psave) << parsave;
 
       // Do dual averaging to adapt step size
-      int sampling;
-      if(is <= nwarmup){
-	sampling=0;
-      } else {
-	sampling=1;
-      }
-      if(useDA && !sampling){
+      if(useDA && is <= nwarmup){
 	// If a divergence occurs, make step size smaller so it doesn't get
 	// stuck. This is very ad hoc and not in the NUTS paper. But it
 	// seems to make it more robust to divergences.

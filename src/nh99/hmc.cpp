@@ -45,7 +45,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dmatrix s_covar;
   dvector s_mean;
- 
+
   s_covar.allocate(1,nvar,1,nvar);
   s_mean.allocate(1,nvar);
   s_mean.initialize();
@@ -448,15 +448,14 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   epsbar(1)=eps;
   Hbar(1)=0;
   int divergence;		// boolean for whether divergence occured
-  ofstream adaptation("adaptation.csv", ios::trunc); // write adaptation to file
-  adaptation << "iteration" << "," << "Hbar" << "," <<  "epsvec" << ","
-	     << "epsbar" << "," << "alpha" << "," << "accepted"<< "," << "divergence" << endl;
+  ofstream adaptation("adaptation.csv", ios::trunc); // write sampler parameters
+  adaptation << "accept_stat__,stepsize__,int_time__,energy__,lp__" << endl;
 
   dvector pp(1,nvar);
   pp.fill_randn(rng);
   // Get a reasonable starting step size if the user didn't specify one
   if(useDA) eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
-  
+
   // Start of MCMC chain
   for (int is=1;is<=number_sims;is++)
     {
@@ -532,8 +531,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
 	epsbar(is+1)=exp(logepsbar);
 	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
-	adaptation << is << "," << Hbar(is) << "," << epsvec(is) << ","
-		   <<epsbar(is) << "," << alpha << "," << accepted << "," << divergence << endl;
+	adaptation << alpha << "," <<  eps << ","
+		   << eps*L << "," << H0 << "," << -nll << endl;
       }
     } // end of MCMC chain
   // This final ratio should closely match adapt_delta

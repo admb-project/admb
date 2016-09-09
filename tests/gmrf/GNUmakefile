@@ -38,23 +38,23 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del $(TARGET)
-	@del variance
-	@del fmin.log
-	@del $(TARGET).eva
-	@del $(TARGET).htp
-	@del $(TARGET).bar
-	@del $(TARGET).bgs
-	@del $(TARGET).cor
-	@del $(TARGET).cpp
-	@del $(TARGET).log
-	@del $(TARGET).o
-	@del $(TARGET).obj
-	@del $(TARGET).par
-	@del $(TARGET).std
-	@del tests_$(TARGET).o
-	@del tests_$(TARGET)
-	@del eigv.rpt
+	@del $(TARGET) 2>nul
+	@del variance 2>nul
+	@del fmin.log 2>nul
+	@del $(TARGET).eva 2>nul
+	@del $(TARGET).htp 2>nul
+	@del $(TARGET).bar 2>nul
+	@del $(TARGET).bgs 2>nul
+	@del $(TARGET).cor 2>nul
+	@del $(TARGET).cpp 2>nul
+	@del $(TARGET).log 2>nul
+	@del $(TARGET).o 2>nul
+	@del $(TARGET).obj 2>nul
+	@del $(TARGET).par 2>nul
+	@del $(TARGET).std 2>nul
+	@del tests_$(TARGET).o 2>nul
+	@del tests_$(TARGET) 2>nul
+	@del eigv.rpt 2>nul
 else
 	@rm -vf gmrf.par
 	@rm -vf betareg.p02

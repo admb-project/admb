@@ -31,54 +31,54 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del admodel.cov
-	@del admodel.hes
-	@del fmin.log
-	@del $(TARGET).cor
-	@del $(TARGET).eva
-	@del $(TARGET).log
-	@del $(TARGET).par
-	@del $(TARGET).std
-	@del sims
-	@del admodel.dep
-	@del eigv.rpt
-	@del $(TARGET).bar
-	@del $(TARGET).cpp
-	@del $(TARGET).htp
-	@del $(TARGET).o
-	@del $(TARGET).obj
-	@del $(TARGET).psv
-	@del variance
-	@del posteriors.rep
-	@del $(TARGET).ecm
-	@del $(TARGET).hst
-	@del $(TARGET).mc2
-	@del $(TARGET).mcm
-	@del $(TARGET).exe
-	@del $(TARGET)
-	@del admodel.cov
-	@del admodel.dep
-	@del admodel.hes
-	@del eigv.rpt
-	@del fmin.log
-	@del posteriors.rep
-	@del simple_mcmc.bar
-	@del simple_mcmc.cor
-	@del simple_mcmc.cpp
-	@del simple_mcmc.ecm
-	@del simple_mcmc.eva
-	@del simple_mcmc.exe
-	@del simple_mcmc.hst
-	@del simple_mcmc.htp
-	@del simple_mcmc.log
-	@del simple_mcmc.mc2
-	@del simple_mcmc.mcm
-	@del simple_mcmc.obj
-	@del simple_mcmc.par
-	@del simple_mcmc.psv
-	@del simple_mcmc.std
-	@del sims
-	@del variance
+	@del admodel.cov 2>nul
+	@del admodel.hes 2>nul
+	@del fmin.log 2>nul
+	@del $(TARGET).cor 2>nul
+	@del $(TARGET).eva 2>nul
+	@del $(TARGET).log 2>nul
+	@del $(TARGET).par 2>nul
+	@del $(TARGET).std 2>nul
+	@del sims 2>nul
+	@del admodel.dep 2>nul
+	@del eigv.rpt 2>nul
+	@del $(TARGET).bar 2>nul
+	@del $(TARGET).cpp 2>nul
+	@del $(TARGET).htp 2>nul
+	@del $(TARGET).o 2>nul
+	@del $(TARGET).obj 2>nul
+	@del $(TARGET).psv 2>nul
+	@del variance 2>nul
+	@del posteriors.rep 2>nul
+	@del $(TARGET).ecm 2>nul
+	@del $(TARGET).hst 2>nul
+	@del $(TARGET).mc2 2>nul
+	@del $(TARGET).mcm 2>nul
+	@del $(TARGET).exe 2>nul
+	@del $(TARGET) 2>nul
+	@del admodel.cov 2>nul
+	@del admodel.dep 2>nul
+	@del admodel.hes 2>nul
+	@del eigv.rpt 2>nul
+	@del fmin.log 2>nul
+	@del posteriors.rep 2>nul
+	@del simple_mcmc.bar 2>nul
+	@del simple_mcmc.cor 2>nul
+	@del simple_mcmc.cpp 2>nul
+	@del simple_mcmc.ecm 2>nul
+	@del simple_mcmc.eva 2>nul
+	@del simple_mcmc.exe 2>nul
+	@del simple_mcmc.hst 2>nul
+	@del simple_mcmc.htp 2>nul
+	@del simple_mcmc.log 2>nul
+	@del simple_mcmc.mc2 2>nul
+	@del simple_mcmc.mcm 2>nul
+	@del simple_mcmc.obj 2>nul
+	@del simple_mcmc.par 2>nul
+	@del simple_mcmc.psv 2>nul
+	@del simple_mcmc.std 2>nul
+	@del sims 2>nul
+	@del variance 2>nul
 else
 	@rm -f admodel.cov
 	@rm -f admodel.hes

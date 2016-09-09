@@ -45,45 +45,45 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del rat
-	@del ratre
-	@del rat.obj
-	@del ratre.obj
-	@del eigv.rpt
-	@del fmin.log
-	@del rat.exe
-	@del rat.b01
-	@del rat.b02
-	@del rat.bar
-	@del rat.cpp
-	@del rat.htp
-	@del rat.log
-	@del rat.o
-	@del rat.p01
-	@del rat.p02
-	@del rat.par
-	@del rat.r01
-	@del rat.r02
-	@del rat.rep
-	@del ratre.exe
-	@del ratre.b01
-	@del ratre.b02
-	@del ratre.bar
-	@del ratre.cpp
-	@del ratre.htp
-	@del ratre.log
-	@del ratre.o
-	@del ratre.p01
-	@del ratre.p02
-	@del ratre.par
-	@del ratre.r01
-	@del ratre.r02
-	@del ratre.rep
-	@del variance
-	@del cmpdiff.tmp
-	@del gradfil1.tmp
-	@del gradfil2.tmp
-	@del varssave.tmp
+	@del rat 2>nul
+	@del ratre 2>nul
+	@del rat.obj 2>nul
+	@del ratre.obj 2>nul
+	@del eigv.rpt 2>nul
+	@del fmin.log 2>nul
+	@del rat.exe 2>nul
+	@del rat.b01 2>nul
+	@del rat.b02 2>nul
+	@del rat.bar 2>nul
+	@del rat.cpp 2>nul
+	@del rat.htp 2>nul
+	@del rat.log 2>nul
+	@del rat.o 2>nul
+	@del rat.p01 2>nul
+	@del rat.p02 2>nul
+	@del rat.par 2>nul
+	@del rat.r01 2>nul
+	@del rat.r02 2>nul
+	@del rat.rep 2>nul
+	@del ratre.exe 2>nul
+	@del ratre.b01 2>nul
+	@del ratre.b02 2>nul
+	@del ratre.bar 2>nul
+	@del ratre.cpp 2>nul
+	@del ratre.htp 2>nul
+	@del ratre.log 2>nul
+	@del ratre.o 2>nul
+	@del ratre.p01 2>nul
+	@del ratre.p02 2>nul
+	@del ratre.par 2>nul
+	@del ratre.r01 2>nul
+	@del ratre.r02 2>nul
+	@del ratre.rep 2>nul
+	@del variance 2>nul
+	@del cmpdiff.tmp 2>nul
+	@del gradfil1.tmp 2>nul
+	@del gradfil2.tmp 2>nul
+	@del varssave.tmp 2>nul
 else
 	@rm -f rat.obj
 	@rm -f ratre.obj

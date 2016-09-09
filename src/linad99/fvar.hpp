@@ -89,6 +89,7 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
+
 #define USE_VECTOR_SHAPE_POOL
 
 #if defined(USE_DDOUBLE)

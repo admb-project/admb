@@ -46,7 +46,7 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	del /Q $(OBJECTS)
+	del /Q $(OBJECTS) 2>nul
 else
 	@rm -vf $(OBJECTS)
 endif

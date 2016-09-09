@@ -30,50 +30,50 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del b1 b2 s1 s2
-	@del $(TARGET).exe
-	@del variance
-	@del testminmax.dat
-	@del fmin.log
-	@del $(TARGET).dat
-	@del $(TARGET).par
-	@del $(TARGET).eva
-	@del $(TARGET).htp
-	@del $(TARGET).bar
-	@del $(TARGET).bgs
-	@del $(TARGET).cor
-	@del $(TARGET).cpp
-	@del $(TARGET).log
-	@del $(TARGET).luu
-	@del $(TARGET).b01
-	@del $(TARGET).psv
-	@del $(TARGET).r01
-	@del $(TARGET).o
-	@del $(TARGET).obj
-	@del $(TARGET).p01
-	@del $(TARGET).std
-	@del $(TARGET).rep
-	@del $(TARGET).rhes
-	@del $(TARGET)
-	@del f1b2list13
-	@del hesscheck
-	@del data
-	@del sims
-	@del eigv.rpt
-	@del hessian.bin
-	@del f1b2list1 gradfil1.tmp nf1b2list12
-	@del f1b2list12 gradfil2.tmp nf1b2list13
-	@del cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
-	@del eigv.rpt
-	@del fmin.log
-	@del testminmax.bar
-	@del testminmax.cpp
-	@del testminmax.exe
-	@del testminmax.htp
-	@del testminmax.log
-	@del testminmax.obj
-	@del testminmax.par
-	@del variance
+	@del b1 b2 s1 s2 2>nul
+	@del $(TARGET).exe 2>nul
+	@del variance 2>nul
+	@del testminmax.dat 2>nul
+	@del fmin.log 2>nul
+	@del $(TARGET).dat 2>nul
+	@del $(TARGET).par 2>nul
+	@del $(TARGET).eva 2>nul
+	@del $(TARGET).htp 2>nul
+	@del $(TARGET).bar 2>nul
+	@del $(TARGET).bgs 2>nul
+	@del $(TARGET).cor 2>nul
+	@del $(TARGET).cpp 2>nul
+	@del $(TARGET).log 2>nul
+	@del $(TARGET).luu 2>nul
+	@del $(TARGET).b01 2>nul
+	@del $(TARGET).psv 2>nul
+	@del $(TARGET).r01 2>nul
+	@del $(TARGET).o 2>nul
+	@del $(TARGET).obj 2>nul
+	@del $(TARGET).p01 2>nul
+	@del $(TARGET).std 2>nul
+	@del $(TARGET).rep 2>nul
+	@del $(TARGET).rhes 2>nul
+	@del $(TARGET) 2>nul
+	@del f1b2list13 2>nul
+	@del hesscheck 2>nul
+	@del data 2>nul
+	@del sims 2>nul
+	@del eigv.rpt 2>nul
+	@del hessian.bin 2>nul
+	@del f1b2list1 gradfil1.tmp nf1b2list12 2>nul
+	@del f1b2list12 gradfil2.tmp nf1b2list13 2>nul
+	@del cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp 2>nul
+	@del eigv.rpt 2>nul
+	@del fmin.log 2>nul
+	@del testminmax.bar 2>nul
+	@del testminmax.cpp 2>nul
+	@del testminmax.exe 2>nul
+	@del testminmax.htp 2>nul
+	@del testminmax.log 2>nul
+	@del testminmax.obj 2>nul
+	@del testminmax.par 2>nul
+	@del variance 2>nul
 else
 	@rm -vf b1 b2 s1 s2
 	@rm -vf $(TARGET)

@@ -31,27 +31,27 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del hybrid_seed
-	@del hysimple.obj
-	@del admodel.cov
-	@del admodel.hes
-	@del fmin.log
-	@del hysimple
-	@del hysimple.exe
-	@del hysimple.cor
-	@del hysimple.eva
-	@del hysimple.log
-	@del hysimple.par
-	@del hysimple.std
-	@del sims
-	@del admodel.dep
-	@del eigv.rpt
-	@del hysimple.bar
-	@del hysimple.cpp
-	@del hysimple.htp
-	@del hysimple.o
-	@del hysimple.psv
-	@del variance
+	@del hybrid_seed 2>nul
+	@del hysimple.obj 2>nul
+	@del admodel.cov 2>nul
+	@del admodel.hes 2>nul
+	@del fmin.log 2>nul
+	@del hysimple 2>nul
+	@del hysimple.exe 2>nul
+	@del hysimple.cor 2>nul
+	@del hysimple.eva 2>nul
+	@del hysimple.log 2>nul
+	@del hysimple.par 2>nul
+	@del hysimple.std 2>nul
+	@del sims 2>nul
+	@del admodel.dep 2>nul
+	@del eigv.rpt 2>nul
+	@del hysimple.bar 2>nul
+	@del hysimple.cpp 2>nul
+	@del hysimple.htp 2>nul
+	@del hysimple.o 2>nul
+	@del hysimple.psv 2>nul
+	@del variance 2>nul
 else
 	@rm -f hybrid_seed
 	@rm -f hysimple.obj

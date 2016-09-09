@@ -459,7 +459,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double time_warmup=0;
   double time_total=0;
   std::clock_t start =clock();
-  cout << "/n Starting model " << ad_comm::adprogram_name << " at " << start << endl;
+  // Print current date/time
+  time_t now = time(0);
+  // Convert now to tm struct for local timezone
+  tm* localtm = localtime(&now);
+  cout << endl << "...Starting static HMC for model " << ad_comm::adprogram_name << " at " << asctime(localtm);
+
 
     // Start of MCMC chain
   for (int is=1;is<=number_sims;is++)

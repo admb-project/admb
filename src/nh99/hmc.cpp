@@ -524,8 +524,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
 	epsbar(is+1)=exp(logepsbar);
 	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
-	adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
       }
+	adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
       if(is ==nwarmup){
 	time_warmup = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
       }

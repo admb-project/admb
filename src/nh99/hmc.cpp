@@ -361,7 +361,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if (nmcmc<=0)
     {
       cerr << "Negative iterations for MCMC";
-      ad_exit(1)
+      ad_exit(1);
     }
   int nwarmup= (int)nmcmc/2; // default to half of sims being warmup
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nwarmup",nopt))>-1)
@@ -525,7 +525,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	epsbar(is+1)=exp(logepsbar);
 	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
       }
-	adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
+      adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
       if(is ==nwarmup){
 	time_warmup = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
       }

@@ -1,0 +1,11 @@
+Example illustrating the use of the TINYFUN macro. 
+
+The defined function has its derivatives calculated 
+via forward mode AD and the code for it is generated 
+by the macro. 
+
+This is a silly example, but the approach can be used 
+for more complicated functions of up to 3 parameters. 
+
+AD up to 3. order is supported, so also models with 
+random effects.   

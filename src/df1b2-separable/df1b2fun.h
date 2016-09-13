@@ -93,6 +93,10 @@ public:
   #include <tiny_ad.hpp>
 #endif
 
+#ifndef TINY_WRAP_H
+  #include <tiny_wrap.hpp>
+#endif
+
 #ifndef TINY_AD_INTEGRATE_H
   #include <integrate_wrap.hpp>
 #endif

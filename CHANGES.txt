@@ -42,7 +42,7 @@ ADMB-X
 * Fixed numerous bugs and added various improvements.
 
 ####Developers changes
-* Added tool for checking for testing code coverage.
+* Added tool for checking for [testing code coverage](https://codecov.io/gh/admb-project/admb).
 
 ADMB-11.5
 ---------

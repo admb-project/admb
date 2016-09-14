@@ -491,6 +491,7 @@ ifeq ($(SHELL),cmd)
 	copy tools99\Vectorize.hpp ${DIST}\include
 	copy tools99\tiny_ad.hpp ${DIST}\include
 	copy tools99\tiny_vec.hpp ${DIST}\include
+	copy tools99\tiny_wrap.hpp ${DIST}\include
 	copy tools99\integrate.cpp ${DIST}\include
 	copy tools99\integrate.hpp ${DIST}\include
 	copy tools99\integrate_wrap.hpp ${DIST}\include
@@ -525,6 +526,7 @@ else
 	cp tools99/Vectorize.hpp ${DIST}/include
 	cp tools99/tiny_ad.hpp ${DIST}/include
 	cp tools99/tiny_vec.hpp ${DIST}/include
+	cp tools99/tiny_wrap.hpp ${DIST}/include
 	cp tools99/integrate.cpp ${DIST}/include
 	cp tools99/integrate.hpp ${DIST}/include
 	cp tools99/integrate_wrap.hpp ${DIST}/include

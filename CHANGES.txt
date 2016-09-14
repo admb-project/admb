@@ -20,10 +20,12 @@ ADMB-X
 ---------
 
 ####New Supported Compilers
+
 * GNU C++ 6.1 and 5.3
 * Rtools 3.4
 
 ####Changes and Improvements
+
 * Added floating point checking into tpl2cpp and tpl2rem.
 
   To check for floating point errors, build executable with -g option.
@@ -42,7 +44,12 @@ ADMB-X
 * Fixed numerous bugs and added various improvements.
 
 ####Developers changes
+
 * Added tool for checking for [testing code coverage](https://codecov.io/gh/admb-project/admb).
+
+####Website changes
+
+* Moved website to GitHub pages (see [repository](https://github.com/admb-project/admb-project.github.io)).
 
 ADMB-11.5
 ---------

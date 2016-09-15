@@ -52,4 +52,3 @@ Float ltail##FUN(Float to){						\
   return integrate(f,-INFINITY,to);					\
 }									\
 TINYFUN1(ltail##FUN,to)
-

@@ -55,6 +55,7 @@ coverage: all-gtests
 	$(MAKE) tpl-vonmises
 	$(MAKE) tpl-tiny_ad_fe
 	$(MAKE) tpl-tinyfun
+	$(MAKE) tpl-poisp
 	$(MAKE) tpl-tiny_ad_re
 	$(MAKE) tpl-vectorize
 	$(MAKE) tpl-bessel
@@ -95,6 +96,7 @@ all-tpls:\
   tpl-vonmises\
   tpl-tiny_ad_fe\
   tpl-tinyfun\
+  tpl-poisp\
   tpl-tiny_ad_re\
   tpl-vectorize\
   tpl-bessel\
@@ -146,6 +148,9 @@ tpl-tiny_ad_fe:
 
 tpl-tinyfun:
 	$(MAKE) --directory=tinyfun
+
+tpl-poisp:
+	$(MAKE) --directory=poisp
 
 tpl-tiny_ad_re:
 	$(MAKE) --directory=tiny_ad_re
@@ -270,6 +275,7 @@ endif
 	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=tiny_ad_fe clean
 	$(MAKE) --directory=tinyfun clean
+	$(MAKE) --directory=poisp clean
 	$(MAKE) --directory=tiny_ad_re clean
 	$(MAKE) --directory=vectorize clean
 	$(MAKE) --directory=bessel clean

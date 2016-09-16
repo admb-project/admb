@@ -39,6 +39,7 @@ ADMB-X
 
 * Configured and automated builds for ADMB-IDE.
 * Merged Anders Nielsen bug fixes and new features such as vectorize.
+* Added tiny_ad.hpp feature developed by DTU.
 * Able to use Rtools\bin\make to build admb from source.
 * Replaced rgamma function.
 * Fixed numerous bugs and added various improvements.

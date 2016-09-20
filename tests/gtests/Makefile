@@ -172,6 +172,28 @@ else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
+test_nuts.obj: test_nuts.cpp
+ifeq ($(SHELL),cmd)
+	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_nuts.cpp
+else
+	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_nuts.cpp
+endif
+
+nuts: test_nuts	
+	matlab -nodesktop -nodisplay -r "help;quit;"
+ifeq ($(SHELL),cmd)
+	test_nuts
+else
+	./test_nuts
+endif
+
+test_nuts: main.cpp gtest-all.obj test_nuts.obj
+ifeq ($(SHELL),cmd)
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj main.cpp
+else
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj main.cpp
+endif
+
 gtest-all.obj: googletest-read-only
 ifeq ($(SHELL),cmd)
 	$(CXX) -c $(CXXFLAGS) -g -I$(GTEST_DIR)\\include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)\\src\\gtest-all.cc

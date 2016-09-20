@@ -32,7 +32,6 @@ hold off;
 mu = mean(samples)
 stddev = sqrt(mean(samples.^2))
 correlations = corr(samples)
-pause;
 
 fprintf('Running HMC with dual averaging and trajectory length 2...\n');
 tic;
@@ -44,7 +43,6 @@ hold off;
 mu = mean(samples)
 stddev = sqrt(mean(samples.^2))
 correlations = corr(samples)
-pause;
 
 fprintf('Running NUTS with dual averaging...\n');
 tic;

@@ -1,19 +1,19 @@
 all: admb_tests glmmadmb.exe nbmm.exe bvprobit.exe run
 
 glmmadmb.exe: glmmadmb.tpl
-	..\\..\\admb $^
+	..\\..\\admb glmmadmb
 
 glmmadmb.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
 nbmm.exe: nbmm.tpl
-	..\\..\\admb $^
+	..\\..\\admb nbmm
 
 nbmm.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
 
 bvprobit.exe: bvprobit.tpl
-	..\\..\\admb $^
+	..\\..\\admb bvprobit
 
 bvprobit.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@

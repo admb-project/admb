@@ -20,7 +20,6 @@ test-geolocation:
 
 total-clean: clean
 	pushd glmmadmb & $(MAKE) total-clean & popd
-	pushd gtests & $(MAKE) total-clean & popd
 	pushd geolocation & $(MAKE) total-clean & popd
 	pushd agemat & $(MAKE) total-clean & popd
 

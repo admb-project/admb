@@ -62,8 +62,8 @@ Mailing list archives
 + [Users][ADMB_users] is the general mailing list.
 + [Developers][ADMB_developers] is core team mailing list.
 
-[ADMB_users]: https://groups.google.com/a/admb-project.org/forum/#!forum/users
-[ADMB_developers]: https://groups.google.com/a/admb-project.org/forum/#!forum/developers
+[ADMB_users]: https://groups.google.com/a/admb-project.org/d/forum/users
+[ADMB_developers]: https://groups.google.com/a/admb-project.org/d/forum/developers
 
 Contributors
 ------------

@@ -37,7 +37,6 @@ INSTALLATION: admbmanual.cls admbmanual.ins admbmanual.dtx
 	cp -v ADMB-logo.png $(LATEX_PATH)/admbmanual
 	$(INDEXER)
 
-
 clean:
 	rm -fv admbmanual.pdf
 	rm -fv admbmanual.log
@@ -47,6 +46,3 @@ clean:
 	rm -fv admbmanual.cls  
 	rm -fv license.tex
 	rm -rv ADMB-logo.png
-
-
-

@@ -1,6 +1,7 @@
 build/
 contrib/**/*.obj
 tests/gtests/*.obj
+tests/gtests/test_nuts
 /admb
 contrib/ad2csv/ad2csv
 src/**/lex.yy.c

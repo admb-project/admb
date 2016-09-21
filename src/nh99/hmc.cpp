@@ -21,7 +21,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   if (nmcmc<=0)
     {
-      cerr << "Negative iterations for MCMC not meaningful";
+      cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
       ad_exit(1);
     }
 
@@ -42,12 +42,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::restore_start_phase();
 
   independent_variables parsave(1,nvar_re);
-  dvector x(1,nvar);
-  initial_params::xinit(x);
-  dvector pen_vector(1,nvar);
-  {
-    initial_params::reset(dvar_vector(x),pen_vector);
-  }
+  // dvector x(1,nvar);
+  // initial_params::xinit(x);
+  // dvector pen_vector(1,nvar);
+  // {
+  //   initial_params::reset(dvar_vector(x),pen_vector);
+  // }
   initial_params::mc_phase=1;
 
   int old_Hybrid_bounded_flag=-1;
@@ -248,7 +248,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::xinit(x0);
   int mctmp=initial_params::mc_phase;
   initial_params::mc_phase=0;
-  initial_params::stddev_scale(current_scale,x);
+  initial_params::stddev_scale(current_scale,x0);
   initial_params::mc_phase=mctmp;
   for (int i=1;i<=nvar;i++)
     {
@@ -372,9 +372,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	{
 	  iaccept++;
 	  yold=y;		// Update parameters
-	  H0=nll+pprob;	//
+	  H0=nll+pprob;	
 	  gr2begin=gr2;
-	  ii=1;
 	  initial_params::copy_all_values(parsave,ii);
 	}
       else // reject
@@ -387,7 +386,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Save parameters to psv file
       (*pofs_psave) << parsave;
 
-      // Do dual averaging to adapt step size
+      // Do dual averaging to adapt step size. See algorithm 5 from Hoffman
+      // and Gelman (2014).
       if(useDA && is <= nwarmup){
 	// If a divergence occurs, make step size smaller so it doesn't get
 	// stuck. This is very ad hoc and not in the NUTS paper. But it
@@ -416,17 +416,15 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
   print_mcmc_timing(time_warmup, time_total);
-  // This saves a new seed for if the chain is restarted, making it
-  // reproducible.
-  ofstream ofs("hybrid_seed");
-  int seed=(int) (10000*randu(rng));
-  ofs << seed;
+
+  // I assume this closes the connection to the file??
   if (pofs_psave)
     {
       delete pofs_psave;
       pofs_psave=NULL;
     }
 } // end of HMC function
+
 
   /**
    * Written by Dave, commented by Cole starting 8/31/2016

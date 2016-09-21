@@ -40,9 +40,9 @@ prevariable& exp(const prevariable& v1)
   #if !defined(__SUNPRO_CC) && !(defined(_MSC_VER) && (_MSC_VER <= 1700))
   if (!std::isfinite(tmp))
   {
-    cerr << "Error: Result of \"exp(prevariable(" << value(v1) << ")) = "
-         << tmp << "\" is not finite.\n";
-    ad_exit(1);
+    // cerr << "Error: Result of \"exp(prevariable(" << value(v1) << ")) = "
+    //      << tmp << "\" is not finite.\n";
+    //  ad_exit(1);
   }
   #endif
 #endif

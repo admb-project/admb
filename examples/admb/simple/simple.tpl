@@ -39,8 +39,10 @@ PARAMETER_SECTION
   init_number a   
   init_number b   
   vector pred_Y(1,nobs)
+  sdreport_number aa
   objective_function_value f
 PROCEDURE_SECTION
+ aa=a;
   pred_Y=a*x+b;
   f=(norm2(pred_Y-Y)); 
   f=nobs/2.*log(f);    // make it a likelihood function so that

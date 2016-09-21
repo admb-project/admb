@@ -458,30 +458,50 @@ void write_banner_stuff(void)
         hybrid_flag=1;
         gradient_structure::Hybrid_bounded_flag=1;
       }
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
-      {
-        if (hybrid_flag==0)
-        {
-          mcmc_routine(nmcmc,iseed0,dscale,1);
-        }
-        else
-        {
-          hybrid_mcmc_routine(nmcmc,iseed0,dscale,1);
-        }
-      }
-      else
-      {
-        if (hybrid_flag==0)
-        {
-          mcmc_routine(nmcmc,iseed0,dscale,0);
-        }
-        else
-        {
-          hybrid_mcmc_routine(nmcmc,iseed0,dscale,0);
-        }
-      }
+
+      // start addition
+      // temporarily adding this here, need to fully merge in with other options still
+      int hmc_flag=0;
+      if (option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)
+	{
+	  hmc_flag=1;
+	  gradient_structure::Hybrid_bounded_flag=1;
+	}
+      if(hmc_flag==1)
+	{
+	  // the call for this routine throws an error when building a
+	  // model but not from source. ???
+	  hmc_mcmc_routine(nmcmc,iseed0,dscale,0);
+	}
+      // Temporarily turn off this chunk if using HMC
+     else
+	{
+	  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
+	    {
+	      if (hybrid_flag==0)
+		{
+		  mcmc_routine(nmcmc,iseed0,dscale,1);
+		}
+	      else
+		{
+		  hybrid_mcmc_routine(nmcmc,iseed0,dscale,1);
+		}
+	    }
+	  else
+	    {
+	      if (hybrid_flag==0)
+		{
+		  mcmc_routine(nmcmc,iseed0,dscale,0);
+		}
+	      else
+		{
+		  hybrid_mcmc_routine(nmcmc,iseed0,dscale,0);
+		}
+	    }
+	}
     }
   }
+
 
 #if defined(USE_ADPVM)
   void function_minimizer::pvm_master_mcmc_computations(void)

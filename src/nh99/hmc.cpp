@@ -225,11 +225,10 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
   //// ------------------------------ End of input processing
 
-  
+
+  //// Setup more inputs and outputs
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
-  //    }
-
   if (!pofs_psave|| !(*pofs_psave))
     {
       cerr << "Error trying to open file" <<
@@ -240,7 +239,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     {
       (*pofs_psave) << nvar;
     }
-
   // need to rescale the hessian
   // get the current scale
   dvector x0(1,nvar);
@@ -264,14 +262,11 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  S(i,j)/=current_scale(i)*current_scale(j);
 	}
     }
-
   gradient_structure::set_NO_DERIVATIVES();
-
   if (mcmc2_flag==0)
     {
       initial_params::set_inactive_random_effects();
     }
-
   // Setup random number generator, based on seed passed
   int iseed=2197;
   if (iseed0) iseed=iseed0;
@@ -279,64 +274,49 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   gradient_structure::set_YES_DERIVATIVES();
   initial_params::xinit(x0);
 
-  // Declare the variables needed
+  // Declare and initialize the variables needed for the algorithm
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   dvector y(1,nvar); // unbounded parameters
   y.initialize();
   dvector yold(1,nvar);	// unbounded parameters 2
-  independent_variables z(1,nvar); // rotated bounded parameters???
-  z=chd*y;
-  // This
+  independent_variables z(1,nvar)=chd*y; // rotated bounded parameters???
   dvector gr(1,nvar);		// gradients in unbounded space
   get_hybrid_monte_carlo_value(nvar,z,gr);
   dvector gr2begin=gr*chd; // rotated gradient
   dvector gr2(1,nvar);	  // rotated gradient
-
   dvector p(1,nvar);  // momentum
   p.fill_randn(rng);
-  //    dmatrix xvalues(1,nmcmc,1,nvar);
-
-  // Initialize the algorithm: momenta and position, H
   yold=y;
   gr2=gr2begin;		// rotated gradient
   double pprob=0.5*norm2(p);	// probability of momenta
   double nll=get_hybrid_monte_carlo_value(nvar,z,gr); // probability of position
   double H0=nll+pprob;			       // initial Hamiltonian
-  int ii=1;
+  int ii=1;			 // assume constant throughout so don't change
   initial_params::copy_all_values(parsave,ii); // does bounding??
   double iaccept=0.0;
   dvector phalf;
   // Dual averaging components
-  double gamma=0.05;
-  double t0=10;
-  double kappa=0.75;
+  double gamma=0.05;  double t0=10;  double kappa=0.75;
   double mu=log(10*eps);
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
-  epsvec.initialize();
-  epsbar.initialize();
-  Hbar.initialize();
-  epsvec(1)=eps;
-  epsbar(1)=eps;
-  Hbar(1)=0;
+  epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
+  epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
   int divergence;		// boolean for whether divergence occured
+  dvector pp(1,nvar);
+  pp.fill_randn(rng);
+  double time_warmup=0;
+  double time_total=0;
+  std::clock_t start = clock();
+  time_t now = time(0);
+  tm* localtm = localtime(&now);
+  cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name <<
+    "' at " << asctime(localtm);
+  if(useDA) eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
   ofstream adaptation("adaptation.csv", ios::trunc); // write sampler parameters
   adaptation << "accept_stat__,stepsize__,int_time__,energy__,lp__" << endl;
 
-  dvector pp(1,nvar);
-  pp.fill_randn(rng);
-  // Get a reasonable starting step size if the user didn't specify one
-  if(useDA) eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
-
-  double time_warmup=0;
-  double time_total=0;
-  std::clock_t start =clock();
-  // Print current date/time
-  time_t now = time(0);
-  // Convert now to tm struct for local timezone
-  tm* localtm = localtime(&now);
-  cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name << "' at " << asctime(localtm);
-
   // Start of MCMC chain
+  // Get a reasonable starting step size if the user didn't specify one
   for (int is=1;is<=nmcmc;is++)
     {
       divergence=0;

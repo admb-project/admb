@@ -158,62 +158,26 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     ad_exit(1);
   }
 
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcec"))>-1)
+    {
+      cerr << endl << "Error: -mcec option not yet implemented with HMC" << endl;
+      ad_exit(1);
+      // use_empirical_flag=1;
+      // read_empirical_covariance_matrix(nvar,S,ad_comm::adprogram_name);
+    }
+
   // Prepare the mass matrix for use. Depends on many factors below. 
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
   int old_nvar;
+  // Need to grab old_scale values still, since it is scaled below
+  read_covariance_matrix(S,nvar,old_Hybrid_bounded_flag,old_scale);
   if (diag_option)		// set covariance to be diagonal
     {
       S.initialize();
       for (int i=1;i<=nvar;i++)
 	{
 	  S(i,i)=dscale;
-	}
-    }
-  else				// read in from file
-    {
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcec"))>-1)
-	{
-	  cerr << endl << "Error: -mcec option not yet implemented with HMC" << endl;
-	  ad_exit(1);
-	  // use_empirical_flag=1;
-	  // read_empirical_covariance_matrix(nvar,S,ad_comm::adprogram_name);
-	}
-      // Read in covariance (mass) matrix
-      if (mcmc2_flag==0)
-	{
-	  read_covariance_matrix(S,nvar,old_Hybrid_bounded_flag,old_scale);
-	}
-      else // this is completely untested (Cole 9/2016)
-	{
-	  int tmp_nvar = 0;
-	  adstring tmpstring = ad_comm::adprogram_name + ".bgs";
-	  uistream uis((char*)(tmpstring));
-	  if (!uis)
-	    {
-	      cerr << "error opening file " << tmpstring << endl;
-	      ad_exit(1);
-	    }
-	  uis >> tmp_nvar;
-	  if (!uis)
-	    {
-	      cerr << "error reading from file " << tmpstring << endl;
-	      ad_exit(1);
-	    }
-	  if (tmp_nvar != nvar)
-	    {
-	      cerr << "size error reading from " <<  tmpstring << endl;
-	      ad_exit(1);
-	    }
-	  uis >> S;
-	  if (!uis)
-	    {
-	      cerr << "error reading from file " << tmpstring << endl;
-	      ad_exit(1);
-	    }
-	  dvector tmp=read_old_scale(old_nvar);
-	  old_scale=1.0;
-	  old_scale(1,old_nvar)=tmp;
 	}
     }
 
@@ -248,20 +212,27 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=0;
   initial_params::stddev_scale(current_scale,x0);
   initial_params::mc_phase=mctmp;
+  cout << "old scale=" <<  old_scale << endl;
+  cout << "current scale=" << current_scale << endl;
+  cout << "S before=" << S << endl;
+  // I think this is only needed if mcmc2 is used??
+  // for (int i=1;i<=nvar;i++)
+  //   {
+  //     for (int j=1;j<=nvar;j++)
+  // 	{
+  // 	  S(i,j)*=old_scale(i)*old_scale(j);
+  // 	}
+  //   }
+  if(diag_option){
   for (int i=1;i<=nvar;i++)
     {
       for (int j=1;j<=nvar;j++)
 	{
-	  S(i,j)*=old_scale(i)*old_scale(j);
+	  S(i,j)*=current_scale(i)*current_scale(j);
 	}
     }
-  for (int i=1;i<=nvar;i++)
-    {
-      for (int j=1;j<=nvar;j++)
-	{
-	  S(i,j)/=current_scale(i)*current_scale(j);
-	}
-    }
+  }
+  cout << "S after=" << S << endl;
   gradient_structure::set_NO_DERIVATIVES();
   if (mcmc2_flag==0)
     {

@@ -180,7 +180,7 @@ else
 endif
 
 nuts: test_nuts	
-	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;"
+	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
 ifeq ($(SHELL),cmd)
 	test_nuts
 else

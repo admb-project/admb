@@ -124,12 +124,27 @@ fprintf('Took %d gradient evaluations.\n', nfevals);
 end
 
 function [thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, epsilon, f)
+
+fprintf('\nleapfrog begin\n');
+display(theta);
+display(r);
+display(grad);
+display(epsilon);
+display(f);
+
 rprime = r + 0.5 * epsilon * grad;
 thetaprime = theta + epsilon * rprime;
 [logpprime, gradprime] = f(thetaprime);
 rprime = rprime + 0.5 * epsilon * gradprime;
 global nfevals;
 nfevals = nfevals + 1;
+
+display(nfevals);
+display(thetaprime);
+display(rprime);
+display(gradprime);
+display(logpprime);
+fprintf('leapfrog end\n');
 end
 
 function criterion = stop_criterion(thetaminus, thetaplus, rminus, rplus)

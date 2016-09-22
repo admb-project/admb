@@ -3,11 +3,13 @@
 #include <cstdlib>
 #include <cmath>
 #include <random>
+#include <fstream>
 #include <gtest/gtest.h>
 
 using std::cout;
 using std::endl;
 using std::vector;
+using std::ifstream;
 
 class test_nuts: public ::testing::Test {};
 
@@ -507,6 +509,7 @@ void nuts::compute
     }
   }
 }
+/*
 TEST_F(test_nuts, urand)
 {
   for (int i = 0; i < 10; ++i)
@@ -577,6 +580,7 @@ TEST_F(test_nuts, build_tree)
   double epsilon = 0.191665695786453;
   o.build_tree(theta, r, grad, logu, v, j, epsilon);
 }
+*/
 /*
 TEST_F(test_nuts, build_tree2)
 {
@@ -608,6 +612,7 @@ TEST_F(test_nuts, build_tree2)
   ASSERT_DOUBLE_EQ(o._logpprime, -1.543893231081825);
 }
 */
+/*
 TEST_F(test_nuts, compute)
 {
   size_t M = 10;
@@ -629,4 +634,29 @@ TEST_F(test_nuts, compute)
     cout << endl;
   }
   samples = NULL;
+}
+*/
+TEST_F(test_nuts, leapfrog)
+{
+  ifstream ifs("test_nuts.txt");
+  ASSERT_TRUE(ifs.good());
+
+  while (!ifs.eof())
+  {
+    std::string line;
+    std::getline(ifs, line);
+    if (line.compare("leapfrog begin") == 0)
+    {
+      int num = 0;
+      while (line.compare("leapfrog end") != 0)
+      {
+        std::getline(ifs, line);
+        cout << line << endl;
+        ++num;
+      }
+      cout << num << endl;
+    }
+  }
+
+  ifs.close();
 }

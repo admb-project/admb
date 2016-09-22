@@ -660,8 +660,8 @@ double function_minimizer::find_reasonable_stepsize(int nvar, const independent_
     if(k==1){
       // Determine initial acceptance ratio is too big or too small
       double value = exp(H1-H2);
-      bool result = value > 0.5;
-      if(std::isnan(value) || result) result=0; // if divergence occurs, acceptance prob is 0 so a=-1
+      bool result = std::isnan(value) || value > 0.5;
+      if(result) result=0; // if divergence occurs, acceptance prob is 0 so a=-1
       if(result) a=1;
     }
     // Check if the 1/2 threshold has been crossed

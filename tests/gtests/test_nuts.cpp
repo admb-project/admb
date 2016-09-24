@@ -829,6 +829,7 @@ TEST_F(test_nuts, leapfrog)
       leapfrog(theta, r, grad, epsilon);
 
       ASSERT_EQ(num, nfevals);
+      ASSERT_EQ(_nfevals, nfevals);
 
       if (nfevals != 5 && nfevals != 6)
       {

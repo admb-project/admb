@@ -640,12 +640,11 @@ TEST_F(test_nuts, compute)
 */
 
 int _D(2);
+int _nfevals = 0;
 double _rprime[2];
 double _thetaprime[2];
 double _gradprime[2];
 double _logpprime;
-double _grad[2];
-double _logp;
 void correlated_normal(double* theta)
 {
   //A = [50.251256, -24.874372; -24.874372, 12.562814];
@@ -655,32 +654,34 @@ void correlated_normal(double* theta)
   A[1][0] = -24.874372;
   A[1][1] = 12.562814;
 
+  double grad[2];
   //grad = -theta * A;
   for (int d = 0; d < _D; ++d)
   {
-    _grad[d] = 0;
+    grad[d] = 0;
     for (int j = 0; j < _D; ++j)
     {
-      _grad[d] -= theta[j] * A[d][j];
+      grad[d] -= theta[j] * A[d][j];
     }
   }
-  //logp = 0.5 * grad * theta';
-  _logp = 0;
   for (int d = 0; d < _D; ++d)
   {
-    _logp += _grad[d] * theta[d];
+    _gradprime[d] = grad[d];
   }
-  _logp *= 0.5;
+  //logp = 0.5 * grad * theta';
+  double logp = 0;
+  for (int d = 0; d < _D; ++d)
+  {
+    logp += grad[d] * theta[d];
+  }
+  logp *= 0.5;
+  _logpprime = logp;
+
+  //[logpprime, gradprime] = f(thetaprime);
 }
 void f(double* theta)
 {
   correlated_normal(theta);
-  //[logpprime, gradprime] = f(thetaprime);
-  for (int d = 0; d < _D; ++d)
-  {
-    _gradprime[d] = _grad[d];
-  }
-  _logpprime = _logp;
 }
 void leapfrog
 (
@@ -707,10 +708,9 @@ void leapfrog
   {
     _rprime[d] += 0.5 * epsilon * _gradprime[d];
   }
-/*
+
   //nfevals = nfevals + 1;
-  ++nfevals;
-*/
+  ++_nfevals;
 }
 TEST_F(test_nuts, leapfrog)
 {

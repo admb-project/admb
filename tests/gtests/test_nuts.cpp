@@ -643,12 +643,44 @@ int _D(2);
 double _rprime[2];
 double _thetaprime[2];
 double _gradprime[2];
-double _logpprime[2];
-void f
-(
-  double* values
-)
+double _logpprime;
+double _grad[2];
+double _logp;
+void correlated_normal(double* theta)
 {
+  //A = [50.251256, -24.874372; -24.874372, 12.562814];
+  double A[2][2];
+  A[0][0] = 50.251256;
+  A[0][1] = -24.874372;
+  A[1][0] = -24.874372;
+  A[1][1] = 12.562814;
+
+  //grad = -theta * A;
+  for (int d = 0; d < _D; ++d)
+  {
+    _grad[d] = 0;
+    for (int j = 0; j < _D; ++j)
+    {
+      _grad[d] -= theta[j] * A[d][j];
+    }
+  }
+  //logp = 0.5 * grad * theta';
+  _logp = 0;
+  for (int d = 0; d < _D; ++d)
+  {
+    _logp += _grad[d] * theta[d];
+  }
+  _logp *= 0.5;
+}
+void f(double* theta)
+{
+  correlated_normal(theta);
+  //[logpprime, gradprime] = f(thetaprime);
+  for (int d = 0; d < _D; ++d)
+  {
+    _gradprime[d] = _grad[d];
+  }
+  _logpprime = _logp;
 }
 void leapfrog
 (
@@ -780,8 +812,6 @@ TEST_F(test_nuts, leapfrog)
       {
         istringstream iss(line);
         iss >> gradprime[0] >> gradprime[1]; 
-        _gradprime[0] = gradprime[0];
-        _gradprime[1] = gradprime[1];
       }
       for (int i = 0; i < 5; ++i)
       {
@@ -800,19 +830,15 @@ TEST_F(test_nuts, leapfrog)
 
       ASSERT_EQ(num, nfevals);
 
-      //ASSERT_DOUBLE_EQ(thetaprime[0], _thetaprime[0]);
-      //ASSERT_DOUBLE_EQ(thetaprime[1], _thetaprime[1]);
-      //ASSERT_DOUBLE_EQ(rprime[0], _rprime[0]);
-      //ASSERT_DOUBLE_EQ(rprime[1], _rprime[1]);
-      if (nfevals == 5 || nfevals == 6)
+      if (nfevals != 5 && nfevals != 6)
       {
-      }
-      else
-      {
+        ASSERT_NEAR(gradprime[0], _gradprime[0], 0.1);
+        ASSERT_NEAR(gradprime[1], _gradprime[1], 0.1);
         ASSERT_NEAR(thetaprime[0], _thetaprime[0], 0.001);
         ASSERT_NEAR(thetaprime[1], _thetaprime[1], 0.001);
         ASSERT_NEAR(rprime[0], _rprime[0], 0.01);
         ASSERT_NEAR(rprime[1], _rprime[1], 0.01);
+        ASSERT_NEAR(logpprime, _logpprime, 1);
       }
     }
   }

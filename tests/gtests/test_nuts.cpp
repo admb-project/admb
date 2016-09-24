@@ -4,17 +4,19 @@
 #include <cmath>
 #include <random>
 #include <fstream>
+#include <sstream>
 #include <gtest/gtest.h>
 
 using std::cout;
 using std::endl;
 using std::vector;
 using std::ifstream;
+using std::istringstream;
 
 class test_nuts: public ::testing::Test {};
 
 //global nfevals;
-int nfevals = 0;
+//int nfevals = 0;
 
 double urand()
 {
@@ -636,27 +638,181 @@ TEST_F(test_nuts, compute)
   samples = NULL;
 }
 */
+
+int _D(2);
+double _rprime[2];
+double _thetaprime[2];
+double _gradprime[2];
+double _logpprime[2];
+void f
+(
+  double* values
+)
+{
+}
+void leapfrog
+(
+  double* theta, 
+  double* r,
+  double* grad,
+  double epsilon
+)
+{
+  //rprime = r + 0.5 * epsilon * grad;
+  for (int d = 0; d < _D; ++d)
+  {
+    _rprime[d] = r[d] + 0.5 * epsilon * grad[d];
+  }
+  //thetaprime = theta + epsilon * rprime;
+  for (int d = 0; d < _D; ++d)
+  {
+    _thetaprime[d] = theta[d] + epsilon * _rprime[d];
+  }
+  //[logpprime, gradprime] = f(thetaprime);
+  f(_thetaprime);
+  //rprime = rprime + 0.5 * epsilon * gradprime;
+  for (int d = 0; d < _D; ++d)
+  {
+    _rprime[d] += 0.5 * epsilon * _gradprime[d];
+  }
+/*
+  //nfevals = nfevals + 1;
+  ++nfevals;
+*/
+}
 TEST_F(test_nuts, leapfrog)
 {
   ifstream ifs("test_nuts.txt");
   ASSERT_TRUE(ifs.good());
 
+  double theta[2];
+  double r[2];
+  double grad[2];
+  double epsilon;
+  int nfevals = 1;
+  double thetaprime[2];
+  double rprime[2];
+  double gradprime[2];
+  double logpprime;
+
+  int num = 0;
   while (!ifs.eof())
   {
     std::string line;
     std::getline(ifs, line);
     if (line.compare("leapfrog begin") == 0)
     {
-      int num = 0;
-      while (line.compare("leapfrog end") != 0)
+      ++num;
+      for (int i = 0; i < 4; ++i)
       {
         std::getline(ifs, line);
-        cout << line << endl;
-        ++num;
       }
-      cout << num << endl;
+      {
+        istringstream iss(line);
+        iss >> theta[0] >> theta[1]; 
+      }
+      for (int i = 0; i < 5; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      {
+        istringstream iss(line);
+        iss >> r[0] >> r[1]; 
+      }
+      for (int i = 0; i < 5; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      {
+        istringstream iss(line);
+        iss >> grad[0] >> grad[1]; 
+      }
+      for (int i = 0; i < 5; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      {
+        istringstream iss(line);
+        iss >> epsilon;
+      }
+      for (int i = 0; i < 10; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      {
+        istringstream iss(line);
+        iss >> nfevals;
+      }
+      for (int i = 0; i < 5; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      {
+        istringstream iss(line);
+        iss >> thetaprime[0] >> thetaprime[1]; 
+      }
+      for (int i = 0; i < 5; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      if (nfevals == 5 || nfevals == 6)
+      {
+        for (int i = 0; i < 2; ++i)
+        {
+          std::getline(ifs, line);
+        }
+      }
+      {
+        istringstream iss(line);
+        iss >> rprime[0] >> rprime[1]; 
+      }
+      for (int i = 0; i < 5; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      if (nfevals == 5 || nfevals == 6)
+      {
+        for (int i = 0; i < 2; ++i)
+        {
+          std::getline(ifs, line);
+        }
+      }
+      {
+        istringstream iss(line);
+        iss >> gradprime[0] >> gradprime[1]; 
+        _gradprime[0] = gradprime[0];
+        _gradprime[1] = gradprime[1];
+      }
+      for (int i = 0; i < 5; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      {
+        istringstream iss(line);
+        iss >> logpprime; 
+      }
+      for (int i = 0; i < 2; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.compare("leapfrog end"), 0);
+      leapfrog(theta, r, grad, epsilon);
+
+      ASSERT_EQ(num, nfevals);
+
+      //ASSERT_DOUBLE_EQ(thetaprime[0], _thetaprime[0]);
+      //ASSERT_DOUBLE_EQ(thetaprime[1], _thetaprime[1]);
+      //ASSERT_DOUBLE_EQ(rprime[0], _rprime[0]);
+      //ASSERT_DOUBLE_EQ(rprime[1], _rprime[1]);
+      if (nfevals == 5 || nfevals == 6)
+      {
+      }
+      else
+      {
+        ASSERT_NEAR(rprime[0], _rprime[0], 0.01);
+        ASSERT_NEAR(rprime[1], _rprime[1], 0.01);
+      }
     }
   }
-
   ifs.close();
 }

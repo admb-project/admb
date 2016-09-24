@@ -809,6 +809,8 @@ TEST_F(test_nuts, leapfrog)
       }
       else
       {
+        ASSERT_NEAR(thetaprime[0], _thetaprime[0], 0.001);
+        ASSERT_NEAR(thetaprime[1], _thetaprime[1], 0.001);
         ASSERT_NEAR(rprime[0], _rprime[0], 0.01);
         ASSERT_NEAR(rprime[1], _rprime[1], 0.01);
       }

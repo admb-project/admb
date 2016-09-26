@@ -787,13 +787,6 @@ TEST_F(test_nuts, leapfrog)
       {
         std::getline(ifs, line);
       }
-      if (nfevals == 5 || nfevals == 6)
-      {
-        for (int i = 0; i < 2; ++i)
-        {
-          std::getline(ifs, line);
-        }
-      }
       {
         istringstream iss(line);
         iss >> rprime[0] >> rprime[1]; 
@@ -801,13 +794,6 @@ TEST_F(test_nuts, leapfrog)
       for (int i = 0; i < 5; ++i)
       {
         std::getline(ifs, line);
-      }
-      if (nfevals == 5 || nfevals == 6)
-      {
-        for (int i = 0; i < 2; ++i)
-        {
-          std::getline(ifs, line);
-        }
       }
       {
         istringstream iss(line);
@@ -825,22 +811,22 @@ TEST_F(test_nuts, leapfrog)
       {
         std::getline(ifs, line);
       }
+      cout << nfevals << endl;
+
       ASSERT_EQ(line.compare("leapfrog end"), 0);
       leapfrog(theta, r, grad, epsilon);
 
       ASSERT_EQ(num, nfevals);
       ASSERT_EQ(_nfevals, nfevals);
 
-      if (nfevals != 5 && nfevals != 6)
-      {
-        ASSERT_NEAR(gradprime[0], _gradprime[0], 0.1);
-        ASSERT_NEAR(gradprime[1], _gradprime[1], 0.1);
-        ASSERT_NEAR(thetaprime[0], _thetaprime[0], 0.001);
-        ASSERT_NEAR(thetaprime[1], _thetaprime[1], 0.001);
-        ASSERT_NEAR(rprime[0], _rprime[0], 0.01);
-        ASSERT_NEAR(rprime[1], _rprime[1], 0.01);
-        ASSERT_NEAR(logpprime, _logpprime, 1);
-      }
+      const double range = nfevals == 5 || nfevals == 6 ? 0.0000001 : 0.0000000001;
+      ASSERT_NEAR(gradprime[0], _gradprime[0], range);
+      ASSERT_NEAR(gradprime[1], _gradprime[1], range);
+      ASSERT_NEAR(thetaprime[0], _thetaprime[0], range);
+      ASSERT_NEAR(thetaprime[1], _thetaprime[1], range);
+      ASSERT_NEAR(rprime[0], _rprime[0], range);
+      ASSERT_NEAR(rprime[1], _rprime[1], range);
+      ASSERT_NEAR(logpprime, _logpprime, range);
     }
   }
   ifs.close();

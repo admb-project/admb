@@ -126,6 +126,7 @@ end
 function [thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, epsilon, f)
 
 fprintf('\nleapfrog begin\n');
+format longg;
 display(theta);
 display(r);
 display(grad);

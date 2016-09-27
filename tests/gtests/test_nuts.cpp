@@ -12,6 +12,7 @@ using std::endl;
 using std::vector;
 using std::ifstream;
 using std::istringstream;
+using std::pow;
 
 class test_nuts: public ::testing::Test {};
 
@@ -730,13 +731,21 @@ double find_reasonable_epsilon
   double acceptprob = std::exp(_logpprime - logp0 - 0.5 * (_rprime[0] * _rprime[0] + _rprime[1] * _rprime[1] - r0[0] * r0[0] - r0[1] * r0[1]));
 
   //a = 2 * (acceptprob > 0.5) - 1;
-  int a = 2 * (acceptprob > 0.5 ? 1 : 0) - 1;
+  int a = acceptprob > 0.5 ? 1 : -1;
+
   //Keep moving epsilon in that direction until acceptprob crosses 0.5.
   //while (acceptprob^a > 2^(-a))
-  //  epsilon = epsilon * 2^a;
-  //  [~, rprime, ~, logpprime] = leapfrog(theta0, r0, grad0, epsilon, f);
-  //  acceptprob = exp(logpprime - logp0 - 0.5 * (rprime * rprime' - r0 * r0'));
-  //end
+  while (pow(acceptprob, a) > pow(2.0, -a))
+  {
+    //epsilon = epsilon * 2^a;
+    epsilon *= pow(2.0, a);
+
+    //[~, rprime, ~, logpprime] = leapfrog(theta0, r0, grad0, epsilon, f);
+    leapfrog(theta0, r0, grad0, epsilon);
+
+    //acceptprob = exp(logpprime - logp0 - 0.5 * (rprime * rprime' - r0 * r0'));
+    acceptprob = std::exp(_logpprime - logp0 - 0.5 * (_rprime[0] * _rprime[0] + _rprime[1] * _rprime[1] - r0[0] * r0[0] - r0[1] * r0[1]));
+  }
 
   return epsilon;
 }
@@ -935,6 +944,7 @@ TEST_F(test_nuts, find_reasonable_epsilon)
 
       //Compare C++
       double result = find_reasonable_epsilon(theta0, grad0, logp0, r0);
+      ASSERT_DOUBLE_EQ(result, epsilon);
     }
   }
   ifs.close();

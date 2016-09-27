@@ -207,8 +207,14 @@ end
 end
 
 function epsilon = find_reasonable_epsilon(theta0, grad0, logp0, f)
+format longg;
+fprintf('\nfind_reasonable_epsilon begin\n');
 epsilon = 1;
+display(theta0);
+display(grad0);
+display(logp0);
 r0 = randn(1, length(theta0));
+display(r0);
 % Figure out what direction we should be moving epsilon.
 [~, rprime, ~, logpprime] = leapfrog(theta0, r0, grad0, epsilon, f);
 acceptprob = exp(logpprime - logp0 - 0.5 * (rprime * rprime' - r0 * r0'));
@@ -219,13 +225,6 @@ while (acceptprob^a > 2^(-a))
     [~, rprime, ~, logpprime] = leapfrog(theta0, r0, grad0, epsilon, f);
     acceptprob = exp(logpprime - logp0 - 0.5 * (rprime * rprime' - r0 * r0'));
 end
+display(epsilon);
+fprintf('\nfind_reasonable_epsilon end\n');
 end
-
-
-
-
-
-
-
-
-

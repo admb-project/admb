@@ -712,6 +712,34 @@ void leapfrog
   //nfevals = nfevals + 1;
   ++_nfevals;
 }
+double find_reasonable_epsilon
+(
+  double* theta0,
+  double* grad0,
+  double logp0,
+  double* r0
+)
+{
+  double epsilon = 1;
+
+  //Figure out what direction we should be moving epsilon.
+  //[~, rprime, ~, logpprime] = leapfrog(theta0, r0, grad0, epsilon, f);
+  leapfrog(theta0, r0, grad0, epsilon);
+
+  //acceptprob = exp(logpprime - logp0 - 0.5 * (rprime * rprime' - r0 * r0'));
+  double acceptprob = std::exp(_logpprime - logp0 - 0.5 * (_rprime[0] * _rprime[0] + _rprime[1] * _rprime[1] - r0[0] * r0[0] - r0[1] * r0[1]));
+
+  //a = 2 * (acceptprob > 0.5) - 1;
+  int a = 2 * (acceptprob > 0.5 ? 1 : 0) - 1;
+  //Keep moving epsilon in that direction until acceptprob crosses 0.5.
+  //while (acceptprob^a > 2^(-a))
+  //  epsilon = epsilon * 2^a;
+  //  [~, rprime, ~, logpprime] = leapfrog(theta0, r0, grad0, epsilon, f);
+  //  acceptprob = exp(logpprime - logp0 - 0.5 * (rprime * rprime' - r0 * r0'));
+  //end
+
+  return epsilon;
+}
 TEST_F(test_nuts, leapfrog)
 {
   ifstream ifs("test_nuts.txt");
@@ -811,7 +839,7 @@ TEST_F(test_nuts, leapfrog)
       {
         std::getline(ifs, line);
       }
-      cout << nfevals << endl;
+      //cout << nfevals << endl;
 
       ASSERT_EQ(line.compare("leapfrog end"), 0);
       leapfrog(theta, r, grad, epsilon);
@@ -827,6 +855,86 @@ TEST_F(test_nuts, leapfrog)
       ASSERT_NEAR(rprime[0], _rprime[0], range);
       ASSERT_NEAR(rprime[1], _rprime[1], range);
       ASSERT_NEAR(logpprime, _logpprime, range);
+    }
+  }
+  ifs.close();
+}
+TEST_F(test_nuts, find_reasonable_epsilon)
+{
+  ifstream ifs("test_nuts.txt");
+  ASSERT_TRUE(ifs.good());
+  while (!ifs.eof())
+  {
+    std::string line;
+    std::getline(ifs, line);
+    if (line.compare("find_reasonable_epsilon begin") == 0)
+    {
+      double theta0[2]; 
+      double grad0[2]; 
+      double logp0 = 0;
+      double r0[2]; 
+      double epsilon = 0;
+      {
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        istringstream iss(line);
+        iss >> theta0[0] >> theta0[1];
+      }
+      {
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        istringstream iss(line);
+        iss >> grad0[0] >> grad0[1];
+      }
+      {
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        istringstream iss(line);
+        iss >> logp0;
+      }
+      {
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        istringstream iss(line);
+        iss >> r0[0] >> r0[1];
+      }
+      for (int i = 0; i < 3; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      while (line.compare("leapfrog begin") == 0)
+      {
+        for (int i = 0; i < 53; ++i)
+        {
+          std::getline(ifs, line);
+        }
+      }
+      ASSERT_EQ(line.compare("epsilon ="), 0);
+      {
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        istringstream iss(line);
+        iss >> epsilon;
+      }
+      for (int i = 0; i < 3; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.compare("find_reasonable_epsilon end"), 0);
+
+      //Compare C++
+      double result = find_reasonable_epsilon(theta0, grad0, logp0, r0);
     }
   }
   ifs.close();

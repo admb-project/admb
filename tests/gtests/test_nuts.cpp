@@ -648,6 +648,7 @@ double _rprime[2];
 double _thetaprime[2];
 double _gradprime[2];
 double _logpprime;
+
 void correlated_normal(double* theta)
 {
   //A = [50.251256, -24.874372; -24.874372, 12.562814];
@@ -751,6 +752,18 @@ double find_reasonable_epsilon
 
   return epsilon;
 }
+
+double _thetaminus[2];
+double _rminus[2];
+double _gradminus[2];
+double _thetaplus[2];
+double _rplus[2];
+double _gradplus[2];
+int _nprime;
+int _sprime;
+double _alphaprime;
+int _nalphaprime;
+
 void build_tree(
   double* theta,
   double* r,
@@ -763,19 +776,107 @@ void build_tree(
   double random_number
 )
 {
-  double thetaminus[2];
-  double rminus[2];
-  double gradminus[2];
-  double thetaplus[2];
-  double rplus[2];
-  double gradplus[2];
-  double thetaprime[2];
-  double gradprime[2];
-  double logpprime;
-  int nprime;
-  int sprime;
-  double alphaprime;
-  int nalphaprime;
+  if (j == 0)
+  {
+    //% Base case: Take a single leapfrog step in the direction v.
+    //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
+    leapfrog(theta, r, grad, v * epsilon);
+
+    //joint = logpprime - 0.5 * (rprime * rprime');
+    double joint = 0;
+    for (size_t d = 0; d < _D; ++d)
+    {
+      joint += _rprime[d] * _rprime[d];
+    }
+    joint *= -0.5;
+    joint += _logpprime;
+
+    //% Is the new point in the slice?
+    //nprime = logu < joint;
+    _nprime = logu < joint;
+
+
+    //% Is the simulation wildly inaccurate?
+    //sprime = logu - 1000 < joint;
+    _sprime = (logu - 1000) < joint;
+
+    //% Set the return values---minus=plus for all things here, since the
+    //% "tree" is of depth 0.
+    for (int d = 0; d < _D; ++d)
+    {
+      //thetaminus = thetaprime;
+      _thetaminus[d] = _thetaprime[d];
+
+      //thetaplus = thetaprime;
+      _thetaplus[d] = _thetaprime[d];
+
+      //rminus = rprime;
+      _rminus[d] = _rprime[d];
+
+      //rplus = rprime;
+      _rplus[d] = _rprime[d];
+
+      //gradminus = gradprime;
+      _gradminus[d] = _gradprime[d];
+
+      //gradplus = gradprime;
+      _gradplus[d] = _gradprime[d];
+    }
+
+    //% Compute the acceptance probability.
+    //alphaprime = min(1, exp(logpprime - 0.5 * (rprime * rprime') - joint0));
+    double v = std::exp(joint - joint0);
+    _alphaprime = v < 1.0 ? v : 1.0;
+
+    //nalphaprime = 1;
+    _nalphaprime = 1;
+  }
+/*
+  else
+  {
+    //Recursion: Implicitly build the height j-1 left and right subtrees.
+    //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime]
+    build_tree(theta, r, grad, logu, v, j - 1, epsilon);
+    //No need to keep going if the stopping criteria were met in the first
+    //subtree.
+    if (_sprime == 1)
+    {
+      int nprime2 = _nprime;
+      bool sprime2 = _sprime;
+      double logpprime2 = _logpprime;
+      for (size_t d = 0; d < _D; ++d)
+      {
+        _thetaprime2[d] = _thetaprime[d];
+        _gradprime2[d] = _gradprime[d];
+      }
+      if (v == -1)
+      {
+        //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2]
+        build_tree(_thetaminus, _rminus, _gradminus, logu, v, j - 1, epsilon);
+      }
+      else
+      {
+        //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2]
+        build_tree(_thetaplus, _rplus, _gradplus, logu, v, j - 1, epsilon);
+      }
+      //Choose which subtree to propagate a sample up from.
+      assert(_nprime + nprime2 != 0);
+      if (urand() > nprime2 / (_nprime + nprime2))
+      {
+        for (size_t d = 0; d < _D; ++d)
+        {
+          _thetaprime[d] = _thetaprime2[d];
+          _gradprime[d] = _gradprime2[d];
+        }
+        _logpprime = logpprime2;
+      }
+      //Update the number of valid points.
+      _nprime += nprime2;
+      //Update the stopping criterion.
+      _sprime = _sprime && sprime2 && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
+    }
+  }
+*/
 }
 
 TEST_F(test_nuts, leapfrog)
@@ -998,7 +1099,7 @@ TEST_F(test_nuts, build_tree)
   double gradprime[2];
   double logpprime;
   int nprime;
-  int sprime;
+  bool sprime;
   double alphaprime;
   int nalphaprime;
 
@@ -1218,11 +1319,36 @@ TEST_F(test_nuts, build_tree)
         std::getline(ifs, line);
       }
       ASSERT_EQ(line.substr(0, 21).compare("build_tree output end"), 0);
-    }
+      if (inj == 0)
+      {
+        //Compare C++
+        double random_number = 0;
+        build_tree(theta, r, grad, logu, v, j, epsilon, joint0, random_number);
 
-    //Compare C++
-    double random_number;
-    build_tree(theta, r, grad, logu, v, j, epsilon, joint0, random_number);
+        const double range = 0.000001;
+        ASSERT_NEAR(thetaminus[0], _thetaminus[0], range);
+        ASSERT_NEAR(thetaminus[1], _thetaminus[1], range);
+        ASSERT_NEAR(rminus[0], _rminus[0], range);
+        ASSERT_NEAR(rminus[1], _rminus[1], range);
+        ASSERT_NEAR(gradminus[0], _gradminus[0], range);
+        ASSERT_NEAR(gradminus[1], _gradminus[1], range);
+        ASSERT_NEAR(thetaplus[0], _thetaplus[0], range);
+        ASSERT_NEAR(thetaplus[1], _thetaplus[1], range);
+        ASSERT_NEAR(rplus[0], _rplus[0], range);
+        ASSERT_NEAR(rplus[1], _rplus[1], range);
+        ASSERT_NEAR(gradplus[0], _gradplus[0], range);
+        ASSERT_NEAR(gradplus[1], _gradplus[1], range);
+        ASSERT_NEAR(thetaprime[0], _thetaprime[0], range);
+        ASSERT_NEAR(thetaprime[1], _thetaprime[1], range);
+        ASSERT_NEAR(gradprime[0], _gradprime[0], range);
+        ASSERT_NEAR(gradprime[1], _gradprime[1], range);
+        ASSERT_NEAR(logpprime, _logpprime, range);
+        ASSERT_EQ(nprime, _nprime);
+        ASSERT_EQ(sprime, _sprime);
+        ASSERT_NEAR(alphaprime, _alphaprime, range);
+        ASSERT_EQ(nalphaprime, _nalphaprime);
+      }
+    }
   }
   ASSERT_EQ(s.size(), 0);
 }

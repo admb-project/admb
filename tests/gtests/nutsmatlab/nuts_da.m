@@ -156,6 +156,16 @@ end
 % The main recursion.
 function [thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
                 build_tree(theta, r, grad, logu, v, j, epsilon, f, joint0)
+fprintf('build_tree begin %i\n', j);
+display(theta);
+display(r);
+display(grad);
+display(logu);
+display(v);
+display(j);
+display(epsilon);
+display(f);
+display(joint0);
 if (j == 0)
     % Base case: Take a single leapfrog step in the direction v.
     [thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
@@ -204,6 +214,22 @@ else
         nalphaprime = nalphaprime + nalphaprime2;
     end
 end
+fprintf('build_tree end %i\n', j);
+fprintf('build_tree output begin %i\n', j);
+display(thetaminus);
+display(rminus);
+display(gradminus);
+display(thetaplus);
+display(rplus);
+display(gradplus);
+display(thetaprime);
+display(gradprime);
+display(logpprime);
+display(nprime);
+display(sprime);
+display(alphaprime);
+display(nalphaprime);
+fprintf('build_tree output end %i\n', j);
 end
 
 function epsilon = find_reasonable_epsilon(theta0, grad0, logp0, f)

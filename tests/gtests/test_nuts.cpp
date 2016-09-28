@@ -5,6 +5,7 @@
 #include <random>
 #include <fstream>
 #include <sstream>
+#include <stack>
 #include <gtest/gtest.h>
 
 using std::cout;
@@ -13,6 +14,7 @@ using std::vector;
 using std::ifstream;
 using std::istringstream;
 using std::pow;
+using std::stack;
 
 class test_nuts: public ::testing::Test {};
 
@@ -23,7 +25,7 @@ double urand()
 {
   std::random_device rd;
   std::mt19937 gen(rd());
- 
+
   // values near the mean are the most likely
   // standard deviation affects the dispersion of generated values from the mean
   std::uniform_real_distribution<double> d(0.0, 1.0);
@@ -33,7 +35,7 @@ double randn()
 {
   std::random_device rd;
   std::mt19937 gen(rd());
- 
+
   // values near the mean are the most likely
   // standard deviation affects the dispersion of generated values from the mean
   std::normal_distribution<> d(0,1);
@@ -112,7 +114,7 @@ public:
   );
   void leapfrog
   (
-    double* theta, 
+    double* theta,
     double* r,
     double* grad,
     double epsilon
@@ -300,7 +302,7 @@ bool nuts::stop_criterion
 }
 void nuts::leapfrog
 (
-  double* theta, 
+  double* theta,
   double* r,
   double* grad,
   double epsilon
@@ -686,7 +688,7 @@ void f(double* theta)
 }
 void leapfrog
 (
-  double* theta, 
+  double* theta,
   double* r,
   double* grad,
   double epsilon
@@ -749,6 +751,33 @@ double find_reasonable_epsilon
 
   return epsilon;
 }
+void build_tree(
+  double* theta,
+  double* r,
+  double* grad,
+  double logu,
+  int v,
+  int j,
+  double epsilon,
+  double joint0,
+  double random_number
+)
+{
+  double thetaminus[2];
+  double rminus[2];
+  double gradminus[2];
+  double thetaplus[2];
+  double rplus[2];
+  double gradplus[2];
+  double thetaprime[2];
+  double gradprime[2];
+  double logpprime;
+  int nprime;
+  int sprime;
+  double alphaprime;
+  int nalphaprime;
+}
+
 TEST_F(test_nuts, leapfrog)
 {
   ifstream ifs("test_nuts.txt");
@@ -778,7 +807,7 @@ TEST_F(test_nuts, leapfrog)
       }
       {
         istringstream iss(line);
-        iss >> theta[0] >> theta[1]; 
+        iss >> theta[0] >> theta[1];
       }
       for (int i = 0; i < 5; ++i)
       {
@@ -786,7 +815,7 @@ TEST_F(test_nuts, leapfrog)
       }
       {
         istringstream iss(line);
-        iss >> r[0] >> r[1]; 
+        iss >> r[0] >> r[1];
       }
       for (int i = 0; i < 5; ++i)
       {
@@ -794,7 +823,7 @@ TEST_F(test_nuts, leapfrog)
       }
       {
         istringstream iss(line);
-        iss >> grad[0] >> grad[1]; 
+        iss >> grad[0] >> grad[1];
       }
       for (int i = 0; i < 5; ++i)
       {
@@ -818,7 +847,7 @@ TEST_F(test_nuts, leapfrog)
       }
       {
         istringstream iss(line);
-        iss >> thetaprime[0] >> thetaprime[1]; 
+        iss >> thetaprime[0] >> thetaprime[1];
       }
       for (int i = 0; i < 5; ++i)
       {
@@ -826,7 +855,7 @@ TEST_F(test_nuts, leapfrog)
       }
       {
         istringstream iss(line);
-        iss >> rprime[0] >> rprime[1]; 
+        iss >> rprime[0] >> rprime[1];
       }
       for (int i = 0; i < 5; ++i)
       {
@@ -834,7 +863,7 @@ TEST_F(test_nuts, leapfrog)
       }
       {
         istringstream iss(line);
-        iss >> gradprime[0] >> gradprime[1]; 
+        iss >> gradprime[0] >> gradprime[1];
       }
       for (int i = 0; i < 5; ++i)
       {
@@ -842,7 +871,7 @@ TEST_F(test_nuts, leapfrog)
       }
       {
         istringstream iss(line);
-        iss >> logpprime; 
+        iss >> logpprime;
       }
       for (int i = 0; i < 2; ++i)
       {
@@ -878,10 +907,10 @@ TEST_F(test_nuts, find_reasonable_epsilon)
     std::getline(ifs, line);
     if (line.compare("find_reasonable_epsilon begin") == 0)
     {
-      double theta0[2]; 
-      double grad0[2]; 
+      double theta0[2];
+      double grad0[2];
       double logp0 = 0;
-      double r0[2]; 
+      double r0[2];
       double epsilon = 0;
       {
         std::getline(ifs, line);
@@ -948,4 +977,252 @@ TEST_F(test_nuts, find_reasonable_epsilon)
     }
   }
   ifs.close();
+}
+TEST_F(test_nuts, build_tree)
+{
+  double theta[2];
+  double r[2];
+  double grad[2];
+  double logu;
+  int v;
+  int j;
+  double epsilon;
+  double joint0;
+  double thetaminus[2];
+  double rminus[2];
+  double gradminus[2];
+  double thetaplus[2];
+  double rplus[2];
+  double gradplus[2];
+  double thetaprime[2];
+  double gradprime[2];
+  double logpprime;
+  int nprime;
+  int sprime;
+  double alphaprime;
+  int nalphaprime;
+
+  ifstream ifs("test_nuts.txt");
+  ASSERT_TRUE(ifs.good());
+
+  stack<int> s;
+
+  while (!ifs.eof())
+  {
+    std::string line;
+    std::getline(ifs, line);
+    if (line.substr(0, 16).compare("build_tree begin") == 0)
+    {
+      istringstream iss(line.substr(17));
+      int inj;
+      iss >> inj;
+      s.push(inj);
+      {
+        for (int i = 0; i < 4; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> theta[0] >> theta[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> r[0] >> r[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> grad[0] >> grad[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> logu;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> v;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> j;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> epsilon;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> joint0;
+      }
+      std::getline(ifs, line);
+      if (inj == 0)
+      {
+        std::getline(ifs, line);
+        std::getline(ifs, line);
+        ASSERT_EQ(line.compare("leapfrog begin"), 0);
+        for (int i = 0; i < 51; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        ASSERT_EQ(line.compare("leapfrog end"), 0);
+      }
+    }
+    else if (line.substr(0, 14).compare("build_tree end") == 0)
+    {
+      istringstream iss(line.substr(15));
+      int inj;
+      iss >> inj;
+      ASSERT_EQ(inj, s.top());
+      s.pop();
+      std::getline(ifs, line);
+      ASSERT_EQ(line.substr(0, 23).compare("build_tree output begin"), 0);
+      {
+        for (int i = 0; i < 4; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> thetaminus[0] >> thetaminus[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> rminus[0] >> rminus[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> gradminus[0] >> gradminus[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> thetaplus[0] >> thetaplus[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> rplus[0] >> rplus[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> gradplus[0] >> gradplus[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> thetaprime[0] >> thetaprime[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> gradprime[0] >> gradprime[1];
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> logpprime;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> nprime;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> sprime;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> alphaprime;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> nalphaprime;
+      }
+      for (int i = 0; i < 2; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.substr(0, 21).compare("build_tree output end"), 0);
+    }
+
+    //Compare C++
+    double random_number;
+    build_tree(theta, r, grad, logu, v, j, epsilon, joint0, random_number);
+  }
+  ASSERT_EQ(s.size(), 0);
 }

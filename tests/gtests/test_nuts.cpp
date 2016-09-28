@@ -753,6 +753,30 @@ double find_reasonable_epsilon
   return epsilon;
 }
 
+bool stop_criterion
+(
+  double* thetaminus,
+  double* thetaplus,
+  double* rminus,
+  double* rplus
+)
+{
+  bool criterion = false;
+
+  //thetavec = thetaplus - thetaminus;
+  double thetavec[2];
+  for (int d = 0; d < _D; ++d)
+  {
+    thetavec[d] = thetaplus[d] - thetaminus[d];
+  }
+
+  //criterion = (thetavec * rminus' >= 0) && (thetavec * rplus' >= 0);
+  criterion = (thetavec[0] * rminus[0] + thetavec[1] * rminus[1] >= 0)
+              && (thetavec[0] * rplus[0] + thetavec[1] * rplus[1] >= 0);
+
+  return criterion;
+}
+
 double _thetaminus[2];
 double _rminus[2];
 double _gradminus[2];
@@ -764,6 +788,13 @@ int _sprime;
 double _alphaprime;
 int _nalphaprime;
 
+stack<double> _random_numbers;
+double _rand()
+{
+  double random_number = _random_numbers.top();
+  _random_numbers.pop();
+  return random_number;
+}
 void build_tree(
   double* theta,
   double* r,
@@ -772,8 +803,7 @@ void build_tree(
   int v,
   int j,
   double epsilon,
-  double joint0,
-  double random_number
+  double joint0
 )
 {
   if (j == 0)
@@ -831,52 +861,65 @@ void build_tree(
     //nalphaprime = 1;
     _nalphaprime = 1;
   }
-/*
   else
   {
-    //Recursion: Implicitly build the height j-1 left and right subtrees.
-    //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime]
-    build_tree(theta, r, grad, logu, v, j - 1, epsilon);
-    //No need to keep going if the stopping criteria were met in the first
-    //subtree.
+    //% Recursion: Implicitly build the height j-1 left and right subtrees.
+    //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
+    build_tree(theta, r, grad, logu, v, j - 1, epsilon, joint0);
+    //% No need to keep going if the stopping criteria were met in the first
+    //% subtree.
     if (_sprime == 1)
     {
-      int nprime2 = _nprime;
-      bool sprime2 = _sprime;
-      double logpprime2 = _logpprime;
-      for (size_t d = 0; d < _D; ++d)
-      {
-        _thetaprime2[d] = _thetaprime[d];
-        _gradprime2[d] = _gradprime[d];
-      }
+/*
+      double alphaprime2 = 0;
+      int nprime2 = 0;
+      bool sprime2 = false;
+      int nalphaprime2 = 0;
+      double logpprime2 = 0;
+      double thetaprime2[2];
+      double gradprime2[2];
       if (v == -1)
       {
-        //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2]
-        build_tree(_thetaminus, _rminus, _gradminus, logu, v, j - 1, epsilon);
+        //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
+        build_tree(_thetaminus, _rminus, _gradminus, logu, v, j - 1, epsilon, joint0);
       }
       else
       {
-        //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2]
-        build_tree(_thetaplus, _rplus, _gradplus, logu, v, j - 1, epsilon);
-      }
-      //Choose which subtree to propagate a sample up from.
-      assert(_nprime + nprime2 != 0);
-      if (urand() > nprime2 / (_nprime + nprime2))
+        //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
+        build_tree(_thetaplus, _rplus, _gradplus, logu, v, j - 1, epsilon, joint0);
+      }//end
+
+      //% Choose which subtree to propagate a sample up from.
+      double random_number = rand();
+      if (random_number < nprime2 / (_nprime + nprime2))
       {
-        for (size_t d = 0; d < _D; ++d)
+        for (int d = 0; d < _D; ++d)
         {
-          _thetaprime[d] = _thetaprime2[d];
-          _gradprime[d] = _gradprime2[d];
+          //thetaprime = thetaprime2;
+          _thetaprime[d] = thetaprime2[d];
+
+          //gradprime = gradprime2;
+          _gradprime[d] = gradprime2[d];
         }
         _logpprime = logpprime2;
-      }
-      //Update the number of valid points.
+      }//end
+
+      //% Update the number of valid points.
+      //nprime = nprime + nprime2;
       _nprime += nprime2;
-      //Update the stopping criterion.
+
+      //% Update the stopping criterion.
       _sprime = _sprime && sprime2 && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
-    }
-  }
+
+      //% Update the acceptance probability statistics.
+      //alphaprime = alphaprime + alphaprime2;
+      _alphaprime += alphaprime2;
+
+      //nalphaprime = nalphaprime + nalphaprime2;
+      _nalphaprime += nalphaprime2;
 */
+    }//end
+  }
 }
 
 TEST_F(test_nuts, leapfrog)
@@ -1314,6 +1357,19 @@ TEST_F(test_nuts, build_tree)
         istringstream iss(line);
         iss >> nalphaprime;
       }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        double random_number = -1;
+        iss >> random_number;
+        if (!(random_number < 0))
+        {
+          _random_numbers.push(random_number);
+        }
+      }
       for (int i = 0; i < 2; ++i)
       {
         std::getline(ifs, line);
@@ -1322,8 +1378,7 @@ TEST_F(test_nuts, build_tree)
       if (inj == 0)
       {
         //Compare C++
-        double random_number = 0;
-        build_tree(theta, r, grad, logu, v, j, epsilon, joint0, random_number);
+        build_tree(theta, r, grad, logu, v, j, epsilon, joint0);
 
         const double range = 0.000001;
         ASSERT_NEAR(thetaminus[0], _thetaminus[0], range);
@@ -1351,4 +1406,5 @@ TEST_F(test_nuts, build_tree)
     }
   }
   ASSERT_EQ(s.size(), 0);
+  //ASSERT_EQ(_random_numbers.size(), 0);
 }

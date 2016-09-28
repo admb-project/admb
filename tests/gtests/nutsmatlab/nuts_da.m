@@ -166,6 +166,7 @@ display(j);
 display(epsilon);
 display(f);
 display(joint0);
+random_number = -1;
 if (j == 0)
     % Base case: Take a single leapfrog step in the direction v.
     [thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
@@ -199,8 +200,10 @@ else
             [~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
                 build_tree(thetaplus, rplus, gradplus, logu, v, j-1, epsilon, f, joint0);
         end
+
+        random_number = rand();
         % Choose which subtree to propagate a sample up from.
-        if (rand() < nprime2 / (nprime + nprime2))
+        if (random_number < nprime2 / (nprime + nprime2))
             thetaprime = thetaprime2;
             gradprime = gradprime2;
             logpprime = logpprime2;
@@ -229,6 +232,7 @@ display(nprime);
 display(sprime);
 display(alphaprime);
 display(nalphaprime);
+display(random_number);
 fprintf('build_tree output end %i\n', j);
 end
 

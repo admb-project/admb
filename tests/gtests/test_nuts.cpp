@@ -1122,6 +1122,49 @@ TEST_F(test_nuts, find_reasonable_epsilon)
   }
   ifs.close();
 }
+stack<double> _stack_theta;
+stack<double> _stack_r;
+stack<double> _stack_grad;
+stack<double> _stack_logu;
+stack<int> _stack_v;
+stack<int> _stack_j;
+stack<double> _stack_epsilon;
+TEST_F(test_nuts, top_build_tree)
+{
+  ifstream ifs("test_nuts.txt");
+  ASSERT_TRUE(ifs.good());
+
+  stack<int> s;
+
+  while (!ifs.eof())
+  {
+    std::string line;
+    std::getline(ifs, line);
+    if (line.compare("build_tree main start") == 0)
+    {
+      ASSERT_TRUE(s.empty());
+      for (int i = 0; i < 47; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.compare("build_tree main start end"), 0);
+    }
+    else if (line.compare("build_tree main end") == 0)
+    {
+      while (!s.empty())
+      {
+        s.pop(); 
+      }
+      ASSERT_TRUE(s.empty());
+      for (int i = 0; i < 52; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.compare("build_tree main end end"), 0);
+    }
+  }
+  ifs.close();
+}
 TEST_F(test_nuts, build_tree)
 {
   double theta[2];
@@ -1155,7 +1198,29 @@ TEST_F(test_nuts, build_tree)
   {
     std::string line;
     std::getline(ifs, line);
-    if (line.substr(0, 16).compare("build_tree begin") == 0)
+    if (line.compare("build_tree main start") == 0)
+    {
+      ASSERT_TRUE(s.empty());
+      for (int i = 0; i < 47; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.compare("build_tree main start end"), 0);
+    }
+    else if (line.compare("build_tree main end") == 0)
+    {
+      while (!s.empty())
+      {
+        s.pop(); 
+      }
+      ASSERT_TRUE(s.empty());
+      for (int i = 0; i < 52; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.compare("build_tree main end end"), 0);
+    }
+    else if (line.substr(0, 16).compare("build_tree begin") == 0)
     {
       istringstream iss(line.substr(17));
       int inj;
@@ -1375,11 +1440,12 @@ TEST_F(test_nuts, build_tree)
         std::getline(ifs, line);
       }
       ASSERT_EQ(line.substr(0, 21).compare("build_tree output end"), 0);
+
+      //Compare C++
+      build_tree(theta, r, grad, logu, v, j, epsilon, joint0);
+
       if (inj == 0)
       {
-        //Compare C++
-        build_tree(theta, r, grad, logu, v, j, epsilon, joint0);
-
         const double range = 0.000001;
         ASSERT_NEAR(thetaminus[0], _thetaminus[0], range);
         ASSERT_NEAR(thetaminus[1], _thetaminus[1], range);

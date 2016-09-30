@@ -85,7 +85,25 @@ for m = 2:M+Madapt,
     while (s == 1)
         % Choose a direction. -1=backwards, 1=forwards.
         v = 2*(rand() < 0.5)-1;
+
         % Double the size of the tree.
+        fprintf('\nbuild_tree main start\n');
+        if (v == -1)
+            display(thetaminus);
+            display(rminus);
+            display(gradminus);
+        else
+            display(thetaplus);
+            display(rplus);
+            display(gradplus);
+        end
+        display(logu);
+        display(v);
+        display(j);
+        display(epsilon);
+        display(f);
+        display(joint);
+        fprintf('\nbuild_tree main start end\n');
         if (v == -1)
             [thetaminus, rminus, gradminus, ~, ~, ~, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
                 build_tree(thetaminus, rminus, gradminus, logu, v, j, epsilon, f, joint);
@@ -93,6 +111,25 @@ for m = 2:M+Madapt,
             [~, ~, ~, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
                 build_tree(thetaplus, rplus, gradplus, logu, v, j, epsilon, f, joint);
         end
+        fprintf('\nbuild_tree main end\n');
+        if (v == -1)
+            display(thetaminus);
+            display(rminus);
+            display(gradminus);
+        else
+            display(thetaplus);
+            display(rplus);
+            display(gradplus);
+        end
+        display(thetaprime);
+        display(gradprime);
+        display(logpprime);
+        display(nprime);
+        display(sprime);
+        display(alpha);
+        display(nalpha);
+        fprintf('\nbuild_tree main end end\n');
+
         % Use Metropolis-Hastings to decide whether or not to move to a
         % point from the half-tree we just generated.
         if ((sprime == 1) && (rand() < nprime/n))

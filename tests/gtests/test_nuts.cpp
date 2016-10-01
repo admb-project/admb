@@ -1190,10 +1190,8 @@ TEST_F(test_nuts, top_build_tree)
   {
     std::string line;
     std::getline(ifs, line);
-cout << line << endl;
     if (line.compare("build_tree main start") == 0)
     {
-cout << "HERE" << endl;
       ASSERT_TRUE(s.empty());
       {
         for (int i = 0; i < 4; ++i)
@@ -1242,7 +1240,6 @@ cout << "HERE" << endl;
         }
         istringstream iss(line);
         iss >> j;
-cout << "HERE" << ' ' << j << endl;
       }
       {
         for (int i = 0; i < 5; ++i)
@@ -1392,9 +1389,9 @@ cout << "HERE" << ' ' << j << endl;
         std::getline(ifs, line);
       }
       ASSERT_EQ(line.compare("build_tree main end end"), 0);
+
+      build_tree(theta, r, grad, logu, v, j, epsilon, joint0);
     }
-cout << "***** " << j << endl;
-    build_tree(theta, r, grad, logu, v, j, epsilon, joint0);
   }
   ifs.close();
 }

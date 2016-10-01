@@ -1391,6 +1391,32 @@ TEST_F(test_nuts, top_build_tree)
       ASSERT_EQ(line.compare("build_tree main end end"), 0);
 
       build_tree(theta, r, grad, logu, v, j, epsilon, joint0);
+/*
+      {
+        const double range = 0.000001;
+        ASSERT_NEAR(thetaminus[0], _thetaminus[0], range);
+        ASSERT_NEAR(thetaminus[1], _thetaminus[1], range);
+        ASSERT_NEAR(rminus[0], _rminus[0], range);
+        ASSERT_NEAR(rminus[1], _rminus[1], range);
+        ASSERT_NEAR(gradminus[0], _gradminus[0], range);
+        ASSERT_NEAR(gradminus[1], _gradminus[1], range);
+        ASSERT_NEAR(thetaplus[0], _thetaplus[0], range);
+        ASSERT_NEAR(thetaplus[1], _thetaplus[1], range);
+        ASSERT_NEAR(rplus[0], _rplus[0], range);
+        ASSERT_NEAR(rplus[1], _rplus[1], range);
+        ASSERT_NEAR(gradplus[0], _gradplus[0], range);
+        ASSERT_NEAR(gradplus[1], _gradplus[1], range);
+        ASSERT_NEAR(thetaprime[0], _thetaprime[0], range);
+        ASSERT_NEAR(thetaprime[1], _thetaprime[1], range);
+        ASSERT_NEAR(gradprime[0], _gradprime[0], range);
+        ASSERT_NEAR(gradprime[1], _gradprime[1], range);
+        ASSERT_NEAR(logpprime, _logpprime, range);
+        ASSERT_EQ(nprime, _nprime);
+        ASSERT_EQ(sprime, _sprime);
+        //ASSERT_NEAR(alphaprime, _alphaprime, range);
+        //ASSERT_EQ(nalphaprime, _nalphaprime);
+      }
+*/
     }
   }
   ifs.close();

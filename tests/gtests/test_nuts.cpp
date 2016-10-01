@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <stack>
+#include <queue>
 #include <gtest/gtest.h>
 
 using std::cout;
@@ -15,6 +16,7 @@ using std::ifstream;
 using std::istringstream;
 using std::pow;
 using std::stack;
+using std::queue;
 
 class test_nuts: public ::testing::Test {};
 
@@ -788,15 +790,16 @@ int _sprime;
 double _alphaprime;
 int _nalphaprime;
 
-stack<double> _random_numbers;
+queue<double> _q;
 double _rand()
 {
-/*
-  double random_number = _random_numbers.top();
-  _random_numbers.pop();
+  double random_number = 0;
+  if (!_q.empty())
+  {
+    random_number = _q.front();
+    _q.pop();
+  }
   return random_number;
-*/
-  return 0.5;
 }
 void build_tree(
   double* theta,
@@ -1149,12 +1152,6 @@ TEST_F(test_nuts, find_reasonable_epsilon)
   }
   ifs.close();
 }
-stack<double> _stack_r;
-stack<double> _stack_grad;
-stack<double> _stack_logu;
-stack<int> _stack_v;
-stack<int> _stack_j;
-stack<double> _stack_epsilon;
 TEST_F(test_nuts, top_build_tree)
 {
   //input
@@ -1184,15 +1181,13 @@ TEST_F(test_nuts, top_build_tree)
   ifstream ifs("test_nuts.txt");
   ASSERT_TRUE(ifs.good());
 
-  stack<int> s;
-
   while (!ifs.eof())
   {
     std::string line;
     std::getline(ifs, line);
     if (line.compare("build_tree main start") == 0)
     {
-      ASSERT_TRUE(s.empty());
+      while (!_q.empty()) _q.pop();
       {
         for (int i = 0; i < 4; ++i)
         {
@@ -1269,11 +1264,6 @@ TEST_F(test_nuts, top_build_tree)
     }
     else if (line.compare("build_tree main end") == 0)
     {
-      while (!s.empty())
-      {
-        s.pop(); 
-      }
-      ASSERT_TRUE(s.empty());
       if (v == -1)
       {
         {
@@ -1391,9 +1381,9 @@ TEST_F(test_nuts, top_build_tree)
       ASSERT_EQ(line.compare("build_tree main end end"), 0);
 
       build_tree(theta, r, grad, logu, v, j, epsilon, joint0);
-/*
       {
         const double range = 0.000001;
+/*
         ASSERT_NEAR(thetaminus[0], _thetaminus[0], range);
         ASSERT_NEAR(thetaminus[1], _thetaminus[1], range);
         ASSERT_NEAR(rminus[0], _rminus[0], range);
@@ -1411,12 +1401,24 @@ TEST_F(test_nuts, top_build_tree)
         ASSERT_NEAR(gradprime[0], _gradprime[0], range);
         ASSERT_NEAR(gradprime[1], _gradprime[1], range);
         ASSERT_NEAR(logpprime, _logpprime, range);
-        ASSERT_EQ(nprime, _nprime);
-        ASSERT_EQ(sprime, _sprime);
+        //ASSERT_EQ(nprime, _nprime);
+        //ASSERT_EQ(sprime, _sprime);
         //ASSERT_NEAR(alphaprime, _alphaprime, range);
         //ASSERT_EQ(nalphaprime, _nalphaprime);
-      }
 */
+      }
+    }
+    else if (line.compare("random_number =") == 0)
+    {
+      std::getline(ifs, line);
+      std::getline(ifs, line);
+      istringstream iss(line);
+      double random_number = -1;
+      iss >> random_number;
+      if (!(random_number < 0))
+      {
+        _q.push(random_number);
+      }
     }
   }
   ifs.close();
@@ -1688,7 +1690,7 @@ TEST_F(test_nuts, build_tree)
         iss >> random_number;
         if (!(random_number < 0))
         {
-          _random_numbers.push(random_number);
+          _q.push(random_number);
         }
       }
       for (int i = 0; i < 2; ++i)

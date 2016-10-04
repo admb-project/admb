@@ -793,12 +793,7 @@ int _nalphaprime;
 queue<double> _random_numbers;
 double _rand()
 {
-/*
-  double random_number = _random_numbers.top();
-  _random_numbers.pop();
-  return random_number;
-*/
-  if (_random_numbers.size() == 0)
+  if (_random_numbers.empty())
   {
     return 0.5;
   }
@@ -1156,12 +1151,6 @@ TEST_F(test_nuts, find_reasonable_epsilon)
   }
   ifs.close();
 }
-stack<double> _stack_r;
-stack<double> _stack_grad;
-stack<double> _stack_logu;
-stack<int> _stack_v;
-stack<int> _stack_j;
-stack<double> _stack_epsilon;
 TEST_F(test_nuts, top_build_tree)
 {
   //input
@@ -1191,15 +1180,13 @@ TEST_F(test_nuts, top_build_tree)
   ifstream ifs("test_nuts.txt");
   ASSERT_TRUE(ifs.good());
 
-  stack<int> s;
-
   while (!ifs.eof())
   {
     std::string line;
     std::getline(ifs, line);
     if (line.compare("build_tree main start") == 0)
     {
-      ASSERT_TRUE(s.empty());
+      while (!_q.empty()) _q.pop();
       {
         for (int i = 0; i < 4; ++i)
         {
@@ -1276,11 +1263,6 @@ TEST_F(test_nuts, top_build_tree)
     }
     else if (line.compare("build_tree main end") == 0)
     {
-      while (!s.empty())
-      {
-        s.pop(); 
-      }
-      ASSERT_TRUE(s.empty());
       if (v == -1)
       {
         {
@@ -1431,6 +1413,20 @@ TEST_F(test_nuts, top_build_tree)
 */
       }
     }
+/*
+    else if (line.compare("random_number =") == 0)
+    {
+      std::getline(ifs, line);
+      std::getline(ifs, line);
+      istringstream iss(line);
+      double random_number = -1;
+      iss >> random_number;
+      if (!(random_number < 0))
+      {
+        _q.push(random_number);
+      }
+    }
+*/
   }
   ifs.close();
 }
@@ -1701,7 +1697,7 @@ TEST_F(test_nuts, build_tree)
         iss >> random_number;
         if (!(random_number < 0))
         {
-          _random_numbers.push(random_number);
+          _q.push(random_number);
         }
       }
       for (int i = 0; i < 2; ++i)

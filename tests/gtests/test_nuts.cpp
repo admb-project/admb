@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <stack>
+#include <queue>
 #include <gtest/gtest.h>
 
 using std::cout;
@@ -15,6 +16,7 @@ using std::ifstream;
 using std::istringstream;
 using std::pow;
 using std::stack;
+using std::queue;
 
 class test_nuts: public ::testing::Test {};
 
@@ -788,7 +790,7 @@ int _sprime;
 double _alphaprime;
 int _nalphaprime;
 
-stack<double> _random_numbers;
+queue<double> _random_numbers;
 double _rand()
 {
 /*
@@ -796,7 +798,13 @@ double _rand()
   _random_numbers.pop();
   return random_number;
 */
-  return 0.5;
+  if (_random_numbers.size() == 0)
+  {
+    return 0.5;
+  }
+  double random_number = _random_numbers.front();
+  _random_numbers.pop();
+  return random_number;
 }
 void build_tree(
   double* theta,
@@ -816,18 +824,15 @@ void build_tree(
     leapfrog(theta, r, grad, v * epsilon);
 
     //joint = logpprime - 0.5 * (rprime * rprime');
-    double joint = 0;
+    double joint = _logpprime;
     for (size_t d = 0; d < _D; ++d)
     {
-      joint += _rprime[d] * _rprime[d];
+      joint -= 0.5 * _rprime[d] * _rprime[d];
     }
-    joint *= -0.5;
-    joint += _logpprime;
 
     //% Is the new point in the slice?
     //nprime = logu < joint;
     _nprime = logu < joint;
-
 
     //% Is the simulation wildly inaccurate?
     //sprime = logu - 1000 < joint;
@@ -874,19 +879,19 @@ void build_tree(
     //% subtree.
     if (_sprime == 1)
     {
-       double thetaminus[2] = { _thetaminus[0], _thetaminus[1]};
-       double rminus[2] = { _rminus[0], _rminus[1]};
-       double gradminus[2] = { _gradminus[0], _gradminus[1]};
-       double thetaplus[2] = { _thetaplus[0], _thetaplus[1]};
-       double rplus[2] = { _rplus[0], _rplus[1]};
-       double gradplus[2] = { _gradplus[0], _gradplus[1]};
-       double thetaprime[2] = { _thetaprime[0], _thetaprime[1]};
-       double gradprime[2] = { _gradprime[0], _gradprime[1]};
-       double logpprime = _logpprime;
-       int nprime = _nprime;
-       bool sprime = _sprime;
-       double alphaprime = _alphaprime;
-       int nalphaprime = _nalphaprime;
+      double thetaminus[2] = { _thetaminus[0], _thetaminus[1]};
+      double rminus[2] = { _rminus[0], _rminus[1]};
+      double gradminus[2] = { _gradminus[0], _gradminus[1]};
+      double thetaplus[2] = { _thetaplus[0], _thetaplus[1]};
+      double rplus[2] = { _rplus[0], _rplus[1]};
+      double gradplus[2] = { _gradplus[0], _gradplus[1]};
+      double thetaprime[2] = { _thetaprime[0], _thetaprime[1]};
+      double gradprime[2] = { _gradprime[0], _gradprime[1]};
+      double logpprime = _logpprime;
+      int nprime = _nprime;
+      bool sprime = _sprime;
+      double alphaprime = _alphaprime;
+      int nalphaprime = _nalphaprime;
       if (v == -1)
       {
         //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
@@ -917,9 +922,11 @@ void build_tree(
       double alphaprime2 = _alphaprime;
       int nalphaprime2 = _nalphaprime;
 
+//JCA
       //% Choose which subtree to propagate a sample up from.
       double random_number = _rand();
-      //if (nprime + nprime2 != 0 && random_number < nprime2 / (nprime + nprime2))
+cout << logpprime << ' ' << logpprime2 << ' ' << random_number << endl;
+      if (nprime + nprime2 != 0 && random_number < nprime2 / (nprime + nprime2))
       {
         for (int d = 0; d < _D; ++d)
         {
@@ -930,21 +937,21 @@ void build_tree(
           _gradprime[d] = gradprime2[d];
         }
         _logpprime = logpprime2;
-      }//end
+      }
 
       //% Update the number of valid points.
       //nprime = nprime + nprime2;
-      _nprime += nprime2;
+      _nprime = nprime + nprime2;
 
       //% Update the stopping criterion.
-      _sprime = _sprime && sprime2 && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
+      _sprime = sprime && sprime2 && stop_criterion(thetaminus, thetaplus, rminus, rplus);
 
       //% Update the acceptance probability statistics.
       //alphaprime = alphaprime + alphaprime2;
-      _alphaprime += alphaprime2;
+      _alphaprime = alphaprime + alphaprime2;
 
       //nalphaprime = nalphaprime + nalphaprime2;
-      _nalphaprime += nalphaprime2;
+      _nalphaprime = nalphaprime + nalphaprime2;
     }//end
   }
 }
@@ -1391,9 +1398,20 @@ TEST_F(test_nuts, top_build_tree)
       ASSERT_EQ(line.compare("build_tree main end end"), 0);
 
       build_tree(theta, r, grad, logu, v, j, epsilon, joint0);
-/*
+      if (j == 0)
       {
+        ASSERT_EQ(1, _nalphaprime);
+      }
+      else if (j == 1)
+      {
+        ASSERT_EQ(sprime, _sprime);
+        ASSERT_EQ(nprime, _nprime);
+        ASSERT_EQ(nalpha, _nalphaprime);
+//JCA
         const double range = 0.000001;
+        ASSERT_NEAR(alpha, _alphaprime, range);
+        //ASSERT_NEAR(logpprime, _logpprime, range);
+/*
         ASSERT_NEAR(thetaminus[0], _thetaminus[0], range);
         ASSERT_NEAR(thetaminus[1], _thetaminus[1], range);
         ASSERT_NEAR(rminus[0], _rminus[0], range);
@@ -1410,13 +1428,8 @@ TEST_F(test_nuts, top_build_tree)
         ASSERT_NEAR(thetaprime[1], _thetaprime[1], range);
         ASSERT_NEAR(gradprime[0], _gradprime[0], range);
         ASSERT_NEAR(gradprime[1], _gradprime[1], range);
-        ASSERT_NEAR(logpprime, _logpprime, range);
-        ASSERT_EQ(nprime, _nprime);
-        ASSERT_EQ(sprime, _sprime);
-        //ASSERT_NEAR(alphaprime, _alphaprime, range);
-        //ASSERT_EQ(nalphaprime, _nalphaprime);
-      }
 */
+      }
     }
   }
   ifs.close();

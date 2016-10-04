@@ -917,11 +917,9 @@ void build_tree(
       double alphaprime2 = _alphaprime;
       int nalphaprime2 = _nalphaprime;
 
-//JCA
       //% Choose which subtree to propagate a sample up from.
       double random_number = _rand();
-cout << logpprime << ' ' << logpprime2 << ' ' << random_number << endl;
-      if (nprime + nprime2 != 0 && random_number < nprime2 / (nprime + nprime2))
+      if (nprime + nprime2 != 0 && random_number < double(nprime2) / double(nprime + nprime2))
       {
         for (int d = 0; d < _D; ++d)
         {
@@ -932,6 +930,18 @@ cout << logpprime << ' ' << logpprime2 << ' ' << random_number << endl;
           _gradprime[d] = gradprime2[d];
         }
         _logpprime = logpprime2;
+      }
+      else
+      {
+        for (int d = 0; d < _D; ++d)
+        {
+          //thetaprime = thetaprime;
+          _thetaprime[d] = thetaprime[d];
+
+          //gradprime = gradprime;
+          _gradprime[d] = gradprime[d];
+        }
+        _logpprime = logpprime;
       }
 
       //% Update the number of valid points.
@@ -1389,31 +1399,35 @@ TEST_F(test_nuts, top_build_tree)
         ASSERT_EQ(sprime, _sprime);
         ASSERT_EQ(nprime, _nprime);
         ASSERT_EQ(nalpha, _nalphaprime);
-//JCA
+
         const double range = 0.000001;
         ASSERT_NEAR(alpha, _alphaprime, range);
-        //ASSERT_NEAR(logpprime, _logpprime, range);
-/*
-        ASSERT_NEAR(thetaminus[0], _thetaminus[0], range);
-        ASSERT_NEAR(thetaminus[1], _thetaminus[1], range);
-        ASSERT_NEAR(rminus[0], _rminus[0], range);
-        ASSERT_NEAR(rminus[1], _rminus[1], range);
-        ASSERT_NEAR(gradminus[0], _gradminus[0], range);
-        ASSERT_NEAR(gradminus[1], _gradminus[1], range);
-        ASSERT_NEAR(thetaplus[0], _thetaplus[0], range);
-        ASSERT_NEAR(thetaplus[1], _thetaplus[1], range);
-        ASSERT_NEAR(rplus[0], _rplus[0], range);
-        ASSERT_NEAR(rplus[1], _rplus[1], range);
-        ASSERT_NEAR(gradplus[0], _gradplus[0], range);
-        ASSERT_NEAR(gradplus[1], _gradplus[1], range);
+        ASSERT_NEAR(logpprime, _logpprime, range);
         ASSERT_NEAR(thetaprime[0], _thetaprime[0], range);
         ASSERT_NEAR(thetaprime[1], _thetaprime[1], range);
         ASSERT_NEAR(gradprime[0], _gradprime[0], range);
         ASSERT_NEAR(gradprime[1], _gradprime[1], range);
-*/
+
+        if (v == -1)
+        {
+          ASSERT_NEAR(thetaminus[0], _thetaminus[0], range);
+          ASSERT_NEAR(thetaminus[1], _thetaminus[1], range);
+          ASSERT_NEAR(rminus[0], _rminus[0], range);
+          ASSERT_NEAR(rminus[1], _rminus[1], range);
+          ASSERT_NEAR(gradminus[0], _gradminus[0], range);
+          ASSERT_NEAR(gradminus[1], _gradminus[1], range);
+        }
+        else
+        {
+          ASSERT_NEAR(thetaplus[0], _thetaplus[0], range);
+          ASSERT_NEAR(thetaplus[1], _thetaplus[1], range);
+          ASSERT_NEAR(rplus[0], _rplus[0], range);
+          ASSERT_NEAR(rplus[1], _rplus[1], range);
+          ASSERT_NEAR(gradplus[0], _gradplus[0], range);
+          ASSERT_NEAR(gradplus[1], _gradplus[1], range);
+        }
       }
     }
-/*
     else if (line.compare("random_number =") == 0)
     {
       std::getline(ifs, line);
@@ -1426,7 +1440,6 @@ TEST_F(test_nuts, top_build_tree)
         _random_numbers.push(random_number);
       }
     }
-*/
   }
   ifs.close();
 }

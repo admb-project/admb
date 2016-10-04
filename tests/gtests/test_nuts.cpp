@@ -1186,7 +1186,7 @@ TEST_F(test_nuts, top_build_tree)
     std::getline(ifs, line);
     if (line.compare("build_tree main start") == 0)
     {
-      while (!_q.empty()) _q.pop();
+      while (!_random_numbers.empty()) _random_numbers.pop();
       {
         for (int i = 0; i < 4; ++i)
         {
@@ -1423,7 +1423,7 @@ TEST_F(test_nuts, top_build_tree)
       iss >> random_number;
       if (!(random_number < 0))
       {
-        _q.push(random_number);
+        _random_numbers.push(random_number);
       }
     }
 */
@@ -1697,7 +1697,7 @@ TEST_F(test_nuts, build_tree)
         iss >> random_number;
         if (!(random_number < 0))
         {
-          _q.push(random_number);
+          _random_numbers.push(random_number);
         }
       }
       for (int i = 0; i < 2; ++i)

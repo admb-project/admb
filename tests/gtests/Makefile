@@ -179,8 +179,10 @@ else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_nuts.cpp
 endif
 
-nuts: test_nuts	
+test_nuts.txt: nutsmatlab/nuts_da.m
 	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
+
+nuts: test_nuts
 ifeq ($(SHELL),cmd)
 	test_nuts
 else

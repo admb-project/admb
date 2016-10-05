@@ -38,6 +38,14 @@ if (nargin < 5)
     delta = 0.6;
 end
 
+fprintf('\nnuts_da begin\n');
+fprintf('\nnuts_da begin parameters\n');
+display(f);
+display(M);
+display(Madapt);
+display(theta0);
+display(delta);
+fprintf('\nnuts_da end parameters\n');
 assert(size(theta0, 1) == 1);
 
 D = length(theta0);
@@ -158,6 +166,11 @@ for m = 2:M+Madapt,
 end
 samples = samples(Madapt+1:end, :);
 fprintf('Took %d gradient evaluations.\n', nfevals);
+fprintf('\nnuts_da end\n');
+fprintf('\nnuts_da begin output\n');
+display(samples);
+display(epsilon);
+fprintf('\nnuts_da end output\n');
 end
 
 function [thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, epsilon, f)

@@ -1481,11 +1481,10 @@ TEST_F(test_nuts, build_tree)
   double alphaprime;
   int nalphaprime;
 
-  ifstream ifs("test_nuts.txt");
-  ASSERT_TRUE(ifs.good());
-
   stack<int> s;
 
+  ifstream ifs("test_nuts.txt");
+  ASSERT_TRUE(ifs.good());
   while (!ifs.eof())
   {
     std::string line;
@@ -1765,4 +1764,92 @@ TEST_F(test_nuts, build_tree)
   }
   ASSERT_EQ(s.size(), 0);
   //ASSERT_EQ(_random_numbers.size(), 0);
+}
+//function [samples, epsilon] = nuts_da(f, M, Madapt, theta0, delta)
+double _samples[500][2];
+double _epsilon;
+void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
+{
+}
+TEST_F(test_nuts, nuts_da)
+{
+  double epsilon = 0;
+  double samples[500][2];
+  int M = 0;
+  int Madapt = 0;
+  double theta0[2];
+  double delta = 0.6;
+
+  ifstream ifs("test_nuts.txt");
+  ASSERT_TRUE(ifs.good());
+  while (!ifs.eof())
+  {
+    std::string line;
+    std::getline(ifs, line);
+    if (line.compare("nuts_da begin") == 0)
+    {
+      std::getline(ifs, line);
+      std::getline(ifs, line);
+      ASSERT_EQ(line.compare("nuts_da begin parameters"), 0);
+      {
+        for (int i = 0; i < 9; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> M;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> Madapt;
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> theta0[0] >> theta0[1];
+      }
+      for (int i = 0; i < 8; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.compare("nuts_da end parameters"), 0);
+    }
+    else if (line.compare("nuts_da end") == 0)
+    {
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        for (int i = 0; i < 500; ++i)
+        {
+          std::getline(ifs, line);
+          istringstream iss(line);
+          iss >> samples[i][0] >> samples[i][1];
+        }
+      }
+      {
+        for (int i = 0; i < 5; ++i)
+        {
+          std::getline(ifs, line);
+        }
+        istringstream iss(line);
+        iss >> epsilon;
+      }
+      for (int i = 0; i < 3; ++i)
+      {
+        std::getline(ifs, line);
+      }
+      ASSERT_EQ(line.compare("nuts_da end output"), 0);
+
+      nuts_da(M, Madapt, theta0, delta);
+    }
+  }
 }

@@ -957,6 +957,20 @@ void build_tree(
 
       //nalphaprime = nalphaprime + nalphaprime2;
       _nalphaprime = nalphaprime + nalphaprime2;
+
+      _thetaminus[0] = thetaminus[0];
+      _thetaminus[1] = thetaminus[1];
+      _rminus[0] = rminus[0];
+      _rminus[1] = rminus[1];
+      _gradminus[0] = gradminus[0];
+      _gradminus[1] = gradminus[1];
+
+      _thetaplus[0] = thetaplus[0];
+      _thetaplus[1] = thetaplus[1];
+      _rplus[0] = rplus[0];
+      _rplus[1] = rplus[1];
+      _gradplus[0] = gradplus[0];
+      _gradplus[1] = gradplus[1];
     }//end
   }
 }
@@ -1394,7 +1408,7 @@ TEST_F(test_nuts, top_build_tree)
       {
         ASSERT_EQ(1, _nalphaprime);
       }
-      else if (j == 1)
+      else
       {
         ASSERT_EQ(sprime, _sprime);
         ASSERT_EQ(nprime, _nprime);

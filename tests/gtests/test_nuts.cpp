@@ -1880,28 +1880,37 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
     bool s = true;
     while (s)
     {
-/*
       //% Choose a direction. -1=backwards, 1=forwards.
       //v = 2*(rand() < 0.5)-1;
       int v = 2 * (rand() < 0.5) - 1;
 
       //% Double the size of the tree.
       if (v == -1)
-            [thetaminus, rminus, gradminus, ~, ~, ~, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
-                build_tree(thetaminus, rminus, gradminus, logu, v, j, epsilon, f, joint);
+      {
+        //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
+        build_tree(_thetaminus, _rminus, _gradminus, logu, v, j, epsilon, joint);
+      }
       else
-            [~, ~, ~, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
-                build_tree(thetaplus, rplus, gradplus, logu, v, j, epsilon, f, joint);
-      end
+      {
+        //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
+        build_tree(_thetaplus, _rplus, _gradplus, logu, v, j, epsilon, joint);
+      }
 
       //% Use Metropolis-Hastings to decide whether or not to move to a
       //% point from the half-tree we just generated.
-      if ((sprime == 1) && (rand() < nprime/n))
-            samples(m, :) = thetaprime;
-            logp = logpprime;
-            grad = gradprime;
-      end
-*/
+      if (_sprime == 1 && rand() < double(_nprime)/n)
+      {
+        //samples(m, :) = thetaprime;
+        _samples[m][0] = _thetaprime[0];
+        _samples[m][1] = _thetaprime[1];
+
+        //logp = logpprime;
+        logp = _logpprime;
+
+        //grad = gradprime;
+        grad[0] = _gradprime[0];
+        grad[1] = _gradprime[1];
+      }
 
       //% Update number of valid points we've seen.
       //n = n + nprime;
@@ -1913,8 +1922,6 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       //% Increment depth.
       //j = j + 1;
       ++j;
-
-      s = false;//JCA remove this
     }
 
     //% Do adaptation of epsilon if we're still doing burn-in.
@@ -1994,7 +2001,7 @@ TEST_F(test_nuts, nuts_da)
         }
       }
     }
-    else if (line.compare("r0 =") == 0)
+    else if (line.compare("r0 =") == 0 || line.compare("rexp =") == 0)
     {
       std::getline(ifs, line);
       std::getline(ifs, line);
@@ -2005,14 +2012,12 @@ TEST_F(test_nuts, nuts_da)
       iss >> random_number;
       _random_numbers.push(random_number);
     }
-    else if (line.compare("rexp =") == 0)
+    else if (line.compare("rn =") == 0)
     {
       std::getline(ifs, line);
       std::getline(ifs, line);
       double random_number;
       istringstream iss(line);
-      iss >> random_number;
-      _random_numbers.push(random_number);
       iss >> random_number;
       _random_numbers.push(random_number);
     }

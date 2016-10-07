@@ -1770,7 +1770,7 @@ TEST_F(test_nuts, build_tree)
   //ASSERT_EQ(_random_numbers.size(), 0);
 }
 //function [samples, epsilon] = nuts_da(f, M, Madapt, theta0, delta)
-double _samples[500][2];
+double _samples[1000][2];
 double _epsilon;
 void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 {
@@ -1864,7 +1864,6 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
     //j = 0;
     int j = 0;
 
-/*
     //% If all else fails, the next sample is the previous sample.
     //samples(m, :) = samples(m-1, :);
     _samples[m][0] = _samples[m - 1][0];
@@ -1874,11 +1873,14 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
     //n = 1;
     int n = 1;
 
+    int nalpha = 1;
+    int alpha = 1;
     //% Main loop---keep going until the criterion s == 0.
     //s = 1;
-    bool s = 1;
-    while (s == 1)
+    bool s = true;
+    while (s)
     {
+/*
       //% Choose a direction. -1=backwards, 1=forwards.
       //v = 2*(rand() < 0.5)-1;
       int v = 2 * (rand() < 0.5) - 1;
@@ -1899,31 +1901,41 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
             logp = logpprime;
             grad = gradprime;
       end
+*/
 
       //% Update number of valid points we've seen.
       //n = n + nprime;
-      n += nprime;
+      n += _nprime;
 
       //% Decide if it's time to stop.
       s = _sprime && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
-      s = -1;
 
       //% Increment depth.
       //j = j + 1;
       ++j;
+
+      s = false;//JCA remove this
     }
 
-    % Do adaptation of epsilon if we're still doing burn-in.
-    eta = 1 / (m - 1 + t0);
+    //% Do adaptation of epsilon if we're still doing burn-in.
+    //eta = 1 / (m - 1 + t0);
+    double eta = 1.0 / (m - 1 + t0);
+
     Hbar = (1 - eta) * Hbar + eta * (delta - alpha / nalpha);
+
     if (m <= Madapt)
-        epsilon = exp(mu - sqrt(m-1)/gamma * Hbar);
-        eta = (m-1)^-kappa;
-        epsilonbar = exp((1 - eta) * log(epsilonbar) + eta * log(epsilon));
+    {
+      epsilon = exp(mu - sqrt(m-1)/gamma * Hbar);
+
+      //eta = (m-1)^-kappa;
+      eta = pow(m-1, -kappa);
+
+      epsilonbar = exp((1 - eta) * log(epsilonbar) + eta * log(epsilon));
+    }
     else
-        epsilon = epsilonbar;
-    end
-*/
+    {
+      epsilon = epsilonbar;
+    }
   }
 }
 TEST_F(test_nuts, nuts_da)

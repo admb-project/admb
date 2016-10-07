@@ -95,7 +95,9 @@ for m = 2:M+Madapt,
     s = 1;
     while (s == 1)
         % Choose a direction. -1=backwards, 1=forwards.
-        v = 2*(rand() < 0.5)-1;
+        rn = rand();
+        display(rn);
+        v = 2*(rn < 0.5)-1;
 
         % Double the size of the tree.
         fprintf('\nbuild_tree main start\n');
@@ -143,7 +145,9 @@ for m = 2:M+Madapt,
 
         % Use Metropolis-Hastings to decide whether or not to move to a
         % point from the half-tree we just generated.
-        if ((sprime == 1) && (rand() < nprime/n))
+        rn = rand();
+        display(rn);
+        if ((sprime == 1) && (rn < nprime/n))
             samples(m, :) = thetaprime;
             logp = logpprime;
             grad = gradprime;

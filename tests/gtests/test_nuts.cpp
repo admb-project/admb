@@ -801,6 +801,10 @@ double _rand()
   _random_numbers.pop();
   return random_number;
 }
+double exprnd(const int m)
+{
+  return _rand();
+}
 void build_tree(
   double* theta,
   double* r,
@@ -1502,7 +1506,7 @@ TEST_F(test_nuts, build_tree)
     {
       while (!s.empty())
       {
-        s.pop(); 
+        s.pop();
       }
       ASSERT_TRUE(s.empty());
       for (int i = 0; i < 52; ++i)
@@ -1770,6 +1774,157 @@ double _samples[500][2];
 double _epsilon;
 void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 {
+  //D = length(theta0);
+  //samples = zeros(M+Madapt, D);
+  int imax = (M + Madapt) / _D;
+  for (int i = 0; i < imax; ++i)
+  {
+    for (int j = 0; j < _D; ++j)
+    {
+      _samples[i][j] = 0;
+    }
+  }
+
+  //[logp grad] = f(theta0);
+  f(theta0);
+  double logp = _logpprime;
+  double grad[2];
+  grad[0] = _gradprime[0];
+  grad[1] = _gradprime[1];
+
+  //samples(1, :) = theta0;
+  _samples[0][0] = theta0[0];
+  _samples[0][1] = theta0[1];
+
+  //% Choose a reasonable first epsilon by a simple heuristic.
+  //epsilon = find_reasonable_epsilon(theta0, grad, logp, f);
+  double r0[2];
+  r0[0] = _rand();
+  r0[1] = _rand();
+
+  double epsilon = find_reasonable_epsilon(theta0, grad, logp, r0);
+
+  //% Parameters to the dual averaging algorithm.
+  //gamma = 0.05;
+  double gamma = 0.05;
+
+  //t0 = 10;
+  int t0 = 10;
+
+  //kappa = 0.75;
+  double kappa = 0.75;
+
+  //mu = log(10*epsilon);
+  double mu = log(epsilon * 10);
+
+  //% Initialize dual averaging algorithm.
+  //epsilonbar = 1;
+  int epsilonbar = 1;
+
+  //Hbar = 0;
+  int Hbar = 0;
+
+  //for m = 2:M+Madapt,
+  int mmax = M + Madapt;
+  for (int m = 1; m < mmax; ++m)
+  {
+    //% Resample momenta.
+    //r0 = randn(1, D);
+    r0[0] = _rand();
+    r0[1] = _rand();
+
+    //% Joint log-probability of theta and momenta r.
+    double joint = logp - 0.5 * (r0[0] * r0[0] + r0[1] * r0[1]);
+
+    //% Resample u ~ uniform([0, exp(joint)]).
+    //% Equivalent to (log(u) - joint) ~ exponential(1).
+    double logu = joint - exprnd(1);
+
+    //% Initialize tree.
+    //thetaminus = samples(m-1, :);
+    _thetaminus[0] = _samples[m - 1][0];
+    _thetaminus[1] = _samples[m - 1][1];
+    //thetaplus = samples(m-1, :);
+    _thetaplus[0] = _samples[m - 1][0];
+    _thetaplus[1] = _samples[m - 1][1];
+    //rminus = r0;
+    _rminus[0] = r0[0];
+    _rminus[1] = r0[1];
+    //rplus = r0;
+    _rplus[0] = r0[0];
+    _rplus[1] = r0[1];
+    //gradminus = grad;
+    _gradminus[0] = grad[0];
+    _gradminus[1] = grad[1];
+    //gradplus = grad;
+    _gradplus[0] = grad[0];
+    _gradplus[1] = grad[1];
+
+    //% Initial height j = 0.
+    //j = 0;
+    int j = 0;
+
+/*
+    //% If all else fails, the next sample is the previous sample.
+    //samples(m, :) = samples(m-1, :);
+    _samples[m][0] = _samples[m - 1][0];
+    _samples[m][1] = _samples[m - 1][1];
+
+    //% Initially the only valid point is the initial point.
+    //n = 1;
+    int n = 1;
+
+    //% Main loop---keep going until the criterion s == 0.
+    //s = 1;
+    bool s = 1;
+    while (s == 1)
+    {
+      //% Choose a direction. -1=backwards, 1=forwards.
+      //v = 2*(rand() < 0.5)-1;
+      int v = 2 * (rand() < 0.5) - 1;
+
+      //% Double the size of the tree.
+      if (v == -1)
+            [thetaminus, rminus, gradminus, ~, ~, ~, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
+                build_tree(thetaminus, rminus, gradminus, logu, v, j, epsilon, f, joint);
+      else
+            [~, ~, ~, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
+                build_tree(thetaplus, rplus, gradplus, logu, v, j, epsilon, f, joint);
+      end
+
+      //% Use Metropolis-Hastings to decide whether or not to move to a
+      //% point from the half-tree we just generated.
+      if ((sprime == 1) && (rand() < nprime/n))
+            samples(m, :) = thetaprime;
+            logp = logpprime;
+            grad = gradprime;
+      end
+
+      //% Update number of valid points we've seen.
+      //n = n + nprime;
+      n += nprime;
+
+      //% Decide if it's time to stop.
+      s = _sprime && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
+      s = -1;
+
+      //% Increment depth.
+      //j = j + 1;
+      ++j;
+    }
+
+    % Do adaptation of epsilon if we're still doing burn-in.
+    eta = 1 / (m - 1 + t0);
+    Hbar = (1 - eta) * Hbar + eta * (delta - alpha / nalpha);
+    if (m <= Madapt)
+        epsilon = exp(mu - sqrt(m-1)/gamma * Hbar);
+        eta = (m-1)^-kappa;
+        epsilonbar = exp((1 - eta) * log(epsilonbar) + eta * log(epsilon));
+    else
+        epsilon = epsilonbar;
+    end
+*/
+  }
 }
 TEST_F(test_nuts, nuts_da)
 {
@@ -1820,6 +1975,34 @@ TEST_F(test_nuts, nuts_da)
         std::getline(ifs, line);
       }
       ASSERT_EQ(line.compare("nuts_da end parameters"), 0);
+      {
+        while (!_random_numbers.empty())
+        {
+          _random_numbers.pop();
+        }
+      }
+    }
+    else if (line.compare("r0 =") == 0)
+    {
+      std::getline(ifs, line);
+      std::getline(ifs, line);
+      double random_number;
+      istringstream iss(line);
+      iss >> random_number;
+      _random_numbers.push(random_number);
+      iss >> random_number;
+      _random_numbers.push(random_number);
+    }
+    else if (line.compare("rexp =") == 0)
+    {
+      std::getline(ifs, line);
+      std::getline(ifs, line);
+      double random_number;
+      istringstream iss(line);
+      iss >> random_number;
+      _random_numbers.push(random_number);
+      iss >> random_number;
+      _random_numbers.push(random_number);
     }
     else if (line.compare("nuts_da end") == 0)
     {

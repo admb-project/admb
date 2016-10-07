@@ -69,11 +69,14 @@ Hbar = 0;
 for m = 2:M+Madapt,
     % Resample momenta.
     r0 = randn(1, D);
+    display(r0);
     % Joint log-probability of theta and momenta r.
     joint = logp - 0.5 * (r0 * r0');
     % Resample u ~ uniform([0, exp(joint)]).
     % Equivalent to (log(u) - joint) ~ exponential(1).
-    logu = joint - exprnd(1);
+    rexp = exprnd(1);
+    display(rexp);
+    logu = joint - rexp;
     % Initialize tree.
     thetaminus = samples(m-1, :);
     thetaplus = samples(m-1, :);

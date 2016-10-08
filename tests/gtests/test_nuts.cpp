@@ -1822,7 +1822,7 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
   int epsilonbar = 1;
 
   //Hbar = 0;
-  int Hbar = 0;
+  double Hbar = 0;
 
   //for m = 2:M+Madapt,
   int mmax = M + Madapt;
@@ -1874,7 +1874,7 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
     int n = 1;
 
     int nalpha = 1;
-    int alpha = 1;
+    double alpha = 1;
     //% Main loop---keep going until the criterion s == 0.
     //s = 1;
     bool s = true;
@@ -1882,7 +1882,8 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
     {
       //% Choose a direction. -1=backwards, 1=forwards.
       //v = 2*(rand() < 0.5)-1;
-      int v = 2 * (rand() < 0.5) - 1;
+      double value = _rand();
+      int v = 2 * (value < 0.5) - 1;
 
       //% Double the size of the tree.
       if (v == -1)
@@ -1895,10 +1896,12 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
         //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
         build_tree(_thetaplus, _rplus, _gradplus, logu, v, j, epsilon, joint);
       }
+      alpha = _alphaprime;
+      nalpha = _nalphaprime;
 
       //% Use Metropolis-Hastings to decide whether or not to move to a
       //% point from the half-tree we just generated.
-      if (_sprime == 1 && rand() < double(_nprime)/n)
+      if (_sprime == 1 && _rand() < double(_nprime)/n)
       {
         //samples(m, :) = thetaprime;
         _samples[m][0] = _thetaprime[0];
@@ -1926,16 +1929,16 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 
     //% Do adaptation of epsilon if we're still doing burn-in.
     //eta = 1 / (m - 1 + t0);
-    double eta = 1.0 / (m - 1 + t0);
+    double eta = 1.0 / (m + t0);
 
     Hbar = (1 - eta) * Hbar + eta * (delta - alpha / nalpha);
 
     if (m <= Madapt)
     {
-      epsilon = exp(mu - sqrt(m-1)/gamma * Hbar);
+      epsilon = exp(mu - sqrt(m)/gamma * Hbar);
 
       //eta = (m-1)^-kappa;
-      eta = pow(m-1, -kappa);
+      eta = pow(m, -kappa);
 
       epsilonbar = exp((1 - eta) * log(epsilonbar) + eta * log(epsilon));
     }
@@ -1944,6 +1947,7 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       epsilon = epsilonbar;
     }
   }
+  _epsilon = epsilon;
 }
 TEST_F(test_nuts, nuts_da)
 {
@@ -2050,6 +2054,11 @@ TEST_F(test_nuts, nuts_da)
       ASSERT_EQ(line.compare("nuts_da end output"), 0);
 
       nuts_da(M, Madapt, theta0, delta);
+
+cout << "nfevals: " << _nfevals << endl;
+
+      const double range = 0.000001;
+      ASSERT_NEAR(_epsilon, epsilon, range);
     }
   }
 }

@@ -1774,6 +1774,8 @@ double _samples[1000][2];
 double _epsilon;
 void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 {
+  _nfevals = 0;
+
   //D = length(theta0);
   //samples = zeros(M+Madapt, D);
   int imax = (M + Madapt) / _D;
@@ -1826,7 +1828,8 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 
   //for m = 2:M+Madapt,
   int mmax = M + Madapt;
-  for (int m = 1; m < mmax; ++m)
+  //for (int m = 1; m < mmax; ++m)
+  for (int m = 1; m < 2; ++m)
   {
     //% Resample momenta.
     //r0 = randn(1, D);
@@ -1888,14 +1891,49 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       //% Double the size of the tree.
       if (v == -1)
       {
+        double thetaplus[2];
+        thetaplus[0] = _thetaplus[0];
+        thetaplus[1] = _thetaplus[1];
+        double rplus[2];
+        rplus[0] = _rplus[0];
+        rplus[1] = _rplus[1];
+        double gradplus[2];
+        gradplus[0] = _gradplus[0];
+        gradplus[1] = _gradplus[1];
+
         //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
         build_tree(_thetaminus, _rminus, _gradminus, logu, v, j, epsilon, joint);
+
+        _thetaplus[0] = thetaplus[0];
+        _thetaplus[1] = thetaplus[1];
+        _rplus[0] = rplus[0];
+        _rplus[1] = rplus[1];
+        _gradplus[0] = gradplus[0];
+        _gradplus[1] = gradplus[1];
       }
       else
       {
+        double thetaminus[2];
+        thetaminus[0] = _thetaminus[0];
+        thetaminus[1] = _thetaminus[1];
+        double rminus[2];
+        rminus[0] = _rminus[0];
+        rminus[1] = _rminus[1];
+        double gradminus[2];
+        gradminus[0] = _gradminus[0];
+        gradminus[1] = _gradminus[1];
+
         //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
         build_tree(_thetaplus, _rplus, _gradplus, logu, v, j, epsilon, joint);
+
+        _thetaminus[0] = thetaminus[0];
+        _thetaminus[1] = thetaminus[1];
+        _rminus[0] = rminus[0];
+        _rminus[1] = rminus[1];
+        _gradminus[0] = gradminus[0];
+        _gradminus[1] = gradminus[1];
       }
+
       alpha = _alphaprime;
       nalpha = _nalphaprime;
 
@@ -1920,7 +1958,8 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       n += _nprime;
 
       //% Decide if it's time to stop.
-      s = _sprime && stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
+      bool b = stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
+      s = _sprime && b;
 
       //% Increment depth.
       //j = j + 1;
@@ -2047,6 +2086,13 @@ TEST_F(test_nuts, nuts_da)
         istringstream iss(line);
         iss >> epsilon;
       }
+      int nfevals = 0;
+      for (int i = 0; i < 5; ++i)
+      {
+        std::getline(ifs, line);
+        istringstream iss(line);
+        iss >> nfevals;
+      }
       for (int i = 0; i < 3; ++i)
       {
         std::getline(ifs, line);
@@ -2055,10 +2101,18 @@ TEST_F(test_nuts, nuts_da)
 
       nuts_da(M, Madapt, theta0, delta);
 
-cout << "nfevals: " << _nfevals << endl;
+      ASSERT_EQ(_nfevals, nfevals);
 
       const double range = 0.000001;
       ASSERT_NEAR(_epsilon, epsilon, range);
+
+/*
+      for (int i = 0; i < 500; ++i)
+      {
+        ASSERT_NEAR(_samples[i][0], samples[i][0], range);
+        ASSERT_NEAR(_samples[i][1], samples[i][1], range);
+      }
+*/
     }
   }
 }

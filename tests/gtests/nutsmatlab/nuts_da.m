@@ -66,7 +66,8 @@ mu = log(10*epsilon);
 epsilonbar = 1;
 Hbar = 0;
 
-for m = 2:M+Madapt,
+%for m = 2:M+Madapt,
+for m = 2:2,
     % Resample momenta.
     r0 = randn(1, D);
     display(r0);
@@ -177,6 +178,7 @@ fprintf('\nnuts_da end\n');
 fprintf('\nnuts_da begin output\n');
 display(samples);
 display(epsilon);
+display(nfevals);
 fprintf('\nnuts_da end output\n');
 end
 

@@ -67,7 +67,7 @@ epsilonbar = 1;
 Hbar = 0;
 
 %for m = 2:M+Madapt,
-for m = 2:2,
+for m = 2:4,
     % Resample momenta.
     r0 = randn(1, D);
     display(r0);
@@ -160,7 +160,7 @@ for m = 2:2,
         % Increment depth.
         j = j + 1;
     end
-    
+
     % Do adaptation of epsilon if we're still doing burn-in.
     eta = 1 / (m - 1 + t0);
     Hbar = (1 - eta) * Hbar + eta * (delta - alpha / nalpha);

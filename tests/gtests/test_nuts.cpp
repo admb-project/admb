@@ -1778,12 +1778,13 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 
   //D = length(theta0);
   //samples = zeros(M+Madapt, D);
+  double samples[1000][2];
   int imax = (M + Madapt) / _D;
-  for (int i = 0; i < imax; ++i)
+  for (int i = 0; i < 1000; ++i)
   {
     for (int j = 0; j < _D; ++j)
     {
-      _samples[i][j] = 0;
+      samples[i][j] = 0;
     }
   }
 
@@ -1795,8 +1796,8 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
   grad[1] = _gradprime[1];
 
   //samples(1, :) = theta0;
-  _samples[0][0] = theta0[0];
-  _samples[0][1] = theta0[1];
+  samples[0][0] = theta0[0];
+  samples[0][1] = theta0[1];
 
   //% Choose a reasonable first epsilon by a simple heuristic.
   //epsilon = find_reasonable_epsilon(theta0, grad, logp, f);
@@ -1829,7 +1830,7 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
   //for m = 2:M+Madapt,
   int mmax = M + Madapt;
   //for (int m = 1; m < mmax; ++m)
-  for (int m = 1; m < 2; ++m)
+  for (int m = 1; m <= 3; ++m)
   {
     //% Resample momenta.
     //r0 = randn(1, D);
@@ -1845,11 +1846,11 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 
     //% Initialize tree.
     //thetaminus = samples(m-1, :);
-    _thetaminus[0] = _samples[m - 1][0];
-    _thetaminus[1] = _samples[m - 1][1];
+    _thetaminus[0] = samples[m - 1][0];
+    _thetaminus[1] = samples[m - 1][1];
     //thetaplus = samples(m-1, :);
-    _thetaplus[0] = _samples[m - 1][0];
-    _thetaplus[1] = _samples[m - 1][1];
+    _thetaplus[0] = samples[m - 1][0];
+    _thetaplus[1] = samples[m - 1][1];
     //rminus = r0;
     _rminus[0] = r0[0];
     _rminus[1] = r0[1];
@@ -1869,8 +1870,8 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 
     //% If all else fails, the next sample is the previous sample.
     //samples(m, :) = samples(m-1, :);
-    _samples[m][0] = _samples[m - 1][0];
-    _samples[m][1] = _samples[m - 1][1];
+    samples[m][0] = samples[m - 1][0];
+    samples[m][1] = samples[m - 1][1];
 
     //% Initially the only valid point is the initial point.
     //n = 1;
@@ -1942,8 +1943,8 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       if (_sprime == 1 && _rand() < double(_nprime)/n)
       {
         //samples(m, :) = thetaprime;
-        _samples[m][0] = _thetaprime[0];
-        _samples[m][1] = _thetaprime[1];
+        samples[m][0] = _thetaprime[0];
+        samples[m][1] = _thetaprime[1];
 
         //logp = logpprime;
         logp = _logpprime;
@@ -1964,6 +1965,7 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       //% Increment depth.
       //j = j + 1;
       ++j;
+      cout << "mj: " << m << ' ' << j << endl;
     }
 
     //% Do adaptation of epsilon if we're still doing burn-in.
@@ -1986,10 +1988,18 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       epsilon = epsilonbar;
     }
   }
+  //samples = samples(Madapt+1:end, :);
+  for (int i = 0; i < 500; ++i)
+  {
+    _samples[i][0] = samples[500 + i][0];
+    _samples[i][1] = samples[500 + i][1];
+  }
   _epsilon = epsilon;
 }
 TEST_F(test_nuts, nuts_da)
 {
+  _nfevals = 0;
+
   double epsilon = 0;
   double samples[500][2];
   int M = 0;
@@ -2106,13 +2116,11 @@ TEST_F(test_nuts, nuts_da)
       const double range = 0.000001;
       ASSERT_NEAR(_epsilon, epsilon, range);
 
-/*
       for (int i = 0; i < 500; ++i)
       {
         ASSERT_NEAR(_samples[i][0], samples[i][0], range);
         ASSERT_NEAR(_samples[i][1], samples[i][1], range);
       }
-*/
     }
   }
 }

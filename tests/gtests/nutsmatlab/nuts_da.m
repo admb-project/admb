@@ -69,7 +69,7 @@ epsilonbar = 1;
 Hbar = 0;
 
 %for m = 2:M+Madapt,
-for m = 2:5,
+for m = 2:500,
     % Resample momenta.
     r0 = randn(1, D);
     display(r0);

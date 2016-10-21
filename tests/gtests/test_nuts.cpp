@@ -1830,7 +1830,7 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
   //for m = 2:M+Madapt,
   int mmax = M + Madapt;
   //for (int m = 1; m < mmax; ++m)
-  for (int m = 1; m <= 4; ++m)
+  for (int m = 1; m <= 500 - 1; ++m)
   {
     //% Resample momenta.
     //r0 = randn(1, D);
@@ -1940,7 +1940,8 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 
       //% Use Metropolis-Hastings to decide whether or not to move to a
       //% point from the half-tree we just generated.
-      if (_sprime == 1 && _rand() < double(_nprime)/n)
+      double rn = _rand();
+      if (_sprime == 1 && rn < double(_nprime)/n)
       {
         //samples(m, :) = thetaprime;
         samples[m][0] = _thetaprime[0];
@@ -2118,8 +2119,8 @@ TEST_F(test_nuts, nuts_da)
       ASSERT_NEAR(_epsilon, epsilon, range);
       for (int i = 0; i < 500; ++i)
       {
-        //ASSERT_NEAR(_samples[i][0], samples[i][0], range);
-        //ASSERT_NEAR(_samples[i][1], samples[i][1], range);
+        ASSERT_NEAR(_samples[i][0], samples[i][0], range);
+        ASSERT_NEAR(_samples[i][1], samples[i][1], range);
       }
     }
   }

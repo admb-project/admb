@@ -68,8 +68,7 @@ mu = log(10*epsilon);
 epsilonbar = 1;
 Hbar = 0;
 
-%for m = 2:M+Madapt,
-for m = 2:500,
+for m = 2:M+Madapt,
     % Resample momenta.
     r0 = randn(1, D);
     display(r0);

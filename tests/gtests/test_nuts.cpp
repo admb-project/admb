@@ -1822,15 +1822,14 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
 
   //% Initialize dual averaging algorithm.
   //epsilonbar = 1;
-  int epsilonbar = 1;
+  double epsilonbar = 1;
 
   //Hbar = 0;
   double Hbar = 0;
 
   //for m = 2:M+Madapt,
   int mmax = M + Madapt;
-  //for (int m = 1; m < mmax; ++m)
-  for (int m = 1; m <= 500 - 1; ++m)
+  for (int m = 1; m < mmax; ++m)
   {
     //% Resample momenta.
     //r0 = randn(1, D);
@@ -1974,9 +1973,10 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
     //eta = 1 / (m - 1 + t0);
     double eta = 1.0 / (m + t0);
 
+
     Hbar = (1 - eta) * Hbar + eta * (delta - alpha / nalpha);
 
-    if (m <= Madapt)
+    if (m <= Madapt - 1)
     {
       epsilon = exp(mu - sqrt(m)/gamma * Hbar);
 

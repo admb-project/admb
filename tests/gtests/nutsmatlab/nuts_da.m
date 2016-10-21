@@ -38,6 +38,8 @@ if (nargin < 5)
     delta = 0.6;
 end
 
+format longg;
+
 fprintf('\nnuts_da begin\n');
 fprintf('\nnuts_da begin parameters\n');
 display(f);
@@ -67,7 +69,7 @@ epsilonbar = 1;
 Hbar = 0;
 
 %for m = 2:M+Madapt,
-for m = 2:4,
+for m = 2:5,
     % Resample momenta.
     r0 = randn(1, D);
     display(r0);
@@ -159,6 +161,7 @@ for m = 2:4,
         s = sprime && stop_criterion(thetaminus, thetaplus, rminus, rplus);
         % Increment depth.
         j = j + 1;
+        s = 0;
     end
 
     % Do adaptation of epsilon if we're still doing burn-in.

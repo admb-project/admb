@@ -160,7 +160,10 @@ for m = 2:M+Madapt,
         s = sprime && stop_criterion(thetaminus, thetaplus, rminus, rplus);
         % Increment depth.
         j = j + 1;
-        s = 0;
+        if (j == 1)
+            s = 0;
+        end
+        fprintf('mj: %d %d', m , j);
     end
 
     % Do adaptation of epsilon if we're still doing burn-in.

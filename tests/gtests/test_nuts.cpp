@@ -1078,7 +1078,6 @@ TEST_F(test_nuts, leapfrog)
       {
         std::getline(ifs, line);
       }
-      //cout << nfevals << endl;
 
       ASSERT_EQ(line.compare("leapfrog end"), 0);
       leapfrog(theta, r, grad, epsilon);
@@ -1830,6 +1829,7 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
   //for m = 2:M+Madapt,
   int mmax = M + Madapt;
   for (int m = 1; m < mmax; ++m)
+  //for (int m = 1; m <= 600 - 1; ++m)
   {
     //% Resample momenta.
     //r0 = randn(1, D);
@@ -1888,19 +1888,28 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       double value = _rand();
       int v = 2 * (value < 0.5) - 1;
 
+      double thetaplus[2];
+      thetaplus[0] = _thetaplus[0];
+      thetaplus[1] = _thetaplus[1];
+      double rplus[2];
+      rplus[0] = _rplus[0];
+      rplus[1] = _rplus[1];
+      double gradplus[2];
+      gradplus[0] = _gradplus[0];
+      gradplus[1] = _gradplus[1];
+      double thetaminus[2];
+      thetaminus[0] = _thetaminus[0];
+      thetaminus[1] = _thetaminus[1];
+      double rminus[2];
+      rminus[0] = _rminus[0];
+      rminus[1] = _rminus[1];
+      double gradminus[2];
+      gradminus[0] = _gradminus[0];
+      gradminus[1] = _gradminus[1];
+
       //% Double the size of the tree.
       if (v == -1)
       {
-        double thetaplus[2];
-        thetaplus[0] = _thetaplus[0];
-        thetaplus[1] = _thetaplus[1];
-        double rplus[2];
-        rplus[0] = _rplus[0];
-        rplus[1] = _rplus[1];
-        double gradplus[2];
-        gradplus[0] = _gradplus[0];
-        gradplus[1] = _gradplus[1];
-
         //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
         build_tree(_thetaminus, _rminus, _gradminus, logu, v, j, epsilon, joint);
 
@@ -1913,16 +1922,6 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       }
       else
       {
-        double thetaminus[2];
-        thetaminus[0] = _thetaminus[0];
-        thetaminus[1] = _thetaminus[1];
-        double rminus[2];
-        rminus[0] = _rminus[0];
-        rminus[1] = _rminus[1];
-        double gradminus[2];
-        gradminus[0] = _gradminus[0];
-        gradminus[1] = _gradminus[1];
-
         //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
         build_tree(_thetaplus, _rplus, _gradplus, logu, v, j, epsilon, joint);
 
@@ -1966,7 +1965,7 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       //j = j + 1;
       ++j;
       cout << "mj: " << m << ' ' << j << endl;
-      s = false;
+      if (j == 1) s = false;
     }
 
     //% Do adaptation of epsilon if we're still doing burn-in.

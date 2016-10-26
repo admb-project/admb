@@ -182,7 +182,7 @@ endif
 test_nuts.txt: nutsmatlab/nuts_da.m
 	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
 
-nuts: test_nuts
+nuts: test_nuts.txt test_nuts
 ifeq ($(SHELL),cmd)
 	test_nuts
 else

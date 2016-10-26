@@ -158,12 +158,14 @@ for m = 2:M+Madapt,
         n = n + nprime;
         % Decide if it's time to stop.
         s = sprime && stop_criterion(thetaminus, thetaplus, rminus, rplus);
-        % Increment depth.
-        j = j + 1;
-        if (j == 1)
+
+        if (j == 0)
             s = 0;
         end
-        fprintf('mj: %d %d', m , j);
+        fprintf('mj: %d %d\n', m , j);
+
+        % Increment depth.
+        j = j + 1;
     end
 
     % Do adaptation of epsilon if we're still doing burn-in.

@@ -1961,11 +1961,12 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       bool b = stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
       s = _sprime && b;
 
+      cout << "mj: " << m << ' ' << j << endl;
+      if (j == 0) s = false;
+
       //% Increment depth.
       //j = j + 1;
       ++j;
-      cout << "mj: " << m << ' ' << j << endl;
-      if (j == 1) s = false;
     }
 
     //% Do adaptation of epsilon if we're still doing burn-in.

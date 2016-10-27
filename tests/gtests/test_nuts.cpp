@@ -1826,10 +1826,8 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
   //Hbar = 0;
   double Hbar = 0;
 
-  //for m = 2:M+Madapt,
   int mmax = M + Madapt;
   for (int m = 1; m < mmax; ++m)
-  //for (int m = 1; m <= 600 - 1; ++m)
   {
     //% Resample momenta.
     //r0 = randn(1, D);
@@ -1961,9 +1959,6 @@ void nuts_da(const int M, const int Madapt, double* theta0, const double delta)
       bool b = stop_criterion(_thetaminus, _thetaplus, _rminus, _rplus);
       s = _sprime && b;
 
-      cout << "mj: " << m << ' ' << j << endl;
-      if (j == 0) s = false;
-
       //% Increment depth.
       //j = j + 1;
       ++j;
@@ -2076,6 +2071,18 @@ TEST_F(test_nuts, nuts_da)
       iss >> random_number;
       _random_numbers.push(random_number);
     }
+    else if (line.compare("random_number =") == 0)
+    {
+      std::getline(ifs, line);
+      std::getline(ifs, line);
+      double random_number;
+      istringstream iss(line);
+      iss >> random_number;
+      if (!(random_number < 0))
+      {
+        _random_numbers.push(random_number);
+      }
+    }
     else if (line.compare("nuts_da end") == 0)
     {
       {
@@ -2112,6 +2119,8 @@ TEST_F(test_nuts, nuts_da)
       ASSERT_EQ(line.compare("nuts_da end output"), 0);
 
       nuts_da(M, Madapt, theta0, delta);
+
+      ASSERT_TRUE(_random_numbers.size() == 0);
 
       ASSERT_EQ(_nfevals, nfevals);
 

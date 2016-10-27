@@ -68,7 +68,8 @@ mu = log(10*epsilon);
 epsilonbar = 1;
 Hbar = 0;
 
-for m = 2:M+Madapt,
+mmax = M + Madapt;
+for m = 2:mmax,
     % Resample momenta.
     r0 = randn(1, D);
     display(r0);
@@ -158,11 +159,6 @@ for m = 2:M+Madapt,
         n = n + nprime;
         % Decide if it's time to stop.
         s = sprime && stop_criterion(thetaminus, thetaplus, rminus, rplus);
-
-        if (j == 0)
-            s = 0;
-        end
-        fprintf('mj: %d %d\n', m , j);
 
         % Increment depth.
         j = j + 1;
@@ -266,7 +262,6 @@ else
             [~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
                 build_tree(thetaplus, rplus, gradplus, logu, v, j-1, epsilon, f, joint0);
         end
-
         random_number = rand();
         % Choose which subtree to propagate a sample up from.
         if (random_number < nprime2 / (nprime + nprime2))

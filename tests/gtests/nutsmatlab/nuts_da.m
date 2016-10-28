@@ -174,6 +174,10 @@ for m = 2:mmax,
     else
         epsilon = epsilonbar;
     end
+    %fprintf('m: %d nfevals: %d\n', m, nfevals);
+    %if (m == 57) %58
+    %  break;
+    %end;
 end
 samples = samples(Madapt+1:end, :);
 fprintf('Took %d gradient evaluations.\n', nfevals);

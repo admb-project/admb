@@ -1,38 +1,15 @@
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <cmath>
-#include <random>
-#include <fstream>
-#include <sstream>
-#include <stack>
-#include <queue>
-
-using std::cout;
-using std::endl;
-using std::vector;
-using std::ifstream;
-using std::istringstream;
-using std::pow;
-using std::stack;
-using std::queue;
-
-//global nfevals;
-//int nfevals = 0;
-
 double urand();
 double randn();
 double exprnd(double p);
 //[logpprime, gradprime] = f(thetaprime);
 void f(const size_t D, const double* theta, double& logp, double* grad);
-
 extern int _D;
+//global nfevals;
 extern int _nfevals;
 extern double _rprime[2];
 extern double _thetaprime[2];
 extern double _gradprime[2];
 extern double _logpprime;
-
 void correlated_normal(double* theta);
 void f(double* theta);
 void leapfrog
@@ -66,9 +43,6 @@ extern int _nprime;
 extern int _sprime;
 extern double _alphaprime;
 extern int _nalphaprime;
-
-extern queue<double> _random_numbers;
-double _rand();
 double exprnd(const int m);
 void build_tree(
   double* theta,
@@ -80,7 +54,6 @@ void build_tree(
   double epsilon,
   double joint0
 );
-
 //function [samples, epsilon] = nuts_da(f, M, Madapt, theta0, delta)
 extern double _samples[1000][2];
 extern double _epsilon;

@@ -5,6 +5,7 @@
 #include <sstream>
 #include <cmath>
 #include <gtest/gtest.h>
+#include <queue>
 #include "nuts_da.h"
 
 using std::cout;
@@ -13,6 +14,10 @@ using std::queue;
 using std::stack;
 using std::ifstream;
 using std::istringstream;
+using std::queue;
+
+extern queue<double> _random_numbers;
+double _rand();
 
 class test_nuts: public ::testing::Test {};
 

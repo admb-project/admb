@@ -1,3 +1,5 @@
+/** Copyright (c) 2016 ADMB Foundation */
+
 #include <iostream>
 #include <vector>
 #include <cstdlib>

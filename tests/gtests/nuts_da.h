@@ -1,3 +1,5 @@
+/** Copyright (c) 2016 ADMB Foundation */
+
 double urand();
 double randn();
 double exprnd(double p);

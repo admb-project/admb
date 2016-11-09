@@ -1,8 +1,3 @@
-/*
-#include <vector>
-#include <cstdlib>
-#include <random>
-*/
 #include <iostream>
 #include <queue>
 #include <stack>
@@ -11,10 +6,6 @@
 #include <cmath>
 #include <gtest/gtest.h>
 
-/*
-using std::vector;
-using std::pow;
-*/
 using std::cout;
 using std::endl;
 using std::queue;
@@ -24,23 +15,12 @@ using std::istringstream;
 
 class test_nuts: public ::testing::Test {};
 
-//global nfevals;
-//int nfevals = 0;
 
 double urand();
 double randn();
 double exprnd(double p);
-//[logpprime, gradprime] = f(thetaprime);
 void f(const size_t D, const double* theta, double& logp, double* grad);
 
-TEST_F(test_nuts, urand)
-{
-  for (int i = 0; i < 10; ++i)
-  {
-    double v = urand();
-    ASSERT_TRUE(0 <= v && v <= 1.0);
-  }
-}
 
 extern int _D;
 extern int _nfevals;
@@ -97,6 +77,18 @@ void build_tree(
   double epsilon,
   double joint0
 );
+extern double _samples[1000][2];
+extern double _epsilon;
+void nuts_da(const int M, const int Madapt, double* theta0, const double delta);
+
+TEST_F(test_nuts, urand)
+{
+  for (int i = 0; i < 10; ++i)
+  {
+    double v = urand();
+    ASSERT_TRUE(0 <= v && v <= 1.0);
+  }
+}
 TEST_F(test_nuts, leapfrog)
 {
   ifstream ifs("test_nuts.txt");
@@ -886,12 +878,6 @@ TEST_F(test_nuts, build_tree)
   ASSERT_EQ(s.size(), 0);
   //ASSERT_EQ(_random_numbers.size(), 0);
 }
-
-extern double _samples[1000][2];
-extern double _epsilon;
-
-void nuts_da(const int M, const int Madapt, double* theta0, const double delta);
-
 TEST_F(test_nuts, nuts_da)
 {
   _nfevals = 0;

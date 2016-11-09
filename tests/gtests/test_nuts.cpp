@@ -21,7 +21,6 @@ double randn();
 double exprnd(double p);
 void f(const size_t D, const double* theta, double& logp, double* grad);
 
-
 extern int _D;
 extern int _nfevals;
 extern double _rprime[2];

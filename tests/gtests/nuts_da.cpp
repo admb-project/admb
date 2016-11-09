@@ -7,6 +7,7 @@
 #include <sstream>
 #include <stack>
 #include <queue>
+#include "nuts_da.h"
 
 using std::cout;
 using std::endl;

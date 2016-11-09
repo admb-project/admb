@@ -199,7 +199,7 @@ else
 	./test_nuts
 endif
 
-test_nuts: main.cpp gtest-all.obj test_nuts.obj nuts.obj
+test_nuts: main.cpp gtest-all.obj test_nuts.obj nuts_da.obj
 ifeq ($(SHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj nuts_da.obj main.cpp
 else

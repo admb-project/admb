@@ -1,56 +1,285 @@
-#ifndef __ADJSON_H__
-#define __ADJSON_H__
+/// Copyright (c) 2016 ADMB Foundation
+/// Author: Johnoel Ancheta
+///
+/// A simple JSON implementation for ADMB.
+/// See JSON Specification below, 
+/// http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf
+#ifndef __JSON_H__
+#define __JSON_H__
 
-namespace adjson {
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <sstream>
+#include <vector>
+using std::istream;
+using std::ostream;
+using std::ostringstream;
+using std::vector;
 
-/**
-ADMB JSON object.
-*/
-class object
+enum class values
 {
-public:
-  object();
-  object(const object&);
-  ~object();
+  _object,
+  _array,
+  _number,
+  _string,
+  _boolean,
+  _null
 };
-
-/**
-ADMB JSON array.
-*/
-class array
+struct value
 {
-public:
-  array();
-  array(const array&);
-  ~array();
+  values _type;
+
+  virtual std::string str() const  = 0;
+  values get_type() const { return _type; }
 };
+struct object: value
+{
+  vector<value*> _value;
 
-}
+  object()
+    { _type = values::_object; }
 
-namespace adjson {
-/**
-Default constructor
-*/
-object::object()
+  std::string str() const
+  {
+    std::string ret;
+    ret = "{";
+    int size = _value.size() - 2;
+    for (int i = 0; i < size; i += 2)
+    {
+      ret += _value[i]->str();
+      ret += ":";
+      ret += _value[i + 1]->str();
+      ret += ", ";
+    }
+    ret += _value[size]->str();
+    ret += ":";
+    ret += _value[size + 1]->str();
+    ret += "}";
+    return ret;
+  }
+  void add(value* id, value* other)
+  {
+    _value.push_back(id);
+    _value.push_back(other);
+  }
+};
+struct array: value
 {
-}
-/**
-Destructor
-*/
-object::~object()
+  vector<value*> _value;
+
+  array()
+    { _type = values::_array; }
+
+  std::string str() const
+  {
+    std::string ret;
+    ret = "[";
+    int size = _value.size() - 1;
+    for (int i = 0; i < size; ++i)
+    {
+      ret += _value[i]->str();
+      ret += ", ";
+    }
+    ret += _value[size]->str();
+    ret += "]";
+    return ret;
+  }
+
+  void add(value* other)
+    { _value.push_back(other); }
+};
+struct number: value
 {
-}
-/**
-Default constructor
-*/
-array::array()
+  double _value;
+
+  number()
+    { _type = values::_number; }
+
+  double get_value() const
+    { return _value; }
+
+  std::string str() const
+  {
+    ostringstream output;
+    output << _value;
+    return output.str();
+  }
+};
+struct string: value
 {
-}
-/**
-Destructor
-*/
-array::~array()
+  std::string _value;
+
+  string()
+    { _type = values::_string; }
+
+  std::string str() const
+    { return _value; }
+
+  std::string get_value() const
+    { return str(); }
+};
+struct boolean: value
 {
+  bool _value;
+
+  boolean(): _value(false)
+    { _type = values::_boolean; }
+
+  std::string str() const
+    { return _value ? "true" : "false"; }
+
+  bool get_value() const
+    { return _value; }
+};
+struct null: value
+{
+  null()
+    { _type = values::_null; }
+
+  std::string str() const
+    { return "null"; }
+
+  value* get_value() const
+    { return 0; }
+};
+class json
+{
+  value* _value;
+
+public:
+  json(): _value(0) { }
+  json(const json& other) { }
+  virtual ~json()
+  {
+    if (_value)
+    {
+      delete _value;
+      _value = 0;
+    }
+  }
+public:
+  std::string str() const
+    { return _value->str(); }
+
+  value* get_value() const
+    { return _value; }
+
+  void set(value* other)
+    { _value = other; }
+
+  value* parse(istream& input);
+};
+value* json::parse(istream& input)
+{
+  value* ret = 0;
+  input >> std::ws;
+  char p = input.peek();
+  while (p != EOF)
+  {
+    char c;
+    if (p == '{')
+    {
+      object* o = new object();      
+
+      input.get(c);
+      while (c != '}')
+      {
+        string* s = (string*)parse(input);
+        input >> std::ws >> c >> std::ws;
+        value* v = parse(input);
+        o->add(s, v);
+        input >> std::ws >> c;
+      }
+
+      ret = o;
+      break;
+    }
+    else if (p == '[')
+    {
+      array* a = new array();      
+
+      input.get(c);
+      while (c != ']')
+      {
+        value* ret = parse(input);
+        a->add(ret);
+
+        input >> std::ws >> c;
+
+        if (c == ',')
+        {
+          input >> std::ws;
+        }
+      }
+      ret = a;
+      break;
+    }
+    else if (p == '\"')
+    {
+      string* s = new string();      
+      input.get(c);
+      s->_value.push_back(c);
+      input.get(c);
+      while (c != '\"')
+      {
+        s->_value.push_back(c);
+        input.get(c);
+      }
+      s->_value.push_back('\"');
+      ret = s;
+      break;
+    }
+    else if (p == '-' || std::isdigit(p))
+    {
+      number* n = new number();      
+      input >> n->_value;
+      ret = n;
+      break;
+    }
+    else if (p == 't')
+    {
+      boolean* b = new boolean();      
+      char str[4];
+      input.read(str, 4);
+      b->_value = true;
+      ret = b;
+      break;
+    }
+    else if (p == 'f')
+    {
+      boolean* b = new boolean();      
+      char str[5];
+      input.read(str, 5);
+      //b->_value = false;
+      ret = b;
+      break;
+    }
+    else if (p == 'n')
+    {
+      null* b = new null();      
+      char str[4];
+      input.read(str, 4);
+      //b->_value = 0;
+      ret = b;
+      break;
+    }
+    else
+    {
+      std::cerr << "Error: unknown char(" << p << ") in json input.\n";
+      break;
+    }
+    input >> std::ws;
+    p = input.peek();
+  }
+  return ret;
 }
+istream& operator>>(istream& input, json& data)
+{
+  value* ret = data.parse(input); 
+  data.set(ret);
+  return input;
 }
+ostream& operator<<(ostream& output, const json& data)
+  { return output; }
 #endif

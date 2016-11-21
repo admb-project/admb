@@ -1,6 +1,6 @@
 #include <sstream>
 #include <gtest/gtest.h>
-#include "adjson.h"
+#include <adjson.h>
 using adjson::json;
 using adjson::value;
 using adjson::object;
@@ -60,6 +60,57 @@ TEST_F(test_adjson, input_output_number)
   output << data;
   std::string s = data.str();
   ASSERT_STREQ((char*)"4.5", s.c_str());
+}
+TEST_F(test_adjson, input_output_string_withreversesolidusandquote)
+{
+  using std::istringstream;
+  using std::ostringstream;
+
+  json data;
+
+  istringstream input("\"abc\\\"def\"");
+  input >> data;
+  string* str = (string*)data.get_value();
+  ASSERT_STREQ((char*)"\"abc\\\"def\"", str->get_value().c_str());
+
+  ostringstream output;
+  output << data;
+  std::string s = data.str();
+  ASSERT_STREQ((char*)"\"abc\\\"def\"", s.c_str());
+}
+TEST_F(test_adjson, input_output_string_solidus)
+{
+  using std::istringstream;
+  using std::ostringstream;
+
+  json data;
+
+  istringstream input("\"abc\/def\"");
+  input >> data;
+  string* str = (string*)data.get_value();
+  ASSERT_STREQ((char*)"\"abc\/def\"", str->get_value().c_str());
+
+  ostringstream output;
+  output << data;
+  std::string s = data.str();
+  ASSERT_STREQ((char*)"\"abc\/def\"", s.c_str());
+}
+TEST_F(test_adjson, input_output_string_tab)
+{
+  using std::istringstream;
+  using std::ostringstream;
+
+  json data;
+
+  istringstream input("\"abc\tdef\"");
+  input >> data;
+  string* str = (string*)data.get_value();
+  ASSERT_STREQ((char*)"\"abc\tdef\"", str->get_value().c_str());
+
+  ostringstream output;
+  output << data;
+  std::string s = data.str();
+  ASSERT_STREQ((char*)"\"abc\tdef\"", s.c_str());
 }
 TEST_F(test_adjson, input_output_string)
 {

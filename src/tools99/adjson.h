@@ -36,6 +36,33 @@ struct value
   virtual std::string str() const  = 0;
   values get_type() const { return _type; }
 };
+class json
+{
+  value* _value;
+
+public:
+  json(): _value(0) { }
+  json(const json& other) { }
+  virtual ~json()
+  {
+    if (_value)
+    {
+      delete _value;
+      _value = 0;
+    }
+  }
+public:
+  std::string str() const
+    { return _value->str(); }
+
+  value* get_value() const
+    { return _value; }
+
+  void set(value* other)
+    { _value = other; }
+
+  value* parse(istream& input);
+};
 struct object: value
 {
   vector<value*> _value;
@@ -146,33 +173,6 @@ struct null: value
   value* get_value() const
     { return 0; }
 };
-class json
-{
-  value* _value;
-
-public:
-  json(): _value(0) { }
-  json(const json& other) { }
-  virtual ~json()
-  {
-    if (_value)
-    {
-      delete _value;
-      _value = 0;
-    }
-  }
-public:
-  std::string str() const
-    { return _value->str(); }
-
-  value* get_value() const
-    { return _value; }
-
-  void set(value* other)
-    { _value = other; }
-
-  value* parse(istream& input);
-};
 value* json::parse(istream& input)
 {
   value* ret = 0;
@@ -222,6 +222,13 @@ value* json::parse(istream& input)
       {
         s->_value.push_back(c);
         input.get(c);
+        if (c == '\\')
+        {
+          s->_value.push_back(c);
+          input.get(c);
+          s->_value.push_back(c);
+          input.get(c);
+        }
       }
       s->_value.push_back('\"');
       ret = s;

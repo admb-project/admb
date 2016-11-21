@@ -495,6 +495,7 @@ ifeq ($(SHELL),cmd)
 	copy tools99\integrate.cpp ${DIST}\include
 	copy tools99\integrate.hpp ${DIST}\include
 	copy tools99\integrate_wrap.hpp ${DIST}\include
+	copy tools99\adjson.h ${DIST}\include
 	copy df1b2-separable\adpool.h ${DIST}\include
 	copy df1b2-separable\adrndeff.h ${DIST}\include
 	copy df1b2-separable\df1b2fun.h ${DIST}\include
@@ -530,6 +531,7 @@ else
 	cp tools99/integrate.cpp ${DIST}/include
 	cp tools99/integrate.hpp ${DIST}/include
 	cp tools99/integrate_wrap.hpp ${DIST}/include
+	cp tools99/adjson.h ${DIST}/include
 	cp df1b2-separable/adpool.h ${DIST}/include
 	cp df1b2-separable/adrndeff.h ${DIST}/include
 	cp df1b2-separable/df1b2fun.h ${DIST}/include

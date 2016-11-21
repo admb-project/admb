@@ -4,8 +4,8 @@
 /// A simple JSON implementation for ADMB.
 /// See JSON Specification below, 
 /// http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf
-#ifndef __JSON_H__
-#define __JSON_H__
+#ifndef __ADJSON_H__
+#define __ADJSON_H__
 
 #include <iostream>
 #include <string>
@@ -17,6 +17,8 @@ using std::ostream;
 using std::ostringstream;
 using std::vector;
 
+namespace adjson
+{
 enum class values
 {
   _object,
@@ -30,6 +32,7 @@ struct value
 {
   values _type;
 
+  virtual ~value() {}
   virtual std::string str() const  = 0;
   values get_type() const { return _type; }
 };
@@ -189,7 +192,7 @@ value* json::parse(istream& input)
         input >> std::ws >> c >> std::ws;
         value* v = parse(input);
         o->add(s, v);
-        input >> std::ws >> c;
+        input >> std::ws >> c >> std::ws;
       }
 
       ret = o;
@@ -204,13 +207,7 @@ value* json::parse(istream& input)
       {
         value* ret = parse(input);
         a->add(ret);
-
-        input >> std::ws >> c;
-
-        if (c == ',')
-        {
-          input >> std::ws;
-        }
+        input >> std::ws >> c >> std::ws;
       }
       ret = a;
       break;
@@ -251,7 +248,7 @@ value* json::parse(istream& input)
       boolean* b = new boolean();      
       char str[5];
       input.read(str, 5);
-      //b->_value = false;
+      b->_value = false;
       ret = b;
       break;
     }
@@ -260,7 +257,6 @@ value* json::parse(istream& input)
       null* b = new null();      
       char str[4];
       input.read(str, 4);
-      //b->_value = 0;
       ret = b;
       break;
     }
@@ -274,12 +270,16 @@ value* json::parse(istream& input)
   }
   return ret;
 }
-istream& operator>>(istream& input, json& data)
+};
+istream& operator>>(istream& input, adjson::json& data)
 {
-  value* ret = data.parse(input); 
+  adjson::value* ret = data.parse(input); 
   data.set(ret);
   return input;
 }
-ostream& operator<<(ostream& output, const json& data)
-  { return output; }
+ostream& operator<<(ostream& output, const adjson::json& data)
+{
+  output << data.str();
+  return output; 
+}
 #endif

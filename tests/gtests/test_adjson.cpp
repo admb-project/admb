@@ -1,6 +1,15 @@
 #include <sstream>
 #include <gtest/gtest.h>
 #include "adjson.h"
+using adjson::json;
+using adjson::value;
+using adjson::object;
+using adjson::array;
+using adjson::string;
+using adjson::number;
+using adjson::boolean;
+using adjson::null;
+using adjson::values;
 
 class test_adjson: public ::testing::Test {};
 

@@ -1,6 +1,7 @@
 #include <sstream>
 #include <gtest/gtest.h>
 #include <adjson.h>
+#include <fvar.hpp>
 using adjson::json;
 using adjson::value;
 using adjson::object;
@@ -172,7 +173,7 @@ TEST_F(test_adjson, input_output_null)
 
   istringstream input("null");
   input >> data;
-  value* n = (value*)data.get_value();
+  null* n = (null*)data.get_value();
   ASSERT_TRUE(n->get_type() == values::_null);
 
   ostringstream output;
@@ -247,4 +248,21 @@ TEST_F(test_adjson, input_output_object_boolean)
   output << data;
   std::string s = data.str();
   ASSERT_STREQ((char*)"{\"a\":true, \"b\":false, \"c\":false}", s.c_str());
+}
+TEST_F(test_adjson, input_output_dvector)
+{
+  using std::istringstream;
+  using std::ostringstream;
+
+  dvector v;
+  istringstream input("[1.5, 2.4, 3.3, 4.2, 5.1]");
+  v.parse(input);
+
+  ASSERT_EQ(1, v.indexmin());
+  ASSERT_EQ(5, v.indexmax());
+  ASSERT_NEAR(1.5, v(1), 0.01);
+  ASSERT_NEAR(2.4, v(2), 0.01);
+  ASSERT_NEAR(3.3, v(3), 0.01);
+  ASSERT_NEAR(4.2, v(4), 0.01);
+  ASSERT_NEAR(5.1, v(5), 0.01);
 }

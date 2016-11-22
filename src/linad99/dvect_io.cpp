@@ -101,5 +101,3 @@ void dvector::read_from(const istream& _s)
      s >> elem(i);
   }
 }
-
-

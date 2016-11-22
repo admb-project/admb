@@ -340,6 +340,8 @@ class dvector
    friend double max(const dvector &);
 
    friend double min(const dvector &);
+
+  istream& parse(istream& input_json);
 };
 
 #ifdef OPT_LIB

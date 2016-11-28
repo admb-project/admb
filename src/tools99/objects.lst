@@ -1,5 +1,4 @@
 OBJ7=\
- adjson.obj\
  adstring_array.obj\
  cifstrem.obj\
  strcase.obj\

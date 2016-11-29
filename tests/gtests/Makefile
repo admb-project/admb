@@ -26,7 +26,6 @@ GTESTS=\
  test_gradient_structure.cpp\
  test_option_match.cpp\
  test_lvector.cpp\
- test_adjson.cpp\
  test_adpool.cpp\
  test_dmatrix.cpp\
  test_param_init_bounded_number_vector.cpp\
@@ -85,7 +84,7 @@ GTESTS=\
  main.cpp
 
 ##Need to debug this
-## test_autodif.cpp\
+## test_autodif.cpp
 ## test_data_number.cpp
 ## test_df1b2variable.cpp
 ## test_atan2.cpp
@@ -93,6 +92,9 @@ GTESTS=\
 
 #cfenv is not completely supported by most compilers
 #  test_cfenv.cpp
+
+# Need C++11
+## test_adjson.cpp
 
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\

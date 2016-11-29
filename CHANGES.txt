@@ -23,6 +23,7 @@ ADMB-X
 
 * GNU C++ 6.1 and 5.3
 * Rtools 3.4
+* Oracle Developer Studio 12.5
 
 ####Changes and Improvements
 
@@ -59,6 +60,9 @@ ADMB-11.5
 * Microsoft Visual C++ 14.0
 * Intel C++ 2016
 * GNU C++ 5.1
+
+####Compilers no longer supported
+* Microsoft Visual C++ 11.0
 
 ####Changes and Improvements
 * Change to Dave Fournier's version of cspline.cpp.

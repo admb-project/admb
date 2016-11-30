@@ -86,6 +86,10 @@ ifneq ($(CXX),CC)
 ADCXXFLAGS:= -Wall -Wextra -Wconversion -Wno-unused-parameter $(ADCXXFLAGS)
 endif
 
+ifneq ($(CXX),g++)
+ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+endif
+
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
 
 ifeq ($(DEBUG),yes)

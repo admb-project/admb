@@ -148,12 +148,15 @@ if [ ! -z "$debug" ]; then
     LDFLAGS="-g -std=c++11 -DDEBUG $LDFLAGS"
   fi
 else
-  if [ "$CXX" == "openCC" ]; then
+  if [ "$CXX" == "g++" ]; then
+    GCCVER="`gcc -dumpversion | cut -f1 -d.`"
+  fi
+  if [ "$CXX" == "openCC" -o "$CXX" == "CC" -o "$GCCVER" == "4" ]; then
     CXXFLAGS="-O2 $CXXFLAGS"
     LDFLAGS="-O2 $LDFLAGS"
   else
-    CXXFLAGS="-O3 $CXXFLAGS"
-    LDFLAGS="-O3 $LDFLAGS"
+    CXXFLAGS="-O3 -std=c++11 $CXXFLAGS"
+    LDFLAGS="-O3 -std=c++11 $LDFLAGS"
   fi
 fi
 if [ "$library" == "opt" ]; then

@@ -124,10 +124,10 @@ value* json::parse(istream& input)
 }
 };
 
-istream& dvector::parse(istream& input_json)
+istream& dvector::parse(istream& input)
 {
   adjson::json data;
-  adjson::array* a = (adjson::array*)data.parse(input_json);
+  adjson::array* a = (adjson::array*)data.parse(input);
 
   if (allocated())
   {
@@ -140,4 +140,6 @@ istream& dvector::parse(istream& input_json)
     adjson::number* n = (adjson::number*)a->_value[i];
     v[i + 1] = n->_value;
   }
+
+  return input;
 }

@@ -22,7 +22,7 @@ value* json::parse(istream& input)
 {
   value* ret = 0;
   input >> std::ws;
-  char p = input.peek();
+  char p = (char)input.peek();
   while (p != EOF)
   {
     char c;
@@ -118,7 +118,7 @@ value* json::parse(istream& input)
       break;
     }
     input >> std::ws;
-    p = input.peek();
+    p = (char)input.peek();
   }
   return ret;
 }
@@ -133,9 +133,9 @@ istream& dvector::parse(istream& input)
   {
     deallocate();
   }
-  int size = a->_value.size();
+  size_type size = a->_value.size();
   allocate(1, size);
-  for (int i = 0; i < size; ++i)
+  for (size_type i = 0; i < size; ++i)
   {
     adjson::number* n = (adjson::number*)a->_value[i];
     v[i + 1] = n->_value;

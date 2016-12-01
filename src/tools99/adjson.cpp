@@ -50,8 +50,8 @@ value* json::parse(istream& input)
       input.get(c);
       while (c != ']')
       {
-        value* ret = parse(input);
-        a->add(ret);
+        value* p = parse(input);
+        a->add(p);
         input >> std::ws >> c >> std::ws;
       }
       ret = a;

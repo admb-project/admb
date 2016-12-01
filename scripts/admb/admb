@@ -140,7 +140,7 @@ if [ ! -z "$debug" ]; then
   if [ "$CXX" == "g++" ]; then
     GCCVER="`gcc -dumpversion | cut -f1 -d.`"
   fi
-  if [ "$CXX" == "openCC" -o "$CXX" == "CC" -o "$GCCVER" == "4" ]; then
+  if [ "$CXX" == "openCC" ]; then
     CXXFLAGS="-g $CXXFLAGS"
     LDFLAGS="-g $LDFLAGS"
   else
@@ -148,10 +148,7 @@ if [ ! -z "$debug" ]; then
     LDFLAGS="-g -std=c++11 -DDEBUG $LDFLAGS"
   fi
 else
-  if [ "$CXX" == "g++" ]; then
-    GCCVER="`gcc -dumpversion | cut -f1 -d.`"
-  fi
-  if [ "$CXX" == "openCC" -o "$CXX" == "CC" -o "$GCCVER" == "4" ]; then
+  if [ "$CXX" == "openCC" ]; then
     CXXFLAGS="-O2 $CXXFLAGS"
     LDFLAGS="-O2 $LDFLAGS"
   else

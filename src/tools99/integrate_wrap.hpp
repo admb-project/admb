@@ -1,5 +1,5 @@
 #include <df1b2fun.h>
-#ifndef __MINGW32__
+#ifndef _WIN32
   #define FALSE false
   #define TRUE  true
 #endif

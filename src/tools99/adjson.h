@@ -74,8 +74,8 @@ struct object: value
   {
     std::string ret;
     ret = "{";
-    std::size_type size = _value.size() - 2;
-    for (std::size_type i = 0; i < size; i += 2)
+    int size = _value.size() - 2;
+    for (int i = 0; i < size; i += 2)
     {
       ret += _value[i]->str();
       ret += ":";
@@ -105,8 +105,8 @@ struct array: value
   {
     std::string ret;
     ret = "[";
-    std::size_type size = _value.size() - 1;
-    for (std::size_type i = 0; i < size; ++i)
+    std::vector<value*>::size_type size = _value.size() - 1;
+    for (std::vector<value*>::size_type i = 0; i < size; ++i)
     {
       ret += _value[i]->str();
       ret += ", ";

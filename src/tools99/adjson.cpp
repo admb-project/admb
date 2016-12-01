@@ -133,9 +133,9 @@ istream& dvector::parse(istream& input)
   {
     deallocate();
   }
-  int size = a->_value.size();
+  size_t size = a->_value.size();
   allocate(1, size);
-  for (int i = 0; i < size; ++i)
+  for (size_t i = 0; i < size; ++i)
   {
     adjson::number* n = (adjson::number*)a->_value[i];
     v[i + 1] = n->_value;

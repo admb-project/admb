@@ -84,6 +84,10 @@ GTESTS=\
  test_adjson.cpp\
  main.cpp
 
+ifeq ($(CXX),openCC)
+  GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
+endif
+
 ##Need to debug this
 ## test_autodif.cpp
 ## test_data_number.cpp

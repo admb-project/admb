@@ -140,7 +140,7 @@ TEST_F(test_adjson, input_output_true)
   istringstream input("true");
   input >> data;
   boolean* n = (boolean*)data.get_value();
-  ASSERT_TRUE(n->get_value());
+  ASSERT_EQ(n->get_value(), true);
 
   ostringstream output;
   output << data;
@@ -157,7 +157,7 @@ TEST_F(test_adjson, input_output_false)
   istringstream input("false");
   input >> data;
   boolean* n = (boolean*)data.get_value();
-  ASSERT_FALSE(n->get_value());
+  ASSERT_EQ(n->get_value(), false);
 
   ostringstream output;
   output << data;

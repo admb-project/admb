@@ -8,7 +8,9 @@ using adjson::object;
 using adjson::array;
 using adjson::string;
 using adjson::number;
+#ifndef __MINGW32__
 using adjson::boolean;
+#endif
 using adjson::null;
 using adjson::values;
 
@@ -139,7 +141,11 @@ TEST_F(test_adjson, input_output_true)
 
   istringstream input("true");
   input >> data;
+#ifdef __MINGW32__
+  adjson::boolean* n = (adjson::boolean*)data.get_value();
+#else
   boolean* n = (boolean*)data.get_value();
+#endif
   ASSERT_EQ(n->get_value(), true);
 
   ostringstream output;
@@ -156,7 +162,11 @@ TEST_F(test_adjson, input_output_false)
 
   istringstream input("false");
   input >> data;
+#ifdef __MINGW32__
+  adjson::boolean* n = (adjson::boolean*)data.get_value();
+#else
   boolean* n = (boolean*)data.get_value();
+#endif
   ASSERT_EQ(n->get_value(), false);
 
   ostringstream output;

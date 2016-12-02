@@ -87,6 +87,9 @@ GTESTS=\
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
 endif
+ifeq ($(COVERAGE),yes)
+  GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
+endif
 
 ##Need to debug this
 ## test_autodif.cpp

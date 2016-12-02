@@ -24,6 +24,7 @@ ADMB-X
 * GNU C++ 6.2 and 5.3
 * Rtools 3.4
 * Oracle Developer Studio 12.5
+* Intel C++ Compiler 2017
 
 ####Changes and Improvements
 

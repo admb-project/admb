@@ -81,7 +81,12 @@ GTESTS=\
  test_d3_array.cpp\
  test_data_matrix.cpp\
  test_tiny_ad.cpp\
+ test_adjson.cpp\
  main.cpp
+
+ifeq ($(CXX),openCC)
+  GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
+endif
 
 ##Need to debug this
 ## test_autodif.cpp
@@ -92,9 +97,6 @@ GTESTS=\
 
 #cfenv is not completely supported by most compilers
 #  test_cfenv.cpp
-
-# Need C++11
-## test_adjson.cpp
 
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\

@@ -88,7 +88,11 @@ endif
 
 ifneq ($(CXX),openCC)
   ifeq ($(COVERAGE),yes)
-    ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
+    ifeq ($(CXX),g++)
+      ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
+    else
+      ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+    endif
   else
     ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
   endif

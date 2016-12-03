@@ -87,7 +87,9 @@ ADCXXFLAGS:= -Wall -Wextra -Wconversion -Wno-unused-parameter $(ADCXXFLAGS)
 endif
 
 ifneq ($(CXX),openCC)
-  ifneq ($(COVERAGE),yes)
+  ifeq ($(COVERAGE),yes)
+    ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
+  else
     ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
   endif
 endif
@@ -161,9 +163,6 @@ OBJECTS:=$(OBJECTS) $(addprefix saflp-nh99-,$(OBJ6)) saflp-sparse-hs_sparse.obj
 
 include tools99/objects.lst
 ifeq ($(CXX),openCC)
-OBJ7:=$(filter-out adjson.obj,$(OBJ7))
-endif
-ifeq ($(COVERAGE),yes)
 OBJ7:=$(filter-out adjson.obj,$(OBJ7))
 endif
 OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools99-,$(OBJ7))

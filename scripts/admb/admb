@@ -157,7 +157,7 @@ if [ "$CXX" != "openCC" ]; then
   if [ "$CXX" == "g++" ]; then
     if [ "`uname`" == "Linux" ]; then
       GCCMAJORVER="`gcc -dumpversion | cut -f1 -d.`"
-      if [ "$GCCMAJORVER" == "5" -o "$GCCMAJORVER" == "6"]; then
+      if [ "$GCCMAJORVER" == "5" -o "$GCCMAJORVER" == "6" ]; then
         CXXFLAGS="-std=c++11 $CXXFLAGS"
         LDFLAGS="-std=c++11 $LDFLAGS"
       else

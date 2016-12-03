@@ -137,23 +137,35 @@ if [ ! -z "$dll" ]; then
   LDFLAGS="-shared $LDFLAGS"
 fi
 if [ ! -z "$debug" ]; then
-  if [ "$CXX" == "g++" ]; then
-    GCCVER="`gcc -dumpversion | cut -f1 -d.`"
-  fi
   if [ "$CXX" == "openCC" ]; then
     CXXFLAGS="-g $CXXFLAGS"
     LDFLAGS="-g $LDFLAGS"
   else
-    CXXFLAGS="-g -std=c++11 -DDEBUG $CXXFLAGS"
-    LDFLAGS="-g -std=c++11 -DDEBUG $LDFLAGS"
+    CXXFLAGS="-g -DDEBUG $CXXFLAGS"
+    LDFLAGS="-g -DDEBUG $LDFLAGS"
   fi
 else
   if [ "$CXX" == "openCC" ]; then
     CXXFLAGS="-O2 $CXXFLAGS"
     LDFLAGS="-O2 $LDFLAGS"
   else
-    CXXFLAGS="-O3 -std=c++11 $CXXFLAGS"
-    LDFLAGS="-O3 -std=c++11 $LDFLAGS"
+    CXXFLAGS="-O3 $CXXFLAGS"
+    LDFLAGS="-O3 $LDFLAGS"
+  fi
+fi
+if [ "$CXX" != "openCC" ]; then
+  if [ "$CXX" == "g++" ]; then
+    GCCMAJORVER="`gcc -dumpversion | cut -f1 -d.`"
+    if [ "$GCCMAJORVER" == "4" -a "`uname`" == "Linux"]; then
+      CXXFLAGS="$CXXFLAGS"
+      LDFLAGS="$LDFLAGS"
+    else
+      CXXFLAGS="-std=c++11 $CXXFLAGS"
+      LDFLAGS="std=c++11 $LDFLAGS"
+    fi
+  else
+    CXXFLAGS="-std=c++11 $CXXFLAGS"
+    LDFLAGS="std=c++11 $LDFLAGS"
   fi
 fi
 if [ "$library" == "opt" ]; then

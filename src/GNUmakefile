@@ -89,16 +89,16 @@ endif
 ifneq ($(CXX),openCC)
   ifeq ($(CXX),g++)
     ifneq ("$(shell uname)","Darwin")
-      GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d.)
+      GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
       ifeq ("$(GCCMAJVER)","4")
-        GCCMINVER:=$(shell `gcc -dumpversion | cut -f2 -d.`)
+        GCCMINVER:=$(shell gcc -dumpversion | cut -f2 -d. )
         ifeq ("$(GCCMINVER)","9")
-          ADCXXFLAGS:= -std=1c++11 $(ADCXXFLAGS)
+          ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
         else
-          ADCXXFLAGS:= -std=2c++0x $(ADCXXFLAGS)
+          ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
         endif
       else
-        ADCXXFLAGS:= -std=$(GCCMAJVER)c++11 $(ADCXXFLAGS)
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
       endif
     else
       ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)

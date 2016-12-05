@@ -155,12 +155,17 @@ else
 fi
 if [ "$CXX" != "openCC" ]; then
   if [ "$CXX" == "g++" ]; then
-    if [ "`uname`" == "Linux" ]; then
-      GCCMAJORVER="`gcc -dumpversion | cut -f1 -d.`"
-      GCCMINORVER="`gcc -dumpversion | cut -f2 -d.`"
-      if [ "$GCCMAJORVER" == "4" -a "$GCCMINORVER" != "8" -a "$GCCMINORVER" != "9" ]; then
-        CXXFLAGS="-std=c++0x $CXXFLAGS"
-        LDFLAGS="-std=c++0x $LDFLAGS"
+    if [ "`uname`" != "Darwin" ]; then
+      GCCMAJVER="`gcc -dumpversion | cut -f1 -d.`"
+      if [ "$GCCMAJVER" == "4" ]; then
+        GCCMINVER="`gcc -dumpversion | cut -f2 -d.`"
+        if [ "$GCCMINVER" == "9" ]; then
+          CXXFLAGS="-std=c++11 $CXXFLAGS"
+          LDFLAGS="-std=c++11 $LDFLAGS"
+        else
+          CXXFLAGS="-std=c++0x $CXXFLAGS"
+          LDFLAGS="-std=c++0x $LDFLAGS"
+        fi
       else
         CXXFLAGS="-std=c++11 $CXXFLAGS"
         LDFLAGS="-std=c++11 $LDFLAGS"

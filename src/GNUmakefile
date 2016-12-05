@@ -93,18 +93,18 @@ ifneq ($(CXX),openCC)
       ifeq ("$(GCCMAJVER)","4")
         GCCMINVER:=$(shell `gcc -dumpversion | cut -f2 -d.`)
         ifeq ("$(GCCMINVER)","9")
-          ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+          ADCXXFLAGS:= -std=1c++11 $(ADCXXFLAGS)
         else
-          ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
+          ADCXXFLAGS:= -std=2c++0x $(ADCXXFLAGS)
         endif
       else
-        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+        ADCXXFLAGS:= -std=3c++11 $(ADCXXFLAGS)
       endif
     else
-      ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      ADCXXFLAGS:= -std=4c++11 $(ADCXXFLAGS)
     endif
   else
-    ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+    ADCXXFLAGS:= -std=5c++11 $(ADCXXFLAGS)
   endif
 endif
 

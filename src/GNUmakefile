@@ -98,13 +98,13 @@ ifneq ($(CXX),openCC)
           ADCXXFLAGS:= -std=2c++0x $(ADCXXFLAGS)
         endif
       else
-        ADCXXFLAGS:= -std=3c++11 $(ADCXXFLAGS)
+        ADCXXFLAGS:= -std=$(GCCMAJVER)c++11 $(ADCXXFLAGS)
       endif
     else
-      ADCXXFLAGS:= -std=4c++11 $(ADCXXFLAGS)
+      ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
     endif
   else
-    ADCXXFLAGS:= -std=5c++11 $(ADCXXFLAGS)
+    ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
   endif
 endif
 

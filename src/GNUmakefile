@@ -89,7 +89,7 @@ endif
 ifneq ($(CXX),openCC)
   ifeq ($(CXX),g++)
     ifneq ("$(shell uname)","Darwin")
-      GCCMAJVER:=$(shell `gcc -dumpversion | cut -f1 -d.`)
+      GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d.)
       ifeq ("$(GCCMAJVER)","4")
         GCCMINVER:=$(shell `gcc -dumpversion | cut -f2 -d.`)
         ifeq ("$(GCCMINVER)","9")

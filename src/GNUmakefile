@@ -66,6 +66,7 @@ ifdef LDFLAGS
   USER_LDFLAGS:= $(LDFLAGS)
 endif
 
+ADCXXFLAGS=
 ifdef SHARED
   ifneq ($(OS),Windows_NT)
     ADCXXFLAGS:= -fPIC $(ADCXXFLAGS)

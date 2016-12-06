@@ -153,7 +153,7 @@ else
     LDFLAGS="-O3 $LDFLAGS"
   fi
 fi
-if [ "`uname`" != "Darwin" ]; then
+if [ "`uname`" == "Darwin" ]; then
   CXXFLAGS="-std=c++14 $CXXFLAGS"
   LDFLAGS="-std=c++14 $LDFLAGS"
 elif [ "$CXX" == "clang++" ]; then
@@ -161,7 +161,6 @@ elif [ "$CXX" == "clang++" ]; then
   LDFLAGS="-std=c++11 $LDFLAGS"
 elif [ "$CXX" == "g++" ]; then
   GCCMAJVER="`gcc -dumpversion | cut -f1 -d.`"
-  echo -e "\\nHERE: $GCCMAJVER\\n"
   if [ "$GCCMAJVER" == "4" ]; then
     GCCMINVER="`gcc -dumpversion | cut -f2 -d.`"
     if [ "$GCCMINVER" == "9" ]; then

@@ -85,7 +85,7 @@ endif
 ifneq ($(CXX),CC)
 ADCXXFLAGS:= -Wall -Wextra -Wconversion -Wno-unused-parameter $(ADCXXFLAGS)
 endif
-$(info here3 ${ADCXXFLAGS})
+$(info myinfo ${ADCXXFLAGS})
 
 ifneq ($(CXX),openCC)
   ifeq ($(CXX),g++)
@@ -108,7 +108,7 @@ ifneq ($(CXX),openCC)
     ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
   endif
 endif
-$(info here2 ${ADCXXFLAGS})
+$(info myinfo2 ${ADCXXFLAGS})
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
 
@@ -126,7 +126,7 @@ ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/dist/include
   endif
 endif
 
-$(info here ${ADCXXFLAGS})
+$(info myinfo3 ${ADCXXFLAGS})
 
 ifeq ($(TERM),cygwin)
   ifeq ($(CXX),g++)
@@ -146,7 +146,7 @@ endif
 
 override CXXFLAGS += $(ADCXXFLAGS)
 
-$(info override ${CXXFLAGS})
+$(info myinfo4 ${CXXFLAGS})
 
 CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
 

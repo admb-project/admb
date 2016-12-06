@@ -90,7 +90,7 @@ endif
 ifeq ("$(shell uname)","Darwin")
   ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
 else ifeq ($(CXX),clang++)
-  ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+  ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
 else ifeq ($(CXX),g++)
   GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
   ifeq ("$(GCCMAJVER)","4")

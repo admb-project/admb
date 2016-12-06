@@ -135,12 +135,7 @@ ifeq ($(SHELL),cmd)
 endif
 endif
 
-$(info myinfo $(ADCXXFLAGS))
-$(info myinfo2 ${CXXFLAGS})
-
 override CXXFLAGS = $(ADCXXFLAGS)
-
-$(info myinfo3 ${CXXFLAGS})
 
 CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
 

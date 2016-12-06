@@ -86,30 +86,22 @@ endif
 ifneq ($(CXX),CC)
 ADCXXFLAGS:= -Wall -Wextra -Wconversion -Wno-unused-parameter $(ADCXXFLAGS)
 endif
-$(info myinfo ${ADCXXFLAGS})
 
-ifneq ($(CXX),openCC)
-  ifeq ($(CXX),g++)
-    ifneq ("$(shell uname)","Darwin")
-      GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
-      ifeq ("$(GCCMAJVER)","4")
-        GCCMINVER:=$(shell gcc -dumpversion | cut -f2 -d. )
-        ifeq ("$(GCCMINVER)","9")
-          ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-        else
-          ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
-        endif
-      else
-        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-      endif
-    else
+ifeq ("$(shell uname)","Darwin")
+  ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+else ifeq ($(CXX),g++)
+  GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
+  ifeq ("$(GCCMAJVER)","4")
+    GCCMINVER:=$(shell gcc -dumpversion | cut -f2 -d. )
+    ifeq ("$(GCCMINVER)","9")
       ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+    else
+      ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
     endif
   else
-    ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+    ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
   endif
 endif
-$(info myinfo2 ${ADCXXFLAGS})
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
 
@@ -127,8 +119,6 @@ ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/dist/include
   endif
 endif
 
-$(info myinfo3 ${ADCXXFLAGS})
-
 ifeq ($(TERM),cygwin)
   ifeq ($(CXX),g++)
     ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
@@ -145,9 +135,13 @@ ifeq ($(SHELL),cmd)
 endif
 endif
 
-override CXXFLAGS += $(ADCXXFLAGS)
 
-$(info myinfo4 ${CXXFLAGS})
+$(info myinfo $(ADCXXFLAGS))
+$(info myinfo2 ${CXXFLAGS})
+
+override CXXFLAGS = $(ADCXXFLAGS)
+
+$(info myinfo3 ${CXXFLAGS})
 
 CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
 

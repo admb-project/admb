@@ -161,6 +161,7 @@ elif [ "$CXX" == "clang++" ]; then
   LDFLAGS="-std=c++11 $LDFLAGS"
 elif [ "$CXX" == "g++" ]; then
   GCCMAJVER="`gcc -dumpversion | cut -f1 -d.`"
+  $(info myinfo $(GCCMAJVER))
   if [ "$GCCMAJVER" == "4" ]; then
     GCCMINVER="`gcc -dumpversion | cut -f2 -d.`"
     if [ "$GCCMINVER" == "9" ]; then

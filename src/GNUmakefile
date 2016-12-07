@@ -146,12 +146,7 @@ ifeq ($(SHELL),cmd)
 endif
 endif
 
-$(info INFO: $(USER_CXXFLAGS) )
-$(info INFO: $(CXXFLAGS) )
-$(info INFO: $(ADCXXFLAGS) )
 CXXFLAGS_SAF_LIB=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
-$(info INFO: $(CXXFLAGS_SAF_LIB) )
-
 CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS_SAF_LIB))
 
 ifeq ($(CXX),c++)

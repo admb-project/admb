@@ -141,7 +141,7 @@ ifeq ($(SHELL),cmd)
 endif
 endif
 
-override CXXFLAGS = $(ADCXXFLAGS)
+override CXXFLAGS=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
 
 CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
 

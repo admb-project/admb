@@ -146,9 +146,9 @@ ifeq ($(SHELL),cmd)
 endif
 endif
 
-$(info INFO: $USER_CXXFLAGS)
-$(info INFO: $CXXFLAGS)
-$(info INFO: $ADCXXFLAGS)
+$(info INFO: $(USER_CXXFLAGS) )
+$(info INFO: $(CXXFLAGS) )
+$(info INFO: $(ADCXXFLAGS) )
 override CXXFLAGS=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
 $(info INFO: $CXXFLAGS)
 

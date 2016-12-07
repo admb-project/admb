@@ -150,7 +150,7 @@ $(info INFO: $(USER_CXXFLAGS) )
 $(info INFO: $(CXXFLAGS) )
 $(info INFO: $(ADCXXFLAGS) )
 override CXXFLAGS=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
-$(info INFO: $CXXFLAGS)
+$(info INFO: $(CXXFLAGS) )
 
 CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
 

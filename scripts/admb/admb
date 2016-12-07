@@ -159,6 +159,12 @@ if [ "`uname`" == "Darwin" ]; then
 elif [ "$CXX" == "clang++" ]; then
   CXXFLAGS="-std=c++11 $CXXFLAGS"
   LDFLAGS="-std=c++11 $LDFLAGS"
+elif [ "$CXX" == "icpc" ]; then
+  CXXFLAGS="-std=c++14 $CXXFLAGS"
+  LDFLAGS="-std=c++14 $LDFLAGS"
+elif [ "$CXX" == "CC" ]; then
+  CXXFLAGS="-std=c++14 $CXXFLAGS"
+  LDFLAGS="-std=c++14 $LDFLAGS"
 elif [ "$CXX" == "g++" ]; then
   GCCMAJVER="`gcc -dumpversion | cut -f1 -d.`"
   if [ "$GCCMAJVER" == "4" ]; then

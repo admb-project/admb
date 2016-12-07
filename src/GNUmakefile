@@ -149,10 +149,10 @@ endif
 $(info INFO: $(USER_CXXFLAGS) )
 $(info INFO: $(CXXFLAGS) )
 $(info INFO: $(ADCXXFLAGS) )
-override CXXFLAGS=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
-$(info INFO: $(CXXFLAGS) )
+CXXFLAGS_SAF_LIB=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
+$(info INFO: $(CXXFLAGS_SAF_LIB) )
 
-CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
+CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS_SAF_LIB))
 
 ifeq ($(CXX),c++)
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
@@ -385,40 +385,40 @@ else
 endif
 $(OBJSDIR)saflp-nh99-banner.obj: nh99\banner.cpp
 ifeq ($(ADMB_VERSION),)
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
-	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS)) -o $@ $<
+	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_SAF_LIB)) -o $@ $<
 endif
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 $(OBJSDIR)optlp-df1b2-separable-%.obj: df1b2-separable\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-df1b2-separable-%.obj: df1b2-separable\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 $(OBJSDIR)optlp-linad99-%.obj:linad99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-linad99-%.obj:linad99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-%.obj:nh99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-%.obj:nh99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 $(OBJSDIR)optlp-tools99-%.obj:tools99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
 ifeq ($(ADMB_VERSION),)
@@ -428,9 +428,9 @@ else
 endif
 $(OBJSDIR)saflp-nh99-banner.obj: nh99/banner.cpp
 ifeq ($(ADMB_VERSION),)
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
-	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS)) -o $@ $<
+	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_SAF_LIB)) -o $@ $<
 endif
 
 ifeq ($(DEBUG),yes)
@@ -445,7 +445,7 @@ $(OBJSDIR)saflp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
 else
 $(OBJSDIR)saflp-sparse-hs_sparse.obj:sparse/hs_sparse.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
 $(OBJSDIR)optlp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
@@ -459,7 +459,7 @@ $(OBJSDIR)saflp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
 else
 $(OBJSDIR)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
 $(OBJSDIR)optlp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
@@ -473,7 +473,7 @@ $(OBJSDIR)saflp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
 else
 $(OBJSDIR)saflp-linad99-%.obj:linad99/%.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
 $(OBJSDIR)optlp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
@@ -487,7 +487,7 @@ $(OBJSDIR)saflp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
 else
 $(OBJSDIR)saflp-nh99-%.obj:nh99/%.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
 $(OBJSDIR)optlp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
@@ -501,7 +501,7 @@ $(OBJSDIR)saflp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
 else
 $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 endif
 
 includes: dirs

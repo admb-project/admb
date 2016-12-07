@@ -99,7 +99,7 @@ else ifeq ($(CXX),icpc)
     ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
   endif
 else ifeq ($(CXX),CC)
-  ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+  ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
 else ifeq ($(CXX),g++)
   GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
   ifeq ("$(GCCMAJVER)","4")

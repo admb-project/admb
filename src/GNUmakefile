@@ -92,7 +92,12 @@ ifeq ("$(shell uname)","Darwin")
 else ifeq ($(CXX),clang++)
   ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
 else ifeq ($(CXX),icpc)
-  ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+  ICPCMAJVER:=$(shell icpc -dumpversion | cut -f1 -d. )
+  ifeq ("$(ICPCMAJVER)","17")
+    ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+  else
+    ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+  endif
 else ifeq ($(CXX),CC)
   ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
 else ifeq ($(CXX),g++)

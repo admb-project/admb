@@ -160,8 +160,14 @@ elif [ "$CXX" == "clang++" ]; then
   CXXFLAGS="-std=c++11 $CXXFLAGS"
   LDFLAGS="-std=c++11 $LDFLAGS"
 elif [ "$CXX" == "icpc" ]; then
-  CXXFLAGS="-std=c++14 $CXXFLAGS"
-  LDFLAGS="-std=c++14 $LDFLAGS"
+  ICPCMAJVER="`icpc -dumpversion | cut -f1 -d.`"
+  ifeq ("$(ICPCMAJVER)","17")
+    CXXFLAGS="-std=c++14 $CXXFLAGS"
+    LDFLAGS="-std=c++14 $LDFLAGS"
+  else
+    CXXFLAGS="-std=c++11 $CXXFLAGS"
+    LDFLAGS="-std=c++11 $LDFLAGS"
+  endif
 elif [ "$CXX" == "CC" ]; then
   CXXFLAGS="-std=c++14 $CXXFLAGS"
   LDFLAGS="-std=c++14 $LDFLAGS"

@@ -87,7 +87,9 @@ ifneq ($(CXX),CC)
 ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-unused-parameter
 endif
 
-ifeq ("$(shell uname)","Darwin")
+ifeq ($(SHELL),cmd)
+  ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+else ifeq ("$(shell uname)","Darwin")
   ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
 else ifeq ($(CXX),clang++)
   ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)

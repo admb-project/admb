@@ -431,6 +431,8 @@ goto EOF
 :HELP
 echo Builds AD Model Builder executable or library.
 echo.
+echo Release Version: 11.6pre
+echo.
 echo Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
 echo.
 echo  -c     Build only object file(s) (.obj).

@@ -10,6 +10,8 @@ Builds AD Model Builder executable or library.
 
 Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
 
+Release Version: 11.6pre
+
 Options:
  -c     Build only object file(s) (.obj).
  -d     Build a shared library (.so).

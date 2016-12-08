@@ -1,6 +1,6 @@
 #ADMB Project
-*ADMB-11.5*  
-*Released December 11, 2015*  
+*ADMB-11.6pre*  
+*Released December 9, 2016*  
 
 Installing and using ADMB from binary zip distributions for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 
@@ -17,7 +17,7 @@ The following programs are required to be installed on the local computer.
 
       * GNU C++
       * Intel C++ Compiler
-      * Oracle Solaris Studio 12.3
+      * Oracle Solaris Studio
             
 
 * GNU stream editor (sed)
@@ -33,38 +33,38 @@ Quick Start
 
        Download binary zip distribution
 
-       * For Ubuntu 14 (64Bit), download [admb-11.5-ubuntu14-64bit](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-ubuntu14-64bit.zip).
-       * For Fedora 22 (64Bit), download [admb-11.5-fedora22-gcc5.1-64bit](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-fedora22-gcc5.1-64bit.zip).
-       * For Fedora 22 (32Bit), download [admb-11.5-fedora22-gcc5.1-64bit](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-fedora22-gcc5.1-32bit.zip).
-       * For Centos 6 and Oracle Solaris Studio 12.3 (32Bit), download [admb-11.5-centos6-solarisstudio12.3-32bit](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-centos6-solarisstudio12.3-32bit.zip).
-       * For Centos 6 and Intel C++ Compiler 2016 (64Bit), download [admb-11.5-centos6-intelicpc2016-64bit](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-centos6-intelicpc2016-64bit.zip).   
-       * For Centos 6 and Intel C++ Compiler 2013 (64Bit), download [admb-11.5-centos6-intelicpc2013-64bit](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-centos6-intelicpc2013-64bit.zip).   
+       * For Ubuntu 14 (64Bit), download [admb-11.6pre-ubuntu14-64bit](https://github.com/admb-project/admb/releases/download/admb-11.6pre/admb-11.6pre-ubuntu14-64bit.zip).
+       * For Ubuntu 16 (64Bit), download [admb-11.6pre-ubuntu14-64bit](https://github.com/admb-project/admb/releases/download/admb-11.6pre/admb-11.6pre-ubuntu16-64bit.zip).
+       * For Fedora 25 (64Bit), download [admb-11.6pre-fedora25-gcc5.1-64bit](https://github.com/admb-project/admb/releases/download/admb-11.6pre/admb-11.6pre-fedora25-gcc5.1-64bit.zip).
+       * For Fedora 25 (32Bit), download [admb-11.6pre-fedora25-gcc5.1-64bit](https://github.com/admb-project/admb/releases/download/admb-11.6pre/admb-11.6pre-fedora25-gcc5.1-32bit.zip).
+       * For Centos 6 and Oracle Solaris Studio 12.5 (64Bit), download [admb-11.6pre-centos6-solarisstudio12.5-64bit](https://github.com/admb-project/admb/releases/download/admb-11.6pre/admb-11.6pre-centos6-solarisstudio12.5-64bit.zip).
+       * For Centos 6 and Intel C++ Compiler 2017 (64Bit), download [admb-11.6pre-centos6-intelicpc2017-64bit](https://github.com/admb-project/admb/releases/download/admb-11.6pre/admb-11.6pre-centos6-intelicpc2017-64bit.zip).   
 
        Use the command below to extract contents of zip file to _~/admb/_. 
 
        For Ubuntu 14 (64Bit),
 
-           [~]$ unzip admb-11.5-ubuntu14-64bit.zip
+           [~]$ unzip admb-11.6pre-ubuntu14-64bit.zip
 
-       For Fedora 22 (64Bit),
+       For Ubuntu 16 (64Bit),
 
-           [~]$ unzip admb-11.5-fedora22-gcc5.1-64bit.zip
+           [~]$ unzip admb-11.6pre-ubuntu16-64bit.zip
 
-       For Fedora 22 (32Bit),
+       For Fedora 25 (64Bit),
 
-           [~]$ unzip admb-11.5-fedora22-gcc5.1-32bit.zip
+           [~]$ unzip admb-11.6pre-fedora25-gcc5.1-64bit.zip
 
-       For Centos 6 and Oracle Solaris Studio 12.3 (32Bit),
+       For Fedora 25 (32Bit),
 
-           [~]$ unzip admb-11.5-centos6-solarisstudio12.3-32bit.zip
+           [~]$ unzip admb-11.6pre-fedora25-gcc5.1-32bit.zip
 
-       For Centos 6 and Intel C++ Compiler 2016 (64Bit),
+       For Centos 6 and Oracle Solaris Studio 12.5 (64Bit),
 
-           [~]$ unzip admb-11.5-centos6-intelicpc2016-64bit.zip
+           [~]$ unzip admb-11.6pre-centos6-solarisstudio12.5-64bit.zip
 
-       For Centos 6 and Intel C++ Compiler 2013 (64Bit),
+       For Centos 6 and Intel C++ Compiler 2017 (64Bit),
 
-           [~]$ unzip admb-11.5-centos6-intelicpc2013-64bit.zip
+           [~]$ unzip admb-11.6pre-centos6-intelicpc2017-64bit.zip
 
 3. **Use** ADMB
 
@@ -86,7 +86,7 @@ Quick Start
 
            [~/admb/examples/admb/simple/]$ ./simple
 
-       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.5/) for more information.
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.6pre/) for more information.
 
 4. _**Optional**_ &mdash; Multi-User Installation    
 

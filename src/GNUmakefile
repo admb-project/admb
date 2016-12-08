@@ -84,7 +84,7 @@ else
 endif
 
 ifneq ($(CXX),CC)
-ADCXXFLAGS:= -Wall -Wextra -Wconversion -Wno-unused-parameter $(ADCXXFLAGS)
+ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-unused-parameter
 endif
 
 ifeq ("$(shell uname)","Darwin")

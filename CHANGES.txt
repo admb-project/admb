@@ -45,10 +45,14 @@ ADMB-X
 * Able to use Rtools\bin\make to build admb from source.
 * Replaced rgamma function.
 * Fixed numerous bugs and added various improvements.
+* Compilers should support C++11 standard to build ADMB.
+* Other bug fixes and improvements
 
 ####Developers changes
 
 * Added tool for checking for [testing code coverage](https://codecov.io/gh/admb-project/admb).
+* Added build option for C++11 into admb script and build files.
+* Added build option for C++14 into admb script and build files if supported by compiler.
 
 ####Website changes
 

@@ -296,6 +296,7 @@ ifeq ($(SHELL),cmd)
 	@del finance.b0 2>NUL
 	@del finance.p0 2>NUL
 	@del test_dvector.txt 2>NUL
+	@del test_adstring_array.txt 2>NUL
 else
 	@rm -vf finance.b0
 	@rm -vf finance.p0
@@ -350,4 +351,5 @@ else
 	@rm -vf test_scalefactor
 	@rm -vf test_dvector.txt
 	@rm -rvf make_sub_directory
+	@rm -vf test_adstring_array.txt
 endif

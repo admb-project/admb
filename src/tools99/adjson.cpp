@@ -89,7 +89,7 @@ value* json::parse(istream& input)
     else if (p == 't')
     {
       boolean* b = new boolean();      
-      char str[4];
+      char str[6];
       input.read(str, 4);
       b->_value = true;
       ret = b;
@@ -98,7 +98,7 @@ value* json::parse(istream& input)
     else if (p == 'f')
     {
       boolean* b = new boolean();      
-      char str[5];
+      char str[7];
       input.read(str, 5);
       b->_value = false;
       ret = b;
@@ -107,7 +107,7 @@ value* json::parse(istream& input)
     else if (p == 'n')
     {
       null* b = new null();      
-      char str[4];
+      char str[6];
       input.read(str, 4);
       ret = b;
       break;

@@ -89,30 +89,40 @@ endif
 
 ifeq ($(SHELL),cmd)
   ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-else ifeq ("$(shell uname)","Darwin")
-  ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
-else ifeq ($(CXX),clang++)
-  ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-else ifeq ($(CXX),icpc)
-  ICPCMAJVER:=$(shell icpc -dumpversion | cut -f1 -d. )
-  ifeq ("$(ICPCMAJVER)","17")
+else
+  ifeq ("$(shell uname)","Darwin")
     ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
   else
-    ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-  endif
-else ifeq ($(CXX),CC)
-  ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-else ifeq ($(CXX),g++)
-  GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
-  ifeq ("$(GCCMAJVER)","4")
-    GCCMINVER:=$(shell gcc -dumpversion | cut -f2 -d. )
-    ifeq ("$(GCCMINVER)","9")
+    ifeq ($(CXX),clang++)
       ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
     else
-      ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
+      ifeq ($(CXX),icpc)
+        ICPCMAJVER:=$(shell icpc -dumpversion | cut -f1 -d. )
+        ifeq ("$(ICPCMAJVER)","17")
+          ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+        else
+          ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+        endif
+      else
+        ifeq ($(CXX),CC)
+          ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+        else
+          ifeq ($(CXX),g++)
+            GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
+            ifeq ("$(GCCMAJVER)","4")
+              GCCMINVER:=$(shell gcc -dumpversion | cut -f2 -d. )
+              ifeq ("$(GCCMINVER)","9")
+                ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+              else
+                ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
+              endif
+            else
+              ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+            endif
+          endif
+        endif
+      endif
     endif
-  else
-    ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
   endif
 endif
 

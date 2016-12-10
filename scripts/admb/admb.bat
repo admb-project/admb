@@ -173,10 +173,19 @@ if "!CXX!"=="cl" (
       set LD=g++
     )
   )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr 4.') do (
+    set STDCXX=-std=c++11
+  )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr 5.') do (
+    set STDCXX=-std=c++14
+  )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr 6.') do (
+    set STDCXX=-std=c++14
+  )
   if defined CXXFLAGS (
-    set CXXFLAGS= -c !CXXFLAGS!
+    set CXXFLAGS= -c !STDCXX! !CXXFLAGS!
   ) else (
-    set CXXFLAGS= -c
+    set CXXFLAGS= -c !STDCXX!
   )
   if defined d (
     if defined LDFLAGS (

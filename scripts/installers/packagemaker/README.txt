@@ -1,6 +1,6 @@
 #ADMB Project
 *ADMB-11.6pre*  
-*Released December 9, 2016*  
+*Released December 12, 2016*  
 
 The installation procedure for installing ADMBTerminal app for the MacOS.
 

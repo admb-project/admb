@@ -74,6 +74,7 @@ ADMB-11.6
   src(s) C/C++ Source file(s) containing classes, methods and variables that
          are used in model.
   
+* MinGW-w64 Windows installers now include GNU GCC 6.2 compiler.
 * Other bug fixes and improvements
 
 ####Developers changes

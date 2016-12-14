@@ -212,9 +212,9 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=0;
   initial_params::stddev_scale(current_scale,x0);
   initial_params::mc_phase=mctmp;
-  cout << "old scale=" <<  old_scale << endl;
-  cout << "current scale=" << current_scale << endl;
-  cout << "S before=" << S << endl;
+  // cout << "old scale=" <<  old_scale << endl;
+  // cout << "current scale=" << current_scale << endl;
+  // cout << "S before=" << S << endl;
   // I think this is only needed if mcmc2 is used??
   // for (int i=1;i<=nvar;i++)
   //   {
@@ -232,7 +232,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
     }
   }
-  cout << "S after=" << S << endl;
+  //  cout << "S after=" << S << endl;
   gradient_structure::set_NO_DERIVATIVES();
   if (mcmc2_flag==0)
     {
@@ -295,7 +295,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Start of single trajectory
       for (int i=1;i<=L;i++)
 	{
-	  nll=leapfrog(nvar, gr, chd, eps, p, y);
+	  nll=leapfrog(nvar, gr, chd, eps, p, y, gr2);
+	  // Break trajectory early if a divergence occurs to save computation
+	  if(std::isnan(nll)){
+	    divergence=1;
+	    break;
+	  }
 	} // end of trajectory
       pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
       double Ham=nll+pprob; // H at proposed state
@@ -317,10 +322,11 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
       else // reject
 	{
-	  y=yold;		// Don't update params
+	  // Don't update params or initial gradient for next loop
+	  y=yold;
 	  z=chd*y;
 	  H0=nll+pprob;
-	  gr2=gr2begin;	// don't update gradients
+	  gr2=gr2begin;
 	}
       // Save parameters to psv file
       (*pofs_psave) << parsave;
@@ -501,13 +507,11 @@ double function_minimizer::find_reasonable_stepsize(int nvar, const independent_
    momentum variables by reference.
  **/
 
-double function_minimizer::leapfrog(int nvar,dvector& gr, dmatrix& chd, double eps, dvector& p, dvector& y)
+double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p, dvector& y,
+				    dvector& gr2)
 {
   independent_variables z(1,nvar); // rotated bounded parameters???
   dvector phalf;
-  dvector gr2begin=gr*chd; // rotated gradient
-  dvector gr2(1,nvar);	  // rotated gradient
-  gr2=gr2begin;		// rotated gradient
   // Update momentum by half step (why negative?)
   phalf=p-eps/2*gr2;
   // Update parameters by full step

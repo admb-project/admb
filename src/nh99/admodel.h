@@ -1916,7 +1916,7 @@ public:
   double find_reasonable_stepsize(int nvar, const independent_variables& x,
     dvector& gr, dmatrix& chd, double eps, dvector pp);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd, 
-    double eps, dvector& p, dvector& y);
+    double eps, dvector& p, dvector& y, dvector& gr2);
   double pvm_master_get_monte_carlo_value(int nvar,
     const dvector& x);
   void pvm_slave_get_monte_carlo_value(int nvar);

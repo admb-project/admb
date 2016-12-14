@@ -66,7 +66,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  cerr << "Warning: No step size given after -hyeps, ignoring" << endl;
 	  useDA=1;
 	}
-      else			// read in specified value and do not adapt 
+      else			// read in specified value and do not adapt
 	{
 	  istringstream ist(ad_comm::argv[on+1]);
 	  ist >> _eps;
@@ -82,7 +82,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    }
 	}
     }
-  
+
   // Number of leapfrog steps. Defaults to 10.
   int L=10;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1)
@@ -104,7 +104,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   // Number of warmup samples if using adaptation of step size. Defaults to
   // half of iterations.
-  int nwarmup= (int)nmcmc/2; 
+  int nwarmup= (int)nmcmc/2;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nwarmup",nopt))>-1)
     {
       if (nopt)
@@ -166,7 +166,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // read_empirical_covariance_matrix(nvar,S,ad_comm::adprogram_name);
     }
 
-  // Prepare the mass matrix for use. Depends on many factors below. 
+  // Prepare the mass matrix for use. Depends on many factors below.
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
   int old_nvar;
@@ -263,7 +263,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double pprob=0.5*norm2(p);	// probability of momenta
   double nll=get_hybrid_monte_carlo_value(nvar,z,gr); // probability of position
   double H0=nll+pprob;			       // initial Hamiltonian
-  int ii=1;			 
+  int ii=1;
   initial_params::copy_all_values(parsave,ii); // does bounding??
   double iaccept=0.0;
   dvector phalf;
@@ -295,23 +295,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Start of single trajectory
       for (int i=1;i<=L;i++)
 	{
-	  //cout << is << " " << i << " " << nll << endl;
-	  phalf=p-eps/2*gr2; // update momentum by half step (why negative?)
-	  y+=eps*phalf;	      // update parameters by full step
-	  z=chd*y;		      // transform parameters via mass matrix
-	  // This function returns the negative log density/likelihood but also sets gradients in gr
-	  nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	  // If numerical error occurs, mark it as a divergence and stop
-	  // this trajectory early, staying at the current state
-	  if(std::isnan(nll))
-	    {
-	      divergence=1;
-	      break;
-	    }
-	  gr2=gr*chd;		// transform gradient via mass matrix
-	  p=phalf-eps/2*gr2; // update momentum by half step (why negatiev?)
+	  nll=leapfrog(nvar, gr, chd, eps, p, y);
 	} // end of trajectory
-      leapfrog(nvar, gr, chd, eps, p, y);
       pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
       double Ham=nll+pprob; // H at proposed state
       double alpha=min(1.0, exp(H0-Ham)); // acceptance ratio
@@ -325,7 +310,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	{
 	  iaccept++;
 	  yold=y;		// Update parameters
-	  H0=nll+pprob;	
+	  H0=nll+pprob;
 	  gr2begin=gr2;
 	  ii=1;
 	  initial_params::copy_all_values(parsave,ii);
@@ -534,7 +519,7 @@ double function_minimizer::leapfrog(int nvar,dvector& gr, dmatrix& chd, double e
   // Update gradient via mass matrix
   gr2=gr*chd;
   // Last half step for momentum
-  p=phalf-eps/2*gr2; 
+  p=phalf-eps/2*gr2;
   return(nll);
 }
 

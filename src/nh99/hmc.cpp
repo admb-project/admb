@@ -311,6 +311,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  gr2=gr*chd;		// transform gradient via mass matrix
 	  p=phalf-eps/2*gr2; // update momentum by half step (why negatiev?)
 	} // end of trajectory
+      leapfrog(nvar, gr, chd, eps, p, y);
       pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
       double Ham=nll+pprob; // H at proposed state
       double alpha=min(1.0, exp(H0-Ham)); // acceptance ratio
@@ -522,7 +523,6 @@ double function_minimizer::leapfrog(int nvar,dvector& gr, dmatrix& chd, double e
   dvector gr2begin=gr*chd; // rotated gradient
   dvector gr2(1,nvar);	  // rotated gradient
   gr2=gr2begin;		// rotated gradient
-
   // Update momentum by half step (why negative?)
   phalf=p-eps/2*gr2;
   // Update parameters by full step
@@ -535,7 +535,7 @@ double function_minimizer::leapfrog(int nvar,dvector& gr, dmatrix& chd, double e
   gr2=gr*chd;
   // Last half step for momentum
   p=phalf-eps/2*gr2; 
-  return(nll)
+  return(nll);
 }
 
-leapfrog(nvar, gr, chd, eps, pp, y);
+

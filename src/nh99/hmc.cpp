@@ -509,3 +509,33 @@ double function_minimizer::find_reasonable_stepsize(int nvar, const independent_
   return(eps2);
 } // end of function
 
+/**
+   Function to take a single HMC leapfrog step, given current position and
+   momentum variables. Returns nll value but also updates position and
+   momentum variables by reference.
+ **/
+
+double function_minimizer::leapfrog(int nvar,dvector& gr, dmatrix& chd, double eps, dvector& p, dvector& y)
+{
+  independent_variables z(1,nvar); // rotated bounded parameters???
+  dvector phalf;
+  dvector gr2begin=gr*chd; // rotated gradient
+  dvector gr2(1,nvar);	  // rotated gradient
+  gr2=gr2begin;		// rotated gradient
+
+  // Update momentum by half step (why negative?)
+  phalf=p-eps/2*gr2;
+  // Update parameters by full step
+  y+=eps*phalf;
+  // Transform parameters via mass matrix
+  z=chd*y;
+  // Get NLL and set updated gradient in gr by reference
+  double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+  // Update gradient via mass matrix
+  gr2=gr*chd;
+  // Last half step for momentum
+  p=phalf-eps/2*gr2; 
+  return(nll)
+}
+
+leapfrog(nvar, gr, chd, eps, pp, y);

@@ -260,7 +260,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,int_time__,energy__,lp__" << endl;
 
-
   // Declare and initialize the variables needed for the algorithm
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   dvector y(1,nvar); // unbounded parameters
@@ -290,7 +289,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
   }
   double mu=log(10*eps);
-  double eps3=eps;
+
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Random momentum for next iteration, only affects Ham values
@@ -336,6 +335,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     print_mcmc_progress(is, nmcmc, nwarmup);
   } // end of MCMC chain
+
   // This final ratio should closely match adapt_delta
   if(useDA){
     cout << "Final acceptance ratio=" << iaccept/nmcmc << " and target is " << adapt_delta<<endl;
@@ -448,7 +448,6 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   dvector gr2(1,nvar);		// updated rotated gradient
   dvector y2(1,nvar);		// updated position
 
-
   // Calculate initial Hamiltonian value
   double pprob1=0.5*norm2(p);
   z=chd*y;
@@ -459,7 +458,6 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   bool success=0; // whether or not algorithm worked after 50 iterations
 
   for(int k=1; k<50; k++){
-
     // Reinitialize position and momentum at each step.
     p2=p;
     y2=y;

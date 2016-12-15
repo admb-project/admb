@@ -1913,8 +1913,7 @@ public:
   void hmc_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
   void print_mcmc_progress(int is, int nmcmc, int nwarmup);
-  double find_reasonable_stepsize(int nvar, const independent_variables& x,
-    dvector& gr, dmatrix& chd, double eps, dvector pp);
+  double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
     double eps, dvector& p, dvector& y, dvector& gr2);
   double adapt_eps(int ii, double eps, double alpha,

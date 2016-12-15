@@ -249,8 +249,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double gamma=0.05;  double t0=10;  double kappa=0.75;
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
-  dvector pp(1,nvar);
-  pp.fill_randn(rng);
   double time_warmup=0;
   double time_total=0;
   std::clock_t start = clock();
@@ -279,6 +277,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // initial rotated gradient
   dvector gr2(1,nvar); gr2=gr*chd;
   dvector p(1,nvar);		// momentum vector
+  p.fill_randn(rng);
   // Copy initial value to parsave in case first trajectory rejected
   initial_params::copy_all_values(parsave,1.0);
   double iaccept=0.0;
@@ -287,7 +286,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector ybegin(1,nvar); ybegin=y;
   double nll=nllbegin;
   if(useDA){
-    eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
+    eps=find_reasonable_stepsize(nvar,y,p,chd);
     epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
   }
   double mu=log(10*eps);
@@ -435,71 +434,70 @@ void function_minimizer::print_mcmc_timing(double time_warmup, double time_total
   cout << ss.str() << endl;
 }
 
-double function_minimizer::find_reasonable_stepsize(int nvar, const independent_variables& x,dvector& gr,
-						    dmatrix& chd, double eps, dvector pp)
+double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd)
 {
-  // Draw random momentum (used for all iterations)
-  independent_variables z(1,nvar); // rotated bounded parameters???
-  dvector pp2(1,nvar);
-  dvector yy(1,nvar);
-  dvector gr2(1,nvar);	  // rotated gradient
+  // This function holds the position (y) and momentum (p) vectors fixed
+  // and takes a single step of size eps. This process repeats until a
+  // reasonable eps is found. Thus need to make sure y and p are constant
+  // and only eps changes.
 
-  yy.initialize();
+  independent_variables z(1,nvar); // rotated bounded parameters
+  dvector gr(1,nvar);		   // gradients
+  double eps=1;			   // initial eps
+  dvector p2(1,nvar);		// updated momentum
+  dvector gr2(1,nvar);		// updated rotated gradient
+  dvector y2(1,nvar);		// updated position
+
 
   // Calculate initial Hamiltonian value
-  double pprob1=0.5*norm2(pp);
-  // negative log density at initial state
-  z=chd*yy;
-  double nll1=get_hybrid_monte_carlo_value(nvar,z,gr);
+  double pprob1=0.5*norm2(p);
+  z=chd*y;
+  double nllbegin=get_hybrid_monte_carlo_value(nvar,z,gr);
   dvector gr2begin=gr*chd; // rotated gradient
-  double H1=nll1+pprob1;
-  double eps2=eps;
-  double a=-1;
+  double H1=nllbegin+pprob1;
+  double a=-1;			// whether to double or halve eps
   bool success=0; // whether or not algorithm worked after 50 iterations
 
   for(int k=1; k<50; k++){
-    // Reset the position and momentum variables and gradients
-    yy.initialize();
 
-    // Make one leapfrog step
-    dvector phalf=pp-eps2/2*gr2begin;
-    yy+=eps2*phalf;
-    z=chd*yy;
-    double nll2=get_hybrid_monte_carlo_value(nvar,z,gr);
-    gr2=gr*chd;
-    pp2=phalf-eps2/2*gr2; // this leaves pp untouched
-    // Calculate new Hamiltonian value
-    double pprob2=0.5*norm2(pp2);
+    // Reinitialize position and momentum at each step.
+    p2=p;
+    y2=y;
+    gr2=gr2begin;
+
+    // Make one leapfrog step and check acceptance ratio
+    double nll2=leapfrog(nvar, gr, chd, eps, p2, y2, gr2);
+    double pprob2=0.5*norm2(p2);
     double H2=nll2+pprob2;
-    double accept_temp=exp(H1-H2);
+    double alpha=exp(H1-H2);
 
     // On first step, determine whether to halve or double. If a=1, then
-    // eps2 keeps doubling until alpha passes 0.5; otherwise it halves until
+    // eps keeps doubling until alpha passes 0.5; otherwise it halves until
     // that happens.
     if(k==1){
       // Determine initial acceptance ratio is too big or too small
-      bool result = exp(H1-H2)>0.5;
-      if(std::isnan(result)) result=0; // if divergence occurs, acceptance prob is 0 so a=-1
+      bool result = alpha >0.5;
+      // if divergence occurs, acceptance prob is 0 so a=-1
+      if(std::isnan(result)) result=0;
       if(result) a=1;
     }
     // Check if the 1/2 threshold has been crossed
-    double x1=pow(accept_temp,a);
+    double x1=pow(alpha,a);
     double x2=pow(2,-a);
     if(x1 < x2){
-      cout << "Found reasonable step size of " << eps2 << " after " << k << " steps." << endl;
-      eps=eps2;
+      cout << "Found reasonable step size of " << eps << " after " << k << " steps." << endl;
       success=1;
       break;
     }
     // Otherwise either halve or double eps and do another iteration
-    eps2=pow(2,a)*eps2;
+    eps=pow(2,a)*eps;
   }
   if(success==0) {
     cerr << "Did not find reasonable initial step size after 50 iterations -- " <<
       "is something wrong with model?" << endl;
     ad_exit(1);
   }
-  return(eps2);
+  return(eps);
 } // end of function
 
 /**

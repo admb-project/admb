@@ -290,6 +290,21 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   double mu=log(10*eps);
 
+  dvector _thetaminus(1,nvar);
+  dvector _thetaplus(1,nvar);
+  dvector _thetapprime(1,nvar);
+  dvector _rminus(1,nvar);
+  dvector _rplus(1,nvar);
+  double _alphaprime;
+  int _nalphaprime;
+  bool _sprime;
+  int _nprime;
+  int _nfevals=0;
+  bool _divergent=0;
+  double log= Ham -exprnd(1);
+  build_tree(nvar, gr, chd, eps, p, y, gr2, double logu, int v, int j, double H0)
+
+
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Random momentum for next iteration, only affects Ham values
@@ -354,92 +369,4 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       pofs_psave=NULL;
     }
 } // end of HMC function
-
-
-
-<<<<<<< HEAD
-=======
-void function_minimizer::print_mcmc_timing(double time_warmup, double time_total)
-{
-  std::string title(" Elapsed Time: ");
-  std::stringstream ss;
-  ss.str("");
-  ss << title << time_warmup << " seconds (Warm-up)";
-  cout << ss.str() << endl;
-  ss.str("");
-  ss << std::string(title.size(), ' ') << time_total-time_warmup << " seconds (Sampling)";
-  cout << ss.str() << endl;
-  ss.str("");
-  ss << std::string(title.size(), ' ') << time_total << " seconds (Total)";
-  cout << ss.str() << endl;
-}
-
-double function_minimizer::find_reasonable_stepsize(int nvar, const independent_variables& x,dvector& gr,
-						    dmatrix& chd, double eps, dvector pp)
-{
-  // Draw random momentum (used for all iterations)
-  independent_variables z(1,nvar); // rotated bounded parameters???
-  dvector pp2(1,nvar);
-  dvector yy(1,nvar);
-  dvector gr2(1,nvar);	  // rotated gradient
-
-  yy.initialize();
-
-  // Calculate initial Hamiltonian value
-  double pprob1=0.5*norm2(pp);
-  // negative log density at initial state
-  z=chd*yy;
-  double nll1=get_hybrid_monte_carlo_value(nvar,z,gr);
-  dvector gr2begin=gr*chd; // rotated gradient
-  double H1=nll1+pprob1;
-  double eps2=eps;
-  double a=-1;
-  bool success=0; // whether or not algorithm worked after 50 iterations
-
-  for(int k=1; k<50; k++){
-    // Reset the position and momentum variables and gradients
-    yy.initialize();
-
-    // Make one leapfrog step
-    dvector phalf=pp-eps2/2*gr2begin;
-    yy+=eps2*phalf;
-    z=chd*yy;
-    double nll2=get_hybrid_monte_carlo_value(nvar,z,gr);
-    gr2=gr*chd;
-    pp2=phalf-eps2/2*gr2; // this leaves pp untouched
-    // Calculate new Hamiltonian value
-    double pprob2=0.5*norm2(pp2);
-    double H2=nll2+pprob2;
-    double accept_temp=exp(H1-H2);
-
-    // On first step, determine whether to halve or double. If a=1, then
-    // eps2 keeps doubling until alpha passes 0.5; otherwise it halves until
-    // that happens.
-    if(k==1){
-      // Determine initial acceptance ratio is too big or too small
-      double value = exp(H1-H2);
-      bool result = std::isnan(value) || value > 0.5;
-      if(result) result=0; // if divergence occurs, acceptance prob is 0 so a=-1
-      if(result) a=1;
-    }
-    // Check if the 1/2 threshold has been crossed
-    double x1=pow(accept_temp,a);
-    double x2=pow(2,-a);
-    if(x1 < x2){
-      cout << "Found reasonable step size of " << eps2 << " after " << k << " steps." << endl;
-      eps=eps2;
-      success=1;
-      break;
-    }
-    // Otherwise either halve or double eps and do another iteration
-    eps2=pow(2,a)*eps2;
-  }
-  if(success==0) {
-    cerr << "Did not find reasonable initial step size after 50 iterations -- " <<
-      "is something wrong with model?" << endl;
-    ad_exit(1);
-  }
-  return(eps2);
-} // end of function
->>>>>>> 48565f48f78198821246ea8c88f7bc9bc7b8b533
 

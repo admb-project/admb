@@ -1915,8 +1915,11 @@ public:
   void print_mcmc_progress(int is, int nmcmc, int nwarmup);
   double find_reasonable_stepsize(int nvar, const independent_variables& x,
     dvector& gr, dmatrix& chd, double eps, dvector pp);
-  double leapfrog(int nvar,dvector& gr, dmatrix& chd, 
+  double leapfrog(int nvar,dvector& gr, dmatrix& chd,
     double eps, dvector& p, dvector& y, dvector& gr2);
+  double adapt_eps(int ii, double eps, double alpha,
+		 double& adapt_delta, dvector& epsvec, dvector& epsbar,
+		   dvector& Hbar);
   double pvm_master_get_monte_carlo_value(int nvar,
     const dvector& x);
   void pvm_slave_get_monte_carlo_value(int nvar);

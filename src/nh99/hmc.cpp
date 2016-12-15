@@ -246,8 +246,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::xinit(x0);
 
   // Dual averaging components
-  // double gamma=0.05;  double t0=10;  double kappa=0.75;
-  // double mu=log(10*eps);
+  double gamma=0.05;  double t0=10;  double kappa=0.75;
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
   dvector pp(1,nvar);
@@ -291,7 +290,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
     epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
   }
-
+  double mu=log(10*eps);
+  double eps3=eps;
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Random momentum for next iteration, only affects Ham values
@@ -331,16 +331,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // Adaptation of step size (eps).
     if(useDA && is <= nwarmup){
-      // // If divergence, there is 0 acceptance probability so alpha=0.
-      // if(std::isnan(alpha)) alpha=0;
-      // Hbar(is+1)= (1-1/(is+t0))*Hbar(is) + (adapt_delta-alpha)/(is+t0);
-      // double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
-      // epsvec(is+1)=exp(logeps);
-      // double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
-      // epsbar(is+1)=exp(logepsbar);
-      // eps=epsvec(is+1);	// this is the adapted step size for the next iteration
-      eps=adapt_eps(is, eps,  alpha, adapt_delta, epsvec, epsbar, Hbar);
-      if(is==3) cout << epsvec << Hbar << epsbar;
+      eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
     }
 
     adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
@@ -370,11 +361,10 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
 
 double function_minimizer::adapt_eps(int ii, double eps, double alpha,
-				     double& adapt_delta,
+				     double& adapt_delta, double& mu,
 				     dvector& epsvec, dvector& epsbar,
 				     dvector& Hbar){
   double gamma=0.05;  double t0=10;  double kappa=0.75;
-  double mu=log(10*eps);
   // If divergence, there is 0 acceptance probability so alpha=0.
   if(std::isnan(alpha)) alpha=0;
   Hbar(ii+1)= (1-1/(ii+t0))*Hbar(ii) + (adapt_delta-alpha)/(ii+t0);

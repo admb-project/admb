@@ -273,8 +273,12 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // transformed params
   independent_variables z(1,nvar); z=chd*y;
   dvector gr(1,nvar);		// gradients in unbounded space
-  // Need to run this to fill gr with current gradients. NLL is discarded
-  double nll=get_hybrid_monte_carlo_value(nvar,z,gr); // probability of position
+  // Need to run this to fill gr with current gradients and initial NLL.
+  double nllbegin=get_hybrid_monte_carlo_value(nvar,z,gr);
+  if(std::isnan(nllbegin)){
+    cerr << "Starting MCMC trajectory at NaN -- something is wrong!" << endl;
+    ad_exit(1);
+  }
   // initial rotated gradient
   dvector gr2(1,nvar); gr2=gr*chd;
   dvector p(1,nvar);		// momentum vector
@@ -284,20 +288,14 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // The gradient and params at beginning of trajectory, in case rejected.
   dvector gr2begin(1,nvar); gr2begin=gr2;
   dvector ybegin(1,nvar); ybegin=y;
+  double nll=nllbegin;
   if(useDA) eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
-    // Random momentum for next iteration
+    // Random momentum for next iteration, only affects Ham values
     p.fill_randn(rng);
-    z=chd*y;			// transformed params
-    // Update gr and get NLL
-    double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     double H0=nll+0.5*norm2(p);
-    if(std::isnan(nll)){
-      cerr << "Starting MCMC trajectory at NaN -- something is wrong!" << endl;
-      ad_exit(1);
-    }
 
     // Generate trajectory
     divergence=0;
@@ -319,11 +317,13 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Update for next iteration: params, Hamiltonian and gr2
       ybegin=y;
       gr2begin=gr2;
+      nllbegin=nll;
       initial_params::copy_all_values(parsave,1.0);
     } else {
-      // Reject and don't update params or initial gradient for next loop
+      // Reject and don't update anything to reuse initials for next trajectory
       y=ybegin;
       gr2=gr2begin;
+      nll=nllbegin;
     }
     // Save parameters to psv file, duplicated if rejected
     (*pofs_psave) << parsave;

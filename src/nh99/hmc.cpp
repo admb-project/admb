@@ -224,13 +224,13 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // 	}
   //   }
   if(diag_option){
-  for (int i=1;i<=nvar;i++)
-    {
-      for (int j=1;j<=nvar;j++)
-	{
-	  S(i,j)*=current_scale(i)*current_scale(j);
-	}
-    }
+    for (int i=1;i<=nvar;i++)
+      {
+	for (int j=1;j<=nvar;j++)
+	  {
+	    S(i,j)*=current_scale(i)*current_scale(j);
+	  }
+      }
   }
   //  cout << "S after=" << S << endl;
   gradient_structure::set_NO_DERIVATIVES();
@@ -245,28 +245,6 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   gradient_structure::set_YES_DERIVATIVES();
   initial_params::xinit(x0);
 
-  // Declare and initialize the variables needed for the algorithm
-  dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
-  dvector y(1,nvar); // unbounded parameters
-  y.initialize();
-  dvector yold(1,nvar);	// unbounded parameters 2
-  independent_variables z(1,nvar);
-  z=chd*y; // rotated bounded parameters???
-  dvector gr(1,nvar);		// gradients in unbounded space
-  get_hybrid_monte_carlo_value(nvar,z,gr);
-  dvector gr2begin=gr*chd; // rotated gradient
-  dvector gr2(1,nvar);	  // rotated gradient
-  dvector p(1,nvar);  // momentum
-  p.fill_randn(rng);
-  yold=y;
-  gr2=gr2begin;		// rotated gradient
-  double pprob=0.5*norm2(p);	// probability of momenta
-  double nll=get_hybrid_monte_carlo_value(nvar,z,gr); // probability of position
-  double H0=nll+pprob;			       // initial Hamiltonian
-  int ii=1;
-  initial_params::copy_all_values(parsave,ii); // does bounding??
-  double iaccept=0.0;
-  dvector phalf;
   // Dual averaging components
   double gamma=0.05;  double t0=10;  double kappa=0.75;
   double mu=log(10*eps);
@@ -283,74 +261,90 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   tm* localtm = localtime(&now);
   cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name <<
     "' at " << asctime(localtm);
-  if(useDA) eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
-  ofstream adaptation("adaptation.csv", ios::trunc); // write sampler parameters
+  // write sampler parameters
+  ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,int_time__,energy__,lp__" << endl;
 
+
+  // Declare and initialize the variables needed for the algorithm
+  dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
+  dvector y(1,nvar); // unbounded parameters
+  y.initialize();
+  // transformed params
+  independent_variables z(1,nvar); z=chd*y;
+  dvector gr(1,nvar);		// gradients in unbounded space
+  // Need to run this to fill gr with current gradients. NLL is discarded
+  double nll=get_hybrid_monte_carlo_value(nvar,z,gr); // probability of position
+  // initial rotated gradient
+  dvector gr2(1,nvar); gr2=gr*chd;
+  dvector p(1,nvar);		// momentum vector
+  // Copy initial value to parsave in case first trajectory rejected
+  initial_params::copy_all_values(parsave,1.0);
+  double iaccept=0.0;
+  // The gradient and params at beginning of trajectory, in case rejected.
+  dvector gr2begin(1,nvar); gr2begin=gr2;
+  dvector ybegin(1,nvar); ybegin=y;
+  if(useDA) eps=find_reasonable_stepsize(nvar,z,gr, chd, eps, pp);
+
   // Start of MCMC chain
-  // Get a reasonable starting step size if the user didn't specify one
-  for (int is=1;is<=nmcmc;is++)
-    {
-      divergence=0;
-      // Start of single trajectory
-      for (int i=1;i<=L;i++)
-	{
-	  nll=leapfrog(nvar, gr, chd, eps, p, y, gr2);
-	  // Break trajectory early if a divergence occurs to save computation
-	  if(std::isnan(nll)){
-	    divergence=1;
-	    break;
-	  }
-	} // end of trajectory
-      pprob=0.5*norm2(p);	   // probability of momentum (iid standard normal)
-      double Ham=nll+pprob; // H at proposed state
-      double alpha=min(1.0, exp(H0-Ham)); // acceptance ratio
-      // this looks like a bug -- should leave momentum alone here until after saving values?
-      p.fill_randn(rng);
-      pprob=0.5*norm2(p);
+  for (int is=1;is<=nmcmc;is++) {
+    // Random momentum for next iteration
+    p.fill_randn(rng);
+    z=chd*y;			// transformed params
+    // Update gr and get NLL
+    double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    double H0=nll+0.5*norm2(p);
+    if(std::isnan(nll)){
+      cerr << "Starting MCMC trajectory at NaN -- something is wrong!" << endl;
+      ad_exit(1);
+    }
 
-      // Test whether to accept the proposed state
-      double rr=randu(rng);	   // Runif(1)
-      if (rr<alpha && !divergence) // accept
-	{
-	  iaccept++;
-	  yold=y;		// Update parameters
-	  H0=nll+pprob;
-	  gr2begin=gr2;
-	  ii=1;
-	  initial_params::copy_all_values(parsave,ii);
-	}
-      else // reject
-	{
-	  // Don't update params or initial gradient for next loop
-	  y=yold;
-	  z=chd*y;
-	  H0=nll+pprob;
-	  gr2=gr2begin;
-	}
-      // Save parameters to psv file
-      (*pofs_psave) << parsave;
+    // Generate trajectory
+    divergence=0;
+    for (int i=1;i<=L;i++) {
+      // leapfrog updates gr, p, y, and gr2 by reference
+      nll=leapfrog(nvar, gr, chd, eps, p, y, gr2);
+      // Break trajectory early if a divergence occurs to save computation
+      if(std::isnan(nll)){
+	divergence=1; break;
+      }
+    } // end of trajectory
 
-      // Do dual averaging to adapt step size. See algorithm 5 from Hoffman
-      // and Gelman (2014).
-      if(useDA && is <= nwarmup){
-	// If a divergence occurs, make step size smaller so it doesn't get
-	// stuck. This is very ad hoc and not in the NUTS paper. But it
-	// seems to make it more robust to divergences.
-	if(std::isnan(alpha)) alpha=0;
-	Hbar(is+1)= (1-1/(is+t0))*Hbar(is) + (adapt_delta-alpha)/(is+t0);
-	double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
-	epsvec(is+1)=exp(logeps);
-	double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
-	epsbar(is+1)=exp(logepsbar);
-	eps=epsvec(is+1);	// this is the adapted step size for the next iteration
-      }
-      adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
-      if(is ==nwarmup){
-	time_warmup = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-      }
-      print_mcmc_progress(is, nmcmc, nwarmup);
-    } // end of MCMC chain
+    // Test whether to accept the proposed state
+    double Ham=nll+0.5*norm2(p); // Update Hamiltonian for proposed set
+    double alpha=min(1.0, exp(H0-Ham)); // acceptance ratio
+    double rr=randu(rng);	   // Runif(1)
+    if (rr<alpha && !divergence){ // accept
+      iaccept++;
+      // Update for next iteration: params, Hamiltonian and gr2
+      ybegin=y;
+      gr2begin=gr2;
+      initial_params::copy_all_values(parsave,1.0);
+    } else {
+      // Reject and don't update params or initial gradient for next loop
+      y=ybegin;
+      gr2=gr2begin;
+    }
+    // Save parameters to psv file, duplicated if rejected
+    (*pofs_psave) << parsave;
+
+    // Adaptation of step size (eps).
+    if(useDA && is <= nwarmup){
+      // If divergence, there is 0 acceptance probability so alpha=0.
+      if(std::isnan(alpha)) alpha=0;
+      Hbar(is+1)= (1-1/(is+t0))*Hbar(is) + (adapt_delta-alpha)/(is+t0);
+      double logeps=mu-sqrt(is)*Hbar(is+1)/gamma;
+      epsvec(is+1)=exp(logeps);
+      double logepsbar= pow(is, -kappa)*logeps+(1-pow(is,-kappa))*log(epsbar(is));
+      epsbar(is+1)=exp(logepsbar);
+      eps=epsvec(is+1);	// this is the adapted step size for the next iteration
+    }
+    adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
+    if(is ==nwarmup){
+      time_warmup = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+    }
+    print_mcmc_progress(is, nmcmc, nwarmup);
+  } // end of MCMC chain
   // This final ratio should closely match adapt_delta
   if(useDA){
     cout << "Final acceptance ratio=" << iaccept/nmcmc << " and target is " << adapt_delta<<endl;

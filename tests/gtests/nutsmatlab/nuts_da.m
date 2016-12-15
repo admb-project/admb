@@ -38,6 +38,16 @@ if (nargin < 5)
     delta = 0.6;
 end
 
+format longg;
+
+fprintf('\nnuts_da begin\n');
+fprintf('\nnuts_da begin parameters\n');
+display(f);
+display(M);
+display(Madapt);
+display(theta0);
+display(delta);
+fprintf('\nnuts_da end parameters\n');
 assert(size(theta0, 1) == 1);
 
 D = length(theta0);
@@ -58,14 +68,18 @@ mu = log(10*epsilon);
 epsilonbar = 1;
 Hbar = 0;
 
-for m = 2:M+Madapt,
+mmax = M + Madapt;
+for m = 2:mmax,
     % Resample momenta.
     r0 = randn(1, D);
+    display(r0);
     % Joint log-probability of theta and momenta r.
     joint = logp - 0.5 * (r0 * r0');
     % Resample u ~ uniform([0, exp(joint)]).
     % Equivalent to (log(u) - joint) ~ exponential(1).
-    logu = joint - exprnd(1);
+    rexp = exprnd(1);
+    display(rexp);
+    logu = joint - rexp;
     % Initialize tree.
     thetaminus = samples(m-1, :);
     thetaplus = samples(m-1, :);
@@ -84,8 +98,28 @@ for m = 2:M+Madapt,
     s = 1;
     while (s == 1)
         % Choose a direction. -1=backwards, 1=forwards.
-        v = 2*(rand() < 0.5)-1;
+        rn = rand();
+        display(rn);
+        v = 2*(rn < 0.5)-1;
+
         % Double the size of the tree.
+        fprintf('\nbuild_tree main start\n');
+        if (v == -1)
+            display(thetaminus);
+            display(rminus);
+            display(gradminus);
+        else
+            display(thetaplus);
+            display(rplus);
+            display(gradplus);
+        end
+        display(logu);
+        display(v);
+        display(j);
+        display(epsilon);
+        display(f);
+        display(joint);
+        fprintf('\nbuild_tree main start end\n');
         if (v == -1)
             [thetaminus, rminus, gradminus, ~, ~, ~, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
                 build_tree(thetaminus, rminus, gradminus, logu, v, j, epsilon, f, joint);
@@ -93,9 +127,30 @@ for m = 2:M+Madapt,
             [~, ~, ~, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alpha, nalpha] = ...
                 build_tree(thetaplus, rplus, gradplus, logu, v, j, epsilon, f, joint);
         end
+        fprintf('\nbuild_tree main end\n');
+        if (v == -1)
+            display(thetaminus);
+            display(rminus);
+            display(gradminus);
+        else
+            display(thetaplus);
+            display(rplus);
+            display(gradplus);
+        end
+        display(thetaprime);
+        display(gradprime);
+        display(logpprime);
+        display(nprime);
+        display(sprime);
+        display(alpha);
+        display(nalpha);
+        fprintf('\nbuild_tree main end end\n');
+
         % Use Metropolis-Hastings to decide whether or not to move to a
         % point from the half-tree we just generated.
-        if ((sprime == 1) && (rand() < nprime/n))
+        rn = rand();
+        display(rn);
+        if ((sprime == 1) && (rn < nprime/n))
             samples(m, :) = thetaprime;
             logp = logpprime;
             grad = gradprime;
@@ -104,10 +159,11 @@ for m = 2:M+Madapt,
         n = n + nprime;
         % Decide if it's time to stop.
         s = sprime && stop_criterion(thetaminus, thetaplus, rminus, rplus);
+
         % Increment depth.
         j = j + 1;
     end
-    
+
     % Do adaptation of epsilon if we're still doing burn-in.
     eta = 1 / (m - 1 + t0);
     Hbar = (1 - eta) * Hbar + eta * (delta - alpha / nalpha);
@@ -118,18 +174,44 @@ for m = 2:M+Madapt,
     else
         epsilon = epsilonbar;
     end
+    %fprintf('m: %d nfevals: %d\n', m, nfevals);
+    %if (m == 57) %58
+    %  break;
+    %end;
 end
 samples = samples(Madapt+1:end, :);
 fprintf('Took %d gradient evaluations.\n', nfevals);
+fprintf('\nnuts_da end\n');
+fprintf('\nnuts_da begin output\n');
+display(samples);
+display(epsilon);
+display(nfevals);
+fprintf('\nnuts_da end output\n');
 end
 
 function [thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, epsilon, f)
+
+fprintf('\nleapfrog begin\n');
+format longg;
+display(theta);
+display(r);
+display(grad);
+display(epsilon);
+display(f);
+
 rprime = r + 0.5 * epsilon * grad;
 thetaprime = theta + epsilon * rprime;
 [logpprime, gradprime] = f(thetaprime);
 rprime = rprime + 0.5 * epsilon * gradprime;
 global nfevals;
 nfevals = nfevals + 1;
+
+display(nfevals);
+display(thetaprime);
+display(rprime);
+display(gradprime);
+display(logpprime);
+fprintf('leapfrog end\n');
 end
 
 function criterion = stop_criterion(thetaminus, thetaplus, rminus, rplus)
@@ -140,6 +222,17 @@ end
 % The main recursion.
 function [thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
                 build_tree(theta, r, grad, logu, v, j, epsilon, f, joint0)
+fprintf('build_tree begin %i\n', j);
+display(theta);
+display(r);
+display(grad);
+display(logu);
+display(v);
+display(j);
+display(epsilon);
+display(f);
+display(joint0);
+random_number = -1;
 if (j == 0)
     % Base case: Take a single leapfrog step in the direction v.
     [thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
@@ -173,8 +266,9 @@ else
             [~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
                 build_tree(thetaplus, rplus, gradplus, logu, v, j-1, epsilon, f, joint0);
         end
+        random_number = rand();
         % Choose which subtree to propagate a sample up from.
-        if (rand() < nprime2 / (nprime + nprime2))
+        if (random_number < nprime2 / (nprime + nprime2))
             thetaprime = thetaprime2;
             gradprime = gradprime2;
             logpprime = logpprime2;
@@ -188,11 +282,34 @@ else
         nalphaprime = nalphaprime + nalphaprime2;
     end
 end
+fprintf('build_tree end %i\n', j);
+fprintf('build_tree output begin %i\n', j);
+display(thetaminus);
+display(rminus);
+display(gradminus);
+display(thetaplus);
+display(rplus);
+display(gradplus);
+display(thetaprime);
+display(gradprime);
+display(logpprime);
+display(nprime);
+display(sprime);
+display(alphaprime);
+display(nalphaprime);
+display(random_number);
+fprintf('build_tree output end %i\n', j);
 end
 
 function epsilon = find_reasonable_epsilon(theta0, grad0, logp0, f)
+format longg;
+fprintf('\nfind_reasonable_epsilon begin\n');
 epsilon = 1;
+display(theta0);
+display(grad0);
+display(logp0);
 r0 = randn(1, length(theta0));
+display(r0);
 % Figure out what direction we should be moving epsilon.
 [~, rprime, ~, logpprime] = leapfrog(theta0, r0, grad0, epsilon, f);
 acceptprob = exp(logpprime - logp0 - 0.5 * (rprime * rprime' - r0 * r0'));
@@ -203,13 +320,6 @@ while (acceptprob^a > 2^(-a))
     [~, rprime, ~, logpprime] = leapfrog(theta0, r0, grad0, epsilon, f);
     acceptprob = exp(logpprime - logp0 - 0.5 * (rprime * rprime' - r0 * r0'));
 end
+display(epsilon);
+fprintf('\nfind_reasonable_epsilon end\n');
 end
-
-
-
-
-
-
-
-
-

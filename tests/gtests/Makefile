@@ -26,7 +26,6 @@ GTESTS=\
  test_gradient_structure.cpp\
  test_option_match.cpp\
  test_lvector.cpp\
- test_adjson.cpp\
  test_adpool.cpp\
  test_dmatrix.cpp\
  test_param_init_bounded_number_vector.cpp\
@@ -81,10 +80,19 @@ GTESTS=\
  test_df1b23array.cpp\
  test_d3_array.cpp\
  test_data_matrix.cpp\
+ test_tiny_ad.cpp\
+ test_adjson.cpp\
  main.cpp
 
+ifeq ($(CXX),openCC)
+  GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
+endif
+ifeq ($(COVERAGE),yes)
+  GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
+endif
+
 ##Need to debug this
-## test_autodif.cpp\
+## test_autodif.cpp
 ## test_data_number.cpp
 ## test_df1b2variable.cpp
 ## test_atan2.cpp
@@ -179,19 +187,31 @@ else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_nuts.cpp
 endif
 
-nuts: test_nuts	
+nuts_da.obj: nuts_da.cpp nuts_da.h
+ifeq ($(SHELL),cmd)
+	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) nuts_da.cpp
+else
+	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) nuts_da.cpp
+endif
+
+nuts2:
 	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;"
+
+test_nuts.txt: nutsmatlab/nuts_da.m
+	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
+
+nuts: test_nuts.txt test_nuts
 ifeq ($(SHELL),cmd)
 	test_nuts
 else
 	./test_nuts
 endif
 
-test_nuts: main.cpp gtest-all.obj test_nuts.obj
+test_nuts: main.cpp gtest-all.obj test_nuts.obj nuts_da.obj
 ifeq ($(SHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj main.cpp
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj nuts_da.obj main.cpp
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj main.cpp
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj nuts_da.obj main.cpp
 endif
 
 gtest-all.obj: googletest-read-only
@@ -276,6 +296,7 @@ ifeq ($(SHELL),cmd)
 	@del finance.b0 2>NUL
 	@del finance.p0 2>NUL
 	@del test_dvector.txt 2>NUL
+	@del test_adstring_array.txt 2>NUL
 else
 	@rm -vf finance.b0
 	@rm -vf finance.p0
@@ -330,4 +351,5 @@ else
 	@rm -vf test_scalefactor
 	@rm -vf test_dvector.txt
 	@rm -rvf make_sub_directory
+	@rm -vf test_adstring_array.txt
 endif

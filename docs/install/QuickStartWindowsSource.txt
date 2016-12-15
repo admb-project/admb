@@ -1,6 +1,6 @@
 #ADMB Project 
-*ADMB-11.5*  
-*Released December 11, 2015*  
+*ADMB-11.6pre*  
+*Released December 12, 2016*  
 
 ADMB source build and usage procedures for Windows.
 
@@ -35,7 +35,7 @@ Quick Start
 
 1. **Download** ADMB
 
-       Download source distribution [admb-11.5-src.zip](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-src.zip).
+       Download source distribution [admb-11.6pre-src.zip](https://github.com/admb-project/admb/releases/download/admb-11.6pre/admb-11.6pre-src.zip).
 
        Double click downloaded zip file and copy admb directory to the Local Drive (**C:\\>)**.
 
@@ -89,7 +89,7 @@ Quick Start
 
            C:\admb\examples\admb\simple\> simple.exe
 
-       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.5/) for more information.
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.6pre/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

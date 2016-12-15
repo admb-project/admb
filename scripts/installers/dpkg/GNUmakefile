@@ -1,4 +1,4 @@
-VERSION=11.5
+VERSION=11.6pre
 
 all:
 	$(MAKE) clean

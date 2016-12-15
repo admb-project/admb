@@ -1,6 +1,8 @@
 #include <df1b2fun.h>
-#define FALSE false
-#define TRUE  true
+#ifndef _WIN32
+  #define FALSE false
+  #define TRUE  true
+#endif
 #include "integrate.hpp"
 using gauss_kronrod::integrate;
 

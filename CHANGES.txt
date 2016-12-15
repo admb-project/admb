@@ -1,6 +1,6 @@
 #ADMB Project  
-*ADMB-11.5*  
-*Released December 11, 2015*  
+*ADMB-11.6pre*  
+*Released December 12, 2016*  
 
 Describe changes and features for each release.
 
@@ -16,13 +16,15 @@ The goals for all releases are
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-X
+ADMB-11.6
 ---------
 
 ####New Supported Compilers
 
-* GNU C++ 6.1 and 5.3
+* GNU C++ 6.2 and 5.3
 * Rtools 3.4
+* Oracle Developer Studio 12.5
+* Intel C++ Compiler 2017
 
 ####Changes and Improvements
 
@@ -38,11 +40,42 @@ ADMB-X
   $ gdb ./model
 
 * Configured and automated builds for ADMB-IDE.
-* Merged Anders Nielsen bug fixes and new features such as vectorize.
-* Added tiny_ad.hpp feature developed by DTU.
+* Merged Kasper Kristensen and Anders Nielsen bug fixes.
+* Added new features such as tiny_ad.hpp and vectorize developed by DTU. See the report [Extending TMB and ADMB functionality jointly](http://www.admb-project.org/developers/workshops/seattle-2016/Kristensen_Anders_Report.pdf).
 * Able to use Rtools\bin\make to build admb from source.
 * Replaced rgamma function.
 * Fixed numerous bugs and added various improvements.
+* Compilers should support C++11 standard to build ADMB.
+* Added experimental Hybrid Monte Carlo function by Cole Monnahan.
+* Added experimental JSON data structure for data input.
+* Added support for C++11 standard into admb script and build files.
+* Added support for C++14 standard into admb script and build files if supported by compiler.
+* Added release version into admb scripts -h option to help troubleshooting installation conflicts.
+
+  The new output include **Release Version** info.
+
+  $ admb -h
+
+  Builds AD Model Builder executable or library.
+
+  Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
+
+  **Release Version: 11.6pre**
+
+  Options:
+  -c     Build only object file(s) (.obj).
+  -d     Build a shared library (.so).
+  -g     Build with debug symbols.
+  -r     Build with Random effects library (ADMB-RE).
+  -f     Build with Fast optimized mode library (no bounds checking).
+         By default, admb script builds with bounds checking.
+  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl
+         extension)
+  src(s) C/C++ Source file(s) containing classes, methods and variables that
+         are used in model.
+  
+* MinGW-w64 Windows installers now include GNU GCC 6.2 compiler.
+* Other bug fixes and improvements
 
 ####Developers changes
 
@@ -59,6 +92,9 @@ ADMB-11.5
 * Microsoft Visual C++ 14.0
 * Intel C++ 2016
 * GNU C++ 5.1
+
+####Compilers no longer supported
+* Microsoft Visual C++ 11.0
 
 ####Changes and Improvements
 * Change to Dave Fournier's version of cspline.cpp.

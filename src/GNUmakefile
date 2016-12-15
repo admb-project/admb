@@ -1,20 +1,19 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(TERM),cygwin)
-  else
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL = cmd
-    ifeq ($(SHELL),cmd)
-      MYPWD=$(shell cd)
+  ifneq ($(TERM),cygwin)
+    ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+      SHELL = cmd
+      ifeq ($(SHELL),cmd)
+        MYPWD=$(shell cd)
+      else
+        MYPWD=$(shell cmd /C cd)
+      endif
+      PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH)
     else
-      MYPWD=$(shell cmd /C cd)
+      ifneq ($(TERM),xterm)
+        MYPWD=$(shell pwd)
+        PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
+      endif
     endif
-    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH)
-  else
-    ifneq ($(TERM),xterm)
-      MYPWD=$(shell pwd)
-      PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
-    endif
-  endif
   endif
 endif
 
@@ -66,6 +65,7 @@ ifdef LDFLAGS
   USER_LDFLAGS:= $(LDFLAGS)
 endif
 
+ADCXXFLAGS=
 ifdef SHARED
   ifneq ($(OS),Windows_NT)
     ADCXXFLAGS:= -fPIC $(ADCXXFLAGS)
@@ -83,7 +83,46 @@ else
 endif
 
 ifneq ($(CXX),CC)
-ADCXXFLAGS:= -Wall -Wextra -Wconversion -Wno-unused-parameter $(ADCXXFLAGS)
+ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-unused-parameter
+endif
+
+ifeq ($(SHELL),cmd)
+  ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+else
+  ifeq ("$(shell uname)","Darwin")
+    ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+  else
+    ifeq ($(CXX),clang++)
+      ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+    else
+      ifeq ($(CXX),icpc)
+        ICPCMAJVER:=$(shell icpc -dumpversion | cut -f1 -d. )
+        ifeq ("$(ICPCMAJVER)","17")
+          ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+        else
+          ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+        endif
+      else
+        ifeq ($(CXX),CC)
+          ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+        else
+          ifeq ($(CXX),g++)
+            GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
+            ifeq ("$(GCCMAJVER)","4")
+              GCCMINVER:=$(shell gcc -dumpversion | cut -f2 -d. )
+              ifeq ("$(GCCMINVER)","9")
+                ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+              else
+                ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)
+              endif
+            else
+              ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+            endif
+          endif
+        endif
+      endif
+    endif
+  endif
 endif
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
@@ -118,9 +157,8 @@ ifeq ($(SHELL),cmd)
 endif
 endif
 
-override CXXFLAGS += $(ADCXXFLAGS)
-
-CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS))
+CXXFLAGS_SAF_LIB=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
+CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS_SAF_LIB))
 
 ifeq ($(CXX),c++)
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
@@ -154,6 +192,9 @@ OBJECTS:=$(OBJECTS) $(addprefix optlp-nh99-,$(OBJ6)) optlp-sparse-hs_sparse.obj
 OBJECTS:=$(OBJECTS) $(addprefix saflp-nh99-,$(OBJ6)) saflp-sparse-hs_sparse.obj
 
 include tools99/objects.lst
+ifeq ($(CXX),openCC)
+OBJ7:=$(filter-out adjson.obj,$(OBJ7))
+endif
 OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools99-,$(OBJ7))
 
 ifeq ($(COVERAGE),yes)
@@ -350,40 +391,40 @@ else
 endif
 $(OBJSDIR)saflp-nh99-banner.obj: nh99\banner.cpp
 ifeq ($(ADMB_VERSION),)
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
-	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS)) -o $@ $<
+	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_SAF_LIB)) -o $@ $<
 endif
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 $(OBJSDIR)optlp-df1b2-separable-%.obj: df1b2-separable\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-df1b2-separable-%.obj: df1b2-separable\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 $(OBJSDIR)optlp-linad99-%.obj:linad99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-linad99-%.obj:linad99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-%.obj:nh99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-%.obj:nh99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 $(OBJSDIR)optlp-tools99-%.obj:tools99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
 ifeq ($(ADMB_VERSION),)
@@ -393,9 +434,9 @@ else
 endif
 $(OBJSDIR)saflp-nh99-banner.obj: nh99/banner.cpp
 ifeq ($(ADMB_VERSION),)
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
-	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS)) -o $@ $<
+	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_SAF_LIB)) -o $@ $<
 endif
 
 ifeq ($(DEBUG),yes)
@@ -410,7 +451,7 @@ $(OBJSDIR)saflp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
 else
 $(OBJSDIR)saflp-sparse-hs_sparse.obj:sparse/hs_sparse.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
 $(OBJSDIR)optlp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
@@ -424,7 +465,7 @@ $(OBJSDIR)saflp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
 else
 $(OBJSDIR)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
 $(OBJSDIR)optlp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
@@ -438,7 +479,7 @@ $(OBJSDIR)saflp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
 else
 $(OBJSDIR)saflp-linad99-%.obj:linad99/%.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
 $(OBJSDIR)optlp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
@@ -452,7 +493,7 @@ $(OBJSDIR)saflp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
 else
 $(OBJSDIR)saflp-nh99-%.obj:nh99/%.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
 $(OBJSDIR)optlp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
@@ -466,7 +507,7 @@ $(OBJSDIR)saflp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
 else
 $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
 endif
-	$(CXX) -c $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 endif
 
 includes: dirs
@@ -495,6 +536,7 @@ ifeq ($(SHELL),cmd)
 	copy tools99\integrate.cpp ${DIST}\include
 	copy tools99\integrate.hpp ${DIST}\include
 	copy tools99\integrate_wrap.hpp ${DIST}\include
+	copy tools99\adjson.h ${DIST}\include
 	copy df1b2-separable\adpool.h ${DIST}\include
 	copy df1b2-separable\adrndeff.h ${DIST}\include
 	copy df1b2-separable\df1b2fun.h ${DIST}\include
@@ -530,6 +572,7 @@ else
 	cp tools99/integrate.cpp ${DIST}/include
 	cp tools99/integrate.hpp ${DIST}/include
 	cp tools99/integrate_wrap.hpp ${DIST}/include
+	cp tools99/adjson.h ${DIST}/include
 	cp df1b2-separable/adpool.h ${DIST}/include
 	cp df1b2-separable/adrndeff.h ${DIST}/include
 	cp df1b2-separable/df1b2fun.h ${DIST}/include

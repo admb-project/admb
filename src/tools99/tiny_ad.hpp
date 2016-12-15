@@ -8,19 +8,15 @@
 #endif
 
 /* Select the vector class to use */
-#ifdef TINY_AD_USE_STD_VALARRAY
-#include "tiny_valarray.hpp"
-#define TINY_VECTOR(type,size) tiny_vector<type, size>
-#endif
-
-#ifdef TINY_AD_USE_TINY_VEC
-#include "tiny_vec.hpp"
-#define TINY_VECTOR(type,size) tiny_vec<type, size>
-#endif
-
-#ifdef TINY_AD_USE_EIGEN_VEC
-#include <Eigen/Dense>
-#define TINY_VECTOR(type,size) Eigen::Array<type, size, 1>
+#if defined(TINY_AD_USE_STD_VALARRAY)
+  #include "tiny_valarray.hpp"
+  #define TINY_VECTOR(type,size) tiny_vector<type, size>
+#elif defined(TINY_AD_USE_EIGEN_VEC)
+  #include <Eigen/Dense>
+  #define TINY_VECTOR(type,size) Eigen::Array<type, size, 1>
+#else
+  #include "tiny_vec.hpp"
+  #define TINY_VECTOR(type,size) tiny_vec<type, size>
 #endif
 
 namespace tiny_ad {
@@ -180,10 +176,7 @@ namespace tiny_ad {
   /* Print method */
   template<class T, class V>
   std::ostream &operator<<(std::ostream &os, const ad<T, V> &x) {
-    os << "{";
-    os << " value=" << x.value;
-    os << " deriv=" << x.deriv;
-    os << "}";
+    os << "{value=" << x.value << ", deriv=" << x.deriv << "}";
     return os;
   }
 

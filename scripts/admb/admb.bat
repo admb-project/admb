@@ -173,10 +173,19 @@ if "!CXX!"=="cl" (
       set LD=g++
     )
   )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr 4.') do (
+    set STDCXX=-std=c++11
+  )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr 5.') do (
+    set STDCXX=-std=c++14
+  )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr 6.') do (
+    set STDCXX=-std=c++14
+  )
   if defined CXXFLAGS (
-    set CXXFLAGS= -c !CXXFLAGS!
+    set CXXFLAGS= -c !STDCXX! !CXXFLAGS!
   ) else (
-    set CXXFLAGS= -c
+    set CXXFLAGS= -c !STDCXX!
   )
   if defined d (
     if defined LDFLAGS (
@@ -431,8 +440,12 @@ goto EOF
 :HELP
 echo Builds AD Model Builder executable or library.
 echo.
+echo Release Version: 11.6pre
+echo Location: %~dp0
+echo.
 echo Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
 echo.
+echo Options:
 echo  -c     Build only object file(s) (.obj).
 echo  -d     Build a dynamic library (.dll).
 echo  -g     Build with debug symbols.

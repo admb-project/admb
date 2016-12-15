@@ -1,6 +1,6 @@
 #ADMB Project
-*ADMB-11.5*  
-*Released December 11, 2015*  
+*ADMB-11.6pre*  
+*Released December 12, 2016*  
 
 ADMB source build and usage procedures for Windows and Visual C++ compilers.
 
@@ -18,7 +18,7 @@ _**Note**_ &mdash; A free version is available go to [Visual Studio Express](htt
 
 1. **Download** ADMB source
 
-       Download source distribution [admb-11.5-src.zip](https://github.com/admb-project/admb/releases/download/admb-11.5/admb-11.5-src.zip).
+       Download source distribution [admb-11.6pre-src.zip](https://github.com/admb-project/admb/releases/download/admb-11.6pre/admb-11.6pre-src.zip).
 
        Double click downloaded zip file and copy admb directory to **C:\\admb\\>**.
 
@@ -66,7 +66,7 @@ _**Note**_ &mdash; A free version is available go to [Visual Studio Express](htt
 
            C:\admb\examples\admb\simple\> simple
 
-       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.5/) for more information.
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.6pre/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

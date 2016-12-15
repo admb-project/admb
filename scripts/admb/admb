@@ -8,6 +8,9 @@ shopt -s expand_aliases
 alias help='echo -e "
 Builds AD Model Builder executable or library.
 
+Release Version: 11.6pre
+Location: $BASH_SOURCE
+
 Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
 
 Options:
@@ -137,15 +140,12 @@ if [ ! -z "$dll" ]; then
   LDFLAGS="-shared $LDFLAGS"
 fi
 if [ ! -z "$debug" ]; then
-  if [ "$CXX" == "g++" ]; then
-    GCCVER="`gcc -dumpversion | cut -f1 -d.`"
-  fi
-  if [ "$CXX" == "openCC" -o "$CXX" == "CC" -o "$GCCVER" == "4" ]; then
+  if [ "$CXX" == "openCC" ]; then
     CXXFLAGS="-g $CXXFLAGS"
     LDFLAGS="-g $LDFLAGS"
   else
-    CXXFLAGS="-g -std=c++11 -DDEBUG $CXXFLAGS"
-    LDFLAGS="-g -std=c++11 -DDEBUG $LDFLAGS"
+    CXXFLAGS="-g -DDEBUG $CXXFLAGS"
+    LDFLAGS="-g -DDEBUG $LDFLAGS"
   fi
 else
   if [ "$CXX" == "openCC" ]; then
@@ -154,6 +154,40 @@ else
   else
     CXXFLAGS="-O3 $CXXFLAGS"
     LDFLAGS="-O3 $LDFLAGS"
+  fi
+fi
+if [ "`uname`" == "Darwin" ]; then
+  CXXFLAGS="-std=c++14 $CXXFLAGS"
+  LDFLAGS="-std=c++14 $LDFLAGS"
+elif [ "$CXX" == "clang++" ]; then
+  CXXFLAGS="-std=c++11 $CXXFLAGS"
+  LDFLAGS="-std=c++11 $LDFLAGS"
+elif [ "$CXX" == "icpc" ]; then
+  ICPCMAJVER="`icpc -dumpversion | cut -f1 -d.`"
+  if [ "$ICPCMAJVER" == "17" ]; then
+    CXXFLAGS="-std=c++14 $CXXFLAGS"
+    LDFLAGS="-std=c++14 $LDFLAGS"
+  else
+    CXXFLAGS="-std=c++11 $CXXFLAGS"
+    LDFLAGS="-std=c++11 $LDFLAGS"
+  fi
+elif [ "$CXX" == "CC" ]; then
+  CXXFLAGS="-std=c++11 $CXXFLAGS"
+  LDFLAGS="-std=c++11 $LDFLAGS"
+elif [ "$CXX" == "g++" ]; then
+  GCCMAJVER="`gcc -dumpversion | cut -f1 -d.`"
+  if [ "$GCCMAJVER" == "4" ]; then
+    GCCMINVER="`gcc -dumpversion | cut -f2 -d.`"
+    if [ "$GCCMINVER" == "9" ]; then
+      CXXFLAGS="-std=c++11 $CXXFLAGS"
+      LDFLAGS="-std=c++11 $LDFLAGS"
+    else
+      CXXFLAGS="-std=c++0x $CXXFLAGS"
+      LDFLAGS="-std=c++0x $LDFLAGS"
+    fi
+  else
+    CXXFLAGS="-std=c++14 $CXXFLAGS"
+    LDFLAGS="-std=c++14 $LDFLAGS"
   fi
 fi
 if [ "$library" == "opt" ]; then

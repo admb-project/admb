@@ -333,11 +333,8 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     if(useDA && is <= nwarmup){
       eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
     }
-
     adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
-    if(is ==nwarmup){
-      time_warmup = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    }
+    if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     print_mcmc_progress(is, nmcmc, nwarmup);
   } // end of MCMC chain
   // This final ratio should closely match adapt_delta

@@ -1,3 +1,179 @@
+
+void build_tree(
+  double* theta,
+  double* r,
+  double* grad,
+  double logu,
+  int v,
+  int j,
+  double epsilon,
+  double joint0
+)
+{
+  if (j == 0)
+  {
+    //% Base case: Take a single leapfrog step in the direction v.
+    //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
+    leapfrog(theta, r, grad, v * epsilon);
+
+    //joint = logpprime - 0.5 * (rprime * rprime');
+    double joint = _logpprime;
+    for (size_t d = 0; d < _D; ++d)
+    {
+      joint -= 0.5 * _rprime[d] * _rprime[d];
+    }
+
+    //% Is the new point in the slice?
+    //nprime = logu < joint;
+    _nprime = logu < joint;
+
+    //% Is the simulation wildly inaccurate?
+    //sprime = logu - 1000 < joint;
+    _sprime = (logu - 1000) < joint;
+
+    //% Set the return values---minus=plus for all things here, since the
+    //% "tree" is of depth 0.
+    for (int d = 0; d < _D; ++d)
+    {
+      //thetaminus = thetaprime;
+      _thetaminus[d] = _thetaprime[d];
+
+      //thetaplus = thetaprime;
+      _thetaplus[d] = _thetaprime[d];
+
+      //rminus = rprime;
+      _rminus[d] = _rprime[d];
+
+      //rplus = rprime;
+      _rplus[d] = _rprime[d];
+
+      //gradminus = gradprime;
+      _gradminus[d] = _gradprime[d];
+
+      //gradplus = gradprime;
+      _gradplus[d] = _gradprime[d];
+    }
+
+    //% Compute the acceptance probability.
+    //alphaprime = min(1, exp(logpprime - 0.5 * (rprime * rprime') - joint0));
+    double v = std::exp(joint - joint0);
+    _alphaprime = v < 1.0 ? v : 1.0;
+
+    //nalphaprime = 1;
+    _nalphaprime = 1;
+  }
+  else
+  {
+    //% Recursion: Implicitly build the height j-1 left and right subtrees.
+    //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
+    build_tree(theta, r, grad, logu, v, j - 1, epsilon, joint0);
+
+    //% No need to keep going if the stopping criteria were met in the first
+    //% subtree.
+    if (_sprime == 1)
+    {
+      double thetaminus[2] = { _thetaminus[0], _thetaminus[1]};
+      double rminus[2] = { _rminus[0], _rminus[1]};
+      double gradminus[2] = { _gradminus[0], _gradminus[1]};
+      double thetaplus[2] = { _thetaplus[0], _thetaplus[1]};
+      double rplus[2] = { _rplus[0], _rplus[1]};
+      double gradplus[2] = { _gradplus[0], _gradplus[1]};
+      double thetaprime[2] = { _thetaprime[0], _thetaprime[1]};
+      double gradprime[2] = { _gradprime[0], _gradprime[1]};
+      double logpprime = _logpprime;
+      int nprime = _nprime;
+      bool sprime = _sprime;
+      double alphaprime = _alphaprime;
+      int nalphaprime = _nalphaprime;
+      if (v == -1)
+      {
+        //[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
+        build_tree(thetaminus, rminus, gradminus, logu, v, j - 1, epsilon, joint0);
+        thetaminus[0] = _thetaminus[0];
+        thetaminus[1] = _thetaminus[1];
+        rminus[0] = _rminus[0];
+        rminus[1] = _rminus[1];
+        gradminus[0] = _gradminus[0];
+        gradminus[1] = _gradminus[1];
+      }
+      else
+      {
+        //[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
+        build_tree(thetaplus, rplus, gradplus, logu, v, j - 1, epsilon, joint0);
+        thetaplus[0] = _thetaplus[0];
+        thetaplus[1] = _thetaplus[1];
+        rplus[0] = _rplus[0];
+        rplus[1] = _rplus[1];
+        gradplus[0] = _gradplus[0];
+        gradplus[1] = _gradplus[1];
+      }//end
+      double thetaprime2[2] = { _thetaprime[0], _thetaprime[1]};
+      double gradprime2[2] = { _gradprime[0], _gradprime[1]};
+      double logpprime2 = _logpprime;
+      int nprime2 = _nprime;
+      bool sprime2 = _sprime;
+      double alphaprime2 = _alphaprime;
+      int nalphaprime2 = _nalphaprime;
+
+      //% Choose which subtree to propagate a sample up from.
+      double random_number = _rand();
+      if (nprime + nprime2 != 0 && random_number < double(nprime2) / double(nprime + nprime2))
+      {
+        for (int d = 0; d < _D; ++d)
+        {
+          //thetaprime = thetaprime2;
+          _thetaprime[d] = thetaprime2[d];
+
+          //gradprime = gradprime2;
+          _gradprime[d] = gradprime2[d];
+        }
+        _logpprime = logpprime2;
+      }
+      else
+      {
+        for (int d = 0; d < _D; ++d)
+        {
+          //thetaprime = thetaprime;
+          _thetaprime[d] = thetaprime[d];
+
+          //gradprime = gradprime;
+          _gradprime[d] = gradprime[d];
+        }
+        _logpprime = logpprime;
+      }
+
+      //% Update the number of valid points.
+      //nprime = nprime + nprime2;
+      _nprime = nprime + nprime2;
+
+      //% Update the stopping criterion.
+      _sprime = sprime && sprime2 && stop_criterion(thetaminus, thetaplus, rminus, rplus);
+
+      //% Update the acceptance probability statistics.
+      //alphaprime = alphaprime + alphaprime2;
+      _alphaprime = alphaprime + alphaprime2;
+
+      //nalphaprime = nalphaprime + nalphaprime2;
+      _nalphaprime = nalphaprime + nalphaprime2;
+
+      _thetaminus[0] = thetaminus[0];
+      _thetaminus[1] = thetaminus[1];
+      _rminus[0] = rminus[0];
+      _rminus[1] = rminus[1];
+      _gradminus[0] = gradminus[0];
+      _gradminus[1] = gradminus[1];
+
+      _thetaplus[0] = thetaplus[0];
+      _thetaplus[1] = thetaplus[1];
+      _rplus[0] = rplus[0];
+      _rplus[1] = rplus[1];
+      _gradplus[0] = gradplus[0];
+      _gradplus[1] = gradplus[1];
+    }//end
+  }
+}
+
+
 double function_minimizer::adapt_eps(int ii, double eps, double alpha,
 				     double& adapt_delta, double& mu,
 				     dvector& epsvec, dvector& epsbar,

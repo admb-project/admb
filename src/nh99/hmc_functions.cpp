@@ -1,3 +1,12 @@
+double function_minimizer::exprnd(double p)
+{
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  // if particles decay once per second on average,
+  // how much time, in seconds, until the next one?
+  std::exponential_distribution<> d(p);
+  return d(gen);
+}
 
 
 void function_minimizer::build_tree(int nvar, dvector& gr, dmaxtrix& chd, double eps, dvector& p,

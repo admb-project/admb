@@ -1910,20 +1910,25 @@ public:
   void mcmc_routine(int,int,double,int);
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
+
+  // Functions added by Cole for HMC.
   void hmc_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
   void print_mcmc_progress(int is, int nmcmc, int nwarmup);
   double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd);
   bool stop_criterion(int nvar, dvector* thetaminus, dvector* thetaplus,
 		      dvector* rminus, dvector* rplus);
-
-
+  void build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
+		  dvector& y, dvector& gr2, double logu, int v, int j, double H0);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
-    double eps, dvector& p, dvector& y, dvector& gr2);
+		  double eps, dvector& p, dvector& y, dvector& gr2);
   double adapt_eps(int ii, double eps, double alpha,
 		   double& adapt_delta, double& mu,
 		   dvector& epsvec, dvector& epsbar,
 		   dvector& Hbar);
+  double exprnd(double p);
+  // End new functions
+
   double pvm_master_get_monte_carlo_value(int nvar,
     const dvector& x);
   void pvm_slave_get_monte_carlo_value(int nvar);

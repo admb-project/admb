@@ -290,6 +290,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   double mu=log(10*eps);
 
+
   dvector _thetaminus(1,nvar);
   dvector _thetaplus(1,nvar);
   dvector _thetapprime(1,nvar);
@@ -301,8 +302,9 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int _nprime;
   int _nfevals=0;
   bool _divergent=0;
-  double log= Ham -exprnd(1);
-  build_tree(nvar, gr, chd, eps, p, y, gr2, double logu, int v, int j, double H0)
+  double H0= nll+0.5*norm2(p);
+  double logu= H0 -exprnd(1.0);
+  build_tree(nvar, gr, chd, eps, p, y, gr2, logu, -1, 4, H0);
 
 
   // Start of MCMC chain

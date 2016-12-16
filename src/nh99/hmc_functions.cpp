@@ -1,6 +1,6 @@
 
 
-void build_tree(int nvar, dvector& gr, dmaxtrix& chd, double eps, dvector& p,
+void function_minimizer::build_tree(int nvar, dvector& gr, dmaxtrix& chd, double eps, dvector& p,
 		dvector& y, dvector& gr2, double logu, int v, int j, double H0) {
   if (j == 0) {
     //% Base case: Take a single leapfrog step in the direction v.

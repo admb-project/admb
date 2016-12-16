@@ -6,7 +6,7 @@
 ;; Keywords: languages
 ;; URL:      http://admb-project.org/tools/editors/emacs/admb.el
 
-(defconst admb-mode-version "11.5-0" "ADMB Mode version number.")
+(defconst admb-mode-version "11.6-0" "ADMB Mode version number.")
 
 ;; This admb.el file is provided under the general terms of the Simplified BSD
 ;; License.

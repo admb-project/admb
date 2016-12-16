@@ -1914,6 +1914,10 @@ public:
   void print_mcmc_timing(double, double);
   void print_mcmc_progress(int is, int nmcmc, int nwarmup);
   double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd);
+  bool stop_criterion(int nvar, dvector* thetaminus, dvector* thetaplus,
+		      dvector* rminus, dvector* rplus);
+
+
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
     double eps, dvector& p, dvector& y, dvector& gr2);
   double adapt_eps(int ii, double eps, double alpha,

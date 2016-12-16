@@ -1,4 +1,5 @@
 
+
 void build_tree(int nvar, dvector& gr, dmaxtrix& chd, double eps, dvector& p,
 		dvector& y, dvector& gr2, double logu, int v, int j, double H0) {
   if (j == 0) {
@@ -92,6 +93,20 @@ void build_tree(int nvar, dvector& gr, dmaxtrix& chd, double eps, dvector& p,
     } // end building trajectory
   }   // end recursion
 }     // end function
+
+
+bool function_minimizer::stop_criterion(int nvar, dvector* thetaminus, dvector* thetaplus,
+					dvector* rminus, dvector* rplus)
+{
+  bool criterion;
+  //thetavec = thetaplus - thetaminus;
+  dvector(1, nvar) thetavec;
+  thetavec=thetaplus-thetaminus;
+  //criterion = (thetavec * rminus' >= 0) && (thetavec * rplus' >= 0);
+  criterion = (thetavec*rminus+thetavec*rminus>=0) &&
+			      (thetavec*rplus+thetavec*rplus>=0);
+  return criterion;
+}
 
 
 double function_minimizer::adapt_eps(int ii, double eps, double alpha,

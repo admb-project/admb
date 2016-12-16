@@ -16,7 +16,7 @@
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
 
-void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
+void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					  int restart_flag) {
 
   if (nmcmc<=0)
@@ -283,11 +283,35 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector gr2begin(1,nvar); gr2begin=gr2;
   dvector ybegin(1,nvar); ybegin=y;
   double nll=nllbegin;
-  // if(useDA){
-  //   eps=find_reasonable_stepsize(nvar,y,p,chd);
-  //   epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
-  // }
+  if(useDA){
+    eps=find_reasonable_stepsize(nvar,y,p,chd);
+    epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
+  }
   double mu=log(10*eps);
+
+  // Test build_tree trajectory
+  dvector _thetaminus(1,nvar);
+  dvector _thetaplus(1,nvar);
+  dvector _thetapprime(1,nvar);
+  dvector _rminus(1,nvar);
+  dvector _rplus(1,nvar);
+  double _alphaprime;
+  int _nalphaprime;
+  bool _sprime;
+  int _nprime;
+  int _nfevals=0;
+  bool _divergent=0;
+  double H0= nll+0.5*norm2(p);
+  double logu= H0 -exprnd(1.0);
+
+  int j=4;
+  int v=1;
+  build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j, H0);
+
+
+
+  // Stop here for now
+  break;
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
@@ -296,33 +320,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double H0=nll+0.5*norm2(p);
 
     // Generate trajectory
-    int divergence=0;
-    for (int i=1;i<=L;i++) {
-      // leapfrog updates gr, p, y, and gr2 by reference
-      nll=leapfrog(nvar, gr, chd, eps, p, y, gr2);
-      // Break trajectory early if a divergence occurs to save computation
-      if(std::isnan(nll)){
-	divergence=1; break;
-      }
-    } // end of trajectory
 
-    // Test whether to accept the proposed state
-    double Ham=nll+0.5*norm2(p); // Update Hamiltonian for proposed set
-    double alpha=min(1.0, exp(H0-Ham)); // acceptance ratio
-    double rr=randu(rng);	   // Runif(1)
-    if (rr<alpha && !divergence){ // accept
-      iaccept++;
-      // Update for next iteration: params, Hamiltonian and gr2
-      ybegin=y;
-      gr2begin=gr2;
-      nllbegin=nll;
-      initial_params::copy_all_values(parsave,1.0);
-    } else {
-      // Reject and don't update anything to reuse initials for next trajectory
-      y=ybegin;
-      gr2=gr2begin;
-      nll=nllbegin;
-    }
     // Save parameters to psv file, duplicated if rejected
     (*pofs_psave) << parsave;
 
@@ -352,5 +350,5 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       delete pofs_psave;
       pofs_psave=NULL;
     }
-} // end of HMC function
+} // end of NUTS function
 

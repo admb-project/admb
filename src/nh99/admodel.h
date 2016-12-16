@@ -1912,6 +1912,9 @@ public:
   void hybrid_mcmc_routine(int,int,double,int);
 
   // Functions added by Cole for HMC.
+  double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
+    dvector& g);
+  void shmc_mcmc_routine(int,int,double,int);
   void hmc_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
   void print_mcmc_progress(int is, int nmcmc, int nwarmup);
@@ -2010,8 +2013,6 @@ public:
   void monte_carlo_routine(void);
   double get_monte_carlo_value(int nvar, const independent_variables& x);
   double get_monte_carlo_value(int nvar, const independent_variables& x,
-    dvector& g);
-  double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
     dvector& g);
   void mcmc_computations(void);
 #if defined(USE_ADPVM)

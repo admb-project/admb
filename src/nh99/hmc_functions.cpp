@@ -1,15 +1,21 @@
-double function_minimizer::exprnd(double p)
-{
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  // if particles decay once per second on average,
-  // how much time, in seconds, until the next one?
-  std::exponential_distribution<> d(p);
-  return d(gen);
-}
+#include "admodel.h"
+#ifndef OPT_LIB
+#include <cassert>
+#endif
+#include<ctime>
+
+// double function_minimizer::exprnd(double p)
+// {
+//   std::random_device rd;
+//   std::mt19937 gen(rd());
+//   // if particles decay once per second on average,
+//   // how much time, in seconds, until the next one?
+//   std::exponential_distribution<> d(p);
+//   return d(gen);
+// }
 
 
-void function_minimizer::build_tree(int nvar, dvector& gr, dmaxtrix& chd, double eps, dvector& p,
+void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
 		dvector& y, dvector& gr2, double logu, int v, int j, double H0) {
   if (j == 0) {
     //% Base case: Take a single leapfrog step in the direction v.
@@ -110,7 +116,7 @@ bool function_minimizer::stop_criterion(int nvar, dvector* thetaminus, dvector* 
 {
   bool criterion;
   //thetavec = thetaplus - thetaminus;
-  dvector(1, nvar) thetavec;
+  dvector thetavec(1, nvar);
   thetavec=thetaplus-thetaminus;
   //criterion = (thetavec * rminus' >= 0) && (thetavec * rplus' >= 0);
   criterion = (thetavec*rminus+thetavec*rminus>=0) &&

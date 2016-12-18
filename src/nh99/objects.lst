@@ -1,4 +1,5 @@
 OBJ6=\
+ hmc_functions.obj\
  hmc.obj\
  banner.obj\
  param_init_bounded_number_matrix.obj\

@@ -302,7 +302,7 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int _nfevals=0;
   bool _divergent=0;
   double H0= nll+0.5*norm2(p);
-  double logu= H0 -exprnd(1.0);
+  double logu= H0 -1.0;
 
   int j=4;
   int v=1;

@@ -320,7 +320,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // initial_params::copy_all_values(x,1.0);
   // dvector z=chd*y;
   // cout << x << y << z << endl;
-
+  cout << "thetaprime=" << _thetaprime << endl;
   // Stop here for now
   ad_exit(1);
 

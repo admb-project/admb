@@ -28,12 +28,19 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     // original    leapfrog(theta, r, grad, v * epsilon);
     double nll= leapfrog(nvar, gr, chd, eps, p, y, gr2);
     double Ham=nll+0.5*norm2(p);
+    _alphaprime=min(1.0, exp(H0-Ham));
+    _nprime = logu < Ham;
 
     // Check for divergence. Either numerical (nll is nan) or a big
     // difference in H.
-    _sprime = (logu - 1000) < Ham;
-    if(std::isnan(nll)){
+    if(std::isnan(Ham)){
       _sprime=0;
+      _divergent=1;
+      _alphaprime=0;
+      _nprime=0;
+    }
+    _sprime= (logu - 1000) < Ham;
+    if(_sprime==0){
       _divergent=1;
     }
     // Update the tree elements, which are returned by reference in
@@ -43,10 +50,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     _thetaprime = y;
     _rminus = p;
     _rplus = p;
-    _nprime = logu < Ham;
     _nalphaprime = 1;
     // Acceptance probability
-    _alphaprime=min(1.0, exp(H0-Ham));
     _nfevals++;
     _nllprime=nll;
   } else { // j > 1

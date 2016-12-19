@@ -465,11 +465,13 @@ void write_banner_stuff(void)
 	{
 	  gradient_structure::Hybrid_bounded_flag=1;
 	  shmc_mcmc_routine(nmcmc,iseed0,dscale,0);
+	  ad_exit(1);
 	}
       if (option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1)
 	{
 	  gradient_structure::Hybrid_bounded_flag=1;
 	  nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
+	  ad_exit(1);
 	}
       // Temporarily turn off this chunk if using HMC
      else

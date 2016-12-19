@@ -20,8 +20,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 				    dvector& _rplus, dvector& _rminus,
 				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
-				    int& _nprime, int& _nfevals, bool& _divergent) { 
- 
+				    int& _nprime, int& _nfevals, bool& _divergent) {
+
   if (j == 0) {
     //% Base case: Take a single leapfrog step in the direction v.
     //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
@@ -131,13 +131,19 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& thetaplus,
 					dvector& rminus, dvector& rplus)
 {
-  bool criterion=1;
-  // //thetavec = thetaplus - thetaminus;
-  // dvector thetavec(1, nvar);
-  // thetavec=thetaplus-thetaminus;
-  // //criterion = (thetavec * rminus' >= 0) && (thetavec * rplus' >= 0);
+  dvector thetavec(1, nvar);
+  thetavec=thetaplus-thetaminus;
+  // Manual implementation of inner_product, equivalent to this
   // criterion = (thetavec*rminus+thetavec*rminus>=0) &&
   // 			      (thetavec*rplus+thetavec*rplus>=0);
+  double x1=0;
+  double x2=0;
+  for(int i=1; i<=nvar; i++){
+    x1+=thetavec(i)*rminus(i);
+    x2+=thetavec(i)*rplus(i);
+  }
+  bool criterion = x1 >=0 && x2 >=0;
+  //  cout << "stop crit" << x1 <<" " << x2 <<" " << criterion << endl;
   return criterion;
 }
 

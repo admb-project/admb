@@ -16,20 +16,16 @@
 
 
 void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
-				    dvector& y, dvector& gr2, double logu, int v, int j, double H0,
-				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
-				    dvector& _rplus, dvector& _rminus,
-				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
-				    int& _nprime, int& _nfevals, bool& _divergent) {
+				      dvector& y, dvector& gr2, double logu, int v, int j, double H0,
+				      dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
+				      dvector& _rplus, dvector& _rminus,
+				      double& _alphaprime, int& _nalphaprime, bool& _sprime,
+				      int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime) {
 
   if (j == 0) {
     //% Base case: Take a single leapfrog step in the direction v.
     //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
     // original    leapfrog(theta, r, grad, v * epsilon);
-    independent_variables x(1,nvar);
-    initial_params::copy_all_values(x,1.0);
-    dvector z=chd*y;
-    cout << x << y << z << endl;
     double nll= leapfrog(nvar, gr, chd, eps, p, y, gr2);
     double Ham=nll+0.5*norm2(p);
 
@@ -44,20 +40,22 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     // leapfrog.
     _thetaminus = y;
     _thetaplus = y;
+    _thetaprime = y;
     _rminus = p;
     _rplus = p;
     _nprime = logu < Ham;
     _nalphaprime = 1;
     // Acceptance probability
     _alphaprime=min(1.0, exp(H0-Ham));
-
+    _nfevals++;
+    _nllprime=nll;
   } else { // j > 1
     //% Recursion: Implicitly build the height j-1 left and right subtrees.
     //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
     build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
-	       _nprime, _nfevals, _divergent);
+	       _nprime, _nfevals, _divergent, _nllprime);
 
     // Temp, local copies of the global ones due to rerunning build_tree
     // below which will overwrite some of the global variables we need to
@@ -76,6 +74,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     bool sprime1 = _sprime;
     double alphaprime1 = _alphaprime;
     int nalphaprime1 = _nalphaprime;
+    double nllprime=_nllprime;
 
     // If valid trajectory keep building, otherwise exit function
     if (_sprime == 1) {
@@ -85,7 +84,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent);
+		   _nprime, _nfevals, _divergent, _nllprime);
 	thetaminus = _thetaminus;
 	rminus = _rminus;
       } else { // make subtree to the right
@@ -93,7 +92,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent);
+		   _nprime, _nfevals, _divergent, _nllprime);
 	thetaplus = _thetaplus;
 	rplus = _rplus;
       }//end
@@ -109,9 +108,11 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       if(std::isnan(nprime)) nprime=0;
       if (nprime != 0 && random_number < double(_nprime)/double(nprime)) {
 	// _thetaprime already updated globally above so do nothing
+	// _nllprime already updated globally above so do nothing
       } else {
-	// Reuse the first instance by reverting to the local copy
+	// Reuse the first instance by reverting to the local copies
 	_thetaprime = thetaprime;
+	_nllprime= nllprime;
       }
 
       // Update the global variables for next subtree

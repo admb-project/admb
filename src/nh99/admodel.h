@@ -1926,7 +1926,7 @@ public:
 		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 		  dvector& _rplus, dvector& _rminus,
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
-		  int& _nprime, int& _nfevals, bool& _divergent);
+		  int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
 		  double eps, dvector& p, dvector& y, dvector& gr2);
   double adapt_eps(int ii, double eps, double alpha,

@@ -302,6 +302,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int _nfevals=0;
   bool _divergent=0;
   double H0= nll+0.5*norm2(p);
+  double _nllprime=nll;		// NLL value at thetaprime
   double logu= H0 -1.0;
   y(1)=60;
   y(2)=100;
@@ -312,10 +313,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j,
 	     H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	     _alphaprime, _nalphaprime, _sprime,
-	     _nprime, _nfevals, _divergent);
-
-  adaptation << "adapt" << _alphaprime/_nalphaprime << "," <<  eps <<"," << j <<","
-       << _nfevals <<"," << _divergent <<"," << 1.0 << endl;
+	     _nprime, _nfevals, _divergent, _nllprime);
+  adaptation <<  _alphaprime/_nalphaprime << "," <<  eps <<"," << j <<","
+       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;
+  // independent_variables x(1,nvar);
+  // initial_params::copy_all_values(x,1.0);
+  // dvector z=chd*y;
+  // cout << x << y << z << endl;
 
   // Stop here for now
   ad_exit(1);

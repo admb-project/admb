@@ -26,7 +26,10 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     //% Base case: Take a single leapfrog step in the direction v.
     //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
     // original    leapfrog(theta, r, grad, v * epsilon);
-    cout << y << endl;
+    independent_variables x(1,nvar);
+    initial_params::copy_all_values(x,1.0);
+    dvector z=chd*y;
+    cout << x << y << z << endl;
     double nll= leapfrog(nvar, gr, chd, eps, p, y, gr2);
     double Ham=nll+0.5*norm2(p);
 

@@ -17,7 +17,7 @@ void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
-					  int restart_flag) {
+					   int restart_flag) {
 
   if (nmcmc<=0)
     {
@@ -289,12 +289,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   double mu=log(10*eps);
 
-  // Test build_tree trajectory
+  // Setup and intitialize variables for build_tree trajectory
   dvector _thetaminus(1,nvar);
   dvector _thetaplus(1,nvar);
   dvector _thetaprime(1,nvar);
   dvector _rminus(1,nvar);
   dvector _rplus(1,nvar);
+  dvector thetaminus(1,nvar);
+  dvector thetaplus(1,nvar);
+  dvector thetaprime(1,nvar);
+  dvector rminus(1,nvar);
+  dvector rplus(1,nvar);
   double _alphaprime;
   int _nalphaprime;
   bool _sprime;
@@ -304,53 +309,85 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double H0= nll+0.5*norm2(p);
   double _nllprime=nll;		// NLL value at thetaprime
   double logu= H0 -1.0;
-  y(1)=60;
-  y(2)=100;
-  //initial_params::copy_all_values(x,1.0);
-
-  int j=6;
-  int v=1;
-  build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j,
-	     H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-	     _alphaprime, _nalphaprime, _sprime,
-	     _nprime, _nfevals, _divergent, _nllprime);
-  adaptation <<  _alphaprime/_nalphaprime << "," <<  eps <<"," << j <<","
-       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;
-  // independent_variables x(1,nvar);
-  // initial_params::copy_all_values(x,1.0);
-  // dvector z=chd*y;
-  // cout << x << y << z << endl;
-  cout << "thetaprime=" << _thetaprime << endl;
-  // Stop here for now
-  ad_exit(1);
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
-    // Random momentum for next iteration, only affects Ham values
+    // Random momentum for next iteration, and update H
     p.fill_randn(rng);
-    double H0=nll+0.5*norm2(p);
+    _rminus=p;
+    _rplus=p;
+    double H0=_nllprime+0.5*norm2(p);
+    // _theta vars are already set globally from last iteration, but save
+    // last parameters in case first step fails
+    initial_params::copy_all_values(parsave,1.0);
 
-    // Generate trajectory
+    // Generate single NUTS trajectory by repeatedly doubling build_tree
+    int n = 1;
+    // int nalpha = 1;
+    // alpha = 1;
+    bool s = true;
+    int j=0;
+    while (s) {
+      //v = 2*(rand() < 0.5)-1;
+      double value = randu(rng);	   // Runif(1)
+      int v = 2 * (value < 0.5) - 1;
+      thetaplus=_thetaplus;
+      thetaminus=_thetaminus;
+      rplus=_rplus;
+      rminus=_rminus;
+      //% Double the size of the tree.
+      if (v == -1) {
+	build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent, _nllprime);
+	thetaplus = _thetaplus;
+	rplus = _rplus;
+      } else {
+	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent, _nllprime);
+	thetaminus = _thetaminus;
+	rminus = _rminus;
+      }
+
+      //% Use Metropolis-Hastings to decide whether or not to move to a
+      //% point from the half-tree we just generated.
+      double rn = randu(rng);	   // Runif(1)
+      if (_sprime == 1 && rn < double(_nprime)/n) {
+	// Save _thetaprime
+	initial_params::copy_all_values(parsave,1.0);
+      }
+
+      //% Update number of valid points we've seen.
+      n += _nprime;
+      //% Decide if it's time to stop.
+      bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
+      s = _sprime && b;
+      //% Increment depth.
+      ++j;
+      if(j>5){cout << "max treedepth exceeded "<< is <<endl; break;}
+    } // end of single NUTS trajectory
 
     // Save parameters to psv file, duplicated if rejected
     (*pofs_psave) << parsave;
 
     // Adaptation of step size (eps).
-      double alpha=.5; // fixme
     if(useDA && is <= nwarmup){
-      eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+      eps=adapt_eps(is, eps,  _alphaprime/_nalphaprime, adapt_delta, mu, epsvec, epsbar, Hbar);
     }
-    adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
+    adaptation <<  _alphaprime/_nalphaprime << "," <<  eps <<"," << j <<","
+	       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;
     if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     print_mcmc_progress(is, nmcmc, nwarmup);
   } // end of MCMC chain
 
   // This final ratio should closely match adapt_delta
   if(useDA){
-    cout << "Final acceptance ratio=" << iaccept/nmcmc << " and target is " << adapt_delta<<endl;
     cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
   } else {
-    cout << "Final acceptance ratio=" << iaccept/nmcmc << endl;
+    //    cout << "Final acceptance ratio=" << iaccept/nmcmc << endl;
   }
 
   time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;

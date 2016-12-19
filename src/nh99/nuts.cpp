@@ -310,21 +310,27 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double _nllprime=nll;		// NLL value at thetaprime
   double logu= H0 -1.0;
 
+  ofstream theta("theta.txt", ios::trunc);
+
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
-    // Random momentum for next iteration, and update H
+    // Random momentum for next iteration and update H
     p.fill_randn(rng);
     _rminus=p;
     _rplus=p;
+    _thetaminus=_thetaprime;
+    _thetaplus=_thetaprime;
     double H0=_nllprime+0.5*norm2(p);
+    logu= H0-1.0;
     // _theta vars are already set globally from last iteration, but save
     // last parameters in case first step fails
     initial_params::copy_all_values(parsave,1.0);
+    initial_params::restore_all_values(parsave,ii);
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     int n = 1;
-    // int nalpha = 1;
-    // alpha = 1;
+    _divergent=0;
+    _nfevals=0;
     bool s = true;
     int j=0;
     while (s) {
@@ -358,6 +364,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       if (_sprime == 1 && rn < double(_nprime)/n) {
 	// Save _thetaprime
 	initial_params::copy_all_values(parsave,1.0);
+	initial_params::restore_all_values(_thetaprime,1.0);
+	theta << _thetaprime << endl;
       }
 
       //% Update number of valid points we've seen.
@@ -367,11 +375,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       s = _sprime && b;
       //% Increment depth.
       ++j;
-      if(j>5){cout << "max treedepth exceeded "<< is <<endl; break;}
+      if(j>10){cout << "max treedepth exceeded "<< is <<endl; break;}
     } // end of single NUTS trajectory
 
     // Save parameters to psv file, duplicated if rejected
-    (*pofs_psave) << parsave;
+    (*pofs_psave) << _thetaprime;
 
     // Adaptation of step size (eps).
     if(useDA && is <= nwarmup){

@@ -16,7 +16,12 @@
 
 
 void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
-		dvector& y, dvector& gr2, double logu, int v, int j, double H0) {
+				    dvector& y, dvector& gr2, double logu, int v, int j, double H0,
+				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
+				    dvector& _rplus, dvector& _rminus,
+				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
+				    int& _nprime, int& _nfevals, bool& _divergent) { 
+ 
   if (j == 0) {
     //% Base case: Take a single leapfrog step in the direction v.
     //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
@@ -46,7 +51,10 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
   } else { // j > 1
     //% Recursion: Implicitly build the height j-1 left and right subtrees.
     //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
-    build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1, H0);
+    build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
+	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+	       _alphaprime, _nalphaprime, _sprime,
+	       _nprime, _nfevals, _divergent);
 
     // Temp, local copies of the global ones due to rerunning build_tree
     // below which will overwrite some of the global variables we need to
@@ -71,12 +79,18 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // Make subtree to the left
       if (v == -1) {
 	//[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
-	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j-1, H0);
+	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j-1,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent);
 	thetaminus = _thetaminus;
 	rminus = _rminus;
       } else { // make subtree to the right
 	//[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
-	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j-1, H0);
+	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j-1,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent);
 	thetaplus = _thetaplus;
 	rplus = _rplus;
       }//end
@@ -88,7 +102,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       int nalphaprime = nalphaprime1 + _nalphaprime;
 
       // Choose whether to keep the proposal thetaprime.
-      double random_number = _rand();
+      double random_number = .01; // FIX ME FIXMErandu(rng);	   // Runif(1)
       if(std::isnan(nprime)) nprime=0;
       if (nprime != 0 && random_number < double(_nprime)/double(nprime)) {
 	// _thetaprime already updated globally above so do nothing
@@ -99,7 +113,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 
       // Update the global variables for next subtree
       _nprime = nprime;
-      _sprime = sprime && sprime2 && stop_criterion(thetaminus, thetaplus, rminus, rplus);
+      _sprime = sprime && _sprime && stop_criterion(nvar, thetaminus, thetaplus, rminus, rplus);
       _alphaprime = alphaprime;
       _nalphaprime = nalphaprime;
       _thetaminus=thetaminus;
@@ -111,16 +125,16 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 }     // end function
 
 
-bool function_minimizer::stop_criterion(int nvar, dvector* thetaminus, dvector* thetaplus,
-					dvector* rminus, dvector* rplus)
+bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& thetaplus,
+					dvector& rminus, dvector& rplus)
 {
-  bool criterion;
-  //thetavec = thetaplus - thetaminus;
-  dvector thetavec(1, nvar);
-  thetavec=thetaplus-thetaminus;
-  //criterion = (thetavec * rminus' >= 0) && (thetavec * rplus' >= 0);
-  criterion = (thetavec*rminus+thetavec*rminus>=0) &&
-			      (thetavec*rplus+thetavec*rplus>=0);
+  bool criterion=1;
+  // //thetavec = thetaplus - thetaminus;
+  // dvector thetavec(1, nvar);
+  // thetavec=thetaplus-thetaminus;
+  // //criterion = (thetavec * rminus' >= 0) && (thetavec * rplus' >= 0);
+  // criterion = (thetavec*rminus+thetavec*rminus>=0) &&
+  // 			      (thetavec*rplus+thetavec*rplus>=0);
   return criterion;
 }
 

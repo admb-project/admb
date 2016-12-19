@@ -16,7 +16,7 @@
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
 
-void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
+void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					  int restart_flag) {
 
   if (nmcmc<=0)
@@ -306,9 +306,10 @@ void function_minimizer::hmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   int j=4;
   int v=1;
-  build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j, H0);
-
-
+  build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
+	     H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+	     _alphaprime, _nalphaprime, _sprime,
+	     _nprime, _nfevals, _divergent);
 
   // Stop here for now
   break;

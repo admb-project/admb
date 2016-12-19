@@ -461,17 +461,15 @@ void write_banner_stuff(void)
 
       // start addition
       // temporarily adding this here, need to fully merge in with other options still
-      int hmc_flag=0;
       if (option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)
 	{
-	  hmc_flag=1;
 	  gradient_structure::Hybrid_bounded_flag=1;
-	}
-      if(hmc_flag==1)
-	{
-	  // the call for this routine throws an error when building a
-	  // model but not from source. ???
 	  hmc_mcmc_routine(nmcmc,iseed0,dscale,0);
+	}
+      if (option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1)
+	{
+	  gradient_structure::Hybrid_bounded_flag=1;
+	  nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
 	}
       // Temporarily turn off this chunk if using HMC
      else

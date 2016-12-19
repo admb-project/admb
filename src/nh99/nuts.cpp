@@ -257,7 +257,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     "' at " << asctime(localtm);
   // write sampler parameters
   ofstream adaptation("adaptation.csv", ios::trunc);
-  adaptation << "accept_stat__,stepsize__,int_time__,energy__,lp__" << endl;
+  adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
 
   // Declare and initialize the variables needed for the algorithm
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
@@ -306,13 +306,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   y(1)=60;
   y(2)=100;
   //initial_params::copy_all_values(x,1.0);
-  
+
   int j=6;
   int v=1;
   build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j,
 	     H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	     _alphaprime, _nalphaprime, _sprime,
 	     _nprime, _nfevals, _divergent);
+
+  adaptation << "adapt" << _alphaprime/_nalphaprime << "," <<  eps <<"," << j <<","
+       << _nfevals <<"," << _divergent <<"," << 1.0 << endl;
 
   // Stop here for now
   ad_exit(1);
@@ -329,7 +332,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     (*pofs_psave) << parsave;
 
     // Adaptation of step size (eps).
-      double alpha=.5; // fixme 
+      double alpha=.5; // fixme
     if(useDA && is <= nwarmup){
       eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
     }

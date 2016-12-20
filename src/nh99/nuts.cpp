@@ -83,24 +83,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
     }
 
-  // Number of leapfrog steps. Defaults to 10.
-  int L=10;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1)
-    {
-      if (nopt)
-	{
-	  int _L=atoi(ad_comm::argv[on+1]);
-	  if (_L < 1 )
-	    {
-	      cerr << "Error: hynstep argument must be integer > 0 " << endl;
-	      ad_exit(1);
-	    }
-	  else
-	    {
-	      L=_L;
-	    }
-	}
+  // Number of leapfrog steps.
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1) {
+    if (nopt) {
+      cerr << "Error: hynstep argument not allowed with NUTS " << endl;
+      ad_exit(1);
     }
+  }
 
   // Number of warmup samples if using adaptation of step size. Defaults to
   // half of iterations.
@@ -169,7 +158,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Prepare the mass matrix for use. Depends on many factors below.
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
-  int old_nvar;
   // Need to grab old_scale values still, since it is scaled below
   read_covariance_matrix(S,nvar,old_Hybrid_bounded_flag,old_scale);
   if (diag_option)		// set covariance to be diagonal
@@ -278,7 +266,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   p.fill_randn(rng);
   // Copy initial value to parsave in case first trajectory rejected
   initial_params::copy_all_values(parsave,1.0);
-  double iaccept=0.0;
+  int ndivergent=0;
   // The gradient and params at beginning of trajectory, in case rejected.
   dvector gr2begin(1,nvar); gr2begin=gr2;
   dvector ybegin(1,nvar); ybegin=y;
@@ -325,7 +313,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // _theta vars are already set globally from last iteration, but save
     // last parameters in case first step fails
     initial_params::copy_all_values(parsave,1.0);
-    initial_params::restore_all_values(parsave,ii);
+    initial_params::restore_all_values(parsave,1);
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     int n = 1;

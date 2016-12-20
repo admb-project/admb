@@ -1,26 +1,49 @@
+// Added these from Johnoel's code for the RNG below. Hopefully play nice
+// with everything else
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <cmath>
+#include <random>
+#include <fstream>
+#include <sstream>
+#include <stack>
+#include <queue>
+//#include "nuts_da.h"
+
+using std::cout;
+using std::endl;
+using std::vector;
+using std::ifstream;
+using std::istringstream;
+using std::pow;
+using std::stack;
+using std::queue;
+
 #include "admodel.h"
 #ifndef OPT_LIB
 #include <cassert>
 #endif
 #include<ctime>
 
-// double function_minimizer::exprnd(double p)
-// {
-//   std::random_device rd;
-//   std::mt19937 gen(rd());
-//   // if particles decay once per second on average,
-//   // how much time, in seconds, until the next one?
-//   std::exponential_distribution<> d(p);
-//   return d(gen);
-// }
+double function_minimizer::exprnd(double p)
+{
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  // if particles decay once per second on average,
+  // how much time, in seconds, until the next one?
+  std::exponential_distribution<> d(p);
+  return d(gen);
+}
 
 
 void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
-				      dvector& y, dvector& gr2, double logu, int v, int j, double H0,
-				      dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
-				      dvector& _rplus, dvector& _rminus,
-				      double& _alphaprime, int& _nalphaprime, bool& _sprime,
-				      int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime) {
+				    dvector& y, dvector& gr2, double logu, int v, int j, double H0,
+				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
+				    dvector& _rplus, dvector& _rminus,
+				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
+				    int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+				    const random_number_generator& rng) {
 
   if (j == 0) {
     //% Base case: Take a single leapfrog step in the direction v.
@@ -58,7 +81,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
-	       _nprime, _nfevals, _divergent, _nllprime);
+	       _nprime, _nfevals, _divergent, _nllprime, rng);
 
     // Temp, local copies of the global ones due to rerunning build_tree
     // below which will overwrite some of the global variables we need to
@@ -87,7 +110,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime);
+		   _nprime, _nfevals, _divergent, _nllprime, rng);
 	thetaminus = _thetaminus;
 	rminus = _rminus;
       } else { // make subtree to the right
@@ -95,7 +118,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime);
+		   _nprime, _nfevals, _divergent, _nllprime, rng);
 	thetaplus = _thetaplus;
 	rplus = _rplus;
       }//end
@@ -107,9 +130,9 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       int nalphaprime = nalphaprime1 + _nalphaprime;
 
       // Choose whether to keep the proposal thetaprime.
-      double random_number = .01; // FIX ME FIXMErandu(rng);	   // Runif(1)
+      double rr=randu(rng); // runif(1)
       if(std::isnan(nprime)) nprime=0;
-      if (nprime != 0 && random_number < double(_nprime)/double(nprime)) {
+      if (nprime != 0 && rr < double(_nprime)/double(nprime)) {
 	// _thetaprime already updated globally above so do nothing
 	// _nllprime already updated globally above so do nothing
       } else {

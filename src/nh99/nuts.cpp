@@ -296,7 +296,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   bool _divergent=0;
   double H0= nll+0.5*norm2(p);
   double _nllprime=nll;		// NLL value at thetaprime
-  double logu= H0 -1.0;
+  double logu= -H0 - exprnd(1.0);
   // Initialize first iteration at initial values, in case fails below
   y(1)=60;
   y(2)=100;
@@ -322,7 +322,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     _nllprime=nll;
     double H0=nll+0.5*norm2(p);
-    logu= H0-1.0;
+    logu= -H0-exprnd(1.0);
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     int n = 1;
@@ -343,14 +343,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime);
+		   _nprime, _nfevals, _divergent, _nllprime, rng);
 	thetaplus = _thetaplus;
 	rplus = _rplus;
       } else {
 	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime);
+		   _nprime, _nfevals, _divergent, _nllprime, rng);
 	thetaminus = _thetaminus;
 	rminus = _rminus;
       }

@@ -114,25 +114,35 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Target acceptance rate for step size adaptation. Must be
   // 0<adapt_delta<1. Defaults to 0.8.
   double adapt_delta=0.8; // target acceptance rate specified by the user
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_delta",nopt))>-1)
-    {
-      if (nopt)
-	{
-	  istringstream ist(ad_comm::argv[on+1]);
-	  double _adapt_delta;
-	  ist >> _adapt_delta;
-	  if (_adapt_delta < 0 || _adapt_delta > 1 )
-	    {
-	      cerr << "Error: adapt_delta must be between 0 and 1"
-		" using default of 0.8" << endl;
-	    }
-	  else
-	    {
-	      adapt_delta=_adapt_delta;
-	    }
-	}
+  if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_delta",nopt))>-1) {
+    if (nopt) {
+      istringstream ist(ad_comm::argv[on+1]);
+      double _adapt_delta;
+      ist >> _adapt_delta;
+      if (_adapt_delta < 0 || _adapt_delta > 1 ) {
+	cerr << "Error: adapt_delta must be between 0 and 1" << endl;
+	ad_exit(1);
+      } else {
+	adapt_delta=_adapt_delta;
+      }
     }
-
+  }
+  // Max treedpeth is the number of times a NUTS trajectory will double in
+  // length before stopping. Thus length <= 2^max_treedepth+1
+  int max_treedepth=12;
+  if ((on=option_match(ad_comm::argc,ad_comm::argv,"-max_treedepth",nopt))>-1) {
+    if (nopt) {
+      istringstream ist(ad_comm::argv[on+1]);
+      int _max_treedepth;
+      ist >> _max_treedepth;
+      if (_max_treedepth <= 1) {
+	cerr << "Error: max_treedepth must be > 1" << endl;
+	ad_exit(1);
+      } else {
+	max_treedepth=_max_treedepth;
+      }
+    }
+  }
   // User-specified initial values
   nopt=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1) {
@@ -394,7 +404,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       s = _sprime && b;
       //% Increment depth.
       ++j;
-      if(j>10){cout << "max treedepth exceeded "<< is <<endl; break;}
+      if(j>max_treedepth){cout << "max treedepth exceeded "<< is <<endl; break;}
     } // end of single NUTS trajectory
 
     // Save parameters to psv file, duplicated if rejected

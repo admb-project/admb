@@ -246,7 +246,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // write sampler parameters
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
-
   // Declare and initialize the variables needed for the algorithm
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   dvector y(1,nvar); // unbounded parameters
@@ -286,7 +285,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector _rplus(1,nvar);
   dvector thetaminus(1,nvar);
   dvector thetaplus(1,nvar);
-  dvector thetaprime(1,nvar);
+  dvector theta(1,nvar); // the accepted par values
   dvector rminus(1,nvar);
   dvector rplus(1,nvar);
   double _alphaprime;
@@ -298,8 +297,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double H0= nll+0.5*norm2(p);
   double _nllprime=nll;		// NLL value at thetaprime
   double logu= H0 -1.0;
+  // Initialize first iteration at initial values, in case fails below
+  y(1)=60;
+  y(2)=100;
+  theta=y;
+  initial_params::restore_all_values(theta,1);
+  initial_params::copy_all_values(parsave,1.0);
 
-  ofstream theta("theta.txt", ios::trunc);
+  cout << "theta initial" << theta << endl;
+  cout << "parsave initial" << parsave << endl;
+  ofstream samples("samples.txt", ios::trunc);
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
@@ -307,14 +314,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     p.fill_randn(rng);
     _rminus=p;
     _rplus=p;
-    _thetaminus=_thetaprime;
-    _thetaplus=_thetaprime;
-    double H0=_nllprime+0.5*norm2(p);
+    _thetaminus=theta;
+    _thetaplus=theta;
+    _thetaprime=theta;
+    // Reset model parameters to theta, whether updated or not in previous iteration
+    z=chd*theta;
+    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    _nllprime=nll;
+    double H0=nll+0.5*norm2(p);
     logu= H0-1.0;
-    // _theta vars are already set globally from last iteration, but save
-    // last parameters in case first step fails
-    initial_params::copy_all_values(parsave,1.0);
-    initial_params::restore_all_values(parsave,1);
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     int n = 1;
@@ -332,7 +340,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       rminus=_rminus;
       //% Double the size of the tree.
       if (v == -1) {
-	build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j,
+	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, _nllprime);
@@ -349,12 +357,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
       //% Use Metropolis-Hastings to decide whether or not to move to a
       //% point from the half-tree we just generated.
+      // cout << j << " " << theta << " " <<  _thetaprime << endl;
       double rn = randu(rng);	   // Runif(1)
       if (_sprime == 1 && rn < double(_nprime)/n) {
 	// Save _thetaprime
-	initial_params::copy_all_values(parsave,1.0);
-	initial_params::restore_all_values(_thetaprime,1.0);
-	theta << _thetaprime << endl;
+	theta=_thetaprime;
       }
 
       //% Update number of valid points we've seen.
@@ -368,27 +375,35 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     } // end of single NUTS trajectory
 
     // Save parameters to psv file, duplicated if rejected
-    (*pofs_psave) << _thetaprime;
+    (*pofs_psave) << theta;
+    double alpha;
+    if(_nalphaprime==0){
+      alpha=0;
+    } else {
+      alpha=_alphaprime/_nalphaprime;
+    }
+    if(std::isnan(alpha)) alpha=0;
     if(is > nwarmup){
       if(_divergent==1) ndivergent++;
-      alphasum=alphasum+_alphaprime/_nalphaprime;
+      alphasum=alphasum+alpha;
     }
     // Adaptation of step size (eps).
     if(useDA && is <= nwarmup){
-      eps=adapt_eps(is, eps,  _alphaprime/_nalphaprime, adapt_delta, mu, epsvec, epsbar, Hbar);
+      eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
     }
-    adaptation <<  _alphaprime/_nalphaprime << "," <<  eps <<"," << j <<","
+    adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;
     if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     print_mcmc_progress(is, nmcmc, nwarmup);
+    samples << theta << endl;
   } // end of MCMC chain
 
 
   // Information about run
-  if(ndivergent>0) cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
-  if(useDA){
+  if(ndivergent>0)
+    cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
+  if(useDA)
     cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
-  }
   cout << "Final acceptance ratio=" << alphasum/(nmcmc-nwarmup) << endl;
   print_mcmc_timing(time_warmup, time_total);
 

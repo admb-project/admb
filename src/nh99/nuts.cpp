@@ -132,6 +132,31 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    }
 	}
     }
+
+  // User-specified initial values
+  nopt=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1) {
+    if (nopt) {
+      cifstream cif((char *)ad_comm::argv[on+1]);
+      if (!cif) {
+	cerr << "Error trying to open mcmc par input file "
+	     << ad_comm::argv[on+1] << endl;
+	exit(1);
+      }
+      cif >> parsave;
+      if (!cif) {
+	cerr << "Error reading from mcmc par input file "
+	     << ad_comm::argv[on+1] << endl;
+	exit(1);
+      }
+    } else {
+      cerr << "Illegal option with -mcpin" << endl;
+    }
+  } else {
+    initial_params::copy_all_values(parsave,1);
+  }
+
+
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
@@ -263,8 +288,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector gr2(1,nvar); gr2=gr*chd;
   dvector p(1,nvar);		// momentum vector
   p.fill_randn(rng);
-  // Copy initial value to parsave in case first trajectory rejected
-  initial_params::copy_all_values(parsave,1.0);
   int ndivergent=0; // # divergences post-warmup
   // The gradient and params at beginning of trajectory, in case rejected.
   dvector gr2begin(1,nvar); gr2begin=gr2;
@@ -301,11 +324,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   y(1)=60;
   y(2)=100;
   theta=y;
-  initial_params::restore_all_values(theta,1);
-  initial_params::copy_all_values(parsave,1.0);
 
-  cout << "theta initial" << theta << endl;
-  cout << "parsave initial" << parsave << endl;
   ofstream samples("samples.txt", ios::trunc);
 
   // Start of MCMC chain
@@ -362,6 +381,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       if (_sprime == 1 && rn < double(_nprime)/n) {
 	// Save _thetaprime
 	theta=_thetaprime;
+	// Rerun model to update parameters internally before saving
+	z=chd*theta;
+	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	initial_params::copy_all_values(parsave,1.0);
       }
 
       //% Update number of valid points we've seen.
@@ -375,7 +398,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     } // end of single NUTS trajectory
 
     // Save parameters to psv file, duplicated if rejected
-    (*pofs_psave) << theta;
+    (*pofs_psave) << parsave;
     double alpha;
     if(_nalphaprime==0){
       alpha=0;
@@ -395,7 +418,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;
     if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     print_mcmc_progress(is, nmcmc, nwarmup);
-    samples << theta << endl;
   } // end of MCMC chain
 
 

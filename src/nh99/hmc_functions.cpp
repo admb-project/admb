@@ -217,8 +217,8 @@ void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup)
   }
 }
 
-void function_minimizer::print_mcmc_timing(double time_warmup, double time_total)
-{
+void function_minimizer::print_mcmc_timing(double time_warmup, double start) {
+  double time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
   std::string title(" Elapsed Time: ");
   std::stringstream ss;
   ss.str("");

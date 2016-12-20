@@ -266,7 +266,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   p.fill_randn(rng);
   // Copy initial value to parsave in case first trajectory rejected
   initial_params::copy_all_values(parsave,1.0);
-  int ndivergent=0;
+  int ndivergent=0; // # divergences post-warmup
   // The gradient and params at beginning of trajectory, in case rejected.
   dvector gr2begin(1,nvar); gr2begin=gr2;
   dvector ybegin(1,nvar); ybegin=y;
@@ -276,6 +276,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
   }
   double mu=log(10*eps);
+  double alphasum=0;		// running sum for calculating final accept ratio
 
   // Setup and intitialize variables for build_tree trajectory
   dvector _thetaminus(1,nvar);
@@ -368,7 +369,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // Save parameters to psv file, duplicated if rejected
     (*pofs_psave) << _thetaprime;
-
+    if(is > nwarmup){
+      if(_divergent==1) ndivergent++;
+      alphasum=alphasum+_alphaprime/_nalphaprime;
+    }
     // Adaptation of step size (eps).
     if(useDA && is <= nwarmup){
       eps=adapt_eps(is, eps,  _alphaprime/_nalphaprime, adapt_delta, mu, epsvec, epsbar, Hbar);
@@ -379,14 +383,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     print_mcmc_progress(is, nmcmc, nwarmup);
   } // end of MCMC chain
 
-  // This final ratio should closely match adapt_delta
+
+  // Information about run
+  if(ndivergent>0) cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
   if(useDA){
     cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
-  } else {
-    //    cout << "Final acceptance ratio=" << iaccept/nmcmc << endl;
   }
-
-  time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+  cout << "Final acceptance ratio=" << alphasum/(nmcmc-nwarmup) << endl;
   print_mcmc_timing(time_warmup, time_total);
 
   // I assume this closes the connection to the file??

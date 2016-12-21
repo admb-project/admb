@@ -210,10 +210,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       cerr << "Option -mcsave does not currently work with HMC -- every iteration is saved" << endl;
       ad_exit(1);
     }
-  //// ------------------------------ End of input processing
-
-
-  //// Setup more inputs and outputs
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
   if (!pofs_psave|| !(*pofs_psave))
@@ -261,7 +257,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     {
       initial_params::set_inactive_random_effects();
     }
-  // Setup random number generator, based on seed passed
+  //// End of input processing
+  // --------------------------------------------------
+
+  //// Start of algorithm
+  // Setup random number generator, based on seed passed or hardcoded
   int iseed=2197;
   if (iseed0) iseed=iseed0;
   random_number_generator rng(iseed);
@@ -281,32 +281,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // write sampler parameters
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
+
   // Declare and initialize the variables needed for the algorithm
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
-  dvector y(1,nvar); // unbounded parameters
-  y.initialize();
-  // transformed params
-  independent_variables z(1,nvar); z=chd*y;
+  independent_variables z(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
-  // Need to run this to fill gr with current gradients and initial NLL.
-  double nllbegin=get_hybrid_monte_carlo_value(nvar,z,gr);
-  if(std::isnan(nllbegin)){
-    cerr << "Starting MCMC trajectory at NaN -- something is wrong!" << endl;
-    ad_exit(1);
-  }
   // initial rotated gradient
-  dvector gr2(1,nvar); gr2=gr*chd;
+  dvector gr2(1,nvar);
   dvector p(1,nvar);		// momentum vector
-  p.fill_randn(rng);
-  int ndivergent=0; // # divergences post-warmup
-  // The gradient and params at beginning of trajectory, in case rejected.
-  dvector gr2begin(1,nvar); gr2begin=gr2;
-  dvector ybegin(1,nvar); ybegin=y;
-  double nll=nllbegin;
-  if(useDA){
-    eps=find_reasonable_stepsize(nvar,y,p,chd);
-    epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
-  }
   double mu=log(10*eps);
   double alphasum=0;		// running sum for calculating final accept ratio
 
@@ -327,15 +309,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int _nprime;
   int _nfevals=0;
   bool _divergent=0;
-  double H0= nll+0.5*norm2(p);
-  double _nllprime=nll;		// NLL value at thetaprime
-  double logu= -H0 - exprnd(1.0);
-  // Initialize first iteration at initial values, in case fails below
-  y(1)=60;
-  y(2)=100;
-  theta=y;
-
-  ofstream samples("samples.txt", ios::trunc);
+  int ndivergent=0; // # divergences post-warmup
+  theta=parsave;
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
@@ -348,10 +323,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _thetaprime=theta;
     // Reset model parameters to theta, whether updated or not in previous iteration
     z=chd*theta;
-    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    _nllprime=nll;
+    double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    double _nllprime=nll;
     double H0=nll+0.5*norm2(p);
-    logu= -H0-exprnd(1.0);
+    double logu= -H0 - exprnd(1.0);
+    if(useDA && is==1){
+      eps=find_reasonable_stepsize(nvar,theta,p,chd);
+      epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
+    }
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     int n = 1;

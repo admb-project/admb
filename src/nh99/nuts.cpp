@@ -166,7 +166,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     initial_params::copy_all_values(parsave,1);
   }
 
-
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)

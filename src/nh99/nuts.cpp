@@ -145,6 +145,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // User-specified initial values
   nopt=0;
+  dvector theta(1,nvar); // the accepted par values
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1) {
     if (nopt) {
       cifstream cif((char *)ad_comm::argv[on+1]);
@@ -153,7 +154,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	     << ad_comm::argv[on+1] << endl;
 	exit(1);
       }
-      cif >> parsave;
+      cif >> theta;
       if (!cif) {
 	cerr << "Error reading from mcmc par input file "
 	     << ad_comm::argv[on+1] << endl;
@@ -163,7 +164,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       cerr << "Illegal option with -mcpin" << endl;
     }
   } else {
-    initial_params::copy_all_values(parsave,1);
+    initial_params::copy_all_values(theta,1);
   }
 
   // Use diagnoal covariance (identity mass matrix)
@@ -299,7 +300,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector _rplus(1,nvar);
   dvector thetaminus(1,nvar);
   dvector thetaplus(1,nvar);
-  dvector theta(1,nvar); // the accepted par values
   dvector rminus(1,nvar);
   dvector rplus(1,nvar);
   double _alphaprime;
@@ -309,7 +309,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int _nfevals=0;
   bool _divergent=0;
   int ndivergent=0; // # divergences post-warmup
-  theta=parsave;
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
@@ -345,6 +344,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       thetaminus=_thetaminus;
       rplus=_rplus;
       rminus=_rminus;
+      cout << "is=" <<is << " tprime "<< _thetaprime << _nllprime << endl;
       //% Double the size of the tree.
       if (v == -1) {
 	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j,
@@ -414,7 +414,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
   if(useDA)
     cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
-  cout << "Final acceptance ratio=" << alphasum/(nmcmc-nwarmup) << endl;
+  cout << "Final acceptance ratio=" << alphasum /(nmcmc-nwarmup) << endl;
   print_mcmc_timing(time_warmup, time_total);
 
   // I assume this closes the connection to the file??

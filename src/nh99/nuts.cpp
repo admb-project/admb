@@ -18,38 +18,28 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					   int restart_flag) {
-
-  if (nmcmc<=0)
-    {
+  if (nmcmc<=0) {
       cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
       ad_exit(1);
     }
 
+  // I haven't figured out what to do with RE yet, so leaving as is for
+  // now. -Cole
   uostream * pofs_psave=NULL;
-  if (mcmc2_flag==1)
-    {
+  if (mcmc2_flag==1) {
       initial_params::restore_start_phase();
     }
   initial_params::set_inactive_random_effects();
   initial_params::set_active_random_effects();
   int nvar_re=initial_params::nvarcalc();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  if (mcmc2_flag==0)
-    {
+  if (mcmc2_flag==0) {
       initial_params::set_inactive_random_effects();
       nvar=initial_params::nvarcalc(); // get the number of active parameters
     }
   initial_params::restore_start_phase();
-
   independent_variables parsave(1,nvar_re);
-  // dvector x(1,nvar);
-  // initial_params::xinit(x);
-  // dvector pen_vector(1,nvar);
-  // {
-  //   initial_params::reset(dvar_vector(x),pen_vector);
-  // }
   initial_params::mc_phase=1;
-
   int old_Hybrid_bounded_flag=-1;
   int on,nopt = 0;
 
@@ -59,29 +49,23 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double eps=0.1;
   double _eps=-1.0;
   int useDA=1; 			// whether to adapt step size
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hyeps",nopt))>-1)
-    {
-      if (!nopt) // not specified means to adapt, using function below to find reasonable one
-	{
-	  cerr << "Warning: No step size given after -hyeps, ignoring" << endl;
-	  useDA=1;
-	}
-      else			// read in specified value and do not adapt
-	{
-	  istringstream ist(ad_comm::argv[on+1]);
-	  ist >> _eps;
-	  if (_eps<=0)
-	    {
-	      cerr << "Error: step size (-hyeps argument) needs positive number";
-	      ad_exit(1);
-	    }
-	  else
-	    {
-	      eps=_eps;
-	      useDA=0;
-	    }
-	}
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hyeps",nopt))>-1) {
+    if (!nopt){ // not specified means to adapt, using function below to find reasonable one
+      
+      cerr << "Warning: No step size given after -hyeps, ignoring" << endl;
+      useDA=1;
+    } else {			// read in specified value and do not adapt
+      istringstream ist(ad_comm::argv[on+1]);
+      ist >> _eps;
+      if (_eps<=0) {
+	cerr << "Error: step size (-hyeps argument) needs positive number";
+	ad_exit(1);
+      } else {
+	eps=_eps;
+	useDA=0;
+      }
     }
+  }
 
   // Number of leapfrog steps.
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1) {
@@ -94,23 +78,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Number of warmup samples if using adaptation of step size. Defaults to
   // half of iterations.
   int nwarmup= (int)nmcmc/2;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nwarmup",nopt))>-1)
-    {
-      if (nopt)
-        {
-          int iii=atoi(ad_comm::argv[on+1]);
-          if (iii <=0 || iii > nmcmc)
-	    {
-	      cerr << "Error: nwarmup must be 0 < nwarmup < nmcmc" << endl;
-	      ad_exit(1);
-	    }
-          else
-	    {
-	      nwarmup=iii;
-	    }
-        }
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nwarmup",nopt))>-1) {
+    if (nopt) {
+      int iii=atoi(ad_comm::argv[on+1]);
+      if (iii <=0 || iii > nmcmc) {
+	cerr << "Error: nwarmup must be 0 < nwarmup < nmcmc" << endl;
+	ad_exit(1);
+      } else {
+	nwarmup=iii;
+      }
     }
-
+  }
   // Target acceptance rate for step size adaptation. Must be
   // 0<adapt_delta<1. Defaults to 0.8.
   double adapt_delta=0.8; // target acceptance rate specified by the user
@@ -164,64 +142,53 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       cerr << "Illegal option with -mcpin" << endl;
     }
   } else {
+    // Copy the MLE I think? Whatever was last executed by the model.
     initial_params::copy_all_values(theta,1);
   }
-
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
-    {
-      diag_option=1;
-      cout << " Setting covariance matrix to diagonal with entries " << dscale
-	   << endl;
-    }
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
+    diag_option=1;
+    cout << " Setting covariance matrix to diagonal with entries " << dscale
+	 << endl;
+  }
   // Restart chain from previous run?
   int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
   if(mcrestart_flag > -1){
     cerr << endl << "Error: -mcr option not implemented for HMC" << endl;
     ad_exit(1);
   }
-
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcec"))>-1)
-    {
-      cerr << endl << "Error: -mcec option not yet implemented with HMC" << endl;
-      ad_exit(1);
-      // use_empirical_flag=1;
-      // read_empirical_covariance_matrix(nvar,S,ad_comm::adprogram_name);
-    }
-
+  // Not sure what mcec is? Use empirical covariance?
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcec"))>-1) {
+    cerr << endl << "Error: -mcec option not yet implemented with HMC" << endl;
+    ad_exit(1);
+  }
+  // How much to thin, for now fixed at 1 and done externally.
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1) {
+    cerr << "Option -mcsave does not currently work with HMC -- every iteration is saved" << endl;
+    ad_exit(1);
+  }
   // Prepare the mass matrix for use. Depends on many factors below.
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
   // Need to grab old_scale values still, since it is scaled below
   read_covariance_matrix(S,nvar,old_Hybrid_bounded_flag,old_scale);
-  if (diag_option)		// set covariance to be diagonal
-    {
-      S.initialize();
-      for (int i=1;i<=nvar;i++)
-	{
-	  S(i,i)=dscale;
-	}
+  if (diag_option){		// set covariance to be diagonal
+    S.initialize();
+    for (int i=1;i<=nvar;i++) {
+      S(i,i)=dscale;
     }
-
-  // How much to thin, for now fixed at 1.
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
-    {
-      cerr << "Option -mcsave does not currently work with HMC -- every iteration is saved" << endl;
-      ad_exit(1);
-    }
+  }
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
-  if (!pofs_psave|| !(*pofs_psave))
-    {
-      cerr << "Error trying to open file" <<
-	ad_comm::adprogram_name + adstring(".psv") << endl;
-      ad_exit(1);
-    }
-  if (mcrestart_flag == -1 )
-    {
-      (*pofs_psave) << nvar;
-    }
+  if (!pofs_psave|| !(*pofs_psave)) {
+    cerr << "Error trying to open file" <<
+      ad_comm::adprogram_name + adstring(".psv") << endl;
+    ad_exit(1);
+  }
+  if (mcrestart_flag == -1 ){
+    (*pofs_psave) << nvar;
+  }
   // need to rescale the hessian
   // get the current scale
   dvector x0(1,nvar);
@@ -243,20 +210,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // 	}
   //   }
   if(diag_option){
-    for (int i=1;i<=nvar;i++)
-      {
-	for (int j=1;j<=nvar;j++)
-	  {
-	    S(i,j)*=current_scale(i)*current_scale(j);
-	  }
+    for (int i=1;i<=nvar;i++) {
+      for (int j=1;j<=nvar;j++) {
+	S(i,j)*=current_scale(i)*current_scale(j);
       }
+    }
   }
   //  cout << "S after=" << S << endl;
   gradient_structure::set_NO_DERIVATIVES();
-  if (mcmc2_flag==0)
-    {
-      initial_params::set_inactive_random_effects();
-    }
+  if (mcmc2_flag==0) {
+    initial_params::set_inactive_random_effects();
+  }
   //// End of input processing
   // --------------------------------------------------
 
@@ -267,10 +231,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   random_number_generator rng(iseed);
   gradient_structure::set_YES_DERIVATIVES();
   initial_params::xinit(x0);
-
-  // Dual averaging components
+  // ---------- Setup dual averaging components to adapt step size
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
+  // Timings
   double time_warmup=0;
   double time_total=0;
   std::clock_t start = clock();
@@ -278,20 +242,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   tm* localtm = localtime(&now);
   cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name <<
     "' at " << asctime(localtm);
-  // write sampler parameters
+  // write sampler parameters in format used by Shinystan
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
-
   // Declare and initialize the variables needed for the algorithm
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   independent_variables z(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
-  // initial rotated gradient
-  dvector gr2(1,nvar);
+  dvector gr2(1,nvar);		// initial rotated gradient
   dvector p(1,nvar);		// momentum vector
   double mu=log(10*eps);
   double alphasum=0;		// running sum for calculating final accept ratio
-
+  // ---------- End of dual averaging setup
+  
   // Setup and intitialize variables for build_tree trajectory
   dvector _thetaminus(1,nvar);
   dvector _thetaplus(1,nvar);
@@ -312,7 +275,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
-    // Random momentum for next iteration and update H
+    // Randomize momentum for next iteration and update H
     p.fill_randn(rng);
     _rminus=p;
     _rplus=p;
@@ -337,8 +300,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     bool s = true;
     int j=0;
     while (s) {
-      //v = 2*(rand() < 0.5)-1;
-      double value = randu(rng);	   // Runif(1)
+      double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
       thetaplus=_thetaplus;
       thetaminus=_thetaminus;
@@ -408,7 +370,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     print_mcmc_progress(is, nmcmc, nwarmup);
   } // end of MCMC chain
 
-
   // Information about run
   if(ndivergent>0)
     cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
@@ -418,8 +379,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   print_mcmc_timing(time_warmup, time_total);
 
   // I assume this closes the connection to the file??
-  if (pofs_psave)
-    {
+  if (pofs_psave) {
       delete pofs_psave;
       pofs_psave=NULL;
     }

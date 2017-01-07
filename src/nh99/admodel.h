@@ -1928,6 +1928,14 @@ public:
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
 		  int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
 		  const random_number_generator& rng);
+  void build_tree_test(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
+		  dvector& y, dvector& gr2, double logu, int v, int j, double H0,
+		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
+		  dvector& _rplus, dvector& _rminus,
+		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
+		  int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+		       const random_number_generator& rng,
+		        ofstream& out);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
 		  double eps, dvector& p, dvector& y, dvector& gr2);
   double adapt_eps(int ii, double eps, double alpha,

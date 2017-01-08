@@ -296,14 +296,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // --------------------------------------------------
     // Careful tests of build_tree trajectories by manually specifying
     // starting theta & r and then building tree. Should match R for same
-    // model.
+    // model. Read in input values so easier to control everything.
     cifstream cif("input.txt");
     cif >> theta;
     cif >> p;
-    // theta(1)=1.1;
-    // theta(2)=.15;
-    // p(1)=.14;
-    // p(2)=2.31;
+    int jj;
+    cif >> jj;
     _rminus=p; _rplus=p;
     _thetaminus=theta;
     _thetaplus=theta;
@@ -312,15 +310,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     _nllprime=nll;
     H0=nll+0.5*norm2(p);
-    logu= -H0 - exprnd(1.0);
+    logu= -15;//-H0 - exprnd(1.0);
     cout << "theta=" << theta << endl;
     cout << "p=" << p << endl;
-    cout << chd << endl;
+    cout << "chd=" << chd << endl;
+    cout << "seed=" << iseed << endl;
+    cout << "j=" << jj << endl;
     ofstream out("trajectory.txt", ios::app);
-    build_tree_test(nvar, gr, chd, eps, p, theta, gr2, logu, 1, 15,
-	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-	       _alphaprime, _nalphaprime, _sprime,
-	       _nprime, _nfevals, _divergent, _nllprime, rng, out);
+    build_tree_test(nvar, gr, chd, eps, p, theta, gr2, logu, 1, jj,
+		    H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		    _alphaprime, _nalphaprime, _sprime,
+		    _nprime, _nfevals, _divergent, _nllprime, rng, out);
+    ofstream out2("theta_prime.txt", ios::trunc);
+    out2 << _thetaprime << endl;
     // --------------------------------------------------
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree

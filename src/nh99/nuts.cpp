@@ -176,18 +176,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if (diag_option){		// set covariance to be diagonal
     S.initialize();
     for (int i=1;i<=nvar;i++) {
-      S(i,i)=dscale;
+      // S(i,i)=scale;
+      S(i,i)=1;
     }
-  }
-  pofs_psave=
-    new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
-  if (!pofs_psave|| !(*pofs_psave)) {
-    cerr << "Error trying to open file" <<
-      ad_comm::adprogram_name + adstring(".psv") << endl;
-    ad_exit(1);
-  }
-  if (mcrestart_flag == -1 ){
-    (*pofs_psave) << nvar;
   }
   // need to rescale the hessian
   // get the current scale
@@ -221,10 +212,22 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if (mcmc2_flag==0) {
     initial_params::set_inactive_random_effects();
   }
+  dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   //// End of input processing
   // --------------------------------------------------
 
   //// Start of algorithm
+  // Setup binary psv file to write samples to
+  pofs_psave=
+    new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
+  if (!pofs_psave|| !(*pofs_psave)) {
+    cerr << "Error trying to open file" <<
+      ad_comm::adprogram_name + adstring(".psv") << endl;
+    ad_exit(1);
+  }
+  // Save nvar first. If added mcrestart (mcrb) functionality later need to
+  // fix this line.
+  (*pofs_psave) << nvar;
   // Setup random number generator, based on seed passed or hardcoded
   int iseed=2197;
   if (iseed0) iseed=iseed0;
@@ -246,7 +249,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
   // Declare and initialize the variables needed for the algorithm
-  dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   independent_variables z(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// initial rotated gradient

@@ -637,6 +637,8 @@ install:
 	@#echo "Read INSTALL.txt for installation instructions."
 ifeq ($(DEBUG),yes)
   ifeq ($(INSTALL_DIR),/usr/local/)
+        find ../build/debug -type d -exec chmod 755 {} \;
+        find ../build/debug -type f -exec chmod 644 {} \;
 	chmod a+rx ../build/debug/bin/admb
 	chmod a+rx ../build/debug/bin/adlink
 	chmod a+rx ../build/debug/bin/adcomp
@@ -648,6 +650,8 @@ ifeq ($(DEBUG),yes)
 	cp -Rvf ../build/debug $(INSTALL_DIR)admb
 else
   ifeq ($(INSTALL_DIR),/usr/local/)
+        find ../build/dist -type d -exec chmod 755 {} \;
+        find ../build/dist -type f -exec chmod 644 {} \;
 	chmod a+rx ../build/dist/bin/admb
 	chmod a+rx ../build/dist/bin/adlink
 	chmod a+rx ../build/dist/bin/adcomp

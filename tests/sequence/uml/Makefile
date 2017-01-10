@@ -1,7 +1,6 @@
-#$Id$
-#
 .SUFFIXES: .pdf .tex .png
-all: big-admb-component.png admb-component.pdf admb-seqdiag.png admb-blockdiag.png
+all: admb-seqdiag.png admb-blockdiag.png
+all2: big-admb-component.png admb-component.pdf admb-seqdiag.png admb-blockdiag.png
 
 %.pdf:%.tex
 	pdflatex $^
@@ -18,7 +17,7 @@ admb-component.pdf: admb-component.tex
 	pdflatex admb-component
 
 admb-seqdiag.png: admb-seqdiag
-	seqdiag admb-seqdiag
+	seqdiag -f /Library/Fonts/Verdana\ Bold.ttf admb-seqdiag
 
 admb-blockdiag.png: admb-blockdiag
 	blockdiag admb-blockdiag

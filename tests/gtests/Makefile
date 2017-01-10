@@ -195,10 +195,10 @@ else
 endif
 
 nuts2:
-	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;"
+	/Applications/MATLAB_R2016a.app/bin/matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;"
 
 test_nuts.txt: nutsmatlab/nuts_da.m
-	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
+	/Applications/MATLAB_R2016a.app/bin/matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
 
 nuts: test_nuts.txt test_nuts
 ifeq ($(SHELL),cmd)
@@ -297,7 +297,9 @@ ifeq ($(SHELL),cmd)
 	@del finance.p0 2>NUL
 	@del test_dvector.txt 2>NUL
 	@del test_adstring_array.txt 2>NUL
+	@del test_nuts.txt 2>NUL
 else
+	@rm -vf test_nuts.txt
 	@rm -vf finance.b0
 	@rm -vf finance.p0
 	@rm -vf gtest-all *.obj

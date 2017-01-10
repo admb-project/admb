@@ -11,3 +11,4 @@ benchmarks-opt.txt
 benchmarks-saf.txt
 examples/admb/simple/*
 examples/admb/catage/*
+**/.DS_Store

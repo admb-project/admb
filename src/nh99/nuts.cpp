@@ -168,27 +168,30 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cerr << "Option -mcsave does not currently work with HMC -- every iteration is saved" << endl;
     ad_exit(1);
   }
-  // Prepare the mass matrix for use. Depends on many factors below.
+  // Prepare the mass matrix for use. For now assuming mass matrix passed
+  // on the unconstrained scale. Thus all the scales are assumed 1. The MLE
+  // one should also not need to be adjusted since it is written
+  // unconstrained already.
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
-  // Need to grab old_scale values still, since it is scaled below
-  read_covariance_matrix(S,nvar,old_Hybrid_bounded_flag,old_scale);
   if (diag_option){		// set covariance to be diagonal
     S.initialize();
     for (int i=1;i<=nvar;i++) {
-      // S(i,i)=scale;
       S(i,i)=1;
     }
+  } else {
+    // Need to grab old_scale values still, since it is scaled below
+    read_covariance_matrix(S,nvar,old_Hybrid_bounded_flag,old_scale);
   }
-  // need to rescale the hessian
-  // get the current scale
+  // // need to rescale the hessian
+  // // get the current scale
   dvector x0(1,nvar);
-  dvector current_scale(1,nvar);
   initial_params::xinit(x0);
-  int mctmp=initial_params::mc_phase;
-  initial_params::mc_phase=0;
-  initial_params::stddev_scale(current_scale,x0);
-  initial_params::mc_phase=mctmp;
+  // dvector current_scale(1,nvar);
+  // int mctmp=initial_params::mc_phase;
+  // initial_params::mc_phase=0;
+  // initial_params::stddev_scale(current_scale,x0);
+  // initial_params::mc_phase=mctmp;
   // cout << "old scale=" <<  old_scale << endl;
   // cout << "current scale=" << current_scale << endl;
   // cout << "S before=" << S << endl;
@@ -200,19 +203,20 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // 	  S(i,j)*=old_scale(i)*old_scale(j);
   // 	}
   //   }
-  if(diag_option){
-    for (int i=1;i<=nvar;i++) {
-      for (int j=1;j<=nvar;j++) {
-	S(i,j)*=current_scale(i)*current_scale(j);
-      }
-    }
-  }
-  //  cout << "S after=" << S << endl;
+  // if(diag_option){
+  //   for (int i=1;i<=nvar;i++) {
+  //     for (int j=1;j<=nvar;j++) {
+  // 	S(i,j)*=current_scale(i)*current_scale(j);
+  //     }
+  //   }
+  // }
   gradient_structure::set_NO_DERIVATIVES();
   if (mcmc2_flag==0) {
     initial_params::set_inactive_random_effects();
   }
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
+  cout << "S=" << S << endl;
+  cout << "chd=" << chd << endl;
   //// End of input processing
   // --------------------------------------------------
 

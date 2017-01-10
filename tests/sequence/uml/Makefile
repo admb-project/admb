@@ -1,9 +1,20 @@
 .SUFFIXES: .pdf .tex .png
+
 all: admb-seqdiag.png admb-blockdiag.png
-all2: big-admb-component.png admb-component.pdf admb-seqdiag.png admb-blockdiag.png
+
+admb-seqdiag.png: admb-seqdiag
+	seqdiag -f /Library/Fonts/Verdana\ Bold.ttf admb-seq.diag
+
+admb-blockdiag.png: admb-blockdiag
+	blockdiag -f /Library/Fonts/Verdana\ Bold.ttf admb-block.diag
+
+tex: big-admb-component.png admb-component.pdf
 
 %.pdf:%.tex
 	pdflatex $^
+
+admb-component.pdf: admb-component.tex
+	pdflatex admb-component
 
 big-admb-component.png: big-admb-component.pdf
 #	extract page 2
@@ -12,15 +23,6 @@ big-admb-component.png: big-admb-component.pdf
 	pdfcrop --verbose --margins 0 --clip t1.pdf t2.pdf
 #	convert to 300 dpi png
 	convert -antialias -density 600 t2.pdf $@
-
-admb-component.pdf: admb-component.tex
-	pdflatex admb-component
-
-admb-seqdiag.png: admb-seqdiag
-	seqdiag -f /Library/Fonts/Verdana\ Bold.ttf admb-seqdiag
-
-admb-blockdiag.png: admb-blockdiag
-	blockdiag admb-blockdiag
 
 clean:
 	@rm -vf *.png

@@ -2,10 +2,10 @@
 
 all: admb-seqdiag.png admb-blockdiag.png
 
-admb-seqdiag.png: admb-seqdiag
+admb-seqdiag.png: admb-seq.diag
 	seqdiag -f /Library/Fonts/Verdana\ Bold.ttf admb-seq.diag
 
-admb-blockdiag.png: admb-blockdiag
+admb-blockdiag.png: admb-block.diag
 	blockdiag -f /Library/Fonts/Verdana\ Bold.ttf admb-block.diag
 
 tex: big-admb-component.png admb-component.pdf

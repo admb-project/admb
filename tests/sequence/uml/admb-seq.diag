@@ -1,22 +1,28 @@
 seqdiag {
-  edge_length = 400;
+  edge_length = 500;
 
   default_fontsize = 25;
 
-  node_width = 350;
+  node_width = 450;
   node_height = 100;
 
   span_height = 50;
-  span_width = 340;
+  span_width = 400;
 
   main[shape = roundedbox, fontsize = 30];
-  model_parameters[shape = roundedbox, fontsize = 30];
+
+  main => gradient_structure[label = "set_CMPDIF_BUFFER_SIZE"]
+  main => gradient_structure[label = "set_GRADSTACK_BUFFER_SIZE"]
+  main => gradient_structure[label = "set_MAX_NVAR_OFFSET"]
+  main => gradient_structure[label = "set_NO_DERIVATIVES"]
+
+  model_parameters[label = "mp : model_parameters", shape = roundedbox, fontsize = 30];
   model_data[shape = roundedbox, fontsize = 30];
   ad_comm[shape = roundedbox, fontsize = 30];
   function_minimizer[shape = roundedbox, fontsize = 30];
 
-  // auto return edge
-  main => model_parameters [label = "Constructor", return = "return"]
+
+  main => model_parameters [label = "mp.Constructor", return = "return"]
   {
     model_parameters => model_data [label = "Constructor", return = "return"]
     {
@@ -24,12 +30,12 @@ seqdiag {
     }
     model_parameters => function_minimizer[label = "Constructor", return = "return"];
   }
-  main => model_parameters [label = "preliminary_calculations", return = "return"];
-  main => function_minimizer [label = "computations", return = "return"]
+  main => model_parameters [label = "mp.preliminary_calculations", return = "return"];
+  main => function_minimizer [label = "mp.computations", return = "return"]
   {
     function_minimizer => model_parameters [label = "set_runtime", return = "return"];
     function_minimizer => model_parameters [label = "minimize procedure section", return = "return"];
     function_minimizer => model_parameters [label = "final_calcs", return = "return"];
   }
-  main => model_parameters [label = "Destructor", return = "return"];
+  main => model_parameters [label = "mp.Destructor", return = "return"];
 }

@@ -1,5 +1,5 @@
 seqdiag {
-  edge_length = 500;
+  edge_length = 600;
 
   default_fontsize = 25;
 
@@ -27,8 +27,16 @@ seqdiag {
     model_parameters => model_data [label = "Constructor", return = "return"]
     {
       model_data => ad_comm [label = "Constructor", return = "return"];
+      model_data => data[label = "Constructor", return = "return"];
+      model_data => data[label = "allocate", return = "return"];
     }
     model_parameters => function_minimizer[label = "Constructor", return = "return"];
+    model_parameters => parameters[label = "Constructor", return = "return"];
+    model_parameters => model_parameters[label = "initializationfunction", return = "return"]
+    {
+      model_parameters => parameters[label = "set_initial_value", return = "return"];
+    }
+    model_parameters => parameters[label = "allocate", return = "return"];
   }
   main => model_parameters [label = "mp.preliminary_calculations", return = "return"];
   main => function_minimizer [label = "mp.computations", return = "return"]

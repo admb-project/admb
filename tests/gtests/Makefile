@@ -297,9 +297,7 @@ ifeq ($(SHELL),cmd)
 	@del finance.p0 2>NUL
 	@del test_dvector.txt 2>NUL
 	@del test_adstring_array.txt 2>NUL
-	@del test_nuts.txt 2>NUL
 else
-	@rm -vf test_nuts.txt
 	@rm -vf finance.b0
 	@rm -vf finance.p0
 	@rm -vf gtest-all *.obj

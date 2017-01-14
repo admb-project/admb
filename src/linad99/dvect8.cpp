@@ -29,19 +29,16 @@ dvector::dvector(const ivector& u)
  }
 
 /**
- * Description not yet available.
- * \param
- */
+Construct dvector with values in lvector.
+
+\param u values to copy
+*/
 dvector::dvector(const lvector& u)
 {
   allocate(u.indexmin(), u.indexmax());
   for (int i=indexmin(); i <= indexmax(); i++)
   {
-#if defined(_WIN32)
-    elem(i) = u.elem(i);
-#else
     elem(i) = static_cast<double>(u.elem(i));
-#endif
   }
 }
 

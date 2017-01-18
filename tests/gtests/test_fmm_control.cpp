@@ -61,6 +61,7 @@ extern "C"
   void test_ad_exit(const int exit_code);
 }
 #if defined(__MINGW64__)
+ #ifndef OPT_LIB
 TEST_F(test_fmm_control, constructor_ipars_max1)
 {
   ad_exit=&test_ad_exit;
@@ -106,4 +107,5 @@ TEST_F(test_fmm_control, constructor_ipars_max5)
     fmm_control source(ipars);
   }, "Assertion");
 }
+  #endif
 #endif

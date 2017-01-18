@@ -98,6 +98,8 @@ fmm_control::fmm_control(const lvector& ipar)
 
 #if defined(__MINGW64__)
   #ifndef OPT_LIB
+  cout << ipar[1] << ' ' << LONG_MAX << endl;
+  cout << ipar[2] << ' ' << LONG_MAX << endl;
   assert(ipar[1] <= LONG_MAX);
   assert(ipar[2] <= LONG_MAX);
   #endif
@@ -111,7 +113,11 @@ fmm_control::fmm_control(const lvector& ipar)
 #ifdef __HP__
   crit = .0001;
 #else
-  crit = pow(double(10), int(-ipar[3]));
+  #ifndef OPT_LIB
+  cout << ipar[3] << ' ' << INT_MAX << endl;
+  assert(ipar[3] <= INT_MAX);
+  #endif
+  crit = pow(double(10), static_cast<int>(-ipar[3]));
 #endif
 
   imax = ipar[4];

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 #include <adstring.hpp>
+#include <climits>
 
 class test_fmm_control: public ::testing::Test {};
 

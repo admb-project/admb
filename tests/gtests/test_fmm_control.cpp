@@ -40,3 +40,18 @@ TEST_F(test_fmm_control, copy_constructor)
   fmm_control copy(source);
   EXPECT_EQ(1.0, copy.fringe);
 }
+TEST_F(test_fmm_control, constructor_ipars)
+{
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX;
+  ipars[2] = LONG_MAX;
+  ipars[3] = INT_MAX;
+  ipars[4] = INT_MAX;
+  ipars[5] = INT_MAX;
+  fmm_control source(ipars);
+  EXPECT_EQ(LONG_MAX, ipars[1]);
+  EXPECT_EQ(LONG_MAX, ipars[2]);
+  EXPECT_EQ(INT_MAX, ipars[3]);
+  EXPECT_EQ(INT_MAX, ipars[4]);
+  EXPECT_EQ(INT_MAX, ipars[5]);
+}

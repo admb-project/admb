@@ -55,3 +55,54 @@ TEST_F(test_fmm_control, constructor_ipars)
   EXPECT_EQ(INT_MAX, ipars[4]);
   EXPECT_EQ(INT_MAX, ipars[5]);
 }
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+#if defined(__MINGW64__)
+TEST_F(test_fmm_control, constructor_ipars_max1)
+{
+  ad_exit=&test_ad_exit;
+
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX + 1;
+  ipars[2] = LONG_MAX;
+  ipars[3] = INT_MAX;
+  ipars[4] = INT_MAX;
+  ipars[5] = INT_MAX;
+
+  EXPECT_DEATH({
+    fmm_control source(ipars);
+  }, "Assertion");
+}
+TEST_F(test_fmm_control, constructor_ipars_max2)
+{
+  ad_exit=&test_ad_exit;
+
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX;
+  ipars[2] = LONG_MAX + 1;
+  ipars[3] = INT_MAX;
+  ipars[4] = INT_MAX;
+  ipars[5] = INT_MAX;
+
+  EXPECT_DEATH({
+    fmm_control source(ipars);
+  }, "Assertion");
+}
+TEST_F(test_fmm_control, constructor_ipars_max5)
+{
+  ad_exit=&test_ad_exit;
+
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX;
+  ipars[2] = LONG_MAX;
+  ipars[3] = INT_MAX;
+  ipars[4] = INT_MAX;
+  ipars[5] = INT_MAX + 1;
+
+  EXPECT_DEATH({
+    fmm_control source(ipars);
+  }, "Assertion");
+}
+#endif

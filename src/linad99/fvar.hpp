@@ -40,14 +40,13 @@
  */
 #ifndef FVAR_HPP
 #define FVAR_HPP
-//#define __MINGW64__
 /** \file fvar.hpp
 AUTODIF classes.
 Class definitions for reverse mode automatic differentiation.
 Function prototypes for math functions.
 Macro definitions.
 */
-#if defined(__MINGW64__ )
+#if defined(__MINGW64__)
   #define OFF_T off64_t
   #define LSEEK lseek64
   #if !defined(AD_LONG_INT)

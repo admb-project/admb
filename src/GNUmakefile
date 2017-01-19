@@ -87,7 +87,14 @@ ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-unused-parameter
 endif
 
 ifeq ($(SHELL),cmd)
-  ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+  ifeq ($(CXX),g++)
+    GCCMAJVER:="GCCVER$(shell gcc -dumpversion)"
+    ifeq (GCCVER6,$(findstring GCCVER6,$(GCCMAJVER))
+      ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+    else
+      ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+    endif
+  endif
 else
   ifeq ("$(shell uname)","Darwin")
     ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)

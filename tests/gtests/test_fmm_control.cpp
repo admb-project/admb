@@ -67,11 +67,12 @@ TEST_F(test_fmm_control, constructor_ipars_max1)
   ad_exit=&test_ad_exit;
 
   lvector ipars(1, 5);
-  ipars[1] = LONG_MAX + 1;
+  ipars[1] = LONG_MAX;
   ipars[2] = LONG_MAX;
   ipars[3] = INT_MAX;
   ipars[4] = INT_MAX;
   ipars[5] = INT_MAX;
+  ipars[1]++;
 
   EXPECT_DEATH({
     fmm_control source(ipars);
@@ -83,10 +84,11 @@ TEST_F(test_fmm_control, constructor_ipars_max2)
 
   lvector ipars(1, 5);
   ipars[1] = LONG_MAX;
-  ipars[2] = LONG_MAX + 1;
+  ipars[2] = LONG_MAX;
   ipars[3] = INT_MAX;
   ipars[4] = INT_MAX;
   ipars[5] = INT_MAX;
+  ipars[2]++;
 
   EXPECT_DEATH({
     fmm_control source(ipars);
@@ -101,7 +103,8 @@ TEST_F(test_fmm_control, constructor_ipars_max5)
   ipars[2] = LONG_MAX;
   ipars[3] = INT_MAX;
   ipars[4] = INT_MAX;
-  ipars[5] = INT_MAX + 1;
+  ipars[5] = INT_MAX;
+  ipars[5]++;
 
   EXPECT_DEATH({
     fmm_control source(ipars);

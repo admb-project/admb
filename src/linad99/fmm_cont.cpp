@@ -120,6 +120,9 @@ fmm_control::fmm_control(const lvector& ipar)
   crit = pow(double(10), static_cast<int>(-ipar[3]));
 #endif
 
+#ifndef OPT_LIB
+  assert(ipar[4] <= LONG_MAX);
+#endif
   imax = ipar[4];
 
 #ifndef OPT_LIB

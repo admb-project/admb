@@ -49,7 +49,9 @@ Macro definitions.
 #if defined(__MINGW64__)
   #define OFF_T off64_t
   #define LSEEK lseek64
-  #if !defined(AD_LONG_INT)
+  #if defined(AD_LONG_INT)
+    #error "Error: AD_LONG_INT should not be defined."
+  #else
     #define AD_LONG_INT long long int
   #endif
 #else
@@ -57,7 +59,9 @@ Macro definitions.
   #ifndef _MSC_VER
     #define LSEEK lseek
   #endif
-  #if !defined(AD_LONG_INT)
+  #if defined(AD_LONG_INT)
+    #error "Error: AD_LONG_INT should not be defined."
+  #else
     #define AD_LONG_INT long int
   #endif
 #endif
@@ -134,10 +138,6 @@ Macro definitions.
 
 #if defined(__BORLANDC__) || defined (_MSC_VER) || defined(__WAT32__)
 #   include <io.h>
-#endif
-
-#if !defined(AD_LONG_INT)
-  #define AD_LONG_INT long int
 #endif
 
 #if !defined(_MSC_VER)

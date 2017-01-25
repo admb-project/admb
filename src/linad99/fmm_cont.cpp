@@ -119,8 +119,10 @@ fmm_control::fmm_control(const lvector& ipar)
   #ifndef OPT_LIB
   assert(ipar[4] <= LONG_MAX);
   #endif
-#endif
+  imax = static_cast<long>(ipar[4]);
+#else
   imax = ipar[4];
+#endif
 
 #ifndef OPT_LIB
   assert(ipar[5] <= INT_MAX);

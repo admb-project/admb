@@ -2014,8 +2014,10 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   double maxg=max(fabs(g));
   if (!initial_params::mc_phase)
   {
+    std::streamsize save = cout.precision();
     cout << setprecision(16) << " f = " << vf
          << " max g = " << maxg << endl;
+    cout.precision(save);
   }
   return maxg;
 }

@@ -8,6 +8,9 @@ Copyright (c) 2008-2012 Regents of the University of California
 #ifndef OPT_LIB
   #include <cassert>
 #endif
+#ifdef __OPEN64__
+  #define nullptr NULL
+#endif
 
 /**
 Default constructor

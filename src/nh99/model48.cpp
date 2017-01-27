@@ -91,7 +91,7 @@ void param_init_bounded_number_vector::allocate(int min1,int max1,
   int size = max1 - min1 + 1;
   if (size > 0)
   {
-    v = new param_init_bounded_number[size];
+    v = new param_init_bounded_number[static_cast<unsigned long>(size)];
     if (!v)
     {
         cerr << " error trying to allocate memory in "

@@ -19,11 +19,11 @@ Delay runtime by seconds(sec).
 
 \return total seconds waited
 */
-long int _adwait(double sec)
+time_t _adwait(double sec)
 {
-  long int total_wait = 0;
+  time_t total_wait = 0;
 
-  const long int max_seconds =
+  const time_t max_seconds = 
     static_cast<long int>(ceil(sec));
 
   time_t current;

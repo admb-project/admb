@@ -19,3 +19,9 @@ TEST_F(test_adtimer, get_elapsed)
   double mls_t3 = t.get_elapsed_time_and_reset();
   ASSERT_LT(mls_t3, mls_t2);
 }
+TEST_F(test_adtimer, _adwait)
+{
+  long int _adwait(double sec);
+  long int total_wait = _adwait(3.5);
+  ASSERT_GT(total_wait, 4);
+}

@@ -3,6 +3,9 @@
 
 #include <fvar.hpp>
 #include "adjson.h"
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 istream& operator>>(istream& input, adjson::json& data)
 {
@@ -134,7 +137,10 @@ istream& dvector::parse(istream& input)
     deallocate();
   }
   size_t size = a->_value.size();
-  allocate(1, size);
+#ifndef OPT_LIB
+  assert(size <= INT_MAX);
+#endif
+  allocate(1, static_cast<int>(size));
   for (size_t i = 0; i < size; ++i)
   {
     adjson::number* n = (adjson::number*)a->_value[i];

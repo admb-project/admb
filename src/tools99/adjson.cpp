@@ -5,6 +5,7 @@
 #include "adjson.h"
 #ifndef OPT_LIB
   #include <cassert>
+  #include <climits>
 #endif
 
 istream& operator>>(istream& input, adjson::json& data)

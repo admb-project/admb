@@ -131,7 +131,8 @@ value* json::parse(istream& input)
 istream& dvector::parse(istream& input)
 {
   adjson::json data;
-  adjson::array* a = (adjson::array*)data.parse(input);
+  input >> data;
+  adjson::array* a = (adjson::array*)data.get_value();
 
   if (allocated())
   {

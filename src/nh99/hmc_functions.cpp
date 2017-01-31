@@ -260,12 +260,12 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   // reasonable eps is found. Thus need to make sure y and p are constant
   // and only eps changes.
 
-  independent_variables z(1,nvar); // rotated bounded parameters
-  dvector gr(1,nvar);		   // gradients
   double eps=1;			   // initial eps
+  independent_variables z(1,nvar); // rotated bounded parameters
   dvector p2(1,nvar);		// updated momentum
-  dvector gr2(1,nvar);		// updated rotated gradient
   dvector y2(1,nvar);		// updated position
+  dvector gr(1,nvar);		   // gradients
+  dvector gr2(1,nvar);		// updated rotated gradient
 
   // Calculate initial Hamiltonian value
   double pprob1=0.5*norm2(p);
@@ -273,10 +273,26 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   double nllbegin=get_hybrid_monte_carlo_value(nvar,z,gr);
   dvector gr2begin=gr*chd; // rotated gradient
   double H1=nllbegin+pprob1;
-  double a=-1;			// whether to double or halve eps
-  bool success=0; // whether or not algorithm worked after 50 iterations
 
-  for(int k=1; k<50; k++){
+  // Calculate H after a single step of size eps
+  double nll2=leapfrog(nvar, gr, chd, eps, p2, y2, gr2);
+  double pprob2=0.5*norm2(p2);
+  double H2=nll2+pprob2;
+  double alpha=exp(H1-H2);
+  // Determine whether eps is too big or too small, i.e. whether to halve
+  // or double. If a=1, then eps keeps doubling until alpha passes 0.5;
+  // otherwise it halves until that happens.
+  double a;
+  bool result = ;
+  if(alpha < 0.5 || std::isnan(alpha)){
+    // If divergence occurs or eps too big, halve it
+    a=-1;
+  } else {
+    // If stepsize too small, double it
+    a=1;
+  }
+
+  for(int k=2; k<50; k++){
     // Reinitialize position and momentum at each step.
     p2=p;
     y2=y;
@@ -288,33 +304,19 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
     double H2=nll2+pprob2;
     double alpha=exp(H1-H2);
 
-    // On first step, determine whether to halve or double. If a=1, then
-    // eps keeps doubling until alpha passes 0.5; otherwise it halves until
-    // that happens.
-    if(k==1){
-      // Determine initial acceptance ratio is too big or too small
-      bool result = alpha >0.5;
-      // if divergence occurs, acceptance prob is 0 so a=-1
-      if(std::isnan(result)) result=0;
-      if(result) a=1;
-    }
     // Check if the 1/2 threshold has been crossed
-    double x1=pow(alpha,a);
-    double x2=pow(2,-a);
-    if(x1 < x2){
-      cout << "Found reasonable step size of " << eps << " after " << k << " steps." << endl;
-      success=1;
-      break;
+    if(pow(alpha,a) < pow(2,-a)){
+      cout << "Found reasonable step size of " << eps << " after "
+	   << k << " steps." << endl;
+      return(eps);
+    } else {
+      // Otherwise either halve or double eps and do another iteration
+      eps=pow(2,a)*eps;
     }
-    // Otherwise either halve or double eps and do another iteration
-    eps=pow(2,a)*eps;
   }
-  if(success==0) {
-    cerr << "Did not find reasonable initial step size after 50 iterations -- " <<
-      "is something wrong with model?" << endl;
-    ad_exit(1);
-  }
-  return(eps);
+  cerr << "Did not find reasonable initial step size after 50 iterations -- " <<
+    "is something wrong with model?" << endl;
+  ad_exit(1);
 } // end of function
 
 /**

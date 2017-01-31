@@ -297,7 +297,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd);
       mu=log(10*eps);
-      epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
+      epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
@@ -360,7 +360,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     if(_nalphaprime==0){
       alpha=0;
     } else {
-      alpha=_alphaprime/_nalphaprime;
+      alpha=double(_alphaprime)/double(_nalphaprime);
     }
     if(std::isnan(alpha)) alpha=0;
     if(is > nwarmup){

@@ -246,23 +246,21 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   tm* localtm = localtime(&now);
   cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name <<
     "' at " << asctime(localtm);
-  // Setup dual averaging components to adapt step size
+  // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
-  eps=find_reasonable_stepsize(nvar,theta,p,chd);
-  double mu=log(10*eps);
-  epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
+  double mu;
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
+
   // Declare and initialize the variables needed for the algorithm
   independent_variables z(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// initial rotated gradient
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
-  // ---------- End of dual averaging setup
-
-  // Setup and intitialize variables for build_tree trajectory
+  // References to left most and right most theta and momentum for current
+  // subtree inside of buildtree.
   dvector _thetaminus(1,nvar);
   dvector _thetaplus(1,nvar);
   dvector _thetaprime(1,nvar);
@@ -295,6 +293,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double _nllprime=nll;
     double H0=nll+0.5*norm2(p);
     double logu= -H0 - exprnd(1.0);
+    if(useDA && is==1){
+      // Setup dual averaging components to adapt step size
+      eps=find_reasonable_stepsize(nvar,theta,p,chd);
+      mu=log(10*eps);
+      epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
+    }
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     int n = 1;

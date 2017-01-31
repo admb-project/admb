@@ -180,14 +180,15 @@ double function_minimizer::adapt_eps(int ii, double eps, double alpha,
 				     dvector& epsvec, dvector& epsbar,
 				     dvector& Hbar){
   double gamma=0.05;  double t0=10;  double kappa=0.75;
+  int m=ii+1;
   // If divergence, there is 0 acceptance probability so alpha=0.
   if(std::isnan(alpha)) alpha=0;
-  Hbar(ii+1)= (1-1/(ii+t0))*Hbar(ii) + (adapt_delta-alpha)/(ii+t0);
-  double logeps=mu-sqrt(ii)*Hbar(ii+1)/gamma;
-  epsvec(ii+1)=exp(logeps);
-  double logepsbar= pow(ii, -kappa)*logeps+(1-pow(ii,-kappa))*log(epsbar(ii));
-  epsbar(ii+1)=exp(logepsbar);
-  return(epsvec(ii+1));
+  Hbar(m)= (1-1/(m+t0))*Hbar(m-1) + (adapt_delta-alpha)/(m+t0);
+  double logeps=mu-sqrt(m)*Hbar(m)/gamma;
+  epsvec(m)=exp(logeps);
+  double logepsbar= pow(m, -kappa)*logeps+(1-pow(m,-kappa))*log(epsbar(m-1));
+  epsbar(m)=exp(logepsbar);
+  return(epsvec(m));
 }
 
   /**
@@ -279,9 +280,10 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   double pprob2=0.5*norm2(p2);
   double H2=nll2+pprob2;
   double alpha=exp(H1-H2);
-  // Determine whether eps is too big or too small, i.e. whether to halve
-  // or double. If a=1, then eps keeps doubling until alpha passes 0.5;
-  // otherwise it halves until that happens.
+  // Determine whether eps=1 is too big or too small,
+  // i.e. whether to halve or double. If a=1, then eps keeps
+  // doubling until alpha passes 0.5; otherwise it halves until
+  // that happens.
   double a;
   if(alpha < 0.5 || std::isnan(alpha)){
     // If divergence occurs or eps too big, halve it
@@ -309,7 +311,8 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
 	   << k << " steps." << endl;
       return(eps);
     } else {
-      // Otherwise either halve or double eps and do another iteration
+      // Otherwise either halve or double eps and do another
+      // iteration
       eps=pow(2,a)*eps;
     }
   }

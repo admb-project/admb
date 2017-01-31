@@ -283,7 +283,6 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   // or double. If a=1, then eps keeps doubling until alpha passes 0.5;
   // otherwise it halves until that happens.
   double a;
-  bool result = ;
   if(alpha < 0.5 || std::isnan(alpha)){
     // If divergence occurs or eps too big, halve it
     a=-1;

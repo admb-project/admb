@@ -238,9 +238,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   random_number_generator rng(iseed);
   gradient_structure::set_YES_DERIVATIVES();
   initial_params::xinit(x0);
-  // ---------- Setup dual averaging components to adapt step size
-  dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
-  epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
   // Timings
   double time_warmup=0;
   double time_total=0;
@@ -249,7 +246,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   tm* localtm = localtime(&now);
   cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name <<
     "' at " << asctime(localtm);
-  // write sampler parameters in format used by Shinystan
+  // Setup dual averaging components to adapt step size
+  dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
+  epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
+  eps=find_reasonable_stepsize(nvar,theta,p,chd);
+  double mu=log(10*eps);
+  epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
   // Declare and initialize the variables needed for the algorithm
@@ -257,7 +259,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// initial rotated gradient
   dvector p(1,nvar);		// momentum vector
-  double mu=log(10*eps);
   double alphasum=0;		// running sum for calculating final accept ratio
   // ---------- End of dual averaging setup
 
@@ -294,10 +295,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double _nllprime=nll;
     double H0=nll+0.5*norm2(p);
     double logu= -H0 - exprnd(1.0);
-    if(useDA && is==1){
-      eps=find_reasonable_stepsize(nvar,theta,p,chd);
-      epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
-    }
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     int n = 1;

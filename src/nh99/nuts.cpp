@@ -306,6 +306,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _nfevals=0;
     bool s = true;
     int j=0;
+
     while (s) {
       double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
@@ -335,7 +336,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       //% point from the half-tree we just generated.
       // cout << j << " " << theta << " " <<  _thetaprime << endl;
       double rn = randu(rng);	   // Runif(1)
-      if (_sprime == 1 && rn < double(_nprime)/n) {
+      if (_sprime == 1 && rn < double(_nprime)/double(n)) {
 	// Save _thetaprime
 	theta=_thetaprime;
 	// Rerun model to update parameters internally before saving

@@ -324,12 +324,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout.precision(12);
     cout << "chd=" << chd << endl;
     ofstream out("trajectory.txt", ios::app);
+    out << theta << theta << theta << " " << H0 << " " << H0 << p <<endl;
     build_tree_test(nvar, gr, chd, eps, p, theta, gr2, logu, 1, jj,
 		    H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		    _alphaprime, _nalphaprime, _sprime,
 		    _nprime, _nfevals, _divergent, _nllprime, rng, out);
     ofstream out2("theta_prime.txt", ios::trunc);
-    out2 << _thetaprime << _alphaprime << _nalphaprime << endl;
+    out2 << _thetaprime << endl;
     ad_exit(1);
     // --------------------------------------------------
 

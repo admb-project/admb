@@ -367,7 +367,7 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
     independent_variables z(1,nvar);
     z=chd*y;
     // Run user function to update parsave
-    double tmp=get_hybrid_monte_carlo_value(nvar,z,gr);
+     double tmp=get_hybrid_monte_carlo_value(nvar,z,gr);
     independent_variables x(1,nvar);
     initial_params::copy_all_values(x,1.0);
 
@@ -395,7 +395,7 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
     _nfevals++;
     _nllprime=nll;
     double temp=min(1.0, exp(H0-Ham));
-    out << y << z << x << " " << H0 << " " << Ham << endl;
+    out << y << z << x << " " << H0 << " " << Ham << p <<endl;
   } else { // j > 1
     //% Recursion: Implicitly build the height j-1 left and right subtrees.
     //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...

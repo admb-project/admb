@@ -370,7 +370,6 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
     double tmp=get_hybrid_monte_carlo_value(nvar,z,gr);
     independent_variables x(1,nvar);
     initial_params::copy_all_values(x,1.0);
-    out << y << z << x << endl;
 
     // Check for divergence. Either numerical (nll is nan) or a big
     // difference in H.
@@ -395,6 +394,8 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
     _nalphaprime=1;
     _nfevals++;
     _nllprime=nll;
+    double temp=min(1.0, exp(H0-Ham));
+    out << y << z << x << " " << H0 << " " << Ham << endl;
   } else { // j > 1
     //% Recursion: Implicitly build the height j-1 left and right subtrees.
     //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...

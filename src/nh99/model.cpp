@@ -488,18 +488,18 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
 /**
 Use a data_vector to allocate an init_bounded_number
 \author Steve Martell
-\param v vector containing the lower bound, upper bound, and phase of
+\param _v vector containing the lower bound, upper bound, and phase of
 estimation.
 */
-  void param_init_bounded_number::allocate(const data_vector & v,
-   const char * _s)
-   {
-    double lb = v(1);
-    double ub = v(2);
-    int   phz = int(v(3));
+void param_init_bounded_number::allocate(const data_vector& _v,
+   const char* _s)
+{
+  double lb = _v(1);
+  double ub = _v(2);
+  int phz = static_cast<int>(_v(3));
 
-    allocate(lb,ub,phz,_s);
-   }
+  allocate(lb, ub, phz, _s);
+}
 
   void param_init_bounded_number::allocate(double _minb,
     double _maxb,int _phase_start,const char * _s)

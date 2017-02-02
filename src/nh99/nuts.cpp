@@ -215,8 +215,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     initial_params::set_inactive_random_effects();
   }
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
-  cout << "S=" << S << endl;
-  cout << "chd=" << chd << endl;
+  // cout << "S=" << S << endl;
+  // cout << "chd=" << chd << endl;
   //// End of input processing
   // --------------------------------------------------
 
@@ -244,7 +244,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   std::clock_t start = clock();
   time_t now = time(0);
   tm* localtm = localtime(&now);
-  cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name <<
+  cout << endl << "Starting NUTS for model '" << ad_comm::adprogram_name <<
     "' at " << asctime(localtm);
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
@@ -310,6 +310,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     while (s) {
       double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
+      double eps2=eps;
       thetaplus=_thetaplus;
       thetaminus=_thetaminus;
       rplus=_rplus;
@@ -324,7 +325,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	thetaplus = _thetaplus;
 	rplus = _rplus;
       } else {
-	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j,
+	build_tree(nvar, gr, chd, eps2, rminus, thetaminus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, _nllprime, rng);

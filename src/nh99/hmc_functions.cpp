@@ -234,7 +234,7 @@ void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup)
     int width=1+std::ceil(std::log10(static_cast<double>(nmcmc)));
     cout << "Chain 1, " << "Iteration: " << std::setw(width) << is
 	 << " / " << nmcmc << " [" << std::setw(3)
-	 << static_cast<int>( (100.0 * (is / nmcmc )))
+	 << int(100.0 * (double(is) / double(nmcmc) ))
 	 << "%] " << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
   }
 }

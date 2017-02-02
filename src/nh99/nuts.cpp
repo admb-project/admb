@@ -308,21 +308,47 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cif >> p;
     int jj;
     cif >> jj;
-    _rminus=p; _rplus=p;
-    _thetaminus=theta;
-    _thetaplus=theta;
-    _thetaprime=theta;
-    z=chd*theta;
-    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    _nllprime=nll;
-    H0=nll+0.5*norm2(p);
-    logu= -15;//-H0 - exprnd(1.0);
     cout << "theta=" << theta << endl;
     cout << "p=" << p << endl;
     cout << "seed=" << iseed << endl;
     cout << "j=" << jj << endl;
     cout.precision(12);
     cout << "chd=" << chd << endl;
+    cout << "gr=" << gr << endl;
+    cout << "z=" << z << endl;
+    _rminus=p; _rplus=p;
+    _thetaminus=theta;
+    _thetaplus=theta;
+    _thetaprime=theta;
+    z=chd*theta;
+    // cout << "gr0=" << gr << endl;
+    // cout << "p0=" << p << endl;
+    // cout << "theta0=" << theta << endl;
+    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    gr2=gr*chd;
+    // cout << "gr=" << gr << endl;
+    // dvector phalf;
+    // // Update momentum by half step (why negative?)
+    // phalf=p-eps/2*gr;
+    // cout << "phalf=" << phalf << endl;
+    // // Update parameters by full step
+    // theta+=eps*phalf;
+    // cout << "theta2=" << theta << endl;
+    // z=chd*theta;
+    // // Get NLL and set updated gradient in gr by reference
+    // nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    // // Update gradient via mass matrix
+    // cout << "gr2 new" << gr2 << endl;
+    // // Last half step for momentum
+    // p=phalf-eps/2*gr2;
+    // cout << "p new" << p << endl;
+    _nllprime=nll;
+    H0=nll+0.5*norm2(p);
+    logu= -15;//-H0 - exprnd(1.0);
+    // nll= leapfrog(nvar, gr, chd, eps, p, theta, gr2);
+    // cout << "gr=" << gr << endl;
+    // cout << "p=" << p << endl;
+    // cout << "theta=" << theta << endl;
     ofstream out("trajectory.txt", ios::app);
     out << theta << theta << theta << " " << H0 << " " << H0 << p <<endl;
     build_tree_test(nvar, gr, chd, eps, p, theta, gr2, logu, 1, jj,

@@ -260,7 +260,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
   // References to left most and right most theta and momentum for current
-  // subtree inside of buildtree.
+  // subtree inside of buildtree. The ones proceeded with _ are passed
+  // through buildtree by reference while the others are top level. For
+  // instance if after the first step _rminus is updated, then we need to
+  // save that value since it will be overwritten in the next doubling if
+  // the other direction is chosen.
   dvector _thetaminus(1,nvar);
   dvector _thetaplus(1,nvar);
   dvector _thetaprime(1,nvar);
@@ -280,15 +284,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
-    // Randomize momentum for next iteration and update H
+    // Randomize momentum for next iteration, update H, and reset the tree
+    // elements.
     p.fill_randn(rng);
-    _rminus=p;
-    _rplus=p;
-    _thetaminus=theta;
-    _thetaplus=theta;
+    _rminus=p; _rplus=p;
     _thetaprime=theta;
+    _thetaminus=theta; _thetaplus=theta;
+    thetaplus=_thetaplus; thetaminus=_thetaminus;
+    rplus=_rplus; rminus=_rminus;
     // Reset model parameters to theta, whether updated or not in previous iteration
     z=chd*theta;
+    gr2=gr*chd;
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     double _nllprime=nll;
     double H0=nll+0.5*norm2(p);
@@ -306,15 +312,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _nfevals=0;
     bool s = true;
     int j=0;
-
     while (s) {
       double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
-      double eps2=eps;
-      thetaplus=_thetaplus;
-      thetaminus=_thetaminus;
-      rplus=_rplus;
-      rminus=_rminus;
       // cout << "is=" <<is << " tprime "<< _thetaprime << _nllprime << endl;
       //% Double the size of the tree.
       if (v == -1) {
@@ -325,7 +325,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	thetaplus = _thetaplus;
 	rplus = _rplus;
       } else {
-	build_tree(nvar, gr, chd, eps2, rminus, thetaminus, gr2, logu, v, j,
+	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, _nllprime, rng);
@@ -340,21 +340,31 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       if (_sprime == 1 && rn < double(_nprime)/double(n)) {
 	// Save _thetaprime
 	theta=_thetaprime;
-	// Rerun model to update parameters internally before saving
-	z=chd*theta;
-	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	initial_params::copy_all_values(parsave,1.0);
       }
 
       //% Update number of valid points we've seen.
       n += _nprime;
       //% Decide if it's time to stop.
       bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
+      bool b2 = stop_criterion(nvar, thetaminus, thetaplus, rminus, rplus);
+      if(is==1){
+      cout << "_thetaminus " << _thetaminus << endl;
+      cout << "_thetaplus " << _thetaplus << endl;
+      cout << "b= " << b << endl;
+      cout << "thetaminus " << thetaminus << endl;
+      cout << "thetaplus " << thetaplus << endl;
+      cout << "b2= " << b2 << endl;
+      }
       s = _sprime && b;
       //% Increment depth.
       ++j;
       if(j>max_treedepth){cout << "max treedepth exceeded "<< is <<endl; break;}
     } // end of single NUTS trajectory
+
+    // Rerun model to update saved parameters internally before saving
+    z=chd*theta;
+    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    initial_params::copy_all_values(parsave,1.0);
 
     // Save parameters to psv file, duplicated if rejected
     (*pofs_psave) << parsave;

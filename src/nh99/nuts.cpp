@@ -294,8 +294,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     rplus=_rplus; rminus=_rminus;
     // Reset model parameters to theta, whether updated or not in previous iteration
     z=chd*theta;
-    gr2=gr*chd;
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    gr2=gr*chd;
     double _nllprime=nll;
     double H0=nll+0.5*norm2(p);
     double logu= -H0 - exprnd(1.0);
@@ -317,7 +317,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       int v = 2 * (value < 0.5) - 1;
       // cout << "is=" <<is << " tprime "<< _thetaprime << _nllprime << endl;
       //% Double the size of the tree.
-      if (v == -1) {
+      if (v == 1) {
+	z=chd*thetaplus;
+	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	gr2=gr*chd;
 	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
@@ -325,6 +328,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	thetaplus = _thetaplus;
 	rplus = _rplus;
       } else {
+	z=chd*thetaminus;
+	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	gr2=gr*chd;
 	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,

@@ -49,7 +49,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     //% Base case: Take a single leapfrog step in the direction v.
     //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
     // original    leapfrog(theta, r, grad, v * epsilon);
-    double nll= leapfrog(nvar, gr, chd, eps, p, y, gr2);
+    double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
     double Ham=nll+0.5*norm2(p);
 
     // Check for divergence. Either numerical (nll is nan) or a big

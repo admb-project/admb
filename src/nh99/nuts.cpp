@@ -344,17 +344,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
       //% Update number of valid points we've seen.
       n += _nprime;
-      //% Decide if it's time to stop.
+      // Test if a u-turn occured.
       bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
-      bool b2 = stop_criterion(nvar, thetaminus, thetaplus, rminus, rplus);
-      if(is==1){
-      cout << "_thetaminus " << _thetaminus << endl;
-      cout << "_thetaplus " << _thetaplus << endl;
-      cout << "b= " << b << endl;
-      cout << "thetaminus " << thetaminus << endl;
-      cout << "thetaplus " << thetaplus << endl;
-      cout << "b2= " << b2 << endl;
-      }
+
       s = _sprime && b;
       //% Increment depth.
       ++j;

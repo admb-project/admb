@@ -82,7 +82,19 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    }
 	}
     }
-
+  // Chain number -- for console display purposes only
+  int chain=1;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chain",nopt))>-1) {
+    if (nopt) {
+      int iii=atoi(ad_comm::argv[on+1]);
+      if (iii <1) {
+	cerr << "Error: chain must be >= 1" << endl;
+	ad_exit(1);
+      } else {
+	chain=iii;
+      }
+    }
+  }
   // Number of leapfrog steps. Defaults to 10.
   int L=10;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1)
@@ -332,7 +344,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
     adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
     if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    print_mcmc_progress(is, nmcmc, nwarmup);
+    print_mcmc_progress(is, nmcmc, nwarmup, chain);
   } // end of MCMC chain
 
   // This final ratio should closely match adapt_delta

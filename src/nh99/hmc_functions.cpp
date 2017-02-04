@@ -226,13 +226,13 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
   return f;
 }
 
-void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup)
+void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain)
 {
   // Modified from Stan: sample::progress.hpp; 9/9/2016
   int refresh = floor(nmcmc/10);
   if (is==1 || is == nmcmc || is % refresh ==0 ){
     int width=1+std::ceil(std::log10(static_cast<double>(nmcmc)));
-    cout << "Chain 1, " << "Iteration: " << std::setw(width) << is
+    cout << "Chain " << chain << ", " << "Iteration: " << std::setw(width) << is
 	 << " / " << nmcmc << " [" << std::setw(3)
 	 << int(100.0 * (double(is) / double(nmcmc) ))
 	 << "%] " << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;

@@ -317,7 +317,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       int v = 2 * (value < 0.5) - 1;
       // cout << "is=" <<is << " tprime "<< _thetaprime << _nllprime << endl;
       //% Double the size of the tree.
-      if (v == 1) {
+      if (v == -1) {
 	z=chd*thetaplus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
@@ -380,6 +380,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // Adaptation of step size (eps).
     if(useDA && is <= nwarmup){
       eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+    } else {
+      eps=epsbar(nwarmup);
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;

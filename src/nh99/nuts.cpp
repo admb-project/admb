@@ -378,10 +378,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       alphasum=alphasum+alpha;
     }
     // Adaptation of step size (eps).
-    if(useDA && is <= nwarmup){
-      eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
-    } else {
-      eps=epsbar(nwarmup);
+    if(useDA){
+      if(is <= nwarmup){
+	eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+      } else {
+	eps=epsbar(nwarmup);
+      }
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;

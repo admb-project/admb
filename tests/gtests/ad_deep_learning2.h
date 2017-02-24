@@ -1,5 +1,6 @@
 #include <vector>
 #include <cmath>
+#include <numeric>
 
 struct neuron_layer
 {
@@ -18,19 +19,23 @@ public:
 /**
 Default constructor
 */
-neural_network2():
-  _output_from_layer1({0, 0, 0, 0}),
-  _output_from_layer2({0, 0, 0, 0})
+neural_network2()
 {
   //4 by 3 matrix
   _layer1.synaptic_weights =
   {
-    -0.16595599, 0.44064899, -0.99977125, -0.39533485,
+    0.16595599, 0.44064899, -0.99977125, -0.39533485,
     -0.70648822, -0.81532281, -0.62747958, -0.30887855,
-    -0.20646505, 0.07763347, -0.16161097, 0.370439
+    -0.20646505, 0.07763347, -0.16161097, 0.370439,
   };
   //1 by 4 matrix
-  _layer2.synaptic_weights = {-0.5910955, 0.75623487, -0.94522481, 0.34093502};
+  _layer2.synaptic_weights =
+  {
+    -0.5910955,
+    0.75623487,
+    -0.94522481,
+    0.34093502
+  };
 }
 
 /**
@@ -50,6 +55,7 @@ void training(std::vector<double>& inputs, std::vector<double>& outputs, const s
   for (int i = 0; i < iterations; ++i)
   {
     think(inputs);
+
 /*
     std::vector<double> errors(3);
     for (int j = 0; j < 4; ++j)
@@ -81,15 +87,18 @@ void training(std::vector<double>& inputs, std::vector<double>& outputs, const s
 }
 void think(const std::vector<double>& inputs)
 {
-  _output_from_layer1 = think(inputs, _layer1.synaptic_weights);
-  _output_from_layer2 = think(_output_from_layer1, _layer2.synaptic_weights);
+  _output_from_layer1.clear();
+  _output_from_layer1 = think(inputs, _layer1.synaptic_weights, 3);
+  _output_from_layer2.clear();
+  _output_from_layer2 = think(_output_from_layer1, _layer2.synaptic_weights, 4);
 }
 
 private:
 std::vector<double> sigmoid_derivatives(const std::vector<double>& x) const
 {
-  std::vector<double> results(4);
-  for (int i = 0; i < 4; ++i)
+  size_t size = x.size();
+  std::vector<double> results(size);
+  for (int i = 0; i < size; ++i)
   {
     results[i] = x[i] * (1.0 - x[i]);
   }
@@ -97,36 +106,45 @@ std::vector<double> sigmoid_derivatives(const std::vector<double>& x) const
 }
 std::vector<double> sigmoid(const std::vector<double>& x) const
 {
-  std::vector<double> results(4);
-  for (int i = 0; i < 4; ++i)
+  size_t size = x.size();
+  std::vector<double> results(size);
+  for (int i = 0; i < size; ++i)
   {
     results[i] = 1.0 / (1 + std::exp(-x[i]));
   }
   return results;
 }
-std::vector<double> think(const std::vector<double>& inputs, const std::vector<double>& weights) const
+std::vector<double> think(const std::vector<double>& inputs, const std::vector<double>& weights, const size_t n) const
 {
-  const size_t m = 7;
-  const size_t n = 3;
-  const size_t p = 4;
+  const size_t m = inputs.size() / n;
+  const size_t p = weights.size() / n;
   const size_t size = m * p;
   std::vector<double> dot(size);
  
-  for (int i = 0; i < size; ++i)
-  {
-  }
-/*
-  size_t index = 0;
-  for (int i = 0; i < inputs.size(); i += 3)
-  {
-    double value = inputs[i] * weights[0]
-      + inputs[i + 1] * weights[1]
-      + inputs[i + 2] * weights[2];
-    dot[index] = value;
-    ++index;
-  }
-*/
+  std::vector<double> row(n);
+  std::vector<double> col(n);
 
+  int r = 0;
+  int index = 0;
+  for (int i = 0; i < m; ++i)
+  {
+    for (int j = 0; j < n; ++j)
+    {
+      row[j] = inputs[r];
+      ++r;
+    }
+    for (int j = 0; j < p; ++j)
+    {
+      int w = j;
+      for (int k = 0; k < n; ++k)
+      {
+        col[k] = weights[w];
+        w += p;
+      }
+      dot[index] = std::inner_product(row.begin(), row.end(), col.begin(), 0.0);
+      ++index;
+    }
+  }
   return sigmoid(dot);
 }
 

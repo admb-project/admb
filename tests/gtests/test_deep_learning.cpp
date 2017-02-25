@@ -53,7 +53,8 @@ TEST_F(test_deep_learning, nnexample2)
     0, 0, 0
   };
   std::vector<double> training_set_outputs = {0, 1, 1, 1, 1, 0, 0};
-  size_t iterations = 60000;
+  //size_t iterations = 60000;
+  size_t iterations = 1;
 
   nn.training(training_set_inputs, training_set_outputs, iterations);
 

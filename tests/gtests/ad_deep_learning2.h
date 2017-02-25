@@ -50,11 +50,61 @@ std::vector<double>& get_weights()
   { return _weights; }
 */
 
-void training(std::vector<double>& inputs, std::vector<double>& outputs, const size_t iterations)
-{
+/**
+We train the neural network through a process of trial and error.
+Adjusting the synaptic weights each time.
+
+\param
+\param
+\param
+*/
+void training(
+  std::vector<double>& training_set_inputs,
+  std::vector<double>& training_set_outputs,
+  const size_t iterations
+)
+{ 
+  const size_t training_set_outputs_size = training_set_outputs.size();
+  std::vector<double> layer2_delta(training_set_outputs_size);
+
   for (int i = 0; i < iterations; ++i)
   {
-    think(inputs);
+    //Pass the training set through our neural network.
+    think(training_set_inputs);
+
+    //Calculate the error for layer 2 (The difference between the desired output
+    //and the predicted output)
+    std::vector<double> sigmoid_derivatives2 = sigmoid_derivatives(_output_from_layer2);
+    for (int j = 0; j < training_set_outputs_size; ++j)
+    {
+      double layer2_error = training_set_outputs[j] - _output_from_layer2[j];
+      layer2_delta[j] = layer2_error * sigmoid_derivatives2[j];
+    }
+
+    //Calculate the error for layer 1 (By looking at the weights in layer 1,
+    //we can determine by how much layer 1 contributed to the error in layer 2).
+    int index = 0;
+    size_t size = layer2_delta.size() * _layer2.synaptic_weights.size();
+    std::vector<double> layer1_error(size);
+    for (int j = 0; j < layer2_delta.size(); ++j)
+    {
+      double value = layer2_delta[j];
+      for (int k = 0; k < _layer2.synaptic_weights.size(); ++k)
+      {
+        layer1_error[index] = value * _layer2.synaptic_weights[k];
+        ++index;
+      }
+    }
+    std::vector<double> sigmoid_derivatives1 = sigmoid_derivatives(_output_from_layer1);
+    std::vector<double> layer1_delta(size);
+    for (int j = 0; j < size; ++j)
+    {
+      layer1_delta[j] = layer1_error[j] * sigmoid_derivatives1[j];
+    }
+
+    //Calculate how much to adjust the weights by
+    std::vector<double> layer1_adjustment = dot_transposed(training_set_inputs, layer1_delta, 7);
+    std::vector<double> layer2_adjustment = dot_transposed(_output_from_layer1, layer2_delta, 7);
 
 /*
     std::vector<double> errors(3);
@@ -114,12 +164,12 @@ std::vector<double> sigmoid(const std::vector<double>& x) const
   }
   return results;
 }
-std::vector<double> think(const std::vector<double>& inputs, const std::vector<double>& weights, const size_t n) const
+std::vector<double> dot(const std::vector<double>& a, const std::vector<double>& b, const size_t n) const
 {
-  const size_t m = inputs.size() / n;
-  const size_t p = weights.size() / n;
+  const size_t m = a.size() / n;
+  const size_t p = b.size() / n;
   const size_t size = m * p;
-  std::vector<double> dot(size);
+  std::vector<double> result(size);
  
   std::vector<double> row(n);
   std::vector<double> col(n);
@@ -130,7 +180,7 @@ std::vector<double> think(const std::vector<double>& inputs, const std::vector<d
   {
     for (int j = 0; j < n; ++j)
     {
-      row[j] = inputs[r];
+      row[j] = a[r];
       ++r;
     }
     for (int j = 0; j < p; ++j)
@@ -138,14 +188,23 @@ std::vector<double> think(const std::vector<double>& inputs, const std::vector<d
       int w = j;
       for (int k = 0; k < n; ++k)
       {
-        col[k] = weights[w];
+        col[k] = b[w];
         w += p;
       }
-      dot[index] = std::inner_product(row.begin(), row.end(), col.begin(), 0.0);
+      result[index] = std::inner_product(row.begin(), row.end(), col.begin(), 0.0);
       ++index;
     }
   }
-  return sigmoid(dot);
+  return result;
+}
+std::vector<double> dot_transposed(const std::vector<double>& a, const std::vector<double>& b, const size_t n) const
+{
+  std::vector<double> a_tranposed(a.size());
+  return dot(a_tranposed, b, n);
+}
+std::vector<double> think(const std::vector<double>& inputs, const std::vector<double>& weights, const size_t n) const
+{
+  return sigmoid(dot(inputs, weights, n));
 }
 
 };

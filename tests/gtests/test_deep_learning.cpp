@@ -35,13 +35,6 @@ TEST_F(test_deep_learning, nnexample2)
 {
   neural_network2 nn;
 
-/*
-  std::vector<double> weights = nn.get_weights();
-  ASSERT_DOUBLE_EQ(weights[0], -0.16595599);
-  ASSERT_DOUBLE_EQ(weights[1], 0.44064899);
-  ASSERT_DOUBLE_EQ(weights[2], -0.99977125);
-*/
-
   std::vector<double> training_set_inputs =
   {
     0, 0, 1,
@@ -53,15 +46,19 @@ TEST_F(test_deep_learning, nnexample2)
     0, 0, 0
   };
   std::vector<double> training_set_outputs = {0, 1, 1, 1, 1, 0, 0};
-  //size_t iterations = 60000;
-  size_t iterations = 1;
+  size_t iterations = 60000;
 
   nn.training(training_set_inputs, training_set_outputs, iterations);
 
-/*
-  std::vector<double> new_weights = nn.get_weights();
-  ASSERT_NEAR(new_weights[0], 9.67299303, 0.000001);
-  ASSERT_NEAR(new_weights[1], -0.2078435, 0.000001);
-  ASSERT_NEAR(new_weights[2], -4.62963669, 0.000001);
-*/
+  nn.think({1, 1, 0});
+  for (int i = 0; i < nn._output_from_layer1.size(); ++i)
+  {
+    std::cout << nn._output_from_layer1[i] << ' ';
+  }
+  std::cout << std::endl;
+  for (int i = 0; i < nn._output_from_layer2.size(); ++i)
+  {
+    std::cout << nn._output_from_layer2[i] << ' ';
+  }
+  std::cout << std::endl;
 }

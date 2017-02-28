@@ -11,6 +11,8 @@ class neural_network2
 {
 neuron_layer _layer1;
 neuron_layer _layer2;
+
+public:
 std::vector<double> _output_from_layer1;
 std::vector<double> _output_from_layer2;
 
@@ -103,36 +105,18 @@ void training(
     }
 
     //Calculate how much to adjust the weights by
-    std::vector<double> layer1_adjustment = dot_transposed(training_set_inputs, layer1_delta, 7);
-    std::vector<double> layer2_adjustment = dot_transposed(_output_from_layer1, layer2_delta, 7);
+    std::vector<double> layer1_adjustments = dot_transposed(training_set_inputs, layer1_delta, 7);
+    std::vector<double> layer2_adjustments = dot_transposed(_output_from_layer1, layer2_delta, 7);
 
-/*
-    std::vector<double> errors(3);
-    for (int j = 0; j < 4; ++j)
+    //Adjust the weights.
+    for (int j = 0; j < _layer1.synaptic_weights.size(); ++j)
     {
-      errors[j] = outputs[j] - results[j];
+      _layer1.synaptic_weights[j] += layer1_adjustments[j];
     }
-    std::vector<double> derivatives = sigmoid_derivatives(results);
-    std::vector<double> n(4);
-    for (int j = 0; j < 4; ++j)
+    for (int j = 0; j < _layer2.synaptic_weights.size(); ++j)
     {
-      n[j] = errors[j] * derivatives[j];
+      _layer2.synaptic_weights[j] += layer2_adjustments[j];
     }
-    std::vector<double> adjustments(3);
-    for (int j = 0; j < 3; ++j)
-    {
-      double value = inputs[j] * n[0]
-        + inputs[j + 3] * n[1]
-        + inputs[j + 6] * n[2]
-        + inputs[j + 9] * n[3];
-      adjustments[j] = value;
-    }
-    for (int j = 0; j < 3; ++j)
-    {
-      _layer1.synaptic_weights[j] += adjustments[j];
-      _layer2.synaptic_weights[j] += adjustments[j];
-    }
-*/
   }
 }
 void think(const std::vector<double>& inputs)
@@ -160,7 +144,7 @@ std::vector<double> sigmoid(const std::vector<double>& x) const
   std::vector<double> results(size);
   for (int i = 0; i < size; ++i)
   {
-    results[i] = 1.0 / (1 + std::exp(-x[i]));
+    results[i] = 1.0 / (std::exp(-x[i]) + 1.0);
   }
   return results;
 }
@@ -191,7 +175,9 @@ std::vector<double> dot(const std::vector<double>& a, const std::vector<double>&
         col[k] = b[w];
         w += p;
       }
+
       result[index] = std::inner_product(row.begin(), row.end(), col.begin(), 0.0);
+
       ++index;
     }
   }
@@ -199,8 +185,23 @@ std::vector<double> dot(const std::vector<double>& a, const std::vector<double>&
 }
 std::vector<double> dot_transposed(const std::vector<double>& a, const std::vector<double>& b, const size_t n) const
 {
-  std::vector<double> a_tranposed(a.size());
-  return dot(a_tranposed, b, n);
+  const int size = a.size();
+  std::vector<double> a_transposed(size);
+
+  int index = 0;
+  int columns = size / n;
+  for (int i = 0; i < columns; ++i)
+  {
+    int j = i;
+    while (j < size)
+    {
+      a_transposed[index] = a[j];
+      j += columns;
+      ++index;
+    }
+  }
+
+  return dot(a_transposed, b, n);
 }
 std::vector<double> think(const std::vector<double>& inputs, const std::vector<double>& weights, const size_t n) const
 {

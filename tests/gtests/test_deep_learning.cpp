@@ -35,6 +35,8 @@ TEST_F(test_deep_learning, nnexample2)
 {
   neural_network2 nn;
 
+  nn.print_weights();
+
   std::vector<double> training_set_inputs =
   {
     0, 0, 1,
@@ -49,6 +51,8 @@ TEST_F(test_deep_learning, nnexample2)
   size_t iterations = 60000;
 
   nn.training(training_set_inputs, training_set_outputs, iterations);
+
+  nn.print_weights();
 
   nn.think({1, 1, 0});
   for (int i = 0; i < nn._output_from_layer1.size(); ++i)

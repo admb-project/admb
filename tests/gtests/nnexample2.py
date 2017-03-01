@@ -93,4 +93,5 @@ if __name__ == "__main__":
     # Test the neural network with a new situation.
     print "Stage 3) Considering a new situation [1, 1, 0] -> ?: "
     hidden_state, output = neural_network.think(array([1, 1, 0]))
+    print hidden_state
     print output

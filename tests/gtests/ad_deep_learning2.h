@@ -26,17 +26,17 @@ neural_network2()
   //4 by 3 matrix
   _layer1.synaptic_weights =
   {
-    0.16595599, 0.44064899, -0.99977125, -0.39533485,
+    -0.16595599,  0.44064899, -0.99977125, -0.39533485,
     -0.70648822, -0.81532281, -0.62747958, -0.30887855,
-    -0.20646505, 0.07763347, -0.16161097, 0.370439,
+    -0.20646505,  0.07763347, -0.16161097,  0.370439,
   };
   //1 by 4 matrix
   _layer2.synaptic_weights =
   {
     -0.5910955,
-    0.75623487,
+     0.75623487,
     -0.94522481,
-    0.34093502
+     0.34093502
   };
 }
 
@@ -47,10 +47,32 @@ Destructor
 {
 }
 
-/*
-std::vector<double>& get_weights()
-  { return _weights; }
-*/
+void print_weights() const
+{
+  for (int i = 0; i < _layer1.synaptic_weights.size(); ++i)
+  {
+    std::cout << _layer1.synaptic_weights[i] << ' ';
+  }
+  std::cout << std::endl;
+  for (int i = 0; i < _layer2.synaptic_weights.size(); ++i)
+  {
+    std::cout << _layer2.synaptic_weights[i] << ' ';
+  }
+  std::cout << std::endl;
+}
+void print_outputs() const
+{
+  for (int i = 0; i < _output_from_layer1.size(); ++i)
+  {
+    std::cout << _output_from_layer1[i] << ' ';
+  }
+  std::cout << std::endl;
+  for (int i = 0; i < _output_from_layer2.size(); ++i)
+  {
+    std::cout << _output_from_layer2[i] << ' ';
+  }
+  std::cout << std::endl;
+}
 
 /**
 We train the neural network through a process of trial and error.
@@ -175,7 +197,6 @@ std::vector<double> dot(const std::vector<double>& a, const std::vector<double>&
         col[k] = b[w];
         w += p;
       }
-
       result[index] = std::inner_product(row.begin(), row.end(), col.begin(), 0.0);
 
       ++index;

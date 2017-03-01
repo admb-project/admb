@@ -9,15 +9,15 @@ std::vector<double> synaptic_weights;
 
 class neural_network2
 {
+public:
+
 neuron_layer _layer1;
 neuron_layer _layer2;
 
-public:
 std::vector<double> _output_from_layer1;
 std::vector<double> _output_from_layer2;
 
 public:
-
 /**
 Default constructor
 */

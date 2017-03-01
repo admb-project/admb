@@ -35,7 +35,17 @@ TEST_F(test_deep_learning, nnexample2)
 {
   neural_network2 nn;
 
-  nn.print_weights();
+  std::vector<double> expected_weights2 = {-0.591095, 0.756235, -0.945225, 0.340935};
+  std::vector<double> expected_weights1 = {-0.165956, 0.440649, -0.999771, -0.395335, -0.706488, -0.815323, -0.62748, -0.308879, -0.206465, 0.0776335, -0.161611, 0.370439};
+
+  for (int i = 0; i < nn._layer1.synaptic_weights.size(); ++i)
+  {
+    ASSERT_NEAR(nn._layer1.synaptic_weights[i], expected_weights1[i], 0.0001);
+  }
+  for (int i = 0; i < nn._layer2.synaptic_weights.size(); ++i)
+  {
+    ASSERT_NEAR(nn._layer2.synaptic_weights[i], expected_weights2[i], 0.0001);
+  }
 
   std::vector<double> training_set_inputs =
   {
@@ -52,17 +62,27 @@ TEST_F(test_deep_learning, nnexample2)
 
   nn.training(training_set_inputs, training_set_outputs, iterations);
 
-  nn.print_weights();
+  expected_weights1 = {0.312246, 4.57704,  -6.1533,  -8.75835,  0.196769,  -8.74976,  -6.16382,  4.40721,  -0.0332707,  -0.58273,  0.0831918,  -0.397876};
+  expected_weights2 = {-8.18851, 10.1321, -21.3353, 9.90935};
+  for (int i = 0; i < nn._layer1.synaptic_weights.size(); ++i)
+  {
+    ASSERT_NEAR(nn._layer1.synaptic_weights[i], expected_weights1[i], 0.0001);
+  }
+  for (int i = 0; i < nn._layer2.synaptic_weights.size(); ++i)
+  {
+    ASSERT_NEAR(nn._layer2.synaptic_weights[i], expected_weights2[i], 0.0001);
+  }
 
   nn.think({1, 1, 0});
+
+  std::vector<double> expected_layer1 = {0.624576, 0.0151765, 4.47447e-06, 0.012728};
   for (int i = 0; i < nn._output_from_layer1.size(); ++i)
   {
-    std::cout << nn._output_from_layer1[i] << ' ';
+    ASSERT_NEAR(nn._output_from_layer1[i], expected_layer1[i], 0.0001);
   }
-  std::cout << std::endl;
+  std::vector<double> expected_layer2 = {0.0078876};
   for (int i = 0; i < nn._output_from_layer2.size(); ++i)
   {
-    std::cout << nn._output_from_layer2[i] << ' ';
+    ASSERT_NEAR(nn._output_from_layer2[i], expected_layer2[i], 0.0001);
   }
-  std::cout << std::endl;
 }

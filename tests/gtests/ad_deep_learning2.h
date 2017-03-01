@@ -42,20 +42,6 @@ Destructor
 {
 }
 
-void print_weights() const
-{
-  for (int i = 0; i < _layer1.synaptic_weights.size(); ++i)
-  {
-    std::cout << _layer1.synaptic_weights[i] << ' ';
-  }
-  std::cout << std::endl;
-  for (int i = 0; i < _layer2.synaptic_weights.size(); ++i)
-  {
-    std::cout << _layer2.synaptic_weights[i] << ' ';
-  }
-  std::cout << std::endl;
-}
-
 /**
 We train the neural network through a process of trial and error.
 Adjusting the synaptic weights each time.
@@ -123,7 +109,7 @@ void training(
     }
   }
 }
-std::pair<std::vector<double>, std::vector<double>> think(const std::vector<double>& inputs)
+std::pair<std::vector<double>, std::vector<double>> think(const std::vector<double>& inputs) const
 {
   std::pair<std::vector<double>, std::vector<double>> layers;
 

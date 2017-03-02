@@ -1,19 +1,15 @@
 /*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
+
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
+Returns a dvector containing the differences of an x(i) and  x(i + 1) for i = 1 to x.indexmax() - 1.
+
+\param _x input.
+*/
 dvector first_difference(const dvector& x)
  {
    if (x.size()<=1)

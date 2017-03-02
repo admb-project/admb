@@ -136,20 +136,15 @@ std::vector<double> dot(const std::vector<double>& a, const std::vector<double>&
   const size_t m = a.size() / n;
   const size_t p = b.size() / n;
   const size_t size = m * p;
+
   std::vector<double> result(size);
- 
-  std::vector<double> row(n);
   std::vector<double> col(n);
 
-  int r = 0;
-  int index = 0;
+  auto ai = a.begin();
+  auto di = result.begin();
+
   for (int i = 0; i < m; ++i)
   {
-    for (int j = 0; j < n; ++j)
-    {
-      row[j] = a[r];
-      ++r;
-    }
     for (int j = 0; j < p; ++j)
     {
       int w = j;
@@ -158,10 +153,10 @@ std::vector<double> dot(const std::vector<double>& a, const std::vector<double>&
         col[k] = b[w];
         w += p;
       }
-      result[index] = std::inner_product(row.begin(), row.end(), col.begin(), 0.0);
-
-      ++index;
+      *di = std::inner_product(ai, ai + n, col.begin(), 0.0);
+      ++di;
     }
+    ai += n;
   }
   return result;
 }

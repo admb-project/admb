@@ -140,23 +140,21 @@ std::vector<double> dot(const std::vector<double>& a, const std::vector<double>&
   std::vector<double> result(size);
   std::vector<double> col(n);
 
-  auto ai = a.begin();
   auto di = result.begin();
-
-  for (int i = 0; i < m; ++i)
+  for (auto ai  = a.begin(); ai != a.end(); ai += n)
   {
-    for (int j = 0; j < p; ++j)
+    auto end = b.begin() + p;
+    for (auto pi  = b.begin(); pi != end; ++pi)
     {
-      int w = j;
-      for (int k = 0; k < n; ++k)
+      auto bi = pi;
+      for (auto ci  = col.begin(); ci != col.end(); ++ci)
       {
-        col[k] = b[w];
-        w += p;
+        *ci = *bi;
+        bi += p;
       }
       *di = std::inner_product(ai, ai + n, col.begin(), 0.0);
       ++di;
     }
-    ai += n;
   }
   return result;
 }
@@ -165,16 +163,20 @@ std::vector<double> dot_transposed(const std::vector<double>& a, const std::vect
   const int size = a.size();
   std::vector<double> a_transposed(size);
 
-  int index = 0;
+  auto ati = a_transposed.begin();
+
   int columns = size / n;
-  for (int i = 0; i < columns; ++i)
+  auto end = a.begin() + columns;
+  for (auto ai  = a.begin(); ai != end; ++ai)
   {
-    int j = i;
-    while (j < size)
+    auto bi = ai;
+    auto biend = bi + columns * n;
+    while (bi != biend)
     {
-      a_transposed[index] = a[j];
-      j += columns;
-      ++index;
+      *ati = *bi;
+      ++ati;
+
+      bi += columns;
     }
   }
 

@@ -9,8 +9,7 @@ std::vector<double> synaptic_weights;
 
 class neural_network2
 {
-neuron_layer _layer1;
-neuron_layer _layer2;
+std::pair<neuron_layer, neuron_layer> _layers; 
 
 public:
 /**
@@ -18,21 +17,6 @@ Default constructor
 */
 neural_network2()
 {
-  //4 by 3 matrix
-  _layer1.synaptic_weights =
-  {
-    -0.16595599,  0.44064899, -0.99977125, -0.39533485,
-    -0.70648822, -0.81532281, -0.62747958, -0.30887855,
-    -0.20646505,  0.07763347, -0.16161097,  0.370439,
-  };
-  //1 by 4 matrix
-  _layer2.synaptic_weights =
-  {
-    -0.5910955,
-     0.75623487,
-    -0.94522481,
-     0.34093502
-  };
 }
 
 /**
@@ -40,6 +24,12 @@ Destructor
 */
 ~neural_network2()
 {
+}
+
+void set_weights(const std::vector<double>& layer1_weights, const std::vector<double>& layer2_weights)
+{
+  _layers.first.synaptic_weights = layer1_weights;
+  _layers.second.synaptic_weights = layer2_weights;
 }
 
 /**
@@ -62,32 +52,32 @@ void training(
   for (int i = 0; i < iterations; ++i)
   {
     //Pass the training set through our neural network.
-    std::pair<std::vector<double>, std::vector<double>> layers = think(training_set_inputs);
+    std::pair<std::vector<double>, std::vector<double>> outputs = think(training_set_inputs);
 
     //Calculate the error for layer 2 (The difference between the desired output
     //and the predicted output)
-    std::vector<double> sigmoid_derivatives2 = sigmoid_derivatives(layers.second);
+    std::vector<double> sigmoid_derivatives2 = sigmoid_derivatives(outputs.second);
     for (int j = 0; j < training_set_outputs_size; ++j)
     {
-      double layer2_error = training_set_outputs[j] - layers.second[j];
+      double layer2_error = training_set_outputs[j] - outputs.second[j];
       layer2_delta[j] = layer2_error * sigmoid_derivatives2[j];
     }
 
     //Calculate the error for layer 1 (By looking at the weights in layer 1,
     //we can determine by how much layer 1 contributed to the error in layer 2).
     int index = 0;
-    size_t size = layer2_delta.size() * _layer2.synaptic_weights.size();
+    size_t size = layer2_delta.size() * _layers.second.synaptic_weights.size();
     std::vector<double> layer1_error(size);
     for (int j = 0; j < layer2_delta.size(); ++j)
     {
       double value = layer2_delta[j];
-      for (int k = 0; k < _layer2.synaptic_weights.size(); ++k)
+      for (int k = 0; k < _layers.second.synaptic_weights.size(); ++k)
       {
-        layer1_error[index] = value * _layer2.synaptic_weights[k];
+        layer1_error[index] = value * _layers.second.synaptic_weights[k];
         ++index;
       }
     }
-    std::vector<double> sigmoid_derivatives1 = sigmoid_derivatives(layers.first);
+    std::vector<double> sigmoid_derivatives1 = sigmoid_derivatives(outputs.first);
     std::vector<double> layer1_delta(size);
     for (int j = 0; j < size; ++j)
     {
@@ -96,31 +86,31 @@ void training(
 
     //Calculate how much to adjust the weights by
     std::vector<double> layer1_adjustments = dot_transposed(training_set_inputs, layer1_delta, 7);
-    std::vector<double> layer2_adjustments = dot_transposed(layers.first, layer2_delta, 7);
+    std::vector<double> layer2_adjustments = dot_transposed(outputs.first, layer2_delta, 7);
 
     //Adjust the weights.
-    for (int j = 0; j < _layer1.synaptic_weights.size(); ++j)
+    for (int j = 0; j < _layers.first.synaptic_weights.size(); ++j)
     {
-      _layer1.synaptic_weights[j] += layer1_adjustments[j];
+      _layers.first.synaptic_weights[j] += layer1_adjustments[j];
     }
-    for (int j = 0; j < _layer2.synaptic_weights.size(); ++j)
+    for (int j = 0; j < _layers.second.synaptic_weights.size(); ++j)
     {
-      _layer2.synaptic_weights[j] += layer2_adjustments[j];
+      _layers.second.synaptic_weights[j] += layer2_adjustments[j];
     }
   }
 }
 std::pair<std::vector<double>, std::vector<double>> think(const std::vector<double>& inputs) const
 {
-  std::pair<std::vector<double>, std::vector<double>> layers;
+  std::pair<std::vector<double>, std::vector<double>> outputs;
 
-  layers.first = think(inputs, _layer1.synaptic_weights, 3);
-  layers.second = think(layers.first, _layer2.synaptic_weights, 4);
+  outputs.first = think(inputs, _layers.first.synaptic_weights, 3);
+  outputs.second = think(outputs.first, _layers.second.synaptic_weights, 4);
 
-  return layers;
+  return outputs;
 }
 std::pair<std::vector<double>, std::vector<double>> get_weights() const
 {
-  std::pair<std::vector<double>, std::vector<double>> weights(_layer1.synaptic_weights, _layer2.synaptic_weights);
+  std::pair<std::vector<double>, std::vector<double>> weights(_layers.first.synaptic_weights, _layers.second.synaptic_weights);
   return weights;
 }
 

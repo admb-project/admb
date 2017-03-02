@@ -35,6 +35,23 @@ TEST_F(test_deep_learning, nnexample2)
 {
   neural_network2 nn;
 
+  std::vector<double> layer1_weights = 
+  {
+    -0.16595599,  0.44064899, -0.99977125, -0.39533485,
+    -0.70648822, -0.81532281, -0.62747958, -0.30887855,
+    -0.20646505,  0.07763347, -0.16161097,  0.370439,
+  };
+  //1 by 4 matrix
+  std::vector<double> layer2_weights = 
+  {
+    -0.5910955,
+     0.75623487,
+    -0.94522481,
+     0.34093502
+  };
+
+  nn.set_weights(layer1_weights, layer2_weights);
+
   std::vector<double> expected_weights2 = {-0.591095, 0.756235, -0.945225, 0.340935};
   std::vector<double> expected_weights1 = {-0.165956, 0.440649, -0.999771, -0.395335, -0.706488, -0.815323, -0.62748, -0.308879, -0.206465, 0.0776335, -0.161611, 0.370439};
 
@@ -79,16 +96,16 @@ TEST_F(test_deep_learning, nnexample2)
     ASSERT_NEAR(weights.second[i], expected_weights2[i], 0.0001);
   }
 
-  std::pair<std::vector<double>, std::vector<double>> layers = nn.think({1, 1, 0});
+  std::pair<std::vector<double>, std::vector<double>> outputs = nn.think({1, 1, 0});
 
   std::vector<double> expected_layer1 = {0.624576, 0.0151765, 4.47447e-06, 0.012728};
-  for (int i = 0; i < layers.first.size(); ++i)
+  for (int i = 0; i < outputs.first.size(); ++i)
   {
-    ASSERT_NEAR(layers.first[i], expected_layer1[i], 0.0001);
+    ASSERT_NEAR(outputs.first[i], expected_layer1[i], 0.0001);
   }
   std::vector<double> expected_layer2 = {0.0078876};
-  for (int i = 0; i < layers.second.size(); ++i)
+  for (int i = 0; i < outputs.second.size(); ++i)
   {
-    ASSERT_NEAR(layers.second[i], expected_layer2[i], 0.0001);
+    ASSERT_NEAR(outputs.second[i], expected_layer2[i], 0.0001);
   }
 }

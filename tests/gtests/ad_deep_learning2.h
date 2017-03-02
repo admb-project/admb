@@ -7,26 +7,19 @@ class neural_network2
 std::pair<std::vector<double>, std::vector<double>> _weights; 
 
 public:
-/**
-Default constructor
-*/
+/** Default constructor */
 neural_network2()
 {
 }
-
-/**
-Destructor
-*/
+/** Destructor */
 ~neural_network2()
 {
 }
-
 void set_weights(const std::vector<double>& layer1_weights, const std::vector<double>& layer2_weights)
 {
   _weights.first = layer1_weights;
   _weights.second = layer2_weights;
 }
-
 /**
 We train the neural network through a process of trial and error.
 Adjusting the synaptic weights each time.
@@ -52,46 +45,42 @@ void training(
     //Calculate the error for layer 2 (The difference between the desired output
     //and the predicted output)
     std::vector<double> sigmoid_derivatives2 = sigmoid_derivatives(outputs.second);
-    for (int j = 0; j < training_set_outputs_size; ++j)
+    auto p_training_set_outputs = training_set_outputs.begin();
+    auto p_outputs_second = outputs.second.begin();
+    auto p_sigmoid_derivatives2 = sigmoid_derivatives2.begin();
+    for (auto delta = layer2_delta.begin(); delta != layer2_delta.end(); ++delta)
     {
-      double layer2_error = training_set_outputs[j] - outputs.second[j];
-      layer2_delta[j] = layer2_error * sigmoid_derivatives2[j];
+      *delta = (*p_training_set_outputs - *p_outputs_second) * *p_sigmoid_derivatives2;
+      ++p_training_set_outputs;
+      ++p_outputs_second;
+      ++p_sigmoid_derivatives2;
     }
 
     //Calculate the error for layer 1 (By looking at the weights in layer 1,
     //we can determine by how much layer 1 contributed to the error in layer 2).
-    int index = 0;
     size_t size = layer2_delta.size() * _weights.second.size();
     std::vector<double> layer1_error(size);
-    for (int j = 0; j < layer2_delta.size(); ++j)
+    auto p_layer1_error = layer1_error.begin();
+    for (auto delta: layer2_delta)
     {
-      double value = layer2_delta[j];
-      for (int k = 0; k < _weights.second.size(); ++k)
+      for (auto weight: _weights.second)
       {
-        layer1_error[index] = value * _weights.second[k];
-        ++index;
+        *p_layer1_error = delta * weight;
+        ++p_layer1_error;
       }
     }
     std::vector<double> sigmoid_derivatives1 = sigmoid_derivatives(outputs.first);
     std::vector<double> layer1_delta(size);
-    for (int j = 0; j < size; ++j)
+    p_layer1_error = layer1_error.begin();
+    auto p_sigmoid_derivatives1 = sigmoid_derivatives1.begin();
+    for (auto delta = layer1_delta.begin(); delta != layer1_delta.end(); ++delta)
     {
-      layer1_delta[j] = layer1_error[j] * sigmoid_derivatives1[j];
+      *delta = *p_layer1_error * *p_sigmoid_derivatives1;
+      ++p_layer1_error;
+      ++p_sigmoid_derivatives1;
     }
-
-    //Calculate how much to adjust the weights by
-    std::vector<double> layer1_adjustments = dot_transposed(training_set_inputs, layer1_delta, 7);
-    std::vector<double> layer2_adjustments = dot_transposed(outputs.first, layer2_delta, 7);
-
-    //Adjust the weights.
-    for (int j = 0; j < _weights.first.size(); ++j)
-    {
-      _weights.first[j] += layer1_adjustments[j];
-    }
-    for (int j = 0; j < _weights.second.size(); ++j)
-    {
-      _weights.second[j] += layer2_adjustments[j];
-    }
+    adjust_weights(_weights.first, training_set_inputs, layer1_delta, 7);
+    adjust_weights(_weights.second, outputs.first, layer2_delta, 7);
   }
 }
 std::pair<std::vector<double>, std::vector<double>> think(const std::vector<double>& inputs) const
@@ -182,9 +171,21 @@ std::vector<double> dot_transposed(const std::vector<double>& a, const std::vect
 
   return dot(a_transposed, b, n);
 }
+void adjust_weights(std::vector<double>& weights, const std::vector<double>& a, const std::vector<double>& b, const size_t n)
+{
+  //Calculate how much to adjust the weights by
+  std::vector<double> adjustments = dot_transposed(a, b, n);
+
+  //Adjust the weights.
+  auto wi = weights.begin();
+  for (auto value: adjustments)
+  {
+    *wi += value;
+    ++wi;
+  }
+}
 std::vector<double> think(const std::vector<double>& inputs, const std::vector<double>& weights, const size_t n) const
 {
   return sigmoid(dot(inputs, weights, n));
 }
-
 };

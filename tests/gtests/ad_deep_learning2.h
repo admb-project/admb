@@ -95,8 +95,9 @@ std::pair<std::vector<double>, std::vector<double>> think(
 {
   std::pair<std::vector<double>, std::vector<double>> outputs;
 
-  outputs.first = think(inputs, _weights.first, 3);
-  outputs.second = think(outputs.first, _weights.second, 4);
+  const size_t n = _weights.first.size() / _weights.second.size();
+  outputs.first = think(inputs, _weights.first, n);
+  outputs.second = think(outputs.first, _weights.second, _weights.second.size());
 
   return outputs;
 }
@@ -108,7 +109,7 @@ private:
 std::vector<double> sigmoid_derivatives(const std::vector<double>& x) const
 {
   std::vector<double> results(x.size());
-  auto iterator = std::begin(results);
+  auto iterator = results.begin();
   for (auto xi: x)
   {
     *iterator = xi * (1.0 - xi);
@@ -119,7 +120,7 @@ std::vector<double> sigmoid_derivatives(const std::vector<double>& x) const
 std::vector<double> sigmoid(const std::vector<double>& x) const
 {
   std::vector<double> results(x.size());
-  auto iterator = std::begin(results);
+  auto iterator = results.begin();
   for (auto xi: x)
   {
     *iterator = 1.0 / (std::exp(-xi) + 1.0);

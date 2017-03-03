@@ -1,47 +1,43 @@
 /*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
+
 #include "fvar.hpp"
 
 void DF_first_diference(void);
 
 /**
- * Description not yet available.
- * \param
- */
-dvar_vector first_difference(const dvar_vector& x)
- {
-   if (x.size()<=1)
-   {
-     cerr << "Error -- vector size too small"
-             " in first_difference(const dvar_vector&)" << endl;
-     ad_exit(1);
-   }
+Returns a dvector containing the differences of an x(i) and  x(i + 1) for i = 1 to x.indexmax() - 1.
 
-   RETURN_ARRAYS_INCREMENT();
-   int mmin=x.indexmin();
-   int mmax=x.indexmax()-1;
-   dvar_vector tmp(mmin,mmax);
-   for (int i=mmin; i<=mmax; i++)
-   {
-     tmp.elem_value(i)=x.elem_value(i+1)-x.elem_value(i);
-   }
+\param x input.
+*/
+dvar_vector first_difference(const dvar_vector& x)
+{
+  if (x.size() <= 1)
+  {
+    cerr << "Error -- vector size too small"
+             " in first_difference(const dvar_vector&)" << endl;
+    ad_exit(1);
+  }
+
+  RETURN_ARRAYS_INCREMENT();
+  int mmin=x.indexmin();
+  int mmax=x.indexmax()-1;
+  dvar_vector tmp(mmin,mmax);
+  for (int i=mmin; i<=mmax; i++)
+  {
+    tmp.elem_value(i)=x.elem_value(i+1)-x.elem_value(i);
+  }
   save_identifier_string("CE4");
   x.save_dvar_vector_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("CE1");
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(DF_first_diference);
-   RETURN_ARRAYS_DECREMENT();
-   return(tmp);
- }
+  RETURN_ARRAYS_DECREMENT();
+  return(tmp);
+}
 
 /**
  * Description not yet available.

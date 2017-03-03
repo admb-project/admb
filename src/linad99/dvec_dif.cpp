@@ -8,7 +8,7 @@ Copyright (c) 2008-2012 Regents of the University of California
 /**
 Returns a dvector containing the differences of an x(i) and  x(i + 1) for i = 1 to x.indexmax() - 1.
 
-\param _x input.
+\param x input.
 */
 dvector first_difference(const dvector& x)
  {

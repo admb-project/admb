@@ -34,8 +34,8 @@ void training(
   const size_t iterations
 )
 { 
-  const size_t training_set_outputs_size = training_set_outputs.size();
-  std::vector<double> layer2_delta(training_set_outputs_size);
+  const size_t n = training_set_outputs.size();
+  std::vector<double> layer2_delta(n);
 
   for (int i = 0; i < iterations; ++i)
   {
@@ -79,8 +79,8 @@ void training(
       ++p_layer1_error;
       ++p_sigmoid_derivatives1;
     }
-    adjust_weights(_weights.first, training_set_inputs, layer1_delta, 7);
-    adjust_weights(_weights.second, outputs.first, layer2_delta, 7);
+    adjust_weights(_weights.first, training_set_inputs, layer1_delta, n);
+    adjust_weights(_weights.second, outputs.first, layer2_delta, n);
   }
 }
 std::pair<std::vector<double>, std::vector<double>> think(const std::vector<double>& inputs) const

@@ -40,10 +40,9 @@ void training(
   std::pair<std::vector<double>, std::vector<double>> deltas;
   std::pair<std::vector<double>, std::vector<double>> outputs;
 
-  int n = training_set_outputs.size();
-  int size = n * _weights.second.size();
+  size_t n = training_set_outputs.size();
   deltas.second.resize(n);
-  deltas.first.resize(size);
+  deltas.first.resize(n * _weights.second.size());
 
   for (int i = 0; i < iterations; ++i)
   {
@@ -103,22 +102,22 @@ private:
 std::vector<double> compute_sigmoid_derivatives(const std::vector<double>& x) const
 {
   std::vector<double> results(x.size());
-  auto iterator = std::begin(results);
+  auto p_results = std::begin(results);
   for (auto xi: x)
   {
-    *iterator = xi * (1.0 - xi);
-    ++iterator;
+    *p_results = xi * (1.0 - xi);
+    ++p_results;
   }
   return results;
 }
 std::vector<double> sigmoid(const std::vector<double>& x) const
 {
   std::vector<double> results(x.size());
-  auto iterator = std::begin(results);
+  auto p_results = std::begin(results);
   for (auto xi: x)
   {
-    *iterator = 1.0 / (std::exp(-xi) + 1.0);
-    ++iterator;
+    *p_results = 1.0 / (std::exp(-xi) + 1.0);
+    ++p_results;
   }
   return results;
 }
@@ -131,10 +130,10 @@ std::vector<double> dot(
   const size_t p = b.size() / n;
   const size_t size = m * p;
 
-  std::vector<double> result(size);
+  std::vector<double> results(size);
   std::vector<double> col(n);
 
-  auto di = result.begin();
+  auto p_results = results.begin();
   for (auto ai  = a.begin(); ai != a.end(); ai += n)
   {
     auto end = b.begin() + p;
@@ -146,11 +145,11 @@ std::vector<double> dot(
         *ci = *bi;
         bi += p;
       }
-      *di = std::inner_product(ai, ai + n, col.begin(), 0.0);
-      ++di;
+      *p_results = std::inner_product(ai, ai + n, col.begin(), 0.0);
+      ++p_results;
     }
   }
-  return result;
+  return results;
 }
 std::vector<double> dot_transposed(
   const std::vector<double>& a,
@@ -160,18 +159,18 @@ std::vector<double> dot_transposed(
   const int size = a.size();
   std::vector<double> a_transposed(size);
 
-  auto ati = a_transposed.begin();
+  auto p_a_transposed = a_transposed.begin();
 
   int columns = size / n;
   auto end = a.begin() + columns;
-  for (auto ai  = a.begin(); ai != end; ++ai)
+  for (auto p_a  = a.begin(); p_a != end; ++p_a)
   {
-    auto bi = ai;
+    auto bi = p_a;
     auto biend = bi + columns * n;
     while (bi != biend)
     {
-      *ati = *bi;
-      ++ati;
+      *p_a_transposed = *bi;
+      ++p_a_transposed;
 
       bi += columns;
     }
@@ -188,11 +187,11 @@ void adjust_weights(
   std::vector<double> adjustments = dot_transposed(a, b, n);
 
   //Adjust the weights.
-  auto wi = weights.begin();
-  for (auto value: adjustments)
+  auto p_weights = weights.begin();
+  for (auto adjustment: adjustments)
   {
-    *wi += value;
-    ++wi;
+    *p_weights += adjustment;
+    ++p_weights;
   }
 }
 std::vector<double> think(

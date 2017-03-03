@@ -11,6 +11,24 @@ public:
 neural_network2()
 {
 }
+neural_network2(const size_t m, const size_t n)
+{
+  _weights.first.resize(m * n);
+  _weights.second.resize(n);
+
+  // initialize random seed
+  srand (time(NULL));
+
+  double max = 1.0 / RAND_MAX;
+  for (auto p = _weights.first.begin(); p != _weights.first.end(); ++p)
+  {
+    *p = rand() * max; 
+  }
+  for (auto p = _weights.second.begin(); p != _weights.second.end(); ++p)
+  {
+    *p = rand() * max; 
+  }
+}
 /** Destructor */
 ~neural_network2()
 {

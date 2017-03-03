@@ -37,11 +37,11 @@ void training(
   const size_t iterations)
 { 
   std::pair<std::vector<double>, std::vector<double>> sigmoid_derivatives;
+  std::pair<std::vector<double>, std::vector<double>> deltas;
   std::pair<std::vector<double>, std::vector<double>> outputs;
+
   int n = training_set_outputs.size();
   int size = n * _weights.second.size();
-  std::vector<double> error(size);
-  std::pair<std::vector<double>, std::vector<double>> deltas;
   deltas.second.resize(n);
   deltas.first.resize(size);
 
@@ -67,26 +67,20 @@ void training(
 
     //Calculate the error for layer 1 (By looking at the weights in layer 1,
     //we can determine by how much layer 1 contributed to the error in layer 2).
-    auto p_error = error.begin();
+    sigmoid_derivatives.first = compute_sigmoid_derivatives(outputs.first);
+    auto p_delta_first = deltas.first.begin();
+    auto p_sigmoid_derivatives_first = sigmoid_derivatives.first.begin();
     for (auto delta_second: deltas.second)
     {
       for (auto weight_second: _weights.second)
       {
-        *p_error = delta_second * weight_second;
-        ++p_error;
+        double error = delta_second * weight_second;
+        *p_delta_first = *p_sigmoid_derivatives_first * error;
+        ++p_delta_first;
+        ++p_sigmoid_derivatives_first;
       }
     }
 
-    sigmoid_derivatives.first = compute_sigmoid_derivatives(outputs.first);
-    p_error = error.begin();
-    auto p_sigmoid_derivatives_first = sigmoid_derivatives.first.begin();
-    for (auto delta_first = deltas.first.begin(); delta_first != deltas.first.end(); ++delta_first)
-    {
-      double error = *p_error;
-      *delta_first = *p_sigmoid_derivatives_first * error;
-      ++p_error;
-      ++p_sigmoid_derivatives_first;
-    }
     adjust_weights(_weights.first, training_set_inputs, deltas.first, n);
     adjust_weights(_weights.second, outputs.first, deltas.second, n);
   }

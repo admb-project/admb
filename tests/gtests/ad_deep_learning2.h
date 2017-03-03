@@ -1,6 +1,7 @@
 #include <vector>
 #include <cmath>
 #include <numeric>
+#include <utility>
 
 class neural_network2
 {
@@ -35,59 +36,59 @@ void training(
   std::vector<double>& training_set_outputs,
   const size_t iterations)
 { 
-  const size_t n = training_set_outputs.size();
-  std::vector<double> layer2_delta(n);
+  std::pair<std::vector<double>, std::vector<double>> sigmoid_derivatives;
+  std::pair<std::vector<double>, std::vector<double>> outputs;
+  int n = training_set_outputs.size();
+  int size = n * _weights.second.size();
+  std::vector<double> layer1_error(size);
+  std::pair<std::vector<double>, std::vector<double>> deltas;
+  deltas.second.resize(n);
+  deltas.first.resize(size);
 
   for (int i = 0; i < iterations; ++i)
   {
     //Pass the training set through our neural network.
-    std::pair<std::vector<double>, std::vector<double>> outputs =
-      think(training_set_inputs);
+    outputs = think(training_set_inputs);
 
     //Calculate the error for layer 2 (The difference between the desired output
     //and the predicted output)
-    std::vector<double> sigmoid_derivatives2 =
-      sigmoid_derivatives(outputs.second);
-
+    sigmoid_derivatives.second = compute_sigmoid_derivatives(outputs.second);
     auto p_training_set_outputs = training_set_outputs.begin();
     auto p_outputs_second = outputs.second.begin();
-    auto p_sigmoid_derivatives2 = sigmoid_derivatives2.begin();
-    for (auto delta = layer2_delta.begin(); delta != layer2_delta.end(); ++delta)
+    auto p_sigmoid_derivatives_second = sigmoid_derivatives.second.begin();
+    for (auto delta_second = deltas.second.begin(); delta_second != deltas.second.end(); ++delta_second)
     {
-      *delta =
-        (*p_training_set_outputs - *p_outputs_second) * *p_sigmoid_derivatives2;
+      double error = *p_training_set_outputs - *p_outputs_second;
+      *delta_second = *p_sigmoid_derivatives_second * error;
+      ++p_sigmoid_derivatives_second;
       ++p_training_set_outputs;
       ++p_outputs_second;
-      ++p_sigmoid_derivatives2;
     }
 
     //Calculate the error for layer 1 (By looking at the weights in layer 1,
     //we can determine by how much layer 1 contributed to the error in layer 2).
-    size_t size = layer2_delta.size() * _weights.second.size();
-    std::vector<double> layer1_error(size);
     auto p_layer1_error = layer1_error.begin();
-    for (auto delta: layer2_delta)
+    for (auto delta_second: deltas.second)
     {
-      for (auto weight: _weights.second)
+      for (auto weight_second: _weights.second)
       {
-        *p_layer1_error = delta * weight;
+        *p_layer1_error = delta_second * weight_second;
         ++p_layer1_error;
       }
     }
-    std::vector<double> sigmoid_derivatives1 =
-      sigmoid_derivatives(outputs.first);
 
-    std::vector<double> layer1_delta(size);
+    sigmoid_derivatives.first = compute_sigmoid_derivatives(outputs.first);
     p_layer1_error = layer1_error.begin();
-    auto p_sigmoid_derivatives1 = sigmoid_derivatives1.begin();
-    for (auto delta = layer1_delta.begin(); delta != layer1_delta.end(); ++delta)
+    auto p_sigmoid_derivatives_first = sigmoid_derivatives.first.begin();
+    for (auto delta_first = deltas.first.begin(); delta_first != deltas.first.end(); ++delta_first)
     {
-      *delta = *p_layer1_error * *p_sigmoid_derivatives1;
+      double error = *p_layer1_error;
+      *delta_first = *p_sigmoid_derivatives_first * error;
       ++p_layer1_error;
-      ++p_sigmoid_derivatives1;
+      ++p_sigmoid_derivatives_first;
     }
-    adjust_weights(_weights.first, training_set_inputs, layer1_delta, n);
-    adjust_weights(_weights.second, outputs.first, layer2_delta, n);
+    adjust_weights(_weights.first, training_set_inputs, deltas.first, n);
+    adjust_weights(_weights.second, outputs.first, deltas.second, n);
   }
 }
 std::pair<std::vector<double>, std::vector<double>> think(
@@ -105,7 +106,7 @@ std::pair<std::vector<double>, std::vector<double>> get_weights() const
   return _weights;
 }
 private:
-std::vector<double> sigmoid_derivatives(const std::vector<double>& x) const
+std::vector<double> compute_sigmoid_derivatives(const std::vector<double>& x) const
 {
   std::vector<double> results(x.size());
   auto iterator = std::begin(results);

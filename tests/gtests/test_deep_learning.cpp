@@ -109,3 +109,64 @@ TEST_F(test_deep_learning, nnexample2)
     ASSERT_NEAR(outputs.second[i], expected_layer2[i], 0.0001);
   }
 }
+TEST_F(test_deep_learning, random_weights)
+{
+  neural_network2 nn(5, 6);
+
+  std::pair<std::vector<double>, std::vector<double>> weights = nn.get_weights();
+
+  ASSERT_EQ(weights.first.size(), 30);
+  ASSERT_EQ(weights.second.size(), 6);
+  for (auto value: weights.first)
+  {
+    ASSERT_TRUE(0.0 <= value && value < 1.0);
+  }
+  for (auto value: weights.second)
+  {
+    ASSERT_TRUE(0.0 <= value && value < 1.0);
+  }
+}
+TEST_F(test_deep_learning, random_weights_nnexample2)
+{
+  neural_network2 nn(3, 4);
+
+  std::pair<std::vector<double>, std::vector<double>> weights = nn.get_weights();
+
+  ASSERT_EQ(weights.first.size(), 12);
+  ASSERT_EQ(weights.second.size(), 4);
+  for (auto value: weights.first)
+  {
+    ASSERT_TRUE(0.0 <= value && value < 1.0);
+  }
+  for (auto value: weights.second)
+  {
+    ASSERT_TRUE(0.0 <= value && value < 1.0);
+  }
+
+  std::vector<double> training_set_inputs =
+  {
+    0, 0, 1,
+    0, 1, 1,
+    1, 0, 1,
+    0, 1, 0,
+    1, 0, 0,
+    1, 1, 1,
+    0, 0, 0
+  };
+  std::vector<double> training_set_outputs = {0, 1, 1, 1, 1, 0, 0};
+  size_t iterations = 100000;
+
+  nn.training(training_set_inputs, training_set_outputs, iterations);
+
+  weights.first.clear();
+  weights.second.clear();
+  weights = nn.get_weights();
+
+  std::pair<std::vector<double>, std::vector<double>> outputs = nn.think({1, 1, 0});
+
+  std::vector<double> expected_layer2 = {0.0078876};
+  for (int i = 0; i < outputs.second.size(); ++i)
+  {
+    ASSERT_NEAR(outputs.second[i], expected_layer2[i], 0.001);
+  }
+}

@@ -161,7 +161,7 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
   dvector thetavec(1, nvar);
   thetavec=thetaplus-thetaminus;
   // Manual implementation of inner_product, equivalent to this
-  // criterion = (thetavec*rminus+thetavec*rminus>=0) &&
+  // criterion = (thetavec*rminus+thetavec*rminus>=0) *
   // 			      (thetavec*rplus+thetavec*rplus>=0);
   double x1=0;
   double x2=0;
@@ -169,7 +169,8 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
     x1+=thetavec(i)*rminus(i);
     x2+=thetavec(i)*rplus(i);
   }
-  bool criterion = x1 >=0 && x2 >=0;
+  // TRUE if both are TRUE, FALSE if at least one.
+  bool criterion = (x1 >=0) * (x2 >=0);
   //  cout << "stop crit" << x1 <<" " << x2 <<" " << criterion << endl;
   return criterion;
 }

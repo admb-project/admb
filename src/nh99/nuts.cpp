@@ -407,7 +407,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
   if(useDA)
     cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
-  cout << "Final acceptance ratio=" << alphasum /(nmcmc-nwarmup) << endl;
+  cout << "Final acceptance ratio=";
+  printf("%.2f", alphasum /(nmcmc-nwarmup));
+  if(useDA)
+    cout << ", and target=" << adapt_delta;
+  cout << endl;
   print_mcmc_timing(time_warmup, time_total);
 
   // I assume this closes the connection to the file??

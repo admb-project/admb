@@ -25,6 +25,11 @@ Destructor
 std::vector<double>& get_weights()
   { return _weights; }
 
+void set_weights(const std::vector<double>& weights)
+{
+  _weights = weights; 
+}
+
 void training(std::vector<double>& inputs, std::vector<double>& outputs, const size_t iterations)
 {
   for (int i = 0; i < iterations; ++i)
@@ -41,18 +46,13 @@ void training(std::vector<double>& inputs, std::vector<double>& outputs, const s
     {
       n[j] = errors[j] * derivatives[j];
     }
-    std::vector<double> adjustments(3);
     for (int j = 0; j < 3; ++j)
     {
-      double value = inputs[j] * n[0]
+      double adjustment = inputs[j] * n[0]
         + inputs[j + 3] * n[1]
         + inputs[j + 6] * n[2]
         + inputs[j + 9] * n[3];
-      adjustments[j] = value;
-    }
-    for (int j = 0; j < 3; ++j)
-    {
-      _weights[j] += adjustments[j];
+      _weights[j] += adjustment;
     }
   }
 }

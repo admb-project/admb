@@ -298,6 +298,16 @@ ifeq ($(SHELL),cmd)
 	@del test_dvector.txt 2>NUL
 	@del test_adstring_array.txt 2>NUL
 else
+	@rm -vf training
+	@rm -vf training.bar
+	@rm -vf training.cor
+	@rm -vf training.cpp
+	@rm -vf training.eva
+	@rm -vf training.htp
+	@rm -vf training.log
+	@rm -vf training.par
+	@rm -vf training.rep
+	@rm -vf training.std
 	@rm -vf finance.b0
 	@rm -vf finance.p0
 	@rm -vf gtest-all *.obj

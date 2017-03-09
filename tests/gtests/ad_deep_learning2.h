@@ -41,6 +41,21 @@ void set_weights(
   _weights.first = layer1_weights;
   _weights.second = layer2_weights;
 }
+std::pair<std::vector<double>, std::vector<double>> think(
+  const std::vector<double>& inputs) const
+{
+  std::pair<std::vector<double>, std::vector<double>> outputs;
+
+  const size_t n = _weights.first.size() / _weights.second.size();
+  outputs.first = sigmoid(dot(inputs, _weights.first, n));
+  outputs.second = sigmoid(dot(outputs.first, _weights.second, _weights.second.size()));
+
+  return outputs;
+}
+std::pair<std::vector<double>, std::vector<double>> get_weights() const
+{
+  return _weights;
+}
 /**
 We train the neural network through a process of trial and error.
 Adjusting the synaptic weights each time.
@@ -101,21 +116,6 @@ void training(
     adjust_weights(_weights.first, training_set_inputs, deltas.first, n);
     adjust_weights(_weights.second, outputs.first, deltas.second, n);
   }
-}
-std::pair<std::vector<double>, std::vector<double>> think(
-  const std::vector<double>& inputs) const
-{
-  std::pair<std::vector<double>, std::vector<double>> outputs;
-
-  const size_t n = _weights.first.size() / _weights.second.size();
-  outputs.first = sigmoid(dot(inputs, _weights.first, n));
-  outputs.second = sigmoid(dot(outputs.first, _weights.second, _weights.second.size()));
-
-  return outputs;
-}
-std::pair<std::vector<double>, std::vector<double>> get_weights() const
-{
-  return _weights;
 }
 private:
 std::vector<double> sigmoid(const std::vector<double>& x) const

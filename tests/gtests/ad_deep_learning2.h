@@ -108,8 +108,8 @@ std::pair<std::vector<double>, std::vector<double>> think(
   std::pair<std::vector<double>, std::vector<double>> outputs;
 
   const size_t n = _weights.first.size() / _weights.second.size();
-  outputs.first = think(inputs, _weights.first, n);
-  outputs.second = think(outputs.first, _weights.second, _weights.second.size());
+  outputs.first = sigmoid(dot(inputs, _weights.first, n));
+  outputs.second = sigmoid(dot(outputs.first, _weights.second, _weights.second.size()));
 
   return outputs;
 }
@@ -212,12 +212,5 @@ void adjust_weights(
     *p_weights += adjustment;
     ++p_weights;
   }
-}
-std::vector<double> think(
-  const std::vector<double>& inputs,
-  const std::vector<double>& weights,
-  const size_t n) const
-{
-  return sigmoid(dot(inputs, weights, n));
 }
 };

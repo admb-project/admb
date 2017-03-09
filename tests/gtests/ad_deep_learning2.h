@@ -118,17 +118,6 @@ std::pair<std::vector<double>, std::vector<double>> get_weights() const
   return _weights;
 }
 private:
-std::vector<double> compute_sigmoid_derivatives(const std::vector<double>& x) const
-{
-  std::vector<double> results(x.size());
-  auto p_results = results.begin();
-  for (auto xi: x)
-  {
-    *p_results = xi * (1.0 - xi);
-    ++p_results;
-  }
-  return results;
-}
 std::vector<double> sigmoid(const std::vector<double>& x) const
 {
   std::vector<double> results(x.size());
@@ -167,6 +156,17 @@ std::vector<double> dot(
       *p_results = std::inner_product(ai, ai + n, col.begin(), 0.0);
       ++p_results;
     }
+  }
+  return results;
+}
+std::vector<double> compute_sigmoid_derivatives(const std::vector<double>& x) const
+{
+  std::vector<double> results(x.size());
+  auto p_results = results.begin();
+  for (auto xi: x)
+  {
+    *p_results = xi * (1.0 - xi);
+    ++p_results;
   }
   return results;
 }

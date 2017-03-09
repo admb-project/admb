@@ -121,7 +121,7 @@ private:
 std::vector<double> compute_sigmoid_derivatives(const std::vector<double>& x) const
 {
   std::vector<double> results(x.size());
-  auto p_results = std::begin(results);
+  auto p_results = results.begin();
   for (auto xi: x)
   {
     *p_results = xi * (1.0 - xi);
@@ -132,7 +132,7 @@ std::vector<double> compute_sigmoid_derivatives(const std::vector<double>& x) co
 std::vector<double> sigmoid(const std::vector<double>& x) const
 {
   std::vector<double> results(x.size());
-  auto p_results = std::begin(results);
+  auto p_results = results.begin();
   for (auto xi: x)
   {
     *p_results = 1.0 / (std::exp(-xi) + 1.0);

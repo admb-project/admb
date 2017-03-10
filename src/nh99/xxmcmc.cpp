@@ -144,7 +144,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     //int nvar1=initial_params::nvarcalc();
   }
 
-  if (stddev_params::num_stddev_params==0 & no_sd_mcmc=0)
+  if (stddev_params::num_stddev_params==0 & no_sd_mcmc==0)
   {
     cout << "No objects of type sdreport so cannot use sd report feature." << endl
 	 << "Use -nosdmcmc for future runs" << endl;

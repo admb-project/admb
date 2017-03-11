@@ -308,6 +308,16 @@ else
 	@rm -vf training.par
 	@rm -vf training.rep
 	@rm -vf training.std
+	@rm -vf training2
+	@rm -vf training2.bar
+	@rm -vf training2.cor
+	@rm -vf training2.cpp
+	@rm -vf training2.eva
+	@rm -vf training2.htp
+	@rm -vf training2.log
+	@rm -vf training2.par
+	@rm -vf training2.rep
+	@rm -vf training2.std
 	@rm -vf finance.b0
 	@rm -vf finance.p0
 	@rm -vf gtest-all *.obj

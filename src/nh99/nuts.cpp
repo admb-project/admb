@@ -66,7 +66,27 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-  // Chain number -- for console display purposes only
+  // Run duration. Can specify warmup and duration, or warmup and
+  // iter. Sampling period will stop after exceeding duration hours.
+  double duration=0;
+  bool use_duration=0;		// whether to use this or iter
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-duration",nopt))>-1) {
+    double _duration=0;
+    use_duration=1;
+    if (nopt) {
+      istringstream ist(ad_comm::argv[on+1]);
+      ist >> _duration;
+      if (_duration <0) {
+	cerr << "Error: duration must be > 0" << endl;
+	ad_exit(1);
+      } else {
+	// input is in hours, duration is in seconds so convert
+	duration=_duration*60*60;
+      }
+    }
+  }
+
+  // chain number -- for console display purposes only
   int chain=1;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chain",nopt))>-1) {
     if (nopt) {
@@ -257,6 +277,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   tm* localtm = localtime(&now);
   cout << endl << "Starting NUTS for model '" << ad_comm::adprogram_name <<
     "' at " << asctime(localtm);
+  if(use_duration==1){
+    cout << "Model will run for " << duration/60/60 <<
+      " hours or until " << nmcmc << " total iterations" << endl;
+  }
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
@@ -398,8 +422,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;
-    if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     print_mcmc_progress(is, nmcmc, nwarmup, chain);
+    if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    if(use_duration==1 && time_total > duration){
+      // If duration option used, break loop after <duration> hours.
+      cout << is << " samples generated after " << duration/60/60 <<
+	" hours running." << endl;
+      break;
+    }
   } // end of MCMC chain
 
   // Information about run

@@ -80,8 +80,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	cerr << "Error: duration must be > 0" << endl;
 	ad_exit(1);
       } else {
-	// input is in hours, duration is in seconds so convert
-	duration=_duration*60*60;
+	// input is in minutes, duration is in seconds so convert
+	duration=_duration*60;
       }
     }
   }
@@ -278,8 +278,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   cout << endl << "Starting NUTS for model '" << ad_comm::adprogram_name <<
     "' at " << asctime(localtm);
   if(use_duration==1){
-    cout << "Model will run for " << duration/60/60 <<
-      " hours or until " << nmcmc << " total iterations" << endl;
+    cout << "Model will run for " << duration/60 <<
+      " minutes or until " << nmcmc << " total iterations" << endl;
   }
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
@@ -427,8 +427,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     if(use_duration==1 && time_total > duration){
       // If duration option used, break loop after <duration> hours.
-      cout << is << " samples generated after " << duration/60/60 <<
-	" hours running." << endl;
+      cout << is << " samples generated after " << duration/60 <<
+	" minutes running." << endl;
       break;
     }
   } // end of MCMC chain

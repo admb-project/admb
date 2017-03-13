@@ -34,14 +34,16 @@ value* json::parse(istream& input)
     {
       object* o = new object();      
 
-      input.get(c);
-      while (c != '}')
+      if (input.get(c))
       {
-        string* s = (string*)parse(input);
-        input >> std::ws >> c >> std::ws;
-        value* v = parse(input);
-        o->add(s, v);
-        input >> std::ws >> c >> std::ws;
+        while (c != '}')
+        {
+          string* s = (string*)parse(input);
+          input >> std::ws >> c >> std::ws;
+          value* v = parse(input);
+          o->add(s, v);
+          input >> std::ws >> c >> std::ws;
+        }
       }
 
       ret = o;
@@ -51,12 +53,14 @@ value* json::parse(istream& input)
     {
       array* a = new array();      
 
-      input.get(c);
-      while (c != ']')
+      if (input.get(c))
       {
-        value* p = parse(input);
-        a->add(p);
-        input >> std::ws >> c >> std::ws;
+        while (c != ']')
+        {
+          value* p = parse(input);
+          a->add(p);
+          input >> std::ws >> c >> std::ws;
+        }
       }
       ret = a;
       break;

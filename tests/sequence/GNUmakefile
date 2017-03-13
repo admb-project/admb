@@ -11,6 +11,8 @@ simple.tpl:
 	cp ../../examples/admb/simple/simple.tpl .
 
 clean:
+	@rm -vf uml/admb-block.png
+	@rm -vf uml/admb-seq.png
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
 	@rm -vf admodel.hes

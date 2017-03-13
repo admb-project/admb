@@ -339,7 +339,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       }
     }
 
-    cout << sort(eigenvalues(S)) << endl;
+    // cout << sort(eigenvalues(S)) << endl;
     dmatrix chd = choleski_decomp( (dscale*2.4/sqrt(double(nvar))) * S);
     dmatrix chdinv=inv(chd);
 
@@ -367,7 +367,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       {
         iseed=-iseed;
       }
-      cout << "Initial seed value " << iseed << endl;
+      // cout << "Initial seed value " << iseed << endl;
       random_number_generator rng(iseed);
       rng.better_rand();
       double lprob=0.0;
@@ -905,6 +905,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       cout << "Final acceptance ratio=";
       printf("%.2f", iac/double(isim));
       //     cout << iac/double(isim) << endl;
+      cout << endl << endl;
       initial_params::mc_phase=0;
      /*
       if (adjm_ptr)

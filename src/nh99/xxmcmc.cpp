@@ -151,7 +151,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     no_sd_mcmc=1;
     // cerr << " You must declare at least one object of type sdreport "
     //      << endl << " to do the mcmc calculations" << endl;
-     return;
   }
   {
     ivector number_offsets;
@@ -591,6 +590,26 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         }
       }
 
+      // Run duration. Can specify warmup and duration, or warmup and
+      // iter. Sampling period will stop after exceeding duration hours.
+      double duration=0;
+      bool use_duration=0;		// whether to use this or iter
+      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-duration",nopt))>-1) {
+	double _duration=0;
+	use_duration=1;
+	if (nopt) {
+	  istringstream ist(ad_comm::argv[on+1]);
+	  ist >> _duration;
+	  if (_duration <0) {
+	    cerr << "Error: duration must be > 0" << endl;
+	    ad_exit(1);
+	  } else {
+	    // input is in hours, duration is in seconds so convert
+	    duration=_duration*60*60;
+	  }
+	}
+      }
+
       double pprobe=0.05;
       int probe_flag=0;
       nopt=0;
@@ -615,6 +634,18 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         }
       }
 
+      double time_warmup=0;
+      double time_total=0;
+      std::clock_t start = clock();
+      time_t now = time(0);
+      tm* localtm = localtime(&now);
+      cout << endl << "Starting RWM for model '" << ad_comm::adprogram_name <<
+	"' at " << asctime(localtm);
+      if(use_duration==1){
+	cout << "Model will run for " << duration/60/60 <<
+	  " hours or until " << number_sims << " total iterations" << endl;
+      }
+
        int java_quit_flag=0;
        for (int i=1;i<=number_sims;i++)
        {
@@ -626,11 +657,11 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
           double ratio = double(iac)/i;
           iac_old=iac-iac_old;
           i_old=i-i_old;
-          cout << llc << " " << llc << endl;
+          // cout << llc << " " << llc << endl;
           double tratio=double(liac)/200;
           liac=0;
-          cout << " mcmc sim " << i <<  "  acceptance rate "
-               << ratio << " " << tratio << endl;
+          // cout << " mcmc sim " << i <<  "  acceptance rate "
+          //      << ratio << " " << tratio << endl;
 
          /*
           int start_flag;
@@ -836,8 +867,19 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
             make_preliminary_hist(s,mean_mcmc_values,isim,values,hist,h,
               nslots,total_spread);
           }
-        }
-       }
+	}
+	if(i==change_ball)
+	  time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+	time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+	if(use_duration==1 && time_total > duration){
+	  // If duration option used, break loop after <duration> hours.
+	  cout << i << " samples generated after " << duration/60/60 <<
+	    " hours running." << endl;
+	  break;
+	}
+	print_mcmc_progress(i, number_sims, change_ball, 1);
+       } // end of mcmc chain
+       print_mcmc_timing(time_warmup, time_total);
       }
       if (!no_sd_mcmc && !have_hist_flag)
       {
@@ -860,7 +902,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 #ifndef OPT_LIB
       assert(isim != 0);
 #endif
-      cout << iac/double(isim) << endl;
+      cout << "Final acceptance ratio=";
+      printf("%.2f", iac/double(isim));
+      //     cout << iac/double(isim) << endl;
       initial_params::mc_phase=0;
      /*
       if (adjm_ptr)
@@ -887,7 +931,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       pofs_psave=NULL;
     }
   }
-}
+ }
 
 /**
  * Writes the covariance matrix out to a file, which is prog_name
@@ -907,8 +951,8 @@ void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
   int nvar=s_mean.indexmax();
   //ofs << ncor << " " << nvar << endl;
   dmatrix sigma=s_covar/ncor -outer_prod(tmp,tmp);
-  cout << "In write empirical covariance matrix" << endl;
-  cout << sort(eigenvalues(sigma)) << endl;
+  // cout << "In write empirical covariance matrix" << endl;
+  // cout << sort(eigenvalues(sigma)) << endl;
   dvector std(1,nvar);
   ofs << sigma;
   /*

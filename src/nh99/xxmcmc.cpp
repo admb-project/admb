@@ -633,6 +633,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
           }
         }
       }
+      int java_quit_flag=0;
+
 
       double time_warmup=0;
       double time_total=0;
@@ -646,7 +648,10 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 	  " minutes or until " << number_sims << " total iterations" << endl;
       }
 
-       int java_quit_flag=0;
+      // Need to save log-posterior (-NLL) to file to read in later.
+      ofstream rwm_lp("rwm_lp.txt", ios::trunc);
+      rwm_lp << "log-posterior" << endl;
+      // Start of MCMC chain
        for (int i=1;i<=number_sims;i++)
        {
          if (user_stop()) break;
@@ -814,7 +819,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 #endif
         if (mcsave_flag && (!((i-1)%mcsave_flag)))
         {
+	  // Save parameters and log posterior at each thinned iteration
           (*pofs_psave) << parsave;
+	  rwm_lp << llc << endl;
         }
        /*
         if (adjm_ptr)

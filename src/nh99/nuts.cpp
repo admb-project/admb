@@ -108,15 +108,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // Number of warmup samples if using adaptation of step size. Defaults to
   // half of iterations.
-  int nwarmup= (int)nmcmc/2;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nwarmup",nopt))>-1) {
+  int warmup= (int)nmcmc/2;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-warmup",nopt))>-1) {
     if (nopt) {
       int iii=atoi(ad_comm::argv[on+1]);
       if (iii <=0 || iii > nmcmc) {
-	cerr << "Error: nwarmup must be 0 < nwarmup < nmcmc" << endl;
+	cerr << "Error: warmup must be 0 < warmup < nmcmc" << endl;
 	ad_exit(1);
       } else {
-	nwarmup=iii;
+	warmup=iii;
       }
     }
   }
@@ -408,22 +408,22 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       alpha=double(_alphaprime)/double(_nalphaprime);
     }
     if(std::isnan(alpha)) alpha=0;
-    if(is > nwarmup){
+    if(is > warmup){
       if(_divergent==1) ndivergent++;
       alphasum=alphasum+alpha;
     }
     // Adaptation of step size (eps).
     if(useDA){
-      if(is <= nwarmup){
+      if(is <= warmup){
 	eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
       } else {
-	eps=epsbar(nwarmup);
+	eps=epsbar(warmup);
       }
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;
-    print_mcmc_progress(is, nmcmc, nwarmup, chain);
-    if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    print_mcmc_progress(is, nmcmc, warmup, chain);
+    if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     if(use_duration==1 && time_total > duration){
       // If duration option used, break loop after <duration> hours.
@@ -437,9 +437,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if(ndivergent>0)
     cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
   if(useDA)
-    cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
+    cout << "Final step size=" << eps << "; after " << warmup << " warmup iterations"<< endl;
   cout << "Final acceptance ratio=";
-  printf("%.2f", alphasum /(nmcmc-nwarmup));
+  printf("%.2f", alphasum /(nmcmc-warmup));
   if(useDA)
     cout << ", and target=" << adapt_delta;
   cout << endl;

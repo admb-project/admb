@@ -46,10 +46,12 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 				    const random_number_generator& rng) {
 
   if (j==0) {
-    // Take a single step in direction v from points p,y.
+    // Take a single step in direction v from points p,y, which are updated
+    // internally by reference and thus represent the new point.
     double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
-    // The new Hamiltonian value
-    double Ham=nll+0.5*norm2(p);
+    // The new Hamiltonian value. ADMB returns negative log density so
+    // correct it
+    double Ham=-(nll+0.5*norm2(p));
 
     // Check for divergence. Either numerical (nll is nan) or a big
     // difference in H. Screws up all the calculations so catch it here.
@@ -62,7 +64,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // No divergence
       _nprime = logu < Ham;
       _sprime= logu < 1000+Ham;
-      _alphaprime = min(1.0, exp(H0-Ham));
+      _alphaprime = min(1.0, exp(Ham- (-H0)));
       // Update the tree elements, which are returned by reference in
       // leapfrog. If moving left, want to leave _thetaplus intact and vice
       // versa.

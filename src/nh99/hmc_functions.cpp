@@ -65,12 +65,16 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       _nprime = logu < Ham;
       _alphaprime = min(1.0, exp(H0-Ham));
       // Update the tree elements, which are returned by reference in
-      // leapfrog.
-      _thetaminus = y;
-      _thetaplus = y;
+      // leapfrog. If moving left, want to leave _thetaplus intact and vice
+      // versa.
       _thetaprime = y;
-      _rminus = p;
-      _rplus = p;
+      if(v==-1){
+	_thetaminus = y;
+	_rminus = p;
+      } else {
+	_thetaplus = y;
+	_rplus = p;
+      }
     }
     _nalphaprime=1;
     _nfevals++;
@@ -86,16 +90,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     // Temp, local copies of the global ones due to rerunning build_tree
     // below which will overwrite some of the global variables we need to
     // save.
-    dvector thetaminus(1,nvar);
-    dvector rminus(1,nvar);
-    dvector thetaplus(1,nvar);
-    dvector rplus(1,nvar);
     dvector thetaprime(1,nvar);
-    thetaminus=_thetaminus;
-    thetaplus=_thetaplus;
     thetaprime=_thetaprime;
-    rminus=_rminus;
-    rplus=_rplus;
     int nprime1 = _nprime;
     bool sprime1 = _sprime;
     double alphaprime1 = _alphaprime;
@@ -107,20 +103,20 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // Make subtree to the left
       if (v == -1) {
 	//[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
-	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j-1,
+	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, _nllprime, rng);
-	thetaminus = _thetaminus;
-	rminus = _rminus;
+	// thetaminus = _thetaminus;
+	// rminus = _rminus;
       } else { // make subtree to the right
 	//[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
-	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j-1,
+	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, _nllprime, rng);
-	thetaplus = _thetaplus;
-	rplus = _rplus;
+	// thetaplus = _thetaplus;
+	// rplus = _rplus;
       }//end
 
       // Update stopping and selection criteria using both subtrees.
@@ -143,13 +139,14 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 
       // Update the global variables for next subtree
       _nprime = nprime;
-      _sprime = sprime && _sprime && stop_criterion(nvar, thetaminus, thetaplus, rminus, rplus);
+      bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
+      _sprime = sprime && _sprime && b;
       _alphaprime = alphaprime;
       _nalphaprime = nalphaprime;
-      _thetaminus=thetaminus;
-      _thetaplus=thetaplus;
-      _rminus=rminus;
-      _rplus=rplus;
+      // _thetaminus=thetaminus;
+      // _thetaplus=thetaplus;
+      // _rminus=rminus;
+      // _rplus=rplus;
     } // end building trajectory
   }   // end recursion
 }     // end function

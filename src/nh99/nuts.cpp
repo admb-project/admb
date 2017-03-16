@@ -388,7 +388,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       s = _sprime * b;
       //% Increment depth.
       ++j;
-      if(j>=max_treedepth){cout << "max treedepth exceeded "<< is <<endl; break;}
+      if(j>=max_treedepth) break;
     } // end of single NUTS trajectory
 
     // Rerun model to update saved parameters internally before saving

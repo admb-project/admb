@@ -305,16 +305,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector _thetaprime(1,nvar);
   dvector _rminus(1,nvar);
   dvector _rplus(1,nvar);
-  dvector thetaminus(1,nvar);
-  dvector thetaplus(1,nvar);
-  dvector rminus(1,nvar);
-  dvector rplus(1,nvar);
+  // dvector thetaminus(1,nvar);	// Global left point
+  // dvector thetaplus(1,nvar);	// Global right point
+  // dvector rminus(1,nvar);
+  // dvector rplus(1,nvar);
   double _alphaprime;
   int _nalphaprime;
   bool _sprime;
-  int _nprime;
-  int _nfevals=0;
-  bool _divergent=0;
+  int _nprime;			//
+  int _nfevals;	   		// trajectory length
+  bool _divergent; // divergent transition
   int ndivergent=0; // # divergences post-warmup
 
   // Start of MCMC chain
@@ -323,11 +323,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // elements.
     p.fill_randn(rng);
     _rminus=p; _rplus=p;
-    _thetaprime=theta;
-    _thetaminus=theta; _thetaplus=theta;
-    thetaplus=_thetaplus; thetaminus=_thetaminus;
-    rplus=_rplus; rminus=_rminus;
-    // Reset model parameters to theta, whether updated or not in previous iteration
+    _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
+    // Reset model parameters to theta, whether updated or not in previous
+    // iteration
     z=chd*theta;
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
@@ -341,37 +339,36 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
 
-    // Generate single NUTS trajectory by repeatedly doubling build_tree
-    int n = 1;
+    // Generate single NUTS trajectory by repeatedly calling build_tree
+    // until a u-turn occurs, or divergence.
+    int n=1;
     _divergent=0;
     _nfevals=0;
-    bool s = true;
+    bool s=1;
     int j=0;
     while (s) {
       double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
-      // cout << "is=" <<is << " tprime "<< _thetaprime << _nllprime << endl;
-      //% Double the size of the tree.
-      if (v == -1) {
-	z=chd*thetaplus;
+      // Add a trajectory of length 2^j, built to the left or right most of
+      // the current tree.
+      if (v == 1) {
+	// Build a tree to the right from thetaplus.
+	z=chd*_thetaplus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
-	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j,
+	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, _nllprime, rng);
-	thetaplus = _thetaplus;
-	rplus = _rplus;
       } else {
-	z=chd*thetaminus;
+	// Same but to the left
+	z=chd*_thetaminus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
-	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j,
+	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, _nllprime, rng);
-	thetaminus = _thetaminus;
-	rminus = _rminus;
       }
 
       //% Use Metropolis-Hastings to decide whether or not to move to a

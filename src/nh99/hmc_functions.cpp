@@ -46,23 +46,22 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 				    const random_number_generator& rng) {
 
   if (j==0) {
-    // Take a single step in direction v
+    // Take a single step in direction v from points p,y.
     double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
     // The new Hamiltonian value
     double Ham=nll+0.5*norm2(p);
 
     // Check for divergence. Either numerical (nll is nan) or a big
-    // difference in H.
-    if(std::isnan(Ham) || !((logu - 1000) < Ham)){
+    // difference in H. Screws up all the calculations so catch it here.
+    _divergent = (std::isnan(Ham) || !((logu - 1000) < Ham));
+    if(_divergent){
       _sprime=0;
-      _divergent=1;
-      _alphaprime=0;
+      _alphaprime=0; // these will be NaN otherwise
       _nprime=0;
     } else {
       // No divergence
-      _sprime=1;
-      _divergent=0;
       _nprime = logu < Ham;
+      _sprime= logu < 1000+Ham;
       _alphaprime = min(1.0, exp(H0-Ham));
       // Update the tree elements, which are returned by reference in
       // leapfrog. If moving left, want to leave _thetaplus intact and vice

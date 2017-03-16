@@ -385,10 +385,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Test if a u-turn occured.
       bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
 
-      s = _sprime && b;
+      s = _sprime * b;
       //% Increment depth.
       ++j;
-      if(j>max_treedepth){cout << "max treedepth exceeded "<< is <<endl; break;}
+      if(j>=max_treedepth){cout << "max treedepth exceeded "<< is <<endl; break;}
     } // end of single NUTS trajectory
 
     // Rerun model to update saved parameters internally before saving

@@ -64,7 +64,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // No divergence
       _nprime = logu < Ham;
       _sprime=1;
-      _alphaprime = min(1.0, exp(Ham- (-H0)));
+      _alphaprime = min(1.0, exp(Ham-H0));
       // Update the tree elements, which are returned by reference in
       // leapfrog. If moving left, want to leave _thetaplus intact and vice
       // versa.

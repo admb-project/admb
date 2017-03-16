@@ -329,7 +329,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     z=chd*theta;
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
-    double _nllprime=nll;
     double H0=nll+0.5*norm2(p);
     double logu= -H0 - exprnd(1.0);
     if(useDA && is==1){
@@ -359,7 +358,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime, rng);
+		   _nprime, _nfevals, _divergent, rng);
       } else {
 	// Same but to the left
 	z=chd*_thetaminus;
@@ -368,7 +367,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime, rng);
+		   _nprime, _nfevals, _divergent, rng);
       }
 
       //% Use Metropolis-Hastings to decide whether or not to move to a
@@ -418,7 +417,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
-	       << _nfevals <<"," << _divergent <<"," << -_nllprime << endl;
+	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
     print_mcmc_progress(is, nmcmc, warmup, chain);
     if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;

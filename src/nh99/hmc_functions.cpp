@@ -42,7 +42,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 				    dvector& _rplus, dvector& _rminus,
 				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
-				    int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+				    int& _nprime, int& _nfevals, bool& _divergent,
 				    const random_number_generator& rng) {
 
   if (j==0) {
@@ -79,13 +79,12 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     }
     _nalphaprime=1;
     _nfevals++;
-    _nllprime=nll;
   } else { // j > 1
     // Buildtree of depth j-1.
     build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
-	       _nprime, _nfevals, _divergent, _nllprime, rng);
+	       _nprime, _nfevals, _divergent, rng);
 
     // If valid trajectory keep building, otherwise exit function
     if (_sprime == 1) {
@@ -94,7 +93,6 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // save. These are the ' versions of the paper, e.g., sprime'.
       dvector thetaprime0(1,nvar);
       thetaprime0=_thetaprime;
-      double nllprime0=_nllprime;
       int nprime0 = _nprime;
       double alphaprime0 = _alphaprime;
       int nalphaprime0 = _nalphaprime;
@@ -104,13 +102,13 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime, rng);
+		   _nprime, _nfevals, _divergent, rng);
       } else {
 	// Make subtree to the right
 	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime, rng);
+		   _nprime, _nfevals, _divergent, rng);
       }
 
       // This is (n'+n''). Can be zero so need to be careful??
@@ -121,11 +119,9 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       if (nprime_temp != 0 && rr < double(_nprime)/double(nprime_temp)) {
 	// Update theta prime to be the new proposal for this tree so far.
 	// _thetaprime already updated globally above so do nothing
-	// _nllprime already updated globally above so do nothing
       } else {
 	// Reject it for the proposal from the last doubling.
 	_thetaprime = thetaprime0;
-	_nllprime= nllprime0;
       }
 
       // Update the global reference variables

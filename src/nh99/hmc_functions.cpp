@@ -55,7 +55,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 
     // Check for divergence. Either numerical (nll is nan) or a big
     // difference in H. Screws up all the calculations so catch it here.
-    _divergent = (std::isnan(Ham) || !((logu - 1000) < Ham));
+    _divergent = (std::isnan(Ham) || logu > 1000+Ham);
     if(_divergent){
       _sprime=0;
       _alphaprime=0; // these will be NaN otherwise
@@ -63,7 +63,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     } else {
       // No divergence
       _nprime = logu < Ham;
-      _sprime= logu < 1000+Ham;
+      _sprime=1;
       _alphaprime = min(1.0, exp(Ham- (-H0)));
       // Update the tree elements, which are returned by reference in
       // leapfrog. If moving left, want to leave _thetaplus intact and vice
@@ -89,9 +89,9 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 
     // If valid trajectory keep building, otherwise exit function
     if (_sprime == 1) {
-      // Temp, local copies of the global ones due to rerunning build_tree
-      // below which will overwrite some of the global variables we need to
-      // save. These are the ' versions of the paper, e.g., sprime'
+      // Save copies of the global ones due to rerunning build_tree below
+      // which will overwrite some of the global variables we need to
+      // save. These are the ' versions of the paper, e.g., sprime'.
       dvector thetaprime0(1,nvar);
       thetaprime0=_thetaprime;
       double nllprime0=_nllprime;
@@ -119,10 +119,11 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // Choose whether to keep the proposal thetaprime.
       double rr=randu(rng); // runif(1)
       if (nprime_temp != 0 && rr < double(_nprime)/double(nprime_temp)) {
+	// Update theta prime to be the new proposal for this tree so far.
 	// _thetaprime already updated globally above so do nothing
 	// _nllprime already updated globally above so do nothing
       } else {
-	// Reset to the first instance by reverting to the local copies
+	// Reject it for the proposal from the last doubling.
 	_thetaprime = thetaprime0;
 	_nllprime= nllprime0;
       }

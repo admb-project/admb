@@ -296,19 +296,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double alphasum=0;		// running sum for calculating final accept ratio
   // References to left most and right most theta and momentum for current
   // subtree inside of buildtree. The ones proceeded with _ are passed
-  // through buildtree by reference while the others are top level. For
-  // instance if after the first step _rminus is updated, then we need to
-  // save that value since it will be overwritten in the next doubling if
-  // the other direction is chosen.
+  // through buildtree by reference. Inside build_tree, _thetaplus is left
+  // the same if moving in the left direction. Thus these are the global
+  // left and right points.
   dvector _thetaminus(1,nvar);
   dvector _thetaplus(1,nvar);
   dvector _thetaprime(1,nvar);
   dvector _rminus(1,nvar);
   dvector _rplus(1,nvar);
-  // dvector thetaminus(1,nvar);	// Global left point
-  // dvector thetaplus(1,nvar);	// Global right point
-  // dvector rminus(1,nvar);
-  // dvector rplus(1,nvar);
   double _alphaprime;
   int _nalphaprime;
   bool _sprime;
@@ -316,6 +311,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int _nfevals;	   		// trajectory length
   bool _divergent; // divergent transition
   int ndivergent=0; // # divergences post-warmup
+  int nsamples=0; // total samples, not always nmcmc if duration option used
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
@@ -329,8 +325,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     z=chd*theta;
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
-    double H0=-(nll+0.5*norm2(p)); // initial Hamiltonian value
-    double logu= H0 - exprnd(1.0);
+    double H0=-nll-0.5*norm2(p); // initial Hamiltonian value
+    double logu= H0-exprnd(1.0);
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd);
@@ -339,7 +335,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
 
     // Generate single NUTS trajectory by repeatedly calling build_tree
-    // until a u-turn occurs, or divergence.
+    // until a u-turn  or divergence occurs.
     int n=1;
     _divergent=0;
     _nfevals=0;
@@ -348,8 +344,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     while (s) {
       double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
-      // Add a trajectory of length 2^j, built to the left or right most of
-      // the current tree.
+      // Add a trajectory of length 2^j, built to the left or right of
+      // edges of the current tree.
       if (v == 1) {
 	// Build a tree to the right from thetaplus.
 	z=chd*_thetaplus;
@@ -360,7 +356,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng);
       } else {
-	// Same but to the left
+	// Same but to the left from thetaminus
 	z=chd*_thetaminus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
@@ -370,42 +366,38 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		   _nprime, _nfevals, _divergent, rng);
       }
 
-      //% Use Metropolis-Hastings to decide whether or not to move to a
-      //% point from the half-tree we just generated.
-      // cout << j << " " << theta << " " <<  _thetaprime << endl;
+      // _thetaprime is the proposed point from that sample (drawn
+      // uniformly), but still need to detemine whether to accept it at
+      // each doubling. The last accepted point becomes the next sample. If
+      // none are accepted, the same point is repeated twice.
       double rn = randu(rng);	   // Runif(1)
-      if (_sprime == 1 && rn < double(_nprime)/double(n)) {
-	// Save _thetaprime
+      if (_sprime == 1 && rn < double(_nprime)/double(n))
 	theta=_thetaprime;
-      }
 
-      //% Update number of valid points we've seen.
-      n += _nprime;
-      // Test if a u-turn occured.
+      // Test if a u-turn occured and update stopping criterion
       bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
-
-      s = _sprime * b;
-      //% Increment depth.
+      s = _sprime*b;
+      // Increment valid points and depth
+      n += _nprime;
       ++j;
       if(j>=max_treedepth) break;
     } // end of single NUTS trajectory
 
-    // Rerun model to update saved parameters internally before saving
+    // Rerun model to update saved parameters internally before saving. Is
+    // there a way to avoid doing this? I think I need to because of the
+    // bounding functions??
     z=chd*theta;
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     initial_params::copy_all_values(parsave,1.0);
-
-    // Save parameters to psv file, duplicated if rejected
-    (*pofs_psave) << parsave;
-    double alpha;
-    if(_nalphaprime==0){
-      alpha=0;
-    } else {
+    (*pofs_psave) << parsave; // saves row to psv file
+    double alpha=0;
+    if(_nalphaprime>0){
       alpha=double(_alphaprime)/double(_nalphaprime);
     }
-    if(std::isnan(alpha)) alpha=0;
     if(is > warmup){
+      // Increment divergences only after warmup
       if(_divergent==1) ndivergent++;
+      // running sum of alpha to calculate samplin
       alphasum=alphasum+alpha;
     }
     // Adaptation of step size (eps).
@@ -421,8 +413,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     print_mcmc_progress(is, nmcmc, warmup, chain);
     if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    nsamples=is;
     if(use_duration==1 && time_total > duration){
-      // If duration option used, break loop after <duration> hours.
+      // If duration option used, break loop after <duration> minutes.
       cout << is << " samples generated after " << duration/60 <<
 	" minutes running." << endl;
       break;
@@ -435,10 +428,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if(useDA)
     cout << "Final step size=" << eps << "; after " << warmup << " warmup iterations"<< endl;
   cout << "Final acceptance ratio=";
-  printf("%.2f", alphasum /(nmcmc-warmup));
-  if(useDA)
-    cout << ", and target=" << adapt_delta;
-  cout << endl;
+  printf("%.2f", alphasum /(nsamples-warmup));
+  if(useDA) cout << ", and target=" << adapt_delta << endl;
   print_mcmc_timing(time_warmup, time_total);
 
   // I assume this closes the connection to the file??

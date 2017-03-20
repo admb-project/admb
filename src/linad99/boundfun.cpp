@@ -198,7 +198,7 @@ dvariable dfboundp(const prevariable& x, double fmin,double fmax)
     }
     if (dfy==0)
     {
-      cout << "error in dfboundp" << endl;
+      // cout << "error in dfboundp" << endl;
     }
     return diff*dfy;
   }

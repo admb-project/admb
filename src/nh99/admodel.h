@@ -1910,11 +1910,41 @@ public:
   void mcmc_routine(int,int,double,int);
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
-  void hmc_mcmc_routine(int,int,double,int);
+
+  // Functions added by Cole for HMC.
+  double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
+    dvector& g);
+  void shmc_mcmc_routine(int,int,double,int);
+  void nuts_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
-  void print_mcmc_progress(int is, int nmcmc, int nwarmup);
-  double find_reasonable_stepsize(int nvar, const independent_variables& x,
-    dvector& gr, dmatrix& chd, double eps, dvector pp);
+  void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
+  double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd);
+  bool stop_criterion(int nvar, dvector& thetaminus, dvector& thetaplus,
+		      dvector& rminus, dvector& rplus);
+  void build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
+		  dvector& y, dvector& gr2, double logu, int v, int j, double H0,
+		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
+		  dvector& _rplus, dvector& _rminus,
+		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
+		  int& _nprime, int& _nfevals, bool& _divergent,
+		  const random_number_generator& rng);
+  void build_tree_test(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
+		  dvector& y, dvector& gr2, double logu, int v, int j, double H0,
+		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
+		  dvector& _rplus, dvector& _rminus,
+		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
+		  int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+		       const random_number_generator& rng,
+		        ofstream& out);
+  double leapfrog(int nvar,dvector& gr, dmatrix& chd,
+		  double eps, dvector& p, dvector& y, dvector& gr2);
+  double adapt_eps(int ii, double eps, double alpha,
+		   double& adapt_delta, double& mu,
+		   dvector& epsvec, dvector& epsbar,
+		   dvector& Hbar);
+  double exprnd(double p);
+  // End new functions
+
   double pvm_master_get_monte_carlo_value(int nvar,
     const dvector& x);
   void pvm_slave_get_monte_carlo_value(int nvar);
@@ -1996,8 +2026,6 @@ public:
   void monte_carlo_routine(void);
   double get_monte_carlo_value(int nvar, const independent_variables& x);
   double get_monte_carlo_value(int nvar, const independent_variables& x,
-    dvector& g);
-  double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
     dvector& g);
   void mcmc_computations(void);
 #if defined(USE_ADPVM)

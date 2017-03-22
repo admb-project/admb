@@ -248,7 +248,7 @@ void DF_dvlog(void)
       if (v1.elem(i)==0.0 || fabs(v1.elem(i))<1.e-150 ||
         dfvtmp(i) > 1.e+150)
       {
-        cerr << "Possible overflow in DF_dvlog" << endl;
+        // cerr << "Possible overflow in DF_dvlog" << endl;
       }
 #    endif
     dfv1(i)=dfvtmp(i)/(v1.elem(i));

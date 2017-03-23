@@ -42,117 +42,98 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 				    dvector& _rplus, dvector& _rminus,
 				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
-				    int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+				    int& _nprime, int& _nfevals, bool& _divergent,
 				    const random_number_generator& rng) {
 
-  if (j == 0) {
-    //% Base case: Take a single leapfrog step in the direction v.
-    //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
-    // original    leapfrog(theta, r, grad, v * epsilon);
-
-    double nll= leapfrog(nvar, gr, chd, eps, p, y, gr2);
-    double Ham=nll+0.5*norm2(p);
+  if (j==0) {
+    // Take a single step in direction v from points p,y, which are updated
+    // internally by reference and thus represent the new point.
+    double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
+    // The new Hamiltonian value. ADMB returns negative log density so
+    // correct it
+    double Ham=-(nll+0.5*norm2(p));
 
     // Check for divergence. Either numerical (nll is nan) or a big
-    // difference in H.
-    if(std::isnan(Ham) || !((logu - 1000) < Ham)){
+    // difference in H. Screws up all the calculations so catch it here.
+    _divergent = (std::isnan(Ham) || logu > 1000+Ham);
+    if(_divergent){
       _sprime=0;
-      _divergent=1;
-      _alphaprime=0;
+      _alphaprime=0; // these will be NaN otherwise
       _nprime=0;
     } else {
-      _sprime=1;
-      _divergent=0;
+      // No divergence
       _nprime = logu < Ham;
-      _alphaprime = min(1.0, exp(H0-Ham));
+      _sprime=1;
+      _alphaprime = min(1.0, exp(Ham-H0));
       // Update the tree elements, which are returned by reference in
-      // leapfrog.
-      _thetaminus = y;
-      _thetaplus = y;
+      // leapfrog. If moving left, want to leave _thetaplus intact and vice
+      // versa.
       _thetaprime = y;
-      _rminus = p;
-      _rplus = p;
+      if(v==-1){
+	_thetaminus = y;
+	_rminus = p;
+      } else {
+	_thetaplus = y;
+	_rplus = p;
+      }
     }
     _nalphaprime=1;
     _nfevals++;
-    _nllprime=nll;
   } else { // j > 1
-    //% Recursion: Implicitly build the height j-1 left and right subtrees.
-    //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
+    // Buildtree of depth j-1.
     build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
-	       _nprime, _nfevals, _divergent, _nllprime, rng);
-
-    // Temp, local copies of the global ones due to rerunning build_tree
-    // below which will overwrite some of the global variables we need to
-    // save.
-    dvector thetaminus(1,nvar);
-    dvector rminus(1,nvar);
-    dvector thetaplus(1,nvar);
-    dvector rplus(1,nvar);
-    dvector thetaprime(1,nvar);
-    thetaminus=_thetaminus;
-    thetaplus=_thetaplus;
-    thetaprime=_thetaprime;
-    rminus=_rminus;
-    rplus=_rplus;
-    int nprime1 = _nprime;
-    bool sprime1 = _sprime;
-    double alphaprime1 = _alphaprime;
-    int nalphaprime1 = _nalphaprime;
-    double nllprime=_nllprime;
+	       _nprime, _nfevals, _divergent, rng);
 
     // If valid trajectory keep building, otherwise exit function
     if (_sprime == 1) {
+      // Save copies of the global ones due to rerunning build_tree below
+      // which will overwrite some of the global variables we need to
+      // save. These are the ' versions of the paper, e.g., sprime'.
+      dvector thetaprime0(1,nvar);
+      thetaprime0=_thetaprime;
+      int nprime0 = _nprime;
+      double alphaprime0 = _alphaprime;
+      int nalphaprime0 = _nalphaprime;
+
       // Make subtree to the left
       if (v == -1) {
-	//[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
-	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j-1,
+	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime, rng);
-	thetaminus = _thetaminus;
-	rminus = _rminus;
-      } else { // make subtree to the right
-	//[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
-	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j-1,
-		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime, rng);
-	thetaplus = _thetaplus;
-	rplus = _rplus;
-      }//end
-
-      // Update stopping and selection criteria using both subtrees.
-      int nprime = nprime1 + _nprime;
-      bool sprime = sprime1 + _sprime;
-      double alphaprime = alphaprime1 + _alphaprime;
-      int nalphaprime = nalphaprime1 + _nalphaprime;
-
-      // Choose whether to keep the proposal thetaprime.
-      double rr=randu(rng); // runif(1)
-      if(std::isnan(nprime)) nprime=0;
-      if (nprime != 0 && rr < double(_nprime)/double(nprime)) {
-	// _thetaprime already updated globally above so do nothing
-	// _nllprime already updated globally above so do nothing
+		   _nprime, _nfevals, _divergent, rng);
       } else {
-	// Reuse the first instance by reverting to the local copies
-	_thetaprime = thetaprime;
-	_nllprime= nllprime;
+	// Make subtree to the right
+	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent, rng);
       }
 
-      // Update the global variables for next subtree
-      _nprime = nprime;
-      _sprime = sprime && _sprime && stop_criterion(nvar, thetaminus, thetaplus, rminus, rplus);
-      _alphaprime = alphaprime;
-      _nalphaprime = nalphaprime;
-      _thetaminus=thetaminus;
-      _thetaplus=thetaplus;
-      _rminus=rminus;
-      _rplus=rplus;
-    } // end building trajectory
-  }   // end recursion
+      // This is (n'+n''). Can be zero so need to be careful??
+      int nprime_temp = nprime0 + _nprime;
+      if(std::isnan(nprime_temp)) nprime_temp=0;
+      // Choose whether to keep the proposal thetaprime.
+      double rr=randu(rng); // runif(1)
+      if (nprime_temp != 0 && rr < double(_nprime)/double(nprime_temp)) {
+	// Update theta prime to be the new proposal for this tree so far.
+	// _thetaprime already updated globally above so do nothing
+      } else {
+	// Reject it for the proposal from the last doubling.
+	_thetaprime = thetaprime0;
+      }
+
+      // Update the global reference variables
+      _alphaprime = alphaprime0 + _alphaprime;
+      _nalphaprime = nalphaprime0 + _nalphaprime;
+      // s' from the first execution above is 1 by definition (inside this
+      // if statement), while _sprime is s''. So need to reset s':
+      bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
+      _sprime = _sprime*b;
+      _nprime = nprime_temp;
+    } // end building second trajectory
+  }   // end recursion branch (j>0)
 }     // end function
 
 
@@ -162,7 +143,7 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
   dvector thetavec(1, nvar);
   thetavec=thetaplus-thetaminus;
   // Manual implementation of inner_product, equivalent to this
-  // criterion = (thetavec*rminus+thetavec*rminus>=0) &&
+  // criterion = (thetavec*rminus+thetavec*rminus>=0) *
   // 			      (thetavec*rplus+thetavec*rplus>=0);
   double x1=0;
   double x2=0;
@@ -170,7 +151,8 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
     x1+=thetavec(i)*rminus(i);
     x2+=thetavec(i)*rplus(i);
   }
-  bool criterion = x1 >=0 && x2 >=0;
+  // TRUE if both are TRUE, FALSE if at least one.
+  bool criterion = (x1 >=0) * (x2 >=0);
   //  cout << "stop crit" << x1 <<" " << x2 <<" " << criterion << endl;
   return criterion;
 }
@@ -181,14 +163,15 @@ double function_minimizer::adapt_eps(int ii, double eps, double alpha,
 				     dvector& epsvec, dvector& epsbar,
 				     dvector& Hbar){
   double gamma=0.05;  double t0=10;  double kappa=0.75;
+  int m=ii+1;
   // If divergence, there is 0 acceptance probability so alpha=0.
   if(std::isnan(alpha)) alpha=0;
-  Hbar(ii+1)= (1-1/(ii+t0))*Hbar(ii) + (adapt_delta-alpha)/(ii+t0);
-  double logeps=mu-sqrt(ii)*Hbar(ii+1)/gamma;
-  epsvec(ii+1)=exp(logeps);
-  double logepsbar= pow(ii, -kappa)*logeps+(1-pow(ii,-kappa))*log(epsbar(ii));
-  epsbar(ii+1)=exp(logepsbar);
-  return(epsvec(ii+1));
+  Hbar(m)= (1-1/(m+t0))*Hbar(m-1) + (adapt_delta-alpha)/(m+t0);
+  double logeps=mu-sqrt(m)*Hbar(m)/gamma;
+  epsvec(m)=exp(logeps);
+  double logepsbar= pow(m, -kappa)*logeps+(1-pow(m,-kappa))*log(epsbar(m-1));
+  epsbar(m)=exp(logepsbar);
+  return(epsvec(m));
 }
 
   /**
@@ -226,15 +209,15 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
   return f;
 }
 
-void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup)
+void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain)
 {
   // Modified from Stan: sample::progress.hpp; 9/9/2016
   int refresh = floor(nmcmc/10);
   if (is==1 || is == nmcmc || is % refresh ==0 ){
     int width=1+std::ceil(std::log10(static_cast<double>(nmcmc)));
-    cout << "Chain 1, " << "Iteration: " << std::setw(width) << is
+    cout << "Chain " << chain << ", " << "Iteration: " << std::setw(width) << is
 	 << " / " << nmcmc << " [" << std::setw(3)
-	 << static_cast<int>( (100.0 * (is / nmcmc )))
+	 << int(100.0 * (double(is) / double(nmcmc) ))
 	 << "%] " << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
   }
 }
@@ -261,12 +244,12 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   // reasonable eps is found. Thus need to make sure y and p are constant
   // and only eps changes.
 
-  independent_variables z(1,nvar); // rotated bounded parameters
-  dvector gr(1,nvar);		   // gradients
   double eps=1;			   // initial eps
+  independent_variables z(1,nvar); // rotated bounded parameters
   dvector p2(1,nvar);		// updated momentum
-  dvector gr2(1,nvar);		// updated rotated gradient
   dvector y2(1,nvar);		// updated position
+  dvector gr(1,nvar);		   // gradients
+  dvector gr2(1,nvar);		// updated rotated gradient
 
   // Calculate initial Hamiltonian value
   double pprob1=0.5*norm2(p);
@@ -274,10 +257,26 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   double nllbegin=get_hybrid_monte_carlo_value(nvar,z,gr);
   dvector gr2begin=gr*chd; // rotated gradient
   double H1=nllbegin+pprob1;
-  double a=-1;			// whether to double or halve eps
-  bool success=0; // whether or not algorithm worked after 50 iterations
 
-  for(int k=1; k<50; k++){
+  // Calculate H after a single step of size eps
+  double nll2=leapfrog(nvar, gr, chd, eps, p2, y2, gr2);
+  double pprob2=0.5*norm2(p2);
+  double H2=nll2+pprob2;
+  double alpha=exp(H1-H2);
+  // Determine whether eps=1 is too big or too small,
+  // i.e. whether to halve or double. If a=1, then eps keeps
+  // doubling until alpha passes 0.5; otherwise it halves until
+  // that happens.
+  double a;
+  if(alpha < 0.5 || std::isnan(alpha)){
+    // If divergence occurs or eps too big, halve it
+    a=-1;
+  } else {
+    // If stepsize too small, double it
+    a=1;
+  }
+
+  for(int k=2; k<50; k++){
     // Reinitialize position and momentum at each step.
     p2=p;
     y2=y;
@@ -289,33 +288,20 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
     double H2=nll2+pprob2;
     double alpha=exp(H1-H2);
 
-    // On first step, determine whether to halve or double. If a=1, then
-    // eps keeps doubling until alpha passes 0.5; otherwise it halves until
-    // that happens.
-    if(k==1){
-      // Determine initial acceptance ratio is too big or too small
-      bool result = alpha >0.5;
-      // if divergence occurs, acceptance prob is 0 so a=-1
-      if(std::isnan(result)) result=0;
-      if(result) a=1;
-    }
     // Check if the 1/2 threshold has been crossed
-    double x1=pow(alpha,a);
-    double x2=pow(2,-a);
-    if(x1 < x2){
-      cout << "Found reasonable step size of " << eps << " after " << k << " steps." << endl;
-      success=1;
-      break;
+    if(pow(alpha,a) < pow(2,-a)){
+      cout << "Found reasonable step size of " << eps << " after "
+	   << k << " steps." << endl;
+      return(eps);
+    } else {
+      // Otherwise either halve or double eps and do another
+      // iteration
+      eps=pow(2,a)*eps;
     }
-    // Otherwise either halve or double eps and do another iteration
-    eps=pow(2,a)*eps;
   }
-  if(success==0) {
-    cerr << "Did not find reasonable initial step size after 50 iterations -- " <<
-      "is something wrong with model?" << endl;
-    ad_exit(1);
-  }
-  return(eps);
+  cerr << "Did not find reasonable initial step size after 50 iterations -- " <<
+    "is something wrong with model?" << endl;
+  ad_exit(1);
 } // end of function
 
 /**
@@ -350,18 +336,16 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
 				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 				    dvector& _rplus, dvector& _rminus,
 				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
-				    int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+				    int& _nprime, int& _nfevals, bool& _divergent,
 					 const random_number_generator& rng, ofstream& out) {
-  // This function is the same as build_tree but passes an io object to
-  // print each step to file, to be used for testing
-  if (j == 0) {
-    //% Base case: Take a single leapfrog step in the direction v.
-    //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
-    // original    leapfrog(theta, r, grad, v * epsilon);
 
-    double nll= leapfrog(nvar, gr, chd, eps, p, y, gr2);
-    double Ham=nll+0.5*norm2(p);
-
+  if (j==0) {
+    // Take a single step in direction v from points p,y, which are updated
+    // internally by reference and thus represent the new point.
+    double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
+    // The new Hamiltonian value. ADMB returns negative log density so
+    // correct it
+    double Ham=-(nll+0.5*norm2(p));
     // ---------- Print single trajectory to file VERY SLOW ONLY FOR TESTING!!!
     // Get parameters on all three scales. y is unbounded unrotated, z is
     // rotated, and x is model (rotated + bounded) stored
@@ -371,107 +355,235 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
      double tmp=get_hybrid_monte_carlo_value(nvar,z,gr);
     independent_variables x(1,nvar);
     initial_params::copy_all_values(x,1.0);
-
     // Check for divergence. Either numerical (nll is nan) or a big
-    // difference in H.
-    if(std::isnan(Ham) || !((logu - 1000) < Ham)){
+    // difference in H. Screws up all the calculations so catch it here.
+    _divergent = (std::isnan(Ham) || logu > 1000+Ham);
+    if(_divergent){
       _sprime=0;
-      _divergent=1;
-      _alphaprime=0;
+      _alphaprime=0; // these will be NaN otherwise
       _nprime=0;
     } else {
-      _sprime=1;
-      _divergent=0;
+      // No divergence
       _nprime = logu < Ham;
-      _alphaprime = min(1.0, exp(H0-Ham));
+      _sprime=1;
+      _alphaprime = min(1.0, exp(Ham-H0));
       // Update the tree elements, which are returned by reference in
-      // leapfrog.
-      _thetaminus = y;
-      _thetaplus = y;
+      // leapfrog. If moving left, want to leave _thetaplus intact and vice
+      // versa.
       _thetaprime = y;
-      _rminus = p;
-      _rplus = p;
+      if(v==-1){
+	_thetaminus = y;
+	_rminus = p;
+      } else {
+	_thetaplus = y;
+	_rplus = p;
+      }
     }
     _nalphaprime=1;
     _nfevals++;
-    _nllprime=nll;
     double temp=min(1.0, exp(H0-Ham));
     out << y << z << x << " " << H0 << " " << Ham << p <<endl;
   } else { // j > 1
-    //% Recursion: Implicitly build the height j-1 left and right subtrees.
-    //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
+    // Buildtree of depth j-1.
     build_tree_test(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
-		    _nprime, _nfevals, _divergent, _nllprime, rng, out);
-
-    // Temp, local copies of the global ones due to rerunning build_tree
-    // below which will overwrite some of the global variables we need to
-    // save.
-    dvector thetaminus(1,nvar);
-    dvector rminus(1,nvar);
-    dvector thetaplus(1,nvar);
-    dvector rplus(1,nvar);
-    dvector thetaprime(1,nvar);
-    thetaminus=_thetaminus;
-    thetaplus=_thetaplus;
-    thetaprime=_thetaprime;
-    rminus=_rminus;
-    rplus=_rplus;
-    int nprime1 = _nprime;
-    bool sprime1 = _sprime;
-    double alphaprime1 = _alphaprime;
-    int nalphaprime1 = _nalphaprime;
-    double nllprime=_nllprime;
+	       _nprime, _nfevals, _divergent, rng, out);
 
     // If valid trajectory keep building, otherwise exit function
     if (_sprime == 1) {
+      // Save copies of the global ones due to rerunning build_tree below
+      // which will overwrite some of the global variables we need to
+      // save. These are the ' versions of the paper, e.g., sprime'.
+      dvector thetaprime0(1,nvar);
+      thetaprime0=_thetaprime;
+      int nprime0 = _nprime;
+      double alphaprime0 = _alphaprime;
+      int nalphaprime0 = _nalphaprime;
+
       // Make subtree to the left
       if (v == -1) {
-	//[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
-	build_tree_test(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j-1,
+	build_tree_test(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-			_nprime, _nfevals, _divergent, _nllprime, rng, out);
-	thetaminus = _thetaminus;
-	rminus = _rminus;
-      } else { // make subtree to the right
-	//[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
-	build_tree_test(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j-1,
-		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-		   _alphaprime, _nalphaprime, _sprime,
-			 _nprime, _nfevals, _divergent, _nllprime, rng, out);
-	thetaplus = _thetaplus;
-	rplus = _rplus;
-      }//end
-
-      // Update stopping and selection criteria using both subtrees.
-      int nprime = nprime1 + _nprime;
-      bool sprime = sprime1 + _sprime;
-      double alphaprime = alphaprime1 + _alphaprime;
-      int nalphaprime = nalphaprime1 + _nalphaprime;
-
-      // Choose whether to keep the proposal thetaprime.
-      double rr=randu(rng); // runif(1)
-      if(std::isnan(nprime)) nprime=0;
-      if (nprime != 0 && rr < double(_nprime)/double(nprime)) {
-	// _thetaprime already updated globally above so do nothing
-	// _nllprime already updated globally above so do nothing
+		   _nprime, _nfevals, _divergent, rng, out);
       } else {
-	// Reuse the first instance by reverting to the local copies
-	_thetaprime = thetaprime;
-	_nllprime= nllprime;
+	// Make subtree to the right
+	build_tree_test(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent, rng, out);
       }
 
-      // Update the global variables for next subtree
-      _nprime = nprime;
-      _sprime = sprime && _sprime && stop_criterion(nvar, thetaminus, thetaplus, rminus, rplus);
-      _alphaprime = alphaprime;
-      _nalphaprime = nalphaprime;
-      _thetaminus=thetaminus;
-      _thetaplus=thetaplus;
-      _rminus=rminus;
-      _rplus=rplus;
-    } // end building trajectory
-  }   // end recursion
+      // This is (n'+n''). Can be zero so need to be careful??
+      int nprime_temp = nprime0 + _nprime;
+      if(std::isnan(nprime_temp)) nprime_temp=0;
+      // Choose whether to keep the proposal thetaprime.
+      double rr=randu(rng); // runif(1)
+      if (nprime_temp != 0 && rr < double(_nprime)/double(nprime_temp)) {
+	// Update theta prime to be the new proposal for this tree so far.
+	// _thetaprime already updated globally above so do nothing
+      } else {
+	// Reject it for the proposal from the last doubling.
+	_thetaprime = thetaprime0;
+      }
+
+      // Update the global reference variables
+      _alphaprime = alphaprime0 + _alphaprime;
+      _nalphaprime = nalphaprime0 + _nalphaprime;
+      // s' from the first execution above is 1 by definition (inside this
+      // if statement), while _sprime is s''. So need to reset s':
+      bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
+      _sprime = _sprime*b;
+      _nprime = nprime_temp;
+    } // end building second trajectory
+  }   // end recursion branch (j>0)
 }     // end function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// old version dont use
+// void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
+// 				    dvector& y, dvector& gr2, double logu, int v, int j, double H0,
+// 				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
+// 				    dvector& _rplus, dvector& _rminus,
+// 				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
+// 				    int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+// 					 const random_number_generator& rng, ofstream& out) {
+//   // This function is the same as build_tree but passes an io object to
+//   // print each step to file, to be used for testing
+//   if (j == 0) {
+//     //% Base case: Take a single leapfrog step in the direction v.
+//     //[thetaprime, rprime, gradprime, logpprime] = leapfrog(theta, r, grad, v*epsilon, f);
+//     // original    leapfrog(theta, r, grad, v * epsilon);
+
+//     double nll= leapfrog(nvar, gr, chd, eps, p, y, gr2);
+//     double Ham=nll+0.5*norm2(p);
+
+//     // ---------- Print single trajectory to file VERY SLOW ONLY FOR TESTING!!!
+//     // Get parameters on all three scales. y is unbounded unrotated, z is
+//     // rotated, and x is model (rotated + bounded) stored
+//     independent_variables z(1,nvar);
+//     z=chd*y;
+//     // Run user function to update parsave
+//      double tmp=get_hybrid_monte_carlo_value(nvar,z,gr);
+//     independent_variables x(1,nvar);
+//     initial_params::copy_all_values(x,1.0);
+
+//     // Check for divergence. Either numerical (nll is nan) or a big
+//     // difference in H.
+//     if(std::isnan(Ham) || !((logu - 1000) < Ham)){
+//       _sprime=0;
+//       _divergent=1;
+//       _alphaprime=0;
+//       _nprime=0;
+//     } else {
+//       _sprime=1;
+//       _divergent=0;
+//       _nprime = logu < Ham;
+//       _alphaprime = min(1.0, exp(H0-Ham));
+//       // Update the tree elements, which are returned by reference in
+//       // leapfrog.
+//       _thetaminus = y;
+//       _thetaplus = y;
+//       _thetaprime = y;
+//       _rminus = p;
+//       _rplus = p;
+//     }
+//     _nalphaprime=1;
+//     _nfevals++;
+//     _nllprime=nll;
+//     double temp=min(1.0, exp(H0-Ham));
+//     out << y << z << x << " " << H0 << " " << Ham << p <<endl;
+//   } else { // j > 1
+//     //% Recursion: Implicitly build the height j-1 left and right subtrees.
+//     //[thetaminus, rminus, gradminus, thetaplus, rplus, gradplus, thetaprime, gradprime, logpprime, nprime, sprime, alphaprime, nalphaprime] = ...
+//     build_tree_test(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
+// 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+// 	       _alphaprime, _nalphaprime, _sprime,
+// 		    _nprime, _nfevals, _divergent, _nllprime, rng, out);
+
+//     // Temp, local copies of the global ones due to rerunning build_tree
+//     // below which will overwrite some of the global variables we need to
+//     // save.
+//     dvector thetaminus(1,nvar);
+//     dvector rminus(1,nvar);
+//     dvector thetaplus(1,nvar);
+//     dvector rplus(1,nvar);
+//     dvector thetaprime(1,nvar);
+//     thetaminus=_thetaminus;
+//     thetaplus=_thetaplus;
+//     thetaprime=_thetaprime;
+//     rminus=_rminus;
+//     rplus=_rplus;
+//     int nprime1 = _nprime;
+//     bool sprime1 = _sprime;
+//     double alphaprime1 = _alphaprime;
+//     int nalphaprime1 = _nalphaprime;
+//     double nllprime=_nllprime;
+
+//     // If valid trajectory keep building, otherwise exit function
+//     if (_sprime == 1) {
+//       // Make subtree to the left
+//       if (v == -1) {
+// 	//[thetaminus, rminus, gradminus, ~, ~, ~, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
+// 	build_tree_test(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j-1,
+// 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+// 		   _alphaprime, _nalphaprime, _sprime,
+// 			_nprime, _nfevals, _divergent, _nllprime, rng, out);
+// 	thetaminus = _thetaminus;
+// 	rminus = _rminus;
+//       } else { // make subtree to the right
+// 	//[~, ~, ~, thetaplus, rplus, gradplus, thetaprime2, gradprime2, logpprime2, nprime2, sprime2, alphaprime2, nalphaprime2] = ...
+// 	build_tree_test(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j-1,
+// 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+// 		   _alphaprime, _nalphaprime, _sprime,
+// 			 _nprime, _nfevals, _divergent, _nllprime, rng, out);
+// 	thetaplus = _thetaplus;
+// 	rplus = _rplus;
+//       }//end
+
+//       // Update stopping and selection criteria using both subtrees.
+//       int nprime = nprime1 + _nprime;
+//       bool sprime = sprime1 + _sprime;
+//       double alphaprime = alphaprime1 + _alphaprime;
+//       int nalphaprime = nalphaprime1 + _nalphaprime;
+
+//       // Choose whether to keep the proposal thetaprime.
+//       double rr=randu(rng); // runif(1)
+//       if(std::isnan(nprime)) nprime=0;
+//       if (nprime != 0 && rr < double(_nprime)/double(nprime)) {
+// 	// _thetaprime already updated globally above so do nothing
+// 	// _nllprime already updated globally above so do nothing
+//       } else {
+// 	// Reuse the first instance by reverting to the local copies
+// 	_thetaprime = thetaprime;
+// 	_nllprime= nllprime;
+//       }
+
+//       // Update the global variables for next subtree
+//       _nprime = nprime;
+//       _sprime = sprime && _sprime && stop_criterion(nvar, thetaminus, thetaplus, rminus, rplus);
+//       _alphaprime = alphaprime;
+//       _nalphaprime = nalphaprime;
+//       _thetaminus=thetaminus;
+//       _thetaplus=thetaplus;
+//       _rminus=rminus;
+//       _rplus=rplus;
+//     } // end building trajectory
+//   }   // end recursion
+// }     // end function
+

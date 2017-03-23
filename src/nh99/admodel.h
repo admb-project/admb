@@ -1917,7 +1917,7 @@ public:
   void shmc_mcmc_routine(int,int,double,int);
   void nuts_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
-  void print_mcmc_progress(int is, int nmcmc, int nwarmup);
+  void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
   double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd);
   bool stop_criterion(int nvar, dvector& thetaminus, dvector& thetaplus,
 		      dvector& rminus, dvector& rplus);
@@ -1926,14 +1926,14 @@ public:
 		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 		  dvector& _rplus, dvector& _rminus,
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
-		  int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+		  int& _nprime, int& _nfevals, bool& _divergent,
 		  const random_number_generator& rng);
   void build_tree_test(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
 		  dvector& y, dvector& gr2, double logu, int v, int j, double H0,
 		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 		  dvector& _rplus, dvector& _rminus,
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
-		  int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+		  int& _nprime, int& _nfevals, bool& _divergent, 
 		       const random_number_generator& rng,
 		        ofstream& out);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,

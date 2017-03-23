@@ -66,7 +66,39 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
+  // Run duration. Can specify warmup and duration, or warmup and
+  // iter. Sampling period will stop after exceeding duration hours.
+  double duration=0;
+  bool use_duration=0;		// whether to use this or iter
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-duration",nopt))>-1) {
+    double _duration=0;
+    use_duration=1;
+    if (nopt) {
+      istringstream ist(ad_comm::argv[on+1]);
+      ist >> _duration;
+      if (_duration <0) {
+	cerr << "Error: duration must be > 0" << endl;
+	ad_exit(1);
+      } else {
+	// input is in minutes, duration is in seconds so convert
+	duration=_duration*60;
+      }
+    }
+  }
 
+  // chain number -- for console display purposes only
+  int chain=1;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chain",nopt))>-1) {
+    if (nopt) {
+      int iii=atoi(ad_comm::argv[on+1]);
+      if (iii <1) {
+	cerr << "Error: chain must be >= 1" << endl;
+	ad_exit(1);
+      } else {
+	chain=iii;
+      }
+    }
+  }
   // Number of leapfrog steps.
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1) {
     if (nopt) {
@@ -74,18 +106,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       ad_exit(1);
     }
   }
-
   // Number of warmup samples if using adaptation of step size. Defaults to
   // half of iterations.
-  int nwarmup= (int)nmcmc/2;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nwarmup",nopt))>-1) {
+  int warmup= (int)nmcmc/2;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-warmup",nopt))>-1) {
     if (nopt) {
       int iii=atoi(ad_comm::argv[on+1]);
       if (iii <=0 || iii > nmcmc) {
-	cerr << "Error: nwarmup must be 0 < nwarmup < nmcmc" << endl;
+	cerr << "Error: warmup must be 0 < warmup < nmcmc" << endl;
 	ad_exit(1);
       } else {
-	nwarmup=iii;
+	warmup=iii;
       }
     }
   }
@@ -215,8 +246,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     initial_params::set_inactive_random_effects();
   }
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
-  cout << "S=" << S << endl;
-  cout << "chd=" << chd << endl;
+  // cout << "S=" << S << endl;
+  // cout << "chd=" << chd << endl;
   //// End of input processing
   // --------------------------------------------------
 
@@ -238,65 +269,69 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   random_number_generator rng(iseed);
   gradient_structure::set_YES_DERIVATIVES();
   initial_params::xinit(x0);
-  // ---------- Setup dual averaging components to adapt step size
-  dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
-  epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
   // Timings
   double time_warmup=0;
   double time_total=0;
   std::clock_t start = clock();
   time_t now = time(0);
   tm* localtm = localtime(&now);
-  cout << endl << "Starting static HMC for model '" << ad_comm::adprogram_name <<
+  cout << endl << "Starting NUTS for model '" << ad_comm::adprogram_name <<
     "' at " << asctime(localtm);
+  if(use_duration==1){
+    cout << "Model will run for " << duration/60 <<
+      " minutes or until " << nmcmc << " total iterations" << endl;
+  }
   // write sampler parameters in format used by Shinystan
+  dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
+  epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
+  double mu;
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
+
   // Declare and initialize the variables needed for the algorithm
   independent_variables z(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// initial rotated gradient
   dvector p(1,nvar);		// momentum vector
-  double mu=log(10*eps);
   double alphasum=0;		// running sum for calculating final accept ratio
-  // ---------- End of dual averaging setup
-
-  // Setup and intitialize variables for build_tree trajectory
+  // References to left most and right most theta and momentum for current
+  // subtree inside of buildtree. The ones proceeded with _ are passed
+  // through buildtree by reference. Inside build_tree, _thetaplus is left
+  // the same if moving in the left direction. Thus these are the global
+  // left and right points.
   dvector _thetaminus(1,nvar);
   dvector _thetaplus(1,nvar);
   dvector _thetaprime(1,nvar);
   dvector _rminus(1,nvar);
   dvector _rplus(1,nvar);
-  dvector thetaminus(1,nvar);
-  dvector thetaplus(1,nvar);
-  dvector rminus(1,nvar);
-  dvector rplus(1,nvar);
   double _alphaprime;
   int _nalphaprime;
   bool _sprime;
-  int _nprime;
-  int _nfevals=0;
-  bool _divergent=0;
+  int _nprime;			//
+  int _nfevals;	   		// trajectory length
+  bool _divergent; // divergent transition
   int ndivergent=0; // # divergences post-warmup
+  int nsamples=0; // total samples, not always nmcmc if duration option used
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
-    // Randomize momentum for next iteration and update H
+    // Randomize momentum for next iteration, update H, and reset the tree
+    // elements.
     p.fill_randn(rng);
-    _rminus=p;
-    _rplus=p;
-    _thetaminus=theta;
-    _thetaplus=theta;
-    _thetaprime=theta;
-    // Reset model parameters to theta, whether updated or not in previous iteration
+    _rminus=p; _rplus=p;
+    _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
+    // Reset model parameters to theta, whether updated or not in previous
+    // iteration
     z=chd*theta;
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    double _nllprime=nll;
-    double H0=nll+0.5*norm2(p);
-    double logu= -H0 - exprnd(1.0);
+    gr2=gr*chd;
+    double H0=-nll-0.5*norm2(p); // initial Hamiltonian value
+    double logu= H0-exprnd(1.0);
     if(useDA && is==1){
+      // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd);
-      epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
+      mu=log(10*eps);
+      epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
 
     // --------------------------------------------------
@@ -342,8 +377,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // // Last half step for momentum
     // p=phalf-eps/2*gr2;
     // cout << "p new" << p << endl;
-    _nllprime=nll;
-    H0=nll+0.5*norm2(p);
+    H0=-nll-+0.5*norm2(p);
     logu= -15;//-H0 - exprnd(1.0);
     // nll= leapfrog(nvar, gr, chd, eps, p, theta, gr2);
     // cout << "gr=" << gr << endl;
@@ -354,7 +388,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     build_tree_test(nvar, gr, chd, eps, p, theta, gr2, logu, 1, jj,
 		    H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		    _alphaprime, _nalphaprime, _sprime,
-		    _nprime, _nfevals, _divergent, _nllprime, rng, out);
+		    _nprime, _nfevals, _divergent, rng, out);
     ofstream out2("theta_prime.txt", ios::trunc);
     out2 << _thetaprime << endl;
     ad_exit(1);
@@ -364,85 +398,97 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int n = 1;
     _divergent=0;
     _nfevals=0;
-    bool s = true;
+    bool s=1;
     int j=0;
     while (s) {
       double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
-      thetaplus=_thetaplus;
-      thetaminus=_thetaminus;
-      rplus=_rplus;
-      rminus=_rminus;
-      // cout << "is=" <<is << " tprime "<< _thetaprime << _nllprime << endl;
-      //% Double the size of the tree.
-      if (v == -1) {
-	build_tree(nvar, gr, chd, eps, rplus, thetaplus, gr2, logu, v, j,
+      // Add a trajectory of length 2^j, built to the left or right of
+      // edges of the current tree.
+      if (v == 1) {
+	// Build a tree to the right from thetaplus.
+	z=chd*_thetaplus;
+	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	gr2=gr*chd;
+	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime, rng);
-	thetaplus = _thetaplus;
-	rplus = _rplus;
+		   _nprime, _nfevals, _divergent, rng);
       } else {
-	build_tree(nvar, gr, chd, eps, rminus, thetaminus, gr2, logu, v, j,
+	// Same but to the left from thetaminus
+	z=chd*_thetaminus;
+	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	gr2=gr*chd;
+	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, _nllprime, rng);
-	thetaminus = _thetaminus;
-	rminus = _rminus;
+		   _nprime, _nfevals, _divergent, rng);
       }
 
-      //% Use Metropolis-Hastings to decide whether or not to move to a
-      //% point from the half-tree we just generated.
-      // cout << j << " " << theta << " " <<  _thetaprime << endl;
+      // _thetaprime is the proposed point from that sample (drawn
+      // uniformly), but still need to detemine whether to accept it at
+      // each doubling. The last accepted point becomes the next sample. If
+      // none are accepted, the same point is repeated twice.
       double rn = randu(rng);	   // Runif(1)
-      if (_sprime == 1 && rn < double(_nprime)/n) {
-	// Save _thetaprime
+      if (_sprime == 1 && rn < double(_nprime)/double(n))
 	theta=_thetaprime;
-	// Rerun model to update parameters internally before saving
-	z=chd*theta;
-	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	initial_params::copy_all_values(parsave,1.0);
-      }
 
-      //% Update number of valid points we've seen.
-      n += _nprime;
-      //% Decide if it's time to stop.
+      // Test if a u-turn occured and update stopping criterion
       bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
-      s = _sprime && b;
-      //% Increment depth.
+      s = _sprime*b;
+      // Increment valid points and depth
+      n += _nprime;
       ++j;
-      if(j>max_treedepth){cout << "max treedepth exceeded "<< is <<endl; break;}
+      if(j>=max_treedepth) break;
     } // end of single NUTS trajectory
 
-    // Save parameters to psv file, duplicated if rejected
-    (*pofs_psave) << parsave;
-    double alpha;
-    if(_nalphaprime==0){
-      alpha=0;
-    } else {
-      alpha=_alphaprime/_nalphaprime;
+    // Rerun model to update saved parameters internally before saving. Is
+    // there a way to avoid doing this? I think I need to because of the
+    // bounding functions??
+    z=chd*theta;
+    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    initial_params::copy_all_values(parsave,1.0);
+    (*pofs_psave) << parsave; // saves row to psv file
+    double alpha=0;
+    if(_nalphaprime>0){
+      alpha=double(_alphaprime)/double(_nalphaprime);
     }
-    if(std::isnan(alpha)) alpha=0;
-    if(is > nwarmup){
+    if(is > warmup){
+      // Increment divergences only after warmup
       if(_divergent==1) ndivergent++;
+      // running sum of alpha to calculate samplin
       alphasum=alphasum+alpha;
     }
     // Adaptation of step size (eps).
-    if(useDA && is <= nwarmup){
-      eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+    if(useDA){
+      if(is <= warmup){
+	eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+      } else {
+	eps=epsbar(warmup);
+      }
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
-	       << _nfevals <<"," << _divergent <<"," << _nllprime << endl;
-    if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    print_mcmc_progress(is, nmcmc, nwarmup);
+	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
+    print_mcmc_progress(is, nmcmc, warmup, chain);
+    if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    nsamples=is;
+    if(use_duration==1 && time_total > duration){
+      // If duration option used, break loop after <duration> minutes.
+      cout << is << " samples generated after " << duration/60 <<
+	" minutes running." << endl;
+      break;
+    }
   } // end of MCMC chain
 
   // Information about run
   if(ndivergent>0)
     cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
   if(useDA)
-    cout << "Final step size=" << eps << "; after " << nwarmup << " warmup iterations"<< endl;
-  cout << "Final acceptance ratio=" << alphasum /(nmcmc-nwarmup) << endl;
+    cout << "Final step size=" << eps << "; after " << warmup << " warmup iterations"<< endl;
+  cout << "Final acceptance ratio=";
+  printf("%.2f", alphasum /(nsamples-warmup));
+  if(useDA) cout << ", and target=" << adapt_delta << endl;
   print_mcmc_timing(time_warmup, time_total);
 
   // I assume this closes the connection to the file??

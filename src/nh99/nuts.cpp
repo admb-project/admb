@@ -326,7 +326,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
     double H0=-nll-0.5*norm2(p); // initial Hamiltonian value
-    double logu= H0-exprnd(1.0);
+    double logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd);

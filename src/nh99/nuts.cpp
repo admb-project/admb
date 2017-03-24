@@ -326,7 +326,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
     double H0=-nll-0.5*norm2(p); // initial Hamiltonian value
-    double logu= H0-exprnd(1.0);
+    double logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd);
@@ -345,7 +345,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cif >> jj;
     cout << "theta=" << theta << endl;
     cout << "p=" << p << endl;
-    cout << "seed=" << iseed << endl;
     cout << "j=" << jj << endl;
     cout.precision(12);
     cout << "chd=" << chd << endl;
@@ -356,46 +355,21 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _thetaplus=theta;
     _thetaprime=theta;
     z=chd*theta;
-    // cout << "gr0=" << gr << endl;
-    // cout << "p0=" << p << endl;
-    // cout << "theta0=" << theta << endl;
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
-    // cout << "gr=" << gr << endl;
-    // dvector phalf;
-    // // Update momentum by half step (why negative?)
-    // phalf=p-eps/2*gr;
-    // cout << "phalf=" << phalf << endl;
-    // // Update parameters by full step
-    // theta+=eps*phalf;
-    // cout << "theta2=" << theta << endl;
-    // z=chd*theta;
-    // // Get NLL and set updated gradient in gr by reference
-    // nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    // // Update gradient via mass matrix
-    // cout << "gr2 new" << gr2 << endl;
-    // // Last half step for momentum
-    // p=phalf-eps/2*gr2;
-    // cout << "p new" << p << endl;
-    H0=-nll-+0.5*norm2(p);
-    logu= -15;//-H0 - exprnd(1.0);
-    // nll= leapfrog(nvar, gr, chd, eps, p, theta, gr2);
-    // cout << "gr=" << gr << endl;
-    // cout << "p=" << p << endl;
-    // cout << "theta=" << theta << endl;
-    ofstream out("trajectory.txt", ios::app);
-    out << theta << theta << theta << " " << H0 << " " << H0 << p <<endl;
-    build_tree_test(nvar, gr, chd, eps, p, theta, gr2, logu, 1, jj,
-		    H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-		    _alphaprime, _nalphaprime, _sprime,
-		    _nprime, _nfevals, _divergent, rng, out);
-    ofstream out2("theta_prime.txt", ios::trunc);
-    out2 << _thetaprime << endl;
-    ad_exit(1);
+    H0=-nll-0.5*norm2(p);
+    // logu= -15;//-H0 - exprnd(1.0);
+    ofstream out("trajectory.txt", ios::trunc);
+    ofstream out2("out2.txt", ios::trunc);
+    out << "theta1 theta2 thetaminus1 thetaminus2 thetaplus1 thetaplus2 rminus1 rminus2 " <<
+      "rplus1 rplus2 alpha divergent nfevals v nprime" << endl;
+    out2 << "j v _thetaprime1 _thetaprime2 theta1 theta2 prob divergent s n nprime" << endl;
+
     // --------------------------------------------------
 
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     int n = 1;
+    _nprime=0;
     _divergent=0;
     _nfevals=0;
     bool s=1;
@@ -403,6 +377,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     while (s) {
       double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
+      v=1;
       // Add a trajectory of length 2^j, built to the left or right of
       // edges of the current tree.
       if (v == 1) {
@@ -410,19 +385,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	z=chd*_thetaplus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
-	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j,
-		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+	build_tree_test(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j,
+			H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+			_alphaprime, _nalphaprime, _sprime,
+			_nprime, _nfevals, _divergent, rng, out);
       } else {
 	// Same but to the left from thetaminus
 	z=chd*_thetaminus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
-	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j,
-		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+	build_tree_test(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j,
+			H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+			_alphaprime, _nalphaprime, _sprime,
+			_nprime, _nfevals, _divergent, rng,out);
       }
 
       // _thetaprime is the proposed point from that sample (drawn
@@ -437,6 +412,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
       s = _sprime*b;
       // Increment valid points and depth
+      out2 << j <<  " " << v << _thetaprime << theta << " "
+	   << double(_nprime)/double(n) << " " << _divergent
+	   << " " << s << " " << n  << " " << _nprime << endl;
       n += _nprime;
       ++j;
       if(j>=max_treedepth) break;

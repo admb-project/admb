@@ -345,7 +345,7 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
     double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
     // The new Hamiltonian value. ADMB returns negative log density so
     // correct it
-    double Ham=-(nll+0.5*norm2(p));
+    double Ham=-nll-0.5*norm2(p);
     // ---------- Print single trajectory to file VERY SLOW ONLY FOR TESTING!!!
     // Get parameters on all three scales. y is unbounded unrotated, z is
     // rotated, and x is model (rotated + bounded) stored
@@ -381,8 +381,8 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
     }
     _nalphaprime=1;
     _nfevals++;
-    double temp=min(1.0, exp(H0-Ham));
-    out << y << z << x << " " << H0 << " " << Ham << p <<endl;
+    out << y << _thetaminus << _thetaplus << _rminus << _rplus << " " << _alphaprime << " " << _divergent
+	<< " " << _nfevals << " " << v << " " << _nprime << endl;
   } else { // j > 1
     // Buildtree of depth j-1.
     build_tree_test(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,

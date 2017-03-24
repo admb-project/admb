@@ -43,6 +43,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int old_Hybrid_bounded_flag=-1;
   int on,nopt = 0;
 
+  dvector x(1,nvar);
+  dvector scale(1,nvar);
+  initial_params::xinit(x);
+  dvector pen_vector(1,nvar);
+  {
+    initial_params::reset(dvar_vector(x),pen_vector);
+    //cout << pen_vector << endl << endl;
+  }
+  initial_params::mc_phase=0;
+  initial_params::stddev_scale(scale,x);
+  initial_params::mc_phase=1;
+
+
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
   // and will not be adapted.
@@ -154,7 +167,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // User-specified initial values
   nopt=0;
-  dvector theta(1,nvar); // the accepted par values
+  int ii=1;
+  independent_variables theta(1,nvar); // the accepted par values
+  independent_variables y(1,nvar); // the accepted par values
+  initial_params::restore_start_phase();
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1) {
     if (nopt) {
       cifstream cif((char *)ad_comm::argv[on+1]);
@@ -174,8 +190,23 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
   } else {
     // Copy the MLE I think? Whatever was last executed by the model.
-    initial_params::copy_all_values(theta,1);
+    ii=1;
+    initial_params::copy_all_values(theta,ii);
   }
+
+  // I think this backtransforms theta
+  ii=1;
+  cout << endl << endl << endl << "printing starting values" << endl;
+  cout << theta << endl << endl;
+  initial_params::restore_all_values(theta,ii);
+  if (mcmc2_flag==0)
+    {
+      initial_params::set_inactive_random_effects();
+    }
+  gradient_structure::set_NO_DERIVATIVES();
+  initial_params::xinit(y);
+  cout << y << endl << endl;
+
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {

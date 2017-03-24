@@ -403,53 +403,45 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         if (tmp) have_hist_flag=1;
         chd=size_scale*chd;
         chdinv=chdinv/size_scale;
-      }
-      else
-      {
-        int nopt=0;
-        if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1)
-        {
-          if (nopt)
-          {
-            cifstream cif((char *)ad_comm::argv[on+1]);
-            if (!cif)
-            {
-              cerr << "Error trying to open mcmc par input file "
-                   << ad_comm::argv[on+1] << endl;
-              exit(1);
-            }
-            cif >> parsave;
-            if (!cif)
-            {
-              cerr << "Error reading from mcmc par input file "
-                   << ad_comm::argv[on+1] << endl;
-              exit(1);
-            }
-          }
-          else
-          {
-            cerr << "Illegal option with -mcpin" << endl;
-          }
-        }
-        else
-        {
-          ii=1;
-          initial_params::copy_all_values(parsave,ii);
-        }
+      } else {
+	int nopt=0;
+	if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1) {
+	  if (nopt) {
+	    cifstream cif((char *)ad_comm::argv[on+1]);
+	    if (!cif) {
+	      cerr << "Error trying to open mcmc par input file "
+		   << ad_comm::argv[on+1] << endl;
+	      exit(1);
+	    }
+	    cif >> parsave;
+	    if (!cif) {
+	      cerr << "Error reading from mcmc par input file "
+		   << ad_comm::argv[on+1] << endl;
+	      exit(1);
+	    }
+	  } else {
+	    cerr << "Illegal option with -mcpin" << endl;
+	  }
+	} else {
+	  ii=1;
+	  initial_params::copy_all_values(parsave,ii);
+	}
       }
 
       ii=1;
+      cout << endl << endl << endl << "printing starting values" << endl;
+      cout << parsave << endl << endl;
       initial_params::restore_all_values(parsave,ii);
-
       if (mcmc2_flag==0)
       {
         initial_params::set_inactive_random_effects();
       }
-
       gradient_structure::set_NO_DERIVATIVES();
+      initial_params::xinit(y);
+      cout << y << endl << endl;
+
       ofstream ogs("sims");
       ogs << nvar << " " << number_sims << endl;
-      initial_params::xinit(y);
       double llc=-get_monte_carlo_value(nvar,y);
       llbest=-get_monte_carlo_value(nvar,y);
       lbmax=llbest;

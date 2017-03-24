@@ -6,7 +6,7 @@
 ;; Keywords: languages
 ;; URL:      http://admb-project.org/tools/editors/emacs/admb.el
 
-(defconst admb-mode-version "11.6-0" "ADMB Mode version number.")
+(defconst admb-mode-version "11.5-0" "ADMB Mode version number.")
 
 ;; This admb.el file is provided under the general terms of the Simplified BSD
 ;; License.
@@ -694,7 +694,8 @@ that makes it easy to return to `admb-mode':\n
 \(add-hook 'outline-mode-hook 'my-outline-hook)"
   (interactive)
   (let ((outreg outline-regexp))
-    (outline-mode)(setq outline-regexp outreg))(outline-mode)(hide-body))
+    (outline-mode)(setq outline-regexp outreg))
+  (outline-mode)(outline-hide-body))
 (defun admb-par ()
   "Open ADMB point estimates (.par) file." (interactive)(admb-open "par"))
 (defun admb-pin ()

@@ -432,14 +432,17 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       cout << endl << endl << endl << "printing starting values" << endl;
       cout << parsave << endl << endl;
       initial_params::restore_all_values(parsave,ii);
+      cout << endl << endl << endl << "printing starting values2" << endl;
+      cout << parsave << endl << endl;
       if (mcmc2_flag==0)
       {
         initial_params::set_inactive_random_effects();
       }
       gradient_structure::set_NO_DERIVATIVES();
       initial_params::xinit(y);
+      cout << endl << endl << endl << "printing starting values3" << endl;
       cout << y << endl << endl;
-
+      
       ofstream ogs("sims");
       ogs << nvar << " " << number_sims << endl;
       double llc=-get_monte_carlo_value(nvar,y);

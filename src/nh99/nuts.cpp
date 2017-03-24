@@ -199,6 +199,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   cout << endl << endl << endl << "printing starting values" << endl;
   cout << theta << endl << endl;
   initial_params::restore_all_values(theta,ii);
+  cout << endl << endl << endl << "printing starting values2" << endl;
+  cout << theta << endl << endl;
   if (mcmc2_flag==0)
     {
       initial_params::set_inactive_random_effects();

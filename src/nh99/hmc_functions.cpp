@@ -93,6 +93,10 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // save. These are the ' versions of the paper, e.g., sprime'.
       dvector thetaprime0(1,nvar);
       thetaprime0=_thetaprime;
+      dvector thetaminus0(1,nvar);
+      dvector thetaplus0(1,nvar);
+      dvector rminus0(1,nvar);
+      dvector rplus0(1,nvar);
       int nprime0 = _nprime;
       double alphaprime0 = _alphaprime;
       int nalphaprime0 = _nalphaprime;
@@ -103,12 +107,14 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng);
+	// leftmost pointers are moved inside build_tree by reference
       } else {
 	// Make subtree to the right
 	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng);
+	// rightmost pointers are moved inside build_tree by reference
       }
 
       // This is (n'+n''). Can be zero so need to be careful??
@@ -346,15 +352,7 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
     // The new Hamiltonian value. ADMB returns negative log density so
     // correct it
     double Ham=-nll-0.5*norm2(p);
-    // ---------- Print single trajectory to file VERY SLOW ONLY FOR TESTING!!!
-    // Get parameters on all three scales. y is unbounded unrotated, z is
-    // rotated, and x is model (rotated + bounded) stored
-    independent_variables z(1,nvar);
-    z=chd*y;
-    // Run user function to update parsave
-     double tmp=get_hybrid_monte_carlo_value(nvar,z,gr);
-    independent_variables x(1,nvar);
-    initial_params::copy_all_values(x,1.0);
+
     // Check for divergence. Either numerical (nll is nan) or a big
     // difference in H. Screws up all the calculations so catch it here.
     _divergent = (std::isnan(Ham) || logu > 1000+Ham);
@@ -368,38 +366,46 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
       _sprime=1;
       _alphaprime = min(1.0, exp(Ham-H0));
       // Update the tree elements, which are returned by reference in
-      // leapfrog. If moving left, want to leave _thetaplus intact and vice
-      // versa.
+      // leapfrog.
       _thetaprime = y;
-      if(v==-1){
-	_thetaminus = y;
-	_rminus = p;
-      } else {
-	_thetaplus = y;
-	_rplus = p;
-      }
+      _thetaminus = y;
+      _rminus = p;
+      _thetaplus = y;
+      _rplus = p;
+      
     }
     _nalphaprime=1;
     _nfevals++;
     out << y << _thetaminus << _thetaplus << _rminus << _rplus << " " << _alphaprime << " " << _divergent
-	<< " " << _nfevals << " " << v << " " << _nprime << endl;
+	<< " " << _nfevals << " " << v << " " << _nprime << " " << logu << endl;
   } else { // j > 1
     // Buildtree of depth j-1.
+    _thetaminus=y; _thetaplus=y;
+    _rminus=p; _rplus=p;
     build_tree_test(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
 	       _nprime, _nfevals, _divergent, rng, out);
-
+    cout << j << " " << _thetaplus << _thetaminus << endl;
     // If valid trajectory keep building, otherwise exit function
     if (_sprime == 1) {
       // Save copies of the global ones due to rerunning build_tree below
       // which will overwrite some of the global variables we need to
       // save. These are the ' versions of the paper, e.g., sprime'.
       dvector thetaprime0(1,nvar);
+      dvector thetaplus0(1,nvar);
+      dvector thetaminus0(1,nvar);
+      dvector rplus0(1,nvar);
+      dvector rminus0(1,nvar);
       thetaprime0=_thetaprime;
+      thetaplus0=_thetaplus;
+      thetaminus0=_thetaminus;
+      rplus0=_rplus;
+      rminus0=_rminus;
       int nprime0 = _nprime;
       double alphaprime0 = _alphaprime;
       int nalphaprime0 = _nalphaprime;
+      
 
       // Make subtree to the left
       if (v == -1) {
@@ -407,12 +413,18 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng, out);
+	// Update the leftmost point
+	rminus0=_rminus;
+	thetaminus0=_thetaminus;
       } else {
 	// Make subtree to the right
 	build_tree_test(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng, out);
+	// Update the rightmost point
+	rplus0=_rplus;
+	thetaplus0=_thetaplus;
       }
 
       // This is (n'+n''). Can be zero so need to be careful??
@@ -433,22 +445,12 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
       _nalphaprime = nalphaprime0 + _nalphaprime;
       // s' from the first execution above is 1 by definition (inside this
       // if statement), while _sprime is s''. So need to reset s':
-      bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
+      bool b = stop_criterion(nvar, thetaminus0, thetaplus0, rminus0, rplus0);
       _sprime = _sprime*b;
       _nprime = nprime_temp;
     } // end building second trajectory
   }   // end recursion branch (j>0)
 }     // end function
-
-
-
-
-
-
-
-
-
-
 
 
 

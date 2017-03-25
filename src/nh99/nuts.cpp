@@ -246,6 +246,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   } else {
     // Need to grab old_scale values still, since it is scaled below
     read_covariance_matrix(S,nvar,old_Hybrid_bounded_flag,old_scale);
+    // If user toggles between RWM and NUTS the bounded flag can be
+    // wrong. This would cause critical issues with bounding so catch it.
+    if(old_Hybrid_bounded_flag != gradient_structure::Hybrid_bounded_flag) {
+      cerr << "hybrid_bounded_flag read in from admodel.cov does not match:" <<
+	gradient_structure::Hybrid_bounded_flag << " vs " <<  old_Hybrid_bounded_flag << endl
+	   << "try restimating model." << endl;
+      ad_exit(1);
+    }
   }
   // // need to rescale the hessian
   // // get the current scale

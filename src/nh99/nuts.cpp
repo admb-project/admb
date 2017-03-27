@@ -252,7 +252,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       cerr << "hybrid_bounded_flag read in from admodel.cov does not match:" <<
 	gradient_structure::Hybrid_bounded_flag << " vs " <<  old_Hybrid_bounded_flag << endl
 	   << "try restimating model." << endl;
-      ad_exit(1);
+      //ad_exit(1);
     }
   }
   // // need to rescale the hessian

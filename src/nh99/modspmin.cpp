@@ -463,13 +463,13 @@ void write_banner_stuff(void)
       // temporarily adding this here, need to fully merge in with other options still
       if (option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)
 	{
-	  gradient_structure::Hybrid_bounded_flag=1;
+	  // gradient_structure::Hybrid_bounded_flag=1;
 	  shmc_mcmc_routine(nmcmc,iseed0,dscale,0);
 	  return;
 	}
       if (option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1)
 	{
-	  gradient_structure::Hybrid_bounded_flag=1;
+	  //  gradient_structure::Hybrid_bounded_flag=1;
 	  nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
 	  return;
 	}

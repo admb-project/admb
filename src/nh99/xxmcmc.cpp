@@ -4,6 +4,7 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+#include <ctime>
 #include <admodel.h>
 
 #if defined(_MSC_VER)

@@ -646,6 +646,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       // Need to save log-posterior (-NLL) to file to read in later.
       ofstream rwm_lp("rwm_lp.txt", ios::trunc);
       rwm_lp << "log-posterior" << endl;
+      cout << "Starting at y=" << y << endl;
       // Start of MCMC chain
        for (int i=1;i<=number_sims;i++)
        {

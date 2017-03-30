@@ -38,7 +38,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       nvar=initial_params::nvarcalc(); // get the number of active parameters
     }
   initial_params::restore_start_phase();
-  independent_variables parsave(1,nvar_re);
+  independent_variables parsave(1,nvar);
   initial_params::mc_phase=1;
   int old_Hybrid_bounded_flag=-1;
   int on,nopt = 0;
@@ -194,20 +194,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     initial_params::copy_all_values(theta,ii);
   }
 
-  // I think this backtransforms theta
-  ii=1;
-  cout << endl << endl << endl << "printing starting values" << endl;
+  // Theta is the transformed (bounded) parameter vector.  This passes the
+  // vector of theta through the model
+  initial_params::restore_all_values(theta,1);
+  // This copies the unbounded parameters back into theta.
+  initial_params::xinit(theta);
   cout << theta << endl << endl;
-  initial_params::restore_all_values(theta,ii);
-  cout << endl << endl << endl << "printing starting values2" << endl;
-  cout << theta << endl << endl;
-  if (mcmc2_flag==0)
-    {
-      initial_params::set_inactive_random_effects();
-    }
-  gradient_structure::set_NO_DERIVATIVES();
-  initial_params::xinit(y);
-  cout << y << endl << endl;
 
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
@@ -259,29 +251,29 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // // get the current scale
   dvector x0(1,nvar);
   initial_params::xinit(x0);
-  // dvector current_scale(1,nvar);
-  // int mctmp=initial_params::mc_phase;
-  // initial_params::mc_phase=0;
-  // initial_params::stddev_scale(current_scale,x0);
-  // initial_params::mc_phase=mctmp;
-  // cout << "old scale=" <<  old_scale << endl;
-  // cout << "current scale=" << current_scale << endl;
-  // cout << "S before=" << S << endl;
+  dvector current_scale(1,nvar);
+  int mctmp=initial_params::mc_phase;
+  initial_params::mc_phase=0;
+  initial_params::stddev_scale(current_scale,x0);
+  initial_params::mc_phase=mctmp;
+  cout << "old scale=" <<  old_scale << endl;
+  cout << "current scale=" << current_scale << endl;
+  cout << "S before=" << S << endl;
   // I think this is only needed if mcmc2 is used??
-  // for (int i=1;i<=nvar;i++)
-  //   {
-  //     for (int j=1;j<=nvar;j++)
-  // 	{
-  // 	  S(i,j)*=old_scale(i)*old_scale(j);
-  // 	}
-  //   }
-  // if(diag_option){
-  //   for (int i=1;i<=nvar;i++) {
-  //     for (int j=1;j<=nvar;j++) {
-  // 	S(i,j)*=current_scale(i)*current_scale(j);
-  //     }
-  //   }
-  // }
+  for (int i=1;i<=nvar;i++)
+    {
+      for (int j=1;j<=nvar;j++)
+        {
+          S(i,j)*=old_scale(i)*old_scale(j);
+        }
+    }
+  for (int i=1;i<=nvar;i++)
+    {
+      for (int j=1;j<=nvar;j++)
+        {
+          S(i,j)/=current_scale(i)*current_scale(j);
+        }
+    }
   gradient_structure::set_NO_DERIVATIVES();
   if (mcmc2_flag==0) {
     initial_params::set_inactive_random_effects();
@@ -294,6 +286,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   //// Start of algorithm
   // Setup binary psv file to write samples to
+  cout << "Starting from theta=" << theta << endl;
+  gradient_structure::set_YES_DERIVATIVES();
+  initial_params::xinit(theta);
+  independent_variables ztemp(1,nvar);
+  dvector grtemp(1,nvar);		// gradients in unbounded space
+  ztemp=theta;
+  double nlltemp=get_hybrid_monte_carlo_value(nvar,ztemp,grtemp);
+  cout << "Starting from z=" << ztemp << endl;
+  cout << "Starting from nll=" << nlltemp << endl;
+  cout << "Starting from chd=" << chd << endl;
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
   if (!pofs_psave|| !(*pofs_psave)) {
@@ -308,8 +310,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int iseed=2197;
   if (iseed0) iseed=iseed0;
   random_number_generator rng(iseed);
-  gradient_structure::set_YES_DERIVATIVES();
-  initial_params::xinit(x0);
+
+
   // Timings
   double time_warmup=0;
   double time_total=0;
@@ -362,7 +364,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _rminus=p; _rplus=p;
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
     // Reset model parameters to theta, whether updated or not in previous
-    // iteration
+    // iteration. 
     z=chd*theta;
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;

@@ -113,7 +113,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 
       // This is (n'+n''). Can be zero so need to be careful??
       int nprime_temp = nprime0 + _nprime;
-      if(std::isnan(double(nprime_temp))) nprime_temp=0;
+      if(std::isnan(static_cast<double>(nprime_temp))) nprime_temp=0;
       // Choose whether to keep the proposal thetaprime.
       double rr=randu(rng); // runif(1)
       if (nprime_temp != 0 && rr < double(_nprime)/double(nprime_temp)) {

@@ -19,24 +19,21 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					   int restart_flag) {
   if (nmcmc<=0) {
-      cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
-      ad_exit(1);
-    }
-
+    cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
+    ad_exit(1);
+  }
   // I haven't figured out what to do with RE yet, so leaving as is for
   // now. -Cole
   uostream * pofs_psave=NULL;
-  if (mcmc2_flag==1) {
-      initial_params::restore_start_phase();
-    }
+  if (mcmc2_flag==1) initial_params::restore_start_phase();
   initial_params::set_inactive_random_effects();
   initial_params::set_active_random_effects();
   int nvar_re=initial_params::nvarcalc();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  if (mcmc2_flag==0) {
-      initial_params::set_inactive_random_effects();
-      nvar=initial_params::nvarcalc(); // get the number of active parameters
-    }
+  if (mcmc2_flag==0){
+    initial_params::set_inactive_random_effects();
+    nvar=initial_params::nvarcalc(); // get the number of active parameters
+  }
   initial_params::restore_start_phase();
   independent_variables parsave(1,nvar);
   initial_params::mc_phase=1;
@@ -47,10 +44,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector scale(1,nvar);
   initial_params::xinit(x0);
   dvector pen_vector(1,nvar);
-  {
-    initial_params::reset(dvar_vector(x0),pen_vector);
-    //cout << pen_vector << endl << endl;
-  }
+  initial_params::reset(dvar_vector(x0),pen_vector);
   initial_params::mc_phase=0;
   initial_params::stddev_scale(scale,x0);
   initial_params::mc_phase=1;
@@ -64,7 +58,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int useDA=1; 			// whether to adapt step size
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hyeps",nopt))>-1) {
     if (!nopt){ // not specified means to adapt, using function below to find reasonable one
-
       cerr << "Warning: No step size given after -hyeps, ignoring" << endl;
       useDA=1;
     } else {			// read in specified value and do not adapt
@@ -98,7 +91,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-
   // chain number -- for console display purposes only
   int chain=1;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chain",nopt))>-1) {
@@ -193,7 +185,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     ii=1;
     initial_params::copy_all_values(theta,ii);
   }
-
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
@@ -223,6 +214,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // unconstrained already.
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
+  bool rescale_covar=0; 
   if (diag_option){		// set covariance to be diagonal
     S.initialize();
     for (int i=1;i<=nvar;i++) {
@@ -234,9 +226,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // If user toggles between RWM and NUTS the bounded flag can be
     // wrong. This would cause critical issues with bounding so catch it.
     if(old_Hybrid_bounded_flag != gradient_structure::Hybrid_bounded_flag) {
-      cerr << "hybrid_bounded_flag read in from admodel.cov does not match:" <<
-	gradient_structure::Hybrid_bounded_flag << " vs " <<  old_Hybrid_bounded_flag << endl
-	   << "try restimating model." << endl;
+      // cerr << "hybrid_bounded_flag read in from admodel.cov does not match:" <<
+      // 	gradient_structure::Hybrid_bounded_flag << " vs " <<  old_Hybrid_bounded_flag << endl
+      // 	   << "try restimating model." << endl;
+      rescale_covar=1;
       //ad_exit(1);
     }
   }
@@ -247,70 +240,59 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=0;
   initial_params::stddev_scale(current_scale,x0);
   initial_params::mc_phase=mctmp;
-  cout << "old scale=" <<  old_scale << endl;
-  cout << "current scale=" << current_scale << endl;
-  // cout << "S before=" << S << endl;
-  // Rescale the covariance matrix
-  for (int i=1;i<=nvar;i++) {
-    for (int j=1;j<=nvar;j++) {
-      S(i,j)*=old_scale(i)*old_scale(j);
+  if(rescale_covar){
+    // If no covar was pushed by the user, then the MLE one is used
+    // about. But since that admodel.cov file was written with the hbf=0
+    // transformations, it is wrong now that hbf=1. So convert to covar in
+    // transformed space using the old scales, and then back to the
+    // untransformed space using the new scales.
+    cout << "Rescaling covariance matrix b/c scales don't match" << endl;
+    cout << "old scale=" <<  old_scale << endl;
+    cout << "current scale=" << current_scale << endl;
+    // cout << "S before=" << S << endl;
+    // Rescale the covariance matrix
+    for (int i=1;i<=nvar;i++) {
+      for (int j=1;j<=nvar;j++) {
+	S(i,j)*=old_scale(i)*old_scale(j);
+	S(i,j)/=current_scale(i)*current_scale(j);
+      }
     }
   }
-  for (int i=1;i<=nvar;i++) {
-    for (int j=1;j<=nvar;j++) {
-      S(i,j)/=current_scale(i)*current_scale(j);
-    }
-  }
+  // Don't know if this is necessary or can be deleted.
   gradient_structure::set_NO_DERIVATIVES();
   if (mcmc2_flag==0) {
     initial_params::set_inactive_random_effects();
   }
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   dmatrix chdinv=inv(chd);
-
-  // cout << "S=" << S << endl;
-  // cout << "chd=" << chd << endl;
-  //// End of input processing
-  // --------------------------------------------------
-
-  //// Start of algorithm
-  // Prepare initial value
-  // Theta is the transformed (bounded) parameter vector.  This passes the
-  // vector of theta through the model I think.
+  /// Prepare initial value. Need to both back-transform, and then rotate
+  /// this to be in the "x" space.
+  ///
+  // Theta is the transformed (bounded) parameter vector (in "z" space").
+  // This passes the vector of theta through the model I think. Since this
+  // wasn't the last vector evaluated, need to propogate it through ADMB
+  // internally.
   gradient_structure::set_YES_DERIVATIVES();
   // cout << "Starting from chd=" << chd << endl;
-  cout << "hbf=" << gradient_structure::Hybrid_bounded_flag << endl;
-  cout << "Starting from bounded parameters=" << theta << endl;
   initial_params::restore_all_values(theta,1);
-  // This copies the unbounded parameters back into theta.
+  // This copies the unbounded parameters into ytemp
   independent_variables ytemp(1,nvar);
   initial_params::xinit(ytemp);
-  cout << "Starting from unbounded parameters=" << ytemp << endl;
   independent_variables xtemp(1,nvar);
   xtemp=chdinv*ytemp;
-  cout << "Starting from rotated, unbounded parameters=" << xtemp << endl;
-  ytemp=chd*xtemp;
-  dvector grtemp(1,nvar);		// gradients in unbounded space
-  double nlltemp=get_hybrid_monte_carlo_value(nvar,ytemp,grtemp);
-  cout << "Starting from nll=" << nlltemp << endl;
-  cout << "Starting gr in unbounded space= " << grtemp << endl;
-  cout << "Starting gr in rotated space= " << grtemp*chd<< endl;
-
-  // // Take a single step
-  // cout << "Taking step with eps=.1" << endl;
-  // dvector gr2temp(1,nvar);
-  // dvector ptemp(1,nvar);
-  // for(int i=1;i<=nvar;i++) ptemp(i)=.1;
-  // nlltemp= leapfrog(nvar, grtemp, chd, .1, ptemp, xtemp, gr2temp);
-  // cout << "Now rotated, unbounded parameters=" << xtemp << endl;
-  // cout << "Now unbounded parameters=" << chd*xtemp << endl;
-  // initial_params::copy_all_values(parsave,1);
-  // cout << "Now bounded parameters=" << parsave << endl;
-  // cout << "Now nll=" << nlltemp << endl;
-  // cout << "Now gr in unbounded space= " << gr2temp << endl;
+  /// Old code to test that I know what's going on.
+  // cout << "hbf=" << gradient_structure::Hybrid_bounded_flag << endl;
+  // cout << "Starting from bounded parameters=" << theta << endl;
+  // cout << "Starting from unbounded parameters=" << ytemp << endl;
+  // cout << "Starting from rotated, unbounded parameters=" << xtemp << endl;
+  // ytemp=chd*xtemp;
+  // dvector grtemp(1,nvar);		// gradients in unbounded space
+  // double nlltemp=get_hybrid_monte_carlo_value(nvar,ytemp,grtemp);
+  // cout << "Starting from nll=" << nlltemp << endl;
+  // cout << "Starting gr in unbounded space= " << grtemp << endl;
+  // cout << "Starting gr in rotated space= " << grtemp*chd<< endl;
   theta=xtemp;
   // Setup binary psv file to write samples to
-  gradient_structure::set_YES_DERIVATIVES();
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
   if (!pofs_psave|| !(*pofs_psave)) {
@@ -325,9 +307,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int iseed=2197;
   if (iseed0) iseed=iseed0;
   random_number_generator rng(iseed);
-
-
-  // Timings
+  // Run timings
   double time_warmup=0;
   double time_total=0;
   std::clock_t start = clock();
@@ -345,7 +325,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double mu;
   ofstream adaptation("adaptation.csv", ios::trunc);
   adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
-
+  //// End of input processing and preparation
+  // --------------------------------------------------
+  
+  //// ---------- Start of algorithm
   // Declare and initialize the variables needed for the algorithm
   independent_variables z(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
@@ -365,7 +348,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double _alphaprime;
   int _nalphaprime;
   bool _sprime;
-  int _nprime;			//
+  int _nprime;	
   int _nfevals;	   		// trajectory length
   bool _divergent; // divergent transition
   int ndivergent=0; // # divergences post-warmup
@@ -493,8 +476,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   // I assume this closes the connection to the file??
   if (pofs_psave) {
-      delete pofs_psave;
-      pofs_psave=NULL;
-    }
+    delete pofs_psave;
+    pofs_psave=NULL;
+  }
 } // end of NUTS function
 

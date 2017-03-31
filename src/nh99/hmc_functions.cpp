@@ -36,6 +36,15 @@ double function_minimizer::exprnd(double p)
   return d(gen);
 }
 
+// Strip out the model name given full path
+std::string function_minimizer::get_filename(const char* f) {
+  std::string s(f);
+  size_t pos = s.find_last_of("/\\");
+  std::string filename_exe = s.substr(pos + 1);
+  size_t dot_pos = s.find_last_of(".");
+  std::string filename = s.substr(pos + 1, dot_pos - pos - 1);
+  return filename;
+}
 
 void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
 				    dvector& y, dvector& gr2, double logu, int v, int j, double H0,

@@ -1912,6 +1912,7 @@ public:
   void hybrid_mcmc_routine(int,int,double,int);
 
   // Functions added by Cole for HMC.
+  std::string get_filename(const char* f);
   double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
     dvector& g);
   void shmc_mcmc_routine(int,int,double,int);

@@ -318,7 +318,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   std::clock_t start = clock();
   time_t now = time(0);
   tm* localtm = localtime(&now);
-  cout << endl << "Starting NUTS for model '" << ad_comm::adprogram_name <<
+  std::string m=get_filename((char*)ad_comm::adprogram_name);
+  cout << endl << "Starting NUTS for model '" << m <<
     "' at " << asctime(localtm);
   if(use_duration==1){
     cout << "Model will run for " << duration/60 <<

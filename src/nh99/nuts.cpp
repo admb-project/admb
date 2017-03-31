@@ -299,10 +299,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       ad_comm::adprogram_name + adstring(".psv") << endl;
     ad_exit(1);
   }
-  // This file holds the unbounded (y) draws. Can read this in to get
-  // empirical covariance on the unbounded scale and then put back into
-  // admodel.cov. 
+  // This file holds the rotated (x), unbounded (y) and bounded (z) samples
+  // (not warmup). Can read this in to get empirical covariance on the
+  // unbounded scale and then put back into admodel.cov. Or look at how
+  // mass matrix is doing.
+  ofstream rotated("rotated.csv", ios::trunc);
   ofstream unbounded("unbounded.csv", ios::trunc);
+  ofstream bounded("bounded.csv", ios::trunc);
   // Save nvar first. If added mcrestart (mcrb) functionality later need to
   // fix this line.
   (*pofs_psave) << nvar;
@@ -433,8 +436,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // bounding functions??
     nll=get_hybrid_monte_carlo_value(nvar,ytemp,gr);
     initial_params::copy_all_values(parsave,1.0);
-    unbounded << ytemp << endl; // save the unbounded draws
-    (*pofs_psave) << parsave; // saves bounded draws to psv file
+    // Write the rotated, unbounded, and bounded draws to csv files for
+    // sampling draws only
+    if(is>warmup){
+      for(int i=1;i<nvar;i++) {
+	rotated << theta(i) << ", ";
+	unbounded << ytemp(i) << ", ";
+	bounded << parsave(i) << ", ";
+      }
+      rotated << theta(nvar) << endl;
+      unbounded << ytemp(nvar) << endl;
+      bounded << parsave(nvar) << endl;
+    }
+    (*pofs_psave) << parsave; // save all bounded draws to psv file
     // Estimated acceptance probability
     double alpha=0;
     if(_nalphaprime>0){

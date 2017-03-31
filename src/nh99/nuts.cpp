@@ -301,6 +301,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       ad_comm::adprogram_name + adstring(".psv") << endl;
     ad_exit(1);
   }
+  // This file holds the unbounded (y) draws. Can read this in to get
+  // empirical covariance on the unbounded scale and then put back into
+  // admodel.cov. 
+  ofstream unbounded("unbounded.csv", ios::trunc);
   // Save nvar first. If added mcrestart (mcrb) functionality later need to
   // fix this line.
   (*pofs_psave) << nvar;
@@ -414,8 +418,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // each doubling. The last accepted point becomes the next sample. If
       // none are accepted, the same point is repeated twice.
       double rn = randu(rng);	   // Runif(1)
-      if (_sprime == 1 && rn < double(_nprime)/double(n))
-	theta=_thetaprime;
+      if (_sprime == 1 && rn < double(_nprime)/double(n)){
+	theta=_thetaprime; // rotated, unbounded
+	ytemp=chd*theta; // unbounded
+      }
 
       // Test if a u-turn occured and update stopping criterion
       bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
@@ -425,14 +431,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       ++j;
       if(j>=max_treedepth) break;
     } // end of single NUTS trajectory
-
     // Rerun model to update saved parameters internally before saving. Is
     // there a way to avoid doing this? I think I need to because of the
     // bounding functions??
-    z=chd*theta;
-    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    nll=get_hybrid_monte_carlo_value(nvar,ytemp,gr);
     initial_params::copy_all_values(parsave,1.0);
-    (*pofs_psave) << parsave; // saves row to psv file
+    unbounded << ytemp << endl; // save the unbounded draws
+    (*pofs_psave) << parsave; // saves bounded draws to psv file
+    // Estimated acceptance probability
     double alpha=0;
     if(_nalphaprime>0){
       alpha=double(_alphaprime)/double(_nalphaprime);

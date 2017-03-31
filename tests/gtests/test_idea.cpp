@@ -4,6 +4,39 @@
 
 class test_idea: public ::testing::Test {};
 
+TEST_F(test_idea, filename)
+{
+  const char* full = "/dir1/dir2/filename.exe";
+
+  std::string s(full);
+  size_t pos = s.find_last_of("/\\");
+  std::string filename_exe = s.substr(pos + 1);
+
+  size_t dot_pos = s.find_last_of(".");
+  std::string filename = s.substr(pos + 1, dot_pos - pos - 1);
+
+  ASSERT_STREQ(filename_exe.c_str(), "filename.exe");
+  ASSERT_STREQ(filename.c_str(), "filename");
+}
+std::string get_filename(const char* f)
+{
+  std::string s(f);
+  size_t pos = s.find_last_of("/\\");
+  std::string filename_exe = s.substr(pos + 1);
+
+  size_t dot_pos = s.find_last_of(".");
+  std::string filename = s.substr(pos + 1, dot_pos - pos - 1);
+
+  return filename;
+}
+TEST_F(test_idea, get_filename)
+{
+  const char* full = "/dir1/dir2/filename.exe";
+  std::string filename = get_filename(full);
+  std::cout << filename << std::endl;
+
+  ASSERT_STREQ(filename.c_str(), "filename");
+}
 TEST_F(test_idea, if_literal_double)
 {
   if (1.0e-10)

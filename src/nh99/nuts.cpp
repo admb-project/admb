@@ -310,8 +310,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // fix this line.
   (*pofs_psave) << nvar;
   // Setup random number generator, based on seed passed or hardcoded
-  int iseed=2197;
-  if (iseed0) iseed=iseed0;
+  int iseed = iseed0 ? iseed0 : rand();
   random_number_generator rng(iseed);
   // Run timings
   double time_warmup=0;

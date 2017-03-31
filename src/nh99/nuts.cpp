@@ -39,7 +39,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=1;
   int old_Hybrid_bounded_flag=-1;
   int on,nopt = 0;
-
   dvector x0(1,nvar);
   dvector scale(1,nvar);
   initial_params::xinit(x0);
@@ -49,8 +48,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::stddev_scale(scale,x0);
   initial_params::mc_phase=1;
   gradient_structure::set_YES_DERIVATIVES();
-
-  
+ 
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
   // and will not be adapted.
@@ -372,7 +370,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
     double H0=-nll-0.5*norm2(p); // initial Hamiltonian value
-    if(is==1) cout << "nll=" << nll << " H0=" << H0 << endl;
     double logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size

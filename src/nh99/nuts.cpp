@@ -43,16 +43,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int old_Hybrid_bounded_flag=-1;
   int on,nopt = 0;
 
-  dvector x(1,nvar);
+  dvector x0(1,nvar);
   dvector scale(1,nvar);
-  initial_params::xinit(x);
+  initial_params::xinit(x0);
   dvector pen_vector(1,nvar);
   {
-    initial_params::reset(dvar_vector(x),pen_vector);
+    initial_params::reset(dvar_vector(x0),pen_vector);
     //cout << pen_vector << endl << endl;
   }
   initial_params::mc_phase=0;
-  initial_params::stddev_scale(scale,x);
+  initial_params::stddev_scale(scale,x0);
   initial_params::mc_phase=1;
 
 
@@ -194,13 +194,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     initial_params::copy_all_values(theta,ii);
   }
 
-  // Theta is the transformed (bounded) parameter vector.  This passes the
-  // vector of theta through the model
-  initial_params::restore_all_values(theta,1);
-  // This copies the unbounded parameters back into theta.
-  initial_params::xinit(theta);
-  cout << theta << endl << endl;
-
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
@@ -247,10 +240,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       //ad_exit(1);
     }
   }
-  // // need to rescale the hessian
-  // // get the current scale
-  dvector x0(1,nvar);
-  initial_params::xinit(x0);
+  // need to rescale the hessian
+  // get the current scale
   dvector current_scale(1,nvar);
   int mctmp=initial_params::mc_phase;
   initial_params::mc_phase=0;
@@ -258,44 +249,68 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=mctmp;
   cout << "old scale=" <<  old_scale << endl;
   cout << "current scale=" << current_scale << endl;
-  cout << "S before=" << S << endl;
-  // I think this is only needed if mcmc2 is used??
-  for (int i=1;i<=nvar;i++)
-    {
-      for (int j=1;j<=nvar;j++)
-        {
-          S(i,j)*=old_scale(i)*old_scale(j);
-        }
+  // cout << "S before=" << S << endl;
+  // Rescale the covariance matrix
+  for (int i=1;i<=nvar;i++) {
+    for (int j=1;j<=nvar;j++) {
+      S(i,j)*=old_scale(i)*old_scale(j);
     }
-  for (int i=1;i<=nvar;i++)
-    {
-      for (int j=1;j<=nvar;j++)
-        {
-          S(i,j)/=current_scale(i)*current_scale(j);
-        }
+  }
+  for (int i=1;i<=nvar;i++) {
+    for (int j=1;j<=nvar;j++) {
+      S(i,j)/=current_scale(i)*current_scale(j);
     }
+  }
   gradient_structure::set_NO_DERIVATIVES();
   if (mcmc2_flag==0) {
     initial_params::set_inactive_random_effects();
   }
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
+  dmatrix chdinv=inv(chd);
+
   // cout << "S=" << S << endl;
   // cout << "chd=" << chd << endl;
   //// End of input processing
   // --------------------------------------------------
 
   //// Start of algorithm
-  // Setup binary psv file to write samples to
-  cout << "Starting from theta=" << theta << endl;
+  // Prepare initial value
+  // Theta is the transformed (bounded) parameter vector.  This passes the
+  // vector of theta through the model I think.
   gradient_structure::set_YES_DERIVATIVES();
-  initial_params::xinit(theta);
-  independent_variables ztemp(1,nvar);
+  // cout << "Starting from chd=" << chd << endl;
+  cout << "hbf=" << gradient_structure::Hybrid_bounded_flag << endl;
+  cout << "Starting from bounded parameters=" << theta << endl;
+  initial_params::restore_all_values(theta,1);
+  // This copies the unbounded parameters back into theta.
+  independent_variables ytemp(1,nvar);
+  initial_params::xinit(ytemp);
+  cout << "Starting from unbounded parameters=" << ytemp << endl;
+  independent_variables xtemp(1,nvar);
+  xtemp=chdinv*ytemp;
+  cout << "Starting from rotated, unbounded parameters=" << xtemp << endl;
+  ytemp=chd*xtemp;
   dvector grtemp(1,nvar);		// gradients in unbounded space
-  ztemp=theta;
-  double nlltemp=get_hybrid_monte_carlo_value(nvar,ztemp,grtemp);
-  cout << "Starting from z=" << ztemp << endl;
+  double nlltemp=get_hybrid_monte_carlo_value(nvar,ytemp,grtemp);
   cout << "Starting from nll=" << nlltemp << endl;
-  cout << "Starting from chd=" << chd << endl;
+  cout << "Starting gr in unbounded space= " << grtemp << endl;
+  cout << "Starting gr in rotated space= " << grtemp*chd<< endl;
+
+  // // Take a single step
+  // cout << "Taking step with eps=.1" << endl;
+  // dvector gr2temp(1,nvar);
+  // dvector ptemp(1,nvar);
+  // for(int i=1;i<=nvar;i++) ptemp(i)=.1;
+  // nlltemp= leapfrog(nvar, grtemp, chd, .1, ptemp, xtemp, gr2temp);
+  // cout << "Now rotated, unbounded parameters=" << xtemp << endl;
+  // cout << "Now unbounded parameters=" << chd*xtemp << endl;
+  // initial_params::copy_all_values(parsave,1);
+  // cout << "Now bounded parameters=" << parsave << endl;
+  // cout << "Now nll=" << nlltemp << endl;
+  // cout << "Now gr in unbounded space= " << gr2temp << endl;
+  theta=xtemp;
+  // Setup binary psv file to write samples to
+  gradient_structure::set_YES_DERIVATIVES();
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
   if (!pofs_psave|| !(*pofs_psave)) {
@@ -364,11 +379,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _rminus=p; _rplus=p;
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
     // Reset model parameters to theta, whether updated or not in previous
-    // iteration. 
+    // iteration.
     z=chd*theta;
     double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
     double H0=-nll-0.5*norm2(p); // initial Hamiltonian value
+    if(is==1) cout << "nll=" << nll << " H0=" << H0 << endl;
     double logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size

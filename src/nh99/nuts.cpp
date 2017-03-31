@@ -48,8 +48,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=0;
   initial_params::stddev_scale(scale,x0);
   initial_params::mc_phase=1;
+  gradient_structure::set_YES_DERIVATIVES();
 
-
+  
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
   // and will not be adapted.
@@ -258,13 +259,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-  // Don't know if this is necessary or can be deleted.
-  gradient_structure::set_NO_DERIVATIVES();
-  if (mcmc2_flag==0) {
-    initial_params::set_inactive_random_effects();
-  }
+  // // Don't know if this is necessary or can be deleted.
+  // gradient_structure::set_NO_DERIVATIVES();
+  // if (mcmc2_flag==0) {
+  //   initial_params::set_inactive_random_effects();
+  // }
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   dmatrix chdinv=inv(chd);
+  // cout << "Starting from chd=" << chd << endl;
   /// Prepare initial value. Need to both back-transform, and then rotate
   /// this to be in the "x" space.
   ///
@@ -272,14 +274,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // This passes the vector of theta through the model I think. Since this
   // wasn't the last vector evaluated, need to propogate it through ADMB
   // internally.
-  gradient_structure::set_YES_DERIVATIVES();
-  // cout << "Starting from chd=" << chd << endl;
   initial_params::restore_all_values(theta,1);
   // This copies the unbounded parameters into ytemp
   independent_variables ytemp(1,nvar);
   initial_params::xinit(ytemp);
+  // Can now inverse rotate y to be x (algorithm space)
   independent_variables xtemp(1,nvar);
-  xtemp=chdinv*ytemp;
+  xtemp=chdinv*ytemp; // this is the initial value
   /// Old code to test that I know what's going on.
   // cout << "hbf=" << gradient_structure::Hybrid_bounded_flag << endl;
   // cout << "Starting from bounded parameters=" << theta << endl;
@@ -291,7 +292,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // cout << "Starting from nll=" << nlltemp << endl;
   // cout << "Starting gr in unbounded space= " << grtemp << endl;
   // cout << "Starting gr in rotated space= " << grtemp*chd<< endl;
-  theta=xtemp;
+  theta=xtemp; // kind of a misnomer here: theta is in "x" space
   // Setup binary psv file to write samples to
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));

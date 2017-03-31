@@ -475,7 +475,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << "Final step size=" << eps << "; after " << warmup << " warmup iterations"<< endl;
   cout << "Final acceptance ratio=";
   printf("%.2f", alphasum /(nsamples-warmup));
-  if(useDA) cout << ", and target=" << adapt_delta << endl;
+  if(useDA) cout << ", and target=" << adapt_delta << endl; else cout << endl;
   print_mcmc_timing(time_warmup, time_total);
 
   // I assume this closes the connection to the file??

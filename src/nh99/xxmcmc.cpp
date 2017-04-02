@@ -342,7 +342,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     // cout << sort(eigenvalues(S)) << endl;
     dmatrix chd = choleski_decomp( (dscale*2.4/sqrt(double(nvar))) * S);
     dmatrix chdinv=inv(chd);
-
+    dmatrix chdinv0=chdinv;
     dmatrix symbds(1,2,1,nvar);
     initial_params::set_all_simulation_bounds(symbds);
     ofstream ofs_sd1((char*)(ad_comm::adprogram_name + adstring(".mc2")));
@@ -646,6 +646,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       // Need to save log-posterior (-NLL) to file to read in later.
       ofstream rwm_lp("rwm_lp.txt", ios::trunc);
       rwm_lp << "log-posterior" << endl;
+      ofstream rotated("rotated.csv", ios::trunc);
+      ofstream unbounded("unbounded.csv", ios::trunc);
+      ofstream bounded("bounded.csv", ios::trunc);
       cout << "Starting at y=" << y << endl;
       // Start of MCMC chain
        for (int i=1;i<=number_sims;i++)
@@ -818,6 +821,19 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 	  // Save parameters and log posterior at each thinned iteration
           (*pofs_psave) << parsave;
 	  rwm_lp << llc << endl;
+	  if(i>change_ball){
+	    // Calculate rotated parameter vector
+	    independent_variables xtemp(1,nvar);
+	    xtemp=chdinv0*y; 
+	    for(int i=1;i<nvar;i++) {
+	      rotated << xtemp(i) << ", ";
+	      unbounded << y(i) << ", ";
+	      bounded << parsave(i) << ", ";
+	    }
+	    rotated << xtemp(nvar) << endl;
+	    unbounded << y(nvar) << endl;
+	    bounded << parsave(nvar) << endl;
+	  }
         }
        /*
         if (adjm_ptr)

@@ -246,6 +246,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // transformed space using the old scales, and then back to the
     // untransformed space using the new scales.
     cout << "Rescaling covariance matrix b/c scales don't match" << endl;
+    if (option_match(ad_comm::argc,ad_comm::argv,"-noest") > -1){
+      cerr << "-noest argument invoked so the current scales are invalid. Rerun without -noest" << endl;
+      ad_exit(1);
+    }
     cout << "old scale=" <<  old_scale << endl;
     cout << "current scale=" << current_scale << endl;
     // cout << "S before=" << S << endl;

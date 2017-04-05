@@ -429,19 +429,19 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       }
 
       ii=1;
-      cout << endl << endl << endl << "printing starting values" << endl;
-      cout << parsave << endl << endl;
+      // cout << endl << endl << endl << "printing starting values" << endl;
+      // cout << parsave << endl << endl;
       initial_params::restore_all_values(parsave,ii);
-      cout << endl << endl << endl << "printing starting values2" << endl;
-      cout << parsave << endl << endl;
+      // cout << endl << endl << endl << "printing starting values2" << endl;
+      // cout << parsave << endl << endl;
       if (mcmc2_flag==0)
       {
         initial_params::set_inactive_random_effects();
       }
       gradient_structure::set_NO_DERIVATIVES();
       initial_params::xinit(y);
-      cout << endl << endl << endl << "printing starting values3" << endl;
-      cout << y << endl << endl;
+      // cout << endl << endl << endl << "printing starting values3" << endl;
+      // cout << y << endl << endl;
       
       ofstream ogs("sims");
       ogs << nvar << " " << number_sims << endl;
@@ -473,7 +473,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       {
         if (nopt)
         {
-          int iii=atoi(ad_comm::argv[on+1]);
+          // int iii=atoi(ad_comm::argv[on+1]); old way that was buggy
+	  int iii=(int)atof(ad_comm::argv[on+1]); // better way
           if (iii <=0)
           {
             cerr << " Invalid option following command line option -mcscale -- "

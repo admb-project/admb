@@ -6223,29 +6223,31 @@ class d5_array
    double &operator () (int, int, int, int, int);
 #endif
    //access functions
-   int indexmin(void)
+   int indexmin()
    {
-      return (shape->indexmin());
+     return shape->indexmin();
    }
-   int indexmax(void)
+   int indexmax()
    {
-      return (shape->indexmax());
+     return shape->indexmax();
    }
-   int size(void)
+   unsigned int size()
    {
-      return (indexmax() - indexmin() + 1);
+     int ret = indexmax() - indexmin() + 1;
+     return static_cast<unsigned int>(ret < 0 ? 0 : ret);
    }
-   int indexmin(void) const
+   int indexmin() const
    {
-      return (shape->indexmin());
+      return shape->indexmin();
    }
-   int indexmax(void) const
+   int indexmax() const
    {
-      return (shape->indexmax());
+      return shape->indexmax();
    }
-   int size(void) const
+   unsigned int size() const
    {
-      return (indexmax() - indexmin() + 1);
+     int ret = indexmax() - indexmin() + 1;
+     return static_cast<unsigned int>(ret < 0 ? 0 : ret);
    }
    void initialize(void);
    void operator /=(double d);

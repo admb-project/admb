@@ -79,6 +79,8 @@ GTESTS=\
  test_adstring.cpp\
  test_df1b23array.cpp\
  test_d3_array.cpp\
+ test_d6_array.cpp\
+ test_d7_array.cpp\
  test_data_matrix.cpp\
  test_tiny_ad.cpp\
  test_adjson.cpp\

@@ -105,28 +105,28 @@ d6_array& d6_array::operator=(const d6_array& m)
  }
 
 /**
- * Description not yet available.
- * \param
- */
+Allocate d6_array with same dimensions as m1.
+
+\param m1 other d6_array
+*/
 void d6_array::allocate(const d6_array& m1)
- {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
-       == 0)
-   {
-     cerr << " Error allocating memory in d5_array contructor" << endl;
-   }
-   int ss=size();
-   if ( (t = new d5_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d5_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
-   {
-     t[i].allocate(m1[i]);
-   }
- }
+{
+  if ((shape=new vector_shape(m1.indexmin(),m1.indexmax())) == 0)
+  {
+    cerr << " Error allocating memory in d5_array contructor" << endl;
+  }
+  unsigned int ss = size();
+  if ((t = new d5_array[ss]) == 0)
+  {
+    cerr << " Error allocating memory in d5_array contructor" << endl;
+    ad_exit(21);
+  }
+  t -= indexmin();
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    t[i].allocate(m1[i]);
+  }
+}
 
   #ifndef OPT_LIB
 
@@ -359,60 +359,58 @@ d6_array::d6_array(const ad_integer& hsl,const ad_integer& hsu,
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Allocate d6_array with specified dimensions.
+*/
 void d6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6)
- {
-   if ( (shape=new vector_shape(hsl,hsu)) == 0)
-   {
-     cerr << " Error allocating memory in d5_array contructor\n";
-     ad_exit(21);
-   }
-   int ss=size();
-   if ( (t = new d5_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d5_array contructor\n";
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=hsl; i<=hsu; i++)
-   {
-     t[i].allocate(sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
-   }
- }
+{
+  if ((shape = new vector_shape(hsl, hsu)) == 0)
+  {
+    cerr << " Error allocating memory in d5_array contructor\n";
+    ad_exit(21);
+  }
+  unsigned int ss = size();
+  if ((t = new d5_array[ss]) == 0)
+  {
+    cerr << " Error allocating memory in d5_array contructor\n";
+    ad_exit(21);
+  }
+  t -= indexmin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    t[i].allocate(sl, sh, nrl, nrh, ncl, nch, l5, u5, l6, u6);
+  }
+}
 
 /**
- * Description not yet available.
- * \param
- */
- void d6_array::allocate(const ad_integer& hsl,const ad_integer& hsu,
+Allocate d6_array with specified dimensions.
+*/
+void d6_array::allocate(const ad_integer& hsl,const ad_integer& hsu,
    const index_type& sl,const index_type& sh,const index_type& nrl,
    const index_type& nrh,const index_type& ncl,const index_type& nch,
    const index_type& l5,const index_type& u5,
    const index_type& l6,const index_type& u6)
- {
-   if ( (shape=new vector_shape (hsl,hsu)) == 0)
-   {
-     cerr << " Error allocating memory in d5_array contructor\n";
-   }
+{
+  if ((shape = new vector_shape (hsl, hsu)) == 0)
+  {
+    cerr << " Error allocating memory in d5_array contructor\n";
+  }
 
-   int ss=size();
-   if ( (t = new d5_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d5_array contructor\n";
-     ad_exit(21);
-   }
-   t -= indexmin();
-   int i1=hsl;
-   int i2=hsu;
-   for (int i=i1; i<=i2; i++)
-   {
-     (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),
+  unsigned int ss = size();
+  if ( (t = new d5_array[ss]) == 0)
+  {
+    cerr << " Error allocating memory in d5_array contructor\n";
+    ad_exit(21);
+  }
+  t -= indexmin();
+  int i1=hsl;
+  int i2=hsu;
+  for (int i = i1; i <= i2; ++i)
+  {
+    (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),
        ncl(i),nch(i), l5(i),u5(i),l6(i),u6(i));
-   }
- }
+  }
+}
 
 /**
  * Description not yet available.

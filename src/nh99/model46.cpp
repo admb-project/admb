@@ -52,7 +52,7 @@ void param_init_bounded_matrix_vector::allocate(
   int size = max1 - min1 + 1;
   if (size > 0)
   {
-    v = new param_init_bounded_matrix[size];
+    v = new param_init_bounded_matrix[static_cast<unsigned int>(size)];
     if (!v)
     {
         cerr << " error trying to allocate memory in "

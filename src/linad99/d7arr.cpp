@@ -113,7 +113,7 @@ void d7_array::allocate(const d7_array& m1)
    {
      cerr << " Error allocating memory in d6_array contructor" << endl;
    }
-   int ss=size();
+   unsigned int ss = size();
    if ( (t = new d6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor" << endl;
@@ -388,9 +388,8 @@ d7_array::d7_array(const ad_integer& l7,const ad_integer& u7,
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Allocate a d7_array with indices.
+*/
 void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6)
  {
@@ -399,7 +398,7 @@ void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
      cerr << " Error allocating memory in d6_array contructor\n";
      ad_exit(21);
    }
-   int ss=size();
+   unsigned int ss = size();
    if ( (t = new d6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor\n";
@@ -413,17 +412,19 @@ void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
  }
 
 /**
- * Description not yet available.
- * \param
- */
-void d7_array::allocate(int l7,int u7)
+Allocate a vector of empty d6_arrays.
+
+\param l7 lower index
+\param u7 upper index
+*/
+void d7_array::allocate(int l7, int u7)
 {
   if ( (shape=new vector_shape(l7,u7)) == 0)
   {
     cerr << " Error allocating memory in d6_array contructor\n";
     ad_exit(21);
   }
-  int ss=size();
+  unsigned int ss = size();
   if ( (t = new d6_array[ss]) == 0)
   {
     cerr << " Error allocating memory in d6_array contructor\n";
@@ -452,7 +453,7 @@ void d7_array::allocate(int l7,int u7)
      cerr << " Error allocating memory in d6_array contructor\n";
    }
 
-   int ss=size();
+   unsigned int ss = size();
    if ( (t = new d6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor\n";

@@ -70,6 +70,12 @@ int adstring_array::indexmin() const
 int adstring_array::indexmax() const
   { return shape ? shape->indexmax() : 0;}
 
+/**
+Allocate vector of adstring with range [min, max].
+
+\param min lower index
+\param max upper index
+*/
 void adstring_array::allocate(int min, int max)
 {
   if (min > max)
@@ -83,7 +89,9 @@ void adstring_array::allocate(int min, int max)
   {
     cerr << "Error allocating memory in adstring_array" << endl;
   }
-  ptr = new adstring*[max - min + 1];
+  int size = max - min + 1;
+  ptr =
+    new adstring*[static_cast<unsigned int>(size < 0 ? 0 : size)];
   if (!ptr)
   {
     cerr << "Error allocating memory in adstring_array" << endl;

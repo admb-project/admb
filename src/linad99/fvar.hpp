@@ -7251,31 +7251,33 @@ class dvar7_array
    dvar_vector & operator ()(int, int, int, int, int, int);
    prevariable operator () (int, int, int, int, int, int, int);
 #endif
-   //access functions
-   int indexmin(void)
-   {
-      return (shape->indexmin());
-   }
-   int indexmax(void)
-   {
-      return (shape->indexmax());
-   }
-   int size(void)
-   {
-      return (indexmax() - indexmin() + 1);
-   }
-   int indexmin(void) const
-   {
-      return (shape->indexmin());
-   }
-   int indexmax(void) const
-   {
-      return (shape->indexmax());
-   }
-   int size(void) const
-   {
-      return (indexmax() - indexmin() + 1);
-   }
+  //access functions
+  int indexmin()
+  {
+    return shape->indexmin();
+  }
+  int indexmax()
+  {
+    return shape->indexmax();
+  }
+  unsigned int size()
+  {
+    int ret = indexmax() - indexmin() + 1;
+    return static_cast<unsigned int>(ret < 0 ? 0 : ret);
+  }
+  int indexmin() const
+  {
+    return shape->indexmin();
+  }
+  int indexmax() const
+  {
+    return shape->indexmax();
+  }
+  unsigned int size() const
+  {
+    int ret = indexmax() - indexmin() + 1;
+    return static_cast<unsigned int>(ret < 0 ? 0 : ret);
+  }
    void initialize(void);
    void operator/=(const prevariable & d);
    void operator/=(const double &d);

@@ -2415,11 +2415,13 @@ class dvar_matrix
    {
       return (index_max);
    }
-   // returns the number of rows
-   int rowsize() const
-   {
-      return (rowmax() - rowmin() + 1);
-   }
+
+  // returns the number of rows
+  unsigned int rowsize() const
+  {
+    int size = rowmax() - rowmin() + 1;
+    return static_cast<unsigned int>(size < 0 ? 0 : size);
+  }
    // returns the number of columns
    int colsize() const
    {

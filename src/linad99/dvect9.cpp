@@ -181,7 +181,7 @@ dvector::dvector(const char * s)
    infile.clear();
    infile.seekg(0,ios::beg);
 
-    if ( (v = new double [count+2]) ==0)
+    if ((v = new double[static_cast<unsigned int>(count + 2)]) ==0)
     {
       cerr << " Error trying to allocate memory for dvector\n";
       ad_exit(21);

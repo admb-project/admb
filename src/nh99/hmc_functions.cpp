@@ -339,3 +339,52 @@ double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double 
   return(nll);
 }
 
+// This function reads in the hessian file to get the MLE values at the end.
+void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
+  adstring tmpstring = "admodel.hes";
+  uistream cif((char*)tmpstring);
+  if (!cif) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    exit(1);
+  }
+  int tmp_nvar = 0;
+  cif >> tmp_nvar;
+  if (nvar !=tmp_nvar) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    exit(1);
+  }
+  dmatrix hess(1,tmp_nvar,1,tmp_nvar);
+  cif >> hess;
+  if (!cif) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    exit(1);
+  }
+  int oldHbf;
+  cif >> oldHbf;
+  if (!cif) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    exit(1);
+  }
+  dvector sscale(1,tmp_nvar);
+  cif >> sscale;
+  if (!cif) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    exit(1);
+  }
+  // Read in the MLEs finally
+  int temp=0;
+  cif >> temp;
+  cif >> mle;
+  // Temp is a unique flag to make sure the mle values were written (that
+  // admodel.hes is not too old)
+  if(temp != -987 || !cif){
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+
+  }
+}

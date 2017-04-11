@@ -664,7 +664,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 	ofstream rotated("rotated.csv", ios::trunc);
 	ofstream unbounded("unbounded.csv", ios::trunc);
 	ofstream bounded("bounded.csv", ios::trunc);
-	cout << "Starting at y=" << y << endl;
+	cout << "Initial y=" << y << endl;
+	cout << "Initial nll=" << -llbest << endl;
 	// Start of MCMC chain
 	for (int i=1;i<=number_sims;i++)
 	  {

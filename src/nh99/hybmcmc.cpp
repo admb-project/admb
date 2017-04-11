@@ -475,8 +475,8 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       z=x0;
       gradient_structure::set_NO_DERIVATIVES();
       dvector g(1,nvar);
-      //cout << "initial ll value " << get_hybrid_monte_carlo_value(nvar,z,g)
-      //     << endl;
+      cout << "initial ll value " << get_hybrid_monte_carlo_value(nvar,z,g)
+          << endl;
       dvector y(1,nvar);
       y.initialize();
 
@@ -553,8 +553,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
        // detmine whether to go forward or backward
        cout << "Starting from y=" << y << endl;
        cout << "Starting from z=" << z << endl;
+       cout << "Starting from gr=" << g << endl;
        cout << "Starting from nll=" << beginprior << endl;
-       cout << "Starting from chd=" << chd << endl;
+       // cout << "Starting from chd=" << chd << endl;
  
        double iaccept=0.0;
        for (int is=1;is<=number_sims;is++)

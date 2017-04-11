@@ -149,6 +149,14 @@ void function_minimizer::hess_routine_noparallel(void)
   dvector tscale(1,nvar);   // need to get scale from somewhere
   /*int check=*/initial_params::stddev_scale(tscale,x);
   ofs << tscale;
+  // Write the MLE (bounded space) to file to be read in later by hybrid
+  // methods. This is needed b/c the covar needs to be rescaled and the MLE
+  // is needed for that.
+  // Added by Cole; 4/2017
+  ofs << -987; // unique flag to check for later
+  dvector mle(1,nvar);
+  initial_params::copy_all_values(mle,1);
+  ofs << mle;
 }
 
 void function_minimizer::hess_routine_and_constraint(int iprof,

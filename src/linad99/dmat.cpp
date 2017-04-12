@@ -285,40 +285,44 @@ int ivector_check(const ivector& v, int l, int u)
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void dmatrix::allocate(int nrl,int nrh,const ivector& ncl,int nch)
- {
-   if (nrh<nrl)
-   {
-     allocate();
-     return;
-   }
-   if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())
-   {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
+Allocate matrix with dimension [nrl to nrh] x [ncl to nch] where
+ncl is a vector of indexes.
+\param nrl lower row index for matrix
+\param nrl upper row index for matrix
+\param nrl vector of lower column indexes for matrix
+\param nrl upper row index for matrix
+*/
+void dmatrix::allocate(int nrl,int nrh,const ivector& ncl,int nch)
+{
+  if (nrh < nrl)
+  {
+    allocate();
+    return;
+  }
+  if (nrl != ncl.indexmin() || nrh != ncl.indexmax())
+  {
+    cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
        " int ncl,const ivector& nch)\n";
-     ad_exit(1);
-   }
-   index_min=nrl;
-   index_max=nrh;
-   if ( (m = new dvector [rowsize()]) == 0)
-   {
-     cerr << " Error allocating memory in dmatrix contructor\n";
-     ad_exit(21);
-   }
-   if ( (shape = new mat_shapex(m))== 0)
-   {
-     cerr << " Error allocating memory in dmatrix contructor\n";
-     ad_exit(21);
-   }
-   m -= rowmin();
-   for (int i=rowmin(); i<=rowmax(); i++)
-   {
-     m[i].allocate(ncl(i),nch);
-   }
- }
+    ad_exit(1);
+  }
+  index_min=nrl;
+  index_max=nrh;
+  if ((m = new dvector[rowsize()]) == 0)
+  {
+    cerr << " Error allocating memory in dmatrix contructor\n";
+    ad_exit(21);
+  }
+  if ((shape = new mat_shapex(m)) == 0)
+  {
+    cerr << " Error allocating memory in dmatrix contructor\n";
+    ad_exit(21);
+  }
+  m -= rowmin();
+  for (int i = rowmin(); i <= rowmax(); ++i)
+  {
+    m[i].allocate(ncl(i), nch);
+  }
+}
 
 /*
  dmatrix::dmatrix(void)

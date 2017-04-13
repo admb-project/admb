@@ -104,135 +104,117 @@ d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl,
  }
 
 /**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-where ncl is a vector of indexes.
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl lower row index for matrix
-\param nrh upper row index for matrix
-\param ncl vector of lower column indexes for matrix
-\param nch upper column index for matrix
-*/
-void d3_array::allocate(int sl, int sh, int nrl, int nrh,
-  const ivector& ncl, int nch)
-{
-#ifdef DIAG
-  myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
-#endif
-  if (sl != ncl.indexmin() || sh != ncl.indexmax())
-  {
+ * Description not yet available.
+ * \param
+ */
+void d3_array::allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl,
+  int nch)
+ {
+   #ifdef DIAG
+     myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
+   #endif
+   if (sl !=ncl.indexmin() || sh !=ncl.indexmax())
+   {
      cerr << "Incompatible array bounds in "
      " dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)" << endl;
      ad_exit(1);
-  }
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(nrl, nrh, ncl(i), nch);
-  }
-}
+   }
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl,nrh,ncl(i),nch);
+   }
+ }
+
 /**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-where nrh is a vector of indexes.
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl lower row index for matrix
-\param nrh upper row index for matrix
-\param ncl lower column index for matrix
-\param nch vector of upper column indexes for matrix
-*/
-void d3_array::allocate(int sl, int sh, int nrl, int nrh,
-  int ncl, const ivector& nch)
-{
-#ifdef DIAG
-  myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
-#endif
-  if (sl != nch.indexmin() || sh != nch.indexmax())
-  {
+ * Description not yet available.
+ * \param
+ */
+void d3_array::allocate(int sl, int sh, int nrl, int nrh, int ncl,
+  const ivector& nch)
+ {
+   #ifdef DIAG
+     myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
+   #endif
+   if (sl !=nch.indexmin() || sh !=nch.indexmax())
+   {
      cerr << "Incompatible array bounds in "
      " dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)"
      << endl;
      ad_exit(1);
-  }
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-     cerr << " Error allocating memory in d3_array::allocate." << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(nrl, nrh, ncl, nch(i));
-  }
-}
+   }
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl,nrh,ncl,nch(i));
+   }
+ }
 
 /**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl lower row index for matrix
-\param nrh upper row index for matrix
-\param ncl lower column index for matrix
-\param nch upper column index for matrix
-*/
-void d3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
-{
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(nrl, nrh, ncl, nch);
-  }
-}
+ * Description not yet available.
+ * \param
+ */
+ void d3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
+ {
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl,nrh,ncl,nch);
+   }
+ }
+
 /**
-Allocate vector of matrices having empty columns and with dimensions
-[sl to sh] x [nrl to nrh].
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl lower row index for matrix
-\param nrh upper row index for matrix
-*/
-void d3_array::allocate(int sl, int sh, int nrl, int nrh)
-{
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(nrl, nrh);
-  }
-}
+ * Description not yet available.
+ * \param
+ */
+ void d3_array::allocate(int sl,int sh,int nrl,int nrh)
+ {
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl,nrh);
+   }
+ }
 
 /**
  * Description not yet available.
@@ -259,50 +241,56 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh)
  }
 
 /**
-Allocate vector [sl to sh] of empty matrices.
-\param sl lower index of vector
-\param sh upper index of vector
-*/
-void d3_array::allocate(int sl, int sh)
-{
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i=sl; i<=sh; i++)
-  {
-    t[i].allocate();
-  }
-}
+ * Description not yet available.
+ * \param
+ */
+ void d3_array::allocate(int sl,int sh)
+ {
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate();
+   }
+ }
 
 /**
-Allocate a d3_array with the same dimensions as d3v.
-*/
+ * Description not yet available.
+ * \param
+ */
 void d3_array::allocate(const d3_array& d3v)
-{
-  int sl = d3v.slicemin();
-  int sh = d3v.slicemax();
-  if ( (shape=new three_array_shape(sl,sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(d3v(i));
-  }
-}
+ {
+   int sl=d3v.slicemin();
+   int sh=d3v.slicemax();
+   //int nrl=d3v.rowmin();
+   //int nrh=d3v.rowmax();
+   //int ncl=d3v.colmin();
+   //int nch=d3v.colmax();
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(d3v(i));
+   }
+ }
 
 /**
  * Description not yet available.
@@ -336,111 +324,96 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
  }
 
 /**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-where nrh and nrl are vectors of indexes.
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl vector of lower row indexes for matrix
-\param nrh vector of upper row indexes for matrix
-\param ncl lower column index for matrix
-\param nch upper column index for matrix
-*/
+ * Description not yet available.
+ * \param
+ */
 void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
   int ncl, int nch)
-{
-  if (sl !=nrl.indexmin() || sh !=nrl.indexmax()
-      || sl !=nrh.indexmin() || sh !=nrh.indexmax())
-  {
+ {
+   if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
+       sl !=nrh.indexmin() || sh !=nrh.indexmax())
+   {
      cerr << "Incompatible array bounds in "
      " dmatrix(int nrl,int nrh,const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);
-  }
-  if ( (shape=new three_array_shape(sl,sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i=sl; i<=sh; i++)
-  {
-    t[i].allocate(nrl(i),nrh(i),ncl,nch);
-  }
-}
+   }
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl(i),nrh(i),ncl,nch);
+   }
+ }
+
 /**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-where nrh and nrl are vectors of indexes.
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl vector of lower row indexes for matrix
-\param nrh upper row index for matrix
-\param ncl lower column index for matrix
-\param nch upper column index for matrix
-*/
-void d3_array::allocate(int sl, int sh, const ivector& nrl, int nrh,
-  int ncl, int nch)
-{
-  if (sl != nrl.indexmin() || sh != nrl.indexmax())
-  {
-    cerr << "Incompatible array bounds in "
+ * Description not yet available.
+ * \param
+ */
+void d3_array::allocate(int sl, int sh, const ivector& nrl, int nrh, int ncl,
+  int nch)
+ {
+   if (sl !=nrl.indexmin() || sh !=nrl.indexmax())
+   {
+     cerr << "Incompatible array bounds in "
      "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
-    ad_exit(1);
-  }
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(nrl(i), nrh, ncl, nch);
-  }
-}
+     ad_exit(1);
+   }
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl(i),nrh,ncl,nch);
+   }
+ }
+
 /**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-where nrh and nrl are vectors of indexes.
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl lower row index for matrix
-\param nrh vector of upper row indexes for matrix
-\param ncl lower column index for matrix
-\param nch upper column index for matrix
-*/
-void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
-  int ncl, int nch)
-{
-  if (sl != nrh.indexmin() || sh != nrh.indexmax())
-  {
-    cerr << "Incompatible array bounds in "
+ * Description not yet available.
+ * \param
+ */
+void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl,
+  int nch)
+ {
+   if ( sl !=nrh.indexmin() || sh !=nrh.indexmax())
+   {
+     cerr << "Incompatible array bounds in "
      "dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)" << endl;
-    ad_exit(1);
-  }
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(nrl, nrh(i), ncl, nch);
-  }
-}
+     ad_exit(1);
+   }
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl,nrh(i),ncl,nch);
+   }
+ }
+
 /**
  * Description not yet available.
  * \param
@@ -503,101 +476,83 @@ void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl,
  }
 
 /**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-where nrh and nrl are vectors of indexes.
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl vector of lower row indexes for matrix
-\param nrh vector of upper row indexes for matrix
-\param ncl vector of lower column indexes for matrix
-\param nch vector of upper column indexes for matrix
-*/
-void d3_array::allocate(int sl, int sh,
-  const ivector& nrl, const ivector& nrh,
+ * Description not yet available.
+ * \param
+ */
+void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
   const ivector& ncl, const ivector& nch)
-{
-  if (sl !=nrl.indexmin() || sh !=nrl.indexmax()
-      || sl !=nrh.indexmin() || sh !=nrh.indexmax())
-  {
-    cerr << "Incompatible array bounds in "
+ {
+   if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
+       sl !=nrh.indexmin() || sh !=nrh.indexmax())
+   {
+     cerr << "Incompatible array bounds in "
      "dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)" << endl;
-    ad_exit(1);
-  }
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array constructor" << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array constructor" << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(nrl(i), nrh(i), ncl(i), nch(i));
-  }
-}
-/**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-where nrh and nrl are vectors of indexes.
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl lower row index for matrix
-\param nrh upper row index for matrix
-\param ncl vector of lower column indexes for matrix
-\param nch vector of upper column indexes for matrix
-*/
-void d3_array::allocate(int sl, int sh, int nrl, int nrh,
-  const ivector& ncl, const ivector& nch)
-{
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error allocating memory in d3_array constructor" << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array constructor" << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i=sl; i<=sh; i++)
-  {
-    t[i].allocate(nrl, nrh, ncl(i), nch(i));
-  }
-}
-/**
-Allocate vector of matrices with dimensions
-[sl to sh] x ([nrl to nrh] x [ncl to nch])
-where nrh and nrl are vectors of indexes.
-\param sl lower index of vector
-\param sh upper index of vector
-\param nrl lower row index for matrix
-\param nrh vector of upper row indexes for matrix
-\param ncl upper column index for matrix
-\param nch vector of upper column indexes for matrix
-*/
-void d3_array::allocate(int sl, int sh,
-  int nrl, const ivector& nrh,
-  int ncl, const ivector& nch)
-{
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
+     ad_exit(1);
+   }
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
      cerr << " Error allocating memory in d3_array contructor" << endl;
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-    ad_exit(21);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
-  {
-    t[i].allocate(nrl, nrh(i), ncl, nch(i));
-  }
-}
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl(i),nrh(i),ncl(i),nch(i));
+   }
+ }
+
+/**
+ * Description not yet available.
+ * \param
+ */
+void d3_array::allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl,
+  const ivector& nch)
+ {
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl,nrh,ncl(i),nch(i));
+   }
+ }
+
+/**
+ * Description not yet available.
+ * \param
+ */
+void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl,
+  const ivector& nch)
+ {
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+   }
+   int ss=slicesize();
+   if ( (t = new dmatrix[ss]) == 0)
+   {
+     cerr << " Error allocating memory in d3_array contructor" << endl;
+     ad_exit(21);
+   }
+   t -= slicemin();
+   for (int i=sl; i<=sh; i++)
+   {
+     t[i].allocate(nrl,nrh(i),ncl,nch(i));
+   }
+ }
 
 /**
  * Description not yet available.

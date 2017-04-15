@@ -125,6 +125,15 @@ void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
 void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 				      int restart_flag)
 {
+  // Temporary addition by Cole. Now MLE in bound space can be read in from
+  // the .hes file using this function. This means we can start the model
+  // from the MLE (default) even if not using -mcpin or estimating the
+  // model.
+  int nvar=initial_params::nvarcalc(); // get the number of active parameters
+  independent_variables mle(1,nvar); // the accepted par values
+  // Store saved MLE in bounded space into vector mle.
+  read_mle_hmc(nvar, mle);
+
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
   //int mcmc_save_index=1;
@@ -438,7 +447,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 	  }
 	} else {
 	  ii=1;
-	  initial_params::copy_all_values(parsave,ii);
+	  parsave=mle;
+	  //initial_params::copy_all_values(parsave,ii);
 	}
       }
 
@@ -664,6 +674,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 	ofstream rotated("rotated.csv", ios::trunc);
 	ofstream unbounded("unbounded.csv", ios::trunc);
 	ofstream bounded("bounded.csv", ios::trunc);
+	cout << "Initial mle=" << mle << endl;
+	cout << "Initial z=" << parsave << endl;
 	cout << "Initial y=" << y << endl;
 	cout << "Initial nll=" << -llbest << endl;
 	// Start of MCMC chain

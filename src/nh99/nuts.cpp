@@ -39,15 +39,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=1;
   int old_Hybrid_bounded_flag=-1;
   int on,nopt = 0;
-  dvector x0(1,nvar);
-  dvector scale(1,nvar);
-  initial_params::xinit(x0);
-  dvector pen_vector(1,nvar);
-  initial_params::reset(dvar_vector(x0),pen_vector);
-  initial_params::mc_phase=0;
-  initial_params::stddev_scale(scale,x0);
-  initial_params::mc_phase=1;
-  gradient_structure::set_YES_DERIVATIVES();
+  // dvector x0(1,nvar);
+  // dvector scale(1,nvar);
+  // initial_params::xinit(x0);
+  // dvector pen_vector(1,nvar);
+  // initial_params::reset(dvar_vector(x0),pen_vector);
+  // initial_params::mc_phase=0;
+  // initial_params::stddev_scale(scale,x0);
+  // initial_params::mc_phase=1;
+  // gradient_structure::set_YES_DERIVATIVES();
 
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
@@ -211,7 +211,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cerr << "Option -mcsave does not currently work with HMC -- every iteration is saved" << endl;
     ad_exit(1);
   }
-  
+
   // Prepare the mass matrix for use. For now assuming mass matrix passed
   // on the unconstrained scale using hybrid bounds, which is detectable
   // becuase the hbf flag is 1 in the .cov file. In that case, there is no
@@ -239,11 +239,34 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       rescale_covar=1;
     }
   }
+  /// Prepare initial value. Need to both back-transform, and then rotate
+  /// this to be in the "x" space.
+  ///
+  // z0 is the initial transformed (bounded) parameter vector (in "z"
+  // space").  This passes the vector of theta through the model I
+  // think. Since this wasn't necessarily the last vector evaluated, need
+  // to propogate it through ADMB internally so can use xinit().
+  initial_params::restore_all_values(z0,1);
+  independent_variables y0(1,nvar);
   dvector current_scale(1,nvar);
-  int mctmp=initial_params::mc_phase;
+  // This copies the unbounded parameters into y0
+  gradient_structure::set_YES_DERIVATIVES();
+  initial_params::xinit(y0);
+  // Don't know what pen_vector is doing, now current_scale has the updated
+  // scales
+  dvector pen_vector(1,nvar);
+  initial_params::reset(dvar_vector(y0),pen_vector);
   initial_params::mc_phase=0;
-  initial_params::stddev_scale(current_scale,mle);
-  initial_params::mc_phase=mctmp;
+  initial_params::stddev_scale(current_scale,y0);
+  initial_params::mc_phase=1;
+  // gradient_structure::set_NO_DERIVATIVES();
+  // if (mcmc2_flag==0) {
+  //   initial_params::set_inactive_random_effects();
+  // }
+
+  // Get NLL and gradient in unbounded space for initial value y0.
+  dvector grtemp(1,nvar);		// gradients in unbounded space
+  double nlltemp=get_hybrid_monte_carlo_value(nvar,y0,grtemp);
   if(rescale_covar){
     // If no covar was pushed by the user, then the MLE one is used
     // about. But since that admodel.cov file was written with the hbf=0
@@ -262,45 +285,28 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-  // // Don't know if this is necessary or can be deleted.
-  // gradient_structure::set_NO_DERIVATIVES();
-  // if (mcmc2_flag==0) {
-  //   initial_params::set_inactive_random_effects();
-  // }
   dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
   dmatrix chdinv=inv(chd);
-  // cout << "Starting from chd=" << chd << endl;
-  /// Prepare initial value. Need to both back-transform, and then rotate
-  /// this to be in the "x" space.
-  ///
-  // z0 is the initial transformed (bounded) parameter vector (in "z"
-  // space").  This passes the vector of theta through the model I
-  // think. Since this wasn't necessarily the last vector evaluated, need
-  // to propogate it through ADMB internally so can use xinit().
-  initial_params::restore_all_values(z0,1);
-  // This copies the unbounded parameters into ytemp
-  independent_variables ytemp(1,nvar);
-  initial_params::xinit(ytemp);
-  // Get NLL and gradient in unbounded space for initial value ytemp.
-  dvector grtemp(1,nvar);		// gradients in unbounded space
-  double nlltemp=get_hybrid_monte_carlo_value(nvar,ytemp,grtemp);
   // Can now inverse rotate y to be x (algorithm space)
-  independent_variables xtemp(1,nvar);
-  xtemp=chdinv*ytemp; // this is the initial value in algorithm space
+  independent_variables x0(1,nvar);
+  x0=chdinv*y0; // this is the initial value
+  //  gradient_structure::set_NO_DERIVATIVES(); // what does this do?
+
+  // cout << "Starting from chd=" << chd << endl;
   ///
   /// Old code to test that I know what's going on.
   cout << "Initial hbf new=" << gradient_structure::Hybrid_bounded_flag << endl;
   cout << "Initial hbf old=" << old_Hybrid_bounded_flag << endl;
   cout << "Initial bounded mle=" << mle << endl;
   cout << "Initial bounded parameters=" << z0 << endl;
-  cout << "Initial unbounded parameters=" << ytemp << endl;
-  cout << "Initial rotated, unbounded parameters=" << xtemp << endl;
+  cout << "Initial unbounded parameters=" << y0 << endl;
+  cout << "Initial rotated, unbounded parameters=" << x0 << endl;
   cout << "Initial nll=" << nlltemp << endl;
   cout << "Initial gr in unbounded space= " << grtemp << endl;
   cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
   ///
   independent_variables theta(1,nvar);
-  theta=xtemp; // kind of a misnomer here: theta is in "x" or algorithm space
+  theta=x0; // kind of a misnomer here: theta is in "x" or algorithm space
   // Setup binary psv file to write samples to
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
@@ -347,6 +353,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   //// ---------- Start of algorithm
   // Declare and initialize the variables needed for the algorithm
   independent_variables z(1,nvar);
+  independent_variables ytemp(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// initial rotated gradient
   dvector p(1,nvar);		// momentum vector

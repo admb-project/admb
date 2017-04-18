@@ -2765,16 +2765,18 @@ class dmatrix
    {
       return ((*this) (indexmin()).indexmax());
    }
-   // returns the number of rows
-   int rowsize() const
-   {
-      return (rowmax() - rowmin() + 1);
-   }
-   // returns the number of columns
-   int colsize() const
-   {
-      return (colmax() - colmin() + 1);
-   }
+  // returns the number of rows
+  unsigned int rowsize() const
+  {
+    int size = rowmax() - rowmin() + 1;
+    return static_cast<unsigned int>(size < 0 ? 0 : size);
+  }
+  // returns the number of columns
+  unsigned int colsize() const
+  {
+    int size = rowsize() > 0 ? colmax() - colmin() + 1 : 0;
+    return static_cast<unsigned int>(size < 0 ? 0 : size);
+  }
    void rowshift(int min);
    void colshift(int min);
 

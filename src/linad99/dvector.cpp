@@ -425,8 +425,7 @@ void dvector::allocate(int ncl, int nch)
     //Originally +2
     //int size = nch - ncl + 2;
 
-    int size = nch - ncl + 1;
-
+    unsigned int size = nch < ncl ? 0 : nch - ncl + 1;
     v = new double[size];
     if (v == NULL)
     {
@@ -434,8 +433,7 @@ void dvector::allocate(int ncl, int nch)
       ad_exit(21);
     }
 #ifndef OPT_LIB
-    assert(size >= 0);
-    memset(v, 0, sizeof(double) * (unsigned int)size);
+    memset(v, 0, sizeof(double) * size);
 #endif
 
 #if defined(THREAD_SAFE)

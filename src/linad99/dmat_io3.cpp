@@ -50,9 +50,7 @@ uistream& operator>>(const uistream& istr, const dmatrix& _z)
  */
 void dmatrix::read_from(const uistream& s)
 {
-  int n = rowmin() + rowsize() - 1;
-
-  for (int i=rowmin(); i <= n; i++)
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
      s >> (*this)[i];
      if (!s.good())

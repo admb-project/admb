@@ -425,7 +425,9 @@ void dvector::allocate(int ncl, int nch)
     //Originally +2
     //int size = nch - ncl + 2;
 
-    unsigned int size = nch < ncl ? 0 : nch - ncl + 1;
+    unsigned int size =
+      static_cast<unsigned int>(nch < ncl ? 0 : nch - ncl + 1);
+
     v = new double[size];
     if (v == NULL)
     {

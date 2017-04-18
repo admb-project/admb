@@ -23,8 +23,7 @@ void imatrix::allocate(const imatrix& dm)
   index_min=nrl;
   index_max=nrh;
 
-  int rs=rowsize();
-  if ( (m = new ivector [rs]) == 0)
+  if ((m = new ivector[rowsize()]) == 0)
   {
     cerr << " Error allocating memory in imatrix contructor" << endl;
     ad_exit(21);

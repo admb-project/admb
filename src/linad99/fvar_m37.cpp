@@ -54,12 +54,7 @@ void dvar_matrix::allocate(
     }
     index_min=int(nrl);
     index_max=int(nrh);
-
-    int rs = rowsize();
-#ifndef OPT_LIB
-    assert(rs > 0);
-#endif
-    if ( (m = new dvar_vector[static_cast<unsigned int>(rs)]) == 0)
+    if ((m = new dvar_vector[rowsize()]) == 0)
     {
       cerr << " Error allocating memory in dmatrix contructor" << endl;
       ad_exit(21);

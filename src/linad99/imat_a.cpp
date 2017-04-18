@@ -30,15 +30,13 @@ imatrix::imatrix(const imatrix_position& pos)
      ad_exit(1);
    }
 
-   int rs=rowsize();
-
-   if ( (m = new ivector [rs]) == 0)
+   if ((m = new ivector[rowsize()]) == 0)
    {
      cerr << " Error allocating memory in imatrix contructor\n";
      ad_exit(21);
    }
 
-   if ( (shape = new mat_shapex(m))== 0)
+   if ((shape = new mat_shapex(m))== 0)
    {
      cerr << " Error allocating memory in imatrix contructor\n";
      ad_exit(21);

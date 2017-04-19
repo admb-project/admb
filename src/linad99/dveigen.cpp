@@ -8,6 +8,7 @@
 #include <fvar.hpp>
 #ifndef OPT_LIB
   #include <cassert>
+  #include <climits>
 #endif
 
 void tri_dag(const dvar_matrix& ,const dvar_vector& ,const dvar_vector& );

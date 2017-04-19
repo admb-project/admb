@@ -9,73 +9,75 @@
  * Description not yet available.
  */
 #include <df1b2fun.h>
-    typedef df1b2_header * ad_df1b2_header_ptr;
-    typedef double * ad_double_ptr;
+
+typedef df1b2_header* ad_df1b2_header_ptr;
+typedef double* ad_double_ptr;
 
 /**
- * Description not yet available.
- * \param
- */
-  df1b2_header_ptr_vector::df1b2_header_ptr_vector(int mmin,int mmax)
-  {
-    index_min=mmin;
-    index_max=mmax;
-    v = new ad_df1b2_header_ptr[mmax-mmin+1];
-    if (v ==0)
-    {
-      cerr << "error allocating memory for"
-        " df1b2_header_ptr_vector" << endl;
-      ad_exit(1);
-    }
-    v-=indexmin();
-  }
+Constructor vector of ad_df1b2_header_ptr with dimension
+[mmin to mmax].
 
-/**
- * Description not yet available.
- * \param
- */
-  df1b2_header_ptr_vector::~df1b2_header_ptr_vector()
+\param mmin lower vector index
+\param mmax upper vector index
+*/
+df1b2_header_ptr_vector::df1b2_header_ptr_vector(int mmin, int mmax)
+{
+  index_min = mmin;
+  index_max = mmax;
+  v = new ad_df1b2_header_ptr[
+    static_cast<unsigned int>(mmax < mmin ? 0 : mmax - mmin + 1)];
+  if (v == 0)
   {
-    if (v !=0)
-    {
-      v+=indexmin();
-      delete [] v;
-      v=0;
-      index_min=0;
-      index_max=-1;
-    }
+    cerr << "error allocating memory for df1b2_header_ptr_vector\n";
+    ad_exit(1);
   }
+  v -= indexmin();
+}
+/**
+Destructor
+*/
+df1b2_header_ptr_vector::~df1b2_header_ptr_vector()
+{
+  if (v !=0)
+  {
+    v += indexmin();
+    delete [] v;
+    v = 0;
+    index_min = 0;
+    index_max = -1;
+  }
+}
+/**
+Constructor vector of ad_double_ptr with dimension
+[mmin to mmax].
 
-/**
- * Description not yet available.
- * \param
- */
-  double_ptr_vector::double_ptr_vector(int mmin,int mmax)
+\param mmin lower vector index
+\param mmax upper vector index
+*/
+double_ptr_vector::double_ptr_vector(int mmin,int mmax)
+{
+  index_min = mmin;
+  index_max = mmax;
+  v = new ad_double_ptr[
+    static_cast<unsigned int>(mmax < mmin ? 0 : mmax - mmin + 1)];
+  if (v == 0)
   {
-    index_min=mmin;
-    index_max=mmax;
-    v = new ad_double_ptr[mmax-mmin+1];
-    if (v ==0)
-    {
-      cerr << "error allocating memory for"
-        " double_ptr_vector" << endl;
-      ad_exit(1);
-    }
-    v-=indexmin();
+    cerr << "error allocating memory for double_ptr_vector\n.";
+    ad_exit(1);
   }
-
+  v-=indexmin();
+}
 /**
- * Description not yet available.
- * \param
- */
-  double_ptr_vector::~double_ptr_vector()
+Destructor
+*/
+double_ptr_vector::~double_ptr_vector()
+{
+  if (v !=0)
   {
-    if (v !=0)
-    {
-      v+=indexmin();
-      delete [] v;
-      v=0;
-      index_min=0;
-      index_max=-1;
-    }
+    v += indexmin();
+    delete [] v;
+    v = 0;
+    index_min = 0;
+    index_max = -1;
   }
+}

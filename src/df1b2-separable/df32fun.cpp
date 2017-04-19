@@ -242,31 +242,36 @@ void df3_two_vector::allocate()
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  df3_two_matrix::df3_two_matrix(int rmin,int rmax,int cmin,int cmax)
-  {
-    index_min=rmin;
-    index_max=rmax;
-    v=new df3_two_vector[rmax-rmin+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df3_two_matrix" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new mat_shapex(v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df3_two_vector"
-           << endl;;
-    }
-    v-=rmin;
+Construct matrix of df3_two_variable with dimension
+[rmin to rmax] x [cmin to cmax].
 
-    for (int i=rmin;i<=rmax;i++)
-    {
-      v[i].allocate(cmin,cmax);
-    }
+\param rmin row lower index
+\param rmax row upper index
+\param cmin column lower index
+\param cmax column upper index
+*/
+df3_two_matrix::df3_two_matrix(int rmin,int rmax,int cmin,int cmax)
+{
+  index_min = rmin;
+  index_max = rmax;
+  v = new df3_two_vector[
+    static_cast<unsigned int>(rmax < rmin ? 0 : rmax - rmin + 1)];
+  if (v == 0)
+  {
+    cerr << "error allocating memory in df3_two_matrix" << endl;
+    ad_exit(1);
   }
+  if ((shape = new mat_shapex(v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df3_two_vector\n";
+    ad_exit(1);
+  }
+  v-=rmin;
+  for (int i = rmin; i <= rmax; ++i)
+  {
+    v[i].allocate(cmin, cmax);
+  }
+}
 /**
 Subtract values in _v from df3_two_variable.
 */

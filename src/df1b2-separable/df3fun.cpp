@@ -289,28 +289,37 @@ void df3_one_vector::allocate(void)
   }
 
 
-  df3_one_matrix::df3_one_matrix(int rmin,int rmax,int cmin,int cmax)
-  {
-    index_min=rmin;
-    index_max=rmax;
-    v=new df3_one_vector[rmax-rmin+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df3_one_matrix" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new mat_shapex(v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df3_one_vector"
-           << endl;;
-    }
-    v-=rmin;
+/*
+Construct matrix of df3_one_variable with dimension
+[min to max] x [cmin to cmax].
 
-    for (int i=rmin;i<=rmax;i++)
-    {
-      v[i].allocate(cmin,cmax);
-    }
+\param rmin lower row index
+\param rmax upper row index
+\param cmin lower column index
+\param cmax upper column index
+*/
+df3_one_matrix::df3_one_matrix(int rmin, int rmax, int cmin,int cmax)
+{
+  index_min = rmin;
+  index_max = rmax;
+  v = new df3_one_vector[
+    static_cast<unsigned int>(rmax < rmin ? 0 : rmax - rmin + 1)];
+  if (v == 0)
+  {
+    cerr << "error allocating memory in df3_one_matrix" << endl;
+    ad_exit(1);
   }
+  if ((shape = new mat_shapex(v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df3_one_vector\n";
+    ad_exit(1);
+  }
+  v-=rmin;
+  for (int i = rmin; i<= rmax; ++i)
+  {
+    v[i].allocate(cmin, cmax);
+  }
+}
 
 /*
   df3_one_variable operator F(const df3_one_variable& x)

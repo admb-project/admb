@@ -1128,7 +1128,11 @@ public:
   ~df1b23array();
   int indexmin(void){return index_min;}
   int indexmax(void){return index_max;}
-  int size(void){return index_max-index_min+1;}
+  unsigned int size() const
+  {
+    return static_cast<unsigned int>(
+      index_max < index_min ? 0 : index_max - index_min + 1);
+  }
   df1b23array(int nrl,int nrh,int ncl,int nch,int,int);
   df1b23array(int nrl,int nrh);
   df1b23array(int nrl,int nrh,int,int);

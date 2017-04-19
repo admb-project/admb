@@ -46,13 +46,12 @@ df3_two_variable::df3_two_variable(const df3_two_variable& x)
  }
 
 /**
- * Description not yet available.
- * \param
- */
- df3_two_vector::~df3_two_vector()
- {
-   deallocate();
- }
+Destructor
+*/
+df3_two_vector::~df3_two_vector()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.
@@ -94,27 +93,24 @@ df3_two_variable::df3_two_variable(const df3_two_variable& x)
  }
 
 /**
- * Description not yet available.
- * \param
- */
-  void df3_two_vector::initialize(void)
+Initialize df3_two_vector to zero.
+*/
+void df3_two_vector::initialize()
+{
+  int mmin = indexmin();
+  int mmax = indexmax();
+  for (int i = mmin; i <= mmax; ++i)
   {
-    int mmin=indexmin();
-    int mmax=indexmax();
-    for (int i=mmin;i<=mmax;i++)
-    {
-      (*this)(i)=0.0;
-    }
+    (*this)(i) = 0.0;
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
-  df3_two_vector::df3_two_vector(void)
-  {
-    allocate();
-  }
+Default constructor
+*/
+df3_two_vector::df3_two_vector()
+{
+  allocate();
+}
 
 /**
  * Description not yet available.
@@ -126,39 +122,40 @@ df3_two_variable::df3_two_variable(const df3_two_variable& x)
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  void df3_two_vector::allocate(int min,int max)
-  {
-    index_min=min;
-    index_max=max;
-    v=new df3_two_variable[max-min+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df3_two_vector" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new vector_shapex(min,max,v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df3_two_vector"
-           << endl;;
-      ad_exit(1);
-    }
-    v-=min;
-  }
+Allocate vector of df3_two_variable with dimension
+[min to max].
 
-/**
- * Description not yet available.
- * \param
- */
-  void df3_two_vector::allocate(void)
+\param min lower index
+\param max upper index
+*/
+void df3_two_vector::allocate(int min, int max)
+{
+  index_min = min;
+  index_max = max;
+  v = new df3_two_variable[
+    static_cast<unsigned int>(max < min ? 0 : max - min + 1)];
+  if (v == 0)
   {
-    index_min=0;
-    index_max=-1;
-    v=0;
-    shape=0;
+    cerr << "error allocating memory in df3_two_vector\n";
+    ad_exit(1);
   }
+  if ((shape = new vector_shapex(min, max, v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df3_two_vector\n";
+    ad_exit(1);
+  }
+  v -= min;
+}
+/**
+Does NOT allocate, but initializes empty df3_two_vector.
+*/
+void df3_two_vector::allocate()
+{
+  index_min = 0;
+  index_max = -1;
+  v = 0;
+  shape = 0;
+}
 
 /**
  * Description not yet available.

@@ -128,42 +128,54 @@ df3_one_vector::~df3_one_vector()
     }
   }
 
-  df3_one_vector::df3_one_vector(void)
-  {
-    allocate();
-  }
+/**
+Default constructor.
+*/
+df3_one_vector::df3_one_vector()
+{
+  allocate();
+}
 
   df3_one_vector::df3_one_vector(int min,int max)
   {
     allocate(min,max);
   }
 
-  void df3_one_vector::allocate(int min,int max)
-  {
-    index_min=min;
-    index_max=max;
-    v=new df3_one_variable[max-min+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df3_one_vector" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new vector_shapex(min,max,v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df3_one_vector"
-           << endl;;
-      ad_exit(1);
-    }
-    v-=min;
-  }
+/**
+Allocate vector of df3_one_variable with dimension
+[min to max].
 
-  void df3_one_vector::allocate(void)
+\param min lower index
+\param max upper index
+*/
+void df3_one_vector::allocate(int min,int max)
+{
+  index_min = min;
+  index_max = max;
+  v = new df3_one_variable[
+    static_cast<unsigned int>(max < min ? 0 : max - min + 1)];
+  if (v == 0)
   {
-    index_min=0;
-    index_max=-1;
-    v=0;
-    shape=0;
+    cerr << "error allocating memory in df3_one_vector\n";
+    ad_exit(1);
   }
+  if ((shape = new vector_shapex(min, max, v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df3_one_vector\n";
+    ad_exit(1);
+  }
+  v -= min;
+}
+/**
+Does NOT allocate, but initializes empty df3_one_vector.
+*/
+void df3_one_vector::allocate(void)
+{
+  index_min = 0;
+  index_max = -1;
+  v = 0;
+  shape = 0;
+}
 
  dmatrix value(const df3_one_matrix& v)
  {

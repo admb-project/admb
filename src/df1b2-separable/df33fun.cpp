@@ -184,29 +184,31 @@ df3_three_vector::df3_three_vector(int min,int max)
 {
   allocate(min, max);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-  void df3_three_vector::allocate(int min,int max)
+Allocate vector of df3_three_variable with dimension
+[min to max].
+
+\param min lower index
+\param max upper index
+*/
+void df3_three_vector::allocate(int min, int max)
+{
+  index_min = min;
+  index_max = max;
+  v = new df3_three_variable[
+    static_cast<unsigned int>(max < min ? 0 : max - min + 1)];
+  if (v == 0)
   {
-    index_min=min;
-    index_max=max;
-    v=new df3_three_variable[max-min+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df3_three_vector" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new vector_shapex(min,max,v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df3_three_vector"
-           << endl;;
-      ad_exit(1);
-    }
-    v-=min;
+    cerr << "error allocating memory in df3_three_vector\n";
+    ad_exit(1);
   }
+  if ((shape = new vector_shapex(min, max, v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df3_three_vector\n";
+    ad_exit(1);
+  }
+  v -= min;
+}
 /**
 Does not allocate, but initializes member variables and pointers to NULL.
 */
@@ -289,45 +291,48 @@ void df3_three_vector::allocate(void)
  }
 
 /**
- * Description not yet available.
- * \param
- */
-  void df3_three_matrix::initialize(void)
+Initialize values.
+*/
+void df3_three_matrix::initialize()
+{
+  int mmin = indexmin();
+  int mmax = indexmax();
+  for (int i = mmin; i <= mmax; ++i)
   {
-    int mmin=indexmin();
-    int mmax=indexmax();
-    for (int i=mmin;i<=mmax;i++)
-    {
-      (*this)(i).initialize();
-    }
+    (*this)(i).initialize();
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
-  df3_three_matrix::df3_three_matrix(int rmin,int rmax,int cmin,int cmax)
-  {
-    index_min=rmin;
-    index_max=rmax;
-    v=new df3_three_vector[rmax-rmin+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df3_three_matrix" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new mat_shapex(v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df3_three_vector"
-           << endl;;
-    }
-    v-=rmin;
+Construct matrix of df3_three_variable with dimensions
+[rmin to rmax] x [cmin to cmax].
 
-    for (int i=rmin;i<=rmax;i++)
-    {
-      v[i].allocate(cmin,cmax);
-    }
+\param rmin lower row index
+\param rmax upper row index
+\param cmin lower column index
+\param cmax upper column index
+*/
+df3_three_matrix::df3_three_matrix(int rmin, int rmax, int cmin, int cmax)
+{
+  index_min = rmin;
+  index_max = rmax;
+  v = new df3_three_vector[
+    static_cast<unsigned int>(rmax < rmin ? 0 : rmax - rmin + 1)];
+  if (v == 0)
+  {
+      cerr << "error allocating memory in df3_three_matrix\n";
+      ad_exit(1);
   }
+  if ((shape = new mat_shapex(v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df3_three_vector\n";
+    ad_exit(1);
+  }
+  v -= rmin;
+  for (int i = rmin;i <= rmax; ++i)
+  {
+    v[i].allocate(cmin, cmax);
+  }
+}
 /**
 Subtract values from _v in df3_three_variable.
 */

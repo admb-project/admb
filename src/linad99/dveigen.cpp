@@ -6,11 +6,12 @@
 //#define EIGEN_VECTORS
 
 #include <fvar.hpp>
-
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 void tri_dag(const dvar_matrix& ,const dvar_vector& ,const dvar_vector& );
 void get_eigen(const dvar_vector& d,const dvar_vector& e, const dvar_matrix& z);
-
 
 dvar_vector eigenvalues(const dvar_matrix& m)
 {
@@ -21,7 +22,10 @@ dvar_vector eigenvalues(const dvar_matrix& m)
     ad_exit(1);
   }
   dvar_matrix m1=symmetrize(m);
-  int n=m1.rowsize();
+#ifndef OPT_LIB
+  assert(m1.rowsize() <= INT_MAX);
+#endif
+  int n = static_cast<int>(m1.rowsize());
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvar_vector diag(1,n);
@@ -64,7 +68,10 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
     "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
-  int n=m.rowsize();
+#ifndef OPT_LIB
+  assert(m.rowsize() <= INT_MAX);
+#endif
+  int n = static_cast<int>(m.rowsize());
   int l,k,j,i;
   dvariable scale,hh,h,g,f;
 
@@ -181,7 +188,10 @@ void get_eigen(const dvar_vector& _d,const dvar_vector& _e,
 {
   ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)
-  int n=d.size();
+#ifndef OPT_LIB
+  assert(d.size() <= INT_MAX);
+#endif
+  int n = static_cast<int>(d.size());
   int m,l,iter,i;
   dvariable s,r,p,g,f,dd,c,b;
 
@@ -266,7 +276,10 @@ dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
   d=ddd;
   e=eee;
 
-  int n=d.size();
+#ifndef OPT_LIB
+  assert(d.size() <= INT_MAX);
+#endif
+  int n = static_cast<int>(d.size());
   int m,l,iter,i;
   dvariable s,r,p,g,f,dd,c,b;
 

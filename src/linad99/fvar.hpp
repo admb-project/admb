@@ -2138,11 +2138,12 @@ public:
    {
       return index_max;
    }
-   // returns the number of elements
-   int size() const
-   {
-      return (index_max - index_min + 1);
-   }
+  // returns the number of elements
+  unsigned int size() const
+  {
+    return static_cast<unsigned int>(
+      index_max < index_min ? 0 : index_max - index_min + 1);
+  }
    dvar_vector & shift(int min);
 
 #ifdef OPT_LIB

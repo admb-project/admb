@@ -1054,7 +1054,11 @@ public:
   int indexmin(void) const {return index_min;}
   int indexmax(void) const {return index_max;}
   int rowmax(void) const {return index_max;}
-  int size(void) const {return index_max-index_min+1;}
+  unsigned int size() const
+  {
+    return static_cast<unsigned int>(
+      index_max < index_min ? 0 : index_max - index_min + 1);
+  }
   df1b2matrix(int nrl,int nrh,int ncl,int nch);
   df1b2matrix(int nrl,int nrh);
   df1b2matrix(const df1b2matrix&);

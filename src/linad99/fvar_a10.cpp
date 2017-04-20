@@ -57,7 +57,7 @@ void dvar_vector::fill(const char * s)
   const int n = (int)len;
   int lbraces = 0;
   int rbraces = 0;
-  int commas  = 0;
+  unsigned int commas  = 0;
 
   char *t = new char[n];
   for (int k = 0; k < n; k++)
@@ -85,7 +85,7 @@ void dvar_vector::fill(const char * s)
 
   if (lbraces == 1 && rbraces == 1)
   {
-    int nch = commas + 1;
+    unsigned int nch = commas + 1;
 
     if (nch != size())
     {

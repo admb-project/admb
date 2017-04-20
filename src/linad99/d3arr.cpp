@@ -122,18 +122,21 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh,
 #endif
   if (sl != ncl.indexmin() || sh != ncl.indexmax())
   {
-     cerr << "Incompatible array bounds in "
-     " dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)" << endl;
+     cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
   }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)
@@ -160,19 +163,21 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh,
 #endif
   if (sl != nch.indexmin() || sh != nch.indexmax())
   {
-     cerr << "Incompatible array bounds in "
-     " dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)"
-     << endl;
+     cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
   }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-     cerr << " Error allocating memory in d3_array::allocate." << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)
@@ -195,12 +200,15 @@ void d3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
 {
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)
@@ -220,12 +228,15 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh)
 {
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)
@@ -235,28 +246,29 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh)
 }
 
 /**
- * Description not yet available.
- * \param
- */
- void d3_array::allocate(int sl,int sh,
+*/
+void d3_array::allocate(
+  int sl, int sh,
   const index_type& nrl,const index_type& nrh)
- {
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-   }
-   int ss=slicesize();
-   if ( (t = new dmatrix[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= slicemin();
-   for (int i=sl; i<=sh; i++)
-   {
-     t[i].allocate(nrl(i),nrh(i));
-   }
- }
+{
+  if ((shape = new three_array_shape(sl, sh)) == 0)
+  {
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ( (t = new dmatrix[slicesize()]) == 0)
+  {
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  t -= slicemin();
+  for (int i = sl; i <= sh; ++i)
+  {
+    t[i].allocate(nrl(i), nrh(i));
+  }
+}
 
 /**
 Allocate vector [sl to sh] of empty matrices.
@@ -267,12 +279,15 @@ void d3_array::allocate(int sl, int sh)
 {
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i=sl; i<=sh; i++)
@@ -290,12 +305,15 @@ void d3_array::allocate(const d3_array& d3v)
   int sh = d3v.slicemax();
   if ( (shape=new three_array_shape(sl,sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)
@@ -305,36 +323,37 @@ void d3_array::allocate(const d3_array& d3v)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+*/
+void d3_array::allocate(
+  int sl, int sh,
+  const ivector& nrl, const ivector& nrh,
   const imatrix& ncl, const imatrix& nch)
- {
-   if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
-       sl !=nrh.indexmin() || sh !=nrh.indexmax())
-   {
-     cerr << "Incompatible array bounds in "
-     " dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)" << endl;
+{
+  if (sl !=nrl.indexmin() || sh !=nrl.indexmax()
+      || sl !=nrh.indexmin() || sh !=nrh.indexmax())
+  {
+     cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
-   }
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-   }
-   int ss=slicesize();
-   if ( (t = new dmatrix[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= slicemin();
-   for (int i=sl; i<=sh; i++)
-   {
-     t[i].allocate(nrl(i),nrh(i),ncl(i),nch(i));
-   }
- }
-
+  }
+  if ((shape = new three_array_shape(sl, sh)) == 0)
+  {
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ((t = new dmatrix[slicesize()]) == 0)
+  {
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  t -= slicemin();
+  for (int i = sl; i <= sh; ++i)
+  {
+    t[i].allocate(nrl(i), nrh(i), ncl(i), nch(i));
+  }
+}
 /**
 Allocate vector of matrices with dimensions
 [sl to sh] x ([nrl to nrh] x [ncl to nch])
@@ -352,18 +371,21 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
   if (sl !=nrl.indexmin() || sh !=nrl.indexmax()
       || sl !=nrh.indexmin() || sh !=nrh.indexmax())
   {
-     cerr << "Incompatible array bounds in "
-     " dmatrix(int nrl,int nrh,const ivector& ncl, const ivector& nch)" << endl;
+     cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
   }
   if ( (shape=new three_array_shape(sl,sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i=sl; i<=sh; i++)
@@ -387,18 +409,21 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, int nrh,
 {
   if (sl != nrl.indexmin() || sh != nrl.indexmax())
   {
-    cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
+    cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)
@@ -422,18 +447,21 @@ void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
 {
   if (sl != nrh.indexmin() || sh != nrh.indexmax())
   {
-    cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)" << endl;
+    cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array::allocate." << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)
@@ -451,19 +479,21 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
        sl !=nrh.indexmin() || sh !=nrh.indexmax())
    {
-     cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh,int ncl,const ivector& nch)" << endl;
+     cerr << "Incompatible d3_array bounds in "
+          << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
    }
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ((shape=new three_array_shape(sl, sh)) == 0)
    {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
+     cerr << " Error: d3_array unable to allocate memory in "
+          << __FILE__ << ':' << __LINE__ << '\n';
+     ad_exit(1);
    }
-   int ss=slicesize();
-   if ( (t = new dmatrix[ss]) == 0)
+   if ( (t = new dmatrix[slicesize()]) == 0)
    {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-     ad_exit(21);
+     cerr << " Error: d3_array unable to allocate memory in "
+          << __FILE__ << ':' << __LINE__ << '\n';
+     ad_exit(1);
    }
    t -= slicemin();
    for (int i=sl; i<=sh; i++)
@@ -473,35 +503,44 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
  }
 
 /**
- * Description not yet available.
- * \param
- */
-void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl,
-  const imatrix& nch)
- {
-   if (sl !=nrh.indexmin() || sh !=nrh.indexmax())
-   {
-     cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh,int ncl,const ivector& nch)" << endl;
-     ad_exit(1);
-   }
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-   }
-   int ss=slicesize();
-   if ( (t = new dmatrix[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= slicemin();
-   for (int i=sl; i<=sh; i++)
-   {
-     t[i].allocate(nrl,nrh(i),ncl,nch(i));
-   }
- }
-
+Allocate d3_array with dimensions
+[sl to sh] x [nrl to nrh] x [ncl to nch].
+\param sl lower index of vector
+\param sh upper index of vector
+\param nrl vector of lower row indexes for matrix
+\param nrh vector of upper row indexes for matrix
+\param ncl vector of lower column indexes for matrix
+\param nch vector of upper column indexes for matrix
+*/
+void d3_array::allocate(
+  int sl, int sh,
+  int nrl, const ivector& nrh,
+  int ncl, const imatrix& nch)
+{
+  if (sl != nrh.indexmin() || sh != nrh.indexmax())
+  {
+    cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ((shape = new three_array_shape(sl, sh)) == 0)
+  {
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ( (t = new dmatrix[slicesize()]) == 0)
+  {
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  t -= slicemin();
+  for (int i = sl; i <= sh; ++i)
+  {
+    t[i].allocate(nrl, nrh(i), ncl, nch(i));
+  }
+}
 /**
 Allocate vector of matrices with dimensions
 [sl to sh] x ([nrl to nrh] x [ncl to nch])
@@ -520,18 +559,21 @@ void d3_array::allocate(int sl, int sh,
   if (sl !=nrl.indexmin() || sh !=nrl.indexmax()
       || sl !=nrh.indexmin() || sh !=nrh.indexmax())
   {
-    cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)" << endl;
+    cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array constructor" << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array constructor" << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)
@@ -555,12 +597,15 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh,
 {
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error allocating memory in d3_array constructor" << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array constructor" << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i=sl; i<=sh; i++)
@@ -585,12 +630,14 @@ void d3_array::allocate(int sl, int sh,
 {
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
   }
   if ((t = new dmatrix[slicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array contructor" << endl;
-    ad_exit(21);
+    cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= slicemin();
   for (int i = sl; i <= sh; ++i)

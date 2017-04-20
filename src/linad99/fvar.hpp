@@ -3670,7 +3670,7 @@ class d3_array
    }
 
   // returns the number of rows
-  unsigned int slicesize(void) const
+  unsigned int slicesize() const
   {
     int size = slicemax() - slicemin() + 1;
     return static_cast<unsigned int>(size < 0 ? 0 : size);

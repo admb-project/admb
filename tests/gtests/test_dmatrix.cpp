@@ -24,6 +24,49 @@ TEST_F(test_dmatrix, fill)
   ASSERT_DOUBLE_EQ(4, m(2, 2));
   ASSERT_DOUBLE_EQ(5, m(2, 3));
 }
+TEST_F(test_dmatrix, rowshift)
+{
+  char array[] = "{1, 2, 3, 4} {5, 6, 7, 8} {9, 10, 11, 12} {13, 14, 15, 16}";
+  dmatrix m(1, 4, 1, 4);
+  m.fill(array);
+  ASSERT_DOUBLE_EQ(1, m(1, 1));
+  ASSERT_DOUBLE_EQ(2, m(1, 2));
+  ASSERT_DOUBLE_EQ(3, m(1, 3));
+  ASSERT_DOUBLE_EQ(4, m(1, 4));
+  ASSERT_DOUBLE_EQ(5, m(2, 1));
+  ASSERT_DOUBLE_EQ(6, m(2, 2));
+  ASSERT_DOUBLE_EQ(7, m(2, 3));
+  ASSERT_DOUBLE_EQ(8, m(2, 4));
+  ASSERT_DOUBLE_EQ(9, m(3, 1));
+  ASSERT_DOUBLE_EQ(10, m(3, 2));
+  ASSERT_DOUBLE_EQ(11, m(3, 3));
+  ASSERT_DOUBLE_EQ(12, m(3, 4));
+  ASSERT_DOUBLE_EQ(13, m(4, 1));
+  ASSERT_DOUBLE_EQ(14, m(4, 2));
+  ASSERT_DOUBLE_EQ(15, m(4, 3));
+  ASSERT_DOUBLE_EQ(16, m(4, 4));
+  ASSERT_EQ(1, m.indexmin());
+  ASSERT_EQ(4, m.indexmax());
+  m.rowshift(2);
+  ASSERT_EQ(2, m.indexmin());
+  ASSERT_EQ(5, m.indexmax());
+  ASSERT_DOUBLE_EQ(1, m(2, 1));
+  ASSERT_DOUBLE_EQ(2, m(2, 2));
+  ASSERT_DOUBLE_EQ(3, m(2, 3));
+  ASSERT_DOUBLE_EQ(4, m(2, 4));
+  ASSERT_DOUBLE_EQ(5, m(3, 1));
+  ASSERT_DOUBLE_EQ(6, m(3, 2));
+  ASSERT_DOUBLE_EQ(7, m(3, 3));
+  ASSERT_DOUBLE_EQ(8, m(3, 4));
+  ASSERT_DOUBLE_EQ(9, m(4, 1));
+  ASSERT_DOUBLE_EQ(10, m(4, 2));
+  ASSERT_DOUBLE_EQ(11, m(4, 3));
+  ASSERT_DOUBLE_EQ(12, m(4, 4));
+  ASSERT_DOUBLE_EQ(13, m(5, 1));
+  ASSERT_DOUBLE_EQ(14, m(5, 2));
+  ASSERT_DOUBLE_EQ(15, m(5, 3));
+  ASSERT_DOUBLE_EQ(16, m(5, 4));
+}
 TEST_F(test_dmatrix, fill_constructor)
 {
   char array[] = "{0, 1, 2} {3, 4, 5}";
@@ -274,4 +317,18 @@ TEST_F(test_dmatrix, row_vector)
   ASSERT_DOUBLE_EQ(3, ret(1, 2));
   ASSERT_DOUBLE_EQ(2, ret(1, 3));
   ASSERT_DOUBLE_EQ(1, ret(1, 4));
+}
+TEST_F(test_dmatrix, default)
+{
+  dmatrix ret;
+
+/*
+  ASSERT_EQ(1, ret.rowmin());
+  ASSERT_EQ(0, ret.rowmax());
+  ASSERT_EQ(0, ret.rowsize());
+*/
+
+  //ASSERT_EQ(1, ret.colmin());
+  //ASSERT_EQ(0, ret.colmax());
+  ASSERT_EQ(0, ret.colsize());
 }

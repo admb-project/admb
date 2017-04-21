@@ -27,7 +27,6 @@ GTESTS=\
  test_option_match.cpp\
  test_lvector.cpp\
  test_adpool.cpp\
- test_dmatrix.cpp\
  test_param_init_bounded_number_vector.cpp\
  test_param_init_d3array.cpp\
  test_spline.cpp\
@@ -70,6 +69,7 @@ GTESTS=\
  test_dll_param_matrix.cpp\
  test_dvector.cpp\
  test_dvar3_array.cpp\
+ test_dvar7_array.cpp\
  test_arr_link.cpp\
  test_df1b2_init_number_vector.cpp\
  test_init_df1b2vector.cpp\
@@ -84,6 +84,7 @@ GTESTS=\
  test_data_matrix.cpp\
  test_tiny_ad.cpp\
  test_adjson.cpp\
+ test_dmatrix.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

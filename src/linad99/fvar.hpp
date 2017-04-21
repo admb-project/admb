@@ -6424,10 +6424,11 @@ class dvar5_array
    {
       return (shape->indexmax());
    }
-   int size(void)
-   {
-      return (indexmax() - indexmin() + 1);
-   }
+  unsigned int size()
+  {
+    return static_cast<unsigned int>(
+      indexmax() < indexmin() ? 0 : indexmax() - indexmin() + 1);
+  }
    int indexmin(void) const
    {
       return (shape->indexmin());
@@ -6436,10 +6437,11 @@ class dvar5_array
    {
       return (shape->indexmax());
    }
-   int size(void) const
-   {
-      return (indexmax() - indexmin() + 1);
-   }
+  unsigned int size() const
+  {
+    return static_cast<unsigned int>(
+      indexmax() < indexmin() ? 0 : indexmax() - indexmin() + 1);
+  }
    void initialize(void);
    void operator/=(const prevariable & d);
    void operator/=(const double &d);

@@ -448,7 +448,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 	} else {
 	  ii=1;
 	  parsave=mle;
-	  //initial_params::copy_all_values(parsave,ii);
+	  initial_params::copy_all_values(parsave,ii);
 	}
       }
 

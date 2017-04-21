@@ -186,7 +186,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // Set to stored MLE vector in bounded space
     ii=1;
     z0=mle;
-    //initial_params::copy_all_values(z0,ii);
+    initial_params::copy_all_values(z0,ii);
   }
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;

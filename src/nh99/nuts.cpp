@@ -294,16 +294,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   // cout << "Starting from chd=" << chd << endl;
   ///
-  /// Old code to test that I know what's going on.
-  cout << "Initial hbf new=" << gradient_structure::Hybrid_bounded_flag << endl;
-  cout << "Initial hbf old=" << old_Hybrid_bounded_flag << endl;
-  cout << "Initial bounded mle=" << mle << endl;
-  cout << "Initial bounded parameters=" << z0 << endl;
-  cout << "Initial unbounded parameters=" << y0 << endl;
-  cout << "Initial rotated, unbounded parameters=" << x0 << endl;
-  cout << "Initial nll=" << nlltemp << endl;
-  cout << "Initial gr in unbounded space= " << grtemp << endl;
-  cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
+  // /// Old code to test that I know what's going on.
+  // cout << "Initial hbf new=" << gradient_structure::Hybrid_bounded_flag << endl;
+  // cout << "Initial hbf old=" << old_Hybrid_bounded_flag << endl;
+  // cout << "Initial bounded mle=" << mle << endl;
+  // cout << "Initial bounded parameters=" << z0 << endl;
+  // cout << "Initial unbounded parameters=" << y0 << endl;
+  // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
+  // cout << "Initial nll=" << nlltemp << endl;
+  // cout << "Initial gr in unbounded space= " << grtemp << endl;
+  // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
   ///
   independent_variables theta(1,nvar);
   theta=x0; // kind of a misnomer here: theta is in "x" or algorithm space

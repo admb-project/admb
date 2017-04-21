@@ -5391,11 +5391,12 @@ class dvar4_array
    //int rowmin(void) { return(shape->row_min);}
    //int rowmax(void) { return(shape->row_max);}
 
-   // returns the number of rows
-   int hslicesize()
-   {
-      return (hslicemax() - hslicemin() + 1);
-   }
+  // returns the number of rows
+  unsigned int hslicesize()
+  {
+    return static_cast<unsigned int>(
+      hslicemax() < hslicemin() ? 0 : hslicemax() - hslicemin() + 1);
+  }
    // returns the number of rows
    int slicesize()
    {
@@ -5460,11 +5461,12 @@ class dvar4_array
    //int rowmin(void) const { return(shape->row_min); }
    //int rowmax(void) const { return(shape->row_max); }
 
-   // returns the number of rows
-   int hslicesize() const
-   {
-      return (hslicemax() - hslicemin() + 1);
-   }
+  // returns the number of rows
+  unsigned int hslicesize() const
+  {
+    return static_cast<unsigned int>(
+      hslicemax() < hslicemin() ? 0 : hslicemax() - hslicemin() + 1);
+  }
    // returns the number of rows
    int slicesize() const
    {

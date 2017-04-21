@@ -269,3 +269,12 @@ TEST_F(test_ivector, fill)
   ASSERT_EQ(2, v(2));
   ASSERT_EQ(1, v(3));
 }
+TEST_F(test_ivector, invalid_index)
+{
+  ivector w(4, 2);
+  ASSERT_EQ(0, w.size());
+  ASSERT_EQ(1, w.indexmin());
+  ASSERT_EQ(-1, w.indexmax());
+  ASSERT_EQ(NULL, w.get_v());
+  ASSERT_EQ(false, w.allocated());
+}

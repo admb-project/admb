@@ -238,9 +238,8 @@ ivector::ivector(unsigned int sz, long int* x)
     }
   }
 }
-
 /**
-Constructor
+Construct ivector with same dimensions as u.
 */
 ivector::ivector(const dvector& u)
 {
@@ -256,55 +255,60 @@ ivector::ivector(const dvector& u)
 #endif
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
- ivector::ivector(int ncl,int nch)
- {
-   allocate(ncl, nch);
- }
+Allocate vector of integers with dimension
+[ncl to nch].
 
+\param ncl lower vector index
+\param nch upper vector index
+*/
+ivector::ivector(int ncl, int nch)
+{
+  allocate(ncl, nch);
+}
 /**
- * Description not yet available.
- * \param
- */
- void ivector::allocate(int ncl,int nch)
- {
-   int itemp=nch-ncl;
-   if (itemp<0)
-   {
-     //cerr << "Error in ivector constructor max index must be >= minindex\n"
-     //  << "minindex = " << ncl << " maxindex = " << nch <<endl;
-     //ad_exit(1);
-     allocate();
-   }
-   else
-   {
-     if ( (v = new int [itemp+1]) == 0 )
-     {
-       cerr << " Error trying to allocate memory for ivector\n";
-       ad_exit(21);
-     }
+Allocate vector of integers with dimension
+[ncl to nch].
 
-     if ( (shape=new vector_shapex(ncl,nch,v)) == NULL)
-     {
-       cerr << "Error trying to allocate memory for ivector\n";
-       ad_exit(1);
-     }
+\param ncl lower vector index
+\param nch upper vector index
+*/
+void ivector::allocate(int ncl,int nch)
+{
+  unsigned int ss =
+    static_cast<unsigned int>(nch < ncl ? 0 : nch - ncl + 1);
+  if (ss > 0)
+  {
+    if ((v = new int [ss]) == 0 )
+    {
+      cerr << " Error: i4_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    if ((shape = new vector_shapex(ncl, nch, v)) == NULL)
+    {
+      cerr << " Error: i4_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
 
-     index_min=ncl;
-     index_max=nch;
-     v -= indexmin();
-     #ifdef SAFE_INITIALIZE
-       for ( int i=indexmin(); i<=indexmax(); i++)
-       {
-         v[i]=0.;
-       }
-     #endif
-   }
- }
+    index_min=ncl;
+    index_max=nch;
+
+    v -= indexmin();
+
+#ifdef SAFE_INITIALIZE
+    for (int i = ncl; i <= nch; ++i)
+    {
+      v[i] = 0;
+    }
+#endif
+  }
+  else
+  {
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.

@@ -169,28 +169,28 @@ d4_array& d4_array::operator=(const d4_array& m)
  }
 
 /**
- * Description not yet available.
- * \param
- */
+Allocate d4_array with same dimensions as m1.
+*/
 void d4_array::allocate(const d4_array& m1)
- {
-   if ( (shape=new four_array_shape(m1.hslicemin(),m1.hslicemax()))
-       == 0)
-   {
-     cerr << " Error allocating memory in dvar4_array contructor" << endl;
-   }
-   int ss=hslicesize();
-   if ( (t = new d3_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in dvar4_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= hslicemin();
-   for (int i=hslicemin(); i<=hslicemax(); i++)
-   {
-     t[i].allocate(m1[i]);
-   }
- }
+{
+  if ((shape = new four_array_shape(m1.hslicemin(),m1.hslicemax())) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ( (t = new d3_array[hslicesize()]) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  t -= hslicemin();
+  for (int i = hslicemin(); i <= hslicemax(); ++i)
+  {
+    t[i].allocate(m1[i]);
+  }
+}
 
   #ifndef OPT_LIB
 
@@ -341,80 +341,116 @@ const double& d4_array::operator()(int i, int j, int k, int l) const
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh,int ncl,int nch)
- {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor\n";
-     ad_exit(21);
-   }
-   int ss=hslicesize();
-   if ( (t = new d3_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor\n";
-     ad_exit(21);
-   }
-   t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
-   {
-     (*this)(i).allocate(sl,sh,nrl,nrh,ncl,nch);
-   }
- }
+Allocate arrays with dimension
+[hsl to hsu] x [sl to sh] x [nrl to nrh] x [ncl to nch].
 
+\param hsl lower d4_array index
+\param hsu upper d4_array index
+\param sl lower d3_array index
+\param sh upper d3_array index
+\param nrl lower row matrix index
+\param nrh upper row matrix index
+\param ncl lower column matrix index
+\param nch upper column matrix index
+*/
+void d4_array::allocate(
+  int hsl, int hsu,
+  int sl, int sh,
+  int nrl, int nrh,
+  int ncl, int nch)
+{
+  if ((shape = new four_array_shape(hsl, hsu)) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ( (t = new d3_array[hslicesize()]) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  t -= hslicemin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch);
+  }
+}
 /**
- * Description not yet available.
- * \param
- */
- void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh, const ivector& ncl, const ivector& nch)
- {
-   if ( (shape=new four_array_shape (hsl,hsu)) == 0)
-   {
-     cerr << " Error allocating memory in d4_array contructor\n";
-   }
+Allocate arrays with dimension
+[hsl to hsu] x [sl to sh] x [nrl to nrh] x [ncl to nch].
 
-   int ss=hslicesize();
-   if ( (t = new d3_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor\n";
-     ad_exit(21);
-   }
-   t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
-   {
-     (*this)(i).allocate(sl,sh,nrl,nrh,ncl,nch);
-   }
- }
-
+\param hsl lower d4_array index
+\param hsu upper d4_array index
+\param sl lower d3_array index
+\param sh upper d3_array index
+\param nrl lower row matrix index
+\param nrh upper row matrix index
+\param ncl lower column matrix index
+\param nch upper column matrix index
+*/
+void d4_array::allocate(
+  int hsl, int hsu,
+  int sl, int sh,
+  int nrl, int nrh,
+  const ivector& ncl, const ivector& nch)
+{
+  if ((shape = new four_array_shape(hsl, hsu)) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ((t = new d3_array[hslicesize()]) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  t -= hslicemin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch);
+  }
+}
 /**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
-  const ivector& nrh, const ivector& ncl, const ivector& nch)
- {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
-   {
-     cerr << " Error allocating memory in d4_array contructor\n";
-   }
+Allocate arrays with dimension
+[hsl to hsu] x [sl to sh] x [nrl to nrh] x [ncl to nch].
 
-   int ss=hslicesize();
-   if ( (t = new d3_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor\n";
-     ad_exit(21);
-   }
-   t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
-   {
-     (*this)(i).allocate(sl,sh,nrl(i),nrh(i),ncl(i),nch(i));
-   }
- }
-
+\param hsl lower d4_array index
+\param hsu upper d4_array index
+\param sl lower d3_array index
+\param sh upper d3_array index
+\param nrl lower row matrix index
+\param nrh upper row matrix index
+\param ncl lower column matrix index
+\param nch upper column matrix index
+*/
+void d4_array::allocate(
+  int hsl, int hsu,
+  int sl, int sh,
+  const ivector& nrl, const ivector& nrh,
+  const ivector& ncl, const ivector& nch)
+{
+  if ( (shape = new four_array_shape(hsl, hsu)) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ( (t = new d3_array[hslicesize()]) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  t -= hslicemin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    (*this)(i).allocate(sl, sh, nrl(i), nrh(i), ncl(i), nch(i));
+  }
+}
 /**
  * Description not yet available.
  * \param
@@ -426,31 +462,42 @@ d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh,
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
-  int nrl, const imatrix& nrh, int ncl, int nch)
- {
-   //int rmin=nrh.rowmin();
-   //int cmin=nrh(rmin).indexmin();
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
-   {
-     cerr << " Error allocating memory in d4_array contructor\n";
-   }
+Allocate arrays with dimension
+[hsl to hsu] x [sl to sh] x [nrl to nrh] x [ncl to nch].
 
-   int ss=hslicesize();
-   if ( (t = new d3_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor\n";
-     ad_exit(21);
-   }
-   t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
-   {
-     (*this)(i).allocate(sl,sh(i),nrl,nrh(i),ncl,nch);
-   }
- }
+\param hsl lower d4_array index
+\param hsu upper d4_array index
+\param sl lower d3_array index
+\param sh upper d3_array index
+\param nrl lower row matrix index
+\param nrh upper row matrix index
+\param ncl lower column matrix index
+\param nch upper column matrix index
+*/
+void d4_array::allocate(
+  int hsl, int hsu,
+  int sl, const ivector& sh,
+  int nrl, const imatrix& nrh,
+  int ncl, int nch)
+{
+  if ((shape = new four_array_shape(hsl, hsu)) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  if ((t = new d3_array[hslicesize()]) == 0)
+  {
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
+  }
+  t -= hslicemin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    (*this)(i).allocate(sl, sh(i), nrl, nrh(i), ncl, nch);
+  }
+}
 
 /**
  * Description not yet available.
@@ -501,28 +548,28 @@ d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
  * Description not yet available.
  * \param
  */
-void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
-  const imatrix& nrh, int ncl, const i3_array& nch)
+void d4_array::allocate(
+  int hsl, int hsu,
+  int sl, const ivector& sh,
+  int nrl, const imatrix& nrh,
+  int ncl, const i3_array& nch)
 {
-  //int rmin=nrh.rowmin();
-  //int cmin=nrh(rmin).indexmin();
-  //int sl1=nch.slicemin();
-  //int rmin1=nch(sl1).rowmin();
-  //int cmin1=nch(sl1,rmin1).indexmin();
-  if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+  if ((shape = new four_array_shape(hsl, hsu)) == 0)
   {
-    cerr << " Error allocating memory in d4_array contructor\n";
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
-  int ss=hslicesize();
-  if ( (t = new d3_array[ss]) == 0)
+  if ((t = new d3_array[hslicesize()]) == 0)
   {
-    cerr << " Error allocating memory in d3_array contructor\n";
-    ad_exit(21);
+    cerr << " Error: d4_array unable to allocate memory in "
+         << __FILE__ << ':' << __LINE__ << '\n';
+    ad_exit(1);
   }
   t -= hslicemin();
-  for (int i=hsl; i<=hsu; i++)
+  for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl,sh(i),nrl,nrh(i),ncl,nch(i));
+    (*this)(i).allocate(sl, sh(i), nrl, nrh(i), ncl, nch(i));
   }
 }
 
@@ -538,124 +585,158 @@ d4_array::d4_array(int hsl,int hsu,const index_type& sl,
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
-    const index_type& sh,const index_type& nrl,const index_type& nrh,
-    const index_type& ncl,const index_type& nch)
+Allocate arrays with dimension
+[hsl to hsu] x [sl to sh] x [nrl to nrh] x [ncl to nch].
+
+\param hsl lower d4_array index
+\param hsu upper d4_array index
+\param sl lower d3_array index
+\param sh upper d3_array index
+\param nrl lower row matrix index
+\param nrh upper row matrix index
+\param ncl lower column matrix index
+\param nch upper column matrix index
+*/
+void d4_array::allocate(
+  ad_integer hsl, ad_integer hsu,
+  const index_type& sl, const index_type& sh,
+  const index_type& nrl, const index_type& nrh,
+  const index_type& ncl, const index_type& nch)
 {
-   if (hsl>hsu)
-   {
-     allocate();
-     return;
-   }
-  int ss=hsu-hsl+1;
-  if ( (t = new d3_array[ss]) == 0)
+  unsigned int ss =
+    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
+  if (ss > 0)
   {
-    cerr << " Error allocating memory in d3_array contructor\n";
-    ad_exit(21);
+    if ( (t = new d3_array[ss]) == 0)
+    {
+      cerr << " Error: d4_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+    {
+      cerr << " Error: d4_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    t -= int(hsl);
+    for (int i=hsl; i<=hsu; i++)
+    {
+      const index_type& rsl=sl[i];
+      const index_type& rsh=sh[i];
+      const index_type& rnrl=nrl[i];
+      const index_type& rnrh=nrh[i];
+      const index_type& rncl=ncl[i];
+      const index_type& rnch=nch[i];
+      const ad_integer& aa=ad_integer(rsl);
+      const ad_integer& bb=ad_integer(rsh);
+      (*this)(i).allocate(aa,bb,rnrl,rnrh,rncl,rnch);
+      //(*this)(i).allocate(sl[i],sh[i],nrl[i],nrh[i],ncl[i],nch[i]);
+    }
   }
-  if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+  else
   {
-    cerr << " Error allocating memory in d3_array contructor\n";
-    ad_exit(21);
-  }
-  t -= int(hsl);
-  for (int i=hsl; i<=hsu; i++)
-  {
-    const index_type& rsl=sl[i];
-    const index_type& rsh=sh[i];
-    const index_type& rnrl=nrl[i];
-    const index_type& rnrh=nrh[i];
-    const index_type& rncl=ncl[i];
-    const index_type& rnch=nch[i];
-
-    const ad_integer& aa=ad_integer(rsl);
-    const ad_integer& bb=ad_integer(rsh);
-
-    (*this)(i).allocate(aa,bb,rnrl,rnrh,rncl,rnch);
-
-    //(*this)(i).allocate(sl[i],sh[i],nrl[i],nrh[i],ncl[i],nch[i]);
+    allocate();
   }
 }
-
 /**
- * Description not yet available.
- * \param
+Allocate arrays with dimension
+[hsl to hsu] x [sl to sh] x [nrl to nrh] x [ncl to nch].
+
+\param hsl lower d4_array index
+\param hsu upper d4_array index
+\param sl lower d3_array index
+\param sh upper d3_array index
+\param nrl lower row matrix index
+\param nrh upper row matrix index
+\param ncl lower column matrix index
+\param nch upper column matrix index
  */
-void d4_array::allocate(int hsl,int hsu,const index_type& sl,
-    const index_type& sh,const index_type& nrl,const index_type& nrh,
-    const index_type& ncl,const index_type& nch)
+void d4_array::allocate(
+  int hsl, int hsu,
+  const index_type& sl, const index_type& sh,
+  const index_type& nrl, const index_type& nrh,
+  const index_type& ncl,const index_type& nch)
 {
-   if (hsl>hsu)
-   {
-     allocate();
-     return;
-   }
-  int ss=hsu-hsl+1;
-  if ( (t = new d3_array[ss]) == 0)
+  unsigned int ss =
+    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
+  if (ss > 0)
   {
-    cerr << " Error allocating memory in d3_array contructor\n";
-    ad_exit(21);
+    if ((t = new d3_array[ss]) == 0)
+    {
+      cerr << " Error: d4_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    }
+    if ((shape = new four_array_shape(hsl, hsu)) == 0)
+    {
+      cerr << " Error: d4_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    }
+    t -= hsl;
+    for (int i=hsl; i<=hsu; i++)
+    {
+      const index_type& rsl=sl[i];
+      const index_type& rsh=sh[i];
+      const index_type& rnrl=nrl[i];
+      const index_type& rnrh=nrh[i];
+      const index_type& rncl=ncl[i];
+      const index_type& rnch=nch[i];
+      const ad_integer& aa=ad_integer(rsl);
+      const ad_integer& bb=ad_integer(rsh);
+      (*this)(i).allocate(aa,bb,rnrl,rnrh,rncl,rnch);
+      //(*this)(i).allocate(sl[i],sh[i],nrl[i],nrh[i],ncl[i],nch[i]);
+    }
   }
-  if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+  else
   {
-    cerr << " Error allocating memory in d3_array contructor\n";
-    ad_exit(21);
-  }
-  t -= int(hsl);
-  for (int i=hsl; i<=hsu; i++)
-  {
-    const index_type& rsl=sl[i];
-    const index_type& rsh=sh[i];
-    const index_type& rnrl=nrl[i];
-    const index_type& rnrh=nrh[i];
-    const index_type& rncl=ncl[i];
-    const index_type& rnch=nch[i];
-
-    const ad_integer& aa=ad_integer(rsl);
-    const ad_integer& bb=ad_integer(rsh);
-
-    (*this)(i).allocate(aa,bb,rnrl,rnrh,rncl,rnch);
-
-    //(*this)(i).allocate(sl[i],sh[i],nrl[i],nrh[i],ncl[i],nch[i]);
+    allocate();
   }
 }
-
 /**
+Allocate arrays with empty columns matrices with dimension
+[hsl to hsu] x [sl to sh] x [nrl to nrh].
+
+\param hsl lower d4_array index
+\param hsu upper d4_array index
+\param sl lower d3_array index
+\param sh upper d3_array index
+\param nrl lower row matrix index
+\param nrh upper row matrix index
 */
 void d4_array::allocate(
   ad_integer hsl, ad_integer hsu,
   const index_type& sl, const index_type& sh,
   const index_type& nrl, const index_type& nrh)
 {
-   if (hsl>hsu)
-   {
-     allocate();
-     return;
-   }
-  int ss=hsu-hsl+1;
-  if ( (t = new d3_array[ss]) == 0)
+  unsigned int ss =
+    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
+  if (ss > 0)
   {
-    cerr << " Error allocating memory in d3_array contructor\n";
-    ad_exit(21);
+    if ((t = new d3_array[ss]) == 0)
+    {
+      cerr << " Error: d4_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    }
+    if ((shape=new four_array_shape(hsl, hsu)) == 0)
+    {
+      cerr << " Error: d4_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+    }
+    t -= int(hsl);
+    for (int i = hsl; i <= hsu; ++i)
+    {
+      const index_type& rsl = sl[i];
+      const index_type& rsh = sh[i];
+      const index_type& rnrl = nrl[i];
+      const index_type& rnrh = nrh[i];
+      const ad_integer& aa = ad_integer(rsl);
+      const ad_integer& bb = ad_integer(rsh);
+      (*this)(i).allocate(aa, bb, rnrl, rnrh);
+    }
   }
-  if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+  else
   {
-    cerr << " Error allocating memory in d3_array contructor\n";
-    ad_exit(21);
-  }
-  t -= int(hsl);
-  for (int i=hsl; i<=hsu; i++)
-  {
-    const index_type& rsl=sl[i];
-    const index_type& rsh=sh[i];
-    const index_type& rnrl=nrl[i];
-    const index_type& rnrh=nrh[i];
-    const ad_integer& aa=ad_integer(rsl);
-    const ad_integer& bb=ad_integer(rsh);
-    (*this)(i).allocate(aa,bb,rnrl,rnrh);
+    allocate();
   }
 }
 

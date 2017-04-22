@@ -369,43 +369,50 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void imatrix::allocate(const ad_integer& nrl,const ad_integer& nrh,
-    const index_type& ncl,const index_type& nch)
- {
-   if (nrl>nrh)
-   {
-     allocate();
-     return;
-   }
-   index_min=nrl;
-   index_max=nrh;
-   if ( (ncl.isinteger() && (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())) ||
-     (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
-   {
-     cerr << "Incompatible array bounds in "
-     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
-     ad_exit(1);
-   }
-   int ss=nrh-nrl+1;
-   if ( (m = new ivector [ss]) == 0)
-   {
-     cerr << " Error allocating memory in imatrix contructor\n";
-     ad_exit(21);
-   }
-   if ( (shape = new mat_shapex(m))== 0)
-   {
-     cerr << " Error allocating memory in imatrix contructor\n";
-     ad_exit(21);
-   }
-   m -= int(nrl);
-   for (int i=nrl; i<=nrh; i++)
-   {
-     m[i].allocate(ncl(i),nch(i));
-   }
- }
+Allocate matrix on integers with dimension [nrl to nrh] x [ncl to nch].
+\param nrl lower row matrix index
+\param nrh upper row matrix index
+\param ncl lower column matrix index
+\param nch upper column matrix index
+*/
+void imatrix::allocate(
+  const ad_integer& nrl, const ad_integer& nrh,
+  const index_type& ncl, const index_type& nch)
+{
+  index_min = nrl;
+  index_max = nrh;
+  if ((ncl.isinteger() && (nrl != ncl.indexmin() || nrh != ncl.indexmax()))
+     || (nch.isinteger() && (nrl != nch.indexmin() || nrh != nch.indexmax())))
+  {
+    cerr << "Incompatible array bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
+    ad_exit(1);
+  }
+  unsigned int ss = static_cast<unsigned int>(nrh < nrl ? 0 : nrh - nrl + 1);
+  if (ss > 0)
+  {
+    if ((m = new ivector [ss]) == 0)
+    {
+      cerr << " Error: imatrix unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    if ((shape = new mat_shapex(m)) == 0)
+    {
+      cerr << " Error: imatrix unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    m -= int(nrl);
+    for (int i = nrl; i <= nrh; ++i)
+    {
+      m[i].allocate(ncl(i), nch(i));
+    }
+  }
+  else
+  {
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.
@@ -417,44 +424,50 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void dvector::allocate(const ad_integer& _ncl,const index_type& _nch)
- {
-   int ncl=_ncl;
-   int nch=ad_integer(_nch);
-   int itemp=nch-ncl;
-   if (itemp<0)
-   {
-     allocate();
-     return;
-   }
-   if ( (v = new double [itemp+1]) ==0)
-   {
-     cerr << " Error trying to allocate memory for dvector\n";
-     ad_exit(21);
-   }
-#if defined(THREAD_SAFE)
-   if ( (shape=new ts_vector_shapex(ncl,nch,v)) == NULL)
-#else
-   if ( (shape=new vector_shapex(ncl,nch,v)) == NULL)
-#endif
-   {
-     cerr << "Error trying to allocate memory for dvector\n";
-     ad_exit(1);
-   }
+Allocate vector of reals with dimension [_ncl to _nch].
 
-   index_min=ncl;
-   index_max=nch;
-   v -= indexmin();
-   #ifdef SAFE_INITIALIZE
-     for ( int i=indexmin(); i<=indexmax(); i++)
-     {
-       v[i]=0.;
-     }
-   #endif
- }
+\param _ncl lower vector index 
+\param _nch upper vector index 
+*/
+void dvector::allocate(const ad_integer& _ncl,const index_type& _nch)
+{
+  int ncl = _ncl;
+  int nch = ad_integer(_nch);
+  unsigned int ss =
+    static_cast<unsigned int>(nch < ncl ? 0 : nch - ncl + 1);
+  if (ss > 0)
+  {
+    if ((v = new double[ss]) == 0)
+    {
+      cerr << " Error: dvector unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+#if defined(THREAD_SAFE)
+    if ((shape = new ts_vector_shapex(ncl, nch, v)) == NULL)
+#else
+    if ((shape = new vector_shapex(ncl, nch, v)) == NULL)
+#endif
+    {
+      cerr << " Error: dvector unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    index_min = ncl;
+    index_max = nch;
+    v -= indexmin();
+#ifdef SAFE_INITIALIZE
+    for (int i = indexmin(); i <= indexmax(); ++i)
+    {
+      v[i] = 0.0;
+    }
+#endif
+  }
+  else
+  {
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.
@@ -466,38 +479,44 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void ivector::allocate(const ad_integer& _ncl,const index_type& _nch)
- {
-   index_min=_ncl;
-   index_max=ad_integer(_nch);
-   int itemp=index_max-index_min;
-   if (itemp<0)
+Allocate vector of integers with dimension [_ncl to _nch].
+
+\param _ncl lower vector index 
+\param _nch upper vector index 
+*/
+void ivector::allocate(const ad_integer& _ncl, const index_type& _nch)
+{
+  index_min = _ncl;
+  index_max = ad_integer(_nch);
+  unsigned int ss = static_cast<unsigned int>(
+    index_max < index_min ? 0 : index_max - index_min + 1);
+  if (ss > 0)
+  {
+   if ((v = new int[ss]) == 0)
    {
-     allocate();
-     return;
-   }
-   if ( (v = new int [itemp+1]) ==0)
-   {
-     cerr << " Error trying to allocate memory for dvector\n";
-     ad_exit(21);
-   }
-   if ( (shape=new vector_shapex(index_min,index_max,v)) == NULL)
-   {
-     cerr << "Error trying to allocate memory for dvector\n";
+     cerr << " Error: ivector unable to allocate memory in "
+          << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
    }
-
+   if ((shape = new vector_shapex(index_min, index_max, v)) == NULL)
+   {
+     cerr << " Error: ivector unable to allocate memory in "
+          << __FILE__ << ':' << __LINE__ << '\n';
+     ad_exit(1);
+   }
    v -= indexmin();
-   #ifdef SAFE_INITIALIZE
-     for ( int i=indexmin(); i<=indexmax(); i++)
-     {
-       v[i]=0.;
-     }
-   #endif
- }
+#ifdef SAFE_INITIALIZE
+   for (int i = indexmin(); i <= indexmax(); ++i)
+   {
+     v[i] = 0;
+   }
+#endif
+  }
+  else
+  {
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.

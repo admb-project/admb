@@ -12,36 +12,35 @@
 //#include "i3_array.h"
 
 /**
- * Description not yet available.
- * \param
- */
- i3_array::i3_array(void)
- {
-   allocate();
- }
-
+Default constructor
+*/
+i3_array::i3_array()
+{
+  allocate();
+}
 /**
- * Description not yet available.
- * \param
- */
- i3_array::~i3_array()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       deallocate();
-     }
-   }
-   else
-   {
-    // cerr << "Warning -- trying to deallocate an unallocated i3_array"<<endl;
-   }
- }
+Destructor
+*/
+i3_array::~i3_array()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      deallocate();
+    }
+  }
+/*
+  else
+  {
+    cerr << "Warning -- trying to deallocate an unallocated i3_array"<<endl;
+  }
+*/
+}
 
 /**
  * Description not yet available.

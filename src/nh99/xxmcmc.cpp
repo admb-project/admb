@@ -466,7 +466,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       initial_params::xinit(y);
       // cout << endl << endl << endl << "printing starting values3" << endl;
       // cout << y << endl << endl;
-      
+
       ofstream ogs("sims");
       ogs << nvar << " " << number_sims << endl;
       double llc=-get_monte_carlo_value(nvar,y);
@@ -852,7 +852,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 		if(i>change_ball){
 		  // Calculate rotated parameter vector
 		  independent_variables xtemp(1,nvar);
-		  xtemp=chdinv0*y; 
+		  xtemp=chdinv0*y;
 		  for(int i=1;i<nvar;i++) {
 		    rotated << xtemp(i) << ", ";
 		    unbounded << y(i) << ", ";

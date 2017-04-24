@@ -100,21 +100,24 @@ void dvar_matrix::fill(const char* s)
     ad_exit(1);
   }
 
-  if (nrow != rowsize())
+  [](unsigned int nrow, unsigned int rowsize)
   {
-    if (nrow < rowsize())
+    if (nrow != rowsize)
     {
-      cerr << " Not enough rows in the data for "
-      "dvar_matrix::fill(const char *) \n";
-      ad_exit(1);
+      if (nrow < rowsize)
+      {
+        cerr << " Not enough rows in the data for "
+        "dvar_matrix::fill(const char*)\n";
+        ad_exit(1);
+      }
+      else
+      {
+        cerr << " Too many rows in the data for "
+        "dvar_matrix::fill(const char*)\n";
+        ad_exit(1);
+      }
     }
-    else
-    {
-      cerr << " Too many rows in the data for "
-      "dvar_matrix::fill(const char *) \n";
-      ad_exit(1);
-    }
-  }
+  } (static_cast<unsigned int>(nrow), rowsize());
 
   int i;
   for (i=1; i<=nrow; i++)

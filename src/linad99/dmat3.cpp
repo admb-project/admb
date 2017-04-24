@@ -6,8 +6,9 @@
  */
 #include "fvar.hpp"
 #include <math.h>
-#ifndef __ZTC__
-//#include <iomanip.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
 #endif
 
 #ifdef ISZERO
@@ -176,19 +177,25 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
   int i=0;
   int j=0;
   int k=0;
-  int n=0;
   double& d=(double&)_d;
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
 
-  n=a.colsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (a.colsize());
+#else
+  int n = static_cast<int>(a.colsize());
+#endif
   int lb=a.colmin();
   int ub=a.colmax();
 
   double big,dum,sum,temp;
 
   dvector vv(lb,ub);
-
 
   d=1.0;
 
@@ -282,12 +289,20 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
 */
 void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 {
-  int i,j,k,n;
+  int i,j,k;
   double& d=(double&)_d;
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
 
-  n=a.colsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (a.colsize());
+#else
+  int n = static_cast<int>(a.colsize());
+#endif
   int lb=a.colmin();
   int ub=a.colmax();
 
@@ -534,12 +549,18 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
   int i=0;
   int j=0;
   int k=0;
-  int n=0;
   double& d=(double&)_d;
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
-
-  n=a.colsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (a.colsize());
+#else
+  int n = static_cast<int>(a.colsize());
+#endif
   int lb=a.colmin();
   int ub=a.colmax();
   indx.fill_seqadd(lb,1);

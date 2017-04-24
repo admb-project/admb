@@ -6,6 +6,10 @@
  */
 #include "fvar.hpp"
 #include <math.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 #ifdef ISZERO
   #undef ISZERO
@@ -30,9 +34,18 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
   ADUNCONST(dvar_matrix,a)
   ADUNCONST(prevariable,d)
   ivector& indx= (ivector&) _indx;
-  int i,j,k,n;
+  int i,j,k;
 
-  n=a.colsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (a.colsize());
+#else
+  int n = static_cast<int>(a.colsize());
+#endif
+
   int lb=a.colmin();
   int ub=a.colmax();
 

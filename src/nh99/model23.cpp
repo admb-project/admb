@@ -5,6 +5,10 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 int adkdelta(int i,int j)
 {
@@ -47,7 +51,16 @@ void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H,
   dmatrix& H=(dmatrix&) _H;
   int& ii=(int&) _ii;
   int lmin=ii;
-  int n=size();
+#ifndef OPT_LIB
+  int n = [](unsigned int size) -> int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  } (size());
+#else
+  int n = static_cast<int>(size());
+#endif
+
   int lmax=lmin+n-1;
   dmatrix Htmp(lmin,lmax,lmin,lmax);
   double ninv=1.0/double(n);

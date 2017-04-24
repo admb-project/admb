@@ -5,6 +5,10 @@
  * Copyright (c) 2009-2012 ADMB Foundation
  */
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -63,7 +67,15 @@ dvector solve(const dmatrix& aa,const dvector& z,
   const double& _ln_unsigned_det,double& sign)
 {
   double& ln_unsigned_det=(double&) (_ln_unsigned_det);
-  int n=aa.colsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (aa.colsize());
+#else
+  int n = static_cast<int>(aa.colsize());
+#endif
   int lb=aa.colmin();
   int ub=aa.colmax();
   if (lb!=aa.rowmin()||ub!=aa.rowmax())

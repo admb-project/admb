@@ -2,9 +2,13 @@
  * $Id: fvar_m20.cpp 789 2010-10-05 01:01:09Z johnoel $
  *
  * Author: Steve Martell made Changes on Dec 30, 2013
- * 
+ *
  */
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 #ifdef __TURBOC__
   #pragma hdrstop
   #include <iomanip.h>
@@ -33,7 +37,15 @@ void df_xdet(void);
 dvariable det(const dvar_matrix& aa)
 {
   int i,j,k;
-  int n=aa.colsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (aa.colsize());
+#else
+  int n = static_cast<int>(aa.colsize());
+#endif
   int lb=aa.colmin();
   int ub=aa.colmax();
   ivector indx(lb,ub);

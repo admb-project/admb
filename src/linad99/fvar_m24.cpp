@@ -4,6 +4,10 @@
  * Author: Unknown
  */
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -38,7 +42,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z)
   return sol;
 }
 
-/** Solve a linear sysgem using LU decomposition.
+/** Solve a linear system using LU decomposition.
 \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
     \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
@@ -55,7 +59,15 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   prevariable& sign=(prevariable&) _sign;
 
   RETURN_ARRAYS_INCREMENT();
-  int n=aa.colsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (aa.colsize());
+#else
+  int n = static_cast<int>(aa.colsize());
+#endif
   int lb=aa.colmin();
   int ub=aa.colmax();
   if (lb!=aa.rowmin()||ub!=aa.colmax())

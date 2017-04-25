@@ -398,95 +398,36 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
 
-    // --------------------------------------------------
-    // Careful tests of build_tree trajectories by manually specifying
-    // starting theta & r and then building tree. Should match R for same
-    // model. Read in input values so easier to control everything.
-    cifstream cif("input.txt");
-    cif >> theta;
-    cif >> p;
-    int jj;
-    cif >> jj;
-    cout << "theta=" << theta << endl;
-    cout << "p=" << p << endl;
-    cout << "j=" << jj << endl;
-    cout.precision(12);
-    cout << "chd=" << chd << endl;
-    _rminus=p; _rplus=p;
-    _thetaminus=theta;
-    _thetaplus=theta;
-    _thetaprime=theta;
-    z=chd*theta;
-    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    gr2=gr*chd;
-    cout << "gr=" << gr << endl;
-    cout << "z=" << z << endl;
-    H0=-nll-0.5*norm2(p);
-    logu=H0-log(2); // set slice variable at half height
-    ofstream out("trajectory.txt", ios::trunc);
-    ofstream out2("out2.txt", ios::trunc);
-    out << "theta1 theta2 thetaminus1 thetaminus2 thetaplus1 thetaplus2 rminus1 rminus2 " <<
-      "rplus1 rplus2 alpha divergent nfevals v nprime logu" << endl;
-    out2 << "j v _thetaprime1 _thetaprime2 theta1 theta2 prob divergent s n nprime" << endl;
-
-    // --------------------------------------------------
-
-    // Generate single NUTS trajectory by repeatedly doubling build_tree
-    int n = 1;
-    _nprime=0;
+    // Generate single NUTS trajectory by repeatedly calling build_tree
+    // until a u-turn  or divergence occurs.
+    int n=1;
     _divergent=0;
     _nfevals=0;
     bool s=1;
     int j=0;
-    // Global, local variables to track the extreme left and rightmost
-    // nodes of the entire tree
-    dvector thetaminus_end(1,nvar);
-    dvector thetaplus_end(1,nvar);
-    dvector rminus_end(1,nvar);
-    dvector rplus_end(1,nvar);
-    dvector thetaminus0(1,nvar);
-    dvector thetaplus0(1,nvar);
-    dvector rminus0(1,nvar);
-    dvector rplus0(1,nvar);
-    thetaminus_end=theta; thetaplus_end=theta;
-    rminus_end=p; rplus_end=p;
-    thetaminus0=theta; thetaplus0=theta;
-    rminus0=p; rplus0=p;
-    
     while (s) {
       double value = randu(rng);	   // runif(1)
       int v = 2 * (value < 0.5) - 1;
-      v=1;
       // Add a trajectory of length 2^j, built to the left or right of
-      // edges of the current entire tree.
+      // edges of the current tree.
       if (v == 1) {
-	// Build a tree to the right from thetaplus. The leftmost point in
-	// the new subtree, which gets overwritten in both the global _end
-	// variable, but also the _ ref version.
-	z=chd*thetaplus_end;
+	// Build a tree to the right from thetaplus.
+	z=chd*_thetaplus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
-	build_tree_test(nvar, gr, chd, eps, rplus_end, thetaplus_end, gr2, logu, v, j,
-			H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-			_alphaprime, _nalphaprime, _sprime,
-			_nprime, _nfevals, _divergent, rng, out);
-	// Moved right, so update extreme right tree
-	thetaplus_end=_thetaplus;
-	rplus_end=_rplus;
+	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent, rng);
       } else {
 	// Same but to the left from thetaminus
-	_thetaplus=thetaminus_end; _thetaminus=thetaminus_end;
-	_rplus=rminus_end; _rminus=rminus_end;
 	z=chd*_thetaminus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
-	build_tree_test(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j,
-			H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-			_alphaprime, _nalphaprime, _sprime,
-			_nprime, _nfevals, _divergent, rng,out);
-	// Moved left, so update extreme left tree
-	thetaminus_end=_thetaminus;
-	rminus_end=_rminus;
+	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent, rng);
       }
 
       // _thetaprime is the proposed point from that sample (drawn
@@ -499,14 +440,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	ytemp=chd*theta; // unbounded
       }
 
-      // Test if a u-turn occured across the whole subtree j. Previously we
-      // only tested sub-subtrees.
-      bool b= stop_criterion(nvar, thetaminus_end, thetaplus_end, rminus_end, rplus_end);
+      // Test if a u-turn occured and update stopping criterion
+      bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
       s = _sprime*b;
       // Increment valid points and depth
-      out2 << j <<  " " << v << _thetaprime << theta << " "
-	   << double(_nprime)/double(n) << " " << _divergent
-	   << " " << s << " " << n  << " " << _nprime << endl;
       n += _nprime;
       ++j;
       if(j>=max_treedepth) break;

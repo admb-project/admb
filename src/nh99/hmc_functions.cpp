@@ -36,6 +36,15 @@ double function_minimizer::exprnd(double p)
   return d(gen);
 }
 
+// Strip out the model name given full path
+std::string function_minimizer::get_filename(const char* f) {
+  std::string s(f);
+  size_t pos = s.find_last_of("/\\");
+  std::string filename_exe = s.substr(pos + 1);
+  size_t dot_pos = s.find_last_of(".");
+  std::string filename = s.substr(pos + 1, dot_pos - pos - 1);
+  return filename;
+}
 
 void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
 				    dvector& y, dvector& gr2, double logu, int v, int j, double H0,
@@ -588,4 +597,55 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
 //     } // end building trajectory
 //   }   // end recursion
 // }     // end function
+
+
+// This function reads in the hessian file to get the MLE values at the end.
+void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
+  adstring tmpstring = "admodel.hes";
+  uistream cif((char*)tmpstring);
+  if (!cif) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    ad_exit(1);
+  }
+  int tmp_nvar = 0;
+  cif >> tmp_nvar;
+  if (nvar !=tmp_nvar) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    ad_exit(1);
+  }
+  dmatrix hess(1,tmp_nvar,1,tmp_nvar);
+  cif >> hess;
+  if (!cif) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    ad_exit(1);
+  }
+  int oldHbf;
+  cif >> oldHbf;
+  if (!cif) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    ad_exit(1);
+  }
+  dvector sscale(1,tmp_nvar);
+  cif >> sscale;
+  if (!cif) {
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    ad_exit(1);
+  }
+  // Read in the MLEs finally
+  int temp=0;
+  cif >> temp;
+  cif >> mle;
+  // Temp is a unique flag to make sure the mle values were written (that
+  // admodel.hes is not too old)
+  if(temp != -987 || !cif){
+    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
+	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    ad_exit(1);
+  }
+}
 

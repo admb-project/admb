@@ -3869,11 +3869,12 @@ class i3_array
    {
       return ((*this) (slicemin()).rowmax());
    }
-   // returns the number of rows
-   int slicesize() const
-   {
-      return (slicemax() - slicemin() + 1);
-   }
+  // returns the number of rows
+  unsigned int slicesize() const
+  {
+    int size = slicemax() - slicemin() + 1;
+    return static_cast<unsigned int>(size < 0 ? 0 : size);
+  }
    // returns the number of rows
    int rowsize() const
    {

@@ -427,3 +427,30 @@ TEST_F(test_dvector, sgn)
   ASSERT_EQ(-1, v(4));
   ASSERT_EQ(1, v(5));
 }
+TEST_F(test_dvector, append)
+{
+  dvector a(1, 5);
+  a(1) = 1;
+  a(2) = 2;
+  a(3) = 3;
+  a(4) = 4;
+  a(5) = 5;
+  dvector b(1, 5);
+  b(1) = 6;
+  b(2) = 7;
+  b(3) = 8;
+  b(4) = 9;
+  b(5) = 10;
+  dvector ab = a & b;
+  ASSERT_EQ(10, ab.size());
+  ASSERT_EQ(1, ab(1));
+  ASSERT_EQ(2, ab(2));
+  ASSERT_EQ(3, ab(3));
+  ASSERT_EQ(4, ab(4));
+  ASSERT_EQ(5, ab(5));
+  ASSERT_EQ(6, ab(6));
+  ASSERT_EQ(7, ab(7));
+  ASSERT_EQ(8, ab(8));
+  ASSERT_EQ(9, ab(9));
+  ASSERT_EQ(10, ab(10));
+}

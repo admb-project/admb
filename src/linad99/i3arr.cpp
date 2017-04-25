@@ -43,27 +43,35 @@ i3_array::~i3_array()
 }
 
 /**
- * Description not yet available.
- * \param
- */
- void i3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
- {
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
-   {
+Allocate vector of integer matrices with dimensions
+[sl to sh] x [nrl to nrh] x [ncl to nch].
+\param sl lower vector index
+\param sh upper vector index
+\param nrl lower matrix row index
+\param nrh upper matrix row index
+\param ncl lower matrix column index
+\param nch upper matrix column index
+*/
+void i3_array::allocate(
+  int sl, int sh,
+  int nrl, int nrh,
+  int ncl, int nch)
+{
+  if ((shape = new three_array_shape(sl, sh)) == 0)
+  {
      cerr << " Error allocating memory in i3_array contructor" << endl;
-   }
-   int ss=slicesize();
-   if ( (t = new imatrix[ss]) == 0)
-   {
+  }
+  if ((t = new imatrix[slicesize()]) == 0)
+  {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
-   }
-   t -= slicemin();
-   for (int i=sl; i<=sh; i++)
-   {
-     t[i].allocate(nrl,nrh,ncl,nch);
-   }
- }
+  }
+  t -= slicemin();
+  for (int i = sl; i <= sh; ++i)
+  {
+    t[i].allocate(nrl, nrh, ncl, nch);
+  }
+}
 
 /**
  * Description not yet available.
@@ -99,13 +107,15 @@ i3_array::~i3_array()
  }
 
 /**
- * Description not yet available.
- * \param
- */
- i3_array::i3_array(int sl,int sh)
- {
-   allocate(sl,sh);
- }
+Construct vector of empty matrices with dimension
+[sl to sh].
+\param sl lower vector index
+\param sh upper vector index
+*/
+i3_array::i3_array(int sl, int sh)
+{
+  allocate(sl, sh);
+}
 
 /**
  * Description not yet available.

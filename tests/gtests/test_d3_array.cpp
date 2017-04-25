@@ -242,3 +242,9 @@ TEST_F(test_d3_array, mean)
 
   ASSERT_DOUBLE_EQ(5, mean(a));
 }
+TEST_F(test_d3_array, size_count)
+{
+  d3_array a(1, 4, 1, 3, 1, 2);
+
+  ASSERT_EQ(24, size_count(a));
+}

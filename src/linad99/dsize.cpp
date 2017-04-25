@@ -11,10 +11,10 @@
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const dvector& x)
+Returns total size of elements in vector x.
+\param x vector
+*/
+unsigned int size_count(const dvector& x)
 {
   return x.size();
 }
@@ -29,19 +29,19 @@ int size_count_partial(const dvector& x, int n)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const dmatrix& x)
+Returns total size of elements in matrix x.
+\param x matrix
+*/
+unsigned int size_count(const dmatrix& x)
 {
-  int tmp=0;
-  int min=x.rowmin();
-  int max=x.rowmax();
-  for (int i=min;i<=max;i++)
+  int count = 0;
+  int min = x.rowmin();
+  int max = x.rowmax();
+  for (int i = min;i <= max; ++i)
   {
-    tmp+=size_count(x(i));
+    count += size_count(x(i));
   }
-  return tmp;
+  return count;
 }
 
 /**
@@ -61,19 +61,19 @@ int size_count_partial(const dmatrix& x, int n)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const d3_array& x)
+Returns total size of elements in d3_array x.
+\param x matrix
+*/
+unsigned int size_count(const d3_array& x)
 {
-  int tmp=0;
-  int min=x.slicemin();
-  int max=x.slicemax();
-  for (int i=min;i<=max;i++)
+  int count = 0;
+  int min = x.slicemin();
+  int max = x.slicemax();
+  for (int i = min; i <= max; ++i)
   {
-    tmp+=size_count(x(i));
+    count += size_count(x(i));
   }
-  return tmp;
+  return count;
 }
 
 /**

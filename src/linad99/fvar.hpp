@@ -4438,9 +4438,9 @@ int size_count(const dvar_vector & x);
 int size_count(const dvar_matrix & x);
 int size_count(const dvar3_array & x);
 int size_count(const dvar4_array & x);
-int size_count(const dvector & x);
-int size_count(const dmatrix & x);
-int size_count(const d3_array & x);
+unsigned int size_count(const dvector& x);
+unsigned int size_count(const dmatrix& x);
+unsigned int size_count(const d3_array& x);
 int size_count(const d4_array & x);
 
 int size_count_partial(const dvar_vector & x, int);

@@ -343,23 +343,26 @@ void ivector::allocate()
  * \param
  */
 ivector::ivector(const preivector& pdv)
- {
-   #ifdef DIAG
-    // cout << "starting out in dvector contructor\n";
-   #endif
-   shape=pdv.p->shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   else
-   {
-     cerr << "Taking a subvector  of an unallocated ivector"<<endl;
-   }
-   v = pdv.p->v;
-   index_min=pdv.lb;
-   index_max=pdv.ub;
- }
+{
+#if defined(SAFE_ALL)
+  cout << "starting out in ivector constructor\n";
+#endif
+
+  shape=pdv.p->shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+  }
+#if defined(SAFE_ALL)
+  else
+  {
+    cerr << "Taking a subvector of an unallocated ivector" << endl;
+  }
+#endif
+  v = pdv.p->v;
+  index_min = pdv.lb;
+  index_max = pdv.ub;
+}
 
 /**
  * Description not yet available.

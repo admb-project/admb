@@ -210,11 +210,12 @@ class dvector
       return index_max;
    }
 
-   /// Get number of elements in array.
-   int size() const
-   {
-      return (index_max - index_min + 1);
-   }
+  /// Get number of elements in array.
+  unsigned int size() const
+  {
+    return static_cast<unsigned int>(
+      index_max < index_min ? 0 : index_max - index_min + 1);
+  }
 
    dvector & shift(int min);
 

@@ -34,12 +34,12 @@ i3_array::~i3_array()
       deallocate();
     }
   }
-/*
+#if defined(SAFE_ALL)
   else
   {
     cerr << "Warning -- trying to deallocate an unallocated i3_array"<<endl;
   }
-*/
+#endif
 }
 /**
 Allocate vector of integer matrices with dimensions
@@ -379,12 +379,12 @@ i3_array::i3_array(const i3_array& m2)
   {
     (shape->ncopies)++;
   }
-/*
+#if defined(SAFE_ALL)
   else
   {
     cerr << "Making a copy of an unallocated d3_array"<<endl;
   }
-*/
+#endif
   t = m2.t;
 }
 /**
@@ -403,10 +403,10 @@ void i3_array::deallocate()
     delete shape;
     shape = NULL;
   }
-/*
+#if defined(SAFE_ALL)
   else
   {
     cerr << "Warning -- trying to deallocate an unallocated imatrix"<<endl;
   }
-*/
+#endif
 }

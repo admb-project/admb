@@ -106,7 +106,7 @@ void gradcalc(int nvar, const dvector& _g)
     return;
   }
 
-  if (g.size() < nvar)
+  if (g.size() < static_cast<unsigned int>(nvar))
   {
     cerr  << "gradient vector size is less than the number of variables.\n";
     ad_exit(1);

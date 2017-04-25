@@ -34,7 +34,7 @@ Returns total size of elements in matrix x.
 */
 unsigned int size_count(const dmatrix& x)
 {
-  int count = 0;
+  unsigned int count = 0;
   int min = x.rowmin();
   int max = x.rowmax();
   for (int i = min;i <= max; ++i)
@@ -66,7 +66,7 @@ Returns total size of elements in d3_array x.
 */
 unsigned int size_count(const d3_array& x)
 {
-  int count = 0;
+  unsigned int count = 0;
   int min = x.slicemin();
   int max = x.slicemax();
   for (int i = min; i <= max; ++i)

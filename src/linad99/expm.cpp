@@ -9,6 +9,10 @@
  * Matrix exponential function for dvar_matrix.
  */
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 #define TINY 1.0e-20;
 
 /**
@@ -191,11 +195,19 @@ dvar_matrix expm(const dvar_matrix& A)
   return E;
 }
 
-dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz,
+dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
   dvariable ln_unsigned_det, dvariable& sign)
 {
   RETURN_ARRAYS_INCREMENT();
-  int n = aa.colsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (aa.colsize());
+#else
+  int n = static_cast<int>(aa.colsize());
+#endif
   int lb=aa.colmin();
   int ub=aa.colmax();
   if (lb!=aa.rowmin()||ub!=aa.colmax())

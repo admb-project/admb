@@ -11,31 +11,30 @@
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
+Returns d3_array with square root values from m.
+\param m input values
  */
 d3_array sqrt(const d3_array& m)
-   {
-     d3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=sqrt(m(i));
-     }
-     return tmp;
-   }
-
+{
+  d3_array tmp;
+  tmp.allocate(m);
+  for (int i = tmp.slicemin(); i <= tmp.slicemax(); ++i)
+  {
+    tmp(i) = sqrt(m(i));
+  }
+  return tmp;
+}
 /**
- * Description not yet available.
- * \param
- */
+Returns d3_array with square root values from m.
+\param m input values
+*/
 d3_array sqr(const d3_array& m)
-   {
-     d3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=sqrt(m(i));
-     }
-     return tmp;
-   }
+{
+  d3_array tmp;
+  tmp.allocate(m);
+  for (int i = tmp.slicemin(); i <= tmp.slicemax(); ++i)
+  {
+    tmp(i) = sqrt(m(i));
+  }
+  return tmp;
+}

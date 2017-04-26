@@ -10,6 +10,10 @@
 #define EIGEN_VECTORS
 
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 #ifdef ISZERO
   #undef ISZERO

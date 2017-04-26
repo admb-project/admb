@@ -40,13 +40,7 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
    dmatrix cm2=value(m2);
    dmatrix tmp(cm1.rowmin(),cm1.rowmax(), m2.colmin(), m2.colmax());
 
-#ifdef OPT_LIB
-   const size_t rowsize = (size_t)m2.rowsize();
-#else
-   const int _rowsize = m2.rowsize();
-   assert(_rowsize > 0);
-   const size_t rowsize = (size_t)_rowsize;
-#endif
+   const unsigned int rowsize = m2.rowsize();
    try
    {
      double* temp_col = new double[rowsize];

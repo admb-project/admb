@@ -102,6 +102,10 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // save. These are the ' versions of the paper, e.g., sprime'.
       dvector thetaprime0(1,nvar);
       thetaprime0=_thetaprime;
+      dvector thetaminus0(1,nvar);
+      dvector thetaplus0(1,nvar);
+      dvector rminus0(1,nvar);
+      dvector rplus0(1,nvar);
       int nprime0 = _nprime;
       double alphaprime0 = _alphaprime;
       int nalphaprime0 = _nalphaprime;
@@ -112,12 +116,14 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng);
+	// leftmost pointers are moved inside build_tree by reference
       } else {
 	// Make subtree to the right
 	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng);
+	// rightmost pointers are moved inside build_tree by reference
       }
 
       // This is (n'+n''). Can be zero so need to be careful??

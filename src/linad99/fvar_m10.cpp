@@ -21,8 +21,10 @@
 
 #include <string.h>
 #include <ctype.h>
-#include <cassert>
-#include <climits>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 /**
  * Description not yet available.
@@ -36,14 +38,22 @@
 const int MAXROWS = 5050;
 
 /**
- * Description not yet available.
- * \param
- */
+Fill values of dvar_matrix with text input from s with
+format rowmin...rowmax where ith row is {colmin,...,colmax}.
+
+Example dvar_matrix::fill("{1,2}{3,4}") produces 
+dvar_matrix = 
+1 2
+3 4
+\param s string
+*/
 void dvar_matrix::fill(const char* s)
 {
   const size_t len = strlen(s);
+#ifndef OPT_LIB
   assert(len <= INT_MAX);
-  int n = (int)len;
+#endif
+  int n = static_cast<int>(len);
   int braces = 0;
   int nrow = 0;
   int ncol = 0;

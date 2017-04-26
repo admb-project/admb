@@ -47,7 +47,15 @@ dmatrix eigenvectors(const dmatrix& m)  //,_CONST dvector& diag)
   }
 
   dmatrix m1=symmetrize(m);
-  int n=m1.rowsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int rowsize) -> int
+  {
+    assert(rowsize <= INT_MAX);
+    return static_cast<int>(rowsize);
+  } (m1.rowsize());
+#else
+  int n = static_cast<int>(m1.rowsize());
+#endif
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvector diag(1,n);
@@ -85,7 +93,15 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
   }
 
   dmatrix m1=symmetrize(m);
-  int n=m1.rowsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int rowsize) -> int
+  {
+    assert(rowsize <= INT_MAX);
+    return static_cast<int>(rowsize);
+  } (m1.rowsize());
+#else
+  int n = static_cast<int>(m1.rowsize());
+#endif
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   diag.shift(1);
@@ -143,7 +159,15 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
     "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
-  int n=m.rowsize();
+#ifndef OPT_LIB
+  int n = [](unsigned int rowsize) -> int
+  {
+    assert(rowsize <= INT_MAX);
+    return static_cast<int>(rowsize);
+  } (m.rowsize());
+#else
+  int n = static_cast<int>(m.rowsize());
+#endif
   int l,k,j,i;
   double scale,hh,h,g,f;
 
@@ -262,7 +286,15 @@ double SIGNV(const double x, double y)
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
   dmatrix& z = (dmatrix&) _z;
-  int n=d.size();
+#ifndef OPT_LIB
+  int n = [](unsigned int size) -> int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  } (d.size());
+#else
+  int n = static_cast<int>(d.size());
+#endif
   int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
 

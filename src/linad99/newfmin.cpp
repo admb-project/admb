@@ -293,7 +293,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
          independent vector and gradient vector
          Note, this function will work correctly only if
          indices start at 1  */
-     if (n==0)
+     if (n <= 0)
      {
        cerr << "Error -- the number of active parameters"
          " fmin must be > 0\n";
@@ -307,7 +307,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
         << " it is " << x.indexmin() << "\n";
         ad_exit(1);
      }
-     if (x.size() <n)
+     if (x.size() < static_cast<unsigned int>(n))
      {
        cerr << "Error -- the size of the independent_variables"
         " which is " << x.size() << " must be >= " << n << "\n"
@@ -322,7 +322,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
         << " it is " << g.indexmin() << "\n";
         ad_exit(1);
      }
-     if (g.size() <n)
+     if (g.size() < static_cast<unsigned int>(n))
      {
        cerr << "Error -- the size of the gradient vector"
         " which is " << g.size() << " must be >=\n"

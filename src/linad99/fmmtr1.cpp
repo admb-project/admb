@@ -117,7 +117,7 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
       if (ireturn == 1) goto call1;
       if (ireturn == 2) goto call2;
       ihflag=0;
-     if (n==0)
+     if (n <= 0)
      {
        cerr << "Error -- the number of active parameters"
          " fmin must be > 0\n";
@@ -131,6 +131,7 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
         ad_exit(1);
      }
      if (x.size() <n)
+     if (x.size() < static_cast<unsigned int>(n))
      {
        cerr << "Error -- the size of the independent_variables"
         " which is " << x.size() << " must be >= " << n << "\n"
@@ -144,7 +145,7 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
         << " it is " << g.indexmin() << "\n";
         ad_exit(1);
      }
-     if (g.size() <n)
+     if (g.size() < static_cast<unsigned int>(n))
      {
        cerr << "Error -- the size of the gradient vector"
         " which is " << g.size() << " must be >=\n"

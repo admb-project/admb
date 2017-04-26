@@ -1918,6 +1918,7 @@ public:
   void read_mle_hmc(int nvar, dvector& mle); 
   void shmc_mcmc_routine(int,int,double,int);
   void nuts_mcmc_routine(int,int,double,int);
+  void nuts_test_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
    void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
   double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd);
@@ -1935,7 +1936,7 @@ public:
 		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 		  dvector& _rplus, dvector& _rminus,
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
-		  int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+		       int& _nprime, int& _nfevals, bool& _divergent, 
 		       const random_number_generator& rng,
 		        ofstream& out);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,

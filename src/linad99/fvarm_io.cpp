@@ -91,14 +91,13 @@ istream& operator>>(const istream& _istr, const dvar_matrix& _z)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Read values to dvar_matrix from input istream s.
+\param s input stream
+*/
 void dvar_matrix::read_from(const istream& s)
 {
-  int n = rowmin() + rowsize() - 1;
-
-  for (int i=rowmin(); i <= n; i++)
+  int n = rowmax();
+  for (int i = rowmin(); i <= n; ++i)
   {
     s >> (*this)[i];
     /*

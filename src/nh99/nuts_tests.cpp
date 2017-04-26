@@ -627,12 +627,12 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
     out << y << _thetaminus << _thetaplus << _rminus << _rplus << " " << _alphaprime << " " << _divergent
 	<< " " << _nfevals << " " << v << " " << _nprime << " " << logu << endl;
   } else { // j > 1
-    // Buildtree of depth j-1.
+    // Build first half of tree.
     build_tree_test(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
 	       _nprime, _nfevals, _divergent, rng, out);
-    // If valid trajectory keep building, otherwise exit function
+    // If valid trajectory, build second half.
     if (_sprime == 1) {
       // Save copies of the global ones due to rerunning build_tree below
       // which will overwrite some of the global variables we need to
@@ -660,6 +660,7 @@ void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, do
 	// Update the leftmost point
 	rminus0=_rminus;
 	thetaminus0=_thetaminus;
+	// Rest rightmost tree
 	_thetaplus=thetaplus0;
 	_rplus=rplus0;
       } else {

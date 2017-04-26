@@ -89,23 +89,26 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     _nalphaprime=1;
     _nfevals++;
   } else { // j > 1
-    // Buildtree of depth j-1.
+    // Build first half of tree.
     build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
 	       _nprime, _nfevals, _divergent, rng);
-
-    // If valid trajectory keep building, otherwise exit function
+    // If valid trajectory, build second half.
     if (_sprime == 1) {
       // Save copies of the global ones due to rerunning build_tree below
       // which will overwrite some of the global variables we need to
       // save. These are the ' versions of the paper, e.g., sprime'.
       dvector thetaprime0(1,nvar);
-      thetaprime0=_thetaprime;
-      dvector thetaminus0(1,nvar);
       dvector thetaplus0(1,nvar);
-      dvector rminus0(1,nvar);
+      dvector thetaminus0(1,nvar);
       dvector rplus0(1,nvar);
+      dvector rminus0(1,nvar);
+      thetaprime0=_thetaprime;
+      thetaplus0=_thetaplus;
+      thetaminus0=_thetaminus;
+      rplus0=_rplus;
+      rminus0=_rminus;
       int nprime0 = _nprime;
       double alphaprime0 = _alphaprime;
       int nalphaprime0 = _nalphaprime;
@@ -116,14 +119,24 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng);
-	// leftmost pointers are moved inside build_tree by reference
+	// Update the leftmost point
+	rminus0=_rminus;
+	thetaminus0=_thetaminus;
+	// Rest rightmost tree
+	_thetaplus=thetaplus0;
+	_rplus=rplus0;
       } else {
 	// Make subtree to the right
 	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng);
-	// rightmost pointers are moved inside build_tree by reference
+	// Update the rightmost point
+	rplus0=_rplus;
+	thetaplus0=_thetaplus;
+	// Reset leftmost tree
+	_thetaminus=thetaminus0;
+	_rminus=rminus0;
       }
 
       // This is (n'+n''). Can be zero so need to be careful??
@@ -144,7 +157,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       _nalphaprime = nalphaprime0 + _nalphaprime;
       // s' from the first execution above is 1 by definition (inside this
       // if statement), while _sprime is s''. So need to reset s':
-      bool b = stop_criterion(nvar, _thetaminus, _thetaplus, _rminus, _rplus);
+      bool b = stop_criterion(nvar, thetaminus0, thetaplus0, rminus0, rplus0);
       _sprime = _sprime*b;
       _nprime = nprime_temp;
     } // end building second trajectory

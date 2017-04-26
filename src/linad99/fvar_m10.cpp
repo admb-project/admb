@@ -122,20 +122,19 @@ void dvar_matrix::fill(const char* s)
   int i;
   for (i=1; i<=nrow; i++)
   {
-    if ( ((*this)[rowmin()+i-1]).size() != columns[i])
+    unsigned int size = ((*this)[rowmin()+i-1]).size();
+    unsigned int column = static_cast<unsigned int>(columns[i]);
+    if (size > column)
     {
-      if ( ((*this)[rowmin()+i-1]).size() > columns[i])
-      {
-        cerr << " Not enough columns in the data in row "
-             << i << " for dvar_matrix::fill(const char *) \n";
-        ad_exit(1);
-      }
-      else
-      {
-        cerr << " Too many columns in the data in row "
-             << i << " for dvar_matrix::fill(const char *) \n";
-        ad_exit(1);
-      }
+      cerr << " Not enough columns in the data in row "
+           << i << " for dvar_matrix::fill(const char *) \n";
+      ad_exit(1);
+    }
+    else if (size < column)
+    {
+      cerr << " Too many columns in the data in row "
+           << i << " for dvar_matrix::fill(const char *) \n";
+      ad_exit(1);
     }
   }
 

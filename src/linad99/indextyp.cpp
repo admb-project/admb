@@ -201,45 +201,49 @@ vector_index::~vector_index() {}
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void dmatrix::allocate(const ad_integer& nrl,const ad_integer& nrh,
-   const index_type& ncl,const index_type& nch)
- {
-   if (nrh<nrl)
-   {
-     allocate();
-     return;
-   }
-
-   if ( (ncl.isinteger() && (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())) ||
-     (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
-   {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
-      "const ivector& ncl, const ivector& nch)" << endl;
-     ad_exit(1);
-   }
-   index_min=int(nrl);
-   index_max=int(nrh);
-
-   int rs=rowsize();
-   if ( (m = new dvector [rs]) == 0)
-   {
-     cerr << " Error allocating memory in dmatrix contructor" << endl;
-     ad_exit(21);
-   }
-   if ( (shape = new mat_shapex(m))== 0)
-   {
-     cerr << " Error allocating memory in dmatrix contructor" << endl;
-     ad_exit(21);
-   }
-   m -= int(nrl);
-   for (int i=nrl; i<=nrh; i++)
-   {
-     m[i].allocate(ncl[i],nch[i]);
-   }
- }
+Allocate matrix with dimensions [nrl to nrh] x [ncl to nch]
+\param nrl lower matrix row index
+\param nrl upper matrix row index
+\param ncl lower matrix column index
+\param ncl upper matrix column index
+*/
+void dmatrix::allocate(
+  const ad_integer& nrl, const ad_integer& nrh,
+  const index_type& ncl, const index_type& nch)
+{
+  if (nrh < nrl)
+  {
+    allocate();
+  }
+  else
+  {
+    if ((ncl.isinteger() && (nrl != ncl.indexmin() || nrh != ncl.indexmax()))
+       || (nch.isinteger() && (nrl != nch.indexmin() || nrh != nch.indexmax())))
+    {
+      cerr << "Incompatible dmatrix bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
+      ad_exit(1);
+    }
+    index_min = int(nrl);
+    index_max = int(nrh);
+    if ((m = new dvector[rowsize()]) == 0)
+    {
+      cerr << " Error: dmatrix unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    if ((shape = new mat_shapex(m)) == 0)
+    {
+      cerr << " Error: dmatrix unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    m -= int(nrl);
+    for (int i = nrl; i <= nrh; ++i)
+    {
+      m[i].allocate(ncl[i], nch[i]);
+    }
+  }
+}
 
 /**
  * Description not yet available.
@@ -263,111 +267,99 @@ vector_index::~vector_index() {}
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void i3_array::allocate(int sl,int sh,const index_type& nrl,
-  const index_type& nrh,const index_type& ncl,const index_type& nch)
- {
-   if (sl>sh)
-   {
-     allocate();
-     return;
-   }
-
-   //int imin=nrh.indexmin();
-   //int rmin=nch.rowmin();
-   //int cmin=nch(rmin).indexmin();
-   if ( (nrl.isinteger() && (sl !=nrl.indexmin() || sh !=nrl.indexmax())) ||
-       (nch.isinteger() && (sl !=nch.indexmin() || sh !=nch.indexmax())) ||
-       (ncl.isinteger() && (sl !=ncl.indexmin() || sh !=ncl.indexmax())) ||
-       (nrh.isinteger() && (sl !=nrh.indexmin() || sh !=nrh.indexmax())) )
-   {
-     cout << nrl.isinteger() << endl;
-     cout << nrl.indexmin() << endl;
-     cout << nrl.indexmax() << endl;
-     cout << nrh.isinteger() << endl;
-     cout << nrh.indexmin() << endl;
-     cout << nrh.indexmax() << endl;
-     cout << ncl.isinteger() << endl;
-     cout << ncl.indexmin() << endl;
-     cout << ncl.indexmax() << endl;
-     cout << nch.isinteger() << endl;
-     cout << nch.indexmin() << endl;
-     cout << nch.indexmax() << endl;
-     cerr << "Incompatible array bounds in i3_array(int nrl,int nrh,"
-      "const index_type& nrl, const index_type& nrh,"
-      "const index_type& ncl, const index_type& nch)" << endl;
-     cout << sl << " " << nrl.indexmin() << endl
-          << sh << " " << nrl.indexmax() << endl
-          << sl << " " << nrh.indexmin() << endl
-          << sh << " " << nrh.indexmax() << endl
-          << sl << " " << ncl.indexmin() << endl
-          << sh << " " << ncl.indexmax() << endl
-          << sl << " " << nch.indexmin() << endl
-          << sh << " " << nch.indexmax() << endl;
-
-     ad_exit(1);
-   }
-
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
-   {
-     cerr << " Error allocating memory in i3_array contructor" << endl;
-   }
-   int ss=slicesize();
-   if ( (t = new imatrix[ss]) == 0)
-   {
-     cerr << " Error allocating memory in i3_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= slicemin();
-   for (int i=sl; i<=sh; i++)
-   {
-     t[i].allocate(nrl(i),nrh(i),ncl(i),nch(i));
-   }
- }
-
+Allocate array of matrices with dimensions
+[sl to sh] x [nrl to nrh] x [ncl to nch].
+\param sl lower vector index
+\param sh upper vector index
+\param nrl lower matrix row index
+\param nrl upper matrix row index
+\param ncl lower matrix column index
+\param ncl upper matrix column index
+*/
+void i3_array::allocate(
+  int sl, int sh,
+  const index_type& nrl, const index_type& nrh,
+  const index_type& ncl, const index_type& nch)
+{
+  if (sl > sh)
+  {
+    allocate();
+  }
+  else
+  {  
+    if ((nrl.isinteger() && (sl !=nrl.indexmin() || sh !=nrl.indexmax()))
+       || (nch.isinteger() && (sl !=nch.indexmin() || sh !=nch.indexmax()))
+       || (ncl.isinteger() && (sl !=ncl.indexmin() || sh !=ncl.indexmax()))
+       || (nrh.isinteger() && (sl !=nrh.indexmin() || sh !=nrh.indexmax())))
+    {
+      cerr << "Incompatible i3_array bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
+      ad_exit(1);
+    }
+    if ((shape = new three_array_shape(sl,sh)) == 0)
+    {
+      cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    if ((t = new imatrix[slicesize()]) == 0)
+    {
+      cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    t -= slicemin();
+    for (int i = sl; i <= sh; ++i)
+    {
+      t[i].allocate(nrl(i), nrh(i), ncl(i), nch(i));
+    }
+  }
+}
 /**
- * Description not yet available.
- * \param
- */
-void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
-  const index_type& nrl, const index_type& nrh, const index_type& ncl,
-  const index_type& nch)
- {
-   if (int(sl)>int(sh))
-   {
-     allocate();
-     return;
-   }
-
-   if ( (nrl.isinteger() && (sl !=nrl.indexmin() || sh !=nrl.indexmax())) ||
-       (nrh.isinteger() && (sl !=nrh.indexmin() || sh !=nrh.indexmax())) )
-   {
-     cerr << "Incompatible array bounds in i3_array(int nrl,int nrh,"
-      "const index_type& nrl, const index_type& nrh,"
-      "const index_type& ncl, const index_type& nch)" << endl;
-     ad_exit(1);
-   }
-
-   if ( (shape=new three_array_shape(sl,sh))== 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-   }
-
-   int ss=slicesize();
-   if ( (t = new dmatrix[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d3_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=sl; i<=sh; i++)
-   {
-     t[i].allocate(nrl[i],nrh[i],ncl[i],nch[i]);
-   }
- }
-
+Allocate array of matrices with dimensions
+[sl to sh] x [nrl to nrh] x [ncl to nch].
+\param sl lower vector index
+\param sh upper vector index
+\param nrl lower matrix row index
+\param nrl upper matrix row index
+\param ncl lower matrix column index
+\param ncl upper matrix column index
+*/
+void d3_array::allocate(
+  const ad_integer& sl, const ad_integer& sh,
+  const index_type& nrl, const index_type& nrh,
+  const index_type& ncl, const index_type& nch)
+{
+  if (int(sl) > int(sh))
+  {
+    allocate();
+  }
+  else
+  {
+    if ((nrl.isinteger() && (sl !=nrl.indexmin() || sh !=nrl.indexmax()))
+       || (nrh.isinteger() && (sl !=nrh.indexmin() || sh !=nrh.indexmax())))
+    {
+      cerr << "Incompatible d3_array bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
+      ad_exit(1);
+    }
+    if ((shape = new three_array_shape(sl, sh)) == 0)
+    {
+      cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    if ((t = new dmatrix[slicesize()]) == 0)
+    {
+      cerr << " Error: d3_array unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    t -= indexmin();
+    for (int i = sl; i <= sh; ++i)
+    {
+      t[i].allocate(nrl[i], nrh[i], ncl[i], nch[i]);
+    }
+  }
+}
 /**
 Allocate matrix on integers with dimension [nrl to nrh] x [ncl to nch].
 \param nrl lower row matrix index
@@ -384,7 +376,7 @@ void imatrix::allocate(
   if ((ncl.isinteger() && (nrl != ncl.indexmin() || nrh != ncl.indexmax()))
      || (nch.isinteger() && (nrl != nch.indexmin() || nrh != nch.indexmax())))
   {
-    cerr << "Incompatible array bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
+    cerr << "Incompatible imatrix bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
     ad_exit(1);
   }
   unsigned int ss = static_cast<unsigned int>(nrh < nrl ? 0 : nrh - nrl + 1);
@@ -531,10 +523,8 @@ index_guts* matrix_index::operator [] (int i)
 {
   return new vector_index(imatrix::operator [](i));
 }
-
 /// Destructor
 matrix_index::~matrix_index()
 {
   //cout << "in ~matrix_index()" << endl;
 }
-

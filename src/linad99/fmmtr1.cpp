@@ -130,7 +130,6 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
         << " it is " << x.indexmin() << "\n";
         ad_exit(1);
      }
-     if (x.size() <n)
      if (x.size() < static_cast<unsigned int>(n))
      {
        cerr << "Error -- the size of the independent_variables"

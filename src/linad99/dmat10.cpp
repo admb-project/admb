@@ -122,24 +122,22 @@ void dmatrix::fill(const char* s)
 
   for (int i=1; i<=nrow; i++)
   {
-    cout << "row  " << i << " matrix  "
-       << ((*this)[rowmin()+i-1]).size()
-       << "  colvector " << columns[i] << "\n";
+    int index = rowmin() + i - 1;
+    unsigned int size = ((*this)[index]).size();
+    unsigned int cols = static_cast<unsigned int>(columns[i]);
+    cout << "row " << i << " matrix " << size << " colvector " << cols << "\n";
 
-    if ( ((*this)[rowmin()+i-1]).size() != columns[i])
+    if (size > cols)
     {
-      if ( ((*this)[rowmin()+i-1]).size() > columns[i])
-      {
-        cerr << " Not enough columns in the data in row "
-             << i << " for dmatrix::fill(const char *) \n";
-        ad_exit(1);
-      }
-      else
-      {
-        cerr << " Too many columns in the data in row "
-             << i << " for dmatrix::fill(const char *) \n";
-        ad_exit(1);
-      }
+      cerr << " Not enough columns in the data in row "
+           << i << " for dmatrix::fill(const char *) \n";
+      ad_exit(1);
+    }
+    else if (size < cols)
+    {
+      cerr << " Too many columns in the data in row "
+           << i << " for dmatrix::fill(const char *) \n";
+      ad_exit(1);
     }
   }
 

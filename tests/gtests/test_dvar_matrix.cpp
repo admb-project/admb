@@ -148,3 +148,15 @@ TEST_F(test_dvar_matrix, row_vector)
   ASSERT_DOUBLE_EQ(2, value(ret(1, 3)));
   ASSERT_DOUBLE_EQ(1, value(ret(1, 4)));
 }
+TEST_F(test_dvar_matrix, fill)
+{
+  gradient_structure gs;
+
+  //2 x 2 matrix
+  dvar_matrix ret(1, 2, 1, 2);
+  ret.fill("{1,2}{3,4}");
+  ASSERT_DOUBLE_EQ(1, value(ret(1, 1)));
+  ASSERT_DOUBLE_EQ(2, value(ret(1, 2)));
+  ASSERT_DOUBLE_EQ(3, value(ret(2, 1)));
+  ASSERT_DOUBLE_EQ(4, value(ret(2, 2)));
+}

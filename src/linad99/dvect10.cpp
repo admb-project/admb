@@ -83,23 +83,26 @@ void dvector::fill(const char* s)
   {
     int nch = commas + 1;
 
-    if (nch != size())
+    [] (unsigned int nch, unsigned int size, const char* s)
     {
-      if (nch < size())
+      if (nch != size)
       {
-        cerr << "Not enough elements to fill vector in "
-        "dvector::fill(const char * s)\n";
-        cerr << s << "\n";
-        ad_exit(1);
+        if (nch < size)
+        {
+          cerr << "Not enough elements to fill vector in "
+          "dvector::fill(const char * s)\n";
+          cerr << s << "\n";
+          ad_exit(1);
+        }
+        else
+        {
+          cerr << "Too many elements for size of vector in "
+          "dvector::fill(const char * s)\n";
+          cerr << s << "\n";
+          ad_exit(1);
+        }
       }
-      else
-      {
-        cerr << "Too many elements for size of vector in "
-        "dvector::fill(const char * s)\n";
-        cerr << s << "\n";
-        ad_exit(1);
-      }
-    }
+    } (static_cast<unsigned int>(nch), size(), s);
     istringstream ss(t);
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];

@@ -100,9 +100,9 @@ class gradient_structure
  private:
    static long int USE_FOR_HESSIAN;
    static long int NVAR;
-   static int NUM_RETURN_ARRAYS;
+   static unsigned int NUM_RETURN_ARRAYS;
    static dvariable **RETURN_ARRAYS;
-   static int RETURN_ARRAYS_PTR;
+   static unsigned int RETURN_ARRAYS_PTR;
    static dvariable **RETURN_PTR_CONTAINER;
    static size_t TOTAL_BYTES;
    static size_t PREVIOUS_TOTAL_BYTES;
@@ -186,7 +186,7 @@ class gradient_structure
    static grad_stack *GRAD_STACK1;
    friend double_and_int *gradnew();
    static dlist *GRAD_LIST;
-   static int RETURN_ARRAYS_SIZE;
+   static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
    static dvariable *RETURN_PTR;
    static dvariable *MIN_RETURN;

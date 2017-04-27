@@ -29,21 +29,21 @@ void gradient_structure::check_set_error(const char* variable_name)
 }
 
 /**
- * Set the return arrays size controlling the amount of complexity that
- * one line of arithmetic can have
- * \param i size of return arrays
- */
-void gradient_structure::set_RETURN_ARRAYS_SIZE(int i)
+Set the return arrays size controlling the amount of complexity that
+one line of arithmetic can have.
+\param i positive size of return arrays
+*/
+void gradient_structure::set_RETURN_ARRAYS_SIZE(unsigned int i)
 {
-  RETURN_ARRAYS_SIZE=i;
+  RETURN_ARRAYS_SIZE = i;
 }
 
 /**
- * Set the maximum allowable depth of nesting of functions that return autodif
- * variable types
- * \param i number of return arrays
- */
-void gradient_structure::set_NUM_RETURN_ARRAYS(int i)
+Set the maximum allowable depth of nesting of functions that return autodif
+variable types.
+\param i positive number of return arrays
+*/
+void gradient_structure::set_NUM_RETURN_ARRAYS(unsigned int i)
 {
   check_set_error("NUM_RETURN_ARRAYS");
   NUM_RETURN_ARRAYS = i;

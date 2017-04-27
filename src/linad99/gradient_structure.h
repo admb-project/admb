@@ -206,7 +206,7 @@ class gradient_structure
    {
       return fp;
    }
-   static void set_NUM_RETURN_ARRAYS(int i);
+   static void set_NUM_RETURN_ARRAYS(unsigned int i);
 #if defined(NO_DERIVS)
    static void set_NO_DERIVATIVES(void);
    static void set_YES_DERIVATIVES(void);
@@ -218,7 +218,7 @@ class gradient_structure
    //static int _GRADFILE_PTR2; // should be int gradfile_handle;
    //static int _VARSSAV_PTR; // should be int gradfile_handle;
    static void set_NUM_DEPENDENT_VARIABLES(int i);
-   static void set_RETURN_ARRAYS_SIZE(int i);
+   static void set_RETURN_ARRAYS_SIZE(unsigned int i);
    static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
 #ifdef __BORLANDC__
    static void set_CMPDIF_BUFFER_SIZE(long int i);

@@ -429,6 +429,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// the new subtree, which gets overwritten in both the global _end
 	// variable, but also the _ ref version.
 	z=chd*thetaplus_end;
+	// Need to reset to the rightmost point, since this may not have
+	// been last one executed and thus the gradients are wrong
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
 	build_tree(nvar, gr, chd, eps, rplus_end, thetaplus_end, gr2, logu, v, j,
@@ -440,8 +442,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	rplus_end=_rplus;
       } else {
 	// Same but to the left from thetaminus
-	_thetaplus=thetaminus_end; _thetaminus=thetaminus_end;
-	_rplus=rminus_end; _rminus=rminus_end;
 	z=chd*_thetaminus;
 	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;

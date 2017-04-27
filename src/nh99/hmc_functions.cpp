@@ -75,16 +75,12 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       _sprime=1;
       _alphaprime = min(1.0, exp(Ham-H0));
       // Update the tree elements, which are returned by reference in
-      // leapfrog. If moving left, want to leave _thetaplus intact and vice
-      // versa.
+      // leapfrog. 
       _thetaprime = y;
-      if(v==-1){
-	_thetaminus = y;
-	_rminus = p;
-      } else {
-	_thetaplus = y;
-	_rplus = p;
-      }
+      _thetaminus = y;
+      _rminus = p;
+      _thetaplus = y;
+      _rplus = p;
     }
     _nalphaprime=1;
     _nfevals++;
@@ -181,7 +177,6 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
   }
   // TRUE if both are TRUE, FALSE if at least one.
   bool criterion = (x1 >=0) * (x2 >=0);
-  //  cout << "stop crit" << x1 <<" " << x2 <<" " << criterion << endl;
   return criterion;
 }
 

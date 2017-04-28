@@ -13,9 +13,9 @@ using std::istringstream;
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-
 #ifndef OPT_LIB
   #include <cassert>
+  #include <climits>
 #endif
         int fcount =0;
 static int no_stuff=0;

@@ -8,9 +8,13 @@
  * \file
  * Description not yet available.
  */
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 class dvar_hs_smatrix;
 
@@ -24,8 +28,21 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
 {
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
-  const int xs=x.size();
-  const int us=u0.size();
+#ifndef OPT_LIB
+  const int xs = [](unsigned int size)->int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  }(x.size());
+  const int us = [](unsigned int size)->int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  }(u0.size());
+#else
+  const int xs = static_cast<int>(x.size());
+  const int us = static_cast<int>(u0.size());
+#endif
   gradient_structure::set_YES_DERIVATIVES();
 
   int nvar=0;
@@ -39,7 +56,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   int smin=lst.indexmin();
   int smax=lst.indexmax();
   int sz= smax-smin+1;
-  nvar=x.size()+u0.size()+sz;
+  nvar = xs + us + sz;
   independent_variables y(1,nvar);
 
   // need to set random effects active together with whatever

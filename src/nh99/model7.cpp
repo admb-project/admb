@@ -159,7 +159,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       "filename to FILE\n");
       (*ad_printf)( " -est            only do the parameter estimation\n");
       (*ad_printf)( " -noest          do not do the parameter estimation "
-      "(optimization) \n");
+      "(optimization)\n");
       (*ad_printf)( " -ind FILE       change default input data filename to "
       "FILE\n");
       (*ad_printf)( " -lmn N          use limited memory quasi newton -- keep "

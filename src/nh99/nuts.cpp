@@ -148,8 +148,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       istringstream ist(ad_comm::argv[on+1]);
       int _max_treedepth;
       ist >> _max_treedepth;
-      if (_max_treedepth <= 1) {
-	cerr << "Error: max_treedepth must be > 1" << endl;
+      if (_max_treedepth < 0) {
+	cerr << "Error: max_treedepth must be > 0" << endl;
 	ad_exit(1);
       } else {
 	max_treedepth=_max_treedepth;

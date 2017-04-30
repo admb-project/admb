@@ -358,6 +358,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector gr2(1,nvar);		// initial rotated gradient
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
+  // Global, local variables to track the extreme left and rightmost
+  // nodes of the entire tree
+  dvector thetaminus_end(1,nvar);
+  dvector thetaplus_end(1,nvar);
+  dvector rminus_end(1,nvar);
+  dvector rplus_end(1,nvar);
+  dvector thetaminus0(1,nvar);
+  dvector thetaplus0(1,nvar);
+  dvector rminus0(1,nvar);
+  dvector rplus0(1,nvar);
   // References to left most and right most theta and momentum for current
   // subtree inside of buildtree. The ones proceeded with _ are passed
   // through buildtree by reference. Inside build_tree, _thetaplus is left
@@ -376,7 +386,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   bool _divergent; // divergent transition
   int ndivergent=0; // # divergences post-warmup
   int nsamples=0; // total samples, not always nmcmc if duration option used
-
+  // Declare some local variables used below.
+  double nll, H0, logu, value, rn, alpha;
+  int n, j, v;
+  bool s,b;
+  
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Randomize momentum for next iteration, update H, and reset the tree
@@ -387,10 +401,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // Reset model parameters to theta, whether updated or not in previous
     // iteration.
     z=chd*theta;
-    double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
-    double H0=-nll-0.5*norm2(p); // initial Hamiltonian value
-    double logu=H0+log(randu(rng)); // slice variable
+    H0=-nll-0.5*norm2(p); // initial Hamiltonian value
+    logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd);
@@ -398,30 +412,20 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
     // Generate single NUTS trajectory by repeatedly doubling build_tree
-    int n = 1;
+    n = 1;
     _nprime=0;
     _divergent=0;
     _nfevals=0;
-    bool s=1;
-    int j=0;
-    // Global, local variables to track the extreme left and rightmost
-    // nodes of the entire tree
-    dvector thetaminus_end(1,nvar);
-    dvector thetaplus_end(1,nvar);
-    dvector rminus_end(1,nvar);
-    dvector rplus_end(1,nvar);
-    dvector thetaminus0(1,nvar);
-    dvector thetaplus0(1,nvar);
-    dvector rminus0(1,nvar);
-    dvector rplus0(1,nvar);
+    s=1;
+    j=0;
     thetaminus_end=theta; thetaplus_end=theta;
     rminus_end=p; rplus_end=p;
     thetaminus0=theta; thetaplus0=theta;
     rminus0=p; rplus0=p;
 
     while (s) {
-      double value = randu(rng);	   // runif(1)
-      int v = 2 * (value < 0.5) - 1;
+      value = randu(rng);	   // runif(1)
+      v = 2 * (value < 0.5) - 1;
       // Add a trajectory of length 2^j, built to the left or right of
       // edges of the current entire tree.
       if (v == 1) {
@@ -431,7 +435,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	z=chd*thetaplus_end;
 	// Need to reset to the rightmost point, since this may not have
 	// been last one executed and thus the gradients are wrong
-	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
 	build_tree(nvar, gr, chd, eps, rplus_end, thetaplus_end, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
@@ -443,7 +447,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       } else {
 	// Same but to the left from thetaminus
 	z=chd*_thetaminus;
-	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
 	build_tree(nvar, gr, chd, eps, rminus_end, thetaminus_end, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
@@ -458,7 +462,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // uniformly), but still need to detemine whether to accept it at
       // each doubling. The last accepted point becomes the next sample. If
       // none are accepted, the same point is repeated twice.
-      double rn = randu(rng);	   // Runif(1)
+      rn = randu(rng);	   // Runif(1)
       if (_sprime == 1 && rn < double(_nprime)/double(n)){
 	theta=_thetaprime; // rotated, unbounded
 	ytemp=chd*theta; // unbounded
@@ -466,7 +470,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
       // Test if a u-turn occured across the whole subtree j. Previously we
       // only tested sub-subtrees.
-      bool b= stop_criterion(nvar, thetaminus_end, thetaplus_end, rminus_end, rplus_end);
+      b= stop_criterion(nvar, thetaminus_end, thetaplus_end, rminus_end, rplus_end);
       s = _sprime*b;
       // Increment valid points and depth
       n += _nprime;
@@ -492,7 +496,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
     (*pofs_psave) << parsave; // save all bounded draws to psv file
     // Estimated acceptance probability
-    double alpha=0;
+     alpha=0;
     if(_nalphaprime>0){
       alpha=double(_alphaprime)/double(_nalphaprime);
     }

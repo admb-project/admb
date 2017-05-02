@@ -211,10 +211,7 @@ void dfsdmat::allocate(int _n, const gradient_structure& gs)
     tmp+=i;
   }
 }
-
-/**
-Destructor
-*/
+/// Destructor
 dfsdmat::~dfsdmat()
 {
   deallocate();

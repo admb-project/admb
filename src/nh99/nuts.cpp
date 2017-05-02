@@ -301,7 +301,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // cout << "Initial bounded parameters=" << z0 << endl;
   // cout << "Initial unbounded parameters=" << y0 << endl;
   // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
-  // cout << "Initial nll=" << nlltemp << endl;
+  cout << "Initial nll=" << nlltemp << endl;
   // cout << "Initial gr in unbounded space= " << grtemp << endl;
   // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
   ///
@@ -405,6 +405,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     gr2=gr*chd;
     H0=-nll-0.5*norm2(p); // initial Hamiltonian value
     logu=H0+log(randu(rng)); // slice variable
+    cout << "H0=" << H0 << endl;
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd);

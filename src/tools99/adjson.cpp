@@ -27,7 +27,7 @@ value* json::parse(istream& input)
   value* ret = 0;
   input >> std::ws;
   char p = (char)input.peek();
-  while (p != EOF)
+  if (p != EOF)
   {
     char c;
     if (p == '{')
@@ -47,7 +47,6 @@ value* json::parse(istream& input)
       }
 
       ret = o;
-      break;
     }
     else if (p == '[')
     {
@@ -57,13 +56,12 @@ value* json::parse(istream& input)
       {
         while (c != ']')
         {
-          value* p = parse(input);
-          a->add(p);
+          value* v = parse(input);
+          a->add(v);
           input >> std::ws >> c >> std::ws;
         }
       }
       ret = a;
-      break;
     }
     else if (p == '\"')
     {
@@ -85,14 +83,12 @@ value* json::parse(istream& input)
       }
       s->_value.push_back('\"');
       ret = s;
-      break;
     }
     else if (p == '-' || std::isdigit(p))
     {
       number* n = new number();      
       input >> n->_value;
       ret = n;
-      break;
     }
     else if (p == 't')
     {
@@ -101,7 +97,6 @@ value* json::parse(istream& input)
       input.read(str, 4);
       b->_value = true;
       ret = b;
-      break;
     }
     else if (p == 'f')
     {
@@ -110,7 +105,6 @@ value* json::parse(istream& input)
       input.read(str, 5);
       b->_value = false;
       ret = b;
-      break;
     }
     else if (p == 'n')
     {
@@ -118,15 +112,11 @@ value* json::parse(istream& input)
       char str[6];
       input.read(str, 4);
       ret = b;
-      break;
     }
     else
     {
       std::cerr << "Error: unknown char(" << p << ") in json input.\n";
-      break;
     }
-    input >> std::ws;
-    p = (char)input.peek();
   }
   return ret;
 }

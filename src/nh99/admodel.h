@@ -760,13 +760,13 @@ For storing void pointers in a array.
 */
 class adlist_ptr
 {
-  ptovoid * ptr;
-  int current_size;
-  int current;
+  ptovoid* ptr;
+  unsigned int current_size;
+  unsigned int current;
   void resize(void);
   void add_to_list(void* p);
 public:
-  adlist_ptr(int init_size);
+  adlist_ptr(unsigned int init_size);
   ~adlist_ptr();
 
   void initialize();

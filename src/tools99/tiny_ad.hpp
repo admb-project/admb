@@ -189,27 +189,27 @@ namespace tiny_ad {
      y.getDeriv();                          // Get all 3rd order derivatives
   */
 #define VARIABLE(order,n) variable<order,n>
-  template<int order, int n>
+  template<int order, unsigned int n>
   struct variable : ad< VARIABLE(order-1, n),
 			TINY_VECTOR( VARIABLE(order-1, n) , n) > {
     typedef ad< VARIABLE(order-1, n),
 		TINY_VECTOR(VARIABLE(order-1, n), n) > Base;
     typedef variable<order-1, n> Type;
-    static const int result_size = n * Type::result_size;
+    static const unsigned int result_size = n * Type::result_size;
     variable() { /* Do not zero-initialize */ }
     variable(Base x) : Base(x) {}
     variable(double x) : Base(x) {}
-    variable(double x, int id) : Base(x) {
+    variable(double x, unsigned int id) : Base(x) {
       setid(id);
     }
-    void setid(int i0, int count = 0){
+    void setid(unsigned int i0, unsigned int count = 0){
       this->value.setid(i0, count);
       this->deriv[i0].setid(i0, count + 1);
     }
     TINY_VECTOR(double, result_size) getDeriv(){
       TINY_VECTOR(double, result_size) ans;
-      int stride = result_size / n;
-      for(int i=0; i<n; i++)
+      unsigned int stride = result_size / n;
+      for(unsigned int i=0; i<n; i++)
 	ans.segment(i * stride, stride) = this->deriv[i].getDeriv();
       return ans;
     }
@@ -218,14 +218,14 @@ namespace tiny_ad {
   template<int n>
   struct variable<1, n> : ad<double, TINY_VECTOR(double,n) >{
     typedef ad<double, TINY_VECTOR(double,n) > Base;
-    static const int result_size = n;
+    static const unsigned int result_size = n;
     variable<1, n>() { /* Do not zero-initialize */ }
     variable<1, n>(Base x) : Base(x) {}
     variable<1, n>(double x) : Base(x) {}
-    variable<1, n>(double x, int id) : Base(x) {
+    variable<1, n>(double x, unsigned int id) : Base(x) {
       setid(id);
     }
-    void setid(int i0, int count = 0){
+    void setid(unsigned int i0, unsigned int count = 0){
       if(count == 0)
 	this->deriv[i0] = 1.0;
       if(count == 1)

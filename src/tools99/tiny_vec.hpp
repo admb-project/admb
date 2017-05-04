@@ -17,51 +17,51 @@ struct tiny_vec {
   Type data[n];
   tiny_vec(){}
   tiny_vec(const tiny_vec &other) {
-    for(int i=0; i<n; i++) data[i] = other.data[i];
+    for(unsigned int i=0; i<n; ++i) data[i] = other.data[i];
   }
   void resize(size_t length){ /* Ignore - this is fixed size */ }
   int size() const { return n; }
   Type operator[] (size_t i) const { return data[i]; }
   Type &operator[] (size_t i) { return data[i]; }
-  void setZero() {for(int i=0; i<n; i++) (*this)[i] = 0;}
+  void setZero() {for(unsigned int i = 0;  i < n; ++i) (*this)[i] = 0;}
   tiny_vec_ref<Type> segment(size_t start, size_t length) {
     tiny_vec_ref<Type> ans;
     ans.p = &(data[start]);
     ans.n = length;
     return ans;
   }
-#define VBINARY_OPERATOR(OP)						\
-  tiny_vec operator OP (const tiny_vec &other) const {			\
-    tiny_vec ans;							\
-    for(int i=0; i<n; i++) ans.data[i] = data[i] OP other.data[i];	\
-    return ans;								\
-  }									\
-  template<class Scalar>						\
-  tiny_vec operator OP (const Scalar &other) const {			\
-    tiny_vec ans;							\
-    for(int i=0; i<n; i++) ans.data[i] = data[i] OP other;		\
-    return ans;								\
+#define VBINARY_OPERATOR(OP)						    \
+  tiny_vec operator OP (const tiny_vec &other) const {			    \
+    tiny_vec ans;							    \
+    for(unsigned int i=0; i<n; ++i) ans.data[i] = data[i] OP other.data[i]; \
+    return ans;								    \
+  }									    \
+  template<class Scalar>						    \
+  tiny_vec operator OP (const Scalar &other) const {			    \
+    tiny_vec ans;							    \
+    for(unsigned int i=0; i<n; ++i) ans.data[i] = data[i] OP other;         \
+    return ans;								    \
   }
   VBINARY_OPERATOR(+)
   VBINARY_OPERATOR(-)
   VBINARY_OPERATOR(*)
   VBINARY_OPERATOR(/)
-#define VUNARY_OPERATOR(OP)					\
-  tiny_vec operator OP () const {				\
-    tiny_vec ans;						\
-    for(int i=0; i<n; i++) ans.data[i] = OP (*this).data[i];	\
-    return ans;							\
+#define VUNARY_OPERATOR(OP)					      \
+  tiny_vec operator OP () const {				      \
+    tiny_vec ans;						      \
+    for(unsigned int i=0; i<n; ++i) ans.data[i] = OP (*this).data[i]; \
+    return ans;							      \
   }
   VUNARY_OPERATOR(+)
   VUNARY_OPERATOR(-)
-#define COMPOUND_ASSIGNMENT_OPERATOR(OP)		\
-  tiny_vec& operator OP (const Type &other) {		\
-    for(int i=0; i<n; i++) (*this).data[i] OP other;	\
-    return *this;					\
-  }							\
-  tiny_vec& operator OP (const tiny_vec &other) {	\
-    for(int i=0; i<n; i++) (*this).data[i] OP other[i];	\
-    return *this;					\
+#define COMPOUND_ASSIGNMENT_OPERATOR(OP)		        \
+  tiny_vec& operator OP (const Type &other) {		        \
+    for(unsigned int i=0; i<n; ++i) (*this).data[i] OP other;	\
+    return *this;					        \
+  }							        \
+  tiny_vec& operator OP (const tiny_vec &other) {	        \
+    for(unsigned int i=0; i<n; ++i) (*this).data[i] OP other[i];\
+    return *this;					        \
   }
   COMPOUND_ASSIGNMENT_OPERATOR(+=)
   COMPOUND_ASSIGNMENT_OPERATOR(-=)
@@ -71,7 +71,7 @@ struct tiny_vec {
   #ifdef EIGEN_CORE_H
   operator vector<Type>(){
     vector<Type> ans(n);
-    for(int i=0; i<n; i++) ans[i] = (*this)[i];
+    for(unsigned int i=0; i<n; ++i) ans[i] = (*this)[i];
     return ans;
   }
   #endif

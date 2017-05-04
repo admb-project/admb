@@ -83,9 +83,14 @@ named_dvar_matrix& named_dvar_matrix::operator=(const dvar_matrix& values)
   this->dvar_matrix::operator=(values);
   return *this;
 }
-named_dvar_matrix& named_dvar_matrix::operator=(const dmatrix& m)
+/**
+Assigns named_dvar_matrix with values from dmatrix dm.
+
+\param dm dmatrix values
+*/
+named_dvar_matrix& named_dvar_matrix::operator=(const dmatrix& dm)
 {
-  this->dvar_matrix::operator=(m);
+  this->dvar_matrix::operator=(dm);
   return *this;
 }
 /**

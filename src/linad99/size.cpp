@@ -4,22 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const dvar_vector& x)
+Returns size of dvar_vector x.
+
+\param x dvar_vector
+*/
+unsigned int size_count(const dvar_vector& x)
 {
-  if (!(x))
-    return 0;
-  else
-    return x.size();
+  return !(x) ? 0 : x.size();
 }
 
 /**

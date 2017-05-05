@@ -85,6 +85,7 @@ GTESTS=\
  test_tiny_ad.cpp\
  test_adjson.cpp\
  test_dmatrix.cpp\
+ test_size_count.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

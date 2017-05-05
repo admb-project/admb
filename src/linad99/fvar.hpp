@@ -4435,13 +4435,13 @@ void set_value_partial(dvar3_array & x, const dvar_vector & v, const int &ii,
   int n);
 
 unsigned int size_count(const dvar_vector& x);
-int size_count(const dvar_matrix & x);
-int size_count(const dvar3_array & x);
-int size_count(const dvar4_array & x);
+unsigned int size_count(const dvar_matrix& x);
+unsigned int size_count(const dvar3_array& x);
+unsigned int size_count(const dvar4_array& x);
 unsigned int size_count(const dvector& x);
 unsigned int size_count(const dmatrix& x);
 unsigned int size_count(const d3_array& x);
-int size_count(const d4_array & x);
+unsigned int size_count(const d4_array& x);
 
 int size_count_partial(const dvar_vector & x, int);
 int size_count_partial(const dvar_matrix & x, int);

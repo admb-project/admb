@@ -13,7 +13,6 @@ OBJ6=\
  xmodelm5.obj\
  getbigs.obj\
  vec_io.obj\
- cnstrs.obj\
  con2fmin.obj\
  model34.obj\
  model35.obj\
@@ -116,6 +115,7 @@ UNUSED=\
  admbgui.obj\
  confmin.obj\
  model_mi.obj\
+ cnstrs.obj\
  evalxtrn.obj
 UNUSED_OBJSPLUS=\
  spcomm.obj

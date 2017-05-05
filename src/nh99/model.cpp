@@ -1260,7 +1260,7 @@ pinitial_params& adlist_ptr::operator[](int i)
 /**
 Construct array with init_size.
 */
-adlist_ptr::adlist_ptr(int init_size)
+adlist_ptr::adlist_ptr(unsigned int init_size)
 {
   current = 0;
   ptr = new ptovoid[init_size];
@@ -1272,7 +1272,7 @@ adlist_ptr::adlist_ptr(int init_size)
 }
 void adlist_ptr::initialize()
 {
-  for (int i = 0; i < current_size; i++)
+  for (unsigned int i = 0; i < current_size; ++i)
   {
     ptr[i] = 0;
   }
@@ -1290,7 +1290,7 @@ void adlist_ptr::resize(void)
   {
     cerr << "Error: allocating memory in adlist_ptr" << endl;
   }
-  for (int i=0;i<current;i++)
+  for (unsigned int i = 0; i < current; ++i)
   {
     tmp[i] = ptr[i];
   }
@@ -1319,8 +1319,6 @@ Destructor
 */
 adlist_ptr::~adlist_ptr()
 {
-  current = 0;
-  current_size = -1;
   if (ptr)
   {
     delete [] ptr;

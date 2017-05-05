@@ -1,5 +1,3 @@
-OBJSPARSE=\
- ../sparse/hs_sparse.obj
 OBJ1=\
  dmat21.obj\
  dmat3.obj\

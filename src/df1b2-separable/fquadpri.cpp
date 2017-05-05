@@ -267,24 +267,37 @@ void normal_df1b2quadratic_prior::set_old_style_flag(void)
 {
   old_style_flag=0;
 }
-void normal_df1b2quadratic_prior::operator = (const df1b2matrix & M)
-{
-  df1b2quadratic_prior::operator = (M);
-}
+/**
+Assigns normal_df1b2quadratic_prior with values from m.
 
+\param m values
+*/
+void normal_df1b2quadratic_prior::operator=(const df1b2matrix& m)
+{
+  df1b2quadratic_prior::operator=(m);
+}
 void df1b2quadratic_re_penalty::set_old_style_flag(void)
 {
   old_style_flag=2;
 }
-void df1b2quadratic_re_penalty::operator = (const df1b2matrix & M)
-{
-  df1b2quadratic_prior::operator = (M);
-}
-void df1b2quadratic_re_penalty::operator = (const dmatrix & M)
-{
-  df1b2quadratic_prior::operator = (M);
-}
+/**
+Assigns df1v2quadratic_re with values from m.
 
+\param m values
+*/
+void df1b2quadratic_re_penalty::operator=(const df1b2matrix& m)
+{
+  df1b2quadratic_prior::operator=(m);
+}
+/**
+Assigns df1v2quadratic_re with values from m.
+
+\param m values
+*/
+void df1b2quadratic_re_penalty::operator=(const dmatrix& m)
+{
+  df1b2quadratic_prior::operator=(m);
+}
 
 df1b2quadratic_re_penalty::df1b2quadratic_re_penalty(void)
 {

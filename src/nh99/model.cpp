@@ -480,10 +480,13 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
     //add_to_list();
   }
 
-  int param_init_number::size_count(void)
-  {
-    return 1;
-  }
+/**
+Returns number of active paramters.
+*/
+unsigned int param_init_number::size_count() const
+{
+  return 1;
+}
 
 /**
 Use a data_vector to allocate an init_bounded_number
@@ -717,10 +720,13 @@ void param_init_vector::set_value(const dvar_vector& x,
 #  endif
   }
 
-  int param_init_vector::size_count(void)
-  {
-    return ::size_count(*this);
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_init_vector::size_count() const
+{
+  return ::size_count(*this);
+}
 
   param_init_vector::param_init_vector(void) : named_dvar_vector() ,
     initial_params()
@@ -885,10 +891,13 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
     }
   }
 
-  int param_init_bounded_vector::size_count(void)
-  {
-    return ::size_count(*this);
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_init_bounded_vector::size_count() const
+{
+  return ::size_count(*this);
+}
 
 /**
 Default constructor
@@ -1002,10 +1011,13 @@ void param_init_matrix::set_value_inv(const dvector& x, const int& ii)
     //add_to_list();
   }
 
-  int param_init_matrix::size_count(void)
-  {
-    return ::size_count(*this);
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_init_matrix::size_count() const
+{
+  return ::size_count(*this);
+}
 
 void param_init_matrix::save_value(ofstream& ofs)
 {

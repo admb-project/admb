@@ -30,10 +30,13 @@
     // stddev_params::add_to_list(); // don't think we need this here
   }
 
-  int param_likeprof_number::size_count(void)
-  {
-    return 1;
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_likeprof_number::size_count() const
+{
+  return 1;
+}
 
 /*
         void param_likeprof_number::set_dependent_variables(void)

@@ -893,7 +893,7 @@ public:
     const int& ii) = 0;
   virtual void hess_scale(const dvector& d, const dvector& x,
     const int& ii) = 0;
-  virtual int size_count(void)=0; // get the number of active parameters
+  virtual unsigned int size_count() const = 0; // get the number of active parameters
 
   // save the objects value in to a text file
   virtual void save_value(ofstream& ofs) = 0;
@@ -1007,7 +1007,7 @@ private:
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void sd_scale(const dvector& d, const dvector& x, const int&);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x,const int&);
@@ -1090,7 +1090,7 @@ private:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x, const int&);
@@ -1180,7 +1180,7 @@ class param_init_number: public named_dvariable, public initial_params
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void save_value(const ofstream& ofs, int prec);
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
     int& offset);
@@ -1326,7 +1326,7 @@ public:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void save_value(ofstream& ofs);
   virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
@@ -2145,7 +2145,10 @@ public:
   stddev_params(void){;}
   virtual void setindex(int);
   virtual int getindex(void);
-  virtual int size_count(void)=0; // get the number of active parameters
+
+  // get the number of active parameters
+  virtual unsigned int size_count() const = 0;
+
   virtual void set_dependent_variables(void)=0;
   virtual void copy_value_to_vector(const dvector&,const int&) = 0;
   virtual void get_sd_values(const dvector& x, const int& ii) = 0;
@@ -2195,7 +2198,10 @@ public:
 class param_stddev_vector: public named_dvar_vector , stddev_params
 {
   dvector sd;
-    virtual int size_count(void); // get the number of active parameters
+
+  // get the number of active parameters
+  virtual unsigned int size_count() const;
+
     virtual const char * label(void);
     param_stddev_vector();
     void allocate(int imin,int imax,const char * s="UNNAMED");
@@ -2219,7 +2225,10 @@ class param_stddev_number: public named_dvariable , public stddev_params
   void allocate(const char *s="UNNAMED");
   virtual void setindex(int);
   virtual int getindex(void);
-  virtual int size_count(void); // get the number of active parameters
+
+  // get the number of active parameters
+  virtual unsigned int size_count() const;
+
   virtual const char * label(void);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void get_sd_values(const dvector& x, const int& ii);
@@ -2240,7 +2249,10 @@ class param_likeprof_number: public param_stddev_number ,
 {
     double sigma;
     void allocate(const char *s="UNNAMED");
-    virtual int size_count(void); // get the number of active parameters
+
+  // get the number of active parameters
+  virtual unsigned int size_count() const;
+
     virtual const char * label(void);
     virtual double& get_sigma(void){return sigma;}
     virtual double get_value(void){return value(*this);}
@@ -2260,7 +2272,7 @@ public:
 class param_stddev_matrix: public named_dvar_matrix , stddev_params
 {
   dmatrix sd;
-    virtual int size_count(void);
+  virtual unsigned int size_count() const;
     //virtual void read_value(void);
     virtual const char * label(void);
     void allocate(int rmin,int rmax,int cmin,int cmax,
@@ -2323,7 +2335,7 @@ public:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void save_value(ofstream& ofs);
   virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec);
@@ -2380,7 +2392,7 @@ public:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&,const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void save_value(ofstream& ofs);
   virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec);

@@ -501,3 +501,56 @@ TEST_F(test_dvector, sort_with_index)
   ASSERT_EQ(2, ivec(4));
   ASSERT_EQ(3, ivec(5));
 }
+namespace admb_deprecated
+{
+  dvector sort(const dvector& v, int NSTACK);
+  dvector sort(const dvector& v, const ivector& index, int NSTACK);
+}
+TEST_F(test_dvector, deprecated_sort)
+{
+  dvector d(1, 5);
+  d(1) = -1;
+  d(2) = 0.1;
+  d(3) = 3;
+  d(4) = -0.25;
+  d(5) = 0;
+
+  dvector v = admb_deprecated::sort(d, 60);
+  ASSERT_DOUBLE_EQ(-1, v(1));
+  ASSERT_DOUBLE_EQ(-0.25, v(2));
+  ASSERT_DOUBLE_EQ(0, v(3));
+  ASSERT_DOUBLE_EQ(0.1, v(4));
+  ASSERT_DOUBLE_EQ(3, v(5));
+}
+TEST_F(test_dvector, deprecated_sort_with_index)
+{
+  dvector dvec(1, 5);
+  dvec(1) = -1;
+  dvec(2) = 0.1;
+  dvec(3) = 3;
+  dvec(4) = -0.25;
+  dvec(5) = 0;
+
+  ivector ivec(1, 5);
+  ivec.initialize();
+
+  dvector v = admb_deprecated::sort(dvec, ivec, 60);
+
+  ASSERT_DOUBLE_EQ(-1, dvec(1));
+  ASSERT_DOUBLE_EQ(0.1, dvec(2));
+  ASSERT_DOUBLE_EQ(3, dvec(3));
+  ASSERT_DOUBLE_EQ(-0.25, dvec(4));
+  ASSERT_DOUBLE_EQ(0, dvec(5));
+
+  ASSERT_DOUBLE_EQ(-1, v(1));
+  ASSERT_DOUBLE_EQ(-0.25, v(2));
+  ASSERT_DOUBLE_EQ(0, v(3));
+  ASSERT_DOUBLE_EQ(0.1, v(4));
+  ASSERT_DOUBLE_EQ(3, v(5));
+
+  ASSERT_EQ(1, ivec(1));
+  ASSERT_EQ(4, ivec(2));
+  ASSERT_EQ(5, ivec(3));
+  ASSERT_EQ(2, ivec(4));
+  ASSERT_EQ(3, ivec(5));
+}

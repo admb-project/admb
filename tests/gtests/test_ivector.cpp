@@ -278,3 +278,102 @@ TEST_F(test_ivector, invalid_index)
   ASSERT_EQ(NULL, w.get_v());
   ASSERT_EQ(false, w.allocated());
 }
+TEST_F(test_ivector, sort)
+{
+  ivector ivec(1, 5);
+  ivec(1) = -1;
+  ivec(2) = 4;
+  ivec(3) = 3;
+  ivec(4) = -2;
+  ivec(5) = 0;
+
+  ivector ret = sort(ivec, 60);
+  ASSERT_EQ(-2, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(0, ret(3));
+  ASSERT_EQ(3, ret(4));
+  ASSERT_EQ(4, ret(5));
+}
+TEST_F(test_ivector, sort_with_index)
+{
+  ivector ivec(1, 5);
+  ivec(1) = -1;
+  ivec(2) = 4;
+  ivec(3) = 3;
+  ivec(4) = -2;
+  ivec(5) = 0;
+
+  ivector index(1, 5);
+  index.initialize();
+
+  ivector ret = sort(ivec, index, 60);
+  ASSERT_EQ(-2, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(0, ret(3));
+  ASSERT_EQ(3, ret(4));
+  ASSERT_EQ(4, ret(5));
+
+  ASSERT_EQ(-1, ivec(1));
+  ASSERT_EQ(4, ivec(2));
+  ASSERT_EQ(3, ivec(3));
+  ASSERT_EQ(-2, ivec(4));
+  ASSERT_EQ(0, ivec(5));
+
+  ASSERT_EQ(4, index(1));
+  ASSERT_EQ(1, index(2));
+  ASSERT_EQ(5, index(3));
+  ASSERT_EQ(3, index(4));
+  ASSERT_EQ(2, index(5));
+}
+namespace admb_deprecated
+{
+  ivector sort(const ivector& v, int NSTACK);
+  ivector sort(const ivector& v, const ivector& index, int NSTACK);
+}
+TEST_F(test_ivector, deprecated_sort)
+{
+  ivector ivec(1, 5);
+  ivec(1) = -1;
+  ivec(2) = 4;
+  ivec(3) = 3;
+  ivec(4) = -2;
+  ivec(5) = 0;
+
+  ivector ret = admb_deprecated::sort(ivec, 60);
+  ASSERT_EQ(-2, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(0, ret(3));
+  ASSERT_EQ(3, ret(4));
+  ASSERT_EQ(4, ret(5));
+}
+TEST_F(test_ivector, deprecated_sort_with_index)
+{
+  ivector ivec(1, 5);
+  ivec(1) = -1;
+  ivec(2) = 4;
+  ivec(3) = 3;
+  ivec(4) = -2;
+  ivec(5) = 0;
+
+  ivector index(1, 5);
+  index.initialize();
+
+  ivector ret = admb_deprecated::sort(ivec, index, 60);
+  ASSERT_EQ(-2, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(0, ret(3));
+  ASSERT_EQ(3, ret(4));
+  ASSERT_EQ(4, ret(5));
+
+  ASSERT_EQ(-1, ivec(1));
+  ASSERT_EQ(4, ivec(2));
+  ASSERT_EQ(3, ivec(3));
+  ASSERT_EQ(-2, ivec(4));
+  ASSERT_EQ(0, ivec(5));
+
+  ASSERT_EQ(4, index(1));
+  ASSERT_EQ(1, index(2));
+  ASSERT_EQ(5, index(3));
+  ASSERT_EQ(3, index(4));
+  ASSERT_EQ(2, index(5));
+}

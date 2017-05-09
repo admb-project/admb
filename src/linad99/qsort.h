@@ -257,7 +257,7 @@ typedef struct {
   {                  \
     QSORT_TYPE *const _end_ptr = _base + _elems - 1;      \
     QSORT_TYPE *_tmp_ptr = _base;          \
-    register QSORT_TYPE *_run_ptr;          \
+    QSORT_TYPE *_run_ptr;          \
     QSORT_TYPE *_thresh;            \
                   \
     _thresh = _base + _QSORT_MAX_THRESH;        \
@@ -473,8 +473,8 @@ QSORT2(QSORT_TYPE,QSORT_TYPE2,QSORT_BASE,QSORT_BASE2,QSORT_NELT,QSORT_LT)\
     QSORT_TYPE *const _end_ptr = _base + _elems - 1;      \
     QSORT_TYPE *_tmp_ptr = _base;          \
     QSORT_TYPE2 *_tmp_ptr2 = _base2;          \
-    register QSORT_TYPE *_run_ptr;          \
-    register QSORT_TYPE2 *_run_ptr2;          \
+    QSORT_TYPE *_run_ptr;          \
+    QSORT_TYPE2 *_run_ptr2;          \
     QSORT_TYPE *_thresh;            \
                   \
     _thresh = _base + _QSORT_MAX_THRESH;        \

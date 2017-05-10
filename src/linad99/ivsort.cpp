@@ -60,6 +60,9 @@ ivector sort(const ivector& v, int NSTACK)
     ++lb;
   }
 
+  delete [] intarray;
+  intarray = 0;
+
   return arr;
 }
 

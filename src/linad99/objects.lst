@@ -410,7 +410,9 @@ OBJ3=\
  boundfun.obj\
  derch.obj\
  dvsort.obj\
+ dvsort2.obj\
  ivsort.obj\
+ ivsort2.obj\
  ivect_io.obj\
  fmm_cont.obj\
  dvec_dif.obj\

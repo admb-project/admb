@@ -639,3 +639,12 @@ TEST_F(test_adstring, constructor_not_one)
     adstring u(0, 1); 
   }, ::testing::ExitedWithCode(1), "Error");
 }
+TEST_F(test_adstring, str2)
+{
+  adstring a;
+  str(1234, a);
+  EXPECT_STREQ("1234", a);
+  adstring b;
+  str(-1234, b);
+  EXPECT_STREQ("-1234", b);
+}

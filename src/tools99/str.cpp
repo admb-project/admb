@@ -85,7 +85,12 @@ adstring str(double x, int minwidth, int decplaces)
    adstring tmp(buffer);
    return (tmp);
 }
+/**
+Convert integer a to adstring s.
 
+\param a Value to be converted.
+\param s Converted adstring of a.
+*/
 void str(const int a, adstring& s)
 {
 #if defined(_MSC_VER)
@@ -96,7 +101,11 @@ void str(const int a, adstring& s)
   s = itoa(a,10);
 #endif
 }
+/**
+Returns converted string representation of integer a.
 
+\param a Value to be converted.
+*/
 adstring str(const int a)
 {
 #if defined(_MSC_VER)
@@ -108,7 +117,7 @@ adstring str(const int a)
 #else
   adstring tmp = itoa(a,10);
 #endif
-  return(tmp);
+  return tmp;
 }
 
 adstring chr(int c)

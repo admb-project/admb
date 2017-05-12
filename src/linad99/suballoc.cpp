@@ -62,67 +62,54 @@ int sub_unallocated(const dvar3_array& arr3)
   }
   return !isallocated;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-  int sub_unallocated(const dvar4_array& m)
+Returns true if any of the sub vectors of arr4 was not allocated,
+otherwise false.
+
+\param arr4 variable dvar4_array
+*/
+int sub_unallocated(const dvar4_array& arr4)
+{
+  int isallocated = allocated(arr4);
+  if (isallocated)
   {
-    int iflag=0;
-    int mmin=m.indexmin();
-    int mmax=m.indexmax();
-    if (!allocated(m))
+    int mmin = arr4.indexmin();
+    int mmax = arr4.indexmax();
+    for (int i = mmin; i <= mmax; ++i)
     {
-      iflag=1;
-      return iflag;
-    }
-    if (!allocated(m))
-    {
-      iflag=1;
-      return iflag;
-    }
-    for (int i=mmin;i<=mmax;i++)
-    {
-      if (sub_unallocated(m(i)))
+      if (sub_unallocated(arr4(i)))
       {
-        iflag=1;
+        isallocated = false;
         break;
       }
     }
-    return iflag;
   }
-
+  return !isallocated;
+}
 /**
- * Description not yet available.
- * \param
- */
-  int sub_unallocated(const dvar5_array& m)
+Returns true if any of the sub vectors of arr5 was not allocated,
+otherwise false.
+
+\param arr5 variable dvar5_array
+*/
+int sub_unallocated(const dvar5_array& arr5)
+{
+  int isallocated = allocated(arr5);
+  if (isallocated)
   {
-    int iflag=0;
-    int mmin=m.indexmin();
-    int mmax=m.indexmax();
-    if (!allocated(m))
+    int mmin = arr5.indexmin();
+    int mmax = arr5.indexmax();
+    for (int i = mmin; i <= mmax; ++i)
     {
-      iflag=1;
-      return iflag;
-    }
-    if (!allocated(m))
-    {
-      iflag=1;
-      return iflag;
-    }
-    for (int i=mmin;i<=mmax;i++)
-    {
-      if (sub_unallocated(m(i)))
+      if (sub_unallocated(arr5(i)))
       {
-        iflag=1;
+        isallocated = false;
         break;
       }
     }
-    return iflag;
   }
-
+  return !isallocated;
+}
 /**
  * Description not yet available.
  * \param

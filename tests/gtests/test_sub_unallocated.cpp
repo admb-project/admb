@@ -121,3 +121,21 @@ TEST_F(test_sub_unallocated, dvar3_array)
   dvar3_array arr3b(1, 4, 1, 4, 1, 4);
   ASSERT_FALSE(sub_unallocated(arr3b));
 }
+TEST_F(test_sub_unallocated, dvar4_array)
+{
+  gradient_structure gs;
+
+  dvar4_array arr4;
+  ASSERT_TRUE(sub_unallocated(arr4));
+  arr4.allocate(1, 4, 1, 4, 1, 4, 1, 4);
+  ASSERT_FALSE(sub_unallocated(arr4));
+}
+TEST_F(test_sub_unallocated, dvar5_array)
+{
+  gradient_structure gs;
+
+  dvar5_array arr5;
+  ASSERT_TRUE(sub_unallocated(arr5));
+  arr5.allocate(1, 4, 1, 4, 1, 4, 1, 4, 1, 4);
+  ASSERT_FALSE(sub_unallocated(arr5));
+}

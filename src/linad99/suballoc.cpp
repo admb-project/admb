@@ -1,85 +1,67 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2017 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-  int sub_unallocated(const dvar_vector& m)
-  {
-    int iflag = 0;
-    if (!allocated(m)) iflag=1;
-    return iflag;
-  }
+Returns true if varvec was not allocated,
+otherwise false.
 
+\param v variable vector
+*/
+int sub_unallocated(const dvar_vector& v)
+{
+  return !allocated(v);
+}
 /**
- * Description not yet available.
- * \param
- */
-  int sub_unallocated(const dvar_matrix& m)
-  {
-    int iflag=0;
-    if (!allocated(m))
-    {
-      iflag=1;
-      return iflag;
-    }
-    int mmin=m.indexmin();
-    int mmax=m.indexmax();
-    if (!allocated(m))
-    {
-      iflag=1;
-      return iflag;
-    }
-    for (int i=mmin;i<=mmax;i++)
-    {
-      if (!allocated(m(i)))
-      {
-        iflag=1;
-        break;
-      }
-    }
-    return iflag;
-  }
+Returns true if any of the sub vectors of matrix m was not allocated,
+otherwise false.
 
-/**
- * Description not yet available.
- * \param
- */
-  int sub_unallocated(const dvar3_array& m)
+\param m variable dvar_matrix
+*/
+int sub_unallocated(const dvar_matrix& m)
+{
+  int isallocated = allocated(m);
+  if (isallocated)
   {
-    int iflag=0;
-    int mmin=m.indexmin();
-    int mmax=m.indexmax();
-    if (!allocated(m))
-    {
-      iflag=1;
-      return iflag;
-    }
-    if (!allocated(m))
-    {
-      iflag=1;
-      return iflag;
-    }
-    for (int i=mmin;i<=mmax;i++)
+    int mmin = m.indexmin();
+    int mmax = m.indexmax();
+    for (int i = mmin; i <= mmax; ++i)
     {
       if (sub_unallocated(m(i)))
       {
-        iflag=1;
+        isallocated = false;
         break;
       }
     }
-    return iflag;
   }
+  return !isallocated;
+}
+/**
+Returns true if any of the sub vectors of arr3 was not allocated,
+otherwise false.
+
+\param arr3 variable dvar3_array
+*/
+int sub_unallocated(const dvar3_array& arr3)
+{
+  int isallocated = allocated(arr3);
+  if (isallocated)
+  {
+    int mmin = arr3.indexmin();
+    int mmax = arr3.indexmax();
+    for (int i = mmin; i <= mmax; ++i)
+    {
+      if (sub_unallocated(arr3(i)))
+      {
+        isallocated = false;
+        break;
+      }
+    }
+  }
+  return !isallocated;
+}
 
 /**
  * Description not yet available.

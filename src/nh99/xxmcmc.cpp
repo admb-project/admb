@@ -661,7 +661,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 	std::clock_t start = clock();
 	time_t now = time(0);
 	tm* localtm = localtime(&now);
-	cout << endl << "Starting RWM for model '" << ad_comm::adprogram_name <<
+	std::string m=get_filename((char*)ad_comm::adprogram_name);
+	cout << endl << "Starting RWM for model '" << m <<
 	  "' at " << asctime(localtm);
 	if(use_duration==1){
 	  cout << "Model will run for " << duration/60 <<
@@ -674,9 +675,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 	ofstream rotated("rotated.csv", ios::trunc);
 	ofstream unbounded("unbounded.csv", ios::trunc);
 	ofstream bounded("bounded.csv", ios::trunc);
-	cout << "Initial mle=" << mle << endl;
-	cout << "Initial z=" << parsave << endl;
-	cout << "Initial y=" << y << endl;
+	// cout << "Initial mle=" << mle << endl;
+	// cout << "Initial z=" << parsave << endl;
+	// cout << "Initial y=" << y << endl;
 	cout << "Initial nll=" << -llbest << endl;
 	// Start of MCMC chain
 	for (int i=1;i<=number_sims;i++)

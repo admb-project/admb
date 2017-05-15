@@ -479,6 +479,7 @@ OBJ16=\
  imat4.obj\
  model49.obj\
  i3arr1.obj\
+ conjprod.obj\
  d3arr11.obj
 PVM=\
  slgrdclc.obj\
@@ -494,5 +495,4 @@ UNUSED=\
  ad_atlas.obj\
  getopt.obj\
  manip.obj\
- fmmq.obj\
- conjprod.obj
+ fmmq.obj

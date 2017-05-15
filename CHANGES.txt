@@ -16,6 +16,19 @@ The goals for all releases are
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+ADMB-git
+--------
+
+####New Supported Compilers
+
+* Microsoft Visual C++ 2017
+
+  __Note__ Microsoft Visual C++ 2013 is no longer supported.
+
+####Changes and Improvements
+
+* Fixed many signed and unsigned conversion warnings.
+
 ADMB-11.6
 ---------
 

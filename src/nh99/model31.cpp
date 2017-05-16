@@ -365,58 +365,44 @@ void dll_param_init_bounded_vector::allocate(double* _pd,int imin,int imax,
   allocate(_pd,imin,imax,_minb,_maxb,1,s);
 }
 
-dll_param_matrix& dll_param_matrix::operator =
-  (const dvar_matrix& m)
+dll_param_matrix& dll_param_matrix::operator=(const dvar_matrix& varmat)
 {
-  param_matrix::operator = (m);
+  param_matrix::operator=(varmat);
   return *this;
 }
-
-dll_param_matrix& dll_param_matrix::operator =
-  (const double m)
+dll_param_matrix& dll_param_matrix::operator=(const double value)
 {
-  param_matrix::operator = (m);
+  param_matrix::operator=(value);
   return *this;
 }
-
-dll_param_matrix& dll_param_matrix::operator =
-  (const dvariable& m)
+dll_param_matrix& dll_param_matrix::operator=(const dvariable& var)
 {
-  param_matrix::operator = (m);
+  param_matrix::operator=(var);
   return *this;
 }
-
-dll_param_matrix& dll_param_matrix::operator =
-  (const dmatrix& m)
+dll_param_matrix& dll_param_matrix::operator=(const dmatrix& mat)
 {
-  param_matrix::operator = (m);
+  param_matrix::operator=(mat);
   return *this;
 }
-
-dll_param_init_matrix& dll_param_init_matrix::operator =
-  (const dmatrix& m)
+dll_param_init_matrix& dll_param_init_matrix::operator=(const dmatrix& mat)
 {
-  param_init_matrix::operator = (m);
+  param_init_matrix::operator=(mat);
   return *this;
 }
-
-dll_param_init_matrix& dll_param_init_matrix::operator =
-  (const dvar_matrix& m)
+dll_param_init_matrix& dll_param_init_matrix::operator=(
+  const dvar_matrix& varmat)
 {
-  param_init_matrix::operator = (m);
+  param_init_matrix::operator=(varmat);
   return *this;
 }
-
-dll_param_init_matrix& dll_param_init_matrix::operator =
-  (const dvariable& m)
+dll_param_init_matrix& dll_param_init_matrix::operator=(const dvariable& value)
 {
-  param_init_matrix::operator = (m);
+  param_init_matrix::operator=(value);
   return *this;
 }
-
-dll_param_init_matrix& dll_param_init_matrix::operator =
-  (const double& m)
+dll_param_init_matrix& dll_param_init_matrix::operator=(const double& value)
 {
-  param_init_matrix::operator = (m);
+  param_init_matrix::operator=(value);
   return *this;
 }

@@ -728,11 +728,12 @@ unsigned int param_init_vector::size_count() const
   return ::size_count(*this);
 }
 
-  param_init_vector::param_init_vector(void) : named_dvar_vector() ,
-    initial_params()
-  {
-    //add_to_list();
-  }
+/// Default constructor
+param_init_vector::param_init_vector():
+  named_dvar_vector(), initial_params()
+{
+  //add_to_list();
+}
 
 void param_init_vector::save_value(ofstream& ofs)
 {
@@ -757,44 +758,52 @@ void param_init_vector::bsave_value(uostream& uos)
     allocate(imin,imax,1,s);
   }
  */
-
-  void param_init_vector::allocate(int imin,int imax,int phase_start,
-     const char * s)
+/**
+Allocate variable vector of parameters, then reads values from input data.
+\param imin lower vector index
+\param imax upper vector index
+\param _phase_start
+\param s parameter id
+*/
+void param_init_vector::allocate(
+  int imin,
+  int imax,
+  int _phase_start,
+  const char* s)
+{
+  named_dvar_vector::allocate(imin, imax, s);
+  if (!(!(*this)))
   {
-    named_dvar_vector::allocate(imin,imax,s);
-    if (!(!(*this)))
+    initial_params::allocate(_phase_start);
+    if (ad_comm::global_bparfile)
     {
-      initial_params::allocate(phase_start);
-      if (ad_comm::global_bparfile)
+      *(ad_comm::global_bparfile) >> dvar_vector(*this);
+      if (!(*(ad_comm::global_bparfile)))
       {
-        *(ad_comm::global_bparfile) >> dvar_vector(*this);
-        if (!(*(ad_comm::global_bparfile)))
-        {
-          cerr << "error reading parameters from binary file "
-               << endl;
-          ad_exit(1);
-        }
+        cerr << "error reading parameters from binary file.\n";
+        ad_exit(1);
       }
-      else if (ad_comm::global_parfile)
+    }
+    else if (ad_comm::global_parfile)
+    {
+      *(ad_comm::global_parfile) >> dvar_vector(*this);
+      if (!(*(ad_comm::global_parfile)))
       {
-        *(ad_comm::global_parfile) >> dvar_vector(*this);
-        if (!(*(ad_comm::global_parfile)))
-        {
-          cerr << "error reading parameters from file "
-               << ad_comm::global_parfile->get_file_name() << endl;
-          ad_exit(1);
-        }
-      }
-      else
-      {
-        dvar_vector::operator=(initial_value);
+        cerr << "error reading parameters from file "
+             << ad_comm::global_parfile->get_file_name() << endl;
+        ad_exit(1);
       }
     }
     else
     {
-      initial_params::allocate(-1);
+      dvar_vector::operator=(initial_value);
     }
   }
+  else
+  {
+    initial_params::allocate(-1);
+  }
+}
 
   void param_init_matrix::allocate(int rmin,int rmax,int cmin,int cmax,
     const char * s)

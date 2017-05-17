@@ -629,31 +629,38 @@ df3_one_variable& df3_one_variable::operator+=(const df3_one_variable& _v)
     return z;
   }
 
-  init_df3_one_variable::init_df3_one_variable(const df1b2variable& _v)
-  {
-    ADUNCONST(df1b2variable,v)
-   /*
+/**
+Construct init_df3_one_variable from _var.
+\param _var value for u.
+*/
+init_df3_one_variable::init_df3_one_variable(const df1b2variable& _var)
+{
+  ADUNCONST(df1b2variable,var)
+/*
     if (num_ind_var>0)
     {
       cerr << "can only have 1 independent_variables in df3_one_variable"
        " function" << endl;
       ad_exit(1);
    }
-   */
-   ind_var=&v;
-    *get_u() =  *v.get_u();
-    *get_udot() = 1.0;
-    *get_udot2() = 0.0;
-    *get_udot3() = 0.0;
-  }
-
-  init_df3_one_variable::init_df3_one_variable(double v)
-  {
-    *get_u() =  v;
-    *get_udot() = 1.0;
-    *get_udot2() = 0.0;
-    *get_udot3() = 0.0;
-  }
+*/
+  ind_var = &var;
+  *get_u() =  *var.get_u();
+  *get_udot() = 1.0;
+  *get_udot2() = 0.0;
+  *get_udot3() = 0.0;
+}
+/**
+Constructs init_df3_one_variable setting member u with value _u.
+\param _u value for u
+*/
+init_df3_one_variable::init_df3_one_variable(double _u)
+{
+  *get_u() = _u;
+  *get_udot() = 1.0;
+  *get_udot2() = 0.0;
+  *get_udot3() = 0.0;
+}
 
 df3_one_matrix choleski_decomp(const df3_one_matrix& MM)
 {

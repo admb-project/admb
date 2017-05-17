@@ -181,7 +181,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Prepare the mass matrix for use. Depends on many factors below.
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
-  int old_nvar;
+  // int old_nvar;
   // Need to grab old_scale values still, since it is scaled below
   read_covariance_matrix(S,nvar,old_Hybrid_bounded_flag,old_scale);
   if (diag_option)		// set covariance to be diagonal

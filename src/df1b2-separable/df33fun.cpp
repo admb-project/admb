@@ -1425,9 +1425,7 @@ df3_three_variable operator*(
 
     return z;
   }
-/**
-Destructor
-*/
+/// Destructor
 init_df3_three_variable::~init_df3_three_variable()
 {
   num_local_ind_var--;
@@ -1442,56 +1440,58 @@ init_df3_three_variable::~init_df3_three_variable()
   }
 }
 /**
-Constructor for df1b2variable.
+Construct init_df3_three_variable from df1b2variable.
+
+\param _var df1b2variable
 */
-  init_df3_three_variable::init_df3_three_variable(const df1b2variable& _v)
+init_df3_three_variable::init_df3_three_variable(const df1b2variable& _var)
+{
+  ADUNCONST(df1b2variable,var)
+  if (num_local_ind_var > 2)
   {
-    ADUNCONST(df1b2variable,v)
-    if (num_local_ind_var>2)
-    {
       cerr << "can only have 3 independent_variables in df3_three_variable"
        " function" << endl;
       ad_exit(1);
-    }
-    ind_var[num_ind_var++]=&v;
-    num_local_ind_var++;
-    *get_u() =  *v.get_u();
-    *get_u_x() = 0.0;
-    *get_u_y() = 0.0;
-    *get_u_z() = 0.0;
-    switch(num_local_ind_var)
-    {
-    case 1:
-      *get_u_x() = 1.0;
-      break;
-    case 2:
-      *get_u_y() = 1.0;
-      break;
-    case 3:
-      *get_u_z() = 1.0;
-      break;
-    default:
-      cerr << "illegal num_ind_var value of " << num_ind_var
-           << " in  df3_three_variable function" << endl;
-      ad_exit(1);
-    }
-    *get_u_xx() = 0.0;
-    *get_u_xy() = 0.0;
-    *get_u_xz() = 0.0;
-    *get_u_yy() = 0.0;
-    *get_u_yz() = 0.0;
-    *get_u_zz() = 0.0;
-    *get_u_xxx() = 0.0;
-    *get_u_xxy() = 0.0;
-    *get_u_xxz() = 0.0;
-    *get_u_xyy() = 0.0;
-    *get_u_xyz() = 0.0;
-    *get_u_xzz() = 0.0;
-    *get_u_yyy() = 0.0;
-    *get_u_yyz() = 0.0;
-    *get_u_yzz() = 0.0;
-    *get_u_zzz() = 0.0;
   }
+  ind_var[num_ind_var++] = &var;
+  num_local_ind_var++;
+  *get_u() =  *var.get_u();
+  *get_u_x() = 0.0;
+  *get_u_y() = 0.0;
+  *get_u_z() = 0.0;
+  switch(num_local_ind_var)
+  {
+  case 1:
+    *get_u_x() = 1.0;
+    break;
+  case 2:
+    *get_u_y() = 1.0;
+    break;
+  case 3:
+    *get_u_z() = 1.0;
+    break;
+  default:
+    cerr << "illegal num_ind_var value of " << num_ind_var
+         << " in  df3_three_variable function" << endl;
+    ad_exit(1);
+  }
+  *get_u_xx() = 0.0;
+  *get_u_xy() = 0.0;
+  *get_u_xz() = 0.0;
+  *get_u_yy() = 0.0;
+  *get_u_yz() = 0.0;
+  *get_u_zz() = 0.0;
+  *get_u_xxx() = 0.0;
+  *get_u_xxy() = 0.0;
+  *get_u_xxz() = 0.0;
+  *get_u_xyy() = 0.0;
+  *get_u_xyz() = 0.0;
+  *get_u_xzz() = 0.0;
+  *get_u_yyy() = 0.0;
+  *get_u_yyz() = 0.0;
+  *get_u_yzz() = 0.0;
+  *get_u_zzz() = 0.0;
+}
 
 /**
  * Description not yet available.

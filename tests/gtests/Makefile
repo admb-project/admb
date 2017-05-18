@@ -88,6 +88,7 @@ GTESTS=\
  test_size_count.cpp\
  test_sub_unallocated.cpp\
  test_dvar4_array.cpp\
+ test_utils.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

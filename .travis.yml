@@ -1,8 +1,12 @@
+sudo: require
 language: cpp
 
 compiler:
   - gcc
   - clang
+
+before_install:
+  - sudo pip install codecov
 
 script: make clean coverage
 
@@ -22,4 +26,3 @@ os:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -a "--object-directory=build/objects/debug"
-  - bash <(curl -s https://codecov.io/bash) -a "--object-directory=tests/gtests"

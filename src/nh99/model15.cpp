@@ -147,9 +147,13 @@ named_dvar4_array& named_dvar4_array::operator=(const dvar4_array& m)
   this->dvar4_array::operator=(m);
   return *this;
 }
+/**
+Assign values from arr4 to named_dvar4_array. 
 
-named_dvar4_array& named_dvar4_array::operator=(const d4_array& m)
+\param arr4 input values
+*/
+named_dvar4_array& named_dvar4_array::operator=(const d4_array& arr4)
 {
-  this->dvar4_array::operator=(m);
+  this->dvar4_array::operator=(arr4);
   return *this;
 }

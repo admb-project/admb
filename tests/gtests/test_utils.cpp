@@ -14,4 +14,7 @@ TEST_F(test_utils, ranfill)
 
   double value2 = auto_rand(idum, 1);
   ASSERT_DOUBLE_EQ(value2, 0.6659108996391296);
+
+  void reinitialize_auto_rand();
+  reinitialize_auto_rand();
 }

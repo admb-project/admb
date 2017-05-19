@@ -1,4 +1,5 @@
 OBJ1=\
+ conjprod.obj\
  dmat21.obj\
  dmat3.obj\
  dmat34.obj\
@@ -479,7 +480,6 @@ OBJ16=\
  imat4.obj\
  model49.obj\
  i3arr1.obj\
- conjprod.obj\
  d3arr11.obj
 PVM=\
  slgrdclc.obj\

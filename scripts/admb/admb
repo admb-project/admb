@@ -35,18 +35,20 @@ ADMB_HOME=
 if [ -z "$ADMB_HOME" ]; then
   FILE=$0
   DIRECTORY=$(cd `dirname "$FILE"` && pwd)
-  if [ -h "${FILE}" ]
-  then
-    while [ -h "${FILE}" ]; do
-      pushd "$DIRECTORY" &> /dev/null
-      FILE=$(readlink "$DIRECTORY"/admb)
-      DIRECTORY=$(cd `dirname "$FILE"` && pwd)
-      popd &> /dev/null
-    done
-    pushd "$DIRECTORY/.." &> /dev/null
-  else
+  while [ -h "${FILE}" ]; do
     pushd "$DIRECTORY" &> /dev/null
+    FILE=$(readlink "$DIRECTORY"/admb)
+    DIRECTORY=$(cd `dirname "$FILE"` && pwd)
+    popd &> /dev/null
+  done
+
+  if [ -e "${DIRECTORY}/bin/admb" ]
+  then
+    pushd "$DIRECTORY" &> /dev/null
+  else
+    pushd "$DIRECTORY/.." &> /dev/null
   fi
+
   declare -rx ADMB_HOME=$PWD
   popd &> /dev/null
 fi

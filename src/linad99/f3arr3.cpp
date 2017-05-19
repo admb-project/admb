@@ -14,7 +14,7 @@ d3_array value(const dvar3_array& arr3)
 {
   d3_array result;
   result.allocate(arr3);
-  for (int i = tmp.slicemin(); i <= tmp.slicemax(); ++i)
+  for (int i = result.slicemin(); i <= result.slicemax(); ++i)
   {
     result[i] = value(arr3(i));
   }

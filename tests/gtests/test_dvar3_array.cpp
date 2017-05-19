@@ -181,3 +181,29 @@ TEST_F(test_dvar3_array, value)
   ASSERT_DOUBLE_EQ(7, result(2, 2, 1));
   ASSERT_DOUBLE_EQ(8, result(2, 2, 2));
 }
+TEST_F(test_dvar3_array, cube)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar3_array a(1, 2, 1, 2, 1, 2);
+
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  dvar3_array result = cube(a);
+  ASSERT_DOUBLE_EQ(1 * 1 * 1, value(result(1, 1, 1)));
+  ASSERT_DOUBLE_EQ(2 * 2 * 2, value(result(1, 1, 2)));
+  ASSERT_DOUBLE_EQ(3 * 3 * 3, value(result(1, 2, 1)));
+  ASSERT_DOUBLE_EQ(4 * 4 * 4, value(result(1, 2, 2)));
+  ASSERT_DOUBLE_EQ(5 * 5 * 5, value(result(2, 1, 1)));
+  ASSERT_DOUBLE_EQ(6 * 6 * 6, value(result(2, 1, 2)));
+  ASSERT_DOUBLE_EQ(7 * 7 * 7, value(result(2, 2, 1)));
+  ASSERT_DOUBLE_EQ(8 * 8 * 8, value(result(2, 2, 2)));
+}

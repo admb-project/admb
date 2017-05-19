@@ -864,9 +864,6 @@ label2000:
 void bracket_report(const dvector& theta, const double& left_bracket,
                     double& right_bracket, const dvector& d)
 {
-  double f=0;
-  double fp1=0;
-  double fp2=0;
   dvector g(1,d.size());
   dvector u(1,d.size());
   ivector ii(1,3);

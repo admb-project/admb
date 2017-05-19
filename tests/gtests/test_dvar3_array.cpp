@@ -69,3 +69,87 @@ TEST_F(test_dvar3_array, square)
   ASSERT_DOUBLE_EQ(49, value(result(2, 2, 1)));
   ASSERT_DOUBLE_EQ(64, value(result(2, 2, 2)));
 }
+TEST_F(test_dvar3_array, division)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar3_array a(1, 2, 1, 2, 1, 2);
+
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  dvariable d;
+  d = 1;
+  dvar3_array result = d / a;
+  ASSERT_DOUBLE_EQ(1.0 / 1, value(result(1, 1, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 2, value(result(1, 1, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 3, value(result(1, 2, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 4, value(result(1, 2, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 5, value(result(2, 1, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 6, value(result(2, 1, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 7, value(result(2, 2, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 8, value(result(2, 2, 2)));
+}
+TEST_F(test_dvar3_array, division2)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  d3_array a(1, 2, 1, 2, 1, 2);
+
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  dvariable d;
+  d = 1;
+  dvar3_array result = d / a;
+  ASSERT_DOUBLE_EQ(1.0 / 1, value(result(1, 1, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 2, value(result(1, 1, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 3, value(result(1, 2, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 4, value(result(1, 2, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 5, value(result(2, 1, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 6, value(result(2, 1, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 7, value(result(2, 2, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 8, value(result(2, 2, 2)));
+}
+TEST_F(test_dvar3_array, division3)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar3_array a(1, 2, 1, 2, 1, 2);
+
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  double d;
+  d = 1;
+  dvar3_array result = d / a;
+  ASSERT_DOUBLE_EQ(1.0 / 1, value(result(1, 1, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 2, value(result(1, 1, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 3, value(result(1, 2, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 4, value(result(1, 2, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 5, value(result(2, 1, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 6, value(result(2, 1, 2)));
+  ASSERT_DOUBLE_EQ(1.0 / 7, value(result(2, 2, 1)));
+  ASSERT_DOUBLE_EQ(1.0 / 8, value(result(2, 2, 2)));
+}

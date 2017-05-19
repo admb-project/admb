@@ -1,56 +1,55 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
  * \file
- * Description not yet available.
+ * Author: David Fournier
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array operator/(const prevariable& d, const dvar3_array& m)
-   {
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=d/m(i);
-     }
-     return tmp;
-   }
+Returns dvar3_array where each element (i, j) is equal to d / m(i, j).
 
+\param d numerator
+\param m denominator for each element i and j.
+*/
+dvar3_array operator/(const prevariable& d, const dvar3_array& arr3)
+{
+  dvar3_array result;
+  result.allocate(arr3);
+  for (int i = result.slicemin(); i<= result.slicemax(); ++i)
+  {
+    result(i) = d / arr3(i);
+  }
+  return result;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array operator/(const prevariable& d, const d3_array& m)
-   {
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=d/m(i);
-     }
-     return tmp;
-   }
+Returns dvar3_array where each element (i, j) is equal to d / m(i, j).
 
+\param d numerator
+\param m denominator for each element i and j.
+*/
+dvar3_array operator/(const prevariable& d, const d3_array& arr3)
+{
+  dvar3_array result;
+  result.allocate(arr3);
+  for (int i = result.slicemin(); i<= result.slicemax(); ++i)
+  {
+    result(i) = d / arr3(i);
+  }
+  return result;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array operator/(const double d, const dvar3_array& m)
-   {
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=d/m(i);
-     }
-     return tmp;
-   }
+Returns dvar3_array where each element (i, j) is equal to d / m(i, j).
+
+\param d double numerator
+\param m denominator for each element i and j.
+*/
+dvar3_array operator/(const double d, const dvar3_array& arr3)
+{
+  dvar3_array result;
+  result.allocate(arr3);
+  for (int i = result.slicemin(); i<= result.slicemax(); ++i)
+  {
+    result(i) = d / arr3(i);
+  }
+  return result;
+}

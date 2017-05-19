@@ -153,3 +153,31 @@ TEST_F(test_dvar3_array, division3)
   ASSERT_DOUBLE_EQ(1.0 / 7, value(result(2, 2, 1)));
   ASSERT_DOUBLE_EQ(1.0 / 8, value(result(2, 2, 2)));
 }
+TEST_F(test_dvar3_array, value)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar3_array a(1, 2, 1, 2, 1, 2);
+
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  double d;
+  d = 1;
+  d3_array result = value(a);
+  ASSERT_DOUBLE_EQ(1, result(1, 1, 1));
+  ASSERT_DOUBLE_EQ(2, result(1, 1, 2));
+  ASSERT_DOUBLE_EQ(3, result(1, 2, 1));
+  ASSERT_DOUBLE_EQ(4, result(1, 2, 2));
+  ASSERT_DOUBLE_EQ(5, result(2, 1, 1));
+  ASSERT_DOUBLE_EQ(6, result(2, 1, 2));
+  ASSERT_DOUBLE_EQ(7, result(2, 2, 1));
+  ASSERT_DOUBLE_EQ(8, result(2, 2, 2));
+}

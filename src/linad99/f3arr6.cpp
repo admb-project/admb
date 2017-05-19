@@ -1,26 +1,22 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array square(const dvar3_array& m)
-   {
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=square(m(i));
-     }
-     return tmp;
-   }
+Returns dvar3_array with squared values from each element in vararr3.
+
+\param vararr3 values to square
+*/
+dvar3_array square(const dvar3_array& vararr3)
+{
+  dvar3_array result;
+  result.allocate(vararr3);
+  for (int i = result.slicemin(); i <= result.slicemax(); ++i)
+  {
+    result(i) = square(vararr3(i));
+  }
+  return result;
+}

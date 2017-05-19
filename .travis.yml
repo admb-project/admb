@@ -8,7 +8,10 @@ compiler:
 before_install:
   - sudo pip install codecov
 
-script: make clean coverage
+script:
+  - make clean coverage
+  - ./get_code_cov
+  - codecov
 
 branches:
   only:

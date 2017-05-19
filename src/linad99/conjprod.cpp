@@ -662,7 +662,7 @@ double do_interpolate(const double& _fret, const double& _left_bracket,
   static double gamma;
 #ifdef CUBIC_INTERPOLATION
   static double gamma1;
-#endi
+#endif
   static double rho_0;
   if (int_flag ==1) goto label200;
   J+=1;

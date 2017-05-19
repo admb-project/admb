@@ -660,7 +660,9 @@ double do_interpolate(const double& _fret, const double& _left_bracket,
   //double Psi_2;
   //dvector g1(1,d.size());
   static double gamma;
+#ifdef CUBIC_INTERPOLATION
   static double gamma1;
+#endi
   static double rho_0;
   if (int_flag ==1) goto label200;
   J+=1;

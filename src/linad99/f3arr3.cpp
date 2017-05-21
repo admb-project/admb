@@ -6,17 +6,19 @@
 #include "fvar.hpp"
 
 /**
-Returns values of variable ar array.
+Returns d3_array with scalar values of variable arr3 array.
+
+\param arr3 
 */
-d3_array value(const dvar3_array& ar)
+d3_array value(const dvar3_array& arr3)
 {
-  d3_array tmp;
-  tmp.allocate(ar);
-  for (int i = tmp.slicemin(); i <= tmp.slicemax(); ++i)
+  d3_array result;
+  result.allocate(arr3);
+  for (int i = result.slicemin(); i <= result.slicemax(); ++i)
   {
-    tmp[i] = value(ar(i));
+    result[i] = value(arr3(i));
   }
-  return tmp;
+  return result;
 }
 /**
 Allocate d3_array with same dimensions as d3v.

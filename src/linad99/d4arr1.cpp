@@ -1,71 +1,71 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-d4_array sqrt(const d4_array& m)
-{
-  d4_array tmp;
-  tmp.allocate(m);
-  for (int i=tmp.hslicemin();i<=tmp.hslicemax();i++)
-  {
-    tmp(i)=sqrt(m(i));
-  }
-  return tmp;
-}
+Returns results in a d4_array with the computed square roots of the elements in
+arr4.
 
-/**
- * Description not yet available.
- * \param
- */
-d4_array exp(const d4_array& m)
+\param arr4 d4_array
+*/
+d4_array sqrt(const d4_array& arr4)
 {
-  d4_array tmp;
-  tmp.allocate(m);
-  for (int i=tmp.hslicemin();i<=tmp.hslicemax();i++)
+  d4_array results;
+  results.allocate(arr4);
+  for (int i = results.hslicemin(); i <= results.hslicemax(); ++i)
   {
-    tmp(i)=exp(m(i));
+    results(i) = sqrt(arr4(i));
   }
-  return tmp;
+  return results;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-d4_array mfexp(const d4_array& m)
+Returns results in a d4_array with the computed exponential of the elements in
+arr4.
+
+\param arr4 d4_array
+*/
+d4_array exp(const d4_array& arr4)
 {
-  d4_array tmp;
-  tmp.allocate(m);
-  for (int i=tmp.hslicemin();i<=tmp.hslicemax();i++)
+  d4_array results;
+  results.allocate(arr4);
+  for (int i = results.hslicemin(); i <= results.hslicemax(); ++i)
   {
-    tmp(i)=mfexp(m(i));
+    results(i) = exp(arr4(i));
   }
-  return tmp;
+  return results;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-d4_array log(const d4_array& m)
+Returns results in a d4_array with the computed exponential of the elements in
+arr4.
+
+\param arr4 d4_array
+*/
+d4_array mfexp(const d4_array& arr4)
 {
-  d4_array tmp;
-  tmp.allocate(m);
-  for (int i=tmp.hslicemin();i<=tmp.hslicemax();i++)
+  d4_array results;
+  results.allocate(arr4);
+  for (int i = results.hslicemin(); i <= results.hslicemax(); ++i)
   {
-    tmp(i)=log(m(i));
+    results(i) = mfexp(arr4(i));
   }
-  return tmp;
+  return results;
+}
+/**
+Returns results in a d4_array with the computed log of the elements in
+arr4.
+
+\param arr4 d4_array
+*/
+d4_array log(const d4_array& arr4)
+{
+  d4_array results;
+  results.allocate(arr4);
+  for (int i = results.hslicemin(); i <= results.hslicemax(); ++i)
+  {
+    results(i) = log(arr4(i));
+  }
+  return results;
 }

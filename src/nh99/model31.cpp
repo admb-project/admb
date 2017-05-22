@@ -214,16 +214,22 @@ void dll_data_matrix::allocate(double * _d,int rmin,int rmax,
   }
 }
 
-
-dll_data_matrix& dll_data_matrix::operator=(const dmatrix& m)
+/**
+Assign values from mat to elements of dll_data_matrix.
+\param mat dmatrix
+*/
+dll_data_matrix& dll_data_matrix::operator=(const dmatrix& mat)
 {
-  data_matrix::operator = (m);
+  data_matrix::operator=(mat);
   return *this;
 }
-
-dll_data_matrix& dll_data_matrix::operator=(const double& m)
+/**
+Assign value to all elements of dll_data_matrix.
+\param value double
+*/
+dll_data_matrix& dll_data_matrix::operator=(const double& value)
 {
-  data_matrix::operator = (m);
+  data_matrix::operator=(value);
   return *this;
 }
 

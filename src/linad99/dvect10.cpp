@@ -83,6 +83,7 @@ void dvector::fill(const char* s)
   {
     int nch = commas + 1;
 
+#if defined(__cplusplus) && (__cplusplus >= 201103L)
     [] (unsigned int nch, unsigned int size, const char* s)
     {
       if (nch != size)
@@ -103,6 +104,7 @@ void dvector::fill(const char* s)
         }
       }
     } (static_cast<unsigned int>(nch), size(), s);
+#endif
     istringstream ss(t);
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];

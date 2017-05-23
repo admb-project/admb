@@ -103,8 +103,10 @@ void dmatrix::fill(const char* s)
     ad_exit(1);
   }
 
+#if (__cplusplus > 199711L)
   [](unsigned int nrow, unsigned int rowsize)
   {
+#endif
     if (nrow != rowsize)
     {
       if (nrow < rowsize)
@@ -118,7 +120,9 @@ void dmatrix::fill(const char* s)
         ad_exit(1);
       }
     }
+#if (__cplusplus > 199711L)
   } (static_cast<unsigned int>(nrow), rowsize());
+#endif
 
   for (int i=1; i<=nrow; i++)
   {

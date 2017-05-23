@@ -160,3 +160,48 @@ TEST_F(test_dvar_matrix, fill)
   ASSERT_DOUBLE_EQ(3, value(ret(2, 1)));
   ASSERT_DOUBLE_EQ(4, value(ret(2, 2)));
 }
+TEST_F(test_dvar_matrix, extract_diagonal)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a(1, 3, 1, 3);
+  a(1, 1) = 1;
+  a(1, 2) = 2;
+  a(1, 3) = 3;
+  a(2, 1) = 4;
+  a(2, 2) = 5;
+  a(2, 3) = 6;
+  a(3, 1) = 7;
+  a(3, 2) = 8;
+  a(3, 3) = 9;
+
+  dvar_vector extract_diagonal(const dvar_matrix& m);
+
+  dvar_vector result = extract_diagonal(a);
+
+  ASSERT_TRUE(result.indexmin() == 1);
+  ASSERT_TRUE(result.indexmax() == 3);
+
+  ASSERT_DOUBLE_EQ(1, value(result(1)));
+  ASSERT_DOUBLE_EQ(5, value(result(2)));
+  ASSERT_DOUBLE_EQ(9, value(result(3)));
+}
+TEST_F(test_dvar_matrix, extract_diagonal_not_square)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a(1, 3, 1, 2);
+  a(1, 1) = 1;
+  a(1, 2) = 2;
+  a(2, 1) = 4;
+  a(2, 2) = 5;
+  a(3, 1) = 4;
+  a(3, 2) = 5;
+
+  dvar_vector extract_diagonal(const dvar_matrix& m);
+  ASSERT_THROW(extract_diagonal(a), int);
+}

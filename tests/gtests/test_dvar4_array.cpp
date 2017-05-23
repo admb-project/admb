@@ -52,3 +52,13 @@ TEST_F(test_dvar4_array, assignment)
     }
   }
 }
+TEST_F(test_dvar4_array, constructor_2)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar4_array a(1, 2);
+
+  ASSERT_TRUE(!a(1));
+  ASSERT_TRUE(!a(2));
+}

@@ -1,28 +1,21 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 /**
- * Description not yet available.
- * \param
- */
- dvar4_array::dvar4_array(int nrl,int nrh)
- {
-   allocate(nrl,nrh);
- }
+Construct vector of dvar3_array with dimension nrl to nrh.
 
-/**
-Copy constructor
+\param nrl lower index
+\param nrh upper index
 */
+dvar4_array::dvar4_array(int nrl, int nrh)
+{
+  allocate(nrl, nrh);
+}
+/// Copy constructor
 dvar4_array::dvar4_array(const dvar4_array& m2)
 {
   if (m2.shape)

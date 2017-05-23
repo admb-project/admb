@@ -23,7 +23,7 @@
 #include <math.h>
 
 #if defined(_MSC_VER) && (_MSC_VER < 1900)
-#define M1 = 714025
+#define M1 714025
 #else
 constexpr int M1 = 714025;
 #endif

@@ -110,6 +110,7 @@ void dvar_matrix::fill(const char* s)
     ad_exit(1);
   }
 
+#if defined(__cplusplus) && (__cplusplus >= 201103L)
   [](unsigned int nrow, unsigned int rowsize)
   {
     if (nrow != rowsize)
@@ -128,6 +129,7 @@ void dvar_matrix::fill(const char* s)
       }
     }
   } (static_cast<unsigned int>(nrow), rowsize());
+#endif
 
   int i;
   for (i=1; i<=nrow; i++)

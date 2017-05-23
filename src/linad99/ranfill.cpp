@@ -22,17 +22,39 @@
 
 #include <math.h>
 
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#define M1 = 714025
+#else
 constexpr int M1 = 714025;
+#endif
+
 #define IA1 1366
 #define IC1 150889
+
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#define RM1 (1.0f/M1)
+#else
 constexpr float RM1 = 1.0f / M1;
+#endif
+
 #define M3 134456
 #define IA3 8121
 #define IC3 28411
+
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#define M2 243000
+#else
 constexpr int M2 = 243000;
+#endif
+
 #define IA2 4561
 #define IC2 51349
+
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#define RM2 (1.0f/M2)
+#else
 constexpr float RM2 = 1.0f / M2;
+#endif
 
 double auto_rand(long int& idum, int reset);
 void reinitialize_auto_rand();

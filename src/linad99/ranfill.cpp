@@ -22,7 +22,8 @@
 
 #include <math.h>
 
-#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#if (defined(_MSC_VER) && (_MSC_VER < 1900))\
+    || (defined(__cplusplus) && (__cplusplus < 201103L))
 #define M1 714025
 #else
 constexpr int M1 = 714025;
@@ -31,7 +32,8 @@ constexpr int M1 = 714025;
 #define IA1 1366
 #define IC1 150889
 
-#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#if (defined(_MSC_VER) && (_MSC_VER < 1900))\
+    || (defined(__cplusplus) && (__cplusplus < 201103L))
 #define RM1 (1.0f/M1)
 #else
 constexpr float RM1 = 1.0f / M1;
@@ -41,7 +43,8 @@ constexpr float RM1 = 1.0f / M1;
 #define IA3 8121
 #define IC3 28411
 
-#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#if (defined(_MSC_VER) && (_MSC_VER < 1900))\
+    || (defined(__cplusplus) && (__cplusplus < 201103L))
 #define M2 243000
 #else
 constexpr int M2 = 243000;
@@ -50,7 +53,8 @@ constexpr int M2 = 243000;
 #define IA2 4561
 #define IC2 51349
 
-#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#if (defined(_MSC_VER) && (_MSC_VER < 1900))\
+    || (defined(__cplusplus) && (__cplusplus < 201103L))
 #define RM2 (1.0f/M2)
 #else
 constexpr float RM2 = 1.0f / M2;

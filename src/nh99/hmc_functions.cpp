@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
-#if defined(__cplusplus) && (__cplusplus==199711L)
+#if (defined(__cplusplus) && (__cplusplus==199711L))
 #include <random.h>
 #else
 #include <random>

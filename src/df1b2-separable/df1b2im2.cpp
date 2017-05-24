@@ -29,7 +29,7 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(banded_symmetric_dmatrix,bHessadjoint)
   int bw=bHess.bandwidth();
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

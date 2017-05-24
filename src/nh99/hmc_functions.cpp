@@ -4,7 +4,11 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
+#if (defined(__cplusplus) && (__cplusplus < 201103L)
+#include <random.h>
+#else
 #include <random>
+#endif
 #include <fstream>
 #include <sstream>
 #include <stack>

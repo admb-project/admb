@@ -27,7 +27,7 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(dmatrix,Hessadjoint)
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

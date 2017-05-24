@@ -1463,7 +1463,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(dmatrix,Hessadjoint)
   ADUNCONST(dmatrix,Hess)
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

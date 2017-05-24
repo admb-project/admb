@@ -194,6 +194,7 @@ endif
 include nh99/objects.lst
 ifeq ($(CXX),CC)
 OBJ6:=$(filter-out dfqromb.obj,$(OBJ6))
+OBJ6:=$(filter-out hmc_functions.obj,$(OBJ6))
 endif
 OBJECTS:=$(OBJECTS) $(addprefix optlp-nh99-,$(OBJ6)) optlp-sparse-hs_sparse.obj
 OBJECTS:=$(OBJECTS) $(addprefix saflp-nh99-,$(OBJ6)) saflp-sparse-hs_sparse.obj

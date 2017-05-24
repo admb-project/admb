@@ -123,6 +123,37 @@ TEST_F(test_cifstream, dvar3_array)
   ASSERT_DOUBLE_EQ(7, value(vararr3(2, 2, 1)));
   ASSERT_DOUBLE_EQ(8, value(vararr3(2, 2, 2)));
 }
+TEST_F(test_cifstream, i3_array)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_iarray.txt");
+  ofs << "# d\n";
+  ofs << 1 << endl;
+  ofs << 2 << endl;
+  ofs << 3 << endl;
+  ofs << 4 << endl;
+  ofs << 5 << endl;
+  ofs << 6 << endl;
+  ofs << 7 << endl;
+  ofs << 8 << endl;
+  ofs.close();
+
+  i3_array arr3(1, 2, 1, 2, 1, 2);
+
+  cifstream cifs("test_cifstream_iarray.txt");
+  cifs >> arr3;
+  cifs.close();
+
+  ASSERT_DOUBLE_EQ(1, arr3(1, 1, 1));
+  ASSERT_DOUBLE_EQ(2, arr3(1, 1, 2));
+  ASSERT_DOUBLE_EQ(3, arr3(1, 2, 1));
+  ASSERT_DOUBLE_EQ(4, arr3(1, 2, 2));
+  ASSERT_DOUBLE_EQ(5, arr3(2, 1, 1));
+  ASSERT_DOUBLE_EQ(6, arr3(2, 1, 2));
+  ASSERT_DOUBLE_EQ(7, arr3(2, 2, 1));
+  ASSERT_DOUBLE_EQ(8, arr3(2, 2, 2));
+}
 TEST_F(test_cifstream, dvar4_array)
 {
   gradient_structure gs;
@@ -169,6 +200,54 @@ TEST_F(test_cifstream, dvar4_array)
   ASSERT_DOUBLE_EQ(14, value(vararr4(2, 2, 1, 2)));
   ASSERT_DOUBLE_EQ(15, value(vararr4(2, 2, 2, 1)));
   ASSERT_DOUBLE_EQ(16, value(vararr4(2, 2, 2, 2)));
+}
+TEST_F(test_cifstream, i4_array)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_iarray.txt");
+  ofs << "# d\n";
+  ofs << 1 << endl;
+  ofs << 2 << endl;
+  ofs << 3 << endl;
+  ofs << 4 << endl;
+  ofs << 5 << endl;
+  ofs << 6 << endl;
+  ofs << 7 << endl;
+  ofs << 8 << endl;
+  ofs << 9 << endl;
+  ofs << 10 << endl;
+  ofs << 11 << endl;
+  ofs << 12 << endl;
+  ofs << 13 << endl;
+  ofs << 14 << endl;
+  ofs << 15 << endl;
+  ofs << 16 << endl;
+  ofs.close();
+
+  i4_array arr4;
+  arr4.allocate(1, 2, 1, 2, 1, 2, 1, 2);
+
+  cifstream cifs("test_cifstream_iarray.txt");
+  cifs >> arr4;
+  cifs.close();
+
+  ASSERT_DOUBLE_EQ(1, arr4(1, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(2, arr4(1, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(3, arr4(1, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(4, arr4(1, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(5, arr4(1, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(6, arr4(1, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(7, arr4(1, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(8, arr4(1, 2, 2, 2));
+  ASSERT_DOUBLE_EQ(9, arr4(2, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(10, arr4(2, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(11, arr4(2, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(12, arr4(2, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(13, arr4(2, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(14, arr4(2, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(15, arr4(2, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(16, arr4(2, 2, 2, 2));
 }
 TEST_F(test_cifstream, dvar5_array)
 {
@@ -249,3 +328,167 @@ TEST_F(test_cifstream, dvar5_array)
   ASSERT_DOUBLE_EQ(31, value(vararr5(2, 2, 2, 2, 1)));
   ASSERT_DOUBLE_EQ(32, value(vararr5(2, 2, 2, 2, 2)));
 }
+TEST_F(test_cifstream, d5_array)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_darray.txt");
+  ofs << "# d\n";
+  ofs << 1 << endl;
+  ofs << 2 << endl;
+  ofs << 3 << endl;
+  ofs << 4 << endl;
+  ofs << 5 << endl;
+  ofs << 6 << endl;
+  ofs << 7 << endl;
+  ofs << 8 << endl;
+  ofs << 9 << endl;
+  ofs << 10 << endl;
+  ofs << 11 << endl;
+  ofs << 12 << endl;
+  ofs << 13 << endl;
+  ofs << 14 << endl;
+  ofs << 15 << endl;
+  ofs << 16 << endl;
+  ofs << 17 << endl;
+  ofs << 18 << endl;
+  ofs << 19 << endl;
+  ofs << 20 << endl;
+  ofs << 21 << endl;
+  ofs << 22 << endl;
+  ofs << 23 << endl;
+  ofs << 24 << endl;
+  ofs << 25 << endl;
+  ofs << 26 << endl;
+  ofs << 27 << endl;
+  ofs << 28 << endl;
+  ofs << 29 << endl;
+  ofs << 30 << endl;
+  ofs << 31 << endl;
+  ofs << 32 << endl;
+  ofs.close();
+
+  d5_array arr5;
+  arr5.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  cifstream cifs("test_cifstream_darray.txt");
+  cifs >> arr5;
+  cifs.close();
+
+  ASSERT_DOUBLE_EQ(1, arr5(1, 1, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(2, arr5(1, 1, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(3, arr5(1, 1, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(4, arr5(1, 1, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(5, arr5(1, 1, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(6, arr5(1, 1, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(7, arr5(1, 1, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(8, arr5(1, 1, 2, 2, 2));
+  ASSERT_DOUBLE_EQ(9, arr5(1, 2, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(10, arr5(1, 2, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(11, arr5(1, 2, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(12, arr5(1, 2, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(13, arr5(1, 2, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(14, arr5(1, 2, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(15, arr5(1, 2, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(16, arr5(1, 2, 2, 2, 2));
+  ASSERT_DOUBLE_EQ(17, arr5(2, 1, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(18, arr5(2, 1, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(19, arr5(2, 1, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(20, arr5(2, 1, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(21, arr5(2, 1, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(22, arr5(2, 1, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(23, arr5(2, 1, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(24, arr5(2, 1, 2, 2, 2));
+  ASSERT_DOUBLE_EQ(25, arr5(2, 2, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(26, arr5(2, 2, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(27, arr5(2, 2, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(28, arr5(2, 2, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(29, arr5(2, 2, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(30, arr5(2, 2, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(31, arr5(2, 2, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(32, arr5(2, 2, 2, 2, 2));
+}
+/*
+TEST_F(test_cifstream, i5_array)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_iarray.txt");
+  ofs << "# d\n";
+  ofs << 1 << endl;
+  ofs << 2 << endl;
+  ofs << 3 << endl;
+  ofs << 4 << endl;
+  ofs << 5 << endl;
+  ofs << 6 << endl;
+  ofs << 7 << endl;
+  ofs << 8 << endl;
+  ofs << 9 << endl;
+  ofs << 10 << endl;
+  ofs << 11 << endl;
+  ofs << 12 << endl;
+  ofs << 13 << endl;
+  ofs << 14 << endl;
+  ofs << 15 << endl;
+  ofs << 16 << endl;
+  ofs << 17 << endl;
+  ofs << 18 << endl;
+  ofs << 19 << endl;
+  ofs << 20 << endl;
+  ofs << 21 << endl;
+  ofs << 22 << endl;
+  ofs << 23 << endl;
+  ofs << 24 << endl;
+  ofs << 25 << endl;
+  ofs << 26 << endl;
+  ofs << 27 << endl;
+  ofs << 28 << endl;
+  ofs << 29 << endl;
+  ofs << 30 << endl;
+  ofs << 31 << endl;
+  ofs << 32 << endl;
+  ofs.close();
+
+  i5_array arr5;
+  arr5.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  cifstream cifs("test_cifstream_iarray.txt");
+  cifs >> arr5;
+  cifs.close();
+
+cout << arr5 << endl;
+
+  ASSERT_DOUBLE_EQ(1, arr5(1, 1, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(2, arr5(1, 1, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(3, arr5(1, 1, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(4, arr5(1, 1, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(5, arr5(1, 1, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(6, arr5(1, 1, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(7, arr5(1, 1, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(8, arr5(1, 1, 2, 2, 2));
+  ASSERT_DOUBLE_EQ(9, arr5(1, 2, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(10, arr5(1, 2, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(11, arr5(1, 2, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(12, arr5(1, 2, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(13, arr5(1, 2, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(14, arr5(1, 2, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(15, arr5(1, 2, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(16, arr5(1, 2, 2, 2, 2));
+  ASSERT_DOUBLE_EQ(17, arr5(2, 1, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(18, arr5(2, 1, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(19, arr5(2, 1, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(20, arr5(2, 1, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(21, arr5(2, 1, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(22, arr5(2, 1, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(23, arr5(2, 1, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(24, arr5(2, 1, 2, 2, 2));
+  ASSERT_DOUBLE_EQ(25, arr5(2, 2, 1, 1, 1));
+  ASSERT_DOUBLE_EQ(26, arr5(2, 2, 1, 1, 2));
+  ASSERT_DOUBLE_EQ(27, arr5(2, 2, 1, 2, 1));
+  ASSERT_DOUBLE_EQ(28, arr5(2, 2, 1, 2, 2));
+  ASSERT_DOUBLE_EQ(29, arr5(2, 2, 2, 1, 1));
+  ASSERT_DOUBLE_EQ(30, arr5(2, 2, 2, 1, 2));
+  ASSERT_DOUBLE_EQ(31, arr5(2, 2, 2, 2, 1));
+  ASSERT_DOUBLE_EQ(32, arr5(2, 2, 2, 2, 2));
+}
+*/

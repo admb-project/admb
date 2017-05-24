@@ -133,6 +133,16 @@ int allocated(const d5_array& v)
 }
 
 /**
+Returns true if iarr5 is allocated, otherwise false.
+
+\param iarr5 i5_array
+*/
+int allocated(const i5_array& iarr5)
+{
+  return !(!(iarr5));
+}
+
+/**
  * Description not yet available.
  * \param
  */

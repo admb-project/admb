@@ -8253,6 +8253,7 @@ int allocated(const i4_array & v);
 int allocated(const d4_array & v);
 int allocated(const dvar4_array & v);
 
+int allocated(const i5_array& iarr5);
 int allocated(const d5_array & v);
 int allocated(const dvar5_array & v);
 

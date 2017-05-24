@@ -38,7 +38,6 @@ GTESTS=\
  test_df_file.cpp\
  test_multinomial.cpp\
  test_multi_index.cpp\
- test_cifstream.cpp\
  test_param_init_vector_vector.cpp\
  test_param_init_matrix_vector.cpp\
  test_param_init_bounded_vector_vector.cpp\
@@ -91,6 +90,7 @@ GTESTS=\
  test_sub_unallocated.cpp\
  test_dvar4_array.cpp\
  test_utils.cpp\
+ test_cifstream.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)
@@ -306,6 +306,9 @@ ifeq ($(SHELL),cmd)
 	@del finance.p0 2>NUL
 	@del test_dvector.txt 2>NUL
 	@del test_adstring_array.txt 2>NUL
+	@del test_cifstream_darray.txt 2>NUL
+	@del test_cifstream_dvariable.txt 2>NUL
+	@del test_cifstream_iarray.txt 2>NUL
 else
 	@rm -vf training
 	@rm -vf training.bar
@@ -381,4 +384,7 @@ else
 	@rm -vf test_dvector.txt
 	@rm -rvf make_sub_directory
 	@rm -vf test_adstring_array.txt
+	@rm -vf test_cifstream_darray.txt
+	@rm -vf test_cifstream_dvariable.txt
+	@rm -vf test_cifstream_iarray.txt
 endif

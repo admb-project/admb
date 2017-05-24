@@ -18,108 +18,202 @@ Overloaded cifstream operators for autodif classes.
 //MATRIX_OPERATOR_DEFINE(imatrix)
 //MATRIX_OPERATOR_DEFINE(lmatrix)
 
-cifstream& cifstream::operator>>(const ivector& z)
+
+/**
+Reads values into var from istr.
+
+\param istr comment formatted input stream
+\param var prevariable
+*/
+cifstream& operator>>(cifstream& istr, const prevariable& var)
 {
-  if (allocated(z))
-  for (int i= z.indexmin(); i <= z.indexmax(); i++)
+  istr >> value(var);
+  return istr;
+}
+/**
+Reads values into lvec from istr.
+
+\param istr comment formatted input stream
+\param lvec dmatrix
+*/
+cifstream& cifstream::operator>>(const lvector& lvec)
+{
+  if (allocated(lvec))
   {
-    *this >> z[i];
+    for (int i = lvec.indexmin(); i <= lvec.indexmax(); ++i)
+    {
+      *this >> lvec[i];
+    }
   }
   return *this;
 }
+/**
+Reads values into dvec from istr.
 
-cifstream& operator>>(cifstream& istr, const prevariable& z)
+\param istr comment formatted input stream
+\param dvec dmatrix
+*/
+cifstream& cifstream::operator>>(const dvector& dvec)
 {
-  istr >> value(z);
-  return istr;
-}
-
-cifstream& cifstream::operator>>(const lvector& z)
-{
-  if (allocated(z))
-  for (int i= z.indexmin(); i <= z.indexmax(); i++)
+  if (allocated(dvec))
   {
-    *this >> z[i];
+    for (int i = dvec.indexmin(); i <= dvec.indexmax(); ++i)
+    {
+      *this >> dvec[i];
+    }
   }
   return *this;
 }
+/**
+Reads values into dmat from istr.
 
-cifstream& operator>>(cifstream& istr, const imatrix& z)
+\param istr comment formatted input stream
+\param dmat dmatrix
+*/
+cifstream& operator>>(cifstream& istr, const dmatrix& dmat)
 {
-  if (allocated(z))
-  for (int i= z.rowmin(); i <= z.rowmax(); i++)
+  if (allocated(dmat))
   {
-    istr >> z[i];
+    for (int i = dmat.indexmin(); i <= dmat.indexmax(); ++i)
+    {
+      istr >> dmat[i];
+    }
   }
   return istr;
 }
+/**
+Reads values into darr from istr.
 
-cifstream& cifstream::operator>>(const dvector& z)
+\param istr comment formatted input stream
+\param darr d3_array
+*/
+cifstream& operator>>(cifstream& istr, const d3_array& darr)
 {
-  if (allocated(z))
-  for (int i= z.indexmin(); i <= z.indexmax(); i++)
+  if (allocated(darr))
   {
-    *this >> z[i];
+    for (int i = darr.indexmin(); i <= darr.indexmax(); ++i)
+    {
+      istr >> darr[i];
+    }
+  }
+  return istr;
+}
+/**
+Reads values into darr from istr.
+
+\param istr comment formatted input stream
+\param darr d4_array
+*/
+cifstream& operator>>(cifstream& istr, const d4_array& darr)
+{
+  if (allocated(darr))
+  {
+    for (int i = darr.indexmin(); i <= darr.indexmax(); ++i)
+    {
+      istr >> darr[i];
+    }
+  }
+  return istr;
+}
+/**
+Reads values into darr from istr.
+
+\param istr comment formatted input stream
+\param darr d5_array
+*/
+cifstream& operator>>(cifstream& istr, const d5_array& darr)
+{
+  if (allocated(darr))
+  {
+    for (int i = darr.indexmin(); i <= darr.indexmax(); ++i)
+    {
+      istr >> darr[i];
+    }
+  }
+  return istr;
+}
+/**
+Reads values into ivec from istr.
+
+\param istr comment formatted input stream
+\param ivec ivector
+*/
+cifstream& cifstream::operator>>(const ivector& ivec)
+{
+  if (allocated(ivec))
+  {
+    for (int i = ivec.indexmin(); i <= ivec.indexmax(); ++i)
+    {
+      *this >> ivec[i];
+    }
   }
   return *this;
 }
+/**
+Reads values into imat from istr.
 
-cifstream& operator>>(cifstream& istr, const dmatrix& z)
+\param istr comment formatted input stream
+\param imat imatrix
+*/
+cifstream& operator>>(cifstream& istr, const imatrix& imat)
 {
-  if (allocated(z))
-  for (int i= z.rowmin(); i <= z.rowmax(); i++)
+  if (allocated(imat))
   {
-    istr >> z[i];
+    for (int i = imat.indexmin(); i <= imat.indexmax(); ++i)
+    {
+      istr >> imat[i];
+    }
   }
   return istr;
 }
+/**
+Reads values into i3_array from istr.
 
-cifstream& operator>>(cifstream& istr, const d3_array& z)
+\param istr comment formatted input stream
+\param iarr i3_array
+*/
+cifstream& operator>>(cifstream& istr, const i3_array& iarr)
 {
-  if (allocated(z))
-  for (int i= z.slicemin(); i <= z.slicemax(); i++)
+  if (allocated(iarr))
   {
-    istr >> z[i];
+    for (int i = iarr.indexmin(); i <= iarr.indexmax(); ++i)
+    {
+      istr >> iarr[i];
+    }
   }
   return istr;
 }
+/**
+Reads values into i4_array from istr.
 
-cifstream& operator>>(cifstream& istr, const d5_array& z)
+\param istr comment formatted input stream
+\param iarr i4_array
+*/
+cifstream& operator>>(cifstream& istr, const i4_array& iarr)
 {
-  if (allocated(z))
-  for (int i= z.indexmin(); i <= z.indexmax(); i++)
+  if (allocated(iarr))
   {
-    istr >> z[i];
+    for (int i = iarr.indexmin(); i <= iarr.indexmax(); ++i)
+    {
+      istr >> iarr[i];
+    }
   }
   return istr;
 }
+/**
+Reads values into i5_array from istr.
 
-cifstream& operator>>(cifstream& istr, const i4_array& z)
+\param istr comment formatted input stream
+\param iarr i5_array
+*/
+cifstream& operator>>(cifstream& istr, const i5_array& iarr)
 {
-  if (allocated(z))
-  for (int i= z.indexmin(); i <= z.indexmax(); i++)
+  if (allocated(iarr))
   {
-    istr >> z[i];
-  }
-  return istr;
-}
-
-cifstream& operator>>(cifstream& istr, const i3_array& z)
-{
-  if (allocated(z))
-  for (int i= z.indexmin(); i <= z.indexmax(); i++)
-  {
-    istr >> z[i];
-  }
-  return istr;
-}
-
-cifstream& operator>>(cifstream& istr, const d4_array& z)
-{
-  if (allocated(z))
-  for (int i= z.hslicemin(); i <= z.hslicemax(); i++)
-  {
-    istr >> z[i];
+    for (int i = iarr.indexmin(); i <= iarr.indexmax(); ++i)
+    {
+      istr >> iarr[i];
+    }
   }
   return istr;
 }

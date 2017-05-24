@@ -4,11 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
-#if defined(__OPENCC__)
-#include <random.h>
-#else
 #include <random>
-#endif
 #include <fstream>
 #include <sstream>
 #include <stack>

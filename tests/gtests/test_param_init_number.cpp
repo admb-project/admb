@@ -24,3 +24,23 @@ TEST_F(test_param_init_number, allocate_assignments)
   n = var;
   ASSERT_DOUBLE_EQ(value(var), value(n));
 }
+/*
+TEST_F(test_param_init_number, save_value)
+{
+  gradient_structure gs;
+  dll_param_init_number n;
+
+  double expected_pd = 5.41000002;
+  n.allocate(&expected_pd, "test_param_init_number");
+  ASSERT_DOUBLE_EQ(expected_pd, value(n));
+
+  ofstream ofs("test_param_init_number.txt"); 
+  initial_params::save_value(ofs);
+  ofs.close();
+
+  ifstream ifs("test_param_init_number.txt"); 
+  std::string line;
+  getline(ifs, line);
+  ifs.close();
+}
+*/

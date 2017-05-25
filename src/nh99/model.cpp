@@ -666,7 +666,9 @@ data_number& data_number::operator=(const double& v)
   }
 
 /**
-Saves value param_init_number to ofs.
+Saves value param_init_number to output stream ofs.
+
+\param ofs output stream
 */
 void param_init_number::save_value(ofstream& ofs)
 {

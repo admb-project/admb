@@ -1221,8 +1221,8 @@ public:
   dll_param_init_number& operator=(const double m);
   dll_param_init_number& operator=(const prevariable& m);
 
-  void allocate(double * pd,int phase_start=1,const char *s="UNNAMED");
-  void allocate(double *pd,const char *s="UNNAMED");
+  void allocate(double* pd, int phase_start = 1, const char* s = "UNNAMED");
+  void allocate(double* pd, const char *s = "UNNAMED");
 };
 
 //forward declaration

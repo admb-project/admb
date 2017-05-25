@@ -37,6 +37,13 @@ dll_param_number& dll_param_number::operator=(const double m)
   return *this;
 }
 
+/**
+Allocate param_init_number and sets pd = _pd.
+
+\param _pd pointer to double
+\param _phase_start
+\param _s id
+*/
 void dll_param_init_number::allocate
   (double * _pd,int _phase_start,const char *_s)
 {
@@ -53,23 +60,37 @@ void dll_param_number::allocate
   pd=_pd;
   value(*this)=*_pd;
 }
+/**
+Allocate param_init_number and sets pd = _pd.
+Uses 1 as default phase_start.
 
-
-void dll_param_init_number::allocate
-  (double *_pd,const char *_s)
+\param _pd pointer to double
+\param _s id
+*/
+void dll_param_init_number::allocate(
+  double* _pd,
+  const char* _s)
 {
-  allocate(_pd,1,_s);
+  allocate(_pd, 1, _s);
 }
+/**
+Assigns val to parameter value.
 
-dll_param_init_number& dll_param_init_number::operator=(const double m)
+\param val double
+*/
+dll_param_init_number& dll_param_init_number::operator=(const double val)
 {
-  dvariable::operator = (m);
+  dvariable::operator=(val);
   return *this;
 }
+/**
+Assigns var to parameter value.
 
-dll_param_init_number& dll_param_init_number::operator=(const prevariable& m)
+\param var prevariable
+*/
+dll_param_init_number& dll_param_init_number::operator=(const prevariable& var)
 {
-  dvariable::operator = (m);
+  dvariable::operator=(var);
   return *this;
 }
 

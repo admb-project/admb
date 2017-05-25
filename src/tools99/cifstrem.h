@@ -202,18 +202,19 @@ public:
 
 cifstream& operator>>(cifstream& istr, const prevariable& z);
 cifstream& operator>>(cifstream& istr, const dvar_matrix& z);
-cifstream& operator>>(cifstream& istr, const d3_array& z);
-cifstream& operator>>(cifstream& istr, const d4_array& z);
-cifstream& operator>>(cifstream& istr, const d5_array& z);
 cifstream& operator>>(cifstream& istr, const dvar3_array& z);
 cifstream& operator>>(cifstream& istr, const dvar4_array& z);
 cifstream& operator>>(cifstream& istr, const dvar5_array& z);
-//cifstream& operator>>(cifstream& istr, s3_array& z);
 cifstream& operator>>(cifstream& istr, const dmatrix& z);
+cifstream& operator>>(cifstream& istr, const d3_array& z);
+cifstream& operator>>(cifstream& istr, const d4_array& z);
+cifstream& operator>>(cifstream& istr, const d5_array& z);
+//cifstream& operator>>(cifstream& istr, s3_array& z);
 //cifstream& operator>>(cifstream& istr,smatrix& z);
 cifstream& operator>>(cifstream& istr, const imatrix& z);
 cifstream& operator>>(cifstream& istr, const i3_array& z);
 cifstream& operator>>(cifstream& istr, const i4_array& z);
+cifstream& operator>>(cifstream& istr, const i5_array& z);
 //cifstream& operator>>(cifstream& istr, lmatrix& z);
 
 #endif //#define CIFSTREM_H

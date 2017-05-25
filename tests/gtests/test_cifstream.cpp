@@ -408,7 +408,6 @@ TEST_F(test_cifstream, d5_array)
   ASSERT_DOUBLE_EQ(31, arr5(2, 2, 2, 2, 1));
   ASSERT_DOUBLE_EQ(32, arr5(2, 2, 2, 2, 2));
 }
-/*
 TEST_F(test_cifstream, i5_array)
 {
   gradient_structure gs;
@@ -456,8 +455,6 @@ TEST_F(test_cifstream, i5_array)
   cifs >> arr5;
   cifs.close();
 
-cout << arr5 << endl;
-
   ASSERT_DOUBLE_EQ(1, arr5(1, 1, 1, 1, 1));
   ASSERT_DOUBLE_EQ(2, arr5(1, 1, 1, 1, 2));
   ASSERT_DOUBLE_EQ(3, arr5(1, 1, 1, 2, 1));
@@ -491,4 +488,3 @@ cout << arr5 << endl;
   ASSERT_DOUBLE_EQ(31, arr5(2, 2, 2, 2, 1));
   ASSERT_DOUBLE_EQ(32, arr5(2, 2, 2, 2, 2));
 }
-*/

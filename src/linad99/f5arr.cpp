@@ -435,16 +435,17 @@ void dvar5_array::allocate(
     (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch, l5, u5);
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
- dvar5_array::dvar5_array(int hsl,int hsu)
- {
-   allocate(hsl,hsu);
- }
+Construct vector of empty dvar4_array with dimension
+[hsl to hsu].
 
+\param hsl lower vector index
+\param hsu upper vector index
+*/
+dvar5_array::dvar5_array(int hsl, int hsu)
+{
+  allocate(hsl, hsu);
+}
 /**
 Allocate vector of empty dvar4_array with dimension
 [hsl to hsu].

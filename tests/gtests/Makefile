@@ -91,6 +91,7 @@ GTESTS=\
  test_dvar4_array.cpp\
  test_utils.cpp\
  test_cifstream.cpp\
+ test_dvar5_array.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

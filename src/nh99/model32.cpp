@@ -16,9 +16,13 @@ dll_data_number::~dll_data_number()
   *pd=val;
 }
 
+//Destructor
 dll_param_init_number::~dll_param_init_number()
 {
-  *pd=value(*this);
+  if (pd)
+  {
+    *pd = value(*this);
+  }
 }
 
 dll_param_init_bounded_number::~dll_param_init_bounded_number()

@@ -118,34 +118,34 @@ public:
  * Description not yet available.
  * \param
  */
-  class df3_three_vector
+class df3_three_vector
+{
+  int index_min;
+  int index_max;
+  vector_shapex* shape;
+  df3_three_variable* v;
+
+public:
+  df3_three_vector();
+  df3_three_vector(const df3_three_vector& m2);
+  df3_three_vector(int min,int max);
+  ~df3_three_vector();
+
+  int indexmin() const { return index_min; }
+  int indexmax() const { return index_max; }
+  void allocate();
+  void allocate(int min,int max);
+  df3_three_variable& operator()(int i) const
   {
-    int index_min;
-    int index_max;
-    vector_shapex * shape;
-    df3_three_variable * v;
-  public:
-    int indexmin(void) const { return int(index_min); }
-    int indexmax(void) const { return int(index_max); }
-    df3_three_vector(int min,int max);
-    df3_three_vector(void);
-    void allocate(void);
-    void allocate(int min,int max);
-    df3_three_variable& operator () (int i) const
-    {
-      return (df3_three_variable&) (*(v+i));
-    }
-    df3_three_variable& operator [] (int i) const
-    {
-      return (df3_three_variable&) (*(v+i));
-    }
-    void initialize(void);
-    void deallocate(void);
-    ~df3_three_vector();
-    df3_three_vector(const df3_three_vector& m2);
-  };
-
-
+    return *(v + i);
+  }
+  df3_three_variable& operator[](int i) const
+  {
+    return *(v + i);
+  }
+  void initialize();
+  void deallocate();
+};
 
  dvector value(const df3_three_vector& v);
 

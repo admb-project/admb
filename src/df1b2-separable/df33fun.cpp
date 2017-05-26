@@ -117,29 +117,30 @@ df3_three_vector::~df3_three_vector()
 {
   deallocate();
 }
-
 /**
- * Description not yet available.
- * \param
- */
- void df3_three_vector::deallocate(void)
- {
-   if(shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df3_three_variable*) (shape->trueptr);
-       delete [] v;
-       v = NULL;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+Free allocated memory.
+*/
+void df3_three_vector::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df3_three_variable*) (shape->trueptr);
+      delete [] v;
+      v = NULL;
+
+      delete shape;
+      shape=0;
+    }
+    index_max = -1;
+    index_min = 0;
+  }
+}
 
 /**
  * Description not yet available.

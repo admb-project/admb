@@ -20,7 +20,7 @@ TEST_F(test_adjson, constructor)
 {
   json _json;
 
-  ASSERT_TRUE(_json.get_value() == NULL):
+  ASSERT_TRUE(_json.get_value() == NULL);
 }
 TEST_F(test_adjson, input_output_array)
 {

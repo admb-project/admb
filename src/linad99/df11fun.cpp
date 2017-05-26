@@ -569,29 +569,32 @@ void init_df1_one_variable::deallocate(void)
   num_ind_var=0;
 }
 
-init_df1_one_variable::init_df1_one_variable(const prevariable& _v)
+/**
+Construct init_df1_one_variable with _var.
+
+\param _var sets u.
+*/
+init_df1_one_variable::init_df1_one_variable(const prevariable& _var)
 {
-  ADUNCONST(prevariable,v)
   if (num_ind_var > 0)
   {
     cerr << "can only have 1 independent_variables in df1_one_variable"
        " function" << endl;
     ad_exit(1);
   }
-  else
+
+  ADUNCONST(prevariable,var)
+  ind_var[num_ind_var++] = &var;
+  *get_u() = value(var);
+  switch(num_ind_var)
   {
-    ind_var[num_ind_var++]=&v;
-    *get_u() =  value(v);
-    switch(num_ind_var)
-    {
-    case 1:
-      *get_u_x() = 1.0;
-      break;
-    default:
-      cerr << "illegal num_ind_var value of " << num_ind_var
-           << " in  df1_one_variable function" << endl;
-      ad_exit(1);
-    }
+  case 1:
+    *get_u_x() = 1.0;
+    break;
+  default:
+    cerr << "illegal num_ind_var value of " << num_ind_var
+         << " in  df1_one_variable function" << endl;
+    ad_exit(1);
   }
 }
 

@@ -14,10 +14,10 @@
 /**
 Default constructor
 */
-adstring_array::adstring_array()
+adstring_array::adstring_array():
+  shape(NULL),
+  ptr(NULL)
 {
-  shape=NULL;
-  ptr=NULL;
 }
 /**
 Copy constructor

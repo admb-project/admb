@@ -488,3 +488,51 @@ TEST_F(test_cifstream, i5_array)
   ASSERT_DOUBLE_EQ(31, arr5(2, 2, 2, 2, 1));
   ASSERT_DOUBLE_EQ(32, arr5(2, 2, 2, 2, 2));
 }
+TEST_F(test_cifstream, float)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_float.txt");
+  ofs << "# d\n";
+  ofs << "3.56\n";
+  ofs.close();
+
+  float f;
+  cifstream cifs("test_cifstream_float.txt");
+  cifs >> f;
+  cifs.close();
+
+  ASSERT_FLOAT_EQ(3.56, f);
+}
+TEST_F(test_cifstream, longlong)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_float.txt");
+  ofs << "# d\n";
+  ofs << "356345\n";
+  ofs.close();
+
+  long long ll;
+  cifstream cifs("test_cifstream_float.txt");
+  cifs >> ll;
+  cifs.close();
+
+  ASSERT_EQ(356345, ll);
+}
+TEST_F(test_cifstream, long)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_float.txt");
+  ofs << "# d\n";
+  ofs << "356345\n";
+  ofs.close();
+
+  long l;
+  cifstream cifs("test_cifstream_float.txt");
+  cifs >> l;
+  cifs.close();
+
+  ASSERT_EQ(356345, l);
+}

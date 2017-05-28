@@ -81,7 +81,7 @@ void adstring_array::allocate(int min, int max)
   if (min > max)
   {
     cerr << " Error in adstring_array(int min,int max) --"
-            " max must be >= min" << endl;
+         << " max must be >= min" << endl;
     exit(1);
   }
   shape = new vector_shape(min, max);
@@ -89,9 +89,8 @@ void adstring_array::allocate(int min, int max)
   {
     cerr << "Error allocating memory in adstring_array" << endl;
   }
-  int size = max - min + 1;
-  ptr =
-    new adstring*[static_cast<unsigned int>(size < 0 ? 0 : size)];
+  unsigned int size = static_cast<unsigned int>(max - min + 1);
+  ptr = new adstring*[size];
   if (!ptr)
   {
     cerr << "Error allocating memory in adstring_array" << endl;

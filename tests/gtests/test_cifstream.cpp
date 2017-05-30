@@ -556,3 +556,77 @@ TEST_F(test_cifstream, longlong)
 
   ASSERT_EQ(ll, INT_MAX);
 }
+TEST_F(test_cifstream, float)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_float.txt");
+  ofs << "# d\n";
+  ofs << "3.56\n";
+  ofs.close();
+
+  float f;
+  cifstream cifs("test_cifstream_float.txt");
+  cifs >> f;
+  cifs.close();
+
+  ASSERT_FLOAT_EQ(3.56, f);
+}
+TEST_F(test_cifstream, long)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_float.txt");
+  ofs << "# d\n";
+  ofs << "356345\n";
+  ofs.close();
+
+  long l;
+  cifstream cifs("test_cifstream_float.txt");
+  cifs >> l;
+  cifs.close();
+
+  ASSERT_EQ(356345, l);
+}
+TEST_F(test_cifstream, lvector)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_float.txt");
+  ofs << "# d\n";
+  ofs << "356345 9445938 43948093 993859\n";
+  ofs.close();
+
+  lvector lvec;
+  ASSERT_FALSE(allocated(lvec));
+  lvec.allocate(1, 4);
+  ASSERT_TRUE(allocated(lvec));
+  cifstream cifs("test_cifstream_float.txt");
+  cifs >> lvec;
+  cifs.close();
+
+  ASSERT_EQ(356345, lvec(1));
+  ASSERT_EQ(9445938, lvec(2));
+  ASSERT_EQ(43948093, lvec(3));
+  ASSERT_EQ(993859, lvec(4));
+}
+TEST_F(test_cifstream, lvector2)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_float.txt");
+  ofs << "# d\n";
+  ofs << "356345 9445938 43948093 993859\n";
+  ofs.close();
+
+  lvector lvec(1, 4);
+  ASSERT_TRUE(allocated(lvec));
+  cifstream cifs("test_cifstream_float.txt");
+  cifs >> lvec;
+  cifs.close();
+
+  ASSERT_EQ(356345, lvec(1));
+  ASSERT_EQ(9445938, lvec(2));
+  ASSERT_EQ(43948093, lvec(3));
+  ASSERT_EQ(993859, lvec(4));
+}

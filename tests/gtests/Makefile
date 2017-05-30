@@ -93,6 +93,7 @@ GTESTS=\
  test_cifstream.cpp\
  test_dvar5_array.cpp\
  test_param_init_number.cpp\
+ test_df3_three_vector.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

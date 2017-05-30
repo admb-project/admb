@@ -31,10 +31,9 @@ cifstream& operator>>(cifstream& istr, const prevariable& var)
   return istr;
 }
 /**
-Reads values into lvec from istr.
+Reads values into lvec from cifstream.
 
-\param istr comment formatted input stream
-\param lvec dmatrix
+\param lvec lvector
 */
 cifstream& cifstream::operator>>(const lvector& lvec)
 {
@@ -48,10 +47,9 @@ cifstream& cifstream::operator>>(const lvector& lvec)
   return *this;
 }
 /**
-Reads values into dvec from istr.
+Reads values into dvec from cifstream.
 
-\param istr comment formatted input stream
-\param dvec dmatrix
+\param dvec dvector
 */
 cifstream& cifstream::operator>>(const dvector& dvec)
 {

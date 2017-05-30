@@ -1,6 +1,7 @@
 //MY Signature
 //Another line for testing
 #include <gtest/gtest.h>
+#include <climits>
 #include <cifstrem.h>
 
 class test_cifstream: public ::testing::Test {};

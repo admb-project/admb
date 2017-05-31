@@ -156,7 +156,7 @@ TEST_F(test_adstring, substring)
   substring = "4ad";
 
   EXPECT_EQ(4, pos(substring, a));
-  
+
   adstring b;
   b = a(4, 6);
   EXPECT_EQ('4', b(1));
@@ -207,13 +207,13 @@ TEST_F(test_adstring, operator_notequal)
 }
 TEST_F(test_adstring, val_hexadecimal)
 {
-  adstring a("0x2E6"); 
+  adstring a("0x2E6");
   int actual = val(a);
   EXPECT_EQ(742, actual);
 }
 TEST_F(test_adstring, val_integer)
 {
-  adstring a("-742"); 
+  adstring a("-742");
   int actual = val(a);
   EXPECT_EQ(-742, actual);
 }
@@ -285,8 +285,8 @@ TEST_F(test_adstring, itoa_INT_MAX_base2)
 #endif
 TEST_F(test_adstring, realloc)
 {
-  adstring a("-742"); 
-  char expected[] = "Reallocation."; 
+  adstring a("-742");
+  char expected[] = "Reallocation.";
   a.realloc(expected);
   EXPECT_STREQ(expected, (char*)a);
 }
@@ -308,9 +308,9 @@ TEST_F(test_adstring, clist_chain_list)
 {
   adstring a;
   EXPECT_EQ(1, a.length());
-  adstring b(a); 
+  adstring b(a);
   EXPECT_EQ(2, b.length());
-  adstring c(b); 
+  adstring c(b);
   EXPECT_EQ(3, c.length());
   EXPECT_STREQ((char*)a, (char*)b);
   EXPECT_STREQ((char*)a, (char*)c);
@@ -320,10 +320,10 @@ TEST_F(test_adstring, clist_nested_destructors)
   adstring a;
   EXPECT_EQ(1, a.length());
   {
-    adstring b(a); 
+    adstring b(a);
     EXPECT_EQ(2, b.length());
     {
-      adstring c(b); 
+      adstring c(b);
       EXPECT_EQ(3, c.length());
     }
     EXPECT_EQ(2, b.length());
@@ -613,14 +613,14 @@ TEST_F(test_adstring, default_constructor_unsigned_char_array)
 }
 TEST_F(test_adstring, operator_plus_char)
 {
-  adstring u("-742"); 
+  adstring u("-742");
   char v = 'v';
   adstring actual = u + v;
   EXPECT_STREQ("-742v", actual);
 }
 TEST_F(test_adstring, operator_plus_unsigned_char)
 {
-  adstring u("-742"); 
+  adstring u("-742");
   unsigned char v = 'v';
   adstring actual = u + v;
   EXPECT_STREQ("-742v", actual);
@@ -629,14 +629,14 @@ TEST_F(test_adstring, constructor_zero)
 {
   ad_exit=&test_ad_exit;
   ASSERT_EXIT({
-    adstring u(0); 
+    adstring u(0);
   }, ::testing::ExitedWithCode(1), "Error");
 }
 TEST_F(test_adstring, constructor_not_one)
 {
   ad_exit=&test_ad_exit;
   ASSERT_EXIT({
-    adstring u(0, 1); 
+    adstring u(0, 1);
   }, ::testing::ExitedWithCode(1), "Error");
 }
 TEST_F(test_adstring, str2)
@@ -647,4 +647,31 @@ TEST_F(test_adstring, str2)
   adstring b;
   str(-1234, b);
   EXPECT_STREQ("-1234", b);
+}
+TEST_F(test_adstring, unsignedchar_plus_adstring)
+{
+  const unsigned char u('u');
+  adstring v("-742");
+
+  adstring result = u + v;
+  EXPECT_STREQ("u-742", result);
+}
+TEST_F(test_adstring, unsignedchararray_plus_adstring)
+{
+  const unsigned char v[] = "abc";
+
+  adstring u("-742");
+
+  adstring result = v + u;
+
+  EXPECT_STREQ("abc-742", result);
+}
+TEST_F(test_adstring, adstring_plus_unsignedchararray)
+{
+  const unsigned char v[] = "abc";
+
+  adstring u("-742");
+
+  adstring result = u + v;
+  EXPECT_STREQ("-742abc", result);
 }

@@ -506,6 +506,23 @@ TEST_F(test_cifstream, adstring2)
 
   ASSERT_STREQ((char*)ads, "testadstring");
 }
+TEST_F(test_cifstream, char_array)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_adstring.txt");
+  ofs << "# d\n";
+  ofs << "testadstring 2\n" << endl;
+  ofs.close();
+
+  char char_array[100];
+
+  cifstream cifs("test_cifstream_adstring.txt");
+  cifs >> char_array;
+  cifs.close();
+
+  ASSERT_STREQ(char_array, "testadstring");
+}
 TEST_F(test_cifstream, constadstring)
 {
   gradient_structure gs;
@@ -539,6 +556,23 @@ TEST_F(test_cifstream, line_adstring)
   cifs.close();
 
   ASSERT_STREQ((const char*)lads, "testadstring 2\n");
+}
+TEST_F(test_cifstream, constlonglong)
+{
+  gradient_structure gs;
+
+  std::ofstream ofs("test_cifstream_longlong.txt");
+  ofs << "# d\n";
+  ofs << INT_MAX << endl;
+  ofs.close();
+
+  const long long ll = -1;
+
+  cifstream cifs("test_cifstream_longlong.txt");
+  cifs >> ll;
+  cifs.close();
+
+  ASSERT_EQ(ll, INT_MAX);
 }
 TEST_F(test_cifstream, longlong)
 {

@@ -4,11 +4,15 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
-#include <random>
 #include <fstream>
 #include <sstream>
 #include <stack>
 #include <queue>
+
+#ifndef __OPENCC__
+#include <random>
+#endif
+
 //#include "nuts_da.h"
 
 using std::cout;
@@ -28,12 +32,16 @@ using std::queue;
 
 double function_minimizer::exprnd(double p)
 {
+#ifndef __OPENCC__
   std::random_device rd;
   std::mt19937 gen(rd());
   // if particles decay once per second on average,
   // how much time, in seconds, until the next one?
   std::exponential_distribution<> d(p);
   return d(gen);
+#else
+  return 0;
+#endif
 }
 
 

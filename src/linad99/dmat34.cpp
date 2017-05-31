@@ -67,7 +67,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
   const double& _ln_unsigned_det,double& sign)
 {
   double& ln_unsigned_det=(double&) (_ln_unsigned_det);
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

@@ -17,7 +17,7 @@
 * \f$ V(x)=a/b^2 \f$.  Note that you can also derive \f$a\f$ and \f$b\f$ from
 * the expected value and variance via:
 * \f[
-* 	a = \frac{E(x)^2}{V(x)}, \quad b=\frac{a}{V(x)}
+* 	a = \frac{E(x)^2}{V(x)}, \quad b=\sqrt{\frac{a}{V(x)}}
 * \f]
 * 
 * 

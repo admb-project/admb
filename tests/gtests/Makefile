@@ -255,6 +255,9 @@ endif
 clean:
 ifeq ($(SHELL),cmd)
 	@if exist make_sub_directory rmdir /s /q make_sub_directory
+	@del test_cifstream_adstring.txt 2>NUL
+	@del test_cifstream_float.txt 2>NUL
+	@del test_cifstream_longlong.txt 2>NUL
 	@del gtest-all.exe 2>NUL
 	@del gtest-all *.obj 2>NUL
 	@del eigv.rpt 2>NUL
@@ -313,6 +316,9 @@ ifeq ($(SHELL),cmd)
 	@del test_cifstream_dvariable.txt 2>NUL
 	@del test_cifstream_iarray.txt 2>NUL
 else
+	@rm -vf test_cifstream_adstring.txt
+	@rm -vf test_cifstream_float.txt
+	@rm -vf test_cifstream_longlong.txt
 	@rm -vf training
 	@rm -vf training.bar
 	@rm -vf training.cor

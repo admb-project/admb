@@ -51,7 +51,7 @@ void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H,
   dmatrix& H=(dmatrix&) _H;
   int& ii=(int&) _ii;
   int lmin=ii;
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int size) -> int
   {
     assert(size <= INT_MAX);

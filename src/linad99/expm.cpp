@@ -199,7 +199,7 @@ dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
   dvariable ln_unsigned_det, dvariable& sign)
 {
   RETURN_ARRAYS_INCREMENT();
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

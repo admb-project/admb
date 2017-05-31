@@ -231,10 +231,20 @@ Reads to s from input cifstream.
 
 \param s line_adstring
 */
+cifstream& cifstream::operator>>(line_adstring& s)
+{
+  get_field(static_cast<char*>(s), 1);
+  return *this;
+}
+/**
+Reads to s from input cifstream.
+
+\param s line_adstring
+*/
 cifstream& cifstream::operator>>(const line_adstring& s)
 {
-  get_field((char*)(const char *)(s),1);
-  return (*this);
+  *this >> const_cast<line_adstring&>(s);
+  return *this;
 }
 /**
 Reads to c from input cifstream.
@@ -243,7 +253,7 @@ Reads to c from input cifstream.
 */
 cifstream& cifstream::operator>>(char* c)
 {
-  get_field((char*)c);
+  get_field(c);
   return *this;
 }
 /**
@@ -253,7 +263,7 @@ Reads to c from input cifstream.
 */
 cifstream& cifstream::operator>>(const char* c)
 {
-  get_field((char*)c);
+  get_field(const_cast<char*>(c));
   return *this;
 }
 /**

@@ -177,17 +177,18 @@ public:
 
   cifstream& operator>>(const dvariable& z);
  //  cifstream& operator>>(const prevariable& z);
-  cifstream& operator >> (long long& i);
-  cifstream& operator >> (const long long& i);
+  cifstream& operator>>(long long& i);
+  cifstream& operator>>(const long long& i);
   cifstream& operator>>(const long& i);
   cifstream& operator>>(const int& i);
   cifstream& operator>>(const double& x);
   cifstream& operator>>(const float& x);
-  cifstream& operator >> (char* x);
-  cifstream& operator >> (const char* x);
-  cifstream& operator >> (const adstring& x);
-  cifstream& operator >> (adstring& x);
-  cifstream& operator >> (const line_adstring& x);
+  cifstream& operator>>(char* x);
+  cifstream& operator>>(const char* x);
+  cifstream& operator>>(const adstring& x);
+  cifstream& operator>>(adstring& x);
+  cifstream& operator>>(const line_adstring& x);
+  cifstream& operator>>(line_adstring& x);
   cifstream& getline(char*, int, char = '\n');
 
   cifstream& operator>>(const dvar_vector& z);

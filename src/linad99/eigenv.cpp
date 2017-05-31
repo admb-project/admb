@@ -51,7 +51,7 @@ dmatrix eigenvectors(const dmatrix& m)  //,_CONST dvector& diag)
   }
 
   dmatrix m1=symmetrize(m);
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int rowsize) -> int
   {
     assert(rowsize <= INT_MAX);
@@ -97,7 +97,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
   }
 
   dmatrix m1=symmetrize(m);
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int rowsize) -> int
   {
     assert(rowsize <= INT_MAX);
@@ -163,7 +163,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
     "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int rowsize) -> int
   {
     assert(rowsize <= INT_MAX);
@@ -290,7 +290,7 @@ double SIGNV(const double x, double y)
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
   dmatrix& z = (dmatrix&) _z;
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int size) -> int
   {
     assert(size <= INT_MAX);

@@ -49,7 +49,7 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
   }
 
   dvar_matrix m1=symmetrize(m);
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int rowsize) -> int
   {
     assert(rowsize <= INT_MAX);
@@ -113,7 +113,7 @@ void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d,
     "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int rowsize) -> int
   {
     assert(rowsize <= INT_MAX);
@@ -243,7 +243,7 @@ dvariable SIGNV(const prevariable& x, const prevariable& y)
   ADUNCONST(dvar_matrix,z)
   dvar_vector& e=(dvar_vector&) _e;
   dvar_vector& d=(dvar_vector&) _d;
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int size) -> int
   {
     assert(size <= INT_MAX);

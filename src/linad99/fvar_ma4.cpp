@@ -36,7 +36,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
   ivector& indx= (ivector&) _indx;
   int i,j,k;
 
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

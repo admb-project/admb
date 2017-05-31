@@ -47,7 +47,7 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
 {
   int errflag=0;
   int i,j,k;
-#ifndef OPT_LIB
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

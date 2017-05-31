@@ -16,10 +16,10 @@ TEST_F(test_adstring_array, equals)
 
   EXPECT_EQ(b.indexmin(), 1);
   EXPECT_EQ(b.indexmax(), 4);
-  EXPECT_EQ(b(1), adstring("one"));
-  EXPECT_EQ(b(2), adstring("two"));
-  EXPECT_EQ(b(3), adstring("three"));
-  EXPECT_EQ(b(4), adstring("four"));
+  EXPECT_STREQ((char*)b(1), "one");
+  EXPECT_STREQ((char*)b(2), "two");
+  EXPECT_STREQ((char*)b(3), "three");
+  EXPECT_STREQ((char*)b(4), "four");
 }
 TEST_F(test_adstring_array, append_distinct)
 {

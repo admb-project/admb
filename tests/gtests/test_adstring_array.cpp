@@ -21,6 +21,26 @@ TEST_F(test_adstring_array, equals)
   EXPECT_STREQ((char*)b(3), "three");
   EXPECT_STREQ((char*)b(4), "four");
 }
+TEST_F(test_adstring_array, constindex)
+{
+  adstring_array a(1, 4);
+  a(1) = "one";
+  a(2) = "two";
+  a(3) = "three";
+  a(4) = "four";
+
+  const adstring_array b = a;
+
+  EXPECT_EQ(b.indexmin(), 1);
+  EXPECT_EQ(b.indexmax(), 4);
+  EXPECT_STREQ((const char*)b(1), "one");
+  EXPECT_STREQ((const char*)b(2), "two");
+  EXPECT_STREQ((const char*)b(3), "three");
+  EXPECT_STREQ((const char*)b(4), "four");
+#ifndef OPT_LIB
+  EXPECT_DEATH(b(5), "Assertion");
+#endif
+}
 TEST_F(test_adstring_array, append_distinct)
 {
   adstring a1 = "one";
@@ -146,5 +166,15 @@ TEST_F(test_adstring_array, null_index1)
   });
   ASSERT_ANY_THROW({
     a[1];
+  });
+}
+TEST_F(test_adstring_array, const_null_index1)
+{
+  const adstring_array a;
+  ASSERT_EXIT({
+    a[1];
+  }, ::testing::ExitedWithCode(1), "Error -- trying to acess unallocated adstring array");
+  ASSERT_ANY_THROW({
+    a(1);
   });
 }

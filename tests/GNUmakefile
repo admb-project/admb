@@ -56,9 +56,7 @@ coverage: all-gtests
 	$(MAKE) tpl-tiny_ad_fe
 	$(MAKE) tpl-tinyfun
 	$(MAKE) tpl-poisp
-ifneq ($(CXX),icpc)
 	$(MAKE) tpl-tiny_ad_re
-endif
 	$(MAKE) tpl-vectorize
 	$(MAKE) tpl-bessel
 	$(MAKE) tpl-qbeta
@@ -155,7 +153,10 @@ tpl-poisp:
 	$(MAKE) --directory=poisp
 
 tpl-tiny_ad_re:
+	@echo "Temporarily disabled."
+ifneq ($(CXX),icpc)
 	$(MAKE) --directory=tiny_ad_re
+endif
 
 tpl-vectorize:
 	$(MAKE) --directory=vectorize

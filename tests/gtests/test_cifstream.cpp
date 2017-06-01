@@ -605,7 +605,7 @@ TEST_F(test_cifstream, longlong)
   ofs << INT_MAX << endl;
   ofs.close();
 
-  const long long ll = -1;
+  long long ll = -1;
 
   cifstream cifs("test_cifstream_longlong.txt");
   cifs >> ll;

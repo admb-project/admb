@@ -491,8 +491,6 @@ TEST_F(test_cifstream, i5_array)
 }
 TEST_F(test_cifstream, adstring2)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_adstring.txt");
   ofs << "# d\n";
   ofs << "testadstring 2\n" << endl;
@@ -508,8 +506,6 @@ TEST_F(test_cifstream, adstring2)
 }
 TEST_F(test_cifstream, char_array)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_adstring.txt");
   ofs << "# d\n";
   ofs << "testadstring 2\n" << endl;
@@ -525,8 +521,6 @@ TEST_F(test_cifstream, char_array)
 }
 TEST_F(test_cifstream, constadstring)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_adstring.txt");
   ofs << "# d\n";
   ofs << "testadstring 2\n" << endl;
@@ -540,10 +534,30 @@ TEST_F(test_cifstream, constadstring)
 
   ASSERT_STREQ((const char*)ads, "testadstring");
 }
-TEST_F(test_cifstream, line_adstring)
+TEST_F(test_cifstream, line_adstringa)
 {
-  gradient_structure gs;
+  std::ofstream ofs("test_cifstream_adstring.txt");
+  ofs << "# d\n";
+  ofs << "testadstring 2" << endl;
+  ofs.close();
 
+  line_adstring lads;
+}
+TEST_F(test_cifstream, line_adstringb)
+{
+  std::ofstream ofs("test_cifstream_adstring.txt");
+  ofs << "# d\n";
+  ofs << "testadstring 2" << endl;
+  ofs.close();
+
+  line_adstring lads;
+
+  cifstream cifs("test_cifstream_adstring.txt");
+  cifs >> lads;
+  cifs.close();
+}
+TEST_F(test_cifstream, line_adstringc)
+{
   std::ofstream ofs("test_cifstream_adstring.txt");
   ofs << "# d\n";
   ofs << "testadstring 2" << endl;
@@ -559,8 +573,6 @@ TEST_F(test_cifstream, line_adstring)
 }
 TEST_F(test_cifstream, constline_adstring)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_adstring.txt");
   ofs << "# d\n";
   ofs << "testadstring 2" << endl;
@@ -576,8 +588,6 @@ TEST_F(test_cifstream, constline_adstring)
 }
 TEST_F(test_cifstream, constlonglong)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_longlong.txt");
   ofs << "# d\n";
   ofs << INT_MAX << endl;
@@ -593,8 +603,6 @@ TEST_F(test_cifstream, constlonglong)
 }
 TEST_F(test_cifstream, longlong)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_longlong.txt");
   ofs << "# d\n";
   ofs << INT_MAX << endl;
@@ -610,8 +618,6 @@ TEST_F(test_cifstream, longlong)
 }
 TEST_F(test_cifstream, float)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_float.txt");
   ofs << "# d\n";
   ofs << "3.56\n";
@@ -626,8 +632,6 @@ TEST_F(test_cifstream, float)
 }
 TEST_F(test_cifstream, long)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_float.txt");
   ofs << "# d\n";
   ofs << "356345\n";
@@ -642,8 +646,6 @@ TEST_F(test_cifstream, long)
 }
 TEST_F(test_cifstream, lvector)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_float.txt");
   ofs << "# d\n";
   ofs << "356345 9445938 43948093 993859\n";
@@ -664,8 +666,6 @@ TEST_F(test_cifstream, lvector)
 }
 TEST_F(test_cifstream, lvector2)
 {
-  gradient_structure gs;
-
   std::ofstream ofs("test_cifstream_float.txt");
   ofs << "# d\n";
   ofs << "356345 9445938 43948093 993859\n";

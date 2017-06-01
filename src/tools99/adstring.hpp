@@ -104,7 +104,7 @@ public :
   inline adstring& operator+=(const char u)
     { return(*this += adstring(u)); }
 
-  int operator==(const adstring &u);
+  bool operator==(const adstring& other);
 
   inline int operator == (const char* u)
     { return *this == adstring(u); }
@@ -116,7 +116,7 @@ public :
   adstring operator()(const size_t i, const size_t j) const;
 
   int operator==(const char* u) const;
-  int operator==(const adstring &u) const;
+  bool operator==(const adstring& other) const;
 
   adstring& operator=(const adstring &t);
   adstring& operator=(const char t);

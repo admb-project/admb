@@ -675,3 +675,31 @@ TEST_F(test_adstring, adstring_plus_unsignedchararray)
   adstring result = u + v;
   EXPECT_STREQ("-742abc", result);
 }
+TEST_F(test_adstring, comparison)
+{
+  adstring a("abcd");
+  adstring b("abcd");
+  adstring c("efgh");
+
+  ASSERT_TRUE(a == b);
+  ASSERT_TRUE(a == a);
+  ASSERT_TRUE(b == b);
+  ASSERT_FALSE(a == c);
+  ASSERT_FALSE(c == a);
+  ASSERT_FALSE(b == c);
+  ASSERT_FALSE(c == b);
+}
+TEST_F(test_adstring, constcomparison)
+{
+  const adstring a("abcd");
+  const adstring b("abcd");
+  const adstring c("efgh");
+
+  ASSERT_TRUE(a == b);
+  ASSERT_TRUE(a == a);
+  ASSERT_TRUE(b == b);
+  ASSERT_FALSE(a == c);
+  ASSERT_FALSE(c == a);
+  ASSERT_FALSE(b == c);
+  ASSERT_FALSE(c == b);
+}

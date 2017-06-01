@@ -141,16 +141,23 @@ const unsigned char& adstring::operator[](const size_t i) const
   return (s[i]);
 }
 
-int adstring::operator==(const adstring& v) const
-{
-  int tmp = strcmp (* this, v);
-  return (tmp == 0);
-}
+/**
+Return true if adstring is equal to other, otherwise false.
 
-int adstring::operator==(const adstring& v)
+\param other compare string
+*/
+bool adstring::operator==(const adstring& other) const
 {
-  int tmp = strcmp (* this, v);
-  return (tmp == 0);
+  return !strcmp(*this, other);
+}
+/**
+Return true if adstring is equal to other, otherwise false.
+
+\param other compare string
+*/
+bool adstring::operator==(const adstring& other)
+{
+  return !strcmp(*this, other);
 }
 /*
 int adstring::operator!=(const adstring& v)

@@ -56,7 +56,9 @@ coverage: all-gtests
 	$(MAKE) tpl-tiny_ad_fe
 	$(MAKE) tpl-tinyfun
 	$(MAKE) tpl-poisp
+ifneq ($(CXX),icpc)
 	$(MAKE) tpl-tiny_ad_re
+endif
 	$(MAKE) tpl-vectorize
 	$(MAKE) tpl-bessel
 	$(MAKE) tpl-qbeta

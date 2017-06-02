@@ -1,39 +1,55 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+
 #include <admodel.h>
 
-//double ndfboundp( double x, double fmin, double fmax, const double& fpen);
+/**
+Set maximum bounds value for param_init_bounded_number.
 
-  void param_init_bounded_number::set_maxb(double x)
-  {
-    maxb=x;
-  }
+\param val double
+*/
+void param_init_bounded_number::set_maxb(double val)
+{
+  maxb = val;
+}
+/**
+Returns maximum bounds value for param_init_bounded_number.
+*/
+double param_init_bounded_number::get_maxb() const
+{
+  return maxb;
+}
+/**
+Set maximum bounds value for param_init_bounded_vector.
 
-  double param_init_bounded_number::get_maxb(void)
-  {
-    return maxb;
-  }
+\param val double
+*/
+void param_init_bounded_vector::set_maxb(double val)
+{
+  maxb = val;
+}
+/**
+Returns maximum bounds value for param_init_bounded_vector.
+*/
+double param_init_bounded_vector::get_maxb() const
+{
+  return maxb;
+}
+/**
+Set maximum bounds value for param_init_bounded_matrix.
 
-  void param_init_bounded_vector::set_maxb(double x)
-  {
-    maxb=x;
-  }
-
-  double param_init_bounded_vector::get_maxb(void)
-  {
-    return maxb;
-  }
-
-  void param_init_bounded_matrix::set_maxb(double x)
-  {
-    maxb=x;
-  }
-
-  double param_init_bounded_matrix::get_maxb(void)
-  {
-    return maxb;
-  }
+\param val double
+*/
+void param_init_bounded_matrix::set_maxb(double val)
+{
+  maxb = val;
+}
+/**
+Returns maximum bounds value for param_init_bounded_matrix.
+*/
+double param_init_bounded_matrix::get_maxb() const
+{
+  return maxb;
+}

@@ -1068,7 +1068,7 @@ class param_init_bounded_vector: public named_dvar_vector, public initial_params
 public:
   double get_minb(void);
   void set_minb(double b);
-  double get_maxb(void);
+  double get_maxb() const;
   void set_maxb(double b);
 protected:
   double minb;
@@ -1238,7 +1238,7 @@ class param_init_bounded_number: public param_init_number
 public:
   double get_minb(void);
   void set_minb(double b);
-  double get_maxb(void);
+  double get_maxb() const;
   void set_maxb(double b);
 protected:
   double minb;
@@ -1401,7 +1401,7 @@ class param_init_bounded_matrix: public param_init_matrix
 public:
   double get_minb(void);
   void set_minb(double b);
-  double get_maxb(void);
+  double get_maxb() const;
   void set_maxb(double b);
 protected:
   double minb;

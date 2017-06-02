@@ -7,15 +7,24 @@ class test_ad_comm: public ::testing::Test {};
 class ad_comm2: public ad_comm
 {
 public:
-ad_comm2(int argc, char *argv[]): ad_comm(argc, argv)
-{
-}
+ad_comm2(): ad_comm() {}
+ad_comm2(int argc, char *argv[]): ad_comm(argc, argv) {}
 };
 
+TEST_F(test_ad_comm, defaultconstructor)
+{
+  ad_comm2 adcomm;
+}
 TEST_F(test_ad_comm, constructor)
 {
   int argc = 3;
   char* argv[] = { "./simple" , "-ind", "other.dat"};
+  ad_comm2 adcomm(argc, argv);
+}
+TEST_F(test_ad_comm, timer)
+{
+  int argc = 2;
+  char* argv[] = { "./simple" , "-timer" };
   ad_comm2 adcomm(argc, argv);
 }
 TEST_F(test_ad_comm, help)

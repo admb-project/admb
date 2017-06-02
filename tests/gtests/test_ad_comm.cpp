@@ -18,6 +18,22 @@ TEST_F(test_ad_comm, constructor)
   char* argv[] = { "./simple" , "-ind", "other.dat"};
   ad_comm2 adcomm(argc, argv);
 }
+TEST_F(test_ad_comm, help)
+{
+  int argc = 2;
+  char* argv[] = { "./simple" , "-help"};
+  ASSERT_ANY_THROW({
+    ad_comm2 adcomm(argc, argv);
+  });
+}
+TEST_F(test_ad_comm, info)
+{
+  int argc = 2;
+  char* argv[] = { "./simple" , "-info"};
+  ASSERT_ANY_THROW({
+    ad_comm2 adcomm(argc, argv);
+  });
+}
 TEST_F(test_ad_comm, option_match_ind)
 {
   int argc = 7;

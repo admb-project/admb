@@ -13,6 +13,8 @@ ad_comm2(int argc, char *argv[]): ad_comm(argc, argv) {}
 
 TEST_F(test_ad_comm, defaultconstructor)
 {
+  ad_comm::argc = 0;
+  ad_comm::argv = 0;
   ad_comm2 adcomm;
 }
 TEST_F(test_ad_comm, constructor)

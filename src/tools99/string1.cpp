@@ -193,20 +193,28 @@ adstring& adstring::operator+=(const adstring& v)
   }
   return (* this);
 }
+/**
+Returns reference to element at specified index i.
 
+\param i index
+*/
 unsigned char& adstring::operator[](const size_t i)
 {
   if (i < 1 || i > shape->size())
   {
-    cerr << "Index out of bounds in adstring::operator () (const int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
+    cerr << "Index out of bounds in adstring::operator[](const size_t)\n"
+         << "Index value was " << i
+         << " The size of this adstring is " << shape->size() << "\n";
+    ad_exit(1);
   }
- // return (s[i]);
-  return ( ((unsigned char *)s)[i]);
+  return s[i];
 }
+/**
+Returns the size of adstr.
 
-size_t length(const adstring& t)
+\param adstr is a adstring.
+*/
+size_t length(const adstring& adstr)
 {
-  return t.size();
+  return adstr.size();
 }

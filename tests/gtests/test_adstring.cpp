@@ -703,20 +703,21 @@ TEST_F(test_adstring, constcomparison)
   ASSERT_FALSE(b == c);
   ASSERT_FALSE(c == b);
 }
-/*
 TEST_F(test_adstring, errorunsignedchar)
 {
   void test_ad_exit(const int exit_code);
   ad_exit=&test_ad_exit;
 
-  const adstring a("abcd");
+  adstring a("abcd");
 
   ASSERT_ANY_THROW({
     unsigned char c = a[0];
   });
-
-  //ASSERT_ANY_THROW({
-  //  a(5);
-  //});
+  ASSERT_ANY_THROW({
+    unsigned char c = a[5];
+  });
+  ASSERT_EQ('a', a[1]);
+  ASSERT_EQ('b', a[2]);
+  ASSERT_EQ('c', a[3]);
+  ASSERT_EQ('d', a[4]);
 }
-*/

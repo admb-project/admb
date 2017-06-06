@@ -554,3 +554,76 @@ TEST_F(test_dvector, deprecated_sort_with_index)
   ASSERT_EQ(2, ivec(4));
   ASSERT_EQ(3, ivec(5));
 }
+TEST_F(test_dvector, nobraces)
+{
+  ofstream ofs("test_dvector.txt");
+  ofs << "0 1 2 3 4 5\n";
+  ofs.close();
+
+  dvector v("test_dvector.txt");
+
+  ASSERT_DOUBLE_EQ(0, v(1));
+  ASSERT_DOUBLE_EQ(1, v(2));
+  ASSERT_DOUBLE_EQ(2, v(3));
+  ASSERT_DOUBLE_EQ(3, v(4));
+  ASSERT_DOUBLE_EQ(4, v(5));
+  ASSERT_DOUBLE_EQ(5, v(6));
+}
+TEST_F(test_dvector, allocatenobraces)
+{
+  ofstream ofs("test_dvector.txt");
+  ofs << "0 1 2 3 4 5\n";
+  ofs.close();
+
+  dvector v(1, 6);
+  v.allocate("test_dvector.txt");
+
+  ASSERT_DOUBLE_EQ(0, v(1));
+  ASSERT_DOUBLE_EQ(1, v(2));
+  ASSERT_DOUBLE_EQ(2, v(3));
+  ASSERT_DOUBLE_EQ(3, v(4));
+  ASSERT_DOUBLE_EQ(4, v(5));
+  ASSERT_DOUBLE_EQ(5, v(6));
+}
+TEST_F(test_dvector, unmatchedbraces)
+{
+  ad_exit=&test_ad_exit;
+
+  char array[] = "{0, 1, 2, 3, 4, 5";
+
+  ASSERT_ANY_THROW({
+    dvector v(array);
+  });
+}
+TEST_F(test_dvector, allocateunmatchedbraces)
+{
+  ad_exit=&test_ad_exit;
+
+  char array[] = "{0, 1, 2, 3, 4, 5";
+
+  ASSERT_ANY_THROW({
+    dvector v;
+    v.allocate(array);
+  });
+}
+TEST_F(test_dvector, t0omanybraces)
+{
+  ad_exit=&test_ad_exit;
+
+  char array[] = "{{0, 1, 2, 3, 4, 5}}";
+
+  ASSERT_ANY_THROW({
+    dvector v(array);
+  });
+}
+TEST_F(test_dvector, allocatet0omanybraces)
+{
+  ad_exit=&test_ad_exit;
+
+  char array[] = "{{0, 1, 2, 3, 4, 5}}";
+
+  ASSERT_ANY_THROW({
+    dvector v;
+    v.allocate(array);
+  });
+}

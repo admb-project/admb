@@ -49,10 +49,12 @@ using std::istringstream;
 const int MAX_FIELD_LENGTH = 500;
 
 /**
- * Description not yet available.
- * \param
- */
-dvector::dvector(const char * s)
+Construct dvector from s.  s is either a filename or a ascii text vector of
+doubles with format "{ d[1], ..., d[n]}" where d are doubles with range 1 to n.
+
+\param s file input or ascii text
+*/
+dvector::dvector(const char* s)
 {
   const size_t n = strlen(s);
   int lbraces = 0;
@@ -243,11 +245,12 @@ dvector::dvector(const char * s)
  delete [] t;
  t = 0;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Allocate dvector from s.  s is either a filename or a ascii text vector of
+doubles with format "{ d[1], ..., d[n]}" where d are doubles with range 1 to n.
+
+\param s file input or ascii text
+*/
 void dvector::allocate(const char * s)
 {
   const size_t n = strlen(s);

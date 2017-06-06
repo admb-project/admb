@@ -705,7 +705,6 @@ TEST_F(test_adstring, constcomparison)
 }
 TEST_F(test_adstring, errorunsignedchar)
 {
-  void test_ad_exit(const int exit_code);
   ad_exit=&test_ad_exit;
 
   adstring a("abcd");
@@ -720,4 +719,23 @@ TEST_F(test_adstring, errorunsignedchar)
   ASSERT_EQ('b', a[2]);
   ASSERT_EQ('c', a[3]);
   ASSERT_EQ('d', a[4]);
+}
+TEST_F(test_adstring, errormaxlimit)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit.txt");
+  for (int i = 0; i <= 1025; ++i)
+  {
+    ofs << "i";
+  }
+  ofs.close();
+
+  adstring a;
+
+  ifstream ifs("maxlimit.txt");
+  ASSERT_ANY_THROW({
+    ifs >> a;
+  });
+  ifs.close();
 }

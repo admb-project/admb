@@ -8,6 +8,7 @@
 Returns results in dvar3_array with elements in base raised to power exp.
 
 \param base dvar3_array of base
+\param exp int exponent
 */
 dvar3_array pow(const dvar3_array& base, int exp)
 {

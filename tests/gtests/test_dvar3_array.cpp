@@ -413,15 +413,13 @@ TEST_F(test_dvar3_array, incompatiblebounds)
 
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
-  //d3_array other;
-  dvar3_array other(1, 3, 1, 2, 1, 2);
+  d3_array other(1, 3, 1, 2, 1, 2);
 
   ASSERT_ANY_THROW(
     a = other;
   );
 }
-/*
-TEST_F(test_dvar3_array, unallocted)
+TEST_F(test_dvar3_array, unallocated)
 {
   ad_exit=&test_ad_exit;
 
@@ -431,8 +429,7 @@ TEST_F(test_dvar3_array, unallocted)
 
   d3_array other;
 
-  ASSERT_ANY_THROW(
-    a = other;
-  );
+#ifdef DEBUG
+  EXPECT_DEATH({ a = other; }, "Assertion");
+#endif
 }
-*/

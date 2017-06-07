@@ -2,12 +2,11 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#include "fvar.hpp"
-/*
+#include <fvar.hpp>
+
 #ifdef DEBUG
 #include <cassert>
 #endif
-*/
 
 /**
 Assign element values from scalar arr3 to dvar3_array.
@@ -16,11 +15,9 @@ Assign element values from scalar arr3 to dvar3_array.
 */
 dvar3_array& dvar3_array::operator=(const d3_array& arr3)
 {
-/*
 #ifdef DEBUG
   assert(allocated(arr3));
 #endif
-*/
   if (slicemin() != arr3.slicemin() || slicemax() != arr3.slicemax())
   {
      cerr << " Incompatible array bounds in "

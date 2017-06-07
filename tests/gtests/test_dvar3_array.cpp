@@ -419,6 +419,7 @@ TEST_F(test_dvar3_array, incompatiblebounds)
     a = other;
   );
 }
+/*
 TEST_F(test_dvar3_array, unallocated)
 {
   ad_exit=&test_ad_exit;
@@ -433,3 +434,4 @@ TEST_F(test_dvar3_array, unallocated)
   EXPECT_DEATH({ a = other; }, "Assertion");
 #endif
 }
+*/

@@ -400,7 +400,7 @@ TEST_F(test_dvar3_array, pow)
       for (int k = 1; k <= 2; ++k)
       {
         
-        ASSERT_DOUBLE_EQ(std::pow(d,  exp), ret(i, j, k));
+        ASSERT_DOUBLE_EQ(std::pow(d,  exp), value(ret(i, j, k)));
         d += 2.0;
       }
     }

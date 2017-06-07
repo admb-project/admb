@@ -585,6 +585,18 @@ TEST_F(test_dvector, allocatenobraces)
   ASSERT_DOUBLE_EQ(4, v(5));
   ASSERT_DOUBLE_EQ(5, v(6));
 }
+TEST_F(test_dvector, filedoesnotexist)
+{
+  ad_exit=&test_ad_exit;
+
+  ASSERT_ANY_THROW({
+    dvector v("filedoesnotexist");
+  });
+  ASSERT_ANY_THROW({
+    dvector v;
+    v.allocate("filedoesnotexist");
+  });
+}
 TEST_F(test_dvector, unmatchedbraces)
 {
   ad_exit=&test_ad_exit;

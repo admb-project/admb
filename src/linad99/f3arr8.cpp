@@ -13,7 +13,7 @@ dvar3_array pow(const dvar3_array& m, int exp)
 {
   dvar3_array result;
   result.allocate(m);
-  for (int i = tmp.slicemin(); i <= tmp.slicemax(); ++i)
+  for (int i = result.slicemin(); i <= result.slicemax(); ++i)
   {
     result(i) = pow(m(i), exp);
   }

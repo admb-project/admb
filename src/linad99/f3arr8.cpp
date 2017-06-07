@@ -1,26 +1,21 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array pow(const dvar3_array& m, int e)
-   {
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=pow(m(i),e);
-     }
-     return tmp;
-   }
+Returns results innn dvar3_array with elements in vararr3 raised to power exp.
+
+\param m dvar3_array of base
+*/
+dvar3_array pow(const dvar3_array& m, int exp)
+{
+  dvar3_array result;
+  result.allocate(m);
+  for (int i = tmp.slicemin(); i <= tmp.slicemax(); ++i)
+  {
+    result(i) = pow(m(i), exp);
+  }
+  return result;
+}

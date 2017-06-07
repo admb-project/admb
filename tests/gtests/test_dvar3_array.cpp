@@ -388,7 +388,8 @@ TEST_F(test_dvar3_array, pow)
     }
   }
 
-  d3_array ret = pow(a, 2.0);
+  const int exp = 2;
+  d3_array ret = pow(a, exp);
 
   d = 2.0;
   for (int i = 1; i <= 2; ++i)
@@ -397,7 +398,8 @@ TEST_F(test_dvar3_array, pow)
     {
       for (int k = 1; k <= 2; ++k)
       {
-        ASSERT_DOUBLE_EQ(std::pow(d,  2.0), ret(i, j, k));
+        
+        ASSERT_DOUBLE_EQ(std::pow(d,  exp), ret(i, j, k));
         d += 2.0;
       }
     }

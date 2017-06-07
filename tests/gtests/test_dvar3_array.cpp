@@ -399,10 +399,40 @@ TEST_F(test_dvar3_array, pow)
     {
       for (int k = 1; k <= 2; ++k)
       {
-        
         ASSERT_DOUBLE_EQ(std::pow(d,  exp), value(ret(i, j, k)));
         d += 2.0;
       }
     }
   }
 }
+TEST_F(test_dvar3_array, incompatiblebounds)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar3_array a(1, 2, 1, 2, 1, 2);
+
+  //d3_array other;
+  dvar3_array other(1, 3, 1, 2, 1, 2);
+
+  ASSERT_ANY_THROW(
+    a = other;
+  );
+}
+/*
+TEST_F(test_dvar3_array, unallocted)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar3_array a(1, 2, 1, 2, 1, 2);
+
+  d3_array other;
+
+  ASSERT_ANY_THROW(
+    a = other;
+  );
+}
+*/

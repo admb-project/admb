@@ -1,44 +1,48 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include "fvar.hpp"
+/*
+#ifdef DEBUG
+#include <cassert>
+#endif
+*/
 
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array& dvar3_array::operator=(const d3_array& m1)
- {
-   if (slicemin() != m1.slicemin() || slicemax() != m1.slicemax())
-   {
+Assign element values from scalar arr3 to dvar3_array.
+
+\param arr3 scalar values
+*/
+dvar3_array& dvar3_array::operator=(const d3_array& arr3)
+{
+/*
+#ifdef DEBUG
+  assert(allocated(arr3));
+#endif
+*/
+  if (slicemin() != arr3.slicemin() || slicemax() != arr3.slicemax())
+  {
      cerr << " Incompatible array bounds in "
-     "dvar_matrix& operator = (const dvar_vector&)\n";
-     ad_exit(21);
-   }
-
-   for (int i=slicemin();i<=slicemax();i++)
-   {
-     elem(i)=m1.elem(i);
-   }
-   return(*this);
- }
-
+          << "dvar3_array& dvar3_array::operator=(const d3_array&)\n";
+     ad_exit(1);
+  }
+  for (int i = slicemin(); i <= slicemax(); ++i)
+  {
+    elem(i) = arr3.elem(i);
+  }
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
- dvar3_array& dvar3_array::operator= (double x)
- {
-   for (int i=slicemin();i<=slicemax();i++)
-   {
-     elem(i)=x;
-   }
-   return(*this);
- }
+Assigns value to all elements of dvar3_array.
+
+\param value assigment value
+*/
+dvar3_array& dvar3_array::operator=(double value)
+{
+  for (int i = slicemin(); i <= slicemax(); ++i)
+  {
+    elem(i) = value;
+  }
+  return *this;
+}

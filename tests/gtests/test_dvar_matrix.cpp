@@ -205,3 +205,19 @@ TEST_F(test_dvar_matrix, extract_diagonal_not_square)
   dvar_vector extract_diagonal(const dvar_matrix& m);
   ASSERT_THROW(extract_diagonal(a), int);
 }
+TEST_F(test_dvar_matrix, negativeoperator)
+{
+  gradient_structure gs;
+
+  dvar_matrix a(1, 2, 1, 2);
+  a(1, 1) = 1;
+  a(1, 2) = 2;
+  a(2, 1) = 3;
+  a(2, 2) = 4;
+
+  dvar_matrix a2 = -a;
+  ASSERT_DOUBLE_EQ(-1, value(a2(1, 1)));
+  ASSERT_DOUBLE_EQ(-2, value(a2(1, 2)));
+  ASSERT_DOUBLE_EQ(-3, value(a2(2, 1)));
+  ASSERT_DOUBLE_EQ(-4, value(a2(2, 2)));
+}

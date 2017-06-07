@@ -419,6 +419,20 @@ TEST_F(test_dvar3_array, incompatiblebounds)
     a = other;
   );
 }
+TEST_F(test_dvar3_array, incompatiblebounds2)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar3_array a(1, 2, 1, 2, 1, 2);
+
+  d3_array other(2, 2, 1, 2, 1, 2);
+
+  ASSERT_ANY_THROW(
+    a = other;
+  );
+}
 /*
 TEST_F(test_dvar3_array, unallocated)
 {

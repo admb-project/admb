@@ -5,17 +5,17 @@
 #include "fvar.hpp"
 
 /**
-Returns results innn dvar3_array with elements in vararr3 raised to power exp.
+Returns results in dvar3_array with elements in base raised to power exp.
 
-\param m dvar3_array of base
+\param base dvar3_array of base
 */
-dvar3_array pow(const dvar3_array& m, int exp)
+dvar3_array pow(const dvar3_array& base, int exp)
 {
-  dvar3_array result;
-  result.allocate(m);
-  for (int i = result.slicemin(); i <= result.slicemax(); ++i)
+  dvar3_array results;
+  results.allocate(base);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
   {
-    result(i) = pow(m(i), exp);
+    results(i) = pow(base(i), exp);
   }
-  return result;
+  return results;
 }

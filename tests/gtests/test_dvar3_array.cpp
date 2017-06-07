@@ -373,7 +373,7 @@ TEST_F(test_dvar3_array, pow)
 {
   gradient_structure gs;
 
-  d3_array a(1, 2, 1, 2, 1, 2);
+  dvar3_array a(1, 2, 1, 2, 1, 2);
 
   double d = 2.0;
   for (int i = 1; i <= 2; ++i)
@@ -389,7 +389,7 @@ TEST_F(test_dvar3_array, pow)
   }
 
   const int exp = 2;
-  d3_array ret = pow(a, exp);
+  dvar3_array ret = pow(a, exp);
 
   d = 2.0;
   for (int i = 1; i <= 2; ++i)

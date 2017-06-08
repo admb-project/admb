@@ -98,7 +98,7 @@ public :
   unsigned char &operator()(const size_t i);
   unsigned char &operator[](const size_t i);
   const unsigned char& operator()(const size_t i) const;
-  const unsigned char& operator[](const size_t i) const;
+  unsigned char& operator[](const size_t i) const;
 
   adstring& operator+=(const adstring &u);
   inline adstring& operator+=(const char u)

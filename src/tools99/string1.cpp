@@ -129,7 +129,7 @@ const unsigned char& adstring::operator()(const size_t i) const
   return (s[i]);
 }
 
-const unsigned char& adstring::operator[](const size_t i) const
+unsigned char& adstring::operator[](const size_t i) const
 {
 /*
   if (i < 1 || i > shape->size())
@@ -138,7 +138,7 @@ const unsigned char& adstring::operator[](const size_t i) const
     "unsigned char & adstring::operator[](int i) const ", 1, shape->size(), i);
   }
 */
-  return (s[i]);
+  return s[i];
 }
 
 /**

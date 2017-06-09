@@ -2713,47 +2713,59 @@ public:
  */
 class param_init_bounded_matrix_vector
 {
-  param_init_bounded_matrix * v;
+  param_init_bounded_matrix* v;
   int index_min;
   int index_max;
-  double_index_type * it;
+  double_index_type* it;
 public:
   param_init_bounded_matrix_vector();
   ~param_init_bounded_matrix_vector();
 
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
-  dvector get_scalefactor(void);
+  dvector get_scalefactor();
 
-  void allocate(int min1,int max1,
-    const index_type& min, const index_type& max, const index_type& min2,
-    const index_type& max2, const double_index_type& dmin2,
-    const double_index_type& dmax2, const index_type& phase_start,
+  void allocate(
+    int min1, int max1,
+    const index_type& min, const index_type& max,
+    const index_type& min2, const index_type& max2,
+    const double_index_type& dmin2, const double_index_type& dmax2,
+    const index_type& phase_start,
     const char * s);
 
-  void allocate(int min1,int max1,
-    const index_type& min, const index_type& max, const index_type& min2,
-    const index_type& max2, const double_index_type& dmin2,
-    const double_index_type& dmax2,const char * s);
+  void allocate(
+    int min1, int max1,
+    const index_type& min, const index_type& max,
+    const index_type& min2, const index_type& max2,
+    const double_index_type& dmin2, const double_index_type& dmax2,
+    const char * s);
 
-#if defined(OPT_LIB)
-  param_init_bounded_matrix& operator [] (int i) { return v[i];}
-  param_init_bounded_matrix& operator () (int i) { return v[i];}
-  dvar_vector& operator () (int i,int j) { return v[i][j];}
-  prevariable operator () (int i,int j,int k) { return v[i](j,k);}
-#else
-  param_init_bounded_matrix& operator [] (int i);
-  param_init_bounded_matrix& operator () (int i);
-  dvar_vector& operator () (int i,int j);
-  prevariable operator () (int i,int j,int k);
-#endif
+  param_init_bounded_matrix& operator[](int i);
+  param_init_bounded_matrix& operator()(int i);
+  dvar_vector& operator()(int i, int j);
+  prevariable operator()(int i, int j, int k);
 
   bool allocated() const { return v != NULL; }
   int indexmin() const { return index_min; }
   int indexmax() const { return index_max; }
-  void set_initial_value(const double_index_type& it);
-  void deallocate(void);
+
+  void set_initial_value(const double_index_type& initial_value);
+  void deallocate();
 };
+#if defined(OPT_LIB)
+inline param_init_bounded_matrix&
+param_init_bounded_matrix_vector::operator[](int i)
+  { return v[i]; }
+inline param_init_bounded_matrix&
+param_init_bounded_matrix_vector::operator()(int i)
+  { return v[i]; }
+inline dvar_vector&
+param_init_bounded_matrix_vector::operator()(int i, int j)
+  { return v[i][j]; }
+inline prevariable
+param_init_bounded_matrix_vector::operator()(int i, int j, int k)
+  { return v[i](j,k); }
+#endif
 
 /**
  * Description not yet available.

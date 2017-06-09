@@ -10,6 +10,7 @@ TEST_F(test_param_init_bounded_matrix_vector, constructor)
   ASSERT_EQ(0, p.indexmin());
   ASSERT_EQ(0, p.indexmax());
 }
+/*
 TEST_F(test_param_init_bounded_matrix_vector, allocate)
 {
   gradient_structure gs;
@@ -35,3 +36,4 @@ TEST_F(test_param_init_bounded_matrix_vector, allocate_error)
   ASSERT_EQ(0, p.indexmin());
   ASSERT_EQ(0, p.indexmax());
 }
+*/

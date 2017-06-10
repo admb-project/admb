@@ -11,6 +11,14 @@ TEST_F(test_param_init_vector_vector, constructor)
   ASSERT_EQ(0, p.indexmin());
   ASSERT_EQ(0, p.indexmax());
 }
+TEST_F(test_param_init_vector_vector, set_initial_value)
+{
+  param_init_vector_vector p;
+  p.set_initial_value(0.5);
+  ASSERT_FALSE(p.allocated());
+  ASSERT_EQ(0, p.indexmin());
+  ASSERT_EQ(0, p.indexmax());
+}
 TEST_F(test_param_init_vector_vector, allocate)
 {
   gradient_structure gs;

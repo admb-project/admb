@@ -1,35 +1,35 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
- void param_init_vector_vector::set_initial_value(const double_index_type& _it)
- {
-    it=new double_index_type(_it);
- }
-
+/**
+Set the initial_value.
+\param initial_value new value
+*/
+void param_init_vector_vector::set_initial_value(
+  const double_index_type& initial_value)
+{
+  it = new double_index_type(initial_value);
+}
 /**
 Default constructor
 */
 param_init_vector_vector::param_init_vector_vector():
   v(NULL),
   index_min(0),
-  index_max(0),
+  index_max(-1),
   it(NULL)
 {
 }
 
 void param_init_vector_vector::allocate(
-  int min1,
-  int max1,
-  const index_type& min,
-  const index_type& max,
-  const char * s)
+  int min1, int max1,
+  const index_type& min, const index_type& max,
+  const char* s)
 {
-  allocate(min1,max1,min,max,1,s);
+  allocate(min1, max1, min, max, 1, s);
 }
 
 void param_init_vector_vector::allocate(
@@ -40,10 +40,10 @@ void param_init_vector_vector::allocate(
   const index_type& phase_start,
   const char * s)
 {
-  int size = max1 - min1 + 1;
-  if (size > 0)
+  if (max1 >= min1)
   {
-    v = new param_init_vector[static_cast<unsigned int>(size)];
+    unsigned int size = static_cast<unsigned int>(max1 - min1 + 1);
+    v = new param_init_vector[size];
     if (!v)
     {
       cerr << " error trying to allocate memory in "
@@ -100,7 +100,7 @@ param_init_vector_vector::~param_init_vector_vector()
 /**
 Free member allocated memory.
 */
-void param_init_vector_vector::deallocate(void)
+void param_init_vector_vector::deallocate()
 {
   if (it)
   {

@@ -23,22 +23,43 @@ param_init_vector_vector::param_init_vector_vector():
   it(NULL)
 {
 }
+/**
+Allocate vector min1 to max2 of param_init_vector with dimensions
+min to max using phase_start at 1.
 
+\param min1 lower vector index
+\param max1 upper vector index
+\param min param_init_vector lower vector index
+\param max param_init_vector upper vector index
+\param s is the id
+*/
 void param_init_vector_vector::allocate(
-  int min1, int max1,
-  const index_type& min, const index_type& max,
+  int min1,
+  int max1,
+  const index_type& min,
+  const index_type& max,
   const char* s)
 {
   allocate(min1, max1, min, max, 1, s);
 }
+/**
+Allocate vector min1 to max2 of param_init_vector with dimensions
+min to max using specified phase_start.
 
+\param min1 lower vector index
+\param max1 upper vector index
+\param min param_init_vector lower vector index
+\param max param_init_vector upper vector index
+\param phase_start specified starting phase
+\param s is the id
+*/
 void param_init_vector_vector::allocate(
   int min1,
   int max1,
   const index_type& min,
   const index_type& max,
   const index_type& phase_start,
-  const char * s)
+  const char* s)
 {
   if (max1 >= min1)
   {
@@ -50,18 +71,28 @@ void param_init_vector_vector::allocate(
           "param_init_vector_vector " << endl;
       exit(1);
     }
-
     index_min = min1;
     index_max = max1;
-    v-=indexmin();
-    for (int i=indexmin();i<=indexmax();i++)
+    v -= indexmin();
+    for (int i = indexmin(); i <= indexmax(); ++i)
     {
       if (it) v[i].set_initial_value(ad_double((*it)[i]));
-      adstring ss=s + adstring("[") + str(i) + adstring("]");
-      v[i].allocate(min[i],max[i],phase_start[i],(char*)(ss) );
+      adstring ss = s + adstring("[") + str(i) + adstring("]");
+      v[i].allocate(min[i], max[i], phase_start[i], (char*)(ss));
     }
   }
 }
+/**
+Allocate param_init_vector with dimension imin to imax
+using specified phase_start.
+
+Note: May read values from either global parfile or bparfile. 
+
+\param imin lower vector index
+\param imax upper vector index
+\param phase_start specified starting phase
+\param s is the id
+*/
 void param_init_vector::allocate(
   const ad_integer& imin,
   const ad_integer& imax,

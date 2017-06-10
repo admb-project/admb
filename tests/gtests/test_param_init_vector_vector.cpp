@@ -30,6 +30,18 @@ TEST_F(test_param_init_vector_vector, allocate)
   for (int i = 1; i <= 4; i++)
     ASSERT_EQ(1, p[i].get_phase_start());
 }
+TEST_F(test_param_init_vector_vector, intialvalueallocate)
+{
+  gradient_structure gs;
+  param_init_vector_vector p;
+  p.set_initial_value(0.5);
+  p.allocate(1, 4, -5, 5, "allocate");
+  ASSERT_TRUE(p.allocated());
+  ASSERT_EQ(1, p.indexmin());
+  ASSERT_EQ(4, p.indexmax());
+  for (int i = 1; i <= 4; i++)
+    ASSERT_EQ(1, p[i].get_phase_start());
+}
 TEST_F(test_param_init_vector_vector, allocate_error)
 {
   param_init_vector_vector p;

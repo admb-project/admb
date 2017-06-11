@@ -31,4 +31,16 @@ TEST_F(test_param_init_bounded_number_matrix, allocate)
   ASSERT_EQ(4, n[2].indexmax());
   ASSERT_EQ(2, n[3].indexmin());
   ASSERT_EQ(4, n[3].indexmax());
+
+  n.set_scalefactor(1.4);
+
+  dmatrix scalefactor = n.get_scalefactor();
+
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 4; ++j)
+    {
+      ASSERT_DOUBLE_EQ(1.4, scalefactor(i, j));
+    }
+  }
 }

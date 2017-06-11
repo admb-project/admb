@@ -17,6 +17,11 @@ param_init_bounded_number_matrix::param_init_bounded_number_matrix():
   index_max(-1)
 {
 }
+/// Destructor
+param_init_bounded_number_matrix::~param_init_bounded_number_matrix()
+{
+  deallocate();
+}
 /**
 Allocate matrix of param_init_bounded numbers with dimension
 [rowmin to rowmax] x [colmin to colmax] with bounded values

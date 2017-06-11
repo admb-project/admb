@@ -1,6 +1,4 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  *
@@ -50,67 +48,42 @@ class param_init_bounded_number_matrix
 public:
   param_init_bounded_number_matrix();
   param_init_bounded_number_matrix(const param_init_bounded_number_matrix&);
-  virtual ~param_init_bounded_number_matrix()
-  {
-    deallocate();
-  }
+  virtual ~param_init_bounded_number_matrix();
+
 public:
-  /**
-   *
-   */
   void allocate(int rowmin, int rowmax,
                 int colmin, int colmax,
                 const dmatrix& bmin, const dmatrix& bmax,
                 const char* s);
-  /**
-   *
-   */
+
   void allocate(int rowmin, int rowmax,
                 int colmin, int colmax,
                 const dmatrix& bmin, const dmatrix& bmax,
                 const imatrix& phase_start,
                 const char* s);
-  /**
-   *
-   */
+
   void set_scalefactor(const double scalefactor);
-  /**
-   *
-   */
   void set_scalefactor(const dmatrix& scalefactor);
-  /**
-   *
-   */
   dmatrix get_scalefactor() const;
-  /**
-   *
-   */
+
   param_init_bounded_number_vector& operator[](const int i) const;
-  /**
-   *
-   */
   param_init_bounded_number_vector& operator()(const int i) const;
-  /**
-   *
-   */
   param_init_bounded_number& operator()(const int i, const int j) const;
-  /**
-   *
-   */
+
+  /// Returns true is allocated, otherwise false.
   bool allocated() const { return v != NULL; }
-  /**
-   *
-   */
+
+  /// Returns lower row index
   int indexmin() const { return index_min; }
-  /**
-   *
-   */
+
+  /// Returns upper row index
   int indexmax() const { return index_max; }
+
 private:
-  /**
-   *
-   */
+
+  /// Free allocated memory.
   void deallocate();
+
 private:
   param_init_bounded_number_vector* v;
   int index_min;

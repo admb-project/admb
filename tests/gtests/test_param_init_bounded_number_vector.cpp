@@ -13,7 +13,36 @@ TEST_F(test_param_init_bounded_number_vector, default_constructor)
   param_init_bounded_number_vector p;
   EXPECT_EQ(0, p.allocated());
   EXPECT_EQ(0, p.indexmin());
-  EXPECT_EQ(0, p.indexmax());
+  EXPECT_EQ(-1, p.indexmax());
+}
+TEST_F(test_param_init_bounded_number_vector, set_initial_value)
+{
+  param_init_bounded_number_vector p;
+  p.set_initial_value(0.5);
+  EXPECT_EQ(0, p.allocated());
+  EXPECT_EQ(0, p.indexmin());
+  EXPECT_EQ(-1, p.indexmax());
+}
+TEST_F(test_param_init_bounded_number_vector, allocate)
+{
+  gradient_structure gs;
+
+  param_init_bounded_number_vector p;
+  p.allocate(1, 4, 0.5, 1.0, "param_init_bounded_number_vecotor");
+  EXPECT_TRUE(p.allocated());
+  EXPECT_EQ(1, p.indexmin());
+  EXPECT_EQ(4, p.indexmax());
+}
+TEST_F(test_param_init_bounded_number_vector, set_initial_valueallocate)
+{
+  gradient_structure gs;
+
+  param_init_bounded_number_vector p;
+  p.set_initial_value(0.5);
+  p.allocate(1, 4, 0.5, 1.0, "param_init_bounded_number_vecotor");
+  EXPECT_TRUE(p.allocated());
+  EXPECT_EQ(1, p.indexmin());
+  EXPECT_EQ(4, p.indexmax());
 }
 #ifndef OPT_LIB
 TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)

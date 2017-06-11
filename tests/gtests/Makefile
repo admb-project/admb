@@ -95,6 +95,7 @@ GTESTS=\
  test_param_init_number.cpp\
  test_df3_three_vector.cpp\
  test_param_init_bounded_matrix_vector.cpp\
+ test_param_init_bounded_number_matrix.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

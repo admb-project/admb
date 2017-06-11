@@ -10,11 +10,30 @@
   #include <cassert>
 #endif
 
-param_init_bounded_number_matrix::param_init_bounded_number_matrix(): v(NULL),
-  index_min(0), index_max(0)
+/// Default constructor
+param_init_bounded_number_matrix::param_init_bounded_number_matrix():
+  v(NULL),
+  index_min(0),
+  index_max(-1)
 {
 }
-void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
+/**
+Allocate matrix of param_init_bounded numbers with dimension
+[rowmin to rowmax] x [colmin to colmax] with bounded values
+[bmin, bmax].
+
+Note: default phase_start is 1.
+
+\param rowmin matrix row minimum index
+\param rowmax matrix row max index
+\param colmin matrix column minimum index
+\param colmax matrix column max index
+\param bmin bounded lower values
+\param bmax bounded upper values
+\param s id
+*/
+void param_init_bounded_number_matrix::allocate(
+  int rowmin, int rowmax,
   int colmin, int colmax,
   const dmatrix& bmin, const dmatrix& bmax,
   const char* s)
@@ -23,7 +42,24 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
   phase_start = 1;
   allocate(rowmin, rowmax, colmin, colmax, bmin, bmax, phase_start, s);
 }
-void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
+/**
+Allocate matrix of param_init_bounded numbers with dimension
+[rowmin to rowmax] x [colmin to colmax] with bounded values
+[bmin, bmax].
+
+Note: default phase_start is 1.
+
+\param rowmin matrix row minimum index
+\param rowmax matrix row max index
+\param colmin matrix column minimum index
+\param colmax matrix column max index
+\param bmin bounded lower values
+\param bmax bounded upper values
+\param phase_start
+\param s id
+*/
+void param_init_bounded_number_matrix::allocate(
+  int rowmin, int rowmax,
   int colmin, int colmax,
   const dmatrix& bmin, const dmatrix& bmax,
   const imatrix& phase_start,
@@ -33,13 +69,9 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
   assert(v == NULL);
 #endif
 
-  unsigned int size  =
-    static_cast<unsigned int>(rowmax < rowmin ? 0 : rowmax - rowmin + 1);
-
-  if (size > 0)
+  if (rowmax >= rowmin)
   {
-    index_min = rowmin;
-    index_max = rowmax;
+    unsigned int size  = static_cast<unsigned int>(rowmax - rowmin + 1);
     v = new param_init_bounded_number_vector[size];
     if (!v)
     {
@@ -47,9 +79,12 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
                "param_init_bounded_number_vector " << endl;
       ad_exit(1);
     }
+
+    index_min = rowmin;
+    index_max = rowmax;
     v -= index_min;
 
-    for (int i = index_min; i <= index_max; i++)
+    for (int i = index_min; i <= index_max; ++i)
     {
       /*if (it) v[i].set_initial_value(it[i]);*/
       adstring a = s + adstring("[") + str(i) + adstring("]");

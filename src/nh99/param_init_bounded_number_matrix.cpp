@@ -98,20 +98,38 @@ void param_init_bounded_number_matrix::allocate(
     }
   }
 }
-void param_init_bounded_number_matrix::set_scalefactor(const double scalefactor)
+/**
+Set scalefactor for each element of param_init_bounded_number_matrix.
+
+\param scalefactor double
+*/
+void param_init_bounded_number_matrix::set_scalefactor(
+  const double scalefactor)
 {
-  for (int i = index_min; i <= index_max; i++)
+#ifndef OPT_LIB
+  assert(v == NULL);
+#endif
+
+  for (int i = index_min; i <= index_max; ++i)
   {
     v[i].set_scalefactor(scalefactor);
   }
 }
+/**
+Set scalefactor for each element of param_init_bounded_number_matrix.
+scalefactor should have the same dimension as param_init_bounded_number_matrix.
+
+\param scalefactor dmatrix
+*/
 void param_init_bounded_number_matrix::set_scalefactor(
   const dmatrix& scalefactor)
 {
+#ifndef OPT_LIB
+  assert(v == NULL);
+#endif
   for (int i = index_min; i <= index_max; i++)
   {
-    const dvector& dv = scalefactor(i);
-    v[i].set_scalefactor(dv);
+    v[i].set_scalefactor(scalefactor(i));
   }
 }
 dmatrix param_init_bounded_number_matrix::get_scalefactor() const

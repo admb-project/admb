@@ -107,7 +107,7 @@ void param_init_bounded_number_matrix::set_scalefactor(
   const double scalefactor)
 {
 #ifndef OPT_LIB
-  assert(v == NULL);
+  assert(v != NULL);
 #endif
 
   for (int i = index_min; i <= index_max; ++i)
@@ -125,13 +125,17 @@ void param_init_bounded_number_matrix::set_scalefactor(
   const dmatrix& scalefactor)
 {
 #ifndef OPT_LIB
-  assert(v == NULL);
+  assert(v != NULL);
 #endif
   for (int i = index_min; i <= index_max; i++)
   {
     v[i].set_scalefactor(scalefactor(i));
   }
 }
+/**
+Returns matrix with scalefactors for each element
+in param_init_bounded_number_matrix.
+*/
 dmatrix param_init_bounded_number_matrix::get_scalefactor() const
 {
   dmatrix scalefactor;
@@ -140,12 +144,9 @@ dmatrix param_init_bounded_number_matrix::get_scalefactor() const
     scalefactor.allocate(index_min, index_max);
     for (int i = index_min; i <= index_max; i++)
     {
-      param_init_bounded_number_vector& pibv = v[i];
-      dvector dv = pibv.get_scalefactor();
-      int indexmin = pibv.indexmin();
-      int indexmax = pibv.indexmax();
-      scalefactor.allocate(indexmin, indexmax);
-      scalefactor(i) = dv;
+      param_init_bounded_number_vector& vi = v[i];
+      scalefactor(i).allocate(vi.indexmin(), vi .indexmax());
+      scalefactor(i) = vi.get_scalefactor();
     }
   }
   return scalefactor;

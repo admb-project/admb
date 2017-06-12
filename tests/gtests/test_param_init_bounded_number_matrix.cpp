@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 #include "admodel.h"
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_param_init_bounded_number_matrix: public ::testing::Test {};
 
 TEST_F(test_param_init_bounded_number_matrix, constructor)
@@ -54,4 +59,18 @@ TEST_F(test_param_init_bounded_number_matrix, allocate)
       ASSERT_DOUBLE_EQ(0, n(i, j).get_scalefactor());
     }
   }
+  ad_exit=&test_ad_exit;
+
+  ASSERT_ANY_THROW({
+    n[0];
+  });
+  ASSERT_ANY_THROW({
+    n[10];
+  });
+  ASSERT_ANY_THROW({
+    n(0);
+  });
+  ASSERT_ANY_THROW({
+    n(10);
+  });
 }

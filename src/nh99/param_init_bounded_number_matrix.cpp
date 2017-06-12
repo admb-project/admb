@@ -151,6 +151,9 @@ dmatrix param_init_bounded_number_matrix::get_scalefactor() const
   }
   return scalefactor;
 }
+/**
+Free allocated memory.
+*/
 void param_init_bounded_number_matrix::deallocate()
 {
   if (v)
@@ -164,8 +167,14 @@ void param_init_bounded_number_matrix::deallocate()
     v = NULL;
   }
 }
-param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
-  const int i) const
+/**
+Returns param_init_bounded_vector for index i.
+Bounds checking is performed.
+
+\param i index
+*/
+param_init_bounded_number_vector&
+param_init_bounded_number_matrix::operator[](const int i) const
 {
 #ifndef OPT_LIB
   if (i < index_min)
@@ -183,8 +192,14 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
 #endif
   return v[i];
 }
-param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(
-  const int i) const
+/**
+Returns param_init_bounded_vector for index i.
+Bounds checking is performed.
+
+\param i index
+*/
+param_init_bounded_number_vector&
+param_init_bounded_number_matrix::operator()(const int i) const
 {
 #ifndef OPT_LIB
   if (i < index_min)
@@ -202,8 +217,15 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(
 #endif
   return v[i];
 }
-param_init_bounded_number& param_init_bounded_number_matrix::operator()(
-  const int i, const int j) const
+/**
+Returns param_init_bounded_number at index i and j.
+Bounds checking is performed.
+
+\param i row index
+\param j column index
+*/
+param_init_bounded_number&
+param_init_bounded_number_matrix::operator()(const int i, const int j) const
 {
   return this->operator()(i)(j);
 }

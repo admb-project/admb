@@ -27,7 +27,6 @@ GTESTS=\
  test_option_match.cpp\
  test_lvector.cpp\
  test_adpool.cpp\
- test_param_init_bounded_number_vector.cpp\
  test_param_init_d3array.cpp\
  test_spline.cpp\
  test_banded_symmetric_dmatrix.cpp\
@@ -96,6 +95,8 @@ GTESTS=\
  test_df3_three_vector.cpp\
  test_param_init_bounded_matrix_vector.cpp\
  test_param_init_bounded_number_matrix.cpp\
+ test_adlist_ptr.cpp\
+ test_param_init_bounded_number_vector.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

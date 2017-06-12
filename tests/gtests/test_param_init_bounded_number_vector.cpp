@@ -33,6 +33,72 @@ TEST_F(test_param_init_bounded_number_vector, allocate)
   EXPECT_EQ(1, p.indexmin());
   EXPECT_EQ(4, p.indexmax());
 }
+TEST_F(test_param_init_bounded_number_vector, nonmatching)
+{
+  gradient_structure gs;
+
+  param_init_bounded_number_vector p;
+  p.allocate(1, 4, 0.5, 1.0, "param_init_bounded_number_vecotor");
+
+  ad_exit=&test_ad_exit;
+
+  ASSERT_ANY_THROW({
+    dvector scalefactor;
+    p.set_scalefactor(scalefactor);
+  });
+  ASSERT_ANY_THROW({
+    dvector scalefactor(0, 4);
+    p.set_scalefactor(scalefactor);
+  });
+  ASSERT_ANY_THROW({
+    dvector scalefactor(1, 5);
+    p.set_scalefactor(scalefactor);
+  });
+}
+TEST_F(test_param_init_bounded_number_vector, allocateset_initial_value)
+{
+  gradient_structure gs;
+
+  param_init_bounded_number_vector p;
+  p.allocate(1, 4, 0.5, 1.0, "param_init_bounded_number_vecotor");
+  p.set_initial_value(2.5);
+  EXPECT_TRUE(p.allocated());
+  EXPECT_EQ(1, p.indexmin());
+  EXPECT_EQ(4, p.indexmax());
+  EXPECT_DOUBLE_EQ(2.5, value(p(1)));
+  EXPECT_DOUBLE_EQ(2.5, value(p(2)));
+  EXPECT_DOUBLE_EQ(2.5, value(p(3)));
+  EXPECT_DOUBLE_EQ(2.5, value(p(4)));
+  p.set_initial_value(2.5);
+  EXPECT_DOUBLE_EQ(2.5, value(p(1)));
+  EXPECT_DOUBLE_EQ(2.5, value(p(2)));
+  EXPECT_DOUBLE_EQ(2.5, value(p(3)));
+  EXPECT_DOUBLE_EQ(2.5, value(p(4)));
+
+  dvector scalefactors = p.get_scalefactor();
+  EXPECT_EQ(1, scalefactors.indexmin());
+  EXPECT_EQ(4, scalefactors.indexmax());
+  EXPECT_DOUBLE_EQ(0, scalefactors(1));
+  EXPECT_DOUBLE_EQ(0, scalefactors(2));
+  EXPECT_DOUBLE_EQ(0, scalefactors(3));
+  EXPECT_DOUBLE_EQ(0, scalefactors(4));
+  p.set_scalefactor(2.5);
+  scalefactors = p.get_scalefactor();
+  EXPECT_DOUBLE_EQ(2.5, scalefactors(1));
+  EXPECT_DOUBLE_EQ(2.5, scalefactors(2));
+  EXPECT_DOUBLE_EQ(2.5, scalefactors(3));
+  EXPECT_DOUBLE_EQ(2.5, scalefactors(4));
+  scalefactors(1) = 1.5;
+  scalefactors(2) = 2.5;
+  scalefactors(3) = 3.5;
+  scalefactors(4) = 4.5;
+  p.set_scalefactor(scalefactors);
+  scalefactors = p.get_scalefactor();
+  EXPECT_DOUBLE_EQ(1.5, scalefactors(1));
+  EXPECT_DOUBLE_EQ(2.5, scalefactors(2));
+  EXPECT_DOUBLE_EQ(3.5, scalefactors(3));
+  EXPECT_DOUBLE_EQ(4.5, scalefactors(4));
+}
 TEST_F(test_param_init_bounded_number_vector, set_initial_valueallocate)
 {
   gradient_structure gs;

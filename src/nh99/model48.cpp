@@ -1,28 +1,31 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
+/**
+Sets the initial value for elements of param_init_bounded_vector.
+
+\param initial_value double
+*/
 void param_init_bounded_number_vector::set_initial_value(
-  const double_index_type& _it)
+  const double_index_type& initial_value)
 {
   if (it)
   {
     delete it;
     it = 0;
   }
-  it = new double_index_type(_it);
+  it = new double_index_type(initial_value);
 
   if (v)
   {
     int mmin = indexmin();
     int mmax = indexmax();
-    for (int i = mmin; i <= mmax; i++)
+    for (int i = mmin; i <= mmax; ++i)
     {
-      v[i] = ad_double(_it(i));
+      v[i] = ad_double(initial_value(i));
     }
   }
 }
@@ -110,42 +113,52 @@ void param_init_bounded_number_vector::allocate(int min1,int max1,
     }
   }
 }
-
-dvector param_init_number_vector::get_scalefactor(void)
+/**
+Returns vector of scalefactor values.
+*/
+dvector param_init_number_vector::get_scalefactor()
 {
-  int mmin=indexmin();
-  int mmax=indexmax();
-  dvector s(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  int mmin = indexmin();
+  int mmax = indexmax();
+  dvector scalefactors(mmin, mmax);
+  for (int i = mmin; i <= mmax; ++i)
   {
-    s(i)=(*this)(i).get_scalefactor();
+    scalefactors(i) = (*this)(i).get_scalefactor();
   }
-  return s;
+  return scalefactors;
 }
-void param_init_number_vector::set_scalefactor(const dvector& s)
+/**
+Sets individual scalefactor for param_init_number_vector.
+
+\param scalefactor dvector
+*/
+void param_init_number_vector::set_scalefactor(const dvector& scalefactors)
 {
-  int mmin=indexmin();
-  int mmax=indexmax();
-  if (s.indexmin()!=mmin || s.indexmax() != mmax)
+  int mmin = indexmin();
+  int mmax = indexmax();
+  if (scalefactors.indexmin() != mmin || scalefactors.indexmax() != mmax)
   {
     cerr << "non matching vector bounds in"
-     " init_number_vector::set_scalefactor" << endl;
+         << " init_number_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
-
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin; i <= mmax; ++i)
   {
-    (*this)(i).set_scalefactor(s(i));
+    (*this)(i).set_scalefactor(scalefactors(i));
   }
 }
+/**
+Sets scalefactor for param_init_number_vector.
 
-void param_init_number_vector::set_scalefactor(double s)
+\param scalefactor double
+*/
+void param_init_number_vector::set_scalefactor(double scalefactor)
 {
-  int mmin=indexmin();
-  int mmax=indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  int mmin = indexmin();
+  int mmax = indexmax();
+  for (int i = mmin; i <= mmax; ++i)
   {
-    (*this)(i).set_scalefactor(s);
+    (*this)(i).set_scalefactor(scalefactor);
   }
 }
 

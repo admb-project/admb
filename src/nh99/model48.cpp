@@ -80,36 +80,65 @@ void param_init_bounded_number_vector::allocate(const data_matrix &m,
   index_type phz1 = ivector(column(m,3));
   allocate(min1,max1,bmin,bmax,phz1,s);
 }
+/**
+Allocate vector of param_init_bounded_number with dimension [min1 to max1]
+and bounded by [bmin, bmax].
 
-void param_init_bounded_number_vector::allocate(int min1,int max1,
-  const double_index_type & bmin,const double_index_type & bmax,const char * s)
+Note: phase_start is defaulted to 1.
+
+\param min1 lower vector index
+\param max1 upper vector index
+\param bmin lower bounds
+\param bmax upper bounds
+\param s id
+*/
+void param_init_bounded_number_vector::allocate(
+  int min1,
+  int max1,
+  const double_index_type& bmin,
+  const double_index_type& bmax,
+  const char* s)
 {
-  allocate(min1,max1,bmin,bmax,1,s);
+  allocate(min1, max1, bmin, bmax, 1, s);
 }
+/**
+Allocate vector of param_init_bounded_number with dimension [min1 to max1]
+and bounded by [bmin, bmax].
 
-void param_init_bounded_number_vector::allocate(int min1,int max1,
-  const double_index_type & bmin,const double_index_type & bmax,
-  const index_type& phase_start,const char * s)
+\param min1 lower vector index
+\param max1 upper vector index
+\param bmin lower bounds
+\param bmax upper bounds
+\param phase_start
+\param s id
+*/
+void param_init_bounded_number_vector::allocate(
+  int min1,
+  int max1,
+  const double_index_type& bmin,
+  const double_index_type& bmax,
+  const index_type& phase_start,
+  const char* s)
 {
-  int size = max1 - min1 + 1;
-  if (size > 0)
+  if (max1 >= min1)
   {
-    v = new param_init_bounded_number[static_cast<unsigned long>(size)];
+    unsigned int size = static_cast<unsigned int>(max1 - min1 + 1);
+    v = new param_init_bounded_number[size];
     if (!v)
     {
-        cerr << " error trying to allocate memory in "
-          "param_init_bounded_number_vector " << endl;
-        exit(1);
+      cerr << " error trying to allocate memory in "
+           << "param_init_bounded_number_vector " << endl;
+      ad_exit(1);
     }
-    index_min=min1;
-    index_max=max1;
-    v-=indexmin();
-    for (int i=indexmin();i<=indexmax();i++)
+    index_min = min1;
+    index_max = max1;
+    v -= indexmin();
+    for (int i = indexmin(); i <= indexmax(); ++i)
     {
-       if (it) v[i].set_initial_value(ad_double((*it)[i]));
-       adstring ss=s + adstring("[") + str(i) + adstring("]");
-       v[i].allocate(ad_double(bmin[i]),ad_double(bmax[i]),
-         ad_integer(phase_start[i]),(char*)(ss) );
+      if (it) v[i].set_initial_value(ad_double((*it)[i]));
+      adstring ss=s + adstring("[") + str(i) + adstring("]");
+      v[i].allocate(ad_double(bmin[i]),ad_double(bmax[i]),
+        ad_integer(phase_start[i]),(char*)(ss) );
     }
   }
 }

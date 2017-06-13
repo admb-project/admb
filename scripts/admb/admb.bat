@@ -1,6 +1,6 @@
 @echo off
 @REM
-@REM  Copyright 2013 (c) ADMB Foundation
+@REM  Copyright 2013-2017 (c) ADMB Foundation
 @REM
 
 if [%1]==[] goto HELP

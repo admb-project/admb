@@ -429,8 +429,10 @@ if not defined tpls (
     )
   )
 )
+
 :SUCCESS
 goto EOF
+
 :ERROR
 echo.&echo Error: Unable to build.
 echo.&echo COMSPEC=%COMSPEC%.
@@ -471,4 +473,6 @@ REM r525 [2009-08-07] arnima  added support for filename extension like
 REM                           simple.tpl
 REM                   johnoel split -s option into separate -g and -s options
 REM r244 [2009-05-28] arnima  created
+
 :EOF
+EXIT /B

@@ -13,7 +13,7 @@ opened ad_comm::global_datafile.
 void init_adstring::allocate(const char* name_tag)
 {
   check_datafile_pointer(ad_comm::global_datafile);
-  model_name_tag::allocate((char*)name_tag);
+  model_name_tag::allocate(name_tag);
   *(ad_comm::global_datafile) >> *this;
 }
 /**
@@ -25,6 +25,6 @@ from opened ad_comm::global_datafile.
 void init_line_adstring::allocate(const char* name_tag)
 {
   check_datafile_pointer(ad_comm::global_datafile);
-  model_name_tag::allocate((char*)name_tag);
+  model_name_tag::allocate(name_tag);
   *(ad_comm::global_datafile) >> (const init_line_adstring&)(*this);
 }

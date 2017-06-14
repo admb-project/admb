@@ -765,3 +765,28 @@ TEST_F(test_adstring, init_adstring_allocate)
   EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
 
 }
+TEST_F(test_adstring, init_line_adstring_allocate)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit.txt");
+   ofs << "idkjfskjdfklsjkljdfsk";
+  ofs.close();
+
+  init_line_adstring a;
+
+  ASSERT_TRUE(ad_comm::global_datafile == NULL);
+
+  cifstream ifs("maxlimit.txt");
+  
+  ad_comm::global_datafile = &ifs;
+
+  a.allocate("name_tag");
+
+  ad_comm::global_datafile = NULL;
+
+  ifs.close();
+
+  EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
+
+}

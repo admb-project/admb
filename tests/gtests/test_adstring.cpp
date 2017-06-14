@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 #include <adstring.hpp>
+#include <admodel.h>
 #include <climits>
 
 extern "C"
@@ -738,4 +739,29 @@ TEST_F(test_adstring, errormaxlimit)
     ifs >> a;
   });
   ifs.close();
+}
+TEST_F(test_adstring, init_adstring_allocate)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit.txt");
+   ofs << "idkjfskjdfklsjkljdfsk";
+  ofs.close();
+
+  init_adstring a;
+
+  ASSERT_TRUE(ad_comm::global_datafile == NULL);
+
+  cifstream ifs("maxlimit.txt");
+  
+  ad_comm::global_datafile = &ifs;
+
+  a.allocate("name_tag");
+
+  ad_comm::global_datafile = NULL;
+
+  ifs.close();
+
+  EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
+
 }

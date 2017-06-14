@@ -79,4 +79,52 @@ TEST_F(test_ad_comm, change_pinfile_name_error)
     off = ad_comm::change_pinfile_name("filedoesnotexist.txt2", off);
   });
   ASSERT_TRUE(off == 0);
+
+  ASSERT_TRUE(ad_comm::global_parfile == NULL);
+}
+TEST_F(test_ad_comm, change_pinfile_name)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("pinfiledoesexist.pin");
+  ofs << "#empty";
+  ofs.close();
+
+  ASSERT_TRUE(ad_comm::global_parfile == NULL);
+
+  streampos off;
+  off = ad_comm::change_pinfile_name("pinfiledoesexist.pin", off);
+  ASSERT_TRUE(off == 0);
+
+  ASSERT_TRUE(ad_comm::global_parfile != NULL);
+
+  ASSERT_ANY_THROW({
+    off = ad_comm::change_pinfile_name("filedoesnotexist.txt2", off);
+  });
+  ASSERT_TRUE(off == 0);
+
+  ASSERT_TRUE(ad_comm::global_parfile == NULL);
+}
+TEST_F(test_ad_comm, change_datafile_name)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("datafiledoesexist.dat");
+  ofs << "#empty";
+  ofs.close();
+
+  ASSERT_TRUE(ad_comm::global_datafile == NULL);
+
+  streampos off;
+  off = ad_comm::change_datafile_name("datafiledoesexist.dat", off);
+  ASSERT_TRUE(off == 0);
+
+  ASSERT_TRUE(ad_comm::global_datafile != NULL);
+
+  ASSERT_ANY_THROW({
+    off = ad_comm::change_datafile_name("filedoesnotexist.txt2", off);
+  });
+  ASSERT_TRUE(off == 0);
+
+  ASSERT_TRUE(ad_comm::global_datafile == NULL);
 }

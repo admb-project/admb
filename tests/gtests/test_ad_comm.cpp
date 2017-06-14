@@ -2,6 +2,11 @@
 #include <fvar.hpp>
 #include <cmath>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_ad_comm: public ::testing::Test {};
 
 class ad_comm2: public ad_comm
@@ -62,4 +67,16 @@ TEST_F(test_ad_comm, option_match_ind_option_with_unicode_char)
   EXPECT_EQ('\x93', argv[1][2]);
   int opt = option_match(argc, argv, "-ind");
   EXPECT_EQ(-1, opt);
+}
+TEST_F(test_ad_comm, change_pinfile_name_error)
+{
+  ad_exit=&test_ad_exit;
+
+  ASSERT_TRUE(ad_comm::global_parfile == NULL);
+
+  streampos off;
+  ASSERT_ANY_THROW({
+    off = ad_comm::change_pinfile_name("filedoesnotexist.txt2", off);
+  });
+  ASSERT_TRUE(off == 0);
 }

@@ -1,6 +1,4 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
@@ -34,27 +32,37 @@ streampos ad_comm::change_datafile_name(const adstring& s,
   }
   return tmp;
 }
+/**
+Change the global_parfile stream using file s.
+Returns the current streampos of existing open file,
+else returns 0.
 
-streampos ad_comm::change_pinfile_name(const adstring& s,
-  const streampos& off)
+\param input_file new input file.
+\param off change to this offset if file exists.
+*/
+streampos ad_comm::change_pinfile_name(
+  const adstring& input_file,
+  const streampos& offset)
 {
-  streampos tmp=0;
-  if(ad_comm::global_parfile)
+  streampos tmp = 0;
+  if (ad_comm::global_parfile)
   {
-    tmp=ad_comm::global_parfile->tellg();
+    tmp = ad_comm::global_parfile->tellg();
     delete ad_comm::global_parfile;
+    ad_comm::global_parfile = NULL;
   }
-  global_parfile= new cifstream(s);
-  if ( (!global_parfile) || !(*global_parfile))
+  global_parfile = new cifstream(input_file);
+  if (!(global_parfile && global_parfile->good()))
   {
-    cerr << "Error trying to open parameter input file " <<  s << endl;
+    cerr << "Error trying to open parameter input file " <<  input_file << endl;
+
     delete global_parfile;
-    global_parfile=NULL;
-    exit(1);
+    global_parfile = NULL;
+    ad_exit(1);
   }
-  if (off)
+  if (offset)
   {
-    ad_comm::global_parfile->seekg(off);
+    ad_comm::global_parfile->seekg(offset);
   }
   return tmp;
 }

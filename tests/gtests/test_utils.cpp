@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_utils: public ::testing::Test {};
 
 TEST_F(test_utils, ranfill)
@@ -17,4 +22,12 @@ TEST_F(test_utils, ranfill)
 
   void reinitialize_auto_rand();
   reinitialize_auto_rand();
+}
+TEST_F(test_utils, check_datafile_pointer)
+{
+  ad_exit=&test_ad_exit;
+
+  void check_datafile_pointer(void* p);
+
+  ASSERT_THROW(check_datafile_pointer(NULL),int);
 }

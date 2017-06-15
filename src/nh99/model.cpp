@@ -572,15 +572,18 @@ void param_init_bounded_number::set_value_inv(const dvector& x, const int& ii)
     allocate(_minb,_maxb,1,_s);
   }
 
-  void check_datafile_pointer(void * p)
+/**
+Exits if p is null.
+*/
+void check_datafile_pointer(void* p)
+{
+  if (!p)
   {
-    if (!p)
-    {
-      cerr << " Error trying to read in model data " << endl;
-      cerr << " This is usual caused by a missing DAT file " << endl;
-      ad_exit(1);
-    }
+    cerr << " Error trying to read in model data " << endl;
+    cerr << " This is usual caused by a missing DAT file " << endl;
+    ad_exit(1);
   }
+}
 
 data_number& data_number::operator=(const double& v)
   {

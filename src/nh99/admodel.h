@@ -1043,18 +1043,24 @@ public:
  */
 class dll_param_init_vector: public param_init_vector
 {
-  double * pd;
-public:
-  dll_param_init_vector& operator = (const dvector&);
-  dll_param_init_vector& operator = (const dvar_vector&);
-  dll_param_init_vector& operator = (const prevariable&);
-  dll_param_init_vector& operator = (const double&);
-  void allocate(double * _pd,int imin,int imax,
-    int phasestart=1,const char * s="UNNAMED");
-  void allocate(double * _pd,int imin,int imax,
-    const char * s="UNNAMED");
+  double* pd;
 
+public:
   virtual ~dll_param_init_vector();
+
+  dll_param_init_vector& operator=(const dvector&);
+  dll_param_init_vector& operator=(const dvar_vector&);
+  dll_param_init_vector& operator=(const prevariable&);
+  dll_param_init_vector& operator=(const double&);
+
+  void allocate(double* _pd,
+    int imin, int imax,
+    int phasestart = 1,
+    const char* s = "UNNAMED");
+  void allocate(double* _pd,
+    int imin, int imax,
+    const char* s="UNNAMED");
+
   friend class model_parameters;
 };
 

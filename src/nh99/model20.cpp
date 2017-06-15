@@ -73,46 +73,46 @@ param_init_bounded_vector& param_init_bounded_vector::operator=(const double& v)
     return *this;
   }
 /**
-Assigns values from _m to param_init_matrix.
+Assigns values from mat to param_init_matrix.
 
-\param m dmatrix with same dimensions
-\return set with assigned values from m
+\param mat dmatrix with same dimensions
+\return set with assigned values from mat
 */
-param_init_matrix& param_init_matrix::operator=(const dmatrix& _m)
+param_init_matrix& param_init_matrix::operator=(const dmatrix& mat)
 {
-  dvar_matrix::operator=(_m);
+  dvar_matrix::operator=(mat);
   return *this;
 }
 /**
 Assigns values from _m to param_init_matrix.
 
-\param m dvar_matrix with same dimensions
-\return set with assigned values from m
+\param varmat dvar_matrix with same dimensions
+\return set with assigned values from varmat
 */
-param_init_matrix& param_init_matrix::operator=(const dvar_matrix& _m)
+param_init_matrix& param_init_matrix::operator=(const dvar_matrix& varmat)
 {
-  dvar_matrix::operator=(_m);
+  dvar_matrix::operator=(varmat);
   return *this;
 }
 /**
 Assigns value d to all elements of param_init_matrix.
 
-\param d dvariable
-\return set with assigned value from d
+\param var dvariable
+\return set with assigned value from var
 */
-param_init_matrix& param_init_matrix::operator=(const dvariable& d)
+param_init_matrix& param_init_matrix::operator=(const dvariable& var)
 {
-  dvar_matrix::operator=(d);
+  dvar_matrix::operator=(var);
   return *this;
 }
 /**
 Assigns value d to all elements of param_init_matrix.
 
-\param d dvariable
-\return set with assigned value from d
+\param val scalar
+\return set with assigned value from val
 */
-param_init_matrix& param_init_matrix::operator=(const double& d)
+param_init_matrix& param_init_matrix::operator=(const double& val)
 {
-  dvar_matrix::operator=(d);
+  dvar_matrix::operator=(val);
   return *this;
 }

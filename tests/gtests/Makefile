@@ -261,6 +261,8 @@ ifeq ($(SHELL),cmd)
 	@del maxlimit.txt 2>NUL
 	@del test_cifstream_adstring.txt 2>NUL
 	@del test_cifstream_float.txt 2>NUL
+	@del datafiledoesexist.dat 2>NUL
+	@del pinfiledoesexist.pin 2>NUL
 	@del test_cifstream_longlong.txt 2>NUL
 	@del gtest-all.exe 2>NUL
 	@del gtest-all *.obj 2>NUL
@@ -401,4 +403,6 @@ else
 	@rm -vf test_cifstream_darray.txt
 	@rm -vf test_cifstream_dvariable.txt
 	@rm -vf test_cifstream_iarray.txt
+	@rm -vf datafiledoesexist.dat
+	@rm -vf pinfiledoesexist.pin
 endif

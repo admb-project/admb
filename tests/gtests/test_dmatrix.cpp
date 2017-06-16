@@ -9,6 +9,20 @@ extern "C"
 
 class test_dmatrix: public ::testing::Test {};
 
+TEST_F(test_dmatrix, norm)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5}";
+
+  m.fill(array);
+
+  double ret = norm2(m);
+  ASSERT_DOUBLE_EQ(55, ret);
+
+  double ret2 = norm(m);
+  ASSERT_DOUBLE_EQ(std::pow(55, 0.5), ret2);
+}
 TEST_F(test_dmatrix, fill)
 {
   dmatrix m(1, 2, 1, 3);

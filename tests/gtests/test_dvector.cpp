@@ -639,3 +639,18 @@ TEST_F(test_dvector, allocatet0omanybraces)
     v.allocate(array);
   });
 }
+TEST_F(test_dvector, dvector_position)
+{
+  dvector_position pos;
+  ASSERT_EQ(0, pos.indexmin());
+  ASSERT_EQ(-1, pos.indexmax());
+}
+/*
+TEST_F(test_dvector, dvector_position_vec)
+{
+  dvector vec(1, 3);
+  dvector_position pos(vec);
+  ASSERT_EQ(1, pos.indexmin());
+  ASSERT_EQ(3, pos.indexmax());
+}
+*/

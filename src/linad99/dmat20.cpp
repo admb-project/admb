@@ -1,16 +1,12 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 
-// file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable
+/**
+\file
+constructors, destructors and misc functions involving class dvariable
+*/
 
 #include "fvar.hpp"
 
@@ -22,7 +18,6 @@
 #ifdef __ZTC__
   #include <iostream.hpp>
 #endif
-
 
 #include <stdio.h>
 #ifndef __SUN__
@@ -60,45 +55,44 @@ dmatrix XXX(const dmatrix& m)
 */
 
 /**
- * Description not yet available.
- * \param
- */
+Returns dmatrix with pow of element in m raised to the exponent e.
+\param m dmatrix
+\param e integer exponent
+*/
 dmatrix pow(const dmatrix& m,int e)
 {
-  ivector cmin(m.rowmin(),m.rowmax());
-  ivector cmax(m.rowmin(),m.rowmax());
-  int i;
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  ivector cmin(m.rowmin(), m.rowmax());
+  ivector cmax(m.rowmin(), m.rowmax());
+  for (int i = m.rowmin(); i <= m.rowmax(); ++i)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    cmin(i) = m(i).indexmin();
+    cmax(i) = m(i).indexmax();
   }
-  dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  dmatrix tmp(m.rowmin(), m.rowmax(), cmin, cmax);
+  for (int i = m.rowmin(); i <= m.rowmax(); ++i)
   {
-    tmp(i)=pow(m(i),e);
+    tmp(i) = pow(m(i), e);
   }
   return tmp;
 }
-
-/**
- * Description not yet available.
- * \param
- */
+/*
+Returns dmatrix with pow of element in m raised to the exponent e.
+\param m dmatrix
+\param e floating point exponent
+*/
 dmatrix pow(const dmatrix& m, const double e)
 {
-  ivector cmin(m.rowmin(),m.rowmax());
-  ivector cmax(m.rowmin(),m.rowmax());
-  int i;
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  ivector cmin(m.rowmin(), m.rowmax());
+  ivector cmax(m.rowmin(), m.rowmax());
+  for (int i = m.rowmin(); i <= m.rowmax(); ++i)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    cmin(i) = m(i).indexmin();
+    cmax(i) = m(i).indexmax();
   }
-  dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  dmatrix tmp(m.rowmin(), m.rowmax(), cmin, cmax);
+  for (int i = m.rowmin(); i <= m.rowmax(); ++i)
   {
-    tmp(i)=pow(m(i),e);
+    tmp(i) = pow(m(i), e);
   }
   return tmp;
 }

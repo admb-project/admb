@@ -71,6 +71,23 @@ TEST_F(test_dmatrix, max2)
 
   ASSERT_DOUBLE_EQ(20, ret);
 }
+TEST_F(test_dmatrix, cube)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 20} {-3, 4, 5}";
+
+  m.fill(array);
+
+  dmatrix ret = cube(m);
+
+  ASSERT_DOUBLE_EQ(std::pow(m(1, 1), 3), ret(1, 1));
+  ASSERT_DOUBLE_EQ(std::pow(m(1, 2), 3), ret(1, 2));
+  ASSERT_DOUBLE_EQ(std::pow(m(1, 3), 3), ret(1, 3));
+  ASSERT_DOUBLE_EQ(std::pow(m(2, 1), 3), ret(2, 1));
+  ASSERT_DOUBLE_EQ(std::pow(m(2, 2), 3), ret(2, 2));
+  ASSERT_DOUBLE_EQ(std::pow(m(2, 3), 3), ret(2, 3));
+}
 TEST_F(test_dmatrix, powinteger)
 {
   dmatrix m(1, 2, 1, 3);

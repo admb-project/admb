@@ -395,44 +395,41 @@ void dmatrix::shallow_copy(const dmatrix& m2)
    m = m2.m;
  }
 
+/// Destructor
+dmatrix::~dmatrix()
+{
+  deallocate();
+}
 /**
- * Description not yet available.
- * \param
- */
- dmatrix::~dmatrix()
- {
-   deallocate();
- }
+Returns dvector with cube value of each element in vec.
 
+\param vec scalar vector
+*/
+dvector cube(const dvector& vec)
+{
+  dvector results;
+  results.allocate(vec);
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results(i) = cube(vec(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector cube(const dvector& m)
-   {
-     dvector tmp;
-     tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
-     {
-       tmp(i)=cube(m(i));
-     }
-     return tmp;
-   }
+Returns dmatrix with cube value of each element in mat.
 
-/**
- * Description not yet available.
- * \param
- */
-dmatrix cube(const dmatrix& m)
-   {
-     dmatrix tmp;
-     tmp.allocate(m);
-     for (int i=tmp.rowmin();i<=tmp.rowmax();i++)
-     {
-       tmp(i)=cube(m(i));
-     }
-     return tmp;
-   }
+\param mat scalar matrix.
+*/
+dmatrix cube(const dmatrix& mat)
+{
+  dmatrix results;
+  results.allocate(mat);
+  for (int i = results.rowmin(); i <= results.rowmax(); ++i)
+  {
+    results(i) = cube(mat(i));
+  }
+  return results;
+}
 
 /**
  * Description not yet available.

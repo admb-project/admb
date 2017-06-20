@@ -712,7 +712,7 @@ int max(int a,int b)
 */
 double cube(const double m)
 {
-  return m*m*m;
+  return std::pow(m, 3);
 }
 
 /** Fourth power of a number; constant objects.

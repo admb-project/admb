@@ -1,20 +1,14 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
+#include <cmath>
 
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
-
-#include <math.h>
 
 void shape_check(const dvector& v1, const dvector& v2,
   const char *function_name);

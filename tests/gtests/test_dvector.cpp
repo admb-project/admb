@@ -153,14 +153,14 @@ TEST_F(test_dvector, pows)
 
   dvector bases(1, 6);
   bases = 2.0;
-  dvector results = pow(base, v);
+  dvector results = pow(bases, v);
 
-  ASSERT_DOUBLE_EQ(std::pow(base, v[1]), results(1));
-  ASSERT_DOUBLE_EQ(std::pow(base, v[2]), results(2));
-  ASSERT_DOUBLE_EQ(std::pow(base, v[3]), results(3));
-  ASSERT_DOUBLE_EQ(std::pow(base, v[4]), results(4));
-  ASSERT_DOUBLE_EQ(std::pow(base, v[5]), results(5));
-  ASSERT_DOUBLE_EQ(std::pow(base, v[6]), results(6));
+  ASSERT_DOUBLE_EQ(std::pow(bases(1), v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::pow(bases(2), v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::pow(bases(3), v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::pow(bases(4), v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::pow(bases(5), v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::pow(bases(6), v[6]), results(6));
 }
 TEST_F(test_dvector, powbasesexponent)
 {

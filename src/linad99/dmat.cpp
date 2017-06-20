@@ -402,6 +402,7 @@ dmatrix::~dmatrix()
 }
 /**
 Returns dvector with cube value of each element in vec.
+Note: vec is allocated vector.
 
 \param vec scalar vector
 */
@@ -417,6 +418,7 @@ dvector cube(const dvector& vec)
 }
 /**
 Returns dmatrix with cube value of each element in mat.
+Note: mat is allocated matrix.
 
 \param mat scalar matrix.
 */

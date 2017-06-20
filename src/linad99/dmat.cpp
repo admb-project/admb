@@ -139,37 +139,38 @@
    }
    m -= rowmin();
  }
-
 /**
- * Description not yet available.
- * \param
- */
+Returns the minimum value of matrix m.
+Note: m is an allocated matrix.
+
+\param m scalar matrix
+*/
 double min(const dmatrix& m)
 {
-  double tmp=max(m(m.rowmin()));
-  for (int i=m.rowmin()+1;i<=m.rowmax();i++)
+  double minimum = min(m(m.rowmin()));
+  for (int i = m.rowmin() + 1; i <= m.rowmax(); ++i)
   {
-    double tmp1=min(m(i));
-    if (tmp>tmp1) tmp=tmp1;
+    double value = min(m(i));
+    if (value < minimum) minimum = value;
   }
-  return tmp;
+  return minimum;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Returns the minimum value of matrix m.
+Note: m is an allocated matrix.
+
+\param m scalar matrix
+*/
 double max(const dmatrix& m)
 {
-  double tmp=max(m(m.rowmin()));
-  for (int i=m.rowmin()+1;i<=m.rowmax();i++)
+  double maximum = max(m(m.rowmin()));
+  for (int i = m.rowmin() + 1; i <= m.rowmax(); ++i)
   {
-    double tmp1=max(m(i));
-    if (tmp<tmp1) tmp=tmp1;
+    double value = max(m(i));
+    if (value > maximum) maximum = value;
   }
-  return tmp;
+  return maximum;
 }
-
 /**
  * Description not yet available.
  * \param

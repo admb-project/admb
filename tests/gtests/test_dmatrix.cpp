@@ -23,6 +23,54 @@ TEST_F(test_dmatrix, norm)
   double ret2 = norm(m);
   ASSERT_DOUBLE_EQ(std::pow(55, 0.5), ret2);
 }
+TEST_F(test_dmatrix, min)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -10, 2} {-3, 4, 5}";
+
+  m.fill(array);
+
+  double ret = min(m);
+
+  ASSERT_DOUBLE_EQ(-10, ret);
+}
+TEST_F(test_dmatrix, min2)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -10, 2} {-3, 4, -55}";
+
+  m.fill(array);
+
+  double ret = min(m);
+
+  ASSERT_DOUBLE_EQ(-55, ret);
+}
+TEST_F(test_dmatrix, max)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5}";
+
+  m.fill(array);
+
+  double ret = max(m);
+
+  ASSERT_DOUBLE_EQ(5, ret);
+}
+TEST_F(test_dmatrix, max2)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 20} {-3, 4, 5}";
+
+  m.fill(array);
+
+  double ret = max(m);
+
+  ASSERT_DOUBLE_EQ(20, ret);
+}
 TEST_F(test_dmatrix, powinteger)
 {
   dmatrix m(1, 2, 1, 3);
@@ -56,6 +104,22 @@ TEST_F(test_dmatrix, powdouble)
   ASSERT_DOUBLE_EQ(std::pow(9.0, 0.5), ret(2, 1));
   ASSERT_DOUBLE_EQ(std::pow(16.0, 0.5), ret(2, 2));
   ASSERT_DOUBLE_EQ(std::pow(25.0, 0.5), ret(2, 3));
+}
+TEST_F(test_dmatrix, sqr)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, 1, 4} {9, 16, 25}";
+
+  m.fill(array);
+ 
+  dmatrix ret = sqr(m);
+  ASSERT_DOUBLE_EQ(0, ret(1, 1));
+  ASSERT_DOUBLE_EQ(1, ret(1, 2));
+  ASSERT_DOUBLE_EQ(16, ret(1, 3));
+  ASSERT_DOUBLE_EQ(81, ret(2, 1));
+  ASSERT_DOUBLE_EQ(16 * 16, ret(2, 2));
+  ASSERT_DOUBLE_EQ(25 * 25, ret(2, 3));
 }
 TEST_F(test_dmatrix, fill)
 {

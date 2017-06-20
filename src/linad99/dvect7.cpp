@@ -56,35 +56,38 @@ dvector fabs(const dvector& t1)
   }
 
 /**
- * Description not yet available.
- * \param
- */
-double max(const dvector& t1)
-  {
-     double tmp;
-     int mmin=t1.indexmin();
-     int mmax=t1.indexmax();
-     tmp=t1.elem(mmin);
-     for (int i=mmin+1; i<=mmax; i++)
-     {
-       if (tmp<t1.elem(i)) tmp=t1.elem(i);
-     }
-     return(tmp);
-  }
+Returns the maximum value of vector vec.
+Note: vec is an allocated vector.
 
-/**
- * Description not yet available.
- * \param
- */
-double min(const dvector& t1)
+\param vec scalar vector
+*/
+double max(const dvector& vec)
+{
+  int indexmin = vec.indexmin();
+  int indexmax = vec.indexmax();
+  double maximum = vec.elem(indexmin);
+  for (int i = indexmin + 1; i <= indexmax; ++i)
   {
-     double tmp;
-     int mmin=t1.indexmin();
-     int mmax=t1.indexmax();
-     tmp=t1.elem(mmin);
-     for (int i=mmin+1; i<=mmax; i++)
-     {
-       if (tmp>t1.elem(i)) tmp=t1.elem(i);
-     }
-     return(tmp);
+    double value = vec.elem(i);
+    if (value > maximum) maximum = value;
   }
+  return maximum;
+}
+/**
+Returns the minimum value of vector vec.
+Note: vec is an allocated vector.
+
+\param vec scalar vector
+ */
+double min(const dvector& vec)
+{
+  int indexmin = vec.indexmin();
+  int indexmax = vec.indexmax();
+  double minimum = vec.elem(indexmin);
+  for (int i = indexmin + 1; i <= indexmax; ++i)
+  {
+    double value = vec.elem(i);
+    if (value < minimum) minimum = value;
+  }
+  return minimum;
+}

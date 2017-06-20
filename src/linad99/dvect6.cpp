@@ -145,7 +145,7 @@ Returns a dvector with each element from bases is raised to the power
 dvector pow(const dvector& bases, const dvector& exponents)
 {
   shape_check(bases, exponents,
-    "dvector pow(const dvector& v1,constdvector& v2)");
+    "dvector pow(const dvector& bases ,constdvector& exponents)");
 
   dvector results(bases.indexmin(), bases.indexmax());
   for (int i = results.indexmin(); i <= results.indexmax(); ++i)

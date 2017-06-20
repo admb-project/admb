@@ -146,12 +146,13 @@ TEST_F(test_dvector, sinh)
   ASSERT_DOUBLE_EQ(std::sinh(v[6]), results(6));
   ASSERT_DOUBLE_EQ(std::sinh(v[7]), results(7));
 }
-TEST_F(test_dvector, powbaseexponents)
+TEST_F(test_dvector, pows)
 {
   char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";
   dvector v(array);
 
-  double base = 2.0;
+  dvector bases(1, 6);
+  bases = 2.0;
   dvector results = pow(base, v);
 
   ASSERT_DOUBLE_EQ(std::pow(base, v[1]), results(1));

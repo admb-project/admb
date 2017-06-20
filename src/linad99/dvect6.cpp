@@ -20,117 +20,121 @@ void shape_check(const dvector& v1, const dvector& v2,
   const char *function_name);
 
 /**
- * Description not yet available.
- * \param
- */
-dvector sin(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=sin(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with sine for each value of vec.
 
+\param vec array of floating values
+ */
+dvector sin(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::sin(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector cos(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=cos(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with cosine for each value of vec.
 
+\param vec array of floating values
+ */
+dvector cos(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::cos(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector tan(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=tan(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with tangent for each value of vec.
 
+\param vec array of floating values
+ */
+dvector tan(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::tan(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector sinh(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=sinh(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with hyperbolic sine for each value of vec.
 
+\param vec array of floating values
+*/
+dvector sinh(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::sinh(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector cosh(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=cosh(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with hyperbolic cosine for each value of vec.
 
+\param vec array of floating values
+*/
+dvector cosh(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::cosh(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector tanh(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=tanh(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with hyperbolic tangent for each value of vec.
 
+\param vec array of floating values
+*/
+dvector tanh(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::tanh(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector pow(const dvector& v1, const double x)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=pow(v1.elem(i),x);             // ***
-   }
-   return(tmp);
- }
+Returns a dvector with base raised to the power exponent for each element in
+exponents. 
 
+\param base array of floating values
+\param exponent a floating value
+*/
+dvector pow(const dvector& bases, const double exponent)
+{
+  dvector results(bases.indexmin(), bases.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::pow(bases.elem(i), exponent);
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector pow(const dvector& v1, int x)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=pow(v1.elem(i),x);             // ***
-   }
-   return(tmp);
- }
+Returns a dvector with base raised to the power exponent for each element in
+exponents. 
 
+\param base array of floating values
+\param exponent a integer
+*/
+dvector pow(const dvector& bases, int exponent)
+{
+  dvector results(bases.indexmin(), bases.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::pow(bases.elem(i), exponent);
+  }
+  return results;
+}
 /**
  * Description not yet available.
  * \param
@@ -146,101 +150,106 @@ dvector pow(const dvector& v1, const dvector& v2)// ***
    }
    return(tmp);
  }
-
 /**
- * Description not yet available.
- * \param
- */
-dvector pow(const double x, const dvector& v2)// ***
- {
-   dvector tmp(v2.indexmin(),v2.indexmax());
-   for (int i=v2.indexmin();i<=v2.indexmax();i++)
-   {
-     tmp.elem(i)=pow(x,v2.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns a dvector with base raised to the power exponent for each element in
+exponents. 
 
+\param base double
+\param exponents array of floating points
+*/
+dvector pow(const double base, const dvector& exponents)// ***
+{
+  dvector results(exponents.indexmin(), exponents.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::pow(base, exponents.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector asin(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=asin(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with principal value of the arc sine of vec,
+expressed in radians.
 
+\param vec scalar vector
+*/
+dvector asin(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::asin(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector acos(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=acos(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with principal value of the arc cosine of vec,
+expressed in radians.
 
+\param vec scalar vector
+*/
+dvector acos(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::acos(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector atan(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=atan(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with principal value of the arc tangent of vec,
+expressed in radians.
 
+\param vec scalar vector
+*/
+dvector atan(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::atan(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector log10(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=log10(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with the common (base-10) logarithm of vec. 
 
+\param vec scalar vector
+*/
+dvector log10(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::log10(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector sqrt(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=sqrt(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with the square of each element in vec.
 
+\param vec scalar vector
+*/
+dvector sqrt(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::sqrt(vec.elem(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector sqr(const dvector& v1)// ***
- {
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=sqrt(v1.elem(i));             // ***
-   }
-   return(tmp);
- }
+Returns dvector with the square of each element in vec.
+
+\param vec scalar vector
+*/
+dvector sqr(const dvector& vec)
+{
+  dvector results(vec.indexmin(), vec.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::pow(vec.elem(i), 2);
+  }
+  return results;
+}

@@ -30,6 +30,152 @@ TEST_F(test_dvector, constructor)
   }
   FAIL();
 }
+TEST_F(test_dvector, sqr)
+{
+  char array[] = "{0, -1.5, 2, -3, 4, 5.1}";
+  dvector v(array);
+
+  dvector results = sqr(v);
+
+  ASSERT_DOUBLE_EQ(0, results(1));
+  ASSERT_DOUBLE_EQ(std::pow(-1.5, 2), results(2));
+  ASSERT_DOUBLE_EQ(4, results(3));
+  ASSERT_DOUBLE_EQ(9, results(4));
+  ASSERT_DOUBLE_EQ(16, results(5));
+  ASSERT_DOUBLE_EQ(std::pow(5.1, 2), results(6));
+}
+TEST_F(test_dvector, log10)
+{
+  char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";
+  dvector v(array);
+
+  dvector results = log10(v);
+
+  ASSERT_DOUBLE_EQ(std::log10(v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::log10(v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::log10(v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::log10(v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::log10(v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::log10(v[6]), results(6));
+}
+TEST_F(test_dvector, atan)
+{
+  char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";
+  dvector v(array);
+
+  dvector results = atan(v);
+
+  ASSERT_DOUBLE_EQ(std::atan(v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::atan(v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::atan(v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::atan(v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::atan(v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::atan(v[6]), results(6));
+}
+TEST_F(test_dvector, tan)
+{
+  char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";
+  dvector v(array);
+
+  dvector results = tan(v);
+
+  ASSERT_DOUBLE_EQ(std::tan(v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::tan(v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::tan(v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::tan(v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::tan(v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::tan(v[6]), results(6));
+}
+TEST_F(test_dvector, acos)
+{
+  char array[] = "{0.5, -0.5, 0, 0.75, -0.75, 1, -1}";
+  dvector v(array);
+
+  dvector results = acos(v);
+
+  ASSERT_DOUBLE_EQ(std::acos(v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::acos(v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::acos(v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::acos(v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::acos(v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::acos(v[6]), results(6));
+  ASSERT_DOUBLE_EQ(std::acos(v[7]), results(7));
+}
+TEST_F(test_dvector, tanh)
+{
+  char array[] = "{0.5, -0.5, 0, 0.75, -0.75, 1, -1}";
+  dvector v(array);
+
+  dvector results = tanh(v);
+
+  ASSERT_DOUBLE_EQ(std::tanh(v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::tanh(v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::tanh(v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::tanh(v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::tanh(v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::tanh(v[6]), results(6));
+  ASSERT_DOUBLE_EQ(std::tanh(v[7]), results(7));
+}
+TEST_F(test_dvector, cosh)
+{
+  char array[] = "{0.5, -0.5, 0, 0.75, -0.75, 1, -1}";
+  dvector v(array);
+
+  dvector results = cosh(v);
+
+  ASSERT_DOUBLE_EQ(std::cosh(v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::cosh(v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::cosh(v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::cosh(v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::cosh(v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::cosh(v[6]), results(6));
+  ASSERT_DOUBLE_EQ(std::cosh(v[7]), results(7));
+}
+TEST_F(test_dvector, powbaseexponents)
+{
+  char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";
+  dvector v(array);
+
+  double base = 2.0;
+  dvector results = pow(base, v);
+
+  ASSERT_DOUBLE_EQ(std::pow(base, v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::pow(base, v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::pow(base, v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::pow(base, v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::pow(base, v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::pow(base, v[6]), results(6));
+}
+TEST_F(test_dvector, powbasesexponent)
+{
+  char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";
+  dvector bases(array);
+
+  double exponent = 2.5;
+  dvector results = pow(bases, exponent);
+
+  ASSERT_DOUBLE_EQ(std::pow(bases(1), exponent), results(1));
+  ASSERT_DOUBLE_EQ(std::pow(bases(2), exponent), results(2));
+  ASSERT_DOUBLE_EQ(std::pow(bases(3), exponent), results(3));
+  ASSERT_DOUBLE_EQ(std::pow(bases(4), exponent), results(4));
+  ASSERT_DOUBLE_EQ(std::pow(bases(5), exponent), results(5));
+  ASSERT_DOUBLE_EQ(std::pow(bases(6), exponent), results(6));
+}
+TEST_F(test_dvector, powbasesintegerexponent)
+{
+  char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";
+  dvector bases(array);
+
+  int exponent = 2;
+  dvector results = pow(bases, exponent);
+
+  ASSERT_DOUBLE_EQ(std::pow(bases(1), exponent), results(1));
+  ASSERT_DOUBLE_EQ(std::pow(bases(2), exponent), results(2));
+  ASSERT_DOUBLE_EQ(std::pow(bases(3), exponent), results(3));
+  ASSERT_DOUBLE_EQ(std::pow(bases(4), exponent), results(4));
+  ASSERT_DOUBLE_EQ(std::pow(bases(5), exponent), results(5));
+  ASSERT_DOUBLE_EQ(std::pow(bases(6), exponent), results(6));
+}
 TEST_F(test_dvector, fill)
 {
   dvector v(1, 6);

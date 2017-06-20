@@ -131,6 +131,21 @@ TEST_F(test_dvector, cosh)
   ASSERT_DOUBLE_EQ(std::cosh(v[6]), results(6));
   ASSERT_DOUBLE_EQ(std::cosh(v[7]), results(7));
 }
+TEST_F(test_dvector, sinh)
+{
+  char array[] = "{0.5, -0.5, 0, 0.75, -0.75, 1, -1}";
+  dvector v(array);
+
+  dvector results = sinh(v);
+
+  ASSERT_DOUBLE_EQ(std::sinh(v[1]), results(1));
+  ASSERT_DOUBLE_EQ(std::sinh(v[2]), results(2));
+  ASSERT_DOUBLE_EQ(std::sinh(v[3]), results(3));
+  ASSERT_DOUBLE_EQ(std::sinh(v[4]), results(4));
+  ASSERT_DOUBLE_EQ(std::sinh(v[5]), results(5));
+  ASSERT_DOUBLE_EQ(std::sinh(v[6]), results(6));
+  ASSERT_DOUBLE_EQ(std::sinh(v[7]), results(7));
+}
 TEST_F(test_dvector, powbaseexponents)
 {
   char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";

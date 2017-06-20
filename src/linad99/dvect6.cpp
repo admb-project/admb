@@ -105,7 +105,7 @@ dvector tanh(const dvector& vec)
 }
 /**
 Returns a dvector with base raised to the power exponent for each element in
-exponents. 
+exponents.
 
 \param base array of floating values
 \param exponent a floating value
@@ -121,7 +121,7 @@ dvector pow(const dvector& bases, const double exponent)
 }
 /**
 Returns a dvector with base raised to the power exponent for each element in
-exponents. 
+exponents.
 
 \param base array of floating values
 \param exponent a integer
@@ -136,23 +136,27 @@ dvector pow(const dvector& bases, int exponent)
   return results;
 }
 /**
- * Description not yet available.
- * \param
- */
-dvector pow(const dvector& v1, const dvector& v2)// ***
- {
-   shape_check(v1,v2,"dvector pow(const dvector& v1,constdvector& v2)");
+Returns a dvector with each element from bases is raised to the power
+ exponent for each element in exponents.
 
-   dvector tmp(v1.indexmin(),v1.indexmax());
-   for (int i=v1.indexmin();i<=v1.indexmax();i++)
-   {
-     tmp.elem(i)=pow(v1.elem(i),v2.elem(i));             // ***
-   }
-   return(tmp);
- }
+\param base array of floating values
+\param exponents array of floating values
+*/
+dvector pow(const dvector& bases, const dvector& exponents)
+{
+  shape_check(bases, exponents,
+    "dvector pow(const dvector& v1,constdvector& v2)");
+
+  dvector results(bases.indexmin(), bases.indexmax());
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results.elem(i) = std::pow(bases.elem(i), exponents.elem(i));
+  }
+  return results;
+}
 /**
 Returns a dvector with base raised to the power exponent for each element in
-exponents. 
+exponents.
 
 \param base double
 \param exponents array of floating points
@@ -212,7 +216,7 @@ dvector atan(const dvector& vec)
   return results;
 }
 /**
-Returns dvector with the common (base-10) logarithm of vec. 
+Returns dvector with the common (base-10) logarithm of vec.
 
 \param vec scalar vector
 */

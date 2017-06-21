@@ -707,7 +707,7 @@ class lvector
    const AD_LONG_INT& operator[](int i) const;
    const AD_LONG_INT& operator()(int i) const;
 
-   lvector operator() (const lvector & u);
+   lvector operator()(const ivector& indexes);
 
    lvector & operator=(const lvector & t);
 

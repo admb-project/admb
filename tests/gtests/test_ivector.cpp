@@ -377,3 +377,20 @@ TEST_F(test_ivector, deprecated_sort_with_index)
   ASSERT_EQ(3, index(4));
   ASSERT_EQ(2, index(5));
 }
+TEST_F(test_ivector, selection)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  ivector indexes(1, 2);
+  indexes(1) = 1;
+  indexes(2) = 3;
+  ivector selected = v(indexes);
+  EXPECT_EQ(1, selected.indexmin());
+  EXPECT_EQ(2, selected.indexmax());
+  EXPECT_EQ(0, selected(1));
+  EXPECT_EQ(2, selected(2));
+}

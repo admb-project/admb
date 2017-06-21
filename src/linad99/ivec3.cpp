@@ -1,52 +1,40 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include "fvar.hpp"
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 /**
- * Description not yet available.
- * \param
- */
-ivector ivector::operator()(const ivector& u)
- {
-   ivector tmp(u.indexmin(),u.indexmax());
+Returns a selected vector of values from ivector using positions
+in indexes.
 
-   for ( int i=u.indexmin(); i<=u.indexmax(); i++)
-   {
-     tmp(i)=(*this)(u(i));
-   }
-   return tmp;
- }
+Note: Assumes positions are in range [indexmin() to indexmax()]. 
 
+\param indexes contains vector of valid index values
+*/
+ivector ivector::operator()(const ivector& indexes)
+{
+  ivector values(indexes.indexmin(), indexes.indexmax());
+  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
+  {
+     values(i) = operator()(indexes(i));
+  }
+  return values;
+}
 /**
- * Description not yet available.
- * \param
- */
-lvector lvector::operator()(const lvector& u)
- {
-   lvector tmp(u.indexmin(),u.indexmax());
+Returns a selected vector of values from lvector using positions
+in indexes.
 
-   for ( int i=u.indexmin(); i<=u.indexmax(); i++)
-   {
-#ifdef OPT_LIB
-     tmp(i)=(*this)((int)u(i));
-#else
-     const AD_LONG_INT ui = u(i);
-     assert(ui <= INT_MAX);
-     tmp(i)=(*this)((int)ui);
-#endif
-   }
-   return tmp;
- }
+Note: Assumes positions are in range [indexmin() to indexmax()]. 
+
+\param indexes contains vector of valid index values
+*/
+lvector lvector::operator()(const ivector& indexes)
+{
+  lvector values(indexes.indexmin(),indexes.indexmax());
+  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
+  {
+    values(i) = operator()(indexes(i));
+  }
+  return values;
+}

@@ -55,7 +55,7 @@ dmatrix XXX(const dmatrix& m)
 */
 
 /**
-Returns dmatrix with pow of element in m raised to the exponent e.
+Returns dmatrix with pow of each element in m raised to the exponent e.
 \param m dmatrix
 \param e integer exponent
 */
@@ -76,7 +76,7 @@ dmatrix pow(const dmatrix& m,int e)
   return tmp;
 }
 /*
-Returns dmatrix with pow of element in m raised to the exponent e.
+Returns dmatrix with pow of each element in m raised to the exponent e.
 \param m dmatrix
 \param e floating point exponent
 */
@@ -206,47 +206,43 @@ dmatrix log(const dmatrix& m)
   }
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Returns dmatrix with each of element in m is square rooted.
+\param m dmatrix
+*/
 dmatrix sqrt(const dmatrix& m)
 {
-  ivector cmin(m.rowmin(),m.rowmax());
-  ivector cmax(m.rowmin(),m.rowmax());
-  int i;
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  ivector cmin(m.rowmin(), m.rowmax());
+  ivector cmax(m.rowmin(), m.rowmax());
+  for (int i = m.rowmin(); i <= m.rowmax(); ++i)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    cmin(i) = m(i).indexmin();
+    cmax(i) = m(i).indexmax();
   }
   dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  for (int i = m.rowmin(); i <= m.rowmax(); ++i)
   {
-    tmp(i)=sqrt(m(i));
+    tmp(i) = sqrt(m(i));
   }
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Returns dmatrix with each of element in m is squared.
+\param m dmatrix
+*/
 dmatrix sqr(const dmatrix& m)
 {
-  ivector cmin(m.rowmin(),m.rowmax());
-  ivector cmax(m.rowmin(),m.rowmax());
-  int i;
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  ivector cmin(m.rowmin(), m.rowmax());
+  ivector cmax(m.rowmin(), m.rowmax());
+  for (int i = m.rowmin(); i <= m.rowmax(); ++i)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    cmin(i) = m(i).indexmin();
+    cmax(i) = m(i).indexmax();
   }
-  dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  dmatrix tmp(m.rowmin(), m.rowmax(), cmin, cmax);
+  for (int i = m.rowmin(); i <= m.rowmax(); ++i)
   {
-    tmp(i)=sqr(m(i));
+    tmp(i) = sqr(m(i));
   }
   return tmp;
 }

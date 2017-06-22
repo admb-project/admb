@@ -23,6 +23,29 @@ TEST_F(test_dmatrix, norm)
   double ret2 = norm(m);
   ASSERT_DOUBLE_EQ(std::pow(55, 0.5), ret2);
 }
+TEST_F(test_dmatrix, select)
+{
+  dmatrix m(1, 3, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5} {1, -2, 1}";
+
+  m.fill(array);
+
+  ivector indexes(1, 2);
+  indexes(1) = 2;
+  indexes(2) = 3;
+
+  dmatrix ret = m(indexes);
+  ASSERT_EQ(1, ret.rowmin());
+  ASSERT_EQ(2, ret.rowmax());
+  ASSERT_EQ(1, ret.colmin());
+  ASSERT_EQ(2, ret.colmax());
+
+  ASSERT_DOUBLE_EQ(4, ret(1, 1));
+  ASSERT_DOUBLE_EQ(5, ret(1, 2));
+  ASSERT_DOUBLE_EQ(-2, ret(2, 1));
+  ASSERT_DOUBLE_EQ(1, ret(2, 2));
+}
 TEST_F(test_dmatrix, trace_or_sum)
 {
   double trace(const dmatrix& M);

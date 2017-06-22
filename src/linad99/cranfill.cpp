@@ -60,48 +60,51 @@ double mean(const dvector& v)
     }
     return(tmp/v.size());
   }
-
 /**
- * Description not yet available.
- * \param
- */
-  void dvector::fill_seqadd(const double base, const double offset)
+Fills dvector elements with values starting from base and incremented by offset. 
+
+\param base initial value
+\param offset incremental value
+*/
+void dvector::fill_seqadd(const double base, const double offset)
+{
+  double sequence = base;
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    double temp=0;
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-       elem(i)=base+temp;
-       temp=temp+offset;
-    }
+    elem(i) = sequence;
+    sequence += offset;
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
-  void ivector::fill_seqadd(int base, int offset)
+Fills ivector elements with values starting from base and incremented by offset. 
+
+\param base initial value
+\param offset incremental value
+*/
+void ivector::fill_seqadd(int base, int offset)
+{
+  int sequence = base;
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    int temp=0;
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-       elem(i)=base+temp;
-       temp=temp+offset;
-    }
+    elem(i) = sequence;
+    sequence += offset;
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
+Fills ivector elements with values starting from base and incremented by offset. 
+
+\param base initial value
+\param offset incremental value
+*/
 void lvector::fill_seqadd(const AD_LONG_INT& base, const AD_LONG_INT& offset)
+{
+  AD_LONG_INT sequence = base;
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    AD_LONG_INT temp=0;
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-       elem(i)=base+temp;
-       temp=temp+offset;
-    }
+    elem(i) = sequence;
+    sequence += offset;
   }
+}
 
 /**
  * Description not yet available.

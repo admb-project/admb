@@ -97,6 +97,7 @@ GTESTS=\
  test_param_init_bounded_number_matrix.cpp\
  test_adlist_ptr.cpp\
  test_param_init_bounded_number_vector.cpp\
+ test_fill_seqadd.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

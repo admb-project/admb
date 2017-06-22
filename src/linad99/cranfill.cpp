@@ -133,30 +133,28 @@ void dmatrix::colfill(int j, const dvector& v)
       (*this)[i][j]=v[i];
     }
   }
-
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::rowfill(int i, const dvector& v)
-  {
-    for (int j=colmin(); j<=colmax(); j++)
-    {
-      (*this)[i][j]=v[j];
-    }
-  }
+Fills dmatrix row at index with values from vec.
 
+\param index of row
+\param vec values to copy
+*/
+void dmatrix::rowfill(int index, const dvector& vec)
+{
+  elem(index) = vec;
+}
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::rowfill_seqadd(const int& i, const double base,
+Fills dmatrix row at index with elements with values starting from base
+and incremented by offset. 
+
+\param index of row
+\param base initial value
+\param offset incremental value
+*/
+void dmatrix::rowfill_seqadd(
+  const int& index,
+  const double base,
   const double offset)
-  {
-    double temp=0;
-    for (int j=colmin(); j<=colmax(); j++)
-    {
-      elem(i,j)=base+temp;
-      temp=temp+offset;
-    }
-  }
+{
+  elem(i).fill_seqadd(base, offset);
+}

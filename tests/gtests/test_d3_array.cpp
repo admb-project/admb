@@ -248,3 +248,35 @@ TEST_F(test_d3_array, size_count)
 
   ASSERT_EQ(24, size_count(a));
 }
+TEST_F(test_d3_array, io)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 5;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  ofstream ofs("d3io.txt");
+  ofs << a;
+  ofs.close();
+
+  d3_array b(1, 2, 1, 2, 1, 2);
+  b.initialize();
+
+  ifstream ifs("d3io.txt");
+  ifs >> b;
+  ifs.close();
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1), b(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2), b(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1), b(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2), b(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1), b(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2), b(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1), b(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2), b(2, 2, 2));
+}

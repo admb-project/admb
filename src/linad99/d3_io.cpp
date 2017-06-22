@@ -1,15 +1,7 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file: dmat_io.cpp
-
 // i/o operations for class dmatrix
 #include "fvar.hpp"
 
@@ -18,65 +10,59 @@
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <iomanip.hpp>
   #include <fstream.hpp>
-  #define __USE_IOSTREAM__
 #endif
-
-#include <string.h>
 
 /**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& _s, const d3_array& z)
+Saves values from arr3 to output stream.
+\param output ostream
+\param arr3 d3_array
+*/
+ostream& operator<<(const ostream& output, const d3_array& arr3)
 {
-  ostream& s = (ostream&) _s;
-#ifdef __USE_IOSTREAM__
-  using std::streamsize;
-  streamsize new_w = s.width();
-  streamsize new_p = s.precision();
+  ostream& ostr = const_cast<ostream&>(output);
+
+  std::streamsize new_w = ostr.width();
+  std::streamsize new_p = ostr.precision();
 #if !defined(__cplusplus)
-  long new_form = s.flags();
+  long new_form = ostr.flags();
 #else
-  ios::fmtflags new_form = s.flags();
+  ios::fmtflags new_form = ostr.flags();
 #endif
+  char new_fill = ostr.fill();
 
-  char new_fill = s.fill();
-#endif
+  ostr.width(new_w);
+  ostr.precision(new_p);
+  ostr.flags(new_form);
+  ostr.fill(new_fill);
 
-  for (int i=z.slicemin();i<=z.slicemax();i++)
+  for (int i = arr3.slicemin(); i <= arr3.slicemax(); ++i)
   {
-  #ifdef __USE_IOSTREAM__
-     s.width(new_w);
-     s.precision(new_p);
-     s.flags(new_form);
-     s.fill(new_fill);
-  #endif
-    s << z[i];
-    if (i<z.slicemax())
+    ostr << arr3[i];
+    if (i < arr3.slicemax())
     {
-      s << endl;
+      ostr << endl;
     }
   }
-  return s;
+  return ostr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& _istr, const d3_array& z)
+Read values from input stream into arr3.
+
+\param input istream
+\param arr3 d3_array
+*/
+istream& operator>>(const istream& input, const d3_array& arr3)
 {
-  istream& istr = (istream&) _istr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
+  istream& istr = const_cast<istream&>(input);
+  for (int i = arr3.slicemin(); i <= arr3.slicemax(); ++i)
   {
-    istr >> z[i];
+    istr >> arr3[i];
   }
   return istr;
 }

@@ -23,6 +23,29 @@ TEST_F(test_dmatrix, norm)
   double ret2 = norm(m);
   ASSERT_DOUBLE_EQ(std::pow(55, 0.5), ret2);
 }
+TEST_F(test_dmatrix, trace_or_sum)
+{
+  double trace(const dmatrix& M);
+  dmatrix m(1, 3, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5} {1, -2, 1}";
+
+  m.fill(array);
+
+  double ret = trace(m);
+  ASSERT_DOUBLE_EQ(5, ret);
+}
+TEST_F(test_dmatrix, trace_or_sum_exit)
+{
+  ad_exit=&test_ad_exit;
+
+  double trace(const dmatrix& M);
+  dmatrix m(1, 2, 1, 3);
+
+  ASSERT_ANY_THROW({
+    trace(m);
+  });
+}
 TEST_F(test_dmatrix, min)
 {
   dmatrix m(1, 2, 1, 3);

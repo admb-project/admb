@@ -46,6 +46,17 @@ TEST_F(test_dmatrix, trace_or_sum_exit)
     trace(m);
   });
 }
+TEST_F(test_dmatrix, trace_or_sum_exit2)
+{
+  ad_exit=&test_ad_exit;
+
+  double trace(const dmatrix& M);
+  dmatrix m(1, 2, 2, 3);
+
+  ASSERT_ANY_THROW({
+    trace(m);
+  });
+}
 TEST_F(test_dmatrix, min)
 {
   dmatrix m(1, 2, 1, 3);

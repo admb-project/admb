@@ -48,18 +48,19 @@ double std_dev(const dvector& v)
   }
 
 /**
- * Description not yet available.
- * \param
- */
-double mean(const dvector& v)
+Returns computed mean of vec.
+
+\param vec dvector
+*/
+double mean(const dvector& vec)
+{
+  double sum = 0;
+  for (int i = vec.indexmin(); i <= vec.indexmax(); ++i)
   {
-    double tmp=0;
-    for (int i=v.indexmin(); i<=v.indexmax(); i++)
-    {
-      tmp+=v.elem(i);
-    }
-    return(tmp/v.size());
+    sum += vec.elem(i);
   }
+  return sum / v.size();
+}
 /**
 Fills dvector elements with values starting from base and incremented by offset. 
 

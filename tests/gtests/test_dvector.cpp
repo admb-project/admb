@@ -822,6 +822,16 @@ TEST_F(test_dvector, dvector_position)
   ASSERT_EQ(0, pos.indexmin());
   ASSERT_EQ(-1, pos.indexmax());
 }
+TEST_F(test_dvector, mean)
+{
+  ad_exit=&test_ad_exit;
+
+  char array[] = "{0, 1, 2, 3, 4, 5}";
+
+  dvector v(array);
+  ASSERT_DOUBLE_EQ(2.5, mean(v));
+}
+
 /*
 TEST_F(test_dvector, dvector_position_vec)
 {

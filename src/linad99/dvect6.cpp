@@ -247,7 +247,8 @@ dvector sqr(const dvector& vec)
   dvector results(vec.indexmin(), vec.indexmax());
   for (int i = results.indexmin(); i <= results.indexmax(); ++i)
   {
-    results.elem(i) = std::pow(vec.elem(i), 2);
+    double x = vec.elem(i);
+    results.elem(i) = x * x;
   }
   return results;
 }

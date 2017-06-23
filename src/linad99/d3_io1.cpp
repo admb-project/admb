@@ -1,15 +1,7 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file: dmat_io.cpp
-
 // i/o operations for class dmatrix
 
 #include "fvar.hpp"
@@ -19,74 +11,71 @@
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <iomanip.hpp>
   #include <fstream.hpp>
-  #define __USE_IOSTREAM__
 #endif
 
-#include <string.h>
-
-#ifdef __USE_IOSTREAM__
-
 /**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& _ostr, const d3_array& z)
-{
-  uostream & ostr = (uostream&) _ostr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
-  {
-    ostr << z[i];
-  }
-  return ostr;
-}
+Save values from arr3 to output stream.
 
+\param output uostream
+\param arr3 d3_array
+*/
+uostream& operator<<(const uostream& output, const d3_array& arr3)
+{
+  uostream& uos = const_cast<uostream&>(output);
+  for (int i = arr3.slicemin(); i <= arr3.slicemax(); ++i)
+  {
+    uos << arr3[i];
+  }
+  return uos;
+}
 /**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& _istr, const d3_array& z)
-{
-  uistream & istr = (uistream&) _istr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
-  {
-    istr >> z[i];
-  }
-  return istr;
-}
+Read values from input stream to arr3.
 
+\param input uistream
+\param arr3 d3_array
+*/
+uistream& operator>>(const uistream& input, const d3_array& arr3)
+{
+  uistream& uis = const_cast<uistream&>(input);
+  for (int i = arr3.slicemin(); i <= arr3.slicemax(); ++i)
+  {
+    uis >> arr3[i];
+  }
+  return uis;
+}
 /**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& _ostr, const dvar3_array& z)
-{
-  uostream & ostr = (uostream&) _ostr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
-  {
-    ostr << z[i];
-  }
-  return ostr;
-}
+Save values from varr3 to output stream.
 
+\param output uostream
+\param varr3 dvar3_array
+*/
+uostream& operator<<(const uostream& output, const dvar3_array& varr3)
+{
+  uostream& uos = const_cast<uostream&>(output);
+  for (int i = varr3.slicemin(); i <= varr3.slicemax(); ++i)
+  {
+    uos << varr3[i];
+  }
+  return uos;
+}
 /**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& _istr, const dvar3_array& z)
-{
-  uistream & istr = (uistream&) _istr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
-  {
-    istr >> z[i];
-  }
-  return istr;
-}
+Read values from input stream to varr3.
 
-#endif
+\param input uistream
+\param varr3 dvar3_array
+*/
+uistream& operator>>(const uistream& input, const dvar3_array& varr3)
+{
+  uistream& uis = const_cast<uistream&>(input);
+  for (int i = varr3.slicemin(); i <= varr3.slicemax(); ++i)
+  {
+    uis >> varr3[i];
+  }
+  return uis;
+}

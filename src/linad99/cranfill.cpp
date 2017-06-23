@@ -22,31 +22,25 @@
 #include <math.h>
 
 /**
- * Description not yet available.
- * \param
- */
-double var(const dvector& v)
-  {
-    double tmp;
-    tmp=norm(v)/sqrt(double(v.size()));
-    double tmp1;
-    tmp1=mean(v);
-    return(tmp*tmp-tmp1*tmp1);
-  }
+Returns the computed variance of vec.
 
+\param vec dvector
+*/
+double var(const dvector& vec)
+{
+  double x = norm(vec) / sqrt(static_cast<double>(vec.size()));
+  double y = mean(vec);
+  return x * x - y * y;
+}
 /**
- * Description not yet available.
- * \param
- */
-double std_dev(const dvector& v)
-  {
-    double tmp;
-    tmp=norm(v)/sqrt(double(v.size()));
-    double tmp1;
-    tmp1=mean(v);
-    return(sqrt(tmp*tmp-tmp1*tmp1));
-  }
+Returns the computed standand deviation of vec.
 
+\param vec dvector
+*/
+double std_dev(const dvector& vec)
+{
+  return sqrt(var(vec));
+}
 /**
 Returns computed mean of vec.
 

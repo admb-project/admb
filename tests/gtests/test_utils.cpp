@@ -31,3 +31,25 @@ TEST_F(test_utils, check_datafile_pointer)
 
   ASSERT_THROW(check_datafile_pointer(NULL),int);
 }
+TEST_F(test_utils, variance)
+{
+  dvector data(1, 5);
+  data(1) = 600;
+  data(2) = 470;
+  data(3) = 170;
+  data(4) = 430;
+  data(5) = 300;
+
+  ASSERT_DOUBLE_EQ(21704, var(data));
+}
+TEST_F(test_utils, std_dev)
+{
+  dvector data(1, 5);
+  data(1) = 600;
+  data(2) = 470;
+  data(3) = 170;
+  data(4) = 430;
+  data(5) = 300;
+
+  ASSERT_DOUBLE_EQ(std::sqrt(21704), std_dev(data));
+}

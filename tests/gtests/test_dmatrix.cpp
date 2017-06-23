@@ -26,6 +26,62 @@ TEST_F(test_dmatrix, norm)
 TEST_F(test_dmatrix, select)
 {
   dmatrix m(1, 3, 1, 3);
+  m.initialize();
+
+  ASSERT_DOUBLE_EQ(0, m(1, 1));
+  ASSERT_DOUBLE_EQ(0, m(1, 2));
+  ASSERT_DOUBLE_EQ(0, m(1, 3));
+  ASSERT_DOUBLE_EQ(0, m(2, 1));
+  ASSERT_DOUBLE_EQ(0, m(2, 2));
+  ASSERT_DOUBLE_EQ(0, m(2, 3));
+  ASSERT_DOUBLE_EQ(0, m(3, 1));
+  ASSERT_DOUBLE_EQ(0, m(3, 2));
+  ASSERT_DOUBLE_EQ(0, m(3, 3));
+
+  dvector fill(1, 3);
+  fill(1) = 1;
+  fill(2) = 2;
+  fill(3) = 3;
+
+  m.colfill(1, fill);
+
+  ASSERT_DOUBLE_EQ(1, m(1, 1));
+  ASSERT_DOUBLE_EQ(0, m(1, 2));
+  ASSERT_DOUBLE_EQ(0, m(1, 3));
+  ASSERT_DOUBLE_EQ(2, m(2, 1));
+  ASSERT_DOUBLE_EQ(0, m(2, 2));
+  ASSERT_DOUBLE_EQ(0, m(2, 3));
+  ASSERT_DOUBLE_EQ(3, m(3, 1));
+  ASSERT_DOUBLE_EQ(0, m(3, 2));
+  ASSERT_DOUBLE_EQ(0, m(3, 3));
+
+  m.colfill(2, fill);
+
+  ASSERT_DOUBLE_EQ(1, m(1, 1));
+  ASSERT_DOUBLE_EQ(1, m(1, 2));
+  ASSERT_DOUBLE_EQ(0, m(1, 3));
+  ASSERT_DOUBLE_EQ(2, m(2, 1));
+  ASSERT_DOUBLE_EQ(2, m(2, 2));
+  ASSERT_DOUBLE_EQ(0, m(2, 3));
+  ASSERT_DOUBLE_EQ(3, m(3, 1));
+  ASSERT_DOUBLE_EQ(3, m(3, 2));
+  ASSERT_DOUBLE_EQ(0, m(3, 3));
+
+  m.colfill(3, fill);
+
+  ASSERT_DOUBLE_EQ(1, m(1, 1));
+  ASSERT_DOUBLE_EQ(1, m(1, 2));
+  ASSERT_DOUBLE_EQ(1, m(1, 3));
+  ASSERT_DOUBLE_EQ(2, m(2, 1));
+  ASSERT_DOUBLE_EQ(2, m(2, 2));
+  ASSERT_DOUBLE_EQ(2, m(2, 3));
+  ASSERT_DOUBLE_EQ(3, m(3, 1));
+  ASSERT_DOUBLE_EQ(3, m(3, 2));
+  ASSERT_DOUBLE_EQ(3, m(3, 3));
+}
+TEST_F(test_dmatrix, colfill)
+{
+  dmatrix m(1, 3, 1, 3);
 
   char array[] = "{0, -1, 2} {-3, 4, 5} {1, -2, 1}";
 

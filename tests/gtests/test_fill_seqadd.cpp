@@ -110,3 +110,63 @@ TEST_F(test_fill_seqadd, dmatrixi)
   ASSERT_DOUBLE_EQ(0, mat(4, 2));
   ASSERT_DOUBLE_EQ(0, mat(4, 3));
 }
+TEST_F(test_fill_seqadd, colfill_seqadd)
+{
+  dmatrix mat(1, 4, 1, 3);
+  mat.initialize();
+
+  ASSERT_DOUBLE_EQ(0, mat(1, 1));
+  ASSERT_DOUBLE_EQ(0, mat(1, 2));
+  ASSERT_DOUBLE_EQ(0, mat(1, 3));
+  ASSERT_DOUBLE_EQ(0, mat(2, 1));
+  ASSERT_DOUBLE_EQ(0, mat(2, 2));
+  ASSERT_DOUBLE_EQ(0, mat(2, 3));
+  ASSERT_DOUBLE_EQ(0, mat(3, 1));
+  ASSERT_DOUBLE_EQ(0, mat(3, 2));
+  ASSERT_DOUBLE_EQ(0, mat(3, 3));
+  ASSERT_DOUBLE_EQ(0, mat(4, 1));
+  ASSERT_DOUBLE_EQ(0, mat(4, 2));
+  ASSERT_DOUBLE_EQ(0, mat(4, 3));
+
+  mat.colfill_seqadd(1, 1.5, 0.5);
+  ASSERT_DOUBLE_EQ(1.5, mat(1, 1));
+  ASSERT_DOUBLE_EQ(0, mat(1, 2));
+  ASSERT_DOUBLE_EQ(0, mat(1, 3));
+  ASSERT_DOUBLE_EQ(2.0, mat(2, 1));
+  ASSERT_DOUBLE_EQ(0, mat(2, 2));
+  ASSERT_DOUBLE_EQ(0, mat(2, 3));
+  ASSERT_DOUBLE_EQ(2.5, mat(3, 1));
+  ASSERT_DOUBLE_EQ(0, mat(3, 2));
+  ASSERT_DOUBLE_EQ(0, mat(3, 3));
+  ASSERT_DOUBLE_EQ(3.0, mat(4, 1));
+  ASSERT_DOUBLE_EQ(0, mat(4, 2));
+  ASSERT_DOUBLE_EQ(0, mat(4, 3));
+
+  mat.colfill_seqadd(2, 1.5, 0.5);
+  ASSERT_DOUBLE_EQ(1.5, mat(1, 1));
+  ASSERT_DOUBLE_EQ(1.5, mat(1, 2));
+  ASSERT_DOUBLE_EQ(0, mat(1, 3));
+  ASSERT_DOUBLE_EQ(2.0, mat(2, 1));
+  ASSERT_DOUBLE_EQ(2.0, mat(2, 2));
+  ASSERT_DOUBLE_EQ(0, mat(2, 3));
+  ASSERT_DOUBLE_EQ(2.5, mat(3, 1));
+  ASSERT_DOUBLE_EQ(2.5, mat(3, 2));
+  ASSERT_DOUBLE_EQ(0, mat(3, 3));
+  ASSERT_DOUBLE_EQ(3.0, mat(4, 1));
+  ASSERT_DOUBLE_EQ(3.0, mat(4, 2));
+  ASSERT_DOUBLE_EQ(0, mat(4, 3));
+
+  mat.colfill_seqadd(3, 1.5, 0.5);
+  ASSERT_DOUBLE_EQ(1.5, mat(1, 1));
+  ASSERT_DOUBLE_EQ(1.5, mat(1, 2));
+  ASSERT_DOUBLE_EQ(1.5, mat(1, 3));
+  ASSERT_DOUBLE_EQ(2.0, mat(2, 1));
+  ASSERT_DOUBLE_EQ(2.0, mat(2, 2));
+  ASSERT_DOUBLE_EQ(2.0, mat(2, 3));
+  ASSERT_DOUBLE_EQ(2.5, mat(3, 1));
+  ASSERT_DOUBLE_EQ(2.5, mat(3, 2));
+  ASSERT_DOUBLE_EQ(2.5, mat(3, 3));
+  ASSERT_DOUBLE_EQ(3.0, mat(4, 1));
+  ASSERT_DOUBLE_EQ(3.0, mat(4, 2));
+  ASSERT_DOUBLE_EQ(3.0, mat(4, 3));
+}

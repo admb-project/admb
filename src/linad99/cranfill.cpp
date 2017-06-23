@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 
@@ -56,7 +50,7 @@ double mean(const dvector& vec)
   return sum / vec.size();
 }
 /**
-Fills dvector elements with values starting from base and incremented by offset. 
+Fills dvector elements with values starting from base and incremented by offset.
 
 \param base initial value
 \param offset incremental value
@@ -71,7 +65,7 @@ void dvector::fill_seqadd(const double base, const double offset)
   }
 }
 /**
-Fills ivector elements with values starting from base and incremented by offset. 
+Fills ivector elements with values starting from base and incremented by offset.
 
 \param base initial value
 \param offset incremental value
@@ -86,7 +80,7 @@ void ivector::fill_seqadd(int base, int offset)
   }
 }
 /**
-Fills ivector elements with values starting from base and incremented by offset. 
+Fills ivector elements with values starting from base and incremented by offset.
 
 \param base initial value
 \param offset incremental value
@@ -100,55 +94,61 @@ void lvector::fill_seqadd(const AD_LONG_INT& base, const AD_LONG_INT& offset)
     sequence += offset;
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::colfill_seqadd(const int& j, const double base,
+Fills dmatrix at index column with elements with values starting from base
+and incremented by offset.
+
+\param row index
+\param base initial value
+\param offset incremental value
+*/
+void dmatrix::colfill_seqadd(
+  const int& column,
+  const double base,
   const double offset)
+{
+  double sequence = base;
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    double temp=0;
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      elem(i,j)=base+temp;
-      temp=temp+offset;
-    }
+    elem(i, column) = sequence;
+    sequence += offset;
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::colfill(int j, const dvector& v)
-  {
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      (*this)[i][j]=v[i];
-    }
-  }
-/**
-Fills dmatrix row at index with values from vec.
+Fills dmatrix column at index column with values from vec.
 
-\param index of row
+\param column index
 \param vec values to copy
 */
-void dmatrix::rowfill(int index, const dvector& vec)
+void dmatrix::colfill(int column, const dvector& vec)
 {
-  elem(index) = vec;
+  for (int i = rowmin(); i <= rowmax(); ++i)
+  {
+    (*this)[i][column] = vec[i];
+  }
+}
+/**
+Fills dmatrix row at index row with values from vec.
+
+\param row index
+\param vec values to copy
+*/
+void dmatrix::rowfill(int row, const dvector& vec)
+{
+  elem(row) = vec;
 }
 /**
 Fills dmatrix row at index with elements with values starting from base
-and incremented by offset. 
+and incremented by offset.
 
-\param index of row
+\param row index
 \param base initial value
 \param offset incremental value
 */
 void dmatrix::rowfill_seqadd(
-  const int& index,
+  const int& row,
   const double base,
   const double offset)
 {
-  elem(index).fill_seqadd(base, offset);
+  elem(row).fill_seqadd(base, offset);
 }

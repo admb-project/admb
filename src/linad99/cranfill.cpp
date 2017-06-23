@@ -59,7 +59,7 @@ double mean(const dvector& vec)
   {
     sum += vec.elem(i);
   }
-  return sum / v.size();
+  return sum / vec.size();
 }
 /**
 Fills dvector elements with values starting from base and incremented by offset. 
@@ -156,5 +156,5 @@ void dmatrix::rowfill_seqadd(
   const double base,
   const double offset)
 {
-  elem(i).fill_seqadd(base, offset);
+  elem(index).fill_seqadd(base, offset);
 }

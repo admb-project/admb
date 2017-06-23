@@ -92,23 +92,21 @@ TEST_F(test_fill_seqadd, dmatrixi)
   ASSERT_DOUBLE_EQ(0, mat(4, 2));
   ASSERT_DOUBLE_EQ(0, mat(4, 3));
 
-  dvect vec(1, 3);
+  dvector vec(1, 3);
   vec(1) = 3;
   vec(2) = 2;
   vec(3) = 1;
   mat.rowfill(3, vec);
-/*
   ASSERT_DOUBLE_EQ(0, mat(1, 1));
   ASSERT_DOUBLE_EQ(0, mat(1, 2));
   ASSERT_DOUBLE_EQ(0, mat(1, 3));
   ASSERT_DOUBLE_EQ(1.5, mat(2, 1));
   ASSERT_DOUBLE_EQ(2.0, mat(2, 2));
   ASSERT_DOUBLE_EQ(2.5, mat(2, 3));
-  ASSERT_DOUBLE_EQ(0, mat(3, 1));
-  ASSERT_DOUBLE_EQ(0, mat(3, 2));
-  ASSERT_DOUBLE_EQ(0, mat(3, 3));
+  ASSERT_DOUBLE_EQ(3, mat(3, 1));
+  ASSERT_DOUBLE_EQ(2, mat(3, 2));
+  ASSERT_DOUBLE_EQ(1, mat(3, 3));
   ASSERT_DOUBLE_EQ(0, mat(4, 1));
   ASSERT_DOUBLE_EQ(0, mat(4, 2));
   ASSERT_DOUBLE_EQ(0, mat(4, 3));
-*/
 }

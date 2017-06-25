@@ -53,3 +53,138 @@ TEST_F(test_utils, std_dev)
 
   ASSERT_DOUBLE_EQ(std::sqrt(21704), std_dev(data));
 }
+TEST_F(test_utils, dvector_times_dmatrix)
+{
+  dvector vec(1, 3);
+  vec(1) = 1;
+  vec(2) = 2;
+  vec(3) = 3;
+  dmatrix mat(1, 3, 1, 2);
+  mat(1, 1) = 1;
+  mat(1, 2) = 1;
+  mat(2, 1) = 2;
+  mat(2, 2) = 2;
+  mat(3, 1) = 3;
+  mat(3, 2) = 3;
+
+  dvector ret = vec * mat;
+
+  ASSERT_EQ(1, ret.indexmin());
+  ASSERT_EQ(2, ret.indexmax());
+  ASSERT_DOUBLE_EQ(14, ret(1));
+  ASSERT_DOUBLE_EQ(14, ret(2));
+}
+TEST_F(test_utils, dvector_times_dmatrix_error)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector vec(1, 3);
+  dmatrix mat(2, 3, 1, 2);
+
+  ASSERT_ANY_THROW({
+    vec * mat;
+  });
+}
+TEST_F(test_utils, dvector_times_dmatrix_error2)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector vec(1, 3);
+  dmatrix mat(1, 4, 1, 2);
+
+  ASSERT_ANY_THROW({
+    vec * mat;
+  });
+}
+TEST_F(test_utils, dmatrix_times_dvector)
+{
+  dmatrix mat(1, 3, 1, 2);
+  mat(1, 1) = 1;
+  mat(1, 2) = 2;
+  mat(2, 1) = 1;
+  mat(2, 2) = 2;
+  mat(3, 1) = 1;
+  mat(3, 2) = 2;
+  dvector vec(1, 2);
+  vec(1) = 1;
+  vec(2) = 2;
+
+  dvector ret = mat * vec;
+
+  ASSERT_EQ(1, ret.indexmin());
+  ASSERT_EQ(3, ret.indexmax());
+  ASSERT_DOUBLE_EQ(5, ret(1));
+  ASSERT_DOUBLE_EQ(5, ret(2));
+  ASSERT_DOUBLE_EQ(5, ret(3));
+}
+TEST_F(test_utils, dmatrix_times_dvector_error)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix mat(1, 3, 1, 2);
+  dvector vec(1, 3);
+
+  ASSERT_ANY_THROW({
+    mat * vec;
+  });
+}
+TEST_F(test_utils, dmatrix_times_dvector_error2)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix mat(1, 3, 2, 2);
+  dvector vec(1, 2);
+
+  ASSERT_ANY_THROW({
+    mat * vec;
+  });
+}
+TEST_F(test_utils, dmatrix_times_dmatrix)
+{
+  dmatrix mat(1, 2, 1, 2);
+  mat(1, 1) = 1;
+  mat(1, 2) = 2;
+  mat(2, 1) = 1;
+  mat(2, 2) = 2;
+  dmatrix mat2(1, 2, 1, 2);
+  mat2(1, 1) = 1;
+  mat2(1, 2) = 2;
+  mat2(2, 1) = 1;
+  mat2(2, 2) = 2;
+
+  dmatrix ret = mat * mat2;
+
+  ASSERT_EQ(1, ret.rowmin());
+  ASSERT_EQ(2, ret.rowmax());
+  ASSERT_EQ(1, ret(1).indexmin());
+  ASSERT_EQ(2, ret(1).indexmax());
+  ASSERT_EQ(1, ret(2).indexmin());
+  ASSERT_EQ(2, ret(2).indexmax());
+
+  ASSERT_DOUBLE_EQ(3, ret(1, 1));
+  ASSERT_DOUBLE_EQ(6, ret(1, 2));
+  ASSERT_DOUBLE_EQ(3, ret(2, 1));
+  ASSERT_DOUBLE_EQ(6, ret(2, 2));
+}
+TEST_F(test_utils, dmatrix_times_dmatrix_error)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix A(1, 3, 1, 2);
+  dmatrix B(1, 3, 1, 3);
+
+  ASSERT_ANY_THROW({
+    A * B;
+  });
+}
+TEST_F(test_utils, dmatrix_times_dmatrix_error2)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix A(1, 3, 2, 3);
+  dmatrix B(1, 3, 1, 3);
+
+  ASSERT_ANY_THROW({
+    A * B;
+  });
+}

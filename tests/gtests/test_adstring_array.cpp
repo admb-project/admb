@@ -2,6 +2,11 @@
 #include <fvar.hpp>
 #include <adstring.hpp>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_adstring_array: public ::testing::Test {};
 
 TEST_F(test_adstring_array, equals)
@@ -153,13 +158,15 @@ TEST_F(test_adstring_array, ifstream)
 }
 TEST_F(test_adstring_array, allocate_min_greaterthan_max)
 {
+  ad_exit=&test_ad_exit;
   adstring_array a;
-  ASSERT_EXIT({
+  ASSERT_ANY_THROW({
     a.allocate(4, 1);
-  }, ::testing::ExitedWithCode(1), " Error");
+  });
 }
 TEST_F(test_adstring_array, null_index1)
 {
+  ad_exit=&test_ad_exit;
   adstring_array a;
   ASSERT_ANY_THROW({
     a(1);
@@ -170,10 +177,11 @@ TEST_F(test_adstring_array, null_index1)
 }
 TEST_F(test_adstring_array, const_null_index1)
 {
+  ad_exit=&test_ad_exit;
   const adstring_array a;
-  ASSERT_EXIT({
+  ASSERT_ANY_THROW({
     a[1];
-  }, ::testing::ExitedWithCode(1), "Error -- trying to acess unallocated adstring array");
+  });
   ASSERT_ANY_THROW({
     a(1);
   });

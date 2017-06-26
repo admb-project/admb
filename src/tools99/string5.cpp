@@ -82,7 +82,7 @@ void adstring_array::allocate(int min, int max)
   {
     cerr << " Error in adstring_array(int min,int max) --"
          << " max must be >= min" << endl;
-    exit(1);
+    ad_exit(1);
   }
   shape = new vector_shape(min, max);
   if (!shape)
@@ -149,7 +149,7 @@ const adstring& adstring_array::operator[](int i) const
   if (!shape)
   {
     cerr << "Error -- trying to acess unallocated adstring array" << endl;
-    exit(1);
+    ad_exit(1);
   }
 
 #ifndef OPT_LIB

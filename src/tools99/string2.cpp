@@ -18,7 +18,7 @@ adstring::adstring(const size_t lb, const size_t ub) : clist()
   {
     cerr << " Error in adstring::adstring(int lb,int ub) : clist()\n"
     " At present minimum index for adstring must equal 1\n";
-    exit(1);
+    ad_exit(1);
   }
   size_t sz = ub;
   allocate(sz);
@@ -34,7 +34,7 @@ adstring::adstring(const int sz) : clist()
   {
     cerr << " Error in adstring::adstring(const size_t size) : clist()\n"
     " At present size must be greater than zero.\n";
-    exit(1);
+    ad_exit(1);
   }
   size_t size = sz > 0 ? (size_t)sz : 0;
   allocate(size);

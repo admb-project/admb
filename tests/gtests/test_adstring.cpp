@@ -629,16 +629,16 @@ TEST_F(test_adstring, operator_plus_unsigned_char)
 TEST_F(test_adstring, constructor_zero)
 {
   ad_exit=&test_ad_exit;
-  ASSERT_EXIT({
+  ASSERT_ANY_THROW({
     adstring u(0);
-  }, ::testing::ExitedWithCode(1), "Error");
+  });
 }
 TEST_F(test_adstring, constructor_not_one)
 {
   ad_exit=&test_ad_exit;
-  ASSERT_EXIT({
+  ASSERT_ANY_THROW({
     adstring u(0, 1);
-  }, ::testing::ExitedWithCode(1), "Error");
+  });
 }
 TEST_F(test_adstring, str2)
 {

@@ -46,6 +46,32 @@ TEST_F(test_dvar_vector, fill)
   ASSERT_DOUBLE_EQ(4, value(v(5)));
   ASSERT_DOUBLE_EQ(5, value(v(6)));
 }
+TEST_F(test_dvar_vector, min)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 6);
+  v.initialize();
+
+  char array[] = "{0, -1, 2, -3, 4, 5}";
+
+  v.fill(array);
+
+  ASSERT_DOUBLE_EQ(-3, value(min(v)));
+}
+TEST_F(test_dvar_vector, max)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 6);
+  v.initialize();
+
+  char array[] = "{0, -1, 2, -3, 4, 5}";
+
+  v.fill(array);
+
+  ASSERT_DOUBLE_EQ(5, value(max(v)));
+}
 TEST_F(test_dvar_vector, constructor_fill)
 {
   gradient_structure gs;

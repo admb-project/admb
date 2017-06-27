@@ -19,7 +19,7 @@
 #endif
 
 /**
-Write value from varr4 to output stream.
+Write values from varr4 to output stream.
 
 \param output uostream
 \param varr4 dvar4_array
@@ -39,7 +39,7 @@ Read values to varr4 from input stream.
 \param input uistream
 \param varr4 dvar4_array
 */
-uistream& operator>>(const uistream& input,const dvar4_array &varr4)
+uistream& operator>>(const uistream& input, const dvar4_array &varr4)
 {
   uistream& istr = const_cast<uistream&>(input);
   for (int i = varr4.hslicemin(); i <= varr4.hslicemax(); ++i)

@@ -646,3 +646,29 @@ TEST_F(test_dmatrix, default)
   //ASSERT_EQ(0, ret.colmax());
   ASSERT_EQ(0, ret.colsize());
 }
+TEST_F(test_dmatrix, identity)
+{
+  dmatrix ret = identity_matrix(2, 5);
+
+  ASSERT_EQ(2, ret.rowmin());
+  ASSERT_EQ(5, ret.rowmax());
+  ASSERT_EQ(2, ret.colmin());
+  ASSERT_EQ(5, ret.colmax());
+
+  ASSERT_DOUBLE_EQ(1, ret(2, 2));
+  ASSERT_DOUBLE_EQ(0, ret(2, 3));
+  ASSERT_DOUBLE_EQ(0, ret(2, 4));
+  ASSERT_DOUBLE_EQ(0, ret(2, 5));
+  ASSERT_DOUBLE_EQ(0, ret(3, 2));
+  ASSERT_DOUBLE_EQ(1, ret(3, 3));
+  ASSERT_DOUBLE_EQ(0, ret(3, 4));
+  ASSERT_DOUBLE_EQ(0, ret(3, 5));
+  ASSERT_DOUBLE_EQ(0, ret(4, 2));
+  ASSERT_DOUBLE_EQ(0, ret(4, 3));
+  ASSERT_DOUBLE_EQ(1, ret(4, 4));
+  ASSERT_DOUBLE_EQ(0, ret(4, 5));
+  ASSERT_DOUBLE_EQ(0, ret(5, 2));
+  ASSERT_DOUBLE_EQ(0, ret(5, 3));
+  ASSERT_DOUBLE_EQ(0, ret(5, 4));
+  ASSERT_DOUBLE_EQ(1, ret(5, 5));
+}

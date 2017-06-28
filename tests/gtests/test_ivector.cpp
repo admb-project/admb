@@ -394,3 +394,25 @@ TEST_F(test_ivector, selection)
   EXPECT_EQ(0, selected(1));
   EXPECT_EQ(2, selected(2));
 }
+TEST_F(test_ivector, uiostream)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  uostream uos("uosivector.txt");
+  uos << v;
+  uos.close();
+
+  ivector u(1, 4);
+  uistream uis("uosivector.txt");
+  uis >> u;
+  uos.close();
+
+  EXPECT_EQ(v(1), u(1));
+  EXPECT_EQ(v(2), u(2));
+  EXPECT_EQ(v(3), u(3));
+  EXPECT_EQ(v(4), u(4));
+}

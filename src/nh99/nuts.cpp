@@ -390,7 +390,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double nll, H0, logu, value, rn, alpha;
   int n, j, v;
   bool s,b;
-  
+
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Randomize momentum for next iteration, update H, and reset the tree
@@ -405,7 +405,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     gr2=gr*chd;
     H0=-nll-0.5*norm2(p); // initial Hamiltonian value
     logu=H0+log(randu(rng)); // slice variable
-    cout << "H0=" << H0 << endl;
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd);

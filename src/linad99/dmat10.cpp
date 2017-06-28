@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #include <string.h>
@@ -22,8 +16,6 @@
  {
    void ** m;
  };
-
-const int MAXROWS = 5050;
 
 /**
 Fill allocated dmatrix with values from input parameter s.
@@ -42,7 +34,7 @@ void dmatrix::fill(const char* s)
 
   size_t len = strlen(s);
   assert(len <= INT_MAX);
-  int n = (int)len;
+  int n = static_cast<int>(len);
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -51,6 +43,7 @@ void dmatrix::fill(const char* s)
   rowshift(1);
   colshift(1);
 
+  const int MAXROWS = 5050;
   ivector columns(1, MAXROWS);
   ivector k1(1, MAXROWS);
   ivector k2(1, MAXROWS);

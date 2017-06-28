@@ -23,6 +23,78 @@ TEST_F(test_dmatrix, norm)
   double ret2 = norm(m);
   ASSERT_DOUBLE_EQ(std::pow(55, 0.5), ret2);
 }
+TEST_F(test_dmatrix, unbalancedbraces)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5";
+
+  ASSERT_ANY_THROW({
+    m.fill(array);
+  });
+}
+TEST_F(test_dmatrix, unbalancedbraces2)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5} }";
+
+  ASSERT_ANY_THROW({
+    m.fill(array);
+  });
+}
+TEST_F(test_dmatrix, notenoughrows)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2}";
+
+  ASSERT_ANY_THROW({
+    m.fill(array);
+  });
+}
+TEST_F(test_dmatrix, toomanyrows)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {1, 1, 1} {1, 1, 1}";
+
+  ASSERT_ANY_THROW({
+    m.fill(array);
+  });
+}
+TEST_F(test_dmatrix, notenoughcolumns)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1} {-3, 4}";
+
+  ASSERT_ANY_THROW({
+    m.fill(array);
+  });
+}
+TEST_F(test_dmatrix, toomanycolumns)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 1, 1} {-3, 4, 1, 1}";
+
+  ASSERT_ANY_THROW({
+    m.fill(array);
+  });
+}
 TEST_F(test_dmatrix, select)
 {
   dmatrix m(1, 3, 1, 3);

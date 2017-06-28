@@ -2,6 +2,11 @@
 #include <cmath>
 #include "fvar.hpp"
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_d3_array: public ::testing::Test {};
 
 TEST_F(test_d3_array, pow)
@@ -319,4 +324,35 @@ TEST_F(test_d3_array, io)
   ASSERT_DOUBLE_EQ(a(2, 1, 2), b(2, 1, 2));
   ASSERT_DOUBLE_EQ(a(2, 2, 1), b(2, 2, 1));
   ASSERT_DOUBLE_EQ(a(2, 2, 2), b(2, 2, 2));
+}
+TEST_F(test_d3_array, sliceexit)
+{
+  ad_exit=&test_ad_exit;
+
+  d3_array a(1, 2, 1, 2, 1, 2);
+
+  ASSERT_ANY_THROW({
+    a(3, 1, 1);
+  });
+  ASSERT_ANY_THROW({
+    a(0, 1, 1);
+  });
+  ASSERT_ANY_THROW({
+    a(3, 1);
+  });
+  ASSERT_ANY_THROW({
+    a(0, 1);
+  });
+  ASSERT_ANY_THROW({
+    a(3);
+  });
+  ASSERT_ANY_THROW({
+    a(0);
+  });
+  ASSERT_ANY_THROW({
+    a[3];
+  });
+  ASSERT_ANY_THROW({
+    a[0];
+  });
 }

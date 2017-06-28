@@ -72,6 +72,28 @@ TEST_F(test_dvar_vector, max)
 
   ASSERT_DOUBLE_EQ(5, value(max(v)));
 }
+TEST_F(test_dvar_vector, sgn)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 6);
+  v.initialize();
+
+  char array[] = "{0, -1, 2, -3, 4, 5}";
+
+  v.fill(array);
+
+  ivector sgn(const dvar_vector& v);
+
+  ivector ret = sgn(v);
+
+  ASSERT_EQ(-1, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(1, ret(3));
+  ASSERT_EQ(-1, ret(4));
+  ASSERT_EQ(1, ret(5));
+  ASSERT_EQ(1, ret(6));
+}
 TEST_F(test_dvar_vector, constructor_fill)
 {
   gradient_structure gs;

@@ -356,3 +356,26 @@ TEST_F(test_d3_array, sliceexit)
     a[0];
   });
 }
+TEST_F(test_d3_array, sqr)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 5;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = -3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = -5;
+  a(2, 1, 2) = -6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array ret = sqr(a);
+
+  ASSERT_DOUBLE_EQ(25 ,ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(4, ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(9, ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(16, ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(25 ,ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(36 ,ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(49 ,ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(64 ,ret(2, 2, 2));
+}

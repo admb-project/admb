@@ -167,7 +167,7 @@ Return sum of squared elements in a.
 double norm2(const d3_array& a)
 {
   double sum = 0.0;
-  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  for (int i = a.slicemin(); i <= a.slicemax(); ++i)
   {
     sum += norm2(a(i));
   }
@@ -245,7 +245,7 @@ a(i, j, k) - value.
 
 \param a d3_array
 */
-d3_array operator-(const d3_array& value, double value)
+d3_array operator-(const d3_array& a, double value)
 {
   d3_array results;
   results.allocate(a);

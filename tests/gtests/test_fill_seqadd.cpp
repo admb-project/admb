@@ -170,3 +170,24 @@ TEST_F(test_fill_seqadd, colfill_seqadd)
   ASSERT_DOUBLE_EQ(3.0, mat(4, 2));
   ASSERT_DOUBLE_EQ(3.0, mat(4, 3));
 }
+TEST_F(test_fill_seqadd, d3_array)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a.initialize();
+  double ret = a.fill_seqadd(1.5, 0.5);
+
+  double value = 1.5;
+  double offset = 0.5;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        ASSERT_DOUBLE_EQ(value, a(i, j, k));
+        value += offset;
+      }
+    }
+  }
+  ASSERT_DOUBLE_EQ(value, ret);
+}

@@ -50,7 +50,7 @@ ostream& operator<<(const ostream& _ostr, const d4_array &z)
  */
 istream& operator>>(const istream& _istr, const d4_array &z)
 {
-  uistream & istr = (uistream&) _istr;
+  istream & istr = (istream&) _istr;
   for (int i=z.hslicemin();i<=z.hslicemax();i++)
   {
     istr >> z[i];

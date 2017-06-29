@@ -232,3 +232,47 @@ TEST_F(test_d4_array, division_equal_operator3)
     }
   }
 }
+TEST_F(test_d4_array, uiostream)
+{
+  d4_array a(1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          a(i, j, k, l) = d;
+          d += 2.0;
+        }
+      }
+    }
+  }
+
+  uostream uos("uistreamd4_array.txt");
+  uos << a;
+  uos.close();
+
+  d4_array b(1, 2, 1, 2, 1, 2, 1, 2);
+
+  uistream uis("uistreamd4_array.txt");
+  uis >> b;
+  uis.close();
+
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          ASSERT_DOUBLE_EQ(a(i, j, k, l), b(i, j, k, l));
+        }
+      }
+    }
+  }
+}

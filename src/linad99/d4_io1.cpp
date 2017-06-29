@@ -1,16 +1,7 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file: dmat_io.cpp
-
-// i/o operations for class dmatrix
 
 #include "fvar.hpp"
 
@@ -19,45 +10,41 @@
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <iomanip.hpp>
   #include <fstream.hpp>
-  #define __USE_IOSTREAM__
 #endif
 
-#include <string.h>
-
-#ifdef __USE_IOSTREAM__
-
 /**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& _ostr, const d4_array &z)
+Write values to output.
+
+\param output uostream
+\param values d4_array
+*/
+uostream& operator<<(const uostream& output, const d4_array& values)
 {
-  uostream & ostr = (uostream&) _ostr;
-  for (int i=z.hslicemin();i<=z.hslicemax();i++)
+  uostream& ostr = const_cast<uostream&>(output);
+  for (int i = values.hslicemin(); i <= values.hslicemax(); ++i)
   {
-    ostr << z[i];
+    ostr << values[i];
   }
   return ostr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& _istr, const d4_array &z)
+Read from input to values.
+
+\param input uistream
+\param values d4_array
+*/
+uistream& operator>>(const uistream& input, const d4_array& values)
 {
-  uistream & istr = (uistream&) _istr;
-  for (int i=z.hslicemin();i<=z.hslicemax();i++)
+  uistream& istr = const_cast<uistream&>(input);
+  for (int i = values.hslicemin(); i <= values.hslicemax(); ++i)
   {
-    istr >> z[i];
+    istr >> values[i];
   }
   return istr;
 }
-#endif

@@ -203,7 +203,7 @@ d3_array operator+(double value, const d3_array& a)
   results.allocate(a);
   for (int i = results.slicemin(); i <= results.slicemax(); ++i)
   {
-    results(i) = value - a(i);
+    results(i) = value + a(i);
   }
   return results;
 }

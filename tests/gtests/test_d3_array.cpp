@@ -296,7 +296,7 @@ TEST_F(test_d3_array, size_count)
 TEST_F(test_d3_array, io)
 {
   d3_array a(1, 2, 1, 2, 1, 2);
-  a(1, 1, 1) = 5;
+  a(1, 1, 1) = 1;
   a(1, 1, 2) = 2;
   a(1, 2, 1) = 3;
   a(1, 2, 2) = 4;
@@ -378,4 +378,388 @@ TEST_F(test_d3_array, sqr)
   ASSERT_DOUBLE_EQ(36 ,ret(2, 1, 2));
   ASSERT_DOUBLE_EQ(49 ,ret(2, 2, 1));
   ASSERT_DOUBLE_EQ(64 ,ret(2, 2, 2));
+}
+TEST_F(test_d3_array, sin)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array ret = sin(a);
+
+  ASSERT_DOUBLE_EQ(std::sin(1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(std::sin(2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(std::sin(3), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(std::sin(4), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(std::sin(5), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(std::sin(6), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(std::sin(7), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(std::sin(8), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, cos)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array ret = cos(a);
+
+  ASSERT_DOUBLE_EQ(std::cos(1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(std::cos(2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(std::cos(3), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(std::cos(4), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(std::cos(5), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(std::cos(6), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(std::cos(7), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(std::cos(8), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, tan)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array ret = tan(a);
+
+  ASSERT_DOUBLE_EQ(std::tan(1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(std::tan(2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(std::tan(3), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(std::tan(4), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(std::tan(5), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(std::tan(6), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(std::tan(7), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(std::tan(8), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, elem_prod)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array b(1, 2, 1, 2, 1, 2);
+  b(1, 1, 1) = 8;
+  b(1, 1, 2) = 7;
+  b(1, 2, 1) = 6;
+  b(1, 2, 2) = 5;
+  b(2, 1, 1) = 4;
+  b(2, 1, 2) = 3;
+  b(2, 2, 1) = 2;
+  b(2, 2, 2) = 1;
+
+  d3_array ret = elem_prod(a, b);
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1) * b(1, 1, 1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2) * b(1, 1, 2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1) * b(1, 2, 1), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2) * b(1, 2, 2), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1) * b(2, 1, 1), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2) * b(2, 1, 2), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1) * b(2, 2, 1), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2) * b(2, 2, 2), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, elem_div)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array b(1, 2, 1, 2, 1, 2);
+  b(1, 1, 1) = 8;
+  b(1, 1, 2) = 7;
+  b(1, 2, 1) = 6;
+  b(1, 2, 2) = 5;
+  b(2, 1, 1) = 4;
+  b(2, 1, 2) = 3;
+  b(2, 2, 1) = 2;
+  b(2, 2, 2) = 1;
+
+  d3_array ret = elem_div(a, b);
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1) / b(1, 1, 1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2) / b(1, 1, 2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1) / b(1, 2, 1), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2) / b(1, 2, 2), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1) / b(2, 1, 1), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2) / b(2, 1, 2), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1) / b(2, 2, 1), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2) / b(2, 2, 2), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, addition)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array b(1, 2, 1, 2, 1, 2);
+  b(1, 1, 1) = 8;
+  b(1, 1, 2) = 7;
+  b(1, 2, 1) = 6;
+  b(1, 2, 2) = 5;
+  b(2, 1, 1) = 4;
+  b(2, 1, 2) = 3;
+  b(2, 2, 1) = 2;
+  b(2, 2, 2) = 1;
+
+  d3_array ret = a + b;
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1) + b(1, 1, 1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2) + b(1, 1, 2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1) + b(1, 2, 1), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2) + b(1, 2, 2), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1) + b(2, 1, 1), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2) + b(2, 1, 2), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1) + b(2, 2, 1), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2) + b(2, 2, 2), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, substraction)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array b(1, 2, 1, 2, 1, 2);
+  b(1, 1, 1) = 8;
+  b(1, 1, 2) = 7;
+  b(1, 2, 1) = 6;
+  b(1, 2, 2) = 5;
+  b(2, 1, 1) = 4;
+  b(2, 1, 2) = 3;
+  b(2, 2, 1) = 2;
+  b(2, 2, 2) = 1;
+
+  d3_array ret = a - b;
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1) - b(1, 1, 1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2) - b(1, 1, 2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1) - b(1, 2, 1), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2) - b(1, 2, 2), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1) - b(2, 1, 1), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2) - b(2, 1, 2), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1) - b(2, 2, 1), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2) - b(2, 2, 2), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, value_addition)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  double value = -4.5;
+
+  d3_array ret = value + a;
+
+  ASSERT_DOUBLE_EQ(value + a(1, 1, 1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(value + a(1, 1, 2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(value + a(1, 2, 1), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(value + a(1, 2, 2), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(value + a(2, 1, 1), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(value + a(2, 1, 2), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(value + a(2, 2, 1), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(value + a(2, 2, 2), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, value_subtraction)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  double value = -4.5;
+
+  d3_array ret = value - a;
+
+  ASSERT_DOUBLE_EQ(value - a(1, 1, 1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(value - a(1, 1, 2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(value - a(1, 2, 1), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(value - a(1, 2, 2), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(value - a(2, 1, 1), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(value - a(2, 1, 2), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(value - a(2, 2, 1), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(value - a(2, 2, 2), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, value_addition2)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  double value = -4.5;
+
+  d3_array ret = a + value;
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1) + value, ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2) + value, ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1) + value, ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2) + value, ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1) + value, ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2) + value, ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1) + value, ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2) + value, ret(2, 2, 2));
+}
+TEST_F(test_d3_array, value_subtraction2)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  double value = -4.5;
+
+  d3_array ret = a - value;
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1) - value, ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2) - value, ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1) - value, ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2) - value, ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1) - value, ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2) - value, ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1) - value, ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2) - value, ret(2, 2, 2));
+}
+TEST_F(test_d3_array, mulitply_value)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  double value = -4.5;
+
+  d3_array ret = a * value;
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1) * value, ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2) * value, ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1) * value, ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2) * value, ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1) * value, ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2) * value, ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1) * value, ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2) * value, ret(2, 2, 2));
+}
+TEST_F(test_d3_array, mulitply_value2)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  double value = -4.5;
+
+  d3_array ret = value * a;
+
+  ASSERT_DOUBLE_EQ(value * a(1, 1, 1), ret(1, 1, 1));
+  ASSERT_DOUBLE_EQ(value * a(1, 1, 2), ret(1, 1, 2));
+  ASSERT_DOUBLE_EQ(value * a(1, 2, 1), ret(1, 2, 1));
+  ASSERT_DOUBLE_EQ(value * a(1, 2, 2), ret(1, 2, 2));
+  ASSERT_DOUBLE_EQ(value * a(2, 1, 1), ret(2, 1, 1));
+  ASSERT_DOUBLE_EQ(value * a(2, 1, 2), ret(2, 1, 2));
+  ASSERT_DOUBLE_EQ(value * a(2, 2, 1), ret(2, 2, 1));
+  ASSERT_DOUBLE_EQ(value * a(2, 2, 2), ret(2, 2, 2));
+}
+TEST_F(test_d3_array, norm2)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = -2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = -4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = -6;
+  a(2, 2, 1) = -7;
+  a(2, 2, 2) = 8;
+
+  double ret = norm2(a);
+
+  ASSERT_DOUBLE_EQ(204, ret);
+  ASSERT_DOUBLE_EQ(204, sumsq(a));
+}
+TEST_F(test_d3_array, norm)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = -2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = -4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = -6;
+  a(2, 2, 1) = -7;
+  a(2, 2, 2) = 8;
+
+  double ret = norm(a);
+
+  ASSERT_DOUBLE_EQ(std::sqrt(204.0), ret);
 }

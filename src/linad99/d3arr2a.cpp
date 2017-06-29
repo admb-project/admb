@@ -4,256 +4,286 @@ Copyright (c) 2008-2012 Regents of the University of California
 */
 
 #include "fvar.hpp"
-#include <cassert>
 
 /**
-Returns d3_array with computed logs from elements in m.
+Returns d3_array results with computed log from elements in arr3.
+
+\param arr3 d3_array
 */
-d3_array log(const d3_array& m)
+d3_array log(const d3_array& arr3)
 {
-  d3_array ret;
-  ret.allocate(m);
-  for (int i = ret.slicemin(); i <= ret.slicemax(); ++i)
+  d3_array results;
+  results.allocate(arr3);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
   {
-    ret(i) = log(m(i));
+    results(i) = log(arr3(i));
   }
-  return ret;
+  return results;
 }
 /**
-Returns d3_array with computed e from elements in m.
+Returns d3_array results with computed exp from elements in arr3.
+
+\param arr3 d3_array
 */
-d3_array exp(const d3_array& m)
+d3_array exp(const d3_array& arr3)
 {
-  d3_array ret;
-  ret.allocate(m);
-  for (int i = ret.slicemin(); i <= ret.slicemax(); ++i)
+  d3_array results;
+  results.allocate(arr3);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
   {
-    ret(i) = exp(m(i));
+    results(i) = exp(arr3(i));
   }
-  return ret;
+  return results;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-d3_array sin(const d3_array& m)
-   {
-     d3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=sin(m(i));
-     }
-     return tmp;
-   }
+Returns d3_array results with computed sin from elements in arr3.
 
+\param arr3 d3_array
+*/
+d3_array sin(const d3_array& arr3)
+{
+  d3_array results;
+  results.allocate(arr3);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = sin(arr3(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-d3_array cos(const d3_array& m)
-   {
-     d3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=cos(m(i));
-     }
-     return tmp;
-   }
+Returns d3_array results with computed cos from elements in arr3.
 
+\param arr3 d3_array
+*/
+d3_array cos(const d3_array& arr3)
+{
+  d3_array results;
+  results.allocate(arr3);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = cos(arr3(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-d3_array tan(const d3_array& m)
-   {
-     d3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=tan(m(i));
-     }
-     return tmp;
-   }
+Returns d3_array results with computed tan from elements in arr3.
 
+\param arr3 d3_array
+*/
+d3_array tan(const d3_array& arr3)
+{
+  d3_array results;
+  results.allocate(arr3);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = tan(arr3(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-d3_array elem_prod(const d3_array& m1, const d3_array& m2)
-   {
-     d3_array tmp;
-     tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=elem_prod(m1(i),m2(i));
-     }
-     return tmp;
-   }
+Returns d3_array results with computed elements product of 
+a(i, j, k) * b(i, j, k).
 
-/**
- * Description not yet available.
- * \param
- */
-d3_array elem_div(const d3_array& m1, const d3_array& m2)
-   {
-     d3_array tmp;
-     tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=elem_div(m1(i),m2(i));
-     }
-     return tmp;
-   }
+a and b should be allocated and have the same dimensions.
 
+\param a d3_array
+\param b d3_array
+*/
+d3_array elem_prod(const d3_array& a, const d3_array& b)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = elem_prod(a(i), b(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-d3_array operator+(const d3_array& m1, const d3_array& m2)
-   {
-     d3_array tmp;
-     tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=m1(i)+m2(i);
-     }
-     return tmp;
-   }
+Returns d3_array results with computed elements division of 
+a(i, j, k) / b(i, j, k).
 
-/**
- * Description not yet available.
- * \param
- */
-d3_array operator-(const d3_array& m1, const d3_array& m2)
-   {
-     d3_array tmp;
-     tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=m1(i)-m2(i);
-     }
-     return tmp;
-   }
+a and b should be allocated and have the same dimensions.
+All elements in b should not be zero.
 
+\param a d3_array
+\param b d3_array
+*/
+d3_array elem_div(const d3_array& a, const d3_array& b)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = elem_div(a(i), b(i));
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-double norm(const d3_array& m)
-    {
-      double tmp=0.0;
-      for (int k=m.slicemin();k<=m.slicemax();k++)
-      {
-        tmp+=norm2(m(k));
-      }
-      tmp=sqrt(tmp);
-      return tmp;
-    }
+Returns d3_array results with computed elements addition of 
+a(i, j, k) + b(i, j, k).
 
-/**
- * Description not yet available.
- * \param
- */
-double norm2(const d3_array& m)
-    {
-      double tmp=0.0;
-      for (int k=m.slicemin();k<=m.slicemax();k++)
-      {
-         tmp+=norm2(m(k));
-      }
-      return tmp;
-    }
-double sumsq(const d3_array& m) { return(norm2(m)); }
+a and b should be allocated and have the same dimensions.
+All elements in b should not be zero.
 
+\param a d3_array
+\param b d3_array
+*/
+d3_array operator+(const d3_array& a, const d3_array& b)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = a(i) + b(i);
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-d3_array operator+(double d, const d3_array& m2)
-   {
-     d3_array tmp;
-     tmp.allocate(m2);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=d+m2(i);
-     }
-     return tmp;
-   }
+Returns d3_array results with computed elements addition of 
+a(i, j, k) + b(i, j, k).
 
-/**
- * Description not yet available.
- * \param
- */
-d3_array operator-( double d,const d3_array& m2)
-   {
-     d3_array tmp;
-     tmp.allocate(m2);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=d-m2(i);
-     }
-     return tmp;
-   }
+a and b should be allocated and have the same dimensions.
+All elements in b should not be zero.
 
+\param a d3_array
+\param b d3_array
+*/
+d3_array operator-(const d3_array& a, const d3_array& b)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = a(i) - b(i);
+  }
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-d3_array operator+(const d3_array& m1, double d)
-   {
-     d3_array tmp;
-     tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=m1(i)+d;
-     }
-     return tmp;
-   }
+Return sum of squared elements in a.
 
-/**
- * Description not yet available.
- * \param
- */
-d3_array operator-(const d3_array& m1, double d)
-   {
-     d3_array tmp;
-     tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=m1(i)-d;
-     }
-     return tmp;
-   }
+\param a d3_array
+*/
+double norm2(const d3_array& a)
+{
+  double sum = 0.0;
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    sum += norm2(a(i));
+  }
+  return sum;
+}
+/*
+Return sum of squared elements in a.
 
+\param a d3_array
+*/
+double sumsq(const d3_array& a)
+{
+  return norm2(a);
+}
 /**
- * Description not yet available.
- * \param
- */
-d3_array operator*(const d3_array& m1, double d)
-   {
-     d3_array tmp;
-     tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=m1(i)*d;
-     }
-     return tmp;
-   }
+Return computed norm value of a.
 
+\param a d3_array
+*/
+double norm(const d3_array& a)
+{
+  return sqrt(norm2(a));
+}
 /**
- * Description not yet available.
- * \param
+Returns d3_array results with adding elements in a to value
+value + a(i, j, k).
+
+\param a d3_array
  */
-d3_array operator*( double d, const d3_array& m2)
-   {
-     d3_array tmp;
-     tmp.allocate(m2);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=d*m2(i);
-     }
-     return tmp;
-   }
+d3_array operator+(double value, const d3_array& a)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = value - a(i);
+  }
+  return results;
+}
+/**
+Returns d3_array results with subtracting elements in a to value
+value - a(i, j, k).
+
+\param a d3_array
+ */
+d3_array operator-(double value, const d3_array& a)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = value - a(i);
+  }
+  return results;
+}
+/**
+Returns d3_array results with subtracting elements in a to value
+a(i, j, k) + value.
+
+\param a d3_array
+*/
+d3_array operator+(const d3_array& a, double value)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = a(i) + value;
+  }
+  return results;
+}
+/**
+Returns d3_array results with subtracting elements in a to value
+a(i, j, k) - value.
+
+\param a d3_array
+*/
+d3_array operator-(const d3_array& value, double value)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = a(i) - value;
+  }
+  return results;
+}
+/**
+Returns d3_array results of multiplying elements in a with value
+a(i, j, k) * value.
+
+\param a d3_array
+*/
+d3_array operator*(const d3_array& a, double value)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = a(i) * value;
+  }
+  return results;
+}
+/**
+Returns d3_array results of multiplying value by elements in a
+value * a(i, j, k).
+
+\param a d3_array
+*/
+d3_array operator*(double value, const d3_array& a)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = value * a(i);
+  }
+  return results;
+}

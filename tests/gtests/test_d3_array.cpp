@@ -790,7 +790,7 @@ TEST_F(test_d3_array, indexerror)
 {
   ad_exit=&test_ad_exit;
 
-  d3_array a(1, 2, 1, 2, 1, 2);
+  const d3_array a(1, 2, 1, 2, 1, 2);
 
   ASSERT_ANY_THROW({
     a[0];

@@ -872,3 +872,46 @@ TEST_F(test_d3_array, assignement)
   ASSERT_DOUBLE_EQ(a(2, 2, 1), b(2, 2, 1));
   ASSERT_DOUBLE_EQ(a(2, 2, 2), b(2, 2, 2));
 }
+TEST_F(test_d3_array, assignementfails)
+{
+  ad_exit=&test_ad_exit;
+
+  d3_array a(1, 2, 1, 2, 1, 2);
+   
+  ASSERT_ANY_THROW({
+    d3_array b(0, 2, 1, 2, 1, 2);
+    a = b;
+  });
+
+  ASSERT_ANY_THROW({
+    d3_array c(1, 3, 1, 2, 1, 2);
+    a = c;
+  });
+}
+TEST_F(test_d3_array, indexed)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  const d3_array b(a);
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1), b(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2), b(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1), b(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2), b(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1), b(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2), b(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1), b(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2), b(2, 2, 2));
+
+  const dvector c(a(1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 1), c(1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2), c(2));
+}

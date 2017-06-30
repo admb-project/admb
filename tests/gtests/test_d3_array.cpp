@@ -911,7 +911,7 @@ TEST_F(test_d3_array, indexed)
   ASSERT_DOUBLE_EQ(a(2, 2, 1), b(2, 2, 1));
   ASSERT_DOUBLE_EQ(a(2, 2, 2), b(2, 2, 2));
 
-  const dvector c(a(1, 1));
+  const dvector c(b(1, 1));
   ASSERT_DOUBLE_EQ(a(1, 1, 1), c(1));
   ASSERT_DOUBLE_EQ(a(1, 1, 2), c(2));
 }

@@ -252,11 +252,15 @@ TEST_F(test_d4_array, uiostream)
     }
   }
 
+  uostream& operator<<(const uostream& output, const d4_array& values);
+
   uostream uos("uistreamd4_array.txt");
   uos << a;
   uos.close();
 
   d4_array b(1, 2, 1, 2, 1, 2, 1, 2);
+
+  uistream& operator>>(const uistream& input, const d4_array& values);
 
   uistream uis("uistreamd4_array.txt");
   uis >> b;

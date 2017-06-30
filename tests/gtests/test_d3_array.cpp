@@ -786,3 +786,89 @@ TEST_F(test_d3_array, square)
   ASSERT_DOUBLE_EQ(std::pow(a(2, 2, 1), 2.0), ret(2, 2, 1));
   ASSERT_DOUBLE_EQ(std::pow(a(2, 2, 2), 2.0), ret(2, 2, 2));
 }
+TEST_F(test_d3_array, indexerror)
+{
+  ad_exit=&test_ad_exit;
+
+  d3_array a(1, 2, 1, 2, 1, 2);
+
+  ASSERT_ANY_THROW({
+    a[0];
+  });
+  ASSERT_ANY_THROW({
+    a[3];
+  });
+  ASSERT_ANY_THROW({
+    a(0);
+  });
+  ASSERT_ANY_THROW({
+    a(3);
+  });
+  ASSERT_ANY_THROW({
+    a(0, 1);
+  });
+  ASSERT_ANY_THROW({
+    a(3, 1);
+  });
+  ASSERT_ANY_THROW({
+    a(0, 1, 1);
+  });
+  ASSERT_ANY_THROW({
+    a(3, 1, 1);
+  });
+}
+TEST_F(test_d3_array, equalsss)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a.initialize();
+
+  double value = -4.5;
+
+  a = value;
+
+  ASSERT_DOUBLE_EQ(value, a(1, 1, 1));
+  ASSERT_DOUBLE_EQ(value, a(1, 1, 2));
+  ASSERT_DOUBLE_EQ(value, a(1, 2, 1));
+  ASSERT_DOUBLE_EQ(value, a(1, 2, 2));
+  ASSERT_DOUBLE_EQ(value, a(2, 1, 1));
+  ASSERT_DOUBLE_EQ(value, a(2, 1, 2));
+  ASSERT_DOUBLE_EQ(value, a(2, 2, 1));
+  ASSERT_DOUBLE_EQ(value, a(2, 2, 2));
+}
+TEST_F(test_d3_array, assignement)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  a(1, 1, 1) = 1;
+  a(1, 1, 2) = 2;
+  a(1, 2, 1) = 3;
+  a(1, 2, 2) = 4;
+  a(2, 1, 1) = 5;
+  a(2, 1, 2) = 6;
+  a(2, 2, 1) = 7;
+  a(2, 2, 2) = 8;
+
+  d3_array b(1, 2, 1, 2, 1, 2);
+  b.initialize();
+
+  b = a;
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1), b(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2), b(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1), b(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2), b(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1), b(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2), b(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1), b(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2), b(2, 2, 2));
+
+  b = b;
+
+  ASSERT_DOUBLE_EQ(a(1, 1, 1), b(1, 1, 1));
+  ASSERT_DOUBLE_EQ(a(1, 1, 2), b(1, 1, 2));
+  ASSERT_DOUBLE_EQ(a(1, 2, 1), b(1, 2, 1));
+  ASSERT_DOUBLE_EQ(a(1, 2, 2), b(1, 2, 2));
+  ASSERT_DOUBLE_EQ(a(2, 1, 1), b(2, 1, 1));
+  ASSERT_DOUBLE_EQ(a(2, 1, 2), b(2, 1, 2));
+  ASSERT_DOUBLE_EQ(a(2, 2, 1), b(2, 2, 1));
+  ASSERT_DOUBLE_EQ(a(2, 2, 2), b(2, 2, 2));
+}

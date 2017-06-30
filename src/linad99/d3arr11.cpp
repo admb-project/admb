@@ -1,34 +1,30 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include "fvar.hpp"
+
 #ifndef OPT_LIB
 /**
- * Description not yet available.
- * \param
- */
+Return dmatrix elment in d3_array indexed by i.
+
+\param i index
+*/
 const dmatrix& d3_array::operator()(int i) const
 {
-  if (i<slicemin())
+  if (i < slicemin())
   {
     cerr << "matrix bound exceeded"
          << " -- row index too low in 3d_array::operator[]"
          << "value was" << i;
-    ad_exit(21);
+    ad_exit(1);
   }
-  if (i>slicemax())
+  if (i > slicemax())
   {
     cerr << "matrix bound exceeded"
          << " -- row index too high in 3d_array::operator[]"
          << "value was" << i;
-    ad_exit(22);
+    ad_exit(1);
   }
   return t[i];
 }

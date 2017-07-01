@@ -824,8 +824,6 @@ TEST_F(test_dvector, dvector_position)
 }
 TEST_F(test_dvector, mean)
 {
-  ad_exit=&test_ad_exit;
-
   char array[] = "{0, 1, 2, 3, 4, 5}";
 
   dvector v(array);
@@ -841,3 +839,63 @@ TEST_F(test_dvector, dvector_position_vec)
   ASSERT_EQ(3, pos.indexmax());
 }
 */
+TEST_F(test_dvector, substracterror)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    a - b;
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    a - b;
+  });
+}
+TEST_F(test_dvector, adderror)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    a + b;
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    a + b;
+  });
+}
+TEST_F(test_dvector, timeserror)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    a * b;
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    a * b;
+  });
+}
+TEST_F(test_dvector, equalserror)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    a = b;
+  });
+}

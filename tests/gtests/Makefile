@@ -260,6 +260,14 @@ endif
 clean:
 ifeq ($(SHELL),cmd)
 	@if exist make_sub_directory rmdir /s /q make_sub_directory
+	@del d3io.txt 2>NUL
+	@del fuistreamd4_array.txt 2>NUL
+	@del test_data_4iarray.cpp 2>NUL
+	@del testi3array.txt 2>NUL
+	@del uistreamd4_array.txt 2>NUL
+	@del uos.txt 2>NUL
+	@del uosivector.txt 2>NUL
+	@del varr4.txt 2>NUL
 	@del maxlimit.txt 2>NUL
 	@del test_cifstream_adstring.txt 2>NUL
 	@del test_cifstream_float.txt 2>NUL
@@ -324,6 +332,14 @@ ifeq ($(SHELL),cmd)
 	@del test_cifstream_dvariable.txt 2>NUL
 	@del test_cifstream_iarray.txt 2>NUL
 else
+	@rm -vf d3io.txt
+	@rm -vf fuistreamd4_array.txt
+	@rm -vf test_data_4iarray.cpp
+	@rm -vf testi3array.txt
+	@rm -vf uistreamd4_array.txt
+	@rm -vf uos.txt
+	@rm -vf uosivector.txt
+	@rm -vf varr4.txt
 	@rm -vf maxlimit.txt
 	@rm -vf test_cifstream_adstring.txt
 	@rm -vf test_cifstream_float.txt

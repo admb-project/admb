@@ -899,3 +899,33 @@ TEST_F(test_dvector, equalserror)
     a = b;
   });
 }
+TEST_F(test_dvector, elemproderror)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    elem_prod(a, b);
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    elem_prod(a, b);
+  });
+}
+TEST_F(test_dvector, elemdiverror)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    elem_div(a, b);
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    elem_div(a, b);
+  });
+}

@@ -324,3 +324,19 @@ TEST_F(test_d4_array, fiostream)
     }
   }
 }
+TEST_F(test_d4_array, constructorintint)
+{
+  d4_array a(1, 2);
+  ASSERT_FALSE(!a);
+  ASSERT_TRUE(allocated(a));
+  ASSERT_FALSE(allocated(a(1)));
+  ASSERT_FALSE(allocated(a(2)));
+  ASSERT_TRUE(!a(1));
+  ASSERT_TRUE(!a(2));
+
+  a(1).allocate(1, 2);
+  ASSERT_FALSE(allocated(a(1, 1)));
+  ASSERT_FALSE(allocated(a(1, 2)));
+  ASSERT_TRUE(!a(1, 1));
+  ASSERT_TRUE(!a(1, 2));
+}

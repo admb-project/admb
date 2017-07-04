@@ -1,24 +1,21 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 /**
- * Description not yet available.
- * \param
- */
- d4_array::d4_array(int nrl,int nrh)
- {
-   allocate(nrl,nrh);
- }
+Construct vector with dimension [nrl to nrh]
+of empty d3_array.
+
+\param nrl lower vector index
+\param nrh upper vector index
+*/
+d4_array::d4_array(int nrl, int nrh)
+{
+  allocate(nrl, nrh);
+}
 
 /**
  * Description not yet available.
@@ -791,13 +788,16 @@ Allocate vector of empty i3_array with dimension
 \param hsl lower vector index
 \param hsu upper vector index
 */
-void d4_array::allocate(ad_integer hsl,ad_integer hsu)
+void d4_array::allocate(ad_integer hsl, ad_integer hsu)
 {
-  unsigned int ss =
-    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
-  if (ss > 0)
+  if (hsl > hsu)
   {
-    if ((t = new d3_array[ss]) == 0)
+    allocate();
+  }
+  else
+  {
+    unsigned int size = static_cast<unsigned int>(hsu - hsl + 1);
+    if ((t = new d3_array[size]) == 0)
     {
       cerr << " Error: d4_array unable to allocate memory in "
            << __FILE__ << ':' << __LINE__ << '\n';
@@ -809,14 +809,10 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu)
            << __FILE__ << ':' << __LINE__ << '\n';
       ad_exit(1);
     }
-    t -= int(hsl);
+    t -= static_cast<int>(hsl);
     for (int i = hsl; i <= hsu; ++i)
     {
-      (*this)(i).allocate();
+      elem(i).allocate();
     }
-  }
-  else
-  {
-    allocate();
   }
 }

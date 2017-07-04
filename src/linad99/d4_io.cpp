@@ -48,29 +48,33 @@ istream& operator>>(const istream& input, const d4_array& values)
   }
   return istr;
 }
-
 /**
+Write values to output.
+
+\param output uostream
+\param values d5_array
 */
-ostream& operator<<(const ostream& _ostr, const d5_array &z)
+ostream& operator<<(const ostream& output, const d5_array& values)
 {
-  ostream & ostr = (ostream&) _ostr;
-  for (int i=z.indexmin();i<=z.indexmax();i++)
+  ostream& ostr = const_cast<ostream&>(output);
+  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
   {
-    ostr << z[i] << endl;
+    ostr << values[i] << endl;
   }
   return ostr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& _istr, const d5_array &z)
+Read from input to values.
+
+\param input uistream
+\param values d4_array
+*/
+istream& operator>>(const istream& input, const d5_array& values)
 {
-  uistream & istr = (uistream&) _istr;
-  for (int i=z.indexmin();i<=z.indexmax();i++)
+  istream& istr = const_cast<istream&>(input);
+  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
   {
-    istr >> z[i];
+    istr >> values[i];
   }
   return istr;
 }

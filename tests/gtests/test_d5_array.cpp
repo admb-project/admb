@@ -121,3 +121,53 @@ TEST_F(test_d5_array, division_equal_operator2)
     }
   }
 }
+TEST_F(test_d5_array, inputoutput)
+{
+  d5_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            a(i, j, k, l, m) = d;
+            d += 2.0;
+          }
+        }
+      }
+    }
+  }
+
+  ofstream ofs("d5_array.txt");
+  ofs << a;
+  ofs.close();
+
+  d5_array b(1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  ifstream ifs("d5_array.txt");
+  ifs >> b;
+  ifs.close();
+
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            ASSERT_DOUBLE_EQ(a(i, j, k, l, m), b(i, j, k, l, m));
+          }
+        }
+      }
+    }
+  }
+}

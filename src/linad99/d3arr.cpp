@@ -1,29 +1,27 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 /**
- * Description not yet available.
- * \param
- */
-double sum(const d3_array& m)
-{
-  double tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
-  {
-    tmp+=sum(m.elem(i));
-  }
-  return tmp;
-}
+Return total sum of the elements in arr3.
 
+\param arr3 d3_array
+*/
+double sum(const d3_array& arr3)
+{
+  double total = 0.0;
+  for (int i = arr3.indexmin(); i <= arr3.indexmax(); ++i)
+  {
+    total += sum(arr3.elem(i));
+  }
+  return total;
+}
 /**
  * Description not yet available.
  * \param
@@ -57,13 +55,16 @@ double sum(const d3_array& m)
  }
 
 /**
- * Description not yet available.
- * \param
- */
- d3_array::d3_array(int nrl,int nrh)
- {
-   allocate(nrl,nrh);
- }
+Construct d3_array with a vector of empty dmatrix with dimension
+[nrl to nrh].
+
+\param nrl lower vector index
+\param nrh upper vector index
+*/
+d3_array::d3_array(int nrl, int nrh)
+{
+  allocate(nrl, nrh);
+}
 
 /**
  * Description not yet available.
@@ -269,14 +270,19 @@ void d3_array::allocate(
     t[i].allocate(nrl(i), nrh(i));
   }
 }
-
 /**
 Allocate vector [sl to sh] of empty matrices.
+Note: sl should be less than or equal to sh.
+
 \param sl lower index of vector
 \param sh upper index of vector
 */
 void d3_array::allocate(int sl, int sh)
 {
+#ifdef DEBUG
+  assert(sl <= sh);
+#endif
+
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
     cerr << " Error: d3_array unable to allocate memory in "

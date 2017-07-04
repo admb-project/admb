@@ -915,3 +915,18 @@ TEST_F(test_d3_array, indexed)
   ASSERT_DOUBLE_EQ(a(1, 1, 1), c(1));
   ASSERT_DOUBLE_EQ(a(1, 1, 2), c(2));
 }
+TEST_F(test_d3_array, constructorintint)
+{
+  d3_array a(1, 2);
+  ASSERT_FALSE(!a);
+  ASSERT_TRUE(allocated(a));
+  ASSERT_FALSE(allocated(a(1)));
+  ASSERT_FALSE(allocated(a(2)));
+  ASSERT_TRUE(!a(1));
+  ASSERT_TRUE(!a(2));
+  a(1).allocate(1, 2);
+  ASSERT_FALSE(allocated(a(1, 1)));
+  ASSERT_FALSE(allocated(a(1, 2)));
+  ASSERT_TRUE(!a(1, 1));
+  ASSERT_TRUE(!a(1, 2));
+}

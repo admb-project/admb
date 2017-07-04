@@ -16,37 +16,40 @@ d4_array::d4_array(int nrl, int nrh)
 {
   allocate(nrl, nrh);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-four_array_shape::four_array_shape(int hsl,int hsu) //,int sl,int su,int rl,
- // int ru,int cl,int cu)
+Construct four_array_shape with initial values and
+setting min and max. 
+
+\param hsl used to set slice min
+\param hsu used to set slice max
+*/
+four_array_shape::four_array_shape(int hsl, int hsu):
+  ncopies(0),
+  hslice_min(hsl),
+  hslice_max(hsu)
 {
-  hslice_min=hsl;
-  hslice_max=hsu;
+  //,int sl,int su,int rl,
+  // int ru,int cl,int cu)
   //slice_min=sl;
   //slice_max=su;
   //row_min=rl;
   //row_max=ru;
   //col_min=cl;
   //col_max=cu;
-  ncopies=0;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-double sum(const d4_array& m)
+Return the sum total of all the elements in arr4.
+
+\param arr4 d4_array
+*/
+double sum(const d4_array& arr4)
 {
-  double tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  double total = 0.0;
+  for (int i = arr4.indexmin(); i <= arr4.indexmax(); ++i)
   {
-    tmp+=sum(m.elem(i));
+    total += sum(arr4.elem(i));
   }
-  return tmp;
+  return total;
 }
 
 /**
@@ -112,32 +115,30 @@ double sum(const d4_array& m)
  * Description not yet available.
  * \param
  */
- void d4_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t += hslicemin();
-       delete [] t;
-       delete shape;
-     }
-   }
-#if defined(SAFE_ALL)
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
-   }
+void d4_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      t += hslicemin();
+      delete [] t;
+      delete shape;
+    }
+  }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- trying to deallocate an unallocated d4_array.\n";
+    ad_exit(1);
+  }
 #endif
- }
-
-/**
-Destructor
-*/
+}
+/// Destructor
 d4_array::~d4_array()
 {
   deallocate();

@@ -340,3 +340,29 @@ TEST_F(test_d4_array, constructorintint)
   ASSERT_TRUE(!a(1, 1));
   ASSERT_TRUE(!a(1, 2));
 }
+TEST_F(test_d4_array, sum)
+{
+  d4_array a(1, 2, 1, 2, 1, 2, 1, 2);
+
+  double total = 0.0;
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          total += d;
+          a(i, j, k, l) = d;
+          d += 2.0;
+        }
+      }
+    }
+  }
+
+  double ret = sum(a);
+
+  ASSERT_DOUBLE_EQ(total, ret);
+}

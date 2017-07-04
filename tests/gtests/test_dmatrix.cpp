@@ -672,3 +672,22 @@ TEST_F(test_dmatrix, identity)
   ASSERT_DOUBLE_EQ(0, ret(5, 4));
   ASSERT_DOUBLE_EQ(1, ret(5, 5));
 }
+TEST_F(test_dmatrix, operatortimesvalue)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 20} {-3, 4, 5}";
+
+  m.fill(array);
+
+  double value = -2.0;
+
+  m *= value;
+
+  ASSERT_DOUBLE_EQ(0, m(1, 1));
+  ASSERT_DOUBLE_EQ(2, m(1, 2));
+  ASSERT_DOUBLE_EQ(-40, m(1, 3));
+  ASSERT_DOUBLE_EQ(6, m(2, 1));
+  ASSERT_DOUBLE_EQ(-8, m(2, 2));
+  ASSERT_DOUBLE_EQ(-10, m(2, 3));
+}

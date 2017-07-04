@@ -366,3 +366,41 @@ TEST_F(test_d4_array, sum)
 
   ASSERT_DOUBLE_EQ(total, ret);
 }
+TEST_F(test_d4_array, log)
+{
+  d4_array a(1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          a(i, j, k, l) = d;
+          d += 2.0;
+        }
+      }
+    }
+  }
+
+  d4_array ret = log(a);
+
+  d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          ASSERT_DOUBLE_EQ(std::log(d), ret(i, j, k, l));
+          d += 2.0;
+        }
+      }
+    }
+  }
+}

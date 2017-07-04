@@ -21,7 +21,7 @@
 /**
 Write values to output.
 
-\param output uostream
+\param output ostream
 \param values d4_array
 */
 ostream& operator<<(const ostream& output, const d4_array& values)
@@ -36,7 +36,7 @@ ostream& operator<<(const ostream& output, const d4_array& values)
 /**
 Read from input to values.
 
-\param input uistream
+\param input istream
 \param values d4_array
 */
 istream& operator>>(const istream& input, const d4_array& values)
@@ -51,7 +51,7 @@ istream& operator>>(const istream& input, const d4_array& values)
 /**
 Write values to output.
 
-\param output uostream
+\param output ostream
 \param values d5_array
 */
 ostream& operator<<(const ostream& output, const d5_array& values)
@@ -66,8 +66,8 @@ ostream& operator<<(const ostream& output, const d5_array& values)
 /**
 Read from input to values.
 
-\param input uistream
-\param values d4_array
+\param input istream
+\param values d5_array
 */
 istream& operator>>(const istream& input, const d5_array& values)
 {
@@ -78,31 +78,33 @@ istream& operator>>(const istream& input, const d5_array& values)
   }
   return istr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& _ostr, const d6_array &z)
+Write values to output.
+
+\param output ostream
+\param values d6_array
+*/
+ostream& operator<<(const ostream& output, const d6_array& values)
 {
-  uostream & ostr = (uostream&) _ostr;
-  for (int i=z.indexmin();i<=z.indexmax();i++)
+  ostream& ostr = const_cast<ostream&>(output);
+  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
   {
-    ostr << z[i] << endl;
+    ostr << values[i] << endl;
   }
   return ostr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& _istr, const d6_array &z)
+Read from input to values.
+
+\param input istream
+\param values d6_array
+*/
+istream& operator>>(const istream& input, const d6_array& values)
 {
-  uistream & istr = (uistream&) _istr;
-  for (int i=z.indexmin();i<=z.indexmax();i++)
+  istream& istr = const_cast<istream&>(input);
+  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
   {
-    istr >> z[i];
+    istr >> values[i];
   }
   return istr;
 }

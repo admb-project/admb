@@ -1015,3 +1015,29 @@ TEST_F(test_dvector, shape_check)
     shape_check(a, b, "shapecheck");
   });
 }
+TEST_F(test_dvector, first_difference_error)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 1);
+
+  ASSERT_ANY_THROW({
+    first_difference(a);
+  });
+}
+TEST_F(test_dvector, first_difference)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+  a(1) = -1;
+  a(2) = 2;
+  a(3) = 4;
+
+  dvector ret = first_difference(a);
+
+  ASSERT_EQ(1, ret.indexmin());
+  ASSERT_EQ(2, ret.indexmax());
+  ASSERT_DOUBLE_EQ(3, ret(1));
+  ASSERT_DOUBLE_EQ(2, ret(2));
+}

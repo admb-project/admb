@@ -6,24 +6,25 @@ Copyright (c) 2008-2012 Regents of the University of California
 #include "fvar.hpp"
 
 /**
-Returns a dvector containing the differences of an x(i) and  x(i + 1) for i = 1 to x.indexmax() - 1.
+Returns dvector containing the differences of an values(i) and values(i + 1)
+for i = 1 to values.indexmax() - 1.
 
-\param x input.
+\param values dvector
 */
-dvector first_difference(const dvector& x)
- {
-   if (x.size()<=1)
-   {
-     cerr << "Error -- vector size too small"
-             " in first_difference(const dvector&)" << endl;
-     ad_exit(1);
-   }
-   int mmin=x.indexmin();
-   int mmax=x.indexmax()-1;
-   dvector tmp(mmin,mmax);
-   for (int i=mmin; i<=mmax; i++)
-   {
-     tmp.elem(i)=x.elem(i+1)-x.elem(i);
-   }
-   return(tmp);
+dvector first_difference(const dvector& values)
+{
+  if (values.size() <= 1)
+  {
+    cerr << "Error -- vector size should be greater than 1"
+         << " in first_difference(const dvector&)" << endl;
+    ad_exit(1);
+  }
+  int indexmin = values.indexmin();
+  int indexmax = values.indexmax() - 1;
+  dvector differences(indexmin, indexmax);
+  for (int i = indexmin; i <= indexmax; ++i)
+  {
+    differences.elem(i) = values.elem(i + 1) - values.elem(i);
+  }
+  return differences;
  }

@@ -691,3 +691,46 @@ TEST_F(test_dmatrix, operatortimesvalue)
   ASSERT_DOUBLE_EQ(-8, m(2, 2));
   ASSERT_DOUBLE_EQ(-10, m(2, 3));
 }
+TEST_F(test_dmatrix, sum)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5}";
+
+  m.fill(array);
+
+  double ret = sum(m);
+
+  ASSERT_DOUBLE_EQ(7, ret);
+}
+TEST_F(test_dmatrix, rowsum)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5}";
+
+  m.fill(array);
+
+  dvector ret = rowsum(m);
+
+  ASSERT_EQ(1, ret.indexmin());
+  ASSERT_EQ(2, ret.indexmax());
+  ASSERT_DOUBLE_EQ(1, ret(1));
+  ASSERT_DOUBLE_EQ(6, ret(2));
+}
+TEST_F(test_dmatrix, fullcolsum)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5}";
+
+  m.fill(array);
+
+  dvector ret = colsum(m);
+
+  ASSERT_EQ(1, ret.indexmin());
+  ASSERT_EQ(3, ret.indexmax());
+  ASSERT_DOUBLE_EQ(-3, ret(1));
+  ASSERT_DOUBLE_EQ(3, ret(2));
+  ASSERT_DOUBLE_EQ(7, ret(3));
+}

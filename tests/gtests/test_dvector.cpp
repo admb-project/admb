@@ -1041,3 +1041,16 @@ TEST_F(test_dvector, first_difference)
   ASSERT_DOUBLE_EQ(3, ret(1));
   ASSERT_DOUBLE_EQ(2, ret(2));
 }
+TEST_F(test_dvector, sum)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+  a(1) = -1;
+  a(2) = 2;
+  a(3) = 4;
+
+  double ret = sum(a);
+
+  ASSERT_DOUBLE_EQ(5, ret);
+}

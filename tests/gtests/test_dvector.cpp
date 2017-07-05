@@ -929,3 +929,69 @@ TEST_F(test_dvector, elemdiverror)
     elem_div(a, b);
   });
 }
+TEST_F(test_dvector, plusequalerror)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    a += b;
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    a += b;
+  });
+}
+TEST_F(test_dvector, minusequalerror)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    a -= b;
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    a -= b;
+  });
+}
+TEST_F(test_dvector, plusequalvalue)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+  a.initialize();
+  a(1) = 1;
+  a(2) = 2;
+  a(3) = 3;
+
+  double value = -2.5;
+
+  a += value;
+
+  ASSERT_DOUBLE_EQ(-1.5, a(1));
+  ASSERT_DOUBLE_EQ(-0.5, a(2));
+  ASSERT_DOUBLE_EQ(0.5, a(3));
+}
+TEST_F(test_dvector, minusequalvalue)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+  a.initialize();
+  a(1) = 1;
+  a(2) = 2;
+  a(3) = 3;
+
+  double value = -2.5;
+
+  a -= value;
+
+  ASSERT_DOUBLE_EQ(3.5, a(1));
+  ASSERT_DOUBLE_EQ(4.5, a(2));
+  ASSERT_DOUBLE_EQ(5.5, a(3));
+}

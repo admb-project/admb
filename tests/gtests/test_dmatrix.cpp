@@ -280,7 +280,7 @@ TEST_F(test_dmatrix, powinteger)
   char array[] = "{0, -1, 2} {-3, 4, 5}";
 
   m.fill(array);
- 
+
   int e = 2;
   dmatrix ret = pow(m, e);
   ASSERT_DOUBLE_EQ(0, ret(1, 1));
@@ -297,7 +297,7 @@ TEST_F(test_dmatrix, powdouble)
   char array[] = "{0, 1, 4} {9, 16, 25}";
 
   m.fill(array);
- 
+
   double e = 0.5;
   dmatrix ret = pow(m, e);
   ASSERT_DOUBLE_EQ(std::pow(0.0, 0.5), ret(1, 1));
@@ -314,7 +314,7 @@ TEST_F(test_dmatrix, sqr)
   char array[] = "{0, 1, 4} {9, 16, 25}";
 
   m.fill(array);
- 
+
   dmatrix ret = sqr(m);
   ASSERT_DOUBLE_EQ(0, ret(1, 1));
   ASSERT_DOUBLE_EQ(1, ret(1, 2));
@@ -733,4 +733,42 @@ TEST_F(test_dmatrix, fullcolsum)
   ASSERT_DOUBLE_EQ(-3, ret(1));
   ASSERT_DOUBLE_EQ(3, ret(2));
   ASSERT_DOUBLE_EQ(7, ret(3));
+}
+TEST_F(test_dmatrix, uoistream)
+{
+  dmatrix m(1, 2, 1, 3);
+
+  char array[] = "{0, -1, 2} {-3, 4, 5}";
+
+  m.fill(array);
+
+  uostream& operator<<(const uostream&, const dmatrix&);
+
+  uostream output("test_damtrixio.txt");
+  output << m;
+  output.close();
+
+  dmatrix b(1, 2, 1, 3);
+  b.initialize();
+
+  uistream& operator>>(const uistream&, const dmatrix&);
+  uistream input("test_damtrixio.txt");
+  input >> b;
+  input.close();
+
+  ASSERT_DOUBLE_EQ(m(1, 1), b(1, 1));
+  ASSERT_DOUBLE_EQ(m(1, 2), b(1, 2));
+  ASSERT_DOUBLE_EQ(m(1, 3), b(1, 3));
+  ASSERT_DOUBLE_EQ(m(2, 1), b(2, 1));
+  ASSERT_DOUBLE_EQ(m(2, 2), b(2, 2));
+  ASSERT_DOUBLE_EQ(m(2, 3), b(2, 3));
+
+  dmatrix c(1, 3, 1, 3);
+  c.initialize();
+
+  ASSERT_ANY_THROW({
+    uistream input2("test_damtrixio.txt");
+    input2 >> c;
+    input2.close();
+  });
 }

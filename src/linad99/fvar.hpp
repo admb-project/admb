@@ -2783,9 +2783,9 @@ class dmatrix
    void colshift(int min);
 
    void write_on(const ostream &) const;
-   void write_on(const uostream &) const;
+   uostream& write_on(const uostream&) const;
    void read_from(const istream &);
-   void read_from(const uistream &);
+   uistream& read_from(const uistream&);
 
    //void colfill(const int&n,...);
    //void rowfill(const int&n,...);

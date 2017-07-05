@@ -995,3 +995,23 @@ TEST_F(test_dvector, minusequalvalue)
   ASSERT_DOUBLE_EQ(4.5, a(2));
   ASSERT_DOUBLE_EQ(5.5, a(3));
 }
+TEST_F(test_dvector, shape_check)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+
+  void shape_check(
+    const dvector& v1,
+    const dvector& v2,
+    const char* function_name);
+
+  ASSERT_ANY_THROW({
+    dvector b(2, 3);
+    shape_check(a, b, "shapecheck");
+  });
+  ASSERT_ANY_THROW({
+    dvector b(1, 4);
+    shape_check(a, b, "shapecheck");
+  });
+}

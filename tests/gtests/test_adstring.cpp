@@ -704,7 +704,6 @@ TEST_F(test_adstring, constcomparison)
   ASSERT_FALSE(b == c);
   ASSERT_FALSE(c == b);
 }
-/*
 TEST_F(test_adstring, errorunsignedchar)
 {
   ad_exit=&test_ad_exit;
@@ -712,17 +711,16 @@ TEST_F(test_adstring, errorunsignedchar)
   adstring a("abcd");
 
   ASSERT_ANY_THROW({
-    unsigned char c = a[0];
+    a[0];
   });
   ASSERT_ANY_THROW({
-    unsigned char c = a[5];
+    a[5];
   });
   ASSERT_EQ('a', a[1]);
   ASSERT_EQ('b', a[2]);
   ASSERT_EQ('c', a[3]);
   ASSERT_EQ('d', a[4]);
 }
-*/
 TEST_F(test_adstring, errormaxlimit)
 {
   ad_exit=&test_ad_exit;
@@ -767,7 +765,6 @@ TEST_F(test_adstring, init_adstring_allocate)
   EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
 
 }
-/*
 TEST_F(test_adstring, init_line_adstring_allocate)
 {
   ad_exit=&test_ad_exit;
@@ -792,4 +789,3 @@ TEST_F(test_adstring, init_line_adstring_allocate)
 
   EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
 }
-*/

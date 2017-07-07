@@ -416,3 +416,23 @@ TEST_F(test_ivector, uiostream)
   EXPECT_EQ(v(3), u(3));
   EXPECT_EQ(v(4), u(4));
 }
+TEST_F(test_ivector, shift)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  EXPECT_EQ(1, v.indexmin());
+  EXPECT_EQ(4, v.indexmax());
+
+  v.shift(2);
+  EXPECT_EQ(2, v.indexmin());
+  EXPECT_EQ(5, v.indexmax());
+
+  EXPECT_EQ(0, v(2));
+  EXPECT_EQ(1, v(3));
+  EXPECT_EQ(2, v(4));
+  EXPECT_EQ(-4, v(5));
+}

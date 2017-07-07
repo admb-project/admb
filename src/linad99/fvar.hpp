@@ -664,7 +664,7 @@ class lvector
    {
       return shape ? shape->index_max - shape->index_min + 1 : 0;
    }
-   void shift(int min);
+   lvector& shift(int min);
 
    void fill(const char *s);
    void fill_seqadd(const AD_LONG_INT &, const AD_LONG_INT &);

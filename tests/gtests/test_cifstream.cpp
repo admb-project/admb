@@ -568,6 +568,7 @@ TEST_F(test_cifstream, gradient_structure)
   ASSERT_STREQ((const char*)lads, "testadstring 2\n");
 }
 */
+/*
 TEST_F(test_cifstream, constline_adstring)
 {
   std::ofstream ofs("test_cifstream_adstring.txt");
@@ -583,6 +584,7 @@ TEST_F(test_cifstream, constline_adstring)
 
   ASSERT_STREQ((const char*)lads, "testadstring 2\n");
 }
+*/
 TEST_F(test_cifstream, constlonglong)
 {
   std::ofstream ofs("test_cifstream_longlong.txt");

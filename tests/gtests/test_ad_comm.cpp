@@ -20,6 +20,7 @@ TEST_F(test_ad_comm, defaultconstructor)
 {
   ad_comm::argc = 0;
   ad_comm::argv = 0;
+  ad_comm::adprogram_name = "test_ad_comm";
   ad_comm2 adcomm;
 }
 TEST_F(test_ad_comm, constructor)

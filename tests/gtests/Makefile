@@ -22,7 +22,6 @@ GTESTS=\
  test_fmm_control.cpp\
  test_adstring_array.cpp\
  test_dlist.cpp\
- test_ad_comm.cpp\
  test_gradient_structure.cpp\
  test_option_match.cpp\
  test_lvector.cpp\

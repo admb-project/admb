@@ -770,7 +770,7 @@ TEST_F(test_adstring, init_line_adstring_allocate)
   ad_exit=&test_ad_exit;
 
   ofstream ofs("maxlimit.txt");
-   ofs << "idkjfskjdfklsjkljdfsk";
+  ofs << "idkjfskjdfklsjkljdfsk";
   ofs.close();
 
   init_line_adstring a;

@@ -74,7 +74,6 @@ GTESTS=\
  test_param_init_bounded_number.cpp\
  test_param_init_bounded_vector.cpp\
  test_df1b2_init_bounded_number_vector.cpp\
- test_adstring.cpp\
  test_df1b23array.cpp\
  test_d3_array.cpp\
  test_d4_array.cpp\

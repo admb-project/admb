@@ -781,7 +781,7 @@ TEST_F(test_adstring, init_line_adstring_allocate)
   
   ad_comm::global_datafile = &ifs;
 
-  a.allocate("name_tag");
+  //a.allocate("name_tag");
 
   ad_comm::global_datafile = NULL;
 

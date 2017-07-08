@@ -711,15 +711,15 @@ TEST_F(test_adstring, errorunsignedchar)
   adstring a("abcd");
 
   ASSERT_ANY_THROW({
-    a[0];
+    a(0);
   });
   ASSERT_ANY_THROW({
-    a[5];
+    a(5);
   });
-  ASSERT_EQ('a', a[1]);
-  ASSERT_EQ('b', a[2]);
-  ASSERT_EQ('c', a[3]);
-  ASSERT_EQ('d', a[4]);
+  ASSERT_EQ('a', a(1));
+  ASSERT_EQ('b', a(2));
+  ASSERT_EQ('c', a(3));
+  ASSERT_EQ('d', a(4));
 }
 TEST_F(test_adstring, errormaxlimit)
 {

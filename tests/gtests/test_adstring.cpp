@@ -781,11 +781,18 @@ TEST_F(test_adstring, init_line_adstring_allocate)
   
   ad_comm::global_datafile = &ifs;
 
+cout << __FILE__ << ':' << __LINE__ << endl;
   a.allocate("name_tag");
 
+cout << __FILE__ << ':' << __LINE__ << endl;
+  EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
+
+cout << __FILE__ << ':' << __LINE__ << endl;
+
   ad_comm::global_datafile = NULL;
+cout << __FILE__ << ':' << __LINE__ << endl;
 
   ifs.close();
+cout << __FILE__ << ':' << __LINE__ << endl;
 
-  EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
 }

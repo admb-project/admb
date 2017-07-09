@@ -14,22 +14,16 @@ Input string from stream c into adstring t.
 */
 istream& operator>>(istream& c, adstring& t)
 {
-cout << __FILE__ << ':' << __LINE__ << endl;
   const unsigned int max_length = 1025;
-cout << __FILE__ << ':' << __LINE__ << endl;
   char tmp[max_length + 1];
-cout << __FILE__ << ':' << __LINE__ << endl;
   c >> tmp;
-cout << __FILE__ << ':' << __LINE__ << endl;
   if (strlen(tmp) > max_length)
   {
     cerr << "Error -- Maximum adstring length exceeded in "
          << "istream& operator>>(istream&, adstring&)" << endl;
     ad_exit(1);
   }
-cout << __FILE__ << ':' << __LINE__ << endl;
   t = tmp;
-cout << __FILE__ << ':' << __LINE__ << endl;
 
   return c;
 }

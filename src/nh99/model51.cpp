@@ -24,11 +24,7 @@ from opened ad_comm::global_datafile.
 */
 void init_line_adstring::allocate(const char* name_tag)
 {
-cout << __FILE__ << ':' << __LINE__ << endl;
   check_datafile_pointer(ad_comm::global_datafile);
-cout << __FILE__ << ':' << __LINE__ << endl;
   model_name_tag::allocate(name_tag);
-cout << __FILE__ << ':' << __LINE__ << endl;
   *(ad_comm::global_datafile) >> (const init_line_adstring&)(*this);
-cout << __FILE__ << ':' << __LINE__ << endl;
 }

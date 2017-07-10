@@ -10,7 +10,7 @@
 Input string from stream c into adstring t.
 
 /param c input stream
-/param t ouput line_adstring
+/param t output adstring
 */
 istream& operator>>(istream& c, adstring& t)
 {
@@ -31,7 +31,7 @@ istream& operator>>(istream& c, adstring& t)
 Input string from stream c into line_adstring t.
 
 /param c input stream
-/param t ouput line_adstring
+/param t output line_adstring
 */
 istream& operator>>(istream& c, line_adstring& t)
 {

@@ -769,14 +769,19 @@ TEST_F(test_adstring, init_line_adstring_allocate)
 {
   ad_exit=&test_ad_exit;
 
+cout << __FILE__ << ':' << __LINE__ << endl;
   ofstream ofs("maxlimit.txt");
   ofs << "idkjfskjdfklsjkljdfsk";
   ofs.close();
 
+cout << __FILE__ << ':' << __LINE__ << endl;
 
   ASSERT_TRUE(ad_comm::global_datafile == NULL);
 
-  cifstream ifs("maxlimit.txt");
+cout << __FILE__ << ':' << __LINE__ << endl;
+
+  adstring input = "maxlimit.txt";
+  cifstream ifs(input);
   
   ad_comm::global_datafile = &ifs;
 

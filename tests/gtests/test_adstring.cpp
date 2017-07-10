@@ -785,7 +785,7 @@ cout << __FILE__ << ':' << __LINE__ << endl;
 cout << __FILE__ << ':' << __LINE__ << endl;
     init_line_adstring a;
 cout << __FILE__ << ':' << __LINE__ << endl;
-    a.allocate("name_tag");
+    a.allocate();
 cout << __FILE__ << ':' << __LINE__ << endl;
     EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
 cout << __FILE__ << ':' << __LINE__ << endl;

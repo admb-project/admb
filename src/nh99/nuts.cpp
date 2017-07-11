@@ -273,6 +273,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // transformations, it is wrong now that hbf=1. So convert to covar in
     // transformed space using the old scales, and then back to the
     // untransformed space using the new scales.
+
+    // Temporarily (?) turning this off. Might be easier and more reliable
+    // to force user to rerun the model with the right hbf.
+    cerr << endl << endl << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
+      endl << "...Rerun model with '-hbf 1' and try again" << endl << endl << endl;
+    ad_exit(1);
     cout << "Rescaling covariance matrix b/c scales don't match" << endl;
     cout << "old scale=" <<  old_scale << endl;
     cout << "current scale=" << current_scale << endl;

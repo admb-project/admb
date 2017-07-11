@@ -125,7 +125,6 @@ class cifstream : public ifstream
   int  field;
   int  ignore_eof;
 
-  void filter(void);
   void get_field(char * s,int space_flag=0);
   void report_error(const char* s = NULL);
   void set_eof_bit(void);
@@ -170,6 +169,8 @@ public:
        void open(const char*, int);
   #endif
 #endif
+
+  void filter();
 
   adstring get_file_name(void);
   char* comment() { return comment_line; }

@@ -560,7 +560,7 @@ TEST_F(test_cifstream, gradient_structure)
 
   line_adstring lads;
 
-  cifstream cifs("test_cifstream_adstring.txt");
+  cifstream cifs(adstring("test_cifstream_adstring.txt"));
   cifs >> lads;
   cifs.close();
 
@@ -619,7 +619,7 @@ TEST_F(test_cifstream, float)
   ofs.close();
 
   float f;
-  cifstream cifs("test_cifstream_float.txt");
+  cifstream cifs(adstring("test_cifstream_float.txt"));
   cifs >> f;
   cifs.close();
 

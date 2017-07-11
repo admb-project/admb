@@ -769,40 +769,24 @@ TEST_F(test_adstring, init_line_adstring_allocate)
 {
   ad_exit=&test_ad_exit;
 
-cout << __FILE__ << ':' << __LINE__ << endl;
   ofstream ofs("maxlimit.txt");
   ofs << "idkjfskjdfklsjkljdfsk";
   ofs.close();
 
-cout << __FILE__ << ':' << __LINE__ << endl;
-
   ASSERT_TRUE(ad_comm::global_datafile == NULL);
-
-cout << __FILE__ << ':' << __LINE__ << endl;
 
   adstring input = "maxlimit.txt";
   cifstream ifs(input);
   
   ad_comm::global_datafile = &ifs;
-
-cout << __FILE__ << ':' << __LINE__ << endl;
   {
-cout << __FILE__ << ':' << __LINE__ << endl;
     init_line_adstring a;
-cout << __FILE__ << ':' << __LINE__ << endl;
     ASSERT_EQ(0, a.buff_size());
-cout << __FILE__ << ':' << __LINE__ << endl;
     a.allocate();
-cout << __FILE__ << ':' << __LINE__ << endl;
     ASSERT_EQ(21, a.buff_size());
-cout << __FILE__ << ':' << __LINE__ << endl;
     EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
-cout << __FILE__ << ':' << __LINE__ << endl;
   }
-cout << __FILE__ << ':' << __LINE__ << endl;
   ad_comm::global_datafile = NULL;
-cout << __FILE__ << ':' << __LINE__ << endl;
 
   ifs.close();
-cout << __FILE__ << ':' << __LINE__ << endl;
 }

@@ -1508,9 +1508,9 @@ protected:
 class named_line_adstring : public line_adstring, public model_name_tag
 {
 protected:
-  void allocate(const char * s1,const char * s="UNNAMED");
-  void operator = (const adstring&);
-  void operator = (const char *);
+  void allocate(const char* s1, const char* s = "UNNAMED");
+  void operator=(const adstring&);
+  void operator=(const char*);
 };
 
 /**
@@ -1530,7 +1530,7 @@ public:
 class init_line_adstring: public named_line_adstring
 {
 public:
-  void allocate(const char * s="UNNAMED");
+  void allocate(const char* s = "UNNAMED");
 };
 
 /**

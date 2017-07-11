@@ -26,5 +26,10 @@ void init_line_adstring::allocate(const char* name_tag)
 {
   check_datafile_pointer(ad_comm::global_datafile);
   model_name_tag::allocate(name_tag);
-  *(ad_comm::global_datafile) >> (const init_line_adstring&)(*this);
+
+  ad_comm::global_datafile->filter();
+
+  char line[256];
+  ad_comm::global_datafile->getline(line, 256);
+  static_cast<adstring&>(*this) = adstring(line);
 }

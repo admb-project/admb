@@ -89,10 +89,14 @@ endif
 ifeq ($(SHELL),cmd)
   ifeq ($(CXX),g++)
     GCCMAJVER:="GCCVER$(shell gcc -dumpversion)"
-    ifeq (GCCVER6,$(findstring GCCVER6,$(GCCMAJVER)))
+    ifeq (GCCVER7,$(findstring GCCVER7,$(GCCMAJVER)))
       ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
     else
-      ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      ifeq (GCCVER6,$(findstring GCCVER6,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      endif
     endif
   endif
 else

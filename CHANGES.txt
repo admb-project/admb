@@ -25,6 +25,8 @@ ADMB-git
 
   __Note__ Microsoft Visual C++ 2013 is no longer supported.
 
+* GNU C++ 7
+
 ####Changes and Improvements
 
 * Fixed many signed and unsigned conversion warnings.

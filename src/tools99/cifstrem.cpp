@@ -155,7 +155,7 @@ void cifstream::filter(void)
   }
 }
 
-void cifstream::get_field(char* s,int space_flag)
+void cifstream::get_field(char* s, int space_flag)
 {
   filter();
 
@@ -227,24 +227,26 @@ cifstream& cifstream::operator>>(const adstring& _s)
   return (*this);
 }
 /**
-Reads to s from input cifstream.
+Reads to str from input cifstream.
 
-\param s line_adstring
+\param str line_adstring
 */
-cifstream& cifstream::operator>>(line_adstring& s)
+cifstream& cifstream::operator>>(line_adstring& str)
 {
-  get_field(static_cast<char*>(s), 1);
+  filter();
+  char line[256];
+  getline(line, 256);
+  str.realloc(&line[0]);
   return *this;
 }
 /**
-Reads to s from input cifstream.
+Reads to str from input cifstream.
 
-\param s line_adstring
+\param str line_adstring
 */
-cifstream& cifstream::operator>>(const line_adstring& s)
+cifstream& cifstream::operator>>(const line_adstring& str)
 {
-  *this >> const_cast<line_adstring&>(s);
-  return *this;
+  return operator>>(const_cast<line_adstring&>(str));
 }
 /**
 Reads to c from input cifstream.

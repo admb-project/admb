@@ -118,7 +118,7 @@ int gradient_structure::save_var_file_flag=0;
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
 dlist * gradient_structure::GRAD_LIST;
-grad_stack * gradient_structure::GRAD_STACK1;
+grad_stack* gradient_structure::GRAD_STACK1;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
 arr_list * gradient_structure::ARR_LIST1 = NULL;
 arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
@@ -169,9 +169,7 @@ size_t gradient_structure::totalbytes(void)
  void fill_ad_random_part(void);
  extern char ad_random_part[6];
 
-/**
-Close gradient and variable files and free gradient structure memory.
-*/
+/// Close gradient and variable files and free gradient structure memory.
 void cleanup_temporary_files()
 {
   if (gradient_structure::fp)
@@ -181,21 +179,27 @@ void cleanup_temporary_files()
   }
   if (gradient_structure::GRAD_STACK1)
   {
-    if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR1))
+    if (gradient_structure::GRAD_STACK1->_GRADFILE_PTR1 != -1
+        && close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR1))
     {
       cerr << "Error closing file "
            << gradient_structure::GRAD_STACK1->gradfile_name1 << "\n";
     }
-    if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR2))
+    gradient_structure::GRAD_STACK1->_GRADFILE_PTR1 = -1;
+    if (gradient_structure::GRAD_STACK1->_GRADFILE_PTR2 != -1
+        && close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR2))
     {
       cerr << "Error closing file "
            << gradient_structure::GRAD_STACK1->gradfile_name2 << "\n";
     }
-    if (close( gradient_structure::GRAD_STACK1->_VARSSAV_PTR))
+    gradient_structure::GRAD_STACK1->_GRADFILE_PTR2 = -1;
+    if (gradient_structure::GRAD_STACK1->_VARSSAV_PTR != -1
+        && close(gradient_structure::GRAD_STACK1->_VARSSAV_PTR))
     {
       cerr << "Error closing file "
            << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
     }
+    gradient_structure::GRAD_STACK1->_VARSSAV_PTR = -1;
 #if defined (_MSC_VER)
     remove(gradient_structure::GRAD_STACK1->gradfile_name1);
     remove(gradient_structure::GRAD_STACK1->gradfile_name2);

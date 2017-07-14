@@ -230,41 +230,42 @@ grad_stack::grad_stack()
   strcpy(gradfile_name, gradfile_name1);
   _GRADFILE_PTR = _GRADFILE_PTR1;
 }
-/**
-Destructor
-*/
+/// Destructor
 grad_stack::~grad_stack()
 {
   const int repfs = option_match(ad_comm::argc, ad_comm::argv, "-fsize");
   if (ad_comm::global_logfile && repfs)
   {
-     OFF_T pos = LSEEK(_GRADFILE_PTR1, 0, SEEK_END);
-     *ad_comm::global_logfile << "size of file " << gradfile_name1
-       << " = " << pos << endl;
+    OFF_T pos = LSEEK(_GRADFILE_PTR1, 0, SEEK_END);
+    *ad_comm::global_logfile << "size of file " << gradfile_name1
+      << " = " << pos << endl;
 
-     pos = LSEEK(_GRADFILE_PTR2, 0, SEEK_END);
-     *ad_comm::global_logfile << "size of file " << gradfile_name2
-       << " = " << pos << endl;
+    pos = LSEEK(_GRADFILE_PTR2, 0, SEEK_END);
+    *ad_comm::global_logfile << "size of file " << gradfile_name2
+      << " = " << pos << endl;
 
-     pos = LSEEK(_VARSSAV_PTR, 0, SEEK_END);
-     *ad_comm::global_logfile << "size of file " << var_store_file_name
-       << " = " << pos << endl;
+    pos = LSEEK(_VARSSAV_PTR, 0, SEEK_END);
+    *ad_comm::global_logfile << "size of file " << var_store_file_name
+      << " = " << pos << endl;
   }
   if (close(_GRADFILE_PTR1))
   {
     cerr << "Error closing file " << gradfile_name1 << "\n"
          << "in grad_stack::~grad_stack().\n";
   }
+  _GRADFILE_PTR1 = -1;
   if (close(_GRADFILE_PTR2))
   {
     cerr << "Error closing file " << gradfile_name2 << "\n"
          << "in grad_stack::~grad_stack().\n";
   }
+  _GRADFILE_PTR1 = -1;
   if (close(_VARSSAV_PTR))
   {
     cerr << "Error closing file " << var_store_file_name << "\n"
          << "in grad_stack::~grad_stack().\n";
   }
+  _VARSSAV_PTR = -1;
 #if !defined (_MSC_VER)
   unlink(gradfile_name1);
   unlink(gradfile_name2);
@@ -274,11 +275,12 @@ grad_stack::~grad_stack()
   remove(gradfile_name2);
   remove(var_store_file_name);
 #endif
-
-  delete [] true_ptr_first;
-  true_ptr_first = 0;
+  if (true_ptr_first)
+  {
+    delete [] true_ptr_first;
+    true_ptr_first = NULL;
+  }
 }
-
 /**
  * Description not yet available.
  * \param

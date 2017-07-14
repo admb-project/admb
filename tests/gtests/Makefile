@@ -260,6 +260,7 @@ endif
 clean:
 ifeq ($(SHELL),cmd)
 	@if exist make_sub_directory rmdir /s /q make_sub_directory
+	@del test_init_adstring.dat 2>NUL
 	@del test_ad_comm.log 2>NUL
 	@del d5_array.txt 2>NUL
 	@del d6_array.txt 2>NUL
@@ -336,6 +337,7 @@ ifeq ($(SHELL),cmd)
 	@del test_cifstream_dvariable.txt 2>NUL
 	@del test_cifstream_iarray.txt 2>NUL
 else
+	@rm -vf test_init_adstring.dat
 	@rm -vf test_ad_comm.log
 	@rm -vf d5_array.txt
 	@rm -vf d6_array.txt

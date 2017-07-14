@@ -418,20 +418,22 @@ TEST_F(test_dvector, is_valid_index)
   ASSERT_DEATH(dv(0), "Assertion");
   ASSERT_DEATH(dv(5), "Assertion");
 }
-/*
-TEST_F(test_dvector, data_int)
+TEST_F(test_dvector, dll_data_int)
 {
+  int min = 1;
+  int max = 4;
   dvector dv;
 
-  data_int begin;
-  data_int end;
+  dll_data_int begin;
+  begin.allocate(&min, "begin");
+  dll_data_int end;
+  end.allocate(&max, "end");
 
   dv.allocate(begin, end);
 
-  //ASSERT_EQ(dv.indexmin(), 1);
-  //ASSERT_EQ(dv.indexmax(), 4);
+  ASSERT_EQ(dv.indexmin(), min);
+  ASSERT_EQ(dv.indexmax(), max);
 }
-*/
 TEST_F(test_dvector, fill_lbraces_zero)
 {
   dvector v(1, 6);
@@ -830,7 +832,6 @@ TEST_F(test_dvector, mean)
   ASSERT_DOUBLE_EQ(2.5, mean(v));
 }
 
-/*
 TEST_F(test_dvector, dvector_position_vec)
 {
   dvector vec(1, 3);
@@ -838,7 +839,6 @@ TEST_F(test_dvector, dvector_position_vec)
   ASSERT_EQ(1, pos.indexmin());
   ASSERT_EQ(3, pos.indexmax());
 }
-*/
 TEST_F(test_dvector, substracterror)
 {
   ad_exit=&test_ad_exit;

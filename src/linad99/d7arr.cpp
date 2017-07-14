@@ -102,6 +102,9 @@ d7_array& d7_array::operator=(const d7_array& m)
    return *this;
  }
 /**
+Allocate d7_array using the same dimensions as other.
+
+\param other d7_array
 */
 void d7_array::allocate(const d7_array& other)
 {

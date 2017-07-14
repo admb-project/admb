@@ -304,7 +304,6 @@ otherwise false.
 
 \param arr5 i5_array
 */
-/*
 int sub_unallocated(const i5_array& arr5)
 {
   int isallocated = allocated(arr5);
@@ -323,4 +322,3 @@ int sub_unallocated(const i5_array& arr5)
   }
   return !isallocated;
 }
-*/

@@ -266,8 +266,6 @@ TEST_F(test_sub_unallocated, dvar5_array)
 }
 TEST_F(test_sub_unallocated, d5_array)
 {
-  gradient_structure gs;
-
   d5_array arr5;
   ASSERT_TRUE(sub_unallocated(arr5));
   arr5.allocate(1, 4, 1, 4, 1, 4, 1, 4, 1, 4);
@@ -275,21 +273,15 @@ TEST_F(test_sub_unallocated, d5_array)
 }
 TEST_F(test_sub_unallocated, i4_array)
 {
-  gradient_structure gs;
-
   i4_array arr4;
   ASSERT_TRUE(sub_unallocated(arr4));
   arr4.allocate(1, 4, 1, 4, 1, 4, 1, 4);
   ASSERT_FALSE(sub_unallocated(arr4));
 }
-/*
 TEST_F(test_sub_unallocated, i5_array)
 {
-  gradient_structure gs;
-
   i5_array arr5;
   ASSERT_TRUE(sub_unallocated(arr5));
-  arr5.allocate(1, 4, 1, 4, 1, 4, 1, 4);
+  arr5.allocate(1, 4, 1, 4, 1, 4, 1, 4, 1, 4);
   ASSERT_FALSE(sub_unallocated(arr5));
 }
-*/

@@ -101,30 +101,31 @@ d7_array& d7_array::operator=(const d7_array& m)
    }
    return *this;
  }
-
 /**
- * Description not yet available.
- * \param
- */
-void d7_array::allocate(const d7_array& m1)
- {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
-       == 0)
-   {
-     cerr << " Error allocating memory in d6_array contructor" << endl;
-   }
-   unsigned int ss = size();
-   if ( (t = new d6_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d6_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
-   {
-     t[i].allocate(m1[i]);
-   }
- }
+*/
+void d7_array::allocate(const d7_array& other)
+{
+  if ((shape = new vector_shape(other.indexmin(), other.indexmax())) == 0)
+  {
+    cerr << " Error allocating memory in "
+         << "d7_array::allocate(const d7_array&)" << endl;
+    ad_exit(1);
+  }
+  if ((t = new d6_array[size()]) == 0)
+  {
+    cerr << " Error allocating memory in "
+         << "d7_array::allocate(const d7_array&)" << endl;
+    ad_exit(1);
+  }
+  t -= indexmin();
+  for (int i=indexmin(); i<=indexmax(); i++)
+  {
+    if (allocated(other.elem(i)))
+    {
+      elem(i).allocate(other.elem(i));
+    }
+  }
+}
 
   #ifndef OPT_LIB
 

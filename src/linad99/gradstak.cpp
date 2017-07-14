@@ -252,15 +252,18 @@ grad_stack::~grad_stack()
   }
   if (close(_GRADFILE_PTR1))
   {
-    cerr << "Error closing file " << gradfile_name1 << "\n";
+    cerr << "Error closing file " << gradfile_name1 << "\n"
+         << "in grad_stack::~grad_stack().\n";
   }
   if (close(_GRADFILE_PTR2))
   {
-    cerr << "Error closing file " << gradfile_name2 << "\n";
+    cerr << "Error closing file " << gradfile_name2 << "\n"
+         << "in grad_stack::~grad_stack().\n";
   }
   if (close(_VARSSAV_PTR))
   {
-    cerr << "Error closing file " << var_store_file_name << "\n";
+    cerr << "Error closing file " << var_store_file_name << "\n"
+         << "in grad_stack::~grad_stack().\n";
   }
 #if !defined (_MSC_VER)
   unlink(gradfile_name1);

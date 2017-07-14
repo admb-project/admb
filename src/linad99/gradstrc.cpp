@@ -170,50 +170,42 @@ size_t gradient_structure::totalbytes(void)
  extern char ad_random_part[6];
 
 /**
-Close gradient and variable files.  Free gradient structure memory.
+Close gradient and variable files and free gradient structure memory.
 */
 void cleanup_temporary_files()
 {
-   if (gradient_structure::fp)
-   {
-     delete gradient_structure::fp;
-     gradient_structure::fp=NULL;
-   }
-   if (gradient_structure::GRAD_STACK1)
-   {
-     if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR1))
-     {
-       cerr << "Error closing file "
-       << gradient_structure::GRAD_STACK1->gradfile_name1 << "\n";
-     }
-     if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR2))
-     {
-       cerr << "Error closing file "
-       << gradient_structure::GRAD_STACK1->gradfile_name2 << "\n";
-     }
-     if (close( gradient_structure::GRAD_STACK1->_VARSSAV_PTR))
-     {
-       cerr << "Error closing file "
-       << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
-     }
-   }
-#if !defined (_MSC_VER)
-   if (gradient_structure::GRAD_STACK1)
-   {
-     unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
-     unlink(gradient_structure::GRAD_STACK1->gradfile_name2);
-     unlink(gradient_structure::GRAD_STACK1->var_store_file_name);
-     //unlink(gradient_structure::cmpdif_file_name);
-   }
+  if (gradient_structure::fp)
+  {
+    delete gradient_structure::fp;
+    gradient_structure::fp = NULL;
+  }
+  if (gradient_structure::GRAD_STACK1)
+  {
+    if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR1))
+    {
+      cerr << "Error closing file "
+           << gradient_structure::GRAD_STACK1->gradfile_name1 << "\n";
+    }
+    if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR2))
+    {
+      cerr << "Error closing file "
+           << gradient_structure::GRAD_STACK1->gradfile_name2 << "\n";
+    }
+    if (close( gradient_structure::GRAD_STACK1->_VARSSAV_PTR))
+    {
+      cerr << "Error closing file "
+           << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
+    }
+#if defined (_MSC_VER)
+    remove(gradient_structure::GRAD_STACK1->gradfile_name1);
+    remove(gradient_structure::GRAD_STACK1->gradfile_name2);
+    remove(gradient_structure::GRAD_STACK1->var_store_file_name);
 #else
-   if (gradient_structure::GRAD_STACK1)
-   {
-     remove(gradient_structure::GRAD_STACK1->gradfile_name1);
-     remove(gradient_structure::GRAD_STACK1->gradfile_name2);
-     remove(gradient_structure::GRAD_STACK1->var_store_file_name);
-     //cout << remove(gradient_structure::cmpdif_file_name);
-   }
+    unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
+    unlink(gradient_structure::GRAD_STACK1->gradfile_name2);
+    unlink(gradient_structure::GRAD_STACK1->var_store_file_name);
 #endif
+  }
 }
 
 /**

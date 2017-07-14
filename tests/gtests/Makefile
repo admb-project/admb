@@ -98,6 +98,7 @@ GTESTS=\
  test_fill_seqadd.cpp\
  test_i3_array.cpp\
  test_adstring.cpp\
+ test_ad_comm.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

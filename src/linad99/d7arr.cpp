@@ -133,33 +133,66 @@ void d7_array::allocate(const d7_array& other)
   #ifndef OPT_LIB
 
 /**
- * Description not yet available.
- * \param
- */
-    d6_array& d7_array::operator ( ) (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
-        "d6_array& d7_array::operator()(int i)", indexmin(), indexmax(), i);
-      }
-      //return t[i];
-      return elem(i);
-    }
+Return d6_array element at index i.
+Note: Exits for out of bounds index.
 
+\param i index
+*/
+d6_array& d7_array::operator()(int i)
+{
+  if (i < indexmin() || i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
+      "d6_array& d7_array::operator()(int i)", indexmin(), indexmax(), i);
+  }
+  return elem(i);
+}
 /**
- * Description not yet available.
- * \param
- */
-    d6_array& d7_array::operator [] (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
-        "d6_array& d7_array::operator[](int i)", indexmin(), indexmax(), i);
-      }
-      return t[i];
-    }
+Return d6_array element at index i.
+Note: Exits for out of bounds index.
+
+\param i index
+*/
+const d6_array& d7_array::operator()(int i) const
+{
+  if (i < indexmin() || i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
+      "d6_array& d7_array::operator()(int i)", indexmin(), indexmax(), i);
+  }
+  return elem(i);
+}
+/**
+Return d6_array element at index i.
+Note: Exits for out of bounds index.
+
+\param i index
+*/
+d6_array& d7_array::operator[](int i)
+{
+  if (i < indexmin() || i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
+      "d6_array& d7_array::operator[](int i)", indexmin(), indexmax(), i);
+  }
+  return elem(i);
+}
+/**
+Return d6_array element at index i.
+Note: Exits for out of bounds index.
+
+\param i index
+*/
+const d6_array& d7_array::operator[](int i) const
+{
+  if (i < indexmin() || i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
+      "const d6_array& d7_array::operator[](int i) const",
+      indexmin(), indexmax(), i);
+  }
+  return elem(i);
+}
 
 /**
  * Description not yet available.
@@ -251,34 +284,6 @@ void d7_array::allocate(const d7_array& other)
       return elem(i)(j,k,l,m,n,_p);
     }
 
-/**
- * Description not yet available.
- * \param
- */
-const d6_array& d7_array::operator()(int i) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error  index out of bounds in\n"
-            "d6_array& d7_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      //return t[i];
-      return elem(i);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const d6_array& d7_array::operator[](int i) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error  index out of bounds in\n"
-            "d5_array& d7_array::operator []" << endl;
-          ad_exit(1);
-        }
-      return t[i];
-    }
 
 /**
  * Description not yet available.

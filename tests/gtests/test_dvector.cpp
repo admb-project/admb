@@ -1074,7 +1074,7 @@ TEST_F(test_dvector, VEC)
 
   dmatrix ret2 = MAT(ret, 2, 2);
   ASSERT_EQ(1, ret2.rowmin());
-  ASSERT_EQ(-2, ret2.rowmax());
+  ASSERT_EQ(2, ret2.rowmax());
   ASSERT_EQ(1, ret2.colmin());
   ASSERT_EQ(2, ret2.colmax());
   ASSERT_DOUBLE_EQ(matrix(1, 1), ret2(1, 1));

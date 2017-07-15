@@ -1054,3 +1054,31 @@ TEST_F(test_dvector, sum)
 
   ASSERT_DOUBLE_EQ(5, ret);
 }
+TEST_F(test_dvector, VEC)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix matrix(1, 2, 1, 2);
+  matrix(1, 1) = 4;
+  matrix(1, 2) = -3;
+  matrix(2, 1) = 2;
+  matrix(2, 2) = -9;
+  dvector ret = VEC(matrix);
+
+  ASSERT_EQ(1, ret.indexmin());
+  ASSERT_EQ(4, ret.indexmax());
+  ASSERT_DOUBLE_EQ(matrix(1, 1), ret(1));
+  ASSERT_DOUBLE_EQ(matrix(1, 2), ret(2));
+  ASSERT_DOUBLE_EQ(matrix(2, 1), ret(3));
+  ASSERT_DOUBLE_EQ(matrix(2, 2), ret(4));
+
+  dmatrix ret2 = MAT(ret, 2, 2);
+  ASSERT_EQ(1, ret2.rowmin());
+  ASSERT_EQ(-2, ret2.rowmax());
+  ASSERT_EQ(1, ret2.colmin());
+  ASSERT_EQ(2, ret2.colmax());
+  ASSERT_DOUBLE_EQ(matrix(1, 1), ret2(1, 1));
+  ASSERT_DOUBLE_EQ(matrix(1, 2), ret2(1, 2));
+  ASSERT_DOUBLE_EQ(matrix(2, 1), ret2(2, 1));
+  ASSERT_DOUBLE_EQ(matrix(2, 2), ret2(2, 2));
+}

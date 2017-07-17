@@ -583,3 +583,50 @@ TEST_F(test_ivector, equalexit)
     a = b;
   });
 }
+TEST_F(test_ivector, add_b_tothis)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  ivector b(1, 4);
+  b(1) = 1;
+  b(2) = 9;
+  b(3) = 5;
+  b(4) = 3;
+
+  a += b;
+
+  EXPECT_EQ(1, a(1));
+  EXPECT_EQ(16, a(2));
+  EXPECT_EQ(7, a(3));
+  EXPECT_EQ(-1, a(4));
+
+  ASSERT_ANY_THROW({
+    ivector empty;
+    a = empty;
+  });
+
+  ASSERT_ANY_THROW({
+    ivector b(0, 1);
+    a = b;
+  });
+}
+TEST_F(test_ivector, add_value_tothis)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  int value = 4;
+  a += value;
+
+  EXPECT_EQ(4, a(1));
+  EXPECT_EQ(11, a(2));
+  EXPECT_EQ(6, a(3));
+  EXPECT_EQ(0, a(4));
+}

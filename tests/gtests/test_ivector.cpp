@@ -436,3 +436,107 @@ TEST_F(test_ivector, shift)
   EXPECT_EQ(2, v(4));
   EXPECT_EQ(-4, v(5));
 }
+TEST_F(test_ivector, value_plus_ivector)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 7;
+  v(3) = 2;
+  v(4) = -4;
+
+  int value = -3;
+
+  ivector ret = value + v;
+  EXPECT_EQ(-3, ret(1));
+  EXPECT_EQ(4, ret(2));
+  EXPECT_EQ(-1, ret(3));
+  EXPECT_EQ(-7, ret(4));
+}
+TEST_F(test_ivector, ivector_plus_value)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 7;
+  v(3) = 2;
+  v(4) = -4;
+
+  int value = -3;
+
+  ivector ret = v + value;
+  EXPECT_EQ(-3, ret(1));
+  EXPECT_EQ(4, ret(2));
+  EXPECT_EQ(-1, ret(3));
+  EXPECT_EQ(-7, ret(4));
+}
+TEST_F(test_ivector, value_minus_ivector)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 7;
+  v(3) = 2;
+  v(4) = -4;
+
+  int value = -3;
+
+  ivector ret = value - v;
+  EXPECT_EQ(-3, ret(1));
+  EXPECT_EQ(-10, ret(2));
+  EXPECT_EQ(-5, ret(3));
+  EXPECT_EQ(1, ret(4));
+}
+TEST_F(test_ivector, ivector_minus_value)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 7;
+  v(3) = 2;
+  v(4) = -4;
+
+  int value = -3;
+
+  ivector ret = v - value;
+  EXPECT_EQ(3, ret(1));
+  EXPECT_EQ(10, ret(2));
+  EXPECT_EQ(5, ret(3));
+  EXPECT_EQ(-1, ret(4));
+}
+TEST_F(test_ivector, elementwise_ivector_add_ivector)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  ivector b(1, 4);
+  b(1) = 1;
+  b(2) = 9;
+  b(3) = 5;
+  b(4) = 3;
+
+  ivector ret = a + b;
+  EXPECT_EQ(1, ret(1));
+  EXPECT_EQ(16, ret(2));
+  EXPECT_EQ(7, ret(3));
+  EXPECT_EQ(-1, ret(4));
+}
+TEST_F(test_ivector, elementwise_ivector_minus_ivector)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  ivector b(1, 4);
+  b(1) = 1;
+  b(2) = 9;
+  b(3) = 5;
+  b(4) = 3;
+
+  ivector ret = a - b;
+  EXPECT_EQ(-1, ret(1));
+  EXPECT_EQ(-2, ret(2));
+  EXPECT_EQ(-3, ret(3));
+  EXPECT_EQ(-7, ret(4));
+}

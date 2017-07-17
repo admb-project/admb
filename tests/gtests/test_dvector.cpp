@@ -1082,3 +1082,23 @@ TEST_F(test_dvector, VEC)
   ASSERT_DOUBLE_EQ(matrix(2, 1), ret2(2, 1));
   ASSERT_DOUBLE_EQ(matrix(2, 2), ret2(2, 2));
 }
+TEST_F(test_dvector, concatenation)
+{
+  dvector a("{0, 1, 2, 3, 4, 5}");
+  dvector b("{-1, -2, -3, -4}");
+
+  dvector ab = a & b;
+
+  ASSERT_EQ(ab.indexmin(), 1);
+  ASSERT_EQ(ab.indexmax(), 10);
+  ASSERT_DOUBLE_EQ(0, ab(1));
+  ASSERT_DOUBLE_EQ(1, ab(2));
+  ASSERT_DOUBLE_EQ(2, ab(3));
+  ASSERT_DOUBLE_EQ(3, ab(4));
+  ASSERT_DOUBLE_EQ(4, ab(5));
+  ASSERT_DOUBLE_EQ(5, ab(6));
+  ASSERT_DOUBLE_EQ(-1, ab(7));
+  ASSERT_DOUBLE_EQ(-2, ab(8));
+  ASSERT_DOUBLE_EQ(-3, ab(9));
+  ASSERT_DOUBLE_EQ(-4, ab(10));
+}

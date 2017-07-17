@@ -1,69 +1,61 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
 
 /**
-Returns new vector containing all values from t1 and t2.
-\param t1 vector
-\param t2 vector
+Concatenates dvector elements in a with b and return results.
+
+\param a scalar vector
+\param b scalar vector
 */
-dvector operator&(const dvector& t1, const dvector& t2)
+dvector operator&(const dvector& a, const dvector& b)
 {
-  unsigned int size = t1.size() + t2.size();
-#ifndef OPT_LIB
-  assert(size <= INT_MAX);
+#ifdef DEBUG
+  assert(a.size() + b.size() <= INT_MAX);
 #endif
-  dvector tmp(1, static_cast<int>(size));
-  int min = t1.indexmin();
-  int max = t1.indexmax();
-  int ii = 0;
-  int i;
-  for (i = min; i <= max; ++i)
+  dvector results(1, static_cast<int>(a.size() + b.size()));
+  int max = a.indexmax();
+  for (int i = a.indexmin(); i <= max; ++i)
   {
-    tmp(++ii) = t1(i);
+    results(i) = a(i);
   }
-  min = t2.indexmin();
-  max = t2.indexmax();
-  for (i = min; i <= max; ++i)
+  int index = max;
+  max = b.indexmax();
+  for (int i = b.indexmin(); i <= max; ++i)
   {
-    tmp(++ii) = t2(i);
+    results(++index) = b(i);
   }
-  return tmp;
+  return results;
 }
 /**
-Returns new vector containing all values from t1 and t2.
-\param t1 vector
-\param t2 vector
+Concatenates variable vector elements in a with b and return results.
+
+\param a variable vector
+\param b variable vector
 */
-dvar_vector operator&(const dvar_vector& t1, const dvar_vector& t2)
+dvar_vector operator&(const dvar_vector& a, const dvar_vector& b)
 {
-  unsigned int size = t1.size() + t2.size();
-  dvar_vector tmp(1, static_cast<int>(size));
-  int min = t1.indexmin();
-  int max = t1.indexmax();
-  int ii = 0;
-  int i;
-  for (i = min; i <= max; ++i)
+#ifdef DEBUG
+  assert(a.size() + b.size() <= INT_MAX);
+#endif
+
+  dvar_vector results(1, static_cast<int>(a.size() + b.size()));
+  int max = a.indexmax();
+  for (int i = a.indexmin(); i <= max; ++i)
   {
-    tmp(++ii) = t1(i);
+    results(i) = a(i);
   }
-  min = t2.indexmin();
-  max = t2.indexmax();
-  for (i = min; i <= max; ++i)
+  int index = max;
+  max = b.indexmax();
+  for (int i = a.indexmin(); i <= max; ++i)
   {
-    tmp(++ii) = t2(i);
+    results(++index) = b(i);
   }
-  return tmp;
+  return results;
 }

@@ -168,3 +168,25 @@ TEST_F(test_dvar_vector, fill_lbraces_not_equal_rbraces)
   }
   FAIL();
 }
+TEST_F(test_dvar_vector, concatenation)
+{
+  gradient_structure gs;
+
+  dvar_vector a("{0, 1, 2, 3, 4, 5}");
+  dvar_vector b("{-1, -2, -3, -4}");
+
+  dvar_vector ab = a & b;
+
+  ASSERT_EQ(ab.indexmin(), 1);
+  ASSERT_EQ(ab.indexmax(), 10);
+  ASSERT_DOUBLE_EQ(0, value(ab(1)));
+  ASSERT_DOUBLE_EQ(1, value(ab(2)));
+  ASSERT_DOUBLE_EQ(2, value(ab(3)));
+  ASSERT_DOUBLE_EQ(3, value(ab(4)));
+  ASSERT_DOUBLE_EQ(4, value(ab(5)));
+  ASSERT_DOUBLE_EQ(5, value(ab(6)));
+  ASSERT_DOUBLE_EQ(-1, value(ab(7)));
+  ASSERT_DOUBLE_EQ(-2, value(ab(8)));
+  ASSERT_DOUBLE_EQ(-3, value(ab(9)));
+  ASSERT_DOUBLE_EQ(-4, value(ab(10)));
+}

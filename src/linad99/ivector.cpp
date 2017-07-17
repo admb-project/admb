@@ -199,20 +199,19 @@ ivector& ivector::operator=(const ivector& t)
    }
    return (*this);
  }
-
 /**
- * Description not yet available.
- * \param
- */
-ivector& ivector::operator=(int u)
-{
-  for (int i = indexmin(); i <= indexmax(); i++)
-  {
-    elem(i) = u;
-  }
-  return (*this);
-}
+Assigns value to all elements of ivector.
 
+\param value int
+*/
+ivector& ivector::operator=(int value)
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) = value;
+  }
+  return *this;
+}
 /**
 Constructor
 */
@@ -247,11 +246,11 @@ ivector::ivector(const dvector& u)
   for (int i=indexmin();i<=indexmax();i++)
   {
 #ifdef OPT_LIB
-    elem(i) = int(u.elem(i));
+    elem(i) = static_cast<int>(u.elem(i));
 #else
     double ui = u.elem(i);
     assert(ui <= INT_MAX);
-    v[i] = (int)ui;
+    elem(i) = static_cast<int>(ui);
 #endif
   }
 }
@@ -275,25 +274,27 @@ Allocate vector of integers with dimension
 */
 void ivector::allocate(int ncl,int nch)
 {
-  unsigned int ss =
-    static_cast<unsigned int>(nch < ncl ? 0 : nch - ncl + 1);
-  if (ss > 0)
+  if (ncl > nch)
   {
-    if ((v = new int [ss]) == 0 )
+    allocate();
+  }
+  else
+  {
+    if ((v = new int[static_cast<unsigned int>(nch - ncl + 1)]) == 0 )
     {
-      cerr << " Error: i4_array unable to allocate memory in "
+      cerr << " Error: ivector unable to allocate memory in "
            << __FILE__ << ':' << __LINE__ << '\n';
       ad_exit(1);
     }
     if ((shape = new vector_shapex(ncl, nch, v)) == NULL)
     {
-      cerr << " Error: i4_array unable to allocate memory in "
+      cerr << " Error: ivector unable to allocate memory in "
            << __FILE__ << ':' << __LINE__ << '\n';
       ad_exit(1);
     }
 
-    index_min=ncl;
-    index_max=nch;
+    index_min = ncl;
+    index_max = nch;
 
     v -= indexmin();
 
@@ -303,10 +304,6 @@ void ivector::allocate(int ncl,int nch)
       v[i] = 0;
     }
 #endif
-  }
-  else
-  {
-    allocate();
   }
 }
 
@@ -365,29 +362,38 @@ ivector::ivector(const preivector& pdv)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-  int norm2(const ivector& t1)
-  {
-    int tmp=0;;
-   for (int i=t1.indexmin();i<=t1.indexmax();i++)
-   {
-     tmp+=t1(i)*t1(i);
-   }
-    return(tmp);
-  }
-  int sumsq(const ivector& t1) {return(norm2(t1));}
+Returns the sum of the squares of all elements in ivec.
 
-/**
- * Description not yet available.
- * \param
- */
-  void clean(ivector& v,int level)
+\param ivec ivector
+*/
+int norm2(const ivector& ivec)
+{
+  int sum = 0;
+  for (int i = ivec.indexmin(); i <= ivec.indexmax(); ++i)
   {
-    int mmax=v.indexmax();
-    for (int i=level+1;i<=mmax;i++)
-    {
-      v(i)=0;
-    }
+    sum += ivec(i) * ivec(i);
   }
+  return sum;
+}
+/**
+Returns the sum of the squares of all elements in ivec.
+
+\param ivec ivector
+*/
+int sumsq(const ivector& ivec)
+{
+  return norm2(ivec);
+}
+/**
+Set elements of ivec to zero starting from level + 1;
+
+\param level is the index of ivec
+*/
+void clean(ivector& v, int level)
+{
+  int max = v.indexmax();
+  for (int i = level + 1; i <= max; ++i)
+  {
+    v(i) = 0;
+  }
+}

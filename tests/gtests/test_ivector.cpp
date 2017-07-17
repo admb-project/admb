@@ -540,3 +540,46 @@ TEST_F(test_ivector, elementwise_ivector_minus_ivector)
   EXPECT_EQ(-3, ret(3));
   EXPECT_EQ(-7, ret(4));
 }
+TEST_F(test_ivector, norm2)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  EXPECT_EQ(69, norm2(a));
+  EXPECT_EQ(69, sumsq(a));
+}
+TEST_F(test_ivector, clean)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+  clean(a, 3);
+
+  EXPECT_EQ(0, a(1));
+  EXPECT_EQ(7, a(2));
+  EXPECT_EQ(2, a(3));
+  EXPECT_EQ(0, a(4));
+}
+TEST_F(test_ivector, equalexit)
+{
+  ad_exit=&test_ad_exit;
+
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+  ASSERT_ANY_THROW({
+    ivector empty;
+    a = empty;
+  });
+  ASSERT_ANY_THROW({
+    ivector b(0, 1);
+    a = b;
+  });
+}

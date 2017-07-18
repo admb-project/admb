@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #ifdef __TURBOC__
@@ -25,13 +19,16 @@ void imatrix::rowshift(int min )
 }
 
 /**
- * Description not yet available.
- * \param
- */
- imatrix::imatrix(int nrl,int nrh)
- {
-   allocate(nrl,nrh);
- }
+Construct integer matrix with row dimension [nrl to nrh] where
+each column is empty.
+
+\param nrl lower row index
+\param nrh upper row index
+*/
+imatrix::imatrix(int nrl, int nrh)
+{
+  allocate(nrl, nrh);
+}
 
 /**
  * Description not yet available.
@@ -53,16 +50,19 @@ void imatrix::rowshift(int min )
      return *this;
    }
  }
-
 /**
- * Description not yet available.
- * \param
- */
- imatrix::imatrix(int nrl, int nrh, int ncl, int nch)
- {
-   allocate(nrl,nrh,ncl,nch);
- }
+Construct integer matrix with the dimensions 
+[nrl to nrh] x [ncl to nch]
 
+\param nrl lower row index
+\param nrh upper row index
+\param ncl lower column index
+\param nch upper column index
+*/
+imatrix::imatrix(int nrl, int nrh, int ncl, int nch)
+{
+  allocate(nrl, nrh, ncl, nch);
+}
 /**
  * Description not yet available.
  * \param
@@ -136,29 +136,10 @@ Allocate integer matrix with the dimensions
 */
 void imatrix::allocate(int nrl, int nrh, int ncl, int nch)
 {
-  if (nrl > nrh)
+  allocate(nrl, nrh);
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    allocate();
-  }
-  else
-  {
-    index_min = nrl;
-    index_max = nrh;
-    if ((m = new ivector[rowsize()]) == 0)
-    {
-      cerr << " Error allocating memory in imatrix constructor\n";
-      ad_exit(21);
-    }
-    if ((shape = new mat_shapex(m)) == 0)
-    {
-      cerr << " Error allocating memory in imatrix constructor\n";
-      ad_exit(21);
-    }
-    m -= rowmin();
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      m[i].allocate(ncl,nch);
-    }
+    elem(i).allocate(ncl, nch);
   }
 }
 /// Does not allocate, but initializes imatrix members.
@@ -181,36 +162,10 @@ column indexes.
 */
 void imatrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& nch)
 {
-   if (nrl > nrh)
-   {
-     allocate();
-   }
-   else
-   {
-    index_min = nrl;
-    index_max = nrh;
-    if ((m = new ivector[rowsize()]) == 0)
-    {
-      cerr << " Error allocating memory in imatrix contructor\n";
-      ad_exit(21);
-    }
-    if ( (shape = new mat_shapex(m))== 0)
-    {
-      cerr << " Error allocating memory in imatrix contructor\n";
-      ad_exit(21);
-    }
-    if (nrl != ncl.indexmin() || nrh != ncl.indexmax()
-        || nrl != nch.indexmin() || nrh != nch.indexmax())
-    {
-       cerr << "Incompatible array bounds in "
-       "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
-       ad_exit(1);
-    }
-    m -= rowmin();
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      m[i].allocate(ncl(i),nch(i));
-    }
+  allocate(nrl, nrh);
+  for (int i = rowmin(); i <= rowmax(); ++i)
+  {
+    elem(i).allocate(ncl(i), nch(i));
   }
 }
 /**
@@ -219,84 +174,43 @@ Allocate ragged matrix with dimensions
 
 \param nrl lower row index
 \param nrh upper row index
-\param ncl lower column indexe
+\param ncl lower column index
 \param nch vector of upper column indexes
 */
 void imatrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
 {
-  if (nrl > nrh)
+  allocate(nrl, nrh);
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    allocate();
+    elem(i).allocate(ncl, nch(i));
+  }
+}
+/// Copy constructor - Shallow
+imatrix::imatrix(const imatrix& other)
+{
+  shallow_copy(other);
+}
+/**
+Copy dimension and pointers in other.
+
+\param other imatrix
+*/
+void imatrix::shallow_copy(const imatrix& other)
+{
+  index_min = other.index_min;
+  index_max = other.index_max;
+  if (other.shape)
+  {
+    shape = other.shape;
+    (shape->ncopies)++;
+    m = other.m;
   }
   else
   {
-    index_min = nrl;
-    index_max = nrh;
-    if ((m = new ivector[rowsize()]) == 0)
-    {
-      cerr << " Error allocating memory in imatrix contructor\n";
-      ad_exit(21);
-    }
-    if (nrl != nch.indexmin() || nrh != nch.indexmax())
-    {
-      cerr << "Incompatible array bounds in "
-      "imatrix::allocate(int nrl,int nrh,int ncl, const ivector& nch)\n";
-      ad_exit(1);
-    }
-    if ((shape = new mat_shapex(m)) == 0)
-    {
-      cerr << " Error allocating memory in imatrix contructor\n";
-      ad_exit(21);
-    }
-    m -= rowmin();
-    for (int i = rowmin(); i <= rowmax(); ++i)
-    {
-      m[i].allocate(ncl, nch(i));
-    }
+    shape = NULL;
+    m = NULL;
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
-imatrix::imatrix(const imatrix& m2)
- {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     m = m2.m;
-   }
-   else
-   {
-     shape=NULL;
-     m=NULL;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
-void imatrix::shallow_copy(const imatrix& m2)
- {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     m = m2.m;
-   }
-   else
-   {
-     shape=NULL;
-     m=NULL;
-   }
- }
 
 /**
  * Description not yet available.

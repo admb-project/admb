@@ -194,3 +194,49 @@ TEST_F(test_imatrix, allocate_imatrix_empty)
   ASSERT_FALSE(allocated(matrix));
   ASSERT_TRUE(sub_unallocated(matrix));
 }
+TEST_F(test_imatrix, raggedallocate)
+{
+  imatrix m;
+
+  ivector colsmin(1, 3);
+  colsmin(1) = 2;
+  colsmin(2) = 4;
+  colsmin(3) = 6;
+  ivector colsmax(1, 3);
+  colsmax(1) = 12;
+  colsmax(2) = 14;
+  colsmax(3) = 16;
+  m.allocate(1, 3, colsmin, colsmax);
+
+  ASSERT_EQ(m.rowmin(), 1);
+  ASSERT_EQ(m.rowmax(), 3);
+  ASSERT_EQ(m.rowmin(), m.indexmin());
+  ASSERT_EQ(m.rowmax(), m.indexmax());
+  ASSERT_EQ(colsmin(1), m(1).indexmin());
+  ASSERT_EQ(colsmax(1), m(1).indexmax());
+  ASSERT_EQ(colsmin(2), m(2).indexmin());
+  ASSERT_EQ(colsmax(2), m(2).indexmax());
+  ASSERT_EQ(colsmin(3), m(3).indexmin());
+  ASSERT_EQ(colsmax(3), m(3).indexmax());
+}
+TEST_F(test_imatrix, raggedallocate2)
+{
+  imatrix m;
+
+  ivector colsmax(1, 3);
+  colsmax(1) = 12;
+  colsmax(2) = 14;
+  colsmax(3) = 16;
+  m.allocate(1, 3, 5, colsmax);
+
+  ASSERT_EQ(m.rowmin(), 1);
+  ASSERT_EQ(m.rowmax(), 3);
+  ASSERT_EQ(m.rowmin(), m.indexmin());
+  ASSERT_EQ(m.rowmax(), m.indexmax());
+  ASSERT_EQ(5, m(1).indexmin());
+  ASSERT_EQ(colsmax(1), m(1).indexmax());
+  ASSERT_EQ(5, m(2).indexmin());
+  ASSERT_EQ(colsmax(2), m(2).indexmax());
+  ASSERT_EQ(5, m(3).indexmin());
+  ASSERT_EQ(colsmax(3), m(3).indexmax());
+}

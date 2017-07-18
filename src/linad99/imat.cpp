@@ -161,19 +161,14 @@ void imatrix::allocate(int nrl, int nrh, int ncl, int nch)
     }
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
- void imatrix::allocate(void)  //default constructor
- {
-   index_min=0;
-   index_max=-1;
-   m=NULL;
-   shape=NULL;
- }
-
+/// Does not allocate, but initializes imatrix members.
+void imatrix::allocate()
+{
+  index_min = 1;
+  index_max = -1;
+  m = NULL;
+  shape = NULL;
+}
 /**
 Allocate ragged matrix with dimensions 
 [nrl to nrh] x [ncl to nch] where ncl and nch are vectors on lower and upper
@@ -321,45 +316,37 @@ imatrix::imatrix(int nrl, int nrh, int ncl, const ivector& nch)
    allocate(nrl,nrh,ncl,nch);
  }
 
+/// Default constructor
+imatrix::imatrix()
+{
+  allocate();
+}
+/// Destructor
+imatrix::~imatrix()
+{
+  deallocate();
+}
 /**
- * Description not yet available.
- * \param
- */
- imatrix::imatrix(void)
- {
-   allocate();
- }
-
-/**
-Destructor
+Deallocate imatrix memory.
 */
- imatrix::~imatrix()
- {
-   deallocate();
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void imatrix::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       m= (ivector*) (shape->get_pointer());
-       delete [] m;
-       m=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
- }
+void imatrix::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      m = static_cast<ivector*>(shape->get_pointer());
+      delete [] m;
+      m = NULL;
+      delete shape;
+      shape = NULL;
+    }
+  }
+}
 
 /**
 Allocate integer matrix with row dimension [nrl to nrh] where

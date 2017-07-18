@@ -1,74 +1,67 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 /**
- * Description not yet available.
- * \param
- */
-int sum(const imatrix& m)
+Return total sum of the values in matrix.
+
+\param matrix imatrix
+*/
+int sum(const imatrix& matrix)
 {
-  int ssum=0;
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  for (int i=mmin;i<=mmax;i++)
+  int total = 0;
+  for (int i = matrix.rowmin(); i <= matrix.rowmax(); ++i)
   {
-    ssum+=sum(m(i));
+    total += sum(matrix(i));
   }
-  return ssum;
+  return total;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int colsum(const imatrix& m, int col)
+Return sum of matrix at specified column index.
+
+\param matrix imatrix
+\param column index
+*/
+int colsum(const imatrix& matrix, int column)
 {
-  if (col < m.colmin() || col > m.colmax())
+  if (column < matrix.colmin() || column > matrix.colmax())
   {
-    //JCA: Should be Column out of bounds
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
-    "int colsum(const imatrix& m,int col)", m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Specified column is out of bounds",
+    "in colsum(const imatrix&,int column)",
+    matrix.colmin(), matrix.colmax(), column);
   }
-  int isum=0;
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  for (int i=mmin;i<=mmax;i++)
+  int sum = 0;
+  int min = matrix.rowmin();
+  int max = matrix.rowmax();
+  for (int i = min; i <= max; ++i)
   {
-    isum+=m(i,col);
+    sum += matrix(i, column);
   }
-  return isum;
+  return sum;
 }
-
 /**
-Return copy of jth column vector from matrix m.
+Return copy of column vector from matrix at specified column index.
 
-/param m matrix
-/param j column index to return
- */
-ivector column(const imatrix& m, int col)
+/param matrix imatrix
+/param column index
+*/
+ivector column(const imatrix& matrix, int column)
 {
-  if (col < m.colmin() || col > m.colmax())
+  if (column < matrix.colmin() || column > matrix.colmax())
   {
-    //JCA: Should be Column out of bounds
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
-    "int colsum(const imatrix& m,int col)", m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Specified column is out of bounds",
+    "in column(const imatrix&, int column)",
+    matrix.colmin(), matrix.colmax(), column);
   }
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  ivector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  int min = matrix.rowmin();
+  int max = matrix.rowmax();
+  ivector vector(min, max);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=m(i,col);
+    vector(i) = matrix(i, column);
   }
-  return tmp;
+  return vector;
 }

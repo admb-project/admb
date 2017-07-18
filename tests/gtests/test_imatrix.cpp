@@ -105,12 +105,29 @@ TEST_F(test_imatrix, colsum)
       ++count;
     }
   }
-  ivector ret(1, 3); 
+  ivector ret(1, 3);
   ivector colsum(const imatrix& m);
   ret = colsum(m);
   ASSERT_EQ(9, ret(1));
   ASSERT_EQ(12, ret(2));
   ASSERT_EQ(15, ret(3));
+}
+TEST_F(test_imatrix, sum)
+{
+  imatrix m(1, 3, 1, 3);
+  m.initialize();
+
+  int count = 0;
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 3; ++j)
+    {
+      m(i, j) = count;
+      ++count;
+    }
+  }
+  int ret = sum(m);
+  ASSERT_EQ(36, ret);
 }
 TEST_F(test_imatrix, rowsum)
 {
@@ -126,12 +143,35 @@ TEST_F(test_imatrix, rowsum)
       ++count;
     }
   }
-  ivector ret(1, 3); 
+  ivector ret(1, 3);
   ivector rowsum(const imatrix& m);
   ret = rowsum(m);
   ASSERT_EQ(3, ret(1));
   ASSERT_EQ(12, ret(2));
   ASSERT_EQ(21, ret(3));
+}
+TEST_F(test_imatrix, column)
+{
+  imatrix m(1, 3, 1, 3);
+  m.initialize();
+
+  int count = 0;
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 3; ++j)
+    {
+      m(i, j) = count;
+      ++count;
+    }
+  }
+  ivector ret(1, 3);
+  ret = column(m, 2);
+  ASSERT_EQ(1, ret(1));
+  ASSERT_EQ(4, ret(2));
+  ASSERT_EQ(7, ret(3));
+
+  int sum = colsum(m, 2);
+  ASSERT_EQ(12, sum);
 }
 TEST_F(test_imatrix, allocate_imatrix)
 {

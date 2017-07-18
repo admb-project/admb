@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
@@ -23,41 +17,27 @@
  * Description not yet available.
  * \param
  */
- dmatrix::dmatrix( int nrl,  int nrh, int ncl,  int nch)
- {
-   allocate(nrl,nrh,ncl,nch);
- }
-
+dmatrix::dmatrix(int nrl, int nrh, int ncl, int nch)
+{
+  allocate(nrl, nrh, ncl, nch);
+}
 /**
- * Description not yet available.
- * \param
- */
- void dmatrix::allocate(int nrl,int nrh,int ncl,int nch)
- {
-   if (nrh<nrl)
-   {
-     allocate();
-     return;
-   }
-   index_min=nrl;
-   index_max=nrh;
-   if ( (m = new dvector [rowsize()]) == 0)
-   {
-     cerr << " Error allocating memory in dmatrix contructor\n";
-     ad_exit(21);
-   }
-   if ( (shape = new mat_shapex(m))== 0)
-   {
-     cerr << " Error allocating memory in dmatrix contructor\n";
-     ad_exit(21);
-   }
-   m -= rowmin();
-   for (int i=rowmin(); i<=rowmax(); i++)
-   {
-     m[i].allocate(ncl,nch);
-   }
- }
+Allocate dmatrix with dimension [nrl to nrh] x [ncl to nch]
+where ncl to nch are vector of indexes.
 
+\param nrl lower row index
+\param nrh upper row index
+\param ncl lower column index
+\param nch upper column index
+*/
+void dmatrix::allocate(int nrl, int nrh, int ncl, int nch)
+{
+  allocate(nrl, nrh);
+  for (int i = rowmin(); i <= rowmax(); ++i)
+  {
+    elem(i).allocate(ncl, nch);
+  }
+}
 /**
  * Description not yet available.
  * \param

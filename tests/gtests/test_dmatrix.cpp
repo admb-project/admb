@@ -522,39 +522,19 @@ TEST_F(test_dmatrix, extract_diagonal_error)
 {
   ad_exit=&test_ad_exit;
   dmatrix m(2, 3, 1, 3);
-  try
-  {
+  ASSERT_ANY_THROW({
     dvector extract_diagonal(const dmatrix& m);
     extract_diagonal(m);
-  }
-  catch (const int exit_code)
-  {
-    const int expected_exit_code = 1;
-    if (exit_code == expected_exit_code)
-    {
-      return;
-    }
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dmatrix, extract_diagonal_error2)
 {
   ad_exit=&test_ad_exit;
   dmatrix m(1, 3, 1, 4);
-  try
-  {
+  ASSERT_ANY_THROW({
     dvector extract_diagonal(const dmatrix& m);
     extract_diagonal(m);
-  }
-  catch (const int exit_code)
-  {
-    const int expected_exit_code = 1;
-    if (exit_code == expected_exit_code)
-    {
-      return;
-    }
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dmatrix, mean)
 {

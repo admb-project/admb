@@ -173,6 +173,22 @@ TEST_F(test_imatrix, column)
   int sum = colsum(m, 2);
   ASSERT_EQ(12, sum);
 }
+TEST_F(test_imatrix, columnexit)
+{
+  imatrix m(1, 3, 2, 4);
+  ASSERT_ANY_THROW({
+    column(m, 1);
+  });
+  ASSERT_ANY_THROW({
+    column(m, 5);
+  });
+  ASSERT_ANY_THROW({
+    colsum(m, 1);
+  });
+  ASSERT_ANY_THROW({
+    colsum(m, 5);
+  });
+}
 TEST_F(test_imatrix, allocate_imatrix)
 {
   imatrix m(1, 3, 1, 3);

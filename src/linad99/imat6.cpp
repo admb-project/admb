@@ -5,12 +5,15 @@
 #include "fvar.hpp"
 
 /**
+Allocate imatrix using dimensions of other.
+
+\param other imatrix
 */
 void imatrix::allocate(const imatrix& other)
 {
   allocate(other.rowmin(), other.rowmax());
   for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    m[i].allocate(other(i));
+    elem(i).allocate(other(i));
   }
 }

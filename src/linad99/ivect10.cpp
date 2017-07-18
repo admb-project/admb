@@ -1,54 +1,47 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-int Max(const ivector& t1)
-  {
-    return max(t1);
-  }
+Returns maximum value of all elements in ivec.
 
+\param ivec ivector
+*/
+int Max(const ivector& ivec)
+{
+  return max(ivec);
+}
 /**
- * Description not yet available.
- * \param
- */
+Returns maximum value of all elements in ivec.
+
+\param ivec ivector
+*/
 int max(const ivector& t1)
+{
+  int min = ivec.indexmin();
+  int max = ivec.indexmax();
+  int maximum = ivec.elem(min);
+  for (int i = min + 1; i <= max; ++i)
   {
-     int tmp;
-     int mmin=t1.indexmin();
-     int mmax=t1.indexmax();
-     tmp=t1.elem(mmin);
-     for (int i=mmin+1; i<=mmax; i++)
-     {
-       if (tmp<t1.elem(i)) tmp=t1.elem(i);
-     }
-     return(tmp);
+    if (maximum < ivec.elem(i)) maximum = ivec.elem(i);
   }
-
+  return maximum;
+}
 /**
- * Description not yet available.
- * \param
- */
-int min(const ivector& t1)
+Returns minimum value of all elements in ivec.
+
+\param ivec ivector
+*/
+int min(const ivector& ivec)
+{
+  int min = ivec.indexmin();
+  int max = ivec.indexmax();
+  int minimum = ivec.elem(min);
+  for (int i = min + 1; i <= max; ++i)
   {
-     int tmp;
-     int mmin=t1.indexmin();
-     int mmax=t1.indexmax();
-     tmp=t1.elem(mmin);
-     for (int i=mmin+1; i<=mmax; i++)
-     {
-       if (tmp>t1.elem(i)) tmp=t1.elem(i);
-     }
-     return(tmp);
+    if (minimum > ivec.elem(i)) minimum = ivec.elem(i);
   }
+  return minimum;
+}

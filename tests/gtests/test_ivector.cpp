@@ -630,3 +630,13 @@ TEST_F(test_ivector, add_value_tothis)
   EXPECT_EQ(6, a(3));
   EXPECT_EQ(0, a(4));
 }
+TEST_F(test_ivector, Max)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  EXPECT_EQ(7, Max(a));
+}

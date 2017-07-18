@@ -606,12 +606,12 @@ TEST_F(test_ivector, add_b_tothis)
 
   ASSERT_ANY_THROW({
     ivector empty;
-    a = empty;
+    a += empty;
   });
 
   ASSERT_ANY_THROW({
     ivector b(0, 1);
-    a = b;
+    a += b;
   });
 }
 TEST_F(test_ivector, add_value_tothis)

@@ -18,7 +18,7 @@ Returns maximum value of all elements in ivec.
 
 \param ivec ivector
 */
-int max(const ivector& t1)
+int max(const ivector& ivec)
 {
   int min = ivec.indexmin();
   int max = ivec.indexmax();

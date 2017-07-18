@@ -133,3 +133,64 @@ TEST_F(test_imatrix, rowsum)
   ASSERT_EQ(12, ret(2));
   ASSERT_EQ(21, ret(3));
 }
+TEST_F(test_imatrix, allocate_imatrix)
+{
+  imatrix m(1, 3, 1, 3);
+  m.initialize();
+
+  int count = 0;
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 3; ++j)
+    {
+      m(i, j) = count;
+      ++count;
+    }
+  }
+
+  imatrix matrix;
+  matrix.allocate(m);
+
+  count = 0;
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 3; ++j)
+    {
+      ASSERT_EQ(m(i, j), count);
+      ++count;
+    }
+  }
+}
+TEST_F(test_imatrix, allocate_imatrix_emptycolumns)
+{
+  imatrix m(1, 3);
+  m.initialize();
+
+  imatrix matrix;
+  matrix.allocate(m);
+
+  ASSERT_EQ(1, matrix.rowmin());
+  ASSERT_EQ(3, matrix.rowmax());
+  ASSERT_FALSE(allocated(matrix(1)));
+  ASSERT_FALSE(allocated(matrix(2)));
+  ASSERT_FALSE(allocated(matrix(3)));
+}
+TEST_F(test_imatrix, allocate_imatrix_empty)
+{
+  imatrix m;
+  m.initialize();
+  ASSERT_EQ(1, m.rowmin());
+  ASSERT_EQ(-1, m.rowmax());
+  ASSERT_EQ(0, m.rowsize());
+  ASSERT_FALSE(allocated(m));
+  ASSERT_TRUE(sub_unallocated(m));
+
+  imatrix matrix;
+  matrix.allocate(m);
+
+  ASSERT_EQ(1, matrix.rowmin());
+  ASSERT_EQ(-1, matrix.rowmax());
+  ASSERT_EQ(0, matrix.rowsize());
+  ASSERT_FALSE(allocated(matrix));
+  ASSERT_TRUE(sub_unallocated(matrix));
+}

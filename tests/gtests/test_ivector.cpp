@@ -640,3 +640,63 @@ TEST_F(test_ivector, Max)
 
   EXPECT_EQ(7, Max(a));
 }
+TEST_F(test_ivector, null)
+{
+  ad_exit=&test_ad_exit;
+
+  ivector a;
+  ASSERT_ANY_THROW({
+    a[1];
+  });
+  ASSERT_ANY_THROW({
+    a(1);
+  });
+}
+TEST_F(test_ivector, errorindex)
+{
+  ad_exit=&test_ad_exit;
+
+  ivector a(1, 3);
+  ASSERT_ANY_THROW({
+    a[0];
+  });
+  ASSERT_ANY_THROW({
+    a(0);
+  });
+  ASSERT_ANY_THROW({
+    a[4];
+  });
+  ASSERT_ANY_THROW({
+    a(4);
+  });
+}
+TEST_F(test_ivector, constnull)
+{
+  ad_exit=&test_ad_exit;
+
+  const ivector a;
+  ASSERT_ANY_THROW({
+    a[1];
+  });
+  ASSERT_ANY_THROW({
+    a(1);
+  });
+}
+TEST_F(test_ivector, errorindex2)
+{
+  ad_exit=&test_ad_exit;
+
+  const ivector a(1, 3);
+  ASSERT_ANY_THROW({
+    a[0];
+  });
+  ASSERT_ANY_THROW({
+    a(0);
+  });
+  ASSERT_ANY_THROW({
+    a[4];
+  });
+  ASSERT_ANY_THROW({
+    a(4);
+  });
+}

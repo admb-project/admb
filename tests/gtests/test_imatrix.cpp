@@ -296,3 +296,20 @@ TEST_F(test_imatrix, raggedallocate2)
   ASSERT_EQ(5, m(3).indexmin());
   ASSERT_EQ(colsmax(3), m(3).indexmax());
 }
+TEST_F(test_imatrix, fill_seqadd)
+{
+  imatrix m(1, 3, 1, 3);
+  int start = 11;
+  int increment = 5;
+  m.fill_seqadd(11, 5);
+
+  ASSERT_EQ(11, m(1, 1));
+  ASSERT_EQ(16, m(1, 2));
+  ASSERT_EQ(21, m(1, 3));
+  ASSERT_EQ(26, m(2, 1));
+  ASSERT_EQ(31, m(2, 2));
+  ASSERT_EQ(36, m(2, 3));
+  ASSERT_EQ(41, m(3, 1));
+  ASSERT_EQ(46, m(3, 2));
+  ASSERT_EQ(51, m(3, 3));
+}

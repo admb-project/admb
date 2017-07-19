@@ -36,13 +36,11 @@ int& ivector::operator[](int i)
   {
     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
      "int& ivector::operator[](int i)", indexmin(), indexmax(), i);
-    ad_exit(1);
   }
   else if (i < indexmin())
   {
     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
      "int& ivector::operator[](int i)", indexmin(), indexmax(), i);
-    ad_exit(1);
   }
 
   return *(v + i);
@@ -64,13 +62,11 @@ int& ivector::operator()(int i)
   {
     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
       "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
-    ad_exit(1);
   }
   else if (i < indexmin())
   {
     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
       "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
-    ad_exit(1);
   }
   return *(v + i);
 }

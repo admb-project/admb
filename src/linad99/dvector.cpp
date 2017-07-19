@@ -508,7 +508,7 @@ void dvector::allocate()
   shape = NULL;
   v = NULL;
   index_min = 1;
-  index_max = 0;
+  index_max = -1;
 }
 
   /** Compute the dot product of two vectors. The minimum and maxium

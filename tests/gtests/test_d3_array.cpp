@@ -943,6 +943,19 @@ TEST_F(test_d3_array, allocate_5int)
   ASSERT_EQ(b(2).colmin(), colsmin(2));
   ASSERT_EQ(b(2).colmax(), 12);
 }
+TEST_F(test_d3_array, allocate_5int_error)
+{
+  d3_array b;
+
+  ASSERT_ANY_THROW({
+    ivector colsmin(1, 3);
+    b.allocate(1, 2, 3, 4, colsmin, 12);
+  });
+  ASSERT_ANY_THROW({
+    ivector colsmin(0, 2);
+    b.allocate(1, 2, 3, 4, colsmin, 12);
+  });
+}
 TEST_F(test_d3_array, allocate_5intb)
 {
   d3_array b;
@@ -962,6 +975,19 @@ TEST_F(test_d3_array, allocate_5intb)
   ASSERT_EQ(b(1).colmax(), colsmax(1));
   ASSERT_EQ(b(2).colmin(), 7);
   ASSERT_EQ(b(2).colmax(), colsmax(2));
+}
+TEST_F(test_d3_array, allocate_5intb_error)
+{
+  d3_array b;
+
+  ASSERT_ANY_THROW({
+    ivector colsmax(3, 5);
+    b.allocate(1, 2, 3, 4, 1, colsmax);
+  });
+  ASSERT_ANY_THROW({
+    ivector colsmax(2, 4);
+    b.allocate(1, 2, 3, 4, 1, colsmax);
+  });
 }
 TEST_F(test_d3_array, allocate_4int)
 {

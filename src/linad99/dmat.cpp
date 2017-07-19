@@ -258,12 +258,17 @@ dmatrix::dmatrix(int nrl, int nrh, int ncl, const ivector& nch)
    allocate(nrl,nrh,ncl,nch);
  }
 
+/// Copy constructor
+dmatrix::dmatrix(const dmatrix& other)
+{
+  shallow_copy(other);
+}
 /**
-Constructing dmatrix using dimensions and values from other.
+Shallow copy values and dimensions from other to dmatrix.
 
 \param other dmatrix
 */
-dmatrix::dmatrix(const dmatrix& other)
+void dmatrix::shallow_copy(const dmatrix& other)
 {
   index_min = other.index_min;
   index_max = other.index_max;
@@ -280,29 +285,6 @@ dmatrix::dmatrix(const dmatrix& other)
   }
 #endif
 }
-
-/**
- * Description not yet available.
- * \param
- */
-void dmatrix::shallow_copy(const dmatrix& m2)
- {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   shape=m2.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-#ifdef SAFE_ALL
-   else
-   {
-     cerr << "Making a copy of an unallocated dmatrix"<<endl;
-   }
-#endif
-   m = m2.m;
- }
-
 /// Destructor
 dmatrix::~dmatrix()
 {

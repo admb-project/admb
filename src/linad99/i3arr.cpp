@@ -56,20 +56,7 @@ void i3_array::allocate(
   int nrl, int nrh,
   int ncl, int nch)
 {
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new imatrix[slicesize()]) == 0)
-  {
-     ad_exit(21);
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
     t[i].allocate(nrl, nrh, ncl, nch);
@@ -83,6 +70,11 @@ Allocate vector of empty matrices with dimension
 */
 void i3_array::allocate(int sl, int sh)
 {
+  if (sl > sh)
+  {
+    allocate();
+    return;
+  }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
     cerr << " Error: i3_array unable to allocate memory in "

@@ -127,22 +127,10 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh,
          << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
   }
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-           << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-           << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh, ncl(i), nch);
+    elem(i).allocate(nrl, nrh, ncl(i), nch);
   }
 }
 /**
@@ -168,25 +156,12 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh,
          << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
   }
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh, ncl, nch(i));
+    elem(i).allocate(nrl, nrh, ncl, nch(i));
   }
 }
-
 /**
 Allocate vector of matrices with dimensions
 [sl to sh] x ([nrl to nrh] x [ncl to nch])
@@ -197,29 +172,18 @@ Allocate vector of matrices with dimensions
 \param ncl lower column index for matrix
 \param nch upper column index for matrix
 */
-void d3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
+void d3_array::allocate(int sl, int sh, int nrl, int nrh, int ncl, int nch)
 {
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh, ncl, nch);
+    elem(i).allocate(nrl, nrh, ncl, nch);
   }
 }
 /**
 Allocate vector of matrices having empty columns and with dimensions
 [sl to sh] x [nrl to nrh].
+
 \param sl lower index of vector
 \param sh upper index of vector
 \param nrl lower row index for matrix
@@ -227,47 +191,29 @@ Allocate vector of matrices having empty columns and with dimensions
 */
 void d3_array::allocate(int sl, int sh, int nrl, int nrh)
 {
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh);
+    elem(i).allocate(nrl, nrh);
   }
 }
-
 /**
+Allocate vector of matrices having empty columns and with dimensions
+[sl to sh] x [nrl to nrh].
+
+\param sl lower index of vector
+\param sh upper index of vector
+\param nrl lower row index for matrix
+\param nrh upper row index for matrix
 */
 void d3_array::allocate(
   int sl, int sh,
   const index_type& nrl,const index_type& nrh)
 {
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ( (t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl(i), nrh(i));
+    elem(i).allocate(nrl(i), nrh(i));
   }
 }
 /**
@@ -279,10 +225,11 @@ Note: sl should be less than or equal to sh.
 */
 void d3_array::allocate(int sl, int sh)
 {
-#ifdef DEBUG
-  assert(sl <= sh);
-#endif
-
+  if (sl > sh)
+  {
+    allocate();
+    return;
+  }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
     cerr << " Error: d3_array unable to allocate memory in "
@@ -296,38 +243,27 @@ void d3_array::allocate(int sl, int sh)
     ad_exit(1);
   }
   t -= slicemin();
-  for (int i=sl; i<=sh; i++)
-  {
-    t[i].allocate();
-  }
-}
 
-/**
-Allocate a d3_array with the same dimensions as d3v.
-*/
-void d3_array::allocate(const d3_array& d3v)
-{
-  int sl = d3v.slicemin();
-  int sh = d3v.slicemax();
-  if ( (shape=new three_array_shape(sl,sh)) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+#ifndef OPT_LIB
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(d3v(i));
+    elem(i).allocate();
+  }
+#endif
+}
+/**
+Allocate d3_array with the same dimensions as other.
+
+\param other d3_array
+*/
+void d3_array::allocate(const d3_array& other)
+{
+  allocate(other.slicemin(), other.slicemax());
+  for (int i = slicemin(); i <= slicemax(); ++i)
+  {
+    elem(i).allocate(other(i));
   }
 }
-
 /**
 */
 void d3_array::allocate(
@@ -703,32 +639,21 @@ d3_array::d3_array(int sl, int sh, int nrl, const ivector& nrh, int ncl,
  }
 
 /**
- * Description not yet available.
- * \param
- */
-d3_array::d3_array(const d3_array& m2)
- {
-   shape=m2.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-#ifdef SAFE_ALL
-   else
-   {
-     cerr << "Making a copy of an unallocated d3_array"<<endl;
-   }
-#endif
-   t = m2.t;
- }
-
+Copy constructor
+*/
+d3_array::d3_array(const d3_array& other)
+{
+  shallow_copy(other);
+}
 /**
- * Description not yet available.
- * \param
- */
-void d3_array::shallow_copy(const d3_array& m2)
- {
-   shape=m2.shape;
+Shallow copy other data structure pointers.
+
+\param other d3_array
+*/
+void d3_array::shallow_copy(const d3_array& other)
+{
+   t = other.t;
+   shape = other.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -739,7 +664,6 @@ void d3_array::shallow_copy(const d3_array& m2)
      cerr << "Making a copy of an unallocated d3_array"<<endl;
    }
 #endif
-   t = m2.t;
  }
 
 /**

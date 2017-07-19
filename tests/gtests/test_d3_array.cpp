@@ -1022,3 +1022,39 @@ TEST_F(test_d3_array, constructorintint)
   ASSERT_TRUE(!a(1, 1));
   ASSERT_TRUE(!a(1, 2));
 }
+TEST_F(test_d3_array, allocateintint4xivector)
+{
+  d3_array a;
+  ivector rowsmin(1, 3); 
+  rowsmin(1) = 2;
+  rowsmin(2) = 3;
+  rowsmin(3) = 4;
+  ivector rowsmax(1, 3); 
+  rowsmax(1) = 5;
+  rowsmax(2) = 6;
+  rowsmax(3) = 7;
+  ivector colsmin(1, 3); 
+  colsmin(1) = 2;
+  colsmin(2) = 3;
+  colsmin(3) = 4;
+  ivector colsmax(1, 3); 
+  colsmax(1) = 5;
+  colsmax(2) = 6;
+  colsmax(3) = 7;
+  a.allocate(1, 3, rowsmin, rowsmax, colsmin, colsmax);
+
+  ASSERT_EQ(1, a.slicemin());
+  ASSERT_EQ(3, a.slicemax());
+  ASSERT_EQ(2, a(1).rowmin());
+  ASSERT_EQ(5, a(1).rowmax());
+  ASSERT_EQ(3, a(2).rowmin());
+  ASSERT_EQ(6, a(2).rowmax());
+  ASSERT_EQ(4, a(3).rowmin());
+  ASSERT_EQ(7, a(3).rowmax());
+  ASSERT_EQ(2, a(1).colmin());
+  ASSERT_EQ(5, a(1).colmax());
+  ASSERT_EQ(3, a(2).colmin());
+  ASSERT_EQ(6, a(2).colmax());
+  ASSERT_EQ(4, a(3).colmin());
+  ASSERT_EQ(7, a(3).colmax());
+}

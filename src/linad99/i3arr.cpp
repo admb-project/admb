@@ -1,26 +1,15 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include "fvar.hpp"
-//#include "i3_array.h"
 
-/**
-Default constructor
-*/
+/// Default constructor
 i3_array::i3_array()
 {
   allocate();
 }
-/**
-Destructor
-*/
+/// Destructor
 i3_array::~i3_array()
 {
   if (shape)
@@ -76,14 +65,14 @@ void i3_array::allocate(int sl, int sh)
   }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
+    cerr << " Error: Unable to allocate memory in "
+         << " i3_array::allocate(int, int).\n";
     ad_exit(1);
   }
   if ((t = new imatrix[slicesize()]) == 0)
   {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
+    cerr << " Error: Unable to allocate memory in "
+         << " i3_array::allocate(int, int).\n";
     ad_exit(1);
   }
   t -= slicemin();
@@ -151,22 +140,10 @@ void i3_array::allocate(
   int nrl, int nrh,
   const ivector& ncl, const ivector& nch)
 {
-  if ( (shape=new three_array_shape(sl,sh)) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ( (t = new imatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh, ncl(i), nch(i));
+    elem(i).allocate(nrl, nrh, ncl(i), nch(i));
   }
 }
 /**
@@ -308,64 +285,37 @@ i3_array::i3_array(int _sl, int _sh, const imatrix& m1)
 /**
 Allocate i3_array with same dimension as i3v.
 */
-void i3_array::allocate(const i3_array& i3v)
+void i3_array::allocate(const i3_array& other)
 {
-  int sl = i3v.slicemin();
-  int sh = i3v.slicemax();
-  //int nrl=i3v.rowmin();
-  //int nrh=i3v.rowmax();
-  //int ncl=i3v.colmin();
-  //int nch=i3v.colmax();
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new imatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  int sl = other.slicemin();
+  int sh = other.slicemax();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(i3v[i]);
-    //elem(i).initialize();
+    elem(i).allocate(other.elem(i));
   }
 }
 
 /**
 Does NOT allocate, but set empty i3_array.
 */
-void i3_array::allocate(void)
+void i3_array::allocate()
 {
   shape = NULL;
   t = NULL;
 }
-
-/**
- * Description not yet available.
- * \param
- */
- void i3_array::initialize()
- {
-   if (!(!(*this)))  // only initialize allocated objects
-   {
-     for (int i=slicemin();i<=slicemax();i++)
-     {
-       elem(i).initialize();
-     }
-   }
- }
-
-/**
-Copy constructor
-*/
-i3_array::i3_array(const i3_array& m2)
+/// Initialize all elements of i3_array to zero.
+void i3_array::initialize()
 {
-  shape = m2.shape;
+  for (int i = slicemin(); i <= slicemax(); ++i)
+  {
+    elem(i).initialize();
+  }
+}
+/// Copy constructor (shallow)
+i3_array::i3_array(const i3_array& other)
+{
+  shape = other.shape;
   if (shape)
   {
     (shape->ncopies)++;
@@ -376,10 +326,10 @@ i3_array::i3_array(const i3_array& m2)
     cerr << "Making a copy of an unallocated d3_array"<<endl;
   }
 #endif
-  t = m2.t;
+  t = other.t;
 }
 /**
-Deallocate memory for i3_array.
+Deallocate i3_array memory.
 */
 void i3_array::deallocate()
 {

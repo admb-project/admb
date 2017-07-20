@@ -71,10 +71,23 @@ TEST_F(test_imatrix, diagonal)
   m(2, 2) = 20;
   m(3, 3) = 30;
   ivector ret = diagonal(m);
-  ASSERT_EQ(10, m(1, 1));
-  ASSERT_EQ(20, m(2, 2));
-  ASSERT_EQ(30, m(3, 3));
+  ASSERT_EQ(10, ret(1));
+  ASSERT_EQ(20, ret(2));
+  ASSERT_EQ(30, ret(3));
 }
+/*
+TEST_F(test_imatrix, diagonalerror)
+{
+  ASSERT_ANY_THROW({
+    imatrix m(1, 3, 2, 3);
+    diagonal(m);
+  });
+  ASSERT_ANY_THROW({
+    imatrix m(1, 3, 1, 4);
+    diagonal(m);
+  });
+}
+*/
 TEST_F(test_imatrix, min)
 {
   int min(const imatrix& M);
@@ -366,4 +379,31 @@ TEST_F(test_imatrix, imatrix_position_error)
     position.ub.allocate(1, 4);
     m.allocate(position);
   });
+}
+TEST_F(test_imatrix, imatrix_imatrix)
+{
+  imatrix a(1, 2, 1, 3);
+  a(1, 1) = 1;
+  a(1, 2) = 2;
+  a(1, 3) = 3;
+  a(2, 1) = 4;
+  a(2, 2) = 5;
+  a(2, 3) = 6;
+  imatrix b(1, 3, 1, 2);
+  b(1, 1) = 7;
+  b(1, 2) = 8;
+  b(2, 1) = 9;
+  b(2, 2) = 10;
+  b(3, 1) = 11;
+  b(3, 2) = 12;
+  imatrix results = a * b;
+
+  ASSERT_EQ(1, results.rowmin());
+  ASSERT_EQ(2, results.rowmax());
+  ASSERT_EQ(1, results.colmin());
+  ASSERT_EQ(2, results.colmax());
+  ASSERT_EQ(58, results(1, 1));
+  ASSERT_EQ(64, results(1, 2));
+  ASSERT_EQ(139, results(2, 1));
+  ASSERT_EQ(154, results(2, 2));
 }

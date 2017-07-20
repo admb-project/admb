@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
@@ -21,17 +15,9 @@ imatrix& imatrix::operator=(const imatrix& m1)
      if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
        colmin() != m1.colmin() || colmax() != m1.colmax() )
      {
-       cerr << rowmin() << endl;
-       cerr << rowmax() << endl;
-       cerr << m1.rowmin() << endl;
-       cerr << m1.rowmax() << endl;
-       cerr << colmin() << endl;
-       cerr << colmax() << endl;
-       cerr << m1.colmin() << endl;
-       cerr << m1.colmax() << endl;
        cerr << " Incompatible array bounds in "
        "imatrix& operator=(const imatrix&)\n";
-       ad_exit(21);
+       ad_exit(1);
      }
 
      if (m != m1.m)            // check for condition that both matrices
@@ -55,18 +41,16 @@ imatrix& imatrix::operator=(const imatrix& m1)
    }
    return(*this);
  }
-
 /**
- * Description not yet available.
- * \param
- */
- imatrix& imatrix::operator= (const int n)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin;i<=mmax;i++)
-   {
-     (*this)(i) = n;
-   }
-   return(*this);
- }
+Assigns value to all elements of imatrix.
+
+\param value integer
+*/
+imatrix& imatrix::operator=(const int value)
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) = value;
+  }
+  return *this;
+}

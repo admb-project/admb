@@ -418,3 +418,19 @@ TEST_F(test_imatrix, error_imatrix_imatrix)
     a * b;
   });
 }
+TEST_F(test_imatrix, operatorequalint)
+{
+  imatrix m(1, 3, 1, 3);
+  int value = 11;
+  m = value;
+
+  ASSERT_EQ(11, m(1, 1));
+  ASSERT_EQ(11, m(1, 2));
+  ASSERT_EQ(11, m(1, 3));
+  ASSERT_EQ(11, m(2, 1));
+  ASSERT_EQ(11, m(2, 2));
+  ASSERT_EQ(11, m(2, 3));
+  ASSERT_EQ(11, m(3, 1));
+  ASSERT_EQ(11, m(3, 2));
+  ASSERT_EQ(11, m(3, 3));
+}

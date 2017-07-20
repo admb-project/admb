@@ -313,3 +313,57 @@ TEST_F(test_imatrix, fill_seqadd)
   ASSERT_EQ(46, m(3, 2));
   ASSERT_EQ(51, m(3, 3));
 }
+TEST_F(test_imatrix, imatrix_position)
+{
+  imatrix_position position(1, 3);
+  position.lb.allocate(1, 3);
+  position.lb(1) = 1;
+  position.lb(2) = 2;
+  position.lb(3) = 3;
+  position.ub.allocate(1, 3);
+  position.ub(1) = 4;
+  position.ub(2) = 5;
+  position.ub(3) = 6;
+
+  imatrix m;
+  m.allocate(position);
+  ASSERT_EQ(1, m.rowmin());
+  ASSERT_EQ(3, m.rowmax());
+  ASSERT_EQ(position.lb(1), m(1).indexmin());
+  ASSERT_EQ(position.ub(1), m(1).indexmax());
+  ASSERT_EQ(position.lb(2), m(2).indexmin());
+  ASSERT_EQ(position.ub(2), m(2).indexmax());
+  ASSERT_EQ(position.lb(3), m(3).indexmin());
+  ASSERT_EQ(position.ub(3), m(3).indexmax());
+}
+TEST_F(test_imatrix, imatrix_position_error)
+{
+  ASSERT_ANY_THROW({
+    imatrix m;
+    imatrix_position position(1, 3);
+    position.lb.allocate(2, 3);
+    position.ub.allocate(1, 3);
+    m.allocate(position);
+  });
+  ASSERT_ANY_THROW({
+    imatrix m;
+    imatrix_position position(1, 3);
+    position.lb.allocate(1, 4);
+    position.ub.allocate(1, 3);
+    m.allocate(position);
+  });
+  ASSERT_ANY_THROW({
+    imatrix m;
+    imatrix_position position(1, 3);
+    position.lb.allocate(1, 3);
+    position.ub.allocate(2, 3);
+    m.allocate(position);
+  });
+  ASSERT_ANY_THROW({
+    imatrix m;
+    imatrix_position position(1, 3);
+    position.lb.allocate(1, 3);
+    position.ub.allocate(1, 4);
+    m.allocate(position);
+  });
+}

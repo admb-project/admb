@@ -29,17 +29,17 @@ dvar_matrix::dvar_matrix(const dvar_matrix& other)
   if (!(other))
   {
     //cerr << "Making a copy of an unallocated dvar_matrix" << endl;
-    index_min = 0;
-    index_max = -1;
-    shape = nullptr;
-    m = nullptr;
+    allocate();
   }
   else
   {
     index_min = other.index_min;
     index_max = other.index_max;
     shape = other.shape;
-    (shape->ncopies)++;
+    if (shape)
+    {
+      (shape->ncopies)++;
+    }
     m = other.m;
   }
 }
@@ -506,7 +506,7 @@ Does not allocate, but initializes members.
 void dvar_matrix::allocate()
 {
   index_min = 1;
-  index_max = 0;
+  index_max = -1;
   shape = nullptr;
   m = nullptr;
 }

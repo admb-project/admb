@@ -169,7 +169,8 @@ dvar_matrix::dvar_matrix(int nrl, int nrh, int ncl, int nch)
 
 /**
 Allocate variable matrix with dimension [nrl to nrh] where
-columns are empty.
+columns are empty.  If nrl greater than nrh, then dvar_matrix
+is initialized as empty.
 
 \param nrl lower index
 \param nrh upper index
@@ -186,14 +187,19 @@ void dvar_matrix::allocate(int nrl, int nrh)
     index_max = nrh;
     if ((m = new dvar_vector[rowsize()]) == 0)
     {
-      cerr << " Error allocating memory in dvar_matrix contructor\n";
-      ad_exit(21);
+      cerr << " Error allocating memory in dvar_matrix::allocate(int, int)\n";
+      ad_exit(1);
     }
     if ((shape = new mat_shapex(m)) == 0)
     {
-      cerr << " Error allocating memory in dvar_matrix contructor\n";
+      cerr << " Error allocating memory in dvar_matrix::allocate(int, int)\n";
+      ad_exit(1);
     }
     m -= rowmin();
+    for (int i = nrl; i <= nrh; ++i)
+    {
+      elem(i).allocate();
+    }
   }
 }
 /**
@@ -206,31 +212,12 @@ Allocates AD variable matrix with dimensions nrl to nrh by ncl to nch.
 */
 void dvar_matrix::allocate(int nrl, int nrh, int ncl, int nch)
 {
-  if (nrl > nrh)
+  allocate(nrl, nrh);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    allocate();
-  }
-  else
-  {
-    index_min = nrl;
-    index_max = nrh;
-    if ((m = new dvar_vector[rowsize()]) == 0)
-    {
-      cerr << " Error allocating memory in dvar_matrix contructor\n";
-      ad_exit(21);
-    }
-    if ((shape=new mat_shapex(m)) == 0)
-    {
-      cerr << " Error allocating memory in dvar_matrix contructor\n";
-    }
-    m -= rowmin();
-    for (int i=nrl; i<=nrh; i++)
-    {
-      m[i].allocate(ncl,nch);
-    }
+    elem(i).allocate(ncl, nch);
   }
 }
-
 /**
  * Description not yet available.
  * \param

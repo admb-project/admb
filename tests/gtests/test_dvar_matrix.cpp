@@ -221,3 +221,46 @@ TEST_F(test_dvar_matrix, negativeoperator)
   ASSERT_DOUBLE_EQ(-3, value(a2(2, 1)));
   ASSERT_DOUBLE_EQ(-4, value(a2(2, 2)));
 }
+TEST_F(test_dvar_matrix, empty)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+  a.allocate(1, 0);
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(-1, a.rowmax());
+  ASSERT_FALSE(allocated(a));
+}
+TEST_F(test_dvar_matrix, emptycolumns)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+  a.allocate(1, 3);
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(3, a.rowmax());
+  ASSERT_TRUE(allocated(a));
+  ASSERT_TRUE(sub_unallocated(a));
+  ASSERT_FALSE(allocated(a(1)));
+  ASSERT_FALSE(allocated(a(2)));
+  ASSERT_FALSE(allocated(a(3)));
+}
+TEST_F(test_dvar_matrix, allocate4xint)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+  a.allocate(1, 3, 1, 4);
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(3, a.rowmax());
+  ASSERT_EQ(1, a.colmin());
+  ASSERT_EQ(4, a.colmax());
+  ASSERT_TRUE(allocated(a));
+  ASSERT_FALSE(sub_unallocated(a));
+  ASSERT_TRUE(allocated(a(1)));
+  ASSERT_TRUE(allocated(a(2)));
+  ASSERT_TRUE(allocated(a(3)));
+}

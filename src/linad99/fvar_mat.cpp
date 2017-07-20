@@ -219,29 +219,17 @@ void dvar_matrix::allocate(int nrl, int nrh, int ncl, int nch)
   }
 }
 /**
- * Description not yet available.
- * \param
- */
- void dvar_matrix::allocate(ad_integer nrl,ad_integer nrh)
- {
-   if (nrl>nrh)
-     allocate();
-   else
-   {
-     index_min=nrl;
-     index_max=nrh;
-     if ( (m = new dvar_vector [rowsize()]) == 0)
-     {
-       cerr << " Error allocating memory in dvar_matrix contructor\n";
-       ad_exit(21);
-     }
-     if ( (shape=new mat_shapex(m)) == 0)
-     {
-       cerr << " Error allocating memory in dvar_matrix contructor\n";
-     }
-     m -= rowmin();
-   }
- }
+Allocate variable matrix with dimension [nrl to nrh] where
+columns are empty.  If nrl greater than nrh, then dvar_matrix
+is initialized as empty.
+
+\param nrl lower index
+\param nrh upper index
+*/
+void dvar_matrix::allocate(ad_integer nrl, ad_integer nrh)
+{
+  allocate(static_cast<int>(nrl), static_cast<int>(nrh));
+}
 
 /**
 Allocate variable matrix using the same dimensions as m1.

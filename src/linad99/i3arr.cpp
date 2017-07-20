@@ -72,8 +72,7 @@ void i3_array::allocate(int sl, int sh)
 {
   if (sl > sh)
   {
-    allocate();
-    return;
+    return allocate();
   }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {

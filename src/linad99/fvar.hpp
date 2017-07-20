@@ -3836,23 +3836,23 @@ class i3_array
    void initialize(int sl, int sh, int nrl, const ivector & nrh, int ncl,
      const ivector & nch);
 
-   //access functions
-   int indexmin(void) const
-   {
-      return shape->slice_min;
-   }
-   int indexmax(void) const
-   {
-      return shape->slice_max;
-   }
-   int slicemin(void) const
-   {
-      return shape->slice_min;
-   }
-   int slicemax(void) const
-   {
-      return shape->slice_max;
-   }
+  //access functions
+  int indexmin() const
+  {
+    return slicemin();
+  }
+  int indexmax() const
+  {
+    return slicemax();
+  }
+  int slicemin() const
+  {
+    return shape ? shape->slice_min : 1;
+  }
+  int slicemax() const
+  {
+    return shape ? shape->slice_max : 0;
+  }
    int colmin(void) const
    {
       return ((*this) (slicemin()).colmin());
@@ -3872,8 +3872,7 @@ class i3_array
   // returns the number of rows
   unsigned int slicesize() const
   {
-    int size = slicemax() - slicemin() + 1;
-    return static_cast<unsigned int>(size < 0 ? 0 : size);
+    return static_cast<unsigned int>(slicemax() - slicemin() + 1);
   }
    // returns the number of rows
    int rowsize() const
@@ -3885,16 +3884,16 @@ class i3_array
    {
       return (colmax() - colmin() + 1);
    }
-   void initialize(void);
+   void initialize();
 
-   imatrix & elem(int k)
-   {
-      return (t[k]);
-   }
-   const imatrix & elem(int k) const
-   {
-      return t[k];
-   }
+  imatrix& elem(int k)
+  {
+    return t[k];
+  }
+  const imatrix& elem(int k) const
+  {
+    return t[k];
+  }
    int &operator()(int k, int i, int j);
    ivector & operator()(int k, int i);
    imatrix & operator[](int i);

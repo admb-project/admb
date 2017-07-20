@@ -44,3 +44,18 @@ TEST_F(test_i3_array, inputoutput)
     }
   }
 }
+TEST_F(test_i3_array, deallocate)
+{
+  i3_array a(2, 5);
+
+  ASSERT_EQ(2, a.slicemin());
+  ASSERT_EQ(5, a.slicemax());
+  ASSERT_EQ(4, a.slicesize());
+
+  a.deallocate();
+
+  ASSERT_EQ(1, a.slicemin());
+  ASSERT_EQ(0, a.slicemax());
+  ASSERT_EQ(0, a.slicesize());
+  ASSERT_FALSE(allocated(a));
+}

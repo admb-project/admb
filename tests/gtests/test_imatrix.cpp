@@ -75,7 +75,6 @@ TEST_F(test_imatrix, diagonal)
   ASSERT_EQ(20, ret(2));
   ASSERT_EQ(30, ret(3));
 }
-/*
 TEST_F(test_imatrix, diagonalerror)
 {
   ASSERT_ANY_THROW({
@@ -87,7 +86,6 @@ TEST_F(test_imatrix, diagonalerror)
     diagonal(m);
   });
 }
-*/
 TEST_F(test_imatrix, min)
 {
   int min(const imatrix& M);
@@ -406,4 +404,17 @@ TEST_F(test_imatrix, imatrix_imatrix)
   ASSERT_EQ(64, results(1, 2));
   ASSERT_EQ(139, results(2, 1));
   ASSERT_EQ(154, results(2, 2));
+}
+TEST_F(test_imatrix, error_imatrix_imatrix)
+{
+  ASSERT_ANY_THROW({
+    imatrix a(1, 2, 1, 3);
+    imatrix b(1, 3, 2, 2);
+    a * b;
+  });
+  ASSERT_ANY_THROW({
+    imatrix a(1, 2, 1, 3);
+    imatrix b(1, 3, 1, 3);
+    a * b;
+  });
 }

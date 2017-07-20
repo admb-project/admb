@@ -11,15 +11,14 @@ Return vector diagonal of matrix.
 */
 ivector diagonal(const imatrix& matrix)
 {
-  if (matrix.indexmin() != matrix.colmin()
-      || matrix.indexmax() != matrix.colmax())
+  int min = matrix.rowmin();
+  int max = matrix.rowmax();
+  if (min != matrix.colmin() || max != matrix.colmax())
   {
     cerr << "Error: imatrix is not square"
          << " in diagonal(const imatrix&).\n";
     ad_exit(1);
   }
-  int min = matrix.indexmin();
-  int max = matrix.indexmax();
   ivector vector(min, max);
   for (int i = min; i <= max; ++i)
   {
@@ -80,17 +79,19 @@ Returns results of integer matrix multiplication (a x b).
 */
 imatrix operator*(const imatrix& a, const imatrix& b)
 {
-  if (a.colmin() != b.rowmin() || a.colmax() != b.rowmax())
+  int min = a.rowmin();
+  int max = a.rowmax();
+  if (min != b.colmin() || max != b.colmax())
   {
     cerr << " Incompatible array bounds"
          << " in operator*(const imatrix&, const imatrix&)\n";
     ad_exit(1);
   }
-  imatrix results(a.rowmin(),a.rowmax(), b.colmin(), b.colmax());
-  for (int j = b.colmin(); j <= b.colmax(); ++j)
+  imatrix results(min, max, min, max);
+  for (int j = min; j <= max; ++j)
   {
     ivector col = column(b, j);
-    for (int i = a.rowmin(); i <= a.rowmax(); ++i)
+    for (int i = min; i <= max; ++i)
     {
       results(i, j) = a(i) * col;
     }

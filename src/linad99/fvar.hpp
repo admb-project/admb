@@ -6236,33 +6236,31 @@ class d5_array
    dvector & operator ()(int, int, int, int);
    double &operator () (int, int, int, int, int);
 #endif
-   //access functions
-   int indexmin()
-   {
-     return shape->indexmin();
-   }
-   int indexmax()
-   {
-     return shape->indexmax();
-   }
-   unsigned int size()
-   {
-     int ret = indexmax() - indexmin() + 1;
-     return static_cast<unsigned int>(ret < 0 ? 0 : ret);
-   }
-   int indexmin() const
-   {
-      return shape->indexmin();
-   }
-   int indexmax() const
-   {
-      return shape->indexmax();
-   }
-   unsigned int size() const
-   {
-     int ret = indexmax() - indexmin() + 1;
-     return static_cast<unsigned int>(ret < 0 ? 0 : ret);
-   }
+  //access functions
+  int indexmin()
+  {
+    return shape ? shape->indexmin() : 1;
+  }
+  int indexmax()
+  {
+    return shape ? shape->indexmax() : 0;
+  }
+  unsigned int size()
+  {
+    return static_cast<unsigned int>(indexmax() - indexmin() + 1);
+  }
+  int indexmin() const
+  {
+    return indexmin();
+  }
+  int indexmax() const
+  {
+    return indexmax();
+  }
+  unsigned int size() const
+  {
+    return size();
+  }
    void initialize(void);
    void operator /=(double d);
 };

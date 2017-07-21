@@ -171,3 +171,10 @@ TEST_F(test_d5_array, inputoutput)
     }
   }
 }
+TEST_F(test_d5_array, empty)
+{
+  d5_array a;
+  ASSERT_EQ(1, a.indexmin());
+  ASSERT_EQ(0, a.indexmax());
+  ASSERT_EQ(0, a.size());
+}

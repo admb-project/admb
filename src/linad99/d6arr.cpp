@@ -1,49 +1,32 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
-/**
- * Description not yet available.
- * \param
- */
- void d6_array::initialize(void)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i).initialize();
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- d6_array::d6_array(const d6_array& _m2)
- {
-   d6_array& m2=(d6_array&) _m2;
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
+/// Initialize all elments of d6_array to zero.
+void d6_array::initialize()
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i).initialize();
+  }
+}
+/// Copy constructor (shallow)
+d6_array::d6_array(const d6_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    (shape->ncopies)++;
+    t = other.t;
+  }
+  else
+  {
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.

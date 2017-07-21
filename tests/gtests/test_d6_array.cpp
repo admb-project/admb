@@ -81,3 +81,58 @@ TEST_F(test_d6_array, inputoutput)
     }
   }
 }
+TEST_F(test_d6_array, initialize)
+{
+  d6_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              a(i, j, k, l, m, n) = d;
+              d += 2.0;
+            }
+          }
+        }
+      }
+    }
+  }
+  a.initialize();
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              ASSERT_DOUBLE_EQ(0, a(i, j, k, l, m, n));
+            }
+          }
+        }
+      }
+    }
+  }
+}
+TEST_F(test_d6_array, copyconstructorempty)
+{
+  d6_array empty;
+  d6_array b(empty);
+  ASSERT_FALSE(allocated(b));
+  ASSERT_EQ(1, b.indexmin());
+  ASSERT_EQ(0, b.indexmax());
+  ASSERT_EQ(0, b.size());
+}

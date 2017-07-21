@@ -156,27 +156,15 @@ Allocate vector of integer matrices with dimensions
 \param ncl lower matrix column index
 \param nch upper matrix column index
 */
- void i3_array::allocate(
+void i3_array::allocate(
   int sl,int sh,
   int nrl,const ivector& nrh,
   int ncl, int nch)
 {
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new imatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh(i), ncl, nch);
+    elem(i).allocate(nrl, nrh(i), ncl, nch);
   }
 }
 
@@ -191,7 +179,6 @@ i3_array::i3_array(
 {
   allocate(sl,sh,nrl,nrh,ncl,nch);
 }
-
 /**
 Allocate vector of integer matrices with dimensions
 [sl to sh] x [nrl to nrh] x [ncl to nch].
@@ -283,7 +270,9 @@ i3_array::i3_array(int _sl, int _sh, const imatrix& m1)
   }
 }
 /**
-Allocate i3_array with same dimension as i3v.
+Allocate i3_array with same dimension as other.
+
+\param other i3_array
 */
 void i3_array::allocate(const i3_array& other)
 {
@@ -295,10 +284,7 @@ void i3_array::allocate(const i3_array& other)
     elem(i).allocate(other.elem(i));
   }
 }
-
-/**
-Does NOT allocate, but set empty i3_array.
-*/
+/// Does NOT allocate, but set empty i3_array.
 void i3_array::allocate()
 {
   shape = NULL;

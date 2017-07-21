@@ -172,3 +172,36 @@ TEST_F(test_i3_array, initializeempty)
     FAIL();
   }
 }
+TEST_F(test_i3_array, allocaterowsmax)
+{
+  ivector rowsmax(2, 5);
+  rowsmax(2) = 14;
+  rowsmax(3) = 15;
+  rowsmax(4) = 16;
+  rowsmax(5) = 17;
+
+  i3_array a;
+  a.allocate(2, 5, 1, rowsmax, 10, 20);
+  i3_array b;
+  b.allocate(a);
+
+  ASSERT_EQ(2, b.slicemin());
+  ASSERT_EQ(5, b.slicemax());
+  ASSERT_EQ(4, b.slicesize());
+  ASSERT_EQ(1, b(2).rowmin());
+  ASSERT_EQ(14, b(2).rowmax());
+  ASSERT_EQ(1, b(3).rowmin());
+  ASSERT_EQ(15, b(3).rowmax());
+  ASSERT_EQ(1, b(4).rowmin());
+  ASSERT_EQ(16, b(4).rowmax());
+  ASSERT_EQ(1, b(5).rowmin());
+  ASSERT_EQ(17, b(5).rowmax());
+  ASSERT_EQ(10, b(2).colmin());
+  ASSERT_EQ(20, b(2).colmax());
+  ASSERT_EQ(10, b(3).colmin());
+  ASSERT_EQ(20, b(3).colmax());
+  ASSERT_EQ(10, b(4).colmin());
+  ASSERT_EQ(20, b(4).colmax());
+  ASSERT_EQ(10, b(5).colmin());
+  ASSERT_EQ(20, b(5).colmax());
+}

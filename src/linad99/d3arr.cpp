@@ -9,16 +9,16 @@
 #endif
 
 /**
-Return total sum of the elements in arr3.
+Return total sum of the elements in darray.
 
-\param arr3 d3_array
+\param darray d3_array
 */
-double sum(const d3_array& arr3)
+double sum(const d3_array& darray)
 {
   double total = 0.0;
-  for (int i = arr3.indexmin(); i <= arr3.indexmax(); ++i)
+  for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
   {
-    total += sum(arr3.elem(i));
+    total += sum(darray.elem(i));
   }
   return total;
 }

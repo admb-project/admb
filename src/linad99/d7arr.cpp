@@ -422,27 +422,33 @@ void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
 
 /**
 Allocate a vector of empty d6_arrays.
+Note: l7 should be greater or equal to u7.
 
 \param l7 lower index
 \param u7 upper index
 */
 void d7_array::allocate(int l7, int u7)
 {
-  if ( (shape=new vector_shape(l7,u7)) == 0)
+  if (l7 > u7)
   {
-    cerr << " Error allocating memory in d6_array contructor\n";
-    ad_exit(21);
+    return allocate();
   }
-  unsigned int ss = size();
-  if ( (t = new d6_array[ss]) == 0)
+  if ((shape = new vector_shape(l7, u7)) == 0)
   {
-    cerr << " Error allocating memory in d6_array contructor\n";
-    ad_exit(21);
+    cerr << "Error: Unable to allocate d7_array memory in "
+         << "d7_array::allocate(int, int).\n"; 
+    ad_exit(1);
+  }
+  if ((t = new d6_array[size()]) == 0)
+  {
+    cerr << "Error: Unable to allocate d7_array memory in "
+         << "d7_array::allocate(int, int).\n"; 
+    ad_exit(1);
   }
   t -= indexmin();
-  for (int i=l7; i<=u7; i++)
+  for (int i = l7; i <= u7; ++i)
   {
-    t[i].allocate();
+    elem(i).allocate();
   }
 }
 

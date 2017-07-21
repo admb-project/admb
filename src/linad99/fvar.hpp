@@ -6237,18 +6237,6 @@ class d5_array
    double &operator () (int, int, int, int, int);
 #endif
   //access functions
-  int indexmin()
-  {
-    return shape ? shape->indexmin() : 1;
-  }
-  int indexmax()
-  {
-    return shape ? shape->indexmax() : 0;
-  }
-  unsigned int size()
-  {
-    return static_cast<unsigned int>(indexmax() - indexmin() + 1);
-  }
   int indexmin() const
   {
     return shape ? shape->indexmin() : 1;
@@ -6261,8 +6249,8 @@ class d5_array
   {
     return static_cast<unsigned int>(indexmax() - indexmin() + 1);
   }
-   void initialize(void);
-   void operator /=(double d);
+  void initialize();
+  void operator/=(double d);
 };
 
 d5_array operator/(const d5_array & m, double d);
@@ -6617,35 +6605,21 @@ class d6_array
    dvector & operator ()(int, int, int, int, int);
    double &operator () (int, int, int, int, int, int);
 #endif
-   //access functions
-   int indexmin()
-   {
-     return (shape->indexmin());
-   }
-   int indexmax()
-   {
-     return (shape->indexmax());
-   }
-   unsigned int size()
-   {
-     int ret = indexmax() - indexmin() + 1;
-     return static_cast<unsigned int>(ret < 0 ? 0 : ret);
-   }
-   int indexmin() const
-   {
-     return (shape->indexmin());
-   }
-   int indexmax() const
-   {
-     return (shape->indexmax());
-   }
-   unsigned int size() const
-   {
-     int ret = indexmax() - indexmin() + 1;
-     return static_cast<unsigned int>(ret < 0 ? 0 : ret);
-   }
-   void initialize(void);
-   void operator /=(double d);
+  //access functions
+  int indexmin() const
+  {
+    return shape ? shape->indexmin() : 1;
+  }
+  int indexmax() const
+  {
+    return shape ? shape->indexmax() : 0;
+  }
+  unsigned int size() const
+  {
+    return static_cast<unsigned int>(indexmax() - indexmin() + 1);
+  }
+  void initialize();
+  void operator/=(double d);
 };
 
 d6_array operator/(const d6_array & m, double d);
@@ -7044,34 +7018,20 @@ class d7_array
    double &operator () (int, int, int, int, int, int, int);
 #endif
    //access functions
-   int indexmin()
-   {
-     return shape->indexmin();
-   }
-   int indexmax()
-   {
-     return shape->indexmax();
-   }
-   unsigned int size()
-   {
-     int ret = indexmax() - indexmin() + 1;
-     return static_cast<unsigned int>(ret < 0 ? 0 : ret);
-   }
-   int indexmin() const
-   {
-     return shape->indexmin();
-   }
-   int indexmax() const
-   {
-     return shape->indexmax();
-   }
-   unsigned int size() const
-   {
-     int ret = indexmax() - indexmin() + 1;
-     return static_cast<unsigned int>(ret < 0 ? 0 : ret);
-   }
-   void initialize();
-   void operator /=(double d);
+  int indexmin() const
+  {
+    return shape ? shape->indexmin() : 1;
+  }
+  int indexmax() const
+  {
+    return shape ? shape->indexmax() : 0;
+  }
+  unsigned int size() const
+  {
+    return static_cast<unsigned int>(indexmax() - indexmin() + 1);
+  }
+  void initialize();
+  void operator/=(double d);
 };
 
 d7_array operator/(const d7_array & m, double d);

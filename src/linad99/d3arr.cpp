@@ -227,8 +227,7 @@ void d3_array::allocate(int sl, int sh)
 {
   if (sl > sh)
   {
-    allocate();
-    return;
+    return allocate();
   }
   if ((shape = new three_array_shape(sl, sh)) == 0)
   {
@@ -243,13 +242,10 @@ void d3_array::allocate(int sl, int sh)
     ad_exit(1);
   }
   t -= slicemin();
-
-#ifndef OPT_LIB
   for (int i = sl; i <= sh; ++i)
   {
     elem(i).allocate();
   }
-#endif
 }
 /**
 Allocate d3_array with the same dimensions as other.

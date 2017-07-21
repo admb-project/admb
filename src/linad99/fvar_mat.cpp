@@ -420,35 +420,10 @@ where ncl is a vector of indexes.
 */
 void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
 {
-  if (nrl>nrh)
+  allocate(nrl, nrh);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    allocate();
-  }
-  else
-  {
-    if (nrl != ncl.indexmin() || nrh != ncl.indexmax())
-    {
-      cerr << "Incompatible array bounds in "
-       "dvar_matrix(int nrl, int nrh, const ivector& ncl,int nch)"
-       << endl;
-      ad_exit(1);
-    }
-    index_min=nrl;
-    index_max=nrh;
-    if ( (m = new dvar_vector[rowsize()]) == 0)
-    {
-      cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
-      ad_exit(21);
-    }
-    if ( (shape=new mat_shapex(m)) == 0)
-    {
-      cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
-    }
-    m -= rowmin();
-    for (int i=nrl; i<=nrh; i++)
-    {
-      m[i].allocate(ncl[i],nch);
-    }
+    elem(i).allocate(ncl(i), nch);
   }
 }
 /**
@@ -458,7 +433,7 @@ dvar_matrix makes a shallow copy of other.
 */
 void dvar_matrix::shallow_copy(const dvar_matrix& other)
 {
-  if (!(other))
+  if (!other)
   {
     //cerr << "Making a copy of an unallocated dvar_matrix" << endl;
     allocate();
@@ -472,9 +447,7 @@ void dvar_matrix::shallow_copy(const dvar_matrix& other)
     m = other.m;
   }
 }
-/**
-Does not allocate, but initializes members.
-*/
+/// Does not allocate, but initializes members.
 void dvar_matrix::allocate()
 {
   index_min = 1;
@@ -500,52 +473,51 @@ void dvar_matrix::deallocate()
 #endif
 }
 /**
-Assigns dvar_matrix values to dvar_matrix.
+Assigns other values to dvar_matrix.
 
 \param values dmatrix
 */
-dvar_matrix& dvar_matrix::operator=(const dvar_matrix& values)
+dvar_matrix& dvar_matrix::operator=(const dvar_matrix& other)
 {
   if (!allocated(*this))
   {
-    shallow_copy(values);
+    shallow_copy(other);
   }
   else
   {
-    if (rowmin() != values.rowmin() || rowmax() != values.rowmax())
+    if (rowmin() != other.rowmin() || rowmax() != other.rowmax())
     {
       cerr << "Error: Incompatible array bounds in "
-            "dvar_matrix& operator=(const dvar_matrix&)\n";
-      ad_exit(21);
+            "dvar_matrix& dvar_matrix::operator=(const dvar_matrix&)\n";
+      ad_exit(1);
     }
     // check for condition that both matrices don't point to the same object
-    if (m != values.m)
+    if (m != other.m)
     {
       for (int i = rowmin(); i <= rowmax(); ++i)
       {
-        (*this)[i] = values[i];
+        elem(i) = other.elem(i);
       }
     }
   }
   return *this;
 }
 /**
-Assigns dmatrix values to dvar_matrix.
+Assigns scalar matrix values to dvar_matrix.
 
-\param values dmatrix
+\param matrix dmatrix
 */
-dvar_matrix& dvar_matrix::operator=(const dmatrix& values)
+dvar_matrix& dvar_matrix::operator=(const dmatrix& matrix)
 {
-  if (rowmin() != values.rowmin() || rowmax() != values.rowmax()
-      || colmin() != values.colmin() || colmax() != values.colmax())
+  if (rowmin() != matrix.rowmin() || rowmax() != matrix.rowmax())
   {
     cerr << "Error: Incompatible array bounds in "
-            "dvar_matrix& operator=(const dmatrix&)\n";
-    ad_exit(21);
+         << "dvar_matrix& dvar_matrix::operator=(const dmatrix&)\n";
+    ad_exit(1);
   }
   for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    (*this)[i] = values[i];
+    elem(i) = matrix.elem(i);
   }
   return *this;
 }

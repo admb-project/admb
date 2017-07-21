@@ -293,3 +293,32 @@ TEST_F(test_dvar_matrix, allocate4xint)
   ASSERT_TRUE(allocated(a(2)));
   ASSERT_TRUE(allocated(a(3)));
 }
+TEST_F(test_dvar_matrix, allocatecolsmax)
+{
+  gradient_structure gs;
+
+  ivector colsmax(1, 3);
+  colsmax(1) = 4;
+  colsmax(2) = 5;
+  colsmax(3) = 6;
+  dvar_matrix a;
+  a.allocate(1, 3, 2, colsmax);
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(3, a.rowmax());
+  ASSERT_EQ(2, a(1).indexmin());
+  ASSERT_EQ(colsmax(1), a(1).indexmax());
+  ASSERT_EQ(2, a(2).indexmin());
+  ASSERT_EQ(colsmax(2), a(2).indexmax());
+  ASSERT_EQ(2, a(3).indexmin());
+  ASSERT_EQ(colsmax(3), a(3).indexmax());
+}
+TEST_F(test_dvar_matrix, emptyequalempty)
+{
+  dvar_matrix a;
+  dmatrix b;
+
+  a = b;
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(0, a.rowmax());
+  ASSERT_FALSE(allocated(a));
+}

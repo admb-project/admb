@@ -6251,15 +6251,15 @@ class d5_array
   }
   int indexmin() const
   {
-    return indexmin();
+    return shape ? shape->indexmin() : 1;
   }
   int indexmax() const
   {
-    return indexmax();
+    return shape ? shape->indexmax() : 0;
   }
   unsigned int size() const
   {
-    return size();
+    return static_cast<unsigned int>(indexmax() - indexmin() + 1);
   }
    void initialize(void);
    void operator /=(double d);

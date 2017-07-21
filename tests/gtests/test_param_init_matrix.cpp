@@ -7,7 +7,7 @@ TEST_F(test_param_init_matrix, constructor)
 {
   param_init_matrix p;
   ASSERT_EQ(1, p.indexmin());
-  ASSERT_EQ(-1, p.indexmax());
+  ASSERT_EQ(0, p.indexmax());
 }
 TEST_F(test_param_init_matrix, assignment_operator_empty_dmatrix)
 {

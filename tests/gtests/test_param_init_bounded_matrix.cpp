@@ -7,7 +7,7 @@ TEST_F(test_param_init_bounded_matrix, constructor)
 {
   param_init_bounded_matrix p;
   ASSERT_EQ(1, p.indexmin());
-  ASSERT_EQ(-1, p.indexmax());
+  ASSERT_EQ(0, p.indexmax());
   ASSERT_DOUBLE_EQ(0, p.get_minb());
   ASSERT_DOUBLE_EQ(0, p.get_maxb());
 

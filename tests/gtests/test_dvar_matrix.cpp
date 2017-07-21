@@ -229,7 +229,19 @@ TEST_F(test_dvar_matrix, empty)
   a.allocate(1, 0);
 
   ASSERT_EQ(1, a.rowmin());
-  ASSERT_EQ(-1, a.rowmax());
+  ASSERT_EQ(0, a.rowmax());
+  ASSERT_EQ(0, a.rowsize());
+  ASSERT_FALSE(allocated(a));
+}
+TEST_F(test_dvar_matrix, empty2)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(0, a.rowmax());
+  ASSERT_EQ(0, a.rowsize());
   ASSERT_FALSE(allocated(a));
 }
 TEST_F(test_dvar_matrix, emptycolumns)

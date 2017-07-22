@@ -11,7 +11,7 @@ d6_array::d6_array()
   allocate();
 }
 /// Does NOT allocate, but initializes d6_array members.
-void d6_array::allocate(void)
+void d6_array::allocate()
 {
   shape = NULL;
   t = NULL;

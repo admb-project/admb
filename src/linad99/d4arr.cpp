@@ -167,26 +167,16 @@ d4_array& d4_array::operator=(const d4_array& m)
  }
 
 /**
-Allocate d4_array with same dimensions as m1.
+Allocate d4_array with same dimensions as other.
+
+\param other d4_array
 */
-void d4_array::allocate(const d4_array& m1)
+void d4_array::allocate(const d4_array& other)
 {
-  if ((shape = new four_array_shape(m1.hslicemin(),m1.hslicemax())) == 0)
-  {
-    cerr << " Error: d4_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ( (t = new d3_array[hslicesize()]) == 0)
-  {
-    cerr << " Error: d4_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= hslicemin();
+  allocate(other.hslicemin(), other.hslicemax());
   for (int i = hslicemin(); i <= hslicemax(); ++i)
   {
-    t[i].allocate(m1[i]);
+    elem(i).allocate(other.elem(i));
   }
 }
 

@@ -12,70 +12,53 @@
 //#include <d5arr.hpp>
 #include "admb_messages.h"
 
-/**
- * Description not yet available.
- * \param
- */
- void d7_array::initialize(void)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i).initialize();
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- d7_array::d7_array(d7_array& m2)
- {
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void d7_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t += indexmin();
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
+/// Initialize all d7_array elements to zero.
+void d7_array::initialize()
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i).initialize();
+  }
+}
+/// Copy constructor (shallow)
+d7_array::d7_array(d7_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    (shape->ncopies)++;
+    t = other.t;
+  }
+  else
+  {
+    allocate();
+  }
+}
+/// Deallocate d7_array memory.
+void d7_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      t += indexmin();
+      delete [] t;
+      delete shape;
+      allocate();
+    }
+  }
 #if defined(SAFE_ALL)
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated d5_array"<<endl;
-   }
+  else
+  {
+    cerr << "Warning -- trying to deallocate an unallocated d7_array.\n";
+  }
 #endif
- }
-/**
-Destructor
-*/
+}
+/// Destructor
 d7_array::~d7_array()
 {
   deallocate();
@@ -108,25 +91,10 @@ Allocate d7_array using the same dimensions as other.
 */
 void d7_array::allocate(const d7_array& other)
 {
-  if ((shape = new vector_shape(other.indexmin(), other.indexmax())) == 0)
+  allocate(other.indexmin(), other.indexmax());
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    cerr << " Error allocating memory in "
-         << "d7_array::allocate(const d7_array&)" << endl;
-    ad_exit(1);
-  }
-  if ((t = new d6_array[size()]) == 0)
-  {
-    cerr << " Error allocating memory in "
-         << "d7_array::allocate(const d7_array&)" << endl;
-    ad_exit(1);
-  }
-  t -= indexmin();
-  for (int i=indexmin(); i<=indexmax(); i++)
-  {
-    if (allocated(other.elem(i)))
-    {
-      elem(i).allocate(other.elem(i));
-    }
+    elem(i).allocate(other.elem(i));
   }
 }
 

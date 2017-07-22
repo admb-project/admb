@@ -88,26 +88,16 @@ d6_array& d6_array::operator=(const d6_array& m)
  }
 
 /**
-Allocate d6_array with same dimensions as m1.
+Allocate d6_array with same dimensions as other.
 
-\param m1 other d6_array
+\param other d6_array
 */
-void d6_array::allocate(const d6_array& m1)
+void d6_array::allocate(const d6_array& other)
 {
-  if ((shape=new vector_shape(m1.indexmin(),m1.indexmax())) == 0)
-  {
-    cerr << " Error allocating memory in d5_array contructor" << endl;
-  }
-  unsigned int ss = size();
-  if ((t = new d5_array[ss]) == 0)
-  {
-    cerr << " Error allocating memory in d5_array contructor" << endl;
-    ad_exit(21);
-  }
-  t -= indexmin();
+  allocate(other.indexmin(), other.indexmax());
   for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    t[i].allocate(m1[i]);
+    elem(i).allocate(other.elem(i));
   }
 }
 
@@ -339,6 +329,30 @@ d6_array::d6_array(const ad_integer& hsl,const ad_integer& hsu,
   const index_type& l6,const index_type& u6)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
+}
+void d6_array::allocate(int hsl, int hsu)
+{
+  if (hsl > hsu)
+  {
+    return allocate();
+  }
+  if ((shape = new vector_shape(hsl, hsu)) == 0)
+  {
+    cerr << "Error: Unable to allocate d6_array memory in\n"
+         << " d6_array::allocate(int, int).\n";
+    ad_exit(1);
+  }
+  if ((t = new d5_array[size()]) == 0)
+  {
+    cerr << "Error: Unable to allocate d6_array memory in\n"
+         << " d6_array::allocate(int, int).\n";
+    ad_exit(1);
+  }
+  t -= indexmin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    elem(i).allocate();
+  }
 }
 
 /**

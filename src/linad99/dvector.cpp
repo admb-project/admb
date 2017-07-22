@@ -457,13 +457,14 @@ void dvector::allocate(int ncl, int nch)
   }
 }
 
- /**
- Allocate memory for a %dvector the same size as it's argument.
- \param dv Reference to a %dvector.
- */
-void dvector::allocate(const dvector& dv)
+/**
+Allocate memory for a %dvector the same size as it's argument.
+
+\param dv Reference to a %dvector.
+*/
+void dvector::allocate(const dvector& other)
 {
-  allocate(dv.indexmin(),dv.indexmax());
+  allocate(other.indexmin(), other.indexmax());
 }
 
  /**

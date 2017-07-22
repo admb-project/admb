@@ -148,7 +148,7 @@ void dmatrix::allocate(const dmatrix& other)
   allocate(other.rowmin(), other.rowmax());
   for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    m[i].allocate(other.elem(i));
+    elem(i).allocate(other.elem(i));
   }
 }
 /**

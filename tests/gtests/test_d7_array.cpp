@@ -31,6 +31,21 @@ TEST_F(test_d7_array, allocate_copy)
 {
   d7_array a;
   a.allocate(3, 6);
+  ASSERT_EQ(a.size(), 4);
+  ASSERT_EQ(a.indexmin(), 3);
+  ASSERT_EQ(a.indexmax(), 6);
+  ASSERT_EQ(a(3).indexmin(), 1);
+  ASSERT_EQ(a(3).indexmax(), 0);
+  ASSERT_EQ(a(4).indexmin(), 1);
+  ASSERT_EQ(a(4).indexmax(), 0);
+  ASSERT_EQ(a(5).indexmin(), 1);
+  ASSERT_EQ(a(5).indexmax(), 0);
+  ASSERT_EQ(a(6).indexmin(), 1);
+  ASSERT_EQ(a(6).indexmax(), 0);
+  ASSERT_FALSE(allocated(a(3)));
+  ASSERT_FALSE(allocated(a(4)));
+  ASSERT_FALSE(allocated(a(5)));
+  ASSERT_FALSE(allocated(a(6)));
 
   //segmentation error
   d7_array b;
@@ -39,6 +54,16 @@ TEST_F(test_d7_array, allocate_copy)
   ASSERT_EQ(b.size(), 4);
   ASSERT_EQ(b.indexmin(), 3);
   ASSERT_EQ(b.indexmax(), 6);
+  ASSERT_EQ(b(3).indexmin(), 1);
+  ASSERT_EQ(b(3).indexmax(), 0);
+  ASSERT_EQ(b(4).indexmin(), 1);
+  ASSERT_EQ(b(4).indexmax(), 0);
+  ASSERT_EQ(b(5).indexmin(), 1);
+  ASSERT_EQ(b(5).indexmax(), 0);
+  ASSERT_EQ(b(6).indexmin(), 1);
+  ASSERT_EQ(b(6).indexmax(), 0);
+  ASSERT_TRUE(!b(3));
+  ASSERT_FALSE(!(!b(3)));
   ASSERT_FALSE(allocated(b(3)));
   ASSERT_FALSE(allocated(b(4)));
   ASSERT_FALSE(allocated(b(5)));

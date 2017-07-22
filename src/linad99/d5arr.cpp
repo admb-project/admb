@@ -118,25 +118,16 @@ d5_array& d5_array::operator=(const d5_array& m)
  }
 
 /**
-Allocate d5_array using m1 dimensions.
-\param m1 d5_array
+Allocate d5_array using other dimensions.
+
+\param other d5_array
 */
-void d5_array::allocate(const d5_array& m1)
+void d5_array::allocate(const d5_array& other)
 {
-  if ((shape=new vector_shape(m1.indexmin(),m1.indexmax())) == 0)
+  allocate(other.indexmin(), other.indexmax());
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    cerr << " Error allocating memory in d5_array contructor" << endl;
-  }
-  unsigned int ss = size();
-  if ((t = new d4_array[ss]) == 0)
-  {
-    cerr << " Error allocating memory in d5_array contructor" << endl;
-    ad_exit(21);
-  }
-  t -= indexmin();
-  for (int i=indexmin(); i<=indexmax(); i++)
-  {
-    t[i].allocate(m1[i]);
+    elem(i).allocate(other.elem(i));
   }
 }
 

@@ -6441,6 +6441,7 @@ class d6_array
      int nrh, int ncl, int nch, int l6, int u6);
    void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
      int nrl, int nrh, int ncl, int nch, int l6, int u6);
+   void allocate(int hhsl, int hhsu);
 
    d6_array(const ad_integer & hhsl, const ad_integer & hhsu,
      const index_type & hsl, const index_type & hsu,

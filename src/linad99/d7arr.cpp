@@ -395,31 +395,18 @@ d7_array::d7_array(const ad_integer& l7,const ad_integer& u7,
 {
   allocate(l7,u7,hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
 }
-
 /**
 Allocate a d7_array with indices.
 */
-void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh,int ncl,int nch,int l5,int u5,int l6,int u6)
- {
-   if ( (shape=new vector_shape(l7,u7)) == 0)
-   {
-     cerr << " Error allocating memory in d6_array contructor\n";
-     ad_exit(21);
-   }
-   unsigned int ss = size();
-   if ( (t = new d6_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d6_array contructor\n";
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=l7; i<=u7; i++)
-   {
-     t[i].allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
-   }
- }
-
+void d7_array::allocate(int l7, int u7, int hsl, int hsu, int sl, int sh,
+  int nrl, int nrh, int ncl, int nch, int l5, int u5, int l6, int u6)
+{
+  allocate(l7, u7);
+  for (int i = l7; i <= u7; ++i)
+  {
+    elem(i).allocate(hsl, hsu, sl, sh, nrl, nrh, ncl, nch, l5, u5, l6, u6);
+  }
+}
 /**
 Allocate a vector of empty d6_arrays.
 Note: l7 should be greater or equal to u7.

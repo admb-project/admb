@@ -66,6 +66,7 @@ GTESTS=\
  test_dll_param_matrix.cpp\
  test_dvector.cpp\
  test_dvar3_array.cpp\
+ test_dvar6_array.cpp\
  test_dvar7_array.cpp\
  test_arr_link.cpp\
  test_df1b2_init_number_vector.cpp\

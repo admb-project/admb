@@ -71,3 +71,41 @@ TEST_F(test_d7_array, empty)
   ASSERT_EQ(a.indexmin(), 1);
   ASSERT_EQ(a.indexmax(), 0);
 }
+TEST_F(test_d7_array, allocate4xint)
+{
+  d7_array a;
+  a.allocate(1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7);
+
+  ASSERT_EQ(1, a.indexmin());
+  ASSERT_EQ(1, a.indexmax());
+  ASSERT_EQ(1, a(1).indexmin());
+  ASSERT_EQ(2, a(1).indexmax());
+  ASSERT_EQ(1, a(1, 1).indexmin());
+  ASSERT_EQ(3, a(1, 1).indexmax());
+  ASSERT_EQ(1, a(1, 2).indexmin());
+  ASSERT_EQ(3, a(1, 2).indexmax());
+  ASSERT_EQ(1, a(1, 1, 1).indexmin());
+  ASSERT_EQ(4, a(1, 1, 1).indexmax());
+  ASSERT_EQ(1, a(1, 2, 1).indexmin());
+  ASSERT_EQ(4, a(1, 2, 1).indexmax());
+  ASSERT_EQ(1, a(1, 1, 2).indexmin());
+  ASSERT_EQ(4, a(1, 1, 2).indexmax());
+  ASSERT_EQ(1, a(1, 2, 2).indexmin());
+  ASSERT_EQ(4, a(1, 2, 2).indexmax());
+  ASSERT_EQ(1, a(1, 1, 3).indexmin());
+  ASSERT_EQ(4, a(1, 1, 3).indexmax());
+  ASSERT_EQ(1, a(1, 2, 3).indexmin());
+  ASSERT_EQ(4, a(1, 2, 3).indexmax());
+  ASSERT_EQ(1, a(1, 1, 1, 1).indexmin());
+  ASSERT_EQ(5, a(1, 1, 1, 1).indexmax());
+  ASSERT_EQ(1, a(1, 1, 1, 4).indexmin());
+  ASSERT_EQ(5, a(1, 1, 1, 4).indexmax());
+  ASSERT_EQ(1, a(1, 1, 1, 1, 1).indexmin());
+  ASSERT_EQ(6, a(1, 1, 1, 1, 1).indexmax());
+  ASSERT_EQ(1, a(1, 1, 1, 1, 5).indexmin());
+  ASSERT_EQ(6, a(1, 1, 1, 1, 5).indexmax());
+  ASSERT_EQ(1, a(1, 1, 1, 1, 1, 1).indexmin());
+  ASSERT_EQ(7, a(1, 1, 1, 1, 1, 1).indexmax());
+  ASSERT_EQ(1, a(1, 1, 1, 1, 1, 6).indexmin());
+  ASSERT_EQ(7, a(1, 1, 1, 1, 1, 6).indexmax());
+}

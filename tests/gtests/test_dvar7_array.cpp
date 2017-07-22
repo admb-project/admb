@@ -43,3 +43,13 @@ TEST_F(test_dvar7_array, allocate_all_dimensions)
   ASSERT_EQ(2, a.indexmin());
   ASSERT_EQ(4, a.indexmax());
 }
+TEST_F(test_dvar7_array, empty)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar7_array a;
+  ASSERT_EQ(0, a.size());
+  ASSERT_EQ(1, a.indexmin());
+  ASSERT_EQ(0, a.indexmax());
+}

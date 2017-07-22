@@ -35,3 +35,13 @@ TEST_F(test_dvar5_array, construct_empty_vector)
   ASSERT_FALSE(allocated(arr[3]));
   ASSERT_FALSE(allocated(arr[4]));
 }
+TEST_F(test_dvar5_array, empty)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar5_array a;
+  ASSERT_EQ(0, a.size());
+  ASSERT_EQ(1, a.indexmin());
+  ASSERT_EQ(0, a.indexmax());
+}

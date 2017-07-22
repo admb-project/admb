@@ -6405,36 +6405,22 @@ class dvar5_array
    dvar_vector & operator ()(int, int, int, int);
    prevariable operator () (int, int, int, int, int);
 #endif
-   //access functions
-   int indexmin(void)
-   {
-      return (shape->indexmin());
-   }
-   int indexmax(void)
-   {
-      return (shape->indexmax());
-   }
-  unsigned int size()
+  //access functions
+  int indexmin() const
   {
-    return static_cast<unsigned int>(
-      indexmax() < indexmin() ? 0 : indexmax() - indexmin() + 1);
+    return shape ? shape->indexmin() : 1;
   }
-   int indexmin(void) const
-   {
-      return (shape->indexmin());
-   }
-   int indexmax(void) const
-   {
-      return (shape->indexmax());
-   }
+  int indexmax() const
+  {
+    return shape ? shape->indexmax() : 0;
+  }
   unsigned int size() const
   {
-    return static_cast<unsigned int>(
-      indexmax() < indexmin() ? 0 : indexmax() - indexmin() + 1);
+    return static_cast<unsigned int>(indexmax() - indexmin() + 1);
   }
-   void initialize(void);
-   void operator/=(const prevariable & d);
-   void operator/=(const double &d);
+  void initialize();
+  void operator/=(const prevariable& d);
+  void operator/=(const double& d);
 };
 
 dvar5_array operator/(const d5_array & m, const prevariable & d);
@@ -6794,36 +6780,22 @@ class dvar6_array
    dvar_vector & operator ()(int, int, int, int, int);
    prevariable operator () (int, int, int, int, int, int);
 #endif
-   //access functions
-   int indexmin(void)
-   {
-      return (shape->indexmin());
-   }
-   int indexmax(void)
-   {
-      return (shape->indexmax());
-   }
-  unsigned int size()
+  //access functions
+  int indexmin() const
   {
-    return static_cast<unsigned int>(
-      indexmax() < indexmin() ? 0 : indexmax() - indexmin() + 1);
+    return shape ? shape->indexmin() : 1;
   }
-   int indexmin(void) const
-   {
-      return (shape->indexmin());
-   }
-   int indexmax(void) const
-   {
-      return (shape->indexmax());
-   }
+  int indexmax() const
+  {
+    return shape ? shape->indexmax() : 0;
+  }
   unsigned int size() const
   {
-    return static_cast<unsigned int>(
-      indexmax() < indexmin() ? 0 : indexmax() - indexmin() + 1);
+    return static_cast<unsigned int>(indexmax() - indexmin() + 1);
   }
-   void initialize(void);
-   void operator/=(const prevariable & d);
-   void operator/=(const double &d);
+  void initialize();
+  void operator/=(const prevariable& d);
+  void operator/=(const double& d);
 };
 
 dvar6_array operator/(const d6_array & m, const prevariable & d);
@@ -7228,35 +7200,21 @@ class dvar7_array
    prevariable operator () (int, int, int, int, int, int, int);
 #endif
   //access functions
-  int indexmin()
-  {
-    return shape->indexmin();
-  }
-  int indexmax()
-  {
-    return shape->indexmax();
-  }
-  unsigned int size()
-  {
-    int ret = indexmax() - indexmin() + 1;
-    return static_cast<unsigned int>(ret < 0 ? 0 : ret);
-  }
   int indexmin() const
   {
-    return shape->indexmin();
+    return shape ? shape->indexmin() : 1;
   }
   int indexmax() const
   {
-    return shape->indexmax();
+    return shape ? shape->indexmax() : 0;
   }
   unsigned int size() const
   {
-    int ret = indexmax() - indexmin() + 1;
-    return static_cast<unsigned int>(ret < 0 ? 0 : ret);
+    return static_cast<unsigned int>(indexmax() - indexmin() + 1);
   }
-   void initialize(void);
-   void operator/=(const prevariable & d);
-   void operator/=(const double &d);
+  void initialize();
+  void operator/=(const prevariable& d);
+  void operator/=(const double& d);
 };
 
 dvar7_array operator/(const d7_array & m, const prevariable & d);

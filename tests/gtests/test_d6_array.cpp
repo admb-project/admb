@@ -136,3 +136,72 @@ TEST_F(test_d6_array, copyconstructorempty)
   ASSERT_EQ(0, b.indexmax());
   ASSERT_EQ(0, b.size());
 }
+TEST_F(test_d6_array, divisor)
+{
+  d6_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              a(i, j, k, l, m, n) = d;
+              d += 2.0;
+            }
+          }
+        }
+      }
+    }
+  }
+  d6_array b(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+  b = a;
+  b /= 2.0;
+  
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              ASSERT_DOUBLE_EQ(a(i, j, k, l, m, n) / 2.0), b(i, j, k, l, m, n));
+            }
+          }
+        }
+      }
+    }
+  }
+  d6_array c = a / 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              ASSERT_DOUBLE_EQ(c(i, j, k, l, m, n), b(i, j, k, l, m, n));
+            }
+          }
+        }
+      }
+    }
+  } 
+}

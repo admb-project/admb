@@ -66,27 +66,26 @@ d6_array::~d6_array()
 }
 
 /**
- * Description not yet available.
- * \param
- */
-d6_array& d6_array::operator=(const d6_array& m)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   {
-     cerr << "Incompatible bounds in"
-      " d6_array& d6_array:: operator =  (const d6_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
+Assigns element values from other to d6_array.
 
+\param other d6_array
+*/
+d6_array& d6_array::operator=(const d6_array& other)
+{
+  int min = indexmin();
+  int max = indexmax();
+  if (min != other.indexmin() || max != other.indexmax())
+  {
+     cerr << "Incompatible bounds in"
+          << " d6_array& d6_array::operator=(const d6_array&).\n";
+     ad_exit(1);
+   }
+  for (int i = min; i <= max; ++i)
+  {
+    elem(i) = other.elem(i);
+  }
+  return *this;
+}
 /**
 Allocate d6_array with same dimensions as other.
 
@@ -408,17 +407,17 @@ void d6_array::allocate(const ad_integer& hsl,const ad_integer& hsu,
        ncl(i),nch(i), l5(i),u5(i),l6(i),u6(i));
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
-double sum(const d6_array& m)
+Return total sum of darray.
+
+\param darray d6_array
+*/
+double sum(const d6_array& darray)
 {
-  double tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  double total = 0.0;
+  for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
   {
-    tmp+=sum(m.elem(i));
+    total += sum(darray.elem(i));
   }
-  return tmp;
+  return total;
 }

@@ -177,7 +177,7 @@ TEST_F(test_d6_array, divisor)
           {
             for (int n = 1; n <= 2; ++n)
             {
-              ASSERT_DOUBLE_EQ(a(i, j, k, l, m, n) / 2.0), b(i, j, k, l, m, n));
+              ASSERT_DOUBLE_EQ(a(i, j, k, l, m, n) / 2.0, b(i, j, k, l, m, n));
             }
           }
         }

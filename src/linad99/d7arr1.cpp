@@ -1,54 +1,47 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-d7_array operator/(const d7_array& m, const double d)
-   {
-     d7_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
-     {
-       tmp(i)=m(i)/d;
-     }
-     return tmp;
-   }
+Return result of dividing all darray elements by divisor.
 
-/**
- * Description not yet available.
- * \param
- */
-void d7_array::operator/=(const double d)
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       (*this)(i)/=d;
-     }
-   }
-
-/**
- * Description not yet available.
- * \param
- */
-double sum(const d7_array& m)
+\param divisor double
+*/
+d7_array operator/(const d7_array& darray, const double divisor)
+{
+  d7_array results;
+  results.allocate(darray);
+  for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
   {
-    RETURN_ARRAYS_INCREMENT();
-    double tmp=0.;
-    for (int i=m.indexmin();i<=m.indexmax();i++)
-    {
-      tmp+=sum(m.elem(i));
-    }
-    RETURN_ARRAYS_DECREMENT();
-    return tmp;
+    results(i) = darray(i) / divisor;
   }
+  return results;
+}
+/**
+Divide all elements of d7_array by divisor.
+
+\param divisor double
+*/
+void d7_array::operator/=(const double divisor)
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) /= divisor;
+  }
+}
+/**
+Return total sum of darray. 
+
+\param darray d7_array
+*/
+double sum(const d7_array& darray)
+{
+  double total = 0.0;
+  for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
+  {
+    total += sum(darray.elem(i));
+  }
+  return total;
+}

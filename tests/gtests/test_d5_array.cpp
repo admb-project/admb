@@ -202,6 +202,60 @@ TEST_F(test_d5_array, sum)
       }
     }
   }
-
   ASSERT_DOUBLE_EQ(total, sum(a));
+}
+TEST_F(test_d5_array, assigmenterror)
+{
+  d5_array a;
+  a.allocate(2, 5);
+  ASSERT_ANY_THROW({
+    d5_array b;
+    b.allocate(1, 5);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    d5_array b;
+    b.allocate(2, 6);
+    a = b;
+  });
+}
+TEST_F(test_d5_array, initialize)
+{
+  d5_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            a(i, j, k, l, m) = d;
+            d += 2.0;
+          }
+        }
+      }
+    }
+  }
+  a.initialize();
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            ASSERT_DOUBLE_EQ(0, a(i, j, k, l, m));
+          }
+        }
+      }
+    }
+  }
 }

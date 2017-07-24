@@ -19,99 +19,79 @@ double sum(const d5_array& darray)
   }
   return total;
 }
-
-/**
- * Description not yet available.
- * \param
- */
- d5_array::d5_array(const d5_array& _m2)
- {
-   d5_array& m2=(d5_array&)_m2;
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void d5_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t += indexmin();
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
-#if defined(SAFE_ALL)
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
-   }
+/// Copy constructor (shallow)
+d5_array::d5_array(const d5_array& other)
+{
+  if (other.shape)
+  {
+    d5_array& darray = const_cast<d5_array&>(other);
+    shape = darray.shape;
+    (shape->ncopies)++;
+    t = darray.t;
+  }
+  else
+  {
+    allocate();
+  }
+}
+/// Deallocate d5_array memory.
+void d5_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      t += indexmin();
+      delete [] t;
+      delete shape;
+      allocate();
+    }
+  }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- trying to deallocate an unallocated d5_array.\n";
+  }
 #endif
- }
-
-/**
-Destructor
-*/
+}
+/// Destructor
 d5_array::~d5_array()
 {
   deallocate();
 }
 /**
- * Description not yet available.
- * \param
- */
-d5_array& d5_array::operator=(const d5_array& m)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   {
-     cerr << "Incompatible bounds in"
-      " d4_array& d4_array:: operator =  (const d4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
+Assigns element values from other to d5_array.
 
-/**
- * Description not yet available.
- * \param
- */
- void d5_array::initialize(void)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i).initialize();
-   }
- }
-
+\param other d5_array
+*/
+d5_array& d5_array::operator=(const d5_array& other)
+{
+  int min = indexmin();
+  int max = indexmax();
+  if (min != other.indexmin() || max != other.indexmax())
+  {
+    cerr << "Incompatible bounds in"
+         << " d5_array& d5_array::operator=(const d5_array&).\n";
+    ad_exit(1);
+  }
+  for (int i = min; i <= max; ++i)
+  {
+    elem(i) = other.elem(i);
+  }
+  return *this;
+}
+/// Initialize all elements of d5_array to zero.
+void d5_array::initialize()
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i).initialize();
+  }
+}
 /**
 Allocate d5_array using other dimensions.
 

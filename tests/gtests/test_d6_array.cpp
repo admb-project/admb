@@ -164,7 +164,7 @@ TEST_F(test_d6_array, divisor)
   d6_array b(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
   b = a;
   b /= 2.0;
-  
+
   for (int i = 1; i <= 2; ++i)
   {
     for (int j = 1; j <= 2; ++j)
@@ -203,7 +203,7 @@ TEST_F(test_d6_array, divisor)
         }
       }
     }
-  } 
+  }
 }
 TEST_F(test_d6_array, sum)
 {
@@ -233,4 +233,19 @@ TEST_F(test_d6_array, sum)
     }
   }
   ASSERT_DOUBLE_EQ(total, sum(a));
+}
+TEST_F(test_d6_array, assigmenterror)
+{
+  d6_array a;
+  a.allocate(2, 5);
+  ASSERT_ANY_THROW({
+    d6_array b;
+    b.allocate(1, 5);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    d6_array b;
+    b.allocate(2, 6);
+    a = b;
+  });
 }

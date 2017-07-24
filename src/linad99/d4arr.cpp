@@ -38,16 +38,16 @@ four_array_shape::four_array_shape(int hsl, int hsu):
   //col_max=cu;
 }
 /**
-Return the sum total of all the elements in arr4.
+Return the sum total of all the elements in darray.
 
-\param arr4 d4_array
+\param array d4_array
 */
-double sum(const d4_array& arr4)
+double sum(const d4_array& darray)
 {
   double total = 0.0;
-  for (int i = arr4.indexmin(); i <= arr4.indexmax(); ++i)
+  for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
   {
-    total += sum(arr4.elem(i));
+    total += sum(darray.elem(i));
   }
   return total;
 }
@@ -72,49 +72,30 @@ double sum(const d4_array& arr4)
      return *this;
    }
  }
-
+/// Copy constructor (shallow)
+d4_array::d4_array(const d4_array& other)
+{
+  shallow_copy(other);
+}
 /**
- * Description not yet available.
- * \param
- */
- d4_array::d4_array(const d4_array& m2)
- {
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
+Copies pointer locations from other to d4_array.
 
-/**
- * Description not yet available.
- * \param
- */
- void d4_array::shallow_copy(const d4_array& m2)
- {
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
+\param other d4_array
+*/
+void d4_array::shallow_copy(const d4_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    (shape->ncopies)++;
+    t = other.t;
+  }
+  else
+  {
+    allocate();
+  }
+}
+/// Deallocates d4_array memory.
 void d4_array::deallocate()
 {
   if (shape)
@@ -128,6 +109,7 @@ void d4_array::deallocate()
       t += hslicemin();
       delete [] t;
       delete shape;
+      allocate();
     }
   }
 #if defined(DEBUG)
@@ -143,29 +125,27 @@ d4_array::~d4_array()
 {
   deallocate();
 }
-
 /**
- * Description not yet available.
- * \param
- */
-d4_array& d4_array::operator=(const d4_array& m)
- {
-   int mmin=hslicemin();
-   int mmax=hslicemax();
-   if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   {
-     cerr << "Incompatible bounds in"
-      " d4_array& d4_array:: operator =  (const d4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
+Assigns element values from other to d4_array.
 
+\param other d4_array
+*/
+d4_array& d4_array::operator=(const d4_array& other)
+{
+  int min = hslicemin();
+  int max = hslicemax();
+  if (min != other.hslicemin() || max != other.hslicemax())
+  {
+    cerr << "Incompatible bounds in"
+         << " d4_array& d4_array::operator=(const d4_array&).\n";
+    ad_exit(1);
+  }
+  for (int i = min; i <= max; ++i)
+  {
+    elem(i) = other.elem(i);
+  }
+  return *this;
+}
 /**
 Allocate d4_array with same dimensions as other.
 

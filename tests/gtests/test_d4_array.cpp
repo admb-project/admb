@@ -404,3 +404,18 @@ TEST_F(test_d4_array, log)
     }
   }
 }
+TEST_F(test_d4_array, assigmenterror)
+{
+  d4_array a;
+  a.allocate(2, 5);
+  ASSERT_ANY_THROW({
+    d4_array b;
+    b.allocate(1, 5);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    d4_array b;
+    b.allocate(2, 6);
+    a = b;
+  });
+}

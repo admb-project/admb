@@ -6847,10 +6847,9 @@ class d7_array
    d7_array(d7_array & m2);
    d7_array();
    ~d7_array();
-   d6_array & elem(int i)
-   {
-      return t[i];
-   }
+
+  d6_array& elem(int i);
+
    d5_array & elem(int i, int j)
    {
       return ((*this) (i)) (j);
@@ -6875,10 +6874,9 @@ class d7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-   const d6_array & elem(int i) const
-   {
-      return t[i];
-   }
+
+  const d6_array& elem(int i) const;
+
    const d5_array & elem(int i, int j) const
    {
       return ((*this) (i)) (j);
@@ -7006,6 +7004,30 @@ class d7_array
   void initialize();
   void operator/=(double d);
 };
+inline d6_array& d7_array::elem(int i)
+{
+#ifndef OPT_LIB
+  if (i < indexmin() || i > indexmax())
+  {
+    cerr << "Error index out of bounds in\n"
+            "d5_array& d6_array::elem(int)" << endl;
+    ad_exit(1);
+  }
+#endif
+  return t[i];
+}
+inline const d6_array& d7_array::elem(int i) const
+{
+#ifndef OPT_LIB
+  if (i < indexmin() || i > indexmax())
+  {
+    cerr << "Error index out of bounds in\n"
+            "d5_array& d6_array::elem(int)" << endl;
+    ad_exit(1);
+  }
+#endif
+  return t[i];
+}
 
 d7_array operator/(const d7_array & m, double d);
 

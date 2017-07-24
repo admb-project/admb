@@ -96,7 +96,7 @@ void d7_array::allocate(const d7_array& other)
   }
 }
 
-  #ifndef OPT_LIB
+#ifndef OPT_LIB
 
 /**
 Return d6_array element at index i.
@@ -106,11 +106,6 @@ Note: Exits for out of bounds index.
 */
 d6_array& d7_array::operator()(int i)
 {
-  if (i < indexmin() || i > indexmax())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
-      "d6_array& d7_array::operator()(int i)", indexmin(), indexmax(), i);
-  }
   return elem(i);
 }
 /**
@@ -121,11 +116,6 @@ Note: Exits for out of bounds index.
 */
 const d6_array& d7_array::operator()(int i) const
 {
-  if (i < indexmin() || i > indexmax())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
-      "d6_array& d7_array::operator()(int i)", indexmin(), indexmax(), i);
-  }
   return elem(i);
 }
 /**
@@ -136,11 +126,6 @@ Note: Exits for out of bounds index.
 */
 d6_array& d7_array::operator[](int i)
 {
-  if (i < indexmin() || i > indexmax())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
-      "d6_array& d7_array::operator[](int i)", indexmin(), indexmax(), i);
-  }
   return elem(i);
 }
 /**
@@ -151,191 +136,106 @@ Note: Exits for out of bounds index.
 */
 const d6_array& d7_array::operator[](int i) const
 {
-  if (i < indexmin() || i > indexmax())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
-      "const d6_array& d7_array::operator[](int i) const",
-      indexmin(), indexmax(), i);
-  }
   return elem(i);
 }
-
 /**
  * Description not yet available.
  * \param
  */
-    d5_array& d7_array::operator ( ) (int i ,int j)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "d5_array& d7_array::operator()(int i, int j)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j);
-    }
-
+d5_array& d7_array::operator()(int i ,int j)
+{
+  return elem(i)(j);
+}
 /**
  * Description not yet available.
  * \param
  */
-    d4_array& d7_array::operator ( ) (int i,int j,int k)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "d4_array& d7_array::operator()(int i, int j, int k)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k);
-    }
-
+d4_array& d7_array::operator()(int i,int j,int k)
+{
+  return elem(i)(j,k);
+}
 /**
  * Description not yet available.
  * \param
  */
-    d3_array& d7_array::operator ( ) (int i,int j,int k,int l)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "d3_array& d7_array::operator()(int i, int j, int k, int l)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l);
-    }
-
+d3_array& d7_array::operator()(int i,int j,int k,int l)
+{
+  return elem(i)(j,k,l);
+}
 /**
  * Description not yet available.
  * \param
  */
-    dmatrix& d7_array::operator ( ) (int i,int j,int k,int l,int m)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "dmatrix& d7_array::operator()(int i, int j, int k, int l, int m)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l,m);
-    }
-
+dmatrix& d7_array::operator()(int i,int j,int k,int l,int m)
+{
+  return elem(i)(j,k,l,m);
+}
 /**
  * Description not yet available.
  * \param
  */
-    dvector& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-      "dvector& d7_array::operator()(int i, int j, int k, int l, int m, int n)",
-         indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l,m,n);
-    }
-
+dvector& d7_array::operator()(int i,int j,int k,int l,int m,int n)
+{
+  return elem(i)(j,k,l,m,n);
+}
 /**
  * Description not yet available.
  * \param
  */
-    double& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n,int _p)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-"double& d7_array::operator()(int i, int j,int k,int l, int m, int n, int _p)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l,m,n,_p);
-    }
-
-
+double& d7_array::operator()(int i,int j,int k,int l,int m,int n,int _p)
+{
+  return elem(i)(j,k,l,m,n,_p);
+}
 /**
  * Description not yet available.
  * \param
  */
-const d5_array& d7_array::operator()(int i,int j) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "d3_array& d5_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j);
-    }
-
+const d5_array& d7_array::operator()(int i, int j) const
+{
+  return elem(i)(j);
+}
 /**
  * Description not yet available.
  * \param
  */
 const d4_array& d7_array::operator()(int i, int j, int k) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-          "dmatrix& d5_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k);
-    }
-
+{
+  return elem(i)(j,k);
+}
 /**
  * Description not yet available.
  * \param
  */
 const d3_array& d7_array::operator()(int i, int j, int k, int l) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "double& d5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l);
-    }
-
+{
+  return elem(i)(j,k,l);
+}
 /**
  * Description not yet available.
  * \param
  */
 const dmatrix& d7_array::operator()(int i, int j, int k, int l, int m) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "double& d5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l,m);
-    }
-
+{
+  return elem(i)(j,k,l,m);
+}
 /**
  * Description not yet available.
  * \param
  */
 const dvector& d7_array::operator()(int i, int j, int k, int l, int m, int n)
   const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "double& d5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l,m,n);
-    }
-
+{
+  return elem(i)(j,k,l,m,n);
+}
 /**
  * Description not yet available.
  * \param
  */
 const double& d7_array::operator()(int i, int j, int k, int l, int m, int n,
   int _p) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "double& d5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l,m,n,_p);
-    }
+{
+  return elem(i)(j,k,l,m,n,_p);
+}
 #endif
 
 /**

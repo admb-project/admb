@@ -6849,65 +6849,62 @@ class d7_array
    ~d7_array();
 
   d6_array& elem(int i);
-
-   d5_array & elem(int i, int j)
-   {
-      return ((*this) (i)) (j);
-   }
-   d4_array & elem(int i, int j, int k)
-   {
-      return (((*this) (i, j)) (k));
-   }
-   d3_array & elem(int i, int j, int k, int l)
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-   dmatrix & elem(int i, int j, int k, int l, int _m)
-   {
-      return (((*this) (i)) (j, k, l, _m));
-   }
-   dvector & elem(int i, int j, int k, int l, int _m, int _n)
-   {
-      return (((*this) (i)) (j, k, l, _m, _n));
-   }
-   double &elem(int i, int j, int k, int l, int _m, int _n, int _p)
-   {
-      return (((*this) (i)) (j, k, l, _m, _n, _p));
-   }
-
+  d5_array& elem(int i, int j)
+  {
+    return elem(i)(j);
+  }
+  d4_array& elem(int i, int j, int k)
+  {
+    return elem(i)(j, k);
+  }
+  d3_array& elem(int i, int j, int k, int l)
+  {
+    return elem(i)(j, k, l);
+  }
+  dmatrix& elem(int i, int j, int k, int l, int _m)
+  {
+    return elem(i)(j, k, l, _m);
+  }
+  dvector& elem(int i, int j, int k, int l, int _m, int _n)
+  {
+    return elem(i)(j, k, l, _m, _n);
+  }
+  double& elem(int i, int j, int k, int l, int _m, int _n, int _p)
+  {
+    return elem(i)(j, k, l, _m, _n, _p);
+  }
   const d6_array& elem(int i) const;
-
-   const d5_array & elem(int i, int j) const
-   {
-      return ((*this) (i)) (j);
-   }
-   const d4_array & elem(int i, int j, int k) const
-   {
-      return (((*this) (i, j)) (k));
-   }
-   const d3_array & elem(int i, int j, int k, int l) const
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-   const dmatrix & elem(int i, int j, int k, int l, int _m) const
-   {
-      return (((*this) (i)) (j, k, l, _m));
-   }
-   const dvector & elem(int i, int j, int k, int l, int _m, int _n) const
-   {
-      return (((*this) (i)) (j, k, l, _m, _n));
-   }
-   const double &elem(int i, int j, int k, int l, int _m, int _n, int _p) const
-   {
-      return (((*this) (i)) (j, k, l, _m, _n, _p));
-   }
+  const d5_array& elem(int i, int j) const
+  {
+    return elem(i)(j);
+  }
+  const d4_array& elem(int i, int j, int k) const
+  {
+    return elem(i)(j, k);
+  }
+  const d3_array& elem(int i, int j, int k, int l) const
+  {
+    return elem(i)(j, k, l);
+  }
+  const dmatrix& elem(int i, int j, int k, int l, int _m) const
+  {
+    return elem(i)(j, k, l, _m);
+  }
+  const dvector& elem(int i, int j, int k, int l, int _m, int _n) const
+  {
+    return elem(i)(j, k, l, _m, _n);
+  }
+  const double& elem(int i, int j, int k, int l, int _m, int _n, int _p) const
+  {
+    return elem(i)(j, k, l, _m, _n, _p);
+  }
   d6_array& operator()(int i)
   {
-    return t[i];
+    return elem(i);
   }
   d6_array& operator[](int i)
   {
-    return t[i];
+    return elem(i);
   }
   d5_array& operator()(int i, int j)
   {
@@ -6935,11 +6932,11 @@ class d7_array
   }
   inline const d6_array& operator()(int i) const
   {
-    return t[i];
+    return elem(i);
   }
   inline const d6_array& operator[](int i) const
   {
-    return t[i];
+    return elem(i);
   }
   inline const d5_array& operator()(int i, int j) const
   {

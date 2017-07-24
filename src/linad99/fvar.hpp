@@ -6470,128 +6470,105 @@ class d6_array
    d6_array(const d6_array & m2);
    d6_array();
    ~d6_array();
-   d5_array & elem(int i)
-   {
-      return t[i];
-   }
-   d4_array & elem(int i, int j)
-   {
-      return ((*this) (i)) (j);
-   }
-   d3_array & elem(int i, int j, int k)
-   {
-      return (((*this) (i, j)) (k));
-   }
-   dmatrix & elem(int i, int j, int k, int l)
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-   dvector & elem(int i, int j, int k, int l, int _m)
-   {
-      return (((*this) (i)) (j, k, l, _m));
-   }
-   double &elem(int i, int j, int k, int l, int _m, int _n)
-   {
-      return (((*this) (i)) (j, k, l, _m, _n));
-   }
-   const d5_array & elem(int i) const
-   {
-      return t[i];
-   }
-   const d4_array & elem(int i, int j) const
-   {
-      return ((*this) (i)) (j);
-   }
-   const d3_array & elem(int i, int j, int k) const
-   {
-      return (((*this) (i, j)) (k));
-   }
-   const dmatrix & elem(int i, int j, int k, int l) const
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-   const dvector & elem(int i, int j, int k, int l, int _m) const
-   {
-      return (((*this) (i)) (j, k, l, _m));
-   }
-   const double &elem(int i, int j, int k, int l, int _m, int _n) const
-   {
-      return (((*this) (i)) (j, k, l, _m, _n));
-   }
-#ifdef OPT_LIB
-   d5_array & operator () (int i)
-   {
-      return t[i];
-   }
-   d5_array & operator [](int i)
-   {
-      return t[i];
-   }
-   d4_array & operator ()(int i, int j)
-   {
-      return ((*this) (i)) (j);
-   }
-   d3_array & operator ()(int i, int j, int k)
-   {
-      return (((*this) (i, j)) (k));
-   }
-   dmatrix & operator ()(int i, int j, int k, int l)
-   {
-      return (((*this) (i)) (j, k, l));
-   }
-   dvector & operator ()(int i, int j, int k, int l, int _m)
-   {
-      return (((*this) (i)) (j, k, l, _m));
-   }
-   double &operator () (int i, int j, int k, int l, int _m, int _n)
-   {
-      return (((*this) (i)) (j, k, l, _m, _n));
-   }
-   inline const d5_array & operator() (int i) const
-   {
-      return t[i];
-   }
-   inline const d5_array & operator[] (int i) const
-   {
-      return t[i];
-   }
-   inline const d4_array & operator() (int i, int j) const
-   {
-      return ((*this) (i)) (j);
-   }
-   inline const d3_array & operator() (int i, int j, int k) const
-   {
-      return (((*this) (i)) (j, k));
-   }
-   inline const dmatrix & operator() (int i, int j, int k, int l) const
-   {
-      return (((*this) (i)) (j, k, l));
-   }
-   inline const dvector & operator() (int i, int j, int k, int l, int _m) const
-   {
-      return (((*this) (i)) (j, k, l, _m));
-   }
-   inline const double &operator() (int i, int j, int k, int l, int _m, int _n)
+  d5_array& elem(int i);
+  d4_array& elem(int i, int j)
+  {
+    return elem(i)(j);
+  }
+  d3_array& elem(int i, int j, int k)
+  {
+    return elem(i)(j, k);
+  }
+  dmatrix& elem(int i, int j, int k, int l)
+  {
+    return elem(i)(j, k, l);
+  }
+  dvector& elem(int i, int j, int k, int l, int _m)
+  {
+    return elem(i)(j, k, l, _m);
+  }
+  double &elem(int i, int j, int k, int l, int _m, int _n)
+  {
+     return elem(i)(j, k, l, _m, _n);
+  }
+  const d5_array& elem(int i) const;
+  const d4_array& elem(int i, int j) const
+  {
+    return elem(i)(j);
+  }
+  const d3_array& elem(int i, int j, int k) const
+  {
+    return elem(i)(j, k);
+  }
+  const dmatrix& elem(int i, int j, int k, int l) const
+  {
+    return elem(i)(j, k, l);
+  }
+  const dvector& elem(int i, int j, int k, int l, int _m) const
+  {
+    return elem(i)(j, k, l, _m);
+  }
+  const double& elem(int i, int j, int k, int l, int _m, int _n) const
+  {
+    return elem(i)(j, k, l, _m, _n);
+  }
+  d5_array& operator()(int i)
+  {
+    return elem(i);
+  }
+  d5_array& operator[](int i)
+  {
+    return elem(i);
+  }
+  d4_array& operator()(int i, int j)
+  {
+    return elem(i)(j);
+  }
+  d3_array& operator ()(int i, int j, int k)
+  {
+    return elem(i)(j, k);
+  }
+  dmatrix& operator ()(int i, int j, int k, int l)
+  {
+    return elem(i)(j, k, l);
+  }
+  dvector& operator ()(int i, int j, int k, int l, int _m)
+  {
+    return elem(i)(j, k, l, _m);
+  }
+  double& operator()(int i, int j, int k, int l, int _m, int _n)
+  {
+    return elem(i)(j, k, l, _m, _n);
+  }
+  inline const d5_array& operator()(int i) const
+  {
+    return elem(i);
+  }
+  inline const d5_array& operator[](int i) const
+  {
+    return elem(i);
+  }
+  inline const d4_array& operator()(int i, int j) const
+  {
+    return elem(i)(j);
+  }
+  inline const d3_array& operator()(int i, int j, int k) const
+  {
+    return elem(i)(j, k);
+  }
+  inline const dmatrix& operator()(int i, int j, int k, int l) const
+  {
+    return elem(i)(j, k, l);
+  }
+  inline const dvector& operator()(int i, int j, int k, int l, int _m) const
+  {
+    return elem(i)(j, k, l, _m);
+  }
+  inline const double& operator()(int i, int j, int k, int l, int _m, int _n)
      const
-   {
-      return (((*this) (i)) (j, k, l, _m, _n));
-   }
-#else
-   const d5_array & operator() (int i) const;
-   const d5_array & operator[] (int i) const;
-   const d4_array & operator() (int i, int j) const;
-   const d3_array & operator() (int i, int j, int k) const;
-   const dmatrix & operator() (int i, int j, int k, int l) const;
-   const dvector & operator() (int i, int j, int k, int l, int _m) const;
-   const double &operator() (int i, int j, int k, int l, int _m, int _n) const;
-   d5_array & operator ()(int);
-   d5_array & operator [](int);
-   d4_array & operator ()(int, int);
-   d3_array & operator ()(int, int, int);
-   dmatrix & operator ()(int, int, int, int);
-   dvector & operator ()(int, int, int, int, int);
-   double &operator () (int, int, int, int, int, int);
-#endif
+  {
+    return elem(i)(j, k, l, _m, _n);
+  }
   //access functions
   int indexmin() const
   {
@@ -6608,6 +6585,32 @@ class d6_array
   void initialize();
   void operator/=(double d);
 };
+inline d5_array& d6_array::elem(int i)
+{
+#ifndef OPT_LIB
+  if (i < indexmin() || i > indexmax())
+  {
+    cerr << "Error: Index is out of bounds in"
+         << " d5_array& d6_array::elem(int).\n";
+    ad_exit(1);
+  }
+#endif
+
+  return t[i];
+}
+inline const d5_array& d6_array::elem(int i) const
+{
+#ifndef OPT_LIB
+  if (i < indexmin() || i > indexmax())
+  {
+    cerr << "Error: Index is out of bounds in"
+         << " d5_array& d6_array::elem(int).\n";
+    ad_exit(1);
+  }
+#endif
+
+  return t[i];
+}
 
 d6_array operator/(const d6_array & m, double d);
 

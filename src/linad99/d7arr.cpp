@@ -64,26 +64,24 @@ d7_array::~d7_array()
   deallocate();
 }
 /**
- * Description not yet available.
- * \param
- */
-d7_array& d7_array::operator=(const d7_array& m)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   {
-     cerr << "Incompatible bounds in"
-      " d7_array& d7_array:: operator =  (const d7_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
+Assign element values from other to d7_array.
+*/
+d7_array& d7_array::operator=(const d7_array& other)
+{
+  int min = indexmin();
+  int max = indexmax();
+  if (min != other.indexmin() || max != other.indexmax())
+  {
+    cerr << "Incompatible bounds in"
+         << " d7_array& d7_array::operator=(const d7_array&).\n";
+    ad_exit(1);
+  }
+  for (int i = min; i <= max; ++i)
+  {
+    elem(i) = other.elem(i);
+  }
+  return *this;
+}
 /**
 Allocate d7_array using the same dimensions as other.
 

@@ -249,3 +249,14 @@ TEST_F(test_d6_array, assigmenterror)
     a = b;
   });
 }
+TEST_F(test_d6_array, elemerror)
+{
+  d6_array a;
+  a.allocate(2, 5);
+  ASSERT_ANY_THROW({
+    a.elem(1);
+  });
+  ASSERT_ANY_THROW({
+    a.elem(6);
+  });
+}

@@ -248,3 +248,166 @@ TEST_F(test_d7_array, divisor)
     }
   }
 }
+TEST_F(test_d7_array, constsum)
+{
+  d7_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  double total = 0;
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              for (int p = 1; p <= 2; ++p)
+              {
+                a(i, j, k, l, m, n, p) = d;
+                total += d;
+                d += 2.0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const d7_array b(a);
+  ASSERT_DOUBLE_EQ(total, sum(b));
+}
+TEST_F(test_d7_array, initialize)
+{
+  d7_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              for (int p = 1; p <= 2; ++p)
+              {
+                a(i, j, k, l, m, n, p) = d;
+                d += 2.0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  a.initialize();
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              for (int p = 1; p <= 2; ++p)
+              {
+                ASSERT_DOUBLE_EQ(0.0, a(i, j, k, l, m, n, p));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+TEST_F(test_d7_array, equal)
+{
+  d7_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              for (int p = 1; p <= 2; ++p)
+              {
+                a(i, j, k, l, m, n, p) = d;
+                d += 2.0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  d7_array b(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+  b = a;
+  a.initialize();
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              for (int p = 1; p <= 2; ++p)
+              {
+                ASSERT_DOUBLE_EQ(0.0, a(i, j, k, l, m, n, p));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  a = b;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          for (int m = 1; m <= 2; ++m)
+          {
+            for (int n = 1; n <= 2; ++n)
+            {
+              for (int p = 1; p <= 2; ++p)
+              {
+                ASSERT_DOUBLE_EQ(a(i, j, k, l, m, n, p), b(i, j, k, l, m, n, p));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

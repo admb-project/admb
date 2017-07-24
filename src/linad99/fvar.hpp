@@ -6901,93 +6901,73 @@ class d7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#ifdef OPT_LIB
-   d6_array & operator () (int i)
-   {
-      return t[i];
-   }
-   d6_array & operator [](int i)
-   {
-      return t[i];
-   }
-   d5_array & operator ()(int i, int j)
-   {
-      return ((*this) (i)) (j);
-   }
-   d4_array & operator ()(int i, int j, int k)
-   {
-      return (((*this) (i, j)) (k));
-   }
-   d3_array & operator ()(int i, int j, int k, int l)
-   {
-      return (((*this) (i)) (j, k, l));
-   }
-   dmatrix & operator ()(int i, int j, int k, int l, int _m)
-   {
-      return (((*this) (i)) (j, k, l, _m));
-   }
-   dvector & operator ()(int i, int j, int k, int l, int _m, int _n)
-   {
-      return (((*this) (i)) (j, k, l, _m, _n));
-   }
-   double &operator () (int i, int j, int k, int l, int _m, int _n, int _p)
-   {
-      return (((*this) (i)) (j, k, l, _m, _n, _p));
-   }
-   inline const d6_array & operator() (int i) const
-   {
-      return t[i];
-   }
-   inline const d6_array & operator[] (int i) const
-   {
-      return t[i];
-   }
-   inline const d5_array & operator() (int i, int j) const
-   {
-      return ((*this) (i)) (j);
-   }
-   inline const d4_array & operator() (int i, int j, int k) const
-   {
-      return (((*this) (i)) (j, k));
-   }
-   inline const d3_array & operator() (int i, int j, int k, int l) const
-   {
-      return (((*this) (i)) (j, k, l));
-   }
-   inline const dmatrix & operator() (int i, int j, int k, int l, int _m) const
-   {
-      return (((*this) (i)) (j, k, l, _m));
-   }
-   inline const dvector & operator() (int i, int j, int k, int l, int _m,
+  d6_array& operator()(int i)
+  {
+    return t[i];
+  }
+  d6_array& operator[](int i)
+  {
+    return t[i];
+  }
+  d5_array& operator()(int i, int j)
+  {
+    return elem(i)(j);
+  }
+  d4_array& operator()(int i, int j, int k)
+  {
+    return elem(i, j)(k);
+  }
+  d3_array& operator ()(int i, int j, int k, int l)
+  {
+    return elem(i)(j, k, l);
+  }
+  dmatrix& operator()(int i, int j, int k, int l, int _m)
+  {
+    return elem(i)(j, k, l, _m);
+  }
+  dvector & operator ()(int i, int j, int k, int l, int _m, int _n)
+  {
+    return elem(i)(j, k, l, _m, _n);
+  }
+  double& operator()(int i, int j, int k, int l, int _m, int _n, int _p)
+  {
+    return elem(i)(j, k, l, _m, _n, _p);
+  }
+  inline const d6_array& operator()(int i) const
+  {
+    return t[i];
+  }
+  inline const d6_array& operator[](int i) const
+  {
+    return t[i];
+  }
+  inline const d5_array& operator()(int i, int j) const
+  {
+    return elem(i)(j);
+  }
+  inline const d4_array& operator()(int i, int j, int k) const
+  {
+    return elem(i)(j, k);
+  }
+  inline const d3_array & operator() (int i, int j, int k, int l) const
+  {
+    return elem(i)(j, k, l);
+  }
+  inline const dmatrix& operator()(int i, int j, int k, int l, int _m) const
+  {
+    return elem(i)(j, k, l, _m);
+  }
+  inline const dvector& operator()(int i, int j, int k, int l, int _m,
      int _n) const
-   {
-      return (((*this) (i)) (j, k, l, _m, _n));
-   }
-   inline const double &operator() (int i, int j, int k, int l, int _m, int _n,
+  {
+    return elem(i)(j, k, l, _m, _n);
+  }
+  inline const double& operator()(int i, int j, int k, int l, int _m, int _n,
      int _p) const
-   {
-      return (((*this) (i)) (j, k, l, _m, _n, _p));
-   }
-#else
-   const d6_array & operator() (int i) const;
-   const d6_array & operator[] (int i) const;
-   const d5_array & operator() (int i, int j) const;
-   const d4_array & operator() (int i, int j, int k) const;
-   const d3_array & operator() (int i, int j, int k, int l) const;
-   const dmatrix & operator() (int i, int j, int k, int l, int _m) const;
-   const dvector & operator() (int i, int j, int k, int l, int _m, int _n)
-     const;
-   const double &operator() (int i, int j, int k, int l, int _m, int _n, int _p)
-     const;
-   d6_array & operator ()(int);
-   d6_array & operator [](int);
-   d5_array & operator ()(int, int);
-   d4_array & operator ()(int, int, int);
-   d3_array & operator ()(int, int, int, int);
-   dmatrix & operator ()(int, int, int, int, int);
-   dvector & operator ()(int, int, int, int, int, int);
-   double &operator () (int, int, int, int, int, int, int);
-#endif
+  {
+    return elem(i)(j, k, l, _m, _n, _p);
+  }
+
    //access functions
   int indexmin() const
   {

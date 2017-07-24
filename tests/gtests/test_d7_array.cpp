@@ -411,3 +411,14 @@ TEST_F(test_d7_array, equal)
     }
   }
 }
+TEST_F(test_d7_array, elem)
+{
+  d7_array a;
+  a.allocate(2, 5);
+  ASSERT_ANY_THROW({
+    a.elem(1);
+  });
+  ASSERT_ANY_THROW({
+    a.elem(6);
+  });
+}

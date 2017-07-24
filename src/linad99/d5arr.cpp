@@ -1,28 +1,23 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 /**
- * Description not yet available.
- * \param
- */
-double sum(const d5_array& m)
+Return total sum of darray.
+
+\param darray d5_array
+*/
+double sum(const d5_array& darray)
 {
-  double tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  double total = 0.0;
+  for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
   {
-    tmp+=sum(m.elem(i));
+    total += sum(darray.elem(i));
   }
-  return tmp;
+  return total;
 }
 
 /**

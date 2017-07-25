@@ -15,15 +15,18 @@ Return total sum of darray.
 double sum(const d5_array& darray)
 {
   double total = 0.0;
-/*
+
+#if (__cplusplus <= 199711L)
   for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
   {
     total += sum(darray.elem(i));
   }
-*/
+#else
   auto begin = &darray.elem(darray.indexmin());
   auto end = begin + darray.size();
   std::for_each(begin, end, [&total](auto darray){ total += sum(darray); });
+#endif
+
   return total;
 }
 /// Copy constructor (shallow)

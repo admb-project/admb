@@ -4,6 +4,7 @@
  */
 #if (__cplusplus == 201402L)
   #include <algorithm>
+  #include <iterator>
 #endif
 #include "fvar.hpp"
 #include "admb_messages.h"
@@ -26,16 +27,10 @@ double sum(const d5_array& darray)
 #else
   auto begin = &darray.elem(darray.indexmin());
   auto end = begin + darray.size();
-
-  #if (__cplusplus == 201103L)
-  for (auto ptr = begin; ptr != end; ++ptr)
+  std::for_each(begin, end, [&total](const d4_array& darray)
   {
-    total += sum(*ptr);
-  }
-  #else
-  std::for_each(begin, end, [&total](auto darray){ total += sum(darray); });
-  #endif
-
+    total += sum(darray);
+  });
 #endif
 
   return total;

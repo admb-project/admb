@@ -2,7 +2,7 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#if (__cplusplus == 201402L)
+#if (__cplusplus > 199711L)
   #include <algorithm>
   #include <iterator>
 #endif

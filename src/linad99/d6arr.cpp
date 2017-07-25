@@ -8,9 +8,17 @@
 /// Initialize all elments of d6_array to zero.
 void d6_array::initialize()
 {
+/*
   for (int i = indexmin(); i <= indexmax(); ++i)
   {
     elem(i).initialize();
+  }
+*/
+  auto begin = &elem(indexmin());
+  auto end = begin + size();
+  for (auto ptr = begin; ptr != end; ++ptr)
+  {
+    ptr->initialize();
   }
 }
 /// Copy constructor (shallow)

@@ -24,11 +24,16 @@ double sum(const d5_array& darray)
 #else
   auto begin = &darray.elem(darray.indexmin());
   auto end = begin + darray.size();
-  //std::for_each(begin, end, [&total](auto darray){ total += sum(darray); });
+
+  #if (__cplusplus == 201103L)
   for (auto ptr = begin; ptr != end; ++ptr)
   {
     total += sum(*ptr);
   }
+  #else
+  std::for_each(begin, end, [&total](auto darray){ total += sum(darray); });
+  #endif
+
 #endif
 
   return total;

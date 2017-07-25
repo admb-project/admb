@@ -2,7 +2,9 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-//#include <algorithm>
+#if (__cplusplus == 201402L)
+  #include <algorithm>
+#endif
 #include "fvar.hpp"
 #include "admb_messages.h"
 

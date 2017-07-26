@@ -1096,3 +1096,8 @@ TEST_F(test_d3_array, position)
   ASSERT_FALSE(allocated(a(4)));
   ASSERT_FALSE(allocated(a(5)));
 }
+TEST_F(test_d3_array, emptyinitialize)
+{
+  d3_array a;
+  a.initialize();
+}

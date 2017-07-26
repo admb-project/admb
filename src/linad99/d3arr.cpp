@@ -3,6 +3,11 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 
+#if (__cplusplus > 199711L)
+  #include <iterator>
+  #include <algorithm>
+#endif
+
 #include "fvar.hpp"
 #ifdef DEBUG
   #include <cassert>
@@ -646,52 +651,42 @@ void d3_array::shallow_copy(const d3_array& other)
    }
 #endif
  }
-
-/**
- * Description not yet available.
- * \param
- */
- void d3_array::initialize()
- {
-   if (!(!(*this)))  // only initialize allocated objects
-   {
-     for (int i=slicemin();i<=slicemax();i++)
-     {
-       elem(i).initialize();
-     }
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void d3_array::deallocate()
- {
-   if (shape)
-   {
-     //static int testflag=0;
-     //if (testflag) test_the_pointer();
-     t += slicemin();
-     //int ss=slicesize();
-     delete [] t;
-     //if (testflag) test_the_pointer();
-     delete shape;
-     //if (testflag) test_the_pointer();
-     t=NULL;
-     shape=NULL;
-   }
-#ifdef SAFE_ALL
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
-   }
+/// Initializes all elements of d3_array to zero.
+void d3_array::initialize()
+{
+  // only initialize allocated objects
+  if (t)
+  {
+#if (__cplusplus <= 199711L)
+    for (int i = slicemin(); i <= slicemax(); ++i)
+    {
+      t[i].initialize();
+    }
+#else
+    std::for_each(begin(), end(), [](dmatrix& matrix) {
+      matrix.initialize();
+    });
 #endif
- }
-
-/**
-Destructor
-*/
+  }
+}
+/// Deallocates d3_array memory.
+void d3_array::deallocate()
+{
+  if (shape)
+  {
+    t += slicemin();
+    delete [] t;
+    delete shape;
+    allocate();
+  }
+#ifdef DEBUG
+  else
+  {
+    cerr << "Warning -- trying to deallocate an unallocated d3_array.\n";
+  }
+#endif
+}
+/// Destructor
 d3_array::~d3_array()
 {
   if (shape)

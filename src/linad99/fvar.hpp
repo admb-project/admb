@@ -3635,6 +3635,14 @@ class d3_array
    void initialize(int sl, int sh, int nrl, const ivector & nrh,
      int ncl, const ivector & nch);
 
+  auto begin() const
+  {
+    return t ? &t[slicemin()] : nullptr;
+  }
+  auto end() const
+  {
+    return t ? begin() + slicesize() : nullptr;
+  }
   //access functions
   int indexmin() const
   {

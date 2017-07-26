@@ -292,7 +292,14 @@ TEST_F(test_d5_array, nonempty_copy_constructor)
   ASSERT_EQ(1, a.indexmin());
   ASSERT_EQ(4, a.indexmax());
 }
-TEST_F(test_d5_array, emptyinitialize)
+TEST_F(test_d5_array, emptysum)
+{
+  d5_array a;
+  ASSERT_NO_THROW({
+    sum(a);
+  });
+}
+TEST_F(test_d5_array, emptyinititalize)
 {
   d5_array a;
   ASSERT_NO_THROW({

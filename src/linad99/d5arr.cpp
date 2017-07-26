@@ -24,12 +24,15 @@ double sum(const d5_array& darray)
     total += sum(darray.elem(i));
   }
 #else
-  auto begin = &darray.elem(darray.indexmin());
-  auto end = begin + darray.size();
-  std::for_each(begin, end, [&total](const d4_array& darray)
+  if (!darray == false)
   {
-    total += sum(darray);
-  });
+    auto begin = &darray.elem(darray.indexmin());
+    auto end = begin + darray.size();
+    std::for_each(begin, end, [&total](const d4_array& darray)
+    {
+      total += sum(darray);
+    });
+  }
 #endif
 
   return total;
@@ -102,10 +105,22 @@ d5_array& d5_array::operator=(const d5_array& other)
 /// Initialize all elements of d5_array to zero.
 void d5_array::initialize()
 {
+#if (__cplusplus <= 199711L)
   for (int i = indexmin(); i <= indexmax(); ++i)
   {
     elem(i).initialize();
   }
+#else
+  if (operator!() == false)
+  {
+    auto begin = &elem(indexmin());
+    auto end = begin + size();
+    std::for_each(begin, end, [](d4_array& darray)
+    {
+      darray.initialize();
+    });
+  }
+#endif
 }
 /**
 Allocate d5_array using other dimensions.

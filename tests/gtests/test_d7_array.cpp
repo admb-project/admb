@@ -422,3 +422,31 @@ TEST_F(test_d7_array, elem)
     a.elem(6);
   });
 }
+TEST_F(test_d7_array, assigment2error)
+{
+  d7_array a;
+  a.allocate(1, 4);
+  ASSERT_ANY_THROW({
+    d7_array b;
+    b.allocate(2, 4);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    d7_array b;
+    b.allocate(1, 5);
+    a = b;
+  });
+}
+TEST_F(test_d7_array, copyempty)
+{
+  d7_array empty;
+  ASSERT_FALSE(allocated(empty));
+  ASSERT_EQ(1, empty.indexmin());
+  ASSERT_EQ(0, empty.indexmax());
+  ASSERT_EQ(0, empty.size());
+  d7_array a(empty);
+  ASSERT_FALSE(allocated(a));
+  ASSERT_EQ(1, a.indexmin());
+  ASSERT_EQ(0, a.indexmax());
+  ASSERT_EQ(0, a.size());
+}

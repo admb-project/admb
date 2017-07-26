@@ -1,22 +1,33 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+
+#if (__cplusplus > 199711L)
+  #include <algorithm>
+  #include <iterator>
+#endif
 #include "fvar.hpp"
 
 /// Initialize all d7_array elements to zero.
 void d7_array::initialize()
 {
+#if (__cplusplus <= 199711L)
   for (int i = indexmin(); i <= indexmax(); ++i)
   {
     elem(i).initialize();
   }
+#else
+  if (operator!() == false)
+  {
+    auto begin = &elem(indexmin());
+    auto end = begin + size();
+    std::for_each(begin, end, [](d6_array& darray)
+    {
+      darray.initialize();
+    });
+  }
+#endif
 }
 /// Copy constructor (shallow)
 d7_array::d7_array(d7_array& other)

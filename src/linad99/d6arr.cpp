@@ -2,24 +2,32 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+#if (__cplusplus > 199711L)
+  #include <algorithm>
+  #include <iterator>
+#endif
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 /// Initialize all elments of d6_array to zero.
 void d6_array::initialize()
 {
-/*
+#if (__cplusplus <= 199711L)
   for (int i = indexmin(); i <= indexmax(); ++i)
   {
     elem(i).initialize();
   }
-*/
-  auto begin = &elem(indexmin());
-  auto end = begin + size();
-  for (auto ptr = begin; ptr != end; ++ptr)
+#else
+  if (operator!() == false)
   {
-    ptr->initialize();
+    auto begin = &elem(indexmin());
+    auto end = begin + size();
+    std::for_each(begin, end, [](d5_array& darray)
+    {
+      darray.initialize();
+    });
   }
+#endif
 }
 /// Copy constructor (shallow)
 d6_array::d6_array(const d6_array& other)

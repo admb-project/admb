@@ -21,10 +21,16 @@ Return total sum of the elements in darray.
 double sum(const d3_array& darray)
 {
   double total = 0.0;
+#if (__cplusplus <= 199711L)
   for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
   {
     total += sum(darray.elem(i));
   }
+#else
+  std::for_each(darray.begin(), darray.end(), [&total](dmatrix& matrix) {
+    total += sum(matrix);
+  });
+#endif
   return total;
 }
 /**

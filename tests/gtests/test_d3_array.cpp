@@ -1051,19 +1051,19 @@ TEST_F(test_d3_array, constructorintint)
 TEST_F(test_d3_array, allocateintint4xivector)
 {
   d3_array a;
-  ivector rowsmin(1, 3); 
+  ivector rowsmin(1, 3);
   rowsmin(1) = 2;
   rowsmin(2) = 3;
   rowsmin(3) = 4;
-  ivector rowsmax(1, 3); 
+  ivector rowsmax(1, 3);
   rowsmax(1) = 5;
   rowsmax(2) = 6;
   rowsmax(3) = 7;
-  ivector colsmin(1, 3); 
+  ivector colsmin(1, 3);
   colsmin(1) = 2;
   colsmin(2) = 3;
   colsmin(3) = 4;
-  ivector colsmax(1, 3); 
+  ivector colsmax(1, 3);
   colsmax(1) = 5;
   colsmax(2) = 6;
   colsmax(3) = 7;
@@ -1083,4 +1083,16 @@ TEST_F(test_d3_array, allocateintint4xivector)
   ASSERT_EQ(6, a(2).colmax());
   ASSERT_EQ(4, a(3).colmin());
   ASSERT_EQ(7, a(3).colmax());
+}
+TEST_F(test_d3_array, position)
+{
+  d3_array_position position(2, 5);
+  d3_array a(position);
+  ASSERT_EQ(2, a.slicemin());
+  ASSERT_EQ(5, a.slicemax());
+  ASSERT_EQ(4, a.slicesize());
+  ASSERT_FALSE(allocated(a(2)));
+  ASSERT_FALSE(allocated(a(3)));
+  ASSERT_FALSE(allocated(a(4)));
+  ASSERT_FALSE(allocated(a(5)));
 }

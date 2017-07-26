@@ -42,18 +42,15 @@ double sum(const d3_array& darray)
      return *this;
    }
  }
-
 /**
- * Description not yet available.
- * \param
- */
- d3_array::d3_array(const d3_array_position& tpos)
- {
-   int nrl=tpos.indexmin();
-   int nrh=tpos.indexmax();
-   allocate(nrl,nrh);
- }
+Construct d3_array with a vector of empty dmatrix using position.
 
+\param position d3_array_position
+*/
+d3_array::d3_array(const d3_array_position& position):
+  d3_array(position.indexmin(), position.indexmax())
+{
+}
 /**
 Construct d3_array with a vector of empty dmatrix with dimension
 [nrl to nrh].

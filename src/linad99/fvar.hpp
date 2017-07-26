@@ -3635,23 +3635,24 @@ class d3_array
    void initialize(int sl, int sh, int nrl, const ivector & nrh,
      int ncl, const ivector & nch);
 
-   //access functions
-   int indexmin(void) const
-   {
-      return shape->slice_min;
-   }
-   int indexmax(void) const
-   {
-      return shape->slice_max;
-   }
-   int slicemin(void) const
-   {
-      return shape->slice_min;
-   }
-   int slicemax(void) const
-   {
-      return shape->slice_max;
-   }
+  //access functions
+  int indexmin() const
+  {
+    return slicemin();
+  }
+  int indexmax() const
+  {
+    return slicemax();
+  }
+  int slicemin() const
+  {
+    return shape ? shape->slice_min : 1;
+  }
+  int slicemax() const
+  {
+    return shape ? shape->slice_max : 0;
+  }
+
    int colmin(void) const
    {
       return ((*this) (slicemin()).colmin());
@@ -3672,8 +3673,7 @@ class d3_array
   // returns the number of rows
   unsigned int slicesize() const
   {
-    int size = slicemax() - slicemin() + 1;
-    return static_cast<unsigned int>(size < 0 ? 0 : size);
+    return static_cast<unsigned int>(slicemax() - slicemin() + 1);
   }
 
    // returns the number of rows
@@ -5018,22 +5018,6 @@ class d4_array
    //access functions
    friend class four_array_shape;
 
-   int indexmin(void)
-   {
-      return (shape->hslice_min);
-   }
-   int indexmax(void)
-   {
-      return (shape->hslice_max);
-   }
-   int hslicemin(void)
-   {
-      return (shape->hslice_min);
-   }
-   int hslicemax(void)
-   {
-      return (shape->hslice_max);
-   }
    int slicemin(void)
    {
       return ((*this) (hslicemin()).slicemin());
@@ -5059,12 +5043,6 @@ class d4_array
       return ((*this) (hslicemin(), slicemin(), rowmax()).indexmax());
    }
    // returns the number of rows
-  unsigned int hslicesize()
-  {
-    return static_cast<unsigned int>(
-      hslicemax() < hslicemin() ? 0 : hslicemax() - hslicemin() + 1);
-  }
-   // returns the number of rows
    int slicesize()
    {
       return (slicemax() - slicemin() + 1);
@@ -5079,22 +5057,22 @@ class d4_array
    {
       return (colmax() - colmin() + 1);
    }
-   int indexmin(void) const
-   {
-      return (shape->hslice_min);
-   }
-   int indexmax(void) const
-   {
-      return (shape->hslice_max);
-   }
-   int hslicemin(void) const
-   {
-      return (shape->hslice_min);
-   }
-   int hslicemax(void) const
-   {
-      return (shape->hslice_max);
-   }
+  int indexmin() const
+  {
+    return hslicemin();
+  }
+  int indexmax() const
+  {
+    return hslicemax();
+  }
+  int hslicemin() const
+  {
+    return shape ? shape->hslice_min : 1;
+  }
+  int hslicemax() const
+  {
+    return shape ? shape->hslice_max : 0;
+  }
    int slicemin(void) const
    {
       return ((*this) (hslicemin()).slicemin());
@@ -5132,9 +5110,9 @@ class d4_array
   // returns the number of rows
   unsigned int hslicesize() const
   {
-    return static_cast<unsigned int>(
-      hslicemax() < hslicemin() ? 0 : hslicemax() - hslicemin() + 1);
+    return static_cast<unsigned int>(hslicemax() - hslicemin() + 1);
   }
+
    // returns the number of rows
    int slicesize() const
    {
@@ -5393,12 +5371,6 @@ class dvar4_array
    //int rowmin(void) { return(shape->row_min);}
    //int rowmax(void) { return(shape->row_max);}
 
-  // returns the number of rows
-  unsigned int hslicesize()
-  {
-    return static_cast<unsigned int>(
-      hslicemax() < hslicemin() ? 0 : hslicemax() - hslicemin() + 1);
-  }
    // returns the number of rows
    int slicesize()
    {
@@ -5466,9 +5438,9 @@ class dvar4_array
   // returns the number of rows
   unsigned int hslicesize() const
   {
-    return static_cast<unsigned int>(
-      hslicemax() < hslicemin() ? 0 : hslicemax() - hslicemin() + 1);
+    return static_cast<unsigned int>(hslicemax() - hslicemin() + 1);
   }
+
    // returns the number of rows
    int slicesize() const
    {

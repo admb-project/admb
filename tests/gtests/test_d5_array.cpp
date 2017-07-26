@@ -259,3 +259,43 @@ TEST_F(test_d5_array, initialize)
     }
   }
 }
+TEST_F(test_d5_array, empty_d4_arrays2)
+{
+  d5_array a(2, 5);
+  for (int i = 2; i <= 5; ++i)
+  {
+    ASSERT_FALSE(allocated(a(i)));
+    ASSERT_EQ(1, a(i).indexmin());
+    ASSERT_EQ(0, a(i).indexmax());
+    ASSERT_EQ(0, a(i).hslicesize());
+  }
+}
+TEST_F(test_d5_array, empty_copy_constructor)
+{
+  d5_array empty;
+  ASSERT_FALSE(allocated(empty));
+  ASSERT_EQ(1, empty.indexmin());
+  ASSERT_EQ(0, empty.indexmax());
+  d5_array a(empty);
+  ASSERT_FALSE(allocated(a));
+  ASSERT_EQ(1, a.indexmin());
+  ASSERT_EQ(0, a.indexmax());
+}
+TEST_F(test_d5_array, nonempty_copy_constructor)
+{
+  d5_array nonempty(1, 4);
+  ASSERT_TRUE(allocated(nonempty));
+  ASSERT_EQ(1, nonempty.indexmin());
+  ASSERT_EQ(4, nonempty.indexmax());
+  d5_array a(nonempty);
+  ASSERT_TRUE(allocated(a));
+  ASSERT_EQ(1, a.indexmin());
+  ASSERT_EQ(4, a.indexmax());
+}
+TEST_F(test_d5_array, emptyinitialize)
+{
+  d5_array a;
+  ASSERT_NO_THROW({
+    a.initialize();
+  });
+}

@@ -9,7 +9,6 @@
 #include "fvar.hpp"
 #include "admb_messages.h"
 
-
 /**
 Return total sum of darray.
 
@@ -344,16 +343,16 @@ void d5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
     t[i].allocate(sl, sh, nrl, nrh, ncl, nch, l5, u5);
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
- d5_array::d5_array(int hsl,int hsu)
- {
-   allocate(hsl,hsu);
- }
+Construct vector of empty d4_arrays with dimension [hsl to hsu].
 
+\param hsl lower index
+\param hsu upper index
+*/
+d5_array::d5_array(int hsl,int hsu)
+{
+  allocate(hsl,hsu);
+}
 /**
 Allocate vector of d4_array with range [hsl, hsu].
 

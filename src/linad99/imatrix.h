@@ -126,22 +126,32 @@ public:
    const ivector& operator()(int) const;
    const int& operator()(int, int) const;
 
-   int indexmin(void) const
-   {
-      return index_min;
-   }
-   int indexmax(void) const
-   {
-      return index_max;
-   }
-   int rowmin(void) const
-   {
-      return index_min;
-   }
-   int rowmax(void) const
-   {
-      return index_max;
-   }
+
+  ivector* begin() const
+  {
+    return m ? &m[indexmin()] : nullptr;
+  }
+  ivector* end() const
+  {
+    return m ? &m[indexmin()] + rowsize(): nullptr;
+  }
+  int indexmin() const
+  {
+    return rowmin();
+  }
+  int indexmax() const
+  {
+    return rowmax();
+  }
+  int rowmin() const
+  {
+    return index_min;
+  }
+  int rowmax() const
+  {
+    return index_max;
+  }
+
    int colmin(void) const
    {
       return ((*this) (indexmin()).indexmin());
@@ -150,17 +160,18 @@ public:
    {
       return ((*this) (indexmin()).indexmax());
    }
-   // returns the number of rows
-   unsigned int rowsize() const
-   {
-      int size = rowmax() - rowmin() + 1;
-      return static_cast<unsigned int>(size < 0 ? 0 : size);
-   }
-   // returns the number of columns
-   int colsize() const
-   {
-      return (colmax() - colmin() + 1);
-   }
+
+  /// Returns the number of rows.
+  unsigned int rowsize() const
+  {
+    return static_cast<unsigned int>(rowmax() - rowmin() + 1);
+  }
+  /// Returns the number of columns.
+  unsigned int colsize() const
+  {
+    return static_cast<unsigned int>(colmax() - colmin() + 1);
+  }
+
    void rowshift(int min);
    inline ivector & elem(int i)
    {
@@ -223,4 +234,3 @@ inline const ivector& imatrix::operator[](int i) const
 }
 #endif
 #endif
-

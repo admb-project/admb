@@ -2,45 +2,59 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+
+#if (__cplusplus > 199711L)
+  #include <iterator>
+  #include <algorithm>
+#endif
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-imatrix& imatrix::operator=(const imatrix& m1)
- {
-   if (allocated(*this))
-   {
-     if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
-       colmin() != m1.colmin() || colmax() != m1.colmax() )
-     {
-       cerr << " Incompatible array bounds in "
-       "imatrix& operator=(const imatrix&)\n";
-       ad_exit(1);
-     }
+Assigns element values from other to imatrix.
 
-     if (m != m1.m)            // check for condition that both matrices
-     {                         // point to the same object
-       for (int i=rowmin();i<=rowmax();i++)
-       {
-         *(m+i) = m1[i];
-       }
-     }
-   }
-   else
-   {
-     index_min=m1.index_min;
-     index_max=m1.index_max;
-     shape=m1.shape;
+\param other imatrix
+*/
+imatrix& imatrix::operator=(const imatrix& other)
+{
+  if (allocated(*this))
+  {
+    if (rowmin() != other.rowmin() || rowmax() != other.rowmax()
+        || colmin() != other.colmin() || colmax() != other.colmax())
+    {
+      cerr << "Incompatible array bounds in "
+           << "imatrix& imatrix::operator=(const imatrix&)\n";
+      ad_exit(1);
+    }
+    // check for condition that both matrices point to the same object
+    if (m != other.m)
+    {
+#if (__cplusplus <= 199711L)
+      for (int i = rowmin(); i <= rowmax(); ++i)
+      {
+        *(m+i) = other[i];
+      }
+#else
+      ivector* iter = other.begin();
+      std::for_each(begin(), end(), [&iter](ivector& v) {
+        v = *iter;
+        ++iter;
+      });
+#endif
+    }
+  }
+  else
+  {
+     index_min = other.index_min;
+     index_max = other.index_max;
+     shape = other.shape;
      if (shape)
      {
        (shape->ncopies)++;
      }
-     m = m1.m;
-   }
-   return(*this);
- }
+     m = other.m;
+  }
+  return *this;
+}
 /**
 Assigns value to all elements of imatrix.
 
@@ -48,9 +62,15 @@ Assigns value to all elements of imatrix.
 */
 imatrix& imatrix::operator=(const int value)
 {
+#if (__cplusplus <= 199711L)
   for (int i = indexmin(); i <= indexmax(); ++i)
   {
     elem(i) = value;
   }
+#else
+  std::for_each(begin(), end(), [value](ivector& v) {
+    v = value;
+  });
+#endif
   return *this;
 }

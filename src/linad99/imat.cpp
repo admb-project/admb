@@ -146,9 +146,9 @@ void imatrix::allocate(int nrl, int nrh, int ncl, int nch)
 void imatrix::allocate()
 {
   index_min = 1;
-  index_max = -1;
-  m = NULL;
-  shape = NULL;
+  index_max = 0;
+  m = nullptr;
+  shape = nullptr;
 }
 /**
 Allocate ragged matrix with dimensions 

@@ -247,7 +247,7 @@ TEST_F(test_imatrix, allocate_imatrix_empty)
   imatrix m;
   m.initialize();
   ASSERT_EQ(1, m.rowmin());
-  ASSERT_EQ(-1, m.rowmax());
+  ASSERT_EQ(0, m.rowmax());
   ASSERT_EQ(0, m.rowsize());
   ASSERT_FALSE(allocated(m));
   ASSERT_TRUE(sub_unallocated(m));
@@ -256,7 +256,7 @@ TEST_F(test_imatrix, allocate_imatrix_empty)
   matrix.allocate(m);
 
   ASSERT_EQ(1, matrix.rowmin());
-  ASSERT_EQ(-1, matrix.rowmax());
+  ASSERT_EQ(0, matrix.rowmax());
   ASSERT_EQ(0, matrix.rowsize());
   ASSERT_FALSE(allocated(matrix));
   ASSERT_TRUE(sub_unallocated(matrix));
@@ -433,4 +433,66 @@ TEST_F(test_imatrix, operatorequalint)
   ASSERT_EQ(11, m(3, 1));
   ASSERT_EQ(11, m(3, 2));
   ASSERT_EQ(11, m(3, 3));
+}
+TEST_F(test_imatrix, assigmentempty)
+{
+  imatrix m(1, 3, 1, 3);
+  m(1, 1) = 1;
+  m(1, 2) = 2;
+  m(1, 3) = 3;
+  m(2, 1) = 4;
+  m(2, 2) = 5;
+  m(2, 3) = 6;
+  m(3, 1) = 7;
+  m(3, 2) = 8;
+  m(3, 3) = 9;
+
+  imatrix a;
+  a = m;
+
+  ASSERT_EQ(&a(1, 1), &m(1, 1));
+  ASSERT_EQ(&a(1, 2), &m(1, 2));
+  ASSERT_EQ(&a(1, 3), &m(1, 3));
+  ASSERT_EQ(&a(2, 1), &m(2, 1));
+  ASSERT_EQ(&a(2, 2), &m(2, 2));
+  ASSERT_EQ(&a(2, 3), &m(2, 3));
+  ASSERT_EQ(&a(3, 1), &m(3, 1));
+  ASSERT_EQ(&a(3, 2), &m(3, 2));
+  ASSERT_EQ(&a(3, 3), &m(3, 3));
+}
+TEST_F(test_imatrix, assigmentallocated)
+{
+  imatrix m(1, 3, 1, 3);
+  m(1, 1) = 1;
+  m(1, 2) = 2;
+  m(1, 3) = 3;
+  m(2, 1) = 4;
+  m(2, 2) = 5;
+  m(2, 3) = 6;
+  m(3, 1) = 7;
+  m(3, 2) = 8;
+  m(3, 3) = 9;
+
+  imatrix a(1, 3, 1, 3);
+  a = m;
+
+  ASSERT_EQ(a(1, 1), m(1, 1));
+  ASSERT_EQ(a(1, 2), m(1, 2));
+  ASSERT_EQ(a(1, 3), m(1, 3));
+  ASSERT_EQ(a(2, 1), m(2, 1));
+  ASSERT_EQ(a(2, 2), m(2, 2));
+  ASSERT_EQ(a(2, 3), m(2, 3));
+  ASSERT_EQ(a(3, 1), m(3, 1));
+  ASSERT_EQ(a(3, 2), m(3, 2));
+  ASSERT_EQ(a(3, 3), m(3, 3));
+
+  ASSERT_NE(&a(1, 1), &m(1, 1));
+  ASSERT_NE(&a(1, 2), &m(1, 2));
+  ASSERT_NE(&a(1, 3), &m(1, 3));
+  ASSERT_NE(&a(2, 1), &m(2, 1));
+  ASSERT_NE(&a(2, 2), &m(2, 2));
+  ASSERT_NE(&a(2, 3), &m(2, 3));
+  ASSERT_NE(&a(3, 1), &m(3, 1));
+  ASSERT_NE(&a(3, 2), &m(3, 2));
+  ASSERT_NE(&a(3, 3), &m(3, 3));
 }

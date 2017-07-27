@@ -278,10 +278,10 @@ void dmatrix::shallow_copy(const dmatrix& other)
   {
     (shape->ncopies)++;
   }
-#ifdef SAFE_ALL
+#ifdef DEBUG
   else
   {
-    cerr << "Constructing from an unallocated dmatrix.\n";
+    cerr << "Warning -- Copying an unallocated dmatrix.\n";
   }
 #endif
 }
@@ -322,49 +322,27 @@ dmatrix cube(const dmatrix& mat)
   }
   return results;
 }
-
-/**
- * Description not yet available.
- * \param
- */
- void dmatrix::deallocate()
- {
-/*
-   static int testflag=0;
-   static int ycounter=0;
-   if (testflag)
-   {
-     ycounter++;
-     cout << " A " << ycounter << endl;
-     test_the_pointer();
-   }
-*/
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       m= (dvector*) (shape->get_pointer());
-       delete [] m;
-       m=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
-/*
-   if (testflag)
-   {
-     cout << " B " << ycounter << endl;
-     test_the_pointer();
-   }
-*/
-#ifdef SAFE_ALL
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
-   }
+/// Deallocate dmatrix memory.
+void dmatrix::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      m = static_cast<dvector*>(shape->get_pointer());
+      delete [] m;
+      delete shape;
+      allocate();
+    }
+  }
+#ifdef DEBUG
+  else
+  {
+    cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+  }
 #endif
- }
+}

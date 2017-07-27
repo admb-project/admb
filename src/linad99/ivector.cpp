@@ -324,17 +324,14 @@ void ivector::allocate(const ivector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
-/**
-Does not allocate, but initializes class members.
-*/
+/// Does not allocate, but initializes class members.
 void ivector::allocate()
 {
-  shape = NULL;
   index_min = 1;
-  index_max = -1;
-  v = NULL;
+  index_max = 0;
+  v = nullptr;
+  shape = nullptr;
 }
-
 /**
  * Description not yet available.
  * \param

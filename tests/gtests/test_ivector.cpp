@@ -127,7 +127,7 @@ TEST_F(test_ivector, reallocate_empty)
   ivector empty;
   empty.reallocate(1.5);
   EXPECT_EQ(1, empty.indexmin());
-  EXPECT_EQ(-1, empty.indexmax());
+  EXPECT_EQ(0, empty.indexmax());
   EXPECT_EQ(0, empty.size());
 }
 TEST_F(test_ivector, check_order)
@@ -274,7 +274,7 @@ TEST_F(test_ivector, invalid_index)
   ivector w(4, 2);
   ASSERT_EQ(0, w.size());
   ASSERT_EQ(1, w.indexmin());
-  ASSERT_EQ(-1, w.indexmax());
+  ASSERT_EQ(0, w.indexmax());
   ASSERT_EQ(NULL, w.get_v());
   ASSERT_EQ(false, w.allocated());
 }

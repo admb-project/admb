@@ -842,3 +842,43 @@ TEST_F(test_dmatrix, assigment)
   ASSERT_DOUBLE_EQ(b(2, 1), -3);
   ASSERT_DOUBLE_EQ(b(2, 2), 4);
 }
+TEST_F(test_dmatrix, initialize)
+{
+  dmatrix m(1, 3, 1, 3);
+  m(1, 1) = 1;
+  m(1, 2) = 2;
+  m(1, 3) = 3;
+  m(2, 1) = 4;
+  m(2, 2) = 5;
+  m(2, 3) = 6;
+  m(3, 1) = 7;
+  m(3, 2) = 8;
+  m(3, 3) = 9;
+  ASSERT_DOUBLE_EQ(1, m(1, 1));
+  ASSERT_DOUBLE_EQ(2, m(1, 2));
+  ASSERT_DOUBLE_EQ(3, m(1, 3));
+  ASSERT_DOUBLE_EQ(4, m(2, 1));
+  ASSERT_DOUBLE_EQ(5, m(2, 2));
+  ASSERT_DOUBLE_EQ(6, m(2, 3));
+  ASSERT_DOUBLE_EQ(7, m(3, 1));
+  ASSERT_DOUBLE_EQ(8, m(3, 2));
+  ASSERT_DOUBLE_EQ(9, m(3, 3));
+  m.initialize();
+
+  ASSERT_DOUBLE_EQ(0, m(1, 1));
+  ASSERT_DOUBLE_EQ(0, m(1, 2));
+  ASSERT_DOUBLE_EQ(0, m(1, 3));
+  ASSERT_DOUBLE_EQ(0, m(2, 1));
+  ASSERT_DOUBLE_EQ(0, m(2, 2));
+  ASSERT_DOUBLE_EQ(0, m(2, 3));
+  ASSERT_DOUBLE_EQ(0, m(3, 1));
+  ASSERT_DOUBLE_EQ(0, m(3, 2));
+  ASSERT_DOUBLE_EQ(0, m(3, 3));
+}
+TEST_F(test_dmatrix, emptyinitialize)
+{
+  dmatrix m;
+  ASSERT_NO_THROW({
+    m.initialize();
+  });
+}

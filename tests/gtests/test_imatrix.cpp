@@ -496,3 +496,30 @@ TEST_F(test_imatrix, assigmentallocated)
   ASSERT_NE(&a(3, 2), &m(3, 2));
   ASSERT_NE(&a(3, 3), &m(3, 3));
 }
+TEST_F(test_imatrix, assigmentsame)
+{
+  imatrix m(1, 3, 1, 3);
+  ASSERT_NO_THROW({
+    m = m;
+  });
+}
+TEST_F(test_imatrix, rowshift)
+{
+  imatrix m(2, 3);
+  m.rowshift(1);
+  ASSERT_EQ(1, m.indexmin());
+  ASSERT_EQ(2, m.indexmax());
+  ASSERT_EQ(2, m.rowsize());
+  m.rowshift(3);
+  ASSERT_EQ(3, m.indexmin());
+  ASSERT_EQ(4, m.indexmax());
+  ASSERT_EQ(2, m.rowsize());
+}
+TEST_F(test_imatrix, rowshiftempty)
+{
+  imatrix m;
+  m.rowshift(5);
+  ASSERT_EQ(1, m.indexmin());
+  ASSERT_EQ(0, m.indexmax());
+  ASSERT_EQ(0, m.rowsize());
+}

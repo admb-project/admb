@@ -8,16 +8,24 @@
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
-void imatrix::rowshift(int min )
-{
-  m = m + rowmin() - min;
-  index_max+=min-index_min;
-  index_min=min;
-}
+Shift minimum row and maximum row indexes starting starting from min.
+If the imatrix is empty, no shifting is done and a warning is displayed.
+Note: rowsize and data for imatrix will remain the same.
 
+\param min new rowmin.
+*/
+void imatrix::rowshift(int min)
+{
+  if (m == nullptr)
+  {
+    cerr << "Warning -- Trying to row shift empty imatrix in "
+         << "imatrix::rowshift(int).\n";
+    return;
+  }
+  m = m + rowmin() - min;
+  index_max += min - index_min;
+  index_min = min;
+}
 /**
 Construct integer matrix with row dimension [nrl to nrh] where
 each column is empty.
@@ -197,19 +205,15 @@ Copy dimension and pointers in other.
 */
 void imatrix::shallow_copy(const imatrix& other)
 {
+  if (!other.shape)
+  {
+    return allocate();
+  }
   index_min = other.index_min;
   index_max = other.index_max;
-  if (other.shape)
-  {
-    shape = other.shape;
-    (shape->ncopies)++;
-    m = other.m;
-  }
-  else
-  {
-    shape = NULL;
-    m = NULL;
-  }
+  shape = other.shape;
+  (shape->ncopies)++;
+  m = other.m;
 }
 
 /**
@@ -273,22 +277,19 @@ void imatrix::allocate(int nrl, int nrh)
 {
   if (nrl > nrh)
   {
-    allocate();
+    return allocate();
   }
-  else
+  index_min = nrl;
+  index_max = nrh;
+  if ((m = new ivector[rowsize()]) == 0)
   {
-    index_min = nrl;
-    index_max = nrh;
-    if ((m = new ivector[rowsize()]) == 0)
-    {
-      cerr << " Error allocating memory in imatrix contructor\n";
-      ad_exit(21);
-    }
-    if ((shape = new mat_shapex(m)) == 0)
-    {
-      cerr << " Error allocating memory in imatrix contructor\n";
-      ad_exit(21);
-    }
-    m -= indexmin();
+    cerr << "Error: Unable to allocate m in imatrix::allocate(int, int).\n";
+    ad_exit(1);
   }
+  if ((shape = new mat_shapex(m)) == 0)
+  {
+    cerr << "Error: Unable to allocate shape in imatrix::allocate(int, int).\n";
+    ad_exit(1);
+  }
+  m -= indexmin();
 }

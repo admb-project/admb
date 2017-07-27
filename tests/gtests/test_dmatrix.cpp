@@ -752,3 +752,93 @@ TEST_F(test_dmatrix, uoistream)
     input2.close();
   });
 }
+TEST_F(test_dmatrix, assigmenterror)
+{
+  dmatrix a(1, 2, 1, 3);
+  ASSERT_ANY_THROW({
+    dmatrix b(2, 2, 1, 3);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    dmatrix b(1, 2, 2, 3);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    dmatrix b(1, 3, 1, 3);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    dmatrix b(1, 2, 1, 4);
+    a = b;
+  });
+}
+TEST_F(test_dmatrix, plusassigmenterror)
+{
+  dmatrix a(1, 2, 1, 3);
+  ASSERT_ANY_THROW({
+    dmatrix b(2, 2, 1, 3);
+    a += b;
+  });
+  ASSERT_ANY_THROW({
+    dmatrix b(1, 3, 1, 3);
+    a += b;
+  });
+}
+TEST_F(test_dmatrix, minusassigmenterror)
+{
+  dmatrix a(1, 2, 1, 3);
+  ASSERT_ANY_THROW({
+    dmatrix b(2, 2, 1, 3);
+    a -= b;
+  });
+  ASSERT_ANY_THROW({
+    dmatrix b(1, 3, 1, 3);
+    a -= b;
+  });
+}
+TEST_F(test_dmatrix, minusassigment)
+{
+  dmatrix a(1, 2, 1, 2);
+  char array[] = "{0, -1} {-3, 4}";
+  a.fill(array);
+  dmatrix b(1, 2, 1, 2);
+  char array2[] = "{0, 1} {3, 4}";
+  b.fill(array2);
+
+  a -= b;
+
+  ASSERT_DOUBLE_EQ(a(1, 1), 0);
+  ASSERT_DOUBLE_EQ(a(1, 2), -2);
+  ASSERT_DOUBLE_EQ(a(2, 1), -6);
+  ASSERT_DOUBLE_EQ(a(2, 2), 0);
+}
+TEST_F(test_dmatrix, plusassigment)
+{
+  dmatrix a(1, 2, 1, 2);
+  char array[] = "{0, -1} {-3, 4}";
+  a.fill(array);
+  dmatrix b(1, 2, 1, 2);
+  char array2[] = "{0, 1} {3, 4}";
+  b.fill(array2);
+
+  a += b;
+
+  ASSERT_DOUBLE_EQ(a(1, 1), 0);
+  ASSERT_DOUBLE_EQ(a(1, 2), 0);
+  ASSERT_DOUBLE_EQ(a(2, 1), 0);
+  ASSERT_DOUBLE_EQ(a(2, 2), 8);
+}
+TEST_F(test_dmatrix, assigment)
+{
+  dmatrix a(1, 2, 1, 2);
+  char array[] = "{0, -1} {-3, 4}";
+  a.fill(array);
+
+  dmatrix b(1, 2, 1, 2);
+  b = a;
+
+  ASSERT_DOUBLE_EQ(b(1, 1), 0);
+  ASSERT_DOUBLE_EQ(b(1, 2), -1);
+  ASSERT_DOUBLE_EQ(b(2, 1), -3);
+  ASSERT_DOUBLE_EQ(b(2, 2), 4);
+}

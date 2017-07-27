@@ -2736,6 +2736,16 @@ class dmatrix
    // copy initializer
 
    ~dmatrix();
+
+  dvector* begin() const
+  {
+    return m ? &m[rowmin()] : nullptr;
+  }
+  dvector* end() const
+  {
+    return m ? begin() + rowsize() : nullptr;
+  }
+
    void save_dmatrix_derivatives(const dvar_matrix_position & pos) const;
    void save_dmatrix_derivatives_na(const dvar_matrix_position & pos)
       const;
@@ -2743,22 +2753,28 @@ class dmatrix
    void save_dmatrix_position(void) const;
    //void save_dmatrix_derivatives(void);
 
-   int indexmin(void) const
-   {
-      return index_min;
-   }
-   int indexmax(void) const
-   {
-      return index_max;
-   }
-   int rowmin(void) const
-   {
-      return index_min;
-   }
-   int rowmax(void) const
-   {
-      return index_max;
-   }
+  int indexmin() const
+  {
+    return rowmin();
+  }
+  int indexmax() const
+  {
+    return rowmax();
+  }
+  int rowmin() const
+  {
+    return index_min;
+  }
+  int rowmax() const
+  {
+    return index_max;
+  }
+  // returns the number of rows
+  unsigned int rowsize() const
+  {
+    return static_cast<unsigned int>(rowmax() - rowmin() + 1);
+  }
+
    int colmin(void) const
    {
       return ((*this) (indexmin()).indexmin());
@@ -2767,12 +2783,6 @@ class dmatrix
    {
       return ((*this) (indexmin()).indexmax());
    }
-  // returns the number of rows
-  unsigned int rowsize() const
-  {
-    int size = rowmax() - rowmin() + 1;
-    return static_cast<unsigned int>(size < 0 ? 0 : size);
-  }
   // returns the number of columns
   unsigned int colsize() const
   {

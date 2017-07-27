@@ -254,12 +254,19 @@ TEST_F(test_dvector, reallocate)
   EXPECT_DOUBLE_EQ(0.5, v(1));
   EXPECT_DOUBLE_EQ(1.5, v(2));
 }
+TEST_F(test_dvector, empty)
+{
+  dvector empty;
+  EXPECT_EQ(1, empty.indexmin());
+  EXPECT_EQ(0, empty.indexmax());
+  EXPECT_EQ(0, empty.size());
+}
 TEST_F(test_dvector, reallocate_empty)
 {
   dvector empty;
   empty.reallocate(1.5);
   EXPECT_EQ(1, empty.indexmin());
-  EXPECT_EQ(-1, empty.indexmax());
+  EXPECT_EQ(0, empty.indexmax());
   EXPECT_EQ(0, empty.size());
 }
 TEST_F(test_dvector, cast_lvector)
@@ -362,11 +369,11 @@ TEST_F(test_dvector, allocate)
 
   dvector dv;
   ASSERT_EQ(dv.indexmin(), 1);
-  ASSERT_EQ(dv.indexmax(), -1);
+  ASSERT_EQ(dv.indexmax(), 0);
 
   dv.allocate(5, 2);
   ASSERT_EQ(dv.indexmin(), 1);
-  ASSERT_EQ(dv.indexmax(), -1);
+  ASSERT_EQ(dv.indexmax(), 0);
 
   dv.allocate(2, 5);
   ASSERT_EQ(dv.indexmin(), 2);

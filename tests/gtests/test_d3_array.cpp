@@ -1002,9 +1002,9 @@ TEST_F(test_d3_array, allocate_4int)
   ASSERT_EQ(b(2).rowmin(), 3);
   ASSERT_EQ(b(2).rowmax(), 4);
   ASSERT_EQ(b(1).colmin(), 1);
-  ASSERT_EQ(b(1).colmax(), -1);
+  ASSERT_EQ(b(1).colmax(), 0);
   ASSERT_EQ(b(2).colmin(), 1);
-  ASSERT_EQ(b(2).colmax(), -1);
+  ASSERT_EQ(b(2).colmax(), 0);
 }
 TEST_F(test_d3_array, indexed)
 {
@@ -1096,8 +1096,8 @@ TEST_F(test_d3_array, position)
   ASSERT_FALSE(allocated(a(4)));
   ASSERT_FALSE(allocated(a(5)));
 }
-TEST_F(test_d3_array, emptyinitialize)
+TEST_F(test_d3_array, emptysum)
 {
   d3_array a;
-  a.initialize();
+  ASSERT_DOUBLE_EQ(0.0, sum(a));
 }

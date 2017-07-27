@@ -882,3 +882,18 @@ TEST_F(test_dmatrix, emptyinitialize)
     m.initialize();
   });
 }
+TEST_F(test_dmatrix, empty)
+{
+  dmatrix empty;
+  ASSERT_EQ(1, empty.rowmin());
+  ASSERT_EQ(0, empty.rowmax());
+  ASSERT_EQ(0, empty.rowsize());
+  ASSERT_EQ(0, empty.colsize());
+
+  ASSERT_ANY_THROW({
+    empty.colmin();
+  });
+  ASSERT_ANY_THROW({
+    empty.colmax();
+  });
+}

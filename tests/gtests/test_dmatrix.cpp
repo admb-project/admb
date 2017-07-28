@@ -897,3 +897,32 @@ TEST_F(test_dmatrix, empty)
     empty.colmax();
   });
 }
+TEST_F(test_dmatrix, symmetrize)
+{
+  dmatrix m(1, 3, 1, 3);
+  char array[] = "{0, 1, 2} {3, 4, 5} {6, 7, 8}";
+  m.fill(array);
+
+  dmatrix results = symmetrize(m);
+
+  ASSERT_DOUBLE_EQ(0, results(1, 1));
+  ASSERT_DOUBLE_EQ(2, results(1, 2));
+  ASSERT_DOUBLE_EQ(4, results(1, 3));
+  ASSERT_DOUBLE_EQ(2, results(2, 1));
+  ASSERT_DOUBLE_EQ(4, results(2, 2));
+  ASSERT_DOUBLE_EQ(6, results(2, 3));
+  ASSERT_DOUBLE_EQ(4, results(3, 1));
+  ASSERT_DOUBLE_EQ(6, results(3, 2));
+  ASSERT_DOUBLE_EQ(8, results(3, 3));
+}
+TEST_F(test_dmatrix, symmetrizeerror)
+{
+  ASSERT_ANY_THROW({
+    dmatrix m(1, 2, 1, 3);
+    symmetrize(m);
+  });
+  ASSERT_ANY_THROW({
+    dmatrix m(1, 3, 2, 3);
+    symmetrize(m);
+  });
+}

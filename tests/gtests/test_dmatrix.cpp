@@ -926,3 +926,73 @@ TEST_F(test_dmatrix, symmetrizeerror)
     symmetrize(m);
   });
 }
+TEST_F(test_dmatrix, extract_row)
+{
+  dmatrix m(1, 3, 1, 3);
+  char array[] = "{0, 1, 2} {3, 4, 5} {6, 7, 8}";
+  m.fill(array);
+
+  dvector m1 = extract_row(m, 1);
+  ASSERT_EQ(1, m1.indexmin());
+  ASSERT_EQ(3, m1.indexmax());
+  ASSERT_DOUBLE_EQ(0, m1(1));
+  ASSERT_DOUBLE_EQ(1, m1(2));
+  ASSERT_DOUBLE_EQ(2, m1(3));
+  dvector m2 = extract_row(m, 2);
+  ASSERT_EQ(1, m2.indexmin());
+  ASSERT_EQ(3, m2.indexmax());
+  ASSERT_DOUBLE_EQ(3, m2(1));
+  ASSERT_DOUBLE_EQ(4, m2(2));
+  ASSERT_DOUBLE_EQ(5, m2(3));
+  dvector m3 = extract_row(m, 3);
+  ASSERT_EQ(1, m3.indexmin());
+  ASSERT_EQ(3, m3.indexmax());
+  ASSERT_DOUBLE_EQ(6, m3(1));
+  ASSERT_DOUBLE_EQ(7, m3(2));
+  ASSERT_DOUBLE_EQ(8, m3(3));
+}
+TEST_F(test_dmatrix, extract_rowerror)
+{
+  dmatrix m(1, 3);
+  ASSERT_ANY_THROW({
+    row(m, 0);
+  });
+  ASSERT_ANY_THROW({
+    row(m, 4);
+  });
+}
+TEST_F(test_dmatrix, extract_column)
+{
+  dmatrix m(1, 3, 1, 3);
+  char array[] = "{0, 1, 2} {3, 4, 5} {6, 7, 8}";
+  m.fill(array);
+
+  dvector m1 = extract_column(m, 1);
+  ASSERT_EQ(1, m1.indexmin());
+  ASSERT_EQ(3, m1.indexmax());
+  ASSERT_DOUBLE_EQ(0, m1(1));
+  ASSERT_DOUBLE_EQ(3, m1(2));
+  ASSERT_DOUBLE_EQ(6, m1(3));
+  dvector m2 = extract_column(m, 2);
+  ASSERT_EQ(1, m2.indexmin());
+  ASSERT_EQ(3, m2.indexmax());
+  ASSERT_DOUBLE_EQ(1, m2(1));
+  ASSERT_DOUBLE_EQ(4, m2(2));
+  ASSERT_DOUBLE_EQ(7, m2(3));
+  dvector m3 = extract_column(m, 3);
+  ASSERT_EQ(1, m3.indexmin());
+  ASSERT_EQ(3, m3.indexmax());
+  ASSERT_DOUBLE_EQ(2, m3(1));
+  ASSERT_DOUBLE_EQ(5, m3(2));
+  ASSERT_DOUBLE_EQ(8, m3(3));
+}
+TEST_F(test_dmatrix, extract_columnerror)
+{
+  dmatrix m(1, 3, 1, 3);
+  ASSERT_ANY_THROW({
+    row(m, 0);
+  });
+  ASSERT_ANY_THROW({
+    row(m, 4);
+  });
+}

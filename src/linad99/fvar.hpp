@@ -1,6 +1,4 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  *
@@ -5677,22 +5675,6 @@ class i4_array
    //access functions
    friend class four_array_shape;
 
-   int hslicemin(void)
-   {
-      return (shape->indexmin());
-   }
-   int indexmin(void)
-   {
-      return (shape->indexmin());
-   }
-   int hslicemax(void)
-   {
-      return (shape->indexmax());
-   }
-   int indexmax(void)
-   {
-      return (shape->indexmax());
-   }
    int slicemin(void)
    {
       return ((*this) (hslicemin()).slicemin());
@@ -5742,22 +5724,22 @@ class i4_array
    {
       return (colmax() - colmin() + 1);
    }
-   int hslicemin(void) const
-   {
-      return (shape->indexmin());
-   }
-   int indexmin(void) const
-   {
-      return (shape->indexmin());
-   }
-   int indexmax(void) const
-   {
-      return (shape->indexmax());
-   }
-   int hslicemax(void) const
-   {
-      return (shape->indexmax());
-   }
+  int indexmin() const
+  {
+    return hslicemin();
+  }
+  int indexmax() const
+  {
+    return hslicemax();
+  }
+  int hslicemin() const
+  {
+    return shape ? shape->indexmin() : 1;
+  }
+  int hslicemax() const
+  {
+    return shape ? shape->indexmax() : 0;
+  }
    int slicemin(void) const
    {
       return ((*this) (hslicemin()).slicemin());
@@ -5782,11 +5764,10 @@ class i4_array
    {
       return ((*this) (hslicemin(), slicemin(), rowmax()).indexmax());
    }
-
-   int hslicesize() const
-   {
-      return (indexmax() - indexmin() + 1);
-   }
+  int hslicesize() const
+  {
+    return indexmax() - indexmin() + 1;
+  }
    int size() const
    {
       return (indexmax() - indexmin() + 1);
@@ -5938,22 +5919,6 @@ class i5_array
    //access functions
    friend class four_array_shape;
 
-   int hslicemin(void)
-   {
-      return (shape->indexmin());
-   }
-   int indexmin(void)
-   {
-      return (shape->indexmin());
-   }
-   int hslicemax(void)
-   {
-      return (shape->indexmax());
-   }
-   int indexmax(void)
-   {
-      return (shape->indexmax());
-   }
    int slicemin(void)
    {
       return ((*this) (hslicemin()).slicemin());
@@ -6004,22 +5969,22 @@ class i5_array
    {
       return (colmax() - colmin() + 1);
    }
-   int hslicemin(void) const
-   {
-      return (shape->indexmin());
-   }
-   int indexmin(void) const
-   {
-      return (shape->indexmin());
-   }
-   int indexmax(void) const
-   {
-      return (shape->indexmax());
-   }
-   int hslicemax(void) const
-   {
-      return (shape->indexmax());
-   }
+  int hslicemin() const
+  {
+    return shape ? shape->indexmin() : 1;
+  }
+  int hslicemax() const
+  {
+    return shape ? shape->indexmax() : 0;
+  }
+  int indexmin() const
+  {
+    return hslicemin();
+  }
+  int indexmax() const
+  {
+    return hslicemax();
+  }
    int slicemin(void) const
    {
       return ((*this) (hslicemin()).slicemin());
@@ -6044,11 +6009,10 @@ class i5_array
    {
       return ((*this) (hslicemin(), slicemin(), rowmax()).indexmax());
    }
-
-   int hslicesize() const
-   {
-      return (indexmax() - indexmin() + 1);
-   }
+  int hslicesize() const
+  {
+    return indexmax() - indexmin() + 1;
+  }
    int size() const
    {
       return (indexmax() - indexmin() + 1);

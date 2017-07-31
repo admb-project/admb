@@ -42,11 +42,9 @@ GTESTS=\
  test_param_init_number_vector.cpp\
  test_pow.cpp\
  test_dvariable.cpp\
- test_imatrix.cpp\
  test_lmatrix.cpp\
  test_dvar_matrix.cpp\
  test_ad_integer.cpp\
- test_ivector.cpp\
  test_cspline.cpp\
  test_dvar_vector.cpp\
  test_index_type.cpp\
@@ -97,9 +95,13 @@ GTESTS=\
  test_adlist_ptr.cpp\
  test_param_init_bounded_number_vector.cpp\
  test_fill_seqadd.cpp\
- test_i3_array.cpp\
  test_adstring.cpp\
  test_ad_comm.cpp\
+ test_ivector.cpp\
+ test_imatrix.cpp\
+ test_i3_array.cpp\
+ test_i4_array.cpp\
+ test_i5_array.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

@@ -1,44 +1,31 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 #include "admb_messages.h"
 
-/**
- * Description not yet available.
- * \param
- */
-void i5_array::allocate(void)
-{
-  t=0;
-  shape=0;
-}
-
-/**
- * Description not yet available.
- * \param
- */
-i5_array::i5_array(void)
+/// Default constructor
+i5_array::i5_array()
 {
   allocate();
 }
-
+/// Does NOT allocate, but initializes i5_array members.
+void i5_array::allocate()
+{
+  t = nullptr;
+  shape = nullptr;
+}
 /**
- * Description not yet available.
- * \param
- */
-i5_array::i5_array(int hsl,int hsu)
+Construct vector of i4_array with dimension
+[hsl to hsu].
+\param lower vector index
+\param upper vector index
+*/
+i5_array::i5_array(int hsl, int hsu)
 {
   allocate(hsl,hsu);
 }
-
 /**
 Allocate vector of i4_array with dimension
 [hsl to hsu].

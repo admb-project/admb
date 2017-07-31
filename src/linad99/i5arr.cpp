@@ -10,6 +10,25 @@ i5_array::i5_array()
 {
   allocate();
 }
+/// Copy constructor
+i5_array::i5_array(const i5_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    (shape->ncopies)++;
+    t = other.t;
+  }
+  else
+  {
+    allocate();
+  }
+}
+/// Destructor
+i5_array::~i5_array()
+{
+  deallocate();
+}
 /// Does NOT allocate, but initializes i5_array members.
 void i5_array::allocate()
 {
@@ -17,28 +36,30 @@ void i5_array::allocate()
   shape = nullptr;
 }
 /**
-Construct vector of i4_array with dimension
-[hsl to hsu].
-\param lower vector index
-\param upper vector index
+Construct vector of i4_array with dimensions [hsl to hsu].
+
+\param hsl lower vector index
+\param hsu upper vector index
 */
 i5_array::i5_array(int hsl, int hsu)
 {
   allocate(hsl,hsu);
 }
 /**
-Allocate vector of i4_array with dimension
-[hsl to hsu].
-\param lower vector index
-\param upper vector index
+Allocate vector of i4_array with dimensions [hsl to hsu].
+
+\param hsl lower vector index
+\param hsu upper vector index
 */
 void i5_array::allocate(int hsl, int hsu)
 {
-  unsigned int ss =
-    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
-  if (ss > 0)
+  if (hsl > hsu)
   {
-    if ((t = new i4_array[ss]) == 0)
+    allocate();
+  }
+  else
+  {
+    if ((t = new i4_array[static_cast<unsigned int>(hsu - hsl + 1)]) == 0)
     {
       cerr << " Error allocating memory in i5_array::allocate\n";
       ad_exit(1);
@@ -51,49 +72,27 @@ void i5_array::allocate(int hsl, int hsu)
     t -= indexmin();
     for (int i = hsl; i <= hsu; ++i)
     {
-      (*this)(i).allocate();
+      t[i].allocate();
     }
   }
-  else
-  {
-    t = 0;
-    shape = 0;
-  }
 }
-
 /**
  * Description not yet available.
  * \param
  */
-void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh,int ncl,int nch,int aa,int bb)
- {
-  unsigned int ss =
-    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
-   if (ss>0)
-   {
-     if ( (t = new i4_array[ss]) == 0)
-     {
-       cerr << " Error allocating memory in i5_array contructor\n";
-       ad_exit(21);
-     }
-     if ( (shape=new vector_shapex(hsl,hsu,t)) == 0)
-     {
-       cerr << " Error allocating memory in i5_array contructor\n";
-       ad_exit(21);
-     }
-     t -= indexmin();
-     for (int i=hsl; i<=hsu; i++)
-     {
-       (*this)(i).allocate(sl,sh,nrl,nrh,ncl,nch,aa,bb);
-     }
-   }
-   else
-   {
-     t=0;
-     shape=0;
-   }
- }
+void i5_array::allocate(
+  int hsl, int hsu,
+  int sl, int sh,
+  int nrl, int nrh,
+  int ncl, int nch,
+  int aa, int bb)
+{
+  allocate(hsl, hsu);
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    t[i].allocate(sl,sh,nrl,nrh,ncl,nch,aa,bb);
+  }
+}
 
 /**
  * Description not yet available.
@@ -132,57 +131,24 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      shape=0;
    }
  }
-
-/**
- * Description not yet available.
- * \param
- */
-i5_array::i5_array(const i5_array& m2)
- {
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- i5_array::~i5_array()
- {
-   deallocate();
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void i5_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t= (i4_array*) (shape->get_truepointer());
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
- }
+/// Deallocates i5_array memory if no copies exists.
+void i5_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      t = static_cast<i4_array*>(shape->get_truepointer());
+      delete [] t;
+      delete shape;
+      allocate();
+    }
+  }
+}
 
 #if !defined (OPT_LIB)
 

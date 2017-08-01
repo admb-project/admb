@@ -29,30 +29,23 @@ void param_init_bounded_number_vector::set_initial_value(
     }
   }
 }
-
-/**
-Default constructor
-*/
+/// Default constructor
 param_init_bounded_number_vector::param_init_bounded_number_vector():
-  v(NULL),
-  index_min(0),
-  index_max(-1),
-  it(NULL)
+  v(nullptr),
+  index_min(1),
+  index_max(0),
+  it(nullptr)
 {
 }
-/**
-Destructor
-*/
+/// Destructor
 param_init_bounded_number_vector::~param_init_bounded_number_vector()
 {
   deallocate();
 }
-/**
-Free allocated memory.
-*/
+/// Deallocate param_init_bounded_number_vector memory.
 void param_init_bounded_number_vector::deallocate(void)
 {
-  if(it)
+  if (it)
   {
     delete it;
     it = NULL;
@@ -63,7 +56,7 @@ void param_init_bounded_number_vector::deallocate(void)
     delete [] v;
     v = NULL;
   }
-  index_min = 0;
+  index_min = 1;
   index_max = 0;
 }
 /**
@@ -122,8 +115,8 @@ void param_init_bounded_number_vector::allocate(
 {
   if (max1 >= min1)
   {
-    unsigned int size = static_cast<unsigned int>(max1 - min1 + 1);
-    v = new param_init_bounded_number[size];
+    v = new param_init_bounded_number[
+          static_cast<unsigned int>(max1 - min1 + 1)];
     if (!v)
     {
       cerr << " error trying to allocate memory in "

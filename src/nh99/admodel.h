@@ -2811,6 +2811,7 @@ public:
   void deallocate(void);
 };
 
+class data_matrix;
 /**
  * Class object for init_bounded_number vector
  * \author Dave Fournier, addition by Steve Martell
@@ -2818,7 +2819,6 @@ public:
  * Steve Martell overloaded the allocate routine to accomodate a matrix object
  * of the form data_matrix that would be read in from an input file.
  */
- class data_matrix;
 class param_init_bounded_number_vector
 {
   param_init_bounded_number* v;
@@ -2831,15 +2831,10 @@ public:
 
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
-  dvector get_scalefactor(void);
+  dvector get_scalefactor();
 
-#if defined(OPT_LIB)
-  param_init_bounded_number& operator [] (int i) { return v[i];}
-  param_init_bounded_number& operator () (int i) { return v[i];}
-#else
-  param_init_bounded_number& operator [] (int i);
-  param_init_bounded_number& operator () (int i);
-#endif
+  param_init_bounded_number& operator[](int i);
+  param_init_bounded_number& operator()(int i);
 
   void allocate(int min1,int max1,const double_index_type & bmin,
     const double_index_type & bmax,const index_type& phase_start,
@@ -2852,11 +2847,23 @@ public:
   void allocate(const data_matrix &m, const char *s);
 
   bool allocated() const { return v != NULL; }
-  int indexmin() const { return (index_min); }
-  int indexmax() const { return (index_max); }
+  int indexmin() const { return index_min; }
+  int indexmax() const { return index_max; }
   void set_initial_value(const double_index_type& it);
-  void deallocate(void);
+  void deallocate();
 };
+#if defined(OPT_LIB)
+inline param_init_bounded_number&
+param_init_bounded_number_vector::operator[](int i)
+{
+  return v[i];
+}
+inline param_init_bounded_number&
+param_init_bounded_number_vector::operator()(int i)
+{
+  return v[i];
+}
+#endif
   extern int traceflag;
   void tracing_message(int traceflag,const char *s,int *pn);
   void tracing_message(int traceflag,const char *s,double *pn);

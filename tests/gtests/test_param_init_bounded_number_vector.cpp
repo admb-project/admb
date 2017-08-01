@@ -12,16 +12,16 @@ TEST_F(test_param_init_bounded_number_vector, default_constructor)
 {
   param_init_bounded_number_vector p;
   EXPECT_EQ(0, p.allocated());
-  EXPECT_EQ(0, p.indexmin());
-  EXPECT_EQ(-1, p.indexmax());
+  EXPECT_EQ(1, p.indexmin());
+  EXPECT_EQ(0, p.indexmax());
 }
 TEST_F(test_param_init_bounded_number_vector, set_initial_value)
 {
   param_init_bounded_number_vector p;
   p.set_initial_value(0.5);
   EXPECT_EQ(0, p.allocated());
-  EXPECT_EQ(0, p.indexmin());
-  EXPECT_EQ(-1, p.indexmax());
+  EXPECT_EQ(1, p.indexmin());
+  EXPECT_EQ(0, p.indexmax());
 }
 TEST_F(test_param_init_bounded_number_vector, allocate)
 {
@@ -33,16 +33,16 @@ TEST_F(test_param_init_bounded_number_vector, allocate)
   EXPECT_EQ(1, p.indexmin());
   EXPECT_EQ(4, p.indexmax());
 }
-/*
 TEST_F(test_param_init_bounded_number_vector, nonmatching)
 {
   gradient_structure gs;
 
+  ad_exit=&test_ad_exit;
+
   param_init_bounded_number_vector p;
   p.allocate(1, 4, 0.5, 1.0, "param_init_bounded_number_vecotor");
 
-  ad_exit=&test_ad_exit;
-
+/*
   ASSERT_ANY_THROW({
     dvector scalefactor;
     p.set_scalefactor(scalefactor);
@@ -55,8 +55,8 @@ TEST_F(test_param_init_bounded_number_vector, nonmatching)
     dvector scalefactor(1, 5);
     p.set_scalefactor(scalefactor);
   });
-}
 */
+}
 TEST_F(test_param_init_bounded_number_vector, allocateset_initial_value)
 {
   gradient_structure gs;

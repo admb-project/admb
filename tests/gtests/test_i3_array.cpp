@@ -243,3 +243,105 @@ TEST_F(test_i3_array, constelemerror)
     a.elem(6);
   });
 }
+TEST_F(test_i3_array, copyconst)
+{
+  i3_array a(1, 3, 1, 2, 1, 1);
+
+  int d = 2;
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 1; ++k)
+      {
+        a(i, j, k) = d;
+        d += 2;
+      }
+    }
+  }
+
+  const i3_array copy(a);
+  d = 2;
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 1; ++k)
+      {
+        ASSERT_EQ(copy(i, j, k), d);
+        d += 2;
+      }
+    }
+  }
+}
+TEST_F(test_i3_array, empty)
+{
+  i3_array empty;
+
+  ASSERT_EQ(1, empty.slicemin());
+  ASSERT_EQ(0, empty.slicemax());
+  ASSERT_EQ(0, empty.slicesize());
+}
+TEST_F(test_i3_array, assignerror)
+{
+  ad_exit=&test_ad_exit;
+
+  i3_array a(2, 5);
+
+  ASSERT_ANY_THROW({
+    i3_array b(1, 5);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    i3_array b(2, 6);
+    a = b;
+  });
+}
+TEST_F(test_i3_array, assign)
+{
+  i3_array a(1, 3, 1, 2, 1, 1);
+
+  int d = 2;
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 1; ++k)
+      {
+        a(i, j, k) = d;
+        d += 2;
+      }
+    }
+  }
+
+  i3_array b(1, 3, 1, 2, 1, 1);
+  b = a;
+
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 1; ++k)
+      {
+        ASSERT_EQ(b(i, j, k), a(i, j, k));
+      }
+    }
+  }
+}
+TEST_F(test_i3_array, assignsinglevalue)
+{
+  i3_array a(1, 3, 1, 2, 1, 1);
+
+  a = 5;
+
+  for (int i = 1; i <= 3; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 1; ++k)
+      {
+        ASSERT_EQ(a(i, j, k), 5);
+      }
+    }
+  }
+}

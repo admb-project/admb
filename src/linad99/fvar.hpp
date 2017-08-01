@@ -3917,8 +3917,8 @@ class i3_array
    const imatrix & operator[](int i) const;
    const imatrix & operator()(int i) const;
 
-   i3_array & operator=(const i3_array & m1);
-   i3_array & operator=(int x);
+  i3_array& operator=(const i3_array& other);
+  i3_array& operator=(int value);
 
    void fill_randu(long int &n);
    void fill_randn(long int &n);

@@ -152,133 +152,64 @@ void i5_array::deallocate()
 
 #if !defined (OPT_LIB)
 
-/**
- * Description not yet available.
- * \param
- */
-    i4_array& i5_array::operator ( ) (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i4_array& i5_array::operator ( ) (int i)", indexmin(), indexmax(), i);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    i4_array& i5_array::operator [] (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i4_array& i5_array::operator [] (int i)", indexmin(), indexmax(), i);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    i3_array& i5_array::operator ( ) (int i ,int j)
-    {
-      return ((*this)(i))(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    imatrix& i5_array::operator ( ) (int i,int j,int k)
-    {
-      return (((*this)(i,j))(k));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    ivector& i5_array::operator ( ) (int i,int j,int k,int l)
-    {
-      return ( ((*this)(i,j,k))(l));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    int& i5_array::operator ( ) (int i,int j,int k,int l,int ll)
-    {
-      return ( ((*this)(i,j,k))(l,ll));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+/// Returns reference to i4_array element at i5_array(i).
+i4_array& i5_array::operator()(int i)
+{
+  return elem(i);
+}
+/// Returns reference to i4_array element at i5_array[i].
+i4_array& i5_array::operator[](int i)
+{
+  return elem(i);
+}
+/// Returns reference to i3_array element at i5_array(i, j).
+i3_array& i5_array::operator()(int i, int j)
+{
+  return elem(i)(j);
+}
+/// Returns reference to imatrix element at i5_array(i, j, k).
+imatrix& i5_array::operator()(int i, int j, int k)
+{
+  return elem(i)(j, k);
+}
+/// Returns reference to ivector element at i5_array(i, j, k, l).
+ivector& i5_array::operator()(int i, int j, int k, int l)
+{
+  return elem(i)(j, k, l);
+}
+/// Returns reference to integer element at i5_array(i, j, k, l, m).
+int& i5_array::operator()(int i, int j, int k, int l, int m)
+{
+  return elem(i)(j, k, l, m);
+}
+/// Returns reference to const i5_array element at i5_array(i).
 const i4_array& i5_array::operator()(int i) const
-    {
-      if (i<indexmin() || i>indexmax())
-      {
-        cerr << "Index out of bounds in i5_array::operator () (int)"
-             << endl;
-        ad_exit(1);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i);
+}
+/// Returns reference to const i5_array element at i5_array[i].
 const i4_array& i5_array::operator[](int i) const
-    {
-      if (i<indexmin() || i>indexmax())
-      {
-        cerr << "Index out of bounds in i5_array::operator () (int)"
-             << endl;
-        ad_exit(1);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i);
+}
+/// Returns reference to const i3_array element at i5_array(i, j).
 const i3_array& i5_array::operator()(int i, int j) const
-    {
-      return ((*this)(i))(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i)(j);
+}
+/// Returns reference to const imatrix element at i5_array(i, j, k).
 const imatrix& i5_array::operator()(int i, int j, int k) const
-    {
-      return (((*this)(i,j))(k));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i)(j, k);
+}
+/// Returns reference to const ivector element at i5_array(i, j, k, l).
 const ivector& i5_array::operator()(int i, int j, int k, int l) const
-    {
-      return ( ((*this)(i,j,k))(l));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const int& i5_array::operator()(int i, int j, int k, int l, int ll) const
-    {
-      return ( ((*this)(i,j,k))(l,ll));
-    }
+{
+  return elem(i)(j, k, l);
+}
+/// Returns reference to const integer element at i5_array(i, j, k, l, m).
+const int& i5_array::operator()(int i, int j, int k, int l, int m) const
+{
+  return elem(i)(j, k, l, m);
+}
 #endif

@@ -5845,77 +5845,23 @@ class i5_array
      int nrl, const imatrix & nrh, int ncl, int nch);
    i5_array();
    ~i5_array();
-   //i4_array& elem(int i) { return t[i];}
-   //i3_array& elem (int i ,int j) {return ((*this)(i))(j);}
-   int iop(void);
-   //imatrix& elem(int i,int j,int k) {return (((*this)(i,j))(k));}
-   int xxx(void);
-   //ivector& elem(int i,int j,int k,int l)
-   int yyy(void);
-  //int& elem(int i,int j,int k,int l,int ll) {return( ((*this)(i,j,k))(l,ll));}
-#ifdef OPT_LIB
-   i4_array & operator () (int i)
-   {
-      return t[i];
-   }
-   i4_array & operator [] (int i)
-   {
-      return t[i];
-   }
-   i3_array & operator ()(int i, int j)
-   {
-      return ((*this) (i)) (j);
-   }
-   imatrix & operator ()(int i, int j, int k)
-   {
-      return (((*this) (i, j)) (k));
-   }
-   ivector & operator ()(int i, int j, int k, int l)
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-   int &operator () (int i, int j, int k, int l, int ll)
-   {
-      return (((*this) (i, j, k)) (l, ll));
-   }
-   inline const i4_array & operator() (int i) const
-   {
-      return t[i];
-   }
-   inline const i4_array & operator[] (int i) const
-   {
-      return t[i];
-   }
-   inline const i3_array & operator() (int i, int j) const
-   {
-      return ((*this) (i)) (j);
-   }
-   inline const imatrix & operator() (int i, int j, int k) const
-   {
-      return (((*this) (i, j)) (k));
-   }
-   inline const ivector & operator() (int i, int j, int k, int l) const
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-   inline const int &operator() (int i, int j, int k, int l, int ll) const
-   {
-      return (((*this) (i, j, k)) (l, ll));
-   }
-#else
-   const i4_array & operator() (int i) const;
-   const i4_array & operator[] (int i) const;
-   const i3_array & operator() (int i, int j) const;
-   const imatrix & operator() (int i, int j, int k) const;
-   const ivector & operator() (int i, int j, int k, int l) const;
-   const int &operator() (int i, int j, int k, int l, int ll) const;
-   i4_array & operator () (int);
-   i4_array & operator [] (int);
-   i3_array & operator () (int, int);
-   imatrix & operator () (int, int, int);
-   ivector & operator () (int, int, int, int);
-   int &operator () (int, int, int, int, int);
-#endif
+
+  i4_array& elem(int i);
+  const i4_array& elem(int i) const;
+
+  i4_array& operator[](int);
+  i4_array& operator()(int);
+  i3_array& operator()(int, int);
+  imatrix& operator()(int, int, int);
+  ivector& operator()(int, int, int, int);
+  int& operator()(int, int, int, int, int);
+  const i4_array& operator[](int) const;
+  const i4_array& operator()(int) const;
+  const i3_array& operator()(int, int) const;
+  const imatrix& operator()(int, int, int) const;
+  const ivector& operator()(int, int, int, int) const;
+  const int& operator()(int, int, int, int, int) const;
+
    //access functions
    friend class four_array_shape;
 
@@ -6034,6 +5980,78 @@ class i5_array
    }
    void initialize(void);
 };
+inline i4_array& i5_array::elem(int i)
+{
+#ifndef OPT_LIB
+  if (i < indexmin() || i > indexmax())
+  {
+    cerr << "Index out of bounds in i5_array::elem(int).\n";
+    ad_exit(1);
+  }
+#endif
+  return t[i];
+}
+inline const i4_array& i5_array::elem(int i) const
+{
+#ifndef OPT_LIB
+  if (i < indexmin() || i > indexmax())
+  {
+    cerr << "Index out of bounds in i5_array::elem(int).\n";
+    ad_exit(1);
+  }
+#endif
+  return t[i];
+}
+#ifdef OPT_LIB
+inline i4_array& i5_array::operator()(int i)
+{
+  return t[i];
+}
+inline i4_array& i5_array::operator[](int i)
+{
+  return t[i];
+}
+inline i3_array& i5_array::operator()(int i, int j)
+{
+  return t[i](j);
+}
+inline imatrix& i5_array::operator()(int i, int j, int k)
+{
+  return t[i](j, k);
+}
+inline ivector& i5_array::operator()(int i, int j, int k, int l)
+{
+  return t[i](j, k, l);
+}
+inline int& i5_array::operator()(int i, int j, int k, int l, int m)
+{
+  return t[i](j, k, l, m);
+}
+inline const i4_array& i5_array::operator()(int i) const
+{
+  return t[i];
+}
+inline const i4_array& i5_array::operator[](int i) const
+{
+  return t[i];
+}
+inline const i3_array& i5_array::operator()(int i, int j) const
+{
+  return t[i](j);
+}
+inline const imatrix& i5_array::operator()(int i, int j, int k) const
+{
+  return t[i](j, k);
+}
+inline const ivector& i5_array::operator()(int i, int j, int k, int l) const
+{
+  return t[i](j, k, l);
+}
+inline const int& i5_array::operator()(int i, int j, int k, int l, int m) const
+{
+  return t[i](j, k, l, m);
+}
+#endif
 
 ostream & operator<<(const ostream & istr, const i5_array & z);
 istream & operator>>(const istream & istr, const i5_array & z);

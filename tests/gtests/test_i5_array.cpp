@@ -86,3 +86,69 @@ TEST_F(test_i5_array, deallocate)
   ASSERT_EQ(1, a.indexmin());
   ASSERT_EQ(0, a.indexmax());
 }
+TEST_F(test_i5_array, equals)
+{
+  i5_array a;
+  a.allocate(1, 5, 1, 4, 1, 3, 1, 2, 1, 1);
+
+  int count = 0;
+  for (int i = 1; i <= 5; ++i)
+  {
+    for (int j = 1; j <= 4; ++j)
+    {
+      for (int k = 1; k <= 3; ++k)
+      {
+        for (int w = 1; w <= 2; ++w)
+        {
+          a(i, j, k, w, 1) = count;
+          ++count;
+        }
+      }
+    }
+  }
+  count = 0;
+  for (int i = 1; i <= 5; ++i)
+  {
+    for (int j = 1; j <= 4; ++j)
+    {
+      for (int k = 1; k <= 3; ++k)
+      {
+        for (int w = 1; w <= 2; ++w)
+        {
+          ASSERT_EQ(a(i, j, k, w, 1), count);
+          ++count;
+        }
+      }
+    }
+  }
+}
+TEST_F(test_i5_array, elemerror)
+{
+  i5_array a(2, 5);
+  ASSERT_ANY_THROW({
+    a.elem(1);
+  });
+  ASSERT_ANY_THROW({
+    a.elem(6);
+  });
+}
+TEST_F(test_i5_array, elembracketerror)
+{
+  i5_array a(2, 5);
+  ASSERT_ANY_THROW({
+    a[1];
+  });
+  ASSERT_ANY_THROW({
+    a[6];
+  });
+}
+TEST_F(test_i5_array, constelemerror)
+{
+  const i5_array a(2, 5);
+  ASSERT_ANY_THROW({
+    a.elem(1);
+  });
+  ASSERT_ANY_THROW({
+    a.elem(6);
+  });
+}

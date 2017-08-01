@@ -19,12 +19,12 @@ const ivector& i3_array::operator()(int i, int j) const
 /// Returns matrix reference element from i3_array[i].
 const imatrix& i3_array::operator[](int i) const
 {
-  return t[i];
+  return elem(i);
 }
 /// Returns matrix reference element from i3_array(i).
 const imatrix& i3_array::operator()(int i) const
 {
-  return t[i];
+  return elem(i);
 }
 #endif
 

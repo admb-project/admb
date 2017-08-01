@@ -3902,14 +3902,8 @@ class i3_array
    }
    void initialize();
 
-  imatrix& elem(int k)
-  {
-    return t[k];
-  }
-  const imatrix& elem(int k) const
-  {
-    return t[k];
-  }
+  imatrix& elem(int k);
+  const imatrix& elem(int k) const;
    int &operator()(int k, int i, int j);
    ivector & operator()(int k, int i);
    imatrix & operator[](int i);
@@ -3927,6 +3921,42 @@ class i3_array
    void fill_randu_ni(long int &n);
    void fill_randn_ni(long int &n);
 };
+inline imatrix& i3_array::elem(int k)
+{
+#ifndef OPT_LIB
+  if (k < slicemin())
+  {
+    cerr << "matrix bound exceeded -- row index too low in"
+         << "ivector& i3_array::elem(int).\n";
+    ad_exit(1);
+  }
+  if (k > slicemax())
+  {
+    cerr << "matrix bound exceeded -- row index too high in"
+         << "ivector& i3_array::elem(int).\n";
+    ad_exit(1);
+  }
+#endif
+  return t[k];
+}
+inline const imatrix& i3_array::elem(int k) const
+{
+#ifndef OPT_LIB
+  if (k < slicemin())
+  {
+    cerr << "matrix bound exceeded -- row index too low in"
+         << "ivector& i3_array::elem(int).\n";
+    ad_exit(1);
+  }
+  if (k > slicemax())
+  {
+    cerr << "matrix bound exceeded -- row index too high in"
+         << "ivector& i3_array::elem(int).\n";
+    ad_exit(1);
+  }
+#endif
+  return t[k];
+}
 
 #ifdef OPT_LIB
 inline const int& i3_array::operator()(int k, int i, int j) const

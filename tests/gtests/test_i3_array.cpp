@@ -2,6 +2,11 @@
 #include <cmath>
 #include "fvar.hpp"
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_i3_array: public ::testing::Test {};
 
 TEST_F(test_i3_array, inputoutput)
@@ -204,4 +209,37 @@ TEST_F(test_i3_array, allocaterowsmax)
   ASSERT_EQ(20, b(4).colmax());
   ASSERT_EQ(10, b(5).colmin());
   ASSERT_EQ(20, b(5).colmax());
+}
+TEST_F(test_i3_array, allocateinvalidindex)
+{
+  i3_array empty(5, 2);
+  ASSERT_EQ(1, empty.slicemin());
+  ASSERT_EQ(0, empty.slicemax());
+  ASSERT_EQ(0, empty.slicesize());
+}
+TEST_F(test_i3_array, elemerror)
+{
+  ad_exit=&test_ad_exit;
+
+  i3_array a(2, 5);
+
+  ASSERT_ANY_THROW({
+    a.elem(1);
+  });
+  ASSERT_ANY_THROW({
+    a.elem(6);
+  });
+}
+TEST_F(test_i3_array, constelemerror)
+{
+  ad_exit=&test_ad_exit;
+
+  const i3_array a(2, 5);
+
+  ASSERT_ANY_THROW({
+    a.elem(1);
+  });
+  ASSERT_ANY_THROW({
+    a.elem(6);
+  });
 }

@@ -1,96 +1,29 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include "fvar.hpp"
-#include "admb_messages.h"
-//#include "i3_array.h"
 
 #ifndef OPT_LIB
 
-/**
- * Description not yet available.
- * \param
- */
-    int& i3_array::operator () (int k, int i, int j)
-    {
-      if (k < slicemin())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-        "ivector& i3_array::operator() (int k, int i, int j)",
-        slicemin(), slicemax(), k);
-      }
-      if (k > slicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-        "ivector& i3_array::operator() (int k, int i, int j)",
-        slicemin(), slicemax(), k);
-      }
-      return ( (elem(k))(i,j) );
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    ivector& i3_array::operator () (int k, int i)
-    {
-      if (k < slicemin())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-        "ivector& i3_array::operator() (int k, int i)",
-        slicemin(), slicemax(), k);
-      }
-      if (k > slicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-        "ivector& i3_array::operator() (int k, int i)",
-        slicemin(), slicemax(), k);
-      }
-      return ( (elem(k))(i) );
-    }
-
-/**
- * Description not yet available.
- * \param
- */
- imatrix& i3_array::operator[] (int i)
- {
-   if (i < slicemin())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-     "imatrix& i3_array::operator[] (int i)", slicemin(), slicemax(), i);
-   }
-   if (i > slicemax())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-     "imatrix& i3_array::operator[] (int i)", slicemin(), slicemax(), i);
-   }
-   return(t[i]);
- }
-
-/**
- * Description not yet available.
- * \param
- */
- imatrix& i3_array::operator() (int i)
- {
-   if (i < slicemin())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-     "imatrix& i3_array::operator() (int i)", slicemin(), slicemax(), i);
-   }
-   if (i > slicemax())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-     "imatrix& i3_array::operator() (int i)", slicemin(), slicemax(), i);
-   }
-   return(t[i]);
- }
+/// Returns reference to integer element at i3_array(i, j, k).
+int& i3_array::operator()(int i, int j, int k)
+{
+  return elem(i)(j, k);
+}
+/// Returns reference to vector element at i3_array(i, j).
+ivector& i3_array::operator()(int i, int j)
+{
+  return elem(i)(j);
+}
+/// Returns reference to matrix element at i3_array[i].
+imatrix& i3_array::operator[](int i)
+{
+  return elem(i);
+}
+/// Returns reference to matrix element at i3_array(i).
+imatrix& i3_array::operator()(int i)
+{
+  return elem(i);
+}
 #endif

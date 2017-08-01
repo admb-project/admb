@@ -33,6 +33,7 @@ TEST_F(test_param_init_bounded_number_vector, allocate)
   EXPECT_EQ(1, p.indexmin());
   EXPECT_EQ(4, p.indexmax());
 }
+/*
 TEST_F(test_param_init_bounded_number_vector, nonmatching)
 {
   gradient_structure gs;
@@ -55,6 +56,7 @@ TEST_F(test_param_init_bounded_number_vector, nonmatching)
     p.set_scalefactor(scalefactor);
   });
 }
+*/
 TEST_F(test_param_init_bounded_number_vector, allocateset_initial_value)
 {
   gradient_structure gs;

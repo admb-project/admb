@@ -55,25 +55,22 @@ void i5_array::allocate(int hsl, int hsu)
 {
   if (hsl > hsu)
   {
-    allocate();
+    return allocate();
   }
-  else
+  if ((t = new i4_array[static_cast<unsigned int>(hsu - hsl + 1)]) == 0)
   {
-    if ((t = new i4_array[static_cast<unsigned int>(hsu - hsl + 1)]) == 0)
-    {
-      cerr << " Error allocating memory in i5_array::allocate\n";
-      ad_exit(1);
-    }
-    if ((shape = new vector_shapex(hsl, hsu, t)) == 0)
-    {
-      cerr << " Error allocating memory in i5_array::allocate\n";
-      ad_exit(1);
-    }
-    t -= indexmin();
-    for (int i = hsl; i <= hsu; ++i)
-    {
-      t[i].allocate();
-    }
+    cerr << " Error allocating memory in i5_array::allocate\n";
+    ad_exit(1);
+  }
+  if ((shape = new vector_shapex(hsl, hsu, t)) == 0)
+  {
+    cerr << " Error allocating memory in i5_array::allocate\n";
+    ad_exit(1);
+  }
+  t -= indexmin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    t[i].allocate();
   }
 }
 /**

@@ -2,6 +2,11 @@
 #include <cmath>
 #include "fvar.hpp"
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_i5_array: public ::testing::Test {};
 
 TEST_F(test_i5_array, default)
@@ -124,6 +129,8 @@ TEST_F(test_i5_array, equals)
 }
 TEST_F(test_i5_array, elemerror)
 {
+  ad_exit=&test_ad_exit;
+
   i5_array a(2, 5);
   ASSERT_ANY_THROW({
     a.elem(1);
@@ -134,6 +141,8 @@ TEST_F(test_i5_array, elemerror)
 }
 TEST_F(test_i5_array, elembracketerror)
 {
+  ad_exit=&test_ad_exit;
+
   i5_array a(2, 5);
   ASSERT_ANY_THROW({
     a[1];
@@ -144,6 +153,8 @@ TEST_F(test_i5_array, elembracketerror)
 }
 TEST_F(test_i5_array, constelemerror)
 {
+  ad_exit=&test_ad_exit;
+
   const i5_array a(2, 5);
   ASSERT_ANY_THROW({
     a.elem(1);

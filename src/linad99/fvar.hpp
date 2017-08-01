@@ -64,6 +64,10 @@ Macro definitions.
   #endif
 #endif
 
+#ifdef __OPENCC__
+  #define nullptr 0
+#endif
+
 #include <math.h>
 // Borrow definition of M_PI from GCC
 #ifndef M_PI

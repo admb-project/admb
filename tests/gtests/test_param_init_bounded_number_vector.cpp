@@ -25,6 +25,9 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value)
 }
 TEST_F(test_param_init_bounded_number_vector, allocate)
 {
+  ad_comm::argc = 0;
+  ad_comm::argv = nullptr;
+
   gradient_structure gs;
 
   param_init_bounded_number_vector p;

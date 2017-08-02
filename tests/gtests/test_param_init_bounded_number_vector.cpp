@@ -41,6 +41,9 @@ TEST_F(test_param_init_bounded_number_vector, nonmatching)
 
   param_init_bounded_number_vector p;
   p.allocate(1, 4, 0.5, 1.0, "param_init_bounded_number_vecotor");
+cout << __FILE__ << ':' << __LINE__ << endl;
+  p.deallocate();
+cout << __FILE__ << ':' << __LINE__ << endl;
 
 /*
   ASSERT_ANY_THROW({

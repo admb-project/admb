@@ -452,7 +452,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	rplus_end=_rplus;
       } else {
 	// Same but to the left from thetaminus
-	z=chd*_thetaminus;
+	z=chd*thetaminus_end;
 	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
 	gr2=gr*chd;
 	build_tree(nvar, gr, chd, eps, rminus_end, thetaminus_end, gr2, logu, v, j,

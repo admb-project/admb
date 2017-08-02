@@ -5824,11 +5824,12 @@ class i4_array
    void initialize(void);
 };
 
+ostream& operator<<(const ostream& output, const i4_array& iarray);
+istream& operator>>(const istream& input, const i4_array& iarray);
 
 #if defined(USE_HIGHER_ARRAYS)
 // ***************************************************************
 // ***************************************************************
-#  if defined(MFCL2_CONSTRUCTORS)
 
 /**
  * Description not yet available.
@@ -6087,12 +6088,8 @@ inline const int& i5_array::operator()(int i, int j, int k, int l, int m) const
 }
 #endif
 
-ostream & operator<<(const ostream & istr, const i5_array & z);
-istream & operator>>(const istream & istr, const i5_array & z);
-#endif //  if defined(MFCL2_CONSTRUCTORS)
-
-ostream & operator<<(const ostream & istr, const i4_array & z);
-istream & operator>>(const istream & istr, const i4_array & z);
+ostream& operator<<(const ostream& output, const i5_array& iarray);
+istream& operator>>(const istream& input, const i5_array& iarray);
 
 // ***************************************************************
 // ***************************************************************

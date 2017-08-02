@@ -1,16 +1,7 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file: dmat_io.cpp
-
-// i/o operations for class dmatrix
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -18,52 +9,50 @@
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <iomanip.hpp>
   #include <fstream.hpp>
-  #define __USE_IOSTREAM__
 #endif
 
-#include <string.h>
-//#include "i3_array.h"
-
 /**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& _ostr, const i5_array& z)
+Write iarray to output stream.
+
+\param output ostream
+\param iarray i5_array
+*/
+ostream& operator<<(const ostream& output, const i5_array& iarray)
 {
-  ostream& ostr=(ostream&) _ostr;
-  for (int i=z.indexmin();i<=z.indexmax();i++)
+  ostream& ostr = const_cast<ostream&>(output);
+  for (int i = iarray.indexmin(); i <= iarray.indexmax(); ++i)
   {
-    if (allocated(z[i]))
+    if (allocated(iarray(i)))
     {
-      ostr << z[i];
+      ostr << iarray(i);
     }
-    if (i<z.indexmax())
+    if (i < iarray.indexmax())
     {
-      ostr << endl;
+      ostr << '\n';
     }
   }
-  return (ostream&) ostr;
+  return ostr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& istr, const i5_array& z)
+Read iarray from input stream.
+
+\param input istream
+\param iarray i5_array
+*/
+istream& operator>>(const istream& input, const i5_array& iarray)
 {
-  for (int i=z.indexmin();i<=z.indexmax();i++)
+  for (int i = iarray.indexmin(); i <= iarray.indexmax(); ++i)
   {
-    if (allocated(z[i]))
+    if (allocated(iarray(i)))
     {
-      istr >> z[i];
+      input >> iarray(i);
     }
   }
-  return (istream&) istr;
+  return const_cast<istream&>(input);
 }

@@ -163,3 +163,57 @@ TEST_F(test_i5_array, constelemerror)
     a.elem(6);
   });
 }
+TEST_F(test_i5_array, inputoutput)
+{
+  i5_array a(1, 5);
+  a(2).allocate(1, 4, 1, 3, 1, 2, 1, 1);
+
+  a(2, 1, 1, 1, 1) = 1;
+  a(2, 1, 1, 2, 1) = 2;
+  a(2, 1, 2, 1, 1) = 3;
+  a(2, 1, 2, 2, 1) = 4;
+  a(2, 1, 3, 1, 1) = 5;
+  a(2, 1, 3, 2, 1) = 6;
+  a(2, 2, 1, 1, 1) = 7;
+  a(2, 2, 1, 2, 1) = 8;
+  a(2, 2, 2, 1, 1) = 9;
+  a(2, 2, 2, 2, 1) = 10;
+  a(2, 2, 3, 1, 1) = 11;
+  a(2, 2, 3, 2, 1) = 12;
+  a(2, 3, 1, 1, 1) = 13;
+  a(2, 3, 1, 2, 1) = 14;
+  a(2, 3, 2, 1, 1) = 15;
+  a(2, 3, 2, 2, 1) = 16;
+  a(2, 3, 3, 1, 1) = 17;
+  a(2, 3, 3, 2, 1) = 18;
+
+  ofstream output("test_i5_array.txt");
+  output << a;
+  output.close();
+
+  i5_array b(1, 5);
+  b(2).allocate(1, 4, 1, 3, 1, 2, 1, 1);
+
+  ifstream input("test_i5_array.txt");
+  input >> b;
+  input.close();
+
+  ASSERT_EQ(a(2, 1, 1, 1, 1), 1);
+  ASSERT_EQ(a(2, 1, 1, 2, 1), 2);
+  ASSERT_EQ(a(2, 1, 2, 1, 1), 3);
+  ASSERT_EQ(a(2, 1, 2, 2, 1), 4);
+  ASSERT_EQ(a(2, 1, 3, 1, 1), 5);
+  ASSERT_EQ(a(2, 1, 3, 2, 1), 6);
+  ASSERT_EQ(a(2, 2, 1, 1, 1), 7);
+  ASSERT_EQ(a(2, 2, 1, 2, 1), 8);
+  ASSERT_EQ(a(2, 2, 2, 1, 1), 9);
+  ASSERT_EQ(a(2, 2, 2, 2, 1), 10);
+  ASSERT_EQ(a(2, 2, 3, 1, 1), 11);
+  ASSERT_EQ(a(2, 2, 3, 2, 1), 12);
+  ASSERT_EQ(a(2, 3, 1, 1, 1), 13);
+  ASSERT_EQ(a(2, 3, 1, 2, 1), 14);
+  ASSERT_EQ(a(2, 3, 2, 1, 1), 15);
+  ASSERT_EQ(a(2, 3, 2, 2, 1), 16);
+  ASSERT_EQ(a(2, 3, 3, 1, 1), 17);
+  ASSERT_EQ(a(2, 3, 3, 2, 1), 18);
+}

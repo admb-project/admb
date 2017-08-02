@@ -557,3 +557,59 @@ TEST_F(test_imatrix, constindexederror)
     m[4];
   });
 }
+TEST_F(test_imatrix, ij_indexederror)
+{
+  ad_exit=&test_ad_exit;
+
+  imatrix m(2, 3, 2, 3);
+  ASSERT_ANY_THROW({
+    m(1, 2);
+  });
+  ASSERT_ANY_THROW({
+    m(4, 2);
+  });
+  ASSERT_ANY_THROW({
+    m(2, 1);
+  });
+  ASSERT_ANY_THROW({
+    m(2, 4);
+  });
+}
+TEST_F(test_imatrix, const_ij_indexederror)
+{
+  ad_exit=&test_ad_exit;
+
+  const imatrix m(2, 3, 2, 3);
+  ASSERT_ANY_THROW({
+    m(1, 2);
+  });
+  ASSERT_ANY_THROW({
+    m(4, 2);
+  });
+  ASSERT_ANY_THROW({
+    m(2, 1);
+  });
+  ASSERT_ANY_THROW({
+    m(2, 4);
+  });
+}
+TEST_F(test_imatrix, constcopy)
+{
+  imatrix m(1, 4, 1, 3);
+  m.initialize();
+  for (int i = 1; i <= 4; ++i)
+  {
+    for (int j = 1; j <= 3; ++j)
+    {
+      ASSERT_EQ(0, m(i, j));
+    }
+  }
+  const imatrix copy(m);
+  for (int i = 1; i <= 4; ++i)
+  {
+    for (int j = 1; j <= 3; ++j)
+    {
+      ASSERT_EQ(copy(i, j), m(i, j));
+    }
+  }
+}

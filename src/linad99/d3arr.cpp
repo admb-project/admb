@@ -59,7 +59,7 @@ Construct d3_array with a vector of empty dmatrix using position.
 \param position d3_array_position
 */
 d3_array::d3_array(const d3_array_position& position)
-#ifdef __INTEL_COMPILER
+#if defined(__INTEL_COMPILER) || defined(__OPENCC__)
   { allocate(position.indexmin(), position.indexmax()); }
 #else
   :d3_array(position.indexmin(), position.indexmax()) { }

@@ -33,8 +33,6 @@ TEST_F(test_imatrix, is_valid_row)
   ASSERT_EQ(true, m.is_valid_row(3));
   ASSERT_EQ(true, m.is_valid_row(4));
   ASSERT_EQ(false, m.is_valid_row(5));
-  ASSERT_DEATH(m(0), "Assertion");
-  ASSERT_DEATH(m(5), "Assertion");
 }
 TEST_F(test_imatrix, assignment)
 {
@@ -522,4 +520,22 @@ TEST_F(test_imatrix, rowshiftempty)
   ASSERT_EQ(1, m.indexmin());
   ASSERT_EQ(0, m.indexmax());
   ASSERT_EQ(0, m.rowsize());
+}
+TEST_F(test_imatrix, indexederror)
+{
+  ad_exit=&test_ad_exit;
+
+  imatrix m(2, 3);
+  ASSERT_ANY_THROW({
+    m(1);
+  });
+  ASSERT_ANY_THROW({
+    m(4);
+  });
+  ASSERT_ANY_THROW({
+    m[1];
+  });
+  ASSERT_ANY_THROW({
+    m[4];
+  });
 }

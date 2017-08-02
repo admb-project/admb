@@ -35,7 +35,10 @@ Bounds checking is performed.
 */
 ivector& imatrix::operator()(int i)
 {
-  assert((index_min <= i && i <= index_max) || is_valid_row(i));
+  if (!is_valid_row(i))
+  {
+    ad_exit(1);
+  }
 
   return elem(i);
 }
@@ -47,7 +50,10 @@ Bounds checking is performed.
 */
 const ivector& imatrix::operator()(int i) const
 {
-  assert((index_min <= i && i <= index_max) || is_valid_row(i));
+  if (!is_valid_row(i))
+  {
+    ad_exit(1);
+  }
 
   return elem(i);
 }

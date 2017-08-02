@@ -539,3 +539,21 @@ TEST_F(test_imatrix, indexederror)
     m[4];
   });
 }
+TEST_F(test_imatrix, constindexederror)
+{
+  ad_exit=&test_ad_exit;
+
+  const imatrix m(2, 3);
+  ASSERT_ANY_THROW({
+    m(1);
+  });
+  ASSERT_ANY_THROW({
+    m(4);
+  });
+  ASSERT_ANY_THROW({
+    m[1];
+  });
+  ASSERT_ANY_THROW({
+    m[4];
+  });
+}

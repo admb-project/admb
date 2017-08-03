@@ -613,3 +613,41 @@ TEST_F(test_imatrix, constcopy)
     }
   }
 }
+TEST_F(test_imatrix, invalidconstructintintivector)
+{
+  ivector columns(3, 5); 
+  columns(3) = 10; 
+  columns(4) = 20; 
+  columns(5) = 30; 
+  ASSERT_EQ(0, columns.get_ncopies());
+
+  imatrix m(4, 1, columns);
+
+  ASSERT_EQ(1, m.indexmin());
+  ASSERT_EQ(0, m.indexmax());
+  ASSERT_EQ(0, columns.get_ncopies());
+}
+TEST_F(test_imatrix, constructintintivector)
+{
+  ivector columns(3, 5); 
+  columns(3) = 10; 
+  columns(4) = 20; 
+  columns(5) = 30; 
+  ASSERT_EQ(0, columns.get_ncopies());
+
+  imatrix m(1, 4, columns);
+
+  ASSERT_EQ(3, m(1).indexmin());
+  ASSERT_EQ(5, m(1).indexmax());
+  ASSERT_EQ(3, m(2).indexmin());
+  ASSERT_EQ(5, m(2).indexmax());
+  ASSERT_EQ(3, m(3).indexmin());
+  ASSERT_EQ(5, m(3).indexmax());
+  ASSERT_EQ(3, m(4).indexmin());
+  ASSERT_EQ(5, m(4).indexmax());
+  ASSERT_EQ(4, columns.get_ncopies());
+  ASSERT_EQ(&columns(3), &m(1, 3));
+  ASSERT_EQ(&columns(3), &m(2, 3));
+  ASSERT_EQ(&columns(3), &m(3, 3));
+  ASSERT_EQ(&columns(3), &m(4, 3));
+}

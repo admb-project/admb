@@ -28,7 +28,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if (mcmc2_flag==1) initial_params::restore_start_phase();
   initial_params::set_inactive_random_effects();
   initial_params::set_active_random_effects();
-  int nvar_re=initial_params::nvarcalc();
+  // int nvar_re=initial_params::nvarcalc();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   if (mcmc2_flag==0){
     initial_params::set_inactive_random_effects();
@@ -151,7 +151,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // User-specified initial values
   nopt=0;
-  int ii=1;
   independent_variables mle(1,nvar); // the accepted par values
   // Store saved MLE in bounded space into vector mle.
   read_mle_hmc(nvar, mle);

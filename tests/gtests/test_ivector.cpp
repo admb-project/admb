@@ -700,3 +700,47 @@ TEST_F(test_ivector, errorindex2)
     a(4);
   });
 }
+TEST_F(test_ivector, anerrormultiply)
+{
+  ad_exit=&test_ad_exit;
+
+  ASSERT_ANY_THROW({
+    ivector a(1, 3);
+    ivector b(2, 3);
+    int operator*(const ivector&, const ivector&);
+    operator*(a, b);
+  });
+  ASSERT_ANY_THROW({
+    ivector a(1, 3);
+    ivector b(1, 4);
+    int operator*(const ivector&, const ivector&);
+    operator*(a, b);
+  });
+  ASSERT_ANY_THROW({
+    ivector a(2, 3);
+    ivector b(1, 3);
+    int operator*(const ivector&, const ivector&);
+    operator*(a, b);
+  });
+  ASSERT_ANY_THROW({
+    ivector a(1, 4);
+    ivector b(1, 3);
+    int operator*(const ivector&, const ivector&);
+    operator*(a, b);
+  });
+}
+TEST_F(test_ivector, multiply)
+{
+  ivector a(1, 3);
+  a(1) = 1;
+  a(2) = 2;
+  a(3) = 3;
+  ivector b(1, 3);
+  b(1) = 5;
+  b(2) = 6;
+  b(3) = 7;
+
+  int operator*(const ivector&, const ivector&);
+  int result = operator*(a, b);
+  ASSERT_EQ(38, result);
+}

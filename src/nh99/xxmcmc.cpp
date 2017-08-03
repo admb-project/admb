@@ -103,7 +103,7 @@ void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
  * -mcscale    Dynamically scales covariance matrix until a reasonable
                acceptance rate is observed.
  * -nosdmcmc   Turn off calculation os sdreport variables during mcsave phase
-               (saves a lot of CPU time).
+               (saves a lot of CPU time). This feature is now deprecated and turned off.
  * -mcu        Use uniform multivariate distributions as bounds, if this is not
                specified then random normal multivariate distributions will be
                used.
@@ -139,12 +139,14 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
   //int mcmc_save_index=1;
   //int mcmc_wrap_flag=0;
   //int mcmc_gui_length=10000;
-  int no_sd_mcmc=0;
+
+  // Cole set this to 1 to essentially turn this feature off since no one seems to use it. 
+  int no_sd_mcmc=1;
 
   int on2=-1;
   if ( (on2=option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
     {
-      no_sd_mcmc=1;
+      cerr << "The sdmcmc feature is disabled, so -nosdmcmc does nothing" << endl;
     }
   if (mcmc2_flag==1)
     {
@@ -153,14 +155,14 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       //int nvar1=initial_params::nvarcalc();
     }
 
-  if (stddev_params::num_stddev_params==0 & no_sd_mcmc==0)
-    {
-      cout << "No objects of type sdreport so cannot use sd report feature." << endl
-	   << "Use -nosdmcmc for future runs" << endl;
-      no_sd_mcmc=1;
-      // cerr << " You must declare at least one object of type sdreport "
-      //      << endl << " to do the mcmc calculations" << endl;
-    }
+  // if (stddev_params::num_stddev_params==0 & no_sd_mcmc==0)
+  //   {
+  //     cout << "No objects of type sdreport so cannot use sd report feature." << endl
+  // 	   << "Use -nosdmcmc for future runs" << endl;
+  //     no_sd_mcmc=1;
+  //     // cerr << " You must declare at least one object of type sdreport "
+  //     //      << endl << " to do the mcmc calculations" << endl;
+  //   }
   {
     ivector number_offsets;
     dvector lkvector;
@@ -174,7 +176,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     uostream * pofs_sd = NULL;
 
     initial_params::set_inactive_random_effects();
-    int nvar_x=initial_params::nvarcalc();
+    // int nvar_x=initial_params::nvarcalc();
     initial_params::set_active_random_effects();
     int nvar_re=initial_params::nvarcalc();
 
@@ -687,7 +689,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 
 	    if (!((i-1)%200))
 	      {
-		double ratio = double(iac)/i;
+		// double ratio = double(iac)/i;
 		iac_old=iac-iac_old;
 		i_old=i-i_old;
 		// cout << llc << " " << llc << endl;

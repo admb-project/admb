@@ -1101,3 +1101,72 @@ TEST_F(test_d3_array, emptysum)
   d3_array a;
   ASSERT_DOUBLE_EQ(0.0, sum(a));
 }
+TEST_F(test_d3_array, allocate4int2vectors)
+{
+  d3_array a;
+
+  ivector lowers(1, 3);
+  lowers(1) = 5;
+  lowers(2) = 6;
+  lowers(3) = 7;
+  ivector uppers(1, 3);
+  uppers(1) = 8;
+  uppers(2) = 9;
+  uppers(3) = 10;
+  a.allocate(1, 3, 1, 2, lowers, uppers);
+  ASSERT_EQ(5, a(1, 1).indexmin());
+  ASSERT_EQ(8, a(1, 1).indexmax());
+  ASSERT_EQ(5, a(1, 2).indexmin());
+  ASSERT_EQ(8, a(1, 2).indexmax());
+  ASSERT_EQ(6, a(2, 1).indexmin());
+  ASSERT_EQ(9, a(2, 1).indexmax());
+  ASSERT_EQ(6, a(2, 2).indexmin());
+  ASSERT_EQ(9, a(2, 2).indexmax());
+  ASSERT_EQ(7, a(3, 1).indexmin());
+  ASSERT_EQ(10, a(3, 1).indexmax());
+  ASSERT_EQ(7, a(3, 2).indexmin());
+  ASSERT_EQ(10, a(3, 2).indexmax());
+}
+TEST_F(test_d3_array, invalidindexesallocate4int2vectors)
+{
+  d3_array a;
+
+  ivector lowers(1, 3);
+  lowers(1) = 5;
+  lowers(2) = 6;
+  lowers(3) = 7;
+  ivector uppers(1, 3);
+  uppers(1) = 8;
+  uppers(2) = 9;
+  uppers(3) = 10;
+  ASSERT_ANY_THROW({
+    a.allocate(3, 1, 1, 2, lowers, uppers);
+  });
+}
+TEST_F(test_d3_array, errorindexesallocate4int2vectors)
+{
+  ad_exit=&test_ad_exit;
+
+  d3_array a;
+
+  ASSERT_ANY_THROW({
+    ivector lowers(0, 3);
+    ivector uppers(1, 3);
+    a.allocate(1, 3, 1, 2, lowers, uppers);
+  });
+  ASSERT_ANY_THROW({
+    ivector lowers(1, 4);
+    ivector uppers(1, 3);
+    a.allocate(1, 3, 1, 2, lowers, uppers);
+  });
+  ASSERT_ANY_THROW({
+    ivector lowers(1, 3);
+    ivector uppers(0, 3);
+    a.allocate(1, 3, 1, 2, lowers, uppers);
+  });
+  ASSERT_ANY_THROW({
+    ivector lowers(1, 3);
+    ivector uppers(1, 4);
+    a.allocate(1, 3, 1, 2, lowers, uppers);
+  });
+}

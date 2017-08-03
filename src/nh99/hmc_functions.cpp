@@ -28,6 +28,7 @@ using std::queue;
 
 double function_minimizer::exprnd(double p)
 {
+  // Johnoel sent me this to use
   std::random_device rd;
   std::mt19937 gen(rd());
   // if particles decay once per second on average,
@@ -46,6 +47,9 @@ std::string function_minimizer::get_filename(const char* f) {
   return filename;
 }
 
+// This function is the heart of NUTS. It builds a single trajectory whose
+// length depends on input j. It keeps doubling in  direction v until
+// finished or a U-turn occurs.
 void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
 				    dvector& y, dvector& gr2, double logu, int v, int j, double H0,
 				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
@@ -260,12 +264,12 @@ void function_minimizer::print_mcmc_timing(double time_warmup, double start) {
   cout << ss.str() << endl;
 }
 
+// This function holds the position (y) and momentum (p) vectors fixed and
+// takes a single step of size eps. This process repeats until a reasonable
+// eps is found. Thus need to make sure y and p are constant and only eps
+// changes.
 double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd)
 {
-  // This function holds the position (y) and momentum (p) vectors fixed
-  // and takes a single step of size eps. This process repeats until a
-  // reasonable eps is found. Thus need to make sure y and p are constant
-  // and only eps changes.
 
   double eps=1;			   // initial eps
   independent_variables z(1,nvar); // rotated bounded parameters
@@ -286,10 +290,9 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   double pprob2=0.5*norm2(p2);
   double H2=nll2+pprob2;
   double alpha=exp(H1-H2);
-  // Determine whether eps=1 is too big or too small,
-  // i.e. whether to halve or double. If a=1, then eps keeps
-  // doubling until alpha passes 0.5; otherwise it halves until
-  // that happens.
+  // Determine whether eps=1 is too big or too small, i.e. whether to halve
+  // or double. If a=1, then eps keeps doubling until alpha passes 0.5;
+  // otherwise it halves until that happens.
   double a;
   if(alpha < 0.5 || std::isnan(alpha)){
     // If divergence occurs or eps too big, halve it
@@ -306,10 +309,10 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
     gr2=gr2begin;
 
     // Make one leapfrog step and check acceptance ratio
-    double nll2=leapfrog(nvar, gr, chd, eps, p2, y2, gr2);
-    double pprob2=0.5*norm2(p2);
-    double H2=nll2+pprob2;
-    double alpha=exp(H1-H2);
+    nll2=leapfrog(nvar, gr, chd, eps, p2, y2, gr2);
+    pprob2=0.5*norm2(p2);
+    H2=nll2+pprob2;
+    alpha=exp(H1-H2);
 
     // Check if the 1/2 threshold has been crossed
     if(pow(alpha,a) < pow(2,-a)){
@@ -317,8 +320,7 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
 	   << k << " steps." << endl;
       return(eps);
     } else {
-      // Otherwise either halve or double eps and do another
-      // iteration
+      // Otherwise either halve or double eps and do another iteration
       eps=pow(2,a)*eps;
     }
   }
@@ -327,22 +329,22 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   ad_exit(1);
 } // end of function
 
+
 /**
    Function to take a single HMC leapfrog step, given current position and
    momentum variables. Returns nll value but also updates position and
    momentum variables by reference.
  **/
-
 double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p, dvector& y,
 				    dvector& gr2)
 {
-  independent_variables z(1,nvar); // rotated bounded parameters???
+  independent_variables z(1,nvar); // bounded parameters
   dvector phalf;
-  // Update momentum by half step (why negative?)
+  // Update momentum by half step
   phalf=p-eps/2*gr2;
   // Update parameters by full step
   y+=eps*phalf;
-  // Transform parameters via mass matrix
+  // Transform parameters via mass matrix to get new gradient
   z=chd*y;
   // Get NLL and set updated gradient in gr by reference
   double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
@@ -353,7 +355,10 @@ double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double 
   return(nll);
 }
 
-// This function reads in the hessian file to get the MLE values at the end.
+// This function reads in the hessian file to get the MLE values at the
+// end. This is needed when the user doesn't pass an initial vector with
+// -mcpin b/c the model is not necessarily run with -est. With adnuts it is
+// not by default so need a default starting value.
 void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
   adstring tmpstring = "admodel.hes";
   uistream cif((char*)tmpstring);
@@ -397,8 +402,7 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
   // Temp is a unique flag to make sure the mle values were written (that
   // admodel.hes is not too old)
   if(temp != -987 || !cif){
-    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
-	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    cerr << "Error reading the bounded MLE values from admodel.hes. Try re-optimizing model." << endl;
     ad_exit(1);
   }
 }

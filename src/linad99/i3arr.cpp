@@ -167,18 +167,6 @@ void i3_array::allocate(
     elem(i).allocate(nrl, nrh(i), ncl, nch);
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
-i3_array::i3_array(
-  int sl, int sh,
-  int nrl, const ivector& nrh,
-  int ncl, const imatrix& nch)
-{
-  allocate(sl,sh,nrl,nrh,ncl,nch);
-}
 /**
 Allocate vector of integer matrices with dimensions
 [sl to sh] x [nrl to nrh] x [ncl to nch].
@@ -196,33 +184,40 @@ i3_array::i3_array(
 {
   allocate(sl, sh, nrl, nrh, ncl, nch);
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Construct vector of integer matrices with dimensions
+[sl to sh] x [nrl to nrh] x [ncl to nch].
+\param sl lower vector index
+\param sh upper vector index
+\param nrl lower matrix row index
+\param nrh vector of upper matrix row indexes [sl to sh]
+\param ncl lower matrix column index
+\param nch matrix of upper matrix column indexes [sl to sh] x [ncl to nrh]
+*/
+i3_array::i3_array(
+  int sl, int sh,
+  int nrl, const ivector& nrh,
+  int ncl, const imatrix& nch)
+{
+  allocate(sl, sh, nrl, nrh, ncl, nch);
+}
+/**
+Allocate vector of integer matrices with dimensions
+[sl to sh] x [nrl to nrh] x [ncl to nch].
+\param sl lower vector index
+\param sh upper vector index
+\param nrl lower matrix row index
+\param nrh vector of upper matrix row indexes [sl to sh]
+\param ncl lower matrix column index
+\param nch matrix of upper matrix column indexes [sl to sh] x [ncl to nrh]
+*/
 void i3_array::allocate(
   int sl, int sh,
   int nrl, const ivector& nrh,
   int ncl, const imatrix& nch)
 {
-  //int imin=nrh.indexmin();
-  //int rmin=nch.rowmin();
-  //int cmin=nch(rmin).indexmin();
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new imatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
+  allocate(sl, sh);
+  for (int i = slicemin(); i <= slicemax(); ++i)
   {
     t[i].allocate(nrl, nrh(i), ncl, nch(i));
   }

@@ -99,6 +99,40 @@ TEST_F(test_i3_array, allocate2xintcolsvec)
   ASSERT_EQ(colsmin(5), a(5).colmin());
   ASSERT_EQ(colsmax(5), a(5).colmax());
 }
+TEST_F(test_i3_array, construct2xintcolsvec)
+{
+  ivector colsmin(2, 5);
+  colsmin(2) = 4;
+  colsmin(3) = 5;
+  colsmin(4) = 6;
+  colsmin(5) = 7;
+  ivector colsmax(2, 5);
+  colsmax(2) = 14;
+  colsmax(3) = 15;
+  colsmax(4) = 16;
+  colsmax(5) = 17;
+
+  i3_array a(2, 5, 1, 4, colsmin, colsmax);
+  ASSERT_EQ(2, a.slicemin());
+  ASSERT_EQ(5, a.slicemax());
+  ASSERT_EQ(4, a.slicesize());
+  ASSERT_EQ(1, a(2).rowmin());
+  ASSERT_EQ(4, a(2).rowmax());
+  ASSERT_EQ(1, a(3).rowmin());
+  ASSERT_EQ(4, a(3).rowmax());
+  ASSERT_EQ(1, a(4).rowmin());
+  ASSERT_EQ(4, a(4).rowmax());
+  ASSERT_EQ(1, a(5).rowmin());
+  ASSERT_EQ(4, a(5).rowmax());
+  ASSERT_EQ(colsmin(2), a(2).colmin());
+  ASSERT_EQ(colsmax(2), a(2).colmax());
+  ASSERT_EQ(colsmin(3), a(3).colmin());
+  ASSERT_EQ(colsmax(3), a(3).colmax());
+  ASSERT_EQ(colsmin(4), a(4).colmin());
+  ASSERT_EQ(colsmax(4), a(4).colmax());
+  ASSERT_EQ(colsmin(5), a(5).colmin());
+  ASSERT_EQ(colsmax(5), a(5).colmax());
+}
 TEST_F(test_i3_array, allocatei3_array)
 {
   ivector colsmin(2, 5);
@@ -209,6 +243,36 @@ TEST_F(test_i3_array, allocaterowsmax)
   ASSERT_EQ(20, b(4).colmax());
   ASSERT_EQ(10, b(5).colmin());
   ASSERT_EQ(20, b(5).colmax());
+}
+TEST_F(test_i3_array, constructrowsmax)
+{
+  ivector rowsmax(2, 5);
+  rowsmax(2) = 14;
+  rowsmax(3) = 15;
+  rowsmax(4) = 16;
+  rowsmax(5) = 17;
+
+  i3_array a(2, 5, 1, rowsmax, 10, 20);
+
+  ASSERT_EQ(2, a.slicemin());
+  ASSERT_EQ(5, a.slicemax());
+  ASSERT_EQ(4, a.slicesize());
+  ASSERT_EQ(1, a(2).rowmin());
+  ASSERT_EQ(14, a(2).rowmax());
+  ASSERT_EQ(1, a(3).rowmin());
+  ASSERT_EQ(15, a(3).rowmax());
+  ASSERT_EQ(1, a(4).rowmin());
+  ASSERT_EQ(16, a(4).rowmax());
+  ASSERT_EQ(1, a(5).rowmin());
+  ASSERT_EQ(17, a(5).rowmax());
+  ASSERT_EQ(10, a(2).colmin());
+  ASSERT_EQ(20, a(2).colmax());
+  ASSERT_EQ(10, a(3).colmin());
+  ASSERT_EQ(20, a(3).colmax());
+  ASSERT_EQ(10, a(4).colmin());
+  ASSERT_EQ(20, a(4).colmax());
+  ASSERT_EQ(10, a(5).colmin());
+  ASSERT_EQ(20, a(5).colmax());
 }
 TEST_F(test_i3_array, allocateinvalidindex)
 {
@@ -344,4 +408,40 @@ TEST_F(test_i3_array, assignsinglevalue)
       }
     }
   }
+}
+TEST_F(test_i3_array, constructintintintivectorintimatrix)
+{
+  ivector rows(1, 3);
+  rows(1) = 3;
+  rows(2) = 4;
+  rows(3) = 5;
+  imatrix columns(1, 3);
+  columns(1).allocate(2, rows(1));
+  columns(2).allocate(2, rows(2));
+  columns(3).allocate(2, rows(3));
+  i3_array a(1, 3, 2, rows, 3, columns);
+
+  ASSERT_EQ(1, a.slicemin());
+  ASSERT_EQ(3, a.slicemax());
+  ASSERT_EQ(3, a.slicesize());
+
+  ASSERT_EQ(2, a(1).rowmin());
+  ASSERT_EQ(rows(1), a(1).rowmax());
+  ASSERT_EQ(rows(1) - 2 + 1, a(1).rowsize());
+  ASSERT_EQ(2, a(2).rowmin());
+  ASSERT_EQ(rows(2), a(2).rowmax());
+  ASSERT_EQ(rows(2) - 2 + 1, a(2).rowsize());
+  ASSERT_EQ(2, a(3).rowmin());
+  ASSERT_EQ(rows(3), a(3).rowmax());
+  ASSERT_EQ(rows(3) - 2 + 1, a(3).rowsize());
+}
+TEST_F(test_i3_array, invalidintintintivectorintimatrix)
+{
+  ivector rows;
+  imatrix columns;
+  i3_array a(3, 1, 2, rows, 3, columns);
+
+  ASSERT_EQ(1, a.slicemin());
+  ASSERT_EQ(0, a.slicemax());
+  ASSERT_EQ(0, a.slicesize());
 }

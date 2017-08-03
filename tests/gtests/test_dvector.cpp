@@ -1109,3 +1109,14 @@ TEST_F(test_dvector, concatenation)
   ASSERT_DOUBLE_EQ(-3, ab(9));
   ASSERT_DOUBLE_EQ(-4, ab(10));
 }
+TEST_F(test_dvector, copyconstructor)
+{
+  dvector a("{0, 1, 2, 3, 4, 5}");
+  ASSERT_EQ(0, a.get_ncopies());
+  dvector copy(a);
+  ASSERT_EQ(a.indexmin(), copy.indexmin());
+  ASSERT_EQ(a.indexmax(), copy.indexmax());
+  ASSERT_EQ(&a(a.indexmin()), &copy(copy.indexmin()));
+  ASSERT_EQ(1, copy.get_ncopies());
+  ASSERT_EQ(1, a.get_ncopies());
+}

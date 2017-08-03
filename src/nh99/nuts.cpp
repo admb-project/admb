@@ -3,7 +3,7 @@
    Copyright (c) 2016 ADMB Foundation
 
    \file
-   This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo
+   This file was copied from hybmcmc.cpp to use as a starting place to create updated Hamiltonian Monte Carlo
    samplers (static HMC and No-u-turn).
 */
 
@@ -23,7 +23,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     ad_exit(1);
   }
   // I haven't figured out what to do with RE yet, so leaving as is for
-  // now. -Cole
+  // now. It will throw an error later on. -Cole
   uostream * pofs_psave=NULL;
   if (mcmc2_flag==1) initial_params::restore_start_phase();
   initial_params::set_inactive_random_effects();
@@ -39,15 +39,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=1;
   int old_Hybrid_bounded_flag=-1;
   int on,nopt = 0;
-  // dvector x0(1,nvar);
-  // dvector scale(1,nvar);
-  // initial_params::xinit(x0);
-  // dvector pen_vector(1,nvar);
-  // initial_params::reset(dvar_vector(x0),pen_vector);
-  // initial_params::mc_phase=0;
-  // initial_params::stddev_scale(scale,x0);
-  // initial_params::mc_phase=1;
-  // gradient_structure::set_YES_DERIVATIVES();
 
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
@@ -72,7 +63,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
   }
   // Run duration. Can specify warmup and duration, or warmup and
-  // iter. Sampling period will stop after exceeding duration hours.
+  // iter. Sampling period will stop after exceeding <duration> hours. If
+  // duration ends before warmup is finished there will be no samples.
   double duration=0;
   bool use_duration=0;		// whether to use this or iter
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-duration",nopt))>-1) {
@@ -85,12 +77,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	cerr << "Error: duration must be > 0" << endl;
 	ad_exit(1);
       } else {
-	// input is in minutes, duration is in seconds so convert
-	duration=_duration*60;
+	// input is in hours, duration is in seconds so convert
+	duration=_duration*60*60;
       }
     }
   }
-  // chain number -- for console display purposes only
+  // chain number -- for console display purposes only, useful when running
+  // in parallel
   int chain=1;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chain",nopt))>-1) {
     if (nopt) {
@@ -126,7 +119,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // Target acceptance rate for step size adaptation. Must be
   // 0<adapt_delta<1. Defaults to 0.8.
-  double adapt_delta=0.8; // target acceptance rate specified by the user
+  double adapt_delta=0.8; 
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_delta",nopt))>-1) {
     if (nopt) {
       istringstream ist(ad_comm::argv[on+1]);
@@ -171,22 +164,21 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       if (!cif) {
 	cerr << "Error trying to open mcmc par input file "
 	     << ad_comm::argv[on+1] << endl;
-	exit(1);
+	ad_exit(1);
       }
       cif >> z0;
       if (!cif) {
 	cerr << "Error reading from mcmc par input file "
 	     << ad_comm::argv[on+1] << endl;
-	exit(1);
+	ad_exit(1);
       }
     } else {
       cerr << "Illegal option with -mcpin" << endl;
     }
   } else {
-    // Set to stored MLE vector in bounded space
-    ii=1;
+    // If user didnt specify one, use MLE values.
     z0=mle;
-    initial_params::copy_all_values(z0,ii);
+    initial_params::copy_all_values(z0,1);
   }
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
@@ -222,6 +214,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // above. This prevents re-estimating the model each time. Then the new
   // scales can be calculated and the matrix converted to bounded, then
   // back to unbounded in hybrid space.
+  //
+  // Actually, I decided to force the user to rerun the model with -hbf 1
+  // so that the scales are correct. This code wasnt working quite right
+  // but leaving here in case someone wants to try adding this back later.
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
   bool rescale_covar=0;
@@ -274,11 +270,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // transformed space using the old scales, and then back to the
     // untransformed space using the new scales.
 
-    // Temporarily (?) turning this off. Might be easier and more reliable
+    // For now turning this off. Might be easier and more reliable
     // to force user to rerun the model with the right hbf.
     cerr << endl << endl << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
       endl << "...Rerun model with '-hbf 1' and try again" << endl << endl << endl;
     ad_exit(1);
+    //
     cout << "Rescaling covariance matrix b/c scales don't match" << endl;
     cout << "old scale=" <<  old_scale << endl;
     cout << "current scale=" << current_scale << endl;
@@ -295,9 +292,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix chdinv=inv(chd);
   // Can now inverse rotate y to be x (algorithm space)
   independent_variables x0(1,nvar);
-  x0=chdinv*y0; // this is the initial value
-  //  gradient_structure::set_NO_DERIVATIVES(); // what does this do?
-
+  x0=chdinv*y0; // this is the initial value in algorithm space
   // cout << "Starting from chd=" << chd << endl;
   ///
   // /// Old code to test that I know what's going on.
@@ -307,7 +302,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // cout << "Initial bounded parameters=" << z0 << endl;
   // cout << "Initial unbounded parameters=" << y0 << endl;
   // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
-  cout << "Initial nll=" << nlltemp << endl;
+  cout << "Initial negative log density=" << nlltemp << endl;
   // cout << "Initial gr in unbounded space= " << grtemp << endl;
   // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
   ///
@@ -321,13 +316,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       ad_comm::adprogram_name + adstring(".psv") << endl;
     ad_exit(1);
   }
-  // This file holds the rotated (x), unbounded (y) and bounded (z) samples
-  // (not warmup). Can read this in to get empirical covariance on the
-  // unbounded scale and then put back into admodel.cov. Or look at how
-  // mass matrix is doing.
-  ofstream rotated("rotated.csv", ios::trunc);
+  // These files holds the rotated (x), unbounded (y) and bounded (z)
+  // samples (not warmup). Can read this in to get empirical covariance on
+  // the unbounded scale and then put back into admodel.cov. Or look at how
+  // mass matrix is doing. For now turned off rotated and bounded since
+  // don't need those immediately
+  // ofstream rotated("rotated.csv", ios::trunc);
+  // ofstream bounded("bounded.csv", ios::trunc);
   ofstream unbounded("unbounded.csv", ios::trunc);
-  ofstream bounded("bounded.csv", ios::trunc);
   // Save nvar first. If added mcrestart (mcrb) functionality later need to
   // fix this line.
   (*pofs_psave) << nvar;
@@ -344,8 +340,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   cout << endl << "Starting NUTS for model '" << m <<
     "' at " << asctime(localtm);
   if(use_duration==1){
-    cout << "Model will run for " << duration/60 <<
-      " minutes or until " << nmcmc << " total iterations" << endl;
+    cout << "Model will run for " << duration <<
+      " hours or until " << nmcmc << " total iterations" << endl;
   }
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
@@ -361,19 +357,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   independent_variables z(1,nvar);
   independent_variables ytemp(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
-  dvector gr2(1,nvar);		// initial rotated gradient
+  dvector gr2(1,nvar);		// gradients in rotated space
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
-  // Global, local variables to track the extreme left and rightmost
-  // nodes of the entire tree
+  // Local variables to track the extreme left and rightmost nodes of the
+  // entire tree. This gets overwritten due to passing things by reference
+  // in buildtree
   dvector thetaminus_end(1,nvar);
   dvector thetaplus_end(1,nvar);
   dvector rminus_end(1,nvar);
   dvector rplus_end(1,nvar);
-  dvector thetaminus0(1,nvar);
-  dvector thetaplus0(1,nvar);
-  dvector rminus0(1,nvar);
-  dvector rplus0(1,nvar);
   // References to left most and right most theta and momentum for current
   // subtree inside of buildtree. The ones proceeded with _ are passed
   // through buildtree by reference. Inside build_tree, _thetaplus is left
@@ -384,6 +377,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector _thetaprime(1,nvar);
   dvector _rminus(1,nvar);
   dvector _rplus(1,nvar);
+  // These are used inside NUTS by reference
   double _alphaprime;
   int _nalphaprime;
   bool _sprime;
@@ -426,8 +420,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     j=0;
     thetaminus_end=theta; thetaplus_end=theta;
     rminus_end=p; rplus_end=p;
-    thetaminus0=theta; thetaplus0=theta;
-    rminus0=p; rplus0=p;
 
     while (s) {
       value = randu(rng);	   // runif(1)
@@ -459,7 +451,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng);
-	// Moved left, so update extreme left tree
 	thetaminus_end=_thetaminus;
 	rminus_end=_rminus;
       }
@@ -492,13 +483,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // sampling draws only
     if(is>warmup){
       for(int i=1;i<nvar;i++) {
-	rotated << theta(i) << ", ";
+	// rotated << theta(i) << ", ";
+	// bounded << parsave(i) << ", ";
 	unbounded << ytemp(i) << ", ";
-	bounded << parsave(i) << ", ";
       }
-      rotated << theta(nvar) << endl;
+      // rotated << theta(nvar) << endl;
+      // bounded << parsave(nvar) << endl;
       unbounded << ytemp(nvar) << endl;
-      bounded << parsave(nvar) << endl;
     }
     (*pofs_psave) << parsave; // save all bounded draws to psv file
     // Estimated acceptance probability
@@ -509,8 +500,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     if(is > warmup){
       // Increment divergences only after warmup
       if(_divergent==1) ndivergent++;
-      // running sum of alpha to calculate samplin
-      alphasum=alphasum+alpha;
+      // running sum of alpha to calculate average acceptance rate below
+      alphasum+=alpha;
     }
     // Adaptation of step size (eps).
     if(useDA){
@@ -544,7 +535,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if(useDA) cout << ", and target=" << adapt_delta << endl; else cout << endl;
   print_mcmc_timing(time_warmup, time_total);
 
-  // I assume this closes the connection to the file??
+  // Close .psv file connection
   if (pofs_psave) {
     delete pofs_psave;
     pofs_psave=NULL;

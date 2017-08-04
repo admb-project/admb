@@ -184,3 +184,11 @@ TEST_F(test_i4_array, construct4intx)
   }
 */
 }
+TEST_F(test_i4_array, invalidconstruct4intx)
+{
+  i4_array a(4, 1, 1, 3, 1, 2, 1, 1);
+
+  ASSERT_EQ(1, a.hslicemin());
+  ASSERT_EQ(0, a.hslicemax());
+  ASSERT_EQ(0, a.hslicesize());
+}

@@ -217,3 +217,25 @@ TEST_F(test_i5_array, inputoutput)
   ASSERT_EQ(a(2, 3, 3, 1, 1), 17);
   ASSERT_EQ(a(2, 3, 3, 2, 1), 18);
 }
+TEST_F(test_i5_array, copyempty)
+{
+  i5_array empty;
+  ASSERT_EQ(0, empty.get_ncopies());
+  i5_array copy(empty);
+  ASSERT_EQ(0, copy.hslicesize());
+  ASSERT_EQ(1, copy.hslicemin());
+  ASSERT_EQ(0, copy.hslicemax());
+  ASSERT_EQ(0, copy.get_ncopies());
+  ASSERT_EQ(0, empty.get_ncopies());
+}
+TEST_F(test_i5_array, copynonempty)
+{
+  i5_array nonempty(1, 1);
+  ASSERT_EQ(0, nonempty.get_ncopies());
+  i5_array copy(nonempty);
+  ASSERT_EQ(1, copy.hslicesize());
+  ASSERT_EQ(1, copy.hslicemin());
+  ASSERT_EQ(1, copy.hslicemax());
+  ASSERT_EQ(1, copy.get_ncopies());
+  ASSERT_EQ(1, nonempty.get_ncopies());
+}

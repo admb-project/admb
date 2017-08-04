@@ -6014,7 +6014,8 @@ class i5_array
    {
       return (colmax() - colmin() + 1);
    }
-   void initialize(void);
+  void initialize();
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 inline i4_array& i5_array::elem(int i)
 {

@@ -5821,7 +5821,8 @@ class i4_array
    {
       return (colmax() - colmin() + 1);
    }
-   void initialize(void);
+  void initialize();
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 ostream& operator<<(const ostream& output, const i4_array& iarray);
@@ -8583,11 +8584,12 @@ class adtimer;
  */
 class ad_comm
 {
- protected:
-   ad_comm(int argc, char *argv[]);
-   ad_comm(void);
-   void allocate(void);
-   virtual ~ ad_comm();
+protected:
+  ad_comm();
+  ad_comm(int argc, char *argv[]);
+  virtual ~ad_comm();
+
+  void allocate();
  public:
    static int time_flag;
    static int bandwidth;

@@ -166,7 +166,7 @@ TEST_F(test_d7_array, sum)
   }
   ASSERT_DOUBLE_EQ(total, sum(a));
 }
-#ifndef __OPENCC__
+#ifndef __OPEN64__
 TEST_F(test_d7_array, divisor)
 {
   d7_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);

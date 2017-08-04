@@ -467,3 +467,14 @@ TEST_F(test_i3_array, invalidintintimatrix)
   ASSERT_EQ(0, a.slicemax());
   ASSERT_EQ(0, a.slicesize());
 }
+TEST_F(test_i3_array, intintimatrixnull)
+{
+  imatrix indexes;
+  i3_array a(1, 2, indexes);
+
+  ASSERT_EQ(1, a.slicemin());
+  ASSERT_EQ(2, a.slicemax());
+  ASSERT_EQ(2, a.slicesize());
+  ASSERT_FALSE(allocated(a(1)));
+  ASSERT_FALSE(allocated(a(2)));
+}

@@ -445,3 +445,25 @@ TEST_F(test_i3_array, invalidintintintivectorintimatrix)
   ASSERT_EQ(0, a.slicemax());
   ASSERT_EQ(0, a.slicesize());
 }
+TEST_F(test_i3_array, intintimatrix)
+{
+  imatrix indexes(1, 2, 1, 4);
+  i3_array a(1, 2, indexes);
+
+  ASSERT_EQ(1, a.slicemin());
+  ASSERT_EQ(2, a.slicemax());
+  ASSERT_EQ(2, a.slicesize());
+  ASSERT_EQ(&indexes(1), &a.elem(1).elem(1));
+  ASSERT_EQ(&indexes(2), &a.elem(1).elem(2));
+  ASSERT_EQ(&indexes(1), &a.elem(2).elem(1));
+  ASSERT_EQ(&indexes(2), &a.elem(2).elem(2));
+}
+TEST_F(test_i3_array, invalidintintimatrix)
+{
+  imatrix indexes;
+  i3_array a(2, 1, indexes);
+
+  ASSERT_EQ(1, a.slicemin());
+  ASSERT_EQ(0, a.slicemax());
+  ASSERT_EQ(0, a.slicesize());
+}

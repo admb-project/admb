@@ -223,33 +223,15 @@ void i3_array::allocate(
   }
 }
 /**
-Allocate vector [_sl to _sh] of integer matrices with same dimension as m1. 
-\param _sl lower vector index
-\param _sh upper vector index
+Allocate vector [sl to sh] of integer matrices with same dimension as m1. 
+\param sl lower vector index
+\param sh upper vector index
 \param m1 matrix to copy dimensions
 */
-i3_array::i3_array(int _sl, int _sh, const imatrix& m1)
+i3_array::i3_array(int sl, int sh, const imatrix& m1)
 {
-  int sl = _sl;
-  int sh = _sh;
-  //int nrl = m1.rowmin();
-  //int nrh = m1.rowmax();
-  //int ncl = m1.colmin();
-  //int nch = m1.colmax();
-  if ((shape = new three_array_shape(sl, sh)) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new imatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: i3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
-  for (int i = sl; i <= sh; ++i)
+  allocate(sl, sh);
+  for (int i = slicemin(); i <= slicemax(); ++i)
   {
     if (m1.shape)
     {

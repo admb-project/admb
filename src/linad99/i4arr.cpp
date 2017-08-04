@@ -1,45 +1,28 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 #include "admb_messages.h"
 
-/**
-Does NOT allocate, but intialize empty i4_array.
-*/
+/// Does NOT allocate, but initializes empty i4_array.
 void i4_array::allocate()
 {
-  t = 0;
-  shape = 0;
+  t = nullptr;
+  shape = nullptr;
 }
-
-/**
- * Description not yet available.
- * \param
- */
-void i4_array::initialize(void)
+/// Initializes elements of i4_array to zero.
+void i4_array::initialize()
 {
-  if (allocated(*this))
+  for (int i = hslicemin(); i <= hslicemax(); ++i)
   {
-    int mmin=indexmin();
-    int mmax=indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    if (allocated(elem(i)))
     {
-      (*this)(i).initialize();
+      elem(i).initialize();
     }
   }
 }
-
-/**
-Default constructor
-*/
+/// Default constructor
 i4_array::i4_array()
 {
   allocate();
@@ -53,7 +36,7 @@ Construct vector of empty i3_array with dimension
 */
 i4_array::i4_array(int hsl, int hsu)
 {
-  allocate(hsl,hsu);
+  allocate(hsl, hsu);
 }
 /**
 Allocate vector of empty i3_array with dimension
@@ -64,45 +47,61 @@ Allocate vector of empty i3_array with dimension
 */
 void i4_array::allocate(int hsl, int hsu)
 {
-  unsigned int ss =
-    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
-  if (ss > 0)
+  if (hsl > hsu)
   {
-    if ((t = new i3_array[ss]) == 0)
-    {
-      cerr << " Error: i4_array unable to allocate memory in "
-           << __FILE__ << ':' << __LINE__ << '\n';
-      ad_exit(1);
-    }
-    if ((shape=new vector_shapex(hsl, hsu, t)) == 0)
-    {
-      cerr << " Error: i4_array unable to allocate memory in "
-           << __FILE__ << ':' << __LINE__ << '\n';
-      ad_exit(1);
-    }
-    t -= indexmin();
-    for (int i = hsl; i <= hsu; ++i)
-    {
-      (*this)(i).allocate();
-    }
+    return allocate();
   }
-  else
+  if ((t = new i3_array[static_cast<unsigned int>(hsu - hsl + 1)]) == 0)
   {
-    t = 0;
-    shape = 0;
+    cerr << " Error: i4_array unable to allocate t in "
+         << "i4_array::allocate(int, int).\n";
+    ad_exit(1);
+  }
+  if ((shape=new vector_shapex(hsl, hsu, t)) == 0)
+  {
+    cerr << " Error: i4_array unable to allocate shape in "
+         << "i4_array::allocate(int, int).\n";
+    ad_exit(1);
+  }
+  t -= indexmin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    elem(i).allocate();
   }
 }
-
 /**
  * Description not yet available.
  * \param
  */
-i4_array::i4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
-  const imatrix& nrh, int ncl, const i3_array& nch)
+i4_array::i4_array(
+  int hsl, int hsu,
+  int sl, const ivector& sh,
+  int nrl, const imatrix& nrh,
+  int ncl, const i3_array& nch)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
+/**
+Construct integer array with dimensions
+[hsl to hsu] x [sl to sh] x [nrl to nrh] x [ncl to nch].
 
+\param hsl lower i4_array index
+\param hsu upper i4_array index
+\param sl lower i3_array index
+\param su upper i3_array index
+\param nrl lower matrix row index
+\param nrh upper matrix row index
+\param ncl lower matrix column index
+\param nch upper matrix column index
+*/
+i4_array::i4_array(
+  int hsl, int hsu,
+  int sl, int sh,
+  int nrl, int nrh,
+  int ncl, int nch)
+{
+  allocate(hsl, hsu, sl, sh, nrl, nrh, ncl, nch);
+}
 /**
 Allocate array with dimensions
 [hsl to hsu] x [sl to sh] x [nrl to nrh] x [ncl to nch].
@@ -116,35 +115,20 @@ Allocate array with dimensions
 \param ncl lower matrix column index
 \param nch upper matrix column index
 */
-void i4_array::allocate(int hsl, int hsu, int sl, int sh,
-  int nrl, int nrh, int ncl, int nch)
+void i4_array::allocate(
+  int hsl, int hsu,
+  int sl, int sh,
+  int nrl, int nrh,
+  int ncl, int nch)
 {
-  unsigned int ss =
-    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
-  if (ss > 0)
+  if (hsl > hsu)
   {
-    if ((t = new i3_array[ss]) == 0)
-    {
-       cerr << " Error: i4_array unable to allocate memory in "
-            << __FILE__ << ':' << __LINE__ << '\n';
-       ad_exit(1);
-    }
-    if ( (shape = new vector_shapex(hsl, hsu, t)) == 0)
-    {
-       cerr << " Error: i4_array unable to allocate memory in "
-            << __FILE__ << ':' << __LINE__ << '\n';
-       ad_exit(1);
-    }
-    t -= indexmin();
-    for (int i = hsl; i <= hsu; ++i)
-    {
-      (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch);
-    }
+    return allocate();
   }
-  else
+  allocate(hsl, hsu);
+  for (int i = hslicemin(); i <= hslicemax(); ++i)
   {
-    t = 0;
-    shape = 0;
+    elem(i).allocate(sl, sh, nrl, nrh, ncl, nch);
   }
 }
 /**
@@ -197,55 +181,43 @@ void i4_array::allocate(
     shape = 0;
   }
 }
-
-/**
-Copy constructor
-*/
-i4_array::i4_array(const i4_array& m2)
+/// Copy constructor
+i4_array::i4_array(const i4_array& other)
 {
-  if (m2.shape)
+  if (other.shape)
   {
-    shape = m2.shape;
+    shape = other.shape;
     (shape->ncopies)++;
-    t = m2.t;
+    t = other.t;
   }
   else
   {
-    shape = NULL;
-    t = NULL;
+    allocate();
   }
 }
-
-/**
-Destructor
-*/
+/// Destructor
 i4_array::~i4_array()
 {
   deallocate();
 }
-
-/**
- * Description not yet available.
- * \param
- */
- void i4_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t= (i3_array*) (shape->get_truepointer());
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
- }
+/// Deallocate i4_array memory.
+void i4_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      t = static_cast<i3_array*>(shape->get_truepointer());
+      delete [] t;
+      delete shape;
+      allocate();
+    }
+  }
+}
 
 #if !defined (OPT_LIB)
 

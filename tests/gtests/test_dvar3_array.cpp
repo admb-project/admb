@@ -492,3 +492,59 @@ TEST_F(test_dvar3_array, unallocated)
 #endif
 }
 */
+TEST_F(test_dvar3_array, assigment)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar3_array a(1, 3, 1, 2, 1, 1);
+  a(1, 1, 1) = 1;
+  a(1, 2, 1) = 2;
+  a(2, 1, 1) = 3;
+  a(2, 2, 1) = 4;
+  a(3, 1, 1) = 5;
+  a(3, 2, 1) = 6;
+  dvar3_array b(1, 3, 1, 2, 1, 1);
+  b = a;
+  ASSERT_DOUBLE_EQ(value(b(1, 1, 1)), 1);
+  ASSERT_DOUBLE_EQ(value(b(1, 2, 1)), 2);
+  ASSERT_DOUBLE_EQ(value(b(2, 1, 1)), 3);
+  ASSERT_DOUBLE_EQ(value(b(2, 2, 1)), 4);
+  ASSERT_DOUBLE_EQ(value(b(3, 1, 1)), 5);
+  ASSERT_DOUBLE_EQ(value(b(3, 2, 1)), 6);
+}
+TEST_F(test_dvar3_array, assigmenterror)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar3_array a(1, 3);
+  ASSERT_ANY_THROW({
+    dvar3_array b(2, 3);
+    a = b;
+  });
+  ASSERT_ANY_THROW({
+    dvar3_array b(1, 4);
+    a = b;
+  });
+}
+TEST_F(test_dvar3_array, assigmentsame)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar3_array a(1, 3, 1, 2, 1, 1);
+  a(1, 1, 1) = 1;
+  a(1, 2, 1) = 2;
+  a(2, 1, 1) = 3;
+  a(2, 2, 1) = 4;
+  a(3, 1, 1) = 5;
+  a(3, 2, 1) = 6;
+  a = a;
+  ASSERT_DOUBLE_EQ(value(a(1, 1, 1)), 1);
+  ASSERT_DOUBLE_EQ(value(a(1, 2, 1)), 2);
+  ASSERT_DOUBLE_EQ(value(a(2, 1, 1)), 3);
+  ASSERT_DOUBLE_EQ(value(a(2, 2, 1)), 4);
+  ASSERT_DOUBLE_EQ(value(a(3, 1, 1)), 5);
+  ASSERT_DOUBLE_EQ(value(a(3, 2, 1)), 6);
+}

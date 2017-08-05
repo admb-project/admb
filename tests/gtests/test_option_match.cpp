@@ -38,8 +38,10 @@ TEST_F(test_option_match, check_null_indexes)
 {
   int option_match(char* _s, const char* option);
 
+#if !defined(__GNUC__) && !defined(__WIN32)
   char* p = strtok(NULL, " ");
   ASSERT_TRUE(p == NULL);
+#endif
   //Will produce segmentation fault:
   //ASSERT_NE(0, strcmp(p, " "));
 

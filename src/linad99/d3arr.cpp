@@ -504,8 +504,7 @@ void d3_array::allocate(
   int nrl, int nrh,
   const ivector& ncl, const ivector& nch)
 {
-  if (sl > sh
-      || sl != ncl.indexmin() || sh != ncl.indexmax()
+  if (sl != ncl.indexmin() || sh != ncl.indexmax()
       || sl != nch.indexmin() || sh != nch.indexmax())
   {
     cerr << "Incompatible d3_array bounds in "
@@ -533,18 +532,14 @@ void d3_array::allocate(int sl, int sh,
   int nrl, const ivector& nrh,
   int ncl, const ivector& nch)
 {
-  if ((shape = new three_array_shape(sl, sh)) == 0)
+  if (sl != nrh.indexmin() || sh != nrh.indexmax()
+      || sl != nch.indexmin() || sh != nch.indexmax())
   {
-    cerr << " Error: d3_array unable to allocate memory in "
-           << __FILE__ << ':' << __LINE__ << '\n';
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-           << __FILE__ << ':' << __LINE__ << '\n';
+    cerr << "Incompatible d3_array bounds in "
+         << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= slicemin();
+  allocate(sl, sh);
   for (int i = sl; i <= sh; ++i)
   {
     t[i].allocate(nrl, nrh(i), ncl, nch(i));

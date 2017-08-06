@@ -411,51 +411,43 @@ TEST_F(test_i3_array, assignsinglevalue)
 }
 TEST_F(test_i3_array, constructintintintivectorintimatrix)
 {
-cout << __FILE__ << ':' << __LINE__ << endl;
   ivector rows(1, 3);
-cout << __FILE__ << ':' << __LINE__ << endl;
   rows(1) = 3;
-cout << __FILE__ << ':' << __LINE__ << endl;
   rows(2) = 4;
-cout << __FILE__ << ':' << __LINE__ << endl;
   rows(3) = 5;
-cout << __FILE__ << ':' << __LINE__ << endl;
-  imatrix columns(1, 3);
-cout << __FILE__ << ':' << __LINE__ << endl;
-  columns(1).allocate(2, rows(1));
-cout << __FILE__ << ':' << __LINE__ << endl;
-  columns(2).allocate(2, rows(2));
-cout << __FILE__ << ':' << __LINE__ << endl;
-  columns(3).allocate(2, rows(3));
-cout << __FILE__ << ':' << __LINE__ << endl;
+  imatrix columns(1, 3, 2, rows);
+  columns(1, 2) = 6;
+  columns(1, 3) = 7;
+  columns(2, 2) = 8;
+  columns(2, 3) = 9;
+  columns(2, 4) = 10;
+  columns(3, 2) = 11;
+  columns(3, 3) = 12;
+  columns(3, 4) = 13;
+  columns(3, 5) = 14;
   i3_array a(1, 3, 2, rows, 3, columns);
 
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(1, a.slicemin());
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(3, a.slicemax());
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(3, a.slicesize());
 
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(2, a(1).rowmin());
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(rows(1), a(1).rowmax());
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(rows(1) - 2 + 1, a(1).rowsize());
-cout << __FILE__ << ':' << __LINE__ << endl;
+  ASSERT_EQ(3, a(1).colmin());
+  ASSERT_EQ(6, a(1).colmax());
+
   ASSERT_EQ(2, a(2).rowmin());
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(rows(2), a(2).rowmax());
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(rows(2) - 2 + 1, a(2).rowsize());
-cout << __FILE__ << ':' << __LINE__ << endl;
+  ASSERT_EQ(3, a(2).colmin());
+  ASSERT_EQ(8, a(2).colmax());
+
   ASSERT_EQ(2, a(3).rowmin());
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(rows(3), a(3).rowmax());
-cout << __FILE__ << ':' << __LINE__ << endl;
   ASSERT_EQ(rows(3) - 2 + 1, a(3).rowsize());
-cout << __FILE__ << ':' << __LINE__ << endl;
+  ASSERT_EQ(3, a(3).colmin());
+  ASSERT_EQ(11, a(3).colmax());
 }
 TEST_F(test_i3_array, invalidintintintivectorintimatrix)
 {

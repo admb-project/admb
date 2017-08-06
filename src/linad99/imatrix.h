@@ -84,7 +84,6 @@ public:
    // makes a matrix [0..nr][0..nc]
 
    imatrix(int nrl, int nrh, const ivector & iv);
-   void allocate(int nrl, int nrh, const ivector & iv);
 
    imatrix(int, int, int, int);
    // makes a matrix [nrl..nrh][ncl..nch]
@@ -110,10 +109,11 @@ public:
    imatrix_position restore_imatrix_position(void);
 
    void allocate(void);
-   void allocate(const imatrix & dm);
+   void allocate(int nrl, int nrh, const ivector & iv);
+   void allocate(const imatrix& dm);
    void allocate(int nrl, int nrh, int ncl, int nch);
    void allocate(int nrl, int nrh);
-   void allocate(int nrl, int nrh, int ncl, const ivector & nch);
+   void allocate(int nrl, int nrh, int ncl, const ivector& nch);
    void allocate(int nrl, int nrh, const ivector & ncl, const ivector & nch);
    void allocate(const ad_integer & nrl, const ad_integer & nrh,
      const index_type & ncl, const index_type & nch);

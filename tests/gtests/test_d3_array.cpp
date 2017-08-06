@@ -981,11 +981,11 @@ TEST_F(test_d3_array, allocate_5intb_error)
   d3_array b;
 
   ASSERT_ANY_THROW({
-    ivector colsmax(3, 5);
+    ivector colsmax(0, 2);
     b.allocate(1, 2, 3, 4, 1, colsmax);
   });
   ASSERT_ANY_THROW({
-    ivector colsmax(2, 4);
+    ivector colsmax(1, 3);
     b.allocate(1, 2, 3, 4, 1, colsmax);
   });
 }
@@ -1169,4 +1169,84 @@ TEST_F(test_d3_array, errorindexesallocate4int2vectors)
     ivector uppers(1, 4);
     a.allocate(1, 3, 1, 2, lowers, uppers);
   });
+}
+TEST_F(test_d3_array, invalid_allocate_2int)
+{
+  d3_array b;
+
+  b.allocate(2, 1);
+
+  ASSERT_EQ(b.slicemin(), 1);
+  ASSERT_EQ(b.slicemax(), 0);
+  ASSERT_EQ(b.slicesize(), 0);
+}
+TEST_F(test_d3_array, allocate_rowsmax)
+{
+  d3_array b;
+
+  ivector rowsmax(1, 3);
+  rowsmax(1) = 2;
+  rowsmax(2) = 3;
+  rowsmax(3) = 4;
+  b.allocate(1, 3, 2, rowsmax, 5, 6);
+
+  ASSERT_EQ(b.slicemin(), 1);
+  ASSERT_EQ(b.slicemax(), 3);
+  ASSERT_EQ(b.slicesize(), 3);
+
+  ASSERT_EQ(b(1).indexmin(), 2);
+  ASSERT_EQ(b(1).indexmax(), 2);
+  ASSERT_EQ(b(1, 2).indexmin(), 5);
+  ASSERT_EQ(b(1, 2).indexmax(), 6);
+
+  ASSERT_EQ(b(2).indexmin(), 2);
+  ASSERT_EQ(b(2).indexmax(), 3);
+  ASSERT_EQ(b(2, 2).indexmin(), 5);
+  ASSERT_EQ(b(2, 2).indexmax(), 6);
+  ASSERT_EQ(b(2, 3).indexmin(), 5);
+  ASSERT_EQ(b(2, 3).indexmax(), 6);
+
+  ASSERT_EQ(b(3).indexmin(), 2);
+  ASSERT_EQ(b(3).indexmax(), 4);
+  ASSERT_EQ(b(3, 2).indexmin(), 5);
+  ASSERT_EQ(b(3, 2).indexmax(), 6);
+  ASSERT_EQ(b(3, 3).indexmin(), 5);
+  ASSERT_EQ(b(3, 3).indexmax(), 6);
+  ASSERT_EQ(b(3, 4).indexmin(), 5);
+  ASSERT_EQ(b(3, 4).indexmax(), 6);
+}
+TEST_F(test_d3_array, allocate_rowsmin)
+{
+  d3_array b;
+
+  ivector rowsmin(1, 3);
+  rowsmin(1) = 2;
+  rowsmin(2) = 3;
+  rowsmin(3) = 4;
+  b.allocate(1, 3, rowsmin, 4, 5, 6);
+
+  ASSERT_EQ(b.slicemin(), 1);
+  ASSERT_EQ(b.slicemax(), 3);
+  ASSERT_EQ(b.slicesize(), 3);
+
+  ASSERT_EQ(b(1).indexmin(), 2);
+  ASSERT_EQ(b(1).indexmax(), 4);
+  ASSERT_EQ(b(1, 2).indexmin(), 5);
+  ASSERT_EQ(b(1, 2).indexmax(), 6);
+  ASSERT_EQ(b(1, 3).indexmin(), 5);
+  ASSERT_EQ(b(1, 3).indexmax(), 6);
+  ASSERT_EQ(b(1, 4).indexmin(), 5);
+  ASSERT_EQ(b(1, 4).indexmax(), 6);
+
+  ASSERT_EQ(b(2).indexmin(), 3);
+  ASSERT_EQ(b(2).indexmax(), 4);
+  ASSERT_EQ(b(2, 3).indexmin(), 5);
+  ASSERT_EQ(b(2, 3).indexmax(), 6);
+  ASSERT_EQ(b(2, 4).indexmin(), 5);
+  ASSERT_EQ(b(2, 4).indexmax(), 6);
+
+  ASSERT_EQ(b(3).indexmin(), 4);
+  ASSERT_EQ(b(3).indexmax(), 4);
+  ASSERT_EQ(b(3, 4).indexmin(), 5);
+  ASSERT_EQ(b(3, 4).indexmax(), 6);
 }

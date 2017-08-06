@@ -23,7 +23,7 @@ i3_array::~i3_array()
       deallocate();
     }
   }
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
   else
   {
     cerr << "Warning -- trying to deallocate an unallocated i3_array"<<endl;
@@ -252,10 +252,8 @@ Allocate i3_array with same dimension as other.
 */
 void i3_array::allocate(const i3_array& other)
 {
-  int sl = other.slicemin();
-  int sh = other.slicemax();
-  allocate(sl, sh);
-  for (int i = sl; i <= sh; ++i)
+  allocate(other.slicemin(), other.slicemax());
+  for (int i = slicemax(); i <= slicemax(); ++i)
   {
     elem(i).allocate(other.elem(i));
   }
@@ -282,7 +280,7 @@ i3_array::i3_array(const i3_array& other)
   {
     (shape->ncopies)++;
   }
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
   else
   {
     cerr << "Making a copy of an unallocated d3_array"<<endl;
@@ -304,7 +302,7 @@ void i3_array::deallocate()
     delete shape;
     allocate();
   }
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
   else
   {
     cerr << "Warning -- trying to deallocate an unallocated imatrix"<<endl;

@@ -609,7 +609,7 @@ dvar3_array::~dvar3_array()
       deallocate();
     }
   }
-#ifdef SAFE_ALL
+#ifdef DEBUG
   else
   {
     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
@@ -632,7 +632,7 @@ dvar3_array::~dvar3_array()
      t=NULL;
      shape=NULL;
    }
-#ifdef SAFE_ALL
+#ifdef DEBUG
    else
    {
      cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;

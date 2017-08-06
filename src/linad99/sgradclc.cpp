@@ -122,7 +122,7 @@ void gradcalc(int nvar, const dvector& _g)
   if (gradient_structure::GRAD_STACK1->ptr <=
         gradient_structure::GRAD_STACK1->ptr_first)
   {
-#ifdef SAFE_ALL
+#ifdef DEBUG
     cerr << "warning -- calling gradcalc when no calculations generating"
          << endl << "derivative information have occurred" << endl;
 #endif

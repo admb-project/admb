@@ -73,7 +73,7 @@ dvector::~dvector()
     }
     else
     {
-#ifdef SAFE_ALL
+#ifdef DEBUG
   #ifdef DIAG
       myheapcheck(" Entering ~dvector");
   #endif

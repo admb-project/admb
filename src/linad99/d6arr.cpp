@@ -65,7 +65,7 @@ d6_array::d6_array(const d6_array& other)
        shape=NULL;
      }
    }
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
    else
    {
      cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;

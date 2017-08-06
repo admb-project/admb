@@ -60,7 +60,7 @@ void d7_array::deallocate()
       allocate();
     }
   }
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
   else
   {
     cerr << "Warning -- trying to deallocate an unallocated d7_array.\n";

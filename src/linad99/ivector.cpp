@@ -77,7 +77,7 @@ ivector::~ivector()
     }
     else
     {
-#ifdef SAFE_ALL
+#ifdef DEBUG
   #ifdef DIAG
       myheapcheck(" Entering ~dvector");
   #endif
@@ -338,7 +338,7 @@ void ivector::allocate()
  */
 ivector::ivector(const preivector& pdv)
 {
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
   cout << "starting out in ivector constructor\n";
 #endif
 
@@ -347,7 +347,7 @@ ivector::ivector(const preivector& pdv)
   {
     (shape->ncopies)++;
   }
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
   else
   {
     cerr << "Taking a subvector of an unallocated ivector" << endl;

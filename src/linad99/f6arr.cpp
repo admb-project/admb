@@ -75,7 +75,7 @@ dvar6_array::dvar6_array(const dvar6_array& _m2)
        shape=NULL;
      }
    }
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
    else
    {
      cerr << "Warning -- trying to deallocate an unallocated dvar4_array"<<endl;

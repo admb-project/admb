@@ -651,7 +651,7 @@ void d3_array::shallow_copy(const d3_array& other)
    {
      (shape->ncopies)++;
    }
-#ifdef SAFE_ALL
+#ifdef DEBUG
    else
    {
      cerr << "Making a copy of an unallocated d3_array"<<endl;
@@ -707,7 +707,7 @@ d3_array::~d3_array()
       deallocate();
     }
   }
-#ifdef SAFE_ALL
+#ifdef DEBUG
   else
   {
     cerr << "Warning -- trying to deallocate an unallocated d3_array"<<endl;

@@ -50,13 +50,13 @@ void * vector_shape::operator new(size_t n)
   {
     xpool=new vector_shape_pool(sizeof(vector_shape));
   }
-# if defined(SAFE_ALL)
+#if defined(DEBUG)
   if (n != xpool->size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
-# endif
+#endif
   return xpool->alloc();
 }
 
@@ -70,13 +70,13 @@ void * arr_link::operator new(size_t n)
   {
     xpool=new vector_shape_pool(sizeof(vector_shape));
   }
-# if defined(SAFE_ALL)
+#if defined(DEBUG)
   if (n != xpool->size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
-# endif
+#endif
   return xpool->alloc();
 }
 
@@ -90,13 +90,13 @@ void * vector_shapex::operator new(size_t n)
   {
     xpool=new vector_shape_pool(sizeof(vector_shapex));
   }
-# if defined(SAFE_ALL)
+#if defined(DEBUG)
   if (n != xpool->size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
-# endif
+#endif
   return xpool->alloc();
 }
 

@@ -241,8 +241,7 @@ i3_array::i3_array(int sl, int sh, const imatrix& m1)
     }
     else
     {
-      t[i].shape = NULL;
-      t[i].m = NULL;
+      t[i].allocate();
     }
   }
 }
@@ -264,8 +263,8 @@ void i3_array::allocate(const i3_array& other)
 /// Does NOT allocate, but set empty i3_array.
 void i3_array::allocate()
 {
-  shape = NULL;
-  t = NULL;
+  shape = nullptr;
+  t = nullptr;
 }
 /// Initialize all elements of i3_array to zero.
 void i3_array::initialize()
@@ -302,10 +301,8 @@ void i3_array::deallocate()
     //int ss=slicesize();
 
     delete [] t;
-    t = NULL;
-
     delete shape;
-    shape = NULL;
+    allocate();
   }
 #if defined(SAFE_ALL)
   else

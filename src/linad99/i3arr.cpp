@@ -253,7 +253,7 @@ Allocate i3_array with same dimension as other.
 void i3_array::allocate(const i3_array& other)
 {
   allocate(other.slicemin(), other.slicemax());
-  for (int i = slicemax(); i <= slicemax(); ++i)
+  for (int i = slicemin(); i <= slicemax(); ++i)
   {
     elem(i).allocate(other.elem(i));
   }

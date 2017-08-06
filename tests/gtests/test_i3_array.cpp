@@ -436,18 +436,36 @@ TEST_F(test_i3_array, constructintintintivectorintimatrix)
   ASSERT_EQ(rows(1) - 2 + 1, a(1).rowsize());
   ASSERT_EQ(3, a(1).colmin());
   ASSERT_EQ(6, a(1).colmax());
+  ASSERT_EQ(3, a(1, 2).indexmin());
+  ASSERT_EQ(6, a(1, 2).indexmax());
+  ASSERT_EQ(3, a(1, 3).indexmin());
+  ASSERT_EQ(7, a(1, 3).indexmax());
 
   ASSERT_EQ(2, a(2).rowmin());
   ASSERT_EQ(rows(2), a(2).rowmax());
   ASSERT_EQ(rows(2) - 2 + 1, a(2).rowsize());
   ASSERT_EQ(3, a(2).colmin());
   ASSERT_EQ(8, a(2).colmax());
+  ASSERT_EQ(3, a(2, 2).indexmin());
+  ASSERT_EQ(8, a(2, 2).indexmax());
+  ASSERT_EQ(3, a(2, 3).indexmin());
+  ASSERT_EQ(9, a(2, 3).indexmax());
+  ASSERT_EQ(3, a(2, 4).indexmin());
+  ASSERT_EQ(10, a(2, 4).indexmax());
 
   ASSERT_EQ(2, a(3).rowmin());
   ASSERT_EQ(rows(3), a(3).rowmax());
   ASSERT_EQ(rows(3) - 2 + 1, a(3).rowsize());
   ASSERT_EQ(3, a(3).colmin());
   ASSERT_EQ(11, a(3).colmax());
+  ASSERT_EQ(3, a(3, 2).indexmin());
+  ASSERT_EQ(11, a(3, 2).indexmax());
+  ASSERT_EQ(3, a(3, 3).indexmin());
+  ASSERT_EQ(12, a(3, 3).indexmax());
+  ASSERT_EQ(3, a(3, 4).indexmin());
+  ASSERT_EQ(13, a(3, 4).indexmax());
+  ASSERT_EQ(3, a(3, 5).indexmin());
+  ASSERT_EQ(14, a(3, 5).indexmax());
 }
 TEST_F(test_i3_array, invalidintintintivectorintimatrix)
 {

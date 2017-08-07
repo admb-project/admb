@@ -315,32 +315,22 @@ where nrh and nrl are vectors of indexes.
 \param ncl lower column index for matrix
 \param nch upper column index for matrix
 */
-void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+void d3_array::allocate(
+  int sl, int sh,
+  const ivector& nrl, const ivector& nrh,
   int ncl, int nch)
 {
-  if (sl !=nrl.indexmin() || sh !=nrl.indexmax()
-      || sl !=nrh.indexmin() || sh !=nrh.indexmax())
+  if (sl != nrl.indexmin() || sh != nrl.indexmax()
+      || sl != nrh.indexmin() || sh != nrh.indexmax())
   {
      cerr << "Incompatible d3_array bounds in "
          << __FILE__ << ':' << __LINE__ << '\n';
      ad_exit(1);
   }
-  if ( (shape=new three_array_shape(sl,sh)) == 0)
+  allocate(sl, sh);
+  for (int i = slicemin(); i <= slicemax(); ++i)
   {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  if ((t = new dmatrix[slicesize()]) == 0)
-  {
-    cerr << " Error: d3_array unable to allocate memory in "
-         << __FILE__ << ':' << __LINE__ << '\n';
-    ad_exit(1);
-  }
-  t -= slicemin();
-  for (int i=sl; i<=sh; i++)
-  {
-    t[i].allocate(nrl(i),nrh(i),ncl,nch);
+    t[i].allocate(nrl(i), nrh(i), ncl, nch);
   }
 }
 /**

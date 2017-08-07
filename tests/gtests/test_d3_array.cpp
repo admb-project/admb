@@ -1318,3 +1318,71 @@ TEST_F(test_d3_array, error_rowsmax_colsmax)
     b.allocate(1, 3, 2, rowsmax, 5, colsmax);
   });
 }
+TEST_F(test_d3_array, allocate_rowsminmax)
+{
+  d3_array b;
+
+  ivector rowsmin(1, 3);
+  rowsmin(1) = 5;
+  rowsmin(2) = 6;
+  rowsmin(3) = 7;
+  ivector rowsmax(1, 3);
+  rowsmax(1) = 6;
+  rowsmax(2) = 7;
+  rowsmax(3) = 8;
+  b.allocate(1, 3, rowsmin, rowsmax, 10, 11);
+
+  ASSERT_EQ(b.slicemin(), 1);
+  ASSERT_EQ(b.slicemax(), 3);
+  ASSERT_EQ(b.slicesize(), 3);
+
+  ASSERT_EQ(b(1).indexmin(), 5);
+  ASSERT_EQ(b(1).indexmax(), 6);
+  ASSERT_EQ(b(1, 5).indexmin(), 10);
+  ASSERT_EQ(b(1, 5).indexmax(), 11);
+  ASSERT_EQ(b(1, 6).indexmin(), 10);
+  ASSERT_EQ(b(1, 6).indexmax(), 11);
+
+  ASSERT_EQ(b(2).indexmin(), 6);
+  ASSERT_EQ(b(2).indexmax(), 7);
+  ASSERT_EQ(b(2, 6).indexmin(), 10);
+  ASSERT_EQ(b(2, 6).indexmax(), 11);
+  ASSERT_EQ(b(2, 7).indexmin(), 10);
+  ASSERT_EQ(b(2, 7).indexmax(), 11);
+
+  ASSERT_EQ(b(3).indexmin(), 7);
+  ASSERT_EQ(b(3).indexmax(), 8);
+  ASSERT_EQ(b(3, 7).indexmin(), 10);
+  ASSERT_EQ(b(3, 7).indexmax(), 11);
+  ASSERT_EQ(b(3, 8).indexmin(), 10);
+  ASSERT_EQ(b(3, 8).indexmax(), 11);
+}
+TEST_F(test_d3_array, error_rowsminmax)
+{
+  ad_exit=&test_ad_exit;
+
+  ASSERT_ANY_THROW({
+    d3_array b;
+    ivector rowsmin(0, 3);
+    ivector rowsmax(1, 3);
+    b.allocate(1, 3, rowsmin, rowsmax, 10, 11);
+  });
+  ASSERT_ANY_THROW({
+    d3_array b;
+    ivector rowsmin(1, 4);
+    ivector rowsmax(1, 3);
+    b.allocate(1, 3, rowsmin, rowsmax, 10, 11);
+  });
+  ASSERT_ANY_THROW({
+    d3_array b;
+    ivector rowsmin(1, 3);
+    ivector rowsmax(0, 3);
+    b.allocate(1, 3, rowsmin, rowsmax, 10, 11);
+  });
+  ASSERT_ANY_THROW({
+    d3_array b;
+    ivector rowsmin(1, 3);
+    ivector rowsmax(1, 4);
+    b.allocate(1, 3, rowsmin, rowsmax, 10, 11);
+  });
+}

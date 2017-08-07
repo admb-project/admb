@@ -440,3 +440,56 @@ TEST_F(test_d4_array, emptyinitialize)
     a.initialize();
   });
 }
+TEST_F(test_d4_array, copy)
+{
+  d4_array a(1, 2, 1, 2, 1, 2, 1, 2);
+
+  double d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          a(i, j, k, l) = d;
+          d += 2.0;
+        }
+      }
+    }
+  }
+
+  ASSERT_EQ(0, a.get_ncopies());
+  const d4_array copy = a;
+  ASSERT_EQ(1, copy.get_ncopies());
+  ASSERT_EQ(1, a.get_ncopies());
+
+  d = 2.0;
+  for (int i = 1; i <= 2; ++i)
+  {
+    for (int j = 1; j <= 2; ++j)
+    {
+      for (int k = 1; k <= 2; ++k)
+      {
+        for (int l = 1; l <= 2; ++l)
+        {
+          ASSERT_DOUBLE_EQ(a(i, j, k, l), copy(i, j, k, l));
+        }
+      }
+    }
+  }
+}
+TEST_F(test_d4_array, copyempty)
+{
+  d4_array empty;
+  ASSERT_EQ(1, empty.indexmin());
+  ASSERT_EQ(0, empty.indexmax());
+  ASSERT_EQ(0, empty.hslicesize());
+
+  d4_array copy(empty);
+
+  ASSERT_EQ(1, copy.indexmin());
+  ASSERT_EQ(0, copy.indexmax());
+  ASSERT_EQ(0, copy.hslicesize());
+}

@@ -5178,8 +5178,9 @@ class d4_array
    {
       return (colmax() - colmin() + 1);
    }
-   void initialize(void);
    void operator /=(double d);
+  void initialize();
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 #ifdef OPT_LIB
 inline d3_array& d4_array::operator()(int i)
@@ -5637,73 +5638,34 @@ class i4_array
      int nrl, const imatrix & nrh, int ncl, int nch);
    i4_array();
    ~i4_array();
+
   i3_array& elem(int i);
   const i3_array& elem(int i) const;
-   imatrix & elem(int i, int j)
-   {
-      return ((*this) (i)) (j);
-   }
-   ivector & elem(int i, int j, int k)
-   {
-      return (((*this) (i, j)) (k));
-   }
-   int &elem(int i, int j, int k, int l)
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-#ifdef OPT_LIB
-   i3_array & operator ()(int i)
-   {
-      return t[i];
-   }
-   i3_array & operator [](int i)
-   {
-      return t[i];
-   }
-   imatrix & operator ()(int i, int j)
-   {
-      return ((*this) (i)) (j);
-   }
-   ivector & operator ()(int i, int j, int k)
-   {
-      return (((*this) (i, j)) (k));
-   }
-   int &operator () (int i, int j, int k, int l)
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-   inline const i3_array & operator() (int i) const
-   {
-      return t[i];
-   }
-   inline const i3_array & operator[] (int i) const
-   {
-      return t[i];
-   }
-   inline const imatrix & operator() (int i, int j) const
-   {
-      return ((*this) (i)) (j);
-   }
-   inline const ivector & operator() (int i, int j, int k) const
-   {
-      return (((*this) (i, j)) (k));
-   }
-   inline const int &operator() (int i, int j, int k, int l) const
-   {
-      return (((*this) (i, j, k)) (l));
-   }
-#else
-   const i3_array & operator() (int i) const;
-   const i3_array & operator[] (int i) const;
-   const imatrix & operator() (int i, int j) const;
-   const ivector & operator() (int i, int j, int k) const;
-   const int &operator() (int i, int j, int k, int l) const;
-   i3_array & operator ()(int);
-   i3_array & operator [](int);
-   imatrix & operator ()(int, int);
-   ivector & operator ()(int, int, int);
-   int &operator () (int, int, int, int);
-#endif
+
+  imatrix& elem(int i, int j)
+  {
+    return elem(i)(j);
+  }
+  ivector& elem(int i, int j, int k)
+  {
+    return elem(i)(j, k);
+  }
+  int& elem(int i, int j, int k, int l)
+  {
+    return elem(i)(j, k, l);
+  }
+
+  i3_array& operator()(int i);
+  i3_array& operator[](int j);
+  imatrix& operator()(int i, int j);
+  ivector& operator()(int i, int j, int k);
+  int& operator()(int i, int j, int k, int l);
+  const i3_array& operator()(int i) const;
+  const i3_array& operator[](int i) const;
+  const imatrix& operator()(int i, int j) const;
+  const ivector& operator()(int i, int j, int k) const;
+  const int& operator()(int i, int j, int k, int l) const;
+
    //access functions
    friend class four_array_shape;
 
@@ -5842,6 +5804,48 @@ inline const i3_array& i4_array::elem(int i) const
   }
   return t[i];
 }
+#ifdef OPT_LIB
+inline i3_array& i4_array::operator()(int i)
+{
+  return t[i];
+}
+inline i3_array& i4_array::operator[](int i)
+{
+  return t[i];
+}
+inline imatrix& i4_array::operator()(int i, int j)
+{
+  return t[i](j);
+}
+inline ivector& i4_array::operator()(int i, int j, int k)
+{
+  return t[i](j, k);
+}
+inline int& i4_array::operator()(int i, int j, int k, int l)
+{
+  return t[i](j, k, l);
+}
+inline const i3_array& i4_array::operator()(int i) const
+{
+  return t[i];
+}
+inline const i3_array& i4_array::operator[](int i) const
+{
+  return t[i];
+}
+inline const imatrix& i4_array::operator()(int i, int j) const
+{
+  return t[i](j);
+}
+inline const ivector& i4_array::operator()(int i, int j, int k) const
+{
+  return t[i](j, k);
+}
+inline const int& i4_array::operator()(int i, int j, int k, int l) const
+{
+  return t[i](j, k, l);
+}
+#endif
 
 ostream& operator<<(const ostream& output, const i4_array& iarray);
 istream& operator>>(const istream& input, const i4_array& iarray);

@@ -5638,6 +5638,7 @@ class i4_array
    i4_array();
    ~i4_array();
   i3_array& elem(int i);
+  const i3_array& elem(int i) const;
    imatrix & elem(int i, int j)
    {
       return ((*this) (i)) (j);
@@ -5822,6 +5823,16 @@ class i4_array
   unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 inline i3_array& i4_array::elem(int i)
+{
+  if (i < indexmin() || i > indexmax())
+  {
+    cerr << "Index out of bounds in "
+         << "i4_array::elem(int).\n";
+    ad_exit(1);
+  }
+  return t[i];
+}
+inline const i3_array& i4_array::elem(int i) const
 {
   if (i < indexmin() || i > indexmax())
   {

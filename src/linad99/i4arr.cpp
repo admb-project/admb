@@ -221,115 +221,44 @@ void i4_array::deallocate()
 
 #if !defined (OPT_LIB)
 
-/**
- * Description not yet available.
- * \param
- */
-    i3_array& i4_array::operator ( ) (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i3_array& i4_array::operator ( ) (int i)", indexmin(), indexmax(), i);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    i3_array& i4_array::operator [] (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i3_array& i4_array::operator [] (int i)", indexmin(), indexmax(), i);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    imatrix& i4_array::operator ( ) (int i ,int j)
-    {
-      return ((*this)(i))(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    ivector& i4_array::operator ( ) (int i,int j,int k)
-    {
-      return (((*this)(i,j))(k));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    int& i4_array::operator ( ) (int i,int j,int k,int l)
-    {
-      return ( ((*this)(i,j,k))(l));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+i3_array& i4_array::operator()(int i)
+{
+  return elem(i);
+}
+i3_array& i4_array::operator[](int i)
+{
+  return elem(i);
+}
+imatrix& i4_array::operator()(int i, int j)
+{
+  return elem(i)(j);
+}
+ivector& i4_array::operator()(int i, int j, int k)
+{
+  return elem(i)(j, k);
+}
+int& i4_array::operator()(int i, int j, int k, int l)
+{
+  return elem(i)(j, k, l);
+}
 const i3_array& i4_array::operator()(int i) const
-    {
-      if (i<indexmin() || i>indexmax())
-      {
-        cerr << "Index out of bounds in i4_array::operator () (int)"
-             << endl;
-        ad_exit(1);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i);
+}
 const i3_array& i4_array::operator[](int i) const
-    {
-      if (i<indexmin() || i>indexmax())
-      {
-        cerr << "Index out of bounds in i4_array::operator () (int)"
-             << endl;
-        ad_exit(1);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i);
+}
 const imatrix& i4_array::operator()(int i, int j) const
-    {
-      return ((*this)(i))(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i)(j);
+}
 const ivector& i4_array::operator()(int i, int j, int k) const
-    {
-      return (((*this)(i,j))(k));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i)(j, k);
+}
 const int& i4_array::operator()(int i, int j, int k, int l) const
-    {
-      return ( ((*this)(i,j,k))(l));
-    }
+{
+  return elem(i)(j, k, l);
+}
 #endif

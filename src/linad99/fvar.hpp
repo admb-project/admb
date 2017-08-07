@@ -5637,10 +5637,7 @@ class i4_array
      int nrl, const imatrix & nrh, int ncl, int nch);
    i4_array();
    ~i4_array();
-   i3_array & elem(int i)
-   {
-      return t[i];
-   }
+  i3_array& elem(int i);
    imatrix & elem(int i, int j)
    {
       return ((*this) (i)) (j);
@@ -5824,6 +5821,16 @@ class i4_array
   void initialize();
   unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
+inline i3_array& i4_array::elem(int i)
+{
+  if (i < indexmin() || i > indexmax())
+  {
+    cerr << "Index out of bounds in "
+         << "i4_array::elem(int).\n";
+    ad_exit(1);
+  }
+  return t[i];
+}
 
 ostream& operator<<(const ostream& output, const i4_array& iarray);
 istream& operator>>(const istream& input, const i4_array& iarray);

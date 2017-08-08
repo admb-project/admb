@@ -600,19 +600,20 @@ Shallow copy other data structure pointers.
 */
 void d3_array::shallow_copy(const d3_array& other)
 {
-   t = other.t;
-   shape = other.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
+  }
+  else
+  {
 #ifdef DEBUG
-   else
-   {
-     cerr << "Making a copy of an unallocated d3_array"<<endl;
-   }
+    cerr << "Making shallow copy of an unallocated d3_array.\n";
 #endif
- }
+    allocate();
+  }
+}
 /// Initializes all elements of d3_array to zero.
 void d3_array::initialize()
 {
@@ -636,38 +637,30 @@ void d3_array::deallocate()
 {
   if (shape)
   {
-    t += slicemin();
-    delete [] t;
-    delete shape;
+    if (shape->ncopies > 0)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      t += indexmin();
+      delete [] t;
+      delete shape;
+    }
     allocate();
   }
-#ifdef DEBUG
+#if defined(DEBUG)
   else
   {
-    cerr << "Warning -- trying to deallocate an unallocated d3_array.\n";
+    cerr << "Warning -- trying to deallocate an unallocated d4_array.\n";
+    ad_exit(1);
   }
 #endif
 }
 /// Destructor
 d3_array::~d3_array()
 {
-  if (shape)
-  {
-    if (shape->ncopies)
-    {
-      (shape->ncopies)--;
-    }
-    else
-    {
-      deallocate();
-    }
-  }
-#ifdef DEBUG
-  else
-  {
-    cerr << "Warning -- trying to deallocate an unallocated d3_array"<<endl;
-  }
-#endif
+  deallocate();
 }
 /**
  * Description not yet available.

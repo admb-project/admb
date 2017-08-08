@@ -3740,6 +3740,8 @@ class d3_array
    void fill_randn_ni(long int &n);
    double fill_seqadd(double, double);
    void operator /=(double d);
+
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 #ifdef OPT_LIB
 inline const double& d3_array::operator()(int k, int i, int j) const

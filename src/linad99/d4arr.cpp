@@ -87,11 +87,14 @@ void d4_array::shallow_copy(const d4_array& other)
   if (other.shape)
   {
     shape = other.shape;
-    (shape->ncopies)++;
+    ++(shape->ncopies);
     t = other.t;
   }
   else
   {
+#ifdef DEBUG
+    cerr << "Making shallow copy of an unallocated d4_array.\n";
+#endif
     allocate();
   }
 }
@@ -100,17 +103,17 @@ void d4_array::deallocate()
 {
   if (shape)
   {
-    if (shape->ncopies)
+    if (shape->ncopies > 0)
     {
-      (shape->ncopies)--;
+      --(shape->ncopies);
     }
     else
     {
-      t += hslicemin();
+      t += indexmin();
       delete [] t;
       delete shape;
-      allocate();
     }
+    allocate();
   }
 #if defined(DEBUG)
   else

@@ -1386,3 +1386,25 @@ TEST_F(test_d3_array, error_rowsminmax)
     b.allocate(1, 3, rowsmin, rowsmax, 10, 11);
   });
 }
+TEST_F(test_d3_array, deallocatecopies)
+{
+  d3_array a(1, 2, 1, 2, 1, 2);
+  ASSERT_EQ(0, a.get_ncopies());
+  d3_array firstcopy(a);
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(1, firstcopy.get_ncopies());
+  d3_array secondcopy(a);
+  ASSERT_EQ(2, a.get_ncopies());
+  ASSERT_EQ(2, firstcopy.get_ncopies());
+  ASSERT_EQ(2, secondcopy.get_ncopies());
+
+  firstcopy.deallocate();
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(1, secondcopy.get_ncopies());
+
+  secondcopy.deallocate();
+  ASSERT_EQ(0, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(0, secondcopy.get_ncopies());
+}

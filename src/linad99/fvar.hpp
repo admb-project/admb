@@ -6135,7 +6135,9 @@ class d5_array
      int nrl, int nrh, int ncl, int nch);
 
    void allocate(int imin, int imax);
-   void shallow_copy(const d5_array &);
+
+  void shallow_copy(const d5_array&);
+
    d5_array(int imin, int imax);
 
    d5_array(const ad_integer & hhsl, const ad_integer & hhsu,
@@ -6280,6 +6282,7 @@ class d5_array
   }
   void initialize();
   void operator/=(double d);
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 d5_array operator/(const d5_array & m, double d);

@@ -40,15 +40,26 @@ double sum(const d5_array& darray)
 /// Copy constructor (shallow)
 d5_array::d5_array(const d5_array& other)
 {
+  shallow_copy(other);
+}
+/**
+Shallow copy pointers from other data structure.
+
+\param other d5_array
+*/
+void d5_array::shallow_copy(const d5_array& other)
+{
   if (other.shape)
   {
-    d5_array& darray = const_cast<d5_array&>(other);
-    shape = darray.shape;
-    (shape->ncopies)++;
-    t = darray.t;
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
   }
   else
   {
+#ifdef DEBUG
+    cerr << "Copying (shallow) unallocated d5_array.\n";
+#endif
     allocate();
   }
 }
@@ -59,15 +70,15 @@ void d5_array::deallocate()
   {
     if (shape->ncopies)
     {
-      (shape->ncopies)--;
+      --(shape->ncopies);
     }
     else
     {
       t += indexmin();
       delete [] t;
       delete shape;
-      allocate();
     }
+    allocate();
   }
 #if defined(DEBUG)
   else

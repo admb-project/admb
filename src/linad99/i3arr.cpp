@@ -12,23 +12,7 @@ i3_array::i3_array()
 /// Destructor
 i3_array::~i3_array()
 {
-  if (shape)
-  {
-    if (shape->ncopies)
-    {
-      (shape->ncopies)--;
-    }
-    else
-    {
-      deallocate();
-    }
-  }
-#if defined(DEBUG)
-  else
-  {
-    cerr << "Warning -- trying to deallocate an unallocated i3_array"<<endl;
-  }
-#endif
+  deallocate();
 }
 /**
 Allocate vector of integer matrices with dimensions
@@ -275,37 +259,50 @@ void i3_array::initialize()
 /// Copy constructor (shallow)
 i3_array::i3_array(const i3_array& other)
 {
-  shape = other.shape;
-  if (shape)
-  {
-    (shape->ncopies)++;
-  }
-#if defined(DEBUG)
-  else
-  {
-    cerr << "Making a copy of an unallocated d3_array"<<endl;
-  }
-#endif
-  t = other.t;
+  shallow_copy(other);
 }
 /**
-Deallocate i3_array memory.
+Shallow copy other data structure pointers.
+
+\param other d3_array
 */
+void i3_array::shallow_copy(const i3_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
+  }
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated i3_array.\n";
+#endif
+    allocate();
+  }
+}
+/// Deallocate i3_array memory.
 void i3_array::deallocate()
 {
   if (shape)
   {
-    t += slicemin();
-    //int ss=slicesize();
-
-    delete [] t;
-    delete shape;
+    if (shape->ncopies > 0)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      t += indexmin();
+      delete [] t;
+      delete shape;
+    }
     allocate();
   }
 #if defined(DEBUG)
   else
   {
-    cerr << "Warning -- trying to deallocate an unallocated imatrix"<<endl;
+    cerr << "Warning -- Unable to deallocate an unallocated i3_array.\n";
   }
 #endif
 }

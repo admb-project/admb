@@ -3924,6 +3924,8 @@ class i3_array
    void fill_randn(long int &n);
    void fill_randu_ni(long int &n);
    void fill_randn_ni(long int &n);
+
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 inline imatrix& i3_array::elem(int k)
 {

@@ -264,7 +264,7 @@ i3_array::i3_array(const i3_array& other)
 /**
 Shallow copy other data structure pointers.
 
-\param other d3_array
+\param other i3_array
 */
 void i3_array::shallow_copy(const i3_array& other)
 {

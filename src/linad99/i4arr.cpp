@@ -184,14 +184,26 @@ void i4_array::allocate(
 /// Copy constructor
 i4_array::i4_array(const i4_array& other)
 {
+  shallow_copy(other);
+}
+/**
+Shallow copy other data structure pointers.
+
+\param other i4_array
+*/
+void i4_array::shallow_copy(const i4_array& other)
+{
   if (other.shape)
   {
     shape = other.shape;
-    (shape->ncopies)++;
+    ++(shape->ncopies);
     t = other.t;
   }
   else
   {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated i4_array.\n";
+#endif
     allocate();
   }
 }
@@ -205,18 +217,24 @@ void i4_array::deallocate()
 {
   if (shape)
   {
-    if (shape->ncopies)
+    if (shape->ncopies > 0)
     {
-      (shape->ncopies)--;
+      --(shape->ncopies);
     }
     else
     {
       t = static_cast<i3_array*>(shape->get_truepointer());
       delete [] t;
       delete shape;
-      allocate();
     }
+    allocate();
   }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated i4_array.\n";
+  }
+#endif
 }
 
 #if !defined (OPT_LIB)

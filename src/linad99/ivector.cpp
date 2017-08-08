@@ -69,27 +69,7 @@ Produces an error if the double* member v is NULL.
 */
 ivector::~ivector()
 {
-  if (shape)
-  {
-    if (shape->ncopies)
-    {
-      (shape->ncopies)--;
-    }
-    else
-    {
-#ifdef DEBUG
-  #ifdef DIAG
-      myheapcheck(" Entering ~dvector");
-  #endif
-      if (v == NULL)
-      {
-        cerr << " Trying to delete NULL pointer in ~ivector\n";
-        ad_exit(21);
-      }
-#endif
-      deallocate();
-    }
-  }
+  deallocate();
 }
 /**
  * Description not yet available.
@@ -107,25 +87,31 @@ ivector::~ivector()
      allocate(ncl,nch);
    }
  }
-/**
-Called by destructor to deallocate memory for a ivector object.
-Produces an error if the int* member is NULL.
-*/
+/// Deallocate i3_array memory.
 void ivector::deallocate()
 {
+  //Called by destructor to deallocate memory for a ivector object.
+  //Produces an error if the int* member is NULL.
   if (shape)
   {
-    v = (int*)(shape->trueptr);
-
-    if (v)
+    if (shape->ncopies > 0)
     {
-      delete [] v;
-      v = NULL;
+      --(shape->ncopies);
     }
-
-    delete shape;
-    shape = NULL;
+    else
+    {
+      v = static_cast<int*>(shape->trueptr);
+      delete [] v;
+      delete shape;
+    }
+    allocate();
   }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated i3_array.\n";
+  }
+#endif
 }
 /**
 Safely deallocates memory by reporting if shallow copies are still in scope.
@@ -142,32 +128,34 @@ void ivector::safe_deallocate()
     deallocate();
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Shallow copy other data structure pointers.
 
+\param other i3_array
+*/
+void ivector::shallow_copy(const ivector& other)
+{
+#ifdef DEBUG
+  cout << "Copy constructor called for ivector with address "
+       << _farptr_tolong(t.v) <<"\n";
+#endif
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+    v = other.v;
 
-/**
- * Description not yet available.
- * \param
- */
-void ivector::shallow_copy(const ivector& t)
- {
-   index_min=t.index_min;
-   index_max=t.index_max;
-   #ifdef DIAG
-    cout << "Copy constructor called for ivector with address "
-         << _farptr_tolong(t.v) <<"\n";
-   #endif
-   shape=t.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-     v = t.v;
-   }
- }
+    index_min = other.index_min;
+    index_max = other.index_max;
+  }
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated i3_array.\n";
+#endif
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.

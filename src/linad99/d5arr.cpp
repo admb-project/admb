@@ -58,7 +58,7 @@ void d5_array::shallow_copy(const d5_array& other)
   else
   {
 #ifdef DEBUG
-    cerr << "Copying (shallow) unallocated d5_array.\n";
+    cerr << "Warning -- Unable to shallow copy an unallocated d5_array.\n";
 #endif
     allocate();
   }
@@ -83,7 +83,7 @@ void d5_array::deallocate()
 #if defined(DEBUG)
   else
   {
-    cerr << "Warning -- trying to deallocate an unallocated d5_array.\n";
+    cerr << "Warning -- Unable to deallocate an unallocated d5_array.\n";
   }
 #endif
 }

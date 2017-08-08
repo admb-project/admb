@@ -50,16 +50,12 @@ void d6_array::shallow_copy(const d6_array& other)
   else
   {
 #ifdef DEBUG
-    cerr << "Making shallow copy of an unallocated d6_array.\n";
+    cerr << "Warning -- Unable to shallow copy an unallocated d6_array.\n";
 #endif
     allocate();
   }
 }
-
-/**
- * Description not yet available.
- * \param
- */
+/// Deallocate d6_array memory.
 void d6_array::deallocate()
 {
   if (shape)
@@ -79,7 +75,7 @@ void d6_array::deallocate()
 #if defined(DEBUG)
   else
   {
-    cerr << "Warning -- trying to deallocate an unallocated d6_array"<<endl;
+    cerr << "Warning -- Unable to deallocate an unallocated d6_array.\n";
   }
 #endif
 }

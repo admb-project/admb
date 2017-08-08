@@ -6879,10 +6879,11 @@ class d7_array
       return (shape == NULL);
    }
 
+  d7_array();
+  d7_array(const d7_array&);
+  ~d7_array();
+
    d7_array & operator=(const d7_array &);
-   d7_array(d7_array & m2);
-   d7_array();
-   ~d7_array();
 
   d6_array& elem(int i);
   d5_array& elem(int i, int j)
@@ -7016,6 +7017,8 @@ class d7_array
   }
   void initialize();
   void operator/=(double d);
+  void shallow_copy(const d7_array&);
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 inline d6_array& d7_array::elem(int i)
 {

@@ -609,7 +609,7 @@ void d3_array::shallow_copy(const d3_array& other)
   else
   {
 #ifdef DEBUG
-    cerr << "Making shallow copy of an unallocated d3_array.\n";
+    cerr << "Warning -- Unable to shallow copy an unallocated d3_array.\n";
 #endif
     allocate();
   }
@@ -652,7 +652,7 @@ void d3_array::deallocate()
 #if defined(DEBUG)
   else
   {
-    cerr << "Warning -- trying to deallocate an unallocated d4_array.\n";
+    cerr << "Warning -- Unable to deallocate an unallocated d3_array.\n";
     ad_exit(1);
   }
 #endif

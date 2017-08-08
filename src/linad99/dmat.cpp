@@ -270,18 +270,19 @@ Shallow copy values and dimensions from other to dmatrix.
 */
 void dmatrix::shallow_copy(const dmatrix& other)
 {
-  index_min = other.index_min;
-  index_max = other.index_max;
-  m = other.m;
-  shape = other.shape;
-  if (shape)
+  if (other.shape)
   {
-    (shape->ncopies)++;
+    shape = other.shape;
+    ++(shape->ncopies);
+    m = other.m;
+
+    index_min = other.index_min;
+    index_max = other.index_max;
   }
 #ifdef DEBUG
   else
   {
-    cerr << "Warning -- Copying an unallocated dmatrix.\n";
+    cerr << "Warning -- Unable to shallow copy an unallocated dmatrix.\n";
   }
 #endif
 }
@@ -329,20 +330,20 @@ void dmatrix::deallocate()
   {
     if (shape->ncopies)
     {
-      (shape->ncopies)--;
+      --(shape->ncopies);
     }
     else
     {
       m = static_cast<dvector*>(shape->get_pointer());
       delete [] m;
       delete shape;
-      allocate();
     }
+    allocate();
   }
 #ifdef DEBUG
   else
   {
-    cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+    cerr << "Warning -- Unable to deallocate an unallocated dmatrix.\n";
   }
 #endif
 }

@@ -136,8 +136,6 @@ Macro definitions.
   #endif
 #endif
 
-#define USE_HIGHER_ARRAYS
-
 #if defined(__BORLANDC__) || defined (_MSC_VER) || defined(__WAT32__)
 #   include <io.h>
 #endif
@@ -5852,10 +5850,6 @@ inline const int& i4_array::operator()(int i, int j, int k, int l) const
 ostream& operator<<(const ostream& output, const i4_array& iarray);
 istream& operator>>(const istream& input, const i4_array& iarray);
 
-#if defined(USE_HIGHER_ARRAYS)
-// ***************************************************************
-// ***************************************************************
-
 /**
  * Description not yet available.
  * \param
@@ -7259,9 +7253,6 @@ class dvar7_array
 dvar7_array operator/(const d7_array & m, const prevariable & d);
 dvar7_array operator/(const dvar7_array & m, double d);
 dvar7_array operator/(const dvar7_array & m, const prevariable & d);
-
-
-#endif // #if defined(USE_HIGHER_ARRAYS)
 
 class lmatrix;
 

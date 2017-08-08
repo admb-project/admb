@@ -84,10 +84,7 @@ public:
       return (shape == NULL);
    }
 
-   unsigned int get_ncopies() const
-   {
-     return shape ? shape->get_ncopies() : 0;
-   }
+  unsigned int get_ncopies() const { return shape ? shape->get_ncopies() : 0; }
 
    int& elem(int i)
    {

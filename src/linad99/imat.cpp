@@ -181,21 +181,27 @@ imatrix::imatrix(const imatrix& other)
   shallow_copy(other);
 }
 /**
-Copy dimension and pointers in other.
+Shallow copy other data structure pointers.
 
 \param other imatrix
 */
 void imatrix::shallow_copy(const imatrix& other)
 {
-  if (!other.shape)
+  if (other.shape)
   {
-    return allocate();
+    shape = other.shape;
+    ++(shape->ncopies);
+    m = other.m;
+    index_min = other.index_min;
+    index_max = other.index_max;
   }
-  index_min = other.index_min;
-  index_max = other.index_max;
-  shape = other.shape;
-  (shape->ncopies)++;
-  m = other.m;
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated imatrix.\n";
+#endif
+    allocate();
+  }
 }
 
 /**
@@ -226,26 +232,29 @@ imatrix::~imatrix()
 {
   deallocate();
 }
-/**
-Deallocate imatrix memory.
-*/
+/// Deallocate imatrix memory.
 void imatrix::deallocate()
 {
   if (shape)
   {
-    if (shape->ncopies)
+    if (shape->ncopies > 0)
     {
-      (shape->ncopies)--;
+      --(shape->ncopies);
     }
     else
     {
       m = static_cast<ivector*>(shape->get_pointer());
       delete [] m;
-      m = NULL;
       delete shape;
-      shape = NULL;
     }
+    allocate();
   }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated imatrix.\n";
+  }
+#endif
 }
 
 /**

@@ -202,6 +202,8 @@ public:
 
    friend char* fform(const char*, const dmatrix&);
    friend class i3_array;
+
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 #ifdef OPT_LIB

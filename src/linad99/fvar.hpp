@@ -6467,8 +6467,8 @@ class d6_array
 {
    vector_shape *shape;
    d5_array *t;
- public:
-   void shallow_copy(const d6_array &);
+public:
+  void shallow_copy(const d6_array&);
    d6_array(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh, int nrl,
      int nrh, int ncl, int nch, int l6, int u6);
    void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
@@ -6616,6 +6616,7 @@ class d6_array
   }
   void initialize();
   void operator/=(double d);
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 inline d5_array& d6_array::elem(int i)
 {

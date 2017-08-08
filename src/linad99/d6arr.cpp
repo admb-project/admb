@@ -32,14 +32,26 @@ void d6_array::initialize()
 /// Copy constructor (shallow)
 d6_array::d6_array(const d6_array& other)
 {
+  shallow_copy(other);
+}
+/**
+Shallow copy other data structure pointers.
+
+\param other d3_array
+*/
+void d6_array::shallow_copy(const d6_array& other)
+{
   if (other.shape)
   {
     shape = other.shape;
-    (shape->ncopies)++;
+    ++(shape->ncopies);
     t = other.t;
   }
   else
   {
+#ifdef DEBUG
+    cerr << "Making shallow copy of an unallocated d6_array.\n";
+#endif
     allocate();
   }
 }
@@ -48,34 +60,30 @@ d6_array::d6_array(const d6_array& other)
  * Description not yet available.
  * \param
  */
- void d6_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
+void d6_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
        t += indexmin();
        delete [] t;
-       t=NULL;
        delete shape;
-       shape=NULL;
-     }
-   }
+    }
+    allocate();
+  }
 #if defined(DEBUG)
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
-   }
+  else
+  {
+    cerr << "Warning -- trying to deallocate an unallocated d6_array"<<endl;
+  }
 #endif
- }
-
-/**
-Destructor
-*/
+}
+/// Destructor
 d6_array::~d6_array()
 {
   deallocate();

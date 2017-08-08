@@ -239,3 +239,26 @@ TEST_F(test_i5_array, copynonempty)
   ASSERT_EQ(1, copy.get_ncopies());
   ASSERT_EQ(1, nonempty.get_ncopies());
 }
+TEST_F(test_i5_array, deallocatecopies)
+{
+  i5_array a;
+  a.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
+  ASSERT_EQ(0, a.get_ncopies());
+  i5_array firstcopy(a);
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(1, firstcopy.get_ncopies());
+  i5_array secondcopy(a);
+  ASSERT_EQ(2, a.get_ncopies());
+  ASSERT_EQ(2, firstcopy.get_ncopies());
+  ASSERT_EQ(2, secondcopy.get_ncopies());
+
+  firstcopy.deallocate();
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(1, secondcopy.get_ncopies());
+
+  secondcopy.deallocate();
+  ASSERT_EQ(0, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(0, secondcopy.get_ncopies());
+}

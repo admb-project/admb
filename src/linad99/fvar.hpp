@@ -5871,7 +5871,7 @@ class i5_array
      const index_type & nrh, const index_type & ncl, const index_type & nch,
      const index_type & aa, const index_type & bb);
 
-   void shallow_copy(const i5_array &);
+   void shallow_copy(const i5_array&);
    void deallocate(void);
    void allocate(void);
    void allocate(const i5_array &);

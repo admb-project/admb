@@ -13,14 +13,26 @@ i5_array::i5_array()
 /// Copy constructor
 i5_array::i5_array(const i5_array& other)
 {
+  shallow_copy(other);
+}
+/**
+Shallow copy other data structure pointers.
+
+\param other i5_array
+*/
+void i5_array::shallow_copy(const i5_array& other)
+{
   if (other.shape)
   {
     shape = other.shape;
-    (shape->ncopies)++;
+    ++(shape->ncopies);
     t = other.t;
   }
   else
   {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated i5_array.\n";
+#endif
     allocate();
   }
 }
@@ -133,18 +145,24 @@ void i5_array::deallocate()
 {
   if (shape)
   {
-    if (shape->ncopies)
+    if (shape->ncopies > 0)
     {
-      (shape->ncopies)--;
+      --(shape->ncopies);
     }
     else
     {
       t = static_cast<i4_array*>(shape->get_truepointer());
       delete [] t;
       delete shape;
-      allocate();
     }
+    allocate();
   }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated i5_array.\n";
+  }
+#endif
 }
 
 #if !defined (OPT_LIB)

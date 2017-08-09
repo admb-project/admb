@@ -3906,16 +3906,16 @@ class i3_array
    }
    void initialize();
 
-  imatrix& elem(int k);
-  const imatrix& elem(int k) const;
-   int &operator()(int k, int i, int j);
-   ivector & operator()(int k, int i);
-   imatrix & operator[](int i);
-   imatrix & operator()(int i);
-   const int &operator()(int k, int i, int j) const;
-   const ivector & operator()(int k, int i) const;
-   const imatrix & operator[](int i) const;
-   const imatrix & operator()(int i) const;
+  imatrix& elem(int i);
+  const imatrix& elem(int i) const;
+  int& operator()(int i, int j, int k);
+  ivector& operator()(int i, int j);
+  imatrix& operator[](int i);
+  imatrix& operator()(int i);
+  const int& operator()(int i, int j, int k) const;
+  const ivector& operator()(int i, int j) const;
+  const imatrix& operator[](int i) const;
+  const imatrix& operator()(int i) const;
 
   i3_array& operator=(const i3_array& other);
   i3_array& operator=(int value);
@@ -3927,77 +3927,106 @@ class i3_array
 
   unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
-inline imatrix& i3_array::elem(int k)
+inline imatrix& i3_array::elem(int i)
 {
 #ifndef OPT_LIB
-  if (k < slicemin())
+  if (i < slicemin())
   {
     cerr << "matrix bound exceeded -- row index too low in"
          << "ivector& i3_array::elem(int).\n";
     ad_exit(1);
   }
-  if (k > slicemax())
+  if (i > slicemax())
   {
     cerr << "matrix bound exceeded -- row index too high in"
          << "ivector& i3_array::elem(int).\n";
     ad_exit(1);
   }
 #endif
-  return t[k];
+  return t[i];
 }
-inline const imatrix& i3_array::elem(int k) const
+inline const imatrix& i3_array::elem(int i) const
 {
 #ifndef OPT_LIB
-  if (k < slicemin())
+  if (i < slicemin())
   {
     cerr << "matrix bound exceeded -- row index too low in"
          << "ivector& i3_array::elem(int).\n";
     ad_exit(1);
   }
-  if (k > slicemax())
+  if (i > slicemax())
   {
     cerr << "matrix bound exceeded -- row index too high in"
          << "ivector& i3_array::elem(int).\n";
     ad_exit(1);
   }
 #endif
-  return t[k];
-}
-
-#ifdef OPT_LIB
-inline const int& i3_array::operator()(int k, int i, int j) const
-{
-  return ((t[k].m[i]).v)[j];
-}
-inline const ivector& i3_array::operator()(int k, int i) const
-{
-  return t[k].m[i];
-}
-inline const imatrix& i3_array::operator()(int i) const
-{
-  return t[i];
-}
-inline const imatrix& i3_array::operator[](int i) const
-{
-  return t[i];
-}
-inline int& i3_array::operator()(int k, int i, int j)
-{
-  return ((t[k].m[i]).v)[j];
-}
-inline ivector& i3_array::operator()(int k, int i)
-{
-  return t[k].m[i];
-}
-inline imatrix& i3_array::operator()(int i)
-{
   return t[i];
 }
 inline imatrix& i3_array::operator[](int i)
 {
+#ifdef OPT_LIB
   return t[i];
-}
+#else
+  return elem(i);
 #endif
+}
+inline imatrix& i3_array::operator()(int i)
+{
+#ifdef OPT_LIB
+  return t[i];
+#else
+  return elem(i);
+#endif
+}
+inline ivector& i3_array::operator()(int i, int j)
+{
+#ifdef OPT_LIB
+  return t[i].m[j];
+#else
+  return elem(i)(j);
+#endif
+}
+inline int& i3_array::operator()(int i, int j, int k)
+{
+#ifdef OPT_LIB
+  return ((t[i].m[j]).v)[k];
+#else
+  return elem(i)(j, k);
+#endif
+}
+inline const imatrix& i3_array::operator[](int i) const
+{
+#ifdef OPT_LIB
+  return t[i];
+#else
+  return elem(i);
+#endif
+}
+inline const imatrix& i3_array::operator()(int i) const
+{
+#ifdef OPT_LIB
+  return t[i];
+#else
+  return elem(i);
+#endif
+}
+inline const ivector& i3_array::operator()(int i, int j) const
+{
+#ifdef OPT_LIB
+  return t[i].m[j];
+#else
+  return elem(i)(j);
+#endif
+}
+inline const int& i3_array::operator()(int i, int j, int k) const
+{
+#ifdef OPT_LIB
+  return ((t[i].m[j]).v)[k];
+#else
+  return elem(i)(j, k);
+#endif
+}
 
 #   if defined(__NUMBERVECTOR__)
 class param_init_matrix_vector;

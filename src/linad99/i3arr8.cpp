@@ -4,30 +4,6 @@
  */
 #include "fvar.hpp"
 
-#ifndef OPT_LIB
-
-/// Returns integer reference element from i3_array(i, j, k).
-const int& i3_array::operator()(int i, int j, int k) const
-{
-  return elem(i)(j, k);
-}
-/// Returns vector reference element from i3_array(i, j).
-const ivector& i3_array::operator()(int i, int j) const
-{
-  return elem(i)(j);
-}
-/// Returns matrix reference element from i3_array[i].
-const imatrix& i3_array::operator[](int i) const
-{
-  return elem(i);
-}
-/// Returns matrix reference element from i3_array(i).
-const imatrix& i3_array::operator()(int i) const
-{
-  return elem(i);
-}
-#endif
-
 /**
 Assign values from other to i3_array.
 Note: Both matrices should have the same bounds.

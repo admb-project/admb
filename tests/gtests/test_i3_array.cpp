@@ -532,3 +532,62 @@ TEST_F(test_i3_array, deallocatecopies)
   ASSERT_EQ(0, firstcopy.get_ncopies());
   ASSERT_EQ(0, secondcopy.get_ncopies());
 }
+TEST_F(test_i3_array, constconstructintintintivectorintimatrix)
+{
+  ivector rows(1, 3);
+  rows(1) = 3;
+  rows(2) = 4;
+  rows(3) = 5;
+  imatrix columns(1, 3, 2, rows);
+  columns(1, 2) = 6;
+  columns(1, 3) = 7;
+  columns(2, 2) = 8;
+  columns(2, 3) = 9;
+  columns(2, 4) = 10;
+  columns(3, 2) = 11;
+  columns(3, 3) = 12;
+  columns(3, 4) = 13;
+  columns(3, 5) = 14;
+  i3_array b(1, 3, 2, rows, 3, columns);
+  i3_array a(b);
+
+  ASSERT_EQ(1, a.slicemin());
+  ASSERT_EQ(3, a.slicemax());
+  ASSERT_EQ(3, a.slicesize());
+
+  ASSERT_EQ(2, a(1).rowmin());
+  ASSERT_EQ(rows(1), a(1).rowmax());
+  ASSERT_EQ(rows(1) - 2 + 1, a(1).rowsize());
+  ASSERT_EQ(3, a(1).colmin());
+  ASSERT_EQ(6, a(1).colmax());
+  ASSERT_EQ(3, a(1, 2).indexmin());
+  ASSERT_EQ(6, a(1, 2).indexmax());
+  ASSERT_EQ(3, a(1, 3).indexmin());
+  ASSERT_EQ(7, a(1, 3).indexmax());
+
+  ASSERT_EQ(2, a(2).rowmin());
+  ASSERT_EQ(rows(2), a(2).rowmax());
+  ASSERT_EQ(rows(2) - 2 + 1, a(2).rowsize());
+  ASSERT_EQ(3, a(2).colmin());
+  ASSERT_EQ(8, a(2).colmax());
+  ASSERT_EQ(3, a(2, 2).indexmin());
+  ASSERT_EQ(8, a(2, 2).indexmax());
+  ASSERT_EQ(3, a(2, 3).indexmin());
+  ASSERT_EQ(9, a(2, 3).indexmax());
+  ASSERT_EQ(3, a(2, 4).indexmin());
+  ASSERT_EQ(10, a(2, 4).indexmax());
+
+  ASSERT_EQ(2, a(3).rowmin());
+  ASSERT_EQ(rows(3), a(3).rowmax());
+  ASSERT_EQ(rows(3) - 2 + 1, a(3).rowsize());
+  ASSERT_EQ(3, a(3).colmin());
+  ASSERT_EQ(11, a(3).colmax());
+  ASSERT_EQ(3, a(3, 2).indexmin());
+  ASSERT_EQ(11, a(3, 2).indexmax());
+  ASSERT_EQ(3, a(3, 3).indexmin());
+  ASSERT_EQ(12, a(3, 3).indexmax());
+  ASSERT_EQ(3, a(3, 4).indexmin());
+  ASSERT_EQ(13, a(3, 4).indexmax());
+  ASSERT_EQ(3, a(3, 5).indexmin());
+  ASSERT_EQ(14, a(3, 5).indexmax());
+}

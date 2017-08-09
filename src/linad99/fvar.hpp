@@ -5394,22 +5394,7 @@ class dvar4_array
 #endif
    //access functions
    friend class four_array_shape;
-   int indexmin(void)
-   {
-      return (shape->hslice_min);
-   }
-   int indexmax(void)
-   {
-      return (shape->hslice_max);
-   }
-   int hslicemin(void)
-   {
-      return (shape->hslice_min);
-   }
-   int hslicemax(void)
-   {
-      return (shape->hslice_max);
-   }
+
    int slicemin(void)
    {
       return ((*this) (hslicemin()).slicemin());
@@ -5459,22 +5444,12 @@ class dvar4_array
    {
       return (colmax() - colmin() + 1);
    }
-   int indexmin(void) const
-   {
-      return (shape->hslice_min);
-   }
-   int indexmax(void) const
-   {
-      return (shape->hslice_max);
-   }
-   int hslicemin(void) const
-   {
-      return (shape->hslice_min);
-   }
-   int hslicemax(void) const
-   {
-      return (shape->hslice_max);
-   }
+
+  int indexmin() const { return hslicemin(); }
+  int indexmax() const { return hslicemax(); }
+  int hslicemin() const { return shape ? shape->hslice_min : 1; }
+  int hslicemax() const { return shape ? shape->hslice_max : 0; }
+
    int slicemin(void) const
    {
       return ((*this) (hslicemin()).slicemin());
@@ -5532,6 +5507,8 @@ class dvar4_array
    void initialize(void);
    void operator/=(const prevariable & d);
    void operator/=(const double &d);
+
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 dvar4_array operator/(const d4_array & m, const prevariable & d);

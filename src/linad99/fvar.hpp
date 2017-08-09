@@ -5806,48 +5806,86 @@ inline const i3_array& i4_array::elem(int i) const
   }
   return t[i];
 }
-#ifdef OPT_LIB
 inline i3_array& i4_array::operator()(int i)
 {
+#ifdef OPT_LIB
   return t[i];
+#else
+  return elem(i);
+#endif
 }
 inline i3_array& i4_array::operator[](int i)
 {
+#ifdef OPT_LIB
   return t[i];
+#else
+  return elem(i);
+#endif
 }
 inline imatrix& i4_array::operator()(int i, int j)
 {
+#ifdef OPT_LIB
   return t[i](j);
+#else
+  return elem(i)(j);
+#endif
 }
 inline ivector& i4_array::operator()(int i, int j, int k)
 {
+#ifdef OPT_LIB
   return t[i](j, k);
+#else
+  return elem(i)(j, k);
+#endif
 }
-inline int& i4_array::operator()(int i, int j, int k, int l)
+inline int& i4_array::operator()(int i, int j, int k, int a)
 {
-  return t[i](j, k, l);
+#ifdef OPT_LIB
+  return t[i](j, k, a);
+#else
+  return elem(i)(j, k, a);
+#endif
 }
 inline const i3_array& i4_array::operator()(int i) const
 {
+#ifdef OPT_LIB
   return t[i];
+#else
+  return elem(i);
+#endif
 }
 inline const i3_array& i4_array::operator[](int i) const
 {
+#ifdef OPT_LIB
   return t[i];
+#else
+  return elem(i);
+#endif
 }
 inline const imatrix& i4_array::operator()(int i, int j) const
 {
+#ifdef OPT_LIB
   return t[i](j);
+#else
+  return elem(i)(j);
+#endif
 }
 inline const ivector& i4_array::operator()(int i, int j, int k) const
 {
+#ifdef OPT_LIB
   return t[i](j, k);
-}
-inline const int& i4_array::operator()(int i, int j, int k, int l) const
-{
-  return t[i](j, k, l);
-}
+#else
+  return elem(i)(j, k);
 #endif
+}
+inline const int& i4_array::operator()(int i, int j, int k, int a) const
+{
+#ifdef OPT_LIB
+  return t[i](j, k, a);
+#else
+  return elem(i)(j, k, a);
+#endif
+}
 
 ostream& operator<<(const ostream& output, const i4_array& iarray);
 istream& operator>>(const istream& input, const i4_array& iarray);

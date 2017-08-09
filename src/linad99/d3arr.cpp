@@ -663,19 +663,12 @@ d3_array::~d3_array()
   deallocate();
 }
 /**
- * Description not yet available.
- * \param
- */
-three_array_shape::three_array_shape(int sl,int su)
+Stores dimensions for dvar3_array.
+
+\param sl slicemin
+\param su slicemax
+*/
+three_array_shape::three_array_shape(int sl, int su)
+: slice_min(sl), slice_max(su), ncopies(0)
 {
-  slice_min=sl;
-  slice_max=su;
-  //row_min=rl;
-  //row_max=ru;
-  //col_min=cl;
-  //col_max=cu;
-  //nslices=su-sl+1;
-  //nrows=ru-rl+1;
-  //ncols=cu-cl+1;
-  ncopies=0;
 }

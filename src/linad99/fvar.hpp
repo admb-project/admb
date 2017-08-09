@@ -4111,24 +4111,19 @@ public:
 
    d3_array value(const dvar3_array &);
 
-   //access functions
-   int indexmin(void) const
-   {
-      return shape->slice_min;
-   }
-   int indexmax(void) const
-   {
-      return shape->slice_max;
-   }
-   int slicemin(void) const
-   {
-      return shape->slice_min;
-   }
-   int slicemax(void) const
-   {
-      return (shape->slice_max);
-   }
-   int colmin(void) const
+  //access functions
+  int indexmin() const { return slicemin(); }
+  int indexmax() const { return slicemax(); }
+  int slicemin() const { return shape ? shape->slice_min : 1; }
+  int slicemax() const { return shape ? shape->slice_max : 0; }
+  // returns the number of rows
+  unsigned int slicesize() const
+  {
+    //assert(slicemin() <= slicemax());
+    return static_cast<unsigned int>(slicemax() - slicemin() + 1);
+  }
+
+   int colmin() const
    {
       return ((*this) (slicemin()).colmin());
    }
@@ -4144,12 +4139,6 @@ public:
    {
       return ((*this) (slicemin()).rowmax());
    }
-  // returns the number of rows
-  unsigned int slicesize() const
-  {
-    int size = slicemax() - slicemin() + 1;
-    return static_cast<unsigned int>(size < 0 ? 0 : size);
-  }
    // returns the number of rows
    int rowsize() const
    {
@@ -4240,6 +4229,8 @@ public:
    double fill_seqadd(double, double);
    void operator/=(const prevariable &);
    void operator /=(double);
+
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 dvariable inv_cumd_exponential(const prevariable & y);

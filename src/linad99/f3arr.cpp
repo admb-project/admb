@@ -572,73 +572,61 @@ void dvar3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
   }
 }
 
+/// Copy constructor
+dvar3_array::dvar3_array(const dvar3_array& other)
+{
+  shallow_copy(other);
+}
 /**
-Copy constructor
-*/
-dvar3_array::dvar3_array(const dvar3_array& m2)
- {
-   shape=m2.shape;
-   if (shape) (shape->ncopies)++;
-   t = m2.t;
- }
+Shallow copy other data structure pointers.
 
-/**
- * Description not yet available.
- * \param
- */
-void dvar3_array::shallow_copy(const dvar3_array& m2)
- {
-   shape=m2.shape;
-   if (shape) (shape->ncopies)++;
-   t = m2.t;
- }
-
-/**
-Destructor
+\param other dvar3_array
 */
+void dvar3_array::shallow_copy(const dvar3_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
+  }
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated i3_array.\n";
+#endif
+    allocate();
+  }
+}
+/// Destructor
 dvar3_array::~dvar3_array()
+{
+  deallocate();
+}
+/// Deallocate dvar3_array memory.
+void dvar3_array::deallocate()
 {
   if (shape)
   {
-    if (shape->ncopies)
+    if (shape->ncopies > 0)
     {
-      (shape->ncopies)--;
+      --(shape->ncopies);
     }
     else
     {
-      deallocate();
+      t += indexmin();
+      delete [] t;
+      delete shape;
     }
+    allocate();
   }
 #ifdef DEBUG
   else
   {
-    cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+    cerr << "Warning -- Unable to deallocate an unallocated dvar3_array.\n";
   }
 #endif
 }
-
-/**
- * Description not yet available.
- * \param
- */
- void dvar3_array::deallocate()
- {
-   if (shape)
-   {
-     t += slicemin();
-     //int ss=slicesize();
-     delete [] t;
-     delete shape;
-     t=NULL;
-     shape=NULL;
-   }
-#ifdef DEBUG
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
-   }
-#endif
- }
 
 /**
 Allocate variable vector of matrices with dimensions

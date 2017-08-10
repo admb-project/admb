@@ -6867,6 +6867,7 @@ class dvar6_array
   void initialize();
   void operator/=(const prevariable& d);
   void operator/=(const double& d);
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 dvar6_array operator/(const d6_array & m, const prevariable & d);

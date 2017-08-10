@@ -24,22 +24,30 @@
      (*this)(i).initialize();
    }
  }
-/**
-Copy constructor
-*/
-dvar6_array::dvar6_array(const dvar6_array& _m2)
+/// Copy constructor
+dvar6_array::dvar6_array(const dvar6_array& other)
 {
-  dvar6_array& m2 = (dvar6_array&)_m2;
-  if (m2.shape)
+  shallow_copy(other);
+}
+/**
+Shallow copy other data structure pointers.
+
+\param other dvar6_array
+*/
+void dvar6_array::shallow_copy(const dvar6_array& other)
+{
+  if (other.shape)
   {
-    shape = m2.shape;
-    (shape->ncopies)++;
-    t = m2.t;
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
   }
   else
   {
-    shape = NULL;
-    t = NULL;
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated dvar6_array.\n";
+#endif
+    allocate();
   }
 }
 
@@ -53,39 +61,31 @@ dvar6_array::dvar6_array(const dvar6_array& _m2)
    allocate(m2);
    (*this)=m2;
  }
-
-/**
- * Description not yet available.
- * \param
- */
- void dvar6_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t += indexmin();
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
-#if defined(DEBUG)
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated dvar4_array"<<endl;
-   }
+/// Deallocate dvar6_array memory.
+void dvar6_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies > 0)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      t += indexmin();
+      delete [] t;
+      delete shape;
+    }
+    allocate();
+  }
+#ifdef DEBUG
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated dvar6_array.\n";
+  }
 #endif
- }
-
-/**
-Destructor
-*/
+}
+/// Destructor
 dvar6_array::~dvar6_array()
 {
   deallocate();

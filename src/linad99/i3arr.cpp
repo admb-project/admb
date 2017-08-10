@@ -217,16 +217,7 @@ i3_array::i3_array(int sl, int sh, const imatrix& m1)
   allocate(sl, sh);
   for (int i = slicemin(); i <= slicemax(); ++i)
   {
-    if (m1.shape)
-    {
-      t[i].shape = m1.shape;
-      (t[i].shape->ncopies)++;
-      t[i].m = m1.m;
-    }
-    else
-    {
-      t[i].allocate();
-    }
+    t[i].shallow_copy(m1);
   }
 }
 /**

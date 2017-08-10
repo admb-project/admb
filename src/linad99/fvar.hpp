@@ -3929,7 +3929,6 @@ class i3_array
 };
 inline imatrix& i3_array::elem(int i)
 {
-#ifndef OPT_LIB
   if (i < slicemin())
   {
     cerr << "matrix bound exceeded -- row index too low in"
@@ -3942,12 +3941,10 @@ inline imatrix& i3_array::elem(int i)
          << "ivector& i3_array::elem(int).\n";
     ad_exit(1);
   }
-#endif
   return t[i];
 }
 inline const imatrix& i3_array::elem(int i) const
 {
-#ifndef OPT_LIB
   if (i < slicemin())
   {
     cerr << "matrix bound exceeded -- row index too low in"
@@ -3960,7 +3957,6 @@ inline const imatrix& i3_array::elem(int i) const
          << "ivector& i3_array::elem(int).\n";
     ad_exit(1);
   }
-#endif
   return t[i];
 }
 inline imatrix& i3_array::operator[](int i)

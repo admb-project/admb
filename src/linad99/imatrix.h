@@ -173,17 +173,12 @@ public:
   }
 
    void rowshift(int min);
-   inline ivector & elem(int i)
-   {
-      return (*(m + i));
-   }
+ivector& elem(int i);
+const ivector& elem(int i) const;
+
    inline int &elem(int i, int j)
    {
       return (*((*(m + i)).v + j));
-   }
-   inline const ivector & elem(int i) const
-   {
-      return (*(m + i));
    }
    inline const int &elem(int i, int j) const
    {
@@ -235,4 +230,36 @@ inline const ivector& imatrix::operator[](int i) const
   return m[i];
 }
 #endif
+inline ivector& imatrix::elem(int i)
+{
+  if (i < rowmin())
+  {
+    cerr << "matrix bound exceeded -- row index too low in "
+            "imatrix::operator[i] value was \"" << i << "\".\n";
+    ad_exit(1);
+  }
+  if (i > rowmax())
+  {
+    cerr << "matrix bound exceeded -- row index too high in "
+            "imatrix::operator[i] value was \"" << i << "\".\n";
+    ad_exit(1);
+  }
+  return *(m + i);
+}
+inline const ivector& imatrix::elem(int i) const
+{
+  if (i < rowmin())
+  {
+    cerr << "matrix bound exceeded -- row index too low in "
+            "imatrix::operator[i] value was \"" << i << "\".\n";
+    ad_exit(1);
+  }
+  if (i > rowmax())
+  {
+    cerr << "matrix bound exceeded -- row index too high in "
+            "imatrix::operator[i] value was \"" << i << "\".\n";
+    ad_exit(1);
+  }
+  return *(m + i);
+}
 #endif

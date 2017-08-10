@@ -479,16 +479,28 @@ TEST_F(test_i3_array, invalidintintintivectorintimatrix)
 }
 TEST_F(test_i3_array, intintimatrix)
 {
-  imatrix indexes(1, 2, 1, 4);
-  i3_array a(1, 2, indexes);
+  imatrix matrix(3, 4, 5, 6);
+  ASSERT_EQ(0, matrix.get_ncopies());
+
+  i3_array a(1, 2, matrix);
+  ASSERT_EQ(2, matrix.get_ncopies());
 
   ASSERT_EQ(1, a.slicemin());
   ASSERT_EQ(2, a.slicemax());
   ASSERT_EQ(2, a.slicesize());
-  ASSERT_EQ(&indexes(1), &a.elem(1).elem(1));
-  ASSERT_EQ(&indexes(2), &a.elem(1).elem(2));
-  ASSERT_EQ(&indexes(1), &a.elem(2).elem(1));
-  ASSERT_EQ(&indexes(2), &a.elem(2).elem(2));
+ 
+  ASSERT_EQ(3, a(1).indexmin());
+  ASSERT_EQ(4, a(1).indexmax());
+  ASSERT_EQ(3, a(2).indexmin());
+  ASSERT_EQ(4, a(2).indexmax());
+  ASSERT_EQ(5, matrix(3).indexmin());
+  ASSERT_EQ(6, matrix(3).indexmax());
+  ASSERT_EQ(5, matrix(4).indexmin());
+  ASSERT_EQ(6, matrix(4).indexmax());
+  ASSERT_EQ(&matrix(3), &a.elem(1).elem(3));
+  ASSERT_EQ(&matrix(4), &a.elem(1).elem(4));
+  ASSERT_EQ(&matrix(3), &a.elem(2).elem(3));
+  ASSERT_EQ(&matrix(4), &a.elem(2).elem(4));
 }
 TEST_F(test_i3_array, invalidintintimatrix)
 {

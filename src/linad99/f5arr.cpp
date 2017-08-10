@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #include "admb_messages.h"
@@ -45,75 +39,71 @@
      return *this;
    }
  }
+/// Copy constructor
+dvar5_array::dvar5_array(const dvar5_array& other)
+{
+  shallow_copy(other);
+}
+/**
+Shallow copy other data structure pointers.
 
+\param other dvar5_array
+*/
+void dvar5_array::shallow_copy(const dvar5_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
+  }
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated i3_array.\n";
+#endif
+    allocate();
+  }
+}
 /**
  * Description not yet available.
  * \param
  */
- dvar5_array::dvar5_array(const dvar5_array& _m2)
- {
-   dvar5_array& m2=(dvar5_array&) _m2;
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- dvar5_array::dvar5_array(const d5_array& _m2)
+dvar5_array::dvar5_array(const d5_array& _m2)
  {
    d5_array& m2=(d5_array&) _m2;
    allocate(m2);
    (*this)=m2;
  }
-
-/**
- * Description not yet available.
- * \param
- */
- void dvar5_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t += indexmin();
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
-#if defined(DEBUG)
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated dvar4_array"<<endl;
-   }
+/// Deallocate dvar5_array memory.
+void dvar5_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies > 0)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      t += indexmin();
+      delete [] t;
+      delete shape;
+    }
+    allocate();
+  }
+#ifdef DEBUG
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated dvar5_array.\n";
+  }
 #endif
- }
-
-/**
- * Description not yet available.
- * \param
- */
- dvar5_array::~dvar5_array()
- {
-   deallocate();
- }
+}
+/// Destructor
+dvar5_array::~dvar5_array()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.

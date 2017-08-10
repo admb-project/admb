@@ -6324,14 +6324,19 @@ d5_array operator/(const d5_array & m, double d);
  */
 class dvar5_array
 {
-   vector_shape *shape;
-   dvar4_array *t;
- public:
-   void shallow_copy(const dvar5_array &);
-   dvar5_array(int hhsl, int hhsu);
-   dvar5_array sub(int hhsl, int hhsu);
-   dvar5_array(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
+  vector_shape* shape;
+  dvar4_array* t;
+public:
+  dvar5_array();
+  dvar5_array(const d5_array& darray);
+  dvar5_array(const dvar5_array& other);
+  dvar5_array(int hhsl, int hhsu);
+  dvar5_array(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
      int nrl, int nrh, int ncl, int nch);
+  ~dvar5_array();
+
+   dvar5_array sub(int hhsl, int hhsu);
+   void shallow_copy(const dvar5_array &);
    void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
      int nrl, int nrh, int ncl, int nch);
 
@@ -6360,10 +6365,6 @@ class dvar5_array
 
    dvar5_array & operator=(const d5_array &);
    dvar5_array & operator=(const dvar5_array & m);
-   dvar5_array(const d5_array & m2);
-   dvar5_array(const dvar5_array & m2);
-   dvar5_array();
-   ~dvar5_array();
    dvar4_array & elem(int i)
    {
       return t[i];
@@ -6484,6 +6485,8 @@ class dvar5_array
   void initialize();
   void operator/=(const prevariable& d);
   void operator/=(const double& d);
+
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 dvar5_array operator/(const d5_array & m, const prevariable & d);

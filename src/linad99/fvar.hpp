@@ -4149,22 +4149,10 @@ public:
    {
       return (colmax() - colmin() + 1);
    }
-   dvar_matrix & elem(int k)
-   {
-      return (t[k]);
-   }
-   prevariable elem(int i, int j, int k)
-   {
-      return (t[k].elem(i, j));
-   }
-   const dvar_matrix & elem(int k) const
-   {
-      return t[k];
-   }
-   const prevariable elem(int i, int j, int k) const
-   {
-      return t[k].elem(i, j);
-   }
+  dvar_matrix& elem(int i) { return t[i]; }
+  prevariable elem(int i, int j, int k) { return t[i].elem(j, k); }
+  const dvar_matrix& elem(int i) const { return t[i]; }
+  const prevariable elem(int i, int j, int k) const { return t[i].elem(j, k); }
 
 #ifdef OPT_LIB
    inline const prevariable operator() (int k, int i, int j) const

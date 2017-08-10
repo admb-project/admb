@@ -574,3 +574,26 @@ TEST_F(test_dvar3_array, deallocatecopies)
   ASSERT_EQ(0, firstcopy.get_ncopies());
   ASSERT_EQ(0, secondcopy.get_ncopies());
 }
+TEST_F(test_dvar3_array, indexeselem)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+  dvar3_array a(1, 2, 3, 4, 5, 6);
+  a(1, 3, 5) = 1;
+  a(1, 3, 6) = 2;
+  a(1, 4, 5) = 3;
+  a(1, 4, 6) = 4;
+  a(2, 3, 5) = 5;
+  a(2, 3, 6) = 6;
+  a(2, 4, 5) = 7;
+  a(2, 4, 6) = 8;
+  ASSERT_DOUBLE_EQ(value(a.elem(1, 3, 5)), 1);
+  ASSERT_DOUBLE_EQ(value(a.elem(1, 3, 6)), 2);
+  ASSERT_DOUBLE_EQ(value(a.elem(1, 4, 5)), 3);
+  ASSERT_DOUBLE_EQ(value(a.elem(1, 4, 6)), 4);
+  ASSERT_DOUBLE_EQ(value(a.elem(2, 3, 5)), 5);
+  ASSERT_DOUBLE_EQ(value(a.elem(2, 3, 6)), 6);
+  ASSERT_DOUBLE_EQ(value(a.elem(2, 4, 5)), 7);
+  ASSERT_DOUBLE_EQ(value(a.elem(2, 4, 6)), 8);
+}

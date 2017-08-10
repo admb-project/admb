@@ -4149,9 +4149,37 @@ public:
    {
       return (colmax() - colmin() + 1);
    }
+  /**
+  \ingroup matop?
+  Retrieves an element of a dvar3_array.
+  \param i Integer specifying slice
+  \return dvariable containing the desired element
+  */
   dvar_matrix& elem(int i) { return t[i]; }
+  /**
+  \ingroup matop?
+  Retrieves an element of a dvar3_array.
+  \param i Integer specifying slice
+  \param j Integer specifying row within slice
+  \param k integer specifying column within row
+  \return dvariable containing the desired element
+  */
   prevariable elem(int i, int j, int k) { return t[i].elem(j, k); }
+  /**
+  \ingroup matop?
+  Retrieves an element of a dvar3_array.
+  \param i Integer specifying slice
+  \return dvariable containing the desired element
+  */
   const dvar_matrix& elem(int i) const { return t[i]; }
+  /**
+  \ingroup matop?
+  Retrieves an element of a dvar3_array.
+  \param i Integer specifying slice
+  \param j Integer specifying row within slice
+  \param k integer specifying column within row
+  \return dvariable containing the desired element
+  */
   const prevariable elem(int i, int j, int k) const { return t[i].elem(j, k); }
 
 #ifdef OPT_LIB

@@ -7128,6 +7128,7 @@ class dvar7_array
    dvar7_array(dvar7_array & m2);
    dvar7_array();
    ~dvar7_array();
+   void shallow_copy(const dvar7_array&);
    dvar6_array & elem(int i)
    {
       return t[i];
@@ -7289,6 +7290,7 @@ class dvar7_array
   void initialize();
   void operator/=(const prevariable& d);
   void operator/=(const double& d);
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 dvar7_array operator/(const d7_array & m, const prevariable & d);

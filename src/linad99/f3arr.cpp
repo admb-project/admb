@@ -593,7 +593,7 @@ void dvar3_array::shallow_copy(const dvar3_array& other)
   else
   {
 #ifdef DEBUG
-    cerr << "Warning -- Unable to shallow copy an unallocated i3_array.\n";
+    cerr << "Warning -- Unable to shallow copy an unallocated dvar3_array.\n";
 #endif
     allocate();
   }

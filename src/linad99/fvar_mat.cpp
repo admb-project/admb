@@ -427,24 +427,27 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
   }
 }
 /**
-dvar_matrix makes a shallow copy of other.
+Shallow copy other data structure pointers.
 
-\param other dvar_matrix
+\param other dvar3_array
 */
 void dvar_matrix::shallow_copy(const dvar_matrix& other)
 {
-  if (!other)
+  if (other.shape)
   {
-    //cerr << "Making a copy of an unallocated dvar_matrix" << endl;
-    allocate();
+    shape = other.shape;
+    ++(shape->ncopies);
+    m = other.m;
+
+    index_min = other.index_min;
+    index_max = other.index_max;
   }
   else
   {
-    index_min = other.index_min;
-    index_max = other.index_max;
-    shape = other.shape;
-    (shape->ncopies)++;
-    m = other.m;
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated dvar_matrix.\n";
+#endif
+    allocate();
   }
 }
 /// Does not allocate, but initializes members.
@@ -455,20 +458,27 @@ void dvar_matrix::allocate()
   shape = nullptr;
   m = nullptr;
 }
-/// Deallocate dvar_matrix  memory.
+/// Deallocate dvar_matrix memory.
 void dvar_matrix::deallocate()
 {
   if (shape)
   {
-    m = static_cast<dvar_vector*>(shape->get_pointer());
-    delete [] m;
-    delete shape;
+    if (shape->ncopies > 0)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      m = static_cast<dvar_vector*>(shape->get_pointer());
+      delete [] m;
+      delete shape;
+    }
     allocate();
   }
-#if defined(DEBUG)
+#ifdef DEBUG
   else
   {
-    cerr << "Warning -- trying to delete an unallocated dvar_matrix.\n";
+    cerr << "Warning -- Unable to deallocate an unallocated dvar_matrix.\n";
   }
 #endif
 }

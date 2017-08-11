@@ -190,3 +190,29 @@ TEST_F(test_dvar_vector, concatenation)
   ASSERT_DOUBLE_EQ(-3, value(ab(9)));
   ASSERT_DOUBLE_EQ(-4, value(ab(10)));
 }
+TEST_F(test_dvar_vector, deallocatecopies)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_vector a(1, 2);
+  ASSERT_EQ(0, a.get_ncopies());
+  dvar_vector firstcopy(a);
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(1, firstcopy.get_ncopies());
+  dvar_vector secondcopy(a);
+  ASSERT_EQ(2, a.get_ncopies());
+  ASSERT_EQ(2, firstcopy.get_ncopies());
+  ASSERT_EQ(2, secondcopy.get_ncopies());
+
+  firstcopy.deallocate();
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(1, secondcopy.get_ncopies());
+
+  secondcopy.deallocate();
+  ASSERT_EQ(0, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(0, secondcopy.get_ncopies());
+}

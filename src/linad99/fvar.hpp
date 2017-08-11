@@ -2302,6 +2302,8 @@ public:
 
    friend void make_indvar_list(const dvar_vector &);
    friend class array_size;
+
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
  /*
@@ -2369,7 +2371,7 @@ class dvar_matrix
    friend class banded_symmetric_dmatrix;
    friend class banded_lower_triangular_dmatrix;
    friend class dvar3_array;
-   void shallow_copy(const dvar_matrix &);
+   void shallow_copy(const dvar_matrix&);
    dvar_matrix();
    void allocate(int nrl, int nrh, int ncl, int nch);
    void allocate(int nrl, int nrh);
@@ -2604,6 +2606,8 @@ class dvar_matrix
    friend dvariable sumsq(const dvar_matrix &);
 
    friend void copy_status(const ostream & s, const dvar_matrix & m1);
+
+  unsigned int get_ncopies() const { return shape ? shape->ncopies : 0; }
 };
 
 #ifdef OPT_LIB

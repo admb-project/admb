@@ -75,6 +75,7 @@ coverage: all-gtests
 	$(MAKE) tpl-testminmax
 	$(MAKE) tpl-orange_mvn
 	$(MAKE) tpl-lprof
+	$(MAKE) example-prof_like
 
 all-gtests:
 ifneq ($(USE_GTESTS),no)
@@ -223,6 +224,9 @@ ifneq ($(SHELL),cmd)
 	$(MAKE) --directory=lprof
 endif
 
+example-prof_like:
+	$(MAKE) --directory=../examples/admb/prof_like
+
 verify:
 ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
@@ -295,6 +299,7 @@ endif
 	$(MAKE) --directory=orange_mvn clean
 	$(MAKE) --directory=gradients_output clean
 	$(MAKE) --directory=4darray clean
+	$(MAKE) --directory=../examples/admb/prof_like clean
 
 dist-clean:
 ifeq ($(SHELL),cmd)

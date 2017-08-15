@@ -227,13 +227,13 @@ Compute the gradient from the data stored in the global \ref gradient_structure.
 \param _g Vector from 1 to nvar. On return contains the gradient.
 \param f objective function
 \returns likelihood value
-*/
 double gradcalc(int nvar, const dvector& _g, dvariable& f)
 {
   double v = value(f);
   gradcalc(nvar, _g);
   return v;
 }
+*/
 /**
  */
 void gradient_structure::save_arrays()

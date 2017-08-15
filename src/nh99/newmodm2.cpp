@@ -177,6 +177,7 @@ void function_minimizer::get_particular_grad(int iprof,int nvar,
     independent_variables x(1,nvar);
     // get the initial values into the x vector
     initial_params::xinit(x);
+    double f = 0.0;
     dvariable vf=0.0;
     gradient_structure::set_YES_DERIVATIVES();
     vf=initial_params::reset(dvar_vector(x));
@@ -189,7 +190,8 @@ void function_minimizer::get_particular_grad(int iprof,int nvar,
       }
     userfunction();
     vf=likeprof_params::likeprofptr[iprof]->variable();
-    gradcalc(nvar, g, vf);
+    f = value(vf);
+    gradcalc(nvar, g);
 
     vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
@@ -203,7 +205,8 @@ void function_minimizer::get_particular_grad(int iprof,int nvar,
       }
     userfunction();
     vf+=*objective_function_value::pobjfun;
-    gradcalc(nvar, fg, vf);
+    f = value(vf);
+    gradcalc(nvar, fg);
 
     gradient_structure::set_NO_DERIVATIVES();
     double div=norm(g)*norm(fg);
@@ -284,7 +287,8 @@ void function_minimizer::prof_minimize(int iprof, double sigma,
            dvariable tv=likeprof_params::likeprofptr[iprof]->variable();
            vf+=weight*square(new_value-tv);
            vf+=*objective_function_value::pobjfun;
-           gradcalc(nvar, g, vf);
+           f = value(vf);
+           gradcalc(nvar, g);
          }
        }
        gradient_structure::set_NO_DERIVATIVES();

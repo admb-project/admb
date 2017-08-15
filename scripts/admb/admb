@@ -159,8 +159,8 @@ else
     CXXFLAGS="-O2 $CXXFLAGS"
     LDFLAGS="-O2 $LDFLAGS"
   elif [ "$CXX" == "icpc" ]; then
-    CXXFLAGS="-O2 $CXXFLAGS"
-    LDFLAGS="-O2 $LDFLAGS"
+    CXXFLAGS=" $CXXFLAGS"
+    LDFLAGS=" $LDFLAGS"
   else
     CXXFLAGS="-O3 $CXXFLAGS"
     LDFLAGS="-O3 $LDFLAGS"

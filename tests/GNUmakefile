@@ -154,10 +154,7 @@ tpl-poisp:
 	$(MAKE) --directory=poisp
 
 tpl-tiny_ad_re:
-	@echo "Temporarily disabled."
-ifneq ($(CXX),icpc)
 	$(MAKE) --directory=tiny_ad_re
-endif
 
 tpl-vectorize:
 	$(MAKE) --directory=vectorize

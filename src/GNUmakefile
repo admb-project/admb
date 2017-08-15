@@ -78,7 +78,11 @@ else
   ifeq ($(CXX),openCC)
     ADCXXFLAGS:= -O2 $(ADCXXFLAGS)
   else
-    ADCXXFLAGS:= -O3 $(ADCXXFLAGS)
+    ifeq ($(CXX),icpc)
+      ADCXXFLAGS:= -O2 $(ADCXXFLAGS)
+    else
+      ADCXXFLAGS:= -O3 $(ADCXXFLAGS)
+    endif
   endif
 endif
 

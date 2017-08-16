@@ -6,6 +6,7 @@ template <class Type>
 struct tiny_vec_ref {
   Type *p;
   size_t n;
+  tiny_vec_ref(Type *p_, size_t n_) : p(p_), n(n_) {}
   template<class T>
   tiny_vec_ref &operator=(const T &other) {
     for(size_t i = 0; i < n; i++) p[i] = other[i];
@@ -19,15 +20,16 @@ struct tiny_vec {
   tiny_vec(const tiny_vec &other) {
     for(int i=0; i<n; i++) data[i] = other.data[i];
   }
+  tiny_vec(const Type &other) {
+    for(int i=0; i<n; i++) data[i] = other;
+  }
   void resize(size_t length){ /* Ignore - this is fixed size */ }
   int size() const { return n; }
   Type operator[] (size_t i) const { return data[i]; }
   Type &operator[] (size_t i) { return data[i]; }
   void setZero() {for(int i=0; i<n; i++) (*this)[i] = 0;}
   tiny_vec_ref<Type> segment(size_t start, size_t length) {
-    tiny_vec_ref<Type> ans;
-    ans.p = &(data[start]);
-    ans.n = length;
+    tiny_vec_ref<Type> ans(&(data[start]), length);
     return ans;
   }
 #define VBINARY_OPERATOR(OP)						\
@@ -77,9 +79,9 @@ struct tiny_vec {
   #endif
 };
 
-template<class Type, int n, class T>
-tiny_vec<Type, n> operator* (const T &x, const tiny_vec<Type, n> &y) {
-  return y * x;
+template<class Type, int n>
+tiny_vec<Type, n> operator* (const Type &x, const tiny_vec<Type, n> &y) {
+  return y.operator* (x);
 }
 
 template<class Type, int n>

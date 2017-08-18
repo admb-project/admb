@@ -62,6 +62,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
+
   // Run duration. Can specify warmup and duration, or warmup and
   // iter. Sampling period will stop after exceeding <duration> hours. If
   // duration ends before warmup is finished there will be no samples.
@@ -119,7 +120,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // Target acceptance rate for step size adaptation. Must be
   // 0<adapt_delta<1. Defaults to 0.8.
-  double adapt_delta=0.8; 
+  double adapt_delta=0.8;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_delta",nopt))>-1) {
     if (nopt) {
       istringstream ist(ad_comm::argv[on+1]);
@@ -183,9 +184,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
     diag_option=1;
-    cout << " Setting covariance matrix to diagonal with entries " << dscale
-	 << endl;
+    cout << "Setting covariance matrix to diagonal with entries" << endl;
   }
+  // Whether to adapt the mass matrix
+  int adapt_mass=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass"))>-1) {
+    adapt_mass=1;
+    cout << "Using diagonal mass matrix adaptation" << endl;
+    diag_option=1; // always start with unit mass matrix if adapting
+  }
+
   // Restart chain from previous run?
   int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
   if(mcrestart_flag > -1){
@@ -271,8 +279,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // For now turning this off. Might be easier and more reliable
     // to force user to rerun the model with the right hbf.
-    cerr << endl << endl << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
-      endl << "...Rerun model with '-hbf 1' and try again" << endl << endl << endl;
+    cerr << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
+      endl << "...Rerun model with '-hbf 1' and try again" << endl;
     ad_exit(1);
     //
     cout << "Rescaling covariance matrix b/c scales don't match" << endl;
@@ -389,6 +397,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double nll, H0, logu, value, rn, alpha;
   int n, j, v;
   bool s,b;
+  // Mass matrix adapatation algorithm arguments
+  int k=0;
+  int w1 = 75; int w2 = 50; int w3 = 25;
+  int aws = w2; // adapt window size
+  int anw = w1+w2; // adapt next window
+  // temporary for recursive formula
+  dvector s1(1,nvar); dvector s0(1,nvar);
+  dvector m1(1,nvar); dvector m0(1,nvar);
+  dmatrix metric(1,nvar,1,nvar); // holds updated metric
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
@@ -510,6 +527,46 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	eps=epsbar(warmup);
       }
     }
+
+    // Mass matrix adaptation. For now only diagonal
+    bool slow=slow_phase(is, warmup, w1, w3);
+    if(adapt_mass & slow){
+      // If in slow phase, update running estimate of variances
+      // The Welford running variance calculation, see
+      // https://www.johndcook.com/blog/standard_deviation/
+      if(is== w1){
+        // Initialize algorithm from end of first fast window
+        m1 = ytemp;
+	s1.initialize();
+	k = 1;
+      } else if(is==anw){
+        // If at end of adaptation window, update the mass matrix to the
+        // estimated variances
+	metric.initialize();
+	for(int i=1; i<=nvar; i++)
+	  metric(i,i) = s1(i)/(k-1);
+	// Update chd and current vectxor
+	chd = choleski_decomp(metric); chdinv=inv(chd);
+        theta = chdinv*ytemp; // this is in x space now
+	// cout << is << ": Updated metric. Next window= " << anw << "-";
+        // Reset the running variance calculation
+        k = 1; m1 = ytemp; s1.initialize();
+        // Calculate the next end window. If this overlaps into the final fast
+        // period, it will be stretched to that point (warmup-w3)
+        anw = compute_next_window(is, anw, warmup, w1, aws, w3);
+	aws *=2;
+	// cout << anw << endl << metric << endl;
+      } else {
+        k = k+1; m0 = m1; s0 = s1;
+        // Update M and S
+	for(int i=1; i<=nvar; i++){
+	  m1(i) = m0(i)+(ytemp(i)-m0(i))/k;
+	  s1(i) = s0(i)+ (ytemp(i)-m0(i))*(ytemp(i)-m1(i));
+	}
+      }
+    }
+
+
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
     print_mcmc_progress(is, nmcmc, warmup, chain);

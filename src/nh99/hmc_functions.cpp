@@ -26,6 +26,34 @@ using std::queue;
 #endif
 #include<ctime>
 
+
+int function_minimizer::compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3){
+  anw = i+aws;
+  if(anw == (warmup-w3) )
+    return(anw);
+  // Check that the next anw is not too long. This will be the anw for the
+  // next time this is computed.
+  int nwb = anw+2*aws;
+  if(nwb >= warmup-w3){
+    // if(i != warmup-w3){
+    // cout << "Extending last slow window from" <<
+    // anw << "to" << warmup-w3 << endl;
+    // }
+    anw = warmup-w3;
+  }
+  return(anw);
+}
+
+
+bool function_minimizer::slow_phase(int i, int warmup, int w1, int w3)
+{
+  // After w1, before start of w3
+  bool x1 = i>= w1; // after initial fast window
+  bool x2 = i<= (warmup-w3); // but before last fast window
+  bool x3 = i < warmup; // definitely not during sampling
+  return(x1 & x2 & x3);
+}
+
 double function_minimizer::exprnd(double p)
 {
   // Johnoel sent me this to use
@@ -79,7 +107,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       _sprime=1;
       _alphaprime = min(1.0, exp(Ham-H0));
       // Update the tree elements, which are returned by reference in
-      // leapfrog. 
+      // leapfrog.
       _thetaprime = y;
       _thetaminus = y;
       _rminus = p;

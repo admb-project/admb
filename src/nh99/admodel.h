@@ -1912,10 +1912,12 @@ public:
   void hybrid_mcmc_routine(int,int,double,int);
 
   // Functions added by Cole for HMC.
+  int compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3);
+  bool slow_phase(int is, int warmup, int w1, int w3);
   std::string get_filename(const char* f);
   double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
     dvector& g);
-  void read_mle_hmc(int nvar, dvector& mle); 
+  void read_mle_hmc(int nvar, dvector& mle);
   void shmc_mcmc_routine(int,int,double,int);
   void nuts_mcmc_routine(int,int,double,int);
   void nuts_test_mcmc_routine(int,int,double,int);
@@ -1936,7 +1938,7 @@ public:
 		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 		  dvector& _rplus, dvector& _rminus,
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
-		       int& _nprime, int& _nfevals, bool& _divergent, 
+		       int& _nprime, int& _nfevals, bool& _divergent,
 		       const random_number_generator& rng,
 		        ofstream& out);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,

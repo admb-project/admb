@@ -30,6 +30,7 @@ ADMB-git
 ####Changes and Improvements
 
 * Fixed many signed and unsigned conversion warnings.
+* Reverted change to gradcalc wrapper which caused incorrect outputs in profiler (see https://github.com/admb-project/admb/commit/6ffe1a00cc308dec52a271fa0cc088bfadfe6061).
 
 ADMB-11.6
 ---------

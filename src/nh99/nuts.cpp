@@ -398,8 +398,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int n, j, v;
   bool s,b;
   // Mass matrix adapatation algorithm arguments
-  ofstream mass_adapt("mass_adapt.txt", ios::trunc);
-  mass_adapt << "is m1 m2 s1 s2 x1 x2 y1 y2 update" << endl;
   int k=0;
   int w1 = 75; int w2 = 50; int w3 = 25;
   int aws = w2; // adapt window size

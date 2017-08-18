@@ -35,10 +35,10 @@ int function_minimizer::compute_next_window(int i, int anw, int warmup, int w1, 
   // next time this is computed.
   int nwb = anw+2*aws;
   if(nwb >= warmup-w3){
-    if(i != warmup-w3){
-      cout << "Extending last slow window from" <<
-	anw << "to" << warmup-w3 << endl;
-    }
+    // if(i != warmup-w3){
+    // cout << "Extending last slow window from" <<
+    // anw << "to" << warmup-w3 << endl;
+    // }
     anw = warmup-w3;
   }
   return(anw);

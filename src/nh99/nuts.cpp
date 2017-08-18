@@ -184,17 +184,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
     diag_option=1;
-    cout << " Setting covariance matrix to diagonal with entries " << dscale
-	 << endl;
+    cout << "Setting covariance matrix to diagonal with entries" << endl;
   }
   // Whether to adapt the mass matrix
-  int adapt_mass=1;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-no_adapt_mass"))>-1) {
-    adapt_mass=0;
-    cout << " Setting covariance matrix to diagonal with entries " << dscale
-	 << endl;
+  int adapt_mass=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass"))>-1) {
+    adapt_mass=1;
+    cout << "Using diagonal mass matrix adaptation" << endl;
+    diag_option=1; // always start with unit mass matrix if adapting
   }
-  if(!diag_option) adapt_mass=0;
 
   // Restart chain from previous run?
   int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
@@ -281,8 +279,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // For now turning this off. Might be easier and more reliable
     // to force user to rerun the model with the right hbf.
-    cerr << endl << endl << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
-      endl << "...Rerun model with '-hbf 1' and try again" << endl << endl << endl;
+    cerr << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
+      endl << "...Rerun model with '-hbf 1' and try again" << endl;
     ad_exit(1);
     //
     cout << "Rescaling covariance matrix b/c scales don't match" << endl;
@@ -552,14 +550,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// Update chd and current vectxor
 	chd = choleski_decomp(metric); chdinv=inv(chd);
         theta = chdinv*ytemp; // this is in x space now
-	cout << is << ": Updated metric. Next window= " << anw << "-";
+	// cout << is << ": Updated metric. Next window= " << anw << "-";
         // Reset the running variance calculation
         k = 1; m1 = ytemp; s1.initialize();
         // Calculate the next end window. If this overlaps into the final fast
         // period, it will be stretched to that point (warmup-w3)
         anw = compute_next_window(is, anw, warmup, w1, aws, w3);
 	aws *=2;
-	cout << anw << endl << metric << endl;
+	// cout << anw << endl << metric << endl;
       } else {
         k = k+1; m0 = m1; s0 = s1;
         // Update M and S
@@ -573,7 +571,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
-    // print_mcmc_progress(is, nmcmc, warmup, chain);
+    print_mcmc_progress(is, nmcmc, warmup, chain);
     if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     nsamples=is;

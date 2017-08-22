@@ -21,11 +21,11 @@ ADMB-git
 
 ####New Supported Compilers
 
+* GNU C++ 7
+* Intel C++ Compiler 2018
 * Microsoft Visual C++ 2017
 
   __Note__ Microsoft Visual C++ 2013 is no longer supported.
-
-* GNU C++ 7
 
 ####Changes and Improvements
 

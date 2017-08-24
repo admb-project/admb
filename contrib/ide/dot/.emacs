@@ -9,25 +9,33 @@
 
 (defconst admb-ide-version "11.2" "ADMB-IDE version number.")
 
-;; This .emacs file is provided under the general terms of the Simplified BSD License.
-;; Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
-;; following conditions are met:
-;; 1 Redistributions of source code must retain the above copyright notice, this list of conditions and the following
-;;   disclaimer.
-;; 2 Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
-;;   disclaimer in the documentation and/or other materials provided with the distribution.
-;; THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-;; THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-;; AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-;; NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-;; HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-;; OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+;; This .emacs file is provided under the general terms of the Simplified BSD
+;; License.
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;; 1 Redistributions of source code must retain the above copyright notice, this
+;;   list of conditions and the following disclaimer.
+;; 2 Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;; THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+;; WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+;; MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+;; EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+;; SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+;; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+;; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+;; WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+;; OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+;; ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ;;; Commentary:
 ;;
-;; Configuration file for a user-friendly integrated development environment (IDE) for AD Model Builder (ADMB). Emulates
-;; common keybindings of basic editors, while disabling some of the most used Emacs keybindings. This .emacs file is
-;; therefore not intended for experienced Emacs users, although they may find it an interesting read.
+;; Configuration file for a user-friendly integrated development environment
+;; (IDE) for AD Model Builder (ADMB). Emulates common keybindings of basic
+;; editors, while disabling some of the most used Emacs keybindings. This .emacs
+;; file is therefore not intended for experienced Emacs users, although they may
+;; find it an interesting read.
 ;;
 ;; Usage:
 ;;
@@ -39,51 +47,74 @@
 
 ;;; History:
 ;;
-;; 12 Jan 2013  11.2     Reactivated C-h to access help system. Removed dependency on `pc-selection-mode'. Set encoding
-;;                       to UTF-8 on Windows. Let Linux decide encoding and initial window size. Added ESS and AUCTeX.
-;; 29 Feb 2012  4.5.2-1  Commented out `recentf-mode', which had been causing long delays for many users. This feature
-;;                       can be turned back on by uncommenting the line.
-;; 17 Feb 2011  4.5.0-1  Added functions `admb-ide-version', `delete-trailing-spc-tab-m', and
-;;                       `toggle-trailing-whitespace'. Bound C-p to open model file in other window, C-- to toggle
-;;                       compilation flags, S-f1 to show ADMB-IDE version number, C-, to toggle whether trailing
-;;                       whitespace is highlighted, M-, to delete trailing whitespace, and S-return to end line and
-;;                       indent next line. Unbound C-d and C-c C-r. Removed configuration of `font-lock-doc-face'. Minor
-;;                       syntax changes to avoid warnings in Emacs 23.2.
+;; 12 Jan 2013  11.2     Reactivated C-h to access help system. Removed
+;;                       dependency on `pc-selection-mode'. Set encoding to
+;;                       UTF-8 on Windows. Let Linux decide encoding and initial
+;;                       window size. Added ESS and AUCTeX.
+;; 29 Feb 2012  4.5.2-1  Commented out `recentf-mode', which had been causing
+;;                       long delays for many users. This feature can be turned
+;;                       back on by uncommenting the line.
+;; 17 Feb 2011  4.5.0-1  Added functions `admb-ide-version',
+;;                       `delete-trailing-spc-tab-m', and
+;;                       `toggle-trailing-whitespace'. Bound C-p to open model
+;;                       file in other window, C-- to toggle compilation flags,
+;;                       S-f1 to show ADMB-IDE version number, C-, to toggle
+;;                       whether trailing whitespace is highlighted, M-, to
+;;                       delete trailing whitespace, and S-return to end line
+;;                       and indent next line. Unbound C-d and C-c C-r. Removed
+;;                       configuration of `font-lock-doc-face'. Minor syntax
+;;                       changes to avoid warnings in Emacs 23.2.
 ;; 19 Mar 2010  4.4.0-2  No changes (only updated admb-mode and manual).
-;; 14 Mar 2010  4.4.0-1  Input and output files (ctl/dat/pin and par/rep) are opened in `conf-unix-mode' to provide
-;;                       syntax highlighting of #comments. Improved C-S-home and C-S-end selection.
-;; 14 Sep 2009  3.4.5-8  Bound C-. to toggle whether the current section is indicated in the mode line, C-space to
-;;                       expand recognized words, C-M-space to open recent files, and S-f9 to run with args.
+;; 14 Mar 2010  4.4.0-1  Input and output files (ctl/dat/pin and par/rep) are
+;;                       opened in `conf-unix-mode' to provide syntax
+;;                       highlighting of #comments. Improved C-S-home and
+;;                       C-S-end selection.
+;; 14 Sep 2009  3.4.5-8  Bound C-. to toggle whether the current section is
+;;                       indicated in the mode line, C-space to expand
+;;                       recognized words, C-M-space to open recent files, and
+;;                       S-f9 to run with args.
 ;;  6 Sep 2009  3.4.5-7  Added support for Emacs 23.
-;;  7 Jul 2009  3.4.5-6  Bound M-f6 to switch to next buffer, in case C-f6 is reserved in Linux KDE.
+;;  7 Jul 2009  3.4.5-6  Bound M-f6 to switch to next buffer, in case C-f6 is
+;;                       reserved in Linux KDE.
 ;;  3 Jun 2009  3.4.5-5  Unbound C-c C-- and C-c C-f.
 ;; 29 May 2009  3.4.5-4  No changes (only in manual).
 ;; 28 May 2009  3.4.5-3  No changes (only in manual and installer).
-;; 27 May 2009  3.4.5-2  Bound Alt, M-a, M-b, M-e, M-f, M-h, M-o, and M-t to activate menu, and unbound S-f11.
-;; 24 May 2009  3.4.5-1  Created variables `easy-default-directory' and `outline-previous-mode'. Created functions
-;;                       `backward-delete-word', `delete-word', `easy-admb-hook', `easy-conf-hook', `easy-gdb-hook',
-;;                       `easy-help-hook', `easy-isearch-hook', `easy-outline-hook', `easy-recentf-hook',
-;;                       `gdb-io-buffer-off', `gdb-io-buffer-on', `kill-buffer-maybe-window', `kill-this-buffer',
-;;                       `mouse-extend-region', `new-buffer', `outline-mouse-select', `outline-return', and
-;;                       `outline-window-or-return'. Released ADMB-IDE to ADMB Project.
+;; 27 May 2009  3.4.5-2  Bound Alt, M-a, M-b, M-e, M-f, M-h, M-o, and M-t to
+;;                       activate menu, and unbound S-f11.
+;; 24 May 2009  3.4.5-1  Created variables `easy-default-directory' and
+;;                       `outline-previous-mode'. Created functions
+;;                       `backward-delete-word', `delete-word',
+;;                       `easy-admb-hook', `easy-conf-hook', `easy-gdb-hook',
+;;                       `easy-help-hook', `easy-isearch-hook',
+;;                       `easy-outline-hook', `easy-recentf-hook',
+;;                       `gdb-io-buffer-off', `gdb-io-buffer-on',
+;;                       `kill-buffer-maybe-window', `kill-this-buffer',
+;;                       `mouse-extend-region', `new-buffer',
+;;                       `outline-mouse-select', `outline-return', and
+;;                       `outline-window-or-return'. Released ADMB-IDE to ADMB
+;;                       Project.
 
 ;;; Code:
 
 ;; Section numbers match http://www.hafro.is/~arnima/.emacs
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 1  OS-SPECIFICS
 ;;
-;;======================================================================================================================
-(defvar easy-default-directory "~" "Directory where `find-file' and `write-file' start looking.")
-(if (string-match "windows" (prin1-to-string system-type)) ; if Windows maximize and UTF-8, Linux takes care of itself
-    (progn (modify-frame-parameters nil '((fullscreen . maximized)))(prefer-coding-system 'utf-8)
-           (setq-default buffer-file-coding-system 'utf-8)(setq easy-default-directory "c:/")))
-;;======================================================================================================================
+;;==============================================================================
+(defvar easy-default-directory "~"
+  "Directory where `find-file' and `write-file' start looking.")
+;; In Windows maximize and UTF-8, Linux takes care of itself
+(if (string-match "windows" (prin1-to-string system-type))
+    (progn (modify-frame-parameters nil '((fullscreen . maximized)))
+           (prefer-coding-system 'utf-8)
+           (setq-default buffer-file-coding-system 'utf-8)
+           (setq easy-default-directory "c:/")))
+;;==============================================================================
 ;;
 ;; 2  INTERFACE
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;;-------------
 ;; 2.1  Visual
 ;;-------------
@@ -97,16 +128,19 @@
 (show-paren-mode t               )
 (setq tool-bar-map (make-sparse-keymap))
 (setq tool-bar-style 'image) ; suppress fixed text labels on toolbar in Linux
-(let ((undo-form '(and (not buffer-read-only)(not (eq t buffer-undo-list)) ; from menu-bar.el
-                       (if (eq last-command 'undo)(listp pending-undo-list)(consp buffer-undo-list)))))
-  (tool-bar-add-item "new"   'new-buffer          'new-buffer          :help "New"                              )
-  (tool-bar-add-item "open"  'find-file           'find-file           :help "Open"                             )
-  (tool-bar-add-item "save"  'save-buffer         'save-buffer         :help "Save" :enable '(buffer-modified-p))
-  (tool-bar-add-item "cut"   'kill-region         'kill-region         :help "Cut"                              )
-  (tool-bar-add-item "copy"  'copy-region-as-kill 'copy-region-as-kill :help "Copy"                             )
-  (tool-bar-add-item "paste" 'yank                'yank                :help "Paste"                            )
-  (tool-bar-add-item "undo"  'undo                'undo                :help "Undo" :enable undo-form           )
-  (tool-bar-add-item "close" 'kill-this-buffer    'kill-this-buffer    :help "Close"                           ))
+(let ((undo-form '(and (not buffer-read-only)(not (eq t buffer-undo-list))
+                       (if (eq last-command 'undo)(listp pending-undo-list)
+                         (consp buffer-undo-list)))))
+  (tool-bar-add-item "new" 'new-buffer 'new-buffer :help "New")
+  (tool-bar-add-item "open" 'find-file 'find-file :help "Open")
+  (tool-bar-add-item "save" 'save-buffer 'save-buffer :help "Save"
+                     :enable '(buffer-modified-p))
+  (tool-bar-add-item "cut" 'kill-region 'kill-region :help "Cut")
+  (tool-bar-add-item "copy" 'copy-region-as-kill 'copy-region-as-kill
+                     :help "Copy")
+  (tool-bar-add-item "paste" 'yank 'yank :help "Paste")
+  (tool-bar-add-item "undo" 'undo 'undo :help "Undo" :enable undo-form)
+  (tool-bar-add-item "close" 'kill-this-buffer 'kill-this-buffer :help "Close"))
 ;;--------------
 ;; 2.2  Editing
 ;;--------------
@@ -124,28 +158,33 @@
 ;; 2.3  Faces
 ;;------------
 (defconst - 'unspecified)
-(set-face-attribute 'font-lock-builtin-face       nil :foreground "red"                      )
-(set-face-attribute 'font-lock-comment-face       nil :foreground "gray70"                   )
-(set-face-attribute 'font-lock-constant-face      nil :foreground - :underline t             )
-(set-face-attribute 'font-lock-function-name-face nil :foreground "saddlebrown" :weight 'bold)
-(set-face-attribute 'font-lock-keyword-face       nil :foreground "blue"                     )
-(set-face-attribute 'font-lock-string-face        nil :foreground "forestgreen"              )
-(set-face-attribute 'font-lock-type-face          nil :foreground "magenta"                  )
-(set-face-attribute 'font-lock-variable-name-face nil :foreground "saddlebrown"              )
-(set-face-attribute 'fringe                       nil :background -                          )
-(set-face-attribute 'isearch                      nil :background "yellow" :foreground -     )
-(set-face-attribute 'isearch-lazy-highlight-face  nil :background "palegoldenrod"            )
-(set-face-attribute 'show-paren-match-face        nil :background "chartreuse"               )
-(set-face-attribute 'show-paren-mismatch-face     nil :background "red"                      )
-;;======================================================================================================================
+(set-face-attribute 'font-lock-builtin-face       nil :foreground "red"        )
+(set-face-attribute 'font-lock-comment-face       nil :foreground "gray70"     )
+(set-face-attribute 'font-lock-constant-face      nil :foreground -
+                    :underline t)
+(set-face-attribute 'font-lock-function-name-face nil :foreground "saddlebrown"
+                    :weight 'bold)
+(set-face-attribute 'font-lock-keyword-face       nil :foreground "blue"       )
+(set-face-attribute 'font-lock-string-face        nil :foreground "forestgreen")
+(set-face-attribute 'font-lock-type-face          nil :foreground "magenta"    )
+(set-face-attribute 'font-lock-variable-name-face nil :foreground "saddlebrown")
+(set-face-attribute 'fringe                       nil :background -            )
+(set-face-attribute 'isearch                      nil :background "yellow"
+                    :foreground -)
+(set-face-attribute 'isearch-lazy-highlight-face  nil
+                    :background "palegoldenrod")
+(set-face-attribute 'show-paren-match-face        nil :background "chartreuse" )
+(set-face-attribute 'show-paren-mismatch-face     nil :background "red"        )
+;;==============================================================================
 ;;
 ;; 3  FILES
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;;-------------
 ;; 3.3  Backup
 ;;-------------
-(setq make-backup-files nil)(setq auto-save-default nil)(setq auto-save-list-file-prefix nil)
+(setq make-backup-files nil)(setq auto-save-default nil)
+(setq auto-save-list-file-prefix nil)
 ;;-------------
 ;; 3.4  Recent
 ;;-------------
@@ -154,13 +193,15 @@
 ;; 3.5  Autoloads
 ;;----------------
 (if (file-directory-p "~/emacs/lisp/")
-    (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)(cd easy-default-directory)))
+    (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)
+           (cd easy-default-directory)))
 (autoload 'admb-mode      "admb"     "Edit ADMB code."        t)
 (autoload 'R              "ess-site" "Interactive R session." t)
-(autoload 'R-mode         "ess-site" "Edit R code."           t)(autoload 'r-mode "ess-site") ;*-R-*
+(autoload 'R-mode         "ess-site" "Edit R code."           t)
+(autoload 'r-mode         "ess-site"                           ) ;*-R-*
 (autoload 'Rd-mode        "ess-site" "Edit R documentation."  t)
 (autoload 'Rnw-mode       "ess-site" "Edit Sweave document."  t)
-(autoload 'TeX-latex-mode "tex-site" "Edit LaTeX document."   t) ; "latex" in Win, "auctex" in Linux
+(autoload 'TeX-latex-mode "tex-site" "Edit LaTeX document."   t)
 ;;-------------------
 ;; 3.6  Associations
 ;;-------------------
@@ -177,16 +218,19 @@
 (add-to-list 'auto-mode-alist '("\\.Rd$"       . Rd-mode       ))
 (add-to-list 'auto-mode-alist '("\\.Rnw$"      . Rnw-mode      ))
 (add-to-list 'auto-mode-alist '("\\.tex$"      . TeX-latex-mode))
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 4  KEYBINDINGS
 ;;
-;;======================================================================================================================
-;; Windows                                                                                                           ESC
-;; Special      c     i   m          x         [
-;; Default               l              0..9`-= ];'\, /~!@#$%^&*() +{}|:"<>?     TAB     HOME END PGUP PGDN BKSP DEL
-;; Custom     ab   fg      nopqrs  vw  z             .                       SPC     RET
-;; Suppress      de  h jk        tu   y                           _
+;;==============================================================================
+;; Ctrl-
+;; Windows                                           ESC
+;; Default       TAB     HOME END PGUP PGDN BKSP DEL
+;; Custom    SPC     RET
+;; Special     c     i   m          x         [
+;; Default              l              0..9`-= ];'\, /~!@#$%^&*() +{}|:"<>?
+;; Custom    ab   fg      nopqrs  vw  z             .
+;; Suppress     de  h jk        tu   y                           _
 ;;--------------
 ;; 4.1  Disable
 ;;--------------
@@ -207,7 +251,7 @@
 (setq mouse-wheel-follow-mouse nil)(setq mouse-wheel-progressive-speed nil)
 (global-set-key   [S-down-mouse-1] 'mouse-extend-region) ; mouse-set-font
 (global-set-key   [S-drag-mouse-1] 'mouse-extend-region)
-(global-set-key          [mouse-3] 'ignore             ) ; mouse-secondary-save-then-kill
+(global-set-key          [mouse-3] 'ignore             ) ; mouse-secondary-sa...
 (global-set-key     [down-mouse-3] 'imenu              )
 ;;--------------
 ;; 4.3  Special
@@ -216,15 +260,15 @@
 (global-set-key [f1]          'admb-help               ) ; prefix
 (global-set-key [S-f1]        'admb-ide-version        )
 (global-set-key [f2]          'admb-mode               ) ; prefix
-(global-set-key [f3]          'conf-unix-mode          ) ; kmacro-start-macro-or-insert-counter
-(global-set-key [f4]          'admb-toggle-window      ) ; kmacro-end-or-call-macro
+(global-set-key [f3]          'conf-unix-mode          ) ; kmacro-start-macro...
+(global-set-key [f4]          'admb-toggle-window      ) ; kmacro-end-or-call...
 (global-set-key [C-f4]        'kill-buffer-maybe-window)
-(global-set-key [M-f4]        'save-buffers-kill-emacs ) ; emacs 23 save-buffers-kill-terminal
+(global-set-key [M-f4]        'save-buffers-kill-emacs )
 (global-set-key [f5]          'revert-buffer           )
 (global-set-key [f6]          'other-window            )
 (global-set-key [C-f6]        'next-buffer             )
 (global-set-key [M-f6]        'next-buffer             )
-;; Function keys [f7]-[f10] are set in `easy-admb-hook' and [f11]-[f12] in `admb-mode'
+;; [f7]-[f10] are set in `easy-admb-hook' and [f11]-[f12] in `admb-mode'
 (global-set-key [C-backspace] 'backward-delete-word    ) ; backward-kill-word
 (global-set-key [C-delete]    'delete-word             ) ; kill-line
 (global-set-key [S-return]    'comment-indent-new-line )
@@ -252,7 +296,7 @@
 (global-set-key [?\C-n]    'new-buffer                ) ; next-line
 (global-set-key [?\C-o]    'find-file                 ) ; open-line
 (global-set-key [?\C-p]    'admb-open                 ) ; previous-line
-(global-set-key [?\C-q]    'save-buffers-kill-emacs   ) ; quoted-insert, emacs 23 save-buffers-kill-terminal
+(global-set-key [?\C-q]    'save-buffers-kill-emacs   ) ; quoted-insert
 (global-set-key [?\C-r]    'query-replace             ) ; isearch-backward
 (global-set-key [?\C-s]    'save-buffer               ) ; isearch-forward
 (global-set-key [33554451] 'write-file                ) ; C-S
@@ -272,50 +316,64 @@
 ;; 4.7  Minibuffer
 ;;-----------------
 (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 5  FUNCTIONS
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;;-----------
 ;; 5.1  File
 ;;-----------
-(defun kill-this-buffer () "Kill current buffer." (interactive)(kill-buffer (current-buffer)))
-(defun kill-buffer-maybe-window () "Kill current buffer and window." (interactive)
-       (kill-this-buffer)(if (> (length (window-list)) 1)(delete-window)))
-(defun new-buffer () "Create new buffer." (interactive)
-       (switch-to-buffer (generate-new-buffer "Untitled"))(eval (list (default-value 'major-mode))))
+(defun kill-this-buffer ()
+  "Kill current buffer." (interactive)(kill-buffer (current-buffer)))
+(defun kill-buffer-maybe-window ()
+  "Kill current buffer and window." (interactive)
+  (kill-this-buffer)(if (> (length (window-list)) 1)(delete-window)))
+(defun new-buffer ()
+  "Create new buffer." (interactive)
+  (switch-to-buffer (generate-new-buffer "Untitled"))
+  (eval (list (default-value 'major-mode))))
 ;;-----------
 ;; 5.2  Edit
 ;;-----------
-(defun backward-delete-word (N) "Delete previous N words." (interactive "*p")(delete-word (- N)))
-(defun delete-word (N) "Delete following N words." (interactive "*p")
-       (delete-region (point)(save-excursion (forward-word N)(point))))
-(defun mouse-extend-region (click) "Extend region to mouse position." (interactive "e")
-       (if (and mark-active transient-mark-mode)(mouse-set-point click)(mouse-save-then-kill click)))
+(defun backward-delete-word (N)
+  "Delete previous N words." (interactive "*p")(delete-word (- N)))
+(defun delete-word (N)
+  "Delete following N words." (interactive "*p")
+  (delete-region (point)(save-excursion (forward-word N)(point))))
+(defun mouse-extend-region (click)
+  "Extend region to mouse position." (interactive "e")
+  (if (and mark-active transient-mark-mode)(mouse-set-point click)
+    (mouse-save-then-kill click)))
 ;;-----------
 ;; 5.3  View
 ;;-----------
-(defun toggle-trailing-whitespace () "Toggle highlighting of trailing whitespace." (interactive)
-       (setq show-trailing-whitespace (not show-trailing-whitespace))(redraw-display)
-       (message "Trailing whitespace highlighting %s" (if show-trailing-whitespace "ON" "OFF")))
+(defun toggle-trailing-whitespace ()
+  "Toggle highlighting of trailing whitespace." (interactive)
+  (setq show-trailing-whitespace (not show-trailing-whitespace))(redraw-display)
+  (message "Trailing whitespace highlighting %s"
+           (if show-trailing-whitespace "ON" "OFF")))
 ;;-------------
 ;; 5.5  Format
 ;;-------------
-(defun delete-trailing-spc-tab-m () "Delete spaces, tabs, and ^M glyphs from line ends." (interactive "*")
-       (let ((count 0))(save-excursion (goto-char (point-min))
-                                       (while (re-search-forward "[ \t\r]+$" nil t)(replace-match "")
-                                              (setq count (+ count 1)))(message "Cleaned %d lines" count))))
+(defun delete-trailing-spc-tab-m ()
+  "Delete spaces, tabs, and ^M glyphs from line ends." (interactive "*")
+  (let ((count 0))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "[ \t\r]+$" nil t)(replace-match "")
+             (setq count (+ count 1)))(message "Cleaned %d lines" count))))
 ;;-----------
 ;; 5.8  Help
 ;;-----------
-(defun admb-ide-version () "Show ADMB IDE version number." (interactive)
-       (message (concat "ADMB-IDE version " admb-ide-version)))
-;;======================================================================================================================
+(defun admb-ide-version ()
+  "Show ADMB IDE version number." (interactive)
+  (message (concat "ADMB-IDE version " admb-ide-version)))
+;;==============================================================================
 ;;
 ;; 6  LANGUAGE MODES
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;;-----------
 ;; 6.2  ADMB
 ;;-----------
@@ -356,19 +414,22 @@
 ;; 6.5  C++
 ;;----------
 (defun easy-gdb-hook ()
-  (message nil)(setq indent-line-function 'gud-gdb-complete-command)(setq gdb-show-main t)
+  (message nil)
+  (setq indent-line-function 'gud-gdb-complete-command)(setq gdb-show-main t)
   (local-set-key [f5]          'gdb-restore-windows)
   (local-set-key [M-up]        'gdb-io-buffer-off  )
   (local-set-key [M-down]      'gdb-io-buffer-on   )
   (local-set-key [?\C-c ?\C-q] 'comint-quit-subjob )
-  (defun gdb-io-buffer-off () "Enable separate IO buffer." (interactive)(gdb-use-separate-io-buffer 0))
-  (defun gdb-io-buffer-on () "Disable separate IO buffer." (interactive)(gdb-use-separate-io-buffer t)))
+  (defun gdb-io-buffer-off ()
+    "Enable separate IO buffer." (interactive)(gdb-use-separate-io-buffer 0))
+  (defun gdb-io-buffer-on ()
+    "Disable separate IO buffer." (interactive)(gdb-use-separate-io-buffer t)))
 (add-hook 'gdb-mode-hook 'easy-gdb-hook)
-;;======================================================================================================================
+;;==============================================================================
 ;;
 ;; 7  OTHER MODES
 ;;
-;;======================================================================================================================
+;;==============================================================================
 ;;-----------
 ;; 7.16 Help
 ;;-----------
@@ -377,7 +438,8 @@
 ;;--------------
 ;; 7.26 Outline
 ;;--------------
-(defvar outline-previous-mode '(admb-mode) "Mode to return to. See `outline-return'.")
+(defvar outline-previous-mode '(admb-mode)
+  "Mode to return to. See `outline-return'.")
 (defun easy-outline-hook ()
   (message nil)
   (set-face-attribute 'outline-1 nil :inherit 'font-lock-keyword-face)
@@ -391,11 +453,15 @@
   (local-set-key [down]    'outline-next-heading    )
   (local-set-key [left]    'hide-entry              )
   (local-set-key [right]   'show-entry              )
-  (defun outline-mouse-select () "Select position and return to `outline-previous-mode'." (interactive)
-         (outline-return)(beginning-of-line))
-  (defun outline-return () "Return to `outline-previous-mode'." (interactive)(eval outline-previous-mode))
-  (defun outline-window-or-return () "Delete other windows or return to `outline-previous-mode'." (interactive)
-         (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
+  (defun outline-mouse-select ()
+    "Select position and return to `outline-previous-mode'." (interactive)
+    (outline-return)(beginning-of-line))
+  (defun outline-return ()
+    "Return to `outline-previous-mode'." (interactive)
+    (eval outline-previous-mode))
+  (defun outline-window-or-return ()
+    "Delete other windows or return to `outline-previous-mode'." (interactive)
+    (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
 (add-hook 'outline-mode-hook 'easy-outline-hook)
 ;;--------------
 ;; 7.29 Recentf

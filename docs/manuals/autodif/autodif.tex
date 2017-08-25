@@ -3,7 +3,10 @@
 \hypersetup{urlcolor=black}
 
 % Some local definitions.
-%
+\newcommand\admbversion{11.6}
+\newcommand\admbyear{2016}
+\newcommand\admbdate{2016-12-17}
+
 % Do not use a blank line between the question and the answer.
 \newcommand{\question}[1]{\bigskip\noindent{\bf #1?}\par\medskip\noindent}
 
@@ -14,7 +17,6 @@
 \newcommand\bs{$\backslash$}
 \newcommand\adtypes{\texttt{dvariable}, \texttt{dvar\_array},
   \texttt{dvar\_matrix}, \texttt{dvector}, and \texttt{dmatrix}}
-\newcommand\admbversion{11.6}
 
 % Set the plot symbol size for PicTeX pictures.
 \renewcommand\setplotsymbol{\fiverm .}
@@ -59,8 +61,8 @@
     A \cplus\ Array Language Extension\\
     with Automatic Differentiation\\
     for Use in Nonlinear Modeling and Statistics}
-  \vspace{4ex}\textsf{\textit{Version \admbversion~~(2015-05-22)\\[3pt]
-      Revised manual~~(2015-01-07)
+  \vspace{4ex}\textsf{\textit{Version \admbversion~~(\admbdate)\\[3pt]
+      ~% Revised manual~~(2015-01-07)
     }}\vspace{3ex}
 }
  % Author definition.
@@ -80,10 +82,9 @@
 ~\vfill
 \noindent ADMB Foundation, Honolulu.\\\\
 \noindent This is the manual for AUTODIF version \admbversion.\\\\
-\noindent Copyright \copyright\ 1991, 1992, 1993, 1994, 1996, 2000, 2008, 2011,
-2013, 2014, 2015 David~Fournier\\\\
+\noindent Copyright \copyright\ 1991--\admbyear\ David Fournier\\\\
 \noindent The latest edition of the manual is available at:\\
-\url{http://admb-project.org/documentation/manuals}
+\url{http://www.admb-project.org/docs/manuals/}
 
 % We want a table of contents.
 \tableofcontents

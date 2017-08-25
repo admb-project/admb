@@ -1,5 +1,6 @@
 % Author: Dave Fournier
-% Copyright (c) 2008-2017 ADMB Foundation and Regents of the University of California
+% Copyright (c) 2008-2017
+% ADMB Foundation and Regents of the University of California
 
 
 \documentclass{admbmanual}
@@ -4304,24 +4305,27 @@ The user can refer to the object in the code simply by using its name.
 %-- Added by Steve Martell, Mar 27, 2014
 \section{Using control files for bounded parameters}
 \X{\fontindexentry{tt}{init\_bounded\_number}}
-\XX{Using control file for bounded parameters in \ADM}{\fontindexentry{tt}{init\_bounded\_number}}
+\XX{Using control file for bounded parameters in \ADM}%
+{\fontindexentry{tt}{init\_bounded\_number}}
 Bounded parameters defined in the procedure section take the following format:
 \begin{lstlisting}
   init_bounded_number a(lb,ub,i_phz);
 \end{lstlisting}
-where lb is the lower bound, ub is the upper bound and i\_phz is and integer representing 
-the phase of estimation.  There is also an option to pass a vector containing 3 elements
-set the lower and upper bounds and the phase of estimation.  This is often desirable as this
-vector can be read in from the data file and does not require recompiling of the code to change
-the parameter bounds or the phase of estimation.
+where lb is the lower bound, ub is the upper bound and i\_phz is and integer
+representing the phase of estimation. There is also an option to pass a vector
+containing 3 elements set the lower and upper bounds and the phase of
+estimation. This is often desirable as this vector can be read in from the data
+file and does not require recompiling of the code to change the parameter bounds
+or the phase of estimation.
 
 \begin{lstlisting}
   init_bounded_number a(luphz_vector);
 \end{lstlisting}
 
-This has also been implemented for the \texttt{init\_bounded\_number\_vector}, where a matrix 
-read in from the data section is used to set the lower and upper bounds of each element and 
-phase of estimation.  The  following is a simple example implementing these new features.
+This has also been implemented for the \texttt{init\_bounded\_number\_vector},
+where a matrix read in from the data section is used to set the lower and upper
+bounds of each element and phase of estimation. The following is a simple
+example implementing these new features.
 
 \begin{lstlisting}
 DATA_SECTION
@@ -4351,12 +4355,12 @@ INITIALIZATION_SECTION
   sig 1.0;
 
 PROCEDURE_SECTION
-  
+
   y_hat = a + b * x;
   y2_hat = theta(1) + theta(2)*x;
   f     = dnorm(y - y_hat, sig);
   f    += dnorm(y-y2_hat,theta(3));
-\end{lstlisting} 
+\end{lstlisting}
 
 And the input data file is here:
 
@@ -4364,9 +4368,9 @@ And the input data file is here:
 # number of observations
      10
 # observed Y values
-    1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18 
+    1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18
 # observed x values
-    -1  0 1  2  3  4  5  6  7  8        
+    -1  0 1  2  3  4  5  6  7  8
 
 #a_lup
 -5  5  1

@@ -1,13 +1,12 @@
 ;;; .emacs --- configuration file for AD Model Builder IDE
 
-;; Copyright (C) 2009, 2010, 2011, 2012, 2015 Arni Magnusson
+;; Copyright (C) 2009, 2010, 2011, 2012, 2015, 2017 Arni Magnusson
 
 ;; Author:   Arni Magnusson
-;; Version:  11.2
 ;; Keywords: emulations
 ;; URL:      http://admb-project.org/community/editing-tools/admb-ide/core
 
-(defconst admb-ide-version "11.2" "ADMB-IDE version number.")
+(defconst admb-ide-version "11.6" "ADMB-IDE version number.")
 
 ;; This .emacs file is provided under the general terms of the Simplified BSD
 ;; License.
@@ -47,7 +46,8 @@
 
 ;;; History:
 ;;
-;; 12 Jan 2013  11.2     Reactivated C-h to access help system. Removed
+;; 25 Aug 2017  11.6     Minor adaptations to Emacs 25.
+;; 12 Jan 2015  11.2     Reactivated C-h to access help system. Removed
 ;;                       dependency on `pc-selection-mode'. Set encoding to
 ;;                       UTF-8 on Windows. Let Linux decide encoding and initial
 ;;                       window size. Added ESS and AUCTeX.
@@ -122,7 +122,7 @@
 (column-number-mode t            )
 (set-scroll-bar-mode 'right      )
 (setq frame-title-format "%b"    )
-(setq inhibit-splash-screen t    )
+(setq inhibit-startup-screen t   )
 (setq initial-scratch-message nil)
 (setq-default truncate-lines t   )
 (show-paren-mode t               )
@@ -145,10 +145,11 @@
 ;; 2.2  Editing
 ;;--------------
 (cua-mode t                                  )
-(delete-selection-mode 1                     )
-(setq cua-prefix-override-inhibit-delay 0.001)
 (defalias 'yes-or-no-p 'y-or-n-p             )
+(delete-selection-mode 1                     )
 (require 'imenu)(setq imenu-max-items 43     )
+(setq cua-prefix-override-inhibit-delay 0.001)
+(setq cua-keep-region-after-copy t           )
 (setq initial-major-mode 'admb-mode          )
 (setq-default indent-tabs-mode nil           )
 (setq-default major-mode 'text-mode          )
@@ -193,8 +194,8 @@
 ;; 3.5  Autoloads
 ;;----------------
 (if (file-directory-p "~/emacs/lisp/")
-    (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)
-           (cd easy-default-directory)))
+    (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)))
+(cd easy-default-directory)
 (autoload 'admb-mode      "admb"     "Edit ADMB code."        t)
 (autoload 'R              "ess-site" "Interactive R session." t)
 (autoload 'R-mode         "ess-site" "Edit R code."           t)
@@ -237,6 +238,7 @@
 (global-unset-key [?\C-x ?\C-c])
 (global-unset-key [?\C-x ?\C-f])
 (global-unset-key [?\C-x ?h]   )
+(global-unset-key [?\C-x ?u]   )
 (global-unset-key [?\C-x ?\C-s])
 (global-unset-key [?\C-x ?\C-w])
 (global-unset-key [?\C-x ?\C-z])
@@ -246,13 +248,12 @@
 ;;------------
 ;; 4.2  Mouse
 ;;------------
-(mwheel-install)(message nil)
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 10)((control) . 30)))
-(setq mouse-wheel-follow-mouse nil)(setq mouse-wheel-progressive-speed nil)
-(global-set-key   [S-down-mouse-1] 'mouse-extend-region) ; mouse-set-font
-(global-set-key   [S-drag-mouse-1] 'mouse-extend-region)
-(global-set-key          [mouse-3] 'ignore             ) ; mouse-secondary-sa...
-(global-set-key     [down-mouse-3] 'imenu              )
+(setq mouse-wheel-progressive-speed nil)
+(global-set-key [S-down-mouse-1] 'mouse-extend-region) ; mouse-appearance-menu
+(global-set-key [S-drag-mouse-1] 'mouse-extend-region)
+(global-set-key        [mouse-3] 'ignore             ) ; mouse-save-then-kill
+(global-set-key   [down-mouse-3] 'imenu              )
 ;;--------------
 ;; 4.3  Special
 ;;--------------
@@ -336,11 +337,11 @@
 ;;-----------
 ;; 5.2  Edit
 ;;-----------
-(defun backward-delete-word (N)
-  "Delete previous N words." (interactive "*p")(delete-word (- N)))
-(defun delete-word (N)
+(defun backward-delete-word (n)
+  "Delete previous N words." (interactive "*p")(delete-word (- n)))
+(defun delete-word (n)
   "Delete following N words." (interactive "*p")
-  (delete-region (point)(save-excursion (forward-word N)(point))))
+  (delete-region (point)(save-excursion (forward-word n)(point))))
 (defun mouse-extend-region (click)
   "Extend region to mouse position." (interactive "e")
   (if (and mark-active transient-mark-mode)(mouse-set-point click)
@@ -368,7 +369,7 @@
 ;;-----------
 (defun admb-ide-version ()
   "Show ADMB IDE version number." (interactive)
-  (message (concat "ADMB-IDE version " admb-ide-version)))
+  (message "ADMB-IDE version %s" admb-ide-version))
 ;;==============================================================================
 ;;
 ;; 6  LANGUAGE MODES

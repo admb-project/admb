@@ -7,6 +7,8 @@ REM Script:   ide-distribution                                                 #
 REM                                                                            #
 REM Purpose:  Arrange ADMB-IDE components for distribution                     #
 REM                                                                            #
+REM Requires: Directory 'components' created by ide-components                 #
+REM                                                                            #
 REM Returns:  Creates a directory called 'distribution'                        #
 REM                                                                            #
 REM History:  26 Aug 2017 Arni Magnusson created                               #

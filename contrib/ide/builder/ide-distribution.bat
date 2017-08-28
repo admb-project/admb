@@ -24,13 +24,13 @@ md %TO%
 
 echo on
 @echo.
-@echo *** Populating ~ ...
-%CP% %FROM% %TO%\~ .emacs >NUL
-%CP% %FROM% %TO%\~\emacs\lisp\admb admb.el > NUL
-%CP% %FROM%\auctex %TO%\~\emacs\lisp\auctex /e > NUL
-%CP% %FROM%\ess %TO%\~\emacs\lisp\ess /e > NUL
-%CP% %FROM% %TO%\~\emacs\lisp\tmb tmb.el > NUL
-%CP% %FROM% %TO%\~\icons admb64.ico > NUL
+@echo *** Populating home ...
+%CP% %FROM% %TO%\home .emacs >NUL
+%CP% %FROM% %TO%\home\emacs\lisp\admb admb.el > NUL
+%CP% %FROM%\auctex %TO%\home\emacs\lisp\auctex /e > NUL
+%CP% %FROM%\ess %TO%\home\emacs\lisp\ess /e > NUL
+%CP% %FROM% %TO%\home\emacs\lisp\tmb tmb.el > NUL
+%CP% %FROM% %TO%\home\icons admb64.ico > NUL
 @echo.
 @echo *** Populating admb ...
 for /F "usebackq tokens=*" %%F in (`dir /ad /b %FROM%\admb*-*-*`) do set AD=%%F
@@ -42,6 +42,20 @@ for /F "usebackq tokens=*" %%F in (`dir /ad /b %FROM%\admb*-*-*`) do set AD=%%F
 @echo.
 @echo *** Populating Rtools ...
 %CP% %FROM%\Rtools %TO%\Rtools /e > NUL
+@echo.
+
+@echo *** Compiling Emacs Lisp code
+distribution\gnu\emacs\bin\emacs -Q -nw ^
+-l distribution/home/emacs/lisp/ess/lisp/ess-site.el ^
+-l distribution/home/emacs/lisp/auctex/tex-site.el ^
+--eval "(setq save-abbrevs nil)" ^
+--eval "(byte-recompile-directory """distribution/home/emacs/lisp""" 0)" ^
+--eval "(save-buffers-kill-terminal t)"
+@echo.
+@echo Done
+
+@echo *** Renaming home to ~
+move distribution\home distribution\~
 @echo.
 @echo Done
 

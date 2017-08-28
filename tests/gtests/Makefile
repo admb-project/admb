@@ -102,6 +102,7 @@ GTESTS=\
  test_i3_array.cpp\
  test_i4_array.cpp\
  test_i5_array.cpp\
+ test_gradcalc.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

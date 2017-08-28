@@ -16,14 +16,14 @@ REM                                                                            #
 REM ############################################################################
 
 set ADMB=admb116-gcc493-win64.zip
-set AUCTEX=auctex-11.91.zip
+set AUCTEX=auctex-1191-texsite.zip
 set EMACS=emacs-25.2-x86_64.zip
-set ESS=ess-16.10.zip
+set ESS=ess-1610-github.zip
 set RTOOLS=Rtools34.exe
 
 set COMPS=http://www.admb-project.org/tools/admb-ide/components
 set GITHUB=https://raw.githubusercontent.com
-set WGET=..\WGET=wget -q --no-check-certificate
+set WGET=..\wget -q --no-check-certificate
 
 echo on
 @echo.
@@ -39,9 +39,9 @@ echo on
 %WGET% %COMPS%/autodif.pdf
 %WGET% %COMPS%/innounp.exe
 %WGET% %COMPS%/unzip.exe
-%WGET% http://ftp.gnu.org/pub/gnu/auctex/%AUCTEX%
+%WGET% %COMPS%/%AUCTEX%
 %WGET% http://ftp.gnu.org/gnu/emacs/windows/%EMACS%
-%WGET% http://ess.r-project.org/downloads/ess/%ESS%
+%WGET% %COMPS%/%ESS%
 %WGET% https://cran.r-project.org/bin/windows/Rtools/%RTOOLS%
 %WGET% %GITHUB%/admb-project/admb/master/contrib/emacs/admb.el
 %WGET% %GITHUB%/admb-project/admb/master/contrib/ide/dot/.emacs
@@ -52,12 +52,12 @@ echo on
 
 @echo *** Unpacking components ...
 unzip -q -d %ADMB:.zip=% %ADMB%
-unzip -q %AUCTEX%
+unzip -q -d auctex %AUCTEX%
 @rename %AUCTEX% temp.zip
 @move auctex* auctex >NUL
 @rename temp.zip %AUCTEX%
 unzip -q -d emacs %EMACS%
-unzip -q %ESS%
+unzip -q -d ess %ESS%
 @rename %ESS% temp.zip
 @move ess* ess >NUL
 @rename temp.zip %ESS%

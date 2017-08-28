@@ -9,7 +9,7 @@ ifeq ($(OS),Windows_NT)
 endif
 endif
 
-TARGET=prof_like
+TARGET=bhplfine
 
 all: clean $(TARGET) run
 
@@ -25,8 +25,8 @@ ifeq ($(SHELL),cmd)
 	$(TARGET) -lprof
 else
 	./$(TARGET) -lprof
-	cmp -s loga_pl.plt old/loga_pl.plt; RETVAL=$$?;if [ $$RETVAL -eq 0 ]; then echo "OK"; else echo "NOT OK"; fi
-	cmp -s logb_pl.plt old/logb_pl.plt; RETVAL=$$?;if [ $$RETVAL -eq 0 ]; then echo "OK"; else echo "NOT OK"; fi
+	@cmp -s loga_pl.plt old/loga_pl.plt; RETVAL=$$?;if [ $$RETVAL -eq 0 ]; then echo "OK"; else echo "NOT OK"; fi
+	@cmp -s logb_pl.plt old/logb_pl.plt; RETVAL=$$?;if [ $$RETVAL -eq 0 ]; then echo "OK"; else echo "NOT OK"; fi
 endif
 
 clean:

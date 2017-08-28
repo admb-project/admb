@@ -28,8 +28,8 @@ for /F "usebackq tokens=*" %%F in (`dir /ad /b admb\admb*-*-*`) do set AD=%%F
 set ZIPFILE=admb-ide-%AD:~4,3%-win64.zip
 
 echo *** Zipping %ZIPFILE% ...
-wget -q http://www.admb-project.org/tools/admb-ide/components/zip.exe
-zip -rS ../%ZIPFILE% .\~ .\admb .\gnu .\Rtools
+..\wget -q http://www.admb-project.org/tools/admb-ide/components/zip.exe
+zip -rS ..\%ZIPFILE% ~ admb gnu Rtools
 del zip.exe
 popd
 echo.

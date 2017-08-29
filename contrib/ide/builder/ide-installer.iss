@@ -1,8 +1,6 @@
 [Setup]
 OutputBaseFilename=admb-ide-116-win64
 AppName=ADMB-IDE
-AppPublisher=Arni Magnusson (ADMB Core Team)
-AppPublisherURL=http://admb-project.org
 AppVerName=ADMB-IDE 11.6 win64
 ChangesAssociations=yes
 ChangesEnvironment=yes

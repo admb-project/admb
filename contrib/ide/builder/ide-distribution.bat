@@ -45,17 +45,14 @@ for /F "usebackq tokens=*" %%F in (`dir /ad /b %FROM%\admb*-*-*`) do set AD=%%F
 @echo.
 
 @echo *** Compiling Emacs Lisp code
-distribution\gnu\emacs\bin\emacs -Q -nw ^
--l distribution/home/emacs/lisp/ess/lisp/ess-site.el ^
--l distribution/home/emacs/lisp/auctex/tex-site.el ^
---eval "(setq save-abbrevs nil)" ^
---eval "(byte-recompile-directory """distribution/home/emacs/lisp""" 0)" ^
---eval "(save-buffers-kill-terminal t)"
+distribution\gnu\emacs\bin\emacs -Q -nw distribution/home/emacs/lisp ^
+--eval "(normal-top-level-add-subdirs-to-load-path)" ^
+--eval "(byte-recompile-directory default-directory 0)" ^
+--eval "(kill-emacs)"
 @echo.
-@echo Done
 
 @echo *** Renaming home to ~
-move distribution\home distribution\~
+move distribution\home distribution\~ >NUL
 @echo.
 @echo Done
 

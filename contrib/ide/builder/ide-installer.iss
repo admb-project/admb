@@ -31,7 +31,7 @@ Name: rtools;       Description: "Rtools GCC compiler [c:/Rtools]";     Types: f
 Name: desktop;   Description: "Create Desktop shortcut to ADMB-IDE";                                              GroupDescription: "Shortcuts:"
 Name: startmenu; Description: "Create Start Menu shortcut to ADMB-IDE";                                           GroupDescription: "Shortcuts:"
 Name: assoc1;    Description: "Associate ADMB files (cor, ctl, dat, par, pin, psv, rep, std, tpl) with ADMB-IDE"; GroupDescription: "Registry:"
-Name: assoc2;    Description: "Associate Emacs files (el, elc, emacs) with ADMB-IDE";                             GroupDescription: "Registry:"
+Name: assoc2;    Description: "Associate Emacs files (el, emacs) with ADMB-IDE";                                  GroupDescription: "Registry:"
 Name: path;      Description: "Add ADMB, Emacs, and Rtools to PATH, so they can find each other";                 GroupDescription: "Registry:"
 Name: admbhome;  Description: "Define ADMB_HOME as c:/admb/admb116-gcc493-win64, so ADMB works";                  GroupDescription: "Registry:"
 Name: home;      Description: "Define HOME directory as c:/~, to store configuration files";                      GroupDescription: "Registry:"
@@ -99,10 +99,6 @@ Root: HKCR; Subkey: "ADMB Source Code\DefaultIcon";                   ValueType:
 Root: HKCR; Subkey: "ADMB Source Code\Shell\Open\command";            ValueType: string; ValueName: ""; ValueData: "c:\gnu\emacs\bin\runemacs ""%1""";    Tasks: assoc1; Flags: uninsdeletevalue
 Root: HKCR; Subkey: ".el";                                            ValueType: string; ValueName: ""; ValueData: "Emacs Lisp Code";                     Tasks: assoc2; Flags: uninsdeletevalue uninsdeletekeyifempty
 Root: HKCR; Subkey: "Emacs Lisp Code";                                ValueType: string; ValueName: ""; ValueData: "Emacs Lisp Code";                     Tasks: assoc2; Flags: uninsdeletevalue uninsdeletekeyifempty
-Root: HKCR; Subkey: "Emacs Lisp Code\DefaultIcon";                    ValueType: string; ValueName: ""; ValueData: "c:\gnu\emacs\etc\icons\gnu2a32t.ico"; Tasks: assoc2; Flags: uninsdeletevalue
+Root: HKCR; Subkey: "Emacs Lisp Code\DefaultIcon";                    ValueType: string; ValueName: ""; ValueData: "shell32.dll,69";                      Tasks: assoc2; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "Emacs Lisp Code\Shell\Open\command";             ValueType: string; ValueName: ""; ValueData: "c:\gnu\emacs\bin\runemacs ""%1""";    Tasks: assoc2; Flags: uninsdeletevalue
-Root: HKCR; Subkey: ".elc";                                           ValueType: string; ValueName: ""; ValueData: "Emacs Lisp Binary";                   Tasks: assoc2; Flags: uninsdeletevalue uninsdeletekeyifempty
-Root: HKCR; Subkey: "Emacs Lisp Binary";                              ValueType: string; ValueName: ""; ValueData: "Emacs Lisp Binary";                   Tasks: assoc2; Flags: uninsdeletevalue uninsdeletekeyifempty
-Root: HKCR; Subkey: "Emacs Lisp Binary\DefaultIcon";                  ValueType: string; ValueName: ""; ValueData: "c:\gnu\emacs\etc\icons\gnu3b32t.ico"; Tasks: assoc2; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "Emacs Lisp Binary\Shell\Open\command";           ValueType: string; ValueName: ""; ValueData: "c:\gnu\emacs\bin\runemacs ""%1""";    Tasks: assoc2; Flags: uninsdeletevalue
 Root: HKCR; Subkey: ".emacs";                                         ValueType: string; ValueName: ""; ValueData: "Emacs Lisp Code";                     Tasks: assoc2; Flags: uninsdeletevalue uninsdeletekeyifempty

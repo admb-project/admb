@@ -1,12 +1,12 @@
 ;;; admb.el --- Major mode for creating statistical models with AD Model Builder
 
-;; Copyright (C) 2003, 2007-2016 Arni Magnusson
+;; Copyright (C) 2003, 2007-2017 Arni Magnusson
 
 ;; Author:   Arni Magnusson
 ;; Keywords: languages
 ;; URL:      http://admb-project.org/tools/editors/emacs/admb.el
 
-(defconst admb-mode-version "11.5-0" "ADMB Mode version number.")
+(defconst admb-mode-version "11.6-0" "ADMB Mode version number.")
 
 ;; This admb.el file is provided under the general terms of the Simplified BSD
 ;; License.
@@ -110,6 +110,7 @@
 
 ;;; History:
 ;;
+;; 29 Aug 2017  11.6-0  Bumped version for ADMB-IDE 11.6.
 ;; 24 Jun 2016  11.5-0  Changed `admb-clean' to keep .std file.
 ;; 29 Sep 2015  11.2-6  Simplified customization group.
 ;; 18 Sep 2015  11.2-5  Removed user function `admb-new-buffer'. Simplified

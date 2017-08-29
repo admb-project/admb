@@ -21,7 +21,7 @@ set EMACS=emacs-25.2-x86_64.zip
 set ESS=ess-1610-github.zip
 set RTOOLS=Rtools34.exe
 
-set COMPS=http://www.admb-project.org/tools/admb-ide/components
+set COMPS=http://admb-project.org/tools/admb-ide/components
 set GITHUB=https://raw.githubusercontent.com
 set WGET=..\wget -q --no-check-certificate
 
@@ -33,10 +33,10 @@ echo on
 @md components
 @pushd components
 %WGET% %COMPS%/%ADMB%
-%WGET% %COMPS%/admb-ide.pdf
 %WGET% %COMPS%/admb.pdf
 %WGET% %COMPS%/admbre.pdf
 %WGET% %COMPS%/autodif.pdf
+%WGET% http://admb-project.org/tools/admb-ide/admb-ide.pdf
 %WGET% %COMPS%/innounp.exe
 %WGET% %COMPS%/unzip.exe
 %WGET% %COMPS%/%AUCTEX%

@@ -46,7 +46,7 @@
 
 ;;; History:
 ;;
-;; 25 Aug 2017  11.6     Minor adaptations to Emacs 25.
+;; 30 Aug 2017  11.6     Disable `save-abbrevs'.
 ;; 12 Jan 2015  11.2     Reactivated C-h to access help system. Removed
 ;;                       dependency on `pc-selection-mode'. Set encoding to
 ;;                       UTF-8 on Windows. Let Linux decide encoding and initial
@@ -154,6 +154,7 @@
 (setq-default indent-tabs-mode nil           )
 (setq-default major-mode 'text-mode          )
 (setq-default require-final-newline t        )
+(setq save-abbrevs nil                       )
 (setq w32-pass-alt-to-system t               )
 ;;------------
 ;; 2.3  Faces

@@ -768,18 +768,18 @@ nonlinear models.} Optimization Methods and Software 27:233--249.@*
 @uref{http://dx.doi.org/10.1080/10556788.2011.597854}
 @sp 0.5
 @noindent
-Fournier, D. 2016. @cite{An introduction to AD Model Builder for use in
-nonlinear modeling and statistics.} Version 11.6.@*
+Fournier, D. @cite{An introduction to AD Model Builder for use in nonlinear
+modeling and statistics.}@*
 @uref{http://admb-project.org/docs/manuals/}
 @sp 0.5
 @noindent
-Skaug, H. and D. Fournier. 2016. @cite{Random effects in AD Model Builder:
-ADMB-RE user guide.} Version 11.6.@*
+Skaug, H. and D. Fournier. @cite{Random effects in AD Model Builder: ADMB-RE
+user guide.}@*
 @uref{http://admb-project.org/docs/manuals/}
 @sp 0.5
 @noindent
-Fournier, D. 2016. @cite{AUTODIF: A C++ array language extension with automatic
-differentiation for use in nonlinear modeling and statistics.} Version 11.6.@*
+Fournier, D. @cite{AUTODIF: A C++ array language extension with automatic
+differentiation for use in nonlinear modeling and statistics.}@*
 @uref{http://admb-project.org/docs/manuals/}
 @sp 0.5
 @noindent
@@ -791,31 +791,32 @@ Foundation Newsletter 1(3):1--2.@*
 @subsec Emacs
 
 @noindent
-Stallman, R. 2017. @cite{GNU Emacs manual.} 17th ed. Updated for Emacs version
-25.2.@* @uref{http://www.gnu.org/software/emacs/manual/emacs.html}
+Stallman, R. @cite{GNU Emacs manual.}@*
+@uref{http://www.gnu.org/software/emacs/manual/emacs.html}
 @sp 0.5
 @noindent
-Lewis, B., D. LaLiberte, R. Stallman, and the GNU Manual Group. 2017. @cite{GNU
-Emacs Lisp reference manual for Emacs version 25.2.} Rev. 3.1.@*
+Lewis, B., D. LaLiberte, R. Stallman, and the GNU Manual Group. @cite{GNU Emacs
+Lisp reference manual for Emacs.}@*
 @uref{http://www.gnu.org/software/emacs/manual/elisp.html}
 @sp 0.5
 @noindent
-Chassell, R. 2009. @cite{An introduction to programming in Emacs Lisp.} Rev.
-3.10.@* @uref{http://www.gnu.org/software/emacs/manual/eintr.html}
+Chassell, R. @cite{An introduction to programming in Emacs Lisp.}@*
+@uref{http://www.gnu.org/software/emacs/manual/eintr.html}
 
 @sp 1
 @subsec GCC
 
 @noindent
-Stallman, R.M. and GCC Developer Community. 2015. @cite{Using the GNU Compiler
-Collection.} Version 4.9.3.@* @uref{http://gcc.gnu.org/onlinedocs/}
+Stallman, R.M. and GCC Developer Community. @cite{Using the GNU Compiler
+Collection.}@*
+@uref{http://gcc.gnu.org/onlinedocs/}
 
 @sp 1
 @subsec GDB
 
 @noindent
-Stallman, R., R. Pesch, S. Shebs, et al. 2011. @cite{Debugging with GDB: The GNU
-source-level debugger.} 10th ed. for GDB version 7.3.@*
+Stallman, R., R. Pesch, S. Shebs, et al. @cite{Debugging with GDB: The GNU
+source-level debugger.}@*
 @uref{http://sourceware.org/gdb/download/onlinedocs/}
 
 @bye

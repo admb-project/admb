@@ -97,7 +97,7 @@
 
 ;;; Code:
 
-;; Section numbers match http://www.hafro.is/~arnima/.emacs
+;; Section numbers match https://github.com/arnima-github/dot/blob/master/.emacs
 ;;==============================================================================
 ;;
 ;; 1  OS-SPECIFICS

@@ -46,7 +46,8 @@
 
 ;;; History:
 ;;
-;; 30 Aug 2017  11.6     Disable `save-abbrevs'.
+;; 30 Aug 2017  11.6     Created function `easy-tmb-hook'. Disabled
+;;                       `save-abbrevs'.
 ;; 12 Jan 2015  11.2     Reactivated C-h to access help system. Removed
 ;;                       dependency on `pc-selection-mode'. Set encoding to
 ;;                       UTF-8 on Windows. Let Linux decide encoding and initial
@@ -427,6 +428,38 @@
   (defun gdb-io-buffer-on ()
     "Disable separate IO buffer." (interactive)(gdb-use-separate-io-buffer t)))
 (add-hook 'gdb-mode-hook 'easy-gdb-hook)
+;;----------
+;; 6.17 TMB
+;;----------
+(require 'tmb)
+(defun easy-tmb-hook ()
+  (set-face-attribute 'font-lock-warning-face nil :weight 'normal     )
+  (set-face-attribute 'tmb-block-face         nil :foreground "sienna")
+  (set-face-attribute 'tmb-data-face          nil :foreground "sienna")
+  (set-face-attribute 'tmb-parameter-face     nil :foreground "sienna")
+  (set-face-attribute 'tmb-report-face        nil :foreground "sienna")
+  (local-unset-key [?\C-c ?\C-.])
+  (local-unset-key [?\C-c ?\C-/])
+  (local-unset-key [?\C-c ?\C-b])
+  (local-unset-key [?\C-c ?\C-c])
+  (local-unset-key [?\C-c ?\C-d])
+  (local-unset-key [?\C-c ?\C-k])
+  (local-unset-key [?\C-c ?\C-l])
+  (local-unset-key [?\C-c ?\C-m])
+  (local-unset-key [?\C-c ?\C-n])
+  (local-unset-key [?\C-c ?\C-p])
+  (local-unset-key [?\C-c ?\C-q])
+  (local-unset-key [?\C-c ?\C-r])
+  (local-unset-key [?\C-c ?\C-t])
+  (local-unset-key [?\C-c ?\C-v])
+  (local-unset-key [?\C-c ?\C-w])
+  (local-set-key [f7]  'tmb-clean         )
+  (local-set-key [f8]  'tmb-compile       )
+  (local-set-key [f9]  'tmb-run           )
+  (local-set-key [f10] 'tmb-debug         )
+  (local-set-key [f11] 'tmb-open          )
+  (local-set-key [f12] 'tmb-template-mini))
+(add-hook 'tmb-mode-hook 'easy-tmb-hook)
 ;;==============================================================================
 ;;
 ;; 7  OTHER MODES

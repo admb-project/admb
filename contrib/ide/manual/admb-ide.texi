@@ -150,7 +150,6 @@ The ADMB-IDE components are arranged in four main directories:
 @item @code{c:/Rtools}    @tab GCC and GDB
 @end multitable
 
-@noindent
 It can be problematic to have more than one version of GCC installed on a
 Windows machine, especially if multiple versions of GCC are active in the
 @env{PATH}. Many Windows users already have Rtools installed, so the idea behind
@@ -159,14 +158,14 @@ GCC version conflicts.
 
 The directory structure above can be practical for setting up and configuring
 other free software, such as R. By separating the main program (@code{c:/gnu/r})
-from the user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and user libraries
+from the user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and packages
 (@code{c:/~/r/library}), the main program can be removed and upgraded without
 affecting the user setup.
 
 One thing to keep in mind is that the installer modifies the user @env{PATH} and
-file associations. In rare cases, users may need to reconfigure these according
-to taste and needs after installing ADMB-IDE. Advanced users may choose to
-deselect these options during the installation.
+file associations. In rare cases, users may need to reconfigure these after
+installing ADMB-IDE. Therefore, advanced users may choose to deselect these
+options during the installation.
 
 @subsec Manual setup
 

@@ -39,7 +39,7 @@ ide-installer.iss  ide-zip.bat  ->  admb-ide.exe, admb-ide.zip
 
 ### 3 Manual
 
-3a. [intro-installer.png](https://github.com/admb-project/admb/blob/master/contrib/ide/manual/intro-installer.png)
+3a. [intro-install.png](https://github.com/admb-project/admb/blob/master/contrib/ide/manual/intro-install.png)
 > Current screenshot
 
 3b. [admb-ide.texi](https://github.com/admb-project/admb/blob/master/contrib/ide/manual/admb-ide.texi)

@@ -85,11 +85,11 @@
 ;; References:
 ;;
 ;; Fournier, D. An introduction to AD Model Builder for use in nonlinear
-;;   modeling and statistics. Honolulu: ADMB Foundation.
+;;   modeling and statistics.
 ;;   [http://admb-project.org/docs/manuals/]
 ;; Fournier, D. AUTODIF: A C++ array language extension with automatic
-;;   differentiation for use in nonlinear modeling and statistics. Honolulu:
-;;   ADMB Foundation. [http://admb-project.org/docs/manuals/]
+;;   differentiation for use in nonlinear modeling and statistics.
+;;   [http://admb-project.org/docs/manuals/]
 ;; Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N.
 ;;   Maunder, A. Nielsen, and J. Sibert. 2012. AD Model Builder: Using automatic
 ;;   differentiation for statistical inference of highly parameterized complex
@@ -98,7 +98,7 @@
 ;;   Foundation Newsletter 1(3):1-2. [http://admb-foundation.org/wp-content/
 ;;   uploads/Newsletter/ADMBNewsletterJuly2009.pdf]
 ;; Skaug, H. and D. Fournier. Random effects in AD Model Builder: ADMB-RE user
-;;   guide. Honolulu: ADMB Foundation. [http://admb-project.org/docs/manuals/]
+;;   guide. [http://admb-project.org/docs/manuals/]
 ;;
 ;; Known issues:
 ;;

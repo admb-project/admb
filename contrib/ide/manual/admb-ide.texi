@@ -31,7 +31,7 @@
 This is the manual for AD Model Builder IDE (ADMB-IDE) version
 @value{VERSION}.@*
 The latest edition of the manual is available at:@*
-@uref{http://admb-project.org/tools/admb-ide}
+@uref{http://admb-project.org/tools/admb-ide/}
 @sp
 Copyright @copyright{} @value{YEARS} Arni Magnusson
 @sp

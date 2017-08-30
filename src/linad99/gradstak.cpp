@@ -259,7 +259,7 @@ grad_stack::~grad_stack()
     cerr << "Error closing file " << gradfile_name2 << "\n"
          << "in grad_stack::~grad_stack().\n";
   }
-  _GRADFILE_PTR1 = -1;
+  _GRADFILE_PTR2 = -1;
   if (close(_VARSSAV_PTR))
   {
     cerr << "Error closing file " << var_store_file_name << "\n"

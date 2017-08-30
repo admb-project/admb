@@ -84,12 +84,12 @@
 ;;
 ;; References:
 ;;
-;; Fournier, D. 2014. An introduction to AD Model Builder for use in nonlinear
-;;   modeling and statistics. Version 11.2. Honolulu: ADMB Foundation.
-;;   [http://admb-project.org/documentation/manuals]
-;; Fournier, D. 2014. AUTODIF: A C++ array language extension with automatic
-;;   differentiation for use in nonlinear modeling and statistics. Version 11.2.
-;;   Honolulu: ADMB Foundation. [http://admb-project.org/documentation/manuals]
+;; Fournier, D. 2016. An introduction to AD Model Builder for use in nonlinear
+;;   modeling and statistics. Version 11.6. Honolulu: ADMB Foundation.
+;;   [http://admb-project.org/docs/manuals/]
+;; Fournier, D. 2016. AUTODIF: A C++ array language extension with automatic
+;;   differentiation for use in nonlinear modeling and statistics. Version 11.6.
+;;   Honolulu: ADMB Foundation. [http://admb-project.org/docs/manuals/]
 ;; Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N.
 ;;   Maunder, A. Nielsen, and J. Sibert. 2012. AD Model Builder: Using automatic
 ;;   differentiation for statistical inference of highly parameterized complex
@@ -97,9 +97,9 @@
 ;; Magnusson, A. 2009. ADMB-IDE: Easy and efficient user interface. ADMB
 ;;   Foundation Newsletter 1(3):1-2. [http://admb-foundation.org/wp-content/
 ;;   uploads/Newsletter/ADMBNewsletterJuly2009.pdf]
-;; Skaug, H. and D. Fournier. 2014. Random effects in AD Model Builder: ADMB-RE
-;;   user guide. Version 11.2. Honolulu: ADMB Foundation.
-;;   [http://admb-project.org/documentation/manuals]
+;; Skaug, H. and D. Fournier. 2016. Random effects in AD Model Builder: ADMB-RE
+;;   user guide. Version 11.6. Honolulu: ADMB Foundation.
+;;   [http://admb-project.org/docs/manuals/]
 ;;
 ;; Known issues:
 ;;
@@ -110,7 +110,7 @@
 
 ;;; History:
 ;;
-;; 29 Aug 2017  11.6-0  Bumped version for ADMB-IDE 11.6.
+;; 30 Aug 2017  11.6-0  Bumped version for ADMB-IDE 11.6.
 ;; 24 Jun 2016  11.5-0  Changed `admb-clean' to keep .std file.
 ;; 29 Sep 2015  11.2-6  Simplified customization group.
 ;; 18 Sep 2015  11.2-5  Removed user function `admb-new-buffer'. Simplified

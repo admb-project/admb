@@ -6,13 +6,22 @@ else
 endif
 
 all:
+ifeq ($(SHELL),cmd)
 	ide-components.bat
 	ide-distribution.bat
+else
+	./ide-components.bat
+	./ide-distribution.bat
+endif
 	$(MAKE) admb-ide-116-win64.zip
 	$(MAKE) admb-ide-116-win64.exe
 
 admb-ide-116-win64.zip:
+ifeq ($(SHELL),cmd)
 	ide-zipfile.bat
+else
+	./ide-zipfile.bat
+endif
 
 admb-ide-116-win64.exe:
 	iscc ide-installer.iss

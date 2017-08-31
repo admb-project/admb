@@ -1,5 +1,5 @@
 all:
-	../../utilities/make --directory=builder
+	$(MAKE) --directory=builder
 
 clean:
-	../../utilities/make --directory=builder clean
+	$(MAKE) --directory=builder clean

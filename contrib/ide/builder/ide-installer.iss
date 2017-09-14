@@ -52,7 +52,7 @@ Name: "{userdesktop}\ADMB-IDE";     Filename: "c:\gnu\emacs\bin\runemacs.exe"; I
 Name: "{group}\ADMB-IDE";           Filename: "c:\gnu\emacs\bin\runemacs.exe"; IconFilename: "c:\~\icons\admb64.ico"; Tasks: startmenu
 Name: "{group}\Manual (ADMB)";      Filename: "c:\admb\admb.pdf";                                                     Tasks: startmenu
 Name: "{group}\Manual (ADMB-IDE)";  Filename: "c:\admb\admb-ide.pdf";                                                 Tasks: startmenu
-Name: "{group}\Manual (ADMB-RE)";   Filename: "c:\admb\admb-re.pdf";                                                  Tasks: startmenu
+Name: "{group}\Manual (ADMB-RE)";   Filename: "c:\admb\admbre.pdf";                                                   Tasks: startmenu
 Name: "{group}\Manual (AUTODIF)";   Filename: "c:\admb\autodif.pdf";                                                  Tasks: startmenu
 Name: "{group}\Uninstall ADMB-IDE"; Filename: "{uninstallexe}";                                                       Tasks: startmenu
 

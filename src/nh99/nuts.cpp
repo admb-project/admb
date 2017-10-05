@@ -152,9 +152,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // User-specified initial values
   nopt=0;
-  independent_variables mle(1,nvar); // the accepted par values
-  // Store saved MLE in bounded space into vector mle.
-  read_mle_hmc(nvar, mle);
   independent_variables z0(1,nvar); // bounded space
   independent_variables y(1,nvar); // unbounded space
   initial_params::restore_start_phase();
@@ -177,6 +174,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
   } else {
     // If user didnt specify one, use MLE values.
+    independent_variables mle(1,nvar); // the accepted par values
+    // Store saved MLE in bounded space into vector mle.
+    read_mle_hmc(nvar, mle);
     z0=mle;
     initial_params::copy_all_values(z0,1);
   }
@@ -190,7 +190,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int adapt_mass=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass"))>-1) {
     adapt_mass=1;
-    cout << "Using diagonal mass matrix adaptation" << endl;
     diag_option=1; // always start with unit mass matrix if adapting
   }
 
@@ -309,7 +308,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // cout << "Initial bounded parameters=" << z0 << endl;
   // cout << "Initial unbounded parameters=" << y0 << endl;
   // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
-  cout << "Initial negative log density=" << nlltemp << endl;
+  // cout << "Initial negative log density=" << nlltemp << endl;
   // cout << "Initial gr in unbounded space= " << grtemp << endl;
   // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
   ///
@@ -344,12 +343,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   time_t now = time(0);
   tm* localtm = localtime(&now);
   std::string m=get_filename((char*)ad_comm::adprogram_name);
-  cout << endl << "Starting NUTS for model '" << m <<
+  cout << endl << endl << "Starting NUTS for model '" << m <<
     "' at " << asctime(localtm);
   if(use_duration==1){
     cout << "Model will run for " << duration <<
       " hours or until " << nmcmc << " total iterations" << endl;
   }
+  if(adapt_mass) cout << "Using diagonal mass matrix adaptation" << endl;
+  cout << "Initial negative log density=" << nlltemp << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();

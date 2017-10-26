@@ -251,11 +251,11 @@ public:
   ~DF_FILE();
 
   char* buff;
-  size_t toffset;
+  OFF_T toffset;
   union
   {
-    size_t offset;
-    char fourb[sizeof(size_t)];
+    OFF_T offset;
+    char fourb[sizeof(OFF_T)];
   };
   char cmpdif_file_name[81];
   int file_ptr;
@@ -278,9 +278,9 @@ public:
 private:
 #ifdef _MSC_VER
   OFF_T buff_end;
-  OFF_T buff_size;
+  unsigned int buff_size;
 #else
-  const size_t buff_end;
+  const OFF_T buff_end;
   const size_t buff_size;
 #endif
 };

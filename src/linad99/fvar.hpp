@@ -47,16 +47,23 @@ Macro definitions.
 #if defined(__MINGW64__)
   #define OFF_T off64_t
   #define LSEEK lseek64
+  #define READ read
+  #define WRITE write
   #if defined(AD_LONG_INT)
     #error "Error: AD_LONG_INT should not be defined."
   #else
     #define AD_LONG_INT long long int
   #endif
+#elif defined(_MSC_VER)
+  #define OFF_T __int64
+  #define LSEEK _lseeki64
+  #define READ _read
+  #define WRITE _write
 #else
   #define OFF_T off_t
-  #ifndef _MSC_VER
-    #define LSEEK lseek
-  #endif
+  #define LSEEK lseek
+  #define READ read
+  #define WRITE write
   #if defined(AD_LONG_INT)
     #error "Error: AD_LONG_INT should not be defined."
   #else

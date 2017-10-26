@@ -7,9 +7,6 @@ Copyright (c) 2008-2016 ADMB Foundation and
 #include <fcntl.h>
 
 #ifdef _MSC_VER
-  #define LSEEK _lseek
-  #define  read _read
-  #define write _write
   #include <sys\stat.h>
 #else
   #include <iostream>
@@ -63,26 +60,6 @@ Copyright (c) 2008-2016 ADMB Foundation and
 #include <stdio.h>
 #include <string.h>
 
-#ifdef _MSC_VER
-  #ifdef _M_X64
-  typedef __int64 ssize_t;
-  #else
-  typedef int ssize_t;
-  #endif
-  #ifndef SSIZE_MAX
-    #define SSIZE_MAX INT_MAX
-  #endif
-#endif
-
-#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-  #include <cassert>
-  #include <climits>
-#else
-  #ifndef OPT_LIB
-    #include <cassert>
-  #endif
-#endif
-
 char lastchar(char*);
 
 #if defined(__ADSGI__)
@@ -119,22 +96,15 @@ Constructor to allocate buffer.
 \param nbytes size of buffer
 */
 DF_FILE::DF_FILE(const size_t nbytes):
-  buff_end(nbytes - sizeof(size_t) - 2),
+  buff_end(static_cast<OFF_T>(nbytes - sizeof(size_t) - 2)),
   buff_size(nbytes)
 {
-#if defined(__BORLANDC__)
-  if (nbytes > INT_MAX)
+#if defined(_MSC_VER)
+  if (nbytes > UINT_MAX)
   {
-    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
-         << INT_MAX<<endl;
-  }
-#endif
-
-#if defined(_M_IX86)
-  if (nbytes > LONG_MAX)
-  {
-    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
-         << LONG_MAX <<endl;
+    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE = "
+         << UINT_MAX << endl;
+    ad_exit(1);
   }
 #endif
 
@@ -145,13 +115,6 @@ DF_FILE::DF_FILE(const size_t nbytes):
          << INT_MAX<<endl;
   }
 #endif
-
-///\todo Must add assert back in...
-/*
-#ifndef OPT_LIB
-  assert(nbytes > sizeof(size_t) + 2);
-#endif
-*/
 
   buff = new char[buff_size];
   if (buff == NULL)
@@ -250,7 +213,7 @@ Destructor
 DF_FILE::~DF_FILE()
 {
   delete [] buff;
-  buff=0;
+  buff = nullptr;
 
   int repfs = option_match(ad_comm::argc,ad_comm::argv,"-fsize");
 
@@ -286,9 +249,9 @@ Reads num_bytes from buffer and copies to s.
 */
 void DF_FILE::fread(void* s, const size_t num_bytes)
 {
-  if (toffset < num_bytes)
+  if (toffset < static_cast<OFF_T>(num_bytes))
   {
-    OFF_T lpos = LSEEK(file_ptr, -((OFF_T)buff_size), SEEK_CUR);
+    OFF_T lpos = LSEEK(file_ptr, -static_cast<OFF_T>(buff_size), SEEK_CUR);
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
     toffset = offset;
@@ -318,17 +281,17 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
     return;
   }
 #endif
-  toffset+=num_bytes; //increment the temporary offset count
-  if (toffset>buff_end)
+  toffset += num_bytes; //increment the temporary offset count
+  if (toffset > buff_end)
   {
-    if (num_bytes > buff_end)
+    if (static_cast<OFF_T>(num_bytes) > buff_end)
     {
-      const size_t us = toffset + sizeof(size_t) + 2L;
+      OFF_T us = toffset + static_cast<OFF_T>(sizeof(size_t) + 2L);
       cerr << "Need to increase gradient_structure::CMPDIF_BUFFER_SIZE "
        "to at least" << us << endl;
     }
     write_cmpdif_stack_buffer();
-    toffset=num_bytes;
+    toffset = static_cast<OFF_T>(num_bytes);
     offset=0;
   }
 #if defined(__ADSGI__)
@@ -336,7 +299,7 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
 #else
   memcpy(buff + offset, s, num_bytes);
 #endif
-  offset=toffset;
+  offset = toffset;
 }
 /**
  * Description not yet available.
@@ -349,19 +312,13 @@ void DF_FILE::read_cmpdif_stack_buffer(OFF_T& lpos)
     cerr << "Error rewinding file in DF_FILE:fread"<<endl;
     ad_exit(1);
   }
-#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-  assert(buff_size <= UINT_MAX);
-  if (read(file_ptr, buff, (unsigned int)buff_size) < 0)
-#else
-  ssize_t bytes_read = read(file_ptr, buff, buff_size);
-  if (bytes_read < 0)
-#endif
+  if (READ(file_ptr, buff, buff_size) < 0)
   {
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
   }
-  lpos = LSEEK(file_ptr, -((OFF_T)buff_size),SEEK_CUR);
-  for (size_t i = 0;i < sizeof(size_t); i++)
+  lpos = LSEEK(file_ptr, -static_cast<OFF_T>(buff_size), SEEK_CUR);
+  for (size_t i = 0;i < sizeof(OFF_T); i++)
   {
     fourb[i] = *(buff+buff_end+1+i);
   }
@@ -373,16 +330,11 @@ void DF_FILE::read_cmpdif_stack_buffer(OFF_T& lpos)
 void DF_FILE::write_cmpdif_stack_buffer(void)
 {
   // save the offset at the end of the used part of the buffer
-  for (size_t i = 0; i < sizeof(size_t); i++)
+  for (size_t i = 0; i < sizeof(OFF_T); i++)
   {
     *(buff+buff_end+1+i) = fourb[i];
   }
-#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-  assert(buff_size <= UINT_MAX);
-  if (write(file_ptr, buff, (unsigned int)buff_size) < 0)
-#else
-  if (write(file_ptr, buff, buff_size) < 0)
-#endif
+  if (WRITE(file_ptr, buff, buff_size) < 0)
   {
     cerr << "End of file trying to write to file "<< cmpdif_file_name << endl;
     cerr << "There is probably no more room on the TMP1 (if defined) device\n"

@@ -59,6 +59,11 @@ Macro definitions.
   #define LSEEK _lseeki64
   #define READ _read
   #define WRITE _write
+  #if defined(AD_LONG_INT)
+    #error "Error: AD_LONG_INT should not be defined."
+  #else
+    #define AD_LONG_INT long int
+  #endif
 #else
   #define OFF_T off_t
   #define LSEEK lseek

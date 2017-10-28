@@ -117,7 +117,8 @@ DF_FILE::DF_FILE(const size_t nbytes):
   if (nbytes > std::numeric_limits<OFF_T>::max())
   {
     cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
-         << INT_MAX<<endl;
+         << std::numeric_limits<OFF_T>::max() << endl;
+    ad_exit(1);
   }
 #endif
 

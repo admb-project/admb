@@ -316,8 +316,7 @@ TEST_F(test_df_file, write_read_int_3x_exactbuffer)
 }
 TEST_F(test_df_file, write_read_int_3x_nobuffer)
 {
-  const size_t us = sizeof(size_t) + 2;
-  const size_t size = sizeof(int) + us;
+  const size_t size = sizeof(int);
 
   DF_FILE buffer(size);
 

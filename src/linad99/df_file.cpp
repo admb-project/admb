@@ -6,7 +6,7 @@ Copyright (c) 2008-2016 ADMB Foundation and
 #include "fvar.hpp"
 #include <fcntl.h>
 #if !defined(_MSC_VER) && !defined(__MINGW64__)
-  #include <climits>
+  #include <limits>
 #endif
 
 #ifdef _MSC_VER

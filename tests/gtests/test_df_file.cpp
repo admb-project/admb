@@ -60,7 +60,7 @@ TEST_F(test_df_file, constructor_max)
 #if defined(_MSC_VER) || defined(__MINGW64__)
     size_t maxsize = UINT_MAX;
 #else
-    size_t maxsize = OFF_MAX;
+    size_t maxsize = std::numeric_limits<OFF_T>::max();
 #endif
     DF_FILE df_file(maxsize + 1)
   );

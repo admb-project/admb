@@ -3,9 +3,11 @@ Author: David Fournier
 Copyright (c) 2008-2016 ADMB Foundation and
   Regents of the University of California
 */
-#include <climits>
 #include "fvar.hpp"
 #include <fcntl.h>
+#if !defined(_MSC_VER) && !defined(__MINGW64__)
+  #include <climits>
+#endif
 
 #ifdef _MSC_VER
   #include <sys\stat.h>
@@ -112,7 +114,7 @@ DF_FILE::DF_FILE(const size_t nbytes):
     ad_exit(1);
   }
 #else
-  if (nbytes > OFF_MAX)
+  if (nbytes > std::numeric_limits<OFF_T>::max())
   {
     cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
          << INT_MAX<<endl;

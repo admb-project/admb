@@ -276,7 +276,7 @@ public:
   void read_cmpdif_stack_buffer(OFF_T & lpos);
 
 private:
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__MINGW64__)
   OFF_T buff_end;
   unsigned int buff_size;
 #else

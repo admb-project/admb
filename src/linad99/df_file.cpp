@@ -96,10 +96,14 @@ Constructor to allocate buffer.
 \param nbytes size of buffer
 */
 DF_FILE::DF_FILE(const size_t nbytes):
-  buff_end(static_cast<OFF_T>(nbytes - sizeof(size_t) - 2)),
-  buff_size(nbytes)
+  buff_end(static_cast<OFF_T>(nbytes)),
+#if defined(_MSC_VER) || defined(__MINGW64__)
+  buff_size(static_cast<unsigned int>(nbytes + sizeof(OFF_T) + 1))
+#else
+  buff_size(nbytes + sizeof(OFF_T) + 1)
+#endif
 {
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(__MINGW64__)
   if (nbytes > UINT_MAX)
   {
     cout << "Error -- largest size for CMPDIF_BUFFER_SIZE = "

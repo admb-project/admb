@@ -3,6 +3,7 @@ Author: David Fournier
 Copyright (c) 2008-2016 ADMB Foundation and
   Regents of the University of California
 */
+#include <climits>
 #include "fvar.hpp"
 #include <fcntl.h>
 
@@ -110,10 +111,8 @@ DF_FILE::DF_FILE(const size_t nbytes):
          << UINT_MAX << endl;
     ad_exit(1);
   }
-#endif
-
-#if defined(__GNC__) && defined(__i686__)
-  if (nbytes > INT_MAX)
+#else
+  if (nbytes > OFF_MAX)
   {
     cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
          << INT_MAX<<endl;

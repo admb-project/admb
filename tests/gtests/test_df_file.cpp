@@ -57,7 +57,12 @@ TEST_F(test_df_file, constructor_max)
 {
   ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW(
-    DF_FILE df_file(ULLONG_MAX)
+#if defined(_MSC_VER) || defined(__MINGW64__)
+    size_t maxsize = UINT_MAX;
+#else
+    size_t maxsize = OFF_MAX;
+#endif
+    DF_FILE df_file(maxsize + 1)
   );
 }
 TEST_F(test_df_file, allocate_max)

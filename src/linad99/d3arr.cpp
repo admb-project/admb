@@ -669,6 +669,6 @@ Stores dimensions for dvar3_array.
 \param su slicemax
 */
 three_array_shape::three_array_shape(int sl, int su)
-: slice_min(sl), slice_max(su), ncopies(0)
+: ncopies(0), slice_min(sl), slice_max(su)
 {
 }

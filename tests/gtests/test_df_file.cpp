@@ -59,10 +59,13 @@ TEST_F(test_df_file, constructor_max)
   ASSERT_ANY_THROW(
 #if defined(_MSC_VER) || defined(__MINGW64__)
     size_t maxsize = UINT_MAX;
-#else
+#elif defined(__x86_64)
     size_t maxsize = std::numeric_limits<OFF_T>::max();
+#else
+    size_t maxsize = std::numeric_limits<size_t>::max();
 #endif
-    DF_FILE df_file(maxsize + 1)
+    maxsize -= sizeof(OFF_T);
+    DF_FILE df_file(maxsize)
   );
 }
 TEST_F(test_df_file, allocate_max)

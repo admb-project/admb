@@ -276,12 +276,11 @@ public:
   void read_cmpdif_stack_buffer(OFF_T & lpos);
 
 private:
-#if defined(_MSC_VER) || defined(__MINGW64__)
   OFF_T buff_end;
+#if defined(_MSC_VER) || defined(__MINGW64__)
   unsigned int buff_size;
 #else
-  const OFF_T buff_end;
-  const size_t buff_size;
+  size_t buff_size;
 #endif
 };
 #endif

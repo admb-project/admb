@@ -98,29 +98,22 @@ Constructor to allocate buffer.
 
 \param nbytes size of buffer
 */
-DF_FILE::DF_FILE(const size_t nbytes):
-  buff_end(static_cast<OFF_T>(nbytes)),
-#if defined(_MSC_VER) || defined(__MINGW64__)
-  buff_size(static_cast<unsigned int>(nbytes + sizeof(OFF_T) + 1))
-#else
-  buff_size(nbytes + sizeof(OFF_T) + 1)
-#endif
+DF_FILE::DF_FILE(const size_t nbytes)
 {
 #if defined(_MSC_VER) || defined(__MINGW64__)
-  if (nbytes > UINT_MAX)
-  {
-    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE = "
-         << UINT_MAX << endl;
-    ad_exit(1);
-  }
+  auto max = std::numeric_limits<unsigned int>::max() - sizeof(OFF_T);
+#elif defined(__x86_64)
+  auto max = std::numeric_limits<OFF_T>::max() - sizeof(OFF_T);
 #else
-  if (nbytes > std::numeric_limits<OFF_T>::max())
+  auto max = std::numeric_limits<size_t>::max() - sizeof(OFF_T);
+#endif
+  if (nbytes > max)
   {
-    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
-         << std::numeric_limits<OFF_T>::max() << endl;
+    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is " << max << endl;
     ad_exit(1);
   }
-#endif
+  buff_end = static_cast<OFF_T>(nbytes);
+  buff_size = nbytes + sizeof(OFF_T);
 
   buff = new char[buff_size];
   if (buff == NULL)
@@ -205,7 +198,6 @@ DF_FILE::DF_FILE(const size_t nbytes):
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
        O_BINARY, 0777);
 #endif
-
   if (file_ptr == -1)
   {
     if (ad_printf) (*ad_printf)("Error opening temporary gradient"
@@ -326,7 +318,7 @@ void DF_FILE::read_cmpdif_stack_buffer(OFF_T& lpos)
   lpos = LSEEK(file_ptr, -static_cast<OFF_T>(buff_size), SEEK_CUR);
   for (size_t i = 0;i < sizeof(OFF_T); i++)
   {
-    fourb[i] = *(buff+buff_end+1+i);
+    fourb[i] = *(buff+buff_end+i);
   }
 }
 /**
@@ -338,7 +330,7 @@ void DF_FILE::write_cmpdif_stack_buffer(void)
   // save the offset at the end of the used part of the buffer
   for (size_t i = 0; i < sizeof(OFF_T); i++)
   {
-    *(buff+buff_end+1+i) = fourb[i];
+    *(buff+buff_end+i) = fourb[i];
   }
   if (WRITE(file_ptr, buff, buff_size) < 0)
   {

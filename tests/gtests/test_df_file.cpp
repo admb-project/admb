@@ -58,13 +58,13 @@ TEST_F(test_df_file, constructor_max)
   ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW(
 #if defined(_MSC_VER) || defined(__MINGW64__)
-    size_t maxsize = UINT_MAX;
+    size_t maxsize = std::numeric_limits<unsigned int>::max();
 #elif defined(__x86_64)
     size_t maxsize = std::numeric_limits<OFF_T>::max();
 #else
     size_t maxsize = std::numeric_limits<size_t>::max();
 #endif
-    maxsize -= sizeof(OFF_T);
+    maxsize -= sizeof(OFF_T) + 1;
     DF_FILE df_file(maxsize)
   );
 }

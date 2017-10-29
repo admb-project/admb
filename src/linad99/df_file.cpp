@@ -102,6 +102,9 @@ DF_FILE::DF_FILE(const size_t nbytes)
 {
 #if defined(_MSC_VER) || defined(__MINGW64__)
   auto max = std::numeric_limits<unsigned int>::max() - sizeof(OFF_T);
+#elif defined(__OPENCC__)
+  size_t max = static_cast<size_t>(std::numeric_limits<OFF_T>::max())
+               - sizeof(OFF_T);
 #elif defined(__x86_64)
   auto max = std::numeric_limits<OFF_T>::max() - sizeof(OFF_T);
 #else

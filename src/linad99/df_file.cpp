@@ -116,12 +116,19 @@ DF_FILE::DF_FILE(const size_t nbytes)
   buff_end = static_cast<OFF_T>(nbytes);
   buff_size = nbytes + sizeof(OFF_T);
 
-  buff = new char[buff_size];
-  if (buff == NULL)
+
+  try
   {
-    cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;
+    buff = new char[buff_size];
+  }
+  catch (const std::bad_alloc& e)
+  {
+    size_t gb = nbytes / 1073741824;
+    cerr << "Error: Unable to construct DF_FILE memory buffer\n"
+         << "of size " << nbytes << " bytes or " << gb << "GB.\n";
     ad_exit(1);
   }
+
 #ifndef OPT_LIB
   memset(buff, 0, buff_size);
 #endif

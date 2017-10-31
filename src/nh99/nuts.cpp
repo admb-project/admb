@@ -363,6 +363,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   //// ---------- Start of algorithm
   // Declare and initialize the variables needed for the algorithm
   independent_variables z(1,nvar);
+  independent_variables ztest(1,nvar);
   independent_variables ytemp(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// gradients in rotated space
@@ -418,6 +419,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // Reset model parameters to theta, whether updated or not in previous
     // iteration.
     z=chd*theta;
+    ztest=rotate_space(chd, theta);
+    if(is==1) cout << "chdtest=" << endl << z << endl << ztest << endl;
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=gr*chd;
     H0=-nll-0.5*norm2(p); // initial Hamiltonian value

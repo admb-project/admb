@@ -435,3 +435,51 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
     ad_exit(1);
   }
 }
+
+// Function written by Dave to help speed up some of the MCMC
+// calculations. The code has chd*x which rotates the space but this is
+// often a vector or at least a lower triangular matrix. Thus we can make
+// it more efficient
+dvector function_minimizer::rotate_space(const dmatrix& m, const dvector& x)
+  {
+     if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
+     {
+       cerr << " Incompatible array bounds in "
+       "dvector rotate_space(const dmaxtrix& m, const dvector& x)\n";
+       ad_exit(21);
+     }
+  
+     dvector tmp(m.rowmin(),m.rowmax());
+     int mmin=m.rowmin();
+     int mmax=m.rowmax();
+     int xmin=x.indexmin();
+     int xmax=x.indexmax();
+  
+     for (int i=mmin; i<=mmax; i++)
+     {
+       tmp[i]=0;
+       double * pm= (double *) &(m(i,xmin));
+       double * px= (double *) &(x(xmin));
+       double tt=0.0;
+       for (int j=xmin; j<=i; j++)
+       {
+         tt+= *pm++ * *px++;
+       }
+       tmp[i]=tt;
+     }
+     return(tmp);
+  }
+
+dvector function_minimizer::rotate_space(const dvector& m, const dvector& x)
+  {
+     if (x.indexmin() != m.indexmin() || x.indexmax() != m.indexmax())
+     {
+       cerr << " Incompatible array bounds in "
+       "dvector  rotate_space(const dvector& m, const dvector& x)\n";
+       ad_exit(21);
+     }
+  
+     dvector tmp(x.indexmin(),x.indexmax());
+     tmp=x * m;
+     return(tmp);
+  }

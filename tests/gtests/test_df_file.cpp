@@ -71,7 +71,6 @@ TEST_F(test_df_file, constructor_max)
 TEST_F(test_df_file, constructor_max_limit)
 {
   ad_exit=&test_ad_exit;
-  ASSERT_ANY_THROW(
 #if defined(_MSC_VER) || defined(__MINGW64__)
   ASSERT_NO_THROW(
     size_t maxsize = std::numeric_limits<unsigned int>::max();

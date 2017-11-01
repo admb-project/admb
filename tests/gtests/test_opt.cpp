@@ -1,5 +1,6 @@
 #include <vector>
 #include <gtest/gtest.h>
+#include <thread>
 #include <fvar.hpp>
 
 class test_opt: public ::testing::Test {};
@@ -88,4 +89,79 @@ TEST_F(test_opt, dmatrix_times_dvector_opt)
   ASSERT_DOUBLE_EQ(14, results(1));
   ASSERT_DOUBLE_EQ(32, results(2));
   ASSERT_DOUBLE_EQ(50, results(3));
+}
+TEST_F(test_opt, dmatrix_times_dvector_large_ptrs_threaded)
+{
+  int size = 10000;
+  dmatrix m(1, size, 1, size);
+  dvector v(1, size);
+
+  dvector results(1, size);
+  results.initialize();
+
+  int imin = m.rowmin();
+  int imax = m.rowmax();
+  int imid = (m.rowmax() - m.rowmin()) / 2;
+
+  auto range = [&results](const int imin, const int imax, const dvector& v, const dmatrix& m)
+  {
+    dvector* ptr_m = m.begin() + (imin - 1);
+    double* ptr_r = results.begin() + (imin - 1);
+    for (int i = imin; i <= imax; ++i)
+    {
+      double* ptr_mv = ptr_m->begin();
+      double* ptr_v = v.begin();
+      double sum = 0.0;
+      for (int j = v.indexmin(); j <= v.indexmax(); ++j)
+      {
+        sum += *ptr_mv * *ptr_v;
+        ++ptr_mv;
+        ++ptr_v;
+      }
+      *ptr_r = sum;
+      ++ptr_r;
+      ++ptr_m;
+    }
+  };
+
+  std::thread lower(range, imin, imid, v, m);
+  std::thread upper(range, imid + 1, imax, v, m);
+
+  lower.join();
+  upper.join();
+}
+TEST_F(test_opt, dmatrix_times_dvector_large_ptrs)
+{
+  int size = 10000;
+  dmatrix m(1, size, 1, size);
+  dvector v(1, size);
+
+  dvector results(1, size);
+  results.initialize();
+  dvector* ptr_m = m.begin();
+  double* ptr_r = results.begin();
+  for (int i = 1; i <= size; ++i)
+  {
+    double* ptr_mv = ptr_m->begin();
+    double* ptr_v = v.begin();
+    for (int j = 1; j <= size; ++j)
+    {
+      *ptr_r += *ptr_mv * *ptr_v;
+      ++ptr_mv;
+      ++ptr_v;
+    }
+    ++ptr_r;
+    ++ptr_m;
+  }
+}
+TEST_F(test_opt, dmatrix_times_dvector_large_array)
+{
+  int size = 10000;
+  dmatrix m(1, size, 1, size);
+  dvector v(1, size);
+
+  dvector results(1, size);
+  results.initialize();
+
+  results = m * v;
 }

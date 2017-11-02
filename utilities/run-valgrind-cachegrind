@@ -1,5 +1,4 @@
 #!/bin/sh
 
 valgrind --tool=cachegrind --cachegrind-out-file=valgrind-cachegrind.txt $1 &> /dev/null
-cg_annotate valgrind-cachegrind.txt
-cg_annotate valgrind-cachegrind.txt src/linad99/sgradclc.cpp
+cg_annotate valgrind-cachegrind.txt /home/johnoel/buildslave-basedir/fedora-gcc-64bit-profiler/build/src/linad99/sgradclc.cpp

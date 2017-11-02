@@ -2,3 +2,4 @@
 
 valgrind --tool=cachegrind --cachegrind-out-file=valgrind-cachegrind.txt $1 &> /dev/null
 cg_annotate valgrind-cachegrind.txt
+cg_annotate valgrind-cachegrind.txt src/linad99/sgradclc.cpp

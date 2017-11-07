@@ -308,9 +308,9 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
 
   // Calculate initial Hamiltonian value
   double pprob1=0.5*norm2(p);
-  z=chd*y;
+  z=rotate_pars(chd,y);
   double nllbegin=get_hybrid_monte_carlo_value(nvar,z,gr);
-  dvector gr2begin=gr*chd; // rotated gradient
+  dvector gr2begin=rotate_gradient(gr,chd); // rotated gradient
   double H1=nllbegin+pprob1;
 
   // Calculate H after a single step of size eps
@@ -374,11 +374,11 @@ double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double 
   // Update parameters by full step
   y+=eps*phalf;
   // Transform parameters via mass matrix to get new gradient
-  z=chd*y;
+  z=rotate_pars(chd,y);
   // Get NLL and set updated gradient in gr by reference
   double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
   // Update gradient via mass matrix
-  gr2=gr*chd;
+  gr2=rotate_gradient(gr, chd);
   // Last half step for momentum
   p=phalf-eps/2*gr2;
   return(nll);
@@ -439,13 +439,13 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
 // Function written by Dave to help speed up some of the MCMC
 // calculations. The code has chd*x which rotates the space but this is
 // often a vector or at least a lower triangular matrix. Thus we can make
-// it more efficient
-dvector function_minimizer::rotate_space(const dmatrix& m, const dvector& x)
+// it more efficient.
+dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
   {
      if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
      {
        cerr << " Incompatible array bounds in "
-       "dvector rotate_space(const dmaxtrix& m, const dvector& x)\n";
+       "dvector rotate_pars(const dmaxtrix& m, const dvector& x)\n";
        ad_exit(21);
      }
   
@@ -453,7 +453,6 @@ dvector function_minimizer::rotate_space(const dmatrix& m, const dvector& x)
      int mmin=m.rowmin();
      int mmax=m.rowmax();
      int xmin=x.indexmin();
-     int xmax=x.indexmax();
   
      for (int i=mmin; i<=mmax; i++)
      {
@@ -470,16 +469,46 @@ dvector function_minimizer::rotate_space(const dmatrix& m, const dvector& x)
      return(tmp);
   }
 
-dvector function_minimizer::rotate_space(const dvector& m, const dvector& x)
+dvector function_minimizer::rotate_pars(const dvector& m, const dvector& x)
   {
      if (x.indexmin() != m.indexmin() || x.indexmax() != m.indexmax())
      {
        cerr << " Incompatible array bounds in "
-       "dvector  rotate_space(const dvector& m, const dvector& x)\n";
+       "dvector  rotate_pars(const dvector& m, const dvector& x)\n";
        ad_exit(21);
      }
   
      dvector tmp(x.indexmin(),x.indexmax());
      tmp=x * m;
+     return(tmp);
+  }
+
+
+dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
+  {
+     if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
+     {
+       cerr << " Incompatible array bounds in "
+       "dvector rotate_gradient(const dvector& x, const dmatrix& m)\n";
+       ad_exit(21);
+     }
+  
+     dvector tmp(m.rowmin(),m.rowmax());
+     int mmin=m.colmin();
+     int mmax=m.colmax();
+     int xmin=x.indexmin();
+  
+     for (int i=mmin; i<=mmax; i++)
+     {
+       tmp[i]=0;
+       double * pm= (double *) &(m(i,xmin));
+       double * px= (double *) &(x(xmin));
+       double tt=0.0;
+       for (int j=xmin; j<=i; j++)
+       {
+         tt+= *pm++ * *px++;
+       }
+       tmp[i]=tt;
+     }
      return(tmp);
   }

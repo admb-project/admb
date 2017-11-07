@@ -298,7 +298,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix chdinv=inv(chd);
   // Can now inverse rotate y to be x (algorithm space)
   independent_variables x0(1,nvar);
-  x0=chdinv*y0; // this is the initial value in algorithm space
+  x0=rotate_pars(chdinv,y0); // this is the initial value in algorithm space
   // cout << "Starting from chd=" << chd << endl;
   ///
   // /// Old code to test that I know what's going on.
@@ -363,7 +363,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   //// ---------- Start of algorithm
   // Declare and initialize the variables needed for the algorithm
   independent_variables z(1,nvar);
-  independent_variables ztest(1,nvar);
   independent_variables ytemp(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// gradients in rotated space
@@ -418,11 +417,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
     // Reset model parameters to theta, whether updated or not in previous
     // iteration.
-    z=chd*theta;
-    ztest=rotate_space(chd, theta);
-    if(is==1) cout << "chdtest=" << endl << z << endl << ztest << endl;
+    z=rotate_pars(chd, theta);
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    gr2=gr*chd;
+    gr2=rotate_gradient(gr, chd);
     H0=-nll-0.5*norm2(p); // initial Hamiltonian value
     logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
@@ -450,11 +447,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// Build a tree to the right from thetaplus. The leftmost point in
 	// the new subtree, which gets overwritten in both the global _end
 	// variable, but also the _ ref version.
-	z=chd*thetaplus_end;
+	z=rotate_pars(chd, thetaplus_end);
 	// Need to reset to the rightmost point, since this may not have
 	// been last one executed and thus the gradients are wrong
 	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	gr2=gr*chd;
+	gr2=rotate_gradient(gr, chd);
 	build_tree(nvar, gr, chd, eps, rplus_end, thetaplus_end, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
@@ -464,9 +461,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	rplus_end=_rplus;
       } else {
 	// Same but to the left from thetaminus
-	z=chd*thetaminus_end;
+	z=rotate_pars(chd,thetaminus_end);
 	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	gr2=gr*chd;
+	gr2=rotate_gradient(gr,chd);
 	build_tree(nvar, gr, chd, eps, rminus_end, thetaminus_end, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
@@ -482,7 +479,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       rn = randu(rng);	   // Runif(1)
       if (_sprime == 1 && rn < double(_nprime)/double(n)){
 	theta=_thetaprime; // rotated, unbounded
-	ytemp=chd*theta; // unbounded
+	ytemp=rotate_pars(chd,theta); // unbounded
       }
 
       // Test if a u-turn occured across the whole subtree j. Previously we

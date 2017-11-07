@@ -1912,8 +1912,9 @@ public:
   void hybrid_mcmc_routine(int,int,double,int);
 
   // Functions added by Cole for HMC.
-  dvector rotate_space(const dvector& m, const dvector& x);
-  dvector rotate_space(const dmatrix& m, const dvector& x);
+  dvector rotate_pars(const dvector& m, const dvector& x);
+  dvector rotate_pars(const dmatrix& m, const dvector& x);
+  dvector rotate_gradient(const dvector& x, const dmatrix& m);
   int compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3);
   bool slow_phase(int is, int warmup, int w1, int w3);
   std::string get_filename(const char* f);

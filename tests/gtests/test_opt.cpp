@@ -165,7 +165,7 @@ TEST_F(test_opt, dmatrix_times_dvector_large_array)
 
   results = m * v;
 }
-TEST_F(test_opt, vector_times_matrix_large_array)
+TEST_F(test_opt, vector_times_matrix)
 {
   int size = 3;
   dmatrix m(1, size, 1, size);
@@ -206,4 +206,53 @@ TEST_F(test_opt, vector_times_matrix_large_array)
   ASSERT_DOUBLE_EQ(6.0, tmp(1));
   ASSERT_DOUBLE_EQ(12.0, tmp(2));
   ASSERT_DOUBLE_EQ(18.0, tmp(3));
+}
+TEST_F(test_opt, vector_times_matrix_large_array)
+{
+  int size = 1000;
+  dmatrix m(1, size, 1, size);
+  m = 1;
+  dvector x(1, size);
+  x = 0.5;
+
+  dvector tmp(1, size);
+  tmp.initialize();
+
+  for (int j = m.colmin(); j <= m.colmax(); ++j)
+  {
+    int i = x.indexmin();
+    dvector column = extract_column(m, j);
+    double* pm = (double*)&column(i);
+    double* px = (double*)&x(i);
+    double sum = *px * *pm;
+    for (; i <= x.indexmax(); ++i)
+    {
+      sum += *(++px) * *(++pm);
+    }
+
+    tmp[j] = sum;
+  }
+
+  for (int i = 1; i <= size; ++i)
+  {
+    ASSERT_DOUBLE_EQ(0.5 * size, tmp(i));
+  }
+}
+TEST_F(test_opt, vector_times_matrix_core)
+{
+  int size = 1000;
+  dmatrix m(1, size, 1, size);
+  m = 1;
+  dvector x(1, size);
+  x = 0.5;
+
+  dvector tmp(1, size);
+  tmp.initialize();
+
+  tmp = x * m;
+
+  for (int i = 1; i <= size; ++i)
+  {
+    ASSERT_DOUBLE_EQ(0.5 * size, tmp(i));
+  }
 }

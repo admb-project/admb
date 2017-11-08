@@ -497,7 +497,6 @@ dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
 	"dvector rotate_gradient(const dvector& x, const dmatrix& m)\n";
       ad_exit(21);
     }
-  
   int mmin=m.colmin();
   int mmax=m.colmax();
   dvector tmp(mmin,mmax);

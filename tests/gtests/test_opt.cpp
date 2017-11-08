@@ -165,3 +165,45 @@ TEST_F(test_opt, dmatrix_times_dvector_large_array)
 
   results = m * v;
 }
+TEST_F(test_opt, vector_times_matrix_large_array)
+{
+  int size = 3;
+  dmatrix m(1, size, 1, size);
+  m(1, 1) = 1;
+  m(1, 2) = 2;
+  m(1, 3) = 3;
+  m(2, 1) = 1;
+  m(2, 2) = 2;
+  m(2, 3) = 3;
+  m(3, 1) = 1;
+  m(3, 2) = 2;
+  m(3, 3) = 3;
+
+  dvector x(1, size);
+  x(1) = 1;
+  x(2) = 2;
+  x(3) = 3;
+
+  dvector tmp(1, size);
+  tmp.initialize();
+
+  for (int j = m.colmin(); j <= m.colmax(); ++j)
+  {
+
+    int i = x.indexmin();
+    dvector column = extract_column(m, j);
+    double* pm = (double*)&column(i);
+    double* px = (double*)&x(i);
+    double sum = *px * *pm;
+    for (; i <= x.indexmax(); ++i)
+    {
+      sum += *(++px) * *(++pm);
+    }
+
+    tmp[j] = sum;
+  }
+
+  ASSERT_DOUBLE_EQ(6.0, tmp(1));
+  ASSERT_DOUBLE_EQ(12.0, tmp(2));
+  ASSERT_DOUBLE_EQ(18.0, tmp(3));
+}

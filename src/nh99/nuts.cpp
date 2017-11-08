@@ -350,6 +350,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       " hours or until " << nmcmc << " total iterations" << endl;
   }
   if(adapt_mass) cout << "Using diagonal mass matrix adaptation" << endl;
+  if(adapt_mass) adapt_mass_flag=1; else adapt_mass_flag=0;
   cout << "Initial negative log density=" << nlltemp << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);

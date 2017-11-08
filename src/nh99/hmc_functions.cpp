@@ -453,37 +453,42 @@ dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
      int mmin=m.rowmin();
      int mmax=m.rowmax();
      int xmin=x.indexmin();
-  
-     for (int i=mmin; i<=mmax; i++)
-     {
-       tmp[i]=0;
-       double * pm= (double *) &(m(i,xmin));
-       double * px= (double *) &(x(xmin));
-       double tt=0.0;
-       for (int j=xmin; j<=i; j++)
-       {
-         tt+= *pm++ * *px++;
-       }
-       tmp[i]=tt;
-     }
-     return(tmp);
-  }
 
-dvector function_minimizer::rotate_pars(const dvector& m, const dvector& x)
-  {
-     if (x.indexmin() != m.indexmin() || x.indexmax() != m.indexmax())
-     {
-       cerr << " Incompatible array bounds in "
-       "dvector  rotate_pars(const dvector& m, const dvector& x)\n";
+     // If the metric is a dense matrix, chd will be lower diagonal so just
+     // loop over those. If doing adapt_mass then chd is still passed
+     // through as a matrix (poor programming) but only the digonal will be
+     // non-zero. Hence we can skip the off-diagonals and speed up the
+     // calculation.
+
+     if(adapt_mass_flag==0){
+       for (int i=mmin; i<=mmax; i++)
+	 {
+	   tmp[i]=0;
+	   double * pm= (double *) &(m(i,xmin));
+	   double * px= (double *) &(x(xmin));
+	   double tt=0.0;
+	   for (int j=xmin; j<=i; j++)
+	     {
+	       tt+= *pm++ * *px++;
+	     }
+	   tmp[i]=tt;
+	 }
+     } else if(adapt_mass_flag==1){
+       for (int i=mmin; i<=mmax; i++)
+	 {
+	   double * pm= (double *) &(m(i,i));
+	   double * px= (double *) &(x(i));
+	   tmp[i]= *pm * *px;
+	 }
+     } else {
+       cerr << "Invalid value for adapt_mass_flag in rotate_pars" << endl;
        ad_exit(21);
      }
-  
-     dvector tmp(x.indexmin(),x.indexmax());
-     tmp=x * m;
      return(tmp);
   }
 
-
+// See help for rotate_pars above, it's the same except rotating a gradient
+// vector rather than a par vector (although math is different)
 dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
   {
      if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
@@ -497,18 +502,31 @@ dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
      int mmin=m.colmin();
      int mmax=m.colmax();
      int xmin=x.indexmin();
-  
-     for (int i=mmin; i<=mmax; i++)
-     {
-       tmp[i]=0;
-       double * pm= (double *) &(m(i,xmin));
-       double * px= (double *) &(x(xmin));
-       double tt=0.0;
-       for (int j=xmin; j<=i; j++)
+
+     if(adapt_mass_flag==0){
+       for (int i=mmin; i<=mmax; i++)
+	 {
+	   tmp[i]=0;
+	   double * pm= (double *) &(m(i,xmin));
+	   double * px= (double *) &(x(xmin));
+	   double tt=0.0;
+	   for (int j=xmin; j<=i; j++)
+	     {
+	       tt+= *pm++ * *px++;
+	     }
+	   tmp[i]=tt;
+	 }
+     } else if(adapt_mass_flag==1)
        {
-         tt+= *pm++ * *px++;
-       }
-       tmp[i]=tt;
+	 for (int i=mmin; i<=mmax; i++)
+	   {
+	     double * pm= (double *) &(m(i,i));
+	     double * px= (double *) &(x(i));
+	     tmp[i] = *pm * *px;
+	   }
+       }else {
+       cerr << "Invalid value for adapt_mass_flag in rotate_pars" << endl;
+       ad_exit(21);
      }
      return(tmp);
   }

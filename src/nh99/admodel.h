@@ -1828,6 +1828,7 @@ public:
   int repeatminflag;
   int mcmc2_flag;
   int robust_hybrid_flag;
+  int adapt_mass_flag;
   long ifn;
   int maxfn;
   int iprint;

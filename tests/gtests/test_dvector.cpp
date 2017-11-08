@@ -1120,3 +1120,21 @@ TEST_F(test_dvector, copyconstructor)
   ASSERT_EQ(1, copy.get_ncopies());
   ASSERT_EQ(1, a.get_ncopies());
 }
+TEST_F(test_dvector, initialize)
+{
+  ad_exit=&test_ad_exit;
+
+  dvector a(1, 3);
+  a(1) = 1;
+  a(2) = 2;
+  a(3) = 3;
+  ASSERT_DOUBLE_EQ(1, a(1));
+  ASSERT_DOUBLE_EQ(2, a(2));
+  ASSERT_DOUBLE_EQ(3, a(3));
+
+  a.initialize();
+
+  ASSERT_DOUBLE_EQ(0, a(1));
+  ASSERT_DOUBLE_EQ(0, a(2));
+  ASSERT_DOUBLE_EQ(0, a(3));
+}

@@ -298,7 +298,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix chdinv=inv(chd);
   // Can now inverse rotate y to be x (algorithm space)
   independent_variables x0(1,nvar);
-  x0=rotate_pars(chdinv,y0); // this is the initial value in algorithm space
+  x0=chdinv * y0; // this is the initial value in algorithm space
   // cout << "Starting from chd=" << chd << endl;
   ///
   // /// Old code to test that I know what's going on.
@@ -350,7 +350,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       " hours or until " << nmcmc << " total iterations" << endl;
   }
   if(adapt_mass) cout << "Using diagonal mass matrix adaptation" << endl;
-  if(adapt_mass) adapt_mass_flag=1; else adapt_mass_flag=0;
+  if(adapt_mass) diagonal_metric_flag=1; else diagonal_metric_flag=0;
   cout << "Initial negative log density=" << nlltemp << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
@@ -418,7 +418,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
     // Reset model parameters to theta, whether updated or not in previous
     // iteration.
-    z=rotate_pars(chd, theta);
+    z=chd*theta;
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=rotate_gradient(gr, chd);
     H0=-nll-0.5*norm2(p); // initial Hamiltonian value

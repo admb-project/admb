@@ -459,8 +459,7 @@ dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
      // through as a matrix (poor programming) but only the digonal will be
      // non-zero. Hence we can skip the off-diagonals and speed up the
      // calculation.
-
-     if(adapt_mass_flag==0){
+     if(diagonal_metric_flag==0){
        for (int i=mmin; i<=mmax; i++)
 	 {
 	   tmp[i]=0;
@@ -473,7 +472,8 @@ dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
 	     }
 	   tmp[i]=tt;
 	 }
-     } else if(adapt_mass_flag==1){
+     } else if(diagonal_metric_flag==1){
+       // Only the diagonals are nonzero so skip the offdiagonals completely
        for (int i=mmin; i<=mmax; i++)
 	 {
 	   double * pm= (double *) &(m(i,i));
@@ -481,7 +481,7 @@ dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
 	   tmp[i]= *pm * *px;
 	 }
      } else {
-       cerr << "Invalid value for adapt_mass_flag in rotate_pars" << endl;
+       cerr << "Invalid value for diagonal_metric_flag in rotate_pars" << endl;
        ad_exit(21);
      }
      return(tmp);
@@ -498,25 +498,25 @@ dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
        ad_exit(21);
      }
   
-     dvector tmp(m.rowmin(),m.rowmax());
      int mmin=m.colmin();
      int mmax=m.colmax();
-     int xmin=x.indexmin();
-
-     if(adapt_mass_flag==0){
-       for (int i=mmin; i<=mmax; i++)
+     int ii=mmax-mmin+1;
+     dvector tmp(mmin,mmax);
+     if(diagonal_metric_flag==0){
+       for (int j = mmin; j <= mmax; ++j)
 	 {
-	   tmp[i]=0;
-	   double * pm= (double *) &(m(i,xmin));
-	   double * px= (double *) &(x(xmin));
-	   double tt=0.0;
-	   for (int j=xmin; j<=i; j++)
+	   //	   int i = x.indexmin();
+	   dvector column = extract_column(m, j);
+	   double* pm = (double*)&column(j);
+	   double* px = (double*)&x(j);
+	   double sum = *px * *pm;
+	   for (int i=j; i <= mmax; ++i)
 	     {
-	       tt+= *pm++ * *px++;
+	       sum += *(++px) * *(++pm);
 	     }
-	   tmp[i]=tt;
+	   tmp[j] = sum;
 	 }
-     } else if(adapt_mass_flag==1)
+     } else if(diagonal_metric_flag==1)
        {
 	 for (int i=mmin; i<=mmax; i++)
 	   {
@@ -525,7 +525,7 @@ dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
 	     tmp[i] = *pm * *px;
 	   }
        }else {
-       cerr << "Invalid value for adapt_mass_flag in rotate_pars" << endl;
+       cerr << "Invalid value for diagonal_metric_flag in rotate_gradient" << endl;
        ad_exit(21);
      }
      return(tmp);

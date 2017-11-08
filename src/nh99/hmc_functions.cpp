@@ -441,92 +441,90 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
 // often a vector or at least a lower triangular matrix. Thus we can make
 // it more efficient.
 dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
-  {
-     if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
-     {
-       cerr << " Incompatible array bounds in "
-       "dvector rotate_pars(const dmaxtrix& m, const dvector& x)\n";
-       ad_exit(21);
-     }
+{
+  if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
+    {
+      cerr << " Incompatible array bounds in "
+	"dvector rotate_pars(const dmaxtrix& m, const dvector& x)\n";
+      ad_exit(21);
+    }
   
-     dvector tmp(m.rowmin(),m.rowmax());
-     int mmin=m.rowmin();
-     int mmax=m.rowmax();
-     int xmin=x.indexmin();
+  dvector tmp(m.rowmin(),m.rowmax());
+  int mmin=m.rowmin();
+  int mmax=m.rowmax();
+  int xmin=x.indexmin();
 
-     // If the metric is a dense matrix, chd will be lower diagonal so just
-     // loop over those. If doing adapt_mass then chd is still passed
-     // through as a matrix (poor programming) but only the digonal will be
-     // non-zero. Hence we can skip the off-diagonals and speed up the
-     // calculation.
-     if(diagonal_metric_flag==0){
-       for (int i=mmin; i<=mmax; i++)
-	 {
-	   tmp[i]=0;
-	   double * pm= (double *) &(m(i,xmin));
-	   double * px= (double *) &(x(xmin));
-	   double tt=0.0;
-	   for (int j=xmin; j<=i; j++)
-	     {
-	       tt+= *pm++ * *px++;
-	     }
-	   tmp[i]=tt;
-	 }
-     } else if(diagonal_metric_flag==1){
-       // Only the diagonals are nonzero so skip the offdiagonals completely
-       for (int i=mmin; i<=mmax; i++)
-	 {
-	   double * pm= (double *) &(m(i,i));
-	   double * px= (double *) &(x(i));
-	   tmp[i]= *pm * *px;
-	 }
-     } else {
-       cerr << "Invalid value for diagonal_metric_flag in rotate_pars" << endl;
-       ad_exit(21);
-     }
-     return(tmp);
+  // If the metric is a dense matrix, chd will be lower diagonal so just
+  // loop over those. If doing adapt_mass then chd is still passed
+  // through as a matrix (poor programming) but only the digonal will be
+  // non-zero. Hence we can skip the off-diagonals and speed up the
+  // calculation.
+  if(diagonal_metric_flag==0){
+    for (int i=mmin; i<=mmax; i++)
+      {
+	tmp[i]=0;
+	double * pm= (double *) &(m(i,xmin));
+	double * px= (double *) &(x(xmin));
+	double tt=0.0;
+	for (int j=xmin; j<=i; j++)
+	  {
+	    tt+= *pm++ * *px++;
+	  }
+	tmp[i]=tt;
+      }
+  } else if(diagonal_metric_flag==1){
+    // Only the diagonals are nonzero so skip the offdiagonals completely
+    for (int i=mmin; i<=mmax; i++)
+      {
+	double * pm= (double *) &(m(i,i));
+	double * px= (double *) &(x(i));
+	tmp[i]= *pm * *px;
+      }
+  } else {
+    cerr << "Invalid value for diagonal_metric_flag in rotate_pars" << endl;
+    ad_exit(21);
   }
+  return(tmp);
+}
 
 // See help for rotate_pars above, it's the same except rotating a gradient
 // vector rather than a par vector (although math is different)
 dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
-  {
-     if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
-     {
-       cerr << " Incompatible array bounds in "
-       "dvector rotate_gradient(const dvector& x, const dmatrix& m)\n";
-       ad_exit(21);
-     }
+{
+  if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
+    {
+      cerr << " Incompatible array bounds in "
+	"dvector rotate_gradient(const dvector& x, const dmatrix& m)\n";
+      ad_exit(21);
+    }
   
-     int mmin=m.colmin();
-     int mmax=m.colmax();
-     int ii=mmax-mmin+1;
-     dvector tmp(mmin,mmax);
-     if(diagonal_metric_flag==0){
-       for (int j = mmin; j <= mmax; ++j)
-	 {
-	   //	   int i = x.indexmin();
-	   dvector column = extract_column(m, j);
-	   double* pm = (double*)&column(j);
-	   double* px = (double*)&x(j);
-	   double sum = *px * *pm;
-	   for (int i=j; i <= mmax; ++i)
-	     {
-	       sum += *(++px) * *(++pm);
-	     }
-	   tmp[j] = sum;
-	 }
-     } else if(diagonal_metric_flag==1)
-       {
-	 for (int i=mmin; i<=mmax; i++)
-	   {
-	     double * pm= (double *) &(m(i,i));
-	     double * px= (double *) &(x(i));
-	     tmp[i] = *pm * *px;
-	   }
-       }else {
-       cerr << "Invalid value for diagonal_metric_flag in rotate_gradient" << endl;
-       ad_exit(21);
-     }
-     return(tmp);
+  int mmin=m.colmin();
+  int mmax=m.colmax();
+  dvector tmp(mmin,mmax);
+  if(diagonal_metric_flag==0){
+    for (int j = mmin; j <= mmax; ++j)
+      {
+	dvector column = extract_column(m, j);
+	double* pm = (double*)&column(j);
+	double* px = (double*)&x(j);
+	double sum = *px * *pm;
+	for (int i=j; i <= mmax; ++i)
+	  {
+	    sum += *(++px) * *(++pm);
+	  }
+	tmp[j] = sum;
+      }
+  } else if(diagonal_metric_flag==1)
+    {
+      for (int i=mmin; i<=mmax; i++)
+	{
+	  double * pm= (double *) &(m(i,i));
+	  double * px= (double *) &(x(i));
+	  tmp[i] = *pm * *px;
+	}
+    }else {
+    cerr << "Invalid value for diagonal_metric_flag in rotate_gradient" << endl;
+    ad_exit(21);
   }
+  return(tmp);
+}

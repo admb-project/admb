@@ -43,6 +43,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
   // and will not be adapted.
+  diagonal_metric_flag=0; // set to 1 later if using adapt_mass
   double eps=0.1;
   double _eps=-1.0;
   int useDA=1; 			// whether to adapt step size
@@ -184,6 +185,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
     diag_option=1;
+    diagonal_metric_flag=1;
     cout << "Setting covariance matrix to diagonal with entries" << endl;
   }
   // Whether to adapt the mass matrix
@@ -349,8 +351,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << "Model will run for " << duration <<
       " hours or until " << nmcmc << " total iterations" << endl;
   }
-  if(adapt_mass) cout << "Using diagonal mass matrix adaptation" << endl;
-  if(adapt_mass) diagonal_metric_flag=1; else diagonal_metric_flag=0;
+  if(adapt_mass){
+    diagonal_metric_flag=1;
+    if(warmup < 200){
+      // Turn off if too few samples to properly do it. But keep using
+      // diagonal efficiency.
+      cerr << "Warning: Mass matrix adaptation not allowed when warmup<200" << endl;
+      adapt_mass=0;
+    } else {
+      cout << "Using diagonal mass matrix adaptation" << endl;
+    }
+  }
   cout << "Initial negative log density=" << nlltemp << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);

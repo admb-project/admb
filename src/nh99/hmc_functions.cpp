@@ -66,7 +66,7 @@ double function_minimizer::exprnd(double p)
 }
 
 // Strip out the model name given full path
-std::string function_minimizer::get_filename(const char* f) {
+std::string get_filename(const char* f) {
   std::string s(f);
   size_t pos = s.find_last_of("/\\");
   std::string filename_exe = s.substr(pos + 1);

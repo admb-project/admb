@@ -194,6 +194,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     adapt_mass=1;
     diag_option=1; // always start with unit mass matrix if adapting
   }
+  // Whether to print mass matrix adaptation steps to console
+  int verbose_adapt_mass=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-verbose_adapt_mass"))>-1) {
+    verbose_adapt_mass=1;
+  }
 
   // Restart chain from previous run?
   int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
@@ -566,9 +571,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
         k = 1; m1 = ytemp; s1.initialize();
         // Calculate the next end window. If this overlaps into the final fast
         // period, it will be stretched to that point (warmup-w3)
-        anw = compute_next_window(is, anw, warmup, w1, aws, w3);
 	aws *=2;
-	// cout << anw << endl << metric << endl;
+        anw = compute_next_window(is, anw, warmup, w1, aws, w3);
+	if(verbose_adapt_mass){
+	  cout << is << ": "<< ", eps=" << eps << endl;
+	}
       } else {
         k = k+1; m0 = m1; s0 = s1;
         // Update M and S

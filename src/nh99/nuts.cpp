@@ -573,6 +573,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
         // period, it will be stretched to that point (warmup-w3)
 	aws *=2;
         anw = compute_next_window(is, anw, warmup, w1, aws, w3);
+	// Refind a reasonable step size since it can be really different after changing M
+	eps=find_reasonable_stepsize(nvar,theta,p,chd);
 	if(verbose_adapt_mass){
 	  cout << is << ": "<< ", eps=" << eps << endl;
 	}

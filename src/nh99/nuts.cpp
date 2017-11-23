@@ -18,7 +18,6 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					   int restart_flag) {
-  cout << "Entering NUTS routine" << endl;
   if (nmcmc<=0) {
     cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
     ad_exit(1);
@@ -192,6 +191,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Whether to adapt the mass matrix
   int adapt_mass=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass"))>-1) {
+    diagonal_metric_flag=1;
     adapt_mass=1;
     diag_option=1; // always start with unit mass matrix if adapting
   }
@@ -217,7 +217,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cerr << "Option -mcsave does not currently work with HMC -- every iteration is saved" << endl;
     ad_exit(1);
   }
-
   // Prepare the mass matrix for use. For now assuming mass matrix passed
   // on the unconstrained scale using hybrid bounds, which is detectable
   // becuase the hbf flag is 1 in the .cov file. In that case, there is no
@@ -302,14 +301,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-  dmatrix chd, chdinv;
+  dmatrix chd(1,nvar,1,nvar);
+  dmatrix chdinv(1,nvar,1,nvar);
   if(diagonal_metric_flag==0){
     chd = choleski_decomp(S); // cholesky decomp of mass matrix
     chdinv=inv(chd);
   } else {
     // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal 
-    chd = S;
-    chdinv=S;
+    chd.initialize();
+    chdinv.initialize();
     for(int i=1;i<=nvar;i++){
       chd(i,i)=sqrt(S(i,i));
       chdinv(i,i)=1/chd(i,i);
@@ -577,14 +577,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  metric(i,i) = s1(i)/(k-1);
 	// Update chd and current vectxor
 	if(diagonal_metric_flag==0){
-	  chd = choleski_decomp(S); // cholesky decomp of mass matrix
+	  chd = choleski_decomp(metric); // cholesky decomp of mass matrix
 	  chdinv=inv(chd);
 	} else {
 	  // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal 
-	  chd = S;
-	  chdinv=S;
+	  chd.initialize();
+	  chdinv.initialize();
 	  for(int i=1;i<=nvar;i++){
-	    chd(i,i)=sqrt(S(i,i));
+	    chd(i,i)=sqrt(metric(i,i));
 	    chdinv(i,i)=1/chd(i,i);
 	  }
 	}

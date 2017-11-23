@@ -296,7 +296,7 @@ void function_minimizer::print_mcmc_timing(double time_warmup, double start) {
 // takes a single step of size eps. This process repeats until a reasonable
 // eps is found. Thus need to make sure y and p are constant and only eps
 // changes.
-double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd)
+double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose)
 {
 
   double eps=1;			   // initial eps
@@ -344,8 +344,10 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
 
     // Check if the 1/2 threshold has been crossed
     if(pow(alpha,a) < pow(2,-a)){
+      if(verbose){
       cout << "Found reasonable step size of " << eps << " after "
 	   << k << " steps." << endl;
+      }
       return(eps);
     } else {
       // Otherwise either halve or double eps and do another iteration

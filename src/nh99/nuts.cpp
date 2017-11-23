@@ -453,7 +453,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
-      eps=find_reasonable_stepsize(nvar,theta,p,chd);
+      eps=find_reasonable_stepsize(nvar,theta,p,chd,true);
       mu=log(10*eps);
       epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
@@ -596,7 +596,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	aws *=2;
         anw = compute_next_window(is, anw, warmup, w1, aws, w3);
 	// Refind a reasonable step size since it can be really different after changing M
-	eps=find_reasonable_stepsize(nvar,theta,p,chd);
+	eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass);
 	if(verbose_adapt_mass){
 	  cout << is << ": "<< ", eps=" << eps << endl;
 	}

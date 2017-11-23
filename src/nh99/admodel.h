@@ -1927,7 +1927,7 @@ public:
   void nuts_test_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
    void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
-  double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd);
+  double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose);
   bool stop_criterion(int nvar, dvector& thetaminus, dvector& thetaplus,
 		      dvector& rminus, dvector& rplus);
   void build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,

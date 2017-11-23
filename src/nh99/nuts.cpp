@@ -18,6 +18,7 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					   int restart_flag) {
+  cout << "Entering NUTS routine" << endl;
   if (nmcmc<=0) {
     cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
     ad_exit(1);
@@ -301,11 +302,22 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-  dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
-  dmatrix chdinv=inv(chd);
+  dmatrix chd, chdinv;
+  if(diagonal_metric_flag==0){
+    chd = choleski_decomp(S); // cholesky decomp of mass matrix
+    chdinv=inv(chd);
+  } else {
+    // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal 
+    chd = S;
+    chdinv=S;
+    for(int i=1;i<=nvar;i++){
+      chd(i,i)=sqrt(S(i,i));
+      chdinv(i,i)=1/chd(i,i);
+    }
+  }
   // Can now inverse rotate y to be x (algorithm space)
   independent_variables x0(1,nvar);
-  x0=chdinv * y0; // this is the initial value in algorithm space
+  x0=rotate_pars(chdinv,y0); // this is the initial value in algorithm space
   // cout << "Starting from chd=" << chd << endl;
   ///
   // /// Old code to test that I know what's going on.
@@ -434,7 +446,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
     // Reset model parameters to theta, whether updated or not in previous
     // iteration.
-    z=chd*theta;
+    z=rotate_pars(chd, theta);
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=rotate_gradient(gr, chd);
     H0=-nll-0.5*norm2(p); // initial Hamiltonian value
@@ -564,9 +576,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	for(int i=1; i<=nvar; i++)
 	  metric(i,i) = s1(i)/(k-1);
 	// Update chd and current vectxor
-	chd = choleski_decomp(metric); chdinv=inv(chd);
-        theta = chdinv*ytemp; // this is in x space now
-	// cout << is << ": Updated metric. Next window= " << anw << "-";
+	if(diagonal_metric_flag==0){
+	  chd = choleski_decomp(S); // cholesky decomp of mass matrix
+	  chdinv=inv(chd);
+	} else {
+	  // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal 
+	  chd = S;
+	  chdinv=S;
+	  for(int i=1;i<=nvar;i++){
+	    chd(i,i)=sqrt(S(i,i));
+	    chdinv(i,i)=1/chd(i,i);
+	  }
+	}
+	theta=rotate_pars(chdinv,ytemp);
         // Reset the running variance calculation
         k = 1; m1 = ytemp; s1.initialize();
         // Calculate the next end window. If this overlaps into the final fast

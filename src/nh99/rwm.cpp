@@ -1,7 +1,7 @@
 
 // The random walk metropolis algorithm. This is copied from mcmc_routine
 // function and modified by Cole.
-void function_minimizer::mcmc_rwm_routine(int nmcmc,int iseed0, double dscale,
+void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 				      int restart_flag)
 {
   // Temporary addition by Cole. Now MLE in bound space can be read in from

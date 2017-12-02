@@ -936,13 +936,14 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
       */
     }
 
-    write_empirical_covariance_matrix(ncor,s_mean,s_covar,
-				      ad_comm::adprogram_name);
+    // Cole commented this stuff out. Not sure what it does but shouldnt be needed
+    // write_empirical_covariance_matrix(ncor,s_mean,s_covar,
+    // 				      ad_comm::adprogram_name);
     //newton_raftery_bayes_estimate(current_bf,ibfcount,exp(lkvector),.01);
-#if defined(USE_BAYES_FACTORS)
-    cout << "log current bayes factor " << lcurrent_bf << endl;
-    newton_raftery_bayes_estimate_new(lcurrent_bf,ibfcount,lkvector,.01);
-#endif
+    // #if defined(USE_BAYES_FACTORS)
+    //     cout << "log current bayes factor " << lcurrent_bf << endl;
+    //     newton_raftery_bayes_estimate_new(lcurrent_bf,ibfcount,lkvector,.01);
+    // #endif
     if (pofs_psave)
       {
 	delete pofs_psave;

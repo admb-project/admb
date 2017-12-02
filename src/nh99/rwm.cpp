@@ -107,7 +107,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
   //int mcmc_wrap_flag=0;
   //int mcmc_gui_length=10000;
 
-  // Cole set this to 1 to essentially turn this feature off since no one seems to use it. 
+  // Cole set this to 1 to essentially turn this feature off since no one seems to use it.
   int no_sd_mcmc=1;
 
   int on2=-1;
@@ -460,7 +460,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
         stddev_params::copy_all_number_values(mcmc_number_values,offs);
 	}
       */
-      int change_ball=2500;
+      int change_ball= (int)nmcmc/2;
       int nopt = 0;
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcscale",nopt))>-1)
 	{
@@ -641,9 +641,9 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	// Need to save log-posterior (-NLL) to file to read in later.
 	ofstream rwm_lp("rwm_lp.txt", ios::trunc);
 	rwm_lp << "log-posterior" << endl;
-	ofstream rotated("rotated.csv", ios::trunc);
+	// ofstream rotated("rotated.csv", ios::trunc);
+	// ofstream bounded("bounded.csv", ios::trunc);
 	ofstream unbounded("unbounded.csv", ios::trunc);
-	ofstream bounded("bounded.csv", ios::trunc);
 	// cout << "Initial mle=" << mle << endl;
 	// cout << "Initial z=" << parsave << endl;
 	// cout << "Initial y=" << y << endl;
@@ -692,28 +692,28 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 			chd=.2*chd;
 			size_scale*=0.2;
 			chdinv=chdinv/0.2;
-			cout << "decreasing step size " << ln_det(chd,itmp) << endl;
+			//cout << "decreasing step size " << ln_det(chd,itmp) << endl;
 		      }
 		    if (tratio > .6)
 		      {
 			chd=2.*chd;
 			size_scale*=2.0;
 			chdinv=chdinv/2.;
-			cout << "increasing step size " << ln_det(chd,itmp) << endl;
+			//cout << "increasing step size " << ln_det(chd,itmp) << endl;
 		      }
 		    else if (tratio > .5)
 		      {
 			chd=1.5*chd;
 			size_scale*=1.5;
 			chdinv=chdinv/1.5;
-			cout << "increasing step size " << ln_det(chd,itmp) << endl;
+			//cout << "increasing step size " << ln_det(chd,itmp) << endl;
 		      }
 		    else if (tratio > .4)
 		      {
 			chd=1.2*chd;
 			size_scale*=1.2;
 			chdinv=chdinv/1.2;
-			cout << "increasing step size " << ln_det(chd,itmp) << endl;
+			//cout << "increasing step size " << ln_det(chd,itmp) << endl;
 		      }
 		  }
 	      }
@@ -824,13 +824,13 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 		  independent_variables xtemp(1,nvar);
 		  xtemp=chdinv0*y;
 		  for(int i=1;i<nvar;i++) {
-		    rotated << xtemp(i) << ", ";
+		    // rotated << xtemp(i) << ", ";
 		    unbounded << y(i) << ", ";
-		    bounded << parsave(i) << ", ";
+		    // bounded << parsave(i) << ", ";
 		  }
-		  rotated << xtemp(nvar) << endl;
+		  // rotated << xtemp(nvar) << endl;
 		  unbounded << y(nvar) << endl;
-		  bounded << parsave(nvar) << endl;
+		  // bounded << parsave(nvar) << endl;
 		}
 	      }
 	    /*

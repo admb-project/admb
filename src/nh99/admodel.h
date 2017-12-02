@@ -1922,6 +1922,7 @@ public:
   double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
     dvector& g);
   void read_mle_hmc(int nvar, dvector& mle);
+  void mcmc_rwm_routine(int,int, double, int);
   void shmc_mcmc_routine(int,int,double,int);
   void nuts_mcmc_routine(int,int,double,int);
   void nuts_test_mcmc_routine(int,int,double,int);

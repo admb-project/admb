@@ -1,6 +1,94 @@
 
 // The random walk metropolis algorithm. This is copied from mcmc_routine
 // function and modified by Cole.
+/**
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008-2012 Regents of the University of California
+ */
+#include <ctime>
+#include <admodel.h>
+
+#if defined(_MSC_VER)
+  #include <conio.h>
+#else
+  #define getch getchar
+#endif
+
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
+
+#ifdef ISZERO
+  #undef ISZERO
+#endif
+#define ISZERO(d) ((d)==0.0)
+
+double better_rand(long int&);
+void set_labels_for_mcmc(void);
+
+void print_hist_data(const dmatrix& hist, const dmatrix& values,
+  const dvector& h, dvector& m, const dvector& s, const dvector& parsave,
+  int iseed, double size_scale);
+
+int minnz(const dvector& x);
+int maxnz(const dvector& xa);
+
+void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s,
+  int mcmc2_flag);
+
+int read_hist_data(const dmatrix& hist, const dvector& h, dvector& m,
+  const dvector& s, const dvector& parsave, int& iseed,
+  const double& size_scale);
+
+void make_preliminary_hist(const dvector& s, const dvector& m,int nsim,
+  const dmatrix& values, dmatrix& hist, const dvector& h,int slots,
+  double total_spread,int probflag=0);
+
+void add_hist_values(const dvector& s, const dvector& m, const dmatrix& hist,
+  dvector& mcmc_values,double llc, const dvector& h,int nslots,
+  double total_spreadd,int probflag=0);
+
+void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
+  const dmatrix& s_covar, adstring& prog_name);
+
+void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
+  const adstring& prog_name);
+
+void read_hessian_matrix_and_scale(int nvar, const dmatrix& S,
+  const dvector& pen_vector);
+
+int user_stop(void);
+
+extern int ctlc_flag;
+
+dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& wght,double pprobe,
+   random_number_generator& rng);
+ // const random_number_generator& rng);
+
+void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& wght, const dvector& _y,
+  double pprobe, random_number_generator& rng);
+
+//void newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,
+//  double d);
+#if defined(USE_BAYES_FACTORS)
+void newton_raftery_bayes_estimate_new(double cbf,int ic, const dvector& lk,
+  double d);
+#endif
+
+void ad_update_mcmc_stats_report
+  (int feval,int iter,double fval,double gmax);
+
+void ad_update_function_minimizer_report(int feval,int iter,int phase,
+  double fval,double gmax,const char * cbuf);
+void ad_update_mcmc_report(dmatrix& m,int i,int j,int ff=0);
+void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
+  dvector& mean_mcmc_values,dvector& h,int ff=0);
+
 void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 				      int restart_flag)
 {

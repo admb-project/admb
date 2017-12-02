@@ -1,5 +1,6 @@
 OBJ6=\
  hmc_functions.obj\
+ rwm.obj\
  nuts.obj\
  nuts_tests.obj\
  hmc.obj\

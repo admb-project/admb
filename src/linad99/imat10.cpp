@@ -1,32 +1,30 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-ivector diagonal(const imatrix& m)
+Return vector diagonal of matrix.
+
+\param matrix imatrix
+*/
+ivector diagonal(const imatrix& matrix)
 {
-  if (m.indexmin() != m.colmin() || m.indexmax() != m.colmax())
+  int min = matrix.rowmin();
+  int max = matrix.rowmax();
+  if (min != matrix.colmin() || max != matrix.colmax())
   {
-    cerr << "Error matrix not square in function diagonal" << endl;
-    exit(21);
+    cerr << "Error: imatrix is not square"
+         << " in diagonal(const imatrix&).\n";
+    ad_exit(1);
   }
-  int mmin=m.indexmin();
-  int mmax=m.indexmax();
-  ivector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
-    tmp(i)=m(i,i);
-  return tmp;
+  ivector vector(min, max);
+  for (int i = min; i <= max; ++i)
+  {
+    vector(i) = matrix(i,i);
+  }
+  return vector;
 }
 /** Compute the dot product of two vectors. The minimum and maxium
 legal subscripts of the arguments must agree; otherwize an error message
@@ -41,8 +39,8 @@ int operator*(const ivector& t1, const ivector& t2)
 {
   if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
   {
-    cerr << "Index bounds do not match in "
-      "ivector operator*(const ivector&, const ivector&)\n";
+    cerr << "Index bounds do not match"
+         << " in operator*(const ivector&, const ivector&)\n";
     ad_exit(1);
   }
   int tmp = 0;
@@ -73,29 +71,30 @@ int operator*(const ivector& t1, const ivector& t2)
 
   return tmp;
 }
-
 /**
-Returns matrix multiplication (m1 x m2).
+Returns results of integer matrix multiplication (a x b).
 
-\param m1
-\param m2
+\param a imatrix
+\param b imatrix
 */
-imatrix operator*(const imatrix& m1, const imatrix& m2 )
+imatrix operator*(const imatrix& a, const imatrix& b)
 {
-  if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
+  int min = a.rowmin();
+  int max = a.rowmax();
+  if (min != b.colmin() || max != b.colmax())
   {
-    cerr << " Incompatible array bounds in "
-      "imatrix  operator * (const imatrix& x, const imatrix& m)\n";
-    ad_exit(21);
+    cerr << " Incompatible array bounds"
+         << " in operator*(const imatrix&, const imatrix&)\n";
+    ad_exit(1);
   }
-  imatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
-  for (int j=m2.colmin(); j<=m2.colmax(); j++)
+  imatrix results(min, max, min, max);
+  for (int j = min; j <= max; ++j)
   {
-    ivector m2col=column(m2,j);
-    for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+    ivector col = column(b, j);
+    for (int i = min; i <= max; ++i)
     {
-      tmp(i,j) = m1(i) * m2col;
+      results(i, j) = a(i) * col;
     }
   }
-  return tmp;
+  return results;
 }

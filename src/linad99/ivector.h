@@ -84,10 +84,7 @@ public:
       return (shape == NULL);
    }
 
-   unsigned int get_ncopies() const
-   {
-     return shape ? shape->get_ncopies() : 0;
-   }
+  unsigned int get_ncopies() const { return shape ? shape->get_ncopies() : 0; }
 
    int& elem(int i)
    {
@@ -108,9 +105,10 @@ public:
       return index_max;
    }
    // returns the maximum allowable index
-  int size() const
+  unsigned int size() const
   {
-    return v ? index_max - index_min + 1 : 0;
+    return static_cast<unsigned int>(
+      index_max < index_min ? 0 : index_max - index_min + 1);
   }
   int* get_v() const
   {

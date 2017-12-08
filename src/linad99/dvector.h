@@ -112,6 +112,15 @@ class dvector
 
    dvector(const predvector & pd);
 
+  double* begin() const
+  {
+    return v ? &v[index_min] : nullptr;
+  }
+  double* end() const
+  {
+    return v ? begin() + size() : nullptr;
+  }
+
    void fill_randpoisson(double lambda, const random_number_generator & rng);
    void fill_randnegbinomial(double lambda, double tau,
      const random_number_generator & rng);
@@ -181,40 +190,26 @@ class dvector
    void fill_multinomial(const random_number_generator& rng, const dvector& p);
    void initialize(void);
 
-   // returns the minimum allowable index
-   int &testmin()
-   {
-      return shape->index_min;
-   }
-
-   // returns the minimum allowable index
-   int &testmax()
-   {
-      return shape->index_max;
-   }
-
    unsigned int get_ncopies() const
    {
      return shape ? shape->get_ncopies() : 0;
    }
 
-   /// Get minimum valid index.
-   int indexmin() const
-   {
-      return index_min;
-   }
-
-   /// Get maximum valid index.
-   int indexmax() const
-   {
-      return index_max;
-   }
-
-   /// Get number of elements in array.
-   int size() const
-   {
-      return (index_max - index_min + 1);
-   }
+  /// Get minimum valid index.
+  int indexmin() const
+  {
+    return index_min;
+  }
+  /// Get maximum valid index.
+  int indexmax() const
+  {
+    return index_max;
+  }
+  /// Get number of elements in array.
+  unsigned int size() const
+  {
+    return static_cast<unsigned int>(index_max - index_min + 1);
+  }
 
    dvector & shift(int min);
 
@@ -222,7 +217,7 @@ class dvector
 
    dvector(const ad_integer &, const index_type &);
    void allocate(const ad_integer &, const index_type &);
-   dvector(void);
+   dvector();
    dvector(const dvector &);
    //dvector(const dvector&,int lb,int ub);
 

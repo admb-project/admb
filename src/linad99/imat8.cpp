@@ -6,59 +6,66 @@ Copyright (c) 2008-2012 Regents of the University of California
 #include <fvar.hpp>
 
 /**
-Returns sum of the columns in matrix m.
-*/
-ivector colsum(const imatrix& m)
-{
-  int cmin = m.colmin();
-  int cmax = m.colmax();
-  ivector ret(cmin, cmax);
-  ret.initialize();
+Returns integer vector colsums where each element
+is the sum of the jth column in matrix.
 
-  int rmin = m.rowmin();
-  int rmax = m.rowmax();
-  for (int j=cmin; j<=cmax; j++)
+\param matrix imatrix
+*/
+ivector colsum(const imatrix& matrix)
+{
+  int jmin = matrix.colmin();
+  int jmax = matrix.colmax();
+  ivector colsums(jmin, jmax);
+  colsums.initialize();
+
+  int imin = matrix.rowmin();
+  int imax = matrix.rowmax();
+  for (int j = jmin; j <= jmax; ++j)
   {
-    for (int i=rmin; i<=rmax; i++)
+    for (int i = imin; i <= imax; ++i)
     {
-      ret(j) += m(i,j);
+      colsums(j) += matrix(i, j);
     }
   }
-  return ret;
+  return colsums;
 }
 /**
-Returns sum of the rows in matrix m.
-*/
-ivector rowsum(const imatrix& m)
-{
-  int rmin = m.rowmin();
-  int rmax = m.rowmax();
-  ivector ret(rmin, rmax);
+Returns integer vector rowsums where each element
+is the sum of the ith row in matrix.
 
-  for (int i=rmin; i<=rmax; ++i)
+\param matrix imatrix
+*/
+ivector rowsum(const imatrix& matrix)
+{
+  int min = matrix.rowmin();
+  int max = matrix.rowmax();
+  ivector rowsums(min, max);
+
+  for (int i = min; i <= max; ++i)
   {
-    ret(i) = sum(m(i));
+    rowsums(i) = sum(matrix(i));
   }
 
-  return ret;
+  return rowsums;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-  void imatrix::fill_seqadd(int i2,int j)
+Fill imatrix with sequence of integers from start and adding with increment.
+
+\param start starting value
+\param increment incremental value
+*/
+void imatrix::fill_seqadd(int start, int increment)
+{
+  int current = start;
+
+  int imin = indexmin();
+  int imax = indexmax();
+  for (int i = imin; i <= imax; ++i)
   {
-    int mmin=indexmin();
-    int mmax=indexmax();
-    int ii=i2;
-    for (int i=mmin;i<=mmax;i++)
+    if (allocated(elem(i)))
     {
-      if (allocated((*this)(i)))
-      {
-        (*this)(i).fill_seqadd(ii,j);
-        int jmax=(*this)(i).indexmax();
-        ii=(*this)(i,jmax)+j;
-      }
+      elem(i).fill_seqadd(current, increment);
+      current = elem(i, elem(i).indexmax()) + increment;
     }
   }
+}

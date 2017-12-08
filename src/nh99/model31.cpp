@@ -37,6 +37,13 @@ dll_param_number& dll_param_number::operator=(const double m)
   return *this;
 }
 
+/**
+Allocate param_init_number and sets pd = _pd.
+
+\param _pd pointer to double
+\param _phase_start
+\param _s id
+*/
 void dll_param_init_number::allocate
   (double * _pd,int _phase_start,const char *_s)
 {
@@ -53,23 +60,37 @@ void dll_param_number::allocate
   pd=_pd;
   value(*this)=*_pd;
 }
+/**
+Allocate param_init_number and sets pd = _pd.
+Uses 1 as default phase_start.
 
-
-void dll_param_init_number::allocate
-  (double *_pd,const char *_s)
+\param _pd pointer to double
+\param _s id
+*/
+void dll_param_init_number::allocate(
+  double* _pd,
+  const char* _s)
 {
-  allocate(_pd,1,_s);
+  allocate(_pd, 1, _s);
 }
+/**
+Assigns val to parameter value.
 
-dll_param_init_number& dll_param_init_number::operator=(const double m)
+\param val double
+*/
+dll_param_init_number& dll_param_init_number::operator=(const double val)
 {
-  dvariable::operator = (m);
+  dvariable::operator=(val);
   return *this;
 }
+/**
+Assigns var to parameter value.
 
-dll_param_init_number& dll_param_init_number::operator=(const prevariable& m)
+\param var prevariable
+*/
+dll_param_init_number& dll_param_init_number::operator=(const prevariable& var)
 {
-  dvariable::operator = (m);
+  dvariable::operator=(var);
   return *this;
 }
 
@@ -214,16 +235,22 @@ void dll_data_matrix::allocate(double * _d,int rmin,int rmax,
   }
 }
 
-
-dll_data_matrix& dll_data_matrix::operator=(const dmatrix& m)
+/**
+Assign values from mat to elements of dll_data_matrix.
+\param mat dmatrix
+*/
+dll_data_matrix& dll_data_matrix::operator=(const dmatrix& mat)
 {
-  data_matrix::operator = (m);
+  data_matrix::operator=(mat);
   return *this;
 }
-
-dll_data_matrix& dll_data_matrix::operator=(const double& m)
+/**
+Assign value to all elements of dll_data_matrix.
+\param value double
+*/
+dll_data_matrix& dll_data_matrix::operator=(const double& value)
 {
-  data_matrix::operator = (m);
+  data_matrix::operator=(value);
   return *this;
 }
 
@@ -365,58 +392,44 @@ void dll_param_init_bounded_vector::allocate(double* _pd,int imin,int imax,
   allocate(_pd,imin,imax,_minb,_maxb,1,s);
 }
 
-dll_param_matrix& dll_param_matrix::operator =
-  (const dvar_matrix& m)
+dll_param_matrix& dll_param_matrix::operator=(const dvar_matrix& varmat)
 {
-  param_matrix::operator = (m);
+  param_matrix::operator=(varmat);
   return *this;
 }
-
-dll_param_matrix& dll_param_matrix::operator =
-  (const double m)
+dll_param_matrix& dll_param_matrix::operator=(const double value)
 {
-  param_matrix::operator = (m);
+  param_matrix::operator=(value);
   return *this;
 }
-
-dll_param_matrix& dll_param_matrix::operator =
-  (const dvariable& m)
+dll_param_matrix& dll_param_matrix::operator=(const dvariable& var)
 {
-  param_matrix::operator = (m);
+  param_matrix::operator=(var);
   return *this;
 }
-
-dll_param_matrix& dll_param_matrix::operator =
-  (const dmatrix& m)
+dll_param_matrix& dll_param_matrix::operator=(const dmatrix& mat)
 {
-  param_matrix::operator = (m);
+  param_matrix::operator=(mat);
   return *this;
 }
-
-dll_param_init_matrix& dll_param_init_matrix::operator =
-  (const dmatrix& m)
+dll_param_init_matrix& dll_param_init_matrix::operator=(const dmatrix& mat)
 {
-  param_init_matrix::operator = (m);
+  param_init_matrix::operator=(mat);
   return *this;
 }
-
-dll_param_init_matrix& dll_param_init_matrix::operator =
-  (const dvar_matrix& m)
+dll_param_init_matrix& dll_param_init_matrix::operator=(
+  const dvar_matrix& varmat)
 {
-  param_init_matrix::operator = (m);
+  param_init_matrix::operator=(varmat);
   return *this;
 }
-
-dll_param_init_matrix& dll_param_init_matrix::operator =
-  (const dvariable& m)
+dll_param_init_matrix& dll_param_init_matrix::operator=(const dvariable& value)
 {
-  param_init_matrix::operator = (m);
+  param_init_matrix::operator=(value);
   return *this;
 }
-
-dll_param_init_matrix& dll_param_init_matrix::operator =
-  (const double& m)
+dll_param_init_matrix& dll_param_init_matrix::operator=(const double& value)
 {
-  param_init_matrix::operator = (m);
+  param_init_matrix::operator=(value);
   return *this;
 }

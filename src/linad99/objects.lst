@@ -1,6 +1,5 @@
-OBJSPARSE=\
- ../sparse/hs_sparse.obj
 OBJ1=\
+ conjprod.obj\
  dmat21.obj\
  dmat3.obj\
  dmat34.obj\
@@ -412,7 +411,9 @@ OBJ3=\
  boundfun.obj\
  derch.obj\
  dvsort.obj\
+ dvsort2.obj\
  ivsort.obj\
+ ivsort2.obj\
  ivect_io.obj\
  fmm_cont.obj\
  dvec_dif.obj\
@@ -478,7 +479,6 @@ OBJ16=\
  lvec2.obj\
  imat4.obj\
  model49.obj\
- i3arr1.obj\
  d3arr11.obj
 PVM=\
  slgrdclc.obj\
@@ -494,5 +494,4 @@ UNUSED=\
  ad_atlas.obj\
  getopt.obj\
  manip.obj\
- fmmq.obj\
- conjprod.obj
+ fmmq.obj

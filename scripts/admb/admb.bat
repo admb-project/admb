@@ -1,6 +1,6 @@
 @echo off
 @REM
-@REM  Copyright 2013 (c) ADMB Foundation
+@REM  Copyright 2013-2017 (c) ADMB Foundation
 @REM
 
 if [%1]==[] goto HELP
@@ -429,8 +429,10 @@ if not defined tpls (
     )
   )
 )
+
 :SUCCESS
 goto EOF
+
 :ERROR
 echo.&echo Error: Unable to build.
 echo.&echo COMSPEC=%COMSPEC%.
@@ -440,7 +442,7 @@ goto EOF
 :HELP
 echo Builds AD Model Builder executable or library.
 echo.
-echo Release Version: 11.6pre
+echo Release Version: 11.6
 echo Location: %~dp0
 echo.
 echo Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
@@ -471,4 +473,6 @@ REM r525 [2009-08-07] arnima  added support for filename extension like
 REM                           simple.tpl
 REM                   johnoel split -s option into separate -g and -s options
 REM r244 [2009-05-28] arnima  created
+
 :EOF
+EXIT /B

@@ -10,6 +10,10 @@
 #define EIGEN_VECTORS
 
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 #ifdef ISZERO
   #undef ISZERO
@@ -45,7 +49,15 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
   }
 
   dvar_matrix m1=symmetrize(m);
-  int n=m1.rowsize();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int rowsize) -> int
+  {
+    assert(rowsize <= INT_MAX);
+    return static_cast<int>(rowsize);
+  } (m1.rowsize());
+#else
+  int n = static_cast<int>(m1.rowsize());
+#endif
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvar_vector diag(1,n);
@@ -101,7 +113,15 @@ void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d,
     "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
-  int n=m.rowsize();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int rowsize) -> int
+  {
+    assert(rowsize <= INT_MAX);
+    return static_cast<int>(rowsize);
+  } (m.rowsize());
+#else
+  int n = static_cast<int>(m.rowsize());
+#endif
   int l,k,j,i;
   dvariable scale,hh,h,g,f;
 
@@ -223,7 +243,15 @@ dvariable SIGNV(const prevariable& x, const prevariable& y)
   ADUNCONST(dvar_matrix,z)
   dvar_vector& e=(dvar_vector&) _e;
   dvar_vector& d=(dvar_vector&) _d;
-  int n=d.size();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int size) -> int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  } (d.size());
+#else
+  int n = static_cast<int>(d.size());
+#endif
   int m,l,iter,i,k;
   dvariable s,r,p,g,f,dd,c,b;
 

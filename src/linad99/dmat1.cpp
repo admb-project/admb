@@ -1,140 +1,131 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-dvector operator*(const dvector& x, const dmatrix& m)
- {
+Returns product of AB where A is a vector and B is a matrix.
+
+\param vec dvector
+\param mat dmatrix
+*/
+dvector operator*(const dvector& A, const dmatrix& B)
+{
 #ifdef DIAG
-     if( heapcheck() == _HEAPCORRUPT )
-     {
-        if (ad_printf)
-         (*ad_printf)( "Entering dvector * dvec dmat is corrupted.\n" );
-     }
-     else
-     {
-        if (ad_printf)
-          (*ad_printf)( "Entering dvector * dvec dmat  Heap is OK.\n" );
-     }
+  if(heapcheck() == _HEAPCORRUPT && ad_printf)
+  {
+    (*ad_printf)( "Entering dvector * dvec dmat is corrupted.\n" );
+  }
+  else
+  {
+    (*ad_printf)( "Entering dvector * dvec dmat  Heap is OK.\n" );
+  }
 #endif
 
-   if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
-   {
-     cerr << " Incompatible array bounds in "
-     "dvector  operator * (const dvector& x,const dmatrix& m)\n";
-     ad_exit(21);
-   }
-   dvector tmp(m.colmin(),m.colmax());
+  if (A.indexmin() != B.rowmin() || A.indexmax() != B.rowmax())
+  {
+    cerr << " Incompatible array bounds in "
+         << "dvector operator*(const dvector& A, const dmatrix& B)\n";
+    ad_exit(1);
+  }
 
-   for (int j=m.colmin(); j<=m.colmax(); j++)
-   {
-     tmp[j]=0;
-     for (int i=x.indexmin(); i<=x.indexmax(); i++)
-     {
-       tmp[j]+=x[i]*m[i][j];
-     }
-   }
+  dvector results(B.colmin(), B.colmax());
+  results.initialize();
+
+  for (int j = B.colmin(); j <= B.colmax(); ++j)
+  {
+    for (int i = A.indexmin(); i <= A.indexmax(); ++i)
+    {
+       results[j] += A[i] * B[i][j];
+    }
+  }
 #ifdef DIAG
-     if( heapcheck() == _HEAPCORRUPT )
-     {
-        if (ad_printf)
-          (*ad_printf)( "Leaving dvector * dvec dmat is corrupted.\n" );
-     }
-     else
-     {
-        if (ad_printf)
-          (*ad_printf)( "Leaving dvector * dvec dmat  Heap is OK.\n" );
-     }
+  if (heapcheck() == _HEAPCORRUPT && ad_printf)
+  {
+    (*ad_printf)( "Leaving dvector * dvec dmat is corrupted.\n" );
+  }
+  else
+  {
+    (*ad_printf)( "Leaving dvector * dvec dmat  Heap is OK.\n" );
+  }
 #endif
-   return(tmp);
- }
 
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
-dvector operator*(const dmatrix& m, const dvector& x)
- {
+Returns product of AB where A is a dmatrix and B is a dvector.
+
+\param A dmatrix
+\param B dvector
+*/
+dvector operator*(const dmatrix& A, const dvector& B)
+{
 #ifdef DIAG
-     if( heapcheck() == _HEAPCORRUPT )
-     {
-        if (ad_printf)
-          (*ad_printf)( "Entering dvector * dmat dvec is corrupted.\n" );
-     }
-     else
-     {
-        if (ad_printf)
-          (*ad_printf)( "Entering dvector * dmat dvec   Heap is OK.\n" );
-     }
+  if (heapcheck() == _HEAPCORRUPT && ad_printf)
+  {
+    (*ad_printf)("Entering dvector * dmat dvec is corrupted.\n");
+  }
+  else
+  {
+    (*ad_printf)("Entering dvector * dmat dvec   Heap is OK.\n");
+  }
 #endif
-   if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
+   if (B.indexmin() != A.colmin() || B.indexmax() != A.colmax())
    {
      cerr << " Incompatible array bounds in "
-     "dvector  operator * (const dvector& x, const dmatrix& m)\n";
-     ad_exit(21);
+          << "dvector operator*(const dmatrix& A, const dvector& B)\n";
+     ad_exit(1);
    }
 
-   dvector tmp(m.rowmin(),m.rowmax());
+   dvector results(A.rowmin(), A.rowmax());
+   results.initialize();
 
-   for (int i=m.rowmin(); i<=m.rowmax(); i++)
+   for (int i = A.rowmin(); i <= A.rowmax(); ++i)
    {
-     tmp[i]=0;
-     for (int j=x.indexmin(); j<=x.indexmax(); j++)
+     for (int j = B.indexmin(); j <= B.indexmax(); ++j)
      {
-       tmp[i]+=m[i][j]*x[j];
+       results[i] += A[i][j] * B[j];
      }
    }
-#ifdef DIAG
-     if( heapcheck() == _HEAPCORRUPT )
-     {
-        if (ad_printf)
-          (*ad_printf)( "Leaving dvector * dmat dvec is corrupted.\n" );
-     }
-     else
-     {
-        if (ad_printf)
-          (*ad_printf)( "Leaving dvector * dmat dvec   Heap is OK.\n" );
-     }
-#endif
-   return(tmp);
- }
 
+#ifdef DIAG
+  if (heapcheck() == _HEAPCORRUPT && ad_printf)
+  {
+    (*ad_printf)("Leaving dvector * dmat dvec is corrupted.\n");
+  }
+  else
+  {
+    (*ad_printf)("Leaving dvector * dmat dvec   Heap is OK.\n");
+  }
+#endif
+
+  return results;
+}
 /**
- * Description not yet available.
- * \param
- */
- dmatrix  operator * (const dmatrix& m1,const dmatrix& m2 )
- {
-   if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
+Returns product of AB where A is a dmatrix and B is a dmatrix.
+
+\param A dmatrix
+\param B dmatrix
+*/
+dmatrix operator*(const dmatrix& A, const dmatrix& B)
+{
+   if (A.colmin() != B.rowmin() || A.colmax() != B.rowmax())
    {
      cerr << " Incompatible array bounds in "
-     "dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
-     ad_exit(21);
+          << "dmatrix operator*(const dmatrix& A, const dmatrix& B)\n";
+     ad_exit(1);
    }
-   dmatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
-   double sum;
-   for (int j=m2.colmin(); j<=m2.colmax(); j++)
+   dmatrix results(A.rowmin(), A.rowmax(), B.colmin(), B.colmax());
+   for (int j= B.colmin(); j<= B.colmax(); j++)
    {
-     dvector m2col=column(m2,j);
-     for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+     dvector col = column(B, j);
+     for (int i= A.rowmin(); i<= A.rowmax(); i++)
      {
-       //const dvector& temp_row = m1.elem(i);
-       sum=m1.elem(i) * m2col;
-       tmp.elem(i,j)=sum;
+       results.elem(i,j) = A.elem(i) * col;
      }
    }
-   return(tmp);
+   return results;
  }
 /*
 dmatrix operator*(const dmatrix& m1, const dmatrix& m2 )

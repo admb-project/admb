@@ -4,11 +4,15 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
-#include <random>
 #include <fstream>
 #include <sstream>
 #include <stack>
 #include <queue>
+
+#ifndef __OPENCC__
+#include <random>
+#endif
+
 //#include "nuts_da.h"
 
 using std::cout;
@@ -56,13 +60,16 @@ bool function_minimizer::slow_phase(int i, int warmup, int w1, int w3)
 
 double function_minimizer::exprnd(double p)
 {
-  // Johnoel sent me this to use
+#ifndef __OPENCC__
   std::random_device rd;
   std::mt19937 gen(rd());
   // if particles decay once per second on average,
   // how much time, in seconds, until the next one?
   std::exponential_distribution<> d(p);
   return d(gen);
+#else
+  return 0;
+#endif
 }
 
 // Strip out the model name given full path
@@ -169,7 +176,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 
       // This is (n'+n''). Can be zero so need to be careful??
       int nprime_temp = nprime0 + _nprime;
-      if(std::isnan(nprime_temp)) nprime_temp=0;
+      if(std::isnan(static_cast<double>(nprime_temp))) nprime_temp=0;
       // Choose whether to keep the proposal thetaprime.
       double rr=randu(rng); // runif(1)
       if (nprime_temp != 0 && rr < double(_nprime)/double(nprime_temp)) {

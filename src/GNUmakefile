@@ -78,7 +78,9 @@ else
   ifeq ($(CXX),openCC)
     ADCXXFLAGS:= -O2 $(ADCXXFLAGS)
   else
-    ADCXXFLAGS:= -O3 $(ADCXXFLAGS)
+    ifneq ($(CXX),icpc)
+      ADCXXFLAGS:= -O3 $(ADCXXFLAGS)
+    endif
   endif
 endif
 
@@ -87,7 +89,18 @@ ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-unused-parameter
 endif
 
 ifeq ($(SHELL),cmd)
-  ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+  ifeq ($(CXX),g++)
+    GCCMAJVER:="GCCVER$(shell gcc -dumpversion)"
+    ifeq (GCCVER7,$(findstring GCCVER7,$(GCCMAJVER)))
+      ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+    else
+      ifeq (GCCVER6,$(findstring GCCVER6,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      endif
+    endif
+  endif
 else
   ifeq ("$(shell uname)","Darwin")
     ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
@@ -637,6 +650,8 @@ install:
 	@#echo "Read INSTALL.txt for installation instructions."
 ifeq ($(DEBUG),yes)
   ifeq ($(INSTALL_DIR),/usr/local/)
+	find ../build/debug -type d -exec chmod 755 {} \;
+	find ../build/debug -type f -exec chmod 644 {} \;
 	chmod a+rx ../build/debug/bin/admb
 	chmod a+rx ../build/debug/bin/adlink
 	chmod a+rx ../build/debug/bin/adcomp
@@ -648,6 +663,8 @@ ifeq ($(DEBUG),yes)
 	cp -Rvf ../build/debug $(INSTALL_DIR)admb
 else
   ifeq ($(INSTALL_DIR),/usr/local/)
+	find ../build/dist -type d -exec chmod 755 {} \;
+	find ../build/dist -type f -exec chmod 644 {} \;
 	chmod a+rx ../build/dist/bin/admb
 	chmod a+rx ../build/dist/bin/adlink
 	chmod a+rx ../build/dist/bin/adcomp

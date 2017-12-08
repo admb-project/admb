@@ -1,28 +1,23 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 
 /**
- * Description not yet available.
- * \param
- */
-double d3_array::fill_seqadd(double i1,double i2)
+Fills d3_array with a sequence of values starting with initial
+and incrementing with offset.
+
+\param initial value
+\param offset value
+\return last sequence value
+*/
+double d3_array::fill_seqadd(double initial, double offset)
 {
-  int mmin=indexmin();
-  int mmax=indexmax();
-  double inp = i1;
-  for (int i=mmin;i<=mmax;i++)
+  double last = initial;
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    double tmp=(*this)(i).fill_seqadd(inp,i2);
-    inp=tmp;
+    last = elem(i).fill_seqadd(last, offset);
   }
-  return inp;
+  return last;
 }

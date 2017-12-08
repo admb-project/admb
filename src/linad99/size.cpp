@@ -4,22 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const dvar_vector& x)
+Returns size of dvar_vector x.
+
+\param x dvar_vector
+*/
+unsigned int size_count(const dvar_vector& x)
 {
-  if (!(x))
-    return 0;
-  else
-    return x.size();
+  return !(x) ? 0 : x.size();
 }
 
 /**
@@ -35,24 +29,23 @@ int size_count_partial(const dvar_vector& x,int n)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const dvar_matrix& x)
+Returns size of dvar_matrix x.
+
+\param x dvar_matrix
+*/
+unsigned int size_count(const dvar_matrix& x)
 {
-  if (!(x))
-    return 0;
-  else
+  unsigned int size = 0;
+  if (!(x) == false)
   {
-    int tmp=0;
-    int min=x.rowmin();
-    int max=x.rowmax();
-    for (int i=min;i<=max;i++)
+    int min = x.rowmin();
+    int max = x.rowmax();
+    for (int i = min; i <= max; ++i)
     {
-      tmp+=size_count(x(i));
+      size += size_count(x(i));
     }
-    return tmp;
   }
+  return size;
 }
 
 /**
@@ -75,68 +68,62 @@ int size_count_partial(const dvar_matrix& x, int n)
     return tmp;
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const dvar3_array& x)
+Returns size of dvar3_array x.
+
+\param x dvar3_array
+*/
+unsigned int size_count(const dvar3_array& x)
 {
-  if (!(x))
-    return 0;
-  else
+  unsigned int size = 0;
+  if (!(x) == false)
   {
-    int tmp=0;
-    int min=x.slicemin();
-    int max=x.slicemax();
-    for (int i=min;i<=max;i++)
+    int min = x.slicemin();
+    int max = x.slicemax();
+    for (int i = min; i <= max; ++i)
     {
-      tmp+=size_count(x(i));
+      size += size_count(x(i));
     }
-    return tmp;
   }
+  return size;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const dvar4_array& x)
+Returns size of dvar4_array x.
+
+\param x dvar4_array
+*/
+unsigned int size_count(const dvar4_array& x)
 {
-  if (!(x))
-    return 0;
-  else
+  unsigned int size = 0;
+  if (!(x) == false)
   {
-    int tmp=0;
-    int min=x.indexmin();
-    int max=x.indexmax();
-    for (int i=min;i<=max;i++)
+    int min = x.indexmin();
+    int max = x.indexmax();
+    for (int i = min; i <= max; ++i)
     {
-      tmp+=size_count(x(i));
+      size += size_count(x(i));
     }
-    return tmp;
   }
+  return size;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int size_count(const d4_array& x)
+Returns size of d4_array x.
+
+\param x d4_array
+*/
+unsigned int size_count(const d4_array& x)
 {
-  if (!(x))
-    return 0;
-  else
+  unsigned int size = 0;
+  if (!(x) == false)
   {
-    int tmp=0;
-    int min=x.indexmin();
-    int max=x.indexmax();
-    for (int i=min;i<=max;i++)
+    int min = x.indexmin();
+    int max = x.indexmax();
+    for (int i = min; i <= max; ++i)
     {
-      tmp+=size_count(x(i));
+      size += size_count(x(i));
     }
-    return tmp;
   }
+  return size;
 }
 
 /**

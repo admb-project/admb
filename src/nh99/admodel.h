@@ -52,7 +52,6 @@
   #pragma interface
 #endif
 
-#define BIG_INIT_PARAMS
 
   class laplace_approximation_calculator;
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
@@ -760,13 +759,13 @@ For storing void pointers in a array.
 */
 class adlist_ptr
 {
-  ptovoid * ptr;
-  int current_size;
-  int current;
+  ptovoid* ptr;
+  unsigned int current_size;
+  unsigned int current;
   void resize(void);
   void add_to_list(void* p);
 public:
-  adlist_ptr(int init_size);
+  adlist_ptr(unsigned int init_size);
   ~adlist_ptr();
 
   void initialize();
@@ -815,6 +814,8 @@ public:
   };
 #endif
 
+//#define NO_BIG_INIT_PARAMS
+
 /**
  * Description not yet available.
  * \param
@@ -840,10 +841,11 @@ public:
 #endif
   double get_scalefactor();
   void set_scalefactor(const double);
-#if !defined(BIG_INIT_PARAMS)
-  static initial_params  varsptr[]; // this should be a resizeable array
+  //Resizeable arrays
+#if defined(NO_BIG_INIT_PARAMS)
+  static adlist_ptr varsptr;
 #else
-  static adlist_ptr varsptr; // this should be a resizeable array
+  static initial_params* varsptr[];
 #endif
   static int num_initial_params;
   static const int max_num_initial_params;
@@ -893,7 +895,7 @@ public:
     const int& ii) = 0;
   virtual void hess_scale(const dvector& d, const dvector& x,
     const int& ii) = 0;
-  virtual int size_count(void)=0; // get the number of active parameters
+  virtual unsigned int size_count() const = 0; // get the number of active parameters
 
   // save the objects value in to a text file
   virtual void save_value(ofstream& ofs) = 0;
@@ -1007,7 +1009,7 @@ private:
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void sd_scale(const dvector& d, const dvector& x, const int&);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x,const int&);
@@ -1043,18 +1045,24 @@ public:
  */
 class dll_param_init_vector: public param_init_vector
 {
-  double * pd;
-public:
-  dll_param_init_vector& operator = (const dvector&);
-  dll_param_init_vector& operator = (const dvar_vector&);
-  dll_param_init_vector& operator = (const prevariable&);
-  dll_param_init_vector& operator = (const double&);
-  void allocate(double * _pd,int imin,int imax,
-    int phasestart=1,const char * s="UNNAMED");
-  void allocate(double * _pd,int imin,int imax,
-    const char * s="UNNAMED");
+  double* pd;
 
+public:
   virtual ~dll_param_init_vector();
+
+  dll_param_init_vector& operator=(const dvector&);
+  dll_param_init_vector& operator=(const dvar_vector&);
+  dll_param_init_vector& operator=(const prevariable&);
+  dll_param_init_vector& operator=(const double&);
+
+  void allocate(double* _pd,
+    int imin, int imax,
+    int phasestart = 1,
+    const char* s = "UNNAMED");
+  void allocate(double* _pd,
+    int imin, int imax,
+    const char* s="UNNAMED");
+
   friend class model_parameters;
 };
 
@@ -1068,7 +1076,7 @@ class param_init_bounded_vector: public named_dvar_vector, public initial_params
 public:
   double get_minb(void);
   void set_minb(double b);
-  double get_maxb(void);
+  double get_maxb() const;
   void set_maxb(double b);
 protected:
   double minb;
@@ -1090,7 +1098,7 @@ private:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x, const int&);
@@ -1180,7 +1188,7 @@ class param_init_number: public named_dvariable, public initial_params
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void save_value(const ofstream& ofs, int prec);
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
     int& offset);
@@ -1213,13 +1221,16 @@ protected:
  */
 class dll_param_init_number: public param_init_number
 {
-  double * pd;
+  double* pd;
 public:
-  void allocate(double * pd,int phase_start=1,const char *s="UNNAMED");
-  void allocate(double *pd,const char *s="UNNAMED");
+  dll_param_init_number(): pd(NULL) {}
   virtual ~dll_param_init_number();
+
   dll_param_init_number& operator=(const double m);
   dll_param_init_number& operator=(const prevariable& m);
+
+  void allocate(double* pd, int phase_start = 1, const char* s = "UNNAMED");
+  void allocate(double* pd, const char *s = "UNNAMED");
 };
 
 //forward declaration
@@ -1235,7 +1246,7 @@ class param_init_bounded_number: public param_init_number
 public:
   double get_minb(void);
   void set_minb(double b);
-  double get_maxb(void);
+  double get_maxb() const;
   void set_maxb(double b);
 protected:
   double minb;
@@ -1326,7 +1337,7 @@ public:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void save_value(ofstream& ofs);
   virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec,const dvector&,
@@ -1398,7 +1409,7 @@ class param_init_bounded_matrix: public param_init_matrix
 public:
   double get_minb(void);
   void set_minb(double b);
-  double get_maxb(void);
+  double get_maxb() const;
   void set_maxb(double b);
 protected:
   double minb;
@@ -1499,9 +1510,9 @@ protected:
 class named_line_adstring : public line_adstring, public model_name_tag
 {
 protected:
-  void allocate(const char * s1,const char * s="UNNAMED");
-  void operator = (const adstring&);
-  void operator = (const char *);
+  void allocate(const char* s1, const char* s = "UNNAMED");
+  void operator=(const adstring&);
+  void operator=(const char*);
 };
 
 /**
@@ -1521,7 +1532,7 @@ public:
 class init_line_adstring: public named_line_adstring
 {
 public:
-  void allocate(const char * s="UNNAMED");
+  void allocate(const char* s = "UNNAMED");
 };
 
 /**
@@ -2155,7 +2166,10 @@ public:
   stddev_params(void){;}
   virtual void setindex(int);
   virtual int getindex(void);
-  virtual int size_count(void)=0; // get the number of active parameters
+
+  // get the number of active parameters
+  virtual unsigned int size_count() const = 0;
+
   virtual void set_dependent_variables(void)=0;
   virtual void copy_value_to_vector(const dvector&,const int&) = 0;
   virtual void get_sd_values(const dvector& x, const int& ii) = 0;
@@ -2205,7 +2219,10 @@ public:
 class param_stddev_vector: public named_dvar_vector , stddev_params
 {
   dvector sd;
-    virtual int size_count(void); // get the number of active parameters
+
+  // get the number of active parameters
+  virtual unsigned int size_count() const;
+
     virtual const char * label(void);
     param_stddev_vector();
     void allocate(int imin,int imax,const char * s="UNNAMED");
@@ -2229,7 +2246,10 @@ class param_stddev_number: public named_dvariable , public stddev_params
   void allocate(const char *s="UNNAMED");
   virtual void setindex(int);
   virtual int getindex(void);
-  virtual int size_count(void); // get the number of active parameters
+
+  // get the number of active parameters
+  virtual unsigned int size_count() const;
+
   virtual const char * label(void);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void get_sd_values(const dvector& x, const int& ii);
@@ -2250,7 +2270,10 @@ class param_likeprof_number: public param_stddev_number ,
 {
     double sigma;
     void allocate(const char *s="UNNAMED");
-    virtual int size_count(void); // get the number of active parameters
+
+  // get the number of active parameters
+  virtual unsigned int size_count() const;
+
     virtual const char * label(void);
     virtual double& get_sigma(void){return sigma;}
     virtual double get_value(void){return value(*this);}
@@ -2270,7 +2293,7 @@ public:
 class param_stddev_matrix: public named_dvar_matrix , stddev_params
 {
   dmatrix sd;
-    virtual int size_count(void);
+  virtual unsigned int size_count() const;
     //virtual void read_value(void);
     virtual const char * label(void);
     void allocate(int rmin,int rmax,int cmin,int cmax,
@@ -2333,7 +2356,7 @@ public:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void save_value(ofstream& ofs);
   virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec);
@@ -2390,7 +2413,7 @@ public:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&,const int&);
   virtual void set_value_inv(const dvector& x, const int& ii);
-  virtual int size_count(void);
+  virtual unsigned int size_count() const;
   virtual void save_value(ofstream& ofs);
   virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec);
@@ -2708,47 +2731,59 @@ public:
  */
 class param_init_bounded_matrix_vector
 {
-  param_init_bounded_matrix * v;
+  param_init_bounded_matrix* v;
   int index_min;
   int index_max;
-  double_index_type * it;
+  double_index_type* it;
 public:
   param_init_bounded_matrix_vector();
   ~param_init_bounded_matrix_vector();
 
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
-  dvector get_scalefactor(void);
+  dvector get_scalefactor();
 
-  void allocate(int min1,int max1,
-    const index_type& min, const index_type& max, const index_type& min2,
-    const index_type& max2, const double_index_type& dmin2,
-    const double_index_type& dmax2, const index_type& phase_start,
+  void allocate(
+    int min1, int max1,
+    const index_type& min, const index_type& max,
+    const index_type& min2, const index_type& max2,
+    const double_index_type& dmin2, const double_index_type& dmax2,
+    const index_type& phase_start,
     const char * s);
 
-  void allocate(int min1,int max1,
-    const index_type& min, const index_type& max, const index_type& min2,
-    const index_type& max2, const double_index_type& dmin2,
-    const double_index_type& dmax2,const char * s);
+  void allocate(
+    int min1, int max1,
+    const index_type& min, const index_type& max,
+    const index_type& min2, const index_type& max2,
+    const double_index_type& dmin2, const double_index_type& dmax2,
+    const char * s);
 
-#if defined(OPT_LIB)
-  param_init_bounded_matrix& operator [] (int i) { return v[i];}
-  param_init_bounded_matrix& operator () (int i) { return v[i];}
-  dvar_vector& operator () (int i,int j) { return v[i][j];}
-  prevariable operator () (int i,int j,int k) { return v[i](j,k);}
-#else
-  param_init_bounded_matrix& operator [] (int i);
-  param_init_bounded_matrix& operator () (int i);
-  dvar_vector& operator () (int i,int j);
-  prevariable operator () (int i,int j,int k);
-#endif
+  param_init_bounded_matrix& operator[](int i);
+  param_init_bounded_matrix& operator()(int i);
+  dvar_vector& operator()(int i, int j);
+  prevariable operator()(int i, int j, int k);
 
   bool allocated() const { return v != NULL; }
   int indexmin() const { return index_min; }
   int indexmax() const { return index_max; }
-  void set_initial_value(const double_index_type& it);
-  void deallocate(void);
+
+  void set_initial_value(const double_index_type& initial_value);
+  void deallocate();
 };
+#if defined(OPT_LIB)
+inline param_init_bounded_matrix&
+param_init_bounded_matrix_vector::operator[](int i)
+  { return v[i]; }
+inline param_init_bounded_matrix&
+param_init_bounded_matrix_vector::operator()(int i)
+  { return v[i]; }
+inline dvar_vector&
+param_init_bounded_matrix_vector::operator()(int i, int j)
+  { return v[i][j]; }
+inline prevariable
+param_init_bounded_matrix_vector::operator()(int i, int j, int k)
+  { return v[i](j,k); }
+#endif
 
 /**
  * Description not yet available.
@@ -2788,6 +2823,7 @@ public:
   void deallocate(void);
 };
 
+class data_matrix;
 /**
  * Class object for init_bounded_number vector
  * \author Dave Fournier, addition by Steve Martell
@@ -2795,7 +2831,6 @@ public:
  * Steve Martell overloaded the allocate routine to accomodate a matrix object
  * of the form data_matrix that would be read in from an input file.
  */
- class data_matrix;
 class param_init_bounded_number_vector
 {
   param_init_bounded_number* v;
@@ -2808,15 +2843,10 @@ public:
 
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
-  dvector get_scalefactor(void);
+  dvector get_scalefactor();
 
-#if defined(OPT_LIB)
-  param_init_bounded_number& operator [] (int i) { return v[i];}
-  param_init_bounded_number& operator () (int i) { return v[i];}
-#else
-  param_init_bounded_number& operator [] (int i);
-  param_init_bounded_number& operator () (int i);
-#endif
+  param_init_bounded_number& operator[](int i);
+  param_init_bounded_number& operator()(int i);
 
   void allocate(int min1,int max1,const double_index_type & bmin,
     const double_index_type & bmax,const index_type& phase_start,
@@ -2829,11 +2859,23 @@ public:
   void allocate(const data_matrix &m, const char *s);
 
   bool allocated() const { return v != NULL; }
-  int indexmin() const { return (index_min); }
-  int indexmax() const { return (index_max); }
+  int indexmin() const { return index_min; }
+  int indexmax() const { return index_max; }
   void set_initial_value(const double_index_type& it);
-  void deallocate(void);
+  void deallocate();
 };
+#if defined(OPT_LIB)
+inline param_init_bounded_number&
+param_init_bounded_number_vector::operator[](int i)
+{
+  return v[i];
+}
+inline param_init_bounded_number&
+param_init_bounded_number_vector::operator()(int i)
+{
+  return v[i];
+}
+#endif
   extern int traceflag;
   void tracing_message(int traceflag,const char *s,int *pn);
   void tracing_message(int traceflag,const char *s,double *pn);

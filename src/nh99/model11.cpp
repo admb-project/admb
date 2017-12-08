@@ -73,43 +73,74 @@ void named_dvar_matrix::allocate(int rmin,int rmax,const index_type& cmin,
   dvar_matrix::allocate(rmin,rmax,cmin,cmax);
   model_name_tag::allocate(s);
 }
+/**
+Assign named_dvar_matrix with values.
 
-named_dvar_matrix& named_dvar_matrix::operator=(const dvar_matrix& m)
+\param values dvar_matrix
+*/
+named_dvar_matrix& named_dvar_matrix::operator=(const dvar_matrix& values)
 {
-  this->dvar_matrix::operator=(m);
+  this->dvar_matrix::operator=(values);
   return *this;
 }
-named_dvar_matrix& named_dvar_matrix::operator=(const dmatrix& m)
-{
-  this->dvar_matrix::operator=(m);
-  return *this;
-}
-named_dvar_matrix& named_dvar_matrix::operator=(const double m)
-{
-  this->dvar_matrix::operator=(m);
-  return *this;
-}
+/**
+Assigns named_dvar_matrix with values from dmatrix dm.
 
-named_dvar_matrix& named_dvar_matrix::operator=(const dvariable& m)
+\param dm dmatrix values
+*/
+named_dvar_matrix& named_dvar_matrix::operator=(const dmatrix& dm)
 {
-  this->dvar_matrix::operator=(m);
+  this->dvar_matrix::operator=(dm);
   return *this;
 }
+/**
+Assign named_dvar_matrix with value.
 
+\param value double
+*/
+named_dvar_matrix& named_dvar_matrix::operator=(const double value)
+{
+  this->dvar_matrix::operator=(value);
+  return *this;
+}
+/**
+Assign named_dvar_matrix with value.
 
-param_stddev_matrix& param_stddev_matrix::operator=(const dvar_matrix& m)
+\param value dvariable
+*/
+named_dvar_matrix& named_dvar_matrix::operator=(const dvariable& values)
 {
-  this->dvar_matrix::operator=(m);
+  this->dvar_matrix::operator=(values);
   return *this;
 }
-param_stddev_matrix& param_stddev_matrix::operator=(const dmatrix& m)
+/**
+Assign param_stddev_matrix with values.
+
+\param values dvar_matrix
+*/
+param_stddev_matrix& param_stddev_matrix::operator=(const dvar_matrix& values)
 {
-  this->dvar_matrix::operator=(m);
+  this->dvar_matrix::operator=(values);
   return *this;
 }
-param_stddev_matrix& param_stddev_matrix::operator=(const double m)
+/**
+Assign param_stddev_matrix with values.
+
+\param values dmatrix
+*/
+param_stddev_matrix& param_stddev_matrix::operator=(const dmatrix& value)
 {
-  this->dvar_matrix::operator=(m);
+  this->dvar_matrix::operator=(value);
+  return *this;
+}
+/**
+Assign param_stddev_matrix with value.
+
+\param value double
+*/
+param_stddev_matrix& param_stddev_matrix::operator=(const double value)
+{
+  this->dvar_matrix::operator=(value);
   return *this;
 }
 
@@ -362,15 +393,24 @@ void named_dmatrix::allocate(int rmin,int rmax,const ivector& cmin,
   dmatrix::allocate(rmin,rmax,cmin,cmax);
   model_name_tag::allocate(s);
 }
+/**
+Assign named_dmatrix with values.
 
-named_dmatrix& named_dmatrix::operator=(const dmatrix& m)
+\param values dmatrix
+*/
+named_dmatrix& named_dmatrix::operator=(const dmatrix& values)
 {
-  dmatrix::operator=(m);
+  dmatrix::operator=(values);
   return *this;
 }
-named_dmatrix& named_dmatrix::operator=(const double m)
+/**
+Assign named_dmatrix with value.
+
+\param value double
+*/
+named_dmatrix& named_dmatrix::operator=(const double value)
 {
-  dmatrix::operator=(m);
+  dmatrix::operator=(value);
   return *this;
 }
 
@@ -486,15 +526,23 @@ named_d3_array& named_d3_array::operator=(const d3_array& m)
   d3_array::operator=(m);
   return *this;
 }
+/**
+Assign data_matrix with values.
 
-data_matrix& data_matrix::operator=(const dmatrix& m)
+/param values dmatrix
+*/
+data_matrix& data_matrix::operator=(const dmatrix& values)
 {
-  named_dmatrix::operator = (m);
+  named_dmatrix::operator=(values);
   return *this;
 }
+/**
+Assign data_matrix with value.
 
-data_matrix& data_matrix::operator=(const double& m)
+/param value double
+*/
+data_matrix& data_matrix::operator=(const double& value)
 {
-  named_dmatrix::operator = (m);
+  named_dmatrix::operator=(value);
   return *this;
 }

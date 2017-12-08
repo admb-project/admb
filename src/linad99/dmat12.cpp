@@ -1,39 +1,35 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 
 /**
- * Description not yet available.
- * \param
- */
-dmatrix symmetrize(const dmatrix& m)
+Returns symmetric matrix by averaging the elements upper and lower triangles
+in matrix.  So, results(i, j) and results(j, i) are equal to (matrix(i, j) + matrix(j, i)) / 2.
+Note: Requires that matrix is square.
+
+\param m dmatrix
+*/
+dmatrix symmetrize(const dmatrix& matrix)
 {
-  if (m.rowmin() != m.colmin() || m.rowmax() != m.colmax() )
+  if (matrix.rowmin() != matrix.colmin() || matrix.rowmax() != matrix.colmax())
   {
-    cerr << " Non square matrix passed to dmatrix symmetrize\n";
+    cerr << "Error: Parameter is non square matrix in "
+         << "symmetrize(dmatrix&)\n";
     ad_exit(1);
   }
-  int rmin=m.rowmin();
-  int rmax=m.rowmax();
-
-  dmatrix s(rmin,rmax,rmin,rmax);
-  for (int i=rmin;i<=rmax;i++)
+  int min = matrix.rowmin();
+  int max = matrix.rowmax();
+  dmatrix results(min, max, min, max);
+  for (int i = min; i <= max; ++i)
   {
-    s(i,i)=m(i,i);
-
-    for (int j=rmin;j<i;j++)
+    results(i, i) = matrix(i, i);
+    for (int j = min; j < i; ++j)
     {
-      s(i,j)=(m(i,j)+m(j,i))/2.;
-      s(j,i)=s(i,j);
+      results(i,j) = (matrix(i, j) + matrix(j, i)) * 0.5;
+      results(j,i) = results(i,j);
     }
   }
-  return s;
+  return results;
 }

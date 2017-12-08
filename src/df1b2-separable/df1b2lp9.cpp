@@ -11,6 +11,9 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+#endif
 
 static int no_stuff=0;
 /*
@@ -35,9 +38,13 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     delete separable_function_difference;
     separable_function_difference=0;
   }
+#ifndef OPT_LIB
+  assert(num_separable_calls > 0);
+#endif
+
   separable_function_difference = new dvector(1,num_separable_calls);
 
-  fmm** pfmc1 = new pfmm[num_separable_calls];
+  fmm** pfmc1 = new pfmm[static_cast<unsigned int>(num_separable_calls)];
   pfmc1--;
   ivector ishape(1,num_separable_calls);
   dvector gmax(1,num_separable_calls);

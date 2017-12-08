@@ -1,15 +1,8 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file fvar_fn.cpp
-// math.h functions involving prevariables
+
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -23,22 +16,21 @@
   #include <iomanip.hpp>
 #endif
 
-#include <stdio.h>
-#include <math.h>
-
 /**
-Determine if the lower and upper bounds of two evctors match in a specified
-function.
-\param v1 a data vector
-\param v2 a data vector
-\param function_nam a pointer to the name of the function in question.
+Exits if the dimensions of a and b dvector are not equal.
+
+\param a dvector
+\param b dvector
+\param message to include with output
 */
-void shape_check(const dvector& v1, const dvector& v2,
-  const char *function_name)
+void shape_check(
+  const dvector& a,
+  const dvector& b,
+  const char* message)
 {
-  if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
+  if (a.indexmin() != b.indexmin() || a.indexmax() != b.indexmax())
   {
-    cerr << " Vector sizes do no match in" << function_name << "\n";
+    cerr << " Vector sizes do no match in" << message << "\n";
     ad_exit(1);
   }
 }

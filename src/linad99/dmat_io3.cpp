@@ -1,16 +1,7 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file: dmat_io.cpp
-
-// i/o operations for class dmatrix
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -18,76 +9,69 @@
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <iomanip.hpp>
   #include <fstream.hpp>
-  #define __USE_IOSTREAM__
 #endif
 
-#include <string.h>
-
-#ifdef __USE_IOSTREAM__
-
 /**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& istr, const dmatrix& _z)
-{
-  ADUNCONST(dmatrix,z)
-  z.read_from(istr);
+Read values from input.
 
-  return (uistream&)istr;
+\param input uistream
+\param value dmatrix
+*/
+uistream& operator>>(const uistream& input, const dmatrix& values)
+{
+  return const_cast<dmatrix&>(values).read_from(input);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::read_from(const uistream& s)
-{
-  int n = rowmin() + rowsize() - 1;
+Read dmatrix from input.
 
-  for (int i=rowmin(); i <= n; i++)
+\param input uistream
+*/
+uistream& dmatrix::read_from(const uistream& input)
+{
+  uistream& uis = const_cast<uistream&>(input);
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-     s >> (*this)[i];
-     if (!s.good())
-     {
-       cerr << " Error in dmatrix read\n";
-       ad_exit(1);
-     }
+    uis >> elem(i);
   }
-}
-
-/**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& ostr, const dmatrix& z)
-{
-  z.write_on(ostr);
-
-  return (uostream&) ostr;
-}
-
-/**
- * Description not yet available.
- * \param
- */
-void dmatrix::write_on(const uostream& s) const
-{
-  for (int i=rowmin(); i <= rowmax(); i++)
+  if (uis.bad() || uis.fail())
   {
-     s << (*this)[i];
-     if (!s.good())
-     {
-       cerr << " Error in dmatrix write\n";
-       ad_exit(1);
-     }
+    cerr << " Error in dmatrix::read_from.\n";
+    ad_exit(1);
   }
+  return uis;
 }
-#endif
+/**
+Write values to output.
+
+\param output uostream
+\param value dmatrix
+*/
+uostream& operator<<(const uostream& output, const dmatrix& values)
+{
+  return values.write_on(output);
+}
+/**
+Write dmatrix to output.
+
+\param output uostream
+*/
+uostream& dmatrix::write_on(const uostream& output) const
+{
+  uostream& uos = const_cast<uostream&>(output);
+  for (int i = rowmin(); i <= rowmax(); ++i)
+  {
+    uos << elem(i);
+  }
+  if (uos.bad() || uos.fail())
+  {
+    cerr << " Error in dmatrix::write_on\n";
+    ad_exit(1);
+  }
+  return uos;
+}

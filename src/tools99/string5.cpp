@@ -14,10 +14,10 @@
 /**
 Default constructor
 */
-adstring_array::adstring_array()
+adstring_array::adstring_array():
+  shape(NULL),
+  ptr(NULL)
 {
-  shape=NULL;
-  ptr=NULL;
 }
 /**
 Copy constructor
@@ -70,20 +70,27 @@ int adstring_array::indexmin() const
 int adstring_array::indexmax() const
   { return shape ? shape->indexmax() : 0;}
 
+/**
+Allocate vector of adstring with range [min, max].
+
+\param min lower index
+\param max upper index
+*/
 void adstring_array::allocate(int min, int max)
 {
   if (min > max)
   {
     cerr << " Error in adstring_array(int min,int max) --"
-            " max must be >= min" << endl;
-    exit(1);
+         << " max must be >= min" << endl;
+    ad_exit(1);
   }
   shape = new vector_shape(min, max);
   if (!shape)
   {
     cerr << "Error allocating memory in adstring_array" << endl;
   }
-  ptr = new adstring*[max - min + 1];
+  unsigned int size = static_cast<unsigned int>(max - min + 1);
+  ptr = new adstring*[size];
   if (!ptr)
   {
     cerr << "Error allocating memory in adstring_array" << endl;
@@ -142,7 +149,7 @@ const adstring& adstring_array::operator[](int i) const
   if (!shape)
   {
     cerr << "Error -- trying to acess unallocated adstring array" << endl;
-    exit(1);
+    ad_exit(1);
   }
 
 #ifndef OPT_LIB

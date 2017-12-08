@@ -35,7 +35,10 @@ param_init_d3array::param_init_d3array() : named_dvar3_array() ,
   //add_to_list();
 }
 
-int param_init_d3array::size_count(void)
+/**
+Return number of active parameters.
+*/
+unsigned int param_init_d3array::size_count() const
 {
   return ::size_count(*this);
 }

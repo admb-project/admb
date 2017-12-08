@@ -1,16 +1,7 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file: dmat_io.cpp
-
-// i/o operations for class dmatrix
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -18,52 +9,51 @@
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <iomanip.hpp>
   #include <fstream.hpp>
-  #define __USE_IOSTREAM__
 #endif
 
-#include <string.h>
-//#include "i3_array.h"
-
 /**
- * Description not yet available.
- * \param
- */
-ostream& operator<<(const ostream& _ostr, const i3_array& z)
+Save iarr3 to output stream.
+
+\param output ostream
+\param iarr3 i3_array
+*/
+ostream& operator<<(const ostream& output, const i3_array& iarr3)
 {
-  ostream& ostr=(ostream&) _ostr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
+  ostream& ostr = const_cast<ostream&>(output);
+  for (int i = iarr3.slicemin(); i <= iarr3.slicemax(); ++i)
   {
-    if (allocated(z[i]))
+    if (allocated(iarr3[i]))
     {
-      ostr << z[i];
+      ostr << iarr3[i];
     }
-    if (i<z.slicemax())
+    if (i < iarr3.slicemax())
     {
       ostr << endl;
     }
   }
-  return (ostream&) ostr;
+  return ostr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-istream& operator>>(const istream& istr,const i3_array& z)
+Read to iarr3 from input stream.
+
+\param input istream
+\param iarr3 i3_array
+*/
+istream& operator>>(const istream& input, const i3_array& iarr3)
 {
-  for (int i=z.slicemin();i<=z.slicemax();i++)
+  istream& istr = const_cast<istream&>(input);
+  for (int i = iarr3.slicemin(); i <= iarr3.slicemax(); ++i)
   {
-    if (allocated(z[i]))
+    if (allocated(iarr3[i]))
     {
-      istr >> z[i];
+      istr >> iarr3[i];
     }
   }
-  return (istream&) istr;
+  return istr;
 }

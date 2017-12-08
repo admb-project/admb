@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 #include <adstring.hpp>
+#include <admodel.h>
 #include <climits>
 
 extern "C"
@@ -156,7 +157,7 @@ TEST_F(test_adstring, substring)
   substring = "4ad";
 
   EXPECT_EQ(4, pos(substring, a));
-  
+
   adstring b;
   b = a(4, 6);
   EXPECT_EQ('4', b(1));
@@ -207,13 +208,13 @@ TEST_F(test_adstring, operator_notequal)
 }
 TEST_F(test_adstring, val_hexadecimal)
 {
-  adstring a("0x2E6"); 
+  adstring a("0x2E6");
   int actual = val(a);
   EXPECT_EQ(742, actual);
 }
 TEST_F(test_adstring, val_integer)
 {
-  adstring a("-742"); 
+  adstring a("-742");
   int actual = val(a);
   EXPECT_EQ(-742, actual);
 }
@@ -285,8 +286,8 @@ TEST_F(test_adstring, itoa_INT_MAX_base2)
 #endif
 TEST_F(test_adstring, realloc)
 {
-  adstring a("-742"); 
-  char expected[] = "Reallocation."; 
+  adstring a("-742");
+  char expected[] = "Reallocation.";
   a.realloc(expected);
   EXPECT_STREQ(expected, (char*)a);
 }
@@ -308,9 +309,9 @@ TEST_F(test_adstring, clist_chain_list)
 {
   adstring a;
   EXPECT_EQ(1, a.length());
-  adstring b(a); 
+  adstring b(a);
   EXPECT_EQ(2, b.length());
-  adstring c(b); 
+  adstring c(b);
   EXPECT_EQ(3, c.length());
   EXPECT_STREQ((char*)a, (char*)b);
   EXPECT_STREQ((char*)a, (char*)c);
@@ -320,10 +321,10 @@ TEST_F(test_adstring, clist_nested_destructors)
   adstring a;
   EXPECT_EQ(1, a.length());
   {
-    adstring b(a); 
+    adstring b(a);
     EXPECT_EQ(2, b.length());
     {
-      adstring c(b); 
+      adstring c(b);
       EXPECT_EQ(3, c.length());
     }
     EXPECT_EQ(2, b.length());
@@ -613,14 +614,14 @@ TEST_F(test_adstring, default_constructor_unsigned_char_array)
 }
 TEST_F(test_adstring, operator_plus_char)
 {
-  adstring u("-742"); 
+  adstring u("-742");
   char v = 'v';
   adstring actual = u + v;
   EXPECT_STREQ("-742v", actual);
 }
 TEST_F(test_adstring, operator_plus_unsigned_char)
 {
-  adstring u("-742"); 
+  adstring u("-742");
   unsigned char v = 'v';
   adstring actual = u + v;
   EXPECT_STREQ("-742v", actual);
@@ -628,14 +629,164 @@ TEST_F(test_adstring, operator_plus_unsigned_char)
 TEST_F(test_adstring, constructor_zero)
 {
   ad_exit=&test_ad_exit;
-  ASSERT_EXIT({
-    adstring u(0); 
-  }, ::testing::ExitedWithCode(1), "Error");
+  ASSERT_ANY_THROW({
+    adstring u(0);
+  });
 }
 TEST_F(test_adstring, constructor_not_one)
 {
   ad_exit=&test_ad_exit;
-  ASSERT_EXIT({
-    adstring u(0, 1); 
-  }, ::testing::ExitedWithCode(1), "Error");
+  ASSERT_ANY_THROW({
+    adstring u(0, 1);
+  });
+}
+TEST_F(test_adstring, str2)
+{
+  adstring a;
+  str(1234, a);
+  EXPECT_STREQ("1234", a);
+  adstring b;
+  str(-1234, b);
+  EXPECT_STREQ("-1234", b);
+}
+TEST_F(test_adstring, unsignedchar_plus_adstring)
+{
+  const unsigned char u('u');
+  adstring v("-742");
+
+  adstring result = u + v;
+  EXPECT_STREQ("u-742", result);
+}
+TEST_F(test_adstring, unsignedchararray_plus_adstring)
+{
+  const unsigned char v[] = "abc";
+
+  adstring u("-742");
+
+  adstring result = v + u;
+
+  EXPECT_STREQ("abc-742", result);
+}
+TEST_F(test_adstring, adstring_plus_unsignedchararray)
+{
+  const unsigned char v[] = "abc";
+
+  adstring u("-742");
+
+  adstring result = u + v;
+  EXPECT_STREQ("-742abc", result);
+}
+TEST_F(test_adstring, comparison)
+{
+  adstring a("abcd");
+  adstring b("abcd");
+  adstring c("efgh");
+
+  ASSERT_TRUE(a == b);
+  ASSERT_TRUE(a == a);
+  ASSERT_TRUE(b == b);
+  ASSERT_FALSE(a == c);
+  ASSERT_FALSE(c == a);
+  ASSERT_FALSE(b == c);
+  ASSERT_FALSE(c == b);
+}
+TEST_F(test_adstring, constcomparison)
+{
+  const adstring a("abcd");
+  const adstring b("abcd");
+  const adstring c("efgh");
+
+  ASSERT_TRUE(a == b);
+  ASSERT_TRUE(a == a);
+  ASSERT_TRUE(b == b);
+  ASSERT_FALSE(a == c);
+  ASSERT_FALSE(c == a);
+  ASSERT_FALSE(b == c);
+  ASSERT_FALSE(c == b);
+}
+TEST_F(test_adstring, errorunsignedchar)
+{
+  ad_exit=&test_ad_exit;
+
+  adstring a("abcd");
+
+  ASSERT_ANY_THROW({
+    a(0);
+  });
+  ASSERT_ANY_THROW({
+    a(5);
+  });
+  ASSERT_EQ('a', a(1));
+  ASSERT_EQ('b', a(2));
+  ASSERT_EQ('c', a(3));
+  ASSERT_EQ('d', a(4));
+}
+TEST_F(test_adstring, errormaxlimit)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit.txt");
+  for (int i = 0; i <= 1025; ++i)
+  {
+    ofs << "i";
+  }
+  ofs.close();
+
+  adstring a;
+
+  ifstream ifs("maxlimit.txt");
+  ASSERT_ANY_THROW({
+    ifs >> a;
+  });
+  ifs.close();
+}
+TEST_F(test_adstring, init_adstring_allocate)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit.txt");
+   ofs << "idkjfskjdfklsjkljdfsk";
+  ofs.close();
+
+  init_adstring a;
+
+  ASSERT_TRUE(ad_comm::global_datafile == NULL);
+
+  cifstream ifs("maxlimit.txt");
+  
+  ad_comm::global_datafile = &ifs;
+
+  a.allocate("name_tag");
+
+  ad_comm::global_datafile = NULL;
+
+  ifs.close();
+
+  EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
+
+}
+TEST_F(test_adstring, init_line_adstring_allocate)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit.txt");
+  ofs << "idkjfskjdfklsjkljdfsk";
+  ofs.close();
+
+  ASSERT_TRUE(ad_comm::global_datafile == NULL);
+
+  adstring input = "maxlimit.txt";
+  cifstream ifs(input);
+  
+  ad_comm::global_datafile = &ifs;
+  {
+    init_line_adstring a;
+    ASSERT_EQ(0, a.buff_size());
+    a.allocate();
+    ASSERT_EQ(21, a.buff_size());
+    EXPECT_STREQ("idkjfskjdfklsjkljdfsk", (char*)a);
+  }
+  ad_comm::global_datafile = NULL;
+
+  ifs.close();
 }

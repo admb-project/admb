@@ -364,10 +364,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
           ad_exit(1);
         }
         // get last x vector from file
-#ifndef OPT_LIB
-        assert(parsave.size() >= 0);
-#endif
-        std::streamoff sz = (unsigned int)parsave.size() * sizeof(double);
+        std::streamoff sz = parsave.size() * sizeof(double);
         // backup from end of file
         uis.seekg(-sz, ios::end);
         uis >> parsave;

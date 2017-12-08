@@ -33,26 +33,24 @@ mat_shape::mat_shape(int rl,int ru,int cl,int cu)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Changes the range of valid indices for the rows.
+\param min shifts column values index_min and index_max.
+*/
 void mat_shape::colshift(int min)
 {
-  col_max=col_max-col_min+min;
-  col_min=min;
+  col_max = col_max - col_min + min;
+  col_min = min;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::rowshift(int min )
+Changes the range of valid indices for the rows.
+\param min shifts row values index_min and index_max.
+*/
+void dmatrix::rowshift(int min)
 {
   m = m + rowmin() - min;
-  index_max+=min-index_min;
-  index_min=min;
+  index_max += min - index_min;
+  index_min = min;
 }
-
 /**
  * Description not yet available.
  * \param

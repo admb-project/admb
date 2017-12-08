@@ -1,50 +1,40 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Functions to compute minimum and maximum of a dvar_vector.
  */
 #include "fvar.hpp"
 
 /**
- * \ingroup misc
- * Maximum of a dvar_vector.
- * \param A dvar_vector
- * \returns The maximum of the vector
+\ingroup misc
+Return maximum value variables.
+\param variables dvar_vector
+\returns the maximum of the vector
  */
-dvariable max(const dvar_vector& t1)
+dvariable max(const dvar_vector& variables)
+{
+  int mmin = variables.indexmin();
+  int mmax = variables.indexmax();
+  dvariable maximum = variables.elem(mmin);
+  for (int i = mmin + 1; i <= mmax; ++i)
   {
-     dvariable tmp;
-     int mmin=t1.indexmin();
-     int mmax=t1.indexmax();
-     tmp=t1.elem(mmin);
-     for (int i=mmin+1; i<=mmax; i++)
-     {
-       if (tmp<t1.elem(i)) tmp=t1.elem(i);
-     }
-     return(tmp);
+    if (maximum < variables.elem(i)) maximum = variables.elem(i);
   }
-
-
+  return maximum;
+}
 /**
- * \ingroup misc
- * Minimum of a dvar_vector.
- * \param A dvar_vector
- * \returns The minimum of the vector
- */
-dvariable min(const dvar_vector& t1)
+\ingroup misc
+Return minimum value variables.
+\param variables dvar_vector
+\returns the minimum of the vector
+*/
+dvariable min(const dvar_vector& variables)
+{
+  int mmin = variables.indexmin();
+  int mmax = variables.indexmax();
+  dvariable minimum = variables.elem(mmin);
+  for (int i = mmin + 1; i <= mmax; ++i)
   {
-     dvariable tmp;
-     int mmin=t1.indexmin();
-     int mmax=t1.indexmax();
-     tmp=t1.elem(mmin);
-     for (int i=mmin+1; i<=mmax; i++)
-     {
-       if (tmp>t1.elem(i)) tmp=t1.elem(i);
-     }
-     return(tmp);
+    if (minimum > variables.elem(i)) minimum = variables.elem(i);
   }
+  return minimum;
+}

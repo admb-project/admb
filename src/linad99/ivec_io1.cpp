@@ -1,94 +1,79 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-// file: dvect_io.cpp
 #include "fvar.hpp"
-
-// i/o ooperations for class ivector
-
 
 #ifdef __TURBOC__
   #pragma hdrstop
   #include <iostream.h>
   #include <iomanip.h>
   #include <fstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #include <iomanip.hpp>
   #include <fstream.hpp>
-  #define __USE_IOSTREAM__
 #endif
 
-#include <string.h>
 #ifndef OPT_LIB
   #include <cassert>
 #endif
 
-#ifdef __USE_IOSTREAM__
-
 /**
- * Description not yet available.
- * \param
- */
-uistream& operator>>(const uistream& _istr, const ivector& _z)
+Read from input to values.
+
+\param input uistream
+\param values ivector
+*/
+uistream& operator>>(const uistream& input, const ivector& values)
 {
-  ivector& z=(ivector& )_z;
-  uistream& istr= (uistream&) _istr;
-  z.read_from(istr);
-  return istr;
+  const_cast<ivector&>(values).read_from(input);
+  return const_cast<uistream&>(input);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void ivector::read_from(const uistream& _s)
+Read values from input into ivector.
+
+\param input uistream
+*/
+void ivector::read_from(const uistream& input)
 {
-  ADUNCONST(uistream,s);
-  char* p = (char*)(v + indexmin());
 #ifndef OPT_LIB
   assert(indexmax() >= indexmin());
 #endif
+
+  char* p = (char*)(v + indexmin());
   int n = indexmax() - indexmin() + 1;
   n *= (int)sizeof(int);
-  s.read(p, n);
+
+  const_cast<uistream&>(input).read(p, n);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-uostream& operator<<(const uostream& _ostr, const ivector& z)
-{
-  uostream & ostr = (uostream&) _ostr;
-  z.write_on(ostr);
+Write values to output.
 
-  return ostr;
+\param output uostream
+\param values ivector
+*/
+uostream& operator<<(const uostream& output, const ivector& values)
+{
+  const_cast<ivector&>(values).write_on(output);
+  return const_cast<uostream&>(output);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void ivector::write_on(const uostream& _s) const
+Write ivector values to output.
+
+\param output uostream
+*/
+void ivector::write_on(const uostream& output) const
 {
-  ADUNCONST(uostream,s)
-  char* p = (char*)(v + indexmin());
 #ifndef OPT_LIB
   assert(indexmax() >= indexmin());
 #endif
+
+  char* p = (char*)(v + indexmin());
   int n = indexmax() - indexmin() + 1;
   n *= (int)sizeof(int);
-  s.write(p, n);
+
+  const_cast<uostream&>(output).write(p, n);
 }
-#endif

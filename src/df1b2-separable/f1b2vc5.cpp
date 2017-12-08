@@ -664,8 +664,7 @@ void df1b2matrix::allocate(int nrl,int nrh,int ncl,int nch)
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2vector[rs]) == 0)
+  if ( (v = new df1b2vector[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b2matrix contructor\n";
       ad_exit(21);
@@ -690,8 +689,7 @@ void df1b2matrix::allocate(int nrl,int nrh,const index_type& ncl,
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2vector[rs]) == 0)
+  if ( (v = new df1b2vector[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b2matrix contructor\n";
       ad_exit(21);
@@ -726,8 +724,7 @@ void df1b2matrix::allocate(int nrl,int nrh)
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2vector[rs]) == 0)
+  if ( (v = new df1b2vector[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b2matrix contructor\n";
       ad_exit(21);
@@ -744,11 +741,9 @@ void df1b2matrix::allocate(int nrl,int nrh)
   }
   */
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 df1b2matrix::~df1b2matrix()
 {
   if (shape)
@@ -793,14 +788,17 @@ void df1b2matrix::allocate(void)
 }
 
 /**
- * Copy values of vector v into column j.
- */
-void df1b2matrix::colfill(const int j, const df1b2vector& v)
+Copy vector values into column j of df1b2matrix.
+
+\param j column index
+\param values vector
+*/
+void df1b2matrix::colfill(const int j, const df1b2vector& values)
 {
   //RETURN_ARRAYS_INCREMENT();   makes no sense for df1b2 stuff
-  for (int i=rowmin(); i<=rowmax(); i++)
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    (*this)[i][j]=v[i];
+    (*this)[i][j] = values[i];
   }
   //RETURN_ARRAYS_DECREMENT();
 }

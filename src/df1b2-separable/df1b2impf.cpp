@@ -8,9 +8,13 @@
  * \file
  * Description not yet available.
  */
-#  include <admodel.h>
-#  include <df1b2fun.h>
-#  include <adrndeff.h>
+#include <admodel.h>
+#include <df1b2fun.h>
+#include <adrndeff.h>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 /**
  * Description not yet available.
@@ -23,10 +27,23 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(dmatrix,Hessadjoint)
-  const int xs=x.size();
-  const int us=u0.size();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  const int xs = [](unsigned int size)->int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  }(x.size());
+  const int us = [](unsigned int size)->int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  }(u0.size());
+#else
+  const int xs = static_cast<int>(x.size());
+  const int us = static_cast<int>(u0.size());
+#endif
   gradient_structure::set_YES_DERIVATIVES();
-  int nvar=x.size()+u0.size()+u0.size()*u0.size();
+  int nvar = xs + us + us * us;
   independent_variables y(1,nvar);
 
   // need to set random effects active together with whatever

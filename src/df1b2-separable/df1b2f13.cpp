@@ -363,8 +363,8 @@ void fixed_smartlist::read_buffer(void)
     }
     // get the record size
     unsigned int nbytes = 0;
-    ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
-    assert(ret != -1);
+    ssize_t result = ::read(fp,&nbytes,sizeof(unsigned int));
+    assert(result != -1);
     if (nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"

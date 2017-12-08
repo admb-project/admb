@@ -5,6 +5,10 @@
  * Copyright (c) 2009-2012 ADMB Foundation
  */
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -18,7 +22,8 @@
 #define TINY 1.0e-20;
 void dfinvpret(void);
 
-/** Smallest of two integers
+/**
+Return smallest value of two integers a or b
 \param a An integer
 \param b An integer
 \return A integer \f$ z = \min(a,b)\f$
@@ -38,7 +43,15 @@ int min(const int a, const int b)
 dvar_matrix inv(const dvar_matrix& aa)
 {
   int imax = 0;
-  int n = aa.colsize();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (aa.colsize());
+#else
+  int n = static_cast<int>(aa.colsize());
+#endif
   int lb=aa.colmin();
   int ub=aa.colmax();
   dvar_matrix vc(lb,ub,lb,ub);

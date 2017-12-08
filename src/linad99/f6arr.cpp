@@ -24,26 +24,32 @@
      (*this)(i).initialize();
    }
  }
-
+/// Copy constructor
+dvar6_array::dvar6_array(const dvar6_array& other)
+{
+  shallow_copy(other);
+}
 /**
- * Description not yet available.
- * \param
- */
- dvar6_array::dvar6_array(const dvar6_array& _m2)
- {
-   dvar6_array& m2=(dvar6_array&) _m2;
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
+Shallow copy other data structure pointers.
+
+\param other dvar6_array
+*/
+void dvar6_array::shallow_copy(const dvar6_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
+  }
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated dvar6_array.\n";
+#endif
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.
@@ -55,39 +61,31 @@
    allocate(m2);
    (*this)=m2;
  }
-
-/**
- * Description not yet available.
- * \param
- */
- void dvar6_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t += indexmin();
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
-#if defined(SAFE_ALL)
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated dvar4_array"<<endl;
-   }
+/// Deallocate dvar6_array memory.
+void dvar6_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies > 0)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      t += indexmin();
+      delete [] t;
+      delete shape;
+    }
+    allocate();
+  }
+#ifdef DEBUG
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated dvar6_array.\n";
+  }
 #endif
- }
-
-/**
-Destructor
-*/
+}
+/// Destructor
 dvar6_array::~dvar6_array()
 {
   deallocate();
@@ -138,52 +136,47 @@ dvar6_array::~dvar6_array()
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void dvar6_array::allocate(const dvar6_array& m1)
- {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
-       == 0)
-   {
-     cerr << " Error allocating memory in dvar5_array contructor" << endl;
-   }
-   int ss=size();
-   if ( (t = new dvar5_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in dvar5_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
-   {
-     t[i].allocate(m1[i]);
-   }
- }
-
+Allocate dvar6_array using dimensions from m1.
+*/
+void dvar6_array::allocate(const dvar6_array& m1)
+{
+  if ((shape=new vector_shape(m1.indexmin(), m1.indexmax())) == 0)
+  {
+    cerr << " Error allocating memory in dvar6_array::allocate" << endl;
+    ad_exit(1);
+  }
+  if ((t = new dvar5_array[size()]) == 0)
+  {
+    cerr << " Error allocating memory in dvar6_array::allocate" << endl;
+    ad_exit(1);
+  }
+  t -= indexmin();
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    t[i].allocate(m1[i]);
+  }
+}
 /**
- * Description not yet available.
- * \param
- */
- void dvar6_array::allocate(const d6_array& m1)
- {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
-       == 0)
-   {
-     cerr << " Error allocating memory in dvar5_array contructor" << endl;
-   }
-   int ss=size();
-   if ( (t = new dvar5_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in dvar5_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
-   {
-     t[i].allocate(m1[i]);
-   }
- }
+Allocate dvar6_array using dimensions from m1.
+*/
+void dvar6_array::allocate(const d6_array& m1)
+{
+  if ((shape = new vector_shape(m1.indexmin(), m1.indexmax())) == 0)
+  {
+    cerr << "Error allocating memory in dvar5_array contructor" << endl;
+    ad_exit(1);
+  }
+  if ((t = new dvar5_array[size()]) == 0)
+  {
+    cerr << "Error allocating memory in dvar5_array contructor" << endl;
+    ad_exit(21);
+  }
+  t -= indexmin();
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    t[i].allocate(m1[i]);
+  }
+}
 
   #ifndef OPT_LIB
 
@@ -439,8 +432,7 @@ void dvar6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      cerr << " Error allocating memory in dvar5_array contructor\n";
      ad_exit(21);
    }
-   int ss=size();
-   if ( (t = new dvar5_array[ss]) == 0)
+   if ( (t = new dvar5_array[size()]) == 0)
    {
      cerr << " Error allocating memory in dvar5_array contructor\n";
      ad_exit(21);
@@ -467,8 +459,7 @@ void dvar6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      cerr << " Error allocating memory in dvar5_array contructor\n";
    }
 
-   int ss=size();
-   if ( (t = new dvar5_array[ss]) == 0)
+   if ( (t = new dvar5_array[size()]) == 0)
    {
      cerr << " Error allocating memory in dvar5_array contructor\n";
      ad_exit(21);
@@ -484,27 +475,26 @@ void dvar6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void dvar6_array::allocate(int hsl,int hsu)
- {
-   if ( (shape=new vector_shape (hsl,hsu)) == 0)
-   {
-     cerr << " Error allocating memory in dvar5_array contructor\n";
-   }
-
-   int ss=size();
-   if ( (t = new dvar5_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in dvar5_array contructor\n";
-     ad_exit(21);
-   }
-   t -= indexmin();
-   int il=hsl;
-   int iu=hsu;
-   for (int i=il; i<=iu; i++)
-   {
-     t[i].allocate();
-   }
- }
+Allocate vector of dvar5_array with dimension
+[hsl to hsu].
+\param hsl lower vector index
+\param hsu upper vector index
+*/
+void dvar6_array::allocate(int hsl, int hsu)
+{
+  if ((shape = new vector_shape(hsl, hsu)) == 0)
+  {
+    cerr << " Error allocating memory in dvar5_array contructor\n";
+    ad_exit(1);
+  }
+  if ((t = new dvar5_array[size()]) == 0)
+  {
+    cerr << " Error allocating memory in dvar5_array contructor\n";
+    ad_exit(1);
+  }
+  t -= indexmin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    t[i].allocate();
+  }
+}

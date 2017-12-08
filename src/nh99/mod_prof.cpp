@@ -30,10 +30,13 @@
     // stddev_params::add_to_list(); // don't think we need this here
   }
 
-  int param_likeprof_number::size_count(void)
-  {
-    return 1;
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_likeprof_number::size_count() const
+{
+  return 1;
+}
 
 /*
         void param_likeprof_number::set_dependent_variables(void)
@@ -57,17 +60,24 @@
     return model_name_tag::label().mychar();
   }
 
-param_likeprof_number& param_likeprof_number::operator=(const prevariable& v)
-        {
-                this->param_stddev_number::operator = (v);
-                return *this;
-        }
-
-param_likeprof_number& param_likeprof_number::operator=(const double v)
-        {
-                this->param_stddev_number::operator = (v);
-                return *this;
-        }
+/**
+Assign param_likeprof_number with prevariable var.
+\param var prevariable
+*/
+param_likeprof_number& param_likeprof_number::operator=(const prevariable& var)
+{
+  this->param_stddev_number::operator=(var);
+  return *this;
+}
+/**
+Assign param_likeprof_number with value.
+\param value double
+*/
+param_likeprof_number& param_likeprof_number::operator=(const double value)
+{
+  this->param_stddev_number::operator=(value);
+  return *this;
+}
 
         // for now only do likelihood profiles for numbers
   /*

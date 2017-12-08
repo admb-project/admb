@@ -111,13 +111,12 @@ df1_two_vector::~df1_two_vector()
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  df1_two_vector::df1_two_vector(void)
-  {
-    allocate();
-  }
+Default constructor.
+*/
+df1_two_vector::df1_two_vector(void)
+{
+  allocate();
+}
 
 /**
  * Description not yet available.
@@ -129,39 +128,39 @@ df1_two_vector::~df1_two_vector()
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  void df1_two_vector::allocate(int min,int max)
+Allocate vector of df1_two_variable with dimension
+[min to max].
+\param min lower index
+\param max upper index
+*/
+void df1_two_vector::allocate(int min,int max)
+{
+  index_min = min;
+  index_max = max;
+  v = new df1_two_variable[
+    static_cast<unsigned int>(max < min ? 0 : max - min + 1)];
+  if (v == 0)
   {
-    index_min=min;
-    index_max=max;
-    v=new df1_two_variable[max-min+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df1_two_vector" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new vector_shapex(min,max,v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df1_two_vector"
-           << endl;;
-      ad_exit(1);
-    }
-    v-=min;
+    cerr << "error allocating memory in df1_two_vector\n";
+    ad_exit(1);
   }
-
+  if ((shape = new vector_shapex(min, max, v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df1_two_vector\n";
+    ad_exit(1);
+  }
+  v -= min;
+}
 /**
- * Description not yet available.
- * \param
- */
-  void df1_two_vector::allocate(void)
-  {
-    index_min=0;
-    index_max=-1;
-    v=0;
-    shape=0;
-  }
+Does NOT allocate, but initializes empty df1_two_vector.
+*/
+void df1_two_vector::allocate()
+{
+  index_min = 0;
+  index_max = -1;
+  v = 0;
+  shape = 0;
+}
 
 /**
  * Description not yet available.
@@ -248,31 +247,34 @@ df1_two_vector::~df1_two_vector()
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  df1_two_matrix::df1_two_matrix(int rmin,int rmax,int cmin,int cmax)
+Construct matrix of df1_two_variable with dimension
+[rmin to rmax] x [cmin to cmax].
+\param rmin lower row index
+\param rmax upper row index
+\param cmin lower column index
+\param cmax upper column index
+*/
+df1_two_matrix::df1_two_matrix(int rmin, int rmax, int cmin, int cmax)
+{
+  index_min = rmin;
+  index_max = rmax;
+  v = new df1_two_vector[
+    static_cast<unsigned int>(rmax < rmin ? 0 : rmax - rmin + 1)];
+  if (v == 0)
   {
-    index_min=rmin;
-    index_max=rmax;
-    v=new df1_two_vector[rmax-rmin+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df1_two_matrix" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new mat_shapex(v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df1_two_vector"
-           << endl;;
-    }
-    v-=rmin;
-
-    for (int i=rmin;i<=rmax;i++)
-    {
-      v[i].allocate(cmin,cmax);
-    }
+    cerr << "error allocating memory in df1_two_matrix\n";
+    ad_exit(1);
   }
+  if ((shape = new mat_shapex(v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df1_two_vector\n";
+  }
+  v -= rmin;
+  for (int i = rmin; i <= rmax; ++i)
+  {
+    v[i].allocate(cmin, cmax);
+  }
+}
 
 /**
  * Description not yet available.

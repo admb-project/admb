@@ -139,27 +139,29 @@ df1_three_vector::~df1_three_vector()
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  void df1_three_vector::allocate(int min,int max)
+Allocate vector of df1_three_variable with dimension
+[min to max].
+\param min lower vector index
+\param max upper vector index
+*/
+void df1_three_vector::allocate(int min, int max)
+{
+  index_min = min;
+  index_max = max;
+  v = new df1_three_variable[
+    static_cast<unsigned int>(max < min ? 0 : max - min + 1)];
+  if (v == 0)
   {
-    index_min=min;
-    index_max=max;
-    v=new df1_three_variable[max-min+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df1_three_vector" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new vector_shapex(min,max,v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df1_three_vector"
-           << endl;;
-      ad_exit(1);
-    }
-    v-=min;
+    cerr << "error allocating memory in df1_three_vector" << endl;
+    ad_exit(1);
   }
+  if ((shape = new vector_shapex(min, max, v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df1_three_vector\n";
+    ad_exit(1);
+  }
+  v-=min;
+}
 
 /**
  * Description not yet available.
@@ -258,31 +260,35 @@ df1_three_vector::~df1_three_vector()
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  df1_three_matrix::df1_three_matrix(int rmin,int rmax,int cmin,int cmax)
+Allocate matrix of df1_three_variable with dimension
+[min to max] x [cmin to cmax].
+\param rmin lower row index
+\param rmax upper row index
+\param cmin lower column index
+\param cmax upper column index
+*/
+df1_three_matrix::df1_three_matrix(int rmin, int rmax, int cmin, int cmax)
+{
+  index_min = rmin;
+  index_max = rmax;
+  v = new df1_three_vector[
+    static_cast<unsigned int>(rmax < rmin ? 0 : rmax - rmin + 1)];
+  if (v == 0)
   {
-    index_min=rmin;
-    index_max=rmax;
-    v=new df1_three_vector[rmax-rmin+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df1_three_matrix" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new mat_shapex(v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df1_three_vector"
-           << endl;;
-    }
-    v-=rmin;
-
-    for (int i=rmin;i<=rmax;i++)
-    {
-      v[i].allocate(cmin,cmax);
-    }
+    cerr << "error allocating memory in df1_three_matrix" << endl;
+    ad_exit(1);
   }
+  if ((shape = new mat_shapex(v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df1_three_vector\n";
+    ad_exit(1);
+  }
+  v -= rmin;
+  for (int i = rmin; i <= rmax; ++i)
+  {
+    v[i].allocate(cmin, cmax);
+  }
+}
 
 /**
  * Description not yet available.
@@ -816,21 +822,13 @@ df1_three_variable pow(const df1_three_variable& x,const df1_three_variable& y)
     return z;
   }
 
-  df1_three_variable operator - (const df1_three_variable& x,
-    const df1_three_variable& y);
-  df1_three_variable operator / (const df1_three_variable& x,
-    const df1_three_variable& y);
-  df1_three_variable operator * (const df1_three_variable& x,
-    const df1_three_variable& y);
-
 /**
- * Description not yet available.
- * \param
- */
-  init_df1_three_variable::~init_df1_three_variable()
-  {
-    deallocate();
-  }
+Destructor
+*/
+init_df1_three_variable::~init_df1_three_variable()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.

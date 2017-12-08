@@ -125,7 +125,6 @@ class cifstream : public ifstream
   int  field;
   int  ignore_eof;
 
-  void filter(void);
   void get_field(char * s,int space_flag=0);
   void report_error(const char* s = NULL);
   void set_eof_bit(void);
@@ -171,23 +170,26 @@ public:
   #endif
 #endif
 
+  void filter();
+
   adstring get_file_name(void);
   char* comment() { return comment_line; }
   char* signature();
 
   cifstream& operator>>(const dvariable& z);
  //  cifstream& operator>>(const prevariable& z);
-  cifstream& operator >> (long long& i);
-  cifstream& operator >> (const long long& i);
+  cifstream& operator>>(long long& i);
+  cifstream& operator>>(const long long& i);
   cifstream& operator>>(const long& i);
   cifstream& operator>>(const int& i);
   cifstream& operator>>(const double& x);
   cifstream& operator>>(const float& x);
-  cifstream& operator >> (char* x);
-  cifstream& operator >> (const char* x);
-  cifstream& operator >> (const adstring& x);
-  cifstream& operator >> (adstring& x);
-  cifstream& operator >> (const line_adstring& x);
+  cifstream& operator>>(char* x);
+  cifstream& operator>>(const char* x);
+  cifstream& operator>>(const adstring& x);
+  cifstream& operator>>(adstring& x);
+  cifstream& operator>>(const line_adstring& x);
+  cifstream& operator>>(line_adstring& x);
   cifstream& getline(char*, int, char = '\n');
 
   cifstream& operator>>(const dvar_vector& z);
@@ -202,18 +204,19 @@ public:
 
 cifstream& operator>>(cifstream& istr, const prevariable& z);
 cifstream& operator>>(cifstream& istr, const dvar_matrix& z);
-cifstream& operator>>(cifstream& istr, const d3_array& z);
-cifstream& operator>>(cifstream& istr, const d4_array& z);
-cifstream& operator>>(cifstream& istr, const d5_array& z);
 cifstream& operator>>(cifstream& istr, const dvar3_array& z);
 cifstream& operator>>(cifstream& istr, const dvar4_array& z);
 cifstream& operator>>(cifstream& istr, const dvar5_array& z);
-//cifstream& operator>>(cifstream& istr, s3_array& z);
 cifstream& operator>>(cifstream& istr, const dmatrix& z);
+cifstream& operator>>(cifstream& istr, const d3_array& z);
+cifstream& operator>>(cifstream& istr, const d4_array& z);
+cifstream& operator>>(cifstream& istr, const d5_array& z);
+//cifstream& operator>>(cifstream& istr, s3_array& z);
 //cifstream& operator>>(cifstream& istr,smatrix& z);
 cifstream& operator>>(cifstream& istr, const imatrix& z);
 cifstream& operator>>(cifstream& istr, const i3_array& z);
 cifstream& operator>>(cifstream& istr, const i4_array& z);
+cifstream& operator>>(cifstream& istr, const i5_array& z);
 //cifstream& operator>>(cifstream& istr, lmatrix& z);
 
 #endif //#define CIFSTREM_H

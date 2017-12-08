@@ -5,9 +5,11 @@ tests/gtests/test_nuts
 /admb
 contrib/ad2csv/ad2csv
 src/**/lex.yy.c
+src/**/*.swp
 src/df1b2-separable/tpl2rem.c
 src/nh99/tpl2cpp.c
 benchmarks-opt.txt
 benchmarks-saf.txt
 examples/admb/simple/*
 examples/admb/catage/*
+**/.DS_Store

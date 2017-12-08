@@ -102,6 +102,67 @@ TEST_F(test_param_init_number_vector, allocate)
   ASSERT_EQ(1, p.indexmin());
   ASSERT_EQ(4, p.indexmax());
 }
+TEST_F(test_param_init_number_vector, setscalefactorerror)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  param_init_number_vector p;
+  p.allocate(1, 4, "allocate");
+
+  ASSERT_ANY_THROW({
+    dvector v;
+    p.set_scalefactor(v);
+  });
+  ASSERT_ANY_THROW({
+    dvector v(0, 4);
+    p.set_scalefactor(v);
+  });
+  ASSERT_ANY_THROW({
+    dvector v(1, 5);
+    p.set_scalefactor(v);
+  });
+}
+/*
+TEST_F(test_param_init_number_vector, setscalefactor)
+{
+  gradient_structure gs;
+
+  param_init_number_vector p;
+  p.allocate(1, 4, "allocate");
+  ASSERT_TRUE(p.allocated());
+  ASSERT_EQ(1, p.indexmin());
+  ASSERT_EQ(4, p.indexmax());
+
+  dvector scalefactors = p.get_scalefactor();
+
+  ASSERT_DOUBLE_EQ(0, value(scalefactors(1)));
+  ASSERT_DOUBLE_EQ(0, value(scalefactors(2)));
+  ASSERT_DOUBLE_EQ(0, value(scalefactors(3)));
+  ASSERT_DOUBLE_EQ(0, value(scalefactors(4)));
+
+  p.set_scalefactor(2.5); //Thows exception
+  scalefactors = p.get_scalefactor();
+
+  ASSERT_DOUBLE_EQ(2.5, value(scalefactors(1)));
+  ASSERT_DOUBLE_EQ(2.5, value(scalefactors(2)));
+  ASSERT_DOUBLE_EQ(2.5, value(scalefactors(3)));
+  ASSERT_DOUBLE_EQ(2.5, value(scalefactors(4)));
+
+  scalefactors(1) = 1.5;
+  scalefactors(2) = 2.5;
+  scalefactors(3) = 3.5;
+  scalefactors(4) = 4.5;
+
+  p.set_scalefactor(scalefactors);
+
+  ASSERT_DOUBLE_EQ(1.5, value(scalefactors(1)));
+  ASSERT_DOUBLE_EQ(2.5, value(scalefactors(2)));
+  ASSERT_DOUBLE_EQ(3.5, value(scalefactors(3)));
+  ASSERT_DOUBLE_EQ(4.5, value(scalefactors(4)));
+}
+*/
 TEST_F(test_param_init_number_vector, allocate_error)
 {
   param_init_number_vector p;

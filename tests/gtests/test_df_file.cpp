@@ -57,7 +57,32 @@ TEST_F(test_df_file, constructor_max)
 {
   ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW(
-    DF_FILE df_file(ULLONG_MAX)
+#if defined(_MSC_VER) || defined(__MINGW64__)
+    size_t maxsize = std::numeric_limits<unsigned int>::max();
+#elif defined(__x86_64)
+    size_t maxsize = std::numeric_limits<OFF_T>::max();
+#else
+    size_t maxsize = std::numeric_limits<size_t>::max();
+#endif
+    maxsize -= sizeof(OFF_T) - 1;
+    DF_FILE df_file(maxsize)
+  );
+}
+TEST_F(test_df_file, constructor_max_limit)
+{
+  ad_exit=&test_ad_exit;
+#if defined(_MSC_VER) || defined(__MINGW64__)
+  ASSERT_NO_THROW(
+    size_t maxsize = std::numeric_limits<unsigned int>::max();
+#elif defined(__x86_64)
+  ASSERT_ANY_THROW(
+    size_t maxsize = std::numeric_limits<OFF_T>::max();
+#else
+  ASSERT_ANY_THROW(
+    size_t maxsize = std::numeric_limits<size_t>::max();
+#endif
+    maxsize -= sizeof(OFF_T);
+    DF_FILE df_file(maxsize)
   );
 }
 TEST_F(test_df_file, allocate_max)
@@ -316,8 +341,7 @@ TEST_F(test_df_file, write_read_int_3x_exactbuffer)
 }
 TEST_F(test_df_file, write_read_int_3x_nobuffer)
 {
-  const size_t us = sizeof(size_t) + 2;
-  const size_t size = sizeof(int) + us;
+  const size_t size = sizeof(int);
 
   DF_FILE buffer(size);
 

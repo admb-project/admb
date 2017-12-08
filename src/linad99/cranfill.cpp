@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 
@@ -22,137 +16,139 @@
 #include <math.h>
 
 /**
- * Description not yet available.
- * \param
- */
-double var(const dvector& v)
-  {
-    double tmp;
-    tmp=norm(v)/sqrt(double(v.size()));
-    double tmp1;
-    tmp1=mean(v);
-    return(tmp*tmp-tmp1*tmp1);
-  }
+Returns the computed variance of vec.
 
+\param vec dvector
+*/
+double var(const dvector& vec)
+{
+  double x = norm(vec) / sqrt(static_cast<double>(vec.size()));
+  double y = mean(vec);
+  return x * x - y * y;
+}
 /**
- * Description not yet available.
- * \param
- */
-double std_dev(const dvector& v)
-  {
-    double tmp;
-    tmp=norm(v)/sqrt(double(v.size()));
-    double tmp1;
-    tmp1=mean(v);
-    return(sqrt(tmp*tmp-tmp1*tmp1));
-  }
+Returns the computed standand deviation of vec.
 
+\param vec dvector
+*/
+double std_dev(const dvector& vec)
+{
+  return sqrt(var(vec));
+}
 /**
- * Description not yet available.
- * \param
- */
-double mean(const dvector& v)
-  {
-    double tmp=0;
-    for (int i=v.indexmin(); i<=v.indexmax(); i++)
-    {
-      tmp+=v.elem(i);
-    }
-    return(tmp/v.size());
-  }
+Returns computed mean of vec.
 
-/**
- * Description not yet available.
- * \param
- */
-  void dvector::fill_seqadd(const double base, const double offset)
+\param vec dvector
+*/
+double mean(const dvector& vec)
+{
+  double sum = 0;
+  for (int i = vec.indexmin(); i <= vec.indexmax(); ++i)
   {
-    double temp=0;
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-       elem(i)=base+temp;
-       temp=temp+offset;
-    }
+    sum += vec.elem(i);
   }
-
+  return sum / vec.size();
+}
 /**
- * Description not yet available.
- * \param
- */
-  void ivector::fill_seqadd(int base, int offset)
+Fills dvector elements with values starting from base and incremented by offset.
+
+\param base initial value
+\param offset incremental value
+*/
+void dvector::fill_seqadd(const double base, const double offset)
+{
+  double sequence = base;
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    int temp=0;
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-       elem(i)=base+temp;
-       temp=temp+offset;
-    }
+    elem(i) = sequence;
+    sequence += offset;
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
+Fills ivector elements with values starting from base and incremented by offset.
+
+\param base initial value
+\param offset incremental value
+*/
+void ivector::fill_seqadd(int base, int offset)
+{
+  int sequence = base;
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) = sequence;
+    sequence += offset;
+  }
+}
+/**
+Fills ivector elements with values starting from base and incremented by offset.
+
+\param base initial value
+\param offset incremental value
+*/
 void lvector::fill_seqadd(const AD_LONG_INT& base, const AD_LONG_INT& offset)
+{
+  AD_LONG_INT sequence = base;
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    AD_LONG_INT temp=0;
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-       elem(i)=base+temp;
-       temp=temp+offset;
-    }
+    elem(i) = sequence;
+    sequence += offset;
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::colfill_seqadd(const int& j, const double base,
+Fills dmatrix at index column with elements with values starting from base
+and incremented by offset.
+
+\param row index
+\param base initial value
+\param offset incremental value
+*/
+void dmatrix::colfill_seqadd(
+  const int& column,
+  const double base,
   const double offset)
+{
+  double sequence = base;
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    double temp=0;
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      elem(i,j)=base+temp;
-      temp=temp+offset;
-    }
+    elem(i, column) = sequence;
+    sequence += offset;
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::colfill(int j, const dvector& v)
+Fills dmatrix column at index column with values from vec.
+
+\param column index
+\param vec values to copy
+*/
+void dmatrix::colfill(int column, const dvector& vec)
+{
+  for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      (*this)[i][j]=v[i];
-    }
+    (*this)[i][column] = vec[i];
   }
-
+}
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::rowfill(int i, const dvector& v)
-  {
-    for (int j=colmin(); j<=colmax(); j++)
-    {
-      (*this)[i][j]=v[j];
-    }
-  }
+Fills dmatrix row at index row with values from vec.
 
+\param row index
+\param vec values to copy
+*/
+void dmatrix::rowfill(int row, const dvector& vec)
+{
+  elem(row) = vec;
+}
 /**
- * Description not yet available.
- * \param
- */
-void dmatrix::rowfill_seqadd(const int& i, const double base,
+Fills dmatrix row at index with elements with values starting from base
+and incremented by offset.
+
+\param row index
+\param base initial value
+\param offset incremental value
+*/
+void dmatrix::rowfill_seqadd(
+  const int& row,
+  const double base,
   const double offset)
-  {
-    double temp=0;
-    for (int j=colmin(); j<=colmax(); j++)
-    {
-      elem(i,j)=base+temp;
-      temp=temp+offset;
-    }
-  }
+{
+  elem(row).fill_seqadd(base, offset);
+}

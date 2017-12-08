@@ -1,19 +1,15 @@
 /*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
- */
+Author: David Fournier
+Copyright (c) 2008-2012 Regents of the University of California
+*/
+
 #include <df1b2fun.h>
 
 /**
- * Description not yet available.
- * \param
- */
+Returns a df1b2vector containing the differences of an _x(i) and  _x(i + 1) for i = 1 to x.indexmax() - 1.
+
+\param _x input.
+*/
 df1b2vector first_difference(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)

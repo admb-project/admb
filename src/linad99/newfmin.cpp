@@ -43,15 +43,6 @@ extern int ctlc_flag;
   #define endl "\n"
 #endif
   #include <signal.h>
-  extern "C" void onintr(int k)
-  {
-    signal(SIGINT, exit_handler);
-    ctlc_flag = 1;
-    if (ad_printf)
-      (*ad_printf)(
-"\npress q to quit or c to invoke derivative checker or s to stop optimizing: "
-      );
-  }
 #ifdef __NDPX__
   #include <iostream.hxx>
 #endif
@@ -67,6 +58,32 @@ extern int ctlc_flag;
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+
+#ifdef _MSC_VER
+BOOL CtrlHandler(DWORD fdwCtrlType)
+{
+  if (fdwCtrlType == CTRL_C_EVENT)
+  {
+    //Should exit if CTRL_C_EVENT occurs again.
+    if (ctlc_flag) ad_exit(1);
+
+    ctlc_flag = 1;
+    if (ad_printf)
+      (*ad_printf)("\npress q to quit or c to invoke derivative checker: ");
+    return true;
+  }
+  return false;
+}
+#else
+extern "C" void onintr(int k)
+{
+  signal(SIGINT, exit_handler);
+  ctlc_flag = 1;
+  if (ad_printf)
+    (*ad_printf)("\npress q to quit or c to invoke derivative checker"
+                 " or s to stop optimizing: ");
+}
+#endif
 
 int* pointer_to_phase = 0;
 
@@ -148,19 +165,6 @@ adtimer* pfmintime = 0;
 extern int traceflag;
 //#pragma warn -sig
 
-#ifdef _MSC_VER
-BOOL CtrlHandler( DWORD fdwCtrlType )
-{
-  if (fdwCtrlType == CTRL_C_EVENT)
-  {
-    ctlc_flag = 1;
-    if (ad_printf)
-      (*ad_printf)("\npress q to quit or c to invoke derivative checker: ");
-    return true;
-  }
-  return false;
-}
-#endif
 
 /**
 * Function fmin contains Quasi-Newton function minimizer with
@@ -293,7 +297,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
          independent vector and gradient vector
          Note, this function will work correctly only if
          indices start at 1  */
-     if (n==0)
+     if (n <= 0)
      {
        cerr << "Error -- the number of active parameters"
          " fmin must be > 0\n";
@@ -307,7 +311,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
         << " it is " << x.indexmin() << "\n";
         ad_exit(1);
      }
-     if (x.size() <n)
+     if (x.size() < static_cast<unsigned int>(n))
      {
        cerr << "Error -- the size of the independent_variables"
         " which is " << x.size() << " must be >= " << n << "\n"
@@ -322,7 +326,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
         << " it is " << g.indexmin() << "\n";
         ad_exit(1);
      }
-     if (g.size() <n)
+     if (g.size() < static_cast<unsigned int>(n))
      {
        cerr << "Error -- the size of the gradient vector"
         " which is " << g.size() << " must be >=\n"

@@ -1,368 +1,121 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
-#include "fvar.hpp"
-//#include <d5arr.hpp>
-#include "admb_messages.h"
 
-/**
- * Description not yet available.
- * \param
- */
- void d7_array::initialize(void)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i).initialize();
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- d7_array::d7_array(d7_array& m2)
- {
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void d7_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t += indexmin();
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
-#if defined(SAFE_ALL)
-   else
-   {
-     cerr << "Warning -- trying to deallocate an unallocated d5_array"<<endl;
-   }
+#if (__cplusplus > 199711L)
+  #include <algorithm>
+  #include <iterator>
 #endif
- }
+#include "fvar.hpp"
+
+/// Initialize all d7_array elements to zero.
+void d7_array::initialize()
+{
+#if (__cplusplus <= 199711L)
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i).initialize();
+  }
+#else
+  if (operator!() == false)
+  {
+    auto begin = &elem(indexmin());
+    auto end = begin + size();
+    std::for_each(begin, end, [](d6_array& darray)
+    {
+      darray.initialize();
+    });
+  }
+#endif
+}
+/// Copy constructor (shallow)
+d7_array::d7_array(const d7_array& other)
+{
+  shallow_copy(other);
+}
 /**
-Destructor
+Shallow copy other data structure pointers.
+
+\param other d7_array
 */
+void d7_array::shallow_copy(const d7_array& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
+  }
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated d6_array.\n";
+#endif
+    allocate();
+  }
+}
+/// Deallocate d7_array memory.
+void d7_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      t += indexmin();
+      delete [] t;
+      delete shape;
+    }
+    allocate();
+  }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated d6_array.\n";
+  }
+#endif
+}
+/// Destructor
 d7_array::~d7_array()
 {
   deallocate();
 }
 /**
- * Description not yet available.
- * \param
- */
-d7_array& d7_array::operator=(const d7_array& m)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   {
-     cerr << "Incompatible bounds in"
-      " d7_array& d7_array:: operator =  (const d7_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
-
+Assign element values from other to d7_array.
+*/
+d7_array& d7_array::operator=(const d7_array& other)
+{
+  int min = indexmin();
+  int max = indexmax();
+  if (min != other.indexmin() || max != other.indexmax())
+  {
+    cerr << "Incompatible bounds in"
+         << " d7_array& d7_array::operator=(const d7_array&).\n";
+    ad_exit(1);
+  }
+  for (int i = min; i <= max; ++i)
+  {
+    elem(i) = other.elem(i);
+  }
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
-void d7_array::allocate(const d7_array& m1)
- {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
-       == 0)
-   {
-     cerr << " Error allocating memory in d6_array contructor" << endl;
-   }
-   int ss=size();
-   if ( (t = new d6_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d6_array contructor" << endl;
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
-   {
-     t[i].allocate(m1[i]);
-   }
- }
+Allocate d7_array using the same dimensions as other.
 
-  #ifndef OPT_LIB
-
-/**
- * Description not yet available.
- * \param
- */
-    d6_array& d7_array::operator ( ) (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
-        "d6_array& d7_array::operator()(int i)", indexmin(), indexmax(), i);
-      }
-      //return t[i];
-      return elem(i);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    d6_array& d7_array::operator [] (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
-        "d6_array& d7_array::operator[](int i)", indexmin(), indexmax(), i);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    d5_array& d7_array::operator ( ) (int i ,int j)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "d5_array& d7_array::operator()(int i, int j)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    d4_array& d7_array::operator ( ) (int i,int j,int k)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "d4_array& d7_array::operator()(int i, int j, int k)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    d3_array& d7_array::operator ( ) (int i,int j,int k,int l)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "d3_array& d7_array::operator()(int i, int j, int k, int l)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    dmatrix& d7_array::operator ( ) (int i,int j,int k,int l,int m)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "dmatrix& d7_array::operator()(int i, int j, int k, int l, int m)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l,m);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    dvector& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-      "dvector& d7_array::operator()(int i, int j, int k, int l, int m, int n)",
-         indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l,m,n);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    double& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n,int _p)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-"double& d7_array::operator()(int i, int j,int k,int l, int m, int n, int _p)",
-        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l,m,n,_p);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const d6_array& d7_array::operator()(int i) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error  index out of bounds in\n"
-            "d6_array& d7_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      //return t[i];
-      return elem(i);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const d6_array& d7_array::operator[](int i) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error  index out of bounds in\n"
-            "d5_array& d7_array::operator []" << endl;
-          ad_exit(1);
-        }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const d5_array& d7_array::operator()(int i,int j) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "d3_array& d5_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const d4_array& d7_array::operator()(int i, int j, int k) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-          "dmatrix& d5_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const d3_array& d7_array::operator()(int i, int j, int k, int l) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "double& d5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const dmatrix& d7_array::operator()(int i, int j, int k, int l, int m) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "double& d5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l,m);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const dvector& d7_array::operator()(int i, int j, int k, int l, int m, int n)
-  const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "double& d5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l,m,n);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const double& d7_array::operator()(int i, int j, int k, int l, int m, int n,
-  int _p) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "double& d5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l,m,n,_p);
-    }
-#endif
-
+\param other d7_array
+*/
+void d7_array::allocate(const d7_array& other)
+{
+  allocate(other.indexmin(), other.indexmax());
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i).allocate(other.elem(i));
+  }
+}
 /**
  * Description not yet available.
  * \param
@@ -386,53 +139,47 @@ d7_array::d7_array(const ad_integer& l7,const ad_integer& u7,
 {
   allocate(l7,u7,hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh,int ncl,int nch,int l5,int u5,int l6,int u6)
- {
-   if ( (shape=new vector_shape(l7,u7)) == 0)
-   {
-     cerr << " Error allocating memory in d6_array contructor\n";
-     ad_exit(21);
-   }
-   int ss=size();
-   if ( (t = new d6_array[ss]) == 0)
-   {
-     cerr << " Error allocating memory in d6_array contructor\n";
-     ad_exit(21);
-   }
-   t -= indexmin();
-   for (int i=l7; i<=u7; i++)
-   {
-     t[i].allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
-void d7_array::allocate(int l7,int u7)
+Allocate a d7_array with indices.
+*/
+void d7_array::allocate(int l7, int u7, int hsl, int hsu, int sl, int sh,
+  int nrl, int nrh, int ncl, int nch, int l5, int u5, int l6, int u6)
 {
-  if ( (shape=new vector_shape(l7,u7)) == 0)
+  allocate(l7, u7);
+  for (int i = l7; i <= u7; ++i)
   {
-    cerr << " Error allocating memory in d6_array contructor\n";
-    ad_exit(21);
+    elem(i).allocate(hsl, hsu, sl, sh, nrl, nrh, ncl, nch, l5, u5, l6, u6);
   }
-  int ss=size();
-  if ( (t = new d6_array[ss]) == 0)
+}
+/**
+Allocate a vector of empty d6_arrays.
+Note: l7 should be greater or equal to u7.
+
+\param l7 lower index
+\param u7 upper index
+*/
+void d7_array::allocate(int l7, int u7)
+{
+  if (l7 > u7)
   {
-    cerr << " Error allocating memory in d6_array contructor\n";
-    ad_exit(21);
+    return allocate();
+  }
+  if ((shape = new vector_shape(l7, u7)) == 0)
+  {
+    cerr << "Error: Unable to allocate d7_array memory in "
+         << "d7_array::allocate(int, int).\n"; 
+    ad_exit(1);
+  }
+  if ((t = new d6_array[size()]) == 0)
+  {
+    cerr << "Error: Unable to allocate d7_array memory in "
+         << "d7_array::allocate(int, int).\n"; 
+    ad_exit(1);
   }
   t -= indexmin();
-  for (int i=l7; i<=u7; i++)
+  for (int i = l7; i <= u7; ++i)
   {
-    t[i].allocate();
+    elem(i).allocate();
   }
 }
 
@@ -452,7 +199,7 @@ void d7_array::allocate(int l7,int u7)
      cerr << " Error allocating memory in d6_array contructor\n";
    }
 
-   int ss=size();
+   unsigned int ss = size();
    if ( (t = new d6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor\n";

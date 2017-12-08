@@ -73,7 +73,7 @@ dvector::~dvector()
     }
     else
     {
-#ifdef SAFE_ALL
+#ifdef DEBUG
   #ifdef DIAG
       myheapcheck(" Entering ~dvector");
   #endif
@@ -146,48 +146,35 @@ dvector z;
 z = x;         // "deep" copy
 \endcode
 */
-dvector::dvector(const dvector& t)
+dvector::dvector(const dvector& other)
 {
-#ifdef DIAG
+  shallow_copy(other);
+}
+/**
+Explicit shallow copy.
+
+\param t %dvector to be copied
+*/
+void dvector::shallow_copy(const dvector& other)
+{
+#ifdef DEBUG
   cout << "starting out in dvector contructor\n";
 #endif
-  shape=t.shape;
+  shape = other.shape;
   if (shape)
   {
     (shape->ncopies)++;
   }
+#ifdef DEBUG
   else
   {
     cerr << "Making a copy of an unallocated dvector"<<endl;
   }
-  v = t.v;
-  index_min = t.index_min;
-  index_max = t.index_max;
+#endif
+  v = other.v;
+  index_min = other.index_min;
+  index_max = other.index_max;
 }
-
- /**
- Explicit shallow copy.
- \param t %dvector to be copied
- */
-void dvector::shallow_copy(const dvector& t)
- {
-   #ifdef DIAG
-    // cout << "starting out in dvector contructor\n";
-   #endif
-   shape=t.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   else
-   {
-     cerr << "Making a copy of an unallocated dvector"<<endl;
-   }
-   v = t.v;
-   index_min=t.index_min;
-   index_max=t.index_max;
- }
-
 /**
 Creates a %dvector from an instance of class %predvector.
 Creates a shallow copy.
@@ -414,56 +401,52 @@ Exits with an error message if subscript range makes no sense.
 */
 void dvector::allocate(int ncl, int nch)
 {
-  //\todo Should check if v and shape are already allocated.
-
-  if (nch < ncl)
+  if (ncl > nch)
   {
-    allocate();
+    return allocate();
   }
-  else
+  //Originally +2
+  //int size = nch - ncl + 2;
+
+  unsigned int size = static_cast<unsigned int>(nch - ncl + 1);
+  v = new double[size];
+  if (v == NULL)
   {
-    //Originally +2
-    //int size = nch - ncl + 2;
+    cerr << " Error: Unable to allocate v in"
+         << " dvector::allocate(int, int).\n";
+    ad_exit(1);
+  }
 
-    int size = nch - ncl + 1;
-
-    v = new double[size];
-    if (v == NULL)
-    {
-      cerr << " Error trying to allocate memory for dvector\n";
-      ad_exit(21);
-    }
 #ifndef OPT_LIB
-    assert(size >= 0);
-    memset(v, 0, sizeof(double) * (unsigned int)size);
+  memset(v, 0, sizeof(double) * size);
 #endif
 
 #if defined(THREAD_SAFE)
-    shape = new ts_vector_shapex(ncl, nch, v);
+  shape = new ts_vector_shapex(ncl, nch, v);
 #else
-    shape = new vector_shapex(ncl, nch, v);
+  shape = new vector_shapex(ncl, nch, v);
 #endif
-    if (shape == NULL)
-    {
-      cerr << "Error trying to allocate memory for dvector\n";
-      ad_exit(1);
-    }
-
-    index_min = ncl;
-    index_max = nch;
-
-    //reset v(index_min) to v[0]
-    v -= index_min;
+  if (shape == NULL)
+  {
+    cerr << " Error: Unable to allocate shape in"
+         << " dvector::allocate(int, int).\n";
+    ad_exit(1);
   }
-}
 
- /**
- Allocate memory for a %dvector the same size as it's argument.
- \param dv Reference to a %dvector.
- */
-void dvector::allocate(const dvector& dv)
+  index_min = ncl;
+  index_max = nch;
+
+  //reset v(index_min) to v[0]
+  v -= index_min;
+}
+/**
+Allocate memory for a %dvector the same size as it's argument.
+
+\param dv Reference to a %dvector.
+*/
+void dvector::allocate(const dvector& other)
 {
-  allocate(dv.indexmin(),dv.indexmax());
+  allocate(other.indexmin(), other.indexmax());
 }
 
  /**
@@ -712,7 +695,7 @@ int max(int a,int b)
 */
 double cube(const double m)
 {
-  return m*m*m;
+  return std::pow(m, 3);
 }
 
 /** Fourth power of a number; constant objects.

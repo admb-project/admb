@@ -653,28 +653,30 @@ void df1b2vector::allocate(const ad_integer& lb,const ad_integer& ub)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-void df1b2vector::allocate(int lb,int ub)
+Allocate vector of df1b2variables with dimension
+[lb to ub].
+\param lb lower vector index
+\param ub upper vector index
+*/
+void df1b2vector::allocate(int lb, int ub)
 {
   if (v)
   {
     deallocate();
   }
-  index_min=lb;
-  index_max=ub;
-  int sz=ub-lb+1;
-  if (index_min>index_max)
+  index_min = lb;
+  index_max = ub;
+  int sz = ub < lb ? 0 : ub - lb + 1;
+  if (index_min > index_max)
   {
-    shape=0;
-    v=0;
-    sz=0;
+    shape = 0;
+    v = 0;
+    sz = 0;
   }
   else
   {
     //AD_ALLOCATE(v,df1b2variable,sz,df1b2vector);
-    v=new df1b2variable[sz];
+    v=new df1b2variable[static_cast<unsigned int>(sz)];
     if ( (shape=new vector_shapex(lb,ub,v)) == NULL)
     {
       cerr << "Error trying to allocate memory for df1b2vector\n";
@@ -684,12 +686,12 @@ void df1b2vector::allocate(int lb,int ub)
   }
   if (sz>0)
   {
-    int mmin=indexmin();
-    int mmax=indexmax();
+    int mmin = indexmin();
+    int mmax = indexmax();
     int ind_1 = 0;
-    if (mmax>mmin)
+    if (mmax > mmin)
     {
-      ind_1=adptr_diff((*this)(mmin+1).get_u(), (*this)(mmin).get_u());
+      ind_1 = adptr_diff((*this)(mmin+1).get_u(), (*this)(mmin).get_u());
     }
    /*
 #  if defined(SAFE_ALL)
@@ -718,11 +720,11 @@ void df1b2vector::allocate(int lb,int ub)
     }
     offset=ind_1/sizeof(double);
   */
-    offset=ind_1;
+    offset = ind_1;
   }
   else
   {
-    offset=0;
+    offset = 0;
   }
 }
 
@@ -730,21 +732,21 @@ void df1b2vector::allocate(int lb,int ub)
  * Description not yet available.
  * \param
  */
-void df1b2vector::noallocate(int lb,int ub)
+void df1b2vector::noallocate(int lb, int ub)
 {
-  index_min=lb;
-  index_max=ub;
-  int sz=ub-lb+1;
-  df1b2variable::noallocate=1;
+  index_min = lb;
+  index_max = ub;
+  unsigned int sz = static_cast<unsigned int>(ub < lb ? 0 : ub - lb + 1);
+  df1b2variable::noallocate = 1;
   AD_ALLOCATE(v,df1b2variable,sz,df1b2vector);
-  df1b2variable::noallocate=0;
-  if ( (shape=new vector_shapex(lb,ub,v)) == NULL)
+  df1b2variable::noallocate = 0;
+  if ((shape = new vector_shapex(lb, ub, v)) == NULL)
   {
     cerr << "Error trying to allocate memory for df1b2vector\n";
     ad_exit(1);
   }
-  v-=index_min;
-  offset=0;
+  v -= index_min;
+  offset = 0;
 }
 /**
 Destructor

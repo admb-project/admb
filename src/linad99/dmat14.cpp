@@ -1,31 +1,26 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-double trace(const dmatrix& M)
+Return the sum of the diagonal of a square matrix mat.
+
+\param mat is a square scalar matrix
+*/
+double trace(const dmatrix& mat)
 {
-  double tmp;
-  tmp=0.0;
-  if (M.colmin()!=M.rowmin() || M.colmax()!=M.rowmax() )
+  if (mat.colmin() != mat.rowmin() || mat.colmax() != mat.rowmax() )
   {
-    cerr << " Matrix not square in trace\n";
+    cerr << "Matrix not square in trace\n";
     ad_exit(1);
   }
-  for (int i=M.colmin();i<=M.colmax();i++)
+
+  double sum = 0.0;
+  for (int i = mat.colmin(); i <= mat.colmax(); ++i)
   {
-    tmp+=M.elem(i,i);
+    sum += mat.elem(i, i);
   }
-  return tmp;
+  return sum;
 }

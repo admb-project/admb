@@ -8,7 +8,7 @@ shopt -s expand_aliases
 alias help='echo -e "
 Builds AD Model Builder executable or library.
 
-Release Version: 11.6pre
+Release Version: 11.6
 Location: $BASH_SOURCE
 
 Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
@@ -41,7 +41,14 @@ if [ -z "$ADMB_HOME" ]; then
     DIRECTORY=$(cd `dirname "$FILE"` && pwd)
     popd &> /dev/null
   done
-  pushd "$DIRECTORY/.." &> /dev/null
+
+  if [ -e "${DIRECTORY}/bin/admb" ]
+  then
+    pushd "$DIRECTORY" &> /dev/null
+  else
+    pushd "$DIRECTORY/.." &> /dev/null
+  fi
+
   declare -rx ADMB_HOME=$PWD
   popd &> /dev/null
 fi
@@ -151,6 +158,9 @@ else
   if [ "$CXX" == "openCC" ]; then
     CXXFLAGS="-O2 $CXXFLAGS"
     LDFLAGS="-O2 $LDFLAGS"
+  elif [ "$CXX" == "icpc" ]; then
+    CXXFLAGS=" $CXXFLAGS"
+    LDFLAGS=" $LDFLAGS"
   else
     CXXFLAGS="-O3 $CXXFLAGS"
     LDFLAGS="-O3 $LDFLAGS"

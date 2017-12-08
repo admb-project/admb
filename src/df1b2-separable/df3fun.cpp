@@ -128,42 +128,54 @@ df3_one_vector::~df3_one_vector()
     }
   }
 
-  df3_one_vector::df3_one_vector(void)
-  {
-    allocate();
-  }
+/**
+Default constructor.
+*/
+df3_one_vector::df3_one_vector()
+{
+  allocate();
+}
 
   df3_one_vector::df3_one_vector(int min,int max)
   {
     allocate(min,max);
   }
 
-  void df3_one_vector::allocate(int min,int max)
-  {
-    index_min=min;
-    index_max=max;
-    v=new df3_one_variable[max-min+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df3_one_vector" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new vector_shapex(min,max,v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df3_one_vector"
-           << endl;;
-      ad_exit(1);
-    }
-    v-=min;
-  }
+/**
+Allocate vector of df3_one_variable with dimension
+[min to max].
 
-  void df3_one_vector::allocate(void)
+\param min lower index
+\param max upper index
+*/
+void df3_one_vector::allocate(int min,int max)
+{
+  index_min = min;
+  index_max = max;
+  v = new df3_one_variable[
+    static_cast<unsigned int>(max < min ? 0 : max - min + 1)];
+  if (v == 0)
   {
-    index_min=0;
-    index_max=-1;
-    v=0;
-    shape=0;
+    cerr << "error allocating memory in df3_one_vector\n";
+    ad_exit(1);
   }
+  if ((shape = new vector_shapex(min, max, v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df3_one_vector\n";
+    ad_exit(1);
+  }
+  v -= min;
+}
+/**
+Does NOT allocate, but initializes empty df3_one_vector.
+*/
+void df3_one_vector::allocate(void)
+{
+  index_min = 0;
+  index_max = -1;
+  v = 0;
+  shape = 0;
+}
 
  dmatrix value(const df3_one_matrix& v)
  {
@@ -277,28 +289,37 @@ df3_one_vector::~df3_one_vector()
   }
 
 
-  df3_one_matrix::df3_one_matrix(int rmin,int rmax,int cmin,int cmax)
-  {
-    index_min=rmin;
-    index_max=rmax;
-    v=new df3_one_vector[rmax-rmin+1];
-    if (v==0)
-    {
-      cerr << "error allocating memory in df3_one_matrix" << endl;
-      ad_exit(1);
-    }
-    if ( (shape=new mat_shapex(v)) == NULL)
-    {
-      cerr << "Error trying to allocate memory for df3_one_vector"
-           << endl;;
-    }
-    v-=rmin;
+/*
+Construct matrix of df3_one_variable with dimension
+[min to max] x [cmin to cmax].
 
-    for (int i=rmin;i<=rmax;i++)
-    {
-      v[i].allocate(cmin,cmax);
-    }
+\param rmin lower row index
+\param rmax upper row index
+\param cmin lower column index
+\param cmax upper column index
+*/
+df3_one_matrix::df3_one_matrix(int rmin, int rmax, int cmin,int cmax)
+{
+  index_min = rmin;
+  index_max = rmax;
+  v = new df3_one_vector[
+    static_cast<unsigned int>(rmax < rmin ? 0 : rmax - rmin + 1)];
+  if (v == 0)
+  {
+    cerr << "error allocating memory in df3_one_matrix" << endl;
+    ad_exit(1);
   }
+  if ((shape = new mat_shapex(v)) == NULL)
+  {
+    cerr << "Error trying to allocate memory for df3_one_vector\n";
+    ad_exit(1);
+  }
+  v-=rmin;
+  for (int i = rmin; i<= rmax; ++i)
+  {
+    v[i].allocate(cmin, cmax);
+  }
+}
 
 /*
   df3_one_variable operator F(const df3_one_variable& x)
@@ -608,31 +629,38 @@ df3_one_variable& df3_one_variable::operator+=(const df3_one_variable& _v)
     return z;
   }
 
-  init_df3_one_variable::init_df3_one_variable(const df1b2variable& _v)
-  {
-    ADUNCONST(df1b2variable,v)
-   /*
+/**
+Construct init_df3_one_variable from _var.
+\param _var value for u.
+*/
+init_df3_one_variable::init_df3_one_variable(const df1b2variable& _var)
+{
+  ADUNCONST(df1b2variable,var)
+/*
     if (num_ind_var>0)
     {
       cerr << "can only have 1 independent_variables in df3_one_variable"
        " function" << endl;
       ad_exit(1);
    }
-   */
-   ind_var=&v;
-    *get_u() =  *v.get_u();
-    *get_udot() = 1.0;
-    *get_udot2() = 0.0;
-    *get_udot3() = 0.0;
-  }
-
-  init_df3_one_variable::init_df3_one_variable(double v)
-  {
-    *get_u() =  v;
-    *get_udot() = 1.0;
-    *get_udot2() = 0.0;
-    *get_udot3() = 0.0;
-  }
+*/
+  ind_var = &var;
+  *get_u() =  *var.get_u();
+  *get_udot() = 1.0;
+  *get_udot2() = 0.0;
+  *get_udot3() = 0.0;
+}
+/**
+Constructs init_df3_one_variable setting member u with value _u.
+\param _u value for u
+*/
+init_df3_one_variable::init_df3_one_variable(double _u)
+{
+  *get_u() = _u;
+  *get_udot() = 1.0;
+  *get_udot2() = 0.0;
+  *get_udot3() = 0.0;
+}
 
 df3_one_matrix choleski_decomp(const df3_one_matrix& MM)
 {

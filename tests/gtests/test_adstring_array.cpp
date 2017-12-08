@@ -2,6 +2,11 @@
 #include <fvar.hpp>
 #include <adstring.hpp>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_adstring_array: public ::testing::Test {};
 
 TEST_F(test_adstring_array, equals)
@@ -16,10 +21,30 @@ TEST_F(test_adstring_array, equals)
 
   EXPECT_EQ(b.indexmin(), 1);
   EXPECT_EQ(b.indexmax(), 4);
-  EXPECT_EQ(b(1), adstring("one"));
-  EXPECT_EQ(b(2), adstring("two"));
-  EXPECT_EQ(b(3), adstring("three"));
-  EXPECT_EQ(b(4), adstring("four"));
+  EXPECT_STREQ((char*)b(1), "one");
+  EXPECT_STREQ((char*)b(2), "two");
+  EXPECT_STREQ((char*)b(3), "three");
+  EXPECT_STREQ((char*)b(4), "four");
+}
+TEST_F(test_adstring_array, constindex)
+{
+  adstring_array a(1, 4);
+  a(1) = "one";
+  a(2) = "two";
+  a(3) = "three";
+  a(4) = "four";
+
+  const adstring_array b = a;
+
+  EXPECT_EQ(b.indexmin(), 1);
+  EXPECT_EQ(b.indexmax(), 4);
+  EXPECT_STREQ((const char*)b(1), "one");
+  EXPECT_STREQ((const char*)b(2), "two");
+  EXPECT_STREQ((const char*)b(3), "three");
+  EXPECT_STREQ((const char*)b(4), "four");
+#ifndef OPT_LIB
+  EXPECT_DEATH(b(5), "Assertion");
+#endif
 }
 TEST_F(test_adstring_array, append_distinct)
 {
@@ -133,18 +158,31 @@ TEST_F(test_adstring_array, ifstream)
 }
 TEST_F(test_adstring_array, allocate_min_greaterthan_max)
 {
+  ad_exit=&test_ad_exit;
   adstring_array a;
-  ASSERT_EXIT({
+  ASSERT_ANY_THROW({
     a.allocate(4, 1);
-  }, ::testing::ExitedWithCode(1), " Error");
+  });
 }
 TEST_F(test_adstring_array, null_index1)
 {
+  ad_exit=&test_ad_exit;
   adstring_array a;
   ASSERT_ANY_THROW({
     a(1);
   });
   ASSERT_ANY_THROW({
     a[1];
+  });
+}
+TEST_F(test_adstring_array, const_null_index1)
+{
+  ad_exit=&test_ad_exit;
+  const adstring_array a;
+  ASSERT_ANY_THROW({
+    a[1];
+  });
+  ASSERT_ANY_THROW({
+    a(1);
   });
 }

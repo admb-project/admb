@@ -36,7 +36,6 @@ void cifstream::set_eof_bit(void)
   clear(current_state | ios::eofbit);
 #endif
 }
-
 /**
 Get the signature line of inputfile.
 */
@@ -156,7 +155,7 @@ void cifstream::filter(void)
   }
 }
 
-void cifstream::get_field(char* s,int space_flag)
+void cifstream::get_field(char* s, int space_flag)
 {
   filter();
 
@@ -200,8 +199,12 @@ void cifstream::get_field(char* s,int space_flag)
   s[n++] = '\0';
   field ++;
 }
+/**
+Reads to s from input cifstream.
 
-cifstream& cifstream::operator >> (adstring& s)
+\param s adstring
+*/
+cifstream& cifstream::operator>>(adstring& s)
 {
   char * t = new char[FILTER_BUF_SIZE];
   (*this) >> t;
@@ -209,8 +212,11 @@ cifstream& cifstream::operator >> (adstring& s)
   delete [] t;
   return (*this);
 }
+/**
+Reads to _s from input cifstream.
 
-// the new version
+\param _s adstring
+*/
 cifstream& cifstream::operator>>(const adstring& _s)
 {
   adstring& s = (adstring&) _s;
@@ -220,26 +226,53 @@ cifstream& cifstream::operator>>(const adstring& _s)
   delete [] t;
   return (*this);
 }
+/**
+Reads to str from input cifstream.
 
-cifstream& cifstream::operator>>(const line_adstring& s)
+\param str line_adstring
+*/
+cifstream& cifstream::operator>>(line_adstring& str)
 {
-  get_field((char*)(const char *)(s),1);
-  return (*this);
-}
-
-
-cifstream& cifstream::operator >> (char* c)
-{
-  get_field((char*)c);
+  filter();
+  char line[256];
+  getline(line, 256);
+  str.realloc(&line[0]);
   return *this;
 }
+/**
+Reads to str from input cifstream.
 
+\param str line_adstring
+*/
+cifstream& cifstream::operator>>(const line_adstring& str)
+{
+  return operator>>(const_cast<line_adstring&>(str));
+}
+/**
+Reads to c from input cifstream.
+
+\param c char*
+*/
+cifstream& cifstream::operator>>(char* c)
+{
+  get_field(c);
+  return *this;
+}
+/**
+Reads to c from input cifstream.
+
+\param c char*
+*/
 cifstream& cifstream::operator>>(const char* c)
 {
-  get_field((char*)c);
+  get_field(const_cast<char*>(c));
   return *this;
 }
+/**
+Reads to i from input cifstream.
 
+\param i long
+*/
 cifstream& cifstream::operator>>(const long& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
@@ -267,7 +300,12 @@ istream& istream::operator>>(long long & x)
   return *this;
 }
 #else
-cifstream& cifstream::operator>>(const long long & _i)
+/**
+Reads to _i from input cifstream.
+
+\param _i long long
+*/
+cifstream& cifstream::operator>>(const long long& _i)
 {
   ADUNCONST(long long,i)
   char * s = new char[FILTER_BUF_SIZE];
@@ -285,7 +323,12 @@ cifstream& cifstream::operator>>(const long long & _i)
   delete []s;
   return *this;
 }
-cifstream& cifstream::operator>>(long long & i)
+/**
+Reads to i from input cifstream.
+
+\param i long long
+*/
+cifstream& cifstream::operator>>(long long& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
@@ -315,7 +358,11 @@ void js_strip_leading_zeros(char * s)
      i++;
   }
 }
+/**
+Reads to i from input cifstream.
 
+\param i int
+*/
 cifstream& cifstream::operator>>(const int& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
@@ -336,7 +383,11 @@ cifstream& cifstream::operator>>(const int& i)
   delete []s;
   return *this;
 }
+/**
+Reads to _x from input cifstream.
 
+\param _x double
+*/
 cifstream& cifstream::operator>>(const double& _x)
 {
   double& x = (double&)(_x);
@@ -376,7 +427,11 @@ cifstream& cifstream::operator>>(const double& _x)
   }
   return *this;
 }
+/**
+Reads to x from input cifstream.
 
+\param x float
+*/
 cifstream& cifstream::operator>>(const float& x)
 {
   char * s = new char[FILTER_BUF_SIZE];
@@ -394,7 +449,6 @@ cifstream& cifstream::operator>>(const float& x)
   delete []s;
   return *this;
 }
-
 /**
 \todo Need Test case
 */

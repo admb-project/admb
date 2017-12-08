@@ -1,56 +1,51 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-   void d4_array::operator /= (double d)
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       (*this)(i)/=d;
-     }
-   }
+Divides all elements of d4_array by d.
 
-/**
- * Description not yet available.
- * \param
- */
-d4_array operator/(const d4_array& m, double d)
-   {
-     d4_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
-     {
-       tmp(i)=m(i)/d;
-     }
-     return tmp;
-   }
-
-/**
- * Description not yet available.
- * \param
- */
-d4_array operator/(double d, const d4_array& m)
+\param d double
+*/
+void d4_array::operator/=(double d)
 {
-  d4_array tmp;
-  tmp.allocate(m);
-  for (int i = tmp.indexmin(); i <= tmp.indexmax(); i++)
+  for (int i = indexmin(); i <= indexmax(); ++i)
   {
-    for (int j=tmp(i).indexmin(); j <= tmp(i).indexmax(); j++)
+    (*this)(i) /= d;
+  }
+}
+/**
+Returns d4_array with all elements arr4 divided by d.
+
+\param d double
+*/
+d4_array operator/(const d4_array& arr4, double d)
+{
+  d4_array results;
+  results.allocate(arr4);
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    results(i) = arr4(i) / d;
+  }
+  return results;
+}
+/**
+Returns d4_array with all elements equal to d divided by elements in arr4.
+
+\param arr4 d4_array
+*/
+d4_array operator/(double d, const d4_array& arr4)
+{
+  d4_array results;
+  results.allocate(arr4);
+  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  {
+    for (int j = results(i).indexmin(); j <= results(i).indexmax(); ++j)
     {
-      tmp(i, j) = d / m(i, j);
+      results(i, j) = d / arr4(i, j);
     }
   }
-  return tmp;
+  return results;
 }

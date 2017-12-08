@@ -22,13 +22,10 @@ GTESTS=\
  test_fmm_control.cpp\
  test_adstring_array.cpp\
  test_dlist.cpp\
- test_ad_comm.cpp\
  test_gradient_structure.cpp\
  test_option_match.cpp\
  test_lvector.cpp\
  test_adpool.cpp\
- test_dmatrix.cpp\
- test_param_init_bounded_number_vector.cpp\
  test_param_init_d3array.cpp\
  test_spline.cpp\
  test_banded_symmetric_dmatrix.cpp\
@@ -39,18 +36,15 @@ GTESTS=\
  test_df_file.cpp\
  test_multinomial.cpp\
  test_multi_index.cpp\
- test_cifstream.cpp\
  test_param_init_vector_vector.cpp\
  test_param_init_matrix_vector.cpp\
  test_param_init_bounded_vector_vector.cpp\
  test_param_init_number_vector.cpp\
  test_pow.cpp\
  test_dvariable.cpp\
- test_imatrix.cpp\
  test_lmatrix.cpp\
  test_dvar_matrix.cpp\
  test_ad_integer.cpp\
- test_ivector.cpp\
  test_cspline.cpp\
  test_dvar_vector.cpp\
  test_index_type.cpp\
@@ -70,18 +64,45 @@ GTESTS=\
  test_dll_param_matrix.cpp\
  test_dvector.cpp\
  test_dvar3_array.cpp\
+ test_dvar6_array.cpp\
+ test_dvar7_array.cpp\
  test_arr_link.cpp\
  test_df1b2_init_number_vector.cpp\
  test_init_df1b2vector.cpp\
  test_param_init_bounded_number.cpp\
  test_param_init_bounded_vector.cpp\
  test_df1b2_init_bounded_number_vector.cpp\
- test_adstring.cpp\
  test_df1b23array.cpp\
  test_d3_array.cpp\
+ test_d4_array.cpp\
+ test_d5_array.cpp\
+ test_d6_array.cpp\
+ test_d7_array.cpp\
  test_data_matrix.cpp\
  test_tiny_ad.cpp\
  test_adjson.cpp\
+ test_dmatrix.cpp\
+ test_size_count.cpp\
+ test_sub_unallocated.cpp\
+ test_dvar4_array.cpp\
+ test_utils.cpp\
+ test_cifstream.cpp\
+ test_dvar5_array.cpp\
+ test_param_init_number.cpp\
+ test_df3_three_vector.cpp\
+ test_param_init_bounded_matrix_vector.cpp\
+ test_param_init_bounded_number_matrix.cpp\
+ test_adlist_ptr.cpp\
+ test_param_init_bounded_number_vector.cpp\
+ test_fill_seqadd.cpp\
+ test_adstring.cpp\
+ test_ad_comm.cpp\
+ test_ivector.cpp\
+ test_imatrix.cpp\
+ test_i3_array.cpp\
+ test_i4_array.cpp\
+ test_i5_array.cpp\
+ test_gradcalc.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)
@@ -195,10 +216,10 @@ else
 endif
 
 nuts2:
-	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;"
+	/Applications/MATLAB_R2016a.app/bin/matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;"
 
 test_nuts.txt: nutsmatlab/nuts_da.m
-	matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
+	/Applications/MATLAB_R2016a.app/bin/matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
 
 nuts: test_nuts.txt test_nuts
 ifeq ($(SHELL),cmd)
@@ -243,6 +264,28 @@ endif
 clean:
 ifeq ($(SHELL),cmd)
 	@if exist make_sub_directory rmdir /s /q make_sub_directory
+	@del test_i4_array.txt 2>NUL
+	@del test_i5_array.txt 2>NUL
+	@del test_init_line_adstring.dat 2>NUL
+	@del test_init_adstring.dat 2>NUL
+	@del test_ad_comm.log 2>NUL
+	@del d5_array.txt 2>NUL
+	@del d6_array.txt 2>NUL
+	@del test_damtrixio.txt 2>NUL
+	@del d3io.txt 2>NUL
+	@del fuistreamd4_array.txt 2>NUL
+	@del test_data_4iarray.cpp 2>NUL
+	@del testi3array.txt 2>NUL
+	@del uistreamd4_array.txt 2>NUL
+	@del uos.txt 2>NUL
+	@del uosivector.txt 2>NUL
+	@del varr4.txt 2>NUL
+	@del maxlimit.txt 2>NUL
+	@del test_cifstream_adstring.txt 2>NUL
+	@del test_cifstream_float.txt 2>NUL
+	@del datafiledoesexist.dat 2>NUL
+	@del pinfiledoesexist.pin 2>NUL
+	@del test_cifstream_longlong.txt 2>NUL
 	@del gtest-all.exe 2>NUL
 	@del gtest-all *.obj 2>NUL
 	@del eigv.rpt 2>NUL
@@ -297,7 +340,50 @@ ifeq ($(SHELL),cmd)
 	@del finance.p0 2>NUL
 	@del test_dvector.txt 2>NUL
 	@del test_adstring_array.txt 2>NUL
+	@del test_cifstream_darray.txt 2>NUL
+	@del test_cifstream_dvariable.txt 2>NUL
+	@del test_cifstream_iarray.txt 2>NUL
 else
+	@rm -vf test_i4_array.txt
+	@rm -vf test_i5_array.txt
+	@rm -vf test_init_line_adstring.dat
+	@rm -vf test_init_adstring.dat
+	@rm -vf test_ad_comm.log
+	@rm -vf d5_array.txt
+	@rm -vf d6_array.txt
+	@rm -vf test_damtrixio.txt
+	@rm -vf d3io.txt
+	@rm -vf fuistreamd4_array.txt
+	@rm -vf test_data_4iarray.cpp
+	@rm -vf testi3array.txt
+	@rm -vf uistreamd4_array.txt
+	@rm -vf uos.txt
+	@rm -vf uosivector.txt
+	@rm -vf varr4.txt
+	@rm -vf maxlimit.txt
+	@rm -vf test_cifstream_adstring.txt
+	@rm -vf test_cifstream_float.txt
+	@rm -vf test_cifstream_longlong.txt
+	@rm -vf training
+	@rm -vf training.bar
+	@rm -vf training.cor
+	@rm -vf training.cpp
+	@rm -vf training.eva
+	@rm -vf training.htp
+	@rm -vf training.log
+	@rm -vf training.par
+	@rm -vf training.rep
+	@rm -vf training.std
+	@rm -vf training2
+	@rm -vf training2.bar
+	@rm -vf training2.cor
+	@rm -vf training2.cpp
+	@rm -vf training2.eva
+	@rm -vf training2.htp
+	@rm -vf training2.log
+	@rm -vf training2.par
+	@rm -vf training2.rep
+	@rm -vf training2.std
 	@rm -vf finance.b0
 	@rm -vf finance.p0
 	@rm -vf gtest-all *.obj
@@ -352,4 +438,9 @@ else
 	@rm -vf test_dvector.txt
 	@rm -rvf make_sub_directory
 	@rm -vf test_adstring_array.txt
+	@rm -vf test_cifstream_darray.txt
+	@rm -vf test_cifstream_dvariable.txt
+	@rm -vf test_cifstream_iarray.txt
+	@rm -vf datafiledoesexist.dat
+	@rm -vf pinfiledoesexist.pin
 endif

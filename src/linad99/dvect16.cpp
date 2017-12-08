@@ -1,81 +1,70 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-dvector& dvector::operator+=(const dvector& v1)
- {
-   if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
-   {
-     cerr << " Incompatible array bounds in "
-     "dvector& operator += (const dvector&)\n";
-     ad_exit(21);
-   }
+Add values to dvector element-wise.
 
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem(i) += v1.elem(i);
-     }
-   }
-   return(*this);
- }
-
+\param values dvector
+*/
+dvector& dvector::operator+=(const dvector& values)
+{
+  if (indexmin() != values.indexmin() || indexmax() != values.indexmax())
+  {
+    cerr << " Incompatible array bounds in "
+         << "dvector& operator+=(const dvector&)\n";
+    ad_exit(1);
+  }
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) += values.elem(i);
+  }
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
+Subtract values from dvector element-wise.
+
+\param values dvector
  */
-dvector& dvector::operator-=(const dvector& v1)
- {
-   if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
-   {
-     cerr << " Incompatible array bounds in "
-     "dvector& operator -= (const dvector&)\n";
-     ad_exit(21);
-   }
-
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem(i) -= v1.elem(i);
-     }
-   }
-   return(*this);
- }
-
+dvector& dvector::operator-=(const dvector& values)
+{
+  if (indexmin() != values.indexmin() || indexmax() != values.indexmax())
+  {
+    cerr << " Incompatible array bounds in "
+         << "dvector& operator-=(const dvector&)\n";
+    ad_exit(1);
+  }
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) -= values.elem(i);
+  }
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
- dvector& dvector::operator+=(const double d)
- {
-   for (int i=indexmin();i<=indexmax();i++)
-   {
-     elem(i) += d;
-   }
-   return(*this);
- }
+Add value to each element of dvector.
 
+\param value double
+*/
+dvector& dvector::operator+=(const double value)
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) += value;
+  }
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
- dvector& dvector::operator-=(const double d)
- {
-   for (int i=indexmin();i<=indexmax();i++)
-   {
-     elem(i) -= d;
-   }
-   return(*this);
- }
+Subtract value to each element of dvector.
+
+\param value double
+*/
+dvector& dvector::operator-=(const double value)
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) -= value;
+  }
+  return *this;
+}

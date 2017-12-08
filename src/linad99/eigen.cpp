@@ -8,7 +8,10 @@
 //#define eigen_vectors
 
 #include <fvar.hpp>
-
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 void tri_dag(const dmatrix& m, const dvector& d,const dvector& e);
 void get_eigen(const dvector& d, const dvector& e, const dmatrix& z);
@@ -28,7 +31,15 @@ dvector eigenvalues(const dmatrix& m)
   dmatrix m1=symmetrize(m);
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
-  int n=m1.rowsize();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int rowsize) -> int
+  {
+    assert(rowsize <= INT_MAX);
+    return static_cast<int>(rowsize);
+  } (m1.rowsize());
+#else
+  int n = static_cast<int>(m1.rowsize());
+#endif
   dvector diag(1,n);
   dvector off_diag(1,n);
 
@@ -67,7 +78,15 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
     "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
-  int n=m.rowsize();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int rowsize) -> int
+  {
+    assert(rowsize <= INT_MAX);
+    return static_cast<int>(rowsize);
+  } (m.rowsize());
+#else
+  int n = static_cast<int>(m.rowsize());
+#endif
   int l,j,i;
   double scale,hh,h,g,f;
 
@@ -187,7 +206,15 @@ void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
   dmatrix& z = (dmatrix&) _z;
 #endif
   int max_iterations=30;
-  int n=d.size();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int size) -> int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  } (d.size());
+#else
+  int n = static_cast<int>(d.size());
+#endif
   max_iterations+=10*(n/100);
   int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
@@ -267,7 +294,15 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
   dvector& e = (dvector&) _e;
 
   int max_iterations=30;
-  int n=d.size();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int size) -> int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  } (d.size());
+#else
+  int n = static_cast<int>(d.size());
+#endif
   max_iterations+=10*(n/100);
   int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
@@ -349,7 +384,15 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
   e=xe;
 
   int max_iterations=30;
-  int n=d.size();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int size) -> int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  } (d.size());
+#else
+  int n = static_cast<int>(d.size());
+#endif
   max_iterations+=10*(n/100);
   int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;

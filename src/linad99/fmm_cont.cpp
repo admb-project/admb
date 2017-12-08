@@ -78,34 +78,56 @@ fmm_control::fmm_control(const fmm_control & t)
 }
 
 /**
- * fmm_control Function minimizer null constructor
- * \param
- */
+Default constructor
+*/
 fmm_control::fmm_control()
 {
   set_defaults();
 }
-
 /**
- * fmm_control Function minimizer constructor sets extended defaults
- * \param ipar vector of settings
- */
+Constructs function minimizer with values from
+ipar and overrides the extended defaults.
+
+\param ipar integer vector of settings
+*/
 fmm_control::fmm_control(const lvector& ipar)
 {
   set_defaults();
+
+#if defined(__MINGW64__)
+  #ifndef OPT_LIB
+  assert(ipar[1] <= LONG_MAX);
+  assert(ipar[2] <= LONG_MAX);
+  #endif
+  maxfn  = static_cast<long>(ipar[1]);
+  iprint = static_cast<long>(ipar[2]);
+#else
   maxfn  = ipar[1];
   iprint = ipar[2];
-  #ifdef __HP__
-    crit   = .0001;
-  #else
-    crit   = pow(double(10), int(-ipar[3]));
-  #endif
-  imax   = ipar[4];
-  long ipar5 = ipar[5];
-#ifndef OPT_LIB
-  assert(ipar5 <= INT_MAX);
 #endif
-  scroll_flag = (int)ipar5;
+
+#ifdef __HP__
+  crit = .0001;
+#else
+  #ifndef OPT_LIB
+  assert(ipar[3] <= INT_MAX);
+  #endif
+  crit = pow(double(10), static_cast<int>(-ipar[3]));
+#endif
+
+#if defined(__MINGW64__)
+  #ifndef OPT_LIB
+  assert(ipar[4] <= LONG_MAX);
+  #endif
+  imax = static_cast<long>(ipar[4]);
+#else
+  imax = ipar[4];
+#endif
+
+#ifndef OPT_LIB
+  assert(ipar[5] <= INT_MAX);
+#endif
+  scroll_flag = static_cast<int>(ipar[5]);
 }
 
 /**

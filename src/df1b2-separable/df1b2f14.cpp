@@ -344,8 +344,8 @@ void fixed_smartlist2::read_buffer(void)
     }
     // get the record size
     int _nbytes = 0;
-    ssize_t ret = ::read(fp,&_nbytes,sizeof(int));
-    assert(ret != -1);
+    ssize_t result = ::read(fp,&_nbytes,sizeof(int));
+    assert(result != -1);
     if (_nbytes > 0)
     {
       const size_t nbytes = (size_t)_nbytes;

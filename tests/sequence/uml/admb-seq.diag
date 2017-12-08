@@ -1,0 +1,104 @@
+seqdiag {
+  //edge_length = 2500;
+
+  default_fontsize = 16;
+
+  //node_width = 200;
+  //node_height = 300;
+
+  //span_height = 50;
+  //span_width = 50;
+
+  main[shape = roundedbox];
+  gradient_structure[shape = roundedbox];
+
+  main => gradient_structure[label = "set_CMPDIF_BUFFER_SIZE"]
+  main => gradient_structure[label = "set_GRADSTACK_BUFFER_SIZE"]
+  main => gradient_structure[label = "set_MAX_NVAR_OFFSET"]
+  main => gradient_structure[label = "set_NO_DERIVATIVES"]
+
+  model_parameters[label = "mp : model_parameters", shape = roundedbox];
+  model_data[shape = roundedbox];
+  ad_comm[shape = roundedbox];
+  function_minimizer[shape = roundedbox];
+  param_init_number[label = "a, b : param_init_number", shape = roundedbox];
+
+  === begin TOP_OF_MAIN_SECTION ===
+  === end TOP_OF_MAIN_SECTION ===
+
+  //constructor
+  main => model_parameters [label = "mp.Constructor", return = "return"]
+  {
+    === begin DATA_SECTION ===
+    //model_data
+    model_parameters => model_data [label = "Constructor", return = "return"]
+    {
+      model_data => ad_comm [label = "Constructor", return = "return"];
+      model_data => data[label = "Constructor", return = "return"];
+      model_data => data[label = "allocate", return = "return"];
+    }
+
+    model_parameters => function_minimizer[label = "Constructor", return = "return"];
+
+    === end DATA_SECTION ===
+
+    === begin PARAMETER_SECTION ===
+    //model_parameters
+    model_parameters => param_init_number[label = "a.Constructor", return = "return"]
+    {
+      param_init_number => named_dvariable[label = "Base Constructor", return = "return"]
+      {
+        named_dvariable => dvariable[label = "Base Constructor", return = "return"];
+        named_dvariable => model_tag_name[label = "Base Constructor", return = "return"];
+      }
+      param_init_number=> initial_params[label = "Base Constructor", return = "return", note = "pointer_to_phase=&initial_params::current_phase;"]
+    }
+    model_parameters => param_init_number[label = "b.Constructor", return = "return"]
+    {
+      param_init_number => named_dvariable[label = "Base Constructor", return = "return"]
+      {
+        named_dvariable => dvariable[label = "Base Constructor", return = "return"];
+        named_dvariable => model_tag_name[label = "Base Constructor", return = "return"];
+      }
+      param_init_number=> initial_params[label = "Base Constructor", return = "return", note = "pointer_to_phase=&initial_params::current_phase;"]
+    }
+
+    === begin INITIALIZATION_SECTION ===
+
+    model_parameters => param_init_number[label = "a.set_initial_value", return = "return"];
+    model_parameters => param_init_number[label = "b.set_initial_value", return = "return"];
+
+    === end INITIALIZATION_SECTION ===
+
+    model_parameters => param_init_number[label = "a.allocate", return = "return"]
+    {
+      param_init_number => initial_params[label = "add_to_list", return = "return"]
+    }
+    model_parameters => param_init_number[label = "b.allocate", return = "return"]
+    {
+      param_init_number => initial_params[label = "add_to_list", return = "return"]
+    }
+    === end PARAMETER_SECTION ===
+  }
+
+  === begin PRELIMINARY_CALCS_SECTION ===
+  main => model_parameters [label = "mp.preliminary_calculations", return = "return"];
+  === end PRELIMINARY_CALCS_SECTION ===
+
+  //computations
+  main => function_minimizer [label = "mp.computations", return = "return"]
+  {
+    function_minimizer => model_parameters [label = "set_runtime", return = "return"];
+
+    === begin PROCEDURE_SECTION ===
+    function_minimizer => model_parameters [label = "minimize procedure section", return = "return"];
+    === end PROCEDURE_SECTION ===
+
+    === begin FINAL_SECTION ===
+    function_minimizer => model_parameters [label = "final_calcs", return = "return"];
+    === end FINAL_SECTION ===
+  }
+
+  //destructor
+  main => model_parameters [label = "mp.Destructor", return = "return"];
+}

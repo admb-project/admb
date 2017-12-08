@@ -41,25 +41,29 @@
 #include <sstream>
 using std::istringstream;
 
-#include <cassert>
-#include <climits>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 const int MAX_FIELD_LENGTH = 500;
 
 /**
- * Description not yet available.
- * \param
- */
+Fill variable vector from values in string s.
+\param s should be in {v1, ..., vn} format.
+*/
 void dvar_vector::fill(const char * s)
 {
   const size_t len = strlen(s);
+#ifndef OPT_LIB
   assert(len <= INT_MAX);
-  const int n = (int)len;
+#endif
+  char *t = new char[len];
+  const int n = static_cast<int>(len);
   int lbraces = 0;
   int rbraces = 0;
-  int commas  = 0;
+  unsigned int commas  = 0;
 
-  char *t = new char[n];
   for (int k = 0; k < n; k++)
   {
     if (s[k] == '{')
@@ -85,7 +89,7 @@ void dvar_vector::fill(const char * s)
 
   if (lbraces == 1 && rbraces == 1)
   {
-    int nch = commas + 1;
+    unsigned int nch = commas + 1;
 
     if (nch != size())
     {

@@ -1,108 +1,107 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 #include "admb_messages.h"
 
-/**
- * Description not yet available.
- * \param
- */
-void i5_array::allocate(void)
-{
-  t=0;
-  shape=0;
-}
-
-/**
- * Description not yet available.
- * \param
- */
-i5_array::i5_array(void)
+/// Default constructor
+i5_array::i5_array()
 {
   allocate();
 }
-
-/**
- * Description not yet available.
- * \param
- */
-i5_array::i5_array(int hsl,int hsu)
+/// Copy constructor
+i5_array::i5_array(const i5_array& other)
 {
-  allocate(hsl,hsu);
+  shallow_copy(other);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void i5_array::allocate(int hsl,int hsu)
+Shallow copy other data structure pointers.
+
+\param other i5_array
+*/
+void i5_array::shallow_copy(const i5_array& other)
 {
-  int ss=hsu-hsl+1;
-  if (ss>0)
+  if (other.shape)
   {
-    if ( (t = new i4_array[ss]) == 0)
-    {
-      cerr << " Error allocating memory in i5_array contructor\n";
-      ad_exit(21);
-    }
-    if ( (shape=new vector_shapex(hsl,hsu,t)) == 0)
-    {
-      cerr << " Error allocating memory in i5_array contructor\n";
-      ad_exit(21);
-    }
-    t -= indexmin();
-    for (int i=hsl; i<=hsu; i++)
-    {
-      (*this)(i).allocate();
-    }
+    shape = other.shape;
+    ++(shape->ncopies);
+    t = other.t;
   }
   else
   {
-    t=0;
-    shape=0;
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated i5_array.\n";
+#endif
+    allocate();
   }
 }
+/// Destructor
+i5_array::~i5_array()
+{
+  deallocate();
+}
+/// Does NOT allocate, but initializes i5_array members.
+void i5_array::allocate()
+{
+  t = nullptr;
+  shape = nullptr;
+}
+/**
+Construct vector of i4_array with dimensions [hsl to hsu].
 
+\param hsl lower vector index
+\param hsu upper vector index
+*/
+i5_array::i5_array(int hsl, int hsu)
+{
+  allocate(hsl,hsu);
+}
+/**
+Allocate vector of i4_array with dimensions [hsl to hsu].
+
+\param hsl lower vector index
+\param hsu upper vector index
+*/
+void i5_array::allocate(int hsl, int hsu)
+{
+  if (hsl > hsu)
+  {
+    return allocate();
+  }
+  if ((t = new i4_array[static_cast<unsigned int>(hsu - hsl + 1)]) == 0)
+  {
+    cerr << " Error allocating memory in i5_array::allocate\n";
+    ad_exit(1);
+  }
+  if ((shape = new vector_shapex(hsl, hsu, t)) == 0)
+  {
+    cerr << " Error allocating memory in i5_array::allocate\n";
+    ad_exit(1);
+  }
+  t -= indexmin();
+  for (int i = hsl; i <= hsu; ++i)
+  {
+    t[i].allocate();
+  }
+}
 /**
  * Description not yet available.
  * \param
  */
-void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh,int ncl,int nch,int aa,int bb)
- {
-   int ss=hsu-hsl+1;
-   if (ss>0)
-   {
-     if ( (t = new i4_array[ss]) == 0)
-     {
-       cerr << " Error allocating memory in i5_array contructor\n";
-       ad_exit(21);
-     }
-     if ( (shape=new vector_shapex(hsl,hsu,t)) == 0)
-     {
-       cerr << " Error allocating memory in i5_array contructor\n";
-       ad_exit(21);
-     }
-     t -= indexmin();
-     for (int i=hsl; i<=hsu; i++)
-     {
-       (*this)(i).allocate(sl,sh,nrl,nrh,ncl,nch,aa,bb);
-     }
-   }
-   else
-   {
-     t=0;
-     shape=0;
-   }
- }
+void i5_array::allocate(
+  int hsl, int hsu,
+  int sl, int sh,
+  int nrl, int nrh,
+  int ncl, int nch,
+  int aa, int bb)
+{
+  allocate(hsl, hsu);
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    t[i].allocate(sl,sh,nrl,nrh,ncl,nch,aa,bb);
+  }
+}
 
 /**
  * Description not yet available.
@@ -114,7 +113,8 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    const index_type& ncl,const index_type& nch,
    const index_type& aa,const index_type& bb)
  {
-   int ss=hsu-hsl+1;
+  unsigned int ss =
+    static_cast<unsigned int>(hsu < hsl ? 0 : hsu - hsl + 1);
    if (ss>0)
    {
      if ( (t = new i4_array[ss]) == 0)
@@ -140,187 +140,91 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      shape=0;
    }
  }
-
-/**
- * Description not yet available.
- * \param
- */
-i5_array::i5_array(const i5_array& m2)
- {
-   if (m2.shape)
-   {
-     shape=m2.shape;
-     (shape->ncopies)++;
-     t = m2.t;
-   }
-   else
-   {
-     shape=NULL;
-     t=NULL;
-   }
- }
-
-/**
- * Description not yet available.
- * \param
- */
- i5_array::~i5_array()
- {
-   deallocate();
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void i5_array::deallocate()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       t= (i4_array*) (shape->get_truepointer());
-       delete [] t;
-       t=NULL;
-       delete shape;
-       shape=NULL;
-     }
-   }
- }
+/// Deallocates i5_array memory if no copies exists.
+void i5_array::deallocate()
+{
+  if (shape)
+  {
+    if (shape->ncopies > 0)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      t = static_cast<i4_array*>(shape->get_truepointer());
+      delete [] t;
+      delete shape;
+    }
+    allocate();
+  }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated i5_array.\n";
+  }
+#endif
+}
 
 #if !defined (OPT_LIB)
 
-/**
- * Description not yet available.
- * \param
- */
-    i4_array& i5_array::operator ( ) (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i4_array& i5_array::operator ( ) (int i)", indexmin(), indexmax(), i);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    i4_array& i5_array::operator [] (int i)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-        "i4_array& i5_array::operator [] (int i)", indexmin(), indexmax(), i);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    i3_array& i5_array::operator ( ) (int i ,int j)
-    {
-      return ((*this)(i))(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    imatrix& i5_array::operator ( ) (int i,int j,int k)
-    {
-      return (((*this)(i,j))(k));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    ivector& i5_array::operator ( ) (int i,int j,int k,int l)
-    {
-      return ( ((*this)(i,j,k))(l));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-    int& i5_array::operator ( ) (int i,int j,int k,int l,int ll)
-    {
-      return ( ((*this)(i,j,k))(l,ll));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+/// Returns reference to i4_array element at i5_array(i).
+i4_array& i5_array::operator()(int i)
+{
+  return elem(i);
+}
+/// Returns reference to i4_array element at i5_array[i].
+i4_array& i5_array::operator[](int i)
+{
+  return elem(i);
+}
+/// Returns reference to i3_array element at i5_array(i, j).
+i3_array& i5_array::operator()(int i, int j)
+{
+  return elem(i)(j);
+}
+/// Returns reference to imatrix element at i5_array(i, j, k).
+imatrix& i5_array::operator()(int i, int j, int k)
+{
+  return elem(i)(j, k);
+}
+/// Returns reference to ivector element at i5_array(i, j, k, l).
+ivector& i5_array::operator()(int i, int j, int k, int l)
+{
+  return elem(i)(j, k, l);
+}
+/// Returns reference to integer element at i5_array(i, j, k, l, m).
+int& i5_array::operator()(int i, int j, int k, int l, int m)
+{
+  return elem(i)(j, k, l, m);
+}
+/// Returns reference to const i5_array element at i5_array(i).
 const i4_array& i5_array::operator()(int i) const
-    {
-      if (i<indexmin() || i>indexmax())
-      {
-        cerr << "Index out of bounds in i5_array::operator () (int)"
-             << endl;
-        ad_exit(1);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i);
+}
+/// Returns reference to const i5_array element at i5_array[i].
 const i4_array& i5_array::operator[](int i) const
-    {
-      if (i<indexmin() || i>indexmax())
-      {
-        cerr << "Index out of bounds in i5_array::operator () (int)"
-             << endl;
-        ad_exit(1);
-      }
-      return t[i];
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i);
+}
+/// Returns reference to const i3_array element at i5_array(i, j).
 const i3_array& i5_array::operator()(int i, int j) const
-    {
-      return ((*this)(i))(j);
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i)(j);
+}
+/// Returns reference to const imatrix element at i5_array(i, j, k).
 const imatrix& i5_array::operator()(int i, int j, int k) const
-    {
-      return (((*this)(i,j))(k));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
+{
+  return elem(i)(j, k);
+}
+/// Returns reference to const ivector element at i5_array(i, j, k, l).
 const ivector& i5_array::operator()(int i, int j, int k, int l) const
-    {
-      return ( ((*this)(i,j,k))(l));
-    }
-
-/**
- * Description not yet available.
- * \param
- */
-const int& i5_array::operator()(int i, int j, int k, int l, int ll) const
-    {
-      return ( ((*this)(i,j,k))(l,ll));
-    }
+{
+  return elem(i)(j, k, l);
+}
+/// Returns reference to const integer element at i5_array(i, j, k, l, m).
+const int& i5_array::operator()(int i, int j, int k, int l, int m) const
+{
+  return elem(i)(j, k, l, m);
+}
 #endif

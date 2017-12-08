@@ -107,9 +107,12 @@ TEST_F(test_df1_one_variable, init_df1_one_variable)
 {
   gradient_structure gs;
   dvariable variable;
+  variable = 4.5;
   ASSERT_EQ(0, df1_one_variable::num_ind_var);
   ASSERT_TRUE(df1_one_variable::ind_var[0] == NULL);
   init_df1_one_variable n(variable);
+  ASSERT_DOUBLE_EQ(4.5, *(n.get_u()));
+  ASSERT_DOUBLE_EQ(1, *(n.get_u_x()));
   ASSERT_EQ(1, df1_one_variable::num_ind_var);
   ASSERT_TRUE(&variable == df1_one_variable::ind_var[0]);
   try

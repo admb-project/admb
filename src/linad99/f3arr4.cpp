@@ -27,7 +27,7 @@ Return computed variable mean of variable 3-dimensional array m.
 dvariable mean(const dvar3_array& m)
 {
   dvariable tmp;
-  const int count = size_count(m);
+  const unsigned int count = size_count(m);
   if (count > 0)
   {
     tmp = sum(m) / count;

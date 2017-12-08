@@ -10,6 +10,9 @@ TEST_F(test_param_init_bounded_matrix, constructor)
   ASSERT_EQ(0, p.indexmax());
   ASSERT_DOUBLE_EQ(0, p.get_minb());
   ASSERT_DOUBLE_EQ(0, p.get_maxb());
+
+  p.set_maxb(-2.5);
+  ASSERT_DOUBLE_EQ(-2.5, p.get_maxb());
 }
 TEST_F(test_param_init_bounded_matrix, allocate_phase_start)
 {

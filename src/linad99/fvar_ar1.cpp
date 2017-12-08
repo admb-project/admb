@@ -6,79 +6,76 @@
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-
- dvar_vector::~dvar_vector()
- {
-   deallocate();
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void dvar_vector::deallocate()
- {
-   if (shape)
-   {
+/// Destructor
+dvar_vector::~dvar_vector()
+{
+  deallocate();
+}
+/// Deallocate dvar_vector memory.
+void dvar_vector::deallocate()
+{
+  if (shape)
+  {
 #ifdef DIAG
      cout << " Deallocating dvar_vector with ptr_address\n  "
           << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
 #endif
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       va = (double_and_int*) shape->trueptr;
-       * (arr_link **) va = link_ptr;
-       arr_free(va);
-       delete shape;
-     }
-     va=NULL;
-     shape=NULL;
-   }
- }
+    if (shape->ncopies > 0)
+    {
+      --(shape->ncopies);
+    }
+    else
+    {
+      va = (double_and_int*) shape->trueptr;
+      *(arr_link**) va = link_ptr;
+      arr_free(va);
+      delete shape;
+    }
+    allocate();
+  }
+#ifdef DEBUG
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated dvar_vector.\n";
+  }
+#endif
+}
+/// Copy constructor
+dvar_vector::dvar_vector(const dvar_vector& other)
+{
+  shallow_copy(other);
 
+#ifdef DEBUG
+  cout << " Making copy for dvar_vector with ptr_address\n  "
+       << &va << "  pointing at  " << (va+indexmin()) << "\n";
+#endif
+}
 /**
- * Description not yet available.
- * \param
- */
-dvar_vector::dvar_vector(const dvar_vector& t)
- {
-   index_min=t.index_min;
-   index_max=t.index_max;
-   shape=t.shape;
-   link_ptr=t.link_ptr;
-   if (shape) (shape->ncopies)++;
-   va = t.va;
-   #ifdef DIAG
-     cout << " Making copy for dvar_vector with ptr_address\n  "
-           << &va << "  pointing at  " << (va+indexmin()) << "\n";
-   #endif
- }
+Shallow copy other data structure pointers.
 
-/**
- * Description not yet available.
- * \param
- */
- void dvar_vector::shallow_copy(const dvar_vector& t)
- {
-   index_min=t.index_min;
-   index_max=t.index_max;
-   shape=t.shape;
-   link_ptr=t.link_ptr;
-   if (shape) (shape->ncopies)++;
-   va = t.va;
-   #ifdef DIAG
-     cout << " Making copy for dvar_vector with ptr_address\n  "
-           << &va << "  pointing at  " << (va+indexmin()) << "\n";
-   #endif
- }
+\param other dvar_vector
+*/
+void dvar_vector::shallow_copy(const dvar_vector& other)
+{
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+
+    index_min = other.index_min;
+    index_max = other.index_max;
+
+    link_ptr = other.link_ptr;
+    va = other.va;
+  }
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated dvar_vector.\n";
+#endif
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.

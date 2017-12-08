@@ -123,7 +123,7 @@ struct number: value
 {
   double _value;
 
-  number()
+  number(): _value(0)
     { _type = values::_number; }
 
   double get_value() const

@@ -1,5 +1,6 @@
 % Author: Dave Fournier
-% Copyright (c) 2008-2017 ADMB Foundation and Regents of the University of California
+% Copyright (c) 2008-2017
+% ADMB Foundation and Regents of the University of California
 
 
 \documentclass{admbmanual}
@@ -25,7 +26,9 @@
 \newcommand\Pone{P_{t|t-1}}
 \newcommand\diag{\textrm{diag}}
 \newcommand\ep{\textrm{elem\_prod}}
-\newcommand\admbversion{11.6pre}
+\newcommand\admbversion{11.6}
+\newcommand\admbyear{2016}
+\newcommand\admbdate{2016-12-17}
 
 \makeindex
 
@@ -35,8 +38,8 @@
   \smalltitlepart{An Introduction to}
   \largetitlepart{AD MODEL BUILDER}
   \smalltitlepart{for Use in Nonlinear Modeling and Statistics}
-  \vspace{3ex}\textsf{\textit{Version \admbversion~~(2015-05-22)\\[3pt]
-      Revised manual~~(2015-01-07)
+  \vspace{3ex}\textsf{\textit{Version \admbversion~~(\admbdate)\\[3pt]
+      ~% Revised manual~~(yyyy-mm-dd)
     }}\vspace{3ex}
 }
 \author{\textsf{\textit{David Fournier}}}
@@ -48,10 +51,9 @@
 \noindent ADMB Foundation, Honolulu.\\\\
 \noindent This is the manual for AD Model Builder (ADMB) version
 \admbversion.\\\\
-\noindent Copyright \copyright\ 1993, 1994, 1996, 2000, 2001, 2004, 2007, 2008,
-2011, 2013, 2014, 2015 David~Fournier\\\\
+\noindent Copyright \copyright\ 1993--\admbyear\ David Fournier\\\\
 \noindent The latest edition of the manual is available at:\\
-\url{http://admb-project.org/documentation/manuals}
+\url{http://www.admb-project.org/docs/manuals/}
 
 \tableofcontents
 
@@ -4304,24 +4306,27 @@ The user can refer to the object in the code simply by using its name.
 %-- Added by Steve Martell, Mar 27, 2014
 \section{Using control files for bounded parameters}
 \X{\fontindexentry{tt}{init\_bounded\_number}}
-\XX{Using control file for bounded parameters in \ADM}{\fontindexentry{tt}{init\_bounded\_number}}
+\XX{Using control file for bounded parameters in \ADM}%
+{\fontindexentry{tt}{init\_bounded\_number}}
 Bounded parameters defined in the procedure section take the following format:
 \begin{lstlisting}
   init_bounded_number a(lb,ub,i_phz);
 \end{lstlisting}
-where lb is the lower bound, ub is the upper bound and i\_phz is and integer representing 
-the phase of estimation.  There is also an option to pass a vector containing 3 elements
-set the lower and upper bounds and the phase of estimation.  This is often desirable as this
-vector can be read in from the data file and does not require recompiling of the code to change
-the parameter bounds or the phase of estimation.
+where lb is the lower bound, ub is the upper bound and i\_phz is and integer
+representing the phase of estimation. There is also an option to pass a vector
+containing 3 elements set the lower and upper bounds and the phase of
+estimation. This is often desirable as this vector can be read in from the data
+file and does not require recompiling of the code to change the parameter bounds
+or the phase of estimation.
 
 \begin{lstlisting}
   init_bounded_number a(luphz_vector);
 \end{lstlisting}
 
-This has also been implemented for the \texttt{init\_bounded\_number\_vector}, where a matrix 
-read in from the data section is used to set the lower and upper bounds of each element and 
-phase of estimation.  The  following is a simple example implementing these new features.
+This has also been implemented for the \texttt{init\_bounded\_number\_vector},
+where a matrix read in from the data section is used to set the lower and upper
+bounds of each element and phase of estimation. The following is a simple
+example implementing these new features.
 
 \begin{lstlisting}
 DATA_SECTION
@@ -4351,12 +4356,12 @@ INITIALIZATION_SECTION
   sig 1.0;
 
 PROCEDURE_SECTION
-  
+
   y_hat = a + b * x;
   y2_hat = theta(1) + theta(2)*x;
   f     = dnorm(y - y_hat, sig);
   f    += dnorm(y-y2_hat,theta(3));
-\end{lstlisting} 
+\end{lstlisting}
 
 And the input data file is here:
 
@@ -4364,9 +4369,9 @@ And the input data file is here:
 # number of observations
      10
 # observed Y values
-    1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18 
+    1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18
 # observed x values
-    -1  0 1  2  3  4  5  6  7  8        
+    -1  0 1  2  3  4  5  6  7  8
 
 #a_lup
 -5  5  1

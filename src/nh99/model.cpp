@@ -13,19 +13,14 @@
 
 int initial_params::num_initial_params=0;
 
-#if !defined(BIG_INIT_PARAMS)
-const int initial_params::max_num_initial_params=4000;
-  #if (__BORLANDC__  >= 0x0550)
-// this should be a resizeable array
-initial_params* initial_params::varsptr[4001];
-  #else
-// this should be a resizeable array
-initial_params*
-initial_params::varsptr[initial_params::max_num_initial_params + 1];
-  #endif
+#if defined(NO_BIG_INIT_PARAMS)
+  const int initial_params::max_num_initial_params = 250;
+  adlist_ptr initial_params::varsptr(
+    initial_params::max_num_initial_params);
 #else
-  const int initial_params::max_num_initial_params=250;
-  adlist_ptr initial_params::varsptr(initial_params::max_num_initial_params);
+  const int initial_params::max_num_initial_params = 4000;
+  initial_params* initial_params::varsptr[
+    initial_params::max_num_initial_params + 1];
 #endif
  int initial_params::max_number_phases=1;
  int initial_params::current_phase=1;
@@ -143,10 +138,10 @@ void initial_params::add_to_list()
   }
 
   // this is the list of fundamental objects
-#if !defined(BIG_INIT_PARAMS)
-  varsptr[num_initial_params] = this;
-#else
+#if defined(NO_BIG_INIT_PARAMS)
   varsptr.add_to_list(this);
+#else
+  varsptr[num_initial_params] = this;
 #endif
 
   num_initial_params++;
@@ -480,26 +475,29 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
     //add_to_list();
   }
 
-  int param_init_number::size_count(void)
-  {
-    return 1;
-  }
+/**
+Returns number of active paramters.
+*/
+unsigned int param_init_number::size_count() const
+{
+  return 1;
+}
 
 /**
 Use a data_vector to allocate an init_bounded_number
 \author Steve Martell
-\param v vector containing the lower bound, upper bound, and phase of
+\param _v vector containing the lower bound, upper bound, and phase of
 estimation.
 */
-  void param_init_bounded_number::allocate(const data_vector & v,
-   const char * _s)
-   {
-    double lb = v(1);
-    double ub = v(2);
-    int   phz = int(v(3));
+void param_init_bounded_number::allocate(const data_vector& _v,
+   const char* _s)
+{
+  double lb = _v(1);
+  double ub = _v(2);
+  int phz = static_cast<int>(_v(3));
 
-    allocate(lb,ub,phz,_s);
-   }
+  allocate(lb, ub, phz, _s);
+}
 
   void param_init_bounded_number::allocate(double _minb,
     double _maxb,int _phase_start,const char * _s)
@@ -569,15 +567,18 @@ void param_init_bounded_number::set_value_inv(const dvector& x, const int& ii)
     allocate(_minb,_maxb,1,_s);
   }
 
-  void check_datafile_pointer(void * p)
+/**
+Exits if p is null.
+*/
+void check_datafile_pointer(void* p)
+{
+  if (!p)
   {
-    if (!p)
-    {
-      cerr << " Error trying to read in model data " << endl;
-      cerr << " This is usual caused by a missing DAT file " << endl;
-      ad_exit(1);
-    }
+    cerr << " Error trying to read in model data " << endl;
+    cerr << " This is usual caused by a missing DAT file " << endl;
+    ad_exit(1);
   }
+}
 
 data_number& data_number::operator=(const double& v)
   {
@@ -663,7 +664,9 @@ data_number& data_number::operator=(const double& v)
   }
 
 /**
-Saves value param_init_number to ofs.
+Saves value param_init_number to output stream ofs.
+
+\param ofs output stream
 */
 void param_init_number::save_value(ofstream& ofs)
 {
@@ -717,16 +720,20 @@ void param_init_vector::set_value(const dvar_vector& x,
 #  endif
   }
 
-  int param_init_vector::size_count(void)
-  {
-    return ::size_count(*this);
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_init_vector::size_count() const
+{
+  return ::size_count(*this);
+}
 
-  param_init_vector::param_init_vector(void) : named_dvar_vector() ,
-    initial_params()
-  {
-    //add_to_list();
-  }
+/// Default constructor
+param_init_vector::param_init_vector():
+  named_dvar_vector(), initial_params()
+{
+  //add_to_list();
+}
 
 void param_init_vector::save_value(ofstream& ofs)
 {
@@ -751,44 +758,52 @@ void param_init_vector::bsave_value(uostream& uos)
     allocate(imin,imax,1,s);
   }
  */
-
-  void param_init_vector::allocate(int imin,int imax,int phase_start,
-     const char * s)
+/**
+Allocate variable vector of parameters, then reads values from input data.
+\param imin lower vector index
+\param imax upper vector index
+\param _phase_start
+\param s parameter id
+*/
+void param_init_vector::allocate(
+  int imin,
+  int imax,
+  int _phase_start,
+  const char* s)
+{
+  named_dvar_vector::allocate(imin, imax, s);
+  if (!(!(*this)))
   {
-    named_dvar_vector::allocate(imin,imax,s);
-    if (!(!(*this)))
+    initial_params::allocate(_phase_start);
+    if (ad_comm::global_bparfile)
     {
-      initial_params::allocate(phase_start);
-      if (ad_comm::global_bparfile)
+      *(ad_comm::global_bparfile) >> dvar_vector(*this);
+      if (!(*(ad_comm::global_bparfile)))
       {
-        *(ad_comm::global_bparfile) >> dvar_vector(*this);
-        if (!(*(ad_comm::global_bparfile)))
-        {
-          cerr << "error reading parameters from binary file "
-               << endl;
-          ad_exit(1);
-        }
+        cerr << "error reading parameters from binary file.\n";
+        ad_exit(1);
       }
-      else if (ad_comm::global_parfile)
+    }
+    else if (ad_comm::global_parfile)
+    {
+      *(ad_comm::global_parfile) >> dvar_vector(*this);
+      if (!(*(ad_comm::global_parfile)))
       {
-        *(ad_comm::global_parfile) >> dvar_vector(*this);
-        if (!(*(ad_comm::global_parfile)))
-        {
-          cerr << "error reading parameters from file "
-               << ad_comm::global_parfile->get_file_name() << endl;
-          ad_exit(1);
-        }
-      }
-      else
-      {
-        dvar_vector::operator=(initial_value);
+        cerr << "error reading parameters from file "
+             << ad_comm::global_parfile->get_file_name() << endl;
+        ad_exit(1);
       }
     }
     else
     {
-      initial_params::allocate(-1);
+      dvar_vector::operator=(initial_value);
     }
   }
+  else
+  {
+    initial_params::allocate(-1);
+  }
+}
 
   void param_init_matrix::allocate(int rmin,int rmax,int cmin,int cmax,
     const char * s)
@@ -885,10 +900,13 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
     }
   }
 
-  int param_init_bounded_vector::size_count(void)
-  {
-    return ::size_count(*this);
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_init_bounded_vector::size_count() const
+{
+  return ::size_count(*this);
+}
 
 /**
 Default constructor
@@ -1002,10 +1020,13 @@ void param_init_matrix::set_value_inv(const dvector& x, const int& ii)
     //add_to_list();
   }
 
-  int param_init_matrix::size_count(void)
-  {
-    return ::size_count(*this);
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_init_matrix::size_count() const
+{
+  return ::size_count(*this);
+}
 
 void param_init_matrix::save_value(ofstream& ofs)
 {
@@ -1260,7 +1281,7 @@ pinitial_params& adlist_ptr::operator[](int i)
 /**
 Construct array with init_size.
 */
-adlist_ptr::adlist_ptr(int init_size)
+adlist_ptr::adlist_ptr(unsigned int init_size)
 {
   current = 0;
   ptr = new ptovoid[init_size];
@@ -1272,7 +1293,7 @@ adlist_ptr::adlist_ptr(int init_size)
 }
 void adlist_ptr::initialize()
 {
-  for (int i = 0; i < current_size; i++)
+  for (unsigned int i = 0; i < current_size; ++i)
   {
     ptr[i] = 0;
   }
@@ -1290,7 +1311,7 @@ void adlist_ptr::resize(void)
   {
     cerr << "Error: allocating memory in adlist_ptr" << endl;
   }
-  for (int i=0;i<current;i++)
+  for (unsigned int i = 0; i < current; ++i)
   {
     tmp[i] = ptr[i];
   }
@@ -1319,8 +1340,6 @@ Destructor
 */
 adlist_ptr::~adlist_ptr()
 {
-  current = 0;
-  current_size = -1;
   if (ptr)
   {
     delete [] ptr;

@@ -10,11 +10,35 @@
   #include <cassert>
 #endif
 
-param_init_bounded_number_matrix::param_init_bounded_number_matrix(): v(NULL),
-  index_min(0), index_max(0)
+/// Default constructor
+param_init_bounded_number_matrix::param_init_bounded_number_matrix():
+  v(NULL),
+  index_min(0),
+  index_max(-1)
 {
 }
-void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
+/// Destructor
+param_init_bounded_number_matrix::~param_init_bounded_number_matrix()
+{
+  deallocate();
+}
+/**
+Allocate matrix of param_init_bounded numbers with dimension
+[rowmin to rowmax] x [colmin to colmax] with bounded values
+[bmin, bmax].
+
+Note: default phase_start is 1.
+
+\param rowmin matrix row minimum index
+\param rowmax matrix row max index
+\param colmin matrix column minimum index
+\param colmax matrix column max index
+\param bmin bounded lower values
+\param bmax bounded upper values
+\param s id
+*/
+void param_init_bounded_number_matrix::allocate(
+  int rowmin, int rowmax,
   int colmin, int colmax,
   const dmatrix& bmin, const dmatrix& bmax,
   const char* s)
@@ -23,7 +47,24 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
   phase_start = 1;
   allocate(rowmin, rowmax, colmin, colmax, bmin, bmax, phase_start, s);
 }
-void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
+/**
+Allocate matrix of param_init_bounded numbers with dimension
+[rowmin to rowmax] x [colmin to colmax] with bounded values
+[bmin, bmax].
+
+Note: default phase_start is 1.
+
+\param rowmin matrix row minimum index
+\param rowmax matrix row max index
+\param colmin matrix column minimum index
+\param colmax matrix column max index
+\param bmin bounded lower values
+\param bmax bounded upper values
+\param phase_start
+\param s id
+*/
+void param_init_bounded_number_matrix::allocate(
+  int rowmin, int rowmax,
   int colmin, int colmax,
   const dmatrix& bmin, const dmatrix& bmax,
   const imatrix& phase_start,
@@ -33,11 +74,9 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
   assert(v == NULL);
 #endif
 
-  int size  = rowmax - rowmin + 1;
-  if (size > 0)
+  if (rowmax >= rowmin)
   {
-    index_min = rowmin;
-    index_max = rowmax;
+    unsigned int size  = static_cast<unsigned int>(rowmax - rowmin + 1);
     v = new param_init_bounded_number_vector[size];
     if (!v)
     {
@@ -45,9 +84,12 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
                "param_init_bounded_number_vector " << endl;
       ad_exit(1);
     }
+
+    index_min = rowmin;
+    index_max = rowmax;
     v -= index_min;
 
-    for (int i = index_min; i <= index_max; i++)
+    for (int i = index_min; i <= index_max; ++i)
     {
       /*if (it) v[i].set_initial_value(it[i]);*/
       adstring a = s + adstring("[") + str(i) + adstring("]");
@@ -56,22 +98,44 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
     }
   }
 }
-void param_init_bounded_number_matrix::set_scalefactor(const double scalefactor)
+/**
+Set scalefactor for each element of param_init_bounded_number_matrix.
+
+\param scalefactor double
+*/
+void param_init_bounded_number_matrix::set_scalefactor(
+  const double scalefactor)
 {
-  for (int i = index_min; i <= index_max; i++)
+#ifndef OPT_LIB
+  assert(v != NULL);
+#endif
+
+  for (int i = index_min; i <= index_max; ++i)
   {
     v[i].set_scalefactor(scalefactor);
   }
 }
+/**
+Set scalefactor for each element of param_init_bounded_number_matrix.
+scalefactor should have the same dimension as param_init_bounded_number_matrix.
+
+\param scalefactor dmatrix
+*/
 void param_init_bounded_number_matrix::set_scalefactor(
   const dmatrix& scalefactor)
 {
+#ifndef OPT_LIB
+  assert(v != NULL);
+#endif
   for (int i = index_min; i <= index_max; i++)
   {
-    const dvector& dv = scalefactor(i);
-    v[i].set_scalefactor(dv);
+    v[i].set_scalefactor(scalefactor(i));
   }
 }
+/**
+Returns matrix with scalefactors for each element
+in param_init_bounded_number_matrix.
+*/
 dmatrix param_init_bounded_number_matrix::get_scalefactor() const
 {
   dmatrix scalefactor;
@@ -80,16 +144,16 @@ dmatrix param_init_bounded_number_matrix::get_scalefactor() const
     scalefactor.allocate(index_min, index_max);
     for (int i = index_min; i <= index_max; i++)
     {
-      param_init_bounded_number_vector& pibv = v[i];
-      dvector dv = pibv.get_scalefactor();
-      int indexmin = pibv.indexmin();
-      int indexmax = pibv.indexmax();
-      scalefactor.allocate(indexmin, indexmax);
-      scalefactor(i) = dv;
+      param_init_bounded_number_vector& vi = v[i];
+      scalefactor(i).allocate(vi.indexmin(), vi .indexmax());
+      scalefactor(i) = vi.get_scalefactor();
     }
   }
   return scalefactor;
 }
+/**
+Free allocated memory.
+*/
 void param_init_bounded_number_matrix::deallocate()
 {
   if (v)
@@ -103,8 +167,14 @@ void param_init_bounded_number_matrix::deallocate()
     v = NULL;
   }
 }
-param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
-  const int i) const
+/**
+Returns param_init_bounded_vector for index i.
+Bounds checking is performed.
+
+\param i index
+*/
+param_init_bounded_number_vector&
+param_init_bounded_number_matrix::operator[](const int i) const
 {
 #ifndef OPT_LIB
   if (i < index_min)
@@ -122,8 +192,14 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
 #endif
   return v[i];
 }
-param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(
-  const int i) const
+/**
+Returns param_init_bounded_vector for index i.
+Bounds checking is performed.
+
+\param i index
+*/
+param_init_bounded_number_vector&
+param_init_bounded_number_matrix::operator()(const int i) const
 {
 #ifndef OPT_LIB
   if (i < index_min)
@@ -141,8 +217,15 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(
 #endif
   return v[i];
 }
-param_init_bounded_number& param_init_bounded_number_matrix::operator()(
-  const int i, const int j) const
+/**
+Returns param_init_bounded_number at index i and j.
+Bounds checking is performed.
+
+\param i row index
+\param j column index
+*/
+param_init_bounded_number&
+param_init_bounded_number_matrix::operator()(const int i, const int j) const
 {
   return this->operator()(i)(j);
 }

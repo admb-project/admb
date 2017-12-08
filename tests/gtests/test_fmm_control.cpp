@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 #include <adstring.hpp>
+#include <climits>
 
 class test_fmm_control: public ::testing::Test {};
 
@@ -40,3 +41,90 @@ TEST_F(test_fmm_control, copy_constructor)
   fmm_control copy(source);
   EXPECT_EQ(1.0, copy.fringe);
 }
+TEST_F(test_fmm_control, constructor_ipars)
+{
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX;
+  ipars[2] = LONG_MAX;
+  ipars[3] = INT_MAX;
+  ipars[4] = INT_MAX;
+  ipars[5] = INT_MAX;
+  fmm_control source(ipars);
+  EXPECT_EQ(LONG_MAX, ipars[1]);
+  EXPECT_EQ(LONG_MAX, ipars[2]);
+  EXPECT_EQ(INT_MAX, ipars[3]);
+  EXPECT_EQ(INT_MAX, ipars[4]);
+  EXPECT_EQ(INT_MAX, ipars[5]);
+}
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+#if defined(__MINGW64__)
+ #ifndef OPT_LIB
+TEST_F(test_fmm_control, constructor_ipars_max1)
+{
+  ad_exit=&test_ad_exit;
+
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX;
+  ipars[2] = LONG_MAX;
+  ipars[3] = INT_MAX;
+  ipars[4] = INT_MAX;
+  ipars[5] = INT_MAX;
+  ipars[1]++;
+
+  EXPECT_DEATH({
+    fmm_control source(ipars);
+  }, "Assertion");
+}
+TEST_F(test_fmm_control, constructor_ipars_max2)
+{
+  ad_exit=&test_ad_exit;
+
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX;
+  ipars[2] = LONG_MAX;
+  ipars[3] = INT_MAX;
+  ipars[4] = INT_MAX;
+  ipars[5] = INT_MAX;
+  ipars[2]++;
+
+  EXPECT_DEATH({
+    fmm_control source(ipars);
+  }, "Assertion");
+}
+TEST_F(test_fmm_control, constructor_ipars_max4)
+{
+  ad_exit=&test_ad_exit;
+
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX;
+  ipars[2] = LONG_MAX;
+  ipars[3] = INT_MAX;
+  ipars[4] = LONG_MAX;
+  ipars[5] = INT_MAX;
+  ipars[4]++;
+
+  EXPECT_DEATH({
+    fmm_control source(ipars);
+  }, "Assertion");
+}
+TEST_F(test_fmm_control, constructor_ipars_max5)
+{
+  ad_exit=&test_ad_exit;
+
+  lvector ipars(1, 5);
+  ipars[1] = LONG_MAX;
+  ipars[2] = LONG_MAX;
+  ipars[3] = INT_MAX;
+  ipars[4] = INT_MAX;
+  ipars[5] = INT_MAX;
+  ipars[5]++;
+
+  EXPECT_DEATH({
+    fmm_control source(ipars);
+  }, "Assertion");
+}
+  #endif
+#endif

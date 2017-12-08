@@ -19,9 +19,8 @@ TEST_F(test_param_init_matrix, assignment_operator_empty_dmatrix)
   }
   catch (const int exit_code)
   {
-    return;
+    FAIL();
   }
-  FAIL();
 }
 TEST_F(test_param_init_matrix, allocate_nogradient)
 {

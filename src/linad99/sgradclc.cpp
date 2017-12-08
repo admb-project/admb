@@ -106,7 +106,7 @@ void gradcalc(int nvar, const dvector& _g)
     return;
   }
 
-  if (g.size() < nvar)
+  if (g.size() < static_cast<unsigned int>(nvar))
   {
     cerr  << "gradient vector size is less than the number of variables.\n";
     ad_exit(1);
@@ -122,7 +122,7 @@ void gradcalc(int nvar, const dvector& _g)
   if (gradient_structure::GRAD_STACK1->ptr <=
         gradient_structure::GRAD_STACK1->ptr_first)
   {
-#ifdef SAFE_ALL
+#ifdef DEBUG
     cerr << "warning -- calling gradcalc when no calculations generating"
          << endl << "derivative information have occurred" << endl;
 #endif
@@ -227,13 +227,13 @@ Compute the gradient from the data stored in the global \ref gradient_structure.
 \param _g Vector from 1 to nvar. On return contains the gradient.
 \param f objective function
 \returns likelihood value
-*/
 double gradcalc(int nvar, const dvector& _g, dvariable& f)
 {
   double v = value(f);
   gradcalc(nvar, _g);
   return v;
 }
+*/
 /**
  */
 void gradient_structure::save_arrays()

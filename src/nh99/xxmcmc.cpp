@@ -4,6 +4,7 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+#include <ctime>
 #include <admodel.h>
 
 #if defined(_MSC_VER)
@@ -143,8 +144,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     //get the number of active parameters
     //int nvar1=initial_params::nvarcalc();
   }
-
-  if (stddev_params::num_stddev_params==0)
+  if (stddev_params::num_stddev_params==0 && no_sd_mcmc==0)
   {
     cerr << " You must declare at least one object of type sdreport "
          << endl << " to do the mcmc calculations" << endl;

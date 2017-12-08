@@ -20,7 +20,7 @@ void ivector::reallocate(double s)
     ivector tmp(indexmin(),indexmax());
     tmp=(*this);
     deallocate();
-    allocate(indexmin(),int(s*indexmax()));
+    allocate(tmp.indexmin(),int(s*tmp.indexmax()));
 #ifndef OPT_LIB
     initialize();
 #endif

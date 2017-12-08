@@ -11,10 +11,10 @@ Return the variable mean of matrix m.
 dvariable mean(const dvar_matrix& m)
 {
   dvariable tmp;
-  const int size = size_count(m);
+  const unsigned int size = size_count(m);
   if (size > 0)
   {
-    tmp = sum(m) / double(size);
+    tmp = sum(m) / size;
   }
   else
   {

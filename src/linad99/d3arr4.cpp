@@ -1,80 +1,85 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/** \file
-    Code for computing square of various constant objects.
 
- */
+/** \file
+Code for computing square of various constant objects.
+*/
 #include "fvar.hpp"
 
-/** Square of a number; constant object.
+/**Return square of value; constant object.
 \ingroup misc
-\param m Number to be squared.
-\return \f$m^2\f$
+\param value to be squared.
+\return \f$value^2\f$
 */
-double square(const double m)
+double square(const double value)
 {
-  return m * m;
+  return value * value;
 }
+/**
+Return dvector results of squaring elements in a values;
+constant vector object.
 
-/** Square of elements in a vector; constant vector object.
 \ingroup misc
-\param m Vector of constant object to be squared.
-\return vector of the same length as #m containing \f$m_i^2\f$
+\param values of constant object to be squared.
+\return vector of the same length as #values containing \f$values_i^2\f$
 */
-dvector square(const dvector& m)
-   {
-     dvector tmp;
-     tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
-     {
-       tmp(i)=square(m(i));
-     }
-     return tmp;
-   }
-
-ivector square(const ivector& v)
+dvector square(const dvector& values)
 {
-  ivector tmp;
-  tmp.allocate(v);
-  for (int i = tmp.indexmin(); i <= tmp.indexmax(); i++)
+  dvector results;
+  results.allocate(values);
+  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
   {
-       tmp(i) = v(i) * v(i);
+    results(i) = square(values(i));
   }
-  return tmp;
+  return results;
 }
+/**
+Return dvector results of squaring elements in a values;
+constant vector object.
 
+\ingroup misc
+\param values of constant object to be squared.
+\return vector of the same length as #values containing \f$values_i^2\f$
+*/
+ivector square(const ivector& values)
+{
+  ivector results;
+  results.allocate(values);
+  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
+  {
+    results(i) = values(i) * values(i);
+  }
+  return results;
+}
 /** Square of a elements in a matrix; constant matrix object.
 \ingroup misc
 \param m matrix of numbers to be squared.
-\return A matrix of the same rank as #m containing \f$m_{ij}^2\f$
+\return A matrix of the same rank as #a containing \f$a_{ij}^2\f$
 */
-dmatrix square(const dmatrix& m)
-   {
-     dmatrix tmp;
-     tmp.allocate(m);
-     for (int i=tmp.rowmin();i<=tmp.rowmax();i++)
-     {
-       tmp(i)=square(m(i));
-     }
-     return tmp;
-   }
-
+dmatrix square(const dmatrix& a)
+{
+  dmatrix results;
+  results.allocate(a);
+  for (int i = results.rowmin(); i <= results.rowmax(); ++i)
+  {
+    results(i) = square(a(i));
+  }
+  return results;
+}
 /** Square of elements in a 3-dimensional array; constant 3-dimensionsal array.
 \ingroup misc
 \param m d3_array of numbers to be squared.
-\return A d3_array of the same shape as #m containing \f$m_{ijk}^2\f$
+\return A d3_array of the same shape as #a containing \f$a_{ijk}^2\f$
 */
-d3_array square(const d3_array& m)
-   {
-     d3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=square(m(i));
-     }
-     return tmp;
-   }
+d3_array square(const d3_array& a)
+{
+  d3_array results;
+  results.allocate(a);
+  for (int i = results.slicemin(); i <= results.slicemax(); ++i)
+  {
+    results(i) = square(a(i));
+  }
+  return results;
+}

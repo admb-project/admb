@@ -93,37 +93,45 @@ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator()(int i)
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void df1b2_init_bounded_number_vector::allocate(int min1,int max1,
-   const double_index_type & bmin,const double_index_type & bmax,
-   const index_type& phase_start,const char * s)
- {
-   index_min=min1;
-   index_max=max1;
-   int size=indexmax()-indexmin()+1;
-   if (size>0)
-   {
-     v = new df1b2_init_bounded_number[size];
-     if (!v)
-     {
-        cerr << " error trying to allocate memory in "
+Allocate vector of df1b2_init_bounded number with dimension
+[min1 to max1] bounded by [bmin, bmax].
+\param min1 lower vector index
+\param max1 upper vector index
+\param bmin lower bound
+\param bmax upper bound
+\param phase_start
+\param s
+*/
+void df1b2_init_bounded_number_vector::allocate(
+  int min1, int max1,
+  const double_index_type& bmin,const double_index_type& bmax,
+  const index_type& phase_start, const char* s)
+{
+  index_min = min1;
+  index_max = max1;
+  unsigned int size =
+    static_cast<unsigned int>(max1 < min1 ? 0 : max1 - min1 + 1);
+  if (size > 0)
+  {
+    v = new df1b2_init_bounded_number[size];
+    if (!v)
+    {
+      cerr << " error trying to allocate memory in "
           "df1b2_init_bounded_number_vector " << endl;
-        exit(1);
-     }
-     v-=indexmin();
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       //if (it) v[i].set_initial_value(ad_double((*it)[i]));
-       adstring ss=s + adstring("[") + str(i) + adstring("]");
-       v[i].allocate(ad_double(bmin[i]),ad_double(bmax[i]),
+      ad_exit(1);
+    }
+    v -= indexmin();
+    for (int i = min1; i <= max1; ++i)
+    {
+      //if (it) v[i].set_initial_value(ad_double((*it)[i]));
+      adstring ss=s + adstring("[") + str(i) + adstring("]");
+      v[i].allocate(ad_double(bmin[i]),ad_double(bmax[i]),
          ad_integer(phase_start[i]),(char*)(ss) );
-     }
-   }
-   else
-     v=NULL;
- }
+    }
+  }
+  else
+    v=NULL;
+}
 
 /*
 dvector df1b2_init_number_vector::get_scalefactor(void)
@@ -288,32 +296,37 @@ df1b2_init_number_vector::~df1b2_init_number_vector()
  }
 
 /**
- * Description not yet available.
- * \param
- */
- void df1b2_init_number_vector::allocate(int min1,int max1,
-   const index_type& phase_start,const char * s)
- {
-   index_min=min1;
-   index_max=max1;
-   int size=indexmax()-indexmin()+1;
-   if (size>0)
-   {
-     v = new df1b2_init_number[size];
-     if (!v)
-     {
-        cerr << " error trying to allocate memory in "
+Allocate vector of df1b2_init_bounded number with dimension
+[min1 to max1].
+\param min1 lower vector index
+\param max1 upper vector index
+\param phase_start
+\param s
+*/
+void df1b2_init_number_vector::allocate(int min1, int max1,
+  const index_type& phase_start, const char * s)
+{
+  index_min = min1;
+  index_max = max1;
+  unsigned int size =
+    static_cast<unsigned int>(max1 < min1 ? 0 : max1 - min1 + 1);
+  if (size > 0)
+  {
+    v = new df1b2_init_number[size];
+    if (!v)
+    {
+      cerr << " error trying to allocate memory in "
           "df1b2_init_number_vector " << endl;
-        exit(1);
-     }
-     v-=indexmin();
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       //if (it) v[i].set_initial_value(ad_double((*it)[i]));
-       adstring ss=s + adstring("[") + str(i) + adstring("]");
-       v[i].allocate(ad_integer(phase_start[i]),(char*)(ss) );
-     }
-   }
-   else
-     v=NULL;
- }
+      ad_exit(1);
+    }
+    v -= indexmin();
+    for (int i=indexmin();i<=indexmax();i++)
+    {
+      //if (it) v[i].set_initial_value(ad_double((*it)[i]));
+      adstring ss=s + adstring("[") + str(i) + adstring("]");
+      v[i].allocate(ad_integer(phase_start[i]),(char*)(ss) );
+    }
+  }
+  else
+    v=NULL;
+}

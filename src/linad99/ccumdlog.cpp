@@ -44,7 +44,7 @@ double inv_cumd_logistic(const double& x)
  */
 double inv_cumd_norm_logistic(double x,double p)
 {
-#if defined(SAFE_ALL)
+#if defined(DEBUG)
   if (0.0<p || 1.0>p)
   {
     cerr << "Error in double inv_cumd_norm_logistic -- illegal p value = "

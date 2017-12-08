@@ -1,34 +1,44 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 
 /**
- * Description not yet available.
- * \param
- */
-ivector& ivector::shift(int min)
+Shift current dimensions of ivector using to_indexmin
+as the new lower index value.
+
+ie [1 to 5] shift to_indexmin 2 will change to [2 to 5]
+
+Note: Size and data are unchanged.
+
+\param to_indexmin lower index changed to
+*/
+ivector& ivector::shift(int to_indexmin)
 {
-  v += indexmin()-min;
-  index_max=index_max+min-index_min;
-  index_min=min;
-  shape->shift(min);
+  v += indexmin() - to_indexmin;
+
+  shape->shift(to_indexmin);
+  index_max = shape->index_max;
+  index_min = shape->index_min;
+
   return *this;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-void lvector::shift(int min)
+Shift current dimensions of lvector using to_indexmin
+as the new lower index value.
+
+ie [1 to 5] shift to_indexmin 2 will change to [2 to 5]
+
+Note: Size and data are unchanged.
+
+\param to_indexmin lower index changed to
+*/
+lvector& lvector::shift(int to_indexmin)
 {
-  v += indexmin()-min;
-  shape->shift(min);
+  v += indexmin() - to_indexmin;
+
+  shape->shift(to_indexmin);
+
+  return *this;
 }

@@ -148,3 +148,203 @@ TEST_F(test_dvar_matrix, row_vector)
   ASSERT_DOUBLE_EQ(2, value(ret(1, 3)));
   ASSERT_DOUBLE_EQ(1, value(ret(1, 4)));
 }
+TEST_F(test_dvar_matrix, fill)
+{
+  gradient_structure gs;
+
+  //2 x 2 matrix
+  dvar_matrix ret(1, 2, 1, 2);
+  ret.fill("{1,2}{3,4}");
+  ASSERT_DOUBLE_EQ(1, value(ret(1, 1)));
+  ASSERT_DOUBLE_EQ(2, value(ret(1, 2)));
+  ASSERT_DOUBLE_EQ(3, value(ret(2, 1)));
+  ASSERT_DOUBLE_EQ(4, value(ret(2, 2)));
+}
+TEST_F(test_dvar_matrix, extract_diagonal)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a(1, 3, 1, 3);
+  a(1, 1) = 1;
+  a(1, 2) = 2;
+  a(1, 3) = 3;
+  a(2, 1) = 4;
+  a(2, 2) = 5;
+  a(2, 3) = 6;
+  a(3, 1) = 7;
+  a(3, 2) = 8;
+  a(3, 3) = 9;
+
+  dvar_vector extract_diagonal(const dvar_matrix& m);
+
+  dvar_vector result = extract_diagonal(a);
+
+  ASSERT_TRUE(result.indexmin() == 1);
+  ASSERT_TRUE(result.indexmax() == 3);
+
+  ASSERT_DOUBLE_EQ(1, value(result(1)));
+  ASSERT_DOUBLE_EQ(5, value(result(2)));
+  ASSERT_DOUBLE_EQ(9, value(result(3)));
+}
+TEST_F(test_dvar_matrix, extract_diagonal_not_square)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a(1, 3, 1, 2);
+  a(1, 1) = 1;
+  a(1, 2) = 2;
+  a(2, 1) = 4;
+  a(2, 2) = 5;
+  a(3, 1) = 4;
+  a(3, 2) = 5;
+
+  dvar_vector extract_diagonal(const dvar_matrix& m);
+  ASSERT_THROW(extract_diagonal(a), int);
+}
+TEST_F(test_dvar_matrix, negativeoperator)
+{
+  gradient_structure gs;
+
+  dvar_matrix a(1, 2, 1, 2);
+  a(1, 1) = 1;
+  a(1, 2) = 2;
+  a(2, 1) = 3;
+  a(2, 2) = 4;
+
+  dvar_matrix a2 = -a;
+  ASSERT_DOUBLE_EQ(-1, value(a2(1, 1)));
+  ASSERT_DOUBLE_EQ(-2, value(a2(1, 2)));
+  ASSERT_DOUBLE_EQ(-3, value(a2(2, 1)));
+  ASSERT_DOUBLE_EQ(-4, value(a2(2, 2)));
+}
+TEST_F(test_dvar_matrix, empty)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+  a.allocate(1, 0);
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(0, a.rowmax());
+  ASSERT_EQ(0, a.rowsize());
+  ASSERT_FALSE(allocated(a));
+}
+TEST_F(test_dvar_matrix, empty2)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(0, a.rowmax());
+  ASSERT_EQ(0, a.rowsize());
+  ASSERT_FALSE(allocated(a));
+}
+TEST_F(test_dvar_matrix, emptycolumns)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+  a.allocate(1, 3);
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(3, a.rowmax());
+  ASSERT_TRUE(allocated(a));
+  ASSERT_TRUE(sub_unallocated(a));
+  ASSERT_FALSE(allocated(a(1)));
+  ASSERT_FALSE(allocated(a(2)));
+  ASSERT_FALSE(allocated(a(3)));
+}
+TEST_F(test_dvar_matrix, ad_integeremptycolumns)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+  ad_integer min = 1;
+  ad_integer max = 3;
+  a.allocate(min, max);
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(3, a.rowmax());
+  ASSERT_TRUE(allocated(a));
+  ASSERT_TRUE(sub_unallocated(a));
+  ASSERT_FALSE(allocated(a(1)));
+  ASSERT_FALSE(allocated(a(2)));
+  ASSERT_FALSE(allocated(a(3)));
+}
+TEST_F(test_dvar_matrix, allocate4xint)
+{
+  gradient_structure gs;
+
+  dvar_matrix a;
+  a.allocate(1, 3, 1, 4);
+
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(3, a.rowmax());
+  ASSERT_EQ(1, a.colmin());
+  ASSERT_EQ(4, a.colmax());
+  ASSERT_TRUE(allocated(a));
+  ASSERT_FALSE(sub_unallocated(a));
+  ASSERT_TRUE(allocated(a(1)));
+  ASSERT_TRUE(allocated(a(2)));
+  ASSERT_TRUE(allocated(a(3)));
+}
+TEST_F(test_dvar_matrix, allocatecolsmax)
+{
+  gradient_structure gs;
+
+  ivector colsmax(1, 3);
+  colsmax(1) = 4;
+  colsmax(2) = 5;
+  colsmax(3) = 6;
+  dvar_matrix a;
+  a.allocate(1, 3, 2, colsmax);
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(3, a.rowmax());
+  ASSERT_EQ(2, a(1).indexmin());
+  ASSERT_EQ(colsmax(1), a(1).indexmax());
+  ASSERT_EQ(2, a(2).indexmin());
+  ASSERT_EQ(colsmax(2), a(2).indexmax());
+  ASSERT_EQ(2, a(3).indexmin());
+  ASSERT_EQ(colsmax(3), a(3).indexmax());
+}
+TEST_F(test_dvar_matrix, emptyequalempty)
+{
+  dvar_matrix a;
+  dmatrix b;
+
+  a = b;
+  ASSERT_EQ(1, a.rowmin());
+  ASSERT_EQ(0, a.rowmax());
+  ASSERT_FALSE(allocated(a));
+}
+TEST_F(test_dvar_matrix, deallocatecopies)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvar_matrix a(1, 2, 1, 2);
+  ASSERT_EQ(0, a.get_ncopies());
+  dvar_matrix firstcopy(a);
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(1, firstcopy.get_ncopies());
+  dvar_matrix secondcopy(a);
+  ASSERT_EQ(2, a.get_ncopies());
+  ASSERT_EQ(2, firstcopy.get_ncopies());
+  ASSERT_EQ(2, secondcopy.get_ncopies());
+
+  firstcopy.deallocate();
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(1, secondcopy.get_ncopies());
+
+  secondcopy.deallocate();
+  ASSERT_EQ(0, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(0, secondcopy.get_ncopies());
+}

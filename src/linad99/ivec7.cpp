@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
@@ -24,126 +18,110 @@
 #include <stdexcept>
 
 #ifndef OPT_LIB
+
 /**
- * Description not yet available.
- * \param
- */
+Return element of ivector at index i.
+
+\param i index
+*/
 int& ivector::operator[](int i)
 {
   if (!v)
   {
-    cerr << "\nattempting to acces non-allocated ivector in "
-       "ivector::operator[]\n";
-    throw std::bad_alloc();
+    cerr << "\nError: Unable to access unallocated ivector"
+         << " in ivector::operator[]\n";
+    ad_exit(1);
   }
   else if (i > indexmax())
   {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
-     "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
-     throw std::out_of_range("array bound exceeded -- index too high");
+    ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
+     "int& ivector::operator[](int i)", indexmin(), indexmax(), i);
   }
-  else if (i<indexmin())
+  else if (i < indexmin())
   {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
-     "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
-     throw std::out_of_range("array bound exceeded -- index too low");
+    ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
+     "int& ivector::operator[](int i)", indexmin(), indexmax(), i);
   }
-  else
-  {
-    return *(v+i);
-  }
-}
 
+  return *(v + i);
+}
 /**
- * Description not yet available.
- * \param
- */
+Return element of ivector at index i.
+
+\param i index
+*/
 int& ivector::operator()(int i)
 {
   if (!v)
   {
-    cerr << "\nattempting to acces non-allocated ivector in "
-     "ivector::operator()\n";
-    throw std::bad_alloc();
+    cerr << "\nError: Unable to access unallocated ivector"
+         << " in ivector::operator()\n";
+    ad_exit(1);
   }
   else if (i > indexmax())
   {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
-     "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
-     throw std::out_of_range("array bound exceeded -- index too high");
+    ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
+      "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
   }
   else if (i < indexmin())
   {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
-     "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
-     throw std::out_of_range("array bound exceeded -- index too low");
+    ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
+      "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
   }
-  else
-  {
-    return *(v+i);
-  }
+  return *(v + i);
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Return element of ivector at index i.
+
+\param i index
+*/
 const int& ivector::operator[](int i) const
 {
   if (!v)
   {
-    cerr << "\nattempting to acces non-allocated ivector in "
-       "ivector::operator[]\n";
-    throw std::bad_alloc();
+    cerr << "\nError: Unable to access unallocated ivector"
+         << " in ivector::operator[]\n";
+    ad_exit(1);
   }
   else if (i > indexmax())
   {
-    cerr << "\narray bound exceeded -- index too high in "
-       "ivector::operator[]";
-    cerr << "index value " << i << " max value " << indexmax() << endl;
-    cerr << endl;
-    throw std::out_of_range("array bound exceeded -- index too high");
+    cerr << "\narray bound exceeded -- index too high"
+         << " in ivector::operator[]";
+    ad_exit(1);
   }
   else if (i < indexmin())
   {
-    cerr << "\narray bound exceeded -- index too low in ivector::operator[]";
-    cerr << endl;
-    throw std::out_of_range("array bound exceeded -- index too low");
+    cerr << "\narray bound exceeded -- index too low"
+         << " in ivector::operator[]";
+    ad_exit(1);
   }
-  else
-  {
-    return *(v+i);
-  }
+  return *(v + i);
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Return element of ivector at index i.
+
+\param i index
+*/
 const int& ivector::operator()(int i) const
 {
   if (!v)
   {
-    cerr << "\nattempting to acces non-allocated ivector in "
-       "ivector::operator()\n";
-    throw std::bad_alloc();
+    cerr << "\nError: Unable to access unallocated ivector"
+         << " in ivector::operator()\n";
+    ad_exit(1);
   }
-  else if (i>indexmax())
+  else if (i > indexmax())
   {
-    cerr << "\narray bound exceeded -- index too high in "
-       "ivector::operator()";
-    cerr << "index value " << i << " max value " << indexmax() << endl;
-    throw std::out_of_range("array bound exceeded -- index too high");
+    cerr << "\narray bound exceeded -- index too high"
+         << " in ivector::operator()";
+    ad_exit(1);
   }
-  else if (i<indexmin())
+  else if (i < indexmin())
   {
-    cerr << "\narray bound exceeded -- index too low in ivector::operator[]";
-    cerr << endl;
-    throw std::out_of_range("array bound exceeded -- index too low");
+    cerr << "\narray bound exceeded -- index too low"
+         << " in ivector::operator()";
+    ad_exit(1);
   }
-  else
-  {
-    return *(v+i);
-  }
+  return *(v + i);
 }
 #endif

@@ -162,7 +162,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 
     if(GRAD_STACK1->ptr <= GRAD_STACK1->ptr_first)
     {
-#ifdef SAFE_ALL
+#ifdef DEBUG
         cerr << "warning -- calling gradcalc when no calculations generating"
          << endl << "derivative information have occurred" << endl;
 #endif

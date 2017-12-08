@@ -1,26 +1,26 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <fvar.hpp>
 
 /**
- * Description not yet available.
- * \param
- */
-dmatrix dmatrix::operator()(const ivector& t)
-{
-  dmatrix tmp(t.indexmin(), t.indexmax(), t.indexmin(), t.indexmax());
+Returns a selected vector of rows from ivector using positions
+in indexes, then for each selected row select only values each
+position in indexes.
 
-  for (int i=t.indexmin(); i <= t.indexmax(); i++)
+Note: Assumes positions are in range [indexmin() to indexmax()].
+
+\param indexes contains vector of valid index values
+ */
+dmatrix dmatrix::operator()(const ivector& indexes)
+{
+  dmatrix rows(indexes.indexmin(), indexes.indexmax(),
+               indexes.indexmin(), indexes.indexmax());
+
+  for (int i = rows.rowmin(); i <= rows.rowmax(); ++i)
   {
-    tmp(i) = (*this)(t(i))(t);
+    rows(i) = operator()(indexes(i))(indexes);
   }
-  return(tmp);
+  return rows;
 }

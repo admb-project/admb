@@ -1012,10 +1012,23 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(banded_symmetric_dmatrix,bHessadjoint)
   int bw=bHess.bandwidth();
-  const int xs=x.size();
-  const int us=u0.size();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  const int xs = [](unsigned int size)->int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  }(x.size());
+  const int us = [](unsigned int size)->int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  }(u0.size());
+#else
+  const int xs = static_cast<int>(x.size());
+  const int us = static_cast<int>(u0.size());
+#endif
   gradient_structure::set_YES_DERIVATIVES();
-  int nvar=x.size()+u0.size()+((bw+1)*(2*u0.size()-bw))/2;
+  int nvar = xs + us + ((bw + 1) * (2 * us - bw))/2;
   independent_variables y(1,nvar);
 
   // need to set random effects active together with whatever

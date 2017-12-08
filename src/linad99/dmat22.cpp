@@ -1,13 +1,8 @@
 /**
- * \file
- *
- * Constructors, destructors and misc functions involving class dvariable
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 
-#include <stdio.h>
-#include <math.h>
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -21,34 +16,40 @@
 
 /**
 Assign value x to all elements in dmatrix.
+
+\param value double
 */
-dmatrix& dmatrix::operator=(const double x)
+dmatrix& dmatrix::operator=(const double value)
 {
   for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    elem(i) = x;
+    elem(i) = value;
   }
   return *this;
 }
 /**
-Divide value x to all elements in dmatrix.
+Divide value to all elements in dmatrix.
+
+\param value double
 */
-dmatrix& dmatrix::operator/=(const double x)
+dmatrix& dmatrix::operator/=(const double value)
 {
   for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    elem(i) /= x;
+    elem(i) /= value;
   }
   return *this;
 }
 /**
-Multiply value x to all elements in dmatrix.
+Multiply value to all elements in dmatrix.
+
+\param value double
 */
-dmatrix& dmatrix::operator*=(const double x)
+dmatrix& dmatrix::operator*=(const double value)
 {
   for (int i = rowmin(); i <= rowmax(); ++i)
   {
-    elem(i) *= x;
+    elem(i) *= value;
   }
   return *this;
 }

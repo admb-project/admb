@@ -202,7 +202,7 @@ void dfsdmat::allocate(int _n, const gradient_structure& gs)
   shared_memory=1;
   minp=ptr;
   maxp=ptr+((n*(n+1))/2-1);
-  m=new double * [n];
+  m=new double*[n];
   m-=1;
   double * tmp =ptr;
   for (int i=1;i<=n;i++)
@@ -211,10 +211,7 @@ void dfsdmat::allocate(int _n, const gradient_structure& gs)
     tmp+=i;
   }
 }
-
-/**
-Destructor
-*/
+/// Destructor
 dfsdmat::~dfsdmat()
 {
   deallocate();

@@ -21,8 +21,10 @@
 
 #include <string.h>
 #include <ctype.h>
-#include <cassert>
-#include <climits>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 /**
  * Description not yet available.
@@ -36,14 +38,22 @@
 const int MAXROWS = 5050;
 
 /**
- * Description not yet available.
- * \param
- */
+Fill values of dvar_matrix with text input from s with
+format rowmin...rowmax where ith row is {colmin,...,colmax}.
+
+Example dvar_matrix::fill("{1,2}{3,4}") produces 
+dvar_matrix = 
+1 2
+3 4
+\param s string
+*/
 void dvar_matrix::fill(const char* s)
 {
   const size_t len = strlen(s);
+#ifndef OPT_LIB
   assert(len <= INT_MAX);
-  int n = (int)len;
+#endif
+  int n = static_cast<int>(len);
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -100,39 +110,43 @@ void dvar_matrix::fill(const char* s)
     ad_exit(1);
   }
 
-  if (nrow != rowsize())
+#if defined(__cplusplus) && (__cplusplus >= 201103L)
+  [](unsigned int nrow, unsigned int rowsize)
   {
-    if (nrow < rowsize())
+    if (nrow != rowsize)
     {
-      cerr << " Not enough rows in the data for "
-      "dvar_matrix::fill(const char *) \n";
-      ad_exit(1);
-    }
-    else
-    {
-      cerr << " Too many rows in the data for "
-      "dvar_matrix::fill(const char *) \n";
-      ad_exit(1);
-    }
-  }
-
-  int i;
-  for (i=1; i<=nrow; i++)
-  {
-    if ( ((*this)[rowmin()+i-1]).size() != columns[i])
-    {
-      if ( ((*this)[rowmin()+i-1]).size() > columns[i])
+      if (nrow < rowsize)
       {
-        cerr << " Not enough columns in the data in row "
-             << i << " for dvar_matrix::fill(const char *) \n";
+        cerr << " Not enough rows in the data for "
+        "dvar_matrix::fill(const char*)\n";
         ad_exit(1);
       }
       else
       {
-        cerr << " Too many columns in the data in row "
-             << i << " for dvar_matrix::fill(const char *) \n";
+        cerr << " Too many rows in the data for "
+        "dvar_matrix::fill(const char*)\n";
         ad_exit(1);
       }
+    }
+  } (static_cast<unsigned int>(nrow), rowsize());
+#endif
+
+  int i;
+  for (i=1; i<=nrow; i++)
+  {
+    unsigned int size = ((*this)[rowmin()+i-1]).size();
+    unsigned int column = static_cast<unsigned int>(columns[i]);
+    if (size > column)
+    {
+      cerr << " Not enough columns in the data in row "
+           << i << " for dvar_matrix::fill(const char *) \n";
+      ad_exit(1);
+    }
+    else if (size < column)
+    {
+      cerr << " Too many columns in the data in row "
+           << i << " for dvar_matrix::fill(const char *) \n";
+      ad_exit(1);
     }
   }
 

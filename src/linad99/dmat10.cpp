@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 #include <string.h>
@@ -22,8 +16,6 @@
  {
    void ** m;
  };
-
-const int MAXROWS = 5050;
 
 /**
 Fill allocated dmatrix with values from input parameter s.
@@ -42,7 +34,7 @@ void dmatrix::fill(const char* s)
 
   size_t len = strlen(s);
   assert(len <= INT_MAX);
-  int n = (int)len;
+  int n = static_cast<int>(len);
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -51,6 +43,7 @@ void dmatrix::fill(const char* s)
   rowshift(1);
   colshift(1);
 
+  const int MAXROWS = 5050;
   ivector columns(1, MAXROWS);
   ivector k1(1, MAXROWS);
   ivector k2(1, MAXROWS);
@@ -103,40 +96,43 @@ void dmatrix::fill(const char* s)
     ad_exit(1);
   }
 
-  if (nrow != rowsize())
+#if defined(__cplusplus) && (__cplusplus >= 201103L)
+  [](unsigned int nrow, unsigned int rowsize)
   {
-    if (nrow < rowsize())
+    if (nrow != rowsize)
     {
-      cerr << " Not enough rows in the data for dmatrix::fill(const char *) \n";
-      ad_exit(1);
-    }
-    else
-    {
-      cerr << " Too many rows in the data for dmatrix::fill(const char *) \n";
-      ad_exit(1);
-    }
-  }
-
-  for (int i=1; i<=nrow; i++)
-  {
-    cout << "row  " << i << " matrix  "
-       << ((*this)[rowmin()+i-1]).size()
-       << "  colvector " << columns[i] << "\n";
-
-    if ( ((*this)[rowmin()+i-1]).size() != columns[i])
-    {
-      if ( ((*this)[rowmin()+i-1]).size() > columns[i])
+      if (nrow < rowsize)
       {
-        cerr << " Not enough columns in the data in row "
-             << i << " for dmatrix::fill(const char *) \n";
+        cerr << " Not enough rows in the data for dmatrix::fill(const char *) \n";
         ad_exit(1);
       }
       else
       {
-        cerr << " Too many columns in the data in row "
-             << i << " for dmatrix::fill(const char *) \n";
+        cerr << " Too many rows in the data for dmatrix::fill(const char *) \n";
         ad_exit(1);
       }
+    }
+  } (static_cast<unsigned int>(nrow), rowsize());
+#endif
+
+  for (int i=1; i<=nrow; i++)
+  {
+    int index = rowmin() + i - 1;
+    unsigned int size = ((*this)[index]).size();
+    unsigned int cols = static_cast<unsigned int>(columns[i]);
+    cout << "row " << i << " matrix " << size << " colvector " << cols << "\n";
+
+    if (size > cols)
+    {
+      cerr << " Not enough columns in the data in row "
+           << i << " for dmatrix::fill(const char *) \n";
+      ad_exit(1);
+    }
+    else if (size < cols)
+    {
+      cerr << " Too many columns in the data in row "
+           << i << " for dmatrix::fill(const char *) \n";
+      ad_exit(1);
     }
   }
 

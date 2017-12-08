@@ -1,26 +1,28 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+#if (__cplusplus > 199711L)
+  #include <iterator>
+  #include <algorithm>
+#endif
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
-void dmatrix::initialize(void)
+/// Initalize all elements of dmatrix to zero.
+void dmatrix::initialize()
 {
-  if (!(!(*this)))  // only initialize allocated objects
+  // only initialize allocated objects
+  if (m)
   {
-    for (int i=rowmin();i<=rowmax();i++)
+#if (__cplusplus <= 199711L)
+    for (int i = rowmin(); i <= rowmax(); ++i)
     {
       elem(i).initialize();
     }
+#else
+    std::for_each(begin(), end(), [](dvector& v) {
+      v.initialize();
+    });
+#endif
   }
 }

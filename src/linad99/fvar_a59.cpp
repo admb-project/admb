@@ -1,178 +1,187 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const ivector& v)
-{
-  return !(!(v));
-}
+Returns true if ivector is allocated, otherwise false.
 
+\param ivec ivector
+*/
+int allocated(const ivector& ivec)
+{
+  return !(!(ivec));
+}
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const lvector& v)
-{
-  return !(!(v));
-}
+Returns true if lvector is allocated, otherwise false.
 
+\param lvec lvector
+*/
+int allocated(const lvector& lvec)
+{
+  return !(!(lvec));
+}
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const dvector& v)
-{
-  return !(!(v));
-}
+Returns true if lvector is allocated, otherwise false.
 
+\param lvec lvector
+*/
+int allocated(const dvector& dvec)
+{
+  return !(!(dvec));
+}
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar_vector& v)
-{
-  return !(!(v));
-}
+Returns true if variables is allocated, otherwise false.
 
+\param variables dvar_vector
+*/
+int allocated(const dvar_vector& variables)
+{
+  return !(!(variables));
+}
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const imatrix& v)
-{
-  return !(!(v));
-}
+Returns true if imat is allocated, otherwise false.
 
-int allocated(const dmatrix& v)
+\param imat imatrix
+*/
+int allocated(const imatrix& imat)
 {
-  return !(!(v));
+  return !(!(imat));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar_matrix& v)
-{
-  return !(!(v));
-}
+Returns true if dmat is allocated, otherwise false.
 
-/**
- * Description not yet available.
- * \param
- */
-int allocated(const i3_array& v)
+\param dmat dmatrix
+*/
+int allocated(const dmatrix& dmat)
 {
-  return !(!(v));
+  return !(!(dmat));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const d3_array& v)
+Returns true if vmat is allocated, otherwise false.
+
+\param vmat dvar_matrix
+*/
+int allocated(const dvar_matrix& vmat)
 {
-  return !(!(v));
+  return !(!(vmat));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar3_array& v)
+Returns true if iarr3 is allocated, otherwise false.
+
+\param iarr3 i3_array
+*/
+int allocated(const i3_array& iarr3)
 {
-  return !(!(v));
+  return !(!(iarr3));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const i4_array& v)
+Returns true if arr3 is allocated, otherwise false.
+
+\param arr3 d3_array
+*/
+int allocated(const d3_array& arr3)
 {
-  return !(!(v));
+  return !(!(arr3));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const d4_array& v)
+Returns true if varr3 is allocated, otherwise false.
+
+\param varr3 dvar3_array
+*/
+int allocated(const dvar3_array& varr3)
 {
-  return !(!(v));
+  return !(!(varr3));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar4_array& v)
+Returns true if iarr4 is allocated, otherwise false.
+
+\param iarr4 i4_array
+*/
+int allocated(const i4_array& iarr4)
 {
-  return !(!(v));
+  return !(!(iarr4));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const d5_array& v)
+Returns true if arr4 is allocated, otherwise false.
+
+\param arr4 d4_array
+*/
+int allocated(const d4_array& arr4)
 {
-  return !(!(v));
+  return !(!(arr4));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar5_array& v)
+Returns true if varr4 is allocated, otherwise false.
+
+\param varr4 dvar4_array
+*/
+int allocated(const dvar4_array& varr4)
 {
-  return !(!(v));
+  return !(!(varr4));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const d6_array& v)
+Returns true if arr5 is allocated, otherwise false.
+
+\param arr5 d5_array
+*/
+int allocated(const d5_array& arr5)
 {
-  return !(!(v));
+  return !(!(arr5));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar6_array& v)
+Returns true if iarr5 is allocated, otherwise false.
+
+\param iarr5 i5_array
+*/
+int allocated(const i5_array& iarr5)
 {
-  return !(!(v));
+  return !(!(iarr5));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const d7_array& v)
+Returns true if varr5 is allocated, otherwise false.
+
+\param varr5 dvar5_array
+*/
+int allocated(const dvar5_array& varr5)
 {
-  return !(!(v));
+  return !(!(varr5));
 }
-
 /**
- * Description not yet available.
- * \param
- */
-int allocated(const dvar7_array& v)
+Returns true if arr6 is allocated, otherwise false.
+
+\param arr6 d6_array
+*/
+int allocated(const d6_array& arr6)
 {
-  return !(!(v));
+  return !(!(arr6));
+}
+/**
+Returns true if varr6 is allocated, otherwise false.
+
+\param varr6 dvar6_array
+*/
+int allocated(const dvar6_array& varr6)
+{
+  return !(!(varr6));
+}
+/**
+Returns true if arr7 is allocated, otherwise false.
+
+\param arr7 d7_array
+*/
+int allocated(const d7_array& arr7)
+{
+  return !(!(arr7));
+}
+/**
+Returns true if varr7 is allocated, otherwise false.
+
+\param varr6 dvar7_array
+*/
+int allocated(const dvar7_array& varr7)
+{
+  return !(!(varr7));
 }

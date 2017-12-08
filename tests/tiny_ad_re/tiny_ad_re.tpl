@@ -17,6 +17,13 @@ PROCEDURE_SECTION
   a=exp(loga);
   b=exp(logb);
   
-  dvar_vector pred=pbeta((dvar_vector)x,a+u(1),b+u(2));
+  //dvar_vector pred=pbeta((dvar_vector)x,a+u(1),b+u(2));
+
+  dvar_vector pred(1, 200);
+  for (int i = 1; i <= 200; ++i)
+  {
+    dvariable xi = x(i);
+    pred(i) = pbeta(xi,a+u(1),b+u(2));
+  }
   nll=sum(square(y-pred))+sum(square(u));
   

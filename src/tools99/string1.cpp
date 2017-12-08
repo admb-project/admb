@@ -93,69 +93,84 @@ void adstring::realloc(const char* t)
     }
   }
 }
-
-/**
-Destructor
-*/
+/// Destructor
 adstring::~adstring()
 {
-  if (next==this)
+  if (next == this)
   {
     deallocate();
   }
 }
+/**
+Returns reference to element at specified index i.
 
-unsigned char & adstring::operator()(const size_t i)
-{
-/*
-  if (i < 1 || i > shape->size())
-  {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "unsigned char & adstring::operator()(int i)", 1, shape->size(), i);
-  }
+\param i index
 */
-  return ( ((unsigned char *)s)[i]);
+unsigned char& adstring::operator()(const size_t i)
+{
+  if (i < 1 || (shape && i > shape->size()))
+  {
+    cerr << "Index out of bounds in adstring::operator()(const size_t)\n"
+         << "Index value was " << i << '\n'
+         << "The size of this adstring is " << shape->size() << '\n';
+    ad_exit(1);
+  }
+  return s[i];
 }
+/**
+Returns reference to element at specified index i.
 
+\param i index
+*/
 const unsigned char& adstring::operator()(const size_t i) const
 {
-/*
-  if (i < 1 || i > shape->size())
+  if (i < 1 || (shape && i > shape->size()))
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "unsigned char & adstring::operator()(int i) const", 1, shape->size(), i);
+    cerr << "Index out of bounds in adstring::operator()const size_t) const\n"
+         << "Index value was " << i << '\n'
+         << "The size of this adstring is " << shape->size() << '\n';
+    ad_exit(1);
   }
-*/
-  return (s[i]);
+  return s[i];
 }
+/**
+Returns reference to element at specified index i.
 
-const unsigned char& adstring::operator[](const size_t i) const
+\param i index
+*/
+unsigned char& adstring::operator[](const size_t i) const
 {
-/*
-  if (i < 1 || i > shape->size())
+  if (i < 1 || (shape && i > shape->size()))
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
-    "unsigned char & adstring::operator[](int i) const ", 1, shape->size(), i);
+    cerr << "Index out of bounds in adstring::operator[](const size_t) const\n"
+         << "Index value was " << i << '\n'
+         << "The size of this adstring is " << shape->size() << '\n';
+    ad_exit(1);
   }
+  return s[i];
+}
+/**
+Return true if adstring is equal to other, otherwise false.
+
+\param other compare string
 */
-  return (s[i]);
-}
-
-int adstring::operator==(const adstring& v) const
+bool adstring::operator==(const adstring& other) const
 {
-  int tmp = strcmp (* this, v);
-  return (tmp == 0);
+  return !strcmp(*this, other);
 }
+/**
+Return true if adstring is equal to other, otherwise false.
 
-int adstring::operator==(const adstring& v)
+\param other compare string
+*/
+bool adstring::operator==(const adstring& other)
 {
-  int tmp = strcmp (* this, v);
-  return (tmp == 0);
+  return !strcmp(*this, other);
 }
 /*
 int adstring::operator!=(const adstring& v)
 {
-  int tmp = strcmp (* this, v);
+  int tmp = strcmp (*this, v);
   return (tmp != 0);
 }
 */
@@ -186,20 +201,28 @@ adstring& adstring::operator+=(const adstring& v)
   }
   return (* this);
 }
+/**
+Returns reference to element at specified index i.
 
+\param i index
+*/
 unsigned char& adstring::operator[](const size_t i)
 {
-  if (i < 1 || i > shape->size())
+  if (i < 1 || (shape && i > shape->size()))
   {
-    cerr << "Index out of bounds in adstring::operator () (const int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
+    cerr << "Index out of bounds in adstring::operator[](const size_t)\n"
+         << "Index value was " << i << '\n'
+         << "The size of this adstring is " << shape->size() << '\n';
+    ad_exit(1);
   }
- // return (s[i]);
-  return ( ((unsigned char *)s)[i]);
+  return s[i];
 }
+/**
+Returns the size of adstr.
 
-size_t length(const adstring& t)
+\param adstr is a adstring.
+*/
+size_t length(const adstring& adstr)
 {
-  return t.size();
+  return adstr.size();
 }

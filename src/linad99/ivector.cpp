@@ -69,27 +69,7 @@ Produces an error if the double* member v is NULL.
 */
 ivector::~ivector()
 {
-  if (shape)
-  {
-    if (shape->ncopies)
-    {
-      (shape->ncopies)--;
-    }
-    else
-    {
-#ifdef SAFE_ALL
-  #ifdef DIAG
-      myheapcheck(" Entering ~dvector");
-  #endif
-      if (v == NULL)
-      {
-        cerr << " Trying to delete NULL pointer in ~ivector\n";
-        ad_exit(21);
-      }
-#endif
-      deallocate();
-    }
-  }
+  deallocate();
 }
 /**
  * Description not yet available.
@@ -107,25 +87,31 @@ ivector::~ivector()
      allocate(ncl,nch);
    }
  }
-/**
-Called by destructor to deallocate memory for a ivector object.
-Produces an error if the int* member is NULL.
-*/
+/// Deallocate i3_array memory.
 void ivector::deallocate()
 {
+  //Called by destructor to deallocate memory for a ivector object.
+  //Produces an error if the int* member is NULL.
   if (shape)
   {
-    v = (int*)(shape->trueptr);
-
-    if (v)
+    if (shape->ncopies > 0)
     {
-      delete [] v;
-      v = NULL;
+      --(shape->ncopies);
     }
-
-    delete shape;
-    shape = NULL;
+    else
+    {
+      v = static_cast<int*>(shape->trueptr);
+      delete [] v;
+      delete shape;
+    }
+    allocate();
   }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Warning -- Unable to deallocate an unallocated i3_array.\n";
+  }
+#endif
 }
 /**
 Safely deallocates memory by reporting if shallow copies are still in scope.
@@ -142,32 +128,34 @@ void ivector::safe_deallocate()
     deallocate();
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Shallow copy other data structure pointers.
 
+\param other i3_array
+*/
+void ivector::shallow_copy(const ivector& other)
+{
+#ifdef DEBUG
+  cout << "Copy constructor called for ivector with address "
+       << _farptr_tolong(t.v) <<"\n";
+#endif
+  if (other.shape)
+  {
+    shape = other.shape;
+    ++(shape->ncopies);
+    v = other.v;
 
-/**
- * Description not yet available.
- * \param
- */
-void ivector::shallow_copy(const ivector& t)
- {
-   index_min=t.index_min;
-   index_max=t.index_max;
-   #ifdef DIAG
-    cout << "Copy constructor called for ivector with address "
-         << _farptr_tolong(t.v) <<"\n";
-   #endif
-   shape=t.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-     v = t.v;
-   }
- }
+    index_min = other.index_min;
+    index_max = other.index_max;
+  }
+  else
+  {
+#ifdef DEBUG
+    cerr << "Warning -- Unable to shallow copy an unallocated i3_array.\n";
+#endif
+    allocate();
+  }
+}
 
 /**
  * Description not yet available.
@@ -199,20 +187,19 @@ ivector& ivector::operator=(const ivector& t)
    }
    return (*this);
  }
-
 /**
- * Description not yet available.
- * \param
- */
-ivector& ivector::operator=(int u)
-{
-  for (int i = indexmin(); i <= indexmax(); i++)
-  {
-    elem(i) = u;
-  }
-  return (*this);
-}
+Assigns value to all elements of ivector.
 
+\param value int
+*/
+ivector& ivector::operator=(int value)
+{
+  for (int i = indexmin(); i <= indexmax(); ++i)
+  {
+    elem(i) = value;
+  }
+  return *this;
+}
 /**
 Constructor
 */
@@ -238,9 +225,8 @@ ivector::ivector(unsigned int sz, long int* x)
     }
   }
 }
-
 /**
-Constructor
+Construct ivector with same dimensions as u.
 */
 ivector::ivector(const dvector& u)
 {
@@ -248,63 +234,66 @@ ivector::ivector(const dvector& u)
   for (int i=indexmin();i<=indexmax();i++)
   {
 #ifdef OPT_LIB
-    elem(i) = int(u.elem(i));
+    elem(i) = static_cast<int>(u.elem(i));
 #else
     double ui = u.elem(i);
     assert(ui <= INT_MAX);
-    v[i] = (int)ui;
+    elem(i) = static_cast<int>(ui);
 #endif
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
- ivector::ivector(int ncl,int nch)
- {
-   allocate(ncl, nch);
- }
+Allocate vector of integers with dimension
+[ncl to nch].
 
+\param ncl lower vector index
+\param nch upper vector index
+*/
+ivector::ivector(int ncl, int nch)
+{
+  allocate(ncl, nch);
+}
 /**
- * Description not yet available.
- * \param
- */
- void ivector::allocate(int ncl,int nch)
- {
-   int itemp=nch-ncl;
-   if (itemp<0)
-   {
-     //cerr << "Error in ivector constructor max index must be >= minindex\n"
-     //  << "minindex = " << ncl << " maxindex = " << nch <<endl;
-     //ad_exit(1);
-     allocate();
-   }
-   else
-   {
-     if ( (v = new int [itemp+1]) == 0 )
-     {
-       cerr << " Error trying to allocate memory for ivector\n";
-       ad_exit(21);
-     }
+Allocate vector of integers with dimension
+[ncl to nch].
 
-     if ( (shape=new vector_shapex(ncl,nch,v)) == NULL)
-     {
-       cerr << "Error trying to allocate memory for ivector\n";
-       ad_exit(1);
-     }
+\param ncl lower vector index
+\param nch upper vector index
+*/
+void ivector::allocate(int ncl,int nch)
+{
+  if (ncl > nch)
+  {
+    allocate();
+  }
+  else
+  {
+    if ((v = new int[static_cast<unsigned int>(nch - ncl + 1)]) == 0 )
+    {
+      cerr << " Error: ivector unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
+    if ((shape = new vector_shapex(ncl, nch, v)) == NULL)
+    {
+      cerr << " Error: ivector unable to allocate memory in "
+           << __FILE__ << ':' << __LINE__ << '\n';
+      ad_exit(1);
+    }
 
-     index_min=ncl;
-     index_max=nch;
-     v -= indexmin();
-     #ifdef SAFE_INITIALIZE
-       for ( int i=indexmin(); i<=indexmax(); i++)
-       {
-         v[i]=0.;
-       }
-     #endif
-   }
- }
+    index_min = ncl;
+    index_max = nch;
+
+    v -= indexmin();
+
+#ifdef SAFE_INITIALIZE
+    for (int i = ncl; i <= nch; ++i)
+    {
+      v[i] = 0;
+    }
+#endif
+  }
+}
 
 /**
  * Description not yet available.
@@ -323,64 +312,73 @@ void ivector::allocate(const ivector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
-/**
-Does not allocate, but initializes class members.
-*/
+/// Does not allocate, but initializes class members.
 void ivector::allocate()
 {
-  shape = NULL;
   index_min = 1;
-  index_max = -1;
-  v = NULL;
+  index_max = 0;
+  v = nullptr;
+  shape = nullptr;
 }
-
 /**
  * Description not yet available.
  * \param
  */
 ivector::ivector(const preivector& pdv)
- {
-   #ifdef DIAG
-    // cout << "starting out in dvector contructor\n";
-   #endif
-   shape=pdv.p->shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   else
-   {
-     cerr << "Taking a subvector  of an unallocated ivector"<<endl;
-   }
-   v = pdv.p->v;
-   index_min=pdv.lb;
-   index_max=pdv.ub;
- }
+{
+#if defined(DEBUG)
+  cout << "starting out in ivector constructor\n";
+#endif
+
+  shape=pdv.p->shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+  }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Taking a subvector of an unallocated ivector" << endl;
+  }
+#endif
+  v = pdv.p->v;
+  index_min = pdv.lb;
+  index_max = pdv.ub;
+}
 
 /**
- * Description not yet available.
- * \param
- */
-  int norm2(const ivector& t1)
-  {
-    int tmp=0;;
-   for (int i=t1.indexmin();i<=t1.indexmax();i++)
-   {
-     tmp+=t1(i)*t1(i);
-   }
-    return(tmp);
-  }
-  int sumsq(const ivector& t1) {return(norm2(t1));}
+Returns the sum of the squares of all elements in ivec.
 
-/**
- * Description not yet available.
- * \param
- */
-  void clean(ivector& v,int level)
+\param ivec ivector
+*/
+int norm2(const ivector& ivec)
+{
+  int sum = 0;
+  for (int i = ivec.indexmin(); i <= ivec.indexmax(); ++i)
   {
-    int mmax=v.indexmax();
-    for (int i=level+1;i<=mmax;i++)
-    {
-      v(i)=0;
-    }
+    sum += ivec(i) * ivec(i);
   }
+  return sum;
+}
+/**
+Returns the sum of the squares of all elements in ivec.
+
+\param ivec ivector
+*/
+int sumsq(const ivector& ivec)
+{
+  return norm2(ivec);
+}
+/**
+Set elements of ivec to zero starting from level + 1;
+
+\param level is the index of ivec
+*/
+void clean(ivector& v, int level)
+{
+  int max = v.indexmax();
+  for (int i = level + 1; i <= max; ++i)
+  {
+    v(i) = 0;
+  }
+}

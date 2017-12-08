@@ -1,10 +1,16 @@
+sudo: require
 language: cpp
 
 compiler:
   - gcc
   - clang
 
-script: make clean coverage
+before_install:
+  - sudo pip install codecov
+
+script:
+  - make clean coverage
+  - codecov
 
 branches:
   only:

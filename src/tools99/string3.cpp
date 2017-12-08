@@ -1,12 +1,9 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#include <fvar.hpp>
-#include <string.h>
-#include <stdlib.h>
+
+#include <adstring.hpp>
 
 adstring::adstring(const char* t): clist()
 {
@@ -21,7 +18,7 @@ adstring::adstring(const char* t): clist()
 
 adstring::adstring(const unsigned char* t): clist()
 {
-  size_t sz = t ? strlen((char*)t) : 0;
+  size_t sz = t ? strlen((const char*)t) : 0;
   allocate(sz);
   for (size_t i = 1; i <= sz; i++)
   {
@@ -30,7 +27,8 @@ adstring::adstring(const unsigned char* t): clist()
   s[sz + 1] = '\0';
 }
 
-adstring::adstring(void): clist()
+/// Default constructor
+adstring::adstring(): clist()
 {
   size_t sz = 0;
   allocate(sz);

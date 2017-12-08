@@ -100,9 +100,9 @@ class gradient_structure
  private:
    static long int USE_FOR_HESSIAN;
    static long int NVAR;
-   static int NUM_RETURN_ARRAYS;
+   static unsigned int NUM_RETURN_ARRAYS;
    static dvariable **RETURN_ARRAYS;
-   static int RETURN_ARRAYS_PTR;
+   static unsigned int RETURN_ARRAYS_PTR;
    static dvariable **RETURN_PTR_CONTAINER;
    static size_t TOTAL_BYTES;
    static size_t PREVIOUS_TOTAL_BYTES;
@@ -186,7 +186,7 @@ class gradient_structure
    static grad_stack *GRAD_STACK1;
    friend double_and_int *gradnew();
    static dlist *GRAD_LIST;
-   static int RETURN_ARRAYS_SIZE;
+   static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
    static dvariable *RETURN_PTR;
    static dvariable *MIN_RETURN;
@@ -206,7 +206,7 @@ class gradient_structure
    {
       return fp;
    }
-   static void set_NUM_RETURN_ARRAYS(int i);
+   static void set_NUM_RETURN_ARRAYS(unsigned int i);
 #if defined(NO_DERIVS)
    static void set_NO_DERIVATIVES(void);
    static void set_YES_DERIVATIVES(void);
@@ -218,7 +218,7 @@ class gradient_structure
    //static int _GRADFILE_PTR2; // should be int gradfile_handle;
    //static int _VARSSAV_PTR; // should be int gradfile_handle;
    static void set_NUM_DEPENDENT_VARIABLES(int i);
-   static void set_RETURN_ARRAYS_SIZE(int i);
+   static void set_RETURN_ARRAYS_SIZE(unsigned int i);
    static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
 #ifdef __BORLANDC__
    static void set_CMPDIF_BUFFER_SIZE(long int i);
@@ -251,11 +251,11 @@ public:
   ~DF_FILE();
 
   char* buff;
-  size_t toffset;
+  OFF_T toffset;
   union
   {
-    size_t offset;
-    char fourb[sizeof(size_t)];
+    OFF_T offset;
+    char fourb[sizeof(OFF_T)];
   };
   char cmpdif_file_name[81];
   int file_ptr;
@@ -276,12 +276,11 @@ public:
   void read_cmpdif_stack_buffer(OFF_T & lpos);
 
 private:
-#ifdef _MSC_VER
   OFF_T buff_end;
-  OFF_T buff_size;
+#if defined(_MSC_VER) || defined(__MINGW64__)
+  unsigned int buff_size;
 #else
-  const size_t buff_end;
-  const size_t buff_size;
+  size_t buff_size;
 #endif
 };
 #endif

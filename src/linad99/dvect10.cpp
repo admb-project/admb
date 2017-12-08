@@ -49,7 +49,7 @@ void dvector::fill(const char* s)
 {
   int lbraces = 0;
   int rbraces = 0;
-  int commas  = 0;
+  unsigned int commas  = 0;
 
   const size_t n = strlen(s);
   char* t = new char[n + 1];
@@ -81,23 +81,22 @@ void dvector::fill(const char* s)
 
   if (lbraces == 1 && rbraces == 1)
   {
-    int nch = commas + 1;
-
+    unsigned int nch = commas + 1;
     if (nch != size())
     {
       if (nch < size())
       {
-        cerr << "Not enough elements to fill vector in "
-        "dvector::fill(const char * s)\n";
-        cerr << s << "\n";
-        ad_exit(1);
+          cerr << "Not enough elements to fill vector in "
+          "dvector::fill(const char * s)\n";
+          cerr << s << "\n";
+          ad_exit(1);
       }
       else
       {
-        cerr << "Too many elements for size of vector in "
-        "dvector::fill(const char * s)\n";
-        cerr << s << "\n";
-        ad_exit(1);
+          cerr << "Too many elements for size of vector in "
+          "dvector::fill(const char * s)\n";
+          cerr << s << "\n";
+          ad_exit(1);
       }
     }
     istringstream ss(t);

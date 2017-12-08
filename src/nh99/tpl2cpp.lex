@@ -817,13 +817,13 @@ DATA_SECTION  {
 
 <DEFINE_DATA>6darray {
     likelihood_found=1;
-    BEGIN IN_NAMED_FIVE_ARRAY_DEF;
+    BEGIN IN_NAMED_SIX_ARRAY_DEF;
     fprintf(fdat,"%s","  d6_array ");
                      }
 
 <DEFINE_DATA>7darray {
     likelihood_found=1;
-    BEGIN IN_NAMED_FIVE_ARRAY_DEF;
+    BEGIN IN_NAMED_SEVEN_ARRAY_DEF;
     fprintf(fdat,"%s","  d7_array ");
                      }
 

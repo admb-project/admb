@@ -1,57 +1,34 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
- */
-imatrix::imatrix(const imatrix_position& pos)
- {
-   int nrl=pos.row_min;
-   int nrh=pos.row_max;
-   index_min=nrl;
-   index_max=nrh;
-   const ivector& ncl=pos.lb;
-   const ivector& nch=pos.ub;
-   if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
-     nrl !=nch.indexmin() || nrh !=nch.indexmax())
-   {
-     cerr << "Incompatible array bounds in "
-     "imatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
-     ad_exit(1);
-   }
+Construct imatrix using dimensions in position.
 
-   int rs=rowsize();
+\param position imatrix_position
+*/
+imatrix::imatrix(const imatrix_position& position)
+{
+  if (position.row_min != position.lb.indexmin()
+      || position.row_max != position.lb.indexmax()
+      || position.row_min != position.ub.indexmin()
+      || position.row_max != position.ub.indexmax())
+  {
+    cerr << "Incompatible array bounds"
+         << " in imatrix::imatrix(const imatrix_position&)\n";
+    ad_exit(1);
+  }
 
-   if ( (m = new ivector [rs]) == 0)
-   {
-     cerr << " Error allocating memory in imatrix contructor\n";
-     ad_exit(21);
-   }
+  allocate(position.row_min, position.row_max);
 
-   if ( (shape = new mat_shapex(m))== 0)
-   {
-     cerr << " Error allocating memory in imatrix contructor\n";
-     ad_exit(21);
-   }
+#ifdef DIAG
+  cerr << "Created a imatrix with adress "<< farptr_tolong(m)<<"\n";
+#endif
 
-   #ifdef DIAG
-     cerr << "Created a imatrix with adress "<< farptr_tolong(m)<<"\n";
-   #endif
-
-   m -= rowmin();
-
-   for (int i=rowmin(); i<=rowmax(); i++)
-   {
-     m[i].allocate(ncl[i],nch[i]);
-   }
- }
+  for (int i = rowmin(); i <= rowmax(); ++i)
+  {
+    elem(i).allocate(position.lb(i), position.ub(i));
+  }
+}

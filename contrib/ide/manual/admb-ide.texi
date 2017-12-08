@@ -2,14 +2,12 @@
 @setfilename admb-ide.info
 @afourpaper
 @kbdinputstyle code
-@set VERSION 11.2
-@set IDEFILE   admb-ide-112-win64
-@set ADMBDIR admb112-gcc492-win64
-@set GCCDIR          gcc492-win64
-@set MODE 9.0
-@set DATE (2015-01-12)
-@set REVISED Revised manual (2015-09-23)
-@set YEARS 2009, 2010, 2011, 2012, 2015
+@set VERSION 11.6
+@set IDEFILE admb-ide-116-win64
+@set ADMBDIR admb116-gcc493-win64
+@set DATE (2017-08-30)
+@set REVISED Revised manual (yyyy-mm-dd)
+@set YEARS 2009--2012, 2015, 2017
 @macro screen{filename}
 @sp
 @center @image{\filename\,13.5cm}
@@ -33,7 +31,7 @@
 This is the manual for AD Model Builder IDE (ADMB-IDE) version
 @value{VERSION}.@*
 The latest edition of the manual is available at:@*
-@uref{http://admb-project.org/tools/admb-ide}
+@uref{http://admb-project.org/tools/admb-ide/}
 @sp
 Copyright @copyright{} @value{YEARS} Arni Magnusson
 @sp
@@ -42,22 +40,24 @@ reference.
 @sp
 AD Model Builder IDE is an aggregate of the following software components:
 @itemize
-@item AD Model Builder 11.2 is released under the BSD License.@*
-Source code: @uref{http://ftp.admb-project.org/}
-@item GCC 4.8.1 and 4.9.2 is released under the GPL.@*
-Source code: @uref{ftp://ftp.gnu.org/gnu/gcc/}
-@item GDB 7.6.1.1 and 7.8.1 is released under the GPL.@*
-Source code: @uref{ftp://ftp.gnu.org/gnu/gdb/}
-@item GNU Emacs 24.4.1 is released under the GPL.@*
-Source code: @uref{ftp://ftp.gnu.org/gnu/emacs/}
-@item AUC@TeX@ 11.88 is released under the GPL.@*
-Source code: @uref{ftp://ftp.gnu.org/gnu/auctex/}
-@item Emacs Speaks Statistics (ESS) 14.09 is released under the GPL.@*
+@item AD Model Builder 11.6 is released under the BSD License.@*
+Source code: @uref{https://github.com/admb-project/admb}
+@item GNU Emacs 25.2.1 is released under the GPL.@*
+Source code: @uref{http://ftp.gnu.org/gnu/emacs/}
+@item ADMB Mode 11.6 for Emacs is released under the Simplified BSD License.@*
+Source code: @uref{https://github.com/admb-project/admb/blob/master/contrib/emacs}
+@item AUC@TeX@ 11.91 is released under the GPL.@*
+Source code: @uref{http://ftp.gnu.org/gnu/auctex/}
+@item Emacs Speaks Statistics (ESS) 16.10-1 is released under the GPL.@*
 Source code: @uref{http://ess.r-project.org/downloads/ess/}
-@item ADMB Mode @value{MODE} for Emacs is released under the Simplified BSD License.@*
-Source code: @uref{http://admb-project.org/tools/editors/emacs}
+@item TMB Mode 3.2 for Emacs is released under the GPL.@*
+Source code: @uref{https://github.com/kaskr/adcomp/blob/master/emacs}
 @item ADMB-IDE @code{.emacs} @value{VERSION} is released under the Simplified BSD License.@*
-Source code: @uref{http://admb-project.org/tools/admb-ide}
+Source code: @uref{https://github.com/admb-project/admb/blob/master/contrib/ide/dot}
+@item GCC 4.9.3 is released under the GPL.@*
+Source code: @uref{http://ftp.gnu.org/gnu/gcc/}
+@item GDB 7.3.50 is released under the GPL.@*
+Source code: @uref{http://ftp.gnu.org/gnu/gdb/}
 @end itemize
 @end copying
 
@@ -65,7 +65,7 @@ Source code: @uref{http://admb-project.org/tools/admb-ide}
 @title AD Model Builder IDE
 @subtitle Emacs @command{admb-mode} without the Emacs
 @subtitle Version @value{VERSION} @value{DATE}
-@subtitle @value{REVISED}
+@c @subtitle @value{REVISED}
 @author Arni Magnusson
 @page
 @vskip 0pt plus 1filll
@@ -101,18 +101,18 @@ support for C++, R, @LaTeX, backup/revision control, and other useful tools for
 statistical computing. Its @command{admb-mode} provides syntax highlighting,
 compilation, file manipulation, outline code navigation, templates, and smaller
 tools for creating ADMB models. Emacs users can fetch @command{admb-mode} from
-@uref{http://admb-project.org/tools/editors/emacs,
-http://admb-project.org/tools/editors/emacs/admb.el} and start using it right
-away, after reading the commentary at the top of the file.
+@uref{https://github.com/admb-project/admb/blob/master/contrib/emacs/admb.el}
+and start using it right away, after reading the commentary at the top of the
+file.
 
 The problem with Emacs is that it requires considerable time to learn and
 configure, although for advanced statistical computing this can be a rewarding
 investment. As the programmer Larry Wall once said: ``If ease of use was the
 highest goal, we'd all be driving golf carts.'' The
-@uref{http://admb-project.org/tools/editors/emacs} page contains some pointers
-for setting up and learning Emacs. There are, however, good reasons why many
-users may not feel like adopting Emacs as their main editor, but would still
-appreciate a simple IDE for ADMB.
+@w{@uref{http://admb-project.org/tools/editors/emacs/}} page contains some
+pointers for setting up and learning Emacs. There are, however, good reasons why
+many users may not feel like adopting Emacs as their main editor, but would
+still appreciate a simple IDE for ADMB.
 
 The rest of this tutorial demonstrates how Emacs with @command{admb-mode} can be
 configured as a user-friendly ADMB-IDE, without learning the details of Emacs.
@@ -132,52 +132,40 @@ the individual components by hand.
 
 @noindent
 The @file{@value{IDEFILE}.exe} installer sets up the main components (ADMB,
-GCC, GDB, Emacs, AUC@TeX, ESS, @command{admb-mode}) with a customized Emacs user
-interface, file associations, and environment variables to glue everything
-together. The only catch is that the user must accept the default directory
-structure, and the full installation option is strongly recommended:
+Emacs, Rtools) with a customized Emacs user interface, file associations, and
+environment variables to glue everything together. The only catch is that the
+user must accept the default directory structure, and select whether Rtools is
+already installed on the machine:
 
 @sp
 @center @image{intro-install,9cm}
 
 @noindent
-The directory structure is designed to accommodate coexisting versions of ADMB
-and GCC:
+The ADMB-IDE components are arranged in four main directories:
 
-@multitable @columnfractions .40 .20 .15
-@item Directory                      @tab Component           @tab Overwrite
-@item @code{c:/admb/@value{ADMBDIR}} @tab ADMB                @tab Yes
-@item @code{c:/gnu/@value{GCCDIR}}   @tab GCC                 @tab Yes
-@item @code{c:/gnu/gdb}              @tab GDB                 @tab Yes
-@item @code{c:/gnu/emacs}            @tab Emacs               @tab Yes
-@item @code{c:/~/emacs/lisp/admb}    @tab ADMB Mode           @tab Yes
-@item @code{c:/~/emacs/lisp/auctex}  @tab AUC@TeX             @tab Yes
-@item @code{c:/~/emacs/lisp/ess}     @tab ESS                 @tab Yes
-@item @code{c:/~}                    @tab @code{.emacs}       @tab No
+@multitable @columnfractions .18 .40
+@item @code{c:/~}         @tab Settings and Emacs modes
+@item @code{c:/admb}      @tab ADMB
+@item @code{c:/gnu/emacs} @tab Emacs
+@item @code{c:/Rtools}    @tab GCC and GDB
 @end multitable
 
-@noindent
-It is possible to install ADMB-IDE on top of existing ADMB installations, which
-could reside in subdirectories of @code{c:/admb} or anywhere else. Compilers may
-also coexist, in subdirectories of @code{c:/gnu} or anywhere else
-(@pxref{Conflicting compilers and libraries}). Short and shallow paths without
-spaces are helpful when configuring and writing customized scripts.
+It can be problematic to have more than one version of GCC installed on a
+Windows machine, especially if multiple versions of GCC are active in the
+@env{PATH}. Many Windows users already have Rtools installed, so the idea behind
+having ADMB-IDE use the GCC compiler from Rtools is to reduce the likelihood of
+GCC version conflicts.
 
-This is a practical setup for other free software as well. Take for example the
-R statistical software. By separating the main program (@code{c:/gnu/r}) from
-the user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and user libraries
+The directory structure above can be practical for setting up and configuring
+other free software, such as R. By separating the main program (@code{c:/gnu/r})
+from the user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and packages
 (@code{c:/~/r/library}), the main program can be removed and upgraded without
 affecting the user setup.
 
-As indicated in the table above, the installer will not overwrite an existing
-@code{c:/~/.emacs} file. This is because a personal @file{.emacs} configuration
-file is the only component that is irreplaceable; all other components are
-available and free on the internet.
-
 One thing to keep in mind is that the installer modifies the user @env{PATH} and
-file associations. In rare cases, users may need to reconfigure these according
-to taste and needs after installing ADMB-IDE. Advanced users may choose to
-deselect these options during the installation for this reason.
+file associations. In rare cases, users may need to reconfigure these after
+installing ADMB-IDE. Therefore, advanced users may choose to deselect these
+options during the installation.
 
 @subsec Manual setup
 
@@ -186,13 +174,13 @@ Users can also set up and configure the individual components by hand, starting
 from the @file{@value{IDEFILE}.zip} kit. The following guidelines may be useful
 for that:
 
-@uref{http://admb-project.org/documentation}
+@uref{http://admb-project.org/docs/}
 
 @uref{http://admb-project.org/tools/editors/emacs/install}
 
-@uref{http://admb-project.org/tools/editors/emacs/config}
+@uref{http://admb-project.org/tools/editors/emacs/configure}
 
-@uref{http://mingw.org/wiki/HOWTO_Install_the_MinGW_GCC_Compiler_Suite}
+@uref{https://cran.r-project.org/bin/windows/Rtools/}
 
 @noindent
 See also the chapters on @ref{ADMB-IDE for Linux/Mac OS} and
@@ -208,16 +196,16 @@ Setting up ADMB-IDE for Linux or Mac OS is equivalent to the ``manual setup''
 described above, so the same guidelines apply. The key steps are:
 
 @enumerate
-@item Install ADMB, GNU Emacs, GCC (including the C++ component), and GDB.
+@item Install ADMB, Emacs, GCC (including the C++ component), and GDB.
 
 @item Download the ADMB-IDE
-@uref{http://admb-project.org/tools/admb-ide/core,@code{.emacs}} configuration
-file and place it in @code{~/.emacs} to apply the simplified Emacs user
-interface.
+@uref{https://github.com/admb-project/admb/blob/master/contrib/ide/dot,@code{.emacs}}
+configuration file and place it in @code{~/.emacs} to apply the simplified Emacs
+user interface.
 
-@item Download
-@uref{http://admb-project.org/tools/editors/emacs,@command{admb-mode}}, and
-place it in @code{~/emacs/lisp/admb/admb.el} to provide ADMB syntax highlighting
+@item Download ADMB Mode
+@uref{https://github.com/admb-project/admb/blob/master/contrib/emacs,@command{admb.el}}
+and place it in @code{~/emacs/lisp/admb/admb.el} to provide syntax highlighting
 and IDE features.
 @end enumerate
 
@@ -427,9 +415,9 @@ advanced option is to use a debugger.
 @anchor{GDB}
 
 @noindent
-GNU Emacs and GCC can interact closely with the GDB debugger---these programs
-were all created by the same programmer, Richard Stallman. A program must
-fulfill two conditions before debugging:
+Emacs and GCC can interact closely with the GDB debugger---these programs were
+all created by the same programmer, Richard Stallman. A program must fulfill two
+conditions before debugging:
 
 @itemize
 @item The model executable (e.g., @file{simple.exe}) must build successfully,
@@ -767,20 +755,6 @@ set the variables after the installation. Many Linux distributions include only
 the C component of GCC, so users need to install the optional C++ component
 before using ADMB.
 
-@subsec Conflicting compilers and libraries
-@anchor{Conflicting compilers and libraries}
-
-@noindent
-When developing models using ADMB, it is important to have only one C++ compiler
-and one ADMB version in the PATH. Otherwise, errors will occur as objects and
-libraries of different versions are linked together.
-
-For example, the Rtools collection includes a C++ compiler that should be
-removed from the PATH, unless ADMB was originally built using that compiler. One
-can either modify the PATH environment variable, or temporarily rename
-directories (e.g., @file{Rtools} to @file{Rtools_}) so they are not in the PATH
-while building models with ADMB.
-
 @chapter References
 @anchor{References}
 
@@ -794,19 +768,19 @@ nonlinear models.} Optimization Methods and Software 27:233--249.@*
 @uref{http://dx.doi.org/10.1080/10556788.2011.597854}
 @sp 0.5
 @noindent
-Fournier, D. 2014. @cite{An introduction to AD Model Builder for use in
-nonlinear modeling and statistics.} Version 11.2.@*
-@uref{http://admb-project.org/documentation/manuals/admb-user-manuals}
+Fournier, D. @cite{An introduction to AD Model Builder for use in nonlinear
+modeling and statistics.}@*
+@uref{http://admb-project.org/docs/manuals/}
 @sp 0.5
 @noindent
-Skaug, H. and D. Fournier. 2014. @cite{Random effects in AD Model Builder:
-ADMB-RE user guide.} Version 11.2.@*
-@uref{http://admb-project.org/documentation/manuals/admb-user-manuals}
+Skaug, H. and D. Fournier. @cite{Random effects in AD Model Builder: ADMB-RE
+user guide.}@*
+@uref{http://admb-project.org/docs/manuals/}
 @sp 0.5
 @noindent
-Fournier, D. 2014. @cite{AUTODIF: A C++ array language extension with automatic
-differentiation for use in nonlinear modeling and statistics.} Version 11.2.@*
-@uref{http://admb-project.org/documentation/manuals/admb-user-manuals}
+Fournier, D. @cite{AUTODIF: A C++ array language extension with automatic
+differentiation for use in nonlinear modeling and statistics.}@*
+@uref{http://admb-project.org/docs/manuals/}
 @sp 0.5
 @noindent
 Magnusson, A. 2009. @cite{ADMB-IDE: Easy and efficient user interface.} ADMB
@@ -817,31 +791,32 @@ Foundation Newsletter 1(3):1--2.@*
 @subsec Emacs
 
 @noindent
-Stallman, R. 2014. @cite{GNU Emacs manual.} 17th ed. Updated for Emacs version
-24.4.@* @uref{http://www.gnu.org/software/emacs/manual/emacs.html}
+Stallman, R. @cite{GNU Emacs manual.}@*
+@uref{http://www.gnu.org/software/emacs/manual/emacs.html}
 @sp 0.5
 @noindent
-Lewis, B., D. LaLiberte, R. Stallman, and the GNU Manual Group. 2014. @cite{GNU
-Emacs Lisp reference manual for Emacs version 24.4.} Rev. 3.1.@*
+Lewis, B., D. LaLiberte, R. Stallman, and the GNU Manual Group. @cite{GNU Emacs
+Lisp reference manual for Emacs.}@*
 @uref{http://www.gnu.org/software/emacs/manual/elisp.html}
 @sp 0.5
 @noindent
-Chassell, R. 2009. @cite{An introduction to programming in Emacs Lisp.} Rev.
-3.10.@* @uref{http://www.gnu.org/software/emacs/manual/eintr.html}
+Chassell, R. @cite{An introduction to programming in Emacs Lisp.}@*
+@uref{http://www.gnu.org/software/emacs/manual/eintr.html}
 
 @sp 1
 @subsec GCC
 
 @noindent
-Stallman, R.M. and GCC Developer Community. 2014. @cite{Using the GNU Compiler
-Collection.} Version 4.9.2.@* @uref{http://gcc.gnu.org/onlinedocs/}
+Stallman, R.M. and GCC Developer Community. @cite{Using the GNU Compiler
+Collection.}@*
+@uref{http://gcc.gnu.org/onlinedocs/}
 
 @sp 1
 @subsec GDB
 
 @noindent
-Stallman, R., R. Pesch, S. Shebs, et al. 2014. @cite{Debugging with GDB: The GNU
-source-level debugger.} 10th ed. for GDB version 7.8.1.@*
+Stallman, R., R. Pesch, S. Shebs, et al. @cite{Debugging with GDB: The GNU
+source-level debugger.}@*
 @uref{http://sourceware.org/gdb/download/onlinedocs/}
 
 @bye

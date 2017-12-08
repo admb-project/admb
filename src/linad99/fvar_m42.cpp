@@ -5,6 +5,10 @@
  * Copyright (c) 2009-2012 ADMB Foundation
  */
 #include <fvar.hpp>
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 #ifdef __TURBOC__
   #pragma hdrstop
   #include <iomanip.h>
@@ -42,8 +46,16 @@ Press, Teukolsky, Vetterling, Flannery, chapter 2
 dvariable ln_det(const dvar_matrix& aa, int& sgn)
 {
   int errflag=0;
-  int i,j,k,n;
-  n=aa.colsize();
+  int i,j,k;
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  int n = [](unsigned int colsize) -> int
+  {
+    assert(colsize <= INT_MAX);
+    return static_cast<int>(colsize);
+  } (aa.colsize());
+#else
+  int n = static_cast<int>(aa.colsize());
+#endif
   int lb=aa.colmin();
   int ub=aa.colmax();
   ivector indx(lb,ub);

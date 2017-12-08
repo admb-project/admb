@@ -5,19 +5,13 @@ Copyright (c) 2008-2015 Regents of the University of California
 */
 #include "fvar.hpp"
 
-/**
-Default constructor
-*/
+/// Default constructor
 d4_array::d4_array()
 {
   allocate();
 }
-
-/**
- * Description not yet available.
- * \param
- */
-void d4_array::allocate(void)
+/// Does not allocate, but initializes pointers to NULL.
+void d4_array::allocate()
 {
   shape = NULL;
   t = NULL;

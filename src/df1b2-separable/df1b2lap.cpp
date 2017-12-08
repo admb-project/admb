@@ -13,9 +13,9 @@ using std::istringstream;
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-
 #ifndef OPT_LIB
   #include <cassert>
+  #include <climits>
 #endif
         int fcount =0;
 static int no_stuff=0;
@@ -1463,8 +1463,21 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(dmatrix,Hessadjoint)
   ADUNCONST(dmatrix,Hess)
-  const int xs=x.size();
-  const int us=u0.size();
+#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+  const int xs = [](unsigned int size)->int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  }(x.size());
+  const int us = [](unsigned int size)->int
+  {
+    assert(size <= INT_MAX);
+    return static_cast<int>(size);
+  }(u0.size());
+#else
+  const int xs = static_cast<int>(x.size());
+  const int us = static_cast<int>(u0.size());
+#endif
   gradient_structure::set_YES_DERIVATIVES();
   int nvar;
   //dcompressed_triplet & lst2 = *(pmin->lapprox->sparse_triplet);
@@ -1488,17 +1501,17 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   {
     if (pmin->lapprox->sparse_hessian_flag==0)
     {
-      nvar=x.size()+u0.size()+u0.size()*u0.size();
+      nvar = xs + us + us * us;
     }
     else
     {
       int sz= lst.indexmax()-lst.indexmin()+1;
-      nvar=x.size()+u0.size()+sz;
+      nvar = xs + us + sz;
     }
   }
   else
   {
-    nvar=x.size()+u0.size();
+    nvar = xs + us;
   }
   independent_variables y(1,nvar);
 
@@ -2014,8 +2027,10 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   double maxg=max(fabs(g));
   if (!initial_params::mc_phase)
   {
+    std::streamsize save = cout.precision();
     cout << setprecision(16) << " f = " << vf
          << " max g = " << maxg << endl;
+    cout.precision(save);
   }
   return maxg;
 }

@@ -1,60 +1,116 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2014 Regents of the University of California
  */
 #include <admodel.h>
 
-void initial_params::save(const ofstream& _ofs, int prec)
+/**
+Write values of param_init_number into output stream _ofs.
+
+\param _ofs output stream
+\param precision sets the floating point precision
+*/
+void initial_params::save(
+  const ofstream& _ofs,
+  int precision)
 {
   ofstream& ofs=(ofstream&)_ofs;
-  ofs << setw(prec+6) << setshowpoint();
+  ofs << setw(precision+6) << setshowpoint();
   for (int i=0;i<num_initial_params;i++)
   {
-    (varsptr[i])->save_value(ofs,prec);
+    (varsptr[i])->save_value(ofs,precision);
   }
 }
+/**
+Write values of param_init_number into output stream _ofs.
 
-void param_init_number::save_value(const ofstream& _ofs, int prec)
+\param _ofs output stream
+\param precision sets the floating point precision
+*/
+void param_init_number::save_value(
+  const ofstream& _ofs,
+  int precision)
 {
   ofstream& ofs=(ofstream&)_ofs;
 #ifndef __ZTC__
-  ofs << setprecision(prec) << dvariable(*this) << endl;
+  ofs << setprecision(precision) << dvariable(*this) << endl;
 #else
-  ofs << setw(prec+6) << setprecision(prec) << *this << endl;
+  ofs << setw(precision+6) << setprecision(precision) << *this << endl;
 #endif
 }
+/**
+Write values of param_init_matrix into output stream _ofs.
 
-void param_init_vector::save_value(const ofstream& _ofs, int prec)
+\param _ofs output stream
+\param precision sets the floating point precision
+*/
+void param_init_vector::save_value(
+  const ofstream& _ofs,
+  int precision)
 {
   ofstream& ofs=(ofstream&)_ofs;
-  ofs << setw(prec+6) << setprecision(prec) << dvar_vector(*this) << endl;
+  ofs << setw(precision+6) << setprecision(precision) << dvar_vector(*this) << endl;
 }
+/**
+Write values of param_init_matrix  into output stream _ofs.
 
-void param_init_bounded_vector::save_value(const ofstream& _ofs, int prec)
+\param _ofs output stream
+\param precision sets the floating point precision
+*/
+void param_init_bounded_vector::save_value(
+  const ofstream& _ofs,
+  int precision)
 {
   ofstream& ofs=(ofstream&)_ofs;
-  ofs << setw(prec+6) << setprecision(prec) << dvar_vector(*this) << endl;
+  ofs << setw(precision+6) << setprecision(precision) << dvar_vector(*this) << endl;
 }
+/**
+Write values of param_init_matrix  into output stream _ofs.
 
-void param_init_matrix::save_value(const ofstream& _ofs, int prec)
+\param _ofs output stream
+\param precision sets the floating point precision
+*/
+void param_init_matrix::save_value(
+  const ofstream& _ofs,
+  int precision)
 {
-  ofstream& ofs=(ofstream&)_ofs;
-  ofs << setw(prec+6) << setprecision(prec) << dvar_matrix(*this) << endl;
+  ofstream& ofs = (ofstream&)_ofs;
+  ofs << setw(precision+6) << setprecision(precision) << dvar_matrix(*this) << endl;
 }
+/**
+Write values of g into output stream _ofs, then update offset
+index to the next set of data.
 
-void param_init_number::save_value(const ofstream& _ofs, int prec,
-  const dvector& g, int& offset)
+\param _ofs output stream
+\param precision sets the floating point precision
+\param g the data to output
+\param offset beginning index for g for param_init_matrix
+*/
+void param_init_number::save_value(
+  const ofstream& _ofs,
+  int precision,
+  const dvector& g,
+  int& offset)
 {
   ADUNCONST(ofstream,ofs)
   ofs << label() << " "
-      << setw(prec+6) << setprecision(prec) << *this << " "
-      << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
+      << setw(precision+6) << setprecision(precision) << *this << " "
+      << setw(precision+6) << setprecision(precision) << g(offset++) << endl;
 }
+/**
+Write values of g into output stream _ofs, then update offset
+index to the next set of data.
 
-void param_init_vector::save_value(const ofstream& _ofs, int prec,
-  const dvector& g, int& offset)
+\param _ofs output stream
+\param precision sets the floating point precision
+\param g the data to output
+\param offset beginning index for g for param_init_matrix
+*/
+void param_init_vector::save_value(
+  const ofstream& _ofs,
+  int precision,
+  const dvector& g,
+  int& offset)
 {
   ADUNCONST(ofstream,ofs)
   int mmin=indexmin();
@@ -63,13 +119,24 @@ void param_init_vector::save_value(const ofstream& _ofs, int prec,
   {
     ofs << label()
         << "(" << i << ") "
-        << setw(prec+6) << setprecision(prec) << (*this)(i) << " "
-        << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
+        << setw(precision+6) << setprecision(precision) << (*this)(i) << " "
+        << setw(precision+6) << setprecision(precision) << g(offset++) << endl;
   }
 }
+/**
+Write values of g into output stream _ofs, then update offset
+index to the next set of data.
 
-void param_init_bounded_vector::save_value(const ofstream& _ofs, int prec,
-  const dvector& g, int& offset)
+\param _ofs output stream
+\param precision sets the floating point precision
+\param g the data to output
+\param offset beginning index for g for param_init_matrix
+*/
+void param_init_bounded_vector::save_value(
+  const ofstream& _ofs,
+  int precision,
+  const dvector& g,
+  int& offset)
 {
   ADUNCONST(ofstream,ofs)
   int mmin=indexmin();
@@ -78,12 +145,23 @@ void param_init_bounded_vector::save_value(const ofstream& _ofs, int prec,
   {
     ofs << label()
         << "(" << i << ") "
-        << setw(prec+6) << setprecision(prec) << (*this)(i) << " "
-        << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
+        << setw(precision+6) << setprecision(precision) << (*this)(i) << " "
+        << setw(precision+6) << setprecision(precision) << g(offset++) << endl;
   }
 }
+/**
+Write all values of g into output stream _ofs.
 
-void initial_params::save_all(const ofstream& _ofs, int prec, const dvector& g)
+**Note:** precision is hardcoded to 6.
+
+\param _ofs output stream
+\param precision sets the floating point precision
+\param g the data to output
+*/
+void initial_params::save_all(
+  const ofstream& _ofs,
+  int precision,
+  const dvector& g)
 {
   ADUNCONST(ofstream,ofs)
   int offset = 1;
@@ -97,9 +175,20 @@ void initial_params::save_all(const ofstream& _ofs, int prec, const dvector& g)
     }
   }
 }
+/**
+Write values of g into output stream _ofs, then update offset
+index to the next set of data.
 
-void param_init_matrix::save_value(const ofstream& _ofs, int prec,
-  const dvector& g, int& offset)
+\param _ofs output stream
+\param precision sets the floating point precision
+\param g the data to output
+\param offset beginning index for g for param_init_matrix
+*/
+void param_init_matrix::save_value(
+  const ofstream& _ofs,
+  int precision,
+  const dvector& g,
+  int& offset)
 {
   ADUNCONST(ofstream,ofs)
   int rmin=indexmin();
@@ -112,8 +201,8 @@ void param_init_matrix::save_value(const ofstream& _ofs, int prec,
     {
       ofs << label()
           << "(" << i << "," <<  j << ") "
-          << setw(prec+6) << setprecision(prec) << (*this)(i,j) << " "
-          << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
+          << setw(precision+6) << setprecision(precision) << (*this)(i,j) << " "
+          << setw(precision+6) << setprecision(precision) << g(offset++) << endl;
     }
   }
 }

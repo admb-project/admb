@@ -28,7 +28,9 @@ adstring_array& adstring_array::append_distinct(const adstring& s)
   {
     cerr << "Error allocating memory in adstring_array" << endl;
   }
-  adstring** tmp_ptr=new adstring*[tmp_max-tmp_min+1];
+  int size = tmp_max - tmp_min + 1;
+  adstring** tmp_ptr =
+    new adstring*[static_cast<unsigned int>(size < 0 ? 0 : size)];
   if (!tmp_ptr)
   {
     cerr << "Error allocating memory in adstring_array +=" << endl;

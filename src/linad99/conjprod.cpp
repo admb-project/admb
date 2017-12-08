@@ -63,7 +63,7 @@ extern int ctlc_flag;
 
 #if defined(UNIXKLUDGE) || \
   ((defined(__SUN__) || defined(__GNU__)) && !defined(__GNUDOS__))
-#include <iostream.h>
+#include <iostream>
 #include <signal.h>
 #define getch getchar
   #if defined(__HP__) || defined(linux)
@@ -74,9 +74,9 @@ extern int ctlc_flag;
 #endif
 
 #if defined(_MSC_VER)
-  void __cdecl clrscr(){}
+  void __cdecl clrscr();
 #else
-  extern "C" void clrscr(){}
+  extern "C" void clrscr();
 #endif
 
 #ifdef __NDPX__
@@ -143,7 +143,7 @@ double max(const double&, const double&);
  * Description not yet available.
  * \param
  */
-void fmmc::fmin(const double& fret, const dvector& p, const dvector& gg)
+void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
 {
   dfn=0.0;;
   maxfn_flag=0;
@@ -156,6 +156,8 @@ void fmmc::fmin(const double& fret, const dvector& p, const dvector& gg)
        disp_usebios();
     }
 #endif
+  dvector& p = (dvector&)_p;
+  dvector& gg = (dvector&)_gg;
   int n=p.size();
   dvector& xi=*(this->xi);
   dvector& h=*(this->h);
@@ -638,13 +640,19 @@ label555:
  * Description not yet available.
  * \param
  */
-double do_interpolate(const double& fret, const double& left_bracket,
-  double& left_bracket_value, const dvector& left_bracket_gradient,
-  double& right_bracket, const double& right_bracket_value,
+double do_interpolate(const double& _fret, const double& _left_bracket,
+  double& left_bracket_value, const dvector& _left_bracket_gradient,
+  double& right_bracket, const double& _right_bracket_value,
   dvector& right_bracket_gradient, const dvector& theta, const dvector& d,
   const int& _J, long int& ifn, const double& crit1,
-  int& int_flag, const double& rho_1, const double& Psi_2, const dvector& g1)
+  int& int_flag, const double& _rho_1, const double& Psi_2, const dvector& g1)
 {
+  double& fret = (double&)_fret;
+  double& rho_1 = (double&)_rho_1;
+  double& left_bracket = (double&)_left_bracket;
+  dvector& left_bracket_gradient = (dvector&)_left_bracket_gradient;
+  double& right_bracket_value = (double&)_right_bracket_value;
+
   double rho_min=1.e-10;
   int& J = (int&) _J;
   static double rho_star;
@@ -652,7 +660,9 @@ double do_interpolate(const double& fret, const double& left_bracket,
   //double Psi_2;
   //dvector g1(1,d.size());
   static double gamma;
+#ifdef CUBIC_INTERPOLATION
   static double gamma1;
+#endif
   static double rho_0;
   if (int_flag ==1) goto label200;
   J+=1;
@@ -802,14 +812,22 @@ label200:
  * Description not yet available.
  * \param
  */
-void do_extrapolate(const double& left_bracket,
-  const double& left_bracket_value, dvector& left_bracket_gradient,
-  const double& right_bracket, double& right_bracket_value,
-  const dvector& right_bracket_gradient, const dvector& theta,
-  dvector& d, const int& J, const double& rho_0, long int& ifn,
-  const int& ifnex, int& ext_flag, const double& rho_1, const double& rf,
+void do_extrapolate(const double& _left_bracket,
+  const double& _left_bracket_value, dvector& left_bracket_gradient,
+  const double& _right_bracket, double& right_bracket_value,
+  const dvector& _right_bracket_gradient, const dvector& theta,
+  dvector& d, const int& _J, const double& rho_0, long int& ifn,
+  const int& _ifnex, int& ext_flag, const double& _rho_1, const double& rf,
   const dvector& g1)
 {
+  int& J = (int&)_J;
+  int& ifnex = (int&)_ifnex;
+  double& rho_1 = (double&)_rho_1;
+  double& left_bracket_value = (double&)_left_bracket_value;
+  double& left_bracket = (double&)_left_bracket;
+  double& right_bracket = (double&)_right_bracket;
+  dvector& right_bracket_gradient = (dvector&)_right_bracket_gradient;
+
   if (ext_flag==1) goto label1500;
   J=J/2;
   rho_1=4.*rho_0;
@@ -848,9 +866,6 @@ label2000:
 void bracket_report(const dvector& theta, const double& left_bracket,
                     double& right_bracket, const dvector& d)
 {
-  double f=0;
-  double fp1=0;
-  double fp2=0;
   dvector g(1,d.size());
   dvector u(1,d.size());
   ivector ii(1,3);
@@ -1010,9 +1025,10 @@ fmmc::~fmmc(void)
  * Description not yet available.
  * \param
  */
-void derch(const double& f, const dvector& _x, const dvector& _gg, int n,
+void derch(const double& _f, const dvector& _x, const dvector& _gg, int n,
   const int & _ireturn)
 {
+  double& f = (double&)_f;
   int& ireturn=(int&) _ireturn;
   dvector& x = (dvector&) _x;
   dvector& gg = (dvector&) _gg;

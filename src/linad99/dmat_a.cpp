@@ -42,8 +42,7 @@
    index_min=nrl;
    index_max=nrh;
 
-   int rs=rowsize();
-   if ( (m = new dvector [rs]) == 0)
+   if ( (m = new dvector[rowsize()]) == 0)
    {
      cerr << " Error allocating memory in dmatrix contructor\n";
      ad_exit(21);
@@ -96,8 +95,7 @@
    index_min=nrl;
    index_max=nrh;
 
-   int rs=rowsize();
-   if ( (m = new dvector [rs]) == 0)
+   if ( (m = new dvector[rowsize()]) == 0)
    {
      cerr << " Error allocating memory in dmatrix contructor\n";
      ad_exit(21);

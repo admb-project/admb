@@ -127,7 +127,7 @@ TEST_F(test_ivector, reallocate_empty)
   ivector empty;
   empty.reallocate(1.5);
   EXPECT_EQ(1, empty.indexmin());
-  EXPECT_EQ(-1, empty.indexmax());
+  EXPECT_EQ(0, empty.indexmax());
   EXPECT_EQ(0, empty.size());
 }
 TEST_F(test_ivector, check_order)
@@ -268,4 +268,501 @@ TEST_F(test_ivector, fill)
   ASSERT_EQ(3, v(1));
   ASSERT_EQ(2, v(2));
   ASSERT_EQ(1, v(3));
+}
+TEST_F(test_ivector, invalid_index)
+{
+  ivector w(4, 2);
+  ASSERT_EQ(0, w.size());
+  ASSERT_EQ(1, w.indexmin());
+  ASSERT_EQ(0, w.indexmax());
+  ASSERT_EQ(NULL, w.get_v());
+  ASSERT_EQ(false, w.allocated());
+}
+TEST_F(test_ivector, sort)
+{
+  ivector ivec(1, 5);
+  ivec(1) = -1;
+  ivec(2) = 4;
+  ivec(3) = 3;
+  ivec(4) = -2;
+  ivec(5) = 0;
+
+  ivector ret = sort(ivec, 60);
+  ASSERT_EQ(-2, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(0, ret(3));
+  ASSERT_EQ(3, ret(4));
+  ASSERT_EQ(4, ret(5));
+}
+TEST_F(test_ivector, sort_with_index)
+{
+  ivector ivec(1, 5);
+  ivec(1) = -1;
+  ivec(2) = 4;
+  ivec(3) = 3;
+  ivec(4) = -2;
+  ivec(5) = 0;
+
+  ivector index(1, 5);
+  index.initialize();
+
+  ivector ret = sort(ivec, index, 60);
+  ASSERT_EQ(-2, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(0, ret(3));
+  ASSERT_EQ(3, ret(4));
+  ASSERT_EQ(4, ret(5));
+
+  ASSERT_EQ(-1, ivec(1));
+  ASSERT_EQ(4, ivec(2));
+  ASSERT_EQ(3, ivec(3));
+  ASSERT_EQ(-2, ivec(4));
+  ASSERT_EQ(0, ivec(5));
+
+  ASSERT_EQ(4, index(1));
+  ASSERT_EQ(1, index(2));
+  ASSERT_EQ(5, index(3));
+  ASSERT_EQ(3, index(4));
+  ASSERT_EQ(2, index(5));
+}
+namespace admb_deprecated
+{
+  ivector sort(const ivector& v, int NSTACK);
+  ivector sort(const ivector& v, const ivector& index, int NSTACK);
+}
+TEST_F(test_ivector, deprecated_sort)
+{
+  ivector ivec(1, 5);
+  ivec(1) = -1;
+  ivec(2) = 4;
+  ivec(3) = 3;
+  ivec(4) = -2;
+  ivec(5) = 0;
+
+  ivector ret = admb_deprecated::sort(ivec, 60);
+  ASSERT_EQ(-2, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(0, ret(3));
+  ASSERT_EQ(3, ret(4));
+  ASSERT_EQ(4, ret(5));
+}
+TEST_F(test_ivector, deprecated_sort_with_index)
+{
+  ivector ivec(1, 5);
+  ivec(1) = -1;
+  ivec(2) = 4;
+  ivec(3) = 3;
+  ivec(4) = -2;
+  ivec(5) = 0;
+
+  ivector index(1, 5);
+  index.initialize();
+
+  ivector ret = admb_deprecated::sort(ivec, index, 60);
+  ASSERT_EQ(-2, ret(1));
+  ASSERT_EQ(-1, ret(2));
+  ASSERT_EQ(0, ret(3));
+  ASSERT_EQ(3, ret(4));
+  ASSERT_EQ(4, ret(5));
+
+  ASSERT_EQ(-1, ivec(1));
+  ASSERT_EQ(4, ivec(2));
+  ASSERT_EQ(3, ivec(3));
+  ASSERT_EQ(-2, ivec(4));
+  ASSERT_EQ(0, ivec(5));
+
+  ASSERT_EQ(4, index(1));
+  ASSERT_EQ(1, index(2));
+  ASSERT_EQ(5, index(3));
+  ASSERT_EQ(3, index(4));
+  ASSERT_EQ(2, index(5));
+}
+TEST_F(test_ivector, selection)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  ivector indexes(1, 2);
+  indexes(1) = 1;
+  indexes(2) = 3;
+  ivector selected = v(indexes);
+  EXPECT_EQ(1, selected.indexmin());
+  EXPECT_EQ(2, selected.indexmax());
+  EXPECT_EQ(0, selected(1));
+  EXPECT_EQ(2, selected(2));
+}
+TEST_F(test_ivector, uiostream)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  uostream uos("uosivector.txt");
+  uos << v;
+  uos.close();
+
+  ivector u(1, 4);
+  uistream uis("uosivector.txt");
+  uis >> u;
+  uos.close();
+
+  EXPECT_EQ(v(1), u(1));
+  EXPECT_EQ(v(2), u(2));
+  EXPECT_EQ(v(3), u(3));
+  EXPECT_EQ(v(4), u(4));
+}
+TEST_F(test_ivector, shift)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 1;
+  v(3) = 2;
+  v(4) = -4;
+
+  EXPECT_EQ(1, v.indexmin());
+  EXPECT_EQ(4, v.indexmax());
+
+  v.shift(2);
+  EXPECT_EQ(2, v.indexmin());
+  EXPECT_EQ(5, v.indexmax());
+
+  EXPECT_EQ(0, v(2));
+  EXPECT_EQ(1, v(3));
+  EXPECT_EQ(2, v(4));
+  EXPECT_EQ(-4, v(5));
+}
+TEST_F(test_ivector, value_plus_ivector)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 7;
+  v(3) = 2;
+  v(4) = -4;
+
+  int value = -3;
+
+  ivector ret = value + v;
+  EXPECT_EQ(-3, ret(1));
+  EXPECT_EQ(4, ret(2));
+  EXPECT_EQ(-1, ret(3));
+  EXPECT_EQ(-7, ret(4));
+}
+TEST_F(test_ivector, ivector_plus_value)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 7;
+  v(3) = 2;
+  v(4) = -4;
+
+  int value = -3;
+
+  ivector ret = v + value;
+  EXPECT_EQ(-3, ret(1));
+  EXPECT_EQ(4, ret(2));
+  EXPECT_EQ(-1, ret(3));
+  EXPECT_EQ(-7, ret(4));
+}
+TEST_F(test_ivector, value_minus_ivector)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 7;
+  v(3) = 2;
+  v(4) = -4;
+
+  int value = -3;
+
+  ivector ret = value - v;
+  EXPECT_EQ(-3, ret(1));
+  EXPECT_EQ(-10, ret(2));
+  EXPECT_EQ(-5, ret(3));
+  EXPECT_EQ(1, ret(4));
+}
+TEST_F(test_ivector, ivector_minus_value)
+{
+  ivector v(1, 4);
+  v(1) = 0;
+  v(2) = 7;
+  v(3) = 2;
+  v(4) = -4;
+
+  int value = -3;
+
+  ivector ret = v - value;
+  EXPECT_EQ(3, ret(1));
+  EXPECT_EQ(10, ret(2));
+  EXPECT_EQ(5, ret(3));
+  EXPECT_EQ(-1, ret(4));
+}
+TEST_F(test_ivector, elementwise_ivector_add_ivector)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  ivector b(1, 4);
+  b(1) = 1;
+  b(2) = 9;
+  b(3) = 5;
+  b(4) = 3;
+
+  ivector ret = a + b;
+  EXPECT_EQ(1, ret(1));
+  EXPECT_EQ(16, ret(2));
+  EXPECT_EQ(7, ret(3));
+  EXPECT_EQ(-1, ret(4));
+}
+TEST_F(test_ivector, elementwise_ivector_minus_ivector)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  ivector b(1, 4);
+  b(1) = 1;
+  b(2) = 9;
+  b(3) = 5;
+  b(4) = 3;
+
+  ivector ret = a - b;
+  EXPECT_EQ(-1, ret(1));
+  EXPECT_EQ(-2, ret(2));
+  EXPECT_EQ(-3, ret(3));
+  EXPECT_EQ(-7, ret(4));
+}
+TEST_F(test_ivector, norm2)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  EXPECT_EQ(69, norm2(a));
+  EXPECT_EQ(69, sumsq(a));
+}
+TEST_F(test_ivector, clean)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+  clean(a, 3);
+
+  EXPECT_EQ(0, a(1));
+  EXPECT_EQ(7, a(2));
+  EXPECT_EQ(2, a(3));
+  EXPECT_EQ(0, a(4));
+}
+TEST_F(test_ivector, equalexit)
+{
+  ad_exit=&test_ad_exit;
+
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+  ASSERT_ANY_THROW({
+    ivector empty;
+    a = empty;
+  });
+  ASSERT_ANY_THROW({
+    ivector b(0, 1);
+    a = b;
+  });
+}
+TEST_F(test_ivector, add_b_tothis)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  ivector b(1, 4);
+  b(1) = 1;
+  b(2) = 9;
+  b(3) = 5;
+  b(4) = 3;
+
+  a += b;
+
+  EXPECT_EQ(1, a(1));
+  EXPECT_EQ(16, a(2));
+  EXPECT_EQ(7, a(3));
+  EXPECT_EQ(-1, a(4));
+
+  ASSERT_ANY_THROW({
+    ivector empty;
+    a += empty;
+  });
+
+  ASSERT_ANY_THROW({
+    ivector b(0, 1);
+    a += b;
+  });
+}
+TEST_F(test_ivector, add_value_tothis)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  int value = 4;
+  a += value;
+
+  EXPECT_EQ(4, a(1));
+  EXPECT_EQ(11, a(2));
+  EXPECT_EQ(6, a(3));
+  EXPECT_EQ(0, a(4));
+}
+TEST_F(test_ivector, Max)
+{
+  ivector a(1, 4);
+  a(1) = 0;
+  a(2) = 7;
+  a(3) = 2;
+  a(4) = -4;
+
+  EXPECT_EQ(7, Max(a));
+}
+TEST_F(test_ivector, null)
+{
+  ad_exit=&test_ad_exit;
+
+  ivector a;
+  ASSERT_ANY_THROW({
+    a[1];
+  });
+  ASSERT_ANY_THROW({
+    a(1);
+  });
+}
+TEST_F(test_ivector, errorindex)
+{
+  ad_exit=&test_ad_exit;
+
+  ivector a(1, 3);
+  ASSERT_ANY_THROW({
+    a[0];
+  });
+  ASSERT_ANY_THROW({
+    a(0);
+  });
+  ASSERT_ANY_THROW({
+    a[4];
+  });
+  ASSERT_ANY_THROW({
+    a(4);
+  });
+}
+TEST_F(test_ivector, constnull)
+{
+  ad_exit=&test_ad_exit;
+
+  const ivector a;
+  ASSERT_ANY_THROW({
+    a[1];
+  });
+  ASSERT_ANY_THROW({
+    a(1);
+  });
+}
+TEST_F(test_ivector, errorindex2)
+{
+  ad_exit=&test_ad_exit;
+
+  const ivector a(1, 3);
+  ASSERT_ANY_THROW({
+    a[0];
+  });
+  ASSERT_ANY_THROW({
+    a(0);
+  });
+  ASSERT_ANY_THROW({
+    a[4];
+  });
+  ASSERT_ANY_THROW({
+    a(4);
+  });
+}
+TEST_F(test_ivector, anerrormultiply)
+{
+  ad_exit=&test_ad_exit;
+
+  ASSERT_ANY_THROW({
+    ivector a(1, 3);
+    ivector b(2, 3);
+    int operator*(const ivector&, const ivector&);
+    operator*(a, b);
+  });
+  ASSERT_ANY_THROW({
+    ivector a(1, 3);
+    ivector b(1, 4);
+    int operator*(const ivector&, const ivector&);
+    operator*(a, b);
+  });
+  ASSERT_ANY_THROW({
+    ivector a(2, 3);
+    ivector b(1, 3);
+    int operator*(const ivector&, const ivector&);
+    operator*(a, b);
+  });
+  ASSERT_ANY_THROW({
+    ivector a(1, 4);
+    ivector b(1, 3);
+    int operator*(const ivector&, const ivector&);
+    operator*(a, b);
+  });
+}
+TEST_F(test_ivector, multiply)
+{
+  ivector a(1, 3);
+  a(1) = 1;
+  a(2) = 2;
+  a(3) = 3;
+  ivector b(1, 3);
+  b(1) = 5;
+  b(2) = 6;
+  b(3) = 7;
+
+  int operator*(const ivector&, const ivector&);
+  int result = operator*(a, b);
+  ASSERT_EQ(38, result);
+}
+TEST_F(test_ivector, deallocatecopies)
+{
+  ivector a(1, 2);
+  ASSERT_EQ(0, a.get_ncopies());
+  ivector firstcopy(a);
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(1, firstcopy.get_ncopies());
+  ivector secondcopy(a);
+  ASSERT_EQ(2, a.get_ncopies());
+  ASSERT_EQ(2, firstcopy.get_ncopies());
+  ASSERT_EQ(2, secondcopy.get_ncopies());
+
+  firstcopy.deallocate();
+  ASSERT_EQ(1, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(1, secondcopy.get_ncopies());
+
+  secondcopy.deallocate();
+  ASSERT_EQ(0, a.get_ncopies());
+  ASSERT_EQ(0, firstcopy.get_ncopies());
+  ASSERT_EQ(0, secondcopy.get_ncopies());
 }

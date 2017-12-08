@@ -3,6 +3,10 @@
 
 #include <fvar.hpp>
 #include "adjson.h"
+#ifndef OPT_LIB
+  #include <cassert>
+  #include <climits>
+#endif
 
 istream& operator>>(istream& input, adjson::json& data)
 {
@@ -23,39 +27,41 @@ value* json::parse(istream& input)
   value* ret = 0;
   input >> std::ws;
   char p = (char)input.peek();
-  while (p != EOF)
+  if (p != EOF)
   {
     char c;
     if (p == '{')
     {
       object* o = new object();      
 
-      input.get(c);
-      while (c != '}')
+      if (input.get(c))
       {
-        string* s = (string*)parse(input);
-        input >> std::ws >> c >> std::ws;
-        value* v = parse(input);
-        o->add(s, v);
-        input >> std::ws >> c >> std::ws;
+        while (c != '}')
+        {
+          string* s = (string*)parse(input);
+          input >> std::ws >> c >> std::ws;
+          value* v = parse(input);
+          o->add(s, v);
+          input >> std::ws >> c >> std::ws;
+        }
       }
 
       ret = o;
-      break;
     }
     else if (p == '[')
     {
       array* a = new array();      
 
-      input.get(c);
-      while (c != ']')
+      if (input.get(c))
       {
-        value* p = parse(input);
-        a->add(p);
-        input >> std::ws >> c >> std::ws;
+        while (c != ']')
+        {
+          value* v = parse(input);
+          a->add(v);
+          input >> std::ws >> c >> std::ws;
+        }
       }
       ret = a;
-      break;
     }
     else if (p == '\"')
     {
@@ -77,14 +83,12 @@ value* json::parse(istream& input)
       }
       s->_value.push_back('\"');
       ret = s;
-      break;
     }
     else if (p == '-' || std::isdigit(p))
     {
       number* n = new number();      
       input >> n->_value;
       ret = n;
-      break;
     }
     else if (p == 't')
     {
@@ -93,7 +97,6 @@ value* json::parse(istream& input)
       input.read(str, 4);
       b->_value = true;
       ret = b;
-      break;
     }
     else if (p == 'f')
     {
@@ -102,7 +105,6 @@ value* json::parse(istream& input)
       input.read(str, 5);
       b->_value = false;
       ret = b;
-      break;
     }
     else if (p == 'n')
     {
@@ -110,15 +112,11 @@ value* json::parse(istream& input)
       char str[6];
       input.read(str, 4);
       ret = b;
-      break;
     }
     else
     {
       std::cerr << "Error: unknown char(" << p << ") in json input.\n";
-      break;
     }
-    input >> std::ws;
-    p = (char)input.peek();
   }
   return ret;
 }
@@ -127,14 +125,18 @@ value* json::parse(istream& input)
 istream& dvector::parse(istream& input)
 {
   adjson::json data;
-  adjson::array* a = (adjson::array*)data.parse(input);
+  input >> data;
+  adjson::array* a = (adjson::array*)data.get_value();
 
   if (allocated())
   {
     deallocate();
   }
   size_t size = a->_value.size();
-  allocate(1, size);
+#ifndef OPT_LIB
+  assert(size <= INT_MAX);
+#endif
+  allocate(1, static_cast<int>(size));
   for (size_t i = 0; i < size; ++i)
   {
     adjson::number* n = (adjson::number*)a->_value[i];

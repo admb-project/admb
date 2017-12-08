@@ -112,8 +112,7 @@ void df1b23array::allocate(int nrl,int nrh,int ncl,int nch,
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2matrix[rs]) == 0)
+  if ((v = new df1b2matrix[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";
       ad_exit(21);
@@ -137,8 +136,7 @@ void df1b23array::allocate(int nrl,int nrh,int ncl,int nch)
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2matrix[rs]) == 0)
+  if ((v = new df1b2matrix[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";
       ad_exit(21);
@@ -164,8 +162,7 @@ void df1b23array::allocate(int nrl,int nrh,const index_type& ncl,
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2matrix[rs]) == 0)
+  if ((v = new df1b2matrix[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";
       ad_exit(21);
@@ -191,8 +188,7 @@ void df1b23array::allocate(int nrl,int nrh,
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2matrix[rs]) == 0)
+  if ((v = new df1b2matrix[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";
       ad_exit(21);
@@ -230,8 +226,7 @@ void df1b23array::allocate(
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2matrix[rs]) == 0)
+  if ( (v = new df1b2matrix[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";
       ad_exit(21);
@@ -246,30 +241,28 @@ void df1b23array::allocate(
     v[i].allocate(ncl(i), nch(i), nxl, nxh);
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Copy constructor
+*/
 df1b23array::df1b23array(const df1b23array & x)
 {
-  index_min=x.index_min;
-  index_max=x.index_max;
-  v=x.v;
-  shape=x.shape;
+  index_min = x.index_min;
+  index_max = x.index_max;
+  v = x.v;
+  shape = x.shape;
   if (shape) (shape->ncopies)++;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Allocate vector of df1b2matrix with dimension [nrl to nrh].
+
+\param nrl lower vector index
+\param nrl upper vector index
+*/
 void df1b23array::allocate(int nrl,int nrh)
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
-  if ( (v = new df1b2matrix[rs]) == 0)
+  if ((v = new df1b2matrix[size()]) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";
       ad_exit(21);
@@ -280,7 +273,6 @@ void df1b23array::allocate(int nrl,int nrh)
   }
   v -= indexmin();
 }
-
 /**
 Destructor
 */

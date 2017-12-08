@@ -1,5 +1,6 @@
 % Author: Hans Skaug
-% Copyright (c) 20082017 and ADMB Foundation and  Regents of the University of California
+% Copyright (c) 2008-2017
+% ADMB Foundation and Regents of the University of California
 
 \documentclass{admbmanual}
 \makeatletter\@twosidefalse\makeatother
@@ -15,7 +16,9 @@
 \newcommand{\scGLM}{\textsc{glm}}
 \newcommand{\scGLMM}{\textsc{glmm}}
 \newcommand{\scLIDAR}{\textsc{lidar}}
-\newcommand\admbversion{11.6pre}
+\newcommand\admbversion{11.6}
+\newcommand\admbyear{2016}
+\newcommand\admbdate{2016-12-17}
 
 \makeindex
 
@@ -24,8 +27,8 @@
 \title{%
   \largetitlepart{Random Effects in\\\ADM}
   \smalltitlepart{ADMB-RE User Guide}
-  \vspace{4.5ex}\textsf{\textit{Version \admbversion~~(2015-05-22)\\[3pt]
-      Revised manual~~(2015-01-07)
+  \vspace{4.5ex}\textsf{\textit{Version \admbversion~~(\admbdate)\\[3pt]
+      ~% Revised manual~~(yyyy-mm-dd)
     }}\vspace{3ex}
 }
 \author{\textsf{\textit{Hans Skaug \& David Fournier}}}
@@ -37,10 +40,9 @@
 \noindent ADMB Foundation, Honolulu.\\\\
 \noindent This is the manual for AD Model Builder with Random Effects (ADMB-RE)
 version \admbversion.\\\\
-\noindent Copyright \copyright\ 2004, 2006, 2008, 2009, 2011, 2013, 2014, 2015
-Hans~Skaug \& David~Fournier\\\\
+\noindent Copyright \copyright\ 2004--\admbyear\ Hans Skaug \& David~Fournier\\\\
 \noindent The latest edition of the manual is available at:\\
-\url{http://admb-project.org/documentation/manuals}
+\url{http://www.admb-project.org/docs/manuals/}
 
 \tableofcontents
 
@@ -1000,13 +1002,13 @@ The reason for calling the objective function in step~1, a penalized likelihood,
 is that the prior on the random effects acts as a penalty function.
 
 We can now return to the role of the initial values specified for the random
-effects in the \texttt{.pin} file. Unless you use the command line option \texttt{-noinit}
-these values are not used (but dummy values must nevertheless be provided
-in the \texttt{.pin} file).  Each time step~1 above is performed
-the maximization of the penalized likelihood is always initiated at $x=0$.
-If the command line option \texttt{-noinit} is used the value
-from the \texttt{.pin} file is used the first time step~1 above is performed.
-The remaining times the value from the previous optimum is used as the starting value.
+effects in the \texttt{.pin} file. Unless you use the command line option
+\texttt{-noinit} these values are not used (but dummy values must nevertheless
+be provided in the \texttt{.pin} file). Each time step~1 above is performed the
+maximization of the penalized likelihood is always initiated at $x=0$. If the
+command line option \texttt{-noinit} is used the value from the \texttt{.pin}
+file is used the first time step~1 above is performed. The remaining times the
+value from the previous optimum is used as the starting value.
 
 \paragraph{Empirical Bayes} is commonly used to refer to Bayesian estimates of
 the random effects, with the hyper-parameters fixed at their maximum likelihood
@@ -1548,7 +1550,6 @@ command line options \texttt{-cbs} and \texttt{-gbs} can be used.
 
 The \texttt{-gh N} option should be preferred over importance sampling
 (\texttt{-is}).
-
 
 % \subsection{Frequency weighting for multinomial likelihoods}
 %

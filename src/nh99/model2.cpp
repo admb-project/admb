@@ -103,10 +103,13 @@ param_stddev_number::param_stddev_number():
   setindex(0);
 }
 
-  int param_stddev_number::size_count(void)
-  {
-    return 1;
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_stddev_number::size_count() const
+{
+  return 1;
+}
 
   void param_stddev_number::set_dependent_variables(void)
   {
@@ -124,10 +127,13 @@ param_stddev_number::param_stddev_number():
     stddev_params::allocate();
   }
 
-  int param_stddev_vector::size_count(void)
-  {
-    return ::size_count(*this);
-  }
+/**
+Return number of active paramters.
+*/
+unsigned int param_stddev_vector::size_count() const
+{
+  return ::size_count(*this);
+}
 
   param_stddev_vector::param_stddev_vector(void) : named_dvar_vector() ,
     stddev_params()
@@ -153,10 +159,13 @@ param_stddev_number::param_stddev_number():
     add_to_list();
   }
 
-  int param_stddev_matrix::size_count(void)
-  {
-    return ::size_count(*this);
-  }
+/**
+Returns the number of active parameters.
+*/
+unsigned int param_stddev_matrix::size_count() const
+{
+  return ::size_count(*this);
+}
 
   void param_stddev_matrix::allocate(int rmin,int rmax,int cmin,int cmax,
     const char * s)

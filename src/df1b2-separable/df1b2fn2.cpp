@@ -347,46 +347,42 @@ init_df1b2vector::init_df1b2vector(int lb, int ub)
 }
 
 /**
- * Description not yet available.
- * \param
  */
-  void init_df1b2vector::allocate(int lb,int ub)
+void init_df1b2vector::allocate(int lb,int ub)
+{
+  init_df1b2variable::num_variables= 0;
+  index_min=lb;
+  index_max=ub;
+  ncopies=new int;
+  *ncopies=0;
+  int size = ub < lb ? 0 : indexmax() - indexmin() + 1;
+  if (init_df1b2variable::list == 0)
   {
-    init_df1b2variable::num_variables= 0;
-    index_min=lb;
-    index_max=ub;
-    ncopies=new int;
-    *ncopies=0;
-    int size=indexmax()-indexmin()+1;
-    if (init_df1b2variable::list==0)
-    {
-      max_num_init_df1b2variable
-        =max(size,max_num_init_df1b2variable);
+    max_num_init_df1b2variable
+      = max(size, max_num_init_df1b2variable);
 
-      init_df1b2variable::list =
-        new PINIT_DF1B2VARIABLE [max_num_init_df1b2variable];
-      if (init_df1b2variable::list==0)
-      {
-        cerr << "Error allocating memory for init_df1b2variable::list"
-         << endl;
-        exit(1);
-      }
-    }
-
-  // ****************************************
-    trueptr=new init_df1b2variable[size];
-    if (trueptr == 0)
+    init_df1b2variable::list = new PINIT_DF1B2VARIABLE[static_cast<unsigned int>(
+      max_num_init_df1b2variable < 0 ? 0 : max_num_init_df1b2variable)];
+    if (init_df1b2variable::list == 0)
     {
-      cerr << "Error allocating memory for init_df1b2variable"
-           << endl;
+      cerr << "Error allocating memory for init_df1b2variable::list" << endl;
       ad_exit(1);
     }
-    //AD_ALLOCATE(trueptr,init_df1b2variable,size,df1b2_gradlist)
-  // ****************************************
-
-    ptr=trueptr;
-    ptr-=lb;
   }
+
+// ****************************************
+  trueptr = new init_df1b2variable[static_cast<unsigned int>(size)];
+  if (trueptr == 0)
+  {
+    cerr << "Error allocating memory for init_df1b2variable" << endl;
+    ad_exit(1);
+  }
+  //AD_ALLOCATE(trueptr,init_df1b2variable,size,df1b2_gradlist)
+// ****************************************
+
+  ptr = trueptr;
+  ptr -= lb;
+}
 
 /**
  * Description not yet available.

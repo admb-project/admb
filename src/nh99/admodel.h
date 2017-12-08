@@ -52,7 +52,6 @@
   #pragma interface
 #endif
 
-#define BIG_INIT_PARAMS
 
   class laplace_approximation_calculator;
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
@@ -815,6 +814,8 @@ public:
   };
 #endif
 
+//#define NO_BIG_INIT_PARAMS
+
 /**
  * Description not yet available.
  * \param
@@ -840,10 +841,11 @@ public:
 #endif
   double get_scalefactor();
   void set_scalefactor(const double);
-#if !defined(BIG_INIT_PARAMS)
-  static initial_params  varsptr[]; // this should be a resizeable array
+  //Resizeable arrays
+#if defined(NO_BIG_INIT_PARAMS)
+  static adlist_ptr varsptr;
 #else
-  static adlist_ptr varsptr; // this should be a resizeable array
+  static initial_params* varsptr[];
 #endif
   static int num_initial_params;
   static const int max_num_initial_params;

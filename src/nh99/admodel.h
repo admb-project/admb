@@ -814,8 +814,6 @@ public:
   };
 #endif
 
-//#define NO_BIG_INIT_PARAMS
-
 /**
  * Description not yet available.
  * \param
@@ -842,10 +840,10 @@ public:
   double get_scalefactor();
   void set_scalefactor(const double);
   //Resizeable arrays
-#if defined(NO_BIG_INIT_PARAMS)
-  static adlist_ptr varsptr;
-#else
+#if defined(USE_PTR_INIT_PARAMS)
   static initial_params* varsptr[];
+#else
+  static adlist_ptr varsptr;
 #endif
   static int num_initial_params;
   static const int max_num_initial_params;

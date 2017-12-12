@@ -11,7 +11,7 @@
 #endif
 #define ISZERO(d) ((d)==0.0)
 
-int initial_params::num_initial_params=0;
+int initial_params::num_initial_params = 0;
 
 const int initial_params::max_num_initial_params = 4000;
 #if defined(USE_PTR_INIT_PARAMS)
@@ -58,7 +58,10 @@ Destructor
 */
 initial_params::~initial_params()
 {
-  num_initial_params--;
+  if (num_initial_params > 0)
+  {
+    --num_initial_params;
+  }
 #if defined(USE_SHARE_FLAGS)
   if (share_flags)
   {

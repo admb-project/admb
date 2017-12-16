@@ -3,7 +3,7 @@
    Copyright (c) 2016 ADMB Foundation
 
    \file
-   This file was copied from hybmcmc.cpp to use as a starting place to create updated Hamiltonian Monte Carlo
+   This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo
    samplers (static HMC and No-u-turn).
 */
 
@@ -16,19 +16,19 @@
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
 
-void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
+void function_minimizer::nuts_test_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					   int restart_flag) {
   if (nmcmc<=0) {
     cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
     ad_exit(1);
   }
   // I haven't figured out what to do with RE yet, so leaving as is for
-  // now. It will throw an error later on. -Cole
+  // now. -Cole
   uostream * pofs_psave=NULL;
   if (mcmc2_flag==1) initial_params::restore_start_phase();
   initial_params::set_inactive_random_effects();
   initial_params::set_active_random_effects();
-  // int nvar_re=initial_params::nvarcalc();
+  int nvar_re=initial_params::nvarcalc();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   if (mcmc2_flag==0){
     initial_params::set_inactive_random_effects();
@@ -39,11 +39,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::mc_phase=1;
   int old_Hybrid_bounded_flag=-1;
   int on,nopt = 0;
+  // dvector x0(1,nvar);
+  // dvector scale(1,nvar);
+  // initial_params::xinit(x0);
+  // dvector pen_vector(1,nvar);
+  // initial_params::reset(dvar_vector(x0),pen_vector);
+  // initial_params::mc_phase=0;
+  // initial_params::stddev_scale(scale,x0);
+  // initial_params::mc_phase=1;
+  // gradient_structure::set_YES_DERIVATIVES();
 
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
   // and will not be adapted.
-  diagonal_metric_flag=0; // set to 1 later if using adapt_mass
   double eps=0.1;
   double _eps=-1.0;
   int useDA=1; 			// whether to adapt step size
@@ -63,10 +71,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-
   // Run duration. Can specify warmup and duration, or warmup and
-  // iter. Sampling period will stop after exceeding <duration> hours. If
-  // duration ends before warmup is finished there will be no samples.
+  // iter. Sampling period will stop after exceeding duration hours.
   double duration=0;
   bool use_duration=0;		// whether to use this or iter
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-duration",nopt))>-1) {
@@ -79,13 +85,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	cerr << "Error: duration must be > 0" << endl;
 	ad_exit(1);
       } else {
-	// input is in hours, duration is in seconds so convert
-	duration=_duration*60*60;
+	// input is in minutes, duration is in seconds so convert
+	duration=_duration*60;
       }
     }
   }
-  // chain number -- for console display purposes only, useful when running
-  // in parallel
+  // chain number -- for console display purposes only
   int chain=1;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chain",nopt))>-1) {
     if (nopt) {
@@ -121,7 +126,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // Target acceptance rate for step size adaptation. Must be
   // 0<adapt_delta<1. Defaults to 0.8.
-  double adapt_delta=0.8;
+  double adapt_delta=0.8; // target acceptance rate specified by the user
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_delta",nopt))>-1) {
     if (nopt) {
       istringstream ist(ad_comm::argv[on+1]);
@@ -143,8 +148,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       istringstream ist(ad_comm::argv[on+1]);
       int _max_treedepth;
       ist >> _max_treedepth;
-      if (_max_treedepth < 0) {
-	cerr << "Error: max_treedepth must be > 0" << endl;
+      if (_max_treedepth <= 1) {
+	cerr << "Error: max_treedepth must be > 1" << endl;
 	ad_exit(1);
       } else {
 	max_treedepth=_max_treedepth;
@@ -153,6 +158,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // User-specified initial values
   nopt=0;
+  int ii=1;
+  independent_variables mle(1,nvar); // the accepted par values
+  // Store saved MLE in bounded space into vector mle.
+  read_mle_hmc(nvar, mle);
   independent_variables z0(1,nvar); // bounded space
   independent_variables y(1,nvar); // unbounded space
   initial_params::restore_start_phase();
@@ -162,45 +171,30 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       if (!cif) {
 	cerr << "Error trying to open mcmc par input file "
 	     << ad_comm::argv[on+1] << endl;
-	ad_exit(1);
+	exit(1);
       }
       cif >> z0;
       if (!cif) {
 	cerr << "Error reading from mcmc par input file "
 	     << ad_comm::argv[on+1] << endl;
-	ad_exit(1);
+	exit(1);
       }
     } else {
       cerr << "Illegal option with -mcpin" << endl;
     }
   } else {
-    // If user didnt specify one, use MLE values.
-    independent_variables mle(1,nvar); // the accepted par values
-    // Store saved MLE in bounded space into vector mle.
-    read_mle_hmc(nvar, mle);
+    // Set to stored MLE vector in bounded space
+    ii=1;
     z0=mle;
-    initial_params::copy_all_values(z0,1);
+    initial_params::copy_all_values(z0,ii);
   }
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
     diag_option=1;
-    diagonal_metric_flag=1;
-    cout << "Setting covariance matrix to diagonal with entries" << endl;
+    cout << " Setting covariance matrix to diagonal with entries " << dscale
+	 << endl;
   }
-  // Whether to adapt the mass matrix
-  int adapt_mass=0;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass"))>-1) {
-    diagonal_metric_flag=1;
-    adapt_mass=1;
-    diag_option=1; // always start with unit mass matrix if adapting
-  }
-  // Whether to print mass matrix adaptation steps to console
-  int verbose_adapt_mass=0;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-verbose_adapt_mass"))>-1) {
-    verbose_adapt_mass=1;
-  }
-
   // Restart chain from previous run?
   int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
   if(mcrestart_flag > -1){
@@ -217,6 +211,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cerr << "Option -mcsave does not currently work with HMC -- every iteration is saved" << endl;
     ad_exit(1);
   }
+
   // Prepare the mass matrix for use. For now assuming mass matrix passed
   // on the unconstrained scale using hybrid bounds, which is detectable
   // becuase the hbf flag is 1 in the .cov file. In that case, there is no
@@ -227,10 +222,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // above. This prevents re-estimating the model each time. Then the new
   // scales can be calculated and the matrix converted to bounded, then
   // back to unbounded in hybrid space.
-  //
-  // Actually, I decided to force the user to rerun the model with -hbf 1
-  // so that the scales are correct. This code wasnt working quite right
-  // but leaving here in case someone wants to try adding this back later.
   dmatrix S(1,nvar,1,nvar);
   dvector old_scale(1,nvar);
   bool rescale_covar=0;
@@ -282,13 +273,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // transformations, it is wrong now that hbf=1. So convert to covar in
     // transformed space using the old scales, and then back to the
     // untransformed space using the new scales.
-
-    // For now turning this off. Might be easier and more reliable
-    // to force user to rerun the model with the right hbf.
-    cerr << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
-      endl << "...Rerun model with '-hbf 1' and try again" << endl;
-    ad_exit(1);
-    //
     cout << "Rescaling covariance matrix b/c scales don't match" << endl;
     cout << "old scale=" <<  old_scale << endl;
     cout << "current scale=" << current_scale << endl;
@@ -301,23 +285,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-  dmatrix chd(1,nvar,1,nvar);
-  dmatrix chdinv(1,nvar,1,nvar);
-  if(diagonal_metric_flag==0){
-    chd = choleski_decomp(S); // cholesky decomp of mass matrix
-    chdinv=inv(chd);
-  } else {
-    // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal 
-    chd.initialize();
-    chdinv.initialize();
-    for(int i=1;i<=nvar;i++){
-      chd(i,i)=sqrt(S(i,i));
-      chdinv(i,i)=1/chd(i,i);
-    }
-  }
+  dmatrix chd = choleski_decomp(S); // cholesky decomp of mass matrix
+  dmatrix chdinv=inv(chd);
   // Can now inverse rotate y to be x (algorithm space)
   independent_variables x0(1,nvar);
-  x0=rotate_pars(chdinv,y0); // this is the initial value in algorithm space
+  x0=chdinv*y0; // this is the initial value
+  //  gradient_structure::set_NO_DERIVATIVES(); // what does this do?
+
   // cout << "Starting from chd=" << chd << endl;
   ///
   // /// Old code to test that I know what's going on.
@@ -327,7 +301,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // cout << "Initial bounded parameters=" << z0 << endl;
   // cout << "Initial unbounded parameters=" << y0 << endl;
   // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
-  // cout << "Initial negative log density=" << nlltemp << endl;
+  // cout << "Initial nll=" << nlltemp << endl;
   // cout << "Initial gr in unbounded space= " << grtemp << endl;
   // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
   ///
@@ -341,14 +315,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       ad_comm::adprogram_name + adstring(".psv") << endl;
     ad_exit(1);
   }
-  // These files holds the rotated (x), unbounded (y) and bounded (z)
-  // samples (not warmup). Can read this in to get empirical covariance on
-  // the unbounded scale and then put back into admodel.cov. Or look at how
-  // mass matrix is doing. For now turned off rotated and bounded since
-  // don't need those immediately
-  // ofstream rotated("rotated.csv", ios::trunc);
-  // ofstream bounded("bounded.csv", ios::trunc);
+  // This file holds the rotated (x), unbounded (y) and bounded (z) samples
+  // (not warmup). Can read this in to get empirical covariance on the
+  // unbounded scale and then put back into admodel.cov. Or look at how
+  // mass matrix is doing.
+  ofstream rotated("rotated.csv", ios::trunc);
   ofstream unbounded("unbounded.csv", ios::trunc);
+  ofstream bounded("bounded.csv", ios::trunc);
   // Save nvar first. If added mcrestart (mcrb) functionality later need to
   // fix this line.
   (*pofs_psave) << nvar;
@@ -362,24 +335,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   time_t now = time(0);
   tm* localtm = localtime(&now);
   std::string m=get_filename((char*)ad_comm::adprogram_name);
-  cout << endl << endl << "Starting NUTS for model '" << m <<
+  cout << endl << "Starting NUTS for model '" << m <<
     "' at " << asctime(localtm);
   if(use_duration==1){
-    cout << "Model will run for " << duration <<
-      " hours or until " << nmcmc << " total iterations" << endl;
+    cout << "Model will run for " << duration/60 <<
+      " minutes or until " << nmcmc << " total iterations" << endl;
   }
-  if(adapt_mass){
-    diagonal_metric_flag=1;
-    if(warmup < 200){
-      // Turn off if too few samples to properly do it. But keep using
-      // diagonal efficiency.
-      cerr << "Warning: Mass matrix adaptation not allowed when warmup<200" << endl;
-      adapt_mass=0;
-    } else {
-      cout << "Using diagonal mass matrix adaptation" << endl;
-    }
-  }
-  cout << "Initial negative log density=" << nlltemp << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
@@ -394,16 +355,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   independent_variables z(1,nvar);
   independent_variables ytemp(1,nvar);
   dvector gr(1,nvar);		// gradients in unbounded space
-  dvector gr2(1,nvar);		// gradients in rotated space
+  dvector gr2(1,nvar);		// initial rotated gradient
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
-  // Local variables to track the extreme left and rightmost nodes of the
-  // entire tree. This gets overwritten due to passing things by reference
-  // in buildtree
-  dvector thetaminus_end(1,nvar);
-  dvector thetaplus_end(1,nvar);
-  dvector rminus_end(1,nvar);
-  dvector rplus_end(1,nvar);
   // References to left most and right most theta and momentum for current
   // subtree inside of buildtree. The ones proceeded with _ are passed
   // through buildtree by reference. Inside build_tree, _thetaplus is left
@@ -414,7 +368,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector _thetaprime(1,nvar);
   dvector _rminus(1,nvar);
   dvector _rplus(1,nvar);
-  // These are used inside NUTS by reference
   double _alphaprime;
   int _nalphaprime;
   bool _sprime;
@@ -423,19 +376,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   bool _divergent; // divergent transition
   int ndivergent=0; // # divergences post-warmup
   int nsamples=0; // total samples, not always nmcmc if duration option used
-  // Declare some local variables used below.
-  double nll, H0, logu, value, rn, alpha;
-  int n, j, v;
-  bool s,b;
-  // Mass matrix adapatation algorithm arguments
-  int k=0;
-  int w1 = 75; int w2 = 50; int w3 = 25;
-  int aws = w2; // adapt window size
-  int anw = w1+w2; // adapt next window
-  // temporary for recursive formula
-  dvector s1(1,nvar); dvector s0(1,nvar);
-  dvector m1(1,nvar); dvector m0(1,nvar);
-  dmatrix metric(1,nvar,1,nvar); // holds updated metric
 
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
@@ -446,57 +386,107 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
     // Reset model parameters to theta, whether updated or not in previous
     // iteration.
-    z=rotate_pars(chd, theta);
-    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    gr2=rotate_gradient(gr, chd);
-    H0=-nll-0.5*norm2(p); // initial Hamiltonian value
-    logu=H0+log(randu(rng)); // slice variable
+    z=chd*theta;
+    double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    gr2=gr*chd;
+    double H0=-nll-0.5*norm2(p); // initial Hamiltonian value
+    double logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
-      eps=find_reasonable_stepsize(nvar,theta,p,chd,true);
+      eps=find_reasonable_stepsize(nvar,theta,p,chd,1);
       mu=log(10*eps);
       epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
+
+    // --------------------------------------------------
+    // Careful tests of build_tree trajectories by manually specifying
+    // starting theta & r and then building tree. Should match R for same
+    // model. Read in input values so easier to control everything.
+    cifstream cif("input.txt");
+    cif >> theta;
+    cif >> p;
+    int jj;
+    cif >> jj;
+    // cout << "theta=" << theta << endl;
+    // cout << "p=" << p << endl;
+    // cout << "j=" << jj << endl;
+    // cout.precision(12);
+    // cout << "chd=" << chd << endl;
+    _rminus=p; _rplus=p;
+    _thetaminus=theta;
+    _thetaplus=theta;
+    _thetaprime=theta;
+    z=chd*theta;
+    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+    gr2=gr*chd;
+    // cout << "gr=" << gr << endl;
+    // cout << "z=" << z << endl;
+    H0=-nll-0.5*norm2(p);
+    logu=H0-log(2); // set slice variable at half height
+    ofstream out("trajectory.txt", ios::trunc);
+    ofstream out2("out2.txt", ios::trunc);
+    out << "theta1 theta2 thetaminus1 thetaminus2 thetaplus1 thetaplus2 rminus1 rminus2 " <<
+      "rplus1 rplus2 alpha divergent nfevals v nprime logu" << endl;
+    out2 << "j v _thetaprime1 _thetaprime2 theta1 theta2 prob divergent s n nprime" << endl;
+
+    // --------------------------------------------------
+
     // Generate single NUTS trajectory by repeatedly doubling build_tree
-    n = 1;
+    int n = 1;
     _nprime=0;
     _divergent=0;
     _nfevals=0;
-    s=1;
-    j=0;
+    bool s=1;
+    int j=0;
+    // Global, local variables to track the extreme left and rightmost
+    // nodes of the entire tree
+    dvector thetaminus_end(1,nvar);
+    dvector thetaplus_end(1,nvar);
+    dvector rminus_end(1,nvar);
+    dvector rplus_end(1,nvar);
+    dvector thetaminus0(1,nvar);
+    dvector thetaplus0(1,nvar);
+    dvector rminus0(1,nvar);
+    dvector rplus0(1,nvar);
     thetaminus_end=theta; thetaplus_end=theta;
     rminus_end=p; rplus_end=p;
+    thetaminus0=theta; thetaplus0=theta;
+    rminus0=p; rplus0=p;
+    out << theta << theta << theta << p << p << " " << 0 << " " << 0
+	<< " " << _nfevals << " " << 0 << " " << _nprime << " " << logu << endl;
 
     while (s) {
-      value = randu(rng);	   // runif(1)
-      v = 2 * (value < 0.5) - 1;
+      double value = randu(rng);	   // runif(1)
+      int v = 2 * (value < 0.5) - 1;
+      if(j%2==0) v=1; else v=-1;
       // Add a trajectory of length 2^j, built to the left or right of
       // edges of the current entire tree.
       if (v == 1) {
 	// Build a tree to the right from thetaplus. The leftmost point in
 	// the new subtree, which gets overwritten in both the global _end
 	// variable, but also the _ ref version.
-	z=rotate_pars(chd, thetaplus_end);
-	// Need to reset to the rightmost point, since this may not have
-	// been last one executed and thus the gradients are wrong
-	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	gr2=rotate_gradient(gr, chd);
-	build_tree(nvar, gr, chd, eps, rplus_end, thetaplus_end, gr2, logu, v, j,
-		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+	z=chd*thetaplus_end;
+	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	gr2=gr*chd;
+	build_tree_test(nvar, gr, chd, eps, rplus_end, thetaplus_end, gr2, logu, v, j,
+			H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+			_alphaprime, _nalphaprime, _sprime,
+			_nprime, _nfevals, _divergent, rng, out);
 	// Moved right, so update extreme right tree
 	thetaplus_end=_thetaplus;
 	rplus_end=_rplus;
       } else {
 	// Same but to the left from thetaminus
-	z=rotate_pars(chd,thetaminus_end);
-	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	gr2=rotate_gradient(gr,chd);
-	build_tree(nvar, gr, chd, eps, rminus_end, thetaminus_end, gr2, logu, v, j,
-		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
-		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+	_thetaplus=thetaminus_end; _thetaminus=thetaminus_end;
+	_rplus=rminus_end; _rminus=rminus_end;
+	z=chd*_thetaminus;
+	double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+	gr2=gr*chd;
+	build_tree_test(nvar, gr, chd, eps, rminus_end, thetaminus_end, gr2, logu, v, j,
+			H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+			_alphaprime, _nalphaprime, _sprime,
+			_nprime, _nfevals, _divergent, rng,out);
+	// Moved left, so update extreme left tree
 	thetaminus_end=_thetaminus;
 	rminus_end=_rminus;
       }
@@ -505,17 +495,20 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // uniformly), but still need to detemine whether to accept it at
       // each doubling. The last accepted point becomes the next sample. If
       // none are accepted, the same point is repeated twice.
-      rn = randu(rng);	   // Runif(1)
+      double rn = randu(rng);	   // Runif(1)
       if (_sprime == 1 && rn < double(_nprime)/double(n)){
 	theta=_thetaprime; // rotated, unbounded
-	ytemp=rotate_pars(chd,theta); // unbounded
+	ytemp=chd*theta; // unbounded
       }
 
       // Test if a u-turn occured across the whole subtree j. Previously we
       // only tested sub-subtrees.
-      b= stop_criterion(nvar, thetaminus_end, thetaplus_end, rminus_end, rplus_end);
+      bool b= stop_criterion(nvar, thetaminus_end, thetaplus_end, rminus_end, rplus_end);
       s = _sprime*b;
       // Increment valid points and depth
+      out2 << j <<  " " << v << _thetaprime << theta << " "
+	   << double(_nprime)/double(n) << " " << _divergent
+	   << " " << s << " " << n  << " " << _nprime << endl;
       n += _nprime;
       ++j;
       if(j>=max_treedepth) break;
@@ -529,25 +522,25 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // sampling draws only
     if(is>warmup){
       for(int i=1;i<nvar;i++) {
-	// rotated << theta(i) << ", ";
-	// bounded << parsave(i) << ", ";
+	rotated << theta(i) << ", ";
 	unbounded << ytemp(i) << ", ";
+	bounded << parsave(i) << ", ";
       }
-      // rotated << theta(nvar) << endl;
-      // bounded << parsave(nvar) << endl;
+      rotated << theta(nvar) << endl;
       unbounded << ytemp(nvar) << endl;
+      bounded << parsave(nvar) << endl;
     }
     (*pofs_psave) << parsave; // save all bounded draws to psv file
     // Estimated acceptance probability
-     alpha=0;
+    double alpha=0;
     if(_nalphaprime>0){
       alpha=double(_alphaprime)/double(_nalphaprime);
     }
     if(is > warmup){
       // Increment divergences only after warmup
       if(_divergent==1) ndivergent++;
-      // running sum of alpha to calculate average acceptance rate below
-      alphasum+=alpha;
+      // running sum of alpha to calculate samplin
+      alphasum=alphasum+alpha;
     }
     // Adaptation of step size (eps).
     if(useDA){
@@ -557,60 +550,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	eps=epsbar(warmup);
       }
     }
-
-    // Mass matrix adaptation. For now only diagonal
-    bool slow=slow_phase(is, warmup, w1, w3);
-    if(adapt_mass & slow){
-      // If in slow phase, update running estimate of variances
-      // The Welford running variance calculation, see
-      // https://www.johndcook.com/blog/standard_deviation/
-      if(is== w1){
-        // Initialize algorithm from end of first fast window
-        m1 = ytemp;
-	s1.initialize();
-	k = 1;
-      } else if(is==anw){
-        // If at end of adaptation window, update the mass matrix to the
-        // estimated variances
-	metric.initialize();
-	for(int i=1; i<=nvar; i++)
-	  metric(i,i) = s1(i)/(k-1);
-	// Update chd and current vectxor
-	if(diagonal_metric_flag==0){
-	  chd = choleski_decomp(metric); // cholesky decomp of mass matrix
-	  chdinv=inv(chd);
-	} else {
-	  // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal 
-	  chd.initialize();
-	  chdinv.initialize();
-	  for(int i=1;i<=nvar;i++){
-	    chd(i,i)=sqrt(metric(i,i));
-	    chdinv(i,i)=1/chd(i,i);
-	  }
-	}
-	theta=rotate_pars(chdinv,ytemp);
-        // Reset the running variance calculation
-        k = 1; m1 = ytemp; s1.initialize();
-        // Calculate the next end window. If this overlaps into the final fast
-        // period, it will be stretched to that point (warmup-w3)
-	aws *=2;
-        anw = compute_next_window(is, anw, warmup, w1, aws, w3);
-	// Refind a reasonable step size since it can be really different after changing M
-	eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass);
-	if(verbose_adapt_mass){
-	  cout << is << ": "<< ", eps=" << eps << endl;
-	}
-      } else {
-        k = k+1; m0 = m1; s0 = s1;
-        // Update M and S
-	for(int i=1; i<=nvar; i++){
-	  m1(i) = m0(i)+(ytemp(i)-m0(i))/k;
-	  s1(i) = s0(i)+ (ytemp(i)-m0(i))*(ytemp(i)-m1(i));
-	}
-      }
-    }
-
-
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
     print_mcmc_progress(is, nmcmc, warmup, chain);
@@ -635,10 +574,130 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if(useDA) cout << ", and target=" << adapt_delta << endl; else cout << endl;
   print_mcmc_timing(time_warmup, time_total);
 
-  // Close .psv file connection
+  // I assume this closes the connection to the file??
   if (pofs_psave) {
     delete pofs_psave;
     pofs_psave=NULL;
   }
 } // end of NUTS function
 
+
+
+
+
+void function_minimizer::build_tree_test(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
+				    dvector& y, dvector& gr2, double logu, int v, int j, double H0,
+				    dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
+				    dvector& _rplus, dvector& _rminus,
+				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
+				    int& _nprime, int& _nfevals, bool& _divergent,
+					 const random_number_generator& rng, ofstream& out) {
+
+  if (j==0) {
+    // Take a single step in direction v from points p,y, which are updated
+    // internally by reference and thus represent the new point.
+    double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
+    // The new Hamiltonian value. ADMB returns negative log density so
+    // correct it
+    double Ham=-nll-0.5*norm2(p);
+
+    // Check for divergence. Either numerical (nll is nan) or a big
+    // difference in H. Screws up all the calculations so catch it here.
+    _divergent = (std::isnan(Ham) || logu > 1000+Ham);
+    if(_divergent){
+      _sprime=0;
+      _alphaprime=0; // these will be NaN otherwise
+      _nprime=0;
+    } else {
+      // No divergence
+      _nprime = logu < Ham;
+      _sprime=1;
+      _alphaprime = min(1.0, exp(Ham-H0));
+      // Update the tree elements, which are returned by reference in
+      // leapfrog.
+      _thetaprime = y;
+      _thetaminus = y;
+      _rminus = p;
+      _thetaplus = y;
+      _rplus = p;
+
+    }
+    _nalphaprime=1;
+    _nfevals++;
+    out << y << _thetaminus << _thetaplus << _rminus << _rplus << " " << _alphaprime << " " << _divergent
+	<< " " << _nfevals << " " << v << " " << _nprime << " " << logu << endl;
+  } else { // j > 1
+    // Build first half of tree.
+    build_tree_test(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
+	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+	       _alphaprime, _nalphaprime, _sprime,
+	       _nprime, _nfevals, _divergent, rng, out);
+    // If valid trajectory, build second half.
+    if (_sprime == 1) {
+      // Save copies of the global ones due to rerunning build_tree below
+      // which will overwrite some of the global variables we need to
+      // save. These are the ' versions of the paper, e.g., sprime'.
+      dvector thetaprime0(1,nvar);
+      dvector thetaplus0(1,nvar);
+      dvector thetaminus0(1,nvar);
+      dvector rplus0(1,nvar);
+      dvector rminus0(1,nvar);
+      thetaprime0=_thetaprime;
+      thetaplus0=_thetaplus;
+      thetaminus0=_thetaminus;
+      rplus0=_rplus;
+      rminus0=_rminus;
+      int nprime0 = _nprime;
+      double alphaprime0 = _alphaprime;
+      int nalphaprime0 = _nalphaprime;
+
+      // Make subtree to the left
+      if (v == -1) {
+	build_tree_test(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j-1,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent, rng, out);
+	// Update the leftmost point
+	rminus0=_rminus;
+	thetaminus0=_thetaminus;
+	// Rest rightmost tree
+	_thetaplus=thetaplus0;
+	_rplus=rplus0;
+      } else {
+	// Make subtree to the right
+	build_tree_test(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
+		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
+		   _alphaprime, _nalphaprime, _sprime,
+		   _nprime, _nfevals, _divergent, rng, out);
+	// Update the rightmost point
+	rplus0=_rplus;
+	thetaplus0=_thetaplus;
+	// Reset leftmost tree
+	_thetaminus=thetaminus0;
+	_rminus=rminus0;
+      }
+
+      // This is (n'+n''). Can be zero so need to be careful??
+      int nprime_temp = nprime0 + _nprime;
+      if(std::isnan(nprime_temp)) nprime_temp=0;
+      // Choose whether to keep the proposal thetaprime.
+      double rr=randu(rng); // runif(1)
+      if (nprime_temp != 0 && rr < double(_nprime)/double(nprime_temp)) {
+	// Update theta prime to be the new proposal for this tree so far.
+	// _thetaprime already updated globally above so do nothing
+      } else {
+	// Reject it for the proposal from the last doubling.
+	_thetaprime = thetaprime0;
+      }
+
+      // Update the global reference variables
+      _alphaprime = alphaprime0 + _alphaprime;
+      _nalphaprime = nalphaprime0 + _nalphaprime;
+      // s' from the first execution above is 1 by definition (inside this
+      // if statement), while _sprime is s''. So need to reset s':
+      bool b = stop_criterion(nvar, thetaminus0, thetaplus0, rminus0, rplus0);
+      _sprime = _sprime*b;
+      _nprime = nprime_temp;
+    } // end building second trajectory
+  }   // end recursion branch (j>0)
+}     // end function

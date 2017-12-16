@@ -1837,6 +1837,7 @@ public:
   int repeatminflag;
   int mcmc2_flag;
   int robust_hybrid_flag;
+  int diagonal_metric_flag;
   long ifn;
   int maxfn;
   int iprint;
@@ -1921,13 +1922,22 @@ public:
   void hybrid_mcmc_routine(int,int,double,int);
 
   // Functions added by Cole for HMC.
+  dvector rotate_pars(const dvector& m, const dvector& x);
+  dvector rotate_pars(const dmatrix& m, const dvector& x);
+  dvector rotate_gradient(const dvector& x, const dmatrix& m);
+  int compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3);
+  bool slow_phase(int is, int warmup, int w1, int w3);
+  std::string get_filename(const char* f);
   double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
     dvector& g);
+  void read_mle_hmc(int nvar, dvector& mle);
+  void rwm_mcmc_routine(int,int, double, int);
   void shmc_mcmc_routine(int,int,double,int);
   void nuts_mcmc_routine(int,int,double,int);
+  void nuts_test_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double, double);
-  void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
-  double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd);
+   void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
+  double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose);
   bool stop_criterion(int nvar, dvector& thetaminus, dvector& thetaplus,
 		      dvector& rminus, dvector& rplus);
   void build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
@@ -1942,7 +1952,7 @@ public:
 		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
 		  dvector& _rplus, dvector& _rminus,
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
-		  int& _nprime, int& _nfevals, bool& _divergent, double& _nllprime,
+		       int& _nprime, int& _nfevals, bool& _divergent,
 		       const random_number_generator& rng,
 		        ofstream& out);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,

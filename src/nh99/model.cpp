@@ -11,16 +11,15 @@
 #endif
 #define ISZERO(d) ((d)==0.0)
 
-int initial_params::num_initial_params=0;
+int initial_params::num_initial_params = 0;
 
-#if defined(NO_BIG_INIT_PARAMS)
-  const int initial_params::max_num_initial_params = 250;
-  adlist_ptr initial_params::varsptr(
-    initial_params::max_num_initial_params);
-#else
-  const int initial_params::max_num_initial_params = 4000;
+const int initial_params::max_num_initial_params = 4000;
+#if defined(USE_PTR_INIT_PARAMS)
   initial_params* initial_params::varsptr[
     initial_params::max_num_initial_params + 1];
+#else
+  adlist_ptr initial_params::varsptr(
+    initial_params::max_num_initial_params);
 #endif
  int initial_params::max_number_phases=1;
  int initial_params::current_phase=1;
@@ -59,7 +58,10 @@ Destructor
 */
 initial_params::~initial_params()
 {
-  num_initial_params--;
+  if (num_initial_params > 0)
+  {
+    --num_initial_params;
+  }
 #if defined(USE_SHARE_FLAGS)
   if (share_flags)
   {
@@ -138,10 +140,10 @@ void initial_params::add_to_list()
   }
 
   // this is the list of fundamental objects
-#if defined(NO_BIG_INIT_PARAMS)
-  varsptr.add_to_list(this);
-#else
+#if defined(USE_PTR_INIT_PARAMS)
   varsptr[num_initial_params] = this;
+#else
+  varsptr.add_to_list(this);
 #endif
 
   num_initial_params++;

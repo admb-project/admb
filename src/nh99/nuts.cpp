@@ -79,8 +79,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	cerr << "Error: duration must be > 0" << endl;
 	ad_exit(1);
       } else {
-	// input is in hours, duration is in seconds so convert
-	duration=_duration*60*60;
+	// input is in minutes, duration is in seconds so convert
+	duration=_duration*60;
       }
     }
   }
@@ -307,7 +307,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     chd = choleski_decomp(S); // cholesky decomp of mass matrix
     chdinv=inv(chd);
   } else {
-    // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal 
+    // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
     chd.initialize();
     chdinv.initialize();
     for(int i=1;i<=nvar;i++){
@@ -365,8 +365,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   cout << endl << endl << "Starting NUTS for model '" << m <<
     "' at " << asctime(localtm);
   if(use_duration==1){
-    cout << "Model will run for " << duration <<
-      " hours or until " << nmcmc << " total iterations" << endl;
+    cout << "Model will run for " << duration/60 <<
+      " minutes or until " << nmcmc << " total iterations" << endl;
   }
   if(adapt_mass){
     diagonal_metric_flag=1;
@@ -580,7 +580,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  chd = choleski_decomp(metric); // cholesky decomp of mass matrix
 	  chdinv=inv(chd);
 	} else {
-	  // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal 
+	  // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
 	  chd.initialize();
 	  chdinv.initialize();
 	  for(int i=1;i<=nvar;i++){

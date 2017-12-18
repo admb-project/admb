@@ -27,6 +27,12 @@ ADMB-git
 
   __Note__ Microsoft Visual C++ 2013 is no longer supported.
 
+####New Feature
+
+* Cole Monnahan has developed a new MCMC functionality into ADMB.  The link below has more information.
+
+  https://groups.google.com/a/admb-project.org/d/msg/developers/HmoldJVfx_M/1B1papHSCwAJ
+
 ####Changes and Improvements
 
 * Fixed many signed and unsigned conversion warnings.

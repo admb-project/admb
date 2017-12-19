@@ -53,6 +53,7 @@ Below are some of the changes.
 * Added and updated function documentation.
 * Increased testing code coverage.
 * Updated tiny_ad.
+* Fixed issue #86.  Increased max initial parameters from 250 to 4000.
 
 ADMB-11.6
 ---------

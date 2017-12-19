@@ -28,9 +28,18 @@ ADMB-12.0
 
 ####New Feature
 
-* Cole Monnahan has developed a new MCMC functionality into ADMB.  The link below has more information.
-
-  https://groups.google.com/a/admb-project.org/d/msg/developers/HmoldJVfx_M/1B1papHSCwAJ
+* Cole Monnahan has developed a new MCMC functionality into ADMB. The
+  current Metropolis algorithm was udpated to have more meaningful console
+  output and not require an sdreport object. The old method remains, and
+  the new one is accessible with argument '-rwm'. A new algorith, the
+  no-U-turn sampler (a self-tuning extension of the existing 'hybrid'
+  method was also added, and availabile with '-nuts'. The functionality
+  matches the software platform Stan closely. The user can specify whether
+  to use the MLE covariance, an arbitrary matrix, or adapt one during the
+  warmup phase (recommended). Both these additions work much with the R
+  package adnuts, which streamlines workflow, including parallel chains,
+  diagnostic checking, and inference. See adnuts package vignette for more
+  information.
 
 ####Changes and Improvements
 

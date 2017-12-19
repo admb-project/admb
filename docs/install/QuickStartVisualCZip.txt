@@ -1,6 +1,6 @@
 #ADMB Project
-*ADMB-11.6*  
-*Released December 20, 2016*  
+*ADMB-12.0*  
+*Released December 20, 2017*  
 
 ADMB binary installation and usage procedure for Windows and Visual C++ compilers using zip file.
 
@@ -15,11 +15,11 @@ _**Note**_ &mdash; A free version is available from: [Visual Studio Express](htt
 
 1. **Download** ADMB
 
-       * For Visual C++ 2015 (64Bit), download [admb-11.6-windows10-vc14-64bit](https://github.com/admb-project/admb/releases/download/admb-11.6/admb-11.6-windows10-vc14-64bit.zip).
+       * For Visual C++ 2015 (64Bit), download [admb-12.0-windows10-vc14-64bit](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-windows10-vc14-64bit.zip).
 
-       * For Visual C++ 2013 (64Bit), download [admb-11.6-windows10-vc12-64bit](https://github.com/admb-project/admb/releases/download/admb-11.6/admb-11.6-windows10-vc12-64bit.zip).
+       * For Visual C++ 2013 (64Bit), download [admb-12.0-windows10-vc12-64bit](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-windows10-vc12-64bit.zip).
 
-       * For Visual C++ 2013 (32Bit), download [admb-11.6-windows10-vc12-32bit](https://github.com/admb-project/admb/releases/download/admb-11.6/admb-11.6-windows10-vc12-32bit.zip).
+       * For Visual C++ 2013 (32Bit), download [admb-12.0-windows10-vc12-32bit](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-windows10-vc12-32bit.zip).
 
 2. **Install** ADMB
 
@@ -43,7 +43,7 @@ _**Note**_ &mdash; A free version is available from: [Visual Studio Express](htt
 
            C:\admb\examples\admb\simple\> simple
 
-       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-11.6/) for more information.
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-12.0/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

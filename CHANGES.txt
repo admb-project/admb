@@ -1,14 +1,11 @@
 #ADMB Project  
-*ADMB-11.6*  
-*Released December 20, 2016*  
 
 Describe changes and features for each release.
 
 ---
 
-Release Notes
+Release Goals
 -------------
-The goals for all releases are
  
 * Continually improve algorithms
 * Add new requested features
@@ -16,8 +13,10 @@ The goals for all releases are
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-git
---------
+ADMB-12.0
+---------
+
+*Released December 20, 2017*  
 
 ####New Supported Compilers
 

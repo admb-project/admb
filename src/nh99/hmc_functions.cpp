@@ -58,20 +58,6 @@ bool function_minimizer::slow_phase(int i, int warmup, int w1, int w3)
   return(x1 & x2 & x3);
 }
 
-double function_minimizer::exprnd(double p)
-{
-#ifndef __OPENCC__
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  // if particles decay once per second on average,
-  // how much time, in seconds, until the next one?
-  std::exponential_distribution<> d(p);
-  return d(gen);
-#else
-  return 0;
-#endif
-}
-
 // Strip out the model name given full path
 std::string function_minimizer::get_filename(const char* f) {
   std::string s(f);

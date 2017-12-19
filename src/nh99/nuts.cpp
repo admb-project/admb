@@ -1,20 +1,46 @@
+// $Id$
 /**
-   Author: Cole Monnahan
-   Copyright (c) 2016 ADMB Foundation
-
-   \file
-   This file was copied from hybmcmc.cpp to use as a starting place to create updated Hamiltonian Monte Carlo
-   samplers (static HMC and No-u-turn).
-*/
+ * @file nuts.cpp
+ * The no-U-turn sampler (NUTS) MCMC routine. 
+ *
+ * @author Cole C. Monnahan
+ */
 
 #include "admodel.h"
 #ifndef OPT_LIB
 #include <cassert>
 #endif
 #include<ctime>
-
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
+
+/**
+   The function implements the MCMC algorithm NUTS, which is a self-tuning
+   variant of Hamiltonian Monte Carlo. This function implements the
+   original algorithm of Hoffman and Gelman (2014), namely dynamic
+   trajectory lengths and step size adaptation via the dual averaging
+   algorithm. In addition, it uses a diagonal mass matrix adaptation scheme
+   based on Stan's. Thus, a covariance matrix is not necessary (so it works
+   on models without an invertible Hessian).
+
+   This routine also parses the command line arguments and performs actions for
+   the following ones:
+   * -adapt_delta Target acceptance rate [0,1]. Defaults to 0.8.
+   * -adapt_mass Whether to use diagonal mass matrix adaptation (recommended).
+   * -max_treedepth Maximum treedepth. Defaults to 12. Caps trajectory lengths at 2^12
+   * -hyeps      The step size to use. If not specified it will be adapted.
+   * -duration   The maximum runtime in minutes.
+   * -mcdiag     Use diagonal covariance matrix
+   * -mcpin NAME Read in starting values for MCMC from file NAME. NAME must be a valid ADMB '.par' file.
+   * -warmup     The number of warmup iterations during which adaptation occurs. 
+   * -verbose_adapt_mass Flag whether to print mass adaptation updates to console.
+   * \param int nmcmc The number of MCMC simulations to run.
+   * \param int iseed0 Initial seed value for simulations.
+   * \param double dscale Scale value used only if -mcdiag is specified. Disabled for NUTS.
+   * \param int restart_flag Restart the MCMC, even if -mcr is specified. Disalbed for NUTS.
+   * \return Nothing. Creates files <model>.psv with bounded parameters,
+             and unbounded.csv with post-warmup unbounded samples. 
+**/
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					   int restart_flag) {

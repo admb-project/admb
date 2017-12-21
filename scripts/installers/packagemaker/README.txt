@@ -1,6 +1,6 @@
 #ADMB Project
 *ADMB-12.0*  
-*Released December 20, 2017*  
+*Released December 21, 2017*  
 
 The installation procedure for installing ADMBTerminal app for the MacOS.
 

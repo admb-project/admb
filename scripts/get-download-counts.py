@@ -5,7 +5,7 @@ import json
 from array import array
 
 #To get ids, go to https://api.github.com/repos/admb-project/admb/releases
-ids = array("i", [4944493, 4891577, 2275083, 2223621, 1355046, 1355094, 1328565])
+ids = array("i", [8988986, 4944493, 4891577, 2275083, 2223621, 1355046, 1355094, 1328565])
 
 print datetime.date.today()
 print time.strftime("%H:%M:%S")

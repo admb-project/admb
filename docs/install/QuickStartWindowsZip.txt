@@ -1,6 +1,6 @@
 #ADMB Project
 *ADMB-12.0*  
-*Released December 20, 2017*  
+*Released December 21, 2017*  
 
 ADMB binary installation and usage procedure for Windows and MinGW C++ compiler using zip file.
 

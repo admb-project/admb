@@ -340,7 +340,7 @@ available to be used to describe other data objects. In this case, the value of
 \texttt{nobs} can be used to define the size of the vectors \texttt{Y} and
 \texttt{x}. The next line
 \begin{lstlisting}
-  init\_vector Y(1,nobs)
+  init_vector Y(1,nobs)
 \end{lstlisting}
 defines an initial vector object \texttt{Y} whose minimum valid index is~1 and
 whose maximum valid index is \texttt{nobs}. This vector object will be read in
@@ -428,7 +428,7 @@ of the number \texttt{a} and the components of the vector \texttt{x}, while
 \texttt{+b} adds the value of the number \texttt{b} to this product, so that
 \texttt{pred\_Y} has the components $ax_i+b$. In the line
 \begin{lstlisting}
-  f=regression(Y,pred\_Y);
+  f=regression(Y,pred_Y);
 \end{lstlisting}
 the function \texttt{regression} calculates the log-likelihood function for the
 regression and assigns this value to the object \texttt{f}, which is of type

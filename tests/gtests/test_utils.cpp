@@ -232,3 +232,11 @@ TEST_F(test_utils, allocated_varr7)
 
   ASSERT_EQ(1, allocated(arr7));
 }
+TEST_F(test_utils, is_defined_m_pi)
+{
+#ifndef M_PI
+  FAIL();
+#endif
+  ASSERT_DOUBLE_EQ(PI, 3.14159265358979323846);
+  ASSERT_DOUBLE_EQ(M_PI, 3.14159265358979323846);
+}

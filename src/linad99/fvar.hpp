@@ -80,13 +80,13 @@ Macro definitions.
   #define nullptr 0
 #endif
 
-#include <math.h>
-// Borrow definition of M_PI from GCC
+#define _USE_MATH_DEFINES
+#include <cmath>
 #ifndef M_PI
-#   define M_PI 3.14159265358979323846
+    #error "Error: M_PI is not defined."
 #endif
 #ifndef PI
-#   define PI 3.14159265358979323846
+  #define PI M_PI
 #endif
 
 #if defined(__GNUC__) && (__GNUC__ < 3)

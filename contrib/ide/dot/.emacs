@@ -8,26 +8,6 @@
 
 (defconst admb-ide-version "11.6" "ADMB-IDE version number.")
 
-;; This .emacs file is provided under the general terms of the Simplified BSD
-;; License.
-;; Redistribution and use in source and binary forms, with or without
-;; modification, are permitted provided that the following conditions are met:
-;; 1 Redistributions of source code must retain the above copyright notice, this
-;;   list of conditions and the following disclaimer.
-;; 2 Redistributions in binary form must reproduce the above copyright notice,
-;;   this list of conditions and the following disclaimer in the documentation
-;;   and/or other materials provided with the distribution.
-;; THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
-;; WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-;; MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-;; EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-;; SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-;; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-;; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-;; WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-;; OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-;; ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 ;;; Commentary:
 ;;
 ;; Configuration file for a user-friendly integrated development environment
@@ -46,54 +26,7 @@
 
 ;;; History:
 ;;
-;; 30 Aug 2017  11.6     Created function `easy-tmb-hook'. Disabled
-;;                       `save-abbrevs'.
-;; 12 Jan 2015  11.2     Reactivated C-h to access help system. Removed
-;;                       dependency on `pc-selection-mode'. Set encoding to
-;;                       UTF-8 on Windows. Let Linux decide encoding and initial
-;;                       window size. Added ESS and AUCTeX.
-;; 29 Feb 2012  4.5.2-1  Commented out `recentf-mode', which had been causing
-;;                       long delays for many users. This feature can be turned
-;;                       back on by uncommenting the line.
-;; 17 Feb 2011  4.5.0-1  Added functions `admb-ide-version',
-;;                       `delete-trailing-spc-tab-m', and
-;;                       `toggle-trailing-whitespace'. Bound C-p to open model
-;;                       file in other window, C-- to toggle compilation flags,
-;;                       S-f1 to show ADMB-IDE version number, C-, to toggle
-;;                       whether trailing whitespace is highlighted, M-, to
-;;                       delete trailing whitespace, and S-return to end line
-;;                       and indent next line. Unbound C-d and C-c C-r. Removed
-;;                       configuration of `font-lock-doc-face'. Minor syntax
-;;                       changes to avoid warnings in Emacs 23.2.
-;; 19 Mar 2010  4.4.0-2  No changes (only updated admb-mode and manual).
-;; 14 Mar 2010  4.4.0-1  Input and output files (ctl/dat/pin and par/rep) are
-;;                       opened in `conf-unix-mode' to provide syntax
-;;                       highlighting of #comments. Improved C-S-home and
-;;                       C-S-end selection.
-;; 14 Sep 2009  3.4.5-8  Bound C-. to toggle whether the current section is
-;;                       indicated in the mode line, C-space to expand
-;;                       recognized words, C-M-space to open recent files, and
-;;                       S-f9 to run with args.
-;;  6 Sep 2009  3.4.5-7  Added support for Emacs 23.
-;;  7 Jul 2009  3.4.5-6  Bound M-f6 to switch to next buffer, in case C-f6 is
-;;                       reserved in Linux KDE.
-;;  3 Jun 2009  3.4.5-5  Unbound C-c C-- and C-c C-f.
-;; 29 May 2009  3.4.5-4  No changes (only in manual).
-;; 28 May 2009  3.4.5-3  No changes (only in manual and installer).
-;; 27 May 2009  3.4.5-2  Bound Alt, M-a, M-b, M-e, M-f, M-h, M-o, and M-t to
-;;                       activate menu, and unbound S-f11.
-;; 24 May 2009  3.4.5-1  Created variables `easy-default-directory' and
-;;                       `outline-previous-mode'. Created functions
-;;                       `backward-delete-word', `delete-word',
-;;                       `easy-admb-hook', `easy-conf-hook', `easy-gdb-hook',
-;;                       `easy-help-hook', `easy-isearch-hook',
-;;                       `easy-outline-hook', `easy-recentf-hook',
-;;                       `gdb-io-buffer-off', `gdb-io-buffer-on',
-;;                       `kill-buffer-maybe-window', `kill-this-buffer',
-;;                       `mouse-extend-region', `new-buffer',
-;;                       `outline-mouse-select', `outline-return', and
-;;                       `outline-window-or-return'. Released ADMB-IDE to ADMB
-;;                       Project.
+;; See the NEWS file.
 
 ;;; Code:
 

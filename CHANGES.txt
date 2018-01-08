@@ -22,7 +22,7 @@ ADMB-12.0
 
 * GNU C++ 7
 * Intel C++ Compiler 2018
-* Microsoft Visual C++ 2017
+* Microsoft Visual Studio 2017 (MSVC++ 14.1)
 
   __Note__ Microsoft Visual C++ 2013 is no longer supported.
 

@@ -70,8 +70,10 @@ void banner(const adstring& program_name)
   ss << "2012 11.0";
   #elif (_MSC_VER==1800)
   ss << "2013 12.0";
-  #else
+  #elif (_MSC_VER==1900)
   ss << "2015 14.0";
+  #else
+  ss << "2017 14.1";
   #endif
   #if defined(_M_X64)
   ss <<  "(64bit)";

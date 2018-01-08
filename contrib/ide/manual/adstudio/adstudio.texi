@@ -1,13 +1,14 @@
 \input texinfo
-@setfilename admb-ide.info
+@setfilename adstudio.info
 @afourpaper
 @kbdinputstyle code
-@set VERSION 11.6
-@set IDEFILE admb-ide-116-win64
-@set ADMBDIR admb116-gcc493-win64
-@set DATE (2017-08-30)
-@set REVISED Revised manual (yyyy-mm-dd)
-@set YEARS 2009--2012, 2015, 2017
+@set VERSION 1.0
+@set INSTALLER adstudio-10
+@set ADMBDIR admb112-gcc492-win64
+@set GCCDIR          gcc492-win64
+@set DATE (2018-01-03)
+@c @set REVISED Revised manual (2018-01-01)
+@set YEARS 2018
 @macro screen{filename}
 @sp
 @center @image{\filename\,13.5cm}
@@ -28,42 +29,38 @@
 @end macro
 
 @copying
-This is the manual for AD Model Builder IDE (ADMB-IDE) version
+This is the manual for AD Studio version
 @value{VERSION}.@*
 The latest edition of the manual is available at:@*
-@uref{http://admb-project.org/tools/admb-ide/}
+@uref{http://admb-project.org/tools/adstudio}
 @sp
 Copyright @copyright{} @value{YEARS} Arni Magnusson
 @sp
-To cite ADMB-IDE, use the newsletter article (see @ref{References}) as a fixed
-reference.
-@sp
-AD Model Builder IDE is an aggregate of the following software components:
+AD Studio is an aggregate of the following software components:
 @itemize
-@item AD Model Builder 11.6 is released under the BSD License.@*
-Source code: @uref{https://github.com/admb-project/admb}
-@item GNU Emacs 25.2.1 is released under the GPL.@*
-Source code: @uref{http://ftp.gnu.org/gnu/emacs/}
-@item ADMB Mode 11.6 for Emacs is released under the Simplified BSD License.@*
+@item ADMB 12.0, released under the BSD License.@*
+Source code: @uref{http://ftp.admb-project.org/}
+@item Emacs 24.4.1, released under the GPL.@*
+Source code: @uref{ftp://ftp.gnu.org/gnu/emacs/}
+@item Emacs ADMB Mode 12.0-0, released under the Simplified BSD License.@*
 Source code: @uref{https://github.com/admb-project/admb/blob/master/contrib/emacs}
-@item AUC@TeX@ 11.91 is released under the GPL.@*
-Source code: @uref{http://ftp.gnu.org/gnu/auctex/}
-@item Emacs Speaks Statistics (ESS) 16.10-1 is released under the GPL.@*
+@item Emacs AUC@TeX@ 11.88, released under the GPL.@*
+Source code: @uref{ftp://ftp.gnu.org/gnu/auctex/}
+@item Emacs Markdown Mode 2.3, released under the GPL.@*
+Source code: @uref{https://github.com/jrblevin/markdown-mode}
+@item Emacs Speaks Statistics (ESS) 14.09, released under the GPL.@*
 Source code: @uref{http://ess.r-project.org/downloads/ess/}
-@item TMB Mode 3.2 for Emacs is released under the GPL.@*
+@item Emacs TMB Mode 3.4, released under the GPL.@*
 Source code: @uref{https://github.com/kaskr/adcomp/blob/master/emacs}
-@item ADMB-IDE @code{.emacs} @value{VERSION} is released under the Simplified BSD License.@*
-Source code: @uref{https://github.com/admb-project/admb/blob/master/contrib/ide/dot}
-@item GCC 4.9.3 is released under the GPL.@*
-Source code: @uref{http://ftp.gnu.org/gnu/gcc/}
-@item GDB 7.3.50 is released under the GPL.@*
-Source code: @uref{http://ftp.gnu.org/gnu/gdb/}
+@item Rtools 3.4 (GCC and GDB), released under the GPL.@*
+Source code: @uref{ftp://ftp.gnu.org/gnu/gcc/} and
+@uref{ftp://ftp.gnu.org/gnu/gdb/}
 @end itemize
 @end copying
 
 @titlepage
-@title AD Model Builder IDE
-@subtitle Emacs @command{admb-mode} without the Emacs
+@title AD Studio
+@subtitle Statistical modelling in ADMB and TMB
 @subtitle Version @value{VERSION} @value{DATE}
 @c @subtitle @value{REVISED}
 @author Arni Magnusson
@@ -76,111 +73,143 @@ Source code: @uref{http://ftp.gnu.org/gnu/gdb/}
 
 @chapter Preamble
 
-The purpose of ADMB-IDE is to make the convenient features of Emacs
-@command{admb-mode} available to non-Emacs users. In other words, to disable the
-standard Emacs behavior.
+@section Credit
+
+AD Model Builder (ADMB) was written by David Fournier at Otter Research in
+Canada, and Template Model Builder (TMB) was written by Kasper Kristensen at DTU
+Aqua in Denmark.
+
+@section Simplified Emacs
+
+The main purpose of AD Studio is to make the convenient Emacs features of
+@command{admb-mode} and @command{tmb-mode} available to non-Emacs users. In
+other words, to disable the standard Emacs behavior.
 
 @cartouche
 @noindent
-Experienced Emacs users may prefer to ignore the ADMB-IDE @file{.emacs} file,
-and simply install and load @file{admb.el} like other Emacs packages. It is a
-standard ``major mode'' that follows all Emacs mode conventions.
+Experienced Emacs users may prefer to ignore the AD Studio @file{.emacs} file,
+and simply install and load ADMB Mode (@file{admb.el}) and TMB Mode
+(@file{tmb.el}) like other Emacs packages. They are written as standard ``major
+modes'' that follow all Emacs mode conventions.
 @end cartouche
 
-@chapter Introduction
+@chapter AD Studio overview
 
-@section Emacs @command{admb-mode}
+@section Statistical modelling
 
-The process of creating statistical models with AD Model Builder (ADMB) involves
-writing, compiling, and testing. An integrated development environment (IDE)
-allows the user to perform these tasks more efficiently than with a basic editor
-and a shell.
+Developing statistical models in ADMB and TMB is an iterative process that
+involves writing, compiling, testing, and debugging. AD Studio has been designed
+specifically to allow the user to perform these tasks more efficiently than in
+other working environments.
 
 GNU Emacs is a complex and powerful editor that comes with particularly good
-support for C++, R, @LaTeX, backup/revision control, and other useful tools for
-statistical computing. Its @command{admb-mode} provides syntax highlighting,
-compilation, file manipulation, outline code navigation, templates, and smaller
-tools for creating ADMB models. Emacs users can fetch @command{admb-mode} from
-@uref{https://github.com/admb-project/admb/blob/master/contrib/emacs/admb.el}
-and start using it right away, after reading the commentary at the top of the
-file.
+support for C++, R, @LaTeX, backup/version control, and other useful features
+for statistical computing. The dedicated ADMB and TMB modes provide syntax
+highlighting, compilation, file manipulation, outline code navigation,
+templates, and smaller tools for developing models. Emacs users can download
+@file{admb-mode.el} and @command{tmb-mode.el} and start using them right away,
+after reading the commentary at the top of these files.
 
 The problem with Emacs is that it requires considerable time to learn and
 configure, although for advanced statistical computing this can be a rewarding
 investment. As the programmer Larry Wall once said: ``If ease of use was the
 highest goal, we'd all be driving golf carts.'' The
-@w{@uref{http://admb-project.org/tools/editors/emacs/}} page contains some
-pointers for setting up and learning Emacs. There are, however, good reasons why
-many users may not feel like adopting Emacs as their main editor, but would
-still appreciate a simple IDE for ADMB.
+@uref{http://admb-project.org/tools/editors/emacs} page contains some pointers
+for setting up and learning Emacs. There are, however, good reasons why many
+users may not feel like adopting Emacs as their main editor, but would still
+appreciate a dedicated environment for ADMB and TMB.
 
-The rest of this tutorial demonstrates how Emacs with @command{admb-mode} can be
-configured as a user-friendly ADMB-IDE, without learning the details of Emacs.
-This is achieved with an unusual @file{.emacs} configuration file that emulates
-common keybindings of basic editors, while disabling some of the most used Emacs
-keybindings. This @file{.emacs} file is therefore not intended for experienced
-Emacs users, although they may find it an interesting read.
+The rest of this tutorial demonstrates how AD Studio can used without learning
+the details of Emacs. This is achieved with an unusual @file{.emacs}
+configuration file that emulates common keybindings of basic editors, while
+disabling some of the most used Emacs keybindings. This @file{.emacs} file is
+therefore not intended for experienced Emacs users, although they may find it an
+interesting read.
 
-@section ADMB-IDE for Windows
+@section Software components
 
-@noindent
-There are two ways to install ADMB-IDE for Windows: use an installer or set up
-the individual components by hand.
-@sp -0.5
+AD Model Builder (@strong{ADMB}) and Template Model Builder (@strong{TMB}) are
+software platforms that utilize automatic differentiation (AD) and Laplace
+approximation to estimate parameters and random effects in a fast and reliable
+way. ADMB and TMB generally give the same model fit, but they offer different
+features. ADMB is a stand-alone application that tends to have better MCMC
+functionality, while TMB is an R package that has more convenient and faster
+estimation of random effects.
+
+The @strong{Emacs} editor has dedicated modes for editing different file types
+and for other tasks. In addition to standard Emacs features, AD Studio includes
+modes to work with ADMB, @LaTeX, Markdown, R, and TMB.
+
+The @strong{GCC} C++ compiler and @strong{GDB} debugger are provided by Rtools.
+By using the same compiler to build ADMB and TMB models, AD Studio makes it easy
+to work with ADMB and TMB on the same machine without running into compiler
+version conflicts.
+
+@section Installation
+
+AD Studio consists of components that can be set up individually by hand
+(Windows, Linux, Mac) or using an installer (Windows).
 
 @subsec Installer
 
 @noindent
-The @file{@value{IDEFILE}.exe} installer sets up the main components (ADMB,
-Emacs, Rtools) with a customized Emacs user interface, file associations, and
-environment variables to glue everything together. The only catch is that the
-user must accept the default directory structure, and select whether Rtools is
-already installed on the machine:
+The Windows installer @file{@value{INSTALLER}.exe} sets up ADMB, GCC, GDB,
+Emacs, and the Emacs packages, along with file associations and environment
+variables to glue everything together. Users are expected to install R and TMB
+on their own, as these are frequently updated.
 
 @sp
 @center @image{intro-install,9cm}
 
 @noindent
-The ADMB-IDE components are arranged in four main directories:
+Once installed, the software components reside in four different After the installation, The directory structure is designed to accommodate coexisting versions of ADMB
+and GCC:
 
-@multitable @columnfractions .18 .40
-@item @code{c:/~}         @tab Settings and Emacs modes
-@item @code{c:/admb}      @tab ADMB
-@item @code{c:/gnu/emacs} @tab Emacs
-@item @code{c:/Rtools}    @tab GCC and GDB
+@multitable @columnfractions .25 .25 .15
+@item Directory                     @tab Component      @tab Overwrite
+@item @code{c:/admb}                @tab ADMB           @tab Yes
+@item @code{c:/Rtools}              @tab GCC & GDB      @tab Yes
+@item @code{c:/gnu}           @tab Emacs          @tab Yes
+@item @code{c:/~}                   @tab @code{.emacs}  @tab No
 @end multitable
 
-It can be problematic to have more than one version of GCC installed on a
-Windows machine, especially if multiple versions of GCC are active in the
-@env{PATH}. Many Windows users already have Rtools installed, so the idea behind
-having ADMB-IDE use the GCC compiler from Rtools is to reduce the likelihood of
-GCC version conflicts.
+@noindent
+It is possible to install ADMB-IDE on top of existing ADMB installations, which
+could reside in subdirectories of @code{c:/admb} or anywhere else. Compilers may
+also coexist, in subdirectories of @code{c:/gnu} or anywhere else
+(@pxref{Conflicting compilers and libraries}). Short and shallow paths without
+spaces are helpful when configuring and writing customized scripts.
 
-The directory structure above can be practical for setting up and configuring
-other free software, such as R. By separating the main program (@code{c:/gnu/r})
-from the user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and packages
+This is a practical setup for other free software as well. Take for example the
+R statistical software. By separating the main program (@code{c:/gnu/r}) from
+the user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and user libraries
 (@code{c:/~/r/library}), the main program can be removed and upgraded without
 affecting the user setup.
 
+As indicated in the table above, the installer will not overwrite an existing
+@code{c:/~/.emacs} file. This is because a personal @file{.emacs} configuration
+file is the only component that is irreplaceable; all other components are
+available and free on the internet.
+
 One thing to keep in mind is that the installer modifies the user @env{PATH} and
-file associations. In rare cases, users may need to reconfigure these after
-installing ADMB-IDE. Therefore, advanced users may choose to deselect these
-options during the installation.
+file associations. In rare cases, users may need to reconfigure these according
+to taste and needs after installing ADMB-IDE. Advanced users may choose to
+deselect these options during the installation for this reason.
 
 @subsec Manual setup
 
 @noindent
 Users can also set up and configure the individual components by hand, starting
-from the @file{@value{IDEFILE}.zip} kit. The following guidelines may be useful
-for that:
+from the @file{@value{INSTALLER}.zip} kit. The following guidelines may be
+useful for that:
 
-@uref{http://admb-project.org/docs/}
+@uref{http://admb-project.org/documentation}
 
 @uref{http://admb-project.org/tools/editors/emacs/install}
 
-@uref{http://admb-project.org/tools/editors/emacs/configure}
+@uref{http://admb-project.org/tools/editors/emacs/config}
 
-@uref{https://cran.r-project.org/bin/windows/Rtools/}
+@uref{http://mingw.org/wiki/HOWTO_Install_the_MinGW_GCC_Compiler_Suite}
 
 @noindent
 See also the chapters on @ref{ADMB-IDE for Linux/Mac OS} and
@@ -188,7 +217,7 @@ See also the chapters on @ref{ADMB-IDE for Linux/Mac OS} and
 
 @page
 
-@section ADMB-IDE for Linux/Mac OS
+@subsec ADMB-IDE for Linux/Mac OS
 @anchor{ADMB-IDE for Linux/Mac OS}
 
 @noindent
@@ -196,16 +225,16 @@ Setting up ADMB-IDE for Linux or Mac OS is equivalent to the ``manual setup''
 described above, so the same guidelines apply. The key steps are:
 
 @enumerate
-@item Install ADMB, Emacs, GCC (including the C++ component), and GDB.
+@item Install ADMB, GNU Emacs, GCC (including the C++ component), and GDB.
 
 @item Download the ADMB-IDE
-@uref{https://github.com/admb-project/admb/blob/master/contrib/ide/dot,@code{.emacs}}
-configuration file and place it in @code{~/.emacs} to apply the simplified Emacs
-user interface.
+@uref{http://admb-project.org/tools/admb-ide/core,@code{.emacs}} configuration
+file and place it in @code{~/.emacs} to apply the simplified Emacs user
+interface.
 
-@item Download ADMB Mode
-@uref{https://github.com/admb-project/admb/blob/master/contrib/emacs,@command{admb.el}}
-and place it in @code{~/emacs/lisp/admb/admb.el} to provide syntax highlighting
+@item Download
+@uref{http://admb-project.org/tools/editors/emacs,@command{admb-mode}}, and
+place it in @code{~/emacs/lisp/admb/admb.el} to provide ADMB syntax highlighting
 and IDE features.
 @end enumerate
 
@@ -257,7 +286,7 @@ Emacs, a buffer is like a page, often representing a file, but sometimes other
 things, like the compilation and command output buffers in the previous two
 screenshots. The Emacs screen is divided into one or more windows, where each
 window shows one buffer, while other buffers reside in the background. Explore
-the @clickthis{Buffers} menu, as well as @ref{Shortcut keys}.
+the @clickthis{Buffers} menu, as well as @ref{keybindings}.
 
 Try out different ways to open the @file{.cor} file:
 
@@ -376,7 +405,7 @@ DATA_SECTION
 and/or simplify the model, possibly by commenting out parts of the code. After
 narrowing the search step by step, the problematic line(s) can be changed or
 removed. To comment or uncomment large parts of code, use the @kbd{M-;}
-keystroke (@pxref{Shortcut keys}).
+keystroke (@pxref{keybindings}).
 
 @page
 
@@ -415,9 +444,9 @@ advanced option is to use a debugger.
 @anchor{GDB}
 
 @noindent
-Emacs and GCC can interact closely with the GDB debugger---these programs were
-all created by the same programmer, Richard Stallman. A program must fulfill two
-conditions before debugging:
+GNU Emacs and GCC can interact closely with the GDB debugger---these programs
+were all created by the same programmer, Richard Stallman. A program must
+fulfill two conditions before debugging:
 
 @itemize
 @item The model executable (e.g., @file{simple.exe}) must build successfully,
@@ -499,8 +528,8 @@ Debugger (GDB)}:
 
 @page
 
-@section Shortcut keys
-@anchor{Shortcut keys}
+@section Keybindings
+@anchor{keybindings}
 
 In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @samp{M-} means the @key{Alt} key.
@@ -755,6 +784,20 @@ set the variables after the installation. Many Linux distributions include only
 the C component of GCC, so users need to install the optional C++ component
 before using ADMB.
 
+@subsec Conflicting compilers and libraries
+@anchor{Conflicting compilers and libraries}
+
+@noindent
+When developing models using ADMB, it is important to have only one C++ compiler
+and one ADMB version in the PATH. Otherwise, errors will occur as objects and
+libraries of different versions are linked together.
+
+For example, the Rtools collection includes a C++ compiler that should be
+removed from the PATH, unless ADMB was originally built using that compiler. One
+can either modify the PATH environment variable, or temporarily rename
+directories (e.g., @file{Rtools} to @file{Rtools_}) so they are not in the PATH
+while building models with ADMB.
+
 @chapter References
 @anchor{References}
 
@@ -788,6 +831,22 @@ Foundation Newsletter 1(3):1--2.@*
 @w{@uref{http://admb-foundation.org/wp-content/uploads/Newsletter/ADMBNewsletterJuly2009.pdf}}
 
 @sp 1
+@subsec TMB
+
+@noindent
+Kristensen, K., A. Nielsen, C.W. Berg, H. Skaug, and B. Bell. 2016.
+@cite{TMB: Automatic differentiation and Laplace approximation.}
+J. Stat. Softw. 70(5):1--21.@*
+@uref{http://dx.doi.org/10.18637/jss.v070.i05}
+@sp 0.5
+@noindent
+Kristensen, K. with contributions by B. Bell, H. Skaug, A. Magnusson, C. Berg,
+A. Nielsen, M. Maechler, T. Michelot, M. Brooks, A. Forrence, C.M. Albertsen,
+and C. Monnahan. @cite{Template Model Builder: A general random effect tool
+inspired by ADMB.}@*
+@uref{https://cran.r-project.org/package=TMB}
+
+@sp 1
 @subsec Emacs
 
 @noindent
@@ -804,16 +863,13 @@ Chassell, R. @cite{An introduction to programming in Emacs Lisp.}@*
 @uref{http://www.gnu.org/software/emacs/manual/eintr.html}
 
 @sp 1
-@subsec GCC
+@subsec GCC & GDB
 
 @noindent
 Stallman, R.M. and GCC Developer Community. @cite{Using the GNU Compiler
 Collection.}@*
 @uref{http://gcc.gnu.org/onlinedocs/}
-
-@sp 1
-@subsec GDB
-
+@sp 0.5
 @noindent
 Stallman, R., R. Pesch, S. Shebs, et al. @cite{Debugging with GDB: The GNU
 source-level debugger.}@*

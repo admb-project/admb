@@ -271,10 +271,13 @@ parameter estimates, standard errors, and correlations are found in the
 
 This is an opportunity to introduce basic buffer and window management. In
 Emacs, a buffer is like a page, often representing a file, but sometimes other
-things, like the compilation and command output buffers in the previous two
-screenshots. The Emacs screen is divided into one or more windows, where each
-window shows one buffer, while other buffers reside in the background. Explore
-the @clickthis{Buffers} menu, as well as @ref{keybindings}.
+things, like compilation and command output. The Emacs screen is divided into
+one or more windows, where each window shows one buffer, while other buffers
+reside in the background. Explore the @clickthis{Buffers} menu, as well as
+buffer-related @ref{keybindings}. A window can be split in two by selecting
+@clickthis{New Window Below} (@kbd{C-x 2}) or @clickthis{New Window on Right}
+(@kbd{C-x 3}) in the @clickthis{File} menu. The @key{escape} key lets one window
+fill the Emacs screen.
 
 Try out different ways to open the @file{.cor} file:
 
@@ -450,6 +453,86 @@ simpler debugging methods fail, it is time to click @clickthis{Tools @click{}
 Debugger (GDB)}:
 
 @screen{bug-gdb}
+
+@chapter TMB tutorial
+
+@section Create a working directory
+
+Open AD Studio and create a working directory called @file{c:/demo}:
+
+@example
+M-n
+c:/demo
+C-d
+c:/demo
+@end example
+
+@noindent
+The @kbd{M-n} keystroke means hold @key{Alt} and press @key{n}. This creates
+a new directory.
+
+@noindent
+The @kbd{C-d} keystroke means hold @key{Ctrl} and press @key{d}. This sets the
+current directory.
+
+@noindent
+See @ref{keybindings}, for a full list of AD Studio keybindings.
+
+@section Create a simple model
+
+AD Studio has a built-in example model, which can be used as a minimal template
+to create a new model. To create a mini template in the current directory, find
+the menu above the editor window and select @clickthis{TMB @click{} Mini
+Template} or press @key{f12}.
+
+The screen will now split in two parts, which is the default state of a TMB
+session in AD Studio. The TMB model code (C++) is in the main window and the
+compilation script (R) in a secondary window. The cursor remains in the TMB
+model window, which makes TMB-specific commands available via the menu and
+keybindings.
+
+@section Build and run
+
+The compilation script contains R code that compiles and runs the model. There
+are two alternative ways to build a TMB model:
+
+@itemize
+@item @clickthis{TMB @click{} Build} or @key{f8}: only build the model
+@item @clickthis{TMB @click{} Run} or @key{f9}: run R script, typically builds
+(if not already built) and runs the model
+@end itemize
+
+@subsec Manage buffers
+
+@noindent
+The secondary window is now showing either compilation output or an active R
+session, but the R script is no longer visible. To switch between the R script,
+compilation output, and the R session, select @clickthis{View Script}
+(@key{f11}), @clickthis{View Compilation}, or @clickthis{View R Session} in the
+TMB menu.
+
+@cartouche
+@noindent
+Note how the @clickthis{TMB} menu is only available when the active window is in
+@command{tmb-mode}. Press @key{f3} at any point to switch a window to
+@command{tmb-mode}.
+@end cartouche
+
+This is a good time to revisit basic buffer and window management. In Emacs, a
+buffer is like a page, often representing a file, but sometimes other things,
+like compilation and command output. The Emacs screen is divided into one or
+more windows, where each window shows one buffer, while other buffers reside in
+the background. Explore the @clickthis{Buffers} menu, as well as buffer-related
+@ref{keybindings}. A window can be split in two by selecting @clickthis{New
+Window Below} (@kbd{C-x 2}) or @clickthis{New Window on Right} (@kbd{C-x 3}) in
+the @clickthis{File} menu. The @key{escape} key lets one window fill the Emacs
+screen.
+
+@section Debug
+
+To debug a model in TMB-IDE, select @clickthis{TMB @click{} Debug} or press
+@key{f10}. This starts an R session that invokes the GNU Debugger (GDB). To
+finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 
 @chapter Interface
 

@@ -4,8 +4,7 @@
 @kbdinputstyle code
 @set VERSION 1.0
 @set INSTALLER adstudio-10
-@set ADMBDIR admb112-gcc492-win64
-@set GCCDIR          gcc492-win64
+@set ADMBDIR admb120-gcc463-win64
 @set DATE (2018-01-03)
 @c @set REVISED Revised manual (2018-01-01)
 @set YEARS 2018
@@ -162,89 +161,75 @@ on their own, as these are frequently updated.
 @center @image{intro-install,9cm}
 
 @noindent
-Once installed, the software components reside in four different After the installation, The directory structure is designed to accommodate coexisting versions of ADMB
-and GCC:
+Once installed, the software components reside in four different root directories:
 
-@multitable @columnfractions .25 .25 .15
-@item Directory                     @tab Component      @tab Overwrite
-@item @code{c:/admb}                @tab ADMB           @tab Yes
-@item @code{c:/Rtools}              @tab GCC & GDB      @tab Yes
-@item @code{c:/gnu}           @tab Emacs          @tab Yes
-@item @code{c:/~}                   @tab @code{.emacs}  @tab No
+@multitable @columnfractions .15 .35
+@item Directory        @tab Component
+@item @code{c:/~}      @tab Emacs packages and settings
+@item @code{c:/admb}   @tab ADMB
+@item @code{c:/gnu}    @tab Emacs
+@item @code{c:/Rtools} @tab Rtools
 @end multitable
 
 @noindent
-It is possible to install ADMB-IDE on top of existing ADMB installations, which
-could reside in subdirectories of @code{c:/admb} or anywhere else. Compilers may
-also coexist, in subdirectories of @code{c:/gnu} or anywhere else
-(@pxref{Conflicting compilers and libraries}). Short and shallow paths without
-spaces are helpful when configuring and writing customized scripts.
-
-This is a practical setup for other free software as well. Take for example the
-R statistical software. By separating the main program (@code{c:/gnu/r}) from
-the user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and user libraries
+This directory structure can be practical for setting up other free statistical
+software, such as R. By separating the main program (@code{c:/gnu/r}) from the
+user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and user libraries
 (@code{c:/~/r/library}), the main program can be removed and upgraded without
 affecting the user setup.
 
-As indicated in the table above, the installer will not overwrite an existing
-@code{c:/~/.emacs} file. This is because a personal @file{.emacs} configuration
-file is the only component that is irreplaceable; all other components are
-available and free on the internet.
-
 One thing to keep in mind is that the installer modifies the user @env{PATH} and
 file associations. In rare cases, users may need to reconfigure these according
-to taste and needs after installing ADMB-IDE. Advanced users may choose to
+to taste and needs after installing AD Studio. Advanced users may choose to
 deselect these options during the installation for this reason.
 
 @subsec Manual setup
 
 @noindent
-Users can also set up and configure the individual components by hand, starting
-from the @file{@value{INSTALLER}.zip} kit. The following guidelines may be
-useful for that:
+Windows users can also set up and configure ADMB, Emacs, and Rtools by hand,
+starting from the @file{@value{INSTALLER}.zip} kit. The following guidelines may
+be useful for that:
 
-@uref{http://admb-project.org/documentation}
+@uref{http://admb-project.org/docs}
 
 @uref{http://admb-project.org/tools/editors/emacs/install}
 
-@uref{http://admb-project.org/tools/editors/emacs/config}
+@uref{http://admb-project.org/tools/editors/emacs/configure}
 
-@uref{http://mingw.org/wiki/HOWTO_Install_the_MinGW_GCC_Compiler_Suite}
+@uref{https://cran.r-project.org/bin/windows/Rtools/}
 
 @noindent
-See also the chapters on @ref{ADMB-IDE for Linux/Mac OS} and
+See also the chapters on @ref{AD Studio for Linux/Mac}, @ref{Configuration} and
 @ref{Troubleshooting} in this manual.
 
 @page
 
-@subsec ADMB-IDE for Linux/Mac OS
-@anchor{ADMB-IDE for Linux/Mac OS}
+@subsec AD Studio Linux/Mac
+@anchor{AD Studio for Linux/Mac}
 
 @noindent
-Setting up ADMB-IDE for Linux or Mac OS is equivalent to the ``manual setup''
+Setting up AD Studio for Linux or Mac is equivalent to the ``manual setup''
 described above, so the same guidelines apply. The key steps are:
 
 @enumerate
 @item Install ADMB, GNU Emacs, GCC (including the C++ component), and GDB.
 
-@item Download the ADMB-IDE
+@item Download the AD Studio
 @uref{http://admb-project.org/tools/admb-ide/core,@code{.emacs}} configuration
 file and place it in @code{~/.emacs} to apply the simplified Emacs user
 interface.
 
-@item Download
-@uref{http://admb-project.org/tools/editors/emacs,@command{admb-mode}}, and
-place it in @code{~/emacs/lisp/admb/admb.el} to provide ADMB syntax highlighting
-and IDE features.
+@item Download Emacs packages and place inside @code{~/emacs/lisp/admb} to
+provide mode-specific syntax highlighting and commands.
 @end enumerate
 
 @noindent
-The tutorial in the next chapter uses Windows, but ADMB-IDE is very similar in
-Linux:
+The screenshots in the next chapter are from Windows, but AD Studio looks very
+similar in Linux:
 
 @screen{intro-linux}
 
-@chapter Tutorial
+@chapter ADMB tutorial
 
 @section Create a working copy of @command{simple}
 
@@ -271,15 +256,18 @@ Build the model by clicking the @icon{icon-connect} icon, or press @key{f8}:
 
 @screen{tutor-build-circle}
 
+@page
+
 @noindent
 Run the model by clicking the @icon{icon-jump-to} icon, or press @key{f9}:
 
 @screen{tutor-run-circle}
 
-Many ADMB models output their results to a @file{.rep} report file, and ADMB-IDE
-provides the @icon{icon-describe} icon and @key{f10} key to open the report
-file. The @command{simple} model outputs no report file, but the parameter
-estimates, standard errors, and correlations are found in the @file{.cor} file.
+Many ADMB models output their results to a @file{.rep} report file, and AD
+Studio provides the @icon{icon-describe} icon and @key{f10} key to open the
+report file. The @command{simple} model outputs no report file, but the
+parameter estimates, standard errors, and correlations are found in the
+@file{.cor} file.
 
 This is an opportunity to introduce basic buffer and window management. In
 Emacs, a buffer is like a page, often representing a file, but sometimes other
@@ -452,7 +440,7 @@ fulfill two conditions before debugging:
 @item The model executable (e.g., @file{simple.exe}) must build successfully,
 so a debugger is only helpful for bugs of type 3 and 4 (@pxref{Types of bugs}).
 @item The model executable must include debugging symbols. To embed debugging
-symbols with ADMB-IDE, either select ``Debug'' compilation from the
+symbols with AD Studio, either select ``Debug'' compilation from the
 @clickthis{ADMB @click{} Target} menu, or press @kbd{C-- g} (@key{Ctrl} and
 @key{-}, then @key{g}), followed by @key{return}.
 @end itemize
@@ -622,6 +610,7 @@ Longtime users of the Vi editor can turn on Emacs @command{evil-mode} or
 @command{viper-mode}, which are full-featured Vi emulators for Emacs.
 
 @chapter Configuration
+@anchor{Configuration}
 
 @subsec Personal @code{.emacs} file
 
@@ -693,7 +682,7 @@ The @option{-Q} option tells Emacs to ignore the default startup file(s), the
 @option{-l} tells it to load a Lisp file, and the @option{-f} tells it to call a
 function. This command can be used in a start menu or desktop shortcut, with the
 @code{c:/~/icons/admb64.ico} decorative icon, and similar tricks can be used in
-Linux and Mac OS.
+Linux and Mac.
 
 @chapter Troubleshooting
 @anchor{Troubleshooting}

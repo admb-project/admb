@@ -81,9 +81,9 @@ Macro definitions.
 #endif
 
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <math.h>
 #ifndef M_PI
-    #error "Error: M_PI is not defined."
+  #error "Error: M_PI is not defined."
 #endif
 #ifndef PI
   #define PI M_PI

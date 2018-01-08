@@ -139,6 +139,7 @@ else
 endif
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
+ADCXXFLAGS:= $(ADCXXFLAGS) -D_USE_MATH_DEFINES
 
 ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
@@ -171,7 +172,7 @@ endif
 endif
 
 CXXFLAGS_SAF_LIB=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
-CXXFLAGS_OPT_LIB:=$(subst -I,-DOPT_LIB -I,$(CXXFLAGS_SAF_LIB))
+CXXFLAGS_OPT_LIB:=$(subst -D,-DOPT_LIB -D,$(CXXFLAGS_SAF_LIB))
 
 ifeq ($(CXX),c++)
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))

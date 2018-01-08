@@ -200,6 +200,7 @@ elif [ "$CXX" == "g++" ]; then
     LDFLAGS="-std=c++14 $LDFLAGS"
   fi
 fi
+CXXFLAGS="$CXXFLAGS -D_USE_MATH_DEFINES"
 if [ "$library" == "opt" ]; then
   CXXFLAGS="$CXXFLAGS -DOPT_LIB"
 fi

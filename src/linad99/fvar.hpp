@@ -80,8 +80,7 @@ Macro definitions.
   #define nullptr 0
 #endif
 
-#define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 #ifndef M_PI
   #error "Error: M_PI is not defined."
 #endif

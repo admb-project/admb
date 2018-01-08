@@ -157,10 +157,11 @@ if "!CXX!"=="cl" (
       set libs="!ADMB_HOME!\lib\admb-contrib.lib" /link
     )
   )
+  set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES
   if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
-    set CXXFLAGS=!CXXFLAGS! /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
+    set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
   ) else (
-    set CXXFLAGS=!CXXFLAGS! /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
+    set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
   )
 ) else (
   if not defined CXX (
@@ -227,9 +228,9 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
   if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
-    set CXXFLAGS=!CXXFLAGS! -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
+    set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"
+    set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"
   )
 )
 set "PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!"

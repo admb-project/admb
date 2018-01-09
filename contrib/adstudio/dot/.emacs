@@ -1,28 +1,28 @@
-;;; .emacs --- configuration file for AD Model Builder IDE
+;;; .emacs --- configuration file for AD Studio
 
-;; Copyright (C) 2009, 2010, 2011, 2012, 2015, 2017 Arni Magnusson
+;; Copyright (C) 2018 Arni Magnusson
 
 ;; Author:   Arni Magnusson
 ;; Keywords: emulations
-;; URL:      http://admb-project.org/tools/admb-ide/
+;; URL:      http://admb-project.org/tools/adstudio/
 
-(defconst admb-ide-version "11.6" "ADMB-IDE version number.")
+(defconst adstudio-version "1.0" "AD Studio version number.")
 
 ;;; Commentary:
 ;;
-;; Configuration file for a user-friendly integrated development environment
-;; (IDE) for AD Model Builder (ADMB). Emulates common keybindings of basic
-;; editors, while disabling some of the most used Emacs keybindings. This .emacs
-;; file is therefore not intended for experienced Emacs users, although they may
-;; find it an interesting read.
+;; Configuration file for a user-friendly environment for developing statistical
+;; models with AD Model Builder (ADMB) and Template Model Builder (TMB).
+;; Emulates common keybindings of basic editors, while disabling some of the
+;; most used Emacs keybindings. This .emacs file is therefore not intended for
+;; experienced Emacs users, although they may find it an interesting read.
 ;;
 ;; Usage:
 ;;
-;; See the AD Model Builder IDE manual.
+;; See the AD Studio manual.
 ;;
 ;; References:
 ;;
-;; See the AD Model Builder IDE manual.
+;; See the AD Studio manual.
 
 ;;; History:
 ;;
@@ -36,14 +36,14 @@
 ;; 1  OS-SPECIFICS
 ;;
 ;;==============================================================================
-(defvar easy-default-directory "~"
+(defvar adstudio-default-directory "~"
   "Directory where `find-file' and `write-file' start looking.")
 ;; In Windows maximize and UTF-8, Linux takes care of itself
 (if (string-match "windows" (prin1-to-string system-type))
     (progn (modify-frame-parameters nil '((fullscreen . maximized)))
            (prefer-coding-system 'utf-8)
            (setq-default buffer-file-coding-system 'utf-8)
-           (setq easy-default-directory "c:/")))
+           (setq adstudio-default-directory "c:/")))
 ;;==============================================================================
 ;;
 ;; 2  INTERFACE
@@ -84,12 +84,13 @@
 (require 'imenu)(setq imenu-max-items 43     )
 (setq cua-prefix-override-inhibit-delay 0.001)
 (setq cua-keep-region-after-copy t           )
-(setq initial-major-mode 'admb-mode          )
+(setq initial-major-mode 'text-mode          )
 (setq-default indent-tabs-mode nil           )
 (setq-default major-mode 'text-mode          )
 (setq-default require-final-newline t        )
 (setq save-abbrevs nil                       )
 (setq w32-pass-alt-to-system t               )
+(eval (list initial-major-mode)) ; for emacs -Q -l .emacs
 ;;------------
 ;; 2.3  Faces
 ;;------------
@@ -104,6 +105,7 @@
 (set-face-attribute 'font-lock-string-face        nil :foreground "forestgreen")
 (set-face-attribute 'font-lock-type-face          nil :foreground "magenta"    )
 (set-face-attribute 'font-lock-variable-name-face nil :foreground "saddlebrown")
+(set-face-attribute 'font-lock-warning-face       nil :weight 'normal          )
 (set-face-attribute 'fringe                       nil :background -            )
 (set-face-attribute 'isearch                      nil :background "yellow"
                     :foreground -)
@@ -130,7 +132,7 @@
 ;;----------------
 (if (file-directory-p "~/emacs/lisp/")
     (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)))
-(cd easy-default-directory)
+(cd adstudio-default-directory)
 (autoload 'admb-mode      "admb"     "Edit ADMB code."        t)
 (autoload 'R              "ess-site" "Interactive R session." t)
 (autoload 'R-mode         "ess-site" "Edit R code."           t)
@@ -138,6 +140,7 @@
 (autoload 'Rd-mode        "ess-site" "Edit R documentation."  t)
 (autoload 'Rnw-mode       "ess-site" "Edit Sweave document."  t)
 (autoload 'TeX-latex-mode "tex-site" "Edit LaTeX document."   t)
+(autoload 'tmb-mode       "tmb"      "Edit ADMB code."        t)
 ;;-------------------
 ;; 3.6  Associations
 ;;-------------------
@@ -193,10 +196,10 @@
 ;; 4.3  Special
 ;;--------------
 (global-set-key [escape]      'keyboard-escape-quit    ) ; prefix
-(global-set-key [f1]          'admb-help               ) ; prefix
-(global-set-key [S-f1]        'admb-ide-version        )
+(global-set-key [f1]          'adstudio-help           ) ; prefix
+(global-set-key [S-f1]        'adstudio-version        )
 (global-set-key [f2]          'admb-mode               ) ; prefix
-(global-set-key [f3]          'conf-unix-mode          ) ; kmacro-start-macro...
+(global-set-key [f3]          'tmb-mode                ) ; kmacro-start-macro...
 (global-set-key [f4]          'admb-toggle-window      ) ; kmacro-end-or-call...
 (global-set-key [C-f4]        'kill-buffer-maybe-window)
 (global-set-key [M-f4]        'save-buffers-kill-emacs )
@@ -204,7 +207,7 @@
 (global-set-key [f6]          'other-window            )
 (global-set-key [C-f6]        'next-buffer             )
 (global-set-key [M-f6]        'next-buffer             )
-;; [f7]-[f10] are set in `easy-admb-hook' and [f11]-[f12] in `admb-mode'
+;; [f7]-[f10] are set in `adstudio-admb-hook' and [f11]-[f12] in `admb-mode'
 (global-set-key [C-backspace] 'backward-delete-word    ) ; backward-kill-word
 (global-set-key [C-delete]    'delete-word             ) ; kill-line
 (global-set-key [S-return]    'comment-indent-new-line )
@@ -302,9 +305,12 @@
 ;;-----------
 ;; 5.8  Help
 ;;-----------
-(defun admb-ide-version ()
-  "Show ADMB IDE version number." (interactive)
-  (message "ADMB-IDE version %s" admb-ide-version))
+(defun adstudio-help ()
+  "Show help message for AD Studio." (interactive)
+  (message "F2: ADMB mode      F3: TMB mode"))
+(defun adstudio-version ()
+  "Show AD Studio version number." (interactive)
+  (message "AD Studio version %s" adstudio-version))
 ;;==============================================================================
 ;;
 ;; 6  LANGUAGE MODES
@@ -313,8 +319,8 @@
 ;;-----------
 ;; 6.2  ADMB
 ;;-----------
-(defun easy-admb-hook ()
-  (message nil)
+(require 'admb)
+(defun adstudio-admb-hook ()
   (local-unset-key [S-f11]            )
   (local-unset-key [?\C-c C-backspace])
   (local-unset-key [?\C-c ?\C--]      )
@@ -345,11 +351,61 @@
   (local-set-key [f10]   'admb-rep            ) ; menu-bar-open
   (local-set-key [S-f10] 'admb-cor            )
   (local-set-key [?\C-.] 'admb-toggle-section))
-(add-hook 'admb-mode-hook 'easy-admb-hook)
+(add-hook 'admb-mode-hook 'adstudio-admb-hook)
 ;;----------
-;; 6.5  C++
+;; 6.6  C++
 ;;----------
-(defun easy-gdb-hook ()
+(defun adstudio-c-hook ()
+  (message nil)
+  (local-unset-key [?\C-d] )
+  (local-unset-key [?\C-\[])
+  (local-unset-key [127]   )
+  (local-unset-key [?#]    )
+  (local-unset-key [?\(]   )
+  (local-unset-key [?\)]   )
+  (local-unset-key [?*]    )
+  (local-unset-key [?,]    )
+  (local-unset-key [?/]    )
+  (local-unset-key [?:]    )
+  (local-unset-key [?\;]   )
+  (local-unset-key [?<]    )
+  (local-unset-key [?>]    )
+  (local-unset-key [?{]    )
+  (local-unset-key [?}]    )
+  (local-unset-key [S-return])
+  (define-key c++-mode-map [?\C-c ?\C-e]           nil)
+  (define-key c++-mode-map [?\C-c ?:]              nil)
+  (define-key c-mode-base-map [?\C-c ?\C-a]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-b]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-c]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-d]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-l]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-n]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-o]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-p]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-q]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-s]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-u]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-w]        nil)
+  (define-key c-mode-base-map [?\C-c ?\C-\\]       nil)
+  (define-key c-mode-base-map [?\C-c ?.]           nil)
+  (define-key c-mode-base-map [?\C-c ?\d]          nil) ; C-c DEL
+  (define-key c-mode-base-map [?\C-c ?\C-\d]       nil) ; C-c C-DEL
+  (define-key c-mode-base-map [?\C-c C-backspace]  nil) ; C-c <C-backspace>
+  (define-key c-mode-base-map [?\C-c C-delete]     nil) ; C-c <C-delete>
+  (define-key c-mode-base-map [?\C-c deletechar]   nil) ; C-c <C-deletechar>
+  (define-key c-mode-base-map [?\C-c C-deletechar] nil) ; C-c C-c <C-deletechar>
+  (define-key c-mode-base-map [?\C-\M-a]           nil)
+  (define-key c-mode-base-map [?\C-\M-e]           nil)
+  (define-key c-mode-base-map [?\C-\M-h]           nil)
+  (define-key c-mode-base-map [?\C-\M-j]           nil)
+  (define-key c-mode-base-map [?\C-\M-q]           nil)
+  (define-key c-mode-base-map [?\M-a]              nil)
+  (define-key c-mode-base-map [?\M-e]              nil)
+  (define-key c-mode-base-map [?\M-j]              nil)
+  (define-key c-mode-base-map [?\M-q]              nil))
+(add-hook 'c-mode-common-hook 'adstudio-c-hook)
+(defun adstudio-gdb-hook ()
   (message nil)
   (setq indent-line-function 'gud-gdb-complete-command)(setq gdb-show-main t)
   (local-set-key [f5]          'gdb-restore-windows)
@@ -360,17 +416,16 @@
     "Enable separate IO buffer." (interactive)(gdb-use-separate-io-buffer 0))
   (defun gdb-io-buffer-on ()
     "Disable separate IO buffer." (interactive)(gdb-use-separate-io-buffer t)))
-(add-hook 'gdb-mode-hook 'easy-gdb-hook)
+(add-hook 'gdb-mode-hook 'adstudio-gdb-hook)
 ;;----------
-;; 6.17 TMB
+;; 6.18 TMB
 ;;----------
 (require 'tmb)
-(defun easy-tmb-hook ()
-  (set-face-attribute 'font-lock-warning-face nil :weight 'normal     )
-  (set-face-attribute 'tmb-block-face         nil :foreground "sienna")
-  (set-face-attribute 'tmb-data-face          nil :foreground "sienna")
-  (set-face-attribute 'tmb-parameter-face     nil :foreground "sienna")
-  (set-face-attribute 'tmb-report-face        nil :foreground "sienna")
+(defun adstudio-tmb-hook ()
+  (set-face-attribute 'tmb-block-face     nil :foreground "chocolate")
+  (set-face-attribute 'tmb-data-face      nil :foreground "chocolate")
+  (set-face-attribute 'tmb-parameter-face nil :foreground "chocolate")
+  (set-face-attribute 'tmb-report-face    nil :foreground "chocolate")
   (local-unset-key [?\C-c ?\C-.])
   (local-unset-key [?\C-c ?\C-/])
   (local-unset-key [?\C-c ?\C-b])
@@ -386,13 +441,14 @@
   (local-unset-key [?\C-c ?\C-t])
   (local-unset-key [?\C-c ?\C-v])
   (local-unset-key [?\C-c ?\C-w])
+  (local-set-key [f1]  'tmb-help          )
   (local-set-key [f7]  'tmb-clean         )
   (local-set-key [f8]  'tmb-compile       )
   (local-set-key [f9]  'tmb-run           )
   (local-set-key [f10] 'tmb-debug         )
   (local-set-key [f11] 'tmb-open          )
   (local-set-key [f12] 'tmb-template-mini))
-(add-hook 'tmb-mode-hook 'easy-tmb-hook)
+(add-hook 'tmb-mode-hook 'adstudio-tmb-hook)
 ;;==============================================================================
 ;;
 ;; 7  OTHER MODES
@@ -401,14 +457,14 @@
 ;;-----------
 ;; 7.16 Help
 ;;-----------
-(defun easy-help-hook ()(local-set-key [escape] 'kill-buffer-maybe-window))
-(add-hook 'help-mode-hook 'easy-help-hook)
+(defun adstudio-help-hook ()(local-set-key [escape] 'kill-buffer-maybe-window))
+(add-hook 'help-mode-hook 'adstudio-help-hook)
 ;;--------------
 ;; 7.26 Outline
 ;;--------------
 (defvar outline-previous-mode '(admb-mode)
   "Mode to return to. See `outline-return'.")
-(defun easy-outline-hook ()
+(defun adstudio-outline-hook ()
   (message nil)
   (set-face-attribute 'outline-1 nil :inherit 'font-lock-keyword-face)
   (local-set-key [mouse-1] 'outline-mouse-select    )
@@ -430,18 +486,20 @@
   (defun outline-window-or-return ()
     "Delete other windows or return to `outline-previous-mode'." (interactive)
     (if (> (length (window-list)) 1)(delete-other-windows)(outline-return))))
-(add-hook 'outline-mode-hook 'easy-outline-hook)
+(add-hook 'outline-mode-hook 'adstudio-outline-hook)
 ;;--------------
 ;; 7.29 Recentf
 ;;--------------
-(defun easy-recentf-hook ()(local-set-key [escape] 'recentf-cancel-dialog))
-(add-hook 'recentf-dialog-mode-hook 'easy-recentf-hook)
+(defun adstudio-recentf-hook ()(local-set-key [escape] 'recentf-cancel-dialog))
+(add-hook 'recentf-dialog-mode-hook 'adstudio-recentf-hook)
 ;;-------------
 ;; 7.32 Search
 ;;-------------
-(defun easy-isearch-hook ()
+(defun adstudio-isearch-hook ()
   (define-key isearch-mode-map [escape] 'isearch-exit           )
   (define-key isearch-mode-map [?\C-f]  'isearch-repeat-forward))
-(add-hook 'isearch-mode-hook 'easy-isearch-hook)
+(add-hook 'isearch-mode-hook 'adstudio-isearch-hook)
+
+(adstudio-help)
 
 ;; .emacs ends here

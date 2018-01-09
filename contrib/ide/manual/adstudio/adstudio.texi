@@ -42,7 +42,8 @@ Source code: @uref{http://ftp.admb-project.org/}
 @item Emacs 24.4.1, released under the GPL.@*
 Source code: @uref{ftp://ftp.gnu.org/gnu/emacs/}
 @item Emacs ADMB Mode 12.0-0, released under the Simplified BSD License.@*
-Source code: @uref{https://github.com/admb-project/admb/blob/master/contrib/emacs}
+Source code:
+@uref{https://github.com/admb-project/admb/blob/master/contrib/emacs}
 @item Emacs AUC@TeX@ 11.88, released under the GPL.@*
 Source code: @uref{ftp://ftp.gnu.org/gnu/auctex/}
 @item Emacs Markdown Mode 2.3, released under the GPL.@*
@@ -534,13 +535,15 @@ To debug a model in TMB-IDE, select @clickthis{TMB @click{} Debug} or press
 @key{f10}. This starts an R session that invokes the GNU Debugger (GDB). To
 finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 
-@chapter Interface
+@chapter User interface
 
 @section Menu
 
+@subsec ADMB mode
+
 @multitable @columnfractions .25 .34 .27
 @item@hrule@tab@hrule@tab@hrule
-@headitem Menu label       @tab Purpose                     @tab Emacs command
+@headitem @emph{Menu label} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
 @item Translate            @tab Translate TPL to C++        @tab @command{admb-tpl2cpp}
 @item Compile              @tab Compile C++ to object code  @tab @command{admb-compile}
@@ -575,25 +578,83 @@ finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 
 @page
 
+@subsec TMB mode
+
+@multitable @columnfractions .25 .30 .30
+@item@hrule@tab@hrule@tab@hrule
+@headitem @emph{Menu label} @tab @emph{Purpose} @tab @emph{Emacs command}
+@item@hrule@tab@hrule@tab@hrule
+@item View Script         @tab Show R script           @tab @command{tmb-open}
+@item View Compilation    @tab Show compilation output @tab @command{tmb-show-compilation}
+@item View R Session      @tab Show R sesssion         @tab @command{tmb-show-r}
+@item@hrule@tab@hrule@tab@hrule
+@item Compile             @tab Build model             @tab @command{tmb-compile}
+@item Run                 @tab Run R script            @tab @command{tmb-run}
+@item Make                @tab Run makefile            @tab @command{tmb-make}
+@item@hrule@tab@hrule@tab@hrule
+@item Stop                @tab Stop current process    @tab @command{tmb-kill-process}
+@item Clean               @tab Remove *.o, *.so, *.dll @tab @command{tmb-clean}
+@item@hrule@tab@hrule@tab@hrule
+@item Debug               @tab Debug model with GDB    @tab @command{tmb-debug}
+@item Toggle NaN Debug    @tab Toggle NaN exceptions   @tab @command{tmb-toggle-nan-debug}
+@item@hrule@tab@hrule@tab@hrule
+@item Mini Template       @tab Create minimal template @tab @command{tmb-template-mini}
+@item Multi-Window Layout @tab Arrange three windows   @tab @command{tmb-multi-window}
+@item Toggle Window       @tab Toggle secondary window @tab @command{tmb-toggle-window}
+@item@hrule@tab@hrule@tab@hrule
+@item Help                @tab Show help page          @tab @command{tmb-help}
+@item TMB Mode Version    @tab Show TMB Mode version   @tab @command{tmb-mode-version}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@page
+
 @section Toolbar
+
+@subsec General
 
 @multitable @columnfractions .05 .34 .27
 @item@hrule@tab@hrule@tab@hrule
-@headitem Icon                  @tab Purpose                   @tab Emacs command
+@headitem @emph{Icon} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
-@item @bigicon{icon-new}        @tab New buffer                @tab @command{new-buffer}
-@item @bigicon{icon-open}       @tab Open file                 @tab @command{find-file}
-@item @bigicon{icon-save}       @tab Save file                 @tab @command{save-buffer}
-@item @bigicon{icon-cut}        @tab Cut                       @tab @command{kill-region}
-@item @bigicon{icon-copy}       @tab Copy                      @tab @command{copy-region-as-kill}
-@item @bigicon{icon-paste}      @tab Paste                     @tab @command{cua-paste}
-@item @bigicon{icon-undo}       @tab Undo/redo                 @tab @command{undo}
-@item @bigicon{icon-close}      @tab Close                     @tab @command{kill-this-buffer}
+@item @bigicon{icon-new}   @tab New buffer @tab @command{new-buffer}
+@item @bigicon{icon-open}  @tab Open file  @tab @command{find-file}
+@item @bigicon{icon-save}  @tab Save file  @tab @command{save-buffer}
+@item @bigicon{icon-cut}   @tab Cut        @tab @command{kill-region}
+@item @bigicon{icon-copy}  @tab Copy       @tab @command{copy-region-as-kill}
+@item @bigicon{icon-paste} @tab Paste      @tab @command{cua-paste}
+@item @bigicon{icon-undo}  @tab Undo/redo  @tab @command{undo}
+@item @bigicon{icon-close} @tab Close      @tab @command{kill-this-buffer}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@sp 2
+
+@subsec ADMB mode
+
+@multitable @columnfractions .05 .34 .27
+@item@hrule@tab@hrule@tab@hrule
+@headitem @emph{Icon} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
 @item @bigicon{icon-disconnect} @tab Translate TPL to C++      @tab @command{admb-tpl2cpp}
 @item @bigicon{icon-connect}    @tab Build executable from TPL @tab @command{admb-make}
 @item @bigicon{icon-jump-to}    @tab Run executable            @tab @command{admb-run}
 @item @bigicon{icon-describe}   @tab Open .rep file            @tab @command{admb-rep}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@sp 2
+
+@subsec TMB mode
+
+@multitable @columnfractions .05 .34 .27
+@item@hrule@tab@hrule@tab@hrule
+@headitem @emph{Icon} @tab @emph{Purpose} @tab @emph{Emacs command}
+@item@hrule@tab@hrule@tab@hrule
+@item @bigicon{icon-disconnect} @tab Remove *.o, *.so, *.dll @tab @command{tmb-clean}
+@item @bigicon{icon-connect}    @tab Build model             @tab @command{tmb-compile}
+@item @bigicon{icon-jump-to}    @tab Run R script            @tab @command{tmb-run}
+@item @bigicon{icon-describe}   @tab Debug model with GDB    @tab @command{tmb-debug}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 
@@ -605,9 +666,11 @@ finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @samp{M-} means the @key{Alt} key.
 
+@subsec General
+
 @multitable @columnfractions .15 .39 .39
 @item@hrule@tab@hrule@tab@hrule
-@headitem Keystroke   @tab Purpose                        @tab Emacs command
+@headitem @emph{Keystroke} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
 @item @kbd{f1}        @tab Help                           @tab @command{admb-help}
 @item @kbd{S-f1}      @tab Show ADMB-IDE version          @tab @command{admb-ide-version}
@@ -660,12 +723,75 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 
+@page
+
+@subsec ADMB mode
+
 @multitable @columnfractions .15 .39 .39
 @item@hrule@tab@hrule@tab@hrule
-@headitem Mouse button @tab Purpose             @tab Emacs command
+@headitem @emph{Keystroke} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
-@item @kbd{C-left}     @tab Switch buffers      @tab @command{mouse-buffer-menu}
-@item @kbd{right}      @tab Navigate with imenu @tab @command{imenu}
+@item @kbd{f1}        @tab Help                           @tab @command{admb-help}
+@item @kbd{S-f1}      @tab Show ADMB-IDE version          @tab @command{admb-ide-version}
+@item @kbd{f2}        @tab ADMB mode                      @tab @command{admb-mode}
+@item @kbd{f3}        @tab Data mode                      @tab @command{conf-unix-mode}
+@item @kbd{f4}        @tab Toggle secondary window        @tab @command{admb-toggle-window}
+@item @kbd{C-f4}      @tab Close                          @tab @command{kill-buffer-maybe-window}
+@item @kbd{M-f4}      @tab Quit                           @tab @command{save-buffers-kill-emacs}
+@item @kbd{f5}        @tab Reload                         @tab @command{revert-buffer}
+@item @kbd{f6}        @tab Other window                   @tab @command{other-window}
+@item @kbd{C-f6}      @tab Next buffer                    @tab @command{next-buffer}
+@item @kbd{f7}        @tab Translate TPL to C++           @tab @command{admb-tpl2cpp}
+@item @kbd{f8}        @tab Build executable from TPL      @tab @command{admb-make}
+@item @kbd{f9}        @tab Run executable                 @tab @command{admb-run}
+@item @kbd{f10}       @tab Open .rep file                 @tab @command{admb-rep}
+@item @kbd{S-f10}     @tab Open .cor file                 @tab @command{admb-cor}
+@item @kbd{f11}       @tab Navigate with outline          @tab @command{admb-outline}
+@item @kbd{f12}       @tab Insert template                @tab @command{admb-template}
+@item @kbd{S-f12}     @tab Insert minimal template        @tab @command{admb-template-mini}
+@item@hrule@tab@hrule@tab@hrule
+@item @kbd{C--}       @tab Toggle compilation flags       @tab @command{admb-toggle-flag}
+@item @kbd{C-,}       @tab Toggle trailing whitespace     @tab @command{toggle-trailing-whitespace}
+@item @kbd{C-.}       @tab Toggle section indicator       @tab @command{admb-toggle-section}
+@item @kbd{C-a}       @tab Select all                     @tab @command{mark-whole-buffer}
+@item @kbd{C-b}       @tab Next buffer                    @tab @command{next-buffer}
+@item @kbd{C-c}       @tab Copy                           @tab @command{cua--prefix-override-handler}
+@item @kbd{C-f}       @tab Find, find next                @tab @command{isearch-forward}
+@item @kbd{C-g}       @tab Goto line                      @tab @command{goto-line}
+@item @kbd{C-h}       @tab Emacs help system              @tab @command{help}
+@item @kbd{C-l}       @tab Recenter                       @tab @command{recenter}
+@item @kbd{C-n}       @tab New                            @tab @command{new-buffer}
+@item @kbd{C-o}       @tab Open                           @tab @command{find-file}
+@item @kbd{C-p}       @tab Open in other window           @tab @command{admb-open}
+@item @kbd{C-q}       @tab Quit                           @tab @command{save-buffers-kill-emacs}
+@item @kbd{C-r}       @tab Replace                        @tab @command{query-replace}
+@item @kbd{C-s}       @tab Save                           @tab @command{save-buffer}
+@item @kbd{C-S}       @tab Save as                        @tab @command{write-file}
+@item @kbd{C-v}       @tab Paste                          @tab @command{cua-paste}
+@item @kbd{C-w}       @tab Close                          @tab @command{kill-buffer-maybe-window}
+@item @kbd{C-x}       @tab Cut                            @tab @command{cua--prefix-override-handler}
+@item @kbd{C-x 2}     @tab Split window above/below       @tab @command{split-window-vertically}
+@item @kbd{C-x 3}     @tab Split window left/right        @tab @command{split-window-horizontally}
+@item @kbd{C-z}       @tab Undo/redo                      @tab @command{undo}
+@item @kbd{C-return}  @tab Rectangle functions            @tab @command{cua-set-rectangle-mark}
+@item @kbd{C-space}   @tab Expand recognized words        @tab @command{dabbrev-expand}
+@item @kbd{C-M-space} @tab Open recent files              @tab @command{recentf-open-files}
+@item @kbd{M-,}       @tab Delete trailing whitespace     @tab @command{delete-trailing-spc-tab-m}
+@item @kbd{M-;}       @tab Comment/uncomment region       @tab @command{comment-dwim}
+@item @kbd{escape}    @tab Cancel dialog, maximize window @tab @command{keyboard-escape-quit}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@sp 2
+
+@subsec Mouse
+
+@multitable @columnfractions .15 .39 .39
+@item@hrule@tab@hrule@tab@hrule
+@headitem @emph{Mouse} button @tab @emph{Purpose} @tab @emph{Emacs command}
+@item@hrule@tab@hrule@tab@hrule
+@item @kbd{C-left} @tab Switch buffers      @tab @command{mouse-buffer-menu}
+@item @kbd{right}  @tab Navigate with imenu @tab @command{imenu}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 

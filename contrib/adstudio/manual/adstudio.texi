@@ -275,7 +275,7 @@ Emacs, a buffer is like a page, often representing a file, but sometimes other
 things, like compilation and command output. The Emacs screen is divided into
 one or more windows, where each window shows one buffer, while other buffers
 reside in the background. Explore the @clickthis{Buffers} menu, as well as
-buffer-related @ref{keybindings}. A window can be split in two by selecting
+buffer-related @ref{Keybindings}. A window can be split in two by selecting
 @clickthis{New Window Below} (@kbd{C-x 2}) or @clickthis{New Window on Right}
 (@kbd{C-x 3}) in the @clickthis{File} menu. The @key{escape} key lets one window
 fill the Emacs screen.
@@ -397,7 +397,7 @@ DATA_SECTION
 and/or simplify the model, possibly by commenting out parts of the code. After
 narrowing the search step by step, the problematic line(s) can be changed or
 removed. To comment or uncomment large parts of code, use the @kbd{M-;}
-keystroke (@pxref{keybindings}).
+keystroke (@pxref{Keybindings}).
 
 @page
 
@@ -477,7 +477,7 @@ The @kbd{C-d} keystroke means hold @key{Ctrl} and press @key{d}. This sets the
 current directory.
 
 @noindent
-See @ref{keybindings}, for a full list of AD Studio keybindings.
+See @ref{Keybindings}, for a full list of AD Studio keybindings.
 
 @section Create a simple model
 
@@ -524,7 +524,7 @@ buffer is like a page, often representing a file, but sometimes other things,
 like compilation and command output. The Emacs screen is divided into one or
 more windows, where each window shows one buffer, while other buffers reside in
 the background. Explore the @clickthis{Buffers} menu, as well as buffer-related
-@ref{keybindings}. A window can be split in two by selecting @clickthis{New
+@ref{Keybindings}. A window can be split in two by selecting @clickthis{New
 Window Below} (@kbd{C-x 2}) or @clickthis{New Window on Right} (@kbd{C-x 3}) in
 the @clickthis{File} menu. The @key{escape} key lets one window fill the Emacs
 screen.
@@ -661,7 +661,7 @@ finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 @page
 
 @section Keybindings
-@anchor{keybindings}
+@anchor{Keybindings}
 
 In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @samp{M-} means the @key{Alt} key.
@@ -821,7 +821,7 @@ Longtime users of the Vi editor can turn on Emacs @command{evil-mode} or
 @chapter Configuration
 @anchor{Configuration}
 
-@subsec Personal @code{.emacs} file
+@section Personal @code{.emacs} file
 
 @noindent
 ADMB-IDE is intended for people who don't know Emacs, are not interested in
@@ -873,7 +873,7 @@ but as mentioned in the documentation of @command{admb-rep-browser}, the
 @file{.rep} file ending in Windows may need to be associated with the desired
 browser program, Firefox or the like.
 
-@subsec Canned ADMB-IDE
+@section Custom startup
 
 @noindent
 It can be practical to make a canned version of ADMB-IDE available, while using

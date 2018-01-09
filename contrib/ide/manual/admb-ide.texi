@@ -76,7 +76,7 @@ Source code: @uref{http://ftp.gnu.org/gnu/gdb/}
 
 @chapter Preamble
 
-The purpose of ADMB-IDE is to make the convenient features of Emacs
+The main purpose of ADMB-IDE is to make the convenient features of Emacs
 @command{admb-mode} available to non-Emacs users. In other words, to disable the
 standard Emacs behavior.
 

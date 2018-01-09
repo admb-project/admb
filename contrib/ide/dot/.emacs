@@ -347,7 +347,7 @@
   (local-set-key [?\C-.] 'admb-toggle-section))
 (add-hook 'admb-mode-hook 'easy-admb-hook)
 ;;----------
-;; 6.5  C++
+;; 6.6  C++
 ;;----------
 (defun easy-gdb-hook ()
   (message nil)
@@ -362,7 +362,7 @@
     "Disable separate IO buffer." (interactive)(gdb-use-separate-io-buffer t)))
 (add-hook 'gdb-mode-hook 'easy-gdb-hook)
 ;;----------
-;; 6.17 TMB
+;; 6.18 TMB
 ;;----------
 (require 'tmb)
 (defun easy-tmb-hook ()

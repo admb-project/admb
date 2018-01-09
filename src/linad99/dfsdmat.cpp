@@ -17,7 +17,6 @@
 
 #ifdef _MSC_VER
   #include <io.h>
-  #define LSEEK _lseek
   #define  read _read
   #define write _write
   #define open _open

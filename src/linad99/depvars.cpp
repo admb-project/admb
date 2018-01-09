@@ -12,13 +12,7 @@
 // constructors, destructors and misc functions involving class prevariable
 #include "fvar.hpp"
 
-#ifdef _MSC_VER
-  #define LSEEK _lseek
-  #define read _read
-  #define write _write
-  #define open _open
-  #define close _close
-#else
+#ifndef _MSC_VER
   #include <unistd.h>
 #endif
 

@@ -4,7 +4,7 @@
 
 ;; Author:   Arni Magnusson
 ;; Keywords: emulations
-;; URL:      http://admb-project.org/community/editing-tools/admb-ide/core
+;; URL:      http://admb-project.org/tools/admb-ide/
 
 (defconst admb-ide-version "11.6" "ADMB-IDE version number.")
 

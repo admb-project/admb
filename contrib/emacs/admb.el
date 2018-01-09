@@ -4,7 +4,7 @@
 
 ;; Author:   Arni Magnusson
 ;; Keywords: languages
-;; URL:      http://admb-project.org/tools/editors/emacs/admb.el
+;; URL:      https://github.com/admb-project/admb/blob/master/contrib/emacs
 
 (defconst admb-mode-version "11.6-0" "ADMB Mode version number.")
 
@@ -381,6 +381,7 @@ Use `admb-toggle-flag' to set `admb-flags', `admb-tpl2cpp-command', and
     map))
 (defvar admb-tool-bar-map
   (let ((map (tool-bar-make-keymap)))
+    (tool-bar-local-item "separator" 'ignore nil map :help "" :enable nil)
     (tool-bar-local-item "disconnect" 'admb-tpl2cpp 'Translate map)
     (tool-bar-local-item "connect" 'admb-build 'Build map)
     (tool-bar-local-item "jump-to" 'admb-run 'Run map)

@@ -28,12 +28,16 @@ TEST_F(test_ad_comm, constructor)
   int argc = 3;
   char* argv[] = { "./simple" , "-ind", "other.dat"};
   ad_comm2 adcomm(argc, argv);
+  ad_comm::argc = 0;
+  ad_comm::argv = nullptr;
 }
 TEST_F(test_ad_comm, timer)
 {
   int argc = 2;
   char* argv[] = { "./simple" , "-timer" };
   ad_comm2 adcomm(argc, argv);
+  ad_comm::argc = 0;
+  ad_comm::argv = nullptr;
 }
 TEST_F(test_ad_comm, help)
 {
@@ -42,6 +46,8 @@ TEST_F(test_ad_comm, help)
   ASSERT_ANY_THROW({
     ad_comm2 adcomm(argc, argv);
   });
+  ad_comm::argc = 0;
+  ad_comm::argv = nullptr;
 }
 TEST_F(test_ad_comm, info)
 {
@@ -50,6 +56,8 @@ TEST_F(test_ad_comm, info)
   ASSERT_ANY_THROW({
     ad_comm2 adcomm(argc, argv);
   });
+  ad_comm::argc = 0;
+  ad_comm::argv = nullptr;
 }
 TEST_F(test_ad_comm, option_match_ind)
 {

@@ -14,7 +14,7 @@ TEST_F(test_dvar_vector_position, default_constructor)
 
   ASSERT_EQ(pos.min, 0);
   ASSERT_EQ(pos.max, -1);
-  ASSERT_EQ(pos.va, nullptr);
+  ASSERT_TRUE(pos.va == nullptr);
 }
 TEST_F(test_dvar_vector_position, constructor_dvar_vector_empty)
 {
@@ -23,7 +23,7 @@ TEST_F(test_dvar_vector_position, constructor_dvar_vector_empty)
 
   ASSERT_EQ(pos.min, 0);
   ASSERT_EQ(pos.max, -1);
-  ASSERT_EQ(pos.va, nullptr);
+  ASSERT_TRUE(pos.va == nullptr);
 }
 TEST_F(test_dvar_vector_position, constructor_dvar_vector)
 {
@@ -34,7 +34,7 @@ TEST_F(test_dvar_vector_position, constructor_dvar_vector)
 
   ASSERT_EQ(pos.min, 2);
   ASSERT_EQ(pos.max, 5);
-  ASSERT_EQ(pos.va, v.va);
+  ASSERT_TRUE(pos.va == v.va);
 }
 TEST_F(test_dvar_vector_position, constructor_dvar_vector_copy)
 {
@@ -46,7 +46,7 @@ TEST_F(test_dvar_vector_position, constructor_dvar_vector_copy)
 
   ASSERT_EQ(pos.min, copy.min);
   ASSERT_EQ(pos.max, copy.max);
-  ASSERT_EQ(pos.va, copy.va);
+  ASSERT_TRUE(pos.va == copy.va);
 }
 TEST_F(test_dvar_vector_position, element_access)
 {

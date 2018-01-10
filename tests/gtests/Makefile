@@ -103,6 +103,7 @@ GTESTS=\
  test_i4_array.cpp\
  test_i5_array.cpp\
  test_gradcalc.cpp\
+ test_dvar_vector_position.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

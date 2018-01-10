@@ -27,17 +27,48 @@ void reset_gs_stack(long int);
 #endif
 
 /**
-Copy index and pointer to values from v.
-
-\param vv a dvar_vector
+Default constructor
 */
-dvar_vector_position::dvar_vector_position(const dvar_vector& v)
+dvar_vector_position::dvar_vector_position():
+  min(0),
+  max(-1),
+  va(nullptr)
 {
-  min=v.indexmin();
-  max=v.indexmax();
-  va=v.get_va();
 }
+/**
+Copy constructor
+*/
+dvar_vector_position::dvar_vector_position(const dvar_vector_position& dvp):
+  min(dvp.min),
+  max(dvp.max),
+  va(dvp.va)
+{
+}
+/**
+Copies vector min and max indexes and pointer to values from v.
 
+\param v dvar_vector
+*/
+dvar_vector_position::dvar_vector_position(const dvar_vector& v):
+  min(v.indexmin()),
+  max(v.indexmax()),
+  va(v.get_va())
+{
+}
+/**
+Get element i from dvar_vector_position.
+\param i index
+*/
+double& dvar_vector_position::operator()(const int& i)
+{
+  if (i < min || i > max)
+  {
+    cerr << "Error -- Index out of bounds in "
+     "double& dvar_vector_position::operator()(const int& i)\n";
+    ad_exit(1);
+  }
+  return va[i].x;
+}
 /**
 Copy index and pointer to values from vv.
 
@@ -52,29 +83,11 @@ dvector_position::dvector_position(const dvector& vv)
 /**
 Copy constructor
 */
-dvar_vector_position::dvar_vector_position(const dvar_vector_position& dvp)
-{
-  min=dvp.min;
-  max=dvp.max;
-  va=dvp.va;
-}
-/**
-Copy constructor
-*/
 dvector_position::dvector_position(const dvector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
   v=dvp.v;
-}
-/**
-Default constructor
-*/
-dvar_vector_position::dvar_vector_position(void)
-{
-  min=0;
-  max=-1;
-  va=0;
 }
 /**
 Default constructor
@@ -114,22 +127,6 @@ ivector_position::ivector_position(void)
   max=-1;
   v=0;
 }
-/**
- * Description not yet available.
- * \param
- */
-double& dvar_vector_position::operator()(const int& i)
-{
-  if (i<min||i>max)
-  {
-    cerr << "Error -- Index out of bounds in\n"
-     "double_and_int& dvar_vector_position::operator()(const int& i)"
-     << endl;
-     ad_exit(1);
-   }
-   return va[i].x;
-}
-
 /**
  * Description not yet available.
  * \param

@@ -4672,11 +4672,12 @@ public:
   dvar_vector_position(const dvar_vector& v);
   dvar_vector_position(const dvar_vector_position& dvp);
 
-  double &operator() (const int &i);
+  double& operator()(const int& i);
 
   int min;
   int max;
   double_and_int* va;
+
   int indexmin() const
   {
     return min;

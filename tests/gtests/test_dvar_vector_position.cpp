@@ -67,6 +67,7 @@ TEST_F(test_dvar_vector_position, element_access)
   ASSERT_ANY_THROW({
     pos(6);
   });
+  ASSERT_TRUE(pos.va == v.va);
   ASSERT_DOUBLE_EQ(pos(2), 6.3);
   ASSERT_DOUBLE_EQ(pos(3), 7.3);
   ASSERT_DOUBLE_EQ(pos(4), 8.3);

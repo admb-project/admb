@@ -2697,10 +2697,12 @@ class dmatrix
       return *this;
    }
    void shallow_copy(const dmatrix &);
-   int operator!(void) const
-   {
-      return (shape == NULL);
-   }
+
+  /// Returns true if dmatrix is empty, else false.
+  bool operator!() const
+  {
+    return shape == nullptr;
+  }
 
    dmatrix sub(int, int);
    dmatrix(void);

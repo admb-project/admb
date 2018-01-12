@@ -261,6 +261,7 @@ dmatrix::dmatrix(int nrl, int nrh, int ncl, const ivector& nch)
 /// Copy constructor
 dmatrix::dmatrix(const dmatrix& other)
 {
+  allocate();
   shallow_copy(other);
 }
 /**

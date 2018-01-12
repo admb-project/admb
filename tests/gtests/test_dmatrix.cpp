@@ -996,3 +996,24 @@ TEST_F(test_dmatrix, extract_columnerror)
     row(m, 4);
   });
 }
+TEST_F(test_dmatrix, mean_empty)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix empty;
+  double mean(const dmatrix&);
+  ASSERT_ANY_THROW({
+    mean(empty);
+  });
+}
+TEST_F(test_dmatrix, mean_negative)
+{
+  dmatrix m(1, 2, 1, 2);
+  m(1, 1) = 4.5;
+  m(1, 2) = 8.1;
+  m(2, 1) = -12.8;
+  m(2, 2) = 16.3;
+
+  double mean(const dmatrix& m);
+  ASSERT_DOUBLE_EQ(4.025, mean(m));
+}

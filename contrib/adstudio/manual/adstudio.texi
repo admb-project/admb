@@ -4,7 +4,7 @@
 @kbdinputstyle code
 @set VERSION 1.0
 @set INSTALLER adstudio-10
-@set ADMBDIR admb120-gcc463-win64
+@set ADMBDIR admb120-gcc493-win64
 @set DATE (2018-01-03)
 @c @set REVISED Revised manual (2018-01-01)
 @set YEARS 2018
@@ -93,6 +93,13 @@ and simply install and load ADMB Mode (@file{admb.el}) and TMB Mode
 modes'' that follow all Emacs mode conventions.
 @end cartouche
 
+@section History and name
+
+AD Studio is the unification of two previous software products, ADMB-IDE
+(Magnusson 2009) and TMB-IDE (Magnusson 2015). The `AD' stands for automatic
+differentiation and `Studio' is a commonly used synonym for IDE (integrated
+development environment).
+
 @chapter AD Studio overview
 
 @section Statistical modelling
@@ -100,14 +107,15 @@ modes'' that follow all Emacs mode conventions.
 Developing statistical models in ADMB and TMB is an iterative process that
 involves writing, compiling, testing, and debugging. AD Studio has been designed
 specifically to allow the user to perform these tasks more efficiently than in
-other working environments.
+other working environments. For example, TMB model development involves working
+on C++ and R code side by side on the screen, which is not possible in RStudio.
 
 GNU Emacs is a complex and powerful editor that comes with particularly good
 support for C++, R, @LaTeX, backup/version control, and other useful features
 for statistical computing. The dedicated ADMB and TMB modes provide syntax
 highlighting, compilation, file manipulation, outline code navigation,
 templates, and smaller tools for developing models. Emacs users can download
-@file{admb-mode.el} and @command{tmb-mode.el} and start using them right away,
+@file{admb-mode.el} and @file{tmb-mode.el} and start using them right away,
 after reading the commentary at the top of these files.
 
 The problem with Emacs is that it requires considerable time to learn and
@@ -199,14 +207,15 @@ be useful for that:
 
 @uref{https://cran.r-project.org/bin/windows/Rtools/}
 
+@sp 0.5
+
 @noindent
-See also the chapters on @ref{AD Studio for Linux/Mac}, @ref{Configuration} and
-@ref{Troubleshooting} in this manual.
+See also the chapters on @ref{Configuration} and @ref{Troubleshooting} in this
+manual.
 
 @page
 
 @subsec AD Studio Linux/Mac
-@anchor{AD Studio for Linux/Mac}
 
 @noindent
 Setting up AD Studio for Linux or Mac is equivalent to the ``manual setup''
@@ -216,8 +225,8 @@ described above, so the same guidelines apply. The key steps are:
 @item Install ADMB, GNU Emacs, GCC (including the C++ component), and GDB.
 
 @item Download the AD Studio
-@uref{http://admb-project.org/tools/admb-ide/core,@code{.emacs}} configuration
-file and place it in @code{~/.emacs} to apply the simplified Emacs user
+@uref{http://admb-project.org/tools/admb-ide/core,@file{.emacs}} configuration
+file and place it in @file{~/.emacs} to apply the simplified Emacs user
 interface.
 
 @item Download Emacs packages and place inside @code{~/emacs/lisp/admb} to
@@ -531,9 +540,9 @@ screen.
 
 @section Debug
 
-To debug a model in TMB-IDE, select @clickthis{TMB @click{} Debug} or press
-@key{f10}. This starts an R session that invokes the GNU Debugger (GDB). To
-finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
+To debug a TMB model in AD Studio, select @clickthis{TMB @click{} Debug} or
+press @key{f10}. This starts an R session that invokes the GNU Debugger (GDB).
+To finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 
 @chapter User interface
 
@@ -672,38 +681,31 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item@hrule@tab@hrule@tab@hrule
 @headitem @emph{Keystroke} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
-@item @kbd{f1}        @tab Help                           @tab @command{admb-help}
-@item @kbd{S-f1}      @tab Show ADMB-IDE version          @tab @command{admb-ide-version}
+@item @kbd{f1}        @tab Reminder about F2 and F3       @tab @command{adstudio-help}
+@item @kbd{S-f1}      @tab Show AD Studio version         @tab @command{adstudio-version}
 @item @kbd{f2}        @tab ADMB mode                      @tab @command{admb-mode}
-@item @kbd{f3}        @tab Data mode                      @tab @command{conf-unix-mode}
-@item @kbd{f4}        @tab Toggle secondary window        @tab @command{admb-toggle-window}
+@item @kbd{f3}        @tab TMB mode                       @tab @command{tmb-mode}
+@item @kbd{f4}        @tab R mode                         @tab @command{R-mode}
 @item @kbd{C-f4}      @tab Close                          @tab @command{kill-buffer-maybe-window}
 @item @kbd{M-f4}      @tab Quit                           @tab @command{save-buffers-kill-emacs}
 @item @kbd{f5}        @tab Reload                         @tab @command{revert-buffer}
 @item @kbd{f6}        @tab Other window                   @tab @command{other-window}
 @item @kbd{C-f6}      @tab Next buffer                    @tab @command{next-buffer}
-@item @kbd{f7}        @tab Translate TPL to C++           @tab @command{admb-tpl2cpp}
-@item @kbd{f8}        @tab Build executable from TPL      @tab @command{admb-make}
-@item @kbd{f9}        @tab Run executable                 @tab @command{admb-run}
-@item @kbd{f10}       @tab Open .rep file                 @tab @command{admb-rep}
-@item @kbd{S-f10}     @tab Open .cor file                 @tab @command{admb-cor}
-@item @kbd{f11}       @tab Navigate with outline          @tab @command{admb-outline}
-@item @kbd{f12}       @tab Insert template                @tab @command{admb-template}
-@item @kbd{S-f12}     @tab Insert minimal template        @tab @command{admb-template-mini}
 @item@hrule@tab@hrule@tab@hrule
-@item @kbd{C--}       @tab Toggle compilation flags       @tab @command{admb-toggle-flag}
 @item @kbd{C-,}       @tab Toggle trailing whitespace     @tab @command{toggle-trailing-whitespace}
-@item @kbd{C-.}       @tab Toggle section indicator       @tab @command{admb-toggle-section}
+@item @kbd{C-.}       @tab Toggle section indicator       @tab @command{which-function-mode}
 @item @kbd{C-a}       @tab Select all                     @tab @command{mark-whole-buffer}
 @item @kbd{C-b}       @tab Next buffer                    @tab @command{next-buffer}
 @item @kbd{C-c}       @tab Copy                           @tab @command{cua--prefix-override-handler}
+@item @kbd{C-d}       @tab Change directory               @tab @command{cd}
+@item @kbd{C-e}       @tab End                            @tab @command{move-end-of-line}
 @item @kbd{C-f}       @tab Find, find next                @tab @command{isearch-forward}
 @item @kbd{C-g}       @tab Goto line                      @tab @command{goto-line}
 @item @kbd{C-h}       @tab Emacs help system              @tab @command{help}
 @item @kbd{C-l}       @tab Recenter                       @tab @command{recenter}
 @item @kbd{C-n}       @tab New                            @tab @command{new-buffer}
 @item @kbd{C-o}       @tab Open                           @tab @command{find-file}
-@item @kbd{C-p}       @tab Open in other window           @tab @command{admb-open}
+@item @kbd{C-p}       @tab Open in other window           @tab @command{find-file-other-window}
 @item @kbd{C-q}       @tab Quit                           @tab @command{save-buffers-kill-emacs}
 @item @kbd{C-r}       @tab Replace                        @tab @command{query-replace}
 @item @kbd{C-s}       @tab Save                           @tab @command{save-buffer}
@@ -731,58 +733,45 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item@hrule@tab@hrule@tab@hrule
 @headitem @emph{Keystroke} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
-@item @kbd{f1}        @tab Help                           @tab @command{admb-help}
-@item @kbd{S-f1}      @tab Show ADMB-IDE version          @tab @command{admb-ide-version}
-@item @kbd{f2}        @tab ADMB mode                      @tab @command{admb-mode}
-@item @kbd{f3}        @tab Data mode                      @tab @command{conf-unix-mode}
-@item @kbd{f4}        @tab Toggle secondary window        @tab @command{admb-toggle-window}
-@item @kbd{C-f4}      @tab Close                          @tab @command{kill-buffer-maybe-window}
-@item @kbd{M-f4}      @tab Quit                           @tab @command{save-buffers-kill-emacs}
-@item @kbd{f5}        @tab Reload                         @tab @command{revert-buffer}
-@item @kbd{f6}        @tab Other window                   @tab @command{other-window}
-@item @kbd{C-f6}      @tab Next buffer                    @tab @command{next-buffer}
+@item @kbd{f1}        @tab Help for ADMB mode             @tab @command{admb-help}
 @item @kbd{f7}        @tab Translate TPL to C++           @tab @command{admb-tpl2cpp}
-@item @kbd{f8}        @tab Build executable from TPL      @tab @command{admb-make}
+@item @kbd{f8}        @tab Build executable from TPL      @tab @command{admb-build}
 @item @kbd{f9}        @tab Run executable                 @tab @command{admb-run}
+@item @kbd{S-f9}      @tab Run executable with args       @tab @command{admb-run-args}
 @item @kbd{f10}       @tab Open .rep file                 @tab @command{admb-rep}
 @item @kbd{S-f10}     @tab Open .cor file                 @tab @command{admb-cor}
 @item @kbd{f11}       @tab Navigate with outline          @tab @command{admb-outline}
+@item @kbd{S-f11}     @tab Navigate with imenu            @tab @command{imenu}
 @item @kbd{f12}       @tab Insert template                @tab @command{admb-template}
 @item @kbd{S-f12}     @tab Insert minimal template        @tab @command{admb-template-mini}
 @item@hrule@tab@hrule@tab@hrule
 @item @kbd{C--}       @tab Toggle compilation flags       @tab @command{admb-toggle-flag}
-@item @kbd{C-,}       @tab Toggle trailing whitespace     @tab @command{toggle-trailing-whitespace}
-@item @kbd{C-.}       @tab Toggle section indicator       @tab @command{admb-toggle-section}
-@item @kbd{C-a}       @tab Select all                     @tab @command{mark-whole-buffer}
-@item @kbd{C-b}       @tab Next buffer                    @tab @command{next-buffer}
-@item @kbd{C-c}       @tab Copy                           @tab @command{cua--prefix-override-handler}
-@item @kbd{C-f}       @tab Find, find next                @tab @command{isearch-forward}
-@item @kbd{C-g}       @tab Goto line                      @tab @command{goto-line}
-@item @kbd{C-h}       @tab Emacs help system              @tab @command{help}
-@item @kbd{C-l}       @tab Recenter                       @tab @command{recenter}
-@item @kbd{C-n}       @tab New                            @tab @command{new-buffer}
-@item @kbd{C-o}       @tab Open                           @tab @command{find-file}
-@item @kbd{C-p}       @tab Open in other window           @tab @command{admb-open}
-@item @kbd{C-q}       @tab Quit                           @tab @command{save-buffers-kill-emacs}
-@item @kbd{C-r}       @tab Replace                        @tab @command{query-replace}
-@item @kbd{C-s}       @tab Save                           @tab @command{save-buffer}
-@item @kbd{C-S}       @tab Save as                        @tab @command{write-file}
-@item @kbd{C-v}       @tab Paste                          @tab @command{cua-paste}
-@item @kbd{C-w}       @tab Close                          @tab @command{kill-buffer-maybe-window}
-@item @kbd{C-x}       @tab Cut                            @tab @command{cua--prefix-override-handler}
-@item @kbd{C-x 2}     @tab Split window above/below       @tab @command{split-window-vertically}
-@item @kbd{C-x 3}     @tab Split window left/right        @tab @command{split-window-horizontally}
-@item @kbd{C-z}       @tab Undo/redo                      @tab @command{undo}
-@item @kbd{C-return}  @tab Rectangle functions            @tab @command{cua-set-rectangle-mark}
-@item @kbd{C-space}   @tab Expand recognized words        @tab @command{dabbrev-expand}
-@item @kbd{C-M-space} @tab Open recent files              @tab @command{recentf-open-files}
-@item @kbd{M-,}       @tab Delete trailing whitespace     @tab @command{delete-trailing-spc-tab-m}
-@item @kbd{M-;}       @tab Comment/uncomment region       @tab @command{comment-dwim}
-@item @kbd{escape}    @tab Cancel dialog, maximize window @tab @command{keyboard-escape-quit}
+@item @kbd{M-w}       @tab Toggle secondary window        @tab @command{admb-toggle-window}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 
-@sp 2
+@sp 0.5
+
+@subsec TMB mode
+
+@multitable @columnfractions .15 .39 .39
+@item@hrule@tab@hrule@tab@hrule
+@headitem @emph{Keystroke} @tab @emph{Purpose} @tab @emph{Emacs command}
+@item@hrule@tab@hrule@tab@hrule
+@item @kbd{f1}        @tab Help for TMB mode              @tab @command{tmb-help}
+@item @kbd{f7}        @tab Clean                          @tab @command{tmb-clean}
+@item @kbd{f8}        @tab Compile                        @tab @command{tmb-compile}
+@item @kbd{f9}        @tab Run                            @tab @command{tmb-run}
+@item @kbd{f10}       @tab View script                    @tab @command{tmb-open}
+@item @kbd{f11}       @tab Debug                          @tab @command{tmb-debug}
+@item @kbd{f12}       @tab Mini template                  @tab @command{tmb-template-mini}
+@item@hrule@tab@hrule@tab@hrule
+@item @kbd{M-m}       @tab Multi-window layout            @tab @command{tmb-multi-window}
+@item @kbd{M-w}       @tab Toggle secondary window        @tab @command{tmb-toggle-window}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@sp 0.5
 
 @subsec Mouse
 
@@ -796,9 +785,9 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @end multitable
 
 @noindent
-ADMB-IDE does not emulate perfectly the way many editors open menus with the
+AD Studio does not emulate perfectly the way many editors open menus with the
 @key{Alt} key. To open the @clickthis{Edit} menu, for example, it is not enough
-to press @key{Alt} and @key{e} simultaneously. ADMB-IDE provides four ways to
+to press @key{Alt} and @key{e} simultaneously. AD Studio provides four ways to
 open the @clickthis{Edit} menu:
 
 @enumerate
@@ -809,9 +798,9 @@ open the @clickthis{Edit} menu:
 arrow (Linux)
 @end enumerate
 
-The idea behind ADMB-IDE, however, is that users can memorize intuitive
+The idea behind AD Studio, however, is that users can memorize intuitive
 keystrokes to undo, cut, copy, paste, find, replace, and goto line, without
-opening the @clickthis{Edit} menu. Also don't forget that ADMB-IDE is open
+opening the @clickthis{Edit} menu. Also don't forget that AD Studio is open
 source, so users are free to modify any part of the program, including the
 keybindings defined in the @file{.emacs} file.
 
@@ -824,19 +813,19 @@ Longtime users of the Vi editor can turn on Emacs @command{evil-mode} or
 @section Personal @code{.emacs} file
 
 @noindent
-ADMB-IDE is intended for people who don't know Emacs, are not interested in
-learning it, and will only use it to work with ADMB. The design goal is that
-ADMB-IDE should work out of the box and get the job done with minimum fuss.
+AD Studio is intended for people who don't know Emacs, are not interested in
+learning it, and will only use it to work with ADMB. The design goal is that AD
+Studio should work out of the box and get the job done with minimum fuss.
 
 It is, however, in the nature of modellers to experiment and improve. Users who
-modify the original @file{.emacs} file are no longer using ADMB-IDE, but Emacs
+modify the original @file{.emacs} file are no longer using AD Studio, but Emacs
 with @code{admb-mode} and a personal @file{.emacs} file. One reason to modify
 the @file{.emacs} file or write a new one from scratch is to install additional
 Emacs packages. Another reason is to redefine the keybindings, probably closer
 to the Emacs defaults. Other reasons include setting fonts and colors, setting
 user variables, or defining new user functions. Users with a personal
 @file{.emacs} file can update ADMB, Emacs, GCC, GDB, and @code{admb-mode}
-independently, or salvage pieces from a recent ADMB-IDE zip bundle.
+independently, or salvage pieces from a recent AD Studio zip bundle.
 
 Note that it is not advisable to configure Emacs by clicking @clickthis{Options
 @click{} Save Options} or @clickthis{Options @click{} Customize Emacs}. Editing
@@ -846,26 +835,26 @@ the @file{.emacs} file directly is a more reliable and transparent approach. See
 @subsec Example
 
 @noindent
-The @key{f10} key in ADMB-IDE runs @command{admb-rep} to a open a report file:
+The @key{f10} key in @command{admb-mode} runs @command{admb-rep} to a open a
+report file:
 
 @smallexample
-(local-set-key [f10]   'admb-rep            ) ; menu-bar-open
+(local-set-key [f10] 'admb-rep) ; menu-bar-open
 @end smallexample
 
 @noindent
 The semicolon starts a comment, reminding that the default behavior of Emacs is
-to run @command{menu-bar-open} when @key{f10} is pressed. In ADMB-IDE, it is
+to run @command{menu-bar-open} when @key{f10} is pressed. In AD Studio, it is
 easy to activate the menu bar with the mouse or the @key{Alt} key, so @key{f10}
-can be used for something else. The liberal spacing is to align surrounding
-lines of code, but neither the comment nor multiple spaces are necessary.
+can be used for something else.
 
 Some users may find it practical to open the report file in an external browser,
-rather than inside ADMB-IDE. The report file is often best viewed in a large
-window, and the ADMB-IDE windows are somewhat busy showing other things. It is
+rather than inside AD Studio. The report file is often best viewed in a large
+window, and the AD Studio windows are somewhat busy showing other things. It is
 easy to rebind the @key{f10} key,
 
 @smallexample
-(local-set-key [f10]   'admb-rep-browser    ) ; menu-bar-open
+(local-set-key [f10] 'admb-rep-browser) ; menu-bar-open
 @end smallexample
 
 @noindent
@@ -876,22 +865,21 @@ browser program, Firefox or the like.
 @section Custom startup
 
 @noindent
-It can be practical to make a canned version of ADMB-IDE available, while using
+It can be practical to make a canned version of AD Studio available, while using
 a different @file{.emacs} file for most Emacs sessions. For example, an
-experienced Emacs user may want to test how ADMB-IDE works, or demonstrate it to
-colleagues, without constantly shuffling @file{.emacs} files. In Windows, one
-can place the ADMB-IDE @file{.emacs} file in @code{c:/admb/ide} and then start
-ADMB-IDE with the shell command:
+experienced Emacs user may want to test how AD Studio works, or demonstrate it
+to colleagues, without constantly shuffling @file{.emacs} files. In Windows, one
+can place the AD Studio @file{.emacs} file in @code{c:/~/adstudio} and then
+start AD Studio with the shell command:
 
 @smallexample
-c:/gnu/emacs/bin/runemacs.exe -Q -l c:/admb/ide/.emacs -f admb-mode
+c:/gnu/emacs/bin/runemacs.exe -Q -l c:/~/adstudio/.emacs
 @end smallexample
 
-The @option{-Q} option tells Emacs to ignore the default startup file(s), the
-@option{-l} tells it to load a Lisp file, and the @option{-f} tells it to call a
-function. This command can be used in a start menu or desktop shortcut, with the
-@code{c:/~/icons/admb64.ico} decorative icon, and similar tricks can be used in
-Linux and Mac.
+The @option{-Q} option tells Emacs to ignore the default startup file(s) and the
+@option{-l} tells it to load a Lisp file. This command can be used in a start
+menu or desktop shortcut, with the @code{c:/~/icons/admb64.ico} decorative icon,
+and similar tricks can be used in Linux and Mac.
 
 @chapter Troubleshooting
 @anchor{Troubleshooting}
@@ -910,7 +898,7 @@ example the @ref{GDB,,GDB screenshot}.
 @subsec Undo/redo
 
 @noindent
-The undo command in ADMB-IDE does both undo and redo. When undo is performed
+The undo command in AD Studio does both undo and redo. When undo is performed
 repeatedly, it goes further back in the undo history. Any command other than
 undo will interrupt this sequence, and from that point the previous undo
 commands become ordinary changes that can be undone, equivalent to redo. Try,
@@ -922,7 +910,7 @@ the @key{f5} key.
 @subsec The @key{Tab} key does not indent code properly
 
 @noindent
-ADMB-IDE does not know the appropriate indentation of every line, so generally
+ADMB Mode does not know the appropriate indentation of every line, so generally
 users indent their code manually using @key{Space} and @key{Backspace}. The
 @key{Tab} key is programmed to insert a number of spaces, as suggested by the
 previous line, which is sometimes useful.
@@ -1043,6 +1031,10 @@ A. Nielsen, M. Maechler, T. Michelot, M. Brooks, A. Forrence, C.M. Albertsen,
 and C. Monnahan. @cite{Template Model Builder: A general random effect tool
 inspired by ADMB.}@*
 @uref{https://cran.r-project.org/package=TMB}
+@sp 0.5
+@noindent
+Magnusson, A. 2015. TMB-IDE: Emacs @command{tmb-mode} without the Emacs.@*
+@uref{ftp://ftp.hafro.is/pub/tmb/tmb-ide.pdf}
 
 @sp 1
 @subsec Emacs
@@ -1059,6 +1051,12 @@ Lisp reference manual for Emacs.}@*
 @noindent
 Chassell, R. @cite{An introduction to programming in Emacs Lisp.}@*
 @uref{http://www.gnu.org/software/emacs/manual/eintr.html}
+@sp 0.5
+@noindent
+Rossini, A.J., R.M. Heiberger, K. Hornik, M. Maechler, R.A. Sparapani, S.J.
+Eglen, S.P. Luque, H. Redestig, V. Spinu, and L. Henry. @cite{ESS: Emacs Speaks
+Statistics.}@*
+@uref{http://ess.r-project.org/index.php?Section=documentation&subSection=manuals}
 
 @sp 1
 @subsec GCC & GDB

@@ -996,3 +996,13 @@ TEST_F(test_dmatrix, extract_columnerror)
     row(m, 4);
   });
 }
+TEST_F(test_dmatrix, mean_empty)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix empty;
+  double mean(const dmatrix&);
+  ASSERT_ANY_THROW({
+    mean(empty);
+  });
+}

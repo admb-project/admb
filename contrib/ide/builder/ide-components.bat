@@ -44,10 +44,16 @@ echo on
 %WGET% %COMPS%/%ESS%
 %WGET% https://cran.r-project.org/bin/windows/Rtools/%RTOOLS%
 %WGET% %GITHUB%/admb-project/admb/master/contrib/emacs/admb.el
+%WGET% %GITHUB%/admb-project/admb/master/contrib/emacs/LICENSE
+%WGET% %GITHUB%/admb-project/admb/master/contrib/emacs/NEWS
 %WGET% %GITHUB%/admb-project/admb/master/contrib/ide/dot/.emacs
+%WGET% %GITHUB%/admb-project/admb/master/contrib/ide/dot/LICENSE
+%WGET% %GITHUB%/admb-project/admb/master/contrib/ide/dot/NEWS
 %WGET% %GITHUB%/admb-project/admb/master/contrib/ide/icons/admb64.ico
 %WGET% %GITHUB%/admb-project/admb/master/contrib/ide/NEWS
 %WGET% %GITHUB%/kaskr/adcomp/master/emacs/tmb.el
+%WGET% %GITHUB%/kaskr/adcomp/master/emacs/LICENSE
+%WGET% %GITHUB%/kaskr/adcomp/master/emacs/NEWS
 @echo.
 
 @echo *** Unpacking components ...

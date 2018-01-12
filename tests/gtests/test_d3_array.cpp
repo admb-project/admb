@@ -1408,3 +1408,28 @@ TEST_F(test_d3_array, deallocatecopies)
   ASSERT_EQ(0, firstcopy.get_ncopies());
   ASSERT_EQ(0, secondcopy.get_ncopies());
 }
+TEST_F(test_d3_array, mean_empty)
+{
+  ad_exit=&test_ad_exit;
+
+  d3_array empty;
+  double mean(const d3_array&);
+  ASSERT_ANY_THROW({
+    mean(empty);
+  });
+}
+TEST_F(test_d3_array, mean_negative)
+{
+  d3_array array(1, 2, 1, 2, 1, 2);
+  array(1, 1, 1) = 1.8;
+  array(1, 1, 2) = 2.7;
+  array(1, 2, 1) = -3.6;
+  array(1, 2, 2) = 4.5;
+  array(2, 1, 1) = 5.0;
+  array(2, 1, 2) = 6.3;
+  array(2, 2, 1) = -7.2;
+  array(2, 2, 2) = 8.1;
+
+  double mean(const d3_array&);
+  ASSERT_DOUBLE_EQ(2.2, mean(array));
+}

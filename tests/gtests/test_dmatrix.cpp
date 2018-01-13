@@ -996,6 +996,24 @@ TEST_F(test_dmatrix, extract_columnerror)
     row(m, 4);
   });
 }
+TEST_F(test_dmatrix, copy_empty)
+{
+  dmatrix empty;
+
+  ASSERT_TRUE(empty.begin() == nullptr);
+  ASSERT_TRUE(empty.end() == nullptr);
+  ASSERT_TRUE(empty.operator!());
+  ASSERT_TRUE(empty.indexmin() == 1);
+  ASSERT_TRUE(empty.indexmax() == 0);
+
+  dmatrix copy(empty);
+
+  ASSERT_TRUE(copy.begin() == nullptr);
+  ASSERT_TRUE(copy.end() == nullptr);
+  ASSERT_TRUE(copy.operator!());
+  ASSERT_TRUE(copy.indexmin() == 1);
+  ASSERT_TRUE(copy.indexmax() == 0);
+}
 TEST_F(test_dmatrix, mean_empty)
 {
   ad_exit=&test_ad_exit;

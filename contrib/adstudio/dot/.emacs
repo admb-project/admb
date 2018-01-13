@@ -133,14 +133,15 @@
 (if (file-directory-p "~/emacs/lisp/")
     (progn (cd "~/emacs/lisp/")(normal-top-level-add-subdirs-to-load-path)))
 (cd adstudio-default-directory)
-(autoload 'admb-mode      "admb"     "Edit ADMB code."        t)
-(autoload 'R              "ess-site" "Interactive R session." t)
-(autoload 'R-mode         "ess-site" "Edit R code."           t)
-(autoload 'r-mode         "ess-site"                           ) ;*-R-*
-(autoload 'Rd-mode        "ess-site" "Edit R documentation."  t)
-(autoload 'Rnw-mode       "ess-site" "Edit Sweave document."  t)
-(autoload 'TeX-latex-mode "tex-site" "Edit LaTeX document."   t)
-(autoload 'tmb-mode       "tmb"      "Edit ADMB code."        t)
+(autoload 'admb-mode      "admb"          "Edit ADMB code."         t)
+(autoload 'markdown-mode  "markdown-mode" "Edit Markdown document." t)
+(autoload 'R              "ess-site"      "Interactive R session."  t)
+(autoload 'R-mode         "ess-site"      "Edit R code."            t)
+(autoload 'r-mode         "ess-site"                                 ) ;*-R-*
+(autoload 'Rd-mode        "ess-site"      "Edit R documentation."   t)
+(autoload 'Rnw-mode       "ess-site"      "Edit Sweave document."   t)
+(autoload 'TeX-latex-mode "tex-site"      "Edit LaTeX document."    t)
+(autoload 'tmb-mode       "tmb"           "Edit ADMB code."         t)
 ;;-------------------
 ;; 3.6  Associations
 ;;-------------------
@@ -150,6 +151,8 @@
 (add-to-list 'auto-mode-alist '("\\.par$"      . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("\\.pin$"      . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("\\.rep$"      . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode ))
+(add-to-list 'auto-mode-alist '("\\.Rmd$"      . markdown-mode ))
 (add-to-list 'auto-mode-alist '("\\.R$"        . R-mode        ))
 (add-to-list 'auto-mode-alist '("\\.Rprofile$" . R-mode        ))
 (add-to-list 'auto-mode-alist '("/Redit"       . R-mode        ))
@@ -167,12 +170,14 @@
 ;; Default       TAB     HOME END PGUP PGDN BKSP DEL
 ;; Custom    SPC     RET
 ;; Special     c     i   m          x         [
-;; Default              l              0..9`-= ];'\, /~!@#$%^&*() +{}|:"<>?
-;; Custom    ab   fg      nopqrs  vw  z             .
-;; Suppress     de  h jk        tu   y                           _
+;; Default       e  h jkl       tu   y 0..9`-= ];'\  /~!@#$%^&*() +{}|:"<>?
+;; Custom    ab d fg      nopqrs  vw  z            ,.
+;; Suppress                                                      _
 ;;--------------
 ;; 4.1  Disable
 ;;--------------
+(global-unset-key [f10]        ) ; menu-bar-open
+(global-unset-key [f11]        ) ; toggle-frame-fullscreen
 (global-unset-key [?\C-x ?\C-c])
 (global-unset-key [?\C-x ?\C-f])
 (global-unset-key [?\C-x ?h]   )
@@ -181,15 +186,13 @@
 (global-unset-key [?\C-x ?\C-w])
 (global-unset-key [?\C-x ?\C-z])
 (global-unset-key [?\M-g ?g]   )
-(global-unset-key [?\C-_]      )
-(global-unset-key [?\M-%]      )
 ;;------------
 ;; 4.2  Mouse
 ;;------------
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 10)((control) . 30)))
 (setq mouse-wheel-progressive-speed nil)
+(global-set-key [S-mouse-1]      'mouse-extend-region)
 (global-set-key [S-down-mouse-1] 'mouse-extend-region) ; mouse-appearance-menu
-(global-set-key [S-drag-mouse-1] 'mouse-extend-region)
 (global-set-key        [mouse-3] 'ignore             ) ; mouse-save-then-kill
 (global-set-key   [down-mouse-3] 'imenu              )
 ;;--------------
@@ -200,14 +203,15 @@
 (global-set-key [S-f1]        'adstudio-version        )
 (global-set-key [f2]          'admb-mode               ) ; prefix
 (global-set-key [f3]          'tmb-mode                ) ; kmacro-start-macro...
-(global-set-key [f4]          'admb-toggle-window      ) ; kmacro-end-or-call...
+(global-set-key [f4]          'R-mode                  ) ; kmacro-end-or-call...
 (global-set-key [C-f4]        'kill-buffer-maybe-window)
 (global-set-key [M-f4]        'save-buffers-kill-emacs )
 (global-set-key [f5]          'revert-buffer           )
 (global-set-key [f6]          'other-window            )
 (global-set-key [C-f6]        'next-buffer             )
 (global-set-key [M-f6]        'next-buffer             )
-;; [f7]-[f10] are set in `adstudio-admb-hook' and [f11]-[f12] in `admb-mode'
+;; [f7]-[f10] are set in `adstudio-admb-hook' and `adstudio-tmb-hook'
+;; [f11]-[f12] are set in in `admb-mode' and `tmb-mode'
 (global-set-key [C-backspace] 'backward-delete-word    ) ; backward-kill-word
 (global-set-key [C-delete]    'delete-word             ) ; kill-line
 (global-set-key [S-return]    'comment-indent-new-line )
@@ -216,33 +220,26 @@
 ;;------------------
 ;; 4.5  Two strokes
 ;;------------------
-(global-set-key [?\C-x escape] 'ignore)
-(global-set-key [?\C-x ?\C-x]  'ignore)
+(global-set-key [?\C-x escape] 'ignore) ; prefix
+(global-set-key [?\C-x ?\C-x]  'ignore) ; exchange-point-and-mark
 ;;-----------------
 ;; 4.6  One stroke
 ;;-----------------
-(global-set-key [?\C--]    'admb-toggle-flag          ) ; negative-argument
 (global-set-key [?\C-,]    'toggle-trailing-whitespace)
+(global-set-key [?\C-.]    'which-function-mode       )
 (global-set-key [?\C-a]    'mark-whole-buffer         ) ; move-beginning-of-line
 (global-set-key [?\C-b]    'next-buffer               ) ; backward-char
-(global-set-key [?\C-d]    'ignore                    ) ; delete-char
-(global-set-key [?\C-e]    'ignore                    ) ; move-end-of-line
+(global-set-key [?\C-d]    'cd                        ) ; kill-word
 (global-set-key [?\C-f]    'isearch-forward           ) ; forward-char
 (global-set-key [?\C-g]    'goto-line                 ) ; keyboard-quit
-(global-set-key [?\C-j]    'ignore                    ) ; eval-print-last-sexp
-(global-set-key [?\C-k]    'ignore                    ) ; kill-line
-(global-set-key [?\C-l]    'recenter                  ) ; recenter-top-bottom
 (global-set-key [?\C-n]    'new-buffer                ) ; next-line
 (global-set-key [?\C-o]    'find-file                 ) ; open-line
-(global-set-key [?\C-p]    'admb-open                 ) ; previous-line
+(global-set-key [?\C-p]    'find-file-other-window    ) ; previous-line
 (global-set-key [?\C-q]    'save-buffers-kill-emacs   ) ; quoted-insert
 (global-set-key [?\C-r]    'query-replace             ) ; isearch-backward
 (global-set-key [?\C-s]    'save-buffer               ) ; isearch-forward
 (global-set-key [33554451] 'write-file                ) ; C-S
-(global-set-key [?\C-t]    'ignore                    ) ; transpose-chars
-(global-set-key [?\C-u]    'ignore                    ) ; universal-argument
 (global-set-key [?\C-w]    'kill-buffer-maybe-window  ) ; kill-region
-(global-set-key [?\C-y]    'ignore                    ) ; yank
 (global-set-key [?\M-,]    'delete-trailing-spc-tab-m ) ; tags-loop-continue
 (global-set-key [?\M-a]    'menu-bar-open             ) ; backward-sentence
 (global-set-key [?\M-b]    'menu-bar-open             ) ; backward-word
@@ -320,9 +317,12 @@
 ;; 6.2  ADMB
 ;;-----------
 (require 'admb)
+(eval-after-load "prog-mode" '(define-key prog-mode-map [?\C-\M-q] nil))
 (defun adstudio-admb-hook ()
+  (adstudio-help)
   (local-unset-key [S-f11]            )
   (local-unset-key [?\C-c C-backspace])
+  (local-unset-key [?\C-c 127]        )
   (local-unset-key [?\C-c ?\C--]      )
   (local-unset-key [?\C-c ?\C-.]      )
   (local-unset-key [?\C-c ?\C-/]      )
@@ -344,20 +344,23 @@
   (local-unset-key [?\C-c ?\C-v]      )
   (local-unset-key [?\C-c ?\C-w]      )
   ;; Keybindings that should only be active in an ADMB buffer
-  (local-set-key [f7]    'admb-tpl2cpp        )
-  (local-set-key [f8]    'admb-build          )
-  (local-set-key [f9]    'admb-run            )
-  (local-set-key [S-f9]  'admb-run-args       )
-  (local-set-key [f10]   'admb-rep            ) ; menu-bar-open
-  (local-set-key [S-f10] 'admb-cor            )
-  (local-set-key [?\C-.] 'admb-toggle-section))
+  (local-set-key [f1]    'admb-help          ) ; adstudio-help
+  (local-set-key [f7]    'admb-tpl2cpp       )
+  (local-set-key [f8]    'admb-build         )
+  (local-set-key [f9]    'admb-run           )
+  (local-set-key [S-f9]  'admb-run-args      )
+  (local-set-key [f10]   'admb-rep           ) ; menu-bar-open
+  (local-set-key [S-f10] 'admb-cor           )
+  (local-set-key [?\C--] 'admb-toggle-flag   ) ; negative-argument
+  (local-set-key [?\C-.] 'admb-toggle-section)
+  (local-set-key [?\C-p] 'admb-open          ) ; previous-line
+  (local-set-key [?\M-w] 'admb-toggle-window)) ; kill-ring-save
 (add-hook 'admb-mode-hook 'adstudio-admb-hook)
 ;;----------
 ;; 6.6  C++
 ;;----------
 (defun adstudio-c-hook ()
   (message nil)
-  (local-unset-key [?\C-d] )
   (local-unset-key [?\C-\[])
   (local-unset-key [127]   )
   (local-unset-key [?#]    )
@@ -395,6 +398,7 @@
   (define-key c-mode-base-map [?\C-c C-delete]     nil) ; C-c <C-delete>
   (define-key c-mode-base-map [?\C-c deletechar]   nil) ; C-c <C-deletechar>
   (define-key c-mode-base-map [?\C-c C-deletechar] nil) ; C-c C-c <C-deletechar>
+  (define-key c-mode-base-map [?\C-d]              nil)
   (define-key c-mode-base-map [?\C-\M-a]           nil)
   (define-key c-mode-base-map [?\C-\M-e]           nil)
   (define-key c-mode-base-map [?\C-\M-h]           nil)
@@ -422,38 +426,52 @@
 ;;----------
 (require 'tmb)
 (defun adstudio-tmb-hook ()
+  (adstudio-help)
   (set-face-attribute 'tmb-block-face     nil :foreground "chocolate")
   (set-face-attribute 'tmb-data-face      nil :foreground "chocolate")
   (set-face-attribute 'tmb-parameter-face nil :foreground "chocolate")
   (set-face-attribute 'tmb-report-face    nil :foreground "chocolate")
+  (local-unset-key [?\C-c C-backspace])
   (local-unset-key [?\C-c ?\C-.])
   (local-unset-key [?\C-c ?\C-/])
+  (local-unset-key [?\C-c ?\C-a])
   (local-unset-key [?\C-c ?\C-b])
   (local-unset-key [?\C-c ?\C-c])
   (local-unset-key [?\C-c ?\C-d])
+  (local-unset-key [?\C-c ?\C-f])
   (local-unset-key [?\C-c ?\C-k])
   (local-unset-key [?\C-c ?\C-l])
   (local-unset-key [?\C-c ?\C-m])
   (local-unset-key [?\C-c ?\C-n])
+  (local-unset-key [?\C-c ?\C-o])
   (local-unset-key [?\C-c ?\C-p])
   (local-unset-key [?\C-c ?\C-q])
   (local-unset-key [?\C-c ?\C-r])
+  (local-unset-key [?\C-c ?\C-s])
   (local-unset-key [?\C-c ?\C-t])
   (local-unset-key [?\C-c ?\C-v])
   (local-unset-key [?\C-c ?\C-w])
-  (local-set-key [f1]  'tmb-help          )
-  (local-set-key [f7]  'tmb-clean         )
-  (local-set-key [f8]  'tmb-compile       )
-  (local-set-key [f9]  'tmb-run           )
-  (local-set-key [f10] 'tmb-debug         )
-  (local-set-key [f11] 'tmb-open          )
-  (local-set-key [f12] 'tmb-template-mini))
+  (local-set-key [f1]    'tmb-help          ) ; adstudio-help
+  (local-set-key [f7]    'tmb-clean         )
+  (local-set-key [f8]    'tmb-compile       )
+  (local-set-key [f9]    'tmb-run           )
+  (local-set-key [f10]   'tmb-debug         )
+  (local-set-key [f11]   'tmb-open          ) ; menu-bar-open
+  (local-set-key [f12]   'tmb-template-mini )
+  (local-set-key [?\C-p] 'tmb-open-any      ) ; previous-line
+  (local-set-key [?\M-m] 'tmb-multi-window  ) ; back-to-indentation
+  (local-set-key [?\M-w] 'tmb-toggle-window)) ; previous-line
 (add-hook 'tmb-mode-hook 'adstudio-tmb-hook)
 ;;==============================================================================
 ;;
 ;; 7  OTHER MODES
 ;;
 ;;==============================================================================
+;;-------------
+;; 7.5  Comint
+;;-------------
+(defun adstudio-comint-hook ()(local-set-key [home] 'comint-bol))
+(add-hook 'comint-mode-hook 'adstudio-comint-hook)
 ;;-----------
 ;; 7.16 Help
 ;;-----------

@@ -3,9 +3,9 @@ setlocal
 if [%1]==[--help] goto HELP
 REM ############################################################################
 REM                                                                            #
-REM Script:   ide-components                                                   #
+REM Script:   adstudio-components                                              #
 REM                                                                            #
-REM Purpose:  Download ADMB-IDE components                                     #
+REM Purpose:  Download AD Studio components                                    #
 REM                                                                            #
 REM Requires: wget                                                             #
 REM                                                                            #
@@ -15,13 +15,14 @@ REM History:  26 Aug 2017 Arni Magnusson created                               #
 REM                                                                            #
 REM ############################################################################
 
-set ADMB=admb116-gcc493-win64.zip
-set AUCTEX=auctex-1191-texsite.zip
-set EMACS=emacs-25.2-x86_64.zip
-set ESS=ess-1610-github.zip
+set ADMB=admb120-gcc493-win64.zip
+set AUCTEX=auctex121-built.zip
+set EMACS=emacs-25.3_1-x86_64.zip
+set ESS=ess-17.11.zip
+set INNOEXTRACT=innoextract-1.6-windows.zip
 set RTOOLS=Rtools34.exe
 
-set COMPS=http://admb-project.org/tools/admb-ide/components
+set COMPS=http://admb-project.org/tools/adstudio/components
 set GITHUB=https://raw.githubusercontent.com
 set WGET=..\wget -q --no-check-certificate
 
@@ -36,33 +37,36 @@ echo on
 %WGET% %COMPS%/admb.pdf
 %WGET% %COMPS%/admbre.pdf
 %WGET% %COMPS%/autodif.pdf
-%WGET% http://admb-project.org/tools/admb-ide/admb-ide.pdf
-%WGET% %COMPS%/innounp.exe
-%WGET% %COMPS%/unzip.exe
+%WGET% http://admb-project.org/tools/adstudio/adstudio.pdf
 %WGET% %COMPS%/%AUCTEX%
+%WGET% http://ess.r-project.org/downloads/ess/%ESS%
+%WGET% %COMPS%/unzip.exe
 %WGET% http://ftp.gnu.org/gnu/emacs/windows/%EMACS%
-%WGET% %COMPS%/%ESS%
+%WGET% http://constexpr.org/innoextract/files/%INNOEXTRACT%
+%WGET% https://jblevins.org/projects/markdown-mode/markdown-mode.el
 %WGET% https://cran.r-project.org/bin/windows/Rtools/%RTOOLS%
-%WGET% %GITHUB%/admb-project/admb/master/contrib/emacs/admb.el
-%WGET% %GITHUB%/admb-project/admb/master/contrib/ide/dot/.emacs
-%WGET% %GITHUB%/admb-project/admb/master/contrib/ide/icons/admb64.ico
-%WGET% %GITHUB%/admb-project/admb/master/contrib/ide/NEWS
-%WGET% %GITHUB%/kaskr/adcomp/master/emacs/tmb.el
+%WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/admb.el
+%WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/LICENSE
+%WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/NEWS
+%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/tmb.el
+%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/LICENSE
+%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/NEWS
+%WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/dot/.emacs
+%WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/admb64.ico
+%WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/NEWS
 @echo.
 
 @echo *** Unpacking components ...
 unzip -q -d %ADMB:.zip=% %ADMB%
 unzip -q -d auctex %AUCTEX%
-@rename %AUCTEX% temp.zip
-@move auctex* auctex >NUL
-@rename temp.zip %AUCTEX%
 unzip -q -d emacs %EMACS%
-unzip -q -d ess %ESS%
-@rename %ESS% temp.zip
-@move ess* ess >NUL
-@rename temp.zip %ESS%
-innounp -q -x -dtemp %RTOOLS% >NUL
-@move temp\{app} Rtools >NUL
+unzip -q %ESS%
+@rename %ESS:~0,-4% ess
+unzip -q -d innoextract %INNOEXTRACT%
+@move innoextract\innoextract.exe . >NUL
+@rd /q /s innoextract
+innoextract -s -d temp %RTOOLS%
+@move temp\app Rtools >NUL
 @rd /q /s temp
 @popd
 @echo.
@@ -71,7 +75,7 @@ innounp -q -x -dtemp %RTOOLS% >NUL
 @goto EOF
 
 :HELP
-echo Usage: ide-components
+echo Usage: adstudio-components
 echo.
 
 :EOF

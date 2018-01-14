@@ -29,6 +29,7 @@ echo on
 %CP% %FROM% %TO%\home\emacs\lisp\admb admb.el > NUL
 %CP% %FROM%\auctex %TO%\home\emacs\lisp\auctex /e > NUL
 %CP% %FROM%\ess %TO%\home\emacs\lisp\ess /e > NUL
+%CP% %FROM% %TO%\home\emacs\lisp\markdown markdown-mode.el > NUL
 %CP% %FROM% %TO%\home\emacs\lisp\tmb tmb.el > NUL
 %CP% %FROM% %TO%\home\icons admb64.ico > NUL
 @echo.

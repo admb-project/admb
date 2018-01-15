@@ -186,6 +186,7 @@
 (global-unset-key [?\C-x ?\C-w])
 (global-unset-key [?\C-x ?\C-z])
 (global-unset-key [?\M-g ?g]   )
+(global-unset-key [?\C-\M-v]   ) ; scroll-other-window
 ;;------------
 ;; 4.2  Mouse
 ;;------------
@@ -246,6 +247,7 @@
 (global-set-key [?\M-e]    'menu-bar-open             ) ; forward-sentence
 (global-set-key [?\M-f]    'menu-bar-open             ) ; forward-word
 (global-set-key [?\M-h]    'menu-bar-open             ) ; mark-paragraph
+(global-set-key [?\M-n]    'make-directory            )
 (global-set-key [?\M-o]    'menu-bar-open             ) ; [map]
 (global-set-key [?\M-t]    'menu-bar-open             ) ; transpose-words
 ;;-----------------

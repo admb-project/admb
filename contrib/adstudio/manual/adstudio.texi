@@ -39,16 +39,16 @@ AD Studio is an aggregate of the following software components:
 @itemize
 @item ADMB 12.0, released under the BSD License.@*
 Source code: @uref{http://ftp.admb-project.org/}
-@item Emacs 24.4.1, released under the GPL.@*
+@item Emacs 25.3.1, released under the GPL.@*
 Source code: @uref{ftp://ftp.gnu.org/gnu/emacs/}
 @item Emacs ADMB Mode 12.0-0, released under the Simplified BSD License.@*
 Source code:
 @uref{https://github.com/admb-project/admb/blob/master/contrib/emacs}
-@item Emacs AUC@TeX@ 11.88, released under the GPL.@*
+@item Emacs AUC@TeX@ 12.1, released under the GPL.@*
 Source code: @uref{ftp://ftp.gnu.org/gnu/auctex/}
 @item Emacs Markdown Mode 2.3, released under the GPL.@*
 Source code: @uref{https://github.com/jrblevin/markdown-mode}
-@item Emacs Speaks Statistics (ESS) 14.09, released under the GPL.@*
+@item Emacs Speaks Statistics (ESS) 17.11, released under the GPL.@*
 Source code: @uref{http://ess.r-project.org/downloads/ess/}
 @item Emacs TMB Mode 3.4, released under the GPL.@*
 Source code: @uref{https://github.com/kaskr/adcomp/blob/master/emacs}
@@ -105,10 +105,11 @@ development environment).
 @section Statistical modelling
 
 Developing statistical models in ADMB and TMB is an iterative process that
-involves writing, compiling, testing, and debugging. AD Studio has been designed
-specifically to allow the user to perform these tasks more efficiently than in
-other working environments. For example, TMB model development involves working
-on C++ and R code side by side on the screen, which is not possible in RStudio.
+consists of writing, compiling, testing, and debugging. AD Studio has been
+designed specifically to allow the user to perform these tasks more efficiently
+than in other working environments. For example, TMB model development involves
+working on C++ and R code side by side on the screen, but in some editors, such
+as RStudio, it is not possible to view two source code files at the same time.
 
 GNU Emacs is a complex and powerful editor that comes with particularly good
 support for C++, R, @LaTeX, backup/version control, and other useful features
@@ -225,11 +226,11 @@ described above, so the same guidelines apply. The key steps are:
 @item Install ADMB, GNU Emacs, GCC (including the C++ component), and GDB.
 
 @item Download the AD Studio
-@uref{http://admb-project.org/tools/admb-ide/core,@file{.emacs}} configuration
+@uref{http://admb-project.org/tools/adstudio/core,@file{.emacs}} configuration
 file and place it in @file{~/.emacs} to apply the simplified Emacs user
 interface.
 
-@item Download Emacs packages and place inside @code{~/emacs/lisp/admb} to
+@item Download Emacs packages and place inside @code{~/emacs/lisp} to
 provide mode-specific syntax highlighting and commands.
 @end enumerate
 
@@ -562,6 +563,7 @@ To finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 @item Run                  @tab Run executable              @tab @command{admb-run}
 @item Run with Args        @tab Run executable with args    @tab @command{admb-run-args}
 @item Run Makefile         @tab Run Makefile in current dir @tab @command{admb-run-makefile}
+@item Stop                 @tab Stop current process        @tab @command{admb-kill-process}
 @item@hrule@tab@hrule@tab@hrule
 @item View Report          @tab Open .rep file              @tab @command{admb-rep}
 @item View Estimates       @tab Open .cor file              @tab @command{admb-cor}
@@ -593,19 +595,19 @@ To finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 @item@hrule@tab@hrule@tab@hrule
 @headitem @emph{Menu label} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
-@item View Script         @tab Show R script           @tab @command{tmb-open}
-@item View Compilation    @tab Show compilation output @tab @command{tmb-show-compilation}
-@item View R Session      @tab Show R sesssion         @tab @command{tmb-show-r}
+@item Stop                @tab Stop current process    @tab @command{tmb-kill-process}
+@item Clean               @tab Remove *.o, *.so, *.dll @tab @command{tmb-clean}
 @item@hrule@tab@hrule@tab@hrule
 @item Compile             @tab Build model             @tab @command{tmb-compile}
 @item Run                 @tab Run R script            @tab @command{tmb-run}
 @item Make                @tab Run makefile            @tab @command{tmb-make}
 @item@hrule@tab@hrule@tab@hrule
-@item Stop                @tab Stop current process    @tab @command{tmb-kill-process}
-@item Clean               @tab Remove *.o, *.so, *.dll @tab @command{tmb-clean}
-@item@hrule@tab@hrule@tab@hrule
 @item Debug               @tab Debug model with GDB    @tab @command{tmb-debug}
 @item Toggle NaN Debug    @tab Toggle NaN exceptions   @tab @command{tmb-toggle-nan-debug}
+@item@hrule@tab@hrule@tab@hrule
+@item View Script         @tab Show R script           @tab @command{tmb-open}
+@item View Compilation    @tab Show compilation output @tab @command{tmb-show-compilation}
+@item View R Session      @tab Show R sesssion         @tab @command{tmb-show-r}
 @item@hrule@tab@hrule@tab@hrule
 @item Mini Template       @tab Create minimal template @tab @command{tmb-template-mini}
 @item Multi-Window Layout @tab Arrange three windows   @tab @command{tmb-multi-window}
@@ -703,7 +705,7 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item @kbd{C-g}       @tab Goto line                      @tab @command{goto-line}
 @item @kbd{C-h}       @tab Emacs help system              @tab @command{help}
 @item @kbd{C-l}       @tab Recenter                       @tab @command{recenter}
-@item @kbd{C-n}       @tab New                            @tab @command{new-buffer}
+@item @kbd{C-n}       @tab New file                       @tab @command{new-buffer}
 @item @kbd{C-o}       @tab Open                           @tab @command{find-file}
 @item @kbd{C-p}       @tab Open in other window           @tab @command{find-file-other-window}
 @item @kbd{C-q}       @tab Quit                           @tab @command{save-buffers-kill-emacs}
@@ -718,9 +720,10 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item @kbd{C-z}       @tab Undo/redo                      @tab @command{undo}
 @item @kbd{C-return}  @tab Rectangle functions            @tab @command{cua-set-rectangle-mark}
 @item @kbd{C-space}   @tab Expand recognized words        @tab @command{dabbrev-expand}
-@item @kbd{C-M-space} @tab Open recent files              @tab @command{recentf-open-files}
+@c @item @kbd{C-M-space} @tab Open recent files              @tab @command{recentf-open-files}
 @item @kbd{M-,}       @tab Delete trailing whitespace     @tab @command{delete-trailing-spc-tab-m}
 @item @kbd{M-;}       @tab Comment/uncomment region       @tab @command{comment-dwim}
+@item @kbd{M-n}       @tab New folder                     @tab @command{make-directory}
 @item @kbd{escape}    @tab Cancel dialog, maximize window @tab @command{keyboard-escape-quit}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
@@ -745,12 +748,14 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item @kbd{f12}       @tab Insert template                @tab @command{admb-template}
 @item @kbd{S-f12}     @tab Insert minimal template        @tab @command{admb-template-mini}
 @item@hrule@tab@hrule@tab@hrule
+@item @kbd{M-up}      @tab Scroll other screen up         @tab @command{admb-scroll-up}
+@item @kbd{M-down}    @tab Scroll other screen down       @tab @command{admb-scroll-down}
 @item @kbd{C--}       @tab Toggle compilation flags       @tab @command{admb-toggle-flag}
 @item @kbd{M-w}       @tab Toggle secondary window        @tab @command{admb-toggle-window}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 
-@sp 0.5
+@sp 2
 
 @subsec TMB mode
 
@@ -766,26 +771,105 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item @kbd{f11}       @tab Debug                          @tab @command{tmb-debug}
 @item @kbd{f12}       @tab Mini template                  @tab @command{tmb-template-mini}
 @item@hrule@tab@hrule@tab@hrule
+@item @kbd{M-up}      @tab Scroll other screen up         @tab @command{tmb-scroll-up}
+@item @kbd{M-down}    @tab Scroll other screen down       @tab @command{tmb-scroll-down}
 @item @kbd{M-m}       @tab Multi-window layout            @tab @command{tmb-multi-window}
 @item @kbd{M-w}       @tab Toggle secondary window        @tab @command{tmb-toggle-window}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 
-@sp 0.5
+@page
 
 @subsec Mouse
 
 @multitable @columnfractions .15 .39 .39
 @item@hrule@tab@hrule@tab@hrule
-@headitem @emph{Mouse} button @tab @emph{Purpose} @tab @emph{Emacs command}
+@headitem @emph{Mouse button} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
 @item @kbd{C-left} @tab Switch buffers      @tab @command{mouse-buffer-menu}
 @item @kbd{right}  @tab Navigate with imenu @tab @command{imenu}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 
+@sp 2
+
+@section Commentary
+
+@subsec Files
+
 @noindent
-AD Studio does not emulate perfectly the way many editors open menus with the
+The keystrokes @kbd{C-n}, @kbd{C-o}, @kbd{C-s}, and @kbd{C-w} can be used to
+create, open, save, and close files. For convenience, @kbd{C-p} opens any file
+that has a similar name as the ADMB/TMB model, for example, @kbd{C-p@tie{}dat}
+to open @file{mymodel.dat}. Directories can be created with @kbd{M-n} and
+switched to with @kbd{C-d}. To quit AD Studio, press @kbd{C-q}.
+
+@subsec Cut, copy, paste (CUA mode)
+
+@noindent
+These three commands are essential for editing any text, and they form a major
+obstacle for users who try Emacs for the first time.
+
+In almost all other editors, @kbd{C-x}, @kbd{C-c}, and @kbd{C-v} are used to
+cut, copy, and paste. These are the keybindings that the majority of computer
+users have memorized and use in a wide variety of applications. The default
+keybindings in Emacs to cut, copy, and paste (@kbd{C-w}, @kbd{M-w}, @kbd{C-y})
+are neither intuitive nor easy to memorize at first. Rebinding keystrokes is
+easy enough in Emacs, except @kbd{C-x} and @kbd{C-c} are reserved keystrokes in
+Emacs, to access many of the most important commands. Rebinding those keystrokes
+is questionable, in the same way it would be questionable for an R package to
+redefine things like @code{q()} or @code{pi}. There is no perfect solution, but
+the alternatives include:
+
+@enumerate
+@item Bite the bullet and learn the Emacs defaults.
+@item Define keybindings to cut/copy/paste that feel convenient, but are not
+@kbd{C-x} or @kbd{C-c}.
+@item Load special @code{cua-mode} that overrides the reserved defaults and
+binds @kbd{C-x}, @kbd{C-c}, and @kbd{C-v} to cut, copy, and paste.
+@end enumerate
+
+@noindent
+AD Studio takes the third option: CUA mode. Among the drawbacks is that text is
+not reliably copied between applications, not even between Emacs instances.
+Workarounds include:
+
+@itemize @minus
+@item Copy with @kbd{C-insert} and paste with @kbd{M-insert}.
+@item Copy with left mouse button, paste with middle button.
+@end itemize
+
+@subsec Undo/redo
+
+@noindent
+The undo command in AD Studio does both undo and redo. When undo is performed
+repeatedly, it goes further back in the undo history. Any command other than
+undo will interrupt this sequence, and from that point the previous undo
+commands become ordinary changes that can be undone, equivalent to redo. Try,
+for example, copying some text and then paste it three times. Now undo three
+times, interrupt with a harmless key like the @key{up} arrow, and then undo
+again to redo. To undo all changes since last save, it's easiest to reload using
+the @key{f5} key.
+
+@subsec Comment/uncomment
+
+@noindent
+The @kbd{M-;} key comments or uncomments the highlighted code region, depending
+on whether the region is already commented or not.
+
+@subsec Secondary window
+
+@noindent
+The default state of an AD Studio session is with the screen split in two parts,
+with the ADMB/TMB model code (TPL/C++) in the main window and something else in
+a secondary window. This secondary window can be navigated without leaving the
+main window, using intuitive keybindings: @kbd{M-up}, @kbd{M-down},
+@kbd{M-pgup}, @kbd{M-pgdn}, @kbd{M-home}, @kbd{M-end}.
+
+@subsec Alt key
+
+@noindent
+AD Studio does not emulate exactly the way many editors open menus with the
 @key{Alt} key. To open the @clickthis{Edit} menu, for example, it is not enough
 to press @key{Alt} and @key{e} simultaneously. AD Studio provides four ways to
 open the @clickthis{Edit} menu:
@@ -804,8 +888,11 @@ opening the @clickthis{Edit} menu. Also don't forget that AD Studio is open
 source, so users are free to modify any part of the program, including the
 keybindings defined in the @file{.emacs} file.
 
-Longtime users of the Vi editor can turn on Emacs @command{evil-mode} or
-@command{viper-mode}, which are full-featured Vi emulators for Emacs.
+@subsec Vi keybindings
+
+@noindent
+Longtime users of the Vi editor can turn on Emacs @command{viper-mode}, which is
+a full-featured Vi emulator for Emacs.
 
 @chapter Configuration
 @anchor{Configuration}

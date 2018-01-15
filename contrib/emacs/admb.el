@@ -1,12 +1,12 @@
 ;;; admb.el --- Major mode for creating statistical models with AD Model Builder
 
-;; Copyright (C) 2003, 2007-2017 Arni Magnusson
+;; Copyright (C) 2003, 2007-2018 Arni Magnusson
 
 ;; Author:   Arni Magnusson
 ;; Keywords: languages
 ;; URL:      https://github.com/admb-project/admb/blob/master/contrib/emacs
 
-(defconst admb-mode-version "11.6-0" "ADMB Mode version number.")
+(defconst admb-mode-version "12.0-0" "ADMB Mode version number.")
 
 ;;; Commentary:
 ;;
@@ -358,6 +358,8 @@ Use `admb-toggle-flag' to set `admb-flags', `admb-tpl2cpp-command', and
     (define-key map [?\C-\M-m]          'admb-endl          )
     (define-key map [?\C-c C-backspace] 'admb-clean         )
     (define-key map [?\C-c 127]         'admb-clean         )
+    (define-key map [M-up]              'admb-scroll-up     )
+    (define-key map [M-down]            'admb-scroll-down   )
     (define-key map [?\C-c ?\C--]       'admb-toggle-flag   )
     (define-key map [?\C-c ?\C-.]       'admb-mode-version  )
     (define-key map [?\C-c ?\C-/]       'admb-help          )
@@ -528,6 +530,20 @@ ending may need to be associated with the desired browser program."
   (interactive)(save-buffer)
   (admb-split-window)(admb-send admb-run-makefile-command)
   (with-current-buffer "*compilation*" (setq show-trailing-whitespace nil)))
+(defun admb-scroll-down (n)
+  "Scroll other window down N lines, or visit next error message.\n
+The behavior of this command depends on whether the compilation buffer is
+visible."
+  (interactive "p")
+  (if (null (get-buffer-window "*compilation*"))(scroll-other-window n)
+    (next-error n)))
+(defun admb-scroll-up (n)
+  "Scroll other window up N lines, or visit previous error message.\n
+The behavior of this command depends on whether the compilation buffer is
+visible."
+  (interactive "p")
+  (if (null (get-buffer-window "*compilation*"))(scroll-other-window (- n))
+    (previous-error n)))
 (defun admb-template ()
   "Insert AD Model Builder template." (interactive)
   (goto-char (point-min))(insert "\
@@ -703,6 +719,14 @@ files, and `admb-pin' to set initial parameter values. Run model with `admb-run'
 or `admb-run-args', and view model output with `admb-cor', `admb-par',
 `admb-rep', and `admb-rep-browser'. Use the general `admb-open' to open other
 model-related files.\n
+While staying in the ADMB window, navigate the secondary window with
+\\<admb-mode-map>\
+\\[beginning-of-buffer-other-window], \\[scroll-other-window-down], \
+\\[admb-scroll-up] (scroll home, page up, line up), and
+\\[end-of-buffer-other-window], \\[scroll-other-window], \
+\\[admb-scroll-down] (scroll end, page down, line down).
+This is particularly efficient for navigating error messages listed
+in the compilation buffer.\n
 The `admb-run-makefile' command supports makefile-based workflow.\n
 \\{admb-mode-map}"
   (set (make-local-variable 'comment-start) "//")

@@ -3,15 +3,15 @@ setlocal
 if [%1]==[--help] goto HELP
 REM ############################################################################
 REM                                                                            #
-REM Script:   ide-distribution                                                 #
+REM Script:   adstudio-distribution                                            #
 REM                                                                            #
-REM Purpose:  Arrange ADMB-IDE components for distribution                     #
+REM Purpose:  Arrange AD Studio components for distribution                    #
 REM                                                                            #
-REM Requires: Directory 'components' created by ide-components                 #
+REM Requires: Directory 'components' created by adstudio-components            #
 REM                                                                            #
 REM Returns:  Creates a directory called 'distribution'                        #
 REM                                                                            #
-REM History:  26 Aug 2017 Arni Magnusson created                               #
+REM History:  2018-01-15  Created for AD Studio 1.0                            #
 REM                                                                            #
 REM ############################################################################
 
@@ -25,13 +25,13 @@ md %TO%
 echo on
 @echo.
 @echo *** Populating home ...
-%CP% %FROM% %TO%\home .emacs >NUL
-%CP% %FROM% %TO%\home\emacs\lisp\admb admb.el > NUL
+%CP% %FROM%\admb %TO%\home\emacs\lisp\admb /e> NUL
 %CP% %FROM%\auctex %TO%\home\emacs\lisp\auctex /e > NUL
 %CP% %FROM%\ess %TO%\home\emacs\lisp\ess /e > NUL
 %CP% %FROM% %TO%\home\emacs\lisp\markdown markdown-mode.el > NUL
-%CP% %FROM% %TO%\home\emacs\lisp\tmb tmb.el > NUL
+%CP% %FROM%\tmb %TO%\home\emacs\lisp\tmb /e> NUL
 %CP% %FROM% %TO%\home\icons admb64.ico > NUL
+%CP% %FROM% %TO%\home .emacs >NUL
 @echo.
 @echo *** Populating admb ...
 for /F "usebackq tokens=*" %%F in (`dir /ad /b %FROM%\admb*-*-*`) do set AD=%%F
@@ -60,7 +60,7 @@ move distribution\home distribution\~ >NUL
 @goto EOF
 
 :HELP
-echo Usage: ide-distribution
+echo Usage: adstudio-distribution
 echo.
 
 :EOF

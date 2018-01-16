@@ -11,7 +11,7 @@ REM Requires: wget                                                             #
 REM                                                                            #
 REM Returns:  Creates a directory called 'components'                          #
 REM                                                                            #
-REM History:  26 Aug 2017 Arni Magnusson created                               #
+REM History:  2018-01-15  Created for AD Studio 1.0                            #
 REM                                                                            #
 REM ############################################################################
 
@@ -33,18 +33,6 @@ echo on
 @rd /q /s components 2>NUL
 @md components
 @pushd components
-%WGET% %COMPS%/%ADMB%
-%WGET% %COMPS%/admb.pdf
-%WGET% %COMPS%/admbre.pdf
-%WGET% %COMPS%/autodif.pdf
-%WGET% http://admb-project.org/tools/adstudio/adstudio.pdf
-%WGET% %COMPS%/%AUCTEX%
-%WGET% http://ess.r-project.org/downloads/ess/%ESS%
-%WGET% %COMPS%/unzip.exe
-%WGET% http://ftp.gnu.org/gnu/emacs/windows/%EMACS%
-%WGET% http://constexpr.org/innoextract/files/%INNOEXTRACT%
-%WGET% https://jblevins.org/projects/markdown-mode/markdown-mode.el
-%WGET% https://cran.r-project.org/bin/windows/Rtools/%RTOOLS%
 %WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/admb.el
 %WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/LICENSE
 %WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/NEWS
@@ -52,8 +40,21 @@ echo on
 %WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/LICENSE
 %WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/NEWS
 %WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/dot/.emacs
+%WGET% %COMPS%/admb.pdf
 %WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/admb64.ico
+%WGET% %COMPS%/%ADMB%
+%WGET% %COMPS%/admbre.pdf
+%WGET% http://admb-project.org/tools/adstudio/adstudio.pdf
+%WGET% %COMPS%/%AUCTEX%
+%WGET% %COMPS%/autodif.pdf
+%WGET% http://ftp.gnu.org/gnu/emacs/windows/%EMACS%
+%WGET% http://ess.r-project.org/downloads/ess/%ESS%
+%WGET% http://constexpr.org/innoextract/files/%INNOEXTRACT%
+%WGET% https://jblevins.org/projects/markdown-mode/markdown-mode.el
 %WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/NEWS
+%WGET% https://cran.r-project.org/bin/windows/Rtools/%RTOOLS%
+%WGET% %COMPS%/unzip.exe
+
 @echo.
 
 @echo *** Unpacking components ...
@@ -61,7 +62,7 @@ unzip -q -d %ADMB:.zip=% %ADMB%
 unzip -q -d auctex %AUCTEX%
 unzip -q -d emacs %EMACS%
 unzip -q %ESS%
-@rename %ESS:~0,-4% ess
+@rename %ESS:.zip=% ess
 unzip -q -d innoextract %INNOEXTRACT%
 @move innoextract\innoextract.exe . >NUL
 @rd /q /s innoextract

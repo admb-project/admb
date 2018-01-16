@@ -1,11 +1,11 @@
 [Setup]
-OutputBaseFilename=admb-ide-116-win64
-AppName=ADMB-IDE
-AppVerName=ADMB-IDE 11.6 win64
+OutputBaseFilename=adstudio
+AppName=AD Studio
+AppVerName=AD Studio 1.0
 ChangesAssociations=yes
 ChangesEnvironment=yes
 DefaultDirName=c:\admb
-DefaultGroupName=ADMB
+DefaultGroupName=AD Studio
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 OutputDir=..

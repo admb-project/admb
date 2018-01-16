@@ -722,9 +722,9 @@ model-related files.\n
 While staying in the ADMB window, navigate the secondary window with
 \\<admb-mode-map>\
 \\[beginning-of-buffer-other-window], \\[scroll-other-window-down], \
-\\[admb-scroll-up] (scroll home, page up, line up), and
+\\[admb-scroll-up] (home, page up, line up), and
 \\[end-of-buffer-other-window], \\[scroll-other-window], \
-\\[admb-scroll-down] (scroll end, page down, line down).
+\\[admb-scroll-down] (end, page down, line down).
 This is particularly efficient for navigating error messages listed
 in the compilation buffer.\n
 The `admb-run-makefile' command supports makefile-based workflow.\n

@@ -170,8 +170,8 @@
 ;; Default       TAB     HOME END PGUP PGDN BKSP DEL
 ;; Custom    SPC     RET
 ;; Special     c     i   m          x         [
-;; Default       e  h jkl       tu   y 0..9`-= ];'\  /~!@#$%^&*() +{}|:"<>?
-;; Custom    ab d fg      nopqrs  vw  z            ,.
+;; Default       e  h jkl        u   y 0..9`-= ];'\  /~!@#$%^&*() +{}|:"<>?
+;; Custom    ab d fg      nopqrst vw  z            ,.
 ;; Suppress                                                      _
 ;;--------------
 ;; 4.1  Disable
@@ -239,6 +239,7 @@
 (global-set-key [?\C-q]    'save-buffers-kill-emacs   ) ; quoted-insert
 (global-set-key [?\C-r]    'query-replace             ) ; isearch-backward
 (global-set-key [?\C-s]    'save-buffer               ) ; isearch-forward
+(global-set-key [?\C-t]    'adstudio-toggle-reminder  ) ; transpose-chars
 (global-set-key [33554451] 'write-file                ) ; C-S
 (global-set-key [?\C-w]    'kill-buffer-maybe-window  ) ; kill-region
 (global-set-key [?\M-,]    'delete-trailing-spc-tab-m ) ; tags-loop-continue
@@ -304,9 +305,17 @@
 ;;-----------
 ;; 5.8  Help
 ;;-----------
+(defcustom adstudio-reminder t
+  "Whether to show `adstudio-help' when switching to
+`admb-mode' or `tmb-mode'."
+:tag "Remind me" :type 'boolean)
 (defun adstudio-help ()
   "Show help message for AD Studio." (interactive)
   (message "F2: ADMB mode      F3: TMB mode"))
+(defun adstudio-toggle-reminder ()
+  "Toggle the value of `adstudio-reminder'." (interactive)
+  (setq adstudio-reminder (not adstudio-reminder))
+  (message "F2 and F3 reminder %s" (if adstudio-reminder "ON" "OFF")))
 (defun adstudio-version ()
   "Show AD Studio version number." (interactive)
   (message "AD Studio version %s" adstudio-version))
@@ -321,7 +330,7 @@
 (require 'admb)
 (eval-after-load "prog-mode" '(define-key prog-mode-map [?\C-\M-q] nil))
 (defun adstudio-admb-hook ()
-  (adstudio-help)
+  (if adstudio-reminder (adstudio-help))
   (local-unset-key [S-f11]            )
   (local-unset-key [?\C-c C-backspace])
   (local-unset-key [?\C-c 127]        )
@@ -346,17 +355,18 @@
   (local-unset-key [?\C-c ?\C-v]      )
   (local-unset-key [?\C-c ?\C-w]      )
   ;; Keybindings that should only be active in an ADMB buffer
-  (local-set-key [f1]    'admb-help          ) ; adstudio-help
-  (local-set-key [f7]    'admb-tpl2cpp       )
-  (local-set-key [f8]    'admb-build         )
-  (local-set-key [f9]    'admb-run           )
-  (local-set-key [S-f9]  'admb-run-args      )
-  (local-set-key [f10]   'admb-rep           ) ; menu-bar-open
-  (local-set-key [S-f10] 'admb-cor           )
-  (local-set-key [?\C--] 'admb-toggle-flag   ) ; negative-argument
-  (local-set-key [?\C-.] 'admb-toggle-section)
-  (local-set-key [?\C-p] 'admb-open          ) ; previous-line
-  (local-set-key [?\M-w] 'admb-toggle-window)) ; kill-ring-save
+  (local-set-key [f1]          'admb-help          ) ; adstudio-help
+  (local-set-key [f7]          'admb-tpl2cpp       )
+  (local-set-key [f8]          'admb-build         )
+  (local-set-key [f9]          'admb-run           )
+  (local-set-key [S-f9]        'admb-run-args      )
+  (local-set-key [f10]         'admb-rep           ) ; menu-bar-open
+  (local-set-key [S-f10]       'admb-cor           )
+  (local-set-key [M-backspace] 'admb-clean         ) ; backward-kill-word
+  (local-set-key [?\C--]       'admb-toggle-flag   ) ; negative-argument
+  (local-set-key [?\C-.]       'admb-toggle-section)
+  (local-set-key [?\C-p]       'admb-open          ) ; previous-line
+  (local-set-key [?\M-w]       'admb-toggle-window)) ; kill-ring-save
 (add-hook 'admb-mode-hook 'adstudio-admb-hook)
 ;;----------
 ;; 6.6  C++
@@ -428,7 +438,7 @@
 ;;----------
 (require 'tmb)
 (defun adstudio-tmb-hook ()
-  (adstudio-help)
+  (if adstudio-reminder (adstudio-help))
   (set-face-attribute 'tmb-block-face     nil :foreground "chocolate")
   (set-face-attribute 'tmb-data-face      nil :foreground "chocolate")
   (set-face-attribute 'tmb-parameter-face nil :foreground "chocolate")
@@ -520,6 +530,6 @@
   (define-key isearch-mode-map [?\C-f]  'isearch-repeat-forward))
 (add-hook 'isearch-mode-hook 'adstudio-isearch-hook)
 
-(adstudio-help)
+(if adstudio-reminder (adstudio-help))
 
 ;; .emacs ends here

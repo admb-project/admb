@@ -1,0 +1,52 @@
+#ADMB Project
+*ADMB-12.0*  
+*Released December 21, 2017*  
+
+ADMB binary installation and usage procedure for Windows and MinGW C++ compiler using zip file.
+
+---
+
+Quick Start
+-----------
+
+**Prerequisite** &mdash; Rtools is installed on the local computer.
+
+
+1. **Download** ADMB
+
+       * For Windows 64Bit, download [admb-12.0-windows10-rtools](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-windows10-rtools.zip).
+
+2. **Install** ADMB
+
+       Double click downloaded file to open, then copy **admb** folder to Local Disk (**C:\\>**).
+
+3. **Use** ADMB
+
+       Using Windows Explorer, double click the **ADMB Command Prompt** shortcut located in **C:\\admb\\>**.
+
+       In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
+
+       Check C++ compiler (g++).
+
+           C:\> g++ --version
+
+       If g++ compiler is not recognized, then configure search **PATH** with location of **g++.exe**.
+
+           C:\> set PATH=C:\Rtools\bin;C:\Rtools\mingw_64\bin;%PATH%
+ 
+       Change simple example directory.
+
+           C:\> cd admb\examples\admb\simple
+
+       Build simple example.
+
+           C:\admb\examples\admb\simple\> admb simple
+
+       Run simple example.
+
+           C:\admb\examples\admb\simple\> simple
+
+       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-12.0/) for more information.
+
+---
+For help and support, contact <users@admb-project.org>.

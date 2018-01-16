@@ -677,8 +677,6 @@ To finish the debugging session, type @code{quit} in the @code{(gdb)} prompt.
 In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @samp{M-} means the @key{Alt} key.
 
-@subsec General
-
 @multitable @columnfractions .15 .39 .39
 @item@hrule@tab@hrule@tab@hrule
 @headitem @emph{Keystroke} @tab @emph{Purpose} @tab @emph{Emacs command}
@@ -712,6 +710,7 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item @kbd{C-r}       @tab Replace                        @tab @command{query-replace}
 @item @kbd{C-s}       @tab Save                           @tab @command{save-buffer}
 @item @kbd{C-S}       @tab Save as                        @tab @command{write-file}
+@item @kbd{C-t}       @tab Toggle F2 and F3 reminder      @tab @command{adstudio-toggle-reminder}
 @item @kbd{C-v}       @tab Paste                          @tab @command{cua-paste}
 @item @kbd{C-w}       @tab Close                          @tab @command{kill-buffer-maybe-window}
 @item @kbd{C-x}       @tab Cut                            @tab @command{cua--prefix-override-handler}
@@ -720,7 +719,6 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item @kbd{C-z}       @tab Undo/redo                      @tab @command{undo}
 @item @kbd{C-return}  @tab Rectangle functions            @tab @command{cua-set-rectangle-mark}
 @item @kbd{C-space}   @tab Expand recognized words        @tab @command{dabbrev-expand}
-@c @item @kbd{C-M-space} @tab Open recent files              @tab @command{recentf-open-files}
 @item @kbd{M-,}       @tab Delete trailing whitespace     @tab @command{delete-trailing-spc-tab-m}
 @item @kbd{M-;}       @tab Comment/uncomment region       @tab @command{comment-dwim}
 @item @kbd{M-n}       @tab New folder                     @tab @command{make-directory}
@@ -736,22 +734,23 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item@hrule@tab@hrule@tab@hrule
 @headitem @emph{Keystroke} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
-@item @kbd{f1}        @tab Help for ADMB mode             @tab @command{admb-help}
-@item @kbd{f7}        @tab Translate TPL to C++           @tab @command{admb-tpl2cpp}
-@item @kbd{f8}        @tab Build executable from TPL      @tab @command{admb-build}
-@item @kbd{f9}        @tab Run executable                 @tab @command{admb-run}
-@item @kbd{S-f9}      @tab Run executable with args       @tab @command{admb-run-args}
-@item @kbd{f10}       @tab Open .rep file                 @tab @command{admb-rep}
-@item @kbd{S-f10}     @tab Open .cor file                 @tab @command{admb-cor}
-@item @kbd{f11}       @tab Navigate with outline          @tab @command{admb-outline}
-@item @kbd{S-f11}     @tab Navigate with imenu            @tab @command{imenu}
-@item @kbd{f12}       @tab Insert template                @tab @command{admb-template}
-@item @kbd{S-f12}     @tab Insert minimal template        @tab @command{admb-template-mini}
+@item @kbd{f1}          @tab Help for ADMB mode             @tab @command{admb-help}
+@item @kbd{f7}          @tab Translate TPL to C++           @tab @command{admb-tpl2cpp}
+@item @kbd{f8}          @tab Build executable from TPL      @tab @command{admb-build}
+@item @kbd{f9}          @tab Run executable                 @tab @command{admb-run}
+@item @kbd{S-f9}        @tab Run executable with args       @tab @command{admb-run-args}
+@item @kbd{f10}         @tab Open .rep file                 @tab @command{admb-rep}
+@item @kbd{S-f10}       @tab Open .cor file                 @tab @command{admb-cor}
+@item @kbd{f11}         @tab Navigate with outline          @tab @command{admb-outline}
+@item @kbd{S-f11}       @tab Navigate with imenu            @tab @command{imenu}
+@item @kbd{f12}         @tab Insert template                @tab @command{admb-template}
+@item @kbd{S-f12}       @tab Insert minimal template        @tab @command{admb-template-mini}
 @item@hrule@tab@hrule@tab@hrule
-@item @kbd{M-up}      @tab Scroll other screen up         @tab @command{admb-scroll-up}
-@item @kbd{M-down}    @tab Scroll other screen down       @tab @command{admb-scroll-down}
-@item @kbd{C--}       @tab Toggle compilation flags       @tab @command{admb-toggle-flag}
-@item @kbd{M-w}       @tab Toggle secondary window        @tab @command{admb-toggle-window}
+@item @kbd{M-backspace} @tab Remove temporary files         @tab @command{admb-clean}
+@item @kbd{M-up}        @tab Scroll other screen up         @tab @command{admb-scroll-up}
+@item @kbd{M-down}      @tab Scroll other screen down       @tab @command{admb-scroll-down}
+@item @kbd{C--}         @tab Toggle compilation flags       @tab @command{admb-toggle-flag}
+@item @kbd{M-w}         @tab Toggle secondary window        @tab @command{admb-toggle-window}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 
@@ -791,22 +790,34 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 
-@sp 2
+@chapter Hints and tips
 
-@section Commentary
+@section Help pages
 
-@subsec Files
+Both @command{admb-mode} and @command{tmb-mode} come with a help page that is
+bound to the @key{f1} key when either of these modes is active. Furthermore, the
+Emacs help system has a help page for every function and variable, as well as
+keystrokes:
 
-@noindent
+@indentedblock
+@multitable @columnfractions .07 .45
+@item @kbd{C-h k} @tab Keystroke
+@item @kbd{C-h f} @tab Function
+@item @kbd{C-h a} @tab Search for command
+@item @kbd{C-h v} @tab Variable
+@end multitable
+@end indentedblock
+
+@section Files
+
 The keystrokes @kbd{C-n}, @kbd{C-o}, @kbd{C-s}, and @kbd{C-w} can be used to
 create, open, save, and close files. For convenience, @kbd{C-p} opens any file
 that has a similar name as the ADMB/TMB model, for example, @kbd{C-p@tie{}dat}
 to open @file{mymodel.dat}. Directories can be created with @kbd{M-n} and
 switched to with @kbd{C-d}. To quit AD Studio, press @kbd{C-q}.
 
-@subsec Cut, copy, paste (CUA mode)
+@section Cut, copy, paste
 
-@noindent
 These three commands are essential for editing any text, and they form a major
 obstacle for users who try Emacs for the first time.
 
@@ -839,9 +850,8 @@ Workarounds include:
 @item Copy with left mouse button, paste with middle button.
 @end itemize
 
-@subsec Undo/redo
+@section Undo/redo
 
-@noindent
 The undo command in AD Studio does both undo and redo. When undo is performed
 repeatedly, it goes further back in the undo history. Any command other than
 undo will interrupt this sequence, and from that point the previous undo
@@ -851,24 +861,24 @@ times, interrupt with a harmless key like the @key{up} arrow, and then undo
 again to redo. To undo all changes since last save, it's easiest to reload using
 the @key{f5} key.
 
-@subsec Comment/uncomment
+@section Comment/uncomment
 
-@noindent
 The @kbd{M-;} key comments or uncomments the highlighted code region, depending
 on whether the region is already commented or not.
 
-@subsec Secondary window
+@section Secondary window
 
-@noindent
 The default state of an AD Studio session is with the screen split in two parts,
 with the ADMB/TMB model code (TPL/C++) in the main window and something else in
 a secondary window. This secondary window can be navigated without leaving the
 main window, using intuitive keybindings: @kbd{M-up}, @kbd{M-down},
 @kbd{M-pgup}, @kbd{M-pgdn}, @kbd{M-home}, @kbd{M-end}.
 
-@subsec Alt key
+If the secondary window contains compilation output, @kbd{M-up} and @kbd{M-down}
+will navigate between error messages instead of lines.
 
-@noindent
+@section Alt key
+
 AD Studio does not emulate exactly the way many editors open menus with the
 @key{Alt} key. To open the @clickthis{Edit} menu, for example, it is not enough
 to press @key{Alt} and @key{e} simultaneously. AD Studio provides four ways to
@@ -888,9 +898,8 @@ opening the @clickthis{Edit} menu. Also don't forget that AD Studio is open
 source, so users are free to modify any part of the program, including the
 keybindings defined in the @file{.emacs} file.
 
-@subsec Vi keybindings
+@section Vi keybindings
 
-@noindent
 Longtime users of the Vi editor can turn on Emacs @command{viper-mode}, which is
 a full-featured Vi emulator for Emacs.
 
@@ -906,13 +915,12 @@ Studio should work out of the box and get the job done with minimum fuss.
 
 It is, however, in the nature of modellers to experiment and improve. Users who
 modify the original @file{.emacs} file are no longer using AD Studio, but Emacs
-with @code{admb-mode} and a personal @file{.emacs} file. One reason to modify
-the @file{.emacs} file or write a new one from scratch is to install additional
-Emacs packages. Another reason is to redefine the keybindings, probably closer
-to the Emacs defaults. Other reasons include setting fonts and colors, setting
-user variables, or defining new user functions. Users with a personal
-@file{.emacs} file can update ADMB, Emacs, GCC, GDB, and @code{admb-mode}
-independently, or salvage pieces from a recent AD Studio zip bundle.
+with packages and a personal @file{.emacs} file. One reason to modify the
+@file{.emacs} file or write a new one from scratch is to install additional
+Emacs packages. Another reason is to redefine the keybindings, perhaps closer to
+the Emacs defaults. Other reasons include setting fonts and colors, setting user
+variables, or defining new user functions. Users with a personal @file{.emacs}
+file can update ADMB, GCC, GDB, Emacs and packages independently.
 
 Note that it is not advisable to configure Emacs by clicking @clickthis{Options
 @click{} Save Options} or @clickthis{Options @click{} Customize Emacs}. Editing
@@ -952,47 +960,35 @@ browser program, Firefox or the like.
 @section Custom startup
 
 @noindent
-It can be practical to make a canned version of AD Studio available, while using
-a different @file{.emacs} file for most Emacs sessions. For example, an
-experienced Emacs user may want to test how AD Studio works, or demonstrate it
-to colleagues, without constantly shuffling @file{.emacs} files. In Windows, one
-can place the AD Studio @file{.emacs} file in @code{c:/~/adstudio} and then
-start AD Studio with the shell command:
+It can be practical to have AD Studio available, while using a personal
+@file{.emacs} file for most Emacs sessions. For example, an experienced Emacs
+user may want to test how AD Studio works, or demonstrate it to colleagues,
+without constantly shuffling @file{.emacs} files. In Windows, one can place the
+AD Studio @file{.emacs} file in @code{c:/~/adstudio} and then start AD Studio
+with the shell command:
 
 @smallexample
 c:/gnu/emacs/bin/runemacs.exe -Q -l c:/~/adstudio/.emacs
 @end smallexample
 
-The @option{-Q} option tells Emacs to ignore the default startup file(s) and the
+The @option{-Q} option tells Emacs to ignore the default startup file(s) and
 @option{-l} tells it to load a Lisp file. This command can be used in a start
-menu or desktop shortcut, with the @code{c:/~/icons/admb64.ico} decorative icon,
-and similar tricks can be used in Linux and Mac.
+menu or desktop shortcut, with the @code{c:/~/icons/ad.ico} decorative icon, and
+similar tricks can be used in Linux and Mac.
 
 @chapter Troubleshooting
 @anchor{Troubleshooting}
 
 @section{General usage}
 
-@subsec The ADMB menu and toolbar icons disappear
+@subsec The ADMB/TMB menu and toolbar icons disappear
 
 @noindent
-These only appear when the current buffer is in @command{admb-mode}. Either
-switch to a @file{.tpl} buffer that is already in @command{admb-mode}, or press
-@key{f2} to switch to @command{admb-mode} in the current buffer. Other modes may
-have special menus and toolbar icons that are useful for that mode, see for
-example the @ref{GDB,,GDB screenshot}.
-
-@subsec Undo/redo
-
-@noindent
-The undo command in AD Studio does both undo and redo. When undo is performed
-repeatedly, it goes further back in the undo history. Any command other than
-undo will interrupt this sequence, and from that point the previous undo
-commands become ordinary changes that can be undone, equivalent to redo. Try,
-for example, copying some text and then paste it three times. Now undo three
-times, interrupt with a harmless key like the @key{up} arrow, and then undo
-again to redo. To undo all changes since last save, it's easiest to reload using
-the @key{f5} key.
+These only appear when the current buffer is in @command{admb-mode} or
+@command{tmb-mode}. Either switch to a source code buffer that is already in
+@command{admb-mode} or @command{tmb-mode}, or press @key{f2} or @key{f3} in the
+current buffer. Other modes may have special menus and toolbar icons that are
+useful for that mode, see for example the @ref{GDB,,GDB screenshot}.
 
 @subsec The @key{Tab} key does not indent code properly
 
@@ -1008,18 +1004,20 @@ previous line, which is sometimes useful.
 This is how Emacs shows Dos line endings, although in most cases Dos line
 endings are handled more gracefully. It could be that the file contains mixed
 line endings (both Dos and Unix), and the simplest solution is to delete all
-@code{^M} characters. It could also be that the Emacs variable
+@code{^M} characters. This can be done using the @key{M-,} key that deletes all
+trailing whitespace. It could also be that the Emacs variable
 @code{file-name-buffer-file-type-alist} matches the @file{.tpl} file ending, and
 the simplest solution is to set that variable to @code{nil}.
 
-@subsec Clicking @clickthis{ADMB @click{} Run Makefile} returns an error
+@subsec Clicking (@clickthis{ADMB @click{} Run Makefile}) or (@clickthis{TMB
+@click{} Make}) returns an error
 
 @noindent
 Makefiles are a sophisticated build automation tool, not required for general
-ADMB usage. This command invokes the @command{make} program that looks for a
-file called @file{Makefile}. If the @command{make} program or the makefile is
-not found, an error is returned. This feature is provided for advanced users who
-have prepared a makefile in the working directory.
+ADMB or TMB usage. This command invokes the @command{make} program that looks
+for a file called @file{Makefile}. If the @command{make} program or the makefile
+is not found, an error is returned. This feature is provided for advanced users
+who have prepared a makefile in the working directory.
 
 @section{Configuration}
 

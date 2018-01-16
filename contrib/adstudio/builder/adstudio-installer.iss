@@ -10,7 +10,7 @@ DisableDirPage=yes
 DisableProgramGroupPage=yes
 OutputDir=..
 SourceDir=distribution
-UninstallDisplayIcon=~\icons\admb64.ico
+UninstallDisplayIcon=~\icons\ad.ico
 
 [Types]
 Name: full;      Description: "Full installation"

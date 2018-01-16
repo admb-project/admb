@@ -30,7 +30,7 @@ echo on
 %CP% %FROM%\ess %TO%\home\emacs\lisp\ess /e > NUL
 %CP% %FROM% %TO%\home\emacs\lisp\markdown markdown-mode.el > NUL
 %CP% %FROM%\tmb %TO%\home\emacs\lisp\tmb /e> NUL
-%CP% %FROM% %TO%\home\icons admb64.ico > NUL
+%CP% %FROM%\icons %TO%\home\icons /e > NUL
 %CP% %FROM% %TO%\home .emacs >NUL
 @echo.
 @echo *** Populating admb ...

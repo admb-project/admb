@@ -36,12 +36,16 @@ echo on
 %WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/admb.el
 %WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/LICENSE
 %WGET% -P admb %GITHUB%/admb-project/admb/master/contrib/emacs/NEWS
+%WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/ad.ico
+%WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/cpp.ico
+%WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/gnu_gray.ico
+%WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/md.ico
+%WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/tex.ico
 %WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/tmb.el
 %WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/LICENSE
 %WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/NEWS
 %WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/dot/.emacs
 %WGET% %COMPS%/admb.pdf
-%WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/admb64.ico
 %WGET% %COMPS%/%ADMB%
 %WGET% %COMPS%/admbre.pdf
 %WGET% http://admb-project.org/tools/adstudio/adstudio.pdf
@@ -54,7 +58,6 @@ echo on
 %WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/NEWS
 %WGET% https://cran.r-project.org/bin/windows/Rtools/%RTOOLS%
 %WGET% %COMPS%/unzip.exe
-
 @echo.
 
 @echo *** Unpacking components ...

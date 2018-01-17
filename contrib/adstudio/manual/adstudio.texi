@@ -1027,16 +1027,17 @@ who have prepared a makefile in the working directory.
 The @file{.tpl} file ending needs to be associated with Emacs. This can be done
 with registry entries or in Windows Explorer folder options.
 
-@subsec Emacs cannot load @command{admb-mode}
+@subsec Emacs cannot load @command{admb-mode} or @command{tmb-mode}
 
 @noindent
 The directory containing the @file{admb.el} file needs to be in the Emacs
 variable @code{load-path}, and the @command{admb-mode} command needs to be
-autoloaded in the @file{.emacs} configuration file.
+autoloaded in the @file{.emacs} configuration file. The same holds for
+@file{tmb.el} and other Emacs packages.
 
 @page
 
-@subsec Compilation commands are not recognized
+@subsec ADMB compilation commands not recognized
 
 @noindent
 The @env{PATH} environment variable needs to point to the directories containing
@@ -1059,15 +1060,15 @@ before using ADMB.
 @anchor{Conflicting compilers and libraries}
 
 @noindent
-When developing models using ADMB, it is important to have only one C++ compiler
-and one ADMB version in the PATH. Otherwise, errors will occur as objects and
-libraries of different versions are linked together.
+When developing models using ADMB or TMB, it is important to have only one C++
+compiler in the PATH. Likewise, a maximum of one version of ADMB should be in
+the PATH. Otherwise, errors will occur as objects and libraries of different
+versions are linked together.
 
-For example, the Rtools collection includes a C++ compiler that should be
-removed from the PATH, unless ADMB was originally built using that compiler. One
-can either modify the PATH environment variable, or temporarily rename
-directories (e.g., @file{Rtools} to @file{Rtools_}) so they are not in the PATH
-while building models with ADMB.
+AD Studio uses the C++ compiler that comes with Rtools, which should be used for
+compiling both ADMB and TMB models. If other C++ compilers are on the machine,
+it may be necessary to remove them the PATH, either by modifying the PATH
+environment variable, or temporarily renaming directories.
 
 @chapter References
 @anchor{References}

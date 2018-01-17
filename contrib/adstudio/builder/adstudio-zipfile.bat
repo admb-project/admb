@@ -11,7 +11,7 @@ REM Requires: wget, directory 'distribution' created by adstudio-distribution  #
 REM                                                                            #
 REM Returns:  Creates adstudio.zip in the current directory                    #
 REM                                                                            #
-REM History:  2018-01-15  Created for AD Studio 1.0                            #
+REM History:  2018-01-17  Created for AD Studio 1.0                            #
 REM                                                                            #
 REM ############################################################################
 

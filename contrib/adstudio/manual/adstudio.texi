@@ -5,7 +5,7 @@
 @set VERSION 1.0
 @set INSTALLER adstudio-10
 @set ADMBDIR admb120-gcc493-win64
-@set DATE (2018-01-03)
+@set DATE (2018-01-17)
 @c @set REVISED Revised manual (2018-01-01)
 @set YEARS 2018
 @macro screen{filename}

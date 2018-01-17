@@ -34,7 +34,7 @@ echo on
 %CP% %FROM% %TO%\home .emacs >NUL
 @echo.
 @echo *** Populating admb ...
-for /F "usebackq tokens=*" %%F in (`dir /ad /b %FROM%\admb*-*-*`) do set AD=%%F
+@for /F "usebackq tokens=*" %%F in (`dir /ad /b %FROM%\admb*-*-*`) do @set AD=%%F
 %CP% %FROM%\%AD% %TO%\admb\%AD% /e > NUL
 %CP% %FROM% %TO%\admb *.pdf NEWS > NUL
 @echo.

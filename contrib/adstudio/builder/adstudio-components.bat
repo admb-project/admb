@@ -20,9 +20,11 @@ set AUCTEX=auctex121-built.zip
 set EMACS=emacs-25.3_1-x86_64.zip
 set ESS=ess-17.11.zip
 set INNOEXTRACT=innoextract-1.6-windows.zip
+set MANUAL=-12.0.pdf
 set RTOOLS=Rtools34.exe
 
 set COMPS=http://admb-project.org/tools/adstudio/components
+set DOCS=https://github.com/admb-project/admb/releases/download/admb-12.0
 set GITHUB=https://raw.githubusercontent.com
 set WGET=..\wget -q --no-check-certificate
 
@@ -41,16 +43,16 @@ echo on
 %WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/gnu_gray.ico
 %WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/md.ico
 %WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/tex.ico
-%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/tmb.el
-%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/LICENSE
-%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/NEWS
+%WGET% -P tmb %GITHUB%/admb-project/adcomp/master/emacs/tmb.el
+%WGET% -P tmb %GITHUB%/admb-project/adcomp/master/emacs/LICENSE
+%WGET% -P tmb %GITHUB%/admb-project/adcomp/master/emacs/NEWS
 %WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/dot/.emacs
-%WGET% %COMPS%/admb.pdf
+%WGET% %DOCS%/admb%MANUAL%
 %WGET% %COMPS%/%ADMB%
-%WGET% %COMPS%/admbre.pdf
+%WGET% %DOCS%/admbre%MANUAL%
 %WGET% http://admb-project.org/tools/adstudio/adstudio.pdf
 %WGET% %COMPS%/%AUCTEX%
-%WGET% %COMPS%/autodif.pdf
+%WGET% %DOCS%/autodif%MANUAL%
 %WGET% http://ftp.gnu.org/gnu/emacs/windows/%EMACS%
 %WGET% http://ess.r-project.org/downloads/ess/%ESS%
 %WGET% http://constexpr.org/innoextract/files/%INNOEXTRACT%
@@ -72,8 +74,14 @@ unzip -q -d innoextract %INNOEXTRACT%
 innoextract -s -d temp %RTOOLS%
 @move temp\app Rtools >NUL
 @rd /q /s temp
-@popd
 @echo.
+
+@echo *** Renaming manuals ...
+rename admb%MANUAL% admb.pdf
+rename admbre%MANUAL% admbre.pdf
+rename autodif%MANUAL% autodif.pdf
+@popd
+echo.
 @echo Done
 
 @goto EOF

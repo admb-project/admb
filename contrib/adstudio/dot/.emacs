@@ -61,6 +61,7 @@
 (setq-default truncate-lines t   )
 (show-paren-mode t               )
 (setq tool-bar-map (make-sparse-keymap))
+(defun startup-echo-area-message ()(adstudio-help))
 (setq tool-bar-style 'image) ; suppress fixed text labels on toolbar in Linux
 (let ((undo-form '(and (not buffer-read-only)(not (eq t buffer-undo-list))
                        (if (eq last-command 'undo)(listp pending-undo-list)
@@ -529,7 +530,5 @@
   (define-key isearch-mode-map [escape] 'isearch-exit           )
   (define-key isearch-mode-map [?\C-f]  'isearch-repeat-forward))
 (add-hook 'isearch-mode-hook 'adstudio-isearch-hook)
-
-(if adstudio-reminder (adstudio-help))
 
 ;; .emacs ends here

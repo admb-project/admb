@@ -434,6 +434,19 @@
   (defun gdb-io-buffer-on ()
     "Disable separate IO buffer." (interactive)(gdb-use-separate-io-buffer t)))
 (add-hook 'gdb-mode-hook 'adstudio-gdb-hook)
+;;--------
+;; 6.16 R
+;;--------
+(defun adstudio-ess-hook ()
+  (ess-toggle-S-assign nil)
+  (local-set-key [f9]  'ess-eval-region-or-line-and-step                 )
+  (local-set-key [f10] 'ess-eval-region-or-function-or-paragraph-and-step)
+  (local-set-key [f11] 'ess-save-buffer-and-eval                         )
+  (defun ess-save-buffer-and-eval ()
+    "Save buffer and evaluate." (interactive)
+    (save-excursion (if (buffer-file-name)(save-buffer))
+                    (ess-eval-buffer nil))))
+(add-hook 'ess-mode-hook 'adstudio-ess-hook)
 ;;----------
 ;; 6.18 TMB
 ;;----------

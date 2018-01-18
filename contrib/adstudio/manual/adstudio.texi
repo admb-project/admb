@@ -5,7 +5,7 @@
 @set VERSION 1.0
 @set INSTALLER adstudio-10
 @set ADMBDIR admb120-gcc493-win64
-@set DATE (2018-01-17)
+@set DATE (2018-01-18)
 @c @set REVISED Revised manual (2018-01-01)
 @set YEARS 2018
 @macro screen{filename}
@@ -154,6 +154,12 @@ By using the same compiler to build ADMB and TMB models, AD Studio makes it easy
 to work with ADMB and TMB on the same machine without running into compiler
 version conflicts.
 
+@strong{R} is required for using TMB, but is not installed as part of AD Studio.
+Users are expected to install R and the TMB package on their own, as these are
+frequently updated.
+
+@page
+
 @section Installation
 
 AD Studio consists of components that can be set up individually by hand
@@ -164,8 +170,7 @@ AD Studio consists of components that can be set up individually by hand
 @noindent
 The Windows installer @file{@value{INSTALLER}.exe} sets up ADMB, GCC, GDB,
 Emacs, and the Emacs packages, along with file associations and environment
-variables to glue everything together. Users are expected to install R and TMB
-on their own, as these are frequently updated.
+variables to glue everything together.
 
 @sp
 @center @image{intro-install,9cm}
@@ -315,9 +320,9 @@ clicking the @icon{icon-close} icon or pressing @kbd{C-w} or @kbd{C-f4}.
 
 @cartouche
 @noindent
-Note how the ADMB menu and toolbar icons are only available when the active
-window is in @command{admb-mode}. Press @key{f2} at any point to switch a window
-to @command{admb-mode}.
+Note how the @clickthis{ADMB} menu and toolbar icons are only available when the
+active window is in @command{admb-mode}. Press @key{f2} at any point to switch a
+window to @command{admb-mode}.
 @end cartouche
 
 @page
@@ -467,8 +472,11 @@ Debugger (GDB)}:
 
 @chapter TMB tutorial
 
-@section Create a working directory
+@section Create a working copy of @command{mini}
 
+@subsec Directory
+
+@noindent
 Open AD Studio and create a working directory called @file{c:/demo}:
 
 @example
@@ -489,12 +497,15 @@ current directory.
 @noindent
 See @ref{Keybindings}, for a full list of AD Studio keybindings.
 
-@section Create a simple model
+@subsec Model
 
-AD Studio has a built-in example model, which can be used as a minimal template
-to create a new model. To create a mini template in the current directory, find
-the menu above the editor window and select @clickthis{TMB @click{} Mini
-Template} or press @key{f12}.
+@noindent
+Now switch to @command{tmb-mode} (@key{f3}) to work with TMB.
+
+AD Studio comes with a built-in TMB example model, which can be used as a
+minimal template to create a new model. To create a mini template in the current
+directory, find the menu above the editor window and select @clickthis{TMB
+@click{} Mini Template} or press @key{f12} and @key{return}.
 
 The screen will now split in two parts, which is the default state of a TMB
 session in AD Studio. The TMB model code (C++) is in the main window and the
@@ -502,7 +513,7 @@ compilation script (R) in a secondary window. The cursor remains in the TMB
 model window, which makes TMB-specific commands available via the menu and
 keybindings.
 
-@section Build and run
+@section Build, run, and view the results
 
 The compilation script contains R code that compiles and runs the model. There
 are two alternative ways to build a TMB model:
@@ -538,6 +549,22 @@ the background. Explore the @clickthis{Buffers} menu, as well as buffer-related
 Window Below} (@kbd{C-x 2}) or @clickthis{New Window on Right} (@kbd{C-x 3}) in
 the @clickthis{File} menu. The @key{escape} key lets one window fill the Emacs
 screen.
+
+@page
+
+@subsec Run R script
+
+@noindent
+While working with TMB models, it is often convenient to keep the cursor inside
+the TMB window containing the C++ code. This way, the @command{tmb-mode}
+facilities (menu, keybindings, etc.) remain active.
+
+Positioning the cursor inside an R script window, however, activates
+@command{R-mode} that is part of the Emacs Speaks Statistics (ESS) package. It
+is a feature-rich mode that supports a variety of R tasks, including package
+development and debugging, as reflected in the @clickthis{ESS} menu items. The
+@key{f9}, @key{f10}, and @key{f11} can be used to run R scripts, a
+line/paragraph at a time or the entire script. See @ref{R mode keybindings}.
 
 @section Debug
 
@@ -779,6 +806,21 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 
 @page
 
+@subsec R mode
+@anchor{R mode keybindings}
+
+@multitable @columnfractions .11 .20 .66
+@item@hrule@tab@hrule@tab@hrule
+@headitem @emph{Keystroke} @tab @emph{Purpose} @tab @emph{Emacs command}
+@item@hrule@tab@hrule@tab@hrule
+@item @kbd{f9}  @tab Run line      @tab @command{ess-eval-region-or-line-and-step}
+@item @kbd{f10} @tab Run paragraph @tab @command{ess-eval-region-or-function-or-paragraph-and-step}
+@item @kbd{f11} @tab Run script    @tab @command{ess-save-buffer-and-eval}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@sp 2
+
 @subsec Mouse
 
 @multitable @columnfractions .15 .39 .39
@@ -796,15 +838,16 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 
 Both @command{admb-mode} and @command{tmb-mode} come with a help page that is
 bound to the @key{f1} key when either of these modes is active. Furthermore, the
-Emacs help system has a help page for every function and variable, as well as
-keystrokes:
+Emacs help system has a help page for every mode, function and variable, as well
+as keystrokes:
 
 @indentedblock
 @multitable @columnfractions .07 .45
-@item @kbd{C-h k} @tab Keystroke
+@item @kbd{C-h m} @tab Mode
 @item @kbd{C-h f} @tab Function
-@item @kbd{C-h a} @tab Search for command
 @item @kbd{C-h v} @tab Variable
+@item @kbd{C-h k} @tab Keystroke
+@item @kbd{C-h a} @tab Search for command
 @end multitable
 @end indentedblock
 

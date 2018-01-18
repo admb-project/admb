@@ -196,6 +196,10 @@
 (global-set-key [S-down-mouse-1] 'mouse-extend-region) ; mouse-appearance-menu
 (global-set-key        [mouse-3] 'ignore             ) ; mouse-save-then-kill
 (global-set-key   [down-mouse-3] 'imenu              )
+(global-set-key     [C-wheel-up] 'text-scale-increase)
+(global-set-key   [C-wheel-down] 'text-scale-decrease)
+(global-set-key      [C-mouse-4] 'text-scale-increase)
+(global-set-key      [C-mouse-5] 'text-scale-decrease)
 ;;--------------
 ;; 4.3  Special
 ;;--------------

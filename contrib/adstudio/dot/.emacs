@@ -61,7 +61,6 @@
 (setq-default truncate-lines t   )
 (show-paren-mode t               )
 (setq tool-bar-map (make-sparse-keymap))
-(defun startup-echo-area-message ()(adstudio-help))
 (setq tool-bar-style 'image) ; suppress fixed text labels on toolbar in Linux
 (let ((undo-form '(and (not buffer-read-only)(not (eq t buffer-undo-list))
                        (if (eq last-command 'undo)(listp pending-undo-list)
@@ -320,6 +319,7 @@
 (defun adstudio-version ()
   "Show AD Studio version number." (interactive)
   (message "AD Studio version %s" adstudio-version))
+(defun startup-echo-area-message ()(adstudio-help)) ; initial minibuffer
 ;;==============================================================================
 ;;
 ;; 6  LANGUAGE MODES

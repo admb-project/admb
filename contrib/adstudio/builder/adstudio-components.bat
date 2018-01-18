@@ -43,9 +43,9 @@ echo on
 %WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/gnu_gray.ico
 %WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/md.ico
 %WGET% -P icons %GITHUB%/admb-project/admb/master/contrib/adstudio/icons/tex.ico
-%WGET% -P tmb %GITHUB%/admb-project/adcomp/master/emacs/tmb.el
-%WGET% -P tmb %GITHUB%/admb-project/adcomp/master/emacs/LICENSE
-%WGET% -P tmb %GITHUB%/admb-project/adcomp/master/emacs/NEWS
+%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/tmb.el
+%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/LICENSE
+%WGET% -P tmb %GITHUB%/kaskr/adcomp/master/emacs/NEWS
 %WGET% %GITHUB%/admb-project/admb/master/contrib/adstudio/dot/.emacs
 %WGET% %DOCS%/admb%MANUAL%
 %WGET% %COMPS%/%ADMB%

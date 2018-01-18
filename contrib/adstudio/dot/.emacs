@@ -439,6 +439,8 @@
 ;;--------
 (defun adstudio-ess-hook ()
   (ess-toggle-S-assign nil)
+  (set-face-attribute 'font-lock-constant-face nil :underline - )
+  (set-face-attribute 'font-lock-type-face     nil :foreground -)
   (local-set-key [f9]  'ess-eval-region-or-line-and-step                 )
   (local-set-key [f10] 'ess-eval-region-or-function-or-paragraph-and-step)
   (local-set-key [f11] 'ess-save-buffer-and-eval                         )
@@ -447,6 +449,10 @@
     (save-excursion (if (buffer-file-name)(save-buffer))
                     (ess-eval-buffer nil))))
 (add-hook 'ess-mode-hook 'adstudio-ess-hook)
+(defun adstudio-inferior-ess-hook ()
+  (set-face-attribute 'font-lock-constant-face nil :underline -  )
+  (set-face-attribute 'font-lock-type-face     nil :foreground -))
+(add-hook 'inferior-ess-mode-hook 'adstudio-inferior-ess-hook)
 ;;----------
 ;; 6.18 TMB
 ;;----------
@@ -543,5 +549,7 @@
   (define-key isearch-mode-map [escape] 'isearch-exit           )
   (define-key isearch-mode-map [?\C-f]  'isearch-repeat-forward))
 (add-hook 'isearch-mode-hook 'adstudio-isearch-hook)
+
+(adstudio-help)
 
 ;; .emacs ends here

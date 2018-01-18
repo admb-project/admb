@@ -823,12 +823,15 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 
 @subsec Mouse
 
-@multitable @columnfractions .15 .39 .39
+@multitable @columnfractions .21 .29 .44
 @item@hrule@tab@hrule@tab@hrule
 @headitem @emph{Mouse button} @tab @emph{Purpose} @tab @emph{Emacs command}
 @item@hrule@tab@hrule@tab@hrule
-@item @kbd{C-left} @tab Switch buffers      @tab @command{mouse-buffer-menu}
-@item @kbd{right}  @tab Navigate with imenu @tab @command{imenu}
+@item @kbd{C-left-mouse} @tab Switch buffers      @tab @command{mouse-buffer-menu}
+@item @kbd{middle-mouse} @tab Paste               @tab @command{mouse-yank-primary}
+@item @kbd{right-mouse}  @tab Navigate with imenu @tab @command{imenu}
+@item @kbd{C-wheel-up}   @tab Increase font size  @tab @command{text-scale-increase}
+@item @kbd{C-wheel-down} @tab Decrease font size  @tab @command{text-scale-decrease}
 @item@hrule@tab@hrule@tab@hrule
 @end multitable
 

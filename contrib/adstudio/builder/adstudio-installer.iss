@@ -35,12 +35,12 @@ Name: admbhome;  Description: "Define ADMB_HOME as c:/admb/admb120-gcc493-win64,
 Name: home;      Description: "Define HOME directory as c:/~, to store configuration files";                       GroupDescription: "Registry:"
 
 [Files]
-Source: "admb\*";         DestDir: "c:\admb";                Components: admb;           Flags: recursesubdirs
-Source: "~/icons\*";      DestDir: "c:\~\icons";             Components: emacs
-Source: "gnu\emacs\*";    DestDir: "c:\gnu\emacs";           Components: emacs;          Flags: recursesubdirs
-Source: "~/emacs\lisp\*"; DestDir: "c:\~\emacs\lisp\auctex"; Components: emacs/packages; Flags: recursesubdirs
-Source: "~/.emacs";       DestDir: "c:\~";                   Components: emacs/settings; Flags: confirmoverwrite
-Source: "Rtools\*";       DestDir: "c:\Rtools";              Components: rtools;         Flags: onlyifdoesntexist recursesubdirs
+Source: "admb\*";         DestDir: "c:\admb";         Components: admb;           Flags: recursesubdirs
+Source: "~/icons\*";      DestDir: "c:\~\icons";      Components: emacs
+Source: "gnu\emacs\*";    DestDir: "c:\gnu\emacs";    Components: emacs;          Flags: recursesubdirs
+Source: "~/emacs\lisp\*"; DestDir: "c:\~\emacs\lisp"; Components: emacs/packages; Flags: recursesubdirs
+Source: "~/.emacs";       DestDir: "c:\~";            Components: emacs/settings; Flags: confirmoverwrite
+Source: "Rtools\*";       DestDir: "c:\Rtools";       Components: rtools;         Flags: onlyifdoesntexist recursesubdirs
 
 [Icons]
 Name: "{userdesktop}\AD Studio";     Filename: "c:\gnu\emacs\bin\runemacs.exe"; IconFilename: "c:\~\icons\ad.ico"; Tasks: desktop

@@ -196,6 +196,10 @@
 (global-set-key [S-down-mouse-1] 'mouse-extend-region) ; mouse-appearance-menu
 (global-set-key        [mouse-3] 'ignore             ) ; mouse-save-then-kill
 (global-set-key   [down-mouse-3] 'imenu              )
+(global-set-key     [C-wheel-up] 'text-scale-increase)
+(global-set-key   [C-wheel-down] 'text-scale-decrease)
+(global-set-key      [C-mouse-4] 'text-scale-increase)
+(global-set-key      [C-mouse-5] 'text-scale-decrease)
 ;;--------------
 ;; 4.3  Special
 ;;--------------
@@ -319,6 +323,7 @@
 (defun adstudio-version ()
   "Show AD Studio version number." (interactive)
   (message "AD Studio version %s" adstudio-version))
+(defun startup-echo-area-message ()(adstudio-help)) ; initial minibuffer
 ;;==============================================================================
 ;;
 ;; 6  LANGUAGE MODES
@@ -433,6 +438,25 @@
   (defun gdb-io-buffer-on ()
     "Disable separate IO buffer." (interactive)(gdb-use-separate-io-buffer t)))
 (add-hook 'gdb-mode-hook 'adstudio-gdb-hook)
+;;--------
+;; 6.16 R
+;;--------
+(defun adstudio-ess-hook ()
+  (ess-toggle-S-assign nil)
+  (set-face-attribute 'font-lock-constant-face nil :underline - )
+  (set-face-attribute 'font-lock-type-face     nil :foreground -)
+  (local-set-key [f9]  'ess-eval-region-or-line-and-step                 )
+  (local-set-key [f10] 'ess-eval-region-or-function-or-paragraph-and-step)
+  (local-set-key [f11] 'ess-save-buffer-and-eval                         )
+  (defun ess-save-buffer-and-eval ()
+    "Save buffer and evaluate." (interactive)
+    (save-excursion (if (buffer-file-name)(save-buffer))
+                    (ess-eval-buffer nil))))
+(add-hook 'ess-mode-hook 'adstudio-ess-hook)
+(defun adstudio-inferior-ess-hook ()
+  (set-face-attribute 'font-lock-constant-face nil :underline -  )
+  (set-face-attribute 'font-lock-type-face     nil :foreground -))
+(add-hook 'inferior-ess-mode-hook 'adstudio-inferior-ess-hook)
 ;;----------
 ;; 6.18 TMB
 ;;----------
@@ -530,6 +554,6 @@
   (define-key isearch-mode-map [?\C-f]  'isearch-repeat-forward))
 (add-hook 'isearch-mode-hook 'adstudio-isearch-hook)
 
-(if adstudio-reminder (adstudio-help))
+(adstudio-help)
 
 ;; .emacs ends here

@@ -11,7 +11,7 @@ REM Requires: Directory 'components' created by adstudio-components            #
 REM                                                                            #
 REM Returns:  Creates a directory called 'distribution'                        #
 REM                                                                            #
-REM History:  2018-01-15  Created for AD Studio 1.0                            #
+REM History:  2018-01-18  Created for AD Studio 1.0                            #
 REM                                                                            #
 REM ############################################################################
 
@@ -34,7 +34,7 @@ echo on
 %CP% %FROM% %TO%\home .emacs >NUL
 @echo.
 @echo *** Populating admb ...
-for /F "usebackq tokens=*" %%F in (`dir /ad /b %FROM%\admb*-*-*`) do set AD=%%F
+@for /F "usebackq tokens=*" %%F in (`dir /ad /b %FROM%\admb*-*-*`) do @set AD=%%F
 %CP% %FROM%\%AD% %TO%\admb\%AD% /e > NUL
 %CP% %FROM% %TO%\admb *.pdf NEWS > NUL
 @echo.

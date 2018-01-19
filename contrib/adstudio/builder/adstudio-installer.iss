@@ -18,14 +18,11 @@ Name: havetools; Description: "I already have Rtools"
 Name: custom;    Description: "Custom installation"; Flags: iscustom
 
 [Components]
-Name: admb;         Description: "AD Model Builder [c:/admb]";          Types: full havetools
-Name: emacs;        Description: "Emacs editor [c:/gnu/emacs]";         Types: full havetools
-Name: emacs/admb;   Description: "ADMB mode [c:/~/emacs/lisp/admb]";    Types: full havetools
-Name: emacs/auctex; Description: "LaTeX mode [c:/~/emacs/lisp/auctex]"; Types: full havetools
-Name: emacs/ess;    Description: "R mode [c:/~/emacs/lisp/ess]";        Types: full havetools
-Name: emacs/tmb;    Description: "TMB mode [c:/~/emacs/lisp/tmb]";      Types: full havetools
-Name: emacs/ide;    Description: "AD Studio .emacs settings [c:/~]";    Types: full havetools
-Name: rtools;       Description: "Rtools GCC compiler [c:/Rtools]";     Types: full
+Name: admb;           Description: "AD Model Builder [c:/admb]";       Types: full havetools
+Name: emacs;          Description: "Emacs editor [c:/gnu/emacs]";      Types: full havetools
+Name: emacs/packages; Description: "Emacs packages [c:/~/emacs/lisp]"; Types: full havetools
+Name: emacs/settings; Description: "Emacs settings [c:/~/.emacs]";     Types: full havetools
+Name: rtools;         Description: "Rtools GCC and GDB [c:/Rtools]";   Types: full
 
 [Tasks]
 Name: desktop;   Description: "Create Desktop shortcut to AD Studio";                                              GroupDescription: "Shortcuts:"
@@ -33,35 +30,32 @@ Name: startmenu; Description: "Create Start Menu shortcut to AD Studio";        
 Name: assoc1;    Description: "Associate ADMB files (cor, ctl, dat, par, pin, psv, rep, std, tpl) with AD Studio"; GroupDescription: "Registry:"
 Name: assoc2;    Description: "Associate Emacs files (el, emacs) with AD Studio";                                  GroupDescription: "Registry:"
 Name: assoc3;    Description: "Associate other files (cpp, md, r, tex) with AD Studio";                            GroupDescription: "Registry:"
-Name: path;      Description: "Add ADMB, Emacs, and Rtools to PATH, so they can find each other";                  GroupDescription: "Registry:"
+Name: path;      Description: "Add ADMB, Emacs, GCC, and GDB to PATH, so they can find each other";                GroupDescription: "Registry:"
 Name: admbhome;  Description: "Define ADMB_HOME as c:/admb/admb120-gcc493-win64, so ADMB works";                   GroupDescription: "Registry:"
 Name: home;      Description: "Define HOME directory as c:/~, to store configuration files";                       GroupDescription: "Registry:"
 
 [Files]
-Source: "admb\*";                DestDir: "c:\admb";                Components: admb;         Flags: recursesubdirs
-Source: "~\icons\*";             DestDir: "c:\~\icons";             Components: admb
-Source: "gnu\emacs\*";           DestDir: "c:\gnu\emacs";           Components: emacs;        Flags: recursesubdirs
-Source: "~\emacs\lisp\admb\*";   DestDir: "c:\~\emacs\lisp\admb";   Components: emacs/admb
-Source: "~\emacs\lisp\auctex\*"; DestDir: "c:\~\emacs\lisp\auctex"; Components: emacs/auctex; Flags: recursesubdirs
-Source: "~\emacs\lisp\ess\*";    DestDir: "c:\~\emacs\lisp\ess";    Components: emacs/ess;    Flags: recursesubdirs
-Source: "~\emacs\lisp\tmb\*";    DestDir: "c:\~\emacs\lisp\tmb";    Components: emacs/tmb
-Source: "~\.emacs";              DestDir: "c:\~";                   Components: emacs/ide;    Flags: confirmoverwrite
-Source: "Rtools\*";              DestDir: "c:\Rtools";              Components: rtools;       Flags: onlyifdoesntexist recursesubdirs
+Source: "admb\*";         DestDir: "c:\admb";         Components: admb;           Flags: recursesubdirs
+Source: "~/icons\*";      DestDir: "c:\~\icons";      Components: emacs
+Source: "gnu\emacs\*";    DestDir: "c:\gnu\emacs";    Components: emacs;          Flags: recursesubdirs
+Source: "~/emacs\lisp\*"; DestDir: "c:\~\emacs\lisp"; Components: emacs/packages; Flags: recursesubdirs
+Source: "~/.emacs";       DestDir: "c:\~";            Components: emacs/settings; Flags: confirmoverwrite
+Source: "Rtools\*";       DestDir: "c:\Rtools";       Components: rtools;         Flags: onlyifdoesntexist recursesubdirs
 
 [Icons]
 Name: "{userdesktop}\AD Studio";     Filename: "c:\gnu\emacs\bin\runemacs.exe"; IconFilename: "c:\~\icons\ad.ico"; Tasks: desktop
 Name: "{group}\AD Studio";           Filename: "c:\gnu\emacs\bin\runemacs.exe"; IconFilename: "c:\~\icons\ad.ico"; Tasks: startmenu
 Name: "{group}\Manual (ADMB)";       Filename: "c:\admb\admb.pdf";                                                 Tasks: startmenu
-Name: "{group}\Manual (AD Studio)";  Filename: "c:\admb\admb-ide.pdf";                                             Tasks: startmenu
+Name: "{group}\Manual (AD Studio)";  Filename: "c:\admb\adstudio.pdf";                                             Tasks: startmenu
 Name: "{group}\Manual (ADMB-RE)";    Filename: "c:\admb\admbre.pdf";                                               Tasks: startmenu
 Name: "{group}\Manual (AUTODIF)";    Filename: "c:\admb\autodif.pdf";                                              Tasks: startmenu
 Name: "{group}\Uninstall AD Studio"; Filename: "{uninstallexe}";                                                   Tasks: startmenu
 
 [Registry]
 ; Environment variables
-Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "PATH";      ValueData: "c:/ADMB/admb120-gcc493-win64/bin;c:/RTOOLS/bin;c:/rtools/MINGW_64/bin;c:/gnu/EMACS/bin"; Tasks: path;     Flags: uninsdeletevalue
-Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "HOME";      ValueData: "c:/~";                                                                                   Tasks: home;     Flags: uninsdeletevalue
-Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "ADMB_HOME"; ValueData: "c:/ADMB/admb120-gcc493-win64";                                                           Tasks: admbhome; Flags: uninsdeletevalue
+Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "PATH";      ValueData: "c:/ADMB/admb120-gcc493-win64/bin;c:/rtools/MINGW_64/bin;c:/gnu/EMACS/bin"; Tasks: path;     Flags: uninsdeletevalue
+Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "HOME";      ValueData: "c:/~";                                                                     Tasks: home;     Flags: uninsdeletevalue
+Root: HKCU; Subkey: "Environment"; ValueType: string; ValueName: "ADMB_HOME"; ValueData: "c:/ADMB/admb120-gcc493-win64";                                             Tasks: admbhome; Flags: uninsdeletevalue
 ; File associations
 Root: HKCR; Subkey: ".cor";                                           ValueType: string; ValueName: ""; ValueData: "ADMB Correlation";                    Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty
 Root: HKCR; Subkey: "ADMB Correlation";                               ValueType: string; ValueName: ""; ValueData: "ADMB Correlation";                    Tasks: assoc1; Flags: uninsdeletevalue uninsdeletekeyifempty

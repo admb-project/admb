@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // GLMM with negative binomial response
 // Example 2 in Booth, Casella, Friedl, Hobert (2003) Statistical Modelling, vol. 3, no. 3, pp. 179-191
 // Numerical results meant to match rightmost column in Table 2 of Booth et al.

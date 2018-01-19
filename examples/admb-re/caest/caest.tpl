@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // TPL code for:
 // J. T. Schnute and L. J. Richards.  1995.  The influence of error on
 //      population estimates from catch-age models.  Can. J. Fish.

@@ -1,4 +1,7 @@
-  // ADMB-RE implementation of from Zeh and Punt (2004) SC/56/BRG1
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
+// ADMB-RE implementation of from Zeh and Punt (2004) SC/56/BRG1
 
 DATA_SECTION
 

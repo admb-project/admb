@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Phenobarbital kinetics example in Pinheiro & Bates (2000, Ch. 6.4)
 
 DATA_SECTION

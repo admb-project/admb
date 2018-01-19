@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Stochastic volatitliy model of Stroud, Muller and Stoffer (2003)
 
 DATA_SECTION

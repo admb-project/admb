@@ -1,5 +1,10 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
+// Changes:
 // 2011-03-24 version from Dave Fournier
 // modified 2011-04-27 Hans Skaug, BMB
+
 DATA_SECTION
 
   init_int n					// Number of observations

@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Biomial with random effects
 
 DATA_SECTION

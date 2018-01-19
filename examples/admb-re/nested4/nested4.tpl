@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Logistic regression with 4 levels of nested random effects
 
 DATA_SECTION

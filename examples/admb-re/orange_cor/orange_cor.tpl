@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Extended version of: Orange data used in Ch. 8.2, Pinheiro & Bates (2000)
 // Correlated random effects
 

@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Orange data used in Millar (2004) Aust NZ J. Stat Vol 46, p. 543-554.
 
 DATA_SECTION

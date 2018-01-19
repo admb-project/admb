@@ -1,3 +1,6 @@
+// Author: Anders Nielsen
+// Copyright (c) 2009-2018 ADMB Foundation
+
 DATA_SECTION
   init_int nR
   init_int nC

@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Poisson regression with spatially smoothed mean.
 
 DATA_SECTION

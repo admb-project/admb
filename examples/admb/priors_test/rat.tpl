@@ -1,3 +1,6 @@
+// Author: Weihai Liu
+// Copyright (c) 2009-2018 ADMB Foundation
+
 GLOBALS_SECTION 
   #include "priors.cpp"
   // append to mcmc output file

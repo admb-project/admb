@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Ordinal response model with random effects. 
 // The SOCATT data used in the software comparison http://multilevel.ioe.ac.uk/softrev/index.html
 

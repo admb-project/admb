@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Generalized additive model fitted to the Wage-union data
 
 DATA_SECTION

@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Section 14.2 in Skrondal and Rabe-Hesketh. Non-parametric version.
 
 DATA_SECTION

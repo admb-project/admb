@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Nonparametric estimation of mean and variance applied to the Lidar data.
 
 DATA_SECTION

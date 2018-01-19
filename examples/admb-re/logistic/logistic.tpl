@@ -1,3 +1,6 @@
+// Author: David Fournier
+// Copyright (c) 2009-2018 ADMB Foundation
+
 // Logistic regression: Example 1 in Skaug and Fournier (2003)
 
 DATA_SECTION

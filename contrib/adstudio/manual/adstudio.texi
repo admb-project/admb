@@ -100,6 +100,22 @@ AD Studio is the unification of two previous software products, ADMB-IDE
 differentiation and `Studio' is a commonly used synonym for IDE (integrated
 development environment).
 
+@section System requirements
+
+@subsec 64-bit
+
+@noindent
+AD Studio requires a 64-bit operating system. Windows 32-bit users can continue
+to use previous versions of ADMB-IDE (11.2) and TMB-IDE (1.6).
+
+@subsec Rtools, R, TMB
+
+@noindent
+Rtools, R, and TMB may already exist on the machine before AD Studio is set up.
+If Rtools is not already installed, the AD Studio installer can (optionally) do
+that. Users are expected to install R and the TMB package on their own, as these
+are frequently updated.
+
 @chapter AD Studio overview
 
 @section Statistical modelling

@@ -5,16 +5,16 @@
 %
 
 For performance reasons, many nonlinear modeling routines for packages
-such as Splus or Gauss, or spreadsheets such as Excel,
+such as S-Plus or Gauss, or spreadsheets such as Excel,
 are written in other languages, such as C or \textsc{fortran}, and
 compiled as \textsc{dll}s or shared libraries. Due to 
 \ADM's support for nonlinear statistical modeling, it
 is generally much faster and easier to produce the code for
 a nonlinear statistical model with \textsc{admb} rather than C or \textsc{fortran}.
 This code can then be put into a shared library (\textsc{dll}) and called
-from Splus as though it were a part of the language. 
+from S-Plus as though it were a part of the language. 
 
-This section focuses on creating \textsc{dll}s for Splus Version~4 Release~3, Gauss
+This section focuses on creating \textsc{dll}s for S-Plus Version~4 Release~3, Gauss
 under Windows 95/NT,
 or for the R programming environment under Windows 95/NT or Linux. 
 The construction can be easily modified to produce \textsc{dll}s, which can be
@@ -86,39 +86,15 @@ PROCEDURE_SECTION
 \XX{\fontindexentry{sc}{dll}}{commands for producing}
 \section{Compiling the code to produce a \textsc{dll}}
 
-The exact form of the commands used to produce a \textsc{dll}, or shared library,
-depend on the compiler used and the operating system.
-
-Assuming that the template file is named \texttt{xxxx.tpl|}
-for NT/9?, then using the gcc2.95-mingw32 compiler, the 
+The commands produce a \textsc{dll}, or shared library, is
 commands are 
 \begin{lstlisting}
-tpl2cpp -dll  %1
-
- C++ -fpermissive -O3 -c -DBUILDING_DLL=1 -D__GNUDOS__ -I. i
-  -If:/admodel/include   -o %1.o %1.cpp
-
-dllwrap -def %1.def --implib lib%1.a --driver-name \cplus\ -o %1.dll  %1.o 
-   -Lf:/admodel/lib -ladmod -ladt -lado -lm 
+admb -d root
 \end{lstlisting}
-where the symbol \texttt{\%1} (this is a batch file argument, which would
-be \texttt{\$1} for Linux) should be replaced by \texttt{xxxx}.
+where \texttt{root.tpl} is the template file.
 
-Of course, you don't want to type all this every time, so the commands
-should be replaced in a \texttt{.bat} file,
-such as \texttt{makedll.bat}.
-Then, to compile the \textsc{tpl} into a \textsc{dll}, it is only necessary to type
-\begin{lstlisting}
-  makeadll xxxx
-\end{lstlisting}
-where \texttt{xxxx.tpl} is the template file.
-For debugging purposes, you may find that you want to edit the
-\texttt{.cpp} file, so you will not want to run \texttt{tpl2cpp}
-every time. In that case, the first line should be removed from
-the \texttt{.bat} file.
-
-To call the \textsc{dll} from Splus, the \texttt{dll.load} function is used to
-load the library. 
+To call the \textsc{dll} from S-Plus, the \texttt{dll.load} function is used to
+load the model library.
 \begin{smallcode}
 dll.load("simpdll.dll",symbol="simpdll")
 n<-100
@@ -128,23 +104,23 @@ ans<-.C("simpdll",as.integer(n),x = as.double(x),as.double(f)," -sp -crit 1.e-8 
 \end{smallcode}
 The final parameter, \texttt{-sp -crit 1.e-8 -nohess}, is a string that serves the same function as command
 line options in AD Model Builder programs. 
-The \texttt{-sp} option tells the \textsc{dll} that it is being run from Splus, so 
-it can print into the Splus command window. The \texttt{-crit} option sets the
+The \texttt{-sp} option tells the \textsc{dll} that it is being run from S-Plus, so 
+it can print into the S-Plus command window. The \texttt{-crit} option sets the
 convergence criterion for the magnitude of the components of the
 gradient, and the \texttt{-nohess} option suppresses the calculation of the 
 Hessian at the minimum. It must be present, although it can be blank.
 
-It is necessary for Splus to find the \textsc{dll}. If it has trouble doing so, a full
+It is necessary for S-Plus to find the \textsc{dll}. If it has trouble doing so, a full
 path name can be used as in:
 \begin{lstlisting}
   dll.load("c://mydlls//simpdll.dll",symbol="simpdll")
 \end{lstlisting}
 
 
-\section{The Splus objects}
+\section{The S-Plus objects}
 
 At present, the objects for communication
-with Splus that can be put in the \DS\ of the \textsc{tpl} file are
+with S-Plus that can be put in the \DS\ of the \textsc{tpl} file are
 \begin{lstlisting}
 dll_init_int
 dll_iinit_number
@@ -168,19 +144,19 @@ dll_matrix
 \end{lstlisting}
 These objects act the same as the corresponding AD Model Builder objects
 without the \texttt{dll\_} prefix. For initial parameters, the difference is that
-they are assumed to get their initial values from Splus.
+they are assumed to get their initial values from S-Plus.
 
-Note that by default, Splus stores elements of a matrix by columns, that
+Note that by default, S-Plus stores elements of a matrix by columns, that
 is, contiguous areas of memory run down the columns. AD Model Builder stores
 its elements by rows, so that when a matrix objects is passed to it from
-Splus, it expects the object to be stored by column and does a transpose
+S-Plus, it expects the object to be stored by column and does a transpose
 operation on it. At the conclusion of the AD Model Builder program,
-the object is passed back to Splus via the inverse operation. This
+the object is passed back to S-Plus via the inverse operation. This
 process should be transparent to the user. 
 
 Gauss, on the other hand, stores a matrix by rows. 
 In addition, Gauss passes a string as a \texttt{char *} rather than the
-\texttt{char **} employed by Splus.
+\texttt{char **} employed by S-Plus.
 Using the \texttt{-gaussdll}
 option ensures that Gauss matrices and strings will be handled properly.
 \XX{\fontindexentry{tt}{-gaussdll}}{command line option}
@@ -195,8 +171,8 @@ first compile it as a stand-alone application and debug it.
 Then you can simply put the \texttt{dll\_} prefix before
 those objects you wish to have passed to and from
 the calling program.
-Also is inconvenient to debug the \textsc{dll}s from Splus directly.
-Errors in the code usually cause Splus to crash. 
+Also is inconvenient to debug the \textsc{dll}s from S-Plus directly.
+Errors in the code usually cause S-Plus to crash. 
 Also, printing results to the screen from a \textsc{dll} can
 be problematic if the calling program does not
 provide for it. To alleviate this
@@ -438,7 +414,7 @@ __declspec(dllexport) void _export simpdll(int *_nvar,
 After running the program, you should find the values of the 
 objects printed into a file named \texttt{logfile}.
 
-Splus passes objects to the \textsc{dll} by address, that is, it
+S-Plus passes objects to the \textsc{dll} by address, that is, it
 finds the address in memory of the object and passes that value.
 So the integer \texttt{nvar} is not passed itself, but the address is. In
 C or \cplus, you get the address of an object with the \texttt{\&}
@@ -452,7 +428,7 @@ accesses the object. So, the line of code
 \end{lstlisting}
 will set the values of the integer to 5 back in the calling 
 program.
-When Splus passes a vector object, it passes the address of the
+When S-Plus passes a vector object, it passes the address of the
 first element in the vector. So, if the vector is a vector of
 double precision numbers (an object of type \texttt{double} in C),
 it will pass a pointer to \texttt{double}. So in the above code,
@@ -469,12 +445,12 @@ x[4]=-2.5;  // sets the 5 element equal to -2.5
 \end{lstlisting}
 
 
-\section{Passing strings from Splus to a \textsc{dll}}
+\section{Passing strings from S-Plus to a \textsc{dll}}
 
 A string in C is a pointer to an array of elements of type \texttt{char}.
-It might be logical to conclude that Splus would pass the
+It might be logical to conclude that S-Plus would pass the
 address of the first element of the array. This is not
-the case.  Splus passes the address of the object pointing to the 
+the case.  S-Plus passes the address of the object pointing to the 
 first element of the array (a \texttt{char **} in C).
 So in the above code, if you want to print the second element of the
 string, point \texttt{sp\_options} to the standard output
@@ -619,7 +595,7 @@ REPORT_SECTION
   report << "Second covariance matrix = " << endl << S2 << endl;
 \end{lstlisting}
 
-This example can be run by using the following Splus source code:
+This example can be run by using the following S-Plus source code:
 \begin{lstlisting}
  nobs<-scan("bimix.dat",n=1)
  x<-matrix(scan("bimix.dat",skip=1),nrow=nobs,ncol=2,byrow=TRUE)
@@ -657,8 +633,8 @@ This example can be run by using the following Splus source code:
  print(S2)
 \end{lstlisting}
 This code  only works under NT/95 for Version 4 Release~3.
-Assuming that you have put the code where Splus can find it, you can
-run the example from Splus by typing
+Assuming that you have put the code where S-Plus can find it, you can
+run the example from S-Plus by typing
 \begin{lstlisting}
   source("bimix.spl")
 \end{lstlisting}
@@ -667,7 +643,7 @@ However, at present for Windows, the R version will not print out any
 intermediate results.  So, be patient and the final estimates will appear
 when the minimization has converged.
 After the program executes, the parameter estimates can be found in
-the Splus variables \texttt{p}, \texttt{mu1}, \texttt{mu2}, \texttt{S1}, and~\texttt{S2}.
+the S-Plus variables \texttt{p}, \texttt{mu1}, \texttt{mu2}, \texttt{S1}, and~\texttt{S2}.
 
 
 \section{Interpretation of the parameter estimates}

@@ -199,7 +199,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       "previous mcsave\n");
       (*ad_printf)( " -nuts           MCMC draws with the no-U-turn sampler\n");
       (*ad_printf)( " -rwm            MCMC draws with a Metopolis sampler.\n");
-      (*ad_printf)( " -mcu            use uniformaly distributed steps for "
+      (*ad_printf)( " -mcu            use uniformly distributed steps for "
       "mcmc instead of random normal\n");
       (*ad_printf)( " -crit N1,N2,... set gradient magnitude convergence "
       "criterion to N\n");

@@ -5,74 +5,72 @@
 %
 
 \ADM\ has a number of options that can be invoked at the command line.
-A list of current options can be displayed by typing the name of the application followed by \texttt{-?}. 
+A list of current options can be displayed by typing the name of the application
+followed by \texttt{-help}. You will see a display like:
 
-\medskip
-
-You will see a display like:
-\XX{command line arguments}{\fontindexentry{tt}{-ind NAME}}
 \XX{command line arguments}{only estimate parameters}
 \begin{code}
- AD Model Builder Copyright (c) 2008 Regents of the University of California
- USAGE--kalman options
- where an option consists of -option_tag followed by arguments if necessary
- -ainp NAME      change default ascii input parameter file name to NAME
- -binp NAME      change default binary input parameter file name to NAME
+Usage: simple [options]
+
+Options:
+ -ainp FILE      change default ascii input parameter filename to FILE
+ -binp FILE      change default binary input parameter filename to FILE
  -est            only do the parameter estimation
- -ind NAME       change default input data file name to NAME
+ -noest          do not do the parameter estimation (optimization)
+ -ind FILE       change default input data filename to FILE
  -lmn N          use limited memory quasi newton -- keep N steps
+ -lmn2 N         use other limited memory quasi newton -- keep N steps
+ -ilmn N         use other limited memory quasi newton for random effects
+                 models - keep N steps
+ -dd N           check derivatives after N function evaluations
  -lprof          perform profile likelihood calculations
- -prsave         save the independent variables from the profile calculations
  -maxph N        increase the maximum phase number to N
  -mcdiag         use diagonal covariance matrix for mcmc with diagonal values 1
  -mcmc [N]       perform markov chain monte carlo with N simulations
  -mcmult N       multiplier N for mcmc default
  -mcr            resume previous mcmc
- -mcrb N         modify the covariance matrix to reduce extremely high correlation      
+ -mcrb  N        reduce amount of correlation in the covariance matrix 1<=N<=9
  -mcnoscale      don't rescale step size for mcmc depending on acceptance rate
+ -nosdmcmc       turn off mcmc histogram calcs to make mcsave run faster
  -mcprobe N      use probing strategy for mcmc with factor N
+ -mcgrope N      Deprecated, same as -mcprobe
  -mcseed N       seed for random number generator for markov chain monte carlo
- -mccale N       rescale step size for first N evaluations
- -mcsave N       save the parameters for every N'th simulation
- -mceval         Go through the saved mcmc values from a previous mcsave
- -mcpin NAME      Read the starting values for MCMC from the file NAME
- -crit N         set gradient magnitude convergence criterion to N
+ -mcscale N      rescale step size for first N evaluations
+ -mcsave N       save the parameters for every Nth simulation
+ -mceval         go through the saved mcmc values from a previous mcsave
+ -mcu            use uniformly distributed steps for mcmc instead of random normal
+ -crit N1,N2,... set gradient magnitude convergence criterion to N
  -iprint N       print out function minimizer report every N iterations
- -maxfn N        set maximum number of function eval's to N
+ -maxfn N1,N2,.. set maximum number opf function eval's to N
  -rs             if function minimizer can't make progress rescale and try again
- -nox            don't show vector and gradient values in function minimizer screen
-                 report
+ -nox            suppress vector and gradient values in minimizer screen report
  -phase N        start minimization in phase N
- -simplex        use simplex algorithm for minimization (new test version)
+ -simplex        use simplex for minimization -- deprecated, use -neldmead
+ -neldmead       use Nelder-Mead simplex algorithm for minimization
+ -nohess         don't do hessian or delta method for std dev
+ -eigvec         calculate eigenvectors of the Hessian
  -sdonly         do delta method for std dev estimates without redoing hessian
- -ams N          set arrmblsize to n (ARRAY_MEMBLOCK_SIZE) 
- -cbs N          set CMPDIF_BUFFER_SIZE TO N 
+ -ams N          set arrmblsize to N (ARRAY_MEMBLOCK_SIZE)
+ -cbs N          set CMPDIF_BUFFER_SIZE to N (ARRAY_MEMBLOCK_SIZE)
  -mno N          set the maximum number of independent variables to N
- -gbs N          set GRADSTACK_BUFFER_SIZE TO N 
  -mdl N          set the maximum number of dvariables to N
- -? or -help     this message
+ -gbs N          set GRADSTACK_BUFFER_SIZE to N (ARRAY_MEMBLOCK_SIZE)
+ -info           show how to cite ADMB, license, and acknowledgements
+ -version        show version information
+ -help           show this message
 \end{code}
-The version of \ADM\ is printed. This can be useful to determine
-the version with which the application was compiled.
 
-\XX{command line arguments}{setting the maximum number of dvariables@\texttt{dvariables}}
+\XX{command line arguments}%
+{setting the maximum number of dvariables@\texttt{dvariables}}
 \XX{command line arguments}{\fontindexentry{tt}{-mno N}}
 \XX{command line arguments}{\fontindexentry{tt}{-mdl N}}
-\XX{command line arguments}{\fontindexentry{tt}{-ind NAME}}
+\XX{command line arguments}{\fontindexentry{tt}{-ainp FILE}}
 \XX{command line arguments}{changing the input data file name}
 \begin{lstlisting}
--aind NAME 
+-ainp FILE
 \end{lstlisting}
-\afterlistingthing{By default, the program named \texttt{xxxx(.exe)} tries to read in its data
-from the file \texttt{xxxx.dat}. This option changes the data file to \texttt{NAME}.}
-
-\XX{command line arguments}{\fontindexentry{tt}{-ainp NAME}}
-\XX{command line arguments}{changing the input data file name}
-\begin{lstlisting}
--ainp NAME 
-\end{lstlisting}
-\afterlistingthing{This option changes to NAME the file from which the initial parameter estimates
-are read. The program expects the parameters to
+\afterlistingthing{This option changes to FILE the file from which the initial
+parameter estimates are read. The program expects the parameters to
 be in \textsc{ascii} format, with comment lines beginning with \texttt{\#}.}
 
 When a program is running, it produces parameter estimates in \textsc{ascii}
@@ -80,14 +78,14 @@ format, in files named \texttt{xxxx.p01},$\ldots$, \texttt{xxxx.par}.
 These files are in the proper format to be input back into the model
 and permit restarts at any phase of the minimization.
 
-\XX{command line arguments}{\fontindexentry{tt}{-binp NAME}}
+\XX{command line arguments}{\fontindexentry{tt}{-binp FILE}}
 \XX{command line arguments}{changing the input data file name}
 \begin{lstlisting}
--binp NAME 
+-binp FILE
 \end{lstlisting}
-\afterlistingthing{This option changes to NAME the file from which the initial parameter estimates
-are read. The program expects the parameters to
-be in  binary format.}
+\afterlistingthing{This option changes to FILE the file from which the initial
+parameter estimates are read. The program expects the parameters to be in
+binary format.}
 
 When a program is running, it produces parameter estimates in binary
 format in files named \texttt{xxxx.b01},$\ldots$, \texttt{xxxx.bar}.
@@ -98,6 +96,15 @@ Both \textsc{ascii} and binary forms of the parameter files are supplied, becaus
 they have different advantages and disadvantages. \textsc{ascii} files can be
 easily examined and edited. Binary files supply parameter values 
 to the limit of machine precision in a compact format.
+
+\XX{command line arguments}{\fontindexentry{tt}{-ind FILE}}
+\XX{command line arguments}{changing the input data file name}
+\begin{lstlisting}
+-ind FILE
+\end{lstlisting}
+\afterlistingthing{By default, the program named \texttt{xxxx(.exe)} tries to
+read in its data from the file \texttt{xxxx.dat}. This option changes the data
+file to \texttt{FILE}.}
 
 \XX{command line arguments}{\fontindexentry{tt}{-lmn}}
 \XX{command line arguments}{limited memory Newton}
@@ -148,9 +155,9 @@ set the number of phases to~\texttt{N}.}
 \begin{lstlisting}
 -mcmc [N]    
 \end{lstlisting} 
-\afterlistingthing{This option turns on the the calculation of the Markov chain Monte Carlo
-routine. By default, the model will recalculate the approximate Hessian,
-so you may want to use the \texttt{-nohess} option if you don't wish
+\afterlistingthing{This option turns on the the calculation of the Markov chain
+Monte Carlo routine. By default, the model will recalculate the approximate
+Hessian, so you may want to use the \texttt{-nohess} option if you don't wish
 to recalculate the Hessian. It is your responsibility to ensure that
 the Hessian data in the current directory are current.
 The \texttt{mcmc} routine will perform \texttt{N} simulations.}
@@ -175,11 +182,11 @@ left off.}
 \begin{lstlisting}
 -mcsave N  
 \end{lstlisting}
-\afterlistingthing{For the usual \textsc{mcmc} routine, the results from consecutive
-steps of the simulation are highly correlated. If the
+\afterlistingthing{For the usual \textsc{mcmc} routine, the results from
+consecutive steps of the simulation are highly correlated. If the
 parameters of interest are expensive to compute, it may be advantageous to
-only compute every \texttt{N}$^\textrm{th}$ one. This option saves the results so that they
-can be used in subsequent calculations.}
+only compute every \texttt{N}$^\textrm{th}$ one. This option saves the results
+so that they can be used in subsequent calculations.}
 
 \XX{command line arguments}{\fontindexentry{tt}{-mceval}}
 \XX{command line arguments}{use the saved results from Markov Chain Monte Carlo}
@@ -188,17 +195,18 @@ can be used in subsequent calculations.}
 \begin{lstlisting}
 -mceval N
 \end{lstlisting}
-\afterlistingthing{This option will use the previously saved results from \texttt{mcmc} to evaluate
-parameters of interest. The function \texttt{mceval\_phase()} can
-be useful here to only calculate the parameters during this phase.}
+\afterlistingthing{This option will use the previously saved results from
+\texttt{mcmc} to evaluate parameters of interest. The function
+\texttt{mceval\_phase()} can be useful here to only calculate the parameters
+during this phase.}
 
 \XX{command line arguments}{\fontindexentry{tt}{-nox}}
 \XX{command line arguments}{suppressing printing}
 \begin{lstlisting}
 -nox  
 \end{lstlisting}
-\afterlistingthing{This option suppresses the printing of the current \texttt{x} vector
-being sampled by the function minimizer.
+\afterlistingthing{This option suppresses the printing of the current \texttt{x}
+vector being sampled by the function minimizer.
 Printing this out can be a significant overhead for models with
 a large number of parameters.  Also, it simply irritates some users.}
 
@@ -207,10 +215,12 @@ a large number of parameters.  Also, it simply irritates some users.}
 \begin{lstlisting}
 -ams N          set arrmblsize to n (ARRAY_MEMBLOCK_SIZE) 
 \end{lstlisting}
-\afterlistingthing{This option has the same effect as setting \texttt{arrmblsize} in the
-program code, but has the advantage that it can be done at runtime.}
+\afterlistingthing{This option has the same effect as setting
+\texttt{arrmblsize} in the program code, but has the advantage that it can be
+done at runtime.}
 
-\XX{\fontindexentry{tt}{gradient\_structure::}}{\fontindexentry{tt}{set\_CMPDIF\_BUFFER\_SIZE}} 
+\XX{\fontindexentry{tt}%
+{gradient\_structure::}}{\fontindexentry{tt}{set\_CMPDIF\_BUFFER\_SIZE}}
 \XX{command line arguments}{\fontindexentry{tt}{-cbs N}}
 \begin{lstlisting}
 -cbs N          set CMPDIF_BUFFER_SIZE to n 
@@ -219,7 +229,8 @@ program code, but has the advantage that it can be done at runtime.}
   \texttt{gradient\_structure::set\_CMPDIF\_BUFFER\_SIZE} function
 in the program code, but has the advantage that it can be done at runtime.}
 
-\XX{\fontindexentry{tt}{gradient\_structure::}}{\fontindexentry{tt}{set\_GRADSTACK\_BUFFER\_SIZE}}
+\XX{\fontindexentry{tt}%
+{gradient\_structure::}}{\fontindexentry{tt}{set\_GRADSTACK\_BUFFER\_SIZE}}
 \XX{command line arguments}{\fontindexentry{tt}{-gbs N}}
 \begin{lstlisting}
 -gbs N          set GRADSTACK_BUFFER_SIZE 
@@ -228,5 +239,5 @@ in the program code, but has the advantage that it can be done at runtime.}
 \texttt{gradient\_structure::set\_GRADSTACK\_BUFFER\_SIZE } function
 in the
 program code, but has the advantage that it can be done at runtime. 
-{\it Also note that the size is in bytes here, whereas for the included code, it is in chunks of about 36 bytes.}}
-
+{\it Also note that the size is in bytes here, whereas for the included code, it
+  is in chunks of about 36 bytes.}}

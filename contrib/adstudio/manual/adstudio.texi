@@ -173,7 +173,7 @@ Emacs, and the Emacs packages, along with file associations and environment
 variables to glue everything together.
 
 @sp
-@center @image{intro-install,9cm}
+@screen{intro-install}
 
 @noindent
 Once installed, the software components reside in four different root directories:
@@ -198,6 +198,8 @@ file associations. In rare cases, users may need to reconfigure these according
 to taste and needs after installing AD Studio. Advanced users may choose to
 deselect these options during the installation for this reason.
 
+@page
+
 @subsec Manual setup
 
 @noindent
@@ -218,8 +220,6 @@ be useful for that:
 @noindent
 See also the chapters on @ref{Configuration} and @ref{Troubleshooting} in this
 manual.
-
-@page
 
 @subsec AD Studio Linux/Mac
 
@@ -552,6 +552,8 @@ screen.
 
 @page
 
+@screen{tmb-mode}
+
 @subsec Run R script
 
 @noindent
@@ -562,9 +564,10 @@ facilities (menu, keybindings, etc.) remain active.
 Positioning the cursor inside an R script window, however, activates
 @command{R-mode} that is part of the Emacs Speaks Statistics (ESS) package. It
 is a feature-rich mode that supports a variety of R tasks, including package
-development and debugging, as reflected in the @clickthis{ESS} menu items. The
-@key{f9}, @key{f10}, and @key{f11} can be used to run R scripts, a
-line/paragraph at a time or the entire script. See @ref{R mode keybindings}.
+development and debugging, as reflected in the @clickthis{ESS} menu items.
+Inside an R script buffer, @key{f9}, @key{f10}, and @key{f11} can be used to run
+R scripts, a line/paragraph at a time or the entire script. See @ref{R mode
+keybindings}.
 
 @section Debug
 

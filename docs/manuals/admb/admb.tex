@@ -98,7 +98,7 @@ process of producing the executable is automated, so that the user who doesn't
 wish to consider the vagaries of \cplus\ programming can go from the \ADM\
 template to the compiled executable in one step. Assuming that the \cplus\
 compiler and the \ADM\ and \scAD\ libraries have been properly installed, then
-to produce a \ADM\ executable, it is only necessary to type \texttt{makeadm
+to produce a \ADM\ executable, it is only necessary to type \texttt{admb
   root}, where \texttt{root.tpl} is the name of the \textsc{ascii} file
 containing the template specification. To simplify model development, two modes
 of operation are provided: a safe mode with bounds checking on all array
@@ -260,7 +260,7 @@ attempt describing the time series of returns from some market instrument.
 
 %\item{5.}
 \paragraph{A problem in natural resource management.} The
-Schaefer-Pella-Tomlinson Model for investigating the response of an exploited
+Schaefer-Pella-Tomlinson model for investigating the response of an exploited
 fish population is developed and extended to include a Bayesian times series
 treatment of time-varying carrying capacity. This example is interesting because
 the model is rather temperamental. Several techniques for producing reliable
@@ -289,9 +289,9 @@ $Y_i$ and the predicted values $ax_i+b$ is minimized. That is,
 we want to solve the problem
 $$\min_{a,b}\sum_{i=1}^n(Y_i-ax_i-b)^2$$
 
-The template for this model is in the file \texttt{SIMPLE.TPL}. To make the
-model, one would type \texttt{makeadm simple}. The resulting executable for the
-model is in the file \texttt{SIMPLE.EXE}. The contents of \texttt{SIMPLE.TPL}
+The template for this model is in the file \texttt{simple.tpl}. To build the
+model, one would type \texttt{admb simple}. The resulting executable for the
+model is in the file \texttt{simple.exe}. The contents of \texttt{simple.tpl}
 are below. (Anything following ``\texttt{//}'' is a comment.)
 \XX{sections}{\fontindexentry{tt}{DATA\_SECTION}}
 \XX{sections}{\fontindexentry{tt}{PARAMETER\_SECTION}}
@@ -332,10 +332,10 @@ are distinguished by the prefix \texttt{init}, as in \texttt{init\_int} or
 \texttt{init\_number}. All objects prefaced with \texttt{init} in the \DS\ are
 read in from a data file in the order in which they are declared. The default
 file names for various files are derived from the name of the executable
-program. For example, if the executable file is named \texttt{ROOT.EXE}, then
-the default input data file name is \texttt{ROOT.DAT}. For this example, the
-executable file is named \texttt{SIMPLE.EXE}, so the default data file is
-\texttt{SIMPLE.DAT}. Notice that once an object has been read in, its value is
+program. For example, if the executable file is named \texttt{root.exe}, then
+the default input data file name is \texttt{root.dat}. For this example, the
+executable file is named \texttt{simple.exe}, so the default data file is
+\texttt{simple.dat}. Notice that once an object has been read in, its value is
 available to be used to describe other data objects. In this case, the value of
 \texttt{nobs} can be used to define the size of the vectors \texttt{Y} and
 \texttt{x}. The next line
@@ -344,7 +344,7 @@ available to be used to describe other data objects. In this case, the value of
 \end{lstlisting}
 defines an initial vector object \texttt{Y} whose minimum valid index is~1 and
 whose maximum valid index is \texttt{nobs}. This vector object will be read in
-next from the data file. The contents of the file \texttt{SIMPLE.DAT} are shown
+next from the data file. The contents of the file \texttt{simple.dat} are shown
 below.
 \X{data file}
 \begin{lstlisting}
@@ -386,7 +386,7 @@ in from a data file) and initial parameters is that since parameters are
 estimated in the model, it is possible to assign initial default values to them.
 
 The default file name for the file that contains initial values for the initial
-model parameters is \texttt{ROOT.PIN}. If no file named \texttt{ROOT.PIN} is
+model parameters is \texttt{root.pin}. If no file named \texttt{root.pin} is
 found, default values are supplied for the initial parameters. (Methods for
 changing the default values for initial parameters are described below.) The
 statement
@@ -514,7 +514,7 @@ it is generally possible to use lower level ``C-like'' operations to accomplish
 the same objective as \scAD's array and matrix operations. In this case, the
 columns of the matrix \texttt{Obs} can also be copied to the vectors \texttt{x}
 and \texttt{Y} by using a standard for loop and the following element-wise
-operations
+operations:
 \begin{lstlisting}
 PRELIMINARY_CALCS_SECTION
   for (int i=1;i<=nobs;i++)
@@ -546,21 +546,21 @@ index for the for loop, ``on the fly'' in the
 
 By default, \ADM\ produces three or more files:
 \begin{enumerate}
-  \item \texttt{ROOT.PAR}, which contains the parameter estimates in
+  \item \texttt{root.par}, which contains the parameter estimates in
   \textsc{ascii} format,
 
-  \item \texttt{ROOT.BAR}, which is the parameter estimates in a binary file
+  \item \texttt{root.bar}, which is the parameter estimates in a binary file
   format, and
 
-  \item \texttt{ROOT.COR}, which contains the estimated standard deviations and
+  \item \texttt{root.cor}, which contains the estimated standard deviations and
   correlations of the parameter estimates.
 \end{enumerate}
 
-The template code for the simple model is in the file \texttt{SIMPLE.TPL}. The
-input data is in the file \texttt{SIMPLE.DAT}. The parameter estimates are in
-the file \texttt{SIMPLE.PAR}. By default, the standard deviations and the
+The template code for the simple model is in the file \texttt{simple.tpl}. The
+input data is in the file \texttt{simple.dat}. The parameter estimates are in
+the file \texttt{simple.par}. By default, the standard deviations and the
 correlation matrix for the model parameters are estimated. They are in the file
-\texttt{SIMPLE.COR}:
+\texttt{simple.cor}:
 \X{correlation matrix}
 \begin{lstlisting}
  index      value      std.dev       1       2
@@ -580,7 +580,7 @@ correlation matrix for the parameters is~given.
 \X{robust regression}
 
 The code for the model template for this example is found in the file
-\texttt{VONB.TPL}. This example is intended to demonstrate the advantages of
+\texttt{vonb.tpl}. This example is intended to demonstrate the advantages of
 using \ADM's robust regression routine over standard nonlinear least square
 regression procedures. Further discussion about the underlying theory can be
 found in the \scAD\ user's manual, but it is not necessary to understand the
@@ -707,7 +707,7 @@ outlying points without the need to expressly remove them from the data.
 
 To invoke the robust regression procedure, it is necessary to make three changes
 to the existing code. The template for the robust regression version of the
-model can be found in the file \texttt{VONBR.TPL}.
+model can be found in the file \texttt{vonbr.tpl}.
 \begin{lstlisting}
 DATA_SECTION
   init_int nobs;
@@ -781,7 +781,7 @@ to be
 \end{lstlisting}
 to invoke the robust regression function.
 
-That's all there is to it! These three changes will convert any AD Model builder
+That's all there is to it! These three changes will convert any AD Model Builder
 template from a nonlinear regression model to a robust nonlinear regression
 model.
 
@@ -857,7 +857,7 @@ estimators.
 \X{chemical kinetics}
 %xx \htmlnewfile
 
-\section{Chemical engineering: \br a chemical kinetics problem}
+\section{Chemical engineering:\br a chemical kinetics problem}
 
 This example may strike you as being fairly complicated. If so, you should
 compare it with the original solution using the so-called sensitivity equations.
@@ -1116,7 +1116,7 @@ exclude parameters from the report, if desired.
 %xx \htmlendtex
 
 %xx \htmlnewfile
-\section{Financial Modelling: a generalized autoregressive\br
+\section{Financial modelling: a generalized autoregressive\br
   conditional \hbox{heteroskedasticity} or \textsc{garch} model}
 \X{financial modelling}
 \XX{time series}{\fontindexentry{sc}{garch} Model}
@@ -1294,7 +1294,7 @@ minimizer in each stage of the minimization procedure.
 \XX{optimization}{phases}
 %xx \htmlnewfile
 
-\section{Natural resource management:\br the Schaefer-Pella-Tomlinson Model}
+\section{Natural resource management:\br the Schaefer-Pella-Tomlinson model}
 
 It is typical of many models in natural resource management that the model tends
 to be rather unstable numerically. In addition, some of the model parameters are
@@ -1357,7 +1357,7 @@ The catch $C_{t+\delta}$ over the period $(t,t+\delta)$ is given by
 \XX{Schaefer-Pella-Tomlinson model}{unfished equilibrium biomass level}
 \XX{Schaefer-Pella-Tomlinson model}{optimal productivity}
 
-\section{Bayesian considerations in the Pella-Tomlinson Model}
+\section{Bayesian considerations in the Pella-Tomlinson model}
 
 The parameter $k$ is referred to as the ``carrying capacity'' or the ``unfished
 equilibrium biomass level,'' because it is the value that the biomass of the
@@ -2412,7 +2412,7 @@ the valid index range by~1.
 \X{6-dimensional arrays}
 \X{7-dimensional arrays}
 
-The example contained in the file \texttt{FOURD.TPL} illustrates some aspects of
+The example contained in the file \texttt{fourd.tpl} illustrates some aspects of
 the use of 3 and 4-dimensional arrays. There are now examples of the use of
 arrays up to dimension~7 in the documentation. \footnote{See
   Chapter~\ref{ch:regime-switching} for an example of the use of
@@ -2546,7 +2546,7 @@ case 2: i
 \chapter{Markov Chain Simulation}
 
 \section{Introduction to the Markov Chain Monte Carlo\br
-  Approach in Bayesian Analysis}
+  approach in Bayesian analysis}
 \XX{command line arguments}{\fontindexentry{tt}%
   {-mcmc N Markov chain Monte Carlo}}
 \XX{command line arguments}{\fontindexentry{tt}{-mcscale}}
@@ -2936,7 +2936,7 @@ This examples highlights two features of \ADM: 1) the use of a numerical
 integration routine within a statistical parameter estimation model, and 2) the
 use of the \texttt{ad\_begin\_funnel} mechanism to reduce the size of temporary
 file storage required. It also provides a performance comparison between \ADM\
-and Splus.
+and S-Plus.
 
 This problem investigates a model that predicts a relationship between the size
 and frequency of wildfires. It is assumed that the probability of observing a
@@ -3148,14 +3148,14 @@ elapsed time = 244 seconds nsteps = 11 f = 627.310624
 tau 23.115275 nu 49009470510.133156 beta 0.159369 sigma 8.658643
 \end{lstlisting}
 
-\section{A comparison with Splus for the forestry model}
+\section{A comparison with S-Plus for the forestry model}
 
-The Splus minimizing routine \texttt{nlminb} was used to fit the model. Fitting
-the three-parameter model with Splus required approximately 280~seconds,
+The S-Plus minimizing routine \texttt{nlminb} was used to fit the model. Fitting
+the three-parameter model with S-Plus required approximately 280~seconds,
 compared to 6~seconds with \ADM, so that \ADM\ was approximately 45 times faster
 for this simple problem.
 
-For the four parameter problem with beta estimated, the SPLUS routine exited
+For the four parameter problem with beta estimated, the S-Plus routine exited
 after 14~minutes and 30~seconds, reporting false convergence with a function
 value of~627.338.
 
@@ -3167,7 +3167,7 @@ freq
  167 84 61 29 19 17 4 4 1 0 1 1
 \end{lstlisting}
 where the first line contains the bounds for the size categories and the second
-line contains the number of observations in each size category. The Splus code
+line contains the number of observations in each size category. The S-Plus code
 with fixed beta for the example is
 \begin{lstlisting}
 obj.20<-
@@ -3212,7 +3212,7 @@ function(z, A, TAU, NU, SIGMA)
   exp(-0.5 * z^2 + TAU * (-1 + exp(-NU * A^2/3 * exp(SIGMA * z))))
 }
 \end{lstlisting}
-To run the example in Splus with the same initial values, use the following
+To run the example in S-Plus with the same initial values, use the following
 values
 \begin{lstlisting}
   logtau 0  lognu 0  logsigma -2
@@ -4392,7 +4392,7 @@ And the input data file is here:
 
 \chapter{The Regression Function}\label{ch:appendix-regression-function}
 
-The \texttt{robust\_regression} function calculates the log-likelihood function
+The \texttt{regression} function calculates the log-likelihood function
 for the standard statistical model of independent normally distributed errors,
 with mean~0 and equal variance. The code is written in terms of \scAD\ objects,
 such as \texttt{dvariable} and \texttt{dvar\_vector}. They are described in the
@@ -4400,11 +4400,10 @@ such as \texttt{dvariable} and \texttt{dvar\_vector}. They are described in the
 \begin{lstlisting}
 dvariable regression(const dvector& obs,const dvar_vector& pred)
 {
-  double nobs=double(size_count(obs));  // get the number of
-                                        // observations
+  double nobs=double(size_count(obs));  // number of observations
   dvariable vhat=norm2(obs-pred);  // sum of squared deviations
-  vhat/=nobs;                      //mean of squared deviations
-  return (.5*nobs*log(vhat));     //return log-likelihood value
+  vhat/=nobs;                        // mean of squared deviations
+  return (.5*nobs*log(vhat));        // return log-likelihood value
 }
 \end{lstlisting}
 

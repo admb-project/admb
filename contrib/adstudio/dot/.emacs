@@ -213,8 +213,8 @@
 (global-set-key [M-f4]        'save-buffers-kill-emacs )
 (global-set-key [f5]          'revert-buffer           )
 (global-set-key [f6]          'other-window            )
-(global-set-key [C-f6]        'next-buffer             )
-(global-set-key [M-f6]        'next-buffer             )
+(global-set-key [C-f6]        'bs-cycle-next           )
+(global-set-key [M-f6]        'bs-cycle-next           )
 ;; [f7]-[f10] are set in `adstudio-admb-hook' and `adstudio-tmb-hook'
 ;; [f11]-[f12] are set in in `admb-mode' and `tmb-mode'
 (global-set-key [C-backspace] 'backward-delete-word    ) ; backward-kill-word
@@ -233,7 +233,7 @@
 (global-set-key [?\C-,]    'toggle-trailing-whitespace)
 (global-set-key [?\C-.]    'which-function-mode       )
 (global-set-key [?\C-a]    'mark-whole-buffer         ) ; move-beginning-of-line
-(global-set-key [?\C-b]    'next-buffer               ) ; backward-char
+(global-set-key [?\C-b]    'bs-cycle-next             ) ; backward-char
 (global-set-key [?\C-d]    'cd                        ) ; kill-word
 (global-set-key [?\C-f]    'isearch-forward           ) ; forward-char
 (global-set-key [?\C-g]    'goto-line                 ) ; keyboard-quit

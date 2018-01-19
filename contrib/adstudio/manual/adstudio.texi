@@ -717,12 +717,12 @@ In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
 @item @kbd{M-f4}      @tab Quit                           @tab @command{save-buffers-kill-emacs}
 @item @kbd{f5}        @tab Reload                         @tab @command{revert-buffer}
 @item @kbd{f6}        @tab Other window                   @tab @command{other-window}
-@item @kbd{C-f6}      @tab Next buffer                    @tab @command{next-buffer}
+@item @kbd{C-f6}      @tab Next buffer                    @tab @command{bs-cycle-next}
 @item@hrule@tab@hrule@tab@hrule
 @item @kbd{C-,}       @tab Toggle trailing whitespace     @tab @command{toggle-trailing-whitespace}
 @item @kbd{C-.}       @tab Toggle section indicator       @tab @command{which-function-mode}
 @item @kbd{C-a}       @tab Select all                     @tab @command{mark-whole-buffer}
-@item @kbd{C-b}       @tab Next buffer                    @tab @command{next-buffer}
+@item @kbd{C-b}       @tab Next buffer                    @tab @command{bs-cycle-next}
 @item @kbd{C-c}       @tab Copy                           @tab @command{cua--prefix-override-handler}
 @item @kbd{C-d}       @tab Change directory               @tab @command{cd}
 @item @kbd{C-e}       @tab End                            @tab @command{move-end-of-line}

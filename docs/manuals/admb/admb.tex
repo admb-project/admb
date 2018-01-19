@@ -280,39 +280,38 @@ and estimate the exploitation rates, etc., in exploited fish populations.
 
 To illustrate this method, we begin with a simple statistical model, which is to
 estimate the parameters of a linear relationship of the form
-$$Y_{i} =ax_i+b\qquad \hbox{\rm for}\ 1<=i<=n,$$
-where $x_i$ and $Y_i$ are vectors, and $a$ and $b$ are the model parameters
+$$y_i=b_0+b_1x_i\qquad \hbox{\rm for}\ 1<=i<=n,$$
+where $x_i$ and $y_i$ are vectors, and $b_0$ and $b_1$ are the model parameters
 that are to be estimated. The parameters are estimated by the method
-of least squares---that is, we find the values of $a$ and $b$ such that
+of least squares---that is, we find the values of $b_0$ and $b_1$ such that
 the sum of the squared differences between the observed values
-$Y_i$ and the predicted values $ax_i+b$ is minimized. That is,
+$y_i$ and the predicted values $b_0+b_1x_i$ is minimized. That is,
 we want to solve the problem
-$$\min_{a,b}\sum_{i=1}^n(Y_i-ax_i-b)^2$$
+$$\min_{b_0,b_1}\sum_{i=1}^n(y_i-b_0-b_1x_i)^2$$
 
 The template for this model is in the file \texttt{simple.tpl}. To build the
 model, one would type \texttt{admb simple}. The resulting executable for the
 model is in the file \texttt{simple.exe}. The contents of \texttt{simple.tpl}
-are below. (Anything following ``\texttt{//}'' is a comment.)
+are below.
 \XX{sections}{\fontindexentry{tt}{DATA\_SECTION}}
 \XX{sections}{\fontindexentry{tt}{PARAMETER\_SECTION}}
 \XX{sections}{\fontindexentry{tt}{PROCEDURE\_SECTION}}
 \begin{lstlisting}
 DATA_SECTION
-  init_int nobs             // nobs is the number of observations
-  init_vector Y(1,nobs)     // the observed Y values
-  init_vector x(1,nobs)
+  init_int n
+  init_vector x(1,n)
+  init_vector y(1,n)
 PARAMETER_SECTION
-  init_number a
-  init_number b
-  vector pred_Y(1,nobs)
+  init_number b0
+  init_number b1
+  vector yhat(1,n)
   objective_function_value f
 PROCEDURE_SECTION
-  pred_Y=a*x+b;       // calculate the predicted Y values
-  f=regression(Y,pred_Y);  // do the regression---the vector of
-                           // observations goes first
+  yhat=b0+b1*x;
+  f=regression(y,yhat);
 \end{lstlisting}
 The main requirement is that all keywords must begin in column~1, while the code
-itself must be indented.
+itself must be indented. Comments begin with \texttt{//}.
 
 \section{The data section}
 
@@ -337,23 +336,23 @@ the default input data file name is \texttt{root.dat}. For this example, the
 executable file is named \texttt{simple.exe}, so the default data file is
 \texttt{simple.dat}. Notice that once an object has been read in, its value is
 available to be used to describe other data objects. In this case, the value of
-\texttt{nobs} can be used to define the size of the vectors \texttt{Y} and
-\texttt{x}. The next line
+\texttt{n} can be used to define the size of the vectors \texttt{x} and
+\texttt{y}. The next line
 \begin{lstlisting}
-  init_vector Y(1,nobs)
+  init_vector x(1,n)
 \end{lstlisting}
-defines an initial vector object \texttt{Y} whose minimum valid index is~1 and
-whose maximum valid index is \texttt{nobs}. This vector object will be read in
+defines an initial vector object \texttt{x} whose minimum valid index is~1 and
+whose maximum valid index is \texttt{n}. This vector object will be read in
 next from the data file. The contents of the file \texttt{simple.dat} are shown
 below.
 \X{data file}
 \begin{lstlisting}
 # number of observations
-     10
-# observed Y values
-    1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18
-# observed x values
-    -1  0 1  2  3  4  5  6  7  8
+10
+# x values
+-1  0  1  2  3  4  5  6  7  8
+# y values
+1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18.0
 \end{lstlisting}
 It is possible to put comment lines in the data files.
 \X{comments in data file}
@@ -375,7 +374,7 @@ in your model. The description of the model parameters is similar to that used
 for the data in the \DS.
 
 All parameters are floating point numbers (or arrays of floating point numbers).
-The statement \texttt{init\_number b} defines a floating point (actually, a
+The statement \texttt{init\_number b0} defines a floating point (actually, a
 double) number. The preface \texttt{init} means that this is an initial
 parameter. Initial parameters have two properties that distinguish them from
 other model parameters. First, all of the other model parameters are calculated
@@ -391,7 +390,7 @@ found, default values are supplied for the initial parameters. (Methods for
 changing the default values for initial parameters are described below.) The
 statement
 \begin{lstlisting}
-  vector pred_Y(1,nobs)
+  vector yhat(1,n)
 \end{lstlisting}
 defines a vector of parameters. Since it is not prefaced with \texttt{init}, the
 values for this vector will not be read in from a file or given default values.
@@ -423,12 +422,12 @@ section.)
 Statements must end with a ``\texttt{;}''---exactly as with C or \cplus. The
 `\texttt{;}' is optional in the \DS\ and the \PS. The code uses \scAD's vector
 operations, which enable you to avoid writing a lot of code for loops. In the
-statement \texttt{pred\_Y=a*x+b;} the expression \texttt{a*x} forms the product
-of the number \texttt{a} and the components of the vector \texttt{x}, while
-\texttt{+b} adds the value of the number \texttt{b} to this product, so that
-\texttt{pred\_Y} has the components $ax_i+b$. In the line
+statement \texttt{yhat=b0+b1*x;} the expression \texttt{b1*x} forms the product
+of the number \texttt{b1} and the components of the vector \texttt{x}, while
+\texttt{b0+} adds the value of the number \texttt{b0} to this product, so that
+\texttt{yhat} has the components $b_0+b_1x_i$. In the line
 \begin{lstlisting}
-  f=regression(Y,pred_Y);
+  f=regression(y,yhat);
 \end{lstlisting}
 the function \texttt{regression} calculates the log-likelihood function for the
 regression and assigns this value to the object \texttt{f}, which is of type
@@ -461,46 +460,46 @@ wants to carry out some calculations with the input data to put them in a more
 convenient form. Suppose that the input data for the simple regression model are
 in the form
 \begin{lstlisting}
-# number of observations
-     10
-# observed Y values  observed x values
-    1.4                    -1
-    4.7                     0
-    5.1                     1
-    8.3                     2
-    9.0                     3
-    14.5                    4
-    14.0                    5
-    13.4                    6
-    19.2                    7
-    18                      8
+# n
+10
+# x     y
+ -1   1.4
+  0   4.7
+  1   5.1
+  2   8.3
+  3   9.0
+  4  14.5
+  5  14.0
+  6  13.4
+  7  19.2
+  8  18.0
 \end{lstlisting}
-The problem is that the data are in pairs in the form $(Y_i,x_i)$, so that we
-can't read in either the $x_i$ or $Y_i$ first. To read in the data in this
-format, we will define a matrix with \texttt{nobs} rows and two columns. The
+The problem is that the data are in pairs in the form $(x_i,y_i)$, so that we
+can't read in either the $x_i$ or $y_i$ first. To read in the data in this
+format, we will define a matrix with \texttt{n} rows and two columns. The
 \DS\ becomes
 \begin{lstlisting}
 DATA_SECTION
-  init_int nobs
-  init_matrix Obs(1,nobs,1,2)
-  vector Y(1,nobs)
-  vector x(1,nobs)
+  init_int n
+  init_matrix mat(1,n,1,2)
+  vector x(1,n)
+  vector y(1,n)
 \end{lstlisting}
-Notice that since we do not want to read in \texttt{Y} or \texttt{x}, these
+Notice that since we do not want to read in \texttt{x} or \texttt{y}, these
 objects are no longer initial objects, so their declarations are no longer
-prefaced with \texttt{int}. The observations will be read into the initial
-matrix object \texttt{Obs} so that \texttt{Y} is in the first column of
-\texttt{Obs}, while \texttt{x} is in the second column. If we don't want to
+prefaced with \texttt{init}. The observations will be read into the initial
+matrix object \texttt{mat} so that \texttt{x} is in the first column of
+\texttt{mat}, while \texttt{y} is in the second column. If we don't want to
 change the rest of the code, the next problem is to get the first column of
-\texttt{Obs} into \texttt{Y}, and the second column of \texttt{Obs} into
-\texttt{x}. The following code in the \texttt{PRELIMINARY\_CALCS\_SECTION} will
+\texttt{mat} into \texttt{x}, and the second column of \texttt{mat} into
+\texttt{y}. The following code in the \texttt{PRELIMINARY\_CALCS\_SECTION} will
 accomplish this objective. It uses the function \texttt{column}, which extracts
 a column from a matrix object so that it can be put into a vector object.
 \XX{column}{extract a column from a matrix}
 \begin{lstlisting}
 PRELIMINARY_CALCS_SECTION
- Y=column(Obs,1); // extract the first column
- x=column(Obs,2); // extract the second column
+  Y=column(mat,1); // extract column 1
+  x=column(mat,2); // extract column 2
 \end{lstlisting}
 
 \section{The use of loops and element-wise operations}
@@ -512,15 +511,15 @@ that \scAD\ provides the \texttt{column} operation. What if you didn't know that
 and don't feel like reading the manual yet? For those who are familiar with~C,
 it is generally possible to use lower level ``C-like'' operations to accomplish
 the same objective as \scAD's array and matrix operations. In this case, the
-columns of the matrix \texttt{Obs} can also be copied to the vectors \texttt{x}
-and \texttt{Y} by using a standard for loop and the following element-wise
+columns of the matrix \texttt{mat} can also be copied to the vectors \texttt{x}
+and \texttt{y} by using a standard for loop and the following element-wise
 operations:
 \begin{lstlisting}
 PRELIMINARY_CALCS_SECTION
-  for (int i=1;i<=nobs;i++)
+  for (int i=1;i<=n;i++)
   {
-    Y[i]=Obs[i][1];
-    x[i]=Obs[i][2];
+    x[i]=mat[i][1];
+    y[i]=mat[i][2];
   }
 \end{lstlisting}
 Incidentally, the C-like operation \texttt{[]} was used for indexing members of
@@ -530,10 +529,10 @@ be written as
 \X{accessing elements of matrix objects}
 \begin{lstlisting}
 PRELIMINARY_CALCS_SECTION
-  for (int i=1;i<=nobs;i++)
+  for (int i=1;i<=n;i++)
   {
-    Y(i)=Obs(i,1);
-    x(i)=Obs(i,2);
+    x(i)=mat(i,1);
+    y(i)=mat(i,2);
   }
 \end{lstlisting}
 which may be more readable for some users. Notice that it is also possible to
@@ -563,9 +562,11 @@ correlation matrix for the model parameters are estimated. They are in the file
 \texttt{simple.cor}:
 \X{correlation matrix}
 \begin{lstlisting}
- index      value      std.dev       1       2
-    1   a  1.9091e+00 1.5547e-01       1
-    2   b  4.0782e+00 7.0394e-01  -0.773       1
+index   name       value     std.dev        1        2
+     1  b0    4.0782e+00  7.0394e-01   1.0000
+     2  b1    1.9091e+00  1.5547e-01  -0.7730  1.0000
+
+
 \end{lstlisting}
 \X{standard deviations report}
 \XX{standard deviations report}{\fontindexentry{sc}{std}}

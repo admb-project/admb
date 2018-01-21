@@ -1,32 +1,33 @@
-# ADMB-IDE Builder
+# AD Studio Builder
 
 ## Overview
 
-This directory implements an automated build procedure for ADMB-IDE. The
+This directory implements an automated build procedure for AD Studio. The
 automation serves two purposes: (a) continuous integration, and (b) streamlining
-the work required for an official ADMB-IDE release. It consists of four scripts:
+the work required for an official AD Studio release. It consists of four
+scripts:
 
 ```
-        ide-components.bat      ->  [components]
-                |
-       ide-distribution.bat     ->  [distribution]
-                |
-        +-------+-------+
-        |               |
-ide-installer.iss  ide-zip.bat  ->  admb-ide.exe, admb-ide.zip
+            adstudio-components.bat       ->  [components]
+                    |
+            adstudio-distribution.bat     ->  [distribution]
+                    |
+        +-----------+-----------+
+        |                       |
+adstudio-installer.iss  adstudio-zip.bat  ->  adstudio.exe, adstudio.zip
 ```
 
 ## Checklist for official release
 
 ### 1 Pipeline
 
-1a. [components](https://github.com/admb-project/admb-project.github.io/tree/master/tools/admb-ide/components)
+1a. [components](https://github.com/admb-project/admb-project.github.io/tree/master/tools/adstudio/components)
 > Update components, including `index.md`
 
-**1b. [components.bat](https://github.com/admb-project/admb/blob/master/contrib/ide/builder/ide-components.bat)
+**1b. [adstudio-components.bat](https://github.com/admb-project/admb/blob/master/contrib/adstudio/builder/adstudio-components.bat)
 > Update components
 
-1c. [ide-installer.iss](https://github.com/admb-project/admb/blob/master/contrib/ide/builder/ide-installer.iss)
+1c. [adstudio-installer.iss](https://github.com/admb-project/admb/blob/master/contrib/adstudio/builder/adstudio-installer.iss)
 > Version
 
 ### 2 Lisp
@@ -34,21 +35,21 @@ ide-installer.iss  ide-zip.bat  ->  admb-ide.exe, admb-ide.zip
 2a. [admb.el](https://github.com/admb-project/admb/blob/master/contrib/emacs/admb.el)
 > Copyright year, version, history entry
 
-2b. [.emacs](https://github.com/admb-project/admb/blob/master/contrib/ide/dot/.emacs)
+2b. [.emacs](https://github.com/admb-project/admb/blob/master/contrib/adstudio/dot/.emacs)
 > Copyright year, version, history entry
 
 ### 3 Manual
 
-3a. [intro-install.png](https://github.com/admb-project/admb/blob/master/contrib/ide/manual/intro-install.png)
+3a. [intro-install.png](https://github.com/admb-project/admb/blob/master/contrib/adstudio/manual/intro-install.png)
 > Current screenshot
 
-3b. [admb-ide.texi](https://github.com/admb-project/admb/blob/master/contrib/ide/manual/admb-ide.texi)
+3b. [adstudio.texi](https://github.com/admb-project/admb/blob/master/contrib/adstudio/manual/adstudio.texi)
 > Version and date variables, version numbers on copyright page
 
-3c. [admb-ide.pdf](https://github.com/admb-project/admb-project.github.io/tree/master/tools/admb-ide/admb-ide.pdf)
+3c. [adstudio.pdf](https://github.com/admb-project/admb-project.github.io/tree/master/tools/adstudio/adstudio.pdf)
 > Compile and upload new manual
 
 ### 4 News
 
-4a. [NEWS](https://github.com/admb-project/admb/blob/master/contrib/ide/NEWS)
-> News entry listing all user-visible changes in ADMB-IDE since last formal release
+4a. [NEWS](https://github.com/admb-project/admb/blob/master/contrib/adstudio/NEWS)
+> News entry listing all user-visible changes in AD Studio since last formal release

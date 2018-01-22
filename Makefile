@@ -286,8 +286,3 @@ bcc-install:
 	cd src& $(MAKE) -fbcc.mak install
 bcc-clean:
 	cd src& $(MAKE) -fbcc.mak clean
-
-counter: counts
-
-counts:
-	python scripts/get-download-counts.py

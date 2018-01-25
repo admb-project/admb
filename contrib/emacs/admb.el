@@ -6,7 +6,7 @@
 ;; Keywords: languages
 ;; URL:      https://github.com/admb-project/admb/blob/master/contrib/emacs
 
-(defconst admb-mode-version "12.0-0" "ADMB Mode version number.")
+(defconst admb-mode-version "12.0-1" "ADMB Mode version number.")
 
 ;;; Commentary:
 ;;
@@ -95,8 +95,6 @@
 ;; 1  Preamble
 
 (require 'outline)
-(require 'which-func)
-(add-to-list 'which-func-modes 'admb-mode) ; unnecessary in Emcas 24.3 onwards
 (defgroup admb nil
   "Major mode for editing AD Model Builder code."
   :tag "ADMB" :group 'languages)

@@ -363,7 +363,7 @@ if not defined tpls (
       )
       echo.&echo *** Linking: !objs!
       echo !CMD!
-      call !CMD!
+      call !CMD! || goto ERROR
       if defined d (
         if not exist !main!.dll (
           goto ERROR
@@ -414,7 +414,7 @@ if not defined tpls (
       echo.&echo *** Linking: !tpl!.obj
     )
     echo !CMD!
-    call !CMD!
+    call !CMD! || goto ERROR
     if defined d (
       if not exist !tpl!.dll (
         goto ERROR

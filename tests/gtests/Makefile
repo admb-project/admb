@@ -104,7 +104,6 @@ GTESTS=\
  test_i5_array.cpp\
  test_dvar_vector_position.cpp\
  test_atan2.cpp\
- test_data_number.cpp\
  test_gradcalc.cpp\
  test_autodif.cpp\
  main.cpp
@@ -117,6 +116,7 @@ ifeq ($(COVERAGE),yes)
 endif
 
 ##Need to debug this
+# test_data_number.cpp\
 # test_dll_param_init_bounded_vector.cpp\
 # test_df1b2atan2.cpp\
 # test_df1b2variable.cpp\

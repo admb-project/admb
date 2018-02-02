@@ -103,7 +103,11 @@ GTESTS=\
  test_i4_array.cpp\
  test_i5_array.cpp\
  test_dvar_vector_position.cpp\
+ test_df1b2atan2.cpp\
  test_atan2.cpp\
+ test_data_number.cpp\
+ test_dll_param_init_bounded_vector.cpp\
+ test_df1b2variable.cpp\
  test_gradcalc.cpp\
  test_autodif.cpp\
  main.cpp
@@ -116,15 +120,8 @@ ifeq ($(COVERAGE),yes)
 endif
 
 ##Need to debug this
-## test_autodif.cpp
-## test_data_number.cpp
-## test_df1b2variable.cpp
-## test_dll_param_init_bounded_vector.cpp
-
 #cfenv is not completely supported by most compilers
 #  test_cfenv.cpp
-
-# test_df1b2atan2.obj\
 # df1b2atan2.obj\
 # scalefactor.obj\
 

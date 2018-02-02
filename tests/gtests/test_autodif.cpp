@@ -1,14 +1,26 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_autodif: public ::testing::Test {};
 
-TEST_F(test_autodif, gradcalc)
+TEST_F(test_autodif, gradcalc_no_independant_variables)
 {
+  //Should test for initial state.
+  //ASSERT_EQ(gradient_structure::NVAR, 0);
+
+  ad_exit=&test_ad_exit;
+
   const int nvar = 1;
   dvector g(1, nvar);
 
-  ASSERT_DEATH(gradcalc(nvar, g), "nvar != gradient_structure::NVAR in gradcalc");
+  ASSERT_ANY_THROW(
+    gradcalc(nvar, g);
+  );
 }
 /*
   gradient_structure gs(1500);
@@ -22,19 +34,15 @@ TEST_F(test_autodif, gradcalc)
   dvector g(1, nvar);
 */
 
-TEST_F(test_autodif, dvar_vector)
+TEST_F(test_autodif, dvar_vector_with_no_gradient_structure)
 {
   const int nvar = 1;
   independent_variables variables(1, nvar);
-  ASSERT_DEATH
-  (
-    {
+  ASSERT_ANY_THROW(
       dvar_vector x(variables);
-    },
-    "Error -- you are trying to create a dvar_vector object"
   );
 }
-TEST_F(test_autodif, grad_stack1)
+TEST_F(test_autodif, reinitialize_grad_stack1_scoped)
 {
   ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
   {
@@ -60,11 +68,15 @@ TEST_F(test_autodif, dvar_vector3)
   
   ASSERT_DOUBLE_EQ(value(x[1]), 10);
 
-  dvariable v = sum(x);
-  double f = value(v);
-  ASSERT_DOUBLE_EQ(f, 10);
+  dvariable f = sum(x);
+  double result  = value(f);
+  ASSERT_DOUBLE_EQ(result, 10);
 
   dvector g(1, nvar);
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1->ptr != NULL);
+  //sgradcalc.cpp:158
+  // *gradient_structure::GRAD_STACK1->ptr->dep_addr = 1;
   gradcalc(nvar, g);
 }
 */

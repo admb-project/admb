@@ -104,6 +104,7 @@ GTESTS=\
  test_i5_array.cpp\
  test_gradcalc.cpp\
  test_dvar_vector_position.cpp\
+ test_autodif.cpp\
  main.cpp
 
 ifeq ($(CXX),openCC)

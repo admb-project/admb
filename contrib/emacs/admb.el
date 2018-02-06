@@ -54,8 +54,8 @@
 ;;   (local-set-key [down-mouse-3] 'imenu))
 ;; (add-hook 'admb-mode-hook 'my-admb-hook)
 ;;
-;; See also ADMB-IDE (http://admb-project.org/tools/admb-ide) for special use of
-;; `admb-mode'.
+;; See also AD Studio (https://github.com/admb-project/adstudio) for special use
+;; of `admb-mode'.
 ;;
 ;; Usage:
 ;;

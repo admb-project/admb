@@ -685,7 +685,7 @@ and `admb-tpl2cpp-flags'."
 ;; 5  Internal functions
 
 (defun admb-send (cmd)
-  "Send shell compilation command, after cleaning up spaces."
+  "Send shell compilation command CMD, after cleaning up spaces."
   (compile (replace-regexp-in-string "  +" " " cmd)))
 (defun admb-split-window ()
   "Split window if it is the only window, otherwise do nothing.\n

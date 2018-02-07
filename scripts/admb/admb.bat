@@ -233,6 +233,9 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"
   )
 )
+if exist "!CD!\echo" (
+  echo.&echo Warning: File 'echo' should not be in !CD!.
+)
 set "PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!"
 if not defined tpls (
   if not defined srcs (

@@ -93,6 +93,24 @@ TEST_F(test_async, simple_initial_values)
   ASSERT_DOUBLE_EQ(gradients(1), -0.7278138528138528);
   ASSERT_DOUBLE_EQ(gradients(2), -3.6126893939393945);
 }
+TEST_F(test_async, dlist_total_addresses)
+{
+  dlist list;
+  ASSERT_EQ(list.total_addresses(), 0);
+}
+TEST_F(test_async, gradient_structure_only)
+{
+  ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
+
+  gradient_structure gs;
+
+  ASSERT_TRUE(gradient_structure::GRAD_LIST != NULL);
+
+  //Created for return variables and arrays
+  //gradstrc.cpp: unsigned int gradient_structure::NUM_RETURN_ARRAYS = 25;
+  ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(),
+            25 * gradient_structure::RETURN_ARRAYS_SIZE);
+}
 TEST_F(test_async, simple_final_values)
 {
   independent_variables independents(1, 2);
@@ -102,6 +120,7 @@ TEST_F(test_async, simple_final_values)
   gradient_structure gs;
 
   dvar_vector variables(independents);
+
 
   dvector x(1, 10); 
   x(1) = -1.0;

@@ -9,21 +9,21 @@ extern "C"
   void test_ad_exit(const int exit_code);
 }
 
-class test_async: public ::testing::Test {};
+class test_simple_async: public ::testing::Test {};
 
-TEST_F(test_async, gradcalc_empty)
+TEST_F(test_simple_async, gradcalc_empty)
 {
   dvector empty;
   gradcalc(empty.size(), empty);
 }
-TEST_F(test_async, gradcalc_empty_with_gradient_structure)
+TEST_F(test_simple_async, gradcalc_empty_with_gradient_structure)
 {
   gradient_structure gs;
 
   dvector empty;
   gradcalc(empty.size(), empty);
 }
-TEST_F(test_async, gradcalc_make_indvar_list_not_called)
+TEST_F(test_simple_async, gradcalc_make_indvar_list_not_called)
 {
   ad_exit=&test_ad_exit;
 
@@ -32,7 +32,7 @@ TEST_F(test_async, gradcalc_make_indvar_list_not_called)
     gradcalc(gradients.size(), gradients);
   });
 }
-TEST_F(test_async, minimum)
+TEST_F(test_simple_async, minimum)
 {
   independent_variables independents(1, 2);
 
@@ -48,7 +48,7 @@ TEST_F(test_async, minimum)
   ASSERT_DOUBLE_EQ(gradients(1), 0);
   ASSERT_DOUBLE_EQ(gradients(2), 0);
 }
-TEST_F(test_async, simple_initial_values)
+TEST_F(test_simple_async, simple_initial_values)
 {
   independent_variables independents(1, 2);
 
@@ -94,12 +94,12 @@ TEST_F(test_async, simple_initial_values)
   ASSERT_DOUBLE_EQ(gradients(1), -0.7278138528138528);
   ASSERT_DOUBLE_EQ(gradients(2), -3.6126893939393945);
 }
-TEST_F(test_async, dlist_total_addresses)
+TEST_F(test_simple_async, dlist_total_addresses)
 {
   dlist list;
   ASSERT_EQ(list.total_addresses(), 0);
 }
-TEST_F(test_async, gradient_structure_only_GRAD_LIST)
+TEST_F(test_simple_async, gradient_structure_only_GRAD_LIST)
 {
   ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
 
@@ -112,7 +112,7 @@ TEST_F(test_async, gradient_structure_only_GRAD_LIST)
   ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(),
             25 * gradient_structure::RETURN_ARRAYS_SIZE);
 }
-TEST_F(test_async, gradient_structure_only_DF_FILE)
+TEST_F(test_simple_async, gradient_structure_only_DF_FILE)
 {
   ASSERT_TRUE(gradient_structure::get_fp() == NULL);
 
@@ -128,7 +128,7 @@ TEST_F(test_async, gradient_structure_only_DF_FILE)
   OFF_T pos = LSEEK(gradient_structure::get_fp()->file_ptr, 0, SEEK_END);
   ASSERT_EQ(pos, 0);
 }
-TEST_F(test_async, simple_final_values)
+TEST_F(test_simple_async, simple_final_values)
 {
   independent_variables independents(1, 2);
   independents(1) = 4.07817738582;

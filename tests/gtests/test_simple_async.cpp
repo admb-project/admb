@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 #include <admodel.h>
+#include <unistd.h>
 
 extern "C"
 {
@@ -98,7 +99,7 @@ TEST_F(test_async, dlist_total_addresses)
   dlist list;
   ASSERT_EQ(list.total_addresses(), 0);
 }
-TEST_F(test_async, gradient_structure_only)
+TEST_F(test_async, gradient_structure_only_GRAD_LIST)
 {
   ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
 
@@ -111,6 +112,22 @@ TEST_F(test_async, gradient_structure_only)
   ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(),
             25 * gradient_structure::RETURN_ARRAYS_SIZE);
 }
+TEST_F(test_async, gradient_structure_only_DF_FILE)
+{
+  ASSERT_TRUE(gradient_structure::get_fp() == NULL);
+
+  gradient_structure gs;
+
+  ASSERT_TRUE(gradient_structure::get_fp() != NULL);
+  ASSERT_TRUE(gradient_structure::get_fp()->file_ptr != 0);
+  ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
+  ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
+  ASSERT_TRUE(gradient_structure::get_fp()->buff != NULL);
+  ASSERT_EQ(sizeof(gradient_structure::get_fp()->buff), sizeof(OFF_T));
+  ASSERT_STREQ(gradient_structure::get_fp()->cmpdif_file_name, "cmpdiff.tmp");
+  OFF_T pos = LSEEK(gradient_structure::get_fp()->file_ptr, 0, SEEK_END);
+  ASSERT_EQ(pos, 0);
+}
 TEST_F(test_async, simple_final_values)
 {
   independent_variables independents(1, 2);
@@ -120,7 +137,6 @@ TEST_F(test_async, simple_final_values)
   gradient_structure gs;
 
   dvar_vector variables(independents);
-
 
   dvector x(1, 10); 
   x(1) = -1.0;
@@ -134,8 +150,18 @@ TEST_F(test_async, simple_final_values)
   x(9) = 7.0;
   x(10) = 8.0;
 
+  ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
+  ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
+
   dvar_vector yhat(1, 10);
+
+  ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
+  ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
+
   yhat = variables(1) + variables(2) * x; 
+
+  OFF_T pos = LSEEK(gradient_structure::get_fp()->file_ptr, 0, SEEK_CUR);
+  ASSERT_EQ(pos, 0);
 
   dvector y(1, 10); 
   y(1) = 1.4;

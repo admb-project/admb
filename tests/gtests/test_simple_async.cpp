@@ -112,6 +112,14 @@ TEST_F(test_simple_async, gradient_structure_only_GRAD_LIST)
   ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(),
             25 * gradient_structure::RETURN_ARRAYS_SIZE);
 }
+TEST_F(test_simple_async, gradient_structure_only_GRAD_STACK1)
+{
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+
+  gradient_structure gs;
+
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+}
 TEST_F(test_simple_async, gradient_structure_only_DF_FILE)
 {
   ASSERT_TRUE(gradient_structure::get_fp() == NULL);
@@ -130,11 +138,15 @@ TEST_F(test_simple_async, gradient_structure_only_DF_FILE)
 }
 TEST_F(test_simple_async, simple_final_values)
 {
+
   independent_variables independents(1, 2);
   independents(1) = 4.07817738582;
   independents(2) = 1.90909098475;
 
   gradient_structure gs;
+
+  grad_stack_entry* expected_ptr = gradient_structure::GRAD_STACK1->ptr;
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1->ptr == expected_ptr);
 
   dvar_vector variables(independents);
 
@@ -155,9 +167,6 @@ TEST_F(test_simple_async, simple_final_values)
 
   dvar_vector yhat(1, 10);
 
-  ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
-  ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
-
   yhat = variables(1) + variables(2) * x; 
 
   OFF_T pos = LSEEK(gradient_structure::get_fp()->file_ptr, 0, SEEK_CUR);
@@ -175,11 +184,38 @@ TEST_F(test_simple_async, simple_final_values)
   y(9) = 19.2;
   y(10) = 18.0;
 
+
   objective_function_value f;
   f = regression(y, yhat);
 
+  //ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(),
+  //          25 * gradient_structure::RETURN_ARRAYS_SIZE);
+
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1->ptr != expected_ptr);
+
+  ASSERT_EQ(gradient_structure::get_fp()->toffset, 460);
+  ASSERT_EQ(gradient_structure::get_fp()->offset, 460);
+
   dvector gradients(independents.indexmin(), independents.indexmax());
+
+  int total = 0;
+  grad_stack_entry* ptr = expected_ptr;
+  while (gradient_structure::GRAD_STACK1->ptr != ptr)
+  {
+    ptr++;
+    total++;
+  }
+  ASSERT_EQ(total, 11);
+
   gradcalc(gradients.size(), gradients);
+
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1->ptr == expected_ptr);
+
+  ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
+  ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
+
+  ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(),
+            25 * gradient_structure::RETURN_ARRAYS_SIZE);
 
   ASSERT_DOUBLE_EQ(independents(1), 4.07817738582);
   ASSERT_DOUBLE_EQ(independents(2), 1.90909098475);

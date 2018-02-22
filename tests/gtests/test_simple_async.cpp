@@ -273,9 +273,31 @@ TEST_F(test_simple_async, simple)
   ASSERT_DOUBLE_EQ(gradients(1), -2.0898189765639064e-05);
   ASSERT_DOUBLE_EQ(gradients(2), -7.0013678170888216e-05);
 }
-TEST_F(test_simple_async, simple)
+TEST_F(test_simple_async, verysimple)
 {
+  independent_variables independents(1, 1);
+  independents(1) = 4.07817738582;
 
+  gradient_structure gs;
+
+  dvar_vector variables(independents);
+
+  objective_function_value y;
+
+  y = -0.5 * variables(1);
+
+  ASSERT_DOUBLE_EQ(value(y), -0.5 * independents(1));
+
+  dvector gradients(independents.indexmin(), independents.indexmax());
+
+  //In gradcalc sets variables dependant value to 1.
+  gradcalc(gradients.size(), gradients);
+
+  ASSERT_DOUBLE_EQ(independents(1), 4.07817738582);
+  ASSERT_DOUBLE_EQ(gradients(1), -0.5);
+}
+TEST_F(test_simple_async, verysimpleab)
+{
   independent_variables independents(1, 2);
   independents(1) = 4.07817738582;
   independents(2) = 1.90909098475;
@@ -284,43 +306,150 @@ TEST_F(test_simple_async, simple)
 
   dvar_vector variables(independents);
 
-  dvector x(1, 10); 
-  x(1) = -1.0;
-  x(2) = 0.0;
-  x(3) = 1.0;
-  x(4) = 2.0;
-  x(5) = 3.0;
-  x(6) = 4.0;
-  x(7) = 5.0;
-  x(8) = 6.0;
-  x(9) = 7.0;
-  x(10) = 8.0;
+  dvariable a;
+  a = variables(1);
 
-  dvar_vector yhat(1, 10);
-
-  yhat = variables(1) + variables(2) * x; 
-
-  dvector y(1, 10); 
-  y(1) = 1.4;
-  y(2) = 4.7;
-  y(3) = 5.1;
-  y(4) = 8.3;
-  y(5) = 9.0;
-  y(6) = 14.5;
-  y(7) = 14.0;
-  y(8) = 13.4;
-  y(9) = 19.2;
-  y(10) = 18.0;
+  dvariable b;
+  b = 2.0 * variables(2);
 
   objective_function_value f;
-  f = regression(y, yhat);
+
+  f = a + b;
+
+  ASSERT_DOUBLE_EQ(value(f), 7.8963593553199996);
 
   dvector gradients(independents.indexmin(), independents.indexmax());
 
+  //In gradcalc sets variables dependant value to 1.
   gradcalc(gradients.size(), gradients);
 
   ASSERT_DOUBLE_EQ(independents(1), 4.07817738582);
   ASSERT_DOUBLE_EQ(independents(2), 1.90909098475);
-  ASSERT_DOUBLE_EQ(gradients(1), -2.0898189765639064e-05);
-  ASSERT_DOUBLE_EQ(gradients(2), -7.0013678170888216e-05);
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 2.0);
+}
+TEST_F(test_simple_async, verysimpleaa)
+{
+  independent_variables independents(1, 1);
+  independents(1) = 4.07817738582;
+
+  gradient_structure gs;
+
+  dvar_vector variables(independents);
+
+  dvariable a;
+  a = variables(1);
+
+  dvariable b;
+  b = 2.0 * variables(1);
+
+  objective_function_value f;
+
+  f = a + b;
+
+  ASSERT_DOUBLE_EQ(value(f), (independents(1) + 2.0 * independents(1)));
+
+  dvector gradients(independents.indexmin(), independents.indexmax());
+
+  //In gradcalc sets variables dependant value to 1.
+  gradcalc(gradients.size(), gradients);
+
+  ASSERT_DOUBLE_EQ(independents(1), 4.07817738582);
+  ASSERT_DOUBLE_EQ(gradients(1), 3.0);
+}
+TEST_F(test_simple_async, verysimpleaa_noasync)
+{
+  independent_variables independents(1, 1);
+  independents(1) = 4.07817738582;
+
+  cout << (3.5 * independents(1)) << endl;
+  cout << (1.5 * independents(1)) << endl;
+
+  gradient_structure gs;
+
+  dvar_vector variables(independents);
+
+  dvariable a, b;
+
+  auto compute_a =
+    [](const dvariable& a)
+    {
+      dvariable result;
+      result = 3.5 * a;
+      return result;
+    };
+  auto compute_b = 
+    [](const dvariable& b)
+    {
+      dvariable result;
+      result = 1.5 * b;
+      return result;
+    };
+
+  a = compute_a(variables(1));
+  b = compute_b(variables(1));
+
+  ASSERT_EQ(8, gradient_structure::GRAD_STACK1->total());
+
+  objective_function_value f;
+
+  f = a + b;
+
+  ASSERT_DOUBLE_EQ(value(f), (3.5 * independents(1) + 1.5 * independents(1)));
+
+  dvector gradients(independents.indexmin(), independents.indexmax());
+
+  //In gradcalc sets variables dependant value to 1.
+  gradcalc(gradients.size(), gradients);
+
+  ASSERT_DOUBLE_EQ(independents(1), 4.07817738582);
+  ASSERT_DOUBLE_EQ(gradients(1), 5.0);
+}
+TEST_F(test_simple_async, verysimpleaa_async_racecondition)
+{
+  independent_variables independents(1, 1);
+  independents(1) = 4.07817738582;
+
+  gradient_structure gs;
+
+  dvar_vector variables(independents);
+
+  dvariable a, b;
+
+  std::future<dvariable> compute_a(
+    std::async([](const dvariable& a)
+    {
+      dvariable result;
+      result = 3.5 * a;
+      return result;
+    } , variables(1)));
+
+  std::future<dvariable> compute_b(
+    std::async([](const dvariable& b)
+    {
+      dvariable result;
+      result = 1.5 * b;
+      return result;
+    } , variables(1)));
+
+  a = compute_a.get();
+  b = compute_b.get();
+
+  ASSERT_EQ(12, gradient_structure::GRAD_STACK1->total());
+
+  objective_function_value f;
+
+  f = a + b;
+
+  ASSERT_EQ(14, gradient_structure::GRAD_STACK1->total());
+
+  ASSERT_DOUBLE_EQ(value(f), (3.5 * independents(1) + 1.5 * independents(1)));
+
+  dvector gradients(independents.indexmin(), independents.indexmax());
+
+  //In gradcalc sets variables dependant value to 1.
+  gradcalc(gradients.size(), gradients);
+
+  ASSERT_DOUBLE_EQ(independents(1), 4.07817738582);
+  ASSERT_DOUBLE_EQ(gradients(1), 5.0);
 }

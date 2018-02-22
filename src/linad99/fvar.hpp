@@ -1000,6 +1000,16 @@ class grad_stack
    int &gradfile_handle();
 #endif
    char *get_gradfile_name();
+
+  size_t total() const
+  {
+    size_t count = 0;
+    for (grad_stack_entry* current = ptr_first; current != ptr; ++current)
+    {
+      ++count;
+    }
+    return count;
+  }
    friend class gradient_structure;
    //int get_ngradfiles();
 };

@@ -962,7 +962,6 @@ class grad_stack
      double *dep_addr, double *ind_addr1,
      double *ind_addr2);
 
-
    void set_gradient_stack0(void (*func) (void), double *dep_addr);
 
    void set_gradient_stack1(void (*func) (void),

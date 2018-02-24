@@ -362,9 +362,6 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
   independent_variables independents(1, 1);
   independents(1) = 4.07817738582;
 
-  cout << (3.5 * independents(1)) << endl;
-  cout << (1.5 * independents(1)) << endl;
-
   gradient_structure gs;
 
   dvar_vector variables(independents);
@@ -386,9 +383,10 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
       return result;
     };
 
+  ASSERT_EQ(0, gradient_structure::GRAD_STACK1->total());
   a = compute_a(variables(1));
+  ASSERT_EQ(4, gradient_structure::GRAD_STACK1->total());
   b = compute_b(variables(1));
-
   ASSERT_EQ(8, gradient_structure::GRAD_STACK1->total());
 
   objective_function_value f;
@@ -398,6 +396,53 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
   ASSERT_DOUBLE_EQ(value(f), (3.5 * independents(1) + 1.5 * independents(1)));
 
   dvector gradients(independents.indexmin(), independents.indexmax());
+
+  //jca
+  ASSERT_EQ(10, gradient_structure::GRAD_STACK1->total());
+
+  grad_stack_entry* ptr = gradient_structure::GRAD_STACK1->ptr;
+
+  --ptr;
+  //10: f = ... in fvar_o10.cpp
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+
+  --ptr;
+  //9: a + b ... in fvar_opr.cpp
+  ASSERT_TRUE(ptr->func == &default_evaluation4);
+
+  --ptr;
+  //4: b = compute_b(variables(1)); in fvar_o10.cpp
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+
+  --ptr;
+  //7: result = 
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+
+  --ptr;
+  //6: 1.5 * b; in fvar_o10.cpp
+  ASSERT_TRUE(ptr->func == &default_evaluation2);
+
+  --ptr;
+  //5: called dvariable::dvariable(const prevariable& t)
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+
+  --ptr;
+  //4: a = compute_a(variables(1)); in fvar_o10.cpp
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+
+  --ptr;
+  //3: result = 
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+
+  --ptr;
+  //2: 3.5 * a; in fvar_o10.cpp
+  ASSERT_TRUE(ptr->func == &default_evaluation2);
+
+  --ptr;
+  //1: called dvariable::dvariable(const prevariable& t)
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+
+  ASSERT_EQ(10, gradient_structure::GRAD_STACK1->total());
 
   //In gradcalc sets variables dependant value to 1.
   gradcalc(gradients.size(), gradients);

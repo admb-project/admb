@@ -1967,6 +1967,10 @@ class arr_list
       max_last_offset = 0;
       number_arr_links = 0;
    }
+
+  arr_link* get_last() const
+    { return last; }
+
    unsigned long int get_last_offset()
    {
       return last_offset;
@@ -2015,6 +2019,17 @@ class arr_link
    unsigned long int offset;
  public:
    arr_link();
+
+  arr_link* get_prev() const
+    { return prev; }
+  arr_link* get_next() const
+    { return next; }
+  unsigned int get_size() const
+    { return size; }
+  unsigned long get_offset() const
+    { return offset; }
+  unsigned int get_status() const
+    { return status; }
 
    friend double_and_int *arr_new(unsigned int);
    friend void arr_free(double_and_int *);

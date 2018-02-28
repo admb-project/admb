@@ -6,9 +6,9 @@ extern "C"
   void test_ad_exit(const int exit_code);
 }
 
-class test_df_pool: public ::testing::Test {};
+class test_dfpool: public ::testing::Test {};
 
-TEST_F(test_df_pool, constructor)
+TEST_F(test_dfpool, constructor)
 {
   dfpool pool;
 
@@ -22,7 +22,7 @@ TEST_F(test_df_pool, constructor)
   ASSERT_TRUE(pool.head == NULL);
   ASSERT_TRUE(pool.first == NULL);
 }
-TEST_F(test_df_pool, constructor_grow_with_zero_size)
+TEST_F(test_dfpool, constructor_grow_with_zero_size)
 {
   ad_exit=&test_ad_exit;
 
@@ -32,7 +32,7 @@ TEST_F(test_df_pool, constructor_grow_with_zero_size)
     pool.grow();
   });
 }
-TEST_F(test_df_pool, constructor_set_size)
+TEST_F(test_dfpool, constructor_set_size)
 {
   size_t size = sizeof(double);
 
@@ -50,7 +50,7 @@ TEST_F(test_df_pool, constructor_set_size)
   ASSERT_TRUE(pool.head == NULL);
   ASSERT_TRUE(pool.first == NULL);
 }
-TEST_F(test_df_pool, constructor_size)
+TEST_F(test_dfpool, constructor_size)
 {
   size_t size = sizeof(double);
   dfpool pool(size);
@@ -65,7 +65,7 @@ TEST_F(test_df_pool, constructor_size)
   ASSERT_TRUE(pool.head == NULL);
   ASSERT_TRUE(pool.first == NULL);
 }
-TEST_F(test_df_pool, constructor_size_set_size)
+TEST_F(test_dfpool, constructor_size_set_size)
 {
   size_t size = sizeof(double);
   dfpool pool(size);
@@ -81,7 +81,7 @@ TEST_F(test_df_pool, constructor_size_set_size)
   ASSERT_TRUE(pool.head == NULL);
   ASSERT_TRUE(pool.first == NULL);
 }
-TEST_F(test_df_pool, constructor_size_grow)
+TEST_F(test_dfpool, constructor_size_grow)
 {
   size_t size = sizeof(double);
   dfpool pool(size);
@@ -105,7 +105,7 @@ TEST_F(test_df_pool, constructor_size_grow)
   }
   ASSERT_EQ(count, 8122);
 }
-TEST_F(test_df_pool, constructor_size_alloc)
+TEST_F(test_dfpool, constructor_size_alloc)
 {
   size_t size = sizeof(double);
   dfpool pool(size);
@@ -132,7 +132,7 @@ TEST_F(test_df_pool, constructor_size_alloc)
   ASSERT_TRUE(static_cast<void*>(pool.first) == original_head);
   ASSERT_TRUE(pool.head == NULL);
 }
-TEST_F(test_df_pool, constructor_size_alloc_grow_2x)
+TEST_F(test_dfpool, constructor_size_alloc_grow_2x)
 {
   size_t size = sizeof(double);
   dfpool pool(size);

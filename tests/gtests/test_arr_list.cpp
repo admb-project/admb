@@ -29,8 +29,11 @@ TEST_F(test_arr_list, constructor_state)
   gradient_structure gs;
 
   ASSERT_EQ(gradient_structure::ARR_LIST1->get_number_arr_links(), 0);
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_last_offset(), 0);
   dvar_vector variables(independents);
   ASSERT_EQ(gradient_structure::ARR_LIST1->get_number_arr_links(), 1);
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_last_offset(), sizeof(double_and_int));
+
   ASSERT_EQ(gradient_structure::ARR_LIST1->get_last(), variables.link_ptr);
   ASSERT_TRUE(gradient_structure::ARR_LIST1->get_last()->get_prev() == NULL);
   ASSERT_TRUE(gradient_structure::ARR_LIST1->get_last()->get_next() == NULL);

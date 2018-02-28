@@ -357,6 +357,59 @@ TEST_F(test_simple_async, verysimpleaa)
   ASSERT_DOUBLE_EQ(independents(1), 4.07817738582);
   ASSERT_DOUBLE_EQ(gradients(1), 3.0);
 }
+TEST_F(test_simple_async, check_state_total_addresses)
+{
+  ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
+  {
+    gradient_structure gs;
+
+    ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
+  }
+  ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
+  {
+    gradient_structure gs;
+
+    ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
+  }
+  ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
+}
+TEST_F(test_simple_async, lambda_and_copy_constructor)
+{
+  independent_variables independents(1, 1);
+  independents(1) = 4.07817738582;
+
+  gradient_structure gs;
+
+  ASSERT_EQ(0, gradient_structure::ARR_LIST1->get_number_arr_links());
+
+  dvar_vector variables(independents);
+
+  ASSERT_EQ(1, gradient_structure::ARR_LIST1->get_number_arr_links());
+
+  auto compute_a =
+    [](const dvariable& a)
+    {
+    };
+
+  ASSERT_EQ(1, gradient_structure::ARR_LIST1->get_number_arr_links());
+  ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
+  ASSERT_EQ(0, gradient_structure::GRAD_STACK1->total());
+  compute_a(variables(1));
+  ASSERT_EQ(1751, gradient_structure::GRAD_LIST->total_addresses());
+  ASSERT_EQ(1, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1, gradient_structure::ARR_LIST1->get_number_arr_links());
+
+  grad_stack_entry* ptr = gradient_structure::GRAD_STACK1->ptr;
+
+  --ptr;
+  //1: called dvariable::dvariable(const prevariable& t)
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+  ASSERT_TRUE(ptr->dep_addr == gradient_structure::GRAD_LIST->get(1750));
+  ASSERT_TRUE(ptr->ind_addr1 == &(variables(1).v->x));
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+}
 TEST_F(test_simple_async, verysimpleaa_noasync)
 {
   independent_variables independents(1, 1);
@@ -366,7 +419,11 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
 
   dvar_vector variables(independents);
 
+  ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
+
   dvariable a, b;
+
+  ASSERT_EQ(1752, gradient_structure::GRAD_LIST->total_addresses());
 
   auto compute_a =
     [](const dvariable& a)
@@ -383,15 +440,20 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
       return result;
     };
 
+
   ASSERT_EQ(0, gradient_structure::GRAD_STACK1->total());
   a = compute_a(variables(1));
   ASSERT_EQ(4, gradient_structure::GRAD_STACK1->total());
   b = compute_b(variables(1));
   ASSERT_EQ(8, gradient_structure::GRAD_STACK1->total());
 
+  ASSERT_EQ(1754, gradient_structure::GRAD_LIST->total_addresses());
+
   objective_function_value f;
 
   f = a + b;
+
+  ASSERT_EQ(1754, gradient_structure::GRAD_LIST->total_addresses());
 
   ASSERT_DOUBLE_EQ(value(f), (3.5 * independents(1) + 1.5 * independents(1)));
 
@@ -433,14 +495,27 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
   --ptr;
   //3: result = 
   ASSERT_TRUE(ptr->func == &default_evaluation1);
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
 
   --ptr;
   //2: 3.5 * a; in fvar_o10.cpp
   ASSERT_TRUE(ptr->func == &default_evaluation2);
+  //ASSERT_TRUE(ptr->dep_addr == gradient_structure::GRAD_LIST->get(1752));
+  ASSERT_TRUE(ptr->ind_addr1 == gradient_structure::GRAD_LIST->get(1752));
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 3.5);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
 
   --ptr;
   //1: called dvariable::dvariable(const prevariable& t)
   ASSERT_TRUE(ptr->func == &default_evaluation1);
+  ASSERT_TRUE(ptr->dep_addr == gradient_structure::GRAD_LIST->get(1752));
+  ASSERT_TRUE(ptr->ind_addr1 == &(variables(1).v->x));
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
 
   ASSERT_EQ(10, gradient_structure::GRAD_STACK1->total());
 

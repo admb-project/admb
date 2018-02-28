@@ -17,6 +17,13 @@ else
 GTEST_DIR=googletest-read-only/googletest
 endif
 
+GTESTS2=\
+ test_arr_link.cpp\
+ test_arr_list.cpp\
+ test_dfpool.cpp\
+ test_simple_async.cpp\
+ main.cpp
+
 GTESTS=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\

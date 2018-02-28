@@ -161,3 +161,7 @@ TEST_F(test_dfpool, constructor_size_alloc_grow_2x)
   ASSERT_TRUE(static_cast<void*>(pool.first) != original_head);
   ASSERT_TRUE(pool.head != NULL);
 }
+TEST_F(test_dfpool, arr_link)
+{
+  arr_link link;
+}

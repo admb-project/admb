@@ -25,7 +25,7 @@ TEST_F(test_arr_link, arr_remove)
   }
   catch (const int exit_code)
   {
-    delete pptr;
+    delete [] pptr;
     pptr = NULL;
 
     const int expected_exit_code = 23;

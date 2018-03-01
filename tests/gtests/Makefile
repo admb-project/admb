@@ -75,7 +75,7 @@ GTESTS=\
  test_dvar7_array.cpp\
  test_arr_link.cpp\
  test_arr_list.cpp\
- test_df_pool.cpp\
+ test_dfpool.cpp\
  test_df1b2_init_number_vector.cpp\
  test_init_df1b2vector.cpp\
  test_param_init_bounded_number.cpp\

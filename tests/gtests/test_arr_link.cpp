@@ -36,3 +36,17 @@ TEST_F(test_arr_link, arr_remove)
   }
   FAIL();
 }
+TEST_F(test_arr_link, dvar_vector1to4)
+{
+  gradient_structure gs;
+
+  dvar_vector v(1, 4);
+
+  arr_link* last = gradient_structure::ARR_LIST1->get_last();
+
+  ASSERT_TRUE(last->get_prev() == NULL);
+  ASSERT_TRUE(last->get_next() == NULL);
+  ASSERT_EQ(last->get_size(), sizeof(double_and_int) * 4);
+  ASSERT_EQ(last->get_offset(), 0);
+  ASSERT_EQ(last->get_status(), 1);
+}

@@ -107,3 +107,17 @@ TEST_F(test_arr_list, arr_remove)
   //Special case where v3 is the last arr_link with status 1.
   ASSERT_EQ(gradient_structure::ARR_LIST1->get_number_arr_links(), 0);
 }
+TEST_F(test_arr_list, dvar_vector1to4)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_number_arr_links(), 0);
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_last_offset(), 0);
+  ASSERT_TRUE(gradient_structure::ARR_LIST1->get_last() == NULL);
+
+  dvar_vector v(1, 4);
+
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_number_arr_links(), 1);
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_last_offset(), sizeof(double_and_int) * 4);
+  ASSERT_TRUE(gradient_structure::ARR_LIST1->get_last() != NULL);
+}

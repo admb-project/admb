@@ -846,6 +846,9 @@ public:
   void check_list(void);
   size_t total_addresses() const;
 
+  double* get(const int i) const
+    { return &(dlink_addresses[i]->get_address()->x); }
+
   friend double_and_int *gradnew();
   friend void df_check_derivative_values(void);
   friend void df_check_derivative_values_indexed(void);

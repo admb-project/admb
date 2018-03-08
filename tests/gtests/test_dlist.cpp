@@ -89,3 +89,20 @@ TEST_F(test_dlist, dvariable2x)
   EXPECT_TRUE(link2->previous() == NULL);
   EXPECT_TRUE(link2->get_address() == variable2.v);
 }
+TEST_F(test_dlist, dvariable2x_scoped)
+{
+  gradient_structure gs;
+
+  EXPECT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1750);
+  {
+    dvariable variable;
+    dvariable variable2;
+  }
+  EXPECT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1752);
+
+  dlink* link = (dlink*)gradient_structure::GRAD_LIST->get(1750);
+  dlink* link2 = (dlink*)gradient_structure::GRAD_LIST->get(1751);
+
+  EXPECT_TRUE(link->previous() == link2);
+  EXPECT_TRUE(link2->previous() == NULL);
+}

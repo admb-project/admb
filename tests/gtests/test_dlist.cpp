@@ -3,44 +3,19 @@
 
 class test_dlist: public ::testing::Test {};
 
-/*
-extern char* ddlist_space;
 TEST_F(test_dlist, constructor)
 {
   dlist lst;
-  EXPECT_STRNE(0, ddlist_space);
   EXPECT_EQ(0, lst.total_addresses());
 }
 TEST_F(test_dlist, destructor)
 {
-  dlist* lst = new dlist();
-  delete lst;
-  lst = 0;
-
-  EXPECT_EQ(0, ddlist_space);
+  {
+    dlist* lst = new dlist();
+    delete lst;
+    lst = 0;
+  }
 }
-TEST_F(test_dlist, create)
-{
-  dlist lst;
-
-  //EXPECT_EQ(sizeof(double) * 2, sizeof(dlink));
-
-  dlink* a = lst.create();
-  //EXPECT_EQ((intptr_t)ddlist_space + (0 * sizeof(double)), (intptr_t)a);
-  EXPECT_EQ((intptr_t)ddlist_space + (0 * sizeof(dlink)), (intptr_t)a);
-  EXPECT_EQ(0, (intptr_t)a->previous());
-
-  dlink* b = lst.create();
-  //EXPECT_EQ((intptr_t)ddlist_space + (2 * sizeof(double)), (intptr_t)b);
-  EXPECT_EQ((intptr_t)ddlist_space + (1 * sizeof(dlink)), (intptr_t)b);
-  EXPECT_EQ(0, (intptr_t)b->previous());
-
-  dlink* c = lst.create();
-  //EXPECT_EQ((intptr_t)ddlist_space + (4 * sizeof(double)), (intptr_t)c);
-  EXPECT_EQ((intptr_t)ddlist_space + (2 * sizeof(dlink)), (intptr_t)c);
-  EXPECT_EQ(0, (intptr_t)c->previous());
-}
-*/
 TEST_F(test_dlist, last_remove_empty_list)
 {
   dlist lst;
@@ -65,7 +40,6 @@ TEST_F(test_dlist, append)
   EXPECT_EQ((intptr_t)lastc, (intptr_t)c);
   EXPECT_EQ((intptr_t)b, (intptr_t)c->previous());
 }
-
 TEST_F(test_dlist, remove)
 {
   dlist lst;
@@ -82,4 +56,36 @@ TEST_F(test_dlist, remove)
   EXPECT_EQ((intptr_t)c, (intptr_t)lst.last_remove());
   EXPECT_EQ((intptr_t)b, (intptr_t)lst.last_remove());
   EXPECT_EQ((intptr_t)a, (intptr_t)lst.last_remove());
+}
+TEST_F(test_dlist, dvariable)
+{
+  gradient_structure gs;
+
+  EXPECT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1750);
+  dvariable variable;
+  EXPECT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1751);
+  EXPECT_TRUE(static_cast<void*>(gradient_structure::GRAD_LIST->get(1750)) == static_cast<void*>(variable.v));
+  dlink* link = (dlink*)variable.v;
+  EXPECT_TRUE(link->previous() == NULL);
+  EXPECT_TRUE(link->get_address() == variable.v);
+}
+TEST_F(test_dlist, dvariable2x)
+{
+  gradient_structure gs;
+
+  EXPECT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1750);
+  dvariable variable;
+  dvariable variable2;
+  EXPECT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1752);
+
+  EXPECT_TRUE(static_cast<void*>(gradient_structure::GRAD_LIST->get(1750)) == static_cast<void*>(variable.v));
+  EXPECT_TRUE(static_cast<void*>(gradient_structure::GRAD_LIST->get(1751)) == static_cast<void*>(variable2.v));
+
+  dlink* link = (dlink*)variable.v;
+  EXPECT_TRUE(link->previous() == NULL);
+  EXPECT_TRUE(link->get_address() == variable.v);
+
+  dlink* link2 = (dlink*)variable2.v;
+  EXPECT_TRUE(link2->previous() == NULL);
+  EXPECT_TRUE(link2->get_address() == variable2.v);
 }

@@ -17,14 +17,9 @@ else
 GTEST_DIR=googletest-read-only/googletest
 endif
 
-GTESTS2=\
- test_arr_link.cpp\
- test_arr_list.cpp\
- test_dfpool.cpp\
- test_simple_async.cpp\
- main.cpp
-
-GTESTS=\
+GTESTS_ALL=\
+ test_atomic.cpp\
+ test_shared_ptr.cpp\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
  test_adstring_array.cpp\
@@ -116,6 +111,16 @@ GTESTS=\
  test_gradcalc.cpp\
  test_autodif.cpp\
  main.cpp
+
+GTESTS_DEV=\
+ test_atomic.cpp\
+ test_shared_ptr.cpp\
+ test_valarray.cpp\
+ main.cpp
+
+#GTESTS=$(GTESTS_DEV)
+GTESTS=$(GTESTS_ALL)
+
 
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))

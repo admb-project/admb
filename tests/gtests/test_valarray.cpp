@@ -57,3 +57,25 @@ TEST_F(test_valarray, shift_does_not_reindex)
   ASSERT_DOUBLE_EQ(value(result[3]), 3.4);
   ASSERT_DOUBLE_EQ(value(result[4]), -2.0);
 }
+TEST_F(test_valarray, double_and_int)
+{
+  double_and_int arr[5];
+  arr[0].x = 1.0;
+  arr[1].x = 2.5;
+  arr[2].x = 3.4;
+  arr[3].x = -2.0;
+  arr[4].x = -1.5;
+  std::valarray<double_and_int> array(arr, 5);
+  std::valarray<double_and_int> result =
+    array.apply([](const double_and_int& v)
+    {
+      double_and_int vv;
+      vv.x  = v.x * v.x;
+      return vv;
+    });
+  ASSERT_DOUBLE_EQ(result[0].x, 1.0);
+  ASSERT_DOUBLE_EQ(result[1].x, 6.25);
+  ASSERT_DOUBLE_EQ(result[2].x, 11.56);
+  ASSERT_DOUBLE_EQ(result[3].x, 4.0);
+  ASSERT_DOUBLE_EQ(result[4].x, 2.25);
+}

@@ -208,7 +208,6 @@ TEST_F(test_move, independents_gradcalc)
     return a + b;
   };
 
-
   dvariable result = sum();
   double v = value(result);
 
@@ -223,7 +222,6 @@ TEST_F(test_move, independents_gradcalc)
   ASSERT_DOUBLE_EQ(value(variables(1)), 1.0);
   ASSERT_DOUBLE_EQ(value(variables(2)), 1.0);
 }
-/*
 TEST_F(test_move, independents_gradmanual)
 {
   independent_variables independents(1, 2);
@@ -252,7 +250,7 @@ TEST_F(test_move, independents_gradmanual)
 
   --gradient_structure::GRAD_STACK1->ptr;
 
-  double_and_int* ptr = (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
+  double_and_int* ptr = (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int imax = gradient_structure::ARR_LIST1->get_max_last_offset() / sizeof(double_and_int);
   for (unsigned int i = 0; i < imax; ++i)
   {
@@ -311,4 +309,3 @@ TEST_F(test_move, independents_gradmanual)
   ASSERT_DOUBLE_EQ(value(variables(1)), 1.0);
   ASSERT_DOUBLE_EQ(value(variables(2)), 1.0);
 }
-*/

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
+#include <future>
 
 class test_move: public ::testing::Test {};
 
@@ -308,4 +309,65 @@ TEST_F(test_move, independents_gradmanual)
   //ASSERT_DOUBLE_EQ(*gradient_structure::INDVAR_LIST->get_address(2), 0.0);
   ASSERT_DOUBLE_EQ(value(variables(1)), 1.0);
   ASSERT_DOUBLE_EQ(value(variables(2)), 1.0);
+}
+TEST_F(test_move, independents2x_gradcalc)
+{
+  independent_variables independents(1, 2);
+  independents(1) = 1.5;
+  independents(2) = 3.5;
+
+  gradient_structure gs;
+
+  ASSERT_EQ(0, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
+
+  dvar_vector variables(independents);
+
+  auto sum = [&variables](const double lhs, const double rhs)
+  {
+    dvariable a(variables(1));
+    dvariable b(variables(2));
+    return lhs * a + rhs * b;
+  };
+
+  dvariable a = sum(2, -5);
+  dvariable b = sum(-4, 6);
+  dvariable result = a + b; 
+
+  ASSERT_EQ(14, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1753, gradient_structure::GRAD_LIST->total_addresses());
+
+  ASSERT_DOUBLE_EQ(value(result), 0.5);
+}
+TEST_F(test_move, independents2x_async_gradcalc)
+{
+  independent_variables independents(1, 2);
+  independents(1) = 1.5;
+  independents(2) = 3.5;
+
+  gradient_structure gs;
+
+  ASSERT_EQ(0, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
+
+  dvar_vector variables(independents);
+
+  auto sum = [&variables](const double lhs, const double rhs)
+  {
+    dvariable a(variables(1));
+    dvariable b(variables(2));
+    return lhs * a + rhs * b;
+  };
+
+  std::future<dvariable> a(std::async([](){ return dvariable(); } ));
+  //std::future<dvariable> b(std::async(sum(-4, 6)));
+
+/*
+  dvariable result = a.get() + b.get(); 
+
+  ASSERT_EQ(14, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1753, gradient_structure::GRAD_LIST->total_addresses());
+
+  ASSERT_DOUBLE_EQ(value(result), 0.5);
+*/
 }

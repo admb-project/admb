@@ -327,7 +327,7 @@ TEST_F(test_move, independents2x_gradcalc)
   {
     dvariable a(variables(1));
     dvariable b(variables(2));
-    return lhs * a + rhs * b;
+    return dvariable(lhs * a + rhs * b);
   };
 
   dvariable a = sum(2, -5);
@@ -335,7 +335,7 @@ TEST_F(test_move, independents2x_gradcalc)
   dvariable result = a + b; 
 
   ASSERT_EQ(14, gradient_structure::GRAD_STACK1->total());
-  ASSERT_EQ(1753, gradient_structure::GRAD_LIST->total_addresses());
+  ASSERT_EQ(1754, gradient_structure::GRAD_LIST->total_addresses());
 
   ASSERT_DOUBLE_EQ(value(result), 0.5);
 }
@@ -356,18 +356,16 @@ TEST_F(test_move, independents2x_async_gradcalc)
   {
     dvariable a(variables(1));
     dvariable b(variables(2));
-    return lhs * a + rhs * b;
+    return dvariable(lhs * a + rhs * b);
   };
 
-  std::future<dvariable> a(std::async([](){ return dvariable(); } ));
-  //std::future<dvariable> b(std::async(sum(-4, 6)));
+  std::future<dvariable> a(std::async(sum, 2, -5));
+  std::future<dvariable> b(std::async(sum, -4, 6));
 
-/*
   dvariable result = a.get() + b.get(); 
 
-  ASSERT_EQ(14, gradient_structure::GRAD_STACK1->total());
-  ASSERT_EQ(1753, gradient_structure::GRAD_LIST->total_addresses());
+  ASSERT_EQ(18, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1754, gradient_structure::GRAD_LIST->total_addresses());
 
   ASSERT_DOUBLE_EQ(value(result), 0.5);
-*/
 }

@@ -200,12 +200,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       cerr << "Illegal option with -mcpin" << endl;
     }
   } else {
-    // If user didnt specify one, use MLE values.
-    independent_variables mle(1,nvar); // the accepted par values
-    // Store saved MLE in bounded space into vector mle.
-    read_mle_hmc(nvar, mle);
-    z0=mle;
-    initial_params::copy_all_values(z0,1);
+    // If user didnt specify one, use MLE values. Store saved MLEs from
+    // admodel.hes file in bounded space into initial parameters z0
+    read_mle_hmc(nvar, z0);
   }
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;

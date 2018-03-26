@@ -1,7 +1,7 @@
 // $Id$
 /**
  * @file nuts.cpp
- * The no-U-turn sampler (NUTS) MCMC routine. 
+ * The no-U-turn sampler (NUTS) MCMC routine.
  *
  * @author Cole C. Monnahan
  */
@@ -32,14 +32,14 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
    * -duration   The maximum runtime in minutes.
    * -mcdiag     Use diagonal covariance matrix
    * -mcpin NAME Read in starting values for MCMC from file NAME. NAME must be a valid ADMB '.par' file.
-   * -warmup     The number of warmup iterations during which adaptation occurs. 
+   * -warmup     The number of warmup iterations during which adaptation occurs.
    * -verbose_adapt_mass Flag whether to print mass adaptation updates to console.
    * \param int nmcmc The number of MCMC simulations to run.
    * \param int iseed0 Initial seed value for simulations.
    * \param double dscale Scale value used only if -mcdiag is specified. Disabled for NUTS.
    * \param int restart_flag Restart the MCMC, even if -mcr is specified. Disalbed for NUTS.
    * \return Nothing. Creates files <model>.psv with bounded parameters,
-             and unbounded.csv with post-warmup unbounded samples. 
+             and unbounded.csv with post-warmup unbounded samples.
 **/
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
@@ -177,33 +177,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-  // User-specified initial values
-  nopt=0;
-  independent_variables z0(1,nvar); // bounded space
-  independent_variables y(1,nvar); // unbounded space
-  initial_params::restore_start_phase();
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1) {
-    if (nopt) {
-      cifstream cif((char *)ad_comm::argv[on+1]);
-      if (!cif) {
-	cerr << "Error trying to open mcmc par input file "
-	     << ad_comm::argv[on+1] << endl;
-	ad_exit(1);
-      }
-      cif >> z0;
-      if (!cif) {
-	cerr << "Error reading from mcmc par input file "
-	     << ad_comm::argv[on+1] << endl;
-	ad_exit(1);
-      }
-    } else {
-      cerr << "Illegal option with -mcpin" << endl;
-    }
-  } else {
-    // If user didnt specify one, use MLE values. Store saved MLEs from
-    // admodel.hes file in bounded space into initial parameters z0
-    read_mle_hmc(nvar, z0);
-  }
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
@@ -223,7 +196,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-verbose_adapt_mass"))>-1) {
     verbose_adapt_mass=1;
   }
-
   // Restart chain from previous run?
   int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
   if(mcrestart_flag > -1){
@@ -271,34 +243,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       rescale_covar=1;
     }
   }
-  /// Prepare initial value. Need to both back-transform, and then rotate
-  /// this to be in the "x" space.
-  ///
-  // z0 is the initial transformed (bounded) parameter vector (in "z"
-  // space").  This passes the vector of theta through the model I
-  // think. Since this wasn't necessarily the last vector evaluated, need
-  // to propogate it through ADMB internally so can use xinit().
-  initial_params::restore_all_values(z0,1);
-  independent_variables y0(1,nvar);
-  dvector current_scale(1,nvar);
-  // This copies the unbounded parameters into y0
-  gradient_structure::set_YES_DERIVATIVES();
-  initial_params::xinit(y0);
-  // Don't know what pen_vector is doing, now current_scale has the updated
-  // scales
-  dvector pen_vector(1,nvar);
-  initial_params::reset(dvar_vector(y0),pen_vector);
-  initial_params::mc_phase=0;
-  initial_params::stddev_scale(current_scale,y0);
-  initial_params::mc_phase=1;
-  // gradient_structure::set_NO_DERIVATIVES();
-  // if (mcmc2_flag==0) {
-  //   initial_params::set_inactive_random_effects();
-  // }
-
-  // Get NLL and gradient in unbounded space for initial value y0.
-  dvector grtemp(1,nvar);		// gradients in unbounded space
-  double nlltemp=get_hybrid_monte_carlo_value(nvar,y0,grtemp);
   if(rescale_covar){
     // If no covar was pushed by the user, then the MLE one is used
     // about. But since that admodel.cov file was written with the hbf=0
@@ -311,18 +255,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cerr << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
       endl << "...Rerun model with '-hbf 1' and try again" << endl;
     ad_exit(1);
-    //
-    cout << "Rescaling covariance matrix b/c scales don't match" << endl;
-    cout << "old scale=" <<  old_scale << endl;
-    cout << "current scale=" << current_scale << endl;
-    // cout << "S before=" << S << endl;
-    // Rescale the covariance matrix
-    for (int i=1;i<=nvar;i++) {
-      for (int j=1;j<=nvar;j++) {
-	S(i,j)*=old_scale(i)*old_scale(j);
-	S(i,j)/=current_scale(i)*current_scale(j);
-      }
-    }
+    // cout << "Rescaling covariance matrix b/c scales don't match" << endl;
+    // cout << "old scale=" <<  old_scale << endl;
+    // cout << "current scale=" << current_scale << endl;
+    // // cout << "S before=" << S << endl;
+    // // Rescale the covariance matrix
+    // for (int i=1;i<=nvar;i++) {
+    //   for (int j=1;j<=nvar;j++) {
+    // 	S(i,j)*=old_scale(i)*old_scale(j);
+    // 	S(i,j)/=current_scale(i)*current_scale(j);
+    //   }
+    // }
   }
   dmatrix chd(1,nvar,1,nvar);
   dmatrix chdinv(1,nvar,1,nvar);
@@ -338,9 +281,65 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       chdinv(i,i)=1/chd(i,i);
     }
   }
-  // Can now inverse rotate y to be x (algorithm space)
-  independent_variables x0(1,nvar);
-  x0=rotate_pars(chdinv,y0); // this is the initial value in algorithm space
+  /// Mass matrix and inverse are now ready to be used.
+
+  /// Prepare initial value. Need to both back-transform, and then rotate
+  /// this to be in the "x" space.
+  ///
+  // User-specified initial values
+  nopt=0;
+  independent_variables z0(1,nvar); // inits in bounded space
+  initial_params::restore_start_phase();
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1) {
+    if (nopt) {
+      cifstream cif((char *)ad_comm::argv[on+1]);
+      if (!cif) {
+	cerr << "Error trying to open mcmc par input file "
+	     << ad_comm::argv[on+1] << endl;
+	ad_exit(1);
+      }
+      cif >> z0;
+      if (!cif) {
+	cerr << "Error reading from mcmc par input file "
+	     << ad_comm::argv[on+1] << endl;
+	ad_exit(1);
+      }
+    } else {
+      cerr << "Illegal option with -mcpin" << endl;
+    }
+  } else {
+    // If user didnt specify one, use MLE values. Store saved MLEs from
+    // admodel.hes file in bounded space into initial parameters z0
+    read_mle_hmc(nvar, z0);
+  }
+  /// Now z0 is either the MLE or the user specified value
+
+  // Need to convert z0 to y0. First, pass z0 through the model. Since this
+  // wasn't necessarily the last vector evaluated, need to propogate it
+  // through ADMB internally so can use xinit().
+  initial_params::restore_all_values(z0,1);
+  independent_variables y0(1,nvar); // inits in unbounded space
+  dvector current_scale(1,nvar);
+  gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
+  // This copies the unbounded parameters into y0
+  initial_params::xinit(y0);
+  // Don't know what this does or if necessary
+  dvector pen_vector(1,nvar);
+  initial_params::reset(dvar_vector(y0),pen_vector);
+  initial_params::mc_phase=0;
+  initial_params::stddev_scale(current_scale,y0);
+  initial_params::mc_phase=1;
+  // gradient_structure::set_NO_DERIVATIVES();
+  // if (mcmc2_flag==0) {
+  //   initial_params::set_inactive_random_effects();
+  // }
+
+  // Get NLL and gradient in unbounded space for initial value y0.
+  dvector grtemp(1,nvar);		// gradients in unbounded space
+  double nlltemp=get_hybrid_monte_carlo_value(nvar,y0,grtemp);
+  // Can now inverse rotate y0 to be x0 (algorithm space)
+  independent_variables x0(1,nvar); // inits in algorithm space
+  x0=rotate_pars(chdinv,y0);
   // cout << "Starting from chd=" << chd << endl;
   ///
   // /// Old code to test that I know what's going on.
@@ -357,6 +356,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   independent_variables theta(1,nvar);
   theta=x0; // kind of a misnomer here: theta is in "x" or algorithm space
   // Setup binary psv file to write samples to
+  //// Model initialization of parameters and options complete.
+
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
   if (!pofs_psave|| !(*pofs_psave)) {

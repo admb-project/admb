@@ -363,7 +363,6 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
       independent_variables parsave(1,nvar_re);
       initial_params::restore_start_phase();
       nopt=0;
-      independent_variables z0(1,nvar); // inits in bounded space
 
       // read in the mcmc values to date
       int ii=1;
@@ -412,7 +411,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	} else {
 	  // If user didnt specify one, use MLE values. Store saved MLEs from
 	  // admodel.hes file in bounded space into initial parameters z0
-	  read_mle_hmc(nvar, z0);
+	  read_mle_hmc(nvar, parsave);
 	}
       }
 

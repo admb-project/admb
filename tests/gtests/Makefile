@@ -119,7 +119,7 @@ GTESTS_DEV=\
  test_move.cpp\
  main.cpp
 
-#GTESTS=$(GTESTS_DEV)
+##GTESTS=$(GTESTS_DEV)
 GTESTS=$(GTESTS_ALL)
 
 

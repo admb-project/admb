@@ -1,6 +1,4 @@
-/*
- * $Id$
- *
+/**
  * Author: Jorge Nodecal
  * Copyright (c) 2009-2012 ADMB Foundation
  *

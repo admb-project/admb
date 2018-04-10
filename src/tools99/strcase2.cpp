@@ -1,6 +1,4 @@
-/*
- * $Id$
- *
+/**
  * Author: John Sibert
  * Copyright (c) 2010-2012 ADMB Foundation
  */

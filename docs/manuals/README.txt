@@ -1,3 +1,20 @@
+Install smallcaps.sty
+
+1. Download the package from CTAN using link below.
+
+https://ctan.org/tex-archive/macros/latex/contrib/smallcap
+
+2. Extract the files and place them in an appropriate directory.
+
+$ mkdir -p  /usr/local/share/texmf/tex/latex/misc
+$ cd /usr/local/share/texmf/tex/latex/misc 
+$ unzip ~/Downloads/smallcap.zip
+
+3. Update the ls-R file in this source tree to make system aware of new package.
+
+$ cd /usr/local/share/texmf
+$ sudo mktexlsr
+
 Making the ADMB manuals with LaTeX
 
 1. read http://en.wikibooks.org/wiki/LaTeX/Packages/Installing_Extra_Packages

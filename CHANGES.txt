@@ -18,6 +18,9 @@ ADMB-git
 
 ####Changes and Improvements
 
+* Buildbot is now hosted at SOEST.
+
+
 ADMB-12.0
 ---------
 

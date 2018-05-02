@@ -113,14 +113,15 @@ GTESTS_ALL=\
  test_atomic.cpp\
  test_shared_ptr.cpp\
  test_valarray.cpp\
- main.cpp
-
-GTESTS_DEV=\
  test_move.cpp\
  main.cpp
 
-#GTESTS=$(GTESTS_DEV)
-GTESTS=$(GTESTS_ALL)
+GTESTS_DEV=\
+ test_param_init_bounded_dev_vector.cpp\
+ main.cpp
+
+GTESTS=$(GTESTS_DEV)
+#GTESTS=$(GTESTS_ALL)
 
 
 ifeq ($(CXX),openCC)

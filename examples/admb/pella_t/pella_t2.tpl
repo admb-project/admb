@@ -46,8 +46,8 @@ PRELIMINARY_CALCS_SECTION
   effort/=avg_effort;
   cout << " beta" << beta << endl;
 PROCEDURE_SECTION
-  dvariable total = sum(effort_devs) / static_cast<double>(effort_devs.size());
-  effort_devs -= total;
+  dvariable mean = sum(effort_devs) / static_cast<double>(effort_devs.size());
+  effort_devs -= mean;
 
   // calculate the fishing mortality
   calculate_fishing_mortality();

@@ -7,7 +7,11 @@ DATA_SECTION
   vector obs_catch(1,nobs);
   vector cpue(1,nobs);
   vector effort(1,nobs);
-  number avg_effort
+  number avg_effort;
+
+  !!ad_comm::change_datafile_name("penalty.dat");
+  init_number penalty;
+
 INITIALIZATION_SECTION
   m 2.
   beta 1.
@@ -46,17 +50,15 @@ PRELIMINARY_CALCS_SECTION
   effort/=avg_effort;
   cout << " beta" << beta << endl;
 PROCEDURE_SECTION
-  dvariable mean = sum(effort_devs) / static_cast<double>(effort_devs.size());
+  dvariable total = sum(effort_devs);
+  dvariable mean = total / static_cast<double>(effort_devs.size());
   effort_devs -= mean;
 
-  // calculate the fishing mortality
   calculate_fishing_mortality();
-  // calculate the biomass and predicted catch
   calculate_biomass_and_predicted_catch();
-  // calculate the objective function
   calculate_the_objective_function();
 
-  ff += 100.0 * square(total);
+  ff += penalty * square(total);
 
 FUNCTION calculate_fishing_mortality
   // calculate the fishing mortality

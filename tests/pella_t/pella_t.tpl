@@ -58,7 +58,10 @@ PROCEDURE_SECTION
   calculate_biomass_and_predicted_catch();
   calculate_the_objective_function();
 
-  ff += penalty * square(total);
+  if (penalty >= 0)
+  {
+    ff += penalty * square(total);
+  }
 
 FUNCTION calculate_fishing_mortality
   // calculate the fishing mortality

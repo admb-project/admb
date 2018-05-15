@@ -114,10 +114,11 @@ GTESTS_ALL=\
  test_shared_ptr.cpp\
  test_valarray.cpp\
  test_move.cpp\
+ test_param_init_bounded_dev_vector.cpp\
  main.cpp
 
 GTESTS_DEV=\
- test_param_init_bounded_dev_vector.cpp\
+ test_experimenting_mcmc.cpp\
  main.cpp
 
 GTESTS=$(GTESTS_DEV)

@@ -22,7 +22,8 @@ double gradient_descent(
     double previous_x = current_x;
     current_x -= gamma * dfx(previous_x);
     current_error = std::abs(current_x - previous_x);
-    printf("current: x = %f and error = %f\n", current_x, current_error);
+    std::cout << "current: x = " << current_x 
+              << " and error = " <<  current_error << std::endl;
   } while (minimum_error < current_error);
 
   return current_x;

@@ -696,18 +696,20 @@ void memory_allocate_error(const char * s, void * ptr)
 
  #if defined(NO_DERIVS)
 
-/**
- * Description not yet available.
- * \param
+/** Disable accumulation of derivative information. 
+    Used internally by ADMB to avoid computation of derivatives.
+    Also useful for running simulations using variable objects when
+    function minimization is not required. 
+   \ingroup BAD
  */
     void gradient_structure::set_NO_DERIVATIVES(void)
     {
       no_derivatives=1;
     }
 
-/**
- * Description not yet available.
- * \param
+/** Enable accumulation of derivative information. 
+    Used internally by ADMB to restart computation of derivatives.
+   \ingroup BAD
  */
     void gradient_structure::set_YES_DERIVATIVES(void)
     {

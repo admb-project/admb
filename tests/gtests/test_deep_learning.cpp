@@ -98,8 +98,14 @@ void neural_network_part1(double** data, double* layer)
   }
   std::cout << std::endl;
 }
+/**
+Ported from https://iamtrask.github.io/2015/07/12/basic-python-network
+*/
 void neural_network_two_layers(double** data, double** output_layer)
 {
+  data[1][3] = 1;
+  data[3][3] = 0;
+
   double hidden_weights[3][4];
   hidden_weights[0][0] = -0.16595599;  
   hidden_weights[0][1] = 0.44064899;
@@ -120,12 +126,13 @@ void neural_network_two_layers(double** data, double** output_layer)
   output_weights[2][0] = -0.94522481;
   output_weights[3][0] = 0.34093502;
 
-  //double errors[4];
-  //double slopes[4];
+  double output_errors[4][1];
+  double output_deltas[4][1];
   double hidden_layer[4][4];
+  double hidden_errors[4][4];
+  double hidden_deltas[4][4];
   for (int counts  = 0; counts < 60000; ++counts)
   {
-    //Transformed data and weights to probability
     for (int k = 0; k < 4; ++k)
     {
       for (int i = 0; i < 4; ++i)
@@ -133,9 +140,9 @@ void neural_network_two_layers(double** data, double** output_layer)
         double x = 0;
         for (int j = 0; j < 3; ++j)
         {
-          x += data[i][j] * hidden_weights[k][j];
+          x += data[k][j] * hidden_weights[j][i];
         }
-        hidden_layer[i][k] = sigmoid(x);
+        hidden_layer[k][i] = sigmoid(x);
       }
     }
     for (int i = 0; i < 4; ++i)
@@ -143,30 +150,55 @@ void neural_network_two_layers(double** data, double** output_layer)
       double x = 0;
       for (int j = 0; j < 4; ++j)
       {
-        x += hidden_layer[i][j] * output_weights[j][i];
+        x += hidden_layer[i][j] * output_weights[j][0];
       }
       output_layer[i][0] = sigmoid(x);
     }
-/*
-    //Compute error difference from data and current values
-    for (int j = 0; j < 4; ++j)
+    for (int i = 0; i < 4; ++i)
     {
-      errors[j] = data[j][3] - layer[j];
+      output_errors[i][0] = data[i][3] - output_layer[i][0];
     }
-    //Compute slopes from derivatives
-    for (int j = 0; j < 4; ++j)
+    for (int i = 0; i < 4; ++i)
     {
-      slopes[j] = dfsigmoid(layer[j]);
+      output_deltas[i][0] = output_errors[i][0] * dfsigmoid(output_layer[i][0]);
     }
-    //Update weights
-    for (int j = 0; j < 3; ++j)
+    for (int i = 0; i < 4; ++i)
     {
-      for (int k = 0; k < 4; ++k)
+      for (int j = 0; j < 4; ++j)
       {
-        weights[j] += data[k][j] * errors[k] * slopes[k]; 
+        hidden_errors[i][j] = output_deltas[i][0] * output_weights[j][0];
       }
     }
-*/
+    for (int i = 0; i < 4; ++i)
+    {
+      for (int j = 0; j < 4; ++j)
+      {
+        hidden_deltas[i][j] =
+          hidden_errors[i][j] * dfsigmoid(hidden_layer[i][j]);
+      }
+    }
+    //Update weights
+    for (int i = 0; i < 4; ++i)
+    {
+      double x = 0;
+      for (int j = 0; j < 4; ++j)
+      {
+        x += hidden_layer[j][i] * output_deltas[j][0];
+      }
+      output_weights[i][0] += x;
+    }
+    for (int k = 0; k < 4; ++k)
+    {
+      for (int i = 0; i < 3; ++i)
+      {
+        double x = 0;
+        for (int j = 0; j < 4; ++j)
+        {
+          x += data[j][i] * hidden_deltas[j][k];
+        }
+        hidden_weights[i][k] += x;
+      }
+    }
   }
   std::cout << "Output After Training:\n";
   for (int i = 0; i < 4; ++i)
@@ -187,11 +219,24 @@ TEST_F(test_deep_learning, part1)
 }
 TEST_F(test_deep_learning, two_layers)
 {
-  double** outputs;
-  outputs = new double*[4];
+  double** outputs = new double*[4];
   for (int i = 0; i < 4; ++i)
   {
     outputs[i] = new double[1];
   }
+
   neural_network_two_layers(get_data(), outputs);
+
+  ASSERT_NEAR(0.00260572, outputs[0][0], 0.00001); 
+  ASSERT_NEAR(0.996722, outputs[1][0], 0.00001);
+  ASSERT_NEAR(0.997017, outputs[2][0], 0.00001);
+  ASSERT_NEAR(0.00386759, outputs[3][0], 0.00001);
+
+  for (int i = 0; i < 4; ++i)
+  {
+    delete [] outputs[i];
+    outputs[i] = NULL;
+  }
+  delete outputs;
+  outputs = NULL;
 }

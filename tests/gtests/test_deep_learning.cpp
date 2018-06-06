@@ -126,13 +126,12 @@ void neural_network_two_layers(double** data, double** output_layer)
   output_weights[2][0] = -0.94522481;
   output_weights[3][0] = 0.34093502;
 
-  double output_errors[4][1];
-  double output_deltas[4][1];
   double hidden_layer[4][4];
-  double hidden_errors[4][4];
   double hidden_deltas[4][4];
+  double output_deltas[4][1];
   for (int counts  = 0; counts < 60000; ++counts)
   {
+    //Update layers
     for (int k = 0; k < 4; ++k)
     {
       for (int i = 0; i < 4; ++i)
@@ -154,28 +153,11 @@ void neural_network_two_layers(double** data, double** output_layer)
       }
       output_layer[i][0] = sigmoid(x);
     }
+    //Compute deltas using slopes and errors from output layer.
     for (int i = 0; i < 4; ++i)
     {
-      output_errors[i][0] = data[i][3] - output_layer[i][0];
-    }
-    for (int i = 0; i < 4; ++i)
-    {
-      output_deltas[i][0] = output_errors[i][0] * dfsigmoid(output_layer[i][0]);
-    }
-    for (int i = 0; i < 4; ++i)
-    {
-      for (int j = 0; j < 4; ++j)
-      {
-        hidden_errors[i][j] = output_deltas[i][0] * output_weights[j][0];
-      }
-    }
-    for (int i = 0; i < 4; ++i)
-    {
-      for (int j = 0; j < 4; ++j)
-      {
-        hidden_deltas[i][j] =
-          hidden_errors[i][j] * dfsigmoid(hidden_layer[i][j]);
-      }
+      double error = data[i][3] - output_layer[i][0];
+      output_deltas[i][0] = error * dfsigmoid(output_layer[i][0]);
     }
     //Update weights
     for (int i = 0; i < 4; ++i)
@@ -194,7 +176,9 @@ void neural_network_two_layers(double** data, double** output_layer)
         double x = 0;
         for (int j = 0; j < 4; ++j)
         {
-          x += data[j][i] * hidden_deltas[j][k];
+          double error = output_deltas[j][0] * output_weights[k][0];
+          double delta = error * dfsigmoid(hidden_layer[j][k]);
+          x += data[j][i] * delta;
         }
         hidden_weights[i][k] += x;
       }
@@ -237,6 +221,6 @@ TEST_F(test_deep_learning, two_layers)
     delete [] outputs[i];
     outputs[i] = NULL;
   }
-  delete outputs;
+  delete [] outputs;
   outputs = NULL;
 }

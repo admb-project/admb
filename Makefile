@@ -24,8 +24,6 @@ check: $(CXX)-check
 	@echo "CXX: $(CXX)"
 clean: $(CXX)-clean
 coverage: $(CXX)-coverage
-gitversion:
-	git show -s --format=%H HEAD > GITVERSION
 
 help:
 	@echo Read INSTALL.txt for installation help.

@@ -13,3 +13,4 @@ benchmarks-saf.txt
 examples/admb/simple/*
 examples/admb/catage/*
 **/.DS_Store
+docs/api/dox

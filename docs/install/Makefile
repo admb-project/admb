@@ -14,6 +14,23 @@ all:\
   LICENSE.html\
   README.html
 
+htmls:\
+	mkdir -p htmls
+	mv QuickStartWindows.html htmls
+	mv QuickStartWindowsZip.html htmls
+	mv QuickStartWindowsSource.html htmls
+	mv QuickStartVisualC.html htmls
+	mv QuickStartVisualCZip.html htmls
+	mv QuickStartVisualCSource.html htmls
+	mv QuickStartUnix.html htmls
+	mv QuickStartUnixSource.html htmls
+	mv QuickStartMacOS.html htmls
+	mv QuickStartUbuntu14.html htmls
+	mv CHANGES.html htmls
+	mv INSTALL.html htmls
+	mv LICENSE.html htmls
+	mv README.html htmls
+
 QuickStartWindows.html: QuickStartWindows.txt
 	cat begin.html>$@
 	cat admarkdown.css>>$@
@@ -113,6 +130,7 @@ LICENSE.html: ../../LICENSE.txt
 	cat end.html>>$@
 
 clean:
+	rm -rvf htmls
 	rm -vf QuickStartWindows.html QuickStartVisualC.html QuickStartUnix.html
 	rm -vf QuickStartVisualCZip.html
 	rm -vf CHANGES.html INSTALL.html README.html LICENSE.html

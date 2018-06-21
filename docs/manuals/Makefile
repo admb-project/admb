@@ -14,7 +14,7 @@ ADMBMANUAL_PATH=admbmanual
 
 ALL: WRITERS_GUIDE MANUALS 
 
-pdfs:
+pdfs: ALL
 	mkdir -p pdfs
 	mv -v admb.pdf pdfs
 	mv -v admb-re.pdf pdfs

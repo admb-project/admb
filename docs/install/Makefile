@@ -14,7 +14,7 @@ all:\
   LICENSE.html\
   README.html
 
-htmls:\
+htmls: all
 	mkdir -p htmls
 	mv QuickStartWindows.html htmls
 	mv QuickStartWindowsZip.html htmls

@@ -17,7 +17,7 @@ ALL: WRITERS_GUIDE MANUALS
 pdfs: ALL
 	mkdir -p pdfs
 	mv -v admb.pdf pdfs
-	mv -v admb-re.pdf pdfs
+	mv -v admbre.pdf pdfs/admb-re.pdf
 	mv -v autodif.pdf pdfs
 
 WRITERS_GUIDE: admbmanual.pdf admb-sample.pdf

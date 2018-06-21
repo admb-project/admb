@@ -141,7 +141,7 @@ invoke custom adjoint code.
     \details Contributed by Weihai Liu
 */
 
-/** \defgroup  GDBPRINTLIB Dubugging aids.
+/** \defgroup  GDBPRINTLIB Debugging Tools
     \ingroup CONTRIB
     \details Functions for printing ADMB objects during GDB sessions.
   This functioniality was added to allow easy

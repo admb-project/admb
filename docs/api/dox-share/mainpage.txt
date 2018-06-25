@@ -40,7 +40,7 @@ consult the
 Comments on groupings
 */
 
-/**  \defgroup matop Vector and Matrix Operations. 
+/**  \defgroup matop Vector and Matrix Operations
 \details The syntax of ADMB Matrix and vector operations follows normal
 mathematical conventions as much as possible. If \c u and \c v are
 vectors and \c M is a matrix, \code u*M \endcode is a normal matrix
@@ -57,10 +57,10 @@ types are optimized for efficient derivative computation.
 Only the constant types are currently documented here.
 */
 
-/**  \defgroup PDF Probability Density Functions.
+/**  \defgroup PDF Probability Density Functions
 */
 
-/**  \defgroup RNG Random Numbers.
+/**  \defgroup RNG Random Numbers
 */
 
 /**  \defgroup misc "Helper" Functions
@@ -78,7 +78,7 @@ invoke custom adjoint code.
 */
 
 /**
- * \defgroup gammafunc Factorial, gamma and related functions.
+ * \defgroup gammafunc Factorial, Gamma and related functions
  */
 
 /**
@@ -86,7 +86,7 @@ invoke custom adjoint code.
  */
 
 /**
- * \defgroup cub_spline Class and methods for cubic splines.
+ * \defgroup cub_spline Class and methods for cubic splines
  */
 
 /**
@@ -103,7 +103,7 @@ invoke custom adjoint code.
 */
 
 /**
-  \defgroup AD Classes for Automatic Differentiation.
+  \defgroup AD Classes for Automatic Differentiation
    \details
    The algorithms for AD  in ADMB are invoked by declaring variables to be
    instances of specific classes, usually of type dvariable. Operations on instances of these classes invoke specialized overloaded 
@@ -111,31 +111,31 @@ invoke custom adjoint code.
    compute the required deravitives.
 */
 
-/** \defgroup BAD Reverse mode Automatic Differentiation.
+/** \defgroup BAD Reverse mode Automatic Differentiation
     \ingroup AD
 */
 
-/** \defgroup FAD Forward mode Automatic Differentiation.
+/** \defgroup FAD Forward mode Automatic Differentiation
      \ingroup AD
 */
 
-/** \defgroup CONTRIB User-Contributed Libraries.
+/** \defgroup CONTRIB User-Contributed Libraries
     \details 
      Collections of C++ and source code for implementing specialized
      models in ADMB. These modules are maintained by the original authors.
 */
 
-/** \defgroup STATLIB Statistical Fuctions.
+/** \defgroup STATLIB Statistical Fuctions
     \ingroup CONTRIB
     \details Contributed by Steven Martell.
 */
 
-/** \defgroup ECOL Functions Useful in Ecology.
+/** \defgroup ECOL Functions Useful in Ecology
     \ingroup CONTRIB
     \details Contributed by Mollie Brooks.
 */
 
-/** \defgroup QFC Functions created at the Quantitative Fisheries Center(QFC), Michigan State University.
+/** \defgroup QFC Functions created at the Quantitative Fisheries Center(QFC), Michigan State University
  
     \ingroup CONTRIB
     \details Contributed by Weihai Liu

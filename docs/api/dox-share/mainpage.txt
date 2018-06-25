@@ -69,7 +69,7 @@ typically optimized for automatic differentiation and automatically
 invoke custom adjoint code.
 */
 
-/**  \defgroup prepros Preprosessor (tpl2cpp & tpl2rem)
+/**  \defgroup prepros Preprocessor (tpl2cpp & tpl2rem)
 \details Document "tpl2cpp" and "tpl2rem" as well as their output files (.cpp and .htp)
 */
 
@@ -82,7 +82,7 @@ invoke custom adjoint code.
  */
 
 /**
- * \defgroup eigen Eigenvalues and eigenvectors.
+ * \defgroup eigen Eigenvalues and Eigenvectors
  */
 
 /**

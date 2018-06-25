@@ -30,7 +30,7 @@ contact developers@admb-project.org.
 <H3>
 For up-to-date information and download and installation instructions
 consult the 
-<a href="http://www.admb-project.org/buildbot/documentation/INSTALL.html">Installation Guide</a>.
+<a href="http://buildbot.admb-project.org/install/">Installation Guides</a>.
 </H3>
 </center>
 

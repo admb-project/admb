@@ -121,6 +121,7 @@ GTESTS_ALL=\
 GTESTS_DEV=\
  test_gradient_descent.cpp\
  test_deep_learning.cpp\
+ test_cast.cpp\
  main.cpp
 
 GTESTS=$(GTESTS_DEV)

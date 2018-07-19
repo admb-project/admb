@@ -56,12 +56,9 @@ class vector_shapex
       return trueptr;
    }
 #if defined(USE_VECTOR_SHAPE_POOL)
-   static vector_shape_pool *xpool;
-   void *operator new(size_t);
-   void operator delete(void *ptr, size_t)
-   {
-      xpool->free(ptr);
-   }
+  static vector_shape_pool xpool;
+  void* operator new(size_t);
+  void operator delete(void* ptr, size_t) { xpool.free(ptr); }
 #endif
    void shift(int min);
    int index_min;  ///< Minimum valid subscript

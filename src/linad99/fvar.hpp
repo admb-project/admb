@@ -500,12 +500,9 @@ class vector_shape
 {
  public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-   static vector_shape_pool *xpool;
-   void *operator new(size_t);
-   void operator delete(void *ptr, size_t)
-   {
-      xpool->free(ptr);
-   }
+  static vector_shape_pool xpool;
+  void* operator new(size_t);
+  void operator delete(void* ptr, size_t) { xpool.free(ptr); }
 #endif
    unsigned int ncopies;
    void shift(int min);
@@ -2005,12 +2002,9 @@ class arr_list
 class arr_link
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
-   static vector_shape_pool *xpool;
-   void *operator new(size_t);
-   void operator delete(void* ptr, size_t)
-   {
-      xpool->free(ptr);
-   }
+  static vector_shape_pool xpool;
+  void* operator new(size_t);
+  void operator delete(void* ptr, size_t) { xpool.free(ptr); }
 #endif
    arr_link *prev;
    arr_link *next;

@@ -426,15 +426,14 @@ void dfpool::deallocate(void)
   sanity_check();
   sanity_check2();
 #endif
-#ifndef _MSC_VER
-  while (last_chunk)
+  while (num_chunks > 0)
   {
     num_chunks--;
     char * tmp=*(char**) last_chunk;
     delete [] last_chunk;
     last_chunk=tmp;
   }
-#endif
+  last_chunk=NULL;
   size=0;
   head=0;
   num_allocated=0;

@@ -426,7 +426,7 @@ void dfpool::deallocate(void)
   sanity_check();
   sanity_check2();
 #endif
-  while (num_chunks > 0)
+  while (num_chunks > 0 && num_allocated == 0)
   {
     num_chunks--;
     char * tmp=*(char**) last_chunk;

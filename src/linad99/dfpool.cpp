@@ -426,7 +426,15 @@ void dfpool::deallocate(void)
   sanity_check();
   sanity_check2();
 #endif
-  while (num_chunks > 0 && num_allocated == 0)
+#ifdef DEBUG
+  if (num_allocated > 0)
+  {
+    cerr << "Warning: In dfpool::deallocated, "
+         << "the number allocated (" << num_allocated
+         << ") should be zero.\n";
+  }
+#endif
+  while (num_chunks > 0)
   {
     num_chunks--;
     char * tmp=*(char**) last_chunk;

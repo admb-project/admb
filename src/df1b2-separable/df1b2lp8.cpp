@@ -953,8 +953,7 @@ void save_number_of_local_effects(int num_separable_calls,
 #endif
     ivector tmp(1,old_max);
     tmp=(**num_local_re_array);
-    (*num_local_re_array)=new ivector(1,new_max);
-
+    //(*num_local_re_array)=new ivector(1,new_max);
     delete *num_local_re_array;
     *num_local_re_array = new ivector(1,new_max);
     if (*num_local_re_array == NULL)
@@ -998,9 +997,8 @@ void save_number_of_local_effects(int num_separable_calls,
 #endif
     ivector tmp(1,old_max);
     tmp=(**num_local_fixed_array);
-    (*num_local_fixed_array)=new ivector(1,new_max);
-
-    delete* num_local_fixed_array;
+    //(*num_local_fixed_array)=new ivector(1,new_max);
+    delete *num_local_fixed_array;
     *num_local_fixed_array = new ivector(1,new_max);
     if (*num_local_fixed_array == NULL)
     {

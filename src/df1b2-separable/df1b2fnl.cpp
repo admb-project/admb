@@ -18,8 +18,7 @@
 class newadkludge;
 newadkludge * newadkl=0;
 
-
-typedef funnel_init_var  * PFUNNEL_INIT_VAR;
+//typedef funnel_init_var* PFUNNEL_INIT_VAR;
 
 class laplace_approximation_calculator;
 laplace_approximation_calculator * funnel_init_var::lapprox=0;
@@ -29,12 +28,12 @@ unsigned int funnel_init_var::num_vars=0;
 int funnel_init_var::num_inactive_vars=0;
 unsigned int funnel_init_var::num_active_parameters=0;
 //funnel_init_var ** funnel_init_var::all_list=new PFUNNEL_INIT_VAR[2000];
-funnel_init_var ** funnel_init_var::list=new PFUNNEL_INIT_VAR[2000];
-funnel_init_var ** funnel_init_var::inactive_list=new PFUNNEL_INIT_VAR[2000];
-init_df1b2vector * funnel_init_var::py=0;
+funnel_init_var* funnel_init_var::list[] = { NULL };
+funnel_init_var* funnel_init_var::inactive_list[] = { NULL };
+init_df1b2vector* funnel_init_var::py=0;
 imatrix * funnel_init_var::plist=0;
 
-  int funnel_check_flag=0;
+//  int funnel_check_flag=0;
 
 /**
  * Description not yet available.

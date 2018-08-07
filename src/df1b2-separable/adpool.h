@@ -46,8 +46,12 @@
 #if !defined(__AD_POOL__)
 #define  __AD_POOL__
 #include <fvar.hpp>
-extern void * pchecker;
+
 //#define __CHECK_MEMORY__
+
+#ifdef __CHECK_MEMORY__
+extern void * pchecker;
+#endif
 
 /**
  * Description not yet available.
@@ -56,10 +60,13 @@ class adpool
 {
   static int num_adpools;
   int adpool_vector_flag;
+
 public:
   adpool();
   adpool(const size_t);
- ~adpool();
+  adpool(adpool&) = delete;  // copy protection
+  ~adpool();
+  void operator=(adpool&) = delete; // copy protection
 
   int depth_check(void);
   unsigned int nvar;
@@ -72,9 +79,8 @@ public:
   size_t size;
   link* head;
   double* first;
-  adpool(adpool&);  // copy protection
-  void operator=(adpool&); // copy protection
   void grow(void);
+
 #if defined(__CHECK_MEMORY__)
   int maxchunks;
   char * minaddress[2000];
@@ -82,12 +88,14 @@ public:
   int * pvalues;
   int nalloc;
 #endif
+
 public:
   void clean(void);
   void set_size(const size_t);
   void* alloc(void);
   void free(void* b);
   void deallocate(void);
+
 #if defined(__CHECK_MEMORY__)
   int bad(link * p);
   int badaddress(link * p);

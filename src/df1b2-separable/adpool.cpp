@@ -262,30 +262,18 @@ adpool::~adpool(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-adpool::adpool(const size_t sz):
-  size(sz < sizeof(link*) ? sizeof(link*) : sz)
-{
-  num_adpools++;
-  adpool_vector_flag=0;
-  if (!sz) size=0;
-  last_chunk=0;
-  head = 0;
-  num_allocated=0;
-  num_chunks=0;
-#if defined(__CHECK_MEMORY__)
-  nalloc=0;
-  pvalues=0;
-  maxchunks=0;
-#endif
-}
+Construct adpool with size (sz).
 
-/**
-Default constructor
+\param sz size of adpool.
 */
-adpool::adpool()
+adpool::adpool(const size_t sz):
+  last_chunk(NULL),
+  num_allocated(0),
+  num_chunks(0),
+  nelem(0),
+  size(0),
+  head(NULL),
+  first(NULL)
 {
   num_adpools++;
   size_t i1=sizeof(twointsandptr);
@@ -296,17 +284,19 @@ adpool::adpool()
     ad_exit(1);
   }
   adpool_vector_flag=0;
-  size=0;
-  last_chunk=0;
-  head = 0;
-  num_allocated=0;
-  num_chunks=0;
+  if (sz)
+  {
+    size = sz < sizeof(link*) ? sizeof(link*) : sz;
+  }
 #if defined(__CHECK_MEMORY__)
   nalloc=0;
   pvalues=0;
   maxchunks=0;
 #endif
 }
+
+/** Default constructor */
+adpool::adpool(): adpool(0) { }
 
 /**
 Set size of adpool.

@@ -16,10 +16,15 @@ TEST_F(test_valarray, sum)
 {
   gradient_structure gs;
 
-  std::valarray<dvariable> array = {1.0, 2.5, 3.4, -2.0, -1.5};
-  ASSERT_EQ(array.size(), 5);
+  //!!!For xcode, first element must be zero
+  std::valarray<dvariable> array = {0.0, 2.0, 3.4};
+  ASSERT_EQ(array.size(), 3);
+  ASSERT_DOUBLE_EQ(value(array.sum()), 5.4);
 
-  ASSERT_DOUBLE_EQ(value(array.sum()), 3.4);
+  std::valarray<dvariable> array2 = {0.0, 1.0, 2.5, 3.4, -2.0, -1.5};
+  ASSERT_EQ(array2.size(), 6);
+
+  ASSERT_DOUBLE_EQ(value(array2.sum()), 3.4);
 }
 TEST_F(test_valarray, apply)
 {
@@ -51,7 +56,7 @@ TEST_F(test_valarray, shift_does_not_reindex)
   std::valarray<dvariable> result = array.shift(-1);
   ASSERT_EQ(result.size(), 5);
 
-  ASSERT_DOUBLE_EQ(value(result[0]), 1.0);
+  ASSERT_DOUBLE_EQ(value(result[0]), -1.5);
   ASSERT_DOUBLE_EQ(value(result[1]), 1.0);
   ASSERT_DOUBLE_EQ(value(result[2]), 2.5);
   ASSERT_DOUBLE_EQ(value(result[3]), 3.4);

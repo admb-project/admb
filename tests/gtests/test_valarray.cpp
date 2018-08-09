@@ -12,11 +12,17 @@ TEST_F(test_valarray, default_constructor)
 
   ASSERT_EQ(array.size(), 0);
 }
+TEST_F(test_valarray, sumdoubles)
+{
+  std::valarray<double> array = {1.0, 2.0, 3.4};
+  ASSERT_EQ(array.size(), 3);
+  ASSERT_DOUBLE_EQ(array.sum(), 6.4);
+}
 TEST_F(test_valarray, sum)
 {
   gradient_structure gs;
 
-  //!!!For xcode, first element must be zero
+  //!!!For gcc, first element must be zero
   std::valarray<dvariable> array = {0.0, 2.0, 3.4};
   ASSERT_EQ(array.size(), 3);
   ASSERT_DOUBLE_EQ(value(array.sum()), 5.4);

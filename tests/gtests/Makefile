@@ -116,12 +116,13 @@ GTESTS_ALL=\
  test_move.cpp\
  test_param_init_bounded_dev_vector.cpp\
  test_experimenting_mcmc.cpp\
- main.cpp
-
-GTESTS_DEV=\
  test_gradient_descent.cpp\
  test_deep_learning.cpp\
  test_cast.cpp\
+ main.cpp
+
+GTESTS_DEV=\
+ test_adpool.cpp\
  main.cpp
 
 GTESTS=$(GTESTS_DEV)

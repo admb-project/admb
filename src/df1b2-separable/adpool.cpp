@@ -251,13 +251,10 @@ void adpool::free(void * b)
   head = p;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-adpool::~adpool(void)
+/** Destructor */
+adpool::~adpool()
 {
-  num_adpools--;
+  --num_adpools;
   deallocate();
 }
 

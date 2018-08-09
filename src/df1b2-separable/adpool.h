@@ -62,11 +62,16 @@ class adpool
   int adpool_vector_flag;
 
 public:
+
   adpool();
   adpool(const size_t);
-  adpool(adpool&) = delete;  // copy protection
+  adpool(adpool&) = delete;
   ~adpool();
-  void operator=(adpool&) = delete; // copy protection
+
+  void operator=(adpool&) = delete;
+
+  static int get_num_adpools()
+    { return adpool::num_adpools; }
 
   int depth_check(void);
   unsigned int nvar;

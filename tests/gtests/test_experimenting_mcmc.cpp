@@ -1,3 +1,4 @@
+#include <functional>
 #include <gtest/gtest.h>
 #include <fstream>
 #include <cmath>

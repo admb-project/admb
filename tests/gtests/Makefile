@@ -119,14 +119,15 @@ GTESTS_ALL=\
  test_gradient_descent.cpp\
  test_deep_learning.cpp\
  test_cast.cpp\
+ test_adpool.cpp\
  main.cpp
 
 GTESTS_DEV=\
  test_adpool.cpp\
  main.cpp
 
-GTESTS=$(GTESTS_DEV)
-#GTESTS=$(GTESTS_ALL)
+#GTESTS=$(GTESTS_DEV)
+GTESTS=$(GTESTS_ALL)
 
 
 ifeq ($(CXX),openCC)

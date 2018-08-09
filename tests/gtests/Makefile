@@ -112,7 +112,6 @@ GTESTS_ALL=\
  test_autodif.cpp\
  test_atomic.cpp\
  test_shared_ptr.cpp\
- test_valarray.cpp\
  test_move.cpp\
  test_param_init_bounded_dev_vector.cpp\
  test_experimenting_mcmc.cpp\
@@ -125,6 +124,8 @@ GTESTS_ALL=\
 GTESTS_DEV=\
  test_adpool.cpp\
  main.cpp
+
+#test_valarray.cpp
 
 #GTESTS=$(GTESTS_DEV)
 GTESTS=$(GTESTS_ALL)

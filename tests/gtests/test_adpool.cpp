@@ -5,9 +5,9 @@ class test_adpool: public ::testing::Test {};
 
 TEST_F(test_adpool, default_constructor)
 {
-  ASSERT_EQ(0, adpool::get_num_adpools());
+  const int start_num_adpools = adpool::get_num_adpools();
   adpool a;
-  ASSERT_EQ(1, adpool::get_num_adpools());
+  ASSERT_EQ(start_num_adpools + 1, adpool::get_num_adpools());
 
   /*
   unsigned int nvar;
@@ -24,7 +24,9 @@ TEST_F(test_adpool, default_constructor)
 }
 TEST_F(test_adpool, constructor_size)
 {
+  const int start_num_adpools = adpool::get_num_adpools();
   adpool a(0);
+  ASSERT_EQ(start_num_adpools + 1, adpool::get_num_adpools());
 
   ASSERT_TRUE(a.last_chunk == NULL);
   ASSERT_EQ(0, a.num_allocated);
@@ -38,9 +40,9 @@ TEST_F(test_adpool, constructor_size)
 
   for (size_t i = size - 1; i <= size; ++i)
   {
-    ASSERT_EQ(1, adpool::get_num_adpools());
+    ASSERT_EQ(start_num_adpools + 1, adpool::get_num_adpools());
     adpool b(i);
-    ASSERT_EQ(2, adpool::get_num_adpools());
+    ASSERT_EQ(start_num_adpools + 2, adpool::get_num_adpools());
 
     ASSERT_TRUE(b.last_chunk == NULL);
     ASSERT_EQ(0, b.num_allocated);
@@ -50,9 +52,9 @@ TEST_F(test_adpool, constructor_size)
     ASSERT_TRUE(b.head == NULL);
     ASSERT_TRUE(b.first == NULL);
   }
-  ASSERT_EQ(1, adpool::get_num_adpools());
+  ASSERT_EQ(start_num_adpools + 1, adpool::get_num_adpools());
   adpool c(size + 1);
-  ASSERT_EQ(2, adpool::get_num_adpools());
+  ASSERT_EQ(start_num_adpools + 2, adpool::get_num_adpools());
 
   ASSERT_TRUE(c.last_chunk == NULL);
   ASSERT_EQ(0, c.num_allocated);

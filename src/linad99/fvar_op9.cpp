@@ -25,37 +25,40 @@
 #include <stdio.h>
 #include <math.h>
 
-  void df_plus_eq_pvpv(void);
+void df_plus_eq_pvpv(void);
   //extern ofstream gradlog;
 
 /**
- * Description not yet available.
- * \param
- */
-void prevariable::operator+=(const prevariable& v1)
-  {
-    (*v).x+=(*v1.v).x;
-    gradient_structure::GRAD_STACK1->set_gradient_stack1
-      (df_plus_eq_pvpv,&(v->x),&(v1.v->x));
-  }
+Prevariable addition assignment operator.
 
+\param other add to prevariable
+*/
+prevariable& prevariable::operator+=(const prevariable& other)
+{
+  (*v).x += (*other.v).x;
+
+  gradient_structure::GRAD_STACK1->set_gradient_stack1
+    (df_plus_eq_pvpv,&(v->x),&(other.v->x));
+
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
-  void df_plus_eq_pvpv(void)
-  {
-    //cout <<  setprecision(13) <<
-     //  * gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
+Computes gradients for prevariable addition assignment operator.
+*/
+void df_plus_eq_pvpv(void)
+{
+  //cout << setprecision(13) <<
+  //  *gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
 
-    //cout <<  setprecision(13) <<
-     //  * gradient_structure::GRAD_STACK1->ptr->dep_addr << endl;
+  //cout << setprecision(13) <<
+  //  *gradient_structure::GRAD_STACK1->ptr->dep_addr << endl;
 
-    //gradlog <<  setprecision(13) <<
-     //  * gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
+  //gradlog << setprecision(13) <<
+  //  *gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
 
-    * gradient_structure::GRAD_STACK1->ptr->ind_addr1
-               += * gradient_structure::GRAD_STACK1->ptr->dep_addr;
-    //gradlog <<  setprecision(13) <<
-     //  * gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
-  }
+  *gradient_structure::GRAD_STACK1->ptr->ind_addr1
+    += *gradient_structure::GRAD_STACK1->ptr->dep_addr;
+
+  //gradlog << setprecision(13) <<
+  //  *gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
+}

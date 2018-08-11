@@ -1448,7 +1448,7 @@ public:
 
    friend char *fform(const char *, const prevariable &);
 
-   void operator+=(const prevariable & t1);
+   prevariable& operator+=(const prevariable&);
    void operator +=(double t1);
 
    void operator-=(const prevariable & t1);

@@ -118,6 +118,7 @@ GTESTS_ALL=\
  test_deep_learning.cpp\
  test_cast.cpp\
  test_valarray.cpp\
+ test_vector.cpp\
  main.cpp
 
 GTESTS_DEV=\

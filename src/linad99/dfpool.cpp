@@ -19,8 +19,6 @@
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
-vector_shape_pool arr_link::xpool(sizeof(arr_link));
-
 vector_shape_pool::vector_shape_pool(void) : dfpool(sizeof(vector_shape))
 { ;}
 
@@ -61,7 +59,7 @@ void* arr_link::operator new(size_t n)
     ad_exit(1);
   }
 #endif
-  return xpool.alloc();
+  return arr_link::get_xpool().alloc();
 }
 
 /**

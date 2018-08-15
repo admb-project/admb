@@ -2010,9 +2010,16 @@ class arr_list
 class arr_link
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
-  static vector_shape_pool xpool;
+  static vector_shape_pool& get_xpool()
+  {
+    static vector_shape_pool xpool(sizeof(arr_link));
+    return xpool;
+  }
   void* operator new(size_t);
-  void operator delete(void* ptr, size_t) { xpool.free(ptr); }
+  void operator delete(void* ptr, size_t)
+    { arr_link::get_xpool().free(ptr); }
+  arr_link(const arr_link&) = delete;
+  arr_link& operator=(const arr_link&) = delete;
 #endif
    arr_link *prev;
    arr_link *next;

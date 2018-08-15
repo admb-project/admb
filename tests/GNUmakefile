@@ -118,7 +118,11 @@ all-tpls:\
   tpl-priors\
   tpl-testminmax\
   tpl-orange_mvn\
+  cpp-globals\
   tpl-lprof
+
+cpp-globals:
+	$(MAKE) --directory=globals
 
 tpl-f1b2vc5:
 	$(MAKE) --directory=f1b2vc5
@@ -263,6 +267,7 @@ else
 	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3
 endif
+	$(MAKE) --directory=globals clean
 	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean

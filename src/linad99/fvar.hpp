@@ -500,10 +500,18 @@ class vector_shape
 {
  public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-  static vector_shape_pool xpool;
+  static vector_shape_pool& get_xpool()
+  {
+    static vector_shape_pool xpool(sizeof(vector_shape));
+    return xpool;
+  }
   void* operator new(size_t);
-  void operator delete(void* ptr, size_t) { xpool.free(ptr); }
+  void operator delete(void* ptr, size_t)
+   { vector_shape::get_xpool().free(ptr); }
+  vector_shape(const vector_shape&) = delete;
+  vector_shape& operator=(const vector_shape&) =  delete;
 #endif
+
    unsigned int ncopies;
    void shift(int min);
    int index_min;

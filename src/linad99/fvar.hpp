@@ -2009,6 +2009,16 @@ class arr_list
  */
 class arr_link
 {
+   arr_link *prev;
+   arr_link *next;
+   arr_link *free_prev;
+   arr_link *free_next;
+   unsigned int status;
+   // unsigned int     free_list_status;
+   unsigned int size;
+   unsigned long int offset;
+
+ public:
 #if defined(USE_VECTOR_SHAPE_POOL)
   static vector_shape_pool& get_xpool()
   {
@@ -2021,16 +2031,8 @@ class arr_link
   arr_link(const arr_link&) = delete;
   arr_link& operator=(const arr_link&) = delete;
 #endif
-   arr_link *prev;
-   arr_link *next;
-   arr_link *free_prev;
-   arr_link *free_next;
-   unsigned int status;
-   // unsigned int     free_list_status;
-   unsigned int size;
-   unsigned long int offset;
- public:
-   arr_link();
+
+  arr_link();
 
   arr_link* get_prev() const
     { return prev; }

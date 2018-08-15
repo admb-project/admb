@@ -22,10 +22,9 @@ TEST_F(test_valarray, sum)
 {
   gradient_structure gs;
 
-  //!!!For gcc, first element must be zero
-  std::valarray<dvariable> array = {0.0, 2.0, 3.4};
+  std::valarray<dvariable> array = {1.0, 2.0, 3.4};
   ASSERT_EQ(array.size(), 3);
-  ASSERT_DOUBLE_EQ(value(array.sum()), 5.4);
+  ASSERT_DOUBLE_EQ(value(array.sum()), 6.4);
 
   std::valarray<dvariable> array2 = {0.0, 1.0, 2.5, 3.4, -2.0, -1.5};
   ASSERT_EQ(array2.size(), 6);

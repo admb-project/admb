@@ -19,8 +19,8 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
-	@del main.obj
+ifeq ($(OS),Windows_NT)
+	@del main.ob
 	@del main.exe
 else
 	@rm -vf main.obj

@@ -119,7 +119,7 @@ GTESTS_ALL=\
  test_cast.cpp\
  test_valarray.cpp\
  test_vector.cpp\
- test_xpool.cpp\
+ test_xpools.cpp\
  main.cpp
 
 GTESTS_DEV=\

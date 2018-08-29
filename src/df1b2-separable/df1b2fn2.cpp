@@ -37,7 +37,7 @@ unsigned int get_f1b2buffer_size(const char* s);
   int df1b2_gradlist::ncount_check=-1;
 #endif
 
-adpool * df1b2variable::pool= new adpool();
+adpool* df1b2variable::pool = NULL;
 
 /**
  * Description not yet available.

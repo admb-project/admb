@@ -52,8 +52,7 @@ df1b2_gradlist * globalf1b2gradlist = 0;
 
 int df1b2variable::noallocate=0;
 
-initial_df1b2params ** initial_df1b2params::varsptr
-  =new P_INITIAL_DF1B2PARAMS[1000];
+initial_df1b2params** initial_df1b2params::varsptr = NULL;
 int initial_df1b2params::num_initial_df1b2params=0;         // array
 
 int initial_df1b2params::num_initial_df1b2params_sav=0;         // array

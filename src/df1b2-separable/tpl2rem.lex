@@ -4597,11 +4597,18 @@ TOP_OF_MAIN_SECTION {
     // **********************************************************************
     // **********************************************************************
 
-    if (makedll)
-    {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
         "      if (!arrmblsize) arrmblsize=150000;\n");
 
+    if (random_effects_flag)
+    {
+      fprintf(ftopmain,"    df1b2variable::noallocate=1;\n");
+      fprintf(ftopmain,"df1b2variable::pool = new adpool();\n");
+      fprintf(ftopmain,"initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1000];\n");
+      fprintf(ftopmain,"{\n");
+    }
+    if (makedll)
+    {
       if (!random_effects_flag)
       {
         fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
@@ -4617,8 +4624,6 @@ TOP_OF_MAIN_SECTION {
     }
     else
     {
-      fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
-        "      if (!arrmblsize) arrmblsize=150000;\n");
       if (!random_effects_flag)
       {
        fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv);\n"
@@ -4626,12 +4631,10 @@ TOP_OF_MAIN_SECTION {
       }
       else
       {
-       fprintf(ftopmain,"    df1b2variable::noallocate=1;\n");
        fprintf(ftopmain,"    df1b2_parameters mp(arrmblsize,argc,argv);\n"
          "    mp.iprint=10;\n");
       }
     }
-
 
      if (random_effects_flag)
      {
@@ -4646,6 +4649,17 @@ TOP_OF_MAIN_SECTION {
        fprintf(ftopmain,"    initial_df1b2params::separable_flag=1;\n");
 
      fprintf(ftopmain,"    mp.computations(argc,argv);\n");
+
+     if (random_effects_flag)
+     {
+       fprintf(ftopmain,"}\n");
+       fprintf(ftopmain,"delete [] init_df1b2variable::list;\n");
+       fprintf(ftopmain,"init_df1b2variable::list = NULL;\n");
+       fprintf(ftopmain,"delete [] initial_df1b2params::varsptr;\n");
+       fprintf(ftopmain,"initial_df1b2params::varsptr = NULL;\n");
+       fprintf(ftopmain,"delete df1b2variable::pool;\n");
+       fprintf(ftopmain,"df1b2variable::pool = NULL;\n");
+     }
 
     fprintf(ftopmain,"#ifdef DEBUG\n");
     fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");

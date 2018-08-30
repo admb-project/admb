@@ -200,11 +200,9 @@ struct df1b2_header
   double* u_dot_tilde;
   double* u_bar_tilde;
   double* u_dot_bar_tilde;
-
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-  long long int indindex;
-#else
   int indindex;
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+  int padding;
 #endif
 
   /// Default constructor
@@ -217,7 +215,11 @@ struct df1b2_header
     u_dot_tilde(NULL),
     u_bar_tilde(NULL),
     u_dot_bar_tilde(NULL),
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+    indindex(0),  padding(0)
+#else
     indindex(0)
+#endif
   {
   }
 
@@ -231,13 +233,8 @@ struct df1b2_header
   double* get_u_dot_tilde() const {return u_dot_tilde; }
   double* get_u_bar_tilde() const {return u_bar_tilde; }
   double* get_u_dot_bar_tilde() const {return u_dot_bar_tilde; }
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-  long long int& get_ind_index() { return indindex; }
-  const long long int& get_ind_index() const { return indindex; }
-#else
   int& get_ind_index() { return indindex; }
   const int& get_ind_index() const { return indindex; }
-#endif
 };
   class adkludge1;
 

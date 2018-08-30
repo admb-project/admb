@@ -187,9 +187,7 @@ void read_pass1_2(void);
 #undef ADUNCONST
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
-/**
-Base class for df1b2variable
-*/
+/** Base class for df1b2variable */
 struct df1b2_header
 {
   //double* ptr;
@@ -202,7 +200,12 @@ struct df1b2_header
   double* u_dot_tilde;
   double* u_bar_tilde;
   double* u_dot_bar_tilde;
+
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
   long long int indindex;
+#else
+  int indindex;
+#endif
 
   /// Default constructor
   df1b2_header():
@@ -228,8 +231,13 @@ struct df1b2_header
   double* get_u_dot_tilde() const {return u_dot_tilde; }
   double* get_u_bar_tilde() const {return u_bar_tilde; }
   double* get_u_dot_bar_tilde() const {return u_dot_bar_tilde; }
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
   long long int& get_ind_index() { return indindex; }
-  const long long int& get_ind_index(void) const { return indindex; }
+  const long long int& get_ind_index() const { return indindex; }
+#else
+  int& get_ind_index() { return indindex; }
+  const int& get_ind_index() const { return indindex; }
+#endif
 };
   class adkludge1;
 

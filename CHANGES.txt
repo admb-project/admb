@@ -18,6 +18,7 @@ ADMB-git
 
 ####Changes and Improvements
 
+* Fixed valgrind reported memory leaks.
 * Buildbot is now hosted at SOEST (April-2018).
   
   https://buildbot.admb-project.org/

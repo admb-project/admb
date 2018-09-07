@@ -22,6 +22,7 @@ ADMB-git
 * Buildbot is now hosted at SOEST (April-2018).
   
   https://buildbot.admb-project.org/
+* Fixed parsers to avoid needing to add extra line at the end to the tpl file.
 
 
 ADMB-12.0

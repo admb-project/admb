@@ -162,7 +162,7 @@ prior_def [ \t(a-z_A-Z0-9-]+(->)?[ \ta-z_A-Z0-9),.-]*
 
 %%
 
-\/\/.*$         /* ignore trailing comments */ ;
+\/\/.*         /* ignore trailing comments */ ;
 \/[\*]+.[\*]\/  /* ignore block comments */ ;
 
 \r    { ; }
@@ -297,7 +297,7 @@ RUNTIME_SECTION  {
   }
                 }
 
-<DEFINE_RUNTIME>^" "*convergence_criteria" ".*$ {
+<DEFINE_RUNTIME>^" "*convergence_criteria" ".* {
 
     strip_leading_blanks(tmp_string1,yytext);
     after_part(tmp_string2,tmp_string1,' ');  // get 10  in x  10
@@ -310,7 +310,7 @@ RUNTIME_SECTION  {
 
                                   }
 
-<DEFINE_RUNTIME>^" "*maximum_function_evaluations" ".*$ {
+<DEFINE_RUNTIME>^" "*maximum_function_evaluations" ".* {
 
     strip_leading_blanks(tmp_string1,yytext);
     after_part(tmp_string2,tmp_string1,' ');  // get 10  in x  10
@@ -413,7 +413,7 @@ SLAVE_SECTION  {
   #endif
          }
 
-<IN_PVM_SLAVE_SECTION>^[ \t].*$ { fprintf(fall,"%s\n",yytext); }
+<IN_PVM_SLAVE_SECTION>^[ \t].* { fprintf(fall,"%s\n",yytext); }
 
 DATA_SECTION  {
 
@@ -468,14 +468,14 @@ DATA_SECTION  {
   }
                 }
 
-<DEFINE_DATA>^[ \t]*!!USER_CODE.*$ {
+<DEFINE_DATA>^[ \t]*!!USER_CODE.* {
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+11);
     fprintf(fall,"%s\n",tmp_string2);
 
     }
 
-<DEFINE_DATA>^[ \t]*!!CLASS.*$ {              // start with !!CLASSbbclassname classinstance(xxx)
+<DEFINE_DATA>^[ \t]*!!CLASS.* {              // start with !!CLASSbbclassname classinstance(xxx)
     num_user_classes++;
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+7);  // now bbclassname classinstance(xxx)
@@ -513,7 +513,7 @@ DATA_SECTION  {
 
   }
 
-<DEFINE_DATA>^[ \t]*@@.*$ {              // start with !!CLASSbbclassname classinstance(xxx)
+<DEFINE_DATA>^[ \t]*@@.* {              // start with !!CLASSbbclassname classinstance(xxx)
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     printf("ddd\n");
     strcpy(tmp_string2,tmp_string1+2);  // now bbclassname classinstance(xxx)
@@ -555,7 +555,7 @@ DATA_SECTION  {
 
   }
 
-<DEFINE_DATA>^[ \t]*!!.*$ {
+<DEFINE_DATA>^[ \t]*!!.* {
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+2);
     fprintf(fall,"%s\n",tmp_string2);
@@ -835,7 +835,7 @@ DATA_SECTION  {
 
                   }
 
-<IN_LOCAL_CALCS>^[ \t][^ \tE].*$ {
+<IN_LOCAL_CALCS>^[ \t][^ \tE].* {
     fprintf(stderr,"%s","Error: In LOCAL_SECTION lines should be indented with two spaces or tabs.\n");
     fprintf(stderr,"Line %d:\n",nline);
     fprintf(stderr,"%s\n",yytext);
@@ -843,11 +843,11 @@ DATA_SECTION  {
     exit(1);
 }
 
-<IN_LOCAL_CALCS>^[ \t][ \t].*$       {
+<IN_LOCAL_CALCS>^[ \t][ \t].*       {
     fprintf(fall,"%s\n",yytext);
           }
 
-<DEFINE_PARAMETERS>^[ \t]*!!CLASS.*$ {              // start with !!CLASSbbclassname classinstance(xxx)
+<DEFINE_PARAMETERS>^[ \t]*!!CLASS.* {              // start with !!CLASSbbclassname classinstance(xxx)
     num_user_classes++;
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+7);  // now bbclassname classinstance(xxx)
@@ -885,14 +885,14 @@ DATA_SECTION  {
 
   }
 
-<DEFINE_PARAMETERS>^[ \t]*!!USER_CODE.*$ {
+<DEFINE_PARAMETERS>^[ \t]*!!USER_CODE.* {
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+11);
     fprintf(fall,"%s\n",tmp_string2);
 
     }
 
-<DEFINE_PARAMETERS>^[ \t]*!!.*$ {
+<DEFINE_PARAMETERS>^[ \t]*!!.* {
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+2);
     fprintf(fall,"%s\n",tmp_string2);
@@ -3935,7 +3935,7 @@ FUNCTION_DECLARATION[ ]*{name} |
 <DEFINE_PROCS>^[ \t].* { fprintf(fall,"%s\n",yytext); }
 
 
-<DEFINE_AUX_PROC>^\ +{name}\ +{name}\(.*$       {
+<DEFINE_AUX_PROC>^\ +{name}\ +{name}\(.*       {
 
    fprintf(fall,"  %s\n",yytext);
    num_paren=count_paren(num_paren,yytext);
@@ -3953,7 +3953,7 @@ FUNCTION_DECLARATION[ ]*{name} |
                               }
 
 
-<CONTINUE_PROTOTYPE_DEF>^\ .*$       {
+<CONTINUE_PROTOTYPE_DEF>^\ .*       {
 
    fprintf(fall,"  %s\n",yytext);
    num_paren=count_paren(num_paren,yytext);
@@ -3989,7 +3989,7 @@ GLOBALS_SECTION {
 
                 }
 
-<IN_GLOBALS_SECTION>^[ \t].*$ {
+<IN_GLOBALS_SECTION>^[ \t].* {
 
         fprintf(fglobals,"%s\n",yytext);
                               }
@@ -4088,7 +4088,7 @@ TOP_OF_MAIN_SECTION {
 
                 }
 
-<IN_TOP_SECTION>^[ \t].*$ {
+<IN_TOP_SECTION>^[ \t].* {
 
         fprintf(ftopmain,"%s\n",yytext);
 

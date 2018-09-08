@@ -164,8 +164,7 @@ prior_def [ \t(a-z_A-Z0-9-]+(->)?[ \ta-z_A-Z0-9),.-]*
 
 \/\/.*         /* ignore trailing comments */ ;
 \/[\*]+.[\*]\/  /* ignore block comments */ ;
-
-\r    { ; }
+\r  /* ignore windows carriage return*/ ;
 
 INITIALIZATION_SECTION  {
 

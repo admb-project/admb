@@ -27,7 +27,7 @@
   #define CHK_ID_STRING
 #endif
 
-extern ofstream clogf;
+//extern ofstream clogf;
 
 /**
  * Description not yet available.

@@ -41,7 +41,6 @@ void null_ptr_err_message(void);
   #include <cassert>
 #endif
 
-extern ofstream clogf;
 #ifndef __SUNPRO_CC
 typedef int (* fptr) (const char * format, ...) ;
 #endif

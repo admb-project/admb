@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
+#include <climits>
+
 
 extern "C"
 {
@@ -8,6 +10,37 @@ extern "C"
 
 class test_gradcalc: public ::testing::Test {};
 
+/*
+TEST_F(test_gradcalc, memset)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs(INT_MAX);
+
+  double_and_int* tmp =
+    (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  memset(tmp, 1, INT_MAX);
+
+  unsigned long int max_last_offset0 =
+    gradient_structure::ARR_LIST1->get_max_last_offset();
+  ASSERT_EQ(max_last_offset0, 0);
+
+  size_t size = sizeof(double_and_int);
+
+  dvar_vector v(1, 4);
+  unsigned long int max_last_offset =
+    gradient_structure::ARR_LIST1->get_max_last_offset();
+  ASSERT_EQ(max_last_offset, 4 * size);
+  for (unsigned int i = 0; i < (max_last_offset/size); i++)
+  {
+     tmp->x = 0;
+     tmp++;
+  }
+
+  memset(gradient_structure::ARRAY_MEMBLOCK_BASE,
+         0, gradient_structure::ARRAY_MEMBLOCK_SIZE);
+}
+*/
 TEST_F(test_gradcalc, nvarzero)
 {
   ad_exit=&test_ad_exit;

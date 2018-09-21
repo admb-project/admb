@@ -290,8 +290,6 @@ gradient_structure::gradient_structure(long int _size):
   atexit(cleanup_temporary_files);
   fill_ad_random_part();
 
-  const unsigned long int size = (unsigned long int)_size;
-
   if (instances++ > 0)
   {
     cerr << "More than one gradient_structure object has been declared.\n"
@@ -299,7 +297,11 @@ gradient_structure::gradient_structure(long int _size):
          << "  of the objects declared.\n";
     ad_exit(1);
   }
-  gradient_structure::ARRAY_MEMBLOCK_SIZE=size; //js
+
+  //Should be a multiple of sizeof(double_and_int)
+  const long int remainder = _size % sizeof(double_and_int);
+  gradient_structure::ARRAY_MEMBLOCK_SIZE =
+    static_cast<unsigned long int>(_size - remainder);
 
   char* path = getenv("ADTMP1"); // NULL if not defined
   if (path != NULL && strlen(path) <= 45)

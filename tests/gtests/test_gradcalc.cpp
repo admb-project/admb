@@ -10,17 +10,106 @@ extern "C"
 
 class test_gradcalc: public ::testing::Test {};
 
-/*
-TEST_F(test_gradcalc, memset)
+TEST_F(test_gradcalc, gradient_size_intmax)
 {
   ad_exit=&test_ad_exit;
 
+  const long int size = sizeof(double_and_int);
+  long int total_size  = INT_MAX;
+  //compute size should that is not big enough
+  long int extra = total_size % size;
+  total_size -= extra;
   gradient_structure gs(INT_MAX);
 
-  double_and_int* tmp =
+  double_and_int* ptr =
     (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
-  memset(tmp, 1, INT_MAX);
+  memset(ptr, 0, total_size);
+  for (int i = 0; i < total_size; i += size)
+  {
+    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ++ptr;
+  }
+  ptr = (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  memset(ptr, 1, total_size);
+  for (int i = 0; i < total_size; i += size)
+  {
+    ptr->x = 0.0;
+    ++ptr;
+  }
+  ptr = (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  for (int i = 0; i < total_size; i += size)
+  {
+    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ++ptr;
+  }
+}
+TEST_F(test_gradcalc, gradient_size_small_array_memblock_base)
+{
+  ad_exit=&test_ad_exit;
 
+  const long int size = sizeof(double_and_int);
+  const long int total_size  = size * 2;
+  gradient_structure gs(total_size);
+
+  double_and_int* ptr =
+    (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  memset(ptr, 0, total_size);
+
+  for (int i = 0; i < total_size; i += size)
+  {
+    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ++ptr;
+  }
+}
+TEST_F(test_gradcalc, dvar_vector)
+{
+  ad_exit=&test_ad_exit;
+
+  const long int size = sizeof(double_and_int);
+  const long int total_size  = size * 4;
+  gradient_structure gs(total_size);
+
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), 0);
+
+  dvar_vector v(1, 4);
+  v.initialize();
+
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), total_size);
+
+  double_and_int* ptr =
+    (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  for (int i = 0; i < total_size; i += size)
+  {
+    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ++ptr;
+  }
+
+  v(1) = -1.5;
+  v(2) = 4.5;
+  v(3) = 1.5;
+  v(4) = -8.5;
+  ptr = (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+
+  ASSERT_DOUBLE_EQ(ptr->x, value(v(1)));
+  ++ptr;
+
+  ASSERT_DOUBLE_EQ(ptr->x, value(v(2)));
+  ++ptr;
+
+  ASSERT_DOUBLE_EQ(ptr->x, value(v(3)));
+  ++ptr;
+
+  ASSERT_DOUBLE_EQ(ptr->x, value(v(4)));
+
+  ptr = (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  memset(ptr, 0, total_size);
+  for (int i = 0; i < total_size; i += size)
+  {
+    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ++ptr;
+  }
+
+  /*
   unsigned long int max_last_offset0 =
     gradient_structure::ARR_LIST1->get_max_last_offset();
   ASSERT_EQ(max_last_offset0, 0);
@@ -39,8 +128,8 @@ TEST_F(test_gradcalc, memset)
 
   memset(gradient_structure::ARRAY_MEMBLOCK_BASE,
          0, gradient_structure::ARRAY_MEMBLOCK_SIZE);
+  */
 }
-*/
 TEST_F(test_gradcalc, nvarzero)
 {
   ad_exit=&test_ad_exit;

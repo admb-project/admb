@@ -383,7 +383,16 @@ void imatrix::allocate(
        || (nch.isinteger() && (nrl != nch.indexmin() || nrh != nch.indexmax())))
     {
       cerr << "Incompatible imatrix bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
-      ad_exit(1);
+      if(nrh==0) 
+      {
+        // Some models use 0 for columns to "turn off" a parameter, so we
+        // don't want to exit in this case, just throw error.
+        cerr << "0 columns - was this intentional?\n" ;
+      }
+      else
+      {
+        ad_exit(1);
+      }
     }
     unsigned int ss = static_cast<unsigned int>(nrh - nrl + 1);
     if ((m = new ivector[ss]) == 0)

@@ -92,20 +92,13 @@ void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
 void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 				      int restart_flag)
 {
-  // Temporary addition by Cole. Now MLE in bound space can be read in from
-  // the .hes file using this function. This means we can start the model
-  // from the MLE (default) even if not using -mcpin or estimating the
-  // model.
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  independent_variables mle(1,nvar); // the accepted par values
-  // Store saved MLE in bounded space into vector mle.
-  read_mle_hmc(nvar, mle);
 
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
   //int mcmc_save_index=1;
   //int mcmc_wrap_flag=0;
   //int mcmc_gui_length=10000;
+  int nvar=initial_params::nvarcalc(); // get the number of active parameters
 
   // Cole set this to 1 to essentially turn this feature off since no one seems to use it.
   int no_sd_mcmc=1;
@@ -369,6 +362,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
       independent_variables y(1,nvar);
       independent_variables parsave(1,nvar_re);
       initial_params::restore_start_phase();
+      nopt=0;
 
       // read in the mcmc values to date
       int ii=1;
@@ -415,9 +409,9 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	    cerr << "Illegal option with -mcpin" << endl;
 	  }
 	} else {
-	  ii=1;
-	  parsave=mle;
-	  initial_params::copy_all_values(parsave,ii);
+	  // If user didnt specify one, use MLE values. Store saved MLEs from
+	  // admodel.hes file in bounded space into initial parameters z0
+	  read_mle_hmc(nvar, parsave);
 	}
       }
 
@@ -647,7 +641,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	// cout << "Initial mle=" << mle << endl;
 	// cout << "Initial z=" << parsave << endl;
 	// cout << "Initial y=" << y << endl;
-	cout << "Initial nll=" << -llbest << endl;
+	cout << "Initial negative log density=" << -llbest << endl;
 	// Start of MCMC chain
 	for (int i=1;i<=number_sims;i++)
 	  {

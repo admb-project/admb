@@ -2558,7 +2558,7 @@ class dvar_matrix
       return (prevariable((m[i]).va + j));
    }
 #else
-   inline prevariable operator () (register int i, register int j)
+   inline prevariable operator()(int i, int j)
    {
       return ((m[i]).va + j);
    }
@@ -2567,12 +2567,12 @@ class dvar_matrix
    prevariable operator () (int i, int j);
 #endif
 
-   inline double &elem_value(register int i, register int j)
+   inline double &elem_value(int i, int j)
    {
       return *(double *) ((m[i]).va + j);
    }
 
-   inline const double &elem_value(register int i, register int j) const
+   inline const double &elem_value(int i, int j) const
    {
       return *(double *) ((m[i]).va + j);
    }
@@ -2583,7 +2583,7 @@ class dvar_matrix
       return (prevariable((m[i]).va + j));
    }
 #else
-   inline prevariable operator() (register int i, register int j) const
+   inline prevariable operator()(int i, int j) const
    {
       return ((m[i]).va + j);
    }
@@ -2888,11 +2888,11 @@ class dmatrix
    const dvector& operator[](int) const;
 
 #if defined(OPT_LIB) && !defined(__INTEL_COMPILER)
-   inline double &operator() (register int i, register int j)
+   inline double& operator()(int i, int j)
    {
       return (*(m[i].v + j));
    }
-   inline const double &operator() (register int i, register int j) const
+   inline const double& operator()(int i, int j) const
    {
       return (*(m[i].v + j));
    }
@@ -7921,19 +7921,19 @@ class banded_symmetric_dmatrix
    void save_dmatrix_derivatives(const dvar_matrix_position &) const;
 
 #if defined(OPT_LIB)
-   inline double &operator () (register int i, register int j)
+   inline double& operator()(int i, int j)
    {
       return (*((d.m[i - j]).v + i));
    }
-   inline dvector operator () (register int i)
+   inline dvector operator()(int i)
    {
       return (d.m[i]);
    }
-   inline const double &operator() (register int i, register int j) const
+   inline const double& operator()(int i, int j) const
    {
       return (*((d.m[i - j]).v + i));
    }
-   inline const dvector operator() (register int i) const
+   inline const dvector operator()(int i) const
    {
       return (d.m[i]);
    }
@@ -8051,19 +8051,19 @@ class banded_lower_triangular_dmatrix
       restore_banded_lower_triangular_dvar_matrix_value(
         const dvar_matrix_position& mpos);
 #if defined(OPT_LIB)
-   inline double &operator () (register int i, register int j)
+   inline double& operator()(int i, int j)
    {
       return (*((d.m[i - j]).v + i));
    }
-   inline dvector operator () (register int i)
+   inline dvector operator()(int i)
    {
       return (d.m[i]);
    }
-   inline const double &operator() (register int i, register int j) const
+   inline const double& operator()(int i, int j) const
    {
       return (*((d.m[i - j]).v + i));
    }
-   inline const dvector operator() (register int i) const
+   inline const dvector operator()(int i) const
    {
       return (d.m[i]);
    }
@@ -8115,19 +8115,19 @@ class banded_lower_triangular_dvar_matrix
       (const banded_lower_triangular_dvar_matrix &);
 
 #if defined(OPT_LIB)
-   inline prevariable operator () (register int i, register int j)
+   inline prevariable operator()(int i, int j)
    {
       return ((d.m[i - j]).va + i);
    }
-   inline dvar_vector operator () (register int i)
+   inline dvar_vector operator()(int i)
    {
       return (d.m[i]);
    }
-   inline const prevariable operator() (register int i, register int j) const
+   inline const prevariable operator()(int i, int j) const
    {
       return ((d.m[i - j]).va + i);
    }
-   inline const dvar_vector operator() (register int i) const
+   inline const dvar_vector operator()(int i) const
    {
       return (d.m[i]);
    }
@@ -8137,11 +8137,11 @@ class banded_lower_triangular_dvar_matrix
    const prevariable operator() (int i, int j) const;
    const dvar_vector operator() (int i) const;
 #endif
-   inline double &elem_value(register int i, register int j)
+   inline double& elem_value(int i, int j)
    {
       return *(double *) ((d.m[i - j]).va + i);
    }
-   inline const double &elem_value(register int i, register int j) const
+   inline const double& elem_value(int i, int j) const
    {
       return *(double *) ((d.m[i - j]).va + i);
    }

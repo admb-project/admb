@@ -161,7 +161,6 @@ void print_values(const double& f, const dvector & x,const dvector& g)
   logstream << setprecision(13) << x << endl;
   logstream << setprecision(13) << g << endl;
 }
-adtimer* pfmintime = 0;
 extern int traceflag;
 //#pragma warn -sig
 
@@ -218,7 +217,11 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
   {
     print_values(_f,_x,_g);
   }
-  if (pfmintime==0) pfmintime=new adtimer;
+
+#ifdef DEBUG
+  adtimer fmintime;
+#endif
+
   tracing_message(traceflag,"A3");
 
   /* Remember gradient and function values
@@ -509,7 +512,11 @@ label21 : /* Calculating Newton step */
       for (i=1; i<=n; i++)
          x.elem(i)=xx.elem(i);
       w.elem(1)=-g.elem(1);
-      pfmintime->get_elapsed_time_and_reset();
+
+#ifdef DEBUG
+      cout << __FILE__ << ':' << __LINE__ << ' '
+	   << fmintime.get_elapsed_time_and_reset() << endl;
+#endif
 
       /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k
          to get next search direction
@@ -821,7 +828,12 @@ label65: /* save in g the gradient df(x_k+alpha*p_k) */
       goto  label20; //convergence check
 label70:  // Hessian update
       w.elem(iv+1)=w.elem(iu+1);
-      pfmintime->get_elapsed_time_and_reset();
+
+#ifdef DEBUG
+      cout << __FILE__ << ':' << __LINE__ << ' '
+	   << fmintime.get_elapsed_time_and_reset() << endl;
+#endif
+
       for (i=2;i<=n;i++)
       {
          i1=i-1;
@@ -834,7 +846,12 @@ label70:  // Hessian update
          }
          w.elem(iv+i)=z;
       }
-      pfmintime->get_elapsed_time_and_reset();
+
+#ifdef DEBUG
+      cout << __FILE__ << ':' << __LINE__ << ' '
+	   << fmintime.get_elapsed_time_and_reset() << endl;
+#endif
+
       for (i=1;i<=n;i++)
       {  /* BFGS updating formula */
          z=h.elem(i,i)+sig*w.elem(iv+i)*w.elem(iv+i);

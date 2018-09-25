@@ -5281,7 +5281,7 @@ dvar_vector Phi(dvar_vector& v)
                             // variable type
   int min=v.minindex();
   int max=v.maxindex();
-  dvar_vector tmp(min,max)
+  dvar_vector tmp(min,max);
   for (int i=min;i<=max;i++)
   {
     tmp(i)=0.31831*atan(v(i)); //0.31831 is 1/PI

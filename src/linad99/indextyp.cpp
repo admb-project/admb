@@ -371,24 +371,31 @@ void imatrix::allocate(
   const ad_integer& nrl, const ad_integer& nrh,
   const index_type& ncl, const index_type& nch)
 {
-  index_min = nrl;
-  index_max = nrh;
-  if ((ncl.isinteger() && (nrl != ncl.indexmin() || nrh != ncl.indexmax()))
-     || (nch.isinteger() && (nrl != nch.indexmin() || nrh != nch.indexmax())))
+  if (nrl > nrh)
   {
-    cerr << "Incompatible imatrix bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
-    if(nrh==0) {
-      // Some models use 0 for columns to "turn off" a parameter, so we
-      // don't want to exit in this case, just throw error.
-      cerr << "0 columns - was this intentional?\n" ;
-    } else {
-      ad_exit(1);
-    }
+    allocate();
   }
-  unsigned int ss = static_cast<unsigned int>(nrh < nrl ? 0 : nrh - nrl + 1);
-  if (ss > 0)
+  else
   {
-    if ((m = new ivector [ss]) == 0)
+    index_min = nrl;
+    index_max = nrh;
+    if ((ncl.isinteger() && (nrl != ncl.indexmin() || nrh != ncl.indexmax()))
+       || (nch.isinteger() && (nrl != nch.indexmin() || nrh != nch.indexmax())))
+    {
+      cerr << "Incompatible imatrix bounds in " << __FILE__ << ':' << __LINE__ << ".\n";
+      if(nrh==0) 
+      {
+        // Some models use 0 for columns to "turn off" a parameter, so we
+        // don't want to exit in this case, just throw error.
+        cerr << "0 columns - was this intentional?\n" ;
+      }
+      else
+      {
+        ad_exit(1);
+      }
+    }
+    unsigned int ss = static_cast<unsigned int>(nrh - nrl + 1);
+    if ((m = new ivector[ss]) == 0)
     {
       cerr << " Error: imatrix unable to allocate memory in "
            << __FILE__ << ':' << __LINE__ << '\n';
@@ -405,10 +412,6 @@ void imatrix::allocate(
     {
       m[i].allocate(ncl(i), nch(i));
     }
-  }
-  else
-  {
-    allocate();
   }
 }
 

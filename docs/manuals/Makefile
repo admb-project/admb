@@ -14,6 +14,12 @@ ADMBMANUAL_PATH=admbmanual
 
 ALL: WRITERS_GUIDE MANUALS 
 
+pdfs: ALL
+	mkdir -p pdfs
+	mv -v admb.pdf pdfs
+	mv -v admbre.pdf pdfs/admb-re.pdf
+	mv -v autodif.pdf pdfs
+
 WRITERS_GUIDE: admbmanual.pdf admb-sample.pdf
 
 MANUALS: admb.pdf admbre.pdf autodif.pdf
@@ -59,6 +65,7 @@ clean:
 	@$(MAKE) -C $(ADMB_RE_PATH) -f ../share/Makefile.DC clean filename=admbre
 	@$(MAKE) -C $(SAMPLE_PATH)  -f ../share/Makefile.DC clean filename=admb-sample
 #	$(MAKE) -C $(ADMBMANUAL_PATH) clean
+	@rm -rvf pdfs
 	@rm -fv admb.pdf autodif.pdf admbre.pdf admbmanual.pdf admb-sample.pdf
 	@rm -vf admbmanual/admbmanual.cls
 	@rm -vf admbmanual/admbmanual.glo

@@ -187,13 +187,11 @@ void read_pass1_2(void);
 #undef ADUNCONST
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
-/**
- * Description not yet available.
- * \param
- */
+/** Base class for df1b2variable */
 struct df1b2_header
 {
   //double* ptr;
+
   double* u;
   double* u_dot;
   double* u_bar;
@@ -203,10 +201,11 @@ struct df1b2_header
   double* u_bar_tilde;
   double* u_dot_bar_tilde;
   int indindex;
-
-#ifndef OPT_LIB
-  #if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
   int padding;
+#endif
+
+  /// Default constructor
   df1b2_header():
     u(NULL),
     u_dot(NULL),
@@ -216,23 +215,26 @@ struct df1b2_header
     u_dot_tilde(NULL),
     u_bar_tilde(NULL),
     u_dot_bar_tilde(NULL),
-    indindex(0),
-    padding(0)
+#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
+    indindex(0),  padding(0)
+#else
+    indindex(0)
+#endif
   {
   }
-  #endif
-#endif
 
   //double * get_ptr(void){return ptr;}
 
-  double* get_u(void) const {return (double*)u;}
-  double* get_u_dot(void) const {return (double*)u_dot;}
-  double* get_u_bar(void) const {return (double*)u_bar;}
-  double* get_u_dot_bar(void) const {return (double*)u_dot_bar;}
-  double* get_u_tilde(void) const {return (double*)u_tilde;}
-  double* get_u_dot_tilde(void) const {return (double*)u_dot_tilde;}
-  double* get_u_bar_tilde(void) const {return (double*)u_bar_tilde;}
-  double* get_u_dot_bar_tilde(void) const {return (double*)u_dot_bar_tilde;}
+  double* get_u() const {return u; }
+  double* get_u_dot() const {return u_dot; }
+  double* get_u_bar() const {return u_bar; }
+  double* get_u_dot_bar() const {return u_dot_bar; }
+  double* get_u_tilde() const {return u_tilde; }
+  double* get_u_dot_tilde() const {return u_dot_tilde; }
+  double* get_u_bar_tilde() const {return u_bar_tilde; }
+  double* get_u_dot_bar_tilde() const {return u_dot_bar_tilde; }
+  int& get_ind_index() { return indindex; }
+  const int& get_ind_index() const { return indindex; }
 };
   class adkludge1;
 
@@ -299,8 +301,6 @@ struct df1b2_header
     static void set_blocksize(void);
     static unsigned int get_blocksize(void);
     static unsigned int get_blocksize(const unsigned int n);
-    int & get_ind_index(void){ return indindex;}
-    const int& get_ind_index(void) const { return indindex;}
     short int* ncopies;
     // for fixed size n whole thing is 6n+2
     void initialize(void);

@@ -100,36 +100,23 @@ dvariable::dvariable(const dvariable& t): prevariable()
     set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
 }
 /**
-Null constructor.
-Creates new dvariable object,
-sets value to zero and initializes derivatve information.
- */
-dvariable::dvariable()
-{
-  v=gradnew();
-  //(*v).nc=0;
-#ifdef SAFE_INITIALIZE
-  (*v).x = 0;
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(
-    default_evaluation0,&((*v).x));
-#endif
-}
+Default constructor.
+
+Creates new zero value dvariable object.
+*/
+dvariable::dvariable(): dvariable(0.0) { }
+
 /**
-   Specialized constructor that does not create unnecessary entries
-   in the gradient structure; see function \ref nograd_assign.
- */
+Specialized constructor that does not create unnecessary entries
+in the gradient structure; see function \ref nograd_assign.
+*/
 dvariable::dvariable(kkludge_object)
 {
   v = gradnew();
   //(*v).nc=0;
 }
-/**
-  Destructor; frees memory on gradient stack.
- */
-dvariable::~dvariable()
-{
-  gradfree((dlink*)v);
-}
+/** Destructor; frees memory on gradient stack.  */
+dvariable::~dvariable() { gradfree((dlink*)v); }
 /**
    Creates dvariable instance from a double constant.
    Creates new dvariable object,

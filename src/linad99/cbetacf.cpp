@@ -1,6 +1,4 @@
 /**
- * $Id: cbetacf.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
  * Author: David Fournier
  * Copyright (c) 2009, 2010 ADMB Foundation
  */

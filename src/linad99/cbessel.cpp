@@ -1,15 +1,10 @@
-/*
- * $Id$
- *
+/**
  * Author: Anders Nielsen
  * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * Inspired from NR. 
  */
-/**
- * \file
- * Description not yet available.
- */
+
 #include <fvar.hpp>
 
 #define ACC 40.0 

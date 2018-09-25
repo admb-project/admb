@@ -68,9 +68,9 @@ public:
   static init_df1b2vector * py;
   static imatrix * plist;
   int index;
-  static   funnel_init_var ** list;
+  static funnel_init_var* list[2000];
   //static   funnel_init_var ** all_list;
-  static   funnel_init_var ** inactive_list;
+  static funnel_init_var* inactive_list[2000];
   void add_to_list(void);
   void delete_from_list(void);
   void add_to_inactive_list(void);

@@ -18,6 +18,18 @@ ADMB-git
 
 ####Changes and Improvements
 
+* Fixed valgrind reported memory leaks.
+
+* Buildbot is now hosted at SOEST (April-2018).
+  
+  https://buildbot.admb-project.org/
+
+  Note: Needed to comment out "escape shell special characters"
+  in runproces.py from windows buildbot-worker.
+
+* Fixed parsers to avoid needing to add extra line at the end to the tpl file.
+
+
 ADMB-12.0
 ---------
 

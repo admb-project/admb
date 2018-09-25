@@ -409,17 +409,18 @@ void dvector::allocate(int ncl, int nch)
   //int size = nch - ncl + 2;
 
   unsigned int size = static_cast<unsigned int>(nch - ncl + 1);
+#if (__cplusplus < 201103L)
   v = new double[size];
+  memset(v, 0, sizeof(double) * size);
+#else
+  v = new double[size] {0};
+#endif
   if (v == NULL)
   {
     cerr << " Error: Unable to allocate v in"
          << " dvector::allocate(int, int).\n";
     ad_exit(1);
   }
-
-#ifndef OPT_LIB
-  memset(v, 0, sizeof(double) * size);
-#endif
 
 #if defined(THREAD_SAFE)
   shape = new ts_vector_shapex(ncl, nch, v);

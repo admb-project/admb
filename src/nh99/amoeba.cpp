@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2009-2012 ADMB foundation
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <admodel.h>
 #include <math.h>

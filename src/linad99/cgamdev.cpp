@@ -1,9 +1,8 @@
 /**
- * $Id$
- *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+
 /**
  * \file
  * This file deals with the Incomplete Gamma Functions

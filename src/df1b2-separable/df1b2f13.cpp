@@ -1,12 +1,6 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- */
-/**
- * \file
- * Description not yet available.
  */
 #include <df1b2fun.h>
 #include <cassert>
@@ -71,9 +65,7 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
   bufsize=_bufsize;
   filename=_filename;
   AD_ALLOCATE(true_buffer,fixed_list_entry,nentries+2,df1b2_gradlist)
-#ifndef OPT_LIB
   memset(true_buffer, 0, sizeof(fixed_list_entry) * (nentries + 2));
-#endif
   doubleptr=(double*)true_buffer;
   true_buffend=true_buffer+nentries+1;
   buffer=true_buffer+1;

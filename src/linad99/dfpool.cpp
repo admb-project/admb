@@ -19,16 +19,6 @@
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
-//ofstream xofs("allocation");
-vector_shape_pool * vector_shape::xpool =
-    new vector_shape_pool(sizeof(vector_shape));
-
-vector_shape_pool * vector_shapex::xpool =
-    new vector_shape_pool(sizeof(vector_shapex));
-
-vector_shape_pool  * arr_link::xpool =
-    new vector_shape_pool (sizeof(arr_link));
-
 vector_shape_pool::vector_shape_pool(void) : dfpool(sizeof(vector_shape))
 { ;}
 
@@ -44,60 +34,48 @@ vector_shape_pool::vector_shape_pool(const size_t n) : dfpool(n)
  * Description not yet available.
  * \param
  */
-void * vector_shape::operator new(size_t n)
+void* vector_shape::operator new(size_t n)
 {
-  if (xpool==0)
-  {
-    xpool=new vector_shape_pool(sizeof(vector_shape));
-  }
 #if defined(DEBUG)
-  if (n != xpool->size)
+  if (n != xpool.size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
 #endif
-  return xpool->alloc();
+  return vector_shape::get_xpool().alloc();
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void * arr_link::operator new(size_t n)
+void* arr_link::operator new(size_t n)
 {
-  if (xpool==0)
-  {
-    xpool=new vector_shape_pool(sizeof(vector_shape));
-  }
 #if defined(DEBUG)
-  if (n != xpool->size)
+  if (n != xpool.size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
 #endif
-  return xpool->alloc();
+  return arr_link::get_xpool().alloc();
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void * vector_shapex::operator new(size_t n)
+void* vector_shapex::operator new(size_t n)
 {
-  if (xpool==0)
-  {
-    xpool=new vector_shape_pool(sizeof(vector_shapex));
-  }
 #if defined(DEBUG)
-  if (n != xpool->size)
+  if (n != xpool.size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
 #endif
-  return xpool->alloc();
+  return vector_shapex::get_xpool().alloc();
 }
 
 #if defined(__CHECK_MEMORY__)
@@ -444,13 +422,22 @@ void dfpool::deallocate(void)
   sanity_check();
   sanity_check2();
 #endif
-  while (last_chunk)
+#ifdef DEBUG
+  if (num_allocated > 0)
+  {
+    cerr << "Warning: In dfpool::deallocated, "
+         << "the number allocated (" << num_allocated
+         << ") should be zero.\n";
+  }
+#endif
+  while (num_chunks > 0)
   {
     num_chunks--;
     char * tmp=*(char**) last_chunk;
     delete [] last_chunk;
     last_chunk=tmp;
   }
+  last_chunk=NULL;
   size=0;
   head=0;
   num_allocated=0;

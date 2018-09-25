@@ -1,13 +1,12 @@
-/*
-  $Id$
-
-  Author: David Fournier
-  Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
-  \file
-  Functions for gamma probability density; constant objects.
+ * Author: David Fournier
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
+
+/**
+\file
+Functions for gamma probability density; constant objects.
+*/
 
 //double get_values(double x,double y,int print_switch);
 #include "fvar.hpp"

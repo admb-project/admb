@@ -78,11 +78,11 @@ public:
 
 public:
   dfpool();
-  dfpool(dfpool&);  // copy protection
+  dfpool(const dfpool&) = delete;
   dfpool(const size_t);
- ~dfpool();
+  ~dfpool();
 
-  void operator = (dfpool&); // copy protection
+  dfpool& operator=(const dfpool&) = delete;
 
   void clean(void);
   void set_size(const size_t);

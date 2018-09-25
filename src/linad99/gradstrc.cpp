@@ -41,7 +41,6 @@ void null_ptr_err_message(void);
   #include <cassert>
 #endif
 
-extern ofstream clogf;
 #ifndef __SUNPRO_CC
 typedef int (* fptr) (const char * format, ...) ;
 #endif
@@ -291,8 +290,6 @@ gradient_structure::gradient_structure(long int _size):
   atexit(cleanup_temporary_files);
   fill_ad_random_part();
 
-  const unsigned long int size = (unsigned long int)_size;
-
   if (instances++ > 0)
   {
     cerr << "More than one gradient_structure object has been declared.\n"
@@ -300,7 +297,11 @@ gradient_structure::gradient_structure(long int _size):
          << "  of the objects declared.\n";
     ad_exit(1);
   }
-  gradient_structure::ARRAY_MEMBLOCK_SIZE=size; //js
+
+  //Should be a multiple of sizeof(double_and_int)
+  const long int remainder = _size % sizeof(double_and_int);
+  gradient_structure::ARRAY_MEMBLOCK_SIZE =
+    static_cast<unsigned long int>(_size - remainder);
 
   char* path = getenv("ADTMP1"); // NULL if not defined
   if (path != NULL && strlen(path) <= 45)
@@ -696,18 +697,20 @@ void memory_allocate_error(const char * s, void * ptr)
 
  #if defined(NO_DERIVS)
 
-/**
- * Description not yet available.
- * \param
+/** Disable accumulation of derivative information. 
+    Used internally by ADMB to avoid computation of derivatives.
+    Also useful for running simulations using variable objects when
+    function minimization is not required. 
+   \ingroup BAD
  */
     void gradient_structure::set_NO_DERIVATIVES(void)
     {
       no_derivatives=1;
     }
 
-/**
- * Description not yet available.
- * \param
+/** Enable accumulation of derivative information. 
+    Used internally by ADMB to restart computation of derivatives.
+   \ingroup BAD
  */
     void gradient_structure::set_YES_DERIVATIVES(void)
     {

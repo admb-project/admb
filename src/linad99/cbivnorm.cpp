@@ -1,18 +1,14 @@
-/*
- * $Id$
- *
+/**
  * Authors: Alan Genz and Yihong Ge
  * Copyright (c) 2009-2012 ADMB foundation
  *
  * Ported to C++ and extensively modified by David Fournier
  */
-/**
- * \file
- * Description not yet available.
- */
-/* t.f -- translated by f2c (version 20000121).
-   You must link the resulting object file with the libraries:
-    -lf2c -lm   (in that order)
+
+/*
+t.f -- translated by f2c (version 20000121).
+You must link the resulting object file with the libraries:
+-lf2c -lm   (in that order)
 */
 #include <fvar.hpp>
 //#include <fstream.h>

@@ -206,7 +206,7 @@ void copy_status(const ostream& _s, const dvar_vector& v)
    }
 
 /**
-Does not allocate, but initializes all class member variables.
+Does not allocate, but initializes dvar_vector to empty.
 */
 void dvar_vector::allocate()
 {

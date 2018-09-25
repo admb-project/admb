@@ -210,10 +210,10 @@ double_and_int * arr_new(unsigned int sz)
      gradient_structure::ARR_LIST1->last_offset;
   }
 
-  if( gradient_structure::ARR_LIST1->last_offset >=
+  if(gradient_structure::ARR_LIST1->last_offset >
     gradient_structure::ARRAY_MEMBLOCK_SIZE)
   {
-    cout << gradient_structure::ARR_LIST1->last_offset <<">="
+    cout << gradient_structure::ARR_LIST1->last_offset <<" > "
          <<  gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
     cout << " No memory for dvar_vectors\n"
          << " Need to increase ARRAY_MEMBLOCK_SIZE parameter\n"

@@ -29,7 +29,7 @@ do_naught_kludge df1b2_init_number::do_naught_kludge_a;
 //df1b2_gradlist * f1b2gradlist = NULL;
 int max_num_init_df1b2variable=500;
 
-char AD_allocation_error_message[]="Error tryng to allocate memory for ";
+char AD_allocation_error_message[]="Error: trying to allocate memory for ";
 
 unsigned int get_f1b2buffer_size(const char* s);
 
@@ -37,7 +37,7 @@ unsigned int get_f1b2buffer_size(const char* s);
   int df1b2_gradlist::ncount_check=-1;
 #endif
 
-adpool * df1b2variable::pool= new adpool();
+adpool* df1b2variable::pool = NULL;
 
 /**
  * Description not yet available.

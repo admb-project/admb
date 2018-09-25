@@ -4,6 +4,103 @@
 
 class test_move: public ::testing::Test {};
 
+TEST_F(test_move, follow_gradient_structure)
+{
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+  ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
+
+  gradient_structure gs;
+
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+  ASSERT_TRUE(gradient_structure::GRAD_LIST != NULL);
+
+  ASSERT_EQ(0, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
+
+  grad_stack_entry* ptr = gradient_structure::GRAD_STACK1->ptr;
+  ASSERT_TRUE(ptr != NULL);
+
+  ASSERT_TRUE(ptr->func == NULL);
+  ASSERT_TRUE(ptr->dep_addr == NULL);
+  ASSERT_TRUE(ptr->ind_addr1 == NULL);
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+
+  dvariable a(1.5);
+
+  ASSERT_EQ(1, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1751, gradient_structure::GRAD_LIST->total_addresses());
+
+  ASSERT_TRUE(ptr->func == &default_evaluation0);
+  ASSERT_TRUE(ptr->dep_addr == gradient_structure::GRAD_LIST->get(1750));
+  ASSERT_TRUE(ptr->ind_addr1 == NULL);
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+
+  ptr++;
+
+  ASSERT_TRUE(ptr->func == NULL);
+  ASSERT_TRUE(ptr->dep_addr == NULL);
+  ASSERT_TRUE(ptr->ind_addr1 == NULL);
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+
+  dvariable b(3.5);
+
+  ASSERT_EQ(2, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1752, gradient_structure::GRAD_LIST->total_addresses());
+
+  ASSERT_TRUE(ptr->func == &default_evaluation0);
+  ASSERT_TRUE(ptr->dep_addr == gradient_structure::GRAD_LIST->get(1751));
+  ASSERT_TRUE(ptr->ind_addr1 == NULL);
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+
+  ptr++;
+
+  ASSERT_TRUE(ptr->func == NULL);
+  ASSERT_TRUE(ptr->dep_addr == NULL);
+  ASSERT_TRUE(ptr->ind_addr1 == NULL);
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+
+  dvariable result = a + b;
+
+  ASSERT_EQ(4, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1753, gradient_structure::GRAD_LIST->total_addresses());
+
+  ASSERT_TRUE(ptr->func == &default_evaluation4);
+  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->ind_addr1 == gradient_structure::GRAD_LIST->get(1750));
+  ASSERT_TRUE(ptr->ind_addr2 == gradient_structure::GRAD_LIST->get(1751));
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+
+  ptr++;
+
+  ASSERT_TRUE(ptr->func == &default_evaluation1);
+  ASSERT_TRUE(ptr->dep_addr == gradient_structure::GRAD_LIST->get(1752));
+  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+
+  ptr++;
+
+  ASSERT_TRUE(ptr->func == NULL);
+  ASSERT_TRUE(ptr->dep_addr == NULL);
+  ASSERT_TRUE(ptr->ind_addr1 == NULL);
+  ASSERT_TRUE(ptr->ind_addr2 == NULL);
+  ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+  ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+
+  ASSERT_DOUBLE_EQ(value(result), 5.0);
+}
 TEST_F(test_move, temporary)
 {
   gradient_structure gs;

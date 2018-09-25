@@ -1,15 +1,14 @@
-/*
- * $Id$
- *
+/**
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+
 /**
-  \file boundfun.cpp
-  \brief Code to implement placing constraints on parameters.
-  See in Section 10.1 of the AUTODIF manual.
-  The code in thse section of the AUTODIF manual appears to be
-  out of date with respect to some of the code in this file.
+\file boundfun.cpp
+\brief Code to implement placing constraints on parameters.
+See in Section 10.1 of the AUTODIF manual.
+The code in thse section of the AUTODIF manual appears to be
+out of date with respect to some of the code in this file.
 */
 #include "fvar.hpp"
 

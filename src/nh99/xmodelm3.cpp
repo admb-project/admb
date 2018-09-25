@@ -576,9 +576,7 @@ function_minimizer::function_minimizer(long int sz):
     }
   }
 
-/**
-Destructor
-*/
+/** Destructor */
 function_minimizer::~function_minimizer()
 {
   if (multinomial_weights)
@@ -598,6 +596,8 @@ function_minimizer::~function_minimizer()
     delete negdirections;
     negdirections = 0;
   }
+  convergence_criteria.deallocate();
+  maximum_function_evaluations.deallocate();
 }
 
 void function_minimizer::set_initial_simplex(const dmatrix& _p,

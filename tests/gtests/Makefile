@@ -110,12 +110,21 @@ GTESTS_ALL=\
  test_atan2.cpp\
  test_gradcalc.cpp\
  test_autodif.cpp\
+ test_atomic.cpp\
+ test_shared_ptr.cpp\
+ test_param_init_bounded_dev_vector.cpp\
+ test_experimenting_mcmc.cpp\
+ test_gradient_descent.cpp\
+ test_deep_learning.cpp\
+ test_cast.cpp\
+ test_valarray.cpp\
+ test_vector.cpp\
+ test_xpools.cpp\
  main.cpp
 
 GTESTS_DEV=\
- test_atomic.cpp\
- test_shared_ptr.cpp\
- test_valarray.cpp\
+ test_adpool.cpp\
+ test_move.cpp\
  main.cpp
 
 #GTESTS=$(GTESTS_DEV)

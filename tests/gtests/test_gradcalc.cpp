@@ -192,7 +192,6 @@ TEST_F(test_gradcalc, simple)
   ASSERT_DOUBLE_EQ(result, 24.980653039466869);
   ASSERT_DOUBLE_EQ(g(1), -0.7278138528138528);
   ASSERT_DOUBLE_EQ(g(2), -3.6126893939393945);
-
 }
 TEST_F(test_gradcalc, simple_final)
 {
@@ -285,4 +284,62 @@ TEST_F(test_gradcalc, simple_final)
   ASSERT_DOUBLE_EQ(value(yhat(8)), 0.0);
   ASSERT_DOUBLE_EQ(value(yhat(9)), 0.0);
   ASSERT_DOUBLE_EQ(value(yhat(10)), 0.0);
+}
+TEST_F(test_gradcalc, simple_xy)
+{
+  for (int i = 0; i < 3; ++i)
+  {
+  ad_exit=&test_ad_exit;
+
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+
+  size_t size = sizeof(double_and_int);
+  const long int total_size  = size * 2;
+
+  gradient_structure gs(total_size);
+
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+
+  const unsigned int NUM_RETURN_ARRAYS = 25;
+  unsigned int expected_total = //1750
+    NUM_RETURN_ARRAYS * gradient_structure::RETURN_ARRAYS_SIZE;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.07818;
+  independents(2) = -1.90909;
+
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), total_size);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), expected_total);
+
+  dvariable f = 0.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), expected_total + 1);
+
+  f = variables(1) * variables(2);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), expected_total + 3);
+
+  double result = value(f);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), expected_total + 3);
+
+  dvector g(1, 2);
+  gradcalc(2, g);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  ASSERT_DOUBLE_EQ(result, independents(1) * independents(2));
+  ASSERT_DOUBLE_EQ(g(1), -1.90909);
+  ASSERT_DOUBLE_EQ(g(2), 4.07818);
+  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), total_size);
+  }
+
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+  ASSERT_TRUE(gradient_structure::ARR_LIST1 == NULL);
 }

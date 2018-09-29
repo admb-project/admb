@@ -1,12 +1,46 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_dlist: public ::testing::Test {};
 
 TEST_F(test_dlist, constructor)
 {
   dlist lst;
   EXPECT_EQ(0, lst.total_addresses());
+}
+TEST_F(test_dlist, sizes)
+{
+  EXPECT_EQ(sizeof(double) * 2, sizeof(dlink));
+}
+TEST_F(test_dlist, create)
+{
+  ad_exit=&test_ad_exit;
+  gradient_structure gs;
+  ASSERT_TRUE(gradient_structure::GRAD_LIST->last_remove() == NULL);
+
+  dlink* ptr = gradient_structure::GRAD_LIST->create();
+  ASSERT_TRUE(ptr->previous() == NULL);
+
+  size_t total_addresses = gradient_structure::GRAD_LIST->total_addresses();
+  for (int i = total_addresses; i < gradient_structure::get_MAX_DLINKS(); ++i)
+  {
+    dlink* next = gradient_structure::GRAD_LIST->create();
+    ASSERT_TRUE(next->previous() == NULL);
+
+    ++ptr;
+    ASSERT_TRUE(next == ptr);
+
+    dlink* lst = (dlink*)gradient_structure::GRAD_LIST->get(i);
+    ASSERT_TRUE(next == lst);
+  }
+
+  //Exceed maximum dlinks allocated
+  EXPECT_DEATH(gradient_structure::GRAD_LIST->create(), "Assertion");
 }
 TEST_F(test_dlist, destructor)
 {

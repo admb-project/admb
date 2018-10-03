@@ -198,7 +198,9 @@ dvariable test_regression(const dvector& obs, const dvar_vector& pred)
   cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;
   double nobs=double(size_count(obs));
   cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;
-  dvariable vhat=norm2(obs-pred);
+  dvariable vhat = 0.0;
+  cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;
+  vhat = norm2(obs-pred);
   cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;
   vhat/=nobs;
   cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;

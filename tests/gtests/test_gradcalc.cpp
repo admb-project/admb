@@ -193,6 +193,17 @@ TEST_F(test_gradcalc, simple)
   ASSERT_DOUBLE_EQ(g(1), -0.7278138528138528);
   ASSERT_DOUBLE_EQ(g(2), -3.6126893939393945);
 }
+dvariable test_regression(const dvector& obs, const dvar_vector& pred)
+{
+  cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;
+  double nobs=double(size_count(obs));
+  cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;
+  dvariable vhat=norm2(obs-pred);
+  cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;
+  vhat/=nobs;
+  cout << __FILE__ << ':' << __LINE__ << ' ' << gradient_structure::GRAD_STACK1->total() << endl;
+  return (.5*nobs*log(vhat));
+}
 TEST_F(test_gradcalc, simple_final)
 {
   ad_exit=&test_ad_exit;
@@ -255,7 +266,7 @@ TEST_F(test_gradcalc, simple_final)
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
   dvariable f = 0.0;
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
-  f=regression(y,yhat);
+  f = test_regression(y,yhat);
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 13);
 
   double result = value(f);

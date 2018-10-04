@@ -345,3 +345,41 @@ TEST_F(test_gradcalc, simple_xy)
   ASSERT_TRUE(gradient_structure::ARR_LIST1 == NULL);
   ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
 }
+TEST_F(test_gradcalc, operator_multiply_vars_vars)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.7;
+  independents(2) = -2.3;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  dvariable f = 0.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 1);
+
+  f = variables * variables;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+
+  double result = value(f);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+
+  dvector g(1, 2);
+  gradcalc(2, g);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  ASSERT_DOUBLE_EQ(result, 27.38);
+  ASSERT_DOUBLE_EQ(g(1), 9.4);
+  ASSERT_DOUBLE_EQ(g(2), -4.6);
+}

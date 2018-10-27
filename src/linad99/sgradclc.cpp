@@ -188,13 +188,9 @@ void gradcalc(int nvar, const dvector& _g)
 #endif
   }
 
-#ifndef OPT_LIB
-  assert(g.indexmin() > 0);
-#endif
-  int mindx = g.indexmin();
-  for (int i=0; i < nvar; i++)
+  for (int i=0, j=g.indexmin(); i < nvar; ++i, ++j)
   {
-    g[i + mindx] = *gradient_structure::INDVAR_LIST->get_address(i);
+    g[j] = *gradient_structure::INDVAR_LIST->get_address(i);
   }
 
   gradient_structure::GRAD_STACK1->ptr =

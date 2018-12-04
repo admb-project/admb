@@ -9,7 +9,11 @@ namespace admb
   template <typename procedure_section>
   void minimize(procedure_section&& run)
   {
-    run();
+    //begin loop
+    //gradient_structure gs(get_id());
+    run();    
+    //gradcalc();
+    //end loop
   }
 }
 
@@ -53,28 +57,19 @@ void simple()
   return std::move(f);
 */
 }
-double simple_with_return()
-{
-  return 1.3;
-}
 
+TEST_F(test_template, lamda)
+{
+  admb::minimize([]() { return simple(); });
+}
 TEST_F(test_template, simple)
 {
   admb::minimize(simple);
 }
-TEST_F(test_template, async_simple)
+TEST_F(test_template, async_minimize_simple)
 {
-  std::async(simple);
-  /*
-  auto result = std::async(admb::minimize, simple_with_return);
-  auto result2 = std::async(admb::minimize, simple_with_return2);
-  ASSERT_DOUBLE_EQ(result, 1.3);
-  ASSERT_DOUBLE_EQ(result2, 2.3);
-  */
-}
-TEST_F(test_template, simple_with_data_parameters)
-{
-  //dvector x{-1, 0, 1, 2, 3, 4, 5, 6, 7, 8};
-  //dvector y{1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0};
-  //admb::minimize(simple, x, y);
+  std::async([]()
+  {
+    admb::minimize(simple);
+  });
 }

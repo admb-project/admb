@@ -26,15 +26,20 @@ namespace admb
   class model: public function_minimizer
   {
   std::function<void()> _run;
+
   public:
-  model()
-  {
+  model() 
+  { 
+    initial_params::varsptr.initialize();
+  }
+  model(const std::function<void()>& run): _run(run) 
+  { 
+    initial_params::varsptr.initialize();
   }
   model(const model&) = delete;
   model(model&&) = delete;
-  ~model()
-  {
-  }
+  virtual ~model() { }
+
   model& operator=(const model&) = delete;
   model& operator=(model&&) = delete;
   void set_userfunction(std::function<void()> run)
@@ -50,14 +55,13 @@ namespace admb
   template <typename procedure_section>
   void minimize(procedure_section&& run)
   {
-    model m;
+    model m(run);
 
     param_init_number b0;
     b0.allocate("bo");
 
     objective_function_value f;
 
-    m.set_userfunction(run);
     m.minimize();
   }
 }
@@ -105,20 +109,20 @@ void simple()
   return std::move(f);
 */
 }
+void simple2()
+{
+  cout << __FILE__ << ':' << __LINE__ << endl;
+}
 
-TEST_F(test_template, lamda)
-{
-  admb::minimize([]() { return simple(); });
-}
-TEST_F(test_template, lamda2)
-{
-  admb::minimize([]() { return simple(); });
-}
-/*
 TEST_F(test_template, simple)
 {
   admb::minimize(simple);
 }
+TEST_F(test_template, lamda)
+{
+  admb::minimize([]() { return simple2(); });
+}
+/*
 TEST_F(test_template, async_minimize_simple)
 {
   std::async([]()

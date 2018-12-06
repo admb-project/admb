@@ -109,10 +109,6 @@ void simple()
   return std::move(f);
 */
 }
-void simple2()
-{
-  cout << __FILE__ << ':' << __LINE__ << endl;
-}
 
 TEST_F(test_template, simple)
 {
@@ -120,9 +116,8 @@ TEST_F(test_template, simple)
 }
 TEST_F(test_template, lamda)
 {
-  admb::minimize([]() { return simple2(); });
+  admb::minimize([]() { return simple(); });
 }
-/*
 TEST_F(test_template, async_minimize_simple)
 {
   std::async([]()
@@ -130,4 +125,3 @@ TEST_F(test_template, async_minimize_simple)
     admb::minimize([]() { return simple(); });
   });
 }
-*/

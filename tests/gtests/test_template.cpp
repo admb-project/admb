@@ -7,11 +7,11 @@ class test_template: public ::testing::Test {};
 
 namespace admb
 {
-  class independent_variable: public named_dvariable
+  class independent_variable
   {
   public:
   independent_variable() { }
-  independent_variable(const independent_variable&) = delete;
+  independent_variable(const independent_variable&) { }
   independent_variable(independent_variable&&) = delete;
   ~independent_variable() { }
   independent_variable& operator=(const independent_variable&) = delete;
@@ -21,10 +21,18 @@ namespace admb
   class model: public function_minimizer
   {
   std::function<void()> _run;
+  independent_variable _a;
+  independent_variable _b;
 
   public:
   model() = delete;
   model(const std::function<void()>& run): _run(run) 
+  { 
+    // Points to independent variables
+    initial_params::varsptr.initialize();
+  }
+  model(const std::function<void()>& run, independent_variable& a, independent_variable& b):
+    _run(run), _a(a), _b(b)
   { 
     // Points to independent variables
     initial_params::varsptr.initialize();
@@ -45,6 +53,18 @@ namespace admb
   void minimize(procedure_section&& run)
   {
     model m(run);
+
+    param_init_number b0;
+    b0.allocate("bo");
+
+    objective_function_value f;
+
+    m.minimize();
+  }
+  template <typename procedure_section>
+  void minimize(procedure_section&& run, independent_variable& a, independent_variable& b)
+  {
+    model m(run, a, b);
 
     param_init_number b0;
     b0.allocate("bo");
@@ -118,12 +138,10 @@ TEST_F(test_template, sequence_2xempty)
   admb::minimize(empty);
   admb::minimize(empty);
 }
-/*
 TEST_F(test_template, parameters)
 {
-  independent_variable a;
-  independent_variable b;
+  admb::independent_variable a;
+  admb::independent_variable b;
 
-  admb::minimize([&a, &b]() { return parameters(a, b); });
+  admb::minimize(empty, a, b);
 }
-*/

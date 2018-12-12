@@ -44,7 +44,7 @@ namespace admb
   };
 
   template <typename procedure_section>
-  void minimize(procedure_section run)
+  void minimize(const procedure_section& run)
   {
     model m(run);
 
@@ -77,16 +77,24 @@ PROCEDURE_SECTION
   f=regression(y,yhat);
 */
 
-dvariable simple(dvector& x, dvector& y, dvariable& b0, dvariable& b1)
-{
-  dvar_vector yhat = b0 + b1 * x;
-  return regression(y, yhat);
-}
 TEST_F(test_template, lamda)
 {
+	/*
+  gradient_structure gs;
+
+  param_init_number a0;
+  param_init_number a1;
+  a0.allocate("a0");
+  a1.allocate("a1");
+  */
+
   dvector x("{-1, 0, 1, 2, 3, 4, 5, 6, 7, 8}");
   dvector y("{1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0}");
-  admb::minimize([&x, &y](dvariable& b0, dvariable& b1) { return simple(x, y, b0, b1); });
+  admb::minimize([&x, &y](dvariable& b0, dvariable& b1)
+  {
+    dvar_vector yhat = b0 + b1 * x;
+    return regression(y, yhat);
+  });
 }
 
 /*

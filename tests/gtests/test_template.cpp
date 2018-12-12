@@ -7,35 +7,28 @@ class test_template: public ::testing::Test {};
 
 namespace admb
 {
-  class independent_variable
-  {
-  public:
-  independent_variable() { }
-  independent_variable(const independent_variable&) { }
-  independent_variable(independent_variable&&) = delete;
-  ~independent_variable() { }
-  independent_variable& operator=(const independent_variable&) = delete;
-  independent_variable& operator=(independent_variable&&) = delete;
-  };
+  /// variable has a value, derivative and name.
+  typedef std::tuple<double, double, std::string> variable;
+  /// bounds has a value, minimum and maximum bounds.
+  typedef std::tuple<double, double, double> bounds;
+  /// bounded_variable has bounds, derivative and name.
+  typedef std::tuple<bounds, double, std::string> bounded_variable;
 
   class model: public function_minimizer
   {
-  std::function<void()> _run;
-  independent_variable _a;
-  independent_variable _b;
+  std::function<dvariable(dvariable&, dvariable&)> _run;
+  param_init_number b0;
+  param_init_number b1;
+  objective_function_value f;
 
   public:
-  model() = delete;
-  model(const std::function<void()>& run): _run(run) 
+  model(const std::function<dvariable(dvariable&, dvariable&)>& run): _run(run) 
   { 
     // Points to independent variables
     initial_params::varsptr.initialize();
-  }
-  model(const std::function<void()>& run, independent_variable& a, independent_variable& b):
-    _run(run), _a(a), _b(b)
-  { 
-    // Points to independent variables
-    initial_params::varsptr.initialize();
+
+    b0.allocate("b0");
+    b1.allocate("b1");
   }
   model(const model&) = delete;
   model(model&&) = delete;
@@ -45,31 +38,15 @@ namespace admb
   model& operator=(model&&) = delete;
   void userfunction()
   {
-    _run();
+    //f = _parameters.run();
+    f = _run(b0, b1);
   }
   };
 
   template <typename procedure_section>
-  void minimize(procedure_section&& run)
+  void minimize(procedure_section run)
   {
     model m(run);
-
-    param_init_number b0;
-    b0.allocate("bo");
-
-    objective_function_value f;
-
-    m.minimize();
-  }
-  template <typename procedure_section>
-  void minimize(procedure_section&& run, independent_variable& a, independent_variable& b)
-  {
-    model m(run, a, b);
-
-    param_init_number b0;
-    b0.allocate("bo");
-
-    objective_function_value f;
 
     m.minimize();
   }
@@ -100,23 +77,20 @@ PROCEDURE_SECTION
   f=regression(y,yhat);
 */
 
-void empty() {}
-
-//void parameters(independent_variable& b0, independent_variable& b1) {}
-
-void simple()
+dvariable simple(dvector& x, dvector& y, dvariable& b0, dvariable& b1)
 {
-  cout << __FILE__ << ':' << __LINE__ << endl;
-/*
-  dvector x("{-1, 0, 1, 2, 3, 4, 5, 6, 7, 8}");
-  dvector y{1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0};
-
-  independent_variable b0;   
-  independent_variable b1;   
   dvar_vector yhat = b0 + b1 * x;
   return regression(y, yhat);
-*/
 }
+TEST_F(test_template, lamda)
+{
+  dvector x("{-1, 0, 1, 2, 3, 4, 5, 6, 7, 8}");
+  dvector y("{1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0}");
+  admb::minimize([&x, &y](dvariable& b0, dvariable& b1) { return simple(x, y, b0, b1); });
+}
+
+/*
+void empty() {}
 
 TEST_F(test_template, empty)
 {
@@ -138,10 +112,4 @@ TEST_F(test_template, sequence_2xempty)
   admb::minimize(empty);
   admb::minimize(empty);
 }
-TEST_F(test_template, parameters)
-{
-  admb::independent_variable a;
-  admb::independent_variable b;
-
-  admb::minimize(empty, a, b);
-}
+*/

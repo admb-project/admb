@@ -5,25 +5,29 @@
 
 class test_template: public ::testing::Test {};
 
-namespace admb
+namespace _admb
 {
-/// variable has a value, derivative and name.
-typedef std::tuple<double, double, std::string> parameter;
-/// bounds has a value, minimum and maximum bounds.
-typedef std::tuple<double, double, double> bounds;
-/// bounded_variable has bounds, derivative and name.
-typedef std::tuple<bounds, double, std::string> bounded_parameter;
+class environment
+{
+public:
+  environment() {}
+  environment(const environment&) = delete;
+  environment(environment&&) = delete;
+  ~environment() {}
+
+  environment& operator=(const environment&) = delete;
+  environment& operator=(environment&&) = delete;
+};
 
 template <typename base>
 class model: public function_minimizer, base
 {
-  objective_function_value f;
+  objective_function_value _f;
+  _admb::environment _env;
 
 public:
   model(): function_minimizer(), base()
   { 
-    // Points to independent variables
-    initial_params::varsptr.initialize();
     base::allocate();
   }
   model(const model&) = delete;
@@ -34,14 +38,24 @@ public:
   model& operator=(model&&) = delete;
   void userfunction()
   {
-    f = base::run();
+    _f = base::run();
   }
 };
+}
+
+namespace admb
+{
+/// variable has a value, derivative and name.
+typedef std::tuple<double, double, std::string> parameter;
+/// bounds has a value, minimum and maximum bounds.
+typedef std::tuple<double, double, double> bounds;
+/// bounded_variable has bounds, derivative and name.
+typedef std::tuple<bounds, double, std::string> bounded_parameter;
 
 template <typename parameters>
 void minimize()
 {
-  model<parameters> m;
+  _admb::model<parameters> m;
   m.minimize();
 }
 }
@@ -71,9 +85,36 @@ PROCEDURE_SECTION
   f=regression(y,yhat);
 */
 
+TEST_F(test_template, gradient_structure_destructor)
+{
+  gradient_structure gs;
+}
+TEST_F(test_template, gradient_structure_2xdestructor)
+{
+  {
+    gradient_structure gs;
+  }
+  {
+    gradient_structure gs;
+  }
+}
+TEST_F(test_template, gradient_structure)
+{
+  gradient_structure gs;
+	/*
+  cout << __FILE__ << ':' << __LINE__ << endl;
+  gradient_structure& gs = gradient_structure::get();
+  cout << __FILE__ << ':' << __LINE__ << endl;
+  gradient_structure& gs2 = gradient_structure::get();
+  cout << __FILE__ << ':' << __LINE__ << endl;
+
+  cout << &gs << ' ' <<  &gs2 << endl;
+  */
+}
+/*
 TEST_F(test_template, model)
 {
-  struct model
+  struct simple
   {
     param_init_number b0;
     param_init_number b1;
@@ -88,15 +129,39 @@ TEST_F(test_template, model)
       dvector x("{-1, 0, 1, 2, 3, 4, 5, 6, 7, 8}");
       dvector y("{1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0}");
 
-      dvar_vector yhat = b0 + b1 * x;
+      auto yhat = b0 + b1 * x;
+      return regression(y, yhat);
+    }
+  };
+  struct simple2
+  {
+    param_init_number b0;
+    param_init_number b1;
+
+    void allocate()
+    {
+      b0.allocate("b0");
+      b1.allocate("b1");
+    }
+    auto run()
+    { 
+      dvector x("{-1, 0, 1, 2, 3, 4, 5, 6, 7, 8}");
+      dvector y("{1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0}");
+
+      auto yhat = b0 + b1 * x;
       return regression(y, yhat);
     }
   };
   std::async([]()
   {
-    admb::minimize<model>();
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    admb::minimize<simple>();
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    admb::minimize<simple2>();
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
   });
 }
+*/
 
 /*
 void empty() {}

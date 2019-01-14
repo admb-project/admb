@@ -10,6 +10,8 @@ extern "C"
 
 class test_gradcalc: public ::testing::Test {};
 
+#ifdef DEBUG2
+/*
 TEST_F(test_gradcalc, gradient_size_intmax)
 {
   ad_exit=&test_ad_exit;
@@ -43,6 +45,7 @@ TEST_F(test_gradcalc, gradient_size_intmax)
     ++ptr;
   }
 }
+*/
 TEST_F(test_gradcalc, gradient_size_small_array_memblock_base)
 {
   ad_exit=&test_ad_exit;
@@ -345,6 +348,7 @@ TEST_F(test_gradcalc, simple_xy)
   ASSERT_TRUE(gradient_structure::ARR_LIST1 == NULL);
   ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
 }
+#endif
 TEST_F(test_gradcalc, operator_multiply_vars_vars)
 {
   ad_exit=&test_ad_exit;
@@ -362,24 +366,60 @@ TEST_F(test_gradcalc, operator_multiply_vars_vars)
 
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
 
-  dvariable f = 0.0;
-
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 1);
-
-  f = variables * variables;
-
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
-
-  double result = value(f);
-
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
-
-  dvector g(1, 2);
-  gradcalc(2, g);
+  dvariable f;
 
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
 
+  cout << __FILE__ << ':' << __LINE__ << endl;
+  f = variables * variables;
+  cout << __FILE__ << ':' << __LINE__ << endl;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  double result = value(f);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
   ASSERT_DOUBLE_EQ(result, 27.38);
-  ASSERT_DOUBLE_EQ(g(1), 9.4);
-  ASSERT_DOUBLE_EQ(g(2), -4.6);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_DOUBLE_EQ(g(-1), 9.4);
+  ASSERT_DOUBLE_EQ(g(0), -4.6);
+}
+TEST_F(test_gradcalc, operator_plus_prevar_prevar)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.7;
+  independents(2) = -2.3;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  dvariable f;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  cout << __FILE__ << ':' << __LINE__ << endl;
+  f = variables(1) + variables(2);
+  cout << __FILE__ << ':' << __LINE__ << endl;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  double result = value(f);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+  ASSERT_DOUBLE_EQ(result, 27.38);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_DOUBLE_EQ(g(-1), 9.4);
+  ASSERT_DOUBLE_EQ(g(0), -4.6);
 }

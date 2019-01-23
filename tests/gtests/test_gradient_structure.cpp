@@ -1698,8 +1698,7 @@ TEST_F(test_gradient_structure, return_arrays_pow_double_to_negvariable)
       ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
   }
 }
-/*
-TEST_F(test_gradient_structure, return_arrays_prevariable_div_prevariable)
+TEST_F(test_gradient_structure, return_arrays_pow_prevariable_prevariable)
 {
   gradient_structure gs;
 
@@ -1716,26 +1715,695 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_div_prevariable)
   for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
   {
     ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
-    v1 = i * 2;
+    v1 = static_cast<double>(i) + 0.5;
     v2 = i;
     count += 2;
     ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
-    dvariable result = v1 / v2;
-    ASSERT_TRUE(ptr->func == default_evaluation3);
+    dvariable result = pow(v1, v2);
+    ASSERT_TRUE(ptr->func == default_evaluation);
     dvariable* return_ptr = gradient_structure::RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
-    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / v2.v->x);
+    ASSERT_DOUBLE_EQ(ptr->mult1, v2.v->x * std::pow(static_cast<double>(i) + 0.5, static_cast<double>(i) - 1.0));
     ASSERT_TRUE(ptr->ind_addr2 == &(v2.v->x));
-    ASSERT_DOUBLE_EQ(ptr->mult2, -(v1.v->x) / (v2.v->x * v2.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult2, std::pow(static_cast<double>(i) + 0.5, static_cast<double>(i)) * std::log(static_cast<double>(i) + 0.5));
     count += 2;
     ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
-    ASSERT_DOUBLE_EQ(value(result), static_cast<double>(i * 2) / i);
+    ASSERT_DOUBLE_EQ(value(result), std::pow(static_cast<double>(i) + 0.5, static_cast<double>(i)));
     if (i == 70)
       ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
     else
       ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
   }
 }
-*/
+TEST_F(test_gradient_structure, return_arrays_cosh_positive)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    v1 = i + 1;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = cosh(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, std::sinh(static_cast<double>(i + 1)));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::cosh(static_cast<double>(i + 1)));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_cosh_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    v1 = -i - 1;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = cosh(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, std::sinh(static_cast<double>(-i - 1)));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::cosh(static_cast<double>(-i - 1)));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_sinh_positive)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    v1 = i + 1;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = sinh(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, std::cosh(static_cast<double>(i + 1)));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::sinh(static_cast<double>(i + 1)));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_sinh_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    v1 = -i - 1;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = sinh(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, std::cosh(static_cast<double>(-i - 1)));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::sinh(static_cast<double>(-i - 1)));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_atan_positive)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    v1 = i + 1;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = atan(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / (1.0 + static_cast<double>(i + 1) * static_cast<double>(i + 1)));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::atan(static_cast<double>(i + 1)));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_atan_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    v1 = -i - 1;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = atan(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / (1.0 + static_cast<double>(-i - 1) * static_cast<double>(-i - 1)));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::atan(static_cast<double>(-i - 1)));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_ldexp_positive)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    v1 = i + 1;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = ldexp(v1, i);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, std::pow(2.0, static_cast<double>(i)));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::ldexp(static_cast<double>(i + 1), i));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_ldexp_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    v1 = -i - 1;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = ldexp(v1, -i);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, std::pow(2.0, static_cast<double>(-i)));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::ldexp(static_cast<double>(-i - 1), -i));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_tan_positive)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = 0.01 * (i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = tan(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 + std::tan(arg) * std::tan(arg));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::tan(arg));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_tan_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = -0.01 * (i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = tan(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 + std::tan(arg) * std::tan(arg));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::tan(arg));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_tanh_positive)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = tanh(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 - std::tanh(arg) * std::tanh(arg));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::tanh(arg));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_tanh_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = -1.0 * static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = tanh(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 - std::tanh(arg) * std::tanh(arg));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::tanh(arg));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_acos_positive)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = 0.001 * static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = acos(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, -1.0 / std::sqrt(1.0 - arg * arg));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::acos(arg));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_acos_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = -0.001 * static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = acos(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, -1.0 / std::sqrt(1.0 - arg * arg));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::acos(arg));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_asin_positive)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = 0.001 * static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = asin(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / std::sqrt(1.0 - arg * arg));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::asin(arg));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_asin_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  for (int i = 1; i <= gradient_structure::get()->RETURN_ARRAYS_SIZE; ++i)
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = -0.001 * static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = asin(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / std::sqrt(1.0 - arg * arg));
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), std::asin(arg));
+    if (i == 70)
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+    else
+      ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][i]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_cumd_norm)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  int i = 2;
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = cumd_norm(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 0.0044318437651152988);
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), 0.99865003277776965);
+    ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_cumd_norm_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  int i = 2;
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = -1.0 * static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = cumd_norm(v1);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 0.0044318437651152988);
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), 0.0013499672222303427);
+    ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
+  }
+}

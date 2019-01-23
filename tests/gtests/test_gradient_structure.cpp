@@ -287,9 +287,9 @@ TEST_F(test_gradient_structure, default_constructor)
   ASSERT_EQ(gradient_structure::NUM_DEPENDENT_VARIABLES, 2000);
   ASSERT_TRUE(gradient_structure::get() == NULL);
   ASSERT_TRUE(gradient_structure::RETURN_ARRAYS == NULL);
-  ASSERT_TRUE(gradient_structure::MIN_RETURN == NULL);
-  ASSERT_TRUE(gradient_structure::MAX_RETURN == NULL);
-  ASSERT_TRUE(gradient_structure::RETURN_PTR == NULL);
+  //ASSERT_TRUE(gradient_structure::MIN_RETURN == NULL);
+  //ASSERT_TRUE(gradient_structure::MAX_RETURN == NULL);
+  //ASSERT_TRUE(gradient_structure::RETURN_PTR == NULL);
   ASSERT_TRUE(gradient_structure::RETURN_PTR_CONTAINER == NULL);
   //ASSERT_TRUE(gradient_structure::INDVAR_LIST == NULL);
   //ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
@@ -410,7 +410,7 @@ TEST_F(test_gradient_structure, return_arrays_sqr)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sqr(v);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 2.0 * i);
@@ -456,7 +456,7 @@ TEST_F(test_gradient_structure, return_arrays_sqrt)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sqrt(v);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / (2.0 * std::sqrt(static_cast<double>(i))));
@@ -495,7 +495,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_plus_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 + v2;
     ASSERT_TRUE(ptr->func == default_evaluation4);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -534,7 +534,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_times_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 * v2;
     ASSERT_TRUE(ptr->func == default_evaluation3);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, v2.v->x);
@@ -572,7 +572,7 @@ TEST_F(test_gradient_structure, return_arrays_double_plus_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 + v2;
     ASSERT_TRUE(ptr->func == default_evaluation1);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v2.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -610,7 +610,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_plus_double)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 + v2;
     ASSERT_TRUE(ptr->func == default_evaluation1);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -649,7 +649,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_minus_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 - v2;
     ASSERT_TRUE(ptr->func == default_evaluation4m);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -687,7 +687,7 @@ TEST_F(test_gradient_structure, return_arrays_double_minus_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 - v2;
     ASSERT_TRUE(ptr->func == default_evaluation1m);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v2.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -725,7 +725,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_minus_double)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 - v2;
     ASSERT_TRUE(ptr->func == default_evaluation1);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -762,7 +762,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_minus)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = -v1;
     ASSERT_TRUE(ptr->func == default_evaluation1m);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -801,7 +801,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_div_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 / v2;
     ASSERT_TRUE(ptr->func == default_evaluation3);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / v2.v->x);
@@ -839,7 +839,7 @@ TEST_F(test_gradient_structure, return_arrays_double_div_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 / v2;
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v2.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, -v1 / (v2.v->x * v2.v->x));
@@ -877,7 +877,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_div_double)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 / v2;
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / v2);
@@ -915,7 +915,7 @@ TEST_F(test_gradient_structure, return_arrays_prevariable_times_double)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 * v2;
     ASSERT_TRUE(ptr->func == default_evaluation2);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, v2);
@@ -953,7 +953,7 @@ TEST_F(test_gradient_structure, return_arrays_double_times_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = v1 * v2;
     ASSERT_TRUE(ptr->func == default_evaluation2);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v2.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, v1);
@@ -990,7 +990,7 @@ TEST_F(test_gradient_structure, return_arrays_square)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = square(v1);
     ASSERT_TRUE(ptr->func == default_evaluation2);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, static_cast<double>(2 * i));
@@ -1027,7 +1027,7 @@ TEST_F(test_gradient_structure, return_arrays_cube)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = cube(v1);
     ASSERT_TRUE(ptr->func == default_evaluation2);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, static_cast<double>(3 * i * i));
@@ -1066,7 +1066,7 @@ TEST_F(test_gradient_structure, return_arrays_fourth)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = fourth(v1);
     ASSERT_TRUE(ptr->func == default_evaluation2);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, static_cast<double>(4 * i * i * i));
@@ -1105,7 +1105,7 @@ TEST_F(test_gradient_structure, return_arrays_cos)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = cos(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, -1.0 * std::sin(static_cast<double>(i)));
@@ -1142,7 +1142,7 @@ TEST_F(test_gradient_structure, return_arrays_sin)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sin(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::cos(static_cast<double>(i)));
@@ -1179,7 +1179,7 @@ TEST_F(test_gradient_structure, return_arrays_log)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = log(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / (static_cast<double>(i + 1)));
@@ -1216,7 +1216,7 @@ TEST_F(test_gradient_structure, return_arrays_log10)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = log10(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / (2.3025851 * static_cast<double>(i + 1)));
@@ -1253,7 +1253,7 @@ TEST_F(test_gradient_structure, return_arrays_sigmoid)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sigmoid(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / (2.8 * (1.0 + static_cast<double>(i + 1) * static_cast<double>(i + 1))));
@@ -1290,7 +1290,7 @@ TEST_F(test_gradient_structure, return_arrays_pow)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = pow(v1, static_cast<double>(i) + 0.5);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, (static_cast<double>(i) + 0.5) * std::pow(static_cast<double>(i), static_cast<double>(i) + 0.5 - 1.0));
@@ -1327,7 +1327,7 @@ TEST_F(test_gradient_structure, return_arrays_fabs_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = fabs(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0);
@@ -1364,7 +1364,7 @@ TEST_F(test_gradient_structure, return_arrays_fabs_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = fabs(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, -1.0);
@@ -1404,7 +1404,7 @@ TEST_F(test_gradient_structure, return_arrays_sfabs_negative_greater_than_cutoff
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sfabs(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, -1.0);
@@ -1444,7 +1444,7 @@ TEST_F(test_gradient_structure, return_arrays_sfabs_positive_greater_than_cutoff
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sfabs(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0);
@@ -1487,7 +1487,7 @@ TEST_F(test_gradient_structure, return_arrays_sfabs_positive_less_than_cutoff)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sfabs(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     //tmp*(2*a-3*b*tmp1
@@ -1532,7 +1532,7 @@ TEST_F(test_gradient_structure, return_arrays_sfabs_negative_less_than_cutoff)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sfabs(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     //tmp*(2*a-3*b*tmp1
@@ -1572,7 +1572,7 @@ TEST_F(test_gradient_structure, return_arrays_exp_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = exp(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::exp(static_cast<double>(i)));
@@ -1609,7 +1609,7 @@ TEST_F(test_gradient_structure, return_arrays_exp_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = exp(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::exp(static_cast<double>(-i)));
@@ -1646,7 +1646,7 @@ TEST_F(test_gradient_structure, return_arrays_pow_double_to_variable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = pow(static_cast<double>(i) + 0.5, v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::pow(static_cast<double>(i) + 0.5, static_cast<double>(i)) * std::log(static_cast<double>(i) + 0.5));
@@ -1683,7 +1683,7 @@ TEST_F(test_gradient_structure, return_arrays_pow_double_to_negvariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = pow(static_cast<double>(i) + 0.5, v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::pow(static_cast<double>(i) + 0.5, -1.0 * static_cast<double>(i)) * std::log(static_cast<double>(i) + 0.5));
@@ -1722,7 +1722,7 @@ TEST_F(test_gradient_structure, return_arrays_pow_prevariable_prevariable)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = pow(v1, v2);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, v2.v->x * std::pow(static_cast<double>(i) + 0.5, static_cast<double>(i) - 1.0));
@@ -1759,7 +1759,7 @@ TEST_F(test_gradient_structure, return_arrays_cosh_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = cosh(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::sinh(static_cast<double>(i + 1)));
@@ -1796,7 +1796,7 @@ TEST_F(test_gradient_structure, return_arrays_cosh_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = cosh(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::sinh(static_cast<double>(-i - 1)));
@@ -1833,7 +1833,7 @@ TEST_F(test_gradient_structure, return_arrays_sinh_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sinh(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::cosh(static_cast<double>(i + 1)));
@@ -1870,7 +1870,7 @@ TEST_F(test_gradient_structure, return_arrays_sinh_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = sinh(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::cosh(static_cast<double>(-i - 1)));
@@ -1907,7 +1907,7 @@ TEST_F(test_gradient_structure, return_arrays_atan_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = atan(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / (1.0 + static_cast<double>(i + 1) * static_cast<double>(i + 1)));
@@ -1944,7 +1944,7 @@ TEST_F(test_gradient_structure, return_arrays_atan_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = atan(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / (1.0 + static_cast<double>(-i - 1) * static_cast<double>(-i - 1)));
@@ -1981,7 +1981,7 @@ TEST_F(test_gradient_structure, return_arrays_ldexp_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = ldexp(v1, i);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::pow(2.0, static_cast<double>(i)));
@@ -2018,7 +2018,7 @@ TEST_F(test_gradient_structure, return_arrays_ldexp_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = ldexp(v1, -i);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, std::pow(2.0, static_cast<double>(-i)));
@@ -2056,7 +2056,7 @@ TEST_F(test_gradient_structure, return_arrays_tan_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = tan(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 + std::tan(arg) * std::tan(arg));
@@ -2094,7 +2094,7 @@ TEST_F(test_gradient_structure, return_arrays_tan_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = tan(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 + std::tan(arg) * std::tan(arg));
@@ -2132,7 +2132,7 @@ TEST_F(test_gradient_structure, return_arrays_tanh_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = tanh(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 - std::tanh(arg) * std::tanh(arg));
@@ -2170,7 +2170,7 @@ TEST_F(test_gradient_structure, return_arrays_tanh_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = tanh(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 - std::tanh(arg) * std::tanh(arg));
@@ -2208,7 +2208,7 @@ TEST_F(test_gradient_structure, return_arrays_acos_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = acos(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, -1.0 / std::sqrt(1.0 - arg * arg));
@@ -2246,7 +2246,7 @@ TEST_F(test_gradient_structure, return_arrays_acos_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = acos(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, -1.0 / std::sqrt(1.0 - arg * arg));
@@ -2284,7 +2284,7 @@ TEST_F(test_gradient_structure, return_arrays_asin_positive)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = asin(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / std::sqrt(1.0 - arg * arg));
@@ -2322,7 +2322,7 @@ TEST_F(test_gradient_structure, return_arrays_asin_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = asin(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 1.0 / std::sqrt(1.0 - arg * arg));
@@ -2360,7 +2360,7 @@ TEST_F(test_gradient_structure, return_arrays_cumd_norm)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = cumd_norm(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0044318437651152988);
@@ -2395,7 +2395,7 @@ TEST_F(test_gradient_structure, return_arrays_cumd_norm_negative)
     grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     dvariable result = cumd_norm(v1);
     ASSERT_TRUE(ptr->func == default_evaluation);
-    dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
     ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
     ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
     ASSERT_DOUBLE_EQ(ptr->mult1, 0.0044318437651152988);
@@ -2404,6 +2404,224 @@ TEST_F(test_gradient_structure, return_arrays_cumd_norm_negative)
     count += 2;
     ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
     ASSERT_DOUBLE_EQ(value(result), 0.0013499672222303427);
+    ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_bounded_cumd_norm)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  int i = 2;
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = bounded_cumd_norm(v1, 0.5);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 0.0022159218825576494);
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), 0.74932501638888482);
+    ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_bounded_cumd_norm_negative)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  int i = 2;
+  {
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = -1.0 * static_cast<double>(i + 1);
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = bounded_cumd_norm(v1, 0.5);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 0.0022159218825576494);
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_DOUBLE_EQ(value(result), 0.25067498361111518);
+    ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_inv_cumd_norm_inner_0)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  int i = 2;
+  {
+    dvariable inv_cumd_norm_inner(const prevariable& x);
+
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = 0.0;
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = inv_cumd_norm_inner(v1);
+    ASSERT_DOUBLE_EQ(value(result), 0.0);
+    //ASSERT_TRUE(ptr->func == NULL);
+    //dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    //ASSERT_TRUE(ptr->dep_addr == NULL);
+    //ASSERT_TRUE(ptr->ind_addr1 == NULL);
+    //ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+    //ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    //ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_inv_cumd_norm_inner_1)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  int i = 2;
+  {
+    dvariable inv_cumd_norm_inner(const prevariable& x);
+
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = 1.0;
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = inv_cumd_norm_inner(v1);
+    ASSERT_DOUBLE_EQ(value(result), 0.0);
+    //ASSERT_TRUE(ptr->func == NULL);
+    //dvariable* return_ptr = gradient_structure::RETURN_PTR;
+    //ASSERT_TRUE(ptr->dep_addr == NULL);
+    //ASSERT_TRUE(ptr->ind_addr1 == NULL);
+    //ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
+    //ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    //ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_inv_cumd_norm_inner_05)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  int i = 2;
+  {
+    dvariable inv_cumd_norm_inner(const prevariable& x);
+
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = 0.5;
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = inv_cumd_norm_inner(v1);
+    ASSERT_DOUBLE_EQ(value(result), 1.0100667569012955e-07);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 2.4991770754639897);
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
+  }
+}
+TEST_F(test_gradient_structure, return_arrays_inv_cumd_norm_inner_07)
+{
+  gradient_structure gs;
+
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  dvariable v1;
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->RETURN_ARRAYS_PTR, 0);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][0]);
+  ASSERT_TRUE(gradient_structure::get()->MAX_RETURN == &gradient_structure::get()->RETURN_ARRAYS[0][69]);
+  ASSERT_TRUE(gradient_structure::get()->MIN_RETURN == gradient_structure::get()->RETURN_PTR);
+
+  int count = 0;
+  int i = 2;
+  {
+    dvariable inv_cumd_norm_inner(const prevariable& x);
+
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    double arg = 0.7;
+    v1 = arg;
+    count += 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
+    grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+    dvariable result = inv_cumd_norm_inner(v1);
+    ASSERT_DOUBLE_EQ(value(result), 0.52400187038267987);
+    ASSERT_TRUE(ptr->func == default_evaluation);
+    dvariable* return_ptr = gradient_structure::get()->RETURN_PTR;
+    ASSERT_TRUE(ptr->dep_addr == &(return_ptr->v->x));
+    ASSERT_TRUE(ptr->ind_addr1 == &(v1.v->x));
+    ASSERT_DOUBLE_EQ(ptr->mult1, 2.8775901861557482);
+    ASSERT_TRUE(ptr->ind_addr2 == NULL);
+    ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
+    count += 2;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), count);
     ASSERT_TRUE(gradient_structure::get()->RETURN_PTR == &gradient_structure::get()->RETURN_ARRAYS[0][1]);
   }
 }

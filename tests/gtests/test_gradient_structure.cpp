@@ -285,12 +285,11 @@ TEST_F(test_gradient_structure, default_constructor)
   ASSERT_EQ(gradient_structure::RETURN_ARRAYS_SIZE, 70);
   //ASSERT_EQ(gradient_structure::MAX_NVAR_OFFSET, 5000);
   ASSERT_EQ(gradient_structure::NUM_DEPENDENT_VARIABLES, 2000);
-  ASSERT_TRUE(gradient_structure::get() == NULL);
-  ASSERT_TRUE(gradient_structure::RETURN_ARRAYS == NULL);
+  //ASSERT_TRUE(gradient_structure::RETURN_ARRAYS == NULL);
   //ASSERT_TRUE(gradient_structure::MIN_RETURN == NULL);
   //ASSERT_TRUE(gradient_structure::MAX_RETURN == NULL);
   //ASSERT_TRUE(gradient_structure::RETURN_PTR == NULL);
-  ASSERT_TRUE(gradient_structure::RETURN_PTR_CONTAINER == NULL);
+  //ASSERT_TRUE(gradient_structure::RETURN_PTR_CONTAINER == NULL);
   //ASSERT_TRUE(gradient_structure::INDVAR_LIST == NULL);
   //ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
   //ASSERT_TRUE(gradient_structure::get()->ARR_LIST1 == NULL);
@@ -298,6 +297,7 @@ TEST_F(test_gradient_structure, default_constructor)
   //ASSERT_TRUE(gradient_structure::fp == NULL);
   ASSERT_TRUE(gradient_structure::DEPVARS_INFO == NULL);
   ASSERT_TRUE(gradient_structure::ARRAY_MEMBLOCK_BASE == NULL);
+  ASSERT_TRUE(gradient_structure::get() == NULL);
 
   gradient_structure gs;
 

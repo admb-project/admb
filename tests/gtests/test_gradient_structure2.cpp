@@ -68,3 +68,58 @@ TEST_F(test_gradient_structure2, RETURN_ARRAYS_DECREMENT_error)
 
   ASSERT_THROW(RETURN_ARRAYS_DECREMENT(), int);
 }
+TEST_F(test_gradient_structure2, ARRAY_MEMBLOCK_BASE_save_arrays)
+{
+  ASSERT_TRUE(gradient_structure::get() == NULL);
+  {
+    ASSERT_EQ(gradient_structure::NUM_DEPENDENT_VARIABLES, 2000);
+
+    gradient_structure gs;
+
+    ASSERT_EQ(gradient_structure::get()->save_var_file_flag, 0);
+    ASSERT_EQ(gradient_structure::get()->ARRAY_MEMBLOCK_SIZE, 1000000);
+    ASSERT_EQ(gradient_structure::get()->ARRAY_MEMBLOCK_BASE.adjustment, 0);
+    ASSERT_TRUE(gradient_structure::get()->ARRAY_MEMBLOCK_BASE != NULL);
+    ASSERT_TRUE(gradient_structure::get()->ARRAY_MEMBLOCK_SAVE == NULL);
+  }
+  ASSERT_TRUE(gradient_structure::get() == NULL);
+}
+TEST_F(test_gradient_structure2, ARRAY_MEMBLOCK_BASE_save_restore)
+{
+  gradient_structure gs;
+
+  double_and_int* v[10];
+
+  double value = 0;
+  for (unsigned int i = 0; i < 10; ++i)
+  {
+    v[i] = arr_new(i + 1);
+    for (unsigned int j = 0; j < i + 1; ++j)
+    {
+      v[i][j].x = value;
+      value += 0.5;
+    }
+  }
+  ASSERT_TRUE(gradient_structure::get()->ARRAY_MEMBLOCK_SAVE == NULL);
+  gradient_structure::save_arrays();
+  ASSERT_TRUE(gradient_structure::get()->ARRAY_MEMBLOCK_SAVE != NULL);
+  value = 0;
+  for (unsigned int i = 0; i < 10; ++i)
+  {
+    for (unsigned int j = 0; j < i + 1; ++j)
+    {
+      v[i][j].x = value;
+    }
+  }
+  ASSERT_TRUE(gradient_structure::get()->ARRAY_MEMBLOCK_SAVE != NULL);
+  gradient_structure::restore_arrays();
+  ASSERT_TRUE(gradient_structure::get()->ARRAY_MEMBLOCK_SAVE == NULL);
+  for (unsigned int i = 0; i < 10; ++i)
+  {
+    for (unsigned int j = 0; j < i + 1; ++j)
+    {
+      ASSERT_DOUBLE_EQ(v[i][j].x, value);
+      value += 0.5;
+    }
+  }
+}

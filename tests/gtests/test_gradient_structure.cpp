@@ -296,7 +296,7 @@ TEST_F(test_gradient_structure, default_constructor)
   //ASSERT_TRUE(gradient_structure::get()->GRAD_LIST == NULL);
   //ASSERT_TRUE(gradient_structure::fp == NULL);
   ASSERT_TRUE(gradient_structure::DEPVARS_INFO == NULL);
-  ASSERT_TRUE(gradient_structure::ARRAY_MEMBLOCK_BASE == NULL);
+  //ASSERT_TRUE(gradient_structure::ARRAY_MEMBLOCK_BASE == NULL);
   ASSERT_TRUE(gradient_structure::get() == NULL);
 
   gradient_structure gs;

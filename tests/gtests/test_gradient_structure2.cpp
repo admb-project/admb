@@ -123,3 +123,58 @@ TEST_F(test_gradient_structure2, ARRAY_MEMBLOCK_BASE_save_restore)
     }
   }
 }
+TEST_F(test_gradient_structure2, TOTAL_BYTES)
+{
+  ASSERT_TRUE(gradient_structure::get() == NULL);
+  {
+    ASSERT_EQ(gradient_structure::TOTAL_BYTES, 0);
+    ASSERT_EQ(gradient_structure::PREVIOUS_TOTAL_BYTES, 0);
+
+    gradient_structure gs;
+
+    ASSERT_EQ(gradient_structure::TOTAL_BYTES, 0);
+    ASSERT_EQ(gradient_structure::PREVIOUS_TOTAL_BYTES, 0);
+  }
+  ASSERT_TRUE(gradient_structure::get() == NULL);
+}
+TEST_F(test_gradient_structure2, TOTAL_BYTES_write_read_grad_stack_buffer)
+{
+  ASSERT_TRUE(gradient_structure::get() == NULL);
+  {
+    ASSERT_EQ(gradient_structure::TOTAL_BYTES, 0);
+
+    gradient_structure gs;
+
+    //ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+    //gradient_structure::get()->GRAD_STACK1->write_grad_stack_buffer();
+
+    dvariable x;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+    x = 1;
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 1);
+
+    gradient_structure::get()->GRAD_STACK1->write_grad_stack_buffer();
+
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
+    //ASSERT_EQ(gradient_structure::TOTAL_BYTES, sizeof(grad_stack_entry));
+    ASSERT_EQ(gradient_structure::TOTAL_BYTES, sizeof(grad_stack_entry) * gradient_structure::get()->GRAD_STACK1->length);
+
+    OFF_T endpos = LSEEK(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR, 0, SEEK_END);
+    ASSERT_EQ(endpos, sizeof(grad_stack_entry) * gradient_structure::get()->GRAD_STACK1->length);
+
+    OFF_T offset = (OFF_T)(sizeof(grad_stack_entry) * gradient_structure::get()->GRAD_STACK1->length);
+    OFF_T lpos=LSEEK(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR, -offset, SEEK_CUR);
+    ASSERT_EQ(lpos, 0);
+
+    gradient_structure::get()->GRAD_STACK1->read_grad_stack_buffer(lpos);
+    ASSERT_EQ(lpos, 0);
+    ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), gradient_structure::get()->GRAD_STACK1->length - 1);
+    size_t count = 0;
+    for (grad_stack_entry* p = gradient_structure::get()->GRAD_STACK1->ptr_first; p <= gradient_structure::get()->GRAD_STACK1->ptr; ++p)
+    {
+      if (p->func != NULL) ++count;
+    }
+    ASSERT_EQ(count, 1);
+  }
+  ASSERT_TRUE(gradient_structure::get() == NULL);
+}

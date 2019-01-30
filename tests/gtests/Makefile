@@ -122,14 +122,21 @@ GTESTS_ALL=\
  test_xpools.cpp\
  main.cpp
 
-GTESTS_DEV=\
+GTESTS_NEW=\
  test_adpool.cpp\
  test_move.cpp\
  main.cpp
 
-#GTESTS=$(GTESTS_DEV)
-GTESTS=$(GTESTS_ALL)
+GTESTS_DEV=\
+ test_return_arrays.cpp\
+ test_grad_stack.cpp\
+ test_df_file.cpp\
+ test_dlist.cpp\
+ test_gradient_structure.cpp\
+ test_gradient_structure2.cpp\
+ main.cpp
 
+GTESTS=$(GTESTS_DEV)
 
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))

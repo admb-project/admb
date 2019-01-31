@@ -78,6 +78,8 @@ TEST_F(test_grad_stack, set_gradient_stack)
 }
 TEST_F(test_grad_stack, write_grad_stack_buffer)
 {
+  gradient_structure gs;
+
   double values[4];
   grad_stack gstack(3);
   gstack.set_gradient_stack0(default_evaluation0, &values[0]);

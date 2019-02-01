@@ -134,6 +134,7 @@ GTESTS_DEV=\
  test_dlist.cpp\
  test_gradient_structure.cpp\
  test_gradient_structure2.cpp\
+ test_dfsdmat.cpp\
  main.cpp
 
 GTESTS=$(GTESTS_DEV)

@@ -16,6 +16,8 @@ TEST_F(test_gradient_structure2, RETURN_ARRAYS_PTR)
 
   gradient_structure gs;
 
+  ASSERT_EQ(gradient_structure::get()->max_last_offset, 0);
+
   for (int i = 0; i < gradient_structure::NUM_RETURN_ARRAYS; ++i)
   {
     ASSERT_TRUE(gradient_structure::get()->RETURN_PTR_CONTAINER[i] == NULL);
@@ -296,4 +298,28 @@ TEST_F(test_gradient_structure2, TOTAL_BYTES_write_read_grad_stack_buffer_length
     ASSERT_EQ(count - 1, gradient_structure::get()->GRAD_STACK1->length);
   }
   ASSERT_TRUE(gradient_structure::get() == NULL);
+}
+TEST_F(test_gradient_structure2, max_last_offset)
+{
+  {
+    gradient_structure gs;
+    ASSERT_EQ(gradient_structure::get()->max_last_offset, 0);
+    double_and_int* ptr = arr_new(1);
+    ASSERT_EQ(gradient_structure::get()->ARR_LIST1->last_offset, gradient_structure::get()->max_last_offset);
+    ASSERT_EQ(gradient_structure::get()->ARR_LIST1->last_offset, gradient_structure::get()->ARR_LIST1->max_last_offset);
+    ASSERT_EQ(gradient_structure::get()->max_last_offset, sizeof(double_and_int));
+    ptr = NULL;
+  }
+}
+TEST_F(test_gradient_structure2, max_last_offset_times_8)
+{
+  {
+    gradient_structure gs;
+    ASSERT_EQ(gradient_structure::get()->max_last_offset, 0);
+    double_and_int* ptr = arr_new(8);
+    ASSERT_EQ(gradient_structure::get()->ARR_LIST1->last_offset, gradient_structure::get()->max_last_offset);
+    ASSERT_EQ(gradient_structure::get()->ARR_LIST1->last_offset, gradient_structure::get()->ARR_LIST1->max_last_offset);
+    ASSERT_EQ(gradient_structure::get()->max_last_offset, sizeof(double_and_int) * 8);
+    ptr = NULL;
+  }
 }

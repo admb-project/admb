@@ -372,8 +372,8 @@ TEST_F(test_gradient_structure, make_indvar_list)
   make_indvar_list(t);
   ASSERT_TRUE(gradient_structure::get()->INDVAR_LIST != NULL);
 
-  ASSERT_EQ(gradient_structure::NVAR, 5);
-  for (int i = 0; i < gradient_structure::NVAR; ++i)
+  ASSERT_EQ(gradient_structure::get()->INDVAR_LIST->get_nvar(), 5);
+  for (int i = 0; i < gradient_structure::get()->INDVAR_LIST->get_nvar(); ++i)
   {
     ASSERT_TRUE(gradient_structure::get()->INDVAR_LIST->get_address(i) == &(t.va[i + 1].x));
   }

@@ -31,6 +31,6 @@ matrix:
     - make clean all
 
   - os: windows
-    compiler: msvc
+    compiler: gcc
     script:
-    - nmake clean all
+    - utilities/make clean all

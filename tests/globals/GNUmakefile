@@ -20,7 +20,7 @@ endif
 
 clean:
 ifeq ($(OS),Windows_NT)
-	@del main.ob
+	@del main.obj
 	@del main.exe
 else
 	@rm -vf main.obj

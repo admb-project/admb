@@ -54,7 +54,7 @@ matrix:
 
   - os: windows
     env:
-     - DEBUG="yes" PROG=
-    compiler: msvc
+     - CXX=cl.exe CC=cl.exe DEBUG="yes" PROG=
+    compiler: cl
     script:
     - utilities/make.exe clean all

@@ -46,14 +46,15 @@ matrix:
     - make clean all
 
   - os: windows
+    install: choco install -y make
     env:
      - DEBUG="yes" PROG=
     compiler: gcc
     script:
-    - utilities/make.exe clean all
+    - make.exe clean all
 
   - os: windows
-    before_install: choco install -y visualstudio2017community visualstudio2017-workload-nativecrossplat
+    install: choco install -y visualstudio2017community visualstudio2017-workload-nativecrossplat
     env:
      - CXX=cl.exe CC=cl.exe DEBUG="yes" PROG=
     compiler: cl

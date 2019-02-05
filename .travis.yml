@@ -1,9 +1,6 @@
 sudo: require
 language: cpp
 
-env:
-  global:
-  - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
 
 branches:
   only:
@@ -15,6 +12,8 @@ notifications:
 matrix:
   include:
   - os: linux
+    env:
+     - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
     dist: xenial
     compiler: gcc
     before_install:
@@ -26,16 +25,22 @@ matrix:
     - codecov
 
   - os: osx
+    env:
+     - CXXFLAGS="-O0" LDFLAGS="-O0" DEBUG="yes" PROG=
     compiler: clang
     script:
     - make clean all
 
   - os: osx
+    env:
+     - CXXFLAGS="-O0" LDFLAGS="-O0" DEBUG="yes" PROG=
     compiler: gcc
     script:
     - make clean all
 
   - os: windows
+    env:
+     - DEBUG="yes" PROG=
     compiler: gcc
     script:
     - utilities/make.exe clean all

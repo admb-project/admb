@@ -20,14 +20,22 @@ env:
   global:
     - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
 
-os:
-  - linux
+matrix:
+  include:
+  - os: linux
     dist: xenial
     before_install:
     - sudo pip install codecov
     after_success:
     - bash <(curl -s https://codecov.io/bash) -a "--object-directory=build/objects/debug"
+    script:
+    - make clean coverage
+    - codecov
 
-  - osx
-  - windows
+  - os: osx
+    script:
+    - make clean all
 
+  - os: windows
+    script:
+    - make clean all

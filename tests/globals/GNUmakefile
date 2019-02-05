@@ -19,7 +19,7 @@ else
 endif
 
 clean:
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 	@del main.obj
 	@del main.exe
 else

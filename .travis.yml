@@ -26,21 +26,21 @@ matrix:
   - os: linux
     dist: xenial
     env:
-     - CXXFLAGS="-O0" LDFLAGS="-O0" DEBUG="yes" PROG=
+     - CXXFLAGS="-O2" LDFLAGS="-O2" DEBUG= PROG=
     compiler: gcc
     script:
     - make clean all
 
   - os: osx
     env:
-     - CXXFLAGS="-O0" LDFLAGS="-O0" DEBUG="yes" PROG=
+     - CXXFLAGS="-O2" LDFLAGS="-O2" DEBUG= PROG=
     compiler: clang
     script:
     - make clean all
 
   - os: osx
     env:
-     - CXXFLAGS="-O0" LDFLAGS="-O0" DEBUG="yes" PROG=
+     - CXXFLAGS="-O2" LDFLAGS="-O2" DEBUG= PROG=
     compiler: gcc
     script:
     - make clean all

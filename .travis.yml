@@ -33,4 +33,4 @@ matrix:
   - os: windows
     compiler: gcc
     script:
-    - utilities/make clean all
+    - utilities/make.exe clean all

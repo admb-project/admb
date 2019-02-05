@@ -16,9 +16,7 @@ matrix:
   include:
   - os: linux
     dist: xenial
-    compiler:
-    - gcc
-    - clang
+    compiler: gcc
     before_install:
     - sudo pip install codecov
     after_success:
@@ -28,12 +26,11 @@ matrix:
     - codecov
 
   - os: osx
-    compiler:
-    - gcc
-    - clang
+    compiler: clang
     script:
     - make clean all
 
   - os: windows
+    compiler: msvc
     script:
     - nmake clean all

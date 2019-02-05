@@ -420,6 +420,6 @@ TEST_F(test_gradcalc, operator_plus_prevar_prevar)
   dvector g(-1, 0);
   gradcalc(2, g);
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
-  ASSERT_DOUBLE_EQ(g(-1), 9.4);
-  ASSERT_DOUBLE_EQ(g(0), -4.6);
+  ASSERT_DOUBLE_EQ(g(-1), 1);
+  ASSERT_DOUBLE_EQ(g(0), 1);
 }

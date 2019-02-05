@@ -1,7 +1,6 @@
 sudo: require
 language: cpp
 
-
 branches:
   only:
     - master
@@ -24,6 +23,14 @@ matrix:
     - make clean coverage
     - codecov
 
+  - os: linux
+    dist: xenial
+    env:
+     - CXXFLAGS="-O0" LDFLAGS="-O0" DEBUG="yes" PROG=
+    compiler: gcc
+    script:
+    - make clean all
+
   - os: osx
     env:
      - CXXFLAGS="-O0" LDFLAGS="-O0" DEBUG="yes" PROG=
@@ -42,5 +49,12 @@ matrix:
     env:
      - DEBUG="yes" PROG=
     compiler: gcc
+    script:
+    - utilities/make.exe clean all
+
+  - os: windows
+    env:
+     - DEBUG="yes" PROG=
+    compiler: msvc
     script:
     - utilities/make.exe clean all

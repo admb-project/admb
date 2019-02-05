@@ -1,6 +1,10 @@
 sudo: require
 language: cpp
 
+env:
+  global:
+  - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
+
 branches:
   only:
     - master
@@ -15,7 +19,6 @@ matrix:
     compiler:
     - gcc
     - clang
-
     before_install:
     - sudo pip install codecov
     after_success:
@@ -23,9 +26,6 @@ matrix:
     script:
     - make clean coverage
     - codecov
-    env:
-      global:
-      - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
 
   - os: osx
     compiler:

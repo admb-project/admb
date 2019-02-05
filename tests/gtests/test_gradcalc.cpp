@@ -415,7 +415,7 @@ TEST_F(test_gradcalc, operator_plus_prevar_prevar)
 
   double result = value(f);
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
-  ASSERT_DOUBLE_EQ(result, 27.38);
+  ASSERT_DOUBLE_EQ(result, 2.4);
 
   dvector g(-1, 0);
   gradcalc(2, g);

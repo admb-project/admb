@@ -53,8 +53,9 @@ matrix:
     - utilities/make.exe clean all
 
   - os: windows
+    before_install: choco install -y visualstudio2017community visualstudio2017-workload-nativecrossplat
     env:
      - CXX=cl.exe CC=cl.exe DEBUG="yes" PROG=
     compiler: cl
     script:
-    - utilities/make.exe clean all
+    - nmake.exe clean all

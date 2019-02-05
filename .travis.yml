@@ -26,6 +26,8 @@ env:
 
 os:
   - linux
+  - osx
+  - windows
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -a "--object-directory=build/objects/debug"

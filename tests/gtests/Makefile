@@ -23,7 +23,6 @@ GTESTS_ALL=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
  test_adstring_array.cpp\
- test_dlist.cpp\
  test_gradient_structure.cpp\
  test_option_match.cpp\
  test_lvector.cpp\

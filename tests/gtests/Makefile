@@ -138,7 +138,8 @@ GTESTS_DEV=\
  test_dependent_variables_information.cpp\
  main.cpp
 
-GTESTS=$(GTESTS_DEV)
+#GTESTS=$(GTESTS_DEV)
+GTESTS=$(GTESTS_ALL)
 
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))

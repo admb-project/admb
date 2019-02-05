@@ -48,7 +48,7 @@ matrix:
   - os: windows
     install: choco install -y make
     env:
-     - DEBUG="yes" PROG=
+     - PROG=
     compiler: gcc
     script:
     - make.exe clean all

@@ -30,6 +30,11 @@ matrix:
     script:
     - make clean all
 
+  - os: osx
+    compiler: gcc
+    script:
+    - make clean all
+
   - os: windows
     compiler: gcc
     script:

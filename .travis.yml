@@ -55,8 +55,4 @@ matrix:
 
   - os: windows
     script:
-    - ./vc.bat
-
-  - os: windows
-    script:
-    - cmd //c pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build" && vcvarsall.bat amd64 && popd && nmake CXX=cl CC=cl
+    - utilities/travis-windows-vc-build.bat

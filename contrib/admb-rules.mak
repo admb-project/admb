@@ -11,7 +11,11 @@ endif
 endif
 
 ifeq ($(SHELL),cmd)
+  ifeq ($(COVERAGE),yes)
+all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))
+  else
 all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)-optlp-, $(OBJECTS))
+  endif
 
 $(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
 	..\..\admb -c $(OPTION) $<
@@ -21,7 +25,11 @@ $(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
 	..\..\admb -c -f $(OPTION) $<
 	copy $(basename $<).obj $@
 else
+  ifeq ($(COVERAGE),yes)
+all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))
+  else
 all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)-optlp-, $(OBJECTS))
+  endif
 
 $(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
 	../../admb$(EXT) -c $(OPTION) $<

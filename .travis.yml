@@ -54,9 +54,8 @@ matrix:
     - make.exe clean all
 
   - os: windows
-    install: choco install -y visualstudio2017buildtools
     env:
      - CXX=cl.exe CC=cl.exe DEBUG= PROG=
     compiler: cl
     script:
-    - nmake.exe clean all
+    -  C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvarsall.bat

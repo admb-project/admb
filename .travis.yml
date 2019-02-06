@@ -55,4 +55,4 @@ matrix:
 
   - os: windows
     script:
-    - vc.bat
+    - ./vc.bat

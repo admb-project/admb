@@ -29,21 +29,21 @@ matrix:
      - DEBUG= PROG=
     compiler: gcc
     script:
-    - make clean all
+    - make clean dist test
 
   - os: osx
     env:
      - DEBUG= PROG=
     compiler: clang
     script:
-    - make clean all
+    - make clean dist test
 
   - os: osx
     env:
      - DEBUG= PROG=
     compiler: gcc
     script:
-    - make clean all
+    - make clean dist test
 
   - os: windows
     install: choco install -y make
@@ -51,7 +51,7 @@ matrix:
      - PROG=
     compiler: gcc
     script:
-    - make.exe clean all
+    - make.exe clean dist test
 
   - os: windows
     script:

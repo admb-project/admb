@@ -28,6 +28,15 @@ ADMB-git
   in runproces.py from windows buildbot-worker.
 
 * Fixed parsers to avoid needing to add extra line at the end to the tpl file.
+* Added target dist to Makefile to skip building shared libraries for faster builds.
+
+  For unix,
+
+  $ make dist
+
+  For Microsoft Visual Studio,
+
+  > nmake dist
 
 
 ADMB-12.0

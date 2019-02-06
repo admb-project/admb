@@ -4,6 +4,8 @@
 all:
 	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)
 	@echo ADMB build completed.
+dist: $(CXX)-dist
+	@echo ADMB build dist completed.
 src: $(CXX)-src
 debug:
 	$(MAKE) $(CXX)-all DEBUG=yes
@@ -39,6 +41,9 @@ cl-all:
 	nmake cl-src
 	nmake cl-contrib
 	nmake cl-shared
+cl-dist: 
+	nmake cl-src
+	nmake cl-contrib
 cl-debug:
 	pushd src& nmake DEBUG=yes all
 	pushd contrib& nmake DEBUG=yes all
@@ -71,14 +76,15 @@ g++-all:
 	$(MAKE) g++-src
 	$(MAKE) g++-contrib
 	$(MAKE) g++-shared
+g++-dist: 
+	$(MAKE) g++-src
+	$(MAKE) g++-contrib
 g++-debug:
 	$(MAKE) g++-all DEBUG=yes
 g++-src:
 	$(MAKE) --directory=src CC=gcc CXX=g++ all
-	$(MAKE) --directory=src CC=gcc CXX=g++ SHARED=-shared libs
 g++-contrib:
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ all
-	$(MAKE) --directory=contrib CC=gcc CXX=g++ SHARED=-shared libs
 g++-docs:
 	$(MAKE) --directory=docs CC=gcc CXX=g++ all
 g++-test:
@@ -107,14 +113,15 @@ clang++-all:
 	$(MAKE) clang++-src
 	$(MAKE) clang++-contrib
 	$(MAKE) clang++-shared
+clang++-dist:
+	$(MAKE) clang++-src
+	$(MAKE) clang++-contrib
 clang++-debug:
 	$(MAKE) clang++-all DEBUG=yes
 clang++-src:
 	$(MAKE) --directory=src CC=clang CXX=clang++ all
-	$(MAKE) --directory=src CC=clang CXX=clang++ SHARED=-shared libs
 clang++-contrib:
 	$(MAKE) --directory=contrib CC=clang CXX=clang++ all
-	$(MAKE) --directory=contrib CC=clang CXX=clang++ SHARED=-shared libs
 clang++-docs:
 	$(MAKE) --directory=docs CC=clang CXX=clang++ all
 clang++-test:
@@ -143,14 +150,15 @@ c++-all:
 	$(MAKE) c++-src
 	$(MAKE) c++-contrib
 	$(MAKE) c++-shared
+c++-dist:
+	$(MAKE) c++-src
+	$(MAKE) c++-contrib
 c++-debug:
 	$(MAKE) c++-all DEBUG=yes
 c++-src:
 	$(MAKE) --directory=src CC=cc CXX=c++ all
-	$(MAKE) --directory=src CC=cc CXX=c++ SHARED=-shared libs
 c++-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=c++ all
-	$(MAKE) --directory=contrib CC=cc CXX=c++ SHARED=-shared libs
 c++-docs:
 	$(MAKE) --directory=docs CC=cc CXX=c++ all
 c++-coverage:
@@ -179,14 +187,15 @@ CC-all:
 	$(MAKE) CC-src
 	$(MAKE) CC-contrib
 	$(MAKE) CC-shared
+CC-dist:
+	$(MAKE) CC-src
+	$(MAKE) CC-contrib
 CC-debug:
 	$(MAKE) CC-all DEBUG=yes
 CC-src:
 	$(MAKE) --directory=src CC=cc CXX=CC all
-	$(MAKE) --directory=src CC=cc CXX=CC SHARED=-shared libs
 CC-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=CC all
-	$(MAKE) --directory=contrib CC=cc CXX=CC SHARED=-shared libs
 CC-docs:
 	$(MAKE) --directory=docs CC=cc CXX=CC all
 CC-test:
@@ -212,14 +221,15 @@ icpc-all:
 	$(MAKE) icpc-src 
 	$(MAKE) icpc-contrib
 	$(MAKE) icpc-shared
+icpc-dist:
+	$(MAKE) icpc-src 
+	$(MAKE) icpc-contrib
 icpc-debug:
 	$(MAKE) icpc-all DEBUG=yes
 icpc-src:
 	$(MAKE) --directory=src CC=icc CXX=icpc all
-	$(MAKE) --directory=src CC=icc CXX=icpc SHARED=-shared libs
 icpc-contrib:
 	$(MAKE) --directory=contrib CC=icc CXX=icpc all
-	$(MAKE) --directory=contrib CC=icc CXX=icpc SHARED=-shared libs
 icpc-docs:
 	$(MAKE) --directory=docs CC=icc CXX=icpc all
 icpc-test:
@@ -245,14 +255,15 @@ openCC-all:
 	$(MAKE) openCC-src
 	$(MAKE) openCC-contrib
 	$(MAKE) openCC-shared
+openCC-dist: 
+	$(MAKE) openCC-src
+	$(MAKE) openCC-contrib
 openCC-debug:
 	$(MAKE) openCC-all DEBUG=yes
 openCC-src:
 	$(MAKE) --directory=src CC=opencc CXX=openCC all
-	$(MAKE) --directory=src CC=opencc CXX=openCC SHARED=-shared libs
 openCC-contrib:
 	$(MAKE) --directory=contrib CC=opencc CXX=openCC all
-	$(MAKE) --directory=contrib CC=opencc CXX=openCC SHARED=-shared libs
 openCC-docs:
 	$(MAKE) --directory=docs CC=opencc CXX=openCC all
 openCC-test:
@@ -275,6 +286,7 @@ openCC-clean:
 #Unsupported Borland 5.5
 bcc: bcc-all
 bcc-all: bcc-src
+bcc-dist: bcc-src
 bcc-src:
 	cd src& $(MAKE) -fbcc.mak all
 bcc-debug:

@@ -33,14 +33,14 @@ matrix:
 
   - os: osx
     env:
-     - DEBUG= PROG=
+     - COVERAGE=yes DEBUG= PROG=
     compiler: clang
     script:
     - make clean dist test
 
   - os: osx
     env:
-     - DEBUG= PROG=
+     - COVERAGE=yes DEBUG= PROG=
     compiler: gcc
     script:
     - make clean dist test
@@ -48,10 +48,10 @@ matrix:
   - os: windows
     install: choco install -y make
     env:
-     - PROG=
+     - COVERAGE=yes PROG=
     compiler: gcc
     script:
-    - make.exe clean dist test
+    - make.exe clean dist gtests
 
   - os: windows
     script:

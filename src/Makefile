@@ -121,7 +121,11 @@ libs: objects
 	IF EXIST $(DESTDIR)\lib\admbo.lib del $(DESTDIR)\lib\admbo.lib
 	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admbo.lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj
 
+!IF DEFINED(COVERAGE)
+objects: includes $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS) $(SAFLP_NH99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
+!ELSE
 objects: includes $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
+!ENDIF
 
 $(SAFLP_DF1B2_SEPARABLE_OBJS):: $(@B:saflp-df1b2-separable-=df1b2-separable\).cpp
 	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?

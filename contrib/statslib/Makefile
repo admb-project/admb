@@ -8,7 +8,11 @@ OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-statslib-)
 SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-statslib-)
 !ENDIF
 
+!IF DEFINED(COVERAGE)
+all: $(SAF)
+!ELSE
 all: $(OPT) $(SAF)
+!ENDIF
 
 $(OPT):: $(@B:contrib-optlp-statslib-=).cpp
 	..\..\admb -c -f $?

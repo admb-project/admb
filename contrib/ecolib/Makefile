@@ -8,7 +8,11 @@ OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-ecolib-)
 SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-ecolib-)
 !ENDIF
 
+!IF DEFINED(COVERAGE)
+all: $(SAF)
+!ELSE
 all: $(OPT) $(SAF)
+!ENDIF
 
 $(OPT):: $(@B:contrib-optlp-ecolib-=).cpp
 	..\..\admb -c -f $?

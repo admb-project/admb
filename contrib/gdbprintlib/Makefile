@@ -8,7 +8,11 @@ OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-gdbprintlib-)
 SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-gdbprintlib-)
 !ENDIf
 
+!IF DEFINED(COVERAGE)
+all: $(SAF)
+!ELSE
 all: $(OPT) $(SAF)
+!ENDIf
 
 $(OPT):: $(@B:contrib-optlp-gdbprintlib-=).cpp
 	..\..\admb -c -f $?

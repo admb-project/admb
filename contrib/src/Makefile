@@ -8,7 +8,11 @@ OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-src-)
 SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-src-)
 !ENDIF
 
+!IF DEFINED(COVERAGE)
+all: $(SAF)
+!ELSE
 all: $(OPT) $(SAF)
+!ENDIF
 
 $(OPT):: $(@B:contrib-optlp-src-=).cpp
 	..\..\admb -c -f $?

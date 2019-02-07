@@ -13,6 +13,8 @@ debug:
 contrib: $(CXX)-contrib
 test: verify
 	$(MAKE) $(CXX)-test DEBUG=$(DEBUG)
+gtests:
+	$(MAKE) $(CXX)-gtests DEBUG=$(DEBUG)
 verify:
 	$(MAKE) $(CXX)-verify DEBUG=$(DEBUG)
 doc: $(CXX)-docs
@@ -55,6 +57,8 @@ cl-docs:
 	pushd docs& nmake all
 cl-test:
 	pushd tests & nmake all
+cl-gtests:
+	nmake cl-test
 cl-verify:
 	pushd tests& nmake verify
 cl-shared:
@@ -89,6 +93,8 @@ g++-docs:
 	$(MAKE) --directory=docs CC=gcc CXX=g++ all
 g++-test:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ all
+g++-gtests:
+	$(MAKE) --directory=tests CC=gcc CXX=g++ all-gtests
 g++-coverage:
 	$(MAKE) --directory=src CC=gcc CXX=g++ COVERAGE=yes dist
 	$(MAKE) --directory=tests CC=gcc CXX=g++ coverage
@@ -126,6 +132,8 @@ clang++-docs:
 	$(MAKE) --directory=docs CC=clang CXX=clang++ all
 clang++-test:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ all
+clang++-gtests:
+	$(MAKE) --directory=tests CC=clang CXX=clang++ all-gtests
 clang++-coverage:
 	$(MAKE) --directory=src CC=clang CXX=clang++ COVERAGE=yes dist
 	$(MAKE) --directory=tests CC=clang CXX=clang++ coverage
@@ -166,6 +174,8 @@ c++-coverage:
 	$(MAKE) --directory=tests CC=cc CXX=c++ coverage
 c++-test:
 	$(MAKE) --directory=tests CC=cc CXX=c++ all
+c++-gtests:
+	$(MAKE) --directory=tests CC=cc CXX=c++ all-gtests
 c++-verify:
 	$(MAKE) --directory=tests CC=cc CXX=c++ verify
 c++-shared:
@@ -200,6 +210,8 @@ CC-docs:
 	$(MAKE) --directory=docs CC=cc CXX=CC all
 CC-test:
 	$(MAKE) --directory=tests CC=cc CXX=CC all
+CC-gtests:
+	$(MAKE) --directory=tests CC=cc CXX=CC all-gtests
 CC-verify:
 	$(MAKE) --directory=tests CC=cc CXX=CC verify
 CC-shared:
@@ -234,6 +246,8 @@ icpc-docs:
 	$(MAKE) --directory=docs CC=icc CXX=icpc all
 icpc-test:
 	$(MAKE) --directory=tests CC=icc CXX=icpc all
+icpc-gtests:
+	$(MAKE) --directory=tests CC=icc CXX=icpc all-gtests
 icpc-verify:
 	$(MAKE) --directory=tests CC=icc CXX=icpc verify
 icpc-shared:
@@ -268,6 +282,8 @@ openCC-docs:
 	$(MAKE) --directory=docs CC=opencc CXX=openCC all
 openCC-test:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC all
+openCC-gtests:
+	$(MAKE) --directory=tests CC=opencc CXX=openCC all-gtests
 openCC-verify:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC verify
 openCC-shared:
@@ -292,6 +308,7 @@ bcc-src:
 bcc-debug:
 bcc-verify:
 	cd src& $(MAKE) -fbcc.mak verify
+bcc-gtests:
 bcc-test:
 	cd src& $(MAKE) -fbcc.mak tests
 bcc-install:

@@ -248,8 +248,10 @@ ifeq ($(SHELL),cmd)
 else
 	rm -vf ../benchmarks-opt.txt
 	rm -vf ../benchmarks-saf.txt
+  ifndef COVERAGE
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-opt.txt"
+  endif
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
 endif

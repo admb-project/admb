@@ -37,8 +37,10 @@ verify:
 	xcopy ..\examples ..\build\dist\examples  /S /Y /D
 	pushd ..\build\dist\examples & $(MAKE) all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+!IFNDEF COVERAGE
 	pushd ..\build\dist\examples & $(MAKE) FAST_OPTION=-f all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+!ENDIF
 
 copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests

@@ -68,6 +68,7 @@ TEST_F(test_df_file, constructor_max)
     DF_FILE df_file(maxsize)
   );
 }
+#ifndef _MSC_VER
 TEST_F(test_df_file, constructor_max_limit)
 {
   ad_exit=&test_ad_exit;
@@ -88,6 +89,7 @@ TEST_F(test_df_file, constructor_max_limit)
     DF_FILE df_file(maxsize)
   );
 }
+#endif
 TEST_F(test_df_file, allocate_max)
 {
   size_t size = INT_MAX/2;

@@ -48,11 +48,13 @@ matrix:
   - os: windows
     install: choco install -y make
     env:
-     - COVERAGE=yes PROG=
+    - COVERAGE=yes PROG=
     compiler: gcc
     script:
     - make.exe clean dist gtests
 
   - os: windows
+    env:
+    - COVERAGE=yes PROG=
     script:
     - utilities/travis-windows-vc-build.bat

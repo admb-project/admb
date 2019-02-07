@@ -1,9 +1,12 @@
+ifeq ($(TERM),cygwin)
+EXT=.cmd
+else
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+SHELL = cmd
+endif
 ifeq ($(OS),Windows_NT)
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL=cmd
-  else
-    EXT=.sh
-  endif
+EXT=.sh
+endif
 endif
 
 ADMB_OPTIONS=-g

@@ -5,7 +5,7 @@ void ADSleep(unsigned int t);
 
 class test_adtimer: public ::testing::Test {};
 
-#ifndef _MSC_VER
+#ifndef __MINGW32__
 TEST_F(test_adtimer, get_elapsed)
 {
   adtimer t;

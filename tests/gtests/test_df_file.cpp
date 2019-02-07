@@ -68,7 +68,7 @@ TEST_F(test_df_file, constructor_max)
     DF_FILE df_file(maxsize)
   );
 }
-#ifndef _MSC_VER
+#ifndef __MINGW32__
 TEST_F(test_df_file, constructor_max_limit)
 {
   ad_exit=&test_ad_exit;

@@ -1,10 +1,14 @@
 DESTDIR=..\build\dist
 
 all:\
+  test-gtests\
   test-agemat\
   test-cov_re\
   test-expm\
   test-geolocation
+
+test-gtests:
+	pushd gtests& $(MAKE) & popd
 
 test-agemat:
 	pushd agemat& $(MAKE) & popd

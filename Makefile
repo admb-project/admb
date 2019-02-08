@@ -58,7 +58,7 @@ cl-docs:
 cl-test:
 	pushd tests & nmake all
 cl-gtests:
-	nmake cl-test
+	pushd tests & nmake test-gtests
 cl-verify:
 	pushd tests& nmake verify
 cl-shared:

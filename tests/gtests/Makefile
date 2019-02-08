@@ -1,10 +1,8 @@
 GTEST_DIR=googletest-read-only\googletest
 GTESTS_ALL=main.cpp test_dmatrix.cpp
 
-all:
+all: clean
 	echo "Begin ADMB Unit tests...\n"
-	del gtest-all.obj
-	del gtest-all.exe
 	$(MAKE) gtest-all.obj
 	$(MAKE) gtest-all.exe
 
@@ -16,3 +14,7 @@ gtest-all.obj: googletest-read-only
 
 gtest-all.exe: gtest-all.obj $(GTESTS_ALL)
 	set CXXFLAGS=-I$(GTEST_DIR)\include & set LDFLAGS=-pthread & ..\..\admb $(ADMB_OPTIONS) $^
+
+clean:
+	del gtest-all.obj
+	del gtest-all.exe

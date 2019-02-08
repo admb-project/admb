@@ -8,7 +8,7 @@ all:\
   test-geolocation
 
 test-gtests:
-	pushd gtests& $(MAKE) & popd
+	pushd gtests& $(MAKE) all & popd
 
 test-agemat:
 	pushd agemat& $(MAKE) & popd
@@ -28,6 +28,7 @@ total-clean: clean
 	pushd agemat & $(MAKE) total-clean & popd
 
 clean:
+	pushd gtests& $(MAKE) clean & popd
 	pushd agemat& $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd

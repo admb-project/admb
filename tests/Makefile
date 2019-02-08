@@ -4,8 +4,7 @@ all:\
   test-gtests\
   test-agemat\
   test-cov_re\
-  test-expm\
-  test-geolocation
+  test-expm
 
 test-gtests:
 	pushd gtests& $(MAKE) all & popd

@@ -1,11 +1,12 @@
 GTEST_DIR=googletest-read-only\googletest
+GTESTS_ALL=main.cpp test_dmatrix.cpp
 
-GTESTS_ALL=\
- test_dmatrix.cpp\
- main.cpp
-
-all: gtest-all.exe
-	gtest-all.exe
+all:
+	echo "Begin ADMB Unit tests...\n"
+	del gtest-all.obj
+	del gtest-all.exe
+	$(MAKE) gtest-all.obj
+	$(MAKE) gtest-all.exe
 
 googletest-read-only:
 	git clone --depth=1 https://github.com/google/googletest.git googletest-read-only

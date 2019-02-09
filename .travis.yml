@@ -56,7 +56,5 @@ matrix:
   - os: windows
     env:
     - COVERAGE=yes PROG=
-    before_install:
-    - cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" amd64
     script:
-    - utilities/travis-windows-vc-build.bat
+    - cmd /c "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" amd64; nmake CXX=cl CC=cl clean dist test

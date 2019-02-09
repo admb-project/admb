@@ -236,11 +236,9 @@ else
 	$(MAKE) --directory=../build/dist/src dist-clean
   endif
 endif
-	@echo ADMB build completed.
-	@echo Check README.txt for usage and installation information.
 
-shared: dirs
-	$(MAKE) objects
+shared: libs
+	$(MAKE) bins
 ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-shared.a -Wl,--no-whole-archive
@@ -269,8 +267,8 @@ else
   endif
 endif
 
-dist: bins
-	$(MAKE) libs
+dist: libs
+	$(MAKE) bins
 ifeq ($(SHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
 	copy /Y ..\README.txt ${DIST}
@@ -366,11 +364,7 @@ else
     endif
 endif
 
-ifndef SHARED
-libs:  includes
-else
-libs: dirs
-endif
+libs: includes
 	$(MAKE) objects
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib

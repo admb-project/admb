@@ -3,13 +3,16 @@
 
 all:
 	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)
-	@echo ADMB build completed.
+	@echo ADMB build all completed.
+	@echo Check README.txt for usage and installation information.
 dist: $(CXX)-dist
 	@echo ADMB build dist completed.
+	@echo Check README.txt for usage and installation information.
 src: $(CXX)-src
 debug:
 	$(MAKE) $(CXX)-all DEBUG=yes
-	@echo ADMB debug build completed.
+	@echo ADMB build debug completed.
+	@echo Check README.txt for usage and installation information.
 contrib: $(CXX)-contrib
 test: verify
 	$(MAKE) $(CXX)-test DEBUG=$(DEBUG)
@@ -19,6 +22,8 @@ verify:
 	$(MAKE) $(CXX)-verify DEBUG=$(DEBUG)
 doc: $(CXX)-docs
 shared: $(CXX)-shared
+	@echo ADMB build shared completed.
+	@echo Check README.txt for usage and installation information.
 install: $(CXX)-install
 check: $(CXX)-check
 	@echo "SHELL: $(SHELL)"
@@ -40,8 +45,7 @@ installer:
 #Microsoft Visual C++
 cl: cl-all
 cl-all: 
-	nmake cl-src
-	nmake cl-contrib
+	nmake cl-dist
 	nmake cl-shared
 cl-dist: 
 	nmake cl-src
@@ -77,8 +81,7 @@ cl-clean:
 #GNU
 g++: g++-all
 g++-all: 
-	$(MAKE) g++-src
-	$(MAKE) g++-contrib
+	$(MAKE) g++-dist
 	$(MAKE) g++-shared
 g++-dist: 
 	$(MAKE) g++-src
@@ -116,8 +119,7 @@ g++-clean:
 #clang
 clang++: clang++-all
 clang++-all:
-	$(MAKE) clang++-src
-	$(MAKE) clang++-contrib
+	$(MAKE) clang++-dist
 	$(MAKE) clang++-shared
 clang++-dist:
 	$(MAKE) clang++-src
@@ -155,8 +157,7 @@ clang++-clean:
 #default c++
 c++: c++-all
 c++-all:
-	$(MAKE) c++-src
-	$(MAKE) c++-contrib
+	$(MAKE) c++-dist
 	$(MAKE) c++-shared
 c++-dist:
 	$(MAKE) c++-src
@@ -194,8 +195,7 @@ c++-clean:
 #Oracle Solaris Studio
 CC: CC-all
 CC-all:
-	$(MAKE) CC-src
-	$(MAKE) CC-contrib
+	$(MAKE) CC-dist
 	$(MAKE) CC-shared
 CC-dist:
 	$(MAKE) CC-src
@@ -230,8 +230,7 @@ CC-clean:
 #Intel
 icpc: icpc-all
 icpc-all:
-	$(MAKE) icpc-src 
-	$(MAKE) icpc-contrib
+	$(MAKE) icpc-dist
 	$(MAKE) icpc-shared
 icpc-dist:
 	$(MAKE) icpc-src 
@@ -266,8 +265,7 @@ icpc-clean:
 #AMD
 openCC: openCC-all
 openCC-all: 
-	$(MAKE) openCC-src
-	$(MAKE) openCC-contrib
+	$(MAKE) openCC-dist
 	$(MAKE) openCC-shared
 openCC-dist: 
 	$(MAKE) openCC-src

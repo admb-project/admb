@@ -53,7 +53,7 @@ all:
 	$(MAKE) contrib-libs
 	$(MAKE) contrib-ad2csv
 
-shared:
+shared: libs
 ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb-contrib.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-contrib-shared.a -Wl,--no-whole-archive

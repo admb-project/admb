@@ -14,21 +14,12 @@ TEST_F(test_dvector, constructor)
 {
   ad_exit=&test_ad_exit;
 
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     dvector v(1, 10);
     dvector w(0, 1000);
     v(0, 1000) = w;
-  }
-  catch (const int exit_code)
-  {
-    const int expected_exit_code = 1;
-    if (exit_code == expected_exit_code)
-    {
-      return;
-    }
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, sqr)
 {
@@ -354,14 +345,10 @@ TEST_F(test_dvector, safe_deallocate)
   dv_ncopies = dv.get_ncopies();
   ASSERT_EQ(dv_ncopies, 0);
 
-  try
-  {
+  ASSERT_NO_THROW
+  ({
     dv.safe_deallocate();
-  }
-  catch (const int exit_code)
-  {
-    FAIL();
-  }
+  });
 }
 TEST_F(test_dvector, allocate)
 {
@@ -449,15 +436,10 @@ TEST_F(test_dvector, fill_lbraces_zero)
   char array[] = "0, 1, 2, 3, 4, 5}";
 
   ad_exit=&test_ad_exit;
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     v.fill(array);
-  }
-  catch (const int exit_code)
-  {
-    return;
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, fill_lbraces_greater_than_one)
 {
@@ -467,15 +449,10 @@ TEST_F(test_dvector, fill_lbraces_greater_than_one)
   char array[] = "{{0, 1, 2, 3, 4, 5}}";
 
   ad_exit=&test_ad_exit;
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     v.fill(array);
-  }
-  catch (const int exit_code)
-  {
-    return;
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, fill_lbraces_not_equal_rbraces)
 {
@@ -485,15 +462,10 @@ TEST_F(test_dvector, fill_lbraces_not_equal_rbraces)
   char array[] = "{{0, 1, 2, 3, 4, 5}}}";
 
   ad_exit=&test_ad_exit;
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     v.fill(array);
-  }
-  catch (const int exit_code)
-  {
-    return;
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, fill_lbraces1_not_equal_rbraces)
 {
@@ -503,15 +475,10 @@ TEST_F(test_dvector, fill_lbraces1_not_equal_rbraces)
   char array[] = "{0, 1, 2, 3, 4, 5}}}";
 
   ad_exit=&test_ad_exit;
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     v.fill(array);
-  }
-  catch (const int exit_code)
-  {
-    return;
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, filename_goodcolumn)
 {
@@ -536,15 +503,10 @@ TEST_F(test_dvector, filename_badcolumn)
   ofs << "4 5 6\n";
   ofs << "7 8 9\n";
   ofs.close();
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     dvector v("test_dvector.txt", 4);
-  }
-  catch (const int exit_code)
-  {
-    return;
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, filename_negativebadcolumn)
 {
@@ -553,15 +515,10 @@ TEST_F(test_dvector, filename_negativebadcolumn)
   ofs << "4 5 6\n";
   ofs << "7 8 9\n";
   ofs.close();
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     dvector v("test_dvector.txt", -1);
-  }
-  catch (const int exit_code)
-  {
-    return;
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, filename_zerobadcolumn)
 {
@@ -570,15 +527,10 @@ TEST_F(test_dvector, filename_zerobadcolumn)
   ofs << "4 5 6\n";
   ofs << "7 8 9\n";
   ofs.close();
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     dvector v("test_dvector.txt", 0);
-  }
-  catch (const int exit_code)
-  {
-    return;
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, filename_raggedcolumn)
 {
@@ -587,15 +539,10 @@ TEST_F(test_dvector, filename_raggedcolumn)
   ofs << "4\n";
   ofs << "7 8 9\n";
   ofs.close();
-  try
-  {
+  ASSERT_ANY_THROW
+  ({
     dvector v("test_dvector.txt", 2);
-  }
-  catch (const int exit_code)
-  {
-    return;
-  }
-  FAIL();
+  });
 }
 TEST_F(test_dvector, sgn)
 {

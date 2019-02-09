@@ -8,7 +8,7 @@ OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-ecolib-)
 SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-ecolib-)
 !ENDIF
 
-!IF DEFINED(COVERAGE)
+!IF DEFINED(SAFE_ONLY)
 all: $(SAF)
 !ELSE
 all: $(OPT) $(SAF)

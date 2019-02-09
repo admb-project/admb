@@ -13,7 +13,7 @@ all:
 shared:
 	IF EXIST $(DESTDIR)\lib\admb-contrib.dll del $(DESTDIR)\lib\admb-contrib.dll
 	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contrib.dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admb.lib contrib-saflp-*.obj
-!IFNDEF COVERAGE
+!IFNDEF SAFE_ONLY
 	IF EXIST $(DESTDIR)\lib\admb-contribo.dll del $(DESTDIR)\lib\admb-contribo.dll
 	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contribo.dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admbo.lib contrib-optlp-*.obj
 !ENDIf
@@ -36,7 +36,7 @@ contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib
 	IF EXIST $(DESTDIR)\lib\admb-contrib.lib del $(DESTDIR)\lib\admb-contrib.lib
 	copy $(DESTDIR)\lib\admb.lib $(DESTDIR)\lib\admb-contrib.lib
 	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contrib.lib /NOLOGO /IGNORE:4006 contrib-saflp-*.obj
-!IFNDEF COVERAGE
+!IFNDEF SAFE_ONLY
 	IF EXIST $(DESTDIR)\lib\admb-contribo.lib del $(DESTDIR)\lib\admb-contribo.lib
 	copy $(DESTDIR)\lib\admbo.lib $(DESTDIR)\lib\admb-contribo.lib
 	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contribo.lib /NOLOGO /IGNORE:4006 contrib-optlp-*.obj

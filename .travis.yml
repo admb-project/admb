@@ -62,14 +62,14 @@ matrix:
 
   - os: osx
     env:
-     - COVERAGE=yes DEBUG= PROG=
+     - SAFE_ONLY=yes
     compiler: clang
     script:
     - make clean dist test
 
   - os: osx
     env:
-     - COVERAGE=yes DEBUG= PROG=
+     - SAFE_ONLY=yes
     compiler: gcc
     script:
     - make clean dist test
@@ -77,13 +77,13 @@ matrix:
   - os: windows
     install: choco install -y make
     env:
-    - COVERAGE=yes PROG=
+    - SAFE_ONLY=yes
     compiler: gcc
     script:
     - make.exe clean dist gtests
 
   - os: windows
     env:
-    - COVERAGE=yes PROG=
+    - SAFE_ONLY=yes
     script:
     - utilities/travis-windows-vc-build.bat

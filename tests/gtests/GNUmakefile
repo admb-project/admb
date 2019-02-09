@@ -142,7 +142,7 @@ GTESTS=$(GTESTS_ALL)
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
 endif
-ifeq ($(COVERAGE),yes)
+ifeq ($(SAFE_ONLY),yes)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
 endif
 

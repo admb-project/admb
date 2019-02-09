@@ -211,7 +211,7 @@ OBJ7:=$(filter-out adjson.obj,$(OBJ7))
 endif
 OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools99-,$(OBJ7))
 
-ifeq ($(COVERAGE),yes)
+ifndef SAFE_ONLY
 OBJECTS:=$(filter-out optlp-%,$(OBJECTS))
 endif
 
@@ -246,10 +246,14 @@ ifeq ($(DEBUG),yes)
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb.so -Wl,-force_load ../build/debug/lib/libadmb-shared.a
+      ifndef SAFE_ONLY
 	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmbo.so -Wl,-force_load ../build/debug/lib/libadmbo-shared.a
+      endif
     else
 	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb.so -Wl,--whole-archive ../build/debug/lib/libadmb-shared.a -Wl,--no-whole-archive
+      ifndef SAFE_ONLY
 	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmbo.so -Wl,--whole-archive ../build/debug/lib/libadmbo-shared.a -Wl,--no-whole-archive
+      endif
     endif
   endif
 else
@@ -259,10 +263,14 @@ else
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb-shared.a
+      ifndef SAFE_ONLY
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo-shared.a
+      endif
     else
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
+      ifndef SAFE_ONLY
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+      endif
     endif
   endif
 endif
@@ -380,7 +388,7 @@ endif
 	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-nh99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-tools99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-sparse-*.obj
-ifndef COVERAGE
+ifndef SAFE_ONLY
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-linad99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-df1b2-separable-*.obj
 	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-nh99-*.obj

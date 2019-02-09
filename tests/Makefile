@@ -1,10 +1,10 @@
 DESTDIR=..\build\dist
 
 all:\
-  test-gtests\
   test-agemat\
   test-cov_re\
-  test-expm
+  test-expm\
+  test-gtests
 
 test-gtests:
 	pushd gtests& $(MAKE) all & popd
@@ -41,7 +41,7 @@ verify:
 	xcopy ..\examples ..\build\dist\examples  /S /Y /D
 	pushd ..\build\dist\examples & $(MAKE) all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
-!IFNDEF COVERAGE
+!IFNDEF SAFE_ONLY
 	pushd ..\build\dist\examples & $(MAKE) FAST_OPTION=-f all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
 !ENDIF

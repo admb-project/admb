@@ -248,7 +248,7 @@ ifeq ($(SHELL),cmd)
 else
 	rm -vf ../benchmarks-opt.txt
 	rm -vf ../benchmarks-saf.txt
-  ifndef COVERAGE
+  ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-opt.txt"
   endif

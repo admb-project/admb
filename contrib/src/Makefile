@@ -8,7 +8,7 @@ OPT=$(OBJECTS: = ..\..\build\objects\dist\contrib-optlp-src-)
 SAF=$(OBJECTS: = ..\..\build\objects\dist\contrib-saflp-src-)
 !ENDIF
 
-!IF DEFINED(COVERAGE)
+!IF DEFINED(SAFE_ONLY)
 all: $(SAF)
 !ELSE
 all: $(OPT) $(SAF)

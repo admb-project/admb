@@ -29,6 +29,7 @@ matrix:
     script:
     - make clean
     - make dist 
+    - make verify
     - make gtests
 
   - os: linux
@@ -37,14 +38,7 @@ matrix:
     script:
     - make clean
     - make
-
-  - os: linux
-    dist: xenial
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make verify
+    - make gtests
 
   - os: linux
     dist: xenial
@@ -54,6 +48,7 @@ matrix:
     - make dist
     - make shared
     - make all
+    - make gtests
 
   - os: linux
     dist: xenial
@@ -63,6 +58,7 @@ matrix:
     - make shared
     - make dist
     - make all
+    - make gtests
 
   - os: osx
     env:

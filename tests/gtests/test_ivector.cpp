@@ -236,14 +236,10 @@ TEST_F(test_ivector, safe_deallocate)
   iv_ncopies = iv.get_ncopies();
   ASSERT_EQ(iv_ncopies, 0);
 
-  try
-  {
+  ASSERT_NO_THROW
+  ({
     iv.safe_deallocate();
-  }
-  catch (const int exit_code)
-  {
-    FAIL();
-  }
+  });
 }
 TEST_F(test_ivector, copy_constructor_empty)
 {

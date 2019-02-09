@@ -27,6 +27,10 @@ ADMB-git
   Note: Needed to comment out "escape shell special characters"
   in runproces.py from windows buildbot-worker.
 
+* Using Travis CI for build and testing of ADMB.
+  
+  https://travis-ci.org/admb-project/admb/
+
 * Fixed parsers to avoid needing to add extra line at the end to the tpl file.
 * Added target dist to Makefile to skip building shared libraries for faster builds.
 
@@ -37,6 +41,12 @@ ADMB-git
   For Microsoft Visual Studio,
 
   > nmake dist
+
+* Able to build only shared targets.
+
+  For unix,
+
+  $ make shared 
 
 
 ADMB-12.0

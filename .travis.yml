@@ -25,11 +25,11 @@ matrix:
 
   - os: linux
     dist: xenial
-    env:
-     - DEBUG= PROG=
     compiler: gcc
     script:
-    - make clean dist test
+    - make clean
+    - make dist 
+    - make gtests
 
   - os: linux
     dist: xenial
@@ -43,6 +43,7 @@ matrix:
     compiler: gcc
     script:
     - make clean
+    - make dist 
     - make verify
 
   - os: linux

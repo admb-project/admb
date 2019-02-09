@@ -31,6 +31,38 @@ matrix:
     script:
     - make clean dist test
 
+  - os: linux
+    dist: xenial
+    compiler: gcc
+    script:
+    - make clean
+    - make
+
+  - os: linux
+    dist: xenial
+    compiler: gcc
+    script:
+    - make clean
+    - make verify
+
+  - os: linux
+    dist: xenial
+    compiler: gcc
+    script:
+    - make clean
+    - make dist
+    - make shared
+    - make all
+
+  - os: linux
+    dist: xenial
+    compiler: gcc
+    script:
+    - make clean
+    - make shared
+    - make dist
+    - make all
+
   - os: osx
     env:
      - COVERAGE=yes DEBUG= PROG=

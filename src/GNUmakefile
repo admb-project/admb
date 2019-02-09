@@ -211,7 +211,7 @@ OBJ7:=$(filter-out adjson.obj,$(OBJ7))
 endif
 OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools99-,$(OBJ7))
 
-ifndef SAFE_ONLY
+ifdef SAFE_ONLY
 OBJECTS:=$(filter-out optlp-%,$(OBJECTS))
 endif
 

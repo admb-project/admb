@@ -85,7 +85,7 @@ matrix:
      - DEBUG=yes
     script:
     - make clean
-    - scan-build -v make
+    - scan-build -v make dist
 
   - os: osx
     env:

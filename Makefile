@@ -297,6 +297,44 @@ openCC-clean:
 	$(MAKE) --directory=scripts CC=opencc CXX=openCC clean
 	$(MAKE) --directory=tests CC=opencc CXX=openCC clean
 
+#scan-build
+analyze-c++: analyze-c++-all
+analyze-c++-all:
+	$(MAKE) analyze-c++-dist
+	$(MAKE) analyze-c++-shared
+analyze-c++-dist:
+	$(MAKE) analyze-c++-src
+	$(MAKE) analyze-c++-contrib
+analyze-c++-debug:
+	$(MAKE) analyze-c++-all DEBUG=yes
+analyze-c++-src:
+	$(MAKE) --directory=src CC=cc CXX=c++ all
+analyze-c++-contrib:
+	$(MAKE) --directory=contrib CC=cc CXX=c++ all
+analyze-c++-docs:
+	$(MAKE) --directory=docs CC=cc CXX=c++ all
+analyze-c++-coverage:
+	$(MAKE) --directory=src CC=cc CXX=c++ SAFE_ONLY=yes dist
+	$(MAKE) --directory=tests CC=cc CXX=c++ coverage
+analyze-c++-test:
+	$(MAKE) --directory=tests CC=cc CXX=c++ all
+analyze-c++-gtests:
+	$(MAKE) --directory=tests CC=cc CXX=c++ all-gtests
+analyze-c++-verify:
+	$(MAKE) --directory=tests CC=cc CXX=c++ verify
+analyze-c++-shared:
+	$(MAKE) --directory=src CC=cc CXX=c++ SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=cc CXX=c++ SHARED=-shared shared
+analyze-c++-install:
+	$(MAKE) --directory=src CC=cc CXX=c++ install
+analyze-c++-check:
+	$(MAKE) --directory=src CC=cc CXX=c++ check 
+analyze-c++-clean:
+	$(MAKE) --directory=src CC=cc CXX=c++ clean
+	$(MAKE) --directory=contrib CC=cc CXX=c++ clean
+	$(MAKE) --directory=scripts CC=cc CXX=c++ clean
+	$(MAKE) --directory=tests CC=cc CXX=c++ clean
+
 #Unsupported Borland 5.5
 bcc: bcc-all
 bcc-all: bcc-src

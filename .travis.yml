@@ -39,7 +39,21 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples catage forest finance logistic orange weights
+    - make --directory=examples admb
+
+  - os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+     - PROG=../../../utilities/run-valgrind-memcheck
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial
@@ -53,7 +67,21 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples catage forest finance logistic orange weights
+    - make --directory=examples admb
+
+  - os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+     - PROG=../../../utilities/run-valgrind-cachegrind
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial
@@ -67,7 +95,21 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples buscycle catage forest finance biglog logistic orange weights
+    - make --directory=examples admb
+
+  - os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+     - PROG=../../../utilities/run-valgrind-callgrind
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial

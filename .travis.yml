@@ -30,6 +30,7 @@ matrix:
   - os: linux
     dist: xenial
     env:
+     - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../utilities/run-valgrind-memcheck
     before_install:
@@ -43,6 +44,7 @@ matrix:
   - os: linux
     dist: xenial
     env:
+     - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../utilities/run-valgrind-cachegrind
     before_install:
@@ -56,6 +58,7 @@ matrix:
   - os: linux
     dist: xenial
     env:
+     - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../utilities/run-valgrind-callgrind
     before_install:
@@ -118,7 +121,7 @@ matrix:
     - sudo pip install cpplint
     script:
     - make clean
-    - cpplint --recursive src/tools99/
+    - cpplint --recursive --filter=-whitespace src
 
   - os: osx
     env:

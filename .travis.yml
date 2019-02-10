@@ -31,7 +31,7 @@ matrix:
     dist: xenial
     env:
      - DEBUG=yes
-     - PROG=utilities/run-valgrind-memcheck
+     - PROG=../../../utilities/run-valgrind-memcheck
     before_install:
     - sudo apt-get install -y valgrind
     compiler: gcc
@@ -44,7 +44,7 @@ matrix:
     dist: xenial
     env:
      - DEBUG=yes
-     - PROG=utilities/run-valgrind-cachegrind
+     - PROG=../../../utilities/run-valgrind-cachegrind
     before_install:
     - sudo apt-get install -y valgrind
     compiler: gcc
@@ -57,7 +57,7 @@ matrix:
     dist: xenial
     env:
      - DEBUG=yes
-     - PROG=utilities/run-valgrind-callgrind
+     - PROG=../../../utilities/run-valgrind-callgrind
     before_install:
     - sudo apt-get install -y valgrind
     compiler: gcc

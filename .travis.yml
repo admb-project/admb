@@ -39,7 +39,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb
+    - make --directory=examples simple forest
 
   - os: linux
     dist: xenial
@@ -53,7 +53,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re
+    - make --directory=examples logistic spatial
 
   - os: linux
     dist: xenial

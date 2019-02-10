@@ -1,6 +1,11 @@
 sudo: require
 language: cpp
 
+env:
+
+git:
+  depth: false
+
 branches:
   only:
     - master
@@ -61,6 +66,14 @@ matrix:
     - make gtests
 
   - os: osx
+    compiler: clang
+    env:
+     - DEBUG=yes
+    script:
+    - make clean
+    - scan-build -v make clean dist
+
+  - os: osx
     env:
      - SAFE_ONLY=yes
     compiler: clang
@@ -87,3 +100,9 @@ matrix:
     - SAFE_ONLY=yes
     script:
     - utilities/travis-windows-vc-build.bat
+
+  - os: windows
+    env:
+    - DEBUG=yes
+    script:
+    - utilities/travis-windows-vc-build-analyze.bat

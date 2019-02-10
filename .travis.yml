@@ -42,6 +42,32 @@ matrix:
 
   - os: linux
     dist: xenial
+    env:
+     - DEBUG=yes
+     - PROG=utilities/run-valgrind-cachegrind
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make verify
+
+  - os: linux
+    dist: xenial
+    env:
+     - DEBUG=yes
+     - PROG=utilities/run-valgrind-callgrind
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make verify
+
+  - os: linux
+    dist: xenial
     compiler: gcc
     script:
     - make clean

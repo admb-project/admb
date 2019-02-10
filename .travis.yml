@@ -81,7 +81,21 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re
+    - make --directory=examples admb-re-start
+
+  - os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+     - PROG=../../../utilities/run-valgrind-cachegrind
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples admb-re-end
 
   - os: linux
     dist: xenial
@@ -109,7 +123,21 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re
+    - make --directory=examples admb-re-begin
+
+  - os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+     - PROG=../../../utilities/run-valgrind-callgrind
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples admb-re-end
 
   - os: linux
     dist: xenial

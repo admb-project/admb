@@ -96,7 +96,8 @@ ifndef TRAVIS
   endif
 endif
 
-admb-re:\
+admb-re: admb-re-begin admb-re-end
+admb-re-begin:\
  bcb\
  biglog\
  bvprobit\
@@ -106,7 +107,9 @@ admb-re:\
  kidney\
  lidar\
  logistic\
- nbmm\
+ nbmm
+
+admb-re-end:\
  nested4\
  orange\
  orange2\

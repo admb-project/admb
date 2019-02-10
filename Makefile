@@ -308,32 +308,32 @@ analyze-c++-dist:
 analyze-c++-debug:
 	$(MAKE) analyze-c++-all DEBUG=yes
 analyze-c++-src:
-	$(MAKE) --directory=src CC=cc CXX=c++ all
+	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ all
 analyze-c++-contrib:
-	$(MAKE) --directory=contrib CC=cc CXX=c++ all
+	$(MAKE) --directory=contrib CC=analyze-cc CXX=analyze-c++ all
 analyze-c++-docs:
-	$(MAKE) --directory=docs CC=cc CXX=c++ all
+	$(MAKE) --directory=docs CC=analyze-cc CXX=analyze-c++ all
 analyze-c++-coverage:
-	$(MAKE) --directory=src CC=cc CXX=c++ SAFE_ONLY=yes dist
-	$(MAKE) --directory=tests CC=cc CXX=c++ coverage
+	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ SAFE_ONLY=yes dist
+	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ coverage
 analyze-c++-test:
-	$(MAKE) --directory=tests CC=cc CXX=c++ all
+	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ all
 analyze-c++-gtests:
-	$(MAKE) --directory=tests CC=cc CXX=c++ all-gtests
+	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ all-gtests
 analyze-c++-verify:
-	$(MAKE) --directory=tests CC=cc CXX=c++ verify
+	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ verify
 analyze-c++-shared:
-	$(MAKE) --directory=src CC=cc CXX=c++ SHARED=-shared shared
-	$(MAKE) --directory=contrib CC=cc CXX=c++ SHARED=-shared shared
+	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=analyze-cc CXX=analyze-c++ SHARED=-shared shared
 analyze-c++-install:
-	$(MAKE) --directory=src CC=cc CXX=c++ install
+	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ install
 analyze-c++-check:
-	$(MAKE) --directory=src CC=cc CXX=c++ check 
+	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ check 
 analyze-c++-clean:
-	$(MAKE) --directory=src CC=cc CXX=c++ clean
-	$(MAKE) --directory=contrib CC=cc CXX=c++ clean
-	$(MAKE) --directory=scripts CC=cc CXX=c++ clean
-	$(MAKE) --directory=tests CC=cc CXX=c++ clean
+	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ clean
+	$(MAKE) --directory=contrib CC=analyze-cc CXX=analyze-c++ clean
+	$(MAKE) --directory=scripts CC=analyze-cc CXX=analyze-c++ clean
+	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ clean
 
 #Unsupported Borland 5.5
 bcc: bcc-all

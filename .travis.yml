@@ -114,6 +114,14 @@ matrix:
     - scan-build -v make dist
 
   - os: osx
+    before_install:
+    - sudo pip install cpplint
+    compiler: cpplint
+    script:
+    - make clean
+    - make CXX=cpplint dist
+
+  - os: osx
     env:
      - SAFE_ONLY=yes
     compiler: clang

@@ -30,13 +30,9 @@ endif
 
 default: simple
 
-ifdef PROG_VALGRIND
-all: simple caest
-else
 all: admb admb-re
 ifneq ($(TERM),cygwin)
 	cd autodif && $(MAKE)
-endif
 endif
 
 admb:\

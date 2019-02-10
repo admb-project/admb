@@ -81,7 +81,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re-start
+    - make --directory=examples admb-re-begin
 
   - os: linux
     dist: xenial

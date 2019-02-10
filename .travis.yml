@@ -39,7 +39,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples buscycle catage forest finance biglog logistic orange union weights
+    - make --directory=examples simple union
 
   - os: linux
     dist: xenial
@@ -53,7 +53,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples buscycle catage forest finance biglog logistic orange union weights
+    - make --directory=examples catage forest finance logistic orange union
 
   - os: linux
     dist: xenial

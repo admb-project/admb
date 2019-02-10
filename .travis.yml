@@ -118,7 +118,7 @@ matrix:
     - sudo pip install cpplint
     script:
     - make clean
-    - make CXX=cpplint dist
+    - python cpplint.py src/* 
 
   - os: osx
     env:

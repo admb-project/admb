@@ -335,28 +335,6 @@ analyze-c++-clean:
 	$(MAKE) --directory=scripts CC=analyze-cc CXX=analyze-c++ clean
 	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ clean
 
-cpplint: cpplint-all
-cpplint-all:
-	$(MAKE) cpplint-dist
-	$(MAKE) cpplint-shared
-cpplint-dist:
-	$(MAKE) cpplint-src
-	$(MAKE) cpplint-contrib
-cpplint-debug:
-cpplint-src:
-	$(MAKE) --directory=src CC=gcc CXX=cpplint all
-cpplint-contrib:
-	$(MAKE) --directory=contrib CC=gcc CXX=cpplint all
-cpplint-docs:
-cpplint-coverage:
-cpplint-test:
-cpplint-gtests:
-cpplint-verify:
-cpplint-shared:
-cpplint-install:
-cpplint-check:
-cpplint-clean:
-
 #Unsupported Borland 5.5
 bcc: bcc-all
 bcc-all: bcc-src

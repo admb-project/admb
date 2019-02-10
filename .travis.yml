@@ -31,7 +31,7 @@ matrix:
     dist: xenial
     env:
      - DEBUG=yes
-     - PROG=valgrind
+     - PROG=utilities/run-valgrind-memcheck
     before_install:
     - sudo apt-get install -y valgrind
     compiler: gcc
@@ -85,7 +85,7 @@ matrix:
      - DEBUG=yes
     script:
     - make clean
-    - scan-build -v make dist
+    - scan-build -v make
 
   - os: osx
     env:

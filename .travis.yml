@@ -23,8 +23,22 @@ matrix:
     after_success:
     - bash <(curl -s https://codecov.io/bash) -a "--object-directory=build/objects/debug"
     script:
-    - make clean coverage
+    - make clean
+    - make coverage
     - codecov
+
+  - os: linux
+    dist: xenial
+    env:
+     - DEBUG=yes
+     - PROG=valgrind
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make verify
 
   - os: linux
     dist: xenial
@@ -71,21 +85,25 @@ matrix:
      - DEBUG=yes
     script:
     - make clean
-    - scan-build -v make clean dist
+    - scan-build -v make dist
 
   - os: osx
     env:
      - SAFE_ONLY=yes
     compiler: clang
     script:
-    - make clean dist test
+    - make clean
+    - make dist
+    - make test
 
   - os: osx
     env:
      - SAFE_ONLY=yes
     compiler: gcc
     script:
-    - make clean dist test
+    - make clean
+    - make dist
+    - make test
 
   - os: windows
     install: choco install -y make
@@ -93,7 +111,9 @@ matrix:
     - SAFE_ONLY=yes
     compiler: gcc
     script:
-    - make.exe clean dist gtests
+    - make.exe clean
+    - make.exe dist
+    - make.exe gtests
 
   - os: windows
     env:

@@ -1,8 +1,6 @@
 sudo: require
 language: cpp
 
-env:
-
 git:
   depth: false
 
@@ -66,6 +64,8 @@ matrix:
     - make gtests
 
   - os: osx
+    before_install:
+    - sudo pip install scan-build
     compiler: clang
     env:
      - DEBUG=yes

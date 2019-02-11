@@ -37,7 +37,6 @@ endif
 
 ifdef TRAVIS
 admb:\
- buscycle\
  catage\
  chem_eng\
  forest\

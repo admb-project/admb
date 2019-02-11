@@ -45,7 +45,6 @@ admb:\
  robreg\
  truncreg\
  simple\
- simple-version\
  vol
 
 buscycle:

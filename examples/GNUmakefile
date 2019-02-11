@@ -122,10 +122,12 @@ admb-re:\
  weights
 
 bcb:
-	#cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
+ifndef TRAVIS
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 bvprobit:
 	@#Do not catch for admb-9.x

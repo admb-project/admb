@@ -83,7 +83,7 @@ vonbr:
 	cd admb/robreg && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 simple-version:
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -version
+	cd admb/ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -version
 
 simple:
 	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
@@ -93,7 +93,9 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
+ifndef TRAVIS
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 admb-re:\
  bcb\

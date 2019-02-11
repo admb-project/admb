@@ -35,17 +35,6 @@ ifneq ($(TERM),cygwin)
 	cd autodif && $(MAKE)
 endif
 
-ifdef TRAVIS
-admb:\
- catage\
- chem_eng\
- forest\
- finance\
- pella_t\
- robreg\
- truncreg\
- simple
-else
 admb:\
  buscycle\
  catage\
@@ -57,7 +46,6 @@ admb:\
  truncreg\
  simple\
  vol
-endif
 
 buscycle:
 	$(MAKE) ham4 
@@ -105,18 +93,10 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
+ifndef TRAVIS
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
-ifdef TRAVIS
-admb-re:\
- bcb\
- bvprobit\
- gamma\
- kidney\
- lidar\
- logistic\
- spatial
-else
 admb-re:\
  bcb\
  biglog\
@@ -140,24 +120,29 @@ admb-re:\
  spatial\
  union\
  weights
-endif
 
 bcb:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
+ifndef TRAVIS
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 bvprobit:
 	@#Do not catch for admb-9.x
 	cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 glmmadmb:
+ifndef TRAVIS
 	@#Do not catch for admb-9.x
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
+endif
 
 caest:
+ifndef TRAVIS
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 gamma:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) liver_$@ && $(PROG) ./liver_$@

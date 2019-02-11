@@ -53,7 +53,21 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples ham5 catage chem_eng forest finance pella_t robreg truncreg simple vol
+    - make --directory=examples ham5
+
+  - os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+     - PROG=../../../utilities/run-valgrind-memcheck
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples catage chem_eng forest finance pella_t robreg truncreg simple vol
 
   - os: linux
     dist: xenial

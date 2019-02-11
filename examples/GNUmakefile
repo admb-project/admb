@@ -45,13 +45,14 @@ admb:\
  robreg\
  truncreg\
  simple\
+ simple-version\
  vol
 
 buscycle:
 	$(MAKE) ham4 
 	$(MAKE) ham5
 ham4:
-	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -version && $(PROG) ./$@
+	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 ham5:
 	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
@@ -82,6 +83,9 @@ vonb:
 vonbr:
 	cd admb/robreg && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
+simple-version:
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -version
+
 simple:
 	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
@@ -90,14 +94,9 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
-ifndef TRAVIS
-  ifeq ($(PROG),time)
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-  endif
-endif
 
-admb-re: admb-re-begin admb-re-end
-admb-re-begin:\
+admb-re:\
  bcb\
  biglog\
  bvprobit\
@@ -106,9 +105,7 @@ admb-re-begin:\
  gamma\
  kidney\
  lidar\
- logistic
-
-admb-re-end:\
+ logistic\
  nbmm\
  nested4\
  orange\
@@ -127,30 +124,18 @@ bcb:
 	#cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
-ifndef TRAVIS
-  ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
-  endif
-endif
 
 bvprobit:
 	@#Do not catch for admb-9.x
 	cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 glmmadmb:
-ifndef TRAVIS
-  ifeq ($(PROG),time)
 	@#Do not catch for admb-9.x
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
-  endif
-endif
 
 caest:
-ifndef TRAVIS
-  ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-  endif
-endif
 
 gamma:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) liver_$@ && $(PROG) ./liver_$@
@@ -177,12 +162,7 @@ orange2:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 orange_cor:
-ifndef TRAVIS
-  ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-  endif
-endif
-
 pheno:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
@@ -190,11 +170,7 @@ polio:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 sdv:
-ifndef TRAVIS
-  ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-  endif
-endif
 
 skewed:
 	$(MAKE) diet

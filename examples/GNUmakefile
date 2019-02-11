@@ -106,10 +106,10 @@ admb-re-begin:\
  gamma\
  kidney\
  lidar\
- logistic\
- nbmm
+ logistic
 
 admb-re-end:\
+ nbmm\
  nested4\
  orange\
  orange2\

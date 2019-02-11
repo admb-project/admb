@@ -81,7 +81,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re-begin
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial
@@ -95,7 +95,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re-end
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial
@@ -123,7 +123,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re-begin
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial
@@ -137,7 +137,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re-end
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial
@@ -165,7 +165,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re-begin
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial
@@ -179,7 +179,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples admb-re-end
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial

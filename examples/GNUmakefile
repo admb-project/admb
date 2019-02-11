@@ -116,19 +116,7 @@ admb-re:\
  kidney\
  lidar\
  logistic\
- nbmm\
- nested4\
- orange\
- orange2\
- orange_cor\
- pheno\
- polio\
- sdv\
- skewed\
- socatt\
- spatial\
- union\
- weights
+ spatial
 else
 admb-re:\
  bcb\

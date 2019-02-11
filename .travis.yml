@@ -88,20 +88,6 @@ matrix:
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
-     - PROG=../../../utilities/run-valgrind-memcheck
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples admb-re
-
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
      - PROG=../../../utilities/run-valgrind-cachegrind
     before_install:
     - sudo apt-get install -y valgrind
@@ -130,20 +116,6 @@ matrix:
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
-     - PROG=../../../utilities/run-valgrind-cachegrind
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples admb-re
-
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
      - PROG=../../../utilities/run-valgrind-callgrind
     before_install:
     - sudo apt-get install -y valgrind
@@ -152,20 +124,6 @@ matrix:
     - make clean
     - make dist 
     - make --directory=examples admb
-
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
-     - PROG=../../../utilities/run-valgrind-callgrind
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial

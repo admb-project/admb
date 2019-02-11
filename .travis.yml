@@ -39,7 +39,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples buscycle
+    - make --directory=examples ham4
 
   - os: linux
     dist: xenial
@@ -53,7 +53,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples catage chem_eng forest finance pella_t robreg truncreg simple vol
+    - make --directory=examples ham5 catage chem_eng forest finance pella_t robreg truncreg simple vol
 
   - os: linux
     dist: xenial

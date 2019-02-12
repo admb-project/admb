@@ -35,9 +35,8 @@ ifneq ($(TERM),cygwin)
 	cd autodif && $(MAKE)
 endif
 
-ifdef TRAVIS
+ifeq ($(PROG),../../../utilities/run-valgrind-memcheck)
 admb:\
- buscycle\
  catage\
  chem_eng\
  forest\
@@ -108,7 +107,7 @@ vol: n2mvol
 n2mvol:
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
-ifdef TRAVIS
+ifeq ($(PROG),../../../utilities/run-valgrind-memcheck)
 admb-re:\
  bcb\
  bvprobit\

@@ -57,7 +57,6 @@ admb:\
  truncreg\
  simple\
  vol
-endif
 
 buscycle:
 	$(MAKE) ham4 
@@ -78,9 +77,7 @@ finance:
 	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 forest:
-ifneq ($(CXX),CC)
 	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-endif
 
 pella_t:
 	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
@@ -111,11 +108,20 @@ ifeq ($(PROG),../../../utilities/run-valgrind-memcheck)
 admb-re:\
  bcb\
  bvprobit\
+ glmmadmb\
  gamma\
  kidney\
  lidar\
  logistic\
- spatial
+ nbmm\
+ orange\
+ orange2\
+ orange_cor\
+ pheno\
+ polio\
+ sdv\
+ union\
+ weights
 else
 admb-re:\
  bcb\
@@ -210,9 +216,7 @@ spatial:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 union:
-ifeq ($(PROG),time)
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-endif
 
 weights: binomial
 binomial:

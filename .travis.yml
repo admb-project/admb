@@ -69,13 +69,6 @@ matrix:
     - make dist 
     - make --directory=examples ham5
 
-# bcb\
-# biglog\
-# bvprobit\
-# glmmadmb\
-# caest\
-# gamma\
-
   - os: linux
     dist: xenial
     env:
@@ -88,7 +81,7 @@ matrix:
     script:
     - make clean
     - make dist 
-    - make --directory=examples bcb bvprobit gamma kidney lidar logistic orange orange2 orange_cor
+    - make --directory=examples admb-re
 
   - os: linux
     dist: xenial
@@ -104,15 +97,6 @@ matrix:
     - make dist 
     - make --directory=examples caest
 
-# kidney\
-# lidar\
-# logistic\
-# nbmm\
-# nested4\
-# orange\
-# orange2\
-# orange_cor\
-
   - os: linux
     dist: xenial
     env:
@@ -127,57 +111,6 @@ matrix:
     - make dist 
     - make --directory=examples nested4
 
-# pheno\
-# polio\
-# sdv\
-# skewed\
-# socatt\
-# spatial\
-# union\
-# weights
-
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
-     - PROG=../../../utilities/run-valgrind-memcheck
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples pheno
-
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
-     - PROG=../../../utilities/run-valgrind-memcheck
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples polio
-
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
-     - PROG=../../../utilities/run-valgrind-memcheck
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples sdv
-
   - os: linux
     dist: xenial
     env:
@@ -191,7 +124,6 @@ matrix:
     - make clean
     - make dist 
     - make --directory=examples skewed
-
 
   - os: linux
     dist: xenial
@@ -220,34 +152,6 @@ matrix:
     - make clean
     - make dist 
     - make --directory=examples spatial
-
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
-     - PROG=../../../utilities/run-valgrind-memcheck
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples union
-
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
-     - PROG=../../../utilities/run-valgrind-memcheck
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples weights
 
   - os: linux
     dist: xenial

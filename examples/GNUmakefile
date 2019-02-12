@@ -97,6 +97,25 @@ ifndef TRAVIS
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 endif
 
+ifdef TRAVIS
+admb-re:\
+ bcb\
+ bvprobit\
+ glmmadmb\
+ gamma\
+ kidney\
+ lidar\
+ logistic\
+ nbmm\
+ orange\
+ orange2\
+ orange_cor\
+ pheno\
+ polio\
+ sdv\
+ union\
+ weights
+else
 admb-re:\
  bcb\
  biglog\
@@ -120,6 +139,7 @@ admb-re:\
  spatial\
  union\
  weights
+endif
 
 bcb:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
@@ -140,9 +160,7 @@ ifndef TRAVIS
 endif
 
 caest:
-ifndef TRAVIS
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-endif
 
 gamma:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) liver_$@ && $(PROG) ./liver_$@
@@ -179,7 +197,9 @@ polio:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 sdv:
+ifndef TRAVIS
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
 
 skewed:
 	$(MAKE) diet

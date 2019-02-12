@@ -112,7 +112,6 @@ admb-re:\
  gamma\
  kidney\
  lidar\
- logistic\
  orange\
  orange2\
  orange_cor\

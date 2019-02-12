@@ -158,6 +158,34 @@ matrix:
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
+     - PROG=../../../utilities/run-valgrind-memcheck
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples union
+
+  - os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+     - PROG=../../../utilities/run-valgrind-memcheck
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples weights
+
+  - os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
      - PROG=../../../utilities/run-valgrind-cachegrind
     before_install:
     - sudo apt-get install -y valgrind

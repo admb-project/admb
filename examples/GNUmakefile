@@ -117,8 +117,11 @@ admb-re:\
  orange_cor\
  pheno\
  polio\
- union\
- weights
+
+ifneq ($(PROG),../../../utilities/run-valgrind-memcheck)
+ admb-re += logistic union weights
+endif
+
 else
 admb-re:\
  bcb\

@@ -57,6 +57,7 @@ admb:\
  truncreg\
  simple\
  vol
+endif
 
 buscycle:
 	$(MAKE) ham4 

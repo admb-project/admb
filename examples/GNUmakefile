@@ -118,7 +118,6 @@ admb-re:\
  orange_cor\
  pheno\
  polio\
- sdv\
  union\
  weights
 else

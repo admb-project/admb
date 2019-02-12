@@ -113,7 +113,6 @@ admb-re:\
  kidney\
  lidar\
  logistic\
- nbmm\
  orange\
  orange2\
  orange_cor\

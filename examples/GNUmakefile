@@ -106,7 +106,7 @@ n2mvol:
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 ifdef TRAVIS
-ifeq ($(PROG),../../../utilities/run-valgrind-memcheck)
+ifeq ("$(PROG)","../../../utilities/run-valgrind-memcheck")
 admb-re:\
  bcb\
  bvprobit\

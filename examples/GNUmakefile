@@ -106,6 +106,22 @@ n2mvol:
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 ifdef TRAVIS
+ifeq ($(PROG),../../../utilities/run-valgrind-memcheck)
+admb-re:\
+ bcb\
+ bvprobit\
+ logistic\
+ gamma\
+ kidney\
+ lidar\
+ orange\
+ orange2\
+ orange_cor\
+ pheno\
+ polio\
+ union\
+ weights
+else
 admb-re:\
  bcb\
  bvprobit\
@@ -117,14 +133,7 @@ admb-re:\
  orange_cor\
  pheno\
  polio
-
-ifneq ($(PROG),../../../utilities/run-valgrind-memcheck)
-admb-re+=\
- logistic\
- union\
- weights
 endif
-
 else
 admb-re:\
  bcb\

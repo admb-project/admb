@@ -131,7 +131,6 @@ admb-re:\
  orange_cor\
  pheno\
  polio\
- skewed\
  socatt\
  spatial\
  union\

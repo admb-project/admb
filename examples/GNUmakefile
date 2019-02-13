@@ -116,10 +116,13 @@ admb-re:\
  orange2\
  orange_cor\
  pheno\
- polio\
+ polio
 
 ifneq ($(PROG),../../../utilities/run-valgrind-memcheck)
- admb-re += logistic union weights
+admb-re+=\
+ logistic\
+ union\
+ weights
 endif
 
 else

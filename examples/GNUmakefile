@@ -118,9 +118,7 @@ admb-re:\
  orange2\
  orange_cor\
  pheno\
- polio\
- union\
- weights
+ polio
 else
 admb-re:\
  bcb\
@@ -132,7 +130,9 @@ admb-re:\
  orange2\
  orange_cor\
  pheno\
- polio
+ polio\
+ union\
+ weights
 endif
 else
 admb-re:\

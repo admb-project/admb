@@ -132,7 +132,6 @@ admb-re:\
  pheno\
  polio\
  spatial\
- union\
  weights
 endif
 else

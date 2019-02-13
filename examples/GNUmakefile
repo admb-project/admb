@@ -131,7 +131,6 @@ admb-re:\
  orange_cor\
  pheno\
  polio\
- socatt\
  spatial\
  union\
  weights

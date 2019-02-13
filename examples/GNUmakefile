@@ -28,25 +28,7 @@ PROG=time
 endif
 endif
 
-default: simple
-
-all: admb admb-re
-ifneq ($(TERM),cygwin)
-	cd autodif && $(MAKE)
-endif
-
-ifdef TRAVIS
-admb:\
- catage\
- chem_eng\
- forest\
- finance\
- pella_t\
- robreg\
- truncreg\
- simple
-else
-admb:\
+ADMB_TPLS=\
  buscycle\
  catage\
  chem_eng\
@@ -57,6 +39,42 @@ admb:\
  truncreg\
  simple\
  vol
+
+ADMB_RE_TPLS=\
+ bcb\
+ biglog\
+ bvprobit\
+ glmmadmb\
+ caest\
+ gamma\
+ kidney\
+ lidar\
+ logistic\
+ nbmm\
+ nested4\
+ orange\
+ orange2\
+ orange_cor\
+ pheno\
+ polio\
+ sdv\
+ skewed\
+ socatt\
+ spatial\
+ union\
+ weights
+
+default: simple
+
+all: admb admb-re
+ifneq ($(TERM),cygwin)
+	cd autodif && $(MAKE)
+endif
+
+ifdef TRAVIS
+admb: $(filter-out buscycle vol, $(ADMB_TPLS))
+else
+admb: $(ADMB_TPLS)
 endif
 
 buscycle:
@@ -106,46 +124,13 @@ n2mvol:
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 ifdef TRAVIS
-admb-re:\
- bcb\
- bvprobit\
- gamma\
- kidney\
- lidar\
- orange\
- orange2\
- orange_cor\
- pheno\
- polio\
-
-ifneq ($(PROG),../../../utilities/run-valgrind-memcheck)
- admb-re += logistic union weights
-endif
-
+ifeq ($(PROG),../../../utilities/run-valgrind-memcheck)
+admb-re: $(filter-out biglog glmmadmb caest nbmm logistic nested4 sdv skewed socatt spatial union weights, $(ADMB_RE_TPLS))
 else
-admb-re:\
- bcb\
- biglog\
- bvprobit\
- glmmadmb\
- caest\
- gamma\
- kidney\
- lidar\
- logistic\
- nbmm\
- nested4\
- orange\
- orange2\
- orange_cor\
- pheno\
- polio\
- sdv\
- skewed\
- socatt\
- spatial\
- union\
- weights
+admb-re: $(filter-out biglog glmmadmb caest nbmm nested4 sdv skewed socatt spatial, $(ADMB_RE_TPLS))
+endif
+else
+admb-re: $(ADMB_RE_TPLS)
 endif
 
 bcb:

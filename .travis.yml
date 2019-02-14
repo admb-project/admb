@@ -280,16 +280,17 @@ matrix:
     compiler: clang
     env:
      - DEBUG=yes
+     - SAFE_ONLY=yes
     script:
     - make clean
-    - scan-build -v make SAFE_ONLY=yes dist
+    - scan-build -v make dist
 
   - os: osx
     before_install:
     - sudo pip install cpplint
     script:
     - make clean
-    - cpplint --recursive --filter=-whitespace src
+    - cpplint --recursive --filter=-whitespace,-runtime,-build,-readablity src
 
   - os: osx
     env:

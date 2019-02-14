@@ -290,7 +290,7 @@ matrix:
     - sudo pip install cpplint
     script:
     - make clean
-    - cpplint --recursive --filter=-whitespace,-runtime,-build,-readablity src
+    - cpplint --recursive --filter=-whitespace,-runtime,-build,-readability,-legal src
 
   - os: osx
     env:

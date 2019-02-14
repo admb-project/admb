@@ -330,5 +330,6 @@ matrix:
     env:
     - DEBUG=yes
     - SAFE_ONLY=yes
+    - MAKEFLAGS=
     script:
     - utilities/travis-windows-vc-build-analyze.bat

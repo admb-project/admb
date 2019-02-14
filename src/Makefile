@@ -126,6 +126,12 @@ objects: includes $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS) $(SAFLP_NH
 !ELSE
 objects: includes $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
 !ENDIF
+!IF DEFINED(TRAVIS)
+objects1: includes $(SAFLP_DF1B2_SEPARABLE_OBJS)
+objects2: includes $(SAFLP_LINAD99_OBJS)
+objects3: includes $(SAFLP_NH99_OBJS)
+objects4: includes $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
+!ENDIF
 
 $(SAFLP_DF1B2_SEPARABLE_OBJS):: $(@B:saflp-df1b2-separable-=df1b2-separable\).cpp
 	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?

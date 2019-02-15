@@ -30,8 +30,8 @@ SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist\saflp-df1b2-separable
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug\optlp-linad99-) $(OBJ2: = ..\build\objects\debug\optlp-linad99-) $(OBJ3: = ..\build\objects\debug\optlp-linad99-) $(OBJ4: = ..\build\objects\debug\optlp-linad99-)
 SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug\saflp-linad99-) $(OBJ2: = ..\build\objects\debug\saflp-linad99-) $(OBJ3: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
 !IF DEFINED(TRAVIS)
-SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\debug\saflp-linad99-) $(OBJ2: = ..\build\objects\debug\saflp-linad99-)
-SAFLP_LINAD99_OBJS2=$(OBJ3: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\debug\saflp-linad99-) $(OBJ3: = ..\build\objects\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
 !ENDIF
 !ELSE
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\optlp-linad99-) $(OBJ2: = ..\build\objects\dist\optlp-linad99-) $(OBJ3: = ..\build\objects\dist\optlp-linad99-) $(OBJ4: = ..\build\objects\dist\optlp-linad99-)

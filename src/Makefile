@@ -34,7 +34,6 @@ SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\debug\saflp-linad99-)
 SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects\debug\saflp-linad99-)
 SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
 !ENDIF
-!ENDIF
 !ELSE
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\optlp-linad99-) $(OBJ2: = ..\build\objects\dist\optlp-linad99-) $(OBJ3: = ..\build\objects\dist\optlp-linad99-) $(OBJ4: = ..\build\objects\dist\optlp-linad99-)
 SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\saflp-linad99-) $(OBJ2: = ..\build\objects\dist\saflp-linad99-) $(OBJ3: = ..\build\objects\dist\saflp-linad99-) $(OBJ4: = ..\build\objects\dist\saflp-linad99-) $(OBJ16: = ..\build\objects\dist\saflp-linad99-)

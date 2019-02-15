@@ -341,11 +341,3 @@ matrix:
     - MAKEFLAGS=
     script:
     - utilities/travis-windows-vc-build-analyze.bat objects2
-
-  - os: windows
-    env:
-    - DEBUG=yes
-    - SAFE_ONLY=yes
-    - MAKEFLAGS=
-    script:
-    - utilities/travis-windows-vc-build-analyze.bat objects3

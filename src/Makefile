@@ -30,8 +30,10 @@ SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist\saflp-df1b2-separable
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug\optlp-linad99-) $(OBJ2: = ..\build\objects\debug\optlp-linad99-) $(OBJ3: = ..\build\objects\debug\optlp-linad99-) $(OBJ4: = ..\build\objects\debug\optlp-linad99-)
 SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug\saflp-linad99-) $(OBJ2: = ..\build\objects\debug\saflp-linad99-) $(OBJ3: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
 !IF DEFINED(TRAVIS)
-SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\debug\saflp-linad99-) $(OBJ3: = ..\build\objects\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects\debug\saflp-linad99-)
 SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
+!ENDIF
 !ENDIF
 !ELSE
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\optlp-linad99-) $(OBJ2: = ..\build\objects\dist\optlp-linad99-) $(OBJ3: = ..\build\objects\dist\optlp-linad99-) $(OBJ4: = ..\build\objects\dist\optlp-linad99-)
@@ -132,12 +134,15 @@ objects: includes $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(
 !ENDIF
 !IF DEFINED(DEBUG)
 !IF DEFINED(TRAVIS)
-objects1: includes $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS2) $(SAFLP_NH99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
-objects2: includes $(SAFLP_LINAD99_OBJS1)
+objects1: includes $(SAFLP_LINAD99_OBJS1)
+objects3: includes $(SAFLP_LINAD99_OBJS3)
+objects2: includes $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS2) $(SAFLP_NH99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
 
 $(SAFLP_LINAD99_OBJS1):: $(@B:saflp-linad99-=linad99\).cpp
 	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
 $(SAFLP_LINAD99_OBJS2):: $(@B:saflp-linad99-=linad99\).cpp
+	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
+$(SAFLP_LINAD99_OBJS3):: $(@B:saflp-linad99-=linad99\).cpp
 	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
 !ENDIF
 !ENDIF

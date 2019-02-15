@@ -349,11 +349,3 @@ matrix:
     - MAKEFLAGS=
     script:
     - utilities/travis-windows-vc-build-analyze.bat objects3
-
-  - os: windows
-    env:
-    - DEBUG=yes
-    - SAFE_ONLY=yes
-    - MAKEFLAGS=
-    script:
-    - utilities/travis-windows-vc-build-analyze.bat objects4

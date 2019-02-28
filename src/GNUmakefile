@@ -658,6 +658,8 @@ ifeq ($(DEBUG),yes)
 	chmod a+rx ../build/debug/bin/admb
 	chmod a+rx ../build/debug/bin/adlink
 	chmod a+rx ../build/debug/bin/adcomp
+	chmod a+rx ../build/debug/bin/tpl2cpp
+	chmod a+rx ../build/debug/bin/tpl2rem
 	chmod a+rx ../build/debug/contrib
 	chmod a+r ../build/debug/bin/sed*
 	chmod a+r ../build/debug/include/*.*
@@ -671,6 +673,8 @@ else
 	chmod a+rx ../build/dist/bin/admb
 	chmod a+rx ../build/dist/bin/adlink
 	chmod a+rx ../build/dist/bin/adcomp
+	chmod a+rx ../build/dist/bin/tpl2cpp
+	chmod a+rx ../build/dist/bin/tpl2rem
 	chmod a+rx ../build/dist/contrib
 	chmod a+r ../build/dist/bin/sed*
 	chmod a+r ../build/dist/include/*.*

@@ -31,3 +31,10 @@ for release in json.loads(releases):
   print '\"' + id + "\",\"" + str(today) + "\",\"" + str(time) + "\",\"total_windows\"," + str(total_windows)
   print '\"' + id + "\",\"" + str(today) + "\",\"" + str(time) + "\",\"total_installers\"," + str(total_installers)
   print '\"' + id + "\",\"" + str(today) + "\",\"" + str(time) + "\",\"total\"," + str(total)
+
+adstudio_releases = urllib2.urlopen("https://api.github.com/repos/admb-project/adstudio/releases").read()
+for adstudio_release in json.loads(adstudio_releases):
+  for asset in adstudio_release['assets']:
+    download_count = asset['download_count']
+    filename = asset['name']
+    print '\"' + id + "\",\"" + str(today) + "\",\"" + str(time) + "\",\"" + filename  + "\"," + str(download_count)

@@ -30,12 +30,19 @@ ifeq ($(SHELL),cmd)
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix \lib,$(CONTRIB_DIR))
 else
+  UNAME_S := $(shell uname -s)
+  ifeq ($(UNAME_S),Linux)
+    OS_NAME=linux
+  endif
+  ifeq ($(UNAME_S),Darwin)
+    OS_NAME=macosx
+  endif
   ifeq ($(DEBUG),yes)
   CONTRIB_DIR=../../build/debug/contrib
-  CONTRIB_OBJS_PREFIX=build/objects/debug-$(CXX)/contrib$(SHARED)
+  CONTRIB_OBJS_PREFIX=build/objects/debug-$(OS_NAME)-$(CXX)/contrib$(SHARED)
   else
   CONTRIB_DIR=../../build/dist/contrib
-  CONTRIB_OBJS_PREFIX=build/objects/dist-$(CXX)/contrib$(SHARED)
+  CONTRIB_OBJS_PREFIX=build/objects/dist-$(OS_NAME)-$(CXX)/contrib$(SHARED)
   endif
   CONTRIB_OBJS_DIR=../../$(CONTRIB_OBJS_PREFIX)
   CONTRIB_BIN=$(addsuffix /bin,$(CONTRIB_DIR))

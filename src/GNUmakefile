@@ -40,10 +40,17 @@ else
   DIST=../build/dist
   endif
   LIBSDIR=$(DIST)/lib/
+  UNAME_S := $(shell uname -s)
+  ifeq ($(UNAME_S),Linux)
+    OS_NAME=linux
+  endif
+  ifeq ($(UNAME_S),Darwin)
+    OS_NAME=macosx
+  endif
   ifeq ($(DEBUG),yes)
-  OBJSDIR=$(shell pwd)/../build/objects/debug-$(CXX)/
+  OBJSDIR=$(shell pwd)/../build/objects/debug-$(OS_NAME)-$(CXX)/
   else
-  OBJSDIR=../build/objects/dist-$(CXX)/
+  OBJSDIR=../build/objects/dist-$(OS_NAME)-$(CXX)/
   endif
   ADMB_VERSION:=$(shell cat ../VERSION)
 endif

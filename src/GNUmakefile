@@ -41,9 +41,9 @@ else
   endif
   LIBSDIR=$(DIST)/lib/
   ifeq ($(DEBUG),yes)
-  OBJSDIR=$(shell pwd)/../build/objects/debug/
+  OBJSDIR=$(shell pwd)/../build/objects/debug-$(CXX)/
   else
-  OBJSDIR=../build/objects/dist/
+  OBJSDIR=../build/objects/dist-$(CXX)/
   endif
   ADMB_VERSION:=$(shell cat ../VERSION)
 endif
@@ -605,11 +605,7 @@ dirs:
 ifeq ($(SHELL),cmd)
 	if not exist $(OBJSDIR) md $(OBJSDIR)
 else
-  ifeq ($(DEBUG),yes)
-	mkdir -p ../build/objects/debug/
-  else
-	mkdir -p ../build/objects/dist/
-  endif
+	mkdir -p $(OBJSDIR)
 endif
 
 dist-clean:

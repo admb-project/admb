@@ -32,11 +32,12 @@ ifeq ($(SHELL),cmd)
 else
   ifeq ($(DEBUG),yes)
   CONTRIB_DIR=../../build/debug/contrib
-  CONTRIB_OBJS_DIR=../../build/objects/debug/contrib$(SHARED)
+  CONTRIB_OBJS_PREFIX=build/objects/debug-$(CXX)/contrib$(SHARED)
   else
   CONTRIB_DIR=../../build/dist/contrib
-  CONTRIB_OBJS_DIR=../../build/objects/dist/contrib$(SHARED)
+  CONTRIB_OBJS_PREFIX=build/objects/dist-$(CXX)/contrib$(SHARED)
   endif
+  CONTRIB_OBJS_DIR=../../$(CONTRIB_OBJS_PREFIX)
   CONTRIB_BIN=$(addsuffix /bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix /include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix /lib,$(CONTRIB_DIR))
@@ -119,53 +120,31 @@ ifeq ($(SHELL),cmd)
   else
 	if exist  src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a del src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a
 	copy src\$(CONTRIB_LIB)\..\..\lib\libadmb$(SHARED).a src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a
-	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a ..\build\objects\dist\contrib-saflp-*.obj
+	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a $(CONTRIB_OBJS_DIR)\contrib-saflp-*.obj
     ifndef SAFE_ONLY
 	if exist  src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a del src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a
 	copy src\$(CONTRIB_LIB)\..\..\lib\libadmbo$(SHARED).a src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a
-	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a ..\build\objects\dist\contrib-optlp-*.obj
+	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a $(CONTRIB_OBJS_DIR)\contrib-optlp-*.obj
     endif
   endif
 else
   ifdef SHARED
-    ifeq ($(DEBUG),yes)
 	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a
 	cp -vf src/$(CONTRIB_DIR)/../lib/libadmb-shared.a src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a ../build/objects/debug/contrib-shared-saflp-*.obj
-      ifndef SAFE_ONLY
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a ../$(CONTRIB_OBJS_PREFIX)-saflp-*.obj
+    ifndef SAFE_ONLY
 	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a
 	cp -vf src/$(CONTRIB_DIR)/../lib/libadmbo-shared.a src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a ../build/objects/debug/contrib-shared-optlp-*.obj
-      endif
-    else
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a
-	cp -vf src/$(CONTRIB_DIR)/../lib/libadmb-shared.a src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib-shared.a ../build/objects/dist/contrib-shared-saflp-*.obj
-      ifndef SAFE_ONLY
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a
-	cp -vf src/$(CONTRIB_DIR)/../lib/libadmbo-shared.a src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a ../build/objects/dist/contrib-shared-optlp-*.obj
-      endif
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo-shared.a ../$(CONTRIB_OBJS_PREFIX)-optlp-*.obj
     endif
   else
-    ifeq ($(DEBUG),yes)
 	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a
 	cp -vf src/$(CONTRIB_DIR)/../lib/libadmb.a src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a ../build/objects/debug/contrib-saflp-*.obj
-      ifndef SAFE_ONLY
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a ../$(CONTRIB_OBJS_PREFIX)-saflp-*.obj
+    ifndef SAFE_ONLY
 	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a
 	cp -vf src/$(CONTRIB_DIR)/../lib/libadmbo.a src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a ../build/objects/debug/contrib-optlp-*.obj
-      endif
-    else
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a
-	cp -vf src/$(CONTRIB_DIR)/../lib/libadmb.a src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contrib.a ../build/objects/dist/contrib-saflp-*.obj
-      ifndef SAFE_ONLY
-	rm -vf src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a
-	cp -vf src/$(CONTRIB_DIR)/../lib/libadmbo.a src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a
-	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a ../build/objects/dist/contrib-optlp-*.obj
-      endif
+	$(AR) -rs src/$(CONTRIB_DIR)/../lib/libadmb-contribo.a ../$(CONTRIB_OBJS_PREFIX)-optlp-*.obj
     endif
   endif
 endif

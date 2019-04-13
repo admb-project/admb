@@ -130,9 +130,15 @@ if [ -z "$tpls" ]; then
     fi
   fi
 fi
-if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
-  source "$ADMB_HOME/bin/admb-cfg.sh"
-  CXX=$ADMB_CFG_CXX
+UNAME_S="`uname -s`"
+if [ "$UNAME_S" == "Linux" ]; then
+    OS_NAME=linux
+fi
+if [ "$UNAME_S" == "Darwin" ]; then
+    OS_NAME=macosx
+fi
+if [ -f "$ADMB_HOME/bin/admb-cfg-$OS_NAME-$CXX.sh" ]; then
+  source "$ADMB_HOME/bin/admb-cfg-$OS_NAME-$CXX.sh"
   CXXFLAGS="$CXXFLAGS $ADMB_CFG_CXXFLAGS"
   LDFLAGS="$LDFLAGS $ADMB_CFG_LDFLAGS"
 else

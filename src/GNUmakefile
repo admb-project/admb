@@ -330,12 +330,8 @@ else
   ifdef BUILD_SHARED_LIBRARY
 	cp ../scripts/admb/adlink-shared ${DIST}/bin/adlink
   endif
-    ifeq ($(DEBUG),yes)
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-debug-$(OS_NAME)-$(CXX).sh
-    else
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-dist-$(OS_NAME)-$(CXX).sh
-    endif
   ifeq ($(OS),Windows_NT)
+	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg.sh
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
     ifeq ($(DEBUG),yes)
@@ -358,11 +354,8 @@ else
 	cp ../scripts/admb/adcomp.bat ${DIST}/bin/adcomp.cmd
 	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
   else
-    ifeq ($(DEBUG),yes)
-	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-debug-$(OS_NAME)-$(CXX).sh
-    else
-	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-dist-$(OS_NAME)-$(CXX).sh
-    endif
+	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-$(OS_NAME)-$(CXX).sh
+	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-$(OS_NAME)-$(CXX).sh
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin

@@ -133,13 +133,13 @@ fi
 UNAME_S="`uname -s`"
 if [ "$UNAME_S" == "Linux" ]; then
   OS_NAME=linux
-  if [ ! -z "$dll" ]; then
+  if [ ! -z "$CXX" ]; then
     CXX=g++
   fi
 fi
 if [ "$UNAME_S" == "Darwin" ]; then
   OS_NAME=macosx
-  if [ ! -z "$dll" ]; then
+  if [ ! -z "$CXX" ]; then
     CXX=c++
   fi
 fi

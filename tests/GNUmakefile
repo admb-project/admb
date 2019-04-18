@@ -48,7 +48,6 @@ coverage: all-gtests
 	$(MAKE) --directory=../examples all
 	$(MAKE) tpl-f1b2vc5
 	$(MAKE) tpl-4darray
-	$(MAKE) tpl-glmmadmb
 	$(MAKE) tpl-betai
 	$(MAKE) tpl-beta2
 	$(MAKE) tpl-beta3
@@ -89,7 +88,6 @@ all-tpls:\
   test-rgamma\
   tpl-f1b2vc5\
   tpl-4darray\
-  tpl-glmmadmb\
   tpl-agemat\
   tpl-betai\
   tpl-beta2\

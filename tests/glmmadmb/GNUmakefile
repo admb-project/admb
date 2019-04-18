@@ -9,13 +9,16 @@ ifeq ($(OS),Windows_NT)
 endif
 endif
 
-all: 
+all: rforge-glmmadmb
 ifeq ($(SHELL),cmd)
 	$(MAKE) --file=Makefile all
 else
 	$(MAKE) glmmadmb nbmm bvprobit admb_tests
 	$(MAKE) run
 endif
+
+rforge-glmmadmb:
+	git clone --depth 1 https://github.com/rforge/glmmadmb.git rforge-glmmadmb
 
 glmmadmb: glmmadmb.tpl
 ifeq ($(SHELL),cmd)
@@ -25,7 +28,7 @@ else
 endif
 
 glmmadmb.tpl:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
+	cp rforge-glmmadmb/pkg/inst/tpl/glmmadmb.tpl .
 
 nbmm: nbmm.tpl
 ifeq ($(SHELL),cmd)
@@ -35,7 +38,7 @@ else
 endif
 
 nbmm.tpl:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
+	cp rforge-glmmadmb/pkg/inst/tpl/nbmm.tpl .
 
 bvprobit: bvprobit.tpl
 ifeq ($(SHELL),cmd)
@@ -45,10 +48,10 @@ else
 endif
 
 bvprobit.tpl:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
+	cp rforge-glmmadmb/pkg/inst/tpl/bvprobit.tpl .
 
 admb_tests:
-	svn checkout svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/$@ $@ 
+	cp -R rforge-glmmadmb/pkg/inst/admb_tests .
 
 run:
 ifeq ($(SHELL),cmd)

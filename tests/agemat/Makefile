@@ -1,16 +1,19 @@
-all: 
+all: agemat.tpl
 	$(MAKE) agemat.tpl
 	..\\..\\admb agemat.tpl
 	$(MAKE) run
 
-run: agemat.dat
+run:
 	agemat
 
 agemat.tpl:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/executables/AGEMAT.TPL > agemat.tpl
+	copy rforge-nwfscassmt\\pkg\\nwfscAgeingError\\inst\\executables\\AGEMAT.TPL agemat.tpl
 
-agemat.dat:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/doc/agemat.dat > agemat.dat
+agemat.dat: rforge-nwfscassmt
+	copy rforge-nwfscassmt\\pkg\\nwfscAgeingError\\inst\\doc\\agemat.dat
+
+rforge-nwfscassmt:
+	git clone --depth 1 https://github.com/rforge/nwfscassmt rforge-nwfscassmt
 
 total-clean:
 	@if exist agemat.dat del /Q agemat.dat

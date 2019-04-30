@@ -5,15 +5,18 @@ all:
 	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)
 	@echo ADMB build all completed.
 	@echo Check README.txt for usage and installation information.
-dist: $(CXX)-dist
+dist:
+	$(MAKE) $(CXX)-dist DEBUG=$(DEBUG)
 	@echo ADMB build dist completed.
 	@echo Check README.txt for usage and installation information.
-src: $(CXX)-src
+src:
+	$(MAKE) $(CXX)-src DEBUG=$(DEBUG)
 debug:
 	$(MAKE) $(CXX)-all DEBUG=yes
 	@echo ADMB build debug completed.
 	@echo Check README.txt for usage and installation information.
-contrib: $(CXX)-contrib
+contrib:
+	$(MAKE) $(CXX)-contrib DEBUG=$(DEBUG)
 test: verify
 	$(MAKE) $(CXX)-test DEBUG=$(DEBUG)
 gtests:
@@ -22,6 +25,7 @@ verify:
 	$(MAKE) $(CXX)-verify DEBUG=$(DEBUG)
 doc: $(CXX)-docs
 shared: $(CXX)-shared
+	$(MAKE) $(CXX)-shared DEBUG=$(DEBUG)
 	@echo ADMB build shared completed.
 	@echo Check README.txt for usage and installation information.
 install: $(CXX)-install
@@ -32,7 +36,8 @@ check: $(CXX)-check
 	@echo "MAKE: $(MAKE)"
 	@echo "CXX: $(CXX)"
 clean: $(CXX)-clean
-coverage: $(CXX)-coverage
+coverage:
+	$(MAKE) $(CXX)-coverage DEBUG=$(DEBUG)
 
 help:
 	@echo Read INSTALL.txt for installation help.

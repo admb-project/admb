@@ -48,6 +48,10 @@ ADMB-git
 
   $ make shared 
 
+####Notes
+
+* Only 64-bit libraries for the MacOSX will be available for download.
+
 
 ADMB-12.0
 ---------

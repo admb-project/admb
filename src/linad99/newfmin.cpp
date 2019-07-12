@@ -59,7 +59,7 @@ extern int ctlc_flag;
 #include <stdio.h>
 #include <ctype.h>
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 BOOL CtrlHandler(DWORD fdwCtrlType)
 {
   if (fdwCtrlType == CTRL_C_EVENT)
@@ -236,7 +236,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
     #endif
   tracing_message(traceflag,"A4");
 
-#ifdef _MSC_VER
+#ifdef _WIN32
   SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandler, true);
 #else
   /* Check the value of control variable ireturn:

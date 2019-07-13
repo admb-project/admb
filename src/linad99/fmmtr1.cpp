@@ -58,6 +58,7 @@ extern int ctlc_flag;
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <conio.h>
 dvector update(int nvar, int iter, int m, const dvector& g,
   const dmatrix& xalpha, dmatrix& y, const dvector& x, const dvector& xold,
   const dvector& gold, const dvector& xrho);

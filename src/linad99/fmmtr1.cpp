@@ -44,9 +44,6 @@ extern int ctlc_flag;
 #endif
 #if defined (_MSC_VER)
   void __cdecl clrscr();
-#endif
-#if defined (_WIN32)
-  BOOL CtrlHandler(DWORD fdwCtrlType);
 #else
   #include <iostream>
   #include <signal.h>
@@ -77,18 +74,30 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
     #endif
   if (use_control_c)
   {
-#if defined (_WIN32)
-  SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandler, true);
-#else
-    if (ireturn <= 0 )
-    {
-  #if defined(__GNUC__)
-      signal(SIGINT, &onintr);
-  #else
-      signal(SIGINT, (SIG_PF)&onintr);
-  #endif
-    }
-#endif
+#if !defined (_MSC_VER)
+    #if defined( __SUN__) && !(defined __GNU__)
+      #if defined( __HP__)
+        if (ireturn <= 0 )
+        {
+          signal(SIGINT, &onintr);
+        }
+      #else
+        if (ireturn <= 0 )
+        {
+          signal(SIGINT, (SIG_PF)&onintr);
+        }
+      #endif
+    #endif
+ #endif
+  }
+  if (use_control_c)
+  {
+    #if defined( __GNU__)
+      if (ireturn <= 0 )
+      {
+        signal(SIGINT, &onintr);
+      }
+    #endif
   }
     #ifdef __ZTC__
       if (ireturn <= 0 )

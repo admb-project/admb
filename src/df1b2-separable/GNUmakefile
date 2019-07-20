@@ -1,8 +1,5 @@
-ifeq ($(OS)_$(TERM),Windows_NT_)
-PATH:=$(PATH):..\..\utilities
-endif
-
 ifeq ($(OS),Windows_NT)
+PATH:=$(PATH):..\..\utilities
 bins: $(DIST)\bin\tpl2rem.exe
 $(DIST)\bin\tpl2rem.exe: tpl2rem.c
 else
@@ -12,7 +9,7 @@ endif
 	$(CC) $(CFLAGS) -o $@ $<
 
 tpl2rem.c: lex.yy.c
-ifeq ($(OS)_$(TERM),Windows_NT_)
+ifeq ($(OS),Windows_NT)
 	sed -f sedflex lex.yy.c > $@
 else
 	rm -vf $@

@@ -47,6 +47,12 @@ else
   ifeq ($(UNAME_S),Darwin)
     OS_NAME=macosx
   endif
+  ifeq ($(findstring MINGW32,$(UNAME_S)),MINGW32)
+    OS_NAME=mingw32
+  endif
+  ifeq ($(findstring MINGW64,$(UNAME_S)),MINGW64)
+    OS_NAME=mingw64
+  endif
   ifeq ($(DEBUG),yes)
   OBJSDIR=$(shell pwd)/../build/objects/debug-$(OS_NAME)-$(CXX)/
   else

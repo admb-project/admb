@@ -1,21 +1,13 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(TERM),cygwin)
-  else
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL = cmd
-    ifeq ($(SHELL),cmd)
-      MYPWD=$(shell cd)
-    else
-      MYPWD=$(shell cmd /C cd)
+  ifeq ($(strip $(TERM)),)
+    SHELL=cmd
+    ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
+      PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
     endif
-    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
   else
-    ifneq ($(TERM),xterm)
-      MYPWD=$(shell pwd)
-      PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
+    ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
+      PATH:=$(shell pwd)/../utilities/mingw/bin:$(PATH)
     endif
-    PATH:=$(PATH):$(MYPWD)/../utilities
-  endif
   endif
 endif
 ifeq ($(SHELL),cmd)

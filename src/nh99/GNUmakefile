@@ -1,7 +1,13 @@
 ifeq ($(OS),Windows_NT)
+ifeq ($(strip $(TERM)),)
 PATH:=$(PATH):..\..\utilities
 bins: $(DIST)\bin\tpl2cpp.exe
 $(DIST)\bin\tpl2cpp.exe: tpl2cpp.c
+else
+PATH:=$(PATH):../../utilities
+bins: $(DIST)/bin/tpl2cpp.exe
+$(DIST)/bin/tpl2cpp.exe: tpl2cpp.c
+endif
 else
 bins: $(DIST)/bin/tpl2cpp
 $(DIST)/bin/tpl2cpp: tpl2cpp.c

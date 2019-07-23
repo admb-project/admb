@@ -1,21 +1,13 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(TERM),cygwin)
-  else
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL = cmd
-    ifeq ($(SHELL),cmd)
-      MYPWD=$(shell cd)
-    else
-      MYPWD=$(shell cmd /C cd)
+  ifeq ($(strip $(TERM)),)
+    SHELL=cmd
+    ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
+      PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
     endif
-    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
   else
-    ifneq ($(TERM),xterm)
-      MYPWD=$(shell pwd)
-      PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
+    ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
+      PATH:=$(shell pwd)/../utilities/mingw/bin:$(PATH)
     endif
-    PATH:=$(PATH):$(MYPWD)/../utilities
-  endif
   endif
 endif
 ifeq ($(SHELL),cmd)
@@ -127,11 +119,11 @@ ifeq ($(SHELL),cmd)
   else
 	if exist  src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a del src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a
 	copy src\$(CONTRIB_LIB)\..\..\lib\libadmb$(SHARED).a src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a
-	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a $(CONTRIB_OBJS_DIR)\contrib-saflp-*.obj
+	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contrib$(SHARED).a ..\build\objects\dist\contrib-saflp-*.obj
     ifndef SAFE_ONLY
 	if exist  src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a del src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a
 	copy src\$(CONTRIB_LIB)\..\..\lib\libadmbo$(SHARED).a src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a
-	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a $(CONTRIB_OBJS_DIR)\contrib-optlp-*.obj
+	$(AR) -rs src\$(CONTRIB_LIB)\..\..\lib\libadmb-contribo$(SHARED).a ..\build\objects\dist\contrib-optlp-*.obj
     endif
   endif
 else

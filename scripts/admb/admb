@@ -143,6 +143,18 @@ if [ "$UNAME_S" == "Darwin" ]; then
     CXX=c++
   fi
 fi
+if [[ "$UNAME_S" =~ "MINGW32" ]]; then
+  OS_NAME=mingw32
+  if [ "$CXX" == "" ]; then
+    CXX=g++
+  fi
+fi
+if [[ "$UNAME_S" =~ "MINGW64" ]]; then
+  OS_NAME=mingw64
+  if [ "$CXX" == "" ]; then
+    CXX=g++
+  fi
+fi
 if [ -f "$ADMB_HOME/bin/admb-cfg-$OS_NAME-$CXX.sh" ]; then
   source "$ADMB_HOME/bin/admb-cfg-$OS_NAME-$CXX.sh"
   CXXFLAGS="$CXXFLAGS $ADMB_CFG_CXXFLAGS"

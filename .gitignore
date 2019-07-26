@@ -3,7 +3,12 @@ contrib/**/*.obj
 tests/gtests/*.obj
 tests/gtests/test_nuts
 /admb
+/admb.sh
+/admb.cmd
 contrib/ad2csv/ad2csv
+contrib/ad2csv/ad2csv.exe
+src/.*~
+src/*~
 src/**/lex.yy.c
 src/**/*.swp
 src/df1b2-separable/tpl2rem.c
@@ -14,3 +19,7 @@ examples/admb/simple/*
 examples/admb/catage/*
 **/.DS_Store
 docs/api/dox
+scripts/admb/.*~
+scripts/admb/*~
+contrib/.*~
+contrib/*~

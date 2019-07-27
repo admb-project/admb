@@ -171,6 +171,12 @@ if [ "$CXX" == "g++" ]; then
 else
   CXXVERSION="$OS_NAME-$CXX"
 fi
+if [ "$CXX" == "c++" ]; then
+  DUMPVERSION="`c++ -dumpversion | cut -f1 -d. `"
+  CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
+else
+  CXXVERSION="$OS_NAME-$CXX"
+fi
 if [ -f "$ADMB_HOME/bin/admb-cfg$OS_NAME$CXXVERSION.sh" ]; then
   source "$ADMB_HOME/bin/admb-cfg$OS_NAME$CXXVERSION.sh"
   CXXFLAGS="$CXXFLAGS $ADMB_CFG_CXXFLAGS"

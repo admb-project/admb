@@ -63,7 +63,12 @@ else
     endif
   endif
   ifeq ($(CXX),g++)
-  CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
+  CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
+  else
+  CXXVERSION=-$(CXX)
+  endif
+  ifeq ($(CXX),c++)
+  CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
   else
   CXXVERSION=-$(CXX)
   endif

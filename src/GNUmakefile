@@ -24,7 +24,14 @@ ifeq ($(SHELL),cmd)
   else
   OBJSDIR=..\build\objects\dist
   endif
-  OBJSDIR:=$(addsuffix \,$(OBJSDIR))
+  ifeq ($(CXX),g++)
+    ifeq ($(shell g++ -dumpmachine),i686-w64-mingw32)
+      CXXVERSION=-mingw32-g++$(basename $(basename $(shell g++ -dumpversion)))
+    else
+      CXXVERSION=-mingw64-g++$(basename $(basename $(shell g++ -dumpversion)))
+    endif
+  endif
+  OBJSDIR:=$(addsuffix $(CXXVERSION)\,$(OBJSDIR))
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
 else
   INSTALL_DIR=/usr/local/
@@ -36,28 +43,36 @@ else
   LIBSDIR=$(DIST)/lib/
   UNAME_S := $(shell uname -s)
   ifeq ($(UNAME_S),Linux)
-    OS_NAME=linux
+    OSNAME=-linux
   endif
   ifeq ($(UNAME_S),Darwin)
-    OS_NAME=macosx
+    OSNAME=-macosx
   endif
   ifeq ($(findstring MINGW32,$(UNAME_S)),MINGW32)
-    OS_NAME=mingw32
+    ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+    OSNAME=-msys2-mingw32
+    else
+    OSNAME=-mingw32
+    endif
   endif
   ifeq ($(findstring MINGW64,$(UNAME_S)),MINGW64)
-    OS_NAME=mingw64
+    ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+    OSNAME=-msys2-mingw64
+    else
+    OSNAME=-mingw64
+    endif
+  endif
+  ifeq ($(CXX),g++)
+  CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
+  else
+  CXXVERSION=-$(CXX)
   endif
   ifeq ($(DEBUG),yes)
-  OBJSDIR=$(shell pwd)/../build/objects/debug-$(OS_NAME)-$(CXX)/
+  OBJSDIR=$(shell pwd)/../build/objects/debug$(OSNAME)$(CXXVERSION)/
   else
-  OBJSDIR=../build/objects/dist-$(OS_NAME)-$(CXX)/
+  OBJSDIR=../build/objects/dist$(OSNAME)$(CXXVERSION)/
   endif
   ADMB_VERSION:=$(shell cat ../VERSION)
-endif
-ifdef SHARED
-  ifneq ($(SHELL),cmd)
-    OBJSDIR:=$(addsuffix shared-,$(OBJSDIR))
-  endif
 endif
 
 ifdef CXX
@@ -222,7 +237,10 @@ ifdef SAFE_ONLY
 OBJECTS:=$(filter-out optlp-%,$(OBJECTS))
 endif
 
-OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
+ifdef SHARED
+PREFIXSHARED=shared-
+endif
+OBJECTS:=$(sort $(addprefix $(OBJSDIR)$(PREFIXSHARED),$(OBJECTS)))
 
 all: dist
 ifeq ($(SHELL),cmd)
@@ -248,25 +266,25 @@ shared: libs
 	$(MAKE) bins
 ifeq ($(DEBUG),yes)
   ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb.dll -Wl,--whole-archive ..\build\debug\lib\libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admbo.dll -Wl,--whole-archive ..\build\debug\lib\libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admb$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\debug\lib\libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\debug\lib\admbo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\debug\lib\libadmbo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb.so -Wl,-force_load ../build/debug/lib/libadmb-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/debug/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmbo.so -Wl,-force_load ../build/debug/lib/libadmbo-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/debug/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb.so -Wl,--whole-archive ../build/debug/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/debug/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmbo.so -Wl,--whole-archive ../build/debug/lib/libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/debug/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       endif
     endif
   endif
 else
   ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\dist\lib\libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admbo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\dist\lib\libadmbo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb-shared.a
@@ -274,9 +292,9 @@ else
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo-shared.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/dist/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/dist/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       endif
     endif
   endif
@@ -354,8 +372,8 @@ else
 	cp ../scripts/admb/adcomp.bat ${DIST}/bin/adcomp.cmd
 	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
   else
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-$(OS_NAME)-$(CXX).sh
-	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-$(OS_NAME)-$(CXX).sh
+	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-$(OSNAME)-$(CXX).sh
+	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-$(OSNAME)-$(CXX).sh
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin
@@ -390,72 +408,74 @@ else
 	rm -vf ${DIST}/lib/libadmb$(SHARED).a
 	rm -vf ${DIST}/lib/libadmbo$(SHARED).a
 endif
-	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-linad99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-df1b2-separable-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-nh99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-tools99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-sparse-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)saflp-linad99-[f]*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)saflp-linad99-[^f]*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)saflp-df1b2-separable-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)saflp-nh99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)saflp-tools99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)saflp-sparse-*.obj
 ifndef SAFE_ONLY
-	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-linad99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-df1b2-separable-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-nh99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-tools99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-sparse-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)optlp-linad99-[f]*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)optlp-linad99-[^f]*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)optlp-df1b2-separable-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)optlp-nh99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)optlp-tools99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)optlp-sparse-*.obj
 endif
 
 objects: $(OBJECTS)
 
 ifeq ($(SHELL),cmd)
-$(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-nh99-banner.obj: nh99\banner.cpp
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
 endif
-$(OBJSDIR)saflp-nh99-banner.obj: nh99\banner.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-nh99-banner.obj: nh99\banner.cpp
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_SAF_LIB)) -o $@ $<
 endif
 
-$(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-$(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
-$(OBJSDIR)optlp-df1b2-separable-%.obj: df1b2-separable\%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-df1b2-separable-%.obj: df1b2-separable\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-$(OBJSDIR)saflp-df1b2-separable-%.obj: df1b2-separable\%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-df1b2-separable-%.obj: df1b2-separable\%.cpp
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
-$(OBJSDIR)optlp-linad99-%.obj:linad99\%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-linad99-%.obj:linad99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-$(OBJSDIR)saflp-linad99-%.obj:linad99\%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-linad99-%.obj:linad99\%.cpp
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
-$(OBJSDIR)optlp-nh99-%.obj:nh99\%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-nh99-%.obj:nh99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-$(OBJSDIR)saflp-nh99-%.obj:nh99\%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-nh99-%.obj:nh99\%.cpp
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
-$(OBJSDIR)optlp-tools99-%.obj:tools99\%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-tools99-%.obj:tools99\%.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-$(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-tools99-%.obj:tools99\%.cpp
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
-$(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-nh99-banner.obj: nh99/banner.cpp
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
 endif
-$(OBJSDIR)saflp-nh99-banner.obj: nh99/banner.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-nh99-banner.obj: nh99/banner.cpp
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 else
@@ -463,72 +483,72 @@ else
 endif
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
 else
-$(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
 else
-$(OBJSDIR)saflp-sparse-hs_sparse.obj:sparse/hs_sparse.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-sparse-hs_sparse.obj:sparse/hs_sparse.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
 else
-$(OBJSDIR)optlp-df1b2-separable-%.obj:df1b2-separable/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-df1b2-separable-%.obj:df1b2-separable/%.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
 else
-$(OBJSDIR)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
 else
-$(OBJSDIR)optlp-linad99-%.obj:linad99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-linad99-%.obj:linad99/%.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
 else
-$(OBJSDIR)saflp-linad99-%.obj:linad99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-linad99-%.obj:linad99/%.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
 else
-$(OBJSDIR)optlp-nh99-%.obj:nh99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-nh99-%.obj:nh99/%.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
 else
-$(OBJSDIR)saflp-nh99-%.obj:nh99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-nh99-%.obj:nh99/%.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
 else
-$(OBJSDIR)optlp-tools99-%.obj:tools99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)optlp-tools99-%.obj:tools99/%.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
 else
-$(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
+$(OBJSDIR)$(PREFIXSHARED)saflp-tools99-%.obj:tools99/%.cpp
 endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 endif

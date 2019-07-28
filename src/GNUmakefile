@@ -64,13 +64,9 @@ else
   endif
   ifeq ($(CXX),g++)
   CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
-  else
-  CXXVERSION=-$(CXX)
   endif
   ifeq ($(CXX),c++)
   CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
-  else
-  CXXVERSION=-$(CXX)
   endif
   ifeq ($(DEBUG),yes)
   OBJSDIR=$(shell pwd)/../build/objects/debug$(OSNAME)$(CXXVERSION)/

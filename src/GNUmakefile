@@ -68,6 +68,9 @@ else
   ifeq ($(CXX),c++)
   CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
   endif
+  ifeq ($(CXX),icpc)
+  CXXVERSION=-icpc$(basename $(basename $(basename $(shell $(CXX) -dumpversion))))
+  endif
   ifeq ($(DEBUG),yes)
   OBJSDIR=$(shell pwd)/../build/objects/debug$(OSNAME)$(CXXVERSION)/
   else

@@ -59,6 +59,9 @@ else
   ifeq ($(CXX),c++)
   CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
   endif
+  ifeq ($(CXX),icpc)
+  CXXVERSION=-icpc$(basename $(basename $(basename $(shell $(CXX) -dumpversion))))
+  endif
   ifeq ($(DEBUG),yes)
   CONTRIB_DIR=../../build/debug/contrib
   CONTRIB_OBJS_PREFIX=build/objects/debug$(OSNAME)$(CXXVERSION)/contrib$(SHARED)

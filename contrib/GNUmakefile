@@ -96,14 +96,14 @@ ifeq ($(DEBUG),yes)
     endif
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contrib.so -Wl,-force_load ../build/debug/lib/libadmb-contrib-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/debug/lib/libadmb-contrib$(OSNAME)$(CXXVERSION)-shared.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contribo.so -Wl,-force_load ../build/debug/lib/libadmb-contribo-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/debug/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/debug/lib/libadmb-contrib-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/debug/lib/libadmb-contrib$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/debug/lib/libadmb-contribo-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/debug/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/debug/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       endif
     endif
   endif
@@ -115,9 +115,9 @@ else
     endif
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contrib.so -Wl,-force_load ../build/dist/lib/libadmb-contrib-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/dist/lib/libadmb-contrib$(OSNAME)$(CXXVERSION)-shared.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contribo.so -Wl,-force_load ../build/dist/lib/libadmb-contribo-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/dist/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/dist/lib/libadmb-contrib$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive

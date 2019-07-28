@@ -292,9 +292,9 @@ else
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admbo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\dist\lib\libadmbo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/dist/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/dist/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
 	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/dist/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
@@ -406,12 +406,12 @@ libs: includes
 	$(MAKE) objects
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
-	if exist ${DIST}\lib\libadmb$(SHARED).a del ${DIST}\lib\libadmb$(SHARED).a
-	if exist ${DIST}\lib\libadmbo$(SHARED).a del ${DIST}\lib\libadmbo$(SHARED).a
+	if exist ${DIST}\lib\libadmb$$(OSNAME)$(CXXVERSION)(SHARED).a del ${DIST}\lib\libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a
+	if exist ${DIST}\lib\libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a del ${DIST}\lib\libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a
 else
 	mkdir -p ${DIST}/lib
-	rm -vf ${DIST}/lib/libadmb$(SHARED).a
-	rm -vf ${DIST}/lib/libadmbo$(SHARED).a
+	rm -vf ${DIST}/lib/libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a
+	rm -vf ${DIST}/lib/libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a
 endif
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)saflp-linad99-[f]*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)$(PREFIXSHARED)saflp-linad99-[^f]*.obj

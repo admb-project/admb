@@ -9,8 +9,9 @@ dist:
 	$(MAKE) $(CXX)-dist DEBUG=$(DEBUG)
 	@echo ADMB build dist completed.
 	@echo Check README.txt for usage and installation information.
-src:
-	$(MAKE) $(CXX)-src DEBUG=$(DEBUG)
+core:
+	$(MAKE) $(CXX)-core DEBUG=$(DEBUG)
+	@echo ADMB build core completed.
 debug:
 	$(MAKE) $(CXX)-all DEBUG=yes
 	@echo ADMB build debug completed.
@@ -53,12 +54,12 @@ cl-all:
 	nmake cl-dist
 	nmake cl-shared
 cl-dist: 
-	nmake cl-src
+	nmake cl-core
 	nmake cl-contrib
 cl-debug:
 	pushd src& nmake DEBUG=yes all
 	pushd contrib& nmake DEBUG=yes all
-cl-src:
+cl-core:
 	pushd src& nmake all
 cl-contrib:
 	pushd contrib& nmake all
@@ -89,11 +90,11 @@ g++-all:
 	$(MAKE) g++-dist
 	$(MAKE) g++-shared
 g++-dist: 
-	$(MAKE) g++-src
+	$(MAKE) g++-core
 	$(MAKE) g++-contrib
 g++-debug:
 	$(MAKE) g++-all DEBUG=yes
-g++-src:
+g++-core:
 	$(MAKE) --directory=src CC=gcc CXX=g++ all
 g++-contrib:
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ all
@@ -127,11 +128,11 @@ clang++-all:
 	$(MAKE) clang++-dist
 	$(MAKE) clang++-shared
 clang++-dist:
-	$(MAKE) clang++-src
+	$(MAKE) clang++-core
 	$(MAKE) clang++-contrib
 clang++-debug:
 	$(MAKE) clang++-all DEBUG=yes
-clang++-src:
+clang++-core:
 	$(MAKE) --directory=src CC=clang CXX=clang++ all
 clang++-contrib:
 	$(MAKE) --directory=contrib CC=clang CXX=clang++ all
@@ -165,11 +166,11 @@ c++-all:
 	$(MAKE) c++-dist
 	$(MAKE) c++-shared
 c++-dist:
-	$(MAKE) c++-src
+	$(MAKE) c++-core
 	$(MAKE) c++-contrib
 c++-debug:
 	$(MAKE) c++-all DEBUG=yes
-c++-src:
+c++-core:
 	$(MAKE) --directory=src CC=cc CXX=c++ all
 c++-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=c++ all
@@ -203,11 +204,11 @@ CC-all:
 	$(MAKE) CC-dist
 	$(MAKE) CC-shared
 CC-dist:
-	$(MAKE) CC-src
+	$(MAKE) CC-core
 	$(MAKE) CC-contrib
 CC-debug:
 	$(MAKE) CC-all DEBUG=yes
-CC-src:
+CC-core:
 	$(MAKE) --directory=src CC=cc CXX=CC all
 CC-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=CC all
@@ -238,11 +239,11 @@ icpc-all:
 	$(MAKE) icpc-dist
 	$(MAKE) icpc-shared
 icpc-dist:
-	$(MAKE) icpc-src 
+	$(MAKE) icpc-core
 	$(MAKE) icpc-contrib
 icpc-debug:
 	$(MAKE) icpc-all DEBUG=yes
-icpc-src:
+icpc-core:
 	$(MAKE) --directory=src CC=icc CXX=icpc all
 icpc-contrib:
 	$(MAKE) --directory=contrib CC=icc CXX=icpc all
@@ -273,11 +274,11 @@ openCC-all:
 	$(MAKE) openCC-dist
 	$(MAKE) openCC-shared
 openCC-dist: 
-	$(MAKE) openCC-src
+	$(MAKE) openCC-core
 	$(MAKE) openCC-contrib
 openCC-debug:
 	$(MAKE) openCC-all DEBUG=yes
-openCC-src:
+openCC-core:
 	$(MAKE) --directory=src CC=opencc CXX=openCC all
 openCC-contrib:
 	$(MAKE) --directory=contrib CC=opencc CXX=openCC all
@@ -308,11 +309,11 @@ analyze-c++-all:
 	$(MAKE) analyze-c++-dist
 	$(MAKE) analyze-c++-shared
 analyze-c++-dist:
-	$(MAKE) analyze-c++-src
+	$(MAKE) analyze-c++-core
 	$(MAKE) analyze-c++-contrib
 analyze-c++-debug:
 	$(MAKE) analyze-c++-all DEBUG=yes
-analyze-c++-src:
+analyze-c++-core:
 	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ all
 analyze-c++-contrib:
 	$(MAKE) --directory=contrib CC=analyze-cc CXX=analyze-c++ all

@@ -1,13 +1,13 @@
 #default targets depending on compiler
 #DEBUG=yes
 
-all:
-	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)
-	@echo ADMB build all completed.
-	@echo Check README.txt for usage and installation information.
 dist:
 	$(MAKE) $(CXX)-dist DEBUG=$(DEBUG)
 	@echo ADMB build dist completed.
+	@echo Check README.txt for usage and installation information.
+all:
+	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)
+	@echo ADMB build all completed.
 	@echo Check README.txt for usage and installation information.
 core:
 	$(MAKE) $(CXX)-core DEBUG=$(DEBUG)
@@ -15,7 +15,6 @@ core:
 debug:
 	$(MAKE) $(CXX)-all DEBUG=yes
 	@echo ADMB build debug completed.
-	@echo Check README.txt for usage and installation information.
 contribs:
 	$(MAKE) $(CXX)-contribs DEBUG=$(DEBUG)
 	@echo ADMB build contribs completed.
@@ -29,7 +28,6 @@ doc: $(CXX)-docs
 shared: $(CXX)-shared
 	$(MAKE) $(CXX)-shared DEBUG=$(DEBUG)
 	@echo ADMB build shared completed.
-	@echo Check README.txt for usage and installation information.
 install: $(CXX)-install
 check: $(CXX)-check
 	@echo "SHELL: $(SHELL)"

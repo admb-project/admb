@@ -122,7 +122,7 @@ ifeq ($(SHELL),cmd)
 	$(AR) -rs src\$(CONTRIB_LIB)lib\libadmb-contrib$(SHARED).a ..\build\objects\dist\contrib-saflp-*.obj
     ifndef SAFE_ONLY
 	if exist  src\$(CONTRIB_LIB)lib\libadmb-contribo$(SHARED).a del src\$(CONTRIB_LIB)lib\libadmb-contribo$(SHARED).a
-	copy src\$(CONTRIB_LIBlib\libadmbo$(SHARED).a src\$(CONTRIB_LIB)lib\libadmb-contribo$(SHARED).a
+	copy src\$(CONTRIB_LIB)lib\libadmbo$(SHARED).a src\$(CONTRIB_LIB)lib\libadmb-contribo$(SHARED).a
 	$(AR) -rs src\$(CONTRIB_LIB)lib\libadmb-contribo$(SHARED).a ..\build\objects\dist\contrib-optlp-*.obj
     endif
   endif

@@ -301,8 +301,6 @@ ifeq ($(SHELL),cmd)
   endif
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
-	if not exist $(DIST)\include\contrib md $(DIST)\include\contrib
-	copy nh99\nocontrib.h $(DIST)\include\contrib\contrib.h
 	$(MAKE) --directory=df1b2-separable CC=gcc DIST=..\${DIST} bins
 	$(MAKE) --directory=nh99 CC=gcc DIST=..\${DIST} bins
 else
@@ -349,8 +347,6 @@ else
     endif
 	#cp ../scripts/admb/root-admb ../admb
   endif
-	mkdir -p $(DIST)/include/contrib
-	touch $(DIST)/include/contrib/contrib.h
     ifeq ($(DEBUG),yes)
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=${DIST} bins

@@ -12,15 +12,15 @@ ifeq ($(OS),Windows_NT)
 endif
 ifeq ($(SHELL),cmd)
   ifeq ($(DEBUG),yes)
-  CONTRIB_DIR=..\..\build\debug\contrib
+  CONTRIB_DIR=..\..\build\debug\
   CONTRIB_OBJS_DIR=..\..\build\objects\debug\contrib
   else
-  CONTRIB_DIR=..\..\build\dist\contrib
+  CONTRIB_DIR=..\..\build\dist\
   CONTRIB_OBJS_DIR=..\..\build\objects\dist\contrib
   endif
-  CONTRIB_BIN=$(addsuffix \bin,$(CONTRIB_DIR))
+  CONTRIB_BIN=$(addsuffix bin\,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
-  CONTRIB_LIB=$(addsuffix \lib,$(CONTRIB_DIR))
+  CONTRIB_LIB=$(addsuffix lib\,$(CONTRIB_DIR))
 else
   UNAME_S := $(shell uname -s)
   ifeq ($(UNAME_S),Linux)

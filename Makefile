@@ -52,6 +52,7 @@ cl: cl-all
 cl-all: 
 	nmake cl-dist
 	nmake cl-shared
+	pushd src& nmake copy
 cl-dist: 
 	nmake cl-contribs
 cl-debug:
@@ -87,6 +88,7 @@ g++: g++-all
 g++-all: 
 	$(MAKE) g++-dist
 	$(MAKE) g++-shared
+	$(MAKE) --directory=src CC=gcc CXX=g++ copy
 g++-dist: 
 	$(MAKE) g++-core
 	$(MAKE) g++-contribs
@@ -125,6 +127,7 @@ clang++: clang++-all
 clang++-all:
 	$(MAKE) clang++-dist
 	$(MAKE) clang++-shared
+	$(MAKE) --directory=src CC=clang CXX=clang++ copy
 clang++-dist:
 	$(MAKE) clang++-contribs
 clang++-debug:
@@ -162,6 +165,7 @@ c++: c++-all
 c++-all:
 	$(MAKE) c++-dist
 	$(MAKE) c++-shared
+	$(MAKE) --directory=src CC=cc CXX=c++ copy
 c++-dist:
 	$(MAKE) c++-contribs
 c++-debug:
@@ -199,6 +203,7 @@ CC: CC-all
 CC-all:
 	$(MAKE) CC-dist
 	$(MAKE) CC-shared
+	$(MAKE) --directory=src CC=cc CXX=CC copy
 CC-dist:
 	$(MAKE) CC-contribs
 CC-debug:
@@ -233,6 +238,7 @@ icpc: icpc-all
 icpc-all:
 	$(MAKE) icpc-dist
 	$(MAKE) icpc-shared
+	$(MAKE) --directory=src CC=icc CXX=icpc copy
 icpc-dist:
 	$(MAKE) icpc-contribs
 icpc-debug:
@@ -267,6 +273,7 @@ openCC: openCC-all
 openCC-all: 
 	$(MAKE) openCC-dist
 	$(MAKE) openCC-shared
+	$(MAKE) --directory=src CC=opencc CXX=openCC copy
 openCC-dist: 
 	$(MAKE) openCC-contribs
 openCC-debug:
@@ -301,6 +308,7 @@ analyze-c++: analyze-c++-all
 analyze-c++-all:
 	$(MAKE) analyze-c++-dist
 	$(MAKE) analyze-c++-shared
+	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ copy
 analyze-c++-dist:
 	$(MAKE) analyze-c++-contribs
 analyze-c++-debug:

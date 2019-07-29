@@ -4336,7 +4336,9 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"#endif\n");
 
     fprintf(htop,"#include <admodel.h>\n");
+    fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
     fprintf(htop,"#include <contrib.h>\n\n");
+    fprintf(htop,"#endif\n");
 
     if (bound_flag)
     {

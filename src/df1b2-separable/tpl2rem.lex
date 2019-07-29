@@ -4677,7 +4677,9 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"#endif\n");
 
     fprintf(htop,"#include <admodel.h>\n");
+    fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
     fprintf(htop,"#include <contrib.h>\n\n");
+    fprintf(htop,"#endif\n");
     if (random_effects_flag)
     {
       fprintf(htop,"#include <df1b2fun.h>\n\n");

@@ -132,16 +132,24 @@ if [ -z "$tpls" ]; then
 fi
 UNAME_S="`uname -s`"
 if [ "$UNAME_S" == "Linux" ]; then
-  OS_NAME=-linux
   if [ "$CXX" == "" ]; then
     CXX=g++
   fi
+  if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
+    OS_NAME=-x86_64-linux
+  else
+    OS_NAME=-i686-linux
+  fi  
 fi
 if [ "$UNAME_S" == "Darwin" ]; then
-  OS_NAME=-macosx
   if [ "$CXX" == "" ]; then
     CXX=c++
   fi
+  if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
+    OS_NAME=-x86_64-macosx
+  else
+    OS_NAME=-i686-macosx
+  fi  
 fi
 if [[ "$UNAME_S" =~ "MINGW32" ]]; then
   if [ "$CXX" == "" ]; then

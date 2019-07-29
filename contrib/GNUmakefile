@@ -36,10 +36,18 @@ ifeq ($(SHELL),cmd)
 else
   UNAME_S := $(shell uname -s)
   ifeq ($(UNAME_S),Linux)
-    OSNAME=-linux
+    ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
+      OSNAME=-i686-linux
+    else
+      OSNAME=-x86_64-linux
+    endif
   endif
   ifeq ($(UNAME_S),Darwin)
-    OSNAME=-macosx
+    ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
+      OSNAME=-i686-macosx
+    else
+      OSNAME=-x86_64-macosx
+    endif
   endif
   ifeq ($(findstring MINGW32,$(UNAME_S)),MINGW32)
     ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)

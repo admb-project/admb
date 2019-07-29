@@ -43,10 +43,18 @@ else
   LIBSDIR=$(DIST)/lib/
   UNAME_S := $(shell uname -s)
   ifeq ($(UNAME_S),Linux)
-    OSNAME=-linux
+    ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
+      OSNAME=-i686-linux
+    else
+      OSNAME=-x86_64-linux
+    endif
   endif
   ifeq ($(UNAME_S),Darwin)
-    OSNAME=-macosx
+    ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
+      OSNAME=-i686-macosx
+    else
+      OSNAME=-x86_64-macosx
+    endif
   endif
   ifeq ($(findstring MINGW32,$(UNAME_S)),MINGW32)
     ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
@@ -355,8 +363,8 @@ else
 	cp ../scripts/admb/adcomp.bat ${DIST}/bin/adcomp.cmd
 	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
   else
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-$(OSNAME)-$(CXX).sh
-	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-$(OSNAME)-$(CXX).sh
+	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg$(OSNAME)$(CXXVERSION).sh
+	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg$(OSNAME)$(CXXVERSION).sh
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin

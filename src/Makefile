@@ -228,6 +228,7 @@ copy:
 	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\src $(DESTDIR)\utilities
 	pushd ..\contrib & $(MAKE) copy
 	pushd ..\tests & $(MAKE) copy
+	copy ..\Makefile $(DESTDIR)
 
 clean:
 	if exist ..\benchmarks-opt.txt del ..\benchmarks-opt.txt

@@ -224,6 +224,8 @@ copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\src
 	IF NOT EXIST $(DESTDIR)\src xcopy /I /E /Y ..\src $(DESTDIR)\src
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
+	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\src $(DESTDIR)\utilities
 	pushd ..\contrib & $(MAKE) copy
 	pushd ..\tests & $(MAKE) copy
 

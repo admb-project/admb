@@ -19,17 +19,14 @@ shared:
 !ENDIf
 
 contrib-includes: contrib-dirs
-	pushd ecolib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
-	pushd gdbprintlib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
-	pushd qfclib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
-	pushd statslib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
-	pushd src& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	pushd ecolib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd gdbprintlib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd qfclib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd statslib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd src& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
 
 contrib-dirs:
-	IF NOT EXIST $(DESTDIR)\contrib md $(DESTDIR)\contrib
-	IF NOT EXIST $(DESTDIR)\contrib\bin md $(DESTDIR)\contrib\bin
-	IF NOT EXIST $(DESTDIR)\contrib\include md $(DESTDIR)\contrib\include
-	IF NOT EXIST $(DESTDIR)\contrib\lib md $(DESTDIR)\contrib\lib
+	IF NOT EXIST $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
 	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
 
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src

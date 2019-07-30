@@ -74,8 +74,6 @@ dist: bins
 	copy ..\README.txt $(DESTDIR)
 	copy ..\VERSION $(DESTDIR)
 	$(MAKE) lexfiles
-	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
-	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\utilities $(DESTDIR)\utilities
 
 bins: libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin

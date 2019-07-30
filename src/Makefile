@@ -50,7 +50,6 @@ SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\dist\saflp-nh99-)
 
 !INCLUDE tools99\objects.lst
 !IF DEFINED(DEBUG)
-OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\debug\optlp-nh99-)
 OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\debug\optlp-tools99-)
 SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\debug\saflp-tools99-)
 !ELSE
@@ -59,10 +58,7 @@ SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\saflp-tools99-)
 !ENDIF
 
 all: dist
-	$(MAKE) copy
 	@rem pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
-	@echo ADMB build completed.
-	@echo Check README.txt for usage and installation information.
 
 shared: all
 	IF EXIST $(DESTDIR)\lib\admb.dll del $(DESTDIR)\lib\admb.dll

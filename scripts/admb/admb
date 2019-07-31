@@ -139,7 +139,7 @@ if [ "$UNAME_S" == "Linux" ]; then
     OS_NAME=-x86_64-linux
   else
     OS_NAME=-i686-linux
-  fi  
+  fi
 fi
 if [ "$UNAME_S" == "Darwin" ]; then
   if [ "$CXX" == "" ]; then
@@ -149,7 +149,20 @@ if [ "$UNAME_S" == "Darwin" ]; then
     OS_NAME=-x86_64-macosx
   else
     OS_NAME=-i686-macosx
-  fi  
+  fi
+fi
+if [[ "$UNAME_S" =~ "MSYS_NT" ]]; then
+  if [ "$CXX" == "" ]; then
+    CXX=g++
+  fi
+  if [ "$CXX" == "g++" ]; then
+    if [ "`$CXX --version`" =~ "x86_64" ]; then
+      MSYSARCH=-x86_64
+    else
+      MSYSARCH=-i686
+    fi
+  fi
+  OS_NAME=$MSYSARCH-msys
 fi
 if [[ "$UNAME_S" =~ "MINGW32" ]]; then
   if [ "$CXX" == "" ]; then

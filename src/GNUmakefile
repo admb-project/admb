@@ -60,6 +60,13 @@ else
       OSNAME=-x86_64-macosx
     endif
   endif
+  ifeq ($(findstring MSYS_NT,$(UNAME_S)),MSYS_NT)
+    ifeq ($(findstring x86_64,$(shell g++ --version)),x86_64)
+      OSNAME=-x86_64-msys
+    else
+      OSNAME=-i686-msys
+    endif
+  endif
   ifeq ($(findstring MINGW32,$(UNAME_S)),MINGW32)
     ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
     OSNAME=-msys2-mingw32
@@ -727,7 +734,7 @@ ifeq ($(SHELL),cmd)
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
 	if not exist $(DIST)\src md $(DIST)\src
 	xcopy ..\src $(DIST)\src /S /Y /D
-	if not exist $(DIST)\scripts md $(DIST)\scripts 
+	if not exist $(DIST)\scripts md $(DIST)\scripts
 	xcopy ..\scripts $(DIST)\scripts /S /Y /D
 	$(MAKE) --directory=$(DIST)/scripts clean
 	if not exist $(DIST)\examples md $(DIST)\examples

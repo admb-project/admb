@@ -227,10 +227,10 @@ CXXFLAGS="$CXXFLAGS -D_USE_MATH_DEFINES"
 if [ "$library" == "opt" ]; then
   CXXFLAGS="$CXXFLAGS -DOPT_LIB"
 fi
-if [ ! -f "$ADMB_HOME/lib/libadmb-contrib$SHARED.a" ]; then
-  CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/include/contrib\""
+if [ -f "$ADMB_HOME/lib/libadmb-contrib$SHARED.a" ]; then
+  CXXFLAGS="$CXXFLAGS -DUSE_ADMB_CONTRIBS -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/include/contrib\""
 else
-  CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/contrib/include\""
+  CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\""
 fi
 if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
   LDFLAGS="--static $LDFLAGS"

@@ -225,24 +225,7 @@ endif
 OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 
 all: dist
-ifeq ($(SHELL),cmd)
-	if not exist $(DIST)\utilities md $(DIST)\utilities
-	xcopy ..\utilities $(DIST)\utilities /S /Y /D
-	$(MAKE) copy
-  ifeq ($(DEBUG),yes)
-	$(MAKE) --directory=..\build\debug\src dist-clean
-  else
-	$(MAKE) --directory=..\build\dist\src dist-clean
-  endif
-else
-	cp -vRf ../utilities ${DIST}
-	$(MAKE) copy
-  ifeq ($(DEBUG),yes)
-	$(MAKE) --directory=../build/debug/src dist-clean
-  else
-	$(MAKE) --directory=../build/dist/src dist-clean
-  endif
-endif
+
 
 shared: libs
 	$(MAKE) bins
@@ -289,13 +272,11 @@ ifeq ($(SHELL),cmd)
 	copy /Y ..\README.txt ${DIST}
 	copy /Y ..\CHANGES.txt ${DIST}
 	copy /Y ..\VERSION ${DIST}
-	copy /Y ..\Makefile ${DIST}
 else
 	cp -f ../LICENSE.txt ${DIST}
 	cp -f ../README.txt ${DIST}
 	cp -f ../CHANGES.txt ${DIST}
 	cp -f ../VERSION ${DIST}
-	cp -f ../Makefile ${DIST}
 endif
 
 bins:
@@ -320,8 +301,6 @@ ifeq ($(SHELL),cmd)
   endif
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
-	if not exist $(DIST)\include\contrib md $(DIST)\include\contrib
-	copy nh99\nocontrib.h $(DIST)\include\contrib\contrib.h
 	$(MAKE) --directory=df1b2-separable CC=gcc DIST=..\${DIST} bins
 	$(MAKE) --directory=nh99 CC=gcc DIST=..\${DIST} bins
 else
@@ -368,8 +347,6 @@ else
     endif
 	#cp ../scripts/admb/root-admb ../admb
   endif
-	mkdir -p $(DIST)/include/contrib
-	touch $(DIST)/include/contrib/contrib.h
     ifeq ($(DEBUG),yes)
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=${DIST} bins
@@ -689,6 +666,8 @@ endif
 
 copy:
 ifeq ($(SHELL),cmd)
+	if not exist $(DIST)\utilities md $(DIST)\utilities
+	xcopy ..\utilities $(DIST)\utilities /S /Y /D
 	if not exist $(DIST)\src md $(DIST)\src
 	xcopy ..\src $(DIST)\src /S /Y /D
 	if not exist $(DIST)\scripts md $(DIST)\scripts 
@@ -698,13 +677,26 @@ ifeq ($(SHELL),cmd)
 	xcopy ..\examples $(DIST)\examples /S /Y /D
 	$(MAKE) --directory=..\contrib copy
 	$(MAKE) --directory=..\tests copy
+  ifeq ($(DEBUG),yes)
+	$(MAKE) --directory=..\build\debug\src dist-clean
+  else
+	$(MAKE) --directory=..\build\dist\src dist-clean
+  endif
+	copy /Y ..\Makefile ${DIST}
 else
+	cp -vRf ../utilities ${DIST}
 	cp -R ../src $(DIST)
 	cp -R ../scripts $(DIST)
 	$(MAKE) --directory=$(DIST)/scripts clean
 	cp -R ../examples $(DIST)
 	$(MAKE) --directory=../contrib copy
 	$(MAKE) --directory=../tests copy
+  ifeq ($(DEBUG),yes)
+	$(MAKE) --directory=../build/debug/src dist-clean
+  else
+	$(MAKE) --directory=../build/dist/src dist-clean
+  endif
+	cp -f ../Makefile ${DIST}
 endif
 
 coding-standard: cpplint.py

@@ -177,6 +177,10 @@ if [ "$CXX" == "g++" ]; then
   DUMPVERSION="`g++ -dumpversion | cut -f1 -d. `"
   CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
 fi
+if [ "$CXX" == "clang++" ]; then
+  DUMPVERSION="`clang++ -dumpversion | cut -f1 -d. `"
+  CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
+fi
 if [ "$CXX" == "c++" ]; then
   DUMPVERSION="`c++ -dumpversion | cut -f1 -d. `"
   CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"

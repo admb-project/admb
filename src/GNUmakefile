@@ -87,7 +87,7 @@ else
   CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
   endif
   ifeq ($(CXX),analyze-c++)
-  CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
+  CXXVERSION=-analyze-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
   endif
   ifeq ($(CXX),icpc)
   CXXVERSION=-icpc$(basename $(basename $(basename $(shell $(CXX) -dumpversion))))

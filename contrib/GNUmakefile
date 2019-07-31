@@ -19,7 +19,7 @@ ifeq ($(SHELL),cmd)
   CONTRIB_OBJS_DIR=..\..\build\objects\dist
   endif
   ifeq ($(CXX),g++)
-    ifeq ($(findstring x86_64,$(shell g++ --version)),x86_64)
+    ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
       ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
         OSNAME=-x86_64-msys
       else
@@ -56,7 +56,7 @@ else
     endif
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
-    ifeq ($(findstring x86_64,$(shell g++ --version)),x86_64)
+    ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
       ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
         OSNAME=-x86_64-msys
       else

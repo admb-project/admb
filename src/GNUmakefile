@@ -74,6 +74,9 @@ else
     OSNAME=-mingw64
     endif
   endif
+  ifndef OSNAME
+    $(info Unable to set OSNAME from $(UNAME_S))
+  endif
   ifeq ($(CXX),g++)
   CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
   endif

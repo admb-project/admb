@@ -25,11 +25,20 @@ ifeq ($(SHELL),cmd)
   OBJSDIR=..\build\objects\dist
   endif
   ifeq ($(CXX),g++)
-    ifeq ($(shell g++ -dumpmachine),i686-w64-mingw32)
-      CXXVERSION=-mingw32-g++$(basename $(basename $(shell g++ -dumpversion)))
+    ifeq ($(findstring x86_64,$(shell g++ --version)),x86_64)
+      ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+        OSNAME=-x86_64-msys
+      else
+        OSNAME=-mingw64
+      endif
     else
-      CXXVERSION=-mingw64-g++$(basename $(basename $(shell g++ -dumpversion)))
+      ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+        OSNAME=-i686-msys
+      else
+        OSNAME=-mingw32
+      endif
     endif
+    CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
   ifdef SHARED
   OBJSDIR:=$(addsuffix $(CXXVERSION)-shared\,$(OBJSDIR))
@@ -62,9 +71,17 @@ else
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
     ifeq ($(findstring x86_64,$(shell g++ --version)),x86_64)
-      OSNAME=-x86_64-msys
+      ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+        OSNAME=-x86_64-msys
+      else
+        OSNAME=-mingw64
+      endif
     else
-      OSNAME=-i686-msys
+      ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+        OSNAME=-i686-msys
+      else
+        OSNAME=-mingw32
+      endif
     endif
   endif
   ifndef OSNAME

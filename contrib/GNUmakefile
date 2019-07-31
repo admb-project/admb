@@ -19,14 +19,20 @@ ifeq ($(SHELL),cmd)
   CONTRIB_OBJS_DIR=..\..\build\objects\dist
   endif
   ifeq ($(CXX),g++)
-    ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
-       MSYS2=-msys2
-    endif
-    ifeq ($(shell g++ -dumpmachine),i686-w64-mingw32)
-      CXXVERSION=$(MSYS2)-mingw32-g++$(basename $(basename $(shell g++ -dumpversion)))
+    ifeq ($(findstring x86_64,$(shell g++ --version)),x86_64)
+      ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+        OSNAME=-x86_64-msys
+      else
+        OSNAME=-mingw64
+      endif
     else
-      CXXVERSION=$(MSYS2)-mingw64-g++$(basename $(basename $(shell g++ -dumpversion)))
+      ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+        OSNAME=-i686-msys
+      else
+        OSNAME=-mingw32
+      endif
     endif
+    CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
   CONTRIB_OBJS_DIR:="\"$(CONTRIB_OBJS_DIR)$(CXXVERSION)\""
   CONTRIB_OBJS_DIR:=$(addsuffix \contrib,$(CONTRIB_OBJS_DIR))
@@ -51,9 +57,17 @@ else
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
     ifeq ($(findstring x86_64,$(shell g++ --version)),x86_64)
-      OSNAME=-x86_64-msys
+      ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+        OSNAME=-x86_64-msys
+      else
+        OSNAME=-mingw64
+      endif
     else
-      OSNAME=-i686-msys
+      ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
+        OSNAME=-i686-msys
+      else
+        OSNAME=-mingw32
+      endif
     endif
   endif
   ifeq ($(CXX),g++)

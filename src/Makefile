@@ -50,7 +50,6 @@ SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\dist\saflp-nh99-)
 
 !INCLUDE tools99\objects.lst
 !IF DEFINED(DEBUG)
-OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\debug\optlp-nh99-)
 OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\debug\optlp-tools99-)
 SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\debug\saflp-tools99-)
 !ELSE
@@ -59,10 +58,7 @@ SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\saflp-tools99-)
 !ENDIF
 
 all: dist
-	$(MAKE) copy
 	@rem pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
-	@echo ADMB build completed.
-	@echo Check README.txt for usage and installation information.
 
 shared: all
 	IF EXIST $(DESTDIR)\lib\admb.dll del $(DESTDIR)\lib\admb.dll
@@ -78,8 +74,6 @@ dist: bins
 	copy ..\README.txt $(DESTDIR)
 	copy ..\VERSION $(DESTDIR)
 	$(MAKE) lexfiles
-	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
-	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\utilities $(DESTDIR)\utilities
 
 bins: libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
@@ -212,7 +206,6 @@ includes: objdestdir
 	copy tools99\integrate_wrap.hpp $(DESTDIR)\include
 	copy tools99\adjson.h $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
-	copy nh99\nocontrib.h $(DESTDIR)\include\contrib\contrib.h
 
 objdestdir:
 	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
@@ -231,8 +224,11 @@ copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\src
 	IF NOT EXIST $(DESTDIR)\src xcopy /I /E /Y ..\src $(DESTDIR)\src
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
+	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\src $(DESTDIR)\utilities
 	pushd ..\contrib & $(MAKE) copy
 	pushd ..\tests & $(MAKE) copy
+	copy ..\Makefile $(DESTDIR)
 
 clean:
 	if exist ..\benchmarks-opt.txt del ..\benchmarks-opt.txt

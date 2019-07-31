@@ -1,9 +1,9 @@
 all:
 	..\..\admb.cmd ad2csv.cpp main.cpp
 !IF DEFINED(DEBUG)
-	copy ad2csv.exe ..\..\build\debug\contrib\bin
+	copy ad2csv.exe ..\..\build\debug\bin
 !ELSE
-	copy ad2csv.exe ..\..\build\dist\contrib\bin
+	copy ad2csv.exe ..\..\build\dist\bin
 !ENDIf
 
 clean:

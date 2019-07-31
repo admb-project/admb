@@ -72,10 +72,10 @@ else
   endif
   ifeq ($(DEBUG),yes)
   CONTRIB_DIR=../../build/debug/
-  CONTRIB_OBJS_PREFIX=build/objects/debug$(OSNAME)$(CXXVERSION)/contrib$(SHARED)
+  CONTRIB_OBJS_PREFIX=build/objects/debug$(OSNAME)$(CXXVERSION)$(SHARED)/contrib
   else
   CONTRIB_DIR=../../build/dist/
-  CONTRIB_OBJS_PREFIX=build/objects/dist$(OSNAME)$(CXXVERSION)/contrib$(SHARED)
+  CONTRIB_OBJS_PREFIX=build/objects/dist$(OSNAME)$(CXXVERSION)$(SHARED)/contrib
   endif
   CONTRIB_OBJS_DIR=../../$(CONTRIB_OBJS_PREFIX)
   CONTRIB_BIN=$(addsuffix bin/,$(CONTRIB_DIR))

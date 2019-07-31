@@ -185,6 +185,10 @@ if [ "$CXX" == "c++" ]; then
   DUMPVERSION="`c++ -dumpversion | cut -f1 -d. `"
   CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
 fi
+if [ "$CXX" == "analyze-c++" ]; then
+  DUMPVERSION="`analyze-c++ -dumpversion | cut -f1 -d. `"
+  CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
+fi
 if [ "$CXX" == "icpc" ]; then
   DUMPVERSION="`icpc -dumpversion | cut -f1 -d. `"
   CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"

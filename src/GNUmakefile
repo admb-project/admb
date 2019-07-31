@@ -75,7 +75,7 @@ else
     endif
   endif
   ifndef OSNAME
-    $(info Unable to set OSNAME from $(UNAME_S))
+    $(warning Unknown UNAME_S = "$(UNAME_S)" results in empty OSNAME.)
   endif
   ifeq ($(CXX),g++)
   CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
@@ -86,8 +86,14 @@ else
   ifeq ($(CXX),c++)
   CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
   endif
+  ifeq ($(CXX),analyze-c++)
+  CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
+  endif
   ifeq ($(CXX),icpc)
   CXXVERSION=-icpc$(basename $(basename $(basename $(shell $(CXX) -dumpversion))))
+  endif
+  ifndef CXXVERSION
+    $(warning Unknown CXX = "$(CXX)" results in empty CXXVERSION.)
   endif
   ifeq ($(DEBUG),yes)
   OBJSDIR=$(shell pwd)/../build/objects/debug$(OSNAME)$(CXXVERSION)

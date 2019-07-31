@@ -56,17 +56,19 @@ else
       OSNAME=-i686-msys
     endif
   endif
-  ifeq ($(findstring MINGW32,$(UNAME_S)),MINGW32)
+  ifeq ($(findstring MINGW32_NT,$(UNAME_S)),MINGW32_NT)
     ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
-       MSYS2=-msys2
+      OSNAME=-i686-msys2
+    else
+      OSNAME=-mingw32
     endif
-    OSNAME=$(MSYS2)-mingw32
   endif
-  ifeq ($(findstring MINGW64,$(UNAME_S)),MINGW64)
+  ifeq ($(findstring MINGW64_NT,$(UNAME_S)),MINGW64_NT)
     ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
-       MSYS2=-msys2
+      OSNAME=-x86_64-msys2
+    else
+      OSNAME=-mingw64
     endif
-    OSNAME=$(MSYS2)-mingw64
   endif
   ifeq ($(CXX),g++)
   CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))

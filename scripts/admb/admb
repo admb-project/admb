@@ -164,27 +164,27 @@ if [[ "$UNAME_S" =~ "MSYS_NT" ]]; then
   fi
   OS_NAME=$MSYSARCH-msys
 fi
-if [[ "$UNAME_S" =~ "MINGW32" ]]; then
+if [[ "$UNAME_S" =~ "MINGW32_NT" ]]; then
   if [ "$CXX" == "" ]; then
     CXX=g++
   fi
+  OS_NAME=-mingw32
   if [ "$CXX" == "g++" ]; then
     if [ "`$CXX --version`" =~ "MSYS2" ]; then
-      MSYS2=-msys2
+      OSNAME=-i686-msys2
     fi
   fi
-  OS_NAME=$MSYS2-mingw32
 fi
-if [[ "$UNAME_S" =~ "MINGW64" ]]; then
+if [[ "$UNAME_S" =~ "MINGW64_NT" ]]; then
   if [ "$CXX" == "" ]; then
     CXX=g++
   fi
+  OS_NAME=-mingw64
   if [ "$CXX" == "g++" ]; then
     if [[ "`$CXX --version`" =~ "MSYS2" ]]; then
-      MSYS2=-msys2
+      OSNAME=-x86_64-msys2
     fi
   fi
-  OS_NAME=$MSYS2-mingw64
 fi
 if [ "$CXX" == "g++" ]; then
   DUMPVERSION="`g++ -dumpversion | cut -f1 -d. `"

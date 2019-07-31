@@ -151,38 +151,15 @@ if [ "$UNAME_S" == "Darwin" ]; then
     OS_NAME=-i686-macosx
   fi
 fi
-if [[ "$UNAME_S" =~ "MSYS_NT" ]]; then
+if [[ "$UNAME_S" =~ "_NT" ]]; then
   if [ "$CXX" == "" ]; then
     CXX=g++
   fi
   if [ "$CXX" == "g++" ]; then
     if [ "`$CXX --version`" =~ "x86_64" ]; then
-      MSYSARCH=-x86_64
+      OS_NAME=-x86_64-msys
     else
-      MSYSARCH=-i686
-    fi
-  fi
-  OS_NAME=$MSYSARCH-msys
-fi
-if [[ "$UNAME_S" =~ "MINGW32_NT" ]]; then
-  if [ "$CXX" == "" ]; then
-    CXX=g++
-  fi
-  OS_NAME=-mingw32
-  if [ "$CXX" == "g++" ]; then
-    if [ "`$CXX --version`" =~ "MSYS2" ]; then
-      OSNAME=-i686-msys2
-    fi
-  fi
-fi
-if [[ "$UNAME_S" =~ "MINGW64_NT" ]]; then
-  if [ "$CXX" == "" ]; then
-    CXX=g++
-  fi
-  OS_NAME=-mingw64
-  if [ "$CXX" == "g++" ]; then
-    if [[ "`$CXX --version`" =~ "MSYS2" ]]; then
-      OSNAME=-x86_64-msys2
+      OS_NAME=-i686-msys
     fi
   fi
 fi

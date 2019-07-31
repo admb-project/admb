@@ -222,13 +222,15 @@ if "!CXX!"=="cl" (
   )
   for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
     for /f %%i in ('!CXX! --version ^| findstr MSYS2') do (
-      set CXXVERSION=-i686-msys2!CXXMAJORNUMBER!
+      set CXXVERSION=-i686-msys!CXXMAJORNUMBER!
     )
-    set CXXVERSION=-mingw32!CXXMAJORNUMBER!
+    if not defined CXXVERSION (
+      set CXXVERSION=-mingw32!CXXMAJORNUMBER!
+    )
   )
   for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
     for /f %%i in ('!CXX! --version ^| findstr MSYS2') do (
-      set CXXVERSION=-x86_64-msys2!CXXMAJORNUMBER!
+      set CXXVERSION=-x86_64-msys!CXXMAJORNUMBER!
     )
     if not defined CXXVERSION (
       set CXXVERSION=-mingw64!CXXMAJORNUMBER!

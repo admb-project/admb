@@ -156,7 +156,7 @@ if [[ "$UNAME_S" =~ "_NT" ]]; then
     CXX=g++
   fi
   if [ "$CXX" == "g++" ]; then
-    if [ "`$CXX --version`" =~ "x86_64" ]; then
+    if [ "`$CXX -dumpmachine`" =~ "x86_64" ]; then
       if [ "`$CXX --version`" =~ "MSYS2" ]; then
         OS_NAME=-x86_64-msys
       else

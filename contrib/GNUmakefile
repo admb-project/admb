@@ -34,7 +34,7 @@ ifeq ($(SHELL),cmd)
     endif
     CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
-  CONTRIB_OBJS_DIR:="\"$(CONTRIB_OBJS_DIR)$(CXXVERSION)\""
+  CONTRIB_OBJS_DIR:="\"$(CONTRIB_OBJS_DIR)$(OSNAME)$(CXXVERSION)\""
   CONTRIB_OBJS_DIR:=$(addsuffix \contrib,$(CONTRIB_OBJS_DIR))
   CONTRIB_BIN=$(addsuffix \bin\,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))

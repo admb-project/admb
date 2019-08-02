@@ -11,6 +11,9 @@ branches:
 notifications:
   email: false
 
+install:
+  - if [ $TRAVIS_OS_NAME = windows]; then choco install -y make
+
 matrix:
   include:
   - os: linux

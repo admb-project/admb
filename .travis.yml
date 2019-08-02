@@ -11,11 +11,7 @@ branches:
 notifications:
   email: false
 
-install:
-  if: os = windows
-  - choco install -y make
-
-matrix:
+jobs:
   include:
   - os: linux
     env:

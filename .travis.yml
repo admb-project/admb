@@ -16,11 +16,7 @@ compiler:
 
 os:
   - linux
-  - macos
-
-stages:
-  - build
-  - test
+  - osx
 
 jobs:
   include:

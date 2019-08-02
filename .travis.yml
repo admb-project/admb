@@ -16,7 +16,7 @@ matrix:
   - os: linux
     env:
      - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
-    dist: bionic
+    dist: xenial
     compiler: gcc
     before_install:
     - sudo pip install codecov
@@ -28,13 +28,13 @@ matrix:
     - codecov
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -42,13 +42,13 @@ matrix:
     - make --directory=examples admb
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -56,13 +56,13 @@ matrix:
     - make --directory=examples ham4
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -70,13 +70,13 @@ matrix:
     - make --directory=examples ham5
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -84,13 +84,13 @@ matrix:
     - make --directory=examples admb-re
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -98,13 +98,13 @@ matrix:
     - make --directory=examples logistic
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -112,13 +112,13 @@ matrix:
     - make --directory=examples nested4
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -126,13 +126,13 @@ matrix:
     - make --directory=examples skewed
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -140,13 +140,13 @@ matrix:
     - make --directory=examples socatt
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -154,13 +154,13 @@ matrix:
     - make --directory=examples spatial
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -168,13 +168,13 @@ matrix:
     - make --directory=examples union
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -182,13 +182,13 @@ matrix:
     - make --directory=examples weights
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-cachegrind
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -196,13 +196,13 @@ matrix:
     - make --directory=examples admb
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-cachegrind
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -210,13 +210,13 @@ matrix:
     - make --directory=examples admb-re
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-callgrind
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -224,13 +224,13 @@ matrix:
     - make --directory=examples admb
 
   - os: linux
-    dist: bionic
+    dist: xenial
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-callgrind
     before_install:
-    - sudo snap install valgrind
+    - sudo apt-get install -y valgrind
     compiler: gcc
     script:
     - make clean
@@ -238,7 +238,7 @@ matrix:
     - make --directory=examples admb-re
 
   - os: linux
-    dist: bionic
+    dist: xenial
     compiler: gcc
     script:
     - make clean
@@ -247,7 +247,7 @@ matrix:
     - make gtests
 
   - os: linux
-    dist: bionic
+    dist: xenial
     compiler: gcc
     script:
     - make clean
@@ -255,7 +255,7 @@ matrix:
     - make gtests
 
   - os: linux
-    dist: bionic
+    dist: xenial
     compiler: gcc
     script:
     - make clean
@@ -265,7 +265,7 @@ matrix:
     - make gtests
 
   - os: linux
-    dist: bionic
+    dist: xenial
     compiler: gcc
     script:
     - make clean

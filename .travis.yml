@@ -34,7 +34,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -48,7 +48,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -62,7 +62,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -76,7 +76,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -90,7 +90,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -104,7 +104,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -118,7 +118,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -132,7 +132,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -146,7 +146,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -160,7 +160,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -174,7 +174,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-memcheck
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -188,7 +188,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-cachegrind
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -202,7 +202,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-cachegrind
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -216,7 +216,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-callgrind
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean
@@ -230,7 +230,7 @@ matrix:
      - DEBUG=yes
      - PROG=../../../scripts/ci/run-valgrind-callgrind
     before_install:
-    - sudo apt-get install -y valgrind
+    - sudo snap install valgrind
     compiler: gcc
     script:
     - make clean

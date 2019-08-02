@@ -11,12 +11,17 @@ branches:
 notifications:
   email: false
 
+os:
+  - linux
+  - osx
+  - windows
+
 matrix:
   include:
   - os: linux
     env:
      - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
-    dist: xenial
+    dist: bionic
     compiler: gcc
     before_install:
     - sudo pip install codecov
@@ -28,7 +33,7 @@ matrix:
     - codecov
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -42,7 +47,7 @@ matrix:
     - make --directory=examples admb
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -56,7 +61,7 @@ matrix:
     - make --directory=examples ham4
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -70,7 +75,7 @@ matrix:
     - make --directory=examples ham5
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -84,7 +89,7 @@ matrix:
     - make --directory=examples admb-re
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -98,7 +103,7 @@ matrix:
     - make --directory=examples logistic
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -112,7 +117,7 @@ matrix:
     - make --directory=examples nested4
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -126,7 +131,7 @@ matrix:
     - make --directory=examples skewed
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -140,7 +145,7 @@ matrix:
     - make --directory=examples socatt
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -154,7 +159,7 @@ matrix:
     - make --directory=examples spatial
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -168,7 +173,7 @@ matrix:
     - make --directory=examples union
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -182,7 +187,7 @@ matrix:
     - make --directory=examples weights
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -196,7 +201,7 @@ matrix:
     - make --directory=examples admb
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -210,7 +215,7 @@ matrix:
     - make --directory=examples admb-re
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -224,7 +229,7 @@ matrix:
     - make --directory=examples admb
 
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -238,7 +243,7 @@ matrix:
     - make --directory=examples admb-re
 
   - os: linux
-    dist: xenial
+    dist: bionic
     compiler: gcc
     script:
     - make clean
@@ -247,7 +252,7 @@ matrix:
     - make gtests
 
   - os: linux
-    dist: xenial
+    dist: bionic
     compiler: gcc
     script:
     - make clean
@@ -255,7 +260,7 @@ matrix:
     - make gtests
 
   - os: linux
-    dist: xenial
+    dist: bionic
     compiler: gcc
     script:
     - make clean
@@ -265,7 +270,7 @@ matrix:
     - make gtests
 
   - os: linux
-    dist: xenial
+    dist: bionic
     compiler: gcc
     script:
     - make clean
@@ -349,3 +354,11 @@ matrix:
     - MAKEFLAGS=
     script:
     - scripts/ci/travis-windows-vc-build-analyze.bat objects3
+
+stages:
+  -build
+  -test
+
+jobs:
+  include:
+  

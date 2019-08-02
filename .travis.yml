@@ -11,11 +11,6 @@ branches:
 notifications:
   email: false
 
-os:
-  - linux
-  - osx
-  - windows
-
 matrix:
   include:
   - os: linux
@@ -354,11 +349,3 @@ matrix:
     - MAKEFLAGS=
     script:
     - scripts/ci/travis-windows-vc-build-analyze.bat objects3
-
-stages:
-  -build
-  -test
-
-jobs:
-  include:
-  

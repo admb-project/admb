@@ -126,7 +126,7 @@ n2mvol:
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 ifdef TRAVIS
-ifeq ($(PROG),../../../utilities/run-valgrind-memcheck)
+ifeq ($(PROG),../../../scripts/ci/run-valgrind-memcheck)
 admb-re: $(filter-out biglog glmmadmb caest nbmm logistic nested4 sdv skewed socatt spatial union weights, $(ADMB_RE_TPLS))
 else
 admb-re: $(filter-out biglog glmmadmb caest nbmm nested4 sdv skewed socatt spatial, $(ADMB_RE_TPLS))

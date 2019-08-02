@@ -21,8 +21,6 @@ os:
 jobs:
   include:
   - stage: build
-    script:
-    - make clean dist
+    script: make clean dist
   - stage: test
-    script:
-    - make --directory=examples admb
+    script: make --directory=examples admb

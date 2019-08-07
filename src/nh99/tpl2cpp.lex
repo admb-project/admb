@@ -743,7 +743,7 @@ DATA_SECTION  {
 <DEFINE_DATA>init_7darray {
     likelihood_found=1;
     BEGIN IN_SEVEN_ARRAY_DEF;
-    fprintf(fdat,"%s","  data_4array ");
+    fprintf(fdat,"%s","  data_7array ");
                      }
 
 

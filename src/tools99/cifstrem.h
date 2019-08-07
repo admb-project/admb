@@ -211,6 +211,8 @@ cifstream& operator>>(cifstream& istr, const dmatrix& z);
 cifstream& operator>>(cifstream& istr, const d3_array& z);
 cifstream& operator>>(cifstream& istr, const d4_array& z);
 cifstream& operator>>(cifstream& istr, const d5_array& z);
+cifstream& operator>>(cifstream& istr, const d6_array& z);
+cifstream& operator>>(cifstream& istr, const d7_array& z);
 //cifstream& operator>>(cifstream& istr, s3_array& z);
 //cifstream& operator>>(cifstream& istr,smatrix& z);
 cifstream& operator>>(cifstream& istr, const imatrix& z);

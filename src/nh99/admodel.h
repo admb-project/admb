@@ -1652,10 +1652,38 @@ public:
 };
 
 
-/**
- * Description not yet available.
- * \param
- */
+class data_7array : public named_d7_array
+{
+  data_7array(void) : named_d7_array() {;}
+  void allocate(int l7,int u7,int l6,int u6,int l5,int u5,int hhsl,
+    int hhsu,int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
+    const char* s="UNNAMED");
+  void allocate(const ad_integer& l7,const ad_integer& u7,
+    const index_type& l6,const index_type& u6,
+    const index_type& l5,const index_type& u5,
+    const index_type& hhsl,const index_type& hhsu,
+    const index_type& hsl,const index_type& hsu,
+    const index_type& sl,const index_type& sh,
+    const index_type& nrl,const index_type& nrh,
+    const char* s="UNNAMED");
+  friend class model_data;
+};
+
+class data_6array : public named_d6_array
+{
+  data_6array(void) : named_d6_array() {;}
+  void allocate(int l6,int u6,int l5,int u5,int hhsl,int hhsu,int hsl,
+    int hsu,int rmin,int rmax,int cmin,int cmax,const char * s="UNNAMED");
+  void allocate(const ad_integer& l6,const ad_integer& u6,
+    const index_type& l5,const index_type& u5,
+    const index_type& hhsl,const index_type& hhsu,
+    const index_type& hsl,const index_type& hsu,
+    const index_type& sl,const index_type& sh,
+    const index_type& nrl,const index_type& nrh,
+    const char * s="UNNAMED");
+  friend class model_data;
+};
+
 class data_5array : public named_d5_array
 {
   data_5array(void) : named_d5_array() {;}

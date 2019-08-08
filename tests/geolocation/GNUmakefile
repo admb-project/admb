@@ -95,10 +95,10 @@ ifeq ($(SHELL),cmd)
 else
 ifeq (cygwin,$(TERM))
 else
-	if [[ -e kfsst/Makefile ]]; then $(MAKE) --directory=kfsst clean; fi;
-	if [[ -e kftrack/Makefile ]]; then $(MAKE) --directory=kftrack clean; fi;
-	if [[ -e trackit/Makefile ]]; then $(MAKE) --directory=trackit clean; fi;
-	if [[ -e ukfsst/Makefile ]]; then $(MAKE) --directory=ukfsst clean; fi;
+	if [ -e kfsst/Makefile ]; then $(MAKE) --directory=kfsst clean; fi;
+	if [ -e kftrack/Makefile ]; then $(MAKE) --directory=kftrack clean; fi;
+	if [ -e trackit/Makefile ]; then $(MAKE) --directory=trackit clean; fi;
+	if [ -e ukfsst/Makefile ]; then $(MAKE) --directory=ukfsst clean; fi;
 endif
 	@rm -vf kfsst/admodel.cov
 	@rm -vf kfsst/admodel.dep

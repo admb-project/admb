@@ -16,7 +16,7 @@ TEST_F(test_issues, issue50)
   dvar_vector results = mfexp(values);
   dvector fd1 = value(results);
   fd1 /= std::exp(60.0);
-  double dx = 1.0e-10;
+  double dx = 1.0e-7;
   dvar_vector values2(1, 3);
   values2(1) = 60 + dx;
   values2(2) = 61 + dx;
@@ -42,7 +42,7 @@ TEST_F(test_issues, issue50)
   fd(2) = (fd2(2) - fd1(2)) / dx;
   fd(3) = (fd2(3) - fd1(3)) / dx;
 
-  ASSERT_NEAR(fd(1), gradients(1), 0.0001);
-  ASSERT_NEAR(fd(2), gradients(2), 0.0001);
-  ASSERT_NEAR(fd(3), gradients(3), 0.0001);
+  ASSERT_NEAR(fd(1), gradients(1), 0.000001);
+  ASSERT_NEAR(fd(2), gradients(2), 0.000001);
+  ASSERT_NEAR(fd(3), gradients(3), 0.000001);
 }

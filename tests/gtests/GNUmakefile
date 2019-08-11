@@ -118,6 +118,7 @@ GTESTS_ALL=\
  test_valarray.cpp\
  test_vector.cpp\
  test_xpools.cpp\
+ test_issues.cpp\
  main.cpp
 
 GTESTS_NEW=\

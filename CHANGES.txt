@@ -18,14 +18,25 @@ ADMB-git
 
 ####Changes and Improvements
 
+* Simplified build.
+
+  Default will only build static libraries.
+
+  ```
+  $ make
+  ```
+
+  To build shared libraries, use target all
+
+  ```
+  $ make all
+  ```
+
+* Corrected mfexp derivative computation. [See Issue #113](https://github.com/admb-project/admb/issues/113)
+
+* Added missing init_6darray and init_7darray. [See Issue #108](https://github.com/admb-project/admb/issues/108)
+
 * Fixed valgrind reported memory leaks.
-
-* Buildbot is now hosted at SOEST (April-2018).
-  
-  https://buildbot.admb-project.org/
-
-  Note: Needed to comment out "escape shell special characters"
-  in runproces.py from windows buildbot-worker.
 
 * Using Travis CI for build and testing of ADMB.
   

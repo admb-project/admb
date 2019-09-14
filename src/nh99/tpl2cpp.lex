@@ -4012,10 +4012,6 @@ TOP_OF_MAIN_SECTION {
       exit(1);
     }
     fprintf(ftopmain,"  long int arrmblsize=0;\n");
-    fprintf(ftopmain,"#ifdef DEBUG\n");
-    fprintf(ftopmain,"  #include <chrono>\n");
-    fprintf(ftopmain,"#endif\n");
-
     if (makedll) fprintf(ftopmain,"extern \"C\" {\n");
     if (splus_debug_flag)
     {
@@ -4341,6 +4337,9 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"  #endif\n");
     fprintf(ftopmain,"#endif\n");
 
+    fprintf(htop,"#ifdef DEBUG\n");
+    fprintf(htop,"  #include <chrono>\n");
+    fprintf(htop,"#endif\n");
     fprintf(htop,"#include <admodel.h>\n");
     fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
     fprintf(htop,"#include <contrib.h>\n\n");

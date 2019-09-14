@@ -4012,6 +4012,10 @@ TOP_OF_MAIN_SECTION {
       exit(1);
     }
     fprintf(ftopmain,"  long int arrmblsize=0;\n");
+    fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  #include <chrono>\n");
+    fprintf(ftopmain,"#endif\n");
+
     if (makedll) fprintf(ftopmain,"extern \"C\" {\n");
     if (splus_debug_flag)
     {
@@ -4301,6 +4305,7 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
     fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
     fprintf(ftopmain,"  #endif\n");
+    fprintf(ftopmain,"  auto start = std::chrono::high_resolution_clock::now();\n");
     fprintf(ftopmain,"#endif\n");
     if (makedll)
     {
@@ -4321,6 +4326,7 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"    mp.computations(argc,argv);\n");
 
     fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  std::cout << endl << argv[0] << \" elapsed time is \" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count() << \" microseconds.\" << endl;\n");
     fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
     fprintf(ftopmain,"bool failedtest = false;\n");
     fprintf(ftopmain,"if (std::fetestexcept(FE_DIVBYZERO))\n");

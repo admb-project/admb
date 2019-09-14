@@ -4343,6 +4343,7 @@ TOP_OF_MAIN_SECTION {
       {
         fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
         fprintf(ftopmain,"#ifdef DEBUG\n");
+        fprintf(ftopmain,"  auto start = std::chrono::high_resolution_clock::now();\n");
         fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
         fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
         fprintf(ftopmain,"  #endif\n");
@@ -4548,6 +4549,7 @@ TOP_OF_MAIN_SECTION {
       {
         fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
         fprintf(ftopmain,"#ifdef DEBUG\n");
+        fprintf(ftopmain,"  auto start = std::chrono::high_resolution_clock::now();\n");
         fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
         fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
         fprintf(ftopmain,"  #endif\n");
@@ -4662,6 +4664,7 @@ TOP_OF_MAIN_SECTION {
      }
 
     fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  std::cout << endl << argv[0] << \" elapsed time is \" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count() << \" microseconds.\" << endl;\n");
     fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
     fprintf(ftopmain,"bool failedtest = false;\n");
     fprintf(ftopmain,"if (std::fetestexcept(FE_DIVBYZERO))\n");
@@ -4676,6 +4679,9 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"  #endif\n");
     fprintf(ftopmain,"#endif\n");
 
+    fprintf(htop,"#ifdef DEBUG\n");
+    fprintf(htop,"  #include <chrono>\n");
+    fprintf(htop,"#endif\n");
     fprintf(htop,"#include <admodel.h>\n");
     fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
     fprintf(htop,"#include <contrib.h>\n\n");

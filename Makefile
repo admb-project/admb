@@ -82,6 +82,7 @@ cl-clean:
 	pushd contrib& nmake clean
 	pushd scripts& nmake clean
 	pushd tests& nmake clean
+	pushd examples& nmake clean
 
 #GNU
 g++: g++-all
@@ -121,6 +122,7 @@ g++-clean:
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ clean
 	$(MAKE) --directory=scripts CC=gcc CXX=g++ clean
 	$(MAKE) --directory=tests CC=gcc CXX=g++ clean
+	$(MAKE) --directory=examples CC=gcc CXX=g++ clean
 
 #clang
 clang++: clang++-all
@@ -159,6 +161,7 @@ clang++-clean:
 	$(MAKE) --directory=contrib CC=clang CXX=clang++ clean
 	$(MAKE) --directory=scripts CC=clang CXX=clang++ clean
 	$(MAKE) --directory=tests CC=clang CXX=clang++ clean
+	$(MAKE) --directory=examples CC=clang CXX=clang++ clean
 
 #default c++
 c++: c++-all
@@ -197,6 +200,7 @@ c++-clean:
 	$(MAKE) --directory=contrib CC=cc CXX=c++ clean
 	$(MAKE) --directory=scripts CC=cc CXX=c++ clean
 	$(MAKE) --directory=tests CC=cc CXX=c++ clean
+	$(MAKE) --directory=examples CC=cc CXX=c++ clean
 
 #Oracle Solaris Studio
 CC: CC-all
@@ -232,6 +236,7 @@ CC-clean:
 	$(MAKE) --directory=contrib CC=cc CXX=CC clean
 	$(MAKE) --directory=scripts CC=cc CXX=CC clean
 	$(MAKE) --directory=tests CC=cc CXX=CC clean
+	$(MAKE) --directory=examples CC=cc CXX=CC clean
 
 #Intel
 icpc: icpc-all
@@ -267,6 +272,7 @@ icpc-clean:
 	$(MAKE) --directory=contrib CC=icc CXX=icpc clean
 	$(MAKE) --directory=scripts CC=icc CXX=icpc clean
 	$(MAKE) --directory=tests CC=icc CXX=icpc clean
+	$(MAKE) --directory=examples CC=icc CXX=icpc clean
 
 #AMD
 openCC: openCC-all
@@ -302,6 +308,7 @@ openCC-clean:
 	$(MAKE) --directory=contrib CC=opencc CXX=openCC clean
 	$(MAKE) --directory=scripts CC=opencc CXX=openCC clean
 	$(MAKE) --directory=tests CC=opencc CXX=openCC clean
+	$(MAKE) --directory=examples CC=opencc CXX=openCC clean
 
 #scan-build
 analyze-c++: analyze-c++-all
@@ -340,6 +347,7 @@ analyze-c++-clean:
 	$(MAKE) --directory=contrib CC=analyze-cc CXX=analyze-c++ clean
 	$(MAKE) --directory=scripts CC=analyze-cc CXX=analyze-c++ clean
 	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ clean
+	$(MAKE) --directory=examples CC=analyze-cc CXX=analyze-c++ clean
 
 #Unsupported Borland 5.5
 bcc: bcc-all

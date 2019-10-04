@@ -11,6 +11,6 @@ pool:
 
 steps:
 - script: |
-    apt install -y flex
+    sudo apt install -y flex
     make
   displayName: 'make'

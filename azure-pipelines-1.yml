@@ -11,5 +11,6 @@ pool:
 
 steps:
 - script: |
-      echo "%VS150COMNTOOLS%""
+      set
+      echo "%VS150COMNTOOLS%
       nmake

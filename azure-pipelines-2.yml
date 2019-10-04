@@ -11,3 +11,4 @@ pool:
 
 steps:
 - script: make
+- script: make verify

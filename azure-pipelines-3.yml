@@ -14,5 +14,3 @@ steps:
     set
 
 - task: VSBuild@1
-  inputs:
-    solution: 'Makefile'

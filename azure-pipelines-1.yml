@@ -12,5 +12,5 @@ pool:
 steps:
 - script: |
       set
-      echo "%VS150COMNTOOLS%
+      pushd "%VS140COMNTOOLS%\..\..\VC\Auxiliary\Build & call vcvarsall.bat amd64 & popd
       nmake

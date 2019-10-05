@@ -10,8 +10,6 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-- task: AzurePowerShell@1
-  
 - script:
     set && nmake
 

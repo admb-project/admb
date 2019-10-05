@@ -9,16 +9,9 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
-  buildPlatform: 'x86|x64|ARM'
-  buildConfiguration: 'Release'
-  appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
-
 steps:
-
-- task: VSBuild@1
-  inputs:
-    vsVersion: latest
+- task: AzurePowerShell@1
+  
 - script:
     set && nmake
 

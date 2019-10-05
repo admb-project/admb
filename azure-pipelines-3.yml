@@ -11,6 +11,5 @@ pool:
 
 steps:
 - script:
-    set
     dir %ProgramFiles(x86)%
 

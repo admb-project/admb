@@ -7,8 +7,12 @@ trigger:
 - master
 
 pool:
-  vmImage: 'vs2019-win2019'
+  vmImage: 'windows-2019'
 
 steps:
 - script:
     set
+
+- task: VSBuild@1
+  inputs:
+    solution: 'Makefile'

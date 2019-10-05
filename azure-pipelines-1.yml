@@ -14,3 +14,4 @@ steps:
       set
       pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
       nmake
+      nmake verify

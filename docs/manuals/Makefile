@@ -12,7 +12,7 @@ AUTODIF_PATH=autodif
 SAMPLE_PATH=admb-sample
 ADMBMANUAL_PATH=admbmanual
 
-ALL: MANUALS 
+ALL: WRITERS_GUIDE MANUALS 
 
 pdfs: ALL
 	mkdir -p pdfs

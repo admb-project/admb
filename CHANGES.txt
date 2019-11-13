@@ -38,9 +38,13 @@ ADMB-git
 
 * Fixed valgrind reported memory leaks.
 
-* Using Travis CI for build and testing of ADMB.
+* Automated Builds
+
+  Using Travis CI for build and testing of ADMB.
   
   https://travis-ci.org/admb-project/admb/
+
+  Also, added Microsoft Azure DevOps for build and testing of ADMB.
 
 * Fixed parsers to avoid needing to add extra line at the end to the tpl file.
 * Added target dist to Makefile to skip building shared libraries for faster builds.

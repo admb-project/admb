@@ -36,7 +36,7 @@ ifeq ($(SHELL),cmd)
   endif
   CONTRIB_OBJS_DIR:="\"$(CONTRIB_OBJS_DIR)$(OSNAME)$(CXXVERSION)\""
   CONTRIB_OBJS_DIR:=$(addsuffix \contrib,$(CONTRIB_OBJS_DIR))
-  CONTRIB_BIN=$(addsuffix \bin\,$(CONTRIB_DIR))
+  CONTRIB_BIN=$(addsuffix \bin\\,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix \lib\,$(CONTRIB_DIR))
 else

@@ -7,6 +7,30 @@ trigger:
 - master
 
 jobs:
+- job: VS2017
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - script: |
+      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
+      nmake
+      nmake verify
+
+- job: VS2019
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - script: |
+      nmake
+      nmake verify
+
+- job: MacOS
+  pool:
+    vmImage: 'macOS-latest'
+  steps:
+  - script: make
+  - script: make verify
+
 - job: Ubuntu
   pool:
     vmImage: 'ubuntu-latest'
@@ -17,19 +41,3 @@ jobs:
       make --directory=scripts/installers/packagemaker
       make verify
     displayName: 'make'
-
-- job: MacOS
-  pool:
-    vmImage: 'macOS-latest'
-  steps:
-  - script: make
-  - script: make verify
-
-- job: VS2017
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - script: |
-      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
-      nmake
-      nmake verify

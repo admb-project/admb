@@ -1,9 +1,0 @@
-trigger:
-- master
-
-pool:
-  vmImage: 'windows-2019'
-
-steps:
-- script:
-    call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"

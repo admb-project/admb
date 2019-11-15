@@ -81,8 +81,6 @@ all-tpls:\
   test-rgamma\
   tpl-f1b2vc5\
   tpl-4darray\
-  tpl-glmmadmb\
-  tpl-agemat\
   tpl-betai\
   tpl-beta2\
   tpl-beta3\
@@ -98,13 +96,11 @@ all-tpls:\
   tpl-beta_deviate\
   tpl-betareg\
   tpl-beta_regression\
-  tpl-changepoint\
   tpl-colfill\
   tpl-cov_re\
   tpl-ctl\
   tpl-expm\
   tpl-gradients_output\
-  tpl-geolocation\
   tpl-simple_mcmc\
   tpl-hysimple\
   tpl-priors\
@@ -112,6 +108,12 @@ all-tpls:\
   tpl-orange_mvn\
   cpp-globals\
   tpl-lprof
+
+all-remote-tpls:\
+  tpl-agemat\
+  tpl-changepoint\
+  tpl-geolocation\
+  tpl-glmmadmb
 
 cpp-globals:
 	$(MAKE) --directory=globals

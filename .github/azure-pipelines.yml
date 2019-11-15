@@ -21,7 +21,7 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - script: |
-      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Common7\Tools" & call VsDevCmd.bat & popd
+      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\Common7\Tools" & call VsDevCmd.bat & popd
       nmake
       nmake verify
 

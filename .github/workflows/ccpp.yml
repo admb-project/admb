@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: Ubuntu build of ADMB 
 
 on: [push]
 
@@ -13,9 +13,7 @@ jobs:
       run: sudo apt-get install flex
     - name: clean
       run: make clean
-    - name: make
+    - name: build
       run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    - name: tests
+      run: make test

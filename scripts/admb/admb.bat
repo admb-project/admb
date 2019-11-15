@@ -257,7 +257,7 @@ if "!CXX!"=="cl" (
   if defined d (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
-  if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
+  if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
     set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include"
   ) else (
     set CXXFLAGS=!CXXFLAGS! -DUSE_ADMB_CONTRIBS -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"

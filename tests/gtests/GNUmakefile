@@ -140,7 +140,7 @@ GTESTS_DEV=\
 #GTESTS=$(GTESTS_DEV)
 GTESTS=$(GTESTS_ALL)
 
-ifdef (TRAVIS_COMPILER)
+ifeq ($(OS),Windows_NT)
   GTESTS:=$(filter-out test_adstring_array.cpp,$(GTESTS))
 endif
 ifeq ($(CXX),openCC)

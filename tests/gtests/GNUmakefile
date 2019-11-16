@@ -142,6 +142,8 @@ GTESTS=$(GTESTS_ALL)
 
 ifeq ($(OS),Windows_NT)
   GTESTS:=$(filter-out test_adstring_array.cpp,$(GTESTS))
+  GTESTS:=$(filter-out test_line_adstring.cpp,$(GTESTS))
+  GTESTS:=$(filter-out test_init_line_adstring.cpp,$(GTESTS))
 endif
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))

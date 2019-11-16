@@ -465,6 +465,26 @@ else
 	rm -vf admb-re/nbmm/nbmm.rep
 	rm -vf admb-re/nbmm/nbmm.rhes
 	rm -vf admb-re/nbmm/nbmm.std
+	rm -vf admb-re/nested4/admodel.cov
+	rm -vf admb-re/nested4/admodel.dep
+	rm -vf admb-re/nested4/admodel.hes
+	rm -vf admb-re/nested4/fmin.log
+	rm -vf admb-re/nested4/hesscheck
+	rm -vf admb-re/nested4/hessian.bin
+	rm -vf admb-re/nested4/nested4.b01
+	rm -vf admb-re/nested4/nested4.bar
+	rm -vf admb-re/nested4/nested4.bgs
+	rm -vf admb-re/nested4/nested4.cor
+	rm -vf admb-re/nested4/nested4.cpp
+	rm -vf admb-re/nested4/nested4.eva
+	rm -vf admb-re/nested4/nested4.htp
+	rm -vf admb-re/nested4/nested4.log
+	rm -vf admb-re/nested4/nested4.obj
+	rm -vf admb-re/nested4/nested4.p01
+	rm -vf admb-re/nested4/nested4.par
+	rm -vf admb-re/nested4/nested4.r01
+	rm -vf admb-re/nested4/nested4.rep
+	rm -vf admb-re/nested4/nested4.rhes
 	rm -vf admb-re/nested4/nested4.std
 	rm -vf admb-re/orange/admodel.cov
 	rm -vf admb-re/orange/admodel.dep

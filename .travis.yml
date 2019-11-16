@@ -324,6 +324,7 @@ jobs:
     - SAFE_ONLY=yes
     compiler: gcc
     script:
+    - make.exe clean
     - make.exe dist
     - make.exe gtests
 

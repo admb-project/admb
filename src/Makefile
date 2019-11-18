@@ -67,9 +67,20 @@ OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects-win-vc\debug\optlp-linad99-) $(OBJ
 SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects-win-vc\debug\saflp-linad99-) $(OBJ2: = ..\build\objects-win-vc\debug\saflp-linad99-) $(OBJ3: = ..\build\objects-win-vc\debug\saflp-linad99-) $(OBJ4: = ..\build\objects-win-vc\debug\saflp-linad99-) $(OBJ16: = ..\build\objects-win-vc\debug\saflp-linad99-)
 !ENDIF
 !IF DEFINED(TRAVIS)
-SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\debug\saflp-linad99-)
-SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects\debug\saflp-linad99-)
-SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
+!IF "$(CXXVERSION)"=="-vc19" && "$(OSNAME)"=="-winx64"
+SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects-winx64-vc19\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects-winx64-vc19\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects-winx64-vc19\debug\saflp-linad99-) $(OBJ4: = ..\build\objects-winx64-vc19\debug\saflp-linad99-) $(OBJ16: = ..\build\objects-winx64-vc19\debug\saflp-linad99-)
+!ELSEIF "$(CXXVERSION)"=="-vc19" && "$(OSNAME)"=="-winx86"
+SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects-winx86-vc19\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects-winx86-vc19\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects-winx86-vc19\debug\saflp-linad99-) $(OBJ4: = ..\build\objects-winx86-vc19\debug\saflp-linad99-) $(OBJ16: = ..\build\objects-winx86-vc19\debug\saflp-linad99-)
+!ELSE
+SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects-win-vc\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects-win-vc\debug\saflp-linad99-)
+SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects-win-vc\debug\saflp-linad99-) $(OBJ4: = ..\build\objects-win-vc\debug\saflp-linad99-) $(OBJ16: = ..\build\objects-win-vc\debug\saflp-linad99-)
+!ELSE
+!ENDIF
 !ENDIF
 !ELSE
 !IF "$(CXXVERSION)"=="-vc19" && "$(OSNAME)"=="-winx64"

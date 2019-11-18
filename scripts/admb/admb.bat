@@ -143,21 +143,36 @@ if "!CXX!"=="cl" (
   ) else (
     set CXXFLAGS=!CXXFLAGS! /O2
   )
-  if defined fast (
-    set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
-    if not exist "!ADMB_HOME!\lib\admb-contribo.lib" (
-      set libs="!ADMB_HOME!\lib\admbo.lib" /link
-    ) else (
-      set libs="!ADMB_HOME!\lib\admb-contribo.lib" /link
+  for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "Compiler Version 19."') do (
+    set CXXVERSION=-vc19
+    for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "x64"') do (
+      set OSNAME=-winx64
     )
-  ) else (
-    if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
-      set libs="!ADMB_HOME!\lib\admb.lib" /link
-    ) else (
-      set libs="!ADMB_HOME!\lib\admb-contrib.lib" /link
+    for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "x86"') do (
+      set OSNAME=-winx86
     )
   )
-  if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
+  if not defined CXXVERSION (
+    set CXXVERSION=-vc
+  )
+  if not defined OSNAME (
+    set OSNAME=-win
+  )
+  if defined fast (
+    set CXXFLAGS=!CXXFLAGS! /nologo /DOPT_LIB
+    if not exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" (
+      set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!.lib" /link
+    ) else (
+      set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" /link
+    )
+  ) else (
+    if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
+      set libs="!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!.lib" /link
+    ) else (
+      set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" /link
+    )
+  )
+  if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
     set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include"
   ) else (
     set CXXFLAGS=!CXXFLAGS! /DUSE_ADMB_CONTRIBS /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"

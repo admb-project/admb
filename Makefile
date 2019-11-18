@@ -50,39 +50,39 @@ installer:
 #Microsoft Visual C++
 cl: cl-all
 cl-all: 
-	nmake cl-dist
-	nmake cl-shared
-	pushd src& nmake copy
+	nmake /nologo cl-dist
+	nmake /nologo cl-shared
+	pushd src& nmake /nologo copy
 cl-dist: 
-	nmake cl-contribs
+	nmake /nologo cl-contribs
 cl-debug:
-	pushd src& nmake DEBUG=yes all
-	pushd contrib& nmake DEBUG=yes all
+	pushd src& nmake /nologo DEBUG=yes all
+	pushd contrib& nmake /nologo DEBUG=yes all
 cl-core:
-	pushd src& nmake all
+	pushd src& nmake /nologo all
 cl-contribs: cl-core
-	pushd contrib& nmake all
+	pushd contrib& nmake /nologo all
 cl-docs:
-	pushd docs& nmake all
+	pushd docs& nmake /nologo all
 cl-test:
-	pushd tests & nmake all
+	pushd tests & nmake /nologo all
 cl-gtests:
-	pushd tests & nmake test-gtests
+	pushd tests & nmake /nologo test-gtests
 cl-verify:
-	pushd tests& nmake verify
+	pushd tests& nmake /nologo verify
 cl-shared:
-	pushd src& nmake shared
-	pushd contrib& nmake shared
+	pushd src& nmake /nologo shared
+	pushd contrib& nmake /nologo shared
 cl-install:
-	pushd src& nmake install
+	pushd src& nmake /nologo install
 cl-check:
-	pushd src& nmake check
+	pushd src& nmake /nologo check
 cl-clean:
-	pushd src& nmake clean
-	pushd contrib& nmake clean
-	pushd scripts& nmake clean
-	pushd tests& nmake clean
-	pushd examples& nmake clean
+	pushd src& nmake /nologo clean
+	pushd contrib& nmake /nologo clean
+	pushd scripts& nmake /nologo clean
+	pushd tests& nmake /nologo clean
+	pushd examples& nmake /nologo clean
 
 #GNU
 g++: g++-all

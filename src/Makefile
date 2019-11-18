@@ -79,7 +79,6 @@ SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects-winx86-vc19\debug\saflp-linad99-)
 SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects-win-vc\debug\saflp-linad99-)
 SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects-win-vc\debug\saflp-linad99-)
 SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects-win-vc\debug\saflp-linad99-) $(OBJ4: = ..\build\objects-win-vc\debug\saflp-linad99-) $(OBJ16: = ..\build\objects-win-vc\debug\saflp-linad99-)
-!ELSE
 !ENDIF
 !ENDIF
 !ELSE

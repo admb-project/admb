@@ -336,4 +336,4 @@ check:
 	@echo "OS: $(OS)"
 	@echo "OSTYPE: $(OSTYPE)"
 zip:
-	pushd ..\\build && ..\\scripts\\installers.bat && popd
+	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd

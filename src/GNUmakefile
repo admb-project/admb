@@ -785,7 +785,7 @@ check:
 	@echo "OSTYPE: $(OSTYPE)"
 zip:
 ifeq ($(OS),Windows_NT)
-	pushd ..\\build && ..\\scripts\\installers.bat && popd
+	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd
 else
 	rm -vf ../admb.zip build/admb
 	cd ../build && ln -sf dist/ admb

@@ -783,3 +783,11 @@ check:
 	@echo "CXX: $(CXX)"
 	@echo "OS: $(OS)"
 	@echo "OSTYPE: $(OSTYPE)"
+zip:
+ifeq ($(OS),Windows_NT)
+	pushd ..\\build && ..\\scripts\\installers.bat && popd
+else
+	rm -vf ../admb.zip build/admb
+	cd ../build && ln -sf dist/ admb
+	cd ../build && zip -9 -r ../admb.zip admb
+endif

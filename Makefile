@@ -42,10 +42,9 @@ coverage:
 help:
 	@echo Read INSTALL.txt for installation help.
 
-installer:
-	rm -vf admb.zip build/admb
-	cd build && ln -sf dist/ admb
-	cd build && zip -9 -r ../admb admb
+installer: zip
+
+zip: $(CXX)-zip
 
 #Microsoft Visual C++
 cl: cl-all
@@ -83,6 +82,8 @@ cl-clean:
 	pushd scripts& nmake /nologo clean
 	pushd tests& nmake /nologo clean
 	pushd examples& nmake /nologo clean
+cl-zip:
+	pushd src& nmake /nologo zip
 
 #GNU
 g++: g++-all
@@ -123,6 +124,8 @@ g++-clean:
 	$(MAKE) --directory=scripts CC=gcc CXX=g++ clean
 	$(MAKE) --directory=tests CC=gcc CXX=g++ clean
 	$(MAKE) --directory=examples CC=gcc CXX=g++ clean
+g++-zip:
+	$(MAKE) --directory=src CC=gcc CXX=g++ zip
 
 #clang
 clang++: clang++-all
@@ -162,6 +165,8 @@ clang++-clean:
 	$(MAKE) --directory=scripts CC=clang CXX=clang++ clean
 	$(MAKE) --directory=tests CC=clang CXX=clang++ clean
 	$(MAKE) --directory=examples CC=clang CXX=clang++ clean
+clang++-zip:
+	$(MAKE) --directory=zip CC=clang CXX=clang++ zip
 
 #default c++
 c++: c++-all
@@ -201,6 +206,8 @@ c++-clean:
 	$(MAKE) --directory=scripts CC=cc CXX=c++ clean
 	$(MAKE) --directory=tests CC=cc CXX=c++ clean
 	$(MAKE) --directory=examples CC=cc CXX=c++ clean
+c++-zip:
+	$(MAKE) --directory=zip CC=cc CXX=c++ zip
 
 #Oracle Solaris Studio
 CC: CC-all
@@ -237,6 +244,8 @@ CC-clean:
 	$(MAKE) --directory=scripts CC=cc CXX=CC clean
 	$(MAKE) --directory=tests CC=cc CXX=CC clean
 	$(MAKE) --directory=examples CC=cc CXX=CC clean
+CC-zip:
+	$(MAKE) --directory=zip CC=cc CXX=CC zip
 
 #Intel
 icpc: icpc-all
@@ -273,6 +282,8 @@ icpc-clean:
 	$(MAKE) --directory=scripts CC=icc CXX=icpc clean
 	$(MAKE) --directory=tests CC=icc CXX=icpc clean
 	$(MAKE) --directory=examples CC=icc CXX=icpc clean
+icpc-zip:
+	$(MAKE) --directory=zip CC=icc CXX=icpc zip
 
 #AMD
 openCC: openCC-all
@@ -309,6 +320,8 @@ openCC-clean:
 	$(MAKE) --directory=scripts CC=opencc CXX=openCC clean
 	$(MAKE) --directory=tests CC=opencc CXX=openCC clean
 	$(MAKE) --directory=examples CC=opencc CXX=openCC clean
+openCC-zip:
+	$(MAKE) --directory=zip CC=opencc CXX=openCC zip
 
 #scan-build
 analyze-c++: analyze-c++-all
@@ -348,6 +361,7 @@ analyze-c++-clean:
 	$(MAKE) --directory=scripts CC=analyze-cc CXX=analyze-c++ clean
 	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ clean
 	$(MAKE) --directory=examples CC=analyze-cc CXX=analyze-c++ clean
+analyze-c++-zip:
 
 #Unsupported Borland 5.5
 bcc: bcc-all

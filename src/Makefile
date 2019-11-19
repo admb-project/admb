@@ -335,3 +335,5 @@ check:
 	@echo "CXX: $(CXX)"
 	@echo "OS: $(OS)"
 	@echo "OSTYPE: $(OSTYPE)"
+zip:
+	pushd ..\\build && ..\\scripts\\installers.bat && popd

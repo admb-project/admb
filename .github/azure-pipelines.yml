@@ -14,6 +14,7 @@ jobs:
   - script: |
       pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
       nmake
+      nmake zip
       nmake verify
 
 - job: VS2019
@@ -23,6 +24,7 @@ jobs:
   - script: |
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\Common7\Tools" & call VsDevCmd.bat & popd
       nmake
+      nmake zip
       nmake verify
 
 - job: MacOS

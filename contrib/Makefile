@@ -1,14 +1,14 @@
 !IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
-CXXVERSION=-vc19
+CXXVERSION=-cl19
 !ELSE
-CXXVERSION=-vc
+CXXVERSION=-cl
 !ENDIF
 !IF ([cl /? 2>&1 | findstr /C:" x64" > nul] == 0)
-OSNAME=-winx64
+OSNAME=-vsx64
 !ELSEIF ([cl /? 2>&1 | findstr /C:" x86" > nul] == 0)
-OSNAME=-winx86
+OSNAME=-vsx86
 !ELSE
-OSNAME=-win
+OSNAME=-vs
 !ENDIF
 
 !IF DEFINED(DEBUG)

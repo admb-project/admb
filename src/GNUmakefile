@@ -785,9 +785,18 @@ check:
 	@echo "OSTYPE: $(OSTYPE)"
 zip:
 ifeq ($(OS),Windows_NT)
-	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd
+ifeq ($(DEBUG),yes)
+	pushd ..\\build && move debug admb && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && move admb debug && popd
+else
+	pushd ..\\build && move dist admb && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && move admb dist && popd
+endif
 else
 	rm -vf ../admb.zip build/admb
+ifeq ($(DEBUG),yes)
+	cd ../build && ln -sf debug/ admb
+else
 	cd ../build && ln -sf dist/ admb
+endif
 	cd ../build && zip -9 -r ../admb.zip admb
+	rm -vf build/admb
 endif

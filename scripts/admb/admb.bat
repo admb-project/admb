@@ -144,19 +144,19 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! /O2
   )
   for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "Compiler Version 19."') do (
-    set CXXVERSION=-vc19
+    set CXXVERSION=-cl19
     for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "x64"') do (
-      set OSNAME=-winx64
+      set OSNAME=-vsx64
     )
     for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "x86"') do (
-      set OSNAME=-winx86
+      set OSNAME=-vsx86
     )
   )
   if not defined CXXVERSION (
-    set CXXVERSION=-vc
+    set CXXVERSION=-cl
   )
   if not defined OSNAME (
-    set OSNAME=-win
+    set OSNAME=-vs
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /nologo /DOPT_LIB

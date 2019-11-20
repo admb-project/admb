@@ -166,7 +166,7 @@ clang++-clean:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ clean
 	$(MAKE) --directory=examples CC=clang CXX=clang++ clean
 clang++-zip:
-	$(MAKE) --directory=zip CC=clang CXX=clang++ zip
+	$(MAKE) --directory=src CC=clang CXX=clang++ zip
 
 #default c++
 c++: c++-all
@@ -207,7 +207,7 @@ c++-clean:
 	$(MAKE) --directory=tests CC=cc CXX=c++ clean
 	$(MAKE) --directory=examples CC=cc CXX=c++ clean
 c++-zip:
-	$(MAKE) --directory=zip CC=cc CXX=c++ zip
+	$(MAKE) --directory=src CC=cc CXX=c++ zip
 
 #Oracle Solaris Studio
 CC: CC-all
@@ -245,7 +245,7 @@ CC-clean:
 	$(MAKE) --directory=tests CC=cc CXX=CC clean
 	$(MAKE) --directory=examples CC=cc CXX=CC clean
 CC-zip:
-	$(MAKE) --directory=zip CC=cc CXX=CC zip
+	$(MAKE) --directory=src CC=cc CXX=CC zip
 
 #Intel
 icpc: icpc-all
@@ -283,7 +283,7 @@ icpc-clean:
 	$(MAKE) --directory=tests CC=icc CXX=icpc clean
 	$(MAKE) --directory=examples CC=icc CXX=icpc clean
 icpc-zip:
-	$(MAKE) --directory=zip CC=icc CXX=icpc zip
+	$(MAKE) --directory=src CC=icc CXX=icpc zip
 
 #AMD
 openCC: openCC-all
@@ -321,7 +321,7 @@ openCC-clean:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC clean
 	$(MAKE) --directory=examples CC=opencc CXX=openCC clean
 openCC-zip:
-	$(MAKE) --directory=zip CC=opencc CXX=openCC zip
+	$(MAKE) --directory=src CC=opencc CXX=openCC zip
 
 #scan-build
 analyze-c++: analyze-c++-all

@@ -35,15 +35,15 @@ clean:
 	if exist SS3 rmdir /s /q SS3
 
 verify:
-	del ..\benchmarks-saf.txt
-	del ..\benchmarks-opt.txt
+	del ..\outputs-saf.txt
+	del ..\outputs-opt.txt
 	if not exist ..\build\dist\examples md  ..\build\dist\examples
 	xcopy ..\examples ..\build\dist\examples  /S /Y /D
 	pushd ..\build\dist\examples & $(MAKE) all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
 !IFNDEF SAFE_ONLY
 	pushd ..\build\dist\examples & $(MAKE) FAST_OPTION=-f all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
 !ENDIF
 
 copy:

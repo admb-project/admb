@@ -225,32 +225,32 @@ example-prof_like:
 verify:
 ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
-	del ..\benchmarks-saf.txt
+	del ..\outputs-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
     ifndef SAFE_ONLY
-	del ..\benchmarks-opt.txt
+	del ..\outputs-opt.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
     endif
   else
     ifndef SAFE_ONLY
-	del ..\benchmarks-opt.txt
+	del ..\outputs-opt.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples --file=Makefile all
-	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
     endif
-	del ..\benchmarks-saf.txt
+	del ..\outputs-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples --file=Makefile all
-	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
   endif
 else
-	rm -vf ../benchmarks-saf.txt
+	rm -vf ../outputs-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ../examples all
-	-../scripts/get-outputs.sh ../examples/ > "../benchmarks-saf.txt"
+	-../scripts/get-outputs.sh ../examples/ > "../outputs-saf.txt"
   ifndef SAFE_ONLY
-	rm -vf ../benchmarks-opt.txt
+	rm -vf ../outputs-opt.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples all
-	-../scripts/get-outputs.sh ../examples/ > "../benchmarks-opt.txt"
+	-../scripts/get-outputs.sh ../examples/ > "../outputs-opt.txt"
   endif
 endif
 
@@ -340,15 +340,15 @@ else
 	$(MAKE) --directory=$(DIST)/tests total-clean
 endif
 
-benchmarks:
+outputs:
 ifeq ($(SHELL),cmd)
-	del benchmarks-tests.txt
+	del outputs-tests.txt
 else
-	rm -vf benchmarks-tests.txt
-	touch benchmarks-tests.txt
-	$(MAKE) --directory=lprof get-outputs >> benchmarks-tests.txt
+	rm -vf outputs-tests.txt
+	touch outputs-tests.txt
+	$(MAKE) --directory=lprof get-outputs >> outputs-tests.txt
 endif
-	$(MAKE) --directory=beta_regression get-outputs >> benchmarks-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> benchmarks-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> benchmarks-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> benchmarks-tests.txt
+	$(MAKE) --directory=beta_regression get-outputs >> outputs-tests.txt
+	$(MAKE) --directory=agemat get-outputs >> outputs-tests.txt
+	$(MAKE) --directory=beta_deviate get-outputs >> output-tests.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> output-tests.txt

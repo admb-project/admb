@@ -318,8 +318,8 @@ copy:
 	copy ..\Makefile $(DESTDIR)
 
 clean:
-	if exist ..\benchmarks-opt.txt del ..\benchmarks-opt.txt
-	if exist ..\benchmarks-saf.txt del ..\benchmarks-saf.txt
+	if exist ..\outputs-opt.txt del ..\outputs-opt.txt
+	if exist ..\outputs-saf.txt del ..\outputs-saf.txt
 	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
 	if exist ..\admb.cmd del ..\admb.cmd

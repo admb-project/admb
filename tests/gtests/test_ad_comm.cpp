@@ -87,7 +87,9 @@ TEST_F(test_ad_comm, change_pinfile_name_error)
   ASSERT_ANY_THROW({
     off = ad_comm::change_pinfile_name("filedoesnotexist.txt2", off);
   });
+#if defined(_MSC_VER) && (_MSC_VER >= 1910)
   ASSERT_TRUE(off == 0);
+#endif
 
   ASSERT_TRUE(ad_comm::global_parfile == NULL);
 }
@@ -103,7 +105,9 @@ TEST_F(test_ad_comm, change_pinfile_name)
 
   streampos off;
   off = ad_comm::change_pinfile_name("pinfiledoesexist.pin", off);
+#if defined(_MSC_VER) && (_MSC_VER >= 1910)
   ASSERT_TRUE(off == 0);
+#endif
 
   ASSERT_TRUE(ad_comm::global_parfile != NULL);
 
@@ -126,7 +130,9 @@ TEST_F(test_ad_comm, change_datafile_name)
 
   streampos off;
   off = ad_comm::change_datafile_name("datafiledoesexist.dat", off);
+#if defined(_MSC_VER) && (_MSC_VER >= 1910)
   ASSERT_TRUE(off == 0);
+#endif
 
   ASSERT_TRUE(ad_comm::global_datafile != NULL);
 

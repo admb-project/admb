@@ -188,6 +188,11 @@ if "!CXX!"=="cl" (
       set LD=g++
     )
   )
+  where /Q !CXX!
+  if errorlevel 1 (
+    echo Error: Unable to find !CXX!
+    exit /B 1
+  )
   for /f %%i in ('!CXX! -dumpversion ^| findstr /b 4.') do (
     set CXXMAJORNUMBER=-g++4
     set STDCXX=-std=c++11

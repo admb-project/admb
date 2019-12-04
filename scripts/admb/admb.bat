@@ -132,6 +132,11 @@ if exist "!ADMB_HOME!\bin\admb-cfg.bat" (
   )
 )
 if "!CXX!"=="cl" (
+  where /Q !CXX!
+  if errorlevel 1 (
+    echo Error: Unable to find !CXX!
+    exit /B 1
+  )
   set LD=!CXX!
   if defined CXXFLAGS (
     set CXXFLAGS= /c /nologo /EHsc !CXXFLAGS!

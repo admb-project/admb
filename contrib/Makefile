@@ -13,15 +13,15 @@ OSNAME=-vs
 
 !IF DEFINED(DEBUG)
 DESTDIR=..\build\debug
-OBJDESTDIR=..\build\objects$(OSNAME)$(CXXVERSION)\debug
+OBJDESTDIR=..\build\objects\debug$(OSNAME)$(CXXVERSION)
 !ELSE
 DESTDIR=..\build\dist
-OBJDESTDIR=..\build\objects$(OSNAME)$(CXXVERSION)\dist
+OBJDESTDIR=..\build\objects\dist$(OSNAME)$(CXXVERSION)
 !ENDIf
 all:
-	$(MAKE) /nlogo contrib-includes
-	$(MAKE) /nlogo contrib-libs
-	$(MAKE) /nlogo contrib-ad2csv
+	$(MAKE) contrib-includes
+	$(MAKE) contrib-libs
+	$(MAKE) contrib-ad2csv
 	
 shared:
 	IF EXIST $(DESTDIR)\lib\admb-contrib.dll del $(DESTDIR)\lib\admb-contrib.dll
@@ -53,35 +53,35 @@ contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib
 !ENDIF
 
 contrib-ad2csv:
-	pushd ad2csv& $(MAKE) /nologo
+	pushd ad2csv& $(MAKE)
 
 contrib-ecolib:
-	pushd ecolib& $(MAKE) /nologo
+	pushd ecolib& $(MAKE)
 
 contrib-gdbprintlib:
-	pushd gdbprintlib& $(MAKE) /nologo
+	pushd gdbprintlib& $(MAKE)
 
 contrib-qfclib:
-	pushd qfclib& $(MAKE) /nologo
+	pushd qfclib& $(MAKE)
 
 contrib-statslib:
-	pushd statslib& $(MAKE) /nologo
+	pushd statslib& $(MAKE)
 
 contrib-src:
-	pushd src& $(MAKE) /nologo
+	pushd src& $(MAKE)
 
 test:
-	pushd ecolib& $(MAKE) /nologo test
-	pushd qfclib& $(MAKE) /nologo test
+	pushd ecolib& $(MAKE) test
+	pushd qfclib& $(MAKE) test
 
 clean:
-	pushd ecolib& $(MAKE) /nologo clean
-	pushd gdbprintlib& $(MAKE) /nologo clean
-	pushd qfclib& $(MAKE) /nologo clean
-	pushd statslib& $(MAKE) /nologo clean
-	pushd src& $(MAKE) /nologo clean
-	pushd ad2csv& $(MAKE) /nologo clean
+	pushd ecolib& $(MAKE) clean
+	pushd gdbprintlib& $(MAKE) clean
+	pushd qfclib& $(MAKE) clean
+	pushd statslib& $(MAKE) clean
+	pushd src& $(MAKE) clean
+	pushd ad2csv& $(MAKE) clean
 
 copy:
 	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib
-	pushd $(DESTDIR)\contrib& $(MAKE) /nologo clean& popd
+	pushd $(DESTDIR)\contrib& $(MAKE) clean& popd

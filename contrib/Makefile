@@ -32,11 +32,11 @@ shared:
 !ENDIf
 
 contrib-includes: contrib-dirs
-	pushd ecolib& $(MAKE) /nlogo CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
-	pushd gdbprintlib& $(MAKE) /nlogo CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
-	pushd qfclib& $(MAKE) /nlogo CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
-	pushd statslib& $(MAKE) /nlogo CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
-	pushd src& $(MAKE) /nlogo CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd ecolib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd gdbprintlib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd qfclib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd statslib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
+	pushd src& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\include\contrib includes
 
 contrib-dirs:
 	IF NOT EXIST $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib

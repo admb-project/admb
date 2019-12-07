@@ -41,6 +41,7 @@ TEST_F(test_df_file, allocate_INT_MAX)
   delete [] a;
   a = 0;
 }
+#ifdef __linux__
 TEST_F(test_df_file, constructor_size)
 {
   ad_exit=&test_ad_exit;
@@ -53,6 +54,7 @@ TEST_F(test_df_file, union_sizeof)
   ASSERT_EQ(sizeof(df_file.fourb), sizeof(df_file.offset));
   ad_comm::argc = 0;
 }
+#endif
 TEST_F(test_df_file, constructor_max)
 {
   ad_exit=&test_ad_exit;
@@ -68,7 +70,7 @@ TEST_F(test_df_file, constructor_max)
     DF_FILE df_file(maxsize)
   );
 }
-#ifndef __MINGW32__
+/*
 TEST_F(test_df_file, constructor_max_limit)
 {
   ad_exit=&test_ad_exit;
@@ -89,7 +91,7 @@ TEST_F(test_df_file, constructor_max_limit)
     DF_FILE df_file(maxsize)
   );
 }
-#endif
+*/
 TEST_F(test_df_file, allocate_max)
 {
   size_t size = INT_MAX/2;

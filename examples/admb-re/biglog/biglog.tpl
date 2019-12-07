@@ -66,7 +66,9 @@ SEPARABLE_FUNCTION void f1(double y,const prevariable& a,const prevariable& u1,c
 
 
 TOP_OF_MAIN_SECTION
+  /*
   arrmblsize = 40000000L;
   gradient_structure::set_GRADSTACK_BUFFER_SIZE(30000000);
   gradient_structure::set_CMPDIF_BUFFER_SIZE(2000000);
   gradient_structure::set_MAX_NVAR_OFFSET(100000);
+  */

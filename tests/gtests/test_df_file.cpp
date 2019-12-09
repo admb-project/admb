@@ -41,7 +41,7 @@ TEST_F(test_df_file, allocate_INT_MAX)
   delete [] a;
   a = 0;
 }
-#ifdef __linux__
+#ifndef __linux__
 TEST_F(test_df_file, constructor_size)
 {
   ad_exit=&test_ad_exit;

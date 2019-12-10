@@ -227,21 +227,21 @@ ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
 	del ..\outputs-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
+	pushd .. & scripts\get-outputs.bat > outputs-saf.txt & popd
     ifndef SAFE_ONLY
 	del ..\outputs-opt.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
+	pushd .. & scripts\get-outputs.bat > outputs-opt.txt & popd
     endif
   else
     ifndef SAFE_ONLY
 	del ..\outputs-opt.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples --file=Makefile all
-	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
+	pushd .. & scripts\get-outputs.bat > outputs-opt.txt & popd
     endif
 	del ..\outputs-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples --file=Makefile all
-	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
+	pushd .. & scripts\get-outputs.bat > outputs-saf.txt & popd
   endif
 else
 	rm -vf ../outputs-saf.txt

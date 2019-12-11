@@ -40,12 +40,12 @@ finance:
 	pushd admb\\$@ & $@
 
 forest:
-	@REM pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	@REM pushd admb\\$@ & $@
+	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
+	pushd admb\\$@ & $@
 
 pella_t:
-	@REM pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	@REM pushd admb\\$@ & $@
+	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
+	pushd admb\\$@ & $@
 
 robreg: vonb vonbr
 vonb:
@@ -61,8 +61,8 @@ simple:
 	pushd admb\\$@ & $@
 
 truncreg:
-	@REM pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	@REM pushd admb\\$@ & $@
+	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
+	pushd admb\\$@ & $@
 
 vol: n2mvol
 n2mvol:
@@ -130,8 +130,8 @@ logistic:
 	pushd admb-re\\$@ & $@
 
 nbmm:
-	@REM pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	@REM pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 nested4:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@

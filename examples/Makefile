@@ -40,8 +40,8 @@ finance:
 	pushd admb\\$@ & $@
 
 forest:
-	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\$@ & $@
+	@REM pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
+	@REM pushd admb\\$@ & $@
 
 pella_t:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@

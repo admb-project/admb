@@ -16,6 +16,16 @@ jobs:
       nmake
       nmake zip
       nmake verify SAFE_ONLY=1
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        build\?(dist|debug)
+        outputs-saf.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: outputs
 
 - job: VS2015_vcvars64
   pool:

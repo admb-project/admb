@@ -131,7 +131,7 @@ logistic:
 
 nbmm:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	@REM pushd admb-re\\$@ & $@
 
 nested4:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@

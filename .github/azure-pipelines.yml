@@ -7,9 +7,9 @@ trigger:
 - master
 
 jobs:
-- job: VS2015-vcvars32
+- job: VS2015_vcvars32
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'vs2015-win2012r2'
   steps:
   - script: |
       pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat x86 & popd
@@ -17,9 +17,9 @@ jobs:
       nmake zip
       nmake verify SAFE_ONLY=1
 
-- job: VS2015-vcvars64
+- job: VS2015_vcvars64
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'vs2015-win2012r2'
   steps:
   - script: |
       pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
@@ -27,7 +27,7 @@ jobs:
       nmake zip
       nmake verify SAFE_ONLY=1
 
-- job: VS2017-vcvars32
+- job: VS2017_vcvars32
   pool:
     vmImage: 'vs2017-win2016'
   steps:
@@ -37,7 +37,7 @@ jobs:
       nmake zip
       nmake verify SAFE_ONLY=1
 
-- job: VS2017-vcvars64
+- job: VS2017_vcvars64
   pool:
     vmImage: 'vs2017-win2016'
   steps:
@@ -47,7 +47,7 @@ jobs:
       nmake zip
       nmake verify SAFE_ONLY=1
 
-- job: VS2019-vcvars32
+- job: VS2019_vcvars32
   pool:
     vmImage: 'windows-2019'
   steps:
@@ -57,7 +57,7 @@ jobs:
       nmake zip
       nmake verify SAFE_ONLY=1
 
-- job: VS2019-vcvars64
+- job: VS2019_vcvars64
   pool:
     vmImage: 'windows-2019'
   steps:

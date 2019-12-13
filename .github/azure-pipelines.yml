@@ -26,6 +26,14 @@ jobs:
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
       artifactName: outputs
+  - task: UniversalPackages@0
+    displayName: Universal Publish
+    inputs:
+      command: publish
+      publishDirectory: '$(Build.ArtifactStagingDirectory)'
+      vstsFeedPublish: 'outputs'
+      vstsFeedPackagePublish: 'outputs'
+      packagePublishDescription: 'outputs'
 
 - job: VS2015_vcvars64
   pool:

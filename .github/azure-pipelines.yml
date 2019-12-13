@@ -15,7 +15,7 @@ jobs:
       pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
       nmake
       nmake zip
-      nmake /DSAFE_ONLY verify
+      nmake verify SAFE_ONLY=1
 
 - job: VS2019
   pool:
@@ -25,7 +25,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\Common7\Tools" & call VsDevCmd.bat & popd
       nmake
       nmake zip
-      nmake /DSAFE_ONLY verify
+      nmake verify SAFE_ONLY=1
 
 - job: MacOS
   pool:

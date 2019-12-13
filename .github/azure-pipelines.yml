@@ -19,7 +19,7 @@ jobs:
   - task: CopyFiles@2
     inputs:
       contents: |
-        build\?(dist|debug)
+        build\dist\**
         outputs-saf.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -31,8 +31,8 @@ jobs:
     inputs:
       command: publish
       publishDirectory: '$(Build.ArtifactStagingDirectory)'
-      vstsFeedPublish: 'outputs'
-      vstsFeedPackagePublish: 'outputs'
+      vstsFeedPublish: 'johnoel'
+      vstsFeedPackagePublish: 'johnoel'
       packagePublishDescription: 'outputs'
 
 - job: VS2015_vcvars64

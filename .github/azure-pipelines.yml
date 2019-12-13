@@ -7,7 +7,17 @@ trigger:
 - master
 
 jobs:
-- job: VS2017
+- job: VS2015-vcvars32
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - script: |
+      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat x86 & popd
+      nmake
+      nmake zip
+      nmake verify SAFE_ONLY=1
+
+- job: VS2015-vcvars64
   pool:
     vmImage: 'vs2017-win2016'
   steps:
@@ -17,12 +27,42 @@ jobs:
       nmake zip
       nmake verify SAFE_ONLY=1
 
-- job: VS2019
+- job: VS2017-vcvars32
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - script: |
+      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
+      nmake
+      nmake zip
+      nmake verify SAFE_ONLY=1
+
+- job: VS2017-vcvars64
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - script: |
+      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+      nmake
+      nmake zip
+      nmake verify SAFE_ONLY=1
+
+- job: VS2019-vcvars32
   pool:
     vmImage: 'windows-2019'
   steps:
   - script: |
-      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\Common7\Tools" & call VsDevCmd.bat & popd
+      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
+      nmake
+      nmake zip
+      nmake verify SAFE_ONLY=1
+
+- job: VS2019-vcvars64
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - script: |
+      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
       nmake verify SAFE_ONLY=1

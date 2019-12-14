@@ -27,7 +27,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: VS2015_vcvars32
 
 - job: VS2015_vcvars64
   pool:
@@ -46,7 +46,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: VS2015_vcvars64
 
 - job: VS2017_vcvars32
   pool:
@@ -65,7 +65,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: VS2017_vcvars32
 
 - job: VS2017_vcvars64
   pool:
@@ -84,7 +84,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: VS2017_vcvars64
 
 - job: VS2019_vcvars32
   pool:
@@ -104,7 +104,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: VS2019_vcvars32
 
 - job: VS2019_vcvars64
   pool:
@@ -124,7 +124,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: VS2019_vcvars64
 
 - job: MacOS
   pool:
@@ -144,7 +144,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: MacOS
 
 - job: Ubuntu
   pool:
@@ -165,7 +165,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: Ubuntu
 
 - job: MacOS_debug
   pool:
@@ -174,7 +174,7 @@ jobs:
   - script: make DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make verify DEBUG=yes
+  - script: make gtests DEBUG=yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -185,7 +185,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: MacOS_debug
 
 - job: Ubuntu_debug
   pool:
@@ -206,4 +206,4 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
+      artifactName: Ubuntu_debug

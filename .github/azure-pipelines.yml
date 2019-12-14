@@ -19,7 +19,6 @@ jobs:
   - task: CopyFiles@2
     inputs:
       contents: |
-        admb.zip
         outputs-saf.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -39,7 +38,6 @@ jobs:
   - task: CopyFiles@2
     inputs:
       contents: |
-        admb.zip
         outputs-saf.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -59,7 +57,6 @@ jobs:
   - task: CopyFiles@2
     inputs:
       contents: |
-        admb.zip
         outputs-saf.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -79,7 +76,6 @@ jobs:
   - task: CopyFiles@2
     inputs:
       contents: |
-        admb.zip
         outputs-saf.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -167,86 +163,6 @@ jobs:
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
       artifactName: artifacts
-- job: VS2015_vcvars32_debug
-  pool:
-    vmImage: 'vs2015-win2012r2'
-  steps:
-  - script: |
-      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat x86 & popd
-      nmake DEBUG=1
-      nmake zip DEBUG=1
-      nmake verify SAFE_ONLY=1 DEBUG=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        admb.zip
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
-
-- job: VS2015_vcvars64_debug
-  pool:
-    vmImage: 'vs2015-win2012r2'
-  steps:
-  - script: |
-      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
-      nmake DEBUG=1
-      nmake zip DEBUG=1
-      nmake verify SAFE_ONLY=1 DEBUG=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        admb.zip
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
-
-- job: VS2017_vcvars32_debug
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - script: |
-      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
-      nmake DEBUG=1
-      nmake zip DEBUG=1
-      nmake verify SAFE_ONLY=1 DEBUG=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        admb.zip
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
-
-- job: VS2017_vcvars64_debug
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - script: |
-      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-      nmake DEBUG=1
-      nmake zip DEBUG=1
-      nmake verify SAFE_ONLY=1 DEBUG=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        admb.zip
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: artifacts
-
 - job: VS2019_vcvars32_debug
   pool:
     vmImage: 'windows-2019'

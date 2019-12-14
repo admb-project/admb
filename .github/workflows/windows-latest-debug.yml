@@ -10,8 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: clean
-      run: nmake clean DEBUG=yes
+      run: pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd & nmake clean DEBUG=yes
     - name: build
-      run: nmake DEBUG=yes
+      run: pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd & nmake DEBUG=yes
     - name: tests
-      run: nmake test DEBUG=yes
+      run: pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd & nmake tests DEBUG=yes

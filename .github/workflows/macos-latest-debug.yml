@@ -1,0 +1,19 @@
+name: macos-latest-debug
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: flex
+      run: sudo apt-get install flex
+    - name: clean
+      run: make clean DEBUG=yes
+    - name: build
+      run: make DEBUG=yes
+    - name: tests
+      run: make test DEBUG=yes

@@ -20,8 +20,8 @@ OSNAME=-vs
 !IF DEFINED(DEBUG)
 DESTDIR=..\build\debug
 OBJDESTDIR=..\build\objects\debug$(OSNAME)$(CXXVERSION)
-CXXFLAGS_SAF=/nologo /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /analyze:stacksize 50024 /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
-CXXFLAGS_OPT=/nologo /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc /analyze:stacksize 50024 /D_USE_MATH_DEFINES /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+CXXFLAGS_SAF=/nologo /DEBUG:NONE /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /analyze:stacksize 50024 /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /DEBUG:NONE /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc /analyze:stacksize 50024 /D_USE_MATH_DEFINES /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
 !ELSE
 DESTDIR=..\build\dist
 OBJDESTDIR=..\build\objects\dist$(OSNAME)$(CXXVERSION)
@@ -60,7 +60,7 @@ SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist-vs-cl\saflp-df1b2-sep
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug-vsx64-cl19\optlp-linad99-) $(OBJ2: = ..\build\objects\debug-vsx64-cl19\optlp-linad99-) $(OBJ3: = ..\build\objects\debug-vsx64-cl19\optlp-linad99-) $(OBJ4: = ..\build\objects\debug-vsx64-cl19\optlp-linad99-)
 SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug-vsx64-cl19\saflp-linad99-) $(OBJ2: = ..\build\objects\debug-vsx64-cl19\saflp-linad99-) $(OBJ3: = ..\build\objects\debug-vsx64-cl19\saflp-linad99-) $(OBJ4: = ..\build\objects\debug-vsx64-cl19\saflp-linad99-) $(OBJ16: = ..\build\objects\debug-vsx64-cl19\saflp-linad99-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx86"
-OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug-vsx86-cl19\debug\optlp-linad99-) $(OBJ2: = ..\build\objects\debug-vsx86-cl19\optlp-linad99-) $(OBJ3: = ..\build\objects\debug-vsx86-cl19\optlp-linad99-) $(OBJ4: = ..\build\objects\debug-vsx86-cl19\optlp-linad99-)
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug-vsx86-cl19\optlp-linad99-) $(OBJ2: = ..\build\objects\debug-vsx86-cl19\optlp-linad99-) $(OBJ3: = ..\build\objects\debug-vsx86-cl19\optlp-linad99-) $(OBJ4: = ..\build\objects\debug-vsx86-cl19\optlp-linad99-)
 SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug-vsx86-cl19\saflp-linad99-) $(OBJ2: = ..\build\objects\debug-vsx86-cl19\saflp-linad99-) $(OBJ3: = ..\build\objects\debug-vsx86-cl19\saflp-linad99-) $(OBJ4: = ..\build\objects\debug-vsx86-cl19\saflp-linad99-) $(OBJ16: = ..\build\objects\debug-vsx86-cl19\saflp-linad99-)
 !ELSE
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug-vs-cl\optlp-linad99-) $(OBJ2: = ..\build\objects\debug-vs-cl\optlp-linad99-) $(OBJ3: = ..\build\objects\debug-vs-cl\optlp-linad99-) $(OBJ4: = ..\build\objects\debug-vs-cl\optlp-linad99-)

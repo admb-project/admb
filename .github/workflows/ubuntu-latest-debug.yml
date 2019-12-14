@@ -1,4 +1,4 @@
-name: Ubuntu build of ADMB 
+name: ubuntu-latest-debug
 
 on: [push]
 
@@ -12,8 +12,8 @@ jobs:
     - name: flex
       run: sudo apt-get install flex
     - name: clean
-      run: make clean
+      run: make clean DEBUG=yes
     - name: build
-      run: make
+      run: make DEBUG=yes
     - name: tests
-      run: make test
+      run: make test DEBUG=yes

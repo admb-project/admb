@@ -6,7 +6,11 @@ all:
 
 ADMBTerminal.dmg: build/ADMBTerminal.app
 	cp -vf README.txt build
+ifeq ($(DEBUG),yes)
+	cp -rvf ../../../build/debug build/ADMBTerminal.app/admb
+else
 	cp -rvf ../../../build/dist build/ADMBTerminal.app/admb
+endif
 	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build -ov -debug
 
 build/ADMBTerminal.app: ADMBTerminal.scpt

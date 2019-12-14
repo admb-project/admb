@@ -19,7 +19,7 @@ jobs:
   - task: CopyFiles@2
     inputs:
       contents: |
-        build\dist\**
+        admb.zip
         outputs-saf.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -32,8 +32,8 @@ jobs:
       command: publish
       publishDirectory: '$(Build.ArtifactStagingDirectory)'
       vstsFeedPublish: 'johnoel'
-      vstsFeedPackagePublish: 'johnoel'
-      packagePublishDescription: 'outputs'
+      vstsFeedPackagePublish: 'vs2015_vcvars32'
+      packagePublishDescription: 'Visual Studio 2015 (32Bit)'
 
 - job: VS2015_vcvars64
   pool:
@@ -90,6 +90,7 @@ jobs:
     vmImage: 'macOS-latest'
   steps:
   - script: make
+  - script: make --directory=scripts/installers/packagemaker
   - script: make verify
 
 - job: Ubuntu
@@ -99,6 +100,6 @@ jobs:
   - script: |
       sudo apt install -y flex
       make
-      make --directory=scripts/installers/packagemaker
+      make zip
       make verify
     displayName: 'make'

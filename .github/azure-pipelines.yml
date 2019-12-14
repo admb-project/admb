@@ -36,6 +36,16 @@ jobs:
       nmake
       nmake zip
       nmake verify SAFE_ONLY=1
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs-saf.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: artifacts
 
 - job: VS2017_vcvars32
   pool:
@@ -46,6 +56,16 @@ jobs:
       nmake
       nmake zip
       nmake verify SAFE_ONLY=1
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs-saf.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: artifacts
 
 - job: VS2017_vcvars64
   pool:
@@ -56,6 +76,16 @@ jobs:
       nmake
       nmake zip
       nmake verify SAFE_ONLY=1
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs-saf.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: artifacts
 
 - job: VS2019_vcvars32
   pool:
@@ -66,6 +96,16 @@ jobs:
       nmake
       nmake zip
       nmake verify SAFE_ONLY=1
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs-saf.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: artifacts
 
 - job: VS2019_vcvars64
   pool:
@@ -76,14 +116,36 @@ jobs:
       nmake
       nmake zip
       nmake verify SAFE_ONLY=1
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs-saf.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: artifacts
 
 - job: MacOS
   pool:
     vmImage: 'macOS-latest'
   steps:
   - script: make
+  - script: make zip
   - script: make --directory=scripts/installers/packagemaker
   - script: make verify
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        scripts/installers/packagemaker/ADMBTerminal.dmg
+        outputs-saf.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: artifacts
 
 - job: Ubuntu
   pool:
@@ -95,3 +157,13 @@ jobs:
       make zip
       make verify
     displayName: 'make'
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs-saf.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: artifacts

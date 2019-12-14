@@ -2,6 +2,9 @@
 # Build your C/C++ project with GCC using make.
 # Add steps that publish test results, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/c-cpp/gcc
+# nmake DEBUG=1
+# nmake zip DEBUG=1
+# nmake verify SAFE_ONLY=1 DEBUG=1
 
 trigger:
 - master
@@ -92,9 +95,6 @@ jobs:
       nmake
       nmake zip
       nmake verify SAFE_ONLY=1
-      #      nmake DEBUG=1
-      #      nmake zip DEBUG=1
-      #      nmake verify SAFE_ONLY=1 DEBUG=1
   - task: CopyFiles@2
     inputs:
       contents: |

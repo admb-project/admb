@@ -207,10 +207,10 @@ jobs:
   pool:
     vmImage: 'macOS-latest'
   steps:
-  - script: make DEBUG=1
-  - script: make zip DEBUG=1
-  - script: make --directory=scripts/installers/packagemaker DEBUG=1
-  - script: make verify DEBUG=1
+  - script: make DEBUG=yes
+  - script: make zip DEBUG=yes
+  - script: make --directory=scripts/installers/packagemaker DEBUG=yes
+  - script: make verify DEBUG=yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -229,9 +229,9 @@ jobs:
   steps:
   - script: |
       sudo apt install -y flex
-      make DEBUG=1
-      make zip DEBUG=1
-      make verify DEBUG=1
+      make DEBUG=yes
+      make zip DEBUG=yes
+      make verify DEBUG=yes
     displayName: 'make'
   - task: CopyFiles@2
     inputs:

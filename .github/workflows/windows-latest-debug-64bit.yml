@@ -15,5 +15,5 @@ jobs:
         cl /?
         nmake clean DEBUG=yes
         nmake DEBUG=yes
-        nmake tests DEBUG=yes
+        nmake test DEBUG=yes
       shell: cmd

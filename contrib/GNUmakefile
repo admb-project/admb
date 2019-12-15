@@ -45,9 +45,9 @@ else
   endif
   ifeq ($(UNAME_S),Darwin)
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
-      OSNAME=-i686-macosx
+      OSNAME=i686-macos
     else
-      OSNAME=-x86_64-macosx
+      OSNAME=x86_64-macos
     endif
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)

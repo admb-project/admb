@@ -146,9 +146,9 @@ if [ "$UNAME_S" == "Darwin" ]; then
     CXX=c++
   fi
   if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
-    OS_NAME=-x86_64-macosx
+    OS_NAME=x86_64-macos
   else
-    OS_NAME=-i686-macosx
+    OS_NAME=i686-macos
   fi
 fi
 if [[ "$UNAME_S" =~ "_NT" ]]; then
@@ -263,7 +263,7 @@ CXXFLAGS="$CXXFLAGS -D_USE_MATH_DEFINES"
 if [ "$library" == "opt" ]; then
   CXXFLAGS="$CXXFLAGS -DOPT_LIB"
 fi
-if [ -f "$ADMB_HOME/lib/libadmb-contrib$CXXVERSION$SHARED.a" ]; then
+if [ -f "$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a" ]; then
   CXXFLAGS="$CXXFLAGS -DUSE_ADMB_CONTRIBS -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/include/contrib\""
 else
   CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\""
@@ -371,17 +371,17 @@ do
     CMD="$CXX $LDFLAGS -o$model"
   fi
   CMD="$CMD $file $objs"
-  if [ ! -f "$ADMB_HOME/lib/libadmb-contrib$CXXVERSION$SHARED.a" ]; then
+  if [ ! -f "$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a" ]; then
     if [[ "$library" == "opt" ]]; then
-      CMD="$CMD \"$ADMB_HOME/lib/libadmbo$CXXVERSION$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmbo-$CXXVERSION$SHARED.a\""
     else
-      CMD="$CMD \"$ADMB_HOME/lib/libadmb$CXXVERSION$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-$CXXVERSION$SHARED.a\""
     fi
   else
     if [[ "$library" == "opt" ]]; then
-      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo$CXXVERSION$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo-$CXXVERSION$SHARED.a\""
     else
-      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contrib$CXXVERSION$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a\""
     fi
   fi
   echo -e \\n\*\*\* Linking: $file $objs\\n$CMD
@@ -424,17 +424,17 @@ if [[ "$tplobjs" == "" ]]; then
     CMD="$CXX $LDFLAGS -o$outputfilebasename"
   fi
   CMD="$CMD $listobjs"
-  if [ ! -f "$ADMB_HOME/lib/libadmb-contrib$CXXVERSION$SHARED.a" ]; then
+  if [ ! -f "$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a" ]; then
     if [[ "$library" == "opt" ]]; then
-      CMD="$CMD \"$ADMB_HOME/lib/libadmbo$CXXVERSION$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmbo-$CXXVERSION$SHARED.a\""
     else
-      CMD="$CMD \"$ADMB_HOME/lib/libadmb$CXXVERSION$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-$CXXVERSION$SHARED.a\""
     fi
   else
     if [[ "$library" == "opt" ]]; then
-      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo$CXXVERSION$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo-$CXXVERSION$SHARED.a\""
     else
-      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contrib$CXXVERSION$SHARED.a\""
+      CMD="$CMD \"$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a\""
     fi
   fi
   echo -e \\n\*\*\* Linking: $listobjs\\n$CMD

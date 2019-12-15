@@ -1,4 +1,4 @@
-name: macos-latest-debug-64bit
+name: macos-latest-shared-debug-64bit
 
 on: [push]
 

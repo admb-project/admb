@@ -1,15 +1,6 @@
 .ONESHELL:
-ifeq ($(TERM),cygwin)
 ifeq ($(OS),Windows_NT)
 EXT=.cmd
-endif
-else
-ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-SHELL = cmd
-endif
-ifeq ($(OS),Windows_NT)
-EXT=.sh
-endif
 endif
 
 ifeq ($(SHELL),cmd)

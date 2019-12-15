@@ -43,9 +43,9 @@ else
   UNAME_S := $(shell uname -s)
   ifeq ($(UNAME_S),Linux)
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
-      OSNAME=-i686-linux
+      OSNAME=i686-linux
     else
-      OSNAME=-x86_64-linux
+      OSNAME=x86_64-linux
     endif
   endif
   ifeq ($(UNAME_S),Darwin)
@@ -85,13 +85,8 @@ else
   ifeq ($(CXX),icpc)
   CXXVERSION=-icpc$(basename $(basename $(basename $(shell $(CXX) -dumpversion))))
   endif
-  ifeq ($(DEBUG),yes)
-  CONTRIB_DIR=../../build/debug/
-  CONTRIB_OBJS_PREFIX=build/objects/debug$(OSNAME)$(CXXVERSION)$(SHARED)/contrib
-  else
-  CONTRIB_DIR=../../build/dist/
-  CONTRIB_OBJS_PREFIX=build/objects/dist$(OSNAME)$(CXXVERSION)$(SHARED)/contrib
-  endif
+  CONTRIB_DIR=../../build/admb/
+  CONTRIB_OBJS_PREFIX=build/objects/$(OSNAME)$(CXXVERSION)$(SHARED)/contrib
   CONTRIB_OBJS_DIR=../../$(CONTRIB_OBJS_PREFIX)
   CONTRIB_BIN=$(addsuffix bin/,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix include/contrib/,$(CONTRIB_DIR))

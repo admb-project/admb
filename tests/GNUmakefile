@@ -15,19 +15,7 @@ ifeq ($(DEBUG),yes)
 DEBUG_OPTION=-g
 endif
 
-ifeq ($(SHELL),cmd)
-  ifneq ($(DEBUG),yes)
-    DIST=..\build\dist
-  else
-    DIST=..\build\debug
-  endif
-else
-  ifneq ($(DEBUG),yes)
-    DIST=../build/dist
-  else
-    DIST=../build/debug
-  endif
-endif
+DIST=../build/admb
 
 ifeq ($(CXX),CC)
 all: all-tpls
@@ -36,7 +24,7 @@ all: all-gtests all-tpls
 endif
 
 coverage: all-gtests
-	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/debug/include includes
+	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/admb/include includes
 	$(MAKE) --directory=../examples all
 	$(MAKE) tpl-f1b2vc5
 	$(MAKE) tpl-4darray

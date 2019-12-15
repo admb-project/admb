@@ -144,7 +144,7 @@ if "!CXX!"=="cl" (
     set CXXFLAGS= /c /nologo /EHsc
   )
   if defined g (
-    set CXXFLAGS=!CXXFLAGS! /Z7
+    set CXXFLAGS=!CXXFLAGS! /DEBUG:NONE /Z7
   ) else (
     set CXXFLAGS=!CXXFLAGS! /O2
   )

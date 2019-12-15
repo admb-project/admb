@@ -121,20 +121,20 @@ ifeq ($(DEBUG),yes)
   endif
 else
   ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\dist\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
     ifndef SAFE_ONLY
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\dist\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
     endif
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/dist/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/dist/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/dist/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/dist/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       endif
     endif
   endif
@@ -165,11 +165,11 @@ ifeq ($(SHELL),cmd)
   else
 	if exist "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	$(AR) -rs "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" "..\build\objects\dist$(OSNAME)$(CXXVERSION)\contrib-saflp-*.obj"
+	$(AR) -rs "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" "..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-saflp-*.obj"
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	$(AR) -rs "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a" "..\build\objects\dist$(OSNAME)$(CXXVERSION)\contrib-optlp-*.obj"
+	$(AR) -rs "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a" "..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-optlp-*.obj"
     endif
   endif
 else
@@ -240,11 +240,11 @@ ifeq ($(DEBUG),yes)
   endif
 else
   ifeq ($(SHELL),cmd)
-	if not exist ..\build\dist\contrib md ..\build\dist\contrib
-	xcopy ..\contrib ..\build\dist\contrib /S /Y /D
+	if not exist ..\build\admb\contrib md ..\build\admb\contrib
+	xcopy ..\contrib ..\build\admb\contrib /S /Y /D
   else
-	cp -Rvf ../contrib ../build/dist/
-	$(MAKE) --directory=../build/dist/contrib clean
+	cp -Rvf ../contrib ../build/admb/
+	$(MAKE) --directory=../build/admb/contrib clean
   endif
 endif
 

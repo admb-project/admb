@@ -9,6 +9,10 @@ contrib/ad2csv/ad2csv
 contrib/ad2csv/ad2csv.exe
 src/.*~
 src/*~
+src/**/*~
+contrib/**/*~
+tests/**/*~
+examples/**/*~
 src/**/lex.yy.c
 src/**/*.swp
 src/df1b2-separable/tpl2rem.c

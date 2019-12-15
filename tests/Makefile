@@ -1,4 +1,4 @@
-DESTDIR=..\build\dist
+DESTDIR=..\build\admb
 
 all:\
   test-agemat\
@@ -37,13 +37,13 @@ clean:
 verify:
 	del ..\outputs-saf.txt
 	del ..\outputs-opt.txt
-	if not exist ..\build\dist\examples md  ..\build\dist\examples
-	xcopy ..\examples ..\build\dist\examples  /S /Y /D
-	pushd ..\build\dist\examples & $(MAKE) all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
+	if not exist ..\build\admb\examples md  ..\build\admb\examples
+	xcopy ..\examples ..\build\admb\examples  /S /Y /D
+	pushd ..\build\admb\examples & $(MAKE) all
+	pushd ..\build\admb & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
 !IFNDEF SAFE_ONLY
-	pushd ..\build\dist\examples & $(MAKE) FAST_OPTION=-f all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
+	pushd ..\build\admb\examples & $(MAKE) FAST_OPTION=-f all
+	pushd ..\build\admb & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
 !ENDIF
 
 copy:

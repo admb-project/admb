@@ -11,25 +11,25 @@ OSNAME=-vsx86
 
 !IF DEFINED(DEBUG)
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx64"
-OPT=$(OBJECTS: = ..\..\build\objects\debug-vsx64-cl19\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\debug-vsx64-cl19\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx64-cl19\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx64-cl19\contrib-saflp-statslib-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx86"
-OPT=$(OBJECTS: = ..\..\build\objects\debug-vsx86-cl19\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\debug-vsx86-cl19\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-saflp-statslib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\debug-vs-cl\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\debug-vs-cl\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-saflp-statslib-)
 !ENDIF
 !ELSE
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx64"
-OPT=$(OBJECTS: = ..\..\build\objects\dist-vsx64-cl19\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\dist-vsx64-cl19\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx64-cl19\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx64-cl19\contrib-saflp-statslib-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx86"
-OPT=$(OBJECTS: = ..\..\build\objects\dist-vsx86-cl19\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\dist-vsx86-cl19\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-saflp-statslib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\dist-vs-cl\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\dist-vs-cl\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-saflp-statslib-)
 !ENDIF
 !ENDIF
 

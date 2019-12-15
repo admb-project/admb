@@ -21,8 +21,8 @@ popd
 if exist !ADMB_PATH!\bin\admb.cmd (
   set ADMB_HOME=!ADMB_PATH!
 ) else (
-  if exist !ADMB_PATH!\build\dist\bin\admb.cmd (
-    set ADMB_HOME=!ADMB_PATH!\build\dist
+  if exist !ADMB_PATH!\build\admb\bin\admb.cmd (
+    set ADMB_HOME=!ADMB_PATH!\build\admb
   )
 )
 if not defined ADMB_HOME (

@@ -4,20 +4,16 @@ CXXVERSION=-cl19
 CXXVERSION=-cl
 !ENDIF
 !IF ([cl /? 2>&1 | findstr /C:" x64" > nul] == 0)
-OSNAME=-vsx64
+OSNAME=vsx64
 !ELSEIF ([cl /? 2>&1 | findstr /C:" x86" > nul] == 0)
-OSNAME=-vsx86
+OSNAME=vsx86
 !ELSE
-OSNAME=-vs
+OSNAME=vs
 !ENDIF
 
-!IF DEFINED(DEBUG)
-DESTDIR=..\build\debug
-OBJDESTDIR=..\build\objects\debug$(OSNAME)$(CXXVERSION)
-!ELSE
-DESTDIR=..\build\dist
-OBJDESTDIR=..\build\objects\dist$(OSNAME)$(CXXVERSION)
-!ENDIf
+DESTDIR=..\build\admb
+OBJDESTDIR=..\build\objects\$(OSNAME)$(CXXVERSION)
+
 all:
 	$(MAKE) contrib-includes
 	$(MAKE) contrib-libs
@@ -27,8 +23,8 @@ shared:
 	IF EXIST $(DESTDIR)\lib\admb-contrib.dll del $(DESTDIR)\lib\admb-contrib.dll
 	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contrib.dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admb$(OSNAME)$(CXXVERSION).lib contrib-saflp-*.obj
 !IFNDEF SAFE_ONLY
-	IF EXIST $(DESTDIR)\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll del $(DESTDIR)\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll
-	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contribo.dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admbo$(OSNAME)$(CXXVERSION).lib contrib-optlp-*.obj
+	IF EXIST $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION).dll del $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION).dll
+	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contribo.dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib contrib-optlp-*.obj
 !ENDIf
 
 contrib-includes: contrib-dirs
@@ -43,13 +39,13 @@ contrib-dirs:
 	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
 
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
-	IF EXIST $(DESTDIR)\lib\admb-contrib$(OSNAME)$(CXXVERSION).lib del $(DESTDIR)\lib\admb-contrib$(OSNAME)$(CXXVERSION).lib
-	copy $(DESTDIR)\lib\admb$(OSNAME)$(CXXVERSION).lib $(DESTDIR)\lib\admb-contrib$(OSNAME)$(CXXVERSION).lib
-	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contrib$(OSNAME)$(CXXVERSION).lib /NOLOGO /IGNORE:4006 contrib-saflp-*.obj
+	IF EXIST $(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION).lib del $(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION).lib
+	copy $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION).lib $(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION).lib
+	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION).lib /NOLOGO /IGNORE:4006 contrib-saflp-*.obj
 !IFNDEF SAFE_ONLY
-	IF EXIST $(DESTDIR)\lib\admb-contribo$(OSNAME)$(CXXVERSION).lib del $(DESTDIR)\lib\admb-contribo$(OSNAME)$(CXXVERSION).lib
-	copy $(DESTDIR)\lib\admbo$(OSNAME)$(CXXVERSION).lib $(DESTDIR)\lib\admb-contribo$(OSNAME)$(CXXVERSION).lib
-	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contribo$(OSNAME)$(CXXVERSION).lib /NOLOGO /IGNORE:4006 contrib-optlp-*.obj
+	IF EXIST $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION).lib del $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION).lib
+	copy $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION).lib
+	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION).lib /NOLOGO /IGNORE:4006 contrib-optlp-*.obj
 !ENDIF
 
 contrib-ad2csv:

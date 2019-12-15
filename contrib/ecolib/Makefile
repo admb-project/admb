@@ -11,25 +11,25 @@ OSNAME=-vsx86
 
 !IF DEFINED(DEBUG)
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx64"
-OPT=$(OBJECTS: = ..\..\build\objects\debug-vsx64-cl19\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\debug-vsx64-cl19\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx64-cl19\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx64-cl19\contrib-saflp-ecolib-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx86"
-OPT=$(OBJECTS: = ..\..\build\objects\debug-vsx86-cl19\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\debug-vsx86-cl19\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-saflp-ecolib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\debug-vs-cl\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\debug-vs-cl\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-saflp-ecolib-)
 !ENDIF
 !ELSE
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx64"
-OPT=$(OBJECTS: = ..\..\build\objects\dist-vsx64-cl19\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\dist-vsx64-cl19\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx64-cl19\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx64-cl19\contrib-saflp-ecolib-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-vsx86"
-OPT=$(OBJECTS: = ..\..\build\objects\dist-vsx86-cl19\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\dist-vsx86-cl19\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-saflp-ecolib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\dist-vsx86-cl19\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\dist-vsx86-cl19\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\vsx86-cl19\contrib-saflp-ecolib-)
 !ENDIF
 !ENDIF
 

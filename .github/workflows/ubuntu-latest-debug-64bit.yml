@@ -1,14 +1,16 @@
-name: macos-latest-debug-64bit
+name: ubuntu-latest-debug-64bit
 
 on: [push]
 
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v1
+    - name: flex
+      run: sudo apt-get install flex
     - name: clean
       run: make clean DEBUG=yes
     - name: build

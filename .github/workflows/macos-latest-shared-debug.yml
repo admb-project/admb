@@ -1,0 +1,15 @@
+name: macos-latest-debug-64bit
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: clean
+      run: make clean DEBUG=yes
+    - name: build
+      run: make shared DEBUG=yes

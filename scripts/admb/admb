@@ -136,9 +136,9 @@ if [ "$UNAME_S" == "Linux" ]; then
     CXX=g++
   fi
   if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
-    OS_NAME=-x86_64-linux
+    OS_NAME=x86_64-linux
   else
-    OS_NAME=-i686-linux
+    OS_NAME=i686-linux
   fi
 fi
 if [ "$UNAME_S" == "Darwin" ]; then

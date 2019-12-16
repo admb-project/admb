@@ -16,15 +16,15 @@ ifeq ($(SHELL),cmd)
   ifeq ($(CXX),g++)
     ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
       ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
-        OSNAME=-x86_64-msys2
+        OSNAME=x86_64-msys2
       else
-        OSNAME=-mingw64
+        OSNAME=mingw64
       endif
     else
       ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
-        OSNAME=-i686-msys2
+        OSNAME=i686-msys2
       else
-        OSNAME=-mingw32
+        OSNAME=mingw32
       endif
     endif
     CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
@@ -53,15 +53,15 @@ else
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
     ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
       ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
-        OSNAME=-x86_64-msys2
+        OSNAME=x86_64-msys2
       else
-        OSNAME=-mingw64
+        OSNAME=mingw64
       endif
     else
       ifeq ($(findstring MSYS2,$(shell g++ --version)),MSYS2)
-        OSNAME=-i686-msys2
+        OSNAME=i686-msys2
       else
-        OSNAME=-mingw32
+        OSNAME=mingw32
       endif
     endif
   endif

@@ -1,9 +1,9 @@
 .ONESHELL:
 ifeq ($(OS),Windows_NT)
-EXT=.cmd
+SHELL=.cmd
 endif
 
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),.cmd)
   ifeq ($(SAFE_ONLY),yes)
 all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))
   else
@@ -25,28 +25,28 @@ all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_O
   endif
 
 $(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
-	../../admb$(EXT) -c $(OPTION) $<
+	../../admb$(SHELL) -c $(OPTION) $<
 	cp $(basename $<).obj $@
 
 $(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
-	../../admb$(EXT) -c -f $(OPTION) $<
+	../../admb$(SHELL) -c -f $(OPTION) $<
 	cp $(basename $<).obj $@
 endif
 
 includes:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),.cmd)
 	for %%a in ($(HEADERS)) do copy %%a $(CONTRIB_INCLUDE)
 else
 	cp $(HEADERS) $(CONTRIB_INCLUDE)
 endif
 
 test:
-ifneq ($(SHELL),cmd)
+ifneq ($(SHELL),.cmd)
 	$(MAKE) --directory=tests
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),.cmd)
 	del /Q $(OBJECTS) 2>nul
 else
 	@rm -vf $(OBJECTS)

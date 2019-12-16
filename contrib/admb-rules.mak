@@ -1,8 +1,6 @@
 .ONESHELL:
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(TERM)),)
 SHELL=.cmd
-  endif
 endif
 
 ifeq ($(SHELL),.cmd)

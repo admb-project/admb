@@ -3625,7 +3625,7 @@ PARAMETER_SECTION {
 //    fprintf(fdat,"%s","  void admaster_slave_variable_interface(void);\n");
     fprintf(fdat,"%s","  void preliminary_calculations(void);\n");
     fprintf(fdat,"%s","  void set_runtime(void);\n");
-    fprintf(fdat,"%s","  virtual void * mycast(void) {return (void*)this;}\n");
+//    fprintf(fdat,"%s","  virtual void * mycast(void) {return (void*)this;}\n");
 
     fprintf(fdat,"%s", "  static int mc_phase(void)\n"
       "  {\n    return initial_params::mc_phase;\n  }\n");

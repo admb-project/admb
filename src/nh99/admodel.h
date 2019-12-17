@@ -1816,7 +1816,7 @@ public:
 
 #include <functional>
 
-//typedef dvariable (model_parameters::*PMF) (const dvariable&);
+typedef dvariable (model_parameters::*PMF) (const dvariable&);
 typedef std::function<dvariable(const dvariable&)> _func;
 typedef dvariable (model_parameters::*PMFI) (const dvariable&,int n);
 typedef dvariable (model_parameters::*PMFVI) (const dvar_vector&,int n);
@@ -2130,9 +2130,8 @@ public:
   //dvariable midpnt(PMF, double a, const dvariable& b, int n);
   //dvariable midpnt(PMF, const dvariable& a, double b, int n);
   //dvariable midpnt(PMF, const dvariable& a, const dvariable& b, int n);
+  //virtual void * mycast() { return (void*)this;}
   */
-
-  virtual void * mycast() { return (void*)this;}
 
   void neldmead(int n, dvector& _start, dvector& _xmin, double *ynewlo,
     double reqmin, double delta,int *icount, int *numres, int *ifault);

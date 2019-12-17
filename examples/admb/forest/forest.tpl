@@ -41,9 +41,7 @@ PROCEDURE_SECTION
    {
      a_index=i;
      ad_begin_funnel();
-     using namespace std::placeholders;
-     std::function<dvariable(const dvariable&)> func = std::bind(&model_parameters::h,this,_1);
-     Integral=adromb(func,-3.0,3.0,nsteps);
+     Integral=adromb(&model_parameters::h,-3.0,3.0,nsteps);
      S(i)=Integral;
    }
    f=0.0;

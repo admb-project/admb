@@ -29,7 +29,7 @@ ifeq ($(SHELL),cmd)
     endif
     CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
-  CONTRIB_OBJS_DIR:="\"$(CONTRIB_OBJS_DIR)$(OSNAME)$(CXXVERSION)\""
+  CONTRIB_OBJS_DIR:="\"$(CONTRIB_OBJS_DIR)\$(OSNAME)$(CXXVERSION)\""
   CONTRIB_OBJS_DIR:=$(addsuffix \contrib,$(CONTRIB_OBJS_DIR))
   CONTRIB_BIN=$(addsuffix \bin\\,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
@@ -156,11 +156,11 @@ ifeq ($(SHELL),cmd)
   ifeq ($(DEBUG),yes)
 	if exist  src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a del src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	copy src\$(CONTRIB_LIB)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a
-	$(AR) -rs src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a ..\build\objects\admb$(OSNAME)$(CXXVERSION)\contrib-saflp-*.obj
+	$(AR) -rs src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a ..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-saflp-*.obj
     ifndef SAFE_ONLY
 	if exist  src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a del src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	copy src\$(CONTRIB_LIB)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a
-	$(AR) -rs src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a ..\build\objects\admb$(OSNAME)$(CXXVERSION)\contrib-optlp-*.obj
+	$(AR) -rs src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a ..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-optlp-*.obj
     endif
   else
 	if exist "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a"

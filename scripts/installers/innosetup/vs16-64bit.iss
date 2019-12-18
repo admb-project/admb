@@ -17,7 +17,7 @@ LicenseFile=..\..\..\LICENSE.txt
 Name: "vs16"; Description: "ADMB (Microsoft Visual Studio 2019 - C++ 64Bit)"
 
 [Files]
-Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\cl\set-admb-vs16-64bit.bat"; DestDir: "{app}\bin"
 
 [Icons]

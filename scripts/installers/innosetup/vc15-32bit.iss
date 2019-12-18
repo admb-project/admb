@@ -17,7 +17,7 @@ LicenseFile=..\..\..\LICENSE.txt
 Name: "vc15"; Description: "ADMB (Microsoft Visual C++ 2017 32Bit)"
 
 [Files]
-Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\cl\set-admb-vc15-32bit.bat"; DestDir: "{app}\bin"
 
 [Icons]

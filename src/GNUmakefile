@@ -756,7 +756,11 @@ cpplint.py:
 	svn cat https://github.com/google/styleguide/trunk/cpplint/cpplint.py > cpplint.py
 
 zip:
+ifeq ($(OS),Windows_NT)
+	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd
+else
 	cd ../build/ && zip -r admb.zip admb
+endif
 
 check:
 	@echo "SHELL: $(SHELL)"

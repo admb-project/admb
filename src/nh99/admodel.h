@@ -1814,7 +1814,10 @@ public:
   dll_data_number & operator=(const double& m);
 };
 
+#include <functional>
+
 typedef dvariable (model_parameters::*PMF) (const dvariable&);
+typedef std::function<dvariable(const dvariable&)> _func;
 typedef dvariable (model_parameters::*PMFI) (const dvariable&,int n);
 typedef dvariable (model_parameters::*PMFVI) (const dvar_vector&,int n);
 typedef void (model_parameters::*PMFVIV4) (const dvar_vector&,int n,
@@ -2105,28 +2108,30 @@ public:
   virtual void set_runtime(void);
   virtual void set_runtime_maxfn(const char *);
   virtual void set_runtime_crit(const char *);
-  dvariable adromb(PMF,double a,double b,int ns=9);
-  dvariable adromb(PMF, const dvariable& a, double b, int ns = 9);
-  dvariable adromb(PMF, const dvariable& a, const dvariable& b, int ns = 9);
-  dvariable adromb(PMF, double a, const dvariable& b, int ns = 9);
+  dvariable adromb(_func func, double a, double b, int ns = 9);
+  dvariable adromb(_func func, const dvariable& a, double b, int ns = 9);
+  dvariable adromb(_func func, const dvariable& a, const dvariable& b, int ns = 9);
+  dvariable adromb(_func func, double a, const dvariable& b, int ns = 9);
 
-  dvariable adrombo(PMF,double a,double b,int ns=9);
-  dvariable adrombo(PMF, const dvariable& a, double b, int ns = 9);
-  dvariable adrombo(PMF, const dvariable& a, const dvariable& b, int ns = 9);
-  dvariable adrombo(PMF, double a, const dvariable& b,int ns = 9);
+  dvariable adrombo(_func func, double a, double b, int ns = 9);
+  dvariable adrombo(_func func, const dvariable& a, double b, int ns = 9);
+  dvariable adrombo(_func func, const dvariable& a, const dvariable& b, int ns = 9);
+  dvariable adrombo(_func func, double a, const dvariable& b, int ns = 9);
 
-  dvariable trapzd(void*,double a,double b,int n);
-  dvariable trapzd(PMF,double a,double b,int n);
-  dvariable trapzd(PMF, double a, const dvariable& b, int n);
-  dvariable trapzd(PMF, const dvariable& a, double b, int n);
-  dvariable trapzd(PMF, const dvariable& a, const dvariable& b, int n);
+  dvariable trapzd(void*, double a, double b, int n);
+  dvariable trapzd(_func func, double a, double b, int n);
+  dvariable trapzd(_func func, double a, const dvariable& b, int n);
+  dvariable trapzd(_func func, const dvariable& a, double b, int n);
+  dvariable trapzd(_func func, const dvariable& a, const dvariable& b, int n);
 
-  dvariable midpnt(PMF,double a,double b,int n);
-  dvariable midpnt(PMF, double a, const dvariable& b, int n);
-  dvariable midpnt(PMF, const dvariable& a, double b, int n);
-  dvariable midpnt(PMF, const dvariable& a, const dvariable& b, int n);
-
-  virtual void * mycast() { return (void*)this;}
+  /*
+  //No code for midpnt functions
+  //dvariable midpnt(PMF,double a,double b,int n);
+  //dvariable midpnt(PMF, double a, const dvariable& b, int n);
+  //dvariable midpnt(PMF, const dvariable& a, double b, int n);
+  //dvariable midpnt(PMF, const dvariable& a, const dvariable& b, int n);
+  //virtual void * mycast() { return (void*)this;}
+  */
 
   void neldmead(int n, dvector& _start, dvector& _xmin, double *ynewlo,
     double reqmin, double delta,int *icount, int *numres, int *ifault);

@@ -17,7 +17,7 @@ LicenseFile=..\..\..\LICENSE.txt
 Name: "vs14"; Description: "ADMB (Microsoft Visual Studio 2015 - C++ 64Bit)"
 
 [Files]
-Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\cl\set-admb-vs14-64bit.bat"; DestDir: "{app}\bin"
 
 [Icons]

@@ -756,7 +756,7 @@ cpplint.py:
 	svn cat https://github.com/google/styleguide/trunk/cpplint/cpplint.py > cpplint.py
 
 zip:
-	pushd ../build/ && zip -r admb.zip admb && popd
+	cd ../build/ && zip -r admb.zip admb
 
 check:
 	@echo "SHELL: $(SHELL)"

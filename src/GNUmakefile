@@ -370,7 +370,7 @@ else
 	cp ../scripts/admb/root-admb-debug.sh ${DIST}/admb.sh
     else
 	cp ../scripts/admb/root-admb.sh ../admb.sh
-	cp ../scripts/admb/root-admb.sh ${DIST}/admb.sh
+	cp ../scripts/admb/admb ${DIST}/admb.sh
     endif
 	cp ../scripts/admb/adcomp ${DIST}/bin/adcomp.sh
 	cp ../scripts/admb/adlink ${DIST}/bin/adlink.sh

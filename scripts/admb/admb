@@ -158,15 +158,15 @@ if [[ "$UNAME_S" =~ "_NT" ]]; then
   if [ "$CXX" == "g++" ]; then
     if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
       if [[ "`$CXX --version`" =~ "MSYS2" ]]; then
-        OS_NAME=-x86_64-msys
+        OS_NAME=x86_64-msys2
       else
-        OS_NAME=-mingw64
+        OS_NAME=mingw64
       fi
     else
       if [[ "`$CXX --version`" =~ "MSYS2" ]]; then
-        OS_NAME=-i686-msys
+        OS_NAME=i686-msys2
       else
-        OS_NAME=-mingw32
+        OS_NAME=mingw32
       fi
     fi
   fi

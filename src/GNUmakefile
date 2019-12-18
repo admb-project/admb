@@ -15,7 +15,7 @@ ifeq ($(SHELL),cmd)
   DIST=..\build\admb
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
-  OBJSDIR=..\build\objects\admb
+  OBJSDIR=..\build\objects
   ifeq ($(CXX),g++)
     ifeq (,$(shell where g++.exe))
       $(error "Error: Missing g++ compiler.")
@@ -36,9 +36,9 @@ ifeq ($(SHELL),cmd)
     CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
   ifdef SHARED
-  OBJSDIR:=$(addsuffix $(OSNAME)$(CXXVERSION)-shared\,$(OBJSDIR))
+  OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared\,$(OBJSDIR))
   else
-  OBJSDIR:=$(addsuffix $(OSNAME)$(CXXVERSION)\,$(OBJSDIR))
+  OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)\,$(OBJSDIR))
   endif
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
 else

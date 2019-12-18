@@ -18,7 +18,7 @@ AlwaysShowComponentsList=no
 Name: "rtools"; Description: "ADMB Command Prompt (Rtools)"
 
 [Files]
-Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\mingw\set-admb-rtools.bat"; DestDir: "{app}\bin"
 
 [Icons]

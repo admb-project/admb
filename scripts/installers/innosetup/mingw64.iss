@@ -18,7 +18,7 @@ AlwaysShowComponentsList=no
 Name: "mingw64"; Description: "ADMB Command Prompt (MinGW-w64)"
 
 [Files]
-Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\mingw\set-admb-mingw64.bat"; DestDir: "{app}\bin"
 Source: "C:\msys64\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 

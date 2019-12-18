@@ -1,6 +1,11 @@
 .ONESHELL:
 ifeq ($(OS),Windows_NT)
-EXT=.cmd
+ifeq ("$(shell echo %PATH%)","%PATH%")
+EXT=.sh
+else
+SHELL=cmd
+EXT=.$(SHELL)
+endif
 endif
 
 ifeq ($(SHELL),cmd)

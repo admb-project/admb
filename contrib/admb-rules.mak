@@ -1,10 +1,8 @@
 .ONESHELL:
 ifeq ($(OS),Windows_NT)
-ifeq ("$(shell echo %PATH%)","%PATH%")
 EXT=.sh
-else
+ifneq ("$(shell echo %PATH%)","%PATH%")
 SHELL=cmd
-EXT=.$(SHELL)
 endif
 endif
 
@@ -16,11 +14,11 @@ all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_O
   endif
 
 $(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
-	..\..\admb -c $(OPTION) $<
+	..\..\admb.cmd -c $(OPTION) $<
 	copy $(basename $<).obj $@
 
 $(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
-	..\..\admb -c -f $(OPTION) $<
+	..\..\admb.cmd -c -f $(OPTION) $<
 	copy $(basename $<).obj $@
 else
   ifeq ($(SAFE_ONLY),yes)

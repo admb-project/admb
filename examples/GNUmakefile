@@ -101,9 +101,7 @@ forest:
 	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
 pella_t:
-ifneq ($(OS),Windows_NT)
 	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
-endif
 
 robreg:
 	$(MAKE) vonb

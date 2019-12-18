@@ -215,10 +215,6 @@ REPORT_SECTION
   report<< "R " << endl;
   report<< R << endl;
 
-GLOBALS_SECTION
-  #define _USE_MATH_DEFINES
-  #include <math.h>
-
 TOP_OF_MAIN_SECTION
   //gradient_structure::set_MAX_NVAR_OFFSET(1200);
   arrmblsize=20000000;

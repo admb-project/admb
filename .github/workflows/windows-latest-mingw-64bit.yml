@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: run windows-latest-debug
       run: |
-        utilities\\make USE_MINGW_PATH=C:\\msys2\\mingw64\\bin clean
-        utilities\\make USE_MINGW_PATH=C:\\msys2\\mingw64\\bin DEBUG=yes
-        utilities\\make test USE_MINGW_PATH=C:\\msys2\\mingw64\\bin DEBUG=yes
+        utilities\\make USE_MINGW_PATH=C:\\msys64\\mingw64\\bin clean
+        utilities\\make USE_MINGW_PATH=C:\\msys64\\mingw64\\bin DEBUG=yes
+        utilities\\make test USE_MINGW_PATH=C:\\msys64\\mingw64\\bin DEBUG=yes
       shell: cmd

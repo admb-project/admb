@@ -14,6 +14,5 @@ jobs:
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         cl /?
         nmake clean DEBUG=yes
-        nmake CXXFLAGS=/analyze DEBUG=yes
-        nmake test DEBUG=yes
+        nmake CXXFLAGS=/analyze DEBUG=yes objects
       shell: cmd

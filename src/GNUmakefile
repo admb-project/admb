@@ -1,20 +1,12 @@
 ifeq ($(OS),Windows_NT)
   ifeq ($(strip $(TERM)),)
     SHELL=cmd
-    ifdef USE_MINGW_PATH
-        PATH:=$(USE_MINGW_PATH);$(PATH)
-    else
-      ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
-        PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
-      endif
+    ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
+      PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
     endif
   else
-    ifdef USE_MINGW_PATH
-        PATH:=$(USE_MINGW_PATH):$(PATH)
-    else
-      ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
-        PATH:=$(shell pwd)/../utilities/mingw/bin:$(PATH)
-      endif
+    ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
+      PATH:=$(shell pwd)/../utilities/mingw/bin:$(PATH)
     endif
   endif
 endif

@@ -1,0 +1,19 @@
+name: windows-latest-debug-64bit
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: run windows-latest-debug
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        cl /?
+        nmake clean DEBUG=yes
+        nmake CXXFLAGS=/analyze DEBUG=yes
+        nmake test DEBUG=yes
+      shell: cmd

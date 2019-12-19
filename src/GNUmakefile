@@ -404,7 +404,11 @@ else
     endif
 endif
 
-libs: includes
+ifeq ($(SHELL),cmd)
+libs: $(DIST)\include
+else
+libs: $(DIST)/include
+endif
 	$(MAKE) objects
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
@@ -438,7 +442,9 @@ ifndef SAFE_ONLY
 	$(AR) -rs $(LIBSDIR)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)optlp-sparse-*.obj
 endif
 
-objects: $(OBJECTS)
+objects: $(OBJSDIR)
+	$(MAKE) _objects
+_objects: $(OBJECTS)
 
 ifeq ($(SHELL),cmd)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
@@ -568,8 +574,8 @@ endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 endif
 
-includes: dirs
 ifeq ($(SHELL),cmd)
+${DIST}\include:
 	if not exist ${DIST}\include md ${DIST}\include
 	copy linad99\df11fun.h ${DIST}\include
 	copy linad99\df12fun.h ${DIST}\include
@@ -606,6 +612,7 @@ ifeq ($(SHELL),cmd)
 	copy nh99\admodel.h ${DIST}\include
 	copy nh99\param_init_bounded_number_matrix.h ${DIST}\include
 else
+${DIST}/include:
 	mkdir -p ${DIST}/include
 	cp linad99/df11fun.h ${DIST}/include
 	cp linad99/df12fun.h ${DIST}/include
@@ -643,10 +650,11 @@ else
 	cp nh99/param_init_bounded_number_matrix.h ${DIST}/include
 endif
 
-dirs:
 ifeq ($(SHELL),cmd)
+$(OBJSDIR): ${DIST}\include:
 	if not exist $(OBJSDIR) md $(OBJSDIR)
 else
+$(OBJSDIR): ${DIST}/include
 	mkdir -p $(OBJSDIR)
 endif
 

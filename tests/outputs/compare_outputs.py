@@ -15,7 +15,7 @@ if __name__ == '__main__':
     i += 1
 
   while True:
-    f_lines = []
+    list_lines = []
     for f in files:
       lines = []
       while True:
@@ -30,9 +30,16 @@ if __name__ == '__main__':
           lines.append(line)
 
       if len(lines) > 0:
-        f_lines.append(lines)
+        list_lines.append(lines)
 
-    if len(f_lines) == 0:
+    if len(list_lines) == 0:
       break
 
-    print(f_lines)
+    print(list_lines)
+
+    max_len = 0
+    for l in list_lines:
+      if len(l) > max_len: 
+        max_len = len(l) 
+
+    print(max_len)

@@ -651,10 +651,10 @@ ${DIST}/include:
 endif
 
 ifeq ($(SHELL),cmd)
-$(OBJSDIR): ${DIST}\include:
+$(OBJSDIR): $(DIST)\include
 	if not exist $(OBJSDIR) md $(OBJSDIR)
 else
-$(OBJSDIR): ${DIST}/include
+$(OBJSDIR): $(DIST)/include
 	mkdir -p $(OBJSDIR)
 endif
 

@@ -64,21 +64,6 @@ SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\vsx86-cl19\saflp-linad99-) $(OBJ2:
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\vs-cl\optlp-linad99-) $(OBJ2: = ..\build\objects\vs-cl\optlp-linad99-) $(OBJ3: = ..\build\objects\vs-cl\optlp-linad99-) $(OBJ4: = ..\build\objects\vs-cl\optlp-linad99-)
 SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ2: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ3: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ4: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ16: = ..\build\objects\vs-cl\saflp-linad99-)
 !ENDIF
-!IF DEFINED(TRAVIS)
-!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="vsx64"
-SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\vsx64-cl19\saflp-linad99-)
-SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects\vsx64-cl19\saflp-linad99-)
-SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects\vsx64-cl19\saflp-linad99-) $(OBJ4: = ..\build\objects\vsx64-cl19\saflp-linad99-) $(OBJ16: = ..\build\objects\vsx64-cl19\saflp-linad99-)
-!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="vsx86"
-SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\vsx86-cl19\saflp-linad99-)
-SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects\vsx86-cl19\saflp-linad99-)
-SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects\vsx86-cl19\saflp-linad99-) $(OBJ4: = ..\build\objects\vsx86-cl19\saflp-linad99-) $(OBJ16: = ..\build\objects\vsx86-cl19\saflp-linad99-)
-!ELSE
-SAFLP_LINAD99_OBJS1=$(OBJ1: = ..\build\objects\vs-cl\saflp-linad99-)
-SAFLP_LINAD99_OBJS3=$(OBJ3: = ..\build\objects\vs-cl\saflp-linad99-)
-SAFLP_LINAD99_OBJS2=$(OBJ2: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ4: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ16: = ..\build\objects\vs-cl\saflp-linad99-)
-!ENDIF
-!ENDIF
 !ELSE
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="vsx64"
 OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\vsx64-cl19\optlp-linad99-) $(OBJ2: = ..\build\objects\vsx64-cl19\optlp-linad99-) $(OBJ3: = ..\build\objects\vsx64-cl19\optlp-linad99-) $(OBJ4: = ..\build\objects\vsx64-cl19\optlp-linad99-)
@@ -205,24 +190,12 @@ libs: objects
 	IF EXIST $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib del $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib
 	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj
 
+objects: $(OBJDESTDIR)
+	$(MAKE) _objects
 !IF DEFINED(SAFE_ONLY)
-objects: includes $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS) $(SAFLP_NH99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
+_objects: $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS) $(SAFLP_NH99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
 !ELSE
-objects: includes $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
-!ENDIF
-!IF DEFINED(DEBUG)
-!IF DEFINED(TRAVIS)
-objects1: includes $(SAFLP_LINAD99_OBJS1)
-objects3: includes $(SAFLP_LINAD99_OBJS3)
-objects2: includes $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS2) $(SAFLP_NH99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
-
-$(SAFLP_LINAD99_OBJS1):: $(@B:saflp-linad99-=linad99\).cpp
-	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
-$(SAFLP_LINAD99_OBJS2):: $(@B:saflp-linad99-=linad99\).cpp
-	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
-$(SAFLP_LINAD99_OBJS3):: $(@B:saflp-linad99-=linad99\).cpp
-	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
-!ENDIF
+_objects: $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
 !ENDIF
 
 $(SAFLP_DF1B2_SEPARABLE_OBJS):: $(@B:saflp-df1b2-separable-=df1b2-separable\).cpp
@@ -255,7 +228,7 @@ $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
 
-includes: objdestdir
+$(DESTDIR)\include:
 	IF NOT EXIST $(DESTDIR)\include md $(DESTDIR)\include
 	copy df1b2-separable\df1b2fun.h $(DESTDIR)\include
 	copy df1b2-separable\adpool.h $(DESTDIR)\include
@@ -292,7 +265,7 @@ includes: objdestdir
 	copy tools99\adjson.h $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
 
-objdestdir:
+$(OBJDESTDIR): $(DESTDIR)\include
 	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
 
 install:

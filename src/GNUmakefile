@@ -442,7 +442,7 @@ ifndef SAFE_ONLY
 	$(AR) -rs $(LIBSDIR)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)optlp-sparse-*.obj
 endif
 
-objects: $(OBJSDIR)
+objects: $(OBJSDIR)tmp
 	$(MAKE) _objects
 _objects: $(OBJECTS)
 
@@ -651,10 +651,10 @@ ${DIST}/include:
 endif
 
 ifeq ($(SHELL),cmd)
-$(OBJSDIR): $(DIST)\include
+$(OBJSDIR)tmp: $(DIST)\include
 	if not exist $(OBJSDIR) md $(OBJSDIR)
 else
-$(OBJSDIR): $(DIST)/include
+$(OBJSDIR)tmp: $(DIST)/include
 	mkdir -p $(OBJSDIR)
 endif
 

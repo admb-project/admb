@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: run windows-latest-debug
       run: |
-        set PATH=C:\\msys64\\mingw64\\bin;%PATH% && utilities\\make clean
-        set PATH=C:\\msys64\\mingw64\\bin;%PATH% && utilities\\make DEBUG=yes
-        set PATH=C:\\msys64\\mingw64\\bin;%PATH% && utilities\\make test DEBUG=yes
+        utilities\\make clean
+        utilities\\make DEBUG=yes
+        utilities\\make test DEBUG=yes
       shell: cmd

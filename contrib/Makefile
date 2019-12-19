@@ -4,9 +4,9 @@ CXXVERSION=-cl19
 CXXVERSION=-cl
 !ENDIF
 !IF ([cl /? 2>&1 | findstr /C:" x64" > nul] == 0)
-OSNAME=vsx64
+OSNAME=win64
 !ELSEIF ([cl /? 2>&1 | findstr /C:" x86" > nul] == 0)
-OSNAME=vsx86
+OSNAME=win32
 !ELSE
 OSNAME=vs
 !ENDIF

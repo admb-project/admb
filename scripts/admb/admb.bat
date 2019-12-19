@@ -151,10 +151,10 @@ if "!CXX!"=="cl" (
   for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "Compiler Version 19."') do (
     set CXXVERSION=-cl19
     for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "x64"') do (
-      set OSNAME=-vsx64
+      set OSNAME=-win64
     )
     for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "x86"') do (
-      set OSNAME=-vsx86
+      set OSNAME=-win32
     )
   )
   if not defined CXXVERSION (

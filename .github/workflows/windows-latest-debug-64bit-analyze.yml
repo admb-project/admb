@@ -1,4 +1,4 @@
-name: windows-latest-debug-64bit
+name: windows-latest-debug-64bit-analyze
 
 on: [push]
 

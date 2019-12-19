@@ -1,3 +1,5 @@
+compare:
+	python compare_outputs.py outputs-safa.txt outputs-safb.txt outputs-safc.txt
 all:
 	$(MAKE) check-rtools
 	$(MAKE) check-rtools-redhat

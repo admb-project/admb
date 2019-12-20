@@ -39,7 +39,7 @@ ifeq ($(SHELL),cmd)
   OBJSDIR_:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared,$(OBJSDIR))
   OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared\,$(OBJSDIR))
   else
-  OBJSDIR_:=$(OBJSDIR)
+  OBJSDIR_:=$(addsuffix \$(OSNAME)$(CXXVERSION),$(OBJSDIR))
   OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)\,$(OBJSDIR))
   endif
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)

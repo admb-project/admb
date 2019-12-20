@@ -36,8 +36,10 @@ ifeq ($(SHELL),cmd)
     CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
   ifdef SHARED
+  OBJSDIR_:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared,$(OBJSDIR))
   OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared\,$(OBJSDIR))
   else
+  OBJSDIR_:=$(OBJSDIR)
   OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)\,$(OBJSDIR))
   endif
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
@@ -106,8 +108,10 @@ else
   OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)
   endif
   ifdef SHARED
+  OBJSDIR_:=$(sort $(addsuffix -shared, $(OBJSDIR)))
   OBJSDIR:=$(sort $(addsuffix -shared/, $(OBJSDIR)))
   else
+  OBJSDIR_:=$(OBJSDIR)
   OBJSDIR:=$(sort $(addsuffix /, $(OBJSDIR)))
   endif
   ADMB_VERSION:=$(shell cat ../VERSION)
@@ -442,7 +446,7 @@ ifndef SAFE_ONLY
 	$(AR) -rs $(LIBSDIR)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)optlp-sparse-*.obj
 endif
 
-objects: $(OBJSDIR)tmp
+objects: $(OBJSDIR_)
 	$(MAKE) _objects
 _objects: $(OBJECTS)
 
@@ -651,11 +655,11 @@ ${DIST}/include:
 endif
 
 ifeq ($(SHELL),cmd)
-$(OBJSDIR)tmp: $(DIST)\include
-	if not exist $(OBJSDIR) md $(OBJSDIR)
+$(OBJSDIR_): $(DIST)\include
+	if not exist $(OBJSDIR_) md $(OBJSDIR_)
 else
-$(OBJSDIR)tmp: $(DIST)/include
-	mkdir -p $(OBJSDIR)
+$(OBJSDIR_): $(DIST)/include
+	mkdir -p $(OBJSDIR_)
 endif
 
 dist-clean:

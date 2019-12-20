@@ -1,0 +1,17 @@
+name: centos-latest-debug-64bit
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, linux]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: clean
+      run: make clean DEBUG=yes
+    - name: build
+      run: make DEBUG=yes
+    - name: tests
+      run: make test DEBUG=yes

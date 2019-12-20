@@ -5,11 +5,11 @@ on: [push]
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: [self-hosted, windows]
     
     steps:
     - uses: actions/checkout@v1
-    - name: run windows-latest-debug
+    - name: run windows-latest-mingw-64bit
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
         utilities\\make clean

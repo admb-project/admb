@@ -416,7 +416,7 @@ endif
 	$(MAKE) objects
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
-	if exist ${DIST}\lib\libadmb-$(OSNAME)$(CXXVERSION)(SHARED).a del ${DIST}\lib\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a
+	if exist ${DIST}\lib\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a del ${DIST}\lib\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	if exist ${DIST}\lib\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a del ${DIST}\lib\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a
 else
 	mkdir -p ${DIST}/lib

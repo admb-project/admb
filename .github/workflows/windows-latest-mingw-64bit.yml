@@ -12,7 +12,7 @@ jobs:
     - name: run windows-latest-debug
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make USE_MINGW_PATH=C:\\msys64\\mingw64\\bin clean
-        utilities\\make USE_MINGW_PATH=C:\\msys64\\mingw64\\bin DEBUG=yes
-        utilities\\make test USE_MINGW_PATH=C:\\msys64\\mingw64\\bin DEBUG=yes
+        utilities\\make clean
+        utilities\\make DEBUG=yes
+        utilities\\make test DEBUG=yes
       shell: cmd

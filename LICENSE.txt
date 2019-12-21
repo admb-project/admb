@@ -1,4 +1,4 @@
-Copyright (c) 2008-2019 ADMB Foundation and Regents of the 
+Copyright (c) 2008-2020 ADMB Foundation and Regents of the
 University of California
 
 AD Model Builder and associated libraries and documentations are

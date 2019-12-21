@@ -4685,6 +4685,10 @@ TOP_OF_MAIN_SECTION {
     fprintf(htop,"#include <admodel.h>\n");
     fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
     fprintf(htop,"#include <contrib.h>\n\n");
+    if(enable_pad)
+    {
+      fprintf(htop,"#include <gdbprintlib.cpp>\n");
+    }
     fprintf(htop,"#endif\n");
     if (random_effects_flag)
     {
@@ -4702,13 +4706,6 @@ TOP_OF_MAIN_SECTION {
     {
       fprintf(htop,"#include <adsplus.h>\n\n");
     }
-
-    if(enable_pad){
-      fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
-      fprintf(htop,"#include <gdbprintlib.cpp>\n");
-      fprintf(htop,"#endif");
-    }
-
     if (makedll)
     {
       // make a definition file

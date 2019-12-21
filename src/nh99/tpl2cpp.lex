@@ -4349,6 +4349,10 @@ TOP_OF_MAIN_SECTION {
     fprintf(htop,"#include <admodel.h>\n");
     fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
     fprintf(htop,"#include <contrib.h>\n\n");
+    if(enable_pad)
+    {
+      fprintf(htop,"#include <gdbprintlib.cpp>\n");
+    }
     fprintf(htop,"#endif\n");
 
     if (bound_flag)
@@ -4361,11 +4365,6 @@ TOP_OF_MAIN_SECTION {
     if (talk_to_splus)
     {
       fprintf(htop,"#include <adsplus.h>\n\n");
-    }
-    if(enable_pad){
-      fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
-      fprintf(htop,"#include <gdbprintlib.cpp>\n");
-      fprintf(htop,"#endif");
     }
 
     if (makedll)

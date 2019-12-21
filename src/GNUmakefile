@@ -670,8 +670,7 @@ endif
 
 install:
 	@#echo "Read INSTALL.txt for installation instructions."
-ifeq ($(DEBUG),yes)
-  ifeq ($(INSTALL_DIR),/usr/local/)
+ifeq ($(INSTALL_DIR),/usr/local/)
 	find ../build/admb -type d -exec chmod 755 {} \;
 	find ../build/admb -type f -exec chmod 644 {} \;
 	chmod a+rx ../build/admb/bin/admb
@@ -683,24 +682,8 @@ ifeq ($(DEBUG),yes)
 	chmod a+r ../build/admb/bin/sed*
 	chmod a+r ../build/admb/include/*.*
 	chmod a+r ../build/admb/contrib/include/*.*
-  endif
-	cp -Rvf ../build/admb $(INSTALL_DIR)admb
-else
-  ifeq ($(INSTALL_DIR),/usr/local/)
-	find ../build/admb -type d -exec chmod 755 {} \;
-	find ../build/admb -type f -exec chmod 644 {} \;
-	chmod a+rx ../build/admb/bin/admb
-	chmod a+rx ../build/admb/bin/adlink
-	chmod a+rx ../build/admb/bin/adcomp
-	chmod a+rx ../build/admb/bin/tpl2cpp
-	chmod a+rx ../build/admb/bin/tpl2rem
-	chmod a+rx ../build/admb/contrib
-	chmod a+r ../build/admb/bin/sed*
-	chmod a+r ../build/admb/include/*.*
-	chmod a+r ../build/admb/contrib/include/*.*
-  endif
-	cp -Rvf ../build/admb $(INSTALL_DIR)admb
 endif
+	cp -Rvf ../build/admb $(INSTALL_DIR)admb
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
 
 copy:

@@ -302,8 +302,4 @@ check:
 	@echo "OS: $(OS)"
 	@echo "OSTYPE: $(OSTYPE)"
 zip:
-!IF DEFINED(DEBUG)
 	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd
-!ELSE
-	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd
-!ENDIF

@@ -13,6 +13,22 @@ notifications:
 
 jobs:
   include:
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make dist 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck ham4
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind ham4
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind ham4
+
   - os: linux
     env:
      - CXXFLAGS="-coverage -O0" LDFLAGS="-coverage -O0" DEBUG="yes" PROG=
@@ -41,19 +57,6 @@ jobs:
     - make dist 
     - make --directory=examples admb
 
-  - os: linux
-    dist: xenial
-    env:
-     - SAFE_ONLY=yes
-     - DEBUG=yes
-     - PROG=../../../scripts/ci/run-valgrind-memcheck
-    before_install:
-    - sudo apt-get install -y valgrind
-    compiler: gcc
-    script:
-    - make clean
-    - make dist 
-    - make --directory=examples ham4
 
   - os: linux
     dist: xenial

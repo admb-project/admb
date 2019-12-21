@@ -153,13 +153,8 @@ bins: libs
 	copy df1b2-separable\sed* $(DESTDIR)\bin
 	if exist ..\admb del ..\admb
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin\admb.cmd
-!IF DEFINED(DEBUG)
-	copy ..\scripts\admb\root-admb-debug.bat ..\admb.cmd
-	copy ..\scripts\admb\root-admb-debug.bat $(DESTDIR)\admb.cmd
-!ELSE
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat $(DESTDIR)\admb.cmd
-!ENDIF
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
 	copy ..\utilities\*.dll $(DESTDIR)\bin
 

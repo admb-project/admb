@@ -4704,7 +4704,9 @@ TOP_OF_MAIN_SECTION {
     }
 
     if(enable_pad){
-      fprintf(htop,"#include <gdbprintlib.cpp>\n\n");
+      fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
+      fprintf(htop,"#include <gdbprintlib.cpp>\n");
+      fprintf(htop,"#endif");
     }
 
     if (makedll)

@@ -8,5 +8,5 @@
 @cd "%USERPROFILE%"
 
 @echo.
-@echo ADMB Command Prompt for Microsoft Studio 2019 (C++ 64 Bit)
+@echo ADMB Command Prompt for Microsoft Visual Studio 64Bit
 @echo For help, type command "admb".

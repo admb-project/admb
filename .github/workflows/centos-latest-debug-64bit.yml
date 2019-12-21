@@ -15,3 +15,5 @@ jobs:
       run: make DEBUG=yes
     - name: tests
       run: make test DEBUG=yes
+    - name: manuals
+      run: PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH make docs

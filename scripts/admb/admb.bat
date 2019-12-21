@@ -45,6 +45,8 @@ if not defined ADMB_HOME (
 if not defined ADMB_HOME (
   echo "Error: ADMB_HOME is not defined."
   goto EOF
+) else (
+  set "PATH=!ADMB_HOME!\bin;!PATH!"
 )
 
 set tpls=
@@ -195,8 +197,12 @@ if "!CXX!"=="cl" (
   )
   where /Q !CXX!
   if errorlevel 1 (
-    echo Error: Unable to find !CXX!
-    exit /B 1
+    if exist "!ADMB_HOME!\utilities\mingw\bin\g++.exe" (
+      set "PATH=!ADMB_HOME!\utilities\mingw\bin;!PATH!"
+    ) else (
+      echo Error: Unable to find !CXX!
+      exit /B 1
+    )
   )
   for /f %%i in ('!CXX! -dumpversion ^| findstr /b 4.') do (
     set CXXMAJORNUMBER=-g++4
@@ -280,11 +286,6 @@ if "!CXX!"=="cl" (
 )
 if exist "!CD!\echo" (
   echo.&echo Warning: File 'echo' should not be in !CD!.
-)
-if exist "!ADMB_HOME!\utilities\mingw\bin" (
-  set "PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!"
-) else (
-  set "PATH=!ADMB_HOME!\bin;!PATH!"
 )
 if not defined tpls (
   if not defined srcs (

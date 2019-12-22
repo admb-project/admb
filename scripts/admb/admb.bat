@@ -147,7 +147,6 @@ if "!CXX!"=="cl" (
   )
   if defined g (
     set CXXFLAGS=!CXXFLAGS! /Z7
-    set _DEBUG=-debug
   ) else (
     set CXXFLAGS=!CXXFLAGS! /O2
   )
@@ -168,19 +167,41 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /nologo /DOPT_LIB
-    if not exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!!_DEBUG!.lib" (
-      set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!!_DEBUG!.lib" /link
-    ) else (
-      set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!!_DEBUG!.lib" /link
+    if defined g (
+      if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" (
+        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" /link
+      ) else (
+        if exist "!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!-debug.lib" (
+          set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!-debug.lib" /link
+        )
+      )
+    )
+    if defined libs (
+      if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" (
+        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!lib" /link
+      ) else (
+        set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!.lib" /link
+      )
     )
   ) else (
-    if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!!_DEBUG!.lib" (
-      set libs="!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!!_DEBUG!.lib" /link
-    ) else (
-      set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!!_DEBUG!.lib" /link
+    if defined g (
+      if exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!-debug.lib" (
+        set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!-debug.lib" /link
+      ) else (
+        if exist "!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!-debug.lib" (
+          set libs="!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!-debug.lib" /link
+        )
+      )
+    )
+    if defined libs (
+      if exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
+        set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" /link
+      ) else (
+        set libs="!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!.lib" /link
+      )
     )
   )
-  if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!!_DEBUG!.lib" (
+  if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
     set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include"
   ) else (
     set CXXFLAGS=!CXXFLAGS! /DUSE_ADMB_CONTRIBS /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"

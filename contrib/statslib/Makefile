@@ -11,14 +11,14 @@ OSNAME=-win32
 
 !IF DEFINED(DEBUG)
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win64"
-OPT=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win64-cl19-debug\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19-debug\contrib-saflp-statslib-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win32"
-OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19-debug\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19-debug\contrib-saflp-statslib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win-cl-debug\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win-cl-debug\contrib-saflp-statslib-)
 !ENDIF
 !ELSE
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win64"
@@ -28,8 +28,8 @@ SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-saflp-statslib-)
 OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-optlp-statslib-)
 SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-saflp-statslib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-optlp-statslib-)
-SAF=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-saflp-statslib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win-cl\contrib-optlp-statslib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win-cl\contrib-saflp-statslib-)
 !ENDIF
 !ENDIF
 
@@ -40,12 +40,22 @@ all: $(OPT) $(SAF)
 !ENDIF
 
 $(OPT):: $(@B:contrib-optlp-statslib-=).cpp
+!IF DEFINED(DEBUG)
 	..\..\admb -c -f $?
+!ELSE
+	..\..\admb -c -f -g $?
+!ENDIF
+
 	copy $(?:.cpp=.obj) $@
 
 $(SAF):: $(@B:contrib-saflp-statslib-=).cpp
+!IF DEFINED(DEBUG)
 	..\..\admb -c $?
+!ELSE
+	..\..\admb -c -g $?
+!ENDIF
 	copy $(?:.cpp=.obj) $@
+
 
 includes: $(HEADERS)
 	copy $(HEADERS) $(CONTRIB_INCLUDE)

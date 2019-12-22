@@ -2,7 +2,11 @@ SHELL=cmd
 
 ADMB_HOME=..\\..\\..
 
+!IFDEF DEBUG
+OPTIONS=-g $(DEBUG_OPTION) $(FAST_OPTION)
+!ELSE
 OPTIONS=$(DEBUG_OPTION) $(FAST_OPTION)
+!ENDIF
 
 all: admb admb-re
 

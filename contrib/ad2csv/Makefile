@@ -1,5 +1,9 @@
 all:
+!IF DEFINED(DEBUG)
+	..\..\admb.cmd -g ad2csv.cpp main.cpp
+!ELSE
 	..\..\admb.cmd ad2csv.cpp main.cpp
+!ENDIF
 	copy ad2csv.exe ..\..\build\admb\bin
 
 clean:

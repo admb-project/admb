@@ -11,14 +11,14 @@ OSNAME=-win32
 
 !IF DEFINED(DEBUG)
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win64"
-OPT=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win64-cl19-debug\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19-debug\contrib-saflp-ecolib-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win32"
-OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19-debug\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19-debug\contrib-saflp-ecolib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win-cl-debug\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win-cl-debug\contrib-saflp-ecolib-)
 !ENDIF
 !ELSE
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win64"
@@ -28,8 +28,8 @@ SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-saflp-ecolib-)
 OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-optlp-ecolib-)
 SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-saflp-ecolib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-optlp-ecolib-)
-SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-saflp-ecolib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win-cl\contrib-optlp-ecolib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win-cl\contrib-saflp-ecolib-)
 !ENDIF
 !ENDIF
 
@@ -40,11 +40,19 @@ all: $(OPT) $(SAF)
 !ENDIF
 
 $(OPT):: $(@B:contrib-optlp-ecolib-=).cpp
+!IF DEFINED(DEBUG)
 	..\..\admb -c -f $?
+!ELSE
+	..\..\admb -c -f -g $?
+!ENDIF
 	copy $(?:.cpp=.obj) $@
 
 $(SAF):: $(@B:contrib-saflp-ecolib-=).cpp
+!IF DEFINED(DEBUG)
 	..\..\admb -c $?
+!ELSE
+	..\..\admb -c -g $?
+!ENDIF
 	copy $(?:.cpp=.obj) $@
 
 includes: $(HEADERS)

@@ -11,14 +11,14 @@ OSNAME=-win32
 
 !IF DEFINED(DEBUG)
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win64"
-OPT=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-optlp-gdbprintlib-)
-SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-saflp-gdbprintlib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win64-cl19-debug\contrib-optlp-gdbprintlib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19-debug\contrib-saflp-gdbprintlib-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win32"
-OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-optlp-gdbprintlib-)
-SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-saflp-gdbprintlib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19-debug\contrib-optlp-gdbprintlib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19-debug\contrib-saflp-gdbprintlib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-optlp-gdbprintlib-)
-SAF=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-saflp-gdbprintlib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win-cl-debug\contrib-optlp-gdbprintlib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win-cl-debug\contrib-saflp-gdbprintlib-)
 !ENDIF
 !ELSE
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win64"
@@ -28,8 +28,8 @@ SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-saflp-gdbprintlib-)
 OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-optlp-gdbprintlib-)
 SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-saflp-gdbprintlib-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-optlp-gdbprintlib-)
-SAF=$(OBJECTS: = ..\..\build\objects\vs-cl\contrib-saflp-gdbprintlib-)
+OPT=$(OBJECTS: = ..\..\build\objects\win-cl\contrib-optlp-gdbprintlib-)
+SAF=$(OBJECTS: = ..\..\build\objects\win-cl\contrib-saflp-gdbprintlib-)
 !ENDIF
 !ENDIF
 
@@ -40,11 +40,20 @@ all: $(OPT) $(SAF)
 !ENDIf
 
 $(OPT):: $(@B:contrib-optlp-gdbprintlib-=).cpp
+!IF DEFINED(DEBUG)
+	..\..\admb -c -g -f $?
+!ELSE
 	..\..\admb -c -f $?
+!ENDIf
+
 	copy $(?:.cpp=.obj) $@
 
 $(SAF):: $(@B:contrib-saflp-gdbprintlib-=).cpp
+!IF DEFINED(DEBUG)
+	..\..\admb -c -g $?
+!ELSE
 	..\..\admb -c $?
+!ENDIf
 	copy $(?:.cpp=.obj) $@
 
 includes: $(HEADERS)

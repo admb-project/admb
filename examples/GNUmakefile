@@ -67,9 +67,7 @@ ADMB_RE_TPLS=\
 default: simple
 
 all: admb admb-re
-ifndef DEBUG
 	cd autodif && $(MAKE)
-endif
 
 admb: $(ADMB_TPLS)
 

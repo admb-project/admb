@@ -364,6 +364,7 @@ do
   fi
   CMD="$CMD $file $objs"
   if [ ! -z  "$debug" ]; then
+    echo "1: $ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED-debug.a"
     if [ -f "$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED-debug.a" ]; then
       if [[ "$library" == "opt" ]]; then
         CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo-$CXXVERSION$SHARED-debug.a\""
@@ -371,6 +372,7 @@ do
         CMD="$CMD \"$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED-debug.a\""
       fi
     else
+      echo "2: $ADMB_HOME/lib/libadmb-$CXXVERSION$SHARED-debug.a"
       if [ -f "$ADMB_HOME/lib/libadmb-$CXXVERSION$SHARED-debug.a" ]; then
         if [[ "$library" == "opt" ]]; then
           CMD="$CMD \"$ADMB_HOME/lib/libadmbo-$CXXVERSION$SHARED-debug.a\""
@@ -378,6 +380,7 @@ do
           CMD="$CMD \"$ADMB_HOME/lib/libadmb-$CXXVERSION$SHARED-debug.a\""
         fi
       else
+        echo "3: $ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a"
         if [ -f "$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a" ]; then
           if [[ "$library" == "opt" ]]; then
             CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo-$CXXVERSION$SHARED.a\""

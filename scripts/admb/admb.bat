@@ -176,7 +176,7 @@ if "!CXX!"=="cl" (
         )
       )
     )
-    if defined libs (
+    if not defined libs (
       if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" (
         set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!lib" /link
       ) else (
@@ -193,7 +193,7 @@ if "!CXX!"=="cl" (
         )
       )
     )
-    if defined libs (
+    if not defined libs (
       if exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
         set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" /link
       ) else (

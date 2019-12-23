@@ -17,8 +17,8 @@ endif
 
 DIST=../build/admb
 
-ifeq ($(CXX),CC)
-all: all-tpls
+ifeq ($(DEBUG),yes)
+all: all-gtests
 else
 all: all-gtests all-tpls
 endif

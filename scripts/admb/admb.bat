@@ -279,18 +279,35 @@ if "!CXX!"=="cl" (
   for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
     set CXXVERSION=-mingw64!CXXMAJORNUMBER!
   )
-  if defined fast (
-    set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-    if not exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
-      set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
+  if defined g (
+    if defined fast (
+      set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
+      if not exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a" (
+        set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
+      ) else (
+        set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a"
+      )
     ) else (
-      set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a"
+      if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
+        set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
+      ) else (
+        set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a"
+      )
     )
   ) else (
-    if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
-      set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
+    if defined fast (
+      set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
+      if not exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
+        set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
+      ) else (
+        set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a"
+      )
     ) else (
-      set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a"
+      if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
+        set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
+      ) else (
+        set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a"
+      )
     )
   )
   set CXXFLAGS=!CXXFLAGS! -fpermissive

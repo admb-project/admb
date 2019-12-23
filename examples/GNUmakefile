@@ -24,10 +24,8 @@ endif
 ifdef FAST_OPTION
 OPTIONS:= $(OPTIONS) -f
 endif
-ifndef TRAVIS
 ifneq ($(TERM),cygwin)
 PROG=time
-endif
 endif
 
 ADMB_TPLS=\
@@ -69,15 +67,11 @@ ADMB_RE_TPLS=\
 default: simple
 
 all: admb admb-re
-ifneq ($(TERM),cygwin)
+ifndef DEBUG
 	cd autodif && $(MAKE)
 endif
 
-ifdef TRAVIS
-admb: $(filter-out buscycle vol, $(ADMB_TPLS))
-else
 admb: $(ADMB_TPLS)
-endif
 
 buscycle:
 	$(MAKE) ham4 
@@ -125,15 +119,7 @@ vol: n2mvol
 n2mvol:
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 
-ifdef TRAVIS
-ifeq ($(PROG),../../../scripts/ci/run-valgrind-memcheck)
-admb-re: $(filter-out biglog glmmadmb caest nbmm logistic nested4 sdv skewed socatt spatial union weights, $(ADMB_RE_TPLS))
-else
-admb-re: $(filter-out biglog glmmadmb caest nbmm nested4 sdv skewed socatt spatial, $(ADMB_RE_TPLS))
-endif
-else
 admb-re: $(ADMB_RE_TPLS)
-endif
 
 bcb:
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@

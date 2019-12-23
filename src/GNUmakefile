@@ -28,14 +28,15 @@ ifeq ($(SHELL),cmd)
     CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
   ifdef SHARED
-  OBJSDIR_:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared,$(OBJSDIR))
+  OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared,$(OBJSDIR))
   else
-  OBJSDIR_:=$(addsuffix \$(OSNAME)$(CXXVERSION),$(OBJSDIR))
+  OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION),$(OBJSDIR))
   endif
   ifdef DEBUG
-  OBJSDIR_:=$(addsuffix -debug,$(OBJSDIR_))
+  OBJSDIR:=$(addsuffix -debug,$(OBJSDIR))
   endif
-  OBJSDIR:=$(addsuffix \,$(OBJSDIR_))
+  OBJSDIR_:=$(OBJSDIR)
+  OBJSDIR:=$(addsuffix \,$(OBJSDIR))
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
 else
   INSTALL_DIR=/usr/local/
@@ -88,18 +89,16 @@ else
   ifndef CXXVERSION
     $(warning Unknown CXX = "$(CXX)" results in empty CXXVERSION.)
   endif
-  ifeq ($(DEBUG),yes)
-  OBJSDIR=$(shell pwd)/../build/objects/$(OSNAME)$(CXXVERSION)
+  ifdef SHARED
+  OBJSDIR=$(shell pwd)/../build/objects/$(OSNAME)$(CXXVERSION)-shared
   else
   OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)
   endif
-  ifdef SHARED
-  OBJSDIR_:=$(sort $(addsuffix -shared, $(OBJSDIR)))
-  OBJSDIR:=$(sort $(addsuffix -shared/, $(OBJSDIR)))
-  else
+  ifeq ($(DEBUG),yes)
+  OBJSDIR:=$(sort $(addsuffix -debug, $(OBJSDIR)))
+  endif
   OBJSDIR_:=$(OBJSDIR)
   OBJSDIR:=$(sort $(addsuffix /, $(OBJSDIR)))
-  endif
   ADMB_VERSION:=$(shell cat ../VERSION)
 endif
 

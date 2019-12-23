@@ -236,7 +236,21 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind truncreg
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind truncreg
 
-  - name: linux-valgrind-callgrind-cachegrind-vol
+  - name: linux-valgrind-memcheck-vol
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck vol
+
+  - name: linux-valgrind-callgrind-vol
     os: linux
     dist: xenial
     env:
@@ -249,6 +263,19 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind vol
+
+  - name: linux-cachegrind-vol
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind vol
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-bcb
@@ -267,7 +294,7 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind bcb
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind bcb
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-biglog
+  - name: linux-valgrind-memcheck--biglog
     os: linux
     dist: xenial
     env:
@@ -280,7 +307,33 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck biglog
+
+  - name: linux-valgrind-callgrind-biglog
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind biglog
+
+  - name: linux-valgrind-cachegrind-biglog
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind biglog
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-bvprobit
@@ -299,7 +352,7 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind bvprobit
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind bvprobit
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-caest
+  - name: linux-valgrind-memcheck-caest
     os: linux
     dist: xenial
     env:
@@ -312,10 +365,36 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck caest
+
+  - name: linux-valgrind-callgrind-caest
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind caest
+
+  - name: linux-valgrind-cachegrind-caest
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind caest
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-gamma
+  - name: linux-valgrind-cachegrind-gamma
     os: linux
     dist: xenial
     env:
@@ -363,7 +442,7 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind logistic
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind logistic
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-nbmm
+  - name: linux-valgrind-memcheck-nbmm
     os: linux
     dist: xenial
     env:
@@ -376,7 +455,33 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck nbmm
+
+  - name: linux-valgrind-callgrind-nbmm
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind nbmm
+
+  - name: linux-valgrind-cachegrind-nbmm
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind nbmm
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-nested4
@@ -395,6 +500,134 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind nested4
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind nested4
 
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-orange
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck orange
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind orange
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind orange
+
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-orange2
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck orange2
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind orange2
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind orange2
+
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-orange_cor
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck orange_cor
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind orange_cor
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind orange_cor
+
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-pheno
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck pheno
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind pheno
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind pheno
+
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-sdv
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck sdv
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind sdv
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind sdv
+
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-skewed
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck skewed
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind skewed
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind skewed
+
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-socatt
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck socatt
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind socatt
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind socatt
+
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-spatial
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck spatial
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind spatial
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind spatial
+
   - name: linux-valgrind-memcheck-callgrind-cachegrind-union
     os: linux
     dist: xenial
@@ -410,6 +643,22 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck union
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind union
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind union
+
+  - name: linux-valgrind-memcheck-callgrind-cachegrind-weights
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck weights
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind weights
+    - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind weights
 
   - os: windows
     install: choco install -y make

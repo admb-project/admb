@@ -1,19 +1,16 @@
 .ONESHELL:
+
 ifeq ($(TERM),cygwin)
 ifeq ($(OS),Windows_NT)
-EXT=.cmd
+  ifeq ($(strip $(TERM)),)
+    SHELL=cmd
+    ADMB_HOME=$(shell cmd /C cd .. && cd)
+  else
+    EXT=.sh
+    ADMB_HOME=$(shell cd .. && pwd)
+  endif
 endif
-ADMB_HOME=../../..
-else
-ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-SHELL = cmd
-ADMB_HOME=$(shell cmd /C cd .. && cd)
-else
-ADMB_HOME=$(shell cd .. && pwd)
-endif
-ifeq ($(OS),Windows_NT)
-EXT=.sh
-endif
+
 endif
 ifdef ADMB_OPTIONS
 OPTIONS:= $(ADMB_OPTIONS)

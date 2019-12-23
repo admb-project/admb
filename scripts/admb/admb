@@ -363,6 +363,7 @@ do
     CMD="$CXX $LDFLAGS -o$model"
   fi
   CMD="$CMD $file $objs"
+  echo "debug: $debug"
   if [ ! -z  "$debug" ]; then
     echo "1: $ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED-debug.a"
     if [ -f "$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED-debug.a" ]; then
@@ -397,6 +398,7 @@ do
       fi
     fi
   else
+    echo "4: $ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a"
     if [ -f "$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a" ]; then
       if [[ "$library" == "opt" ]]; then
         CMD="$CMD \"$ADMB_HOME/lib/libadmb-contribo-$CXXVERSION$SHARED.a\""

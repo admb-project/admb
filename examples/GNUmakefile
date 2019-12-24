@@ -67,7 +67,11 @@ ADMB_RE_TPLS=\
 default: simple
 
 all: admb admb-re
+ifeq ($(SHELL),cmd)
+else
 	cd autodif && $(MAKE)
+endif
+
 
 admb: $(ADMB_TPLS)
 
@@ -208,7 +212,7 @@ endif
 
 gamma:
 ifeq ($(SHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) liver_$@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) liver_$@ && $(PROG) liver_$@ && popd
 else
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) liver_$@ && $(PROG) ./liver_$@
 endif

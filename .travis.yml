@@ -480,7 +480,7 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind pheno
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind pheno
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-sdv
+  - name: linux-valgrind-memcheck-sdv
     os: linux
     dist: xenial
     env:
@@ -493,10 +493,36 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck sdv
+
+  - name: linux-valgrind-callgrind-sdv
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind sdv
+
+  - name: linux-valgrind-cachegrind-sdv
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind sdv
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-skewed
+  - name: linux-valgrind-memcheck-skewed
     os: linux
     dist: xenial
     env:
@@ -509,7 +535,33 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck skewed
+
+  - name: linux-valgrind-callgrind-skewed
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind skewed
+
+  - name: linux-valgrind-cachegrind-skewed
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind skewed
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-socatt

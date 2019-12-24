@@ -1,15 +1,15 @@
-ifeq ($(TERM),cygwin)
-EXT=.cmd
-else
-ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-SHELL = cmd
-endif
 ifeq ($(OS),Windows_NT)
-EXT=.sh
-endif
+  ifeq ($(strip $(TERM)),)
+    SHELL=cmd
+    ADMB_HOME=..\\..\\..
+  else
+    EXT=.sh
+  endif
 endif
 
+ifdef DEBUG
 ADMB_OPTIONS=-g
+endif
 
 ifeq ($(SHELL),cmd)
 GTEST_DIR=googletest-read-only\\googletest

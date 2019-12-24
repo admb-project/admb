@@ -66,12 +66,7 @@ ADMB_RE_TPLS=\
 
 default: simple
 
-all: admb admb-re
-ifeq ($(SHELL),cmd)
-else
-	cd autodif && $(MAKE)
-endif
-
+all: admb admb-re autodif
 
 admb: $(ADMB_TPLS)
 
@@ -343,6 +338,99 @@ ifeq ($(SHELL),cmd)
 	pushd admb-re\\weights && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
 else
 	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+endif
+
+autodif: bigmin hemholtz io_examp normsim newt s1 autodif-simple simple2 simp1 struct oldstr
+
+bigmin:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp && $(PROG) $@ && popd
+else
+	cd autodif/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp && $(PROG) ./$@
+endif
+
+hemholtz:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp hem_func.cpp && $(PROG) $@ && popd
+else
+	cd autodif/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp hem_func.cpp && $(PROG) ./$@
+endif
+
+io_examp:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp && $(PROG) $@ && popd
+else
+	cd autodif/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp && $(PROG) ./$@
+endif
+
+minimize:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp userfun.cpp && $(PROG) $@ && popd
+else
+	cd autodif/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp userfun.cpp && $(PROG) ./$@
+endif
+
+mixture:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp normaliz.cpp reset.cpp like.cpp savepar.cpp xinit.cpp nvarcal.cpp fcomp_m.cpp && $(PROG) $@ && popd
+else
+	cd autodif/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp normaliz.cpp reset.cpp like.cpp savepar.cpp xinit.cpp nvarcal.cpp fcomp_m.cpp && $(PROG) ./$@
+endif
+
+normsim:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\mixture && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp && $(PROG) $@ && popd
+else
+	cd autodif/mixture && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp && $(PROG) ./$@
+endif
+
+newt:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp && $(PROG) $@ && popd
+else
+	cd autodif/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp && $(PROG) ./$@
+endif
+
+s1:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\simple && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp && $(PROG) $@ && popd
+else
+	cd autodif/simple && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp && $(PROG) ./$@
+endif
+
+autodif-simple:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\simple && $(ADMB_HOME)\\admb $(OPTIONS) simple.cpp fcomp_s.cpp && $(PROG) simple && popd
+else
+	cd autodif/simple && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) simple.cpp fcomp_s.cpp && $(PROG) ./simple
+endif
+
+simple2:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\simple && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp fcomp_s.cpp && $(PROG) $@ && popd
+else
+	cd autodif/simple && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp fcomp_s.cpp && $(PROG) ./$@
+endif
+
+simp1:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\simple && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp fcomp_s.cpp && $(PROG) $@ && popd
+else
+	cd autodif/simple && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp fcomp_s.cpp && $(PROG) ./$@
+endif
+
+struct:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp && $(PROG) $@ && popd
+else
+	cd autodif/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp && $(PROG) ./$@
+endif
+
+oldstr:
+ifeq ($(SHELL),cmd)
+	pushd autodif\\struct && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp && $(PROG) $@ && popd
+else
+	cd autodif/struct && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp && $(PROG) ./$@
 endif
 
 copy:
@@ -1093,4 +1181,20 @@ else
 	rm -vf autodif/struct/oldstr.obj
 	rm -vf autodif/struct/struct
 	rm -vf autodif/struct/struct.obj
+	rm -vf autodif/bigmin/bigmin
+	rm -vf autodif/bigmin/bigmin.obj
+	rm -vf autodif/bigmin/fmin.log
+	rm -vf autodif/mixture/fcomp_m.obj
+	rm -vf autodif/mixture/fmin.log
+	rm -vf autodif/mixture/like.obj
+	rm -vf autodif/mixture/mixture
+	rm -vf autodif/mixture/mixture.obj
+	rm -vf autodif/mixture/normaliz.obj
+	rm -vf autodif/mixture/normsim
+	rm -vf autodif/mixture/normsim.obj
+	rm -vf autodif/mixture/normsim.out
+	rm -vf autodif/mixture/nvarcal.obj
+	rm -vf autodif/mixture/reset.obj
+	rm -vf autodif/mixture/savepar.obj
+	rm -vf autodif/mixture/xinit.obj
 endif

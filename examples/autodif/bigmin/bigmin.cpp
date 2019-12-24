@@ -83,7 +83,8 @@ int main()
     fmc.fmin(f,x,g);
     if (fmc.ireturn>0)
     {
-      f=fff(x);
+      dvar_vector _x(x);
+      f=fff(_x);
       cout << "f = " << f << endl;
       gradcalc(nvar,g);
     }
@@ -119,13 +120,13 @@ double fff(dvar_vector& x)
   }
 
   tmp=0.;
-  for (i=1;i<=nsize;i++)
+  for (int i=1;i<=nsize;i++)
   {
     tmp+=M[i][i]*M[i][i];
   }
   f-=.01*tmp;
   tmp=0.;
-  for (i=1;i<=nsize;i++)
+  for (int i=1;i<=nsize;i++)
   {
      tmp+=N[i][i]*N[i][i];
   }

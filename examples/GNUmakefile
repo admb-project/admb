@@ -21,8 +21,11 @@ endif
 ifdef FAST_OPTION
 OPTIONS:= $(OPTIONS) -f
 endif
-ifneq ($(TERM),cygwin)
-PROG=time
+
+ifndef PROG
+  ifneq ($(SHELL),cmd)
+    PROG=time
+  endif
 endif
 
 ADMB_TPLS=\

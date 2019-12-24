@@ -282,31 +282,83 @@ if "!CXX!"=="cl" (
   if defined g (
     if defined fast (
       set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-      if not exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a" (
-        set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
-      ) else (
+      if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a" (
         set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a"
+      ) else (
+        if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
+          set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
+        ) else (
+          if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
+            set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a"
+          ) else (
+            if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
+              set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
+            ) else (
+              echo Error: Unable to find libadmbo-debug.a
+              exit /B 1
+            )
+          )
+        ) 
       )
     ) else (
-      if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
-        set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
-      ) else (
+      if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
         set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a"
+      ) else (
+        if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
+          set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
+        ) else (
+          if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
+            set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a"
+          ) else (
+            if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
+              set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
+            ) else (
+              echo Error: Unable to find libadmb
+              exit /B 1
+            )
+          )
+        ) 
       )
     )
   ) else (
     if defined fast (
       set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-      if not exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
-        set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
-      ) else (
+      if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
         set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a"
+      ) else (
+        if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
+          set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
+        ) else (
+          if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a" (
+            set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a"
+          ) else (
+            if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
+              set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
+            ) else (
+              echo Error: Unable to find libadmbo-debug.a
+              exit /B 1
+            )
+          )
+        ) 
       )
     ) else (
-      if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
-        set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
-      ) else (
+      if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
         set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a"
+      ) else (
+        if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
+          set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
+        ) else (
+          if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
+            set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a"
+          ) else (
+            if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
+              set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
+            ) else (
+              echo Error: Unable to find libadmb
+              exit /B 1
+            )
+          )
+        ) 
       )
     )
   )

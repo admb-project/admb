@@ -78,7 +78,15 @@ else
   CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
   endif
   ifeq ($(CXX),c++)
-  CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    ifeq ($(UNAME_S),Darwin)
+      CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    else
+      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) -version)))
+      CXXVERSION=-clang11
+      else
+      CXXVERSION=-clang
+      endif
+    endif
   endif
   ifeq ($(CXX),analyze-c++)
   CXXVERSION=-analyze-c++$(basename $(basename $(shell $(CXX) -dumpversion)))

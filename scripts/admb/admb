@@ -174,7 +174,7 @@ fi
 if [ "$CXX" == "c++" ]; then
   if [ "$UNAME_S" == "Darwin" ]; then
     if [[ "`$CXX --version`" =~ "clang-1100" ]]; then
-      CXXVERSION=-$OS_NAMEclang11
+      CXXVERSION=$OS_NAME-clang11
     else
       if [[ "`$CXX --version`" =~ "clang-1000" ]]; then
         CXXVERSION=$OS_NAME-clang10

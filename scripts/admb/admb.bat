@@ -133,6 +133,13 @@ if exist "!ADMB_HOME!\bin\admb-cfg.bat" (
     set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
   )
 )
+
+if "!CXX!"=="" (
+  for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "cl.exe"') do (
+    set CXX=cl
+  )
+)
+
 if "!CXX!"=="cl" (
   where /Q !CXX!
   if errorlevel 1 (

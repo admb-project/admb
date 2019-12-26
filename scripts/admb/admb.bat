@@ -513,7 +513,7 @@ if not defined tpls (
         set CMD=!LD!!LDFLAGS! -o !main!.dll !objs! !libs!
       ) else (
         if "!CXX!"=="cl" (
-          set CMD=!LD!!LDFLAGS! /Fe!main!.exe !objs! !libs!
+          set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
         ) else (
           set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
         )
@@ -553,9 +553,9 @@ if not defined tpls (
     ) else (
       if "!CXX!"=="cl" (
         if defined objs (
-          set CMD=!LD!!LDFLAGS! /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
         ) else (
-          set CMD=!LD!!LDFLAGS! /Fe!tpl!.exe !tpl!.obj !libs!
+          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
         )
       ) else (
         if defined objs (

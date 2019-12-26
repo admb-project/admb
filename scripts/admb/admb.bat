@@ -138,6 +138,12 @@ if "!CXX!"=="" (
   for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "cl.exe"') do (
     set CXX=cl
   )
+) else (
+  if "!CXX!"=="cl" (
+    for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "Could not find file"') do (
+      set CXX=
+    )
+  )
 )
 
 if "!CXX!"=="cl" (

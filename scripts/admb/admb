@@ -172,8 +172,20 @@ if [ "$CXX" == "clang++" ]; then
   CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
 fi
 if [ "$CXX" == "c++" ]; then
-  DUMPVERSION="`c++ -dumpversion | cut -f1 -d. `"
-  CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
+  if [ "$UNAME_S" == "Darwin" ]; then
+    if [[ "`$CXX --version`" =~ "clang-1100" ]]; then
+      CXXVERSION=-clang11
+    else
+      if [[ "`$CXX --version`" =~ "clang-1000" ]]; then
+        CXXVERSION=-clang10
+      else
+        CXXVERSION=-clang
+      fi
+    fi
+  else
+    DUMPVERSION="`c++ -dumpversion | cut -f1 -d. `"
+    CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
+  fi
 fi
 if [ "$CXX" == "analyze-c++" ]; then
   DUMPVERSION="`analyze-c++ -dumpversion | cut -f1 -d. `"

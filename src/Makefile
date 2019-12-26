@@ -148,9 +148,6 @@ dist: bins
 
 bins: libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
-	echo set ADMB_CFG_CXX=$(CXX)>$(DESTDIR)\bin\admb-cfg.bat
-	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS)>>$(DESTDIR)\bin\admb-cfg.bat
-	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS)>>$(DESTDIR)\bin\admb-cfg.bat
 	copy df1b2-separable\sed* $(DESTDIR)\bin
 	if exist ..\admb del ..\admb
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin\admb.cmd

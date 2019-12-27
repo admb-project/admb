@@ -18,7 +18,7 @@ jobs:
         make shared
         make shared DEBUG=yes
     - name: Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: admb_zip_distribution
-          path: build/admb.zip
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_zip_distribution
+        path: build/admb.zip

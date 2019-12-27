@@ -134,12 +134,16 @@ ADMB-11.6
 
   To check for floating point errors, build executable with -g option.
 
+  ```
   $ admb -g "model.tpl"
+  ```
 
   Run executable with debugger (such as gdb) to locate file and line number
   where error occured.
 
+  ```
   $ gdb ./model
+  ```
 
 * Configured and automated builds for ADMB-IDE.
 * Merged Kasper Kristensen and Anders Nielsen bug fixes.
@@ -156,10 +160,13 @@ ADMB-11.6
 
   The new output include **Release Version** info.
 
+  ```
   $ admb -h
+  ```
 
   Builds AD Model Builder executable or library.
 
+  ```
   Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
 
   **Release Version: 11.6**
@@ -175,6 +182,7 @@ ADMB-11.6
          extension)
   src(s) C/C++ Source file(s) containing classes, methods and variables that
          are used in model.
+  ```
   
 * MinGW-w64 Windows installers now include GNU GCC 6.2 compiler.
 * Other bug fixes and improvements
@@ -239,7 +247,9 @@ ADMB-11.2
   conflict with batch file.  So in MinGW or Cygwin shell, user will need
   to use 
 
-        [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple
+  ```
+  [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple
+  ```
 
 * Fixed 'admb -d' for unix, mingw and cygwin shells.
 * Able to use Rtools for building, but will need to use the utilities\make.exe
@@ -249,27 +259,35 @@ ADMB-11.2
   faster builds.
 * To build with optimized libraries use fast option (-f) instead of (-o). 
 
-        $ admb -f model.tpl
+  ```
+  $ admb -f model.tpl
+  ```
 
 * Fix shared (libadmb.so) and dynamic (admb.dll) builds.
 
-        [~/admb/]$ make shared
+  ```
+  [~/admb/]$ make shared
 
-        C:\admb\> utilities\make shared
+  C:\admb\> utilities\make shared
+  ```
 
   Note &mdash; This is great for testing linker errors.
 
 * Added contributed method to save gradient values to a file.
   Contributed by Jiashen Tang and David Fournier.
 
-        REPORT_SECTION
-          save_gradients(gradients);
+  ```
+  REPORT_SECTION
+    save_gradients(gradients);
+  ```
 
 * Added back the MacOS binary ADMBTerminal app.
 * Packaged mingw compilers (32 and 64 bit) with windows installers.
 * admb scripts can determine which parser (tpl2cpp or tpl2rem) to use.
 
-        [~/admb/examples/admb-re/union/]$ ~/admb/admb union
+  ```
+  [~/admb/examples/admb-re/union/]$ ~/admb/admb union
+  ```
 
   _Note: Option *-r* is no longer needed to build the random effects model._
 
@@ -289,11 +307,15 @@ ADMB-11.2
 
 * Add debug target to build files.
 
-        $ make debug
+  ```
+  $ make debug
+  ```
 
 * Add shared target to build files (Unix only).
 
-        $ make shared
+  ```
+  $ make shared
+  ```
 
 * admb scripts can be called directly and do not require setting enviromental variables
   ADMB_HOME and PATH.

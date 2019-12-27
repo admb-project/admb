@@ -129,7 +129,6 @@ SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\vs-cl\saflp-tools99-)
 !ENDIF
 
 all: dist
-	@rem pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 
 shared: all
 	IF EXIST $(DESTDIR)\lib\admb.dll del $(DESTDIR)\lib\admb.dll
@@ -145,6 +144,8 @@ dist: bins
 	copy ..\README.txt $(DESTDIR)
 	copy ..\VERSION $(DESTDIR)
 	$(MAKE) lexfiles
+	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
+	pushd $(DESTDIR)\bin & copy ..\..\..\scripts\set-admb-command-prompt.bat & popd
 
 bins: libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin

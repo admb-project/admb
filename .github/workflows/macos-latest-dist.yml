@@ -1,0 +1,19 @@
+name: macos-latest-dist
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: clean
+      run: make clean
+    - name: build
+      run: |
+        make
+        make DEBUG=yes
+        make shared
+        make shared DEBUG=yes

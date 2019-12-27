@@ -322,15 +322,15 @@ dist: libs
 	$(MAKE) bins
 ifeq ($(SHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
-	copy /Y ..\README.txt ${DIST}
-	copy /Y ..\CHANGES.txt ${DIST}
+	copy /Y ..\README.md ${DIST}
+	copy /Y ..\CHANGES.md ${DIST}
 	copy /Y ..\VERSION ${DIST}
 	pushd $(DIST) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
 	pushd $(DIST)\bin & copy ..\..\..\scripts\set-admb-command-prompt.bat & popd
 else
 	cp -f ../LICENSE.txt ${DIST}
-	cp -f ../README.txt ${DIST}
-	cp -f ../CHANGES.txt ${DIST}
+	cp -f ../README.md ${DIST}
+	cp -f ../CHANGES.md ${DIST}
 	cp -f ../VERSION ${DIST}
 endif
 

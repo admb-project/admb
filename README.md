@@ -46,7 +46,7 @@ Read the installation procedures in [INSTALL][INSTALL_link] for Unix and Windows
 [INSTALL_link]: INSTALL.md
 
 User manuals for AD Model Builder, the AUTODIF library and the ADMB-RE nonlinear
-random effects module are in the [ADMB website][ADMB_manuals_link].
+random effects module are on the [ADMB website][ADMB_manuals_link].
 
 [ADMB_manuals_link]: http://www.admb-project.org/docs/manuals/ 
 

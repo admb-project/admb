@@ -13,8 +13,14 @@ Release Goals
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-12.1-git
+ADMB-12.1
 ---------
+
+*Released December 27, 2019*  
+
+####New Supported Compilers
+* GNU C++ 9
+* Microsoft Visual Studio 2019
 
 ####Changes and Improvements
 

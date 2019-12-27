@@ -43,7 +43,8 @@ Quick Start
    C:\ADMB\examples\admb\simple\> simple.exe
    ```
 
-Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-12.0/) for more information.
+Read [manuals][ADMB_manuals_link] for more information.
+[ADMB_manuals_link]: http://www.admb-project.org/docs/manuals/ 
 
 ---
 For help and support, contact <users@admb-project.org>.

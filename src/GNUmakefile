@@ -672,11 +672,10 @@ ${DIST}/include:
 	cp nh99/param_init_bounded_number_matrix.h ${DIST}/include
 endif
 
+$(OBJSDIR_):
 ifeq ($(SHELL),cmd)
-$(OBJSDIR_): $(DIST)\include
 	if not exist $(OBJSDIR_) md $(OBJSDIR_)
 else
-$(OBJSDIR_): $(DIST)/include
 	mkdir -p $(OBJSDIR_)
 endif
 

@@ -25,7 +25,7 @@ ADMB-12.1
 
 #### Changes and Improvements
 
-* Fixed forest example.
+* Fixed forest example for Visual Studio.  Replaced function pointer in adromb with std::function.
 * Include debug symbols with release binary zip distributions.
 * Simplified build.
 
@@ -47,13 +47,23 @@ ADMB-12.1
 
 * Fixed valgrind reported memory leaks.
 
-* Added Automated Builds
+* Added Automated Builds for building and testing of ADMB.
 
-  Using Travis CI for build and testing of ADMB.
+  Travis CI
   
   https://travis-ci.org/admb-project/admb/
 
-  Also, added Microsoft Azure DevOps for build and testing of ADMB.
+  Microsoft Azure DevOps
+
+  https://dev.azure.com/johnoel/admb-project/_build
+
+  GitHub Actions
+
+  https://github.com/admb-project/admb/actions
+
+  Buildbot
+
+  http://buildbot.admb-project.org/
 
 * Fixed parsers to avoid needing to add extra line at the end to the tpl file.
 * Added target dist to Makefile to skip building shared libraries for faster builds.

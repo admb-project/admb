@@ -453,6 +453,7 @@ endif
 clean:
 ifeq ($(SHELL),cmd)
 else
+	rm -vf admb-re/nested4/nested4
 	rm -vf admb-re/bcb/admodel.cov
 	rm -vf admb-re/bcb/admodel.dep
 	rm -vf admb-re/bcb/admodel.hes

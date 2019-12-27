@@ -1,7 +1,7 @@
 ADMB Project
 ============
-*ADMB-12.0*  
-*Released December 21, 2017*  
+*ADMB-12.1*  
+*Released December 27, 2019*  
 
 ---
 
@@ -39,11 +39,11 @@ Documentation
 -------------
 Read release notes for changes and features in [CHANGES][CHANGES_link].
 
-[CHANGES_link]: http://www.admb-project.org/downloads/admb-12.0/CHANGES.html
+[CHANGES_link]: CHANGES.md
 
 Read the installation procedures in [INSTALL][INSTALL_link] for Unix and Windows computers.
 
-[INSTALL_link]: http://www.admb-project.org/downloads/admb-12.0/INSTALL.html
+[INSTALL_link]: INSTALL.md
 
 User manuals for AD Model Builder, the AUTODIF library and the ADMB-RE nonlinear
 random effects module are in the [ADMB downloads][ADMB_downloads_link].

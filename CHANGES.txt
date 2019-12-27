@@ -24,6 +24,7 @@ ADMB-12.1
 
 ####Changes and Improvements
 
+* Include debug symbols with release binary zip distributions.
 * Simplified build.
 
   Default will only build static libraries.
@@ -68,7 +69,6 @@ ADMB-12.1
   For unix,
 
   $ make shared 
-
 
 ADMB-12.0
 ---------

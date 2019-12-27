@@ -1198,4 +1198,39 @@ else
 	rm -vf autodif/mixture/reset.obj
 	rm -vf autodif/mixture/savepar.obj
 	rm -vf autodif/mixture/xinit.obj
+	rm -vf admb/catage/admodel.cov
+	rm -vf admb/catage/admodel.dep
+	rm -vf admb/catage/admodel.hes
+	rm -vf admb/catage/catage
+	rm -vf admb/catage/catage.b01
+	rm -vf admb/catage/catage.b02
+	rm -vf admb/catage/catage.bar
+	rm -vf admb/catage/catage.cor
+	rm -vf admb/catage/catage.cpp
+	rm -vf admb/catage/catage.eva
+	rm -vf admb/catage/catage.htp
+	rm -vf admb/catage/catage.log
+	rm -vf admb/catage/catage.obj
+	rm -vf admb/catage/catage.p01
+	rm -vf admb/catage/catage.p02
+	rm -vf admb/catage/catage.par
+	rm -vf admb/catage/catage.r01
+	rm -vf admb/catage/catage.r02
+	rm -vf admb/catage/catage.rep
+	rm -vf admb/catage/catage.std
+	rm -vf admb/catage/fmin.log
+	rm -vf admb/simple/admodel.cov
+	rm -vf admb/simple/admodel.dep
+	rm -vf admb/simple/admodel.hes
+	rm -vf admb/simple/fmin.log
+	rm -vf admb/simple/simple
+	rm -vf admb/simple/simple.bar
+	rm -vf admb/simple/simple.cor
+	rm -vf admb/simple/simple.cpp
+	rm -vf admb/simple/simple.eva
+	rm -vf admb/simple/simple.htp
+	rm -vf admb/simple/simple.log
+	rm -vf admb/simple/simple.obj
+	rm -vf admb/simple/simple.par
+	rm -vf admb/simple/simple.std
 endif

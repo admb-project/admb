@@ -10,15 +10,16 @@ ADMB Installation procedures
 Installation
 ------------
 
-For Windows computers, read the [QuickStartWindows](QuickStartWindows.html).  
+For Windows computers, read the [QuickStartWindows](docs/install/QuickStartWindows.md).  
 
-For MacOS computers, read the [QuickStartMacOS](QuickStartMacOS.html).
+For MacOS computers, read the [QuickStartMacOS](docs/install/QuickStartMacOS.md).
 
-For Linux computers, read the [QuickStartUnix](QuickStartUnix.html).
+For Linux computers, read the [QuickStartUnix](docs/install/QuickStartUnix.md).
 
 For all others, read the source installation procedure below.
 
 
+<!--
 Source Installation
 -------------------
 
@@ -29,6 +30,7 @@ For Windows computers with Visual C++, read the [QuickStartWindowsVisualC++Sourc
 For Unix (Linux, MacOS, Solaris and BSD) computers, read the [QuickStartUnixSource](QuickStartUnixSource.html).
 
 For MinGW and Cygwin shells, read the [QuickStartUnixSource](QuickStartUnixSource.html).
+-->
 
 ---
 For help and support, email <users@admb-project.org>.

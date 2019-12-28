@@ -1,0 +1,37 @@
+name: windows-latest-mingw-64bit
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, windows]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: msys64 mingw64
+      run: |
+        set PATH=C:\msys64\mingw64\bin;%PATH%
+        utilities\\make clean
+        utilities\\make DEBUG=yes
+        utilities\\make test DEBUG=yes
+      shell: cmd
+    - name: rtool40 mingw64
+      run: |
+        set PATH=C:\rtools40\mingw64\bin;%PATH%
+        utilities\\make clean
+        utilities\\make DEBUG=yes
+        utilities\\make test DEBUG=yes
+      shell: cmd
+    - name: rtool35 mingw64
+      run: |
+        set PATH=C:\rtools35\mingw64\bin;%PATH%
+        utilities\\make clean
+        utilities\\make DEBUG=yes
+        utilities\\make test DEBUG=yes
+      shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_zip_distribution
+        path: build\\admb.zip

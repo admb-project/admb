@@ -1,0 +1,42 @@
+name: windows-latest-debug-64bit
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: clean
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake clean
+    - name: build debug
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake DEBUG=yes
+      shell: cmd
+    - name: build
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        cl /?
+        nmake
+      shell: cmd
+    - name: build debug shared
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake DEBUG=yes shared
+      shell: cmd
+    - name: build shared
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        cl /?
+        nmake shared
+      shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_zip_distribution
+        path: build\\admb.zip

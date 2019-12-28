@@ -1,4 +1,4 @@
-name: windows-latest-dist
+name: windows-latest-debug
 
 on: [push]
 

@@ -11,6 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean
       run: |
+        set PATH=C:\msys64\mingw64\bin;%PATH%
         utilities\\make clean
     - name: msys64 mingw64
       run: |

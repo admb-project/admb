@@ -1,4 +1,4 @@
-name: windows-latest-debug-64bit
+name: windows-latest-dist
 
 on: [push]
 
@@ -13,6 +13,7 @@ jobs:
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake clean
+      shell: cmd
     - name: build debug
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd

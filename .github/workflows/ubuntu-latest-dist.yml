@@ -9,6 +9,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    - name: flex
+      run: sudo apt-get install flex
     - name: clean
       run: make clean
     - name: build

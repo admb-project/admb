@@ -11,12 +11,14 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean
       run: make clean
-    - name: build
+    - name: dist
       run: |
         make
-        make DEBUG=yes
+    - name: shared
+      run: |
         make shared
-        make shared DEBUG=yes
+    - name: zip
+      run: |
         make zip
     - name: Artifact
       uses: actions/upload-artifact@v1

@@ -1,4 +1,4 @@
-name: macos-latest-debug-64bit
+name: macos-latest-dist
 
 on: [push]
 
@@ -10,8 +10,18 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: clean
-      run: make clean DEBUG=yes
-    - name: build
-      run: make DEBUG=yes
-    - name: tests
-      run: make test DEBUG=yes
+      run: make clean
+    - name: debug
+      run: |
+        make DEBUG=yes
+    - name: shared
+      run: |
+        make shared DEBUG=yes
+    - name: zip
+      run: |
+        make zip
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_zip_distribution
+        path: build/admb.zip

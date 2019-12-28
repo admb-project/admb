@@ -28,6 +28,11 @@ jobs:
         set PATH=C:\rtools35\mingw64\bin;%PATH%
         utilities\\make DEBUG=yes
       shell: cmd
+    - name: zip
+      run: |
+        set PATH=C:\rtools35\mingw64\bin;%PATH%
+        utilities\\make zip
+      shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

@@ -32,5 +32,5 @@ jobs:
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_zip_distribution
-        path: build\\admb.zip
+        name: admb
+        path: build\\admb

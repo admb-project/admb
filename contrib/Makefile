@@ -24,7 +24,7 @@ all:
 	
 shared:
 	IF EXIST $(DESTDIR)\lib\admb-contrib$(_DEBUG).dll del $(DESTDIR)\lib\admb-contrib$(_DEBUG).dll
-	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contrib$(_DEBUG).dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admb$(OSNAME)$(CXXVERSION)$(_DEBUG).lib contrib-saflp-*.obj
+	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contrib$(_DEBUG).dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib contrib-saflp-*.obj
 !IFNDEF SAFE_ONLY
 	IF EXIST $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).dll del $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).dll
 	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contribo$(_DEBUG).dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib contrib-optlp-*.obj

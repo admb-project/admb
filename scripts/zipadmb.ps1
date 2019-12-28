@@ -1,1 +1,1 @@
-Compress-Archive -Path admb -Update -DestinationPath ..\admb.zip
+Compress-Archive -Path admb -CompressionLevel Fastest -DestinationPath ..\admb.zip

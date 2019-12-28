@@ -183,7 +183,7 @@ $(LEXDESTDIR)\tpl2rem.c: df1b2-separable\tpl2rem.lex
 libs: objects
 	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
 !IF DEFINED(DEBUG)
-	IF EXIST $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)-debug.lib del $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)-debug-debug.lib
+	IF EXIST $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)-debug.lib del $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)-debug.lib
 	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)-debug.lib /NOLOGO /IGNORE:4006 saflp-df1b2-separable*.obj saflp-linad99*.obj saflp-nh99*.obj saflp-tools99*.obj saflp-sparse*.obj
 	IF EXIST $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)-debug.lib del $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)-debug.lib
 	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)-debug.lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj

@@ -19,10 +19,9 @@ jobs:
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake DEBUG=yes
       shell: cmd
-    - name: build
+    - name: build dist
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        cl /?
         nmake
       shell: cmd
     - name: build debug shared
@@ -33,7 +32,6 @@ jobs:
     - name: build shared
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        cl /?
         nmake shared
       shell: cmd
     - name: zip

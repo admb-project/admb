@@ -26,12 +26,12 @@ jobs:
       shell: cmd
     - name: rtool35 mingw64
       run: |
-        set PATH=C:\rtools35\mingw64\bin;%PATH%
+        set PATH=C:\rtools35\mingw_64\bin;%PATH%
         utilities\\make DEBUG=yes
       shell: cmd
     - name: zip
       run: |
-        set PATH=C:\rtools35\mingw64\bin;%PATH%
+        set PATH=C:\msys64\mingw64\bin;%PATH%
         utilities\\make zip
       shell: cmd
     - name: Artifact

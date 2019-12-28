@@ -13,6 +13,7 @@ jobs:
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
         utilities\\make clean
+      shell: cmd
     - name: msys64 mingw64
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%

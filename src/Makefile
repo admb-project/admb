@@ -140,8 +140,8 @@ shared: all
 dist: bins
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)
 	copy ..\LICENSE.txt $(DESTDIR)
-	copy ..\CHANGES.md $(DESTDIR)
-	copy ..\README.md $(DESTDIR)
+	copy ..\CHANGES.md $(DESTDIR)\CHANGES.txt
+	copy ..\README.md $(DESTDIR)\README.txt
 	copy ..\VERSION $(DESTDIR)
 	$(MAKE) lexfiles
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd

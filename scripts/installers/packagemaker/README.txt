@@ -11,19 +11,15 @@ Installation
 
 **Prerequisite** &mdash; [Apple Developer Tools (XCode)](https://developer.apple.com/xcode/) must be installed.
 
-1. Download ADMB installer
+1. **Download**
 
-       For 64Bit, download [admb-12.0-ADMBTerminal-macos10-xcode7-64bit](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-ADMBTerminal-macos10-xcode7-64bit.dmg).
+       download [admb-12.0-ADMBTerminal-macos10-xcode7-64bit](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-ADMBTerminal-macos10-xcode7-64bit.dmg).
 
+2. **Install**
 
-       For 32Bit, download [admb-12.0-ADMBTerminal-macos10-xcode7-32bit](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-ADMBTerminal-macos10-xcode7-32bit.dmg).  
+	Double click downloaded ADMB dmg file. 
 
-2. Double click downloaded ADMB dmg file. 
-
-3. In the ADMBTerminal mounted disk image, copy **ADMBTerminal**
-   into the **/Applications** folder.
-  
-     **Note** &mdash; ADMBTerminal will set *ADMB_HOME* to **/Applications/ADMBTerminal.app/admb/ **.
+	In the ADMBTerminal mounted disk image, copy **ADMBTerminal** into the **/Applications** folder.
 
 Quick Start
 ===========

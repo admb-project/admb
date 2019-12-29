@@ -14,6 +14,9 @@ jobs:
     - name: dist
       run: |
         make
+    - name: debug
+      run: |
+        make DEBUG=yes
     - name: shared
       run: |
         make shared
@@ -25,3 +28,11 @@ jobs:
       with:
         name: admb_zip_distribution
         path: build/admb.zip
+    - name: dmg
+      run: |
+        make --directory=scripts/installers/packagemaker clean all
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_dmg_distribution
+        path: scripts/installers/packagemaker/ADMBTerminal.dmg

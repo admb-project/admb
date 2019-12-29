@@ -21,35 +21,35 @@ Quick Start
 
 1. **Download**
 
-       Download [admb-12.1-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-macos-64bit.zip).
+  Download [admb-12.1-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-macos-64bit.zip).
 
 2. **Extract**
 
-       Open a Terminal, then use the command below to extract contents of zip file to _~/admb/_. 
+  Open a Terminal, then use the command below to extract contents of zip file to _~/admb/_. 
 
            [~]$ unzip admb-12.1-macos-64bit.zip
 
 3. **Use** ADMB
 
-       In the **Terminal** window, use the steps below to build and run the simple example.
+  In the **Terminal** window, use the steps below to build and run the simple example.
 
-       Change to simple example directory.       
+  Change to simple example directory.       
 
            [~]$ cd admb/examples/admb/simple
 
-       Build simple example.
+  Build simple example.
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
 
-       For building with Msys2 shell, use the **'admb.sh'** script.
+  For building with Msys2 shell, use the **'admb.sh'** script.
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
 
-       Run simple example.
+  Run simple example.
 
            [~/admb/examples/admb/simple/]$ ./simple
 
-       Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-12.1/) for more information.
+Read [manuals](https://github.com/admb-project/admb/releases/tag/admb-12.1/) for more information.
 
 --------------------------------------------------------------------------------
 For help and support, contact <users@admb-project.org>.

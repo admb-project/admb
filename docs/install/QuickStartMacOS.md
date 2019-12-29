@@ -11,11 +11,6 @@ Prerequisites
 
 The following programs are required to be installed on the local computer.
 
-For Linux,
-
-* GNU C++
-* GNU stream editor (sed)
-
 For MacOS,
 
 * XCode
@@ -24,22 +19,13 @@ For MacOS,
 Quick Start
 -----------
 
-1. **Download** ADMB
+1. **Download**
 
-       Download binary zip distribution
+       Download [admb-12.1-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-macos-64bit.zip).
 
-       * For Linux (64Bit), download [admb-12.1-linux-64bit](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-linux-64bit.zip).
-       * For MacOS (64Bit), download [admb-12.1-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-macos-64bit.zip).
-
-2. **Extract** Zip file
+2. **Extract**
 
        Open a Terminal, then use the command below to extract contents of zip file to _~/admb/_. 
-
-       For Linux (64Bit),
-
-           [~]$ unzip admb-12.1-linux-64bit.zip
-
-       For MacOS (64Bit),
 
            [~]$ unzip admb-12.1-macos-64bit.zip
 

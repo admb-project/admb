@@ -1,27 +1,28 @@
-# ADMB Project 
+# ADMB Quick Start Windows
+
 *ADMB-12.1*  
 *Released December 27, 2019*  
 
-Describe downloading and installing ADMB from binary zip file.
+Describe downloading, installing and using ADMB from binary release for Windows.
 
 ---
 
 Quick Start
 -----------
 
-1. **Download** Distribution
+1. **Download**
 
    For Windows 64Bit, download [admb-12.0-windows.zip](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-windows.zip).
 
-   _**Note**_ &mdash; Installer include open source MinGW C++ compiler.
+   _**Note**_ &mdash; Release includes MinGW-w64 C++ compiler.
 
-2. **Extract** Zip
+2. **Install**
 
-   Extract zip file to C:\ADMB\
+   Double click downloaded file, then extract zip file to **C:\ADMB\**
 
 3. **Use** ADMB
 
-   On the Desktop, double click **ADMB Command Prompt** shortcut to open command line window.
+   Use **File Explorer**, to open folder **C:\ADMB\**, then double click **ADMB Command Prompt** shortcut to open command line window.
 
    In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
  

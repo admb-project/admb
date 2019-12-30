@@ -16,7 +16,7 @@ Building Source
 
    Download source distribution [admb-12.1-src.zip](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.1-src.zip).
 
-   Double click downloaded zip file and copy admb directory to **C:\\admb\\>**.
+   Double click downloaded zip file and extract admb directory to **C:\\admb\\>**.
 
 2. **Build**
 

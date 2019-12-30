@@ -7,9 +7,9 @@ all:
 ADMBTerminal.dmg: build/ADMBTerminal.app
 	cp -vf QuickStartADMBTerminal.md build/INSTALL.txt
 	cp -rvf ../../../build/admb build/ADMBTerminal.app/admb
-	cp -rvf build/ADMBTerminal.app/admb/README.txt .
-	cp -rvf build/ADMBTerminal.app/admb/LICENSE.txt .
-	cp -rvf build/ADMBTerminal.app/admb/CHANGES.txt .
+	pushd build && ln -sf ADMBTerminal.app/admb/README.txt README.txt && popd
+	pushd build && ln -sf ADMBTerminal.app/admb/LICENSE.txt LICENSE.txt && popd
+	pushd build && ln -sf ADMBTerminal.app/admb/CHANGES.txt CHANGES.txt && popd
 	cp -rvf ../../../examples build
 	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build -ov -debug
 

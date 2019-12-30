@@ -5,7 +5,7 @@ all:
 	$(MAKE) ADMBTerminal.dmg
 
 ADMBTerminal.dmg: build/ADMBTerminal.app
-	cp -vf README.txt build
+	cp -vf QuickStartADMBTerminal.md build/README.txt
 	cp -rvf ../../../build/admb build/ADMBTerminal.app/admb
 	cp -rvf ../../../examples build
 	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build -ov -debug

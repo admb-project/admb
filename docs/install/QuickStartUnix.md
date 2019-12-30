@@ -28,7 +28,9 @@ Quick Start
 
    Open a Terminal, then use the command below to extract contents of zip file to _~/admb/_. 
 
-           [~]$ unzip admb-12.1-linux-64bit.zip
+   ```
+   [~]$ unzip admb-12.1-linux-64bit.zip
+   ```
 
 3. **Use** ADMB
 
@@ -36,15 +38,21 @@ Quick Start
 
    Change to simple example directory.       
 
-           [~]$ cd admb/examples/admb/simple
+   ```
+   [~]$ cd admb/examples/admb/simple
+   ```
 
    Build simple example.
 
-           [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
+   ```
+   [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
+   ```
 
    Run simple example.
 
-           [~/admb/examples/admb/simple/]$ ./simple
+   ```
+   [~/admb/examples/admb/simple/]$ ./simple
+   ```
 
 Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 

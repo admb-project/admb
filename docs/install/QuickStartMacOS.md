@@ -7,11 +7,7 @@ Describe downloading, installing and using ADMB from binary release for MacOS.
 
 ---
 
-Prerequisites
--------------
-
-For MacOS, XCode must be installed on the local computer.
-
+**Prerequisite** &mdash; [Apple Developer Tools (XCode)](https://developer.apple.com/xcode/) must be installed.
 
 Quick Start
 -----------
@@ -22,9 +18,11 @@ Quick Start
 
 2. **Install**
 
-   Open a Terminal, then use the command below to extract contents of zip file to _~/admb/_. 
+   Open a Terminal, then use the command below to extract contents of zip file to **~/admb/**. 
 
-           [~]$ unzip admb-12.1-macos-64bit.zip
+   ```
+   [~]$ unzip admb-12.1-macos-64bit.zip
+   ```
 
 3. **Use** ADMB
 
@@ -32,15 +30,21 @@ Quick Start
 
    Change to simple example directory.       
 
-           [~]$ cd admb/examples/admb/simple
+   ```
+   [~]$ cd admb/examples/admb/simple
+   ```
 
    Build simple example.
 
-           [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
+   ```
+   [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
+   ```
 
    Run simple example.
 
-           [~/admb/examples/admb/simple/]$ ./simple
+   ```
+   [~/admb/examples/admb/simple/]$ ./simple
+   ```
 
 Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 

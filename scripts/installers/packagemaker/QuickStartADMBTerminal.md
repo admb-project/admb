@@ -28,15 +28,21 @@ Quick Start
 
    Change to the simple example directory.
 
-        [~]$ cd examples\admb\simple
+   ```
+   [~]$ cd examples\admb\simple
+   ```
 
    Build the simple example.
 
-        [~/examples/admb/simple/]$ admb simple
+   ```
+   [~/examples/admb/simple/]$ admb simple
+   ```
 
    Run the simple example.
 
-        [~/examples/admb/simple/]$ ./simple
+   ```
+   [~/examples/admb/simple/]$ ./simple
+   ```
 
 Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 

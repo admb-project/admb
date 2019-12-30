@@ -18,7 +18,7 @@ Quick Start
 
 2. **Install**
 
-   Double click downloaded file, then extract zip file to **C:\ADMB\**
+   Double click downloaded file, then extract zip file to **C:\ADMB**.
 
 3. **Use** ADMB
 

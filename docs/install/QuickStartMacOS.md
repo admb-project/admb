@@ -46,7 +46,7 @@ Quick Start
    [~/admb/examples/admb/simple/]$ ./simple
    ```
 
-Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
+   Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 
 --------------------------------------------------------------------------------
 For help and support, contact <users@admb-project.org>.

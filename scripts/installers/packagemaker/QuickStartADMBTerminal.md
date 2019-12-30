@@ -14,13 +14,13 @@ Quick Start
 
 1. **Download**
 
-   Download [admb-12.0-ADMBTerminal-macos10-xcode7-64bit](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-ADMBTerminal-macos10-xcode7-64bit.dmg).
+   For MacOS 64-bit, download [admb-12.0-ADMBTerminal-macos10-xcode7-64bit.dmg](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-ADMBTerminal-macos10-xcode7-64bit.dmg).
 
 2. **Install**
 
-   Double click downloaded ADMB dmg file. 
+   Double click downloaded dmg file. 
 
-   In the ADMBTerminal mounted disk image, copy **ADMBTerminal** into the **/Applications** folder.
+   In the mounted disk image, copy **ADMBTerminal** into the **/Applications** folder.
 
 3. **Use** ADMB
 
@@ -44,7 +44,7 @@ Quick Start
    [~/examples/admb/simple/]$ ./simple
    ```
 
-Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
+   Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

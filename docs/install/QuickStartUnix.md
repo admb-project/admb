@@ -10,9 +10,7 @@ Describe downloading, installing and using ADMB from binary release for Linux.
 Prerequisites
 -------------
 
-The following programs are required to be installed on the local computer.
-
-For Linux,
+The following tools are required to be installed on the local Linux computer.
 
 * GNU C++
 * GNU stream editor (sed)
@@ -54,7 +52,7 @@ Quick Start
    [~/admb/examples/admb/simple/]$ ./simple
    ```
 
-Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
+   Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 
 --------------------------------------------------------------------------------
 For help and support, contact <users@admb-project.org>.

@@ -44,7 +44,7 @@ Quick Start
    C:\ADMB\examples\admb\simple\> simple.exe
    ```
 
-Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
+   Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 
 ---
 For help and support, contact <users@admb-project.org>.

@@ -126,7 +126,7 @@ void banner(const adstring& program_name)
   ss << "unknown compiler";
 #endif
   ss << "\n";
-  ss << "Copyright (c) 2008-2015 ADMB Foundation"
+  ss << "Copyright (c) 2008-2020 ADMB Foundation"
      << " and Regents of the University of California\n";
   ss << "Build date: " << __DATE__ << "\n";
 #if defined(ADMB_REVISION)

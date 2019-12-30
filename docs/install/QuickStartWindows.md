@@ -1,7 +1,7 @@
 # ADMB Quick Start Windows
 
 *ADMB-12.1*  
-*Released December 27, 2019*  
+*Released December 30, 2019*  
 
 Describe downloading, installing and using ADMB from binary release for Windows.
 
@@ -12,7 +12,7 @@ Quick Start
 
 1. **Download**
 
-   For Windows 64Bit, download [admb-12.0-windows.zip](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-windows.zip).
+   For Windows 64Bit, download [admb-12.0-windows.zip](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-windows.zip).
 
    _**Note**_ &mdash; Release includes MinGW-w64 C++ compiler.
 

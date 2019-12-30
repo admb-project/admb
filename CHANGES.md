@@ -1,4 +1,4 @@
-ADMB Project  
+ADMB Changes
 ============
 
 Describe changes and features for each release.
@@ -17,7 +17,7 @@ Release Goals
 ADMB-12.1
 ---------
 
-*Released December 27, 2019*  
+*Released December 30, 2019*  
 
 #### New Supported Compilers
 * GNU C++ 9

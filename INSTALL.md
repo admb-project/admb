@@ -1,7 +1,7 @@
 ADMB Project  
 ============
 *ADMB-12.1*  
-*Released December 27, 2019*  
+*Released December 30, 2019*  
 
 ADMB Installation procedures
 
@@ -20,8 +20,8 @@ For all others, read the source installation procedure below.
 
 
 <!--
-Source Installation
--------------------
+Building ADMB
+-------------
 
 For Windows computers, read the [QuickStartWindowsSource](QuickStartWindowsSource.html).  
 

@@ -1,7 +1,7 @@
 # ADMB Quick Start Linux
 
 *ADMB-12.1*  
-*Released December 27, 2019*  
+*Released December 30, 2019*  
 
 Describe downloading, installing and using ADMB from binary release for Linux.
 

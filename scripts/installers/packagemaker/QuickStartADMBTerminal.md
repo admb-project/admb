@@ -1,7 +1,7 @@
 # ADMB Quick Start for ADMBTerminal
 
-*ADMB-12.0*  
-*Released December 21, 2017*  
+*ADMB-12.1*
+*Released December 30, 2019*
 
 Describe downloading, installing and using ADMBTerminal from binary release for MacOS.
 
@@ -14,11 +14,11 @@ Quick Start
 
 1. **Download**
 
-   For MacOS 64-bit, download [admb-12.0-ADMBTerminal-macos10-xcode7-64bit.dmg](https://github.com/admb-project/admb/releases/download/admb-12.0/admb-12.0-ADMBTerminal-macos10-xcode7-64bit.dmg).
+   For MacOS 64-bit, download [admb-12.1-ADMBTerminal-macos-clang11-64bit.dmg](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.0-ADMBTerminal-macos-clang11-64bit.dmg).
 
 2. **Install**
 
-   Double click downloaded dmg file. 
+   Double click downloaded dmg file.
 
    In the mounted disk image, copy **ADMBTerminal** into the **/Applications** folder.
 

@@ -1,24 +1,22 @@
-# ADMB Project
+# ADMB Building Source for Unix
 *ADMB-12.1*  
 *Released December 30, 2019*  
 
-ADMB source build and usage procedures for Unix operating systems such as Linux, MacOS, Solaris and BSD.
+Describe building ADMB from source for Unix.
 
 ---
 
 Prerequisites
 -------------
 
-The following programs should be installed on the local computer.
+The following tools should be installed on the local computer.
 
 * C++ compiler
 
-      Supported C++ Compilers for Unix
+  Supported C++ Compilers for Unix
 
-      * GNU C++
-      * Intel C++ Compiler
-      * Oracle Solaris Studio 12.3     
-    
+  * GNU C++
+  * Apple Clang
     
 * GNU make
 * GNU stream editor (sed)

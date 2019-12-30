@@ -769,8 +769,19 @@ cpplint.py:
 
 zip:
 ifeq ($(OS),Windows_NT)
+  ifeq ($(SHELL),cmd)
+	copy /Y ..\docs\install\QuickStartWindows.md ..\build\admb\INSTALL.txt
+  else
+	cp ../docs/install/QuickStartWindows.md ../build/admb/INSTALL.txt
+  endif
 	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd
 else
+  ifeq ($(UNAME_S),Linux)
+	cp ../docs/install/QuickStartUnix.md ../build/admb/INSTALL.txt
+  endif
+  ifeq ($(UNAME_S),Darwin)
+	cp ../docs/install/QuickStartMacOS.md ../build/admb/INSTALL.txt
+  endif
 	cd ../build/ && zip -r admb.zip admb
 endif
 

@@ -771,8 +771,11 @@ zip:
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
 	copy /Y ..\docs\install\QuickStartWindows.md ..\build\admb\INSTALL.txt
+	if not exist $(DIST)\examples md $(DIST)\examples
+	xcopy ..\examples $(DIST)\examples /S /Y /D
   else
 	cp ../docs/install/QuickStartWindows.md ../build/admb/INSTALL.txt
+	cp -R ../examples $(DIST)
   endif
 	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd
 else
@@ -782,6 +785,7 @@ else
   ifeq ($(UNAME_S),Darwin)
 	cp ../docs/install/QuickStartMacOS.md ../build/admb/INSTALL.txt
   endif
+	cp -R ../examples $(DIST)
 	cd ../build/ && zip -r admb.zip admb
 endif
 

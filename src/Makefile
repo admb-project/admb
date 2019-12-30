@@ -311,5 +311,7 @@ check:
 	@echo "OS: $(OS)"
 	@echo "OSTYPE: $(OSTYPE)"
 zip:
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\examples
+	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
 	copy /Y ..\docs\install\QuickStartWindows.md ..\build\admb\INSTALL.txt
 	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd

@@ -38,10 +38,6 @@ Quick Start
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
 
-   For building with Msys2 shell, use the **'admb.sh'** script.
-
-           [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
-
    Run simple example.
 
            [~/admb/examples/admb/simple/]$ ./simple

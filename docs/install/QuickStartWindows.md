@@ -22,7 +22,7 @@ Quick Start
 
 3. **Use** ADMB
 
-   Use **File Explorer**, to open folder **C:\ADMB\**, then double click **ADMB Command Prompt** shortcut to open command line window.
+   Use **File Explorer** and open folder **C:\ADMB**, then double click **ADMB Command Prompt** shortcut to open command line window.
 
    In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
  

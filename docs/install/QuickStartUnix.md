@@ -28,8 +28,6 @@ Quick Start
 
    Open a Terminal, then use the command below to extract contents of zip file to _~/admb/_. 
 
-   For Linux (64Bit),
-
            [~]$ unzip admb-12.1-linux-64bit.zip
 
 3. **Use** ADMB
@@ -43,10 +41,6 @@ Quick Start
    Build simple example.
 
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
-
-   For building with Msys2 shell, use the **'admb.sh'** script.
-
-           [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
 
    Run simple example.
 

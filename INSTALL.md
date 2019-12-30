@@ -16,21 +16,15 @@ For MacOS computers, read the [QuickStartMacOS](docs/install/QuickStartMacOS.md)
 
 For Linux computers, read the [QuickStartUnix](docs/install/QuickStartUnix.md).
 
-For all others, read the source installation procedure below.
+For all others, read the building source procedures below.
 
 
-<!--
-Building ADMB
--------------
+Building Source
+---------------
 
-For Windows computers, read the [QuickStartWindowsSource](QuickStartWindowsSource.html).  
+For Windows computers and Visual Studio, read the [BuildingSourceVisualStudio](docs/install/BuildingSourceVisualStudio.md).   
 
-For Windows computers with Visual C++, read the [QuickStartWindowsVisualC++Source](QuickStartVisualC++Source.html).  
-
-For Unix (Linux, MacOS, Solaris and BSD) computers, read the [QuickStartUnixSource](QuickStartUnixSource.html).
-
-For MinGW and Cygwin shells, read the [QuickStartUnixSource](QuickStartUnixSource.html).
--->
+For Unix (Linux, MacOS, Solaris and BSD) computers, read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
 
 ---
 For help and support, email <users@admb-project.org>.

@@ -16,9 +16,14 @@ jobs:
     - name: build
       run: |
         make
+    - name: debug
+      run: |
         make DEBUG=yes
+    - name: shared
+      run: |
         make shared
-        make shared DEBUG=yes
+    - name: zip
+      run: |
         make zip
     - name: Artifact
       uses: actions/upload-artifact@v1

@@ -1,4 +1,4 @@
-name: windows-latest-mingw-dist
+name: windows-latest-mingw-debug
 
 on: [push]
 
@@ -17,23 +17,23 @@ jobs:
     - name: msys64 mingw64
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make
-        utilities\\make shared
+        utilities\\make DEBUG=yes
+        utilities\\make DEBUG=yes shared
       shell: cmd
     - name: rtool40 mingw64
       run: |
         set PATH=C:\rtools40\mingw64\bin;%PATH%
-        utilities\\make
-        utilities\\make shared
+        utilities\\make DEBUG=yes
+        utilities\\make DEBUG=yes shared
       shell: cmd
     - name: rtool35 mingw64
       run: |
         set PATH=C:\rtools35\mingw_64\bin;%PATH%
-        utilities\\make
-        utilities\\make shared
+        utilities\\make DEBUG=yes
+        utilities\\make DEBUG=yes shared
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_windows_mingw_dist
+        name: admb_windows_mingw_debug
         path: build\\admb

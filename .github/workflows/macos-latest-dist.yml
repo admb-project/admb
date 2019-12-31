@@ -26,7 +26,7 @@ jobs:
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_zip_distribution
+        name: admb_macos_dist_zip
         path: build/admb.zip
     - name: dmg
       run: |

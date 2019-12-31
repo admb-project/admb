@@ -9,11 +9,18 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: run windows-latest-debug
+    - name: clean
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        cl /?
         nmake clean DEBUG=yes
+      shell: cmd
+    - name: debug
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake DEBUG=yes
+      shell: cmd
+    - name: test
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake test DEBUG=yes
       shell: cmd

@@ -1,0 +1,34 @@
+name: centos-latest-dist-64bit
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, linux]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: clean
+      run: make clean
+    - name: build
+      run: make
+    - name: debug
+      run: make DEBUG=yes
+    - name: shared
+      run: make shared
+    - name: zip
+      run: |
+        make zip
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_centos_dist_zip
+        path: build/admb.zip
+    - name: manuals
+      run: PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH make docs
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: manuals_pdfs
+        path: docs/manuals/pdfs 

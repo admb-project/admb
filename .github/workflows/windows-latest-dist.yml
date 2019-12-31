@@ -1,4 +1,4 @@
-name: windows-latest-dist
+name: windows-latest-vs-dist
 
 on: [push]
 
@@ -26,11 +26,10 @@ jobs:
       shell: cmd
     - name: zip
       run: |
-        set PATH=C:\rtools35\mingw64\bin;%PATH%
-        utilities\\make zip
+        nmake zip
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb
+        name: admb_windows_vs_dist
         path: build\\admb

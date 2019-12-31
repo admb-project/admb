@@ -9,10 +9,18 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: run windows-latest-mingw-64bit
+    - name: clean
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
         utilities\\make clean
+      shell: cmd
+    - name: debug
+      run: |
+        set PATH=C:\msys64\mingw64\bin;%PATH%
         utilities\\make DEBUG=yes
+      shell: cmd
+    - name: test
+      run: |
+        set PATH=C:\msys64\mingw64\bin;%PATH%
         utilities\\make test DEBUG=yes
       shell: cmd

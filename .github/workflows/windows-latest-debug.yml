@@ -1,4 +1,4 @@
-name: windows-latest-debug
+name: windows-latest-vs-debug
 
 on: [push]
 
@@ -14,23 +14,22 @@ jobs:
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake clean
       shell: cmd
-    - name: build debug
+    - name: dist
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake DEBUG=yes
       shell: cmd
-    - name: build debug shared
+    - name: shared
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake DEBUG=yes shared
       shell: cmd
     - name: zip
       run: |
-        set PATH=C:\rtools35\mingw64\bin;%PATH%
-        utilities\\make zip
+        nmake zip
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb
+        name: admb_windows_vs_debug
         path: build\\admb

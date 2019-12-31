@@ -39,23 +39,26 @@ admb-sample.pdf: $(SAMPLE_PATH)/admb-sample.tex
 	$(MAKE) -C $(SAMPLE_PATH) -f ../share/Makefile.DC filename=admb-sample
 	mv -v $(SAMPLE_PATH)/admb-sample.pdf $@
 
-admbre.pdf: $(ADMB_RE_PATH)/admbre.tex
+admbre.pdf: $(ADMB_RE_PATH)/admbre.tex $(ADMBMANUAL_PATH)/admbmanual.cls
 	cp -vf $(ADMBMANUAL_PATH)/admbmanual.cls $(ADMB_RE_PATH) 
 	cp -vf ./share/ADMB-logo.png $(ADMB_RE_PATH) 
 	$(MAKE) -C $(ADMB_RE_PATH) -f ../share/Makefile.DC filename=admbre
 	mv -v $(ADMB_RE_PATH)/admbre.pdf $@
 
-admb.pdf: $(ADMB_PATH)/admb.tex
+admb.pdf: $(ADMB_PATH)/admb.tex $(ADMBMANUAL_PATH)/admbmanual.cls
 	cp -vf $(ADMBMANUAL_PATH)/admbmanual.cls $(ADMB_PATH) 
 	cp -vf ./share/ADMB-logo.png $(ADMB_PATH) 
 	$(MAKE) -C $(ADMB_PATH) -f ../share/Makefile.DC filename=admb
 	mv -v $(ADMB_PATH)/admb.pdf $@
 
-autodif.pdf: $(AUTODIF_PATH)/autodif.tex
+autodif.pdf: $(AUTODIF_PATH)/autodif.tex $(ADMBMANUAL_PATH)/admbmanual.cls
 	cp -vf $(ADMBMANUAL_PATH)/admbmanual.cls $(AUTODIF_PATH) 
 	cp -vf ./share/ADMB-logo.png $(AUTODIF_PATH) 
 	$(MAKE) -C $(AUTODIF_PATH) -f ../share/Makefile.DC filename=autodif
 	mv -v $(AUTODIF_PATH)/autodif.pdf $@
+
+$(ADMBMANUAL_PATH)/admbmanual.cls:
+	$(MAKE) --directory=admbmanual admbmanual.cls
 
 clean:
 	@$(MAKE) -C $(ADMB_PATH)    -f ../share/Makefile.DC clean filename=admb

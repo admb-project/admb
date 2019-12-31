@@ -26,6 +26,7 @@ jobs:
       shell: cmd
     - name: zip
       run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake zip
       shell: cmd
     - name: Artifact

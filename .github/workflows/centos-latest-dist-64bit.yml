@@ -26,7 +26,7 @@ jobs:
         name: admb_centos_dist_zip
         path: build/admb.zip
     - name: manuals
-      run: PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH make docs
+      run: PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH make --directory=docs/manuals
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

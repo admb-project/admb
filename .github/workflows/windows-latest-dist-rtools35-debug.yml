@@ -1,4 +1,4 @@
-name: windows-latest-mingw-dist-rtools35
+name: windows-latest-dist-rtools35-debug
 
 on: [push]
 
@@ -17,11 +17,11 @@ jobs:
     - name: rtool35 mingw64
       run: |
         set PATH=C:\rtools35\mingw_64\bin;%PATH%
-        utilities\\make
-        utilities\\make shared
+        utilities\\make DEBUG=yes
+        utilities\\make DEBUG=yes shared
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_windows_latest_mingw_dist_rtools35
+        name: admb_windows_latest_dist_rtools35_debug
         path: build\\admb

@@ -31,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: manuals_pdfs
-        path: docs/manuals/pdfs 
+        path: build/manuals

@@ -12,13 +12,11 @@ AUTODIF_PATH=autodif
 SAMPLE_PATH=admb-sample
 ADMBMANUAL_PATH=admbmanual
 
-ALL: MANUALS 
-
-pdfs: ALL
-	mkdir -p pdfs
-	mv -v admb.pdf pdfs
-	mv -v admbre.pdf pdfs/admb-re.pdf
-	mv -v autodif.pdf pdfs
+all: admb.pdf admbre.pdf autodif.pdf
+	mkdir -p ../../build/manuals
+	mv -v admb.pdf ../../build/manuals
+	mv -v admbre.pdf ../../build/manuals
+	mv -v autodif.pdf ../../build/manuals
 
 WRITERS_GUIDE: admbmanual.pdf admb-sample.pdf
 

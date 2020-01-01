@@ -1,4 +1,4 @@
-name: centos-latest-dist-64bit
+name: centos-64bit
 
 on: [push]
 
@@ -23,7 +23,7 @@ jobs:
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_centos_dist_zip
+        name: admb_centos_zip
         path: build/admb.zip
     - name: manuals
       run: PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH make --directory=docs/manuals
@@ -32,3 +32,5 @@ jobs:
       with:
         name: manuals_pdfs
         path: build/manuals
+    - name: tests
+      run: make test DEBUG=yes

@@ -1,19 +1,17 @@
-name: ubuntu-latest-dist
+name: macos-64bit
 
 on: [push]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     
     steps:
     - uses: actions/checkout@v1
-    - name: flex
-      run: sudo apt-get install flex
     - name: clean
       run: make clean
-    - name: build
+    - name: dist
       run: |
         make
     - name: debug
@@ -28,5 +26,13 @@ jobs:
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_zip_distribution
+        name: admb_macos_zip
         path: build/admb.zip
+    - name: dmg
+      run: |
+        make --directory=scripts/installers/packagemaker clean all
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_dmg_distribution
+        path: scripts/installers/packagemaker/ADMBTerminal.dmg

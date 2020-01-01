@@ -1,27 +1,34 @@
-name: macos-latest-debug
+name: ubuntu-64bit
 
 on: [push]
 
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v1
+    - name: flex
+      run: sudo apt-get install flex
     - name: clean
       run: make clean
+    - name: build
+      run: |
+        make
     - name: debug
       run: |
         make DEBUG=yes
     - name: shared
       run: |
-        make shared DEBUG=yes
+        make shared
     - name: zip
       run: |
         make zip
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_macos_debug_zip
+        name: admb_ubuntu_zip
         path: build/admb.zip
+    - name: tests
+      run: make test DEBUG=yes

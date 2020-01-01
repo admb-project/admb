@@ -1,4 +1,4 @@
-name: windows-rtools40
+name: windows-rtools40-64bit
 
 on: [push]
 

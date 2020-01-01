@@ -34,3 +34,8 @@ jobs:
         path: build/manuals
     - name: tests
       run: make test DEBUG=yes
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: outputs
+        path: outputs-opt.txt

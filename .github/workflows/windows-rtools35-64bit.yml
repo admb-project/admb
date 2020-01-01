@@ -40,3 +40,8 @@ jobs:
       run: |
         set PATH=C:\rtools35\mingw_64\bin;%PATH%
         utilities\\make test DEBUG=yes
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: outputs
+        path: outputs-opt.txt

@@ -1,4 +1,4 @@
-name: windows-vs2019-64bit
+name: windows-vs2019-32bit
 
 on: [push]
 
@@ -11,12 +11,12 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean
       run: |
-        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
         nmake clean
       shell: cmd
     - name: build
       run: |
-        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
         nmake
         nmake shared
       shell: cmd
@@ -27,7 +27,7 @@ jobs:
         path: build\\admb
     - name: debug
       run: |
-        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
         nmake DEBUG=yes
         nmake shared DEBUG=yes
       shell: cmd
@@ -38,11 +38,11 @@ jobs:
         path: build\\admb
     - name: test
       run: |
-        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
         nmake test DEBUG=yes
       shell: cmd
     - name: analyze
       run: |
-        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
         cd src & nmake CXXFLAGS=/analyze DEBUG=yes objects
       shell: cmd

@@ -1,4 +1,4 @@
-name: windows-latest-vs-dist
+name: windows-vs2019-64bit
 
 on: [push]
 
@@ -14,23 +14,35 @@ jobs:
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake clean
       shell: cmd
-    - name: build dist
+    - name: build
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake
-      shell: cmd
-    - name: build shared
-      run: |
-        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake shared
-      shell: cmd
-    - name: zip
-      run: |
-        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        nmake zip
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_windows_vs_dist
+        name: admb_vs2019
         path: build\\admb
+    - name: debug
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake DEBUG=yes
+        nmake shared DEBUG=yes
+      shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_vs2019_debug
+        path: build\\admb
+    - name: test
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake test DEBUG=yes
+      shell: cmd
+    - name: analyze
+      run: |
+        pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        cd src & nmake CXXFLAGS=/analyze DEBUG=yes objects
+      shell: cmd

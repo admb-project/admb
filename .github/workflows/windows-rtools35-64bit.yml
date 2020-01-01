@@ -1,0 +1,42 @@
+name: windows-rtools35
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, windows]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: clean
+      run: |
+        set PATH=C:\rtools35\mingw_64\bin;%PATH%
+        utilities\\make clean
+      shell: cmd
+    - name: build
+      run: |
+        set PATH=C:\rtools35\mingw_64\bin;%PATH%
+        utilities\\make
+        utilities\\make shared
+      shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_rtools35
+        path: build\\admb
+    - name: debug
+      run: |
+        set PATH=C:\rtools35\mingw_64\bin;%PATH%
+        utilities\\make DEBUG=yes
+        utilities\\make shared DEBUG=yes
+      shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_rtools35_debug
+        path: build\\admb
+    - name: test
+      run: |
+        set PATH=C:\rtools35\mingw_64\bin;%PATH%
+        utilities\\make test DEBUG=yes

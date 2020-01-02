@@ -41,6 +41,11 @@ jobs:
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
         nmake test DEBUG=yes
       shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: outputs
+        path: outputs-opt.txt
     - name: analyze
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd

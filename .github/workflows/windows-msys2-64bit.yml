@@ -40,6 +40,7 @@ jobs:
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
         utilities\\make test DEBUG=yes
+      shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

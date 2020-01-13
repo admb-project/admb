@@ -1232,4 +1232,34 @@ else
 	@rm -vf admb/simple/simple.obj
 	@rm -vf admb/simple/simple.par
 	@rm -vf admb/simple/simple.std
+	@rm -vf admb-re/priors_test/admodel.cov
+	@rm -vf admb-re/priors_test/admodel.dep
+	@rm -vf admb-re/priors_test/admodel.hes
+	@rm -vf admb-re/priors_test/fmin.log
+	@rm -vf admb-re/priors_test/hesscheck
+	@rm -vf admb-re/priors_test/hessian.bin
+	@rm -vf admb-re/priors_test/ratre
+	@rm -vf admb-re/priors_test/ratre.b01
+	@rm -vf admb-re/priors_test/ratre.b02
+	@rm -vf admb-re/priors_test/ratre.bar
+	@rm -vf admb-re/priors_test/ratre.bgs
+	@rm -vf admb-re/priors_test/ratre.cor
+	@rm -vf admb-re/priors_test/ratre.cpp
+	@rm -vf admb-re/priors_test/ratre.eva
+	@rm -vf admb-re/priors_test/ratre.htp
+	@rm -vf admb-re/priors_test/ratre.log
+	@rm -vf admb-re/priors_test/ratre.luu
+	@rm -vf admb-re/priors_test/ratre.obj
+	@rm -vf admb-re/priors_test/ratre.p01
+	@rm -vf admb-re/priors_test/ratre.p02
+	@rm -vf admb-re/priors_test/ratre.par
+	@rm -vf admb-re/priors_test/ratre.r01
+	@rm -vf admb-re/priors_test/ratre.r02
+	@rm -vf admb-re/priors_test/ratre.rep
+	@rm -vf admb-re/priors_test/ratre.rhes
+	@rm -vf admb-re/priors_test/ratre.std
+	@rm -vf autodif/bigmin/matinv.est
+  ifneq ($(SHELL),cmd)
+	@rm -vf admb-re/nested4/nested4
+  endif
 endif

@@ -36,8 +36,8 @@
     #include <admodel.h>
     #include <df1b2fun.h>
     #include <adrndeff.h>
-    // define constant variable
-    const double EPS = 1.e-30;          //tiny number to avoid 0 in log
+    // from qfc header
+    extern const double EPS;          //tiny number to avoid 0 in log 
   
 
 

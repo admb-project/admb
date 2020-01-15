@@ -1,7 +1,7 @@
 # ADMB Quick Start for ADMBTerminal
 
 *ADMB-12.1*  
-*Released December 31, 2019*  
+*Released January 16, 2020*  
 
 Describe downloading, installing and using ADMBTerminal from binary release for MacOS.
 

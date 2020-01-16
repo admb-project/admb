@@ -18,7 +18,7 @@ ifeq ($(SHELL),cmd)
   OBJSDIR=..\build\objects
   ifeq ($(CXX),g++)
     ifeq (,$(shell where g++.exe))
-      $(error "Error: Missing g++ compiler.")
+      $(warning "Warning: Unable to find g++ compiler.")
     endif
     ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
       OSNAME=mingw64

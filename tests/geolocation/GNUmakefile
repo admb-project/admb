@@ -89,11 +89,11 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	if [ -e kfsst/Makefile ]; then $(MAKE) --directory=kfsst clean; fi;
-	if [ -e kftrack/Makefile ]; then $(MAKE) --directory=kftrack clean; fi;
-	if [ -e trackit/Makefile ]; then $(MAKE) --directory=trackit clean; fi;
-	if [ -e ukfsst/Makefile ]; then $(MAKE) --directory=ukfsst clean; fi;
-endif
+	if exist kfsst/Makefile $(MAKE) --directory=kfsst clean
+	if exist kftrack/Makefile $(MAKE) --directory=kftrack clean
+	if exist trackit/Makefile $(MAKE) --directory=trackit clean
+	if exist ukfsst/Makefile $(MAKE) --directory=ukfsst clean
+else
 	@rm -vf kfsst/admodel.cov
 	@rm -vf kfsst/admodel.dep
 	@rm -vf kfsst/admodel.hes

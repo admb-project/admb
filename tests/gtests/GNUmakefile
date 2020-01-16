@@ -1,5 +1,5 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(TERM)),)
+  ifeq ($(strip $(OSTYPE)),)
     SHELL=cmd
     ADMB_HOME=..\\..\\..
   else

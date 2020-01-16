@@ -1,6 +1,6 @@
 .ONESHELL:
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(TERM)),)
+  ifeq ($(strip $(OSTYPE)),)
     SHELL=cmd
   else
     EXT=.sh

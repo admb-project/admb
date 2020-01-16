@@ -1,5 +1,5 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(TERM)),)
+  ifeq ($(strip $(OSTYPE)),)
     SHELL=cmd
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
       PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)

@@ -1,12 +1,9 @@
-ifeq ($(TERM),cygwin)
-else
 ifeq ($(OS),Windows_NT)
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+  ifeq ($(strip $(OSTYPE)),)
     SHELL=cmd
   else
     EXT=.sh
   endif
-endif
 endif
 
 TARGET=poisp

@@ -1,5 +1,5 @@
 ifeq ($(OS),Windows_NT)
-ifeq ($(strip $(TERM)),)
+ifeq ($(strip $(OSTYPE)),)
 PATH:=$(PATH):..\..\utilities
 bins: $(DIST)\bin\tpl2rem.exe
 $(DIST)\bin\tpl2rem.exe: tpl2rem.c

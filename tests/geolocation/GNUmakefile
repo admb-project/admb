@@ -1,12 +1,9 @@
-ifeq ($(TERM),cygwin)
-else
 ifeq ($(OS),Windows_NT)
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+  ifeq ($(strip $(OSTYPE)),)
     SHELL=cmd
   else
     EXT=.sh
   endif
-endif
 endif
 
 ifndef ADMB_HOME
@@ -92,9 +89,6 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-else
-ifeq (cygwin,$(TERM))
-else
 	if [ -e kfsst/Makefile ]; then $(MAKE) --directory=kfsst clean; fi;
 	if [ -e kftrack/Makefile ]; then $(MAKE) --directory=kftrack clean; fi;
 	if [ -e trackit/Makefile ]; then $(MAKE) --directory=trackit clean; fi;

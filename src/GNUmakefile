@@ -1,5 +1,5 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(TERM)),)
+  ifeq ($(strip $(OSTYPE)),)
     SHELL=cmd
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
       PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
@@ -216,20 +216,12 @@ ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/admb/include
   endif
 endif
 
-ifeq ($(TERM),cygwin)
-  ifeq ($(CXX),g++)
-    ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
-      ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
-    endif
-  endif
-else
 ifeq ($(SHELL),cmd)
   ifeq ($(CXX),g++)
     ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
       ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
     endif
   endif
-endif
 endif
 
 CXXFLAGS_SAF_LIB=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))

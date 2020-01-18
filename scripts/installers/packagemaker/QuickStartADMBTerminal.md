@@ -14,7 +14,7 @@ Quick Start
 
 1. **Download**
 
-   For MacOS 64-bit, download [admb-12.1-ADMBTerminal-macos-clang11-64bit.dmg](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-ADMBTerminal-macos-clang11-64bit.dmg).
+   For MacOS 64-bit, download [admb-12.1-ADMBTerminal-macos-64bit.dmg](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-ADMBTerminal-macos-64bit.dmg).
 
 2. **Install**
 

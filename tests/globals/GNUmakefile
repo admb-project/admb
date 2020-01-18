@@ -17,8 +17,8 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	@del main.obj
-	@del main.exe
+	@if exist main.obj del main.obj
+	@if exist main.exe del main.exe
 else
 	@rm -vf main.obj
 	@rm -vf main

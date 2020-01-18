@@ -16,11 +16,11 @@ all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_O
 
 $(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
 	..\..\admb.cmd -c $(OPTION) $<
-	copy $(basename $<).obj $@
+	copy $(basename $<).obj "$@"
 
 $(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
 	..\..\admb.cmd -c -f $(OPTION) $<
-	copy $(basename $<).obj $@
+	copy $(basename $<).obj "$@"
 else
   ifeq ($(SAFE_ONLY),yes)
 all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))

@@ -169,11 +169,11 @@ ifeq ($(SHELL),cmd)
   else
 	if exist "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	$(AR) -rs "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" "..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-saflp-*.obj"
+	$(AR) -rs ..\build\admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a ..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-saflp-*.obj
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	$(AR) -rs "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a" "..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-optlp-*.obj"
+	$(AR) -rs ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a ..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-optlp-*.obj
     endif
   endif
 else

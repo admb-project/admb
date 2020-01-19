@@ -158,13 +158,13 @@ libs:
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
 ifeq ($(SHELL),cmd)
   ifeq ($(DEBUG),yes)
-	if exist "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
-	copy "src\$(CONTRIB_LIB)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
+	if exist "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
+	copy "src\$(CONTRIB_LIB)\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
 	$(AR) -rs "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects\$(OSNAME)$(CXXVERSION)-debug\contrib-saflp-*.obj"
     ifndef SAFE_ONLY
-	if exist  "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
-	copy "src\$(CONTRIB_LIB)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
-	$(AR) -rs "src\$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects\$(OSNAME)$(CXXVERSION)-debug\contrib-optlp-*.obj"
+	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
+	copy "src\$(CONTRIB_LIB)\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
+	$(AR) -rs "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects\$(OSNAME)$(CXXVERSION)-debug\contrib-optlp-*.obj"
     endif
   else
 	if exist "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a"

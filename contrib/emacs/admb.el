@@ -1,12 +1,12 @@
 ;;; admb.el --- Major mode for creating statistical models with AD Model Builder
 
-;; Copyright (C) 2003, 2007-2018 Arni Magnusson
+;; Copyright (C) 2003-2020 Arni Magnusson
 
 ;; Author:   Arni Magnusson
 ;; Keywords: languages
 ;; URL:      https://github.com/admb-project/admb/blob/master/contrib/emacs
 
-(defconst admb-mode-version "12.0-1" "ADMB Mode version number.")
+(defconst admb-mode-version "12.1-0" "ADMB Mode version number.")
 
 ;;; Commentary:
 ;;
@@ -415,8 +415,8 @@ This command combines `admb-init', `admb-build-command' and `admb-flags'."
   (let* ((model (file-name-sans-extension (buffer-name))) ; fmin.log in Linux
          (pattern (concat "admodel\\..*"        "\\|" "classcode\\.tmp"
                           "\\|" "eigv\\..*"     "\\|" "fmin.log"
-                          "\\|" "hessian.bin"   "\\|" "sims"
-                          "\\|" "variance"
+                          "\\|" "hesscheck"     "\\|" "hessian.bin"
+                          "\\|" "sims"          "\\|" "variance"
                           "\\|" model "\\.b0.*" "\\|" model "\\.bar"
                           "\\|" model "\\.bgs"  "\\|" model "\\.cpp"
                           "\\|" model "\\.ecm"  "\\|" model "\\.eva"
@@ -426,7 +426,8 @@ This command combines `admb-init', `admb-build-command' and `admb-flags'."
                           "\\|" model "\\.luu"  "\\|" model "\\.mc2"
                           "\\|" model "\\.mcm"  "\\|" model "\\.o"
                           "\\|" model "\\.obj"  "\\|" model "\\.p0.*"
-                          "\\|" model "\\.r0.*" "\\|" model "\\.tds"))
+                          "\\|" model "\\.r0.*" "\\|" model "\\.rhes"
+                          "\\|" model "\\.tds"))
          (files (directory-files "." nil pattern t)))
     (dolist (x files)(delete-file x)))(message "Removed ADMB temporary files"))
 (defun admb-compile ()

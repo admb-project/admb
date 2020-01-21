@@ -634,6 +634,8 @@ jobs:
     - SAFE_ONLY=yes
     compiler: gcc
     script:
+    - make.exe -d
+    - make.exe --directory=src check
     - make.exe clean
     - make.exe
     - make.exe gtests

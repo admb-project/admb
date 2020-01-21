@@ -635,7 +635,7 @@ jobs:
     compiler: gcc
     script:
     - make.exe clean
-    - make.exe core
+    - make.exe
     - make.exe gtests
 
   - os: windows

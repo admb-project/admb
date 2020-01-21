@@ -789,3 +789,4 @@ check:
 	@echo "CXX: $(CXX)"
 	@echo "OS: $(OS)"
 	@echo "OSTYPE: $(OSTYPE)"
+	@echo "COMSPEC: $(COMSPEC)"

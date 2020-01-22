@@ -453,7 +453,7 @@ else
 endif
 
 clean:
-ifneq ($(DOSSHELL),cmd)
+ifneq ($(CMDSHELL),cmd)
 	@rm -vf admb-re/bcb/admodel.cov
 	@rm -vf admb-re/bcb/admodel.dep
 	@rm -vf admb-re/bcb/admodel.hes

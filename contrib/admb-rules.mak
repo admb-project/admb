@@ -1,4 +1,5 @@
 .ONESHELL:
+
 ifeq ($(OS),Windows_NT)
   ifneq ($(findstring sh.exe,$(shell where sh.exe)),sh.exe)
     CMDSHELL=cmd
@@ -7,32 +8,38 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-ifeq ($(CMDSHELL),cmd)
-  ifeq ($(SAFE_ONLY),yes)
-all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))
-  else
-all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)-optlp-, $(OBJECTS))
-  endif
+ifndef CONTRIB_OBJS_DIR
+CONTRIB_OBJS_DIR=.
+endif
 
-$(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
+ifeq ($(CMDSHELL),cmd)
+SAFE_PREFIX=$(CONTRIB_OBJS_DIR)\saflp-contrib-
+OPT_PREFIX=$(CONTRIB_OBJS_DIR)\optlp-contrib-
+else
+SAFE_PREFIX=$(CONTRIB_OBJS_DIR)/saflp-contrib-
+OPT_PREFIX=$(CONTRIB_OBJS_DIR)/optlp-contrib-
+endif
+
+ifeq ($(SAFE_ONLY),yes)
+all: $(addprefix $(SAFE_PREFIX), $(OBJECTS))
+else
+all: $(addprefix $(SAFE_PREFIX), $(OBJECTS)) $(addprefix $(OPT_PREFIX), $(OBJECTS))
+endif
+
+$(SAFE_PREFIX)%.obj: %.cpp
+ifeq ($(CMDSHELL),cmd)
 	..\..\admb.cmd -c $(OPTION) $<
 	copy $(basename $<).obj "$@"
+else
+	../../admb$(EXT) -c $(OPTION) $<
+	cp $(basename $<).obj $@
+endif
 
-$(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
+$(OPT_PREFIX)%.obj: %.cpp
+ifeq ($(CMDSHELL),cmd)
 	..\..\admb.cmd -c -f $(OPTION) $<
 	copy $(basename $<).obj "$@"
 else
-  ifeq ($(SAFE_ONLY),yes)
-all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))
-  else
-all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)-optlp-, $(OBJECTS))
-  endif
-
-$(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
-	../../admb$(EXT) -c $(OPTION) $<
-	cp $(basename $<).obj $@
-
-$(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
 	../../admb$(EXT) -c -f $(OPTION) $<
 	cp $(basename $<).obj $@
 endif

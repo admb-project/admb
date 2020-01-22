@@ -28,7 +28,6 @@ ifeq ($(CMDSHELL),cmd)
   else
     CONTRIB_OBJS_DIR:=$(CONTRIB_OBJS_DIR)\$(OSNAME)$(CXXVERSION)
   endif
-  CONTRIB_OBJS_DIR:=$(addsuffix \contrib,$(CONTRIB_OBJS_DIR))
   CONTRIB_BIN=$(addsuffix \bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix \lib,$(CONTRIB_DIR))
@@ -84,9 +83,9 @@ else
   endif
   CONTRIB_DIR=../../build/admb/
   ifeq ($(DEBUG),yes)
-  CONTRIB_OBJS_PREFIX=build/objects/$(OSNAME)$(CXXVERSION)$(SHARED)-debug/contrib
+  CONTRIB_OBJS_PREFIX=build/objects/$(OSNAME)$(CXXVERSION)$(SHARED)-debug
   else
-  CONTRIB_OBJS_PREFIX=build/objects/$(OSNAME)$(CXXVERSION)$(SHARED)/contrib
+  CONTRIB_OBJS_PREFIX=build/objects/$(OSNAME)$(CXXVERSION)$(SHARED)
   endif
   CONTRIB_OBJS_DIR=../../$(CONTRIB_OBJS_PREFIX)
   CONTRIB_BIN=$(addsuffix bin/,$(CONTRIB_DIR))
@@ -162,20 +161,20 @@ ifeq ($(CMDSHELL),cmd)
   ifeq ($(DEBUG),yes)
 	if exist "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
 	copy "src\$(CONTRIB_LIB)\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
-	$(AR) -rs "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects\$(OSNAME)$(CXXVERSION)-debug\contrib-saflp-*.obj"
+	$(AR) -rs "src\$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects\$(OSNAME)$(CXXVERSION)-debug\saflp-contrib-*.obj"
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
 	copy "src\$(CONTRIB_LIB)\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
-	$(AR) -rs "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects\$(OSNAME)$(CXXVERSION)-debug\contrib-optlp-*.obj"
+	$(AR) -rs "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects\$(OSNAME)$(CXXVERSION)-debug\optlp-contrib-*.obj"
     endif
   else
 	if exist "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	cd ..\build && $(AR) -rs "admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" "objects\$(OSNAME)$(CXXVERSION)\contrib-saflp-*.obj"
+	cd ..\build && $(AR) -rs "admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a" "objects\$(OSNAME)$(CXXVERSION)\saflp-contrib-*.obj"
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	$(AR) -rs ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a "..\build\objects\$(OSNAME)$(CXXVERSION)\contrib-optlp-*.obj"
+	$(AR) -rs ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a "..\build\objects\$(OSNAME)$(CXXVERSION)\optlp-contrib-*.obj"
     endif
   endif
 else
@@ -183,40 +182,40 @@ else
     ifdef SHARED
 	rm -vf src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
 	cp -vf src/$(CONTRIB_LIB)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
-	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a ../$(CONTRIB_OBJS_PREFIX)-saflp-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a ../$(CONTRIB_OBJS_PREFIX)/saflp-contrib-*.obj
       ifndef SAFE_ONLY
 	rm -vf src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
 	cp -vf src/$(CONTRIB_LIB)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
-	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a ../$(CONTRIB_OBJS_PREFIX)-optlp-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a ../$(CONTRIB_OBJS_PREFIX)/optlp-contrib-*.obj
       endif
     else
 	rm -vf src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
 	cp -vf src/$(CONTRIB_LIB)libadmb-$(OSNAME)$(CXXVERSION)-debug.a src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
-	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a ../$(CONTRIB_OBJS_PREFIX)-saflp-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a ../$(CONTRIB_OBJS_PREFIX)/saflp-contrib-*.obj
       ifndef SAFE_ONLY
 	rm -vf src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
 	cp -vf src/$(CONTRIB_LIB)libadmbo-$(OSNAME)$(CXXVERSION)-debug.a src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
-	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a ../$(CONTRIB_OBJS_PREFIX)-optlp-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a ../$(CONTRIB_OBJS_PREFIX)/optlp-contrib-*.obj
       endif
     endif
   else
     ifdef SHARED
 	rm -vf src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	cp -vf src/$(CONTRIB_LIB)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a ../$(CONTRIB_OBJS_PREFIX)-saflp-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a ../$(CONTRIB_OBJS_PREFIX)/saflp-contrib-*.obj
       ifndef SAFE_ONLY
 	rm -vf src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	cp -vf src/$(CONTRIB_LIB)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a ../$(CONTRIB_OBJS_PREFIX)-optlp-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a ../$(CONTRIB_OBJS_PREFIX)/optlp-contrib-*.obj
       endif
     else
 	rm -vf src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	cp -vf src/$(CONTRIB_LIB)libadmb-$(OSNAME)$(CXXVERSION).a src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a ../$(CONTRIB_OBJS_PREFIX)-saflp-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED).a ../$(CONTRIB_OBJS_PREFIX)/saflp-contrib-*.obj
       ifndef SAFE_ONLY
 	rm -vf src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	cp -vf src/$(CONTRIB_LIB)libadmbo-$(OSNAME)$(CXXVERSION).a src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a
-	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a ../$(CONTRIB_OBJS_PREFIX)-optlp-*.obj
+	$(AR) -rs src/$(CONTRIB_LIB)libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a ../$(CONTRIB_OBJS_PREFIX)/optlp-contrib-*.obj
       endif
     endif
   endif

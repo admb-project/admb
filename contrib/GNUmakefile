@@ -1,6 +1,8 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifneq ($(findstring sh.exe,$(shell where sh.exe)),sh.exe)
+    CMDSHELL=cmd
+  endif
+  ifeq ($(CMDSHELL),cmd)
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
       PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
     endif
@@ -10,7 +12,7 @@ ifeq ($(OS),Windows_NT)
     endif
   endif
 endif
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
   CONTRIB_DIR=..\..\build\admb
   CONTRIB_OBJS_DIR=..\..\build\objects
   ifeq ($(CXX),g++)
@@ -105,7 +107,7 @@ all:
 
 shared: libs
 ifeq ($(DEBUG),yes)
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
     ifndef SAFE_ONLY
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
@@ -124,7 +126,7 @@ ifeq ($(DEBUG),yes)
     endif
   endif
 else
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
     ifndef SAFE_ONLY
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
@@ -156,7 +158,7 @@ libs:
 	$(MAKE) contrib-libs
 
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
   ifeq ($(DEBUG),yes)
 	if exist "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
 	copy "src\$(CONTRIB_LIB)\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)\libadmb-contrib-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
@@ -239,7 +241,7 @@ contrib-src:
 	$(MAKE) --directory=src CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-dirs:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	if not exist src\$(CONTRIB_INCLUDE) md src\$(CONTRIB_INCLUDE)
 else
 	mkdir -p src/$(CONTRIB_INCLUDE)
@@ -257,7 +259,7 @@ contrib-test-R:
 
 copy:
 ifeq ($(DEBUG),yes)
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	if not exist ..\build\admb\contrib md ..\build\admb\contrib
 	xcopy ..\contrib ..\build\admb\contrib /S /Y /D
   else
@@ -265,7 +267,7 @@ ifeq ($(DEBUG),yes)
 	$(MAKE) --directory=../build/admb/contrib clean
   endif
 else
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	if not exist ..\build\admb\contrib md ..\build\admb\contrib
 	xcopy ..\contrib ..\build\admb\contrib /S /Y /D
   else

@@ -1,5 +1,3 @@
-SHELL=cmd
-
 LEXDESTDIR=..\build\lex
 
 #SAFE_ALL= /DSAFE_ALL

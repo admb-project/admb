@@ -1,13 +1,13 @@
 .ONESHELL:
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifneq ($(findstring sh.exe,$(shell where sh.exe)),sh.exe)
+    CMDSHELL=cmd
   else
     EXT=.sh
   endif
 endif
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
   ifeq ($(SAFE_ONLY),yes)
 all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))
   else
@@ -38,19 +38,19 @@ $(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
 endif
 
 includes:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	for %%a in ($(HEADERS)) do copy %%a $(CONTRIB_INCLUDE)
 else
 	cp $(HEADERS) $(CONTRIB_INCLUDE)
 endif
 
 test:
-ifneq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=tests
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	del /Q $(OBJECTS) 2>nul
 else
 	@rm -vf $(OBJECTS)

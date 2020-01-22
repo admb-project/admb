@@ -1,4 +1,4 @@
-#!/bin/bash
+#!sh
 #
 # Copyright (c) 2013-2014 ADMB Foundation
 #

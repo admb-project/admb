@@ -104,7 +104,7 @@ else
     $(warning Unknown CXX = "$(CXX)" results in empty CXXVERSION.)
   endif
   ifdef SHARED
-  OBJSDIR=$(shell pwd)/../build/objects/$(OSNAME)$(CXXVERSION)-shared
+  OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)-shared
   else
   OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)
   endif

@@ -25,7 +25,7 @@ OPTIONS:= $(OPTIONS) -f
 endif
 
 ifndef PROG
-  ifeq ($(CMDSHELL),cmd)
+  ifneq ($(CMDSHELL),cmd)
     PROG=time
   endif
 endif

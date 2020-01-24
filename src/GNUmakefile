@@ -1,6 +1,10 @@
 ifeq ($(OS),Windows_NT)
-  ifneq ($(findstring sh.exe,$(shell where sh.exe)),sh.exe)
+  ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
+  else
+    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | head)),bash.exe)
+      CMDSHELL=cmd
+    endif
   endif
   ifeq ($(CMDSHELL),cmd)
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
@@ -12,7 +16,6 @@ ifeq ($(OS),Windows_NT)
     endif
   endif
 endif
-
 ifeq ($(CMDSHELL),cmd)
   DIST=..\build\admb
   LIBSDIR=$(DIST)\lib

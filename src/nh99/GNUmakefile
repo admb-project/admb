@@ -1,5 +1,5 @@
 ifeq ($(OS),Windows_NT)
-  ifneq ($(findstring sh.exe,$(shell where sh.exe)),sh.exe)
+  ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | head)),bash.exe)
 PATH:=$(PATH):..\..\utilities
 bins: $(DIST)\bin\tpl2cpp.exe
 $(DIST)\bin\tpl2cpp.exe: tpl2cpp.c

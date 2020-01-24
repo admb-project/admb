@@ -1,8 +1,12 @@
 .ONESHELL:
 
 ifeq ($(OS),Windows_NT)
-  ifneq ($(findstring sh.exe,$(shell where sh.exe)),sh.exe)
-    CMDSHELL=cmd
+  ifeq ($(SHELL),cmd)
+      CMDSHELL=cmd
+  else
+    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | head)),bash.exe)
+      CMDSHELL=cmd
+    endif
   endif
   ifeq ($(CMDSHELL),cmd)
     ADMB_HOME=..\\..\\..

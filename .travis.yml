@@ -642,9 +642,9 @@ jobs:
     - SAFE_ONLY=yes
     compiler: gcc
     script:
-    - make.exe SHELL=cmd clean
-    - make.exe SHELL=cmd
-    - make.exe SHELL=cmd gtests
+    - utilities/make.exe SHELL=cmd clean
+    - utilities/make.exe SHELL=cmd
+    - utilities/make.exe SHELL=cmd gtests
 
   - os: windows
     env:

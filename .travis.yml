@@ -629,14 +629,13 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind weights
 
   - os: windows
-    install: choco install -y make
     env:
     - SAFE_ONLY=yes
     compiler: gcc
     script:
-    - make.exe clean
-    - make.exe
-    - make.exe gtests
+    - utilities\make.exe clean
+    - utilities\make.exe
+    - utilities\make.exe gtests
 
   - os: windows
     install: choco install -y make

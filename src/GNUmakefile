@@ -2,7 +2,7 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr /C:"bash.exe")),bash.exe)
+    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
       CMDSHELL=cmd
     endif
   endif
@@ -22,7 +22,7 @@ ifeq ($(CMDSHELL),cmd)
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
   OBJSDIR=..\build\objects
   ifeq ($(CXX),g++)
-    ifneq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr /C:"g++.exe")),g++.exe)
+    ifneq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
       $(warning "Warning: Unable to find g++ compiler.")
     endif
     ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)

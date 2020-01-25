@@ -633,9 +633,9 @@ jobs:
     - SAFE_ONLY=yes
     compiler: gcc
     script:
-    - utilities\make.exe clean
-    - utilities\make.exe
-    - utilities\make.exe gtests
+    - utilities/make.exe clean
+    - utilities/make.exe
+    - utilities/make.exe gtests
 
   - os: windows
     install: choco install -y make

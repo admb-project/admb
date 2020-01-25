@@ -1,6 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
+  else
+    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr /C:"bash.exe")),bash.exe)
+      CMDSHELL=cmd
+    endif
+  endif
+  ifeq ($(CMDSHELL),cmd)
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
       PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
     endif
@@ -203,7 +209,7 @@ tpl-orange_mvn:
 	$(MAKE) --directory=orange_mvn
 
 tpl-lprof:
-ifneq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=lprof
 endif
 
@@ -211,7 +217,7 @@ example-prof_like:
 	$(MAKE) --directory=../examples/admb/prof_like
 
 verify:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
   ifneq ($(DEBUG),yes)
 	del ..\outputs-saf.txt
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples all
@@ -249,7 +255,9 @@ total-clean: clean
 	$(MAKE) --directory=agemat total-clean
 
 clean:
-ifeq ($(SHELL),cmd)
+
+clean2:
+ifeq ($(CMDSHELL),cmd)
 	@if exist SS3 rmdir /s /q SS3
 else
 	$(MAKE) --directory=lprof clean
@@ -292,7 +300,7 @@ endif
 	$(MAKE) --directory=../examples/admb/prof_like clean
 
 dist-clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	del agemat/agemat.dat
 	del agemat/agemat.tpl
 	if exist geolocation/kfsst rd /S /Q geolocation/kfsst
@@ -319,7 +327,7 @@ else
 endif
 
 copy:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	if not exist $(DIST)\tests md $(DIST)\tests
 	xcopy ..\tests $(DIST)\tests /S /Y /D
 	$(MAKE) --directory=$(DIST)\tests total-clean
@@ -329,7 +337,7 @@ else
 endif
 
 outputs:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	del outputs-tests.txt
 else
 	rm -vf outputs-tests.txt

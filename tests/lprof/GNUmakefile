@@ -1,48 +1,54 @@
-all: simple
-	$(MAKE) run
+TARGET=simple
 
-run: simple
+default: simple.dat
+	$(MAKE) all
+	$(MAKE) run2
+
+
+ifeq ($(OS),Windows_NT)
+include ..\test-rules.mak
+else
+include ../test-rules.mak
+endif
+
+simple.dat:
+ifeq ($(CMDSHELL),cmd)
+	copy ..\..\examples\admb\simple\simple.dat
+else
+	cp ../../examples/admb/simple/simple.dat .
+endif
+
+run2:
+ifeq ($(CMDSHELL),cmd)
+	simple
+	move simple.par simple.par.save
+	simple -lprof
+	move simple.par simple.par.lprof
+	simple -lprof -ainp simple.par.save
+	type simple.par simple.par.save simple.par.lprof
+else
 	./simple
 	mv simple.par simple.par.save
 	./simple -lprof
 	mv simple.par simple.par.lprof
 	./simple -lprof -ainp simple.par.save
 	cat simple.par simple.par.save simple.par.lprof
-
-simple: simple.tpl simple.dat
-	../../admb -g simple.tpl
-
-simple.dat:
-	cp ../../examples/admb/simple/simple.dat .
-
-clean:
-	@rm -vf admodel.cov
-	@rm -vf admodel.dep
-	@rm -vf admodel.hes
-	@rm -vf eigv.rpt
-	@rm -vf fmin.log
-	@rm -vf simple
-	@rm -vf simple.dat
-	@rm -vf simple.bar
-	@rm -vf simple.cor
-	@rm -vf simple.cpp
-	@rm -vf simple.eva
-	@rm -vf simple.htp
-	@rm -vf simple.log
-	@rm -vf simple.obj
-	@rm -vf simple.par
-	@rm -vf simple.par.save
-	@rm -vf simple.par.lprof
-	@rm -vf simple.std
-	@rm -vf simple.prf
-	@rm -vf variance
-	@rm -vf dgs2
-	@rm -vf diags
-	@rm -vf est_a.plt
-	@rm -vf est_b.plt
-	@rm -vf cmpdiff.tmp gradfil1.tmp gradfil2.tmp varssave.tmp
+endif
 
 get-outputs:
+ifeq ($(CMDSHELL),cmd)
+	type dgs2
+	type diags
+	type est_a.plt
+	type est_b.plt
+	type simple.cor
+	type simple.dat
+	type simple.eva
+	type simple.log
+	type simple.par
+	type simple.prf
+	type simple.std
+else
 	cat dgs2
 	cat diags
 	cat est_a.plt
@@ -54,3 +60,4 @@ get-outputs:
 	cat simple.par
 	cat simple.prf
 	cat simple.std
+endif

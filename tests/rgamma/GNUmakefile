@@ -1,13 +1,13 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
-  else
+  ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
     EXT=.sh
+  else
+    CMDSHELL=cmd
   endif
 endif
 
 all: gamm1 testgamm
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	gamm1
 	testgamm
 else
@@ -16,21 +16,21 @@ else
 endif
 
 gamm1: gamm1.cpp
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb gamm1.cpp
 else
-	../../admb gamm1.cpp
+	../../admb$(EXT) gamm1.cpp
 endif
 
 testgamm: testgamm.cpp
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb testgamm.cpp
 else
-	../../admb testgamm.cpp
+	../../admb$(EXT) testgamm.cpp
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del fmin.log gamm1 gamm1.obj testgamm testgamm.obj
 else
 	$(RM) fmin.log gamm1 gamm1.obj testgamm testgamm.obj

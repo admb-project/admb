@@ -1,6 +1,6 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifneq ($(findstring sh.exe,$(shell where sh.exe)),sh.exe)
+    CMDSHELL=cmd
   else
     EXT=.sh
   endif
@@ -11,14 +11,14 @@ TARGET=testminmax
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb $(TARGET)
 else
 	../../admb$(EXT) $(TARGET)
 endif
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -nohess
 else
 	touch testminmax.dat
@@ -26,7 +26,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del b1 b2 s1 s2 2>nul
 	@del $(TARGET).exe 2>nul
 	@del variance 2>nul

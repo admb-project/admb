@@ -1,9 +1,9 @@
 ifeq ($(OS),Windows_NT)
-  ifneq ($(findstring sh.exe,$(shell where sh.exe)),sh.exe)
+  ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    EXT=.sh
+  else
     CMDSHELL=cmd
     ADMB_HOME=..\\..\\..
-  else
-    EXT=.sh
   endif
 endif
 

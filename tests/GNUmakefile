@@ -2,7 +2,7 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr /C:"bash.exe")),bash.exe)
+    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
       CMDSHELL=cmd
     endif
   endif

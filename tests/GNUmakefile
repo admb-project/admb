@@ -255,14 +255,13 @@ total-clean: clean
 	$(MAKE) --directory=agemat total-clean
 
 clean:
-
-clean2:
 ifeq ($(CMDSHELL),cmd)
 	@if exist SS3 rmdir /s /q SS3
 else
 	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3
 endif
+	$(MAKE) --directory=rgamma clean
 	$(MAKE) --directory=globals clean
 	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=expm clean

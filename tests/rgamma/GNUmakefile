@@ -1,8 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
-    EXT=.sh
-  else
+  ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
+  else
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 

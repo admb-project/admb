@@ -31,7 +31,7 @@ Quick Start
    Change to the simple example directory.
 
    ```
-   [~]% cd examples\admb\simple
+   [~]% cd examples/admb/simple
    ```
 
    Build the simple example.

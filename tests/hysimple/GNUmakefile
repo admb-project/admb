@@ -1,8 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
@@ -11,14 +15,14 @@ TARGET=hysimple
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb $(TARGET)
 else
 	../../admb$(EXT) $(TARGET)
 endif
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -hybrid -mcmc 2000 -hyeps .3 -hynsteps 20
 	$(TARGET) -mceval
 else
@@ -27,7 +31,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del hybrid_seed 2>nul
 	@del hysimple.obj 2>nul
 	@del admodel.cov 2>nul

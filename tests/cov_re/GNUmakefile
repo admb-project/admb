@@ -1,8 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
@@ -11,21 +15,21 @@ TARGET=cov_re
 all: clean cov_re cov_re_sep run
 
 cov_re: cov_re.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -r $@
 else
 	../../admb$(EXT) -r $@
 endif
 
 cov_re_sep: cov_re_sep.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -r $@
 else
 	../../admb$(EXT) -r $@
 endif
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	cov_re
 	cov_re_sep
 	cov_re_sep -shess
@@ -36,7 +40,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del $(TARGET) 2>nul
 	@del variance 2>nul
 	@del fmin.log 2>nul

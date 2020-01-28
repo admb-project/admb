@@ -1,27 +1,31 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
 all: f1b2vc5
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	f1b2vc5 -nohess
 else
 	./f1b2vc5 -nohess
 endif
 
 f1b2vc5: f1b2vc5.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -g f1b2vc5.tpl
 else
 	../../admb$(EXT) -g f1b2vc5.tpl
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del admodel.hes 2>nul
 	@del f1b2vc5.b01 2>nul
 	@del f1b2vc5.cor 2>nul

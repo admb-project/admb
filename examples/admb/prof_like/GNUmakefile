@@ -1,8 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
@@ -11,14 +15,14 @@ TARGET=bhplfine
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\..\\admb $(TARGET)
 else
 	../../../admb$(EXT) $(TARGET)
 endif
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -lprof
 else
 	./$(TARGET) -lprof
@@ -27,7 +31,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del $(TARGET) 2>nul
 	@del variance 2>nul
 	@del fmin.log 2>nul

@@ -1,8 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
@@ -11,21 +15,21 @@ TARGET=dd2
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -r $(TARGET)
 else
 	../../admb$(EXT) -r $(TARGET)
 endif
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -imaxfn 0 -noinit
 else
 	./$(TARGET) -imaxfn 0 -noinit
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del $(TARGET) 2>nul
 	@del variance 2>nul
 	@del fmin.log 2>nul

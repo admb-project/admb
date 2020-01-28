@@ -1,8 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
@@ -14,35 +18,35 @@ all: clean $(TARGET)
 	$(MAKE) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -r $(TARGET)
 else
 	../../admb$(EXT) -r $(TARGET)
 endif
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -mno 1000  -mceval -ainp $(TARGET).par -phase 10 -nohess 
 else
 	./$(TARGET) -mno 1000  -mceval -ainp $(TARGET).par -phase 10 -nohess 
 endif
 
 run2:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
 else
 	./$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
 endif
 
 run3:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -mno 1000
 else
 	./$(TARGET) -mno 1000
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del $(TARGET) 2>nul
 	@del variance 2>nul
 	@del fmin.log 2>nul
@@ -137,7 +141,7 @@ else
 endif
 
 get-outputs:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	type b1
 	type b2
 	type beta_regression.cor

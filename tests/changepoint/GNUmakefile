@@ -1,8 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
@@ -10,7 +14,7 @@ TARGET=changepoint
 
 all:
 	$(MAKE) changepoint.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb changepoint.tpl
 else
 	../../admb$(EXT) changepoint.tpl
@@ -18,7 +22,7 @@ endif
 	$(MAKE) run
 
 run: changepoint.dat
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	changepoint
 else
 	./changepoint
@@ -31,7 +35,7 @@ changepoint.dat:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/doc/changepoint.dat > changepoint.dat
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del $(TARGET) 2>nul
 	@del variance 2>nul
 	@del fmin.log 2>nul

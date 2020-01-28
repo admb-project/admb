@@ -1,14 +1,18 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
 all: agemat.tpl
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb agemat.tpl
 else
 	../../admb$(EXT) agemat.tpl
@@ -16,7 +20,7 @@ endif
 	$(MAKE) run
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	agemat
 else
 	./agemat
@@ -33,7 +37,7 @@ rforge-nwfscassmt:
 	git clone --depth 1 https://github.com/rforge/nwfscassmt rforge-nwfscassmt
 
 total-clean: clean
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 else
 	@rm -vf agemat.dat
 	@rm -vf agemat.tpl
@@ -41,7 +45,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 else
 	@rm -vf agemat.exe
 	@rm -vf agemat agemat.cpp agemat.htp agemat.obj
@@ -70,7 +74,7 @@ else
 endif
 
 get-outputs:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	type agemat.bar
 	type agemat.cor
 	type agemat.eva

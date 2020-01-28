@@ -1,13 +1,17 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(OSTYPE)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
 
 all: rforge-glmmadmb
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --file=Makefile all
 else
 	$(MAKE) glmmadmb nbmm bvprobit admb_tests
@@ -18,7 +22,7 @@ rforge-glmmadmb:
 	git clone --depth 1 https://github.com/rforge/glmmadmb.git rforge-glmmadmb
 
 glmmadmb: glmmadmb.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb $^
 else
 	../../admb$(EXT) $^
@@ -28,7 +32,7 @@ glmmadmb.tpl:
 	cp rforge-glmmadmb/pkg/inst/tpl/glmmadmb.tpl .
 
 nbmm: nbmm.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb $^
 else
 	../../admb$(EXT) $^
@@ -38,7 +42,7 @@ nbmm.tpl:
 	cp rforge-glmmadmb/pkg/inst/tpl/nbmm.tpl .
 
 bvprobit: bvprobit.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb $^
 else
 	../../admb$(EXT) $^
@@ -51,7 +55,7 @@ admb_tests:
 	cp -R rforge-glmmadmb/pkg/inst/admb_tests .
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --file=Makefile run
 else
 	cp -vf glmmadmb admb_tests/bacteria
@@ -70,7 +74,7 @@ else
 endif
 
 total-clean: clean
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 else
 	@rm -rvf admb_tests
 	@rm -vf bvprobit.tpl
@@ -79,7 +83,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 else
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

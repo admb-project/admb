@@ -15,14 +15,14 @@ TARGET=simple_mcmc
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb $(TARGET)
 else
 	../../admb$(EXT) $(TARGET)
 endif
 
 run:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -mcmc 1000 -mcsave 10
 	$(TARGET) -mceval
 else
@@ -31,7 +31,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del admodel.cov 2>nul
 	@del admodel.hes 2>nul
 	@del fmin.log 2>nul
@@ -109,7 +109,7 @@ else
 endif
 
 get-outputs:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	type simple_mcmc.cor
 	type simple_mcmc.eva
 	type simple_mcmc.par

@@ -1,31 +1,18 @@
-ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),cmd)
-    CMDSHELL=cmd
-  else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
-      EXT=.sh
-    else
-      CMDSHELL=cmd
-    endif
-  endif
-endif
-
 TARGET=dualaveraging
 SRCS=hybmcmc.cpp
 
-all: clean $(TARGET)
+default: $(TARGET)
 	$(MAKE) run3
 	$(MAKE) run2
-	$(MAKE) run
+	$(MAKE) run1
 
-$(TARGET): $(TARGET).tpl $(TARGET).dat
-ifeq ($(SHELL),cmd)
-	..\\..\\admb -r $(TARGET) $(SRCS)
+ifeq ($(OS),Windows_NT)
+include ..\test-rules.mak
 else
-	../../admb$(EXT) -r $(TARGET) $(SRCS)
+include ../test-rules.mak
 endif
 
-run:
+run1:
 ifeq ($(SHELL),cmd)
 	$(TARGET) -mno 1000  -mceval -ainp $(TARGET).par -phase 10 -nohess 
 else

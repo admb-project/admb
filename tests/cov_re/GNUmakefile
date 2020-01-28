@@ -1,16 +1,12 @@
-ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),cmd)
-    CMDSHELL=cmd
-  else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
-      EXT=.sh
-    else
-      CMDSHELL=cmd
-    endif
-  endif
-endif
-
 TARGET=cov_re
+
+default: $(TARGET) cov_re_sep
+
+ifeq ($(OS),Windows_NT)
+include ..\test-rules.mak
+else
+include ../test-rules.mak
+endif
 
 all: clean cov_re cov_re_sep run
 

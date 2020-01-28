@@ -15,7 +15,7 @@ ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -r main.cpp
 	main.exe
 else
-	../../admb main.cpp
+	../../admb$(EXT) main.cpp
 	./main
 endif
 

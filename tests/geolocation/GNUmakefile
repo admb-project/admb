@@ -28,3 +28,5 @@ else
 	pushd kalmanfilter/testdir/trackit; cp ../../trackit/inst/admb/src/kftrack .; ./trackit; popd
 	pushd kalmanfilter/testdir/ukfsst; cp ../../ukfsst/inst/admb/src/ukfsst .; ./ukfsst; popd
 endif
+
+clean:

@@ -14,9 +14,9 @@ all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl
 ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb $(TARGET)
+	..\\..\\admb $(TARGET) $(SRCS)
 else
-	../../admb$(EXT) $(TARGET)
+	../../admb$(EXT) $(TARGET) $(SRCS)
 endif
 
 run:
@@ -31,6 +31,7 @@ ifeq ($(CMDSHELL),cmd)
 	@del $(TARGET) 2>nul
 	@del variance 2>nul
 	@del fmin.log 2>nul
+	@del $(TARGET).rep 2>nul
 	@del $(TARGET).eva 2>nul
 	@del $(TARGET).exe 2>nul
 	@del $(TARGET).htp 2>nul
@@ -60,6 +61,7 @@ else
 	@rm -vf hessian.bin
 	@rm -vf hesscheck
 	@rm -vf fmin.log
+	@rm -vf $(TARGET).rep
 	@rm -vf $(TARGET).eva
 	@rm -vf $(TARGET).htp
 	@rm -vf $(TARGET).bar

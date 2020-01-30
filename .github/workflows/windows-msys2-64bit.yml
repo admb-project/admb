@@ -17,8 +17,8 @@ jobs:
     - name: build
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make
-        utilities\\make shared
+        utilities\\make -j 4
+        utilities\\make s -j 4hared
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

@@ -1188,6 +1188,16 @@ ifeq ($(CMDSHELL),cmd)
 	@del autodif\\struct\\oldstr.obj
 	@del autodif\\struct\\struct.exe
 	@del autodif\\struct\\struct.obj
+	@del examples\\admb\\prof_like\\bhplfine.prf
+	@del examples\\admb\\prof_like\\dgs2
+	@del examples\\admb\\prof_like\\diags
+	@del examples\\admb\\prof_like\\loga_pl.plt
+	@del examples\\admb\\prof_like\\logb_pl.plt
+	@del admb\\prof_like\\bhplfine.prf
+	@del admb\\prof_like\\dgs2
+	@del admb\\prof_like\\diags
+	@del admb\\prof_like\\loga_pl.plt
+	@del admb\\prof_like\\logb_pl.plt
 else
 	@rm -vf admb-re/bcb/admodel.cov
 	@rm -vf admb-re/bcb/admodel.dep
@@ -1969,4 +1979,14 @@ else
 	@rm -vf admb/simple/simple.par
 	@rm -vf admb/simple/simple.std
 	@rm -vf autodif/bigmin/matinv.est
+	@rm -vf examples/admb/prof_like/bhplfine.prf
+	@rm -vf examples/admb/prof_like/dgs2
+	@rm -vf examples/admb/prof_like/diags
+	@rm -vf examples/admb/prof_like/loga_pl.plt
+	@rm -vf examples/admb/prof_like/logb_pl.plt
+	@rm -vf admb/prof_like/bhplfine.prf
+	@rm -vf admb/prof_like/dgs2
+	@rm -vf admb/prof_like/diags
+	@rm -vf admb/prof_like/loga_pl.plt
+	@rm -vf admb/prof_like/logb_pl.plt
 endif

@@ -244,9 +244,33 @@ total-clean: clean
 clean:
 ifeq ($(CMDSHELL),cmd)
 	@if exist SS3 rmdir /s /q SS3
+	@del dd2\\f1b2list1
+	@del dd2\\f1b2list12
+	@del dd2\\f1b2list13
+	@del dd2\\nf1b2list1
+	@del dd2\\nf1b2list12
+	@del dd2\\nf1b2list13
+	@del dualaveraging\\dualaveraging.cpp
+	@del dualaveraging\\dualaveraging.htp
+	@del dualaveraging\\dualaveraging.obj
+	@del dualaveraging\\hybmcmc.obj
+	@del f1b2vc5\\f1b2vc5.b01
+	@del f1b2vc5\\f1b2vc5.p01
 else
 	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3
+	@rm -vf dd2/f1b2list1
+	@rm -vf dd2/f1b2list12
+	@rm -vf dd2/f1b2list13
+	@rm -vf dd2/nf1b2list1
+	@rm -vf dd2/nf1b2list12
+	@rm -vf dd2/nf1b2list13
+	@rm -vf dualaveraging/dualaveraging.cpp
+	@rm -vf dualaveraging/dualaveraging.htp
+	@rm -vf dualaveraging/dualaveraging.obj
+	@rm -vf dualaveraging/hybmcmc.obj
+	@rm -vf f1b2vc5/f1b2vc5.b01
+	@rm -vf f1b2vc5/f1b2vc5.p01
 endif
 	$(MAKE) --directory=rgamma clean
 	$(MAKE) --directory=globals clean

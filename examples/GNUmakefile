@@ -691,6 +691,7 @@ ifeq ($(CMDSHELL),cmd)
 	@del admb-re\\nbmm\\nbmm.rep
 	@del admb-re\\nbmm\\nbmm.rhes
 	@del admb-re\\nbmm\\nbmm.std
+	@del admb-re\\nested4\\nested4.exe
 	@del admb-re\\nested4\\admodel.cov
 	@del admb-re\\nested4\\admodel.dep
 	@del admb-re\\nested4\\admodel.hes
@@ -1431,6 +1432,7 @@ else
 	@rm -vf admb-re/nbmm/nbmm.rep
 	@rm -vf admb-re/nbmm/nbmm.rhes
 	@rm -vf admb-re/nbmm/nbmm.std
+	@rm -vf admb-re/nested4/nested4
 	@rm -vf admb-re/nested4/admodel.cov
 	@rm -vf admb-re/nested4/admodel.dep
 	@rm -vf admb-re/nested4/admodel.hes

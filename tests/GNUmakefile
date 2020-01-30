@@ -29,38 +29,15 @@ else
 all: all-gtests all-tpls
 endif
 
-coverage: all-gtests
+coverage:
+	$(MAKE) all-gtests
 	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/admb/include includes
 	$(MAKE) --directory=../examples all
-	$(MAKE) tpl-f1b2vc5
-	$(MAKE) tpl-4darray
-	$(MAKE) tpl-glmmadmb
-	$(MAKE) tpl-betai
-	$(MAKE) tpl-beta2
-	$(MAKE) tpl-beta3
-	$(MAKE) tpl-vonmises
-	$(MAKE) tpl-tiny_ad_fe
-	$(MAKE) tpl-tinyfun
-	$(MAKE) tpl-poisp
-	$(MAKE) tpl-tiny_ad_re
-	$(MAKE) tpl-vectorize
-	$(MAKE) tpl-bessel
-	$(MAKE) tpl-qbeta
+	$(MAKE) all-tpls
+	$(MAKE) all-remote-tpls
 	$(MAKE) tpl-dd2
-	$(MAKE) tpl-beta_deviate
-	$(MAKE) tpl-betareg
-	$(MAKE) tpl-beta_regression
-	$(MAKE) tpl-changepoint
-	$(MAKE) tpl-colfill
-	$(MAKE) tpl-cov_re
-	$(MAKE) tpl-expm
-	$(MAKE) tpl-gradients_output
 	$(MAKE) tpl-geolocation
-	$(MAKE) tpl-simple_mcmc
-	$(MAKE) tpl-hysimple
 	$(MAKE) tpl-testminmax
-	$(MAKE) tpl-orange_mvn
-	$(MAKE) tpl-lprof
 	$(MAKE) example-prof_like
 
 all-gtests:

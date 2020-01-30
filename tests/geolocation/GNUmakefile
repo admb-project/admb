@@ -13,7 +13,13 @@ endif
 default: kalmanfilter 
 ifeq ($(CMDSHELL),cmd)
 else
-	PATH=$(PWD)/../..:$(PATH) $(MAKE) --directory=kalmanfilter
+	pushd kalmanfilter/kfsst/kfsst/source; ../../../../../../admb$(EXT) kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp; popd
+	pushd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp; popd
+	pushd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp; popd
+	pushd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) ukf.tpl; popd
+	pushd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) prepro.tpl; popd
+	pushd kalmanfilter/ukfsst/inst/admb/src; ../../../../../../../admb$(EXT) ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp; popd
+
 	$(MAKE) run
 endif
 

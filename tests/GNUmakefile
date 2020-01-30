@@ -25,7 +25,6 @@ DIST=../build/admb
 
 all:
 	$(MAKE) all-gtests
-	$(MAKE) test-rgamma
 ifneq ($(DEBUG),yes)
 	$(MAKE) all-tpls
 endif
@@ -50,6 +49,7 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 all-tpls:\
+  test-rgamma\
   tpl-f1b2vc5\
   tpl-4darray\
   tpl-betai\

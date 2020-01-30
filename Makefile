@@ -106,8 +106,7 @@ g++-test:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ all
 g++-gtests:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ all-gtests
-g++-coverage:
-	$(MAKE) --directory=src CC=gcc CXX=g++ SAFE_ONLY=yes dist
+g++-coverage: g++-contribs
 	$(MAKE) --directory=tests CC=gcc CXX=g++ coverage
 g++-verify:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ verify

@@ -18,7 +18,7 @@ jobs:
       run: |
         set PATH=C:\rtools35\mingw_64\bin;%PATH%
         utilities\\make -j 2
-        utilities\\make  -j 2 shared
+        utilities\\make -j 2 shared
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

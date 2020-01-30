@@ -24,23 +24,25 @@ endif
 DIST=../build/admb
 
 all:
-	$(MAKE) all-gtests
-ifneq ($(DEBUG),yes)
-	$(MAKE) all-tpls
-endif
+	$(MAKE) tests-core
+	$(MAKE) tests-contrib
+
+tests-core:
+	$(MAKE) unit-gtests
+	$(MAKE) --directory=../examples all
+	$(MAKE) core-tpls
+	$(MAKE) remote-core-tpls
+
+tests-contrib:
+	$(MAKE) contrib-tpls
+	$(MAKE) remote-contrib-tpls
 
 coverage:
-	$(MAKE) all-gtests
-	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/admb/include includes
+	$(MAKE) unit-gtests
 	$(MAKE) --directory=../examples all
-	$(MAKE) all-tpls
-	$(MAKE) all-remote-tpls
-	$(MAKE) tpl-dd2
-	$(MAKE) tpl-geolocation
-	$(MAKE) tpl-testminmax
-	$(MAKE) example-prof_like
+	$(MAKE) core-tpls
 
-all-gtests:
+unit-gtests:
 ifneq ($(USE_GTESTS),no)
 	$(MAKE) --directory=gtests
 endif
@@ -48,8 +50,10 @@ endif
 test-rgamma:
 	$(MAKE) --directory=rgamma
 
-all-tpls:\
-  test-rgamma\
+core-tpls:\
+  tpl-dd2\
+  tpl-testminmax\
+  example-prof_like\
   tpl-f1b2vc5\
   tpl-4darray\
   tpl-betai\
@@ -69,22 +73,28 @@ all-tpls:\
   tpl-beta_regression\
   tpl-colfill\
   tpl-cov_re\
-  tpl-ctl\
   tpl-expm\
   tpl-gradients_output\
   tpl-simple_mcmc\
   tpl-hysimple\
-  tpl-priors\
   tpl-testminmax\
   tpl-orange_mvn\
   cpp-globals\
   tpl-lprof
 
-all-remote-tpls:\
-  tpl-agemat\
+remote-core-tpls:\
+  tpl-geolocation\
   tpl-changepoint\
   tpl-geolocation\
   tpl-glmmadmb
+
+contrib-tpls:\
+  tpl-priors\
+  test-rgamma\
+  tpl-ctl
+
+remote-contrib-tpls:\
+  tpl-agemat
 
 cpp-globals:
 	$(MAKE) --directory=globals

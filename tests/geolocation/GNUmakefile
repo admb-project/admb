@@ -12,6 +12,12 @@ endif
 
 default: kalmanfilter 
 ifeq ($(CMDSHELL),cmd)
+	pushd kalmanfilter\\kfsst\\kfsst\\source & ..\\..\\..\\..\\..\\..\\admb.cmd kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+	pushd kalmanfilter\\kftrack\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+	pushd kalmanfilter\\kftrack\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd ukf.tpl & popd
+	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd prepro.tpl & popd
+	pushd kalmanfilter\\ukfsst\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
 else
 	cd kalmanfilter/kfsst/kfsst/source; ../../../../../../admb$(EXT) kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
@@ -27,6 +33,10 @@ kalmanfilter:
 
 run:
 ifeq ($(CMDSHELL),cmd)
+	pushd kalmanfilter\\testdir\\kfsst & copy ..\\..\\kfsst\\kfsst\\source\\kfsst.exe & kfsst & popd
+	pushd kalmanfilter\\testdir\\kftrack & copy ..\\..\\kftrack\\inst\\admb\\src\\kftrack.exe & kftrack & popd
+	pushd kalmanfilter\\testdir\\trackit & copy ..\\..\\trackit\\inst\\admb\\src\\ukf.exe & ukf & popd
+	pushd kalmanfilter\\testdir\\ukfsst & copy ..\\..\\ukfsst\\inst\\admb\\src\\ukfsst.exe & ukfsst & popd
 else
 	cd kalmanfilter/testdir/kfsst; cp ../../kfsst/kfsst/source/kfsst .; ./kfsst
 	cd kalmanfilter/testdir/kftrack; cp ../../kftrack/inst/admb/src/kftrack .; ./kftrack

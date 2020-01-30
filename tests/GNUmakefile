@@ -23,10 +23,11 @@ endif
 
 DIST=../build/admb
 
-ifeq ($(DEBUG),yes)
-all: all-gtests
-else
-all: all-gtests all-tpls
+all:
+	$(MAKE) all-gtests
+	$(MAKE) test-rgamma
+ifneq ($(DEBUG),yes)
+	$(MAKE) all-tpls
 endif
 
 coverage:
@@ -49,7 +50,6 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 all-tpls:\
-  test-rgamma\
   tpl-f1b2vc5\
   tpl-4darray\
   tpl-betai\

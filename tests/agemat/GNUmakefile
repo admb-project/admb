@@ -1,6 +1,7 @@
 TARGET=agemat
 
 default: $(TARGET).tpl
+	$(MAKE) $(TARGET)
 	$(MAKE) run2
 
 ifeq ($(OS),Windows_NT)

@@ -13,15 +13,14 @@ endif
 default: kalmanfilter 
 ifeq ($(CMDSHELL),cmd)
 else
-	pushd kalmanfilter/kfsst/kfsst/source; ../../../../../../admb$(EXT) kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp; popd
-	pushd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp; popd
-	pushd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp; popd
-	pushd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) ukf.tpl; popd
-	pushd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) prepro.tpl; popd
-	pushd kalmanfilter/ukfsst/inst/admb/src; ../../../../../../../admb$(EXT) ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp; popd
-
-	$(MAKE) run
+	cd kalmanfilter/kfsst/kfsst/source; ../../../../../../admb$(EXT) kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	cd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) ukf.tpl
+	cd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) prepro.tpl
+	cd kalmanfilter/ukfsst/inst/admb/src; ../../../../../../../admb$(EXT) ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 endif
+	$(MAKE) run
 
 kalmanfilter:
 	git clone --depth 1 https://github.com/positioning/kalmanfilter
@@ -29,10 +28,10 @@ kalmanfilter:
 run:
 ifeq ($(CMDSHELL),cmd)
 else
-	pushd kalmanfilter/testdir/kfsst; cp ../../kfsst/kfsst/source/kfsst .; ./kfsst; popd
-	pushd kalmanfilter/testdir/kftrack; cp ../../kftrack/inst/admb/src/kftrack .; ./kftrack; popd
-	pushd kalmanfilter/testdir/trackit; cp ../../trackit/inst/admb/src/kftrack .; ./trackit; popd
-	pushd kalmanfilter/testdir/ukfsst; cp ../../ukfsst/inst/admb/src/ukfsst .; ./ukfsst; popd
+	cd kalmanfilter/testdir/kfsst; cp ../../kfsst/kfsst/source/kfsst .; ./kfsst
+	cd kalmanfilter/testdir/kftrack; cp ../../kftrack/inst/admb/src/kftrack .; ./kftrack
+	cd kalmanfilter/testdir/trackit; cp ../../trackit/inst/admb/src/ukf .; ./ukf
+	cd kalmanfilter/testdir/ukfsst; cp ../../ukfsst/inst/admb/src/ukfsst .; ./ukfsst
 endif
 
 clean:

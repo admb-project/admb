@@ -9,13 +9,6 @@ else
 include ../test-rules.mak
 endif
 
-cov_re: cov_re.tpl
-ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb -r $@
-else
-	../../admb$(EXT) -r $@
-endif
-
 cov_re_sep: cov_re_sep.tpl
 ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -r $@

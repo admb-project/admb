@@ -27,15 +27,17 @@ all:
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
 
+all-remote: all
+	$(MAKE) remote-core-tpls
+	$(MAKE) remote-contrib-tpls
+
 tests-core:
 	$(MAKE) unit-gtests
 	$(MAKE) --directory=../examples all
 	$(MAKE) core-tpls
-	$(MAKE) remote-core-tpls
 
 tests-contrib:
 	$(MAKE) contrib-tpls
-	$(MAKE) remote-contrib-tpls
 
 coverage:
 	$(MAKE) unit-gtests

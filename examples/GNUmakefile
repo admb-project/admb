@@ -1432,7 +1432,11 @@ else
 	@rm -vf admb-re/nbmm/nbmm.rep
 	@rm -vf admb-re/nbmm/nbmm.rhes
 	@rm -vf admb-re/nbmm/nbmm.std
+ifeq ($(OS),Windows_NT)
+	@rm -vf admb-re/nested4/nested4.exe
+else
 	@rm -vf admb-re/nested4/nested4
+endif
 	@rm -vf admb-re/nested4/admodel.cov
 	@rm -vf admb-re/nested4/admodel.dep
 	@rm -vf admb-re/nested4/admodel.hes

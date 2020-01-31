@@ -39,7 +39,7 @@ jobs:
     - name: test
       run: |
         set PATH=C:\rtools35\mingw_64\bin;%PATH%
-        utilities\\make test DEBUG=yes
+        utilities\\make test DEBUG=yes TESTS_REMOTE=no
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

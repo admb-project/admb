@@ -26,8 +26,11 @@ DIST=../build/admb
 all:
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
+ifneq ($(TESTS_REMOTE),no)
+	$(MAKE) tests-remote
+endif
 
-all-remote: all
+tests-remote:
 	$(MAKE) remote-core-tpls
 	$(MAKE) remote-contrib-tpls
 

@@ -24,10 +24,10 @@ all:
 	
 shared:
 	IF EXIST $(DESTDIR)\lib\admb-contrib$(_DEBUG).dll del $(DESTDIR)\lib\admb-contrib$(_DEBUG).dll
-	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contrib$(_DEBUG).dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib contrib-saflp-*.obj
+	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contrib$(_DEBUG).dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib saflp-contrib-*.obj
 !IFNDEF SAFE_ONLY
 	IF EXIST $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).dll del $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).dll
-	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contribo$(_DEBUG).dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib contrib-optlp-*.obj
+	pushd $(OBJDESTDIR)& link /DLL /OUT:..\..\$(DESTDIR)\lib\admb-contribo$(_DEBUG).dll /NOLOGO /IGNORE:4006 ..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib optlp-contrib-*.obj
 !ENDIf
 
 contrib-includes: contrib-dirs
@@ -44,11 +44,11 @@ contrib-dirs:
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
 	IF EXIST $(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib del $(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib
 	copy $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib $(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib
-	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib /NOLOGO /IGNORE:4006 contrib-saflp-*.obj
+	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contrib-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib /NOLOGO /IGNORE:4006 saflp-contrib-*.obj
 !IFNDEF SAFE_ONLY
 	IF EXIST $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib del $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib
 	copy $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib $(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib
-	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib /NOLOGO /IGNORE:4006 contrib-optlp-*.obj
+	pushd $(OBJDESTDIR)& lib ..\..\$(DESTDIR)\lib\admb-contribo-$(OSNAME)$(CXXVERSION)$(_DEBUG).lib /NOLOGO /IGNORE:4006 optlp-contrib-*.obj
 !ENDIF
 
 contrib-ad2csv:

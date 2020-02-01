@@ -217,7 +217,11 @@ if "!CXX!"=="cl" (
   if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
     set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include"
   ) else (
-    set CXXFLAGS=!CXXFLAGS! /DUSE_ADMB_CONTRIBS /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
+    if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!-debug.lib" (
+      set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include"
+    ) else (
+      set CXXFLAGS=!CXXFLAGS! /DUSE_ADMB_CONTRIBS /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
+    )
   )
 ) else (
   if not defined CXX (
@@ -385,7 +389,11 @@ if "!CXX!"=="cl" (
   if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
     set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include"
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -DUSE_ADMB_CONTRIBS -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
+    if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
+      set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include"
+    ) else (
+      set CXXFLAGS=!CXXFLAGS! -DUSE_ADMB_CONTRIBS -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
+    }
   )
 )
 if exist "!CD!\echo" (

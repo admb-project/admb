@@ -580,7 +580,7 @@ jobs:
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind socatt
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind socatt
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-spatial
+  - name: linux-valgrind-memcheck-callgrind-spatial
     os: linux
     dist: xenial
     env:
@@ -594,6 +594,19 @@ jobs:
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck spatial
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind spatial
+
+  - name: linux-valgrind-cachegrind-spatial
+    os: linux
+    dist: xenial
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind spatial
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-union

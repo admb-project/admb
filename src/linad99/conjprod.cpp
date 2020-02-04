@@ -184,10 +184,9 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
                 "                  new fbest = " << fret << "\n";
 #endif
 
-      int con_flag;
+      int con_flag = 1;
       for (int jj=gg.indexmin();jj<=gg.indexmax();jj++)
       {
-        con_flag=1;
         if (fabs(gg(jj)) > crit)
         {
           con_flag=0;

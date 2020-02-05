@@ -393,7 +393,7 @@ void function_minimizer::nuts_test_mcmc_routine(int nmcmc,int iseed0,double dsca
     double logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
-      eps=find_reasonable_stepsize(nvar,theta,p,chd,1);
+      eps=find_reasonable_stepsize(nvar,theta,p,chd,1,chain);
       mu=log(10*eps);
       epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }

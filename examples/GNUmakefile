@@ -1203,7 +1203,11 @@ else
 	@rm -vf admb-re/bcb/admodel.cov
 	@rm -vf admb-re/bcb/admodel.dep
 	@rm -vf admb-re/bcb/admodel.hes
+ifeq ($(OS),Windows_NT)
+	@rm -vf admb-re/bcb/bcb.exe
+else
 	@rm -vf admb-re/bcb/bcb
+endif
 	@rm -vf admb-re/bcb/bcb.bar
 	@rm -vf admb-re/bcb/bcb.bgs
 	@rm -vf admb-re/bcb/bcb.cor

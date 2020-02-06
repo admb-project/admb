@@ -380,12 +380,7 @@ else
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} bins
 endif
 
-ifeq ($(CMDSHELL),cmd)
-libs: $(DIST)\include
-else
-libs: $(DIST)/include
-endif
-	$(MAKE) objects
+libs: objects
 ifeq ($(DEBUG),yes)
   ifeq ($(CMDSHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
@@ -452,7 +447,11 @@ else
   endif
 endif
 
-objects: $(OBJSDIR_)
+ifeq ($(CMDSHELL),cmd)
+objects: $(OBJSDIR_) ${DIST}\include
+else
+objects: $(OBJSDIR_) ${DIST}/include
+endif
 	$(MAKE) _objects
 _objects: $(OBJECTS)
 

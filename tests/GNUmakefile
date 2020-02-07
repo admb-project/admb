@@ -153,6 +153,9 @@ tpl-qbeta:
 tpl-dd2:
 	$(MAKE) --directory=dd2
 
+tpl-data_adstring_array:
+	$(MAKE) --directory=data_adstring_array
+
 tpl-beta_deviate:
 	$(MAKE) --directory=beta_deviate
 

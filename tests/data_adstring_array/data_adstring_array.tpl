@@ -19,6 +19,7 @@ DATA_SECTION
   !! d(9) = "d09";
   !! d(10) = "d10";
 
+  // First reads in array size for a from .dat and adstrings.
   init_adstring_array a
 
   adstring_array b

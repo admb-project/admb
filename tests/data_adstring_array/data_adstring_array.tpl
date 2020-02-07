@@ -43,13 +43,13 @@ REPORT_SECTION
   report << "d:\n" << d << endl;
 
 FINAL_SECTION
-  assert(a.indexmin() == 1 && a.indexmax() == 5);
+  assert(a.indexmin() == 1 && a.indexmax() == 6);
   assert(strcmp((char*)a(1), (char*)"a1.4") == 0);
   assert(strcmp((char*)a(2), (char*)"a4.7") == 0);
   assert(strcmp((char*)a(3), (char*)"a5.1") == 0);
   assert(strcmp((char*)a(4), (char*)"a8.3") == 0);
   assert(strcmp((char*)a(5), (char*)"a9.0") == 0);
-  //assert(strcmp((char*)a(6), (char*)"a14.5") == 0);
+  assert(strcmp((char*)a(6), (char*)"a14.5") == 0);
 
   assert(b.indexmin() == 1 && b.indexmax() == 2);
   assert(strcmp((char*)b(1), (char*)"b01") == 0);

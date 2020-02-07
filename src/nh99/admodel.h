@@ -1501,6 +1501,13 @@ protected:
   void operator = (const char *);
 };
 
+class named_adstring_array: public adstring_array, public model_name_tag
+{
+protected:
+  void allocate(int min, int max, const char* s);
+  void allocate(const char* s);
+};
+
 /**
  * Description not yet available.
  * \param
@@ -1521,6 +1528,13 @@ class init_adstring: public named_adstring
 {
 public:
   void allocate(const char * s="UNNAMED");
+};
+
+class data_adstring_array: public named_adstring_array
+{
+public:
+  void allocate(const char* s = "UNNAMED");
+  void allocate(int imin, int imax, const char* s= "UNNAMED");
 };
 
 /**

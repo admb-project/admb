@@ -642,6 +642,18 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  init_adstring ");
                      }
 
+<DEFINE_DATA>init_adstring_array {
+
+    BEGIN IN_VECTOR_DEF;
+    fprintf(fdat,"%s","  data_adstring_array ");
+                     }
+
+<DEFINE_DATA>adstring_array {
+
+    BEGIN IN_NAMED_VECTOR_DEF;
+    fprintf(fdat,"%s","  adstring_array ");
+                     }
+
 <DEFINE_DATA>init_line_adstring {
 
     BEGIN IN_NUMBER_DEF;

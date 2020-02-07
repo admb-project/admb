@@ -16,12 +16,6 @@ void init_adstring::allocate(const char* name_tag)
   model_name_tag::allocate(name_tag);
   *(ad_comm::global_datafile) >> *this;
 }
-void data_adstring_array::allocate(const char* name_tag)
-{
-  check_datafile_pointer(ad_comm::global_datafile);
-  model_name_tag::allocate(name_tag);
-  *(ad_comm::global_datafile) >> *this;
-}
 /**
 Allocate init_line_adstring with id name_tag, then assign input string
 from opened ad_comm::global_datafile.

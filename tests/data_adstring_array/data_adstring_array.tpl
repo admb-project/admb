@@ -41,3 +41,40 @@ REPORT_SECTION
   report << "b:\n" << b << endl;
   report << "c:\n" << c << endl;
   report << "d:\n" << d << endl;
+
+FINAL_SECTION
+  assert(a.indexmin() == 1 && a.indexmax() == 5);
+  assert(strcmp((char*)a(1), (char*)"a1.4") == 0);
+  assert(strcmp((char*)a(2), (char*)"a4.7") == 0);
+  assert(strcmp((char*)a(3), (char*)"a5.1") == 0);
+  assert(strcmp((char*)a(4), (char*)"a8.3") == 0);
+  assert(strcmp((char*)a(5), (char*)"a9.0") == 0);
+  //assert(strcmp((char*)a(6), (char*)"a14.5") == 0);
+
+  assert(b.indexmin() == 1 && b.indexmax() == 2);
+  assert(strcmp((char*)b(1), (char*)"b01") == 0);
+  assert(strcmp((char*)b(2), (char*)"b02") == 0);
+
+  assert(c.indexmin() == 1 && c.indexmax() == 10);
+  assert(strcmp((char*)c(1), (char*)"c1.4") == 0);
+  assert(strcmp((char*)c(2), (char*)"c4.7") == 0);
+  assert(strcmp((char*)c(3), (char*)"c5.1") == 0);
+  assert(strcmp((char*)c(4), (char*)"c8.3") == 0);
+  assert(strcmp((char*)c(5), (char*)"c9.0") == 0);
+  assert(strcmp((char*)c(6), (char*)"c14.5") == 0);
+  assert(strcmp((char*)c(7), (char*)"c14.0") == 0);
+  assert(strcmp((char*)c(8), (char*)"c13.4") == 0);
+  assert(strcmp((char*)c(9), (char*)"c19.2") == 0);
+  assert(strcmp((char*)c(10), (char*)"c18.0") == 0);
+
+  assert(d.indexmin() == 1 && d.indexmax() == 10);
+  assert(strcmp((char*)d(1), (char*)"d01") == 0);
+  assert(strcmp((char*)d(2), (char*)"d02") == 0);
+  assert(strcmp((char*)d(3), (char*)"d03") == 0);
+  assert(strcmp((char*)d(4), (char*)"d04") == 0);
+  assert(strcmp((char*)d(5), (char*)"d05") == 0);
+  assert(strcmp((char*)d(6), (char*)"d06") == 0);
+  assert(strcmp((char*)d(7), (char*)"d07") == 0);
+  assert(strcmp((char*)d(8), (char*)"d08") == 0);
+  assert(strcmp((char*)d(9), (char*)"d09") == 0);
+  assert(strcmp((char*)d(10), (char*)"d10") == 0);

@@ -51,7 +51,7 @@ REPORT_SECTION
   report << "c:\n" << c << endl;
   report << "d:\n" << d << endl;
 
-GLOBAL_SECTION
+GLOBALS_SECTION
   #include <cassert>
 
 FINAL_SECTION

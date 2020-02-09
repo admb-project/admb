@@ -43,6 +43,9 @@ REPORT_SECTION
   report << "c:\n" << c << endl;
   report << "d:\n" << d << endl;
 
+GLOBAL_SECTION
+  #include <cassert>
+
 FINAL_SECTION
   assert(a.indexmin() == 1 && a.indexmax() == 6);
   assert(strcmp((char*)a(1), (char*)"a1.4") == 0);

@@ -2,11 +2,6 @@
 #include <cmath>
 #include "fvar.hpp"
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_d3_array: public ::testing::Test {};
 
 TEST_F(test_d3_array, pow)
@@ -327,8 +322,6 @@ TEST_F(test_d3_array, io)
 }
 TEST_F(test_d3_array, sliceexit)
 {
-  ad_exit=&test_ad_exit;
-
   d3_array a(1, 2, 1, 2, 1, 2);
 
   ASSERT_ANY_THROW({
@@ -788,8 +781,6 @@ TEST_F(test_d3_array, square)
 }
 TEST_F(test_d3_array, indexerror)
 {
-  ad_exit=&test_ad_exit;
-
   const d3_array a(1, 2, 1, 2, 1, 2);
 
   ASSERT_ANY_THROW({
@@ -874,8 +865,6 @@ TEST_F(test_d3_array, assignement)
 }
 TEST_F(test_d3_array, assignementfails)
 {
-  ad_exit=&test_ad_exit;
-
   d3_array a(1, 2, 1, 2, 1, 2);
 
   ASSERT_ANY_THROW({
@@ -1145,8 +1134,6 @@ TEST_F(test_d3_array, invalidindexesallocate4int2vectors)
 }
 TEST_F(test_d3_array, errorindexesallocate4int2vectors)
 {
-  ad_exit=&test_ad_exit;
-
   d3_array a;
 
   ASSERT_ANY_THROW({
@@ -1291,8 +1278,6 @@ TEST_F(test_d3_array, allocate_rowsmax_colsmax)
 }
 TEST_F(test_d3_array, error_rowsmax_colsmax)
 {
-  ad_exit=&test_ad_exit;
-
   ASSERT_ANY_THROW({
     d3_array b;
     ivector rowsmax(0, 3);
@@ -1359,8 +1344,6 @@ TEST_F(test_d3_array, allocate_rowsminmax)
 }
 TEST_F(test_d3_array, error_rowsminmax)
 {
-  ad_exit=&test_ad_exit;
-
   ASSERT_ANY_THROW({
     d3_array b;
     ivector rowsmin(0, 3);
@@ -1410,8 +1393,6 @@ TEST_F(test_d3_array, deallocatecopies)
 }
 TEST_F(test_d3_array, mean_empty)
 {
-  ad_exit=&test_ad_exit;
-
   d3_array empty;
   double mean(const d3_array&);
   ASSERT_ANY_THROW({

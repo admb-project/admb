@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dvar_vector_position: public ::testing::Test {};
 
 TEST_F(test_dvar_vector_position, default_constructor)
@@ -50,8 +45,6 @@ TEST_F(test_dvar_vector_position, constructor_dvar_vector_copy)
 }
 TEST_F(test_dvar_vector_position, element_access)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar_vector v(2, 5);

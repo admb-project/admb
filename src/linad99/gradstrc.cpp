@@ -48,7 +48,7 @@ typedef int (* fptr) (const char * format, ...) ;
 //void adwait(double);
 fptr ad_printf = printf;
 extern "C"{
-  exitptr ad_exit=&exit;
+  exitptr ad_exitptr=0;
 
   void spdll_exit(int ierr)
   {
@@ -59,6 +59,16 @@ extern "C"{
     throw spdll_exception(ierr);
 #endif
   }
+}
+
+void ad_exit(const int code)
+{
+  if (ad_exitptr)
+  {
+    ad_exitptr(code);
+  }
+
+  exit(code);
 }
 
 // *************************************************************

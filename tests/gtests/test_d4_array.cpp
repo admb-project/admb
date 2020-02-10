@@ -2,11 +2,6 @@
 #include <cmath>
 #include "fvar.hpp"
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_d4_array: public ::testing::Test {};
 
 TEST_F(test_d4_array, sqrt)
@@ -411,8 +406,6 @@ TEST_F(test_d4_array, log)
 }
 TEST_F(test_d4_array, assigmenterror)
 {
-  ad_exit=&test_ad_exit;
-
   d4_array a;
   a.allocate(2, 5);
   ASSERT_ANY_THROW({

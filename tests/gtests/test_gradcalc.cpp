@@ -2,20 +2,12 @@
 #include <fvar.hpp>
 #include <climits>
 
-
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_gradcalc: public ::testing::Test {};
 
 #ifdef DEBUG2
 /*
 TEST_F(test_gradcalc, gradient_size_intmax)
 {
-  ad_exit=&test_ad_exit;
-
   const long int size = sizeof(double_and_int);
   long int total_size  = INT_MAX;
   //compute size should that is not big enough
@@ -48,8 +40,6 @@ TEST_F(test_gradcalc, gradient_size_intmax)
 */
 TEST_F(test_gradcalc, gradient_size_small_array_memblock_base)
 {
-  ad_exit=&test_ad_exit;
-
   const long int size = sizeof(double_and_int);
   const long int total_size  = size * 2;
   gradient_structure gs(total_size);
@@ -66,8 +56,6 @@ TEST_F(test_gradcalc, gradient_size_small_array_memblock_base)
 }
 TEST_F(test_gradcalc, dvar_vector)
 {
-  ad_exit=&test_ad_exit;
-
   const long int size = sizeof(double_and_int);
   const long int total_size  = size * 4;
   gradient_structure gs(total_size);
@@ -135,8 +123,6 @@ TEST_F(test_gradcalc, dvar_vector)
 }
 TEST_F(test_gradcalc, nvarzero)
 {
-  ad_exit=&test_ad_exit;
-
   dvector g;
 
   //ASSERT_EQ(0, gradient_structure::NVAR);
@@ -147,8 +133,6 @@ TEST_F(test_gradcalc, nvarzero)
 }
 TEST_F(test_gradcalc, simple)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvector x(1, 10);
@@ -198,8 +182,6 @@ TEST_F(test_gradcalc, simple)
 }
 TEST_F(test_gradcalc, simple_final)
 {
-  ad_exit=&test_ad_exit;
-
   ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
 
   gradient_structure gs;
@@ -290,8 +272,6 @@ TEST_F(test_gradcalc, simple_xy)
 {
   for (int i = 0; i < 3; ++i)
   {
-  ad_exit=&test_ad_exit;
-
   size_t size = sizeof(double_and_int);
   const long int total_size  = size * 2;
 
@@ -351,8 +331,6 @@ TEST_F(test_gradcalc, simple_xy)
 #endif
 TEST_F(test_gradcalc, operator_multiply_vars_vars)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   independent_variables independents(1, 2);
@@ -388,8 +366,6 @@ TEST_F(test_gradcalc, operator_multiply_vars_vars)
 }
 TEST_F(test_gradcalc, operator_plus_prevar_prevar)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   independent_variables independents(1, 2);

@@ -4,11 +4,6 @@
 #include <admodel.h>
 #include <climits>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_adstring: public ::testing::Test {};
 
 TEST_F(test_adstring, default_constructor)
@@ -628,14 +623,12 @@ TEST_F(test_adstring, operator_plus_unsigned_char)
 }
 TEST_F(test_adstring, constructor_zero)
 {
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW({
     adstring u(0);
   });
 }
 TEST_F(test_adstring, constructor_not_one)
 {
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW({
     adstring u(0, 1);
   });
@@ -706,8 +699,6 @@ TEST_F(test_adstring, constcomparison)
 }
 TEST_F(test_adstring, errorunsignedchar)
 {
-  ad_exit=&test_ad_exit;
-
   adstring a("abcd");
 
   ASSERT_ANY_THROW({
@@ -724,8 +715,6 @@ TEST_F(test_adstring, errorunsignedchar)
 #ifndef __MINGW32__
 TEST_F(test_adstring, errormaxlimit)
 {
-  ad_exit=&test_ad_exit;
-
   ofstream ofs("maxlimit.txt");
   for (int i = 0; i <= 1025; ++i)
   {
@@ -744,8 +733,6 @@ TEST_F(test_adstring, errormaxlimit)
 #endif
 TEST_F(test_adstring, init_adstring_allocate)
 {
-  ad_exit=&test_ad_exit;
-
   ofstream ofs("maxlimit.txt");
    ofs << "idkjfskjdfklsjkljdfsk";
   ofs.close();
@@ -769,8 +756,6 @@ TEST_F(test_adstring, init_adstring_allocate)
 }
 TEST_F(test_adstring, init_line_adstring_allocate)
 {
-  ad_exit=&test_ad_exit;
-
   ofstream ofs("maxlimit.txt");
   ofs << "idkjfskjdfklsjkljdfsk";
   ofs.close();

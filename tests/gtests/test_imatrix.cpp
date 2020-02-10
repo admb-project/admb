@@ -2,17 +2,10 @@
 #include <fvar.hpp>
 #include <climits>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_imatrix: public ::testing::Test {};
 
 TEST_F(test_imatrix, rowmax_plus_1)
 {
-  ad_exit=&test_ad_exit;
-
   imatrix m(1, 4, 1, 3);
   m.initialize();
   ASSERT_THROW(m[5],int);
@@ -56,7 +49,6 @@ TEST_F(test_imatrix, assignment)
 }
 TEST_F(test_imatrix, assignment_imatrix)
 {
-  ad_exit=&test_ad_exit;
   imatrix m(1, 4, 1, 3);
   imatrix m2(1, 2, 1, 2);
   ASSERT_THROW(m = m2, int);
@@ -523,8 +515,6 @@ TEST_F(test_imatrix, rowshiftempty)
 }
 TEST_F(test_imatrix, indexederror)
 {
-  ad_exit=&test_ad_exit;
-
   imatrix m(2, 3);
   ASSERT_ANY_THROW({
     m(1);
@@ -541,8 +531,6 @@ TEST_F(test_imatrix, indexederror)
 }
 TEST_F(test_imatrix, constindexederror)
 {
-  ad_exit=&test_ad_exit;
-
   const imatrix m(2, 3);
   ASSERT_ANY_THROW({
     m(1);
@@ -559,8 +547,6 @@ TEST_F(test_imatrix, constindexederror)
 }
 TEST_F(test_imatrix, ij_indexederror)
 {
-  ad_exit=&test_ad_exit;
-
   imatrix m(2, 3, 2, 3);
   ASSERT_ANY_THROW({
     m(1, 2);
@@ -577,8 +563,6 @@ TEST_F(test_imatrix, ij_indexederror)
 }
 TEST_F(test_imatrix, const_ij_indexederror)
 {
-  ad_exit=&test_ad_exit;
-
   const imatrix m(2, 3, 2, 3);
   ASSERT_ANY_THROW({
     m(1, 2);

@@ -174,10 +174,12 @@ extern "C"
    typedef int (*fptr) (const char *format, ...);
    extern fptr ad_printf;
    typedef void (*exitptr) (int);
-   extern exitptr ad_exit;
+   extern exitptr ad_exitptr;
 
    void spdll_exit(int);
 }
+
+void ad_exit(const int code);
 
 /**
 Holds the data for the prevariable class.

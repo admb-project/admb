@@ -1,23 +1,14 @@
 #include <gtest/gtest.h>
 #include <admodel.h>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_param_init_d3array: public ::testing::Test {};
 
 TEST_F(test_param_init_d3array, constructor)
 {
-  ad_exit=&test_ad_exit;
-
   param_init_d3array p;
 }
 TEST_F(test_param_init_d3array, allocate_phase_start)
 {
-  ad_exit=&test_ad_exit;
-
   ad_comm::argc = 0;
   ad_comm::argv = NULL;
   gradient_structure gs;
@@ -37,8 +28,6 @@ TEST_F(test_param_init_d3array, allocate_phase_start)
 }
 TEST_F(test_param_init_d3array, allocate_phase_start_int)
 {
-  ad_exit=&test_ad_exit;
-
   ad_comm::argc = 0;
   ad_comm::argv = NULL;
   gradient_structure gs;
@@ -58,8 +47,6 @@ TEST_F(test_param_init_d3array, allocate_phase_start_int)
 }
 TEST_F(test_param_init_d3array, allocate_phase_start_default)
 {
-  ad_exit=&test_ad_exit;
-
   ad_comm::argc = 0;
   ad_comm::argv = NULL;
   gradient_structure gs;
@@ -79,8 +66,6 @@ TEST_F(test_param_init_d3array, allocate_phase_start_default)
 }
 TEST_F(test_param_init_d3array, allocate_phase_start_int_default)
 {
-  ad_exit=&test_ad_exit;
-
   ad_comm::argc = 0;
   ad_comm::argv = NULL;
   gradient_structure gs;

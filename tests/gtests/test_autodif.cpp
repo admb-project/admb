@@ -1,19 +1,12 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_autodif: public ::testing::Test {};
 
 TEST_F(test_autodif, gradcalc_no_independant_variables)
 {
   //Should test for initial state.
   //ASSERT_EQ(gradient_structure::NVAR, 0);
-
-  ad_exit=&test_ad_exit;
 
   const int nvar = 1;
   dvector g(1, nvar);

@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dvar_vector:public ::testing::Test {};
 
 TEST_F(test_dvar_vector, default_constructor)
@@ -117,7 +112,6 @@ TEST_F(test_dvar_vector, fill_lbraces_zero)
 
   char array[] = "0, 1, 2, 3, 4, 5}";
 
-  ad_exit=&test_ad_exit;
   try
   {
     v.fill(array);
@@ -137,7 +131,6 @@ TEST_F(test_dvar_vector, fill_lbraces_greater_than_one)
 
   char array[] = "{{0, 1, 2, 3, 4, 5}}";
 
-  ad_exit=&test_ad_exit;
   try
   {
     v.fill(array);
@@ -157,7 +150,6 @@ TEST_F(test_dvar_vector, fill_lbraces_not_equal_rbraces)
 
   char array[] = "{{0, 1, 2, 3, 4, 5}}}";
 
-  ad_exit=&test_ad_exit;
   try
   {
     v.fill(array);
@@ -192,8 +184,6 @@ TEST_F(test_dvar_vector, concatenation)
 }
 TEST_F(test_dvar_vector, deallocatecopies)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar_vector a(1, 2);

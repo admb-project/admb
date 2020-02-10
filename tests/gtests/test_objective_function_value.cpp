@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include <admodel.h>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_objective_function_value: public ::testing::Test {};
 
 TEST_F(test_objective_function_value, default_constructor)
@@ -35,7 +30,6 @@ TEST_F(test_objective_function_value, operator_equal_prevariable)
 }
 TEST_F(test_objective_function_value, default_constructor_no_gradient_structure)
 {
-  ad_exit=&test_ad_exit;
   try
   {
     objective_function_value ofv;

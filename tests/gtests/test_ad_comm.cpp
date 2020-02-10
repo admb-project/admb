@@ -2,11 +2,6 @@
 #include <fvar.hpp>
 #include <cmath>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_ad_comm: public ::testing::Test {};
 
 class ad_comm2: public ad_comm
@@ -79,8 +74,6 @@ TEST_F(test_ad_comm, option_match_ind_option_with_unicode_char)
 }
 TEST_F(test_ad_comm, change_pinfile_name_error)
 {
-  ad_exit=&test_ad_exit;
-
   ASSERT_TRUE(ad_comm::global_parfile == NULL);
 
   streampos off;
@@ -95,8 +88,6 @@ TEST_F(test_ad_comm, change_pinfile_name_error)
 }
 TEST_F(test_ad_comm, change_pinfile_name)
 {
-  ad_exit=&test_ad_exit;
-
   ofstream ofs("pinfiledoesexist.pin");
   ofs << "#empty";
   ofs.close();
@@ -120,8 +111,6 @@ TEST_F(test_ad_comm, change_pinfile_name)
 }
 TEST_F(test_ad_comm, change_datafile_name)
 {
-  ad_exit=&test_ad_exit;
-
   ofstream ofs("datafiledoesexist.dat");
   ofs << "#empty";
   ofs.close();

@@ -2,11 +2,6 @@
 #include <fvar.hpp>
 #include <climits>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dmatrix: public ::testing::Test {};
 
 TEST_F(test_dmatrix, norm)
@@ -25,8 +20,6 @@ TEST_F(test_dmatrix, norm)
 }
 TEST_F(test_dmatrix, unbalancedbraces)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix m(1, 2, 1, 3);
 
   char array[] = "{0, -1, 2} {-3, 4, 5";
@@ -37,8 +30,6 @@ TEST_F(test_dmatrix, unbalancedbraces)
 }
 TEST_F(test_dmatrix, unbalancedbraces2)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix m(1, 2, 1, 3);
 
   char array[] = "{0, -1, 2} {-3, 4, 5} }";
@@ -49,8 +40,6 @@ TEST_F(test_dmatrix, unbalancedbraces2)
 }
 TEST_F(test_dmatrix, notenoughrows)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix m(1, 2, 1, 3);
 
   char array[] = "{0, -1, 2}";
@@ -61,8 +50,6 @@ TEST_F(test_dmatrix, notenoughrows)
 }
 TEST_F(test_dmatrix, toomanyrows)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix m(1, 2, 1, 3);
 
   char array[] = "{0, -1, 2} {1, 1, 1} {1, 1, 1}";
@@ -73,8 +60,6 @@ TEST_F(test_dmatrix, toomanyrows)
 }
 TEST_F(test_dmatrix, notenoughcolumns)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix m(1, 2, 1, 3);
 
   char array[] = "{0, -1} {-3, 4}";
@@ -85,8 +70,6 @@ TEST_F(test_dmatrix, notenoughcolumns)
 }
 TEST_F(test_dmatrix, toomanycolumns)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix m(1, 2, 1, 3);
 
   char array[] = "{0, -1, 1, 1} {-3, 4, 1, 1}";
@@ -188,8 +171,6 @@ TEST_F(test_dmatrix, trace_or_sum)
 }
 TEST_F(test_dmatrix, trace_or_sum_exit)
 {
-  ad_exit=&test_ad_exit;
-
   double trace(const dmatrix& M);
   dmatrix m(1, 2, 1, 3);
 
@@ -199,8 +180,6 @@ TEST_F(test_dmatrix, trace_or_sum_exit)
 }
 TEST_F(test_dmatrix, trace_or_sum_exit2)
 {
-  ad_exit=&test_ad_exit;
-
   double trace(const dmatrix& M);
   dmatrix m(1, 2, 2, 3);
 
@@ -395,8 +374,6 @@ TEST_F(test_dmatrix, fill_constructor)
 }
 TEST_F(test_dmatrix, fill_extrabraces)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix m(1, 2, 1, 3);
 
   char array[] = "{{0, 1, 2} {3, 4, 5}}";
@@ -418,8 +395,6 @@ TEST_F(test_dmatrix, fill_extrabraces)
 #ifndef OPT_LIB
 TEST_F(test_dmatrix, fill_unallocated)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix m;
 
   char array[] = "{0, 1, 2} {3, 4, 5}";
@@ -520,7 +495,6 @@ TEST_F(test_dmatrix, extract_diagonal)
 }
 TEST_F(test_dmatrix, extract_diagonal_error)
 {
-  ad_exit=&test_ad_exit;
   dmatrix m(2, 3, 1, 3);
   ASSERT_ANY_THROW({
     dvector extract_diagonal(const dmatrix& m);
@@ -529,7 +503,6 @@ TEST_F(test_dmatrix, extract_diagonal_error)
 }
 TEST_F(test_dmatrix, extract_diagonal_error2)
 {
-  ad_exit=&test_ad_exit;
   dmatrix m(1, 3, 1, 4);
   ASSERT_ANY_THROW({
     dvector extract_diagonal(const dmatrix& m);
@@ -1016,8 +989,6 @@ TEST_F(test_dmatrix, copy_empty)
 }
 TEST_F(test_dmatrix, mean_empty)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix empty;
   double mean(const dmatrix&);
   ASSERT_ANY_THROW({

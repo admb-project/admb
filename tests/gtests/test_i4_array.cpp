@@ -2,11 +2,6 @@
 #include <cmath>
 #include "fvar.hpp"
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_i4_array: public ::testing::Test {};
 
 TEST_F(test_i4_array, default)
@@ -63,8 +58,6 @@ TEST_F(test_i4_array, invalidindexesi3array)
 }
 TEST_F(test_i4_array, initializeemptyi3array)
 {
-  ad_exit=&test_ad_exit;
-
   ASSERT_NO_THROW({
     i4_array a(1, 4);
     a.initialize();

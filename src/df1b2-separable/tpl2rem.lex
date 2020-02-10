@@ -4352,7 +4352,7 @@ TOP_OF_MAIN_SECTION {
       fprintf(ftopmain,"  #endif\n");
       fprintf(ftopmain,"#endif\n");
       fprintf(ftopmain,"    ad_set_new_handler();\n");
-      if (bound_flag) fprintf(ftopmain,"    ad_exit=&ad_boundf;\n");
+      if (bound_flag) fprintf(ftopmain,"    ad_exitptr=&ad_boundf;\n");
       fprintf(ftopmain,"(%s,dll_options);\n}\n",arglist1);
     }
     if (!splus_debug_flag)
@@ -4386,7 +4386,7 @@ TOP_OF_MAIN_SECTION {
         fprintf(ftopmain,"  #endif\n");
         fprintf(ftopmain,"#endif\n");
         fprintf(ftopmain,"  ad_set_new_handler();\n");
-        if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
+        if (bound_flag) fprintf(ftopmain,"  ad_exitptr=&ad_boundf;\n");
       }
     }
     else
@@ -4535,7 +4535,7 @@ TOP_OF_MAIN_SECTION {
           fprintf(ftopmain,"  #endif\n");
           fprintf(ftopmain,"#endif\n");
           fprintf(ftopmain,"  ad_set_new_handler();\n");
-          if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
+          if (bound_flag) fprintf(ftopmain,"  ad_exitptr=&ad_boundf;\n");
           fprintf(ftopmain,"  %s",infile_root);
           fprintf(ftopmain,"(%s,dll_options);\n}\n",arglist1);
         }
@@ -4592,7 +4592,7 @@ TOP_OF_MAIN_SECTION {
         fprintf(ftopmain,"  #endif\n");
         fprintf(ftopmain,"#endif\n");
         fprintf(ftopmain,"  ad_set_new_handler();\n");
-        if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
+        if (bound_flag) fprintf(ftopmain,"  ad_exitptr=&ad_boundf;\n");
       }
       // **********************************************************************
       // **********************************************************************

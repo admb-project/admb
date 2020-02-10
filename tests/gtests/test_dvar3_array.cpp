@@ -2,17 +2,10 @@
 #include <fvar.hpp>
 #include <cmath>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dvar3_array: public ::testing::Test {};
 
 TEST_F(test_dvar3_array, mean_null)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a;
   ASSERT_EQ(0, size_count(a));
@@ -65,8 +58,6 @@ TEST_F(test_dvar3_array, uiostream)
 
 TEST_F(test_dvar3_array, mean)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
   a = 1;
@@ -77,8 +68,6 @@ TEST_F(test_dvar3_array, mean)
 }
 TEST_F(test_dvar3_array, mean_double)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
   a = 0.5;
@@ -89,8 +78,6 @@ TEST_F(test_dvar3_array, mean_double)
 }
 TEST_F(test_dvar3_array, square)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -115,8 +102,6 @@ TEST_F(test_dvar3_array, square)
 }
 TEST_F(test_dvar3_array, division)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -143,8 +128,6 @@ TEST_F(test_dvar3_array, division)
 }
 TEST_F(test_dvar3_array, division2)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   d3_array a(1, 2, 1, 2, 1, 2);
 
@@ -171,8 +154,6 @@ TEST_F(test_dvar3_array, division2)
 }
 TEST_F(test_dvar3_array, division3)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -199,8 +180,6 @@ TEST_F(test_dvar3_array, division3)
 }
 TEST_F(test_dvar3_array, value)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -227,8 +206,6 @@ TEST_F(test_dvar3_array, value)
 }
 TEST_F(test_dvar3_array, cube)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -253,8 +230,6 @@ TEST_F(test_dvar3_array, cube)
 }
 TEST_F(test_dvar3_array, elem_prod)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -279,8 +254,6 @@ TEST_F(test_dvar3_array, elem_prod)
 }
 TEST_F(test_dvar3_array, elem_div)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -305,8 +278,6 @@ TEST_F(test_dvar3_array, elem_div)
 }
 TEST_F(test_dvar3_array, operator_plus)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -331,8 +302,6 @@ TEST_F(test_dvar3_array, operator_plus)
 }
 TEST_F(test_dvar3_array, operator_minus)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 1, 2, 1, 2);
 
@@ -357,8 +326,6 @@ TEST_F(test_dvar3_array, operator_minus)
 }
 TEST_F(test_dvar3_array, operator_plus_single)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   d3_array a(1, 2, 1, 2, 1, 2);
 
@@ -386,8 +353,6 @@ TEST_F(test_dvar3_array, operator_plus_single)
 }
 TEST_F(test_dvar3_array, operator_minus_single)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   d3_array a(1, 2, 1, 2, 1, 2);
 
@@ -450,8 +415,6 @@ TEST_F(test_dvar3_array, pow)
 }
 TEST_F(test_dvar3_array, incompatiblebounds)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar3_array a(1, 2, 1, 2, 1, 2);
@@ -464,8 +427,6 @@ TEST_F(test_dvar3_array, incompatiblebounds)
 }
 TEST_F(test_dvar3_array, incompatiblebounds2)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar3_array a(1, 2, 1, 2, 1, 2);
@@ -479,8 +440,6 @@ TEST_F(test_dvar3_array, incompatiblebounds2)
 /*
 TEST_F(test_dvar3_array, unallocated)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar3_array a(1, 2, 1, 2, 1, 2);
@@ -494,8 +453,6 @@ TEST_F(test_dvar3_array, unallocated)
 */
 TEST_F(test_dvar3_array, assigment)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 3, 1, 2, 1, 1);
   a(1, 1, 1) = 1;
@@ -515,8 +472,6 @@ TEST_F(test_dvar3_array, assigment)
 }
 TEST_F(test_dvar3_array, assigmenterror)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 3);
   ASSERT_ANY_THROW({
@@ -530,8 +485,6 @@ TEST_F(test_dvar3_array, assigmenterror)
 }
 TEST_F(test_dvar3_array, assigmentsame)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 3, 1, 2, 1, 1);
   a(1, 1, 1) = 1;
@@ -550,8 +503,6 @@ TEST_F(test_dvar3_array, assigmentsame)
 }
 TEST_F(test_dvar3_array, deallocatecopies)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar3_array a(1, 2, 1, 2, 1, 2);
@@ -576,8 +527,6 @@ TEST_F(test_dvar3_array, deallocatecopies)
 }
 TEST_F(test_dvar3_array, indexeselem)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar3_array a(1, 2, 3, 4, 5, 6);
   a(1, 3, 5) = 1;

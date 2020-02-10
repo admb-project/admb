@@ -3,17 +3,10 @@
 #include <admodel.h>
 #include <climits>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dvector: public ::testing::Test {};
 
 TEST_F(test_dvector, constructor)
 {
-  ad_exit=&test_ad_exit;
-
   ASSERT_ANY_THROW
   ({
     dvector v(1, 10);
@@ -312,8 +305,6 @@ TEST_F(test_dvector, with_lvector)
 }
 TEST_F(test_dvector, safe_deallocate)
 {
-  ad_exit=&test_ad_exit;
-
   dvector dv(1, 4);
   unsigned int dv_ncopies = dv.get_ncopies();
   ASSERT_EQ(dv_ncopies, 0);
@@ -352,8 +343,6 @@ TEST_F(test_dvector, safe_deallocate)
 }
 TEST_F(test_dvector, allocate)
 {
-  ad_exit=&test_ad_exit;
-
   dvector dv;
   ASSERT_EQ(dv.indexmin(), 1);
   ASSERT_EQ(dv.indexmax(), 0);
@@ -435,7 +424,6 @@ TEST_F(test_dvector, fill_lbraces_zero)
 
   char array[] = "0, 1, 2, 3, 4, 5}";
 
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW
   ({
     v.fill(array);
@@ -448,7 +436,6 @@ TEST_F(test_dvector, fill_lbraces_greater_than_one)
 
   char array[] = "{{0, 1, 2, 3, 4, 5}}";
 
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW
   ({
     v.fill(array);
@@ -461,7 +448,6 @@ TEST_F(test_dvector, fill_lbraces_not_equal_rbraces)
 
   char array[] = "{{0, 1, 2, 3, 4, 5}}}";
 
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW
   ({
     v.fill(array);
@@ -474,7 +460,6 @@ TEST_F(test_dvector, fill_lbraces1_not_equal_rbraces)
 
   char array[] = "{0, 1, 2, 3, 4, 5}}}";
 
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW
   ({
     v.fill(array);
@@ -720,8 +705,6 @@ TEST_F(test_dvector, allocatenobraces)
 }
 TEST_F(test_dvector, filedoesnotexist)
 {
-  ad_exit=&test_ad_exit;
-
   ASSERT_ANY_THROW({
     dvector v("filedoesnotexist");
   });
@@ -732,8 +715,6 @@ TEST_F(test_dvector, filedoesnotexist)
 }
 TEST_F(test_dvector, unmatchedbraces)
 {
-  ad_exit=&test_ad_exit;
-
   char array[] = "{0, 1, 2, 3, 4, 5";
 
   ASSERT_ANY_THROW({
@@ -742,8 +723,6 @@ TEST_F(test_dvector, unmatchedbraces)
 }
 TEST_F(test_dvector, allocateunmatchedbraces)
 {
-  ad_exit=&test_ad_exit;
-
   char array[] = "{0, 1, 2, 3, 4, 5";
 
   ASSERT_ANY_THROW({
@@ -753,8 +732,6 @@ TEST_F(test_dvector, allocateunmatchedbraces)
 }
 TEST_F(test_dvector, t0omanybraces)
 {
-  ad_exit=&test_ad_exit;
-
   char array[] = "{{0, 1, 2, 3, 4, 5}}";
 
   ASSERT_ANY_THROW({
@@ -763,8 +740,6 @@ TEST_F(test_dvector, t0omanybraces)
 }
 TEST_F(test_dvector, allocatet0omanybraces)
 {
-  ad_exit=&test_ad_exit;
-
   char array[] = "{{0, 1, 2, 3, 4, 5}}";
 
   ASSERT_ANY_THROW({
@@ -795,8 +770,6 @@ TEST_F(test_dvector, dvector_position_vec)
 }
 TEST_F(test_dvector, substracterror)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   ASSERT_ANY_THROW({
@@ -810,8 +783,6 @@ TEST_F(test_dvector, substracterror)
 }
 TEST_F(test_dvector, adderror)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   ASSERT_ANY_THROW({
@@ -825,8 +796,6 @@ TEST_F(test_dvector, adderror)
 }
 TEST_F(test_dvector, timeserror)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   ASSERT_ANY_THROW({
@@ -840,8 +809,6 @@ TEST_F(test_dvector, timeserror)
 }
 TEST_F(test_dvector, equalserror)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   ASSERT_ANY_THROW({
@@ -855,8 +822,6 @@ TEST_F(test_dvector, equalserror)
 }
 TEST_F(test_dvector, elemproderror)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   ASSERT_ANY_THROW({
@@ -870,8 +835,6 @@ TEST_F(test_dvector, elemproderror)
 }
 TEST_F(test_dvector, elemdiverror)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   ASSERT_ANY_THROW({
@@ -885,8 +848,6 @@ TEST_F(test_dvector, elemdiverror)
 }
 TEST_F(test_dvector, plusequalerror)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   ASSERT_ANY_THROW({
@@ -900,8 +861,6 @@ TEST_F(test_dvector, plusequalerror)
 }
 TEST_F(test_dvector, minusequalerror)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   ASSERT_ANY_THROW({
@@ -915,8 +874,6 @@ TEST_F(test_dvector, minusequalerror)
 }
 TEST_F(test_dvector, plusequalvalue)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
   a.initialize();
   a(1) = 1;
@@ -933,8 +890,6 @@ TEST_F(test_dvector, plusequalvalue)
 }
 TEST_F(test_dvector, minusequalvalue)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
   a.initialize();
   a(1) = 1;
@@ -951,8 +906,6 @@ TEST_F(test_dvector, minusequalvalue)
 }
 TEST_F(test_dvector, shape_check)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
 
   void shape_check(
@@ -971,8 +924,6 @@ TEST_F(test_dvector, shape_check)
 }
 TEST_F(test_dvector, first_difference_error)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 1);
 
   ASSERT_ANY_THROW({
@@ -981,8 +932,6 @@ TEST_F(test_dvector, first_difference_error)
 }
 TEST_F(test_dvector, first_difference)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
   a(1) = -1;
   a(2) = 2;
@@ -997,8 +946,6 @@ TEST_F(test_dvector, first_difference)
 }
 TEST_F(test_dvector, sum)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
   a(1) = -1;
   a(2) = 2;
@@ -1010,8 +957,6 @@ TEST_F(test_dvector, sum)
 }
 TEST_F(test_dvector, VEC)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix matrix(1, 2, 1, 2);
   matrix(1, 1) = 4;
   matrix(1, 2) = -3;
@@ -1069,8 +1014,6 @@ TEST_F(test_dvector, copyconstructor)
 }
 TEST_F(test_dvector, initialize)
 {
-  ad_exit=&test_ad_exit;
-
   dvector a(1, 3);
   a(1) = 1;
   a(2) = 2;

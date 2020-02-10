@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_index_type: public ::testing::Test {};
 
 TEST_F(test_index_type, constructor_for_number_index)
@@ -41,7 +36,6 @@ TEST_F(test_index_type, constructor_for_vector_index)
   ASSERT_EQ(c[4].integer(), expected(4));
   ASSERT_EQ(c[5].integer(), expected(5));
 
-  ad_exit=&test_ad_exit;
   try
   {
     c.integer();
@@ -83,7 +77,6 @@ TEST_F(test_index_type, constructor_for_matrix_index)
   ASSERT_EQ(c[5][2].integer(), expected(5, 2));
   ASSERT_EQ(c[5][3].integer(), expected(5, 3));
 
-  ad_exit=&test_ad_exit;
   try
   {
     c.integer();
@@ -109,7 +102,6 @@ TEST_F(test_index_type, constructor_for_i3_array_index)
   ASSERT_EQ(c[2][3][4].integer(), expected(2, 3, 4));
 
 
-  ad_exit=&test_ad_exit;
   try
   {
     c.integer();
@@ -136,7 +128,6 @@ TEST_F(test_index_type, constructor_for_i4_array_index)
   ASSERT_EQ(c[2][3][4][6].integer(), expected(2, 3, 4, 6));
 
 
-  ad_exit=&test_ad_exit;
   try
   {
     c.integer();

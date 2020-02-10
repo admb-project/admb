@@ -56,16 +56,10 @@ TEST_F(test_fmm_control, constructor_ipars)
   EXPECT_EQ(INT_MAX, ipars[4]);
   EXPECT_EQ(INT_MAX, ipars[5]);
 }
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
 #if defined(__MINGW64__)
  #ifndef OPT_LIB
 TEST_F(test_fmm_control, constructor_ipars_max1)
 {
-  ad_exit=&test_ad_exit;
-
   lvector ipars(1, 5);
   ipars[1] = LONG_MAX;
   ipars[2] = LONG_MAX;
@@ -80,8 +74,6 @@ TEST_F(test_fmm_control, constructor_ipars_max1)
 }
 TEST_F(test_fmm_control, constructor_ipars_max2)
 {
-  ad_exit=&test_ad_exit;
-
   lvector ipars(1, 5);
   ipars[1] = LONG_MAX;
   ipars[2] = LONG_MAX;
@@ -96,8 +88,6 @@ TEST_F(test_fmm_control, constructor_ipars_max2)
 }
 TEST_F(test_fmm_control, constructor_ipars_max4)
 {
-  ad_exit=&test_ad_exit;
-
   lvector ipars(1, 5);
   ipars[1] = LONG_MAX;
   ipars[2] = LONG_MAX;
@@ -112,8 +102,6 @@ TEST_F(test_fmm_control, constructor_ipars_max4)
 }
 TEST_F(test_fmm_control, constructor_ipars_max5)
 {
-  ad_exit=&test_ad_exit;
-
   lvector ipars(1, 5);
   ipars[1] = LONG_MAX;
   ipars[2] = LONG_MAX;

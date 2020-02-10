@@ -1,17 +1,10 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dvar5_array: public ::testing::Test {};
 
 TEST_F(test_dvar5_array, allocate_empty_vector)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar5_array arr;
   arr.allocate(2, 4);
@@ -24,8 +17,6 @@ TEST_F(test_dvar5_array, allocate_empty_vector)
 }
 TEST_F(test_dvar5_array, construct_empty_vector)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar5_array arr(2, 4);
   ASSERT_EQ(3, arr.size());
@@ -37,8 +28,6 @@ TEST_F(test_dvar5_array, construct_empty_vector)
 }
 TEST_F(test_dvar5_array, empty)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar5_array a;
   ASSERT_EQ(0, a.size());
@@ -47,8 +36,6 @@ TEST_F(test_dvar5_array, empty)
 }
 TEST_F(test_dvar5_array, deallocatecopies)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar5_array a(1, 2, 1, 2, 1, 2, 1, 2, 1, 2);

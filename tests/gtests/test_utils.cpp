@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_utils: public ::testing::Test {};
 
 TEST_F(test_utils, ranfill)
@@ -25,8 +20,6 @@ TEST_F(test_utils, ranfill)
 }
 TEST_F(test_utils, check_datafile_pointer)
 {
-  ad_exit=&test_ad_exit;
-
   void check_datafile_pointer(void* p);
 
   ASSERT_THROW(check_datafile_pointer(NULL),int);
@@ -76,8 +69,6 @@ TEST_F(test_utils, dvector_times_dmatrix)
 }
 TEST_F(test_utils, dvector_times_dmatrix_error)
 {
-  ad_exit=&test_ad_exit;
-
   dvector vec(1, 3);
   dmatrix mat(2, 3, 1, 2);
 
@@ -87,8 +78,6 @@ TEST_F(test_utils, dvector_times_dmatrix_error)
 }
 TEST_F(test_utils, dvector_times_dmatrix_error2)
 {
-  ad_exit=&test_ad_exit;
-
   dvector vec(1, 3);
   dmatrix mat(1, 4, 1, 2);
 
@@ -119,8 +108,6 @@ TEST_F(test_utils, dmatrix_times_dvector)
 }
 TEST_F(test_utils, dmatrix_times_dvector_error)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix mat(1, 3, 1, 2);
   dvector vec(1, 3);
 
@@ -130,8 +117,6 @@ TEST_F(test_utils, dmatrix_times_dvector_error)
 }
 TEST_F(test_utils, dmatrix_times_dvector_error2)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix mat(1, 3, 2, 2);
   dvector vec(1, 2);
 
@@ -168,8 +153,6 @@ TEST_F(test_utils, dmatrix_times_dmatrix)
 }
 TEST_F(test_utils, dmatrix_times_dmatrix_error)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix A(1, 3, 1, 2);
   dmatrix B(1, 3, 1, 3);
 
@@ -179,8 +162,6 @@ TEST_F(test_utils, dmatrix_times_dmatrix_error)
 }
 TEST_F(test_utils, dmatrix_times_dmatrix_error2)
 {
-  ad_exit=&test_ad_exit;
-
   dmatrix A(1, 3, 2, 3);
   dmatrix B(1, 3, 1, 3);
 

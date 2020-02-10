@@ -1,17 +1,10 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dvar4_array: public ::testing::Test {};
 
 TEST_F(test_dvar4_array, assignment)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar4_array a(1, 2, 1, 2, 1, 2, 1, 2);
   a.initialize();
@@ -54,8 +47,6 @@ TEST_F(test_dvar4_array, assignment)
 }
 TEST_F(test_dvar4_array, constructor_2)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
   dvar4_array a(1, 2);
 
@@ -64,8 +55,6 @@ TEST_F(test_dvar4_array, constructor_2)
 }
 TEST_F(test_dvar4_array, inputoutput)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar4_array b(1, 2, 1, 2, 1, 2, 1, 2);
@@ -117,8 +106,6 @@ TEST_F(test_dvar4_array, inputoutput)
 }
 TEST_F(test_dvar4_array, inputoutput2)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar4_array b(1, 2, 1, 2, 1, 2, 1, 2);
@@ -166,8 +153,6 @@ TEST_F(test_dvar4_array, inputoutput2)
 }
 TEST_F(test_dvar4_array, deallocatecopies)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar4_array a(1, 2, 1, 2, 1, 2, 1, 2);

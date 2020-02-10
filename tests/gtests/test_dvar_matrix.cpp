@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dvar_matrix:public ::testing::Test {};
 
 TEST_F(test_dvar_matrix, square_multiplication)
@@ -64,8 +59,6 @@ TEST_F(test_dvar_matrix, multiplication)
 }
 TEST_F(test_dvar_matrix, incompatiblesize)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar_matrix a(1, 6, 1, 6);
@@ -80,8 +73,6 @@ TEST_F(test_dvar_matrix, incompatiblesize)
 }
 TEST_F(test_dvar_matrix, mean_nullmatrix)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar_matrix a;
@@ -91,8 +82,6 @@ TEST_F(test_dvar_matrix, mean_nullmatrix)
 }
 TEST_F(test_dvar_matrix, mean_matrix)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar_matrix a(1, 2, 1, 2);
@@ -162,8 +151,6 @@ TEST_F(test_dvar_matrix, fill)
 }
 TEST_F(test_dvar_matrix, extract_diagonal)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar_matrix a(1, 3, 1, 3);
@@ -190,8 +177,6 @@ TEST_F(test_dvar_matrix, extract_diagonal)
 }
 TEST_F(test_dvar_matrix, extract_diagonal_not_square)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar_matrix a(1, 3, 1, 2);
@@ -324,8 +309,6 @@ TEST_F(test_dvar_matrix, emptyequalempty)
 }
 TEST_F(test_dvar_matrix, deallocatecopies)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   dvar_matrix a(1, 2, 1, 2);

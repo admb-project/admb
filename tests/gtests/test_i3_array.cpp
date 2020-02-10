@@ -2,11 +2,6 @@
 #include <cmath>
 #include "fvar.hpp"
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_i3_array: public ::testing::Test {};
 
 TEST_F(test_i3_array, inputoutput)
@@ -283,8 +278,6 @@ TEST_F(test_i3_array, allocateinvalidindex)
 }
 TEST_F(test_i3_array, elemerror)
 {
-  ad_exit=&test_ad_exit;
-
   i3_array a(2, 5);
 
   ASSERT_ANY_THROW({
@@ -296,8 +289,6 @@ TEST_F(test_i3_array, elemerror)
 }
 TEST_F(test_i3_array, constelemerror)
 {
-  ad_exit=&test_ad_exit;
-
   const i3_array a(2, 5);
 
   ASSERT_ANY_THROW({
@@ -348,8 +339,6 @@ TEST_F(test_i3_array, empty)
 }
 TEST_F(test_i3_array, assignerror)
 {
-  ad_exit=&test_ad_exit;
-
   i3_array a(2, 5);
 
   ASSERT_ANY_THROW({

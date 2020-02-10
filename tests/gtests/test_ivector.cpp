@@ -2,11 +2,6 @@
 #include <fvar.hpp>
 #include <climits>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_ivector: public ::testing::Test {};
 
 TEST_F(test_ivector, constructor)
@@ -203,8 +198,6 @@ TEST_F(test_ivector, common_one)
 }
 TEST_F(test_ivector, safe_deallocate)
 {
-  ad_exit=&test_ad_exit;
-
   ivector iv(1, 4);
   unsigned int iv_ncopies = iv.get_ncopies();
   ASSERT_EQ(iv_ncopies, 0);
@@ -563,8 +556,6 @@ TEST_F(test_ivector, clean)
 }
 TEST_F(test_ivector, equalexit)
 {
-  ad_exit=&test_ad_exit;
-
   ivector a(1, 4);
   a(1) = 0;
   a(2) = 7;
@@ -638,8 +629,6 @@ TEST_F(test_ivector, Max)
 }
 TEST_F(test_ivector, null)
 {
-  ad_exit=&test_ad_exit;
-
   ivector a;
   ASSERT_ANY_THROW({
     a[1];
@@ -650,8 +639,6 @@ TEST_F(test_ivector, null)
 }
 TEST_F(test_ivector, errorindex)
 {
-  ad_exit=&test_ad_exit;
-
   ivector a(1, 3);
   ASSERT_ANY_THROW({
     a[0];
@@ -668,8 +655,6 @@ TEST_F(test_ivector, errorindex)
 }
 TEST_F(test_ivector, constnull)
 {
-  ad_exit=&test_ad_exit;
-
   const ivector a;
   ASSERT_ANY_THROW({
     a[1];
@@ -680,8 +665,6 @@ TEST_F(test_ivector, constnull)
 }
 TEST_F(test_ivector, errorindex2)
 {
-  ad_exit=&test_ad_exit;
-
   const ivector a(1, 3);
   ASSERT_ANY_THROW({
     a[0];
@@ -698,8 +681,6 @@ TEST_F(test_ivector, errorindex2)
 }
 TEST_F(test_ivector, anerrormultiply)
 {
-  ad_exit=&test_ad_exit;
-
   ASSERT_ANY_THROW({
     ivector a(1, 3);
     ivector b(2, 3);

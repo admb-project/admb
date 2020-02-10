@@ -3,11 +3,6 @@
 #include <limits>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dvariable: public ::testing::Test {};
 
 TEST_F(test_dvariable, default_constructor)

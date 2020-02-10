@@ -3,11 +3,6 @@
 #include <limits.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_df_file:public ::testing::Test {};
 
 TEST_F(test_df_file, signs)
@@ -43,7 +38,6 @@ TEST_F(test_df_file, allocate_INT_MAX)
 }
 TEST_F(test_df_file, constructor_size)
 {
-  ad_exit=&test_ad_exit;
   ad_comm::argc = 0;
   ASSERT_NO_THROW(DF_FILE df_file(INT_MAX/2));
 }
@@ -55,7 +49,6 @@ TEST_F(test_df_file, union_sizeof)
 }
 TEST_F(test_df_file, constructor_max)
 {
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW(
 #if defined(_MSC_VER) || defined(__MINGW64__)
     size_t maxsize = std::numeric_limits<unsigned int>::max();
@@ -70,7 +63,6 @@ TEST_F(test_df_file, constructor_max)
 }
 TEST_F(test_df_file, constructor_max_limit)
 {
-  ad_exit=&test_ad_exit;
 #if defined(_MSC_VER)
   ASSERT_NO_THROW(
     size_t maxsize = std::numeric_limits<unsigned int>::max();

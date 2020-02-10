@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include <admodel.h>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_param_init_bounded_number_vector: public ::testing::Test {};
 
 TEST_F(test_param_init_bounded_number_vector, default_constructor)
@@ -39,8 +34,6 @@ TEST_F(test_param_init_bounded_number_vector, allocate)
 TEST_F(test_param_init_bounded_number_vector, nonmatching)
 {
   gradient_structure gs;
-
-  ad_exit=&test_ad_exit;
 
   param_init_bounded_number_vector p;
   p.allocate(1, 4, 0.5, 1.0, "param_init_bounded_number_vecotor");
@@ -121,8 +114,6 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_valueallocate)
 #ifndef OPT_LIB
 TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)
 {
-  ad_exit=&test_ad_exit;
-
   const int min = 1;
   const int max = 3;
   dvector v(min, max); 
@@ -142,8 +133,6 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)
 }
 TEST_F(test_param_init_bounded_number_vector, set_initial_value_only_paren)
 {
-  ad_exit=&test_ad_exit;
-
   const int min = 1;
   const int max = 3;
   dvector v(min, max); 
@@ -164,8 +153,6 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only_paren)
 /*
 TEST_F(test_param_init_bounded_number_vector, allocated_set_initial_value_only_paren)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure* gs = new gradient_structure();
 
   const int min = 1;

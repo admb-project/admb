@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include "fvar.hpp"
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_dfpool: public ::testing::Test {};
 
 TEST_F(test_dfpool, constructor)
@@ -24,8 +19,6 @@ TEST_F(test_dfpool, constructor)
 }
 TEST_F(test_dfpool, constructor_grow_with_zero_size)
 {
-  ad_exit=&test_ad_exit;
-
   dfpool pool;
 
   ASSERT_ANY_THROW({

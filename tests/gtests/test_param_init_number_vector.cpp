@@ -1,18 +1,11 @@
 #include <gtest/gtest.h>
 #include <admodel.h>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_param_init_number_vector: public ::testing::Test {};
 
 #ifndef OPT_LIB
 TEST_F(test_param_init_number_vector, set_initial_value_only)
 {
-  ad_exit=&test_ad_exit;
-
   const int min = 1;
   const int max = 3;
   dvector v(min, max); 
@@ -32,8 +25,6 @@ TEST_F(test_param_init_number_vector, set_initial_value_only)
 }
 TEST_F(test_param_init_number_vector, set_initial_value_only_paren)
 {
-  ad_exit=&test_ad_exit;
-
   const int min = 1;
   const int max = 3;
   dvector v(min, max); 
@@ -104,8 +95,6 @@ TEST_F(test_param_init_number_vector, allocate)
 }
 TEST_F(test_param_init_number_vector, setscalefactorerror)
 {
-  ad_exit=&test_ad_exit;
-
   gradient_structure gs;
 
   param_init_number_vector p;

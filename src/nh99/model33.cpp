@@ -166,20 +166,20 @@ void do_dll_housekeeping(int argc,char ** argv)
   #if defined(_WIN32)
     get_sp_printf();
   #endif
-    ad_exit=spdll_exit;
+    ad_exitptr=spdll_exit;
   }
   else if ( (on=option_match(argc,argv,"-spexit"))>-1)
   {
     ad_printf=printf;
-    ad_exit=spdll_exit;
+    ad_exitptr=spdll_exit;
   }
   else
   {
-    ad_exit=exit;
+    ad_exitptr=exit;
     if (!ad_printf) ad_printf=printf;
   }
 #else
-  ad_exit=exit;
+  ad_exitptr=exit;
 
   if (!ad_printf) ad_printf=printf;
 #endif

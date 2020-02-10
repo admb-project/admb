@@ -2,11 +2,6 @@
 #include <fvar.hpp>
 #include <cmath>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
-
 class test_atan2: public ::testing::Test {};
 
 /**
@@ -106,7 +101,6 @@ TEST_F(test_atan2, y_less_than_zero_and_x_equal_zero)
 TEST_F(test_atan2, y_and_x_equal_zero)
 {
   gradient_structure gs(1500000L);
-  ad_exit=&test_ad_exit;
   dvariable y = 0.0;
   dvariable x = 0.0;
   ASSERT_ANY_THROW({

@@ -2,6 +2,7 @@
 #ifdef __MINGW32__
 #include <windows.h>
 #endif
+#include <fvar.hpp>
 
 extern "C"
 {
@@ -17,5 +18,8 @@ int main(int argc, char** argv)
   SetErrorMode(SEM_NOGPFAULTERRORBOX);
 #endif
   ::testing::InitGoogleTest(&argc, argv);
+
+  ad_exitptr = &test_ad_exit;
+
   return RUN_ALL_TESTS();
 }

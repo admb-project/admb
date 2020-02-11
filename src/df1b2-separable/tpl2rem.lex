@@ -5107,9 +5107,8 @@ TOP_OF_MAIN_SECTION {
       fprintf(stderr,"%s"," WARNING !!! No random effects vector defined "
         "in this TPL file\n");
     }
-    exit(0);
-                  }
-
+    yyterminate();
+}
 
 %%
 

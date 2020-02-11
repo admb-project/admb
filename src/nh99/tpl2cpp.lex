@@ -4476,7 +4476,7 @@ TOP_OF_MAIN_SECTION {
         outfile_name);
     }
 
-    exit(0);
+    yyterminate();
 }
 %%
 

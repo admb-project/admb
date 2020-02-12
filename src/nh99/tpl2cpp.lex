@@ -4515,6 +4515,7 @@ int main(int argc, char * argv[])
   int index = 1;
   while (index < argc)
   {
+    fprintf(stderr,"Trying to open file %s for input\n", argv[index]);
     if (argv[index][0] != '-')
     {
       ioff = index;
@@ -4524,6 +4525,7 @@ int main(int argc, char * argv[])
   }
   if (ioff>0)
   {
+    fprintf(stderr,"Trying to open file %s for input\n", argv[ioff]);
     size_t len = strlen(argv[ioff]);
     if (len + 5 > 1000)
     {

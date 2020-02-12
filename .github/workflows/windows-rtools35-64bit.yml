@@ -13,6 +13,7 @@ jobs:
       run: |
         set PATH=C:\rtools35\mingw_64\bin;%PATH%
         utilities\\make clean
+        git status
       shell: cmd
     - name: build
       run: |

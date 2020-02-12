@@ -60,7 +60,6 @@ core-tpls:\
   tpl-testminmax\
   example-prof_like\
   tpl-f1b2vc5\
-  tpl-4darray\
   tpl-betai\
   tpl-beta2\
   tpl-beta3\

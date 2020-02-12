@@ -4476,7 +4476,7 @@ TOP_OF_MAIN_SECTION {
         outfile_name);
     }
 
-    yyterminate();
+    exit(0);
 }
 %%
 
@@ -4487,6 +4487,7 @@ unsigned _stklen = 16000;
 int main(int argc, char * argv[])
 {
   FILE * f1=NULL;
+  int ioff=argc-1;
   int on=0;
   bound_flag=1;
   if ( (on=option_match(argc,argv,"-bounds"))>-1)
@@ -4511,21 +4512,8 @@ int main(int argc, char * argv[])
   {
     no_userclass=1;
   }
-  int ioff = 0;
-  int index = 1;
-  while (index < argc)
+  if (argc>1)
   {
-    fprintf(stderr,"T222rying to open file %s for input\n", argv[index]);
-    if (argv[index][0] != '-')
-    {
-      ioff = index;
-      break;
-    }
-    ++index;
-  }
-  if (ioff>0)
-  {
-    fprintf(stderr,"Try555ing to open file %s for input\n", argv[ioff]);
     size_t len = strlen(argv[ioff]);
     if (len + 5 > 1000)
     {

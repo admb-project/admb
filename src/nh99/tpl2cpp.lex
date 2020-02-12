@@ -128,6 +128,10 @@
 
   int filename_index;
   int filename_size;
+
+  int ioff;
+  int main_argc;
+  char** main_argv;
 %}
 
 filename \"[^\"]*\"
@@ -4141,6 +4145,28 @@ TOP_OF_MAIN_SECTION {
 
 <<EOF>> {
 
+++ioff;
+while (ioff < main_argc)
+{
+  if (main_argv[ioff][0] != '-')
+  {
+    break;
+  }
+  ++ioff;
+}
+/* Is on last input file? */
+if (ioff <  main_argc)
+{
+  FILE* fpt = fopen(main_argv[ioff], "r+");
+  if (!fpt)
+  {
+    fprintf(stderr,"Error: Unable to open %s for parsing.",main_argv[ioff]);
+    exit(1);
+  }
+  yyrestart(fpt);
+}
+else
+{
     setup_for_prior_likelihood();
 
     if (!data_defined)
@@ -4475,8 +4501,8 @@ TOP_OF_MAIN_SECTION {
       fprintf(stderr,"Error trying to create output file %s",
         outfile_name);
     }
-
-    exit(0);
+    yyterminate();
+  }
 }
 %%
 
@@ -4511,7 +4537,7 @@ int main(int argc, char * argv[])
   {
     no_userclass=1;
   }
-  int ioff = 0;
+  ioff = 0;
   int index = 1;
   while (index < argc)
   {
@@ -4522,6 +4548,8 @@ int main(int argc, char * argv[])
     }
     ++index;
   }
+  main_argc = argc;
+  main_argv = argv;
   if (ioff > 0)
   {
     size_t len = strlen(argv[ioff]);

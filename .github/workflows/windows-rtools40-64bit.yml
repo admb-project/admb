@@ -18,8 +18,8 @@ jobs:
     - name: build
       run: |
         set PATH=C:\rtools40\mingw64\bin;%PATH%
-        utilities\\make -j 2
-        utilities\\make -j 2 shared
+        utilities\\make
+        utilities\\make shared
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
@@ -29,8 +29,9 @@ jobs:
     - name: debug
       run: |
         set PATH=C:\rtools40\mingw64\bin;%PATH%
-        utilities\\make -j 2 DEBUG=yes
-        utilities\\make -j 2 shared DEBUG=yes
+        utilities\\make --directory=tests\\dd2 DEBUG=yes
+        utilities\\make DEBUG=yes
+        utilities\\make shared DEBUG=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

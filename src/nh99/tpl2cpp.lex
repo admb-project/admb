@@ -2372,10 +2372,10 @@ DATA_SECTION  {
 <IN_TABLE_DEF>{name}\({filename}\) {
 
     before_part(tmp_string,yytext,'(');  // get A in A("mat.tab")
- 
+
     fprintf(fdat,"%s",tmp_string);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",tmp_string);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
     after_part(tmp_string1,yytext,'\"');
@@ -2407,7 +2407,7 @@ DATA_SECTION  {
 <IN_TABLE_DEF>{name} {
     fprintf(fdat,"%s",yytext);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",yytext);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",yytext);
     fprintf(fall,"  adstring datname;\n");
@@ -2442,7 +2442,7 @@ DATA_SECTION  {
     before_part(tmp_string,yytext,'(');  // get A in A(str1)
     fprintf(fdat,"%s",tmp_string);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",tmp_string);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
 
@@ -4511,26 +4511,19 @@ int main(int argc, char * argv[])
   {
     no_userclass=1;
   }
-  if (argc>1)
+  int ioff = 0;
+  int index = 1;
+  while (index < argc)
   {
-    int ioff = 0;
-
-    int index = ioff + 1;
-    while (index < argc)
+    if (argv[index][0] != '-')
     {
-      if (argv[index][0] != '-')
-      {
-        ioff = index;
-        break;
-      }
-      ++index; 
+      ioff = index;
+      break;
     }
-    if (ioff == 0)
-    {
-      fprintf(stderr,"Error: ioff is zero.\n");
-      exit(1);
-    }
-
+    ++index;
+  }
+  if (ioff > 0)
+  {
     size_t len = strlen(argv[ioff]);
     if (len + 5 > 1000)
     {
@@ -4582,6 +4575,7 @@ int main(int argc, char * argv[])
   {
     strcpy(infile_name,"admodel.tpl");
     strcpy(outfile_name,"admodel.cpp");
+    strcpy(headerfile_name,"admodel.htp");
     if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n", infile_name);
     yyin=fopen(infile_name,"r");
     if (!yyin)

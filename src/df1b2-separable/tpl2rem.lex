@@ -5107,8 +5107,9 @@ TOP_OF_MAIN_SECTION {
       fprintf(stderr,"%s"," WARNING !!! No random effects vector defined "
         "in this TPL file\n");
     }
-    yyterminate();
-}
+    exit(0);
+                  }
+
 
 %%
 
@@ -5227,6 +5228,7 @@ void check_random_effects_ordering(void)
 int main(int argc, char * argv[])
 {
   FILE * f1=NULL;
+  int ioff=argc-1;
   int on=0;
   dirpath= get_directory_name(argv[0]);
   if (verbosemode)
@@ -5258,18 +5260,7 @@ int main(int argc, char * argv[])
   {
     no_userclass=1;
   }
-  int ioff = 0;
-  int index = 1;
-  while (index < argc)
-  {
-    if (argv[index][0] != '-')
-    {
-      ioff = index;
-      break;
-    }
-    ++index;
-  }
-  if (ioff>0)
+  if (argc>1)
   {
     size_t len = strlen(argv[ioff]);
     if (len + 5 > 1000)

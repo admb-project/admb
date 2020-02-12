@@ -4487,7 +4487,6 @@ unsigned _stklen = 16000;
 int main(int argc, char * argv[])
 {
   FILE * f1=NULL;
-  int ioff=argc-1;
   int on=0;
   bound_flag=1;
   if ( (on=option_match(argc,argv,"-bounds"))>-1)
@@ -4514,6 +4513,24 @@ int main(int argc, char * argv[])
   }
   if (argc>1)
   {
+    int ioff = 0;
+
+    int index = ioff + 1;
+    while (index < argc)
+    {
+      if (argv[index][0] != '-')
+      {
+        ioff = index;
+        break;
+      }
+      ++index; 
+    }
+    if (ioff == 0)
+    {
+      fprintf(stderr,"Error: ioff is zero.\n");
+      exit(1);
+    }
+
     size_t len = strlen(argv[ioff]);
     if (len + 5 > 1000)
     {

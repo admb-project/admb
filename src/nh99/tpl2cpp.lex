@@ -4548,6 +4548,8 @@ int main(int argc, char * argv[])
     }
     ++index;
   }
+  fprintf(stderr,"ioff: %i  argc: %i.\n", ioff, argc);
+
   main_argc = argc;
   main_argv = argv;
   if (ioff > 0)
@@ -4563,6 +4565,7 @@ int main(int argc, char * argv[])
       fprintf(stderr,"Error:%s exceeds sizeof deffile_name[1000].\n", argv[ioff]);
       exit(1);
     }
+    fprintf(stderr,"infile_name: %s\n", argv[ioff]);
     strcpy(infile_name,argv[ioff]);
     strcpy(infile_root,infile_name);
     strcpy(outfile_name,argv[ioff]);

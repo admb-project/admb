@@ -87,9 +87,7 @@ core-tpls:\
   tpl-lprof
 
 remote-core-tpls:\
-  tpl-geolocation\
   tpl-changepoint\
-  tpl-geolocation\
   tpl-glmmadmb
 
 contrib-tpls:\

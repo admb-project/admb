@@ -128,6 +128,10 @@
 
   int filename_index;
   int filename_size;
+
+  int ioff;
+  int main_argc;
+  char** main_argv;
 %}
 
 filename \"[^\"]*\"
@@ -2372,10 +2376,10 @@ DATA_SECTION  {
 <IN_TABLE_DEF>{name}\({filename}\) {
 
     before_part(tmp_string,yytext,'(');  // get A in A("mat.tab")
- 
+
     fprintf(fdat,"%s",tmp_string);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",tmp_string);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
     after_part(tmp_string1,yytext,'\"');
@@ -2407,7 +2411,7 @@ DATA_SECTION  {
 <IN_TABLE_DEF>{name} {
     fprintf(fdat,"%s",yytext);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",yytext);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",yytext);
     fprintf(fall,"  adstring datname;\n");
@@ -2442,7 +2446,7 @@ DATA_SECTION  {
     before_part(tmp_string,yytext,'(');  // get A in A(str1)
     fprintf(fdat,"%s",tmp_string);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",tmp_string);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
 
@@ -4141,6 +4145,28 @@ TOP_OF_MAIN_SECTION {
 
 <<EOF>> {
 
+++ioff;
+while (ioff < main_argc)
+{
+  if (main_argv[ioff][0] != '-')
+  {
+    break;
+  }
+  ++ioff;
+}
+/* Is on last input file? */
+if (ioff <  main_argc)
+{
+  FILE* fpt = fopen(main_argv[ioff], "r+");
+  if (!fpt)
+  {
+    fprintf(stderr,"Error: Unable to open %s for parsing.",main_argv[ioff]);
+    exit(1);
+  }
+  yyrestart(fpt);
+}
+else
+{
     setup_for_prior_likelihood();
 
     if (!data_defined)
@@ -4475,8 +4501,8 @@ TOP_OF_MAIN_SECTION {
       fprintf(stderr,"Error trying to create output file %s",
         outfile_name);
     }
-
-    exit(0);
+    yyterminate();
+  }
 }
 %%
 
@@ -4487,7 +4513,6 @@ unsigned _stklen = 16000;
 int main(int argc, char * argv[])
 {
   FILE * f1=NULL;
-  int ioff=argc-1;
   int on=0;
   bound_flag=1;
   if ( (on=option_match(argc,argv,"-bounds"))>-1)
@@ -4512,7 +4537,20 @@ int main(int argc, char * argv[])
   {
     no_userclass=1;
   }
-  if (argc>1)
+  ioff = 0;
+  int index = 1;
+  while (index < argc)
+  {
+    if (argv[index][0] != '-')
+    {
+      ioff = index;
+      break;
+    }
+    ++index;
+  }
+  main_argc = argc;
+  main_argv = argv;
+  if (ioff > 0)
   {
     size_t len = strlen(argv[ioff]);
     if (len + 5 > 1000)
@@ -4565,6 +4603,7 @@ int main(int argc, char * argv[])
   {
     strcpy(infile_name,"admodel.tpl");
     strcpy(outfile_name,"admodel.cpp");
+    strcpy(headerfile_name,"admodel.htp");
     if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n", infile_name);
     yyin=fopen(infile_name,"r");
     if (!yyin)

@@ -35,9 +35,9 @@ tests-remote:
 	$(MAKE) remote-contrib-tpls
 
 tests-core:
-	$(MAKE) unit-gtests
-	$(MAKE) --directory=../examples all
 	$(MAKE) core-tpls
+	$(MAKE) --directory=../examples all
+	$(MAKE) unit-gtests
 
 tests-contrib:
 	$(MAKE) contrib-tpls
@@ -56,11 +56,11 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 core-tpls:\
+  tpl-4darray\
   tpl-dd2\
   tpl-testminmax\
   example-prof_like\
   tpl-f1b2vc5\
-  tpl-4darray\
   tpl-betai\
   tpl-beta2\
   tpl-beta3\
@@ -72,7 +72,6 @@ core-tpls:\
   tpl-vectorize\
   tpl-bessel\
   tpl-qbeta\
-  tpl-dd2\
   tpl-beta_deviate\
   tpl-betareg\
   tpl-beta_regression\

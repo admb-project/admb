@@ -29,7 +29,6 @@ jobs:
     - name: debug
       run: |
         set PATH=C:\rtools40\mingw64\bin;%PATH%
-        utilities\\make --directory=tests\\dd2 DEBUG=yes
         utilities\\make DEBUG=yes
         utilities\\make shared DEBUG=yes
       shell: cmd

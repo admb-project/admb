@@ -40,7 +40,6 @@ jobs:
     - name: test
       run: |
         set PATH=C:\rtools35\mingw_64\bin;%PATH%
-        utilities\\make --directory=tests\\dd2 DEBUG=yes
         utilities\\make test DEBUG=yes TESTS_REMOTE=no
       shell: cmd
     - name: Artifact

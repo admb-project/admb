@@ -429,18 +429,18 @@ for %%a in (!tpls!) do (
     set dll= -dll
   )
   if defined g (
-    set debug= -debug
+    set _debug= -debug
   )
   echo.&echo *** Parse: !tpl!.tpl
   if defined parser (
-    set CMD=!parser! !debug! !dll! !tpl!
+    set CMD=!parser!!_debug! !dll! !tpl!
     echo !CMD!
     call !CMD!
   ) else (
-    set CMD=tpl2cpp !debug! !dll! !tpl!
+    set CMD=tpl2cpp!_debug! !dll! !tpl!
     call !CMD! 2> admb.log
     if not exist !tpl!.cpp (
-      set CMD=tpl2rem !debug! !dll! !tpl!
+      set CMD=tpl2rem!_debug! !dll! !tpl!
       call !CMD! 2> admb.log
     ) 
     if exist !tpl!.cpp (

@@ -4566,11 +4566,26 @@ int main(int argc, char * argv[])
       exit(1);
     }
     printf("infile_name: %s\n", argv[ioff]);
+
     strcpy(infile_name,argv[ioff]);
-    strcpy(infile_root,infile_name);
-    strcpy(outfile_name,argv[ioff]);
-    strcpy(headerfile_name,argv[ioff]);
-    strcat(infile_name,".tpl");
+    if ((infile_name[len - 4] == '.')
+       && (infile_name[len - 3] == 't' || infile_name[len - 3] == 'T')
+       && (infile_name[len - 2] == 'p' || infile_name[len - 2] == 'P')
+       && (infile_name[len - 1] == 'l' || infile_name[len - 1] == 'L'))
+    {
+      strcpy(infile_root,infile_name);
+      infile_root[len - 4] = '\0';
+      infile_root[len - 3] = ' ';
+      infile_root[len - 2] = ' ';
+      infile_root[len - 1] = ' ';
+    }
+    else
+    {
+      strcpy(infile_root,infile_name);
+      strcat(infile_name,".tpl");
+    }
+    strcpy(outfile_name,infile_root);
+    strcpy(headerfile_name,infile_root);
     strcat(outfile_name,".cpp");
     strcat(headerfile_name,".htp");
     if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n", infile_name);

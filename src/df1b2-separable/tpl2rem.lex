@@ -144,6 +144,9 @@
   void trim(char * a);
   int prior_check(char * parameter, char * prior);
 
+  int ioff;
+  int main_argc;
+  char** main_argv;
 %}
 
 filename \"[^\"]*\"
@@ -4423,6 +4426,28 @@ TOP_OF_MAIN_SECTION {
 
 <<EOF>>           {
 
+++ioff;
+while (ioff < main_argc)
+{
+  if (main_argv[ioff][0] != '-')
+  {
+    break;
+  }
+  ++ioff;
+}
+/* Is on last input file? */
+if (ioff <  main_argc)
+{
+  FILE* fpt = fopen(main_argv[ioff], "r+");
+  if (!fpt)
+  {
+    fprintf(stderr,"Error: Unable to open %s for parsing.",main_argv[ioff]);
+    exit(1);
+  }
+  yyrestart(fpt);
+}
+else
+{
     if (!data_defined)
     {
       fprintf(stderr,"Error -- Reached end-of-file without the DATA_SECTION"
@@ -5107,7 +5132,8 @@ TOP_OF_MAIN_SECTION {
       fprintf(stderr,"%s"," WARNING !!! No random effects vector defined "
         "in this TPL file\n");
     }
-    exit(0);
+    yyterminate();
+}
                   }
 
 
@@ -5228,7 +5254,6 @@ void check_random_effects_ordering(void)
 int main(int argc, char * argv[])
 {
   FILE * f1=NULL;
-  int ioff=argc-1;
   int on=0;
   dirpath= get_directory_name(argv[0]);
   if (verbosemode)
@@ -5260,7 +5285,21 @@ int main(int argc, char * argv[])
   {
     no_userclass=1;
   }
-  if (argc>1)
+  ioff = 0;
+  int index = 1;
+  while (index < argc)
+  {
+    if (argv[index][0] != '-')
+    {
+      ioff = index;
+      break;
+    }
+    ++index;
+  }
+  /* printf("ioff: %i  argc: %i.\n", ioff, argc); */
+  main_argc = argc;
+  main_argv = argv;
+  if (ioff > 0)
   {
     size_t len = strlen(argv[ioff]);
     if (len + 5 > 1000)
@@ -5273,15 +5312,30 @@ int main(int argc, char * argv[])
       fprintf(stderr,"Error:%s exceeds sizeof deffile_name[1000].\n", argv[ioff]);
       exit(1);
     }
+    /* printf("infile_name: %s\n", argv[ioff]); */
     strcpy(infile_name,argv[ioff]);
-    strcpy(deffile_name,argv[ioff]);
-    strcpy(infile_root,infile_name);
-    strcpy(outfile_name,argv[ioff]);
-    strcpy(headerfile_name,argv[ioff]);
-    strcpy(headerfile_name2,argv[ioff]);
-    strcat(infile_name,".tpl");
+    if ((infile_name[len - 4] == '.')
+       && (infile_name[len - 3] == 't' || infile_name[len - 3] == 'T')
+       && (infile_name[len - 2] == 'p' || infile_name[len - 2] == 'P')
+       && (infile_name[len - 1] == 'l' || infile_name[len - 1] == 'L'))
+    {
+      strcpy(infile_root,infile_name);
+      infile_root[len - 4] = '\0';
+      infile_root[len - 3] = ' ';
+      infile_root[len - 2] = ' ';
+      infile_root[len - 1] = ' ';
+    }
+    else
+    {
+      strcpy(infile_root,infile_name);
+      strcat(infile_name,".tpl");
+    }
+    strcpy(outfile_name,infile_root);
+    strcpy(headerfile_name,infile_root);
     strcat(outfile_name,".cpp");
     strcat(headerfile_name,".htp");
+    strcpy(deffile_name,infile_root);
+    strcpy(headerfile_name2,infile_root);
     strcat(deffile_name,".def");
     strcat(headerfile_name2,"2.htp");
     if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n", infile_name);
@@ -5297,17 +5351,17 @@ int main(int argc, char * argv[])
     {
       if (len + 5 > MAX_TMP_STRING)
       {
-        fprintf(stderr,"Error:%s exceeds MAX_TMP_STRING.\n", argv[ioff]);
+        fprintf(stderr,"Error:%s exceeds MAX_TMP_STRING.\n", infile_root);
         exit(1);
       }
       else
       {
-        strcpy(tmp_string1,argv[ioff]);
+        strcpy(tmp_string1,infile_root);
         strcat(tmp_string1,".def");
         f1=fopen(tmp_string1,"w");
-        fprintf(f1,"LIBRARY %s\n\n",argv[ioff]);
+        fprintf(f1,"LIBRARY %s\n\n",infile_root);
         fprintf(f1,"EXPORTS\n");
-        fprintf(f1,"\t%s\n",argv[ioff]);
+        fprintf(f1,"\t%s\n",infile_root);
         fclose(f1);
         f1=NULL;
       }

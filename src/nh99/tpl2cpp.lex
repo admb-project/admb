@@ -4548,8 +4548,7 @@ int main(int argc, char * argv[])
     }
     ++index;
   }
-  printf("ioff: %i  argc: %i.\n", ioff, argc);
-
+  /* printf("ioff: %i  argc: %i.\n", ioff, argc); */
   main_argc = argc;
   main_argv = argv;
   if (ioff > 0)
@@ -4565,8 +4564,7 @@ int main(int argc, char * argv[])
       fprintf(stderr,"Error:%s exceeds sizeof deffile_name[1000].\n", argv[ioff]);
       exit(1);
     }
-    printf("infile_name: %s\n", argv[ioff]);
-
+    /* printf("infile_name: %s\n", argv[ioff]); */
     strcpy(infile_name,argv[ioff]);
     if ((infile_name[len - 4] == '.')
        && (infile_name[len - 3] == 't' || infile_name[len - 3] == 'T')

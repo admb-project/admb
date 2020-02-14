@@ -14,6 +14,13 @@ Release Goals
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+ADMB-dev
+---------
+
+#### Changes and Improvements
+
+* Allow multiple files input tpls to parsers.
+
 ADMB-12.1
 ---------
 

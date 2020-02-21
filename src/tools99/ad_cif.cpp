@@ -129,6 +129,40 @@ cifstream& operator>>(cifstream& istr, const d5_array& darr)
   return istr;
 }
 /**
+Reads values into darr from istr.
+
+\param istr comment formatted input stream
+\param darr d6_array
+*/
+cifstream& operator>>(cifstream& istr, const d6_array& darr)
+{
+  if (allocated(darr))
+  {
+    for (int i = darr.indexmin(); i <= darr.indexmax(); ++i)
+    {
+      istr >> darr[i];
+    }
+  }
+  return istr;
+}
+/**
+Reads values into darr from istr.
+
+\param istr comment formatted input stream
+\param darr d7_array
+*/
+cifstream& operator>>(cifstream& istr, const d7_array& darr)
+{
+  if (allocated(darr))
+  {
+    for (int i = darr.indexmin(); i <= darr.indexmax(); ++i)
+    {
+      istr >> darr[i];
+    }
+  }
+  return istr;
+}
+/**
 Reads values into ivec from istr.
 
 \param istr comment formatted input stream

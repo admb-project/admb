@@ -45,6 +45,8 @@ if not defined ADMB_HOME (
 if not defined ADMB_HOME (
   echo "Error: ADMB_HOME is not defined."
   goto EOF
+) else (
+  set "PATH=!ADMB_HOME!\bin;!PATH!"
 )
 
 set tpls=
@@ -131,7 +133,25 @@ if exist "!ADMB_HOME!\bin\admb-cfg.bat" (
     set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
   )
 )
+
+if "!CXX!"=="" (
+  for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "cl.exe"') do (
+    set CXX=cl
+  )
+) else (
+  if "!CXX!"=="cl" (
+    for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "Could not find file"') do (
+      set CXX=
+    )
+  )
+)
+
 if "!CXX!"=="cl" (
+  where /Q !CXX!
+  if errorlevel 1 (
+    echo Error: Unable to find !CXX!
+    exit /B 1
+  )
   set LD=!CXX!
   if defined CXXFLAGS (
     set CXXFLAGS= /c /nologo /EHsc !CXXFLAGS!
@@ -143,25 +163,61 @@ if "!CXX!"=="cl" (
   ) else (
     set CXXFLAGS=!CXXFLAGS! /O2
   )
-  if defined fast (
-    set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
-    if not exist "!ADMB_HOME!\lib\admb-contribo.lib" (
-      set libs="!ADMB_HOME!\lib\admbo.lib" /link
-    ) else (
-      set libs="!ADMB_HOME!\lib\admb-contribo.lib" /link
+  for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "Compiler Version 19."') do (
+    set CXXVERSION=-cl19
+    for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "x64"') do (
+      set OSNAME=-win64
     )
-  ) else (
-    if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
-      set libs="!ADMB_HOME!\lib\admb.lib" /link
-    ) else (
-      set libs="!ADMB_HOME!\lib\admb-contrib.lib" /link
+    for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr "x86"') do (
+      set OSNAME=-win32
     )
   )
-  set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES
-  if not exist "!ADMB_HOME!\lib\admb-contrib.lib" (
-    set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
+  if not defined CXXVERSION (
+    set CXXVERSION=-cl
+  )
+  if not defined OSNAME (
+    set OSNAME=-win
+  )
+  if defined fast (
+    set CXXFLAGS=!CXXFLAGS! /nologo /DOPT_LIB
+    if defined g (
+      if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" (
+        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" /link
+      ) else (
+        if exist "!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!-debug.lib" (
+          set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!-debug.lib" /link
+        )
+      )
+    )
+    if not defined libs (
+      if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" (
+        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!lib" /link
+      ) else (
+        set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!.lib" /link
+      )
+    )
   ) else (
-    set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
+    if defined g (
+      if exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!-debug.lib" (
+        set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!-debug.lib" /link
+      ) else (
+        if exist "!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!-debug.lib" (
+          set libs="!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!-debug.lib" /link
+        )
+      )
+    )
+    if not defined libs (
+      if exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
+        set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" /link
+      ) else (
+        set libs="!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!.lib" /link
+      )
+    )
+  )
+  if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
+    set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include"
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! /DUSE_ADMB_CONTRIBS /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
   )
 ) else (
   if not defined CXX (
@@ -174,13 +230,37 @@ if "!CXX!"=="cl" (
       set LD=g++
     )
   )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr 4.') do (
+  where /Q !CXX!
+  if errorlevel 1 (
+    if exist "!ADMB_HOME!\utilities\mingw\bin\g++.exe" (
+      set "PATH=!ADMB_HOME!\utilities\mingw\bin;!PATH!"
+    ) else (
+      echo Error: Unable to find !CXX!
+      exit /B 1
+    )
+  )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 4.') do (
+    set CXXMAJORNUMBER=-g++4
     set STDCXX=-std=c++11
   )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr 5.') do (
+  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 5.') do (
+    set CXXMAJORNUMBER=-g++5
     set STDCXX=-std=c++14
   )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr 6.') do (
+  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 6.') do (
+    set CXXMAJORNUMBER=-g++6
+    set STDCXX=-std=c++14
+  )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 7.') do (
+    set CXXMAJORNUMBER=-g++7
+    set STDCXX=-std=c++14
+  )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 8.') do (
+    set CXXMAJORNUMBER=-g++8
+    set STDCXX=-std=c++14
+  )
+  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
+    set CXXMAJORNUMBER=-g++9
     set STDCXX=-std=c++14
   )
   if defined CXXFLAGS (
@@ -206,18 +286,93 @@ if "!CXX!"=="cl" (
   ) else (
     set CXXFLAGS=!CXXFLAGS! -O3
   )
-  if defined fast (
-    set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-    if not exist "!ADMB_HOME!\lib\libadmb-contribo.a" (
-      set libs="!ADMB_HOME!\lib\libadmbo.a"
+  for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
+    set CXXVERSION=-mingw32!CXXMAJORNUMBER!
+  )
+  for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
+    set CXXVERSION=-mingw64!CXXMAJORNUMBER!
+  )
+  if defined g (
+    if defined fast (
+      set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
+      if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a" (
+        set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a"
+      ) else (
+        if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
+          set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
+        ) else (
+          if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
+            set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a"
+          ) else (
+            if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
+              set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
+            ) else (
+              echo Error: Unable to find libadmbo-debug.a
+              exit /B 1
+            )
+          )
+        ) 
+      )
     ) else (
-      set libs="!ADMB_HOME!\lib\libadmb-contribo.a"
+      if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
+        set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a"
+      ) else (
+        if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
+          set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
+        ) else (
+          if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
+            set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a"
+          ) else (
+            if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
+              set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
+            ) else (
+              echo Error: Unable to find libadmb
+              exit /B 1
+            )
+          )
+        ) 
+      )
     )
   ) else (
-    if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
-      set libs="!ADMB_HOME!\lib\libadmb.a"
+    if defined fast (
+      set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
+      if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
+        set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a"
+      ) else (
+        if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
+          set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
+        ) else (
+          if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a" (
+            set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a"
+          ) else (
+            if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
+              set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
+            ) else (
+              echo Error: Unable to find libadmbo-debug.a
+              exit /B 1
+            )
+          )
+        ) 
+      )
     ) else (
-      set libs="!ADMB_HOME!\lib\libadmb-contrib.a"
+      if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
+        set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a"
+      ) else (
+        if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
+          set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
+        ) else (
+          if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
+            set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a"
+          ) else (
+            if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
+              set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
+            ) else (
+              echo Error: Unable to find libadmb
+              exit /B 1
+            )
+          )
+        ) 
+      )
     )
   )
   set CXXFLAGS=!CXXFLAGS! -fpermissive
@@ -227,16 +382,15 @@ if "!CXX!"=="cl" (
   if defined d (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
-  if not exist "!ADMB_HOME!\lib\libadmb-contrib.a" (
-    set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
+  if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
+    set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include"
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\contrib\include"
+    set CXXFLAGS=!CXXFLAGS! -DUSE_ADMB_CONTRIBS -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
   )
 )
 if exist "!CD!\echo" (
   echo.&echo Warning: File 'echo' should not be in !CD!.
 )
-set "PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!"
 if not defined tpls (
   if not defined srcs (
     if not defined objs (
@@ -359,7 +513,7 @@ if not defined tpls (
         set CMD=!LD!!LDFLAGS! -o !main!.dll !objs! !libs!
       ) else (
         if "!CXX!"=="cl" (
-          set CMD=!LD!!LDFLAGS! /Fe!main!.exe !objs! !libs!
+          set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
         ) else (
           set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
         )
@@ -399,9 +553,9 @@ if not defined tpls (
     ) else (
       if "!CXX!"=="cl" (
         if defined objs (
-          set CMD=!LD!!LDFLAGS! /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
         ) else (
-          set CMD=!LD!!LDFLAGS! /Fe!tpl!.exe !tpl!.obj !libs!
+          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
         )
       ) else (
         if defined objs (
@@ -446,7 +600,7 @@ goto EOF
 :HELP
 echo Builds AD Model Builder executable or library.
 echo.
-echo Release Version: 12.0
+echo Release Version: 12.1
 echo Location: %~dp0
 echo.
 echo Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]

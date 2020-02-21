@@ -31,7 +31,18 @@ prevariable& exp(const prevariable& v1)
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 
-  double tmp = ::exp(v1.v->x);
+  double tmp;
+  //Avoid underflow for large negative values
+  // https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/exp-expf
+  if (v1.v->x <= -708.3964)
+  {
+    cout.flush();
+    tmp = 0.0;
+  }
+  else
+  {
+    tmp = std::exp(v1.v->x);
+  }
 
 #ifdef DIAG
   /** \todo Must remove macros below once support

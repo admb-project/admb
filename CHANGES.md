@@ -1,4 +1,5 @@
-#ADMB Project  
+ADMB Changes
+============
 
 Describe changes and features for each release.
 
@@ -13,29 +14,84 @@ Release Goals
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-git
+ADMB-12.1
 ---------
 
-####Changes and Improvements
+*Released December 31, 2019*  
+
+#### New Supported Compilers
+* GNU C++ 9
+* Microsoft Visual Studio 2019
+
+#### Changes and Improvements
+
+* Fixed forest example for Visual Studio.  Replaced function pointer in adromb with std::function.
+* Include debug symbols with release binary zip distributions.
+* Simplified build.
+
+  Default will only build static libraries.
+
+  ```
+  $ make
+  ```
+
+  To build shared libraries, use target all
+
+  ```
+  $ make all
+  ```
+
+* Corrected mfexp derivative computation. [See Issue #113](https://github.com/admb-project/admb/issues/113)
+
+* Added missing init_6darray and init_7darray. [See Issue #108](https://github.com/admb-project/admb/issues/108)
 
 * Fixed valgrind reported memory leaks.
 
-* Buildbot is now hosted at SOEST (April-2018).
-  
-  https://buildbot.admb-project.org/
+* Added Automated Builds for building and testing of ADMB.
 
-  Note: Needed to comment out "escape shell special characters"
-  in runproces.py from windows buildbot-worker.
+  Travis CI
+  
+  https://travis-ci.org/admb-project/admb/
+
+  Microsoft Azure DevOps
+
+  https://dev.azure.com/johnoel/admb-project/_build
+
+  GitHub Actions
+
+  https://github.com/admb-project/admb/actions
+
+  Buildbot
+
+  http://buildbot.admb-project.org/
 
 * Fixed parsers to avoid needing to add extra line at the end to the tpl file.
+* Added target dist to Makefile to skip building shared libraries for faster builds.
 
+  For unix,
+
+  ```
+  $ make dist
+  ```
+
+  For Microsoft Visual Studio,
+
+  ```
+  > nmake dist
+  ```
+
+* Able to build only shared targets.
+
+  For unix,
+
+  $ make shared 
 
 ADMB-12.0
 ---------
 
 *Released December 21, 2017*  
 
-####New Supported Compilers
+#### New Supported Compilers
 
 * GNU C++ 7
 * Intel C++ Compiler 2018
@@ -43,7 +99,7 @@ ADMB-12.0
 
   __Note__ Microsoft Visual C++ 2013 is no longer supported.
 
-####New Feature
+#### New Feature
 
 * Dr. Cole Monnahan has developed a new MCMC functionality into ADMB. The
   current Metropolis algorithm was updated to have more meaningful console
@@ -58,7 +114,7 @@ ADMB-12.0
   diagnostic checking, and inference. See adnuts package vignette for more
   information.
 
-####Changes and Improvements
+#### Changes and Improvements
 
 There were approximately 900 commits to improve ADMB.
 Below are some of the changes.
@@ -75,25 +131,29 @@ Below are some of the changes.
 ADMB-11.6
 ---------
 
-####New Supported Compilers
+#### New Supported Compilers
 
 * GNU C++ 6.2 and 5.3
 * Rtools 3.4
 * Oracle Developer Studio 12.5
 * Intel C++ Compiler 2017
 
-####Changes and Improvements
+#### Changes and Improvements
 
 * Added floating point checking into tpl2cpp and tpl2rem.
 
   To check for floating point errors, build executable with -g option.
 
+  ```
   $ admb -g "model.tpl"
+  ```
 
   Run executable with debugger (such as gdb) to locate file and line number
   where error occured.
 
+  ```
   $ gdb ./model
+  ```
 
 * Configured and automated builds for ADMB-IDE.
 * Merged Kasper Kristensen and Anders Nielsen bug fixes.
@@ -110,10 +170,13 @@ ADMB-11.6
 
   The new output include **Release Version** info.
 
+  ```
   $ admb -h
+  ```
 
   Builds AD Model Builder executable or library.
 
+  ```
   Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
 
   **Release Version: 11.6**
@@ -129,30 +192,31 @@ ADMB-11.6
          extension)
   src(s) C/C++ Source file(s) containing classes, methods and variables that
          are used in model.
+  ```
   
 * MinGW-w64 Windows installers now include GNU GCC 6.2 compiler.
 * Other bug fixes and improvements
 
-####Developers changes
+#### Developers changes
 
 * Added tool for checking for [testing code coverage](https://codecov.io/gh/admb-project/admb).
 
-####Website changes
+#### Website changes
 
 * Moved website to GitHub pages (see [repository](https://github.com/admb-project/admb-project.github.io)).
 
 ADMB-11.5
 ---------
 
-####New Supported Compilers
+#### New Supported Compilers
 * Microsoft Visual C++ 14.0
 * Intel C++ 2016
 * GNU C++ 5.1
 
-####Compilers no longer supported
+#### Compilers no longer supported
 * Microsoft Visual C++ 11.0
 
-####Changes and Improvements
+#### Changes and Improvements
 * Change to Dave Fournier's version of cspline.cpp.
 * Added Dave Fournier's memory leak patches.
 * Fixed memory leaks reported by Valgrind and XCode.
@@ -165,21 +229,21 @@ ADMB-11.5
 ADMB-11.4
 ---------
 
-####Changes and Improvements
+#### Changes and Improvements
 * Fixed unix shared builds. 
 * Other bug fixes and improvements
 
 ADMB-11.3
 ---------
 
-####Changes and Improvements
+#### Changes and Improvements
 * Steve Martell's changes to gamma function.
 * Other bug fixes and improvements
 
 ADMB-11.2
 ---------
 
-####Changes and Improvements
+#### Changes and Improvements
 * Default safe libs include overflows checks.
 * Changes to derivative checker prompts.
 * Added description documentation to the programming interface.
@@ -193,7 +257,9 @@ ADMB-11.2
   conflict with batch file.  So in MinGW or Cygwin shell, user will need
   to use 
 
-        [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple
+  ```
+  [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple
+  ```
 
 * Fixed 'admb -d' for unix, mingw and cygwin shells.
 * Able to use Rtools for building, but will need to use the utilities\make.exe
@@ -203,34 +269,42 @@ ADMB-11.2
   faster builds.
 * To build with optimized libraries use fast option (-f) instead of (-o). 
 
-        $ admb -f model.tpl
+  ```
+  $ admb -f model.tpl
+  ```
 
 * Fix shared (libadmb.so) and dynamic (admb.dll) builds.
 
-        [~/admb/]$ make shared
+  ```
+  [~/admb/]$ make shared
 
-        C:\admb\> utilities\make shared
+  C:\admb\> utilities\make shared
+  ```
 
   Note &mdash; This is great for testing linker errors.
 
 * Added contributed method to save gradient values to a file.
   Contributed by Jiashen Tang and David Fournier.
 
-        REPORT_SECTION
-          save_gradients(gradients);
+  ```
+  REPORT_SECTION
+    save_gradients(gradients);
+  ```
 
 * Added back the MacOS binary ADMBTerminal app.
 * Packaged mingw compilers (32 and 64 bit) with windows installers.
 * admb scripts can determine which parser (tpl2cpp or tpl2rem) to use.
 
-        [~/admb/examples/admb-re/union/]$ ~/admb/admb union
+  ```
+  [~/admb/examples/admb-re/union/]$ ~/admb/admb union
+  ```
 
   _Note: Option *-r* is no longer needed to build the random effects model._
 
 * Separate build/dist and build/debug for easily switching between the both.
 * Allow > 2GB buffers for MinGW-w64 builds.
 
-####New Supported Compilers
+#### New Supported Compilers
 
 * GNU C++ 4.8 compiler
 * Apple XCode 6
@@ -239,15 +313,19 @@ ADMB-11.2
 
  _Note: Borland 5.5 compiler is no longer supported._
 
-####New Features
+#### New Features
 
 * Add debug target to build files.
 
-        $ make debug
+  ```
+  $ make debug
+  ```
 
 * Add shared target to build files (Unix only).
 
-        $ make shared
+  ```
+  $ make shared
+  ```
 
 * admb scripts can be called directly and do not require setting enviromental variables
   ADMB_HOME and PATH.
@@ -295,7 +373,7 @@ ADMB-11.2
 
     _Note: This is the almost the same as using 'adcomp mysource'._
 
-####Priorities: Next Release
+#### Priorities: Next Release
 
 The following are planned or requested features for the next release.
 
@@ -310,7 +388,7 @@ ADMB-11.1
 *ADMB-11.1*  
 *Released May 10, 2013*  
 
-####Changes
+#### Changes
 
 * Updated Visual Studio nmake build files.
 
@@ -339,7 +417,7 @@ ADMB-11.1
   
 * Improved documentation.
 
-####New Features
+#### New Features
 * admb script can now build tpl models without the need to set ADMB_HOME
   or PATH. For example, 
 
@@ -368,7 +446,7 @@ ADMB-11.1
 
     Output is executable 'model'.
 
-####Bug Fixes
+#### Bug Fixes
 
 * Catch exit errors for adlink and adcomp.
 * Watch out for spaces in admb scripts

@@ -124,6 +124,7 @@ TOP_OF_MAIN_SECTION
   gradient_structure::set_MAX_NVAR_OFFSET(50000);
 
 GLOBALS_SECTION
+  /*
   #if defined(_WIN32) && !defined(__BORLANDC__) && !defined(__GNUC__)
   #include <windows.h>
   #include <admodel.h>
@@ -142,9 +143,12 @@ GLOBALS_SECTION
     #include <admodel.h>
     ofstream ofs("model.out");
   #endif
+  */
   
 
 FINAL_SECTION
+  /*
   #if defined(_WIN32) && !defined(__BORLANDC__) && !defined(__GNUC__)
    control87(controlword,0xfffff);
   #endif
+  */

@@ -1,25 +1,33 @@
-all: admb_tests glmmadmb.exe nbmm.exe bvprobit.exe run
+all: rforge-glmmadmb
+	$(MAKE) admb_tests
+	$(MAKE) glmmadmb.exe
+	$(MAKE) nbmm.exe
+	$(MAKE) bvprobit.exe
+	$(MAKE) run
+
+rforge-glmmadmb:
+	git clone --depth 1 https://github.com/rforge/glmmadmb.git rforge-glmmadmb
 
 glmmadmb.exe: glmmadmb.tpl
 	..\\..\\admb glmmadmb
 
 glmmadmb.tpl:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
+	copy rforge-glmmadmb\\pkg\\inst\\tpl\\glmmadmb.tpl
 
 nbmm.exe: nbmm.tpl
 	..\\..\\admb nbmm
 
 nbmm.tpl:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
+	copy rforge-glmmadmb\\pkg\\inst\\tpl\\nbmm.tpl
 
 bvprobit.exe: bvprobit.tpl
 	..\\..\\admb bvprobit
 
 bvprobit.tpl:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/tpl/$@ > $@
+	copy rforge-glmmadmb\\pkg\\inst\\tpl\\bvprobit.tpl
 
 admb_tests:
-	svn checkout svn://scm.r-forge.r-project.org/svnroot/glmmadmb/pkg/inst/$@ $@ 
+	xcopy rforge-glmmadmb\\pkg\\inst\\admb_tests
 
 run:
 	copy glmmadmb.exe admb_tests\\bacteria.exe

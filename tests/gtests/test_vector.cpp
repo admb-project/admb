@@ -44,6 +44,7 @@ TEST_F(test_vector, sum)
   }
   ASSERT_DOUBLE_EQ(value(sum2), 3.4);
 }
+/*
 TEST_F(test_vector, apply)
 {
   gradient_structure gs;
@@ -65,6 +66,7 @@ TEST_F(test_vector, apply)
   ASSERT_DOUBLE_EQ(value(result[3]), 4.0);
   ASSERT_DOUBLE_EQ(value(result[4]), 2.25);
 }
+*/
 template<typename _Tp>
 _Tp my_vector_sum(const _Tp* __f, const _Tp* __l)
     {

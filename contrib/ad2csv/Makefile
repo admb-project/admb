@@ -1,10 +1,10 @@
 all:
-	..\..\admb.cmd ad2csv.cpp main.cpp
 !IF DEFINED(DEBUG)
-	copy ad2csv.exe ..\..\build\debug\contrib\bin
+	..\..\admb.cmd -g ad2csv.cpp main.cpp
 !ELSE
-	copy ad2csv.exe ..\..\build\dist\contrib\bin
-!ENDIf
+	..\..\admb.cmd ad2csv.cpp main.cpp
+!ENDIF
+	copy ad2csv.exe ..\..\build\admb\bin
 
 clean:
 	if exist ad2csv.obj del /Q ad2csv.obj

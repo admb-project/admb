@@ -5,6 +5,7 @@ void ADSleep(unsigned int t);
 
 class test_adtimer: public ::testing::Test {};
 
+#ifndef __MINGW32__
 TEST_F(test_adtimer, get_elapsed)
 {
   adtimer t;
@@ -19,6 +20,7 @@ TEST_F(test_adtimer, get_elapsed)
   double mls_t3 = t.get_elapsed_time_and_reset();
   ASSERT_LT(mls_t3, mls_t2);
 }
+#endif
 TEST_F(test_adtimer, _adwait)
 {
   long int _adwait(double sec);

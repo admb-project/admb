@@ -71,7 +71,7 @@ void DF_dvmfexp(void)
     else
     {
       double b=v1.elem(i)-60.0;
-      dfv1(i)=dfvtmp(i)*exp(60.0)*(1./(1.+b*b));
+      dfv1(i)=dfvtmp(i)*exp(60.0)*std::pow(1.0 + b, -2.0);
     }
   }
   dfv1.save_dvector_derivatives(v1pos);

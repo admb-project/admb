@@ -51,6 +51,7 @@ TEST_F(test_experimenting_mcmc, target_exponential)
   ASSERT_DOUBLE_EQ(target_exponential(0.0), 1.0);
   ASSERT_DOUBLE_EQ(target_exponential(-1.0), 0.0);
 }
+#ifndef _MSC_VER
 TEST_F(test_experimenting_mcmc, run_target_exponential)
 {
   double samples[1000];
@@ -113,6 +114,7 @@ TEST_F(test_experimenting_mcmc, run_target_exponential)
   ofs.close();
 */
 }
+#endif
 TEST_F(test_experimenting_mcmc, run_target_t_distribution)
 {
   double samples[1000];

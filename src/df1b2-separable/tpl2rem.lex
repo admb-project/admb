@@ -777,7 +777,7 @@ DATA_SECTION  {
 <DEFINE_DATA>init_7darray {
     likelihood_found=1;
     BEGIN IN_SEVEN_ARRAY_DEF;
-    fprintf(fdat,"%s","  data_4array ");
+    fprintf(fdat,"%s","  data_7array ");
                      }
 
 
@@ -3718,7 +3718,7 @@ PARAMETER_SECTION {
 //    fprintf(fdat,"%s","  void admaster_slave_variable_interface(void);\n");
     fprintf(fdat,"%s","  void preliminary_calculations(void);\n");
     fprintf(fdat,"%s","  void set_runtime(void);\n");
-    fprintf(fdat,"%s","  virtual void * mycast(void) {return (void*)this;}\n");
+//    fprintf(fdat,"%s","  virtual void * mycast(void) {return (void*)this;}\n");
 
     fprintf(fdat,"%s", "  static int mc_phase(void)\n"
       "  {\n    return initial_params::mc_phase;\n  }\n");
@@ -4343,6 +4343,7 @@ TOP_OF_MAIN_SECTION {
       {
         fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
         fprintf(ftopmain,"#ifdef DEBUG\n");
+        fprintf(ftopmain,"  auto start = std::chrono::high_resolution_clock::now();\n");
         fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
         fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
         fprintf(ftopmain,"  #endif\n");
@@ -4548,6 +4549,7 @@ TOP_OF_MAIN_SECTION {
       {
         fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
         fprintf(ftopmain,"#ifdef DEBUG\n");
+        fprintf(ftopmain,"  auto start = std::chrono::high_resolution_clock::now();\n");
         fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
         fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
         fprintf(ftopmain,"  #endif\n");
@@ -4662,6 +4664,7 @@ TOP_OF_MAIN_SECTION {
      }
 
     fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  std::cout << endl << argv[0] << \" elapsed time is \" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count() << \" microseconds.\" << endl;\n");
     fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
     fprintf(ftopmain,"bool failedtest = false;\n");
     fprintf(ftopmain,"if (std::fetestexcept(FE_DIVBYZERO))\n");
@@ -4676,8 +4679,17 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"  #endif\n");
     fprintf(ftopmain,"#endif\n");
 
+    fprintf(htop,"#ifdef DEBUG\n");
+    fprintf(htop,"  #include <chrono>\n");
+    fprintf(htop,"#endif\n");
     fprintf(htop,"#include <admodel.h>\n");
+    fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
     fprintf(htop,"#include <contrib.h>\n\n");
+    if(enable_pad)
+    {
+      fprintf(htop,"#include <gdbprintlib.cpp>\n");
+    }
+    fprintf(htop,"#endif\n");
     if (random_effects_flag)
     {
       fprintf(htop,"#include <df1b2fun.h>\n\n");
@@ -4694,11 +4706,6 @@ TOP_OF_MAIN_SECTION {
     {
       fprintf(htop,"#include <adsplus.h>\n\n");
     }
-
-    if(enable_pad){
-      fprintf(htop,"#include <gdbprintlib.cpp>\n\n");
-    }
-
     if (makedll)
     {
       // make a definition file

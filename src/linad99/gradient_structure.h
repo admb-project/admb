@@ -232,10 +232,12 @@ class gradient_structure
    static void set_MAX_NVAR_OFFSET(unsigned int i);
    static void set_MAX_DLINKS(int i);
    static size_t NUM_GRADSTACK_BYTES_WRITTEN(void);
-   friend class dlist;
-   friend class grad_stack;
+   static unsigned int get_MAX_DLINKS() { return MAX_DLINKS; }
    static void save_dependent_variable_position(const prevariable & v1);
    static unsigned long int max_last_offset;
+
+   friend class dlist;
+   friend class grad_stack;
    friend class function_minimizer;
    friend void funnel_derivatives(void);
 };

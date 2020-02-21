@@ -4,7 +4,7 @@ AppName=ADMB
 AppVerName=ADMB
 UsePreviousAppDir=no
 UsePreviousGroup=no
-DefaultDirName={pf}\ADMB
+DefaultDirName={commonpf}\ADMB
 DefaultGroupName=ADMB Command Prompt (Rtools)
 UninstallDisplayIcon={app}\uninstall.exe
 OutputDir=..\..\..\build
@@ -18,7 +18,7 @@ AlwaysShowComponentsList=no
 Name: "rtools"; Description: "ADMB Command Prompt (Rtools)"
 
 [Files]
-Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\mingw\set-admb-rtools.bat"; DestDir: "{app}\bin"
 
 [Icons]

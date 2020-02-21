@@ -10,6 +10,7 @@ endif
 endif
 
 all: agemat.tpl
+
 ifeq ($(SHELL),cmd)
 	..\\..\\admb agemat.tpl
 else
@@ -17,24 +18,29 @@ else
 endif
 	$(MAKE) run
 
-run: agemat.dat
+run:
 ifeq ($(SHELL),cmd)
 	agemat
 else
 	./agemat
 endif
 
-agemat.tpl:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/executables/AGEMAT.TPL > agemat.tpl
 
-agemat.dat:
-	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/doc/agemat.dat > agemat.dat
+agemat.tpl: agemat.dat
+	cp rforge-nwfscassmt/pkg/nwfscAgeingError/inst/executables/AGEMAT.TPL agemat.tpl
+
+agemat.dat: rforge-nwfscassmt
+	cp rforge-nwfscassmt/pkg/nwfscAgeingError/inst/doc/agemat.dat .
+
+rforge-nwfscassmt:
+	git clone --depth 1 https://github.com/rforge/nwfscassmt rforge-nwfscassmt
 
 total-clean: clean
 ifeq ($(SHELL),cmd)
 else
 	@rm -vf agemat.dat
 	@rm -vf agemat.tpl
+	@rm -rvf rforge-nwfscassmt
 endif
 
 clean:

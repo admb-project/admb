@@ -4,60 +4,131 @@ LEXDESTDIR=..\build\lex
 
 #SAFE_ALL= /DSAFE_ALL
 
-!IF DEFINED(DEBUG)
-DESTDIR=..\build\debug
-OBJDESTDIR=..\build\objects\debug
-CXXFLAGS_SAF=/nologo /W4 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /analyze:stacksize 50024 /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
-CXXFLAGS_OPT=/nologo /W4 /wd4100 /wd4239 /GF /EHsc /analyze:stacksize 50024 /D_USE_MATH_DEFINES /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+!IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
+CXXVERSION=-cl19
 !ELSE
-DESTDIR=..\build\dist
-OBJDESTDIR=..\build\objects\dist
-CXXFLAGS_SAF=/nologo /O2 /W4 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
-CXXFLAGS_OPT=/nologo /O2 /W4 /wd4100 /wd4239 /GF /EHsc /DOPT_LIB /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+CXXVERSION=-cl
+!ENDIF
+!IF ([cl /? 2>&1 | findstr /C:" x64" > nul] == 0)
+OSNAME=win64
+!ELSEIF ([cl /? 2>&1 | findstr /C:" x86" > nul] == 0)
+OSNAME=win32
+!ELSE
+OSNAME=win
+!ENDIF
+
+DESTDIR=..\build\admb
+!IF DEFINED(DEBUG)
+OBJDESTDIR=..\build\objects\$(OSNAME)$(CXXVERSION)-debug
+CXXFLAGS_SAF=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc /D_USE_MATH_DEFINES /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+!ELSE
+OBJDESTDIR=..\build\objects\$(OSNAME)$(CXXVERSION)
+CXXFLAGS_SAF=/nologo /O2 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /O2 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc /DOPT_LIB /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
 !ENDIF
 
 !INCLUDE df1b2-separable\objects.lst
 !IF DEFINED(DEBUG)
-OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\debug\optlp-df1b2-separable-)
-SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\debug\saflp-df1b2-separable-)
+!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win64"
+OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\win64-cl19-debug\optlp-df1b2-separable-)
+SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\win64-cl19-debug\saflp-df1b2-separable-)
+!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win32"
+OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\win32-cl19-debug\optlp-df1b2-separable-)
+SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\win32-cl19-debug\saflp-df1b2-separable-)
 !ELSE
-OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist\optlp-df1b2-separable-)
-SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist\saflp-df1b2-separable-)
+OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\vs-cl-debug\optlp-df1b2-separable-)
+SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\vs-cl-debug\saflp-df1b2-separable-)
+!ENDIF
+!ELSE
+!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win64"
+OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\win64-cl19\optlp-df1b2-separable-)
+SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\win64-cl19\saflp-df1b2-separable-)
+!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win32"
+OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\win32-cl19\optlp-df1b2-separable-)
+SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\win32-cl19\saflp-df1b2-separable-)
+!ELSE
+OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\vs-cl\optlp-df1b2-separable-)
+SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\vs-cl\saflp-df1b2-separable-)
+!ENDIF
 !ENDIF
 
 !INCLUDE linad99\objects.lst
 !IF DEFINED(DEBUG)
-OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug\optlp-linad99-) $(OBJ2: = ..\build\objects\debug\optlp-linad99-) $(OBJ3: = ..\build\objects\debug\optlp-linad99-) $(OBJ4: = ..\build\objects\debug\optlp-linad99-)
-SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\debug\saflp-linad99-) $(OBJ2: = ..\build\objects\debug\saflp-linad99-) $(OBJ3: = ..\build\objects\debug\saflp-linad99-) $(OBJ4: = ..\build\objects\debug\saflp-linad99-) $(OBJ16: = ..\build\objects\debug\saflp-linad99-)
+!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win64"
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\win64-cl19-debug\optlp-linad99-) $(OBJ2: = ..\build\objects\win64-cl19-debug\optlp-linad99-) $(OBJ3: = ..\build\objects\win64-cl19-debug\optlp-linad99-) $(OBJ4: = ..\build\objects\win64-cl19-debug\optlp-linad99-)
+SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\win64-cl19-debug\saflp-linad99-) $(OBJ2: = ..\build\objects\win64-cl19-debug\saflp-linad99-) $(OBJ3: = ..\build\objects\win64-cl19-debug\saflp-linad99-) $(OBJ4: = ..\build\objects\win64-cl19-debug\saflp-linad99-) $(OBJ16: = ..\build\objects\win64-cl19-debug\saflp-linad99-)
+!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win32"
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\win32-cl19-debug\optlp-linad99-) $(OBJ2: = ..\build\objects\win32-cl19-debug\optlp-linad99-) $(OBJ3: = ..\build\objects\win32-cl19-debug\optlp-linad99-) $(OBJ4: = ..\build\objects\win32-cl19-debug\optlp-linad99-)
+SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\win32-cl19-debug\saflp-linad99-) $(OBJ2: = ..\build\objects\win32-cl19-debug\saflp-linad99-) $(OBJ3: = ..\build\objects\win32-cl19-debug\saflp-linad99-) $(OBJ4: = ..\build\objects\win32-cl19-debug\saflp-linad99-) $(OBJ16: = ..\build\objects\win32-cl19-debug\saflp-linad99-)
 !ELSE
-OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\optlp-linad99-) $(OBJ2: = ..\build\objects\dist\optlp-linad99-) $(OBJ3: = ..\build\objects\dist\optlp-linad99-) $(OBJ4: = ..\build\objects\dist\optlp-linad99-)
-SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\saflp-linad99-) $(OBJ2: = ..\build\objects\dist\saflp-linad99-) $(OBJ3: = ..\build\objects\dist\saflp-linad99-) $(OBJ4: = ..\build\objects\dist\saflp-linad99-) $(OBJ16: = ..\build\objects\dist\saflp-linad99-)
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\vs-cl-debug\optlp-linad99-) $(OBJ2: = ..\build\objects\vs-cl-debug\optlp-linad99-) $(OBJ3: = ..\build\objects\vs-cl-debug\optlp-linad99-) $(OBJ4: = ..\build\objects\vs-cl-debug\optlp-linad99-)
+SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\vs-cl-debug\saflp-linad99-) $(OBJ2: = ..\build\objects\vs-cl-debug\saflp-linad99-) $(OBJ3: = ..\build\objects\vs-cl-debug\saflp-linad99-) $(OBJ4: = ..\build\objects\vs-cl-debug\saflp-linad99-) $(OBJ16: = ..\build\objects\vs-cl-debug\saflp-linad99-)
+!ENDIF
+!ELSE
+!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win64"
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\win64-cl19\optlp-linad99-) $(OBJ2: = ..\build\objects\win64-cl19\optlp-linad99-) $(OBJ3: = ..\build\objects\win64-cl19\optlp-linad99-) $(OBJ4: = ..\build\objects\win64-cl19\optlp-linad99-)
+SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\win64-cl19\saflp-linad99-) $(OBJ2: = ..\build\objects\win64-cl19\saflp-linad99-) $(OBJ3: = ..\build\objects\win64-cl19\saflp-linad99-) $(OBJ4: = ..\build\objects\win64-cl19\saflp-linad99-) $(OBJ16: = ..\build\objects\win64-cl19\saflp-linad99-)
+!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win32"
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\win32-cl19\optlp-linad99-) $(OBJ2: = ..\build\objects\win32-cl19\optlp-linad99-) $(OBJ3: = ..\build\objects\win32-cl19\optlp-linad99-) $(OBJ4: = ..\build\objects\win32-cl19\optlp-linad99-)
+SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\win32-cl19\saflp-linad99-) $(OBJ2: = ..\build\objects\win32-cl19\saflp-linad99-) $(OBJ3: = ..\build\objects\win32-cl19\saflp-linad99-) $(OBJ4: = ..\build\objects\win32-cl19\saflp-linad99-) $(OBJ16: = ..\build\objects\win32-cl19\saflp-linad99-)
+!ELSE
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\vs-cl\optlp-linad99-) $(OBJ2: = ..\build\objects\vs-cl\optlp-linad99-) $(OBJ3: = ..\build\objects\vs-cl\optlp-linad99-) $(OBJ4: = ..\build\objects\vs-cl\optlp-linad99-)
+SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ2: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ3: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ4: = ..\build\objects\vs-cl\saflp-linad99-) $(OBJ16: = ..\build\objects\vs-cl\saflp-linad99-)
+!ENDIF
 !ENDIF
 
 !INCLUDE nh99\objects.lst
 !IF DEFINED(DEBUG)
-OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\debug\optlp-nh99-)
-SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\debug\saflp-nh99-)
+!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win64"
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\win64-cl19-debug\optlp-nh99-)
+SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\win64-cl19-debug\saflp-nh99-)
+!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win32"
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\win32-cl19-debug\optlp-nh99-)
+SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\win32-cl19-debug\saflp-nh99-)
 !ELSE
-OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\dist\optlp-nh99-)
-SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\dist\saflp-nh99-)
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\vs-cl-debug\optlp-nh99-)
+SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\vs-cl-debug\saflp-nh99-)
+!ENDIF
+!ELSE
+!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win64"
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\win64-cl19\optlp-nh99-)
+SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\win64-cl19\saflp-nh99-)
+!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win32"
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\win32-cl19\optlp-nh99-)
+SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\win32-cl19\saflp-nh99-)
+!ELSE
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\vs-cl\optlp-nh99-)
+SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\vs-cl\saflp-nh99-)
+!ENDIF
 !ENDIF
 
 !INCLUDE tools99\objects.lst
 !IF DEFINED(DEBUG)
-OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\debug\optlp-nh99-)
-OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\debug\optlp-tools99-)
-SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\debug\saflp-tools99-)
+!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win64"
+OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\win64-cl19-debug\optlp-tools99-)
+SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\win64-cl19-debug\saflp-tools99-)
+!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win32"
+OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\win32-cl19-debug\optlp-tools99-)
+SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\win32-cl19-debug\saflp-tools99-)
 !ELSE
-OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\optlp-tools99-)
-SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\saflp-tools99-)
+OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\vs-cl-debug\optlp-tools99-)
+SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\vs-cl-debug\saflp-tools99-)
+!ENDIF
+!ELSE
+!IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win64"
+OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\win64-cl19\optlp-tools99-)
+SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\win64-cl19\saflp-tools99-)
+!ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="win32"
+OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\win32-cl19\optlp-tools99-)
+SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\win32-cl19\saflp-tools99-)
+!ELSE
+OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\vs-cl\optlp-tools99-)
+SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\vs-cl\saflp-tools99-)
+!ENDIF
 !ENDIF
 
 all: dist
-	$(MAKE) copy
-	@rem pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
-	@echo ADMB build completed.
-	@echo Check README.txt for usage and installation information.
 
 shared: all
 	IF EXIST $(DESTDIR)\lib\admb.dll del $(DESTDIR)\lib\admb.dll
@@ -69,12 +140,12 @@ shared: all
 dist: bins
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)
 	copy ..\LICENSE.txt $(DESTDIR)
-	copy ..\CHANGES.txt $(DESTDIR)
-	copy ..\README.txt $(DESTDIR)
+	copy ..\CHANGES.md $(DESTDIR)\CHANGES.txt
+	..\utilities\sed.exe "s/\.md/\.txt/g" ..\README.md > $(DESTDIR)\README.txt
 	copy ..\VERSION $(DESTDIR)
 	$(MAKE) lexfiles
-	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
-	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\utilities $(DESTDIR)\utilities
+	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
+	pushd $(DESTDIR)\bin & copy ..\..\..\scripts\set-admb-command-prompt.bat & popd
 
 bins: libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
@@ -84,13 +155,8 @@ bins: libs
 	copy df1b2-separable\sed* $(DESTDIR)\bin
 	if exist ..\admb del ..\admb
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin\admb.cmd
-!IF DEFINED(DEBUG)
-	copy ..\scripts\admb\root-admb-debug.bat ..\admb.cmd
-	copy ..\scripts\admb\root-admb-debug.bat $(DESTDIR)\admb.cmd
-!ELSE
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat $(DESTDIR)\admb.cmd
-!ENDIF
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
 	copy ..\utilities\*.dll $(DESTDIR)\bin
 
@@ -116,12 +182,25 @@ $(LEXDESTDIR)\tpl2rem.c: df1b2-separable\tpl2rem.lex
 
 libs: objects
 	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
-	IF EXIST $(DESTDIR)\lib\admb.lib del $(DESTDIR)\lib\admb.lib
-	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admb.lib /NOLOGO /IGNORE:4006 saflp-df1b2-separable*.obj saflp-linad99*.obj saflp-nh99*.obj saflp-tools99*.obj saflp-sparse*.obj
-	IF EXIST $(DESTDIR)\lib\admbo.lib del $(DESTDIR)\lib\admbo.lib
-	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admbo.lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj
+!IF DEFINED(DEBUG)
+	IF EXIST $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)-debug.lib del $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)-debug.lib
+	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION)-debug.lib /NOLOGO /IGNORE:4006 saflp-df1b2-separable*.obj saflp-linad99*.obj saflp-nh99*.obj saflp-tools99*.obj saflp-sparse*.obj
+	IF EXIST $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)-debug.lib del $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)-debug.lib
+	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION)-debug.lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj
+!ELSE
+	IF EXIST $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION).lib del $(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION).lib
+	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admb-$(OSNAME)$(CXXVERSION).lib /NOLOGO /IGNORE:4006 saflp-df1b2-separable*.obj saflp-linad99*.obj saflp-nh99*.obj saflp-tools99*.obj saflp-sparse*.obj
+	IF EXIST $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib del $(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib
+	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj
+!ENDIF
 
-objects: includes $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
+objects: $(OBJDESTDIR)
+	$(MAKE) _objects
+!IF DEFINED(SAFE_ONLY)
+_objects: $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS) $(SAFLP_NH99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
+!ELSE
+_objects: $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
+!ENDIF
 
 $(SAFLP_DF1B2_SEPARABLE_OBJS):: $(@B:saflp-df1b2-separable-=df1b2-separable\).cpp
 	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
@@ -153,7 +232,7 @@ $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
 
-includes: objdestdir
+$(DESTDIR)\include:
 	IF NOT EXIST $(DESTDIR)\include md $(DESTDIR)\include
 	copy df1b2-separable\df1b2fun.h $(DESTDIR)\include
 	copy df1b2-separable\adpool.h $(DESTDIR)\include
@@ -189,9 +268,8 @@ includes: objdestdir
 	copy tools99\integrate_wrap.hpp $(DESTDIR)\include
 	copy tools99\adjson.h $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
-	copy nh99\nocontrib.h $(DESTDIR)\include\contrib\contrib.h
 
-objdestdir:
+$(OBJDESTDIR): $(DESTDIR)\include
 	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
 
 install:
@@ -208,12 +286,15 @@ copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\src
 	IF NOT EXIST $(DESTDIR)\src xcopy /I /E /Y ..\src $(DESTDIR)\src
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
+	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\src $(DESTDIR)\utilities
 	pushd ..\contrib & $(MAKE) copy
 	pushd ..\tests & $(MAKE) copy
+	copy ..\Makefile $(DESTDIR)
 
 clean:
-	if exist ..\benchmarks-opt.txt del ..\benchmarks-opt.txt
-	if exist ..\benchmarks-saf.txt del ..\benchmarks-saf.txt
+	if exist ..\outputs-opt.txt del ..\outputs-opt.txt
+	if exist ..\outputs-saf.txt del ..\outputs-saf.txt
 	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
 	if exist ..\admb.cmd del ..\admb.cmd
@@ -229,3 +310,8 @@ check:
 	@echo "CXX: $(CXX)"
 	@echo "OS: $(OS)"
 	@echo "OSTYPE: $(OSTYPE)"
+zip:
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\examples
+	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
+	copy /Y ..\docs\install\QuickStartWindows.md ..\build\admb\INSTALL.txt
+	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd

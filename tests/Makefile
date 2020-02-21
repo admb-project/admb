@@ -1,10 +1,13 @@
-DESTDIR=..\build\dist
+DESTDIR=..\build\admb
 
 all:\
   test-agemat\
   test-cov_re\
   test-expm\
-  test-geolocation
+  test-gtests
+
+test-gtests:
+	pushd gtests& $(MAKE) all & popd
 
 test-agemat:
 	pushd agemat& $(MAKE) & popd
@@ -24,6 +27,7 @@ total-clean: clean
 	pushd agemat & $(MAKE) total-clean & popd
 
 clean:
+	pushd gtests& $(MAKE) clean & popd
 	pushd agemat& $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
@@ -31,14 +35,16 @@ clean:
 	if exist SS3 rmdir /s /q SS3
 
 verify:
-	del ..\benchmarks-saf.txt
-	del ..\benchmarks-opt.txt
-	if not exist ..\build\dist\examples md  ..\build\dist\examples
-	xcopy ..\examples ..\build\dist\examples  /S /Y /D
-	pushd ..\build\dist\examples & $(MAKE) all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
-	pushd ..\build\dist\examples & $(MAKE) FAST_OPTION=-f all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+	del ..\outputs-saf.txt
+	del ..\outputs-opt.txt
+	if not exist ..\build\admb\examples md  ..\build\admb\examples
+	xcopy ..\examples ..\build\admb\examples  /S /Y /D
+	pushd ..\build\admb\examples & $(MAKE) all
+	pushd ..\build\admb & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
+!IFNDEF SAFE_ONLY
+	pushd ..\build\admb\examples & $(MAKE) FAST_OPTION=-f all
+	pushd ..\build\admb & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
+!ENDIF
 
 copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests

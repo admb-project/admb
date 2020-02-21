@@ -102,7 +102,7 @@ int main()
   }
 
   std::ofstream fout("normsim.frq");
-  for (i=freq.indexmin();i<=freq.indexmax(); i++)
+  for (int i=freq.indexmin();i<=freq.indexmax(); i++)
   {
     fout << setw(10) << std::setprecision(4) << std::ios::fixed << minlen+i-1
          << setw(10) << freq(i) << "\n";

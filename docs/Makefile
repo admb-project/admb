@@ -1,4 +1,4 @@
-all: _api
+all: _api _manuals installs
 
 _api:
 	$(MAKE) --directory=api

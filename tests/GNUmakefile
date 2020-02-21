@@ -1,21 +1,13 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(TERM),cygwin)
-  else
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL = cmd
-    ifeq ($(SHELL),cmd)
-      MYPWD=$(shell cd)
-    else
-      MYPWD=$(shell cmd /C cd)
+  ifeq ($(strip $(TERM)),)
+    SHELL=cmd
+    ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
+      PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
     endif
-    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
   else
-    ifneq ($(TERM),xterm)
-      MYPWD=$(shell pwd)
-      PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
+    ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
+      PATH:=$(shell pwd)/../utilities/mingw/bin:$(PATH)
     endif
-    PATH:=$(PATH):$(MYPWD)/../utilities
-  endif
   endif
 endif
 
@@ -23,28 +15,16 @@ ifeq ($(DEBUG),yes)
 DEBUG_OPTION=-g
 endif
 
-ifeq ($(SHELL),cmd)
-  ifneq ($(DEBUG),yes)
-    DIST=..\build\dist
-  else
-    DIST=..\build\debug
-  endif
-else
-  ifneq ($(DEBUG),yes)
-    DIST=../build/dist
-  else
-    DIST=../build/debug
-  endif
-endif
+DIST=../build/admb
 
-ifeq ($(CXX),CC)
-all: all-tpls
+ifeq ($(DEBUG),yes)
+all: all-gtests
 else
 all: all-gtests all-tpls
 endif
 
 coverage: all-gtests
-	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/debug/include includes
+	$(MAKE) --directory=../contrib/gdbprintlib CONTRIB_INCLUDE=../../build/admb/include includes
 	$(MAKE) --directory=../examples all
 	$(MAKE) tpl-f1b2vc5
 	$(MAKE) tpl-4darray
@@ -89,8 +69,6 @@ all-tpls:\
   test-rgamma\
   tpl-f1b2vc5\
   tpl-4darray\
-  tpl-glmmadmb\
-  tpl-agemat\
   tpl-betai\
   tpl-beta2\
   tpl-beta3\
@@ -106,13 +84,11 @@ all-tpls:\
   tpl-beta_deviate\
   tpl-betareg\
   tpl-beta_regression\
-  tpl-changepoint\
   tpl-colfill\
   tpl-cov_re\
   tpl-ctl\
   tpl-expm\
   tpl-gradients_output\
-  tpl-geolocation\
   tpl-simple_mcmc\
   tpl-hysimple\
   tpl-priors\
@@ -120,6 +96,12 @@ all-tpls:\
   tpl-orange_mvn\
   cpp-globals\
   tpl-lprof
+
+all-remote-tpls:\
+  tpl-agemat\
+  tpl-changepoint\
+  tpl-geolocation\
+  tpl-glmmadmb
 
 cpp-globals:
 	$(MAKE) --directory=globals
@@ -231,27 +213,33 @@ example-prof_like:
 verify:
 ifeq ($(SHELL),cmd)
   ifneq ($(DEBUG),yes)
-	del ..\benchmarks-opt.txt
-	del ..\benchmarks-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+	del ..\outputs-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples all
+	pushd .. & scripts\get-outputs.bat > outputs-saf.txt & popd
+    ifndef SAFE_ONLY
+	del ..\outputs-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples all
+	pushd .. & scripts\get-outputs.bat > outputs-opt.txt & popd
+    endif
   else
-	del ..\benchmarks-opt.txt
-	del ..\benchmarks-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
-	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\examples --file=Makefile all
-	pushd ..\build\debug & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+    ifndef SAFE_ONLY
+	del ..\outputs-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples all
+	pushd .. & scripts\get-outputs.bat > outputs-opt.txt & popd
+    endif
+	del ..\outputs-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples all
+	pushd .. & scripts\get-outputs.bat > outputs-saf.txt & popd
   endif
 else
-	rm -vf ../benchmarks-opt.txt
-	rm -vf ../benchmarks-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
-	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-opt.txt"
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)/examples all
-	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
+	rm -vf ../outputs-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ../examples all
+	-../scripts/get-outputs.sh ../examples/ > "../outputs-saf.txt"
+  ifndef SAFE_ONLY
+	rm -vf ../outputs-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples all
+	-../scripts/get-outputs.sh ../examples/ > "../outputs-opt.txt"
+  endif
 endif
 
 total-clean: clean
@@ -340,15 +328,15 @@ else
 	$(MAKE) --directory=$(DIST)/tests total-clean
 endif
 
-benchmarks:
+outputs:
 ifeq ($(SHELL),cmd)
-	del benchmarks-tests.txt
+	del outputs-tests.txt
 else
-	rm -vf benchmarks-tests.txt
-	touch benchmarks-tests.txt
-	$(MAKE) --directory=lprof get-outputs >> benchmarks-tests.txt
+	rm -vf outputs-tests.txt
+	touch outputs-tests.txt
+	$(MAKE) --directory=lprof get-outputs >> outputs-tests.txt
 endif
-	$(MAKE) --directory=beta_regression get-outputs >> benchmarks-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> benchmarks-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> benchmarks-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> benchmarks-tests.txt
+	$(MAKE) --directory=beta_regression get-outputs >> outputs-tests.txt
+	$(MAKE) --directory=agemat get-outputs >> outputs-tests.txt
+	$(MAKE) --directory=beta_deviate get-outputs >> output-tests.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> output-tests.txt

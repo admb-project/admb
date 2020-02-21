@@ -15,14 +15,10 @@
 
 class model_parameters;
 
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  double a,double b,int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b,int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int n);
+dvariable trapzd(_func func, double a, double b, int n);
+dvariable trapzd(_func func, double a, const dvariable& b, int n);
+dvariable trapzd(_func func, const dvariable& a, const dvariable& b, int n);
+dvariable trapzd(_func func, const dvariable& a, double b, int n);
 
 void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
   const dvariable& y, const dvariable& dy);
@@ -34,9 +30,7 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, double b, int ns)
+dvariable function_minimizer::adromb(_func func, double a, double b, int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -65,9 +59,7 @@ dvariable function_minimizer::adromb(
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int ns)
+dvariable function_minimizer::adromb(_func func, const dvariable& a, double b, int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -96,9 +88,7 @@ dvariable function_minimizer::adromb(
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b, int ns)
+dvariable function_minimizer::adromb(_func func, double a, const dvariable& b, int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -127,9 +117,7 @@ dvariable function_minimizer::adromb(
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int ns)
+dvariable function_minimizer::adromb(_func func, const dvariable& a, const dvariable& b, int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -158,24 +146,21 @@ dvariable function_minimizer::adromb(
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
  *
  */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, double b, int n)
+dvariable function_minimizer::trapzd(_func func, double a, double b, int n)
 {
   double x,num_interval,hn;
   dvariable sum;
   static dvariable s;
   static int interval;
   int j;
-  model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
     interval=1;
-    return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
+    return (s=0.5*(b-a)*(func(a)+func(b)));
   } else {
     num_interval=interval;
     hn=(b-a)/num_interval;
     x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += func(x);
     interval *= 2;
     s=0.5*(s+(b-a)*sum/num_interval);
     return s;
@@ -189,24 +174,21 @@ dvariable function_minimizer::trapzd(
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
  *
  */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, double b, int n)
+dvariable function_minimizer::trapzd(_func func, const dvariable& a, double b, int n)
 {
   double num_interval;
   dvariable x,sum,hn;
   static dvariable s;
   static int interval;
   int j;
-  model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
     interval=1;
-    return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
+    return (s=0.5*(b-a)*(func(a)+func(b)));
   } else {
     num_interval=interval;
     hn=(b-a)/num_interval;
     x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += func(x);
     interval *= 2;
     s=0.5*(s+(b-a)*sum/num_interval);
     return s;
@@ -219,9 +201,7 @@ dvariable function_minimizer::trapzd(
  * "Numerical Recipes in C", 2nd edition,
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
  */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  double a, const dvariable& b, int n)
+dvariable function_minimizer::trapzd(_func func, double a, const dvariable& b, int n)
 {
   double num_interval;
   dvariable sum,hn,x;
@@ -230,15 +210,14 @@ dvariable function_minimizer::trapzd(
   static int interval;
   int j;
 
-  model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
     interval=1;
-    return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
+    return (s=0.5*(b-a)*(func(a)+func(b)));
   } else {
     num_interval=interval;
     hn=(b-a)/num_interval;
     x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += func(x);
     interval *= 2;
     s=0.5*(s+(b-a)*sum/num_interval);
     return s;
@@ -251,9 +230,7 @@ dvariable function_minimizer::trapzd(
  * "Numerical Recipes in C", 2nd edition,
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
  */
-dvariable function_minimizer::trapzd(
-  dvariable (model_parameters::*func)(const dvariable&),
-  const dvariable& a, const dvariable& b, int n)
+dvariable function_minimizer::trapzd(_func func, const dvariable& a, const dvariable& b, int n)
 {
   double num_interval;
   dvariable sum,hn,x;
@@ -261,15 +238,14 @@ dvariable function_minimizer::trapzd(
   static int interval;
   int j;
 
-  model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
     interval=1;
-    return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
+    return (s=0.5*(b-a)*(func(a)+func(b)));
   } else {
     num_interval=interval;
     hn=(b-a)/num_interval;
     x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += func(x);
     interval *= 2;
     s=0.5*(s+(b-a)*sum/num_interval);
     return s;

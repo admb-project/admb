@@ -104,8 +104,16 @@ Default constructor.
 
 Creates new zero value dvariable object.
 */
-dvariable::dvariable(): dvariable(0.0) { }
+dvariable::dvariable()
+{
+  v = gradnew();
+  (*v).x = 0.0;
 
+#ifdef SAFE_INITIALIZE
+  gradient_structure::GRAD_STACK1->set_gradient_stack0(
+    default_evaluation0,&((*v).x));
+#endif
+}
 /**
 Specialized constructor that does not create unnecessary entries
 in the gradient structure; see function \ref nograd_assign.

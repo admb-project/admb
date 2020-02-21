@@ -18,7 +18,7 @@ AlwaysShowComponentsList=no
 Name: "mingw32"; Description: "ADMB Command Prompt (MinGW 32Bit)"
 
 [Files]
-Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "C:\mingw32\*"; DestDir: "{app}\utilities\mingw32"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\mingw\set-admb-mingw32.bat"; DestDir: "{app}\bin"
 

@@ -32,12 +32,12 @@ dlist::dlist()
       ad_exit(1);
     }
   }
-  last = 0;
+
+  last = NULL;
   nlinks = 0;
   dlink_addresses = new dlink*[gradient_structure::MAX_DLINKS];
-  const size_t size = 2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1);
-  ddlist_space = (char*)malloc(size * sizeof(char));
-
+  ddlist_space =
+    (char*)malloc(gradient_structure::MAX_DLINKS * sizeof(dlink));
   variables_save = new double[gradient_structure::MAX_DLINKS];
 
 #ifndef OPT_LIB
@@ -70,24 +70,25 @@ dlist::~dlist()
   }
 }
 /**
-Create unlinked new node.
+Return new unlinked node.
 */
 dlink* dlist::create()
 {
-  dlink* link = (dlink*)(ddlist_space+2*sizeof(double)*nlinks);
+#ifndef OPT_LIB
+  //If fails, then need to increase the maximum number of dlinks.
+  assert(nlinks < gradient_structure::MAX_DLINKS);
+#endif
+
+  dlink* link = (dlink*)(&ddlist_space[sizeof(dlink) * nlinks]);
+
 #ifndef OPT_LIB
   assert(link);
 #endif
 
-  //do not add to list.
-  link->prev=0;
+  //Do not add to list.
+  link->prev = NULL;
 
-#ifndef OPT_LIB
-  //If fails, then need to increase the maximum number of dlinks.
-  assert(nlinks <= gradient_structure::MAX_DLINKS);
-#endif
-
-  // keep track of the links so you can zero them out
+  //Keep track of the links so you can zero them out (ie gradcalc).
   dlink_addresses[nlinks] = link;
   ++nlinks;
 

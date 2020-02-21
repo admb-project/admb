@@ -1,27 +1,32 @@
 .ONESHELL:
-ifeq ($(TERM),cygwin)
-EXT=.cmd
-else
-ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-SHELL = cmd
-endif
 ifeq ($(OS),Windows_NT)
-EXT=.sh
-endif
+  ifeq ($(strip $(TERM)),)
+    SHELL=cmd
+  else
+    EXT=.sh
+  endif
 endif
 
 ifeq ($(SHELL),cmd)
+  ifeq ($(SAFE_ONLY),yes)
+all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))
+  else
 all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)-optlp-, $(OBJECTS))
+  endif
 
 $(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
-	..\..\admb -c $(OPTION) $<
+	..\..\admb.cmd -c $(OPTION) $<
 	copy $(basename $<).obj $@
 
 $(CONTRIB_OBJS_DIR)-optlp-%.obj: %.cpp
-	..\..\admb -c -f $(OPTION) $<
+	..\..\admb.cmd -c -f $(OPTION) $<
 	copy $(basename $<).obj $@
 else
+  ifeq ($(SAFE_ONLY),yes)
+all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS))
+  else
 all: $(addprefix $(CONTRIB_OBJS_DIR)-saflp-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)-optlp-, $(OBJECTS))
+  endif
 
 $(CONTRIB_OBJS_DIR)-saflp-%.obj: %.cpp
 	../../admb$(EXT) -c $(OPTION) $<

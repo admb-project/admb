@@ -743,7 +743,7 @@ DATA_SECTION  {
 <DEFINE_DATA>init_7darray {
     likelihood_found=1;
     BEGIN IN_SEVEN_ARRAY_DEF;
-    fprintf(fdat,"%s","  data_4array ");
+    fprintf(fdat,"%s","  data_7array ");
                      }
 
 
@@ -3625,7 +3625,7 @@ PARAMETER_SECTION {
 //    fprintf(fdat,"%s","  void admaster_slave_variable_interface(void);\n");
     fprintf(fdat,"%s","  void preliminary_calculations(void);\n");
     fprintf(fdat,"%s","  void set_runtime(void);\n");
-    fprintf(fdat,"%s","  virtual void * mycast(void) {return (void*)this;}\n");
+//    fprintf(fdat,"%s","  virtual void * mycast(void) {return (void*)this;}\n");
 
     fprintf(fdat,"%s", "  static int mc_phase(void)\n"
       "  {\n    return initial_params::mc_phase;\n  }\n");
@@ -3644,6 +3644,12 @@ PARAMETER_SECTION {
    fprintf(fdat,"%s", "  static prevariable current_feval(void)\n"
       "  {\n    return *objective_function_value::pobjfun;\n  }\n");
     fprintf(fdat,"%s","private:\n");
+    fprintf(fdat,"%s","  dvariable adromb(dvariable(model_parameters::*f)(const dvariable&), double a, double b, int ns)\n"
+                      "  {\n"
+                      "    using namespace std::placeholders;\n"
+                      "    _func func = std::bind(f, this, _1);\n"
+                      "    return function_minimizer::adromb(func, a, b, ns);\n"
+                      "  }\n");
     fprintf(fdat,"%s", "  ivector integer_control_flags;\n");
     fprintf(fdat,"%s", "  dvector double_control_flags;\n");
 
@@ -4301,6 +4307,7 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
     fprintf(ftopmain,"std::feclearexcept(FE_ALL_EXCEPT);\n");
     fprintf(ftopmain,"  #endif\n");
+    fprintf(ftopmain,"  auto start = std::chrono::high_resolution_clock::now();\n");
     fprintf(ftopmain,"#endif\n");
     if (makedll)
     {
@@ -4321,6 +4328,7 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"    mp.computations(argc,argv);\n");
 
     fprintf(ftopmain,"#ifdef DEBUG\n");
+    fprintf(ftopmain,"  std::cout << endl << argv[0] << \" elapsed time is \" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count() << \" microseconds.\" << endl;\n");
     fprintf(ftopmain,"  #ifndef __SUNPRO_C\n");
     fprintf(ftopmain,"bool failedtest = false;\n");
     fprintf(ftopmain,"if (std::fetestexcept(FE_DIVBYZERO))\n");
@@ -4335,8 +4343,17 @@ TOP_OF_MAIN_SECTION {
     fprintf(ftopmain,"  #endif\n");
     fprintf(ftopmain,"#endif\n");
 
+    fprintf(htop,"#ifdef DEBUG\n");
+    fprintf(htop,"  #include <chrono>\n");
+    fprintf(htop,"#endif\n");
     fprintf(htop,"#include <admodel.h>\n");
+    fprintf(htop,"#ifdef USE_ADMB_CONTRIBS\n");
     fprintf(htop,"#include <contrib.h>\n\n");
+    if(enable_pad)
+    {
+      fprintf(htop,"#include <gdbprintlib.cpp>\n");
+    }
+    fprintf(htop,"#endif\n");
 
     if (bound_flag)
     {
@@ -4348,9 +4365,6 @@ TOP_OF_MAIN_SECTION {
     if (talk_to_splus)
     {
       fprintf(htop,"#include <adsplus.h>\n\n");
-    }
-    if(enable_pad){
-      fprintf(htop,"#include <gdbprintlib.cpp>\n\n");
     }
 
     if (makedll)

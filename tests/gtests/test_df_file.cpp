@@ -85,7 +85,7 @@ TEST_F(test_df_file, constructor_max_limit)
     size_t maxsize = std::numeric_limits<size_t>::max();
 #endif
     maxsize -= sizeof(OFF_T);
-    DF_FILE df_file(maxsize)
+    DF_FILE df_file(maxsize + 1)
   );
 }
 TEST_F(test_df_file, allocate_max)

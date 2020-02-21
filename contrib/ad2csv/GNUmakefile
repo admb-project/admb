@@ -1,22 +1,19 @@
 .ONESHELL:
-ifeq ($(TERM),cygwin)
-EXT=.cmd
-else
-ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-SHELL = cmd
-endif
 ifeq ($(OS),Windows_NT)
-EXT=.sh
-endif
+  ifeq ($(strip $(TERM)),)
+    SHELL=cmd
+  else
+    EXT=.sh
+  endif
 endif
 OPTION=-f
 
 ifeq ($(SHELL),cmd)
-$(CONTRIB_BIN)\ad2csv.exe: ad2csv.cpp main.cpp
-	..\..\admb $(OPTION) $^
+$(CONTRIB_BIN)ad2csv.exe: ad2csv.cpp main.cpp
+	..\..\admb.cmd $(OPTION) $^
 	copy ad2csv.exe $@
 else
-$(CONTRIB_BIN)/ad2csv: ad2csv.cpp main.cpp
+$(CONTRIB_BIN)ad2csv: ad2csv.cpp main.cpp
 	../../admb$(EXT) $(OPTION) $^
 	cp ad2csv $@
 endif

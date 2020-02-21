@@ -25,8 +25,6 @@
 #include <math.h>
 
 
-void gradfree(dlink *);
-
 /**
  * Description not yet available.
  * \param

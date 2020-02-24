@@ -77,12 +77,17 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 				    dvector& _rplus, dvector& _rminus,
 				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
 				    int& _nprime, int& _nfevals, bool& _divergent,
-				    const random_number_generator& rng) {
+				    const random_number_generator& rng,
+				    dvector& gr2_end) {
 
   if (j==0) {
     // Take a single step in direction v from points p,y, which are updated
     // internally by reference and thus represent the new point.
     double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
+    // These are the NLL and gradients at the last point
+    // evaluated, saved via reference, so I don't have to
+    // recalculate them when starting a new trajectory. 
+    gr2_end=gr2;
     // The new Hamiltonian value. ADMB returns negative log density so
     // correct it
     double Ham=-(nll+0.5*norm2(p));
@@ -114,7 +119,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
-	       _nprime, _nfevals, _divergent, rng);
+	       _nprime, _nfevals, _divergent, rng,
+	       gr2_end);
     // If valid trajectory, build second half.
     if (_sprime == 1) {
       // Save copies of the global ones due to rerunning build_tree below
@@ -139,7 +145,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+		   _nprime, _nfevals, _divergent, rng,
+		   gr2_end);
 	// Update the leftmost point
 	rminus0=_rminus;
 	thetaminus0=_thetaminus;
@@ -151,7 +158,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+		   _nprime, _nfevals, _divergent, rng,
+		   gr2_end);
 	// Update the rightmost point
 	rplus0=_rplus;
 	thetaplus0=_thetaplus;

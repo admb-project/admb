@@ -421,13 +421,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector gr2(1,nvar);		// gradients in rotated space
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
-  // Local variables to track the extreme left and rightmost nodes of the
+  // Global variables to track the extreme left and rightmost nodes of the
   // entire tree. This gets overwritten due to passing things by reference
   // in buildtree
   dvector thetaminus_end(1,nvar);
   dvector thetaplus_end(1,nvar);
   dvector rminus_end(1,nvar);
   dvector rplus_end(1,nvar);
+  dvector gr2minus_end(1,nvar); dvector gr2plus_end(1,nvar);
   // References to left most and right most theta and momentum for current
   // subtree inside of buildtree. The ones proceeded with _ are passed
   // through buildtree by reference. Inside build_tree, _thetaplus is left
@@ -460,7 +461,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector s1(1,nvar); dvector s0(1,nvar);
   dvector m1(1,nvar); dvector m0(1,nvar);
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
-
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Randomize momentum for next iteration, update H, and reset the tree
@@ -469,7 +469,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _rminus=p; _rplus=p;
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
     // Reset model parameters to theta, whether updated or not in previous
-    // iteration.
+    // iteration. (can skip this right??)
     z=rotate_pars(chd, theta);
     nll=get_hybrid_monte_carlo_value(nvar,z,gr);
     gr2=rotate_gradient(gr, chd);
@@ -488,8 +488,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _nfevals=0;
     s=1;
     j=0;
+    // Reset global ones to initial point of this trajectory
     thetaminus_end=theta; thetaplus_end=theta;
     rminus_end=p; rplus_end=p;
+    gr2minus_end=gr2; gr2plus_end=gr2;
 
     while (s) {
       value = randu(rng);	   // runif(1)
@@ -497,30 +499,31 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Add a trajectory of length 2^j, built to the left or right of
       // edges of the current entire tree.
       if (v == 1) {
-	// Build a tree to the right from thetaplus. The leftmost point in
-	// the new subtree, which gets overwritten in both the global _end
-	// variable, but also the _ ref version.
-	z=rotate_pars(chd, thetaplus_end);
-	// Need to reset to the rightmost point, since this may not have
-	// been last one executed and thus the gradients are wrong
-	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	gr2=rotate_gradient(gr, chd);
+	// Build a tree to the right from thetaplus. The leftmost
+	// point in the new subtree, which gets overwritten in
+	// both the global _end variable, but also the _ ref
+	// version.  Need to reset to the rightmost point, since
+	// this may not have been last one executed and thus the
+	// gradients are wrong
+	gr2=gr2plus_end;
 	build_tree(nvar, gr, chd, eps, rplus_end, thetaplus_end, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
-	// Moved right, so update extreme right tree
+		   _nprime, _nfevals, _divergent, rng,
+		   gr2plus_end);
+	// Moved right, so update extreme right tree. Done by
+	// reference in gr2plus_end, which is the gradient at the
+	// rightmost point of the global trajectory.
 	thetaplus_end=_thetaplus;
 	rplus_end=_rplus;
       } else {
 	// Same but to the left from thetaminus
-	z=rotate_pars(chd,thetaminus_end);
-	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	gr2=rotate_gradient(gr,chd);
+	gr2=gr2minus_end;
 	build_tree(nvar, gr, chd, eps, rminus_end, thetaminus_end, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+		   _nprime, _nfevals, _divergent, rng,
+		   gr2minus_end);
 	thetaminus_end=_thetaminus;
 	rminus_end=_rminus;
       }

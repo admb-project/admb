@@ -2,7 +2,7 @@
 
 if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" (
   for /f "usebackq delims=" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere" -latest  -property installationPath`) do (
-    pushd "%%i\VC\Auxiliary\Build" & call vcvars64.bat & popd
+    pushd "%%i\VC\Auxiliary\Build" & call vcvars64.bat > NUL & popd
   )
 )
 

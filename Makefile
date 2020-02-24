@@ -105,7 +105,7 @@ g++-docs:
 g++-test:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ all
 g++-gtests:
-	$(MAKE) --directory=tests CC=gcc CXX=g++ all-gtests
+	$(MAKE) --directory=tests CC=gcc CXX=g++ unit-gtests
 g++-coverage:
 	$(MAKE) --directory=src CC=gcc CXX=g++ SAFE_ONLY=yes dist
 	$(MAKE) --directory=tests CC=gcc CXX=g++ coverage
@@ -146,7 +146,7 @@ clang++-docs:
 clang++-test:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ all
 clang++-gtests:
-	$(MAKE) --directory=tests CC=clang CXX=clang++ all-gtests
+	$(MAKE) --directory=tests CC=clang CXX=clang++ unit-gtests
 clang++-coverage:
 	$(MAKE) --directory=src CC=clang CXX=clang++ SAFE_ONLY=yes dist
 	$(MAKE) --directory=tests CC=clang CXX=clang++ coverage
@@ -190,7 +190,7 @@ c++-coverage:
 c++-test:
 	$(MAKE) --directory=tests CC=cc CXX=c++ all
 c++-gtests:
-	$(MAKE) --directory=tests CC=cc CXX=c++ all-gtests
+	$(MAKE) --directory=tests CC=cc CXX=c++ unit-gtests
 c++-verify:
 	$(MAKE) --directory=tests CC=cc CXX=c++ verify
 c++-shared:
@@ -228,7 +228,7 @@ CC-docs:
 CC-test:
 	$(MAKE) --directory=tests CC=cc CXX=CC all
 CC-gtests:
-	$(MAKE) --directory=tests CC=cc CXX=CC all-gtests
+	$(MAKE) --directory=tests CC=cc CXX=CC unit-gtests
 CC-verify:
 	$(MAKE) --directory=tests CC=cc CXX=CC verify
 CC-shared:
@@ -266,7 +266,7 @@ icpc-docs:
 icpc-test:
 	$(MAKE) --directory=tests CC=icc CXX=icpc all
 icpc-gtests:
-	$(MAKE) --directory=tests CC=icc CXX=icpc all-gtests
+	$(MAKE) --directory=tests CC=icc CXX=icpc unit-gtests
 icpc-verify:
 	$(MAKE) --directory=tests CC=icc CXX=icpc verify
 icpc-shared:
@@ -304,7 +304,7 @@ openCC-docs:
 openCC-test:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC all
 openCC-gtests:
-	$(MAKE) --directory=tests CC=opencc CXX=openCC all-gtests
+	$(MAKE) --directory=tests CC=opencc CXX=openCC unit-gtests
 openCC-verify:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC verify
 openCC-shared:
@@ -345,7 +345,7 @@ analyze-c++-coverage:
 analyze-c++-test:
 	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ all
 analyze-c++-gtests:
-	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ all-gtests
+	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ unit-gtests
 analyze-c++-verify:
 	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ verify
 analyze-c++-shared:

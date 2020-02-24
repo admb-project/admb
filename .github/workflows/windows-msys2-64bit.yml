@@ -17,29 +17,18 @@ jobs:
     - name: build
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make
-        utilities\\make shared
+        utilities\\make -j 4
+        utilities\\make -j 4 shared
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: admb_msys2
         path: build\\admb
-    - name: debug
-      run: |
-        set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make DEBUG=yes
-        utilities\\make shared DEBUG=yes
-      shell: cmd
-    - name: Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: admb_msys2_debug
-        path: build\\admb
     - name: test
       run: |
         set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make test DEBUG=yes
+        utilities\\make test DEBUG=yes TESTS_REMOTE=no
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

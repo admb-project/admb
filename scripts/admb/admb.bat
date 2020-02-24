@@ -183,6 +183,7 @@ if "!CXX!"=="cl" (
     if defined g (
       if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" (
         set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" /link
+	set use_contrib_lib=yes
       ) else (
         if exist "!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!-debug.lib" (
           set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!-debug.lib" /link
@@ -192,6 +193,7 @@ if "!CXX!"=="cl" (
     if not defined libs (
       if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" (
         set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!lib" /link
+	set use_contrib_lib=yes
       ) else (
         set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!.lib" /link
       )
@@ -200,6 +202,7 @@ if "!CXX!"=="cl" (
     if defined g (
       if exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!-debug.lib" (
         set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!-debug.lib" /link
+	set use_contrib_lib=yes
       ) else (
         if exist "!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!-debug.lib" (
           set libs="!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!-debug.lib" /link
@@ -209,15 +212,16 @@ if "!CXX!"=="cl" (
     if not defined libs (
       if exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
         set libs="!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" /link
+	set use_contrib_lib=yes
       ) else (
         set libs="!ADMB_HOME!\lib\admb!OSNAME!!CXXVERSION!.lib" /link
       )
     )
   )
-  if not exist "!ADMB_HOME!\lib\admb-contrib!OSNAME!!CXXVERSION!.lib" (
-    set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include"
-  ) else (
+  if defined use_contrib_lib (
     set CXXFLAGS=!CXXFLAGS! /DUSE_ADMB_CONTRIBS /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include"
   )
 ) else (
   if not defined CXX (
@@ -297,12 +301,14 @@ if "!CXX!"=="cl" (
       set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
       if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a" (
         set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a"
+	set use_contrib_lib=yes
       ) else (
         if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
           set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
         ) else (
           if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
             set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a"
+	    set use_contrib_lib=yes
           ) else (
             if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
@@ -316,12 +322,14 @@ if "!CXX!"=="cl" (
     ) else (
       if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
         set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a"
+	set use_contrib_lib=yes
       ) else (
         if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
           set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
         ) else (
           if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
             set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a"
+	    set use_contrib_lib=yes
           ) else (
             if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
@@ -338,12 +346,14 @@ if "!CXX!"=="cl" (
       set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
       if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a" (
         set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!.a"
+	set use_contrib_lib=yes
       ) else (
         if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
           set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
         ) else (
           if exist "!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a" (
             set libs="!ADMB_HOME!\lib\libadmb-contribo!CXXVERSION!-debug.a"
+	    set use_contrib_lib=yes
           ) else (
             if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
@@ -357,12 +367,14 @@ if "!CXX!"=="cl" (
     ) else (
       if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
         set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a"
+	set use_contrib_lib=yes
       ) else (
         if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
           set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
         ) else (
           if exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a" (
             set libs="!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!-debug.a"
+	    set use_contrib_lib=yes
           ) else (
             if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
@@ -377,15 +389,15 @@ if "!CXX!"=="cl" (
   )
   set CXXFLAGS=!CXXFLAGS! -fpermissive
   for /f %%i in ('!CXX! -dumpmachine ^| findstr x86_64') do (
-     set CXXFLAGS=!CXXFLAGS! -D_FILE_OFFSET_BITS=64
+    set CXXFLAGS=!CXXFLAGS! -D_FILE_OFFSET_BITS=64
   )
   if defined d (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
-  if not exist "!ADMB_HOME!\lib\libadmb-contrib!CXXVERSION!.a" (
-    set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include"
-  ) else (
+  if defined use_contrib_lib (
     set CXXFLAGS=!CXXFLAGS! -DUSE_ADMB_CONTRIBS -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include" -I"!ADMB_HOME!\include\contrib"
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! -D_USE_MATH_DEFINES -I. -I"!ADMB_HOME!\include"
   )
 )
 if exist "!CD!\echo" (

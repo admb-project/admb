@@ -429,6 +429,7 @@ void ad_comm::allocate(void)
     }
   }
 
+/*
   tmpstring=adprogram_name + adstring(".dat");
   if (argc > 1)
   {
@@ -462,6 +463,7 @@ void ad_comm::allocate(void)
       global_datafile=NULL;
     }
   }
+*/
   adstring ts=adprogram_name + adstring(".log");
   global_logfile= new ofstream( (char*)ts);
 

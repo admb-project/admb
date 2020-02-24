@@ -1,6 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(TERM)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
+  else
+    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      CMDSHELL=cmd
+    endif
+  endif
+  ifeq ($(CMDSHELL),cmd)
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
       PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
     endif
@@ -10,15 +16,14 @@ ifeq ($(OS),Windows_NT)
     endif
   endif
 endif
-
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
   DIST=..\build\admb
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
   OBJSDIR=..\build\objects
   ifeq ($(CXX),g++)
-    ifeq (,$(shell where g++.exe))
-      $(error "Error: Missing g++ compiler.")
+    ifneq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+      $(warning "Warning: Unable to find g++ compiler.")
     endif
     ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
       OSNAME=mingw64
@@ -39,12 +44,10 @@ ifeq ($(SHELL),cmd)
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
 else
-  INSTALL_DIR=/usr/local/
-  ifeq ($(DEBUG),yes)
-  DIST=$(shell pwd)/../build/admb
-  else
-  DIST=../build/admb
+  ifndef INSTALL_DIR
+    INSTALL_DIR=/usr/local/
   endif
+  DIST=../build/admb
   LIBSDIR=$(DIST)/lib/
   UNAME_S := $(shell uname -s)
   ifeq ($(UNAME_S),Linux)
@@ -102,7 +105,7 @@ else
     $(warning Unknown CXX = "$(CXX)" results in empty CXXVERSION.)
   endif
   ifdef SHARED
-  OBJSDIR=$(shell pwd)/../build/objects/$(OSNAME)$(CXXVERSION)-shared
+  OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)-shared
   else
   OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)
   endif
@@ -149,7 +152,7 @@ ifneq ($(CXX),CC)
 ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-unused-parameter
 endif
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
   ifeq ($(CXX),g++)
     GCCMAJVER:="GCCVER$(shell gcc -dumpversion)"
     ifeq (GCCVER7,$(findstring GCCVER7,$(GCCMAJVER)))
@@ -203,33 +206,25 @@ endif
 ADCXXFLAGS:= $(ADCXXFLAGS) -D_USE_MATH_DEFINES
 
 ifeq ($(DEBUG),yes)
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\admb\include
   else
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I$(shell pwd)/../build/admb/include
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/admb/include
   endif
 else
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\admb\include
   else
 ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/admb/include
   endif
 endif
 
-ifeq ($(TERM),cygwin)
+ifeq ($(CMDSHELL),cmd)
   ifeq ($(CXX),g++)
     ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
       ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
     endif
   endif
-else
-ifeq ($(SHELL),cmd)
-  ifeq ($(CXX),g++)
-    ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
-      ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
-    endif
-  endif
-endif
 endif
 
 CXXFLAGS_SAF_LIB=$(strip $(USER_CXXFLAGS) $(ADCXXFLAGS))
@@ -283,9 +278,9 @@ all: dist
 shared: libs
 	$(MAKE) bins
 ifeq ($(DEBUG),yes)
-  ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admbo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmbo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+  ifeq ($(CMDSHELL),cmd)
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admbo-$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmbo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared-debug.a
@@ -300,9 +295,9 @@ ifeq ($(DEBUG),yes)
     endif
   endif
 else
-  ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admbo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmbo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+  ifeq ($(CMDSHELL),cmd)
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admbo-$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmbo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared.a
@@ -320,7 +315,7 @@ endif
 
 dist: libs
 	$(MAKE) bins
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
 	..\utilities\sed.exe "s/\.md/\.txt/g" ..\README.md > ${DIST}\README.txt
 	copy /Y ..\CHANGES.md ${DIST}\CHANGES.txt
@@ -335,7 +330,7 @@ else
 endif
 
 bins:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	if not exist ${DIST}\bin md ${DIST}\bin
 	copy df1b2-separable\seddf1b* ${DIST}\bin
 	copy df1b2-separable\sedf1b2* ${DIST}\bin
@@ -383,23 +378,13 @@ else
 	ln -sf build/admb/bin/admb ..
 	#cp ../scripts/admb/root-admb ../admb
   endif
-    ifeq ($(DEBUG),yes)
-	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=${DIST} bins
-	$(MAKE) --directory=nh99 CC=$(CC) DIST=${DIST} bins
-    else
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} bins
-    endif
 endif
 
-ifeq ($(SHELL),cmd)
-libs: $(DIST)\include
-else
-libs: $(DIST)/include
-endif
-	$(MAKE) objects
+libs: objects
 ifeq ($(DEBUG),yes)
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
 	if exist ${DIST}\lib\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a del ${DIST}\lib\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
 	if exist ${DIST}\lib\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a del ${DIST}\lib\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
@@ -408,7 +393,7 @@ ifeq ($(DEBUG),yes)
 	rm -vf ${DIST}/lib/libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
 	rm -vf ${DIST}/lib/libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a
   endif
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	$(AR) -rs $(LIBSDIR)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(OBJSDIR)saflp-linad99-*.obj
   else
 	$(AR) -rs $(LIBSDIR)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(OBJSDIR)saflp-linad99-[f]*.obj
@@ -419,7 +404,7 @@ ifeq ($(DEBUG),yes)
 	$(AR) -rs $(LIBSDIR)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(OBJSDIR)saflp-tools99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(OBJSDIR)saflp-sparse-*.obj
   ifndef SAFE_ONLY
-    ifeq ($(SHELL),cmd)
+    ifeq ($(CMDSHELL),cmd)
 	$(AR) -rs $(LIBSDIR)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(OBJSDIR)optlp-linad99-*.obj
     else
 	$(AR) -rs $(LIBSDIR)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(OBJSDIR)optlp-linad99-[f]*.obj
@@ -431,7 +416,7 @@ ifeq ($(DEBUG),yes)
 	$(AR) -rs $(LIBSDIR)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(OBJSDIR)optlp-sparse-*.obj
   endif
 else
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
 	if exist ${DIST}\lib\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a del ${DIST}\lib\libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	if exist ${DIST}\lib\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a del ${DIST}\lib\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a
@@ -440,7 +425,7 @@ else
 	rm -vf ${DIST}/lib/libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a
 	rm -vf ${DIST}/lib/libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a
   endif
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	$(AR) -rs $(LIBSDIR)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-linad99-*.obj
   else
 	$(AR) -rs $(LIBSDIR)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-linad99-[f]*.obj
@@ -451,7 +436,7 @@ else
 	$(AR) -rs $(LIBSDIR)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-tools99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-sparse-*.obj
   ifndef SAFE_ONLY
-    ifeq ($(SHELL),cmd)
+    ifeq ($(CMDSHELL),cmd)
 	$(AR) -rs $(LIBSDIR)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)optlp-linad99-*.obj
     else
 	$(AR) -rs $(LIBSDIR)libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)optlp-linad99-[f]*.obj
@@ -464,11 +449,15 @@ else
   endif
 endif
 
-objects: $(OBJSDIR_)
+ifeq ($(CMDSHELL),cmd)
+objects: $(OBJSDIR_) ${DIST}\include
+else
+objects: $(OBJSDIR_) ${DIST}/include
+endif
 	$(MAKE) _objects
 _objects: $(OBJECTS)
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
@@ -525,78 +514,38 @@ else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_SAF_LIB)) -o $@ $<
 endif
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
-else
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-sparse-hs_sparse.obj: $(shell pwd)/sparse/hs_sparse.cpp
-else
 $(OBJSDIR)saflp-sparse-hs_sparse.obj:sparse/hs_sparse.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
-else
 $(OBJSDIR)optlp-df1b2-separable-%.obj:df1b2-separable/%.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-df1b2-separable-%.obj:$(shell pwd)/df1b2-separable/%.cpp
-else
 $(OBJSDIR)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
-else
 $(OBJSDIR)optlp-linad99-%.obj:linad99/%.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-linad99-%.obj:$(shell pwd)/linad99/%.cpp
-else
 $(OBJSDIR)saflp-linad99-%.obj:linad99/%.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
-else
 $(OBJSDIR)optlp-nh99-%.obj:nh99/%.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-nh99-%.obj:$(shell pwd)/nh99/%.cpp
-else
 $(OBJSDIR)saflp-nh99-%.obj:nh99/%.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)optlp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
-else
 $(OBJSDIR)optlp-tools99-%.obj:tools99/%.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
-ifeq ($(DEBUG),yes)
-$(OBJSDIR)saflp-tools99-%.obj:$(shell pwd)/tools99/%.cpp
-else
 $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
-endif
 	$(CXX) -c $(CXXFLAGS_SAF_LIB) -o $@ $<
 endif
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 ${DIST}\include:
 	if not exist ${DIST}\include md ${DIST}\include
 	copy linad99\df11fun.h ${DIST}\include
@@ -673,14 +622,14 @@ ${DIST}/include:
 endif
 
 $(OBJSDIR_):
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	if not exist $(OBJSDIR_) md $(OBJSDIR_)
 else
 	mkdir -p $(OBJSDIR_)
 endif
 
 dist-clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	if exist ..\benchmarks-opt.txt del ..\benchmarks-opt.txt
 	if exist ..\benchmarks-saf.txt del ..\benchmarks-saf.txt
 	if exist nh99\lex.yy.c del nh99\lex.yy.c
@@ -699,7 +648,7 @@ else
 endif
 
 clean: dist-clean
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat
 	if exist ..\admb.cmd del ..\admb.cmd
@@ -726,16 +675,17 @@ ifeq ($(INSTALL_DIR),/usr/local/)
 	chmod a+rx ../build/admb/bin/adcomp
 	chmod a+rx ../build/admb/bin/tpl2cpp
 	chmod a+rx ../build/admb/bin/tpl2rem
-	chmod a+rx ../build/admb/contrib
 	chmod a+r ../build/admb/bin/sed*
 	chmod a+r ../build/admb/include/*.*
-	chmod a+r ../build/admb/contrib/include/*.*
+	chmod a+r ../build/admb/include/contrib/*.*
 endif
 	cp -Rvf ../build/admb $(INSTALL_DIR)admb
+ifeq ($(INSTALL_DIR),/usr/local/)
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
+endif
 
 copy:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	if not exist $(DIST)\utilities md $(DIST)\utilities
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
 	if not exist $(DIST)\src md $(DIST)\src
@@ -769,7 +719,7 @@ cpplint.py:
 
 zip:
 ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 	copy /Y ..\docs\install\QuickStartWindows.md ..\build\admb\INSTALL.txt
 	if not exist $(DIST)\examples md $(DIST)\examples
 	xcopy ..\examples $(DIST)\examples /S /Y /D
@@ -797,3 +747,4 @@ check:
 	@echo "CXX: $(CXX)"
 	@echo "OS: $(OS)"
 	@echo "OSTYPE: $(OSTYPE)"
+	@echo "COMSPEC: $(COMSPEC)"

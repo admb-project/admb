@@ -1,5 +1,3 @@
-SHELL=cmd
-
 LEXDESTDIR=..\build\lex
 
 #SAFE_ALL= /DSAFE_ALL
@@ -194,8 +192,9 @@ libs: objects
 	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admbo-$(OSNAME)$(CXXVERSION).lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj
 !ENDIF
 
-objects: $(OBJDESTDIR)
+objects: $(OBJDESTDIR) $(DESTDIR)\include
 	$(MAKE) _objects
+
 !IF DEFINED(SAFE_ONLY)
 _objects: $(SAFLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_LINAD99_OBJS) $(SAFLP_NH99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
 !ELSE

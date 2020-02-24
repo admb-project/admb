@@ -1,5 +1,3 @@
-SHELL=cmd
-
 ADMB_HOME=..\\..\\..
 
 !IFDEF DEBUG

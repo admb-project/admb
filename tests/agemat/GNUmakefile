@@ -1,30 +1,21 @@
-ifeq ($(TERM),cygwin)
-else
+TARGET=agemat
+
+default: $(TARGET).tpl
+	$(MAKE) $(TARGET)
+	$(MAKE) run2
+
 ifeq ($(OS),Windows_NT)
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL=cmd
-  else
-    EXT=.sh
-  endif
-endif
-endif
-
-all: agemat.tpl
-
-ifeq ($(SHELL),cmd)
-	..\\..\\admb agemat.tpl
+include ..\test-rules.mak
 else
-	../../admb$(EXT) agemat.tpl
+include ../test-rules.mak
 endif
-	$(MAKE) run
 
-run:
-ifeq ($(SHELL),cmd)
+run2:
+ifeq ($(CMDSHELL),cmd)
 	agemat
 else
 	./agemat
 endif
-
 
 agemat.tpl: agemat.dat
 	cp rforge-nwfscassmt/pkg/nwfscAgeingError/inst/executables/AGEMAT.TPL agemat.tpl
@@ -35,45 +26,8 @@ agemat.dat: rforge-nwfscassmt
 rforge-nwfscassmt:
 	git clone --depth 1 https://github.com/rforge/nwfscassmt rforge-nwfscassmt
 
-total-clean: clean
-ifeq ($(SHELL),cmd)
-else
-	@rm -vf agemat.dat
-	@rm -vf agemat.tpl
-	@rm -rvf rforge-nwfscassmt
-endif
-
-clean:
-ifeq ($(SHELL),cmd)
-else
-	@rm -vf agemat.exe
-	@rm -vf agemat agemat.cpp agemat.htp agemat.obj
-	@rm -vf Echo.Out
-	@rm -vf admodel.cov
-	@rm -vf admodel.dep
-	@rm -vf admodel.hes
-	@rm -vf agemat.b01
-	@rm -vf agemat.bar
-	@rm -vf agemat.cor
-	@rm -vf agemat.eva
-	@rm -vf agemat.log
-	@rm -vf agemat.p01
-	@rm -vf agemat.par
-	@rm -vf agemat.r01
-	@rm -vf agemat.rep
-	@rm -vf agemat.std
-	@rm -vf agemat
-	@rm -vf cmpdiff.tmp
-	@rm -vf eigv.rpt
-	@rm -vf fmin.log
-	@rm -vf gradfil1.tmp
-	@rm -vf gradfil2.tmp
-	@rm -vf variance
-	@rm -vf varssave.tmp
-endif
-
 get-outputs:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	type agemat.bar
 	type agemat.cor
 	type agemat.eva

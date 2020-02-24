@@ -17,7 +17,7 @@ Release Goals
 ADMB-12.1
 ---------
 
-*Released December 31, 2019*  
+*Released January 17, 2020*  
 
 #### New Supported Compilers
 * GNU C++ 9
@@ -25,6 +25,8 @@ ADMB-12.1
 
 #### Changes and Improvements
 
+* Build both the debug and dist into build/admb to simplify packaging.
+* Avoid default .dat error. [See Issue #117](https://github.com/admb-project/admb/issues/117)
 * Fixed forest example for Visual Studio.  Replaced function pointer in adromb with std::function.
 * Include debug symbols with release binary zip distributions.
 * Simplified build.

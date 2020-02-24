@@ -1,12 +1,13 @@
-ifeq ($(TERM),cygwin)
-else
 ifeq ($(OS),Windows_NT)
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
-endif
 endif
 
 TARGET=priors
@@ -16,35 +17,35 @@ TPL_TARGETRE=ratre
 all: clean run runre
 
 run: $(TPL_TARGET)
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TPL_TARGET) -nohess
 else
 	./$(TPL_TARGET) -nohess
 endif
 
 runre: $(TPL_TARGETRE)
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TPL_TARGETRE) -nohess
 else
 	./$(TPL_TARGETRE) -nohess
 endif
 
 $(TPL_TARGET): $(TPL_TARGET).tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb $(TPL_TARGET)
 else
 	../../admb$(EXT) $(TPL_TARGET)
 endif
 
 $(TPL_TARGETRE): $(TPL_TARGETRE).tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -r $(TPL_TARGETRE)
 else
 	../../admb$(EXT) -r $(TPL_TARGETRE)
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@del rat 2>nul
 	@del ratre 2>nul
 	@del rat.obj 2>nul

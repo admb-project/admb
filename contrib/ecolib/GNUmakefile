@@ -1,4 +1,5 @@
 HEADERS=ecolib.h
+
 OBJECTS=\
  Gompertz.obj\
  Hassell.obj\

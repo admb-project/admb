@@ -576,7 +576,7 @@ Construct init_df1_one_variable with _var.
 */
 init_df1_one_variable::init_df1_one_variable(const prevariable& _var)
 {
-  if (num_ind_var > 0)
+  if (num_ind_var != 0)
   {
     cerr << "can only have 1 independent_variables in df1_one_variable"
        " function" << endl;
@@ -584,7 +584,8 @@ init_df1_one_variable::init_df1_one_variable(const prevariable& _var)
   }
 
   ADUNCONST(prevariable,var)
-  ind_var[num_ind_var++] = &var;
+  num_ind_var = 1;
+  ind_var[0] = &var;
   *get_u() = value(var);
   switch(num_ind_var)
   {

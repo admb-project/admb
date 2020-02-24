@@ -1,27 +1,28 @@
-ifeq ($(TERM),cygwin)
-else
 ifeq ($(OS),Windows_NT)
-  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
-endif
 endif
 
 all:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -r main.cpp
 	main.exe
 else
-	../../admb main.cpp
+	../../admb$(EXT) main.cpp
 	./main
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
-	@del main.obj
-	@del main.exe
+ifeq ($(CMDSHELL),cmd)
+	@if exist main.obj del main.obj
+	@if exist main.exe del main.exe
 else
 	@rm -vf main.obj
 	@rm -vf main

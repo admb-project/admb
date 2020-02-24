@@ -10,24 +10,20 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-TARGET=bhplfine
-
 all: clean $(TARGET) run
 
-$(TARGET): $(TARGET).tpl $(TARGET).dat
+$(TARGET): $(TARGET).tpl
 ifeq ($(CMDSHELL),cmd)
-	..\\..\\..\\admb $(TARGET)
+	..\\..\\admb $(TARGET) $(SRCS)
 else
-	../../../admb$(EXT) $(TARGET)
+	../../admb$(EXT) $(TARGET) $(SRCS)
 endif
 
 run:
 ifeq ($(CMDSHELL),cmd)
-	$(TARGET) -lprof
+	$(TARGET)
 else
-	./$(TARGET) -lprof
-	@cmp -s loga_pl.plt old/loga_pl.plt; RETVAL=$$?;if [ $$RETVAL -eq 0 ]; then echo "OK"; else echo "NOT OK"; fi
-	@cmp -s logb_pl.plt old/logb_pl.plt; RETVAL=$$?;if [ $$RETVAL -eq 0 ]; then echo "OK"; else echo "NOT OK"; fi
+	./$(TARGET)
 endif
 
 clean:
@@ -35,6 +31,7 @@ ifeq ($(CMDSHELL),cmd)
 	@del $(TARGET) 2>nul
 	@del variance 2>nul
 	@del fmin.log 2>nul
+	@del $(TARGET).rep 2>nul
 	@del $(TARGET).eva 2>nul
 	@del $(TARGET).exe 2>nul
 	@del $(TARGET).htp 2>nul
@@ -64,6 +61,7 @@ else
 	@rm -vf hessian.bin
 	@rm -vf hesscheck
 	@rm -vf fmin.log
+	@rm -vf $(TARGET).rep
 	@rm -vf $(TARGET).eva
 	@rm -vf $(TARGET).htp
 	@rm -vf $(TARGET).bar

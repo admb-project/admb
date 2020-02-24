@@ -1,15 +1,21 @@
 .ONESHELL:
+
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(TERM)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+    endif
   endif
 endif
+
 OPTION=-f
 
-ifeq ($(SHELL),cmd)
-$(CONTRIB_BIN)ad2csv.exe: ad2csv.cpp main.cpp
+ifeq ($(CMDSHELL),cmd)
+$(CONTRIB_BIN)\ad2csv.exe: ad2csv.cpp main.cpp
 	..\..\admb.cmd $(OPTION) $^
 	copy ad2csv.exe $@
 else
@@ -19,7 +25,7 @@ $(CONTRIB_BIN)ad2csv: ad2csv.cpp main.cpp
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	if exist ad2csv del /Q ad2csv
 	if exist ad2csv.exe del /Q ad2csv.exe
 	if exist main.o del /Q main.o

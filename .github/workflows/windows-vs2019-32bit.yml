@@ -23,7 +23,7 @@ jobs:
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_vs2019
+        name: admb_vs2019_32bit
         path: build\\admb
     - name: debug
       run: |
@@ -34,7 +34,7 @@ jobs:
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: admb_vs2019_debug
+        name: admb_vs2019_debug_32bit
         path: build\\admb
     - name: test
       run: |

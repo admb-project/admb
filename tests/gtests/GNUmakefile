@@ -1,9 +1,14 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(strip $(TERM)),)
-    SHELL=cmd
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
     ADMB_HOME=..\\..\\..
   else
-    EXT=.sh
+    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      EXT=.sh
+    else
+      CMDSHELL=cmd
+      ADMB_HOME=..\\..\\..
+    endif
   endif
 endif
 
@@ -11,7 +16,7 @@ ifdef DEBUG
 ADMB_OPTIONS=-g
 endif
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 GTEST_DIR=googletest-read-only\\googletest
 else
 GTEST_DIR=googletest-read-only/googletest
@@ -158,7 +163,7 @@ endif
 # scalefactor.obj\
 
 all: clean gtest-all
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	gtest-all
 else
 	./gtest-all
@@ -168,56 +173,56 @@ memcheck: gtest-all
 	valgrind -v --tool=memcheck ./gtest-all
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_df1b2atan2.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_df1b2atan2.cpp
 endif
 
 df1b2atan2.obj: df1b2atan2.cpp
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	..\\..\\admb -c $(ADMB_OPTIONS) $^
 else
 	../../admb$(EXT) -c $(ADMB_OPTIONS) $^
 endif
 
 test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_scalefactor.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_scalefactor.cpp
 endif
 
 scalefactor.obj: scalefactor.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS="-Dmain=scalefactor" & ..\\..\\admb -c $^
 else
 	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c $^
 endif
 
 test_scalefactor: test_scalefactor.obj main.obj gtest-all.obj scalefactor.obj
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
 test_finance.obj: test_finance.cpp finance.obj
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_finance.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_finance.cpp
 endif
 
 finance.obj: finance.tpl
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS="-Dmain=finance" & ..\\..\\admb -c $^
 else
 	CXXFLAGS=-Dmain=finance ../../admb$(EXT) -c $^
 endif
 
 test_finance: test_finance.obj main.obj gtest-all.obj finance.obj
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
 	copy ..\\..\\examples\\admb\\finance\\finance.dat
 else
@@ -226,21 +231,21 @@ else
 endif
 
 gtest-all: gtest-all.obj $(GTESTS)
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
 test_nuts.obj: test_nuts.cpp
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_nuts.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_nuts.cpp
 endif
 
 nuts_da.obj: nuts_da.cpp nuts_da.h
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) nuts_da.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) nuts_da.cpp
@@ -253,21 +258,21 @@ test_nuts.txt: nutsmatlab/nuts_da.m
 	/Applications/MATLAB_R2016a.app/bin/matlab -nodesktop -nodisplay -r "run nutsmatlab/demo.m;quit;" > test_nuts.txt
 
 nuts: test_nuts.txt test_nuts
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	test_nuts
 else
 	./test_nuts
 endif
 
 test_nuts: main.cpp gtest-all.obj test_nuts.obj nuts_da.obj
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj nuts_da.obj main.cpp
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj nuts_da.obj main.cpp
 endif
 
 gtest-all.obj: googletest-read-only
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(CXX) -c $(CXXFLAGS) -std=c++11 -g -I$(GTEST_DIR)\\include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)\\src\\gtest-all.cc
 else
 	$(CXX) -c $(CXXFLAGS) -std=c++11 -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
@@ -286,14 +291,14 @@ df33_tester:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 total-clean: clean
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@if exist googletest-read-only rmdir /s /q googletest-read-only
 else
 	@rm -rvf googletest-read-only
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	@if exist make_sub_directory rmdir /s /q make_sub_directory
 	@del test_i4_array.txt 2>NUL
 	@del test_i5_array.txt 2>NUL

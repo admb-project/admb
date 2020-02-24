@@ -1,20 +1,26 @@
 # ADMB Quick Start for ADMBTerminal
 
 *ADMB-12.1*  
-*Released December 31, 2019*  
+*Released January 17, 2020*  
 
 Describe downloading, installing and using ADMBTerminal from binary release for MacOS.
 
 ---
 
-**Prerequisite** &mdash; [Apple Developer Tools (XCode)](https://developer.apple.com/xcode/) must be installed.
+**Prerequisite** &mdash; [Apple Developer Tools (XCode)](https://developer.apple.com/xcode/) and the command line tools must be installed.
+
+To install or update command line tools, use the command below in the MacOS Terminal, then click "Install" button in the window.
+
+```
+[~]% xcode-select --install
+```
 
 Quick Start
 -----------
 
 1. **Download**
 
-   For MacOS 64-bit, download [admb-12.1-ADMBTerminal-macos-clang11-64bit.dmg](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-ADMBTerminal-macos-clang11-64bit.dmg).
+   For MacOS 64-bit, download [admb-12.1-ADMBTerminal-macos-64bit.dmg](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-ADMBTerminal-macos-64bit.dmg).
 
 2. **Install**
 
@@ -31,7 +37,7 @@ Quick Start
    Change to the simple example directory.
 
    ```
-   [~]% cd examples\admb\simple
+   [~]% cd examples/admb/simple
    ```
 
    Build the simple example.

@@ -2,7 +2,8 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+      SHELL=cmd
       CMDSHELL=cmd
     endif
   endif
@@ -49,7 +50,11 @@ else
   endif
   DIST=../build/admb
   LIBSDIR=$(DIST)/lib/
-  UNAME_S := $(shell uname -s)
+  ifeq ($(OS),Windows_NT)
+    UNAME_S=_NT
+  else
+    UNAME_S := $(shell uname -s)
+  endif
   ifeq ($(UNAME_S),Linux)
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
       OSNAME=i686-linux
@@ -75,15 +80,39 @@ else
     $(warning Unknown UNAME_S = "$(UNAME_S)" results in empty OSNAME.)
   endif
   ifeq ($(CXX),g++)
-  CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    ifeq ($(UNAME_S),Darwin)
+      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
+        CXXVERSION=-clang11
+      else
+        ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
+          CXXVERSION=-clang10
+        else
+          CXXVERSION=-clang
+        endif
+      endif
+    else
+      CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    endif
   endif
   ifeq ($(CXX),clang++)
-  CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    ifeq ($(UNAME_S),Darwin)
+      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
+        CXXVERSION=-clang11
+      else
+        ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
+          CXXVERSION=-clang10
+        else
+          CXXVERSION=-clang
+        endif
+      endif
+    else
+      CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    endif
   endif
   ifeq ($(CXX),c++)
     ifeq ($(UNAME_S),Darwin)
       ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
-      CXXVERSION=-clang11
+        CXXVERSION=-clang11
       else
         ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
           CXXVERSION=-clang10
@@ -166,7 +195,7 @@ ifeq ($(CMDSHELL),cmd)
     endif
   endif
 else
-  ifeq ("$(shell uname)","Darwin")
+  ifeq ("$(UNAME_S)","Darwin")
     ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
   else
     ifeq ($(CXX),clang++)

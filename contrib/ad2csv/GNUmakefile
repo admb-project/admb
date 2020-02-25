@@ -7,6 +7,7 @@ ifeq ($(OS),Windows_NT)
     ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
       EXT=.sh
     else
+      SHELL=cmd
       CMDSHELL=cmd
     endif
   endif

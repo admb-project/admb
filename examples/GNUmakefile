@@ -5,6 +5,7 @@ ifeq ($(OS),Windows_NT)
       CMDSHELL=cmd
   else
     ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+      SHELL=cmd
       CMDSHELL=cmd
     endif
   endif
@@ -1445,7 +1446,6 @@ endif
 	@rm -vf admb-re/nested4/admodel.dep
 	@rm -vf admb-re/nested4/admodel.hes
 	@rm -vf admb-re/nested4/fmin.log
-	@rm -vf admb-re/nested4/hesscheck
 	@rm -vf admb-re/nested4/hessian.bin
 	@rm -vf admb-re/nested4/nested4.b01
 	@rm -vf admb-re/nested4/nested4.bar
@@ -1462,6 +1462,7 @@ endif
 	@rm -vf admb-re/nested4/nested4.rep
 	@rm -vf admb-re/nested4/nested4.rhes
 	@rm -vf admb-re/nested4/nested4.std
+	@rm -vf admb-re/nested4/hesscheck
 	@rm -vf admb-re/orange/admodel.cov
 	@rm -vf admb-re/orange/admodel.dep
 	@rm -vf admb-re/orange/admodel.hes

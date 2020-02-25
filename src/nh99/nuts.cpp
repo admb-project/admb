@@ -313,51 +313,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     read_mle_hmc(nvar, z0);
   }
   /// Now z0 is either the MLE or the user specified value
-
-  // Need to convert z0 to y0. First, pass z0 through the model. Since this
-  // wasn't necessarily the last vector evaluated, need to propogate it
-  // through ADMB internally so can use xinit().
-  initial_params::restore_all_values(z0,1);
-  independent_variables y0(1,nvar); // inits in unbounded space
-  dvector current_scale(1,nvar);
-  gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
-  // This copies the unbounded parameters into y0
-  initial_params::xinit(y0);
-  // Don't know what this does or if necessary
-  dvector pen_vector(1,nvar);
-  initial_params::reset(dvar_vector(y0),pen_vector);
-  initial_params::mc_phase=0;
-  initial_params::stddev_scale(current_scale,y0);
-  initial_params::mc_phase=1;
-  // gradient_structure::set_NO_DERIVATIVES();
-  // if (mcmc2_flag==0) {
-  //   initial_params::set_inactive_random_effects();
-  // }
-
-  // Get NLL and gradient in unbounded space for initial value y0.
-  dvector grtemp(1,nvar);		// gradients in unbounded space
-  double nlltemp=get_hybrid_monte_carlo_value(nvar,y0,grtemp);
-  // Can now inverse rotate y0 to be x0 (algorithm space)
-  independent_variables x0(1,nvar); // inits in algorithm space
-  x0=rotate_pars(chdinv,y0);
-  // cout << "Starting from chd=" << chd << endl;
-  ///
-  // /// Old code to test that I know what's going on.
-  // cout << "Initial hbf new=" << gradient_structure::Hybrid_bounded_flag << endl;
-  // cout << "Initial hbf old=" << old_Hybrid_bounded_flag << endl;
-  // cout << "Initial bounded mle=" << mle << endl;
-  // cout << "Initial bounded parameters=" << z0 << endl;
-  // cout << "Initial unbounded parameters=" << y0 << endl;
-  // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
-  // cout << "Initial negative log density=" << nlltemp << endl;
-  // cout << "Initial gr in unbounded space= " << grtemp << endl;
-  // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
-  ///
-  independent_variables theta(1,nvar);
-  theta=x0; // kind of a misnomer here: theta is in "x" or algorithm space
-  // Setup binary psv file to write samples to
-  //// Model initialization of parameters and options complete.
-
+// Setup binary psv file to write samples to
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
   if (!pofs_psave|| !(*pofs_psave)) {
@@ -403,7 +359,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
     }
   }
-  cout << "Chain " << chain << ": Initial negative log density=" << nlltemp << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
@@ -413,43 +368,71 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   //// End of input processing and preparation
   // --------------------------------------------------
 
+  /// Start initializing the algorithm at the initial point. z0
+  // was specified by user, but need y0 and x0. First, pass z0
+  // through the model. Since this wasn't necessarily the last
+  // vector evaluated, need to propogate it through ADMB
+  // internally so can use xinit().
+  initial_params::restore_all_values(z0,1);
+  independent_variables y0(1,nvar); // inits in unbounded space
+  dvector current_scale(1,nvar);
+  gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
+  // This copies the unbounded parameters into y0
+  initial_params::xinit(y0);
+  // Don't know what this does or if necessary
+  dvector pen_vector(1,nvar);
+  initial_params::reset(dvar_vector(y0),pen_vector);
+  initial_params::mc_phase=0;
+  initial_params::stddev_scale(current_scale,y0);
+  initial_params::mc_phase=1;
+
   //// ---------- Start of algorithm
   // Declare and initialize the variables needed for the algorithm
-  independent_variables z(1,nvar);
-  independent_variables ytemp(1,nvar);
+  // Get NLL and gradient in unbounded space for initial value y0.
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// gradients in rotated space
+  double nll=get_hybrid_monte_carlo_value(nvar,y0,gr);
+  gr2=rotate_gradient(gr, chd);
+  // Can now inverse rotate y0 to be x0 (algorithm space)
+  independent_variables x0(1,nvar); // inits in algorithm space
+  x0=rotate_pars(chdinv,y0); 
+  // Now have z0, y0, x0, objective fn value, gradients in
+  // unbounded and rotated space all at the intial value.
+  cout << "Chain " << chain << ": Initial negative log density=" << nll << endl;
+  
+  // Now initialize these into the algorithm arguments needed.
+  independent_variables theta(1,nvar);
+  // kind of a misnomer here: theta is in "x" or algorithm space
+  // (before applying the mass matrix rotation, and before the
+  // bounding functions are applied) 
+  theta=x0;
+  independent_variables z(1,nvar);
+  independent_variables ytemp(1,nvar); // local copy of y
+  z=z0; ytemp=y0;
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
   // Global variables to track the extreme left and rightmost nodes of the
   // entire tree. This gets overwritten due to passing things by reference
   // in buildtree
-  dvector thetaminus_end(1,nvar);
-  dvector thetaplus_end(1,nvar);
-  dvector rminus_end(1,nvar);
-  dvector rplus_end(1,nvar);
+  dvector thetaminus_end(1,nvar); dvector thetaplus_end(1,nvar);
+  dvector rminus_end(1,nvar); dvector rplus_end(1,nvar);
   dvector gr2minus_end(1,nvar); dvector gr2plus_end(1,nvar);
   // References to left most and right most theta and momentum for current
   // subtree inside of buildtree. The ones proceeded with _ are passed
   // through buildtree by reference. Inside build_tree, _thetaplus is left
   // the same if moving in the left direction. Thus these are the global
   // left and right points.
-  dvector _thetaminus(1,nvar);
-  dvector _thetaplus(1,nvar);
+  dvector _thetaminus(1,nvar); dvector _thetaplus(1,nvar);
+  dvector _rminus(1,nvar); dvector _rplus(1,nvar);
   dvector _thetaprime(1,nvar);
-  dvector _rminus(1,nvar);
-  dvector _rplus(1,nvar);
   // These are used inside NUTS by reference
+  int _nalphaprime, _nprime, _nfevals;
   double _alphaprime;
-  int _nalphaprime;
-  bool _sprime;
-  int _nprime;
-  int _nfevals;	   		// trajectory length
-  bool _divergent; // divergent transition
+  bool _sprime, _divergent;
   int ndivergent=0; // # divergences post-warmup
   int nsamples=0; // total samples, not always nmcmc if duration option used
   // Declare some local variables used below.
-  double nll, H0, logu, value, rn, alpha;
+  double H0, logu, value, rn, alpha;
   int n, j, v;
   bool s,b;
   // Mass matrix adapatation algorithm arguments
@@ -461,6 +444,18 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector s1(1,nvar); dvector s0(1,nvar);
   dvector m1(1,nvar); dvector m0(1,nvar);
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
+  // // Old code to test that I know what's going on.
+  // cout << "Starting from chd=" << chd << endl;
+  // cout << "Initial hbf new=" << gradient_structure::Hybrid_bounded_flag << endl;
+  // cout << "Initial hbf old=" << old_Hybrid_bounded_flag << endl;
+  // cout << "Initial bounded mle=" << mle << endl;
+  // cout << "Initial bounded parameters=" << z0 << endl;
+  // cout << "Initial unbounded parameters=" << y0 << endl;
+  // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
+  // cout << "Initial negative log density=" << nlltemp << endl;
+  // cout << "Initial gr in unbounded space= " << grtemp << endl;
+  // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
+  
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Randomize momentum for next iteration, update H, and reset the tree
@@ -482,12 +477,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
     // Generate single NUTS trajectory by repeatedly doubling build_tree
-    n = 1;
-    _nprime=0;
-    _divergent=0;
-    _nfevals=0;
-    s=1;
-    j=0;
+    _nprime=0; _divergent=0; _nfevals=0;
+    n=1; s=1; j=0;
     // Reset global ones to initial point of this trajectory
     thetaminus_end=theta; thetaplus_end=theta;
     rminus_end=p; rplus_end=p;

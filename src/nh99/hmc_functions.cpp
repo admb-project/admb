@@ -272,26 +272,41 @@ void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup, int
   if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
   if (is==1 || is == nmcmc || is % refresh ==0 ){
     int width=1+(int)std::ceil(std::log10(static_cast<double>(nmcmc)));
-    cout << "Chain " << chain << ", " << "Iteration: " << std::setw(width) << is
-	 << " / " << nmcmc << " [" << std::setw(3)
+    cout << "Chain " << chain << ": " << "Iteration: " << std::setw(width) << is
+	 << "/" << nmcmc << " [" << std::setw(3)
 	 << int(100.0 * (double(is) / double(nmcmc) ))
-	 << "%] " << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
+	 << "%]" << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
   }
 }
 
-void function_minimizer::print_mcmc_timing(double time_warmup, double start) {
+void function_minimizer::print_mcmc_timing(double time_warmup, double start, int chain) {
   double time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-  std::string title(" Elapsed Time: ");
-  std::stringstream ss;
-  ss.str("");
-  ss << title << time_warmup << " seconds (Warm-up)";
-  cout << ss.str() << endl;
-  ss.str("");
-  ss << std::string(title.size(), ' ') << time_total-time_warmup << " seconds (Sampling)";
-  cout << ss.str() << endl;
-  ss.str("");
-  ss << std::string(title.size(), ' ') << time_total << " seconds (Total)";
-  cout << ss.str() << endl;
+  double time_sampling=time_total-time_warmup;
+  std::string title= "Elapsed Time: ";
+  std::string title2="Chain " + std::to_string(chain) + ": ";
+  std::string u; // units
+  // Depending on how long it ran convert to sec/min/hour/days so
+  // the outputs are interpretable
+  if(time_total<=60){
+    u=" seconds";
+  } else if(time_total > 60 && time_total <=60*60){
+    time_total/=60; time_sampling/=60; time_warmup/=60;
+    u=" minutes";
+  } else if(time_total > (60*60) && time_total <= (360*24)){
+    time_total/=(60*60); time_sampling/=(60*60); time_warmup/=(60*60);
+    u=" hours";
+  } else {
+    time_total/=(24*60*60); time_sampling/=(24*60*60); time_warmup/=(24*60*60);
+    u=" days";
+  }
+  cout << title2 << title; printf("%.2f", time_warmup); cout << u << " (Warmup   | ";
+  printf("%.0f", 100*(time_warmup/time_total)); cout << "%)" << endl;
+  cout << title2 << std::string(title.size(), ' '); printf("%.2f", time_sampling);
+  cout  << u << " (Sampling | " ; 
+  printf("%.0f", 100*(time_sampling/time_total)); cout <<"%)" << endl;
+  cout << title2 << std::string(title.size(), ' '); printf("%.2f", time_total);
+  cout  << u << " (Total    | 100%)";
+  cout << endl;
 }
 
 // This function holds the position (y) and momentum (p) vectors fixed and

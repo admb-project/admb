@@ -386,10 +386,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   time_t now = time(0);
   tm* localtm = localtime(&now);
   std::string m=get_filename((char*)ad_comm::adprogram_name);
-  cout << endl << endl << "Starting NUTS for model '" << m <<
+  cout << endl << endl << "Chain " << chain << ": Starting NUTS for model '" << m <<
     "' at " << asctime(localtm);
   if(use_duration==1){
-    cout << "Model will run for " << duration/60 <<
+    cout << "Chain " << chain << ": Model will run for " << duration/60 <<
       " minutes or until " << nmcmc << " total iterations" << endl;
   }
   if(adapt_mass){
@@ -397,13 +397,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     if(warmup < 200){
       // Turn off if too few samples to properly do it. But keep using
       // diagonal efficiency.
-      cerr << "Warning: Mass matrix adaptation not allowed when warmup<200" << endl;
+      cerr << "Chain " << chain << ": Warning: Mass matrix adaptation not allowed when warmup<200" << endl;
       adapt_mass=0;
     } else {
-      cout << "Using diagonal mass matrix adaptation" << endl;
+      cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
     }
   }
-  cout << "Initial negative log density=" << nlltemp << endl;
+  cout << "Chain " << chain << ": Initial negative log density=" << nlltemp << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
@@ -646,7 +646,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     nsamples=is;
     if(use_duration==1 && time_total > duration){
       // If duration option used, break loop after <duration> minutes.
-      cout << is << " samples generated after " << duration/60 <<
+      cout << "Chain " << chain << ":" <<  is << " samples generated after " << duration/60 <<
 	" minutes running." << endl;
       break;
     }
@@ -654,13 +654,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   // Information about run
   if(ndivergent>0)
-    cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
+    cout << "Chain " << chain <<": There were " << ndivergent << " divergent transitions after warmup" << endl;
   if(useDA)
-    cout << "Final step size=" << eps << "; after " << warmup << " warmup iterations"<< endl;
-  cout << "Final acceptance ratio=";
+    cout << "Chain " << chain << ": Final step size=" << eps << "; after " << warmup << " warmup iterations"<< endl;
+  cout << "Chain " << chain << ": Final acceptance ratio=";
   printf("%.2f", alphasum /(nsamples-warmup));
   if(useDA) cout << ", and target=" << adapt_delta << endl; else cout << endl;
-  print_mcmc_timing(time_warmup, time_total);
+  print_mcmc_timing(time_warmup, time_total, chain);
 
   // Close .psv file connection
   if (pofs_psave) {

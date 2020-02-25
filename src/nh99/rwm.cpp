@@ -890,7 +890,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	    }
 	    print_mcmc_progress(i, number_sims, change_ball, chain);
 	  } // end of mcmc chain
-	print_mcmc_timing(time_warmup, time_total);
+	print_mcmc_timing(time_warmup, time_total, chain);
       }
       if (!no_sd_mcmc && !have_hist_flag)
 	{

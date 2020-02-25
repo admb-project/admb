@@ -356,7 +356,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
 
   time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-  print_mcmc_timing(time_warmup, time_total);
+  print_mcmc_timing(time_warmup, time_total, chain);
 
   // I assume this closes the connection to the file??
   if (pofs_psave)

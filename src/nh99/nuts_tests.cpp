@@ -572,7 +572,7 @@ void function_minimizer::nuts_test_mcmc_routine(int nmcmc,int iseed0,double dsca
   cout << "Final acceptance ratio=";
   printf("%.2f", alphasum /(nsamples-warmup));
   if(useDA) cout << ", and target=" << adapt_delta << endl; else cout << endl;
-  print_mcmc_timing(time_warmup, time_total);
+  print_mcmc_timing(time_warmup, time_total, chain);
 
   // I assume this closes the connection to the file??
   if (pofs_psave) {

@@ -1966,8 +1966,9 @@ public:
   void shmc_mcmc_routine(int,int,double,int);
   void nuts_mcmc_routine(int,int,double,int);
   void nuts_test_mcmc_routine(int,int,double,int);
+  void print_mcmc_timing(double, double, int);
   void print_mcmc_timing(double, double);
-   void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
+  void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
   double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose, int chain);
   bool stop_criterion(int nvar, dvector& thetaminus, dvector& thetaplus,
 		      dvector& rminus, dvector& rplus);

@@ -1955,7 +1955,7 @@ public:
   // Functions added by Cole for HMC.
   dvector rotate_pars(const dvector& m, const dvector& x);
   dvector rotate_pars(const dmatrix& m, const dvector& x);
-  dvector rotate_gradient(const dvector& x, const dmatrix& m);
+  dvector rotate_gradient(const dvector& x, const dmatrix& m); 
   int compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3);
   bool slow_phase(int is, int warmup, int w1, int w3);
   std::string get_filename(const char* f);
@@ -1965,7 +1965,6 @@ public:
   void rwm_mcmc_routine(int,int, double, int);
   void shmc_mcmc_routine(int,int,double,int);
   void nuts_mcmc_routine(int,int,double,int);
-  void nuts_test_mcmc_routine(int,int,double,int);
   void print_mcmc_timing(double time_warmup, double time_total, int chain);
   void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
   double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose, int chain);
@@ -1979,14 +1978,6 @@ public:
 		  int& _nprime, int& _nfevals, bool& _divergent,
 		  const random_number_generator& rng,
 		  dvector& gr2_end);
-  void build_tree_test(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
-		  dvector& y, dvector& gr2, double logu, int v, int j, double H0,
-		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
-		  dvector& _rplus, dvector& _rminus,
-		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
-		       int& _nprime, int& _nfevals, bool& _divergent,
-		       const random_number_generator& rng,
-		        ofstream& out);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
 		  double eps, dvector& p, dvector& y, dvector& gr2);
   double adapt_eps(int ii, double eps, double alpha,

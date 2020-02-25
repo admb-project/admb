@@ -33,6 +33,17 @@ ifeq ($(CMDSHELL),cmd)
     endif
     CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
+  ifeq ($(CXX),clang++)
+    ifneq ($(findstring clang++.exe,$(shell where clang++.exe 2>&1 | findstr clang++.exe)),clang++.exe)
+      $(warning "Warning: Unable to find clang++ compiler.")
+    endif
+    ifeq ($(findstring x86_64,$(shell $(CXX) -dumpmachine)),x86_64)
+      OSNAME=win64
+    else
+      OSNAME=win32
+    endif
+    CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
+  endif
   ifdef SHARED
   OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared,$(OBJSDIR))
   else

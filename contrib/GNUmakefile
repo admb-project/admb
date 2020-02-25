@@ -37,7 +37,11 @@ ifeq ($(CMDSHELL),cmd)
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix \lib,$(CONTRIB_DIR))
 else
-  UNAME_S := $(shell uname -s)
+  ifeq ($(OS),Windows_NT)
+    UNAME_S=_NT
+  else
+    UNAME_S := $(shell uname -s)
+  endif
   ifeq ($(UNAME_S),Linux)
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
       OSNAME=i686-linux

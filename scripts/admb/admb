@@ -130,7 +130,11 @@ if [ -z "$tpls" ]; then
     fi
   fi
 fi
-UNAME_S="`uname -s`"
+if [ "$OS" == "Windows_NT" ]; then
+  UNAME_S="_NT"
+else
+  UNAME_S="`uname -s`"
+fi
 if [ "$UNAME_S" == "Linux" ]; then
   if [ "$CXX" == "" ]; then
     CXX=g++
@@ -154,6 +158,13 @@ fi
 if [[ "$UNAME_S" =~ "_NT" ]]; then
   if [ "$CXX" == "" ]; then
     CXX=g++
+  fi
+  if [ "$CXX" == "clang++" ]; then
+    if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
+      OS_NAME=win64
+    else
+      OS_NAME=win32
+    fi
   fi
   if [ "$CXX" == "g++" ]; then
     if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then

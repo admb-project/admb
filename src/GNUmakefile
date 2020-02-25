@@ -70,10 +70,19 @@ else
     endif
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
-    ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-      OSNAME=mingw64
-    else
-      OSNAME=mingw32
+    ifeq ($(CXX),g++)
+      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+        OSNAME=mingw64
+      else
+        OSNAME=mingw32
+      endif
+    endif
+    ifeq ($(CXX),clang++)
+      ifeq ($(findstring x86_64,$(shell clang++ -dumpmachine)),x86_64)
+        OSNAME=win64
+      else
+        OSNAME=win32
+      endif
     endif
   endif
   ifndef OSNAME

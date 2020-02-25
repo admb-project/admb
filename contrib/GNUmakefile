@@ -57,17 +57,50 @@ else
     endif
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
-    ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-      OSNAME=mingw64
-    else
-      OSNAME=mingw32
+    ifeq ($(CXX),g++)
+      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+        OSNAME=mingw64
+      else
+        OSNAME=mingw32
+      endif
+    endif
+    ifeq ($(CXX),clang++)
+      ifeq ($(findstring x86_64,$(shell clang++ -dumpmachine)),x86_64)
+        OSNAME=win64
+      else
+        OSNAME=win32
+      endif
     endif
   endif
   ifeq ($(CXX),g++)
-  CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
+    ifeq ($(UNAME_S),Darwin)
+      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
+      CXXVERSION=-clang11
+      else
+        ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
+          CXXVERSION=-clang10
+        else
+          CXXVERSION=-clang
+        endif
+      endif
+    else
+      CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    endif
   endif
   ifeq ($(CXX),clang++)
-  CXXVERSION=-clang++$(basename $(basename $(shell g++ -dumpversion)))
+    ifeq ($(UNAME_S),Darwin)
+      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
+      CXXVERSION=-clang11
+      else
+        ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
+          CXXVERSION=-clang10
+        else
+          CXXVERSION=-clang
+        endif
+      endif
+    else
+      CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    endif
   endif
   ifeq ($(CXX),c++)
     ifeq ($(UNAME_S),Darwin)

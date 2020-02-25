@@ -661,7 +661,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   printf("%.2f", alphasum /(nsamples-warmup));
   if(useDA) cout << ", and target=" << adapt_delta << endl; else cout << endl;
   print_mcmc_timing(time_warmup, time_total, chain);
-
   // Close .psv file connection
   if (pofs_psave) {
     delete pofs_psave;

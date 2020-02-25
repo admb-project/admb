@@ -279,8 +279,7 @@ void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup, int
   }
 }
 
-void function_minimizer::print_mcmc_timing(double time_warmup, double start, int chain) {
-  double time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+void function_minimizer::print_mcmc_timing(double time_warmup, double time_total, int chain) {
   double time_sampling=time_total-time_warmup;
   std::string title= "Elapsed Time: ";
   std::string title2="Chain " + std::to_string(chain) + ": ";
@@ -299,12 +298,12 @@ void function_minimizer::print_mcmc_timing(double time_warmup, double start, int
     time_total/=(24*60*60); time_sampling/=(24*60*60); time_warmup/=(24*60*60);
     u=" days";
   }
-  cout << title2 << title; printf("%.2f", time_warmup); cout << u << " (Warmup   | ";
+  cout << title2 << title; printf("%5.2f", time_warmup); cout << u << " (Warmup   | ";
   printf("%.0f", 100*(time_warmup/time_total)); cout << "%)" << endl;
-  cout << title2 << std::string(title.size(), ' '); printf("%.2f", time_sampling);
+  cout << title2 << std::string(title.size(), ' '); printf("%5.2f", time_sampling);
   cout  << u << " (Sampling | " ; 
   printf("%.0f", 100*(time_sampling/time_total)); cout <<"%)" << endl;
-  cout << title2 << std::string(title.size(), ' '); printf("%.2f", time_total);
+  cout << title2 << std::string(title.size(), ' '); printf("%5.2f", time_total);
   cout  << u << " (Total    | 100%)";
   cout << endl;
 }

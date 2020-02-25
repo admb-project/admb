@@ -234,11 +234,11 @@ double function_minimizer::adapt_eps(int ii, double eps, double alpha,
    * Written by Dave, commented by Cole starting 8/31/2016
    * Description not yet available.
    * \param
-   * x is vector of Choleski decomposed parameters (i.e., x=y*chd).
+   * y is vector of Choleski rotated parameters (i.e., unbounded space;  y=chd*x where x is algorithm space).
    * g is a vector of empty gradients
-   * returns the negative log likelihood (density), but also stores gradients for x in g
+   * returns the negative log likelihood (density), but also stores gradients at y in g
    */
-double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independent_variables& x,dvector& g)
+double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independent_variables& y,dvector& g)
 {
   //initial_params::xinit(x);
   double f=0.0;
@@ -246,12 +246,11 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
     {
       cerr << "HMC not implemented for random effects models" << endl;
       ad_exit(1);
-      g=(*lapprox)(x,f,this);
     }
   else
     {
       dvariable vf=0.0;
-      dvar_vector vx=dvar_vector(x);
+      dvar_vector vx=dvar_vector(y);
       vf=initial_params::reset(vx);
       *objective_function_value::pobjfun=0.0;
       userfunction();
@@ -380,19 +379,19 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
    momentum variables. Returns nll value but also updates position and
    momentum variables by reference.
  **/
-double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p, dvector& y,
+double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p, dvector& x,
 				    dvector& gr2)
 {
-  independent_variables z(1,nvar); // bounded parameters
+  independent_variables y(1,nvar); // bounded parameters
   dvector phalf;
   // Update momentum by half step
   phalf=p-eps/2*gr2;
   // Update parameters by full step
-  y+=eps*phalf;
+  x+=eps*phalf;
   // Transform parameters via mass matrix to get new gradient
-  z=rotate_pars(chd,y);
+  y=rotate_pars(chd,x);
   // Get NLL and set updated gradient in gr by reference
-  double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+  double nll=get_hybrid_monte_carlo_value(nvar,y,gr);
   // Update gradient via mass matrix
   gr2=rotate_gradient(gr, chd);
   // Last half step for momentum
@@ -453,9 +452,10 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
 }
 
 // Function written by Dave to help speed up some of the MCMC
-// calculations. The code has chd*x which rotates the space but this is
-// often a vector or at least a lower triangular matrix. Thus we can make
-// it more efficient.
+// calculations. The code has chd*x which rotates the space but
+// this is often a vector or at least a lower triangular
+// matrix. Thus we can make it more efficient. Can go from x to
+// y, or y to x, depending on if you pass m=chd or m=inverse(chd)
 dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
 {
   if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())

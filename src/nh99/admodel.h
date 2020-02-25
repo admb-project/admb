@@ -1959,7 +1959,7 @@ public:
   int compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3);
   bool slow_phase(int is, int warmup, int w1, int w3);
   std::string get_filename(const char* f);
-  double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
+  double get_hybrid_monte_carlo_value(int nvar,const independent_variables& y,
     dvector& g);
   void read_mle_hmc(int nvar, dvector& mle);
   void rwm_mcmc_routine(int,int, double, int);
@@ -1979,7 +1979,7 @@ public:
 		  const random_number_generator& rng,
 		  dvector& gr2_end);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
-		  double eps, dvector& p, dvector& y, dvector& gr2);
+		  double eps, dvector& p, dvector& x, dvector& gr2);
   double adapt_eps(int ii, double eps, double alpha,
 		   double& adapt_delta, double& mu,
 		   dvector& epsvec, dvector& epsbar,

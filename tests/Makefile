@@ -48,4 +48,3 @@ verify:
 
 copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
-	pushd $(DESTDIR)\tests & $(MAKE) total-clean & popd

@@ -41,6 +41,7 @@ run:
 	pushd ukfsst& ukfsst
 
 total-clean:
+	@if exist kalmanfilter rmdir /s /q kalmanfilter
 	@if exist ukfsst rmdir /s /q ukfsst
 	@if exist trackit rmdir /s /q trackit
 	@if exist kftrack rmdir /s /q kftrack

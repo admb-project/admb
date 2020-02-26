@@ -46,6 +46,7 @@ else
 endif
 
 total-clean: clean
+	rm -rvf kalmanfilter
 	rm -rvf ukfsst
 	rm -rvf trackit
 	rm -rvf kftrack

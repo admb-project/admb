@@ -1977,7 +1977,8 @@ public:
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
 		  int& _nprime, int& _nfevals, bool& _divergent,
 		  const random_number_generator& rng,
-		  dvector& gr2_end);
+		  dvector& gr2_end, dvector& _grprime, dvector& _gr2prime, double& _nllprime,
+		  independent_variables& _parsaveprime);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
 		  double eps, dvector& p, dvector& x, dvector& gr2);
   double adapt_eps(int ii, double eps, double alpha,

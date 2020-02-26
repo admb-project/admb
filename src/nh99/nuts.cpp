@@ -424,7 +424,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // left and right points.
   dvector _thetaminus(1,nvar); dvector _thetaplus(1,nvar);
   dvector _rminus(1,nvar); dvector _rplus(1,nvar);
-  dvector _thetaprime(1,nvar);
+  // Hold temporary copies of these as new points are chosen to
+  // avoid recalculations at end of trajetory
+  dvector thetaprime(1,nvar); dvector _thetaprime(1,nvar);
+  dvector grprime(1,nvar); dvector _grprime(1,nvar);
+  dvector gr2prime(1,nvar); dvector _gr2prime(1,nvar);
+  double nllprime, _nllprime;
+  independent_variables parsaveprime(1,nvar);
+  independent_variables _parsaveprime(1,nvar);
+
   // These are used inside NUTS by reference
   int _nalphaprime, _nprime, _nfevals;
   double _alphaprime;
@@ -476,10 +484,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     _nprime=0; _divergent=0; _nfevals=0;
     n=1; s=1; j=0;
     // Reset global ones to initial point of this trajectory
-    thetaminus_end=theta; thetaplus_end=theta;
+    thetaminus_end=theta; thetaplus_end=theta; thetaprime=theta;
     rminus_end=p; rplus_end=p;
-    gr2minus_end=gr2; gr2plus_end=gr2;
-
+    gr2minus_end=gr2; gr2plus_end=gr2; gr2prime=gr2;
+    nllprime=nll; grprime=gr;
     while (s) {
       value = randu(rng);	   // runif(1)
       v = 2 * (value < 0.5) - 1;
@@ -497,7 +505,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng,
-		   gr2plus_end);
+		   gr2plus_end, _grprime, _gr2prime, _nllprime, _parsaveprime);
 	// Moved right, so update extreme right tree. Done by
 	// reference in gr2plus_end, which is the gradient at the
 	// rightmost point of the global trajectory.
@@ -509,7 +517,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng,
-		   gr2minus_end);
+		   gr2minus_end, _grprime, _gr2prime, _nllprime, _parsaveprime);
 	thetaminus_end=_thetaminus; rminus_end=_rminus;
       }
       // _thetaprime is the proposed point from that sample (drawn
@@ -518,8 +526,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // none are accepted, the same point is repeated twice.
       rn = randu(rng);	   // Runif(1)
       if (_sprime == 1 && rn < double(_nprime)/double(n)){
-	theta=_thetaprime; // rotated, unbounded
-	ynew=rotate_pars(chd,theta); // unbounded
+	thetaprime=_thetaprime; // rotated, unbounded
+	gr2prime=_gr2prime; //
+	nllprime=_nllprime;
+	parsaveprime=_parsaveprime;
+	ynew=rotate_pars(chd,thetaprime); // unbounded
       }
 
       // Test if a u-turn occured across the whole subtree j. Previously we
@@ -533,9 +544,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // Rerun model to update saved parameters internally before saving. Is
     // there a way to avoid doing this? I think I need to because of the
     // bounding functions??
-    nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);
-    gr2=rotate_gradient(gr, chd);
-    initial_params::copy_all_values(parsave,1.0);
+    nll=nllprime;
+    gr2=gr2prime;
+    theta=thetaprime;
+    parsave=parsaveprime;// initial_params::copy_all_values(parsave,1.0);
     // Write the rotated, unbounded, and bounded draws to csv files for
     // sampling draws only
     if(is>warmup){
@@ -589,6 +601,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
 	// Since chd changed need to refresh values and gradients
 	// in x space
+	nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);
 	theta=rotate_pars(chdinv,ynew);
 	gr2=rotate_gradient(gr, chd);
         // Reset the running variance calculation

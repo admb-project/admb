@@ -78,7 +78,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
 				    int& _nprime, int& _nfevals, bool& _divergent,
 				    const random_number_generator& rng,
-				    dvector& gr2_end) {
+				    dvector& gr2_end, dvector& _grprime, dvector& _gr2prime, double& _nllprime,
+				    independent_variables& _parsaveprime) {
 
   if (j==0) {
     // Take a single step in direction v from points p,y, which are updated
@@ -111,6 +112,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       _rminus = p;
       _thetaplus = y;
       _rplus = p;
+      _grprime=gr; _gr2prime=gr2; _nllprime=nll;
+      initial_params::copy_all_values(_parsaveprime,1.0);
     }
     _nalphaprime=1;
     _nfevals++;
@@ -120,18 +123,25 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
 	       _nprime, _nfevals, _divergent, rng,
-	       gr2_end);
+	       gr2_end, _grprime, _gr2prime, _nllprime, _parsaveprime);
     // If valid trajectory, build second half.
     if (_sprime == 1) {
       // Save copies of the global ones due to rerunning build_tree below
       // which will overwrite some of the global variables we need to
       // save. These are the ' versions of the paper, e.g., sprime'.
       dvector thetaprime0(1,nvar);
+      independent_variables parsaveprime0(1,nvar);
+      dvector gr2prime0(1,nvar); dvector grprime0(1,nvar);
+      double nllprime0;
       dvector thetaplus0(1,nvar);
       dvector thetaminus0(1,nvar);
       dvector rplus0(1,nvar);
       dvector rminus0(1,nvar);
       thetaprime0=_thetaprime;
+      parsaveprime0=_parsaveprime;
+      grprime0=_grprime;
+      gr2prime0=_gr2prime;
+      nllprime0=_nllprime;
       thetaplus0=_thetaplus;
       thetaminus0=_thetaminus;
       rplus0=_rplus;
@@ -146,7 +156,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng,
-		   gr2_end);
+		   gr2_end, _grprime, _gr2prime, _nllprime, _parsaveprime);
 	// Update the leftmost point
 	rminus0=_rminus;
 	thetaminus0=_thetaminus;
@@ -159,7 +169,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng,
-		   gr2_end);
+		   gr2_end, _grprime, _gr2prime, _nllprime, _parsaveprime);
 	// Update the rightmost point
 	rplus0=_rplus;
 	thetaplus0=_thetaplus;
@@ -179,6 +189,10 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       } else {
 	// Reject it for the proposal from the last doubling.
 	_thetaprime = thetaprime0;
+	_parsaveprime=parsaveprime0;
+	_grprime=grprime0;
+	_gr2prime=gr2prime0;
+	_nllprime=nllprime0;
       }
 
       // Update the global reference variables

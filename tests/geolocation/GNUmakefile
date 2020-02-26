@@ -56,5 +56,5 @@ ifeq ($(CMDSHELL),cmd)
 	pushd kalmanfilter & git restore * & popd
 else
 	cd kalmanfilter; git clean -f
-	cd kalmanfilter; git restore *
+	cd kalmanfilter; git checkout --
 endif

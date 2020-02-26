@@ -407,8 +407,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // bounding functions are applied) 
   theta=x0;
   independent_variables z(1,nvar);
-  independent_variables ytemp(1,nvar); // local copy of y
-  z=z0; ytemp=y0;
+  independent_variables ynew(1,nvar); // local copy of y
+  z=z0; ynew=y0;
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
   // Global variables to track the extreme left and rightmost nodes of the
@@ -462,12 +462,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // elements.
     p.fill_randn(rng);
     _rminus=p; _rplus=p;
+    // Note: theta, nll, gr, and gr2 are caried over from end of last loop
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
-    // Reset model parameters to theta, whether updated or not in previous
-    // iteration. (can skip this right??)
-    z=rotate_pars(chd, theta);
-    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    gr2=rotate_gradient(gr, chd);
     H0=-nll-0.5*norm2(p); // initial Hamiltonian value
     logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
@@ -518,7 +514,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	thetaminus_end=_thetaminus;
 	rminus_end=_rminus;
       }
-
       // _thetaprime is the proposed point from that sample (drawn
       // uniformly), but still need to detemine whether to accept it at
       // each doubling. The last accepted point becomes the next sample. If
@@ -526,7 +521,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       rn = randu(rng);	   // Runif(1)
       if (_sprime == 1 && rn < double(_nprime)/double(n)){
 	theta=_thetaprime; // rotated, unbounded
-	ytemp=rotate_pars(chd,theta); // unbounded
+	ynew=rotate_pars(chd,theta); // unbounded
       }
 
       // Test if a u-turn occured across the whole subtree j. Previously we
@@ -541,7 +536,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // Rerun model to update saved parameters internally before saving. Is
     // there a way to avoid doing this? I think I need to because of the
     // bounding functions??
-    nll=get_hybrid_monte_carlo_value(nvar,ytemp,gr);
+    nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);
+    gr2=rotate_gradient(gr, chd);
     initial_params::copy_all_values(parsave,1.0);
     // Write the rotated, unbounded, and bounded draws to csv files for
     // sampling draws only
@@ -549,11 +545,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       for(int i=1;i<nvar;i++) {
 	// rotated << theta(i) << ", ";
 	// bounded << parsave(i) << ", ";
-	unbounded << ytemp(i) << ", ";
+	unbounded << ynew(i) << ", ";
       }
       // rotated << theta(nvar) << endl;
       // bounded << parsave(nvar) << endl;
-      unbounded << ytemp(nvar) << endl;
+      unbounded << ynew(nvar) << endl;
     }
     (*pofs_psave) << parsave; // save all bounded draws to psv file
     // Estimated acceptance probability
@@ -584,7 +580,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // https://www.johndcook.com/blog/standard_deviation/
       if(is== w1){
         // Initialize algorithm from end of first fast window
-        m1 = ytemp;
+        m1 = ynew;
 	s1.initialize();
 	k = 1;
       } else if(is==anw){
@@ -593,7 +589,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	metric.initialize();
 	for(int i=1; i<=nvar; i++)
 	  metric(i,i) = s1(i)/(k-1);
-	// Update chd and current vectxor
+	// Update chd since metric changed
 	if(diagonal_metric_flag==0){
 	  chd = choleski_decomp(metric); // cholesky decomp of mass matrix
 	  chdinv=inv(chd);
@@ -606,9 +602,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    chdinv(i,i)=1/chd(i,i);
 	  }
 	}
-	theta=rotate_pars(chdinv,ytemp);
+	// Since chd changed need to refresh values and gradients
+	// in x space
+	theta=rotate_pars(chdinv,ynew);
+	gr2=rotate_gradient(gr, chd);
         // Reset the running variance calculation
-        k = 1; m1 = ytemp; s1.initialize();
+        k = 1; m1 = ynew; s1.initialize();
         // Calculate the next end window. If this overlaps into the final fast
         // period, it will be stretched to that point (warmup-w3)
 	aws *=2;
@@ -622,8 +621,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
         k = k+1; m0 = m1; s0 = s1;
         // Update M and S
 	for(int i=1; i<=nvar; i++){
-	  m1(i) = m0(i)+(ytemp(i)-m0(i))/k;
-	  s1(i) = s0(i)+ (ytemp(i)-m0(i))*(ytemp(i)-m1(i));
+	  m1(i) = m0(i)+(ynew(i)-m0(i))/k;
+	  s1(i) = s0(i)+ (ynew(i)-m0(i))*(ynew(i)-m1(i));
 	}
       }
     }

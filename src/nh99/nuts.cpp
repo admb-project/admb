@@ -501,8 +501,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// Moved right, so update extreme right tree. Done by
 	// reference in gr2plus_end, which is the gradient at the
 	// rightmost point of the global trajectory.
-	thetaplus_end=_thetaplus;
-	rplus_end=_rplus;
+	thetaplus_end=_thetaplus; rplus_end=_rplus;
       } else {
 	// Same but to the left from thetaminus
 	gr2=gr2minus_end;
@@ -511,8 +510,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng,
 		   gr2minus_end);
-	thetaminus_end=_thetaminus;
-	rminus_end=_rminus;
+	thetaminus_end=_thetaminus; rminus_end=_rminus;
       }
       // _thetaprime is the proposed point from that sample (drawn
       // uniformly), but still need to detemine whether to accept it at
@@ -529,8 +527,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       b= stop_criterion(nvar, thetaminus_end, thetaplus_end, rminus_end, rplus_end);
       s = _sprime*b;
       // Increment valid points and depth
-      n += _nprime;
-      ++j;
+      n += _nprime; ++j;
       if(j>=max_treedepth) break;
     } // end of single NUTS trajectory
     // Rerun model to update saved parameters internally before saving. Is
@@ -542,24 +539,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // Write the rotated, unbounded, and bounded draws to csv files for
     // sampling draws only
     if(is>warmup){
-      for(int i=1;i<nvar;i++) {
-	// rotated << theta(i) << ", ";
-	// bounded << parsave(i) << ", ";
-	unbounded << ynew(i) << ", ";
-      }
-      // rotated << theta(nvar) << endl;
-      // bounded << parsave(nvar) << endl;
+      for(int i=1;i<nvar;i++) unbounded << ynew(i) << ", ";
       unbounded << ynew(nvar) << endl;
     }
     (*pofs_psave) << parsave; // save all bounded draws to psv file
-    // Estimated acceptance probability
+    // Calculate estimated acceptance probability
      alpha=0;
-    if(_nalphaprime>0){
-      alpha=double(_alphaprime)/double(_nalphaprime);
-    }
+    if(_nalphaprime>0) alpha=double(_alphaprime)/double(_nalphaprime);
     if(is > warmup){
-      // Increment divergences only after warmup
-      if(_divergent==1) ndivergent++;
+      if(_divergent==1) ndivergent++;  // Increment divergences only after warmup
       // running sum of alpha to calculate average acceptance rate below
       alphasum+=alpha;
     }
@@ -580,9 +568,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // https://www.johndcook.com/blog/standard_deviation/
       if(is== w1){
         // Initialize algorithm from end of first fast window
-        m1 = ynew;
-	s1.initialize();
-	k = 1;
+        m1 = ynew; s1.initialize(); k = 1;
       } else if(is==anw){
         // If at end of adaptation window, update the mass matrix to the
         // estimated variances
@@ -595,8 +581,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  chdinv=inv(chd);
 	} else {
 	  // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
-	  chd.initialize();
-	  chdinv.initialize();
+	  chd.initialize(); chdinv.initialize();
 	  for(int i=1;i<=nvar;i++){
 	    chd(i,i)=sqrt(metric(i,i));
 	    chdinv(i,i)=1/chd(i,i);
@@ -626,8 +611,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
       }
     }
-
-
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
     print_mcmc_progress(is, nmcmc, warmup, chain);

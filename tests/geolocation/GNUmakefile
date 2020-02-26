@@ -53,8 +53,7 @@ total-clean: clean
 	rm -rvf kfsst
 clean:
 ifeq ($(CMDSHELL),cmd)
-	pushd kalmanfilter & git clean -f & popd
-	pushd kalmanfilter & git restore * & popd
+	if exist kalmanfilter pushd kalmanfilter & git clean -f & git checkout -- . &  popd
 else
 	cd kalmanfilter; git clean -f
 	cd kalmanfilter; git checkout --

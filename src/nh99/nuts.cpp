@@ -391,15 +391,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Get NLL and gradient in unbounded space for initial value y0.
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// gradients in rotated space
+  std::clock_t start0 = clock();
   double nll=get_hybrid_monte_carlo_value(nvar,y0,gr);
+  double time_gradient = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;
   gr2=rotate_gradient(gr, chd);
   // Can now inverse rotate y0 to be x0 (algorithm space)
   independent_variables x0(1,nvar); // inits in algorithm space
   x0=rotate_pars(chdinv,y0); 
   // Now have z0, y0, x0, objective fn value, gradients in
   // unbounded and rotated space all at the intial value.
-  cout << "Chain " << chain << ": Initial negative log density=" << nll << endl;
-  
+  cout << "Chain " << chain << ": Initial negative log density= " << nll << endl;
+  cout << "Chain " << chain << ": Gradient eval took " << time_gradient <<
+    " sec. " << nmcmc << " iter w/ 100 steps would take " ;
+  printf("%.2f", nmcmc*100*time_gradient); cout << " sec." << endl;
   // Now initialize these into the algorithm arguments needed.
   independent_variables theta(1,nvar);
   // kind of a misnomer here: theta is in "x" or algorithm space

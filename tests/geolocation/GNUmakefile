@@ -11,7 +11,7 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-default: kalmanfilter 
+default: kalmanfilter
 ifeq ($(CMDSHELL),cmd)
 	pushd kalmanfilter\\kfsst\\kfsst\\source & ..\\..\\..\\..\\..\\..\\admb.cmd kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
 	pushd kalmanfilter\\kftrack\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
@@ -45,4 +45,16 @@ else
 	@# cd kalmanfilter/testdir/ukfsst; cp ../../ukfsst/inst/admb/src/ukfsst .; ./ukfsst
 endif
 
+total-clean: clean
+	rm -rvf ukfsst
+	rm -rvf trackit
+	rm -rvf kftrack
+	rm -rvf kfsst
 clean:
+ifeq ($(CMDSHELL),cmd)
+	pushd kalmanfilter & git clean -f & popd
+	pushd kalmanfilter & git restore * & popd
+else
+	cd kalmanfilter; git clean -f
+	cd kalmanfilter; git restore *
+endif

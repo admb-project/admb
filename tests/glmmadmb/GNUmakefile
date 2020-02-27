@@ -15,7 +15,10 @@ all: rforge-glmmadmb
 ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --file=Makefile all
 else
-	$(MAKE) glmmadmb nbmm bvprobit admb_tests
+	$(MAKE) glmmadmb
+	$(MAKE) nbmm
+	$(MAKE) bvprobit
+	$(MAKE) admb_tests
 	$(MAKE) run
 endif
 

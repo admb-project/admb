@@ -77,6 +77,7 @@ endif
 total-clean: clean
 ifeq ($(CMDSHELL),cmd)
 else
+	@rm -rvf rforge-glmmadmb
 	@rm -rvf admb_tests
 	@rm -vf bvprobit.tpl
 	@rm -vf glmmadmb.tpl

@@ -48,3 +48,14 @@ else
 	cat agemat.std
 	cat Echo.Out
 endif
+
+total-clean: clean
+ifeq ($(CMDSHELL),cmd)
+	@if exist rforge-nwfscassmt rmdir /s /q rforge-nwfscassmt
+	del agemat.dat
+	del agemat.tpl
+else
+	rm -rf rforge-nwfscassmt
+	rm -vf agemat.dat
+	rm -vf agemat.tpl
+endif

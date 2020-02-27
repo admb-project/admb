@@ -224,48 +224,56 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! /D_USE_MATH_DEFINES /I. /I"!ADMB_HOME!\include"
   )
 ) else (
-  if not defined CXX (
-    set CXX=g++
-  )
-  if not defined LD (
-    if not defined d (
-      set LD=g++
-    ) else (
-      set LD=g++
+  if "!CXX!"=="clang++" (
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
+      set CXXMAJORNUMBER=-clang++9
+      set STDCXX=-std=c++11
     )
-  )
-  where /Q !CXX!
-  if errorlevel 1 (
-    if exist "!ADMB_HOME!\utilities\mingw\bin\g++.exe" (
-      set "PATH=!ADMB_HOME!\utilities\mingw\bin;!PATH!"
-    ) else (
-      echo Error: Unable to find !CXX!
-      exit /B 1
+    set LD=clang++
+  ) else (
+    if not defined CXX (
+      set CXX=g++
     )
-  )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 4.') do (
-    set CXXMAJORNUMBER=-g++4
-    set STDCXX=-std=c++11
-  )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 5.') do (
-    set CXXMAJORNUMBER=-g++5
-    set STDCXX=-std=c++14
-  )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 6.') do (
-    set CXXMAJORNUMBER=-g++6
-    set STDCXX=-std=c++14
-  )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 7.') do (
-    set CXXMAJORNUMBER=-g++7
-    set STDCXX=-std=c++14
-  )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 8.') do (
-    set CXXMAJORNUMBER=-g++8
-    set STDCXX=-std=c++14
-  )
-  for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
-    set CXXMAJORNUMBER=-g++9
-    set STDCXX=-std=c++14
+    if not defined LD (
+      if not defined d (
+        set LD=g++
+      ) else (
+        set LD=g++
+      )
+    )
+    where /Q !CXX!
+    if errorlevel 1 (
+      if exist "!ADMB_HOME!\utilities\mingw\bin\g++.exe" (
+        set "PATH=!ADMB_HOME!\utilities\mingw\bin;!PATH!"
+      ) else (
+        echo Error: Unable to find !CXX!
+        exit /B 1
+      )
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 4.') do (
+      set CXXMAJORNUMBER=-g++4
+      set STDCXX=-std=c++11
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 5.') do (
+      set CXXMAJORNUMBER=-g++5
+      set STDCXX=-std=c++14
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 6.') do (
+      set CXXMAJORNUMBER=-g++6
+      set STDCXX=-std=c++14
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 7.') do (
+      set CXXMAJORNUMBER=-g++7
+      set STDCXX=-std=c++14
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 8.') do (
+      set CXXMAJORNUMBER=-g++8
+      set STDCXX=-std=c++14
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
+      set CXXMAJORNUMBER=-g++9
+      set STDCXX=-std=c++14
+    )
   )
   if defined CXXFLAGS (
     set CXXFLAGS= -c !STDCXX! !CXXFLAGS!
@@ -290,11 +298,22 @@ if "!CXX!"=="cl" (
   ) else (
     set CXXFLAGS=!CXXFLAGS! -O3
   )
-  for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
-    set CXXVERSION=-mingw32!CXXMAJORNUMBER!
-  )
-  for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
-    set CXXVERSION=-mingw64!CXXMAJORNUMBER!
+  if "!CXX!"=="clang++" (
+    for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
+       set CXXVERSION=-win32!CXXMAJORNUMBER!
+     )
+     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
+       set CXXVERSION=-win64!CXXMAJORNUMBER!
+     )
+  ) else (
+    if "!CXX!"=="g++" (
+      for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
+        set CXXVERSION=-mingw32!CXXMAJORNUMBER!
+      )
+      for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
+        set CXXVERSION=-mingw64!CXXMAJORNUMBER!
+      )
+    )
   )
   if defined g (
     if defined fast (

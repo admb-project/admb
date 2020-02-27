@@ -346,10 +346,8 @@ copy:
 ifeq ($(CMDSHELL),cmd)
 	if not exist $(DIST)\tests md $(DIST)\tests
 	xcopy ..\tests $(DIST)\tests /S /Y /D
-	$(MAKE) --directory=$(DIST)\tests total-clean
 else
 	cp -Rvf ../tests $(DIST)
-	$(MAKE) --directory=$(DIST)/tests total-clean
 endif
 
 outputs:

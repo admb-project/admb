@@ -11,7 +11,12 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-all: gamm1 testgamm
+all: clean
+	$(MAKE) gamm1
+	$(MAKE) testgamm
+	$(MAKE) run
+
+run:
 ifeq ($(CMDSHELL),cmd)
 	gamm1
 	testgamm

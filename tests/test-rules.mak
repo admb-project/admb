@@ -11,7 +11,8 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-all: clean $(TARGET) run
+all: clean
+	$(MAKE) run
 
 $(TARGET): $(TARGET).tpl
 ifeq ($(CMDSHELL),cmd)
@@ -20,7 +21,7 @@ else
 	../../admb$(EXT) $(TARGET) $(SRCS)
 endif
 
-run:
+run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
 	$(TARGET)
 else

@@ -196,6 +196,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-verbose_adapt_mass"))>-1) {
     verbose_adapt_mass=1;
   }
+  // Whether to print diagnostic information
+  int diagnostic_flag=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nutsdiagnostic"))>-1) {
+    diagnostic_flag=1;
+  }
   // Restart chain from previous run?
   int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
   if(mcrestart_flag > -1){
@@ -397,9 +402,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   gr2=rotate_gradient(gr, chd);
   // Can now inverse rotate y0 to be x0 (algorithm space)
   independent_variables x0(1,nvar); // inits in algorithm space
-  x0=rotate_pars(chdinv,y0); 
+  x0=rotate_pars(chdinv,y0);
   // Now have z0, y0, x0, objective fn value, gradients in
-  // unbounded and rotated space all at the intial value.
+  // unbounded (y) and rotated (x) space all at the intial value.
   cout << "Chain " << chain << ": Initial negative log density= " << nll << endl;
   cout << "Chain " << chain << ": Gradient eval took " << time_gradient <<
     " sec. " << nmcmc << " iter w/ 100 steps would take " ;
@@ -456,18 +461,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector s1(1,nvar); dvector s0(1,nvar);
   dvector m1(1,nvar); dvector m0(1,nvar);
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
-  // // Old code to test that I know what's going on.
-  // cout << "Starting from chd=" << chd << endl;
-  // cout << "Initial hbf new=" << gradient_structure::Hybrid_bounded_flag << endl;
-  // cout << "Initial hbf old=" << old_Hybrid_bounded_flag << endl;
-  // cout << "Initial bounded mle=" << mle << endl;
-  // cout << "Initial bounded parameters=" << z0 << endl;
-  // cout << "Initial unbounded parameters=" << y0 << endl;
-  // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
-  // cout << "Initial negative log density=" << nlltemp << endl;
-  // cout << "Initial gr in unbounded space= " << grtemp << endl;
-  // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
-  
+  if(diagnostic_flag){
+    cout << "Initial chd=" << chd << endl;
+    cout << "Initial negative log density=" << nll << endl;
+    cout << "Initial gr in unbounded space= " << gr << endl;
+    cout << "Initial gr in rotated space= " << gr2 << endl;
+    cout << "Initial bounded parameters=" << z0 << endl;
+    cout << "Initial unbounded parameters=" << y0 << endl;
+    cout << "Initial rotated, unbounded parameters=" << x0 << endl;
+  }
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Randomize momentum for next iteration, update H, and reset the tree

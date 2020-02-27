@@ -719,18 +719,29 @@ install:
 ifeq ($(INSTALL_DIR),/usr/local/)
 	find ../build/admb -type d -exec chmod 755 {} \;
 	find ../build/admb -type f -exec chmod 644 {} \;
+  ifeq ($(OS),Windows_NT)
+	chmod a+rx ../build/admb/bin/admb.cmd
+	chmod a+rx ../build/admb/bin/admb.sh
+	chmod a+rx ../build/admb/bin/adlink.cmd
+	chmod a+rx ../build/admb/bin/adcomp.cmd
+	chmod a+rx ../build/admb/bin/tpl2cpp.exe
+	chmod a+rx ../build/admb/bin/tpl2rem.exe
+  else
 	chmod a+rx ../build/admb/bin/admb
 	chmod a+rx ../build/admb/bin/adlink
 	chmod a+rx ../build/admb/bin/adcomp
 	chmod a+rx ../build/admb/bin/tpl2cpp
 	chmod a+rx ../build/admb/bin/tpl2rem
+  endif
 	chmod a+r ../build/admb/bin/sed*
 	chmod a+r ../build/admb/include/*.*
 	chmod a+r ../build/admb/include/contrib/*.*
 endif
-	cp -Rvf ../build/admb $(INSTALL_DIR)admb
+	cp -Rvf ../build/admb $(INSTALL_DIR)
 ifeq ($(INSTALL_DIR),/usr/local/)
+  ifneq ($(OS),Windows_NT)
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
+  endif
 endif
 
 copy:

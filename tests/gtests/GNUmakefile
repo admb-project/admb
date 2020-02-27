@@ -163,7 +163,10 @@ endif
 # df1b2atan2.obj\
 # scalefactor.obj\
 
-all: clean gtest-all
+all: clean
+	$(MAKE) run
+
+run: gtest-all
 ifeq ($(CMDSHELL),cmd)
 	gtest-all
 else

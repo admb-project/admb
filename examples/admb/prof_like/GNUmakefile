@@ -13,7 +13,8 @@ endif
 
 TARGET=bhplfine
 
-all: clean $(TARGET) run
+all: clean
+	$(MAKE) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
 ifeq ($(CMDSHELL),cmd)
@@ -22,7 +23,7 @@ else
 	../../../admb$(EXT) $(TARGET)
 endif
 
-run:
+run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -lprof
 else

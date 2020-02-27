@@ -15,7 +15,9 @@ TARGET=priors
 TPL_TARGET=rat
 TPL_TARGETRE=ratre
 
-all: clean run runre
+all: clean
+	$(MAKE) run
+	$(MAKE) runre
 
 run: $(TPL_TARGET)
 ifeq ($(CMDSHELL),cmd)

@@ -537,7 +537,7 @@ dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
 	double* pm = (double*)&column(j);
 	double* px = (double*)&x(j);
 	double sum = *px * *pm;
-	for (int i=j; i <= mmax; ++i)
+	for (int i=j; i < mmax; ++i)
 	  {
 	    sum += *(++px) * *(++pm);
 	  }

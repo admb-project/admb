@@ -125,6 +125,7 @@ GTESTS_ALL=\
  test_vector.cpp\
  test_xpools.cpp\
  test_issues.cpp\
+ test_funnel.cpp\
  main.cpp
 
 GTESTS_NEW=\

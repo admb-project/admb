@@ -77,6 +77,7 @@ else
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).luu
 	@rm -vf $(TARGET).rhes
+	@rm -vf $(TARGET).[bpr]01
 	@rm -vf eigv.rpt
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

@@ -258,7 +258,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // For now turning this off. Might be easier and more reliable
     // to force user to rerun the model with the right hbf.
     cerr << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
-      endl << "...Rerun model with '-hbf 1' and try again" << endl;
+      endl << "...Rerun model with '-hbf' and try again" << endl;
     ad_exit(1);
     // cout << "Rescaling covariance matrix b/c scales don't match" << endl;
     // cout << "old scale=" <<  old_scale << endl;

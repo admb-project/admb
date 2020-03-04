@@ -69,7 +69,7 @@ TEST_F(test_funnels, simple)
   dvariable tmp;
   tmp = regression(y,yhat);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 14);
+  ASSERT_TRUE(gradient_structure::GRAD_STACK1->total() >= 13);
 
   Integral = tmp;
 

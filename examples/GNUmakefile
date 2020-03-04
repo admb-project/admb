@@ -50,7 +50,6 @@ ADMB_TPLS=\
 ADMB_RE_TPLS=\
  bcb\
  biglog\
- bvprobit\
  glmmadmb\
  caest\
  gamma\
@@ -73,7 +72,10 @@ ADMB_RE_TPLS=\
 
 default: simple
 
-all: admb admb-re autodif
+all: clean
+	$(MAKE) admb
+	$(MAKE) admb-re
+	$(MAKE) autodif
 
 admb: $(ADMB_TPLS)
 
@@ -198,7 +200,7 @@ else
 	cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 endif
 
-glmmadmb:
+glmmadmb: bvprobit
 ifeq ($(CMDSHELL),cmd)
 	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ -maxph 5 -noinit -shess -crit 1.e-6 && popd
 else

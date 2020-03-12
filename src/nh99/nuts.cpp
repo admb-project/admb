@@ -458,6 +458,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int n, j, v;
   bool s,b;
   // Mass matrix adapatation algorithm arguments
+  double sumProducts = 0.;
+  double xMean = 0.;
+  double yMean = 0.;
   int k=0;
   int w1 = 75; int w2 = 50; int w3 = 25;
   int aws = w2; // adapt window size
@@ -592,6 +595,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       if(is== w1){
         // Initialize algorithm from end of first fast window
         m1 = ynew; s1.initialize(); k = 1;
+      } else if(is<anw){
+        k = k+1; m0 = m1; s0 = s1;
+        // Update M and S
+	for(int i=1; i<=nvar; i++){
+	  m1(i) = m0(i)+(ynew(i)-m0(i))/k;
+	  s1(i) = s0(i)+ (ynew(i)-m0(i))*(ynew(i)-m1(i));
+	}
       } else if(is==anw){
         // If at end of adaptation window, update the mass matrix to the
         // estimated variances
@@ -627,12 +637,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  cout << is << ": "<< ", eps=" << eps << endl;
 	}
       } else {
-        k = k+1; m0 = m1; s0 = s1;
-        // Update M and S
-	for(int i=1; i<=nvar; i++){
-	  m1(i) = m0(i)+(ynew(i)-m0(i))/k;
-	  s1(i) = s0(i)+ (ynew(i)-m0(i))*(ynew(i)-m1(i));
-	}
+	cerr << "error in adaptation" << endl;
+	ad_exit(1);
       }
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","

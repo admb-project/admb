@@ -325,9 +325,10 @@ void function_minimizer::print_mcmc_timing(double time_warmup, double time_total
 // takes a single step of size eps. This process repeats until a reasonable
 // eps is found. Thus need to make sure y and p are constant and only eps
 // changes.
-double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose, int chain)
+double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd,
+						    bool verbose_adapt_mass, bool verbose_find_epsilon,
+						    int chain)
 {
-
   double eps=1;			   // initial eps
   independent_variables z(1,nvar); // rotated bounded parameters
   dvector p2(1,nvar);		// updated momentum
@@ -360,6 +361,10 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   }
 
   for(int k=2; k<50; k++){
+    if(verbose_find_epsilon){
+      cout << "Chain " << chain <<  ": Find epsilson: iteration=" << k-1 << "; eps=" << eps << "; NLL1=" << nllbegin << "; p1=" << pprob1 << "; H1=" << H1 <<
+	"; NLL2=" << nll2 << "; p2=" << pprob2 <<"; H2=" << H2<< "; alpha=" << alpha << endl;
+    }
     // Reinitialize position and momentum at each step.
     p2=p;
     y2=y;
@@ -372,16 +377,20 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
     alpha=exp(H1-H2);
 
     // Check if the 1/2 threshold has been crossed
-    if(pow(alpha,a) < pow(2,-a)){
-      if(verbose){
-	cout << "Chain " << chain << ": Found reasonable step size of " << eps << endl;
+    if(!std::isnan(alpha) && pow(alpha,a) < pow(2,-a)){
+      if(verbose_find_epsilon){
+	cout << "Chain " << chain <<  ": Final epsilson: iteration=" << k << "; eps=" << eps << "; NLL1=" << nllbegin << "; p1=" << pprob1 << "; H1=" << H1 <<
+	  "; NLL2=" << nll2 << "; p2=" << pprob2 <<"; H2=" << H2<< "; alpha=" << alpha << endl;
       }
+      if(verbose_adapt_mass) {cout << "Chain " << chain << ": Found reasonable step size of " << eps << endl;}
       return(eps);
     } else {
       // Otherwise either halve or double eps and do another iteration
       eps=pow(2,a)*eps;
     }
   }
+  cerr << "Chain " << chain <<": Final epsilson: iteration=" << 50 << "; eps=" << eps << "; NLL1=" << nllbegin << "; p1=" << pprob1 << "; H1=" << H1 <<
+  	"; NLL2=" << nll2 << "; p2=" << pprob2 <<"; H2=" << H2<< "; alpha=" << alpha << endl;
   cerr << "Chain " << chain << ": Could not find reasonable initial step size. Is something wrong with model/initial value?" << endl;
   ad_exit(1);
   return(eps); // dummy to avoid compile warnings

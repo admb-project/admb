@@ -196,6 +196,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-verbose_adapt_mass"))>-1) {
     verbose_adapt_mass=1;
   }
+  // Whether to print diagnostic info inside find_reasonable_stepsize function
+  int verbose_find_epsilon=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-verbose_find_epsilon"))>-1) {
+    verbose_find_epsilon=1;
+  }
   // Whether to print diagnostic information
   int diagnostic_flag=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nutsdiagnostic"))>-1) {
@@ -482,7 +487,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
-      eps=find_reasonable_stepsize(nvar,theta,p,chd,true, chain);
+      eps=find_reasonable_stepsize(nvar,theta,p,chd,true, verbose_find_epsilon, chain);
       mu=log(10*eps);
       epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
     }
@@ -617,7 +622,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	aws *=2;
         anw = compute_next_window(is, anw, warmup, w1, aws, w3);
 	// Refind a reasonable step size since it can be really different after changing M
-	eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, chain);
+	eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
 	if(verbose_adapt_mass){
 	  cout << is << ": "<< ", eps=" << eps << endl;
 	}

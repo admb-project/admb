@@ -620,7 +620,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	} else {
 	  // dense metric
 	  metric=adm2/(is3-1);
-	  cout << metric << endl;
 	  if(verbose_adapt_mass==1){
 	    dvector tmp=diagonal(metric);
 	    cout << "Chain " << chain << ": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
@@ -628,7 +627,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	}
 	// Update chd and chdinv by reference, since metric changed
 	calculate_chd_and_inverse(nvar, metric, chd, chdinv);
-	cout << chd << endl;
 	// Since chd changed need to refresh values and gradients
 	// in x space
 	nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);

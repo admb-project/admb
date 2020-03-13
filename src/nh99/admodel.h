@@ -1953,6 +1953,10 @@ public:
   void hybrid_mcmc_routine(int,int,double,int);
 
   // Functions added by Cole for HMC.
+  void add_sample_diag(const int nvar, int& n, dvector& m, dvector& m2,
+		       const independent_variables& q);
+  void add_sample_dense(const int nvar, int& is2, dvector& m, dmatrix& m2,
+			const independent_variables& q);
   dvector rotate_pars(const dvector& m, const dvector& x);
   dvector rotate_pars(const dmatrix& m, const dvector& x);
   dvector rotate_gradient(const dvector& x, const dmatrix& m); 

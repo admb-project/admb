@@ -566,3 +566,49 @@ dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
   }
   return(tmp);
 }
+
+/**
+ * Calculate running covariance using Welford's "online" algorithm
+ * \param
+ * n is a count of samples
+ * m is a running vector of means (initialized at 0)
+ * m2 is a running matrix of unscaled covariance (initalized
+ * at 0)
+ * q is a vector of the new parameters used to update
+ * returns updated n, m, and m2 via reference
+ * m2/(n-1) is the covariance through n samples
+ * this is loosely based off of Stan's algorithm: welford_covar_estimator.hpp
+ */
+void function_minimizer::add_sample_diag(const int nvar, int& n, dvector& m, dvector& m2,
+					  const independent_variables& q) {
+  n++;
+  //convert q to dvector ( better way to do this?)
+  dvector aq(1,nvar);
+  aq=q;
+  dvector delta=aq - m;
+  m += delta / n;
+  m2 += elem_prod(aq-m, delta);
+}
+
+/**
+ * Calculate running covariance using Welford's "online" algorithm
+ * \param
+ * n is a count of samples
+ * m is a running vector of means (initialized at 0)
+ * m2 is a running vector of unscaled variances (initalized
+ * at 0)
+ * q is a vector of the new parameters used to update
+ * returns updated n, m, and m2 via reference
+ * m2/(n-1) is the covariance through n samples
+ * this is loosely based off of Stan's algorithm: welford_covar_estimator.hpp
+ */
+void function_minimizer::add_sample_dense(const int nvar, int& n, dvector& m, dmatrix& m2,
+					  const independent_variables& q) {
+  n++;
+  //convert q to dvector ( better way to do this?)
+  dvector aq(1,nvar);
+  aq=q;
+  dvector delta=aq - m;
+  m += delta / n;
+  m2 += outer_prod(aq-m, delta);
+}

@@ -1,3 +1,4 @@
+
 // $Id$
 /**
  * @file nuts.cpp
@@ -457,16 +458,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double H0, logu, value, rn, alpha;
   int n, j, v;
   bool s,b;
-  // Mass matrix adapatation algorithm arguments
+  // Mass matrix adapatation algorithm arguments for diagonal
   dvector am(1,nvar);
-  dmatrix am2(1,nvar,1,nvar);
-  dmatrix tmp(1,nvar, 1,nvar);
-  dvector tmp2(1,nvar);
-  dvector aq(1,nvar);
-  dvector adelta(1,nvar);
-
-  int is2=0;
-
+  dvector am2(1,nvar);
+  // and dense
+  dvector adm(1,nvar);
+  dmatrix adm2(1,nvar,1,nvar);
+  int is2=0; int is3=0;
   int k=0;
   int w1 = 75; int w2 = 50; int w3 = 25;
   int aws = w2; // adapt window size
@@ -603,9 +601,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
         m1 = ynew; s1.initialize(); k = 1;
 	am.initialize();
 	am2.initialize();
-	is2=0;
+	adm.initialize();
+	adm2.initialize();
+	is2=0; is3=0;
       } else if(is<anw){
-	cout << "is=" << is << endl;
 	// Update estimates of covariance
         k = k+1; m0 = m1; s0 = s1;
         // Update M and S
@@ -614,29 +613,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  s1(i) = s0(i)+ (ynew(i)-m0(i))*(ynew(i)-m1(i));
 	}
 	// dense way
-	is2++;
-	aq=ynew;
-	adelta=ynew - am;
-	am += adelta / is2;
-	tmp2=ynew-am;
-	for(int i=1; i<=nvar; i++){
-	  for(int j=1; j<=nvar; j++){
-	    // this is cross product tmp2 %*% t(adelta)
-	    tmp(i,j)=tmp2(j)*adelta(i);
-	  }
-	}
-	am2 = am2 + tmp;
+	
+	add_sample_diag(nvar, is2, am, am2, ynew);
+	add_sample_dense(nvar, is3, adm, adm2, ynew);
       } else if(is==anw){
-	cout << "am=" << am << "; am2=" << am2 <<
-	  "; delta=" << adelta << "; is2=" << is2 << endl;
-	cout << " calc= " << tmp << endl;
-	cout << "new way=" << am2/(is2-1) << endl;
-	cout << "old way=" << s1(1)/(k-1) << " " <<  s1(2)/(k-1) << endl;
         // If at end of adaptation window, update the mass matrix to the
         // estimated variances
 	metric.initialize();
-	for(int i=1; i<=nvar; i++)
-	  metric(i,i) = s1(i)/(k-1);
+	for(int i=1; i<=nvar; i++){
+	  metric(i,i) = s1(i)/(k);
+	  cout << metric(i,i) << " ";}
+	cout << endl;
 	// Update chd since metric changed
 	if(diagonal_metric_flag==0){
 	  chd = choleski_decomp(metric); // cholesky decomp of mass matrix

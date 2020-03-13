@@ -612,3 +612,28 @@ void function_minimizer::add_sample_dense(const int nvar, int& n, dvector& m, dm
   m += delta / n;
   m2 += outer_prod(aq-m, delta);
 }
+
+/**
+ * Calculate the Cholesky decomposition and its inverse given a mass matrix
+ * \param 
+ * nvar Number of active parameters
+ * metric Mass matrix
+ * chd Choleksy decomposition, updated via reference
+ * chdinv Inverse of chd, updated via reference
+ * returns nothing except updated matrices by reference
+ */
+void function_minimizer::calculate_chd_and_inverse(int nvar, const dmatrix& metric, 
+						      dmatrix& chd, dmatrix& chdinv){
+  if(diagonal_metric_flag==0){
+    chd = choleski_decomp(metric); // cholesky decomp of mass matrix
+    chdinv=inv(chd);
+  } else {
+    // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
+    chd.initialize(); chdinv.initialize();
+    for(int i=1;i<=nvar;i++){
+      chd(i,i)=sqrt(metric(i,i));
+      chdinv(i,i)=1/chd(i,i);
+    }
+  }
+}
+  

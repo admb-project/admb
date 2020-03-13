@@ -1953,6 +1953,8 @@ public:
   void hybrid_mcmc_routine(int,int,double,int);
 
   // Functions added by Cole for HMC.
+  void calculate_chd_and_inverse(int nvar, const dmatrix& metric,
+				 dmatrix& chd, dmatrix& chdinv);
   void add_sample_diag(const int nvar, int& n, dvector& m, dvector& m2,
 		       const independent_variables& q);
   void add_sample_dense(const int nvar, int& is2, dvector& m, dmatrix& m2,

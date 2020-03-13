@@ -70,7 +70,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
   // and will not be adapted.
-  diagonal_metric_flag=0; // set to 1 later if using adapt_mass
   double eps=0.1;
   double _eps=-1.0;
   int useDA=1; 			// whether to adapt step size
@@ -182,15 +181,24 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
     diag_option=1;
-    diagonal_metric_flag=1;
     cout << "Setting covariance matrix to diagonal with entries" << endl;
   }
-  // Whether to adapt the mass matrix
+  // Whether to do diagonal adaptation of the mass matrix
   int adapt_mass=0;
+  diagonal_metric_flag=0; // global flag used in functions to do more efficient calculations
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass"))>-1) {
     diagonal_metric_flag=1;
     adapt_mass=1;
-    diag_option=1; // always start with unit mass matrix if adapting
+  }
+  // Whether to do dense adaptation of the mass matrix
+  int adapt_mass_dense=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass_dense"))>-1) {
+    if(adapt_mass==1){
+      cerr << "You can only specify one of adapt_mass and adapt_mass_dense" << endl;
+      ad_exit(1);
+    }
+    diagonal_metric_flag=0;
+    adapt_mass_dense=1;
   }
   // Whether to print mass matrix adaptation steps to console
   int verbose_adapt_mass=0;
@@ -280,18 +288,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   dmatrix chd(1,nvar,1,nvar);
   dmatrix chdinv(1,nvar,1,nvar);
-  if(diagonal_metric_flag==0){
-    chd = choleski_decomp(S); // cholesky decomp of mass matrix
-    chdinv=inv(chd);
-  } else {
-    // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
-    chd.initialize();
-    chdinv.initialize();
-    for(int i=1;i<=nvar;i++){
-      chd(i,i)=sqrt(S(i,i));
-      chdinv(i,i)=1/chd(i,i);
-    }
-  }
+  // update chd and chdinv by reference
+  calculate_chd_and_inverse(nvar, S, chd, chdinv);
+
   /// Mass matrix and inverse are now ready to be used.
 
   /// Prepare initial value. Need to both back-transform, and then rotate
@@ -359,15 +358,21 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << "Chain " << chain << ": Model will run for " << duration/60 <<
       " minutes or until " << nmcmc << " total iterations" << endl;
   }
-  if(adapt_mass){
-    diagonal_metric_flag=1;
-    if(warmup < 200){
+  if(adapt_mass || adapt_mass_dense){
+    if(warmup < 150){
       // Turn off if too few samples to properly do it. But keep using
       // diagonal efficiency.
-      cerr << "Chain " << chain << ": Warning: Mass matrix adaptation not allowed when warmup<200" << endl;
-      adapt_mass=0;
-    } else {
+      cerr << "Chain " << chain << ": Mass matrix adaptation not allowed when warmup<150" << endl;
+      ad_exit(1);
+    }
+    if( adapt_mass){ 
       cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
+    } else {
+      cout << "Chain " << chain << ": Using dense mass matrix adaptation" << endl;
+    }
+    if(verbose_adapt_mass==1){
+      dvector tmp=diagonal(S);
+      cout << "Chain " << chain << ": Initial variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
     }
   }
   // write sampler parameters in format used by Shinystan
@@ -458,20 +463,16 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double H0, logu, value, rn, alpha;
   int n, j, v;
   bool s,b;
-  // Mass matrix adapatation algorithm arguments for diagonal
+  // Mass matrix adapatation algorithm variables for diagonal
   dvector am(1,nvar);
   dvector am2(1,nvar);
   // and dense
   dvector adm(1,nvar);
   dmatrix adm2(1,nvar,1,nvar);
   int is2=0; int is3=0;
-  int k=0;
   int w1 = 75; int w2 = 50; int w3 = 25;
   int aws = w2; // adapt window size
   int anw = w1+w2; // adapt next window
-  // temporary for recursive formula
-  dvector s1(1,nvar); dvector s0(1,nvar);
-  dvector m1(1,nvar); dvector m0(1,nvar);
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
   if(diagnostic_flag){
     cout << "Initial chd=" << chd << endl;
@@ -592,66 +593,53 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // Mass matrix adaptation. For now only diagonal
     bool slow=slow_phase(is, warmup, w1, w3);
-    if(adapt_mass & slow){
-      // If in slow phase, update running estimate of variances
-      // The Welford running variance calculation, see
-      // https://www.johndcook.com/blog/standard_deviation/
-      if(is== w1){
-        // Initialize algorithm from end of first fast window
-        m1 = ynew; s1.initialize(); k = 1;
+    if( (adapt_mass || adapt_mass_dense) & slow){
+      // If in slow phase, do adaptation of mass matrix
+      if(is== w1){ // start of slow window
+        // Initialize algorithm
 	am.initialize();
 	am2.initialize();
 	adm.initialize();
 	adm2.initialize();
 	is2=0; is3=0;
-      } else if(is<anw){
-	// Update estimates of covariance
-        k = k+1; m0 = m1; s0 = s1;
-        // Update M and S
-	for(int i=1; i<=nvar; i++){
-	  m1(i) = m0(i)+(ynew(i)-m0(i))/k;
-	  s1(i) = s0(i)+ (ynew(i)-m0(i))*(ynew(i)-m1(i));
-	}
-	// dense way
-	
-	add_sample_diag(nvar, is2, am, am2, ynew);
-	add_sample_dense(nvar, is3, adm, adm2, ynew);
-      } else if(is==anw){
-        // If at end of adaptation window, update the mass matrix to the
-        // estimated variances
-	metric.initialize();
-	for(int i=1; i<=nvar; i++){
-	  metric(i,i) = s1(i)/(k);
-	  cout << metric(i,i) << " ";}
-	cout << endl;
-	// Update chd since metric changed
-	if(diagonal_metric_flag==0){
-	  chd = choleski_decomp(metric); // cholesky decomp of mass matrix
-	  chdinv=inv(chd);
+      } else if(is<anw){ // middle of slow window
+	// Update metric with newest sample in unboudned space (ynew)
+	if(adapt_mass) add_sample_diag(nvar, is2, am, am2, ynew);
+	if(adapt_mass_dense) add_sample_dense(nvar, is3, adm, adm2, ynew);
+      } else if(is==anw){ // end of slow window
+        // Update the mass matrix and chd
+	if(adapt_mass){
+	  metric.initialize();
+	  dvector tmp=am2/(is2-1);
+	  for(int i=1; i<=nvar; i++){
+	    metric(i,i) = tmp(i);
+	  }
+	  if(verbose_adapt_mass==1){
+	    cout << "Chain " << chain << ": Estimated variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+	  }
 	} else {
-	  // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
-	  chd.initialize(); chdinv.initialize();
-	  for(int i=1;i<=nvar;i++){
-	    chd(i,i)=sqrt(metric(i,i));
-	    chdinv(i,i)=1/chd(i,i);
+	  // dense metric
+	  metric=adm2/(is3-1);
+	  cout << metric << endl;
+	  if(verbose_adapt_mass==1){
+	    dvector tmp=diagonal(metric);
+	    cout << "Chain " << chain << ": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
 	  }
 	}
+	// Update chd and chdinv by reference, since metric changed
+	calculate_chd_and_inverse(nvar, metric, chd, chdinv);
+	cout << chd << endl;
 	// Since chd changed need to refresh values and gradients
 	// in x space
 	nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);
 	theta=rotate_pars(chdinv,ynew);
 	gr2=rotate_gradient(gr, chd);
-        // Reset the running variance calculation
-        k = 1; m1 = ynew; s1.initialize();
         // Calculate the next end window. If this overlaps into the final fast
         // period, it will be stretched to that point (warmup-w3)
 	aws *=2;
         anw = compute_next_window(is, anw, warmup, w1, aws, w3);
 	// Refind a reasonable step size since it can be really different after changing M
 	eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
-	if(verbose_adapt_mass){
-	  cout << is << ": "<< ", eps=" << eps << endl;
-	}
       } else {
 	cerr << "error in adaptation" << endl;
 	ad_exit(1);

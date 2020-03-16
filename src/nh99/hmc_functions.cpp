@@ -228,7 +228,7 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
 }
 
 
-double function_minimizer::adapt_eps(int ii, double eps, double alpha,
+double function_minimizer::adapt_eps(int ii, int iseps, double eps, double alpha,
 				     double& adapt_delta, double& mu,
 				     dvector& epsvec, dvector& epsbar,
 				     dvector& Hbar){
@@ -236,10 +236,10 @@ double function_minimizer::adapt_eps(int ii, double eps, double alpha,
   int m=ii+1;
   // If divergence, there is 0 acceptance probability so alpha=0.
   if(std::isnan(alpha)) alpha=0;
-  Hbar(m)= (1-1/(m+t0))*Hbar(m-1) + (adapt_delta-alpha)/(m+t0);
-  double logeps=mu-sqrt(m)*Hbar(m)/gamma;
+  Hbar(m)= (1-1/(iseps+t0))*Hbar(m-1) + (adapt_delta-alpha)/(iseps+t0);
+  double logeps=mu-sqrt(iseps)*Hbar(m)/gamma;
   epsvec(m)=exp(logeps);
-  double logepsbar= pow(m, -kappa)*logeps+(1-pow(m,-kappa))*log(epsbar(m-1));
+  double logepsbar= pow(iseps, -kappa)*logeps+(1-pow(iseps,-kappa))*log(epsbar(m-1));
   epsbar(m)=exp(logepsbar);
   return(epsvec(m));
 }

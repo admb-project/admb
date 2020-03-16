@@ -340,7 +340,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // Adaptation of step size (eps).
     if(useDA && is <= nwarmup){
-      eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+      eps=adapt_eps(is, is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
     }
     adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
     if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;

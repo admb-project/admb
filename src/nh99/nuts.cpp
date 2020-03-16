@@ -470,6 +470,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector adm(1,nvar);
   dmatrix adm2(1,nvar,1,nvar);
   int is2=0; int is3=0;
+  int iseps=0;
   int w1 = 75; int w2 = 50; int w3 = 25;
   int aws = w2; // adapt window size
   int anw = w1+w2; // adapt next window
@@ -585,7 +586,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // Adaptation of step size (eps).
     if(useDA){
       if(is <= warmup){
-	eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+	iseps++; // how many iterations since start of last adapt window
+	cout << "i=" << is << ", iseps=" << iseps << ", alpha=" << alpha <<
+	  ", mu=" << mu << ", epsvec(is)=" << epsvec(is) << ", epsbar(is)=" << epsbar(is) <<
+	  ", Hbar(is)=" << Hbar(is) << endl;
+	eps=adapt_eps(is, iseps, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
       } else {
 	eps=epsbar(warmup);
       }
@@ -602,6 +607,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	adm.initialize();
 	adm2.initialize();
 	is2=0; is3=0;
+	iseps=0;
       } else if(is<anw){ // middle of slow window
 	// Update metric with newest sample in unboudned space (ynew)
 	if(adapt_mass) add_sample_diag(nvar, is2, am, am2, ynew);
@@ -640,9 +646,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// different after changing M and reset algorithm
 	// parameters
 	eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
-	epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
 	mu=log(10*eps);
-	epsvec(is)=eps; epsbar(is)=1; Hbar(is)=0;
+	epsvec(is)=eps; epsbar(is)=eps; Hbar(is)=0;
       } else {
 	cerr << "error in adaptation" << endl;
 	ad_exit(1);

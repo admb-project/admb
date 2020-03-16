@@ -1987,7 +1987,7 @@ public:
 		  independent_variables& _parsaveprime);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
 		  double eps, dvector& p, dvector& x, dvector& gr2);
-  double adapt_eps(int ii, double eps, double alpha,
+  double adapt_eps(int ii, int iseps, double eps, double alpha,
 		   double& adapt_delta, double& mu,
 		   dvector& epsvec, dvector& epsbar,
 		   dvector& Hbar);

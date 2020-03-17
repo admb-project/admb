@@ -232,7 +232,7 @@ double function_minimizer::adapt_eps(int ii, int iseps, double eps, double alpha
 				     double& adapt_delta, double& mu,
 				     dvector& epsvec, dvector& epsbar,
 				     dvector& Hbar){
-  double gamma=0.05;  double t0=10;  double kappa=0.75;
+  double gamma=0.05;  double t0=20;  double kappa=0.75;
   int m=ii+1;
   // If divergence, there is 0 acceptance probability so alpha=0.
   if(std::isnan(alpha)) alpha=0;

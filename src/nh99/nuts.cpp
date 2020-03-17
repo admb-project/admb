@@ -471,7 +471,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix adm2(1,nvar,1,nvar);
   int is2=0; int is3=0;
   int iseps=0;
-  int w1 = 75; int w2 = 50; int w3 = 25;
+  int w1 = 75; int w2 = 50; int w3 = 50;
   int aws = w2; // adapt window size
   int anw = w1+w2; // adapt next window
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
@@ -498,7 +498,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd,true, verbose_find_epsilon, chain);
       mu=log(10*eps);
-      epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
+      epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
     }
     // Generate single NUTS trajectory by repeatedly doubling build_tree
     _nprime=0; _divergent=0; _nfevals=0;
@@ -583,18 +583,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // running sum of alpha to calculate average acceptance rate below
       alphasum+=alpha;
     }
-    // Adaptation of step size (eps).
-    if(useDA){
-      if(is <= warmup){
-	iseps++; // how many iterations since start of last adapt window
-	cout << "i=" << is << ", iseps=" << iseps << ", alpha=" << alpha <<
-	  ", mu=" << mu << ", epsvec(is)=" << epsvec(is) << ", epsbar(is)=" << epsbar(is) <<
-	  ", Hbar(is)=" << Hbar(is) << endl;
-	eps=adapt_eps(is, iseps, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
-      } else {
-	eps=epsbar(warmup);
-      }
-    }
 
     // Mass matrix adaptation. For now only diagonal
     bool slow=slow_phase(is, warmup, w1, w3);
@@ -607,7 +595,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	adm.initialize();
 	adm2.initialize();
 	is2=0; is3=0;
-	iseps=0;
       } else if(is<anw){ // middle of slow window
 	// Update metric with newest sample in unboudned space (ynew)
 	if(adapt_mass) add_sample_diag(nvar, is2, am, am2, ynew);
@@ -645,12 +632,24 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// Refind a reasonable step size since it can be really
 	// different after changing M and reset algorithm
 	// parameters
-	eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
-	mu=log(10*eps);
-	epsvec(is)=eps; epsbar(is)=eps; Hbar(is)=0;
+	// eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
+	mu=log(10*epsvec(is));
+	Hbar(is)=0; epsvec(is)=epsbar(is); iseps=0; 
       } else {
 	cerr << "error in adaptation" << endl;
 	ad_exit(1);
+      }
+    }
+    // Adaptation of step size (eps).
+    if(useDA){
+      if(is <= warmup){
+	iseps++; // how many iterations since start of last adapt window
+	// cout << "i=" << is << ", iseps=" << iseps << ", alpha=" << alpha <<
+	//   ", mu=" << mu << ", epsvec(is)=" << epsvec(is) << ", epsbar(is)=" << epsbar(is) <<
+	//   ", Hbar(is)=" << Hbar(is) << endl;
+	eps=adapt_eps(is, iseps, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+      } else {
+	eps=epsbar(warmup);
       }
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","

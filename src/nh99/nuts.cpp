@@ -471,7 +471,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix adm2(1,nvar,1,nvar);
   int is2=0; int is3=0;
   int iseps=0;
-  int w1 = 75; int w2 = 50; int w3 = 50;
+  int w1 = 75; int w2 = 50; int w3 = 75;
   int aws = w2; // adapt window size
   int anw = w1+w2; // adapt next window
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
@@ -497,7 +497,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
       eps=find_reasonable_stepsize(nvar,theta,p,chd,true, verbose_find_epsilon, chain);
-      mu=log(10*eps);
+      mu=log(eps);
       epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
     }
     // Generate single NUTS trajectory by repeatedly doubling build_tree
@@ -633,8 +633,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	// different after changing M and reset algorithm
 	// parameters
 	// eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
-	mu=log(10*epsvec(is));
-	Hbar(is)=0; epsvec(is)=epsbar(is); iseps=0; 
+	mu=log(epsvec(is));
+	Hbar(is)=0; epsvec(is)=epsbar(is);
+	// this is supposed to restart the eps adaptation counter
+	// but I think it works better without
+	// iseps=0;
       } else {
 	cerr << "error in adaptation" << endl;
 	ad_exit(1);

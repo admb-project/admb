@@ -570,7 +570,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     parsave=parsaveprime;// initial_params::copy_all_values(parsave,1.0);
     // Write the rotated, unbounded, and bounded draws to csv files for
     // sampling draws only
-    if(is>0){
+    if(is>warmup){
       for(int i=1;i<nvar;i++) unbounded << ynew(i) << ", ";
       unbounded << ynew(nvar) << endl;
     }

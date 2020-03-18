@@ -419,7 +419,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   cout << "Chain " << chain << ": Initial negative log density= " << nll << endl;
   cout << "Chain " << chain << ": Gradient eval took " << time_gradient <<
     " sec. " << nmcmc << " iter w/ 100 steps would take " ;
-  printf("%.2f", nmcmc*100*time_gradient); cout << " sec." << endl;
+  time_gradient*= (nmcmc*100);
+  if(time_gradient<=60){
+    printf("%.2f", time_gradient); cout << " seconds." << endl;
+  } else if(time_gradient <=60*60){
+    printf("%.2f", time_gradient/60); cout << " minutes." << endl;
+  } else if(time_gradient <= (60*60*24)){
+    printf("%.2f", time_gradient/(60*60)); cout << " hours." << endl;
+  } else {
+    printf("%.2f", time_gradient/(24*60*60)); cout << " days." << endl;
+  }
+
   // Now initialize these into the algorithm arguments needed.
   independent_variables theta(1,nvar);
   // kind of a misnomer here: theta is in "x" or algorithm space

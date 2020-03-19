@@ -601,70 +601,60 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // Mass matrix adaptation. For now only diagonal
     bool slow=slow_phase(is, warmup, w1, w3);
+    // If in slow phase, do adaptation of mass matrix
     if( (adapt_mass || adapt_mass_dense) & slow){
-      // If in slow phase, do adaptation of mass matrix
-      if(is== w1){ // start of slow window
-	cout << "i=" << is << " starting slow window" << endl;
+      if(is== w1){ // start of slow adaptation window
         // Initialize algorithm
 	am.initialize(); am2.initialize();
 	adm.initialize(); adm2.initialize();
 	is2=0; is3=0;
-      } else if(is<anw){ // middle of slow window
+      } else {
 	// Update metric with newest sample in unboudned space (ynew)
 	if(adapt_mass) add_sample_diag(nvar, is2, am, am2, ynew);
 	if(adapt_mass_dense) add_sample_dense(nvar, is3, adm, adm2, ynew);
-      } else if(is==anw){ // end of slow window
-        // Update the mass matrix and chd
-	if(adapt_mass){
-	  metric.initialize();
-	  dvector tmp=am2/(is2-1);
-	  for(int i=1; i<=nvar; i++){
-	    metric(i,i) = tmp(i);
+	if(is==anw){ // end of slow window
+	  // Update the mass matrix and chd
+	  if(adapt_mass){
+	    metric.initialize();
+	    dvector tmp=am2/(is2-1);
+	    for(int i=1; i<=nvar; i++) metric(i,i) = tmp(i);
+	    if(verbose_adapt_mass==1){
+	      cout << "Chain " << chain << ": Estimated diagonal variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+	    }
+	  } else {
+	    // dense metric
+	    metric=adm2/(is3-1);
+	    if(verbose_adapt_mass==1){
+	      dvector tmp=diagonal(metric);
+	      cout << "Chain " << chain << 
+		": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+	    }
 	  }
-	  if(verbose_adapt_mass==1){
-	    cout << "Chain " << chain << ", i=" << is <<
-	      ": Estimated diagonal variances, min=" << min(tmp) <<
-	      " and max=" << max(tmp) << endl;
-	  }
-	} else {
-	  // dense metric
-	  metric=adm2/(is3-1);
-	  if(verbose_adapt_mass==1){
-	    dvector tmp=diagonal(metric);
-	    cout << "Chain " << chain << ", i=" << is <<
-	      ": Estimated dense variances, min=" << min(tmp)
-		 << " and max=" << max(tmp) << endl;
-	  }
-	}
-	// Update chd and chdinv by reference, since metric changed
-	success=calculate_chd_and_inverse(nvar, metric, chd, chdinv);
-	if(!success){
-	  if(adapt_mass_dense)
+	  // Update chd and chdinv by reference, since metric changed
+	  success=calculate_chd_and_inverse(nvar, metric, chd, chdinv);
+	  if(!success && adapt_mass_dense)
 	    cout << "Chain " << chain << ": Choleski decomposition of dense mass matrix failed. Skipping this update." << endl;
-	}
-	// Since chd changed need to refresh values and gradients
-	// in x space
-	nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);
-	theta=rotate_pars(chdinv,ynew);
-	gr2=rotate_gradient(gr, chd);
-        // Calculate the next end window. If this overlaps into the final fast
-        // period, it will be stretched to that point (warmup-w3)
-	aws *=2;
-        anw = compute_next_window(is, anw, warmup, w1, aws, w3);
-	// Refind a reasonable step size since it can be really
-	// different after changing M and reset algorithm
-	// parameters
-	// eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
-	mu=log(epsvec(is));
-	Hbar(is)=0; epsvec(is)=epsbar(is);
-	// this is supposed to restart the eps adaptation counter
-	// but I think it works better without
-	// iseps=0;
-      } else {
-	cerr << "error in adaptation" << endl;
-	ad_exit(1);
-      }
-    }
+	  // Since chd changed need to refresh values and gradients
+	  // in x space
+	  nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);
+	  theta=rotate_pars(chdinv,ynew);
+	  gr2=rotate_gradient(gr, chd);
+	  // Calculate the next end window. If this overlaps into the final fast
+	  // period, it will be stretched to that point (warmup-w3)
+	  aws *=2;
+	  anw = compute_next_window(is, anw, warmup, w1, aws, w3);
+	  // Refind a reasonable step size since it can be really
+	  // different after changing M and reset algorithm
+	  // parameters
+	  // eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
+	  mu=log(epsvec(is));
+	  Hbar(is)=0; epsvec(is)=epsbar(is);
+	  // this is supposed to restart the eps adaptation counter
+	  // but I think it works better without
+	  // iseps=0;
+	} // end of slow window
+      } // end up updating mass matrix
+    } // end adaptation of mass matrix
     // Adaptation of step size (eps).
     if(useDA){
       if(is <= warmup){

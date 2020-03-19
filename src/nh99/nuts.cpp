@@ -289,8 +289,13 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix chd(1,nvar,1,nvar);
   dmatrix chdinv(1,nvar,1,nvar);
   // update chd and chdinv by reference
-  calculate_chd_and_inverse(nvar, S, chd, chdinv);
-
+  bool success;
+  success=calculate_chd_and_inverse(nvar, S, chd, chdinv);
+  if(!success){
+    cerr << "Cannot start algorithm, something is wrong with the mass matrix" << endl;
+    ad_exit(1);
+  }
+      
   /// Mass matrix and inverse are now ready to be used.
 
   /// Prepare initial value. Need to both back-transform, and then rotate
@@ -359,10 +364,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       " minutes or until " << nmcmc << " total iterations" << endl;
   }
   if(adapt_mass || adapt_mass_dense){
-    if(warmup < 150){
+    if(warmup < 200){
       // Turn off if too few samples to properly do it. But keep using
       // diagonal efficiency.
-      cerr << "Chain " << chain << ": Mass matrix adaptation not allowed when warmup<150" << endl;
+      cerr << "Chain " << chain << ": Mass matrix adaptation not allowed when warmup<200" << endl;
       ad_exit(1);
     }
     if( adapt_mass){ 
@@ -580,7 +585,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     parsave=parsaveprime;// initial_params::copy_all_values(parsave,1.0);
     // Write the rotated, unbounded, and bounded draws to csv files for
     // sampling draws only
-    if(is>warmup){
+    if(is>0){
       for(int i=1;i<nvar;i++) unbounded << ynew(i) << ", ";
       unbounded << ynew(nvar) << endl;
     }
@@ -599,11 +604,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     if( (adapt_mass || adapt_mass_dense) & slow){
       // If in slow phase, do adaptation of mass matrix
       if(is== w1){ // start of slow window
+	cout << "i=" << is << " starting slow window" << endl;
         // Initialize algorithm
-	am.initialize();
-	am2.initialize();
-	adm.initialize();
-	adm2.initialize();
+	am.initialize(); am2.initialize();
+	adm.initialize(); adm2.initialize();
 	is2=0; is3=0;
       } else if(is<anw){ // middle of slow window
 	// Update metric with newest sample in unboudned space (ynew)
@@ -618,18 +622,26 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    metric(i,i) = tmp(i);
 	  }
 	  if(verbose_adapt_mass==1){
-	    cout << "Chain " << chain << ": Estimated variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+	    cout << "Chain " << chain << ", i=" << is <<
+	      ": Estimated diagonal variances, min=" << min(tmp) <<
+	      " and max=" << max(tmp) << endl;
 	  }
 	} else {
 	  // dense metric
 	  metric=adm2/(is3-1);
 	  if(verbose_adapt_mass==1){
 	    dvector tmp=diagonal(metric);
-	    cout << "Chain " << chain << ": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+	    cout << "Chain " << chain << ", i=" << is <<
+	      ": Estimated dense variances, min=" << min(tmp)
+		 << " and max=" << max(tmp) << endl;
 	  }
 	}
 	// Update chd and chdinv by reference, since metric changed
-	calculate_chd_and_inverse(nvar, metric, chd, chdinv);
+	success=calculate_chd_and_inverse(nvar, metric, chd, chdinv);
+	if(!success){
+	  if(adapt_mass_dense)
+	    cout << "Chain " << chain << ": Choleski decomposition of dense mass matrix failed. Skipping this update." << endl;
+	}
 	// Since chd changed need to refresh values and gradients
 	// in x space
 	nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);
@@ -679,6 +691,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
   } // end of MCMC chain
 
+  if(adapt_mass_dense | adapt_mass){
+    ofstream metricsave("adapted_metric.txt", ios::trunc);
+    metricsave << metric;
+  }
+  
   // Information about run
   if(ndivergent>0)
     cout << "Chain " << chain <<": There were " << ndivergent << " divergent transitions after warmup" << endl;

@@ -622,18 +622,91 @@ void function_minimizer::add_sample_dense(const int nvar, int& n, dvector& m, dm
  * chdinv Inverse of chd, updated via reference
  * returns nothing except updated matrices by reference
  */
-void function_minimizer::calculate_chd_and_inverse(int nvar, const dmatrix& metric, 
-						      dmatrix& chd, dmatrix& chdinv){
+bool function_minimizer::calculate_chd_and_inverse(int nvar, const dmatrix& metric, 
+						   dmatrix& chd, dmatrix& chdinv){
+
+  // Save copy before modifying it
+  dmatrix chd0(1,nvar,1,nvar);
+  chd0=chd;
+  bool success = true;
   if(diagonal_metric_flag==0){
-    chd = choleski_decomp(metric); // cholesky decomp of mass matrix
-    chdinv=inv(chd);
+    // will fail if not positive definite
+    success = choleski_decomp_hmc(metric, chd); // cholesky decomp of mass matrix
+    if(success){
+      chdinv=inv(chd);
+    } else {
+      // wasn't positive definite so don't update it (better to
+      // do diagonal?)), reset to original
+      chd=chd0;
+    }
   } else {
     // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
     chd.initialize(); chdinv.initialize();
     for(int i=1;i<=nvar;i++){
-      chd(i,i)=sqrt(metric(i,i));
+      if(metric(i,i)<0){
+	cerr << "Element " << i << " of diagonal mass matrix was <0... setting to 1 instead" << endl;
+	chd(i,i)=1;
+      } else{
+	chd(i,i)=sqrt(metric(i,i));
+      }
       chdinv(i,i)=1/chd(i,i);
     }
   }
+  return(success);
 }
   
+
+/* This function is a copy of choleski_decomp from dmat15.cpp,
+ except tweaked for use with adaptive dense stepsize in HMC.  The
+ main difference is that instead of exiting on error it gives a
+ more informative error, also it returns a flag for whether it
+ succeeded, and updates L by reference.  -Cole 3/2020
+ */
+bool function_minimizer::choleski_decomp_hmc(const dmatrix& metric, dmatrix& L) {
+  // kludge to deal with constantness
+  dmatrix & M= * (dmatrix *) &metric;
+  if (M.colsize() != M.rowsize())
+  {
+    cerr << "Error in choleski_decomp_hmc. Mass matrix not square" << endl;
+    ad_exit(1);
+  }
+  int rowsave=M.rowmin();
+  int colsave=M.colmin();
+  M.rowshift(1);
+  M.colshift(1);
+  int n=M.rowmax();
+  /// what is this?
+  //   dmatrix L(1,n,1,n);
+  // #ifndef SAFE_INITIALIZE
+  L.initialize();
+  // #endif
+  
+  int i,j,k;
+  double tmp;
+  bool success=true;
+  adstring tmpstring = "Mass matrix not positive definite when updating dense mass matrix adaptation.";
+  if (M(1,1)<=0) {success=false; return success;}
+  // I didn't touch the actual algorithm
+  L(1,1)=sqrt(M(1,1));
+  for (i=2;i<=n;i++) {
+    L(i,1)=M(i,1)/L(1,1);
+  }
+  for (i=2;i<=n;i++) {
+    for (j=2;j<=i-1;j++) {
+      tmp=M(i,j);
+      for (k=1;k<=j-1;k++) {
+        tmp-=L(i,k)*L(j,k);
+      }
+      L(i,j)=tmp/L(j,j);
+    }
+    tmp=M(i,i);
+    for (k=1;k<=i-1;k++) {
+      tmp-=L(i,k)*L(i,k);
+    }
+    if (tmp<=0) {success=false; return success;}
+    L(i,i)=sqrt(tmp);
+  }
+  L.rowshift(rowsave);
+  L.colshift(colsave);
+  return success;
+}

@@ -124,6 +124,21 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
+  // console refresh rate
+  int refresh=1;
+  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
+    if (nopt) {
+      int iii=atoi(ad_comm::argv[on+1]);
+      if (iii <0) {
+	cerr << "Error: refresh must be >= 0" << endl;
+	ad_exit(1);
+      } else {
+	refresh=iii;
+      }
+    }
+  }
+  
   // Number of leapfrog steps.
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1) {
     if (nopt) {
@@ -630,9 +645,26 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
 	    }
 	  }
+	  // Note: Stan does this regularization of the metric
+	  // to avoid Cholesky errors. I decided it against doing
+	  // that and rather just catch the error and then skip
+	  // the update. The next time it will have twice as many
+	  // samples to estimate the metric. My reasoning was it
+	  // will prevent a downward spiral where a
+	  // poorly-estimated M will cause fewer effective
+	  // samples, leading to worse M, etc. This will warn the
+	  // user and continue on with the current metric, thus
+	  // being more stable. A different approach would be to
+	  // use the diagonal of the estimated one.  Here's the
+	  // stabilization code:
+	  //
+	  // dmatrix Mtemp(1,nvar, 1,nvar);
+	  // Mtemp.initialize();
+	  // for(int i=1; i<=nvar; i++) Mtemp(i,i)=1e-3 * (5.0 / (is3 + 5.0));
+	  // metric = (is3 / (is3 + 5.0)) * metric + Mtemp;
 	  // Update chd and chdinv by reference, since metric changed
 	  success=calculate_chd_and_inverse(nvar, metric, chd, chdinv);
-	  if(!success && adapt_mass_dense)
+	  if(!success)
 	    cout << "Chain " << chain << ": Choleski decomposition of dense mass matrix failed. Skipping this update." << endl;
 	  // Since chd changed need to refresh values and gradients
 	  // in x space
@@ -669,7 +701,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
-    print_mcmc_progress(is, nmcmc, warmup, chain);
+    print_mcmc_progress(is, nmcmc, warmup, chain, refresh);
     if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     nsamples=is;

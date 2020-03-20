@@ -216,6 +216,20 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	}
       }
     }
+  // console refresh rate
+  int refresh=1;
+  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
+    if (nopt) {
+      int iii=atoi(ad_comm::argv[on+1]);
+      if (iii <0) {
+	cerr << "Error: refresh must be >= 0" << endl;
+	ad_exit(1);
+      } else {
+	refresh=iii;
+      }
+    }
+  }
     int diag_option=0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
       {
@@ -888,7 +902,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 		" minutes running." << endl;
 	      break;
 	    }
-	    print_mcmc_progress(i, number_sims, change_ball, chain);
+	    print_mcmc_progress(i, number_sims, change_ball, chain, refresh);
 	  } // end of mcmc chain
 	print_mcmc_timing(time_warmup, time_total, chain);
       }

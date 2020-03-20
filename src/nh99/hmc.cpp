@@ -95,6 +95,21 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
+    // console refresh rate
+  int refresh=1;
+  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
+    if (nopt) {
+      int iii=atoi(ad_comm::argv[on+1]);
+      if (iii <0) {
+	cerr << "Error: refresh must be >= 0" << endl;
+	ad_exit(1);
+      } else {
+	refresh=iii;
+      }
+    }
+  }
+
   // Number of leapfrog steps. Defaults to 10.
   int L=10;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1)
@@ -344,7 +359,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
     adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
     if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    print_mcmc_progress(is, nmcmc, nwarmup, chain);
+    print_mcmc_progress(is, nmcmc, nwarmup, chain, refresh);
   } // end of MCMC chain
 
   // This final ratio should closely match adapt_delta
@@ -357,7 +372,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
   print_mcmc_timing(time_warmup, time_total, chain);
-
+ 
   // I assume this closes the connection to the file??
   if (pofs_psave)
     {

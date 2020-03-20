@@ -278,17 +278,17 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
   return f;
 }
 
-void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain)
+void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain, int refresh)
 {
   // Modified from Stan: sample::progress.hpp; 9/9/2016
-  int refresh=1;
-  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
-  if (is==1 || is == nmcmc || is % refresh ==0 ){
-    int width=1+(int)std::ceil(std::log10(static_cast<double>(nmcmc)));
-    cout << "Chain " << chain << ": " << "Iteration: " << std::setw(width) << is
-	 << "/" << nmcmc << " [" << std::setw(3)
-	 << int(100.0 * (double(is) / double(nmcmc) ))
-	 << "%]" << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
+  if(refresh>0){
+    if (is==1 || is == nmcmc || is % refresh ==0 ){
+      int width=1+(int)std::ceil(std::log10(static_cast<double>(nmcmc)));
+      cout << "Chain " << chain << ": " << "Iteration: " << std::setw(width) << is
+	   << "/" << nmcmc << " [" << std::setw(3)
+	   << int(100.0 * (double(is) / double(nmcmc) ))
+	   << "%]" << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
+    }
   }
 }
 
@@ -479,6 +479,10 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
 // this is often a vector or at least a lower triangular
 // matrix. Thus we can make it more efficient. Can go from x to
 // y, or y to x, depending on if you pass m=chd or m=inverse(chd)
+/*
+@param 
+
+ */
 dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
 {
   if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
@@ -661,6 +665,11 @@ bool function_minimizer::calculate_chd_and_inverse(int nvar, const dmatrix& metr
  main difference is that instead of exiting on error it gives a
  more informative error, also it returns a flag for whether it
  succeeded, and updates L by reference.  -Cole 3/2020
+
+ @param metric A covariance matrix as estimated from warmup samples
+ @param L A cholesky decomposed matrix
+ @return A boolean whether algorithm succeeded, and L by reference
+
  */
 bool function_minimizer::choleski_decomp_hmc(const dmatrix& metric, dmatrix& L) {
   // kludge to deal with constantness

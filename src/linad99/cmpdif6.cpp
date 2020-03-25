@@ -22,12 +22,10 @@
 #include <string.h>
 
 /**
- * Description not yet available.
- * \param
+ * Saves size and address information for a dmatrix to adjoint data file.
  */
 void dmatrix::save_dmatrix_position(void) const
 {
-  // saves the size and address information for a dvar_vector
   dmatrix_position tmp(*this);
   size_t wsize=sizeof(int);
   size_t wsize1=sizeof(void*);
@@ -86,13 +84,11 @@ d3_array_position restore_d3_array_position(void)
 }
 
 /**
- * Description not yet available.
- * \param
+ * Reads back the size and address information for a dvar_matrix,
+ * restores the size, address, and value information for a dvar_vector
  */
 dvar_matrix_position restore_dvar_matrix_position(void)
 {
-  // reads back the size and address information for a dvar_matrix
-  // restores the size, address, and value information for a dvar_vector
   int min;
   int max;
   gradient_structure::get_fp()->fread(&max,sizeof(int));

@@ -10,44 +10,6 @@ trigger:
 - master
 
 jobs:
-- job: VS2015_vcvars32
-  pool:
-    vmImage: 'vs2015-win2012r2'
-  steps:
-  - script: |
-      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat x86 & popd
-      nmake
-      nmake zip
-      nmake verify SAFE_ONLY=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: VS2015_vcvars32
-
-- job: VS2015_vcvars64
-  pool:
-    vmImage: 'vs2015-win2012r2'
-  steps:
-  - script: |
-      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
-      nmake
-      nmake zip
-      nmake verify SAFE_ONLY=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: VS2015_vcvars64
-
 - job: VS2017_vcvars32
   pool:
     vmImage: 'vs2017-win2016'

@@ -61,15 +61,15 @@ for %%a in (%*) do (
     if "!arg!"=="-d" (
       set d= -d
     )
+    if "!arg!"=="-f" (
+      set fast= -f
+    )
     if "!arg!"=="-g" (
       set g= -g
     )
     if "!arg!"=="-r" (
       set r = -r
       set parser=tpl2rem
-    )
-    if "!arg!"=="-f" (
-      set fast= -f
     )
   ) else (
     if "%%~xa"=="" (
@@ -634,19 +634,16 @@ echo.
 echo Release Version: 12.1
 echo Location: %~dp0
 echo.
-echo Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
+echo Usage: admb [-c] [-d] [-f] [-g] [-r] model [src(s)]
 echo.
 echo Options:
 echo  -c     Build only object file(s) (.obj).
 echo  -d     Build a dynamic library (.dll).
+echo  -f     Build with fast optimized mode library (no bounds checking).
 echo  -g     Build with debug symbols.
-echo  -r     Build Random effects library (ADMB-RE).
-echo  -f     Build with Fast optimized mode library (no error checking).
-echo         By default, admb script will include error checking in the build.
-echo  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl
-echo         extension)
-echo  src(s) C/C++ Source file(s) containing classes, methods and variables that
-echo         are used in model.
+echo  -r     Build with random effects library (ADMB-RE).
+echo  model  TPL file, i.e. 'simple.tpl' or 'simple' with no .tpl extension.
+echo  src(s) C/C++ source file(s) containing classes, methods and variables.
 echo.
 goto EOF
 REM r982 [2011-02-16] arnima  rewrite, fixed bug when user option is not

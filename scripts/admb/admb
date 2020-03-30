@@ -11,19 +11,16 @@ Builds AD Model Builder executable or library.
 Release Version: 12.1
 Location: $BASH_SOURCE
 
-Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
+Usage: admb [-c] [-d] [-f] [-g] [-r] model [src(s)]
 
 Options:
  -c     Build only object file(s) (.obj).
  -d     Build a shared library (.so).
+ -f     Build with fast optimized mode library (no bounds checking).
  -g     Build with debug symbols.
- -r     Build with Random effects library (ADMB-RE).
- -f     Build with Fast optimized mode library (no bounds checking).
-        By default, admb script builds with bounds checking.
- model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl
-        extension)
- src(s) C/C++ Source file(s) containing classes, methods and variables that
-        are used in model.
+ -r     Build with random effects library (ADMB-RE).
+ model  TPL file, i.e. 'simple.tpl' or 'simple' with no .tpl extension.
+ src(s) C/C++ source file(s) containing classes, methods and variables.
 "'
 
 if [[ "$1" == "" ]]; then help; exit; fi
@@ -58,39 +55,34 @@ fi
 PATH=$ADMB_HOME/bin:$PATH
 
 # Pop args until model=$1
-unset dll
-unset debug
-unset parser
-unset library
-unset compileonly
-dll=
-debug=
-parser=
-library=safe
 compileonly=
+dll=
+library=safe
+debug=
 output=
-while getopts "dgrsfco:" A; do
+parser=
+while getopts "cdfgo:rs" A; do
   case $A in
+    c)
+       compileonly=yes
+       ;;
     d)
        dll=-dll
        SHARED=-shared
        ;;
+    f)
+       library=opt
+       ;;
     g)
        debug=-debug
+       ;;
+    o)
+       output="$OPTARG"
        ;;
     r)
        parser=tpl2rem
        ;;
     s)
-       ;;
-    f)
-       library=opt
-       ;;
-    c)
-       compileonly=yes
-       ;;
-    o)
-       output="$OPTARG"
        ;;
     *)
        help

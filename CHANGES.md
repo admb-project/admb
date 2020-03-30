@@ -14,6 +14,22 @@ Release Goals
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+Development Version
+-------------------
+
+#### New Features
+
+* New user compilation option `-p` to build a portable (statically linked) model
+  executable, which runs independently of underlying system libraries. For
+  example, if one Linux machine has system library GLIBC 2.29 and another has
+  GLIBC 2.28, users can now compile with
+
+  ```
+  admb -p simple
+  ```
+
+  to produce an executable that can run on both machines.
+
 ADMB-12.1
 ---------
 

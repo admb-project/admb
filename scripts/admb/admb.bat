@@ -641,6 +641,7 @@ echo  -c     Build only object file(s) (.obj).
 echo  -d     Build a dynamic library (.dll).
 echo  -f     Build with fast optimized mode library (no bounds checking).
 echo  -g     Build with debug symbols.
+echo  -p     Build portable model executable (-p has no effect in Windows).
 echo  -r     Build with random effects library (ADMB-RE).
 echo  model  TPL file, i.e. 'simple.tpl' or 'simple' with no .tpl extension.
 echo  src(s) C/C++ source file(s) containing classes, methods and variables.

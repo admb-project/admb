@@ -11,13 +11,14 @@ Builds AD Model Builder executable or library.
 Release Version: 12.1
 Location: $BASH_SOURCE
 
-Usage: admb [-c] [-d] [-f] [-g] [-r] model [src(s)]
+Usage: admb [-c] [-d] [-f] [-g] [-p] [-r] model [src(s)]
 
 Options:
  -c     Build only object file(s) (.obj).
  -d     Build a shared library (.so).
  -f     Build with fast optimized mode library (no bounds checking).
  -g     Build with debug symbols.
+ -p     Build portable model executable (statically linked).
  -r     Build with random effects library (ADMB-RE).
  model  TPL file, i.e. 'simple.tpl' or 'simple' with no .tpl extension.
  src(s) C/C++ source file(s) containing classes, methods and variables.
@@ -60,8 +61,9 @@ dll=
 library=safe
 debug=
 output=
+static=
 parser=
-while getopts "cdfgo:rs" A; do
+while getopts "cdfgo:prs" A; do
   case $A in
     c)
        compileonly=yes
@@ -78,6 +80,8 @@ while getopts "cdfgo:rs" A; do
        ;;
     o)
        output="$OPTARG"
+       ;;
+    p) static=-static
        ;;
     r)
        parser=tpl2rem
@@ -299,7 +303,7 @@ if [[ -f "$ADMB_HOME/lib/libadmb-contrib-$CXXVERSION$SHARED.a" || -f "$ADMB_HOME
 else
   CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\""
 fi
-if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
+if [[ "$static" == "-static" || "$CXX" == "adcomp-x86_64-w64-mingw32" ]]; then
   LDFLAGS="--static $LDFLAGS"
 fi
 tplsrcs=

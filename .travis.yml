@@ -42,7 +42,7 @@ jobs:
     before_install:
     - sudo pip install codecov
     after_success:
-    - bash <(curl -s https://codecov.io/bash) -a "--object-directory=build/objects/x86_64-linux-g++5"
+    - bash <(curl -s https://codecov.io/bash) -a "--object-directory=build/objects/x86_64-linux-g++5-debug"
     script:
     - make clean
     - make coverage

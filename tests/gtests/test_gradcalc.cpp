@@ -423,3 +423,40 @@ TEST_F(test_gradcalc, operator_plus_prevar_prevar)
   ASSERT_DOUBLE_EQ(g(-1), 1);
   ASSERT_DOUBLE_EQ(g(0), 1);
 }
+
+prevariable& fourth(const prevariable& v1);
+TEST_F(test_gradcalc, cube_forth)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.7;
+  independents(2) = -2.3;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  dvariable f;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  f = cube(variables(1)) + fourth(variables(2));
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+
+  double result = value(f);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+  ASSERT_DOUBLE_EQ(result, 131.8071);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_DOUBLE_EQ(g(-1), 66.27);
+  ASSERT_DOUBLE_EQ(g(0), -48.668);
+}

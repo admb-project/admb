@@ -1,15 +1,19 @@
 /**
+ * \file
+ *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ *
+ * Copyright (c) 2008-2020 Regents of the University of California
  */
 #include "fvar.hpp"
 
 /**
+Return a copy of the maximum element in variables vector.
+
 \ingroup misc
-Return maximum value variables.
-\param variables dvar_vector
-\returns the maximum of the vector
- */
+\param variables is a dvar_vector
+\returns maximum variable
+*/
 dvariable max(const dvar_vector& variables)
 {
   int mmin = variables.indexmin();
@@ -22,10 +26,11 @@ dvariable max(const dvar_vector& variables)
   return maximum;
 }
 /**
+Return a copy of the minimum element in variables vector.
+
 \ingroup misc
-Return minimum value variables.
-\param variables dvar_vector
-\returns the minimum of the vector
+\param variables is a dvar_vector
+\returns minimum variable
 */
 dvariable min(const dvar_vector& variables)
 {

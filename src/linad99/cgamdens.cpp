@@ -1,11 +1,9 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+Constant object functions to compute gamma probability density.
 
-/**
-\file
-Functions for gamma probability density; constant objects.
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2012 Regents of the University of California
 */
 
 //double get_values(double x,double y,int print_switch);

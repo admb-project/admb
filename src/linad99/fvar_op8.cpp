@@ -1,5 +1,5 @@
 /**
-Functions cube(const prevariable&) and fourth(const prevariable&).
+prevariable functions to compute cube(const prevariable&) and fourth(const prevariable&).
 
 \file
 \author David Fournier

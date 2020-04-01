@@ -1,5 +1,4 @@
 /**
- * \file
  * \brief Functions max(const dvar_vector&) and min(const dvar_vector&).
  * \Author David Fournier
  * \Copyright Copyright (c) 2008-2020 Regents of the University of California

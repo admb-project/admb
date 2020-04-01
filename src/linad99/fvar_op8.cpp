@@ -1,5 +1,4 @@
 /**
- * \file
  * \brief Functions cube(const prevariable&) and fourth(const prevariable&).
  * \author David Fournier
  * \copyright Copyright (c) 2008-2020 Regents of the University of California

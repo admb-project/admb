@@ -1,9 +1,9 @@
 /**
-prevariable functions to compute cube(const prevariable&) and fourth(const prevariable&).
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
 
-\file
-\author David Fournier
-\copyright Copyright (c) 2008-2020 Regents of the University of California
+@brief Functions for prevariable to compute cube(const prevariable&) and fourth(const prevariable&).
 */
 
 #include "fvar.hpp"

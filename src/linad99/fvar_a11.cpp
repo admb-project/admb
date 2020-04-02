@@ -1,9 +1,9 @@
 /**
-dvar_vector functions to find max(const dvar_vector&) and min(const dvar_vector&).
-
 @file
 @author David Fournier
 @copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Functions for dvar_vector to find max(const dvar_vector&) and min(const dvar_vector&).
 */
 
 #include "fvar.hpp"

@@ -1,9 +1,9 @@
 /**
-Constant object functions to compute gamma probability density.
-
 @file
 @author David Fournier
 @copyright Copyright (c) 2008-2012 Regents of the University of California
+
+@brief Constant object functions to compute gamma_density and log_gamma_density probabilities.
 */
 
 //double get_values(double x,double y,int print_switch);

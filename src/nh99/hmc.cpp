@@ -1,10 +1,10 @@
 /**
-   Author: Cole Monnahan
-   Copyright (c) 2016 ADMB Foundation
+This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo
+samplers (static HMC and No-u-turn).
 
-   \file
-   This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo
-   samplers (static HMC and No-u-turn).
+\file
+\author Cole Monnahan
+\copyright   Copyright (c) 2016 ADMB Foundation
 */
 
 #include "admodel.h"

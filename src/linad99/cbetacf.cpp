@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2009-2020 ADMB Foundation
+
+@brief Wrapper for betacf function.
+*/
 #include <fvar.hpp>
 #include "betacf_val.hpp"
 

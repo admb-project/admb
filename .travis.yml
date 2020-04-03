@@ -42,7 +42,7 @@ jobs:
     before_install:
     - sudo pip install codecov
     after_success:
-    - bash <(curl -s https://codecov.io/bash) -v -d -f '!*.lst'
+    - bash <(curl -s https://codecov.io/bash) -v -d -g tests -g examples -g contrib -g docs -g scripts -g utilities
     script:
     - make clean
     - make coverage

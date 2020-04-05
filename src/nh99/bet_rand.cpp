@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB foundation
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 ADMB Foundation
+
+@brief Function better_rand
+*/
 #include <fvar.hpp>
 #ifndef OPT_LIB
   #include <cassert>

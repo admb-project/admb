@@ -1,4 +1,11 @@
 /**
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Member functions for class function_minimzer.
+*/
+/**
  * Author: David Fournier
  * Copyright (c) 2009-2012 ADMB Foundation
  */

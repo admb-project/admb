@@ -48,6 +48,7 @@ jobs:
     - make LDFLAGS=--coverage
     - make --directory=examples LDFLAGS=--coverage PROG= all
     - make --directory=tests/gtests LDFLAGS=--coverage
+    - make --directory=tests LDFLAGS=--coverage core-tpls
     - codecov
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4

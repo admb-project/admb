@@ -46,7 +46,7 @@ jobs:
     - make clean
     - make --directory=src CXXFLAGS=--coverage objects
     - make LDFLAGS=--coverage
-    - make --directory=examples LDFLAGS=--coverage PROG=
+    - make --directory=examples LDFLAGS=--coverage PROG= all
     - make --directory=tests/gtests LDFLAGS=--coverage
     - codecov
 

@@ -36,7 +36,7 @@ jobs:
   - name: Code Coverage 
     os: linux
     env:
-     - CXXFLAGS="-coverage -fprofile-arcs -O0" LDFLAGS="-coverage -fprofile-arcs -O0" DEBUG="yes" PROG=
+     - CXXFLAGS="--coverage -O0" LDFLAGS="--coverage -O0" DEBUG="yes" PROG=
     dist: xenial
     compiler: gcc
     before_install:

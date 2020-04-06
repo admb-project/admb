@@ -45,7 +45,9 @@ jobs:
     - bash <(curl -s https://codecov.io/bash)
     script:
     - make clean
-    - make coverage
+    - make --directory=src CXXFLAGS=--coverage DEBUG=yes objects
+    - make LDFLAGS=--coverage
+    - make LDFLAGS=--coverage test
     - codecov
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4

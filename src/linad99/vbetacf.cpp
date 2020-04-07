@@ -1,9 +1,11 @@
 /**
- * $Id: vbetacf.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function betacf(const dvariable&, const dvariable&, const dvariable&, int MAXIT)
+*/
+
 #include <fvar.hpp>
 #include "betacf_val.hpp"
 

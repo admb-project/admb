@@ -3,7 +3,7 @@
 @author David Fournier
 @copyright Copyright (c) 2008-2020 Regents of the University of California
 
-@brief Utility function val for adstring.
+@brief Functions val(const adstring&, int&, int&) and val(const adstring&)
 */
 #include <fvar.hpp>
 #include <stdio.h>

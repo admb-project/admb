@@ -216,3 +216,41 @@ TEST_F(test_dvar_vector, deallocatecopies)
   ASSERT_EQ(0, firstcopy.get_ncopies());
   ASSERT_EQ(0, secondcopy.get_ncopies());
 }
+TEST_F(test_dvar_vector, division_operator)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  results = a / 0.5;
+
+  ASSERT_DOUBLE_EQ(value(results(1)), value(a(1)) * 2.0);
+  ASSERT_DOUBLE_EQ(value(results(2)), value(a(2)) * 2.0);
+  ASSERT_DOUBLE_EQ(value(results(3)), value(a(3)) * 2.0);
+  ASSERT_DOUBLE_EQ(value(results(4)), value(a(4)) * 2.0);
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, 2.0 * sum(independents));
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(3), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(4), 2.0);
+}

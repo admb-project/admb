@@ -446,3 +446,79 @@ TEST_F(test_dvar_vector, unary_double_minus_operator)
   ASSERT_DOUBLE_EQ(gradients(3), 1.0);
   ASSERT_DOUBLE_EQ(gradients(4), 1.0);
 }
+TEST_F(test_dvar_vector, dvcv_elem_div)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  results = elem_div(a, independents);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(2)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(3)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(4)), 1.0);
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, 4.0);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0 / independents(1));
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0 / independents(2));
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0 / independents(3));
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0 / independents(4));
+}
+TEST_F(test_dvar_vector, cvdv_elem_div)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  results = elem_div(independents, a);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(2)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(3)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(4)), 1.0);
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, 4.0);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), -1.0 / independents(1));
+  ASSERT_DOUBLE_EQ(gradients(2), -1.0 / independents(2));
+  ASSERT_DOUBLE_EQ(gradients(3), -1.0 / independents(3));
+  ASSERT_DOUBLE_EQ(gradients(4), -1.0 / independents(4));
+}

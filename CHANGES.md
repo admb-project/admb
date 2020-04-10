@@ -30,6 +30,10 @@ Development Version
 
   to produce an executable that can run on both machines.
 
+#### Changes and Improvements
+
+* Fixed GNUmakefile and admb script when building for MacOS and clang.  [See Issue #128](https://github.com/admb-project/admb/issues/128)
+
 ADMB-12.1
 ---------
 

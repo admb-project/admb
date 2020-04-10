@@ -172,10 +172,10 @@ if [[ "$UNAME_S" =~ "_NT" ]]; then
 fi
 if [ "$CXX" == "g++" ]; then
   if [ "$UNAME_S" == "Darwin" ]; then
-    if [[ "`$CXX --version`" =~ "clang-1100" ]]; then
+    if [[ "`$CXX --version`" =~ "clang-11" ]]; then
       CXXVERSION=$OS_NAME-clang11
     else
-      if [[ "`$CXX --version`" =~ "clang-1000" ]]; then
+      if [[ "`$CXX --version`" =~ "clang-10" ]]; then
         CXXVERSION=$OS_NAME-clang10
       else
         CXXVERSION=$OS_NAME-clang
@@ -188,10 +188,10 @@ if [ "$CXX" == "g++" ]; then
 fi
 if [ "$CXX" == "clang++" ]; then
   if [ "$UNAME_S" == "Darwin" ]; then
-    if [[ "`$CXX --version`" =~ "clang-1100" ]]; then
+    if [[ "`$CXX --version`" =~ "clang-11" ]]; then
       CXXVERSION=$OS_NAME-clang11
     else
-      if [[ "`$CXX --version`" =~ "clang-1000" ]]; then
+      if [[ "`$CXX --version`" =~ "clang-10" ]]; then
         CXXVERSION=$OS_NAME-clang10
       else
         CXXVERSION=$OS_NAME-clang
@@ -204,10 +204,10 @@ if [ "$CXX" == "clang++" ]; then
 fi
 if [ "$CXX" == "c++" ]; then
   if [ "$UNAME_S" == "Darwin" ]; then
-    if [[ "`$CXX --version`" =~ "clang-1100" ]]; then
+    if [[ "`$CXX --version`" =~ "clang-11" ]]; then
       CXXVERSION=$OS_NAME-clang11
     else
-      if [[ "`$CXX --version`" =~ "clang-1000" ]]; then
+      if [[ "`$CXX --version`" =~ "clang-10" ]]; then
         CXXVERSION=$OS_NAME-clang10
       else
         CXXVERSION=$OS_NAME-clang

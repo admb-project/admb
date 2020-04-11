@@ -484,7 +484,7 @@ TEST_F(test_dvar_vector, dvcv_elem_div)
   ASSERT_DOUBLE_EQ(gradients(3), 1.0 / independents(3));
   ASSERT_DOUBLE_EQ(gradients(4), 1.0 / independents(4));
 }
-TEST_F(test_dvar_vector, cvdv_elem_div)
+TEST_F(test_dvar_vector, sine)
 {
   ad_exit=&test_ad_exit;
 
@@ -500,25 +500,32 @@ TEST_F(test_dvar_vector, cvdv_elem_div)
 
   dvar_vector results(1, 4);
 
-  results = elem_div(independents, a);
+  dvar_vector sin(const dvar_vector&);
 
-  ASSERT_DOUBLE_EQ(value(results(1)), 1.0);
-  ASSERT_DOUBLE_EQ(value(results(2)), 1.0);
-  ASSERT_DOUBLE_EQ(value(results(3)), 1.0);
-  ASSERT_DOUBLE_EQ(value(results(4)), 1.0);
+  results = sin(a);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), std::sin(independents(1)));
+  ASSERT_DOUBLE_EQ(value(results(2)), std::sin(independents(2)));
+  ASSERT_DOUBLE_EQ(value(results(3)), std::sin(independents(3)));
+  ASSERT_DOUBLE_EQ(value(results(4)), std::sin(independents(4)));
 
   dvariable total = results(1) + results(2) + results(3) + results(4);
   //dvariable total = sum(results);
 
   double v = value(total);
-  ASSERT_DOUBLE_EQ(v, 4.0);
+  double expected_v =
+    std::sin(independents(1))
+    + std::sin(independents(2))
+    + std::sin(independents(3))
+    + std::sin(independents(4));
+  ASSERT_DOUBLE_EQ(v, expected_v);
 
   dvector gradients(1, 4);
 
   gradcalc(4, gradients);
 
-  ASSERT_DOUBLE_EQ(gradients(1), -1.0 / independents(1));
-  ASSERT_DOUBLE_EQ(gradients(2), -1.0 / independents(2));
-  ASSERT_DOUBLE_EQ(gradients(3), -1.0 / independents(3));
-  ASSERT_DOUBLE_EQ(gradients(4), -1.0 / independents(4));
+  ASSERT_DOUBLE_EQ(gradients(1), cos(independents(1)));
+  ASSERT_DOUBLE_EQ(gradients(2), cos(independents(2)));
+  ASSERT_DOUBLE_EQ(gradients(3), cos(independents(3)));
+  ASSERT_DOUBLE_EQ(gradients(4), cos(independents(4)));
 }

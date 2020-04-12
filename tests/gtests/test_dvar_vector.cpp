@@ -664,3 +664,48 @@ TEST_F(test_dvar_vector, sqrt)
   ASSERT_DOUBLE_EQ(gradients(3), 1.0 / (2.0 * std::sqrt(independents(3))));
   ASSERT_DOUBLE_EQ(gradients(4), 1.0 / (2.0 * std::sqrt(independents(4))));
 }
+TEST_F(test_dvar_vector, sqr)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -40.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  dvar_vector sqr(const dvar_vector&);
+
+  results = sqr(a);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), std::pow(independents(1), 2.0));
+  ASSERT_DOUBLE_EQ(value(results(2)), std::pow(independents(2), 2.0));
+  ASSERT_DOUBLE_EQ(value(results(3)), std::pow(independents(3), 2.0));
+  ASSERT_DOUBLE_EQ(value(results(4)), std::pow(independents(4), 2.0));
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  double expected_v =
+    std::pow(independents(1), 2.0)
+    + std::pow(independents(2), 2.0)
+    + std::pow(independents(3), 2.0)
+    + std::pow(independents(4), 2.0);
+  ASSERT_DOUBLE_EQ(v, expected_v);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 2.0 * independents(1));
+  ASSERT_DOUBLE_EQ(gradients(2), 2.0 * independents(2));
+  ASSERT_DOUBLE_EQ(gradients(3), 2.0 * independents(3));
+  ASSERT_DOUBLE_EQ(gradients(4), 2.0 * independents(4));
+}

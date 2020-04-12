@@ -372,13 +372,14 @@ dvar_vector sqrt(const dvar_vector& v1)
             set_gradient_stack(DF_dvsqrt);
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Computes square of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector sqr(const dvar_vector& v1)
 {
+  /*
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
   for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -394,6 +395,9 @@ dvar_vector sqr(const dvar_vector& v1)
   gradient_structure::GRAD_STACK1->
             set_gradient_stack(DF_dvsqrt);
   return vtmp;
+  */
+
+  return pow(v1, 2.0);
 }
 /**
 Adjoint function to compute gradients for sqrt(const dvar_vector&).
@@ -420,9 +424,10 @@ void DF_dvsqrt(void)
 void DF_dvpow(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes pow raised to the power e for each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector pow(const dvar_vector& v1, const double e)
 {
   //dvector cv1=value(v1);
@@ -442,11 +447,9 @@ dvar_vector pow(const dvar_vector& v1, const double e)
             set_gradient_stack(DF_dvpow);
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for pow(const dvar_vector&, const double).
+*/
 void DF_dvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

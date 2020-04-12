@@ -256,9 +256,10 @@ void DF_dvlog(void)
 void DF_dvtan(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes tan of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector tan(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -273,15 +274,13 @@ dvar_vector tan(const dvar_vector& v1)
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("xee");
-  gradient_structure::GRAD_STACK1->
-            set_gradient_stack(DF_dvtan);
+  gradient_structure::GRAD_STACK1-> set_gradient_stack(DF_dvtan);
+
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for tan(const dvar_vector&).
+*/
 void DF_dvtan(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

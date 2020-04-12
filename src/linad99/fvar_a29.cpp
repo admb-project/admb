@@ -303,9 +303,10 @@ void DF_dvtan(void)
 void DF_dvatan(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes atan of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector atan(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -324,11 +325,9 @@ dvar_vector atan(const dvar_vector& v1)
             set_gradient_stack(DF_dvatan);
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for tan(const dvar_vector&).
+*/
 void DF_dvatan(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

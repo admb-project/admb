@@ -350,9 +350,10 @@ void DF_dvatan(void)
 void DF_dvsqrt(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes sqrt of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector sqrt(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -394,11 +395,9 @@ dvar_vector sqr(const dvar_vector& v1)
             set_gradient_stack(DF_dvsqrt);
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for sqrt(const dvar_vector&).
+*/
 void DF_dvsqrt(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

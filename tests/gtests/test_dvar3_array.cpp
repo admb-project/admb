@@ -597,3 +597,81 @@ TEST_F(test_dvar3_array, indexeselem)
   ASSERT_DOUBLE_EQ(value(a.elem(2, 4, 5)), 7);
   ASSERT_DOUBLE_EQ(value(a.elem(2, 4, 6)), 8);
 }
+TEST_F(test_dvar3_array, sin)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 8);
+  independents(1) = 40.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = 14.2;
+  independents(5) = 0.2;
+  independents(6) = -40.2;
+  independents(7) = -4.2;
+  independents(8) = -10.2;
+
+  dvar_vector a(independents);
+
+  dvar3_array b(1, 2, 3, 4, 5, 6);
+  b(1, 3, 5) = a(1);
+  b(1, 3, 6) = a(2);
+  b(1, 4, 5) = a(3);
+  b(1, 4, 6) = a(4);
+  b(2, 3, 5) = a(5);
+  b(2, 3, 6) = a(6);
+  b(2, 4, 5) = a(7);
+  b(2, 4, 6) = a(8);
+
+  dvar3_array results(1, 2, 3, 4, 5, 6);
+
+  dvar3_array sin(const dvar3_array&);
+
+  results = sin(b);
+
+  ASSERT_DOUBLE_EQ(value(results(1, 3, 5)), std::sin(independents(1)));
+  ASSERT_DOUBLE_EQ(value(results(1, 3, 6)), std::sin(independents(2)));
+  ASSERT_DOUBLE_EQ(value(results(1, 4, 5)), std::sin(independents(3)));
+  ASSERT_DOUBLE_EQ(value(results(1, 4, 6)), std::sin(independents(4)));
+  ASSERT_DOUBLE_EQ(value(results(2, 3, 5)), std::sin(independents(5)));
+  ASSERT_DOUBLE_EQ(value(results(2, 3, 6)), std::sin(independents(6)));
+  ASSERT_DOUBLE_EQ(value(results(2, 4, 5)), std::sin(independents(7)));
+  ASSERT_DOUBLE_EQ(value(results(2, 4, 6)), std::sin(independents(8)));
+
+  dvariable total =
+    results(1, 3, 5)
+    + results(1, 3, 6)
+    + results(1, 4, 5)
+    + results(1, 4, 6)
+    + results(2, 3, 5)
+    + results(2, 3, 6)
+    + results(2, 4, 5)
+    + results(2, 4, 6);
+
+  double v = value(total);
+  double expected_v =
+    std::sin(independents(1))
+    + std::sin(independents(2))
+    + std::sin(independents(3))
+    + std::sin(independents(4))
+    + std::sin(independents(5))
+    + std::sin(independents(6))
+    + std::sin(independents(7))
+    + std::sin(independents(8));
+  ASSERT_DOUBLE_EQ(v, expected_v);
+
+  dvector gradients(1, 8);
+
+  gradcalc(8, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), std::cos(independents(1)));
+  ASSERT_DOUBLE_EQ(gradients(2), std::cos(independents(2)));
+  ASSERT_DOUBLE_EQ(gradients(3), std::cos(independents(3)));
+  ASSERT_DOUBLE_EQ(gradients(4), std::cos(independents(4)));
+  ASSERT_DOUBLE_EQ(gradients(5), std::cos(independents(5)));
+  ASSERT_DOUBLE_EQ(gradients(6), std::cos(independents(6)));
+  ASSERT_DOUBLE_EQ(gradients(7), std::cos(independents(7)));
+  ASSERT_DOUBLE_EQ(gradients(8), std::cos(independents(8)));
+}

@@ -664,7 +664,7 @@ TEST_F(test_dvar_vector, sqrt)
   ASSERT_DOUBLE_EQ(gradients(3), 1.0 / (2.0 * std::sqrt(independents(3))));
   ASSERT_DOUBLE_EQ(gradients(4), 1.0 / (2.0 * std::sqrt(independents(4))));
 }
-TEST_F(test_dvar_vector, sqr)
+TEST_F(test_dvar_vector, sqrvariable)
 {
   ad_exit=&test_ad_exit;
 
@@ -678,19 +678,7 @@ TEST_F(test_dvar_vector, sqr)
 
   dvar_vector a(independents);
 
-  dvar_vector results(1, 4);
-
-  dvar_vector sqr(const dvar_vector&);
-
-  results = sqr(a);
-
-  ASSERT_DOUBLE_EQ(value(results(1)), std::pow(independents(1), 2.0));
-  ASSERT_DOUBLE_EQ(value(results(2)), std::pow(independents(2), 2.0));
-  ASSERT_DOUBLE_EQ(value(results(3)), std::pow(independents(3), 2.0));
-  ASSERT_DOUBLE_EQ(value(results(4)), std::pow(independents(4), 2.0));
-
-  dvariable total = results(1) + results(2) + results(3) + results(4);
-  //dvariable total = sum(results);
+  dvariable total = sqr(a(1)) + sqr(a(2)) + sqr(a(3)) + sqr(a(4));
 
   double v = value(total);
   double expected_v =

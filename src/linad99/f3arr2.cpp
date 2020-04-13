@@ -112,23 +112,23 @@ dvar3_array cos(const dvar3_array& m)
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Computes sqrt of each element in m to a dvar3_array.
+
+@param m dvar3_array
+*/
 dvar3_array sqrt(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=sqrt(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=sqrt(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 
 /**
  * Description not yet available.

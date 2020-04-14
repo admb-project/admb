@@ -33,6 +33,7 @@ Development Version
 #### Changes and Improvements
 
 * Fixed GNUmakefile and admb script when building for MacOS and clang.  [See Issue #128](https://github.com/admb-project/admb/issues/128)
+* Function sqr should compute the square of a variable not the square root.  [See Issue #129](https://github.com/admb-project/admb/issues/129)
 
 ADMB-12.1
 ---------

@@ -45,22 +45,22 @@ dvariable norm2(const dvar3_array& m)
 dvariable sumsq(const dvar3_array& m) {return(norm2(m));}
 
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array exp(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=exp(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
+Computes exp of each element in m to a dvar3_array.
 
+@param m dvar3_array
+*/
+dvar3_array exp(const dvar3_array& m)
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=exp(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
 Computes log of each element in m to a dvar3_array.
 

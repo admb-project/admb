@@ -62,22 +62,22 @@ dvar3_array exp(const dvar3_array& m)
    }
 
 /**
- * Description not yet available.
- * \param
- */
-dvar3_array log(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=log(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
+Computes log of each element in m to a dvar3_array.
 
+@param m dvar3_array
+*/
+dvar3_array log(const dvar3_array& m)
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=log(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
 Computes sin of each element in m to a dvar3_array.
 

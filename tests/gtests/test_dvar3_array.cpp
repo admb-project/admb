@@ -909,3 +909,81 @@ TEST_F(test_dvar3_array, sqr)
   ASSERT_DOUBLE_EQ(gradients(7), 2.0 * independents(7));
   ASSERT_DOUBLE_EQ(gradients(8), 2.0 * independents(8));
 }
+TEST_F(test_dvar3_array, log)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 8);
+  independents(1) = 28.2;
+  independents(2) = 24.2;
+  independents(3) = 10.2;
+  independents(4) = 14.2;
+  independents(5) = 0.2;
+  independents(6) = 8.2;
+  independents(7) = 4.2;
+  independents(8) = 10.2;
+
+  dvar_vector a(independents);
+
+  dvar3_array b(1, 2, 3, 4, 5, 6);
+  b(1, 3, 5) = a(1);
+  b(1, 3, 6) = a(2);
+  b(1, 4, 5) = a(3);
+  b(1, 4, 6) = a(4);
+  b(2, 3, 5) = a(5);
+  b(2, 3, 6) = a(6);
+  b(2, 4, 5) = a(7);
+  b(2, 4, 6) = a(8);
+
+  dvar3_array results(1, 2, 3, 4, 5, 6);
+
+  dvar3_array log(const dvar3_array&);
+
+  results = log(b);
+
+  ASSERT_DOUBLE_EQ(value(results(1, 3, 5)), std::log(independents(1)));
+  ASSERT_DOUBLE_EQ(value(results(1, 3, 6)), std::log(independents(2)));
+  ASSERT_DOUBLE_EQ(value(results(1, 4, 5)), std::log(independents(3)));
+  ASSERT_DOUBLE_EQ(value(results(1, 4, 6)), std::log(independents(4)));
+  ASSERT_DOUBLE_EQ(value(results(2, 3, 5)), std::log(independents(5)));
+  ASSERT_DOUBLE_EQ(value(results(2, 3, 6)), std::log(independents(6)));
+  ASSERT_DOUBLE_EQ(value(results(2, 4, 5)), std::log(independents(7)));
+  ASSERT_DOUBLE_EQ(value(results(2, 4, 6)), std::log(independents(8)));
+
+  dvariable total =
+    results(1, 3, 5)
+    + results(1, 3, 6)
+    + results(1, 4, 5)
+    + results(1, 4, 6)
+    + results(2, 3, 5)
+    + results(2, 3, 6)
+    + results(2, 4, 5)
+    + results(2, 4, 6);
+
+  double v = value(total);
+  double expected_v =
+    std::log(independents(1))
+    + std::log(independents(2))
+    + std::log(independents(3))
+    + std::log(independents(4))
+    + std::log(independents(5))
+    + std::log(independents(6))
+    + std::log(independents(7))
+    + std::log(independents(8));
+  ASSERT_DOUBLE_EQ(v, expected_v);
+
+  dvector gradients(1, 8);
+
+  gradcalc(8, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0 / independents(1));
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0 / independents(2));
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0 / independents(3));
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0 / independents(4));
+  ASSERT_DOUBLE_EQ(gradients(5), 1.0 / independents(5));
+  ASSERT_DOUBLE_EQ(gradients(6), 1.0 / independents(6));
+  ASSERT_DOUBLE_EQ(gradients(7), 1.0 / independents(7));
+  ASSERT_DOUBLE_EQ(gradients(8), 1.0 / independents(8));
+}

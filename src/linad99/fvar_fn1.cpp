@@ -115,11 +115,13 @@ prevariable& sqrt(const prevariable& v1)
     }
 
 /**
- * Description not yet available.
- * \param
- */
+Returns the square of v1.
+
+@param v1 variable
+*/
 prevariable& sqr(const prevariable& v1)
-    {
+{
+/*
       double tmp=v1.v->x;
       if (tmp==0.0)
       {
@@ -134,7 +136,9 @@ prevariable& sqr(const prevariable& v1)
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
         &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),1./(2.*tmp));
       return(*gradient_structure::RETURN_PTR);
-    }
+*/
+  return pow(v1, 2.0);
+}
 
 /**
  * Description not yet available.

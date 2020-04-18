@@ -406,9 +406,9 @@ else
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg.sh
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
+	cp ../scripts/admb/admb.sh ${DIST}/bin/admb.sh
 	cp ../scripts/admb/root-admb.sh ../admb.sh
-	cp ../scripts/admb/admb ${DIST}/admb.sh
+	cp ../scripts/admb/admb.sh ${DIST}/admb.sh
 	cp ../scripts/admb/adcomp ${DIST}/bin/adcomp.sh
 	cp ../scripts/admb/adlink ${DIST}/bin/adlink.sh
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd

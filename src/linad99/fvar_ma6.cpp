@@ -1,13 +1,11 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Functions for empirical_covariance and outer_prod.
+*/
+
 #include "fvar.hpp"
 
 void dfempirical_covarv_partial(void);
@@ -263,9 +261,11 @@ void dfouter_prodvv(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Compute the outer product of v1 and v2 vectors into dvar_matrix.
+
+@param v1 dvector
+@param v2 dvar_vector
+*/
 dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
  {
    RETURN_ARRAYS_INCREMENT();
@@ -282,11 +282,12 @@ dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
-
 /**
- * Description not yet available.
- * \param
- */
+Compute the outer product of v1 and v2 vectors into dvar_matrix.
+
+@param v1 dvar_vector
+@param v2 dvector
+*/
 dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
  {
    RETURN_ARRAYS_INCREMENT();
@@ -301,5 +302,6 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
      }
    }
    RETURN_ARRAYS_DECREMENT();
+
    return(tmp);
  }

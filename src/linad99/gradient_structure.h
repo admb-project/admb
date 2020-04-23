@@ -220,6 +220,8 @@ class gradient_structure
    static void set_NUM_DEPENDENT_VARIABLES(int i);
    static void set_RETURN_ARRAYS_SIZE(unsigned int i);
    static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
+   static unsigned long get_ARRAY_MEMBLOCK_SIZE()
+     { return ARRAY_MEMBLOCK_SIZE; }
 #ifdef __BORLANDC__
    static void set_CMPDIF_BUFFER_SIZE(long int i);
    static void set_GRADSTACK_BUFFER_SIZE(long int i);
@@ -227,6 +229,8 @@ class gradient_structure
 #else
    static void set_CMPDIF_BUFFER_SIZE(const size_t i);
    static void set_GRADSTACK_BUFFER_SIZE(const size_t i);
+   static size_t get_GRADSTACK_BUFFER_SIZE()
+     { return GRADSTACK_BUFFER_SIZE; }
    static void set_GRADSTACK_BUFFER_BYTES(const size_t i);
 #endif
    static void set_MAX_NVAR_OFFSET(unsigned int i);

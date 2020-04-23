@@ -4962,11 +4962,12 @@ void marker(void){;}
   if(likelihood_defined) likelihood_done=1;
   if((procedure_defined)&&(!priors_defined)&&(!likelihood_defined))
   {
-    //JCA
     if (!procedure_done)
     {
       fprintf(fall,"#ifdef DEBUG\n");
-      fprintf(fall,"  std::cout << \"DEBUG: gradient stack total is \" << gradient_structure::GRAD_STACK1->total() << std::endl;;\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total gradient stack used is \" << gradient_structure::GRAD_STACK1->total() << \" out of \" << gradient_structure::get_GRADSTACK_BUFFER_SIZE() << std::endl;;\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total dvariable address used is \" << gradient_structure::GRAD_LIST->total_addresses() << \" out of \" << gradient_structure::get_MAX_DLINKS() << std::endl;;\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total dvariable address used is \" << gradient_structure::ARR_LIST1->get_max_last_offset() << \" out of \" << gradient_structure::get_ARRAY_MEMBLOCK_SIZE() << std::endl;;\n");
       fprintf(fall,"#endif\n");
     }
     procedure_done=1;

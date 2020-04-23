@@ -4960,7 +4960,17 @@ void marker(void){;}
   {
   if(priors_defined) priors_done=1;
   if(likelihood_defined) likelihood_done=1;
-  if((procedure_defined)&&(!priors_defined)&&(!likelihood_defined)) procedure_done=1;
+  if((procedure_defined)&&(!priors_defined)&&(!likelihood_defined))
+  {
+    //JCA
+    if (!procedure_done)
+    {
+      fprintf(fall,"#ifdef DEBUG\n");
+      fprintf(fall,"  std::cout << \"DEBUG: gradient stack total is \" << gradient_structure::GRAD_STACK1->total() << std::endl;;\n");
+      fprintf(fall,"#endif\n");
+    }
+    procedure_done=1;
+  }
   if((procedure_defined)&&(priors_defined)&&(!prior_done_once)) add_prior_to_objective();
   if((procedure_defined)&&(likelihood_defined)&&(!likelihood_done_once)) add_likelihood_to_objective();
   //if((priors_defined)&&(!prior_done_once)) add_prior_to_objective();

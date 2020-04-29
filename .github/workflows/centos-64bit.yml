@@ -14,8 +14,6 @@ jobs:
     - name: api
       run: |
         make --directory=docs/api
-        cd docs/api
-        api-upload.sh
     - name: build
       run: make
     - name: debug

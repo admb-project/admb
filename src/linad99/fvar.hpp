@@ -958,7 +958,8 @@ class grad_stack
    friend void cleanup_temporary_files();
    ostream & operator  <<(grad_stack);
    void print();
-   grad_stack();
+   grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
+   grad_stack(const size_t GRADSTACK_BUFFER_SIZE);
    ~grad_stack();
    void write_grad_stack_buffer(void);
 

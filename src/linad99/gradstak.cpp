@@ -99,10 +99,7 @@ void fill_ad_random_part(void)
   }
 */
 }
-/**
-Default constructor
-*/
-grad_stack::grad_stack()
+grad_stack::grad_stack(const size_t GRADSTACK_BUFFER_SIZE)
 {
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;

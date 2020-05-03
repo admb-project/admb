@@ -99,11 +99,11 @@ void fill_ad_random_part(void)
   }
 */
 }
-grad_stack::grad_stack(const size_t GRADSTACK_BUFFER_SIZE)
+grad_stack::grad_stack(const size_t size, const unsigned int id)
 {
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-  true_length = gradient_structure::GRADSTACK_BUFFER_SIZE;
+  true_length = size;
   length = true_length;
 
 #ifndef OPT_LIB
@@ -165,21 +165,33 @@ grad_stack::grad_stack(const size_t GRADSTACK_BUFFER_SIZE)
   if (path != NULL && strlen(path) <= 45)
   {
 #if !defined (_WIN32)
-    sprintf(&gradfile_name1[0],"%s/gradfil1.%s", path, ad_random_part);
+    if (id > 0)
+      sprintf(&gradfile_name1[0],"%s/gradfil1%u.tmp", path, id);
+    else
+      sprintf(&gradfile_name1[0],"%s/gradfil1.tmp", path);
 #else
     if (lastchar(path) != '\\')
     {
-      sprintf(&gradfile_name1[0], "%s\\gradfil1.%s", path, ad_random_part);
+      if (id > 0)
+        sprintf(&gradfile_name1[0], "%s\\gradfil1%u.tmp", path, id);
+      else
+        sprintf(&gradfile_name1[0], "%s\\gradfil1.tmp", path);
     }
     else
     {
-      sprintf(&gradfile_name1[0], "%sgradfil1.%s", path, ad_random_part);
+      if (id > 0)
+        sprintf(&gradfile_name1[0], "%sgradfil1%u.tmp", path, id);
+      else
+        sprintf(&gradfile_name1[0], "%sgradfil1.tmp", path);
     }
 #endif
   }
   else
   {
-    sprintf(&gradfile_name1[0], "gradfil1.%s", ad_random_part);
+    if (id > 0)
+      sprintf(&gradfile_name1[0], "gradfil1%u.tmp", id);
+    else
+      sprintf(&gradfile_name1[0], "gradfil1.tmp");
   }
 
   path = getenv("ADTMP1"); // NULL if not defined
@@ -194,31 +206,71 @@ grad_stack::grad_stack(const size_t GRADSTACK_BUFFER_SIZE)
 #if !defined (_WIN32)
     if (strlen(path) > 0)
     {
-      sprintf(&var_store_file_name[0],"%s/varssave.%s",path, ad_random_part);
-      sprintf(&gradfile_name2[0],"%s/gradfil2.%s", path, ad_random_part);
+      if (id > 0)
+      {
+        sprintf(&var_store_file_name[0],"%s/varssave%u.tmp",path, id);
+        sprintf(&gradfile_name2[0],"%s/gradfil2%u.tmp", path, id);
+      }
+      else
+      {
+        sprintf(&var_store_file_name[0],"%s/varssave.tmp",path);
+        sprintf(&gradfile_name2[0],"%s/gradfil2.tmp", path);
+      }
     }
     else
     {
-      sprintf(&var_store_file_name[0],"varssave.tmp");
-      sprintf(&gradfile_name2[0],"gradfil2.tmp");
+      if (id > 0)
+      {
+        sprintf(&var_store_file_name[0],"varssave%u.tmp", id);
+        sprintf(&gradfile_name2[0],"gradfil2%u.tmp", id);
+      }
+      else
+      {
+        sprintf(&var_store_file_name[0],"varssave.tmp");
+        sprintf(&gradfile_name2[0],"gradfil2.tmp");
+      }
     }
 #else
     if (lastchar(path)!='\\')
     {
-      sprintf(&gradfile_name2[0], "%s\\gradfil2.%s", path, ad_random_part);
-      sprintf(&var_store_file_name[0], "%s\\varssave.%s", path, ad_random_part);
+      if (id > 0)
+      {
+        sprintf(&gradfile_name2[0], "%s\\gradfil2%u.tmp", path, id);
+        sprintf(&var_store_file_name[0], "%s\\varssave%u.tmp", path, id);
+      }
+      else
+      {
+        sprintf(&gradfile_name2[0], "%s\\gradfil2.tmp", path);
+        sprintf(&var_store_file_name[0], "%s\\varssave.tmp", path);
+      }
     }
     else
     {
-      sprintf(&gradfile_name2[0], "%sgradfil2.%s", path, ad_random_part);
-      sprintf(&var_store_file_name[0], "%svarssave.%s", path, ad_random_part);
+      if (id > 0)
+      {
+        sprintf(&gradfile_name2[0], "%sgradfil2%u.tmp", path, id);
+        sprintf(&var_store_file_name[0], "%svarssave%u.tmp", path, id);
+      }
+      else
+      {
+        sprintf(&gradfile_name2[0], "%sgradfil2.tmp", path);
+        sprintf(&var_store_file_name[0], "%svarssave.tmp", path);
+      }
     }
 #endif
   }
   else
   {
-    sprintf(&gradfile_name2[0], "gradfil2.%s", ad_random_part);
-    sprintf(&var_store_file_name[0], "varssave.%s", ad_random_part);
+    if (id > 0)
+    {
+      sprintf(&gradfile_name2[0], "gradfil2%u.tmp", id);
+      sprintf(&var_store_file_name[0], "varssave%u.tmp", id);
+    }
+    else
+    {
+      sprintf(&gradfile_name2[0], "gradfil2.tmp");
+      sprintf(&var_store_file_name[0], "varssave.tmp");
+    }
   }
 
   create_gradfile();

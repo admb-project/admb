@@ -959,7 +959,8 @@ class grad_stack
    ostream & operator  <<(grad_stack);
    void print();
    grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
-   grad_stack(const size_t GRADSTACK_BUFFER_SIZE);
+   grad_stack(const size_t size): grad_stack(size, 0) {}
+   grad_stack(const size_t size, const unsigned int id);
    ~grad_stack();
    void write_grad_stack_buffer(void);
 

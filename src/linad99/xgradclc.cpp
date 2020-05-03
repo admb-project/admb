@@ -82,8 +82,7 @@ void funnel_gradcalc(void)
        return;
      }
 #  endif
-  gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
+  gradient_structure::GRAD_STACK1->initialize();
   if(!gradient_structure::instances)
   {
     return;

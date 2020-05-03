@@ -127,6 +127,7 @@ GTESTS_ALL=\
  test_issues.cpp\
  test_funnel.cpp\
  test_math.cpp\
+ test_funnel_thread_grad_stack.cpp\
  main.cpp
 
 GTESTS_NEW=\

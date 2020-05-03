@@ -97,8 +97,7 @@ void gradcalc(int nvar, const dvector& _g)
     }
   }
   dvector& g= (dvector&) _g;
-  gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
+  gradient_structure::GRAD_STACK1->initialize();
   if(!gradient_structure::instances)
   {
     g.initialize();

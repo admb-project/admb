@@ -99,10 +99,16 @@ void fill_ad_random_part(void)
   }
 */
 }
+/**
+Construct grad_stack with size and id.
+
+@param size number of elements
+@param id unique identifier
+*/
 grad_stack::grad_stack(const size_t size, const unsigned int id)
 {
-  gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
+  initialize();
+
   true_length = size;
   length = true_length;
 
@@ -412,13 +418,13 @@ void  grad_stack::write_grad_stack_buffer()
     cout << "Wrote " << ierr << "bytes into temp. grad. file\n";
   }
   {
-    OFF_T lpos = LSEEK(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
+    OFF_T lpos = LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
     cout << "Offset in file after write is " << lpos
          << " bytes from the beginning\n";
   }
 #endif
   //keep track of the size of the grad_stack
-  gradient_structure::TOTAL_BYTES+=nbw;
+  TOTAL_BYTES += nbw;
   ptr = ptr_first;
 }
 

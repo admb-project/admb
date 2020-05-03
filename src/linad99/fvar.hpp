@@ -922,6 +922,16 @@ class grad_stack
    size_t true_length;
 #endif
  public:
+   size_t TOTAL_BYTES;
+   size_t PREVIOUS_TOTAL_BYTES;
+
+   /// Initialize byte totals to zero.
+   void initialize()
+   {
+     TOTAL_BYTES = 0;
+     PREVIOUS_TOTAL_BYTES = 0;
+   }
+
    grad_stack_entry * ptr;
  private:
    //lvector * table;

@@ -832,12 +832,16 @@ class dlist
   dlink** dlink_addresses;
   char* ddlist_space;
   double* variables_save;
+  unsigned int size;
 
 public:
-  // constructor
-  dlist();
-  // destructor
+  /// Default Constructor
+  dlist(): dlist(gradient_structure::MAX_DLINKS) {}
+  /// Constructor size
+  dlist(const unsigned int size);
+  /// Destructor
   ~dlist();
+
   // create a new link
   dlink* create();
   // append link

@@ -98,6 +98,7 @@ GTESTS_ALL=\
  test_vector.cpp\
  test_xpools.cpp\
  test_issues.cpp\
+ test_math.cpp\
  main.cpp
 
 all: clean gtest-all

@@ -325,6 +325,27 @@ TEST_F(test_imatrix, fill_seqadd)
 TEST_F(test_imatrix, imatrix_position)
 {
   imatrix_position position(1, 3);
+  ASSERT_EQ(position.lb(1), 0);
+  ASSERT_EQ(position.lb(2), 0);
+  ASSERT_EQ(position.lb(3), 0);
+  ASSERT_EQ(position.ub(1), -1);
+  ASSERT_EQ(position.ub(2), -1);
+  ASSERT_EQ(position.ub(3), -1);
+  ASSERT_TRUE(position.ptr(1) == 0);
+  ASSERT_TRUE(position.ptr(2) == 0);
+  ASSERT_TRUE(position.ptr(3) == 0);
+
+  imatrix_position copy_position(position);
+  ASSERT_EQ(copy_position.lb(1), 0);
+  ASSERT_EQ(copy_position.lb(2), 0);
+  ASSERT_EQ(copy_position.lb(3), 0);
+  ASSERT_EQ(copy_position.ub(1), -1);
+  ASSERT_EQ(copy_position.ub(2), -1);
+  ASSERT_EQ(copy_position.ub(3), -1);
+  ASSERT_TRUE(copy_position.ptr(1) == 0);
+  ASSERT_TRUE(copy_position.ptr(2) == 0);
+  ASSERT_TRUE(copy_position.ptr(3) == 0);
+
   position.lb.allocate(1, 3);
   position.lb(1) = 1;
   position.lb(2) = 2;
@@ -333,6 +354,17 @@ TEST_F(test_imatrix, imatrix_position)
   position.ub(1) = 4;
   position.ub(2) = 5;
   position.ub(3) = 6;
+
+  imatrix_position copy_position2(position);
+  ASSERT_EQ(copy_position2.lb(1), 1);
+  ASSERT_EQ(copy_position2.lb(2), 2);
+  ASSERT_EQ(copy_position2.lb(3), 3);
+  ASSERT_EQ(copy_position2.ub(1), 4);
+  ASSERT_EQ(copy_position2.ub(2), 5);
+  ASSERT_EQ(copy_position2.ub(3), 6);
+  ASSERT_TRUE(copy_position2.ptr(1) == 0);
+  ASSERT_TRUE(copy_position2.ptr(2) == 0);
+  ASSERT_TRUE(copy_position2.ptr(3) == 0);
 
   imatrix m;
   m.allocate(position);
@@ -344,6 +376,17 @@ TEST_F(test_imatrix, imatrix_position)
   ASSERT_EQ(position.ub(2), m(2).indexmax());
   ASSERT_EQ(position.lb(3), m(3).indexmin());
   ASSERT_EQ(position.ub(3), m(3).indexmax());
+
+  imatrix_position copy_position3(m);
+  ASSERT_EQ(copy_position3.lb(1), 1);
+  ASSERT_EQ(copy_position3.lb(2), 2);
+  ASSERT_EQ(copy_position3.lb(3), 3);
+  ASSERT_EQ(copy_position3.ub(1), 4);
+  ASSERT_EQ(copy_position3.ub(2), 5);
+  ASSERT_EQ(copy_position3.ub(3), 6);
+  ASSERT_TRUE(copy_position3.ptr(1) == m(1).get_v());
+  ASSERT_TRUE(copy_position3.ptr(2) == m(2).get_v());
+  ASSERT_TRUE(copy_position3.ptr(3) == m(3).get_v());
 }
 TEST_F(test_imatrix, imatrix_position_error)
 {

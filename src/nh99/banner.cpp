@@ -1,8 +1,10 @@
-/*
- * $Id$
- *
- * Copyright (c) 2008-2013 ADMB Foundation
- */
+/**
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 ADMB Foundation
+
+@brief Function banner
+*/
 
 #include <fvar.hpp>
 #include <adstring.hpp>

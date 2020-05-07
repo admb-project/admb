@@ -2,15 +2,17 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
       EXT=.sh
     else
+      SHELL=cmd
       CMDSHELL=cmd
     endif
   endif
 endif
 
-all: clean $(TARGET) run
+all: clean
+	$(MAKE) run
 
 $(TARGET): $(TARGET).tpl
 ifeq ($(CMDSHELL),cmd)
@@ -19,7 +21,7 @@ else
 	../../admb$(EXT) $(TARGET) $(SRCS)
 endif
 
-run:
+run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
 	$(TARGET)
 else
@@ -75,6 +77,7 @@ else
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).luu
 	@rm -vf $(TARGET).rhes
+	@rm -vf $(TARGET).[bpr]01
 	@rm -vf eigv.rpt
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

@@ -2,17 +2,18 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+      SHELL=cmd
       CMDSHELL=cmd
     endif
   endif
   ifeq ($(CMDSHELL),cmd)
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
-      PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
+      PATH:=$(abspath ..\utilities\mingw\bin);$(PATH)
     endif
   else
     ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
-      PATH:=$(shell pwd)/../utilities/mingw/bin:$(PATH)
+      PATH:=$(abspath /../utilities/mingw/bin):$(PATH)
     endif
   endif
 endif
@@ -32,6 +33,17 @@ ifeq ($(CMDSHELL),cmd)
     endif
     CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
+  ifeq ($(CXX),clang++)
+    ifneq ($(findstring clang++.exe,$(shell where clang++.exe 2>&1 | findstr clang++.exe)),clang++.exe)
+      $(warning "Warning: Unable to find clang++ compiler.")
+    endif
+    ifeq ($(findstring x86_64,$(shell $(CXX) -dumpmachine)),x86_64)
+      OSNAME=win64
+    else
+      OSNAME=win32
+    endif
+    CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
+  endif
   ifdef SHARED
   OBJSDIR:=$(addsuffix \$(OSNAME)$(CXXVERSION)-shared,$(OBJSDIR))
   else
@@ -44,10 +56,16 @@ ifeq ($(CMDSHELL),cmd)
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
   ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
 else
-  INSTALL_DIR=/usr/local/
+  ifndef INSTALL_DIR
+    INSTALL_DIR=/usr/local/
+  endif
   DIST=../build/admb
   LIBSDIR=$(DIST)/lib/
-  UNAME_S := $(shell uname -s)
+  ifeq ($(OS),Windows_NT)
+    UNAME_S=_NT
+  else
+    UNAME_S := $(shell uname -s)
+  endif
   ifeq ($(UNAME_S),Linux)
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
       OSNAME=i686-linux
@@ -63,27 +81,60 @@ else
     endif
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
-    ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-      OSNAME=mingw64
-    else
-      OSNAME=mingw32
+    ifeq ($(CXX),g++)
+      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+        OSNAME=mingw64
+      else
+        OSNAME=mingw32
+      endif
+    endif
+    ifeq ($(CXX),clang++)
+      ifeq ($(findstring x86_64,$(shell clang++ -dumpmachine)),x86_64)
+        OSNAME=win64
+      else
+        OSNAME=win32
+      endif
     endif
   endif
   ifndef OSNAME
     $(warning Unknown UNAME_S = "$(UNAME_S)" results in empty OSNAME.)
   endif
   ifeq ($(CXX),g++)
-  CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    ifeq ($(UNAME_S),Darwin)
+      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
+        CXXVERSION=-clang11
+      else
+        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
+          CXXVERSION=-clang10
+        else
+          CXXVERSION=-clang
+        endif
+      endif
+    else
+      CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    endif
   endif
   ifeq ($(CXX),clang++)
-  CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    ifeq ($(UNAME_S),Darwin)
+      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
+        CXXVERSION=-clang11
+      else
+        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
+          CXXVERSION=-clang10
+        else
+          CXXVERSION=-clang
+        endif
+      endif
+    else
+      CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    endif
   endif
   ifeq ($(CXX),c++)
     ifeq ($(UNAME_S),Darwin)
-      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
-      CXXVERSION=-clang11
+      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
+        CXXVERSION=-clang11
       else
-        ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
+        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
           CXXVERSION=-clang10
         else
           CXXVERSION=-clang
@@ -164,7 +215,7 @@ ifeq ($(CMDSHELL),cmd)
     endif
   endif
 else
-  ifeq ("$(shell uname)","Darwin")
+  ifeq ("$(UNAME_S)","Darwin")
     ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
   else
     ifeq ($(CXX),clang++)
@@ -355,9 +406,9 @@ else
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg.sh
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
+	cp ../scripts/admb/admb.sh ${DIST}/bin/admb.sh
 	cp ../scripts/admb/root-admb.sh ../admb.sh
-	cp ../scripts/admb/admb ${DIST}/admb.sh
+	cp ../scripts/admb/admb.sh ${DIST}/admb.sh
 	cp ../scripts/admb/adcomp ${DIST}/bin/adcomp.sh
 	cp ../scripts/admb/adlink ${DIST}/bin/adlink.sh
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
@@ -668,18 +719,30 @@ install:
 ifeq ($(INSTALL_DIR),/usr/local/)
 	find ../build/admb -type d -exec chmod 755 {} \;
 	find ../build/admb -type f -exec chmod 644 {} \;
+  ifeq ($(OS),Windows_NT)
+	chmod a+rx ../build/admb/bin/admb.cmd
+	chmod a+rx ../build/admb/bin/admb.sh
+	chmod a+rx ../build/admb/bin/adlink.cmd
+	chmod a+rx ../build/admb/bin/adcomp.cmd
+	chmod a+rx ../build/admb/bin/tpl2cpp.exe
+	chmod a+rx ../build/admb/bin/tpl2rem.exe
+  else
 	chmod a+rx ../build/admb/bin/admb
 	chmod a+rx ../build/admb/bin/adlink
 	chmod a+rx ../build/admb/bin/adcomp
 	chmod a+rx ../build/admb/bin/tpl2cpp
 	chmod a+rx ../build/admb/bin/tpl2rem
-	chmod a+rx ../build/admb/contrib
+  endif
 	chmod a+r ../build/admb/bin/sed*
 	chmod a+r ../build/admb/include/*.*
-	chmod a+r ../build/admb/contrib/include/*.*
+	chmod a+r ../build/admb/include/contrib/*.*
 endif
-	cp -Rvf ../build/admb $(INSTALL_DIR)admb
+	cp -Rvf ../build/admb $(INSTALL_DIR)
+ifeq ($(INSTALL_DIR),/usr/local/)
+  ifneq ($(OS),Windows_NT)
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
+  endif
+endif
 
 copy:
 ifeq ($(CMDSHELL),cmd)

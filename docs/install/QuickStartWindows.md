@@ -1,7 +1,7 @@
 # ADMB Quick Start Windows
 
-*ADMB-12.1*  
-*Released January 17, 2020*  
+*ADMB-12.1*
+*Released January 17, 2020*
 
 Describe downloading, installing and using ADMB from binary release for Windows.
 
@@ -31,8 +31,8 @@ Quick Start
    For self extracting file, Use **File Explorer** and open folder **C:\Program Files(x86)\ADMB-12.1**, then double click **ADMB Command Prompt** shortcut to open command line window.
 
    In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
- 
-   Change to simple example directory.       
+
+   Change to simple example directory.
 
    ```
    C:\> cd ADMB\examples\admb\simple
@@ -51,6 +51,16 @@ Quick Start
    ```
 
    Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
+
+AD Studio
+---------
+
+Alternatively, install [AD Studio](https://github.com/admb-project/adstudio), a
+dedicated environment for developing ADMB and TMB models. It uses the C++
+compiler from Rtools and has especially good support for R, LaTeX, Markdown,
+GDB, and Git.
+
+AD Studio 1.0 comes with ADMB 12.0, which is one version older than 12.1.
 
 ---
 For help and support, contact <users@admb-project.org>.

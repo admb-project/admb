@@ -1,10 +1,11 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
-#include <admodel.h>
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
 
-double better_rand(long int&);
+@brief Function function_minimizer::get_monte_carlo_value
+*/
+#include <admodel.h>
 
 double function_minimizer::get_monte_carlo_value(int nvar, const dvector& x)
 {

@@ -11,6 +11,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean
       run: make clean
+    - name: api
+      run: |
+        make --directory=docs/api
     - name: build
       run: make
     - name: debug

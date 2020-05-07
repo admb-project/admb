@@ -4,7 +4,8 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
       CMDSHELL=cmd
   else
-    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+      SHELL=cmd
       CMDSHELL=cmd
     endif
   endif
@@ -49,7 +50,6 @@ ADMB_TPLS=\
 ADMB_RE_TPLS=\
  bcb\
  biglog\
- bvprobit\
  glmmadmb\
  caest\
  gamma\
@@ -72,7 +72,10 @@ ADMB_RE_TPLS=\
 
 default: simple
 
-all: admb admb-re autodif
+all: clean
+	$(MAKE) admb
+	$(MAKE) admb-re
+	$(MAKE) autodif
 
 admb: $(ADMB_TPLS)
 
@@ -197,7 +200,7 @@ else
 	cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 endif
 
-glmmadmb:
+glmmadmb: bvprobit
 ifeq ($(CMDSHELL),cmd)
 	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ -maxph 5 -noinit -shess -crit 1.e-6 && popd
 else
@@ -1445,7 +1448,6 @@ endif
 	@rm -vf admb-re/nested4/admodel.dep
 	@rm -vf admb-re/nested4/admodel.hes
 	@rm -vf admb-re/nested4/fmin.log
-	@rm -vf admb-re/nested4/hesscheck
 	@rm -vf admb-re/nested4/hessian.bin
 	@rm -vf admb-re/nested4/nested4.b01
 	@rm -vf admb-re/nested4/nested4.bar
@@ -1462,6 +1464,7 @@ endif
 	@rm -vf admb-re/nested4/nested4.rep
 	@rm -vf admb-re/nested4/nested4.rhes
 	@rm -vf admb-re/nested4/nested4.std
+	@rm -vf admb-re/nested4/hesscheck
 	@rm -vf admb-re/orange/admodel.cov
 	@rm -vf admb-re/orange/admodel.dep
 	@rm -vf admb-re/orange/admodel.hes

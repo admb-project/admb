@@ -11,15 +11,14 @@ jobs:
     - uses: actions/checkout@v1
     - name: clean
       run: |
-        set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make clean
-        git status
+        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        make clean
       shell: cmd
     - name: build debug
       run: |
-        set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make DEBUG=yes
-        utilities\\make shared DEBUG=yes
+        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        make -j 2 DEBUG=yes
+        make -j 2 shared DEBUG=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
@@ -28,8 +27,8 @@ jobs:
         path: build\\admb
     - name: test
       run: |
-        set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make test DEBUG=yes TESTS_REMOTE=no
+        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        make test DEBUG=yes TESTS_REMOTE=no
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

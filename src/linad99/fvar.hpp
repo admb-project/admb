@@ -1233,10 +1233,10 @@ inline void grad_stack::set_gradient_stack4(void (*func) (void),
    }
 #endif
 }
-
 /**
- * Description not yet available.
- * \param
+ * Push func to adjoint functions stack.
+ *
+ * \param func pointer to adjoint function
  */
 inline void grad_stack::set_gradient_stack(void (*func) (void))
 {

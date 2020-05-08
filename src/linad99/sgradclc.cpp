@@ -84,6 +84,11 @@ Compute the gradient from the data stored in the global \ref gradient_structure.
 */
 void gradcalc(int nvar, const dvector& _g)
 {
+  dvector& g = (dvector&)_g;
+  gradient_structure::GRAD_STACK1->gradcalc(nvar, g);
+}
+void grad_stack::gradcalc(int nvar, dvector& g)
+{
   if (nvar!=0)
   {
     if (nvar != gradient_structure::NVAR)
@@ -96,8 +101,7 @@ void gradcalc(int nvar, const dvector& _g)
       ad_exit(1);
     }
   }
-  dvector& g= (dvector&) _g;
-  gradient_structure::GRAD_STACK1->initialize();
+  initialize();
   if(!gradient_structure::instances)
   {
     g.initialize();
@@ -110,15 +114,11 @@ void gradcalc(int nvar, const dvector& _g)
     ad_exit(1);
   }
 
-   gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
-     gradient_structure::GRAD_STACK1->gradfile_handle();
-
-  int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
+  _GRADFILE_PTR = gradfile_handle();
 
   LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
-  if (gradient_structure::GRAD_STACK1->ptr <=
-        gradient_structure::GRAD_STACK1->ptr_first)
+  if (ptr <= ptr_first)
   {
 #ifdef DEBUG
     cerr << "warning -- calling gradcalc when no calculations generating"
@@ -134,53 +134,43 @@ void gradcalc(int nvar, const dvector& _g)
     gradient_structure::save_variables();
   }
 
-  gradient_structure::GRAD_STACK1->ptr--;
+  ptr--;
 
   gradient_structure::GRAD_LIST->initialize();
 
   memset(gradient_structure::ARRAY_MEMBLOCK_BASE, 0,
     gradient_structure::ARR_LIST1->get_max_last_offset());
 
-  *gradient_structure::GRAD_STACK1->ptr->dep_addr = 1;
+  *ptr->dep_addr = 1;
 
   //int icount=0;
   int break_flag=1;
   do
   {
-    gradient_structure::GRAD_STACK1->ptr++;
+    ptr++;
 #ifdef FAST_ASSEMBLER
     gradloop();
 #else
-    grad_stack_entry* grad_ptr_first =
-      gradient_structure::GRAD_STACK1->ptr_first;
-    while (gradient_structure::GRAD_STACK1->ptr-- >
-             grad_ptr_first)
+    grad_stack_entry* grad_ptr_first = ptr_first;
+    while (ptr-- > grad_ptr_first)
     {
-      (*(gradient_structure::GRAD_STACK1->ptr->func))();
-/*
-      icount++;
-      if (icount%1000==0)
-      {
-        //cout << "icount = " << icount << endl;
-      }
-*/
+      (*(ptr->func))();
     }
 #endif
 
    // back up the file one buffer size and read forward
    OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
-                  * gradient_structure::GRAD_STACK1->length);
-   OFF_T lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
-      -offset,SEEK_CUR);
+                  * length);
+   OFF_T lpos = LSEEK(_GRADFILE_PTR, -offset,SEEK_CUR);
 
-    break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
+    break_flag=read_grad_stack_buffer(lpos);
   } while (break_flag);
 
   {
 #ifdef GRAD_DIAG
     long int ttmp =
 #endif
-    LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
+    LSEEK(_GRADFILE_PTR, 0,SEEK_CUR);
 #ifdef GRAD_DIAG
     cout << "Offset in file at end of gradcalc is " << ttmp
          << " bytes from the beginning\n";
@@ -192,8 +182,7 @@ void gradcalc(int nvar, const dvector& _g)
     g[j] = *gradient_structure::INDVAR_LIST->get_address(i);
   }
 
-  gradient_structure::GRAD_STACK1->ptr =
-    gradient_structure::GRAD_STACK1->ptr_first;
+  ptr = ptr_first;
 
   if (gradient_structure::save_var_flag)
   {

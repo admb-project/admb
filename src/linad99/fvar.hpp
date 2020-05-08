@@ -956,7 +956,7 @@ class grad_stack
 #endif
    //dmatrix *table;
  public:
-   friend void gradcalc(int nvar, const dvector & g);
+   void gradcalc(int nvar, dvector& g);
    friend void slave_gradcalc(void);
    friend void funnel_gradcalc(void);
    friend void default_evaluation(void);

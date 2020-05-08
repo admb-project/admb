@@ -91,7 +91,6 @@ public:
  */
 class gradient_structure
 {
-   static char cmpdif_file_name[61];
    static DF_FILE *fp;
  public:
 #if defined(NO_DERIVS)
@@ -247,16 +246,31 @@ by gradcalc.
 class DF_FILE
 {
 public:
-  DF_FILE(const size_t nbytes);
+  /// Default uses gradient_structure::CMPDIF_BUFFER_SIZE
+  DF_FILE(): DF_FILE(gradient_structure::CMPDIF_BUFFER_SIZE) {}
+  /// Do not allow copy contructor
+  DF_FILE(const DF_FILE&) = delete;
+  /// User defined size with default id
+  DF_FILE(const size_t nbytes): DF_FILE(nbytes, 0) {}
+  DF_FILE(const size_t nbytes, const unsigned int id);
   ~DF_FILE();
 
+  /// Do not allow assignment operator
+  DF_FILE& operator=(const DF_FILE&) = delete;
+
+  /// Stores binary data and size
   char* buff;
+ 
+  /// Used data offset for buff
   OFF_T toffset;
+
+  /// Offset for each data record written to file
   union
   {
     OFF_T offset;
     char fourb[sizeof(OFF_T)];
   };
+  /// Filename and pointer to store records of binary data and size to file
   char cmpdif_file_name[81];
   int file_ptr;
 

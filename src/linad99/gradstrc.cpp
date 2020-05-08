@@ -66,7 +66,6 @@ extern "C"{
 int ctlc_flag = 0;
 int gradient_structure::Hybrid_bounded_flag=0;
 DF_FILE * gradient_structure::fp=NULL;
-char gradient_structure::cmpdif_file_name[61];
 //char gradient_structure::var_store_file_name[61];
 unsigned int gradient_structure::NUM_RETURN_ARRAYS = 25;
 double * gradient_structure::hessian_ptr=NULL;
@@ -167,9 +166,6 @@ size_t gradient_structure::totalbytes(void)
   grad_stack* gs = gradient_structure::GRAD_STACK1;
   return gs ? gradient_structure::GRAD_STACK1->TOTAL_BYTES : 0;
 }
-
- void fill_ad_random_part(void);
- extern char ad_random_part[6];
 
 /// Close gradient and variable files and free gradient structure memory.
 void cleanup_temporary_files()
@@ -291,7 +287,6 @@ gradient_structure::gradient_structure(long int _size):
 #endif
   gradient_structure::NVAR=0;
   atexit(cleanup_temporary_files);
-  fill_ad_random_part();
 
   if (instances++ > 0)
   {
@@ -306,29 +301,6 @@ gradient_structure::gradient_structure(long int _size):
   gradient_structure::ARRAY_MEMBLOCK_SIZE =
     static_cast<unsigned long int>(_size - remainder);
 
-  char* path = getenv("ADTMP1"); // NULL if not defined
-  if (path != NULL && strlen(path) <= 45)
-  {
-#ifdef __SUN__
-    sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
-            ad_random_part);
-#else
-    if (lastchar(path)!='\\')
-    {
-      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
-              ad_random_part);
-    }
-    else
-    {
-      sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
-              ad_random_part);
-    }
-#endif
-  }
-  else
-  {
-    sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
-  }
   if (DEPVARS_INFO!= NULL)
   {
     cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
@@ -368,7 +340,7 @@ gradient_structure::gradient_structure(long int _size):
   }
   else
   {
-    fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+    fp = new DF_FILE();
     memory_allocate_error("fp", (void *) fp);
   }
 

@@ -89,6 +89,12 @@ void byte_copy(void* dest, void* source, const size_t num_bytes)
 }
 #endif
 
+DF_FILE* gradient_structure::get_fp()
+{
+  return gradient_structure::GRAD_STACK1->fp;
+}
+
+
 /**
 Constructor to allocate buffer and storage output file.
 

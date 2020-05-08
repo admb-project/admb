@@ -91,7 +91,6 @@ public:
  */
 class gradient_structure
 {
-   static DF_FILE *fp;
  public:
 #if defined(NO_DERIVS)
    static int no_derivatives;
@@ -111,7 +110,6 @@ class gradient_structure
    {
       return (double*)ARRAY_MEMBLOCK_BASE;
    }
- private:
 #ifdef __BORLANDC__
    static long int CMPDIF_BUFFER_SIZE;
    static long int GRADSTACK_BUFFER_SIZE;
@@ -119,6 +117,7 @@ class gradient_structure
    static size_t CMPDIF_BUFFER_SIZE;
    static size_t GRADSTACK_BUFFER_SIZE;
 #endif
+ private:
    static unsigned int MAX_NVAR_OFFSET;
    static int save_var_file_flag;
    static int save_var_flag;
@@ -196,13 +195,10 @@ class gradient_structure
    static void jacobcalc(int nvar, const uostream & jac);
 
    friend void default_evaluation(void);
-   //access functions
 
-   friend class DF_FILE;
-   static DF_FILE *get_fp(void)
-   {
-      return fp;
-   }
+  //access functions
+  static DF_FILE* get_fp();
+
    static void set_NUM_RETURN_ARRAYS(unsigned int i);
 #if defined(NO_DERIVS)
    static void set_NO_DERIVATIVES(void);

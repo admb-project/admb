@@ -922,6 +922,8 @@ class grad_stack
    size_t true_length;
 #endif
  public:
+   DF_FILE* fp;
+
    size_t TOTAL_BYTES;
    size_t PREVIOUS_TOTAL_BYTES;
 

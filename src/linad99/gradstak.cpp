@@ -83,11 +83,13 @@ using namespace std;
 #endif
 
 char lastchar(char *);
+void memory_allocate_error(const char * s, void * ptr);
+
+/*
 char ad_random_part[6]="tmp";
 
 void fill_ad_random_part(void)
 {
-/*
   time_t t,tt;
   time(&t);
   tt=t;
@@ -97,8 +99,9 @@ void fill_ad_random_part(void)
     ad_random_part[i]=(tt/div)%10+48;
     div*=10;
   }
-*/
 }
+*/
+
 /**
 Construct grad_stack with size and id.
 
@@ -283,6 +286,9 @@ grad_stack::grad_stack(const size_t size, const unsigned int id)
 
   strcpy(gradfile_name, gradfile_name1);
   _GRADFILE_PTR = _GRADFILE_PTR1;
+
+  fp = new DF_FILE();
+  memory_allocate_error("fp", (void *) fp);
 }
 /// Destructor
 grad_stack::~grad_stack()
@@ -302,6 +308,20 @@ grad_stack::~grad_stack()
     *ad_comm::global_logfile << "size of file " << var_store_file_name
       << " = " << pos << endl;
   }
+
+  if (fp != NULL)
+  {
+    delete fp;
+    fp = NULL;
+  }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Trying to close stream referenced by a NULL pointer\n"
+            " in ~gradient_structure\n";
+  }
+#endif
+
   if (close(_GRADFILE_PTR1))
   {
     cerr << "Error closing file " << gradfile_name1 << "\n"

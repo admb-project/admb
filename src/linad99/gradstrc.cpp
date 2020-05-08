@@ -65,7 +65,6 @@ extern "C"{
 // *************************************************************
 int ctlc_flag = 0;
 int gradient_structure::Hybrid_bounded_flag=0;
-DF_FILE * gradient_structure::fp=NULL;
 //char gradient_structure::var_store_file_name[61];
 unsigned int gradient_structure::NUM_RETURN_ARRAYS = 25;
 double * gradient_structure::hessian_ptr=NULL;
@@ -170,13 +169,13 @@ size_t gradient_structure::totalbytes(void)
 /// Close gradient and variable files and free gradient structure memory.
 void cleanup_temporary_files()
 {
-  if (gradient_structure::fp)
-  {
-    delete gradient_structure::fp;
-    gradient_structure::fp = NULL;
-  }
   if (gradient_structure::GRAD_STACK1)
   {
+    if (gradient_structure::GRAD_STACK1->fp)
+    {
+      delete gradient_structure::GRAD_STACK1->fp;
+      gradient_structure::GRAD_STACK1->fp = NULL;
+    }
     if (gradient_structure::GRAD_STACK1->_GRADFILE_PTR1 != -1
         && close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR1))
     {
@@ -332,18 +331,6 @@ gradient_structure::gradient_structure(long int _size):
     DEPVARS_INFO=new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
-
-  if (fp!= NULL)
-  {
-    cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
-            "_structure" << endl;
-  }
-  else
-  {
-    fp = new DF_FILE();
-    memory_allocate_error("fp", (void *) fp);
-  }
-
   // double_and_int * tmp;
 #ifdef DIAG
   cerr <<" In gradient_structure::gradient_structure()\n";
@@ -637,16 +624,6 @@ gradient_structure::~gradient_structure()
 
   delete DEPVARS_INFO;
   DEPVARS_INFO=NULL;
-
-  if (fp == NULL)
-  {
-    cerr << "Trying to close stream referenced by a NULL pointer\n"
-            " in ~gradient_structure\n";
-    ad_exit(1);
-  }
-
-  delete fp;
-  fp = NULL;
 }
 
 /**

@@ -111,12 +111,12 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
   }
 
   // check to see if anything has been written into the file
-  OFF_T last_cpos=LSEEK(fp->file_ptr,0L,SEEK_CUR);
+  OFF_T last_cpos=LSEEK(get_fp()->file_ptr,0L,SEEK_CUR);
 
   //save current contents of the buffer so we can get them later
   if (last_cpos)
   {
-    fp->write_cmpdif_stack_buffer();
+    get_fp()->write_cmpdif_stack_buffer();
   }
 
   for (int i=jac.rowmin();i<=jac.rowmax();i++)
@@ -156,17 +156,17 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
       ad_exit(1);
     }
 
-    fp->offset=DEPVARS_INFO->cmpdif_buffer_position(ijac);
-    fp->toffset=fp->offset;
+    get_fp()->offset=DEPVARS_INFO->cmpdif_buffer_position(ijac);
+    get_fp()->toffset=get_fp()->offset;
     _GRADFILE_PTR=DEPVARS_INFO->grad_file_count(ijac);
-    fp->file_ptr=DEPVARS_INFO->cmpdif_file_count(ijac);
+    get_fp()->file_ptr=DEPVARS_INFO->cmpdif_file_count(ijac);
     lpos=DEPVARS_INFO->grad_file_position(ijac);
     // position the cmpdif file correctly;
     if (last_cpos)
     {
       OFF_T cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
-      LSEEK(fp->file_ptr,cmp_lpos,SEEK_SET);
-      fp->read_cmpdif_stack_buffer(cmp_lpos);
+      LSEEK(get_fp()->file_ptr,cmp_lpos,SEEK_SET);
+      get_fp()->read_cmpdif_stack_buffer(cmp_lpos);
     }
     GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();
 

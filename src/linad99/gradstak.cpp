@@ -111,6 +111,7 @@ Construct grad_stack with size and id.
 grad_stack::grad_stack(
   const size_t size,
   const size_t df_file_bytes,
+  const unsigned int dlist_size,
   const unsigned int id)
 {
   initialize();
@@ -292,6 +293,9 @@ grad_stack::grad_stack(
 
   fp = new DF_FILE(df_file_bytes, id);
   memory_allocate_error("fp", (void *) fp);
+
+  GRAD_LIST = new dlist(dlist_size);
+  memory_allocate_error("GRAD_LIST", (void*)GRAD_LIST);
 }
 /// Destructor
 grad_stack::~grad_stack()
@@ -324,7 +328,18 @@ grad_stack::~grad_stack()
             " in ~gradient_structure\n";
   }
 #endif
-
+  if (GRAD_LIST != NULL)
+  {
+    delete GRAD_LIST;
+    GRAD_LIST = NULL;
+  }
+#if defined(DEBUG)
+  else
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+#endif
   if (close(_GRADFILE_PTR1))
   {
     cerr << "Error closing file " << gradfile_name1 << "\n"

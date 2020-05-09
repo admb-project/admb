@@ -181,7 +181,6 @@ class gradient_structure
    friend dvar_vector_position restore_dvar_vector_position(void);
    static grad_stack *GRAD_STACK1;
    friend double_and_int *gradnew();
-   static dlist *GRAD_LIST;
    static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
    static dvariable *RETURN_PTR;

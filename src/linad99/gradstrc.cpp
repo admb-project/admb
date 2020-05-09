@@ -112,7 +112,6 @@ int gradient_structure::save_var_file_flag=0;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
-dlist * gradient_structure::GRAD_LIST;
 grad_stack* gradient_structure::GRAD_STACK1;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
 arr_list * gradient_structure::ARR_LIST1 = NULL;
@@ -259,8 +258,8 @@ void allocate_dvariable_space()
     tmp1+=2*sizeof(double);
     dl->prev=NULL;
     dlink * prev=dl;
-    int& nlinks=(int&)gradient_structure::GRAD_LIST->nlinks;
-    gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
+    int& nlinks=(int&)gradient_structure::GRAD_STACK1->GRAD_LIST->nlinks;
+    gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[nlinks++]=dl;
     for (unsigned int i=1;i<=numlinks;i++)
     {
       dl=(dlink*)tmp1;
@@ -268,10 +267,10 @@ void allocate_dvariable_space()
       prev=dl;
       tmp1+=2*sizeof(double);
 
-      gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
+      gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[nlinks++]=dl;
       // keep track of the links so you can zero them out
     }
-    gradient_structure::GRAD_LIST->last=dl;
+    gradient_structure::GRAD_STACK1->GRAD_LIST->last=dl;
   }
 }
 
@@ -337,11 +336,6 @@ gradient_structure::gradient_structure(long int _size):
   cerr <<"  ARRAY_MEMBLOCK_SIZE = " << ARRAY_MEMBLOCK_SIZE << "\n";
 #endif
 
-   if (GRAD_LIST!= NULL)
-   {
-     cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
-   }
-   else
    {
      int on,nopt = 0;
      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
@@ -359,8 +353,6 @@ gradient_structure::gradient_structure(long int _size):
          ad_exit(1);
        }
      }
-     GRAD_LIST = new dlist;
-     memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
    }
    if (ARR_LIST1!= NULL)
    {
@@ -618,16 +610,6 @@ gradient_structure::~gradient_structure()
   {
     delete ARR_LIST1;
     ARR_LIST1 = NULL;
-  }
-  if (GRAD_LIST == NULL)
-  {
-    null_ptr_err_message();
-    ad_exit(1);
-  }
-  else
-  {
-    delete GRAD_LIST;
-    GRAD_LIST = NULL;
   }
 
   instances--;

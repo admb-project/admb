@@ -165,7 +165,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 
     gradient_structure::GRAD_STACK1->ptr--;
 
-    GRAD_LIST->initialize();
+    gradient_structure::GRAD_STACK1->GRAD_LIST->initialize();
 
     double_and_int* tmp =
       (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;

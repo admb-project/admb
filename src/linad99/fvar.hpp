@@ -858,6 +858,9 @@ public:
   double* get(const int i) const
     { return &(dlink_addresses[i]->get_address()->x); }
 
+  double_and_int* gradnew();
+  void gradfree(dlink* v);
+
   friend double_and_int *gradnew();
   friend void df_check_derivative_values(void);
   friend void df_check_derivative_values_indexed(void);
@@ -927,6 +930,7 @@ class grad_stack
 #endif
  public:
    DF_FILE* fp;
+   dlist* GRAD_LIST;
 
    size_t TOTAL_BYTES;
    size_t PREVIOUS_TOTAL_BYTES;
@@ -974,12 +978,20 @@ class grad_stack
    friend void cleanup_temporary_files();
    ostream & operator  <<(grad_stack);
    void print();
+
    grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
    grad_stack(const size_t size):
-     grad_stack(size, gradient_structure::CMPDIF_BUFFER_SIZE, 0) {}
-   grad_stack(const size_t size, const size_t df_file_nbytes,
+     grad_stack(
+       size,
+       gradient_structure::CMPDIF_BUFFER_SIZE,
+       gradient_structure::MAX_DLINKS, 0) {}
+   grad_stack(
+     const size_t size,
+     const size_t df_file_nbytes,
+     const unsigned int dlist_size,
      const unsigned int id);
    ~grad_stack();
+
    void write_grad_stack_buffer(void);
 
    void set_gradient_stack(void (*func) (void),

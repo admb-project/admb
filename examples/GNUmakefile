@@ -349,7 +349,7 @@ else
 	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
 endif
 
-autodif: bigmin hemholtz io_examp normsim newt s1 autodif-simple simple2 simp1 struct oldstr
+autodif: bigmin hemholtz io_examp normsim newt autodif-simple4 struct oldstr
 
 bigmin:
 ifeq ($(CMDSHELL),cmd)
@@ -399,6 +399,12 @@ ifeq ($(CMDSHELL),cmd)
 else
 	cd autodif/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@.cpp && $(PROG) ./$@
 endif
+
+autodif-simple4:
+	$(MAKE) s1
+	$(MAKE) autodif-simple
+	$(MAKE) simple2
+	$(MAKE) simp1
 
 s1:
 ifeq ($(CMDSHELL),cmd)

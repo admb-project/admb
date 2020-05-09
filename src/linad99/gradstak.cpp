@@ -108,7 +108,10 @@ Construct grad_stack with size and id.
 @param size number of elements
 @param id unique identifier
 */
-grad_stack::grad_stack(const size_t size, const unsigned int id)
+grad_stack::grad_stack(
+  const size_t size,
+  const size_t df_file_bytes,
+  const unsigned int id)
 {
   initialize();
 
@@ -287,7 +290,7 @@ grad_stack::grad_stack(const size_t size, const unsigned int id)
   strcpy(gradfile_name, gradfile_name1);
   _GRADFILE_PTR = _GRADFILE_PTR1;
 
-  fp = new DF_FILE();
+  fp = new DF_FILE(df_file_bytes, id);
   memory_allocate_error("fp", (void *) fp);
 }
 /// Destructor

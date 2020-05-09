@@ -343,6 +343,22 @@ gradient_structure::gradient_structure(long int _size):
    }
    else
    {
+     int on,nopt = 0;
+     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
+     {
+       if (nopt == 1)
+       {
+         int i = atoi(ad_comm::argv[on+1]);
+         if (i > 0)
+           gradient_structure::MAX_DLINKS = (unsigned int)i;
+       }
+       else
+       {
+         cerr << "Wrong number of options to -mdl -- must be 1"
+           " you have " << nopt << endl;
+         ad_exit(1);
+       }
+     }
      GRAD_LIST = new dlist;
      memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
    }

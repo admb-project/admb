@@ -24,6 +24,7 @@ GTEST_DIR=googletest-read-only/googletest
 endif
 
 GTESTS_ALL=\
+ test_dlist.cpp\
  test_atomic.cpp\
  test_shared_ptr.cpp\
  test_adstring_strcase.cpp\

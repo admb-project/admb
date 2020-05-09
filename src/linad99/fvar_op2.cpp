@@ -26,11 +26,6 @@
 #include <stdio.h>
 #include <math.h>
 
-//extern prevariable * FRETURN;
-//extern int RETURN_INDEX;
-//extern dlist * GRAD_LIST; //js
-//extern grad_stack  * gradient_structure::GRAD_STACK1; //js
-
 /**
  * Description not yet available.
  * \param

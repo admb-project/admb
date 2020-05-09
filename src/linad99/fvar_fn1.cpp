@@ -13,11 +13,6 @@
 #include <stdio.h>
 #include <cmath>
 
-//extern prevariable * FRETURN;
-//extern int RETURN_INDEX;
-//extern dlist * GRAD_LIST;          //js
-//extern grad_stack  * GRAD_STACK1;
-
 /**
 Compute exponential variable
 

@@ -122,9 +122,6 @@ unsigned int gradient_structure::MAX_DLINKS = 5000;
 //       those settings could be moved into this file in the future
 //       - Ian Taylor 5/3/2012
 
-//unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
-humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
-humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
 #ifdef DIAG
 long int farptr_tolong(void *) ;
 #endif
@@ -376,28 +373,6 @@ cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
    }
 */
 
-   void* temp_ptr = NULL;
-#ifdef __ZTC__
-   if ((temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE)) == 0)
-#else
-   if ((temp_ptr = (void*)malloc(ARRAY_MEMBLOCK_SIZE)) == 0)
-#endif
-   {
-     cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";
-     ad_exit(1);
-   }
-
-  /*
-   if (ARRAY_MEMBLOCK_BASE != NULL)
-   {
-cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
-   }
- */
-
-   ARRAY_MEMBLOCK_BASE = temp_ptr;
-
-   const size_t adjustment = (8 -((size_t)ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
-   ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
    if (GRAD_STACK1 != NULL)
    {
@@ -591,15 +566,6 @@ gradient_structure::~gradient_structure()
   {
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;
-  }
-  if (ARRAY_MEMBLOCK_BASE == NULL)
-  {
-    cerr << "Trying to farfree a NULL pointer in ~gradient_structure\n";
-    ad_exit(1);
-  }
-  else
-  {
-    ARRAY_MEMBLOCK_BASE.free();
   }
   if (ARR_LIST1 == NULL)
   {

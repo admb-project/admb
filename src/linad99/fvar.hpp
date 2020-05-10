@@ -508,9 +508,9 @@ class vector_shape
   void* operator new(size_t);
   void operator delete(void* ptr, size_t)
    { vector_shape::get_xpool().free(ptr); }
+#endif
   vector_shape(const vector_shape&) = delete;
   vector_shape& operator=(const vector_shape&) =  delete;
-#endif
 
    unsigned int ncopies;
    void shift(int min);
@@ -1985,28 +1985,32 @@ class mat_shapex
 class arr_link;
 
 /**
- * Description not yet available.
- * \param
- */
+Storage for variable arrays
+*/
 class arr_list
 {
-   arr_link *last;
-   arr_link *free_last;
-   unsigned long int last_offset;
-   unsigned long int max_last_offset;
+  arr_link *last;
+  arr_link *free_last;
+  unsigned long last_offset;
+  unsigned long max_last_offset;
+  int num_free_obj;
+  unsigned long _size;
+
+  vector_shape_pool pool;
+
  public:
+  humungous_pointer ARRAY_MEMBLOCK_BASE;
+  humungous_pointer ARRAY_MEMBLOCK_SAVE;
    unsigned long int number_arr_links;
    friend class arr_link;
 
  public:
-   arr_list(void)
-   {
-      last = 0;
-      free_last = 0;
-      last_offset = 0;
-      max_last_offset = 0;
-      number_arr_links = 0;
-   }
+  /// Default constructor
+  arr_list(): arr_list(gradient_structure::ARRAY_MEMBLOCK_SIZE) {}
+  /// Size constructor
+  arr_list(const unsigned long size);
+  /// Destructor
+  ~arr_list();
 
   arr_link* get_last() const
     { return last; }
@@ -2027,12 +2031,20 @@ class arr_list
    {
       max_last_offset = 0;
    }
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_list_remove(arr_link **);
-   friend void arr_free_add(arr_link *);
-   friend void arr_free_remove(arr_link *);
+
+  double_and_int* arr_new(unsigned int);
+  void arr_free(double_and_int*);
+
+private:
+  void arr_remove(arr_link**);
+  void arr_free_list_remove(arr_link**);
+  void arr_free_add(arr_link*);
+  void arr_free_remove(arr_link*);
+
+  arr_link* allocate_link_node()
+    { return (arr_link*)pool.alloc(); }
+  void deallocate_link_node(arr_link* ptr)
+    { pool.free(ptr); }
 };
 
 /**
@@ -2051,18 +2063,8 @@ class arr_link
    unsigned long int offset;
 
  public:
-#if defined(USE_VECTOR_SHAPE_POOL)
-  static vector_shape_pool& get_xpool()
-  {
-    static vector_shape_pool xpool(sizeof(arr_link));
-    return xpool;
-  }
-  void* operator new(size_t);
-  void operator delete(void* ptr, size_t)
-    { arr_link::get_xpool().free(ptr); }
   arr_link(const arr_link&) = delete;
   arr_link& operator=(const arr_link&) = delete;
-#endif
 
   arr_link();
 
@@ -2077,11 +2079,7 @@ class arr_link
   unsigned int get_status() const
     { return status; }
 
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_remove(arr_link *);
-   friend void arr_free_add(arr_link *);
+  friend class arr_list;
 };
 
 #if defined(__NUMBERVECTOR__)

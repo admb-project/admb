@@ -102,14 +102,12 @@ class gradient_structure
    static dvariable **RETURN_ARRAYS;
    static unsigned int RETURN_ARRAYS_PTR;
    static dvariable **RETURN_PTR_CONTAINER;
-   static unsigned long ARRAY_MEMBLOCK_SIZE;//js
-   static humungous_pointer ARRAY_MEMBLOCK_BASE;
-   static humungous_pointer ARRAY_MEMBLOCK_SAVE;
+   static size_t TOTAL_BYTES;
+   static size_t PREVIOUS_TOTAL_BYTES;
  public:
-   static double *get_ARRAY_MEMBLOCK_BASE()
-   {
-      return (double*)ARRAY_MEMBLOCK_BASE;
-   }
+   static unsigned long ARRAY_MEMBLOCK_SIZE;//js
+   static double* get_ARRAY_MEMBLOCK_BASE();
+
 #ifdef __BORLANDC__
    static long int CMPDIF_BUFFER_SIZE;
    static long int GRADSTACK_BUFFER_SIZE;

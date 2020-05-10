@@ -64,9 +64,9 @@ class vector_shapex
   void* operator new(size_t);
   void operator delete(void* ptr, size_t)
     { vector_shapex::get_xpool().free(ptr); }
+#endif
   vector_shapex(const vector_shapex&) = delete;
   vector_shapex& operator=(const vector_shapex&) = delete;
-#endif
 
    void shift(int min);
    int index_min;  ///< Minimum valid subscript

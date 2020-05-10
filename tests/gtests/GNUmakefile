@@ -25,6 +25,7 @@ endif
 
 GTESTS_ALL=\
  test_dlist.cpp\
+ test_funnel_thread_arr_list.cpp\
  test_atomic.cpp\
  test_shared_ptr.cpp\
  test_adstring_strcase.cpp\

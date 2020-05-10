@@ -98,22 +98,9 @@ dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
 int gradient_structure::save_var_flag=0;
 int gradient_structure::save_var_file_flag=0;
 
-// should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR = NULL;
-
-// should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR1 = NULL;
-
-// should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR2 = NULL;
-
-// should be int gradfile_handle;
-//int gradient_structure::_VARSSAV_PTR = 0;
-
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
 grad_stack* gradient_structure::GRAD_STACK1;
-indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
 unsigned int gradient_structure::MAX_DLINKS = 5000;
 
 // note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons
@@ -349,30 +336,7 @@ gradient_structure::gradient_structure(long int _size):
        }
      }
    }
-   if (GRAD_STACK1 != NULL)
    {
-     cerr << "Trying to allocate to a non NULL pointer\n";
-   }
-   else
-   {
-     GRAD_STACK1 = new grad_stack;
-     memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
-     gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
-   }
-#ifdef DIAG
-   cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
-#endif
-
-   if (INDVAR_LIST!= NULL)
-   {
-      cerr <<
-        "Trying to allocate to a non NULL pointer in gradient structure \n";
-      ad_exit(1);
-   }
-   else
-   {
-     INDVAR_LIST = new indvar_offset_list;
-     memory_allocate_error("INDVAR_LIST",INDVAR_LIST);
  // ****************************************************************
  // ****************************************************************
       int nopt=0;
@@ -395,10 +359,21 @@ gradient_structure::gradient_structure(long int _size):
 
  // ****************************************************************
  // ****************************************************************
-
-     INDVAR_LIST->address = new double * [ (size_t) MAX_NVAR_OFFSET];
-     memory_allocate_error("INDVAR_LIST->address",INDVAR_LIST->address);
    }
+
+   if (GRAD_STACK1 != NULL)
+   {
+     cerr << "Trying to allocate to a non NULL pointer\n";
+   }
+   else
+   {
+     GRAD_STACK1 = new grad_stack;
+     memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
+     gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
+   }
+#ifdef DIAG
+   cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
+#endif
 
    //allocate_dvariable_space();
 
@@ -520,17 +495,6 @@ gradient_structure::~gradient_structure()
      RETURN_ARRAYS = NULL;
      delete [] RETURN_PTR_CONTAINER;
      RETURN_PTR_CONTAINER = NULL;
-  }
-  if (INDVAR_LIST == NULL)
-  {
-     null_ptr_err_message();
-     ad_exit(1);
-  }
-  else
-  {
-     delete [] INDVAR_LIST->address;
-     delete INDVAR_LIST;
-     INDVAR_LIST = NULL;
   }
   if (GRAD_STACK1 == NULL)
   {

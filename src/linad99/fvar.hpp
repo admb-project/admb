@@ -987,12 +987,14 @@ public:
        size,
        gradient_structure::CMPDIF_BUFFER_SIZE,
        gradient_structure::MAX_DLINKS,
-       gradient_structure::ARRAY_MEMBLOCK_SIZE, 0) {}
+       gradient_structure::ARRAY_MEMBLOCK_SIZE,
+       gradient_structure::MAX_NVAR_OFFSET, 0) {}
    grad_stack(
      const size_t size,
      const size_t df_file_nbytes,
      const unsigned int dlist_size,
      const unsigned long arr_list_size,
+     const unsigned long indvar_list_size,
      const unsigned int id);
    ~grad_stack();
 
@@ -1055,6 +1057,8 @@ public:
   }
    friend class gradient_structure;
    //int get_ngradfiles();
+
+  indvar_offset_list* INDVAR_LIST;
 };
 
 
@@ -1309,7 +1313,6 @@ class indvar_offset_list
    double **address;
 
  public:
-   friend class gradient_structure;
    inline double *get_address(const int &i)
    {
       return address[i];
@@ -1319,6 +1322,7 @@ class indvar_offset_list
       address[i] = iaddress;
       //  cerr << "In put_address i = " << i << "\n";
    }
+   friend class grad_stack;
 };
 
 void gradfree(dlink *);

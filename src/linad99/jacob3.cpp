@@ -211,7 +211,7 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
     int mindx = g.indexmin();
     for (int i=0; i < nvar; i++)
     {
-      g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
+      g[i+mindx] =  * gradient_structure::GRAD_STACK1->INDVAR_LIST->get_address(i);
     }
     gradient_structure::GRAD_STACK1->ptr =
          gradient_structure::GRAD_STACK1->ptr_first;

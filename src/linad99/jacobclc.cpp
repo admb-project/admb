@@ -260,7 +260,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     dvector & gg=(dvector&)(g);
     for (int i=0; i<nvar; i++)
     {
-      gg[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
+      gg[i+mindx] =  * gradient_structure::GRAD_STACK1->INDVAR_LIST->get_address(i);
       //g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
     }
     gradient_structure::GRAD_STACK1->ptr =

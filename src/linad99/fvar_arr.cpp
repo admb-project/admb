@@ -21,11 +21,6 @@
   #include <climits>
 #endif
 
-//extern double * NULL_ADDRESS;
-//extern grad_stack  * GRAD_STACK1; //js
-//extern indvar_offset_list * INDVAR_LIST;
-//extern unsigned  MAX_NVAR_OFFSET;
-
 /**
  * Description not yet available.
  * \param
@@ -189,7 +184,7 @@ void make_indvar_list(const dvar_vector& t)
   for (int i=t.indexmin(); i<=t.indexmax(); i++)
   {
     unsigned int tmp = (unsigned int)(i - t.indexmin());
-    gradient_structure::INDVAR_LIST->put_address(tmp,&(t.va[i].x));
+    gradient_structure::GRAD_STACK1->INDVAR_LIST->put_address(tmp,&(t.va[i].x));
   }
   gradient_structure::NVAR=t.indexmax()-t.indexmin()+1;
 }

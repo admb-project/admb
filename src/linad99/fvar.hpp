@@ -869,8 +869,6 @@ public:
   friend void slave_gradcalc(void);
   friend void gradcalc(int nvar, const dvector& g);
   friend void gradloop();
-  friend void gradient_structure::restore_variables();
-  friend void gradient_structure::save_variables();
   friend void allocate_dvariable_space(void);
   //friend void gradient_structure::funnel_jacobcalc(void);
   friend void funnel_derivatives(void);

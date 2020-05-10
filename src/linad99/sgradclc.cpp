@@ -131,7 +131,7 @@ void grad_stack::gradcalc(int nvar, dvector& g)
   if (gradient_structure::save_var_flag)
   {
     gradient_structure::save_arrays();
-    gradient_structure::save_variables();
+    GRAD_LIST->save_variables();
   }
 
   ptr--;
@@ -186,7 +186,7 @@ void grad_stack::gradcalc(int nvar, dvector& g)
   if (gradient_structure::save_var_flag)
   {
     gradient_structure::restore_arrays();
-    gradient_structure::restore_variables();
+    GRAD_LIST->restore_variables();
   }
 }
 /**
@@ -340,20 +340,6 @@ void gradient_structure::restore_arrays()
        (char*)dest,left_to_move);
 #endif
   }
-}
-/**
-Save variables to a buffer.
-*/
-void gradient_structure::save_variables()
-{
-  GRAD_STACK1->GRAD_LIST->save_variables();
-}
-/**
-Restore variables from buffer.
-*/
-void gradient_structure::restore_variables()
-{
-  GRAD_STACK1->GRAD_LIST->restore_variables();
 }
 /**
 Rewind buffer.

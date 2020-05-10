@@ -91,7 +91,7 @@ void grad_stack::jacobcalc(int nvar, const uostream& ofs)
   if (gradient_structure::save_var_flag)
   {
     gradient_structure::save_arrays();
-    gradient_structure::save_variables();
+    GRAD_LIST->save_variables();
   }
   // now evalueate the jacobian
   for (int ijac=1;ijac<=depvar_count;ijac++)
@@ -217,6 +217,6 @@ void grad_stack::jacobcalc(int nvar, const uostream& ofs)
   if (gradient_structure::save_var_flag)
   {
     gradient_structure::restore_arrays();
-    gradient_structure::restore_variables();
+    GRAD_LIST->restore_variables();
   }
 }

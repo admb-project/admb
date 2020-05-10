@@ -149,8 +149,6 @@ class gradient_structure
    friend class dfsdmat;
    gradient_structure(long int size = 100000L);// constructor
    ~gradient_structure(void);// destructor
-   static void save_variables(void);
-   static void restore_variables(void);
    static void save_arrays(void);
    static void restore_arrays(void);
    static size_t totalbytes(void);

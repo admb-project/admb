@@ -109,7 +109,7 @@ void funnel_gradcalc(void)
   //if (gradient_structure::save_var_flag)
   {
     gradient_structure::save_arrays();
-    gradient_structure::save_variables();
+    gradient_structure::GRAD_STACK1->GRAD_LIST->save_variables();
   }
 
   gradient_structure::GRAD_STACK1->ptr--;
@@ -287,7 +287,7 @@ do
 
     gradient_structure::GRAD_STACK1->set_gradient_stack(funnel_derivatives);
     gradient_structure::restore_arrays();
-    gradient_structure::restore_variables();
+    gradient_structure::GRAD_STACK1->GRAD_LIST->restore_variables();
   }
 }
 

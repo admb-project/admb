@@ -93,8 +93,6 @@ size_t gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
 size_t gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
 #endif
 
-dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
-
 int gradient_structure::save_var_flag=0;
 int gradient_structure::save_var_file_flag=0;
 
@@ -281,12 +279,6 @@ gradient_structure::gradient_structure(long int _size):
   gradient_structure::ARRAY_MEMBLOCK_SIZE =
     static_cast<unsigned long int>(_size - remainder);
 
-  if (DEPVARS_INFO!= NULL)
-  {
-    cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
-            "_structure" << endl;
-  }
-  else
   {
     int on,nopt = 0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
@@ -309,8 +301,6 @@ gradient_structure::gradient_structure(long int _size):
         }
       }
     }
-    DEPVARS_INFO=new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
-    memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
   // double_and_int * tmp;
 #ifdef DIAG
@@ -508,15 +498,6 @@ gradient_structure::~gradient_structure()
   }
 
   instances--;
-
-  if (DEPVARS_INFO==NULL)
-  {
-    null_ptr_err_message();
-    ad_exit(1);
-  }
-
-  delete DEPVARS_INFO;
-  DEPVARS_INFO=NULL;
 }
 
 /**

@@ -90,7 +90,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     jac.initialize();
     return;
   }
-  int depvar_count=DEPVARS_INFO->depvar_count;
+  int depvar_count=GRAD_STACK1->DEPVARS_INFO->depvar_count;
   if (jac.rowmax()<depvar_count)
   {
     cerr << "Error in jacobcalc jacobian must have maximumvalid"
@@ -145,10 +145,10 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
   {
     dvector& g=(dvector&)(jac(ijac));
     //max_num_dependent_variables=ndv;
-    if (depvar_count>DEPVARS_INFO->max_num_dependent_variables)
+    if (depvar_count>GRAD_STACK1->DEPVARS_INFO->max_num_dependent_variables)
     {
       cout << "maximum number of depdendent variables of "
-         << DEPVARS_INFO->max_num_dependent_variables << " exceeded "
+         << GRAD_STACK1->DEPVARS_INFO->max_num_dependent_variables << " exceeded "
          << endl
          << "use gradient_structure::set_NUM_DEPENDENT_VARIABLES(int i);"
          << endl << "to increase the number of dependent variables"
@@ -156,15 +156,15 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
       ad_exit(1);
     }
 
-    get_fp()->offset=DEPVARS_INFO->cmpdif_buffer_position(ijac);
+    get_fp()->offset=GRAD_STACK1->DEPVARS_INFO->cmpdif_buffer_position(ijac);
     get_fp()->toffset=get_fp()->offset;
-    _GRADFILE_PTR=DEPVARS_INFO->grad_file_count(ijac);
-    get_fp()->file_ptr=DEPVARS_INFO->cmpdif_file_count(ijac);
-    lpos=DEPVARS_INFO->grad_file_position(ijac);
+    _GRADFILE_PTR=GRAD_STACK1->DEPVARS_INFO->grad_file_count(ijac);
+    get_fp()->file_ptr=GRAD_STACK1->DEPVARS_INFO->cmpdif_file_count(ijac);
+    lpos=GRAD_STACK1->DEPVARS_INFO->grad_file_position(ijac);
     // position the cmpdif file correctly;
     if (last_cpos)
     {
-      OFF_T cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
+      OFF_T cmp_lpos=GRAD_STACK1->DEPVARS_INFO->cmpdif_file_position(ijac);
       LSEEK(get_fp()->file_ptr,cmp_lpos,SEEK_SET);
       get_fp()->read_cmpdif_stack_buffer(cmp_lpos);
     }
@@ -191,7 +191,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
       // now reposition the grad_buffer pointer
     }
     GRAD_STACK1->ptr=
-         (grad_stack_entry *)DEPVARS_INFO->grad_buffer_position(ijac);
+         (grad_stack_entry *)GRAD_STACK1->DEPVARS_INFO->grad_buffer_position(ijac);
 
     if(GRAD_STACK1->ptr <= GRAD_STACK1->ptr_first)
     {
@@ -266,7 +266,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     gradient_structure::GRAD_STACK1->ptr =
          gradient_structure::GRAD_STACK1->ptr_first;
   }// loop over dep vars
-  DEPVARS_INFO->depvar_count=0;
+  GRAD_STACK1->DEPVARS_INFO->depvar_count=0;
   if (gradient_structure::save_var_flag)
   {
     gradient_structure::restore_arrays();

@@ -16,7 +16,7 @@ TEST_F(test_test_funnel_thread_grad_stack, default)
 }
 TEST_F(test_test_funnel_thread_grad_stack, size_id)
 {
-  grad_stack gs(10, 0, 0, 0, 0, 2);
+  grad_stack gs(10, 0, 0, 0, 0, 1, 2);
 
   ASSERT_EQ(gs.TOTAL_BYTES, 0);
   ASSERT_EQ(gs.PREVIOUS_TOTAL_BYTES, 0);

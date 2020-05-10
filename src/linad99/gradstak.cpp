@@ -114,6 +114,7 @@ grad_stack::grad_stack(
   const unsigned int dlist_size,
   const unsigned long arr_list_size,
   const unsigned long indvar_list_size,
+  const int max_nvar_size,
   const unsigned int id)
 {
   initialize();
@@ -302,15 +303,17 @@ grad_stack::grad_stack(
   ARR_LIST1 = new arr_list(arr_list_size);
   memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
 
-/*
-  ARR_FREE_LIST1 = new arr_list;
-  memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
-*/
+  //ARR_FREE_LIST1 = new arr_list;
+  //memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
+
   INDVAR_LIST = new indvar_offset_list();
   memory_allocate_error("INDVAR_LIST",INDVAR_LIST);
 
   INDVAR_LIST->address = new double*[indvar_list_size];
   memory_allocate_error("INDVAR_LIST->address",INDVAR_LIST->address);
+
+  DEPVARS_INFO = new dependent_variables_information(max_nvar_size);
+  memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
 }
 /// Destructor
 grad_stack::~grad_stack()
@@ -384,7 +387,18 @@ grad_stack::~grad_stack()
      ad_exit(1);
   }
 #endif
-
+  if (DEPVARS_INFO != NULL)
+  {
+    delete DEPVARS_INFO;
+    DEPVARS_INFO = NULL;
+  }
+#if defined(DEBUG)
+  else
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+#endif
   if (close(_GRADFILE_PTR1))
   {
     cerr << "Error closing file " << gradfile_name1 << "\n"

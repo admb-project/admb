@@ -122,7 +122,6 @@ class gradient_structure
 
    static unsigned int MAX_DLINKS;
    static int NUM_DEPENDENT_VARIABLES;
-   static dependent_variables_information *DEPVARS_INFO;
 
    // this needs to be a static member function so other static
    // member functions can call it
@@ -220,7 +219,6 @@ class gradient_structure
    static void set_MAX_DLINKS(int i);
    static size_t NUM_GRADSTACK_BYTES_WRITTEN(void);
    static unsigned int get_MAX_DLINKS() { return MAX_DLINKS; }
-   static void save_dependent_variable_position(const prevariable & v1);
    static unsigned long int max_last_offset;
 
    friend class dlist;

@@ -234,7 +234,7 @@ TEST_F(funnel_thread_df_file, grad_stack)
 
     std::this_thread::sleep_for (std::chrono::seconds(random0));
 
-    grad_stack gs(100, sizeof(double), 0, 0, 0, id);
+    grad_stack gs(100, sizeof(double), 0, 0, 0, 1, id);
 
     double v = 4.5;
     for (int i = id; i >= 0; --i)
@@ -295,7 +295,7 @@ TEST_F(funnel_thread_df_file, grad_stack_sequence)
 
     std::this_thread::sleep_for (std::chrono::seconds(random0));
 
-    grad_stack gs(100, sizeof(double), 0, 0, 0, id);
+    grad_stack gs(100, sizeof(double), 0, 0, 0, 1, id);
 
     double v = 4.5;
     for (int i = id; i >= 0; --i)

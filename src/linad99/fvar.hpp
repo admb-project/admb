@@ -758,6 +758,7 @@ AD_LONG_INT sum(const lvector &);
  */
 class dependent_variables_information
 {
+public:
    int max_num_dependent_variables;
    int depvar_count;
    ptr_vector grad_buffer_position;
@@ -767,7 +768,6 @@ class dependent_variables_information
   ivector grad_file_count;
   ivector cmpdif_file_count;
    dependent_variables_information(int ndv);
-   friend class gradient_structure;
 };
 dvar_vector_position restore_dvar_vector_position(void);
 dvector restore_dvar_vector_value(const dvar_vector_position & tmp);
@@ -983,18 +983,20 @@ public:
 
    grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
    grad_stack(const size_t size):
-     grad_stack(
+      grad_stack(
        size,
        gradient_structure::CMPDIF_BUFFER_SIZE,
        gradient_structure::MAX_DLINKS,
        gradient_structure::ARRAY_MEMBLOCK_SIZE,
-       gradient_structure::MAX_NVAR_OFFSET, 0) {}
+       gradient_structure::MAX_NVAR_OFFSET,
+       gradient_structure::NUM_DEPENDENT_VARIABLES, 0) {}
    grad_stack(
      const size_t size,
      const size_t df_file_nbytes,
      const unsigned int dlist_size,
      const unsigned long arr_list_size,
      const unsigned long indvar_list_size,
+     const int max_nvar_size,
      const unsigned int id);
    ~grad_stack();
 
@@ -1059,6 +1061,9 @@ public:
    //int get_ngradfiles();
 
   indvar_offset_list* INDVAR_LIST;
+  dependent_variables_information* DEPVARS_INFO;
+
+  void save_dependent_variable_position(const prevariable& v1);
 };
 
 

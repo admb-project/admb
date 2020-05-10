@@ -24,7 +24,7 @@ prevariable& operator<<(const prevariable& _v1, const prevariable& v2)
   {
     ADUNCONST(prevariable,v1)
     v1=v2;
-    gradient_structure::save_dependent_variable_position(v1);
+    gradient_structure::GRAD_STACK1->save_dependent_variable_position(v1);
     return (prevariable&)v1;
   }
 
@@ -102,27 +102,26 @@ dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2)
  * Description not yet available.
  * \param
  */
-void gradient_structure::save_dependent_variable_position(const prevariable& v1)
-    {
-      int depvar_count=++DEPVARS_INFO->depvar_count;
-      //max_num_dependent_variables=ndv;
-      if (depvar_count>DEPVARS_INFO->max_num_dependent_variables)
-      {
-        cout << "maximum number of depdendent variables of "
-           << DEPVARS_INFO->max_num_dependent_variables << " exceeded "
-           << endl
-           << "use gradient_structure::set_NUM_DEPENDENT_VARIABLES(int i);"
-           << endl << "to increase the number of dependent variables"
-           << endl;
-        ad_exit(1);
-      }
-      DEPVARS_INFO->grad_buffer_position(depvar_count)=GRAD_STACK1->ptr;
-      DEPVARS_INFO->cmpdif_buffer_position(depvar_count)=get_fp()->offset;
-      DEPVARS_INFO->grad_file_count(depvar_count)=
-                                GRAD_STACK1->_GRADFILE_PTR;
-      DEPVARS_INFO->cmpdif_file_count(depvar_count)=get_fp()->file_ptr;
-      DEPVARS_INFO->grad_file_position(depvar_count)
-        =LSEEK(GRAD_STACK1->_GRADFILE_PTR,0,SEEK_CUR);
-      DEPVARS_INFO->cmpdif_file_position(depvar_count)
-        =LSEEK(get_fp()->file_ptr,0,SEEK_CUR);
-    }
+void grad_stack::save_dependent_variable_position(const prevariable& v1)
+{
+  int depvar_count = ++DEPVARS_INFO->depvar_count;
+  //max_num_dependent_variables = ndv;
+  if (depvar_count>DEPVARS_INFO->max_num_dependent_variables)
+  {
+    cout << "maximum number of depdendent variables of "
+         << DEPVARS_INFO->max_num_dependent_variables << " exceeded "
+         << endl
+         << "use gradient_structure::set_NUM_DEPENDENT_VARIABLES(int i);"
+         << endl << "to increase the number of dependent variables"
+         << endl;
+    ad_exit(1);
+  }
+  DEPVARS_INFO->grad_buffer_position(depvar_count) = ptr;
+  DEPVARS_INFO->cmpdif_buffer_position(depvar_count) = fp->offset;
+  DEPVARS_INFO->grad_file_count(depvar_count) = _GRADFILE_PTR;
+  DEPVARS_INFO->cmpdif_file_count(depvar_count) = fp->file_ptr;
+  DEPVARS_INFO->grad_file_position(depvar_count)
+    = LSEEK(_GRADFILE_PTR,0,SEEK_CUR);
+  DEPVARS_INFO->cmpdif_file_position(depvar_count)
+    = LSEEK(fp->file_ptr,0,SEEK_CUR);
+}

@@ -45,7 +45,7 @@ TEST_F(test_arr_link, dvar_vector1to4)
 
   dvar_vector v(1, 4);
 
-  arr_link* last = gradient_structure::ARR_LIST1->get_last();
+  arr_link* last = gradient_structure::GRAD_STACK1->ARR_LIST1->get_last();
 
   ASSERT_TRUE(last->get_prev() == NULL);
   ASSERT_TRUE(last->get_next() == NULL);

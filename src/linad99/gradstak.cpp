@@ -112,6 +112,7 @@ grad_stack::grad_stack(
   const size_t size,
   const size_t df_file_bytes,
   const unsigned int dlist_size,
+  const unsigned long arr_list_size,
   const unsigned int id)
 {
   initialize();
@@ -296,6 +297,14 @@ grad_stack::grad_stack(
 
   GRAD_LIST = new dlist(dlist_size);
   memory_allocate_error("GRAD_LIST", (void*)GRAD_LIST);
+
+  ARR_LIST1 = new arr_list(arr_list_size);
+  memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
+
+/*
+  ARR_FREE_LIST1 = new arr_list;
+  memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
+*/
 }
 /// Destructor
 grad_stack::~grad_stack()
@@ -332,6 +341,18 @@ grad_stack::~grad_stack()
   {
     delete GRAD_LIST;
     GRAD_LIST = NULL;
+  }
+#if defined(DEBUG)
+  else
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+#endif
+  if (ARR_LIST1 != NULL)
+  {
+    delete ARR_LIST1;
+    ARR_LIST1 = NULL;
   }
 #if defined(DEBUG)
   else

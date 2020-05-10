@@ -24,7 +24,7 @@ int ad_kill_flag=0;
 
 double* gradient_structure::get_ARRAY_MEMBLOCK_BASE()
 {
-  return (double*)gradient_structure::ARR_LIST1->ARRAY_MEMBLOCK_BASE;
+  return (double*)gradient_structure::GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE;
 }
 
 /**
@@ -125,7 +125,7 @@ double_and_int* arr_new(unsigned int sz)
             " gradient_structure in scope " << endl;
     ad_exit(1);
   }
-  return gradient_structure::ARR_LIST1->arr_new(sz);
+  return gradient_structure::GRAD_STACK1->ARR_LIST1->arr_new(sz);
 }
 double_and_int* arr_list::arr_new(unsigned int sz)
 {
@@ -274,7 +274,7 @@ double_and_int* arr_list::arr_new(unsigned int sz)
  */
 void arr_free(double_and_int * varr)
 {
-  gradient_structure::ARR_LIST1->arr_free(varr);
+  gradient_structure::GRAD_STACK1->ARR_LIST1->arr_free(varr);
 }
 void arr_list::arr_free(double_and_int* varr)
 {
@@ -417,7 +417,7 @@ void df_check_derivative_values(void)
   adstring str=get_string_marker();
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
-    gradient_structure::ARR_LIST1->get_max_last_offset();
+    gradient_structure::GRAD_STACK1->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   int icount=0;
@@ -482,7 +482,7 @@ void df_check_derivative_values_indexed(void)
   adstring str=get_string_marker();
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
-    gradient_structure::ARR_LIST1->get_max_last_offset();
+    gradient_structure::GRAD_STACK1->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   int icount=0;
@@ -532,7 +532,7 @@ void df_check_derivative_values_indexed_break(void)
   adstring str=get_string_marker();
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
-    gradient_structure::ARR_LIST1->get_max_last_offset();
+    gradient_structure::GRAD_STACK1->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   if (index<=b)

@@ -37,7 +37,7 @@ TEST_F(test_dlist, thread)
 {
   auto f = [](const int id)
   {
-    grad_stack gs(100, sizeof(double), 10, id);
+    grad_stack gs(100, sizeof(double), 1, 0, id);
 
     dlink* link = gs.GRAD_LIST->create();
     gs.GRAD_LIST->append(link);
@@ -58,7 +58,7 @@ TEST_F(test_dlist, thread5x)
   {
     int random0 = std::rand() % 3;
 
-    grad_stack gs(100, sizeof(double), 10, id);
+    grad_stack gs(100, sizeof(double), 3, 0, id);
 
     dlink* link0 = gs.GRAD_LIST->create();
     gs.GRAD_LIST->append(link0);

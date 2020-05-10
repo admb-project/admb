@@ -208,10 +208,10 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     gradient_structure::GRAD_STACK1->GRAD_LIST->initialize();
 
     double_and_int* tmp =
-      (double_and_int*)gradient_structure::ARR_LIST1->ARRAY_MEMBLOCK_BASE;
+      (double_and_int*)gradient_structure::GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE;
 
     unsigned long int max_last_offset
-               = gradient_structure::ARR_LIST1->get_max_last_offset();
+               = gradient_structure::GRAD_STACK1->ARR_LIST1->get_max_last_offset();
 
     size_t size = sizeof(double_and_int);
 

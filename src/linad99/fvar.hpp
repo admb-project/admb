@@ -928,19 +928,21 @@ class grad_stack
    size_t length;
    size_t true_length;
 #endif
- public:
-   DF_FILE* fp;
-   dlist* GRAD_LIST;
+public:
+  DF_FILE* fp;
+  dlist* GRAD_LIST;
+  arr_list* ARR_LIST1;
+  //arr_list* ARR_FREE_LIST1;
 
-   size_t TOTAL_BYTES;
-   size_t PREVIOUS_TOTAL_BYTES;
+  size_t TOTAL_BYTES;
+  size_t PREVIOUS_TOTAL_BYTES;
 
-   /// Initialize byte totals to zero.
-   void initialize()
-   {
-     TOTAL_BYTES = 0;
-     PREVIOUS_TOTAL_BYTES = 0;
-   }
+  /// Initialize byte totals to zero.
+  void initialize()
+  {
+    TOTAL_BYTES = 0;
+    PREVIOUS_TOTAL_BYTES = 0;
+  }
 
    grad_stack_entry * ptr;
  private:
@@ -984,11 +986,13 @@ class grad_stack
      grad_stack(
        size,
        gradient_structure::CMPDIF_BUFFER_SIZE,
-       gradient_structure::MAX_DLINKS, 0) {}
+       gradient_structure::MAX_DLINKS,
+       gradient_structure::ARRAY_MEMBLOCK_SIZE, 0) {}
    grad_stack(
      const size_t size,
      const size_t df_file_nbytes,
      const unsigned int dlist_size,
+     const unsigned long arr_list_size,
      const unsigned int id);
    ~grad_stack();
 

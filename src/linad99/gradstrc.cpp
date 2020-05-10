@@ -114,8 +114,6 @@ unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
 grad_stack* gradient_structure::GRAD_STACK1;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
-arr_list * gradient_structure::ARR_LIST1 = NULL;
-arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
 unsigned int gradient_structure::MAX_DLINKS = 5000;
 
 // note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons
@@ -351,29 +349,6 @@ gradient_structure::gradient_structure(long int _size):
        }
      }
    }
-   if (ARR_LIST1!= NULL)
-   {
-     cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
-   }
-   else
-   {
-      ARR_LIST1 = new arr_list;
-      memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
-   }
-
-/*
-   if ( ARR_FREE_LIST1!= NULL)
-   {
-cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
-   }
-   else
-   {
-      ARR_FREE_LIST1 = new arr_list;
-      memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
-   }
-*/
-
-
    if (GRAD_STACK1 != NULL)
    {
      cerr << "Trying to allocate to a non NULL pointer\n";
@@ -566,16 +541,6 @@ gradient_structure::~gradient_structure()
   {
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;
-  }
-  if (ARR_LIST1 == NULL)
-  {
-    null_ptr_err_message();
-    ad_exit(1);
-  }
-  else
-  {
-    delete ARR_LIST1;
-    ARR_LIST1 = NULL;
   }
 
   instances--;

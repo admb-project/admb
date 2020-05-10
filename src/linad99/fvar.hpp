@@ -875,8 +875,6 @@ public:
     const dmatrix& jac);
   friend void allocate_dvariable_space(void);
   //friend void gradient_structure::funnel_jacobcalc(void);
-  friend void gradient_structure::jacobcalc(int nvar,
-    const uostream& jac);
   friend void funnel_derivatives(void);
 };
 
@@ -1062,7 +1060,8 @@ public:
   dependent_variables_information* DEPVARS_INFO;
 
   void save_dependent_variable_position(const prevariable& v1);
-  void jacobcalc(int nvar, const ofstream & jac);
+  void jacobcalc(int nvar, const ofstream& jac);
+  void jacobcalc(int nvar, const uostream& jac);
 };
 
 

@@ -776,9 +776,9 @@ double_and_int *arr_new(unsigned int sz);
 
 #include <gradient_structure.h>
 
-void jacobcalc(int nvar, const dmatrix & g);
-void jacobcalc(int nvar, const ofstream & ofs);
-void jacobcalc(int nvar, const uostream & ofs);
+void jacobcalc(int nvar, const dmatrix& g);
+void jacobcalc(int nvar, const ofstream& ofs);
+void jacobcalc(int nvar, const uostream& ofs);
 
 #if defined(__BORLANDC__ )
 #if defined(__GNUC__)
@@ -871,8 +871,6 @@ public:
   friend void gradloop();
   friend void gradient_structure::restore_variables();
   friend void gradient_structure::save_variables();
-  friend void gradient_structure::jacobcalc(int nvar,
-    const dmatrix& jac);
   friend void allocate_dvariable_space(void);
   //friend void gradient_structure::funnel_jacobcalc(void);
   friend void funnel_derivatives(void);
@@ -902,8 +900,6 @@ class grad_stack_entry
    friend void gradloop();
    friend void default_evaluation(void);
    friend class grad_stack;
-   friend void gradient_structure::jacobcalc(int nvar,
-     const dmatrix & jac);
    //friend void gradient_structure::funnel_jacobcalc(void);
 };
 void default_evaluation3ind(void);
@@ -1062,6 +1058,7 @@ public:
   void save_dependent_variable_position(const prevariable& v1);
   void jacobcalc(int nvar, const ofstream& jac);
   void jacobcalc(int nvar, const uostream& jac);
+  void jacobcalc(int nvar, const dmatrix& jac);
 };
 
 

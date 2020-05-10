@@ -183,8 +183,9 @@ class gradient_structure
    static dvariable *MIN_RETURN;
    static dvariable *MAX_RETURN;
    //static void funnel_jacobcalc(void);
+
+  static void jacobcalc(int nvar, const ofstream& jac);
    static void jacobcalc(int nvar, const dmatrix & jac);
-   static void jacobcalc(int nvar, const ofstream & jac);
    static void jacobcalc(int nvar, const uostream & jac);
 
    friend void default_evaluation(void);

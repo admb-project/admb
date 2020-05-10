@@ -130,7 +130,7 @@ void grad_stack::gradcalc(int nvar, dvector& g)
 
   if (gradient_structure::save_var_flag)
   {
-    gradient_structure::save_arrays();
+    save_arrays();
     GRAD_LIST->save_variables();
   }
 
@@ -185,7 +185,7 @@ void grad_stack::gradcalc(int nvar, dvector& g)
 
   if (gradient_structure::save_var_flag)
   {
-    gradient_structure::restore_arrays();
+    restore_arrays();
     GRAD_LIST->restore_variables();
   }
 }
@@ -205,12 +205,12 @@ double gradcalc(int nvar, const dvector& _g, dvariable& f)
 */
 /**
  */
-void gradient_structure::save_arrays()
+void grad_stack::save_arrays()
 {
   void * temp_ptr;
   unsigned long bytes_needed =
-    min(gradient_structure::GRAD_STACK1->ARR_LIST1->get_last_offset() + 1,
-        ARRAY_MEMBLOCK_SIZE);
+    min(ARR_LIST1->get_last_offset() + 1,
+      gradient_structure::ARRAY_MEMBLOCK_SIZE);
   gradient_structure::save_var_file_flag=0;
 #ifdef __ZTC__
    if ( (temp_ptr = farmalloc(bytes_needed) ) == 0)
@@ -226,11 +226,11 @@ void gradient_structure::save_arrays()
    }
    if (gradient_structure::save_var_file_flag==0)
    {
-     GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_SAVE = temp_ptr;
+     ARR_LIST1->ARRAY_MEMBLOCK_SAVE = temp_ptr;
 #if defined(DOS386)
   #ifndef USE_ASSEMBLER
-         memcpy((char*)GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_SAVE,(char*)GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE,
-           bytes_needed);
+    memcpy((char*)ARR_LIST1->ARRAY_MEMBLOCK_SAVE,
+      (char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE, bytes_needed);
   #else
          dw_block_move((double*)ARRAY_MEMBLOCK_SAVE,
            (double*)ARRAY_MEMBLOCK_BASE,bytes_needed/8);
@@ -252,15 +252,13 @@ void gradient_structure::save_arrays()
   }
   else
   {
-     humungous_pointer src = GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE;
-     LSEEK(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+     humungous_pointer src = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
+     LSEEK(_VARSSAV_PTR, 0L, SEEK_SET);
 #if defined(DOS386)
   #ifdef OPT_LIB
-     write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
-       (char*)src, bytes_needed);
+     write(_VARSSAV_PTR, (char*)src, bytes_needed);
   #else
-     ssize_t ret = write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
-       (char*)src, bytes_needed);
+     ssize_t ret = write(_VARSSAV_PTR, (char*)src, bytes_needed);
      assert(ret != -1);
   #endif
 #else
@@ -280,17 +278,17 @@ void gradient_structure::save_arrays()
 
 /**
  */
-void gradient_structure::restore_arrays()
+void grad_stack::restore_arrays()
 {
   unsigned long bytes_needed =
-    min(gradient_structure::GRAD_STACK1->ARR_LIST1->get_last_offset() + 1,
-        ARRAY_MEMBLOCK_SIZE);
+    min(ARR_LIST1->get_last_offset() + 1,
+        gradient_structure::ARRAY_MEMBLOCK_SIZE);
   if (gradient_structure::save_var_file_flag==0)
   {
 #if defined(DOS386)
   #ifndef USE_ASSEMBLER
-        memcpy((char*)GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE,(char*)GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_SAVE,
-          bytes_needed);
+    memcpy((char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
+      (char*)ARR_LIST1->ARRAY_MEMBLOCK_SAVE, bytes_needed);
   #else
          dw_block_move((double*)ARRAY_MEMBLOCK_BASE,
            (double*)ARRAY_MEMBLOCK_SAVE,bytes_needed/8);
@@ -310,19 +308,17 @@ void gradient_structure::restore_arrays()
      }
      memcpy((char*)dest,(char*)src,left_to_move);
 #endif
-    GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_SAVE.free();
+    ARR_LIST1->ARRAY_MEMBLOCK_SAVE.free();
   }
   else
   {
-    humungous_pointer dest = GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE;
-    LSEEK(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+    humungous_pointer dest = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
+    LSEEK(_VARSSAV_PTR, 0L, SEEK_SET);
 #if defined(DOS386)
   #if defined(OPT_LIB) && !defined(_MSC_VER)
-    read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
-      (char*)dest,bytes_needed);
+    read(_VARSSAV_PTR, (char*)dest, bytes_needed);
   #else
-    ssize_t ret = read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
-      (char*)dest,bytes_needed);
+    ssize_t ret = read(_VARSSAV_PTR, (char*)dest, bytes_needed);
     assert(ret != -1);
   #endif
 #else

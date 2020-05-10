@@ -140,7 +140,7 @@ void grad_stack::jacobcalc(int nvar, const dmatrix& _jac)
   // save variable values if desired
   if (gradient_structure::save_var_flag)
   {
-    gradient_structure::save_arrays();
+    save_arrays();
     GRAD_LIST->save_variables();
   }
   // now evalueate the jacobian
@@ -264,7 +264,7 @@ void grad_stack::jacobcalc(int nvar, const dmatrix& _jac)
   DEPVARS_INFO->depvar_count=0;
   if (gradient_structure::save_var_flag)
   {
-    gradient_structure::restore_arrays();
+    restore_arrays();
     GRAD_LIST->restore_variables();
   }
 }

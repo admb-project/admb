@@ -1057,6 +1057,9 @@ public:
   void jacobcalc(int nvar, const ofstream& jac);
   void jacobcalc(int nvar, const uostream& jac);
   void jacobcalc(int nvar, const dmatrix& jac);
+
+  void save_arrays();
+  void restore_arrays();
 };
 
 

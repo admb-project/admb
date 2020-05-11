@@ -314,6 +314,8 @@ grad_stack::grad_stack(
 
   DEPVARS_INFO = new dependent_variables_information(max_nvar_size);
   memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
+
+  RETURN_ARRAYS = nullptr;
 }
 /// Destructor
 grad_stack::~grad_stack()

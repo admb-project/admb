@@ -75,7 +75,6 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 unsigned long int gradient_structure::max_last_offset = 0;
 long int gradient_structure::NVAR = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
-dvariable** gradient_structure::RETURN_ARRAYS = NULL;
 unsigned int gradient_structure::RETURN_ARRAYS_PTR;
 dvariable ** gradient_structure::RETURN_PTR_CONTAINER = NULL;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
@@ -116,12 +115,12 @@ void memory_allocate_error(const char * s, void * ptr);
  */
 size_t gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
 {
-  grad_stack* gs = gradient_structure::GRAD_STACK1;
+  grad_stack* gstack = gradient_structure::GRAD_STACK1;
 
-  if (!gs) return 0;
+  if (!gstack) return 0;
 
-  size_t tmp = gs->TOTAL_BYTES - gs->PREVIOUS_TOTAL_BYTES;
-  gs->PREVIOUS_TOTAL_BYTES = gs->TOTAL_BYTES;
+  size_t tmp = gstack->TOTAL_BYTES - gstack->PREVIOUS_TOTAL_BYTES;
+  gstack->PREVIOUS_TOTAL_BYTES = gstack->TOTAL_BYTES;
 
   return tmp;
 }
@@ -367,25 +366,25 @@ gradient_structure::gradient_structure(long int _size):
 
    //allocate_dvariable_space();
 
-  if ( RETURN_ARRAYS!= NULL)
+  if (GRAD_STACK1->RETURN_ARRAYS != NULL)
   {
 cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
     ad_exit(1);
   }
   else
   {
-    RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
-    memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
+    GRAD_STACK1->RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
+    memory_allocate_error("RETURN_ARRAYS",GRAD_STACK1->RETURN_ARRAYS);
 
     //allocate_dvariable_space();
     for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
     {
-      RETURN_ARRAYS[i]  = new dvariable[RETURN_ARRAYS_SIZE];
-      memory_allocate_error("RETURN_ARRAYS[i]", RETURN_ARRAYS[i]);
+      GRAD_STACK1->RETURN_ARRAYS[i]  = new dvariable[RETURN_ARRAYS_SIZE];
+      memory_allocate_error("RETURN_ARRAYS[i]", GRAD_STACK1->RETURN_ARRAYS[i]);
     }
     RETURN_ARRAYS_PTR = 0;
-    MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
-    MAX_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
+    MIN_RETURN = GRAD_STACK1->RETURN_ARRAYS[RETURN_ARRAYS_PTR];
+    MAX_RETURN = GRAD_STACK1->RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
     RETURN_PTR = MIN_RETURN;
   }
   //RETURN_INDEX = 0;
@@ -421,9 +420,9 @@ void RETURN_ARRAYS_INCREMENT(void)
     ad_exit(24);
   }
   gradient_structure::MIN_RETURN =
-    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
+    gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
   gradient_structure::MAX_RETURN =
-    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
+    gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
     gradient_structure::RETURN_ARRAYS_SIZE-1;
   gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 #if defined(THREAD_SAFE)
@@ -452,9 +451,9 @@ void RETURN_ARRAYS_DECREMENT(void)
   --gradient_structure::RETURN_ARRAYS_PTR;
 
   gradient_structure::MIN_RETURN =
-    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
+    gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
   gradient_structure::MAX_RETURN =
-    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
+    gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
     gradient_structure::RETURN_ARRAYS_SIZE-1;
   gradient_structure::RETURN_PTR =
     gradient_structure::RETURN_PTR_CONTAINER[
@@ -469,23 +468,6 @@ Destructor
 gradient_structure::~gradient_structure()
 {
   gradient_structure::NVAR=0;
-  if (RETURN_ARRAYS == NULL)
-  {
-    null_ptr_err_message();
-    ad_exit(1);
-  }
-  else
-  {
-     for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
-     {
-       delete [] RETURN_ARRAYS[i];
-       RETURN_ARRAYS[i] = NULL;
-     }
-     delete [] RETURN_ARRAYS;
-     RETURN_ARRAYS = NULL;
-     delete [] RETURN_PTR_CONTAINER;
-     RETURN_PTR_CONTAINER = NULL;
-  }
   if (GRAD_STACK1 == NULL)
   {
     null_ptr_err_message();
@@ -493,6 +475,23 @@ gradient_structure::~gradient_structure()
   }
   else
   {
+    if (GRAD_STACK1->RETURN_ARRAYS == NULL)
+    {
+      null_ptr_err_message();
+      ad_exit(1);
+    }
+    else
+    {
+       for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
+       {
+         delete [] GRAD_STACK1->RETURN_ARRAYS[i];
+         GRAD_STACK1->RETURN_ARRAYS[i] = NULL;
+       }
+       delete [] GRAD_STACK1->RETURN_ARRAYS;
+       GRAD_STACK1->RETURN_ARRAYS = NULL;
+       delete [] RETURN_PTR_CONTAINER;
+       RETURN_PTR_CONTAINER = NULL;
+    }
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;
   }

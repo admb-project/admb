@@ -1062,6 +1062,7 @@ public:
   void restore_arrays();
   dvariable** RETURN_ARRAYS;
   dvariable** RETURN_PTR_CONTAINER;
+  dvariable* MIN_RETURN;
 };
 
 

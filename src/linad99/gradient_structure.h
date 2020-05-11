@@ -174,7 +174,6 @@ class gradient_structure
    static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
    static dvariable *RETURN_PTR;
-   static dvariable *MIN_RETURN;
    static dvariable *MAX_RETURN;
    //static void funnel_jacobcalc(void);
 

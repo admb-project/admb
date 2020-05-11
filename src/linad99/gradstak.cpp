@@ -316,6 +316,7 @@ grad_stack::grad_stack(
   memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
 
   RETURN_ARRAYS = nullptr;
+  RETURN_PTR_CONTAINER = nullptr;
 }
 /// Destructor
 grad_stack::~grad_stack()

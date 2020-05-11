@@ -100,7 +100,6 @@ class gradient_structure
    static long int NVAR;
    static unsigned int NUM_RETURN_ARRAYS;
    static unsigned int RETURN_ARRAYS_PTR;
-   static dvariable **RETURN_PTR_CONTAINER;
    static size_t TOTAL_BYTES;
    static size_t PREVIOUS_TOTAL_BYTES;
  public:

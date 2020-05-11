@@ -1061,6 +1061,7 @@ public:
   void save_arrays();
   void restore_arrays();
   dvariable** RETURN_ARRAYS;
+  dvariable** RETURN_PTR_CONTAINER;
 };
 
 

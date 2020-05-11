@@ -76,7 +76,6 @@ unsigned long int gradient_structure::max_last_offset = 0;
 long int gradient_structure::NVAR = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_PTR;
-dvariable ** gradient_structure::RETURN_PTR_CONTAINER = NULL;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
 //int gradient_structure::RETURN_INDEX = 0;
@@ -389,12 +388,12 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
   }
   //RETURN_INDEX = 0;
 
-  RETURN_PTR_CONTAINER = new dvariable*[NUM_RETURN_ARRAYS];
-  memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
+  GRAD_STACK1->RETURN_PTR_CONTAINER = new dvariable*[NUM_RETURN_ARRAYS];
+  memory_allocate_error("RETURN_INDICES_CONTAINER",GRAD_STACK1->RETURN_PTR_CONTAINER);
 
   for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
   {
-    RETURN_PTR_CONTAINER[i] = 0;
+    GRAD_STACK1->RETURN_PTR_CONTAINER[i] = 0;
   }
 }
 
@@ -409,7 +408,7 @@ void RETURN_ARRAYS_INCREMENT(void)
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_return_arrays);
 #endif
-  gradient_structure::RETURN_PTR_CONTAINER[
+  gradient_structure::GRAD_STACK1->RETURN_PTR_CONTAINER[
     gradient_structure::RETURN_ARRAYS_PTR]=gradient_structure::RETURN_PTR;
   if (++gradient_structure::RETURN_ARRAYS_PTR ==
     gradient_structure::NUM_RETURN_ARRAYS)
@@ -456,7 +455,7 @@ void RETURN_ARRAYS_DECREMENT(void)
     gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
     gradient_structure::RETURN_ARRAYS_SIZE-1;
   gradient_structure::RETURN_PTR =
-    gradient_structure::RETURN_PTR_CONTAINER[
+    gradient_structure::GRAD_STACK1->RETURN_PTR_CONTAINER[
       gradient_structure::RETURN_ARRAYS_PTR];
 #if defined(THREAD_SAFE)
   pthread_mutex_unlock(&mutex_return_arrays);
@@ -489,8 +488,16 @@ gradient_structure::~gradient_structure()
        }
        delete [] GRAD_STACK1->RETURN_ARRAYS;
        GRAD_STACK1->RETURN_ARRAYS = NULL;
-       delete [] RETURN_PTR_CONTAINER;
-       RETURN_PTR_CONTAINER = NULL;
+    }
+    if (GRAD_STACK1->RETURN_PTR_CONTAINER == NULL)
+    {
+      null_ptr_err_message();
+      ad_exit(1);
+    }
+    else
+    {
+      delete [] GRAD_STACK1->RETURN_PTR_CONTAINER;
+      GRAD_STACK1->RETURN_PTR_CONTAINER = NULL;
     }
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;

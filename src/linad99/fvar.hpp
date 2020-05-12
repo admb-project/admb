@@ -1066,6 +1066,11 @@ public:
   dvariable* MAX_RETURN;
   dvariable* RETURN_PTR;
   unsigned int RETURN_ARRAYS_PTR;
+  unsigned int NUM_RETURN_ARRAYS;
+  unsigned int RETURN_ARRAYS_SIZE;
+  void allocate_RETURN_ARRAYS(
+    unsigned int _NUM_RETURN_ARRAYS,
+    unsigned int _RETURN_ARRAYS_SIZE);
 };
 
 

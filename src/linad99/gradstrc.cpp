@@ -354,42 +354,48 @@ gradient_structure::gradient_structure(long int _size):
      GRAD_STACK1 = new grad_stack;
      memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
      gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
+     GRAD_STACK1->allocate_RETURN_ARRAYS(NUM_RETURN_ARRAYS, RETURN_ARRAYS_SIZE);
    }
 #ifdef DIAG
    cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
 #endif
-
    //allocate_dvariable_space();
-
-  if (GRAD_STACK1->RETURN_ARRAYS != NULL)
+}
+void grad_stack::allocate_RETURN_ARRAYS(
+  unsigned int _NUM_RETURN_ARRAYS,
+  unsigned int _RETURN_ARRAYS_SIZE)
+{
+  if (RETURN_ARRAYS != NULL)
   {
 cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
     ad_exit(1);
   }
-  else
-  {
-    GRAD_STACK1->RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
-    memory_allocate_error("RETURN_ARRAYS",GRAD_STACK1->RETURN_ARRAYS);
 
-    //allocate_dvariable_space();
-    for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
-    {
-      GRAD_STACK1->RETURN_ARRAYS[i]  = new dvariable[RETURN_ARRAYS_SIZE];
-      memory_allocate_error("RETURN_ARRAYS[i]", GRAD_STACK1->RETURN_ARRAYS[i]);
-    }
-    GRAD_STACK1->RETURN_ARRAYS_PTR = 0;
-    GRAD_STACK1->MIN_RETURN = GRAD_STACK1->RETURN_ARRAYS[GRAD_STACK1->RETURN_ARRAYS_PTR];
-    GRAD_STACK1->MAX_RETURN = GRAD_STACK1->RETURN_ARRAYS[GRAD_STACK1->RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
-    GRAD_STACK1->RETURN_PTR = GRAD_STACK1->MIN_RETURN;
+  NUM_RETURN_ARRAYS = _NUM_RETURN_ARRAYS;
+  RETURN_ARRAYS_SIZE = _RETURN_ARRAYS_SIZE;
+
+  RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
+  memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
+
+  //allocate_dvariable_space();
+  for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
+  {
+    RETURN_ARRAYS[i]  = new dvariable[RETURN_ARRAYS_SIZE];
+    memory_allocate_error("RETURN_ARRAYS[i]", RETURN_ARRAYS[i]);
   }
+
+  RETURN_ARRAYS_PTR = 0;
+  MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
+  MAX_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
+  RETURN_PTR = MIN_RETURN;
   //RETURN_INDEX = 0;
 
-  GRAD_STACK1->RETURN_PTR_CONTAINER = new dvariable*[NUM_RETURN_ARRAYS];
-  memory_allocate_error("RETURN_INDICES_CONTAINER",GRAD_STACK1->RETURN_PTR_CONTAINER);
+  RETURN_PTR_CONTAINER = new dvariable*[NUM_RETURN_ARRAYS];
+  memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
 
   for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
   {
-    GRAD_STACK1->RETURN_PTR_CONTAINER[i] = 0;
+    RETURN_PTR_CONTAINER[i] = 0;
   }
 }
 

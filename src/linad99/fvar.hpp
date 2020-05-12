@@ -1065,6 +1065,7 @@ public:
   dvariable* MIN_RETURN;
   dvariable* MAX_RETURN;
   dvariable* RETURN_PTR;
+  unsigned int RETURN_ARRAYS_PTR;
 };
 
 

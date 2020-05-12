@@ -106,7 +106,7 @@ Macro definitions.
 #endif
 
 
-#define USE_VECTOR_SHAPE_POOL
+//#define USE_VECTOR_SHAPE_POOL
 
 #if defined(USE_DDOUBLE)
 #   include <qd/qd.h>

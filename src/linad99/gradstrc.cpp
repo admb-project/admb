@@ -92,7 +92,7 @@ int gradient_structure::save_var_file_flag=0;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
-grad_stack* gradient_structure::GRAD_STACK1;
+__thread grad_stack* gradient_structure::GRAD_STACK1 = NULL;
 unsigned int gradient_structure::MAX_DLINKS = 5000;
 
 // note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons
@@ -265,7 +265,7 @@ gradient_structure::gradient_structure(long int _size):
     cerr << "More than one gradient_structure object has been declared.\n"
          << "  Only one gradient_structure object can exist. Check the scope\n"
          << "  of the objects declared.\n";
-    ad_exit(1);
+    //ad_exit(1);
   }
 
   //Should be a multiple of sizeof(double_and_int)

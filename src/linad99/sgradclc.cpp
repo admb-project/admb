@@ -98,7 +98,7 @@ void grad_stack::gradcalc(int nvar, dvector& g)
       cerr << "  gradient_structure::NVAR = " << gradient_structure::NVAR
            << endl;
       cerr << "  in " __FILE__ << endl;
-      ad_exit(1);
+      //ad_exit(1);
     }
   }
   initialize();

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 #include <climits>
-
+#include <thread>
 
 extern "C"
 {
@@ -459,4 +459,119 @@ TEST_F(test_gradcalc, cube_forth)
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
   ASSERT_DOUBLE_EQ(g(-1), 66.27);
   ASSERT_DOUBLE_EQ(g(0), -48.668);
+}
+TEST_F(test_gradcalc, thread_simple)
+{
+  ad_exit=&test_ad_exit;
+
+  std::srand(std::time(nullptr));
+
+  auto f = []()
+  {
+    gradient_structure gs;
+
+    int random0 = std::rand() % 4;
+    int random1 = std::rand() % 5;
+    int random2 = std::rand() % 3;
+
+    independent_variables independents(1, 2);
+    independents(1) = 4.7;
+    independents(2) = -2.3;
+
+    std::this_thread::sleep_for (std::chrono::seconds(random0));
+
+    ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+    // Set gradient_structure::NVAR
+    dvar_vector variables(independents);
+
+    ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+    dvariable f;
+
+    ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+    std::this_thread::sleep_for (std::chrono::seconds(random1));
+    f = cube(variables(1)) + fourth(variables(2));
+
+    ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+
+    double result = value(f);
+    ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+    ASSERT_DOUBLE_EQ(result, 131.8071);
+
+    std::this_thread::sleep_for (std::chrono::seconds(random2));
+    dvector g(-1, 0);
+    gradcalc(2, g);
+    ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+    ASSERT_DOUBLE_EQ(g(-1), 66.27);
+    ASSERT_DOUBLE_EQ(g(0), -48.668);
+  };
+  auto simple = []()
+  {
+    gradient_structure gs;
+
+    int random0 = std::rand() % 4;
+    int random1 = std::rand() % 5;
+    int random2 = std::rand() % 3;
+    dvector x(1, 10);
+    x(1) = -1.0;
+    x(2) = 0.0;
+    x(3) = 1.0;
+    x(4) = 2.0;
+    x(5) = 3.0;
+    x(6) = 4.0;
+    x(7) = 5.0;
+    x(8) = 6.0;
+    x(9) = 7.0;
+    x(10) = 8.0;
+
+    dvector y(1, 10);
+    y(1) = 1.4;
+    y(2) = 4.7;
+    y(3) = 5.1;
+    y(4) = 8.3;
+    y(5) = 9.0;
+    y(6) = 14.5;
+    y(7) = 14.0;
+    y(8) = 13.4;
+    y(9) = 19.2;
+    y(10) = 18.0;
+
+    std::this_thread::sleep_for (std::chrono::seconds(random0));
+
+    independent_variables independents(1, 2);
+    independents.initialize();
+
+    // Set gradient_structure::NVAR
+    dvar_vector variables(independents);
+
+    std::this_thread::sleep_for (std::chrono::seconds(random1));
+
+    dvar_vector yhat(1, 10);
+    yhat = variables(1) + variables(2) * x;
+
+    dvariable f = 0.0;
+    f=regression(y,yhat);
+
+    double result = value(f);
+
+    std::this_thread::sleep_for (std::chrono::seconds(random2));
+
+    dvector g(1, 2);
+    gradcalc(2, g);
+
+    ASSERT_DOUBLE_EQ(result, 24.980653039466869);
+    ASSERT_DOUBLE_EQ(g(1), -0.7278138528138528);
+    ASSERT_DOUBLE_EQ(g(2), -3.6126893939393945);
+  };
+
+  std::thread t1(simple);
+  std::thread t2(simple);
+  std::thread t3(f);
+  std::thread t4(simple);
+  t1.join();
+  t4.join();
+  t3.join();
+  t2.join();
 }

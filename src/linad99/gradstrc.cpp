@@ -481,21 +481,8 @@ gradient_structure::~gradient_structure()
   }
   else
   {
-    if (GRAD_STACK1->RETURN_ARRAYS == NULL)
-    {
-      null_ptr_err_message();
-      ad_exit(1);
-    }
-    else
-    {
-       for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
-       {
-         delete [] GRAD_STACK1->RETURN_ARRAYS[i];
-         GRAD_STACK1->RETURN_ARRAYS[i] = NULL;
-       }
-       delete [] GRAD_STACK1->RETURN_ARRAYS;
-       GRAD_STACK1->RETURN_ARRAYS = NULL;
-    }
+    GRAD_STACK1->deallocate_RETURN_ARRAYS();
+
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;
   }

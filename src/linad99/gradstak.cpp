@@ -322,6 +322,24 @@ grad_stack::grad_stack(
   RETURN_PTR = nullptr;
   RETURN_ARRAYS_PTR = 0;
 }
+void grad_stack::deallocate_RETURN_ARRAYS()
+{
+  if (RETURN_ARRAYS != NULL)
+  {
+    for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
+    {
+      delete [] RETURN_ARRAYS[i];
+      RETURN_ARRAYS[i] = NULL;
+    }
+    delete [] RETURN_ARRAYS;
+    RETURN_ARRAYS = NULL;
+  }
+  if (RETURN_PTR_CONTAINER != NULL)
+  {
+    delete [] RETURN_PTR_CONTAINER;
+    RETURN_PTR_CONTAINER = NULL;
+  }
+}
 /// Destructor
 grad_stack::~grad_stack()
 {
@@ -406,11 +424,6 @@ grad_stack::~grad_stack()
     ad_exit(1);
   }
 #endif
-  if (RETURN_PTR_CONTAINER != NULL)
-  {
-    delete [] RETURN_PTR_CONTAINER;
-    RETURN_PTR_CONTAINER = NULL;
-  }
   if (close(_GRADFILE_PTR1))
   {
     cerr << "Error closing file " << gradfile_name1 << "\n"

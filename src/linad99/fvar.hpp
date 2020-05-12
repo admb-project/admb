@@ -1064,6 +1064,7 @@ public:
   dvariable** RETURN_PTR_CONTAINER;
   dvariable* MIN_RETURN;
   dvariable* MAX_RETURN;
+  dvariable* RETURN_PTR;
 };
 
 

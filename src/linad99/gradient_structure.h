@@ -173,7 +173,6 @@ class gradient_structure
    friend double_and_int *gradnew();
    static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
-   static dvariable *RETURN_PTR;
    //static void funnel_jacobcalc(void);
 
   static void jacobcalc(int nvar, const ofstream& jac);

@@ -405,30 +405,32 @@ Must be called on entry to any function that returns a variable object.
 Calls must balance calls to void RETURN_ARRAYS_DECREMENT(void).
 \ingroup RA
 */
-void RETURN_ARRAYS_INCREMENT(void)
+void RETURN_ARRAYS_INCREMENT()
 {
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_return_arrays);
 #endif
-  gradient_structure::GRAD_STACK1->RETURN_PTR_CONTAINER[
-    gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR]=gradient_structure::GRAD_STACK1->RETURN_PTR;
-  if (++gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR ==
-    gradient_structure::NUM_RETURN_ARRAYS)
+
+  gradient_structure::GRAD_STACK1->RETURN_ARRAYS_INCREMENT();
+
+#if defined(THREAD_SAFE)
+  pthread_mutex_unlock(&mutex_return_arrays);
+#endif
+}
+void grad_stack::RETURN_ARRAYS_INCREMENT()
+{
+  RETURN_PTR_CONTAINER[RETURN_ARRAYS_PTR] = RETURN_PTR;
+
+  if (++RETURN_ARRAYS_PTR == NUM_RETURN_ARRAYS)
   {
     cerr << " Overflow in RETURN_ARRAYS stack -- Increase NUM_RETURN_ARRAYS\n";
     cerr << " There may be a RETURN_ARRAYS_INCREMENT()\n";
     cerr << " which is not matched by a RETURN_ARRAYS_DECREMENT()\n";
     ad_exit(24);
   }
-  gradient_structure::GRAD_STACK1->MIN_RETURN =
-    gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR];
-  gradient_structure::GRAD_STACK1->MAX_RETURN =
-    gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR]+
-    gradient_structure::RETURN_ARRAYS_SIZE-1;
-  gradient_structure::GRAD_STACK1->RETURN_PTR = gradient_structure::GRAD_STACK1->MIN_RETURN;
-#if defined(THREAD_SAFE)
-  pthread_mutex_unlock(&mutex_return_arrays);
-#endif
+  MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
+  MAX_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR] + RETURN_ARRAYS_SIZE - 1;
+  RETURN_PTR = MIN_RETURN;
 }
 
 /**
@@ -437,31 +439,34 @@ Must be called prior to exit from any functiton that returns a variable object.
 Calls must balance calls to void RETURN_ARRAYS_INCREMENT(void).
 \ingroup RA
 */
-void RETURN_ARRAYS_DECREMENT(void)
+void RETURN_ARRAYS_DECREMENT()
 {
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_return_arrays);
 #endif
-  if (gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR == 0)
+
+  gradient_structure::GRAD_STACK1->RETURN_ARRAYS_DECREMENT();
+
+#if defined(THREAD_SAFE)
+  pthread_mutex_unlock(&mutex_return_arrays);
+#endif
+}
+
+void grad_stack::RETURN_ARRAYS_DECREMENT()
+{
+  if (RETURN_ARRAYS_PTR == 0)
   {
     cerr << " Error -- RETURN_ARRAYS_PTR is 0  \n";
     cerr << " There must be a RETURN_ARRAYS_DECREMENT()\n";
     cerr << " which is not matched by a RETURN_ARRAYS_INCREMENT()\n";
     ad_exit(24);
   }
-  --gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR;
 
-  gradient_structure::GRAD_STACK1->MIN_RETURN =
-    gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR];
-  gradient_structure::GRAD_STACK1->MAX_RETURN =
-    gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR]+
-    gradient_structure::RETURN_ARRAYS_SIZE-1;
-  gradient_structure::GRAD_STACK1->RETURN_PTR =
-    gradient_structure::GRAD_STACK1->RETURN_PTR_CONTAINER[
-      gradient_structure::GRAD_STACK1->RETURN_ARRAYS_PTR];
-#if defined(THREAD_SAFE)
-  pthread_mutex_unlock(&mutex_return_arrays);
-#endif
+  --RETURN_ARRAYS_PTR;
+
+  MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
+  MAX_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR] + RETURN_ARRAYS_SIZE - 1;
+  RETURN_PTR = RETURN_PTR_CONTAINER[RETURN_ARRAYS_PTR];
 }
 /**
 Destructor

@@ -1071,6 +1071,8 @@ public:
   void allocate_RETURN_ARRAYS(
     unsigned int _NUM_RETURN_ARRAYS,
     unsigned int _RETURN_ARRAYS_SIZE);
+  void RETURN_ARRAYS_DECREMENT();
+  void RETURN_ARRAYS_INCREMENT();
 };
 
 

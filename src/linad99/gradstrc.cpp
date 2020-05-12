@@ -496,16 +496,6 @@ gradient_structure::~gradient_structure()
        delete [] GRAD_STACK1->RETURN_ARRAYS;
        GRAD_STACK1->RETURN_ARRAYS = NULL;
     }
-    if (GRAD_STACK1->RETURN_PTR_CONTAINER == NULL)
-    {
-      null_ptr_err_message();
-      ad_exit(1);
-    }
-    else
-    {
-      delete [] GRAD_STACK1->RETURN_PTR_CONTAINER;
-      GRAD_STACK1->RETURN_PTR_CONTAINER = NULL;
-    }
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;
   }

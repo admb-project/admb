@@ -406,6 +406,11 @@ grad_stack::~grad_stack()
     ad_exit(1);
   }
 #endif
+  if (RETURN_PTR_CONTAINER != NULL)
+  {
+    delete [] RETURN_PTR_CONTAINER;
+    RETURN_PTR_CONTAINER = NULL;
+  }
   if (close(_GRADFILE_PTR1))
   {
     cerr << "Error closing file " << gradfile_name1 << "\n"

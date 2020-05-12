@@ -20,7 +20,7 @@ prevariable& cube(const prevariable& v1)
   double x=value(v1);
   double x2=x*x;
 
-  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
+  if (++gradient_structure::RETURN_PTR > gradient_structure::GRAD_STACK1->MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::GRAD_STACK1->MIN_RETURN;
 
   gradient_structure::RETURN_PTR->v->x=x2*x;
@@ -41,7 +41,7 @@ prevariable& fourth(const prevariable& v1)
   double x=value(v1);
   double x2=x*x;
 
-  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
+  if (++gradient_structure::RETURN_PTR > gradient_structure::GRAD_STACK1->MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::GRAD_STACK1->MIN_RETURN;
 
   gradient_structure::RETURN_PTR->v->x=x2*x2;

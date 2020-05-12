@@ -318,6 +318,7 @@ grad_stack::grad_stack(
   RETURN_ARRAYS = nullptr;
   RETURN_PTR_CONTAINER = nullptr;
   MIN_RETURN = nullptr;
+  MAX_RETURN = nullptr;
 }
 /// Destructor
 grad_stack::~grad_stack()

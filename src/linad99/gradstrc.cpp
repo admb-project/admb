@@ -80,7 +80,6 @@ unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
 //int gradient_structure::RETURN_INDEX = 0;
 //dvariable * gradient_structure::FRETURN = NULL;
-dvariable * gradient_structure::MAX_RETURN = NULL;
 dvariable * gradient_structure::RETURN_PTR = NULL;
 #ifdef __BORLANDC__
 long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
@@ -382,7 +381,7 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
     }
     RETURN_ARRAYS_PTR = 0;
     GRAD_STACK1->MIN_RETURN = GRAD_STACK1->RETURN_ARRAYS[RETURN_ARRAYS_PTR];
-    MAX_RETURN = GRAD_STACK1->RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
+    GRAD_STACK1->MAX_RETURN = GRAD_STACK1->RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
     RETURN_PTR = GRAD_STACK1->MIN_RETURN;
   }
   //RETURN_INDEX = 0;
@@ -419,7 +418,7 @@ void RETURN_ARRAYS_INCREMENT(void)
   }
   gradient_structure::GRAD_STACK1->MIN_RETURN =
     gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
-  gradient_structure::MAX_RETURN =
+  gradient_structure::GRAD_STACK1->MAX_RETURN =
     gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
     gradient_structure::RETURN_ARRAYS_SIZE-1;
   gradient_structure::RETURN_PTR = gradient_structure::GRAD_STACK1->MIN_RETURN;
@@ -450,7 +449,7 @@ void RETURN_ARRAYS_DECREMENT(void)
 
   gradient_structure::GRAD_STACK1->MIN_RETURN =
     gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
-  gradient_structure::MAX_RETURN =
+  gradient_structure::GRAD_STACK1->MAX_RETURN =
     gradient_structure::GRAD_STACK1->RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
     gradient_structure::RETURN_ARRAYS_SIZE-1;
   gradient_structure::RETURN_PTR =

@@ -49,7 +49,7 @@ void prevariable::operator-=(const double uu)
  */
 prevariable& operator+(const prevariable& v1, const prevariable& v2)
 {
-  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
+  if (++gradient_structure::RETURN_PTR > gradient_structure::GRAD_STACK1->MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::GRAD_STACK1->MIN_RETURN;
 
  gradient_structure::RETURN_PTR->v->x =(*v1.v).x+ (*v2.v).x;
@@ -64,7 +64,7 @@ prevariable& operator+(const prevariable& v1, const prevariable& v2)
  */
 prevariable& operator*(const prevariable& v1, const prevariable& v2)
 {
-  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
+  if (++gradient_structure::RETURN_PTR > gradient_structure::GRAD_STACK1->MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::GRAD_STACK1->MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x= (*v1.v).x * (*v2.v).x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3,

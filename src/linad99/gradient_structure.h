@@ -97,7 +97,6 @@ class gradient_structure
 #endif
  private:
    static long int USE_FOR_HESSIAN;
-   static long int NVAR;
    static unsigned int NUM_RETURN_ARRAYS;
    static size_t TOTAL_BYTES;
    static size_t PREVIOUS_TOTAL_BYTES;

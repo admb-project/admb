@@ -150,35 +150,34 @@ void make_indvar_list(const dvar_vector& t)
   {
     return;
   }
-  if ((unsigned int)(t.indexmax()-t.indexmin()+1)
-    > gradient_structure::MAX_NVAR_OFFSET)
+  unsigned int size = t.indexmax() - t.indexmin() + 1;
+  if (size > gradient_structure::MAX_NVAR_OFFSET)
   {
-   if (ad_printf)
-   {
-     (*ad_printf)("Current maximum number of independent variables is %d\n",
+    if (ad_printf)
+    {
+      (*ad_printf)("Current maximum number of independent variables is %d\n",
         gradient_structure::MAX_NVAR_OFFSET);
-     (*ad_printf)("  You need to increase the global variable "
-     "MAX_NVAR_OFFSET to %d\n",t.indexmax()-t.indexmin()+1);
-     (*ad_printf)("  This can be done by putting the line\n"
+      (*ad_printf)("  You need to increase the global variable "
+      "MAX_NVAR_OFFSET to %d\n",t.indexmax()-t.indexmin()+1);
+      (*ad_printf)("  This can be done by putting the line\n"
          "    gradient_structure::set_MAX_NVAR_OFFSET(%d);\n",
         t.indexmax()-t.indexmin()+1);
-     (*ad_printf)("  before the declaration of the gradient_structure object.\n"
-        " or the command line option -mno %d\n",
-        t.indexmax()-t.indexmin()+1);
-   }
-   else
-   {
+      (*ad_printf)("  before the declaration of the gradient_structure object."
+        "\n or the command line option -mno %d\n", size);
+    }
+    else
+    {
      cerr << "Current maximum number of independent variables is "
           << gradient_structure::MAX_NVAR_OFFSET << "\n"
           <<  "  You need to increase the global variable MAX_NVAR_OFFSET to "
-          << (t.indexmax()-t.indexmin()+1) << "\n"
+          << size << "\n"
           << "  This can be done by putting the line\n"
           << "    'gradient_structure::set_MAX_NVAR_OFFSET("
           << (t.indexmax()-t.indexmin()+1) << ");'\n"
           << "  before the declaration of the gradient_structure object.\n"
           << " or use the -mno 1149 command line option in AD Model Builder\n";
-   }
-   ad_exit(21);
+    }
+    ad_exit(21);
   }
 
   for (int i=t.indexmin(); i<=t.indexmax(); i++)
@@ -186,7 +185,7 @@ void make_indvar_list(const dvar_vector& t)
     unsigned int tmp = (unsigned int)(i - t.indexmin());
     gradient_structure::GRAD_STACK1->INDVAR_LIST->put_address(tmp,&(t.va[i].x));
   }
-  gradient_structure::NVAR=t.indexmax()-t.indexmin()+1;
+  gradient_structure::GRAD_STACK1->INDVAR_LIST->NVAR = size;
 }
 
 /**

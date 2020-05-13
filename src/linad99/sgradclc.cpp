@@ -84,24 +84,27 @@ Compute the gradient from the data stored in the global \ref gradient_structure.
 */
 void gradcalc(int nvar, const dvector& _g)
 {
+#ifndef OPT_LIB
+  if (!gradient_structure::GRAD_STACK1) ad_exit(1);
+#endif
+
   dvector& g = (dvector&)_g;
   gradient_structure::GRAD_STACK1->gradcalc(nvar, g);
 }
 void grad_stack::gradcalc(int nvar, dvector& g)
 {
-  if (nvar!=0)
+  int NVAR = INDVAR_LIST ? INDVAR_LIST->NVAR : 0;
+  if (nvar != 0 && nvar != NVAR)
   {
-    if (nvar != gradient_structure::NVAR)
-    {
-      cerr << "nvar != gradient_structure::NVAR in gradcalc" << endl;
-      cerr << "  nvar = " << nvar << endl;
-      cerr << "  gradient_structure::NVAR = " << gradient_structure::NVAR
-           << endl;
-      cerr << "  in " __FILE__ << endl;
-      //ad_exit(1);
-    }
+    cerr << "nvar != gradient_structure::NVAR in gradcalc" << endl;
+    cerr << "  nvar = " << nvar << endl;
+    cerr << "  gradient_structure::NVAR = " << INDVAR_LIST->NVAR << endl;
+    cerr << "  in " __FILE__ << endl;
+    ad_exit(1);
   }
+
   initialize();
+
   if(!gradient_structure::instances)
   {
     g.initialize();

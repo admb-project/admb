@@ -73,7 +73,6 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
   int gradient_structure::no_derivatives = 0;
 #endif
 unsigned long int gradient_structure::max_last_offset = 0;
-long int gradient_structure::NVAR = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
@@ -259,7 +258,6 @@ gradient_structure::gradient_structure(long int _size):
 #ifndef OPT_LIB
   assert(_size > 0);
 #endif
-  gradient_structure::NVAR=0;
   atexit(cleanup_temporary_files);
 
   m.lock();
@@ -471,7 +469,6 @@ Destructor
 */
 gradient_structure::~gradient_structure()
 {
-  gradient_structure::NVAR=0;
   if (GRAD_STACK1 == NULL)
   {
     null_ptr_err_message();

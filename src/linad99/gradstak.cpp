@@ -306,11 +306,8 @@ grad_stack::grad_stack(
   //ARR_FREE_LIST1 = new arr_list;
   //memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
 
-  INDVAR_LIST = new indvar_offset_list();
+  INDVAR_LIST = new indvar_offset_list(indvar_list_size);
   memory_allocate_error("INDVAR_LIST",INDVAR_LIST);
-
-  INDVAR_LIST->address = new double*[indvar_list_size];
-  memory_allocate_error("INDVAR_LIST->address",INDVAR_LIST->address);
 
   DEPVARS_INFO = new dependent_variables_information(max_nvar_size);
   memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
@@ -397,11 +394,6 @@ grad_stack::~grad_stack()
 #endif
   if (INDVAR_LIST != NULL)
   {
-    if (INDVAR_LIST->address != NULL)
-    {
-      delete INDVAR_LIST->address;
-      INDVAR_LIST->address = nullptr;
-    }
     delete INDVAR_LIST;
     INDVAR_LIST = nullptr;
   }

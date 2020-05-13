@@ -1324,22 +1324,46 @@ inline void grad_stack::set_gradient_stack(void (*func) (void))
  */
 class indvar_offset_list
 {
-   // The number of independent variables
-   int NVAR;
-   double **address;
+  // The number of independent variables
+  int NVAR;
+  double **address;
+  unsigned int size;
 
- public:
-   inline double *get_address(const int &i)
-   {
-      return address[i];
-   }
-   void put_address(unsigned int &i, double *iaddress)
-   {
-      address[i] = iaddress;
-      //  cerr << "In put_address i = " << i << "\n";
-   }
-   friend class grad_stack;
-   friend void make_indvar_list(const dvar_vector& t);
+public:
+  indvar_offset_list(): NVAR(0), address(nullptr), size(0) {}
+  indvar_offset_list(const unsigned int _size): indvar_offset_list()
+  {
+    size = _size;
+    address = new double*[size];
+    for (unsigned int i = 0; i < size; ++i)
+    {
+      address[i] = 0;
+    }
+  }
+  ~indvar_offset_list()
+  {
+    if (address)
+    {
+      for (unsigned int i = 0; i < size; ++i)
+      {
+        address[i] = 0;
+      }
+      delete [] address;
+      address = nullptr;
+    }
+  }
+
+  inline double *get_address(const int &i)
+  {
+    return address[i];
+  }
+  void put_address(unsigned int &i, double *iaddress)
+  {
+    address[i] = iaddress;
+    //  cerr << "In put_address i = " << i << "\n";
+  }
+  friend class grad_stack;
+  friend void make_indvar_list(const dvar_vector& t);
 };
 
 void gradfree(dlink *);

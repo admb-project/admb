@@ -248,6 +248,8 @@ void allocate_dvariable_space()
   }
 }
 
+std::mutex m;
+
 /**
 Constructor
 */
@@ -260,13 +262,9 @@ gradient_structure::gradient_structure(long int _size):
   gradient_structure::NVAR=0;
   atexit(cleanup_temporary_files);
 
-  if (instances++ > 0)
-  {
-    cerr << "More than one gradient_structure object has been declared.\n"
-         << "  Only one gradient_structure object can exist. Check the scope\n"
-         << "  of the objects declared.\n";
-    //ad_exit(1);
-  }
+  m.lock();
+  instances++;
+  m.unlock();
 
   //Should be a multiple of sizeof(double_and_int)
   const long int remainder = _size % sizeof(double_and_int);
@@ -351,7 +349,7 @@ gradient_structure::gradient_structure(long int _size):
    }
    else
    {
-     GRAD_STACK1 = new grad_stack;
+     GRAD_STACK1 = new grad_stack(_size, instances - 1);
      memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
      gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
      GRAD_STACK1->allocate_RETURN_ARRAYS(NUM_RETURN_ARRAYS, RETURN_ARRAYS_SIZE);
@@ -486,8 +484,7 @@ gradient_structure::~gradient_structure()
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;
   }
-
-  instances--;
+  --instances;
 }
 
 /**

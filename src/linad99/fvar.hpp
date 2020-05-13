@@ -972,14 +972,15 @@ public:
    void print();
 
    grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
-   grad_stack(const size_t size):
-      grad_stack(
+   grad_stack(const size_t size): grad_stack(size, 0) {}
+   grad_stack(const size_t size, const unsigned int id):
+     grad_stack(
        size,
        gradient_structure::CMPDIF_BUFFER_SIZE,
        gradient_structure::MAX_DLINKS,
        gradient_structure::ARRAY_MEMBLOCK_SIZE,
        gradient_structure::MAX_NVAR_OFFSET,
-       gradient_structure::NUM_DEPENDENT_VARIABLES, 0) {}
+       gradient_structure::NUM_DEPENDENT_VARIABLES, id) {}
    grad_stack(
      const size_t size,
      const size_t df_file_nbytes,

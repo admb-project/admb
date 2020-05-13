@@ -85,6 +85,10 @@ public:
   operator double*();
 };
 
+#ifdef _MSC_VER
+  #define __thread __declspec(thread)
+#endif
+
 /**
  * class for things related to the gradient structures, including dimension of
  * arrays, size of buffers, etc.

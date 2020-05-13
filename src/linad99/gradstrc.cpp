@@ -8,6 +8,7 @@
  * \file
  * Description not yet available.
  */
+#include <mutex>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif

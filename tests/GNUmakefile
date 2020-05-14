@@ -95,9 +95,11 @@ remote-core-tpls:\
   tpl-glmmadmb
 
 contrib-tpls:\
-  tpl-priors\
   test-rgamma\
   tpl-ctl
+
+debug-laters:\
+  tpl-priors
 
 remote-contrib-tpls:\
   tpl-agemat

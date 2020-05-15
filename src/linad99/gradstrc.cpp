@@ -348,15 +348,16 @@ gradient_structure::gradient_structure(long int _size):
    }
    else
    {
-     GRAD_STACK1 = new grad_stack(_size, instances - 1);
+     GRAD_STACK1 = new grad_stack(
+       gradient_structure::GRADSTACK_BUFFER_SIZE, instances - 1);
      memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
      gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
      GRAD_STACK1->allocate_RETURN_ARRAYS(NUM_RETURN_ARRAYS, RETURN_ARRAYS_SIZE);
-   }
+
 #ifdef DIAG
-   cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
+     cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
 #endif
-   //allocate_dvariable_space();
+   }
 }
 void grad_stack::allocate_RETURN_ARRAYS(
   unsigned int _NUM_RETURN_ARRAYS,

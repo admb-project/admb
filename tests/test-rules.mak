@@ -16,7 +16,7 @@ all: clean
 
 $(TARGET): $(TARGET).tpl
 ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb $(TARGET) $(SRCS)
+	..\\..\\admb.cmd $(TARGET) $(SRCS)
 else
 	../../admb$(EXT) $(TARGET) $(SRCS)
 endif

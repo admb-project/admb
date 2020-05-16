@@ -3,7 +3,7 @@ TARGET=4darray
 default:
 ifeq ($(OS),Windows_NT)
 	..\..\build\admb\bin\tpl2cpp 4darray.tpl
-	..\..\admb 4darray.cpp
+	..\..\admb.cmd 4darray.cpp
 else
 	../../build/admb/bin/tpl2cpp 4darray.tpl
 	../../admb 4darray.cpp

@@ -1,16 +1,16 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2012 Regents of the University of California
 
-/**
- * \file
- * This file deals with the Incomplete Gamma Functions
- * of constant types. All supporting mathematical functions
- * required to compute the Inmomplete Gamma Function
- * are included. They being: log gamma,
- * and some polynomial evaluation functions.
- */
+@brief Functions to compute incomplete gamma.
+
+This file deals with the Incomplete Gamma Functions
+of constant types. All supporting mathematical functions
+required to compute the Inmomplete Gamma Function
+are included. They being: log gamma,
+and some polynomial evaluation functions.
+*/
 
 #include <fvar.hpp>
 #define ITMAX 200

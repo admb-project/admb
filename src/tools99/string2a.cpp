@@ -1,7 +1,9 @@
 /**
-/file
-Author: David Fournier
-Copyright (c) 2008-2012 Regents of the University of California
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Member functions for class line_adstring.
 */
 #include <adstring.hpp>
 

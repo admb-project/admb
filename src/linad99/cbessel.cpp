@@ -1,9 +1,10 @@
 /**
- * Author: Anders Nielsen
- * Copyright (c) 2008-2012 Regents of the University of California
- * 
- * Inspired from NR. 
- */
+@file
+@author Anders Nielsen
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Inspired from NR. 
+*/
 
 #include <fvar.hpp>
 

@@ -2,7 +2,7 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
       EXT=.sh
     else
       SHELL=cmd
@@ -16,7 +16,7 @@ all: clean
 
 $(TARGET): $(TARGET).tpl
 ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb $(TARGET) $(SRCS)
+	..\\..\\admb.cmd $(TARGET) $(SRCS)
 else
 	../../admb$(EXT) $(TARGET) $(SRCS)
 endif

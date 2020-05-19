@@ -1,13 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Assignment operators for dvar_vector for types dvar_vector, prevariable and double
+*/
 #include "fvar.hpp"
 #if defined(__TURBOC__)
   #pragma hdrstop
@@ -27,9 +24,10 @@ void dv_assign(void);
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
+Assign values from other t to dvar_vector.
+
+@param t other dvar_vector
+*/
 dvar_vector& dvar_vector::operator=(const dvar_vector& t)
  {
    if (!(*this))
@@ -89,9 +87,10 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
 void dv_eqprev(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Assigns all elements for dvar_vector with t. 
+
+@param t prevariable
+*/
 dvar_vector& dvar_vector::operator=(const prevariable& t)
  {
    int mmin=indexmin();
@@ -114,9 +113,10 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
 void dv_eqdoub(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Assigns all elements for dvar_vector with t. 
+
+@param t single value
+*/
 dvar_vector& dvar_vector::operator=(const double t)
  {
    int mmin=indexmin();
@@ -133,11 +133,9 @@ dvar_vector& dvar_vector::operator=(const double t)
      set_gradient_stack(dv_eqdoub);
    return (*this);
  }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint to compute gradient for dvar_vector::operator=(const double).
+*/
 void dv_eqdoub(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -146,11 +144,9 @@ void dv_eqdoub(void)
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   verify_identifier_string("trut");
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint to compute gradient for dvar_vector::operator=(const prevariable&).
+*/
 void dv_eqprev(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -167,11 +163,9 @@ void dv_eqprev(void)
   }
   save_double_derivative(dft,t_pos);
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint to compute gradients for dvar_vector::operator=(const dvar_vector&)
+*/
 void dv_assign(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

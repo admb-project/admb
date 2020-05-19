@@ -10,14 +10,14 @@
 
 istream& operator>>(istream& input, adjson::json& data)
 {
-  adjson::value* ret = data.parse(input); 
+  adjson::value* ret = data.parse(input);
   data.set(ret);
   return input;
 }
 ostream& operator<<(ostream& output, const adjson::json& data)
 {
   output << data.str();
-  return output; 
+  return output;
 }
 
 namespace adjson
@@ -32,7 +32,7 @@ value* json::parse(istream& input)
     char c;
     if (p == '{')
     {
-      object* o = new object();      
+      object* o = new object();
 
       if (input.get(c))
       {
@@ -50,7 +50,7 @@ value* json::parse(istream& input)
     }
     else if (p == '[')
     {
-      array* a = new array();      
+      array* a = new array();
 
       if (input.get(c))
       {
@@ -65,7 +65,7 @@ value* json::parse(istream& input)
     }
     else if (p == '\"')
     {
-      string* s = new string();      
+      string* s = new string();
       input.get(c);
       s->_value.push_back(c);
       input.get(c);
@@ -86,13 +86,13 @@ value* json::parse(istream& input)
     }
     else if (p == '-' || std::isdigit(p))
     {
-      number* n = new number();      
+      number* n = new number();
       input >> n->_value;
       ret = n;
     }
     else if (p == 't')
     {
-      boolean* b = new boolean();      
+      boolean* b = new boolean();
       char str[6];
       input.read(str, 4);
       b->_value = true;
@@ -100,7 +100,7 @@ value* json::parse(istream& input)
     }
     else if (p == 'f')
     {
-      boolean* b = new boolean();      
+      boolean* b = new boolean();
       char str[7];
       input.read(str, 5);
       b->_value = false;
@@ -108,7 +108,7 @@ value* json::parse(istream& input)
     }
     else if (p == 'n')
     {
-      null* b = new null();      
+      null* b = new null();
       char str[6];
       input.read(str, 4);
       ret = b;

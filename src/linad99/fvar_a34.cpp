@@ -1,21 +1,21 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief AD Function operator/(const dvar_vector&, const double)
+*/
 #include "fvar.hpp"
 
   void DF_dv_cdble_div(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Divides each element of t1 by x, then return result in dvar_vector.
+
+@param t1 dvar_vector
+@param x divisor
+@return dvar_vector result of operation
+*/
 dvar_vector operator/(const dvar_vector& t1, const double x)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -36,9 +36,8 @@ dvar_vector operator/(const dvar_vector& t1, const double x)
   }
 
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function for dvar_vector operator/(const dvar_vector&, const double)
+*/
  void DF_dv_cdble_div(void)
  {
     verify_identifier_string("ddba");

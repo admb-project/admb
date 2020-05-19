@@ -2,18 +2,18 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
       SHELL=cmd
       CMDSHELL=cmd
     endif
   endif
   ifeq ($(CMDSHELL),cmd)
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
-      PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
+      PATH:=$(abspath ..\utilities\mingw\bin);$(PATH)
     endif
   else
     ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
-      PATH:=$(shell pwd)/../utilities/mingw/bin:$(PATH)
+      PATH:=$(abspath ../utilities/mingw/bin):$(PATH)
     endif
   endif
 endif
@@ -27,7 +27,7 @@ DIST=../build/admb
 all:
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
-ifneq ($(TESTS_REMOTE),no)
+ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
 endif
 

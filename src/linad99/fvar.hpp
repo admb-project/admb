@@ -82,7 +82,8 @@ Macro definitions.
 
 #include <cmath>
 #ifndef M_PI
-  #error "Error: M_PI is not defined."
+  //#error "Error: M_PI is not defined."
+  #define M_PI 3.14159265358979323846
 #endif
 #ifndef PI
   #define PI M_PI
@@ -1233,10 +1234,10 @@ inline void grad_stack::set_gradient_stack4(void (*func) (void),
    }
 #endif
 }
-
 /**
- * Description not yet available.
- * \param
+ * Push func to adjoint functions stack.
+ *
+ * \param func pointer to adjoint function
  */
 inline void grad_stack::set_gradient_stack(void (*func) (void))
 {

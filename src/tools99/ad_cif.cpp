@@ -1,12 +1,13 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Overloaded cifstream operators for autodif classes.
+*/
+
 #include <fvar.hpp>
 #include "cifstrem.h"
-/** \file ad_cif.cpp
-Overloaded cifstream operators for autodif classes.
-*/
 
 //VECTOR_OPERATOR_DEFINE(dvector)
 //VECTOR_OPERATOR_DEFINE(ivector)

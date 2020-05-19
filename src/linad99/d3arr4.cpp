@@ -1,11 +1,11 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+Functions to compute square with various types.
 
-/** \file
-Code for computing square of various constant objects.
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2012 Regents of the University of California
 */
+
 #include "fvar.hpp"
 
 /**Return square of value; constant object.

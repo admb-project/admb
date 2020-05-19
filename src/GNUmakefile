@@ -9,11 +9,11 @@ ifeq ($(OS),Windows_NT)
   endif
   ifeq ($(CMDSHELL),cmd)
     ifeq ($(wildcard ..\utilities\mingw\bin\g++.exe),..\utilities\mingw\bin\g++.exe)
-      PATH:=$(shell cd)\..\utilities\mingw\bin;$(PATH)
+      PATH:=$(abspath ..\utilities\mingw\bin);$(PATH)
     endif
   else
     ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
-      PATH:=$(shell pwd)/../utilities/mingw/bin:$(PATH)
+      PATH:=$(abspath /../utilities/mingw/bin):$(PATH)
     endif
   endif
 endif
@@ -101,10 +101,10 @@ else
   endif
   ifeq ($(CXX),g++)
     ifeq ($(UNAME_S),Darwin)
-      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
+      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
         CXXVERSION=-clang11
       else
-        ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
+        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
           CXXVERSION=-clang10
         else
           CXXVERSION=-clang
@@ -116,10 +116,10 @@ else
   endif
   ifeq ($(CXX),clang++)
     ifeq ($(UNAME_S),Darwin)
-      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
+      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
         CXXVERSION=-clang11
       else
-        ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
+        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
           CXXVERSION=-clang10
         else
           CXXVERSION=-clang
@@ -131,10 +131,10 @@ else
   endif
   ifeq ($(CXX),c++)
     ifeq ($(UNAME_S),Darwin)
-      ifeq (clang-1100,$(findstring clang-1100,$(shell $(CXX) --version)))
+      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
         CXXVERSION=-clang11
       else
-        ifeq (clang-1000,$(findstring clang-1000,$(shell $(CXX) --version)))
+        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
           CXXVERSION=-clang10
         else
           CXXVERSION=-clang
@@ -406,9 +406,9 @@ else
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg.sh
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
+	cp ../scripts/admb/admb.sh ${DIST}/bin/admb.sh
 	cp ../scripts/admb/root-admb.sh ../admb.sh
-	cp ../scripts/admb/admb ${DIST}/admb.sh
+	cp ../scripts/admb/admb.sh ${DIST}/admb.sh
 	cp ../scripts/admb/adcomp ${DIST}/bin/adcomp.sh
 	cp ../scripts/admb/adlink ${DIST}/bin/adlink.sh
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd

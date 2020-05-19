@@ -2165,8 +2165,15 @@ public:
   dvariable do_gauss_hermite_integration(void);
   void end_df1b2_funnel_stuff(void);
 
+  double get_ln_det_value() const { return _ln_det_value; }
+  dmatrix& get_hessian() { return _hessian; }
+  dmatrix& get_hessian_inverse() { return _hessian_inverse; }
+
 private:
   dvariable do_gauss_hermite_integration_multi(void);
+  double _ln_det_value;
+  dmatrix _hessian;
+  dmatrix _hessian_inverse;
 };
 
 cifstream& operator>>(const cifstream& s, const param_init_number& x);

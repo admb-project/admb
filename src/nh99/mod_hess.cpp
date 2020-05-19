@@ -69,6 +69,8 @@ void function_minimizer::hess_routine_noparallel(void)
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
+  _hessian.allocate(1, nvar, 1, nvar);
+
   adstring tmpstring="admodel.hes";
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes";
@@ -143,6 +145,8 @@ void function_minimizer::hess_routine_noparallel(void)
       hess2=(g1-g2)/(sdelta1-sdelta2);
 
       hess=(eps2*hess1-hess2) /(eps2-1.);
+
+      _hessian(i) = hess;
 
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
@@ -512,6 +516,7 @@ void function_minimizer::hess_inv(void)
       exit(1);
     }
   }
+
   int hybflag = 0;
   ifs >> hybflag;
   dvector sscale(1,nvar);
@@ -561,7 +566,7 @@ void function_minimizer::hess_inv(void)
   }
 
   int ssggnn;
-  ln_det(hess,ssggnn);
+  _ln_det_value = ln_det(hess,ssggnn);
   int on1=0;
   {
     ofstream ofs3((char*)(ad_comm::adprogram_name + adstring(".eva")));
@@ -638,6 +643,9 @@ void function_minimizer::hess_inv(void)
       if (num_negflags==0)
       {
         hess=inv(hess);
+        _hessian_inverse.allocate(1,nvar,1,nvar);
+        _hessian_inverse = hess;
+
         int on=0;
         if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-eigvec"))>-1)
         {

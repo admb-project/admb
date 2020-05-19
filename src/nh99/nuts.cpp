@@ -664,8 +664,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  // metric = (is3 / (is3 + 5.0)) * metric + Mtemp;
 	  // Update chd and chdinv by reference, since metric changed
 	  success=calculate_chd_and_inverse(nvar, metric, chd, chdinv);
-	  if(!success)
-	    cout << "Chain " << chain << ": Choleski decomposition of dense mass matrix failed. Skipping this update." << endl;
+	  if(!success && adapt_mass_dense){
+	    // if it fails try a diagonal one which should be more reliable
+	    cout << "Chain " << chain << ": Choleski decomposition of dense mass matrix failed. Trying diagonal update instead." << endl;
+	    diagonal_metric_flag=1;
+	    success=calculate_chd_and_inverse(nvar, metric, chd, chdinv);
+	    diagonal_metric_flag=0;
+	  }
+	  if(!success && adapt_mass){
+	    cout << "Chain " << chain << ": Error updating diagonal mass matrix. Fix model, turn off adaptation, or length initial adaptation buffer" << endl;
+	    ad_exit(1);
+	  }
 	  // Since chd changed need to refresh values and gradients
 	  // in x space
 	  nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);

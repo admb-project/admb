@@ -176,6 +176,59 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
+  // Initial buffer window size for metric adaptation
+  int adapt_window=25;
+  if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_window",nopt))>-1) {
+    if (nopt) {
+      istringstream ist(ad_comm::argv[on+1]);
+      int _adapt_window;
+      ist >> _adapt_window;
+      if (_adapt_window < 1) {
+	cerr << "Error: adapt_window invalid" << endl;
+	ad_exit(1);
+      } else {
+	adapt_window=_adapt_window;
+      }
+    }
+  }
+   // Initial buffer window before adaptation of metric starts (first fast phase)
+  int adapt_term_buffer=50;
+  if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_term_buffer",nopt))>-1) {
+    if (nopt) {
+      istringstream ist(ad_comm::argv[on+1]);
+      int _adapt_term_buffer;
+      ist >> _adapt_term_buffer;
+      if (_adapt_term_buffer < 1 ) {
+	cerr << "Error: adapt_term_buffer invalid" << endl;
+	ad_exit(1);
+      } else {
+	adapt_term_buffer=_adapt_term_buffer;
+      }
+    }
+  }
+  // Initial buffer window before adaptation of metric starts (first fast phase)
+  int adapt_init_buffer=75;
+  if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_init_buffer",nopt))>-1) {
+    if (nopt) {
+      istringstream ist(ad_comm::argv[on+1]);
+      int _adapt_init_buffer;
+      ist >> _adapt_init_buffer;
+      if (_adapt_init_buffer < 1 ) {
+	cerr << "Error: adapt_init_buffer invalid" << endl;
+	ad_exit(1);
+      } else {
+	adapt_init_buffer=_adapt_init_buffer;
+      }
+    }
+  }
+  // Check that these adaptation settings make sense
+  int aws = adapt_window; // adapt window size
+  int anw = adapt_init_buffer+adapt_window; // adapt next window
+  if(anw > warmup-adapt_term_buffer) {
+    cerr << "Error: adaptation arguments are invalid" << endl;
+    ad_exit(1);
+  }
+  
   // Max treedpeth is the number of times a NUTS trajectory will double in
   // length before stopping. Thus length <= 2^max_treedepth+1
   int max_treedepth=12;
@@ -501,9 +554,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix adm2(1,nvar,1,nvar);
   int is2=0; int is3=0;
   int iseps=0;
-  int w1 = 75; int w2 = 50; int w3 = 75;
-  int aws = w2; // adapt window size
-  int anw = w1+w2; // adapt next window
+  
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
   if(diagnostic_flag){
     cout << "Initial chd=" << chd << endl;
@@ -598,12 +649,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     gr2=gr2prime;
     theta=thetaprime;
     parsave=parsaveprime;// initial_params::copy_all_values(parsave,1.0);
-    // Write the rotated, unbounded, and bounded draws to csv files for
-    // sampling draws only
-    if(is>0){
-      for(int i=1;i<nvar;i++) unbounded << ynew(i) << ", ";
-      unbounded << ynew(nvar) << endl;
-    }
+    // Write the samples for this iteration to file
+    for(int i=1;i<nvar;i++) unbounded << ynew(i) << ", ";
+    unbounded << ynew(nvar) << endl;
     (*pofs_psave) << parsave; // save all bounded draws to psv file
     // Calculate estimated acceptance probability
      alpha=0;
@@ -615,10 +663,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
 
     // Mass matrix adaptation. For now only diagonal
-    bool slow=slow_phase(is, warmup, w1, w3);
+    bool slow=slow_phase(is, warmup, adapt_init_buffer, adapt_term_buffer);
     // If in slow phase, do adaptation of mass matrix
     if( (adapt_mass || adapt_mass_dense) & slow){
-      if(is== w1){ // start of slow adaptation window
+      if(is== adapt_init_buffer){ // start of slow adaptation window
         // Initialize algorithm
 	am.initialize(); am2.initialize();
 	adm.initialize(); adm2.initialize();
@@ -681,9 +729,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  theta=rotate_pars(chdinv,ynew);
 	  gr2=rotate_gradient(gr, chd);
 	  // Calculate the next end window. If this overlaps into the final fast
-	  // period, it will be stretched to that point (warmup-w3)
+	  // period, it will be stretched to that point (warmup-adapt_term_buffer)
 	  aws *=2;
-	  anw = compute_next_window(is, anw, warmup, w1, aws, w3);
+	  anw = compute_next_window(is, anw, warmup, adapt_init_buffer, aws, adapt_term_buffer);
 	  // Refind a reasonable step size since it can be really
 	  // different after changing M and reset algorithm
 	  // parameters

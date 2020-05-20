@@ -27,3 +27,5 @@ PROCEDURE_SECTION
   sa = a;
   sb = b;
   smu = mu;
+FINAL_SECTION
+  cout << "In FINAL_SECTION" << endl;

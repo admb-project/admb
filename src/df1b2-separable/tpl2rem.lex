@@ -291,6 +291,20 @@ FINAL_SECTION  {
   }
   else
   {
+    if (!report_defined)
+    {
+      fprintf(fall,"}\n");
+      fclose(fall);
+      fall=fopen("xxalloc4.tmp","w+");
+      if (fall==NULL)
+      {
+        fprintf(stderr,"%s","Error trying to open file xxalloc4.tmp\n");
+      }
+      report_defined = 1;
+      fprintf(fall,"%s",
+        "\nvoid model_parameters::report(const dvector& gradients)"
+        "\n{\n");
+    }
     BEGIN DEFINE_PROCS;
     final_defined=1;
     setup_for_prior_likelihood();

@@ -69,8 +69,6 @@ void function_minimizer::hess_routine_noparallel(void)
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
-  _hessian.allocate(1, nvar, 1, nvar);
-
   adstring tmpstring="admodel.hes";
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes";
@@ -145,8 +143,6 @@ void function_minimizer::hess_routine_noparallel(void)
       hess2=(g1-g2)/(sdelta1-sdelta2);
 
       hess=(eps2*hess1-hess2) /(eps2-1.);
-
-      _hessian(i) = hess;
 
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
@@ -516,6 +512,9 @@ void function_minimizer::hess_inv(void)
       exit(1);
     }
   }
+
+  _hessian.allocate(1, nvar, 1, nvar);
+  _hessian = hess;
 
   int hybflag = 0;
   ifs >> hybflag;

@@ -249,7 +249,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
     diag_option=1;
-    cout << "Setting covariance matrix to diagonal with entries" << endl;
+    //  cout << "Setting covariance matrix to diagonal with entries" << endl;
   }
   // Whether to do diagonal adaptation of the mass matrix
   int adapt_mass=0;

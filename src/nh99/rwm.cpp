@@ -827,19 +827,17 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 		// Save parameters and log posterior at each thinned iteration
 		(*pofs_psave) << parsave;
 		rwm_lp << llc << endl;
-		if(i>change_ball){
-		  // Calculate rotated parameter vector
-		  independent_variables xtemp(1,nvar);
-		  xtemp=chdinv0*y;
-		  for(int i=1;i<nvar;i++) {
-		    // rotated << xtemp(i) << ", ";
-		    unbounded << y(i) << ", ";
-		    // bounded << parsave(i) << ", ";
-		  }
-		  // rotated << xtemp(nvar) << endl;
-		  unbounded << y(nvar) << endl;
-		  // bounded << parsave(nvar) << endl;
+		// Calculate rotated parameter vector
+		independent_variables xtemp(1,nvar);
+		xtemp=chdinv0*y;
+		for(int i=1;i<nvar;i++) {
+		  // rotated << xtemp(i) << ", ";
+		  unbounded << y(i) << ", ";
+		  // bounded << parsave(i) << ", ";
 		}
+		// rotated << xtemp(nvar) << endl;
+		unbounded << y(nvar) << endl;
+		// bounded << parsave(nvar) << endl;
 	      }
 	    /*
 	      if (adjm_ptr)

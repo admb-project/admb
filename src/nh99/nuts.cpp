@@ -177,7 +177,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
   }
   // Initial buffer window size for metric adaptation
-  int adapt_window=25;
+  int adapt_window=50;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_window",nopt))>-1) {
     if (nopt) {
       istringstream ist(ad_comm::argv[on+1]);
@@ -192,7 +192,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
   }
    // Initial buffer window before adaptation of metric starts (first fast phase)
-  int adapt_term_buffer=50;
+  int adapt_term_buffer=75;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_term_buffer",nopt))>-1) {
     if (nopt) {
       istringstream ist(ad_comm::argv[on+1]);
@@ -207,7 +207,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
   }
   // Initial buffer window before adaptation of metric starts (first fast phase)
-  int adapt_init_buffer=75;
+  int adapt_init_buffer=50;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_init_buffer",nopt))>-1) {
     if (nopt) {
       istringstream ist(ad_comm::argv[on+1]);

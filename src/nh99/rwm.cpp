@@ -234,7 +234,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
       {
 	diag_option=1;
-	cout << " Setting covariance matrix to diagonal with entries " << dscale
+	cout << "Chain " << chain << ": Setting covariance matrix to diagonal with entries " << dscale
 	     << endl;
       }
     dmatrix S(1,nvar,1,nvar);
@@ -639,10 +639,10 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	time_t now = time(0);
 	tm* localtm = localtime(&now);
 	std::string m=get_filename((char*)ad_comm::adprogram_name);
-	cout << endl << "Starting RWM for model '" << m <<
+	cout << endl << "Chain " << chain << ": Starting RWM for model '" << m <<
 	  "' at " << asctime(localtm);
 	if(use_duration==1){
-	  cout << "Model will run for " << duration/60 <<
+	  cout <<"Chain " << chain << ": Model will run for " << duration/60 <<
 	    " minutes or until " << number_sims << " total iterations" << endl;
 	}
 
@@ -655,7 +655,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	// cout << "Initial mle=" << mle << endl;
 	// cout << "Initial z=" << parsave << endl;
 	// cout << "Initial y=" << y << endl;
-	cout << "Initial negative log density=" << -llbest << endl;
+	cout <<"Chain " << chain << ": Initial negative log density=" << -llbest << endl;
 	// Start of MCMC chain
 	for (int i=1;i<=number_sims;i++)
 	  {
@@ -896,7 +896,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	    time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
 	    if(use_duration==1 && time_total > duration){
 	      // If duration option used, break loop after <duration> hours.
-	      cout << i << " samples generated after " << duration/60 <<
+	      cout << "Chain " << chain << ": " << i << " samples generated after " << duration/60 <<
 		" minutes running." << endl;
 	      break;
 	    }
@@ -925,7 +925,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 #ifndef OPT_LIB
       assert(isim != 0);
 #endif
-      cout << "Final acceptance ratio=";
+      cout <<"Chain " << chain << ":Final acceptance ratio=";
       printf("%.2f", iac/double(isim));
       //     cout << iac/double(isim) << endl;
       cout << endl << endl;

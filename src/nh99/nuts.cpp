@@ -734,8 +734,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  anw = compute_next_window(is, anw, warmup, adapt_init_buffer, aws, adapt_term_buffer);
 	  // Refind a reasonable step size since it can be really
 	  // different after changing M and reset algorithm
-	  // parameters
-	  // eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
+	  // parameters (Turned off for 13.0 b/c I thought it worked better this way)
+	  // if(useDA)
+	  //   eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
 	  mu=log(epsvec(is));
 	  Hbar(is)=0; epsvec(is)=epsbar(is);
 	  // this is supposed to restart the eps adaptation counter

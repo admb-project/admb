@@ -408,9 +408,10 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Check that the adaptation settings make sense given warmup
   // and if using adaptation
   int aws = adapt_window; // adapt window size
-  int anw = adapt_init_buffer+adapt_window; // adapt next window
+  // Adapt next window... the next iteration at which the adaptation takes place
+  int anw = compute_next_window(adapt_init_buffer, anw, warmup, adapt_init_buffer, aws, adapt_term_buffer);
   if(adapt_mass || adapt_mass_dense){
-    if(adapt_init_buffer+adapt_window + adapt_term_buffer >= warmup) {
+    if(adapt_init_buffer + adapt_window + adapt_term_buffer >= warmup) {
       cerr << "Warning: Turning off mass matrix adaptation because warmup<= " <<
 	adapt_init_buffer+adapt_window + adapt_term_buffer << endl;
       adapt_mass=0; adapt_mass_dense=0;
@@ -640,12 +641,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       alphasum+=alpha;
     }
 
-    // Mass matrix adaptation. For now only diagonal
+    // Mass matrix adaptation. 
     bool slow=slow_phase(is, warmup, adapt_init_buffer, adapt_term_buffer);
     // If in slow phase, do adaptation of mass matrix
     if( (adapt_mass || adapt_mass_dense) & slow){
       if(is== adapt_init_buffer){ // start of slow adaptation window
-        // Initialize algorithm
+        // Initialize algorithm: do I want to reinitialize after each update also?
 	am.initialize(); am2.initialize();
 	adm.initialize(); adm2.initialize();
 	is2=0; is3=0;
@@ -660,7 +661,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    dvector tmp=am2/(is2-1);
 	    for(int i=1; i<=nvar; i++) metric(i,i) = tmp(i);
 	    if(verbose_adapt_mass==1){
-	      cout << "Chain " << chain << ": Estimated diagonal variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+	      cout << "Chain " << chain << ": Iteration: " << is << ": Estimated diagonal variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
 	    }
 	  } else {
 	    // dense metric
@@ -668,21 +669,20 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    if(verbose_adapt_mass==1){
 	      dvector tmp=diagonal(metric);
 	      cout << "Chain " << chain << 
-		": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+		": Iteration " << is << ": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
 	    }
 	  }
-	  // Note: Stan does this regularization of the metric
-	  // to avoid Cholesky errors. I decided it against doing
-	  // that and rather just catch the error and then skip
-	  // the update. The next time it will have twice as many
-	  // samples to estimate the metric. My reasoning was it
-	  // will prevent a downward spiral where a
+	  // Note: Stan does this regularization of the metric to
+	  // avoid Cholesky errors. I decided it against doing
+	  // that and rather just catch the error and instead do
+	  // a diagonal one. The next time it will have twice as
+	  // many samples to estimate the metric. My reasoning
+	  // was it will prevent a downward spiral where a
 	  // poorly-estimated M will cause fewer effective
 	  // samples, leading to worse M, etc. This will warn the
-	  // user and continue on with the current metric, thus
-	  // being more stable. A different approach would be to
-	  // use the diagonal of the estimated one.  Here's the
-	  // stabilization code:
+	  // user and continue on with the diagonal metric, thus
+	  // being more stable. This is the adapted Stan
+	  // regularization code:
 	  //
 	  // dmatrix Mtemp(1,nvar, 1,nvar);
 	  // Mtemp.initialize();
@@ -698,7 +698,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    diagonal_metric_flag=0;
 	  }
 	  if(!success && adapt_mass){
-	    cout << "Chain " << chain << ": Error updating diagonal mass matrix. Fix model, turn off adaptation, or length initial adaptation buffer" << endl;
+	    cout << "Chain " << chain << ": Error updating diagonal mass matrix. Fix model, turn off adaptation, or increase adapt_window" << endl;
 	    ad_exit(1);
 	  }
 	  // Since chd changed need to refresh values and gradients

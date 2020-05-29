@@ -98,73 +98,63 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-duration",nopt))>-1) {
     double _duration=0;
     use_duration=1;
-    if (nopt) {
-      istringstream ist(ad_comm::argv[on+1]);
-      ist >> _duration;
-      if (_duration <0) {
-	cerr << "Error: duration must be > 0" << endl;
-	ad_exit(1);
-      } else {
-	// input is in minutes, duration is in seconds so convert
-	duration=_duration*60;
-      }
+    istringstream ist(ad_comm::argv[on+1]);
+    ist >> _duration;
+    if (_duration <0) {
+      cerr << "Error: duration must be > 0" << endl;
+      ad_exit(1);
+    } else {
+      // input is in minutes, duration is in seconds so convert
+      duration=_duration*60;
     }
   }
   // chain number -- for console display purposes only, useful when running
   // in parallel
   int chain=1;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chain",nopt))>-1) {
-    if (nopt) {
-      int iii=atoi(ad_comm::argv[on+1]);
-      if (iii <1) {
-	cerr << "Error: chain must be >= 1" << endl;
-	ad_exit(1);
-      } else {
-	chain=iii;
-      }
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii <1) {
+      cerr << "Error: chain must be >= 1" << endl;
+      ad_exit(1);
+    } else {
+      chain=iii;
     }
   }
   // console refresh rate
   int refresh=1;
   if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
-    if (nopt) {
-      int iii=atoi(ad_comm::argv[on+1]);
-      if (iii <0) {
-	cerr << "Error: refresh must be >= 0" << endl;
-	ad_exit(1);
-      } else {
-	refresh=iii;
-      }
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii < -1) {
+      cerr << iii << endl;
+      cerr << "Error: refresh must be >= -1. Use -1 for no refresh or positive integer for rate." << endl;
+      ad_exit(1);
+    } else {
+      refresh=iii;
     }
   }
   
   // Number of leapfrog steps.
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1) {
-    if (nopt) {
-      cerr << "Error: hynstep argument not allowed with NUTS " << endl;
-      ad_exit(1);
-    }
+    cerr << "Error: hynstep argument not allowed with NUTS " << endl;
+    ad_exit(1);
   }
   // Number of warmup samples if using adaptation of step size. Defaults to
   // half of iterations.
   int warmup= (int)nmcmc/2;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-warmup",nopt))>-1) {
-    if (nopt) {
-      int iii=atoi(ad_comm::argv[on+1]);
-      if (iii <=0 || iii > nmcmc) {
-	cerr << "Error: warmup must be 0 < warmup < nmcmc" << endl;
-	ad_exit(1);
-      } else {
-	warmup=iii;
-      }
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii <=0 || iii > nmcmc) {
+      cerr << "Error: warmup must be 0 < warmup < nmcmc" << endl;
+      ad_exit(1);
+    } else {
+      warmup=iii;
     }
   }
   // Target acceptance rate for step size adaptation. Must be
   // 0<adapt_delta<1. Defaults to 0.8.
   double adapt_delta=0.8;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_delta",nopt))>-1) {
-    if (nopt) {
       istringstream ist(ad_comm::argv[on+1]);
       double _adapt_delta;
       ist >> _adapt_delta;
@@ -174,75 +164,59 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       } else {
 	adapt_delta=_adapt_delta;
       }
-    }
   }
   // Initial buffer window size for metric adaptation
   int adapt_window=50;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_window",nopt))>-1) {
-    if (nopt) {
-      istringstream ist(ad_comm::argv[on+1]);
-      int _adapt_window;
-      ist >> _adapt_window;
-      if (_adapt_window < 1) {
-	cerr << "Error: adapt_window invalid" << endl;
-	ad_exit(1);
-      } else {
-	adapt_window=_adapt_window;
-      }
+    istringstream ist(ad_comm::argv[on+1]);
+    int _adapt_window;
+    ist >> _adapt_window;
+    if (_adapt_window < 1) {
+      cerr << "Error: adapt_window invalid" << endl;
+      ad_exit(1);
+    } else {
+      adapt_window=_adapt_window;
     }
   }
    // Initial buffer window before adaptation of metric starts (first fast phase)
   int adapt_term_buffer=75;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_term_buffer",nopt))>-1) {
-    if (nopt) {
-      istringstream ist(ad_comm::argv[on+1]);
-      int _adapt_term_buffer;
-      ist >> _adapt_term_buffer;
-      if (_adapt_term_buffer < 1 ) {
-	cerr << "Error: adapt_term_buffer invalid" << endl;
-	ad_exit(1);
-      } else {
-	adapt_term_buffer=_adapt_term_buffer;
-      }
+    istringstream ist(ad_comm::argv[on+1]);
+    int _adapt_term_buffer;
+    ist >> _adapt_term_buffer;
+    if (_adapt_term_buffer < 1 ) {
+      cerr << "Error: adapt_term_buffer invalid" << endl;
+      ad_exit(1);
+    } else {
+      adapt_term_buffer=_adapt_term_buffer;
     }
   }
   // Initial buffer window before adaptation of metric starts (first fast phase)
   int adapt_init_buffer=50;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_init_buffer",nopt))>-1) {
-    if (nopt) {
-      istringstream ist(ad_comm::argv[on+1]);
-      int _adapt_init_buffer;
-      ist >> _adapt_init_buffer;
-      if (_adapt_init_buffer < 1 ) {
-	cerr << "Error: adapt_init_buffer invalid" << endl;
-	ad_exit(1);
-      } else {
-	adapt_init_buffer=_adapt_init_buffer;
-      }
+    istringstream ist(ad_comm::argv[on+1]);
+    int _adapt_init_buffer;
+    ist >> _adapt_init_buffer;
+    if (_adapt_init_buffer < 1 ) {
+      cerr << "Error: adapt_init_buffer invalid" << endl;
+      ad_exit(1);
+    } else {
+      adapt_init_buffer=_adapt_init_buffer;
     }
-  }
-  // Check that these adaptation settings make sense
-  int aws = adapt_window; // adapt window size
-  int anw = adapt_init_buffer+adapt_window; // adapt next window
-  if(anw > warmup-adapt_term_buffer) {
-    cerr << "Error: adaptation arguments are invalid" << endl;
-    ad_exit(1);
   }
   
   // Max treedpeth is the number of times a NUTS trajectory will double in
   // length before stopping. Thus length <= 2^max_treedepth+1
   int max_treedepth=12;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-max_treedepth",nopt))>-1) {
-    if (nopt) {
-      istringstream ist(ad_comm::argv[on+1]);
-      int _max_treedepth;
-      ist >> _max_treedepth;
-      if (_max_treedepth < 0) {
-	cerr << "Error: max_treedepth must be > 0" << endl;
-	ad_exit(1);
-      } else {
-	max_treedepth=_max_treedepth;
-      }
+    istringstream ist(ad_comm::argv[on+1]);
+    int _max_treedepth;
+    ist >> _max_treedepth;
+    if (_max_treedepth < 0) {
+      cerr << "Error: max_treedepth must be > 0" << endl;
+      ad_exit(1);
+    } else {
+      max_treedepth=_max_treedepth;
     }
   }
   // Use diagnoal covariance (identity mass matrix)
@@ -431,12 +405,15 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << "Chain " << chain << ": Model will run for " << duration/60 <<
       " minutes or until " << nmcmc << " total iterations" << endl;
   }
+  // Check that the adaptation settings make sense given warmup
+  // and if using adaptation
+  int aws = adapt_window; // adapt window size
+  int anw = adapt_init_buffer+adapt_window; // adapt next window
   if(adapt_mass || adapt_mass_dense){
-    if(warmup < 200){
-      // Turn off if too few samples to properly do it. But keep using
-      // diagonal efficiency.
-      cerr << "Chain " << chain << ": Mass matrix adaptation not allowed when warmup<200" << endl;
-      ad_exit(1);
+    if(adapt_init_buffer+adapt_window + adapt_term_buffer >= warmup) {
+      cerr << "Warning: Turning off mass matrix adaptation because warmup<= " <<
+	adapt_init_buffer+adapt_window + adapt_term_buffer << endl;
+      adapt_mass=0; adapt_mass_dense=0;
     }
     if( adapt_mass){ 
       cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
@@ -448,6 +425,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       cout << "Chain " << chain << ": Initial variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
     }
   }
+  if(diag_option)  cout << "Chain " << chain <<": Initializing with unit diagonal mass matrix" << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();

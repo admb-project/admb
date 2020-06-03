@@ -39,7 +39,7 @@ jobs:
     - name: test
       run: |
         set PATH=C:\rtools35\bin;C:\rtools35\mingw_64\bin;%PATH%
-        make test DEBUG=yes TESTS_REMOTE=no CXXFLAGS='-DGTEST_HAS_STD_WSTRING=0'
+        make verify DEBUG=yes TESTS_REMOTE=no
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

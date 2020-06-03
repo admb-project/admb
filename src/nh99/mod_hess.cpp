@@ -565,7 +565,7 @@ void function_minimizer::hess_inv(void)
   }
 
   int ssggnn;
-  _ln_det_value = ln_det(hess,ssggnn);
+  ln_det(hess,ssggnn);
   int on1=0;
   {
     ofstream ofs3((char*)(ad_comm::adprogram_name + adstring(".eva")));

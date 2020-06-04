@@ -770,3 +770,285 @@ TEST_F(test_gradcalc, funnel_dvariable)
 
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
 }
+TEST_F(test_gradcalc, funnel_set_gradient)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x(variables(1));
+  dvariable y(variables(2));
+
+  dvariable f, a(17.0), b(43.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+
+  //a = df2_compute_a(x, y);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(
+    default_evaluation,
+    &((*a.v).x),
+    &((*x.v).x), 2.0,
+    &((*y.v).x), 3.0
+  );
+  //b = df_compute_b(x, y);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(
+    default_evaluation,
+    &((*b.v).x),
+    &((*x.v).x), 8.0,
+    &((*y.v).x), 27.0
+  );
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 6);
+
+  f = a + b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 8);
+
+  double result = value(f);
+  ASSERT_DOUBLE_EQ(result, 60.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 8);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_DOUBLE_EQ(g(-1), 10.0);
+  ASSERT_DOUBLE_EQ(g(0), 30.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+}
+dvariable f_compute_a(dvariable& x, dvariable& y)
+{
+  dvariable a(17.0);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(
+    default_evaluation,
+    &((*a.v).x),
+    &((*x.v).x), 2.0,
+    &((*y.v).x), 3.0
+  );
+  return a;
+}
+dvariable f_compute_b(dvariable& x, dvariable& y)
+{
+  dvariable b(43.0);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(
+    default_evaluation,
+    &((*b.v).x),
+    &((*x.v).x), 8.0,
+    &((*y.v).x), 27.0
+  );
+  return b;
+}
+TEST_F(test_gradcalc, funnel_set_gradient_function)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x(variables(1));
+  dvariable y(variables(2));
+
+  dvariable f, a, b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  a = f_compute_a(x, y);
+  b = f_compute_b(x, y);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 8);
+
+  f = a + b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  double result = value(f);
+  ASSERT_DOUBLE_EQ(result, 60.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_DOUBLE_EQ(g(-1), 10.0);
+  ASSERT_DOUBLE_EQ(g(0), 30.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+}
+dvariable tf_compute_a(dvariable& x, dvariable& y)
+{
+  dvariable a(17.0);
+
+  grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
+  entry->func = default_evaluation;
+  entry->dep_addr = &((*a.v).x);
+  entry->ind_addr1 = &((*x.v).x);
+  entry->mult1 = 2.0;
+  entry->ind_addr2 = &((*y.v).x);
+  entry->mult2 = 3.0;
+  gradient_structure::GRAD_STACK1->ptr++;
+  
+  return a;
+}
+dvariable tf_compute_b(dvariable& x, dvariable& y)
+{
+  dvariable b(43.0);
+
+  grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
+  entry->func = default_evaluation;
+  entry->dep_addr = &((*b.v).x);
+  entry->ind_addr1 = &((*x.v).x);
+  entry->mult1 = 8.0;
+  entry->ind_addr2 = &((*y.v).x);
+  entry->mult2 = 27.0;
+  gradient_structure::GRAD_STACK1->ptr++;
+
+  return b;
+}
+TEST_F(test_gradcalc, funnel_set_gradient_thread_function)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x(variables(1));
+  dvariable y(variables(2));
+
+  dvariable f, a, b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  a = tf_compute_a(x, y);
+  b = tf_compute_b(x, y);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 8);
+
+  f = a + b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  double result = value(f);
+  ASSERT_DOUBLE_EQ(result, 60.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_DOUBLE_EQ(g(-1), 10.0);
+  ASSERT_DOUBLE_EQ(g(0), 30.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+}
+dvariable tfj_compute_a(dvariable& x, dvariable& y)
+{
+  dvariable a(17.0);
+
+  grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
+
+  std::thread t([]()
+  {
+    int random = std::rand() % 5;
+    std::this_thread::sleep_for(std::chrono::seconds(random));
+  });
+  t.join();
+
+  entry->func = default_evaluation;
+  entry->dep_addr = &((*a.v).x);
+  entry->ind_addr1 = &((*x.v).x);
+  entry->mult1 = 2.0;
+  entry->ind_addr2 = &((*y.v).x);
+  entry->mult2 = 3.0;
+  gradient_structure::GRAD_STACK1->ptr++;
+  
+  return a;
+}
+dvariable tfj_compute_b(dvariable& x, dvariable& y)
+{
+  dvariable b(43.0);
+
+  grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
+
+  std::thread t([]()
+  {
+    int random = std::rand() % 5;
+    std::this_thread::sleep_for(std::chrono::seconds(random));
+  });
+  t.join();
+
+  entry->func = default_evaluation;
+  entry->dep_addr = &((*b.v).x);
+  entry->ind_addr1 = &((*x.v).x);
+  entry->mult1 = 8.0;
+  entry->ind_addr2 = &((*y.v).x);
+  entry->mult2 = 27.0;
+  gradient_structure::GRAD_STACK1->ptr++;
+
+  return b;
+}
+TEST_F(test_gradcalc, funnel_set_gradient_thread_function_join)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x(variables(1));
+  dvariable y(variables(2));
+
+  dvariable f, a, b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  a = tfj_compute_a(x, y);
+  b = tfj_compute_b(x, y);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 8);
+
+  f = a + b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  double result = value(f);
+  ASSERT_DOUBLE_EQ(result, 60.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_DOUBLE_EQ(g(-1), 10.0);
+  ASSERT_DOUBLE_EQ(g(0), 30.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+}

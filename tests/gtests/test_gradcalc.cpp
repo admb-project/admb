@@ -10,7 +10,7 @@ extern "C"
 
 class test_gradcalc: public ::testing::Test {};
 
-#ifdef DEBUG2
+#ifdef DEBUG
 /*
 TEST_F(test_gradcalc, gradient_size_intmax)
 {
@@ -574,4 +574,199 @@ TEST_F(test_gradcalc, thread_simple)
   t4.join();
   t3.join();
   t2.join();
+}
+TEST_F(test_gradcalc, funnel_pre)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x(variables(1));
+  dvariable y(variables(2));
+
+  dvariable f;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  f = (2.0 * x + 3.0 * y) + (pow(x, 2.0) + pow(y, 3.0));
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  double result = value(f);
+  ASSERT_DOUBLE_EQ(result, 60.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_DOUBLE_EQ(g(-1), 10.0);
+  ASSERT_DOUBLE_EQ(g(0), 30.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+}
+TEST_F(test_gradcalc, funnel_split)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x(variables(1));
+  dvariable y(variables(2));
+
+  dvariable f, a, b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  a = (2.0 * x + 3.0 * y);
+  b = (pow(x, 2.0) + pow(y, 3.0));
+  f = a + b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 12);
+
+  double result = value(f);
+  ASSERT_DOUBLE_EQ(result, 60.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 12);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_DOUBLE_EQ(g(-1), 10.0);
+  ASSERT_DOUBLE_EQ(g(0), 30.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+}
+dvariable compute_a(dvariable& x, dvariable& y)
+{
+  dvariable a;
+  a = (2.0 * x + 3.0 * y);
+  return a;
+}
+dvariable compute_b(dvariable& x, dvariable& y)
+{
+  dvariable b;
+  b = (pow(x, 2.0) + pow(y, 3.0));
+  return b;
+}
+TEST_F(test_gradcalc, funnel_functions)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x(variables(1));
+  dvariable y(variables(2));
+
+  dvariable f, a, b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  a = compute_a(x, y);
+  b = compute_b(x, y);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 12);
+
+  f = a + b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 14);
+
+  double result = value(f);
+  ASSERT_DOUBLE_EQ(result, 60.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 14);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_DOUBLE_EQ(g(-1), 10.0);
+  ASSERT_DOUBLE_EQ(g(0), 30.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+}
+dvariable df_compute_a(dvariable& x, dvariable& y)
+{
+  dvariable a;
+  funnel_dvariable f;
+  ad_begin_funnel();
+  f = (2.0 * x + 3.0 * y);
+  a = f;
+  return a;
+}
+dvariable df_compute_b(dvariable& x, dvariable& y)
+{
+  dvariable b;
+  funnel_dvariable f;
+  ad_begin_funnel();
+  f = (pow(x, 2.0) + pow(y, 3.0));
+  b = f;
+  return b;
+}
+TEST_F(test_gradcalc, funnel_dvariable)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x(variables(1));
+  dvariable y(variables(2));
+
+  dvariable f, a, b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+
+  a = df_compute_a(x, y);
+  b = df_compute_b(x, y);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 8);
+
+  f = a + b;
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+
+  double result = value(f);
+  ASSERT_DOUBLE_EQ(result, 60.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 10);
+
+  dvector g(-1, 0);
+  gradcalc(2, g);
+  ASSERT_DOUBLE_EQ(g(-1), 10.0);
+  ASSERT_DOUBLE_EQ(g(0), 30.0);
+
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
 }

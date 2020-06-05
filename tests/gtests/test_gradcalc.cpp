@@ -2,6 +2,7 @@
 #include <fvar.hpp>
 #include <climits>
 #include <thread>
+#include <future>
 
 extern "C"
 {
@@ -963,18 +964,24 @@ TEST_F(test_gradcalc, funnel_set_gradient_thread_function)
 
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
 }
-dvariable tfj_compute_a(dvariable& x, dvariable& y)
+dvariable async_compute_a(dvariable& x, dvariable& y)
 {
   dvariable a(17.0);
 
   grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
 
-  std::thread t([]()
-  {
-    int random = std::rand() % 5;
-    std::this_thread::sleep_for(std::chrono::seconds(random));
-  });
-  t.join();
+  std::future<dvector> gradients =
+    std::async([]()
+    {
+      int random = std::rand() % 5;
+      std::this_thread::sleep_for(std::chrono::seconds(random));
+
+      dvector g(1, 2);
+      g(1) = 2.0;
+      g(2) = 3.0;
+      return g;
+    });
+  dvector g = gradients.get();
 
   entry->func = default_evaluation;
   entry->dep_addr = &((*a.v).x);
@@ -986,30 +993,36 @@ dvariable tfj_compute_a(dvariable& x, dvariable& y)
   
   return a;
 }
-dvariable tfj_compute_b(dvariable& x, dvariable& y)
+dvariable async_compute_b(dvariable& x, dvariable& y)
 {
   dvariable b(43.0);
 
   grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
 
-  std::thread t([]()
-  {
-    int random = std::rand() % 5;
-    std::this_thread::sleep_for(std::chrono::seconds(random));
-  });
-  t.join();
+  std::future<dvector> gradients =
+    std::async([]()
+    {
+      int random = std::rand() % 5;
+      std::this_thread::sleep_for(std::chrono::seconds(random));
+
+      dvector g(1, 2);
+      g(1) = 8.0;
+      g(2) = 27.0;
+      return g;
+    });
+  dvector g = gradients.get();
 
   entry->func = default_evaluation;
   entry->dep_addr = &((*b.v).x);
   entry->ind_addr1 = &((*x.v).x);
-  entry->mult1 = 8.0;
+  entry->mult1 = g(1);
   entry->ind_addr2 = &((*y.v).x);
-  entry->mult2 = 27.0;
+  entry->mult2 = g(2);
   gradient_structure::GRAD_STACK1->ptr++;
 
   return b;
 }
-TEST_F(test_gradcalc, funnel_set_gradient_thread_function_join)
+TEST_F(test_gradcalc, funnel_async)
 {
   ad_exit=&test_ad_exit;
 
@@ -1031,8 +1044,8 @@ TEST_F(test_gradcalc, funnel_set_gradient_thread_function_join)
 
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
 
-  a = tfj_compute_a(x, y);
-  b = tfj_compute_b(x, y);
+  a = async_compute_a(x, y);
+  b = async_compute_b(x, y);
 
   ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 8);
 

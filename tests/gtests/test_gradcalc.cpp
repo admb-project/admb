@@ -969,6 +969,7 @@ dvariable async_compute_a(dvariable& x, dvariable& y)
   dvariable a(17.0);
 
   grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
+  gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
     std::async([]()
@@ -989,7 +990,6 @@ dvariable async_compute_a(dvariable& x, dvariable& y)
   entry->mult1 = 2.0;
   entry->ind_addr2 = &((*y.v).x);
   entry->mult2 = 3.0;
-  gradient_structure::GRAD_STACK1->ptr++;
   
   return a;
 }
@@ -998,6 +998,7 @@ dvariable async_compute_b(dvariable& x, dvariable& y)
   dvariable b(43.0);
 
   grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
+  gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
     std::async([]()
@@ -1018,7 +1019,6 @@ dvariable async_compute_b(dvariable& x, dvariable& y)
   entry->mult1 = g(1);
   entry->ind_addr2 = &((*y.v).x);
   entry->mult2 = g(2);
-  gradient_structure::GRAD_STACK1->ptr++;
 
   return b;
 }

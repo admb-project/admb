@@ -285,7 +285,7 @@ gtest-all.obj: googletest-read-only
 ifeq ($(CMDSHELL),cmd)
 	$(CXX) -c $(CXXFLAGS) -std=c++11 -g -I$(GTEST_DIR)\\include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)\\src\\gtest-all.cc
 else
-	cd googletest-read-only/googletest && git checkout 011959aafddcd30611003de96cfd8d7a7685c700
+	cd googletest-read-only && git apply ../googletest.diff
 	$(CXX) -c $(CXXFLAGS) -std=c++11 -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
 endif
 

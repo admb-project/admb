@@ -568,7 +568,6 @@ TEST_F(test_funnels, async_gradcalc2)
     delete gradient_structure::GRAD_STACK1;
     gradient_structure::GRAD_STACK1 = nullptr;
 
-
     ASSERT_DOUBLE_EQ(g(1), 4.0);
     ASSERT_DOUBLE_EQ(g(2), 3.0);
   });

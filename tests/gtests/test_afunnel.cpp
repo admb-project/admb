@@ -24,6 +24,7 @@ TEST_F(test_afunnel, future)
 
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
+  cout << "1: " << gradient_structure::GRAD_STACK1 << endl;
 
   std::future<std::pair<double, dvector>> ret = 
     std::async([]()->std::pair<double, dvector>
@@ -32,6 +33,7 @@ TEST_F(test_afunnel, future)
       dvector g(1, 2);
 
       gradient_structure::GRAD_STACK1 = new grad_stack(10000, 10);
+      cout << "2: " << gradient_structure::GRAD_STACK1 << endl;
       gradient_structure::GRAD_STACK1->allocate_RETURN_ARRAYS(25, 70);
       {
         independent_variables scoped_independents(1, 2);
@@ -52,17 +54,21 @@ TEST_F(test_afunnel, future)
 
         gradcalc(2, g);
       }
+      cout << "3: " << gradient_structure::GRAD_STACK1 << endl;
       gradient_structure::GRAD_STACK1->deallocate_RETURN_ARRAYS();
       delete gradient_structure::GRAD_STACK1;
       gradient_structure::GRAD_STACK1 = nullptr;
 
+      cout << "4: " << gradient_structure::GRAD_STACK1 << endl;
       return std::make_pair(v, g);;
     });
 
+  cout << "5: " << gradient_structure::GRAD_STACK1 << endl;
   std::pair<double, dvector> p = ret.get();
   ASSERT_DOUBLE_EQ(p.first, 25.0);
   ASSERT_DOUBLE_EQ(p.second(1), 4.0);
   ASSERT_DOUBLE_EQ(p.second(2), 3.0);
+  cout << "6: " << gradient_structure::GRAD_STACK1 << endl;
 
   ASSERT_TRUE(gstack == gradient_structure::GRAD_STACK1);
 }
@@ -279,6 +285,112 @@ TEST_F(test_afunnel, lambda_afunnel_2x)
     return result;
   }, x, y);
 
+  f = a + b;
+
+  ASSERT_DOUBLE_EQ(value(f), 60.0);
+
+  dvector g(1, 2);
+  gradcalc(2, g);
+
+  ASSERT_DOUBLE_EQ(g(1), 10.0);
+  ASSERT_DOUBLE_EQ(g(2), 30.0);
+
+  ASSERT_TRUE(gstack == gradient_structure::GRAD_STACK1);
+}
+std::future<std::pair<double, dvector>> afunnel(
+  dvariable (*func)(dvariable& x, dvariable& y),
+  dvariable& x, dvariable& y)
+{
+  return std::async([=]()->std::pair<double, dvector>
+  {
+    double v = 0;
+    dvector g(1, 2);
+
+    gradient_structure::GRAD_STACK1 = new grad_stack(10000, 10);
+    gradient_structure::GRAD_STACK1->allocate_RETURN_ARRAYS(25, 70);
+    {
+      independent_variables scoped_independents(1, 2);
+      scoped_independents(1) = value(x);
+      scoped_independents(2) = value(y);
+
+      // Set gradient_structure::NVAR
+      dvar_vector scoped_variables(scoped_independents);
+
+      dvariable f(0);
+
+      dvariable a = scoped_variables(1);
+      dvariable b = scoped_variables(2);
+
+      f = func(a, b);
+
+      v = value(f);
+
+      gradcalc(2, g);
+    }
+    gradient_structure::GRAD_STACK1->deallocate_RETURN_ARRAYS();
+    delete gradient_structure::GRAD_STACK1;
+    gradient_structure::GRAD_STACK1 = nullptr;
+
+    return std::make_pair(v, g);
+  });
+}
+dvariable to_dvariable(
+  std::pair<double, dvector>& p,
+  dvariable& x, dvariable& y)
+{
+  dvariable var(p.first);
+  dvector g(p.second);
+
+  grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
+  entry->func = default_evaluation;
+  entry->dep_addr = &((*var.v).x);
+  entry->ind_addr1 = &((*x.v).x);
+  entry->mult1 = g(1);
+  entry->ind_addr2 = &((*y.v).x);
+  entry->mult2 = g(2);
+  gradient_structure::GRAD_STACK1->ptr++;
+
+  return var;
+}
+TEST_F(test_afunnel, afunnel)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  grad_stack* gstack = gradient_structure::GRAD_STACK1;
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x = variables(1);
+  dvariable y = variables(2);
+
+  std::future<std::pair<double, dvector>>
+    future_a = afunnel([](dvariable& x, dvariable& y)
+    {
+      dvariable result;
+      result = 2.0 * x + 3.0 * y;
+      return result;
+    }, x, y);
+  std::future<std::pair<double, dvector>>
+    future_b = afunnel([](dvariable& x, dvariable& y)
+    {
+      dvariable result;
+      result = (pow(x, 2.0) + pow(y, 3.0));
+      return result;
+    }, x, y);
+
+  dvariable f, a, b;
+  std::pair<double, dvector> pa = future_a.get();
+  std::pair<double, dvector> pb = future_b.get();
+  a = to_dvariable(pa, x, y);
+  b = to_dvariable(pb, x, y);
   f = a + b;
 
   ASSERT_DOUBLE_EQ(value(f), 60.0);

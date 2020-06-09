@@ -24,6 +24,7 @@ GTEST_DIR=googletest-read-only/googletest
 endif
 
 GTESTS_ALL=\
+ test_afunnel.cpp\
  test_dlist.cpp\
  test_funnel_thread_arr_list.cpp\
  test_atomic.cpp\

@@ -282,7 +282,7 @@ elif [ "$CXX" == "g++" ]; then
   GCCMAJVER="`gcc -dumpversion | cut -f1 -d.`"
   if [ "$GCCMAJVER" == "4" ]; then
     GCCMINVER="`gcc -dumpversion | cut -f2 -d.`"
-    if [ "$GCCMINVER" == "7"  || "$GCCMINVER" == "8" || "$GCCMINVER" == "9"]; then
+    if [[ "$GCCMINVER" == "7"  || "$GCCMINVER" == "8" || "$GCCMINVER" == "9" ]]; then
       CXXFLAGS="-std=c++11 $CXXFLAGS"
       LDFLAGS="-std=c++11 $LDFLAGS"
     else

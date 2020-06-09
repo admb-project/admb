@@ -24,7 +24,6 @@ TEST_F(test_afunnel, future)
 
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
-  cout << "1: " << gradient_structure::GRAD_STACK1 << endl;
 
   std::future<std::pair<double, dvector>> ret = 
     std::async([]()->std::pair<double, dvector>
@@ -33,7 +32,6 @@ TEST_F(test_afunnel, future)
       dvector g(1, 2);
 
       gradient_structure::GRAD_STACK1 = new grad_stack(10000, 10);
-      cout << "2: " << gradient_structure::GRAD_STACK1 << endl;
       gradient_structure::GRAD_STACK1->allocate_RETURN_ARRAYS(25, 70);
       {
         independent_variables scoped_independents(1, 2);
@@ -54,21 +52,17 @@ TEST_F(test_afunnel, future)
 
         gradcalc(2, g);
       }
-      cout << "3: " << gradient_structure::GRAD_STACK1 << endl;
       gradient_structure::GRAD_STACK1->deallocate_RETURN_ARRAYS();
       delete gradient_structure::GRAD_STACK1;
       gradient_structure::GRAD_STACK1 = nullptr;
 
-      cout << "4: " << gradient_structure::GRAD_STACK1 << endl;
       return std::make_pair(v, g);;
     });
 
-  cout << "5: " << gradient_structure::GRAD_STACK1 << endl;
   std::pair<double, dvector> p = ret.get();
   ASSERT_DOUBLE_EQ(p.first, 25.0);
   ASSERT_DOUBLE_EQ(p.second(1), 4.0);
   ASSERT_DOUBLE_EQ(p.second(2), 3.0);
-  cout << "6: " << gradient_structure::GRAD_STACK1 << endl;
 
   ASSERT_TRUE(gstack == gradient_structure::GRAD_STACK1);
 }

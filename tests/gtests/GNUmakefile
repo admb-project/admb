@@ -159,6 +159,12 @@ endif
 ifeq ($(SAFE_ONLY),yes)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
 endif
+ifeq ($(CXX),g++)
+  GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
+  ifeq ("$(GCCMAJVER)","4")
+    GTESTS:=$(filter-out test_afunnel.cpp,$(GTESTS))
+  endif
+endif
 
 ##Need to debug this
 # test_data_number.cpp\

@@ -87,7 +87,7 @@ public:
 };
 
 #ifdef _MSC_VER
-  #define __thread __declspec(thread)
+  #define thread_local __declspec(thread)
 #endif
 
 /**
@@ -172,7 +172,7 @@ class gradient_structure
    friend void allocate_dvariable_space(void);
    friend void wide_funnel_gradcalc(void);
    friend dvar_vector_position restore_dvar_vector_position(void);
-   static __thread grad_stack* GRAD_STACK1;
+   static thread_local grad_stack* GRAD_STACK1;
    friend double_and_int *gradnew();
    static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;

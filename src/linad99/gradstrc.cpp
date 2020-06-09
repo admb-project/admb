@@ -92,7 +92,7 @@ int gradient_structure::save_var_file_flag=0;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
-__thread grad_stack* gradient_structure::GRAD_STACK1 = NULL;
+thread_local grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
 unsigned int gradient_structure::MAX_DLINKS = 5000;
 
 // note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons

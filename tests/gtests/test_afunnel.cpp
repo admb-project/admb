@@ -26,7 +26,7 @@ TEST_F(test_afunnel, future)
   dvar_vector variables(independents);
 
   std::future<std::pair<double, dvector>> ret = 
-    std::async([]()->std::pair<double, dvector>
+    std::async(std::launch::async, []()->std::pair<double, dvector>
     {
       double v = 0;
       dvector g(1, 2);
@@ -69,7 +69,7 @@ TEST_F(test_afunnel, future)
 dvariable start_afunnel(dvariable& x, dvariable& y)
 {
   std::future<std::pair<double, dvector>> ret = 
-    std::async([]()->std::pair<double, dvector>
+    std::async(std::launch::async, []()->std::pair<double, dvector>
     {
       double v = 0;
       dvector g(1, 2);
@@ -157,7 +157,7 @@ dvariable lambda_afunnel(
   dvariable& x, dvariable& y)
 {
   std::future<std::pair<double, dvector>> ret = 
-    std::async([=]()->std::pair<double, dvector>
+    std::async(std::launch::async, [=]()->std::pair<double, dvector>
     {
       double v = 0;
       dvector g(1, 2);
@@ -295,7 +295,7 @@ std::future<std::pair<double, dvector>> afunnel(
   dvariable (*func)(dvariable& x, dvariable& y),
   dvariable& x, dvariable& y)
 {
-  return std::async([=]()->std::pair<double, dvector>
+  return std::async(std::launch::async, [=]()->std::pair<double, dvector>
   {
     double v = 0;
     dvector g(1, 2);

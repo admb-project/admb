@@ -97,7 +97,7 @@ dvariable async_a(dvariable& x, dvariable& y)
   gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
-    std::async([]()
+    std::async(std::launch::async, []()
     {
       int random = std::rand() % 5;
       std::this_thread::sleep_for(std::chrono::seconds(random));
@@ -126,7 +126,7 @@ dvariable async_b(dvariable& x, dvariable& y)
   gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
-    std::async([]()
+    std::async(std::launch::async, []()
     {
       int random = std::rand() % 5;
       std::this_thread::sleep_for(std::chrono::seconds(random));
@@ -199,7 +199,7 @@ dvariable async2_a(dvariable& x, dvariable& y)
   gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
-    std::async([]()
+    std::async(std::launch::async, []()
     {
       gradient_structure::GRAD_STACK1 = new grad_stack();
 
@@ -236,7 +236,7 @@ dvariable async2_b(dvariable& x, dvariable& y)
   gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
-    std::async([]()
+    std::async(std::launch::async, []()
     {
       gradient_structure::GRAD_STACK1 = new grad_stack();
 
@@ -316,7 +316,7 @@ dvariable async3_a(dvariable& x, dvariable& y)
   gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
-    std::async([](const double value_x, const double value_y)
+    std::async(std::launch::async, [](const double value_x, const double value_y)
     {
       dvector g(1, 2);
 
@@ -368,7 +368,7 @@ dvariable async3_b(dvariable& x, dvariable& y)
   gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
-    std::async([](const double value_x, const double value_y)
+    std::async(std::launch::async, [](const double value_x, const double value_y)
     {
       dvector g(1, 2);
 
@@ -503,7 +503,7 @@ TEST_F(test_funnels, async_arr_list)
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
 
-  std::async([]()
+  std::async(std::launch::async, []()
   {
     gradient_structure::GRAD_STACK1 = new grad_stack();
     {
@@ -538,7 +538,7 @@ TEST_F(test_funnels, async_gradcalc2)
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
 
-  std::async([]()
+  std::async(std::launch::async, []()
   {
     dvector g(1, 2);
 

@@ -966,7 +966,7 @@ dvariable async_compute_a(dvariable& x, dvariable& y)
   gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
-    std::async([]()
+    std::async(std::launch::async, []()
     {
       int random = std::rand() % 5;
       std::this_thread::sleep_for(std::chrono::seconds(random));
@@ -995,7 +995,7 @@ dvariable async_compute_b(dvariable& x, dvariable& y)
   gradient_structure::GRAD_STACK1->ptr++;
 
   std::future<dvector> gradients =
-    std::async([]()
+    std::async(std::launch::async, []()
     {
       int random = std::rand() % 5;
       std::this_thread::sleep_for(std::chrono::seconds(random));

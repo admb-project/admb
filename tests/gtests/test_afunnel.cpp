@@ -380,11 +380,67 @@ TEST_F(test_afunnel, afunnel)
       return result;
     }, x, y);
 
-  dvariable f, a, b;
   std::pair<double, dvector> pa = future_a.get();
   std::pair<double, dvector> pb = future_b.get();
+
+  dvariable f, a, b;
   a = to_dvariable(pa, x, y);
   b = to_dvariable(pb, x, y);
+  f = a + b;
+
+  ASSERT_DOUBLE_EQ(value(f), 60.0);
+
+  dvector g(1, 2);
+  gradcalc(2, g);
+
+  ASSERT_DOUBLE_EQ(g(1), 10.0);
+  ASSERT_DOUBLE_EQ(g(2), 30.0);
+
+  ASSERT_TRUE(gstack == gradient_structure::GRAD_STACK1);
+}
+dvariable funnel(
+  dvariable (*func)(dvariable& x, dvariable& y),
+  dvariable& x, dvariable& y)
+{
+  std::future<std::pair<double, dvector>> f = afunnel(func, x, y);
+  std::pair<double, dvector> p = f.get();
+
+  dvariable result;
+  result = to_dvariable(p, x, y);
+  return result;
+}
+TEST_F(test_afunnel, funnel)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 4.0;
+  independents(2) = 3.0;
+
+  grad_stack* gstack = gradient_structure::GRAD_STACK1;
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+
+  // Set gradient_structure::NVAR
+  dvar_vector variables(independents);
+
+  dvariable x = variables(1);
+  dvariable y = variables(2);
+
+  dvariable f, a, b;
+  a = funnel([](dvariable& x, dvariable& y)
+  {
+    dvariable result;
+    result = 2.0 * x + 3.0 * y;
+    return result;
+  }, x, y);
+  b = funnel([](dvariable& x, dvariable& y)
+  {
+    dvariable result;
+    result = (pow(x, 2.0) + pow(y, 3.0));
+    return result;
+  }, x, y);
   f = a + b;
 
   ASSERT_DOUBLE_EQ(value(f), 60.0);

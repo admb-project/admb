@@ -10,20 +10,20 @@ PARAMETER_SECTION
   init_number b1
   objective_function_value f
 PROCEDURE_SECTION
-  cout << "Start: " << gradient_structure::GRAD_STACK1->total() << endl;
+  //cout << "Start: " << gradient_structure::GRAD_STACK1->total() << endl;
   f = funnel([](dvariable& b0, dvariable& b1, const dvector& x, const dvector& y)
   {
-    cout << "A: " << gradient_structure::GRAD_STACK1->total() << endl;
+    //cout << "A: " << gradient_structure::GRAD_STACK1->total() << endl;
     dvariable f;
 
     dvar_vector yhat(x.indexmin(), y.indexmax());
     yhat = b0 + b1 * x;
     f=regression(y, yhat);
 
-    cout << "B: " << gradient_structure::GRAD_STACK1->total() << endl;
+    //cout << "B: " << gradient_structure::GRAD_STACK1->total() << endl;
     return f;
   }, b0, b1, x, y);
-  cout << "End: " << gradient_structure::GRAD_STACK1->total() << endl;
+  //cout << "End: " << gradient_structure::GRAD_STACK1->total() << endl;
 PRELIMINARY_CALCS_SECTION
   global_grad_stack = new grad_stack(10000, 10);
   global_grad_stack->allocate_RETURN_ARRAYS(25, 70);

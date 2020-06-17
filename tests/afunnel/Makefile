@@ -8,19 +8,19 @@ run:
 	cp ../../examples/admb/simple/simple.dat .
 	cp ../../examples/admb/simple/simple.tpl .
 	../../admb simple &> /dev/null
-	time ./simple &> /dev/null
+	time ./simple &> simple.out
 run2:
 	cp ../../examples/admb/simple/simple.dat simple2.dat
 	../../admb simple2 &> /dev/null
-	time ./simple2 &> /dev/null
+	time ./simple2 &> simple2.out
 run3:
 	cp ../../examples/admb/simple/simple.dat simple3.dat
 	../../admb simple3 &> /dev/null
-	time ./simple3 &> /dev/null
+	time ./simple3 &> simple3.out
 run4:
 	cp ../../examples/admb/simple/simple.dat simple4.dat
 	../../admb simple4 &> /dev/null
-	time ./simple4 &> /dev/null
+	time ./simple4 &> simple4.out
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

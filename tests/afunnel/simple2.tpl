@@ -11,7 +11,7 @@ PARAMETER_SECTION
   vector yhat(1,n)
   objective_function_value f
 PROCEDURE_SECTION
-  cout << "Start: " << gradient_structure::GRAD_STACK1->total() << endl;
+  //cout << "Start: " << gradient_structure::GRAD_STACK1->total() << endl;
 
   dvariable result;
   funnel_dvariable Integral;
@@ -19,9 +19,9 @@ PROCEDURE_SECTION
     ad_begin_funnel();
     yhat=b0+b1*x;
     Integral = regression(y,yhat);
-    cout << "During: " << gradient_structure::GRAD_STACK1->total() << endl;
+    //cout << "During: " << gradient_structure::GRAD_STACK1->total() << endl;
     result = Integral;
   }
-  cout << "Before: " << gradient_structure::GRAD_STACK1->total() << endl;
+  //cout << "Before: " << gradient_structure::GRAD_STACK1->total() << endl;
   f = result;
-  cout << "After: " << gradient_structure::GRAD_STACK1->total() << endl;
+  //cout << "After: " << gradient_structure::GRAD_STACK1->total() << endl;

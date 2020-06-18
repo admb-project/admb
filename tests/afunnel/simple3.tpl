@@ -33,7 +33,6 @@ GLOBALS_SECTION
       double v = 0;
       dvector g(1, 2);
 
-      //std::cout << "A: " <<  gradient_structure::GRAD_STACK1 << std::endl;
       gradient_structure::GRAD_STACK1 = new grad_stack(10000, 10);
       gradient_structure::GRAD_STACK1->allocate_RETURN_ARRAYS(25, 70);
       {
@@ -59,7 +58,6 @@ GLOBALS_SECTION
       delete gradient_structure::GRAD_STACK1;
       gradient_structure::GRAD_STACK1 = nullptr;
 
-      //std::cout << "B: " << std::this_thread::get_id() << std::endl;
       return std::make_pair(v, g);
     });
   }

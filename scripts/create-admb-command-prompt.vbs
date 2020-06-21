@@ -16,7 +16,7 @@ else
   Dim args
   Set args = WScript.Arguments
   'Set the additional parameters for the shortcut
-  oShellLink.Arguments = "/K args(0)\bin\set-admb-command-prompt.bat"
+  oShellLink.Arguments = "/K " + args(0) + "\bin\set-admb-command-prompt.bat"
 end if
 
 oShellLink.WorkingDirectory = "%CD%"

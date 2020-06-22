@@ -28,7 +28,7 @@ Quick Start
 
    For zip file, Use **File Explorer** and open folder **C:\ADMB**, then double click **ADMB Command Prompt** shortcut to open command line window.
 
-   For self extracting file, Use **File Explorer** and open folder **C:\Program Files(x86)\ADMB-12.1**, then double click **ADMB Command Prompt** shortcut to open command line window.
+   For self extracting exe file, Use **File Explorer** and open folder **C:\Program Files(x86)\ADMB-12.1**, then double click **ADMB Command Prompt** shortcut to open command line window.
 
    In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
 
@@ -41,16 +41,20 @@ Quick Start
    Build simple example.
 
    ```
-   C:\ADMB\examples\admb\simple\> admb simple
+   C:\ADMB\examples\admb\simple> admb simple.tpl
    ```
 
    Run simple example.
 
    ```
-   C:\ADMB\examples\admb\simple\> simple.exe
+   C:\ADMB\examples\admb\simple> simple.exe
    ```
 
    Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
+
+4. **Configure PATH** Optional
+
+   An alternative to using the ADMB Command Prompt is to add the ADMB installation directory **C:\ADMB\bin** to the system enviroment PATH variable.  This will allow admb to be used in the Windows Command Prompt.
 
 AD Studio
 ---------

@@ -54,7 +54,7 @@ Quick Start
 
 4. **Configure PATH** Optional
 
-   An alternative to using the ADMB Command Prompt is to add the ADMB installation directory **C:\ADMB\bin** to the system enviroment PATH variable.  This will allow admb to be used in the Windows Command Prompt.
+   An alternative to using the **ADMB Command Prompt** is to add the ADMB installation directory **C:\ADMB\bin** to the system enviroment **PATH** variable.  This will allow admb to be used in the **Windows Command Prompt**.
 
 AD Studio
 ---------

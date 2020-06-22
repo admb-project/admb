@@ -5,9 +5,6 @@
 
 setlocal EnableExtensions EnableDelayedExpansion
 
-set x=%cmdcmdline:"=%
-set y=%x: =%
-
 set SCRIPT_PATH=%~dp0
 if not defined SCRIPT_PATH (
   for %%a in (%0) do (
@@ -32,11 +29,7 @@ if not defined ADMB_HOME (
   echo "ADMB_HOME: !ADMB_HOME!"
   goto ERROR
 )
-if "%y%"=="%comspec%" (
-  call "!ADMB_HOME!\bin\admb" %*
-) else (
-  cmd /K bin\set-admb-command-prompt.bat
-)
+call "!ADMB_HOME!\bin\admb" %*
 goto EOF
 :ERROR
 echo Error: Unable to find 'bin\admb.cmd'.

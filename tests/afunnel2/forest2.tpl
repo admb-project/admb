@@ -40,8 +40,6 @@ PROCEDURE_SECTION
    for (i=1;i<=k+1;i++)
    {
      a_index=i;
-     //ad_begin_funnel();
-     //Integral=adromb(&model_parameters::h,-3.0,3.0,nsteps);
      Integral=adromb2(&h2,tau,nu,sigma,beta,a(a_index),-3.0,3.0,nsteps);
      S(i)=Integral;
    }

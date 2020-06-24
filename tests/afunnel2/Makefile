@@ -1,7 +1,12 @@
+dev:
+	../../admb forest2
+	cp ../../examples/admb/forest/forest.dat forest2.dat
+	time ./forest2
 all:
 	$(MAKE) run0
 	$(MAKE) run
-
+	$(MAKE) run2
+	$(MAKE) run3
 run0:
 	cp ../../examples/admb/forest/forest.dat forest0.dat
 	../../admb forest0 &> /dev/null
@@ -11,6 +16,15 @@ run:
 	cp ../../examples/admb/forest/forest.tpl .
 	../../admb forest &> /dev/null
 	time ./forest &> forest.out
+
+run2:
+	../../admb forest2 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest2.dat
+	time ./forest2 &> forest2.out
+run3:
+	../../admb forest3 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest3.dat
+	time ./forest3 &> forest3.out
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

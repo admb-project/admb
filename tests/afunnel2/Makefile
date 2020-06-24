@@ -1,7 +1,3 @@
-dev:
-	../../admb forest2
-	cp ../../examples/admb/forest/forest.dat forest2.dat
-	time ./forest2
 all:
 	$(MAKE) run0
 	$(MAKE) run

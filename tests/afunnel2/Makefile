@@ -3,6 +3,11 @@ all:
 	$(MAKE) run
 	$(MAKE) run2
 	$(MAKE) run3
+	$(MAKE) run4
+	$(MAKE) run5
+	$(MAKE) run6
+	$(MAKE) run7
+	$(MAKE) run8
 run0:
 	cp ../../examples/admb/forest/forest.dat forest0.dat
 	../../admb forest0 &> /dev/null
@@ -21,6 +26,26 @@ run3:
 	../../admb forest3 &> /dev/null
 	cp ../../examples/admb/forest/forest.dat forest3.dat
 	time ./forest3 &> forest3.out
+run4:
+	../../admb forest4 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest4.dat
+	time ./forest4 &> forest4.out
+run5:
+	../../admb forest5 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest5.dat
+	time ./forest5 &> forest5.out
+run6:
+	../../admb forest6 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest6.dat
+	time ./forest6 &> forest6.out
+run7:
+	../../admb forest7 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest7.dat
+	time ./forest7 &> forest7.out
+run8:
+	../../admb forest8 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest8.dat
+	time ./forest8 &> forest8.out
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

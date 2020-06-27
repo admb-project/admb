@@ -30,7 +30,6 @@ all:
 ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
 endif
-	$(MAKE) tests-afunnel
 
 tests-remote:
 	$(MAKE) remote-core-tpls

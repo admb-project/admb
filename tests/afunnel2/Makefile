@@ -8,6 +8,7 @@ all:
 	$(MAKE) run6
 	$(MAKE) run6a
 	$(MAKE) run6b
+	$(MAKE) run6c
 	$(MAKE) run7
 	$(MAKE) run8
 run0:

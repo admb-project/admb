@@ -48,6 +48,10 @@ run6b:
 	../../admb forest6b &> /dev/null
 	cp ../../examples/admb/forest/forest.dat forest6b.dat
 	time ./forest6b &> forest6b.out
+run6c:
+	../../admb forest6c &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest6c.dat
+	time ./forest6c &> forest6c.out
 run7:
 	../../admb forest7 &> /dev/null
 	cp ../../examples/admb/forest/forest.dat forest7.dat

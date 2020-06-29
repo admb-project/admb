@@ -236,7 +236,6 @@ GLOBALS_SECTION
       tmp+=elem_prod(lambda2,fabs(e)); 
     return tmp;
   }
-
   dvar_matrix update_the_variances2(dvar_matrix& v, const int ndim, dvar_vector& delta, dvar_matrix& Z)
   {
     dvar_matrix tmp(1,ndim,1,ndim);
@@ -282,30 +281,29 @@ GLOBALS_SECTION
   }
   dvariable fp2(dvar_vector& h, dvector& y, dvar_vector& m,dvar_matrix& v, const int ndim, dvar_matrix& S, dvar_matrix& R, dvar_vector& w1, dvar_vector& lmin)
   {
-  dvar_vector eh=exp(.5*h);
-  for (int i=1;i<=ndim;i++)
-  {
-    for (int j=1;j<=i;j++)
+    dvar_vector eh=exp(.5*h);
+    for (int i=1;i<=ndim;i++)
     {
-      S(i,j)= eh(i)*eh(j)*R(i,j);
-      if (i!=j) S(j,i)=S(i,j);
-    }
-  }   
+      for (int j=1;j<=i;j++)
+      {
+        S(i,j)= eh(i)*eh(j)*R(i,j);
+        if (i!=j) S(j,i)=S(i,j);
+      }
+    }   
 
-  dvariable lndet;
-  dvariable sgn;
-  dvar_vector u=solve(S,y,lndet,sgn);
-  dvariable l;
-  l=.5*lndet+.5*(y*u);
+    dvariable lndet;
+    dvariable sgn;
+    dvar_vector u=solve(S,y,lndet,sgn);
+    dvariable l;
+    l=.5*lndet+.5*(y*u);
   
-  dvar_vector hm=h-m;
-  w1=solve(v,hm,lndet,sgn);
+    dvar_vector hm=h-m;
+    w1=solve(v,hm,lndet,sgn);
 
-  l+=.5*lndet+.5*(w1*hm);
+    l+=.5*lndet+.5*(w1*hm);
 
-  return l;
+    return l;
   }
-
   dvar_vector funnel(dvariable (*func)(const int i, const int nobs, dvar_vector& w, dvar_matrix& h_mean, dmatrix& Y, dvar_vector& delta, dvar_vector& lambda, dvar_vector& lambda2, const int ndim, dvar_matrix& Z, dvar3_array& h_var, dvar_matrix& Rinv, dvar_matrix& S, dvar_matrix& R, dvar_vector& w1, dvar_vector& lmin, bool active_lambda2), const int nobs, dvar_vector& w, dvar_matrix& h_mean, dmatrix& Y, dvar_vector& delta, dvar_vector& lambda, dvar_vector& lambda2, const int ndim, dvar_matrix& Z, dvar3_array& h_var, dvar_matrix& Rinv, dvar_matrix& S, dvar_matrix& R, dvar_vector& w1, dvar_vector& lmin, bool active_lambda2)
   {
     dvar_vector results(2, nobs);

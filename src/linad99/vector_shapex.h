@@ -56,14 +56,10 @@ class vector_shapex
       return trueptr;
    }
 #if defined(USE_VECTOR_SHAPE_POOL)
-  static vector_shape_pool& get_xpool()
-  {
-    static vector_shape_pool xpool(sizeof(vector_shapex));
-    return xpool;
-  }
+  static vector_shape_pool xpool;
   void* operator new(size_t);
   void operator delete(void* ptr, size_t)
-    { vector_shapex::get_xpool().free(ptr); }
+    { vector_shapex::xpool.free(ptr); }
   vector_shapex(const vector_shapex&) = delete;
   vector_shapex& operator=(const vector_shapex&) = delete;
 #endif

@@ -15,15 +15,9 @@
 
 #if defined(USE_VECTOR_SHAPE_POOL)
 
-bool vector_shape_xpool = false;
-bool vector_shapex_xpool = false;
-bool arr_link_xpool = false;
-vector_shape_pool vector_shape::xpool(
-  sizeof(vector_shape), &vector_shape_xpool);
-vector_shape_pool vector_shapex::xpool(
-  sizeof(vector_shapex), &vector_shapex_xpool);
-vector_shape_pool arr_link::xpool(
-  sizeof(arr_link), &arr_link_xpool);
+bool vector_shape::allocated = false;
+bool vector_shapex::allocated = false;
+bool arr_link::allocated = false;
 
 #if defined(THREAD_SAFE)
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
@@ -69,7 +63,7 @@ void* vector_shape::operator new(size_t n)
     ad_exit(1);
   }
 #endif
-  return vector_shape::xpool.alloc();
+  return vector_shape::get_xpool().alloc();
 }
 
 /**
@@ -85,7 +79,7 @@ void* arr_link::operator new(size_t n)
     ad_exit(1);
   }
 #endif
-  return arr_link::xpool.alloc();
+  return arr_link::get_xpool().alloc();
 }
 
 /**
@@ -101,7 +95,7 @@ void* vector_shapex::operator new(size_t n)
     ad_exit(1);
   }
 #endif
-  return vector_shapex::xpool.alloc();
+  return vector_shapex::get_xpool().alloc();
 }
 
 #if defined(__CHECK_MEMORY__)

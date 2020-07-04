@@ -57,9 +57,6 @@ dvector& dvector::shift(int min)
   shape->shift(min);
   return *this;
 }
-#if defined(USE_VECTOR_SHAPE_POOL)
-extern bool vector_shapex_xpool;
-#endif
 /**
 Default destructor. Invoked by the compiler. Only frees allocated memory
 if all shallow copies in scope have been removed.
@@ -68,7 +65,7 @@ Produces an error if the double* member v is NULL.
 dvector::~dvector()
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
-  if (!vector_shapex_xpool) return;
+  if (!vector_shapex::allocated) return;
 #endif
   if (shape)
   {

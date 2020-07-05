@@ -56,9 +56,11 @@ class vector_shapex
       return trueptr;
    }
 #if defined(USE_VECTOR_SHAPE_POOL)
+  static bool allocated;
   static vector_shape_pool& get_xpool()
   {
-    static vector_shape_pool xpool(sizeof(vector_shapex));
+    static vector_shape_pool xpool(
+      sizeof(vector_shapex), &vector_shapex::allocated);
     return xpool;
   }
   void* operator new(size_t);

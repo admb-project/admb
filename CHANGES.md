@@ -30,6 +30,15 @@ Development Version
 
   to produce an executable that can run on both machines.
 
+* Added access functions for ln_det, hessian and hessian inverse which should only be used in the FINAL_SECTION. [See Issue #132](https://github.com/admb-project/admb/issues/132)
+
+  ```
+  FINAL_SECTION
+  cout << "\nln_det:\n" << get_ln_det_value() << endl;
+  cout << "\nhessian:\n" << get_hessian() << endl;
+  cout << "\nhessian inverse:\n" << get_hessian_inverse() << endl;
+  ```
+
 #### Changes and Improvements
 
 * Fixed GNUmakefile and admb script when building for MacOS and clang.  [See Issue #128](https://github.com/admb-project/admb/issues/128)

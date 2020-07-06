@@ -512,6 +512,10 @@ void function_minimizer::hess_inv(void)
       exit(1);
     }
   }
+
+  _hessian.allocate(1, nvar, 1, nvar);
+  _hessian = hess;
+
   int hybflag = 0;
   ifs >> hybflag;
   dvector sscale(1,nvar);
@@ -638,6 +642,9 @@ void function_minimizer::hess_inv(void)
       if (num_negflags==0)
       {
         hess=inv(hess);
+        _hessian_inverse.allocate(1,nvar,1,nvar);
+        _hessian_inverse = hess;
+
         int on=0;
         if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-eigvec"))>-1)
         {

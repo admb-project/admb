@@ -15,21 +15,41 @@
 
 #if defined(USE_VECTOR_SHAPE_POOL)
 
+bool vector_shape::allocated = false;
+bool vector_shapex::allocated = false;
+bool arr_link::allocated = false;
+
 #if defined(THREAD_SAFE)
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
 vector_shape_pool::vector_shape_pool(void) : dfpool(sizeof(vector_shape))
-{ ;}
+{
+  _allocated = nullptr;
+}
 
 #if defined(THREAD_SAFE)
 ts_vector_shape_pool::ts_vector_shape_pool(int n) : tsdfpool(n)
 { ;}
 #endif
 
-vector_shape_pool::vector_shape_pool(const size_t n) : dfpool(n)
-{ ;}
-
+vector_shape_pool::vector_shape_pool(
+  const size_t n, bool* allocated) : dfpool(n)
+{
+  _allocated = allocated;
+  if (_allocated)
+  {
+    *_allocated = true;
+  }
+}
+vector_shape_pool::~vector_shape_pool()
+{
+  if (_allocated)
+  {
+    *_allocated = false;
+    _allocated = nullptr;
+  }
+}
 /**
  * Description not yet available.
  * \param

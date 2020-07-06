@@ -476,9 +476,11 @@ class kkludge_object{};
  */
 class vector_shape_pool:public dfpool
 {
+  bool* _allocated;
 public:
   vector_shape_pool();
-  vector_shape_pool(const size_t);
+  vector_shape_pool(const size_t, bool* allocated);
+  ~vector_shape_pool();
 };
 
 /**
@@ -501,9 +503,11 @@ class vector_shape
 {
  public:
 #if defined(USE_VECTOR_SHAPE_POOL)
+  static bool allocated;
   static vector_shape_pool& get_xpool()
   {
-    static vector_shape_pool xpool(sizeof(vector_shape));
+    static vector_shape_pool xpool(
+      sizeof(vector_shape), &vector_shape::allocated);
     return xpool;
   }
   void* operator new(size_t);
@@ -2021,9 +2025,11 @@ class arr_link
 
  public:
 #if defined(USE_VECTOR_SHAPE_POOL)
+  static bool allocated;
   static vector_shape_pool& get_xpool()
   {
-    static vector_shape_pool xpool(sizeof(arr_link));
+    static vector_shape_pool xpool(
+      sizeof(arr_link), &arr_link::allocated);
     return xpool;
   }
   void* operator new(size_t);

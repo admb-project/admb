@@ -2,9 +2,10 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
       EXT=.sh
     else
+      SHELL=cmd
       CMDSHELL=cmd
     endif
   endif
@@ -14,7 +15,10 @@ all: rforge-glmmadmb
 ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --file=Makefile all
 else
-	$(MAKE) glmmadmb nbmm bvprobit admb_tests
+	$(MAKE) glmmadmb
+	$(MAKE) nbmm
+	$(MAKE) bvprobit
+	$(MAKE) admb_tests
 	$(MAKE) run
 endif
 
@@ -76,6 +80,7 @@ endif
 total-clean: clean
 ifeq ($(CMDSHELL),cmd)
 else
+	@rm -rvf rforge-glmmadmb
 	@rm -rvf admb_tests
 	@rm -vf bvprobit.tpl
 	@rm -vf glmmadmb.tpl

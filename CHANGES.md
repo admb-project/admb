@@ -14,12 +14,39 @@ Release Goals
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-dev
---------
+Development Version
+-------------------
+
+#### New Features
+
+* New user compilation option `-p` to build a portable (statically linked) model
+  executable, which runs independently of underlying system libraries. For
+  example, if one Linux machine has system library GLIBC 2.29 and another has
+  GLIBC 2.28, users can now compile with
+
+  ```
+  admb -p simple
+  ```
+
+  to produce an executable that can run on both machines.
+
+* Added access functions for ln_det, hessian and hessian inverse which should only be used in the FINAL_SECTION. [See Issue #132](https://github.com/admb-project/admb/issues/132)
+
+  ```
+  FINAL_SECTION
+  cout << "\nln_det:\n" << get_ln_det_value() << endl;
+  cout << "\nhessian:\n" << get_hessian() << endl;
+  cout << "\nhessian inverse:\n" << get_hessian_inverse() << endl;
+  ```
 
 #### Changes and Improvements
 
-* Allow adstring_array to be used in DATA_SECTION.
+* Fixed GNUmakefile and admb script when building for MacOS and clang.  [See Issue #128](https://github.com/admb-project/admb/issues/128)
+* Function sqr should compute the square of a variable not the square root.  [See Issue #129](https://github.com/admb-project/admb/issues/129)
+* Add batch file create-admb-command-prompt.bat to create shortcut with full instead of relative path.  [See Issue #135](https://github.com/admb-project/admb/issues/135)
+* Able to use FINAL_SECTION without REPORT_SECTION. [See Issue #133](https://github.com/admb-project/admb/issues/133)
+* Fixed core dump when deallocating already freed memory from xpools.  [See Issue #138](https://github.com/admb-project/admb/issues/138)
+* Support adstring_array in DATA_SECTION.  [See Issue #143](https://github.com/admb-project/admb/issues/143)
 
 ADMB-12.1
 ---------

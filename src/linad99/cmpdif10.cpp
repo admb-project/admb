@@ -8,8 +8,9 @@
 #endif
 
 /**
- * Description not yet available.
- * \param
+ * Constructor to copy dimensions and row data pointers from m.
+ *
+ * \param m imatrix
  */
 imatrix_position::imatrix_position(const imatrix& m)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
@@ -24,10 +25,12 @@ imatrix_position::imatrix_position(const imatrix& m)
     ptr(i)=m(i).get_v();
   }
 }
-
 /**
- * Description not yet available.
- * \param
+ * Constructor to allocate empty valued rows and pointers to data
+ * with dimension min to max.
+ *
+ * \param min minimum index
+ * \param max maximum index
  */
 imatrix_position::imatrix_position(int min,int max)
   : lb(min,max), ub(min,max), ptr(min,max)
@@ -41,10 +44,10 @@ imatrix_position::imatrix_position(int min,int max)
     ptr(i)=0;
   }
 }
-
 /**
- * Description not yet available.
- * \param
+ * Copy constructor
+ *
+ * \param p other imatrix_position to copy
  */
 imatrix_position::imatrix_position(const imatrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),

@@ -2,12 +2,13 @@
 
 TARGET=rsimple
 
-all: clean $(TARGET) run
+all: clean
+	$(MAKE) run
 
 $(TARGET): $(TARGET).tpl
 	../../admb -g $(TARGET)
 
-run:
+run: $(TARGET)
 	@printf "Started run:\n"
 	./$(TARGET) -mcmc 10000 -mcsave 100
 	@printf "Finished run.\n"

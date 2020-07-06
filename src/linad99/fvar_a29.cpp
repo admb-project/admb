@@ -1,13 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Functions for dvar_vector to compute sin, ...
+*/
 #include "fvar.hpp"
 
 /*
@@ -58,9 +55,10 @@ void DF_dvXXX(void)
 void DF_dvsin(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes sin of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector sin(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -79,11 +77,9 @@ dvar_vector sin(const dvar_vector& v1)
             set_gradient_stack(DF_dvsin);
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for sin(const dvar_vector&)
+*/
 void DF_dvsin(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -260,9 +256,10 @@ void DF_dvlog(void)
 void DF_dvtan(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes tan of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector tan(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -277,15 +274,13 @@ dvar_vector tan(const dvar_vector& v1)
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("xee");
-  gradient_structure::GRAD_STACK1->
-            set_gradient_stack(DF_dvtan);
+  gradient_structure::GRAD_STACK1-> set_gradient_stack(DF_dvtan);
+
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for tan(const dvar_vector&).
+*/
 void DF_dvtan(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -308,9 +303,10 @@ void DF_dvtan(void)
 void DF_dvatan(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes atan of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector atan(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -329,11 +325,9 @@ dvar_vector atan(const dvar_vector& v1)
             set_gradient_stack(DF_dvatan);
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for tan(const dvar_vector&).
+*/
 void DF_dvatan(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -356,9 +350,10 @@ void DF_dvatan(void)
 void DF_dvsqrt(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes sqrt of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector sqrt(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -377,13 +372,14 @@ dvar_vector sqrt(const dvar_vector& v1)
             set_gradient_stack(DF_dvsqrt);
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Computes square of each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector sqr(const dvar_vector& v1)
 {
+  /*
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
   for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -399,12 +395,13 @@ dvar_vector sqr(const dvar_vector& v1)
   gradient_structure::GRAD_STACK1->
             set_gradient_stack(DF_dvsqrt);
   return vtmp;
-}
+  */
 
+  return pow(v1, 2.0);
+}
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for sqrt(const dvar_vector&).
+*/
 void DF_dvsqrt(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -427,9 +424,10 @@ void DF_dvsqrt(void)
 void DF_dvpow(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Computes pow raised to the power e for each element in v1 to a dvar_vector.
+
+@param v1 dvar_vector
+*/
 dvar_vector pow(const dvar_vector& v1, const double e)
 {
   //dvector cv1=value(v1);
@@ -449,11 +447,9 @@ dvar_vector pow(const dvar_vector& v1, const double e)
             set_gradient_stack(DF_dvpow);
   return vtmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for pow(const dvar_vector&, const double).
+*/
 void DF_dvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

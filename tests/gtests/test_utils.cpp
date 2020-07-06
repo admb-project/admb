@@ -240,3 +240,11 @@ TEST_F(test_utils, is_defined_m_pi)
   ASSERT_DOUBLE_EQ(PI, 3.14159265358979323846);
   ASSERT_DOUBLE_EQ(M_PI, 3.14159265358979323846);
 }
+TEST_F(test_utils, which_library)
+{
+#ifdef OPT_LIB
+  ASSERT_EQ('o', which_library());
+#else
+  ASSERT_EQ('s', which_library());
+#endif
+}

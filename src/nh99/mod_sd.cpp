@@ -109,7 +109,7 @@ void function_minimizer::sd_routine(void)
   }
   int sgn;
   initial_params::stddev_scale(scale,x);
-  double lndet=-ln_det(S,sgn)-2.0*sum(log(scale));
+  _ln_det_value = -ln_det(S,sgn)-2.0*sum(log(scale));
   initial_params::set_active_random_effects();
   //int nvar1=initial_params::nvarcalc();
   dvector diag(1,nvar1+ndvar);
@@ -365,8 +365,8 @@ void function_minimizer::sd_routine(void)
 
     int lc=1;
     int ic=1;
-    ofs << " The logarithm of the determinant of the hessian = " << lndet
-        << endl;
+    ofs << " The logarithm of the determinant of the hessian = "
+        << _ln_det_value << endl;
     ofs << " index  ";
     ofsd << " index  ";
     ofs << " name  ";

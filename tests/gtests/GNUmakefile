@@ -3,9 +3,10 @@ ifeq ($(OS),Windows_NT)
     CMDSHELL=cmd
     ADMB_HOME=..\\..\\..
   else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
+    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
       EXT=.sh
     else
+      SHELL=cmd
       CMDSHELL=cmd
       ADMB_HOME=..\\..\\..
     endif
@@ -124,6 +125,8 @@ GTESTS_ALL=\
  test_vector.cpp\
  test_xpools.cpp\
  test_issues.cpp\
+ test_funnel.cpp\
+ test_math.cpp\
  main.cpp
 
 GTESTS_NEW=\
@@ -162,7 +165,10 @@ endif
 # df1b2atan2.obj\
 # scalefactor.obj\
 
-all: clean gtest-all
+all: clean
+	$(MAKE) run
+
+run: gtest-all
 ifeq ($(CMDSHELL),cmd)
 	gtest-all
 else

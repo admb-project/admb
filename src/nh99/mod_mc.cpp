@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function function_minimizer::monte_carlo_routine
+*/
 #include <admodel.h>
 
 double inv_cumd_norm(const double& x);

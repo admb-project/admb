@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Member functions for class cifstream.
+*/
 
 #include <fvar.hpp>
 #include "cifstrem.h"
@@ -15,7 +18,7 @@ cifstream& cifstream::operator>>(const prevariable& z)
 */
 
 /**
-Reads input into var from comment formatted input file. 
+Reads input into var from comment formatted input file.
 
 \param var dvariable
 */
@@ -25,7 +28,7 @@ cifstream& cifstream::operator>>(const dvariable& var)
   return *this;
 }
 /**
-Reads input into var from comment formatted input file. 
+Reads input into var from comment formatted input file.
 
 \param var dvar_vector
 */
@@ -39,7 +42,7 @@ cifstream& cifstream::operator>>(const dvar_vector& varvec)
 }
 
 /**
-Reads input into var from comment formatted input file. 
+Reads input into var from comment formatted input file.
 
 \param var dvar_matrix
 */
@@ -55,7 +58,7 @@ cifstream& operator>>(cifstream& istr, const dvar_matrix& varmat)
   return istr;
 }
 /**
-Reads input into var from comment formatted input file. 
+Reads input into var from comment formatted input file.
 
 \param var dvar3_array
 */
@@ -68,7 +71,7 @@ cifstream& operator>>(cifstream& istr, const dvar3_array& vararr3)
   return istr;
 }
 /**
-Reads input into var from comment formatted input file. 
+Reads input into var from comment formatted input file.
 
 \param var dvar4_array
 */
@@ -81,7 +84,7 @@ cifstream& operator>>(cifstream& istr, const dvar4_array& vararr4)
   return istr;
 }
 /**
-Reads input into var from comment formatted input file. 
+Reads input into var from comment formatted input file.
 
 \param var dvar5_array
 */

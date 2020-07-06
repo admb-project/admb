@@ -45,6 +45,7 @@ run:
 	glmmadmb.exe
 
 total-clean: clean
+	@if exist rforge-glmmadmb rmdir /s /q rforge-glmmadmb
 	@if exist admb_tests rmdir /s /q admb_tests
 	@if exist bvprobit.tpl del bvprobit.tpl
 	@if exist glmmadmb.tpl del glmmadmb.tpl

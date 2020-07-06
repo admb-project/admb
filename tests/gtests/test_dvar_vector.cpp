@@ -122,8 +122,8 @@ TEST_F(test_dvar_vector, fill_lbraces_zero)
   {
     v.fill(array);
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -142,8 +142,8 @@ TEST_F(test_dvar_vector, fill_lbraces_greater_than_one)
   {
     v.fill(array);
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -162,8 +162,8 @@ TEST_F(test_dvar_vector, fill_lbraces_not_equal_rbraces)
   {
     v.fill(array);
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -215,4 +215,485 @@ TEST_F(test_dvar_vector, deallocatecopies)
   ASSERT_EQ(0, a.get_ncopies());
   ASSERT_EQ(0, firstcopy.get_ncopies());
   ASSERT_EQ(0, secondcopy.get_ncopies());
+}
+TEST_F(test_dvar_vector, division_operator)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  results = a / 0.5;
+
+  ASSERT_DOUBLE_EQ(value(results(1)), value(a(1)) * 2.0);
+  ASSERT_DOUBLE_EQ(value(results(2)), value(a(2)) * 2.0);
+  ASSERT_DOUBLE_EQ(value(results(3)), value(a(3)) * 2.0);
+  ASSERT_DOUBLE_EQ(value(results(4)), value(a(4)) * 2.0);
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, 2.0 * sum(independents));
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(3), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(4), 2.0);
+}
+TEST_F(test_dvar_vector, substract_operator)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  results = a - 0.5;
+
+  ASSERT_DOUBLE_EQ(value(results(1)), value(a(1)) - 0.5);
+  ASSERT_DOUBLE_EQ(value(results(2)), value(a(2)) - 0.5);
+  ASSERT_DOUBLE_EQ(value(results(3)), value(a(3)) - 0.5);
+  ASSERT_DOUBLE_EQ(value(results(4)), value(a(4)) - 0.5);
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, sum(independents) - 2.0);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0);
+}
+TEST_F(test_dvar_vector, unary_plus_operator)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvariable d;
+  d = a(1);
+
+  a += d;
+
+  ASSERT_DOUBLE_EQ(value(a(1)), independents(1) + independents(1));
+  ASSERT_DOUBLE_EQ(value(a(2)), independents(2) + independents(1));
+  ASSERT_DOUBLE_EQ(value(a(3)), independents(3) + independents(1));
+  ASSERT_DOUBLE_EQ(value(a(4)), independents(4) + independents(1));
+
+  dvariable total = a(1) + a(2) + a(3) + a(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, sum(independents) + 4.0 * independents(1));
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 5.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0);
+}
+TEST_F(test_dvar_vector, unary_minus_operator)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvariable d;
+  d = a(1);
+
+  a -= d;
+
+  ASSERT_DOUBLE_EQ(value(a(1)), independents(1) - independents(1));
+  ASSERT_DOUBLE_EQ(value(a(2)), independents(2) - independents(1));
+  ASSERT_DOUBLE_EQ(value(a(3)), independents(3) - independents(1));
+  ASSERT_DOUBLE_EQ(value(a(4)), independents(4) - independents(1));
+
+  dvariable total = a(1) + a(2) + a(3) + a(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, sum(independents) - 4.0 * independents(1));
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), -3.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0);
+}
+TEST_F(test_dvar_vector, unary_double_plus_operator)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  double d = independents(1);
+
+  a += d;
+
+  ASSERT_DOUBLE_EQ(value(a(1)), independents(1) + independents(1));
+  ASSERT_DOUBLE_EQ(value(a(2)), independents(2) + independents(1));
+  ASSERT_DOUBLE_EQ(value(a(3)), independents(3) + independents(1));
+  ASSERT_DOUBLE_EQ(value(a(4)), independents(4) + independents(1));
+
+  dvariable total = a(1) + a(2) + a(3) + a(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, sum(independents) + 4.0 * independents(1));
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0);
+}
+TEST_F(test_dvar_vector, unary_double_minus_operator)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  double d = independents(1);
+
+  a -= d;
+
+  ASSERT_DOUBLE_EQ(value(a(1)), independents(1) - independents(1));
+  ASSERT_DOUBLE_EQ(value(a(2)), independents(2) - independents(1));
+  ASSERT_DOUBLE_EQ(value(a(3)), independents(3) - independents(1));
+  ASSERT_DOUBLE_EQ(value(a(4)), independents(4) - independents(1));
+
+  dvariable total = a(1) + a(2) + a(3) + a(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, sum(independents) - 4.0 * independents(1));
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0);
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0);
+}
+TEST_F(test_dvar_vector, dvcv_elem_div)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  results = elem_div(a, independents);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(2)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(3)), 1.0);
+  ASSERT_DOUBLE_EQ(value(results(4)), 1.0);
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  ASSERT_DOUBLE_EQ(v, 4.0);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0 / independents(1));
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0 / independents(2));
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0 / independents(3));
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0 / independents(4));
+}
+TEST_F(test_dvar_vector, sine)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  dvar_vector sin(const dvar_vector&);
+
+  results = sin(a);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), std::sin(independents(1)));
+  ASSERT_DOUBLE_EQ(value(results(2)), std::sin(independents(2)));
+  ASSERT_DOUBLE_EQ(value(results(3)), std::sin(independents(3)));
+  ASSERT_DOUBLE_EQ(value(results(4)), std::sin(independents(4)));
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  double expected_v =
+    std::sin(independents(1))
+    + std::sin(independents(2))
+    + std::sin(independents(3))
+    + std::sin(independents(4));
+  ASSERT_DOUBLE_EQ(v, expected_v);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), cos(independents(1)));
+  ASSERT_DOUBLE_EQ(gradients(2), cos(independents(2)));
+  ASSERT_DOUBLE_EQ(gradients(3), cos(independents(3)));
+  ASSERT_DOUBLE_EQ(gradients(4), cos(independents(4)));
+}
+TEST_F(test_dvar_vector, tan)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  dvar_vector tan(const dvar_vector&);
+
+  results = tan(a);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), std::tan(independents(1)));
+  ASSERT_DOUBLE_EQ(value(results(2)), std::tan(independents(2)));
+  ASSERT_DOUBLE_EQ(value(results(3)), std::tan(independents(3)));
+  ASSERT_DOUBLE_EQ(value(results(4)), std::tan(independents(4)));
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  double expected_v =
+    std::tan(independents(1))
+    + std::tan(independents(2))
+    + std::tan(independents(3))
+    + std::tan(independents(4));
+  ASSERT_DOUBLE_EQ(v, expected_v);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), std::pow(cos(independents(1)), -2.0));
+  ASSERT_DOUBLE_EQ(gradients(2), std::pow(cos(independents(2)), -2.0));
+  ASSERT_DOUBLE_EQ(gradients(3), std::pow(cos(independents(3)), -2.0));
+  ASSERT_DOUBLE_EQ(gradients(4), std::pow(cos(independents(4)), -2.0));
+}
+TEST_F(test_dvar_vector, atan)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  dvar_vector tan(const dvar_vector&);
+
+  results = atan(a);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), std::atan(independents(1)));
+  ASSERT_DOUBLE_EQ(value(results(2)), std::atan(independents(2)));
+  ASSERT_DOUBLE_EQ(value(results(3)), std::atan(independents(3)));
+  ASSERT_DOUBLE_EQ(value(results(4)), std::atan(independents(4)));
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  double expected_v =
+    std::atan(independents(1))
+    + std::atan(independents(2))
+    + std::atan(independents(3))
+    + std::atan(independents(4));
+  ASSERT_DOUBLE_EQ(v, expected_v);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0 / (1.0 + std::pow(independents(1), 2.0)));
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0 / (1.0 + std::pow(independents(2), 2.0)));
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0 / (1.0 + std::pow(independents(3), 2.0)));
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0 / (1.0 + std::pow(independents(4), 2.0)));
+}
+TEST_F(test_dvar_vector, sqrt)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = 40.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = 14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector results(1, 4);
+
+  dvar_vector sqrt(const dvar_vector&);
+
+  results = sqrt(a);
+
+  ASSERT_DOUBLE_EQ(value(results(1)), std::sqrt(independents(1)));
+  ASSERT_DOUBLE_EQ(value(results(2)), std::sqrt(independents(2)));
+  ASSERT_DOUBLE_EQ(value(results(3)), std::sqrt(independents(3)));
+  ASSERT_DOUBLE_EQ(value(results(4)), std::sqrt(independents(4)));
+
+  dvariable total = results(1) + results(2) + results(3) + results(4);
+  //dvariable total = sum(results);
+
+  double v = value(total);
+  double expected_v =
+    std::sqrt(independents(1))
+    + std::sqrt(independents(2))
+    + std::sqrt(independents(3))
+    + std::sqrt(independents(4));
+  ASSERT_DOUBLE_EQ(v, expected_v);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 1.0 / (2.0 * std::sqrt(independents(1))));
+  ASSERT_DOUBLE_EQ(gradients(2), 1.0 / (2.0 * std::sqrt(independents(2))));
+  ASSERT_DOUBLE_EQ(gradients(3), 1.0 / (2.0 * std::sqrt(independents(3))));
+  ASSERT_DOUBLE_EQ(gradients(4), 1.0 / (2.0 * std::sqrt(independents(4))));
+}
+TEST_F(test_dvar_vector, sqrvariable)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -40.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvariable total = sqr(a(1)) + sqr(a(2)) + sqr(a(3)) + sqr(a(4));
+
+  double v = value(total);
+  double expected_v =
+    std::pow(independents(1), 2.0)
+    + std::pow(independents(2), 2.0)
+    + std::pow(independents(3), 2.0)
+    + std::pow(independents(4), 2.0);
+  ASSERT_DOUBLE_EQ(v, expected_v);
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 2.0 * independents(1));
+  ASSERT_DOUBLE_EQ(gradients(2), 2.0 * independents(2));
+  ASSERT_DOUBLE_EQ(gradients(3), 2.0 * independents(3));
+  ASSERT_DOUBLE_EQ(gradients(4), 2.0 * independents(4));
 }

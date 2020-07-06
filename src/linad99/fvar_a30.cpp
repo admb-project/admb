@@ -1,43 +1,40 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Unary functions for dvar_vector operator-= and operator+=
+*/
 #include "fvar.hpp"
 
 void dv_xminuseq(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Substracts d from each element of dvar_vector.
+
+@param d prevariable
+*/
 dvar_vector& dvar_vector::operator-=(const prevariable& d)
- {
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem_value(i) -= value(d);
-     }
-   }
+{
+  {
+    double value_d = value(d);
+    for (int i = indexmin(); i <= indexmax(); ++i)
+    {
+      elem_value(i) -= value_d;
+    }
+  }
 
-   save_identifier_string("Pvv");
-   save_dvar_vector_position();  // for this->
-   d.save_prevariable_position();
-   save_identifier_string("Pxx");
-    gradient_structure::GRAD_STACK1->
-            set_gradient_stack(dv_xminuseq);
-   return(*this);
- }
+  save_identifier_string("Pvv");
+  save_dvar_vector_position();  // for this->
+  d.save_prevariable_position();
+  save_identifier_string("Pxx");
+  gradient_structure::GRAD_STACK1->set_gradient_stack(dv_xminuseq);
 
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for dvar_vector::operator-=(const prevariable&)
+*/
 void dv_xminuseq(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -53,30 +50,31 @@ void dv_xminuseq(void)
 void dv_xpluseq(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Adds d to each element of dvar_vector.
+
+@param d prevariable
+*/
 dvar_vector& dvar_vector::operator+=(const prevariable& d)
- {
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem_value(i) += value(d);
-     }
-   }
+{
+  {
+    double value_d = value(d);
+    for (int i = indexmin(); i <= indexmax(); ++i)
+    {
+      elem_value(i) += value_d;
+    }
+  }
 
-   save_identifier_string("Qvv");
-   save_dvar_vector_position();  // for this->
-   d.save_prevariable_position();
-   save_identifier_string("Qxx");
-    gradient_structure::GRAD_STACK1->set_gradient_stack(dv_xpluseq);
-   return(*this);
- }
+  save_identifier_string("Qvv");
+  save_dvar_vector_position();  // for this->
+  d.save_prevariable_position();
+  save_identifier_string("Qxx");
+  gradient_structure::GRAD_STACK1->set_gradient_stack(dv_xpluseq);
 
+  return *this;
+}
 /**
- * Description not yet available.
- * \param
- */
+Adjoint function to compute gradients for dvar_vector::operator+=(const prevariable&).
+*/
 void dv_xpluseq(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -88,35 +86,35 @@ void dv_xpluseq(void)
   double temp=sum(dfthis);
   save_double_derivative(temp,d_pos);
 }
-
 /**
- * Description not yet available.
- * \param
- */
- dvar_vector& dvar_vector::operator-= (double d)
- {
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem_value(i) -= d;
-     }
-   }
+Substracts d from each element of dvar_vector.
 
-   return(*this);
- }
+@param d double
+*/
+dvar_vector& dvar_vector::operator-=(double d)
+{
+  {
+    for (int i = indexmin(); i <= indexmax(); ++i)
+    {
+      elem_value(i) -= d;
+    }
+  }
 
+  return*this;
+}
 /**
- * Description not yet available.
- * \param
- */
- dvar_vector& dvar_vector::operator+= (double d)
- {
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem_value(i) += d;
-     }
-   }
+Adds d to each element of dvar_vector.
 
-   return(*this);
- }
+@param d double
+*/
+dvar_vector& dvar_vector::operator+=(double d)
+{
+  {
+    for (int i = indexmin(); i <= indexmax(); ++i)
+    {
+      elem_value(i) += d;
+    }
+  }
+
+  return *this;
+}

@@ -28,6 +28,7 @@ PROCEDURE_SECTION
   sb = b;
   smu = mu;
 FINAL_SECTION
+  cout << "In FINAL_SECTION" << endl;
   cout << "\nln_det:\n" << get_ln_det_value() << endl;
   cout << "\nhessian:\n" << get_hessian() << endl;
   cout << "\nhessian inverse:\n" << get_hessian_inverse() << endl;

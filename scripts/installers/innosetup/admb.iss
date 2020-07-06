@@ -21,5 +21,6 @@ Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flag
 Source: "..\..\set-admb-command-prompt.bat"; DestDir: "{app}\bin"
 
 [Icons]
-Name: "{group}\ADMB-12.1 Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "ADMB-12.1 Command Prompt"; OnlyBelowVersion: 6.1
+Name: "{app}\ADMB Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "ADMB-12.1 Command Prompt"; OnlyBelowVersion: 6.1
+Name: "{group}\ADMB Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "ADMB-12.1 Command Prompt"; OnlyBelowVersion: 6.1
 Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB"; OnlyBelowVersion: 6.1

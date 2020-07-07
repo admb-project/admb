@@ -2,13 +2,13 @@
 #
 # Created by: Arni Magnusson [2009-05-27] revision 243
 #
-# Copyright (c) 2008-2013 ADMB Foundation
+# Copyright (c) 2008-2020 ADMB Foundation
 #
 shopt -s expand_aliases
 alias help='echo -e "
 Builds AD Model Builder executable or library.
 
-Release Version: 12.1
+Release Version: 12.2
 Location: $BASH_SOURCE
 
 Usage: admb [-c] [-d] [-f] [-g] [-p] [-r] model [src(s)]

@@ -1,7 +1,7 @@
 ADMB Changes
 ============
 
-Describe changes and features for each release.
+Describe new features, changes and improvements for each release.
 
 ---
 
@@ -14,8 +14,10 @@ Release Goals
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-Development Version
--------------------
+ADMB-12.2
+---------
+
+*Released July 7, 2020*  
 
 #### New Features
 

@@ -1,7 +1,7 @@
-# ADMB Quick Start Linux
+# ADMB Quick Start Unix
 
-*ADMB-12.1*  
-*Released January 17, 2020*  
+*ADMB-12.2*  
+*Released July 7, 2020*  
 
 Describe downloading, installing and using ADMB from binary release for Linux.
 
@@ -20,11 +20,14 @@ Quick Start
 
 1. **Download**
 
-   For Linux 64-bit, download [admb-12.1-linux-64bit](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-linux-64bit.zip).
+   For Linux 64-bit, download [admb-12.2-linux-64bit](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-linux-64bit.zip).
 
 2. **Install**
 
    Open a Terminal, then use the command below to extract contents of zip file to _~/admb/_. 
+
+
+   For Linux,
 
    ```
    [~]$ unzip admb-12.1-linux-64bit.zip

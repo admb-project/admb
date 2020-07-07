@@ -1,7 +1,7 @@
 # ADMB Building Source for Unix
 
-*ADMB-12.1*  
-*Released January 17, 2020*  
+*ADMB-12.2*  
+*Released July 7, 2020*  
 
 Describe building ADMB from source for Unix.
 
@@ -31,14 +31,14 @@ Building Source
 
 1. **Download**
 
-   Download ADMB source distribution [admb-12.1-src.zip](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-src.zip).
+   Download ADMB source distribution [admb-12.2-src.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-src.zip).
 
    Open a **Terminal** window
 
    Use the command below to extract contents of zip file to _~/admb/_. 
 
    ```
-   [~]$ unzip admb-12.0-src.zip
+   [~]$ unzip admb-12.2-src.zip
    ```
 
    _**Alternative**_ &mdash; Use Git client (see command below) to get source from version control repository.

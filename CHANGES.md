@@ -3,10 +3,7 @@ ADMB Changes
 
 Describe new features, changes and improvements for each release.
 
----
-
-Release Goals
--------------
+**Release Goals**
  
 * Continually improve algorithms
 * Add new requested features

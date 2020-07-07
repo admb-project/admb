@@ -612,6 +612,17 @@ data_number& data_number::operator=(const double& v)
     model_name_tag::allocate(s);
   }
 
+void named_adstring_array::allocate(int mmin, int mmax, const char* s)
+{
+  adstring_array::allocate(mmin, mmax);
+  model_name_tag::allocate(s);
+}
+void named_adstring_array::allocate(const char* s)
+{
+  adstring_array::allocate();
+  model_name_tag::allocate(s);
+}
+
 
   void named_ivector::allocate(int mmin,int mmax,const char * s)
   {
@@ -1238,6 +1249,24 @@ void named_imatrix::allocate(int rmin,int rmax, const index_type& cmin,
   }
 
 
+void data_adstring_array::allocate(const char* s)
+{
+  int imax = 1;
+  *(ad_comm::global_datafile) >> imax;
+  allocate(1, imax, s);
+}
+void data_adstring_array::allocate(int imin, int imax, const char* s)
+{
+  named_adstring_array::allocate(imin, imax, s);
+  if (size() > 0)
+  {
+    check_datafile_pointer(ad_comm::global_datafile);
+    for (int i = indexmin(); i <= indexmax(); ++i)
+    {
+      *(ad_comm::global_datafile) >> operator[](i);
+    }
+  }
+}
   void data_ivector::allocate(int imin,int imax,const char * s)
   {
     named_ivector::allocate(imin,imax,s);

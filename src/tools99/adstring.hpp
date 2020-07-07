@@ -204,6 +204,7 @@ public:
   ~adstring_array();
   adstring_array(int min,int max);
   void allocate(int min,int max);
+  void allocate() {}
   adstring_array(void);
   const adstring& operator[](int i) const;
   const adstring& operator()(int i) const;

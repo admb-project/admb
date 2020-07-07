@@ -31,7 +31,11 @@ Building Source
 
 1. **Download**
 
+<!--
    Download ADMB source distribution [admb-12.2-src.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-src.zip).
+-->
+
+   Download ADMB source distribution [admb-12.2-src.zip](https://github.com/admb-project/admb/archive/admb-12.2pre.zip).
 
    Open a **Terminal** window
 

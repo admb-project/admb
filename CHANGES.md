@@ -51,7 +51,7 @@ ADMB-12.2
   * [Issue #125](https://github.com/admb-project/admb/issues/125)
   * [Issue #126](https://github.com/admb-project/admb/issues/126)
   * [Issue #120](https://github.com/admb-project/admb/issues/120)
-* Fixed build issue reported by Jon Schnute.  [See Issue #130](https://github.com/admb-project/admb/issues/130)
+* Fixed Windows build issue reported by Jon Schnute.  [See Issue #130](https://github.com/admb-project/admb/issues/130)
 * Added api function documentation.
 
 ADMB-12.1

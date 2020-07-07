@@ -30,7 +30,7 @@ ADMB-12.2
   admb -p simple
   ```
 
-  to produce an executable that can run on both machines.
+  to produce an executable that can run on both machines.  [See Issue #127](https://github.com/admb-project/admb/issues/127)
 
 * Added access functions for ln_det, hessian and hessian inverse which should only be used in the FINAL_SECTION. [See Issue #132](https://github.com/admb-project/admb/issues/132)
 
@@ -49,6 +49,13 @@ ADMB-12.2
 * Able to use FINAL_SECTION without REPORT_SECTION. [See Issue #133](https://github.com/admb-project/admb/issues/133)
 * Fixed core dump when deallocating already freed memory from xpools.  [See Issue #138](https://github.com/admb-project/admb/issues/138)
 * Support adstring_array in DATA_SECTION.  [See Issue #143](https://github.com/admb-project/admb/issues/143)
+* Applied fixes from @yukio-takeuchi.
+  * [Issue #122](https://github.com/admb-project/admb/issues/122)
+  * [Issue #125](https://github.com/admb-project/admb/issues/125)
+  * [Issue #126](https://github.com/admb-project/admb/issues/126)
+  * [Issue #120](https://github.com/admb-project/admb/issues/120)
+* Fixed build issue reported by Jon Schnute.  [See Issue #130](https://github.com/admb-project/admb/issues/130)
+* Added api function documentation.
 
 ADMB-12.1
 ---------

@@ -58,6 +58,8 @@ PRELIMINARY_CALCS_SECTION
   global_grad_stack = new grad_stack(10000, 10);
   global_grad_stack2 = new grad_stack(10000, 10);
   global_grad_stack3 = new grad_stack(10000, 10);
+  global_grad_stack4 = new grad_stack(10000, 10);
+  global_grad_stack5 = new grad_stack(10000, 10);
 FUNCTION dvariable h(const dvariable& z)
   dvariable tmp;
   tmp=mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(a(a_index),beta)*mfexp(sigma*z))) );  
@@ -87,6 +89,10 @@ FINAL_SECTION
   global_grad_stack2 = nullptr;
   delete global_grad_stack3;
   global_grad_stack3 = nullptr;
+  delete global_grad_stack4;
+  global_grad_stack4 = nullptr;
+  delete global_grad_stack5;
+  global_grad_stack5 = nullptr;
 GLOBALS_SECTION
   #include <fvar.hpp>
   #include <admodel.h>
@@ -144,6 +150,8 @@ GLOBALS_SECTION
   grad_stack* global_grad_stack = nullptr;
   grad_stack* global_grad_stack2 = nullptr;
   grad_stack* global_grad_stack3 = nullptr;
+  grad_stack* global_grad_stack4 = nullptr;
+  grad_stack* global_grad_stack5 = nullptr;
 
   std::future<std::vector<std::pair<double, dvector>>> afunnel(
     dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
@@ -224,31 +232,49 @@ GLOBALS_SECTION
     dvar_vector results(min, max);
 
     std::future<std::vector<std::pair<double, dvector>>> f = 
-      afunnel(func, tau, nu, sigma, beta, a, 1, 4, nsteps, global_grad_stack);
+      afunnel(func, tau, nu, sigma, beta, a, 1, 3, nsteps, global_grad_stack);
     std::future<std::vector<std::pair<double, dvector>>> f2 = 
-      afunnel(func, tau, nu, sigma, beta, a, 5, 8, nsteps, global_grad_stack2);
+      afunnel(func, tau, nu, sigma, beta, a, 4, 6, nsteps, global_grad_stack2);
     std::future<std::vector<std::pair<double, dvector>>> f3 = 
-      afunnel(func, tau, nu, sigma, beta, a, 9, 13, nsteps, global_grad_stack3);
+      afunnel(func, tau, nu, sigma, beta, a, 7, 9, nsteps, global_grad_stack3);
+    std::future<std::vector<std::pair<double, dvector>>> f4 = 
+      afunnel(func, tau, nu, sigma, beta, a, 10, 11, nsteps, global_grad_stack4);
+    std::future<std::vector<std::pair<double, dvector>>> f5 = 
+      afunnel(func, tau, nu, sigma, beta, a, 12, 13, nsteps, global_grad_stack5);
 
     std::vector<std::pair<double, dvector>> pairs = f.get();
     std::vector<std::pair<double, dvector>> pairs2 = f2.get();
     std::vector<std::pair<double, dvector>> pairs3 = f3.get();
+    std::vector<std::pair<double, dvector>> pairs4 = f4.get();
+    std::vector<std::pair<double, dvector>> pairs5 = f5.get();
   
-    for (int i = 1; i <= 4; ++i)
+    for (int i = 1; i <= 3; ++i)
     {
       results(i) = to_dvariable(pairs[i - 1], tau, nu, sigma, beta);
     }
     int index = 0;
-    for (int i = 5; i <= 8; ++i)
+    for (int i = 4; i <= 6; ++i)
     {
       results(i) = to_dvariable(pairs2[index], tau, nu, sigma, beta);
       ++index;
     }
     int index2 = 0;
-    for (int i = 9; i <= 13; ++i)
+    for (int i = 7; i <= 9; ++i)
     {
       results(i) = to_dvariable(pairs3[index2], tau, nu, sigma, beta);
       ++index2;
+    }
+    int index3 = 0;
+    for (int i = 10; i <= 11; ++i)
+    {
+      results(i) = to_dvariable(pairs4[index3], tau, nu, sigma, beta);
+      ++index3;
+    }
+    int index4 = 0;
+    for (int i = 12; i <= 13; ++i)
+    {
+      results(i) = to_dvariable(pairs5[index4], tau, nu, sigma, beta);
+      ++index4;
     }
 
     return results;

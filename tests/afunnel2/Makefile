@@ -9,6 +9,8 @@ all:
 	$(MAKE) run6a
 	$(MAKE) run6b
 	$(MAKE) run6c
+	$(MAKE) run6d
+	$(MAKE) run6e
 	$(MAKE) run7
 	$(MAKE) run8
 run0:
@@ -53,6 +55,14 @@ run6c:
 	../../admb forest6c &> /dev/null
 	cp ../../examples/admb/forest/forest.dat forest6c.dat
 	time ./forest6c &> forest6c.out
+run6d:
+	../../admb forest6d &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest6d.dat
+	time ./forest6d &> forest6d.out
+run6e:
+	../../admb forest6e &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest6e.dat
+	time ./forest6e &> forest6e.out
 run7:
 	../../admb forest7 &> /dev/null
 	cp ../../examples/admb/forest/forest.dat forest7.dat

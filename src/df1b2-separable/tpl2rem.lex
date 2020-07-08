@@ -291,6 +291,20 @@ FINAL_SECTION  {
   }
   else
   {
+    if (!report_defined)
+    {
+      fprintf(fall,"}\n");
+      fclose(fall);
+      fall=fopen("xxalloc4.tmp","w+");
+      if (fall==NULL)
+      {
+        fprintf(stderr,"%s","Error trying to open file xxalloc4.tmp\n");
+      }
+      report_defined = 1;
+      fprintf(fall,"%s",
+        "\nvoid model_parameters::report(const dvector& gradients)"
+        "\n{\n");
+    }
     BEGIN DEFINE_PROCS;
     final_defined=1;
     setup_for_prior_likelihood();
@@ -661,6 +675,18 @@ DATA_SECTION  {
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  init_adstring ");
                      }
+<DEFINE_DATA>init_adstring_array {
+
+    BEGIN IN_VECTOR_DEF;
+    fprintf(fdat,"%s","  data_adstring_array ");
+                     }
+
+<DEFINE_DATA>adstring_array {
+
+    BEGIN IN_NAMED_VECTOR_DEF;
+    fprintf(fdat,"%s","  adstring_array ");
+                     }
+
 
 <DEFINE_DATA>init_line_adstring {
 

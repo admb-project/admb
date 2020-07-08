@@ -1501,6 +1501,13 @@ protected:
   void operator = (const char *);
 };
 
+class named_adstring_array: public adstring_array, public model_name_tag
+{
+protected:
+  void allocate(int min, int max, const char* s);
+  void allocate(const char* s);
+};
+
 /**
  * Description not yet available.
  * \param
@@ -1521,6 +1528,13 @@ class init_adstring: public named_adstring
 {
 public:
   void allocate(const char * s="UNNAMED");
+};
+
+class data_adstring_array: public named_adstring_array
+{
+public:
+  void allocate(const char* s = "UNNAMED");
+  void allocate(int imin, int imax, const char* s= "UNNAMED");
 };
 
 /**
@@ -2165,8 +2179,16 @@ public:
   dvariable do_gauss_hermite_integration(void);
   void end_df1b2_funnel_stuff(void);
 
+  double get_ln_det_value() const
+    { return !_hessian ? 0 : _ln_det_value; }
+  dmatrix& get_hessian() { return _hessian; }
+  dmatrix& get_hessian_inverse() { return _hessian_inverse; }
+
 private:
   dvariable do_gauss_hermite_integration_multi(void);
+  double _ln_det_value;
+  dmatrix _hessian;
+  dmatrix _hessian_inverse;
 };
 
 cifstream& operator>>(const cifstream& s, const param_init_number& x);

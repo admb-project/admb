@@ -1977,7 +1977,7 @@ public:
   dvector rotate_pars(const dvector& m, const dvector& x);
   dvector rotate_pars(const dmatrix& m, const dvector& x);
   dvector rotate_gradient(const dvector& x, const dmatrix& m); 
-  int compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3);
+  int compute_next_window(int i, int warmup, int w1, int aws, int w3);
   bool slow_phase(int is, int warmup, int w1, int w3);
   std::string get_filename(const char* f);
   double get_hybrid_monte_carlo_value(int nvar,const independent_variables& y,

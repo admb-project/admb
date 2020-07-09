@@ -31,7 +31,8 @@ using std::queue;
 #include<ctime>
 
 
-int function_minimizer::compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3){
+int function_minimizer::compute_next_window(int i, int warmup, int w1, int aws, int w3){
+  int anw;
   anw = i+aws;
   if(anw == (warmup-w3) )
     return(anw);

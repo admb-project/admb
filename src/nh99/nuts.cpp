@@ -409,11 +409,12 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // and if using adaptation
   int aws = adapt_window; // adapt window size
   // Adapt next window... the next iteration at which the adaptation takes place
-  int anw = compute_next_window(adapt_init_buffer, anw, warmup, adapt_init_buffer, aws, adapt_term_buffer);
+  int anw = compute_next_window(adapt_init_buffer, warmup, adapt_init_buffer, aws, adapt_term_buffer);
   if(adapt_mass || adapt_mass_dense){
     if(adapt_init_buffer + adapt_window + adapt_term_buffer >= warmup) {
       cerr << "Chain " << chain << ": Warning: Turning off mass matrix adaptation because warmup<= " <<
 	adapt_init_buffer+adapt_window + adapt_term_buffer << endl;
+      cerr << "Chain " << chain << ": Warning: Either increase warmup, adjust adaptation inputs, or turn off adaptation" << endl;
       adapt_mass=0; adapt_mass_dense=0;
     }
   }
@@ -731,7 +732,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  // Calculate the next end window. If this overlaps into the final fast
 	  // period, it will be stretched to that point (warmup-adapt_term_buffer)
 	  aws *=2;
-	  anw = compute_next_window(is, anw, warmup, adapt_init_buffer, aws, adapt_term_buffer);
+	  anw = compute_next_window(is, warmup, adapt_init_buffer, aws, adapt_term_buffer);
 	  // Refind a reasonable step size since it can be really
 	  // different after changing M and reset algorithm
 	  // parameters (Turned off for 13.0 b/c I thought it worked better this way)

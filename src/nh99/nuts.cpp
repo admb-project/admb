@@ -412,16 +412,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int anw = compute_next_window(adapt_init_buffer, anw, warmup, adapt_init_buffer, aws, adapt_term_buffer);
   if(adapt_mass || adapt_mass_dense){
     if(adapt_init_buffer + adapt_window + adapt_term_buffer >= warmup) {
-      cerr << "Warning: Turning off mass matrix adaptation because warmup<= " <<
+      cerr << "Chain " << chain << ": Warning: Turning off mass matrix adaptation because warmup<= " <<
 	adapt_init_buffer+adapt_window + adapt_term_buffer << endl;
       adapt_mass=0; adapt_mass_dense=0;
     }
   }
   if( adapt_mass){ 
     cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
-  } else {
+  } else if(adapt_mass_dense) {
     cout << "Chain " << chain << ": Using dense mass matrix adaptation" << endl;
+  } else {
+    cout << "Chain " << chain << ": Not using mass matrix adaptation" << endl;
   }
+  
   if(verbose_adapt_mass==1){
     dvector tmp=diagonal(S);
     cout << "Chain " << chain << ": Initial margial variances: min=" << min(tmp) << " and max=" << max(tmp) << endl;
@@ -460,6 +463,22 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // Get NLL and gradient in unbounded space for initial value y0.
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// gradients in rotated space
+
+  
+  dvariable jac;
+  dvariable userNLL;
+
+  // Get the Jacobian and user NLL at initial value.
+  dvar_vector vx=dvar_vector(y0);
+  jac=initial_params::reset(vx);
+  *objective_function_value::pobjfun=0.0;
+  userfunction();
+  dvar_vector dtemp(1,nvar);
+  initial_params::stddev_vscale(dtemp,vx);
+  jac=sum(log(dtemp)); // get Jacobian adjustment from bounded pars
+  userNLL=*objective_function_value::pobjfun; // NLL defined by user
+  //f=value(vf);
+
   std::clock_t start0 = clock();
   double nll=get_hybrid_monte_carlo_value(nvar,y0,gr);
   double time_gradient = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;
@@ -469,7 +488,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   x0=rotate_pars(chdinv,y0);
   // Now have z0, y0, x0, objective fn value, gradients in
   // unbounded (y) and rotated (x) space all at the intial value.
-  cout << "Chain " << chain << ": Initial negative log density= " << nll << endl;
+  
+  cout << "Chain " << chain << ": Initial negative log density= " << userNLL <<
+    ", Jacobian= " << jac << ", Total= " << userNLL-jac << endl;
   cout << "Chain " << chain << ": Gradient eval took " << time_gradient <<
     " sec. " << nmcmc << " iter w/ 100 steps would take " ;
   time_gradient*= (nmcmc*100);

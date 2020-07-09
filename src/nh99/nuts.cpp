@@ -416,16 +416,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	adapt_init_buffer+adapt_window + adapt_term_buffer << endl;
       adapt_mass=0; adapt_mass_dense=0;
     }
-    if( adapt_mass){ 
-      cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
-    } else {
-      cout << "Chain " << chain << ": Using dense mass matrix adaptation" << endl;
-    }
-    if(verbose_adapt_mass==1){
-      dvector tmp=diagonal(S);
-      cout << "Chain " << chain << ": Initial variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
-    }
   }
+  if( adapt_mass){ 
+    cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
+  } else {
+    cout << "Chain " << chain << ": Using dense mass matrix adaptation" << endl;
+  }
+  if(verbose_adapt_mass==1){
+    dvector tmp=diagonal(S);
+    cout << "Chain " << chain << ": Initial margial variances: min=" << min(tmp) << " and max=" << max(tmp) << endl;
+  }
+  
   if(diag_option)  cout << "Chain " << chain <<": Initializing with unit diagonal mass matrix" << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);

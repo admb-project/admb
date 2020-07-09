@@ -437,7 +437,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
   double mu;
   ofstream adaptation("adaptation.csv", ios::trunc);
-  adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
+  adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__,lp__" << endl;
   //// End of input processing and preparation
   // --------------------------------------------------
 
@@ -534,6 +534,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector thetaprime(1,nvar); dvector _thetaprime(1,nvar);
   dvector grprime(1,nvar); dvector _grprime(1,nvar);
   dvector gr2prime(1,nvar); dvector _gr2prime(1,nvar);
+  double Hprime, _Hprime;
   double nllprime, _nllprime;
   independent_variables parsaveprime(1,nvar);
   independent_variables _parsaveprime(1,nvar);
@@ -545,7 +546,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int ndivergent=0; // # divergences post-warmup
   int nsamples=0; // total samples, not always nmcmc if duration option used
   // Declare some local variables used below.
-  double H0, logu, value, rn, alpha;
+  double H0, H, logu, value, rn, alpha;
   int n, j, v;
   bool s,b;
   // Mass matrix adapatation algorithm variables for diagonal
@@ -591,6 +592,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     rminus_end=p; rplus_end=p;
     gr2minus_end=gr2; gr2plus_end=gr2; gr2prime=gr2;
     nllprime=nll; grprime=gr;
+    Hprime=H0; 
     while (s) {
       value = randu(rng);	   // runif(1)
       v = 2 * (value < 0.5) - 1;
@@ -608,7 +610,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng,
-		   gr2plus_end, _grprime, _gr2prime, _nllprime, _parsaveprime);
+		   gr2plus_end, _grprime, _gr2prime, _nllprime, _Hprime, _parsaveprime);
 	// Moved right, so update extreme right tree. Done by
 	// reference in gr2plus_end, which is the gradient at the
 	// rightmost point of the global trajectory.
@@ -620,7 +622,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
 		   _nprime, _nfevals, _divergent, rng,
-		   gr2minus_end, _grprime, _gr2prime, _nllprime, _parsaveprime);
+		   gr2minus_end, _grprime, _gr2prime, _nllprime, _Hprime, _parsaveprime);
 	thetaminus_end=_thetaminus; rminus_end=_rminus;
       }
       // _thetaprime is the proposed point from that sample (drawn
@@ -632,6 +634,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	thetaprime=_thetaprime; // rotated, unbounded
 	gr2prime=_gr2prime; //
 	nllprime=_nllprime;
+	Hprime=_Hprime;
 	parsaveprime=_parsaveprime;
 	ynew=rotate_pars(chd,thetaprime); // unbounded
       }
@@ -648,6 +651,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // there a way to avoid doing this? I think I need to because of the
     // bounding functions??
     nll=nllprime;
+    H=Hprime;
     gr2=gr2prime;
     theta=thetaprime;
     parsave=parsaveprime;// initial_params::copy_all_values(parsave,1.0);
@@ -759,7 +763,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
-	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
+	       << _nfevals <<"," << _divergent <<"," << H << "," << -nll << endl;
     print_mcmc_progress(is, nmcmc, warmup, chain, refresh);
     if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;

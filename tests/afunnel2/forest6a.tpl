@@ -35,12 +35,16 @@ PROCEDURE_SECTION
   tau=mfexp(log_tau);
   nu=mfexp(log_nu);
   sigma=mfexp(log_sigma);
+  auto start = std::chrono::high_resolution_clock::now();
   S = funnel([](const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps)
   {
     dvariable Integral;
     Integral=adromb2(&h2,tau,nu,sigma,beta,ai,-3.0,3.0,nsteps);
     return Integral;
   }, tau, nu, sigma, beta, a, nsteps);
+  auto finish = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish - start;
+  std::cout << "Elapsed time: " << elapsed.count() <<  endl;
    f=0.0;
    for (int i=1;i<=k;i++)
    {

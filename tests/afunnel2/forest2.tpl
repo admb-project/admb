@@ -35,6 +35,7 @@ PROCEDURE_SECTION
   tau=mfexp(log_tau);
   nu=mfexp(log_nu);
   sigma=mfexp(log_sigma);
+  auto start = std::chrono::high_resolution_clock::now();
    dvariable Integral;
    int i;
    for (i=1;i<=k+1;i++)
@@ -43,6 +44,9 @@ PROCEDURE_SECTION
      Integral=adromb2(&h2,tau,nu,sigma,beta,a(a_index),-3.0,3.0,nsteps);
      S(i)=Integral;
    }
+  auto finish = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish - start;
+  std::cout << "Elapsed time: " << elapsed.count() <<  endl;
    f=0.0;
    for (i=1;i<=k;i++)
    {

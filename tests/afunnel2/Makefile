@@ -19,7 +19,7 @@ run0:
 	time ./forest0 &> forest0.out
 run:
 	cp ../../examples/admb/forest/forest.dat .
-	cp ../../examples/admb/forest/forest.tpl .
+	@#cp ../../examples/admb/forest/forest.tpl .
 	../../admb forest &> /dev/null
 	time ./forest &> forest.out
 

@@ -35,6 +35,7 @@ PROCEDURE_SECTION
   tau=mfexp(log_tau);
   nu=mfexp(log_nu);
   sigma=mfexp(log_sigma);
+  auto start = std::chrono::high_resolution_clock::now();
    int i;
    for (i=1;i<=k+1;i++)
    {
@@ -46,6 +47,9 @@ PROCEDURE_SECTION
        return Integral;
      }, tau, nu, sigma, beta, a(i), nsteps);
    }
+  auto finish = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish - start;
+  std::cout << "Elapsed time: " << elapsed.count() <<  endl;
    f=0.0;
    for (i=1;i<=k;i++)
    {

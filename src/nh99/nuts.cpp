@@ -471,8 +471,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector gr2(1,nvar);		// gradients in rotated space
 
   
-  dvariable jac;
-  dvariable userNLL;
+  dvariable jac=0.0;
+  dvariable userNLL=0.0;
 
   // Get the Jacobian and user NLL at initial value.
   dvar_vector vx=dvar_vector(y0);
@@ -483,8 +483,11 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   initial_params::stddev_vscale(dtemp,vx);
   jac=sum(log(dtemp)); // get Jacobian adjustment from bounded pars
   userNLL=*objective_function_value::pobjfun; // NLL defined by user
-  //f=value(vf);
-
+  // For some reason if I comment this out then the next call to
+  // get_hybrid_mc will return gradients of 0. No idea why but
+  // leave this here.
+  gradcalc(nvar,gr);
+   
   std::clock_t start0 = clock();
   double nll=get_hybrid_monte_carlo_value(nvar,y0,gr);
   double time_gradient = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;

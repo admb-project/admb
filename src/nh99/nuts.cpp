@@ -768,7 +768,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
-	       << _nfevals <<"," << _divergent <<"," << H << "," << -nll << endl;
+	       << _nfevals <<"," << _divergent <<"," << -H << "," << -nll << endl;
     print_mcmc_progress(is, nmcmc, warmup, chain, refresh);
     if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;

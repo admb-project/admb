@@ -45,6 +45,7 @@ ADMB-12.2
 * Add batch file create-admb-command-prompt.bat to create shortcut with full instead of relative path.  [See Issue #135](https://github.com/admb-project/admb/issues/135)
 * Able to use FINAL_SECTION without REPORT_SECTION. [See Issue #133](https://github.com/admb-project/admb/issues/133)
 * Fixed core dump when deallocating already freed memory from xpools.  [See Issue #138](https://github.com/admb-project/admb/issues/138)
+    __Note: USE_VECTOR_SHAPE_POOL for memory pool is now disabled by default.__
 * Support adstring_array in DATA_SECTION.  [See Issue #143](https://github.com/admb-project/admb/issues/143)
 * Applied fixes from @yukio-takeuchi.
   * [Issue #122](https://github.com/admb-project/admb/issues/122)

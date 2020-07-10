@@ -84,6 +84,7 @@ core-tpls:\
   tpl-gradients_output\
   tpl-simple_mcmc\
   tpl-hysimple\
+  tpl-adnuts\
   tpl-testminmax\
   tpl-orange_mvn\
   cpp-globals\
@@ -292,6 +293,7 @@ endif
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean
 	$(MAKE) --directory=hysimple clean
+	$(MAKE) --directory=adnuts clean
 	$(MAKE) --directory=betareg clean
 	$(MAKE) --directory=gmrf clean
 	$(MAKE) --directory=simple_mcmc clean

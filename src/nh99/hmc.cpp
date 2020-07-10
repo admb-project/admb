@@ -18,7 +18,7 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
 
 void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					  int restart_flag) {
-
+  cerr << endl << endl << "Option -hmc is deprecated, please use -nuts" << endl << endl;
   if (nmcmc<=0)
     {
       cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;

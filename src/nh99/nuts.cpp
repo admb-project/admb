@@ -545,6 +545,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   double Hprime, _Hprime;
   double nllprime, _nllprime;
   independent_variables parsaveprime(1,nvar);
+  parsaveprime=z0;
   independent_variables _parsaveprime(1,nvar);
 
   // These are used inside NUTS by reference

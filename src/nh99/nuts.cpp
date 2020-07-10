@@ -27,20 +27,25 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
    This routine also parses the command line arguments and performs actions for
    the following ones:
    * -adapt_delta Target acceptance rate [0,1]. Defaults to 0.8.
-   * -adapt_mass Whether to use diagonal mass matrix adaptation (recommended).
    * -max_treedepth Maximum treedepth. Defaults to 12. Caps trajectory lengths at 2^12
-   * -hyeps      The step size to use. If not specified it will be adapted.
+   * -hyeps      The step size to use. If not specified it will be adapted (recommended).
    * -duration   The maximum runtime in minutes.
-   * -mcdiag     Use diagonal covariance matrix
-   * -mcpin NAME Read in starting values for MCMC from file NAME. NAME must be a valid ADMB '.par' file.
+   * -mcdiag     Initial mass matrix is unit diagonal
+   * -mcpin NAME Read in MCMC starting values for __active parameters only__ from file NAME. 
    * -warmup     The number of warmup iterations during which adaptation occurs.
-   * -verbose_adapt_mass Flag whether to print mass adaptation updates to console.
+   * -refresh    How often to refresh the console output (defaults to 10%)
+   * -adapt_mass Do diagonal mass matrix adaptation
+   * -adapt_mass_dense Do dense mass matrix adaptation
+   * -verbose_adapt_mass Flag whether to print mass adaptation updates to console
+   * -adapt_window Mass matrix adaptation initial window size
+   *- adapt_init_buffer Mass matrix adaptation initial buffer size
+   *- adapt_term_buffer Mass matrix adaptation terminal buffer size
    * \param int nmcmc The number of MCMC simulations to run.
    * \param int iseed0 Initial seed value for simulations.
    * \param double dscale Scale value used only if -mcdiag is specified. Disabled for NUTS.
    * \param int restart_flag Restart the MCMC, even if -mcr is specified. Disalbed for NUTS.
-   * \return Nothing. Creates files <model>.psv with bounded parameters,
-             and unbounded.csv with post-warmup unbounded samples.
+   * \return Nothing. Creates file <model>.psv with bounded parameters, and various files used 
+             by R package adnuts for diagnostics. 
 **/
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,

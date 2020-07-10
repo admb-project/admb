@@ -196,6 +196,9 @@ tpl-gmrf:
 tpl-hysimple:
 	$(MAKE) --directory=hysimple
 
+tpl-adnuts:
+	$(MAKE) --directory=adnuts
+
 tpl-priors:
 	$(MAKE) --directory=priors
 

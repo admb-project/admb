@@ -447,7 +447,10 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
       ofstream ogs("sims");
       ogs << nvar << " " << number_sims << endl;
       double llc=-get_monte_carlo_value(nvar,y);
+
+      std::clock_t start0 = clock();
       llbest=-get_monte_carlo_value(nvar,y);
+      double time_nll = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;
       lbmax=llbest;
       // store current mcmc variable values in param_values
       //void store_mcmc_values(const ofstream& ofs);
@@ -656,6 +659,19 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	// cout << "Initial z=" << parsave << endl;
 	// cout << "Initial y=" << y << endl;
 	cout <<"Chain " << chain << ": Initial negative log density=" << -llbest << endl;
+	cout << "Chain " << chain << ": Model eval took " << time_nll <<
+	  " sec. " << nmcmc << " iter will take approximately " ;
+	time_nll*= nmcmc;
+	if(time_nll<=60){
+	  printf("%.2f", time_nll); cout << " seconds." << endl;
+	} else if(time_nll <=60*60){
+	  printf("%.2f", time_nll/60); cout << " minutes." << endl;
+	} else if(time_nll <= (60*60*24)){
+	  printf("%.2f", time_nll/(60*60)); cout << " hours." << endl;
+	} else {
+	  printf("%.2f", time_nll/(24*60*60)); cout << " days." << endl;
+	}
+
 	// Start of MCMC chain
 	for (int i=1;i<=number_sims;i++)
 	  {

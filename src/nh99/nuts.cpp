@@ -656,20 +656,20 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       n += _nprime; ++j;
       if(j>=max_treedepth) break;
     } // end of single NUTS trajectory
-    // Rerun model to update saved parameters internally before saving. Is
-    // there a way to avoid doing this? I think I need to because of the
-    // bounding functions??
-    nll=nllprime;
-    H=Hprime;
-    gr2=gr2prime;
-    theta=thetaprime;
-    parsave=parsaveprime;// initial_params::copy_all_values(parsave,1.0);
+    // Instead of rerunning the model again (costly), I pass
+    // versions of the important parts by reference above. This
+    // is difference in ADMB 12.0 and 12.2 versions of this
+    // algorithm. Note these are also the intial values in the
+    // next iteration.
+    nll=nllprime; H=Hprime;
+    gr2=gr2prime; theta=thetaprime;
+    parsave=parsaveprime;
     // Write the samples for this iteration to file
     for(int i=1;i<nvar;i++) unbounded << ynew(i) << ", ";
     unbounded << ynew(nvar) << endl;
     (*pofs_psave) << parsave; // save all bounded draws to psv file
-    // Calculate estimated acceptance probability
-     alpha=0;
+    // Calculate approximate acceptance probability
+    alpha=0;
     if(_nalphaprime>0) alpha=double(_alphaprime)/double(_nalphaprime);
     if(is > warmup){
       if(_divergent==1) ndivergent++;  // Increment divergences only after warmup

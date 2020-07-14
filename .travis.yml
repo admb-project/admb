@@ -35,7 +35,7 @@ jobs:
 
   - name: Code Coverage 
     os: linux
-    dist: xenial
+    dist: bionic
     compiler: gcc
     env: DEBUG=yes
     before_install:
@@ -53,7 +53,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -69,7 +69,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-ham5
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -83,7 +83,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-ham5
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -97,7 +97,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-ham5
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -113,7 +113,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-catage
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -129,7 +129,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-chem_eng
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -145,7 +145,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-forest
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -161,7 +161,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-finance
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -177,7 +177,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-simple
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -193,7 +193,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-pella_t
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -209,7 +209,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-robreg
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -225,7 +225,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-truncreg
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -241,7 +241,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-bcb
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -257,7 +257,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-bvprobit
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -273,7 +273,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-caest
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -287,7 +287,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-caest
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -301,7 +301,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-caest
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -315,7 +315,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-gamma
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -331,7 +331,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-lidar
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -347,7 +347,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-logistic
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -363,7 +363,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-nbmm
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -377,7 +377,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-nbmm
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -391,7 +391,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-nbmm
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -405,7 +405,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-nested4
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -421,7 +421,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-orange
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -437,7 +437,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-orange2
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -453,7 +453,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-orange_cor
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -469,7 +469,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-pheno
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -485,7 +485,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-sdv
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -499,7 +499,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-sdv
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -513,7 +513,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-sdv
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -527,7 +527,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-skewed
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -541,7 +541,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-skewed
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -555,7 +555,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-skewed
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -569,7 +569,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-socatt
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -585,7 +585,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-spatial
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -600,7 +600,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-spatial
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -614,7 +614,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-union
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -630,7 +630,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-weights
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes

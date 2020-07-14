@@ -39,8 +39,8 @@ Development Version
   cout << "\nhessian inverse:\n" << get_hessian_inverse() << endl;
   ```
 
-* Added code to do mass matrix adaptation in the NUTS
-  routine. This can be initiated with the flag
+* Added code to do mass matrix adaptation in the NUTS routine.
+  This can be initiated with the flag
   `-adapt_mass_dense` when calling the NUTS routine with
   `-nuts`. It is an experimental feature.
   
@@ -52,10 +52,9 @@ Development Version
 * Able to use FINAL_SECTION without REPORT_SECTION. [See Issue #133](https://github.com/admb-project/admb/issues/133)
 * Fixed core dump when deallocating already freed memory from xpools.  [See Issue #138](https://github.com/admb-project/admb/issues/138)
 * Support adstring_array in DATA_SECTION.  [See Issue #143](https://github.com/admb-project/admb/issues/143)
-* Several bugs in the NUTS MCMC routine were fixed, adaptation schemes alterned, and console output improved
-* Validity testing of all MCMC algorithms against known
-  statistical distributions give strong evidence of the
-  robustness of them.  
+* Merged adnuts improvements developed by @Cole-Monnahan-NOAA.  [See Pull #146](https://github.com/admb-project/admb/pull/146)
+  - Several bugs in the NUTS MCMC routine were fixed, adaptation schemes altered, and console output improved.
+  - Validity testing of all MCMC algorithms against known statistical distributions give strong evidence of the robustness of them.  
   
 ADMB-12.1 ---------
 

@@ -220,23 +220,22 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
   int refresh=1;
   if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
-    if (nopt) {
-      int iii=atoi(ad_comm::argv[on+1]);
-      if (iii <0) {
-	cerr << "Error: refresh must be >= 0" << endl;
-	ad_exit(1);
-      } else {
-	refresh=iii;
-      }
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii < -1) {
+      cerr << iii << endl;
+      cerr << "Error: refresh must be >= -1. Use -1 for no refresh or positive integer for rate." << endl;
+      ad_exit(1);
+    } else {
+      refresh=iii;
     }
   }
-    int diag_option=0;
-    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
-      {
-	diag_option=1;
-	cout << "Chain " << chain << ": Setting covariance matrix to diagonal with entries " << dscale
-	     << endl;
-      }
+  int diag_option=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
+    {
+      diag_option=1;
+      cout << "Chain " << chain << ": Setting covariance matrix to diagonal with entries " << dscale
+	   << endl;
+    }
     dmatrix S(1,nvar,1,nvar);
     dvector sscale(1,nvar);
     if (!diag_option)

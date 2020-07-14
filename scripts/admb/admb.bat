@@ -1,6 +1,6 @@
 @echo off
 @REM
-@REM  Copyright 2013-2017 (c) ADMB Foundation
+@REM  Copyright 2013-2020 (c) ADMB Foundation
 @REM
 
 if [%1]==[] goto HELP
@@ -631,7 +631,7 @@ goto EOF
 :HELP
 echo Builds AD Model Builder executable or library.
 echo.
-echo Release Version: 12.1
+echo Release Version: 12.2
 echo Location: %~dp0
 echo.
 echo Usage: admb [-c] [-d] [-f] [-g] [-r] model [src(s)]

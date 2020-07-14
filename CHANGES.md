@@ -1,12 +1,9 @@
 ADMB Changes
 ============
 
-Describe changes and features for each release.
+Describe new features, changes and improvements for each release.
 
----
-
-Release Goals
--------------
+**Release Goals**
  
 * Continually improve algorithms
 * Add new requested features
@@ -14,8 +11,10 @@ Release Goals
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-Development Version
--------------------
+ADMB-12.2
+---------
+
+*Released July 7, 2020*  
 
 #### New Features
 
@@ -28,7 +27,7 @@ Development Version
   admb -p simple
   ```
 
-  to produce an executable that can run on both machines.
+  to produce an executable that can run on both machines.  [See Issue #127](https://github.com/admb-project/admb/issues/127)
 
 * Added access functions for ln_det, hessian and hessian inverse which should only be used in the FINAL_SECTION. [See Issue #132](https://github.com/admb-project/admb/issues/132)
 
@@ -50,14 +49,22 @@ Development Version
 * Function sqr should compute the square of a variable not the square root.  [See Issue #129](https://github.com/admb-project/admb/issues/129)
 * Add batch file create-admb-command-prompt.bat to create shortcut with full instead of relative path.  [See Issue #135](https://github.com/admb-project/admb/issues/135)
 * Able to use FINAL_SECTION without REPORT_SECTION. [See Issue #133](https://github.com/admb-project/admb/issues/133)
-* Fixed core dump when deallocating already freed memory from xpools.  [See Issue #138](https://github.com/admb-project/admb/issues/138)
+* Fixed core dump when deallocating already freed memory from xpools.  [See Issue #138](https://github.com/admb-project/admb/issues/138)   
+  *Note: USE_VECTOR_SHAPE_POOL for memory pool is now disabled by default.*   
 * Support adstring_array in DATA_SECTION.  [See Issue #143](https://github.com/admb-project/admb/issues/143)
 * Merged adnuts improvements developed by @Cole-Monnahan-NOAA.  [See Pull #146](https://github.com/admb-project/admb/pull/146)
   - Several bugs in the NUTS MCMC routine were fixed, adaptation schemes altered, and console output improved.
   - Validity testing of all MCMC algorithms against known statistical distributions give strong evidence of the robustness of them.  
-  
-ADMB-12.1 ---------
+* Applied fixes from @yukio-takeuchi.
+  * [Issue #122](https://github.com/admb-project/admb/issues/122)
+  * [Issue #125](https://github.com/admb-project/admb/issues/125)
+  * [Issue #126](https://github.com/admb-project/admb/issues/126)
+  * [Issue #120](https://github.com/admb-project/admb/issues/120)
+* Fixed Windows build issue reported by Jon Schnute.  [See Issue #130](https://github.com/admb-project/admb/issues/130)
+* Added api function documentation.
 
+ADMB-12.1
+---------
 *Released January 17, 2020*  
 
 #### New Supported Compilers

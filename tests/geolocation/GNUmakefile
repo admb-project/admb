@@ -55,6 +55,5 @@ clean:
 ifeq ($(CMDSHELL),cmd)
 	if exist kalmanfilter pushd kalmanfilter & git clean -f & git checkout -- . &  popd
 else
-	cd kalmanfilter; git clean -f
-	cd kalmanfilter; git checkout --
+	@if [ -d "kalmanfilter" ]; then cd kalmanfilter; git clean -f; git checkout --; fi
 endif

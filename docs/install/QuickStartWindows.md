@@ -1,7 +1,7 @@
 # ADMB Quick Start Windows
 
-*ADMB-12.1*
-*Released January 17, 2020*
+*ADMB-12.2*
+*Released July 7, 2020*
 
 Describe downloading, installing and using ADMB from binary release for Windows.
 
@@ -12,9 +12,9 @@ Quick Start
 
 1. **Download**
 
-   For Windows 64Bit, download zip file [admb-12.1-windows.zip](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-windows.zip).
+   For Windows 64Bit, download zip file [admb-12.2-windows.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-windows.zip).
 
-   For Windows 64Bit, download self extracting file [admb-12.1-windows.exe](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-windows.exe).
+   For Windows 64Bit, download self extracting file [admb-12.2-windows.exe](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-windows.exe).
 
    _**Note**_ &mdash; Release includes MinGW-w64 C++ compiler.
 
@@ -28,7 +28,7 @@ Quick Start
 
    For zip file, Use **File Explorer** and open folder **C:\ADMB**, then double click **ADMB Command Prompt** shortcut to open command line window.
 
-   For self extracting exe file, Use **File Explorer** and open folder **C:\Program Files(x86)\ADMB-12.1**, then double click **ADMB Command Prompt** shortcut to open command line window.
+   For self extracting exe file, Use **File Explorer** and open folder **C:\Program Files(x86)\ADMB-12.2**, then double click **ADMB Command Prompt** shortcut to open command line window.
 
    In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
 

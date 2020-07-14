@@ -34,9 +34,9 @@ endif
 tests-remote:
 	$(MAKE) remote-core-tpls
 	$(MAKE) remote-contrib-tpls
+	$(MAKE) unit-gtests
 
 tests-core:
-	$(MAKE) unit-gtests
 	$(MAKE) --directory=../examples all
 	$(MAKE) core-tpls
 

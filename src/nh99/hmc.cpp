@@ -18,7 +18,7 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
 
 void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					  int restart_flag) {
-  cerr << endl << endl << "Option -hmc is deprecated, please use -nuts" << endl << endl;
+  cerr << endl << endl << "Option -hmc is deprecated, please use option -nuts" << endl << endl;
   if (nmcmc<=0)
     {
       cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
@@ -95,18 +95,17 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
-    // console refresh rate
+  // console refresh rate
   int refresh=1;
   if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
-    if (nopt) {
-      int iii=atoi(ad_comm::argv[on+1]);
-      if (iii <0) {
-	cerr << "Error: refresh must be >= 0" << endl;
-	ad_exit(1);
-      } else {
-	refresh=iii;
-      }
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii < -1) {
+      cerr << iii << endl;
+      cerr << "Error: refresh must be >= -1. Use -1 for no refresh or positive integer for rate." << endl;
+      ad_exit(1);
+    } else {
+      refresh=iii;
     }
   }
 
@@ -207,6 +206,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  S(i,i)=dscale;
 	}
     }
+  diagonal_metric_flag=0; // global flag used in functions to do more efficient calculations
 
   // How much to thin, for now fixed at 1.
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)

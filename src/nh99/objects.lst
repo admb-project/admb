@@ -2,8 +2,7 @@ OBJ6=\
  hmc_functions.obj\
  rwm.obj\
  nuts.obj\
- nuts_tests.obj\
- hmc.obj\
+  hmc.obj\
  banner.obj\
  param_init_bounded_number_matrix.obj\
  newmodm5.obj\

@@ -31,7 +31,8 @@ using std::queue;
 #include<ctime>
 
 
-int function_minimizer::compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3){
+int function_minimizer::compute_next_window(int i, int warmup, int w1, int aws, int w3){
+  int anw;
   anw = i+aws;
   if(anw == (warmup-w3) )
     return(anw);
@@ -77,12 +78,18 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 				    dvector& _rplus, dvector& _rminus,
 				    double& _alphaprime, int& _nalphaprime, bool& _sprime,
 				    int& _nprime, int& _nfevals, bool& _divergent,
-				    const random_number_generator& rng) {
+				    const random_number_generator& rng,
+				    dvector& gr2_end, dvector& _grprime, dvector& _gr2prime, double& _nllprime,
+				    double& _Hprime, independent_variables& _parsaveprime) {
 
   if (j==0) {
     // Take a single step in direction v from points p,y, which are updated
     // internally by reference and thus represent the new point.
     double nll= leapfrog(nvar, gr, chd, eps*v, p, y, gr2);
+    // These are the NLL and gradients at the last point
+    // evaluated, saved via reference, so I don't have to
+    // recalculate them when starting a new trajectory. 
+    gr2_end=gr2;
     // The new Hamiltonian value. ADMB returns negative log density so
     // correct it
     double Ham=-(nll+0.5*norm2(p));
@@ -106,6 +113,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       _rminus = p;
       _thetaplus = y;
       _rplus = p;
+      _grprime=gr; _gr2prime=gr2; _nllprime=nll; _Hprime=Ham;
+      initial_params::copy_all_values(_parsaveprime,1.0);
     }
     _nalphaprime=1;
     _nfevals++;
@@ -114,18 +123,27 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
     build_tree(nvar, gr, chd, eps, p, y, gr2, logu, v, j-1,
 	       H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 	       _alphaprime, _nalphaprime, _sprime,
-	       _nprime, _nfevals, _divergent, rng);
+	       _nprime, _nfevals, _divergent, rng,
+	       gr2_end, _grprime, _gr2prime, _nllprime, _Hprime, _parsaveprime);
     // If valid trajectory, build second half.
     if (_sprime == 1) {
       // Save copies of the global ones due to rerunning build_tree below
       // which will overwrite some of the global variables we need to
       // save. These are the ' versions of the paper, e.g., sprime'.
       dvector thetaprime0(1,nvar);
+      independent_variables parsaveprime0(1,nvar);
+      dvector gr2prime0(1,nvar); dvector grprime0(1,nvar);
+      double nllprime0, Hprime0;
       dvector thetaplus0(1,nvar);
       dvector thetaminus0(1,nvar);
       dvector rplus0(1,nvar);
       dvector rminus0(1,nvar);
       thetaprime0=_thetaprime;
+      parsaveprime0=_parsaveprime;
+      grprime0=_grprime;
+      gr2prime0=_gr2prime;
+      nllprime0=_nllprime;
+      Hprime0=_Hprime;
       thetaplus0=_thetaplus;
       thetaminus0=_thetaminus;
       rplus0=_rplus;
@@ -139,7 +157,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, _rminus, _thetaminus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+		   _nprime, _nfevals, _divergent, rng,
+		   gr2_end, _grprime, _gr2prime, _nllprime, _Hprime, _parsaveprime);
 	// Update the leftmost point
 	rminus0=_rminus;
 	thetaminus0=_thetaminus;
@@ -151,7 +170,8 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
 	build_tree(nvar, gr, chd, eps, _rplus, _thetaplus, gr2, logu, v, j-1,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
+		   _nprime, _nfevals, _divergent, rng,
+		   gr2_end, _grprime, _gr2prime, _nllprime, _Hprime, _parsaveprime);
 	// Update the rightmost point
 	rplus0=_rplus;
 	thetaplus0=_thetaplus;
@@ -171,6 +191,11 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       } else {
 	// Reject it for the proposal from the last doubling.
 	_thetaprime = thetaprime0;
+	_parsaveprime=parsaveprime0;
+	_grprime=grprime0;
+	_gr2prime=gr2prime0;
+	_nllprime=nllprime0;
+	_Hprime=Hprime0;
       }
 
       // Update the global reference variables
@@ -206,18 +231,18 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
 }
 
 
-double function_minimizer::adapt_eps(int ii, double eps, double alpha,
+double function_minimizer::adapt_eps(int ii, int iseps, double eps, double alpha,
 				     double& adapt_delta, double& mu,
 				     dvector& epsvec, dvector& epsbar,
 				     dvector& Hbar){
-  double gamma=0.05;  double t0=10;  double kappa=0.75;
+  double gamma=0.05;  double t0=20;  double kappa=0.75;
   int m=ii+1;
   // If divergence, there is 0 acceptance probability so alpha=0.
   if(std::isnan(alpha)) alpha=0;
-  Hbar(m)= (1-1/(m+t0))*Hbar(m-1) + (adapt_delta-alpha)/(m+t0);
-  double logeps=mu-sqrt(m)*Hbar(m)/gamma;
+  Hbar(m)= (1-1/(iseps+t0))*Hbar(m-1) + (adapt_delta-alpha)/(iseps+t0);
+  double logeps=mu-sqrt(iseps)*Hbar(m)/gamma;
   epsvec(m)=exp(logeps);
-  double logepsbar= pow(m, -kappa)*logeps+(1-pow(m,-kappa))*log(epsbar(m-1));
+  double logepsbar= pow(iseps, -kappa)*logeps+(1-pow(iseps,-kappa))*log(epsbar(m-1));
   epsbar(m)=exp(logepsbar);
   return(epsvec(m));
 }
@@ -226,11 +251,11 @@ double function_minimizer::adapt_eps(int ii, double eps, double alpha,
    * Written by Dave, commented by Cole starting 8/31/2016
    * Description not yet available.
    * \param
-   * x is vector of Choleski decomposed parameters (i.e., x=y*chd).
+   * y is vector of Choleski rotated parameters (i.e., unbounded space;  y=chd*x where x is algorithm space).
    * g is a vector of empty gradients
-   * returns the negative log likelihood (density), but also stores gradients for x in g
+   * returns the negative log likelihood (density), but also stores gradients at y in g
    */
-double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independent_variables& x,dvector& g)
+double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independent_variables& y,dvector& g)
 {
   //initial_params::xinit(x);
   double f=0.0;
@@ -238,12 +263,11 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
     {
       cerr << "HMC not implemented for random effects models" << endl;
       ad_exit(1);
-      g=(*lapprox)(x,f,this);
     }
   else
     {
       dvariable vf=0.0;
-      dvar_vector vx=dvar_vector(x);
+      dvar_vector vx=dvar_vector(y);
       vf=initial_params::reset(vx);
       *objective_function_value::pobjfun=0.0;
       userfunction();
@@ -257,42 +281,57 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar, const independ
   return f;
 }
 
-void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain)
+void function_minimizer::print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain, int refresh)
 {
   // Modified from Stan: sample::progress.hpp; 9/9/2016
-  int refresh=1;
-  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
-  if (is==1 || is == nmcmc || is % refresh ==0 ){
-    int width=1+(int)std::ceil(std::log10(static_cast<double>(nmcmc)));
-    cout << "Chain " << chain << ", " << "Iteration: " << std::setw(width) << is
-	 << " / " << nmcmc << " [" << std::setw(3)
-	 << int(100.0 * (double(is) / double(nmcmc) ))
-	 << "%] " << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
+  if(refresh>0){
+    if (is==1 || is == nmcmc || is % refresh ==0 ){
+      int width=1+(int)std::ceil(std::log10(static_cast<double>(nmcmc)));
+      cout << "Chain " << chain << ": " << "Iteration: " << std::setw(width) << is
+	   << "/" << nmcmc << " [" << std::setw(3)
+	   << int(100.0 * (double(is) / double(nmcmc) ))
+	   << "%]" << (is <= nwarmup ? " (Warmup)" : " (Sampling)") << endl;
+    }
   }
 }
 
-void function_minimizer::print_mcmc_timing(double time_warmup, double start) {
-  double time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-  std::string title(" Elapsed Time: ");
-  std::stringstream ss;
-  ss.str("");
-  ss << title << time_warmup << " seconds (Warm-up)";
-  cout << ss.str() << endl;
-  ss.str("");
-  ss << std::string(title.size(), ' ') << time_total-time_warmup << " seconds (Sampling)";
-  cout << ss.str() << endl;
-  ss.str("");
-  ss << std::string(title.size(), ' ') << time_total << " seconds (Total)";
-  cout << ss.str() << endl;
+void function_minimizer::print_mcmc_timing(double time_warmup, double time_total, int chain) {
+  double time_sampling=time_total-time_warmup;
+  std::string title= "Elapsed Time: ";
+  std::string title2="Chain " + std::to_string(chain) + ": ";
+  std::string u; // units
+  // Depending on how long it ran convert to sec/min/hour/days so
+  // the outputs are interpretable
+  if(time_total<=60){
+    u=" seconds";
+  } else if(time_total > 60 && time_total <=60*60){
+    time_total/=60; time_sampling/=60; time_warmup/=60;
+    u=" minutes";
+  } else if(time_total > (60*60) && time_total <= (360*24)){
+    time_total/=(60*60); time_sampling/=(60*60); time_warmup/=(60*60);
+    u=" hours";
+  } else {
+    time_total/=(24*60*60); time_sampling/=(24*60*60); time_warmup/=(24*60*60);
+    u=" days";
+  }
+  cout << title2 << title; printf("%5.2f", time_warmup); cout << u << " (Warmup   | ";
+  printf("%.0f", 100*(time_warmup/time_total)); cout << "%)" << endl;
+  cout << title2 << std::string(title.size(), ' '); printf("%5.2f", time_sampling);
+  cout  << u << " (Sampling | " ; 
+  printf("%.0f", 100*(time_sampling/time_total)); cout <<"%)" << endl;
+  cout << title2 << std::string(title.size(), ' '); printf("%5.2f", time_total);
+  cout  << u << " (Total    | 100%)";
+  cout << endl;
 }
 
 // This function holds the position (y) and momentum (p) vectors fixed and
 // takes a single step of size eps. This process repeats until a reasonable
 // eps is found. Thus need to make sure y and p are constant and only eps
 // changes.
-double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose)
+double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd,
+						    bool verbose_adapt_mass, bool verbose_find_epsilon,
+						    int chain)
 {
-
   double eps=1;			   // initial eps
   independent_variables z(1,nvar); // rotated bounded parameters
   dvector p2(1,nvar);		// updated momentum
@@ -325,6 +364,10 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
   }
 
   for(int k=2; k<50; k++){
+    if(verbose_find_epsilon){
+      cout << "Chain " << chain <<  ": Find epsilson: iteration=" << k-1 << "; eps=" << eps << "; NLL1=" << nllbegin << "; p1=" << pprob1 << "; H1=" << H1 <<
+	"; NLL2=" << nll2 << "; p2=" << pprob2 <<"; H2=" << H2<< "; alpha=" << alpha << endl;
+    }
     // Reinitialize position and momentum at each step.
     p2=p;
     y2=y;
@@ -337,19 +380,21 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
     alpha=exp(H1-H2);
 
     // Check if the 1/2 threshold has been crossed
-    if(pow(alpha,a) < pow(2,-a)){
-      if(verbose){
-      cout << "Found reasonable step size of " << eps << " after "
-	   << k << " steps." << endl;
+    if(!std::isnan(alpha) && pow(alpha,a) < pow(2,-a)){
+      if(verbose_find_epsilon){
+	cout << "Chain " << chain <<  ": Final epsilson: iteration=" << k << "; eps=" << eps << "; NLL1=" << nllbegin << "; p1=" << pprob1 << "; H1=" << H1 <<
+	  "; NLL2=" << nll2 << "; p2=" << pprob2 <<"; H2=" << H2<< "; alpha=" << alpha << endl;
       }
+      if(verbose_adapt_mass) {cout << "Chain " << chain << ": Found reasonable step size of " << eps << endl;}
       return(eps);
     } else {
       // Otherwise either halve or double eps and do another iteration
       eps=pow(2,a)*eps;
     }
   }
-  cerr << "Did not find reasonable initial step size after 50 iterations -- " <<
-    "is something wrong with model?" << endl;
+  cerr << "Chain " << chain <<": Final epsilson: iteration=" << 50 << "; eps=" << eps << "; NLL1=" << nllbegin << "; p1=" << pprob1 << "; H1=" << H1 <<
+  	"; NLL2=" << nll2 << "; p2=" << pprob2 <<"; H2=" << H2<< "; alpha=" << alpha << endl;
+  cerr << "Chain " << chain << ": Could not find reasonable initial step size. Is something wrong with model/initial value?" << endl;
   ad_exit(1);
   return(eps); // dummy to avoid compile warnings
 } // end of function
@@ -360,19 +405,19 @@ double function_minimizer::find_reasonable_stepsize(int nvar, dvector y, dvector
    momentum variables. Returns nll value but also updates position and
    momentum variables by reference.
  **/
-double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p, dvector& y,
+double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p, dvector& x,
 				    dvector& gr2)
 {
-  independent_variables z(1,nvar); // bounded parameters
+  independent_variables y(1,nvar); // bounded parameters
   dvector phalf;
   // Update momentum by half step
   phalf=p-eps/2*gr2;
   // Update parameters by full step
-  y+=eps*phalf;
+  x+=eps*phalf;
   // Transform parameters via mass matrix to get new gradient
-  z=rotate_pars(chd,y);
+  y=rotate_pars(chd,x);
   // Get NLL and set updated gradient in gr by reference
-  double nll=get_hybrid_monte_carlo_value(nvar,z,gr);
+  double nll=get_hybrid_monte_carlo_value(nvar,y,gr);
   // Update gradient via mass matrix
   gr2=rotate_gradient(gr, chd);
   // Last half step for momentum
@@ -433,9 +478,14 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
 }
 
 // Function written by Dave to help speed up some of the MCMC
-// calculations. The code has chd*x which rotates the space but this is
-// often a vector or at least a lower triangular matrix. Thus we can make
-// it more efficient.
+// calculations. The code has chd*x which rotates the space but
+// this is often a vector or at least a lower triangular
+// matrix. Thus we can make it more efficient. Can go from x to
+// y, or y to x, depending on if you pass m=chd or m=inverse(chd)
+/*
+@param 
+
+ */
 dvector function_minimizer::rotate_pars(const dmatrix& m, const dvector& x)
 {
   if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
@@ -503,7 +553,7 @@ dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
 	double* pm = (double*)&column(j);
 	double* px = (double*)&x(j);
 	double sum = *px * *pm;
-	for (int i=j; i <= mmax; ++i)
+	for (int i=j; i < mmax; ++i)
 	  {
 	    sum += *(++px) * *(++pm);
 	  }
@@ -522,4 +572,153 @@ dvector function_minimizer::rotate_gradient(const dvector& x, const dmatrix& m)
     ad_exit(21);
   }
   return(tmp);
+}
+
+/**
+ * Calculate running covariance using Welford's "online" algorithm
+ * \param
+ * n is a count of samples
+ * m is a running vector of means (initialized at 0)
+ * m2 is a running matrix of unscaled covariance (initalized
+ * at 0)
+ * q is a vector of the new parameters used to update
+ * returns updated n, m, and m2 via reference
+ * m2/(n-1) is the covariance through n samples
+ * this is loosely based off of Stan's algorithm: welford_covar_estimator.hpp
+ */
+void function_minimizer::add_sample_diag(const int nvar, int& n, dvector& m, dvector& m2,
+					  const independent_variables& q) {
+  n++;
+  //convert q to dvector ( better way to do this?)
+  dvector aq(1,nvar);
+  aq=q;
+  dvector delta=aq - m;
+  m += delta / n;
+  m2 += elem_prod(aq-m, delta);
+}
+
+/**
+ * Calculate running covariance using Welford's "online" algorithm
+ * \param
+ * n is a count of samples
+ * m is a running vector of means (initialized at 0)
+ * m2 is a running vector of unscaled variances (initalized
+ * at 0)
+ * q is a vector of the new parameters used to update
+ * returns updated n, m, and m2 via reference
+ * m2/(n-1) is the covariance through n samples
+ * this is loosely based off of Stan's algorithm: welford_covar_estimator.hpp
+ */
+void function_minimizer::add_sample_dense(const int nvar, int& n, dvector& m, dmatrix& m2,
+					  const independent_variables& q) {
+  n++;
+  //convert q to dvector ( better way to do this?)
+  dvector aq(1,nvar);
+  aq=q;
+  dvector delta=aq - m;
+  m += delta / n;
+  m2 += outer_prod(aq-m, delta);
+}
+
+/**
+ * Calculate the Cholesky decomposition and its inverse given a mass matrix
+ * \param 
+ * nvar Number of active parameters
+ * metric Mass matrix
+ * chd Choleksy decomposition, updated via reference
+ * chdinv Inverse of chd, updated via reference
+ * returns nothing except updated matrices by reference
+ */
+bool function_minimizer::calculate_chd_and_inverse(int nvar, const dmatrix& metric, 
+						   dmatrix& chd, dmatrix& chdinv){
+
+  // Save copy before modifying it
+  dmatrix chd0(1,nvar,1,nvar);
+  chd0=chd;
+  bool success = true;
+  if(diagonal_metric_flag==0){
+    // will fail if not positive definite
+    success = choleski_decomp_hmc(metric, chd); // cholesky decomp of mass matrix
+    if(success){
+      chdinv=inv(chd);
+    } else {
+      // wasn't positive definite so don't update it (better to
+      // do diagonal?)), reset to original
+      chd=chd0;
+    }
+  } else {
+    // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
+    chd.initialize(); chdinv.initialize();
+    for(int i=1;i<=nvar;i++){
+      if(metric(i,i)<0){
+	cerr << "Element " << i << " of diagonal mass matrix was <0... setting to 1 instead" << endl;
+	chd(i,i)=1;
+      } else{
+	chd(i,i)=sqrt(metric(i,i));
+      }
+      chdinv(i,i)=1/chd(i,i);
+    }
+  }
+  return(success);
+}
+  
+
+/* This function is a copy of choleski_decomp from dmat15.cpp,
+ except tweaked for use with adaptive dense stepsize in HMC.  The
+ main difference is that instead of exiting on error it gives a
+ more informative error, also it returns a flag for whether it
+ succeeded, and updates L by reference.  -Cole 3/2020
+
+ @param metric A covariance matrix as estimated from warmup samples
+ @param L A cholesky decomposed matrix
+ @return A boolean whether algorithm succeeded, and L by reference
+
+ */
+bool function_minimizer::choleski_decomp_hmc(const dmatrix& metric, dmatrix& L) {
+  // kludge to deal with constantness
+  dmatrix & M= * (dmatrix *) &metric;
+  if (M.colsize() != M.rowsize())
+  {
+    cerr << "Error in choleski_decomp_hmc. Mass matrix not square" << endl;
+    ad_exit(1);
+  }
+  int rowsave=M.rowmin();
+  int colsave=M.colmin();
+  M.rowshift(1);
+  M.colshift(1);
+  int n=M.rowmax();
+  /// what is this?
+  //   dmatrix L(1,n,1,n);
+  // #ifndef SAFE_INITIALIZE
+  L.initialize();
+  // #endif
+  
+  int i,j,k;
+  double tmp;
+  bool success=true;
+  adstring tmpstring = "Mass matrix not positive definite when updating dense mass matrix adaptation.";
+  if (M(1,1)<=0) {success=false; return success;}
+  // I didn't touch the actual algorithm
+  L(1,1)=sqrt(M(1,1));
+  for (i=2;i<=n;i++) {
+    L(i,1)=M(i,1)/L(1,1);
+  }
+  for (i=2;i<=n;i++) {
+    for (j=2;j<=i-1;j++) {
+      tmp=M(i,j);
+      for (k=1;k<=j-1;k++) {
+        tmp-=L(i,k)*L(j,k);
+      }
+      L(i,j)=tmp/L(j,j);
+    }
+    tmp=M(i,i);
+    for (k=1;k<=i-1;k++) {
+      tmp-=L(i,k)*L(i,k);
+    }
+    if (tmp<=0) {success=false; return success;}
+    L(i,i)=sqrt(tmp);
+  }
+  L.rowshift(rowsave);
+  L.colshift(colsave);
+  return success;
 }

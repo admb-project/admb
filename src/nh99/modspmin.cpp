@@ -473,12 +473,6 @@ void write_banner_stuff(void)
 	  nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
 	  return;
 	}
-      if (option_match(ad_comm::argc,ad_comm::argv,"-nuts_test") > -1)
-	{
-	  gradient_structure::Hybrid_bounded_flag=1;
-	  nuts_test_mcmc_routine(nmcmc,iseed0,dscale,0);
-	  return;
-	}
       // This one is my modified version of the one Dave wrote. Mostly
       // cosmetic differences to get it to work with adnuts better.
       if (option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1)

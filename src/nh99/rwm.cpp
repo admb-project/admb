@@ -216,11 +216,25 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	}
       }
     }
+  // console refresh rate
+  int refresh=1;
+  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
+    if (nopt) {
+      int iii=atoi(ad_comm::argv[on+1]);
+      if (iii <0) {
+	cerr << "Error: refresh must be >= 0" << endl;
+	ad_exit(1);
+      } else {
+	refresh=iii;
+      }
+    }
+  }
     int diag_option=0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
       {
 	diag_option=1;
-	cout << " Setting covariance matrix to diagonal with entries " << dscale
+	cout << "Chain " << chain << ": Setting covariance matrix to diagonal with entries " << dscale
 	     << endl;
       }
     dmatrix S(1,nvar,1,nvar);
@@ -433,7 +447,10 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
       ofstream ogs("sims");
       ogs << nvar << " " << number_sims << endl;
       double llc=-get_monte_carlo_value(nvar,y);
+
+      std::clock_t start0 = clock();
       llbest=-get_monte_carlo_value(nvar,y);
+      double time_nll = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;
       lbmax=llbest;
       // store current mcmc variable values in param_values
       //void store_mcmc_values(const ofstream& ofs);
@@ -625,10 +642,10 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	time_t now = time(0);
 	tm* localtm = localtime(&now);
 	std::string m=get_filename((char*)ad_comm::adprogram_name);
-	cout << endl << "Starting RWM for model '" << m <<
+	cout << endl << "Chain " << chain << ": Starting RWM for model '" << m <<
 	  "' at " << asctime(localtm);
 	if(use_duration==1){
-	  cout << "Model will run for " << duration/60 <<
+	  cout <<"Chain " << chain << ": Model will run for " << duration/60 <<
 	    " minutes or until " << number_sims << " total iterations" << endl;
 	}
 
@@ -641,7 +658,20 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	// cout << "Initial mle=" << mle << endl;
 	// cout << "Initial z=" << parsave << endl;
 	// cout << "Initial y=" << y << endl;
-	cout << "Initial negative log density=" << -llbest << endl;
+	cout <<"Chain " << chain << ": Initial negative log density=" << -llbest << endl;
+	cout << "Chain " << chain << ": Model eval took " << time_nll <<
+	  " sec. " << nmcmc << " iter will take approximately " ;
+	time_nll*= nmcmc;
+	if(time_nll<=60){
+	  printf("%.2f", time_nll); cout << " seconds." << endl;
+	} else if(time_nll <=60*60){
+	  printf("%.2f", time_nll/60); cout << " minutes." << endl;
+	} else if(time_nll <= (60*60*24)){
+	  printf("%.2f", time_nll/(60*60)); cout << " hours." << endl;
+	} else {
+	  printf("%.2f", time_nll/(24*60*60)); cout << " days." << endl;
+	}
+
 	// Start of MCMC chain
 	for (int i=1;i<=number_sims;i++)
 	  {
@@ -813,19 +843,17 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 		// Save parameters and log posterior at each thinned iteration
 		(*pofs_psave) << parsave;
 		rwm_lp << llc << endl;
-		if(i>change_ball){
-		  // Calculate rotated parameter vector
-		  independent_variables xtemp(1,nvar);
-		  xtemp=chdinv0*y;
-		  for(int i=1;i<nvar;i++) {
-		    // rotated << xtemp(i) << ", ";
-		    unbounded << y(i) << ", ";
-		    // bounded << parsave(i) << ", ";
-		  }
-		  // rotated << xtemp(nvar) << endl;
-		  unbounded << y(nvar) << endl;
-		  // bounded << parsave(nvar) << endl;
+		// Calculate rotated parameter vector
+		independent_variables xtemp(1,nvar);
+		xtemp=chdinv0*y;
+		for(int i=1;i<nvar;i++) {
+		  // rotated << xtemp(i) << ", ";
+		  unbounded << y(i) << ", ";
+		  // bounded << parsave(i) << ", ";
 		}
+		// rotated << xtemp(nvar) << endl;
+		unbounded << y(nvar) << endl;
+		// bounded << parsave(nvar) << endl;
 	      }
 	    /*
 	      if (adjm_ptr)
@@ -884,13 +912,13 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	    time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
 	    if(use_duration==1 && time_total > duration){
 	      // If duration option used, break loop after <duration> hours.
-	      cout << i << " samples generated after " << duration/60 <<
+	      cout << "Chain " << chain << ": " << i << " samples generated after " << duration/60 <<
 		" minutes running." << endl;
 	      break;
 	    }
-	    print_mcmc_progress(i, number_sims, change_ball, chain);
+	    print_mcmc_progress(i, number_sims, change_ball, chain, refresh);
 	  } // end of mcmc chain
-	print_mcmc_timing(time_warmup, time_total);
+	print_mcmc_timing(time_warmup, time_total, chain);
       }
       if (!no_sd_mcmc && !have_hist_flag)
 	{
@@ -913,7 +941,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 #ifndef OPT_LIB
       assert(isim != 0);
 #endif
-      cout << "Final acceptance ratio=";
+      cout <<"Chain " << chain << ":Final acceptance ratio=";
       printf("%.2f", iac/double(isim));
       //     cout << iac/double(isim) << endl;
       cout << endl << endl;

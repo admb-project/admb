@@ -1,3 +1,4 @@
+
 // $Id$
 /**
  * @file nuts.cpp
@@ -26,20 +27,25 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
    This routine also parses the command line arguments and performs actions for
    the following ones:
    * -adapt_delta Target acceptance rate [0,1]. Defaults to 0.8.
-   * -adapt_mass Whether to use diagonal mass matrix adaptation (recommended).
    * -max_treedepth Maximum treedepth. Defaults to 12. Caps trajectory lengths at 2^12
-   * -hyeps      The step size to use. If not specified it will be adapted.
+   * -hyeps      The step size to use. If not specified it will be adapted (recommended).
    * -duration   The maximum runtime in minutes.
-   * -mcdiag     Use diagonal covariance matrix
-   * -mcpin NAME Read in starting values for MCMC from file NAME. NAME must be a valid ADMB '.par' file.
+   * -mcdiag     Initial mass matrix is unit diagonal
+   * -mcpin NAME Read in MCMC starting values for __active parameters only__ from file NAME. 
    * -warmup     The number of warmup iterations during which adaptation occurs.
-   * -verbose_adapt_mass Flag whether to print mass adaptation updates to console.
+   * -refresh    How often to refresh the console output (defaults to 10%)
+   * -adapt_mass Do diagonal mass matrix adaptation
+   * -adapt_mass_dense Do dense mass matrix adaptation
+   * -verbose_adapt_mass Flag whether to print mass adaptation updates to console
+   * -adapt_window Mass matrix adaptation initial window size
+   *- adapt_init_buffer Mass matrix adaptation initial buffer size
+   *- adapt_term_buffer Mass matrix adaptation terminal buffer size
    * \param int nmcmc The number of MCMC simulations to run.
    * \param int iseed0 Initial seed value for simulations.
    * \param double dscale Scale value used only if -mcdiag is specified. Disabled for NUTS.
    * \param int restart_flag Restart the MCMC, even if -mcr is specified. Disalbed for NUTS.
-   * \return Nothing. Creates files <model>.psv with bounded parameters,
-             and unbounded.csv with post-warmup unbounded samples.
+   * \return Nothing. Creates file <model>.psv with bounded parameters, and various files used 
+             by R package adnuts for diagnostics. 
 **/
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
@@ -69,7 +75,6 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   //// ------------------------------ Parse input options
   // Step size. If not specified, will be adapted. If specified must be >0
   // and will not be adapted.
-  diagonal_metric_flag=0; // set to 1 later if using adapt_mass
   double eps=0.1;
   double _eps=-1.0;
   int useDA=1; 			// whether to adapt step size
@@ -98,58 +103,63 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-duration",nopt))>-1) {
     double _duration=0;
     use_duration=1;
-    if (nopt) {
-      istringstream ist(ad_comm::argv[on+1]);
-      ist >> _duration;
-      if (_duration <0) {
-	cerr << "Error: duration must be > 0" << endl;
-	ad_exit(1);
-      } else {
-	// input is in minutes, duration is in seconds so convert
-	duration=_duration*60;
-      }
+    istringstream ist(ad_comm::argv[on+1]);
+    ist >> _duration;
+    if (_duration <0) {
+      cerr << "Error: duration must be > 0" << endl;
+      ad_exit(1);
+    } else {
+      // input is in minutes, duration is in seconds so convert
+      duration=_duration*60;
     }
   }
   // chain number -- for console display purposes only, useful when running
   // in parallel
   int chain=1;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chain",nopt))>-1) {
-    if (nopt) {
-      int iii=atoi(ad_comm::argv[on+1]);
-      if (iii <1) {
-	cerr << "Error: chain must be >= 1" << endl;
-	ad_exit(1);
-      } else {
-	chain=iii;
-      }
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii <1) {
+      cerr << "Error: chain must be >= 1" << endl;
+      ad_exit(1);
+    } else {
+      chain=iii;
     }
   }
+  // console refresh rate
+  int refresh=1;
+  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii < -1) {
+      cerr << iii << endl;
+      cerr << "Error: refresh must be >= -1. Use -1 for no refresh or positive integer for rate." << endl;
+      ad_exit(1);
+    } else {
+      refresh=iii;
+    }
+  }
+  
   // Number of leapfrog steps.
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1) {
-    if (nopt) {
-      cerr << "Error: hynstep argument not allowed with NUTS " << endl;
-      ad_exit(1);
-    }
+    cerr << "Error: hynstep argument not allowed with NUTS " << endl;
+    ad_exit(1);
   }
   // Number of warmup samples if using adaptation of step size. Defaults to
   // half of iterations.
   int warmup= (int)nmcmc/2;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-warmup",nopt))>-1) {
-    if (nopt) {
-      int iii=atoi(ad_comm::argv[on+1]);
-      if (iii <=0 || iii > nmcmc) {
-	cerr << "Error: warmup must be 0 < warmup < nmcmc" << endl;
-	ad_exit(1);
-      } else {
-	warmup=iii;
-      }
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii <=0 || iii > nmcmc) {
+      cerr << "Error: warmup must be 0 < warmup < nmcmc" << endl;
+      ad_exit(1);
+    } else {
+      warmup=iii;
     }
   }
   // Target acceptance rate for step size adaptation. Must be
   // 0<adapt_delta<1. Defaults to 0.8.
   double adapt_delta=0.8;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_delta",nopt))>-1) {
-    if (nopt) {
       istringstream ist(ad_comm::argv[on+1]);
       double _adapt_delta;
       ist >> _adapt_delta;
@@ -159,42 +169,98 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       } else {
 	adapt_delta=_adapt_delta;
       }
+  }
+  // Initial buffer window size for metric adaptation
+  int adapt_window=50;
+  if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_window",nopt))>-1) {
+    istringstream ist(ad_comm::argv[on+1]);
+    int _adapt_window;
+    ist >> _adapt_window;
+    if (_adapt_window < 1) {
+      cerr << "Error: adapt_window invalid" << endl;
+      ad_exit(1);
+    } else {
+      adapt_window=_adapt_window;
     }
   }
+   // Initial buffer window before adaptation of metric starts (first fast phase)
+  int adapt_term_buffer=75;
+  if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_term_buffer",nopt))>-1) {
+    istringstream ist(ad_comm::argv[on+1]);
+    int _adapt_term_buffer;
+    ist >> _adapt_term_buffer;
+    if (_adapt_term_buffer < 1 ) {
+      cerr << "Error: adapt_term_buffer invalid" << endl;
+      ad_exit(1);
+    } else {
+      adapt_term_buffer=_adapt_term_buffer;
+    }
+  }
+  // Initial buffer window before adaptation of metric starts (first fast phase)
+  int adapt_init_buffer=50;
+  if ((on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_init_buffer",nopt))>-1) {
+    istringstream ist(ad_comm::argv[on+1]);
+    int _adapt_init_buffer;
+    ist >> _adapt_init_buffer;
+    if (_adapt_init_buffer < 1 ) {
+      cerr << "Error: adapt_init_buffer invalid" << endl;
+      ad_exit(1);
+    } else {
+      adapt_init_buffer=_adapt_init_buffer;
+    }
+  }
+  
   // Max treedpeth is the number of times a NUTS trajectory will double in
   // length before stopping. Thus length <= 2^max_treedepth+1
   int max_treedepth=12;
   if ((on=option_match(ad_comm::argc,ad_comm::argv,"-max_treedepth",nopt))>-1) {
-    if (nopt) {
-      istringstream ist(ad_comm::argv[on+1]);
-      int _max_treedepth;
-      ist >> _max_treedepth;
-      if (_max_treedepth < 0) {
-	cerr << "Error: max_treedepth must be > 0" << endl;
-	ad_exit(1);
-      } else {
-	max_treedepth=_max_treedepth;
-      }
+    istringstream ist(ad_comm::argv[on+1]);
+    int _max_treedepth;
+    ist >> _max_treedepth;
+    if (_max_treedepth < 0) {
+      cerr << "Error: max_treedepth must be > 0" << endl;
+      ad_exit(1);
+    } else {
+      max_treedepth=_max_treedepth;
     }
   }
   // Use diagnoal covariance (identity mass matrix)
   int diag_option=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1) {
     diag_option=1;
-    diagonal_metric_flag=1;
-    cout << "Setting covariance matrix to diagonal with entries" << endl;
+    //  cout << "Setting covariance matrix to diagonal with entries" << endl;
   }
-  // Whether to adapt the mass matrix
+  // Whether to do diagonal adaptation of the mass matrix
   int adapt_mass=0;
+  diagonal_metric_flag=0; // global flag used in functions to do more efficient calculations
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass"))>-1) {
     diagonal_metric_flag=1;
     adapt_mass=1;
-    diag_option=1; // always start with unit mass matrix if adapting
+  }
+  // Whether to do dense adaptation of the mass matrix
+  int adapt_mass_dense=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-adapt_mass_dense"))>-1) {
+    if(adapt_mass==1){
+      cerr << "You can only specify one of adapt_mass and adapt_mass_dense" << endl;
+      ad_exit(1);
+    }
+    diagonal_metric_flag=0;
+    adapt_mass_dense=1;
   }
   // Whether to print mass matrix adaptation steps to console
   int verbose_adapt_mass=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-verbose_adapt_mass"))>-1) {
     verbose_adapt_mass=1;
+  }
+  // Whether to print diagnostic info inside find_reasonable_stepsize function
+  int verbose_find_epsilon=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-verbose_find_epsilon"))>-1) {
+    verbose_find_epsilon=1;
+  }
+  // Whether to print diagnostic information
+  int diagnostic_flag=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nutsdiagnostic"))>-1) {
+    diagnostic_flag=1;
   }
   // Restart chain from previous run?
   int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
@@ -253,7 +319,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     // For now turning this off. Might be easier and more reliable
     // to force user to rerun the model with the right hbf.
     cerr << "Error: To use -nuts a Hessian using the hybrid transformations is needed." <<
-      endl << "...Rerun model with '-hbf 1' and try again" << endl;
+      endl << "...Rerun model with '-hbf' and try again" << endl;
     ad_exit(1);
     // cout << "Rescaling covariance matrix b/c scales don't match" << endl;
     // cout << "old scale=" <<  old_scale << endl;
@@ -269,18 +335,14 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   dmatrix chd(1,nvar,1,nvar);
   dmatrix chdinv(1,nvar,1,nvar);
-  if(diagonal_metric_flag==0){
-    chd = choleski_decomp(S); // cholesky decomp of mass matrix
-    chdinv=inv(chd);
-  } else {
-    // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
-    chd.initialize();
-    chdinv.initialize();
-    for(int i=1;i<=nvar;i++){
-      chd(i,i)=sqrt(S(i,i));
-      chdinv(i,i)=1/chd(i,i);
-    }
+  // update chd and chdinv by reference
+  bool success;
+  success=calculate_chd_and_inverse(nvar, S, chd, chdinv);
+  if(!success){
+    cerr << "Cannot start algorithm, something is wrong with the mass matrix" << endl;
+    ad_exit(1);
   }
+      
   /// Mass matrix and inverse are now ready to be used.
 
   /// Prepare initial value. Need to both back-transform, and then rotate
@@ -313,51 +375,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     read_mle_hmc(nvar, z0);
   }
   /// Now z0 is either the MLE or the user specified value
-
-  // Need to convert z0 to y0. First, pass z0 through the model. Since this
-  // wasn't necessarily the last vector evaluated, need to propogate it
-  // through ADMB internally so can use xinit().
-  initial_params::restore_all_values(z0,1);
-  independent_variables y0(1,nvar); // inits in unbounded space
-  dvector current_scale(1,nvar);
-  gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
-  // This copies the unbounded parameters into y0
-  initial_params::xinit(y0);
-  // Don't know what this does or if necessary
-  dvector pen_vector(1,nvar);
-  initial_params::reset(dvar_vector(y0),pen_vector);
-  initial_params::mc_phase=0;
-  initial_params::stddev_scale(current_scale,y0);
-  initial_params::mc_phase=1;
-  // gradient_structure::set_NO_DERIVATIVES();
-  // if (mcmc2_flag==0) {
-  //   initial_params::set_inactive_random_effects();
-  // }
-
-  // Get NLL and gradient in unbounded space for initial value y0.
-  dvector grtemp(1,nvar);		// gradients in unbounded space
-  double nlltemp=get_hybrid_monte_carlo_value(nvar,y0,grtemp);
-  // Can now inverse rotate y0 to be x0 (algorithm space)
-  independent_variables x0(1,nvar); // inits in algorithm space
-  x0=rotate_pars(chdinv,y0);
-  // cout << "Starting from chd=" << chd << endl;
-  ///
-  // /// Old code to test that I know what's going on.
-  // cout << "Initial hbf new=" << gradient_structure::Hybrid_bounded_flag << endl;
-  // cout << "Initial hbf old=" << old_Hybrid_bounded_flag << endl;
-  // cout << "Initial bounded mle=" << mle << endl;
-  // cout << "Initial bounded parameters=" << z0 << endl;
-  // cout << "Initial unbounded parameters=" << y0 << endl;
-  // cout << "Initial rotated, unbounded parameters=" << x0 << endl;
-  // cout << "Initial negative log density=" << nlltemp << endl;
-  // cout << "Initial gr in unbounded space= " << grtemp << endl;
-  // cout << "Initial gr in rotated space= " << grtemp*chd<< endl;
-  ///
-  independent_variables theta(1,nvar);
-  theta=x0; // kind of a misnomer here: theta is in "x" or algorithm space
-  // Setup binary psv file to write samples to
-  //// Model initialization of parameters and options complete.
-
+// Setup binary psv file to write samples to
   pofs_psave=
     new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
   if (!pofs_psave|| !(*pofs_psave)) {
@@ -386,153 +404,248 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   time_t now = time(0);
   tm* localtm = localtime(&now);
   std::string m=get_filename((char*)ad_comm::adprogram_name);
-  cout << endl << endl << "Starting NUTS for model '" << m <<
+  cout << endl << endl << "Chain " << chain << ": Starting NUTS for model '" << m <<
     "' at " << asctime(localtm);
   if(use_duration==1){
-    cout << "Model will run for " << duration/60 <<
+    cout << "Chain " << chain << ": Model will run for " << duration/60 <<
       " minutes or until " << nmcmc << " total iterations" << endl;
   }
-  if(adapt_mass){
-    diagonal_metric_flag=1;
-    if(warmup < 200){
-      // Turn off if too few samples to properly do it. But keep using
-      // diagonal efficiency.
-      cerr << "Warning: Mass matrix adaptation not allowed when warmup<200" << endl;
-      adapt_mass=0;
-    } else {
-      cout << "Using diagonal mass matrix adaptation" << endl;
+  // Check that the adaptation settings make sense given warmup
+  // and if using adaptation
+  int aws = adapt_window; // adapt window size
+  // Adapt next window... the next iteration at which the adaptation takes place
+  int anw = compute_next_window(adapt_init_buffer, warmup, adapt_init_buffer, aws, adapt_term_buffer);
+  if(adapt_mass || adapt_mass_dense){
+    if(adapt_init_buffer + adapt_window + adapt_term_buffer >= warmup) {
+      cerr << "Chain " << chain << ": Warning: Turning off mass matrix adaptation because warmup<= " <<
+	adapt_init_buffer+adapt_window + adapt_term_buffer << endl;
+      cerr << "Chain " << chain << ": Warning: Either increase warmup, adjust adaptation inputs, or turn off adaptation" << endl;
+      adapt_mass=0; adapt_mass_dense=0;
     }
   }
-  cout << "Initial negative log density=" << nlltemp << endl;
+  if( adapt_mass){ 
+    cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
+  } else if(adapt_mass_dense) {
+    cout << "Chain " << chain << ": Using dense mass matrix adaptation" << endl;
+  } else {
+    cout << "Chain " << chain << ": Not using mass matrix adaptation" << endl;
+  }
+  
+  if(verbose_adapt_mass==1){
+    dvector tmp=diagonal(S);
+    cout << "Chain " << chain << ": Initial margial variances: min=" << min(tmp) << " and max=" << max(tmp) << endl;
+  }
+  
+  if(diag_option)  cout << "Chain " << chain <<": Initializing with unit diagonal mass matrix" << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
   epsvec.initialize(); epsbar.initialize(); Hbar.initialize();
   double mu;
   ofstream adaptation("adaptation.csv", ios::trunc);
-  adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__" << endl;
+  adaptation << "accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__,lp__" << endl;
   //// End of input processing and preparation
   // --------------------------------------------------
 
+  /// Start initializing the algorithm at the initial point. z0
+  // was specified by user, but need y0 and x0. First, pass z0
+  // through the model. Since this wasn't necessarily the last
+  // vector evaluated, need to propogate it through ADMB
+  // internally so can use xinit().
+  initial_params::restore_all_values(z0,1);
+  independent_variables y0(1,nvar); // inits in unbounded space
+  dvector current_scale(1,nvar);
+  gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
+  // This copies the unbounded parameters into y0
+  initial_params::xinit(y0);
+  // Don't know what this does or if necessary
+  dvector pen_vector(1,nvar);
+  initial_params::reset(dvar_vector(y0),pen_vector);
+  initial_params::mc_phase=0;
+  initial_params::stddev_scale(current_scale,y0);
+  initial_params::mc_phase=1;
+
   //// ---------- Start of algorithm
   // Declare and initialize the variables needed for the algorithm
-  independent_variables z(1,nvar);
-  independent_variables ytemp(1,nvar);
+  // Get NLL and gradient in unbounded space for initial value y0.
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// gradients in rotated space
+
+  
+  dvariable jac=0.0;
+  dvariable userNLL=0.0;
+
+  // Get the Jacobian and user NLL at initial value.
+  dvar_vector vx=dvar_vector(y0);
+  jac=initial_params::reset(vx);
+  *objective_function_value::pobjfun=0.0;
+  userfunction();
+  dvar_vector dtemp(1,nvar);
+  initial_params::stddev_vscale(dtemp,vx);
+  jac=sum(log(dtemp)); // get Jacobian adjustment from bounded pars
+  userNLL=*objective_function_value::pobjfun; // NLL defined by user
+  // For some reason if I comment this out then the next call to
+  // get_hybrid_mc will return gradients of 0. No idea why but
+  // leave this here.
+  gradcalc(nvar,gr);
+   
+  std::clock_t start0 = clock();
+  double nll=get_hybrid_monte_carlo_value(nvar,y0,gr);
+  double time_gradient = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;
+  gr2=rotate_gradient(gr, chd);
+  // Can now inverse rotate y0 to be x0 (algorithm space)
+  independent_variables x0(1,nvar); // inits in algorithm space
+  x0=rotate_pars(chdinv,y0);
+  // Now have z0, y0, x0, objective fn value, gradients in
+  // unbounded (y) and rotated (x) space all at the intial value.
+  
+  cout << "Chain " << chain << ": Initial negative log density= " << userNLL <<
+    ", Jacobian= " << jac << ", Total= " << userNLL-jac << endl;
+  cout << "Chain " << chain << ": Gradient eval took " << time_gradient <<
+    " sec. " << nmcmc << " iter w/ 100 steps would take " ;
+  time_gradient*= (nmcmc*100);
+  if(time_gradient<=60){
+    printf("%.2f", time_gradient); cout << " seconds." << endl;
+  } else if(time_gradient <=60*60){
+    printf("%.2f", time_gradient/60); cout << " minutes." << endl;
+  } else if(time_gradient <= (60*60*24)){
+    printf("%.2f", time_gradient/(60*60)); cout << " hours." << endl;
+  } else {
+    printf("%.2f", time_gradient/(24*60*60)); cout << " days." << endl;
+  }
+
+  // Now initialize these into the algorithm arguments needed.
+  independent_variables theta(1,nvar);
+  // kind of a misnomer here: theta is in "x" or algorithm space
+  // (before applying the mass matrix rotation, and before the
+  // bounding functions are applied) 
+  theta=x0;
+  independent_variables z(1,nvar);
+  independent_variables ynew(1,nvar); // local copy of y
+  z=z0; ynew=y0;
   dvector p(1,nvar);		// momentum vector
   double alphasum=0;		// running sum for calculating final accept ratio
-  // Local variables to track the extreme left and rightmost nodes of the
+  // Global variables to track the extreme left and rightmost nodes of the
   // entire tree. This gets overwritten due to passing things by reference
   // in buildtree
-  dvector thetaminus_end(1,nvar);
-  dvector thetaplus_end(1,nvar);
-  dvector rminus_end(1,nvar);
-  dvector rplus_end(1,nvar);
+  dvector thetaminus_end(1,nvar); dvector thetaplus_end(1,nvar);
+  dvector rminus_end(1,nvar); dvector rplus_end(1,nvar);
+  dvector gr2minus_end(1,nvar); dvector gr2plus_end(1,nvar);
   // References to left most and right most theta and momentum for current
   // subtree inside of buildtree. The ones proceeded with _ are passed
   // through buildtree by reference. Inside build_tree, _thetaplus is left
   // the same if moving in the left direction. Thus these are the global
   // left and right points.
-  dvector _thetaminus(1,nvar);
-  dvector _thetaplus(1,nvar);
-  dvector _thetaprime(1,nvar);
-  dvector _rminus(1,nvar);
-  dvector _rplus(1,nvar);
+  dvector _thetaminus(1,nvar); dvector _thetaplus(1,nvar);
+  dvector _rminus(1,nvar); dvector _rplus(1,nvar);
+  // Hold temporary copies of these as new points are chosen to
+  // avoid recalculations at end of trajetory
+  dvector thetaprime(1,nvar); dvector _thetaprime(1,nvar);
+  dvector grprime(1,nvar); dvector _grprime(1,nvar);
+  dvector gr2prime(1,nvar); dvector _gr2prime(1,nvar);
+  double Hprime, _Hprime;
+  double nllprime, _nllprime;
+  independent_variables parsaveprime(1,nvar);
+  parsaveprime=z0;
+  independent_variables _parsaveprime(1,nvar);
+
   // These are used inside NUTS by reference
+  int _nalphaprime, _nprime, _nfevals;
   double _alphaprime;
-  int _nalphaprime;
-  bool _sprime;
-  int _nprime;
-  int _nfevals;	   		// trajectory length
-  bool _divergent; // divergent transition
+  bool _sprime, _divergent;
   int ndivergent=0; // # divergences post-warmup
   int nsamples=0; // total samples, not always nmcmc if duration option used
   // Declare some local variables used below.
-  double nll, H0, logu, value, rn, alpha;
+  double H0, H, logu, value, rn, alpha;
   int n, j, v;
   bool s,b;
-  // Mass matrix adapatation algorithm arguments
-  int k=0;
-  int w1 = 75; int w2 = 50; int w3 = 25;
-  int aws = w2; // adapt window size
-  int anw = w1+w2; // adapt next window
-  // temporary for recursive formula
-  dvector s1(1,nvar); dvector s0(1,nvar);
-  dvector m1(1,nvar); dvector m0(1,nvar);
+  // Mass matrix adapatation algorithm variables for diagonal
+  dvector am(1,nvar);
+  dvector am2(1,nvar);
+  // and dense
+  dvector adm(1,nvar);
+  dmatrix adm2(1,nvar,1,nvar);
+  int is2=0; int is3=0;
+  int iseps=0;
+  
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
-
+  if(diagnostic_flag){
+    cout << "Initial chd=" << chd << endl;
+    cout << "Initial negative log density=" << nll << endl;
+    cout << "Initial gr in unbounded space= " << gr << endl;
+    cout << "Initial gr in rotated space= " << gr2 << endl;
+    cout << "Initial bounded parameters=" << z0 << endl;
+    cout << "Initial unbounded parameters=" << y0 << endl;
+    cout << "Initial rotated, unbounded parameters=" << x0 << endl;
+  }
   // Start of MCMC chain
   for (int is=1;is<=nmcmc;is++) {
     // Randomize momentum for next iteration, update H, and reset the tree
     // elements.
     p.fill_randn(rng);
     _rminus=p; _rplus=p;
+    // Note: theta, nll, gr, and gr2 are caried over from end of last loop
     _thetaprime=theta; _thetaminus=theta; _thetaplus=theta;
-    // Reset model parameters to theta, whether updated or not in previous
-    // iteration.
-    z=rotate_pars(chd, theta);
-    nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-    gr2=rotate_gradient(gr, chd);
     H0=-nll-0.5*norm2(p); // initial Hamiltonian value
     logu=H0+log(randu(rng)); // slice variable
     if(useDA && is==1){
       // Setup dual averaging components to adapt step size
-      eps=find_reasonable_stepsize(nvar,theta,p,chd,true);
-      mu=log(10*eps);
-      epsvec(1)=eps; epsbar(1)=1; Hbar(1)=0;
+      eps=find_reasonable_stepsize(nvar,theta,p,chd,true, verbose_find_epsilon, chain);
+      mu=log(eps);
+      epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
     }
     // Generate single NUTS trajectory by repeatedly doubling build_tree
-    n = 1;
-    _nprime=0;
-    _divergent=0;
-    _nfevals=0;
-    s=1;
-    j=0;
-    thetaminus_end=theta; thetaplus_end=theta;
+    _nprime=0; _divergent=0; _nfevals=0;
+    n=1; s=1; j=0;
+    // Reset global ones to initial point of this trajectory
+    thetaminus_end=theta; thetaplus_end=theta; thetaprime=theta;
     rminus_end=p; rplus_end=p;
-
+    gr2minus_end=gr2; gr2plus_end=gr2; gr2prime=gr2;
+    nllprime=nll; grprime=gr;
+    Hprime=H0; 
     while (s) {
       value = randu(rng);	   // runif(1)
       v = 2 * (value < 0.5) - 1;
       // Add a trajectory of length 2^j, built to the left or right of
       // edges of the current entire tree.
       if (v == 1) {
-	// Build a tree to the right from thetaplus. The leftmost point in
-	// the new subtree, which gets overwritten in both the global _end
-	// variable, but also the _ ref version.
-	z=rotate_pars(chd, thetaplus_end);
-	// Need to reset to the rightmost point, since this may not have
-	// been last one executed and thus the gradients are wrong
-	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	gr2=rotate_gradient(gr, chd);
+	// Build a tree to the right from thetaplus. The leftmost
+	// point in the new subtree, which gets overwritten in
+	// both the global _end variable, but also the _ ref
+	// version.  Need to reset to the rightmost point, since
+	// this may not have been last one executed and thus the
+	// gradients are wrong
+	gr2=gr2plus_end;
 	build_tree(nvar, gr, chd, eps, rplus_end, thetaplus_end, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
-	// Moved right, so update extreme right tree
-	thetaplus_end=_thetaplus;
-	rplus_end=_rplus;
+		   _nprime, _nfevals, _divergent, rng,
+		   gr2plus_end, _grprime, _gr2prime, _nllprime, _Hprime, _parsaveprime);
+	// Moved right, so update extreme right tree. Done by
+	// reference in gr2plus_end, which is the gradient at the
+	// rightmost point of the global trajectory.
+	thetaplus_end=_thetaplus; rplus_end=_rplus;
       } else {
 	// Same but to the left from thetaminus
-	z=rotate_pars(chd,thetaminus_end);
-	nll=get_hybrid_monte_carlo_value(nvar,z,gr);
-	gr2=rotate_gradient(gr,chd);
+	gr2=gr2minus_end;
 	build_tree(nvar, gr, chd, eps, rminus_end, thetaminus_end, gr2, logu, v, j,
 		   H0, _thetaprime,  _thetaplus, _thetaminus, _rplus, _rminus,
 		   _alphaprime, _nalphaprime, _sprime,
-		   _nprime, _nfevals, _divergent, rng);
-	thetaminus_end=_thetaminus;
-	rminus_end=_rminus;
+		   _nprime, _nfevals, _divergent, rng,
+		   gr2minus_end, _grprime, _gr2prime, _nllprime, _Hprime, _parsaveprime);
+	thetaminus_end=_thetaminus; rminus_end=_rminus;
       }
-
       // _thetaprime is the proposed point from that sample (drawn
       // uniformly), but still need to detemine whether to accept it at
       // each doubling. The last accepted point becomes the next sample. If
       // none are accepted, the same point is repeated twice.
       rn = randu(rng);	   // Runif(1)
       if (_sprime == 1 && rn < double(_nprime)/double(n)){
-	theta=_thetaprime; // rotated, unbounded
-	ytemp=rotate_pars(chd,theta); // unbounded
+	thetaprime=_thetaprime; // rotated, unbounded
+	gr2prime=_gr2prime; //
+	nllprime=_nllprime;
+	Hprime=_Hprime;
+	parsaveprime=_parsaveprime;
+	ynew=rotate_pars(chd,thetaprime); // unbounded
       }
 
       // Test if a u-turn occured across the whole subtree j. Previously we
@@ -540,125 +653,152 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       b= stop_criterion(nvar, thetaminus_end, thetaplus_end, rminus_end, rplus_end);
       s = _sprime*b;
       // Increment valid points and depth
-      n += _nprime;
-      ++j;
+      n += _nprime; ++j;
       if(j>=max_treedepth) break;
     } // end of single NUTS trajectory
-    // Rerun model to update saved parameters internally before saving. Is
-    // there a way to avoid doing this? I think I need to because of the
-    // bounding functions??
-    nll=get_hybrid_monte_carlo_value(nvar,ytemp,gr);
-    initial_params::copy_all_values(parsave,1.0);
-    // Write the rotated, unbounded, and bounded draws to csv files for
-    // sampling draws only
-    if(is>warmup){
-      for(int i=1;i<nvar;i++) {
-	// rotated << theta(i) << ", ";
-	// bounded << parsave(i) << ", ";
-	unbounded << ytemp(i) << ", ";
-      }
-      // rotated << theta(nvar) << endl;
-      // bounded << parsave(nvar) << endl;
-      unbounded << ytemp(nvar) << endl;
-    }
+    // Instead of rerunning the model again (costly), I pass
+    // versions of the important parts by reference above. This
+    // is difference in ADMB 12.0 and 12.2 versions of this
+    // algorithm. Note these are also the intial values in the
+    // next iteration.
+    nll=nllprime; H=Hprime;
+    gr2=gr2prime; theta=thetaprime;
+    parsave=parsaveprime;
+    // Write the samples for this iteration to file
+    for(int i=1;i<nvar;i++) unbounded << ynew(i) << ", ";
+    unbounded << ynew(nvar) << endl;
     (*pofs_psave) << parsave; // save all bounded draws to psv file
-    // Estimated acceptance probability
-     alpha=0;
-    if(_nalphaprime>0){
-      alpha=double(_alphaprime)/double(_nalphaprime);
-    }
+    // Calculate approximate acceptance probability
+    alpha=0;
+    if(_nalphaprime>0) alpha=double(_alphaprime)/double(_nalphaprime);
     if(is > warmup){
-      // Increment divergences only after warmup
-      if(_divergent==1) ndivergent++;
+      if(_divergent==1) ndivergent++;  // Increment divergences only after warmup
       // running sum of alpha to calculate average acceptance rate below
       alphasum+=alpha;
     }
+
+    // Mass matrix adaptation. 
+    bool slow=slow_phase(is, warmup, adapt_init_buffer, adapt_term_buffer);
+    // If in slow phase, do adaptation of mass matrix
+    if( (adapt_mass || adapt_mass_dense) & slow){
+      if(is== adapt_init_buffer){ // start of slow adaptation window
+        // Initialize algorithm: do I want to reinitialize after each update also?
+	am.initialize(); am2.initialize();
+	adm.initialize(); adm2.initialize();
+	is2=0; is3=0;
+      } else {
+	// Update metric with newest sample in unboudned space (ynew)
+	if(adapt_mass) add_sample_diag(nvar, is2, am, am2, ynew);
+	if(adapt_mass_dense) add_sample_dense(nvar, is3, adm, adm2, ynew);
+	if(is==anw){ // end of slow window
+	  // Update the mass matrix and chd
+	  if(adapt_mass){
+	    metric.initialize();
+	    dvector tmp=am2/(is2-1);
+	    for(int i=1; i<=nvar; i++) metric(i,i) = tmp(i);
+	    if(verbose_adapt_mass==1){
+	      cout << "Chain " << chain << ": Iteration: " << is << ": Estimated diagonal variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+	    }
+	  } else {
+	    // dense metric
+	    metric=adm2/(is3-1);
+	    if(verbose_adapt_mass==1){
+	      dvector tmp=diagonal(metric);
+	      cout << "Chain " << chain << 
+		": Iteration " << is << ": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
+	    }
+	  }
+	  // Note: Stan does this regularization of the metric to
+	  // avoid Cholesky errors. I decided it against doing
+	  // that and rather just catch the error and instead do
+	  // a diagonal one. The next time it will have twice as
+	  // many samples to estimate the metric. My reasoning
+	  // was it will prevent a downward spiral where a
+	  // poorly-estimated M will cause fewer effective
+	  // samples, leading to worse M, etc. This will warn the
+	  // user and continue on with the diagonal metric, thus
+	  // being more stable. This is the adapted Stan
+	  // regularization code:
+	  //
+	  // dmatrix Mtemp(1,nvar, 1,nvar);
+	  // Mtemp.initialize();
+	  // for(int i=1; i<=nvar; i++) Mtemp(i,i)=1e-3 * (5.0 / (is3 + 5.0));
+	  // metric = (is3 / (is3 + 5.0)) * metric + Mtemp;
+	  // Update chd and chdinv by reference, since metric changed
+	  success=calculate_chd_and_inverse(nvar, metric, chd, chdinv);
+	  if(!success && adapt_mass_dense){
+	    // if it fails try a diagonal one which should be more reliable
+	    cout << "Chain " << chain << ": Choleski decomposition of dense mass matrix failed. Trying diagonal update instead." << endl;
+	    diagonal_metric_flag=1;
+	    success=calculate_chd_and_inverse(nvar, metric, chd, chdinv);
+	    diagonal_metric_flag=0;
+	  }
+	  if(!success && adapt_mass){
+	    cout << "Chain " << chain << ": Error updating diagonal mass matrix. Fix model, turn off adaptation, or increase adapt_window" << endl;
+	    ad_exit(1);
+	  }
+	  // Since chd changed need to refresh values and gradients
+	  // in x space
+	  nll=get_hybrid_monte_carlo_value(nvar,ynew,gr);
+	  theta=rotate_pars(chdinv,ynew);
+	  gr2=rotate_gradient(gr, chd);
+	  // Calculate the next end window. If this overlaps into the final fast
+	  // period, it will be stretched to that point (warmup-adapt_term_buffer)
+	  aws *=2;
+	  anw = compute_next_window(is, warmup, adapt_init_buffer, aws, adapt_term_buffer);
+	  // Refind a reasonable step size since it can be really
+	  // different after changing M and reset algorithm
+	  // parameters (Turned off for 13.0 b/c I thought it worked better this way)
+	  // if(useDA)
+	  //   eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass, verbose_find_epsilon, chain);
+	  mu=log(epsvec(is));
+	  Hbar(is)=0; epsvec(is)=epsbar(is);
+	  // this is supposed to restart the eps adaptation counter
+	  // but I think it works better without
+	  // iseps=0;
+	} // end of slow window
+      } // end up updating mass matrix
+    } // end adaptation of mass matrix
     // Adaptation of step size (eps).
     if(useDA){
       if(is <= warmup){
-	eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+	iseps++; // how many iterations since start of last adapt window
+	// cout << "i=" << is << ", iseps=" << iseps << ", alpha=" << alpha <<
+	//   ", mu=" << mu << ", epsvec(is)=" << epsvec(is) << ", epsbar(is)=" << epsbar(is) <<
+	//   ", Hbar(is)=" << Hbar(is) << endl;
+	eps=adapt_eps(is, iseps, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
       } else {
 	eps=epsbar(warmup);
       }
     }
-
-    // Mass matrix adaptation. For now only diagonal
-    bool slow=slow_phase(is, warmup, w1, w3);
-    if(adapt_mass & slow){
-      // If in slow phase, update running estimate of variances
-      // The Welford running variance calculation, see
-      // https://www.johndcook.com/blog/standard_deviation/
-      if(is== w1){
-        // Initialize algorithm from end of first fast window
-        m1 = ytemp;
-	s1.initialize();
-	k = 1;
-      } else if(is==anw){
-        // If at end of adaptation window, update the mass matrix to the
-        // estimated variances
-	metric.initialize();
-	for(int i=1; i<=nvar; i++)
-	  metric(i,i) = s1(i)/(k-1);
-	// Update chd and current vectxor
-	if(diagonal_metric_flag==0){
-	  chd = choleski_decomp(metric); // cholesky decomp of mass matrix
-	  chdinv=inv(chd);
-	} else {
-	  // If diagonal, chd is just sqrt of diagonals and inverse the reciprocal
-	  chd.initialize();
-	  chdinv.initialize();
-	  for(int i=1;i<=nvar;i++){
-	    chd(i,i)=sqrt(metric(i,i));
-	    chdinv(i,i)=1/chd(i,i);
-	  }
-	}
-	theta=rotate_pars(chdinv,ytemp);
-        // Reset the running variance calculation
-        k = 1; m1 = ytemp; s1.initialize();
-        // Calculate the next end window. If this overlaps into the final fast
-        // period, it will be stretched to that point (warmup-w3)
-	aws *=2;
-        anw = compute_next_window(is, anw, warmup, w1, aws, w3);
-	// Refind a reasonable step size since it can be really different after changing M
-	eps=find_reasonable_stepsize(nvar,theta,p,chd, verbose_adapt_mass);
-	if(verbose_adapt_mass){
-	  cout << is << ": "<< ", eps=" << eps << endl;
-	}
-      } else {
-        k = k+1; m0 = m1; s0 = s1;
-        // Update M and S
-	for(int i=1; i<=nvar; i++){
-	  m1(i) = m0(i)+(ytemp(i)-m0(i))/k;
-	  s1(i) = s0(i)+ (ytemp(i)-m0(i))*(ytemp(i)-m1(i));
-	}
-      }
-    }
-
-
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
-	       << _nfevals <<"," << _divergent <<"," << -nll << endl;
-    print_mcmc_progress(is, nmcmc, warmup, chain);
+	       << _nfevals <<"," << _divergent <<"," << -H << "," << -nll << endl;
+    print_mcmc_progress(is, nmcmc, warmup, chain, refresh);
     if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
     nsamples=is;
     if(use_duration==1 && time_total > duration){
       // If duration option used, break loop after <duration> minutes.
-      cout << is << " samples generated after " << duration/60 <<
+      cout << "Chain " << chain << ":" <<  is << " samples generated after " << duration/60 <<
 	" minutes running." << endl;
       break;
     }
   } // end of MCMC chain
 
+  if(adapt_mass_dense | adapt_mass){
+    ofstream metricsave("adapted_metric.txt", ios::trunc);
+    metricsave << metric;
+  }
+  
   // Information about run
   if(ndivergent>0)
-    cout << "There were " << ndivergent << " divergent transitions after warmup" << endl;
+    cout << "Chain " << chain <<": There were " << ndivergent << " divergent transitions after warmup" << endl;
   if(useDA)
-    cout << "Final step size=" << eps << "; after " << warmup << " warmup iterations"<< endl;
-  cout << "Final acceptance ratio=";
+    cout << "Chain " << chain << ": Final step size=" << eps << "; after " << warmup << " warmup iterations"<< endl;
+  cout << "Chain " << chain << ": Final acceptance ratio=";
   printf("%.2f", alphasum /(nsamples-warmup));
   if(useDA) cout << ", and target=" << adapt_delta << endl; else cout << endl;
-  print_mcmc_timing(time_warmup, time_total);
-
+  print_mcmc_timing(time_warmup, time_total, chain);
   // Close .psv file connection
   if (pofs_psave) {
     delete pofs_psave;

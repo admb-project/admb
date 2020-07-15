@@ -8,6 +8,8 @@ extern "C"
 
 class test_dfpool: public ::testing::Test {};
 
+#ifdef USE_VECTOR_SHAPE_POOL
+
 TEST_F(test_dfpool, constructor)
 {
   dfpool pool;
@@ -182,3 +184,5 @@ TEST_F(test_dfpool, dvar_vector1to4)
 
   dvar_vector v(1, 4); 
 }
+
+#endif

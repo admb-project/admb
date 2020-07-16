@@ -403,7 +403,7 @@ jobs:
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind nbmm
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-nested4
+  - name: linux-valgrind-memcheck-nested4
     os: linux
     dist: bionic
     env:
@@ -416,6 +416,19 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck nested4
+
+  - name: linux-valgrind-callgrind-cachegrind-nested4
+    os: linux
+    dist: bionic
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind nested4
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind nested4
 

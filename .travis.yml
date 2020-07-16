@@ -612,7 +612,7 @@ jobs:
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind spatial
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-union
+  - name: linux-valgrind-memcheck-union
     os: linux
     dist: bionic
     env:
@@ -625,6 +625,19 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck union
+
+  - name: linux-valgrind-callgrind-cachegrind-union
+    os: linux
+    dist: bionic
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind union
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind union
 

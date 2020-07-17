@@ -1,27 +1,31 @@
+#define ADMB_VERSION "ADMB-12.2"
+#define ADMB_VERSION2 "admb-12.2"
+
 [Setup]
 PrivilegesRequired=none
-AppName=ADMB-12.2
-AppVerName=ADMB-12.2
+AppName={#ADMB_VERSION}
+AppVerName={#ADMB_VERSION}
 UsePreviousAppDir=no
 UsePreviousGroup=no
-DefaultDirName={commonpf}\ADMB-12.2
-DefaultGroupName=ADMB-12.2
+DefaultDirName={sd}\{#ADMB_VERSION}
+DefaultGroupName={#ADMB_VERSION}
 UninstallDisplayIcon={app}\uninstall.exe
 OutputDir=..\..\..\build
-OutputBaseFilename=admb
-AppPublisher=www.admb-project.org
+OutputBaseFilename={#ADMB_VERSION2}
+AppPublisher=ADMB Project
 AppPublisherURL=http://www.admb-project.org/
 LicenseFile=..\..\..\LICENSE.txt
+Compression=lzma2/ultra64
 
 [Types]
-Name: "admb-12.2"; Description: "ADMB-12.2"
+Name: {#ADMB_VERSION2}; Description: {#ADMB_VERSION}
 
 [Files]
 Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Flags: recursesubdirs
 Source: "..\..\set-admb-command-prompt.bat"; DestDir: "{app}\bin"
-Source: "C:\msys64\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Flags: recursesubdirs
+Source: "C:\rtools40\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Flags: recursesubdirs
 
 [Icons]
-Name: "{app}\ADMB Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "ADMB-12.2 Command Prompt"; OnlyBelowVersion: 6.1
-Name: "{group}\ADMB Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "ADMB-12.2 Command Prompt"; OnlyBelowVersion: 6.1
-Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB"; OnlyBelowVersion: 6.1
+Name: "{app}\{#ADMB_VERSION} Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "{#ADMB_VERSION} Command Prompt"
+Name: "{group}\{#ADMB_VERSION} Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "{#ADMB_VERSION} Command Prompt"
+Name: "{group}\Uninstall {#ADMB_VERSION}"; Filename: "{uninstallexe}"; Comment: "Uninstall {#ADMB_VERSION}"

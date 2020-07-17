@@ -138,6 +138,11 @@ if "!CXX!"=="" (
   for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "cl.exe"') do (
     set CXX=cl
   )
+  if "!CXX!"=="cl" (
+    for /f "tokens=*" %%i in ('dir !ADMB_HOME!\lib\admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
+      set CXX=
+    )
+  )
 ) else (
   if "!CXX!"=="cl" (
     for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "Could not find file"') do (
@@ -274,6 +279,10 @@ if "!CXX!"=="cl" (
       set CXXMAJORNUMBER=-g++9
       set STDCXX=-std=c++14
     )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 10.') do (
+      set CXXMAJORNUMBER=-g++10
+      set STDCXX=-std=c++14
+    )
   )
   if defined CXXFLAGS (
     set CXXFLAGS= -c !STDCXX! !CXXFLAGS!
@@ -332,7 +341,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
             ) else (
-              echo Error: Unable to find libadmbo-debug.a
+              echo Error: Unable to find ADMB DEBUG library 'libadmbo!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -353,7 +362,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
             ) else (
-              echo Error: Unable to find libadmb
+              echo Error: Unable to find ADMB DEBUG library 'libadmb!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -377,7 +386,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
             ) else (
-              echo Error: Unable to find libadmbo-debug.a
+              echo Error: Unable to find ADMB library 'libadmbo!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -398,7 +407,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
             ) else (
-              echo Error: Unable to find libadmb
+              echo Error: Unable to find ADMB library 'libadmb!CXXVERSION!.a'
               exit /B 1
             )
           )

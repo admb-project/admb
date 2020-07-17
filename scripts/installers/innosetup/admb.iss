@@ -17,8 +17,9 @@ LicenseFile=..\..\..\LICENSE.txt
 Name: "admb-12.2"; Description: "ADMB-12.2"
 
 [Files]
-Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Flags: recursesubdirs
 Source: "..\..\set-admb-command-prompt.bat"; DestDir: "{app}\bin"
+Source: "C:\msys64\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Flags: recursesubdirs
 
 [Icons]
 Name: "{app}\ADMB Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "ADMB-12.2 Command Prompt"; OnlyBelowVersion: 6.1

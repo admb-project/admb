@@ -116,30 +116,13 @@ for %%a in (%*) do (
     )
   )
 )
-if exist "!ADMB_HOME!\bin\admb-cfg.bat" (
-  call "!ADMB_HOME!\bin\admb-cfg.bat"
-  if defined ADMB_CFG_CXX (
-    set CXX=!ADMB_CFG_CXX!
-  )
-  if defined ADMB_CFG_CXXFLAGS (
-    set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
-  )
-  if defined ADMB_CFG_LD (
-    if not defined d (
-      set LD=!ADMB_CFG_LD!
-    )
-  )
-  if defined ADMB_CFG_LDFLAGS (
-    set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
-  )
-)
 
 if "!CXX!"=="" (
   for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "cl.exe"') do (
     set CXX=cl
   )
   if "!CXX!"=="cl" (
-    for /f "tokens=*" %%i in ('dir !ADMB_HOME!\lib\admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
+    for /f "tokens=*" %%i in ('dir /B !ADMB_HOME!\lib\admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
       set CXX=
     )
   )
@@ -182,6 +165,20 @@ if "!CXX!"=="cl" (
   )
   if not defined OSNAME (
     set OSNAME=-win
+  )
+  if exist "!ADMB_HOME!\bin\admb-cfg!OSNAME!!CXXVERSION!.bat" (
+    call "!ADMB_HOME!\bin\admb-cfg!OSNAME!!CXXVERSION!.bat"
+    if defined ADMB_CFG_CXXFLAGS (
+      set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
+    )
+    if defined ADMB_CFG_LD (
+      if not defined d (
+        set LD=!ADMB_CFG_LD!
+      )
+    )
+    if defined ADMB_CFG_LDFLAGS (
+      set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
+    )
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /nologo /DOPT_LIB
@@ -322,6 +319,20 @@ if "!CXX!"=="cl" (
       for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
         set CXXVERSION=-mingw64!CXXMAJORNUMBER!
       )
+    )
+  )
+  if exist "!ADMB_HOME!\bin\admb-cfg!CXXVERSION!.bat" (
+    call "!ADMB_HOME!\bin\admb-cfg!CXXVERSION!.bat"
+    if defined ADMB_CFG_CXXFLAGS (
+      set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
+    )
+    if defined ADMB_CFG_LD (
+      if not defined d (
+        set LD=!ADMB_CFG_LD!
+      )
+    )
+    if defined ADMB_CFG_LDFLAGS (
+      set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
     )
   )
   if defined g (

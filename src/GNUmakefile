@@ -384,9 +384,8 @@ ifeq ($(CMDSHELL),cmd)
 	if not exist ${DIST}\bin md ${DIST}\bin
 	copy df1b2-separable\seddf1b* ${DIST}\bin
 	copy df1b2-separable\sedf1b2* ${DIST}\bin
-	echo set ADMB_CFG_CXX=$(USER_CXX)>${DIST}\bin\admb-cfg.bat
-	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>>${DIST}\bin\admb-cfg.bat
-	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>${DIST}\bin\admb-cfg-$(OSNAME)$(CXXVERSION).bat
+	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}\bin\admb-cfg-$(OSNAME)$(CXXVERSION).bat
 	copy ..\utilities\sed.exe ${DIST}\bin
 	copy ..\utilities\libiconv2.dll ${DIST}\bin
 	copy ..\utilities\libintl3.dll ${DIST}\bin
@@ -405,8 +404,10 @@ else
 	cp ../scripts/admb/adlink-shared ${DIST}/bin/adlink
   endif
   ifeq ($(OS),Windows_NT)
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg.sh
-	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).bat
+	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).bat
+	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
+	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
 	cp ../scripts/admb/admb.sh ${DIST}/bin/admb.sh
 	cp ../scripts/admb/root-admb.sh ../admb.sh
 	cp ../scripts/admb/admb.sh ${DIST}/admb.sh
@@ -418,8 +419,8 @@ else
 	cp ../scripts/admb/adcomp.bat ${DIST}/bin/adcomp.cmd
 	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
   else
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg$(OSNAME)$(CXXVERSION).sh
-	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg$(OSNAME)$(CXXVERSION).sh
+	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
+	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin

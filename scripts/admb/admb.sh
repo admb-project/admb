@@ -226,8 +226,8 @@ if [ "$CXX" == "icpc" ]; then
   DUMPVERSION="`icpc -dumpversion | cut -f1 -d. `"
   CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
 fi
-if [ -f "$ADMB_HOME/bin/admb-cfg$CXXVERSION.sh" ]; then
-  source "$ADMB_HOME/bin/admb-cfg$CXXVERSION.sh"
+if [ -f "$ADMB_HOME/bin/admb-cfg-$CXX_VERSION.sh" ]; then
+  source "$ADMB_HOME/bin/admb-cfg-$CXX_VERSION.sh"
   CXXFLAGS="$CXXFLAGS $ADMB_CFG_CXXFLAGS"
   LDFLAGS="$LDFLAGS $ADMB_CFG_LDFLAGS"
 else

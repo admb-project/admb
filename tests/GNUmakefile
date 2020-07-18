@@ -285,6 +285,56 @@ else
 	@rm -vf dualaveraging/hybmcmc.obj
 	@rm -vf f1b2vc5/f1b2vc5.b01
 	@rm -vf f1b2vc5/f1b2vc5.p01
+	@rm -vf adnuts/adaptation.csv
+	@rm -vf adnuts/adapted_metric.txt
+	@rm -vf adnuts/adnuts.mc2
+	@rm -vf adnuts/adnuts.mcm
+	@rm -vf adnuts/adnuts.psv
+	@rm -vf adnuts/adnuts_psv.txt
+	@rm -vf adnuts/output_psv.exe
+	@rm -vf adnuts/rwm_lp.txt
+	@rm -vf adnuts/sims
+	@rm -vf adnuts/unbounded.csv
+	@rm -vf beta_regression/b1
+	@rm -vf beta_regression/b2
+	@rm -vf beta_regression/beta_regression.psv
+	@rm -vf beta_regression/data
+	@rm -vf beta_regression/hybrid_seed
+	@rm -vf beta_regression/s1
+	@rm -vf beta_regression/s2
+	@rm -vf beta_regression/sims
+	@rm -vf betareg/a
+	@rm -vf betareg/b1
+	@rm -vf betareg/b2
+	@rm -vf betareg/betareg.b02
+	@rm -vf betareg/betareg.p02
+	@rm -vf betareg/betareg.r02
+	@rm -vf betareg/data
+	@rm -vf betareg/s1
+	@rm -vf betareg/s2
+	@rm -vf cov_re/cov_re_sep.bar
+	@rm -vf cov_re/cov_re_sep.bgs
+	@rm -vf cov_re/cov_re_sep.cor
+	@rm -vf cov_re/cov_re_sep.cpp
+	@rm -vf cov_re/cov_re_sep.eva
+	@rm -vf cov_re/cov_re_sep.exe
+	@rm -vf cov_re/cov_re_sep.htp
+	@rm -vf cov_re/cov_re_sep.log
+	@rm -vf cov_re/cov_re_sep.obj
+	@rm -vf cov_re/cov_re_sep.par
+	@rm -vf cov_re/cov_re_sep.rhes
+	@rm -vf cov_re/cov_re_sep.std
+	@rm -vf data_adstring_array/data_adstring_array.bar
+	@rm -vf data_adstring_array/data_adstring_array.cor
+	@rm -vf data_adstring_array/data_adstring_array.cpp
+	@rm -vf data_adstring_array/data_adstring_array.eva
+	@rm -vf data_adstring_array/data_adstring_array.exe
+	@rm -vf data_adstring_array/data_adstring_array.htp
+	@rm -vf data_adstring_array/data_adstring_array.log
+	@rm -vf data_adstring_array/data_adstring_array.obj
+	@rm -vf data_adstring_array/data_adstring_array.par
+	@rm -vf data_adstring_array/data_adstring_array.rep
+	@rm -vf data_adstring_array/data_adstring_array.std
 endif
 	$(MAKE) --directory=rgamma clean
 	$(MAKE) --directory=globals clean

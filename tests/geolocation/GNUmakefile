@@ -53,8 +53,6 @@ total-clean:
 	rm -rvf kfsst
 
 clean:
-ifeq ($(CMDSHELL),cmd)
-	if exist kalmanfilter $(MAKE) --directory=kalmanfilter clean
-else
+ifneq ($(CMDSHELL),cmd)
 	@if [ -d "kalmanfilter" ]; then $(MAKE) --directory=kalmanfilter clean; fi
 endif

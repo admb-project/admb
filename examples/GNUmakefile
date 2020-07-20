@@ -1192,11 +1192,6 @@ ifeq ($(CMDSHELL),cmd)
 	@del autodif\\struct\\oldstr.obj
 	@del autodif\\struct\\struct.exe
 	@del autodif\\struct\\struct.obj
-	@del examples\\admb\\prof_like\\bhplfine.prf
-	@del examples\\admb\\prof_like\\dgs2
-	@del examples\\admb\\prof_like\\diags
-	@del examples\\admb\\prof_like\\loga_pl.plt
-	@del examples\\admb\\prof_like\\logb_pl.plt
 	@del admb\\prof_like\\bhplfine.prf
 	@del admb\\prof_like\\dgs2
 	@del admb\\prof_like\\diags

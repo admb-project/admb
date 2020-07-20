@@ -21,12 +21,14 @@ ifeq ($(CMDSHELL),cmd)
   CONTRIB_DIR=..\..\build\admb
   CONTRIB_OBJS_DIR=..\..\build\objects
   ifeq ($(CXX),g++)
-    ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-      OSNAME=mingw64
-    else
-      OSNAME=mingw32
+    ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+        OSNAME=mingw64
+      else
+        OSNAME=mingw32
+      endif
+      CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
     endif
-    CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
   ifeq ($(CXX),clang++)
     ifneq ($(findstring clang++.exe,$(shell where clang++.exe 2>&1 | findstr clang++.exe)),clang++.exe)
@@ -69,10 +71,12 @@ else
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
     ifeq ($(CXX),g++)
-      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-        OSNAME=mingw64
-      else
-        OSNAME=mingw32
+      ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+        ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+          OSNAME=mingw64
+        else
+          OSNAME=mingw32
+        endif
       endif
     endif
     ifeq ($(CXX),clang++)

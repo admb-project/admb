@@ -23,15 +23,14 @@ ifeq ($(CMDSHELL),cmd)
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
   OBJSDIR=..\build\objects
   ifeq ($(CXX),g++)
-    ifneq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
-      $(warning "Warning: Unable to find g++ compiler.")
+    ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+        OSNAME=mingw64
+      else
+        OSNAME=mingw32
+      endif
+      CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
     endif
-    ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-      OSNAME=mingw64
-    else
-      OSNAME=mingw32
-    endif
-    CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
   ifeq ($(CXX),clang++)
     ifneq ($(findstring clang++.exe,$(shell where clang++.exe 2>&1 | findstr clang++.exe)),clang++.exe)
@@ -82,10 +81,12 @@ else
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
     ifeq ($(CXX),g++)
-      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-        OSNAME=mingw64
-      else
-        OSNAME=mingw32
+      ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+        ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+          OSNAME=mingw64
+        else
+          OSNAME=mingw32
+        endif
       endif
     endif
     ifeq ($(CXX),clang++)
@@ -98,72 +99,73 @@ else
   endif
   ifndef OSNAME
     $(warning Unknown UNAME_S = "$(UNAME_S)" results in empty OSNAME.)
-  endif
-  ifeq ($(CXX),g++)
-    ifeq ($(UNAME_S),Darwin)
-      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
-        CXXVERSION=-clang11
-      else
-        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
-          CXXVERSION=-clang10
-        else
-          CXXVERSION=-clang
-        endif
-      endif
-    else
-      CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
-    endif
-  endif
-  ifeq ($(CXX),clang++)
-    ifeq ($(UNAME_S),Darwin)
-      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
-        CXXVERSION=-clang11
-      else
-        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
-          CXXVERSION=-clang10
-        else
-          CXXVERSION=-clang
-        endif
-      endif
-    else
-      CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
-    endif
-  endif
-  ifeq ($(CXX),c++)
-    ifeq ($(UNAME_S),Darwin)
-      ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
-        CXXVERSION=-clang11
-      else
-        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
-          CXXVERSION=-clang10
-        else
-          CXXVERSION=-clang
-        endif
-      endif
-    else
-      CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
-    endif
-  endif
-  ifeq ($(CXX),analyze-c++)
-  CXXVERSION=-analyze-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
-  endif
-  ifeq ($(CXX),icpc)
-  CXXVERSION=-icpc$(basename $(basename $(basename $(shell $(CXX) -dumpversion))))
-  endif
-  ifndef CXXVERSION
-    $(warning Unknown CXX = "$(CXX)" results in empty CXXVERSION.)
-  endif
-  ifdef SHARED
-  OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)-shared
   else
-  OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)
+    ifeq ($(CXX),g++)
+      ifeq ($(UNAME_S),Darwin)
+        ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
+          CXXVERSION=-clang11
+        else
+          ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
+            CXXVERSION=-clang10
+          else
+            CXXVERSION=-clang
+          endif
+        endif
+      else
+        CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
+      endif
+    endif
+    ifeq ($(CXX),clang++)
+      ifeq ($(UNAME_S),Darwin)
+        ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
+          CXXVERSION=-clang11
+        else
+          ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
+            CXXVERSION=-clang10
+          else
+            CXXVERSION=-clang
+          endif
+        endif
+      else
+        CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
+      endif
+    endif
+    ifeq ($(CXX),c++)
+      ifeq ($(UNAME_S),Darwin)
+        ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
+          CXXVERSION=-clang11
+        else
+          ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
+            CXXVERSION=-clang10
+          else
+            CXXVERSION=-clang
+          endif
+        endif
+      else
+        CXXVERSION=-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
+      endif
+    endif
+    ifeq ($(CXX),analyze-c++)
+      CXXVERSION=-analyze-c++$(basename $(basename $(shell $(CXX) -dumpversion)))
+    endif
+    ifeq ($(CXX),icpc)
+      CXXVERSION=-icpc$(basename $(basename $(basename $(shell $(CXX) -dumpversion))))
+    endif
+    ifndef CXXVERSION
+      $(warning Unknown CXX = "$(CXX)" results in empty CXXVERSION.)
+    endif
+    ifdef SHARED
+      OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)-shared
+    else
+      OBJSDIR=../build/objects/$(OSNAME)$(CXXVERSION)
+    endif
+    ifeq ($(DEBUG),yes)
+      OBJSDIR:=$(sort $(addsuffix -debug, $(OBJSDIR)))
+    endif
+    OBJSDIR_:=$(OBJSDIR)
+    OBJSDIR:=$(sort $(addsuffix /, $(OBJSDIR)))
+    ADMB_VERSION:=$(shell cat ../VERSION)
   endif
-  ifeq ($(DEBUG),yes)
-  OBJSDIR:=$(sort $(addsuffix -debug, $(OBJSDIR)))
-  endif
-  OBJSDIR_:=$(OBJSDIR)
-  OBJSDIR:=$(sort $(addsuffix /, $(OBJSDIR)))
-  ADMB_VERSION:=$(shell cat ../VERSION)
 endif
 
 ifdef CXX
@@ -203,14 +205,16 @@ endif
 
 ifeq ($(CMDSHELL),cmd)
   ifeq ($(CXX),g++)
-    GCCMAJVER:="GCCVER$(shell gcc -dumpversion)"
-    ifeq (GCCVER7,$(findstring GCCVER7,$(GCCMAJVER)))
-      ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
-    else
-      ifeq (GCCVER6,$(findstring GCCVER6,$(GCCMAJVER)))
+    ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+      GCCMAJVER:="GCCVER$(shell gcc -dumpversion)"
+      ifeq (GCCVER7,$(findstring GCCVER7,$(GCCMAJVER)))
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
       else
-        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+        ifeq (GCCVER6,$(findstring GCCVER6,$(GCCMAJVER)))
+          ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+        else
+          ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+        endif
       endif
     endif
   endif
@@ -270,8 +274,10 @@ endif
 
 ifeq ($(CMDSHELL),cmd)
   ifeq ($(CXX),g++)
-    ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
-      ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
+    ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+      ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
+        ADCXXFLAGS:=$(subst -I,-D_FILE_OFFSET_BITS=64 -I,$(ADCXXFLAGS))
+      endif
     endif
   endif
 endif
@@ -405,9 +411,9 @@ else
   endif
   ifeq ($(OS),Windows_NT)
 	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).bat
-	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).bat
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
-	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
+	echo set ADMB_CFG_LDFLAGS=-static $(USER_LDFLAGS)>>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).bat
+	echo "ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)">${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
+	echo "ADMB_CFG_LDFLAGS=-static $(USER_LDFLAGS)">>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
 	cp ../scripts/admb/admb.sh ${DIST}/bin/admb.sh
 	cp ../scripts/admb/root-admb.sh ../admb.sh
 	cp ../scripts/admb/admb.sh ${DIST}/admb.sh
@@ -419,8 +425,8 @@ else
 	cp ../scripts/admb/adcomp.bat ${DIST}/bin/adcomp.cmd
 	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
   else
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
-	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
+	echo "ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)">${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
+	echo "ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)">>${DIST}/bin/admb-cfg-$(OSNAME)$(CXXVERSION).sh
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin

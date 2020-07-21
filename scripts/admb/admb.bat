@@ -318,6 +318,11 @@ if "!CXX!"=="cl" (
       )
     )
   )
+  if defined LDFLAGS (
+    set LDFLAGS= -static !LDFLAGS!
+  ) else (
+    set LDFLAGS= -static
+  )
   if exist "!ADMB_HOME!\bin\admb-cfg!CXXVERSION!.bat" (
     call "!ADMB_HOME!\bin\admb-cfg!CXXVERSION!.bat"
     if defined ADMB_CFG_CXXFLAGS (
@@ -329,11 +334,8 @@ if "!CXX!"=="cl" (
       )
     )
     if defined ADMB_CFG_LDFLAGS (
-      set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
+      set LDFLAGS=!LDFLAGS!!ADMB_CFG_LDFLAGS:-static=!
     )
-  )
-  if not defined LDFLAGS (
-    set LDFLAGS= -static !LDFLAGS!
   )
   if defined g (
     if defined fast (

@@ -121,24 +121,20 @@ if "!CXX!"=="" (
   for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "cl.exe"') do (
     set CXX=cl
   )
-  if "!CXX!"=="cl" (
-    for /f "tokens=*" %%i in ('dir /B !ADMB_HOME!\lib\admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
-      set CXX=
-    )
-  )
 ) else (
   if "!CXX!"=="cl" (
     for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "Could not find file"') do (
       set CXX=
     )
   )
-  if "!CXX!"=="cl" (
-    for /f "tokens=*" %%i in ('dir /B !ADMB_HOME!\lib\admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
-      set CXX=
-    )
-  )
 )
-
+if "!CXX!"=="cl" (
+  pushd !ADMB_HOME!\lib
+  for /f "tokens=*" %%i in ('dir /B admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
+    set CXX=
+  )
+  popd
+)
 if "!CXX!"=="cl" (
   where /Q !CXX!
   if errorlevel 1 (
@@ -299,11 +295,6 @@ if "!CXX!"=="cl" (
       set LDFLAGS= -shared
     )
   )
-  if defined LDFLAGS (
-    set LDFLAGS= -static !LDFLAGS!
-  ) else (
-    set LDFLAGS= -static
-  )
   if defined g (
     set CXXFLAGS=!CXXFLAGS! -g
     set LDFLAGS=!LDFLAGS! -g
@@ -312,11 +303,11 @@ if "!CXX!"=="cl" (
   )
   if "!CXX!"=="clang++" (
     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
-       set CXXVERSION=-win32!CXXMAJORNUMBER!
-     )
-     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
-       set CXXVERSION=-win64!CXXMAJORNUMBER!
-     )
+      set CXXVERSION=-win32!CXXMAJORNUMBER!
+    )
+    for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
+      set CXXVERSION=-win64!CXXMAJORNUMBER!
+    )
   ) else (
     if "!CXX!"=="g++" (
       for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
@@ -340,6 +331,9 @@ if "!CXX!"=="cl" (
     if defined ADMB_CFG_LDFLAGS (
       set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
     )
+  )
+  if not defined LDFLAGS (
+    set LDFLAGS= -static !LDFLAGS!
   )
   if defined g (
     if defined fast (

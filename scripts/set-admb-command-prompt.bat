@@ -6,8 +6,9 @@ if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" (
   )
 )
 
-if exist "%CD%\utilities\mingw64\bin\g++.exe" (
-  set "PATH=%CD%\bin;%CD%\utilities\mingw64\bin;%PATH%"
+set "SHORT_SCRIPT_PATH=%~dps0"
+if exist "%SHORT_SCRIPT_PATH%..\utilities\mingw64\bin\g++.exe" (
+  set "PATH=%CD%\bin;%SHORT_SCRIPT_PATH%..\utilities\mingw64\bin;%PATH%"
 ) else (
   set "PATH=%CD%\bin;%PATH%"
 )

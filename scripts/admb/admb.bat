@@ -132,6 +132,11 @@ if "!CXX!"=="" (
       set CXX=
     )
   )
+  if "!CXX!"=="cl" (
+    for /f "tokens=*" %%i in ('dir /B !ADMB_HOME!\lib\admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
+      set CXX=
+    )
+  )
 )
 
 if "!CXX!"=="cl" (
@@ -245,8 +250,9 @@ if "!CXX!"=="cl" (
     )
     where /Q !CXX!
     if errorlevel 1 (
-      if exist "!ADMB_HOME!\utilities\mingw\bin\g++.exe" (
-        set "PATH=!ADMB_HOME!\utilities\mingw\bin;!PATH!"
+      set "SHORT_SCRIPT_PATH=%~dps0"
+      if exist "!SHORT_SCRIPT_PATH!..\utilities\mingw\bin\g++.exe" (
+        set "PATH=!SHORT_SCRIPT_PATH!..\utilities\mingw\bin;!PATH!"
       ) else (
         echo Error: Unable to find !CXX!
         exit /B 1

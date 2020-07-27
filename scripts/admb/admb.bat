@@ -472,6 +472,20 @@ for %%a in (!tpls!) do (
   if defined g (
     set debug= -debug
   )
+  where /Q sed.exe
+  if errorlevel 1 (
+    set "SHORT_SCRIPT_PATH=%~dps0"
+    if exist "!SHORT_SCRIPT_PATH!..\utilities\sed.exe" (
+      set "PATH=!SHORT_SCRIPT_PATH!..\utilities;!PATH!"
+    ) else (
+      if exist "!SHORT_SCRIPT_PATH!..\..\..\utilities\sed.exe" (
+        set "PATH=!SHORT_SCRIPT_PATH!..\..\..\utilities;!PATH!"
+      ) else (
+        echo Error: Unable to find sed.exe
+        exit /B 1
+      )
+    )
+  )
   echo.&echo *** Parse: !tpl!.tpl
   if defined parser (
     set CMD=!parser! !debug! !dll! !tpl!

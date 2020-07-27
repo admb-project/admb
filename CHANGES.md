@@ -66,8 +66,9 @@ ADMB-12.2
 * Fixed Windows build issue reported by Jon Schnute.  [See Issue #130](https://github.com/admb-project/admb/issues/130)
 * Added api documentation for functions.
 * Fixed windows admb building with invalid /32 character. [See commit](https://github.com/admb-project/admb/commit/7bf1f308cad12c9c2fda0fa9dc844768691b156d) 
-* Improvements to admb build files.
 * Windows Innosetup installer includes mingw-w64 compiler used in Rtools 4.0.
+* Updated make.exe and sed.exe in utilities from Rtools 4.0.
+* Improvements to GNUmakefile files to build with GNU Make 4.3.
 
 ADMB-12.1
 ---------

@@ -3,9 +3,11 @@ ifeq ($(OS),Windows_NT)
     CMDSHELL=cmd
   else
     ifneq ($(TERM),cygwin)
-      ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-        SHELL=cmd
-        CMDSHELL=cmd
+      ifneq ($(TERM),xterm)
+        ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+          SHELL=cmd
+          CMDSHELL=cmd
+        endif
       endif
     endif
   endif

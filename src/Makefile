@@ -1,3 +1,5 @@
+ADMB_VER=admb-12.2
+
 LEXDESTDIR=..\build\lex
 
 #SAFE_ALL= /DSAFE_ALL
@@ -15,7 +17,7 @@ OSNAME=win32
 OSNAME=win
 !ENDIF
 
-DESTDIR=..\build\admb
+DESTDIR=..\build\$(ADMB_VER)
 !IF DEFINED(DEBUG)
 OBJDESTDIR=..\build\objects\$(OSNAME)$(CXXVERSION)-debug
 CXXFLAGS_SAF=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
@@ -311,5 +313,5 @@ check:
 zip:
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\examples
 	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
-	copy /Y ..\docs\install\QuickStartWindows.md ..\build\admb\INSTALL.txt
+	copy /Y ..\docs\install\QuickStartWindows.md $(DESTDIR)\INSTALL.txt
 	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd

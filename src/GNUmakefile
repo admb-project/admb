@@ -1,3 +1,4 @@
+ADMB_VER=admb-12.2
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
@@ -22,7 +23,7 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 ifeq ($(CMDSHELL),cmd)
-  DIST=..\build\admb
+  DIST=..\build\$(ADMB_VER)
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
   OBJSDIR=..\build\objects
@@ -62,7 +63,7 @@ else
   ifndef INSTALL_DIR
     INSTALL_DIR=/usr/local/
   endif
-  DIST=../build/admb
+  DIST=../build/$(ADMB_VER)
   LIBSDIR=$(DIST)/lib/
   ifeq ($(OS),Windows_NT)
     UNAME_S=_NT
@@ -264,15 +265,15 @@ ADCXXFLAGS:= $(ADCXXFLAGS) -D_USE_MATH_DEFINES
 
 ifeq ($(DEBUG),yes)
   ifeq ($(CMDSHELL),cmd)
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\admb\include
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\$(ADMB_VER)\include
   else
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/admb/include
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/$(ADMB_VER)/include
   endif
 else
   ifeq ($(CMDSHELL),cmd)
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\admb\include
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I..\build\$(ADMB_VER)\include
   else
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/admb/include
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -I../build/$(ADMB_VER)/include
   endif
 endif
 
@@ -342,14 +343,14 @@ ifeq ($(DEBUG),yes)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admbo-$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmbo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared-debug.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared-debug.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmbo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmbo-$(OSNAME)$(CXXVERSION)-shared-debug.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmbo-$(OSNAME)$(CXXVERSION)-shared-debug.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmbo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmbo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmbo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
       endif
     endif
   endif
@@ -359,14 +360,14 @@ else
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admbo-$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmbo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmbo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmbo-$(OSNAME)$(CXXVERSION)-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/a$(ADMB_VER)dmb/lib/libadmbo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmbo-$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmbo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmbo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmbo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       endif
     endif
   endif
@@ -436,7 +437,7 @@ else
 	cp ../scripts/admb/adcomp ${DIST}/bin
 	ln -sf bin/admb ${DIST}
 	#cp ../scripts/admb/root-admb ${DIST}/admb
-	ln -sf build/admb/bin/admb ..
+	ln -sf build/$(ADMB_VER)/bin/admb ..
 	#cp ../scripts/admb/root-admb ../admb
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} bins
@@ -729,27 +730,27 @@ endif
 install:
 	@#echo "Read INSTALL.txt for installation instructions."
 ifeq ($(INSTALL_DIR),/usr/local/)
-	find ../build/admb -type d -exec chmod 755 {} \;
-	find ../build/admb -type f -exec chmod 644 {} \;
+	find ../build/$(ADMB_VER) -type d -exec chmod 755 {} \;
+	find ../build/$(ADMB_VER) -type f -exec chmod 644 {} \;
   ifeq ($(OS),Windows_NT)
-	chmod a+rx ../build/admb/bin/admb.cmd
-	chmod a+rx ../build/admb/bin/admb.sh
-	chmod a+rx ../build/admb/bin/adlink.cmd
-	chmod a+rx ../build/admb/bin/adcomp.cmd
-	chmod a+rx ../build/admb/bin/tpl2cpp.exe
-	chmod a+rx ../build/admb/bin/tpl2rem.exe
+	chmod a+rx ../build/$(ADMB_VER)/bin/admb.cmd
+	chmod a+rx ../build/$(ADMB_VER)/bin/admb.sh
+	chmod a+rx ../build/$(ADMB_VER)/bin/adlink.cmd
+	chmod a+rx ../build/$(ADMB_VER)/bin/adcomp.cmd
+	chmod a+rx ../build/$(ADMB_VER)/bin/tpl2cpp.exe
+	chmod a+rx ../build/$(ADMB_VER)/bin/tpl2rem.exe
   else
-	chmod a+rx ../build/admb/bin/admb
-	chmod a+rx ../build/admb/bin/adlink
-	chmod a+rx ../build/admb/bin/adcomp
-	chmod a+rx ../build/admb/bin/tpl2cpp
-	chmod a+rx ../build/admb/bin/tpl2rem
+	chmod a+rx ../build/$(ADMB_VER)/bin/admb
+	chmod a+rx ../build/$(ADMB_VER)/bin/adlink
+	chmod a+rx ../build/$(ADMB_VER)/bin/adcomp
+	chmod a+rx ../build/$(ADMB_VER)/bin/tpl2cpp
+	chmod a+rx ../build/$(ADMB_VER)/bin/tpl2rem
   endif
-	chmod a+r ../build/admb/bin/sed*
-	chmod a+r ../build/admb/include/*.*
-	chmod a+r ../build/admb/include/contrib/*.*
+	chmod a+r ../build/$(ADMB_VER)/bin/sed*
+	chmod a+r ../build/$(ADMB_VER)/include/*.*
+	chmod a+r ../build/$(ADMB_VER)/include/contrib/*.*
 endif
-	cp -Rvf ../build/admb $(INSTALL_DIR)
+	cp -Rvf ../build/$(ADMB_VER) $(INSTALL_DIR)
 ifeq ($(INSTALL_DIR),/usr/local/)
   ifneq ($(OS),Windows_NT)
 	ln -svf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
@@ -779,7 +780,7 @@ else
 	cp -R ../examples $(DIST)
 	$(MAKE) --directory=../contrib copy
 	$(MAKE) --directory=../tests copy
-	$(MAKE) --directory=../build/admb/src dist-clean
+	$(MAKE) --directory=../build/$(ADMB_VER)/src dist-clean
 	cp -f ../Makefile ${DIST}
 endif
 
@@ -796,16 +797,16 @@ ifeq ($(OS),Windows_NT)
 	if not exist $(DIST)\examples md $(DIST)\examples
 	xcopy ..\examples $(DIST)\examples /S /Y /D
   else
-	cp ../docs/install/QuickStartWindows.md ../build/admb/INSTALL.txt
+	cp ../docs/install/QuickStartWindows.md ../build/$(ADMB_VER)/INSTALL.txt
 	cp -R ../examples $(DIST)
   endif
 	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd
 else
   ifeq ($(UNAME_S),Linux)
-	cp ../docs/install/QuickStartUnix.md ../build/admb/INSTALL.txt
+	cp ../docs/install/QuickStartUnix.md ../build/$(ADMB_VER)/INSTALL.txt
   endif
   ifeq ($(UNAME_S),Darwin)
-	cp ../docs/install/QuickStartMacOS.md ../build/admb/INSTALL.txt
+	cp ../docs/install/QuickStartMacOS.md ../build/$(ADMB_VER)/INSTALL.txt
   endif
 	cp -R ../examples $(DIST)
 	cd ../build/ && zip -r admb.zip admb

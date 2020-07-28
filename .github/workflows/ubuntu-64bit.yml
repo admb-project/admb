@@ -29,7 +29,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_ubuntu_zip
-        path: build/admb.zip
+        path: build/admbadmb-12.2.zip
     - name: tests
       run: make test DEBUG=yes
     - name: Artifact

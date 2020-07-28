@@ -27,7 +27,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_macos_zip
-        path: build/admb.zip
+        path: build/admb-12.2.zip
     - name: dmg
       run: |
         make --directory=scripts/installers/packagemaker clean all
@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_dmg_distribution
-        path: scripts/installers/packagemaker/ADMBTerminal.dmg
+        path: scripts/installers/packagemaker/admb-12.2.dmg
     - name: tests
       run: |
         make test DEBUG=yes

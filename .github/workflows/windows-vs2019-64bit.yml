@@ -24,7 +24,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_vs2019
-        path: build\\admb
+        path: build\\admb-12.2
     - name: debug
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_vs2019_debug
-        path: build\\admb
+        path: build\\admb-12.2
     - name: test
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd

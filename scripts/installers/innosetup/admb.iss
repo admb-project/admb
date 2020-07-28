@@ -23,6 +23,11 @@ Name: {#ADMB_VERSION2}; Description: {#ADMB_VERSION}
 [Files]
 Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Flags: recursesubdirs
 Source: "..\..\set-admb-command-prompt.bat"; DestDir: "{app}\bin"
+Source: "..\..\..\CHANGES.md"; DestDir: "{app}\CHANGES.txt"
+Source: "..\..\..\LICENSE.txt"; DestDir: "{app}\LICENSE.txt"
+Source: "..\..\..\README.txt"; DestDir: "{app}\README.txt"
+Source: "..\..\..\VERSION"; DestDir: "{app}\VERSION"
+Source: "..\..\..\examples\*"; DestDir: "{app}\examples"; Flags: recursesubdirs
 Source: "..\..\..\utilities\*"; DestDir: "{app}\utilities"; Flags: recursesubdirs
 Source: "C:\rtools40\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Flags: recursesubdirs
 

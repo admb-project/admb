@@ -1,3 +1,5 @@
+ADMB_VER=admb-12.2
+
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
@@ -26,7 +28,7 @@ ifeq ($(DEBUG),yes)
 DEBUG_OPTION=-g
 endif
 
-DIST=../build/admb
+DIST=../build/$(ADMB_VER)
 
 all:
 	$(MAKE) tests-core

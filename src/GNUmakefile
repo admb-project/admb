@@ -809,7 +809,7 @@ else
 	cp ../docs/install/QuickStartMacOS.md ../build/$(ADMB_VER)/INSTALL.txt
   endif
 	cp -R ../examples $(DIST)
-	cd ../build/ && zip -r admb.zip admb
+	cd ../build/ && zip -r $(ADMB_VER).zip $(ADMB_VER)
 endif
 
 check:

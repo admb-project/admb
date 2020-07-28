@@ -169,9 +169,9 @@ all:
 shared: libs
 ifeq ($(DEBUG),yes)
   ifeq ($(CMDSHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\$(ADMB_VER)\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\$(ADMB_VER)\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
     ifndef SAFE_ONLY
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\$(ADMB_VER)\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\$(ADMB_VER)\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
     endif
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
@@ -188,9 +188,9 @@ ifeq ($(DEBUG),yes)
   endif
 else
   ifeq ($(CMDSHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\$(ADMB_VER)\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\$(ADMB_VER)\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
     ifndef SAFE_ONLY
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\$(ADMB_VER)\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\$(ADMB_VER)\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
     endif
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
@@ -236,7 +236,7 @@ ifeq ($(CMDSHELL),cmd)
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	$(AR) -rs ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a "..\build\objects\$(OSNAME)$(CXXVERSION)\optlp-contrib-*.obj"
+	$(AR) -rs ..\build\$(ADMB_VER)\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a "..\build\objects\$(OSNAME)$(CXXVERSION)\optlp-contrib-*.obj"
     endif
   endif
 else
@@ -321,16 +321,16 @@ contrib-test-R:
 copy:
 ifeq ($(DEBUG),yes)
   ifeq ($(CMDSHELL),cmd)
-	if not exist ..\build\admb\contrib md ..\build\admb\contrib
-	xcopy ..\contrib ..\build\admb\contrib /S /Y /D
+	if not exist ..\build\$(ADMB_VER)\contrib md ..\build\$(ADMB_VER)\contrib
+	xcopy ..\contrib ..\build\$(ADMB_VER)\contrib /S /Y /D
   else
 	cp -Rvf ../contrib ../build/$(ADMB_VER)/
 	$(MAKE) --directory=../build/$(ADMB_VER)/contrib clean
   endif
 else
   ifeq ($(CMDSHELL),cmd)
-	if not exist ..\build\admb\contrib md ..\build\admb\contrib
-	xcopy ..\contrib ..\build\admb\contrib /S /Y /D
+	if not exist ..\build\$(ADMB_VER)\contrib md ..\build\$(ADMB_VER)\contrib
+	xcopy ..\contrib ..\build\$(ADMB_VER)\contrib /S /Y /D
   else
 	cp -Rvf ../contrib ../build/$(ADMB_VER)/
 	$(MAKE) --directory=../build/$(ADMB_VER)/contrib clean

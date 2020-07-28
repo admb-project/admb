@@ -1,3 +1,4 @@
+ADMB_VER=admb-12.2
 !IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
 CXXVERSION=-cl19
 !ELSE
@@ -11,7 +12,7 @@ OSNAME=win32
 OSNAME=vs
 !ENDIF
 
-DESTDIR=..\build\admb
+DESTDIR=..\build\$(ADMB_VER)
 !IFDEF DEBUG
 _DEBUG=-debug
 !ENDIF

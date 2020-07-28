@@ -195,7 +195,7 @@ if "!CXX!"=="cl" (
     )
     if not defined libs (
       if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" (
-        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!lib" /link
+        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" /link
 	set use_contrib_lib=yes
       ) else (
         set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!.lib" /link

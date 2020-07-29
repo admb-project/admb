@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_dmg_distribution
-        path: scripts/installers/packagemaker/admb-12.2.dmg
+        path: scripts/installers/packagemaker/ADMBTerminal.dmg
     - name: tests
       run: |
         make test DEBUG=yes

@@ -1,4 +1,6 @@
-ADMB_VER=admb-12.2
+ifndef ADMB_VER
+ADMB_VER=admb
+endif
 
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)

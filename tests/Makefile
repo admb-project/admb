@@ -1,4 +1,6 @@
-ADMB_VER=admb-12.2
+!IFNDEF ADMB_VER
+ADMB_VER=admb
+!ENDIF
 
 DESTDIR=..\build\$(ADMB_VER)
 

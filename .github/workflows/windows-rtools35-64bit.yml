@@ -24,7 +24,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_rtools35
-        path: build\\admb-12.2
+        path: build\\admb
     - name: debug
       run: |
         set PATH=C:\rtools35\bin;C:\rtools35\mingw_64\bin;%PATH%
@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_rtools35_debug
-        path: build\\admb-12.2
+        path: build\\admb
     - name: test
       run: |
         set PATH=C:\rtools35\bin;C:\rtools35\mingw_64\bin;%PATH%

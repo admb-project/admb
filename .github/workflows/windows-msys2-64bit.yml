@@ -24,7 +24,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_msys2
-        path: build\\admb-12.2
+        path: build\\admb
     - name: test
       run: |
         set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%

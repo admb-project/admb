@@ -1,7 +1,7 @@
 # ADMB Quick Start Unix
 
 *ADMB-12.2*  
-*Released July 7, 2020*  
+*Released July 31, 2020*  
 
 Describe downloading, installing and using ADMB from binary release for Linux.
 

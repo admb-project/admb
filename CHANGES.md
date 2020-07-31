@@ -14,7 +14,7 @@ Describe new features, changes and improvements for each release.
 ADMB-12.2
 ---------
 
-*Released July 7, 2020*  
+*Released July 31, 2020*  
 
 #### New Supported Compilers
 * GNU C++ 10 

@@ -55,7 +55,7 @@ cl-all:
 cl-dist: 
 	nmake /nologo cl-contribs
 cl-debug:
-	pushd src& nmake /nologo DEBUG=yes all
+	pushd src& nmake /nologo DEBUG=!DEBUG! all
 	pushd contrib& nmake /nologo DEBUG=yes all
 cl-core:
 	pushd src& nmake /nologo all

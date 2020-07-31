@@ -14,7 +14,7 @@ ADMBTerminal.dmg: build/ADMBTerminal.app
 	pushd build && ln -sf ADMBTerminal.app/admb/README.txt README.txt && popd
 	pushd build && ln -sf ADMBTerminal.app/admb/LICENSE.txt LICENSE.txt && popd
 	pushd build && ln -sf ADMBTerminal.app/admb/CHANGES.txt CHANGES.txt && popd
-	cp -rvf ../../../examples build
+	cp -rvf ../../../examples build/
 	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build -ov -debug
 
 build/ADMBTerminal.app: ADMBTerminal.scpt

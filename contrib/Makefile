@@ -1,4 +1,6 @@
-ADMB_VER=admb-12.2
+!IFNDEF ADMB_VER
+ADMB_VER=admb
+!ENDIF
 !IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
 CXXVERSION=-cl19
 !ELSE

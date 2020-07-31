@@ -20,7 +20,7 @@ Quick Start
 
 1. **Download**
 
-   For Linux 64-bit, download [admb-12.2-linux-64bit](https://github.com/admb-project/admb/releases/download/admb-12.1/admb-12.1-linux-64bit.zip).
+   Download zip file [admb-12.2-linux.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-linux.zip).
 
 2. **Install**
 
@@ -30,7 +30,7 @@ Quick Start
    For Linux,
 
    ```
-   [~]$ unzip admb-12.1-linux-64bit.zip
+   [~]$ unzip admb-12.2-linux.zip
    ```
 
 3. **Use** ADMB

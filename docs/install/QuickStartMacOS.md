@@ -14,7 +14,9 @@ Quick Start
 
 1. **Download**
 
-   For MacOS 64-bit, download [admb-12.2-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-macos-64bit.zip).
+   Download dmg file [admb-12.2-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-macos-64bit.zip).
+
+   Or, download zip file [admb-12.2-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-macos-64bit.zip).
 
 2. **Install**
 

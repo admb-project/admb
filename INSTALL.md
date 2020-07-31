@@ -5,8 +5,6 @@ ADMB Project
 
 ADMB Installation procedures
 
-<!--
-
 Installation
 ------------
 
@@ -17,8 +15,6 @@ For MacOS computers, read the [QuickStartMacOS](docs/install/QuickStartMacOS.md)
 For Linux computers, read the [QuickStartUnix](docs/install/QuickStartUnix.md).
 
 For all others, read the building source procedures below.
-
--->
 
 
 Building Source

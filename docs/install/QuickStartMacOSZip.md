@@ -1,33 +1,27 @@
-# ADMB Quick Start Unix
+# ADMB Quick Start MacOS
 
 *ADMB-12.2*  
-*Released July 7, 2020*  
+*Released July 31, 2020*  
 
-Describe downloading, installing and using ADMB from binary release for Linux.
+Describe downloading, installing and using ADMB from binary release for MacOS.
 
 ---
 
-Prerequisites
--------------
-
-The following tools are required to be installed on the local Linux computer.
-
-* GNU C++
-* GNU stream editor (sed)
+**Prerequisite** &mdash; [Apple Developer Tools (XCode)](https://developer.apple.com/xcode/) must be installed.
 
 Quick Start
 -----------
 
 1. **Download**
 
-   Download linux ZIP file [admb-12.2-linux.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-linux.zip).
+   Download zip file [admb-12.2-macos.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-macos.zip).
 
 2. **Install**
 
-   Open a **Terminal**, then use the command below to extract contents of downloaded zip file to _~/admb/_. 
+   Open a Terminal, then use the command below to extract contents of zip file to **~/admb/**. 
 
    ```
-   [~]$ unzip admb-12.2-linux.zip
+   [~]$ unzip admb-12.2-macos.zip
    ```
 
 3. **Use** ADMB

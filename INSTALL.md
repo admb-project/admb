@@ -14,9 +14,9 @@ Read the [QuickStartWindows](docs/install/QuickStartWindows.md).
 
 **MacOS**
 
-[_Recommended_] To install using dmg file, read the [QuickStartADMBTerminal](docs/install/QuickStartADMBTerminal.md).
+_Recommended_ &mdash; To install using dmg file, read the [QuickStartADMBTerminal](docs/install/QuickStartADMBTerminal.md).
 
-To install using zip file for command line only, read the [QuickStart](docs/install/QuickStartMacOSZip.md).
+To install using zip file for command line only, read the [QuickStartMacOSZip](docs/install/QuickStartMacOSZip.md).
 
 **Unix**
 

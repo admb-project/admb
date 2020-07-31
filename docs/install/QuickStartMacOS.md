@@ -22,7 +22,7 @@ Quick Start
 
 3. **Use** ADMB
 
-   In the **Terminal** window, use the steps below to build and run the simple example.
+   Open **Terminal** window, then use the steps below to build and run the simple example.
 
    Change to simple example directory.       
 

@@ -18,28 +18,28 @@ Quick Start
 
 2. **Install**
 
-   Double click admb-12.2-macos.dmg, then move the ADMBTerminal to HOME directory.
+   Double click downloaded admb-12.2-macos.dmg, then move the ADMBTerminal app to HOME directory.
 
 3. **Use** ADMB
 
-   Open **Terminal** window, then use the steps below to build and run the simple example.
+   Double click the **ADMBTerminal** app, then use the steps below to build and run the simple example.
 
    Change to simple example directory.       
 
    ```
-   [~]$ cd ~/ADMBTerminal/admb/examples/admb/simple
+   [~]$ cd ~/ADMBTerminal.app/admb/examples/admb/simple
    ```
 
    Build simple example.
 
    ```
-   [~/ADMBTerminal/admb/examples/admb/simple/]$ admb simple.tpl
+   [~/ADMBTerminal.app/admb/examples/admb/simple/]$ admb simple.tpl
    ```
 
    Run simple example.
 
    ```
-   [~/ADMBTerminal/admb/examples/admb/simple/]$ ./simple
+   [~/ADMBTerminal.app/admb/examples/admb/simple/]$ ./simple
    ```
 
    Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.

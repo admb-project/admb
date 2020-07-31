@@ -5,7 +5,7 @@
 
 setlocal EnableExtensions EnableDelayedExpansion
 
-set ADMB_VER=admb-12.2
+set ADMB_VER=admb
 
 set SCRIPT_PATH=%~dp0
 if not defined SCRIPT_PATH (

@@ -4,7 +4,7 @@
 #
 shopt -s expand_aliases
 
-ADMB_VER=admb-12.2
+ADMB_VER=admb
 SCRIPT_DIR=$(cd `dirname $0` && pwd)
 
 if [ -f "$SCRIPT_DIR/build/$ADMB_VER/bin/admb.sh" ]; then

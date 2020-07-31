@@ -31,18 +31,14 @@ Building Source
 
 1. **Download**
 
-<!--
-   Download ADMB source distribution [admb-12.2-src.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-src.zip).
--->
-
-   Download ADMB source distribution [admb-12.2-src.zip](https://github.com/admb-project/admb/archive/admb-12.2pre.zip).
+   Download ADMB source distribution [admb-12.2pre3-src.zip](https://github.com/admb-project/admb/releases/download/admb-12.2pre3/admb-12.2pre3-src.zip)
 
    Open a **Terminal** window
 
    Use the command below to extract contents of zip file to _~/admb/_. 
 
    ```
-   [~]$ unzip admb-12.2-src.zip
+   [~]$ unzip admb-12.2pre3-src.zip
    ```
 
    _**Alternative**_ &mdash; Use Git client (see command below) to get source from version control repository.

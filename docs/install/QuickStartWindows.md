@@ -12,23 +12,17 @@ Quick Start
 
 1. **Download**
 
-   Installer [admb-12.2-windows.exe](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-windows.exe).
+   Download installer [admb-12.2-windows.exe](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-windows.exe).
 
    _**Note**_ &mdash; Installer includes MinGW-w64 C++ compiler.
 
-   Zip [admb-12.2-windows.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-windows.zip).
-
 2. **Install**
 
-   For zip file, double click downloaded file, then extract zip file to **C:\ADMB**.
-
-   For installer, double click downloaded file, then follow prompts.
+   Double click downloaded installer file and follow prompts.
 
 3. **Use** ADMB
 
-   For zip file, Use **File Explorer** and open folder **C:\ADMB**, then double click **ADMB Command Prompt** shortcut to open command line window.
-
-   For installer, locate and double click **ADMB Command Prompt** in the Windows Start Menu.
+   To use ADMB, locate and double click **ADMB Command Prompt** in the Windows Start Menu.
 
    In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
 

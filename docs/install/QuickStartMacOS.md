@@ -14,17 +14,11 @@ Quick Start
 
 1. **Download**
 
-   Download dmg file [admb-12.2-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-macos-64bit.zip).
-
-   Or, download zip file [admb-12.2-macos-64bit](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-macos-64bit.zip).
+   Download DMG file [admb-12.2-macos.dmg](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-macos.dmg).
 
 2. **Install**
 
-   Open a Terminal, then use the command below to extract contents of zip file to **~/admb/**. 
-
-   ```
-   [~]$ unzip admb-12.2-macos-64bit.zip
-   ```
+   Double click admb-12.2-macos.dmg, then move the ADMBTerminal to HOME directory.
 
 3. **Use** ADMB
 
@@ -33,19 +27,19 @@ Quick Start
    Change to simple example directory.       
 
    ```
-   [~]$ cd admb/examples/admb/simple
+   [~]$ cd ~/ADMBTerminal/admb/examples/admb/simple
    ```
 
    Build simple example.
 
    ```
-   [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
+   [~/ADMBTerminal/admb/examples/admb/simple/]$ admb simple.tpl
    ```
 
    Run simple example.
 
    ```
-   [~/admb/examples/admb/simple/]$ ./simple
+   [~/ADMBTerminal/admb/examples/admb/simple/]$ ./simple
    ```
 
    Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.

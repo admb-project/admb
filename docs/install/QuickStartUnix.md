@@ -20,14 +20,11 @@ Quick Start
 
 1. **Download**
 
-   Download zip file [admb-12.2-linux.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-linux.zip).
+   Download linux ZIP file [admb-12.2-linux.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-linux.zip).
 
 2. **Install**
 
    Open a Terminal, then use the command below to extract contents of zip file to _~/admb/_. 
-
-
-   For Linux,
 
    ```
    [~]$ unzip admb-12.2-linux.zip
@@ -40,7 +37,7 @@ Quick Start
    Change to simple example directory.       
 
    ```
-   [~]$ cd admb/examples/admb/simple
+   [~]$ cd ~/admb/examples/admb/simple
    ```
 
    Build simple example.

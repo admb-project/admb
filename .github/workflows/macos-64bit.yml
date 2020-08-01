@@ -30,7 +30,7 @@ jobs:
         path: build/admb.zip
     - name: dmg
       run: |
-        make --directory=scripts/installers/packagemaker clean all
+        make ADMB_VER=admb --directory=scripts/installers/packagemaker clean all
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

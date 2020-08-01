@@ -4,9 +4,13 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
       CMDSHELL=cmd
   else
-    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      SHELL=cmd
-      CMDSHELL=cmd
+    ifneq ($(TERM),cygwin)
+      ifneq ($(TERM),xterm)
+        ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+          SHELL=cmd
+          CMDSHELL=cmd
+        endif
+      endif
     endif
   endif
   ifeq ($(CMDSHELL),cmd)
@@ -1192,11 +1196,6 @@ ifeq ($(CMDSHELL),cmd)
 	@del autodif\\struct\\oldstr.obj
 	@del autodif\\struct\\struct.exe
 	@del autodif\\struct\\struct.obj
-	@del examples\\admb\\prof_like\\bhplfine.prf
-	@del examples\\admb\\prof_like\\dgs2
-	@del examples\\admb\\prof_like\\diags
-	@del examples\\admb\\prof_like\\loga_pl.plt
-	@del examples\\admb\\prof_like\\logb_pl.plt
 	@del admb\\prof_like\\bhplfine.prf
 	@del admb\\prof_like\\dgs2
 	@del admb\\prof_like\\diags

@@ -1,10 +1,17 @@
+ifndef ADMB_VER
+  ADMB_VER=admb
+endif
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      SHELL=cmd
-      CMDSHELL=cmd
+    ifneq ($(TERM),cygwin)
+      ifneq ($(TERM),xterm)
+        ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+          SHELL=cmd
+          CMDSHELL=cmd
+        endif
+      endif
     endif
   endif
   ifeq ($(CMDSHELL),cmd)
@@ -18,15 +25,17 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 ifeq ($(CMDSHELL),cmd)
-  CONTRIB_DIR=..\..\build\admb
+  CONTRIB_DIR=..\..\build\$(ADMB_VER)
   CONTRIB_OBJS_DIR=..\..\build\objects
   ifeq ($(CXX),g++)
-    ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-      OSNAME=mingw64
-    else
-      OSNAME=mingw32
+    ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+        OSNAME=mingw64
+      else
+        OSNAME=mingw32
+      endif
+      CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
     endif
-    CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
   endif
   ifeq ($(CXX),clang++)
     ifneq ($(findstring clang++.exe,$(shell where clang++.exe 2>&1 | findstr clang++.exe)),clang++.exe)
@@ -69,10 +78,12 @@ else
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
     ifeq ($(CXX),g++)
-      ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
-        OSNAME=mingw64
-      else
-        OSNAME=mingw32
+      ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
+        ifeq ($(findstring x86_64,$(shell g++ -dumpmachine)),x86_64)
+          OSNAME=mingw64
+        else
+          OSNAME=mingw32
+        endif
       endif
     endif
     ifeq ($(CXX),clang++)
@@ -134,7 +145,7 @@ else
   ifeq ($(CXX),icpc)
   CXXVERSION=-icpc$(basename $(basename $(basename $(shell $(CXX) -dumpversion))))
   endif
-  CONTRIB_DIR=../../build/admb/
+  CONTRIB_DIR=../../build/$(ADMB_VER)/
   ifeq ($(DEBUG),yes)
   CONTRIB_OBJS_PREFIX=build/objects/$(OSNAME)$(CXXVERSION)$(SHARED)-debug
   else
@@ -160,39 +171,39 @@ all:
 shared: libs
 ifeq ($(DEBUG),yes)
   ifeq ($(CMDSHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\$(ADMB_VER)\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\$(ADMB_VER)\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
     ifndef SAFE_ONLY
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\$(ADMB_VER)\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\$(ADMB_VER)\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
     endif
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
       endif
     endif
   endif
 else
   ifeq ($(CMDSHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\$(ADMB_VER)\lib\admb-contrib$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\$(ADMB_VER)\lib\libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
     ifndef SAFE_ONLY
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\admb\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\$(ADMB_VER)\lib\admb-contribo$(OSNAME)$(CXXVERSION).dll -Wl,--whole-archive ..\build\$(ADMB_VER)\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
     endif
   else
     ifeq (clang,$(findstring clang,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contrib-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/admb/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contribo-$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       endif
     endif
   endif
@@ -227,7 +238,7 @@ ifeq ($(CMDSHELL),cmd)
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmbo-$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	$(AR) -rs ..\build\admb\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a "..\build\objects\$(OSNAME)$(CXXVERSION)\optlp-contrib-*.obj"
+	$(AR) -rs ..\build\$(ADMB_VER)\lib\libadmb-contribo-$(OSNAME)$(CXXVERSION)$(SHARED).a "..\build\objects\$(OSNAME)$(CXXVERSION)\optlp-contrib-*.obj"
     endif
   endif
 else
@@ -312,19 +323,19 @@ contrib-test-R:
 copy:
 ifeq ($(DEBUG),yes)
   ifeq ($(CMDSHELL),cmd)
-	if not exist ..\build\admb\contrib md ..\build\admb\contrib
-	xcopy ..\contrib ..\build\admb\contrib /S /Y /D
+	if not exist ..\build\$(ADMB_VER)\contrib md ..\build\$(ADMB_VER)\contrib
+	xcopy ..\contrib ..\build\$(ADMB_VER)\contrib /S /Y /D
   else
-	cp -Rvf ../contrib ../build/admb/
-	$(MAKE) --directory=../build/admb/contrib clean
+	cp -Rvf ../contrib ../build/$(ADMB_VER)/
+	$(MAKE) --directory=../build/$(ADMB_VER)/contrib clean
   endif
 else
   ifeq ($(CMDSHELL),cmd)
-	if not exist ..\build\admb\contrib md ..\build\admb\contrib
-	xcopy ..\contrib ..\build\admb\contrib /S /Y /D
+	if not exist ..\build\$(ADMB_VER)\contrib md ..\build\$(ADMB_VER)\contrib
+	xcopy ..\contrib ..\build\$(ADMB_VER)\contrib /S /Y /D
   else
-	cp -Rvf ../contrib ../build/admb/
-	$(MAKE) --directory=../build/admb/contrib clean
+	cp -Rvf ../contrib ../build/$(ADMB_VER)/
+	$(MAKE) --directory=../build/$(ADMB_VER)/contrib clean
   endif
 endif
 

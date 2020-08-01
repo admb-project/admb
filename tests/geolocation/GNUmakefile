@@ -45,15 +45,14 @@ else
 	@# cd kalmanfilter/testdir/ukfsst; cp ../../ukfsst/inst/admb/src/ukfsst .; ./ukfsst
 endif
 
-total-clean: clean
+total-clean:
 	rm -rvf kalmanfilter
 	rm -rvf ukfsst
 	rm -rvf trackit
 	rm -rvf kftrack
 	rm -rvf kfsst
+
 clean:
-ifeq ($(CMDSHELL),cmd)
-	if exist kalmanfilter pushd kalmanfilter & git clean -f & git checkout -- . &  popd
-else
-	@if [ -d "kalmanfilter" ]; then cd kalmanfilter; git clean -f; git checkout --; fi
+ifneq ($(CMDSHELL),cmd)
+	@if [ -d "kalmanfilter" ]; then $(MAKE) --directory=kalmanfilter clean; fi
 endif

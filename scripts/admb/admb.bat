@@ -116,23 +116,6 @@ for %%a in (%*) do (
     )
   )
 )
-if exist "!ADMB_HOME!\bin\admb-cfg.bat" (
-  call "!ADMB_HOME!\bin\admb-cfg.bat"
-  if defined ADMB_CFG_CXX (
-    set CXX=!ADMB_CFG_CXX!
-  )
-  if defined ADMB_CFG_CXXFLAGS (
-    set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
-  )
-  if defined ADMB_CFG_LD (
-    if not defined d (
-      set LD=!ADMB_CFG_LD!
-    )
-  )
-  if defined ADMB_CFG_LDFLAGS (
-    set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
-  )
-)
 
 if "!CXX!"=="" (
   for /f "tokens=*" %%i in ('where cl.exe 2^>^&1 ^| findstr "cl.exe"') do (
@@ -145,7 +128,13 @@ if "!CXX!"=="" (
     )
   )
 )
-
+if "!CXX!"=="cl" (
+  pushd !ADMB_HOME!\lib
+  for /f "tokens=*" %%i in ('dir /B admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
+    set CXX=
+  )
+  popd
+)
 if "!CXX!"=="cl" (
   where /Q !CXX!
   if errorlevel 1 (
@@ -178,6 +167,20 @@ if "!CXX!"=="cl" (
   if not defined OSNAME (
     set OSNAME=-win
   )
+  if exist "!ADMB_HOME!\bin\admb-cfg!OSNAME!!CXXVERSION!.bat" (
+    call "!ADMB_HOME!\bin\admb-cfg!OSNAME!!CXXVERSION!.bat"
+    if defined ADMB_CFG_CXXFLAGS (
+      set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
+    )
+    if defined ADMB_CFG_LD (
+      if not defined d (
+        set LD=!ADMB_CFG_LD!
+      )
+    )
+    if defined ADMB_CFG_LDFLAGS (
+      set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
+    )
+  )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /nologo /DOPT_LIB
     if defined g (
@@ -192,7 +195,7 @@ if "!CXX!"=="cl" (
     )
     if not defined libs (
       if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" (
-        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!lib" /link
+        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" /link
 	set use_contrib_lib=yes
       ) else (
         set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!.lib" /link
@@ -243,8 +246,9 @@ if "!CXX!"=="cl" (
     )
     where /Q !CXX!
     if errorlevel 1 (
-      if exist "!ADMB_HOME!\utilities\mingw\bin\g++.exe" (
-        set "PATH=!ADMB_HOME!\utilities\mingw\bin;!PATH!"
+      set "SHORT_SCRIPT_PATH=%~dps0"
+      if exist "!SHORT_SCRIPT_PATH!..\utilities\mingw\bin\g++.exe" (
+        set "PATH=!SHORT_SCRIPT_PATH!..\utilities\mingw\bin;!PATH!"
       ) else (
         echo Error: Unable to find !CXX!
         exit /B 1
@@ -274,6 +278,10 @@ if "!CXX!"=="cl" (
       set CXXMAJORNUMBER=-g++9
       set STDCXX=-std=c++14
     )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 10.') do (
+      set CXXMAJORNUMBER=-g++10
+      set STDCXX=-std=c++14
+    )
   )
   if defined CXXFLAGS (
     set CXXFLAGS= -c !STDCXX! !CXXFLAGS!
@@ -287,11 +295,6 @@ if "!CXX!"=="cl" (
       set LDFLAGS= -shared
     )
   )
-  if defined LDFLAGS (
-    set LDFLAGS= -static !LDFLAGS!
-  ) else (
-    set LDFLAGS= -static
-  )
   if defined g (
     set CXXFLAGS=!CXXFLAGS! -g
     set LDFLAGS=!LDFLAGS! -g
@@ -300,11 +303,11 @@ if "!CXX!"=="cl" (
   )
   if "!CXX!"=="clang++" (
     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
-       set CXXVERSION=-win32!CXXMAJORNUMBER!
-     )
-     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
-       set CXXVERSION=-win64!CXXMAJORNUMBER!
-     )
+      set CXXVERSION=-win32!CXXMAJORNUMBER!
+    )
+    for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
+      set CXXVERSION=-win64!CXXMAJORNUMBER!
+    )
   ) else (
     if "!CXX!"=="g++" (
       for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
@@ -313,6 +316,25 @@ if "!CXX!"=="cl" (
       for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
         set CXXVERSION=-mingw64!CXXMAJORNUMBER!
       )
+    )
+  )
+  if defined LDFLAGS (
+    set LDFLAGS= -static !LDFLAGS!
+  ) else (
+    set LDFLAGS= -static
+  )
+  if exist "!ADMB_HOME!\bin\admb-cfg!CXXVERSION!.bat" (
+    call "!ADMB_HOME!\bin\admb-cfg!CXXVERSION!.bat"
+    if defined ADMB_CFG_CXXFLAGS (
+      set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
+    )
+    if defined ADMB_CFG_LD (
+      if not defined d (
+        set LD=!ADMB_CFG_LD!
+      )
+    )
+    if defined ADMB_CFG_LDFLAGS (
+      set LDFLAGS=!LDFLAGS!!ADMB_CFG_LDFLAGS:-static=!
     )
   )
   if defined g (
@@ -332,7 +354,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
             ) else (
-              echo Error: Unable to find libadmbo-debug.a
+              echo Error: Unable to find ADMB DEBUG library 'libadmbo!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -353,7 +375,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
             ) else (
-              echo Error: Unable to find libadmb
+              echo Error: Unable to find ADMB DEBUG library 'libadmb!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -377,7 +399,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
             ) else (
-              echo Error: Unable to find libadmbo-debug.a
+              echo Error: Unable to find ADMB library 'libadmbo!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -398,7 +420,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
             ) else (
-              echo Error: Unable to find libadmb
+              echo Error: Unable to find ADMB library 'libadmb!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -449,6 +471,20 @@ for %%a in (!tpls!) do (
   )
   if defined g (
     set debug= -debug
+  )
+  where /Q sed.exe
+  if errorlevel 1 (
+    set "SHORT_SCRIPT_PATH=%~dps0"
+    if exist "!SHORT_SCRIPT_PATH!..\utilities\sed.exe" (
+      set "PATH=!SHORT_SCRIPT_PATH!..\utilities;!PATH!"
+    ) else (
+      if exist "!SHORT_SCRIPT_PATH!..\..\..\utilities\sed.exe" (
+        set "PATH=!SHORT_SCRIPT_PATH!..\..\..\utilities;!PATH!"
+      ) else (
+        echo Error: Unable to find sed.exe
+        exit /B 1
+      )
+    )
   )
   echo.&echo *** Parse: !tpl!.tpl
   if defined parser (

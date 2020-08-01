@@ -184,5 +184,4 @@ TEST_F(test_dfpool, dvar_vector1to4)
 
   dvar_vector v(1, 4); 
 }
-
 #endif

@@ -1,30 +1,38 @@
 ADMB Project  
 ============
 *ADMB-12.2*  
-*Released July 7, 2020*  
+*Released July 31, 2020*  
 
 ADMB Installation procedures
-
-<!--
 
 Installation
 ------------
 
-For Windows computers, read the [QuickStartWindows](docs/install/QuickStartWindows.md).  
+**Windows**
 
-For MacOS computers, read the [QuickStartMacOS](docs/install/QuickStartMacOS.md).
+Read the [QuickStartWindows](docs/install/QuickStartWindows.md).  
 
-For Linux computers, read the [QuickStartUnix](docs/install/QuickStartUnix.md).
+**MacOS**
+
+_Recommended_ &mdash; To install using dmg file, read the [QuickStartADMBTerminal](docs/install/QuickStartADMBTerminal.md).
+
+To install using zip file for command line only, read the [QuickStartMacOSZip](docs/install/QuickStartMacOSZip.md).
+
+**Unix**
+
+Read the [QuickStartUnix](docs/install/QuickStartUnix.md).
+
 
 For all others, read the building source procedures below.
-
--->
-
 
 Building Source
 ---------------
 
-For Windows computers and Visual Studio, read the [BuildingSourceVisualStudio](docs/install/BuildingSourceVisualStudio.md).   
+**Windows**
+
+To build with Windows and Visual Studio, read the [BuildingSourceVisualStudio](docs/install/BuildingSourceVisualStudio.md).   
+
+**Unix**
 
 For Unix (Linux, MacOS, Solaris and BSD) computers, read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
 

@@ -14,7 +14,10 @@ Describe new features, changes and improvements for each release.
 ADMB-12.2
 ---------
 
-*Released July 7, 2020*  
+*Released July 31, 2020*  
+
+#### New Supported Compilers
+* GNU C++ 10 
 
 #### New Features
 
@@ -61,7 +64,11 @@ ADMB-12.2
   * [Issue #126](https://github.com/admb-project/admb/issues/126)
   * [Issue #120](https://github.com/admb-project/admb/issues/120)
 * Fixed Windows build issue reported by Jon Schnute.  [See Issue #130](https://github.com/admb-project/admb/issues/130)
-* Added api function documentation.
+* Added api documentation for functions.
+* Fixed windows admb building with invalid /32 character. [See commit](https://github.com/admb-project/admb/commit/7bf1f308cad12c9c2fda0fa9dc844768691b156d) 
+* Windows Innosetup installer includes mingw-w64 compiler used in Rtools 4.0.
+* Updated make.exe and sed.exe in utilities from Rtools 4.0.
+* Improvements to GNUmakefile files to build with GNU Make 4.3.
 
 ADMB-12.1
 ---------

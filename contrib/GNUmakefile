@@ -340,7 +340,6 @@ else
 endif
 
 clean:
-	$(MAKE) --directory=ide clean
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=gdbprintlib clean
 	$(MAKE) --directory=qfclib clean

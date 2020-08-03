@@ -10,17 +10,15 @@ Installation
 
 **Windows**
 
-Read the [QuickStartWindows](docs/install/QuickStartWindows.md).  
+Read [QuickStartWindows](docs/install/QuickStartWindows.md).  
 
 **MacOS**
 
-_Recommended_ &mdash; To install using dmg file, read the [QuickStartADMBTerminal](docs/install/QuickStartADMBTerminal.md).
-
-To install using zip file for command line only, read the [QuickStartMacOSZip](docs/install/QuickStartMacOSZip.md).
+Read [QuickStartMacOS](scripts/installers/packagemaker/QuickStartMacOS.md).
 
 **Unix**
 
-Read the [QuickStartUnix](docs/install/QuickStartUnix.md).
+Read [QuickStartUnix](docs/install/QuickStartUnix.md).
 
 
 For all others, read the building source procedures below.
@@ -34,7 +32,7 @@ To build with Windows and Visual Studio, read the [BuildingSourceVisualStudio](d
 
 **Unix**
 
-For Unix (Linux, MacOS, Solaris and BSD) computers, read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
+To build with Linux, MacOS, Solaris BSD or MinGW-w64 in Windows, read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
 
 ---
 For help and support, email <users@admb-project.org>.

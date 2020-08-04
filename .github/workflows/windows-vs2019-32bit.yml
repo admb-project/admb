@@ -39,7 +39,7 @@ jobs:
     - name: test
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
-        nmake test DEBUG=yes
+        nmake gtests DEBUG=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

@@ -54,6 +54,7 @@ vector_shape_pool::~vector_shape_pool()
  * Description not yet available.
  * \param
  */
+
 void* vector_shape::operator new(size_t n)
 {
 #if defined(DEBUG)
@@ -66,26 +67,6 @@ void* vector_shape::operator new(size_t n)
   return vector_shape::get_xpool().alloc();
 }
 
-/**
- * Description not yet available.
- * \param
- */
-void* arr_link::operator new(size_t n)
-{
-#if defined(DEBUG)
-  if (n != xpool.size)
-  {
-    cerr << "incorrect size requested in dfpool" << endl;
-    ad_exit(1);
-  }
-#endif
-  return arr_link::get_xpool().alloc();
-}
-
-/**
- * Description not yet available.
- * \param
- */
 void* vector_shapex::operator new(size_t n)
 {
 #if defined(DEBUG)
@@ -97,6 +78,7 @@ void* vector_shapex::operator new(size_t n)
 #endif
   return vector_shapex::get_xpool().alloc();
 }
+#endif
 
 #if defined(__CHECK_MEMORY__)
 /**
@@ -570,5 +552,3 @@ void dfpool::clean(void)
     ptr++;
   }
 }
-
-#endif  // #if defined(USE_VECTOR_SHAPE_POOL)

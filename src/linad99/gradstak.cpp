@@ -83,11 +83,13 @@ using namespace std;
 #endif
 
 char lastchar(char *);
+void memory_allocate_error(const char * s, void * ptr);
+
+/*
 char ad_random_part[6]="tmp";
 
 void fill_ad_random_part(void)
 {
-/*
   time_t t,tt;
   time(&t);
   tt=t;
@@ -97,16 +99,27 @@ void fill_ad_random_part(void)
     ad_random_part[i]=(tt/div)%10+48;
     div*=10;
   }
-*/
 }
-/**
-Default constructor
 */
-grad_stack::grad_stack()
+
+/**
+Construct grad_stack with size and id.
+
+@param size number of elements
+@param id unique identifier
+*/
+grad_stack::grad_stack(
+  const size_t size,
+  const size_t df_file_bytes,
+  const unsigned int dlist_size,
+  const unsigned long arr_list_size,
+  const unsigned long indvar_list_size,
+  const int max_nvar_size,
+  const unsigned int id)
 {
-  gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-  true_length = gradient_structure::GRADSTACK_BUFFER_SIZE;
+  initialize();
+
+  true_length = size;
   length = true_length;
 
 #ifndef OPT_LIB
@@ -168,21 +181,33 @@ grad_stack::grad_stack()
   if (path != NULL && strlen(path) <= 45)
   {
 #if !defined (_WIN32)
-    sprintf(&gradfile_name1[0],"%s/gradfil1.%s", path, ad_random_part);
+    if (id > 0)
+      sprintf(&gradfile_name1[0],"%s/gradfil1%u.tmp", path, id);
+    else
+      sprintf(&gradfile_name1[0],"%s/gradfil1.tmp", path);
 #else
     if (lastchar(path) != '\\')
     {
-      sprintf(&gradfile_name1[0], "%s\\gradfil1.%s", path, ad_random_part);
+      if (id > 0)
+        sprintf(&gradfile_name1[0], "%s\\gradfil1%u.tmp", path, id);
+      else
+        sprintf(&gradfile_name1[0], "%s\\gradfil1.tmp", path);
     }
     else
     {
-      sprintf(&gradfile_name1[0], "%sgradfil1.%s", path, ad_random_part);
+      if (id > 0)
+        sprintf(&gradfile_name1[0], "%sgradfil1%u.tmp", path, id);
+      else
+        sprintf(&gradfile_name1[0], "%sgradfil1.tmp", path);
     }
 #endif
   }
   else
   {
-    sprintf(&gradfile_name1[0], "gradfil1.%s", ad_random_part);
+    if (id > 0)
+      sprintf(&gradfile_name1[0], "gradfil1%u.tmp", id);
+    else
+      sprintf(&gradfile_name1[0], "gradfil1.tmp");
   }
 
   path = getenv("ADTMP1"); // NULL if not defined
@@ -197,37 +222,120 @@ grad_stack::grad_stack()
 #if !defined (_WIN32)
     if (strlen(path) > 0)
     {
-      sprintf(&var_store_file_name[0],"%s/varssave.%s",path, ad_random_part);
-      sprintf(&gradfile_name2[0],"%s/gradfil2.%s", path, ad_random_part);
+      if (id > 0)
+      {
+        sprintf(&var_store_file_name[0],"%s/varssave%u.tmp",path, id);
+        sprintf(&gradfile_name2[0],"%s/gradfil2%u.tmp", path, id);
+      }
+      else
+      {
+        sprintf(&var_store_file_name[0],"%s/varssave.tmp",path);
+        sprintf(&gradfile_name2[0],"%s/gradfil2.tmp", path);
+      }
     }
     else
     {
-      sprintf(&var_store_file_name[0],"varssave.tmp");
-      sprintf(&gradfile_name2[0],"gradfil2.tmp");
+      if (id > 0)
+      {
+        sprintf(&var_store_file_name[0],"varssave%u.tmp", id);
+        sprintf(&gradfile_name2[0],"gradfil2%u.tmp", id);
+      }
+      else
+      {
+        sprintf(&var_store_file_name[0],"varssave.tmp");
+        sprintf(&gradfile_name2[0],"gradfil2.tmp");
+      }
     }
 #else
     if (lastchar(path)!='\\')
     {
-      sprintf(&gradfile_name2[0], "%s\\gradfil2.%s", path, ad_random_part);
-      sprintf(&var_store_file_name[0], "%s\\varssave.%s", path, ad_random_part);
+      if (id > 0)
+      {
+        sprintf(&gradfile_name2[0], "%s\\gradfil2%u.tmp", path, id);
+        sprintf(&var_store_file_name[0], "%s\\varssave%u.tmp", path, id);
+      }
+      else
+      {
+        sprintf(&gradfile_name2[0], "%s\\gradfil2.tmp", path);
+        sprintf(&var_store_file_name[0], "%s\\varssave.tmp", path);
+      }
     }
     else
     {
-      sprintf(&gradfile_name2[0], "%sgradfil2.%s", path, ad_random_part);
-      sprintf(&var_store_file_name[0], "%svarssave.%s", path, ad_random_part);
+      if (id > 0)
+      {
+        sprintf(&gradfile_name2[0], "%sgradfil2%u.tmp", path, id);
+        sprintf(&var_store_file_name[0], "%svarssave%u.tmp", path, id);
+      }
+      else
+      {
+        sprintf(&gradfile_name2[0], "%sgradfil2.tmp", path);
+        sprintf(&var_store_file_name[0], "%svarssave.tmp", path);
+      }
     }
 #endif
   }
   else
   {
-    sprintf(&gradfile_name2[0], "gradfil2.%s", ad_random_part);
-    sprintf(&var_store_file_name[0], "varssave.%s", ad_random_part);
+    if (id > 0)
+    {
+      sprintf(&gradfile_name2[0], "gradfil2%u.tmp", id);
+      sprintf(&var_store_file_name[0], "varssave%u.tmp", id);
+    }
+    else
+    {
+      sprintf(&gradfile_name2[0], "gradfil2.tmp");
+      sprintf(&var_store_file_name[0], "varssave.tmp");
+    }
   }
 
   create_gradfile();
 
   strcpy(gradfile_name, gradfile_name1);
   _GRADFILE_PTR = _GRADFILE_PTR1;
+
+  fp = new DF_FILE(df_file_bytes, id);
+  memory_allocate_error("fp", (void *) fp);
+
+  GRAD_LIST = new dlist(dlist_size);
+  memory_allocate_error("GRAD_LIST", (void*)GRAD_LIST);
+
+  ARR_LIST1 = new arr_list(arr_list_size);
+  memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
+
+  //ARR_FREE_LIST1 = new arr_list;
+  //memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
+
+  INDVAR_LIST = new indvar_offset_list(indvar_list_size);
+  memory_allocate_error("INDVAR_LIST",INDVAR_LIST);
+
+  DEPVARS_INFO = new dependent_variables_information(max_nvar_size);
+  memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
+
+  RETURN_ARRAYS = nullptr;
+  RETURN_PTR_CONTAINER = nullptr;
+  MIN_RETURN = nullptr;
+  MAX_RETURN = nullptr;
+  RETURN_PTR = nullptr;
+  RETURN_ARRAYS_PTR = 0;
+}
+void grad_stack::deallocate_RETURN_ARRAYS()
+{
+  if (RETURN_ARRAYS != NULL)
+  {
+    for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
+    {
+      delete [] RETURN_ARRAYS[i];
+      RETURN_ARRAYS[i] = NULL;
+    }
+    delete [] RETURN_ARRAYS;
+    RETURN_ARRAYS = NULL;
+  }
+  if (RETURN_PTR_CONTAINER != NULL)
+  {
+    delete [] RETURN_PTR_CONTAINER;
+    RETURN_PTR_CONTAINER = NULL;
+  }
 }
 /// Destructor
 grad_stack::~grad_stack()
@@ -247,6 +355,67 @@ grad_stack::~grad_stack()
     *ad_comm::global_logfile << "size of file " << var_store_file_name
       << " = " << pos << endl;
   }
+
+  if (fp != NULL)
+  {
+    delete fp;
+    fp = NULL;
+  }
+#if defined(DEBUG)
+  else
+  {
+    cerr << "Trying to close stream referenced by a NULL pointer\n"
+            " in ~gradient_structure\n";
+  }
+#endif
+  if (GRAD_LIST != NULL)
+  {
+    delete GRAD_LIST;
+    GRAD_LIST = NULL;
+  }
+#if defined(DEBUG)
+  else
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+#endif
+  if (ARR_LIST1 != NULL)
+  {
+    delete ARR_LIST1;
+    ARR_LIST1 = NULL;
+  }
+#if defined(DEBUG)
+  else
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+#endif
+  if (INDVAR_LIST != NULL)
+  {
+    delete INDVAR_LIST;
+    INDVAR_LIST = nullptr;
+  }
+#if defined(DEBUG)
+  else
+  {
+     null_ptr_err_message();
+     ad_exit(1);
+  }
+#endif
+  if (DEPVARS_INFO != NULL)
+  {
+    delete DEPVARS_INFO;
+    DEPVARS_INFO = NULL;
+  }
+#if defined(DEBUG)
+  else
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+#endif
   if (close(_GRADFILE_PTR1))
   {
     cerr << "Error closing file " << gradfile_name1 << "\n"
@@ -363,13 +532,13 @@ void  grad_stack::write_grad_stack_buffer()
     cout << "Wrote " << ierr << "bytes into temp. grad. file\n";
   }
   {
-    OFF_T lpos = LSEEK(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
+    OFF_T lpos = LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
     cout << "Offset in file after write is " << lpos
          << " bytes from the beginning\n";
   }
 #endif
   //keep track of the size of the grad_stack
-  gradient_structure::TOTAL_BYTES+=nbw;
+  TOTAL_BYTES += nbw;
   ptr = ptr_first;
 }
 

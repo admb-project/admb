@@ -64,6 +64,9 @@ endif
 test-rgamma:
 	$(MAKE) --directory=rgamma
 
+tests-afunnel:\
+  test-afunnel\
+  test-afunnel2
 core-tpls:\
   tpl-data_adstring_array\
   tpl-dd2\
@@ -111,6 +114,12 @@ contrib-tpls:\
 
 remote-contrib-tpls:\
   tpl-agemat
+
+test-afunnel:
+	$(MAKE) --directory=afunnel
+
+test-afunnel2:
+	$(MAKE) --directory=afunnel2
 
 cpp-globals:
 	$(MAKE) --directory=globals

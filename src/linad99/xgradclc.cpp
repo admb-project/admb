@@ -82,7 +82,8 @@ void funnel_gradcalc(void)
        return;
      }
 #  endif
-  gradient_structure::GRAD_STACK1->initialize();
+  gradient_structure::TOTAL_BYTES = 0;
+  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
   if(!gradient_structure::instances)
   {
     return;
@@ -108,19 +109,19 @@ void funnel_gradcalc(void)
 
   //if (gradient_structure::save_var_flag)
   {
-    gradient_structure::GRAD_STACK1->save_arrays();
-    gradient_structure::GRAD_STACK1->GRAD_LIST->save_variables();
+    gradient_structure::save_arrays();
+    gradient_structure::save_variables();
   }
 
   gradient_structure::GRAD_STACK1->ptr--;
 
-  gradient_structure::GRAD_STACK1->GRAD_LIST->initialize();
+  gradient_structure::GRAD_LIST->initialize();
 
   double_and_int* tmp =
-    (double_and_int*)gradient_structure::GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE;
+    (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
 
      unsigned long int max_last_offset =
-       gradient_structure::GRAD_STACK1->ARR_LIST1->get_max_last_offset();
+       gradient_structure::ARR_LIST1->get_max_last_offset();
 
   size_t size = sizeof(double_and_int);
 
@@ -192,7 +193,7 @@ do
   //if (gradient_structure::save_var_flag)
   {
     unsigned long bytes_needed = min(
-      gradient_structure::GRAD_STACK1->ARR_LIST1->get_last_offset() + 1,
+      gradient_structure::ARR_LIST1->get_last_offset() + 1,
       gradient_structure::ARRAY_MEMBLOCK_SIZE);
     size_t _dsize = bytes_needed/sizeof(double);
 #ifndef OPT_LIB
@@ -204,7 +205,7 @@ do
     //memcpy((char*)&(dtmp(0)),(char*)gradient_structure::ARRAY_MEMBLOCK_BASE,
       //dsize*sizeof(double));
 
-    double* dptr=(double*) gradient_structure::GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE;
+    double* dptr=(double*) gradient_structure::ARRAY_MEMBLOCK_BASE;
     dptr-=1;
     int ii=0;
     int nzero=0;
@@ -260,7 +261,7 @@ do
     }
     save_int_value(ii);
 
-    unsigned int ssize=gradient_structure::GRAD_STACK1->GRAD_LIST->nlinks;
+    unsigned int ssize=gradient_structure::GRAD_LIST->nlinks;
 #ifndef OPT_LIB
     assert(ssize > 0);
     assert(ssize <= INT_MAX);
@@ -268,12 +269,12 @@ do
     dvector stmp(0,(int)(ssize-1));
 
 #ifndef OPT_LIB
-    assert(gradient_structure::GRAD_STACK1->GRAD_LIST->nlinks <= INT_MAX);
+    assert(gradient_structure::GRAD_LIST->nlinks <= INT_MAX);
 #endif
-    for (int i=0; i < (int)gradient_structure::GRAD_STACK1->GRAD_LIST->nlinks; i++)
+    for (int i=0; i < (int)gradient_structure::GRAD_LIST->nlinks; i++)
     {
       memcpy((char*)&(stmp(i)),
-        gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[i],sizeof(double));
+        gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
     }
     //dtmp.save_dvector_value();
     //dtmp.save_dvector_position();
@@ -286,8 +287,8 @@ do
     save_identifier_string("ae");
 
     gradient_structure::GRAD_STACK1->set_gradient_stack(funnel_derivatives);
-    gradient_structure::GRAD_STACK1->restore_arrays();
-    gradient_structure::GRAD_STACK1->GRAD_LIST->restore_variables();
+    gradient_structure::restore_arrays();
+    gradient_structure::restore_variables();
   }
 }
 
@@ -326,7 +327,7 @@ void funnel_derivatives(void)
   verify_identifier_string("ue");
 
   double df = restore_prevariable_derivative(deppos);
-  double * dptr= (double *) gradient_structure::GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE;
+  double * dptr= (double *) gradient_structure::ARRAY_MEMBLOCK_BASE;
 
   //double * dd = &(dx(1));
   ii=0;
@@ -352,7 +353,7 @@ void funnel_derivatives(void)
   {
     if (!ISZERO(stmp(i)))
     {
-      *(double*)(gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[i])
+      *(double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
         +=stmp(i)*df;
     }
   }

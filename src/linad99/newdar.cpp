@@ -22,11 +22,6 @@
 int num_free_obj=0;
 int ad_kill_flag=0;
 
-double* gradient_structure::get_ARRAY_MEMBLOCK_BASE()
-{
-  return (double*)gradient_structure::GRAD_STACK1->ARR_LIST1->ARRAY_MEMBLOCK_BASE;
-}
-
 /**
 Default constructor
 */
@@ -43,48 +38,16 @@ arr_link::arr_link()
 }
 
 /**
-Size constructor
-
-@param size in bytes
-*/
-arr_list::arr_list(const unsigned long size): pool(sizeof(arr_link))
-{
-  last = 0;
-  free_last = 0;
-  last_offset = 0;
-  max_last_offset = 0;
-  number_arr_links = 0;
-  num_free_obj = 0;
-  _size = size;
-
-  void* temp_ptr = NULL;
-  if ((temp_ptr = (void*)malloc(size)) == 0)
-  {
-    cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";
-    ad_exit(1);
-  }
-
-  ARRAY_MEMBLOCK_BASE = temp_ptr;
-
-  const size_t adjustment = (8 -((size_t)ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
-  ARRAY_MEMBLOCK_BASE.adjust(adjustment);
-}
-arr_list::~arr_list()
-{
-  ARRAY_MEMBLOCK_BASE.free();
-}
-
-/**
  * Description not yet available.
  * \param
  */
-void arr_list::arr_free_remove(arr_link * tmp)
+void arr_free_remove(arr_link * tmp)
 {
   num_free_obj--;
   // if this is the last free object reset list pointer
   if (!tmp->free_next)
   {
-    free_last=tmp->free_prev;
+    gradient_structure::ARR_LIST1->free_last=tmp->free_prev;
   }
   // This routine removes the link pointed to by tmp
   if (tmp->free_next)  // Make the one after it point to tmp->prev
@@ -102,12 +65,12 @@ void arr_list::arr_free_remove(arr_link * tmp)
  * Description not yet available.
  * \param
  */
-void arr_list::arr_free_add(arr_link* tmp)
+void arr_free_add(arr_link * tmp)
 {
   num_free_obj++;
   // This routine adds the link pointed to by tmp to  the end of the free list
-  tmp->free_prev = free_last;
-  free_last=tmp;
+  tmp->free_prev = gradient_structure::ARR_LIST1->free_last;
+  gradient_structure::ARR_LIST1->free_last=tmp;
   tmp->free_next = NULL;
   if (tmp->free_prev) tmp->free_prev->free_next = tmp;
 }
@@ -116,7 +79,7 @@ void arr_list::arr_free_add(arr_link* tmp)
  * Description not yet available.
  * \param
  */
-double_and_int* arr_new(unsigned int sz)
+double_and_int * arr_new(unsigned int sz)
 {
   if (!gradient_structure::instances)
   {
@@ -125,16 +88,13 @@ double_and_int* arr_new(unsigned int sz)
             " gradient_structure in scope " << endl;
     ad_exit(1);
   }
-  return gradient_structure::GRAD_STACK1->ARR_LIST1->arr_new(sz);
-}
-double_and_int* arr_list::arr_new(unsigned int sz)
-{
+
   char * temp_ptr;
 
   // this routine allocated a block of memory of sizeof(double)*sz bytes
   // for the gradients of an array or matrix of prevariables
 
-  arr_link* tmp = free_last;
+  arr_link * tmp = gradient_structure::ARR_LIST1->free_last;
 
   unsigned int bytes_needed = sz * (unsigned int)sizeof(double_and_int);
 
@@ -160,7 +120,7 @@ double_and_int* arr_list::arr_new(unsigned int sz)
         // remove tmp from the free list
         arr_free_remove(tmp);
 
-        temp_ptr = ARRAY_MEMBLOCK_BASE + tmp->offset;
+        temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
 
         //put the address tmp into the location pointed to by temp_ptr
         (* (arr_link **) (temp_ptr)) = tmp;
@@ -172,8 +132,8 @@ double_and_int* arr_list::arr_new(unsigned int sz)
         // otherwise split up this memory block and return
         // the part you need
 
-        arr_link* tmp1 = allocate_link_node();
-        number_arr_links += 1;
+        arr_link* tmp1 = new arr_link;
+        gradient_structure::ARR_LIST1->number_arr_links += 1;
 
         // put the new link tmp1-> into the list BEFORE tmp->
 
@@ -196,7 +156,7 @@ double_and_int* arr_list::arr_new(unsigned int sz)
         tmp->offset+=bytes_needed;
         tmp->size-=bytes_needed;
 
-        temp_ptr = ARRAY_MEMBLOCK_BASE + tmp1->offset;
+        temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp1->offset;
 
    //put the address pointed to by tmp1 into the location pointed to by temp_ptr
         (*(arr_link**)(temp_ptr)) = tmp1;
@@ -209,60 +169,66 @@ double_and_int* arr_list::arr_new(unsigned int sz)
   // couldn't find a free block large enough
   // make a new block
 
-  tmp = allocate_link_node();
+  tmp = new arr_link;
   if (tmp==0)
   {
     cerr << "Error allocating new arr_link" << endl;
     ad_exit(1);
   }
 
-  number_arr_links  += 1;
+  gradient_structure::ARR_LIST1->number_arr_links  += 1;
 
-  // the new block point back at the previous last block
-  tmp->prev = last;
+  tmp->prev = gradient_structure::ARR_LIST1->last; // the new block point back
+                                                 // at the previous last block
 
-  if (last)
+  if (gradient_structure::ARR_LIST1->last)
   {
-    // the previous last block point forward to tmp
-    last->next = tmp;
+    gradient_structure::ARR_LIST1->last->next = tmp; // the previous last
+                                                  // block point forward to tmp
   }
-  // tmp is the new last block
-  last = tmp;
+  gradient_structure::ARR_LIST1->last = tmp;        // tmp is the new last block
 
   tmp->next = 0;
 
   tmp->status = 1;
 
-  tmp->offset = last_offset;
+  tmp->offset = gradient_structure::ARR_LIST1->last_offset;
 
-  last_offset += bytes_needed;
+  gradient_structure::ARR_LIST1->last_offset += bytes_needed;
 
-  if (last_offset>
+  if (gradient_structure::ARR_LIST1->last_offset>
     (unsigned int)gradient_structure::max_last_offset )
   {
-    gradient_structure::max_last_offset = last_offset;
+    gradient_structure::max_last_offset=
+      gradient_structure::ARR_LIST1->last_offset;
   }
 
-  if (last_offset > max_last_offset)
+  if (gradient_structure::ARR_LIST1->last_offset >
+    gradient_structure::ARR_LIST1->max_last_offset)
   {
-    max_last_offset = last_offset;
+    gradient_structure::ARR_LIST1->max_last_offset =
+     gradient_structure::ARR_LIST1->last_offset;
   }
 
-  if (last_offset > _size)
+  if(gradient_structure::ARR_LIST1->last_offset >
+    gradient_structure::ARRAY_MEMBLOCK_SIZE)
   {
-    cout << last_offset << " > " <<  _size  << "\n";
+    cout << gradient_structure::ARR_LIST1->last_offset <<" > "
+         <<  gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
     cout << " No memory for dvar_vectors\n"
          << " Need to increase ARRAY_MEMBLOCK_SIZE parameter\n"
-         << "In gradient_structure declaration\n";
+      "In gradient_structure declaration\n";
+    //throw gradient_structure::arrmemblerr();
     ad_exit(1);
   }
 
   tmp->size = bytes_needed;
 
-  temp_ptr = ARRAY_MEMBLOCK_BASE + tmp->offset;
+  temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
 
-  //put the address tmp into the location pointed to by temp_ptr
-  (*(arr_link **) (temp_ptr )) = tmp;
+  (*(arr_link **) (temp_ptr )) = tmp; //put the address
+                                   // tmp into the location pointed to
+                                   //by temp_ptr
 
 //  return  (double_and_int *) (temp_ptr+sizeof(double_and_int));
   return  (double_and_int *) (temp_ptr);
@@ -273,10 +239,6 @@ double_and_int* arr_list::arr_new(unsigned int sz)
  * \param
  */
 void arr_free(double_and_int * varr)
-{
-  gradient_structure::GRAD_STACK1->ARR_LIST1->arr_free(varr);
-}
-void arr_list::arr_free(double_and_int* varr)
 {
   // This routines frees up a memory block and
   // consolidates the free blocks if possible
@@ -306,20 +268,20 @@ void arr_list::arr_free(double_and_int* varr)
     if (ptr->prev && !ptr->prev->status)
     {
       // delete ptr->prev
-      last = ptr->prev->prev;
+      gradient_structure::ARR_LIST1->last = ptr->prev->prev;
       //if (gradient_structure::ARR_LIST1->last ==0)
        // cout << "gradient_structure::ARR_LIST1->last =0 " << endl;
 
-      last_offset -= ptr->size + ptr->prev->size;
+      gradient_structure::ARR_LIST1->last_offset -= ptr->size + ptr->prev->size;
       arr_free_remove(ptr->prev);
       arr_remove(&(ptr->prev));
     }
     else
     {
-      last = ptr->prev;
+      gradient_structure::ARR_LIST1->last = ptr->prev;
       //if (gradient_structure::ARR_LIST1->last ==0)
        // cout << "gradient_structure::ARR_LIST1->last =0 " << endl;
-      last_offset -= ptr->size;
+      gradient_structure::ARR_LIST1->last_offset -= ptr->size;
     }
     arr_remove(&ptr);
   }
@@ -417,7 +379,7 @@ void df_check_derivative_values(void)
   adstring str=get_string_marker();
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
-    gradient_structure::GRAD_STACK1->ARR_LIST1->get_max_last_offset();
+    gradient_structure::ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   int icount=0;
@@ -439,14 +401,14 @@ void df_check_derivative_values(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::GRAD_STACK1->GRAD_LIST->nlinks; i++)
+  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
-    if (* (double*) (gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[i])
+    if (* (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
       > 1.e+8)
     {
       icount++;
        cout << "dlist " << i << " " << setscientific() <<
-         * (double*) (gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[i])
+         * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
           << endl;
       if (icount>10)
       {
@@ -482,7 +444,7 @@ void df_check_derivative_values_indexed(void)
   adstring str=get_string_marker();
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
-    gradient_structure::GRAD_STACK1->ARR_LIST1->get_max_last_offset();
+    gradient_structure::ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   int icount=0;
@@ -501,15 +463,15 @@ void df_check_derivative_values_indexed(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::GRAD_STACK1->GRAD_LIST->nlinks; i++)
+  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
-    if (* (double*) (gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[i])
+    if (* (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
       > 1.e+8)
     {
       icount++;
       if (ad_kill_flag) exit_flag=1;
        cout << "dlist " << i << " " << setscientific() <<
-         * (double*) (gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[i])
+         * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
           << endl;
       if (icount>10)
       {
@@ -532,7 +494,7 @@ void df_check_derivative_values_indexed_break(void)
   adstring str=get_string_marker();
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset =
-    gradient_structure::GRAD_STACK1->ARR_LIST1->get_max_last_offset();
+    gradient_structure::ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   if (index<=b)
@@ -555,15 +517,15 @@ void df_check_derivative_values_indexed_break(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::GRAD_STACK1->GRAD_LIST->nlinks; i++)
+  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
-    if (* (double*) (gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[i])
+    if (* (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
       > 1.e+8)
     {
       icount++;
       if (ad_kill_flag) exit_flag=1;
        cout << "dlist " << i << " " <<
-         * (double*) (gradient_structure::GRAD_STACK1->GRAD_LIST->dlink_addresses[i])
+         * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
           << endl;
       if (icount>10)
       {
@@ -577,7 +539,7 @@ void df_check_derivative_values_indexed_break(void)
 /**
 Remove and delete arr_link node pptr from gradient_structure::ARR_LIST1.
 */
-void arr_list::arr_remove(arr_link** pptr)
+void arr_remove(arr_link** pptr)
 {
 #ifndef OPT_LIB
   assert(pptr != NULL);
@@ -612,10 +574,10 @@ void arr_list::arr_remove(arr_link** pptr)
          << "\n";
 #endif
 
-    deallocate_link_node(tmp);
+    delete tmp;
     tmp = NULL;
   }
-  number_arr_links -= 1;
+  gradient_structure::ARR_LIST1->number_arr_links -= 1;
   //cout <<  "after delete number_arr_links = "
   //<<  gradient_structure::ARR_LIST1->number_arr_links <<"\n";
 }

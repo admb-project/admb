@@ -89,19 +89,14 @@ void byte_copy(void* dest, void* source, const size_t num_bytes)
 }
 #endif
 
-DF_FILE* gradient_structure::get_fp()
-{
-  return gradient_structure::GRAD_STACK1->fp;
-}
-
+extern char ad_random_part[6];
 
 /**
-Constructor to allocate buffer and storage output file.
+Constructor to allocate buffer.
 
 \param nbytes size of buffer
-\param id added to filename if greater than default zero.
 */
-DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
+DF_FILE::DF_FILE(const size_t nbytes)
 {
 #if defined(_MSC_VER) || defined(__MINGW64__)
   auto max = std::numeric_limits<unsigned int>::max() - sizeof(OFF_T);
@@ -120,6 +115,7 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
   }
   buff_end = static_cast<OFF_T>(nbytes);
   buff_size = nbytes + sizeof(OFF_T);
+
 
   try
   {
@@ -174,35 +170,26 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
   if (path != NULL && strlen(path) <= 45)
 #if !defined (_WIN32)
   {
-    if (id > 0)
-      sprintf(&cmpdif_file_name[0],"%s/cmpdiff%u.tmp", path, id);
-    else
-      sprintf(&cmpdif_file_name[0],"%s/cmpdiff.tmp", path);
+      sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
+        ad_random_part);
   }
 #else
   {
     if (lastchar(path) != '\\')
     {
-      if (id > 0)
-        sprintf(&cmpdif_file_name[0],"%s\\cmpdiff%u.tmp", path, id);
-      else
-        sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.tmp", path);
+      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
+        ad_random_part);
     }
     else
     {
-      if (id > 0)
-        sprintf(&cmpdif_file_name[0],"%scmpdiff%u.tmp", path, id);
-      else
-        sprintf(&cmpdif_file_name[0],"%scmpdiff.tmp", path);
+      sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
+        ad_random_part);
     }
   }
 #endif
   else
   {
-    if (id > 0)
-      sprintf(&cmpdif_file_name[0],"cmpdiff%u.tmp",id);
-    else
-      sprintf(&cmpdif_file_name[0],"cmpdiff.tmp");
+    sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
   }
 #if defined (_MSC_VER) || defined (__WAT32__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |

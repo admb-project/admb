@@ -18,7 +18,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=1
+      pushd examples & nmake all & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -37,7 +37,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=1
+      pushd examples & nmake all & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -56,7 +56,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=1
+      pushd examples & nmake all & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -76,7 +76,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=1
+      pushd examples & nmake all & popd
   - task: CopyFiles@2
     inputs:
       contents: |

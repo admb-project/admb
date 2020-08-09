@@ -240,7 +240,7 @@ gtest-all: gtest-all.obj $(GTESTS)
 ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
 test_nuts.obj: test_nuts.cpp

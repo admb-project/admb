@@ -19,6 +19,7 @@ jobs:
       nmake
       nmake zip
       pushd examples & nmake all & popd
+      scripts\get-outputs.bat > outputs-saf.txt
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -38,6 +39,7 @@ jobs:
       nmake
       nmake zip
       pushd examples & nmake all & popd
+      scripts\get-outputs.bat > outputs-saf.txt
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -57,6 +59,7 @@ jobs:
       nmake
       nmake zip
       pushd examples & nmake all & popd
+      scripts\get-outputs.bat > outputs-saf.txt
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -77,6 +80,7 @@ jobs:
       nmake
       nmake zip
       pushd examples & nmake all & popd
+      scripts\get-outputs.bat > outputs-saf.txt
   - task: CopyFiles@2
     inputs:
       contents: |

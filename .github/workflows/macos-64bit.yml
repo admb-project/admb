@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: clean
       run: make clean
     - name: dist
@@ -30,7 +30,7 @@ jobs:
         path: build/admb.zip
     - name: dmg
       run: |
-        make --directory=scripts/installers/packagemaker clean all
+        make ADMB_VER=admb --directory=scripts/installers/packagemaker clean all
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

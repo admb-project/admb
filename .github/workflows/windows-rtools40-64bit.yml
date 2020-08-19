@@ -8,7 +8,7 @@ jobs:
     runs-on: [self-hosted, windows]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: clean
       run: |
         set PATH=C:\rtools40\usr\bin;C:\rtools40\mingw64\bin;%PATH%

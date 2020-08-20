@@ -24,6 +24,9 @@ GTEST_DIR=googletest-read-only/googletest
 endif
 
 GTESTS_ALL=\
+ test_afunnel.cpp\
+ test_dlist.cpp\
+ test_funnel_thread_arr_list.cpp\
  test_atomic.cpp\
  test_shared_ptr.cpp\
  test_adstring_strcase.cpp\
@@ -127,6 +130,8 @@ GTESTS_ALL=\
  test_issues.cpp\
  test_funnel.cpp\
  test_math.cpp\
+ test_funnel_thread_grad_stack.cpp\
+ test_funnel_thread_df_file.cpp\
  main.cpp
 
 GTESTS_NEW=\
@@ -240,7 +245,7 @@ gtest-all: gtest-all.obj $(GTESTS)
 ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
 test_nuts.obj: test_nuts.cpp

@@ -12,6 +12,7 @@ TEST_F(test_math, outer_product)
 {
   ad_exit=&test_ad_exit;
 
+  gradient_structure::CMPDIF_BUFFER_SIZE = 140000000L;
   gradient_structure gs;
 
   independent_variables independents(1, 3);
@@ -76,6 +77,7 @@ TEST_F(test_math, outer_product2)
 {
   ad_exit=&test_ad_exit;
 
+  gradient_structure::CMPDIF_BUFFER_SIZE = 140000000L;
   gradient_structure gs;
 
   independent_variables independents(1, 3);

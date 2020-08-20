@@ -9,7 +9,6 @@ extern "C"
 class test_dfpool: public ::testing::Test {};
 
 #ifdef USE_VECTOR_SHAPE_POOL
-
 TEST_F(test_dfpool, constructor)
 {
   dfpool pool;

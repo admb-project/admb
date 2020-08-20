@@ -82,8 +82,7 @@ Macro definitions.
 
 #include <cmath>
 #ifndef M_PI
-  //#error "Error: M_PI is not defined."
-  #define M_PI 3.14159265358979323846
+  #error "Error: M_PI is not defined."
 #endif
 #ifndef PI
   #define PI M_PI
@@ -105,6 +104,7 @@ Macro definitions.
   #define TINY_AD_USE_TINY_VEC 1
   #include <tiny_ad.hpp>
 #endif
+
 
 //#define USE_VECTOR_SHAPE_POOL
 
@@ -475,11 +475,9 @@ class kkludge_object{};
  */
 class vector_shape_pool:public dfpool
 {
-  bool* _allocated;
 public:
   vector_shape_pool();
-  vector_shape_pool(const size_t, bool* allocated);
-  ~vector_shape_pool();
+  vector_shape_pool(const size_t);
 };
 
 /**
@@ -502,19 +500,17 @@ class vector_shape
 {
  public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-  static bool allocated;
   static vector_shape_pool& get_xpool()
   {
-    static vector_shape_pool xpool(
-      sizeof(vector_shape), &vector_shape::allocated);
+    static vector_shape_pool xpool(sizeof(vector_shape));
     return xpool;
   }
   void* operator new(size_t);
   void operator delete(void* ptr, size_t)
    { vector_shape::get_xpool().free(ptr); }
+#endif
   vector_shape(const vector_shape&) = delete;
   vector_shape& operator=(const vector_shape&) =  delete;
-#endif
 
    unsigned int ncopies;
    void shift(int min);
@@ -762,6 +758,7 @@ AD_LONG_INT sum(const lvector &);
  */
 class dependent_variables_information
 {
+public:
    int max_num_dependent_variables;
    int depvar_count;
    ptr_vector grad_buffer_position;
@@ -771,7 +768,6 @@ class dependent_variables_information
   ivector grad_file_count;
   ivector cmpdif_file_count;
    dependent_variables_information(int ndv);
-   friend class gradient_structure;
 };
 dvar_vector_position restore_dvar_vector_position(void);
 dvector restore_dvar_vector_value(const dvar_vector_position & tmp);
@@ -780,9 +776,9 @@ double_and_int *arr_new(unsigned int sz);
 
 #include <gradient_structure.h>
 
-void jacobcalc(int nvar, const dmatrix & g);
-void jacobcalc(int nvar, const ofstream & ofs);
-void jacobcalc(int nvar, const uostream & ofs);
+void jacobcalc(int nvar, const dmatrix& g);
+void jacobcalc(int nvar, const ofstream& ofs);
+void jacobcalc(int nvar, const uostream& ofs);
 
 #if defined(__BORLANDC__ )
 #if defined(__GNUC__)
@@ -836,12 +832,16 @@ class dlist
   dlink** dlink_addresses;
   char* ddlist_space;
   double* variables_save;
+  unsigned int size;
 
 public:
-  // constructor
-  dlist();
-  // destructor
+  /// Default Constructor
+  dlist(): dlist(gradient_structure::MAX_DLINKS) {}
+  /// Constructor size
+  dlist(const unsigned int size);
+  /// Destructor
   ~dlist();
+
   // create a new link
   dlink* create();
   // append link
@@ -858,6 +858,9 @@ public:
   double* get(const int i) const
     { return &(dlink_addresses[i]->get_address()->x); }
 
+  double_and_int* gradnew();
+  void gradfree(dlink* v);
+
   friend double_and_int *gradnew();
   friend void df_check_derivative_values(void);
   friend void df_check_derivative_values_indexed(void);
@@ -866,16 +869,8 @@ public:
   friend void slave_gradcalc(void);
   friend void gradcalc(int nvar, const dvector& g);
   friend void gradloop();
-  friend void gradient_structure::restore_variables();
-  friend void gradient_structure::save_variables();
-  friend void gradient_structure::jacobcalc(int nvar,
-    const dmatrix& jac);
   friend void allocate_dvariable_space(void);
   //friend void gradient_structure::funnel_jacobcalc(void);
-  friend void gradient_structure::jacobcalc(int nvar,
-    const ofstream& jac);
-  friend void gradient_structure::jacobcalc(int nvar,
-    const uostream& jac);
   friend void funnel_derivatives(void);
 };
 
@@ -903,8 +898,6 @@ class grad_stack_entry
    friend void gradloop();
    friend void default_evaluation(void);
    friend class grad_stack;
-   friend void gradient_structure::jacobcalc(int nvar,
-     const dmatrix & jac);
    //friend void gradient_structure::funnel_jacobcalc(void);
 };
 void default_evaluation3ind(void);
@@ -925,7 +918,22 @@ class grad_stack
    size_t length;
    size_t true_length;
 #endif
- public:
+public:
+  DF_FILE* fp;
+  dlist* GRAD_LIST;
+  arr_list* ARR_LIST1;
+  //arr_list* ARR_FREE_LIST1;
+
+  size_t TOTAL_BYTES;
+  size_t PREVIOUS_TOTAL_BYTES;
+
+  /// Initialize byte totals to zero.
+  void initialize()
+  {
+    TOTAL_BYTES = 0;
+    PREVIOUS_TOTAL_BYTES = 0;
+  }
+
    grad_stack_entry * ptr;
  private:
    //lvector * table;
@@ -950,7 +958,7 @@ class grad_stack
 #endif
    //dmatrix *table;
  public:
-   friend void gradcalc(int nvar, const dvector & g);
+   void gradcalc(int nvar, dvector& g);
    friend void slave_gradcalc(void);
    friend void funnel_gradcalc(void);
    friend void default_evaluation(void);
@@ -962,8 +970,27 @@ class grad_stack
    friend void cleanup_temporary_files();
    ostream & operator  <<(grad_stack);
    void print();
-   grad_stack();
+
+   grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
+   grad_stack(const size_t size): grad_stack(size, 0) {}
+   grad_stack(const size_t size, const unsigned int id):
+     grad_stack(
+       size,
+       gradient_structure::CMPDIF_BUFFER_SIZE,
+       gradient_structure::MAX_DLINKS,
+       gradient_structure::ARRAY_MEMBLOCK_SIZE,
+       gradient_structure::MAX_NVAR_OFFSET,
+       gradient_structure::NUM_DEPENDENT_VARIABLES, id) {}
+   grad_stack(
+     const size_t size,
+     const size_t df_file_nbytes,
+     const unsigned int dlist_size,
+     const unsigned long arr_list_size,
+     const unsigned long indvar_list_size,
+     const int max_nvar_size,
+     const unsigned int id);
    ~grad_stack();
+
    void write_grad_stack_buffer(void);
 
    void set_gradient_stack(void (*func) (void),
@@ -1023,6 +1050,31 @@ class grad_stack
   }
    friend class gradient_structure;
    //int get_ngradfiles();
+
+  indvar_offset_list* INDVAR_LIST;
+  dependent_variables_information* DEPVARS_INFO;
+
+  void save_dependent_variable_position(const prevariable& v1);
+  void jacobcalc(int nvar, const ofstream& jac);
+  void jacobcalc(int nvar, const uostream& jac);
+  void jacobcalc(int nvar, const dmatrix& jac);
+
+  void save_arrays();
+  void restore_arrays();
+  dvariable** RETURN_ARRAYS;
+  dvariable** RETURN_PTR_CONTAINER;
+  dvariable* MIN_RETURN;
+  dvariable* MAX_RETURN;
+  dvariable* RETURN_PTR;
+  unsigned int RETURN_ARRAYS_PTR;
+  unsigned int NUM_RETURN_ARRAYS;
+  unsigned int RETURN_ARRAYS_SIZE;
+  void allocate_RETURN_ARRAYS(
+    unsigned int _NUM_RETURN_ARRAYS,
+    unsigned int _RETURN_ARRAYS_SIZE);
+  void deallocate_RETURN_ARRAYS();
+  void RETURN_ARRAYS_DECREMENT();
+  void RETURN_ARRAYS_INCREMENT();
 };
 
 
@@ -1272,21 +1324,47 @@ inline void grad_stack::set_gradient_stack(void (*func) (void))
  */
 class indvar_offset_list
 {
-   // The number of independent variables
-   int nvar;
-   double **address;
+  // The number of independent variables
+  unsigned int NVAR;
+  double **address;
+  unsigned int size;
 
- public:
-   friend class gradient_structure;
-   inline double *get_address(const int &i)
-   {
-      return address[i];
-   }
-   void put_address(unsigned int &i, double *iaddress)
-   {
-      address[i] = iaddress;
-      //  cerr << "In put_address i = " << i << "\n";
-   }
+public:
+  indvar_offset_list(): NVAR(0), address(nullptr), size(0) {}
+  indvar_offset_list(const unsigned int _size): indvar_offset_list()
+  {
+    size = _size;
+    address = new double*[size];
+    for (unsigned int i = 0; i < size; ++i)
+    {
+      address[i] = 0;
+    }
+  }
+  ~indvar_offset_list()
+  {
+    if (address)
+    {
+      for (unsigned int i = 0; i < size; ++i)
+      {
+        address[i] = 0;
+      }
+      delete [] address;
+      address = nullptr;
+    }
+  }
+
+  void make_indvar_list(const dvar_vector& t);
+
+  inline double *get_address(const int &i)
+  {
+    return address[i];
+  }
+  void put_address(unsigned int &i, double *iaddress)
+  {
+    address[i] = iaddress;
+    //  cerr << "In put_address i = " << i << "\n";
+  }
+  friend class grad_stack;
 };
 
 void gradfree(dlink *);
@@ -1957,28 +2035,32 @@ class mat_shapex
 class arr_link;
 
 /**
- * Description not yet available.
- * \param
- */
+Storage for variable arrays
+*/
 class arr_list
 {
-   arr_link *last;
-   arr_link *free_last;
-   unsigned long int last_offset;
-   unsigned long int max_last_offset;
+  arr_link *last;
+  arr_link *free_last;
+  unsigned long last_offset;
+  unsigned long max_last_offset;
+  int num_free_obj;
+  unsigned long _size;
+
+  vector_shape_pool pool;
+
  public:
+  humungous_pointer ARRAY_MEMBLOCK_BASE;
+  humungous_pointer ARRAY_MEMBLOCK_SAVE;
    unsigned long int number_arr_links;
    friend class arr_link;
 
  public:
-   arr_list(void)
-   {
-      last = 0;
-      free_last = 0;
-      last_offset = 0;
-      max_last_offset = 0;
-      number_arr_links = 0;
-   }
+  /// Default constructor
+  arr_list(): arr_list(gradient_structure::ARRAY_MEMBLOCK_SIZE) {}
+  /// Size constructor
+  arr_list(const unsigned long size);
+  /// Destructor
+  ~arr_list();
 
   arr_link* get_last() const
     { return last; }
@@ -1999,12 +2081,20 @@ class arr_list
    {
       max_last_offset = 0;
    }
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_list_remove(arr_link **);
-   friend void arr_free_add(arr_link *);
-   friend void arr_free_remove(arr_link *);
+
+  double_and_int* arr_new(unsigned int);
+  void arr_free(double_and_int*);
+
+private:
+  void arr_remove(arr_link**);
+  void arr_free_list_remove(arr_link**);
+  void arr_free_add(arr_link*);
+  void arr_free_remove(arr_link*);
+
+  arr_link* allocate_link_node()
+    { return (arr_link*)pool.alloc(); }
+  void deallocate_link_node(arr_link* ptr)
+    { pool.free(ptr); }
 };
 
 /**
@@ -2023,20 +2113,8 @@ class arr_link
    unsigned long int offset;
 
  public:
-#if defined(USE_VECTOR_SHAPE_POOL)
-  static bool allocated;
-  static vector_shape_pool& get_xpool()
-  {
-    static vector_shape_pool xpool(
-      sizeof(arr_link), &arr_link::allocated);
-    return xpool;
-  }
-  void* operator new(size_t);
-  void operator delete(void* ptr, size_t)
-    { arr_link::get_xpool().free(ptr); }
   arr_link(const arr_link&) = delete;
   arr_link& operator=(const arr_link&) = delete;
-#endif
 
   arr_link();
 
@@ -2051,11 +2129,7 @@ class arr_link
   unsigned int get_status() const
     { return status; }
 
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_remove(arr_link *);
-   friend void arr_free_add(arr_link *);
+  friend class arr_list;
 };
 
 #if defined(__NUMBERVECTOR__)

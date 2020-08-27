@@ -16,8 +16,6 @@ PROCEDURE_SECTION
   fpe_invalid();
   fpe_divbyzero();
   fpe_overflow();
-  double* x = nullptr;
-  cout << x[1] << endl;
 FUNCTION fpe_invalid
   cout << std::sqrt(-1) << endl;
 FUNCTION fpe_divbyzero

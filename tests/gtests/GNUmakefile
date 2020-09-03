@@ -149,9 +149,13 @@ GTESTS_DEV=\
  test_dfsdmat.cpp\
  test_dependent_variables_information.cpp\
  main.cpp
+GTESTS_DEV2=\
+ test_thread_funnel.cpp\
+ main.cpp
 
+GTESTS=$(GTESTS_DEV2)
 #GTESTS=$(GTESTS_DEV)
-GTESTS=$(GTESTS_ALL)
+#GTESTS=$(GTESTS_ALL)
 
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))

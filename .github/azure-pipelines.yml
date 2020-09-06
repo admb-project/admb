@@ -58,7 +58,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      pushd examples & nmake all & popd
+      pushd examples & nmake admb admb-re & popd
       scripts\get-outputs.bat > outputs-saf.txt
   - task: CopyFiles@2
     inputs:

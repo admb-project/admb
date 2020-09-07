@@ -1,3 +1,9 @@
+benchmark:
+	$(MAKE) run
+	$(MAKE) run8
+	$(MAKE) run8a
+	$(MAKE) run9
+	$(MAKE) run10
 all:
 	$(MAKE) run0
 	$(MAKE) run
@@ -13,6 +19,7 @@ all:
 	$(MAKE) run6e
 	$(MAKE) run7
 	$(MAKE) run8
+	$(MAKE) run9
 run0:
 	cp ../../examples/admb/forest/forest.dat forest0.dat
 	../../admb forest0 &> /dev/null
@@ -71,6 +78,18 @@ run8:
 	../../admb forest8 &> /dev/null
 	cp ../../examples/admb/forest/forest.dat forest8.dat
 	time ./forest8 &> forest8.out
+run8a:
+	../../admb forest8a &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest8a.dat
+	time ./forest8a &> forest8a.out
+run9:
+	../../admb forest9 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest9.dat
+	time ./forest9 &> forest9.out
+run10:
+	../../admb forest10.tpl &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest10.dat
+	time ./forest10 &> forest10.out
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

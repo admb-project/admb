@@ -44,7 +44,8 @@ PROCEDURE_SECTION
   }, tau, nu, sigma, beta, a, nsteps);
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
-  std::cout << "Elapsed time: " << elapsed.count() <<  endl;
+  std::cout << "Funnel time: " << elapsed.count() <<  endl;
+  total_time += elapsed.count();
    f=0.0;
    for (int i=1;i<=k;i++)
    {
@@ -89,6 +90,8 @@ REPORT_SECTION
   report << "beta "  << beta << endl; 
   report << "sigma "  << sigma << endl; 
 FINAL_SECTION
+  cout << "Total time: " << total_time << endl;
+
   delete global_grad_stack1;
   global_grad_stack1 = nullptr;
   delete global_grad_stack2;
@@ -260,3 +263,4 @@ GLOBALS_SECTION
 
     return results;
   }
+  double total_time = 0;

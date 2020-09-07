@@ -44,7 +44,8 @@ PROCEDURE_SECTION
   }, tau, nu, sigma, beta, a, nsteps);
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
-  std::cout << "Elapsed time: " << elapsed.count() <<  endl;
+  std::cout << "Funnel time: " << elapsed.count() <<  endl;
+  total_time += elapsed.count();
    f=0.0;
    for (int i=1;i<=k;i++)
    {
@@ -55,10 +56,14 @@ PROCEDURE_SECTION
    }
    f+=sum_freq*log(1.e-50+S(1));
 PRELIMINARY_CALCS_SECTION
+  auto start = std::chrono::high_resolution_clock::now();
   global_grad_stack = new grad_stack(10000, 10);
   global_grad_stack2 = new grad_stack(10000, 10);
   global_grad_stack3 = new grad_stack(10000, 10);
   global_grad_stack4 = new grad_stack(10000, 10);
+  auto finish = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish - start;
+  std::cout << "Elapsed time (resource allocation): " << elapsed.count() <<  endl;
 FUNCTION dvariable h(const dvariable& z)
   dvariable tmp;
   tmp=mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(a(a_index),beta)*mfexp(sigma*z))) );  
@@ -82,6 +87,8 @@ REPORT_SECTION
   report << "beta "  << beta << endl; 
   report << "sigma "  << sigma << endl; 
 FINAL_SECTION
+  cout << "Total time: " << total_time << endl;
+
   delete global_grad_stack;
   global_grad_stack = nullptr;
   delete global_grad_stack2;
@@ -253,3 +260,4 @@ GLOBALS_SECTION
 
     return results;
   }
+  double total_time = 0;

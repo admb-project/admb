@@ -47,7 +47,8 @@ PROCEDURE_SECTION
    }
    auto finish = std::chrono::high_resolution_clock::now();
    std::chrono::duration<double> elapsed = finish - start;
-   std::cout << "Elapsed time: " << elapsed.count() <<  endl;
+   std::cout << "Funnel time: " << elapsed.count() <<  endl;
+   total_time += elapsed.count();
    f=0.0;
    for (i=1;i<=k;i++)
    {
@@ -79,3 +80,7 @@ REPORT_SECTION
   report << "nu "  << nu << endl; 
   report << "beta "  << beta << endl; 
   report << "sigma "  << sigma << endl; 
+GLOBALS_SECTION
+  double total_time = 0;
+FINAL_SECTION
+  cout << "Total time: " << total_time << endl;

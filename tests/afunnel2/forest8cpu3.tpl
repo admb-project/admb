@@ -59,10 +59,9 @@ PROCEDURE_SECTION
    f+=sum_freq*log(1.e-50+S(1));
 PRELIMINARY_CALCS_SECTION
   auto start = std::chrono::high_resolution_clock::now();
-  global_grad_stack = new grad_stack(10000, 10);
+  global_grad_stack1 = new grad_stack(10000, 10);
   global_grad_stack2 = new grad_stack(10000, 10);
   global_grad_stack3 = new grad_stack(10000, 10);
-  global_grad_stack4 = new grad_stack(10000, 10);
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
   allocation_time = elapsed.count();
@@ -92,14 +91,12 @@ FINAL_SECTION
   cout << "Total Funnel time: " << total_funnel_time << endl;
 
   auto start = std::chrono::high_resolution_clock::now();
-  delete global_grad_stack;
-  global_grad_stack = nullptr;
+  delete global_grad_stack1;
+  global_grad_stack1 = nullptr;
   delete global_grad_stack2;
   global_grad_stack2 = nullptr;
   delete global_grad_stack3;
   global_grad_stack3 = nullptr;
-  delete global_grad_stack4;
-  global_grad_stack4 = nullptr;
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
   deallocation_time = elapsed.count();
@@ -158,10 +155,9 @@ GLOBALS_SECTION
     }
     return s[1];
   }
-  grad_stack* global_grad_stack = nullptr;
+  grad_stack* global_grad_stack1 = nullptr;
   grad_stack* global_grad_stack2 = nullptr;
   grad_stack* global_grad_stack3 = nullptr;
-  grad_stack* global_grad_stack4 = nullptr;
 
   std::future<std::pair<double, dvector>> afunnel(
     dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
@@ -237,30 +233,26 @@ GLOBALS_SECTION
     const int max = a.indexmax();
     dvar_vector results(min, max);
 
-    for (int i = min; i < max; i += 4)
+    for (int i = min; i < max; i += 3)
     {
-      std::future<std::pair<double, dvector>> f = 
-        afunnel(func, tau, nu, sigma, beta, a(i), nsteps, global_grad_stack);
+      std::future<std::pair<double, dvector>> f1 = 
+        afunnel(func, tau, nu, sigma, beta, a(i), nsteps, global_grad_stack1);
       std::future<std::pair<double, dvector>> f2 = 
         afunnel(func, tau, nu, sigma, beta, a(i + 1), nsteps, global_grad_stack2);
       std::future<std::pair<double, dvector>> f3 = 
         afunnel(func, tau, nu, sigma, beta, a(i + 2), nsteps, global_grad_stack3);
-      std::future<std::pair<double, dvector>> f4 = 
-        afunnel(func, tau, nu, sigma, beta, a(i + 3), nsteps, global_grad_stack4);
 
-      std::pair<double, dvector> p = f.get();
+      std::pair<double, dvector> p1 = f1.get();
       std::pair<double, dvector> p2 = f2.get();
       std::pair<double, dvector> p3 = f3.get();
-      std::pair<double, dvector> p4 = f4.get();
 
-      results(i) = to_dvariable(p, tau, nu, sigma, beta);
+      results(i) = to_dvariable(p1, tau, nu, sigma, beta);
       results(i + 1) = to_dvariable(p2, tau, nu, sigma, beta);
       results(i + 2) = to_dvariable(p3, tau, nu, sigma, beta);
-      results(i + 3) = to_dvariable(p4, tau, nu, sigma, beta);
     }
     {
       std::future<std::pair<double, dvector>> f = 
-        afunnel(func, tau, nu, sigma, beta, a(max), nsteps, global_grad_stack);
+        afunnel(func, tau, nu, sigma, beta, a(max), nsteps, global_grad_stack1);
       std::pair<double, dvector> p = f.get();
       results(max) = to_dvariable(p, tau, nu, sigma, beta);
     }

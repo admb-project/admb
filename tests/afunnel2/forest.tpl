@@ -47,8 +47,10 @@ PROCEDURE_SECTION
    }
    auto finish = std::chrono::high_resolution_clock::now();
    std::chrono::duration<double> elapsed = finish - start;
-   std::cout << "Funnel time: " << elapsed.count() <<  endl;
-   total_time += elapsed.count();
+   double count = elapsed.count();
+   std::cout << "Funnel time: " << count <<  endl;
+   total_funnel_time += count;
+
    f=0.0;
    for (i=1;i<=k;i++)
    {
@@ -81,6 +83,9 @@ REPORT_SECTION
   report << "beta "  << beta << endl; 
   report << "sigma "  << sigma << endl; 
 GLOBALS_SECTION
-  double total_time = 0;
+  double total_funnel_time = 0;
+  double allocation_time = 0;
+  double deallocation_time = 0;
 FINAL_SECTION
-  cout << "Total time: " << total_time << endl;
+  cout << "Total Funnel time: " << total_funnel_time << endl;
+  cout << "Resource time: " << (deallocation_time + allocation_time)  <<  endl;

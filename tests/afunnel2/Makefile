@@ -1,9 +1,10 @@
 benchmark:
+	$(MAKE) run0
 	$(MAKE) run
+	$(MAKE) run8cpu2
+	$(MAKE) run8cpu3
 	$(MAKE) run8
-	$(MAKE) run8a
-	$(MAKE) run9
-	$(MAKE) run10
+	$(MAKE) run8cpu5
 all:
 	$(MAKE) run0
 	$(MAKE) run
@@ -78,6 +79,18 @@ run8:
 	../../admb forest8 &> /dev/null
 	cp ../../examples/admb/forest/forest.dat forest8.dat
 	time ./forest8 &> forest8.out
+run8cpu2:
+	../../admb forest8cpu2 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest8cpu2.dat
+	time ./forest8cpu2 &> forest8cpu2.out
+run8cpu3:
+	../../admb forest8cpu3 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest8cpu3.dat
+	time ./forest8cpu3 &> forest8cpu3.out
+run8cpu5:
+	../../admb forest8cpu5 &> /dev/null
+	cp ../../examples/admb/forest/forest.dat forest8cpu5.dat
+	time ./forest8cpu5 &> forest8cpu5.out
 run8a:
 	../../admb forest8a &> /dev/null
 	cp ../../examples/admb/forest/forest.dat forest8a.dat

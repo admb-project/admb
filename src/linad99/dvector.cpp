@@ -64,9 +64,6 @@ Produces an error if the double* member v is NULL.
 */
 dvector::~dvector()
 {
-#if defined(USE_VECTOR_SHAPE_POOL)
-  if (!vector_shapex::allocated) return;
-#endif
   if (shape)
   {
     if (shape->ncopies)

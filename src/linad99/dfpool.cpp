@@ -18,15 +18,50 @@
 bool cleanup_arr_link_xpool = false;
 bool cleanup_vector_shape_xpool = false;
 bool cleanup_vector_shapex_xpool = false;
-void cleanup_xpools()
-{
-  cleanup_arr_link_xpool = true;
-  cleanup_vector_shape_xpool = true;
-  cleanup_vector_shapex_xpool = true;
-}
+
 vector_shape_pool* arr_link::xpool = new vector_shape_pool(sizeof(arr_link));
 vector_shape_pool* vector_shape::xpool = new vector_shape_pool(sizeof(vector_shape));
 vector_shape_pool* vector_shapex::xpool = new vector_shape_pool(sizeof(vector_shapex));
+
+void cleanup_xpools()
+{
+  if (arr_link::xpool)
+  {
+    if (arr_link::xpool->num_allocated > 0)
+    {
+      cleanup_arr_link_xpool = true;
+    }
+    else
+    {
+      delete arr_link::xpool;
+      arr_link::xpool = nullptr;
+    }
+  }
+  if (vector_shape::xpool)
+  {
+    if (vector_shape::xpool->num_allocated > 0)
+    {
+      cleanup_vector_shape_xpool = true;
+    }
+    else
+    {
+      delete vector_shape::xpool;
+      vector_shape::xpool = nullptr;
+    }
+  }
+  if (vector_shapex::xpool)
+  {
+    if (vector_shapex::xpool->num_allocated > 0)
+    {
+      cleanup_vector_shapex_xpool = true;
+    }
+    else
+    {
+      delete vector_shapex::xpool;
+      vector_shapex::xpool = nullptr;
+    }
+  }
+}
 
 #if defined(THREAD_SAFE)
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;

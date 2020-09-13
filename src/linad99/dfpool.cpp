@@ -19,9 +19,9 @@ bool cleanup_arr_link_xpool = false;
 bool cleanup_vector_shape_xpool = false;
 bool cleanup_vector_shapex_xpool = false;
 
-vector_shape_pool* arr_link::xpool = new vector_shape_pool(sizeof(arr_link));
-vector_shape_pool* vector_shape::xpool = new vector_shape_pool(sizeof(vector_shape));
-vector_shape_pool* vector_shapex::xpool = new vector_shape_pool(sizeof(vector_shapex));
+vector_shape_pool* arr_link::xpool = nullptr;
+vector_shape_pool* vector_shape::xpool = nullptr;
+vector_shape_pool* vector_shapex::xpool = nullptr;
 
 void cleanup_xpools()
 {
@@ -85,6 +85,10 @@ void* vector_shape::operator new(size_t n)
     ad_exit(1);
   }
 #endif
+  if (!xpool)
+  {
+    xpool = new vector_shape_pool(sizeof(vector_shape));
+  }
   return xpool->alloc();
 }
 void vector_shape::operator delete(void* ptr, size_t)
@@ -112,6 +116,10 @@ void* arr_link::operator new(size_t n)
     ad_exit(1);
   }
 #endif
+  if (!xpool)
+  {
+    xpool = new vector_shape_pool(sizeof(arr_link));
+  }
   return xpool->alloc();
 }
 void arr_link::operator delete(void* ptr, size_t)
@@ -139,6 +147,10 @@ void* vector_shapex::operator new(size_t n)
     ad_exit(1);
   }
 #endif
+  if (!xpool)
+  {
+    xpool = new vector_shape_pool(sizeof(vector_shapex));
+  }
   return xpool->alloc();
 }
 void vector_shapex::operator delete(void* ptr, size_t)

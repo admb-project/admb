@@ -13,6 +13,17 @@ notifications:
 
 jobs:
   include:
+  - name: linux-ubuntu-focal
+    os: linux
+    dist: focal
+    env:
+     - SAFE_ONLY=yes
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples 
+
   - name: llvm-scan-build
     os: osx
     before_install:

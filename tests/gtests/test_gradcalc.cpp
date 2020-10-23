@@ -28,7 +28,7 @@ TEST_F(test_gradcalc, gradient_size_intmax)
   memset(ptr, 0, total_size);
   for (int i = 0; i < total_size; i += size)
   {
-    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ASSERT_DOUBLE_EQ(ptr->x, 0);
     ++ptr;
   }
   ptr = (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
@@ -41,7 +41,7 @@ TEST_F(test_gradcalc, gradient_size_intmax)
   ptr = (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   for (int i = 0; i < total_size; i += size)
   {
-    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ASSERT_DOUBLE_EQ(ptr->x, 0);
     ++ptr;
   }
 }
@@ -60,7 +60,7 @@ TEST_F(test_gradcalc, gradient_size_small_array_memblock_base)
 
   for (int i = 0; i < total_size; i += size)
   {
-    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ASSERT_DOUBLE_EQ(ptr->x, 0);
     ++ptr;
   }
 }
@@ -83,7 +83,7 @@ TEST_F(test_gradcalc, dvar_vector)
     (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   for (int i = 0; i < total_size; i += size)
   {
-    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ASSERT_DOUBLE_EQ(ptr->x, 0);
     ++ptr;
   }
 
@@ -108,7 +108,7 @@ TEST_F(test_gradcalc, dvar_vector)
   memset(ptr, 0, total_size);
   for (int i = 0; i < total_size; i += size)
   {
-    ASSERT_DOUBLE_EQ(ptr->x, 0);   
+    ASSERT_DOUBLE_EQ(ptr->x, 0);
     ++ptr;
   }
 
@@ -897,7 +897,7 @@ dvariable tf_compute_a(dvariable& x, dvariable& y)
   entry->ind_addr2 = &((*y.v).x);
   entry->mult2 = 3.0;
   gradient_structure::GRAD_STACK1->ptr++;
-  
+
   return a;
 }
 dvariable tf_compute_b(dvariable& x, dvariable& y)
@@ -984,7 +984,7 @@ dvariable async_compute_a(dvariable& x, dvariable& y)
   entry->mult1 = 2.0;
   entry->ind_addr2 = &((*y.v).x);
   entry->mult2 = 3.0;
-  
+
   return a;
 }
 dvariable async_compute_b(dvariable& x, dvariable& y)

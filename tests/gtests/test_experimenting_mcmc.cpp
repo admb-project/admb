@@ -62,7 +62,7 @@ TEST_F(test_experimenting_mcmc, run_target_exponential)
   {
     counts[i] = 0;
   }
-  
+
   ASSERT_DOUBLE_EQ(samples[0], 3.0);
 
   for (int i = 0; i < 1000; ++i)
@@ -125,7 +125,7 @@ TEST_F(test_experimenting_mcmc, run_target_t_distribution)
   {
     counts[i] = 0;
   }
-  
+
   ASSERT_DOUBLE_EQ(samples[0], 3.0);
 
   for (int i = 0; i < 1000; ++i)

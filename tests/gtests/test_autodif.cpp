@@ -65,7 +65,7 @@ TEST_F(test_autodif, dvar_vector3)
   independent_variables variables(1, nvar);
   variables[1] = 10;
   dvar_vector x(variables);
-  
+
   ASSERT_DOUBLE_EQ(value(x[1]), 10);
 
   dvariable f = sum(x);

@@ -199,7 +199,7 @@ TEST_F(test_d7_array, divisor)
   }
   d7_array b;
   b.allocate(a);
-  b = a; 
+  b = a;
   b /= 2.0;
   for (int i = 1; i <= 2; ++i)
   {

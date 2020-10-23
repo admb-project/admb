@@ -103,7 +103,7 @@ TEST_F(test_dfpool, constructor_size_grow)
   ASSERT_TRUE(static_cast<void*>(pool.head) == static_cast<void*>(pool.first));
   ASSERT_TRUE(pool.head != NULL);
   size_t count = 0;
-  dfpool::link* p = pool.head; 
+  dfpool::link* p = pool.head;
   while (p != NULL)
   {
     p = p->next;
@@ -124,7 +124,7 @@ TEST_F(test_dfpool, constructor_size_alloc)
 
   void* original_head = static_cast<void*>(pool.head);
 
-  dfpool::link* p = pool.head; 
+  dfpool::link* p = pool.head;
   for (int i = 0; i < expected_nelem; ++i)
   {
     void* ptr = pool.alloc();
@@ -156,7 +156,7 @@ TEST_F(test_dfpool, constructor_size_alloc_grow_2x)
 
   void* original_head = static_cast<void*>(pool.head);
 
-  dfpool::link* p = pool.head; 
+  dfpool::link* p = pool.head;
   for (int i = 0; i < expected_nelem; ++i)
   {
     void* ptr = pool.alloc();
@@ -181,6 +181,6 @@ TEST_F(test_dfpool, dvar_vector1to4)
 {
   gradient_structure gs;
 
-  dvar_vector v(1, 4); 
+  dvar_vector v(1, 4);
 }
 #endif

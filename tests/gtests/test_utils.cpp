@@ -193,7 +193,7 @@ TEST_F(test_utils, allocated_arr6)
   d6_array arr6;
 
   ASSERT_EQ(0, allocated(arr6));
- 
+
   arr6.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
 
   ASSERT_EQ(1, allocated(arr6));
@@ -205,7 +205,7 @@ TEST_F(test_utils, allocated_varr6)
   dvar6_array arr6;
 
   ASSERT_EQ(0, allocated(arr6));
- 
+
   arr6.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
 
   ASSERT_EQ(1, allocated(arr6));
@@ -215,7 +215,7 @@ TEST_F(test_utils, allocated_arr7)
   d7_array arr7;
 
   ASSERT_EQ(0, allocated(arr7));
- 
+
   arr7.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
 
   ASSERT_EQ(1, allocated(arr7));
@@ -227,7 +227,7 @@ TEST_F(test_utils, allocated_varr7)
   dvar7_array arr7;
 
   ASSERT_EQ(0, allocated(arr7));
- 
+
   arr7.allocate(1, 2, 1, 2, 1, 1, 2, 2, 1, 2, 1, 2, 1, 2);
 
   ASSERT_EQ(1, allocated(arr7));

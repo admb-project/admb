@@ -9,8 +9,144 @@ extern "C"
 
 class test_thread_funnel: public ::testing::Test {};
 
+TEST_F(test_thread_funnel, f_equal_x_times_values2)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvector values(1, 3);
+  values(1) = -1.5;
+  values(2) =  2.4;
+  values(3) =  0.7;
+
+  independent_variables independents(1, 1);
+  independents(1) = 2.0;
+  dvar_vector variables(independents);
+  dvariable x = variables(1);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 1);
+
+  //double v = value(x);
+
+  dvar_vector f(1, 3);
+  f = x * values;
+  //cout << value(f) << endl;
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+
+  f.save_dvar_vector_position();
+  gradient_structure::GRAD_STACK1->set_gradient_stack([]()
+  {
+    dvar_vector_position f_pos = restore_dvar_vector_position();
+    dvector g(1, 3);
+    g = 1;
+    g.save_dvector_derivatives(f_pos);
+  });
+
+  dvariable total;
+  total = 0.0;
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 5);
+  //cout << v << endl;
+
+  dvector g(1, 1);
+  gradcalc(1, g);
+  cout << "$ " << g << endl;
+  cout << "$ " << value(f) << endl;
+  /*
+  dvector f_values = value(f);
+
+  dmatrix g(1, 3, 1, 1);
+  g.initialize();
+  gradcalc(1, g(1));
+  cout << g << endl;
+  ASSERT_EQ(g(1, 1), -1.5);
+  ASSERT_EQ(g(2, 1), 2.4);
+  ASSERT_EQ(g(3, 1), 0.7);
+  */
+}
+TEST_F(test_thread_funnel, f_equal_x_times_values)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvector values(1, 3);
+  values(1) = -1.5;
+  values(2) =  2.4;
+  values(3) =  0.7;
+
+  independent_variables independents(1, 1);
+  independents(1) = 2.0;
+  dvar_vector variables(independents);
+  dvariable x = variables(1);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 1);
+
+  dvar_vector f(1, 3);
+  f = x * values;
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+
+  dvariable total;
+  total = sum(f);
+
+  dvector g(1, 1);
+  gradcalc(1, g);
+
+  ASSERT_DOUBLE_EQ(g(1), sum(values));
+}
+TEST_F(test_thread_funnel, f_equal_x_times_values_weird)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  dvector values(1, 3);
+  values(1) = -1.5;
+  values(2) =  2.4;
+  values(3) =  0.7;
+
+  independent_variables independents(1, 1);
+  independents(1) = 2.0;
+  dvar_vector variables(independents);
+  dvariable x = variables(1);
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 1);
+
+  dvar_vector f(1, 3);
+  f = x * values;
+  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+
+  dvariable total;
+  total = f(2) + f(3);
+
+  dvector g(1, 1);
+  gradcalc(1, g);
+
+  ASSERT_DOUBLE_EQ(g(1), values(2) + values(3));
+}
 dvar_vector adjoint_yhat(dvariable& b0, dvariable& b1, dvector& x);
 
+dvar_vector compute_yhat_v2(dvariable& b0, dvariable& b1, dvector& x)
+{
+  dvar_vector yhat(x.indexmin(), x.indexmax());
+  //yhat = b0 + b1 * x;
+  yhat = value(b0) + value(b1) * x;
+
+  b0.save_prevariable_position();
+  b1.save_prevariable_position();
+  yhat.save_dvar_vector_position();
+  x.save_dvector_value();
+  x.save_dvector_position();
+  gradient_structure::GRAD_STACK1->set_gradient_stack([]()
+  {
+    dvector_position x_pos = restore_dvector_position();
+    dvector x = restore_dvector_value(x_pos);
+    dvar_vector_position yhat_pos = restore_dvar_vector_position();
+    prevariable_position b1_pos = restore_prevariable_position();
+    prevariable_position b0_pos = restore_prevariable_position();
+    dvector dfyhat = restore_dvar_vector_derivatives(yhat_pos);
+    save_double_derivative(dfyhat * x, b1_pos);
+    save_double_derivative(sum(dfyhat), b0_pos);
+  });
+  return yhat;
+}
 dvariable compute_v3(
   std::function<dvariable(const dvector& y, const dvar_vector& yhat)> f,
   const dvector& y, const dvar_vector& yhat)
@@ -50,7 +186,6 @@ dvariable compute_v3(
 
   return result;
 }
-
 TEST_F(test_thread_funnel, compute_v3)
 {
   ad_exit=&test_ad_exit;
@@ -94,7 +229,7 @@ TEST_F(test_thread_funnel, compute_v3)
   y(10) = 18.0;
 
   dvar_vector yhat(1, 10);
-  yhat = adjoint_yhat(b0, b1, x);
+  yhat = compute_yhat_v2(b0, b1, x);
 
   dvariable f;
   f = compute_v3([](const dvector& y, const dvar_vector& yhat)->dvariable

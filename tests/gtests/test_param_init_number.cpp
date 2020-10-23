@@ -34,11 +34,11 @@ TEST_F(test_param_init_number, save_value)
   n.allocate(&expected_pd, "test_param_init_number");
   ASSERT_DOUBLE_EQ(expected_pd, value(n));
 
-  ofstream ofs("test_param_init_number.txt"); 
+  ofstream ofs("test_param_init_number.txt");
   initial_params::save_value(ofs);
   ofs.close();
 
-  ifstream ifs("test_param_init_number.txt"); 
+  ifstream ifs("test_param_init_number.txt");
   std::string line;
   getline(ifs, line);
   ifs.close();

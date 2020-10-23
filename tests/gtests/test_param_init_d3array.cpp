@@ -30,7 +30,7 @@ TEST_F(test_param_init_d3array, allocate_phase_start)
   index_type ncl = 5;
   index_type nch = 6;
   int expected_phase_start = 7;
-  
+
   p.allocate(sl, sh, nrl, nrh, ncl, nch, expected_phase_start, "p");
 
   ASSERT_EQ(p.get_phase_start(), expected_phase_start);
@@ -51,7 +51,7 @@ TEST_F(test_param_init_d3array, allocate_phase_start_int)
   int ncl = 5;
   int nch = 6;
   int expected_phase_start = 7;
-  
+
   p.allocate(sl, sh, nrl, nrh, ncl, nch, expected_phase_start, "p");
 
   ASSERT_EQ(p.get_phase_start(), expected_phase_start);
@@ -72,7 +72,7 @@ TEST_F(test_param_init_d3array, allocate_phase_start_default)
   index_type ncl = 5;
   index_type nch = 6;
   int expected_phase_start = 1;
-  
+
   p.allocate(sl, sh, nrl, nrh, ncl, nch, "p");
 
   ASSERT_EQ(p.get_phase_start(), expected_phase_start);
@@ -93,7 +93,7 @@ TEST_F(test_param_init_d3array, allocate_phase_start_int_default)
   int ncl = 5;
   int nch = 6;
   int expected_phase_start = 1;
-  
+
   p.allocate(sl, sh, nrl, nrh, ncl, nch, "p");
 
   ASSERT_EQ(p.get_phase_start(), expected_phase_start);

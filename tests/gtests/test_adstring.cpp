@@ -755,7 +755,7 @@ TEST_F(test_adstring, init_adstring_allocate)
   ASSERT_TRUE(ad_comm::global_datafile == NULL);
 
   cifstream ifs("maxlimit.txt");
-  
+
   ad_comm::global_datafile = &ifs;
 
   a.allocate("name_tag");
@@ -779,7 +779,7 @@ TEST_F(test_adstring, init_line_adstring_allocate)
 
   adstring input = "maxlimit.txt";
   cifstream ifs(input);
-  
+
   ad_comm::global_datafile = &ifs;
   {
     init_line_adstring a;

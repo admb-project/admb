@@ -25,7 +25,7 @@ TEST_F(test_afunnel, future)
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
 
-  std::future<std::pair<double, dvector>> ret = 
+  std::future<std::pair<double, dvector>> ret =
     std::async(std::launch::async, []()->std::pair<double, dvector>
     {
       double v = 0;
@@ -68,7 +68,7 @@ TEST_F(test_afunnel, future)
 }
 dvariable start_afunnel(dvariable& x, dvariable& y)
 {
-  std::future<std::pair<double, dvector>> ret = 
+  std::future<std::pair<double, dvector>> ret =
     std::async(std::launch::async, []()->std::pair<double, dvector>
     {
       double v = 0;
@@ -156,7 +156,7 @@ dvariable lambda_afunnel(
   dvariable (*func)(dvariable& x, dvariable& y),
   dvariable& x, dvariable& y)
 {
-  std::future<std::pair<double, dvector>> ret = 
+  std::future<std::pair<double, dvector>> ret =
     std::async(std::launch::async, [=]()->std::pair<double, dvector>
     {
       double v = 0;

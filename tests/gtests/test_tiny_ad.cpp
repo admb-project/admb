@@ -14,7 +14,7 @@ TEST_F(test_tiny_ad, report_example_5_3)
   typedef tiny_ad::variable<3, 2> Float;
 
   // Let a = 1.23 have parameter index 0
-  Float a (1.23, 0);                   
+  Float a (1.23, 0);
 
   // Let b = 2.34 have parameter index 1
   Float b (2.34, 1);
@@ -41,7 +41,7 @@ TEST_F(test_tiny_ad, x2_1deriv)
   typedef tiny_ad::variable<1, 1> Float;
 
   // Let x = 1.23 have parameter index 0
-  Float x (1.23, 0);                   
+  Float x (1.23, 0);
 
   // Run the algorithm
   Float y = x * x;
@@ -58,7 +58,7 @@ TEST_F(test_tiny_ad, x2_2deriv)
   typedef tiny_ad::variable<2, 1> Float;
 
   // Let x = 1.23 have parameter index 0
-  Float x (1.23, 0);                   
+  Float x (1.23, 0);
 
   // Run the algorithm
   Float y = x * x;
@@ -75,7 +75,7 @@ TEST_F(test_tiny_ad, x2_3deriv)
   typedef tiny_ad::variable<3, 1> Float;
 
   // Let x = 1.23 have parameter index 0
-  Float x (1.23, 0);                   
+  Float x (1.23, 0);
 
   // Run the algorithm
   Float y = x * x;
@@ -92,7 +92,7 @@ TEST_F(test_tiny_ad, yx_1deriv)
   typedef tiny_ad::variable<1, 2> Float;
 
   // Let x = 1.23 have parameter index 0
-  Float x (1.23, 0);                   
+  Float x (1.23, 0);
 
   // Let y = 2.34 have parameter index 1
   Float y (2.34, 1);
@@ -113,7 +113,7 @@ TEST_F(test_tiny_ad, yx_2deriv)
   typedef tiny_ad::variable<2, 2> Float;
 
   // Let x = 1.23 have parameter index 0
-  Float x (1.23, 0);                   
+  Float x (1.23, 0);
 
   // Let y = 2.34 have parameter index 1
   Float y (2.34, 1);

@@ -125,7 +125,7 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)
 
   const int min = 1;
   const int max = 3;
-  dvector v(min, max); 
+  dvector v(min, max);
   v.initialize();
 
   param_init_bounded_number_vector p;
@@ -135,7 +135,7 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only)
     p[min];
   }
   catch (const std::bad_alloc&)
-  {   
+  {
     return;
   }
   FAIL();
@@ -146,7 +146,7 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only_paren)
 
   const int min = 1;
   const int max = 3;
-  dvector v(min, max); 
+  dvector v(min, max);
   v.initialize();
 
   param_init_bounded_number_vector p;
@@ -156,7 +156,7 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only_paren)
     p(min);
   }
   catch (const std::bad_alloc&)
-  {   
+  {
     return;
   }
   FAIL();
@@ -170,7 +170,7 @@ TEST_F(test_param_init_bounded_number_vector, allocated_set_initial_value_only_p
 
   const int min = 1;
   const int max = 3;
-  dvector v(min, max); 
+  dvector v(min, max);
   v.initialize();
 
   param_init_bounded_number_vector p;
@@ -181,7 +181,7 @@ TEST_F(test_param_init_bounded_number_vector, allocated_set_initial_value_only_p
     p(min);
   }
   catch (const std::out_of_range&)
-  {   
+  {
     delete gs;
     return;
   }
@@ -198,7 +198,7 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
   const int min = 1;
   const int max = 3;
 
-  dvector v(min, max); 
+  dvector v(min, max);
   v.initialize();
   p.set_initial_value(v);
 
@@ -206,7 +206,7 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
   mins.initialize();
   dvector maxs(min, max);
   maxs = 5;
-  std::string s("AString"); 
+  std::string s("AString");
   p.allocate(min, max, mins, maxs, s.c_str());
   EXPECT_NE(0, p.allocated());
   EXPECT_EQ(min, p.indexmin());

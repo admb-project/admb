@@ -7,7 +7,7 @@ class test_df1_two_variable: public ::testing::Test {};
 TEST_F(test_df1_two_variable, default_constructor)
 {
   df1_two_variable x;
-  
+
   ASSERT_EQ(0, value(x));
   ASSERT_EQ(0, *x.get_u());
   ASSERT_EQ(0, *x.get_u_x());
@@ -26,7 +26,7 @@ TEST_F(test_df1_two_variable, plus_equal_operator)
   *y.get_u_y() = 3;
 
   x += y;
-  
+
   ASSERT_EQ(*x.get_u(), value(x));
   ASSERT_EQ(2, *x.get_u());
   ASSERT_EQ(4, *x.get_u_x());
@@ -45,7 +45,7 @@ TEST_F(test_df1_two_variable, minus_equal_operator)
   *y.get_u_y() = 3;
 
   x -= y;
-  
+
   ASSERT_EQ(*x.get_u(), value(x));
   ASSERT_EQ(0, *x.get_u());
   ASSERT_EQ(0, *x.get_u_x());
@@ -61,7 +61,7 @@ TEST_F(test_df1_two_variable, plus_equal_double_operator)
   *x.get_u_y() = 3;
 
   x += y;
-  
+
   ASSERT_EQ(*x.get_u(), value(x));
   ASSERT_EQ(6, *x.get_u());
   ASSERT_EQ(2, *x.get_u_x());
@@ -77,7 +77,7 @@ TEST_F(test_df1_two_variable, minus_equal_double_operator)
   *x.get_u_y() = 3;
 
   x -= y;
-  
+
   ASSERT_EQ(*x.get_u(), value(x));
   ASSERT_EQ(-4, *x.get_u());
   ASSERT_EQ(2, *x.get_u_x());
@@ -93,7 +93,7 @@ TEST_F(test_df1_two_variable, multiplication_equal_double_operator)
   *x.get_u_y() = 3;
 
   x *= y;
-  
+
   ASSERT_EQ(*x.get_u(), value(x));
   ASSERT_EQ(5, *x.get_u());
   ASSERT_EQ(-10, *x.get_u_x());

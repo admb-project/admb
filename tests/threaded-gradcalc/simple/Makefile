@@ -1,7 +1,17 @@
 all:
+	$(MAKE) v5
+	$(MAKE) v4
 	$(MAKE) v3
 	$(MAKE) v2
 	$(MAKE) v1
+v5:
+	cp ../../../examples/admb/simple/simple.dat .
+	../../../admb simple simple-functions-v5.cpp
+	time ./simple
+v4:
+	cp ../../../examples/admb/simple/simple.dat .
+	../../../admb simple simple-functions-v4.cpp
+	time ./simple
 v3:
 	cp ../../../examples/admb/simple/simple.dat .
 	../../../admb simple simple-functions-v3.cpp
@@ -33,3 +43,5 @@ clean:
 	@rm -vf simple-functions-v1.obj
 	@rm -vf simple-functions-v2.obj
 	@rm -vf simple-functions-v3.obj
+	@rm -vf simple-functions-v4.obj
+	@rm -vf simple-functions-v5.obj

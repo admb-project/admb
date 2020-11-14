@@ -2,6 +2,17 @@
 #include <vector>
 #include <tuple>
 
+auto build_tuple(const dvar_vector& variables, const int index, const double arg)
+{
+  return std::make_tuple(std::move(arg));
+}
+template<typename... Args>
+auto build_tuple(const dvar_vector& variables, const int index, const dvariable& variable, Args&&... args)
+{
+  auto t = build_tuple(variables, index + 1, std::forward<Args>(args)...);
+  dvariable v = variables(index);
+  return std::tuple_cat(std::make_tuple(std::move(v)), t);
+}
 int get_ptrs(std::vector<double_and_int*>& ptrs, const double arg)
 {
   return 0;
@@ -21,8 +32,6 @@ template<class ...Args, size_t ...S>
 dvariable compute_gradients(
   const typename parameters<std::function<dvariable(Args...)>>::types& f, Args&&... args)
 {
-  auto t = std::make_tuple(args...);
-
   dvariable result;
 
   std::vector<double_and_int*> ptrs;
@@ -48,12 +57,12 @@ dvariable compute_gradients(
 
         // Set gradient_structure::NVAR
         dvar_vector variables(independents);
-        dvariable b0 = variables(1);
-        dvariable b1 = variables(2);
-    
+
+
         dvariable f_result;
-        auto t2 = std::make_tuple(std::move(b0), std::move(b1), std::move(std::get<2>(t)));
-        f_result = std::apply(f, t2);
+        //auto t2 = std::make_tuple(std::move(b0), std::move(b1), std::get<2>(t));
+        auto t3 = build_tuple(variables, 1, std::forward<Args>(args)...);
+        f_result = std::apply(f, t3);
         result_value = value(f_result);
 
         gradcalc(total_variables, g);
@@ -96,7 +105,7 @@ dvar_vector compute_yhat(dvariable& b0, dvariable& b1, dvector& x)
   dvar_vector yhat(x.indexmin(), x.indexmax());
   for (int i = yhat.indexmin(); i <= yhat.indexmax(); ++i)
   {
-    cout << value(b0) << ' ' << value(b1) << ' ' << x(i) << endl;
+    //cout << value(b0) << ' ' << value(b1) << ' ' << x(i) << endl;
     yhat[i] = compute_gradients([](const dvariable& b0, const dvariable& b1, const double xi)->dvariable
     {
       dvariable result = b0 + b1 * xi;

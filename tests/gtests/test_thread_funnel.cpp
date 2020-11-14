@@ -1018,3 +1018,147 @@ TEST_F(test_thread_funnel, copy)
   std::cout << "Elapsed time (resource allocation): " << elapsed.count() <<  endl;
 }
 */
+template <typename T>
+struct parameters
+{ 
+  typedef T types;
+};
+template<typename... Args>
+double apply_f(typename parameters<std::function<dvariable(Args...)>>::types f, Args&&... args)
+{
+  double result = value(f(std::forward<Args>(args)...));
+  cout << result << endl;
+  return result;
+}
+TEST_F(test_thread_funnel, apply_f)
+{
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 2.3;
+  independents(2) = -5.1;
+  dvar_vector variables(independents);
+  double xi = 3.4;
+  double result = apply_f([](const dvariable& b0, const dvariable& b1, const double xi)->dvariable
+  {
+    cout << value(b0) << endl;
+    cout << value(b1) << endl;
+    cout << xi << endl;
+    dvariable result = b0 + b1 * xi;
+    return result;
+  }, variables(1), variables(2), xi);
+  cout << result << endl;
+}
+/*
+template<typename... Args>
+double f2(const Args&&... args)
+{
+  return 0.25;
+}
+*/
+double f2()
+{
+  return 0.23;
+}
+template<typename... Args>
+double apply_f2(const std::function<double()> f2, const Args&&... args)
+{
+  double result = f2();
+  return result;
+}
+TEST_F(test_thread_funnel, apply_f2)
+{
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 2.3;
+  independents(2) = -5.1;
+  dvar_vector variables(independents);
+  double xi = 3.4;
+  double result = apply_f2(f2, variables(1), variables(2), std::move(xi));
+  ASSERT_DOUBLE_EQ(result, 0.23);
+}
+double f3()
+{
+  return 0.23;
+}
+template<typename... Args>
+double apply_f3(const std::function<double()>& f3, const Args&&... args)
+{
+  double result = f3();
+  return result;
+}
+TEST_F(test_thread_funnel, apply_f3)
+{
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 2.3;
+  independents(2) = -5.1;
+  dvar_vector variables(independents);
+  double xi = 3.4;
+  double result = apply_f3(f3, variables(1), variables(2), std::move(xi));
+  ASSERT_DOUBLE_EQ(result, 0.23);
+}
+double f4(const prevariable& b0, const prevariable& b1, const double xi)
+{
+  dvariable result = b0 + b1 * xi;
+  return value(result);
+}
+template<typename... Args>
+double apply_f4(
+  const std::function<double(const prevariable&, const prevariable&, const double)>& f4,
+  const Args&&... args)
+{
+  auto t = std::make_tuple(args...);
+  auto b0 = std::get<0>(t);
+  auto b1 = std::get<1>(t);
+  double xi = std::get<2>(t);
+  double result = f4(b0, b1, xi);
+  return result;
+}
+TEST_F(test_thread_funnel, apply_f4)
+{
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 2.1;
+  independents(2) = -5.5;
+  dvar_vector variables(independents);
+  double xi = -3.4;
+  double result = apply_f4(f4, variables(1), variables(2), std::move(xi));
+  ASSERT_DOUBLE_EQ(result, 20.80);
+}
+double f5a(const prevariable& b1, const double xi)
+{
+  dvariable result = 2.1 + b1 * xi;
+  return value(result);
+}
+double f5b(const prevariable& b0, const prevariable& b1, const double xi)
+{
+  dvariable result = b0 + b1 * xi;
+  return value(result);
+}
+template<typename... Args>
+double apply_f5(
+  const typename parameters<std::function<double(Args...)>>::types& f5,
+  const Args&&... args)
+{
+  auto t = std::make_tuple(args...);
+  double result = std::apply(f5, t);
+  return result;
+}
+TEST_F(test_thread_funnel, apply_f5)
+{
+  gradient_structure gs;
+
+  independent_variables independents(1, 2);
+  independents(1) = 2.1;
+  independents(2) = -5.5;
+  dvar_vector variables(independents);
+  double xi = -3.4;
+  double resulta = apply_f5(f5a, variables(2), std::move(xi));
+  ASSERT_DOUBLE_EQ(resulta, 20.80);
+  double resultb = apply_f5(f5b, variables(1), variables(2), std::move(xi));
+  ASSERT_DOUBLE_EQ(resultb, 20.80);
+}

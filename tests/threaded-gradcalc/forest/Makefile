@@ -1,5 +1,9 @@
-run8:
-	../../../admb forest8 forest-functions.cpp
+v2:
+	../../../admb forest8 forest-functions-v2.cpp
+	cp ../../../examples/admb/forest/forest.dat forest8.dat
+	time ./forest8
+v1:
+	../../../admb forest8 forest-functions-v1.cpp
 	cp ../../../examples/admb/forest/forest.dat forest8.dat
 	time ./forest8
 clean:
@@ -23,4 +27,5 @@ clean:
 	@rm -vf forest8.r01
 	@rm -vf forest8.rep
 	@rm -vf forest8.std
-	@rm -vf forest-functions.obj
+	@rm -vf forest-functions-v1.obj
+	@rm -vf forest-functions-v2.obj

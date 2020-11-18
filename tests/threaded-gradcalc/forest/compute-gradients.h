@@ -1,8 +1,18 @@
 #include <tuple>
 
+auto build_tuple(const dvar_vector& variables, const int index, const int arg)
+{
+  return std::make_tuple(std::move(arg));
+}
 auto build_tuple(const dvar_vector& variables, const int index, const double arg)
 {
   return std::make_tuple(std::move(arg));
+}
+template<typename... Args>
+auto build_tuple(const dvar_vector& variables, const int index, const double& arg, Args&&... args)
+{
+  auto t = build_tuple(variables, index + 1, std::forward<Args>(args)...);
+  return std::tuple_cat(std::make_tuple(std::move(arg)), t);
 }
 template<typename... Args>
 auto build_tuple(const dvar_vector& variables, const int index, const dvariable& variable, Args&&... args)
@@ -11,9 +21,18 @@ auto build_tuple(const dvar_vector& variables, const int index, const dvariable&
   dvariable v = variables(index);
   return std::tuple_cat(std::make_tuple(std::move(v)), t);
 }
+int get_ptrs(std::vector<double_and_int*>& ptrs, const int arg)
+{
+  return 0;
+}
 int get_ptrs(std::vector<double_and_int*>& ptrs, const double arg)
 {
   return 0;
+}
+template<typename... Args>
+int get_ptrs(std::vector<double_and_int*>& ptrs, const double arg, Args&&... args)
+{
+  return get_ptrs(ptrs, std::forward<Args>(args)...);
 }
 template<typename... Args>
 int get_ptrs(std::vector<double_and_int*>& ptrs, const dvariable& variable, Args&&... args)
@@ -73,7 +92,7 @@ dvariable compute_gradients(
 
     result = result_value;
     {
-      int index = 0;
+/*
       grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
       entry->dep_addr = &((*result.v).x);
       entry->ind_addr1 = &(ptrs[index]->x);
@@ -92,6 +111,22 @@ dvariable compute_gradients(
         entry->mult2 = 0.0;
         entry->func = default_evaluation1;
       }
+      gradient_structure::GRAD_STACK1->ptr++;
+*/
+      grad_stack_entry* entry = gradient_structure::GRAD_STACK1->ptr;
+      entry->func = NULL;
+      entry->dep_addr = &((*result.v).x);
+      entry->ind_addr1 = &(ptrs[0]->x);
+      entry->mult1 = g(1);
+      entry->ind_addr2 = &(ptrs[1]->x);
+      entry->mult2 = g(2);
+      gradient_structure::GRAD_STACK1->ptr++;
+      grad_stack_entry* entry2 = gradient_structure::GRAD_STACK1->ptr;
+      entry2->func = default_evaluation4ind;
+      entry2->ind_addr1 = &(ptrs[2]->x);
+      entry2->mult1 = g(3);
+      entry2->ind_addr2 = &(ptrs[3]->x);
+      entry2->mult2 = g(4);
       gradient_structure::GRAD_STACK1->ptr++;
     }
   }

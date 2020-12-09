@@ -86,6 +86,7 @@ dvariable compute_gradients(
       gradient_structure::GRAD_STACK1->deallocate_RETURN_ARRAYS();
       gradient_structure::GRAD_STACK1 = nullptr;
     }
+
     gradient_structure::GRAD_STACK1 = save;
     delete gradstack;
     gradstack = nullptr;
@@ -129,6 +130,7 @@ dvariable compute_gradients(
       entry2->mult2 = g(4);
       gradient_structure::GRAD_STACK1->ptr++;
     }
+  //cout << g << endl;
   }
   return result;
 }

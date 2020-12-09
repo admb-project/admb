@@ -57,7 +57,7 @@ dvariable adromb2(_func2 func, const dvariable& tau, const dvariable& nu, const 
   return s[1];
 }
 
-#include "compute-gradients-v1.h"
+#include "compute-gradients-v2.h"
 
 dvar_vector funnel(
   dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
@@ -69,8 +69,10 @@ dvar_vector funnel(
 
   for (int i = min; i <= max; ++i)
   {
-    results(i) = compute_gradients(func, tau, nu, sigma, beta, a(i), nsteps);
+    auto f = compute_gradients(func, tau, nu, sigma, beta, a(i), nsteps);
+    results(i) = to_dvariable(f.get());
   }
+  //ad_exit(1);
 
   return results;
 }

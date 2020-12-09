@@ -1,3 +1,21 @@
+all:
+	$(MAKE) v1
+	$(MAKE) v2
+	-$(MAKE) v3
+	$(MAKE) v4dev
+	$(MAKE) v4
+v4dev:
+	CXXFLAGS=-DDEV ../../../admb -g forest8 forest-functions-v4.cpp
+	cp ../../../examples/admb/forest/forest.dat forest8.dat
+	time ./forest8
+v4:
+	../../../admb -g forest8 forest-functions-v4.cpp
+	cp ../../../examples/admb/forest/forest.dat forest8.dat
+	time ./forest8
+v3:
+	../../../admb -g forest8 forest-functions-v3.cpp
+	cp ../../../examples/admb/forest/forest.dat forest8.dat
+	time ./forest8
 v2:
 	../../../admb forest8 forest-functions-v2.cpp
 	cp ../../../examples/admb/forest/forest.dat forest8.dat
@@ -29,3 +47,5 @@ clean:
 	@rm -vf forest8.std
 	@rm -vf forest-functions-v1.obj
 	@rm -vf forest-functions-v2.obj
+	@rm -vf forest-functions-v3.obj
+	@rm -vf forest-functions-v4.obj

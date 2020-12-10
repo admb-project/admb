@@ -691,3 +691,64 @@ TEST_F(test_cifstream, lvector2)
   ASSERT_EQ(43948093, lvec(3));
   ASSERT_EQ(993859, lvec(4));
 }
+TEST_F(test_cifstream, lvector2_dos)
+{
+  std::ofstream ofs("test_cifstream_float_dos.txt");
+  ofs << "# a\r\n";
+  ofs << "\r\n";
+  ofs << "# b\r\n";
+  ofs << "\r\n\r\n";
+  ofs << "# a\r\n";
+  ofs << "\t\r\n";
+  ofs << "# b\r\n";
+  ofs << "	\r\n";
+  ofs << "# a\r\n";
+  ofs << "    \t\r\n";
+  ofs << "# b\r\n";
+  ofs << "356345 \t  9445938    43948093   \r  993859\r\n";
+  ofs.close();
+
+  lvector lvec(1, 4);
+  ASSERT_TRUE(allocated(lvec));
+  cifstream cifs("test_cifstream_float_dos.txt");
+  cifs >> lvec;
+  cifs.close();
+
+  ASSERT_EQ(356345, lvec(1));
+  ASSERT_EQ(9445938, lvec(2));
+  ASSERT_EQ(43948093, lvec(3));
+  ASSERT_EQ(993859, lvec(4));
+}
+TEST_F(test_cifstream, comment_)
+{
+  std::ofstream ofs("test_cifstream_float_dos.txt");
+  ofs << "# a\r\n";
+  ofs << "\r\n";
+  ofs << "# b\r\n";
+  ofs << "\r\n\r\n";
+  ofs << "# a\r\n";
+  ofs << "\t\r\n";
+  ofs << "356345 \t  9445938  # dkfjdkj kdjfkdj \r\n\t  43948093   \r  993859\r\n";
+  ofs << "# b\r\n";
+  ofs << "	\r\n";
+  ofs << "# a\r\n";
+  ofs << "    \t\r\n";
+  ofs << "# b\r\n";
+  ofs.close();
+
+  lvector lvec(1, 4);
+  ASSERT_TRUE(allocated(lvec));
+  cifstream cifs("test_cifstream_float_dos.txt");
+  cifs >> lvec;
+  cifs.close();
+
+  ASSERT_STREQ("# dkfjdkj kdjfkdj", cifs.comment());
+#ifdef DEBUG
+  ASSERT_STREQ("# a", cifs.get_signature());
+#endif
+
+  ASSERT_EQ(356345, lvec(1));
+  ASSERT_EQ(9445938, lvec(2));
+  ASSERT_EQ(43948093, lvec(3));
+  ASSERT_EQ(993859, lvec(4));
+}

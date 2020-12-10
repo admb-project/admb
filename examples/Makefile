@@ -100,7 +100,9 @@ bcb:
 	pushd admb-re\\$@ & $@
 
 biglog:
+	pwd
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
+	pwd
 	pushd admb-re\\$@ & $@
 
 bvprobit:

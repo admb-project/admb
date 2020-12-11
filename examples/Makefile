@@ -101,7 +101,7 @@ bcb:
 
 biglog:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	-pushd admb-re\\$@ & $@
 
 bvprobit:
 	pushd admb-re\\glmmadmb & $(ADMB_HOME)\\admb $(OPTIONS) $@
@@ -121,7 +121,7 @@ gamma:
 
 kidney:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	-pushd admb-re\\$@ & $@
 
 lidar:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@

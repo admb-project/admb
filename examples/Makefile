@@ -73,6 +73,7 @@ n2mvol:
 
 admb-re:\
 bcb \
+biglog \
 bvprobit \
 glmmadmb \
 caest \
@@ -99,7 +100,8 @@ bcb:
 	pushd admb-re\\$@ & $@
 
 biglog:
-	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@ & $@
+	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 bvprobit:
 	pushd admb-re\\glmmadmb & $(ADMB_HOME)\\admb $(OPTIONS) $@

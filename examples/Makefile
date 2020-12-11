@@ -73,7 +73,6 @@ n2mvol:
 
 admb-re:\
 bcb \
-biglog \
 bvprobit \
 glmmadmb \
 caest \

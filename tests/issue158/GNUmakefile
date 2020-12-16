@@ -20,9 +20,9 @@ all: clean
 
 $(TARGET):
 ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb$(EXT) -g $(TARGET)
+	..\\..\\admb -g $(TARGET)
 else
-	../../admb -g $(TARGET)
+	../../admb$(EXT) -g $(TARGET)
 endif
 
 run: $(TARGET)

@@ -52,6 +52,10 @@
   #pragma interface
 #endif
 
+//#define USE_PTR_INIT_PARAMS
+#ifndef USE_PTR_INIT_PARAMS
+#include <vector>
+#endif
 
   class laplace_approximation_calculator;
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
@@ -753,22 +757,34 @@ public:
 
 class initial_params;
 typedef initial_params* pinitial_params;
-typedef void* ptovoid;
+
 /**
 For storing void pointers in a array.
 */
 class adlist_ptr
 {
-  ptovoid* ptr;
   unsigned int current_size;
   unsigned int current;
+#ifdef USE_PTR_INIT_PARAMS
+  typedef void* ptovoid;
+  ptovoid* ptr;
   void resize(void);
-  void add_to_list(void* p);
+#else
+  std::vector<void*> ptr;
+#endif
+  void add_to_list(void*);
+
 public:
-  adlist_ptr(unsigned int init_size);
+  adlist_ptr();
+  adlist_ptr(const adlist_ptr&) = delete;
+  adlist_ptr(adlist_ptr&&) = delete;
   ~adlist_ptr();
 
   void initialize();
+
+#ifdef USE_PTR_INIT_PARAMS
+  void allocate(unsigned int init_size);
+#endif
 
   pinitial_params& operator[](int i);
 
@@ -840,13 +856,11 @@ public:
   double get_scalefactor();
   void set_scalefactor(const double);
   //Resizeable arrays
-#if defined(USE_PTR_INIT_PARAMS)
-  static initial_params* varsptr[];
-#else
-  static adlist_ptr varsptr;
-#endif
   static int num_initial_params;
-  static const int max_num_initial_params;
+#ifdef USE_PTR_INIT_PARAMS
+  static int max_num_initial_params;
+#endif
+  static adlist_ptr varsptr;
   static int straight_through_flag;
   static int num_active_initial_params;
   static int max_number_phases;

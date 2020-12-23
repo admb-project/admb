@@ -39,15 +39,14 @@ extern admb_javapointers * adjm_ptr;
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
-    if (option_match(argc,argv,"-mceval") == -1)
-    {
-      if(option_match(argc,argv,"-hess_step") == -1)
+     if (option_match(argc,argv,"-mceval") == -1) {
+      
+       if(option_match(argc,argv,"-hess_step") == -1)
 	{
+	  // Normal optimization mode
 	  computations1(argc,argv);
-	}
-      else
+	} else {
 	// Single Newton step using the inverse Hessian
-	{
 	  cout << "Experimental feature to take a single Newton step using the inverse Hessian" << endl;
 	  // Let x'=x-inv(Hessian)*gradient, where x is MLE in
 	  // unbounded space and it's corresponding gradient and
@@ -110,18 +109,23 @@ extern admb_javapointers * adjm_ptr;
 	  // cout << "Final unbounded MLE=" << x2 << endl;
 	  // cout << "Final gradients=" << gr2 << endl;
 	  cout << "Final max gradient=" << maxgrad2 << " and min gradient= " << mingrad2 << endl;
-	  hess_routine(); // Calculate new Hessian
-	  depvars_routine(); // calculate derivatives of sdreport variables
-	  hess_inv();	  // Invert Hess and write to admodel.cov
-	  sd_routine();	  // Calculate sdreport variable stuff
-	}
-    }
-    else
-    {
+
+	  if(maxgrad2<maxgrad) {
+	    hess_routine(); // Calculate new Hessian
+	    depvars_routine(); // calculate derivatives of sdreport variables
+	    hess_inv();	  // Invert Hess and write to admodel.cov
+	    sd_routine();	  // Calculate sdreport variable stuff
+	    cout << "The Hessian step resulted in a maxgrad " << maxgrad/maxgrad2 << " times smaller so kept it" << endl;
+	  } else {
+	    cerr << "The Hessian step resulted in a worse gradient so abandoning" << endl;
+	    ad_exit(1);
+	  }
+       }
+     } else {
       initial_params::mceval_phase=1;
       mcmc_eval();
       initial_params::mceval_phase=0;
-    }
+     }
     other_calculations();
 
     final_calcs();

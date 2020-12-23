@@ -53,6 +53,7 @@ extern admb_javapointers * adjm_ptr;
 	  // unbounded space and it's corresponding gradient and
 	  // Hessian. Need to calculate x' then push through
 	  // model and calculate SD report stuff
+	  initial_params::current_phase=initial_params::max_number_phases;
 	  int nvar=initial_params::nvarcalc(); // get the number of active parameters
 	  independent_variables mle(1,nvar); // MLE in bounded space
 	  independent_variables mle2(1,nvar); // MLE in bounded space
@@ -61,6 +62,7 @@ extern admb_javapointers * adjm_ptr;
 	  dvector gr(1,nvar);		// gradients in unbounded space
 	  dvector gr2(1,nvar);		
 	  dvariable userNLL, userNLL2;
+	  double maxgrad, mingrad, maxgrad2, mingrad2;
 	  read_mle_hmc(nvar, mle); // takes MLE from admodel.hes file
 
 	  // Push the original bounded MLE through the model
@@ -74,20 +76,23 @@ extern admb_javapointers * adjm_ptr;
 	  userfunction();
 	  userNLL=*objective_function_value::pobjfun; // NLL defined by user
 	  gradcalc(nvar,gr);
+	  maxgrad=max(fabs(gr));
+	  mingrad=min(fabs(gr));
 
 	  // Get the covar matrix from file, assuming last run was good
 	  dmatrix S(1,nvar,1,nvar); // covar (inverse Hess) in unbounded space
 	  dvector scale(1,nvar);
 	  int hbf;
 	  read_covariance_matrix(S,nvar, hbf, scale);
-	  cout << "Initial bounded MLE= " << mle << endl;
-	  cout << "Initial unbounded MLE= " << x << endl;
-	  cout << "Initial gradients= " << gr << endl;
-	  cout << "Initial cov = " << S << endl;
-	  dvector tmp(1,nvar);
-	  tmp=S*gr;
-	  cout << "Step = " << tmp << endl;
-	  x2=x - tmp; // the updated MLE in unbounded
+	  // cout << "Initial bounded MLE= " << mle << endl;
+	  // cout << "Initial unbounded MLE= " << x << endl;
+	  // cout << "Initial gradients= " << gr << endl;
+	  // cout << "Initial cov = " << S << endl;
+	  cout << "Initial max gradient=" << maxgrad << " and min gradient= " << mingrad << endl;
+	  dvector step(1,nvar);
+	  step=S*gr;
+	  // cout << "Step = " << step << endl;
+	  x2=x - step; // the updated MLE in unbounded
 
 	  // Push the new unbounded MLE through the model
 	  dvar_vector vx2=dvar_vector(x2);
@@ -97,11 +102,14 @@ extern admb_javapointers * adjm_ptr;
 	  userfunction();
 	  userNLL2=*objective_function_value::pobjfun; // NLL defined by user
 	  gradcalc(nvar,gr2);
+	  maxgrad2=max(fabs(gr2));
+	  mingrad2=min(fabs(gr2));
 	  initial_params::copy_all_values(mle2,1.0);
 	  
-	  cout << "Final bounded MLE=" << mle2 << endl;
-	  cout << "Final unbounded MLE=" << x2 << endl;
-	  cout << "Final gradients=" << gr2 << endl;
+	  // cout << "Final bounded MLE=" << mle2 << endl;
+	  // cout << "Final unbounded MLE=" << x2 << endl;
+	  // cout << "Final gradients=" << gr2 << endl;
+	  cout << "Final max gradient=" << maxgrad2 << " and min gradient= " << mingrad2 << endl;
 	  hess_routine(); // Calculate new Hessian
 	  depvars_routine(); // calculate derivatives of sdreport variables
 	  hess_inv();	  // Invert Hess and write to admodel.cov

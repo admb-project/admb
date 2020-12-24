@@ -5,6 +5,9 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 #ifdef ISZERO
   #undef ISZERO
@@ -125,7 +128,7 @@ void initial_params::allocate(int _phase_start)
 
 void initial_params::add_to_list()
 {
-/*
+#ifdef DEBUG
   if (num_initial_params >= initial_params::max_num_initial_params)
   {
     cerr << " This version of ADMB only supports "
@@ -133,7 +136,7 @@ void initial_params::add_to_list()
          << " initial parameter objects.\n";
     ad_exit(1);
   }
-*/
+#endif
 
   // this is the list of fundamental objects
 #if defined(USE_PTR_INIT_PARAMS)
@@ -1303,7 +1306,10 @@ void initial_params::set_random_effects_inactive(void) {;}
 
 pinitial_params& adlist_ptr::operator[](int i)
 {
-  return (pinitial_params&)ptr[i];
+#ifdef DEBUG
+  assert(i >= 0);
+#endif
+  return (pinitial_params&)ptr[static_cast<unsigned int>(i)];
 }
 #if defined(USE_PTR_INIT_PARAMS)
 int initial_params::max_num_initial_params = 4000;

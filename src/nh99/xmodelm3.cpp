@@ -555,7 +555,7 @@ function_minimizer::function_minimizer(long int sz):
     }
     else
     {
-      cerr << "Warning : Invalid argument for option -mip, the default value will be used.\n";
+      cerr << "Warning : Command line option -mip has invalid argument, the default value will be used instead.\n";
     }
     initial_params::varsptr.allocate(static_cast<unsigned int>(initial_params::max_num_initial_params));
 #endif

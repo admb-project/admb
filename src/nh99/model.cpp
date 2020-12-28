@@ -1298,8 +1298,7 @@ pinitial_params& adlist_ptr::operator[](int i)
   return (pinitial_params&)ptr[static_cast<unsigned int>(i)];
 }
 #if defined(USE_PTR_INIT_PARAMS)
-//int initial_params::max_num_initial_params = 4000;
-int initial_params::max_num_initial_params = 1;
+int initial_params::max_num_initial_params = 4000;
 #endif
 /// Default constructor
 adlist_ptr::adlist_ptr()

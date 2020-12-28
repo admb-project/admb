@@ -52,7 +52,7 @@
   #pragma interface
 #endif
 
-#define USE_PTR_INIT_PARAMS
+//#define USE_PTR_INIT_PARAMS
 #ifndef USE_PTR_INIT_PARAMS
 #include <vector>
 #endif

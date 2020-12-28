@@ -1293,40 +1293,45 @@ void initial_params::set_random_effects_inactive(void) {;}
 pinitial_params& adlist_ptr::operator[](int i)
 {
 #ifdef DEBUG
-  assert(i >= 0);
+  assert(i < current);
 #endif
-  return (pinitial_params&)ptr[static_cast<unsigned int>(i)];
+
+  unsigned int index = static_cast<unsigned int>(i);
+  if (index < current_size)
+  {
+    return (pinitial_params&)ptr[index];
+  }
+  return (pinitial_params&)list[index - current_size];
 }
-#if defined(USE_PTR_INIT_PARAMS)
-int initial_params::max_num_initial_params = 4000;
-#endif
+int initial_params::max_num_initial_params = 0;
 /// Default constructor
 adlist_ptr::adlist_ptr()
 {
   current = 0;
-#ifdef USE_PTR_INIT_PARAMS
   current_size = 0;
-  //allocate(initial_params::max_num_initial_params + 1);
   ptr = nullptr;
-#endif
 }
-#ifdef USE_PTR_INIT_PARAMS
 /**
 Construct array with init_size.
 */
 void adlist_ptr::allocate(unsigned int init_size)
 {
   current = 0;
-  ptr = new ptovoid[init_size];
-  if (ptr == 0)
+  if (init_size > 0)
   {
-    cerr << "Error: allocating memory in adlist_ptr" << endl;
+    ptr = new ptovoid[init_size] { nullptr };
+    if (ptr == 0)
+    {
+      cerr << "Error: allocating memory in adlist_ptr" << endl;
+      ad_exit(1);
+    }
+    current_size = init_size;
   }
-  current_size = init_size;
 }
 /**
 Double array size if needed.
 */
+/*
 void adlist_ptr::resize(void)
 {
   current_size *= 2;
@@ -1343,17 +1348,14 @@ void adlist_ptr::resize(void)
   ptr = tmp;
   tmp = 0;
 }
-#endif
+*/
 void adlist_ptr::initialize()
 {
-#ifdef USE_PTR_INIT_PARAMS
   for (unsigned int i = 0; i < current_size; ++i)
   {
     ptr[i] = 0;
   }
-#else
-  ptr.clear();
-#endif
+  list.clear();
   //reset current index to beginning
   current = 0;
 }
@@ -1362,32 +1364,25 @@ Store pointer p to array.
 */
 void adlist_ptr::add_to_list(void* p)
 {
-#ifdef USE_PTR_INIT_PARAMS
-  if (current > current_size)
+  if (current >= current_size)
   {
-    cerr << "This can't happen in adlist_ptr" << endl;
-    exit(1);
+    list.push_back(p);
+    ++current;
   }
-  if (current == current_size)
+  else
   {
-    resize();
+    ptr[current++] = p;
   }
-  ptr[current++] = p;
-#else
-  ptr.push_back(p);
-  ++current;
-#endif
 }
 /**
 Destructor
 */
 adlist_ptr::~adlist_ptr()
 {
-#ifdef USE_PTR_INIT_PARAMS
   if (ptr)
   {
     delete [] ptr;
     ptr = 0;
   }
-#endif
+  list.clear();
 }

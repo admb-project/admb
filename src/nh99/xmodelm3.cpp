@@ -549,7 +549,7 @@ function_minimizer::function_minimizer(long int sz):
     ssz = -1;
     nopt = get_option_number("-mip",
       "Warning: Invalid non-positive argument for command line option -mip.", ssz);
-#ifdef USE_PTR_INIT_PARAMS
+
     if (nopt == 1)
     {
       if (ssz > 0)
@@ -563,12 +563,6 @@ function_minimizer::function_minimizer(long int sz):
       }
     }
     initial_params::varsptr.allocate(static_cast<unsigned int>(initial_params::max_num_initial_params));
-#else
-    if (nopt > -1)
-    {
-      cerr << "Warning: Command line option -mip argument is ignored.\n";
-    }
-#endif
 
 #ifdef __BORLANDC__
     long int lssz;

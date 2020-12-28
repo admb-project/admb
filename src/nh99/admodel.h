@@ -52,10 +52,7 @@
   #pragma interface
 #endif
 
-//#define USE_PTR_INIT_PARAMS
-#ifndef USE_PTR_INIT_PARAMS
 #include <vector>
-#endif
 
   class laplace_approximation_calculator;
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
@@ -764,14 +761,11 @@ For storing void pointers in a array.
 class adlist_ptr
 {
   unsigned int current;
-#ifdef USE_PTR_INIT_PARAMS
   unsigned int current_size;
   typedef void* ptovoid;
   ptovoid* ptr;
   void resize(void);
-#else
-  std::vector<void*> ptr;
-#endif
+  std::vector<void*> list;
   void add_to_list(void*);
 
 public:
@@ -782,9 +776,7 @@ public:
 
   void initialize();
 
-#ifdef USE_PTR_INIT_PARAMS
   void allocate(unsigned int init_size);
-#endif
 
   pinitial_params& operator[](int i);
 
@@ -857,9 +849,7 @@ public:
   void set_scalefactor(const double);
   //Resizeable arrays
   static int num_initial_params;
-#ifdef USE_PTR_INIT_PARAMS
   static int max_num_initial_params;
-#endif
   static adlist_ptr varsptr;
   static int straight_through_flag;
   static int num_active_initial_params;

@@ -111,10 +111,11 @@ extern admb_javapointers * adjm_ptr;
 	  cout << "Final max gradient=" << maxgrad2 << " and min gradient= " << mingrad2 << endl;
 
 	  if(maxgrad2<maxgrad) {
-	    hess_routine(); // Calculate new Hessian
-	    depvars_routine(); // calculate derivatives of sdreport variables
-	    hess_inv();	  // Invert Hess and write to admodel.cov
-	    sd_routine();	  // Calculate sdreport variable stuff
+	    // Run the opitmizer without taking any steps to
+	    // produce updated output files with this new MLE
+	    // value.
+	    function_minimizer::maxfn=0;
+	    computations1(argc,argv);
 	    cout << "The Hessian step resulted in a maxgrad " << maxgrad/maxgrad2 << " times smaller so kept it" << endl;
 	  } else {
 	    cerr << "The Hessian step resulted in a worse gradient so abandoning" << endl;

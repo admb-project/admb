@@ -52,7 +52,7 @@
   #pragma interface
 #endif
 
-//#define USE_PTR_INIT_PARAMS
+#define USE_PTR_INIT_PARAMS
 #ifndef USE_PTR_INIT_PARAMS
 #include <vector>
 #endif
@@ -763,9 +763,9 @@ For storing void pointers in a array.
 */
 class adlist_ptr
 {
-  unsigned int current_size;
   unsigned int current;
 #ifdef USE_PTR_INIT_PARAMS
+  unsigned int current_size;
   typedef void* ptovoid;
   ptovoid* ptr;
   void resize(void);

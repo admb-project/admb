@@ -546,18 +546,28 @@ function_minimizer::function_minimizer(long int sz):
     if (nopt>-1 && ssz>0) {
       sz=ssz;
     }
-#ifdef USE_PTR_INIT_PARAMS
-    ssz = 0;
+    ssz = -1;
     nopt = get_option_number("-mip",
-      "-mip option needs positive integer -- ignored", ssz);
-    if (nopt == 1 && ssz > 0) {
-      initial_params::max_num_initial_params = ssz;
-    }
-    else
+      "Warning: Invalid non-positive argument for command line option -mip.", ssz);
+#ifdef USE_PTR_INIT_PARAMS
+    if (nopt == 1)
     {
-      cerr << "Warning : Command line option -mip has invalid argument, the default value will be used instead.\n";
+      if (ssz > 0)
+      {
+        initial_params::max_num_initial_params = ssz;
+      }
+      else
+      {
+        cerr << "Warning: Invalid non-positive argument for command line option -mip.\n"
+                "The default value (" << initial_params::max_num_initial_params << ") will be used.\n";
+      }
     }
     initial_params::varsptr.allocate(static_cast<unsigned int>(initial_params::max_num_initial_params));
+#else
+    if (nopt > -1)
+    {
+      cerr << "Warning: Command line option -mip argument is ignored.\n";
+    }
 #endif
 
 #ifdef __BORLANDC__

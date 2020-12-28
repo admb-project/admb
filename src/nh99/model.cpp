@@ -128,22 +128,8 @@ void initial_params::allocate(int _phase_start)
 
 void initial_params::add_to_list()
 {
-#ifdef DEBUG
-  if (num_initial_params >= initial_params::max_num_initial_params)
-  {
-    cerr << " This version of ADMB only supports "
-         << initial_params::max_num_initial_params
-         << " initial parameter objects.\n";
-    ad_exit(1);
-  }
-#endif
-
   // this is the list of fundamental objects
-#if defined(USE_PTR_INIT_PARAMS)
-  varsptr[num_initial_params] = this;
-#else
   varsptr.add_to_list(this);
-#endif
 
   num_initial_params++;
 }
@@ -1312,15 +1298,17 @@ pinitial_params& adlist_ptr::operator[](int i)
   return (pinitial_params&)ptr[static_cast<unsigned int>(i)];
 }
 #if defined(USE_PTR_INIT_PARAMS)
-int initial_params::max_num_initial_params = 4000;
+//int initial_params::max_num_initial_params = 4000;
+int initial_params::max_num_initial_params = 1;
 #endif
 /// Default constructor
 adlist_ptr::adlist_ptr()
 {
   current = 0;
-  current_size = 0;
 #ifdef USE_PTR_INIT_PARAMS
-  allocate(initial_params::max_num_initial_params + 1);
+  current_size = 0;
+  //allocate(initial_params::max_num_initial_params + 1);
+  ptr = nullptr;
 #endif
 }
 #ifdef USE_PTR_INIT_PARAMS
@@ -1359,10 +1347,14 @@ void adlist_ptr::resize(void)
 #endif
 void adlist_ptr::initialize()
 {
+#ifdef USE_PTR_INIT_PARAMS
   for (unsigned int i = 0; i < current_size; ++i)
   {
     ptr[i] = 0;
   }
+#else
+  ptr.clear();
+#endif
   //reset current index to beginning
   current = 0;
 }

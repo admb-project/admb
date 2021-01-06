@@ -742,7 +742,7 @@ TEST_F(test_cifstream, comment_)
   cifs >> lvec;
   cifs.close();
 
-  ASSERT_STREQ("# dkfjdkj kdjfkdj", cifs.comment());
+  ASSERT_STREQ("# dkfjdkj kdjfkdj ", cifs.comment());
 #ifdef DEBUG
   ASSERT_STREQ("# a", cifs.get_signature());
 #endif

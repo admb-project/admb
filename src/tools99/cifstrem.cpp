@@ -113,70 +113,49 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
 Move file pointer past comments and empty lines to next data field.
 Also, sets comment_line and signature_line instances if found.
 */
-int cifstream::filter()
+void cifstream::filter()
 {
-  bool done = false;
+  int c = bp->sgetc();
   do
   {
-    int testc = bp->sgetc();
-    while (isspace(testc))
-    {
-      testc = bp->snextc();
-      if (!good() || testc == EOF)
-      {
-        break;
-      }
-    }
-    if (testc == COMMENT_CHAR)
+    if (c == '#')
     {
       int n = 0;
-      while (testc != '\n')
+      while (c != '\r' && c != '\n' && c != EOF)
       {
-        testc = bp->sbumpc();
         if (n < SIGNATURE_LENGTH)
         {
-          if (testc == '\n')
-          {
-            --n;
-            while (isspace(comment_line[n]))
-            {
-              comment_line[n] = '\0';
-              --n;
-            }
-            if (line == 1)
-            {
-              strcpy(signature_line, comment_line);
-            }
-            ++line;
-            field = 0;
-          }
-          else
-          {
-            comment_line[n] = (char)testc;
-            ++n;
-          }
+          comment_line[n] = (char)c;
+          ++n;
         }
-        if (!good() || testc == EOF)
-        {
-          break;
-        }
+        c = bp->snextc();
       }
+      if (n < SIGNATURE_LENGTH - 1)
+        comment_line[n] = '\0';
+      else
+        comment_line[SIGNATURE_LENGTH - 1] = '\0';
+      if (line == 1)
+      {
+        strcpy(signature_line, comment_line);
+      }
+      ++line;
+      field = 0;
+    }
+    else if (isspace(c))
+    {
+      c = bp->snextc();
     }
     else
     {
-      done = true;
+      break;
     }
-    if (!good() || testc == EOF)
-    {
-      done = true;
-      if (testc == EOF)
-        set_eof_bit();
-      report_error(
-        "function: void cifstream::prefilter(); premature end of file?");
-    }
-  } while (!done);
-
-  return bp->sgetc();
+  } while (c != EOF);
+  if (c == EOF)
+  {
+    set_eof_bit();
+    report_error(
+      "function: void cifstream::filter(); premature end of file?");
+  }
 }
 /**
 Extract a single field into s from data file.

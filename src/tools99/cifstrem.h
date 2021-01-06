@@ -170,7 +170,7 @@ public:
   #endif
 #endif
 
-  int filter();
+  void filter();
 
   adstring get_file_name(void);
   /// Returns the last comment line.

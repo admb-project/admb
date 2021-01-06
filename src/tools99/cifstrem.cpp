@@ -48,22 +48,30 @@ char* cifstream::signature()
     int c = bp->sgetc();
 
     int n = 0;
-    while ((n < SIGNATURE_LENGTH) && (c != '\n'))
+    while (c != '\n' && c != '\r' && c != EOF)
     {
-      signature_line[n++] = (char)c;
+      cout << (char)c << endl;
+      if (n < SIGNATURE_LENGTH)
+      {
+        signature_line[n] = (char)c;
+        cout << signature_line << endl;
+        ++n;
+      }
       c = bp->snextc();
     }
-    signature_line[n++] = '\0';
+    signature_line[n] = '\0';
+
     strcpy(comment_line, signature_line);
 
-    // read until end of line incase line is longer than SIGNATURE_LENGTH
-    while (c != '\n')
+    // just position buffer to first character of next line
+    if (c == '\r')
     {
       c = bp->snextc();
     }
-
-    // just position buffer to first character of next line
-    bp->snextc();
+    if (c == '\n')
+    {
+      c = bp->snextc();
+    }
 
     line++;
   }
@@ -130,10 +138,7 @@ void cifstream::filter()
         }
         c = bp->snextc();
       }
-      if (n < SIGNATURE_LENGTH - 1)
-        comment_line[n] = '\0';
-      else
-        comment_line[SIGNATURE_LENGTH - 1] = '\0';
+      comment_line[n] = '\0';
       if (line == 1)
       {
         strcpy(signature_line, comment_line);

@@ -31,7 +31,7 @@ TEST_F(test_cifstream, call_signature_twice)
   char* signature2 = cifs.signature();
   ASSERT_STREQ("//MY Signature", signature2);
 }
-TEST_F(test_cifstream, big_signature)
+TEST_F(test_cifstream, big_signature_file)
 {
   cifstream cifs("big_signature.txt");
   char* bigsignature = cifs.signature();
@@ -41,6 +41,45 @@ TEST_F(test_cifstream, big_signature)
   char line[5];
   cifs.getline(line, 5, '\n');
   ASSERT_STREQ("END", line);
+}
+TEST_F(test_cifstream, big_signature_n)
+{
+  std::ofstream ofs("big_signature_n.txt");
+  ofs << "01234567890123456789012345678901234567890123456789012345678901234567890123456789\n";
+  ofs << "END";
+  ofs.close();
+
+  cifstream cifs("big_signature_n.txt");
+  char* bigsignature = cifs.signature();
+  ASSERT_STREQ(
+    "01234567890123456789012345678901234567890123456789012345678901234567890123456789",
+    bigsignature);
+}
+TEST_F(test_cifstream, big_signature_rn)
+{
+  std::ofstream ofs("big_signature_rn.txt");
+  ofs << "01234567890123456789012345678901234567890123456789012345678901234567890123456789\r\n";
+  ofs << "END";
+  ofs.close();
+
+  cifstream cifs("big_signature_rn.txt");
+  char* bigsignature = cifs.signature();
+  ASSERT_STREQ(
+    "01234567890123456789012345678901234567890123456789012345678901234567890123456789",
+    bigsignature);
+}
+TEST_F(test_cifstream, big_signature_r)
+{
+  std::ofstream ofs("big_signature_r.txt");
+  ofs << "01234567890123456789012345678901234567890123456789012345678901234567890123456789\r";
+  ofs << "END";
+  ofs.close();
+
+  cifstream cifs("big_signature_rn.txt");
+  char* bigsignature = cifs.signature();
+  ASSERT_STREQ(
+    "01234567890123456789012345678901234567890123456789012345678901234567890123456789",
+    bigsignature);
 }
 TEST_F(test_cifstream, double)
 {
@@ -719,7 +758,7 @@ TEST_F(test_cifstream, lvector2_dos)
   ASSERT_EQ(43948093, lvec(3));
   ASSERT_EQ(993859, lvec(4));
 }
-TEST_F(test_cifstream, comment_)
+TEST_F(test_cifstream, comment_rn)
 {
   std::ofstream ofs("test_cifstream_float_dos.txt");
   ofs << "# a\r\n";
@@ -729,6 +768,72 @@ TEST_F(test_cifstream, comment_)
   ofs << "# a\r\n";
   ofs << "\t\r\n";
   ofs << "356345 \t  9445938  # dkfjdkj kdjfkdj \r\n\t  43948093   \r  993859\r\n";
+  ofs << "# b\r\n";
+  ofs << "	\r\n";
+  ofs << "# a\r\n";
+  ofs << "    \t\r\n";
+  ofs << "# b\r\n";
+  ofs.close();
+
+  lvector lvec(1, 4);
+  ASSERT_TRUE(allocated(lvec));
+  cifstream cifs("test_cifstream_float_dos.txt");
+  cifs >> lvec;
+  cifs.close();
+
+  ASSERT_STREQ("# dkfjdkj kdjfkdj ", cifs.comment());
+#ifdef DEBUG
+  ASSERT_STREQ("# a", cifs.get_signature());
+#endif
+
+  ASSERT_EQ(356345, lvec(1));
+  ASSERT_EQ(9445938, lvec(2));
+  ASSERT_EQ(43948093, lvec(3));
+  ASSERT_EQ(993859, lvec(4));
+}
+TEST_F(test_cifstream, comment_r)
+{
+  std::ofstream ofs("test_cifstream_float_dos.txt");
+  ofs << "# a\r\n";
+  ofs << "\r\n";
+  ofs << "# b\r\n";
+  ofs << "\r\n\r\n";
+  ofs << "# a\r\n";
+  ofs << "\t\r\n";
+  ofs << "356345 \t  9445938  # dkfjdkj kdjfkdj \r\t  43948093   \r  993859\r\n";
+  ofs << "# b\r\n";
+  ofs << "	\r\n";
+  ofs << "# a\r\n";
+  ofs << "    \t\r\n";
+  ofs << "# b\r\n";
+  ofs.close();
+
+  lvector lvec(1, 4);
+  ASSERT_TRUE(allocated(lvec));
+  cifstream cifs("test_cifstream_float_dos.txt");
+  cifs >> lvec;
+  cifs.close();
+
+  ASSERT_STREQ("# dkfjdkj kdjfkdj ", cifs.comment());
+#ifdef DEBUG
+  ASSERT_STREQ("# a", cifs.get_signature());
+#endif
+
+  ASSERT_EQ(356345, lvec(1));
+  ASSERT_EQ(9445938, lvec(2));
+  ASSERT_EQ(43948093, lvec(3));
+  ASSERT_EQ(993859, lvec(4));
+}
+TEST_F(test_cifstream, comment_n)
+{
+  std::ofstream ofs("test_cifstream_float_dos.txt");
+  ofs << "# a\r\n";
+  ofs << "\r\n";
+  ofs << "# b\r\n";
+  ofs << "\r\n\r\n";
+  ofs << "# a\r\n";
+  ofs << "\t\r\n";
+  ofs << "356345 \t  9445938  # dkfjdkj kdjfkdj \n\t  43948093   \r  993859\r\n";
   ofs << "# b\r\n";
   ofs << "	\r\n";
   ofs << "# a\r\n";

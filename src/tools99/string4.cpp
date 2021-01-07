@@ -67,7 +67,6 @@ istream& operator>>(istream& c, line_adstring& t)
     else
     {
       tmp[ii++] = ch;
-      cout << ch << endl;
     }
   }
   if (ii > max_length)

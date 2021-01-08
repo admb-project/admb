@@ -2017,7 +2017,7 @@ public:
   void hess_routine_and_constraint(int iprof, const dvector& g,
     dvector& fg);
   dmatrix diag_hess_routine(void);
-  void hess_inv(void);
+  bool hess_inv();
   void depvars_routine(void);
   void sd_routine(void);
   int ef_(double * f, double * x);

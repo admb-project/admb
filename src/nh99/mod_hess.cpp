@@ -484,7 +484,7 @@ void function_minimizer::depvars_routine(void)
 /**
 Symmetrize and invert the hessian
 */
-void function_minimizer::hess_inv(void)
+bool function_minimizer::hess_inv(void)
 {
   initial_params::set_inactive_only_random_effects();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
@@ -672,7 +672,7 @@ void function_minimizer::hess_inv(void)
         if (hess(i,i) <= 0.0)
         {
           hess_errorreport();
-          ad_exit(1);
+          return false;
         }
       }
     }
@@ -686,6 +686,7 @@ void function_minimizer::hess_inv(void)
       ofs << sscale;
     }
   }
+  return true;
 }
 void hess_calcreport(int i,int nvar)
 {

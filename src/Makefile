@@ -2,8 +2,6 @@
 ADMB_VER=admb
 !ENDIF
 
-LEXDESTDIR=..\build\lex
-
 #SAFE_ALL= /DSAFE_ALL
 
 !IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
@@ -164,22 +162,24 @@ bins: libs
 lexfiles: lexdestdir $(DESTDIR)\bin\tpl2cpp.exe $(DESTDIR)\bin\tpl2rem.exe
 
 lexdestdir:
-	IF NOT EXIST $(LEXDESTDIR) md $(LEXDESTDIR)
+	IF NOT EXIST ..\build md ..\build
+	IF NOT EXIST ..\build\tpl2cpp md ..\build\tpl2cpp
+	IF NOT EXIST ..\build\\tpl2rem md ..\build\tpl2rem
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
 
-$(DESTDIR)\bin\tpl2cpp.exe: $(LEXDESTDIR)\tpl2cpp.c
-	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2cpp.c
+$(DESTDIR)\bin\tpl2cpp.exe: ..\build\tpl2cpp\tpl2cpp.c
+	$(CC) /nologo /TC /Fo..\build\tpl2cpp\ /Fe$@ ..\build\tpl2cpp\tpl2cpp.c
 
-$(LEXDESTDIR)\tpl2cpp.c: nh99\tpl2cpp.lex
-	..\utilities\flex -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
-	..\utilities\sed -f nh99\sedflex $(LEXDESTDIR)\lex.yy.c > $@
+..\build\tpl2cpp\tpl2cpp.c: nh99\tpl2cpp.lex
+	..\utilities\flex -o..\build\tpl2cpp\lex.yy.c nh99\tpl2cpp.lex
+	..\utilities\sed -f nh99\sedflex ..\build\tpl2cpp\tpl2cpp\lex.yy.c > $@
 
-$(DESTDIR)\bin\tpl2rem.exe: $(LEXDESTDIR)\tpl2rem.c
-	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2rem.c
+$(DESTDIR)\bin\tpl2rem.exe: ..\build\tpl2rem\tpl2rem.c
+	$(CC) /nologo /TC /Fo..\build\tpl2rem\ /Fe$@ ..\build\tpl2rem\tpl2rem.c
 
-$(LEXDESTDIR)\tpl2rem.c: df1b2-separable\tpl2rem.lex
-	..\utilities\flex -o$(LEXDESTDIR)\lex.yy.c df1b2-separable\tpl2rem.lex
-	..\utilities\sed -f df1b2-separable\sedflex $(LEXDESTDIR)\lex.yy.c > $@
+..\build\\tpl2rem\tpl2rem.c: df1b2-separable\tpl2rem.lex
+	..\utilities\flex -o..\build\tpl2rem\lex.yy.c df1b2-separable\tpl2rem.lex
+	..\utilities\sed -f df1b2-separable\sedflex ..\build\tpl2rem\lex.yy.c > $@
 
 libs: objects
 	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib

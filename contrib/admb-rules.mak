@@ -32,19 +32,19 @@ endif
 $(SAFE_PREFIX)%.obj: %.cpp
 ifeq ($(CMDSHELL),cmd)
 	..\..\admb.cmd -c $(OPTION) $<
-	copy $(basename $<).obj "$@"
+	move $(basename $<).obj "$@"
 else
 	../../admb$(EXT) -c $(OPTION) $<
-	cp $(basename $<).obj $@
+	mv $(basename $<).obj $@
 endif
 
 $(OPT_PREFIX)%.obj: %.cpp
 ifeq ($(CMDSHELL),cmd)
 	..\..\admb.cmd -c -f $(OPTION) $<
-	copy $(basename $<).obj "$@"
+	move $(basename $<).obj "$@"
 else
 	../../admb$(EXT) -c -f $(OPTION) $<
-	cp $(basename $<).obj $@
+	mv $(basename $<).obj $@
 endif
 
 includes:

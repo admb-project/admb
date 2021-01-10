@@ -28,8 +28,10 @@ endif
 	sed -f sedflex ../../build/tpl2cpp/lex.yy.c > $@
 
 ../../build/tpl2cpp/lex.yy.c: tpl2cpp.lex
-ifneq ($(OS),Windows_NT)
+ifeq ($(OS),Windows_NT)
+	flex -v -w -o../../build/tpl2cpp/lex.yy.c  $^
+else
 	rm -vf $@
 	if [ -z "`command -v flex`" ]; then echo "Error: Unable to find flex."; exit 1; fi
-endif
 	flex -v -w -o ../../build/tpl2cpp/lex.yy.c  $^
+endif

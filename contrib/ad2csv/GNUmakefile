@@ -17,12 +17,10 @@ OPTION=-f
 
 ifeq ($(CMDSHELL),cmd)
 $(CONTRIB_BIN)\ad2csv.exe: ad2csv.cpp main.cpp
-	..\..\admb.cmd $(OPTION) $^
-	move ad2csv.exe $@
+	..\..\admb.cmd $(OPTION) -o $@ $^
 else
 $(CONTRIB_BIN)ad2csv: ad2csv.cpp main.cpp
-	../../admb$(EXT) $(OPTION) $^
-	mv ad2csv $@
+	../../admb$(EXT) $(OPTION) -o $@ $^
 endif
 	$(MAKE) clean
 

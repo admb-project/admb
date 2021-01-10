@@ -348,8 +348,13 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
-
-  fileobj=${file%.*}.obj
+  if [ ! -z "$compileonly" ]; then
+    if [ ! -z  "$output" ]; then
+      fileobj="$output".obj
+    fi
+  else
+    fileobj=${file%.*}.obj
+  fi
   rm -f $fileobj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
   echo -e \\n\*\*\* Compile: $file\\n$CMD
@@ -359,7 +364,11 @@ do
     echo -e "\\nError: Could not compile $file\\n"
     exit 1
   fi
-  tplobjs="$tplobjs $fileobj"
+  if [ ! -z "$tplobjs" ]; then
+    tplobjs="$tplobjs $fileobj"
+  else
+    tplobjs="$fileobj"
+  fi
 done
 
 for file in $srcs
@@ -368,7 +377,13 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
-  fileobj=${file%.*}.obj
+  if [ ! -z "$compileonly" ]; then
+    if [ ! -z  "$output" ]; then
+      fileobj="$output".obj
+    fi
+  else
+    fileobj=${file%.*}.obj
+  fi
   rm -f $fileobj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
   echo -e \\n\*\*\* Compile: $file\\n$CMD
@@ -389,7 +404,7 @@ if [ ! -z "$compileonly" ]; then
   if [ ! -z "$objs" ]; then
     objects=$objs
   fi
-  echo -e "\\nCompiled $objects.\\n"
+  echo -e "\\nCompiled $objects\\n"
   exit 0
 fi
 

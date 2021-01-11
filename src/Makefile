@@ -177,7 +177,7 @@ $(DESTDIR)\bin\tpl2cpp.exe: ..\build\tpl2cpp\tpl2cpp.c
 $(DESTDIR)\bin\tpl2rem.exe: ..\build\tpl2rem\tpl2rem.c
 	$(CC) /nologo /TC /Fo..\build\tpl2rem\ /Fe$@ ..\build\tpl2rem\tpl2rem.c
 
-..\build\\tpl2rem\tpl2rem.c: df1b2-separable\tpl2rem.lex
+..\build\tpl2rem\tpl2rem.c: df1b2-separable\tpl2rem.lex
 	..\utilities\flex -o..\build\tpl2rem\lex.yy.c df1b2-separable\tpl2rem.lex
 	..\utilities\sed -f df1b2-separable\sedflex ..\build\tpl2rem\lex.yy.c > $@
 

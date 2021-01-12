@@ -12,19 +12,20 @@
   #include <cassert>
 #endif
 
-#if defined(_MSC_VER)
-void strip_full_path(const adstring& _s)
+adstring strip_full_path(const adstring& _s)
 {
-  adstring& s = (adstring&)_s;
-  size_t n = s.size();
+  size_t n = _s.size();
   size_t i = n - 1;
   for (; i >= 1; i--)
   {
-    if ( s(i) == '\\' || s(i) == '/' || s(i) == ':') break;
+    if (_s(i) == '\\' || _s(i) == '/' || _s(i) == ':') break;
   }
-  s = s(i + 1, n);
+
+  adstring s(1, n - i);
+  s = _s(i + 1, n);
+
+  return std::move(s);
 }
-#endif
 
 void set_signal_handlers(void)
 {
@@ -121,12 +122,9 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
   */
   set_signal_handlers();
-  adprogram_name=_argv[0];
+  adprogram_name = strip_full_path((adstring)_argv[0]);
   //int len=strlen(_argv[0]);
   //for (int i=1;i<=len;i++) adprogram_name[i]=tolower(adprogram_name[i]);
-#if defined(_MSC_VER)
-  strip_full_path(adprogram_name);
-#endif
   adstring workdir;
   ad_getcd(workdir);
   if (_argc>1)

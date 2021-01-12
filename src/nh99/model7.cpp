@@ -18,13 +18,17 @@ adstring strip_full_path(const adstring& _s)
   size_t i = n - 1;
   for (; i >= 1; i--)
   {
+#if defined(_WIN32)
     if (_s(i) == '\\' || _s(i) == '/' || _s(i) == ':') break;
+#else
+    if (_s(i) == '/' || _s(i) == ':') break;
+#endif
   }
 
   adstring s(1, n - i);
   s = _s(i + 1, n);
 
-  return std::move(s);
+  return s;
 }
 
 void set_signal_handlers(void)

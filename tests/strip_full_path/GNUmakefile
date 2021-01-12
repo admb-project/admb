@@ -15,8 +15,8 @@ all:
 	$(MAKE) dirs
 	$(MAKE) copy
 ifeq ($(CMDSHELL),cmd)
-	cd src && ..\\..\\..\\admb -o..\\bin\\simple simple.tpl
-	cd run && ..\\bin\\simple.exe
+	pushd src & ..\\..\\..\\admb -o..\\bin\\simple simple.tpl
+	pushd run & ..\\bin\\simple.exe
 else
 	cd src && ../../../admb$(EXT) -o../bin/simple simple.tpl
 	cd run && ../bin/simple

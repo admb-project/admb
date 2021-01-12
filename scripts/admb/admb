@@ -350,7 +350,13 @@ do
   fi
   if [ ! -z "$compileonly" ]; then
     if [ ! -z  "$output" ]; then
-      fileobj="$output".obj
+      if [ ${output: -4} == ".obj" ]; then
+        fileobj="$output"
+      else
+        fileobj="$output".obj
+      fi
+    else
+      fileobj=${file%.*}.obj
     fi
   else
     fileobj=${file%.*}.obj
@@ -379,7 +385,13 @@ do
   fi
   if [ ! -z "$compileonly" ]; then
     if [ ! -z  "$output" ]; then
-      fileobj="$output".obj
+      if [ ${output: -4} == ".obj" ]; then
+        fileobj="$output"
+      else
+        fileobj="$output".obj
+      fi
+    else
+      fileobj=${file%.*}.obj
     fi
   else
     fileobj=${file%.*}.obj
@@ -400,9 +412,10 @@ do
 done
 
 if [ ! -z "$compileonly" ]; then
-  objects=$tplobjs
   if [ ! -z "$objs" ]; then
     objects=$objs
+  else
+    objects=$tplobjs
   fi
   echo -e "\\nCompiled $objects\\n"
   exit 0

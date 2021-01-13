@@ -15,7 +15,7 @@ $(DIST)/bin/tpl2rem: ../../build/tpl2rem/tpl2rem.c
 endif
 	$(CC) $(CFLAGS) -o $@ $<
 
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 ..\..\build\tpl2rem\tpl2rem.c: ..\..\build\tpl2rem\lex.yy.c
 	sed -f sedflex ..\..\build\tpl2rem\lex.yy.c > $@
 else
@@ -25,7 +25,7 @@ else
 	sed -f sedflex ../../build/tpl2rem/lex.yy.c > $@
 endif
 
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 ..\..\build\tpl2rem\lex.yy.c: tpl2rem.lex
 	flex -v -w -o..\..\build\tpl2rem\lex.yy.c $^
 else

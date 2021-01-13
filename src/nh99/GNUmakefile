@@ -20,7 +20,7 @@ else
 	$(CC) $(CFLAGS) -Wno-format -o $@ $<
 endif
 
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 ..\..\build\tpl2cpp\tpl2cpp.c: ..\..\build\tpl2cpp\lex.yy.c
 	sed -f sedflex ..\..\build\tpl2cpp\lex.yy.c > $@
 else
@@ -30,7 +30,7 @@ else
 	sed -f sedflex ../../build/tpl2cpp/lex.yy.c > $@
 endif
 
-ifeq ($(OS),Windows_NT)
+ifeq ($(SHELL),cmd)
 ..\..\build\tpl2cpp\lex.yy.c: tpl2cpp.lex
 	flex -v -w -o..\..\build\tpl2cpp\lex.yy.c  $^
 else

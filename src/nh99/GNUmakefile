@@ -37,5 +37,5 @@ else
 ../../build/tpl2cpp/lex.yy.c: tpl2cpp.lex
 	rm -vf $@
 	if [ -z "`command -v flex`" ]; then echo "Error: Unable to find flex."; exit 1; fi
-	flex -v -w -o ../../build/tpl2cpp/lex.yy.c  $^
+	flex -v -w -o../../build/tpl2cpp/lex.yy.c  $^
 endif

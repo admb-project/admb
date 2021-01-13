@@ -433,45 +433,45 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
   adstring tmpstring = "admodel.hes";
   uistream cif((char*)tmpstring);
   if (!cif) {
-    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
-	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    cerr << "Error reading admodel.hes file to get MLE values. Try re-optimizing model." << endl;
     ad_exit(1);
   }
   int tmp_nvar = 0;
   cif >> tmp_nvar;
   if (nvar !=tmp_nvar) {
-    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
-	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    cerr << "The number of variables in admodel.hes " << tmp_nvar << " does not match " << nvar <<
+	 ". Try re-optimizing model." << endl;
     ad_exit(1);
   }
   dmatrix hess(1,tmp_nvar,1,tmp_nvar);
   cif >> hess;
   if (!cif) {
-    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
-	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    cerr << "Error reading the Hessian matrix from admodel.hes. Try re-optimizing model." << endl;
     ad_exit(1);
   }
   int oldHbf;
   cif >> oldHbf;
   if (!cif) {
-    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
-	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    cerr << "Error reading the hybrid flag from admodel.hes. Try re-optimizing model." << endl;
     ad_exit(1);
   }
   dvector sscale(1,tmp_nvar);
   cif >> sscale;
   if (!cif) {
-    cerr << "Error reading the bounded MLE values from admodel.hes which are needed "
-	 << endl <<  "to rescale the mass matrix. Try re-optimizing model." << endl;
+    cerr << "Error reading the transformation scales from admodel.hes. Try re-optimizing model." << endl;
     ad_exit(1);
   }
   // Read in the MLEs finally
   int temp=0;
   cif >> temp;
-  cif >> mle;
-  // Temp is a unique flag to make sure the mle values were written (that
+  // temp is a unique flag to make sure the mle values were written (that
   // admodel.hes is not too old)
   if(temp != -987 || !cif){
+    cerr << "Error reading the check value from admodel.hes. Try re-optimizing model." << endl;
+    ad_exit(1);
+  }
+  cif >> mle;
+  if(!cif){
     cerr << "Error reading the bounded MLE values from admodel.hes. Try re-optimizing model." << endl;
     ad_exit(1);
   }

@@ -417,7 +417,7 @@ if [ ! -z "$compileonly" ]; then
   else
     objects=$tplobjs
   fi
-  echo -e "\\nCompiled $objects\\n"
+  echo -e "\\nCompiled $objects\\n\\n"
   exit 0
 fi
 

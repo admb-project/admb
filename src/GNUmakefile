@@ -408,9 +408,9 @@ ifeq ($(CMDSHELL),cmd)
 	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
-	md ../build/tpl2rem
+	if not exist ..\build\tpl2rem md ..\build\tpl2rem
 	$(MAKE) --directory=df1b2-separable CC=gcc DIST=..\${DIST} bins
-	md ../build/tpl2cpp
+	if not exist ..\build\tpl2cpp md ..\build\tpl2cpp
 	$(MAKE) --directory=nh99 CC=gcc DIST=..\${DIST} bins
 else
 	mkdir -p ${DIST}/bin

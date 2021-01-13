@@ -15,17 +15,21 @@ $(DIST)/bin/tpl2rem: ../../build/tpl2rem/tpl2rem.c
 endif
 	$(CC) $(CFLAGS) -o $@ $<
 
+ifeq ($(OS),Windows_NT)
+..\..\build\tpl2rem\tpl2rem.c: ..\..\build\tpl2rem\lex.yy.c
+	sed -f sedflex ..\..\build\tpl2rem\lex.yy.c > $@
+else
 ../../build/tpl2rem/tpl2rem.c: ../../build/tpl2rem/lex.yy.c
-ifneq ($(OS),Windows_NT)
 	rm -vf $@
 	if [ "`cat $^ | wc -l`" -eq 0 ]; then echo "Error: lex.yy.c is empty."; exit 1; fi
-endif
 	sed -f sedflex ../../build/tpl2rem/lex.yy.c > $@
+endif
 
-../../build/tpl2rem/lex.yy.c: tpl2rem.lex
 ifeq ($(OS),Windows_NT)
-	flex -v -w -o../../build/tpl2rem/lex.yy.c $^
+..\..\build\tpl2rem\lex.yy.c: tpl2rem.lex
+	flex -v -w -o..\..\build\tpl2rem\lex.yy.c $^
 else
+../../build/tpl2rem/lex.yy.c: tpl2rem.lex
 	rm -vf $@
 	@if [ -z "`command -v flex`" ]; then echo "Error: Unable to find flex."; exit 1; fi
 	flex -v -w -o ../../build/tpl2rem/lex.yy.c $^

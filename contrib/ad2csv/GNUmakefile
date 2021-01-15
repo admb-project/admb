@@ -17,12 +17,15 @@ OPTION=-f
 
 ifeq ($(CMDSHELL),cmd)
 $(CONTRIB_BIN)\ad2csv.exe: ad2csv.cpp main.cpp
-	..\..\admb.cmd $(OPTION) -o $@ $^
+	..\..\admb.cmd $(OPTION) -c ..\build\ad2csv.obj ad2csv.cpp
+	..\..\admb.cmd $(OPTION) -c ..\build\main.obj main.cpp
+	..\..\admb.cmd $(OPTION) -o $@ ..\build\ad2csv.obj ..\build\main.obj
 else
 $(CONTRIB_BIN)ad2csv: ad2csv.cpp main.cpp
-	../../admb$(EXT) $(OPTION) -o $@ $^
+	../../admb$(EXT) $(OPTION) -o ../build/ad2csv.obj  ad2csv.cpp
+	../../admb$(EXT) $(OPTION) -o ../build/main.obj  main.cpp
+	../../admb$(EXT) $(OPTION) -o $@ ../build/ad2csv.obj ../build/main.obj
 endif
-	$(MAKE) clean
 
 clean:
 ifeq ($(CMDSHELL),cmd)

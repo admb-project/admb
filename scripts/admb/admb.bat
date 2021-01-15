@@ -52,6 +52,7 @@ if not defined ADMB_HOME (
 set tpls=
 set srcs=
 set objs=
+set output=
 for %%a in (%*) do (
   set arg=%%a
   if "!arg:~0,1!"=="-" (
@@ -67,11 +68,18 @@ for %%a in (%*) do (
     if "!arg!"=="-g" (
       set g= -g
     )
+    if "!arg!"=="-o" (
+      set option_o= -o
+    )
     if "!arg!"=="-r" (
       set r = -r
       set parser=tpl2rem
     )
   ) else (
+    if defined option_o (
+      set output=!arg!
+      set option_o=
+    )
     if "%%~xa"=="" (
       if not defined tpls (
         set tpls=!arg!
@@ -515,7 +523,11 @@ for %%b in (!tpls!) do (
   set tpl=%%~nb
   @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
   if "!CXX!"=="cl" (
-    set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+    if defined output (
+      set CMD=!CXX!!CXXFLAGS! /Fo!output! !tpl!.cpp
+    ) else (
+      set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+    )
   ) else (
     set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
   )
@@ -538,7 +550,11 @@ if defined srcs (
     set filename=%%~na
     @REM set CMD=adcomp!d!!g!!r!!fast! !src!
     if "!CXX!"=="cl" (
-      set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+      if defined output (
+        set CMD=!CXX!!CXXFLAGS! /Fo!output! !filename!.cpp
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+      )
     ) else (
       set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
     )
@@ -580,7 +596,11 @@ if not defined tpls (
         set CMD=!LD!!LDFLAGS! -o !main!.dll !objs! !libs!
       ) else (
         if "!CXX!"=="cl" (
-          set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !objs! !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
+          )
         ) else (
           set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
         )
@@ -620,7 +640,11 @@ if not defined tpls (
     ) else (
       if "!CXX!"=="cl" (
         if defined objs (
-          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !tpl!.obj !objs! !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+          ) 
         ) else (
           set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
         )

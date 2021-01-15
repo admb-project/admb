@@ -46,11 +46,47 @@ extern admb_javapointers * adjm_ptr;
 	  // Normal optimization mode
 	  computations1(argc,argv);
 	} else {
-	// Single Newton step using the inverse Hessian
-	  cout << "Experimental feature to take a single Newton step using the inverse Hessian" << endl;
-	  // Let x'=x-inv(Hessian)*gradient, where x is MLE in
-	  // unbounded space and it's corresponding gradient and
-	  // Hessian. Need to calculate x' then push through
+	 // Newton steps after previous optimization
+	 
+	 // Read in the number of steps and optional tolerance
+	 int N_hess_steps=1;
+	 int _N_hess_steps;
+	 int on, nopt;
+	 if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hess_step",nopt))>-1) {
+	   if (!nopt){ 
+	     cout << "Number of hess_steps not specified, using default of 1" << endl;
+	   } else {			
+	     istringstream ist(ad_comm::argv[on+1]);
+	     ist >> _N_hess_steps;
+	     if (_N_hess_steps<=0) {
+	       cerr << "Error: hess_step tolerance must be positive";
+	       ad_exit(1);
+	     } else {
+	       N_hess_steps=_N_hess_steps;
+	     }
+	   }
+	 }
+	 double eps=1e-12;
+	 double _eps;
+	 if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hess_step_tol",nopt))>-1) {
+	   if (!nopt){ 
+	     cout << "No tolerance given, using default of 1e-12" << endl;
+	   } else {			
+	     istringstream ist(ad_comm::argv[on+1]);
+	     ist >> _eps;
+	     if (_eps<=0) {
+	       cerr << "Error: hess_step tolerance must be positive";
+	       ad_exit(1);
+	     } else {
+	       eps=_eps;
+	     }
+	   }
+	 }
+	 cout << "Experimental feature to take up to " << N_hess_steps;
+	 cout << " Newton step(s) using the inverse Hessian" << endl;
+	 // Let x'=x-inv(Hessian)*gradient, where x is MLE in
+	 // unbounded space and it's corresponding gradient and
+	 // Hessian. Need to calculate x' then push through
 	  // model and calculate SD report stuff
 	  initial_params::current_phase=initial_params::max_number_phases;
 	  int nvar=initial_params::nvarcalc(); // get the number of active parameters
@@ -58,9 +94,10 @@ extern admb_javapointers * adjm_ptr;
 	  independent_variables mle2(1,nvar); // updated bounded MLE
 	  independent_variables x(1,nvar); // original unbounded MLE
 	  independent_variables x2(1,nvar); // updated unbounded MLE
-	  dvector gr(1,nvar);		// original gradients
+	  dvector gr0(1,nvar);		// original gradients
+	  dvector gr(1,nvar);		// 
 	  dvector gr2(1,nvar);		// updated gradients
-	  double maxgrad, mingrad, maxgrad2, mingrad2;
+	  double maxgrad0, mingrad0, maxgrad, maxgrad2, mingrad2;
 	  read_mle_hmc(nvar, mle); // takes MLE from admodel.hes file
 
 	  // Push the original bounded MLE through the model
@@ -72,51 +109,85 @@ extern admb_javapointers * adjm_ptr;
 	  initial_params::reset(vx);
 	  *objective_function_value::pobjfun=0.0;
 	  userfunction();
-	  gradcalc(nvar,gr);			      // initial unbounded gradient
-	  maxgrad=max(fabs(gr));
-	  mingrad=min(fabs(gr));
-	  cout << "Initial max gradient=" << maxgrad << " and min gradient= " << mingrad << endl;
-
-	  // Get the covar matrix from file, assuming last run was good
+	  gradcalc(nvar,gr0);			      // initial unbounded gradient
+	  maxgrad0=max(fabs(gr0));
+	  mingrad0=min(fabs(gr0));
+	  
+	  cout << "Initial max gradient=" << maxgrad0 << " and min gradient= " << mingrad0 << endl;
 	  dmatrix S(1,nvar,1,nvar); // covar (inverse Hess) in unbounded space
 	  dvector scale(1,nvar); // dummy var
 	  int hbf; // dummy var
-	  read_covariance_matrix(S,nvar, hbf, scale);
-	  x2=x-S*gr; // the updated MLE in unbounded
 
-	  // Push the new unbounded MLE through the model
-	  dvar_vector vx2=dvar_vector(x2);
-	  // dvariable vf2=0.0;
-	  initial_params::reset(vx2);
-	  *objective_function_value::pobjfun=0.0;
-	  userfunction();
-	  gradcalc(nvar,gr2);
-	  maxgrad2=max(fabs(gr2));
-	  mingrad2=min(fabs(gr2));
-	  initial_params::copy_all_values(mle2,1.0);
-	  cout << "Final max gradient=" << maxgrad2 << " and min gradient= " << mingrad2 << endl;
+	  // Initial for first iteration
+	  gr=gr0; maxgrad=maxgrad0; 
 
-	  if(maxgrad2<maxgrad) {
-	    // Run the opitmizer without taking any steps to
-	    // produce updated output files with this new MLE
-	    // value.
-	    function_minimizer::maxfn=0;
-	    computations1(argc,argv);
-	    cout << "The Hessian step resulted in a maxgrad " << maxgrad/maxgrad2 << " times smaller so kept it" << endl;
-	  } else {
-	    cerr << "The Hessian step resulted in a worse gradient so abandoning" << endl;
-	    ad_exit(1);
-	  }
+	  int Nstep=0;
+	  for(int ii=1; ii<=N_hess_steps; ii++){
+	    Nstep++;
+	    // Get the covar matrix from file, assuming last run was good
+	    read_covariance_matrix(S,nvar, hbf, scale);
+	    x2=x-S*gr; // the updated MLE in unbounded space
+	    // Push the new unbounded MLE through the model
+	    dvar_vector vx2=dvar_vector(x2);
+	    initial_params::reset(vx2);
+	    *objective_function_value::pobjfun=0.0;
+	    userfunction();
+	    // Updated quantities after taking step
+	    gradcalc(nvar,gr2);
+	    maxgrad2=max(fabs(gr2));
+	    mingrad2=min(fabs(gr2));
+	    initial_params::copy_all_values(mle2,1.0);
+	    // Check whether to break out of loop early
+	    if( (maxgrad2 < eps) & (ii < N_hess_steps)){
+	      cout << "Step " << ii << ": Max gradient "<< maxgrad2 <<
+		" below threshold of " << eps << " so exiting early" << endl;
+	      break;
+	    } else if(maxgrad2>maxgrad) {
+	      cerr << "Step " << ii << ": Worse gradient so abandoning. Consider reoptimizing model to reset files" << endl;
+	      // which ones got worse?
+	      for(int jj=1; jj<=nvar; jj++){
+		if(abs(gr(jj)) < abs(gr2(jj))){
+		  cout << "Par " << jj << ": original grad=" << gr(jj) << " and updated grad= "
+		       << gr2(jj) << endl;
+		}
+	      }
+	      ad_exit(1);
+	    } else {
+	      // Was successful but not good enough to break early
+	      cout << "Step " << ii << ": Updated max gradient=" << maxgrad2 <<
+		" and min gradient= " << mingrad2 << endl; 
+	      // Otherwise calculate new covariance matrix so it's
+	      // available for the next step and reset variables
+	      x=x2; gr=gr2; maxgrad=maxgrad2; 
+	      // If not the last step then want to skip the
+	      // sd_calcs which are slow so manually update
+	      // admodel.cov whereas below computations1() runs
+	      // everything so do that if last step
+	      if(ii!=N_hess_steps){
+		hess_routine(); // Calculate new Hessian
+		depvars_routine(); // calculate derivatives of sdreport variables
+		hess_inv(); // Invert Hess and write to admodel.cov
+	      }
+	    } 
+	  }// end loop over hess_steps
+	  
+	  // Finished successully so run the opitmizer without
+	  // taking any steps to produce updated output files
+	  // with this new MLE value.
+	  function_minimizer::maxfn=0;
+	  computations1(argc,argv);
+	  cout << "The " << Nstep << " Hessian step(s) reduced maxgrad from " <<
+	    maxgrad0 << " to " << maxgrad2 << " which is " << 
+	    maxgrad0/maxgrad2 << " times smaller so kept it" << endl;
        }
      } else {
-      initial_params::mceval_phase=1;
-      mcmc_eval();
-      initial_params::mceval_phase=0;
+       initial_params::mceval_phase=1;
+       mcmc_eval();
+       initial_params::mceval_phase=0;
      }
-    other_calculations();
-
-    final_calcs();
-    // clean up if have random effects
+     other_calculations();
+     final_calcs();
+     // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
   }
 

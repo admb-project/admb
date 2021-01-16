@@ -76,10 +76,6 @@ for %%a in (%*) do (
       set parser=tpl2rem
     )
   ) else (
-    if defined option_o (
-      set output=!arg!
-      set option_o=
-    )
     if "%%~xa"=="" (
       if not defined tpls (
         set tpls=!arg!
@@ -109,17 +105,33 @@ for %%a in (%*) do (
       )
     )
     if "%%~xa"==".o" (
-      if not defined objs (
-        set objs=!arg!
+      if defined option_o (
+        set output=!arg!
+        set option_o=
       ) else (
-        set objs=!objs! !arg!
+        if not defined objs (
+          set objs=!arg!
+        ) else (
+          set objs=!objs! !arg!
+        )
       )
     )
     if "%%~xa"==".obj" (
-      if not defined objs (
-        set objs=!arg!
+      if defined option_o (
+        set output=!arg!
+        set option_o=
       ) else (
-        set objs=!objs! !arg!
+        if not defined objs (
+          set objs=!arg!
+        ) else (
+          set objs=!objs! !arg!
+        )
+      )
+    )
+    if "%%~xa"==".exe" (
+      if defined option_o (
+        set output=!arg!
+        set option_o=
       )
     )
   )
@@ -561,21 +573,34 @@ if defined srcs (
     echo.&echo *** Compile: !src!
     echo !CMD!
     call !CMD!
-    if not exist !filename!.obj (
-      echo.&echo Error: Unable to build !src! to !filename!.obj
-      goto ERROR
-    ) else (
-      if not defined objs (
-        set objs=!filename!.obj
+    if defined output (
+      if not exist !output! (
+        echo.&echo Error: Unable to build !src! to !output!
+        goto ERROR
       ) else (
-        set objs=!objs! !filename!.obj
+        if not defined objs (
+          set objs=!output!
+        ) else (
+          set objs=!objs! !output!
+        )
+      )
+    ) else (
+      if not exist !filename!.obj (
+        echo.&echo Error: Unable to build !src! to !filename!.obj
+        goto ERROR
+      ) else (
+        if not defined objs (
+          set objs=!filename!.obj
+        ) else (
+          set objs=!objs! !filename!.obj
+        )
       )
     )
   )
 )
 :linker
 if defined compileonly (
-  echo.&echo Compiled !objs!.
+  echo.&echo Compiled !objs!
   goto EOF
 )
 if not defined tpls (

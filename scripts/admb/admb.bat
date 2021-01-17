@@ -634,22 +634,30 @@ if not defined tpls (
       echo !CMD!
       call !CMD! || goto ERROR
       if defined d (
-        if not exist !main!.dll (
-          goto ERROR
+        if defined output (
+          if not exist !output! (
+            goto ERROR
+          )
+          echo.&echo Successfully built '!ouput!'.
+        ) else (
+          if not exist !main!.dll(
+            goto ERROR
+          )
+          echo.&echo Successfully built '!main!.dll'.
         )
-        echo.&echo Successfully built '!main!.dll'.
         goto SUCCESS
       ) else (
         if defined output (
           if not exist !output! (
             goto ERROR
           )
+          echo.&echo Successfully built '!ouput!'.
         ) else (
           if not exist !main!.exe (
             goto ERROR
           )
+          echo.&echo Successfully built '!main!.exe'.
         )
-        echo.&echo Successfully built '!main!.exe'.
         goto EOF
       )
     )

@@ -568,7 +568,11 @@ if defined srcs (
         set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
       )
     ) else (
-      set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+      if defined output (
+        set CMD=!CXX!!CXXFLAGS! -o !output! !filename!.cpp
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+      )
     )
     echo.&echo *** Compile: !src!
     echo !CMD!

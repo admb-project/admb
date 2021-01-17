@@ -640,8 +640,14 @@ if not defined tpls (
         echo.&echo Successfully built '!main!.dll'.
         goto SUCCESS
       ) else (
-        if not exist !main!.exe (
-          goto ERROR
+        if defined output (
+          if not exist !output! (
+            goto ERROR
+          )
+        ) else (
+          if not exist !main!.exe (
+            goto ERROR
+          )
         )
         echo.&echo Successfully built '!main!.exe'.
         goto EOF

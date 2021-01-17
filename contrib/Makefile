@@ -56,7 +56,6 @@ contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib
 
 contrib-ad2csv:
 	pushd ad2csv& $(MAKE) /nologo
-	copy ad2csv\ad2csv.exe $(DESTDIR)\bin
 
 contrib-ecolib:
 	pushd ecolib& $(MAKE) /nologo

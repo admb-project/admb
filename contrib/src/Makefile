@@ -41,19 +41,17 @@ all: $(OPT) $(SAF)
 
 $(OPT):: $(@B:contrib-optlp-src-=).cpp
 !IF DEFINED(DEBUG)
-	..\..\admb -c -f $?
+	..\..\admb -c -f -o $@ $?
 !ELSE
-	..\..\admb -c -f -g $?
+	..\..\admb -c -f -g -o $@ $?
 !ENDIF
-	copy $(?:.cpp=.obj) $@
 
 $(SAF):: $(@B:contrib-saflp-src-=).cpp
 !IF DEFINED(DEBUG)
-	..\..\admb -c $?
+	..\..\admb -c -o $@ $?
 !ELSE
-	..\..\admb -c -g $?
+	..\..\admb -c -g -o $@ $?
 !ENDIF
-	copy $(?:.cpp=.obj) $@
 
 includes: $(HEADERS)
 	copy $(HEADERS) $(CONTRIB_INCLUDE)

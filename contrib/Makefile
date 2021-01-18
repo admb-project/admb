@@ -55,6 +55,7 @@ contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib
 !ENDIF
 
 contrib-ad2csv:
+	if not exist ..\build\ad2csv md ..\build\ad2csv
 	pushd ad2csv& $(MAKE) /nologo
 
 contrib-ecolib:

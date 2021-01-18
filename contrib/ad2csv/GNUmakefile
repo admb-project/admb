@@ -13,18 +13,16 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-OPTION=-f
-
 ifeq ($(CMDSHELL),cmd)
-$(CONTRIB_BIN)\ad2csv.exe: ad2csv.cpp main.cpp
-	..\..\admb.cmd $(OPTION) -c -o ..\..\build\ad2csv.obj ad2csv.cpp
-	..\..\admb.cmd $(OPTION) -c -o ..\..\build\main.obj main.cpp
-	..\..\admb.cmd $(OPTION) -o $@ ..\..\build\ad2csv.obj ..\..\build\main.obj
+$(CONTRIB_BIN)ad2csv.exe: ad2csv.cpp main.cpp
+	..\..\admb.cmd $(OPTION) -c -o ..\..\build\ad2csv\main.obj main.cpp
+	..\..\admb.cmd $(OPTION) -c -o ..\..\build\ad2csv\ad2csv.obj ad2csv.cpp
+	..\..\admb.cmd $(OPTION) -o $@ ..\..\build\ad2csv\ad2csv.obj ..\..\build\ad2csv\main.obj
 else
 $(CONTRIB_BIN)ad2csv: ad2csv.cpp main.cpp
-	../../admb$(EXT) $(OPTION) -c -o ../../build/ad2csv.obj ad2csv.cpp
-	../../admb$(EXT) $(OPTION) -c -o ../../build/main.obj main.cpp
-	../../admb$(EXT) $(OPTION) -o $@ ../../build/ad2csv.obj ../../build/main.obj
+	../../admb$(EXT) $(OPTION) -c -o ../../build/ad2csv/ad2csv.obj ad2csv.cpp
+	../../admb$(EXT) $(OPTION) -c -o ../../build/ad2csv/main.obj main.cpp
+	../../admb$(EXT) $(OPTION) -o $@ ../../build/ad2csv/ad2csv.obj ../../build/ad2csv/main.obj
 endif
 
 clean:

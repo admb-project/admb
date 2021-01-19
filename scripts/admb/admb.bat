@@ -274,7 +274,10 @@ if "!CXX!"=="cl" (
       set CXXMAJORNUMBER=-g++8
       set STDCXX=-std=c++14
     )
-    if not defined CXXMAJORNUMBER (
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
+      set CXXMAJORNUMBER=-g++9
+      set STDCXX=-std=c++14
+    )
     if not defined CXXMAJORNUMBER (
       set CXXMAJORNUMBER=-g++
       set STDCXX=-std=c++17

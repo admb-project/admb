@@ -216,8 +216,10 @@ ifeq ($(CMDSHELL),cmd)
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
       else ifeq (GCCVER7,$(findstring GCCVER7,$(GCCMAJVER)))
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq (GCCVER8,$(findstring GCCVER8,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
       else
-        ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
+        ADCXXFLAGS:= -std=c++18 $(ADCXXFLAGS)
       endif
     endif
   endif
@@ -250,6 +252,8 @@ else
       else ifeq ("$(GCCMAJVER)","6")
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
       else ifeq ("$(GCCMAJVER)","7")
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","8")
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
       else
         ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)

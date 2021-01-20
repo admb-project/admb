@@ -1,4 +1,4 @@
-#!sh
+#!/bin/bash
 #
 # Created by: Arni Magnusson [2009-05-27] revision 243
 #

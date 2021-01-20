@@ -261,8 +261,8 @@ else
   fi
 fi
 if [ "`uname`" == "Darwin" ]; then
-  CXXFLAGS="-std=c++17 $CXXFLAGS"
-  LDFLAGS="-std=c++17 $LDFLAGS"
+  CXXFLAGS="-std=c++14 $CXXFLAGS"
+  LDFLAGS="-std=c++14 $LDFLAGS"
 elif [ "$CXX" == "clang++" ]; then
   CXXFLAGS="-std=c++11 $CXXFLAGS"
   LDFLAGS="-std=c++11 $LDFLAGS"
@@ -292,15 +292,9 @@ elif [ "$CXX" == "g++" ]; then
   elif [ "$GCCMAJVER" == "5" ]; then
     CXXFLAGS="-std=c++11 $CXXFLAGS"
     LDFLAGS="-std=c++11 $LDFLAGS"
-  elif [ "$GCCMAJVER" == "6" ]; then
-    CXXFLAGS="-std=c++14 $CXXFLAGS"
-    LDFLAGS="-std=c++14 $LDFLAGS"
-  elif [ "$GCCMAJVER" == "7" ]; then
-    CXXFLAGS="-std=c++14 $CXXFLAGS"
-    LDFLAGS="-std=c++14 $LDFLAGS"
   else
-    CXXFLAGS="-std=c++17 $CXXFLAGS"
-    LDFLAGS="-std=c++17 $LDFLAGS"
+    CXXFLAGS="-std=c++14 $CXXFLAGS"
+    LDFLAGS="-std=c++14 $LDFLAGS"
   fi
 fi
 CXXFLAGS="$CXXFLAGS -D_USE_MATH_DEFINES"

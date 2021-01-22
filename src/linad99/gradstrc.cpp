@@ -171,6 +171,10 @@ size_t gradient_structure::totalbytes(void)
 /// Close gradient and variable files and free gradient structure memory.
 void cleanup_temporary_files()
 {
+#if defined(USE_VECTOR_SHAPE_POOL)
+  void cleanup_xpools();
+  cleanup_xpools();
+#endif
   if (gradient_structure::fp)
   {
     delete gradient_structure::fp;

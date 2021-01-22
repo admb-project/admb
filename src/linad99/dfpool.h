@@ -80,7 +80,7 @@ public:
   dfpool();
   dfpool(const dfpool&) = delete;
   dfpool(const size_t);
-  ~dfpool();
+  virtual ~dfpool();
 
   dfpool& operator=(const dfpool&) = delete;
 

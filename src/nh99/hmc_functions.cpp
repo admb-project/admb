@@ -34,6 +34,10 @@ using std::queue;
   Hessian to get much closer to the optimum and reduce the
   maximum gradient arbitrarily close to 0.
 
+  Let x be the current MLE parameter vector. Then a single step
+  consists of calculating x'=x-inv(Hessian)*gradient. This
+  calculation is done in the unbounded parameter space.
+
   This feature is initiated by calling "-hess_step N
   -hess_step_tol eps" to specify the maximum number of steps (N)
   and a minimum threshold for the maximum gradient (eps), below
@@ -48,7 +52,8 @@ using std::queue;
   near the mode is quadratic and well represented by the
   Hessian. It may also slightly improve the MLE and uncertainty
   estimates. The downside is that the Hessian needs to be
-  recalculated at each step so it is costly computationally.
+  recalculated and inverted at each step so it is costly
+  computationally.
 
   Typical usage is to optimize model, then use this feature if
   convergence is suspect.
@@ -56,7 +61,6 @@ using std::queue;
   \author Cole Monnahan
   \returns Nothing
 */
-
 void function_minimizer::hess_step(){
   // Read in the number of steps and optional tolerance
   int N_hess_steps=1;

@@ -235,6 +235,9 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       "N\n");
       (*ad_printf)( " -gbs N          set GRADSTACK_BUFFER_SIZE to N "
       "(ARRAY_MEMBLOCK_SIZE)\n");
+      (*ad_printf)( " -hess_step N    take N Newton steps with inverse Hessian\n");
+      (*ad_printf)( " -hess_step_tol eps set hess_step tolerance to eps\n");
+
 #if defined(USE_ADPVM)
       (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -slave          run as PVM slave program\n");

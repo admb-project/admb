@@ -1966,7 +1966,8 @@ public:
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
 
-  // Functions added by Cole for HMC.
+  // Functions added by Cole for HMC and hess_step
+  void hess_step();
   bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);
   bool calculate_chd_and_inverse(int nvar, const dmatrix& metric,
 				 dmatrix& chd, dmatrix& chdinv);

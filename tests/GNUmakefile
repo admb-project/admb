@@ -65,6 +65,7 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 core-tpls:\
+  tpl-issue158\
   tpl-data_adstring_array\
   tpl-dd2\
   tpl-testminmax\
@@ -114,6 +115,9 @@ remote-contrib-tpls:\
 
 cpp-globals:
 	$(MAKE) --directory=globals
+
+tpl-issue158:
+	$(MAKE) --directory=issue158
 
 tpl-f1b2vc5:
 	$(MAKE) --directory=f1b2vc5
@@ -381,6 +385,7 @@ endif
 	$(MAKE) --directory=gradients_output clean
 	$(MAKE) --directory=4darray clean
 	$(MAKE) --directory=../examples/admb/prof_like clean
+	$(MAKE) --directory=issue158 clean
 
 dist-clean:
 ifeq ($(CMDSHELL),cmd)

@@ -13,8 +13,10 @@ void set_labels_for_hess(int);
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
+bool initial_params::hessian_phase = false;
 void function_minimizer::hess_routine(void)
 {
+  initial_params::hessian_phase = true;
   if (random_effects_flag && lapprox != 0)
   {
     if (laplace_approximation_calculator::alternative_user_function_flag == 1)
@@ -49,6 +51,7 @@ void function_minimizer::hess_routine(void)
   {
     hess_routine_noparallel();
   }
+  initial_params::hessian_phase = false;
 }
 void function_minimizer::hess_routine_noparallel(void)
 {

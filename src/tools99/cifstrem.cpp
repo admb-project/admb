@@ -17,6 +17,10 @@ using std::istringstream;
 
 #include "cifstrem.h"
 
+#ifdef DEBUG
+#include <assert>
+#endif
+
 /**
 Destructor
 */
@@ -44,22 +48,30 @@ char* cifstream::signature()
     int c = bp->sgetc();
 
     int n = 0;
-    while ((n < SIGNATURE_LENGTH) && (c != '\n'))
+    while (c != '\n' && c != '\r' && c != EOF)
     {
-      signature_line[n++] = (char)c;
+      cout << (char)c << endl;
+      if (n < SIGNATURE_LENGTH)
+      {
+        signature_line[n] = (char)c;
+        cout << signature_line << endl;
+        ++n;
+      }
       c = bp->snextc();
     }
-    signature_line[n++] = '\0';
+    signature_line[n] = '\0';
+
     strcpy(comment_line, signature_line);
 
-    // read until end of line incase line is longer than SIGNATURE_LENGTH
-    while (c != '\n')
+    // just position buffer to first character of next line
+    if (c == '\r')
     {
       c = bp->snextc();
     }
-
-    // just position buffer to first character of next line
-    bp->snextc();
+    if (c == '\n')
+    {
+      c = bp->snextc();
+    }
 
     line++;
   }
@@ -105,80 +117,86 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
   memset(comment_line, '\0', SIGNATURE_LENGTH);
   memset(signature_line, '\0', SIGNATURE_LENGTH);
 }
-
-void cifstream::filter(void)
+/**
+Move file pointer past comments and empty lines to next data field.
+Also, sets comment_line and signature_line instances if found.
+*/
+void cifstream::filter()
 {
-  //char testc = bp->NEXTCHAR();
-  int testc = bp->sgetc();
- // cout << "in filter testc= " << testc << endl;
-  while (isspace(testc))
+  int c = bp->sgetc();
+  do
   {
-    testc = bp->snextc();
- //   cout << "in filter testc= " << testc << endl;
-  }
-
-  while ( (good()) && (testc == COMMENT_CHAR) && (testc != EOF))
-  {
-    int n = 0;
-    // skip characters until newline
-    do
+    if (c == '#')
     {
-      if (n < SIGNATURE_LENGTH)
-        comment_line[n++] = (char)testc;
-
-      testc = bp->snextc();
-      //cout << "in filter testc= " << testc << endl;
-      if (testc == '\n')
+      int n = 0;
+      while (c != '\r' && c != '\n' && c != EOF)
       {
-        comment_line[n++] = '\0';
-        if (line == 1)
-          strcpy(signature_line, comment_line);
-        line ++;
-        field = 0;
+        if (n < SIGNATURE_LENGTH)
+        {
+          comment_line[n] = (char)c;
+          ++n;
+        }
+        c = bp->snextc();
       }
-    } while (testc != '\n');
-
-    // get first character in next line
-    testc = bp->snextc();
-
-    while (testc == ' ' || testc == '\n' || testc == '\r')
-      testc = bp->snextc();
-  }
-  if ( (!good()) || (testc == EOF))
+      comment_line[n] = '\0';
+      if (line == 1)
+      {
+        strcpy(signature_line, comment_line);
+      }
+      ++line;
+      field = 0;
+    }
+    else if (isspace(c))
+    {
+      c = bp->snextc();
+    }
+    else
+    {
+      break;
+    }
+  } while (c != EOF);
+  if (c == EOF)
   {
-    if (testc == EOF)
-      set_eof_bit();
+    set_eof_bit();
     report_error(
-      "function: void cifstream::prefilter(); premature end of file?");
+      "function: void cifstream::filter(); premature end of file?");
   }
 }
+/**
+Extract a single field into s from data file.
 
+\param s stores the data field
+\param space_flag includes spaces in data field when active. (default off)
+*/
 void cifstream::get_field(char* s, int space_flag)
 {
   filter();
 
-  // remove leading blanks
   int testc = bp->sgetc();
-  while (isspace(testc))
-  {
-    testc = bp->snextc();
-  }
 
   int n = 0;
   if (!space_flag)
   {
-    while ( (n < FILTER_BUF_SIZE) && !isspace(testc) && (testc != EOF))
+    while (n < FILTER_BUF_SIZE && !isspace(testc))
     {
       s[n++] = (char)testc;
       testc = bp->snextc();
+      if (!good() || testc == EOF)
+      {
+        break;
+      }
     }
   }
   else
   {
-    while ( (n < FILTER_BUF_SIZE) && (testc != EOF))
+    while (n < FILTER_BUF_SIZE)
     {
       s[n++] = (char)testc;
       testc = bp->snextc();
+      if (!good() || testc == EOF)
+      {
+        break;
+      }
     }
   }
   if (n>=FILTER_BUF_SIZE)
@@ -186,8 +204,7 @@ void cifstream::get_field(char* s, int space_flag)
     report_error("function: void cifstream::prefilter();"
         " Buffer size exceeded?");
   }
-
-  if ( (!good()) || (testc == EOF))
+  if (!good() || testc == EOF)
   {
     if (testc == EOF)
       set_eof_bit();
@@ -195,7 +212,7 @@ void cifstream::get_field(char* s, int space_flag)
       "function: void cifstream::prefilter(); premature end of file?");
   }
   s[n++] = '\0';
-  field ++;
+  field++;
 }
 /**
 Reads to s from input cifstream.
@@ -394,8 +411,10 @@ cifstream& cifstream::operator>>(const double& _x)
   if (s)
   {
     get_field(s);
-    if (s[0]=='#' && s[1] == '\0')
-      get_field(s);
+
+#ifdef DEBUG
+    assert((s[0]!='#' && s[1] != '\0');
+#endif
 
 #if !defined(__BORLANDC__)
     istringstream is(s);

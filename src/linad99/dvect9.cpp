@@ -143,6 +143,7 @@ dvector::dvector(const char* s)
            << "dvector::dvector(char* filename)\n";
       ad_exit(1);
     }
+    infile.width(MAX_FIELD_LENGTH);
     char* field = new char[MAX_FIELD_LENGTH + 1];
     int count = 0;
     do
@@ -224,6 +225,8 @@ dvector::dvector(const char* s)
     }
     delete[] field;
     field = 0;
+
+    infile.close();
   }
   delete [] t;
   t = 0;
@@ -332,6 +335,7 @@ void dvector::allocate(const char* s)
       ad_exit(1);
     }
 
+    infile.width(MAX_FIELD_LENGTH);
     char* field = new char[MAX_FIELD_LENGTH + 1];
 
     int count = 0;
@@ -412,6 +416,8 @@ void dvector::allocate(const char* s)
     }
     delete [] field;
     field = 0;
+
+    infile.close();
   }
   delete [] t;
   t = 0;

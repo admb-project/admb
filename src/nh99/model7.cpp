@@ -233,6 +233,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       "N\n");
       (*ad_printf)( " -gbs N          set GRADSTACK_BUFFER_SIZE to N "
       "(ARRAY_MEMBLOCK_SIZE)\n");
+      (*ad_printf)( " -mip N          set maximum the number of initial parameters "
+      "to a value N that is greater than zero (default is 4000).\n");
 #if defined(USE_ADPVM)
       (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -slave          run as PVM slave program\n");

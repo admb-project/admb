@@ -65,6 +65,7 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 core-tpls:\
+  tpl-strip_full_path\
   tpl-issue158\
   tpl-data_adstring_array\
   tpl-dd2\
@@ -112,6 +113,9 @@ contrib-tpls:\
 
 remote-contrib-tpls:\
   tpl-agemat
+
+tpl-strip_full_path:
+	$(MAKE) --directory=strip_full_path
 
 cpp-globals:
 	$(MAKE) --directory=globals

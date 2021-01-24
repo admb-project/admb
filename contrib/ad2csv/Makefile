@@ -1,8 +1,12 @@
 all:
 !IF DEFINED(DEBUG)
-	..\..\admb.cmd -g ad2csv.cpp main.cpp
+	..\..\admb.cmd -g -c -o ..\..\build\ad2csv\ad2csv.obj ad2csv.cpp
+	..\..\admb.cmd -g -c -o ..\..\build\ad2csv\main.obj main.cpp
+	..\..\admb.cmd -g -o ..\..\build\admb\bin\ad2csv.exe ..\..\build\ad2csv\ad2csv.obj ..\..\build\ad2csv\main.obj
 !ELSE
-	..\..\admb.cmd ad2csv.cpp main.cpp
+	..\..\admb.cmd -c -o ..\..\build\ad2csv\ad2csv.obj ad2csv.cpp
+	..\..\admb.cmd -c -o ..\..\build\ad2csv\main.obj main.cpp
+	..\..\admb.cmd -o ..\..\build\admb\bin\ad2csv.exe ..\..\build\ad2csv\ad2csv.obj ..\..\build\ad2csv\main.obj
 !ENDIF
 
 clean:

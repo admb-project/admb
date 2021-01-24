@@ -103,17 +103,16 @@ nontpls=
 
 for file in $*
 do
-  extension="${file#*.}"
-  if [ "$extension" = "$file" ]; then
-    tpls="$tpls $file"
-  elif [ "$extension" = "tpl" ]; then
+  if [ "${file: -4}" = ".tpl" ]; then
     tpls="$tpls ${file%.*}"
-  elif [ "$extension" = "cpp" -o "$extension" = "c" -o "$extension" = "cc" -o "$extension" = "cxx" ]; then
+  elif [ "${file: -4}" = ".cpp" -o "${file: -2}" = ".c" -o "${file: -3}" = ".cc" -o "${file: -4}" = ".cxx" ]; then
     srcs="$srcs $file"
     nontpls="$nontpls $file"
-  elif [ "$extension" = "o" -o "$extension" = "obj" ]; then
+  elif [ "${file: -2}" = ".o" -o "${file: -4}" = ".obj" ]; then
     objs="$objs $file"
     nontpls="$nontpls $file"
+  else
+    tpls="$tpls $file"
   fi
 done
 if [ -z "$tpls" ]; then
@@ -348,8 +347,19 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
-
-  fileobj=${file%.*}.obj
+  if [ ! -z "$compileonly" ]; then
+    if [ ! -z  "$output" ]; then
+      if [ ${output: -4} == ".obj" ]; then
+        fileobj="$output"
+      else
+        fileobj="$output".obj
+      fi
+    else
+      fileobj=${file%.*}.obj
+    fi
+  else
+    fileobj=${file%.*}.obj
+  fi
   rm -f $fileobj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
   echo -e \\n\*\*\* Compile: $file\\n$CMD
@@ -359,7 +369,11 @@ do
     echo -e "\\nError: Could not compile $file\\n"
     exit 1
   fi
-  tplobjs="$tplobjs $fileobj"
+  if [ ! -z "$tplobjs" ]; then
+    tplobjs="$tplobjs $fileobj"
+  else
+    tplobjs="$fileobj"
+  fi
 done
 
 for file in $srcs
@@ -368,7 +382,19 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
-  fileobj=${file%.*}.obj
+  if [ ! -z "$compileonly" ]; then
+    if [ ! -z  "$output" ]; then
+      if [ ${output: -4} == ".obj" ]; then
+        fileobj="$output"
+      else
+        fileobj="$output".obj
+      fi
+    else
+      fileobj=${file%.*}.obj
+    fi
+  else
+    fileobj=${file%.*}.obj
+  fi
   rm -f $fileobj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
   echo -e \\n\*\*\* Compile: $file\\n$CMD
@@ -385,11 +411,12 @@ do
 done
 
 if [ ! -z "$compileonly" ]; then
-  objects=$tplobjs
   if [ ! -z "$objs" ]; then
     objects=$objs
+  else
+    objects=$tplobjs
   fi
-  echo -e "\\nCompiled $objects.\\n"
+  echo -e "Compiled $objects\\n"
   exit 0
 fi
 
@@ -500,8 +527,7 @@ if [[ "$tplobjs" == "" ]]; then
   listobjs=
   for file in $nontpls
   do
-    extension="${file#*.}"
-    if [ "$extension" = "o" -o "$extension" = "obj" ]; then
+    if [ "${file: -2}" = ".o" -o "${file: -4}" = ".obj" ]; then
       listobjs="$listobjs $file"
     else
       listobjs="$listobjs ${file%.*}.obj"

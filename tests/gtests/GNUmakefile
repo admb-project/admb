@@ -385,6 +385,7 @@ ifeq ($(CMDSHELL),cmd)
 	@del test_cifstream_darray.txt 2>NUL
 	@del test_cifstream_dvariable.txt 2>NUL
 	@del test_cifstream_iarray.txt 2>NUL
+	@del test_cifstream_float_dos.txt 2>NUL
 else
 	@rm -vf test_i4_array.txt
 	@rm -vf test_i5_array.txt
@@ -485,4 +486,5 @@ else
 	@rm -vf test_cifstream_iarray.txt
 	@rm -vf datafiledoesexist.dat
 	@rm -vf pinfiledoesexist.pin
+	@rm -vf test_cifstream_float_dos.txt
 endif

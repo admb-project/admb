@@ -697,3 +697,20 @@ TEST_F(test_dvar_vector, sqrvariable)
   ASSERT_DOUBLE_EQ(gradients(3), 2.0 * independents(3));
   ASSERT_DOUBLE_EQ(gradients(4), 2.0 * independents(4));
 }
+TEST_F(test_dvar_vector, nobraces)
+{
+  gradient_structure gs;
+
+  ofstream ofs("test_dvector.txt");
+  ofs << "0 1 2 3 4 5\n";
+  ofs.close();
+
+  dvar_vector v("test_dvector.txt");
+
+  ASSERT_DOUBLE_EQ(0, value(v(1)));
+  ASSERT_DOUBLE_EQ(1, value(v(2)));
+  ASSERT_DOUBLE_EQ(2, value(v(3)));
+  ASSERT_DOUBLE_EQ(3, value(v(4)));
+  ASSERT_DOUBLE_EQ(4, value(v(5)));
+  ASSERT_DOUBLE_EQ(5, value(v(6)));
+}

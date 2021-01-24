@@ -15,41 +15,63 @@
 
 #if defined(USE_VECTOR_SHAPE_POOL)
 
-bool vector_shape::allocated = false;
-bool vector_shapex::allocated = false;
-bool arr_link::allocated = false;
+bool cleanup_arr_link_xpool = false;
+bool cleanup_vector_shape_xpool = false;
+bool cleanup_vector_shapex_xpool = false;
+
+vector_shape_pool* arr_link::xpool = nullptr;
+vector_shape_pool* vector_shape::xpool = nullptr;
+vector_shape_pool* vector_shapex::xpool = nullptr;
+
+void cleanup_xpools()
+{
+  if (arr_link::xpool)
+  {
+    if (arr_link::xpool->num_allocated > 0)
+    {
+      cleanup_arr_link_xpool = true;
+    }
+    else
+    {
+      delete arr_link::xpool;
+      arr_link::xpool = nullptr;
+    }
+  }
+  if (vector_shape::xpool)
+  {
+    if (vector_shape::xpool->num_allocated > 0)
+    {
+      cleanup_vector_shape_xpool = true;
+    }
+    else
+    {
+      delete vector_shape::xpool;
+      vector_shape::xpool = nullptr;
+    }
+  }
+  if (vector_shapex::xpool)
+  {
+    if (vector_shapex::xpool->num_allocated > 0)
+    {
+      cleanup_vector_shapex_xpool = true;
+    }
+    else
+    {
+      delete vector_shapex::xpool;
+      vector_shapex::xpool = nullptr;
+    }
+  }
+}
 
 #if defined(THREAD_SAFE)
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 #endif
-
-vector_shape_pool::vector_shape_pool(void) : dfpool(sizeof(vector_shape))
-{
-  _allocated = nullptr;
-}
 
 #if defined(THREAD_SAFE)
 ts_vector_shape_pool::ts_vector_shape_pool(int n) : tsdfpool(n)
 { ;}
 #endif
 
-vector_shape_pool::vector_shape_pool(
-  const size_t n, bool* allocated) : dfpool(n)
-{
-  _allocated = allocated;
-  if (_allocated)
-  {
-    *_allocated = true;
-  }
-}
-vector_shape_pool::~vector_shape_pool()
-{
-  if (_allocated)
-  {
-    *_allocated = false;
-    _allocated = nullptr;
-  }
-}
 /**
  * Description not yet available.
  * \param
@@ -57,15 +79,30 @@ vector_shape_pool::~vector_shape_pool()
 void* vector_shape::operator new(size_t n)
 {
 #if defined(DEBUG)
-  if (n != xpool.size)
+  if (n != xpool->size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
 #endif
-  return vector_shape::get_xpool().alloc();
+  if (!xpool)
+  {
+    xpool = new vector_shape_pool(sizeof(vector_shape));
+  }
+  return xpool->alloc();
 }
-
+void vector_shape::operator delete(void* ptr, size_t)
+{
+  xpool->free(ptr);
+  if (cleanup_vector_shape_xpool)
+  {
+    if (xpool->num_allocated <= 0)
+    {
+      delete xpool;
+      xpool = nullptr;
+    }
+  }
+}
 /**
  * Description not yet available.
  * \param
@@ -73,15 +110,30 @@ void* vector_shape::operator new(size_t n)
 void* arr_link::operator new(size_t n)
 {
 #if defined(DEBUG)
-  if (n != xpool.size)
+  if (n != xpool->size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
 #endif
-  return arr_link::get_xpool().alloc();
+  if (!xpool)
+  {
+    xpool = new vector_shape_pool(sizeof(arr_link));
+  }
+  return xpool->alloc();
 }
-
+void arr_link::operator delete(void* ptr, size_t)
+{
+  xpool->free(ptr);
+  if (cleanup_arr_link_xpool)
+  {
+    if (xpool->num_allocated <= 0)
+    {
+      delete xpool;
+      xpool = nullptr;
+    }
+  }
+}
 /**
  * Description not yet available.
  * \param
@@ -89,13 +141,29 @@ void* arr_link::operator new(size_t n)
 void* vector_shapex::operator new(size_t n)
 {
 #if defined(DEBUG)
-  if (n != xpool.size)
+  if (n != xpool->size)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
 #endif
-  return vector_shapex::get_xpool().alloc();
+  if (!xpool)
+  {
+    xpool = new vector_shape_pool(sizeof(vector_shapex));
+  }
+  return xpool->alloc();
+}
+void vector_shapex::operator delete(void* ptr, size_t)
+{
+  xpool->free(ptr);
+  if (cleanup_vector_shapex_xpool)
+  {
+    if (xpool->num_allocated <= 0)
+    {
+      delete xpool;
+      xpool = nullptr;
+    }
+  }
 }
 
 #if defined(__CHECK_MEMORY__)

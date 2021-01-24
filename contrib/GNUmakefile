@@ -286,6 +286,11 @@ else
 endif
 
 contrib-ad2csv: contrib-dirs
+ifeq ($(CMDSHELL),cmd)
+	if not exist ..\build\ad2csv md ..\build\ad2csv
+else
+	mkdir -p ../build/ad2csv
+endif
 	$(MAKE) --directory=ad2csv CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_BIN=$(CONTRIB_BIN)
 
 contrib-ecolib:

@@ -12,19 +12,24 @@
   #include <cassert>
 #endif
 
-#if defined(_MSC_VER)
-void strip_full_path(const adstring& _s)
+adstring strip_full_path(const adstring& _s)
 {
-  adstring& s = (adstring&)_s;
-  size_t n = s.size();
+  size_t n = _s.size();
   size_t i = n - 1;
   for (; i >= 1; i--)
   {
-    if ( s(i) == '\\' || s(i) == '/' || s(i) == ':') break;
-  }
-  s = s(i + 1, n);
-}
+#if defined(_WIN32)
+    if (_s(i) == '\\' || _s(i) == '/' || _s(i) == ':') break;
+#else
+    if (_s(i) == '/' || _s(i) == ':') break;
 #endif
+  }
+
+  adstring s(1, n - i);
+  s = _s(i + 1, n);
+
+  return s;
+}
 
 void set_signal_handlers(void)
 {
@@ -121,12 +126,9 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
   */
   set_signal_handlers();
-  adprogram_name=_argv[0];
+  adprogram_name = strip_full_path((adstring)_argv[0]);
   //int len=strlen(_argv[0]);
   //for (int i=1;i<=len;i++) adprogram_name[i]=tolower(adprogram_name[i]);
-#if defined(_MSC_VER)
-  strip_full_path(adprogram_name);
-#endif
   adstring workdir;
   ad_getcd(workdir);
   if (_argc>1)
@@ -233,6 +235,9 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       "N\n");
       (*ad_printf)( " -gbs N          set GRADSTACK_BUFFER_SIZE to N "
       "(ARRAY_MEMBLOCK_SIZE)\n");
+      (*ad_printf)( " -hess_step N    take N Newton steps with inverse Hessian\n");
+      (*ad_printf)( " -hess_step_tol eps set hess_step tolerance to eps\n");
+
 #if defined(USE_ADPVM)
       (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -slave          run as PVM slave program\n");

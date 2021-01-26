@@ -1,19 +1,12 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),cmd)
+  ifeq ($(CMDSHELL),cmd)
 PATH:=$(PATH):..\..\utilities
 bins: $(DIST)\bin\tpl2rem.exe
 $(DIST)\bin\tpl2rem.exe: ..\..\build\tpl2rem\tpl2rem.c
   else
-    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-SHELL=cmd
-PATH:=$(PATH):..\..\utilities
-bins: $(DIST)\bin\tpl2rem.exe
-$(DIST)\bin\tpl2rem.exe: ..\..\build\tpl2rem\tpl2rem.c
-    else
 PATH:=$(PATH):../../utilities
 bins: $(DIST)/bin/tpl2rem.exe
 $(DIST)/bin/tpl2rem.exe: ../../build/tpl2rem/tpl2rem.c
-    endif
   endif
 else
 bins: $(DIST)/bin/tpl2rem
@@ -21,7 +14,7 @@ $(DIST)/bin/tpl2rem: ../../build/tpl2rem/tpl2rem.c
 endif
 	$(CC) $(CFLAGS) -o $@ $<
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 ..\..\build\tpl2rem\tpl2rem.c: ..\..\build\tpl2rem\lex.yy.c
 	sed -f sedflex ..\..\build\tpl2rem\lex.yy.c > $@
 else
@@ -31,7 +24,7 @@ else
 	sed -f sedflex ../../build/tpl2rem/lex.yy.c > $@
 endif
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 ..\..\build\tpl2rem\lex.yy.c: tpl2rem.lex
 	flex -v -w -o..\..\build\tpl2rem\lex.yy.c $^
 else

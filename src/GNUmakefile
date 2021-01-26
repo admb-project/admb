@@ -397,9 +397,9 @@ ifeq ($(CMDSHELL),cmd)
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
 	if not exist ..\build\tpl2rem md ..\build\tpl2rem
-	$(MAKE) --directory=df1b2-separable CC=gcc DIST=..\${DIST} bins
+	$(MAKE) --directory=df1b2-separable CC=gcc DIST=..\${DIST} CMDSHELL=${CMDSHELL} bins
 	if not exist ..\build\tpl2cpp md ..\build\tpl2cpp
-	$(MAKE) --directory=nh99 CC=gcc DIST=..\${DIST} bins
+	$(MAKE) --directory=nh99 CC=gcc DIST=..\${DIST} CMDSHELL=${CMDSHELL} bins
 else
 	mkdir -p ${DIST}/bin
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DIST}/bin
@@ -433,9 +433,9 @@ else
 	#cp ../scripts/admb/root-admb ../admb
   endif
 	mkdir -p ../build/tpl2rem
-	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} bins
+	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} CMDSHELL= bins
 	mkdir -p ../build/tpl2cpp
-	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} bins
+	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} CMDSHELL= bins
 endif
 
 libs: objects

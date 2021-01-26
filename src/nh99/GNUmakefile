@@ -1,6 +1,5 @@
 ifeq ($(OS),Windows_NT)
-  ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-SHELL=cmd
+  ifeq ($(CMDSHELL),cmd)
 PATH:=$(PATH):..\..\utilities
 bins: $(DIST)\bin\tpl2cpp.exe
 $(DIST)\bin\tpl2cpp.exe: ..\..\build\tpl2cpp\tpl2cpp.c
@@ -20,7 +19,7 @@ else
 	$(CC) $(CFLAGS) -Wno-format -o $@ $<
 endif
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 ..\..\build\tpl2cpp\tpl2cpp.c: ..\..\build\tpl2cpp\lex.yy.c
 	sed -f sedflex ..\..\build\tpl2cpp\lex.yy.c > $@
 else
@@ -30,7 +29,7 @@ else
 	sed -f sedflex ../../build/tpl2cpp/lex.yy.c > $@
 endif
 
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 ..\..\build\tpl2cpp\lex.yy.c: tpl2cpp.lex
 	flex -v -w -o..\..\build\tpl2cpp\lex.yy.c  $^
 else

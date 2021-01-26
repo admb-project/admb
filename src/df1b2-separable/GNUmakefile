@@ -1,13 +1,19 @@
 ifeq ($(OS),Windows_NT)
-  ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-SHELL=cmd
+  ifeq ($(SHELL),cmd)
 PATH:=$(PATH):..\..\utilities
 bins: $(DIST)\bin\tpl2rem.exe
 $(DIST)\bin\tpl2rem.exe: ..\..\build\tpl2rem\tpl2rem.c
   else
+    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+SHELL=cmd
+PATH:=$(PATH):..\..\utilities
+bins: $(DIST)\bin\tpl2rem.exe
+$(DIST)\bin\tpl2rem.exe: ..\..\build\tpl2rem\tpl2rem.c
+    else
 PATH:=$(PATH):../../utilities
 bins: $(DIST)/bin/tpl2rem.exe
 $(DIST)/bin/tpl2rem.exe: ../../build/tpl2rem/tpl2rem.c
+    endif
   endif
 else
 bins: $(DIST)/bin/tpl2rem

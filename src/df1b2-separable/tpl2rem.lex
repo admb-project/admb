@@ -3790,7 +3790,7 @@ PARAMETER_SECTION {
       "  {\n    return initial_params::mceval_phase;\n  }\n");
 
     fprintf(fdat,"%s", "  static int hessian_phase(void)\n"
-      "  {\n    return initial_params::hessian_phase;\n  }\n");
+      "  {\n    return initial_params::in_hessian_phase;\n  }\n");
 
     fprintf(fdat,"%s", "  static int sd_phase(void)\n"
       "  {\n    return initial_params::sd_phase;\n  }\n");

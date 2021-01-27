@@ -282,8 +282,8 @@ if "!CXX!"=="cl" (
       set CXXMAJORNUMBER=-g++5
       set STDCXX=-std=c++11
     )
-    for /f %%i in ('!CXX! -dumpversion') do (
-      set CXXMAJORNUMBER=-g++%%ni
+    for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
+      set CXXMAJORNUMBER=-g++%%i
       set STDCXX=-std=c++14
     )
   )

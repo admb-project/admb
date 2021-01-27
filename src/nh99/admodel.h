@@ -857,7 +857,7 @@ public:
   static int current_phase;
   static int restart_phase;
   static int sd_phase;
-  static bool hessian_phase;
+  static bool in_hessian_phase;
   static int mc_phase;
   static int mceval_phase;
   int phase_start;

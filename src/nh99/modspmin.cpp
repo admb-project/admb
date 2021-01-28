@@ -39,17 +39,18 @@ extern admb_javapointers * adjm_ptr;
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
-     if (option_match(argc,argv,"-mceval") == -1) {
-      
-       if(option_match(argc,argv,"-hess_step") == -1)
-	{
-	  // Normal optimization mode
-	  computations1(argc,argv);
-	} else {
-	 // Experimental feature to take Newton steps after
-	 // previous optimization
-	 hess_step();
+     if (option_match(argc,argv,"-mceval") == -1)
+     {
+       bool option_hess_step = !(option_match(argc,argv,"-hess_step") == -1);
+       if(option_hess_step)
+       {
+         // Experimental feature to take Newton steps after
+         // previous optimization
+         hess_step();
        }
+
+       // Normal optimization mode
+       computations1(argc,argv);
      } else {
        initial_params::mceval_phase=1;
        mcmc_eval();

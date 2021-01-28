@@ -211,7 +211,7 @@ extern admb_javapointers * adjm_ptr;
 #endif
             {
               depvars_routine();
-              hess_inv();
+              if (!hess_inv()) break;
               if (spminflag==0)
               {
                 sd_routine();

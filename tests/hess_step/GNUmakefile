@@ -15,12 +15,12 @@ endif
 
 all: copy
 ifeq ($(CMDSHELL),cmd)
-	..\..\admb catage.tpl
+	..\\..\\admb.cmd catage.tpl
 	$(TARGET) -nox
 	@echo "\n===\n"
 	$(TARGET) -hess_step 10 -hess_step_tol 1e-18
 else
-	../../admb catage.tpl
+	../../admb$(EXT) catage.tpl
 	./$(TARGET) -nox
 	@echo "\n===\n"
 	./$(TARGET) -hess_step 10 -hess_step_tol 1e-18

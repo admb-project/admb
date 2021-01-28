@@ -41,16 +41,17 @@ extern admb_javapointers * adjm_ptr;
 #endif
      if (option_match(argc,argv,"-mceval") == -1)
      {
-       bool option_hess_step = !(option_match(argc,argv,"-hess_step") == -1);
-       if(option_hess_step)
+       if(!(option_match(argc,argv,"-hess_step") == -1))
        {
          // Experimental feature to take Newton steps after
          // previous optimization
+         // Note: ::computations1 is called at the end of hess_step function. 
          hess_step();
        }
-
-       // Normal optimization mode
-       computations1(argc,argv);
+       else
+       {
+         computations1(argc,argv);
+       }
      } else {
        initial_params::mceval_phase=1;
        mcmc_eval();

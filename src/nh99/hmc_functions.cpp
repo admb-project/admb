@@ -188,7 +188,7 @@ void function_minimizer::hess_step(){
   // taking any steps to produce updated output files
   // with this new MLE value.
   function_minimizer::maxfn=0;
-  //computations1(ad_comm::argc,ad_comm::argv);
+  computations1(ad_comm::argc,ad_comm::argv);
   cout << "The " << Nstep << " Hessian step(s) reduced maxgrad from " <<
     maxgrad0 << " to " << maxgrad2 << " which is " << 
     maxgrad0/maxgrad2 << " times smaller so kept it" << endl;

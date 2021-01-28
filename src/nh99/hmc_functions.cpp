@@ -30,7 +30,8 @@ using std::queue;
 #endif
 #include<ctime>
 
-/** Experimental feature to take Newton steps using the inverse
+/**
+  Experimental feature to take Newton steps using the inverse
   Hessian to get much closer to the optimum and reduce the
   maximum gradient arbitrarily close to 0.
 
@@ -59,7 +60,6 @@ using std::queue;
   convergence is suspect.
 
   \author Cole Monnahan
-  \returns Nothing
 */
 void function_minimizer::hess_step(){
   // Read in the number of steps and optional tolerance

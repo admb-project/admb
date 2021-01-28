@@ -24,7 +24,10 @@ dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
   int ibcbeg, dvariable ybcbeg, int ibcend, dvariable ybcend );
 
 /** \ingroup cub_spline
- *  Cubic spline interpolation.
+ * Cubic spline interpolation allows users to model natural cubic spline
+ * (2nd derivative of boundary nodes is set to zero) as an alternative of
+ * use of 1st derivative of boundary nodes. This can be accomplished b
+ * setting yp1 and ypn of function spline to >0.99e30
  *
  * \param _xa array of abscissa
  * \param _ya array of corresponding values \f$y_i=f(x_i)\f$

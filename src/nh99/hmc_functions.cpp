@@ -47,7 +47,7 @@ using std::queue;
   function will also exit early if the gradients get worse as a
   result of a step, printing information about which
   parameters. If successful, the new MLE is deemed improved and
-  is propagated through the model to updated all output files.
+  is propagated through the model to update all output files.
 
   The upside of this feature is it confirms that the geometry
   near the mode is quadratic and well represented by the

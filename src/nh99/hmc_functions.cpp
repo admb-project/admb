@@ -159,11 +159,19 @@ void function_minimizer::hess_step(){
     } else if(maxgrad2>maxgrad) {
       cerr << "Step " << ii << ": Worse gradient so abandoning. Consider reoptimizing model to reset files" << endl;
       // which ones got worse?
-      for(int jj=1; jj<=nvar; jj++){
-	if(abs(gr(jj)) < abs(gr2(jj))){
-	  cout << "Par " << jj << ": original grad=" << gr(jj) << " and updated grad= "
-	       << gr2(jj) << endl;
-	}
+      int jj = 1;
+      for (int i = 0; i < initial_params::num_initial_params; ++i) {
+        int jmax = (int)initial_params::varsptr[i]->size_count();
+        for (int j = 1; j <= jmax; ++j) {
+	  if(abs(gr(jj)) < abs(gr2(jj))){
+	    cout << "Par " << (initial_params::varsptr[i])->label();
+            if (jmax > 1) {
+              cout << "(" << j << ")";
+            }
+            cout << " : original grad=" << gr(jj) << " and updated grad= " << gr2(jj) << endl;
+	  }
+          ++jj;
+        }
       }
       ad_exit(1);
     } else {

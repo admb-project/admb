@@ -210,10 +210,7 @@ extern admb_javapointers * adjm_ptr;
                 sd_routine();
               }
             }
-          }
-          else
-          {
-            initial_params::sd_phase=1;
+            initial_params::sd_phase=0;
           }
           if (spminflag==0)
           {
@@ -306,7 +303,6 @@ extern admb_javapointers * adjm_ptr;
                 //sobol_importance_routine(nsob,iseed0,dscale,0);
               }
             }
-            initial_params::sd_phase=0;
           }
         }
       }

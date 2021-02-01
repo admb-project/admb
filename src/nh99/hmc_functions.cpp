@@ -161,14 +161,16 @@ void function_minimizer::hess_step(){
       // which ones got worse?
       int jj = 1;
       for (int i = 0; i < initial_params::num_initial_params; ++i) {
-        int jmax = (int)initial_params::varsptr[i]->size_count();
-        for (int j = 1; j <= jmax; ++j) {
-          if(abs(gr(jj)) < abs(gr2(jj))){
-            cout << "Par " << (initial_params::varsptr[i])->label();
-            if (jmax > 1) {
-              cout << "(" << j << ")";
+        if (active(*initial_params::varsptr[i])) {
+          int jmax = (int)initial_params::varsptr[i]->size_count();
+          for (int j = 1; j <= jmax; ++j) {
+            if(abs(gr(jj)) < abs(gr2(jj))){
+              cout << "Par " << (initial_params::varsptr[i])->label();
+              if (jmax > 1) {
+                cout << " index " << j;
+              }
+              cout << " : original grad=" << gr(jj) << " and updated grad= " << gr2(jj) << endl;
             }
-            cout << " : original grad=" << gr(jj) << " and updated grad= " << gr2(jj) << endl;
           }
           ++jj;
         }

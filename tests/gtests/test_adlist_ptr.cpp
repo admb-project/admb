@@ -5,6 +5,7 @@ class test_adlist_ptr: public ::testing::Test {};
 
 TEST_F(test_adlist_ptr, constructor)
 {
-  adlist_ptr list(0);
+  adlist_ptr list;
+  list.allocate(0);
   list.initialize();
 }

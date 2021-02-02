@@ -157,7 +157,6 @@ void function_minimizer::hess_step(){
 	" below threshold of " << eps << " so exiting early" << endl;
       break;
     } else if(maxgrad2>maxgrad) {
-      cerr << "Step " << ii << ": Worse gradient so abandoning. Consider reoptimizing model to reset files" << endl;
       // which ones got worse?
       int jj = 1;
       for (int i = 0; i < initial_params::num_initial_params; ++i) {
@@ -165,28 +164,33 @@ void function_minimizer::hess_step(){
           int jmax = (int)initial_params::varsptr[i]->size_count();
           for (int j = 1; j <= jmax; ++j) {
             if(abs(gr(jj)) < abs(gr2(jj))){
-              cout << "Par " << (initial_params::varsptr[i])->label();
+              cout << (initial_params::varsptr[i])->label();
               if (jmax > 1) {
-                cout << " index " << j;
+                cout << "(" << j << ")";
               }
-              cout << " : original grad=" << gr(jj) << " and updated grad= " << gr2(jj) << endl;
+              cout << ": original grad=" << gr(jj) << " and updated grad=" << gr2(jj) << endl;
             }
+	    ++jj;
           }
-          ++jj;
         }
       }
+      cerr << endl <<
+	"Experimental feature -hess_step resulted in worse gradients (above)." << endl <<  
+	"Consider reoptimizing model to reset files. This suggests that the" << endl <<
+	"the negative log-likelihood is not quadratic at the mode, or that the" << endl <<
+	"Hessian does not approximate it well. In short, it suggests the model is" << endl <<
+	"not converged. Check model structure and other output files to investigate" << endl <<
+	"potential causes and solutions." << endl;
       ad_exit(1);
     } else {
       // Was successful but not good enough to break early
       cout << "Step " << ii << ": Updated max gradient=" << maxgrad2 <<
 	" and min gradient= " << mingrad2 << endl; 
-      // Otherwise calculate new covariance matrix so it's
-      // available for the next step and reset variables
       x=x2; gr=gr2; maxgrad=maxgrad2; 
-      // If not the last step then want to skip the
-      // sd_calcs which are slow so manually update
-      // admodel.cov whereas below computations1() runs
-      // everything so do that if last step
+      // If not the last step then want to skip the sd_calcs
+      // which are slow so manually update admodel.cov whereas
+      // below computations1() runs everything so do that if last
+      // step
       if(ii!=N_hess_steps){
 	hess_routine(); // Calculate new Hessian
 	depvars_routine(); // calculate derivatives of sdreport variables
@@ -199,9 +203,11 @@ void function_minimizer::hess_step(){
   // with this new MLE value.
   function_minimizer::maxfn=0;
   computations1(ad_comm::argc,ad_comm::argv);
-  cout << "The " << Nstep << " Hessian step(s) reduced maxgrad from " <<
-    maxgrad0 << " to " << maxgrad2 << " which is " << 
-    maxgrad0/maxgrad2 << " times smaller so kept it" << endl;
+  cout << endl << "The " << Nstep << " Hessian step(s) reduced maxgrad from " <<
+    maxgrad0 << " to " << maxgrad2 << "." << endl <<
+    "All output files should be updated, but confirm as this is experimental still." << endl <<
+    "The fact this was successful gives strong evidence of convergence to a mode" << endl <<
+    "with quadratic log-likelihood surface." << endl;
 }
 
 

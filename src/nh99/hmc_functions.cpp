@@ -385,7 +385,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       // s' from the first execution above is 1 by definition (inside this
       // if statement), while _sprime is s''. So need to reset s':
       bool b = stop_criterion(nvar, thetaminus0, thetaplus0, rminus0, rplus0);
-      _sprime = _sprime*b;
+      _sprime = _sprime && b;
       _nprime = nprime_temp;
     } // end building second trajectory
   }   // end recursion branch (j>0)
@@ -407,7 +407,7 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
     x2+=thetavec(i)*rplus(i);
   }
   // TRUE if both are TRUE, FALSE if at least one.
-  bool criterion = (x1 >=0) * (x2 >=0);
+  bool criterion = (x1 >=0) && (x2 >=0);
   return criterion;
 }
 

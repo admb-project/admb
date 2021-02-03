@@ -8,10 +8,14 @@ all:\
   test-agemat\
   test-cov_re\
   test-expm\
+  test-adnuts\
   test-gtests
 
 test-gtests:
 	pushd gtests& $(MAKE) all & popd
+
+test-adnuts:
+	pushd adnuts& $(MAKE) all & popd
 
 test-agemat:
 	pushd agemat& $(MAKE) & popd

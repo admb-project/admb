@@ -41,17 +41,20 @@ all: $(OPT) $(SAF)
 
 $(OPT):: $(@B:contrib-optlp-gdbprintlib-=).cpp
 !IF DEFINED(DEBUG)
-	..\..\admb -c -g -f -o $@ $?
+	..\..\admb -c -g -f $?
 !ELSE
-	..\..\admb -c -f -o $@ $?
+	..\..\admb -c -f $?
 !ENDIf
+
+	copy $(?:.cpp=.obj) $@
 
 $(SAF):: $(@B:contrib-saflp-gdbprintlib-=).cpp
 !IF DEFINED(DEBUG)
-	..\..\admb -c -g -o $@ $?
+	..\..\admb -c -g $?
 !ELSE
-	..\..\admb -c -o $@ $?
+	..\..\admb -c $?
 !ENDIf
+	copy $(?:.cpp=.obj) $@
 
 includes: $(HEADERS)
 	for %%a in ($(HEADERS)) do copy %%a $(CONTRIB_INCLUDE)

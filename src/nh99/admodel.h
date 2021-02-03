@@ -52,7 +52,6 @@
   #pragma interface
 #endif
 
-#include <vector>
 
   class laplace_approximation_calculator;
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
@@ -754,29 +753,22 @@ public:
 
 class initial_params;
 typedef initial_params* pinitial_params;
-
+typedef void* ptovoid;
 /**
 For storing void pointers in a array.
 */
 class adlist_ptr
 {
-  unsigned int current;
-  unsigned int current_size;
-  typedef void* ptovoid;
   ptovoid* ptr;
+  unsigned int current_size;
+  unsigned int current;
   void resize(void);
-  std::vector<void*> list;
-  void add_to_list(void*);
-
+  void add_to_list(void* p);
 public:
-  adlist_ptr();
-  adlist_ptr(const adlist_ptr&) = delete;
-  adlist_ptr(adlist_ptr&&) = delete;
+  adlist_ptr(unsigned int init_size);
   ~adlist_ptr();
 
   void initialize();
-
-  void allocate(unsigned int init_size);
 
   pinitial_params& operator[](int i);
 
@@ -848,16 +840,19 @@ public:
   double get_scalefactor();
   void set_scalefactor(const double);
   //Resizeable arrays
-  static int num_initial_params;
-  static int max_num_initial_params;
+#if defined(USE_PTR_INIT_PARAMS)
+  static initial_params* varsptr[];
+#else
   static adlist_ptr varsptr;
+#endif
+  static int num_initial_params;
+  static const int max_num_initial_params;
   static int straight_through_flag;
   static int num_active_initial_params;
   static int max_number_phases;
   static int current_phase;
   static int restart_phase;
   static int sd_phase;
-  static bool in_hessian_phase;
   static int mc_phase;
   static int mceval_phase;
   int phase_start;
@@ -1971,8 +1966,7 @@ public:
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
 
-  /// hess_step is used for HMC. See details in function_minimizer::hess_step.
-  void hess_step();
+  // Functions added by Cole for HMC.
   bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);
   bool calculate_chd_and_inverse(int nvar, const dmatrix& metric,
 				 dmatrix& chd, dmatrix& chdinv);
@@ -2023,7 +2017,7 @@ public:
   void hess_routine_and_constraint(int iprof, const dvector& g,
     dvector& fg);
   dmatrix diag_hess_routine(void);
-  bool hess_inv();
+  void hess_inv(void);
   void depvars_routine(void);
   void sd_routine(void);
   int ef_(double * f, double * x);

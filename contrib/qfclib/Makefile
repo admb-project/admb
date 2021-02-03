@@ -41,17 +41,19 @@ all: $(OPT) $(SAF)
 
 $(OPT):: $(@B:contrib-optlp-qfclib-=).cpp
 !IF DEFINED(DEBUG)
-	..\..\admb -c -f -o $@ $?
+	..\..\admb -c -f $?
 !ELSE
-	..\..\admb -c -f -g -o $@ $?
+	..\..\admb -c -f -g $?
 !ENDIF
+	copy $(?:.cpp=.obj) $@
 
 $(SAF):: $(@B:contrib-saflp-qfclib-=).cpp
 !IF DEFINED(DEBUG)
-	..\..\admb -c -o $@ $?
+	..\..\admb -c $?
 !ELSE
-	..\..\admb -c -g -o $@ $?
+	..\..\admb -c -g $?
 !ENDIF
+	copy $(?:.cpp=.obj) $@
 
 includes: $(HEADERS)
 	copy $(HEADERS) $(CONTRIB_INCLUDE)

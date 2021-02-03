@@ -52,7 +52,6 @@ if not defined ADMB_HOME (
 set tpls=
 set srcs=
 set objs=
-set output=
 for %%a in (%*) do (
   set arg=%%a
   if "!arg:~0,1!"=="-" (
@@ -67,9 +66,6 @@ for %%a in (%*) do (
     )
     if "!arg!"=="-g" (
       set g= -g
-    )
-    if "!arg!"=="-o" (
-      set option_o= -o
     )
     if "!arg!"=="-r" (
       set r = -r
@@ -105,33 +101,17 @@ for %%a in (%*) do (
       )
     )
     if "%%~xa"==".o" (
-      if defined option_o (
-        set output=!arg!
-        set option_o=
+      if not defined objs (
+        set objs=!arg!
       ) else (
-        if not defined objs (
-          set objs=!arg!
-        ) else (
-          set objs=!objs! !arg!
-        )
+        set objs=!objs! !arg!
       )
     )
     if "%%~xa"==".obj" (
-      if defined option_o (
-        set output=!arg!
-        set option_o=
+      if not defined objs (
+        set objs=!arg!
       ) else (
-        if not defined objs (
-          set objs=!arg!
-        ) else (
-          set objs=!objs! !arg!
-        )
-      )
-    )
-    if "%%~xa"==".exe" (
-      if defined option_o (
-        set output=!arg!
-        set option_o=
+        set objs=!objs! !arg!
       )
     )
   )
@@ -280,10 +260,26 @@ if "!CXX!"=="cl" (
     )
     for /f %%i in ('!CXX! -dumpversion ^| findstr /b 5.') do (
       set CXXMAJORNUMBER=-g++5
-      set STDCXX=-std=c++11
+      set STDCXX=-std=c++14
     )
-    for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
-      set CXXMAJORNUMBER=-g++%%i
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 6.') do (
+      set CXXMAJORNUMBER=-g++6
+      set STDCXX=-std=c++14
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 7.') do (
+      set CXXMAJORNUMBER=-g++7
+      set STDCXX=-std=c++14
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 8.') do (
+      set CXXMAJORNUMBER=-g++8
+      set STDCXX=-std=c++14
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
+      set CXXMAJORNUMBER=-g++9
+      set STDCXX=-std=c++14
+    )
+    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 10.') do (
+      set CXXMAJORNUMBER=-g++10
       set STDCXX=-std=c++14
     )
   )
@@ -519,11 +515,7 @@ for %%b in (!tpls!) do (
   set tpl=%%~nb
   @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
   if "!CXX!"=="cl" (
-    if defined output (
-      set CMD=!CXX!!CXXFLAGS! /Fo!output! !tpl!.cpp
-    ) else (
-      set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
-    )
+    set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
   ) else (
     set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
   )
@@ -546,49 +538,28 @@ if defined srcs (
     set filename=%%~na
     @REM set CMD=adcomp!d!!g!!r!!fast! !src!
     if "!CXX!"=="cl" (
-      if defined output (
-        set CMD=!CXX!!CXXFLAGS! /Fo!output! !filename!.cpp
-      ) else (
-        set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
-      )
+      set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
     ) else (
-      if defined output (
-        set CMD=!CXX!!CXXFLAGS! -o !output! !filename!.cpp
-      ) else (
-        set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
-      )
+      set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
     )
     echo.&echo *** Compile: !src!
     echo !CMD!
     call !CMD!
-    if defined output (
-      if not exist !output! (
-        echo.&echo Error: Unable to build !src! to !output!
-        goto ERROR
-      ) else (
-        if not defined objs (
-          set objs=!output!
-        ) else (
-          set objs=!objs! !output!
-        )
-      )
+    if not exist !filename!.obj (
+      echo.&echo Error: Unable to build !src! to !filename!.obj
+      goto ERROR
     ) else (
-      if not exist !filename!.obj (
-        echo.&echo Error: Unable to build !src! to !filename!.obj
-        goto ERROR
+      if not defined objs (
+        set objs=!filename!.obj
       ) else (
-        if not defined objs (
-          set objs=!filename!.obj
-        ) else (
-          set objs=!objs! !filename!.obj
-        )
+        set objs=!objs! !filename!.obj
       )
     )
   )
 )
 :linker
 if defined compileonly (
-  echo.&echo Compiled !objs!
+  echo.&echo Compiled !objs!.
   goto EOF
 )
 if not defined tpls (
@@ -609,11 +580,7 @@ if not defined tpls (
         set CMD=!LD!!LDFLAGS! -o !main!.dll !objs! !libs!
       ) else (
         if "!CXX!"=="cl" (
-          if defined output (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !objs! !libs!
-          ) else (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
-          )
+          set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
         ) else (
           set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
         )
@@ -622,30 +589,16 @@ if not defined tpls (
       echo !CMD!
       call !CMD! || goto ERROR
       if defined d (
-        if defined output (
-          if not exist !output! (
-            goto ERROR
-          )
-          echo.&echo Successfully built '!output!'.
-        ) else (
-          if not exist !main!.dll (
-            goto ERROR
-          )
-          echo.&echo Successfully built '!main!.dll'.
-	)
+        if not exist !main!.dll (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!main!.dll'.
         goto SUCCESS
       ) else (
-        if defined output (
-          if not exist !output! (
-            goto ERROR
-          )
-          echo.&echo Successfully built '!output!'.
-        ) else (
-          if not exist !main!.exe (
-            goto ERROR
-          )
-          echo.&echo Successfully built '!main!.exe'.
+        if not exist !main!.exe (
+          goto ERROR
         )
+        echo.&echo Successfully built '!main!.exe'.
         goto EOF
       )
     )
@@ -667,11 +620,7 @@ if not defined tpls (
     ) else (
       if "!CXX!"=="cl" (
         if defined objs (
-          if defined output (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !tpl!.obj !objs! !libs!
-          ) else (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
-          ) 
+          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
         ) else (
           set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
         )

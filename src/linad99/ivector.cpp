@@ -90,6 +90,9 @@ ivector::~ivector()
 /// Deallocate i3_array memory.
 void ivector::deallocate()
 {
+#if defined(USE_VECTOR_SHAPE_POOL)
+  if (!vector_shapex::allocated) return;
+#endif
   //Called by destructor to deallocate memory for a ivector object.
   //Produces an error if the int* member is NULL.
   if (shape)

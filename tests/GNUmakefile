@@ -65,8 +65,6 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 core-tpls:\
-  tpl-strip_full_path\
-  tpl-issue158\
   tpl-data_adstring_array\
   tpl-dd2\
   tpl-testminmax\
@@ -88,7 +86,6 @@ core-tpls:\
   tpl-beta_deviate\
   tpl-betareg\
   tpl-beta_regression\
-  tpl-hess_step\
   tpl-colfill\
   tpl-cov_re\
   tpl-expm\
@@ -115,14 +112,8 @@ contrib-tpls:\
 remote-contrib-tpls:\
   tpl-agemat
 
-tpl-strip_full_path:
-	$(MAKE) --directory=strip_full_path
-
 cpp-globals:
 	$(MAKE) --directory=globals
-
-tpl-issue158:
-	$(MAKE) --directory=issue158
 
 tpl-f1b2vc5:
 	$(MAKE) --directory=f1b2vc5
@@ -183,9 +174,6 @@ tpl-betareg:
 
 tpl-beta_regression:
 	$(MAKE) --directory=beta_regression
-
-tpl-hess_step:
-	$(MAKE) --directory=hess_step
 
 tpl-changepoint:
 	$(MAKE) --directory=changepoint
@@ -323,10 +311,6 @@ else
 	@rm -vf beta_regression/s1
 	@rm -vf beta_regression/s2
 	@rm -vf beta_regression/sims
-	@rm -vf hess_step/catage.b02
-	@rm -vf hess_step/catage.p02
-	@rm -vf hess_step/catage.r02
-	@rm -vf hess_step/data
 	@rm -vf betareg/a
 	@rm -vf betareg/b1
 	@rm -vf betareg/b2
@@ -365,7 +349,6 @@ endif
 	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=beta_regression clean
-	$(MAKE) --directory=hess_step clean
 	$(MAKE) --directory=changepoint clean
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=adnuts clean
@@ -398,7 +381,6 @@ endif
 	$(MAKE) --directory=gradients_output clean
 	$(MAKE) --directory=4darray clean
 	$(MAKE) --directory=../examples/admb/prof_like clean
-	$(MAKE) --directory=issue158 clean
 
 dist-clean:
 ifeq ($(CMDSHELL),cmd)
@@ -444,7 +426,6 @@ else
 	$(MAKE) --directory=lprof get-outputs >> outputs-tests.txt
 endif
 	$(MAKE) --directory=beta_regression get-outputs >> outputs-tests.txt
-	$(MAKE) --directory=hess_step get-outputs >> outputs-tests.txt
 	$(MAKE) --directory=agemat get-outputs >> outputs-tests.txt
 	$(MAKE) --directory=beta_deviate get-outputs >> output-tests.txt
 	$(MAKE) --directory=simple_mcmc get-outputs >> output-tests.txt

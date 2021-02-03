@@ -651,7 +651,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // Test if a u-turn occured across the whole subtree j. Previously we
       // only tested sub-subtrees.
       b= stop_criterion(nvar, thetaminus_end, thetaplus_end, rminus_end, rplus_end);
-      s = _sprime && b;
+      s = _sprime*b;
       // Increment valid points and depth
       n += _nprime; ++j;
       if(j>=max_treedepth) break;

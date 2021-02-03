@@ -13,10 +13,8 @@ void set_labels_for_hess(int);
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
-bool initial_params::in_hessian_phase = false;
 void function_minimizer::hess_routine(void)
 {
-  initial_params::in_hessian_phase = true;
   if (random_effects_flag && lapprox != 0)
   {
     if (laplace_approximation_calculator::alternative_user_function_flag == 1)
@@ -51,7 +49,6 @@ void function_minimizer::hess_routine(void)
   {
     hess_routine_noparallel();
   }
-  initial_params::in_hessian_phase = false;
 }
 void function_minimizer::hess_routine_noparallel(void)
 {
@@ -487,7 +484,7 @@ void function_minimizer::depvars_routine(void)
 /**
 Symmetrize and invert the hessian
 */
-bool function_minimizer::hess_inv(void)
+void function_minimizer::hess_inv(void)
 {
   initial_params::set_inactive_only_random_effects();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
@@ -675,7 +672,7 @@ bool function_minimizer::hess_inv(void)
         if (hess(i,i) <= 0.0)
         {
           hess_errorreport();
-          return false;
+          ad_exit(1);
         }
       }
     }
@@ -689,7 +686,6 @@ bool function_minimizer::hess_inv(void)
       ofs << sscale;
     }
   }
-  return true;
 }
 void hess_calcreport(int i,int nvar)
 {

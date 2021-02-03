@@ -106,7 +106,7 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
-#define USE_VECTOR_SHAPE_POOL
+//#define USE_VECTOR_SHAPE_POOL
 
 #if defined(USE_DDOUBLE)
 #   include <qd/qd.h>
@@ -473,17 +473,13 @@ class kkludge_object{};
  * Description not yet available.
  * \param
  */
-class vector_shape_pool: public dfpool
+class vector_shape_pool:public dfpool
 {
+  bool* _allocated;
 public:
-  vector_shape_pool(): dfpool() {}
-  vector_shape_pool(const size_t n): dfpool(n) {}
-  vector_shape_pool(const vector_shape_pool&) = delete;
-  vector_shape_pool(vector_shape_pool&&) = delete;
-  ~vector_shape_pool() {}
-
-  vector_shape_pool& operator=(const vector_shape_pool&) = delete;
-  vector_shape_pool& operator=(vector_shape_pool&&) = delete;
+  vector_shape_pool();
+  vector_shape_pool(const size_t, bool* allocated);
+  ~vector_shape_pool();
 };
 
 /**
@@ -504,16 +500,21 @@ class ts_vector_shape_pool:public tsdfpool
  */
 class vector_shape
 {
+ public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-public:
-  static vector_shape_pool* xpool;
-
+  static bool allocated;
+  static vector_shape_pool& get_xpool()
+  {
+    static vector_shape_pool xpool(
+      sizeof(vector_shape), &vector_shape::allocated);
+    return xpool;
+  }
   void* operator new(size_t);
-  void operator delete(void* ptr, size_t);
+  void operator delete(void* ptr, size_t)
+   { vector_shape::get_xpool().free(ptr); }
   vector_shape(const vector_shape&) = delete;
   vector_shape& operator=(const vector_shape&) =  delete;
 #endif
-public:
 
    unsigned int ncopies;
    void shift(int min);
@@ -2021,17 +2022,22 @@ class arr_link
    unsigned int size;
    unsigned long int offset;
 
+ public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-public:
-  static vector_shape_pool* xpool;
-
+  static bool allocated;
+  static vector_shape_pool& get_xpool()
+  {
+    static vector_shape_pool xpool(
+      sizeof(arr_link), &arr_link::allocated);
+    return xpool;
+  }
   void* operator new(size_t);
-  void operator delete(void* ptr, size_t);
+  void operator delete(void* ptr, size_t)
+    { arr_link::get_xpool().free(ptr); }
   arr_link(const arr_link&) = delete;
   arr_link& operator=(const arr_link&) = delete;
 #endif
 
-public:
   arr_link();
 
   arr_link* get_prev() const

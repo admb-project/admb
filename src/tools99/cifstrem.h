@@ -173,12 +173,7 @@ public:
   void filter();
 
   adstring get_file_name(void);
-  /// Returns the last comment line.
   char* comment() { return comment_line; }
-#ifdef DEBUG
-  /// Returns the signature which is the first commented line of the data file.
-  char* get_signature() { return &signature_line[0]; }
-#endif
   char* signature();
 
   cifstream& operator>>(const dvariable& z);

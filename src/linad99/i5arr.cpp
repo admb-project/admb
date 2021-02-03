@@ -228,12 +228,3 @@ const int& i5_array::operator()(int i, int j, int k, int l, int m) const
   return elem(i)(j, k, l, m);
 }
 #endif
-///  Initialize i5_array elements with zeros.
-void i5_array::initialize()
-{
-  const int max = indexmax();
-  for (int i5 = indexmin(); i5 <= max; ++i5)
-  {
-    elem(i5).initialize();
-  }
-}

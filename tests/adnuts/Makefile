@@ -9,7 +9,7 @@ run: $(TARGET).exe output_psv.exe
 	output_psv adnuts.psv >> adnuts_psv.txt
 	$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass_dense -noest -verbose_adapt_mass -refresh -1 -mcseed 532
 	output_psv adnuts.psv >> adnuts_psv.txt
-	(TARGET) -rwm -mcmc 2000 -mcsave 1 -noest -mcseed 123
+	$(TARGET) -rwm -mcmc 2000 -mcsave 1 -noest -mcseed 123
 	output_psv adnuts.psv >> adnuts_psv.txt
 
 $(TARGET).exe: $(TARGET).tpl

@@ -1,6 +1,8 @@
 TARGET=adnuts
 
-all: run
+all:
+	$(MAKE) clean
+	$(MAKE) run
 
 run: $(TARGET).exe output_psv.exe
 	$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12

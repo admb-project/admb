@@ -13,7 +13,9 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-all: run
+all:
+	$(MAKE) clean
+	$(MAKE) run
 
 run: $(TARGET) output_psv
 ifeq ($(CMDSHELL),cmd)

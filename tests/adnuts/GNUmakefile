@@ -48,7 +48,7 @@ endif
 output_psv: output_psv.cpp
 	$(CXX) -o $@ $^
 
-get_outputs:
+get-outputs:
 ifeq ($(CMDSHELL),cmd)
 	@type adnuts_psv.txt adaptation.csv admodel.dep adnuts.cor adnuts.eva adnuts.log adnuts.par adnuts_psv.txt adnuts.std unbounded.csv > adnuts_outputs.txt
 	@type adnuts_outputs.txt

@@ -18,7 +18,7 @@ $(TARGET).exe: $(TARGET).tpl
 	..\\..\\admb.cmd $(TARGET) $(SRCS)
 
 output_psv: output_psv.cpp
-	$(CXX) -o $@ $^
+	$(CXX) output_psv.cpp
 
 clean2:
 	@del adaptation.csv

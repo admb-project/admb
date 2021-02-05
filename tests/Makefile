@@ -16,6 +16,7 @@ test-gtests:
 
 test-adnuts:
 	pushd adnuts& $(MAKE) all & popd
+	pushd adnuts& $(MAKE) get-outputs & popd
 
 test-agemat:
 	pushd agemat& $(MAKE) & popd

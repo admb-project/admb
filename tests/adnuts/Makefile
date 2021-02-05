@@ -20,6 +20,10 @@ $(TARGET).exe: $(TARGET).tpl
 output_psv: output_psv.cpp
 	$(CXX) output_psv.cpp
 
+get_outputs:
+	@type adnuts_psv.txt adaptation.csv admodel.dep adnuts.cor adnuts.eva adnuts.log adnuts.par adnuts_psv.txt adnuts.std unbounded.csv > adnuts_outputs.txt
+	@type adnuts_outputs.txt
+
 clean2:
 	@del adaptation.csv
 	@del adapted_metric.txt

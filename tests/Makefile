@@ -59,8 +59,4 @@ copy:
 
 get-outputs:
 	del ..\\outputs-tests.txt
-	$(MAKE) --directory=lprof get-outputs > ..\\outputs-tests.txt
-	$(MAKE) --directory=beta_regression get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> ..\\output-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> ..\\output-tests.txt
+	$(MAKE) --directory=expm get-outputs > ..\\outputs-tests.txt

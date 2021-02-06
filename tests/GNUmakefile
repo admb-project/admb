@@ -38,6 +38,7 @@ all:
 ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
 endif
+	$(MAKE) get-outputs
 
 verify: examples
 	$(MAKE) all

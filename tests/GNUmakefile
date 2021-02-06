@@ -39,13 +39,15 @@ ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
 endif
 
+verify: examples
+	$(MAKE) all
+
 tests-remote:
 	$(MAKE) remote-core-tpls
 	$(MAKE) remote-contrib-tpls
 	$(MAKE) unit-gtests
 
 tests-core:
-	$(MAKE) --directory=../examples all
 	$(MAKE) core-tpls
 
 tests-contrib:
@@ -53,7 +55,6 @@ tests-contrib:
 
 coverage:
 	$(MAKE) unit-gtests
-	$(MAKE) --directory=../examples all
 	$(MAKE) core-tpls
 
 unit-gtests:
@@ -225,7 +226,7 @@ endif
 example-prof_like:
 	$(MAKE) --directory=../examples/admb/prof_like
 
-verify:
+examples:
 ifeq ($(CMDSHELL),cmd)
   ifneq ($(DEBUG),yes)
 	del ..\outputs-saf.txt
@@ -417,15 +418,21 @@ else
 	cp -Rvf ../tests $(DIST)
 endif
 
-outputs:
+get-outputs:
 ifeq ($(CMDSHELL),cmd)
-	del outputs-tests.txt
+	del ..\\outputs-tests.txt
+	@echo "# tests outputs\n" > ..\\outputs-tests.txt
+	$(MAKE) --directory=lprof get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=beta_regression get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=agemat get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=beta_deviate get-outputs >> ..\\output-tests.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> ..\\output-tests.txt
 else
-	rm -vf outputs-tests.txt
-	touch outputs-tests.txt
-	$(MAKE) --directory=lprof get-outputs >> outputs-tests.txt
+	rm -vf ../outputs-tests.txt
+	@echo "# tests outputs\n" > ../outputs-tests.txt
+	$(MAKE) --directory=lprof get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=beta_regression get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=agemat get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=beta_deviate get-outputs >> ../output-tests.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> ../output-tests.txt
 endif
-	$(MAKE) --directory=beta_regression get-outputs >> outputs-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> outputs-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> output-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> output-tests.txt

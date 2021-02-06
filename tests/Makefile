@@ -38,7 +38,11 @@ clean:
 	pushd geolocation & $(MAKE) clean & popd
 	if exist SS3 rmdir /s /q SS3
 
-verify:
+verify: examples
+	$(MAKE) all
+	$(MAKE) get-outputs
+
+examples:
 	del ..\outputs-saf.txt
 	del ..\outputs-opt.txt
 	if not exist $(DESTDIR)\examples md  $(DESTDIR)\examples
@@ -52,3 +56,11 @@ verify:
 
 copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
+
+get-outputs:
+	del ..\\outputs-tests.txt
+	$(MAKE) --directory=lprof get-outputs > ..\\outputs-tests.txt
+	$(MAKE) --directory=beta_regression get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=agemat get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=beta_deviate get-outputs >> ..\\output-tests.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> ..\\output-tests.txt

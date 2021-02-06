@@ -36,10 +36,10 @@ jobs:
       with:
         name: admb_vs2019_debug_32bit
         path: build\\admb
-    - name: test
+    - name: tests
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
-        nmake test DEBUG=yes
+        nmake verify DEBUG=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

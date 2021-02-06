@@ -38,7 +38,7 @@ jobs:
         path: scripts/installers/packagemaker/ADMBTerminal.dmg
     - name: tests
       run: |
-        make test DEBUG=yes
+        make verify DEBUG=yes
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

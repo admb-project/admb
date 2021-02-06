@@ -36,7 +36,7 @@ jobs:
       with:
         name: admb_rtools35_debug
         path: build\\admb
-    - name: test
+    - name: tests
       run: |
         set PATH=C:\rtools35\bin;C:\rtools35\mingw_64\bin;%PATH%
         make verify DEBUG=yes TESTS_REMOTE=no

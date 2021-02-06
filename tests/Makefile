@@ -59,4 +59,4 @@ copy:
 
 get-outputs:
 	del ..\\outputs-tests.txt
-	$(MAKE) --directory=expm get-outputs > ..\\outputs-tests.txt
+	pushd expm & $(MAKE) get-outputs > ..\outputs-tests.txt

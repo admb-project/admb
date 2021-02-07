@@ -423,9 +423,9 @@ get-outputs:
 ifeq ($(CMDSHELL),cmd)
 	del ..\\outputs-tests.txt
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
-	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
 else
 	rm -vf ../outputs-tests.txt
 	@echo "# tests outputs\n" > ../outputs-tests.txt
-	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
 endif

@@ -423,16 +423,9 @@ get-outputs:
 ifeq ($(CMDSHELL),cmd)
 	del ..\\outputs-tests.txt
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
-	$(MAKE) --directory=lprof get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=beta_regression get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> ..\\output-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> ..\\output-tests.txt
+	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 else
 	rm -vf ../outputs-tests.txt
 	@echo "# tests outputs\n" > ../outputs-tests.txt
-	$(MAKE) --directory=beta_regression get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> ../output-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> ../output-tests.txt
+	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 endif

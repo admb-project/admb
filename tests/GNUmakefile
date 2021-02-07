@@ -431,7 +431,6 @@ ifeq ($(CMDSHELL),cmd)
 else
 	rm -vf ../outputs-tests.txt
 	@echo "# tests outputs\n" > ../outputs-tests.txt
-	$(MAKE) --directory=lprof get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=beta_regression get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=agemat get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=beta_deviate get-outputs >> ../output-tests.txt

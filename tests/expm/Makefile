@@ -9,9 +9,6 @@ get-outputs:
 	type expm.par
 	type expm.std
 	type expm.cor
-	type expm.bar
-	type expm.rpt
-	type variance
 clean:
 	if exist admodel.cov del /Q admodel.cov
 	if exist admodel.dep del /Q admodel.dep

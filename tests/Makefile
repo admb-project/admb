@@ -10,6 +10,12 @@ all:\
   test-agemat\
   test-cov_re\
   test-expm\
+  test-tiny\
+  test-tiny_ad_fe\
+  test-tiny_ad_re\
+  test-tinyfun\
+  test-vectorize\
+  test-vonmises\
   test-gtests
 
 test-gtests:
@@ -33,6 +39,24 @@ test-expm:
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd
 
+test-tiny:
+	pushd tiny & $(MAKE) & popd
+
+test-tiny_ad_fe:
+	pushd tiny_ad_fe & $(MAKE) & popd
+
+test-tiny_ad_re:
+	pushd tiny_ad_re & $(MAKE) & popd
+
+test-tinyfun:
+	pushd tinyfun & $(MAKE) & popd
+
+test-vectorize:
+	pushd vectorize & $(MAKE) & popd
+
+test-vonmises:
+	pushd vonmises & $(MAKE) & popd
+
 total-clean: clean
 	pushd glmmadmb & $(MAKE) total-clean & popd
 	pushd geolocation & $(MAKE) total-clean & popd
@@ -47,6 +71,11 @@ clean:
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
 	if exist SS3 rmdir /s /q SS3
+	pushd tiny_ad_fe & $(MAKE) clean & popd
+	pushd tiny_ad_re & $(MAKE) clean & popd
+	pushd tinyfun & $(MAKE) clean & popd
+	pushd vectorize & $(MAKE) clean & popd
+	pushd vonmises & $(MAKE) clean & popd
 
 verify: examples
 	$(MAKE) all
@@ -73,3 +102,9 @@ get-outputs:
 	pushd 4darray & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd tiny & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd tiny_ad_fe & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd tiny_ad_re & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd tinyfun & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd vectorize & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd vonmises & $(MAKE) get-outputs >> ..\outputs-tests.txt

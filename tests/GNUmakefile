@@ -77,10 +77,10 @@ core-tpls:\
   tpl-beta2\
   tpl-beta3\
   tpl-vonmises\
+  tpl-tiny\
   tpl-tiny_ad_fe\
   tpl-tinyfun\
   tpl-poisp\
-  tpl-tiny_ad_re\
   tpl-vectorize\
   tpl-bessel\
   tpl-qbeta\
@@ -141,6 +141,9 @@ tpl-beta3:
 tpl-vonmises:
 	$(MAKE) --directory=vonmises
 
+tpl-tiny:
+	$(MAKE) --directory=tiny
+
 tpl-tiny_ad_fe:
 	$(MAKE) --directory=tiny_ad_fe
 
@@ -149,9 +152,6 @@ tpl-tinyfun:
 
 tpl-poisp:
 	$(MAKE) --directory=poisp
-
-tpl-tiny_ad_re:
-	$(MAKE) --directory=tiny_ad_re
 
 tpl-vectorize:
 	$(MAKE) --directory=vectorize
@@ -354,10 +354,10 @@ endif
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
 	$(MAKE) --directory=vonmises clean
+	$(MAKE) --directory=tiny clean
 	$(MAKE) --directory=tiny_ad_fe clean
 	$(MAKE) --directory=tinyfun clean
 	$(MAKE) --directory=poisp clean
-	$(MAKE) --directory=tiny_ad_re clean
 	$(MAKE) --directory=vectorize clean
 	$(MAKE) --directory=bessel clean
 	$(MAKE) --directory=qbeta clean
@@ -415,10 +415,24 @@ ifeq ($(CMDSHELL),cmd)
 	del ..\\outputs-tests.txt
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=tiny get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=tiny_ad_fe get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=tiny_ad_re get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=tinyfun get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=vectorize get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=vonmises get-outputs >> ..\\outputs-tests.txt
 else
 	rm -vf ../outputs-tests.txt
 	@echo "# tests outputs\n" > ../outputs-tests.txt
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=tiny get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=tiny_ad_fe get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=tiny_ad_re get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=tinyfun get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=vectorize get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=vonmises get-outputs >> ../outputs-tests.txt
 endif

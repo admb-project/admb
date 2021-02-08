@@ -1,11 +1,9 @@
 TARGET=adnuts
+OVERRIDE=all
 
 !include <..\test-rules.nmake>
 
-default: $(TARGET)
-	$(MAKE) _run
-
-_run: output_psv.exe
+run: $(TARGET) output_psv.exe
 	$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
 	output_psv adnuts.psv > adnuts_psv.txt
 	$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass -noest -mcseed 141
@@ -18,7 +16,7 @@ _run: output_psv.exe
 output_psv.exe: output_psv.cpp
 	$(CXX) /Feoutput_psv.exe output_psv.cpp
 
-_clean: clean
+clean: _clean
 	@if exist adaptation.csv del /Q adaptation.csv
 	@if exist adapted_metric.txt del /Q adapted_metric.txt
 	@if exist adnuts.mc2 del /Q adnuts.mc2

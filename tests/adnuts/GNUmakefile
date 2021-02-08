@@ -1,7 +1,5 @@
 TARGET=adnuts
-
-default: $(TARGET)
-	$(MAKE) _run
+OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
 include ..\test-rules.mak
@@ -14,9 +12,9 @@ _PATH=./
 endif
 
 ifeq ($(CMDSHELL),cmd)
-_run: output_psv.exe
+run: $(TARGET) output_psv.exe
 else
-_run: output_psv
+run: $(TARGET) output_psv
 endif
 	$(_PATH)$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
 	$(_PATH)output_psv adnuts.psv > adnuts_psv.txt
@@ -34,7 +32,7 @@ output_psv: output_psv.cpp
 endif
 	$(CXX) -o $@ $^
 
-_clean: clean
+clean: _clean
 ifeq ($(CMDSHELL),cmd)
 	@if exist adaptation.csv del /Q adaptation.csv
 	@if exist adapted_metric.txt del /Q adapted_metric.txt

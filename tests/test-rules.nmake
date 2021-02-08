@@ -1,15 +1,31 @@
-all: $(TARGET)
+all: clean
+	$(MAKE) run
+
+!IF "$(OVERRIDE)"=="all"
+_run: $(TARGET)
+!ELSE
+run: $(TARGET)
+!ENDIF
+	$(TARGET)
 
 $(TARGET): $(TARGET).tpl
 	..\..\admb $(TARGET).tpl
-	$(TARGET)
 
+!IF "$(OVERRIDE)"=="all"
 get-outputs:
+!ELSE
+_get-outputs:
+!ENDIF
 	if exist $(TARGET).par type $(TARGET).par
 	if exist $(TARGET).std type $(TARGET).std
 	if exist $(TARGET).cor type $(TARGET).cor
 	if exist $(TARGET).eva type $(TARGET).eva
+
+!IF "$(OVERRIDE)"=="all"
+_clean:
+!ELSE
 clean:
+!ENDIF
 	if exist admodel.cov del /Q admodel.cov
 	if exist admodel.dep del /Q admodel.dep
 	if exist admodel.hes del /Q admodel.hes

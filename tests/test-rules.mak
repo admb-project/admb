@@ -21,14 +21,22 @@ else
 	../../admb$(EXT) $(TARGET) $(SRCS)
 endif
 
+ifeq ($(OVERRIDE),all)
+_run: $(TARGET)
+else
 run: $(TARGET)
+endif
 ifeq ($(CMDSHELL),cmd)
 	$(TARGET)
 else
 	./$(TARGET)
 endif
 
+ifeq ($(OVERRIDE),all)
+_get-outputs:
+else
 get-outputs:
+endif
 ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).std type $(TARGET).std
 	@if exist $(TARGET).par type $(TARGET).par
@@ -41,7 +49,11 @@ else
 	@[ -f $(TARGET).eva ] && cat $(TARGET).eva
 endif
 
+ifeq ($(OVERRIDE),all)
+_clean:
+else
 clean:
+endif
 ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET) del $(TARGET) 2>nul
 	@if exist variance del variance 2>nul

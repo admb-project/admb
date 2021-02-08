@@ -12,9 +12,9 @@ $(TARGET): $(TARGET).tpl
 	..\..\admb $(TARGET).tpl
 
 !IF "$(OVERRIDE)"=="all"
-get-outputs:
-!ELSE
 _get-outputs:
+!ELSE
+get-outputs:
 !ENDIF
 	if exist $(TARGET).par type $(TARGET).par
 	if exist $(TARGET).std type $(TARGET).std

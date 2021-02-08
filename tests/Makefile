@@ -5,6 +5,8 @@ ADMB_VER=admb
 DESTDIR=..\build\$(ADMB_VER)
 
 all:\
+  test-4darray\
+  test-adnuts\
   test-agemat\
   test-cov_re\
   test-expm\
@@ -12,6 +14,12 @@ all:\
 
 test-gtests:
 	pushd gtests& $(MAKE) all & popd
+
+test-4darray:
+	pushd 4darray & $(MAKE) & popd
+
+test-adnuts:
+	pushd adnuts & $(MAKE) & popd
 
 test-agemat:
 	pushd agemat& $(MAKE) & popd
@@ -31,7 +39,9 @@ total-clean: clean
 	pushd agemat & $(MAKE) total-clean & popd
 
 clean:
-	pushd gtests& $(MAKE) clean & popd
+	pushd gtests & $(MAKE) clean & popd
+	pushd 4darray & $(MAKE) clean & popd
+	pushd adnuts & $(MAKE) clean & popd
 	pushd agemat& $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
@@ -59,4 +69,7 @@ copy:
 
 get-outputs:
 	del ..\\outputs-tests.txt
-	pushd expm & $(MAKE) get-outputs > ..\outputs-tests.txt
+	@echo "# tests outputs\n" > ..\\outputs-tests.txt
+	pushd 4darray & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt

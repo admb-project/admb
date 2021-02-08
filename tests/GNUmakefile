@@ -281,6 +281,7 @@ ifeq ($(CMDSHELL),cmd)
 	@del f1b2vc5\\f1b2vc5.b01
 	@del f1b2vc5\\f1b2vc5.p01
 else
+	$(MAKE) --directory=adnuts _clean
 	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3
 	@rm -vf dd2/f1b2list1
@@ -295,16 +296,6 @@ else
 	@rm -vf dualaveraging/hybmcmc.obj
 	@rm -vf f1b2vc5/f1b2vc5.b01
 	@rm -vf f1b2vc5/f1b2vc5.p01
-	@rm -vf adnuts/adaptation.csv
-	@rm -vf adnuts/adapted_metric.txt
-	@rm -vf adnuts/adnuts.mc2
-	@rm -vf adnuts/adnuts.mcm
-	@rm -vf adnuts/adnuts.psv
-	@rm -vf adnuts/adnuts_psv.txt
-	@rm -vf adnuts/output_psv.exe
-	@rm -vf adnuts/rwm_lp.txt
-	@rm -vf adnuts/sims
-	@rm -vf adnuts/unbounded.csv
 	@rm -vf beta_regression/b1
 	@rm -vf beta_regression/b2
 	@rm -vf beta_regression/beta_regression.psv
@@ -423,9 +414,11 @@ get-outputs:
 ifeq ($(CMDSHELL),cmd)
 	del ..\\outputs-tests.txt
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
+	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
 else
 	rm -vf ../outputs-tests.txt
 	@echo "# tests outputs\n" > ../outputs-tests.txt
+	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
 endif

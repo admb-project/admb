@@ -1,0 +1,32 @@
+TARGET=adnuts
+
+!include <..\test-rules.nmake>
+
+default: $(TARGET)
+	$(MAKE) _run
+
+_run: output_psv
+	$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
+	output_psv adnuts.psv > adnuts_psv.txt
+	$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass -noest -mcseed 141
+	output_psv adnuts.psv >> adnuts_psv.txt
+	$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass_dense -noest -verbose_adapt_mass -refresh -1 -mcseed 532
+	output_psv adnuts.psv >> adnuts_psv.txt
+	$(TARGET) -rwm -mcmc 2000 -mcsave 1 -noest -mcseed 123
+	output_psv adnuts.psv >> adnuts_psv.txt
+
+output_psv: output_psv.cpp
+	$(CXX) -o $@ $^
+
+_clean: clean
+	@if exist adaptation.csv del /Q adaptation.csv
+	@if exist adapted_metric.txt del /Q adapted_metric.txt
+	@if exist adnuts.mc2 del /Q adnuts.mc2
+	@if exist adnuts.mcm del /Q adnuts.mcm
+	@if exist adnuts.psv del /Q adnuts.psv
+	@if exist adnuts_psv.txt del /Q adnuts_psv.txt
+	@if exist output_psv.exe del /Q output_psv.exe
+	@if exist output_psv.cpp del /Q output_psv.cpp
+	@if exist rwm_lp.txt del /Q rwm_lp.txt
+	@if exist sims del /Q sims
+	@if exist unbounded.csv del /Q unbounded.csv

@@ -26,7 +26,7 @@ _clean: clean
 	@if exist adnuts.psv del /Q adnuts.psv
 	@if exist adnuts_psv.txt del /Q adnuts_psv.txt
 	@if exist output_psv.exe del /Q output_psv.exe
-	@if exist output_psv.cpp del /Q output_psv.cpp
+	@if exist output_psv.obj del /Q output_psv.obj
 	@if exist rwm_lp.txt del /Q rwm_lp.txt
 	@if exist sims del /Q sims
 	@if exist unbounded.csv del /Q unbounded.csv

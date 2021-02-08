@@ -5,7 +5,7 @@ TARGET=adnuts
 default: $(TARGET)
 	$(MAKE) _run
 
-_run: output_psv
+_run: output_psv.exe
 	$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
 	output_psv adnuts.psv > adnuts_psv.txt
 	$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass -noest -mcseed 141
@@ -15,8 +15,8 @@ _run: output_psv
 	$(TARGET) -rwm -mcmc 2000 -mcsave 1 -noest -mcseed 123
 	output_psv adnuts.psv >> adnuts_psv.txt
 
-output_psv: output_psv.cpp
-	$(CXX) -o $@ $^
+output_psv.exe: output_psv.cpp
+	$(CXX) /Feoutput_psv.exe output_psv.cpp
 
 _clean: clean
 	@if exist adaptation.csv del /Q adaptation.csv

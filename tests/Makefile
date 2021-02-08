@@ -10,6 +10,7 @@ all:\
   test-agemat\
   test-cov_re\
   test-expm\
+  test-adnuts\
   test-gtests
 
 test-gtests:

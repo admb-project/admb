@@ -10,7 +10,10 @@ all:\
   test-agemat\
   test-cov_re\
   test-expm\
-  test-tiny\
+  test-priors\
+  test-qbeta\
+  test-simple_mcmc\
+  test-testminmax\
   test-tiny_ad_fe\
   test-tiny_ad_re\
   test-tinyfun\
@@ -39,8 +42,17 @@ test-expm:
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd
 
-test-tiny:
-	pushd tiny & $(MAKE) & popd
+test-priors:
+	pushd priors & $(MAKE) & popd
+
+test-qbeta:
+	pushd qbeta & $(MAKE) & popd
+
+test-simple_mcmc:
+	pushd simple_mcmc & $(MAKE) & popd
+
+test-testminmax:
+	pushd testminmax & $(MAKE) & popd
 
 test-tiny_ad_fe:
 	pushd tiny_ad_fe & $(MAKE) & popd
@@ -71,6 +83,9 @@ clean:
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
 	if exist SS3 rmdir /s /q SS3
+	pushd qbeta & $(MAKE) clean & popd
+	pushd simple_mcmc & $(MAKE) clean & popd
+	pushd testminmax & $(MAKE) clean & popd
 	pushd tiny_ad_fe & $(MAKE) clean & popd
 	pushd tiny_ad_re & $(MAKE) clean & popd
 	pushd tinyfun & $(MAKE) clean & popd
@@ -102,7 +117,9 @@ get-outputs:
 	pushd 4darray & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
-	pushd tiny & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd qbeta & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd simple_mcmc & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd testminmax & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd tiny_ad_fe & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd tiny_ad_re & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd tinyfun & $(MAKE) get-outputs >> ..\outputs-tests.txt

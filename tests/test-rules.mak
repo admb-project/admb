@@ -55,32 +55,39 @@ else
 clean:
 endif
 ifeq ($(CMDSHELL),cmd)
-	@if exist $(TARGET) del $(TARGET) 2>nul
-	@if exist variance del variance 2>nul
-	@if exist fmin.log del fmin.log 2>nul
-	@if exist $(TARGET).rep del $(TARGET).rep 2>nul
-	@if exist $(TARGET).eva del $(TARGET).eva 2>nul
-	@if exist $(TARGET).exe del $(TARGET).exe 2>nul
-	@if exist $(TARGET).htp del $(TARGET).htp 2>nul
-	@if exist $(TARGET).bar del $(TARGET).bar 2>nul
-	@if exist $(TARGET).bgs del $(TARGET).bgs 2>nul
-	@if exist $(TARGET)cor del $(TARGET).cor 2>nul
-	@if exist $(TARGET).cpp del $(TARGET).cpp 2>nul
-	@if exist $(TARGET).log del $(TARGET).log 2>nul
-	@if exist $(TARGET).o del $(TARGET).o 2>nul
-	@if exist $(TARGET).obj del $(TARGET).obj 2>nul
-	@if exist $(TARGET).par del $(TARGET).par 2>nul
-	@if exist $(TARGET).std del $(TARGET).std 2>nul
-	@if exist tests_$(TARGET).o del tests_$(TARGET).o 2>nul
-	@if exist tests_$(TARGET) del tests_$(TARGET) 2>nul
-	@if exist eigv.rpt  del eigv.rpt 2>nul
-	@if exist admodel.cov del admodel.cov 2>nul
-	@if exist admodel.dep del admodel.dep 2>nul
-	@if exist admodel.hes del admodel.hes 2>nul
-	@if exist $(TARGET).luu del $(TARGET).luu 2>nul
-	@if exist $(TARGET).rhes del $(TARGET).rhes 2>nul
-	@if exist hesscheck del hesscheck 2>nul
-	@if exist hessian.bin del hessian.bin 2>nul
+	@if exist $(TARGET) del /Q $(TARGET) 2>nul
+	@if exist variance del /Q variance 2>nul
+	@if exist fmin.log del /Q fmin.log 2>nul
+	@if exist $(TARGET).rep del /Q $(TARGET).rep 2>nul
+	@if exist $(TARGET).eva del /Q $(TARGET).eva 2>nul
+	@if exist $(TARGET).exe del /Q $(TARGET).exe 2>nul
+	@if exist $(TARGET).htp del /Q $(TARGET).htp 2>nul
+	@if exist $(TARGET).bar del /Q $(TARGET).bar 2>nul
+	@if exist $(TARGET).bgs del /Q $(TARGET).bgs 2>nul
+	@if exist $(TARGET)cor del /Q $(TARGET).cor 2>nul
+	@if exist $(TARGET).cpp del /Q $(TARGET).cpp 2>nul
+	@if exist $(TARGET).log del /Q $(TARGET).log 2>nul
+	@if exist $(TARGET).o del /Q $(TARGET).o 2>nul
+	@if exist $(TARGET).obj del /Q $(TARGET).obj 2>nul
+	@if exist $(TARGET).par del /Q $(TARGET).par 2>nul
+	@if exist $(TARGET).std del /Q $(TARGET).std 2>nul
+	@if exist tests_$(TARGET).o del /Q tests_$(TARGET).o 2>nul
+	@if exist tests_$(TARGET) del /Q tests_$(TARGET) 2>nul
+	@if exist eigv.rpt del /Q eigv.rpt 2>nul
+	@if exist admodel.cov del /Q admodel.cov 2>nul
+	@if exist admodel.dep del /Q admodel.dep 2>nul
+	@if exist admodel.hes del /Q admodel.hes 2>nul
+	@if exist $(TARGET).luu del /Q $(TARGET).luu 2>nul
+	@if exist $(TARGET).rhes del /Q $(TARGET).rhes 2>nul
+	@if exist hesscheck del /Q hesscheck 2>nul
+	@if exist hessian.bin del /Q hessian.bin 2>nul
+	@if exist posteriors.rep del /Q posteriors.rep 2>nul
+	@if exist $(TARGET).ecm del /Q $(TARGET).ecm 2>nul
+	@if exist $(TARGET).hst del /Q $(TARGET).hst 2>nul
+	@if exist $(TARGET).mc2 del /Q $(TARGET).mc2 2>nul
+	@if exist $(TARGET).mcm del /Q $(TARGET).mcm 2>nul
+	@if exist $(TARGET).psv del /Q $(TARGET).psv 2>nul
+	@if exist sims del /Q sims 2>nul
 else
 	@rm -vf $(TARGET)
 	@rm -vf admodel.*
@@ -111,4 +118,11 @@ else
 	@rm -vf $(TARGET).rhes
 	@rm -vf hesscheck
 	@rm -vf hessian.bin
+	@rm -vf posteriors.rep
+	@rm -vf $(TARGET).ecm
+	@rm -vf $(TARGET).hst
+	@rm -vf $(TARGET).mc2
+	@rm -vf $(TARGET).mcm
+	@rm -vf $(TARGET).psv
+	@rm -vf sims
 endif

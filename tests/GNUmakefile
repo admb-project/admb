@@ -76,12 +76,11 @@ core-tpls:\
   tpl-betai\
   tpl-beta2\
   tpl-beta3\
-  tpl-vonmises\
-  tpl-tiny\
   tpl-tiny_ad_fe\
   tpl-tinyfun\
   tpl-poisp\
   tpl-vectorize\
+  tpl-vonmises\
   tpl-bessel\
   tpl-qbeta\
   tpl-dd2\
@@ -95,7 +94,6 @@ core-tpls:\
   tpl-simple_mcmc\
   tpl-hysimple\
   tpl-adnuts\
-  tpl-testminmax\
   tpl-orange_mvn\
   cpp-globals\
   tpl-lprof
@@ -140,9 +138,6 @@ tpl-beta3:
 
 tpl-vonmises:
 	$(MAKE) --directory=vonmises
-
-tpl-tiny:
-	$(MAKE) --directory=tiny
 
 tpl-tiny_ad_fe:
 	$(MAKE) --directory=tiny_ad_fe
@@ -417,7 +412,10 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=tiny get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=priors get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=qbeta get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=testminmax get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=tiny_ad_fe get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=tiny_ad_re get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=tinyfun get-outputs >> ..\\outputs-tests.txt
@@ -429,7 +427,10 @@ else
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=tiny get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=priors get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=qbeta get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=testminmax get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=tiny_ad_fe get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=tiny_ad_re get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=tinyfun get-outputs >> ../outputs-tests.txt

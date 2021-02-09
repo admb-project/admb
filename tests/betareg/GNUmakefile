@@ -35,6 +35,8 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist hesscheck type hesscheck
 	@if exist s1 type s1
 	@if exist s2 type s2
+	@if exist $(TARGET).b02 type $(TARGET).b02
+	@if exist $(TARGET).p02 type $(TARGET).p02
 else
 	@if [ -e a ]; then cat a; fi
 	@if [ -e b1 ]; then cat b1; fi
@@ -43,6 +45,8 @@ else
 	@if [ -e hesscheck ]; then cat hesscheck; fi
 	@if [ -e s1 ]; then cat s1; fi
 	@if [ -e s2 ]; then cat s2; fi
+	@if [ -e $(TARGET).b02 ]; then cat $(TARGET).b02; fi
+	@if [ -e $(TARGET).p02 ]; then cat $(TARGET).p02; fi
 endif
 
 clean: _clean
@@ -54,6 +58,11 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist hesscheck del /Q hesscheck 2>nul
 	@if exist s1 del /Q s1 2>nul
 	@if exist s2 del /Q s2 2>nul
+	@if exist $(TARGET).b02 del /Q $(TARGET).b02 2>nul
+	@if exist $(TARGET).p02 del /Q $(TARGET).p02 2>nul
+	@if exist $(TARGET).r02 del /Q $(TARGET).r02 2>nul
+	@if exist $(TARGET).shess del /Q $(TARGET).shess 2>nul
+	@if exist hybrid_seed del /Q hybrid_seed  2>nul
 else
 	@rm -vf a
 	@rm -vf b1
@@ -62,4 +71,9 @@ else
 	@rm -vf hesscheck
 	@rm -vf s1
 	@rm -vf s2
+	@rm -vf $(TARGET).b02
+	@rm -vf $(TARGET).p02
+	@rm -vf $(TARGET).r02
+	@rm -vf $(TARGET).shess
+	@rm -vf hybrid_seed
 endif

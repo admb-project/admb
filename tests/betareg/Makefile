@@ -20,6 +20,8 @@ get-outputs: _get-outputs
 	@if exist hesscheck type hesscheck
 	@if exist s1 type s1
 	@if exist s2 type s2
+	@if exist $(TARGET).b02 type $(TARGET).b02
+	@if exist $(TARGET).p02 type $(TARGET).p02
 
 clean: _clean
 	@if exist a del /Q a 2>nul
@@ -29,3 +31,8 @@ clean: _clean
 	@if exist hesscheck del /Q hesscheck 2>nul
 	@if exist s1 del /Q s1 2>nul
 	@if exist s2 del /Q s2 2>nul
+	@if exist $(TARGET).b02 del /Q $(TARGET).b02 2>nul
+	@if exist $(TARGET).p02 del /Q $(TARGET).p02 2>nul
+	@if exist $(TARGET).r02 del /Q $(TARGET).r02 2>nul
+	@if exist $(TARGET).shess del /Q $(TARGET).shess 2>nul
+	@if exist hybrid_seed del /Q hybrid_seed  2>nul

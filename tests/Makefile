@@ -8,6 +8,8 @@ all:\
   test-4darray\
   test-adnuts\
   test-agemat\
+  test-beta_regression\
+  test-betareg\
   test-cov_re\
   test-ctl\
   test-changepoint\
@@ -111,6 +113,8 @@ clean:
 	pushd 4darray & $(MAKE) clean & popd
 	pushd adnuts & $(MAKE) clean & popd
 	pushd agemat& $(MAKE) clean & popd
+	pushd beta_regression & $(MAKE) clean & popd
+	pushd betareg & $(MAKE) clean & popd
 	pushd changepoint & $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd ctl & $(MAKE) clean & popd
@@ -156,6 +160,8 @@ get-outputs:
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
 	pushd 4darray & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd beta_regression & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd betareg & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd changepoint & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd ctl & $(MAKE) get-outputs >> ..\outputs-tests.txt

@@ -40,12 +40,14 @@ endif
 ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).std type $(TARGET).std
 	@if exist $(TARGET).par type $(TARGET).par
+	@if exist $(TARGET).p01 type $(TARGET).p01
 	@if exist $(TARGET).cor type $(TARGET).cor
 	@if exist $(TARGET).eva type $(TARGET).eva
 	@if exist $(TARGET).prf type $(TARGET).prf
 else
 	@if [ -e $(TARGET).std ]; then cat $(TARGET).std; fi
 	@if [ -e $(TARGET).par ]; then cat $(TARGET).par; fi
+	@if [ -e $(TARGET).p01 ]; then cat $(TARGET).p01; fi
 	@if [ -e $(TARGET).cor ]; then cat $(TARGET).cor; fi
 	@if [ -e $(TARGET).eva ]; then cat $(TARGET).eva; fi
 	@if [ -e $(TARGET).prf ]; then cat $(TARGET).prf; fi
@@ -72,6 +74,7 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).o del /Q $(TARGET).o 2>nul
 	@if exist $(TARGET).obj del /Q $(TARGET).obj 2>nul
 	@if exist $(TARGET).par del /Q $(TARGET).par 2>nul
+	@if exist $(TARGET).p01 del /Q $(TARGET).p01 2>nul
 	@if exist $(TARGET).std del /Q $(TARGET).std 2>nul
 	@if exist tests_$(TARGET).o del /Q tests_$(TARGET).o 2>nul
 	@if exist tests_$(TARGET) del /Q tests_$(TARGET) 2>nul
@@ -109,6 +112,7 @@ else
 	@rm -vf $(TARGET).o
 	@rm -vf $(TARGET).obj
 	@rm -vf $(TARGET).par
+	@rm -vf $(TARGET).p01
 	@rm -vf $(TARGET).std
 	@rm -vf $(TARGET).luu
 	@rm -vf $(TARGET).rhes

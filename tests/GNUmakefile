@@ -90,7 +90,6 @@ core-tpls:\
   tpl-beta_regression\
   tpl-colfill\
   tpl-cov_re\
-  tpl-betareg\
   tpl-expm\
   tpl-hysimple\
   tpl-initializationfunction\
@@ -366,7 +365,7 @@ endif
 	$(MAKE) --directory=beta3 clean
 	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=high_iarray clean
-	$(MAKE) --directory=tiny clean
+	-$(MAKE) --directory=tiny clean
 	$(MAKE) --directory=tiny_ad_fe clean
 	$(MAKE) --directory=tinyfun clean
 	$(MAKE) --directory=poisp clean
@@ -429,6 +428,7 @@ ifeq ($(CMDSHELL),cmd)
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=betai get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=betareg get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=colfill get-outputs >> ..\\outputs-tests.txt
@@ -455,6 +455,7 @@ else
 	@echo "# tests outputs\n" > ../outputs-tests.txt
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=betai get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=betareg get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=colfill get-outputs >> ../outputs-tests.txt

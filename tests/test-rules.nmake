@@ -17,6 +17,7 @@ _get-outputs:
 get-outputs:
 !ENDIF
 	if exist $(TARGET).par type $(TARGET).par
+	if exist $(TARGET).p01 type $(TARGET).p01
 	if exist $(TARGET).std type $(TARGET).std
 	if exist $(TARGET).cor type $(TARGET).cor
 	if exist $(TARGET).eva type $(TARGET).eva
@@ -40,6 +41,7 @@ clean:
 	if exist $(TARGET).log del /Q $(TARGET).log
 	if exist $(TARGET).obj del /Q $(TARGET).obj
 	if exist $(TARGET).par del /Q $(TARGET).par
+	if exist $(TARGET).p01 del /Q $(TARGET).p01
 	if exist $(TARGET).std del /Q $(TARGET).std
 	if exist $(TARGET).prf del /Q $(TARGET).prf
 	if exist fmin.log del /Q fmin.log

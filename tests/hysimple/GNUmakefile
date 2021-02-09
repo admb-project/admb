@@ -19,3 +19,8 @@ endif
 get-outputs: _get-outputs
 
 clean: _clean
+ifeq ($(CMDSHELL),cmd)
+	if exist hybrid_seed del /Q hybrid_seed
+else
+	@rm -vf hybrid_seed
+endif

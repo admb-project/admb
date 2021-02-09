@@ -9,6 +9,7 @@ all:\
   test-adnuts\
   test-agemat\
   test-cov_re\
+  test-changepoint\
   test-expm\
   test-hysimple\
   test-lprof\
@@ -37,6 +38,9 @@ test-adnuts:
 
 test-agemat:
 	pushd agemat& $(MAKE) & popd
+
+test-changepoint:
+	pushd changepoint & $(MAKE) & popd
 
 test-cov_re:
 	pushd cov_re & $(MAKE) & popd
@@ -99,6 +103,7 @@ clean:
 	pushd 4darray & $(MAKE) clean & popd
 	pushd adnuts & $(MAKE) clean & popd
 	pushd agemat& $(MAKE) clean & popd
+	pushd changepoint & $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
@@ -142,6 +147,7 @@ get-outputs:
 	pushd 4darray & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd changepoint & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd lprof & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd mcmc-theta & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd orange_mvn & $(MAKE) get-outputs >> ..\outputs-tests.txt

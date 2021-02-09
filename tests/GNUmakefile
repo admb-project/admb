@@ -420,6 +420,8 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=colfill get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=changepoint get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=hysimple get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=initializationfunction get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=lprof get-outputs >> ..\\outputs-tests.txt
@@ -441,6 +443,8 @@ else
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=colfill get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=changepoint get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=hysimple get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=initializationfunction get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=lprof get-outputs >> ../outputs-tests.txt

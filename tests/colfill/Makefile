@@ -1,26 +1,10 @@
-ADMB_HOME=$(ADMB_HOME)
-PATH=$(ADMB_HOME)\bin;$(PATH)
+TARGET=colfill
 
-all: colfill
+!include <..\test-rules.nmake>
 
-colfill: colfill.tpl
-	admb colfill.tpl
-	colfill -nohess
+run: $(TARGET)
+	$(TARGET) -nohess
 
-clean:
-	del admodel.cov
-	del admodel.dep
-	del admodel.hes
-	del eigv.rpt
-	del colfill.bar
-	del colfill.cor
-	del colfill.cpp
-	del colfill.eva
-	del colfill.exe
-	del colfill.htp
-	del colfill.log
-	del colfill.obj
-	del colfill.par
-	del colfill.std
-	del fmin.log
-	del variance
+get-outputs: _get-outputs
+
+clean: _clean

@@ -42,11 +42,13 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).par type $(TARGET).par
 	@if exist $(TARGET).cor type $(TARGET).cor
 	@if exist $(TARGET).eva type $(TARGET).eva
+	@if exist $(TARGET).prf type $(TARGET).prf
 else
 	@[ -f $(TARGET).std ] && cat $(TARGET).std
 	@[ -f $(TARGET).par ] && cat $(TARGET).par
 	@[ -f $(TARGET).cor ] && cat $(TARGET).cor
 	@[ -f $(TARGET).eva ] && cat $(TARGET).eva
+	@[ -f $(TARGET).prf ] && cat $(TARGET).prf
 endif
 
 ifeq ($(OVERRIDE),all)
@@ -87,6 +89,7 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).mc2 del /Q $(TARGET).mc2 2>nul
 	@if exist $(TARGET).mcm del /Q $(TARGET).mcm 2>nul
 	@if exist $(TARGET).psv del /Q $(TARGET).psv 2>nul
+	@if exist $(TARGET).prf  del /Q $(TARGET).prf  2>nul
 	@if exist sims del /Q sims 2>nul
 else
 	@rm -vf $(TARGET)
@@ -124,5 +127,6 @@ else
 	@rm -vf $(TARGET).mc2
 	@rm -vf $(TARGET).mcm
 	@rm -vf $(TARGET).psv
+	@rm -vf $(TARGET).prf
 	@rm -vf sims
 endif

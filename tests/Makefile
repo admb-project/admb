@@ -10,6 +10,8 @@ all:\
   test-agemat\
   test-cov_re\
   test-expm\
+  test-hysimple\
+  test-lprof\
   test-mcmc-theta\
   test-orange_mvn\
   test-poisp\
@@ -44,6 +46,12 @@ test-expm:
 
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd
+
+test-hysimple:
+	pushd hysimple & $(MAKE) & popd
+
+test-lprof:
+	pushd lprof & $(MAKE) & popd
 
 test-mcmc-theta:
 	pushd mcmc-theta & $(MAKE) & popd
@@ -95,6 +103,8 @@ clean:
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
 	if exist SS3 rmdir /s /q SS3
+	pushd hysimple & $(MAKE) clean & popd
+	pushd lprof & $(MAKE) clean & popd
 	pushd mcmc-theta & $(MAKE) clean & popd
 	pushd orange_mvn & $(MAKE) clean & popd
 	pushd poisp & $(MAKE) clean & popd
@@ -132,6 +142,7 @@ get-outputs:
 	pushd 4darray & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd lprof & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd mcmc-theta & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd orange_mvn & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd poisp & $(MAKE) get-outputs >> ..\outputs-tests.txt

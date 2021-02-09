@@ -1,3 +1,3 @@
-TARGET=mcmc-theta
+TARGET=theta
 
 !include <..\test-rules.nmake>

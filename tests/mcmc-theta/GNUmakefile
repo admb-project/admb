@@ -7,7 +7,7 @@ else
 include ../test-rules.mak
 endif
 
-run:
+run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -nonit -mcmc 1000 -mcsave 10
 else

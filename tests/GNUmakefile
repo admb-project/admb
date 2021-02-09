@@ -90,6 +90,8 @@ core-tpls:\
   tpl-colfill\
   tpl-cov_re\
   tpl-expm\
+  tpl-hysimple\
+  tpl-initializationfunction\
   tpl-gradients_output\
   tpl-simple_mcmc\
   tpl-hysimple\
@@ -188,6 +190,12 @@ tpl-ctl:
 tpl-expm:
 	$(MAKE) --directory=expm
 
+tpl-hysimple:
+	$(MAKE) --directory=hysimple
+
+tpl-initializationfunction:
+	$(MAKE) --directory=initializationfunction
+
 tpl-simple_mcmc:
 	$(MAKE) --directory=simple_mcmc
 
@@ -219,9 +227,7 @@ tpl-orange_mvn:
 	$(MAKE) --directory=orange_mvn
 
 tpl-lprof:
-ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=lprof
-endif
 
 example-prof_like:
 	$(MAKE) --directory=../examples/admb/prof_like
@@ -280,8 +286,6 @@ ifeq ($(CMDSHELL),cmd)
 	@del f1b2vc5\\f1b2vc5.b01
 	@del f1b2vc5\\f1b2vc5.p01
 else
-	$(MAKE) --directory=adnuts _clean
-	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3
 	@rm -vf dd2/f1b2list1
 	@rm -vf dd2/f1b2list12
@@ -340,6 +344,10 @@ endif
 	$(MAKE) --directory=globals clean
 	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=expm clean
+	$(MAKE) --directory=adnuts clean
+	$(MAKE) --directory=lprof clean
+	$(MAKE) --directory=initializationfunction clean
+	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean
 	$(MAKE) --directory=hysimple clean
@@ -417,6 +425,9 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=hysimple get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=initializationfunction get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=lprof get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=mcmc-theta get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=orange_mvn get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=poisp get-outputs >> ..\\outputs-tests.txt
@@ -435,6 +446,9 @@ else
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=hysimple get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=initializationfunction get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=lprof get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=mcmc-theta get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=orange_mvn get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=poisp get-outputs >> ../outputs-tests.txt

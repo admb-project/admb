@@ -20,6 +20,7 @@ get-outputs:
 	if exist $(TARGET).std type $(TARGET).std
 	if exist $(TARGET).cor type $(TARGET).cor
 	if exist $(TARGET).eva type $(TARGET).eva
+	if exist $(TARGET).prf type $(TARGET).prf
 
 !IF "$(OVERRIDE)"=="all"
 _clean:
@@ -40,5 +41,6 @@ clean:
 	if exist $(TARGET).obj del /Q $(TARGET).obj
 	if exist $(TARGET).par del /Q $(TARGET).par
 	if exist $(TARGET).std del /Q $(TARGET).std
+	if exist $(TARGET).prf del /Q $(TARGET).prf
 	if exist fmin.log del /Q fmin.log
 	if exist variance del /Q variance

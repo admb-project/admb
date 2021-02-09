@@ -81,6 +81,7 @@ core-tpls:\
   tpl-poisp\
   tpl-vectorize\
   tpl-vonmises\
+  tpl-high_iarray\
   tpl-bessel\
   tpl-qbeta\
   tpl-dd2\
@@ -89,6 +90,7 @@ core-tpls:\
   tpl-beta_regression\
   tpl-colfill\
   tpl-cov_re\
+  tpl-betareg\
   tpl-expm\
   tpl-hysimple\
   tpl-initializationfunction\
@@ -141,6 +143,9 @@ tpl-beta3:
 tpl-vonmises:
 	$(MAKE) --directory=vonmises
 
+tpl-high_iarray:
+	$(MAKE) --directory=high_iarray
+
 tpl-tiny_ad_fe:
 	$(MAKE) --directory=tiny_ad_fe
 
@@ -185,6 +190,9 @@ tpl-cov_re:
 
 tpl-ctl:
 	$(MAKE) --directory=ctl
+
+tpl-betareg:
+	$(MAKE) --directory=betareg
 
 tpl-expm:
 	$(MAKE) --directory=expm
@@ -339,6 +347,7 @@ endif
 	$(MAKE) --directory=rgamma clean
 	$(MAKE) --directory=globals clean
 	$(MAKE) --directory=f1b2vc5 clean
+	$(MAKE) --directory=betareg clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=adnuts clean
 	$(MAKE) --directory=lprof clean
@@ -356,6 +365,7 @@ endif
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
 	$(MAKE) --directory=vonmises clean
+	$(MAKE) --directory=high_iarray clean
 	$(MAKE) --directory=tiny clean
 	$(MAKE) --directory=tiny_ad_fe clean
 	$(MAKE) --directory=tinyfun clean
@@ -419,9 +429,11 @@ ifeq ($(CMDSHELL),cmd)
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=betareg get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=colfill get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=changepoint get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=ctl get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=hysimple get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=initializationfunction get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=lprof get-outputs >> ..\\outputs-tests.txt
@@ -437,14 +449,17 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=tinyfun get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=vectorize get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=vonmises get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=high_iarray get-outputs >> ..\\outputs-tests.txt
 else
 	rm -vf ../outputs-tests.txt
 	@echo "# tests outputs\n" > ../outputs-tests.txt
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=betareg get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=colfill get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=changepoint get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=ctl get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=hysimple get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=initializationfunction get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=lprof get-outputs >> ../outputs-tests.txt
@@ -459,5 +474,5 @@ else
 	$(MAKE) --directory=tiny_ad_re get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=tinyfun get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=vectorize get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=vonmises get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=high_iarray get-outputs >> ../outputs-tests.txt
 endif

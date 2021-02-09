@@ -9,8 +9,10 @@ all:\
   test-adnuts\
   test-agemat\
   test-cov_re\
+  test-ctl\
   test-changepoint\
   test-expm\
+  test-high_iarray\
   test-hysimple\
   test-lprof\
   test-mcmc-theta\
@@ -39,6 +41,9 @@ test-adnuts:
 test-agemat:
 	pushd agemat& $(MAKE) & popd
 
+test-ctl:
+	pushd ctl & $(MAKE) & popd
+
 test-changepoint:
 	pushd changepoint & $(MAKE) & popd
 
@@ -50,6 +55,9 @@ test-expm:
 
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd
+
+test-high_iarray:
+	pushd high_iarray & $(MAKE) & popd
 
 test-hysimple:
 	pushd hysimple & $(MAKE) & popd
@@ -105,9 +113,11 @@ clean:
 	pushd agemat& $(MAKE) clean & popd
 	pushd changepoint & $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
+	pushd ctl & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
 	if exist SS3 rmdir /s /q SS3
+	pushd high_iarray & $(MAKE) clean & popd
 	pushd hysimple & $(MAKE) clean & popd
 	pushd lprof & $(MAKE) clean & popd
 	pushd mcmc-theta & $(MAKE) clean & popd
@@ -148,6 +158,9 @@ get-outputs:
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd changepoint & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd ctl & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd high_iarray & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd hysimple & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd lprof & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd mcmc-theta & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd orange_mvn & $(MAKE) get-outputs >> ..\outputs-tests.txt

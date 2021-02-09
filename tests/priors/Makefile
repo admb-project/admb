@@ -16,6 +16,8 @@ $(TPL_TARGET): $(TPL_TARGET).tpl
 $(TPL_TARGETRE): $(TPL_TARGETRE).tpl
 	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=${CXXFLAGS} admb -s -r $(TPL_TARGETRE)
 
+get-outputs:
+
 clean:
 	@if exist eigv.rpt del /Q eigv.rpt
 	@if exist fmin.log del /Q fmin.log

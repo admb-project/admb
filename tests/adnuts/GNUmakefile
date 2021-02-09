@@ -32,6 +32,8 @@ output_psv: output_psv.cpp
 endif
 	$(CXX) -o $@ $^
 
+get-outputs: _get-outputs
+
 clean: _clean
 ifeq ($(CMDSHELL),cmd)
 	@if exist adaptation.csv del /Q adaptation.csv

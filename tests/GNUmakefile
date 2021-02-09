@@ -94,7 +94,6 @@ core-tpls:\
   tpl-initializationfunction\
   tpl-gradients_output\
   tpl-simple_mcmc\
-  tpl-hysimple\
   tpl-adnuts\
   tpl-mcmc-theta\
   tpl-orange_mvn\
@@ -207,9 +206,6 @@ tpl-geolocation:
 
 tpl-gmrf:
 	$(MAKE) --directory=gmrf
-
-tpl-hysimple:
-	$(MAKE) --directory=hysimple
 
 tpl-adnuts:
 	$(MAKE) --directory=adnuts
@@ -350,7 +346,6 @@ endif
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean
-	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=adnuts clean
 	$(MAKE) --directory=betareg clean
 	$(MAKE) --directory=gmrf clean

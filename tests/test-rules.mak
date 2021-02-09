@@ -44,11 +44,11 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).eva type $(TARGET).eva
 	@if exist $(TARGET).prf type $(TARGET).prf
 else
-	@[ -f $(TARGET).std ] && cat $(TARGET).std
-	@[ -f $(TARGET).par ] && cat $(TARGET).par
-	@[ -f $(TARGET).cor ] && cat $(TARGET).cor
-	@[ -f $(TARGET).eva ] && cat $(TARGET).eva
-	@[ -f $(TARGET).prf ] && cat $(TARGET).prf
+	@if [ -e $(TARGET).std ]; then cat $(TARGET).std; fi
+	@if [ -e $(TARGET).par ]; then cat $(TARGET).par; fi
+	@if [ -e $(TARGET).cor ]; then cat $(TARGET).cor; fi
+	@if [ -e $(TARGET).eva ]; then cat $(TARGET).eva; fi
+	@if [ -e $(TARGET).prf ]; then cat $(TARGET).prf; fi
 endif
 
 ifeq ($(OVERRIDE),all)

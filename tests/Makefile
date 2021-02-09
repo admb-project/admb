@@ -12,6 +12,8 @@ all:\
   test-beta_regression\
   test-beta2\
   test-beta3\
+  test-betai\
+  test-beta_deviate\
   test-betareg\
   test-cov_re\
   test-ctl\
@@ -58,6 +60,12 @@ test-beta3:
 
 test-beta_regression:
 	pushd beta_regression & $(MAKE) & popd
+
+test-beta_deviate:
+	pushd beta_deviate& $(MAKE) & popd
+
+test-betai:
+	pushd betai& $(MAKE) & popd
 
 test-betareg:
 	pushd betareg & $(MAKE) & popd
@@ -140,6 +148,8 @@ clean:
 	pushd betareg & $(MAKE) clean & popd
 	pushd beta2 & $(MAKE) clean & popd
 	pushd beta3 & $(MAKE) clean & popd
+	pushd betai & $(MAKE) clean & popd
+	pushd beta_deviate & $(MAKE) clean & popd
 	pushd changepoint & $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd ctl & $(MAKE) clean & popd
@@ -191,6 +201,8 @@ get-outputs:
 	pushd betareg & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd beta2 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd beta3 & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd betai & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd beta_deviate & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd dd2 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd changepoint & $(MAKE) get-outputs >> ..\outputs-tests.txt

@@ -416,6 +416,8 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=bessel get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=beta2 get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=beta3 get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=betai get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=betareg get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=dd2 get-outputs >> ..\\outputs-tests.txt
@@ -445,6 +447,7 @@ else
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=bessel get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=beta2 get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=betai get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=betareg get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=dd2 get-outputs >> ../outputs-tests.txt

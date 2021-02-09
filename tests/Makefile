@@ -10,6 +10,8 @@ all:\
   test-agemat\
   test-bessel\
   test-beta_regression\
+  test-beta2\
+  test-beta3\
   test-betareg\
   test-cov_re\
   test-ctl\
@@ -47,6 +49,18 @@ test-agemat:
 
 test-bessel:
 	pushd bessel & $(MAKE) & popd
+
+test-beta2:
+	pushd beta2 & $(MAKE) & popd
+
+test-beta3:
+	pushd beta3 & $(MAKE) & popd
+
+test-beta_regression:
+	pushd beta_regression & $(MAKE) & popd
+
+test-betareg:
+	pushd betareg & $(MAKE) & popd
 
 test-ctl:
 	pushd ctl & $(MAKE) & popd
@@ -124,6 +138,8 @@ clean:
 	pushd bessel & $(MAKE) clean & popd
 	pushd beta_regression & $(MAKE) clean & popd
 	pushd betareg & $(MAKE) clean & popd
+	pushd beta2 & $(MAKE) clean & popd
+	pushd beta3 & $(MAKE) clean & popd
 	pushd changepoint & $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd ctl & $(MAKE) clean & popd
@@ -173,6 +189,8 @@ get-outputs:
 	pushd bessel & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd beta_regression & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd betareg & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd beta2 & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd beta3 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd dd2 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd changepoint & $(MAKE) get-outputs >> ..\outputs-tests.txt

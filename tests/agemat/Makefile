@@ -19,7 +19,9 @@ get-outputs: _get-outputs
 	@if exist Echo.Out type Echo.Out
 
 clean: _clean
-	@if exist rforge-nwfscassmt rmdir /s /q rforge-nwfscassmt
 	@if exist $(TARGET).tpl del /Q $(TARGET).tpl 2>nul
 	@if exist $(TARGET).dat del /Q $(TARGET).dat 2>nul
 	@if exist Echo.Out del /Q Echo.Out 2>nul
+
+total-clean:
+	@if exist rforge-nwfscassmt rmdir /s /q rforge-nwfscassmt

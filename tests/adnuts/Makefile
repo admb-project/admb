@@ -16,6 +16,14 @@ run: $(TARGET) output_psv.exe
 output_psv.exe: output_psv.cpp
 	$(CXX) /Feoutput_psv.exe output_psv.cpp
 
+get-outputs: _get-outputs
+        @if exist adaptation.csv type adaptation.csv
+        @if exist adapted_metric.txt type adapted_metric.txt
+        @if exist adnuts_psv.txt type adnuts_psv.txt
+        @if exist rwm_lp.txt type rwm_lp.txt
+        @if exist sims type sims
+        @if exist unbounded.csv type unbounded.csv
+
 clean: _clean
 	@if exist adaptation.csv del /Q adaptation.csv
 	@if exist adapted_metric.txt del /Q adapted_metric.txt

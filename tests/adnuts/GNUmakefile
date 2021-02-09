@@ -33,6 +33,21 @@ endif
 	$(CXX) -o $@ $^
 
 get-outputs: _get-outputs
+ifeq ($(CMDSHELL),cmd)
+	@if exist adaptation.csv type adaptation.csv
+	@if exist adapted_metric.txt type adapted_metric.txt
+	@if exist adnuts_psv.txt type adnuts_psv.txt
+	@if exist rwm_lp.txt type rwm_lp.txt
+	@if exist sims type sims
+	@if exist unbounded.csv type unbounded.csv
+else
+	@if [ -e adaptation.csv ]; then cat adaptation.csv; fi
+	@if [ -e adapted_metric.txt ]; then cat adapted_metric.txt; fi
+	@if [ -e adnuts_psv.txt ]; then cat adnuts_psv.txt; fi
+	@if [ -e rwm_lp.txt ]; then cat rwm_lp.txt; fi
+	@if [ -e sims ]; then cat sims; fi
+	@if [ -e unbounded.csv ]; then cat unbounded.csv; fi
+endif
 
 clean: _clean
 ifeq ($(CMDSHELL),cmd)

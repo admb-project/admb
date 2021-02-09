@@ -10,6 +10,9 @@ all:\
   test-agemat\
   test-cov_re\
   test-expm\
+  test-mcmc-theta\
+  test-orange_mvn\
+  test-poisp\
   test-priors\
   test-qbeta\
   test-simple_mcmc\
@@ -41,6 +44,15 @@ test-expm:
 
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd
+
+test-mcmc-theta:
+	pushd mcmc-theta & $(MAKE) & popd
+
+test-orange_mvn:
+	pushd orange_mvn & $(MAKE) & popd
+
+test-poisp:
+	pushd poisp & $(MAKE) & popd
 
 test-priors:
 	pushd priors & $(MAKE) & popd
@@ -83,6 +95,9 @@ clean:
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
 	if exist SS3 rmdir /s /q SS3
+	pushd mcmc-theta & $(MAKE) clean & popd
+	pushd orange_mvn & $(MAKE) clean & popd
+	pushd poisp & $(MAKE) clean & popd
 	pushd qbeta & $(MAKE) clean & popd
 	pushd simple_mcmc & $(MAKE) clean & popd
 	pushd testminmax & $(MAKE) clean & popd
@@ -117,6 +132,9 @@ get-outputs:
 	pushd 4darray & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd mcmc-theta & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd orange_mvn & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd poisp & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd qbeta & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd simple_mcmc & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd testminmax & $(MAKE) get-outputs >> ..\outputs-tests.txt

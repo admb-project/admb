@@ -94,6 +94,7 @@ core-tpls:\
   tpl-simple_mcmc\
   tpl-hysimple\
   tpl-adnuts\
+  tpl-mcmc-theta\
   tpl-orange_mvn\
   cpp-globals\
   tpl-lprof
@@ -210,6 +211,9 @@ tpl-priors:
 
 tpl-testminmax:
 	$(MAKE) --directory=testminmax
+
+tpl-mcmc-theta:
+	$(MAKE) --directory=mcmc-theta
 
 tpl-orange_mvn:
 	$(MAKE) --directory=orange_mvn
@@ -365,6 +369,7 @@ endif
 	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=colfill clean
 	$(MAKE) --directory=glmmadmb clean
+	$(MAKE) --directory=mcmc-theta clean
 	$(MAKE) --directory=orange_mvn clean
 	$(MAKE) --directory=gradients_output clean
 	$(MAKE) --directory=4darray clean
@@ -412,6 +417,9 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=mcmc-theta get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=orange_mvn get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=poisp get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=priors get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=qbeta get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=simple_mcmc get-outputs >> ..\\outputs-tests.txt
@@ -427,6 +435,9 @@ else
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=mcmc-theta get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=orange_mvn get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=poisp get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=priors get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=qbeta get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=simple_mcmc get-outputs >> ../outputs-tests.txt

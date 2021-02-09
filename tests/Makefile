@@ -13,6 +13,7 @@ all:\
   test-cov_re\
   test-ctl\
   test-changepoint\
+  test-dd2\
   test-expm\
   test-high_iarray\
   test-hysimple\
@@ -51,6 +52,9 @@ test-changepoint:
 
 test-cov_re:
 	pushd cov_re & $(MAKE) & popd
+
+test-dd2:
+	pushd dd2 & $(MAKE) & popd
 
 test-expm:
 	pushd expm & $(MAKE) & popd
@@ -118,6 +122,7 @@ clean:
 	pushd changepoint & $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd ctl & $(MAKE) clean & popd
+	pushd dd2 & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
 	if exist SS3 rmdir /s /q SS3
@@ -162,6 +167,7 @@ get-outputs:
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd beta_regression & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd betareg & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd dd2 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd changepoint & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd ctl & $(MAKE) get-outputs >> ..\outputs-tests.txt

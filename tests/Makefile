@@ -8,6 +8,7 @@ all:\
   test-4darray\
   test-adnuts\
   test-agemat\
+  test-altexample\
   test-bessel\
   test-beta_regression\
   test-beta2\
@@ -20,6 +21,9 @@ all:\
   test-changepoint\
   test-dd2\
   test-expm\
+  test-f1b2vc5\
+  test-geolocation\
+  test-gradients_output\
   test-high_iarray\
   test-hysimple\
   test-lprof\
@@ -47,7 +51,11 @@ test-adnuts:
 	pushd adnuts & $(MAKE) & popd
 
 test-agemat:
-	pushd agemat& $(MAKE) & popd
+	pushd agemat & $(MAKE) & popd
+
+test-altexample:
+	pushd altexample & $(MAKE) & popd
+
 
 test-bessel:
 	pushd bessel & $(MAKE) & popd
@@ -85,8 +93,14 @@ test-dd2:
 test-expm:
 	pushd expm & $(MAKE) & popd
 
+test-f1b2vc5 :
+	pushd f1b2vc5 & $(MAKE) & popd
+
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd
+
+test-gradients_output:
+	pushd gradients_output & $(MAKE) & popd
 
 test-high_iarray:
 	pushd high_iarray & $(MAKE) & popd
@@ -142,7 +156,8 @@ clean:
 	pushd gtests & $(MAKE) clean & popd
 	pushd 4darray & $(MAKE) clean & popd
 	pushd adnuts & $(MAKE) clean & popd
-	pushd agemat& $(MAKE) clean & popd
+	pushd agemat & $(MAKE) clean & popd
+	pushd altexample & $(MAKE) clean & popd
 	pushd bessel & $(MAKE) clean & popd
 	pushd beta_regression & $(MAKE) clean & popd
 	pushd betareg & $(MAKE) clean & popd
@@ -155,7 +170,9 @@ clean:
 	pushd ctl & $(MAKE) clean & popd
 	pushd dd2 & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
+	pushd f1b2vc5 & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
+	pushd gradients_output & $(MAKE) clean & popd
 	if exist SS3 rmdir /s /q SS3
 	pushd high_iarray & $(MAKE) clean & popd
 	pushd hysimple & $(MAKE) clean & popd
@@ -194,6 +211,8 @@ copy:
 get-outputs:
 	del ..\\outputs-tests.txt
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
+	pushd agemat & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd altexample & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd 4darray & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd adnuts & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd bessel & $(MAKE) get-outputs >> ..\outputs-tests.txt
@@ -205,6 +224,7 @@ get-outputs:
 	pushd beta_deviate & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd dd2 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd f1b2vc5 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd changepoint & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd ctl & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd high_iarray & $(MAKE) get-outputs >> ..\outputs-tests.txt

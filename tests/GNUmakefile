@@ -67,6 +67,7 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 core-tpls:\
+  tpl-altexample\
   tpl-data_adstring_array\
   tpl-dd2\
   tpl-testminmax\
@@ -101,7 +102,6 @@ core-tpls:\
   tpl-lprof
 
 remote-core-tpls:\
-  tpl-geolocation\
   tpl-changepoint\
   tpl-geolocation\
   tpl-glmmadmb
@@ -128,6 +128,9 @@ tpl-glmmadmb:
 
 tpl-agemat:
 	$(MAKE) --directory=agemat
+
+tpl-altexample:
+	$(MAKE) --directory=altexample
 
 tpl-betai:
 	$(MAKE) --directory=betai
@@ -275,60 +278,8 @@ total-clean: clean
 clean:
 ifeq ($(CMDSHELL),cmd)
 	@if exist SS3 rmdir /s /q SS3
-	@del dualaveraging\\dualaveraging.cpp
-	@del dualaveraging\\dualaveraging.htp
-	@del dualaveraging\\dualaveraging.obj
-	@del dualaveraging\\hybmcmc.obj
-	@del f1b2vc5\\f1b2vc5.b01
-	@del f1b2vc5\\f1b2vc5.p01
 else
 	@rm -rvf SS3
-	@rm -vf dualaveraging/dualaveraging.cpp
-	@rm -vf dualaveraging/dualaveraging.htp
-	@rm -vf dualaveraging/dualaveraging.obj
-	@rm -vf dualaveraging/hybmcmc.obj
-	@rm -vf f1b2vc5/f1b2vc5.b01
-	@rm -vf f1b2vc5/f1b2vc5.p01
-	@rm -vf beta_regression/b1
-	@rm -vf beta_regression/b2
-	@rm -vf beta_regression/beta_regression.psv
-	@rm -vf beta_regression/data
-	@rm -vf beta_regression/hybrid_seed
-	@rm -vf beta_regression/s1
-	@rm -vf beta_regression/s2
-	@rm -vf beta_regression/sims
-	@rm -vf betareg/a
-	@rm -vf betareg/b1
-	@rm -vf betareg/b2
-	@rm -vf betareg/betareg.b02
-	@rm -vf betareg/betareg.p02
-	@rm -vf betareg/betareg.r02
-	@rm -vf betareg/data
-	@rm -vf betareg/s1
-	@rm -vf betareg/s2
-	@rm -vf cov_re/cov_re_sep.bar
-	@rm -vf cov_re/cov_re_sep.bgs
-	@rm -vf cov_re/cov_re_sep.cor
-	@rm -vf cov_re/cov_re_sep.cpp
-	@rm -vf cov_re/cov_re_sep.eva
-	@rm -vf cov_re/cov_re_sep.exe
-	@rm -vf cov_re/cov_re_sep.htp
-	@rm -vf cov_re/cov_re_sep.log
-	@rm -vf cov_re/cov_re_sep.obj
-	@rm -vf cov_re/cov_re_sep.par
-	@rm -vf cov_re/cov_re_sep.rhes
-	@rm -vf cov_re/cov_re_sep.std
-	@rm -vf data_adstring_array/data_adstring_array.bar
-	@rm -vf data_adstring_array/data_adstring_array.cor
-	@rm -vf data_adstring_array/data_adstring_array.cpp
-	@rm -vf data_adstring_array/data_adstring_array.eva
-	@rm -vf data_adstring_array/data_adstring_array.exe
-	@rm -vf data_adstring_array/data_adstring_array.htp
-	@rm -vf data_adstring_array/data_adstring_array.log
-	@rm -vf data_adstring_array/data_adstring_array.obj
-	@rm -vf data_adstring_array/data_adstring_array.par
-	@rm -vf data_adstring_array/data_adstring_array.rep
-	@rm -vf data_adstring_array/data_adstring_array.std
 endif
 	$(MAKE) --directory=rgamma clean
 	$(MAKE) --directory=globals clean
@@ -364,6 +315,7 @@ endif
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean
 	$(MAKE) --directory=agemat clean
+	$(MAKE) --directory=altexample clean
 	$(MAKE) --directory=ctl clean
 	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=colfill clean
@@ -413,6 +365,8 @@ get-outputs:
 ifeq ($(CMDSHELL),cmd)
 	del ..\\outputs-tests.txt
 	@echo "# tests outputs\n" > ..\\outputs-tests.txt
+	$(MAKE) --directory=agemat get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=altexample get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=bessel get-outputs >> ..\\outputs-tests.txt
@@ -423,9 +377,11 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=betareg get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=dd2 get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=f1b2vc5 get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=colfill get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=changepoint get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=ctl get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=gradients_output get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=hysimple get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=initializationfunction get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=lprof get-outputs >> ..\\outputs-tests.txt
@@ -445,6 +401,8 @@ ifeq ($(CMDSHELL),cmd)
 else
 	rm -vf ../outputs-tests.txt
 	@echo "# tests outputs\n" > ../outputs-tests.txt
+	$(MAKE) --directory=agemat get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=altexample get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=bessel get-outputs >> ../outputs-tests.txt
@@ -454,9 +412,11 @@ else
 	$(MAKE) --directory=betareg get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=dd2 get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=f1b2vc5 get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=colfill get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=changepoint get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=ctl get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=gradients_output get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=hysimple get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=initializationfunction get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=lprof get-outputs >> ../outputs-tests.txt

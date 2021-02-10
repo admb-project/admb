@@ -8,8 +8,13 @@ run: $(TARGET)
 !ENDIF
 	$(TARGET)
 
-$(TARGET): $(TARGET).tpl
-	..\..\admb $(TARGET).tpl
+!IF EXISTS($(TARGET).tpl)
+$(TARGET): $(TARGET).tpl $(SRCS)
+	..\..\admb $(TARGET).tpl $(SRCS)
+!ELSE
+$(TARGET): $(SRCS)
+	..\..\admb $(SRCS)
+!ENDIF
 
 !IF "$(OVERRIDE)"=="all"
 _get-outputs:

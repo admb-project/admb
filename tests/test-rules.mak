@@ -1,3 +1,11 @@
+ifeq ($(TARGET),)
+  ifeq ($(SRCS),)
+    $(error Error: The variables TARGET and SRCS are empty.);
+  endif
+  USE_SRCS=yes
+  TARGET=$(basename $(firstword $(SRCS)))
+endif
+
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
@@ -14,11 +22,20 @@ endif
 all: clean
 	$(MAKE) run
 
-$(TARGET): $(TARGET).tpl
-ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb.cmd $(TARGET) $(SRCS)
+ifeq (yes,$(USE_SRCS))
+$(TARGET): $(SRCS)
+  ifeq ($(CMDSHELL),cmd)
+	..\\..\\admb.cmd $(SRCS)
+  else
+	../../admb$(EXT) $(SRCS)
+  endif
 else
+$(TARGET): $(TARGET).tpl $(SRCS)
+  ifeq ($(CMDSHELL),cmd)
+	..\\..\\admb.cmd $(TARGET) $(SRCS)
+  else
 	../../admb$(EXT) $(TARGET) $(SRCS)
+  endif
 endif
 
 ifeq ($(OVERRIDE),all)
@@ -69,7 +86,9 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).bar del /Q $(TARGET).bar 2>nul
 	@if exist $(TARGET).bgs del /Q $(TARGET).bgs 2>nul
 	@if exist $(TARGET)cor del /Q $(TARGET).cor 2>nul
+ifeq (,$(USE_SRCS))
 	@if exist $(TARGET).cpp del /Q $(TARGET).cpp 2>nul
+endif
 	@if exist $(TARGET).log del /Q $(TARGET).log 2>nul
 	@if exist $(TARGET).o del /Q $(TARGET).o 2>nul
 	@if exist $(TARGET).obj del /Q $(TARGET).obj 2>nul
@@ -107,7 +126,9 @@ else
 	@rm -vf $(TARGET).bar
 	@rm -vf $(TARGET).bgs
 	@rm -vf $(TARGET).cor
+ifeq (,$(USE_SRCS))
 	@rm -vf $(TARGET).cpp
+endif
 	@rm -vf $(TARGET).log
 	@rm -vf $(TARGET).o
 	@rm -vf $(TARGET).obj

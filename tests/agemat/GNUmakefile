@@ -30,7 +30,7 @@ get-outputs: _get-outputs
 ifeq ($(CMDSHELL),cmd)
 	@if exist Echo.Out type Echo.Out
 else
-	@[ -f Echo.Out ] && cat Echo.Out
+	@if [ -e Echo.Out ]; then  && cat Echo.Out; fi
 endif
 
 clean: _clean

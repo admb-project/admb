@@ -70,6 +70,7 @@ core-tpls:\
   tpl-altexample\
   tpl-data_adstring_array\
   tpl-dd2\
+  tpl-dualaveraging\
   tpl-testminmax\
   example-prof_like\
   tpl-f1b2vc5\
@@ -167,6 +168,9 @@ tpl-qbeta:
 
 tpl-dd2:
 	$(MAKE) --directory=dd2
+
+tpl-dualaveraging:
+	$(MAKE) --directory=dualaveraging
 
 tpl-data_adstring_array:
 	$(MAKE) --directory=data_adstring_array
@@ -292,6 +296,7 @@ endif
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean
+	$(MAKE) --directory=data_adstring_array clean
 	$(MAKE) --directory=adnuts clean
 	$(MAKE) --directory=betareg clean
 	$(MAKE) --directory=gmrf clean
@@ -311,6 +316,7 @@ endif
 	$(MAKE) --directory=bessel clean
 	$(MAKE) --directory=qbeta clean
 	$(MAKE) --directory=dd2 clean
+	$(MAKE) --directory=dualaveraging clean
 	$(MAKE) --directory=beta_deviate clean
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean
@@ -375,7 +381,9 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=beta_deviate get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=betai get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=betareg get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=data_adstring_array  get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=dd2 get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=dualaveraging get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=f1b2vc5 get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=colfill get-outputs >> ..\\outputs-tests.txt
@@ -410,7 +418,9 @@ else
 	$(MAKE) --directory=beta_deviate get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=betai get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=betareg get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=data_adstring_array get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=dd2 get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=dualaveraging get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=f1b2vc5 get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=colfill get-outputs >> ../outputs-tests.txt

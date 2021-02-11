@@ -19,7 +19,9 @@ all:\
   test-cov_re\
   test-ctl\
   test-changepoint\
+  test-data_adstring_array\
   test-dd2\
+  test-dualaveraging\
   test-expm\
   test-f1b2vc5\
   test-geolocation\
@@ -87,8 +89,14 @@ test-changepoint:
 test-cov_re:
 	pushd cov_re & $(MAKE) & popd
 
+test-data_adstring_array:
+	pushd data_adstring_array& $(MAKE) & popd
+
 test-dd2:
 	pushd dd2 & $(MAKE) & popd
+
+test-dualaveraging:
+	pushd dualaveraging & $(MAKE) & popd
 
 test-expm:
 	pushd expm & $(MAKE) & popd
@@ -168,7 +176,9 @@ clean:
 	pushd changepoint & $(MAKE) clean & popd
 	pushd cov_re & $(MAKE) clean & popd
 	pushd ctl & $(MAKE) clean & popd
+	pushd data_adstring_array & $(MAKE) clean & popd
 	pushd dd2 & $(MAKE) clean & popd
+	pushd dualaveraging & $(MAKE) clean & popd
 	pushd expm & $(MAKE) clean & popd
 	pushd f1b2vc5 & $(MAKE) clean & popd
 	pushd geolocation & $(MAKE) clean & popd
@@ -222,7 +232,9 @@ get-outputs:
 	pushd beta3 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd betai & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd beta_deviate & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd data_adstring_array & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd dd2 & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd dualaveraging & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd expm & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd f1b2vc5 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd changepoint & $(MAKE) get-outputs >> ..\outputs-tests.txt

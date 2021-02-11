@@ -205,9 +205,6 @@ tpl-cov_re:
 tpl-ctl:
 	$(MAKE) --directory=ctl
 
-tpl-betareg:
-	$(MAKE) --directory=betareg
-
 tpl-expm:
 	$(MAKE) --directory=expm
 
@@ -311,7 +308,6 @@ endif
 	$(MAKE) --directory=changepoint clean
 	$(MAKE) --directory=data_adstring_array clean
 	$(MAKE) --directory=adnuts clean
-	$(MAKE) --directory=betareg clean
 	$(MAKE) --directory=gmrf clean
 	$(MAKE) --directory=simple_mcmc clean
 	$(MAKE) --directory=testminmax clean

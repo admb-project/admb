@@ -159,6 +159,9 @@ tpl-tinyfun:
 tpl-tiny:
 	$(MAKE) --directory=tiny
 
+tpl-rsimple:
+	$(MAKE) --directory=rsimple
+
 tpl-poisp:
 	$(MAKE) --directory=poisp
 

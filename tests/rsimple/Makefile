@@ -1,4 +1,5 @@
 TARGET=rsimple
+OVERRIDE=all
 
 !include <..\test-rules.nmake>
 

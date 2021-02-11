@@ -93,6 +93,7 @@ core-tpls:\
   tpl-cov_re\
   tpl-expm\
   tpl-hysimple\
+  tpl-issue108\
   tpl-initializationfunction\
   tpl-gradients_output\
   tpl-simple_mcmc\
@@ -213,6 +214,9 @@ tpl-expm:
 tpl-hysimple:
 	$(MAKE) --directory=hysimple
 
+tpl-issue108:
+	$(MAKE) --directory=issue108
+
 tpl-initializationfunction:
 	$(MAKE) --directory=initializationfunction
 
@@ -302,6 +306,7 @@ endif
 	$(MAKE) --directory=lprof clean
 	$(MAKE) --directory=initializationfunction clean
 	$(MAKE) --directory=hysimple clean
+	$(MAKE) --directory=issue108 clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=changepoint clean
 	$(MAKE) --directory=data_adstring_array clean
@@ -400,6 +405,7 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=ctl get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=gradients_output get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=hysimple get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=issue108 get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=initializationfunction get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=lprof get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=mcmc-theta get-outputs >> ..\\outputs-tests.txt
@@ -439,6 +445,7 @@ else
 	$(MAKE) --directory=ctl get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=gradients_output get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=hysimple get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=issue108 get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=initializationfunction get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=lprof get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=mcmc-theta get-outputs >> ../outputs-tests.txt

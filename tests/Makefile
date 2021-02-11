@@ -28,6 +28,7 @@ all:\
   test-gradients_output\
   test-high_iarray\
   test-hysimple\
+  test-issue108\
   test-lprof\
   test-mcmc-theta\
   test-orange_mvn\
@@ -118,6 +119,9 @@ test-high_iarray:
 test-hysimple:
 	pushd hysimple & $(MAKE) & popd
 
+test-issue108:
+	pushd issue108 & $(MAKE) & popd
+
 test-lprof:
 	pushd lprof & $(MAKE) & popd
 
@@ -194,6 +198,7 @@ clean:
 	if exist SS3 rmdir /s /q SS3
 	pushd high_iarray & $(MAKE) clean & popd
 	pushd hysimple & $(MAKE) clean & popd
+	pushd issue108 & $(MAKE) clean & popd
 	pushd lprof & $(MAKE) clean & popd
 	pushd mcmc-theta & $(MAKE) clean & popd
 	pushd orange_mvn & $(MAKE) clean & popd
@@ -251,6 +256,7 @@ get-outputs:
 	pushd ctl & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd high_iarray & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd hysimple & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd issue108 & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd lprof & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd mcmc-theta & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd orange_mvn & $(MAKE) get-outputs >> ..\outputs-tests.txt

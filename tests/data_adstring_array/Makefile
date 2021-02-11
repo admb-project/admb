@@ -1,16 +1,16 @@
 all: clean
-	$(MAKE) /Fdata_adstring_array.mak data_adstring_array
-	$(MAKE) /Fcov_re_sep.mak cov_re_sep
+	$(MAKE) /Fdata_adstring_array.nmak data_adstring_array
+	$(MAKE) /Fcov_re_sep.nmak cov_re_sep
 	$(MAKE) run
 
 run:
-	$(MAKE) /Fdata_adstring_array.mak run
-	$(MAKE) /F=cov_re_sep.mak run
+	$(MAKE) /Fdata_adstring_array.nmak run
+	$(MAKE) /F=cov_re_sep.nmak run
 
 get-outputs:
-	$(MAKE) /Fdata_adstring_array.mak get-outputs
-	$(MAKE) /Fcov_re_sep.mak get-outputs
+	$(MAKE) /Fdata_adstring_array.nmak get-outputs
+	$(MAKE) /Fcov_re_sep.nmak get-outputs
 
 clean:
-	$(MAKE) /Fdata_adstring_array.mak clean
-	$(MAKE) /Fcov_re_sep.mak clean
+	$(MAKE) /Fdata_adstring_array.nmak clean
+	$(MAKE) /Fcov_re_sep.nmak clean

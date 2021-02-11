@@ -79,6 +79,7 @@ core-tpls:\
   tpl-beta2\
   tpl-beta3\
   tpl-tiny_ad_fe\
+  tpl-tiny_ad_re\
   tpl-tinyfun\
   tpl-poisp\
   tpl-vectorize\
@@ -153,6 +154,9 @@ tpl-high_iarray:
 
 tpl-tiny_ad_fe:
 	$(MAKE) --directory=tiny_ad_fe
+
+tpl-tiny_ad_re:
+	$(MAKE) --directory=tiny_ad_re
 
 tpl-tinyfun:
 	$(MAKE) --directory=tinyfun
@@ -320,6 +324,7 @@ endif
 	$(MAKE) --directory=rsimple clean
 	$(MAKE) --directory=tiny clean
 	$(MAKE) --directory=tiny_ad_fe clean
+	$(MAKE) --directory=tiny_ad_re clean
 	$(MAKE) --directory=tinyfun clean
 	$(MAKE) --directory=poisp clean
 	$(MAKE) --directory=vectorize clean

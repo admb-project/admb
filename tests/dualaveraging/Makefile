@@ -1,4 +1,5 @@
 TARGET=dualaveraging
+OVERRIDE=all
 
 !include <..\test-rules.nmake>
 

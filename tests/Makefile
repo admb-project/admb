@@ -34,11 +34,13 @@ all:\
   test-poisp\
   test-priors\
   test-qbeta\
+  test-rsimple\
   test-simple_mcmc\
   test-testminmax\
   test-tiny_ad_fe\
   test-tiny_ad_re\
   test-tinyfun\
+  test-tiny\
   test-vectorize\
   test-vonmises\
   test-gtests
@@ -134,6 +136,9 @@ test-priors:
 test-qbeta:
 	pushd qbeta & $(MAKE) & popd
 
+test-rsimple:
+	pushd rsimple & $(MAKE) & popd
+
 test-simple_mcmc:
 	pushd simple_mcmc & $(MAKE) & popd
 
@@ -148,6 +153,9 @@ test-tiny_ad_re:
 
 test-tinyfun:
 	pushd tinyfun & $(MAKE) & popd
+
+test-tiny:
+	pushd tiny & $(MAKE) & popd
 
 test-vectorize:
 	pushd vectorize & $(MAKE) & popd
@@ -191,11 +199,13 @@ clean:
 	pushd orange_mvn & $(MAKE) clean & popd
 	pushd poisp & $(MAKE) clean & popd
 	pushd qbeta & $(MAKE) clean & popd
+	pushd rsimple & $(MAKE) clean & popd
 	pushd simple_mcmc & $(MAKE) clean & popd
 	pushd testminmax & $(MAKE) clean & popd
 	pushd tiny_ad_fe & $(MAKE) clean & popd
 	pushd tiny_ad_re & $(MAKE) clean & popd
 	pushd tinyfun & $(MAKE) clean & popd
+	pushd tiny & $(MAKE) clean & popd
 	pushd vectorize & $(MAKE) clean & popd
 	pushd vonmises & $(MAKE) clean & popd
 
@@ -246,10 +256,12 @@ get-outputs:
 	pushd orange_mvn & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd poisp & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd qbeta & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd rsimple & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd simple_mcmc & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd testminmax & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd tiny_ad_fe & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd tiny_ad_re & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd tinyfun & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd tiny & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd vectorize & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd vonmises & $(MAKE) get-outputs >> ..\outputs-tests.txt

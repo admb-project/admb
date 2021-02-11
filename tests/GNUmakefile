@@ -99,6 +99,8 @@ core-tpls:\
   tpl-adnuts\
   tpl-mcmc-theta\
   tpl-orange_mvn\
+  tpl-rsimple\
+  tpl-tiny\
   cpp-globals\
   tpl-lprof
 
@@ -153,6 +155,9 @@ tpl-tiny_ad_fe:
 
 tpl-tinyfun:
 	$(MAKE) --directory=tinyfun
+
+tpl-tiny:
+	$(MAKE) --directory=tiny
 
 tpl-poisp:
 	$(MAKE) --directory=poisp
@@ -308,7 +313,8 @@ endif
 	$(MAKE) --directory=beta3 clean
 	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=high_iarray clean
-	-$(MAKE) --directory=tiny clean
+	$(MAKE) --directory=rsimple clean
+	$(MAKE) --directory=tiny clean
 	$(MAKE) --directory=tiny_ad_fe clean
 	$(MAKE) --directory=tinyfun clean
 	$(MAKE) --directory=poisp clean
@@ -400,9 +406,11 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=qbeta get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=simple_mcmc get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=testminmax get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=rsimple get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=tiny_ad_fe get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=tiny_ad_re get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=tinyfun get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=tiny get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=vectorize get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=vonmises get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=high_iarray get-outputs >> ..\\outputs-tests.txt
@@ -437,9 +445,11 @@ else
 	$(MAKE) --directory=qbeta get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=simple_mcmc get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=testminmax get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=rsimple get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=tiny_ad_fe get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=tiny_ad_re get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=tinyfun get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=tiny get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=vectorize get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=high_iarray get-outputs >> ../outputs-tests.txt
 endif

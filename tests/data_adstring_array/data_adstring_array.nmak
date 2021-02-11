@@ -1,0 +1,3 @@
+TARGET=data_adstring_array
+
+!include <..\test-rules.nmake>

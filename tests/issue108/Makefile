@@ -12,7 +12,7 @@ $(TARGET).dat: dat
 dat: dat.cpp
 	$(CXX) -o dat dat.cpp
 
-get-outputs: _get-output
+get-outputs: _get-outputs
 	@if exist $(TARGET).dat type $(TARGET).dat
 
 clean: _clean

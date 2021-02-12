@@ -1,3 +1,5 @@
+TESTS_REMOTE=yes
+
 ifndef ADMB_VER
   ADMB_VER=admb
 endif
@@ -424,6 +426,7 @@ ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=vectorize get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=vonmises get-outputs >> ..\\outputs-tests.txt
 	$(MAKE) --directory=high_iarray get-outputs >> ..\\outputs-tests.txt
+	$(MAKE) --directory=geolocation get-outputs >> ..\\outputs-tests.txt
 else
 	rm -vf ../outputs-tests.txt
 	@echo "# tests outputs\n" > ../outputs-tests.txt
@@ -463,4 +466,5 @@ else
 	$(MAKE) --directory=tiny get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=vectorize get-outputs >> ../outputs-tests.txt
 	$(MAKE) --directory=high_iarray get-outputs >> ../outputs-tests.txt
+	$(MAKE) --directory=geolocation get-outputs >> ../outputs-tests.txt
 endif

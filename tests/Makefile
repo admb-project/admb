@@ -271,3 +271,4 @@ get-outputs:
 	pushd tiny & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd vectorize & $(MAKE) get-outputs >> ..\outputs-tests.txt
 	pushd vonmises & $(MAKE) get-outputs >> ..\outputs-tests.txt
+	pushd geolocation & $(MAKE) get-outputs >> ..\outputs-tests.txt

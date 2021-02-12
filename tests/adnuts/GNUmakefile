@@ -2,14 +2,21 @@ TARGET=adnuts
 OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
-include ..\test-rules.mak
-else
-include ../test-rules.mak
+  ifeq ($(SHELL),cmd)
+    CMDSHELL=cmd
+  else
+    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+      EXT=.sh
+    else
+      SHELL=cmd
+      CMDSHELL=cmd
+    endif
+  endif
 endif
 
-ifneq ($(CMDSHELL),cmd)
-_PATH=./
-endif
+all:
+	$(MAKE) clean
+	$(MAKE) run
 
 ifeq ($(CMDSHELL),cmd)
 run: $(TARGET) output_psv.exe

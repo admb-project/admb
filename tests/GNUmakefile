@@ -32,7 +32,13 @@ ifeq ($(DEBUG),yes)
 DEBUG_OPTION=-g
 endif
 
+ifeq ($(CMDSHELL),cmd)
+OUTPUT_DIR=..\\
+DIST=..\\build\\$(ADMB_VER)
+else
+OUTPUT_DIR=../
 DIST=../build/$(ADMB_VER)
+endif
 
 all:
 	$(MAKE) tests-core
@@ -69,44 +75,44 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 core-tpls:\
+  tpl-4darray\
+  tpl-adnuts\
   tpl-altexample\
+  tpl-bessel\
+  tpl-beta2\
+  tpl-beta3\
+  tpl-beta_deviate\
+  tpl-beta_regression\
+  tpl-betai\
+  tpl-betareg\
+  tpl-colfill\
+  tpl-cov_re\
   tpl-data_adstring_array\
   tpl-dd2\
   tpl-dualaveraging\
-  tpl-testminmax\
-  example-prof_like\
+  tpl-expm\
   tpl-f1b2vc5\
-  tpl-4darray\
-  tpl-betai\
-  tpl-beta2\
-  tpl-beta3\
+  cpp-globals\
+  tpl-gradients_output\
+  tpl-high_iarray\
+  tpl-hysimple\
+  tpl-initializationfunction\
+  tpl-issue108\
+  tpl-lprof\
+  tpl-mcmc-theta\
+  tpl-orange_mvn\
+  tpl-poisp\
+  tpl-qbeta\
+  tpl-rsimple\
+  tpl-simple_mcmc\
+  tpl-testminmax\
+  tpl-tiny\
   tpl-tiny_ad_fe\
   tpl-tiny_ad_re\
   tpl-tinyfun\
-  tpl-poisp\
   tpl-vectorize\
   tpl-vonmises\
-  tpl-high_iarray\
-  tpl-bessel\
-  tpl-qbeta\
-  tpl-beta_deviate\
-  tpl-betareg\
-  tpl-beta_regression\
-  tpl-colfill\
-  tpl-cov_re\
-  tpl-expm\
-  tpl-hysimple\
-  tpl-issue108\
-  tpl-initializationfunction\
-  tpl-gradients_output\
-  tpl-simple_mcmc\
-  tpl-adnuts\
-  tpl-mcmc-theta\
-  tpl-orange_mvn\
-  tpl-rsimple\
-  tpl-tiny\
-  cpp-globals\
-  tpl-lprof
+  example-prof_like
 
 remote-core-tpls:\
   tpl-changepoint\
@@ -114,9 +120,9 @@ remote-core-tpls:\
   tpl-glmmadmb
 
 contrib-tpls:\
+  tpl-ctl\
   tpl-priors\
-  test-rgamma\
-  tpl-ctl
+  test-rgamma
 
 remote-contrib-tpls:\
   tpl-agemat
@@ -300,79 +306,58 @@ ifeq ($(CMDSHELL),cmd)
 else
 	@rm -rvf SS3
 endif
-	$(MAKE) --directory=rgamma clean
-	$(MAKE) --directory=globals clean
-	$(MAKE) --directory=f1b2vc5 clean
-	$(MAKE) --directory=betareg clean
-	$(MAKE) --directory=expm clean
+	$(MAKE) --directory=4darray clean
 	$(MAKE) --directory=adnuts clean
-	$(MAKE) --directory=lprof clean
-	$(MAKE) --directory=initializationfunction clean
-	$(MAKE) --directory=hysimple clean
-	$(MAKE) --directory=issue108 clean
-	$(MAKE) --directory=beta_regression clean
-	$(MAKE) --directory=changepoint clean
-	$(MAKE) --directory=data_adstring_array clean
-	$(MAKE) --directory=adnuts clean
-	$(MAKE) --directory=gmrf clean
-	$(MAKE) --directory=simple_mcmc clean
-	$(MAKE) --directory=testminmax clean
-	$(MAKE) --directory=geolocation clean
-	$(MAKE) --directory=betai clean
+	$(MAKE) --directory=agemat clean
+	$(MAKE) --directory=altexample clean
+	$(MAKE) --directory=bessel clean
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
-	$(MAKE) --directory=vonmises clean
+	$(MAKE) --directory=beta_deviate clean
+	$(MAKE) --directory=beta_regression clean
+	$(MAKE) --directory=betai clean
+	$(MAKE) --directory=betareg clean
+	$(MAKE) --directory=changepoint clean
+	$(MAKE) --directory=colfill clean
+	$(MAKE) --directory=cov_re clean
+	$(MAKE) --directory=ctl clean
+	$(MAKE) --directory=data_adstring_array clean
+	$(MAKE) --directory=dd2 clean
+	$(MAKE) --directory=dualaveraging clean
+	$(MAKE) --directory=expm clean
+	$(MAKE) --directory=f1b2vc5 clean
+	$(MAKE) --directory=geolocation clean
+	$(MAKE) --directory=glmmadmb clean
+	$(MAKE) --directory=globals clean
+	$(MAKE) --directory=gmrf clean
+	$(MAKE) --directory=gradients_output clean
+	$(MAKE) --directory=gtests clean
 	$(MAKE) --directory=high_iarray clean
+	$(MAKE) --directory=hysimple clean
+	$(MAKE) --directory=initializationfunction clean
+	$(MAKE) --directory=issue108 clean
+	$(MAKE) --directory=lprof clean
+	$(MAKE) --directory=mcmc-theta clean
+	$(MAKE) --directory=orange_mvn clean
+	$(MAKE) --directory=poisp clean
+	$(MAKE) --directory=priors clean
+	$(MAKE) --directory=qbeta clean
+	$(MAKE) --directory=rgamma clean
 	$(MAKE) --directory=rsimple clean
+	$(MAKE) --directory=simple_mcmc clean
+	$(MAKE) --directory=testminmax clean
 	$(MAKE) --directory=tiny clean
 	$(MAKE) --directory=tiny_ad_fe clean
 	$(MAKE) --directory=tiny_ad_re clean
 	$(MAKE) --directory=tinyfun clean
-	$(MAKE) --directory=poisp clean
 	$(MAKE) --directory=vectorize clean
-	$(MAKE) --directory=bessel clean
-	$(MAKE) --directory=qbeta clean
-	$(MAKE) --directory=dd2 clean
-	$(MAKE) --directory=dualaveraging clean
-	$(MAKE) --directory=beta_deviate clean
-	$(MAKE) --directory=cov_re clean
-	$(MAKE) --directory=gtests clean
-	$(MAKE) --directory=agemat clean
-	$(MAKE) --directory=altexample clean
-	$(MAKE) --directory=ctl clean
-	$(MAKE) --directory=priors clean
-	$(MAKE) --directory=colfill clean
-	$(MAKE) --directory=glmmadmb clean
-	$(MAKE) --directory=mcmc-theta clean
-	$(MAKE) --directory=orange_mvn clean
-	$(MAKE) --directory=gradients_output clean
-	$(MAKE) --directory=4darray clean
+	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=../examples/admb/prof_like clean
 
 dist-clean:
 ifeq ($(CMDSHELL),cmd)
-	del agemat/agemat.dat
-	del agemat/agemat.tpl
-	if exist geolocation/kfsst rd /S /Q geolocation/kfsst
-	if exist geolocation/kftrack rd /S /Q geolocation/kftrack
-	if exist geolocation/trackit rd /S /Q geolocation/trackit
-	if exist geolocation/ukfsst rd /S /Q geolocation/ukfsst
-	if exist glmmadmb/admb_tests rd /S /Q glmmadmb/admb_tests
-	del glmmadmb/bvprobit.tpl
-	del glmmadmb/glmmadmb.tpl
-	del glmmadmb/nbmm.tpl
 	if exist gtests/googletest-read-only rd /S /Q gtests/googletest-read-only
 else
-	rm -vf agemat/agemat.dat
-	rm -vf agemat/agemat.tpl
-	rm -rvf geolocation/kfsst
-	rm -rvf geolocation/kftrack
-	rm -rvf geolocation/trackit
-	rm -rvf geolocation/ukfsst
-	rm -rvf glmmadmb/admb_tests
-	rm -vf glmmadmb/bvprobit.tpl
-	rm -vf glmmadmb/glmmadmb.tpl
-	rm -vf glmmadmb/nbmm.tpl
 	rm -rvf gtests/googletest-read-only
 endif
 
@@ -386,85 +371,51 @@ endif
 
 get-outputs:
 ifeq ($(CMDSHELL),cmd)
-	del ..\\outputs-tests.txt
-	@echo "# tests outputs\n" > ..\\outputs-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=altexample get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=4darray get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=adnuts get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=bessel get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=beta2 get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=beta3 get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=betai get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=betareg get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=data_adstring_array  get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=dd2 get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=dualaveraging get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=expm get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=f1b2vc5 get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=colfill get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=changepoint get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=ctl get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=gradients_output get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=hysimple get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=issue108 get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=initializationfunction get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=lprof get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=mcmc-theta get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=orange_mvn get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=poisp get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=priors get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=qbeta get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=testminmax get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=rsimple get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=tiny_ad_fe get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=tiny_ad_re get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=tinyfun get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=tiny get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=vectorize get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=vonmises get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=high_iarray get-outputs >> ..\\outputs-tests.txt
-	$(MAKE) --directory=geolocation get-outputs >> ..\\outputs-tests.txt
+	del ..\\outputs.txt
 else
-	rm -vf ../outputs-tests.txt
-	@echo "# tests outputs\n" > ../outputs-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=altexample get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=4darray get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=adnuts get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=bessel get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=beta2 get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=betai get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=betareg get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=data_adstring_array get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=dd2 get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=dualaveraging get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=expm get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=f1b2vc5 get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=colfill get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=changepoint get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=ctl get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=gradients_output get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=hysimple get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=issue108 get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=initializationfunction get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=lprof get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=mcmc-theta get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=orange_mvn get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=poisp get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=priors get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=qbeta get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=testminmax get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=rsimple get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=tiny_ad_fe get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=tiny_ad_re get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=tinyfun get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=tiny get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=vectorize get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=high_iarray get-outputs >> ../outputs-tests.txt
-	$(MAKE) --directory=geolocation get-outputs >> ../outputs-tests.txt
+	rm -vf ../outputs.txt
 endif
+	@echo "# tests outputs\n" > $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=4darray get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=agemat get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=altexample get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=adnuts get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=bessel get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=beta2 get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=beta3 get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=beta_deviate get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=betai get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=betareg get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=changepoint get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=colfill get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=cov_re get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=ctl get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=data_adstring_array get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=dd2 get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=dualaveraging get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=expm get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=f1b2vc5 get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=geolocation get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=glmmadmb get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=globals get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=gradients_output get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=high_iarray get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=hysimple get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=initializationfunction get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=issue108 get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=lprof get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=mcmc-theta get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=orange_mvn get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=poisp get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=priors get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=qbeta get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=rgamma get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=rsimple get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=simple_mcmc get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=testminmax get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=tiny get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=tiny_ad_fe get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=tiny_ad_re get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=tinyfun get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=vectorize get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) --directory=vonmises get-outputs >> $(OUTPUT_DIR)outputs.txt

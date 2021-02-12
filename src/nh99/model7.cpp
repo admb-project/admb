@@ -235,6 +235,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       "N\n");
       (*ad_printf)( " -gbs N          set GRADSTACK_BUFFER_SIZE to N "
       "(ARRAY_MEMBLOCK_SIZE)\n");
+      (*ad_printf)( " -hess_step N    take N Newton steps with inverse Hessian\n");
+      (*ad_printf)( " -hess_step_tol eps set hess_step tolerance to eps\n");
       (*ad_printf)( " -mip N          set maximum the number of initial parameters "
       "to a value N that is greater than zero (default is 4000).\n");
 #if defined(USE_ADPVM)

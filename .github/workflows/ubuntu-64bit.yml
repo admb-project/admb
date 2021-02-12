@@ -37,3 +37,8 @@ jobs:
       with:
         name: outputs
         path: outputs-opt.txt
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: adnuts_outputs.txt
+        path: tests/adnuts/adnuts_outputs.txt

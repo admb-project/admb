@@ -172,7 +172,7 @@ test-vonmises:
 	pushd vonmises & $(MAKE) & popd
 
 total-clean: clean
-	pushd glmmadmb & $(MAKE) total-clean & popd
+	-pushd glmmadmb & $(MAKE) total-clean & popd
 	pushd geolocation & $(MAKE) total-clean & popd
 	pushd agemat & $(MAKE) total-clean & popd
 

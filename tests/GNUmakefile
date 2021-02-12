@@ -328,7 +328,7 @@ endif
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=geolocation clean
-	$(MAKE) --directory=glmmadmb clean
+	-$(MAKE) --directory=glmmadmb clean
 	$(MAKE) --directory=globals clean
 	$(MAKE) --directory=gmrf clean
 	$(MAKE) --directory=gradients_output clean
@@ -397,7 +397,7 @@ endif
 	$(MAKE) --directory=expm get-outputs >> $(OUTPUT_DIR)outputs.txt
 	$(MAKE) --directory=f1b2vc5 get-outputs >> $(OUTPUT_DIR)outputs.txt
 	$(MAKE) --directory=geolocation get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=glmmadmb get-outputs >> $(OUTPUT_DIR)outputs.txt
+	-$(MAKE) --directory=glmmadmb get-outputs >> $(OUTPUT_DIR)outputs.txt
 	$(MAKE) --directory=globals get-outputs >> $(OUTPUT_DIR)outputs.txt
 	$(MAKE) --directory=gradients_output get-outputs >> $(OUTPUT_DIR)outputs.txt
 	$(MAKE) --directory=high_iarray get-outputs >> $(OUTPUT_DIR)outputs.txt

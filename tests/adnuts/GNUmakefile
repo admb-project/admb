@@ -2,35 +2,32 @@ TARGET=adnuts
 OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),cmd)
-    CMDSHELL=cmd
-  else
-    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      EXT=.sh
-    else
-      SHELL=cmd
-      CMDSHELL=cmd
-    endif
-  endif
+include ..\test-rules.mak
+else
+include ../test-rules.mak
 endif
-
-all:
-	$(MAKE) clean
-	$(MAKE) run
 
 ifeq ($(CMDSHELL),cmd)
 run: $(TARGET) output_psv.exe
+	$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
+	output_psv adnuts.psv > adnuts_psv.txt
+	$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass -noest -mcseed 141
+	output_psv adnuts.psv >> adnuts_psv.txt
+	$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass_dense -noest -verbose_adapt_mass -refresh -1 -mcseed 532
+	output_psv adnuts.psv >> adnuts_psv.txt
+	$(TARGET) -rwm -mcmc 2000 -mcsave 1 -noest -mcseed 123
+	output_psv adnuts.psv >> adnuts_psv.txt
 else
 run: $(TARGET) output_psv
+	./$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
+	./output_psv adnuts.psv > adnuts_psv.txt
+	./$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass -noest -mcseed 141
+	./output_psv adnuts.psv >> adnuts_psv.txt
+	./$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass_dense -noest -verbose_adapt_mass -refresh -1 -mcseed 532
+	./output_psv adnuts.psv >> adnuts_psv.txt
+	./$(TARGET) -rwm -mcmc 2000 -mcsave 1 -noest -mcseed 123
+	./output_psv adnuts.psv >> adnuts_psv.txt
 endif
-	$(_PATH)$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
-	$(_PATH)output_psv adnuts.psv > adnuts_psv.txt
-	$(_PATH)$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass -noest -mcseed 141
-	$(_PATH)output_psv adnuts.psv >> adnuts_psv.txt
-	$(_PATH)$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass_dense -noest -verbose_adapt_mass -refresh -1 -mcseed 532
-	$(_PATH)output_psv adnuts.psv >> adnuts_psv.txt
-	$(_PATH)$(TARGET) -rwm -mcmc 2000 -mcsave 1 -noest -mcseed 123
-	$(_PATH)output_psv adnuts.psv >> adnuts_psv.txt
 
 ifeq ($(CMDSHELL),cmd)
 output_psv.exe: output_psv.cpp

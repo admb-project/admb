@@ -1,4 +1,5 @@
 TARGET=colfill
+OVERRIDE=all
 
 !include <..\test-rules.nmake>
 

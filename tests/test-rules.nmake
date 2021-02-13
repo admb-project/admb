@@ -1,3 +1,7 @@
+!IF "$(SCRIPT_DIR)"==""
+  SCRIPT_DIR=..\..\
+!ENDIF
+
 all: clean
 	$(MAKE) run
 
@@ -10,10 +14,10 @@ run: $(TARGET)
 
 !IF EXISTS($(TARGET).tpl)
 $(TARGET): $(TARGET).tpl $(SRCS)
-	..\..\admb $(TARGET).tpl $(SRCS)
+	$(SCRIPT_DIR)admb $(TARGET).tpl $(SRCS)
 !ELSE
 $(TARGET): $(SRCS)
-	..\..\admb $(SRCS)
+	$(SCRIPT_DIR)admb $(SRCS)
 !ENDIF
 
 !IF "$(OVERRIDE)"=="all"

@@ -19,22 +19,30 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
+ifeq ($(SCRIPT_DIR),)
+  ifeq ($(CMDSHELL),cmd)
+    SCRIPT_DIR=..\\..\\
+  else
+    SCRIPT_DIR=../../
+  endif
+endif
+
 all: clean
 	$(MAKE) run
 
 ifeq (yes,$(USE_SRCS))
 $(TARGET): $(SRCS)
   ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb.cmd $(SRCS)
+	$(SCRIPT_DIR)admb.cmd $(SRCS)
   else
-	../../admb$(EXT) $(SRCS)
+	$(SCRIPT_DIR)admb$(EXT) $(SRCS)
   endif
 else
 $(TARGET): $(TARGET).tpl $(SRCS)
   ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb.cmd $(TARGET) $(SRCS)
+	$(SCRIPT_DIR)admb.cmd $(TARGET) $(SRCS)
   else
-	../../admb$(EXT) $(TARGET) $(SRCS)
+	$(SCRIPT_DIR)admb$(EXT) $(TARGET) $(SRCS)
   endif
 endif
 

@@ -90,6 +90,9 @@ test-betareg:
 test-ctl:
 	pushd ctl & $(MAKE) & popd
 
+test-colfill:
+	pushd colfill & $(MAKE) & popd
+
 test-changepoint:
 	pushd changepoint & $(MAKE) & popd
 

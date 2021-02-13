@@ -286,6 +286,7 @@ endif
 
 googletest-read-only:
 	git clone --depth=1 https://github.com/google/googletest.git googletest-read-only
+	cd googletest-read-only && git checkout release-1.10.0
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@

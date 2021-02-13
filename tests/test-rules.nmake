@@ -1,5 +1,5 @@
 !IF "$(SCRIPT_DIR)"==""
-  SCRIPT_DIR=..\..\
+SCRIPT_DIR=..\..\
 !ENDIF
 
 all: clean

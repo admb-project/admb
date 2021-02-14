@@ -236,14 +236,13 @@ tpl-gradients_output:
 	$(MAKE) --directory=gradients_output
 
 tpl-geolocation:
-	PATH=../../..:$(PATH) $(MAKE) --directory=geolocation
+	$(MAKE) --directory=geolocation
 
 tpl-gmrf:
 	$(MAKE) --directory=gmrf
 
 tpl-adnuts:
 	$(MAKE) --directory=adnuts
-	$(MAKE) --directory=adnuts get-outputs
 
 tpl-priors:
 	$(MAKE) --directory=priors

@@ -77,6 +77,8 @@ else
 	./glmmadmb
 endif
 
+get-outputs:
+
 total-clean: clean
 ifeq ($(CMDSHELL),cmd)
 else

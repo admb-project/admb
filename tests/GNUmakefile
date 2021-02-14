@@ -370,53 +370,56 @@ else
 	cp -Rvf ../tests $(DIST)
 endif
 
-get-outputs:
+outputs:
 ifeq ($(CMDSHELL),cmd)
 	del ..\\outputs.txt
 else
 	rm -vf ../outputs.txt
 endif
 	@echo "# tests outputs\n" > $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=4darray get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=agemat get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=altexample get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=adnuts get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=bessel get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=beta2 get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=beta3 get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=betai get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=betareg get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=changepoint get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=colfill get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=cov_re get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=ctl get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=data_adstring_array get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=dd2 get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=dualaveraging get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=expm get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=f1b2vc5 get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=geolocation get-outputs >> $(OUTPUT_DIR)outputs.txt
-	-$(MAKE) --directory=glmmadmb get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=globals get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=gradients_output get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=high_iarray get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=hysimple get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=initializationfunction get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=issue108 get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=lprof get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=mcmc-theta get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=orange_mvn get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=poisp get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=priors get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=qbeta get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=rgamma get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=rsimple get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=testminmax get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=tiny get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=tiny_ad_fe get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=tiny_ad_re get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=tinyfun get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=vectorize get-outputs >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) --directory=vonmises get-outputs >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) get-outputs >> $(OUTPUT_DIR)outputs.txt
+
+get-outputs:
+	$(MAKE) --directory=4darray get-outputs
+	$(MAKE) --directory=agemat get-outputs
+	$(MAKE) --directory=altexample get-outputs
+	$(MAKE) --directory=adnuts get-outputs
+	$(MAKE) --directory=bessel get-outputs
+	$(MAKE) --directory=beta2 get-outputs
+	$(MAKE) --directory=beta3 get-outputs
+	$(MAKE) --directory=beta_deviate get-outputs
+	$(MAKE) --directory=betai get-outputs
+	$(MAKE) --directory=betareg get-outputs
+	$(MAKE) --directory=changepoint get-outputs
+	$(MAKE) --directory=colfill get-outputs
+	$(MAKE) --directory=cov_re get-outputs
+	$(MAKE) --directory=ctl get-outputs
+	$(MAKE) --directory=data_adstring_array get-outputs
+	$(MAKE) --directory=dd2 get-outputs
+	$(MAKE) --directory=dualaveraging get-outputs
+	$(MAKE) --directory=expm get-outputs
+	$(MAKE) --directory=f1b2vc5 get-outputs
+	$(MAKE) --directory=geolocation get-outputs
+	-$(MAKE) --directory=glmmadmb get-outputs
+	$(MAKE) --directory=globals get-outputs
+	$(MAKE) --directory=gradients_output get-outputs
+	$(MAKE) --directory=high_iarray get-outputs
+	$(MAKE) --directory=hysimple get-outputs
+	$(MAKE) --directory=initializationfunction get-outputs
+	$(MAKE) --directory=issue108 get-outputs
+	$(MAKE) --directory=lprof get-outputs
+	$(MAKE) --directory=mcmc-theta get-outputs
+	$(MAKE) --directory=orange_mvn get-outputs
+	$(MAKE) --directory=poisp get-outputs
+	$(MAKE) --directory=priors get-outputs
+	$(MAKE) --directory=qbeta get-outputs
+	$(MAKE) --directory=rgamma get-outputs
+	$(MAKE) --directory=rsimple get-outputs
+	$(MAKE) --directory=simple_mcmc get-outputs
+	$(MAKE) --directory=testminmax get-outputs
+	$(MAKE) --directory=tiny get-outputs
+	$(MAKE) --directory=tiny_ad_fe get-outputs
+	$(MAKE) --directory=tiny_ad_re get-outputs
+	$(MAKE) --directory=tinyfun get-outputs
+	$(MAKE) --directory=vectorize get-outputs
+	$(MAKE) --directory=vonmises get-outputs

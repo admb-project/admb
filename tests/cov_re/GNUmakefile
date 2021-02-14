@@ -1,7 +1,5 @@
 TARGET=cov_re
-
-default: $(TARGET) cov_re_sep
-	$(MAKE) run2
+OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
 include ..\test-rules.mak
@@ -9,14 +7,7 @@ else
 include ../test-rules.mak
 endif
 
-cov_re_sep: cov_re_sep.tpl
-ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb -r $@
-else
-	../../admb$(EXT) -r $@
-endif
-
-run2:
+run: $(TARGET) cov_re_sep
 ifeq ($(CMDSHELL),cmd)
 	cov_re
 	cov_re_sep
@@ -26,3 +17,14 @@ else
 	./cov_re_sep
 	./cov_re_sep -shess
 endif
+
+cov_re_sep: cov_re_sep.tpl
+ifeq ($(CMDSHELL),cmd)
+	..\\..\\admb $@
+else
+	../../admb$(EXT) $@
+endif
+
+get-outputs: _get-outputs
+
+clean: _clean

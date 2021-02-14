@@ -74,7 +74,7 @@ get-outputs:
 
 total-clean:
 ifeq ($(CMDSHELL),cmd)
-	@if [ -d "kalmanfilter" ]; then $(MAKE) --directory=kalmanfilter clean; fi
+	@if exist kalmanfilter rmdir /s /q kalmanfilter
 else
 	@rm -rvf kalmanfilter
 endif

@@ -118,5 +118,5 @@ run:
 	gtest-all
 
 clean:
-	del gtest-all.obj
-	del gtest-all.exe
+	@if exist gtest-all.obj del /Q gtest-all.obj
+	@if exist gtest-all.exe del /Q gtest-all.exe

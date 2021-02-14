@@ -10,4 +10,4 @@ run: $(TARGET)
 get-outputs: _get-outputs
 
 clean: _clean
-	if exist hybrid_seed del /Q hybrid_seed
+	@if exist hybrid_seed del /Q hybrid_seed

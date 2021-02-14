@@ -1,12 +1,13 @@
-
 TARGET=agemat
 OVERRIDE=all
 
 !include <..\test-rules.nmake>
 
-run: _run
+run: agemat.tpl
+	$(MAKE) /NOLOGO $(TARGET)
+	$(MAKE) /NOLOGO _run
 
-agemat.tpl:
+agemat.tpl: agemat.dat
 	copy rforge-nwfscassmt\\pkg\\nwfscAgeingError\\inst\\executables\\AGEMAT.TPL agemat.tpl
 
 agemat.dat: rforge-nwfscassmt

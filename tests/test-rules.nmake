@@ -25,33 +25,33 @@ _get-outputs:
 !ELSE
 get-outputs:
 !ENDIF
-	if exist $(TARGET).par type $(TARGET).par
-	if exist $(TARGET).p01 type $(TARGET).p01
-	if exist $(TARGET).std type $(TARGET).std
-	if exist $(TARGET).cor type $(TARGET).cor
-	if exist $(TARGET).eva type $(TARGET).eva
-	if exist $(TARGET).prf type $(TARGET).prf
+	@if exist $(TARGET).par type $(TARGET).par
+	@if exist $(TARGET).p01 type $(TARGET).p01
+	@if exist $(TARGET).std type $(TARGET).std
+	@if exist $(TARGET).cor type $(TARGET).cor
+	@if exist $(TARGET).eva type $(TARGET).eva
+	@if exist $(TARGET).prf type $(TARGET).prf
 
 !IF "$(OVERRIDE)"=="all"
 _clean:
 !ELSE
 clean:
 !ENDIF
-	if exist admodel.cov del /Q admodel.cov
-	if exist admodel.dep del /Q admodel.dep
-	if exist admodel.hes del /Q admodel.hes
-	if exist eigv.rpt del /Q eigv.rpt
-	if exist $(TARGET).bar del /Q $(TARGET).bar
-	if exist $(TARGET).cor del /Q $(TARGET).cor
-	if exist $(TARGET).cpp del /Q $(TARGET).cpp
-	if exist $(TARGET).eva del /Q $(TARGET).eva
-	if exist $(TARGET).exe del /Q $(TARGET).exe
-	if exist $(TARGET).htp del /Q $(TARGET).htp
-	if exist $(TARGET).log del /Q $(TARGET).log
-	if exist $(TARGET).obj del /Q $(TARGET).obj
-	if exist $(TARGET).par del /Q $(TARGET).par
-	if exist $(TARGET).p01 del /Q $(TARGET).p01
-	if exist $(TARGET).std del /Q $(TARGET).std
-	if exist $(TARGET).prf del /Q $(TARGET).prf
-	if exist fmin.log del /Q fmin.log
-	if exist variance del /Q variance
+	@if exist admodel.cov del /Q admodel.cov
+	@if exist admodel.dep del /Q admodel.dep
+	@if exist admodel.hes del /Q admodel.hes
+	@if exist eigv.rpt del /Q eigv.rpt
+	@if exist $(TARGET).bar del /Q $(TARGET).bar
+	@if exist $(TARGET).cor del /Q $(TARGET).cor
+	@if exist $(TARGET).cpp del /Q $(TARGET).cpp
+	@if exist $(TARGET).eva del /Q $(TARGET).eva
+	@if exist $(TARGET).exe del /Q $(TARGET).exe
+	@if exist $(TARGET).htp del /Q $(TARGET).htp
+	@if exist $(TARGET).log del /Q $(TARGET).log
+	@if exist $(TARGET).obj del /Q $(TARGET).obj
+	@if exist $(TARGET).par del /Q $(TARGET).par
+	@if exist $(TARGET).p01 del /Q $(TARGET).p01
+	@if exist $(TARGET).std del /Q $(TARGET).std
+	@if exist $(TARGET).prf del /Q $(TARGET).prf
+	@if exist fmin.log del /Q fmin.log
+	@if exist variance del /Q variance

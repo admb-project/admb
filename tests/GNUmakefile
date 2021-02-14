@@ -46,10 +46,10 @@ all:
 ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
 endif
-	$(MAKE) get-outputs
 
 verify: examples
 	$(MAKE) all
+	$(MAKE) outputs.txt
 
 tests-remote:
 	$(MAKE) remote-core-tpls
@@ -370,7 +370,7 @@ else
 	cp -Rvf ../tests $(DIST)
 endif
 
-outputs:
+outputs.txt:
 ifeq ($(CMDSHELL),cmd)
 	del ..\\outputs.txt
 else

@@ -225,7 +225,7 @@ clean:
 
 verify: examples
 	$(MAKE) /NOLOGO all
-	$(MAKE) /NOLOGO outputs
+	$(MAKE) /NOLOGO outputs.txt
 
 examples:
 	del ..\outputs-saf.txt
@@ -242,7 +242,7 @@ examples:
 copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
 
-outputs:
+outputs.txt:
 	$(MAKE) /NOLOGO get-outputs
 	@if exist ..\\outputs.txt del /Q ..\\outputs.txt
 	@echo "# tests outputs\n" > ..\\outputs.txt

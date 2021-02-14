@@ -1,4 +1,4 @@
-TARGET=vonmises
+TARGET=beta_regression
 OVERRIDE=all
 
 !include <..\test-rules.nmake>

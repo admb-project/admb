@@ -5,7 +5,7 @@ all: clean
 
 run:
 	$(MAKE) /NOLOGO /Fdata_adstring_array.nmak run
-	$(MAKE) /NOLOGO /F=cov_re_sep.nmak run
+	$(MAKE) /NOLOGO /Fcov_re_sep.nmak run
 
 get-outputs:
 	$(MAKE) /NOLOGO /Fdata_adstring_array.nmak get-outputs

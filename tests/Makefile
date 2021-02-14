@@ -175,7 +175,7 @@ test-vonmises:
 	pushd vonmises & $(MAKE) /NOLOGO & popd
 
 total-clean: clean
-	-pushd glmmadmb & $(MAKE) /NOLOGO total-clean & popd
+	pushd glmmadmb & $(MAKE) /NOLOGO total-clean & popd
 	pushd geolocation & $(MAKE) /NOLOGO total-clean & popd
 	pushd agemat & $(MAKE) /NOLOGO total-clean & popd
 

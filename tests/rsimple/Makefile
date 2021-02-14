@@ -4,9 +4,9 @@ OVERRIDE=all
 !include <..\test-rules.nmake>
 
 run: $(TARGET)
-	@printf "Started run:\n"
-	./$(TARGET) -mcmc 10000 -mcsave 100
-	@printf "Finished run.\n"
+	@echo Started run:
+	$(TARGET) -mcmc 10000 -mcsave 100
+	@echo Finished run.
 
 get-outputs: _get-outputs
 

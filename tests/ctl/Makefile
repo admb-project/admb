@@ -1,3 +1,3 @@
-TARGET=ctl
+TARGET=example
 
 !include <..\test-rules.nmake>

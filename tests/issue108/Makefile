@@ -1,4 +1,4 @@
-TARGET=vonmises
+TARGET=issue108
 OVERRIDE=all
 
 !include <..\test-rules.nmake>
@@ -10,7 +10,7 @@ $(TARGET).dat: dat
 	dat > issue108.dat
 
 dat: dat.cpp
-	$(CXX) -o dat dat.cpp
+	$(CXX) /Fedat dat.cpp
 
 get-outputs: _get-outputs
 	@if exist $(TARGET).dat type $(TARGET).dat

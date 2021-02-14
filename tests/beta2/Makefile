@@ -1,3 +1,3 @@
-TARGET=vonmises
+TARGET=beta2
 
 !include <..\test-rules.nmake>

@@ -30,6 +30,8 @@ endif
 
 ifeq ($(DEBUG),yes)
 DEBUG_OPTION=-g
+else
+DEBUG_OPTION=
 endif
 
 ifeq ($(CMDSHELL),cmd)
@@ -264,33 +266,18 @@ example-prof_like:
 
 examples:
 ifeq ($(CMDSHELL),cmd)
-  ifneq ($(DEBUG),yes)
-	del ..\outputs-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples all
-	pushd .. & scripts\get-outputs.bat > outputs-saf.txt & popd
-    ifndef SAFE_ONLY
-	del ..\outputs-opt.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples all
-	pushd .. & scripts\get-outputs.bat > outputs-opt.txt & popd
-    endif
-  else
-    ifndef SAFE_ONLY
-	del ..\outputs-opt.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples all
-	pushd .. & scripts\get-outputs.bat > outputs-opt.txt & popd
-    endif
-	del ..\outputs-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples all
-	pushd .. & scripts\get-outputs.bat > outputs-saf.txt & popd
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples all
+	../scripts/get-outputs.bat ..\\examples\\ > outputs-saf.txt
+  ifndef SAFE_ONLY
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\\examples all
+	../scripts/get-outputs.bat ..\\examples\\ > outputs-opt.txt
   endif
 else
-	rm -vf ../outputs-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ../examples all
-	-../scripts/get-outputs.sh ../examples/ > "../outputs-saf.txt"
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples all
+	../scripts/get-outputs.sh ../examples/ > outputs-saf.txt
   ifndef SAFE_ONLY
-	rm -vf ../outputs-opt.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples all
-	-../scripts/get-outputs.sh ../examples/ > "../outputs-opt.txt"
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples
+	../scripts/get-outputs.sh ../examples/ > outputs-opt.txt
   endif
 endif
 
@@ -327,7 +314,7 @@ endif
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=geolocation clean
-	-$(MAKE) --directory=glmmadmb clean
+	$(MAKE) --directory=glmmadmb clean
 	$(MAKE) --directory=globals clean
 	$(MAKE) --directory=gmrf clean
 	$(MAKE) --directory=gradients_output clean
@@ -371,7 +358,7 @@ endif
 
 outputs.txt:
 ifeq ($(CMDSHELL),cmd)
-	del ..\\outputs.txt
+	del /Q ..\\outputs.txt
 else
 	rm -vf ../outputs.txt
 endif
@@ -399,7 +386,7 @@ get-outputs:
 	$(MAKE) --directory=expm get-outputs
 	$(MAKE) --directory=f1b2vc5 get-outputs
 	$(MAKE) --directory=geolocation get-outputs
-	-$(MAKE) --directory=glmmadmb get-outputs
+	$(MAKE) --directory=glmmadmb get-outputs
 	$(MAKE) --directory=globals get-outputs
 	$(MAKE) --directory=gradients_output get-outputs
 	$(MAKE) --directory=high_iarray get-outputs

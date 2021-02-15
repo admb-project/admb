@@ -228,15 +228,13 @@ verify: examples
 	$(MAKE) /NOLOGO outputs.txt
 
 examples:
-	del ..\outputs-saf.txt
-	del ..\outputs-opt.txt
-	if not exist $(DESTDIR)\examples md  $(DESTDIR)\examples
-	xcopy ..\examples $(DESTDIR)\examples  /S /Y /D
+	if not exist $(DESTDIR)\examples md $(DESTDIR)\examples
+	xcopy ..\examples $(DESTDIR)\examples /S /Y /D
 	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO all
-	pushd $(DESTDIR) & ..\..\scripts\get-outputs.bat > "..\..\outputs-saf.txt" & popd
+	../scripts/get-outputs.bat $(DESTDIR)\\examples\\ > outputs-saf.txt
 !IFNDEF SAFE_ONLY
 	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all
-	pushd $(DESTDIR) & ..\..\scripts\get-outputs.bat > "..\..\outputs-opt.txt" & popd
+	../scripts/get-outputs.bat $(DESTDIR)\\examples\\ > outputs-opt.txt
 !ENDIF
 
 copy:

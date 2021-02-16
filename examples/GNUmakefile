@@ -2051,42 +2051,42 @@ ifeq ($(CMDSHELL),cmd)
 	pushd admb-re\\polio && ..\\..\\..\\scripts\\get-outputs.bat polio && popd
 	pushd admb-re\\orange && ..\\..\\..\\scripts\\get-outputs.bat orange && popd
 else
-	cd admb/forest && sh ../../../scripts/get-outputs.sh forest
-	cd admb/robreg && sh ../../../scripts/get-outputs.sh vonbr
-	cd admb/robreg && sh ../../../scripts/get-outputs.sh vonb
-	cd admb/chem_eng && sh ../../../scripts/get-outputs.sh chem_eng
-	cd admb/simple && sh ../../../scripts/get-outputs.sh simple
-	cd admb/truncreg && sh ../../../scripts/get-outputs.sh truncreg
-	cd admb/vol && sh ../../../scripts/get-outputs.sh n2mvol
-	cd admb/buscycle && sh ../../../scripts/get-outputs.sh ham5
-	cd admb/buscycle && sh ../../../scripts/get-outputs.sh ham4
-	cd admb/catage && sh ../../../scripts/get-outputs.sh catage
-	cd admb/finance && sh ../../../scripts/get-outputs.sh finance
-	cd admb/pella_t && sh ../../../scripts/get-outputs.sh pella_t
-	cd admb/prof_like && sh ../../../scripts/get-outputs.sh bhplfine
-	cd admb-re/logistic && sh ../../../scripts/get-outputs.sh logistic
-	cd admb-re/gamma && sh ../../../scripts/get-outputs.sh liver_gamma
-	cd admb-re/biglog && sh ../../../scripts/get-outputs.sh biglog
-	cd admb-re/caest && sh ../../../scripts/get-outputs.sh caest
-	cd admb-re/pheno && sh ../../../scripts/get-outputs.sh pheno
-	cd admb-re/weights && sh ../../../scripts/get-outputs.sh binomial_w2
-	cd admb-re/weights && sh ../../../scripts/get-outputs.sh binomial
-	cd admb-re/kidney && sh ../../../scripts/get-outputs.sh kidney
-	cd admb-re/orange_cor && sh ../../../scripts/get-outputs.sh orange_cor
-	cd admb-re/glmmadmb && sh ../../../scripts/get-outputs.sh bvprobit
-	cd admb-re/glmmadmb && sh ../../../scripts/get-outputs.sh nbmm
-	cd admb-re/glmmadmb && sh ../../../scripts/get-outputs.sh glmmadmb
-	cd admb-re/lidar && sh ../../../scripts/get-outputs.sh lidar
-	cd admb-re/nbmm && sh ../../../scripts/get-outputs.sh nbmm
-	cd admb-re/bcb && sh ../../../scripts/get-outputs.sh bcb
-	cd admb-re/skewed && sh ../../../scripts/get-outputs.sh diet_sk
-	cd admb-re/skewed && sh ../../../scripts/get-outputs.sh diet
-	cd admb-re/union && sh ../../../scripts/get-outputs.sh union
-	cd admb-re/sdv && sh ../../../scripts/get-outputs.sh sdv
-	cd admb-re/nested4 && sh ../../../scripts/get-outputs.sh nested4
-	cd admb-re/orange2 && sh ../../../scripts/get-outputs.sh orange2
-	cd admb-re/spatial && sh ../../../scripts/get-outputs.sh spatial
-	cd admb-re/socatt && sh ../../../scripts/get-outputs.sh socatt
-	cd admb-re/polio && sh ../../../scripts/get-outputs.sh polio
-	cd admb-re/orange && sh ../../../scripts/get-outputs.sh orange
+	cd admb/forest && sh ../../../scripts/get-outputs.sh forest && cd ../..
+	cd admb/robreg && sh ../../../scripts/get-outputs.sh vonbr && cd ../..
+	cd admb/robreg && sh ../../../scripts/get-outputs.sh vonb && cd ../..
+	cd admb/chem_eng && sh ../../../scripts/get-outputs.sh chem_eng && cd ../..
+	cd admb/simple && sh ../../../scripts/get-outputs.sh simple && cd ../..
+	cd admb/truncreg && sh ../../../scripts/get-outputs.sh truncreg && cd ../..
+	cd admb/vol && sh ../../../scripts/get-outputs.sh n2mvol && cd ../..
+	cd admb/buscycle && sh ../../../scripts/get-outputs.sh ham5 && cd ../..
+	cd admb/buscycle && sh ../../../scripts/get-outputs.sh ham4 && cd ../..
+	cd admb/catage && sh ../../../scripts/get-outputs.sh catage && cd ../..
+	cd admb/finance && sh ../../../scripts/get-outputs.sh finance && cd ../..
+	cd admb/pella_t && sh ../../../scripts/get-outputs.sh pella_t && cd ../..
+	cd admb/prof_like && sh ../../../scripts/get-outputs.sh bhplfine && cd ../..
+	cd admb-re/logistic && sh ../../../scripts/get-outputs.sh logistic && cd ../..
+	cd admb-re/gamma && sh ../../../scripts/get-outputs.sh liver_gamma && cd ../..
+	cd admb-re/biglog && sh ../../../scripts/get-outputs.sh biglog && cd ../..
+	cd admb-re/caest && sh ../../../scripts/get-outputs.sh caest && cd ../..
+	cd admb-re/pheno && sh ../../../scripts/get-outputs.sh pheno && cd ../..
+	cd admb-re/weights && sh ../../../scripts/get-outputs.sh binomial_w2 && cd ../..
+	cd admb-re/weights && sh ../../../scripts/get-outputs.sh binomial && cd ../..
+	cd admb-re/kidney && sh ../../../scripts/get-outputs.sh kidney && cd ../..
+	cd admb-re/orange_cor && sh ../../../scripts/get-outputs.sh orange_cor && cd ../..
+	cd admb-re/glmmadmb && sh ../../../scripts/get-outputs.sh bvprobit && cd ../..
+	cd admb-re/glmmadmb && sh ../../../scripts/get-outputs.sh nbmm && cd ../..
+	cd admb-re/glmmadmb && sh ../../../scripts/get-outputs.sh glmmadmb && cd ../..
+	cd admb-re/lidar && sh ../../../scripts/get-outputs.sh lidar && cd ../..
+	cd admb-re/nbmm && sh ../../../scripts/get-outputs.sh nbmm && cd ../..
+	cd admb-re/bcb && sh ../../../scripts/get-outputs.sh bcb && cd ../..
+	cd admb-re/skewed && sh ../../../scripts/get-outputs.sh diet_sk && cd ../..
+	cd admb-re/skewed && sh ../../../scripts/get-outputs.sh diet && cd ../..
+	cd admb-re/union && sh ../../../scripts/get-outputs.sh union && cd ../..
+	cd admb-re/sdv && sh ../../../scripts/get-outputs.sh sdv && cd ../..
+	cd admb-re/nested4 && sh ../../../scripts/get-outputs.sh nested4 && cd ../..
+	cd admb-re/orange2 && sh ../../../scripts/get-outputs.sh orange2 && cd ../..
+	cd admb-re/spatial && sh ../../../scripts/get-outputs.sh spatial && cd ../..
+	cd admb-re/socatt && sh ../../../scripts/get-outputs.sh socatt && cd ../..
+	cd admb-re/polio && sh ../../../scripts/get-outputs.sh polio && cd ../..
+	cd admb-re/orange && sh ../../../scripts/get-outputs.sh orange && cd ../..
 endif

@@ -267,17 +267,17 @@ example-prof_like:
 examples:
 ifeq ($(CMDSHELL),cmd)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples all
-	../scripts/get-outputs.bat ..\\examples\\ > outputs-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples get-outputs > outputs-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\\examples all
-	../scripts/get-outputs.bat ..\\examples\\ > outputs-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples get-outputs > outputs-opt.txt
   endif
 else
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples all
-	../scripts/get-outputs.sh ../examples/ > outputs-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > outputs-saf.txt
   ifndef SAFE_ONLY
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples
-	../scripts/get-outputs.sh ../examples/ > outputs-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > outputs-opt.txt
   endif
 endif
 

@@ -231,10 +231,10 @@ examples:
 	if not exist $(DESTDIR)\examples md $(DESTDIR)\examples
 	xcopy ..\examples $(DESTDIR)\examples /S /Y /D
 	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO all
-	..\\scripts\\get-outputs.bat $(DESTDIR)\\examples\\
+	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs
 !IFNDEF SAFE_ONLY
 	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all
-	..\\scripts\\get-outputs.bat $(DESTDIR)\\examples\\
+	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs
 !ENDIF
 
 copy:

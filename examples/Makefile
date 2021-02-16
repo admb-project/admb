@@ -964,3 +964,43 @@ clean:
 	del autodif\\struct\\oldstr.obj
 	del autodif\\struct\\struct.exe
 	del autodif\\struct\\struct.obj
+
+get-outputs:
+	pushd admb\\forest && ..\\..\\..\\scripts\\get-outputs.bat forest
+	pushd admb\\robreg && ..\\..\\..\\scripts\\get-outputs.bat vonbr
+	pushd admb\\robreg && ..\\..\\..\\scripts\\get-outputs.bat vonb
+	pushd admb\\chem_eng && ..\\..\\..\\scripts\\get-outputs.bat chem_eng
+	pushd admb\\simple && ..\\..\\..\\scripts\\get-outputs.bat simple
+	pushd admb\\truncreg && ..\\..\\..\\scripts\\get-outputs.bat truncreg
+	pushd admb\\vol && ..\\..\\..\\scripts\\get-outputs.bat n2mvol
+	pushd admb\\buscycle && ..\\..\\..\\scripts\\get-outputs.bat ham5
+	pushd admb\\buscycle && ..\\..\\..\\scripts\\get-outputs.bat ham4
+	pushd admb\\catage && ..\\..\\..\\scripts\\get-outputs.bat catage
+	pushd admb\\finance && ..\\..\\..\\scripts\\get-outputs.bat finance
+	pushd admb\\pella_t && ..\\..\\..\\scripts\\get-outputs.bat pella_t
+	pushd admb\\prof_like && ..\\..\\..\\scripts\\get-outputs.bat bhplfine
+	pushd admb-re\\logistic && ..\\..\\..\\scripts\\get-outputs.bat logistic
+	pushd admb-re\\gamma && ..\\..\\..\\scripts\\get-outputs.bat liver_gamma
+	pushd admb-re\\biglog && ..\\..\\..\\scripts\\get-outputs.bat biglog
+	pushd admb-re\\caest && ..\\..\\..\\scripts\\get-outputs.bat caest
+	pushd admb-re\\pheno && ..\\..\\..\\scripts\\get-outputs.bat pheno
+	pushd admb-re\\weights && ..\\..\\..\\scripts\\get-outputs.bat binomial_w2
+	pushd admb-re\\weights && ..\\..\\..\\scripts\\get-outputs.bat binomial
+	pushd admb-re\\kidney && ..\\..\\..\\scripts\\get-outputs.bat kidney
+	pushd admb-re\\orange_cor && ..\\..\\..\\scripts\\get-outputs.bat orange_cor
+	pushd admb-re\\glmmadmb && ..\\..\\..\\scripts\\get-outputs.bat bvprobit
+	pushd admb-re\\glmmadmb && ..\\..\\..\\scripts\\get-outputs.bat nbmm
+	pushd admb-re\\glmmadmb && ..\\..\\..\\scripts\\get-outputs.bat glmmadmb
+	pushd admb-re\\lidar && ..\\..\\..\\scripts\\get-outputs.bat lidar
+	pushd admb-re\\nbmm && ..\\..\\..\\scripts\\get-outputs.bat nbmm
+	pushd admb-re\\bcb && ..\\..\\..\\scripts\\get-outputs.bat bcb
+	pushd admb-re\\skewed && ..\\..\\..\\scripts\\get-outputs.bat diet_sk
+	pushd admb-re\\skewed && ..\\..\\..\\scripts\\get-outputs.bat diet
+	pushd admb-re\\union && ..\\..\\..\\scripts\\get-outputs.bat union
+	pushd admb-re\\sdv && ..\\..\\..\\scripts\\get-outputs.bat sdv
+	pushd admb-re\\nested4 && ..\\..\\..\\scripts\\get-outputs.bat nested4
+	pushd admb-re\\orange2 && ..\\..\\..\\scripts\\get-outputs.bat orange2
+	pushd admb-re\\spatial && ..\\..\\..\\scripts\\get-outputs.bat spatial
+	pushd admb-re\\socatt && ..\\..\\..\\scripts\\get-outputs.bat socatt
+	pushd admb-re\\polio && ..\\..\\..\\scripts\\get-outputs.bat polio
+	pushd admb-re\\orange && ..\\..\\..\\scripts\\get-outputs.bat orange

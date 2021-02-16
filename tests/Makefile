@@ -231,10 +231,10 @@ examples:
 	if not exist $(DESTDIR)\examples md $(DESTDIR)\examples
 	xcopy ..\examples $(DESTDIR)\examples /S /Y /D
 	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO all & popd
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs & popd
+	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs > outputs-examples-saf.txt & popd
 !IFNDEF SAFE_ONLY
 	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all & popd
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs & popd
+	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs > outputs-examples-opt.txt & popd
 !ENDIF
 
 copy:
@@ -243,6 +243,8 @@ copy:
 outputs.txt:
 	$(MAKE) /NOLOGO get-outputs
 	@if exist ..\\outputs.txt del /Q ..\\outputs.txt
+	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt
+	@type outputs-examples-saf.txt >> ..\\outputs.txt
 	@echo "# tests outputs\n" > ..\\outputs.txt
 	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
 

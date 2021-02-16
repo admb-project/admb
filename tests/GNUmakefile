@@ -267,17 +267,17 @@ example-prof_like:
 examples:
 ifeq ($(CMDSHELL),cmd)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples get-outputs > outputs-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\\examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples get-outputs > outputs-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples get-outputs > outputs-examples-opt.txt
   endif
 else
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > outputs-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > outputs-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > outputs-examples-opt.txt
   endif
 endif
 
@@ -361,6 +361,14 @@ ifeq ($(CMDSHELL),cmd)
 	del /Q ..\\outputs.txt
 else
 	rm -vf ../outputs.txt
+endif
+	@echo "# examples outputs\n" > $(OUTPUT_DIR)outputs.txt
+ifeq ($(CMDSHELL),cmd)
+	@fc  outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+	@type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+else
+	@diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+	@cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 endif
 	@echo "# tests outputs\n" > $(OUTPUT_DIR)outputs.txt
 	$(MAKE) get-outputs >> $(OUTPUT_DIR)outputs.txt

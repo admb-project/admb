@@ -362,7 +362,8 @@ ifeq ($(CMDSHELL),cmd)
 else
 	rm -vf ../outputs.txt
 endif
-	@echo "# examples outputs\n" > $(OUTPUT_DIR)outputs.txt
+	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
+	@echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt
 ifeq ($(CMDSHELL),cmd)
 	@fc  outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 	@type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
@@ -370,7 +371,7 @@ else
 	@diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 	@cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 endif
-	@echo "# tests outputs\n" > $(OUTPUT_DIR)outputs.txt
+	@echo "# tests outputs\n" >> $(OUTPUT_DIR)outputs.txt
 	$(MAKE) get-outputs >> $(OUTPUT_DIR)outputs.txt
 
 get-outputs:

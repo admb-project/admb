@@ -241,11 +241,12 @@ copy:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
 
 outputs.txt:
-	$(MAKE) /NOLOGO get-outputs
 	@if exist ..\\outputs.txt del /Q ..\\outputs.txt
+	@echo "# outputs\n" > ..\\outputs.txt
+	@echo "# examples outputs\n" >> ..\\outputs.txt
 	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt
 	@type outputs-examples-saf.txt >> ..\\outputs.txt
-	@echo "# tests outputs\n" > ..\\outputs.txt
+	@echo "# tests outputs\n" >> ..\\outputs.txt
 	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
 
 get-outputs:

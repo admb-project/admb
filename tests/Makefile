@@ -230,11 +230,11 @@ verify: examples
 examples:
 	if not exist $(DESTDIR)\examples md $(DESTDIR)\examples
 	xcopy ..\examples $(DESTDIR)\examples /S /Y /D
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO all
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs
+	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO all & popd
+	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs & popd
 !IFNDEF SAFE_ONLY
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs
+	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all & popd
+	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs & popd
 !ENDIF
 
 copy:
@@ -247,44 +247,44 @@ outputs.txt:
 	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
 
 get-outputs:
-	pushd 4darray & $(MAKE) /NOLOGO get-outputs
-	pushd agemat & $(MAKE) /NOLOGO get-outputs
-	pushd altexample & $(MAKE) /NOLOGO get-outputs
-	pushd adnuts & $(MAKE) /NOLOGO get-outputs
-	pushd bessel & $(MAKE) /NOLOGO get-outputs
-	pushd beta2 & $(MAKE) /NOLOGO get-outputs
-	pushd beta3 & $(MAKE) /NOLOGO get-outputs
-	pushd beta_deviate & $(MAKE) /NOLOGO get-outputs
-	pushd beta_regression & $(MAKE) /NOLOGO get-outputs
-	pushd betai & $(MAKE) /NOLOGO get-outputs
-	pushd betareg & $(MAKE) /NOLOGO get-outputs
-	pushd changepoint & $(MAKE) /NOLOGO get-outputs
-	pushd colfill & $(MAKE) /NOLOGO get-outputs
-	pushd cov_re & $(MAKE) /NOLOGO get-outputs
-	pushd ctl & $(MAKE) /NOLOGO get-outputs
-	pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs
-	pushd dd2 & $(MAKE) /NOLOGO get-outputs
-	pushd dualaveraging & $(MAKE) /NOLOGO get-outputs
-	pushd expm & $(MAKE) /NOLOGO get-outputs
-	pushd f1b2vc5 & $(MAKE) /NOLOGO get-outputs
-	pushd geolocation & $(MAKE) /NOLOGO get-outputs
-	pushd high_iarray & $(MAKE) /NOLOGO get-outputs
-	pushd hysimple & $(MAKE) /NOLOGO get-outputs
-	pushd initializationfunction & $(MAKE) /NOLOGO get-outputs
-	pushd issue108 & $(MAKE) /NOLOGO get-outputs
-	pushd lprof & $(MAKE) /NOLOGO get-outputs
-	pushd mcmc-theta & $(MAKE) /NOLOGO get-outputs
-	pushd orange_mvn & $(MAKE) /NOLOGO get-outputs
-	pushd poisp & $(MAKE) /NOLOGO get-outputs
-	pushd priors & $(MAKE) /NOLOGO get-outputs
-	pushd qbeta & $(MAKE) /NOLOGO get-outputs
-	pushd rgamma & $(MAKE) /NOLOGO get-outputs
-	pushd rsimple & $(MAKE) /NOLOGO get-outputs
-	pushd simple_mcmc & $(MAKE) /NOLOGO get-outputs
-	pushd testminmax & $(MAKE) /NOLOGO get-outputs
-	pushd tiny & $(MAKE) /NOLOGO get-outputs
-	pushd tiny_ad_fe & $(MAKE) /NOLOGO get-outputs
-	pushd tiny_ad_re & $(MAKE) /NOLOGO get-outputs
-	pushd tinyfun & $(MAKE) /NOLOGO get-outputs
-	pushd vectorize & $(MAKE) /NOLOGO get-outputs
-	pushd vonmises & $(MAKE) /NOLOGO get-outputs
+	pushd 4darray & $(MAKE) /NOLOGO get-outputs & popd
+	pushd agemat & $(MAKE) /NOLOGO get-outputs & popd
+	pushd altexample & $(MAKE) /NOLOGO get-outputs & popd
+	pushd adnuts & $(MAKE) /NOLOGO get-outputs & popd
+	pushd bessel & $(MAKE) /NOLOGO get-outputs & popd
+	pushd beta2 & $(MAKE) /NOLOGO get-outputs & popd
+	pushd beta3 & $(MAKE) /NOLOGO get-outputs & popd
+	pushd beta_deviate & $(MAKE) /NOLOGO get-outputs & popd
+	pushd beta_regression & $(MAKE) /NOLOGO get-outputs & popd
+	pushd betai & $(MAKE) /NOLOGO get-outputs & popd
+	pushd betareg & $(MAKE) /NOLOGO get-outputs & popd
+	pushd changepoint & $(MAKE) /NOLOGO get-outputs & popd
+	pushd colfill & $(MAKE) /NOLOGO get-outputs & popd
+	pushd cov_re & $(MAKE) /NOLOGO get-outputs & popd
+	pushd ctl & $(MAKE) /NOLOGO get-outputs & popd
+	pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs & popd
+	pushd dd2 & $(MAKE) /NOLOGO get-outputs & popd
+	pushd dualaveraging & $(MAKE) /NOLOGO get-outputs & popd
+	pushd expm & $(MAKE) /NOLOGO get-outputs & popd
+	pushd f1b2vc5 & $(MAKE) /NOLOGO get-outputs & popd
+	pushd geolocation & $(MAKE) /NOLOGO get-outputs & popd
+	pushd high_iarray & $(MAKE) /NOLOGO get-outputs & popd
+	pushd hysimple & $(MAKE) /NOLOGO get-outputs & popd
+	pushd initializationfunction & $(MAKE) /NOLOGO get-outputs & popd
+	pushd issue108 & $(MAKE) /NOLOGO get-outputs & popd
+	pushd lprof & $(MAKE) /NOLOGO get-outputs & popd
+	pushd mcmc-theta & $(MAKE) /NOLOGO get-outputs & popd
+	pushd orange_mvn & $(MAKE) /NOLOGO get-outputs & popd
+	pushd poisp & $(MAKE) /NOLOGO get-outputs & popd
+	pushd priors & $(MAKE) /NOLOGO get-outputs & popd
+	pushd qbeta & $(MAKE) /NOLOGO get-outputs & popd
+	pushd rgamma & $(MAKE) /NOLOGO get-outputs & popd
+	pushd rsimple & $(MAKE) /NOLOGO get-outputs & popd
+	pushd simple_mcmc & $(MAKE) /NOLOGO get-outputs & popd
+	pushd testminmax & $(MAKE) /NOLOGO get-outputs & popd
+	pushd tiny & $(MAKE) /NOLOGO get-outputs & popd
+	pushd tiny_ad_fe & $(MAKE) /NOLOGO get-outputs & popd
+	pushd tiny_ad_re & $(MAKE) /NOLOGO get-outputs & popd
+	pushd tinyfun & $(MAKE) /NOLOGO get-outputs & popd
+	pushd vectorize & $(MAKE) /NOLOGO get-outputs & popd
+	pushd vonmises & $(MAKE) /NOLOGO get-outputs & popd

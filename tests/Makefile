@@ -244,8 +244,8 @@ outputs.txt:
 	@if exist ..\\outputs.txt del /Q ..\\outputs.txt
 	@echo "# outputs\n" > ..\\outputs.txt
 	@echo "# examples outputs\n" >> ..\\outputs.txt
-	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt
-	@type outputs-examples-saf.txt >> ..\\outputs.txt
+	@fc ..\\examples\\outputs-examples-opt.txt ..\\examples\\outputs-examples-saf.txt >> ..\\outputs.txt
+	@type ..\\examples\\outputs-examples-saf.txt >> ..\\outputs.txt
 	@echo "# tests outputs\n" >> ..\\outputs.txt
 	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
 

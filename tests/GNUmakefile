@@ -274,10 +274,10 @@ ifeq ($(CMDSHELL),cmd)
   endif
 else
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > ..\\tests\\outputs-examples-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > ../tests/outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > ..\\tests\\outputs-examples-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > ../tests/outputs-examples-opt.txt
   endif
 endif
 
@@ -365,7 +365,7 @@ endif
 	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
 	@echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt
 ifeq ($(OS),Windows_NT)
-	@fc  outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 	@type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else
 	@diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt

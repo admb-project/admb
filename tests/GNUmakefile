@@ -364,7 +364,7 @@ else
 endif
 	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
 	@echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt
-ifeq ($(CMDSHELL),cmd)
+ifeq ($(OS),Windows_NT)
 	@fc  outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 	@type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else

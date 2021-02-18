@@ -266,18 +266,20 @@ example-prof_like:
 
 examples:
 ifeq ($(CMDSHELL),cmd)
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples get-outputs > ..\\tests\\outputs-examples-saf.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\\examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\\examples get-outputs > ..\\tests\\outputs-examples-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\\examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-opt.txt
   endif
 else
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > ../tests/outputs-examples-saf.txt
+	if [ -d "$(DIST)/examples" ]; then rm -rvf $(DIST)/examples; fi
+	cp -Rvf ../examples $(DIST)
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples all
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=../examples get-outputs > ../tests/outputs-examples-opt.txt
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-opt.txt
   endif
 endif
 

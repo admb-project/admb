@@ -1,9 +1,9 @@
 ADMB_HOME=..\\..\\..
 
 !IF EXISTS(..\\..\\..\\scripts\\get-outputs.bat)
-SCRIPTS_DIR=..\\..\\..\\scripts\\
+SCRIPTS_DIR=..\\..\\..\\..\\..\\scripts\\
 !ELSE
-SCRIPTS_DIR=..\\scripts\\
+SCRIPTS_DIR=..\\..\\..\\scripts\\
 !ENDIF
 
 !IFDEF DEBUG

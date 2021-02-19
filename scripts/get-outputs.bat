@@ -1,6 +1,6 @@
 @set TARGET=%1
 
-echo # target: %TARGET%
+@echo "# target: %TARGET%"
 
 @if exist %TARGET%.par type %TARGET%.par
 @if exist %TARGET%.p01 type %TARGET%.p01

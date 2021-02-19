@@ -2,7 +2,7 @@
 
 TARGET=$1
 
-echo # target: ${TARGET}
+echo "# target: ${TARGET}"
 
 if [ -e ${TARGET}.std ]; then cat ${TARGET}.std; fi
 if [ -e ${TARGET}.par ]; then cat ${TARGET}.par; fi

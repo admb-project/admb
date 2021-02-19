@@ -388,6 +388,7 @@ get-outputs:
 	$(MAKE) --directory=beta2 get-outputs
 	$(MAKE) --directory=beta3 get-outputs
 	$(MAKE) --directory=beta_deviate get-outputs
+  $(MAKE) --directory=beta_regression get-outputs
 	$(MAKE) --directory=betai get-outputs
 	$(MAKE) --directory=betareg get-outputs
 	$(MAKE) --directory=changepoint get-outputs

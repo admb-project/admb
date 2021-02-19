@@ -40,7 +40,7 @@ if [ -z "$ADMB_HOME" ]; then
     popd &> /dev/null
   done
 
-  if [ -e "${DIRECTORY}/bin/admb" ]
+  if [ -e "${DIRECTORY}/bin/admb.sh" ]
   then
     pushd "$DIRECTORY" &> /dev/null
   else

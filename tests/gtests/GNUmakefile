@@ -285,7 +285,7 @@ else
 endif
 
 googletest-read-only:
-	git clone --depth=1 https://github.com/google/googletest.git googletest-read-only
+	git clone --depth=1 --branch=release-1.10.0 https://github.com/google/googletest.git googletest-read-only
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@

@@ -36,18 +36,13 @@ jobs:
       with:
         name: admb_rtools40_debug
         path: build\\admb
-    - name: test
+    - name: tests
       run: |
         set PATH=C:\rtools40\usr\bin;C:\rtools40\mingw64\bin;%PATH%
-        make test DEBUG=yes TESTS_REMOTE=no
+        make verify DEBUG=yes TESTS_REMOTE=no
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: outputs
-        path: outputs-opt.txt
-    - name: Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: adnuts_outputs.txt
-        path: tests\\adnuts\\adnuts_outputs.txt
+        path: outputs.txt

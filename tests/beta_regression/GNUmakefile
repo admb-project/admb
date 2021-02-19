@@ -1,9 +1,5 @@
 TARGET=beta_regression
-
-default: $(TARGET)
-	$(MAKE) run3
-	$(MAKE) run2
-	$(MAKE) run1
+OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
 include ..\test-rules.mak
@@ -11,52 +7,51 @@ else
 include ../test-rules.mak
 endif
 
-run1:
+run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
+	$(TARGET) -mno 1000
+	$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
 	$(TARGET) -mno 1000  -mceval -ainp $(TARGET).par -phase 10 -nohess 
 else
+	./$(TARGET) -mno 1000
+	./$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
 	./$(TARGET) -mno 1000  -mceval -ainp $(TARGET).par -phase 10 -nohess 
 endif
 
-run2:
+get-outputs: _get-outputs
 ifeq ($(CMDSHELL),cmd)
-	$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
+	@if exist b1 type b1 2>nul
+	@if exist b2 type b2 2>nul
+	@if exist hesscheck type hesscheck 2>nul
+	@if exist hybrid_seed type hybrid_seed 2>nul
+	@if exist s1 type s1 2>nul
+	@if exist s2 type s2 2>nul
+	@if exist data type data 2>nul
 else
-	./$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
+	@if [ -e b1 ]; then cat b1; fi
+	@if [ -e b2 ]; then cat b2; fi
+	@if [ -e hesscheck ]; then cat hesscheck; fi
+	@if [ -e hybrid_seed ]; then cat hybrid_seed; fi
+	@if [ -e s1 ]; then cat s1; fi
+	@if [ -e s2 ]; then cat s2; fi
+	@if [ -e data ]; then cat data; fi
 endif
 
-run3:
+clean: _clean
 ifeq ($(CMDSHELL),cmd)
-	$(TARGET) -mno 1000
+	@if exist b1 del /Q b1 2>nul
+	@if exist b2 del /Q b2 2>nul
+	@if exist hesscheck del /Q hesscheck 2>nul
+	@if exist hybrid_seed del /Q hybrid_seed 2>nul
+	@if exist s1 del /Q s1 2>nul
+	@if exist s2 del /Q s2 2>nul
+	@if exist data del /Q data 2>nul
 else
-	./$(TARGET) -mno 1000
-endif
-
-get-outputs:
-ifeq ($(CMDSHELL),cmd)
-	type b1
-	type b2
-	type beta_regression.cor
-	type beta_regression.eva
-	type beta_regression.p01
-	type beta_regression.par
-	type beta_regression.rhes
-	type beta_regression.std
-	type hesscheck
-	type hybrid_seed
-	type s1
-	type s2
-else
-	cat b1
-	cat b2
-	cat beta_regression.cor
-	cat beta_regression.eva
-	cat beta_regression.p01
-	cat beta_regression.par
-	cat beta_regression.rhes
-	cat beta_regression.std
-	cat hesscheck
-	cat hybrid_seed
-	cat s1
-	cat s2
+	@rm -vf b1
+	@rm -vf b2
+	@rm -vf hesscheck
+	@rm -vf hybrid_seed
+	@rm -vf s1
+	@rm -vf s2
+	@rm -vf data
 endif

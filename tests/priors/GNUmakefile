@@ -47,6 +47,8 @@ else
 	../../admb$(EXT) -r $(TPL_TARGETRE)
 endif
 
+get-outputs:
+
 clean:
 ifeq ($(CMDSHELL),cmd)
 	@del rat 2>nul

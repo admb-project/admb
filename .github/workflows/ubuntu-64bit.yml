@@ -30,15 +30,10 @@ jobs:
       with:
         name: admb_ubuntu_zip
         path: build/admb.zip
-    - name: tests
-      run: make test DEBUG=yes
+    - name: tests 
+      run: make verify DEBUG=yes
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: outputs
-        path: outputs-opt.txt
-    - name: Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: adnuts_outputs.txt
-        path: tests/adnuts/adnuts_outputs.txt
+        path: outputs.txt

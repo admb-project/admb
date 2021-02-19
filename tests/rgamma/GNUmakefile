@@ -1,47 +1,28 @@
+SRCS=gamm1.cpp
+OVERRIDE=all
+
 ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),cmd)
-    CMDSHELL=cmd
-  else
-    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      EXT=.sh
-    else
-      SHELL=cmd
-      CMDSHELL=cmd
-    endif
-  endif
+include ..\test-rules.mak
+else
+include ../test-rules.mak
 endif
 
-all: clean
-	$(MAKE) gamm1
-	$(MAKE) testgamm
-	$(MAKE) run
-
-run:
+run: $(TARGET) testgamm
 ifeq ($(CMDSHELL),cmd)
-	gamm1
 	testgamm
+	$(TARGET)
 else
-	./gamm1
 	./testgamm
-endif
-
-gamm1: gamm1.cpp
-ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb gamm1.cpp
-else
-	../../admb$(EXT) gamm1.cpp
+	./$(TARGET)
 endif
 
 testgamm: testgamm.cpp
 ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb testgamm.cpp
+	$(SCRIPT_DIR)admb.cmd testgamm.cpp
 else
-	../../admb$(EXT) testgamm.cpp
+	$(SCRIPT_DIR)admb$(EXT) testgamm.cpp
 endif
 
-clean:
-ifeq ($(CMDSHELL),cmd)
-	@del fmin.log gamm1 gamm1.obj testgamm testgamm.obj
-else
-	$(RM) fmin.log gamm1 gamm1.obj testgamm testgamm.obj
-endif
+get-outputs: _get-outputs
+
+clean: _clean

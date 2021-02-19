@@ -1,3 +1,5 @@
+TESTS_REMOTE=yes
+
 ifndef ADMB_VER
   ADMB_VER=admb
 endif
@@ -28,9 +30,17 @@ endif
 
 ifeq ($(DEBUG),yes)
 DEBUG_OPTION=-g
+else
+DEBUG_OPTION=
 endif
 
+ifeq ($(CMDSHELL),cmd)
+OUTPUT_DIR=..\\
+DIST=..\\build\\$(ADMB_VER)
+else
+OUTPUT_DIR=../
 DIST=../build/$(ADMB_VER)
+endif
 
 all:
 	$(MAKE) tests-core
@@ -39,13 +49,16 @@ ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
 endif
 
+verify: examples
+	$(MAKE) all
+	$(MAKE) outputs.txt
+
 tests-remote:
 	$(MAKE) remote-core-tpls
 	$(MAKE) remote-contrib-tpls
 	$(MAKE) unit-gtests
 
 tests-core:
-	$(MAKE) --directory=../examples all
 	$(MAKE) core-tpls
 
 tests-contrib:
@@ -53,7 +66,6 @@ tests-contrib:
 
 coverage:
 	$(MAKE) unit-gtests
-	$(MAKE) --directory=../examples all
 	$(MAKE) core-tpls
 
 unit-gtests:
@@ -65,49 +77,54 @@ test-rgamma:
 	$(MAKE) --directory=rgamma
 
 core-tpls:\
-  tpl-data_adstring_array\
-  tpl-dd2\
-  tpl-testminmax\
-  example-prof_like\
-  tpl-f1b2vc5\
   tpl-4darray\
-  tpl-betai\
+  tpl-adnuts\
+  tpl-altexample\
+  tpl-bessel\
   tpl-beta2\
   tpl-beta3\
-  tpl-vonmises\
-  tpl-tiny_ad_fe\
-  tpl-tinyfun\
-  tpl-poisp\
-  tpl-tiny_ad_re\
-  tpl-vectorize\
-  tpl-bessel\
-  tpl-qbeta\
-  tpl-dd2\
   tpl-beta_deviate\
-  tpl-betareg\
   tpl-beta_regression\
+  tpl-betai\
+  tpl-betareg\
   tpl-colfill\
   tpl-cov_re\
+  tpl-data_adstring_array\
+  tpl-dd2\
+  tpl-dualaveraging\
   tpl-expm\
-  tpl-gradients_output\
-  tpl-simple_mcmc\
-  tpl-hysimple\
-  tpl-adnuts\
-  tpl-testminmax\
-  tpl-orange_mvn\
+  tpl-f1b2vc5\
   cpp-globals\
-  tpl-lprof
+  tpl-gradients_output\
+  tpl-high_iarray\
+  tpl-hysimple\
+  tpl-initializationfunction\
+  tpl-issue108\
+  tpl-lprof\
+  tpl-mcmc-theta\
+  tpl-orange_mvn\
+  tpl-poisp\
+  tpl-qbeta\
+  tpl-rsimple\
+  tpl-simple_mcmc\
+  tpl-testminmax\
+  tpl-tiny\
+  tpl-tiny_ad_fe\
+  tpl-tiny_ad_re\
+  tpl-tinyfun\
+  tpl-vectorize\
+  tpl-vonmises\
+  example-prof_like
 
 remote-core-tpls:\
-  tpl-geolocation\
   tpl-changepoint\
   tpl-geolocation\
   tpl-glmmadmb
 
 contrib-tpls:\
+  tpl-ctl\
   tpl-priors\
-  test-rgamma\
-  tpl-ctl
+  test-rgamma
 
 remote-contrib-tpls:\
   tpl-agemat
@@ -127,6 +144,9 @@ tpl-glmmadmb:
 tpl-agemat:
 	$(MAKE) --directory=agemat
 
+tpl-altexample:
+	$(MAKE) --directory=altexample
+
 tpl-betai:
 	$(MAKE) --directory=betai
 
@@ -139,17 +159,26 @@ tpl-beta3:
 tpl-vonmises:
 	$(MAKE) --directory=vonmises
 
+tpl-high_iarray:
+	$(MAKE) --directory=high_iarray
+
 tpl-tiny_ad_fe:
 	$(MAKE) --directory=tiny_ad_fe
+
+tpl-tiny_ad_re:
+	$(MAKE) --directory=tiny_ad_re
 
 tpl-tinyfun:
 	$(MAKE) --directory=tinyfun
 
+tpl-tiny:
+	$(MAKE) --directory=tiny
+
+tpl-rsimple:
+	$(MAKE) --directory=rsimple
+
 tpl-poisp:
 	$(MAKE) --directory=poisp
-
-tpl-tiny_ad_re:
-	$(MAKE) --directory=tiny_ad_re
 
 tpl-vectorize:
 	$(MAKE) --directory=vectorize
@@ -162,6 +191,9 @@ tpl-qbeta:
 
 tpl-dd2:
 	$(MAKE) --directory=dd2
+
+tpl-dualaveraging:
+	$(MAKE) --directory=dualaveraging
 
 tpl-data_adstring_array:
 	$(MAKE) --directory=data_adstring_array
@@ -190,6 +222,15 @@ tpl-ctl:
 tpl-expm:
 	$(MAKE) --directory=expm
 
+tpl-hysimple:
+	$(MAKE) --directory=hysimple
+
+tpl-issue108:
+	$(MAKE) --directory=issue108
+
+tpl-initializationfunction:
+	$(MAKE) --directory=initializationfunction
+
 tpl-simple_mcmc:
 	$(MAKE) --directory=simple_mcmc
 
@@ -197,17 +238,13 @@ tpl-gradients_output:
 	$(MAKE) --directory=gradients_output
 
 tpl-geolocation:
-	PATH=../../..:$(PATH) $(MAKE) --directory=geolocation
+	$(MAKE) --directory=geolocation
 
 tpl-gmrf:
 	$(MAKE) --directory=gmrf
 
-tpl-hysimple:
-	$(MAKE) --directory=hysimple
-
 tpl-adnuts:
 	$(MAKE) --directory=adnuts
-	$(MAKE) --directory=adnuts get-outputs
 
 tpl-priors:
 	$(MAKE) --directory=priors
@@ -215,46 +252,37 @@ tpl-priors:
 tpl-testminmax:
 	$(MAKE) --directory=testminmax
 
+tpl-mcmc-theta:
+	$(MAKE) --directory=mcmc-theta
+
 tpl-orange_mvn:
 	$(MAKE) --directory=orange_mvn
 
 tpl-lprof:
-ifeq ($(CMDSHELL),cmd)
 	$(MAKE) --directory=lprof
-endif
 
 example-prof_like:
 	$(MAKE) --directory=../examples/admb/prof_like
 
-verify:
+examples:
 ifeq ($(CMDSHELL),cmd)
-  ifneq ($(DEBUG),yes)
-	del ..\outputs-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples all
-	pushd .. & scripts\get-outputs.bat > outputs-saf.txt & popd
-    ifndef SAFE_ONLY
-	del ..\outputs-opt.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples all
-	pushd .. & scripts\get-outputs.bat > outputs-opt.txt & popd
-    endif
-  else
-    ifndef SAFE_ONLY
-	del ..\outputs-opt.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ..\examples all
-	pushd .. & scripts\get-outputs.bat > outputs-opt.txt & popd
-    endif
-	del ..\outputs-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ..\examples all
-	pushd .. & scripts\get-outputs.bat > outputs-saf.txt & popd
+	if exist $(DIST)\\examples rmdir /s /q $(DESTDIR)\\examples
+	md $(DESTDIR)\\examples
+	xcopy ..\\examples $(DIST)\examples /S /Y /D
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-saf.txt
+  ifndef SAFE_ONLY
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\\examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-opt.txt
   endif
 else
-	rm -vf ../outputs-saf.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C ../examples all
-	-../scripts/get-outputs.sh ../examples/ > "../outputs-saf.txt"
+	if [ -d "$(DIST)/examples" ]; then rm -rvf $(DIST)/examples; fi
+	cp -Rvf ../examples $(DIST)
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
-	rm -vf ../outputs-opt.txt
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C ../examples all
-	-../scripts/get-outputs.sh ../examples/ > "../outputs-opt.txt"
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-opt.txt
   endif
 endif
 
@@ -267,146 +295,61 @@ total-clean: clean
 clean:
 ifeq ($(CMDSHELL),cmd)
 	@if exist SS3 rmdir /s /q SS3
-	@del dd2\\f1b2list1
-	@del dd2\\f1b2list12
-	@del dd2\\f1b2list13
-	@del dd2\\nf1b2list1
-	@del dd2\\nf1b2list12
-	@del dd2\\nf1b2list13
-	@del dualaveraging\\dualaveraging.cpp
-	@del dualaveraging\\dualaveraging.htp
-	@del dualaveraging\\dualaveraging.obj
-	@del dualaveraging\\hybmcmc.obj
-	@del f1b2vc5\\f1b2vc5.b01
-	@del f1b2vc5\\f1b2vc5.p01
 else
-	$(MAKE) --directory=lprof clean
 	@rm -rvf SS3
-	@rm -vf dd2/f1b2list1
-	@rm -vf dd2/f1b2list12
-	@rm -vf dd2/f1b2list13
-	@rm -vf dd2/nf1b2list1
-	@rm -vf dd2/nf1b2list12
-	@rm -vf dd2/nf1b2list13
-	@rm -vf dualaveraging/dualaveraging.cpp
-	@rm -vf dualaveraging/dualaveraging.htp
-	@rm -vf dualaveraging/dualaveraging.obj
-	@rm -vf dualaveraging/hybmcmc.obj
-	@rm -vf f1b2vc5/f1b2vc5.b01
-	@rm -vf f1b2vc5/f1b2vc5.p01
-	@rm -vf adnuts/adaptation.csv
-	@rm -vf adnuts/adapted_metric.txt
-	@rm -vf adnuts/adnuts.mc2
-	@rm -vf adnuts/adnuts.mcm
-	@rm -vf adnuts/adnuts.psv
-	@rm -vf adnuts/adnuts_psv.txt
-	@rm -vf adnuts/output_psv.exe
-	@rm -vf adnuts/rwm_lp.txt
-	@rm -vf adnuts/sims
-	@rm -vf adnuts/unbounded.csv
-	@rm -vf beta_regression/b1
-	@rm -vf beta_regression/b2
-	@rm -vf beta_regression/beta_regression.psv
-	@rm -vf beta_regression/data
-	@rm -vf beta_regression/hybrid_seed
-	@rm -vf beta_regression/s1
-	@rm -vf beta_regression/s2
-	@rm -vf beta_regression/sims
-	@rm -vf betareg/a
-	@rm -vf betareg/b1
-	@rm -vf betareg/b2
-	@rm -vf betareg/betareg.b02
-	@rm -vf betareg/betareg.p02
-	@rm -vf betareg/betareg.r02
-	@rm -vf betareg/data
-	@rm -vf betareg/s1
-	@rm -vf betareg/s2
-	@rm -vf cov_re/cov_re_sep.bar
-	@rm -vf cov_re/cov_re_sep.bgs
-	@rm -vf cov_re/cov_re_sep.cor
-	@rm -vf cov_re/cov_re_sep.cpp
-	@rm -vf cov_re/cov_re_sep.eva
-	@rm -vf cov_re/cov_re_sep.exe
-	@rm -vf cov_re/cov_re_sep.htp
-	@rm -vf cov_re/cov_re_sep.log
-	@rm -vf cov_re/cov_re_sep.obj
-	@rm -vf cov_re/cov_re_sep.par
-	@rm -vf cov_re/cov_re_sep.rhes
-	@rm -vf cov_re/cov_re_sep.std
-	@rm -vf data_adstring_array/data_adstring_array.bar
-	@rm -vf data_adstring_array/data_adstring_array.cor
-	@rm -vf data_adstring_array/data_adstring_array.cpp
-	@rm -vf data_adstring_array/data_adstring_array.eva
-	@rm -vf data_adstring_array/data_adstring_array.exe
-	@rm -vf data_adstring_array/data_adstring_array.htp
-	@rm -vf data_adstring_array/data_adstring_array.log
-	@rm -vf data_adstring_array/data_adstring_array.obj
-	@rm -vf data_adstring_array/data_adstring_array.par
-	@rm -vf data_adstring_array/data_adstring_array.rep
-	@rm -vf data_adstring_array/data_adstring_array.std
 endif
-	$(MAKE) --directory=rgamma clean
-	$(MAKE) --directory=globals clean
-	$(MAKE) --directory=f1b2vc5 clean
-	$(MAKE) --directory=expm clean
-	$(MAKE) --directory=beta_regression clean
-	$(MAKE) --directory=changepoint clean
-	$(MAKE) --directory=hysimple clean
+	$(MAKE) --directory=4darray clean
 	$(MAKE) --directory=adnuts clean
-	$(MAKE) --directory=betareg clean
-	$(MAKE) --directory=gmrf clean
-	$(MAKE) --directory=simple_mcmc clean
-	$(MAKE) --directory=testminmax clean
-	$(MAKE) --directory=geolocation clean
-	$(MAKE) --directory=betai clean
+	$(MAKE) --directory=agemat clean
+	$(MAKE) --directory=altexample clean
+	$(MAKE) --directory=bessel clean
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
-	$(MAKE) --directory=vonmises clean
-	$(MAKE) --directory=tiny_ad_fe clean
-	$(MAKE) --directory=tinyfun clean
-	$(MAKE) --directory=poisp clean
-	$(MAKE) --directory=tiny_ad_re clean
-	$(MAKE) --directory=vectorize clean
-	$(MAKE) --directory=bessel clean
-	$(MAKE) --directory=qbeta clean
-	$(MAKE) --directory=dd2 clean
 	$(MAKE) --directory=beta_deviate clean
-	$(MAKE) --directory=cov_re clean
-	$(MAKE) --directory=gtests clean
-	$(MAKE) --directory=agemat clean
-	$(MAKE) --directory=ctl clean
-	$(MAKE) --directory=priors clean
+	$(MAKE) --directory=beta_regression clean
+	$(MAKE) --directory=betai clean
+	$(MAKE) --directory=betareg clean
+	$(MAKE) --directory=changepoint clean
 	$(MAKE) --directory=colfill clean
+	$(MAKE) --directory=cov_re clean
+	$(MAKE) --directory=ctl clean
+	$(MAKE) --directory=data_adstring_array clean
+	$(MAKE) --directory=dd2 clean
+	$(MAKE) --directory=dualaveraging clean
+	$(MAKE) --directory=expm clean
+	$(MAKE) --directory=f1b2vc5 clean
+	$(MAKE) --directory=geolocation clean
 	$(MAKE) --directory=glmmadmb clean
-	$(MAKE) --directory=orange_mvn clean
+	$(MAKE) --directory=globals clean
+	$(MAKE) --directory=gmrf clean
 	$(MAKE) --directory=gradients_output clean
-	$(MAKE) --directory=4darray clean
+	$(MAKE) --directory=gtests clean
+	$(MAKE) --directory=high_iarray clean
+	$(MAKE) --directory=hysimple clean
+	$(MAKE) --directory=initializationfunction clean
+	$(MAKE) --directory=issue108 clean
+	$(MAKE) --directory=lprof clean
+	$(MAKE) --directory=mcmc-theta clean
+	$(MAKE) --directory=orange_mvn clean
+	$(MAKE) --directory=poisp clean
+	$(MAKE) --directory=priors clean
+	$(MAKE) --directory=qbeta clean
+	$(MAKE) --directory=rgamma clean
+	$(MAKE) --directory=rsimple clean
+	$(MAKE) --directory=simple_mcmc clean
+	$(MAKE) --directory=testminmax clean
+	$(MAKE) --directory=tiny clean
+	$(MAKE) --directory=tiny_ad_fe clean
+	$(MAKE) --directory=tiny_ad_re clean
+	$(MAKE) --directory=tinyfun clean
+	$(MAKE) --directory=vectorize clean
+	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=../examples/admb/prof_like clean
 
 dist-clean:
 ifeq ($(CMDSHELL),cmd)
-	del agemat/agemat.dat
-	del agemat/agemat.tpl
-	if exist geolocation/kfsst rd /S /Q geolocation/kfsst
-	if exist geolocation/kftrack rd /S /Q geolocation/kftrack
-	if exist geolocation/trackit rd /S /Q geolocation/trackit
-	if exist geolocation/ukfsst rd /S /Q geolocation/ukfsst
-	if exist glmmadmb/admb_tests rd /S /Q glmmadmb/admb_tests
-	del glmmadmb/bvprobit.tpl
-	del glmmadmb/glmmadmb.tpl
-	del glmmadmb/nbmm.tpl
 	if exist gtests/googletest-read-only rd /S /Q gtests/googletest-read-only
 else
-	rm -vf agemat/agemat.dat
-	rm -vf agemat/agemat.tpl
-	rm -rvf geolocation/kfsst
-	rm -rvf geolocation/kftrack
-	rm -rvf geolocation/trackit
-	rm -rvf geolocation/ukfsst
-	rm -rvf glmmadmb/admb_tests
-	rm -vf glmmadmb/bvprobit.tpl
-	rm -vf glmmadmb/glmmadmb.tpl
-	rm -vf glmmadmb/nbmm.tpl
 	rm -rvf gtests/googletest-read-only
 endif
 
@@ -418,15 +361,66 @@ else
 	cp -Rvf ../tests $(DIST)
 endif
 
-outputs:
+outputs.txt:
 ifeq ($(CMDSHELL),cmd)
-	del outputs-tests.txt
+	del /Q ..\\outputs.txt
 else
-	rm -vf outputs-tests.txt
-	touch outputs-tests.txt
-	$(MAKE) --directory=lprof get-outputs >> outputs-tests.txt
+	rm -vf ../outputs.txt
 endif
-	$(MAKE) --directory=beta_regression get-outputs >> outputs-tests.txt
-	$(MAKE) --directory=agemat get-outputs >> outputs-tests.txt
-	$(MAKE) --directory=beta_deviate get-outputs >> output-tests.txt
-	$(MAKE) --directory=simple_mcmc get-outputs >> output-tests.txt
+	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
+	@echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt
+ifeq ($(OS),Windows_NT)
+	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+	@type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+else
+	@diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+	@cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+endif
+	@echo "# tests outputs\n" >> $(OUTPUT_DIR)outputs.txt
+	$(MAKE) get-outputs >> $(OUTPUT_DIR)outputs.txt
+
+get-outputs:
+	$(MAKE) --directory=4darray get-outputs
+	$(MAKE) --directory=agemat get-outputs
+	$(MAKE) --directory=altexample get-outputs
+	$(MAKE) --directory=adnuts get-outputs
+	$(MAKE) --directory=bessel get-outputs
+	$(MAKE) --directory=beta2 get-outputs
+	$(MAKE) --directory=beta3 get-outputs
+	$(MAKE) --directory=beta_deviate get-outputs
+  $(MAKE) --directory=beta_regression get-outputs
+	$(MAKE) --directory=betai get-outputs
+	$(MAKE) --directory=betareg get-outputs
+	$(MAKE) --directory=changepoint get-outputs
+	$(MAKE) --directory=colfill get-outputs
+	$(MAKE) --directory=cov_re get-outputs
+	$(MAKE) --directory=ctl get-outputs
+	$(MAKE) --directory=data_adstring_array get-outputs
+	$(MAKE) --directory=dd2 get-outputs
+	$(MAKE) --directory=dualaveraging get-outputs
+	$(MAKE) --directory=expm get-outputs
+	$(MAKE) --directory=f1b2vc5 get-outputs
+	$(MAKE) --directory=geolocation get-outputs
+	$(MAKE) --directory=glmmadmb get-outputs
+	$(MAKE) --directory=globals get-outputs
+	$(MAKE) --directory=gradients_output get-outputs
+	$(MAKE) --directory=high_iarray get-outputs
+	$(MAKE) --directory=hysimple get-outputs
+	$(MAKE) --directory=initializationfunction get-outputs
+	$(MAKE) --directory=issue108 get-outputs
+	$(MAKE) --directory=lprof get-outputs
+	$(MAKE) --directory=mcmc-theta get-outputs
+	$(MAKE) --directory=orange_mvn get-outputs
+	$(MAKE) --directory=poisp get-outputs
+	$(MAKE) --directory=priors get-outputs
+	$(MAKE) --directory=qbeta get-outputs
+	$(MAKE) --directory=rgamma get-outputs
+	$(MAKE) --directory=rsimple get-outputs
+	$(MAKE) --directory=simple_mcmc get-outputs
+	$(MAKE) --directory=testminmax get-outputs
+	$(MAKE) --directory=tiny get-outputs
+	$(MAKE) --directory=tiny_ad_fe get-outputs
+	$(MAKE) --directory=tiny_ad_re get-outputs
+	$(MAKE) --directory=tinyfun get-outputs
+	$(MAKE) --directory=vectorize get-outputs
+	$(MAKE) --directory=vonmises get-outputs

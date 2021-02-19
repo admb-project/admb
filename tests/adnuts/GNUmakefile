@@ -1,24 +1,14 @@
 TARGET=adnuts
+OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),cmd)
-    CMDSHELL=cmd
-  else
-    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      EXT=.sh
-    else
-      SHELL=cmd
-      CMDSHELL=cmd
-    endif
-  endif
+include ..\test-rules.mak
+else
+include ../test-rules.mak
 endif
 
-all:
-	$(MAKE) clean
-	$(MAKE) run
-
-run: $(TARGET) output_psv
 ifeq ($(CMDSHELL),cmd)
+run: $(TARGET) output_psv.exe
 	$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
 	output_psv adnuts.psv > adnuts_psv.txt
 	$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass -noest -mcseed 141
@@ -28,6 +18,7 @@ ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -rwm -mcmc 2000 -mcsave 1 -noest -mcseed 123
 	output_psv adnuts.psv >> adnuts_psv.txt
 else
+run: $(TARGET) output_psv
 	./$(TARGET) -nuts -hbf -mcmc 2000 -mcseed 12
 	./output_psv adnuts.psv > adnuts_psv.txt
 	./$(TARGET) -nuts -mcmc 2000 -mcdiag -adapt_mass -noest -mcseed 141
@@ -38,37 +29,43 @@ else
 	./output_psv adnuts.psv >> adnuts_psv.txt
 endif
 
-$(TARGET): $(TARGET).tpl
 ifeq ($(CMDSHELL),cmd)
-	..\\..\\admb.cmd $(TARGET) $(SRCS)
+output_psv.exe: output_psv.cpp
 else
-	../../admb$(EXT) $(TARGET) $(SRCS)
-endif
-
 output_psv: output_psv.cpp
+endif
 	$(CXX) -o $@ $^
 
-get-outputs:
+get-outputs: _get-outputs
 ifeq ($(CMDSHELL),cmd)
-	@type adnuts_psv.txt adaptation.csv admodel.dep adnuts.cor adnuts.eva adnuts.log adnuts.par adnuts_psv.txt adnuts.std unbounded.csv > adnuts_outputs.txt
-	@type adnuts_outputs.txt
+	@if exist adaptation.csv type adaptation.csv
+	@if exist adapted_metric.txt type adapted_metric.txt
+	@if exist adnuts_psv.txt type adnuts_psv.txt
+	@if exist rwm_lp.txt type rwm_lp.txt
+	@if exist sims type sims
+	@if exist unbounded.csv type unbounded.csv
 else
-	@cat adnuts_psv.txt adaptation.csv admodel.dep adnuts.cor adnuts.eva adnuts.log adnuts.par adnuts_psv.txt adnuts.std unbounded.csv > adnuts_outputs.txt
-	@cat adnuts_outputs.txt
+	@if [ -e adaptation.csv ]; then cat adaptation.csv; fi
+	@if [ -e adapted_metric.txt ]; then cat adapted_metric.txt; fi
+	@if [ -e adnuts_psv.txt ]; then cat adnuts_psv.txt; fi
+	@if [ -e rwm_lp.txt ]; then cat rwm_lp.txt; fi
+	@if [ -e sims ]; then cat sims; fi
+	@if [ -e unbounded.csv ]; then cat unbounded.csv; fi
 endif
 
-clean2:
+clean: _clean
 ifeq ($(CMDSHELL),cmd)
-	@del adaptation.csv
-	@del adapted_metric.txt
-	@del adnuts.mc2
-	@del adnuts.mcm
-	@del adnuts.psv
-	@del adnuts_psv.txt
-	@del output_psv
-	@del rwm_lp.txt
-	@del sims
-	@del unbounded.csv
+	@if exist adaptation.csv del /Q adaptation.csv
+	@if exist adapted_metric.txt del /Q adapted_metric.txt
+	@if exist adnuts.mc2 del /Q adnuts.mc2
+	@if exist adnuts.mcm del /Q adnuts.mcm
+	@if exist adnuts.psv del /Q adnuts.psv
+	@if exist adnuts_psv.txt del /Q adnuts_psv.txt
+	@if exist output_psv.exe del /Q output_psv.exe
+	@if exist output_psv.obj del /Q output_psv.obj
+	@if exist rwm_lp.txt del /Q rwm_lp.txt
+	@if exist sims del /Q sims
+	@if exist unbounded.csv del /Q unbounded.csv
 else
 	@rm -vf adaptation.csv
 	@rm -vf adapted_metric.txt
@@ -77,67 +74,8 @@ else
 	@rm -vf adnuts.psv
 	@rm -vf adnuts_psv.txt
 	@rm -vf output_psv
+	@rm -vf output_psv.obj
 	@rm -vf rwm_lp.txt
 	@rm -vf sims
 	@rm -vf unbounded.csv
-endif
-
-clean: clean2
-ifeq ($(CMDSHELL),cmd)
-	@del $(TARGET) 2>nul
-	@del variance 2>nul
-	@del fmin.log 2>nul
-	@del $(TARGET).rep 2>nul
-	@del $(TARGET).eva 2>nul
-	@del $(TARGET).exe 2>nul
-	@del $(TARGET).htp 2>nul
-	@del $(TARGET).bar 2>nul
-	@del $(TARGET).bgs 2>nul
-	@del $(TARGET).cor 2>nul
-	@del $(TARGET).cpp 2>nul
-	@del $(TARGET).log 2>nul
-	@del $(TARGET).o 2>nul
-	@del $(TARGET).obj 2>nul
-	@del $(TARGET).par 2>nul
-	@del $(TARGET).std 2>nul
-	@del tests_$(TARGET).o 2>nul
-	@del tests_$(TARGET) 2>nul
-	@del eigv.rpt 2>nul
-	@del admodel.cov 2>nul
-	@del admodel.dep 2>nul
-	@del admodel.hes 2>nul
-	@del $(TARGET).luu 2>nul
-	@del $(TARGET).rhes 2>nul
-	@del hesscheck 2>nul
-	@del hessian.bin 2>nul
-else
-	@rm -vf $(TARGET)
-	@rm -vf admodel.*
-	@rm -vf variance
-	@rm -vf hessian.bin
-	@rm -vf hesscheck
-	@rm -vf fmin.log
-	@rm -vf $(TARGET).rep
-	@rm -vf $(TARGET).eva
-	@rm -vf $(TARGET).htp
-	@rm -vf $(TARGET).bar
-	@rm -vf $(TARGET).bgs
-	@rm -vf $(TARGET).cor
-	@rm -vf $(TARGET).cpp
-	@rm -vf $(TARGET).log
-	@rm -vf $(TARGET).o
-	@rm -vf $(TARGET).obj
-	@rm -vf $(TARGET).par
-	@rm -vf $(TARGET).std
-	@rm -vf $(TARGET).luu
-	@rm -vf $(TARGET).rhes
-	@rm -vf $(TARGET).[bpr]01
-	@rm -vf eigv.rpt
-	@rm -vf admodel.cov
-	@rm -vf admodel.dep
-	@rm -vf admodel.hes
-	@rm -vf $(TARGET).luu
-	@rm -vf $(TARGET).rhes
-	@rm -vf hesscheck
-	@rm -vf hessian.bin
 endif

@@ -11,48 +11,72 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-default: kalmanfilter
-ifeq ($(CMDSHELL),cmd)
-	pushd kalmanfilter\\kfsst\\kfsst\\source & ..\\..\\..\\..\\..\\..\\admb.cmd kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
-	pushd kalmanfilter\\kftrack\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
-	pushd kalmanfilter\\kftrack\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
-	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd ukf.tpl & popd
-	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd prepro.tpl & popd
-	pushd kalmanfilter\\ukfsst\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
-else
-	cd kalmanfilter/kfsst/kfsst/source; ../../../../../../admb$(EXT) kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
-	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
-	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
-	cd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) ukf.tpl
-	cd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) prepro.tpl
-	cd kalmanfilter/ukfsst/inst/admb/src; ../../../../../../../admb$(EXT) ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
-endif
+all: clean
+	$(MAKE) kalmanfilter
 	$(MAKE) run
+
+ifeq ($(CMDSHELL),cmd)
+kalmanfilter\\testdir\\kfsst\\kfsst.exe:
+	pushd kalmanfilter\\kfsst\\kfsst\\source & ..\\..\\..\\..\\..\\..\\admb.cmd -o ..\\..\\..\\..\\$@ kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+
+kalmanfilter\\testdir\\kftrack\kftrack.exe:
+	pushd kalmanfilter\\kftrack\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd -o ..\\..\\..\\..\\..\\$@ kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+
+kalmanfilter\\testdir\\kftrack\twosegtrack.exe:
+	pushd kalmanfilter\\kftrack\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd -o ..\\..\\..\\..\\..\\$@ twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+
+kalmanfilter\\testdir\\trackit\\ukf.exe:
+	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd -o ..\\..\\..\\..\\..\\$@ ukf.tpl & popd
+
+kalmanfilter\\testdir\\trackit\\prepro.exe:
+	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd -o ..\\..\\..\\..\\..\\$@ prepro.tpl & popd
+
+kalmanfilter\\testdir\\ukfsst\\ukfsst.exe:
+	pushd kalmanfilter\\ukfsst\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd -o ..\\..\\..\\..\\..\\$@ ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+else
+kalmanfilter/testdir/kfsst/kfsst:
+	cd kalmanfilter/kfsst/kfsst/source; ../../../../../../admb$(EXT) -o ../../../../$@ kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+
+kalmanfilter/testdir/kftrack/kftrack:
+	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) -o ../../../../../$@ kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+
+kalmanfilter/testdir/kftrack/twosegtrack:
+	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) -o ../../../../../$@ twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+
+kalmanfilter/testdir/trackit/ukf:
+	cd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) -o ../../../../../$@ ukf.tpl
+
+kalmanfilter/testdir/trackit/prepro:
+	cd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) -o ../../../../../$@ prepro.tpl
+
+kalmanfilter/testdir/ukfsst/ukfsst:
+	cd kalmanfilter/ukfsst/inst/admb/src; ../../../../../../../admb$(EXT) -o ../../../../../$@ ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+endif
 
 kalmanfilter:
 	git clone --depth 1 https://github.com/positioning/kalmanfilter
 
-run:
 ifeq ($(CMDSHELL),cmd)
-	pushd kalmanfilter\\testdir\\kfsst & copy ..\\..\\kfsst\\kfsst\\source\\kfsst.exe & kfsst & popd
-	pushd kalmanfilter\\testdir\\kftrack & copy ..\\..\\kftrack\\inst\\admb\\src\\kftrack.exe & kftrack & popd
-	pushd kalmanfilter\\testdir\\trackit & copy ..\\..\\trackit\\inst\\admb\\src\\ukf.exe & ukf & popd
-	pushd kalmanfilter\\testdir\\ukfsst & copy ..\\..\\ukfsst\\inst\\admb\\src\\ukfsst.exe & ukfsst & popd
+run: kalmanfilter\\testdir\\kfsst\\kfsst.exe kalmanfilter\\testdir\\kftrack\kftrack.exe kalmanfilter\\testdir\\kftrack\twosegtrack.exe kalmanfilter\\testdir\\trackit\\ukf.exe kalmanfilter\\testdir\\trackit\\prepro.exe kalmanfilter\\testdir\\ukfsst\\ukfsst.exe
+	pushd kalmanfilter\\testdir\\kfsst & kfsst & popd
+	pushd kalmanfilter\\testdir\\kftrack & kftrack & popd
+	pushd kalmanfilter\\testdir\\trackit & ukf & popd
+	pushd kalmanfilter\\testdir\\ukfsst & ukfsst & popd
 else
-	cd kalmanfilter/testdir/kfsst; cp ../../kfsst/kfsst/source/kfsst .; ./kfsst
-	cd kalmanfilter/testdir/kftrack; cp ../../kftrack/inst/admb/src/kftrack .; ./kftrack
-	cd kalmanfilter/testdir/trackit; cp ../../trackit/inst/admb/src/ukf .; ./ukf
-	@# cd kalmanfilter/testdir/ukfsst; cp ../../ukfsst/inst/admb/src/ukfsst .; ./ukfsst
+run: kalmanfilter/testdir/kfsst/kfsst kalmanfilter/testdir/kftrack/kftrack kalmanfilter/testdir/kftrack/twosegtrack kalmanfilter/testdir/trackit/ukf kalmanfilter/testdir/trackit/prepro kalmanfilter/testdir/ukfsst/ukfsst
+	cd kalmanfilter/testdir/kfsst; ./kfsst
+	cd kalmanfilter/testdir/kftrack; ./kftrack
+	cd kalmanfilter/testdir/trackit; ./ukf
+	cd kalmanfilter/testdir/ukfsst; ./ukfsst
 endif
+
+get-outputs:
 
 total-clean:
-	rm -rvf kalmanfilter
-	rm -rvf ukfsst
-	rm -rvf trackit
-	rm -rvf kftrack
-	rm -rvf kfsst
+ifeq ($(CMDSHELL),cmd)
+	@if exist kalmanfilter rmdir /s /q kalmanfilter
+else
+	@rm -rvf kalmanfilter
+endif
 
 clean:
-ifneq ($(CMDSHELL),cmd)
-	@if [ -d "kalmanfilter" ]; then $(MAKE) --directory=kalmanfilter clean; fi
-endif

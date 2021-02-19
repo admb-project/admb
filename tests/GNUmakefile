@@ -207,6 +207,7 @@ tpl-hysimple:
 
 tpl-adnuts:
 	$(MAKE) --directory=adnuts
+	$(MAKE) --directory=adnuts get-outputs
 
 tpl-priors:
 	$(MAKE) --directory=priors

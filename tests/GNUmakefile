@@ -362,14 +362,9 @@ else
 endif
 
 outputs.txt:
-ifeq ($(CMDSHELL),cmd)
-	del /Q ..\\outputs.txt
-else
-	rm -vf ../outputs.txt
-endif
 	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
 	@echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt
-ifeq ($(OS),Windows_NT)
+ifeq ($(CMDSHELL),cmd)
 	fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else

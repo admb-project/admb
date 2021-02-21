@@ -18,8 +18,9 @@ istream& operator>>(istream& c, adstring& t)
 {
   const unsigned int max_length = 1025;
   char tmp[max_length + 1];
+  tmp[max_length] = '\0';
   c >> tmp;
-  if (strlen(tmp) > max_length)
+  if (tmp[max_length] != '\0')
   {
     cerr << "Error -- Maximum adstring length exceeded in "
          << "istream& operator>>(istream&, adstring&)" << endl;

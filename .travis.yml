@@ -37,7 +37,7 @@ jobs:
     - scan-build -v make core
 
   - name: cpplint 
-    os: osx
+    os: linux
     before_install:
     - sudo pip install cpplint
     script:

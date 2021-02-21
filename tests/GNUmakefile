@@ -369,7 +369,7 @@ ifeq ($(CMDSHELL),cmd)
 	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else
   ifeq ($(OS),Windows_NT)
-	/c/Windows/System32/fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+	@if [ ! -z "`command -v diff`" ]; then diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; else echo "Warning: 'diff' utility is not found."; fi
   else
 	diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
   endif

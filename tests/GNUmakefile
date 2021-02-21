@@ -368,7 +368,11 @@ ifeq ($(CMDSHELL),cmd)
 	fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else
+  ifeq ($(OS),Windows_NT)
+	/c/Windows/System32/fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+  else
 	diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+  endif
 	cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 endif
 	@echo "# tests outputs\n" >> $(OUTPUT_DIR)outputs.txt

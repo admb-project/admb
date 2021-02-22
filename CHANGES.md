@@ -51,16 +51,16 @@ ADMB-12.3
 * Yukio Takeuchi updated the docs for teh natural cubic spline
   ([See Issue #180](https://github.com/admb-project/admb/issues/180)).
 
-* C++14 is the default compiler option, C++ is still supported for older compilers
+* C++14 is the default C++ compiler standard for ADMB. C++11 is still supported for older compilers
   ([See Issue #166](https://github.com/admb-project/admb/issues/166)).
 
 * Able to use absolute path with ADMB program from any run directory with the data files
   ([See Issue #165](https://github.com/admb-project/admb/issues/165)).
 
-  For example,
+  For example, run myprogram from the bin directory to be used to run in a differt directory at myrundirectory.
 
   ```
-  /myrundirectory$ ~/bin/myprogram
+  myrundirectory$ ~/bin/myprogram
   ```
 
 * If the hessian is not positive definite, the ADMB program will NOT exit.  It will instead stop

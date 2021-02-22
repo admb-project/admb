@@ -1,5 +1,5 @@
-#define ADMB_VERSION "ADMB-12.2"
-#define ADMB_VERSION2 "admb-12.2"
+#define ADMB_VERSION "ADMB-12.3"
+#define ADMB_VERSION2 "admb-12.3"
 
 [Setup]
 PrivilegesRequired=none

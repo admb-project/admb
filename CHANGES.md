@@ -11,6 +11,96 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+ADMB-12.3
+---------
+*Released February 28, 2021*  
+
+#### New Features
+
+* Add 'hess_step()' function for the capability to do single Newton steps using the inverse Hessian.
+  [See Issue #160](https://github.com/admb-project/admb/issues/160)
+  [See Pull #179](https://github.com/admb-project/admb/pull/179)
+
+* Added function hessian_phase() which will return true if the hessian is being computed.
+  [See Issue #158](https://github.com/admb-project/admb/issues/158)
+
+* Increased static allocation size of initial_params::max_num_initial_params to 4000 using -mip option.
+  If -mip is not used, the program will dynamically allocate memory for any amount of initial_params.
+  [See Issue #157](https://github.com/admb-project/admb/issues/157)
+
+#### Changes and Improvements
+
+* Fixed compiler boolean warnings in hmc functions.
+  [See Pull #188](https://github.com/admb-project/admb/pull/186)
+
+* Fix bug in labels and cleanup hess_step outputs in hmc functions.
+  [See Pull #185](https://github.com/admb-project/admb/pull/185)
+
+* Use 'make verify' to run all unit and program testing.  All the testing outputs was streamlined
+  to be put into outputs.txt file.
+  [See Issue #188](https://github.com/admb-project/admb/issues/188)
+
+  Also, added a output file option -o to the admb script with can rename and build to a specific directory.. 
+
+
+  For example, the admb script will build the executable for mymodel.tpl to ~/bin/myprogram. 
+
+  ```
+  $ admb -o ~/bin/myprogram mymodel.tpl
+  ```
+
+* Yukio Takeuchi updated the docs for teh natural cubic spline. 
+  [See Issue #180](https://github.com/admb-project/admb/issues/180)
+
+* C++14 is the default compiler option, C++ is still supported for older compilers.
+  [See Issue #166](https://github.com/admb-project/admb/issues/166)
+
+* Able to use absolute path with ADMB program from any run directory with the data files.
+  [See Issue #165](https://github.com/admb-project/admb/issues/165)
+
+  For example,
+
+  ```
+  /myrundirectory/> ~/bin/myprogram
+  ```
+
+* If the hessian is not positive definite, the ADMB program will NOT exit.  It will instead stop
+  computing the hessian, then go to the FINAL_SECTION.
+  [See Issue #164](https://github.com/admb-project/admb/issues/164)
+
+* Updated Git Ignore with more files to avoid displaying as unmodified list.
+  [See Issue #162](https://github.com/admb-project/admb/issues/162)
+
+* Use CodeQL recommendations for setting size of input reads.
+  [See Issue #159](https://github.com/admb-project/admb/issues/159)
+
+* Improved data file parser to work with different line ending including for older MacOS9 files.
+  [See Issue #155](https://github.com/admb-project/admb/issues/155)
+
+* Added missing i5_array::initialize() function.
+  [See Issue #155](https://github.com/admb-project/admb/issues/155)
+
+* Reverted to back to faster version of vector shape pooling code.
+  [See Issue #152](https://github.com/admb-project/admb/issues/152)
+
+* Added a REPORT_SECTION section to the ADMB Manual.
+  [See Issue #97](https://github.com/admb-project/admb/issues/97)
+
+* Fixed input stream for adstring to check if the buffer was exceeded.
+  [See Changes 7237a6a](https://github.com/admb-project/admb/commit/7237a6a1eb3e1ddee6195db4cf6bf080b0acc665)
+
+* Fixed file input stream for dvector and dvar_vector to read in values from file.
+  [See Changes d3be66a](https://github.com/admb-project/admb/commit/d3be66a632b28c412cc84161cc5c3725c0ae06b4)
+
+* Also restructed the build files and outputs scripts.
+
+#### Statistics
+
+* Total Code Coverage testing is ~ 48.54%.
+  [See ADMB Code Coverage](https://app.codecov.io/gh/admb-project/admb)
+
+* Total Unit Tests is 914.
+
 ADMB-12.2
 ---------
 

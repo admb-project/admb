@@ -1,7 +1,7 @@
 # ADMB Quick Start MacOS
 
-*ADMB-12.2*  
-*Released July 31, 2020*  
+*ADMB-12.3*  
+*Released February 28, 2021*  
 
 Describe downloading, installing and using ADMB from binary release for MacOS.
 
@@ -14,14 +14,14 @@ Quick Start
 
 1. **Download**
 
-   Download zip file [admb-12.2-macos.zip](https://github.com/admb-project/admb/releases/download/admb-12.2/admb-12.2-macos.zip).
+   Download zip file [admb-12.3-macos.zip](https://github.com/admb-project/admb/releases/download/admb-12.3/admb-12.3-macos.zip).
 
 2. **Install**
 
    Open a Terminal, then use the command below to extract contents of zip file to **~/admb/**. 
 
    ```
-   [~]$ unzip admb-12.2-macos.zip
+   [~]$ unzip admb-12.3-macos.zip
    ```
 
 3. **Use** ADMB

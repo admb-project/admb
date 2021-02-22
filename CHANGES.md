@@ -97,7 +97,7 @@ ADMB-12.3
 
 * Total Code Coverage testing is ~ 48.54%
   ([See ADMB Code Coverage](https://app.codecov.io/gh/admb-project/admb)).
-(
+
 * Total Unit Tests is 914.
 
 ADMB-12.2

@@ -8,7 +8,7 @@ shopt -s expand_aliases
 alias help='echo -e "
 Builds AD Model Builder executable or library.
 
-Release Version: 12.2
+Release Version: 12.3
 Location: $BASH_SOURCE
 
 Usage: admb [-c] [-d] [-f] [-g] [-p] [-r] model [src(s)]

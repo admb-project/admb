@@ -667,7 +667,7 @@ goto EOF
 :HELP
 echo Builds AD Model Builder executable or library.
 echo.
-echo Release Version: 12.2
+echo Release Version: 12.3
 echo Location: %~dp0
 echo.
 echo Usage: admb [-c] [-d] [-f] [-g] [-r] model [src(s)]

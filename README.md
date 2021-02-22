@@ -1,7 +1,7 @@
 ADMB Project
 ============
-*ADMB-12.2*  
-*Released July 31, 2020*  
+*ADMB-12.3*  
+*Released February 28, 2021*  
 
 ---
 

@@ -35,6 +35,34 @@ TEST_F(test_dvector, sqr)
   ASSERT_DOUBLE_EQ(16, results(5));
   ASSERT_DOUBLE_EQ(std::pow(5.1, 2), results(6));
 }
+TEST_F(test_dvector, read_from_file2)
+{
+  ofstream ofs("test_dvector_read_from_file2.txt");
+  ofs << "3.5 -6.8 11.4 -77.5" << endl;
+  ofs.close();
+
+  dvector v("test_dvector_read_from_file2.txt");
+
+  ASSERT_EQ(4, v.size());
+  ASSERT_DOUBLE_EQ(3.5, v(1));
+  ASSERT_DOUBLE_EQ(-6.8, v(2));
+  ASSERT_DOUBLE_EQ(11.4, v(3));
+  ASSERT_DOUBLE_EQ(-77.5, v(4));
+}
+TEST_F(test_dvector, allocate_read_from_file3)
+{
+  ofstream ofs("test_dvector_read_from_file3.txt");
+  ofs << "3.5 -6.8 11.4 -77.5" << endl;
+  ofs.close();
+
+  dvector v;
+  v.allocate("test_dvector_read_from_file3.txt");
+  ASSERT_EQ(4, v.size());
+  ASSERT_DOUBLE_EQ(3.5, v(1));
+  ASSERT_DOUBLE_EQ(-6.8, v(2));
+  ASSERT_DOUBLE_EQ(11.4, v(3));
+  ASSERT_DOUBLE_EQ(-77.5, v(4));
+}
 TEST_F(test_dvector, log10)
 {
   char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";

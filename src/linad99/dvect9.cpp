@@ -144,6 +144,7 @@ dvector::dvector(const char* s)
       ad_exit(1);
     }
     char* field = new char[MAX_FIELD_LENGTH + 1];
+    infile.width(MAX_FIELD_LENGTH + 1);
     int count = 0;
     do
     {
@@ -192,6 +193,7 @@ dvector::dvector(const char* s)
     cout << "Created dvector with address " << _farptr_tolong(v) <<"\n";
 #endif
     char* err_ptr;
+    infile.width(MAX_FIELD_LENGTH + 1);
     for (int i = 1; i <= count; ++i)
     {
       infile >> field;
@@ -333,6 +335,7 @@ void dvector::allocate(const char* s)
     }
 
     char* field = new char[MAX_FIELD_LENGTH + 1];
+    infile.width(MAX_FIELD_LENGTH + 1);
 
     int count = 0;
     do
@@ -359,7 +362,7 @@ void dvector::allocate(const char* s)
     infile.clear();
     infile.seekg(0,ios::beg);
 
-    if ((v = new double[size()]) == 0)
+    if ((v = new double[static_cast<unsigned int>(count + 2)]) ==0)
     {
       cerr << " Error trying to allocate memory for dvector\n";
       ad_exit(21);
@@ -378,8 +381,11 @@ void dvector::allocate(const char* s)
     cout << "Created ncopies with address " << _farptr_tolong(ncopies) << "\n";
     cout << "Created dvector with address " << _farptr_tolong(v) << "\n";
 #endif
+    index_min = 1;
+    index_max = count;
     v -= indexmin();
     char* err_ptr;
+    infile.width(MAX_FIELD_LENGTH + 1);
     for (int i = 1; i <= count; ++i)
     {
       infile >> field;

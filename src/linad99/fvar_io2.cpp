@@ -126,7 +126,8 @@ dvar_vector::dvar_vector(const char * s)
    int i=0;
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
-   char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
+   char* field = new char[size_t(MAX_FIELD_LENGTH+1)];
+   infile.width(size_t(MAX_FIELD_LENGTH+1));
    int count=0;
    do
    {
@@ -168,6 +169,7 @@ dvar_vector::dvar_vector(const char * s)
      ad_exit(21);
    }
    char* err_ptr;
+   infile.width(size_t(MAX_FIELD_LENGTH+1));
    for (i=1;i<=count;i++)
    {
      infile >> field;

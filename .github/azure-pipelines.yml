@@ -99,7 +99,9 @@ jobs:
   - script: make
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make verify TESTS_REMOTE=no
+  - script: make --directory=tests examples
+  - script: make --directory=tests unit-gtests 
+  - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |

@@ -367,13 +367,17 @@ outputs.txt:
 	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
 	@echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt
 ifeq ($(CMDSHELL),cmd)
+  ifndef SAFE_ONLY
 	fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+  endif
 else
-  ifeq ($(OS),Windows_NT)
+  ifndef SAFE_ONLY
+    ifeq ($(OS),Windows_NT)
 	@if [ ! -z "`command -v diff`" ]; then diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; else echo "Warning: 'diff' utility is not found."; fi
-  else
+    else
 	diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+    endif
   endif
 	cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 endif

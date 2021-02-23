@@ -19,11 +19,11 @@ jobs:
       nmake
       nmake zip
       pushd examples & nmake admb admb-re & popd
-      scripts\get-outputs.bat > outputs-saf.txt
+      scripts\get-outputs.bat > outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -39,11 +39,11 @@ jobs:
       nmake
       nmake zip
       pushd examples & nmake admb admb-re & popd
-      scripts\get-outputs.bat > outputs-saf.txt
+      scripts\get-outputs.bat > outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -59,12 +59,12 @@ jobs:
       nmake
       nmake zip
       pushd examples & nmake admb admb-re & popd
-      scripts\get-outputs.bat > outputs-saf.txt
+      scripts\get-outputs.bat > outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -80,12 +80,12 @@ jobs:
       nmake
       nmake zip
       pushd examples & nmake admb admb-re & popd
-      scripts\get-outputs.bat > outputs-saf.txt
+      scripts\get-outputs.bat > outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -105,7 +105,7 @@ jobs:
       contents: |
         admb.zip
         scripts/installers/packagemaker/ADMBTerminal.dmg
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -126,7 +126,7 @@ jobs:
     inputs:
       contents: |
         admb.zip
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -146,7 +146,7 @@ jobs:
       contents: |
         admb.zip
         scripts/installers/packagemaker/ADMBTerminal.dmg
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -167,7 +167,7 @@ jobs:
     inputs:
       contents: |
         admb.zip
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:

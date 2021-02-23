@@ -1,4 +1,6 @@
-TESTS_REMOTE=yes
+ifndef TESTS_REMOTE
+  TESTS_REMOTE=yes
+endif
 
 ifndef ADMB_VER
   ADMB_VER=admb

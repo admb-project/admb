@@ -99,7 +99,7 @@ jobs:
   - script: make
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make --directory=tests examples
+  - script: make --directory=tests SAFE_ONLY=yes examples
   - script: make --directory=tests unit-gtests 
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2

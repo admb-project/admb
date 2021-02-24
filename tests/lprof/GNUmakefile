@@ -31,19 +31,19 @@ endif
 
 get-outputs: _get-outputs
 ifeq ($(CMDSHELL),cmd)
-	if exist dgs2 type dgs2
-	if exist diags type diags
-	if exist est_a.plt type est_a.plt
-	if exist est_b.plt type est_b.plt
-	if exist $(TARGET).par.save type simple.par.save
-	if exist $(TARGET).par.lprof type simple.par.lprof
+	@if exist dgs2 type dgs2
+	@if exist diags type diags
+	@if exist est_a.plt type est_a.plt
+	@if exist est_b.plt type est_b.plt
+	@if exist $(TARGET).par.save type simple.par.save
+	@if exist $(TARGET).par.lprof type simple.par.lprof
 else
-	@[ -f dgs2 ] && cat dgs2
-	@[ -f diags ] && cat diags
-	@[ -f est_a.plt ] && cat est_a.plt
-	@[ -f est_b.plt ] && cat est_b.plt
-	@[ -f $(TARGET).par.save ] && cat $(TARGET).par.save
-	@[ -f $(TARGET).par.lprof ] && cat $(TARGET).par.lprof
+	@if [ -e dgs2 ]; then cat dgs2; fi
+	@if [ -e diags ]; then cat diags; fi
+	@if [ -e est_a.plt ]; then cat est_a.plt; fi
+	@if [ -e est_b.plt ]; then cat est_b.plt; fi
+	@if [ -e $(TARGET).par.save ]; then cat $(TARGET).par.save; fi
+	@if [ -e $(TARGET).par.lprof ]; then cat $(TARGET).par.lprof; fi
 endif
 
 clean: _clean

@@ -99,9 +99,7 @@ jobs:
   - script: make
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make --directory=tests SAFE_ONLY=yes examples
-  - script: make --directory=tests unit-gtests 
-  - script: make --directory=tests SAFE_ONLY=yes outputs.txt
+  - script: make verify TESTS_REMOTE=no SAFE_ONLY=yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -142,7 +140,7 @@ jobs:
   - script: make DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make gtests DEBUG=yes
+  - script: make verify DEBUG=yes TESTS_REMOTE=no SAFE_ONLY=yes
   - task: CopyFiles@2
     inputs:
       contents: |

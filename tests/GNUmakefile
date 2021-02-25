@@ -280,8 +280,8 @@ example-prof_like:
 
 examples:
 ifeq ($(CMDSHELL),cmd)
-	if exist $(DIST)\\examples rmdir /s /q $(DESTDIR)\\examples
-	md $(DESTDIR)\\examples
+	if exist $(DIST)\\examples rmdir /s /q $(DIST)\\examples
+	md $(DIST)\\examples
 	xcopy ..\\examples $(DIST)\examples /S /Y /D
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples all
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-saf.txt

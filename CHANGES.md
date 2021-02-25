@@ -36,11 +36,11 @@ ADMB-12.3
 * Fix bug in labels and cleanup hess_step outputs in hmc functions
   ([See Pull #185](https://github.com/admb-project/admb/pull/185)).
 
-* Use 'make verify' to run all unit and program testing.  All the testing outputs was streamlined
-  to be put into outputs.txt file
+* Use 'make verify' to run all unit and program testing.  All the testing outputs are combined into 
+  a single outputs.txt file
   ([See Issue #188](https://github.com/admb-project/admb/issues/188)).
 
-  Also, added a output file option -o to the admb script with can rename and build to a specific directory.
+  Also, added output file option -o to the admb script to rename and build to a specific directory.
 
   For example, the admb script will build the executable for mymodel.tpl to ~/bin/myprogram. 
 
@@ -48,7 +48,7 @@ ADMB-12.3
   $ admb -o ~/bin/myprogram mymodel.tpl
   ```
 
-* Yukio Takeuchi updated the docs for teh natural cubic spline
+* Yukio Takeuchi updated the docs for the natural cubic spline
   ([See Issue #180](https://github.com/admb-project/admb/issues/180)).
 
 * C++14 is the default C++ compiler standard for ADMB. C++11 is still supported for older compilers
@@ -57,14 +57,14 @@ ADMB-12.3
 * Able to use absolute path with ADMB program from any run directory with the data files
   ([See Issue #165](https://github.com/admb-project/admb/issues/165)).
 
-  For example, run myprogram from the bin directory to be used to run in a differt directory at myrundirectory.
+  For example, use the absolute path of myprogram to run in a different directory.
 
   ```
   myrundirectory$ ~/bin/myprogram
   ```
 
 * If the hessian is not positive definite, the ADMB program will NOT exit.  It will instead stop
-  computing the hessian, then go to the FINAL_SECTION
+  computing the hessian, then call the the FINAL_SECTION
   ([See Issue #164](https://github.com/admb-project/admb/issues/164)).
 
 * Updated Git Ignore with more files to avoid displaying as unmodified list
@@ -91,7 +91,7 @@ ADMB-12.3
 * Fixed file input stream for dvector and dvar_vector to read in values from file
   ([See Changes d3be66a](https://github.com/admb-project/admb/commit/d3be66a632b28c412cc84161cc5c3725c0ae06b4)).
 
-* Also restructed the build files and outputs scripts.
+* The build files and outputs scripts were simplified.
 
 #### Statistics
 

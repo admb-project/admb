@@ -98,10 +98,12 @@ core-tpls:\
   tpl-f1b2vc5\
   cpp-globals\
   tpl-gradients_output\
+  tpl-hess_step\
   tpl-high_iarray\
   tpl-hysimple\
   tpl-initializationfunction\
   tpl-issue108\
+  tpl-issue158\
   tpl-lprof\
   tpl-mcmc-theta\
   tpl-orange_mvn\
@@ -109,6 +111,7 @@ core-tpls:\
   tpl-qbeta\
   tpl-rsimple\
   tpl-simple_mcmc\
+  tpl-strip_full_path\
   tpl-testminmax\
   tpl-tiny\
   tpl-tiny_ad_fe\
@@ -131,8 +134,14 @@ contrib-tpls:\
 remote-contrib-tpls:\
   tpl-agemat
 
+tpl-strip_full_path:
+	$(MAKE) --directory=strip_full_path
+
 cpp-globals:
 	$(MAKE) --directory=globals
+
+tpl-issue158:
+	$(MAKE) --directory=issue158
 
 tpl-f1b2vc5:
 	$(MAKE) --directory=f1b2vc5
@@ -208,6 +217,9 @@ tpl-betareg:
 
 tpl-beta_regression:
 	$(MAKE) --directory=beta_regression
+
+tpl-hess_step:
+	$(MAKE) --directory=hess_step
 
 tpl-changepoint:
 	$(MAKE) --directory=changepoint
@@ -297,8 +309,12 @@ total-clean: clean
 clean:
 ifeq ($(CMDSHELL),cmd)
 	@if exist SS3 rmdir /s /q SS3
+	@if exist outputs-examples-opt.txt del /Q outputs-examples-opt.txt 2> nul
+	@if exist outputs-examples-saf.txt del /Q outputs-examples-saf.txt 2> nul
 else
 	@rm -rvf SS3
+	@rm -vf outputs-examples-opt.txt
+	@rm -vf outputs-examples-saf.txt
 endif
 	$(MAKE) --directory=4darray clean
 	$(MAKE) --directory=adnuts clean
@@ -326,6 +342,7 @@ endif
 	$(MAKE) --directory=gmrf clean
 	$(MAKE) --directory=gradients_output clean
 	$(MAKE) --directory=gtests clean
+	$(MAKE) --directory=hess_step clean
 	$(MAKE) --directory=high_iarray clean
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=initializationfunction clean
@@ -339,6 +356,7 @@ endif
 	$(MAKE) --directory=rgamma clean
 	$(MAKE) --directory=rsimple clean
 	$(MAKE) --directory=simple_mcmc clean
+	$(MAKE) --directory=strip_full_path clean
 	$(MAKE) --directory=testminmax clean
 	$(MAKE) --directory=tiny clean
 	$(MAKE) --directory=tiny_ad_fe clean
@@ -347,6 +365,7 @@ endif
 	$(MAKE) --directory=vectorize clean
 	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=../examples/admb/prof_like clean
+	$(MAKE) --directory=issue158 clean
 
 dist-clean:
 ifeq ($(CMDSHELL),cmd)
@@ -409,6 +428,7 @@ get-outputs:
 	$(MAKE) --directory=glmmadmb get-outputs
 	$(MAKE) --directory=globals get-outputs
 	$(MAKE) --directory=gradients_output get-outputs
+	$(MAKE) --directory=hess_step get-outputs
 	$(MAKE) --directory=high_iarray get-outputs
 	$(MAKE) --directory=hysimple get-outputs
 	$(MAKE) --directory=initializationfunction get-outputs

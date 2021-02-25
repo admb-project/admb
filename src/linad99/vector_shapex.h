@@ -45,6 +45,16 @@ Holds "shape" information for vector objects.
 */
 class vector_shapex
 {
+#if defined(USE_VECTOR_SHAPE_POOL)
+public:
+  static vector_shape_pool* xpool;
+
+  void* operator new(size_t);
+  void operator delete(void* ptr, size_t);
+  vector_shapex(const vector_shapex&) = delete;
+  vector_shapex& operator=(const vector_shapex&) = delete;
+#endif
+
  public:
    vector_shapex(int lb, int ub, void *p):index_min(lb),
       index_max(ub), ncopies(0), trueptr(p)
@@ -55,20 +65,6 @@ class vector_shapex
    {
       return trueptr;
    }
-#if defined(USE_VECTOR_SHAPE_POOL)
-  static bool allocated;
-  static vector_shape_pool& get_xpool()
-  {
-    static vector_shape_pool xpool(
-      sizeof(vector_shapex), &vector_shapex::allocated);
-    return xpool;
-  }
-  void* operator new(size_t);
-  void operator delete(void* ptr, size_t)
-    { vector_shapex::get_xpool().free(ptr); }
-  vector_shapex(const vector_shapex&) = delete;
-  vector_shapex& operator=(const vector_shapex&) = delete;
-#endif
 
    void shift(int min);
    int index_min;  ///< Minimum valid subscript

@@ -7,7 +7,7 @@ run: $(TARGET)
 	$(TARGET) > outputs
 
 get-outputs: _get-outputs
-        @if exist outputs type outputs
+	@if exist outputs type outputs
 
 clean: _clean
-        @if exist outputs del /Q outputs 2>nul
+	@if exist outputs del /Q outputs 2>nul

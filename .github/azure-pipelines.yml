@@ -140,7 +140,7 @@ jobs:
   - script: make DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make verify DEBUG=yes TESTS_REMOTE=no SAFE_ONLY=yes
+  - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes tests-core gtests
   - task: CopyFiles@2
     inputs:
       contents: |

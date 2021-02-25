@@ -30,7 +30,7 @@ get-outputs: _get-outputs
 
 clean: _clean
 ifeq ($(CMDSHELL),cmd)
-        @if exist simple.dat del /Q simple.dat 2>nul
+	@if exist simple.dat del /Q simple.dat 2>nul
 else
 	@rm -vf simple.dat
 endif

@@ -197,6 +197,8 @@ dvar_vector::dvar_vector(const char * s)
    }
    delete[] field;
    field = 0;
+
+   infile.close();
  }
  delete [] t;
  t = 0;

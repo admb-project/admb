@@ -306,9 +306,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)("License\n");
       (*ad_printf)("-------\n\n");
 
-      (*ad_printf)("Copyright (c) 2008-2013\n");
-      (*ad_printf)("Regents of the University of California and ADMB "
-      "Foundation\n\n");
+      (*ad_printf)("Copyright (c) 2008-2021\n");
+      (*ad_printf)("ADMB Foundation and Regents of the University of California\n\n");
       (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO "
       "WARRANTY.\n");
       (*ad_printf)("You are welcome to redistribute it under certain "

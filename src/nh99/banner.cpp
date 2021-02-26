@@ -33,8 +33,7 @@ void banner(const adstring& program_name)
 {
   ostringstream ss;
 
-  ss << "ADMB Program: " << program_name << "\n";
-  ss << "Build Date: " << __DATE__ << "\n\n";
+  ss << "ADMB Program: " << program_name << "\n\n";
 
   ss << "ADMB";
 
@@ -47,15 +46,23 @@ void banner(const adstring& program_name)
   else
      ss << " safe libraries";
 
-  ss << " compiled with ";
+  ss << " was compiled using ";
 
-#if defined(__GNUC__)
+#if defined(__clang__)
+  ss <<  "Apple Clang C++ " << __clang_major__ << '.' << __clang_minor__ << '.'
+    << __clang_patchlevel__;
+  #if defined(__x86_64)
+  ss <<  " 64bit";
+  #else
+  ss <<  " 32bit";
+  #endif
+#elif defined(__GNUC__)
   ss <<  "GNU C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.'
     << __GNUC_PATCHLEVEL__;
   #if defined(__x86_64)
-  ss <<  " (64bit)";
+  ss <<  " 64bit";
   #else
-  ss <<  " (32bit)";
+  ss <<  " 32bit";
   #endif
 #elif defined(_MSC_VER)
   ss << "Microsoft Visual C++ ";
@@ -128,7 +135,7 @@ void banner(const adstring& program_name)
 #else
   ss << "unknown compiler";
 #endif
-  ss << "\n";
+  ss << " on " << __DATE__ << ".\n";
 #if defined(ADMB_REVISION)
   ss << "Revision: " << STR2(ADMB_REVISION) << "\n";
 #endif

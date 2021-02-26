@@ -93,6 +93,8 @@ ADMB-12.3
 
 * The build files and outputs scripts were simplified.
 
+* Update banner string to include Apple Clang builds.
+
 #### Statistics
 
 * Total Code Coverage testing is ~ 48.54%

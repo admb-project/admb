@@ -40,10 +40,10 @@ ifeq ($(CMDSHELL),cmd)
 	pushd kalmanfilter\\testdir\\trackit & ..\\..\\trackit\\inst\\admb\\src\\ukf & popd
 	pushd kalmanfilter\\testdir\\ukfsst & ..\\..\\ukfsst\\inst\\admb\\src\\ukfsst & popd
 else
-	cd kalmanfilter/testdir/kfsst; ./kfsst
-	cd kalmanfilter/testdir/kftrack; ./kftrack
-	cd kalmanfilter/testdir/trackit; ./ukf
-	cd kalmanfilter/testdir/ukfsst; ./ukfsst
+	cd kalmanfilter/testdir/kfsst; ../../kfsst/kfsst/source/kfsst
+	cd kalmanfilter/testdir/kftrack; ../../kftrack/inst/admb/src/kftrack
+	cd kalmanfilter/testdir/trackit; ../../trackit/inst/admb/src/ukf
+	cd kalmanfilter/testdir/ukfsst; ../../ukfsst/inst/admb/src/ukfsst
 endif
 
 get-outputs:

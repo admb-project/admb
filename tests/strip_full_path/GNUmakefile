@@ -14,10 +14,10 @@ endif
 all: clean
 	$(MAKE) dirs
 ifeq ($(CMDSHELL),cmd)
-	pushd src & ..\\..\\..\\admb -o..\\bin\\simple simple.tpl
-	pushd run & ..\\bin\\simple.exe
+	pushd src & ..\\..\\..\\admb -o ..\\bin\\simple.exe simple.tpl
+	pushd run & ..\\src\\simple.exe
 else
-	cd src && ../../../admb$(EXT) -o../bin/simple simple.tpl
+	cd src && ../../../admb$(EXT) -o ../bin/simple simple.tpl
 	cd run && ../bin/simple
 endif
 
@@ -49,9 +49,9 @@ endif
 
 clean:
 ifeq ($(CMDSHELL),cmd)
-	@if exist bin rmdir /Q bin 2> nul
-	@if exist src rmdir /Q src 2> nul
-	@if exist run rmdir /Q run 2> nul
+	@if exist bin rmdir /S /Q bin
+	@if exist src rmdir /S /Q src
+	@if exist run rmdir /S /Q run
 else
 	@rm -rvf bin src run
 endif

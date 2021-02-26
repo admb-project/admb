@@ -9,20 +9,20 @@ endif
 
 run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
-	# get the mcmc info  note -mcmc2 and not -mcmc  thois means that RE's are part of the mcmc
+# get the mcmc info  note -mcmc2 and not -mcmc  thois means that RE's are part of the mcmc
 	$(TARGET) -mcmc2 300 -hybrid -mno 1000  -shess 
 	$(TARGET) -nohess -phase 10 -binp betareg.bar -mcmc2 2000 -hybrid -mno 1000 -shess 
-	# test the restart
+# test the restart
 	$(TARGET) -nohess -phase 10 -binp betareg.bar -mcmc2 2000 -hybrid -mno 1000 -mcr -shess 
-	# do the mceval part
+# do the mceval part
 	$(TARGET) -nohess -phase 10 -binp betareg.bar -mcmc2 25 -hybrid -mno 1000 -mceval -shess 
 else
-	# get the mcmc info  note -mcmc2 and not -mcmc  thois means that RE's are part of the mcmc
+# get the mcmc info  note -mcmc2 and not -mcmc  thois means that RE's are part of the mcmc
 	./$(TARGET) -mcmc2 300 -hybrid -mno 1000  -shess 
 	./$(TARGET) -nohess -phase 10 -binp betareg.bar -mcmc2 2000 -hybrid -mno 1000 -shess 
-	# test the restart
+# test the restart
 	./$(TARGET) -nohess -phase 10 -binp betareg.bar -mcmc2 2000 -hybrid -mno 1000 -mcr -shess 
-	# do the mceval part
+# do the mceval part
 	./$(TARGET) -nohess -phase 10 -binp betareg.bar -mcmc2 25 -hybrid -mno 1000 -mceval -shess 
 endif
 

@@ -9,13 +9,11 @@ endif
 
 run: simple.dat
 	$(MAKE) $(TARGET)
-	@printf "Started run:\n"
 ifeq ($(CMDSHELL),cmd)
 	$(TARGET).exe
 else
 	./$(TARGET)
 endif
-	@printf "Finished run.\n"
 
 simple.dat:
 ifeq ($(CMDSHELL),cmd)

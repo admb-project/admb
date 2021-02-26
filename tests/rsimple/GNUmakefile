@@ -8,9 +8,11 @@ include ../test-rules.mak
 endif
 
 run: $(TARGET)
-	@printf "Started run:\n"
+ifeq ($(CMDSHELL),cmd)
 	./$(TARGET) -mcmc 10000 -mcsave 100
-	@printf "Finished run.\n"
+else
+	./$(TARGET) -mcmc 10000 -mcsave 100
+endif
 
 get-outputs: _get-outputs
 

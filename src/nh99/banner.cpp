@@ -49,7 +49,10 @@ void banner(const adstring& program_name)
   ss << " was compiled using ";
 
 #if defined(__clang__)
-  ss <<  "Apple Clang C++ " << __clang_major__ << '.' << __clang_minor__ << '.'
+  #if defined(__apple_build_version__)
+  ss <<  "Apple ";
+  #endif
+  ss <<  "Clang C++ "<< __clang_major__ << '.' << __clang_minor__ << '.'
     << __clang_patchlevel__;
   #if defined(__x86_64)
   ss <<  " 64bit";

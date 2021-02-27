@@ -519,11 +519,25 @@ for %%b in (!tpls!) do (
   set tpl=%%~nb
   @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
   if "!CXX!"=="cl" (
-    @REM set CMD=!CXX!!CXXFLAGS! /Fo!output! !tpl!.cpp
-    set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+    if defined compileonly (
+      if defined output (
+        set CMD=!CXX!!CXXFLAGS! /Fo!output! !tpl!.cpp
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+      )
+    ) else (
+      set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+    )
   ) else (
-    @REM set CMD=!CXX!!CXXFLAGS! -o !output! !tpl!.cpp
-    set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+    if defined compileonly (
+      if defined output (
+        set CMD=!CXX!!CXXFLAGS! -o !output! !tpl!.cpp
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+      )
+    ) else (
+      set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+    )
   )
   echo.&echo *** Compile: !tpl!.cpp
   echo !CMD!
@@ -544,23 +558,63 @@ if defined srcs (
     set filename=%%~na
     @REM set CMD=adcomp!d!!g!!r!!fast! !src!
     if "!CXX!"=="cl" (
-      @REM set CMD=!CXX!!CXXFLAGS! /Fo!output! !filename!.cpp
-      set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+      if defined compileonly (
+        if defined output (
+          set CMD=!CXX!!CXXFLAGS! /Fo!output! !filename!.cpp
+        ) else (
+          set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+        )
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+      )
     ) else (
-      @REM set CMD=!CXX!!CXXFLAGS! -o !output! !filename!.cpp
-      set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+      if defined compileonly (
+        if defined output (
+          set CMD=!CXX!!CXXFLAGS! -o !output! !filename!.cpp
+        ) else (
+          set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+        )
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+      )
     )
     echo.&echo *** Compile: !src!
     echo !CMD!
     call !CMD!
-    if not exist !filename!.obj (
-      echo.&echo Error: Unable to build !src! to !filename!.obj
-      goto ERROR
-    ) else (
-      if not defined objs (
-        set objs=!filename!.obj
+    if defined compileonly (
+      if defined output (
+        if not exist !output! (
+          echo.&echo Error: Unable to build !src! to !output!
+          goto ERROR
+        ) else (
+          if not defined objs (
+            set objs=!output!
+          ) else (
+            set objs=!objs! !output!
+          )
+        )
       ) else (
-        set objs=!objs! !filename!.obj
+        if not exist !filename!.obj (
+          echo.&echo Error: Unable to build !src! to !filename!.obj
+          goto ERROR
+        ) else (
+          if not defined objs (
+            set objs=!filename!.obj
+          ) else (
+            set objs=!objs! !filename!.obj
+          )
+        )
+      )
+    ) else (
+      if not exist !filename!.obj (
+        echo.&echo Error: Unable to build !src! to !filename!.obj
+        goto ERROR
+      ) else (
+        if not defined objs (
+          set objs=!filename!.obj
+        ) else (
+          set objs=!objs! !filename!.obj
+        )
       )
     )
   )
@@ -692,14 +746,8 @@ if not defined tpls (
       echo.&echo Successfully built '!tpl!.dll'.
       goto SUCCESS
     ) else (
-      if defined output (
-        if not exist !output! (
-          goto ERROR
-        )
-      ) else (
-        if not exist !tpl!.exe (
-          goto ERROR
-        )
+      if not exist !tpl!.exe (
+        goto ERROR
       )
       echo.&echo Successfully built '!tpl!.exe'.
       goto SUCCESS

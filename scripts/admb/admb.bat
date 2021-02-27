@@ -525,7 +525,11 @@ for %%b in (!tpls!) do (
       set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
     )
   ) else (
-    set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+    if defined output (
+      set CMD=!CXX!!CXXFLAGS! -o !output! !tpl!.cpp
+    ) else (
+      set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+    )
   )
   echo.&echo *** Compile: !tpl!.cpp
   echo !CMD!
@@ -615,7 +619,11 @@ if not defined tpls (
             set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
           )
         ) else (
-          set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! -o !output! !objs! !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
+          )
         )
       )
       echo.&echo *** Linking: !objs!
@@ -673,13 +681,25 @@ if not defined tpls (
             set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
           ) 
         ) else (
-          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !tpl!.obj !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
+          ) 
         )
       ) else (
         if defined objs (
-          set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! -o !outputs! !tpl!.obj !objs! !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+          ) 
         ) else (
-          set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! -o !outputs! !tpl!.obj !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
+          ) 
         )
       )
     )

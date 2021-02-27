@@ -13,8 +13,8 @@ run: kalmanfilter
 	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd prepro.tpl & popd
 	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd ukf.tpl & popd
 	pushd kalmanfilter\\testdir\\trackit & ..\\..\\trackit\\inst\\admb\\src\\ukf.exe & popd
-	pushd kalmanfilter\\ukfsst\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
-	pushd kalmanfilter\\testdir\\ukfsst & ..\\..\\ukfsst\\inst\\admb\\src\\ukfsst.exe & popd
+	pushd kalmanfilter\\ukfsst\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd -o ..\\..\\..\\..\ukfsst.exe ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+	pushd kalmanfilter\\testdir\\ukfsst & ..\\..\\..\\..\\ukfsst.exe & popd
 
 get-outputs:
 

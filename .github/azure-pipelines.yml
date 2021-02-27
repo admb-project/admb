@@ -161,7 +161,7 @@ jobs:
       sudo apt install -y flex
       make DEBUG=yes
       make zip DEBUG=yes
-      make verify DEBUG=yes TESTS_REMOTE=no
+      make verify SAFE_ONLY=yes DEBUG=yes TESTS_REMOTE=no
     displayName: 'make'
   - task: CopyFiles@2
     inputs:

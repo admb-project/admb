@@ -553,27 +553,14 @@ if defined srcs (
     echo.&echo *** Compile: !src!
     echo !CMD!
     call !CMD!
-    if defined output (
-      if not exist !output! (
-        echo.&echo Error: Unable to build !src! to !output!
-        goto ERROR
-      ) else (
-        if not defined objs (
-          set objs=!output!
-        ) else (
-          set objs=!objs! !output!
-        )
-      )
+    if not exist !filename!.obj (
+      echo.&echo Error: Unable to build !src! to !filename!.obj
+      goto ERROR
     ) else (
-      if not exist !filename!.obj (
-        echo.&echo Error: Unable to build !src! to !filename!.obj
-        goto ERROR
+      if not defined objs (
+        set objs=!filename!.obj
       ) else (
-        if not defined objs (
-          set objs=!filename!.obj
-        ) else (
-          set objs=!objs! !filename!.obj
-        )
+        set objs=!objs! !filename!.obj
       )
     )
   )
@@ -705,8 +692,14 @@ if not defined tpls (
       echo.&echo Successfully built '!tpl!.dll'.
       goto SUCCESS
     ) else (
-      if not exist !tpl!.exe (
-        goto ERROR
+      if defined output (
+        if not exist !output! (
+          goto ERROR
+        )
+      ) else (
+        if not exist !tpl!.exe (
+          goto ERROR
+        )
       )
       echo.&echo Successfully built '!tpl!.exe'.
       goto SUCCESS

@@ -391,14 +391,19 @@ ifeq ($(CMDSHELL),cmd)
 	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
   endif
 else
-  ifndef SAFE_ONLY
-    ifeq ($(OS),Windows_NT)
-	@if [ ! -z "`command -v diff`" ]; then diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; else echo "Warning: 'diff' utility is not found."; fi
-    else
-	diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
-    endif
-  endif
-	cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+	@if [[ -f outputs-examples-saf.txt ]]; then \
+	  if [[ -f outputs-examples-opt.txt ]]; then \
+	    if [[ ! -z "`command -v diff`" ]]; then \
+	      echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt; \
+	      diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; \
+	    else \
+	      echo "Error: no 'diff' utility found." >> $(OUTPUT_DIR)outputs.txt; \
+	    fi; \
+	  fi; \
+	  cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; \
+	else \
+	  echo "Info: no examples outputs found." >> $(OUTPUT_DIR)outputs.txt; \
+	fi
 endif
 	@echo "# tests outputs\n" >> $(OUTPUT_DIR)outputs.txt
 	$(MAKE) get-outputs >> $(OUTPUT_DIR)outputs.txt

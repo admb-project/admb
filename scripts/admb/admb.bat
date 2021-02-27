@@ -519,17 +519,11 @@ for %%b in (!tpls!) do (
   set tpl=%%~nb
   @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
   if "!CXX!"=="cl" (
-    if defined output (
-      set CMD=!CXX!!CXXFLAGS! /Fo!output! !tpl!.cpp
-    ) else (
-      set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
-    )
+    @REM set CMD=!CXX!!CXXFLAGS! /Fo!output! !tpl!.cpp
+    set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
   ) else (
-    if defined output (
-      set CMD=!CXX!!CXXFLAGS! -o !output! !tpl!.cpp
-    ) else (
-      set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
-    )
+    @REM set CMD=!CXX!!CXXFLAGS! -o !output! !tpl!.cpp
+    set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
   )
   echo.&echo *** Compile: !tpl!.cpp
   echo !CMD!
@@ -550,17 +544,11 @@ if defined srcs (
     set filename=%%~na
     @REM set CMD=adcomp!d!!g!!r!!fast! !src!
     if "!CXX!"=="cl" (
-      if defined output (
-        set CMD=!CXX!!CXXFLAGS! /Fo!output! !filename!.cpp
-      ) else (
-        set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
-      )
+      @REM set CMD=!CXX!!CXXFLAGS! /Fo!output! !filename!.cpp
+      set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
     ) else (
-      if defined output (
-        set CMD=!CXX!!CXXFLAGS! -o !output! !filename!.cpp
-      ) else (
-        set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
-      )
+      @REM set CMD=!CXX!!CXXFLAGS! -o !output! !filename!.cpp
+      set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
     )
     echo.&echo *** Compile: !src!
     echo !CMD!

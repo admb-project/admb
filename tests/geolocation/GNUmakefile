@@ -19,14 +19,14 @@ ifeq ($(CMDSHELL),cmd)
 	pushd kalmanfilter\\kftrack\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
 	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd ukf.tpl & popd
 	pushd kalmanfilter\\trackit\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd prepro.tpl & popd
-	pushd kalmanfilter\\ukfsst\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
+	pushd kalmanfilter\\ukfsst\\inst\\admb\\src & ..\\..\\..\\..\\..\\..\\..\\admb.cmd -o ..\\..\\..\\ukfsst.exe ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp & popd
 else
 	cd kalmanfilter/kfsst/kfsst/source; ../../../../../../admb$(EXT) kfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) kftrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 	cd kalmanfilter/kftrack/inst/admb/src; ../../../../../../../admb$(EXT) twosegtrack.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 	cd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) ukf.tpl
 	cd kalmanfilter/trackit/inst/admb/src; ../../../../../../../admb$(EXT) prepro.tpl
-	cd kalmanfilter/ukfsst/inst/admb/src; ../../../../../../../admb$(EXT) ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
+	cd kalmanfilter/ukfsst/inst/admb/src; ../../../../../../../admb$(EXT) -o ../../../ukfsst ukfsst.tpl yrmonday.cpp azimuth.cpp banner.cpp solstice.cpp
 endif
 	$(MAKE) run
 
@@ -38,12 +38,12 @@ ifeq ($(CMDSHELL),cmd)
 	pushd kalmanfilter\\testdir\\kfsst & ..\\..\\kfsst\\kfsst\\source\\kfsst & popd
 	pushd kalmanfilter\\testdir\\kftrack & ..\\..\\kftrack\\inst\\admb\\src\\kftrack & popd
 	pushd kalmanfilter\\testdir\\trackit & ..\\..\\trackit\\inst\\admb\\src\\ukf & popd
-	pushd kalmanfilter\\testdir\\ukfsst & ..\\..\\ukfsst\\inst\\admb\\src\\ukfsst & popd
+	pushd kalmanfilter\\testdir\\ukfsst & ..\\..\\ukfsst\\ukfsst.exe & popd
 else
 	cd kalmanfilter/testdir/kfsst; ../../kfsst/kfsst/source/kfsst
 	cd kalmanfilter/testdir/kftrack; ../../kftrack/inst/admb/src/kftrack
 	cd kalmanfilter/testdir/trackit; ../../trackit/inst/admb/src/ukf
-	cd kalmanfilter/testdir/ukfsst; ../../ukfsst/inst/admb/src/ukfsst
+	cd kalmanfilter/testdir/ukfsst; ../../ukfsst/ukfsst
 endif
 
 get-outputs:

@@ -96,24 +96,20 @@ void dmatrix::fill(const char* s)
     ad_exit(1);
   }
 
-#if defined(__cplusplus) && (__cplusplus >= 201103L)
-  [](unsigned int nrow, unsigned int rowsize)
   {
-    if (nrow != rowsize)
+    unsigned int _nrow = static_cast<unsigned int>(nrow);
+    unsigned int _rowsize = rowsize();
+    if (_nrow < _rowsize)
     {
-      if (nrow < rowsize)
-      {
-        cerr << " Not enough rows in the data for dmatrix::fill(const char *) \n";
-        ad_exit(1);
-      }
-      else
-      {
-        cerr << " Too many rows in the data for dmatrix::fill(const char *) \n";
-        ad_exit(1);
-      }
+      cerr << " Not enough rows in the data for dmatrix::fill(const char *) \n";
+      ad_exit(1);
     }
-  } (static_cast<unsigned int>(nrow), rowsize());
-#endif
+    else if (_nrow > _rowsize)
+    {
+      cerr << " Too many rows in the data for dmatrix::fill(const char *) \n";
+      ad_exit(1);
+    }
+  }
 
   for (int i=1; i<=nrow; i++)
   {

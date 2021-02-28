@@ -2,7 +2,7 @@
 ADMB_VER=admb
 !ENDIF
 
-DESTDIR=..\build\$(ADMB_VER)
+DESTDIR=..\\build\\$(ADMB_VER)
 
 all:\
   test-4darray\
@@ -34,7 +34,6 @@ all:\
   test-lprof\
   test-mcmc-theta\
   test-orange_mvn\
-  test-poisp\
   test-priors\
   test-qbeta\
   test-rsimple\
@@ -228,13 +227,13 @@ verify: examples
 	$(MAKE) /NOLOGO outputs.txt
 
 examples:
-	if not exist $(DESTDIR)\examples md $(DESTDIR)\examples
-	xcopy ..\examples $(DESTDIR)\examples /S /Y /D
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO all & popd
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-saf.txt & popd
+	if not exist $(DESTDIR)\\examples md $(DESTDIR)\\examples
+	xcopy ..\\examples $(DESTDIR)\\examples /S /Y /D
+	pushd $(DESTDIR)\\examples & $(MAKE) /NOLOGO all & popd
+	pushd $(DESTDIR)\\examples & $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-saf.txt & popd
 !IFNDEF SAFE_ONLY
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all & popd
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-opt.txt & popd
+	pushd $(DESTDIR)\\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all & popd
+	pushd $(DESTDIR)\\examples & $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-opt.txt & popd
 !ENDIF
 
 copy:

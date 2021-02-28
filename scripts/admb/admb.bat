@@ -740,17 +740,33 @@ if not defined tpls (
     echo !CMD!
     call !CMD! || goto ERROR
     if defined d (
-      if not exist !tpl!.dll (
-        goto ERROR
+      if defined output (
+        if not exist !output! (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!output!'.
+        goto SUCCESS
+      ) else (
+        if not exist !tpl!.dll (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!tpl!.dll'.
+        goto SUCCESS
       )
-      echo.&echo Successfully built '!tpl!.dll'.
-      goto SUCCESS
     ) else (
-      if not exist !tpl!.exe (
-        goto ERROR
+      if defined output (
+        if not exist !output! (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!output!'.
+        goto SUCCESS
+      ) else (
+        if not exist !tpl!.exe (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!tpl!.exe'.
+        goto SUCCESS
       )
-      echo.&echo Successfully built '!tpl!.exe'.
-      goto SUCCESS
     )
   )
 )

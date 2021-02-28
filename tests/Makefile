@@ -34,6 +34,7 @@ all:\
   test-lprof\
   test-mcmc-theta\
   test-orange_mvn\
+  test-poisp\
   test-priors\
   test-qbeta\
   test-rsimple\

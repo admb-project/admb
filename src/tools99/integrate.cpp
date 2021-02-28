@@ -258,7 +258,8 @@ void rdqagie(integr_fn f, void *ex, Float *bound, int *inf, Float *
     int nres;
     Float area1, area2, area12;
     int k;
-    Float small = 0.0, erro12;
+    Float small, erro12;
+    small = 0.0;
     int ierro;
     Float a1, a2, b1, b2, defab1, defab2, oflow;
     int ktmin, nrmax;
@@ -269,13 +270,16 @@ void rdqagie(integr_fn f, void *ex, Float *bound, int *inf, Float *
     int id;
     Float rlist2[52];
     int numrl2;
-    Float defabs, epmach, erlarg = 0.0, abseps, correc = 0.0, errbnd, resabs;
+    Float defabs, epmach, erlarg, abseps, correc, errbnd, resabs;
+    erlarg = 0.0;
+    correc = 0.0;
     int jupbnd;
     Float erlast, errmax;
     int maxerr;
     Float reseps;
     bool extrap;
-    Float ertest = 0.0, errsum;
+    Float ertest, errsum;
+    ertest = 0.0;
 
 /**begin prologue  dqagie
 ***date written   800101   (yymmdd)

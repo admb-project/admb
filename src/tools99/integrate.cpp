@@ -27,6 +27,12 @@
 #include <config.h>
 #endif
 
+#ifdef _MSC_VER
+  #ifdef small
+    #undef small
+  #endif
+#endif
+
 #include <math.h>
 #include <float.h>
 //#include <Rmath.h> /* for fmax2, fmin2, imin2 */

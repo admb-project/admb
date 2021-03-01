@@ -621,7 +621,6 @@ if defined srcs (
 )
 :linker
 if defined compileonly (
-  echo.&echo Compiled !objs!
   goto EOF
 )
 if not defined tpls (

@@ -13,7 +13,7 @@ Describe new features, changes and improvements for each release.
 
 ADMB-12.3
 ---------
-*Released February 28, 2021*  
+*Released March 7, 2021*  
 
 #### New Features
 

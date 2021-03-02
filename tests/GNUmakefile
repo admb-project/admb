@@ -73,9 +73,7 @@ coverage:
 	$(MAKE) core-tpls
 
 unit-gtests:
-ifneq ($(USE_GTESTS),no)
 	$(MAKE) --directory=gtests
-endif
 
 test-rgamma:
 	$(MAKE) --directory=rgamma

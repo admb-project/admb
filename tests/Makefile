@@ -45,8 +45,7 @@ all:\
   test-tiny_ad_re\
   test-tinyfun\
   test-vectorize\
-  test-vonmises\
-  test-gtests
+  test-vonmises
 
 test-gtests:
 	pushd gtests& $(MAKE) /NOLOGO all & popd
@@ -224,7 +223,12 @@ clean:
 	pushd vonmises & $(MAKE) /NOLOGO clean & popd
 
 verify: examples
+!IF DEFINED(TESTS_REMOTE)
+	$(MAKE) /NOLOGO test-gtests
+!ELSE
 	$(MAKE) /NOLOGO all
+	$(MAKE) /NOLOGO test-gtests
+!ENDIF
 	$(MAKE) /NOLOGO outputs.txt
 
 examples:

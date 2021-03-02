@@ -18,8 +18,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      pushd examples & nmake admb admb-re & popd
-      scripts\get-outputs.bat > outputs.txt
+      nmake verify SAFE_ONLY_yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -38,8 +37,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      pushd examples & nmake admb admb-re & popd
-      scripts\get-outputs.bat > outputs.txt
+      nmake verify SAFE_ONLY_yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -58,8 +56,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      pushd examples & nmake admb admb-re & popd
-      scripts\get-outputs.bat > outputs.txt
+      nmake verify SAFE_ONLY_yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -79,8 +76,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      pushd examples & nmake admb admb-re & popd
-      scripts\get-outputs.bat > outputs.txt
+      nmake verify SAFE_ONLY_yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -99,7 +95,7 @@ jobs:
   - script: make
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make verify TESTS_REMOTE=no SAFE_ONLY=yes
+  - script: make verify SAFE_ONLY=yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -120,7 +116,7 @@ jobs:
       sudo apt install -y flex
       make
       make zip
-      make verify
+      make verify SAFE_ONLY=yes
     displayName: 'make'
   - task: CopyFiles@2
     inputs:
@@ -140,7 +136,7 @@ jobs:
   - script: make DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes tests-core gtests
+  - script: make verify DEBUG=yes SAFE_ONLY=yes
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -161,7 +157,7 @@ jobs:
       sudo apt install -y flex
       make DEBUG=yes
       make zip DEBUG=yes
-      make verify DEBUG=yes TESTS_REMOTE=no
+      make verify DEBUG=yes SAFE_ONLY=yes
     displayName: 'make'
   - task: CopyFiles@2
     inputs:

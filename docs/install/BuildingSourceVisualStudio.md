@@ -1,7 +1,7 @@
 # ADMB Building Source with Visual Studio
 
 *ADMB-12.3*  
-*Released February 28, 2021*  
+*Released March 7, 2021*  
 
 Describe building ADMB from source for Windows and Visual C++ compilers.
 

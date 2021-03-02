@@ -312,7 +312,7 @@ tplsrcs=
 for model in $tpls
 do
   if [ ! -f $model.tpl ]; then
-    echo -e "\\nError: $model.tpl not found\\n"
+    echo -e "Error: $model.tpl not found\\n"
     exit 1
   fi
 
@@ -324,17 +324,17 @@ do
 
   if [ "$parser" == "tpl2rem" ]; then
     CMD="$parser $debug $dll $model"
-    echo -e \\n\*\*\* Parse: $model.tpl\\n$CMD
+    echo -e \*\*\* Parse: $model.tpl\\n$CMD\\n
     eval $CMD
   else
-    echo -e \\n\*\*\* Parse: $model.tpl
+    echo -e \*\*\* Parse: $model.tpl
     CMD="tpl2cpp $debug $dll $model || tpl2rem $debug $dll $model"
-    echo -e $CMD
+    echo -e $CMD\\n
     eval $CMD &> admb.log
   fi
 
   if [ ! -f $model.cpp -o ! -f $model.htp ]; then
-    echo -e "\\nError: could not parse \"$model.tpl\".\\n"
+    echo -e "Error: could not parse \"$model.tpl\".\\n"
     cat admb.log
     exit 1
   else
@@ -347,7 +347,7 @@ tplobjs=
 for file in $tplsrcs
 do
   if [ ! -f $file ]; then
-    echo -e "\\nError: $file not found\\n"
+    echo -e "Error: $file not found\\n"
     exit 1
   fi
   if [ ! -z "$compileonly" ]; then
@@ -365,11 +365,10 @@ do
   fi
   rm -f $fileobj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
-  echo -e \\n\*\*\* Compile: $file\\n$CMD
+  echo -e \*\*\* Compile: $file\\n$CMD\\n
   eval $CMD
-
   if [[ ! -f $fileobj ]]; then
-    echo -e "\\nError: Could not compile $file\\n"
+    echo -e "Error: Could not compile $file\\n"
     exit 1
   fi
   if [ ! -z "$tplobjs" ]; then
@@ -382,7 +381,7 @@ done
 for file in $srcs
 do
   if [ ! -f $file ]; then
-    echo -e "\\nError: $file not found\\n"
+    echo -e "Error: $file not found\\n"
     exit 1
   fi
   if [ ! -z "$compileonly" ]; then
@@ -400,10 +399,10 @@ do
   fi
   rm -f $fileobj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
-  echo -e \\n\*\*\* Compile: $file\\n$CMD
+  echo -e \*\*\* Compile: $file\\n$CMD\\n
   eval $CMD
   if [[ ! -f $fileobj ]]; then
-    echo -e "\\nError: Could not compile $file\\n"
+    echo -e "Error: Could not compile $file\\n"
     exit 1
   fi
   if [ ! -z "$objs" ]; then
@@ -419,8 +418,13 @@ if [ ! -z "$compileonly" ]; then
   else
     objects=$tplobjs
   fi
-  echo -e "Compiled $objects\\n"
   exit 0
+else
+  if [ ! -z "$objs" ]; then
+    objects=$objs
+  else
+    objects=$tplobjs
+  fi
 fi
 
 for file in $tplobjs
@@ -465,7 +469,7 @@ do
               CMD="$CMD \"$ADMB_HOME/lib/libadmb$CXXVERSION$SHARED.a\""
             fi
           else
-            echo -e "\\nError: Unable to find libadmb-contrib$CXXVERSION$SHARED-debug.a\\n"
+            echo -e "Error: Unable to find libadmb-contrib$CXXVERSION$SHARED-debug.a\\n"
             exit 0
           fi
         fi
@@ -500,23 +504,23 @@ do
               CMD="$CMD \"$ADMB_HOME/lib/libadmb$CXXVERSION$SHARED-debug.a\""
             fi
           else
-            echo -e "\\nError: Unable to find libadmb-contrib$CXXVERSION$SHARED.a\\n"
+            echo -e "Error: Unable to find libadmb-contrib$CXXVERSION$SHARED.a\\n"
             exit 0
           fi
         fi
       fi
     fi
   fi
-  echo -e \\n\*\*\* Linking: $file $objs\\n$CMD
+  echo -e \*\*\* Linking: $file $objs\\n$CMD\\n
   eval $CMD
   if [[ -z $dll ]]; then
     if [[ ! -f $model ]]; then
-        echo -e "\\nError: Could not build $model\\n"
+        echo -e "Error: Could not build $model\\n"
         exit 1
     fi
   else
     if [[ ! -f $model.so ]]; then
-        echo -e "\\nError: Could not build $model.so\\n"
+        echo -e "Error: Could not build $model.so\\n"
         exit 1
     fi
   fi
@@ -575,7 +579,7 @@ if [[ "$tplobjs" == "" ]]; then
               CMD="$CMD \"$ADMB_HOME/lib/libadmb$CXXVERSION$SHARED.a\""
             fi
           else
-            echo -e "\\nError: Unable to find libadmb-contrib$CXXVERSION$SHARED-debug.a\\n"
+            echo -e "Error: Unable to find libadmb-contrib$CXXVERSION$SHARED-debug.a\\n"
             exit 0
           fi
         fi
@@ -610,25 +614,24 @@ if [[ "$tplobjs" == "" ]]; then
               CMD="$CMD \"$ADMB_HOME/lib/libadmb$CXXVERSION$SHARED-debug.a\""
             fi
           else
-            echo -e "\\nError: Unable to find libadmb-contrib$CXXVERSION$SHARED.a\\n"
+            echo -e "Error: Unable to find libadmb-contrib$CXXVERSION$SHARED.a\\n"
             exit 0
           fi
         fi
       fi
     fi
   fi
-  echo -e \\n\*\*\* Linking: $listobjs\\n$CMD
+  echo -e \*\*\* Linking: $listobjs\\n$CMD\\n
   eval $CMD
-
   if [ ! -z  "$output" ]; then
     if [[ -z $dll ]]; then
       if [[ ! -f $output ]]; then
-        echo -e "\\nError: Could not build $output\\n"
+        echo -e "Error: Could not build $output\\n"
         exit 1
       fi
     else
       if [[ ! -f $output.so ]]; then
-        echo -e "\\nError: Could not build $output.so\\n"
+        echo -e "Error: Could not build $output.so\\n"
         exit 1
       fi
     fi
@@ -638,12 +641,12 @@ if [[ "$tplobjs" == "" ]]; then
     m2=${m%.*}
     if [[ -z $dll ]]; then
       if [[ ! -f $m2 ]]; then
-        echo -e "\\nError: Could not build $m2\\n"
+        echo -e "Error: Could not build $m2\\n"
         exit 1
       fi
     else
       if [[ ! -f $m2.so ]]; then
-        echo -e "\\nError: Could not build $m2.so\\n"
+        echo -e "Error: Could not build $m2.so\\n"
         exit 1
       fi
     fi
@@ -651,8 +654,8 @@ if [[ "$tplobjs" == "" ]]; then
 fi
 
 if [ ! -z "$dll" ]; then
-  echo -e "\\nSuccessfully built.\\n"
+  echo -e "Successfully built.\\n"
 else
-  echo -e "\\nSuccessfully built executable.\\n"
+  echo -e "Successfully built executable.\\n"
 fi
 exit 0

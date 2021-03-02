@@ -46,15 +46,26 @@ void banner(const adstring& program_name)
   else
      ss << " safe libraries";
 
-  ss << " compiled with ";
+  ss << " was compiled using ";
 
-#if defined(__GNUC__)
+#if defined(__clang__)
+  #if defined(__apple_build_version__)
+  ss <<  "Apple ";
+  #endif
+  ss <<  "Clang C++ "<< __clang_major__ << '.' << __clang_minor__ << '.'
+    << __clang_patchlevel__;
+  #if defined(__x86_64)
+  ss <<  " 64bit";
+  #else
+  ss <<  " 32bit";
+  #endif
+#elif defined(__GNUC__)
   ss <<  "GNU C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.'
     << __GNUC_PATCHLEVEL__;
   #if defined(__x86_64)
-  ss <<  " (64bit)";
+  ss <<  " 64bit";
   #else
-  ss <<  " (32bit)";
+  ss <<  " 32bit";
   #endif
 #elif defined(_MSC_VER)
   ss << "Microsoft Visual C++ ";
@@ -127,8 +138,12 @@ void banner(const adstring& program_name)
 #else
   ss << "unknown compiler";
 #endif
+<<<<<<< HEAD
   ss << "\n";
   ss << "Build date: " << __DATE__ << "\n";
+=======
+  ss << " on " << __DATE__ << ".\n";
+>>>>>>> f3a9cb6715d2af9c9d76a029cb927c2d29ffe4f8
 #if defined(ADMB_REVISION)
   ss << "Revision: " << STR2(ADMB_REVISION) << "\n";
 #endif

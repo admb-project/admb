@@ -11,10 +11,10 @@ runre: $(TPL_TARGETRE)
 	$(TPL_TARGETRE) -nohess
 
 $(TPL_TARGET): $(TPL_TARGET).tpl
-	../../admb $(TPL_TARGET)
+	..\\..\\admb.cmd $(TPL_TARGET)
 
 $(TPL_TARGETRE): $(TPL_TARGETRE).tpl
-	../../admb $(TPL_TARGETRE)
+	..\\..\\admb.cmd $(TPL_TARGETRE)
 
 get-outputs:
 

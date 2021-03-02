@@ -2,7 +2,7 @@
 ADMB_VER=admb
 !ENDIF
 
-DESTDIR=..\build\$(ADMB_VER)
+DESTDIR=..\\build\\$(ADMB_VER)
 
 all:\
   test-4darray\
@@ -228,13 +228,13 @@ verify: examples
 	$(MAKE) /NOLOGO outputs.txt
 
 examples:
-	if not exist $(DESTDIR)\examples md $(DESTDIR)\examples
-	xcopy ..\examples $(DESTDIR)\examples /S /Y /D
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO all & popd
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-saf.txt & popd
+	if not exist $(DESTDIR)\\examples md $(DESTDIR)\\examples
+	xcopy ..\\examples $(DESTDIR)\\examples /S /Y /D
+	pushd $(DESTDIR)\\examples & $(MAKE) /NOLOGO all & popd
+	pushd $(DESTDIR)\\examples & $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-saf.txt & popd
 !IFNDEF SAFE_ONLY
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all & popd
-	pushd $(DESTDIR)\examples & $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-opt.txt & popd
+	pushd $(DESTDIR)\\examples & $(MAKE) /NOLOGO FAST_OPTION=-f all & popd
+	pushd $(DESTDIR)\\examples & $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-opt.txt & popd
 !ENDIF
 
 copy:
@@ -243,8 +243,9 @@ copy:
 outputs.txt:
 	@if exist ..\\outputs.txt del /Q ..\\outputs.txt
 	@echo "# outputs\n" > ..\\outputs.txt
-	@echo "# examples outputs\n" >> ..\\outputs.txt
+	@echo "# examples diff\n" >> ..\\outputs.txt
 	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt
+	@echo "# examples outputs\n" >> ..\\outputs.txt
 	@type outputs-examples-saf.txt >> ..\\outputs.txt
 	@echo "# tests outputs\n" >> ..\\outputs.txt
 	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt

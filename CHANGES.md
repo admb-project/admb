@@ -13,7 +13,7 @@ Describe new features, changes and improvements for each release.
 
 ADMB-12.3
 ---------
-*Released February 28, 2021*  
+*Released March 7, 2021*  
 
 #### New Features
 
@@ -92,6 +92,8 @@ ADMB-12.3
   ([See Changes d3be66a](https://github.com/admb-project/admb/commit/d3be66a632b28c412cc84161cc5c3725c0ae06b4)).
 
 * The build files and outputs scripts were simplified.
+
+* Update banner string to include Apple Clang builds.
 
 #### Statistics
 

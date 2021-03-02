@@ -138,12 +138,7 @@ void banner(const adstring& program_name)
 #else
   ss << "unknown compiler";
 #endif
-<<<<<<< HEAD
-  ss << "\n";
-  ss << "Build date: " << __DATE__ << "\n";
-=======
   ss << " on " << __DATE__ << ".\n";
->>>>>>> f3a9cb6715d2af9c9d76a029cb927c2d29ffe4f8
 #if defined(ADMB_REVISION)
   ss << "Revision: " << STR2(ADMB_REVISION) << "\n";
 #endif

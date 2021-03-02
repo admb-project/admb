@@ -113,7 +113,6 @@ jobs:
     vmImage: 'ubuntu-latest'
   steps:
   - script: |
-      sudo apt install -y flex
       make
       make zip
       make verify SAFE_ONLY=yes
@@ -154,7 +153,6 @@ jobs:
     vmImage: 'ubuntu-latest'
   steps:
   - script: |
-      sudo apt install -y flex
       make DEBUG=yes
       make zip DEBUG=yes
       make verify DEBUG=yes SAFE_ONLY=yes

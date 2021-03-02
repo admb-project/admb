@@ -247,8 +247,8 @@ copy:
 outputs.txt:
 	@if exist ..\\outputs.txt del /Q ..\\outputs.txt
 	@echo ^# outputs > ..\\outputs.txt
-!IF EXIST outputs-examples-saf.txt
-  !IF EXIST outputs-examples-opt.txt
+!IF EXISTS(outputs-examples-saf.txt)
+  !IF EXISTS(outputs-examples-opt.txt)
 	@echo ^# diff >> ..\\outputs.txt
 	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt
   !ENDIF

@@ -57,7 +57,7 @@ jobs:
     - make clean
     - make --directory=src CXXFLAGS=--coverage objects
     - make LDFLAGS=--coverage core
-    - make verify SAFE_ONLY=yes LDFLAGS=--coverage PROG=
+    - make verify TESTS_REMOTE=gtests SAFE_ONLY=yes LDFLAGS=--coverage PROG=
     - codecov &> /dev/null
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4

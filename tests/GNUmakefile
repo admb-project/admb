@@ -46,11 +46,14 @@ endif
 
 all:
 	$(MAKE) tests-core
-	$(MAKE) tests-contrib
 ifeq ($(TESTS_REMOTE),gtests)
 	$(MAKE) unit-gtests
 else ifeq ($(TESTS_REMOTE),all)
 	$(MAKE) tests-remote
+else
+	$(MAKE) tests-contrib
+	$(MAKE) tests-remote
+	$(MAKE) unit-gtests
 endif
 
 verify: examples

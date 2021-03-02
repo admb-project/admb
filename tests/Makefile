@@ -243,10 +243,14 @@ copy:
 outputs.txt:
 	@if exist ..\\outputs.txt del /Q ..\\outputs.txt
 	@echo "# outputs\n" > ..\\outputs.txt
-	@echo "# examples diff\n" >> ..\\outputs.txt
-	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt
-	@echo "# examples outputs\n" >> ..\\outputs.txt
-	@type outputs-examples-saf.txt >> ..\\outputs.txt
+	@if exist outputs-examples-opt.txt ( \
+	  if exist outputs-examples-saf.txt ( \
+	    echo "# examples diff\n" >> ..\\outputs.txt \
+            fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt \
+          ) \
+	  echo "# examples outputs\n" >> ..\\outputs.txt \
+	  type outputs-examples-saf.txt >> ..\\outputs.txt \
+        )
 	@echo "# tests outputs\n" >> ..\\outputs.txt
 	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
 

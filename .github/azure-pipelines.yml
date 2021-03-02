@@ -18,7 +18,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=yes
+      nmake verify SAFE_ONLY=yes TESTS_REMOTE=gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -37,7 +37,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=yes
+      nmake verify SAFE_ONLY=yes TESTS_REMOTE=gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -56,7 +56,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=yes
+      nmake verify SAFE_ONLY=yes TESTS_REMOTE=gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -76,7 +76,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=yes
+      nmake verify SAFE_ONLY=yes TESTS_REMOTE=gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -95,7 +95,7 @@ jobs:
   - script: make
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make verify SAFE_ONLY=yes
+  - script: make verify SAFE_ONLY=yes TESTS_REMOTE=gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -115,7 +115,7 @@ jobs:
   - script: |
       make
       make zip
-      make verify SAFE_ONLY=yes
+      make verify SAFE_ONLY=yes TESTS_REMOTE=gtests
     displayName: 'make'
   - task: CopyFiles@2
     inputs:
@@ -135,7 +135,7 @@ jobs:
   - script: make DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make verify DEBUG=yes SAFE_ONLY=yes
+  - script: make verify DEBUG=yes SAFE_ONLY=yes TESTS_REMOTE=gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -155,7 +155,7 @@ jobs:
   - script: |
       make DEBUG=yes
       make zip DEBUG=yes
-      make verify DEBUG=yes SAFE_ONLY=yes
+      make verify DEBUG=yes SAFE_ONLY=yes TESTS_REMOTE=gtests
     displayName: 'make'
   - task: CopyFiles@2
     inputs:

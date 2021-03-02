@@ -1,5 +1,5 @@
 ifndef TESTS_REMOTE
-  TESTS_REMOTE=yes
+  TESTS_REMOTE=all
 endif
 
 ifndef ADMB_VER
@@ -47,7 +47,9 @@ endif
 all:
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
-ifeq ($(TESTS_REMOTE),yes)
+ifeq ($(TESTS_REMOTE),gtests)
+	$(MAKE) unit-gtests
+else ifeq ($(TESTS_REMOTE),all)
 	$(MAKE) tests-remote
 endif
 

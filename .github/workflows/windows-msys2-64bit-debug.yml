@@ -28,7 +28,7 @@ jobs:
     - name: tests
       run: |
         set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
-        make verify DEBUG=yes TESTS_REMOTE=no
+        make verify DEBUG=yes SAFE_ONLY=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

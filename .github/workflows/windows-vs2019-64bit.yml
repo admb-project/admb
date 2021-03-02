@@ -39,7 +39,7 @@ jobs:
     - name: tests
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        nmake verify DEBUG=yes
+        nmake verify DEBUG=yes SAFE_ONLY=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

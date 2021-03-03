@@ -136,6 +136,7 @@ jobs:
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
   - script: make --directory=tests DEBUG=yes tests-contrib tests-remote
+  - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -156,6 +157,7 @@ jobs:
       make DEBUG=yes
       make zip DEBUG=yes
       make --directory=tests DEBUG=yes tests-contrib tests-remote
+      make --directory=tests outputs.txt
     displayName: 'make'
   - task: CopyFiles@2
     inputs:

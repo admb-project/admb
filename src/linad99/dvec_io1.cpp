@@ -144,7 +144,7 @@ dvector::dvector(char* filename, const int& column)
    cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    if (sizeof(int)==sizeof(char*))
    {
-#if defined(__x86_64)
+#if defined(__x86_64) || defined(arm64)
      if ((intptr_t)v < indexmin() * sizeof(double))
 #else
      if ( (unsigned) v < indexmin() * sizeof(double) )

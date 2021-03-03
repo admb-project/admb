@@ -248,10 +248,10 @@ outputs.txt:
 	@if exist ..\\outputs.txt del /Q ..\\outputs.txt
 	@echo ^# outputs > ..\\outputs.txt
 !IF EXISTS(outputs-examples-saf.txt)
-  !IF EXISTS(outputs-examples-opt.txt)
+!IF EXISTS(outputs-examples-opt.txt)
 	@echo ^# diff >> ..\\outputs.txt
 	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt
-  !ENDIF
+!ENDIF
 	@echo ^# examples outputs >> ..\\outputs.txt
 	@type outputs-examples-saf.txt >> ..\\outputs.txt
 !ENDIF

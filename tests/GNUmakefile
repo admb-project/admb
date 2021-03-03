@@ -72,8 +72,8 @@ tests-contrib:
 	$(MAKE) contrib-tpls
 
 coverage:
-	$(MAKE) unit-gtests
 	$(MAKE) core-tpls
+	$(MAKE) unit-gtests
 
 unit-gtests:
 	$(MAKE) --directory=gtests

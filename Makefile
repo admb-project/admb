@@ -18,8 +18,7 @@ debug:
 contribs:
 	$(MAKE) $(CXX)-contribs DEBUG=$(DEBUG)
 	@echo ADMB build contribs completed.
-test:
-	@echo Error: \'test\' target was removed. Use \'verify\' target.
+test: verify
 gtests:
 	$(MAKE) $(CXX)-gtests DEBUG=$(DEBUG)
 verify:

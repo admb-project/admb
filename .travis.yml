@@ -61,6 +61,22 @@ jobs:
     - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-core remote-core-tpls unit-gtests
     - codecov &> /dev/null
 
+  - name: Code Coverage Contrib
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage
+    - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-remote tests-contrib
+    - codecov &> /dev/null
+
   - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4
     os: linux
     dist: bionic

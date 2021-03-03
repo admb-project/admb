@@ -72,8 +72,7 @@ jobs:
     - bash <(curl -s https://codecov.io/bash)
     script:
     - make clean
-    - make --directory=src CXXFLAGS=--coverage objects
-    - make LDFLAGS=--coverage
+    - make CXXFLAGS=--coverage LDFLAGS=--coverage
     - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-remote tests-contrib
     - codecov &> /dev/null
 

@@ -9,9 +9,7 @@
  * Description not yet available.
  */
 #include <fvar.hpp>
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-  #include <stdint.h>
-#endif
+#include <stdint.h>
 
 /**
  * Description not yet available.

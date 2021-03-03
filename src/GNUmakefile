@@ -83,7 +83,11 @@ else
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
       OSNAME=-i686-macos
     else
-      OSNAME=-x86_64-macos
+      ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
+        OSNAME=-x86_64-macos
+      else
+        OSNAME=-arm64-macos
+      endif
     endif
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)

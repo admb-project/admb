@@ -73,7 +73,11 @@ else
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
       OSNAME=-i686-macos
     else
-      OSNAME=-x86_64-macos
+      ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
+        OSNAME=-x86_64-macos
+      else
+        OSNAME=-arm64-macos
+      endif
     endif
   endif
   ifeq ($(findstring _NT,$(UNAME_S)),_NT)
@@ -285,22 +289,22 @@ ifeq ($(CMDSHELL),cmd)
 else
 	mkdir -p ../build/ad2csv
 endif
-	$(MAKE) --directory=ad2csv CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_BIN=$(CONTRIB_BIN)
+	$(MAKE) --directory=ad2csv CXXFLAGS=$(CXXFLAGS) LDFLAGS=$(LDFLAGS) OPTION=$(OPTION) CONTRIB_BIN=$(CONTRIB_BIN)
 
 contrib-ecolib:
-	$(MAKE) --directory=ecolib CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=ecolib CXXFLAGS=$(CXXFLAGS) LDFLAGS=$(LDFLAGS) OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-gdbprintlib:
-	$(MAKE) --directory=gdbprintlib CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=gdbprintlib CXXFLAGS=$(CXXFLAGS) LDFLAGS=$(LDFLAGS) OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-qfclib:
-	$(MAKE) --directory=qfclib CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=qfclib CXXFLAGS=$(CXXFLAGS) LDFLAGS=$(LDFLAGS) OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-statslib:
-	$(MAKE) --directory=statslib CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=statslib CXXFLAGS=$(CXXFLAGS) LDFLAGS=$(LDFLAGS) OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-src:
-	$(MAKE) --directory=src CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=src CXXFLAGS=$(CXXFLAGS) LDFLAGS=$(LDFLAGS) OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-dirs:
 ifeq ($(CMDSHELL),cmd)

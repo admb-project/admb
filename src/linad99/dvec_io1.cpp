@@ -144,10 +144,10 @@ dvector::dvector(char* filename, const int& column)
    cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    if (sizeof(int)==sizeof(char*))
    {
-#if defined(__x86_64) || defined(arm64)
-     if ((intptr_t)v < indexmin() * sizeof(double))
-#else
+#if (defined(__GNUC__) && defined(__i386)) || (defined(_MSC_VER) && defined(_M_IX86))
      if ( (unsigned) v < indexmin() * sizeof(double) )
+#else
+     if ((intptr_t)v < indexmin() * sizeof(double))
 #endif
      {
       //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";

@@ -134,8 +134,10 @@ contrib-tpls:\
   tpl-priors\
   test-rgamma
 
-remote-contrib-tpls:\
-  tpl-agemat
+remote-contrib-tpls:
+ifneq ($(CMDSHELL),cmd)
+	$(MAKE) tpl-agemat
+endif
 
 tpl-strip_full_path:
 	$(MAKE) --directory=strip_full_path

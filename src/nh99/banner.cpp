@@ -54,7 +54,9 @@ void banner(const adstring& program_name)
   #endif
   ss <<  "Clang C++ "<< __clang_major__ << '.' << __clang_minor__ << '.'
     << __clang_patchlevel__;
-  #if defined(__x86_64)
+  #if defined(__arm64__)
+  ss <<  " arm64bit";
+  #elif defined(__x86_64)
   ss <<  " 64bit";
   #else
   ss <<  " 32bit";

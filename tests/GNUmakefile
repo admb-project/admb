@@ -387,7 +387,6 @@ endif
 
 outputs.txt:
 	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
-	@echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt
 ifeq ($(CMDSHELL),cmd)
   ifndef SAFE_ONLY
 	fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
@@ -403,6 +402,7 @@ else
 	      echo "Error: no 'diff' utility found." >> $(OUTPUT_DIR)outputs.txt; \
 	    fi; \
 	  fi; \
+	  echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt; \
 	  cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; \
 	else \
 	  echo "Info: no examples outputs found." >> $(OUTPUT_DIR)outputs.txt; \

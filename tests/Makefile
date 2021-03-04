@@ -249,7 +249,7 @@ outputs.txt:
 	@echo ^# outputs > ..\\outputs.txt
 !IF EXISTS(outputs-examples-saf.txt)
 !IF EXISTS(outputs-examples-opt.txt)
-	@echo ^# diff >> ..\\outputs.txt
+	@echo ^# examples diff >> ..\\outputs.txt
 	@fc outputs-examples-opt.txt outputs-examples-saf.txt >> ..\\outputs.txt
 !ENDIF
 	@echo ^# examples outputs >> ..\\outputs.txt

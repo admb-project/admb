@@ -15,6 +15,10 @@ ADMB-12.3
 ---------
 *Released March 7, 2021*  
 
+#### New Supported Processor
+* Apple M1 Processor (arm64)
+  Alejandro Yáñez contributed to testing and porting of ADMB-12.3 using a local computer with the Apple M1 processor.
+
 #### New Features
 
 * Add **hess_step()** function for the capability to do single Newton steps using the inverse Hessian
@@ -100,7 +104,7 @@ ADMB-12.3
 * Total Code Coverage testing is ~ 48.54%
   ([See ADMB Code Coverage](https://app.codecov.io/gh/admb-project/admb)).
 
-* Total Unit Tests is 914.
+* Total Unit Tests is 933.
 
 ADMB-12.2
 ---------

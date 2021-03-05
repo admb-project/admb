@@ -16,6 +16,7 @@ ADMB-12.3
 *Released March 7, 2021*  
 
 #### New Supported Processor
+
 * Apple M1 Processor (arm64)
   Alejandro Yáñez contributed to testing and porting of ADMB-12.3 using a local computer with the Apple M1 processor.
 
@@ -99,10 +100,15 @@ ADMB-12.3
 
 * Update banner string to include Apple Clang builds.
 
-#### Statistics
+#### Counts and Statistics
 
-* Total Code Coverage testing is ~ 48.54%
+* Total Code Coverage is ~ 49.16%.  Total lines tested is 31605 out of 62160
+  in the src directory
   ([See ADMB Code Coverage](https://app.codecov.io/gh/admb-project/admb)).
+
+* Synopsys static code analyzer detected 223 outstanding defects in ADMB.  The
+  total defects that have been resolved is 193
+  ([See ADMB Static Analysis](https://scan.coverity.com/project/admb-project/)).
 
 * Total Unit Tests is 933.
 

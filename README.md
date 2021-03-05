@@ -97,4 +97,4 @@ developing features, testing, providing fixes, improving documentation and givin
 * Johnoel Ancheta
 
 ---
-For help and support, email <users@admb-project.org>.
+Copyright (c) 2008-2021 ADMB Foundation and Regents of the University of California

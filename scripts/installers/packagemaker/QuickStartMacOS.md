@@ -20,7 +20,7 @@ Quick Start
 
 1. **Download**
 
-   Download [admb-12.3--macos.dmg](https://github.com/admb-project/admb/releases/download/admb-12.3/admb-12.3--macos.dmg).
+   Download [admb-12.3-macos.dmg](https://github.com/admb-project/admb/releases/download/admb-12.3/admb-12.3-macos.dmg).
 
 2. **Install**
 

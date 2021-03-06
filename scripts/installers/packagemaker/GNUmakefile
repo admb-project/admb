@@ -4,16 +4,15 @@ endif
 
 CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
 
-all:
-	$(MAKE) clean
-	$(MAKE) ADMBTerminal.dmg
+all: clean
+	$(MAKE) ../../../$(ADMB_VER)-macos.dmg
 
-ADMBTerminal.dmg: build/ADMBTerminal.app
+../../../$(ADMB_VER)-macos.dmg: build/ADMBTerminal.app
 	cp -vf QuickStartMacOS.md build/INSTALL.txt
-	cp -rvf ../../../build/$(ADMB_VER) build/ADMBTerminal.app/admb
-	pushd build && ln -sf ADMBTerminal.app/admb/README.txt README.txt && popd
-	pushd build && ln -sf ADMBTerminal.app/admb/LICENSE.txt LICENSE.txt && popd
-	pushd build && ln -sf ADMBTerminal.app/admb/CHANGES.txt CHANGES.txt && popd
+	cp -rvf ../../../build/$(ADMB_VER) build/ADMBTerminal.app/
+	pushd build && ln -sf ADMBTerminal.app/$(ADMB_VER)/README.txt README.txt && popd
+	pushd build && ln -sf ADMBTerminal.app/$(ADMB_VER)/LICENSE.txt LICENSE.txt && popd
+	pushd build && ln -sf ADMBTerminal.app/$(ADMB_VER)/CHANGES.txt CHANGES.txt && popd
 	cp -rvf ../../../examples build/
 	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build -ov -debug
 
@@ -27,4 +26,4 @@ build/ADMBTerminal.pkg:
 
 clean:
 	rm -rvf build
-	rm -rvf ADMBTerminal.dmg
+	rm -rvf $(ADMB_VER)-macos.dmg

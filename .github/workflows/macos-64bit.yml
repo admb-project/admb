@@ -35,10 +35,10 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: admb_dmg_distribution
-        path: scripts/installers/packagemaker/ADMBTerminal.dmg
+        path: admb-macos.dmg
     - name: tests
       run: |
-        make verify DEBUG=yes
+        make verify DEBUG=yes SAFE_ONLY=yes
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

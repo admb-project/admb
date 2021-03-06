@@ -95,12 +95,13 @@ jobs:
   - script: make
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make verify SAFE_ONLY=yes TESTS_REMOTE=gtests
+  - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes examples tests-core unit-gtests
+  - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        scripts/installers/packagemaker/ADMBTerminal.dmg
+        admb-macos.dmg
         outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1

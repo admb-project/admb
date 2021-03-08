@@ -11,7 +11,7 @@ DefaultDirName={sd}\{#ADMB_VERSION}
 DefaultGroupName={#ADMB_VERSION}
 UninstallDisplayIcon={app}\uninstall.exe
 OutputDir=..\..\..\build
-OutputBaseFilename={#ADMB_VERSION2}
+OutputBaseFilename={#ADMB_VERSION2}-windows
 AppPublisher=ADMB Project
 AppPublisherURL=http://www.admb-project.org/
 LicenseFile=..\..\..\LICENSE.txt
@@ -21,7 +21,7 @@ Compression=lzma2/ultra64
 Name: {#ADMB_VERSION2}; Description: {#ADMB_VERSION}
 
 [Files]
-Source: "..\..\..\build\admb\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "..\..\..\build\admb-12.3\*"; DestDir: "{app}"; Flags: recursesubdirs
 Source: "..\..\set-admb-command-prompt.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\CHANGES.md"; DestDir: "{app}"; DestName: "CHANGES.txt"
 Source: "..\..\..\LICENSE.txt"; DestDir: "{app}"

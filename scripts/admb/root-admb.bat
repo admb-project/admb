@@ -5,8 +5,9 @@
 
 setlocal EnableExtensions EnableDelayedExpansion
 
-set ADMB_VER=admb
-
+if not defined ADMB_VER (
+  set ADMB_VER=admb
+)
 set SCRIPT_PATH=%~dp0
 if not defined SCRIPT_PATH (
   for %%a in (%0) do (

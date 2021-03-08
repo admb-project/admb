@@ -1,1 +1,1 @@
-Compress-Archive -Path admb -CompressionLevel Fastest -DestinationPath admb.zip
+Compress-Archive -Path admb-12.3 -CompressionLevel Fastest -DestinationPath admb-12.3-windows.zip

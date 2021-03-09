@@ -92,6 +92,7 @@ jobs:
   pool:
     vmImage: 'macOS-latest'
   steps:
+  - script: make clean
   - script: make
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
@@ -101,7 +102,7 @@ jobs:
     inputs:
       contents: |
         admb.zip
-        admb-macos.dmg
+        build/admb-macos.dmg
         outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -133,6 +134,7 @@ jobs:
   pool:
     vmImage: 'macOS-latest'
   steps:
+  - script: make DEBUG=yes clean
   - script: make DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
@@ -142,7 +144,7 @@ jobs:
     inputs:
       contents: |
         admb.zip
-        scripts/installers/packagemaker/ADMBTerminal.dmg
+        build/admb-macos.dmg
         outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -157,7 +159,7 @@ jobs:
   - script: |
       make DEBUG=yes
       make zip DEBUG=yes
-      make --directory=tests DEBUG=yes tests-contrib tests-remote
+      make --directory=tests DEBUG=yes tests-contrib tests-remote unit-gtests
       make --directory=tests outputs.txt
     displayName: 'make'
   - task: CopyFiles@2

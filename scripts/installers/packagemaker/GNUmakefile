@@ -3,11 +3,13 @@ ifndef ADMB_VER
 endif
 
 CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
+BUILD_DIR=../../../build
 
 all: clean
-	$(MAKE) ../../../$(ADMB_VER)-macos.dmg
+	$(MAKE) $(BUILD_DIR)/$(ADMB_VER)-macos.dmg
 
-../../../$(ADMB_VER)-macos.dmg: build/ADMBTerminal.app
+$(BUILD_DIR)/$(ADMB_VER)-macos.dmg: $(BUILD_DIR)/ADMBTerminal.app
+	mkdir -p build
 	cp -vf QuickStartMacOS.md build/INSTALL.txt
 	cp -rvf ../../../build/$(ADMB_VER) build/ADMBTerminal.app/
 	pushd build && ln -sf ADMBTerminal.app/$(ADMB_VER)/README.txt README.txt && popd
@@ -16,10 +18,9 @@ all: clean
 	cp -rvf ../../../examples build/
 	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build -ov -debug
 
-build/ADMBTerminal.app: ADMBTerminal.scpt
-	mkdir -p build
+../../../build/ADMBTerminal.app: ADMBTerminal.scpt
 	osacompile -o $@ $^
-	cp -vf applet.icns build/ADMBTerminal.app/Contents/Resources
+	cp -vf applet.icns $@/Contents/Resources
 
 build/ADMBTerminal.pkg:
 	$(CC) --verbose --title "ADMBTerminal" --root build --id www.admb-project.org --resources build/ADMBTerminal.app/Contents/Resources --out $@

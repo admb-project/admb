@@ -6,25 +6,22 @@ CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMake
 BUILD_DIR=../../../build
 
 all: clean
+	mkdir -p $(BUILD_DIR)/dmg
 	$(MAKE) $(BUILD_DIR)/$(ADMB_VER)-macos.dmg
 
-$(BUILD_DIR)/$(ADMB_VER)-macos.dmg: $(BUILD_DIR)/ADMBTerminal.app
-	mkdir -p build
-	cp -vf QuickStartMacOS.md build/INSTALL.txt
-	cp -rvf ../../../build/$(ADMB_VER) build/ADMBTerminal.app/
-	pushd build && ln -sf ADMBTerminal.app/$(ADMB_VER)/README.txt README.txt && popd
-	pushd build && ln -sf ADMBTerminal.app/$(ADMB_VER)/LICENSE.txt LICENSE.txt && popd
-	pushd build && ln -sf ADMBTerminal.app/$(ADMB_VER)/CHANGES.txt CHANGES.txt && popd
-	cp -rvf ../../../examples build/
-	hdiutil create $@ -volname "ADMBTerminal" -srcfolder build -ov -debug
+$(BUILD_DIR)/$(ADMB_VER)-macos.dmg: $(BUILD_DIR)/dmg/ADMBTerminal.app
+	cp -vf QuickStartMacOS.md $(BUILD_DIR)/dmg/INSTALL.txt
+	cp -rvf ../../../build/$(ADMB_VER) $(BUILD_DIR)/dmg/ADMBTerminal.app/
+	pushd $(BUILD_DIR)/dmg && ln -sf ADMBTerminal.app/$(ADMB_VER)/README.txt README.txt && popd
+	pushd $(BUILD_DIR)/dmg && ln -sf ADMBTerminal.app/$(ADMB_VER)/LICENSE.txt LICENSE.txt && popd
+	pushd $(BUILD_DIR)/dmg && ln -sf ADMBTerminal.app/$(ADMB_VER)/CHANGES.txt CHANGES.txt && popd
+	cp -rvf ../../../examples $(BUILD_DIR)
+	hdiutil create $@ -volname "ADMBTerminal" -srcfolder $(BUILD_DIR)/dmg -ov -debug
 
-../../../build/ADMBTerminal.app: ADMBTerminal.scpt
+$(BUILD_DIR)/dmg/ADMBTerminal.app: ADMBTerminal.scpt
 	osacompile -o $@ $^
 	cp -vf applet.icns $@/Contents/Resources
 
-build/ADMBTerminal.pkg:
-	$(CC) --verbose --title "ADMBTerminal" --root build --id www.admb-project.org --resources build/ADMBTerminal.app/Contents/Resources --out $@
-
 clean:
-	rm -rvf build
-	rm -rvf $(ADMB_VER)-macos.dmg
+	rm -rvf $(BUILD_DIR)/dmg
+	rm -rvf $(BUILD_DIR)/$(ADMB_VER)-macos.dmg

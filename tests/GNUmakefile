@@ -79,6 +79,7 @@ core-tpls:\
   tpl-adnuts\
   tpl-alternatives\
   tpl-altexample\
+  tpl-atan2\
   tpl-bessel\
   tpl-beta2\
   tpl-beta3\
@@ -159,6 +160,9 @@ tpl-agemat:
 
 tpl-altexample:
 	$(MAKE) --directory=altexample
+
+tpl-atan2:
+	$(MAKE) --directory=atan2
 
 tpl-betai:
 	$(MAKE) --directory=betai

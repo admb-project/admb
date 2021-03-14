@@ -127,22 +127,20 @@ GTESTS_ALL=\
  test_issues.cpp\
  test_funnel.cpp\
  test_math.cpp\
- main.cpp
-
-GTESTS_NEW=\
- test_adpool.cpp\
+ test_return_arrays.cpp\
+ test_df_file.cpp\
+ test_async.cpp\
+ test_cfenv.cpp\
+ test_df1b2variable.cpp\
+ test_df1b2vector.cpp\
  test_move.cpp\
+ test_move_dvar_vector.cpp\
+ test_omp.cpp\
+ test_simple_async.cpp\
+ test_template.cpp\
  main.cpp
 
 GTESTS_DEV=\
- test_return_arrays.cpp\
- test_grad_stack.cpp\
- test_df_file.cpp\
- test_dlist.cpp\
- test_gradient_structure.cpp\
- test_gradient_structure2.cpp\
- test_dfsdmat.cpp\
- test_dependent_variables_information.cpp\
  main.cpp
 
 #GTESTS=$(GTESTS_DEV)

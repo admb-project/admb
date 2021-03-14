@@ -9,6 +9,7 @@ all:\
   test-adnuts\
   test-agemat\
   test-altexample\
+  test-atan2\
   test-bessel\
   test-beta2\
   test-beta3\
@@ -64,6 +65,9 @@ test-agemat:
 
 test-altexample:
 	pushd altexample & $(MAKE) /NOLOGO & popd
+
+test-atan2:
+	pushd atan2 & $(MAKE) /NOLOGO & popd
 
 test-bessel:
 	pushd bessel & $(MAKE) /NOLOGO & popd

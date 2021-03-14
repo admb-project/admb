@@ -90,6 +90,7 @@ core-tpls:\
   tpl-colfill\
   tpl-cov_re\
   tpl-data_adstring_array\
+  tpl-df33_tester\
   tpl-dd2\
   tpl-dualaveraging\
   tpl-expm\
@@ -205,6 +206,9 @@ tpl-bessel:
 
 tpl-qbeta:
 	$(MAKE) --directory=qbeta
+
+tpl-df33_tester:
+	$(MAKE) --directory=df33_tester
 
 tpl-dd2:
 	$(MAKE) --directory=dd2

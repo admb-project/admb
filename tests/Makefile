@@ -22,6 +22,7 @@ all:\
   test-cov_re\
   test-ctl\
   test-data_adstring_array\
+  test-df33_tester\
   test-dd2\
   test-dualaveraging\
   test-expm\
@@ -104,6 +105,9 @@ test-cov_re:
 
 test-data_adstring_array:
 	pushd data_adstring_array& $(MAKE) /NOLOGO & popd
+
+test-df33_tester:
+	pushd df33_tester & $(MAKE) /NOLOGO & popd
 
 test-dd2:
 	pushd dd2 & $(MAKE) /NOLOGO & popd

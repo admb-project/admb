@@ -8,14 +8,22 @@
 double get_values(double x,double y,double z,int print_switch);
   double inv_cumd_gamma(double y,double a,int print_switch);
 
-df3_three_variable betai(df3_three_variable& a,df3_three_variable& b,
-  df3_three_variable& x,int maxit){ cerr << "OO" << endl;}
+df3_three_variable betai(const df3_three_variable& a,
+  const df3_three_variable& b,const df3_three_variable& x,int maxit);
+df3_three_variable betai(const df3_three_variable& a,
+  const df3_three_variable& b, double x,int maxit);
 
+df3_three_variable betai(df3_three_variable& a,df3_three_variable& b,
+  df3_three_variable& x)
+{
+  cerr << "OO" << endl;
+  return betai(a, b, x, ITMAX);
+}
 df3_three_variable df3_get_values(double cx,double cy,double czz,int print_switch);
 
 double inv_cumd_beta_stable(double x,double y,double z, double eps);
 
-main()
+int main(int argc, char** argv)
 {
   gradient_structure gs(50000);
   int bd=3;

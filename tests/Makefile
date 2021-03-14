@@ -116,6 +116,9 @@ test-f1b2vc5 :
 test-geolocation:
 	pushd geolocation & $(MAKE) /NOLOGO & popd
 
+test-gmrf:
+	pushd gmrf & $(MAKE) /NOLOGO & popd
+
 test-gradients_output:
 	pushd gradients_output & $(MAKE) /NOLOGO & popd
 

@@ -46,15 +46,9 @@ endif
 
 all:
 	$(MAKE) tests-core
-ifeq ($(TESTS_REMOTE),gtests)
-	$(MAKE) unit-gtests
-else ifeq ($(TESTS_REMOTE),all)
-	$(MAKE) tests-remote
-else
 	$(MAKE) tests-contrib
 	$(MAKE) tests-remote
 	$(MAKE) unit-gtests
-endif
 
 verify: examples
 	$(MAKE) all
@@ -63,7 +57,6 @@ verify: examples
 tests-remote:
 	$(MAKE) remote-core-tpls
 	$(MAKE) remote-contrib-tpls
-	$(MAKE) unit-gtests
 
 tests-core:
 	$(MAKE) core-tpls
@@ -84,6 +77,7 @@ test-rgamma:
 core-tpls:\
   tpl-4darray\
   tpl-adnuts\
+  tpl-alternatives\
   tpl-altexample\
   tpl-bessel\
   tpl-beta2\
@@ -138,6 +132,9 @@ remote-contrib-tpls:
 ifneq ($(CMDSHELL),cmd)
 	$(MAKE) tpl-agemat
 endif
+
+tpl-alternatives:
+	$(MAKE) --directory=strip_full_path
 
 tpl-strip_full_path:
 	$(MAKE) --directory=strip_full_path
@@ -325,6 +322,7 @@ endif
 	$(MAKE) --directory=adnuts clean
 	$(MAKE) --directory=agemat clean
 	$(MAKE) --directory=altexample clean
+	$(MAKE) --directory=alternatives clean
 	$(MAKE) --directory=bessel clean
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
@@ -417,6 +415,7 @@ get-outputs:
 	$(MAKE) --directory=4darray get-outputs
 	$(MAKE) --directory=agemat get-outputs
 	$(MAKE) --directory=altexample get-outputs
+	$(MAKE) --directory=alternatives get-outputs
 	$(MAKE) --directory=adnuts get-outputs
 	$(MAKE) --directory=bessel get-outputs
 	$(MAKE) --directory=beta2 get-outputs

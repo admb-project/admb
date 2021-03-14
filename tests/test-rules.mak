@@ -63,9 +63,9 @@ else
 get-outputs:
 endif
 ifeq ($(CMDSHELL),cmd)
-	@..\\..\\scripts\\get-outputs.bat $(TARGET)
+	@$(SCRIPT_DIR)scripts\\get-outputs.bat $(TARGET)
 else
-	@sh ../../scripts/get-outputs.sh $(TARGET)
+	@sh $(SCRIPT_DIR)scripts/get-outputs.sh $(TARGET)
 endif
 
 ifeq ($(OVERRIDE),all)

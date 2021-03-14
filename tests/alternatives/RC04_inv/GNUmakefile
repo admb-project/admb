@@ -1,31 +1,21 @@
-.PHONY: run
-
 TARGET=inverse
+OVERRIDE=all
 
-all: clean $(TARGET) run
+ifeq ($(OS),Windows_NT)
+SCRIPT_DIR=..\\..\\..\\
+include ..\\..\\test-rules.mak
+else
+SCRIPT_DIR=../../../
+include ../../test-rules.mak
+endif
 
-$(TARGET): $(TARGET).tpl $(TARGET).dat
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s $(TARGET)
-
-run:
-	@printf "Started run:\n"
+run: $(TARGET)
+ifeq ($(CMDSHELL),cmd)
+	$(TARGET) & type $(TARGET).par $(TARGET).rep > $(TARGET).temp & move $(TARGET).temp $(TARGET).par
+else
 	./$(TARGET); cat $(TARGET).par $(TARGET).rep > $(TARGET).temp; mv $(TARGET).temp $(TARGET).par
-	@printf "Finished run.\n"
+endif
 
-clean:
-	@rm -vf $(TARGET)
-	@rm -vf admodel.*
-	@rm -vf variance
-	@rm -vf fmin.log
-	@rm -vf $(TARGET).eva
-	@rm -vf $(TARGET).htp
-	@rm -vf $(TARGET).bar
-	@rm -vf $(TARGET).bgs
-	@rm -vf $(TARGET).cor
-	@rm -vf $(TARGET).cpp
-	@rm -vf $(TARGET).log
-	@rm -vf $(TARGET).o
-	@rm -vf $(TARGET).par
-	@rm -vf $(TARGET).std
-	@rm -vf $(TARGET).rep
-	@rm -vf eigv.rpt
+get-outputs: _get-outputs
+
+clean: _clean

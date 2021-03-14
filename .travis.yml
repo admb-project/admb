@@ -44,7 +44,7 @@ jobs:
     - make clean
     - cpplint --recursive --filter=-whitespace,-runtime,-build,-readability,-legal src
 
-  - name: Code Coverage 
+  - name: Code Coverage examples
     os: linux
     dist: bionic
     compiler: gcc
@@ -58,6 +58,22 @@ jobs:
     - make --directory=src CXXFLAGS=--coverage objects
     - make LDFLAGS=--coverage core
     - make --directory=examples CXXFLAGS=--coverage LDFLAGS=--coverage PROG= all
+    - make --directory=examples CXXFLAGS=--coverage LDFLAGS=--coverage PROG= FAST_OPTION=-f all
+    - codecov &> /dev/null
+
+  - name: Code Coverage tests-core
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage core
     - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-core
     - codecov &> /dev/null
 
@@ -74,6 +90,21 @@ jobs:
     - make clean
     - make CXXFLAGS=--coverage LDFLAGS=--coverage
     - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-contrib tests-remote unit-gtests
+    - codecov &> /dev/null
+
+  - name: Code Coverage gmrf
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make CXXFLAGS=--coverage LDFLAGS=--coverage
+    - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tpl-gmrf
     - codecov &> /dev/null
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4

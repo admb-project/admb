@@ -58,7 +58,7 @@ jobs:
     - make --directory=src CXXFLAGS=--coverage objects
     - make LDFLAGS=--coverage core
     - make --directory=examples CXXFLAGS=--coverage LDFLAGS=--coverage PROG= all
-    - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-core remote-core-tpls
+    - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-core
     - codecov &> /dev/null
 
   - name: Code Coverage Contrib and Unit Tests
@@ -73,7 +73,7 @@ jobs:
     script:
     - make clean
     - make CXXFLAGS=--coverage LDFLAGS=--coverage
-    - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-remote tests-contrib unit-gtests
+    - make --directory=tests CXXFLAGS=--coverage LDFLAGS=--coverage tests-contrib tests-remote unit-gtests
     - codecov &> /dev/null
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4

@@ -81,16 +81,17 @@ get-outputs:
 
 total-clean: clean
 ifeq ($(CMDSHELL),cmd)
+	@if exist rforge-glmmadmb rmdir /s /q rforge-glmmadmb
 else
 	@rm -rvf rforge-glmmadmb
-	@rm -rvf admb_tests
-	@rm -vf bvprobit.tpl
-	@rm -vf glmmadmb.tpl
-	@rm -vf nbmm.tpl
 endif
 
 clean:
 ifeq ($(CMDSHELL),cmd)
+	@if exist admb_tests rmdir /s /q admb_tests
+	@if exist bvprobit.tpl del bvprobit.tpl
+	@if exist glmmadmb.tpl del glmmadmb.tpl
+	@if exist nbmm.tpl del nbmm.tpl
 else
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
@@ -124,78 +125,8 @@ else
 	@rm -vf variance
 	@rm -vf bvprobit.cpp bvprobit.obj bvprobit bvprobit.htp
 	@rm -vf nbmm.cpp nbmm.obj nbmm nbmm.htp
-	@rm -vf admb_tests/admodel.cov
-	@rm -vf admb_tests/admodel.dep
-	@rm -vf admb_tests/admodel.hes
-	@rm -vf admb_tests/b1
-	@rm -vf admb_tests/b2
-	@rm -vf admb_tests/bacteria
-	@rm -vf admb_tests/bacteria.b01
-	@rm -vf admb_tests/bacteria.bar
-	@rm -vf admb_tests/bacteria.bgs
-	@rm -vf admb_tests/bacteria.cor
-	@rm -vf admb_tests/bacteria.eva
-	@rm -vf admb_tests/bacteria.log
-	@rm -vf admb_tests/bacteria.luu
-	@rm -vf admb_tests/bacteria.p01
-	@rm -vf admb_tests/bacteria.r01
-	@rm -vf admb_tests/bacteria.rep
-	@rm -vf admb_tests/bacteria.rhes
-	@rm -vf admb_tests/betabinom
-	@rm -vf admb_tests/betabinom.b01
-	@rm -vf admb_tests/betabinom.bar
-	@rm -vf admb_tests/betabinom.cor
-	@rm -vf admb_tests/betabinom.eva
-	@rm -vf admb_tests/betabinom.log
-	@rm -vf admb_tests/betabinom.p01
-	@rm -vf admb_tests/betabinom.r01
-	@rm -vf admb_tests/betabinom.rep
-	@rm -vf admb_tests/eigv.rpt
-	@rm -vf admb_tests/epil2
-	@rm -vf admb_tests/epil2.b01
-	@rm -vf admb_tests/epil2.b02
-	@rm -vf admb_tests/epil2.bar
-	@rm -vf admb_tests/epil2.eva
-	@rm -vf admb_tests/epil2.log
-	@rm -vf admb_tests/epil2.luu
-	@rm -vf admb_tests/epil2.p01
-	@rm -vf admb_tests/epil2.p02
-	@rm -vf admb_tests/epil2.r01
-	@rm -vf admb_tests/epil2.r02
-	@rm -vf admb_tests/epil2.rep
-	@rm -vf admb_tests/epil2.rhes
-	@rm -vf admb_tests/fmin.log
-	@rm -vf admb_tests/hesscheck
-	@rm -vf admb_tests/hessian.bin
-	@rm -vf admb_tests/hurdle_biochem1
-	@rm -vf admb_tests/hurdle_biochem1.bar
-	@rm -vf admb_tests/hurdle_biochem1.cor
-	@rm -vf admb_tests/hurdle_biochem1.eva
-	@rm -vf admb_tests/hurdle_biochem1.log
-	@rm -vf admb_tests/hurdle_biochem1.rep
-	@rm -vf admb_tests/hurdle_biochem2
-	@rm -vf admb_tests/hurdle_biochem2.bar
-	@rm -vf admb_tests/hurdle_biochem2.cor
-	@rm -vf admb_tests/hurdle_biochem2.eva
-	@rm -vf admb_tests/hurdle_biochem2.log
-	@rm -vf admb_tests/hurdle_biochem2.rep
-	@rm -vf admb_tests/phi.rep
-	@rm -vf admb_tests/s1
-	@rm -vf admb_tests/s2
-	@rm -vf admb_tests/variance
-	@rm -vf admb_tests/zi_owls
-	@rm -vf admb_tests/zi_owls.b01
-	@rm -vf admb_tests/zi_owls.b02
-	@rm -vf admb_tests/zi_owls.bar
-	@rm -vf admb_tests/zi_owls.bgs
-	@rm -vf admb_tests/zi_owls.cor
-	@rm -vf admb_tests/zi_owls.eva
-	@rm -vf admb_tests/zi_owls.log
-	@rm -vf admb_tests/zi_owls.luu
-	@rm -vf admb_tests/zi_owls.p01
-	@rm -vf admb_tests/zi_owls.p02
-	@rm -vf admb_tests/zi_owls.r01
-	@rm -vf admb_tests/zi_owls.r02
-	@rm -vf admb_tests/zi_owls.rep
-	@rm -vf admb_tests/zi_owls.rhes
+	@rm -rvf admb_tests
+	@rm -vf bvprobit.tpl
+	@rm -vf glmmadmb.tpl
+	@rm -vf nbmm.tpl
 endif

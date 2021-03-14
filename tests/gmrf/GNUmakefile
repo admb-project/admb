@@ -29,3 +29,17 @@ else
 endif
 
 clean: _clean
+ifeq ($(CMDSHELL),cmd)
+	@if exist f1b2list1 del /Q f1b2list1 2>nul
+	@if exist f1b2list12 del /Q f1b2list12 2>nul
+	@if exist nf1b2list1 del /Q nf1b2list1 2>nul
+	@if exist nf1b2list12 del /Q nf1b2list12 2>nul
+	@if exist nf1b2list13 del /Q nf1b2list13 2>nul
+else
+	@rm -vf f1b2list1
+	@rm -vf f1b2list12
+	@rm -vf f1b2list13
+	@rm -vf nf1b2list1
+	@rm -vf nf1b2list12
+	@rm -vf nf1b2list13
+endif

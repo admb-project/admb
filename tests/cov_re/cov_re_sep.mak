@@ -1,4 +1,4 @@
-TARGET=cov_re
+TARGET=cov_re_sep
 OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
@@ -9,14 +9,13 @@ endif
 
 run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
-	cov_re
+	$(TARGET)	
+	$(TARGET)cov_re_sep -shess
 else
-	./cov_re
+	./$(TARGET)
+	./$(TARGET) -shess
 endif
-	$(MAKE) --file=cov_re_sep.mak run
 
 get-outputs: _get-outputs
-	$(MAKE) --file=cov_re_sep.mak get-outputs
 
 clean: _clean
-	$(MAKE) --file=cov_re_sep.mak clean

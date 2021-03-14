@@ -26,3 +26,10 @@ endif
 get-outputs: _get-outputs
 
 clean: _clean
+ifeq ($(CMDSHELL),cmd)
+	@if exist testgamm.exe del /Q testgamm.exe 2>nul
+	@if exist testgamm.obj del /Q testgamm.obj 2>nul
+else
+	@rm -vf testgamm
+	@rm -vf testgamm.obj
+endif

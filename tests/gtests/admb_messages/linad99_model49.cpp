@@ -882,12 +882,8 @@ TEST_F(test_admb_messages, linad99_model49_33)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }

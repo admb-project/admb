@@ -12,12 +12,8 @@ TEST_F(test_admb_messages, linad99_i3arr1_01)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -35,12 +31,8 @@ TEST_F(test_admb_messages, linad99_i3arr1_02)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -58,12 +50,8 @@ TEST_F(test_admb_messages, linad99_i3arr1_03)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -81,12 +69,8 @@ TEST_F(test_admb_messages, linad99_i3arr1_04)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -103,12 +87,8 @@ TEST_F(test_admb_messages, linad99_i3arr1_05)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -125,12 +105,8 @@ TEST_F(test_admb_messages, linad99_i3arr1_06)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -147,12 +123,8 @@ TEST_F(test_admb_messages, linad99_i3arr1_07)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -169,12 +141,8 @@ TEST_F(test_admb_messages, linad99_i3arr1_08)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -192,12 +160,8 @@ TEST_F(test_admb_messages, linad99_i4arr_01)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -215,12 +179,8 @@ TEST_F(test_admb_messages, linad99_i4arr_02)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -238,12 +198,8 @@ TEST_F(test_admb_messages, linad99_i4arr_03)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -261,12 +217,8 @@ TEST_F(test_admb_messages, linad99_i4arr_04)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -284,12 +236,8 @@ TEST_F(test_admb_messages, linad99_i5arr_01)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -307,12 +255,8 @@ TEST_F(test_admb_messages, linad99_i5arr_02)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -330,12 +274,8 @@ TEST_F(test_admb_messages, linad99_i5arr_03)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -353,12 +293,8 @@ TEST_F(test_admb_messages, linad99_i5arr_04)
   }
   catch (const int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }

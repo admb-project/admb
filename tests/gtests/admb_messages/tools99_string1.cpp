@@ -33,20 +33,9 @@ TEST_F(test_admb_messages, selftest01)
 TEST_F(test_admb_messages, tools99_string1_01)
 {
   adstring a = "12345";
-  try
-  { 
+  EXPECT_DEATH({
     adstring substring = a(0, 3);
-  }
-  catch (const int exit_code)
-  {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests for errors in "adstring adstring::operator()(int i, int j)"
@@ -54,20 +43,9 @@ TEST_F(test_admb_messages, tools99_string1_01)
 TEST_F(test_admb_messages, tools99_string1_02)
 {
   adstring a = "12345";
-  try
-  { 
+  EXPECT_DEATH({
     adstring substring = a(1, a.size() + 1);
-  }
-  catch (int exit_code)
-  {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests for errors in "adstring adstring::operator()(int i, int j)"
@@ -75,20 +53,9 @@ TEST_F(test_admb_messages, tools99_string1_02)
 TEST_F(test_admb_messages, tools99_string1_03)
 {
   adstring a = "12345";
-  try
-  { 
+  EXPECT_DEATH({
     adstring substring = a(3, 2);
-  }
-  catch (const int exit_code)
-  {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests for errors in "unsigned char & adstring::operator()(_CONST int i)"
@@ -96,20 +63,9 @@ TEST_F(test_admb_messages, tools99_string1_03)
 TEST_F(test_admb_messages, tools99_string1_04)
 {
   adstring a = "12345";
-  try
-  { 
+  EXPECT_DEATH({
     adstring substring = a(1, a.size() + 1);
-  }
-  catch (int exit_code)
-  {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests for errors in "unsigned char & adstring::operator()(_CONST int i)"
@@ -123,12 +79,8 @@ TEST_F(test_admb_messages, tools99_string1_05)
   }
   catch (int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -144,12 +96,8 @@ TEST_F(test_admb_messages, tools99_string1_06)
   }
   catch (int exit_code)
   {
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }

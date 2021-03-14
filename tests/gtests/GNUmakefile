@@ -138,9 +138,11 @@ GTESTS_ALL=\
  test_omp.cpp\
  test_simple_async.cpp\
  test_template.cpp\
+ test_admb_messages.cpp\
  main.cpp
 
 GTESTS_DEV=\
+ test_admb_messages.cpp\
  main.cpp
 
 #GTESTS=$(GTESTS_DEV)

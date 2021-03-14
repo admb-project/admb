@@ -19,7 +19,7 @@ TEST_F(test_move_dvar_vector, copies)
   ASSERT_EQ(b.get_ncopies(), 2);
   ASSERT_EQ(c.get_ncopies(), 2);
 }
-TEST_F(test_move_dvar_vector, moves)
+TEST_F(test_move_dvar_vector, DISABLED_moves)
 {
   gradient_structure gs;
 

@@ -525,7 +525,7 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
   ASSERT_DOUBLE_EQ(independents(1), 4.07817738582);
   ASSERT_DOUBLE_EQ(gradients(1), 5.0);
 }
-TEST_F(test_simple_async, verysimpleaa_async_racecondition)
+TEST_F(test_simple_async, DISABLED_verysimpleaa_async_racecondition)
 {
   independent_variables independents(1, 1);
   independents(1) = 4.07817738582;

@@ -134,20 +134,28 @@ if [ "$UNAME_S" == "Linux" ]; then
   if [ "$CXX" == "" ]; then
     CXX=g++
   fi
-  if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
-    OS_NAME=-x86_64-linux
-  else
+  if [[ "`$CXX -dumpmachine`" =~ "i686" ]]; then
     OS_NAME=-i686-linux
+  else
+    if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
+      OS_NAME=-x86_64-linux
+    else
+      OS_NAME=-arm64-linux
+    fi
   fi
 fi
 if [ "$UNAME_S" == "Darwin" ]; then
   if [ "$CXX" == "" ]; then
     CXX=c++
   fi
-  if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
-    OS_NAME=-x86_64-macos
-  else
+  if [[ "`$CXX -dumpmachine`" =~ "i686" ]]; then
     OS_NAME=-i686-macos
+  else
+    if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
+      OS_NAME=-x86_64-macos
+    else
+      OS_NAME=-arm64-macos
+    fi
   fi
 fi
 if [[ "$UNAME_S" =~ "_NT" ]]; then

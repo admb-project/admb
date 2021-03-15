@@ -76,7 +76,11 @@ else
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
       OSNAME=-i686-linux
     else
-      OSNAME=-x86_64-linux
+      ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
+        OSNAME=-x86_64-linux
+      else
+        OSNAME=-arm64-linux
+      endif
     endif
   endif
   ifeq ($(UNAME_S),Darwin)

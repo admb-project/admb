@@ -136,7 +136,7 @@ TEST_F(test_simple_async, gradient_structure_only_DF_FILE)
   OFF_T pos = LSEEK(gradient_structure::get_fp()->file_ptr, 0, SEEK_END);
   ASSERT_EQ(pos, 0);
 }
-TEST_F(test_simple_async, simple_final_values)
+TEST_F(test_simple_async, DISABLED_simple_final_values)
 {
 
   independent_variables independents(1, 2);

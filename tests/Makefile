@@ -32,6 +32,7 @@ all:\
   test-high_iarray\
   test-hysimple\
   test-initializationfunction\
+  test-init_bounded_number_matrix\
   test-issue108\
   test-lprof\
   test-mcmc-theta\
@@ -136,6 +137,9 @@ test-high_iarray:
 test-hysimple:
 	pushd hysimple & $(MAKE) /NOLOGO & popd
 
+test-init_bounded_number_matrix:
+	pushd init_bounded_number_matrix & $(MAKE) /NOLOGO & popd
+
 test-issue108:
 	pushd issue108 & $(MAKE) /NOLOGO & popd
 
@@ -216,6 +220,7 @@ clean:
 	pushd gtests & $(MAKE) /NOLOGO clean & popd
 	pushd high_iarray & $(MAKE) /NOLOGO clean & popd
 	pushd hysimple & $(MAKE) /NOLOGO clean & popd
+	pushd init_bounded_number_matrix & $(MAKE) /NOLOGO clean & popd
 	pushd issue108 & $(MAKE) /NOLOGO clean & popd
 	pushd lprof & $(MAKE) /NOLOGO clean & popd
 	pushd mcmc-theta & $(MAKE) /NOLOGO clean & popd
@@ -294,6 +299,7 @@ get-outputs:
 	pushd high_iarray & $(MAKE) /NOLOGO get-outputs & popd
 	pushd hysimple & $(MAKE) /NOLOGO get-outputs & popd
 	pushd initializationfunction & $(MAKE) /NOLOGO get-outputs & popd
+	pushd init_bounded_number_matrix & $(MAKE) /NOLOGO get-outputs & popd
 	pushd issue108 & $(MAKE) /NOLOGO get-outputs & popd
 	pushd lprof & $(MAKE) /NOLOGO get-outputs & popd
 	pushd mcmc-theta & $(MAKE) /NOLOGO get-outputs & popd

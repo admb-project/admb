@@ -436,7 +436,7 @@ TEST_F(test_move, independents2x_gradcalc)
 
   ASSERT_DOUBLE_EQ(value(result), 0.5);
 }
-TEST_F(test_move, independents2x_async_gradcalc)
+TEST_F(test_move, DISABLED_independents2x_async_gradcalc)
 {
   independent_variables independents(1, 2);
   independents(1) = 1.5;

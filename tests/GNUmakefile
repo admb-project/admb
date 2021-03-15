@@ -101,6 +101,7 @@ core-tpls:\
   tpl-high_iarray\
   tpl-hysimple\
   tpl-initializationfunction\
+  tpl-init_bounded_number_matrix\
   tpl-issue108\
   tpl-issue158\
   tpl-lprof\
@@ -249,6 +250,9 @@ tpl-expm:
 tpl-hysimple:
 	$(MAKE) --directory=hysimple
 
+tpl-init_bounded_number_matrix:
+	$(MAKE) --directory=init_bounded_number_matrix
+
 tpl-issue108:
 	$(MAKE) --directory=issue108
 
@@ -357,6 +361,7 @@ endif
 	$(MAKE) --directory=high_iarray clean
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=initializationfunction clean
+	$(MAKE) --directory=init_bounded_number_matrix clean
 	$(MAKE) --directory=issue108 clean
 	$(MAKE) --directory=lprof clean
 	$(MAKE) --directory=mcmc-theta clean
@@ -449,6 +454,7 @@ get-outputs:
 	$(MAKE) --directory=high_iarray get-outputs
 	$(MAKE) --directory=hysimple get-outputs
 	$(MAKE) --directory=initializationfunction get-outputs
+	$(MAKE) --directory=init_bounded_number_matrix get-outputs
 	$(MAKE) --directory=issue108 get-outputs
 	$(MAKE) --directory=lprof get-outputs
 	$(MAKE) --directory=mcmc-theta get-outputs

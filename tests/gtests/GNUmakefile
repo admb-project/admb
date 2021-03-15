@@ -138,6 +138,7 @@ GTESTS_ALL=\
  test_simple_async.cpp\
  test_template.cpp\
  test_admb_messages.cpp\
+ test_param_init_bounded_number_matrix.cpp\
  main.cpp
 
 GTESTS_DEV=\

@@ -12,6 +12,7 @@ public:
   }
 };
 
+/*
 TEST_F(test_df1b2variable, default_constructor)
 {
   if (df1b2variable::pool)
@@ -59,7 +60,6 @@ TEST_F(test_df1b2variable, default_constructor)
     initial_df1b2params::varsptr = NULL;
   }
 }
-/*
 TEST_F(test_df1b2variable, default_constructor)
 {
   adpool* save = df1b2variable::pool;

@@ -3,7 +3,7 @@
 
 class test_df1b2vector: public ::testing::Test {};
 
-TEST_F(test_df1b2vector, constructor)
+TEST_F(test_df1b2vector, DISABLED_constructor)
 {
   adpool* save = df1b2variable::pool;
 

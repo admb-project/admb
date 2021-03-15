@@ -130,7 +130,6 @@ GTESTS_ALL=\
  test_return_arrays.cpp\
  test_df_file.cpp\
  test_async.cpp\
- test_cfenv.cpp\
  test_df1b2variable.cpp\
  test_df1b2vector.cpp\
  test_move.cpp\

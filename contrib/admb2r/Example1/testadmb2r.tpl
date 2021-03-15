@@ -3,7 +3,7 @@
 //  Simple AD Model Builder template (program) to demonstrate capabilities of ADMB2R.
 //  This template slightly modified from "catage.tpl" distributed by Otter Research with
 //      its AD Model Builder software.  Redistributed by NOAA by permission of Otter
-//      Research, http://www.otter-rsch.com/
+//      Research, http://www.admb-project.org/otter-research/
 //  ADMB2R = File-based interface from AD Model Builder to R.
 //  ADMB2R available from CRAN - Comprehensive R Archive Network, http://cran.r-project.org/
 //  For questions or comments regarding ADMB2R, contact

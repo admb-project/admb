@@ -20,7 +20,7 @@ public:
   }
 };
 
-TEST_F(test_data_number, constructor)
+TEST_F(test_data_number, DISABLED_constructor)
 {
   ad_exit=&test_ad_exit;
 

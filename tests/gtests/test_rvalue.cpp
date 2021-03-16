@@ -40,12 +40,12 @@ public:
     return *this;
   }
 };
-TEST_F(test_rvalue, default_constructor)
+TEST_F(test_rvalue, DISABLED_default_constructor)
 {
   derived d;
   ASSERT_TRUE(d.v == NULL);
 }
-TEST_F(test_rvalue, rvalue_constructor)
+TEST_F(test_rvalue, DISABLED_rvalue_constructor)
 {
   derived a(3.5);
   ASSERT_EQ(a.v->x, 3.5);

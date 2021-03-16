@@ -140,7 +140,6 @@ GTESTS_ALL=\
  test_admb_messages.cpp\
  test_param_init_bounded_number_matrix.cpp\
  test_data_number.cpp\
- test_dll_param_init_bounded_vector.cpp\
  test_rvalue.cpp\
  test_dfsdmat.cpp\
  main.cpp
@@ -149,6 +148,7 @@ _GTESTS_DEV_ERRORS=\
  test_cfenv.cpp\
  test_dependent_variables_information.cpp\
  test_df1b2atan2.cpp\
+ test_dll_param_init_bounded_vector.cpp\
  test_finance.cpp\
  test_grad_stack.cpp\
  test_gradient_structure.cpp\

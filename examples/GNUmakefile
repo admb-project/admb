@@ -103,51 +103,51 @@ buscycle:
 	$(MAKE) ham5
 ham4:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\buscycle && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\buscycle && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 ham5:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\buscycle && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\buscycle && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/buscycle && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 catage:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 chem_eng:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 finance:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 forest:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 pella_t:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 robreg:
@@ -155,16 +155,16 @@ robreg:
 	$(MAKE) vonbr
 vonb:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\robreg && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\robreg && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/robreg && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/robreg && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 vonbr:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\robreg && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\robreg && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/robreg && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/robreg && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 simple-version:
@@ -176,144 +176,144 @@ endif
 
 simple:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 truncreg:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\$@ && $(ADMB_HOME)\\admb$(EXT) $(OPTIONS) $@ && $(PROG) $@ -ams 2000000 && $(PROG) $@ -ams 2000000 -gbs 6000000 -cbs 4000000 && popd
+	pushd admb\\$@ && $(ADMB_HOME)\\admb$(EXT) $(OPTIONS) $@ && $(PROG) $@ -ams 2000000 && $(PROG) $@ -ams 2000000 -gbs 6000000 -cbs 4000000 $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000 $(ADMB_RUN_ARGS)
 endif
 
 vol: n2mvol
 n2mvol:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\vol && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb\\vol && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -iprint 1
+	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -iprint 1 $(ADMB_RUN_ARGS)
 endif
 
 admb-re: $(ADMB_RE_TPLS)
 
 bcb:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 biglog:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT)  $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 bvprobit:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\glmmadmb && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\glmmadmb && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 glmmadmb: bvprobit
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ -maxph 5 -noinit -shess -crit 1.e-6 && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ -maxph 5 -noinit -shess -crit 1.e-6 $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -maxph 5 -noinit -shess -crit 1.e-6 $(ADMB_RUN_ARGS)
 endif
 
 caest:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 gamma:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) liver_$@ && $(PROG) liver_$@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) liver_$@ && $(PROG) liver_$@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) liver_$@ && $(PROG) ./liver_$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) liver_$@ && $(PROG) ./liver_$@ $(ADMB_RUN_ARGS)
 endif
 
 kidney:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 lidar:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 logistic:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 nbmm:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/nbmm && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/nbmm && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 nested4:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 orange:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 orange2:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 orange_cor:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 pheno:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 polio:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 sdv:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 skewed:
@@ -321,51 +321,51 @@ skewed:
 	$(MAKE) diet_sk
 diet:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\skewed && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\skewed && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 diet_sk:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\skewed && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\skewed && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 socatt:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 spatial:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 union:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\$@ && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 weights: binomial
 binomial:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\weights && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\weights && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 binomial_w2:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb-re\\weights && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ && popd
+	pushd admb-re\\weights && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@
+	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 autodif: bigmin hemholtz io_examp newt
@@ -491,16 +491,16 @@ contrib-statslib:
 
 statslib-catage:
 ifeq ($(CMDSHELL),cmd)
-	pushd statslib\\catage && $(ADMB_HOME)\\admb $(OPTIONS) catage && $(PROG) catage && popd
+	pushd statslib\\catage && $(ADMB_HOME)\\admb $(OPTIONS) catage && $(PROG) catage $(ADMB_RUN_ARGS) && popd
 else
-	cd statslib/catage && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) catage && $(PROG) ./catage
+	cd statslib/catage && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) catage && $(PROG) ./catage $(ADMB_RUN_ARGS)
 endif
 
 statslib-simple:
 ifeq ($(CMDSHELL),cmd)
-	pushd statslib\\simple && $(ADMB_HOME)\\admb $(OPTIONS) simple && $(PROG) simple && popd
+	pushd statslib\\simple && $(ADMB_HOME)\\admb $(OPTIONS) simple && $(PROG) simple $(ADMB_RUN_ARGS) && popd
 else
-	cd statslib/simple && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) simple && $(PROG) ./simple
+	cd statslib/simple && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) simple && $(PROG) ./simple $(ADMB_RUN_ARGS)
 endif
 
 

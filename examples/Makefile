@@ -29,53 +29,53 @@ vol
 buscycle: ham4 ham5
 ham4:
 	pushd admb\\buscycle & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\buscycle & $@
+	pushd admb\\buscycle & $@ $(ADMB_RUN_ARGS)
 
 ham5:
 	pushd admb\\buscycle & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\buscycle & $@
+	pushd admb\\buscycle & $@ $(ADMB_RUN_ARGS)
 
 catage:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\$@ & $@
+	pushd admb\\$@ & $@ $(ADMB_RUN_ARGS)
 
 chem_eng:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\$@ & $@
+	pushd admb\\$@ & $@ $(ADMB_RUN_ARGS)
 
 finance:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\$@ & $@
+	pushd admb\\$@ & $@ $(ADMB_RUN_ARGS)
 
 forest:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\$@ & $@
+	pushd admb\\$@ & $@ $(ADMB_RUN_ARGS)
 
 pella_t:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\$@ & $@
+	pushd admb\\$@ & $@ $(ADMB_RUN_ARGS)
 
 robreg: vonb vonbr
 vonb:
 	pushd admb\\robreg & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\robreg & $@
+	pushd admb\\robreg & $@ $(ADMB_RUN_ARGS)
 
 vonbr:
 	pushd admb\\robreg & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\robreg & $@
+	pushd admb\\robreg & $@ $(ADMB_RUN_ARGS)
 
 simple:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\$@ & $@
+	pushd admb\\$@ & $@ $(ADMB_RUN_ARGS)
 
 truncreg:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\$@ & $@
+	pushd admb\\$@ & $@ $(ADMB_RUN_ARGS)
 
 vol: n2mvol
 n2mvol:
 	pushd admb\\vol & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb\\vol & $@
+	pushd admb\\vol & $@ $(ADMB_RUN_ARGS)
 
 admb-re:\
 bcb \
@@ -103,101 +103,101 @@ weights
 
 bcb:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 biglog:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 bvprobit:
 	pushd admb-re\\glmmadmb & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\glmmadmb & $@
+	pushd admb-re\\glmmadmb & $@ $(ADMB_RUN_ARGS)
 
 glmmadmb:
 	pushd admb-re\\glmmadmb & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\glmmadmb & $@
+	pushd admb-re\\glmmadmb & $@ $(ADMB_RUN_ARGS)
 
 caest:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 gamma:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) liver_$@
-	pushd admb-re\\$@ & liver_$@
+	pushd admb-re\\$@ & liver_$@ $(ADMB_RUN_ARGS)
 
 kidney:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 lidar:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 logistic:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 nbmm:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 nested4:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 orange:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 orange2:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 orange_cor:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 pheno:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 polio:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 sdv:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 skewed: diet diet_sk
 diet:
 	pushd admb-re\\skewed & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\skewed & $@
+	pushd admb-re\\skewed & $@ $(ADMB_RUN_ARGS)
 
 diet_sk:
 	pushd admb-re\\skewed & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\skewed & $@
+	pushd admb-re\\skewed & $@ $(ADMB_RUN_ARGS)
 
 socatt:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 spatial:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 union:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
 weights: binomial
 binomial:
 	pushd admb-re\\weights & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\weights & $@
+	pushd admb-re\\weights & $@ $(ADMB_RUN_ARGS)
 
 binomial_w2:
 	pushd admb-re\\weights & $(ADMB_HOME)\\admb $(OPTIONS) $@
-	pushd admb-re\\weights & $@
+	pushd admb-re\\weights & $@ $(ADMB_RUN_ARGS)
 
 autodif: bigmin hemholtz io_examp normsim newt s1 autodif-simple simple2 simp1 struct oldstr
 
@@ -240,6 +240,16 @@ struct:
 oldstr:
 	pushd autodif\\struct && $(ADMB_HOME)\\admb $(OPTIONS) $@.cpp && $(PROG) $@ && popd
 
+contrib-statslib:
+	$(MAKE) statslib-catage
+	$(MAKE) statslib-simple
+
+statslib-catage:
+        pushd statslib\\catage && $(ADMB_HOME)\\admb $(OPTIONS) catage && $(PROG) catage $(ADMB_RUN_ARGS) && popd
+
+statslib-simple:
+        pushd statslib\\simple && $(ADMB_HOME)\\admb $(OPTIONS) simple && $(PROG) simple $(ADMB_RUN_ARGS) && popd
+
 clean:
 
 get-outputs:
@@ -281,3 +291,5 @@ get-outputs:
 	pushd admb-re\\socatt && $(SCRIPTS_DIR)get-outputs.bat socatt && popd
 	pushd admb-re\\polio && $(SCRIPTS_DIR)get-outputs.bat polio && popd
 	pushd admb-re\\orange && $(SCRIPTS_DIR)get-outputs.bat orange && popd
+        pushd statslib\\simple && $(SCRIPTS_DIR)get-outputs.bat simple && popd
+        pushd statslib\\catage && $(SCRIPTS_DIR)get-outputs.bat catage && popd

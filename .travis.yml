@@ -61,6 +61,23 @@ jobs:
     - make --directory=examples LDFLAGS=--coverage PROG= FAST_OPTION=-f all
     - codecov &> /dev/null
 
+  - name: Code Coverage examples -lm2
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage dist
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS=-lm2 PROG= all
+    - make --directory=examples LDFLAGS=--coverage PROG= ADMB_RUN_ARGS=-lm2 FAST_OPTION=-f all
+    - codecov &> /dev/null
+
   - name: Code Coverage tests-core
     os: linux
     dist: bionic

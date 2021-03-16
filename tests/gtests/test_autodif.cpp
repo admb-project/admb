@@ -56,8 +56,7 @@ TEST_F(test_autodif, reinitialize_grad_stack1_scoped)
   }
   ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
 }
-/*
-TEST_F(test_autodif, dvar_vector3)
+TEST_F(test_autodif, DISABLED_dvar_vector3)
 {
   ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
   gradient_structure gs(1500);
@@ -79,4 +78,3 @@ TEST_F(test_autodif, dvar_vector3)
   // *gradient_structure::GRAD_STACK1->ptr->dep_addr = 1;
   gradcalc(nvar, g);
 }
-*/

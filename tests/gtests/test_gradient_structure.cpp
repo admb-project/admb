@@ -344,7 +344,6 @@ TEST_F(test_gradient_structure, default_constructor2x)
     gradient_structure gs;
   }
 }
-/*
 TEST_F(test_gradient_structure, default_constructorb2b)
 {
   ad_exit = &test_ad_exit;
@@ -355,7 +354,6 @@ TEST_F(test_gradient_structure, default_constructorb2b)
   });
   gradient_structure gs;
 }
-*/
 TEST_F(test_gradient_structure, grad_stack1_defaults)
 {
   gradient_structure gs;

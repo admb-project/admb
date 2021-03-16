@@ -10,8 +10,6 @@ extern "C"
 
 class test_gradcalc: public ::testing::Test {};
 
-#ifdef DEBUG2
-/*
 TEST_F(test_gradcalc, gradient_size_intmax)
 {
   ad_exit=&test_ad_exit;
@@ -45,7 +43,6 @@ TEST_F(test_gradcalc, gradient_size_intmax)
     ++ptr;
   }
 }
-*/
 TEST_F(test_gradcalc, gradient_size_small_array_memblock_base)
 {
   ad_exit=&test_ad_exit;
@@ -348,7 +345,6 @@ TEST_F(test_gradcalc, simple_xy)
   ASSERT_TRUE(gradient_structure::ARR_LIST1 == NULL);
   ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
 }
-#endif
 TEST_F(test_gradcalc, operator_multiply_vars_vars)
 {
   ad_exit=&test_ad_exit;

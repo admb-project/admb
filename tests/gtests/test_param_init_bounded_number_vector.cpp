@@ -161,8 +161,7 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only_paren)
   }
   FAIL();
 }
-/*
-TEST_F(test_param_init_bounded_number_vector, allocated_set_initial_value_only_paren)
+TEST_F(test_param_init_bounded_number_vector, DISABLED_allocated_set_initial_value_only_paren)
 {
   ad_exit=&test_ad_exit;
 
@@ -187,10 +186,8 @@ TEST_F(test_param_init_bounded_number_vector, allocated_set_initial_value_only_p
   }
   FAIL();
 }
-*/
 #endif
-/*
-TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
+TEST_F(test_param_init_bounded_number_vector, DISABLED_set_initial_value_first)
 {
   gradient_structure gs(1500);
 
@@ -222,4 +219,3 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
   EXPECT_EQ(-1, p.indexmin());
   EXPECT_EQ(-1, p.indexmax());
 }
-*/

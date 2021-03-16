@@ -52,8 +52,7 @@ TEST_F(test_param_init_number_vector, set_initial_value_only_paren)
   FAIL();
 }
 #endif
-/*
-TEST_F(test_param_init_number_vector, set_initial_value_first)
+TEST_F(test_param_init_number_vector, DISABLED_set_initial_value_first)
 {
   gradient_structure gs(1500);
 
@@ -85,7 +84,6 @@ TEST_F(test_param_init_number_vector, set_initial_value_first)
   EXPECT_EQ(0, p.indexmin());
   EXPECT_EQ(0, p.indexmax());
 }
-*/
 TEST_F(test_param_init_number_vector, constructor)
 {
   param_init_number_vector p;
@@ -124,8 +122,7 @@ TEST_F(test_param_init_number_vector, setscalefactorerror)
     p.set_scalefactor(v);
   });
 }
-/*
-TEST_F(test_param_init_number_vector, setscalefactor)
+TEST_F(test_param_init_number_vector, DISABLED_setscalefactor)
 {
   gradient_structure gs;
 
@@ -162,7 +159,6 @@ TEST_F(test_param_init_number_vector, setscalefactor)
   ASSERT_DOUBLE_EQ(3.5, value(scalefactors(3)));
   ASSERT_DOUBLE_EQ(4.5, value(scalefactors(4)));
 }
-*/
 TEST_F(test_param_init_number_vector, allocate_error)
 {
   param_init_number_vector p;

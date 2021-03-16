@@ -4,7 +4,6 @@
 
 class test_grad_stack: public ::testing::Test {};
 
-/*
 TEST_F(test_grad_stack, constructor_grad_stack_entry)
 {
   {
@@ -17,7 +16,6 @@ TEST_F(test_grad_stack, constructor_grad_stack_entry)
     ASSERT_DOUBLE_EQ(entry.mult2, 0.0);
   }
 }
-*/
 TEST_F(test_grad_stack, constructor)
 {
   grad_stack gstack(10);

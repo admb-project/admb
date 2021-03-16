@@ -58,7 +58,7 @@ TEST_F(test_rvalue, DISABLED_rvalue_constructor)
   ASSERT_TRUE(c.v == ptr);
   ASSERT_EQ(c.v->x, 3.5);
 }
-TEST_F(test_rvalue, rvalue_assignment)
+TEST_F(test_rvalue, DISABLED_rvalue_assignment)
 {
   derived a(3.5);
   ASSERT_EQ(a.v->x, 3.5);

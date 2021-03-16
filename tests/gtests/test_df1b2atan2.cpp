@@ -112,7 +112,7 @@ TEST_F(test_df1b2atan2, default_constructor_withallocate)
   df1b2variable::noallocate = 0;
   df1b2variable y;
 }
-TEST_F(test_df1b2atan2, df1b2_gradlist_default_constructor)
+TEST_F(test_df1b2atan2, DISABLED_df1b2_gradlist_default_constructor)
 {
   int argc = 1;
   char* argv[] = {"./gtest-all"};

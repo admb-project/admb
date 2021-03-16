@@ -94,6 +94,7 @@ all: clean
 	$(MAKE) admb
 	$(MAKE) admb-re
 	$(MAKE) autodif
+	$(MAKE) contrib-statslib
 
 admb: $(ADMB_TPLS)
 
@@ -483,6 +484,25 @@ else
 	cp -Rvf ../examples ../build/debug
   endif
 endif
+
+contrib-statslib:
+	$(MAKE) statslib-catage
+	$(MAKE) statslib-simple
+
+statslib-catage:
+ifeq ($(CMDSHELL),cmd)
+	pushd statslib\\catage && $(ADMB_HOME)\\admb $(OPTIONS) catage && $(PROG) catage && popd
+else
+	cd statslib/catage && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) catage && $(PROG) ./catage
+endif
+
+statslib-simple:
+ifeq ($(CMDSHELL),cmd)
+	pushd statslib\\simple && $(ADMB_HOME)\\admb $(OPTIONS) simple && $(PROG) simple && popd
+else
+	cd statslib/simple && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) simple && $(PROG) ./simple
+endif
+
 
 clean:
 ifeq ($(CMDSHELL),cmd)
@@ -2022,6 +2042,43 @@ endif
 	@rm -vf admb/prof_like/diags
 	@rm -vf admb/prof_like/loga_pl.plt
 	@rm -vf admb/prof_like/logb_pl.plt
+	@rm -vf statslib/simple/admodel.hes
+	@rm -vf statslib/simple/simple.par
+	@rm -vf statslib/simple/admodel.dep
+	@rm -vf statslib/simple/simple.bar
+	@rm -vf statslib/simple/simple.cpp
+	@rm -vf statslib/simple/admodel.cov
+	@rm -vf statslib/simple/simple.log
+	@rm -vf statslib/simple/simple
+	@rm -vf statslib/simple/simple.exe
+	@rm -vf statslib/simple/simple.std
+	@rm -vf statslib/simple/simple.cor
+	@rm -vf statslib/simple/simple.eva
+	@rm -vf statslib/simple/fmin.log
+	@rm -vf statslib/simple/simple.obj
+	@rm -vf statslib/simple/simple.htp
+	@rm -vf statslib/catage/admodel.hes
+	@rm -vf statslib/catage/catage.obj
+	@rm -vf statslib/catage/catage.htp
+	@rm -vf statslib/catage/admodel.dep
+	@rm -vf statslib/catage/catage.eva
+	@rm -vf statslib/catage/catage.p02
+	@rm -vf statslib/catage/catage.r01
+	@rm -vf statslib/catage/admodel.cov
+	@rm -vf statslib/catage/catage.b02
+	@rm -vf statslib/catage/catage.std
+	@rm -vf statslib/catage/catage.cor
+	@rm -vf statslib/catage/catage.rep
+	@rm -vf statslib/catage/catage.cpp
+	@rm -vf statslib/catage/catage
+	@rm -vf statslib/catage/catage.exe
+	@rm -vf statslib/catage/catage.log
+	@rm -vf statslib/catage/catage.p01
+	@rm -vf statslib/catage/catage.r02
+	@rm -vf statslib/catage/fmin.log
+	@rm -vf statslib/catage/catage.bar
+	@rm -vf statslib/catage/catage.b01
+	@rm -vf statslib/catage/catage.par
 endif
 
 get-outputs:
@@ -2064,6 +2121,8 @@ ifeq ($(CMDSHELL),cmd)
 	pushd admb-re\\socatt && $(SCRIPTS_DIR)get-outputs.bat socatt && popd
 	pushd admb-re\\polio && $(SCRIPTS_DIR)get-outputs.bat polio && popd
 	pushd admb-re\\orange && $(SCRIPTS_DIR)get-outputs.bat orange && popd
+	pushd statslib\\simple && $(SCRIPTS_DIR)get-outputs.bat simple && popd
+	pushd statslib\\catage && $(SCRIPTS_DIR)get-outputs.bat catage && popd
 else
 	cd admb/forest && sh $(SCRIPTS_DIR)get-outputs.sh forest && cd ../..
 	cd admb/robreg && sh $(SCRIPTS_DIR)get-outputs.sh vonbr && cd ../..
@@ -2103,4 +2162,6 @@ else
 	cd admb-re/socatt && sh $(SCRIPTS_DIR)get-outputs.sh socatt && cd ../..
 	cd admb-re/polio && sh $(SCRIPTS_DIR)get-outputs.sh polio && cd ../..
 	cd admb-re/orange && sh $(SCRIPTS_DIR)get-outputs.sh orange && cd ../..
+	cd statslib/simple && sh $(SCRIPTS_DIR)get-outputs.sh simple && cd ../..
+	cd statslib/catage && sh $(SCRIPTS_DIR)get-outputs.sh catage && cd ../..
 endif

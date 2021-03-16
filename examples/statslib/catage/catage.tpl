@@ -205,6 +205,7 @@ FUNCTION evaluate_the_objective_function
 
 GLOBALS_SECTION
   #include <statsLib.h>
+  dvar_vector cubic_spline(const dvar_vector& spline_nodes, const dvector& ip);
 
 REPORT_SECTION
   report << "Estimated numbers of fish " << endl;

@@ -411,7 +411,7 @@ void tracing_message(int traceflag,const char *s);
               {
                 if (!nopt)
                 {
-                  cerr << "Usage -lmn option needs integer"
+                  cerr << "Usage -lmn2 option needs integer"
                      "  -- set to default 5" << endl;
                 }
                 else
@@ -419,7 +419,7 @@ void tracing_message(int traceflag,const char *s);
                   int jj=atoi(ad_comm::argv[lmnflag+1]);
                   if (jj<=0)
                   {
-                    cerr << "Usage -lmn option needs positive integer "
+                    cerr << "Usage -lmn2 option needs positive integer "
                      " -- set to default 5" << endl;
                   }
                   else

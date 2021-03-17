@@ -23,7 +23,7 @@ ADMB-12.3
 #### New Features
 
 * Add **hess_step()** function for the capability to do single Newton steps using the inverse Hessian
-  (See [Issue #160](https://github.com/admb-project/admb/issues/160) and
+  developed by @Cole-Monnahan-NOAA (See [Issue #160](https://github.com/admb-project/admb/issues/160) and
   [Pull #179](https://github.com/admb-project/admb/pull/179)).
 
 * Added function hessian_phase() which will return true if the hessian is being computed

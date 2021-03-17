@@ -248,3 +248,12 @@ TEST_F(test_utils, which_library)
   ASSERT_EQ('s', which_library());
 #endif
 }
+TEST_F(test_utils, singval_decomp_empty)
+{
+  ad_exit=&test_ad_exit;
+
+  dmatrix empty;
+  ASSERT_ANY_THROW({
+    singval_decomp(empty);
+  });
+}

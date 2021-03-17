@@ -137,7 +137,7 @@ ifneq ($(CMDSHELL),cmd)
 endif
 
 tpl-alternatives:
-	$(MAKE) --directory=strip_full_path
+	$(MAKE) --directory=alternatives
 
 tpl-strip_full_path:
 	$(MAKE) --directory=strip_full_path

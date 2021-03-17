@@ -75,7 +75,6 @@ jobs:
     - make --directory=src CXXFLAGS=--coverage objects
     - make LDFLAGS=--coverage dist
     - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-lmn 5" PROG= admb
-    - make --directory=examples LDFLAGS=--coverage PROG= ADMB_RUN_ARGS="-lmn 5" FAST_OPTION=-f admb
     - codecov &> /dev/null
 
   - name: Code Coverage tests-core

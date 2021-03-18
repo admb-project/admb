@@ -59,6 +59,7 @@ jobs:
     - make LDFLAGS=--coverage dist
     - make --directory=examples LDFLAGS=--coverage PROG= all
     - make --directory=examples LDFLAGS=--coverage PROG= FAST_OPTION=-f all
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-version" PROG=
     - codecov &> /dev/null
 
   - name: Code Coverage examples -lmn -lmn2 -simplex
@@ -97,7 +98,7 @@ jobs:
     - make --directory=tests LDFLAGS=--coverage tests-core
     - codecov &> /dev/null
 
-  - name: Code Coverage Contrib and Unit Tests
+  - name: Code Coverage Contrib, Remote and Unit Tests
     os: linux
     dist: bionic
     compiler: gcc

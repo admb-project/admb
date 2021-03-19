@@ -269,8 +269,8 @@ $(DESTDIR)\include:
 	copy tools99\integrate.hpp $(DESTDIR)\include
 	copy tools99\integrate_wrap.hpp $(DESTDIR)\include
 	copy tools99\adjson.h $(DESTDIR)\include
-	copy sparse\hs.h ${DIST}\include
-	copy sparse\cs.h ${DIST}\include
+	copy sparse\hs.h $(DESTDIR)\include
+	copy sparse\cs.h $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
 
 $(OBJDESTDIR): $(DESTDIR)\include

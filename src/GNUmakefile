@@ -646,6 +646,8 @@ ${DIST}\include:
 	copy df1b2-separable\df1b2loc.h ${DIST}\include
 	copy nh99\admodel.h ${DIST}\include
 	copy nh99\param_init_bounded_number_matrix.h ${DIST}\include
+	copy sparse\hs.h ${DIST}\include
+	copy sparse\cs.h ${DIST}\include
 else
 ${DIST}/include:
 	mkdir -p ${DIST}/include
@@ -683,6 +685,8 @@ ${DIST}/include:
 	cp df1b2-separable/df1b2loc.h ${DIST}/include
 	cp nh99/admodel.h ${DIST}/include
 	cp nh99/param_init_bounded_number_matrix.h ${DIST}/include
+	cp sparse/hs.h ${DIST}/include
+	cp sparse/cs.h ${DIST}/include
 endif
 
 $(OBJSDIR_):

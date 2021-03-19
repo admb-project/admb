@@ -79,8 +79,6 @@ jobs:
     - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-lmn2 5" PROG= simple bcb
     - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-simplex -nohess" PROG= bcb
     - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-neldmead -nohess" PROG= bcb
-    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-mcmc 10000 -hmc -hynstep 1 -hyeps .001" PROG= forest catage
-    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-mcmc 10000 -mcsave 100 -mcu" bcb
     - codecov &> /dev/null
 
   - name: Code Coverage tests-core
@@ -97,6 +95,23 @@ jobs:
     - make --directory=src CXXFLAGS=--coverage objects
     - make LDFLAGS=--coverage dist
     - make --directory=tests LDFLAGS=--coverage tests-core
+    - codecov &> /dev/null
+
+  - name: Code Coverage mcmc
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage dist
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-mcmc 10000 -mcsave 100 -mcu" bcb
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-mcmc 10000 -hmc -hynstep 1 -hyeps .001" PROG= forest catage
     - codecov &> /dev/null
 
   - name: Code Coverage Contrib, Remote and Unit Tests

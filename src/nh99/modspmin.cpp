@@ -358,6 +358,7 @@ void write_banner_stuff(void)
 }
 #endif
 
+#ifdef DEBUG
   void test_mcmc_options_window(void)
   {
     dvector v(1,1000);
@@ -376,6 +377,7 @@ void write_banner_stuff(void)
       ADSleep(500);
     }
   }
+#endif
 
   void function_minimizer::set_runtime(void){;}
 

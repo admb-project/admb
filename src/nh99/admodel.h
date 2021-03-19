@@ -1172,6 +1172,7 @@ public:
  */
 class param_init_number: public named_dvariable, public initial_params
 {
+public:
   virtual void dev_correction(const dmatrix&, const int&);
   virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
 
@@ -1207,7 +1208,7 @@ class param_init_number: public named_dvariable, public initial_params
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,
     const int& ii);
   //virtual void read_value(void);
-protected:
+public:
   void allocate(int phase_start=1,const char *s="UNNAMED");
   void allocate(const char *s="UNNAMED");
   void allocate(init_xml_doc&, const char *s="UNNAMED");
@@ -1330,11 +1331,11 @@ class param_init_matrix: public named_dvar_matrix,public initial_params
 #endif
 //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds,
 //  const int& ii);
+public:
   virtual void add_value(const dvector&, const dvector&, const int&,
     const double&, const dvector&);
   virtual void add_value(const dvector&, const int&);
   virtual void get_jacobian(const dvector&, const dvector&, const int&);
-public:
   virtual void set_value(const dvar_vector& x, const int& ii,
     const dvariable& pen);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
@@ -1484,6 +1485,7 @@ protected:
   void allocate(init_xml_doc&, const char * s="UNNAMED");
 
 public:
+  //data_int(): val(0) { }
   ~data_int() { }
   operator int() const { return val; }
 

@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 #include <admodel.h>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_param_init_matrix: public ::testing::Test {};
 
 TEST_F(test_param_init_matrix, constructor)
@@ -190,4 +195,53 @@ TEST_F(test_param_init_matrix, allocate_default_phase_start)
   p.allocate(rmin, rmax, cmin, cmax,  "p");
 
   ASSERT_EQ(p.get_phase_start(), expected_phase_start);
+}
+TEST_F(test_param_init_matrix, add_value)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_matrix p;
+
+  int sl = 1;
+  int sh = 2;
+  int nrl = 3;
+  int nrh = 4;
+  int expected_phase_start = 1;
+
+  p.allocate(sl, sh, nrl, nrh, "p");
+
+  p.initialize();
+
+  ASSERT_EQ(p(1, 3), 0);
+  ASSERT_EQ(p(1, 4), 0);
+  ASSERT_EQ(p(2, 3), 0);
+  ASSERT_EQ(p(2, 4), 0);
+
+  dvector dev(1, 4);
+  dev(1) = 823;
+  dev(2) = -7;
+  dev(3) = -9086;
+  dev(4) = 2;
+
+  int ii = 1;
+  p.add_value(dev, ii);
+  ASSERT_EQ(p(1, 3), dev(1));
+  ASSERT_EQ(p(1, 4), dev(2));
+  ASSERT_EQ(p(2, 3), dev(3));
+  ASSERT_EQ(p(2, 4), dev(4));
+
+  ii = 1;
+  double s;
+  dvector diag(1, 4);
+  diag(1) = -1;
+  diag(2) = -1;
+  diag(3) = -1;
+  diag(4) = -1;
+  p.add_value(dev, dev, ii, s, diag);
+
+  ASSERT_EQ(p(1, 3), 0);
+  ASSERT_EQ(p(1, 4), 0);
+  ASSERT_EQ(p(2, 3), 0);
+  ASSERT_EQ(p(2, 4), 0);
 }

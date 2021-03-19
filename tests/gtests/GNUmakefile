@@ -143,6 +143,7 @@ GTESTS_ALL=\
  test_rvalue.cpp\
  test_dfsdmat.cpp\
  test_data_int.cpp\
+ test_dvar_compressed_triplet.cpp\
  main.cpp
 
 ERRORS=\

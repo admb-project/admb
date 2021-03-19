@@ -11,6 +11,13 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+ADMB-12.3-git
+-------------
+
+#### Changes and Improvements
+
+* Copy sparse headers to distribution includes.
+
 ADMB-12.3
 ---------
 *Released March 7, 2021*  

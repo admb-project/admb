@@ -142,9 +142,10 @@ GTESTS_ALL=\
  test_data_number.cpp\
  test_rvalue.cpp\
  test_dfsdmat.cpp\
+ test_data_int.cpp\
  main.cpp
 
-_GTESTS_DEV_ERRORS=\
+ERRORS=\
  test_cfenv.cpp\
  test_dependent_variables_information.cpp\
  test_df1b2atan2.cpp\
@@ -156,6 +157,9 @@ _GTESTS_DEV_ERRORS=\
  test_humungous_pointer.cpp\
  test_nuts.cpp\
  test_scalefactor.cpp\
+ main.cpp
+
+GTESTS_DEV=\
  main.cpp
 
 #GTESTS=$(GTESTS_DEV)

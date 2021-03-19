@@ -80,6 +80,7 @@ jobs:
     - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-simplex -nohess" PROG= bcb
     - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-neldmead -nohess" PROG= bcb
     - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-mcmc 10000 -hmc -hynstep 1 -hyeps .001" PROG= forest catage
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-mcmc 10000 -mcsave 100 -mcu" bcb
     - codecov &> /dev/null
 
   - name: Code Coverage tests-core

@@ -164,8 +164,8 @@ ERRORS=\
 GTESTS_DEV=\
  main.cpp
 
-GTESTS=$(GTESTS_DEV)
-#GTESTS=$(GTESTS_ALL)
+#GTESTS=$(GTESTS_DEV)
+GTESTS=$(GTESTS_ALL)
 
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))

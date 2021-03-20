@@ -42,32 +42,29 @@ df1_one_vector::df1_one_vector(const df1_one_vector& m2)
   }
   v = m2.v;
 }
-/**
-Destructor
-*/
+/// Destructor
 df1_one_vector::~df1_one_vector()
 {
   deallocate();
 }
-
- void df1_one_vector::deallocate(void)
- {
-   if(shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df1_one_variable*) (shape->trueptr);
-       delete [] v;
-       v = NULL;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+/// Deallocate df1_one_vector, then set to empty.
+void df1_one_vector::deallocate(void)
+{
+  if(shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df1_one_variable*)(shape->trueptr);
+      delete [] v;
+      delete shape;
+      allocate();
+    }
+  }
+}
 
  dvector value(const df1_one_vector& v)
  {
@@ -129,15 +126,14 @@ void df1_one_vector::allocate(int min, int max)
   }
   v -= min;
 }
-
-  void df1_one_vector::allocate(void)
-  {
-    index_min=0;
-    index_max=-1;
-    v=0;
-    shape=0;
-  }
-
+/// Reinitialize df1_one_vector to empty.
+void df1_one_vector::allocate(void)
+{
+  index_min=0;
+  index_max=-1;
+  v=0;
+  shape=0;
+}
  dmatrix value(const df1_one_matrix& v)
  {
    int rmin=v.indexmin();
@@ -172,25 +168,27 @@ void df1_one_vector::allocate(int min, int max)
  {
    deallocate();
  }
-
- void df1_one_matrix::deallocate(void)
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df1_one_vector*) (shape->get_pointer());
-       delete [] v;
-       v=0;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+/// Deallocate df1_one_matrix, then set to empty.
+void df1_one_matrix::deallocate(void)
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df1_one_vector*)(shape->get_pointer());
+      delete [] v;
+      v = nullptr;
+      delete shape;
+      shape = nullptr;
+      index_min = 0;
+      index_max = -1;
+    }
+  }
+}
 
 
   void df1_one_matrix::initialize(void)

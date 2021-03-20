@@ -147,6 +147,8 @@ GTESTS_ALL=\
  test_dcompressed_triplet.cpp\
  test_df1_two_vector.cpp\
  test_df1_two_matrix.cpp\
+ test_df1_one_vector.cpp\
+ test_df1_one_matrix.cpp\
  main.cpp
 
 ERRORS=\

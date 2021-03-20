@@ -145,6 +145,7 @@ GTESTS_ALL=\
  test_data_int.cpp\
  test_dvar_compressed_triplet.cpp\
  test_dcompressed_triplet.cpp\
+ test_df1_two_vector.cpp\
  main.cpp
 
 ERRORS=\
@@ -164,8 +165,8 @@ ERRORS=\
 GTESTS_DEV=\
  main.cpp
 
-#GTESTS=$(GTESTS_DEV)
-GTESTS=$(GTESTS_ALL)
+GTESTS=$(GTESTS_DEV)
+#GTESTS=$(GTESTS_ALL)
 
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))

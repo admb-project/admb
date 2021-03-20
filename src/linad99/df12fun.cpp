@@ -73,9 +73,9 @@ df1_two_vector::~df1_two_vector()
      {
        v = (df1_two_variable*) (shape->trueptr);
        delete [] v;
-       v = NULL;
        delete shape;
-       shape=0;
+       //Reinitialize to empty
+       allocate();
      }
    }
  }

@@ -112,6 +112,7 @@ core-tpls:\
   tpl-rsimple\
   tpl-simple_mcmc\
   tpl-strip_full_path\
+  tpl-svd\
   tpl-testminmax\
   tpl-tiny\
   tpl-tiny_ad_fe\
@@ -277,6 +278,9 @@ tpl-adnuts:
 tpl-priors:
 	$(MAKE) --directory=priors
 
+tpl-svd:
+	$(MAKE) --directory=svd
+
 tpl-testminmax:
 	$(MAKE) --directory=testminmax
 
@@ -373,6 +377,7 @@ endif
 	$(MAKE) --directory=rsimple clean
 	$(MAKE) --directory=simple_mcmc clean
 	$(MAKE) --directory=strip_full_path clean
+	$(MAKE) --directory=svd clean
 	$(MAKE) --directory=testminmax clean
 	$(MAKE) --directory=tiny clean
 	$(MAKE) --directory=tiny_ad_fe clean
@@ -465,6 +470,7 @@ get-outputs:
 	$(MAKE) --directory=rgamma get-outputs
 	$(MAKE) --directory=rsimple get-outputs
 	$(MAKE) --directory=simple_mcmc get-outputs
+	$(MAKE) --directory=svd get-outputs
 	$(MAKE) --directory=testminmax get-outputs
 	$(MAKE) --directory=tiny get-outputs
 	$(MAKE) --directory=tiny_ad_fe get-outputs

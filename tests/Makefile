@@ -42,6 +42,7 @@ all:\
   test-qbeta\
   test-rsimple\
   test-simple_mcmc\
+  test-svd\
   test-testminmax\
   test-tiny\
   test-tiny_ad_fe\
@@ -167,6 +168,9 @@ test-rsimple:
 test-simple_mcmc:
 	pushd simple_mcmc & $(MAKE) /NOLOGO & popd
 
+test-svd:
+	pushd svd & $(MAKE) /NOLOGO & popd
+
 test-testminmax:
 	pushd testminmax & $(MAKE) /NOLOGO & popd
 
@@ -230,6 +234,7 @@ clean:
 	pushd qbeta & $(MAKE) /NOLOGO clean & popd
 	pushd rsimple & $(MAKE) /NOLOGO clean & popd
 	pushd simple_mcmc & $(MAKE) /NOLOGO clean & popd
+	pushd svd & $(MAKE) /NOLOGO clean & popd
 	pushd testminmax & $(MAKE) /NOLOGO clean & popd
 	pushd tiny & $(MAKE) /NOLOGO clean & popd
 	pushd tiny_ad_fe & $(MAKE) /NOLOGO clean & popd
@@ -310,6 +315,7 @@ get-outputs:
 	pushd rgamma & $(MAKE) /NOLOGO get-outputs & popd
 	pushd rsimple & $(MAKE) /NOLOGO get-outputs & popd
 	pushd simple_mcmc & $(MAKE) /NOLOGO get-outputs & popd
+	pushd svd & $(MAKE) /NOLOGO get-outputs & popd
 	pushd testminmax & $(MAKE) /NOLOGO get-outputs & popd
 	pushd tiny & $(MAKE) /NOLOGO get-outputs & popd
 	pushd tiny_ad_fe & $(MAKE) /NOLOGO get-outputs & popd

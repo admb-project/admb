@@ -135,8 +135,8 @@
     mat_shapex * shape;
     df1_two_vector * v;
   public:
-    int indexmin(void) const { return int(index_min); }
-    int indexmax(void) const { return int(index_max); }
+    int indexmin(void) const { return index_min; }
+    int indexmax(void) const { return index_max; }
     df1_two_matrix(int rmin,int rmax,int cmin,int cmax);
     df1_two_vector& operator () (int i) const
     {

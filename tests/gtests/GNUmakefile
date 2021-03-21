@@ -145,6 +145,8 @@ GTESTS_ALL=\
  test_data_int.cpp\
  test_dvar_compressed_triplet.cpp\
  test_dcompressed_triplet.cpp\
+ test_df1_three_vector.cpp\
+ test_df1_three_matrix.cpp\
  test_df1_two_vector.cpp\
  test_df1_two_matrix.cpp\
  test_df1_one_vector.cpp\

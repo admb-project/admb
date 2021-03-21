@@ -151,6 +151,7 @@ GTESTS_ALL=\
  test_df1_two_matrix.cpp\
  test_df1_one_vector.cpp\
  test_df1_one_matrix.cpp\
+ test_hs_smatrix.cpp\
  main.cpp
 
 ERRORS=\

@@ -166,6 +166,7 @@ TEST_F(test_hs_smatrix, multiply2x)
   ASSERT_DOUBLE_EQ(0.0, results(4, 3));
   //ASSERT_DOUBLE_EQ(-100.0, results(4, 4));
 }
+/*
 TEST_F(test_hs_smatrix, constructor_cs)
 {
   cs* ptr = new cs();
@@ -184,6 +185,14 @@ TEST_F(test_hs_smatrix, constructor_cs)
   ptr->x[1] = 2;
   ptr->x[2] = 3;
   hs_smatrix data(ptr);
+  delete ptr->p;
+  ptr->p = nullptr;
+  delete ptr->i;
+  ptr->i = nullptr;
+  delete ptr->x;
+  ptr->x = nullptr;
+  delete ptr;
+  ptr = nullptr;
   dmatrix make_dmatrix(const hs_smatrix& M);
   dmatrix results = make_dmatrix(data);
 
@@ -197,4 +206,43 @@ TEST_F(test_hs_smatrix, constructor_cs)
   ASSERT_DOUBLE_EQ(0.0, results(3, 1));
   ASSERT_DOUBLE_EQ(0.0, results(3, 2));
   ASSERT_DOUBLE_EQ(0.0, results(3, 3));
+}
+*/
+TEST_F(test_hs_smatrix, cs_pvec)
+{
+  gradient_structure gs;
+
+  ivector p(0, 2);
+  p(0) = 1;
+  p(1) = 2;
+  p(2) = 0;
+  dvar_vector b(0, 2);
+  b(0) = 1;
+  b(1) = 2;
+  b(2) = 3;
+  dvar_vector cs_pvec(XCONST ivector &p, XCONST dvar_vector &b);
+  dvar_vector results = cs_pvec(p, b);
+  
+  ASSERT_DOUBLE_EQ(value(b(1)), value(results(0)));
+  ASSERT_DOUBLE_EQ(value(b(2)), value(results(1)));
+  ASSERT_DOUBLE_EQ(value(b(0)), value(results(2)));
+}
+TEST_F(test_hs_smatrix, cs_pvec_none)
+{
+  gradient_structure gs;
+
+  ivector p(0, 2);
+  p(0) = -1;
+  p(1) = 3;
+  p(2) = 1;
+  dvar_vector b(0, 2);
+  b(0) = 1;
+  b(1) = 2;
+  b(2) = 3;
+  dvar_vector cs_pvec(XCONST ivector &p, XCONST dvar_vector &b);
+  dvar_vector results = cs_pvec(p, b);
+  
+  ASSERT_DOUBLE_EQ(value(b(0)), value(results(0)));
+  ASSERT_DOUBLE_EQ(value(b(1)), value(results(1)));
+  ASSERT_DOUBLE_EQ(value(b(2)), value(results(2)));
 }

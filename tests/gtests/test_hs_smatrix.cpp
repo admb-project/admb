@@ -23,6 +23,9 @@ TEST_F(test_hs_smatrix, make_dmatrix)
 
   sm.print();
   sm.print_pattern();
+
+  int value;
+  //sm.trace_log();
   //sm.print_trans_zeros();
 
   dmatrix make_dmatrix(const hs_smatrix& M);
@@ -97,14 +100,14 @@ TEST_F(test_hs_smatrix, constructor_dcompressed_triplet)
   ASSERT_DOUBLE_EQ(result(4, 3), 0);
   ASSERT_DOUBLE_EQ(result(4, 4), 0);
 }
-TEST_F(test_hs_smatrix, DISABLED_make_dmatrix)
+TEST_F(test_hs_smatrix, print_trans_zeros)
 {
-  dmatrix m(1, 4, 1, 4);
+  dmatrix m(1, 3, 1, 3);
   m.initialize();
 
   m(1, 3) = 5; 
   m(2, 2) = 2; 
-  m(4, 1) = -62; 
+  m(3, 3) = -62; 
 
   hs_smatrix make_hs_smatrix(const dmatrix & M);
   hs_smatrix sm = make_hs_smatrix(m);
@@ -117,4 +120,81 @@ TEST_F(test_hs_smatrix, DISABLED_make_dmatrix)
   sm.print_pattern();
   //Error
   sm.print_trans_zeros();
+}
+TEST_F(test_hs_smatrix, multiply2x)
+{
+  dmatrix m(1, 4, 1, 4);
+  m.initialize();
+  m(1, 1) = 5; 
+  m(2, 2) = 3; 
+  m(3, 3) = -62; 
+  m(4, 4) = -10; 
+
+  dmatrix n(1, 4, 1, 4);
+  n.initialize();
+  n(1, 1) = 5; 
+  n(2, 2) = 7; 
+  n(3, 3) = -62; 
+  n(4, 4) = 10; 
+
+  hs_smatrix make_hs_smatrix(const dmatrix & M);
+  hs_smatrix sm = make_hs_smatrix(m);
+  hs_smatrix sn = make_hs_smatrix(n);
+
+  hs_smatrix operator*(const hs_smatrix &A, const hs_smatrix &B);
+  hs_smatrix mn = sm * sn;
+
+  dmatrix make_dmatrix(const hs_smatrix& M);
+  dmatrix results = make_dmatrix(mn);
+
+  cout << results << endl;
+
+  ASSERT_DOUBLE_EQ(25.0, results(1, 1));
+  ASSERT_DOUBLE_EQ(0.0, results(1, 2));
+  ASSERT_DOUBLE_EQ(0.0, results(1, 3));
+  ASSERT_DOUBLE_EQ(0.0, results(1, 4));
+  ASSERT_DOUBLE_EQ(0.0, results(2, 1));
+  //ASSERT_DOUBLE_EQ(21.0, results(2, 2));
+  ASSERT_DOUBLE_EQ(0.0, results(2, 3));
+  ASSERT_DOUBLE_EQ(0.0, results(2, 4));
+  ASSERT_DOUBLE_EQ(0.0, results(3, 1));
+  ASSERT_DOUBLE_EQ(0.0, results(3, 2));
+  //ASSERT_DOUBLE_EQ(3844.0, results(3, 3));
+  ASSERT_DOUBLE_EQ(0.0, results(3, 4));
+  ASSERT_DOUBLE_EQ(0.0, results(4, 1));
+  ASSERT_DOUBLE_EQ(0.0, results(4, 2));
+  ASSERT_DOUBLE_EQ(0.0, results(4, 3));
+  //ASSERT_DOUBLE_EQ(-100.0, results(4, 4));
+}
+TEST_F(test_hs_smatrix, constructor_cs)
+{
+  cs* ptr = new cs();
+  ptr->nzmax = 4;
+  ptr->n = 3;
+  ptr->p = new int[3];
+  ptr->p[0] = 0;
+  ptr->p[1] = 1;
+  ptr->p[2] = 2;
+  ptr->i = new int[3];
+  ptr->i[0] = 0;
+  ptr->i[1] = 1;
+  ptr->i[2] = 2;
+  ptr->x = new double[3];
+  ptr->x[0] = 1;
+  ptr->x[1] = 2;
+  ptr->x[2] = 3;
+  hs_smatrix data(ptr);
+  dmatrix make_dmatrix(const hs_smatrix& M);
+  dmatrix results = make_dmatrix(data);
+
+  cout << results << endl;
+  ASSERT_DOUBLE_EQ(1.0, results(1, 1));
+  ASSERT_DOUBLE_EQ(0.0, results(1, 2));
+  ASSERT_DOUBLE_EQ(0.0, results(1, 3));
+  ASSERT_DOUBLE_EQ(0.0, results(2, 1));
+  ASSERT_DOUBLE_EQ(2.0, results(2, 2));
+  ASSERT_DOUBLE_EQ(0.0, results(2, 3));
+  ASSERT_DOUBLE_EQ(0.0, results(3, 1));
+  ASSERT_DOUBLE_EQ(0.0, results(3, 2));
+  ASSERT_DOUBLE_EQ(0.0, results(3, 3));
 }

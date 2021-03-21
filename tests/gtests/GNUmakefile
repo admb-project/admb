@@ -153,6 +153,8 @@ GTESTS_ALL=\
  test_df1_one_matrix.cpp\
  test_hs_smatrix.cpp\
  test_dvar_hs_smatrix.cpp\
+ test_hs_symbolic.cpp\
+ test_hs_smatrix.cpp\
  main.cpp
 
 ERRORS=\
@@ -169,11 +171,14 @@ ERRORS=\
  test_scalefactor.cpp\
  main.cpp
 
-GTESTS_DEV=\
+#GTESTS_DEV=\
  main.cpp
 
-#GTESTS=$(GTESTS_DEV)
+ifdef GTESTS_DEV
+GTESTS=$(GTESTS_DEV)
+else
 GTESTS=$(GTESTS_ALL)
+endif
 
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))

@@ -14,6 +14,22 @@ TEST_F(test_df1_three_variable, default_constructor)
   ASSERT_EQ(0, *x.get_u_y());
   ASSERT_EQ(0, *x.get_u_z());
 }
+TEST_F(test_df1_three_variable, copy)
+{
+  df1_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = 2;
+  *x.get_u_y() = 3;
+  *x.get_u_z() = 4;
+
+  df1_three_variable y(x);
+  
+  ASSERT_EQ(1, value(y));
+  ASSERT_EQ(1, *y.get_u());
+  ASSERT_EQ(2, *y.get_u_x());
+  ASSERT_EQ(3, *y.get_u_y());
+  ASSERT_EQ(4, *y.get_u_z());
+}
 TEST_F(test_df1_three_variable, assignment)
 {
   df1_three_variable x;
@@ -120,4 +136,123 @@ TEST_F(test_df1_three_variable, operator_equal_minus_double)
   ASSERT_EQ(3, *y.get_u_x());
   ASSERT_EQ(4, *y.get_u_y());
   ASSERT_EQ(5, *y.get_u_z());
+}
+TEST_F(test_df1_three_variable, operator_minus)
+{
+  df1_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = -3;
+  *x.get_u_z() = 4;
+
+  df1_three_variable y;
+  y = -x;
+  
+  ASSERT_EQ(-1, value(y));
+  ASSERT_EQ(-1, *y.get_u());
+  ASSERT_EQ(2, *y.get_u_x());
+  ASSERT_EQ(3, *y.get_u_y());
+  ASSERT_EQ(-4, *y.get_u_z());
+}
+TEST_F(test_df1_three_variable, operator_multiply)
+{
+  df1_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = -3;
+  *x.get_u_z() = 4;
+
+  df1_three_variable y;
+  y = 2.0 * x;
+  
+  ASSERT_EQ(2, value(y));
+  ASSERT_EQ(2, *y.get_u());
+  ASSERT_EQ(-4, *y.get_u_x());
+  ASSERT_EQ(-6, *y.get_u_y());
+  ASSERT_EQ(8, *y.get_u_z());
+}
+TEST_F(test_df1_three_variable, operator_multiply2)
+{
+  df1_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = -3;
+  *x.get_u_z() = 4;
+
+  df1_three_variable y;
+  y = x * 2.0;
+  
+  ASSERT_EQ(2, value(y));
+  ASSERT_EQ(2, *y.get_u());
+  ASSERT_EQ(-4, *y.get_u_x());
+  ASSERT_EQ(-6, *y.get_u_y());
+  ASSERT_EQ(8, *y.get_u_z());
+}
+TEST_F(test_df1_three_variable, operator_plus)
+{
+  df1_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = -3;
+  *x.get_u_z() = 4;
+
+  df1_three_variable y;
+  y = 2.0 + x;
+  
+  ASSERT_EQ(3, value(y));
+  ASSERT_EQ(3, *y.get_u());
+  ASSERT_EQ(-2, *y.get_u_x());
+  ASSERT_EQ(-3, *y.get_u_y());
+  ASSERT_EQ(4, *y.get_u_z());
+}
+TEST_F(test_df1_three_variable, operator_plus2)
+{
+  df1_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = -3;
+  *x.get_u_z() = 4;
+
+  df1_three_variable y;
+  y = x + 2.0;
+  
+  ASSERT_EQ(3, value(y));
+  ASSERT_EQ(3, *y.get_u());
+  ASSERT_EQ(-2, *y.get_u_x());
+  ASSERT_EQ(-3, *y.get_u_y());
+  ASSERT_EQ(4, *y.get_u_z());
+}
+TEST_F(test_df1_three_variable, operator_minus_a)
+{
+  df1_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = -3;
+  *x.get_u_z() = 4;
+
+  df1_three_variable y;
+  y = 2.0 - x;
+  
+  ASSERT_EQ(1, value(y));
+  ASSERT_EQ(1, *y.get_u());
+  ASSERT_EQ(2, *y.get_u_x());
+  ASSERT_EQ(3, *y.get_u_y());
+  ASSERT_EQ(-4, *y.get_u_z());
+}
+TEST_F(test_df1_three_variable, operator_minus2_a)
+{
+  df1_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = -3;
+  *x.get_u_z() = 4;
+
+  df1_three_variable y;
+  y = x - 2.0;
+  
+  ASSERT_EQ(-1, value(y));
+  ASSERT_EQ(-1, *y.get_u());
+  ASSERT_EQ(-2, *y.get_u_x());
+  ASSERT_EQ(-3, *y.get_u_y());
+  ASSERT_EQ(4, *y.get_u_z());
 }

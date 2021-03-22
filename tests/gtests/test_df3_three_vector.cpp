@@ -10,11 +10,6 @@ TEST_F(test_df3_three_vector, default_constructor)
   df3_three_vector x;
   ASSERT_EQ(x.indexmin(), 0);
   ASSERT_EQ(x.indexmax(), -1);
-  x.initialize();
-  ASSERT_DOUBLE_EQ(0, value(x[1]));
-  ASSERT_DOUBLE_EQ(0, value(x[2]));
-  ASSERT_DOUBLE_EQ(0, value(x[3]));
-  ASSERT_DOUBLE_EQ(0, value(x[4]));
 
   dvector v = value(x);
   ASSERT_EQ(v.indexmin(), 1);
@@ -26,6 +21,11 @@ TEST_F(test_df3_three_vector, size_constructor)
   ASSERT_EQ(x.indexmin(), 1);
   ASSERT_EQ(x.indexmax(), 5);
   x.initialize();
+  ASSERT_DOUBLE_EQ(0, value(x[1]));
+  ASSERT_DOUBLE_EQ(0, value(x[2]));
+  ASSERT_DOUBLE_EQ(0, value(x[3]));
+  ASSERT_DOUBLE_EQ(0, value(x[4]));
+  ASSERT_DOUBLE_EQ(0, value(x[5]));
   dvector v = value(x);
   ASSERT_EQ(v.indexmin(), 1);
   ASSERT_EQ(v.indexmax(), 5);

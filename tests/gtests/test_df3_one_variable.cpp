@@ -62,3 +62,27 @@ TEST_F(test_df3_one_variable, equal_add_df3_one_variable)
   ASSERT_DOUBLE_EQ(*x.get_udot2(), 4);
   ASSERT_DOUBLE_EQ(*x.get_udot3(), 6);
 }
+TEST_F(test_df3_one_variable, operator_assignment)
+{
+  df3_one_variable x;
+  *x.get_u() = -1;
+  *x.get_udot() = 1;
+  *x.get_udot2() = 2;
+  *x.get_udot3() = 3;
+  df3_one_variable y;
+  *y.get_u() = 0;
+  *y.get_udot() = 0;
+  *y.get_udot2() = 0;
+  *y.get_udot3() = 0;
+  ASSERT_DOUBLE_EQ(*y.get_u(), 0);
+  ASSERT_DOUBLE_EQ(*y.get_udot(), 0);
+  ASSERT_DOUBLE_EQ(*y.get_udot2(), 0);
+  ASSERT_DOUBLE_EQ(*y.get_udot3(), 0);
+
+  y = x;
+
+  ASSERT_DOUBLE_EQ(*x.get_u(), -1);
+  ASSERT_DOUBLE_EQ(*x.get_udot(), 1);
+  ASSERT_DOUBLE_EQ(*x.get_udot2(), 2);
+  ASSERT_DOUBLE_EQ(*x.get_udot3(), 3);
+}

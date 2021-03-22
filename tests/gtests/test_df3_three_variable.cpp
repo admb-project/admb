@@ -7,6 +7,27 @@ class test_df3_three_variable: public ::testing::Test {};
 TEST_F(test_df3_three_variable, default_constructor)
 {
   df3_three_variable x;
+  *x.get_u() = 1;
+  *x.get_u_x() = 2;
+  *x.get_u_y() = 3;
+  *x.get_u_z() = 4;
+  *x.get_u_xx() = 5;
+  *x.get_u_xy() = 6;
+  *x.get_u_xz() = 7;
+  *x.get_u_yy() = 8;
+  *x.get_u_yz() = 9;
+  *x.get_u_zz() = 10;
+  *x.get_u_xxx() = 11;
+  *x.get_u_xxy() = 12;
+  *x.get_u_xxz() = 13;
+  *x.get_u_xyy() = 14;
+  *x.get_u_xyz() = 15;
+  *x.get_u_xzz() = 16;
+  *x.get_u_yyy() = 17;
+  *x.get_u_yyz() = 18;
+  *x.get_u_yzz() = 19;
+  *x.get_u_zzz() = 20;
+  x.initialize();
   ASSERT_DOUBLE_EQ(*x.get_u(), 0);
   ASSERT_DOUBLE_EQ(*x.get_u_x(), 0);
   ASSERT_DOUBLE_EQ(*x.get_u_y(), 0);
@@ -27,6 +48,51 @@ TEST_F(test_df3_three_variable, default_constructor)
   ASSERT_DOUBLE_EQ(*x.get_u_yyz(), 0);
   ASSERT_DOUBLE_EQ(*x.get_u_yzz(), 0);
   ASSERT_DOUBLE_EQ(*x.get_u_zzz(), 0);
+}
+TEST_F(test_df3_three_variable, fabs)
+{
+  df3_three_variable x;
+  *x.get_u() = -1;
+  *x.get_u_x() = -2;
+  *x.get_u_y() = -3;
+  *x.get_u_z() = -4;
+  *x.get_u_xx() = 5;
+  *x.get_u_xy() = 6;
+  *x.get_u_xz() = 7;
+  *x.get_u_yy() = 8;
+  *x.get_u_yz() = 9;
+  *x.get_u_zz() = 10;
+  *x.get_u_xxx() = -11;
+  *x.get_u_xxy() = -12;
+  *x.get_u_xxz() = -13;
+  *x.get_u_xyy() = -14;
+  *x.get_u_xyz() = -15;
+  *x.get_u_xzz() = -16;
+  *x.get_u_yyy() = -17;
+  *x.get_u_yyz() = -18;
+  *x.get_u_yzz() = -19;
+  *x.get_u_zzz() = -20;
+  df3_three_variable y = fabs(x);
+  ASSERT_DOUBLE_EQ(*y.get_u(), 1);
+  ASSERT_DOUBLE_EQ(*y.get_u_x(), 2);
+  ASSERT_DOUBLE_EQ(*y.get_u_y(), 3);
+  ASSERT_DOUBLE_EQ(*y.get_u_z(), 4);
+  ASSERT_DOUBLE_EQ(*y.get_u_xx(), 5);
+  ASSERT_DOUBLE_EQ(*y.get_u_xy(), 6);
+  ASSERT_DOUBLE_EQ(*y.get_u_xz(), 7);
+  ASSERT_DOUBLE_EQ(*y.get_u_yy(), 8);
+  ASSERT_DOUBLE_EQ(*y.get_u_yz(), 9);
+  ASSERT_DOUBLE_EQ(*y.get_u_zz(), 10);
+  ASSERT_DOUBLE_EQ(*y.get_u_xxx(), 11);
+  ASSERT_DOUBLE_EQ(*y.get_u_xxy(), 12);
+  ASSERT_DOUBLE_EQ(*y.get_u_xxz(), 13);
+  ASSERT_DOUBLE_EQ(*y.get_u_xyy(), 14);
+  ASSERT_DOUBLE_EQ(*y.get_u_xyz(), 15);
+  ASSERT_DOUBLE_EQ(*y.get_u_xzz(), 16);
+  ASSERT_DOUBLE_EQ(*y.get_u_yyy(), 17);
+  ASSERT_DOUBLE_EQ(*y.get_u_yyz(), 18);
+  ASSERT_DOUBLE_EQ(*y.get_u_yzz(), 19);
+  ASSERT_DOUBLE_EQ(*y.get_u_zzz(), 20);
 }
 TEST_F(test_df3_three_variable, minus_equal_df3_three_variable)
 {

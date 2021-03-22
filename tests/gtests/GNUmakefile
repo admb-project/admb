@@ -155,6 +155,10 @@ GTESTS_ALL=\
  test_dvar_hs_smatrix.cpp\
  test_hs_symbolic.cpp\
  test_hs_smatrix.cpp\
+ test_df3_one_vector.cpp\
+ test_df3_one_matrix.cpp\
+ test_df3_three_vector.cpp\
+ test_df3_three_matrix.cpp\
  main.cpp
 
 ERRORS=\

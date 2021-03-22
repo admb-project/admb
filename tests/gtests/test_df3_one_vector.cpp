@@ -1,28 +1,22 @@
 #include <gtest/gtest.h>
 
 #include <df1b2fun.h>
-#include <df33fun.h>
+#include <df3fun.h>
 
-class test_df3_three_vector: public ::testing::Test {};
+class test_df3_one_vector: public ::testing::Test {};
 
-TEST_F(test_df3_three_vector, default_constructor)
+TEST_F(test_df3_one_vector, default_constructor)
 {
-  df3_three_vector x;
+  df3_one_vector x;
   ASSERT_EQ(x.indexmin(), 0);
   ASSERT_EQ(x.indexmax(), -1);
-  x.initialize();
-  ASSERT_DOUBLE_EQ(0, value(x[1]));
-  ASSERT_DOUBLE_EQ(0, value(x[2]));
-  ASSERT_DOUBLE_EQ(0, value(x[3]));
-  ASSERT_DOUBLE_EQ(0, value(x[4]));
-
   dvector v = value(x);
   ASSERT_EQ(v.indexmin(), 1);
   ASSERT_EQ(v.indexmax(), 0);
 }
-TEST_F(test_df3_three_vector, size_constructor)
+TEST_F(test_df3_one_vector, size_constructor)
 {
-  df3_three_vector x(1, 5);
+  df3_one_vector x(1, 5);
   ASSERT_EQ(x.indexmin(), 1);
   ASSERT_EQ(x.indexmax(), 5);
   x.initialize();
@@ -38,10 +32,10 @@ TEST_F(test_df3_three_vector, size_constructor)
   ASSERT_EQ(x.indexmin(), 0);
   ASSERT_EQ(x.indexmax(), -1);
 }
-TEST_F(test_df3_three_vector, copy)
+TEST_F(test_df3_one_vector, copy)
 {
-  df3_three_vector x(1, 5);
-  df3_three_vector y(x);
+  df3_one_vector x(1, 5);
+  df3_one_vector y(x);
 
   ASSERT_TRUE(&x[1] == &y(1));
   ASSERT_TRUE(&x[2] == &y(2));

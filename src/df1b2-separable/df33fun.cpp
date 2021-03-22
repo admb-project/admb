@@ -259,37 +259,32 @@ void df3_three_vector::allocate(void)
    v = m2.v;
  }
 
-/**
- * Description not yet available.
- * \param
- */
- df3_three_matrix::~df3_three_matrix()
- {
-   deallocate();
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void df3_three_matrix::deallocate(void)
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df3_three_vector*) (shape->get_pointer());
-       delete [] v;
-       v=0;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+/// Destructor
+df3_three_matrix::~df3_three_matrix()
+{
+  deallocate();
+}
+/// Deallocate df3_three_matrix, then set to empty.
+void df3_three_matrix::deallocate(void)
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df3_three_vector*) (shape->get_pointer());
+      delete [] v;
+      v=0;
+      delete shape;
+      shape=0;
+      index_min = 0;
+      index_max = -1;
+    }
+  }
+}
 
 /**
 Initialize values.

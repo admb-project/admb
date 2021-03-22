@@ -141,6 +141,14 @@ TEST_F(test_hs_smatrix, multiply2x)
   hs_smatrix sm = make_hs_smatrix(m);
   hs_smatrix sn = make_hs_smatrix(n);
 
+  ostream& operator<<(const ostream& _ofs,const hs_smatrix& M);
+  cout << sn << endl;
+
+  int sgn = 0; //boolean 0 or 1
+  double r = sn.trace_log(sgn);
+  ASSERT_EQ(sgn, 1);
+  ASSERT_DOUBLE_EQ(r, std::log(n(1, 1)) + std::log(n(2, 2)) + std::log(-n(3, 3)) + std::log(n(4, 4)));
+
   hs_smatrix operator*(const hs_smatrix &A, const hs_smatrix &B);
   hs_smatrix mn = sm * sn;
 
@@ -166,16 +174,16 @@ TEST_F(test_hs_smatrix, multiply2x)
   ASSERT_DOUBLE_EQ(0.0, results(4, 3));
   //ASSERT_DOUBLE_EQ(-100.0, results(4, 4));
 }
-/*
 TEST_F(test_hs_smatrix, constructor_cs)
 {
   cs* ptr = new cs();
-  ptr->nzmax = 4;
+  ptr->nzmax = 3;
   ptr->n = 3;
-  ptr->p = new int[3];
+  ptr->p = new int[4];
   ptr->p[0] = 0;
   ptr->p[1] = 1;
   ptr->p[2] = 2;
+  ptr->p[3] = 0;
   ptr->i = new int[3];
   ptr->i[0] = 0;
   ptr->i[1] = 1;
@@ -185,16 +193,14 @@ TEST_F(test_hs_smatrix, constructor_cs)
   ptr->x[1] = 2;
   ptr->x[2] = 3;
   hs_smatrix data(ptr);
-  delete ptr->p;
-  ptr->p = nullptr;
-  delete ptr->i;
-  ptr->i = nullptr;
-  delete ptr->x;
-  ptr->x = nullptr;
-  delete ptr;
-  ptr = nullptr;
+
+  ostream& operator<<(const ostream& _ofs,const hs_smatrix& M);
+  cout << data << endl;
+
   dmatrix make_dmatrix(const hs_smatrix& M);
+cout << __FILE__ << ':' << __LINE__ << endl;
   dmatrix results = make_dmatrix(data);
+cout << __FILE__ << ':' << __LINE__ << endl;
 
   cout << results << endl;
   ASSERT_DOUBLE_EQ(1.0, results(1, 1));
@@ -206,8 +212,16 @@ TEST_F(test_hs_smatrix, constructor_cs)
   ASSERT_DOUBLE_EQ(0.0, results(3, 1));
   ASSERT_DOUBLE_EQ(0.0, results(3, 2));
   ASSERT_DOUBLE_EQ(0.0, results(3, 3));
+
+  delete ptr->p;
+  ptr->p = nullptr;
+  delete ptr->i;
+  ptr->i = nullptr;
+  delete ptr->x;
+  ptr->x = nullptr;
+  delete ptr;
+  ptr = nullptr;
 }
-*/
 TEST_F(test_hs_smatrix, cs_pvec)
 {
   gradient_structure gs;

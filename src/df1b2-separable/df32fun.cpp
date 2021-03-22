@@ -45,36 +45,29 @@ df3_two_variable::df3_two_variable(const df3_two_variable& x)
    v = m2.v;
  }
 
-/**
-Destructor
-*/
+/// Destructor
 df3_two_vector::~df3_two_vector()
 {
   deallocate();
 }
-
-/**
- * Description not yet available.
- * \param
- */
- void df3_two_vector::deallocate(void)
- {
-   if(shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df3_two_variable*) (shape->trueptr);
-       delete [] v;
-       v = NULL;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+/// Deallocate df3_two_vector, then set to empty.
+void df3_two_vector::deallocate(void)
+{
+  if(shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df3_two_variable*) (shape->trueptr);
+      delete [] v;
+      delete shape;
+      allocate();
+    }
+  }
+}
 
 /**
  * Description not yet available.
@@ -194,38 +187,32 @@ void df3_two_vector::allocate()
    }
    v = m2.v;
  }
-
-/**
- * Description not yet available.
- * \param
- */
- df3_two_matrix::~df3_two_matrix()
- {
-   deallocate();
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void df3_two_matrix::deallocate(void)
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df3_two_vector*) (shape->get_pointer());
-       delete [] v;
-       v=0;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+/// Destructor
+df3_two_matrix::~df3_two_matrix()
+{
+  deallocate();
+}
+/// Deallocate df3_two_vector, then set to empty.
+void df3_two_matrix::deallocate(void)
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df3_two_vector*) (shape->get_pointer());
+      delete [] v;
+      v = nullptr;
+      delete shape;
+      shape = nullptr;
+      index_min = 0;
+      index_max = -1;
+    }
+  }
+}
 
 /**
  * Description not yet available.

@@ -24,6 +24,20 @@ TEST_F(test_df3_one_variable, equal_minus_double)
   ASSERT_DOUBLE_EQ(*x.get_udot2(), 0);
   ASSERT_DOUBLE_EQ(*x.get_udot3(), 0);
 }
+TEST_F(test_df3_one_variable, copy_constructor)
+{
+  df3_one_variable x;
+  *x.get_u() = -1;
+  *x.get_udot() = 1;
+  *x.get_udot2() = 2;
+  *x.get_udot3() = 3;
+  df3_one_variable y(x);
+
+  ASSERT_DOUBLE_EQ(*y.get_u(), -1);
+  ASSERT_DOUBLE_EQ(*y.get_udot(), 1);
+  ASSERT_DOUBLE_EQ(*y.get_udot2(), 2);
+  ASSERT_DOUBLE_EQ(*y.get_udot3(), 3);
+}
 TEST_F(test_df3_one_variable, equal_minus_df3_one_variable)
 {
   df3_one_variable x;
@@ -85,4 +99,94 @@ TEST_F(test_df3_one_variable, operator_assignment)
   ASSERT_DOUBLE_EQ(*x.get_udot(), 1);
   ASSERT_DOUBLE_EQ(*x.get_udot2(), 2);
   ASSERT_DOUBLE_EQ(*x.get_udot3(), 3);
+}
+TEST_F(test_df3_one_variable, operator_minus)
+{
+  df3_one_variable x;
+  *x.get_u() = -1;
+  *x.get_udot() = 1;
+  *x.get_udot2() = 2;
+  *x.get_udot3() = 3;
+  df3_one_variable y;
+  *y.get_u() = 1;
+  *y.get_udot() = -1;
+  *y.get_udot2() = -2;
+  *y.get_udot3() = -3;
+
+  df3_one_variable result = x - y;
+
+  ASSERT_DOUBLE_EQ(*result.get_u(), -2);
+  ASSERT_DOUBLE_EQ(*result.get_udot(), 2);
+  ASSERT_DOUBLE_EQ(*result.get_udot2(), 4);
+  ASSERT_DOUBLE_EQ(*result.get_udot3(), 6);
+}
+TEST_F(test_df3_one_variable, operator_minus_double)
+{
+  df3_one_variable x;
+  *x.get_u() = -1;
+  *x.get_udot() = 1;
+  *x.get_udot2() = 2;
+  *x.get_udot3() = 3;
+
+  df3_one_variable result = x - 0.5;
+
+  ASSERT_DOUBLE_EQ(*result.get_u(), -1.5);
+  ASSERT_DOUBLE_EQ(*result.get_udot(), 1);
+  ASSERT_DOUBLE_EQ(*result.get_udot2(), 2);
+  ASSERT_DOUBLE_EQ(*result.get_udot3(), 3);
+}
+TEST_F(test_df3_one_variable, operator_plus)
+{
+  df3_one_variable x;
+  *x.get_u() = -1;
+  *x.get_udot() = 1;
+  *x.get_udot2() = 2;
+  *x.get_udot3() = 3;
+  df3_one_variable y;
+  *y.get_u() = 1;
+  *y.get_udot() = -1;
+  *y.get_udot2() = -2;
+  *y.get_udot3() = -3;
+
+  df3_one_variable result = x + y;
+
+  ASSERT_DOUBLE_EQ(*result.get_u(), 0);
+  ASSERT_DOUBLE_EQ(*result.get_udot(), 0);
+  ASSERT_DOUBLE_EQ(*result.get_udot2(), 0);
+  ASSERT_DOUBLE_EQ(*result.get_udot3(), 0);
+}
+TEST_F(test_df3_one_variable, operator_times_double)
+{
+  df3_one_variable x;
+  *x.get_u() = -1;
+  *x.get_udot() = 1;
+  *x.get_udot2() = 2;
+  *x.get_udot3() = 3;
+
+  df3_one_variable result = x * 0.5;
+
+  ASSERT_DOUBLE_EQ(*result.get_u(), -0.5);
+  ASSERT_DOUBLE_EQ(*result.get_udot(), 0.5);
+  ASSERT_DOUBLE_EQ(*result.get_udot2(), 1);
+  ASSERT_DOUBLE_EQ(*result.get_udot3(), 1.5);
+}
+TEST_F(test_df3_one_variable, DISABLED_operator_division)
+{
+  df3_one_variable x;
+  *x.get_u() = -1;
+  *x.get_udot() = 1;
+  *x.get_udot2() = 2;
+  *x.get_udot3() = 3;
+  df3_one_variable y;
+  *y.get_u() = 1;
+  *y.get_udot() = -1;
+  *y.get_udot2() = -2;
+  *y.get_udot3() = -3;
+
+  df3_one_variable result = x / y;
+
+  ASSERT_DOUBLE_EQ(*result.get_u(), -1);
+  ASSERT_DOUBLE_EQ(*result.get_udot(), -1);
+  ASSERT_DOUBLE_EQ(*result.get_udot2(), -1);
+  ASSERT_DOUBLE_EQ(*result.get_udot3(), -1);
 }

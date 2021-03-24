@@ -161,6 +161,7 @@ GTESTS_ALL=\
  test_df3_three_matrix.cpp\
  test_df3_two_vector.cpp\
  test_df3_two_matrix.cpp\
+ test_df1b2matrix.cpp\
  main.cpp
 
 ERRORS=\

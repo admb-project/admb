@@ -616,22 +616,20 @@ df1b2vector::df1b2vector(const dvector& v):
     }
   }
 }
-/**
-Default constructor
-*/
+/// Default constructor
 df1b2vector::df1b2vector():
   v(NULL), shape(NULL)
 {
+  index_min = 1;
+  index_max = 0;
 }
-
-/**
- * Description not yet available.
- * \param
- */
+/// Initialize df1b2vector to empty.
 void df1b2vector::allocate(void)
 {
   shape=0;
   v=0;
+  index_min = 1;
+  index_max = 0;
 }
 
 /**
@@ -776,8 +774,7 @@ void df1b2vector::deallocate()
 
       delete shape;
     }
-    v = NULL;
-    shape = NULL;
+    allocate();
   }
 }
 /**

@@ -24,8 +24,7 @@ TEST_F(test_param_init_number, allocate_assignments)
   n = var;
   ASSERT_DOUBLE_EQ(value(var), value(n));
 }
-/*
-TEST_F(test_param_init_number, DISABLED_save_value)
+TEST_F(test_param_init_number, save_value)
 {
   gradient_structure gs;
   dll_param_init_number n;
@@ -35,7 +34,7 @@ TEST_F(test_param_init_number, DISABLED_save_value)
   ASSERT_DOUBLE_EQ(expected_pd, value(n));
 
   ofstream ofs("test_param_init_number.txt");
-  initial_params::save_value(ofs);
+  n.save_value(ofs);
   ofs.close();
 
   ifstream ifs("test_param_init_number.txt");
@@ -43,7 +42,6 @@ TEST_F(test_param_init_number, DISABLED_save_value)
   getline(ifs, line);
   ifs.close();
 }
-*/
 TEST_F(test_param_init_number, add_value)
 {
   ad_comm::argc = 0;

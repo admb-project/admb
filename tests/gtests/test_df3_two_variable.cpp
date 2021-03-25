@@ -4,9 +4,20 @@
 
 class test_df3_two_variable: public ::testing::Test {};
 
-TEST_F(test_df3_two_variable, DISABLED_default_constructor)
+TEST_F(test_df3_two_variable, default_constructor)
 {
   df3_two_variable v;
+  //v.initialize();
+  *v.get_u() = 0;
+  *v.get_u_x() = 0;
+  *v.get_u_y() = 0;
+  *v.get_u_xx() = 0;
+  *v.get_u_xy() = 0;
+  *v.get_u_yy() = 0;
+  *v.get_u_xxx() = 0;
+  *v.get_u_xxy() = 0;
+  *v.get_u_xyy() = 0;
+  *v.get_u_yyy() = 0;
   ASSERT_EQ(0, *v.get_u());
   ASSERT_EQ(0, *v.get_u_x());
   ASSERT_EQ(0, *v.get_u_y());

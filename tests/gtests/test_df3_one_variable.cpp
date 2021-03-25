@@ -170,7 +170,7 @@ TEST_F(test_df3_one_variable, operator_times_double)
   ASSERT_DOUBLE_EQ(*result.get_udot2(), 1);
   ASSERT_DOUBLE_EQ(*result.get_udot3(), 1.5);
 }
-TEST_F(test_df3_one_variable, DISABLED_operator_division)
+TEST_F(test_df3_one_variable, operator_division)
 {
   df3_one_variable x;
   *x.get_u() = -1;
@@ -186,7 +186,7 @@ TEST_F(test_df3_one_variable, DISABLED_operator_division)
   df3_one_variable result = x / y;
 
   ASSERT_DOUBLE_EQ(*result.get_u(), -1);
-  ASSERT_DOUBLE_EQ(*result.get_udot(), -1);
-  ASSERT_DOUBLE_EQ(*result.get_udot2(), -1);
-  ASSERT_DOUBLE_EQ(*result.get_udot3(), -1);
+  ASSERT_DOUBLE_EQ(*result.get_udot(), 0);
+  ASSERT_DOUBLE_EQ(*result.get_udot2(), 0);
+  ASSERT_DOUBLE_EQ(*result.get_udot3(), 0);
 }

@@ -426,6 +426,7 @@ ifeq ($(CMDSHELL),cmd)
 	@del /Q test_dvar_vector_read_from_file.txt 2>NUL
 	@del /Q test_dvector_read_from_file2.txt 2>NUL
 	@del /Q test_dvector_read_from_file3.txt 2>NUL
+	@del /Q test_param_init_number.txt
 else
 	@rm -vf test_i4_array.txt
 	@rm -vf test_i5_array.txt
@@ -537,4 +538,5 @@ else
 	@rm -vf test_dvar_vector_read_from_file.txt
 	@rm -vf test_dvector_read_from_file2.txt
 	@rm -vf test_dvector_read_from_file3.txt
+	@rm -vf test_param_init_number.txt
 endif

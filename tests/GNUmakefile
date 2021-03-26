@@ -353,6 +353,7 @@ endif
 	$(MAKE) --directory=ctl clean
 	$(MAKE) --directory=data_adstring_array clean
 	$(MAKE) --directory=dd2 clean
+	$(MAKE) --directory=df33_tester clean
 	$(MAKE) --directory=dualaveraging clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=f1b2vc5 clean

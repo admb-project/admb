@@ -217,6 +217,7 @@ clean:
 	pushd data_adstring_array & $(MAKE) /NOLOGO clean & popd
 	pushd dd2 & $(MAKE) /NOLOGO clean & popd
 	pushd dualaveraging & $(MAKE) /NOLOGO clean & popd
+	pushd df33_tester & $(MAKE) /NOLOGO clean & popd
 	pushd expm & $(MAKE) /NOLOGO clean & popd
 	pushd f1b2vc5 & $(MAKE) /NOLOGO clean & popd
 	pushd geolocation & $(MAKE) /NOLOGO clean & popd

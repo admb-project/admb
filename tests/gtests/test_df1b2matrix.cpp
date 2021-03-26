@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "df1b2fun.h"
+#include <df1b2fun.h>
 
 class test_df1b2matrix: public ::testing::Test
 {

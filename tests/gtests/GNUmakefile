@@ -195,16 +195,6 @@ ifeq ($(SAFE_ONLY),yes)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
 endif
 
-##Need to debug this
-# test_data_number.cpp\
-# test_dll_param_init_bounded_vector.cpp\
-# test_df1b2atan2.cpp\
-# test_df1b2variable.cpp\
-#cfenv is not completely supported by most compilers
-#  test_cfenv.cpp
-# df1b2atan2.obj\
-# scalefactor.obj\
-
 all: clean
 	$(MAKE) run
 

@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include <df1b2fun.h>
 
-extern df1b2_gradlist* f1b2gradlist;
-
 class test_df1b2variable: public ::testing::Test
 {
 public:
@@ -18,6 +16,7 @@ public:
       delete df1b2variable::pool;
       df1b2variable::pool = NULL;
     }
+    extern df1b2_gradlist* f1b2gradlist;
     if (f1b2gradlist)
     {
       delete f1b2gradlist;
@@ -255,14 +254,23 @@ TEST_F(test_df1b2variable, df1b2vector_allocate_deallocate)
   df1b2variable::pool = new adpool();
   df1b2variable::pool->set_size(s);
   {
+    df1b2variable::noallocate = 0;
     df1b2vector v;
     ASSERT_TRUE(v.getv() == nullptr);
     ASSERT_EQ(v.indexmin(), 1);
     ASSERT_EQ(v.indexmax(), 0);
+    df1b2_gradlist::no_derivatives = 1;
     v.allocate(1, 10);
+    v.initialize();
     ASSERT_TRUE(v.getv() != nullptr);
     ASSERT_EQ(v.indexmin(), 1);
     ASSERT_EQ(v.indexmax(), 10);
+
+    dvector values(1, 10);
+    values.initialize();
+ 
+    v = values;
+
     v.deallocate();
     ASSERT_TRUE(v.getv() == nullptr);
     ASSERT_EQ(v.indexmin(), 1);

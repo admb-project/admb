@@ -19,6 +19,7 @@ get-outputs: _get-outputs
         @if exist outputs type outputs
 
 clean: _clean
+	@if exist $(TARGET).tpl del /Q $(TARGET).tpl 2>nul
         @if exist $(TARGET).b02 del /Q $(TARGET).b02 2>nul
         @if exist $(TARGET).dat del /Q $(TARGET).dat 2>nul
         @if exist $(TARGET).p02 del /Q $(TARGET).p02 2>nul

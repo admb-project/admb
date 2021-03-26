@@ -339,6 +339,7 @@ endif
 	$(MAKE) --directory=agemat clean
 	$(MAKE) --directory=altexample clean
 	$(MAKE) --directory=alternatives clean
+	$(MAKE) --directory=atan2 clean
 	$(MAKE) --directory=bessel clean
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean

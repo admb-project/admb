@@ -284,6 +284,7 @@ get-outputs:
 	pushd agemat & $(MAKE) /NOLOGO get-outputs & popd
 	pushd altexample & $(MAKE) /NOLOGO get-outputs & popd
 	pushd adnuts & $(MAKE) /NOLOGO get-outputs & popd
+	pushd atan2 & $(MAKE) /NOLOGO get-outputs & popd
 	pushd bessel & $(MAKE) /NOLOGO get-outputs & popd
 	pushd beta2 & $(MAKE) /NOLOGO get-outputs & popd
 	pushd beta3 & $(MAKE) /NOLOGO get-outputs & popd

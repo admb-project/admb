@@ -92,6 +92,16 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist bvprobit.tpl del bvprobit.tpl
 	@if exist glmmadmb.tpl del glmmadmb.tpl
 	@if exist nbmm.tpl del nbmm.tpl
+	@del /Q glmmadmb.b02
+	@del /Q glmmadmb.b03
+	@del /Q glmmadmb.b04
+	@del /Q glmmadmb.p02
+	@del /Q glmmadmb.p03
+	@del /Q glmmadmb.p04
+	@del /Q glmmadmb.r02
+	@del /Q glmmadmb.r03
+	@del /Q glmmadmb.r04
+	@del /Q glmmadmb.shess
 else
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
@@ -129,4 +139,14 @@ else
 	@rm -vf bvprobit.tpl
 	@rm -vf glmmadmb.tpl
 	@rm -vf nbmm.tpl
+	@rm -vf glmmadmb.b02
+	@rm -vf glmmadmb.b03
+	@rm -vf glmmadmb.b04
+	@rm -vf glmmadmb.p02
+	@rm -vf glmmadmb.p03
+	@rm -vf glmmadmb.p04
+	@rm -vf glmmadmb.r02
+	@rm -vf glmmadmb.r03
+	@rm -vf glmmadmb.r04
+	@rm -vf glmmadmb.shess
 endif

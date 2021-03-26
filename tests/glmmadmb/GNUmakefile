@@ -74,7 +74,7 @@ else
 	cd admb_tests && ./hurdle_biochem2
 	cp -vf glmmadmb admb_tests/zi_owls
 	cd admb_tests && ./zi_owls
-	./glmmadmb
+	./glmmadmb -maxfn 500 -maxph 1 -noinit -shess
 endif
 
 get-outputs:

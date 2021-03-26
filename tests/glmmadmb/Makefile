@@ -42,7 +42,7 @@ run:
 	pushd admb_tests & hurdle_biochem2
 	copy glmmadmb.exe admb_tests\\zi_owls.exe
 	pushd admb_tests & zi_owls
-	glmmadmb.exe
+	glmmadmb.exe -maxfn 500 -maxph 5 -noinit -shess
 
 total-clean: clean
 	@if exist rforge-glmmadmb rmdir /s /q rforge-glmmadmb

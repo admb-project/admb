@@ -203,6 +203,7 @@ clean:
 	pushd adnuts & $(MAKE) /NOLOGO clean & popd
 	pushd agemat & $(MAKE) /NOLOGO clean & popd
 	pushd altexample & $(MAKE) /NOLOGO clean & popd
+	pushd atan2 & $(MAKE) /NOLOGO clean & popd
 	pushd bessel & $(MAKE) /NOLOGO clean & popd
 	pushd beta2 & $(MAKE) /NOLOGO clean & popd
 	pushd beta3 & $(MAKE) /NOLOGO clean & popd
@@ -299,6 +300,7 @@ get-outputs:
 	pushd ctl & $(MAKE) /NOLOGO get-outputs & popd
 	pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs & popd
 	pushd dd2 & $(MAKE) /NOLOGO get-outputs & popd
+	pushd df33_tester & $(MAKE) /NOLOGO get-outputs & popd
 	pushd dualaveraging & $(MAKE) /NOLOGO get-outputs & popd
 	pushd expm & $(MAKE) /NOLOGO get-outputs & popd
 	pushd f1b2vc5 & $(MAKE) /NOLOGO get-outputs & popd

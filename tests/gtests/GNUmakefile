@@ -163,6 +163,7 @@ GTESTS_ALL=\
  test_df3_two_matrix.cpp\
  test_df1b2matrix.cpp\
  test_nested_calls_shape.cpp\
+ test_df1b2bessel.cpp\
  main.cpp
 
 ERRORS=\

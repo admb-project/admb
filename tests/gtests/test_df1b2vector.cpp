@@ -32,6 +32,8 @@ public:
       delete initial_df1b2params::varsptr;
       initial_df1b2params::varsptr = NULL;
     }
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
   }
 };
 
@@ -183,6 +185,69 @@ TEST_F(test_df1b2vector, assigment)
 
     v.deallocate();
 
+    ASSERT_TRUE(v.getv() == nullptr);
+    ASSERT_EQ(v.indexmin(), 1);
+    ASSERT_EQ(v.indexmax(), 0);
+  }
+  ASSERT_TRUE(df1b2variable::pool != NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_df1b2vector, _df1b2vector)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+  const size_t n = 10;
+  size_t s = sizeof(double) * df1b2variable::get_blocksize(n);
+  df1b2variable::pool = new adpool();
+  df1b2variable::pool->set_size(s);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    df1b2vector v;
+    v.allocate(1, 2);
+    df1b2vector copy(v);
+    ASSERT_TRUE(v.getv() == copy.getv());
+    copy.deallocate();
+    v.deallocate();
+  }
+  ASSERT_TRUE(df1b2variable::pool != NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_df1b2vector, df1b2vector_allocate_deallocate)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+  const size_t n = 10;
+  size_t s = sizeof(double) * df1b2variable::get_blocksize(n);
+  df1b2variable::pool = new adpool();
+  df1b2variable::pool->set_size(s);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    df1b2vector v;
+    ASSERT_TRUE(v.getv() == nullptr);
+    ASSERT_EQ(v.indexmin(), 1);
+    ASSERT_EQ(v.indexmax(), 0);
+    v.allocate(1, 10);
+
+    ASSERT_TRUE(v.getv() != nullptr);
+    ASSERT_EQ(v.indexmin(), 1);
+    ASSERT_EQ(v.indexmax(), 10);
+
+    v.initialize();
+
+    dvector values(1, 10);
+    values.initialize();
+ 
+    v = values;
+
+    v.deallocate();
     ASSERT_TRUE(v.getv() == nullptr);
     ASSERT_EQ(v.indexmin(), 1);
     ASSERT_EQ(v.indexmax(), 0);

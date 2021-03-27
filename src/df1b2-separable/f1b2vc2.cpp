@@ -104,19 +104,21 @@ df1b2matrix&  df1b2matrix::operator = (double M)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-df1b2matrix&  df1b2matrix::operator = (const df1b2variable& _M)
+Assigns value _M to all elements of df1b2matrix (if not empty).
+
+\param df1b2variable _M
+\return df1b2matrix
+*/
+df1b2matrix& df1b2matrix::operator=(const df1b2variable& _M)
 {
   ADUNCONST(df1b2variable,M)
   int mmin=indexmin();
   int mmax=indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  for (int i=mmin; i<=mmax; ++i)
   {
     int jmin=(*this)(i).indexmin();
     int jmax=(*this)(i).indexmax();
-    for (int j=jmin;i<=jmax;i++)
+    for (int j=jmin; j<=jmax; ++j)
     {
       (*this)(i,j)=M;
     }

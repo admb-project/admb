@@ -227,8 +227,10 @@ TEST_F(test_df1b2vector, df1b2vector_allocate_deallocate)
   df1b2variable::pool = new adpool();
   df1b2variable::pool->set_size(s);
   {
-    df1b2variable::noallocate = 1;
-    df1b2_gradlist::no_derivatives = 1;
+    f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
+
+    df1b2variable::noallocate = 0;
+    df1b2_gradlist::no_derivatives = 0;
 
     df1b2vector v;
     ASSERT_TRUE(v.getv() == nullptr);
@@ -253,6 +255,6 @@ TEST_F(test_df1b2vector, df1b2vector_allocate_deallocate)
     ASSERT_EQ(v.indexmax(), 0);
   }
   ASSERT_TRUE(df1b2variable::pool != NULL);
-  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(f1b2gradlist != NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }

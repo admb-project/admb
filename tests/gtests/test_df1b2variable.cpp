@@ -156,13 +156,14 @@ TEST_F(test_df1b2variable, copy_constructor_noallocate_nonempty)
   df1b2variable::pool = new adpool();
   df1b2variable::pool->set_size(s);
   {
+    f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
+
     df1b2variable::noallocate = 0;
     df1b2_gradlist::no_derivatives = 1;
 
     df1b2variable v;
 
     ASSERT_TRUE(v.ptr);
-/*
     ASSERT_EQ(0, ((twointsandptr*)v.ptr)->nvar);
     ASSERT_EQ(0, ((twointsandptr*)v.ptr)->ncopies);
     ASSERT_TRUE(((twointsandptr*)v.ptr)->ptr == df1b2variable::pool);
@@ -195,10 +196,9 @@ TEST_F(test_df1b2variable, copy_constructor_noallocate_nonempty)
     ASSERT_TRUE(v.u_dot_bar_tilde == copy.u_dot_bar_tilde);
     ASSERT_TRUE(v.indindex != copy.indindex);
     ASSERT_TRUE(0 == copy.indindex);
-*/
   }
   ASSERT_TRUE(df1b2variable::pool != NULL);
-  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(f1b2gradlist != NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
 TEST_F(test_df1b2variable, constructor_double)

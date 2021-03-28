@@ -164,6 +164,7 @@ GTESTS_ALL=\
  test_df1b2matrix.cpp\
  test_nested_calls_shape.cpp\
  test_df1b2bessel.cpp\
+ test_funnel_init_df1b2variable.cpp\
  main.cpp
 
 ERRORS=\

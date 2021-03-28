@@ -1120,6 +1120,8 @@ laplace_approximation_calculator::laplace_approximation_calculator(
   separable_function_difference = nullptr;
   derindex = nullptr;
   bHessadjoint = nullptr;
+  block_diagonal_vch = nullptr;
+  block_diagonal_ch = nullptr;
 }
 /// Destructor
 laplace_approximation_calculator::~laplace_approximation_calculator()

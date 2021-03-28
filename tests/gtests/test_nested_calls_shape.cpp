@@ -168,3 +168,24 @@ TEST_F(test_nested_calls_shape, allocate3)
   ASSERT_EQ((*ptr3)(2, 3).indexmin(), 1);
   ASSERT_EQ((*ptr3)(2, 3).indexmax(), 4);
 }
+TEST_F(test_nested_calls_shape, trim_and_output)
+{
+  nested_calls_shape data;
+  data.allocate(2, 3, 4);
+
+  ASSERT_TRUE(data.get_ptr1() != nullptr);
+  ASSERT_TRUE(data.get_ptr2() != nullptr);
+  ASSERT_TRUE(data.get_ptr3() != nullptr);
+  ASSERT_TRUE(data.get_ptr4() == nullptr);
+
+  data.initialize();
+  cout << data << endl;
+
+  data.trim();
+  ASSERT_TRUE(data.get_ptr1() == nullptr);
+  ASSERT_TRUE(data.get_ptr2() == nullptr);
+  ASSERT_TRUE(data.get_ptr3() == nullptr);
+  ASSERT_TRUE(data.get_ptr4() == nullptr);
+
+  cout << data << endl;
+}

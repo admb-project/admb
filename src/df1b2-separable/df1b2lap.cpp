@@ -1113,25 +1113,28 @@ laplace_approximation_calculator::laplace_approximation_calculator(
   df1b2variable::set_maxder(maxder(1));
   df1b2variable::set_blocksize();
   y.allocate(1,nvariables);
-}
 
-/**
- * Description not yet available.
- * \param
- */
+  importance_sampling_weights = nullptr;
+  importance_sampling_components = nullptr;
+  importance_sampling_values = nullptr;
+  separable_function_difference = nullptr;
+  derindex = nullptr;
+  bHessadjoint = nullptr;
+}
+/// Destructor
 laplace_approximation_calculator::~laplace_approximation_calculator()
 {
-  if(importance_sampling_weights)
+  if (importance_sampling_weights)
   {
     delete importance_sampling_weights;
     importance_sampling_weights = 0;
   }
-  if(importance_sampling_components)
+  if (importance_sampling_components)
   {
     delete importance_sampling_components;
     importance_sampling_components = 0;
   }
-  if(importance_sampling_values)
+  if (importance_sampling_values)
   {
     delete importance_sampling_values;
     importance_sampling_values = 0;

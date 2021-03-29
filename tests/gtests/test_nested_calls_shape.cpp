@@ -189,3 +189,85 @@ TEST_F(test_nested_calls_shape, trim_and_output)
 
   cout << data << endl;
 }
+TEST_F(test_nested_calls_shape, nonzero_trim_and_output)
+{
+  nested_calls_shape data;
+  data.allocate(2, 3, 4);
+
+  ASSERT_TRUE(data.get_ptr1() != nullptr);
+  ASSERT_TRUE(data.get_ptr2() != nullptr);
+  ASSERT_TRUE(data.get_ptr3() != nullptr);
+  ASSERT_TRUE(data.get_ptr4() == nullptr);
+
+  ivector* ptr1 = data.get_ptr1();
+  *ptr1 = 1;
+  imatrix* ptr2 = data.get_ptr2();
+  *ptr2 = 2;
+  i3_array* ptr3 = data.get_ptr3();
+  *ptr3 = 3;
+  cout << data << endl;
+
+  data.trim();
+  ASSERT_TRUE(data.get_ptr1() != nullptr);
+  ASSERT_TRUE(data.get_ptr2() != nullptr);
+  ASSERT_TRUE(data.get_ptr3() == nullptr);
+  ASSERT_TRUE(data.get_ptr4() == nullptr);
+
+  cout << data << endl;
+}
+TEST_F(test_nested_calls_shape, nested_calls_indices)
+{
+  nested_calls_shape data;
+  data.allocate(2, 2, 2);
+
+  ivector* ptr1 = data.get_ptr1();
+  *ptr1 = 2;
+  imatrix* ptr2 = data.get_ptr2();
+  *ptr2 = 2;
+  i3_array* ptr3 = data.get_ptr3();
+  *ptr3 = 2;
+
+  nested_calls_indices indices;
+  indices.allocate(data);
+
+  ivector& level11 = indices.level1(1);  
+  ASSERT_EQ(level11.indexmin(), 1);
+  ASSERT_EQ(level11.indexmax(), 2);
+  ivector& level12 = indices.level1(2);  
+  ASSERT_EQ(level12.indexmin(), 1);
+  ASSERT_EQ(level12.indexmax(), 2);
+  ivector& level211 = indices.level2(1, 1);
+  ASSERT_EQ(level211.indexmin(), 1);
+  ASSERT_EQ(level211.indexmax(), 2);
+  ivector& level212 = indices.level2(1, 2);
+  ASSERT_EQ(level212.indexmin(), 1);
+  ASSERT_EQ(level212.indexmax(), 2);
+  ivector& level221 = indices.level2(2, 1);
+  ASSERT_EQ(level221.indexmin(), 1);
+  ASSERT_EQ(level221.indexmax(), 2);
+  ivector& level222 = indices.level2(2, 2);
+  ASSERT_EQ(level222.indexmin(), 1);
+  ASSERT_EQ(level222.indexmax(), 2);
+  ivector& level3111 = indices.level3(1, 1, 1);  
+  ASSERT_EQ(level3111.indexmin(), 1);
+  ASSERT_EQ(level3111.indexmax(), 2);
+  ivector& level3112 = indices.level3(1, 1, 2);  
+  ASSERT_EQ(level3112.indexmin(), 1);
+  ASSERT_EQ(level3112.indexmax(), 2);
+  ivector& level3121 = indices.level3(1, 2, 1);  
+  ASSERT_EQ(level3121.indexmin(), 1);
+  ASSERT_EQ(level3121.indexmax(), 2);
+  ivector& level3122 = indices.level3(1, 2, 2);  
+  ASSERT_EQ(level3122.indexmin(), 1);
+  ASSERT_EQ(level3122.indexmax(), 2);
+  ivector& level3211 = indices.level3(2, 1, 1);  
+  ASSERT_EQ(level3211.indexmin(), 1);
+  ASSERT_EQ(level3211.indexmax(), 2);
+  ivector& level3212 = indices.level3(2, 1, 2);  
+  ASSERT_EQ(level3212.indexmin(), 1);
+  ASSERT_EQ(level3212.indexmax(), 2);
+  ivector& level3221 = indices.level3(2, 2, 1);  
+  ivector& level3222 = indices.level3(2, 2, 2);  
+  ASSERT_EQ(level3222.indexmin(), 1);
+  ASSERT_EQ(level3222.indexmax(), 2);
+}

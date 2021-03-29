@@ -146,7 +146,11 @@ TEST_F(test_df1b2variable, copy_constructor_empty)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
+#ifdef _WIN32
+TEST_F(test_df1b2variable, DISABLED_copy_constructor_noallocate_nonempty)
+#else
 TEST_F(test_df1b2variable, copy_constructor_noallocate_nonempty)
+#endif
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -201,7 +205,11 @@ TEST_F(test_df1b2variable, copy_constructor_noallocate_nonempty)
   ASSERT_TRUE(f1b2gradlist != NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
+#ifdef _WIN32
+TEST_F(test_df1b2variable, DISABLED_constructor_double)
+#else
 TEST_F(test_df1b2variable, constructor_double)
+#endif
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);

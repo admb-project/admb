@@ -166,7 +166,6 @@ GTESTS_ALL=\
  test_df1b2bessel.cpp\
  test_funnel_init_df1b2variable.cpp\
  test_shareinfo.cpp\
- test_laplace_approximation_calculator.cpp\
  test_quadratic_prior.cpp\
  main.cpp
 

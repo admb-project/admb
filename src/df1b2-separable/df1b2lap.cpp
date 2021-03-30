@@ -1114,10 +1114,12 @@ laplace_approximation_calculator::laplace_approximation_calculator(
   df1b2variable::set_blocksize();
   y.allocate(1,nvariables);
 
+  gh = nullptr;
   importance_sampling_weights = nullptr;
   importance_sampling_components = nullptr;
   importance_sampling_values = nullptr;
   separable_function_difference = nullptr;
+  Hess_components = nullptr;
   derindex = nullptr;
   bHessadjoint = nullptr;
   block_diagonal_vch = nullptr;

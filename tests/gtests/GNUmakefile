@@ -167,6 +167,7 @@ GTESTS_ALL=\
  test_funnel_init_df1b2variable.cpp\
  test_shareinfo.cpp\
  test_quadratic_prior.cpp\
+ test_laplace_approximation_calculator.cpp\
  main.cpp
 
 ERRORS=\
@@ -181,7 +182,6 @@ ERRORS=\
  test_humungous_pointer.cpp\
  test_nuts.cpp\
  test_scalefactor.cpp\
- test_laplace_approximation_calculator.cpp\
  main.cpp
 
 #GTESTS_DEV=\

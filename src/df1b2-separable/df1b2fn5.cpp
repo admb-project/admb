@@ -18,8 +18,11 @@ void read_pass1_init_3(void);
   extern int addebug_count;
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
+#endif
+
+#ifndef OPT_LIB
   #include <climits>
 #endif
 

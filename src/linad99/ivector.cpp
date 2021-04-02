@@ -136,8 +136,7 @@ Shallow copy other data structure pointers.
 void ivector::shallow_copy(const ivector& other)
 {
 #ifdef DEBUG
-  cout << "Copy constructor called for ivector with address "
-       << _farptr_tolong(t.v) <<"\n";
+  cout << "Copy constructor called for ivector with address." << endl;
 #endif
   if (other.shape)
   {

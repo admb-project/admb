@@ -258,6 +258,10 @@ else
   endif
 endif
 
+ifeq ($(DEBUG),yes)
+ADCXXFLAGS:= $(ADCXXFLAGS) -DDEBUG
+endif
+
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
 ADCXXFLAGS:= $(ADCXXFLAGS) -D_USE_MATH_DEFINES
 

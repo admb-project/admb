@@ -18,7 +18,7 @@ using std::istringstream;
 #include "cifstrem.h"
 
 #ifdef DEBUG
-#include <assert>
+#include <cassert>
 #endif
 
 /**
@@ -413,7 +413,8 @@ cifstream& cifstream::operator>>(const double& _x)
     get_field(s);
 
 #ifdef DEBUG
-    assert((s[0]!='#' && s[1] != '\0');
+    //assert(s[0]!='#' && s[1] != '\0');
+    assert(s[0] != '#');
 #endif
 
 #if !defined(__BORLANDC__)

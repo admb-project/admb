@@ -79,7 +79,7 @@ ts_vector_shape_pool::ts_vector_shape_pool(int n) : tsdfpool(n)
 void* vector_shape::operator new(size_t n)
 {
 #if defined(DEBUG)
-  if (n != xpool->size)
+  if (xpool && xpool->size != n)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
@@ -110,7 +110,7 @@ void vector_shape::operator delete(void* ptr, size_t)
 void* arr_link::operator new(size_t n)
 {
 #if defined(DEBUG)
-  if (n != xpool->size)
+  if (xpool && xpool->size != n)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
@@ -141,7 +141,7 @@ void arr_link::operator delete(void* ptr, size_t)
 void* vector_shapex::operator new(size_t n)
 {
 #if defined(DEBUG)
-  if (n != xpool->size)
+  if (xpool && xpool->size != n)
   {
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);

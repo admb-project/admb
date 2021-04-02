@@ -653,7 +653,7 @@ void d3_array::deallocate()
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated d3_array.\n";
-    ad_exit(1);
+    //ad_exit(1);
   }
 #endif
 }

@@ -2,22 +2,59 @@
 #include <df1b2fun.h>
 #include <cmath>
 
-class test_df1b2atan2 :public ::testing::Test {};
-
-TEST_F(test_df1b2atan2, DISABLED_should_fail_df1b2variable_null_constructor)
+class test_df1b2atan2 :public ::testing::Test
 {
-  ASSERT_ANY_THROW(df1b2variable y);
+public:
+  virtual void SetUp()
+  {
+    TearDown();
+  }
+  virtual void TearDown()
+  {
+    if (df1b2variable::pool)
+    {
+      delete df1b2variable::pool;
+      df1b2variable::pool = NULL;
+    }
+    if (f1b2gradlist)
+    {
+      delete f1b2gradlist;
+      f1b2gradlist = NULL;
+    }
+    if (initial_df1b2params::varsptr)
+    {
+      delete initial_df1b2params::varsptr;
+      initial_df1b2params::varsptr = NULL;
+    }
+    df1b2variable::noallocate = 0;
+    df1b2_gradlist::no_derivatives = 0;
+    initial_params::varsptr.initialize();
+  }
+};
+
+#ifdef DEBUG
+TEST_F(test_df1b2atan2, should_fail_df1b2variable_null_constructor)
+#else
+TEST_F(test_df1b2atan2, DISABLED_should_fail_df1b2variable_null_constructor)
+#endif
+{
+  df1b2variable::noallocate = 0;
+  ASSERT_DEATH({df1b2variable y;}, "Assertion");
 }
 TEST_F(test_df1b2atan2, noallocate_df1b2variable_null_constructor)
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;
 }
+#ifdef DEBUG
+TEST_F(test_df1b2atan2, noallocate_df1b2variable_null_constructor_allocate)
+#else
 TEST_F(test_df1b2atan2, DISABLED_noallocate_df1b2variable_null_constructor_allocate)
+#endif
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;
-  ASSERT_ANY_THROW(y.allocate());
+  ASSERT_DEATH({ y.allocate(); }, "Assertion");
 }
 TEST_F(test_df1b2atan2, adpool_default_constructor)
 {
@@ -47,72 +84,83 @@ TEST_F(test_df1b2atan2, default_constructor_deallocate)
   df1b2variable::noallocate = 1;
   df1b2variable y;
   ASSERT_EQ(0, y.ptr);
+  {
+    adpool pool;
+    df1b2variable::pool = &pool;
+    pool.set_size(808);
+    df1b2_gradlist::no_derivatives = 1;
+    y.ptr = (double*)pool.alloc();
 
-  adpool pool;
-  df1b2variable::pool = &pool;
-  pool.set_size(808);
-  df1b2_gradlist::no_derivatives = 1;
-  y.ptr = (double*)pool.alloc();
-
-  ASSERT_EQ(0, y.ncopies);
-  y.deallocate();
-  ASSERT_EQ(0, y.ptr);
+    ASSERT_EQ(0, y.ncopies);
+    y.deallocate();
+    ASSERT_EQ(0, y.ptr);
+  }
+  df1b2variable::pool = nullptr;
 }
 TEST_F(test_df1b2atan2, default_constructor_initialize_int)
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;
   ASSERT_EQ(0, y.ptr);
+  {
+    adpool pool;
+    df1b2variable::pool = &pool;
+    pool.set_size(808);
+    df1b2_gradlist::no_derivatives = 1;
+    y.ptr = (double*)pool.alloc();
 
-  adpool pool;
-  df1b2variable::pool = &pool;
-  pool.set_size(808);
-  df1b2_gradlist::no_derivatives = 1;
-  y.ptr = (double*)pool.alloc();
-
-  y.initialize(808);
+    y.initialize(808);
+  }
+  df1b2variable::pool = nullptr;
 }
 TEST_F(test_df1b2atan2, default_constructor_initialize)
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;
   ASSERT_EQ(0, y.ptr);
+  {
+    adpool pool;
+    df1b2variable::pool = &pool;
+    pool.set_size(808);
+    pool.nvar = 808;
+    df1b2_gradlist::no_derivatives = 1;
+    y.ptr = (double*)pool.alloc();
 
-  adpool pool;
-  df1b2variable::pool = &pool;
-  pool.set_size(808);
-  pool.nvar = 808;
-  df1b2_gradlist::no_derivatives = 1;
-  y.ptr = (double*)pool.alloc();
-
-  y.initialize();
+    y.initialize();
+  }
+  df1b2variable::pool = nullptr;
 }
 TEST_F(test_df1b2atan2, default_constructor_allocate)
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;
   ASSERT_EQ(0, y.ptr);
+  {
+    adpool pool;
+    df1b2variable::pool = &pool;
+    pool.set_size(808);
+    pool.nvar = 808;
+    df1b2_gradlist::no_derivatives = 1;
+    y.ptr = (double*)pool.alloc();
 
-  adpool pool;
-  df1b2variable::pool = &pool;
-  pool.set_size(808);
-  pool.nvar = 808;
-  df1b2_gradlist::no_derivatives = 1;
-  y.ptr = (double*)pool.alloc();
-
-  y.allocate();
+    y.allocate();
+  }
+  df1b2variable::pool = nullptr;
 }
 TEST_F(test_df1b2atan2, default_constructor_withallocate)
 {
-  adpool pool;
-  pool.set_size(808);
-  pool.nvar = 808;
-  df1b2variable::pool = &pool;
-  df1b2_gradlist::no_derivatives = 1;
-  df1b2variable::noallocate = 0;
-  df1b2variable y;
+  {
+    adpool pool;
+    pool.set_size(808);
+    pool.nvar = 808;
+    df1b2variable::pool = &pool;
+    df1b2_gradlist::no_derivatives = 1;
+    df1b2variable::noallocate = 0;
+    df1b2variable y;
+  }
+  df1b2variable::pool = nullptr;
 }
-TEST_F(test_df1b2atan2, DISABLED_df1b2_gradlist_default_constructor)
+TEST_F(test_df1b2atan2, df1b2_gradlist_default_constructor)
 {
   int argc = 1;
   char* argv[] = {"./gtest-all"};
@@ -146,18 +194,22 @@ TEST_F(test_df1b2atan2, no_derivatives_0)
   ad_comm::argc = argc;
   ad_comm::argv = argv;
 
-  adpool pool;
-  pool.set_size(808);
-  pool.nvar = 808;
-  df1b2variable::pool = &pool;
-  df1b2_gradlist::no_derivatives = 0;
-  df1b2variable::noallocate = 0;
-
   extern df1b2_gradlist* f1b2gradlist;
-  df1b2_gradlist gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
-  f1b2gradlist = &gradlist;;
+  {
+    adpool pool;
+    pool.set_size(808);
+    pool.nvar = 808;
+    df1b2variable::pool = &pool;
+    df1b2_gradlist::no_derivatives = 0;
+    df1b2variable::noallocate = 0;
 
-  df1b2variable y;
+    df1b2_gradlist gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
+    f1b2gradlist = &gradlist;;
+
+    df1b2variable y;
+  }
+  f1b2gradlist = nullptr;
+  df1b2variable::pool = nullptr;
 
   ad_comm::argc = 0;
   ad_comm::argv = 0;
@@ -169,6 +221,8 @@ TEST_F(test_df1b2atan2, atan2)
   ad_comm::argc = argc;
   ad_comm::argv = argv;
 
+  extern df1b2_gradlist* f1b2gradlist;
+  {
   adpool pool;
   pool.set_size(808);
   pool.nvar = 808;
@@ -176,7 +230,6 @@ TEST_F(test_df1b2atan2, atan2)
   df1b2_gradlist::no_derivatives = 0;
   df1b2variable::noallocate = 0;
 
-  extern df1b2_gradlist* f1b2gradlist;
   df1b2_gradlist gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
   f1b2gradlist = &gradlist;;
 
@@ -186,6 +239,9 @@ TEST_F(test_df1b2atan2, atan2)
   df1b2variable atan2(const df1b2variable& y, const df1b2variable& x);
   //df1b2variable v = atan2(y, x);
   //ASSERT_DOUBLE_EQ(std::atan2(0, 0), value(v));
+  }
+  f1b2gradlist = nullptr;
+  df1b2variable::pool = nullptr;
 
   ad_comm::argc = 0;
   ad_comm::argv = 0;

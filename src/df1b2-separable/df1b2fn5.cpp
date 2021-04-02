@@ -122,6 +122,9 @@ df1b2variable::df1b2variable(const newadkludge* z)
  */
 void df1b2variable::allocate(void)
 {
+#ifdef DEBUG
+  assert(pool);
+#endif
   // vectors are all 1,...,nvar
   ptr = (double*) pool->alloc();
   //cout << *(int*)ptr << endl;

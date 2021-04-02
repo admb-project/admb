@@ -28,6 +28,7 @@ public:
     }
     df1b2variable::noallocate = 0;
     df1b2_gradlist::no_derivatives = 0;
+    initial_params::varsptr.initialize();
   }
 };
 class myfunction_minimizer: public function_minimizer
@@ -104,6 +105,7 @@ TEST_F(test_laplace_approximation_calculator, default_constructor)
     ASSERT_TRUE(lac.Hess_components == nullptr);
     ASSERT_TRUE(lac.pHess_non_quadprior_part == nullptr);
     ASSERT_TRUE(lac.derindex == nullptr);
+    ASSERT_EQ(lac.init_switch, 1);
     delete pmin;
     pmin = nullptr;
   }
@@ -254,6 +256,66 @@ TEST_F(test_laplace_approximation_calculator, allocated_pool_for_check_pool_size
   delete pool;
   pool = nullptr;
   df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, allocated_pool_for_check_pool_size_nvar)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    adpool* expected_pool = df1b2variable::pool;
+    df1b2variable::noallocate = 0;
+    df1b2_gradlist::no_derivatives = 0;
+    int xsize = 1;
+    int usize = 1;
+    ivector minder(1, 1);
+    minder(1) = 1;
+    ivector maxder(1, 1);
+    maxder(1) = 1;
+
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    ASSERT_EQ(df1b2variable::pool->nvar, 0);
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+    lac.nvar = 2;
+    ASSERT_EQ(lac.nvar, 2);
+    ASSERT_EQ(df1b2variable::pool->nvar, 1);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+
+    ASSERT_TRUE(df1b2variable::pool != NULL);
+    ASSERT_EQ(df1b2variable::pool->nvar, 1);
+    ASSERT_EQ(lac.nvar, 2);
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+    lac.check_pool_size();
+    ASSERT_TRUE(df1b2variable::adpool_vector[0] == pool);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+    ASSERT_TRUE(df1b2variable::pool != NULL);
+    ASSERT_TRUE(df1b2variable::pool != expected_pool);
+     
+    delete pmin;
+    pmin = nullptr;
+  }
+  ASSERT_EQ(df1b2variable::adpool_counter, 1);
+  ASSERT_TRUE(df1b2variable::pool != pool);
+  df1b2variable::pool->deallocate();
+  delete df1b2variable::pool;
+  //ASSERT_EQ(df1b2variable::adpool_counter, 0);
+  df1b2variable::pool = nullptr;
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+  df1b2variable::pool = nullptr;
+  df1b2variable::adpool_vector[0] = nullptr;
+  --df1b2variable::adpool_counter;
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
@@ -432,7 +494,7 @@ TEST_F(test_laplace_approximation_calculator, check_sparse_matrix_structure)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton)
+TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -468,25 +530,40 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton)
     laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
     ASSERT_TRUE(f1b2gradlist != NULL);
 
-/*
     {
+      ASSERT_EQ(initial_params::nvarcalc(), 0);
       param_init_vector number;
+      ASSERT_EQ(initial_params::nvarcalc(), 0);
       ASSERT_TRUE(ad_comm::global_bparfile == nullptr);
       ASSERT_TRUE(ad_comm::global_parfile == nullptr);
-      ad_integer a(1);
-      ad_integer b(1);
-      number.allocate(a, b);
+      //ASSERT_TRUE(number.share_flags == nullptr);
+      number.allocate(1, 1, 1, "number");
+      //ASSERT_TRUE(number.share_flags == nullptr);
       ASSERT_DOUBLE_EQ(value(number(1)), 0);
-      //ASSERT_DOUBLE_EQ(value(number(2)), 0);
-      ASSERT_EQ(initial_params::nvarcalc(), 0);
-      number.setshare(1, 1);
-      ASSERT_EQ(initial_params::nvarcalc(), 2);
+      ivector ivsf(1, 1);
+      index_type sf(ivsf);
+      ASSERT_EQ(sf.dimension(), 1);
+      ivector ivaf(1, 1);
+      index_type af(ivaf);
+      ASSERT_EQ(af.dimension(), 1);
+      number.setshare(sf, af);
+      //ASSERT_TRUE(number.share_flags != nullptr);
 
-      lac.ubest.allocate(1, 2);
-      dvector empty(1, 2);
+      ASSERT_EQ(lac.init_switch, 1);
+
+      ASSERT_EQ(initial_params::num_initial_params, 1);
+      //ASSERT_EQ(initial_params::varsptr.list.size(), 1);
+      //ASSERT_TRUE(initial_params::varsptr[0] != &number);
+      //ASSERT_TRUE(initial_params::varsptr[0]->share_flags != nullptr);
+      ASSERT_EQ(initial_params::varsptr[0]->shared_size_count(), 0);
+      //ASSERT_EQ(initial_params::varsptr[0]->share_flags->get_current_phase(), number.current_phase);
+      //(initial_params::varsptr[0])->get_share_flags()->get_maxshare() = 1;
+      number.get_share_flags()->get_maxshare() = 1;
+      //ASSERT_EQ(initial_params::varsptr[0]->share_flags->get_maxshare(), 1);
+      ASSERT_EQ(initial_params::nvarcalc(), 1);
+      dvector empty(1, 1);
       lac.get_uhat_lm_newton(empty, pmin);
     }
-*/
 
     delete objective_function_value::pobjfun;
     objective_function_value::pobjfun = nullptr;

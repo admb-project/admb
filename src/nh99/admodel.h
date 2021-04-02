@@ -1025,6 +1025,7 @@ private:
   virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
+public:
   void allocate(int imin,int imax,int phasestart=1,const char * s="UNNAMED");
   void allocate(const ad_integer& imin,const ad_integer& imax,
     const ad_integer& phasestart=1,const char * s="UNNAMED");
@@ -1040,6 +1041,7 @@ public:
   param_init_vector& operator = (const dvar_vector&);
   param_init_vector& operator = (const prevariable&);
   param_init_vector& operator = (const double&);
+  shareinfo* get_share_flags() const { return share_flags; }
 };
 
 /**

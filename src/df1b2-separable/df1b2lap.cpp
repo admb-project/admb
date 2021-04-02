@@ -1018,6 +1018,7 @@ laplace_approximation_calculator::laplace_approximation_calculator(
   ivector _maxder,
   function_minimizer* _pmin
 ):
+  init_switch(1),
   separable_call_level(1),
   triplet_information(0),
   compressed_triplet_information(0),

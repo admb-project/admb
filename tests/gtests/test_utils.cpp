@@ -257,3 +257,20 @@ TEST_F(test_utils, singval_decomp_empty)
     singval_decomp(empty);
   });
 }
+TEST_F(test_utils, fcomp1)
+{
+  double fcomp1(dvector x, dvector d, int samplesize, int n, dvector& g, dmatrix& M);
+
+  int samplesize = 2;
+  int n = 1;
+  dvector x(1, (samplesize - 1) * n);
+  x = 10;
+  dvector d(1, samplesize);
+  d = 10;
+  dvector g(1, (samplesize - 1) * n);
+  dmatrix M(1, samplesize, 1, n);
+  M = 5;
+  double f = fcomp1(x, d, samplesize, n, g, M);
+  ASSERT_DOUBLE_EQ(g(1), 46.051701859880922);
+  ASSERT_DOUBLE_EQ(f, 789.21885044586338);
+}

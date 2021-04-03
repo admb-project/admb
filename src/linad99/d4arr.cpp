@@ -115,7 +115,7 @@ void d4_array::deallocate()
     }
     allocate();
   }
-#if defined(DEBUG)
+#if defined(DIAG)
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated d4_array.\n";

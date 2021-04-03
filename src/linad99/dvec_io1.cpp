@@ -139,7 +139,7 @@ dvector::dvector(char* filename, const int& column)
   }
 
 #ifdef DIAG
-   cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
+   cout << "Created a ncopies with address " << _farptr_tolong(&(shape->ncopies))
         <<"\n";
    cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    if (sizeof(int)==sizeof(char*))
@@ -153,6 +153,7 @@ dvector::dvector(char* filename, const int& column)
       //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
       //cerr << "pointer = "<< (unsigned int) v <<
       //" indexmin() = "<<indexmin()<<"\n";
+        void denormalize_ptr(void * ptr, unsigned int byte_offset);
         denormalize_ptr(&v, indexmin() * sizeof(double));
      }
    }

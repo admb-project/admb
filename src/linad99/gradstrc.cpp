@@ -131,7 +131,7 @@ unsigned int gradient_structure::MAX_DLINKS = 5000;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
 #ifdef DIAG
-long int farptr_tolong(void *) ;
+long int _farptr_tolong(void *) ;
 #endif
 void memory_allocate_error(const char * s, void * ptr);
 
@@ -444,7 +444,7 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
      gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
    }
 #ifdef DIAG
-   cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
+   cout << "GRAD_STACK1= "<< _farptr_tolong(GRAD_STACK1)<<"\n";
 #endif
 
    if (INDVAR_LIST!= NULL)

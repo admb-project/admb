@@ -157,8 +157,8 @@ dvar_vector::dvar_vector(const char * s)
    allocate(1,count);
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)<<"\n";
-     cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(&(shape->ncopies))<<"\n";
+     cout << "Created a dvector with address " << _farptr_tolong(va) <<"\n";
    #endif
 #ifndef OPT_LIB
   assert(size() > 0);

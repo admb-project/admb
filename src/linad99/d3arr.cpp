@@ -649,7 +649,7 @@ void d3_array::deallocate()
     }
     allocate();
   }
-#if defined(DEBUG)
+#if defined(DIAG)
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated d3_array.\n";

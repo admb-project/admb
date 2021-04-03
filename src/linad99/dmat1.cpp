@@ -4,6 +4,11 @@
  */
 #include "fvar.hpp"
 
+#ifdef DIAG
+  int heapcheck();
+  #define _HEAPCORRUPT 1
+#endif
+
 /**
 Returns product of AB where A is a vector and B is a matrix.
 

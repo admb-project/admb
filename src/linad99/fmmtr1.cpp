@@ -525,7 +525,7 @@ label777:
          if (ireturn <= 0)
          #ifdef DIAG
            if (ad_printf) (*ad_printf)("Final values of h in fmin:\n");
-           cout << h << "\n";
+           //cout << h << "\n";
          #endif
          #ifdef __ZTC__
          {

@@ -484,6 +484,7 @@ PVM=\
  slgrdclc.obj\
  adcomm1.obj
 DIAG=\
+ denorm.obj\
  ptr2.obj
 UNUSED=\
  xfmmtr1.obj\

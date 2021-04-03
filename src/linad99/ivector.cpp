@@ -106,7 +106,7 @@ void ivector::deallocate()
     }
     allocate();
   }
-#if defined(DEBUG)
+#if defined(DIAG)
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated i3_array.\n";
@@ -135,8 +135,9 @@ Shallow copy other data structure pointers.
 */
 void ivector::shallow_copy(const ivector& other)
 {
-#ifdef DEBUG
-  cout << "Copy constructor called for ivector with address." << endl;
+#ifdef DIAG
+  cout << "Copy constructor called for ivector with address "
+       << _farptr_tolong(other.v) <<"\n";
 #endif
   if (other.shape)
   {
@@ -149,7 +150,7 @@ void ivector::shallow_copy(const ivector& other)
   }
   else
   {
-#ifdef DEBUG
+#ifdef DIAG
     cerr << "Warning -- Unable to shallow copy an unallocated i3_array.\n";
 #endif
     allocate();
@@ -325,7 +326,7 @@ void ivector::allocate()
  */
 ivector::ivector(const preivector& pdv)
 {
-#if defined(DEBUG)
+#if defined(DIAG)
   cout << "starting out in ivector constructor\n";
 #endif
 

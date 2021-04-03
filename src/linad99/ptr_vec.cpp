@@ -40,7 +40,7 @@ ptr_vector::~ptr_vector()
 {
 #ifdef DIAG
      cout << "deleting an ivector with address " << _farptr_tolong(v)
-          <<" and ncopies = " << *ncopies <<"\n";
+          <<" and ncopies = " << shape->ncopies <<"\n";
 #endif
   if (shape->ncopies)
   {

@@ -196,7 +196,7 @@ ifdef SHARED
   endif
 endif
 
-ifeq ($(DEBUG),yes)
+ifdef DEBUG
   ADCXXFLAGS:= -g $(ADCXXFLAGS)
 else
   ifeq ($(CXX),openCC)
@@ -260,6 +260,8 @@ endif
 
 ifeq ($(DEBUG),yes)
 ADCXXFLAGS:= $(ADCXXFLAGS) -DDEBUG
+else ifeq ($(DEBUG),diag)
+ADCXXFLAGS:= $(ADCXXFLAGS) -DDEBUG=0
 endif
 
 #ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL
@@ -312,6 +314,10 @@ OBJECTS=$(addprefix optlp-df1b2-separable-,$(OBJ0)) $(addprefix saflp-df1b2-sepa
 include linad99/objects.lst
 OBJECTS:=$(OBJECTS) $(addprefix optlp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4))
 OBJECTS:=$(OBJECTS) $(addprefix saflp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ16))
+ifeq ($(DEBUG),diag)
+OBJECTS:=$(OBJECTS) $(addprefix optlp-linad99-,$(DIAG))
+OBJECTS:=$(OBJECTS) $(addprefix saflp-linad99-,$(DIAG))
+endif
 ifeq ($(CXX),icpc)
 OBJECTS:=$(OBJECTS) $(addprefix optlp-linad99-,$(OBJ16))
 endif

@@ -99,7 +99,7 @@ void funnel_gradcalc(void)
   if(gradient_structure::GRAD_STACK1->ptr
        <= gradient_structure::GRAD_STACK1->ptr_first)
   {
-#ifdef DEBUG
+#ifdef DIAG
       cerr <<
         "warning -- calling funnel_gradcalc when no calculations generating"
            << endl << "derivative information have occurred" << endl;

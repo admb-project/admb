@@ -16,6 +16,10 @@ ADMB-12.3-git
 
 #### Changes and Improvements
 
+* Defined DEBUG macro in build files.
+
+* Defined DEBUG=diag in main Makefile to build ADMB with diagnostic outputs.
+
 * Copy sparse headers to distribution includes.
 
 * Fixed typo bug in df1b2matrix& df1b2matrix::operator=(const df1b2variable&).

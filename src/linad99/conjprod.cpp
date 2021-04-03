@@ -675,8 +675,10 @@ label120:
     rho_0=right_bracket-left_bracket;
 
 #ifdef DIAG
+  #ifdef CUBIC_INTERPOLATION
       cout << "f'(x) " << gamma  << "   "
          << "f'(y) " << gamma1 << endl;
+  #endif
 
       cout << "f(x)  " << left_bracket_value  << "   "
          << "f(y)  " << right_bracket_value << endl;
@@ -874,7 +876,7 @@ void bracket_report(const dvector& theta, const double& left_bracket,
 #ifdef DIAG
     cout << "lb " <<  setprecision(4) << setw(12) << left_bracket
       << "rb " << setprecision(4) << setw(12)  << right_bracket
-      << setprecision(4) << setw(12) << theta(ii) <<"\n";
+      << setprecision(4) << setw(12) << theta <<"\n";
 #endif
 }
 

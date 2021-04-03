@@ -218,7 +218,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
     print_values(_f,_x,_g);
   }
 
-#ifdef DEBUG
+#if defined(DIAG)
   adtimer fmintime;
 #endif
 
@@ -513,7 +513,7 @@ label21 : /* Calculating Newton step */
          x.elem(i)=xx.elem(i);
       w.elem(1)=-g.elem(1);
 
-#ifdef DEBUG
+#if defined(DIAG)
       cout << __FILE__ << ':' << __LINE__ << ' '
 	   << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
@@ -829,7 +829,7 @@ label65: /* save in g the gradient df(x_k+alpha*p_k) */
 label70:  // Hessian update
       w.elem(iv+1)=w.elem(iu+1);
 
-#ifdef DEBUG
+#if defined(DIAG)
       cout << __FILE__ << ':' << __LINE__ << ' '
 	   << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
@@ -847,7 +847,7 @@ label70:  // Hessian update
          w.elem(iv+i)=z;
       }
 
-#ifdef DEBUG
+#if defined(DIAG)
       cout << __FILE__ << ':' << __LINE__ << ' '
 	   << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
@@ -958,7 +958,7 @@ label777: /* Printing final Hessian approximation */
          if (ireturn <= 0)
          #ifdef DIAG
            if (ad_printf) (*ad_printf)("Final values of h in fmin:\n");
-           cout << h << "\n";
+           //cout << h << "\n";
          #endif
          #ifdef __ZTC__
          {

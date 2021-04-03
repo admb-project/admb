@@ -18,7 +18,7 @@
 
 #include "fvar.hpp"
 
-#ifdef DOSX286
+#ifdef DIAG
   int heapcheck(void){return 0;}
 #else
   /// Does nothing.
@@ -156,7 +156,7 @@ Explicit shallow copy.
 */
 void dvector::shallow_copy(const dvector& other)
 {
-#ifdef DEBUG
+#if defined(DIAG)
   cout << "starting out in dvector contructor\n";
 #endif
   shape = other.shape;

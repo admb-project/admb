@@ -190,7 +190,7 @@ dvector::dvector(const char* s)
     v -= indexmin();
 
 #ifdef DIAG
-    cout << "Created ncopies with address " << _farptr_tolong(ncopies) <<"\n";
+    cout << "Created ncopies with address " << _farptr_tolong(&(shape->ncopies)) <<"\n";
     cout << "Created dvector with address " << _farptr_tolong(v) <<"\n";
 #endif
     char* err_ptr;
@@ -382,7 +382,7 @@ void dvector::allocate(const char* s)
     }
 
 #ifdef DIAG
-    cout << "Created ncopies with address " << _farptr_tolong(ncopies) << "\n";
+    cout << "Created ncopies with address " << _farptr_tolong(&(shape->ncopies)) << "\n";
     cout << "Created dvector with address " << _farptr_tolong(v) << "\n";
 #endif
     index_min = 1;

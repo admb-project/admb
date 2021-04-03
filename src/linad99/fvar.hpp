@@ -38,6 +38,12 @@
  */
 #ifndef FVAR_HPP
 #define FVAR_HPP
+
+#if defined(DEBUG)
+  #if DEBUG==0
+    #define DIAG
+  #endif
+#endif
 /** \file fvar.hpp
 AUTODIF classes.
 Class definitions for reverse mode automatic differentiation.

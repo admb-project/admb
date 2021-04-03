@@ -171,12 +171,12 @@ GTESTS_ALL=\
  test_quadratic_prior.cpp\
  test_laplace_approximation_calculator.cpp\
  test_df1b2atan2.cpp\
+ test_dll_param_init_bounded_vector.cpp\
  main.cpp
 
 ERRORS=\
  test_cfenv.cpp\
  test_dependent_variables_information.cpp\
- test_dll_param_init_bounded_vector.cpp\
  test_finance.cpp\
  test_grad_stack.cpp\
  test_gradient_structure.cpp\

@@ -2,6 +2,11 @@
 #include <admodel.h>
 #include <climits>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_param_init_vector: public ::testing::Test {};
 
 TEST_F(test_param_init_vector, constructor)
@@ -51,4 +56,21 @@ TEST_F(test_param_init_vector, allocate_phase_start)
   p = val;
   ASSERT_DOUBLE_EQ(16.5, value(p(2)));
   ASSERT_DOUBLE_EQ(16.5, value(p(3)));
+}
+TEST_F(test_param_init_vector, setshare)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_vector p;
+
+  index_type sf(1);
+  index_type af(1);
+
+  shareinfo info(sf, af);
+  ASSERT_EQ(sf.dimension(), 0);
+
+  ad_exit=&test_ad_exit;
+
+  ASSERT_THROW(p.setshare(sf, af), int);
 }

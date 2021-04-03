@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 #include "admodel.h"
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_param_init_number: public ::testing::Test {};
 
 TEST_F(test_param_init_number, constructor)
@@ -70,4 +75,56 @@ TEST_F(test_param_init_number, add_value)
   p.add_value(dev, dev, ii, s, diag);
 
   ASSERT_EQ(value(p), 0);
+}
+TEST_F(test_param_init_number, setshare)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_number p;
+
+  index_type sf(1);
+  index_type af(1);
+ 
+  ad_exit=&test_ad_exit;
+
+  ASSERT_THROW(p.setshare(sf, af), int);
+}
+TEST_F(test_param_init_number, shared_size_count)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_number p;
+
+  ad_exit=&test_ad_exit;
+
+  ASSERT_THROW(p.shared_size_count(), int);
+}
+TEST_F(test_param_init_number, shared_set_value)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_number p;
+
+  dvar_vector x; 
+  int ii = 0;
+  dvariable pen; 
+  ad_exit=&test_ad_exit;
+
+  ASSERT_THROW(p.shared_set_value(x, ii, pen), int);
+}
+TEST_F(test_param_init_number, shared_set_value_inv)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_number p;
+
+  dvector x; 
+  int ii = 0;
+  ad_exit=&test_ad_exit;
+
+  ASSERT_THROW(p.shared_set_value_inv(x, ii), int);
 }

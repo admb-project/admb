@@ -245,3 +245,56 @@ TEST_F(test_param_init_matrix, add_value)
   ASSERT_EQ(p(2, 3), 0);
   ASSERT_EQ(p(2, 4), 0);
 }
+TEST_F(test_param_init_matrix, setshare_error)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_matrix p;
+
+  index_type sf(1);
+  index_type af(1);
+
+  shareinfo info(sf, af);
+  ASSERT_EQ(sf.dimension(), 0);
+
+  ad_exit=&test_ad_exit;
+
+  ASSERT_THROW(p.setshare(sf, af), int);
+}
+TEST_F(test_param_init_matrix, setshare_dimension_1)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_matrix p;
+
+  ivector iv(1, 1);
+  index_type sf(iv);
+  index_type af(1);
+
+  shareinfo info(sf, af);
+  ASSERT_EQ(sf.dimension(), 1);
+
+  ad_exit=&test_ad_exit;
+
+  p.setshare(sf, af);
+}
+TEST_F(test_param_init_matrix, setshare_dimension_2_error)
+{
+  ad_comm::argc = 0;
+  ad_comm::argv = NULL;
+  gradient_structure gs;
+  param_init_matrix p;
+
+  imatrix m(1, 1, 1, 1);
+  index_type sf(m);
+  index_type af(1);
+
+  shareinfo info(sf, af);
+  ASSERT_EQ(sf.dimension(), 2);
+
+  ad_exit=&test_ad_exit;
+
+  ASSERT_THROW(p.setshare(sf, af), int);
+}

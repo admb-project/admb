@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 #include <df1b2fun.h>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_quadratic_prior: public ::testing::Test {};
 
 class my_quadratic_prior: public quadratic_prior
@@ -95,4 +100,15 @@ TEST_F(test_quadratic_prior, assignment_dmatrix)
 
   laplace_approximation_calculator::where_are_we_flag = 0;
   ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+}
+TEST_F(test_quadratic_prior, allocate_null)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  my_quadratic_prior data;
+
+  dvar_vector empty;
+  ASSERT_THROW(data.allocate(empty, "empty"), int);
 }

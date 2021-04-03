@@ -7,7 +7,7 @@ class my_quadratic_prior: public quadratic_prior
 {
 public:
   void set_old_style_flag() {}
-  void get_cM() {}
+  void get_cM(void) {}
 
   void operator=(const dmatrix& M)
     { quadratic_prior::operator=(M); }

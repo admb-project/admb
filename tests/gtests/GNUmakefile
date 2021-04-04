@@ -170,7 +170,6 @@ GTESTS_ALL=\
  test_shareinfo.cpp\
  test_quadratic_prior.cpp\
  test_laplace_approximation_calculator.cpp\
- test_df1b2atan2.cpp\
  test_dll_param_init_bounded_vector.cpp\
  main.cpp
 
@@ -192,7 +191,11 @@ ERRORS=\
 ifdef GTESTS_DEV
 GTESTS=$(GTESTS_DEV)
 else
-GTESTS=$(GTESTS_ALL)
+  ifeq ($(OS),Windows_NT)
+    GTESTS=$(GTESTS_ALL)
+  else
+    GTESTS=$(GTESTS_ALL) test_df1b2atan2.cpp
+  endif
 endif
 
 ifeq ($(CXX),openCC)

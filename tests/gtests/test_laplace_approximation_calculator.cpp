@@ -442,7 +442,7 @@ TEST_F(test_laplace_approximation_calculator, unallocated_pool_for_check_pool_si
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_laplace_approximation_calculator, check_sparse_matrix_structure)
+TEST_F(test_laplace_approximation_calculator, DISABLED_check_sparse_matrix_structure)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -494,7 +494,7 @@ TEST_F(test_laplace_approximation_calculator, check_sparse_matrix_structure)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_laplace_approximation_calculator, check_sparse_matrix_structure_derindex)
+TEST_F(test_laplace_approximation_calculator, DISABLED_check_sparse_matrix_structure_derindex)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);

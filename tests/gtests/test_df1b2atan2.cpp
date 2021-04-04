@@ -97,7 +97,11 @@ TEST_F(test_df1b2atan2, default_constructor_deallocate)
   }
   df1b2variable::pool = nullptr;
 }
+#ifdef _WIN32
+TEST_F(test_df1b2atan2, DISABLED_default_constructor_initialize_int)
+#else
 TEST_F(test_df1b2atan2, default_constructor_initialize_int)
+#endif
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;

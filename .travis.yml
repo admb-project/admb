@@ -752,6 +752,7 @@ jobs:
   - os: windows
     env:
     - SAFE_ONLY=yes
+    - DEBUG=yes
     compiler: gcc
     script:
     - utilities/make.exe clean
@@ -770,5 +771,6 @@ jobs:
   - os: windows
     env:
     - SAFE_ONLY=yes
+    - DEBUG=yes
     script:
     - scripts/ci/travis-windows-vc-build.bat

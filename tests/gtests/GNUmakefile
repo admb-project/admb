@@ -167,7 +167,6 @@ GTESTS_ALL=\
  test_nested_calls_shape.cpp\
  test_df1b2bessel.cpp\
  test_funnel_init_df1b2variable.cpp\
- test_shareinfo.cpp\
  test_laplace_approximation_calculator.cpp\
  main.cpp
 
@@ -187,6 +186,7 @@ ERRORS=\
  test_df1b2atan2.cpp\
  test_dll_param_init_bounded_vector.cpp\
  test_quadratic_prior.cpp\
+ test_shareinfo.cpp\
  main.cpp
 
 ifdef GTESTS_DEV

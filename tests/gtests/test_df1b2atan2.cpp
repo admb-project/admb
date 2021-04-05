@@ -31,8 +31,11 @@ public:
     initial_params::varsptr.initialize();
   }
 };
-
+#if defined(DEBUG)
 TEST_F(test_df1b2atan2, should_fail_df1b2variable_null_constructor)
+#else
+TEST_F(test_df1b2atan2, DISABLED_should_fail_df1b2variable_null_constructor)
+#endif
 {
   df1b2variable::noallocate = 0;
   ASSERT_DEATH({df1b2variable y;}, "Assertion");
@@ -42,7 +45,11 @@ TEST_F(test_df1b2atan2, noallocate_df1b2variable_null_constructor)
   df1b2variable::noallocate = 1;
   df1b2variable y;
 }
+#if defined(DEBUG)
 TEST_F(test_df1b2atan2, noallocate_df1b2variable_null_constructor_allocate)
+#else
+TEST_F(test_df1b2atan2, DISABLED_noallocate_df1b2variable_null_constructor_allocate)
+#endif
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;

@@ -170,7 +170,6 @@ GTESTS_ALL=\
  test_shareinfo.cpp\
  test_quadratic_prior.cpp\
  test_laplace_approximation_calculator.cpp\
- test_dll_param_init_bounded_vector.cpp\
  main.cpp
 
 ERRORS=\
@@ -187,6 +186,7 @@ ERRORS=\
 
 #GTESTS_DEV=\
  test_df1b2atan2.cpp\
+ test_dll_param_init_bounded_vector.cpp\
  main.cpp
 
 ifdef GTESTS_DEV

@@ -32,11 +32,7 @@ public:
   }
 };
 
-#ifdef DEBUG
 TEST_F(test_df1b2atan2, should_fail_df1b2variable_null_constructor)
-#else
-TEST_F(test_df1b2atan2, DISABLED_should_fail_df1b2variable_null_constructor)
-#endif
 {
   df1b2variable::noallocate = 0;
   ASSERT_DEATH({df1b2variable y;}, "Assertion");
@@ -46,11 +42,7 @@ TEST_F(test_df1b2atan2, noallocate_df1b2variable_null_constructor)
   df1b2variable::noallocate = 1;
   df1b2variable y;
 }
-#ifdef DEBUG
 TEST_F(test_df1b2atan2, noallocate_df1b2variable_null_constructor_allocate)
-#else
-TEST_F(test_df1b2atan2, DISABLED_noallocate_df1b2variable_null_constructor_allocate)
-#endif
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;
@@ -97,11 +89,7 @@ TEST_F(test_df1b2atan2, default_constructor_deallocate)
   }
   df1b2variable::pool = nullptr;
 }
-#ifdef _WIN32
-TEST_F(test_df1b2atan2, DISABLED_default_constructor_initialize_int)
-#else
 TEST_F(test_df1b2atan2, default_constructor_initialize_int)
-#endif
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;
@@ -114,6 +102,8 @@ TEST_F(test_df1b2atan2, default_constructor_initialize_int)
     y.ptr = (double*)pool.alloc();
 
     y.initialize(808);
+
+    y.deallocate();
   }
   df1b2variable::pool = nullptr;
 }
@@ -131,6 +121,8 @@ TEST_F(test_df1b2atan2, default_constructor_initialize)
     y.ptr = (double*)pool.alloc();
 
     y.initialize();
+
+    y.deallocate();
   }
   df1b2variable::pool = nullptr;
 }

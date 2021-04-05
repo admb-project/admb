@@ -451,7 +451,11 @@ TEST_F(test_laplace_approximation_calculator, unallocated_pool_for_check_pool_si
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
+#ifdef _WIN32
+TEST_F(test_laplace_approximation_calculator, DISABLED_unallocated_pool_for_check_pool_size_2)
+#else
 TEST_F(test_laplace_approximation_calculator, unallocated_pool_for_check_pool_size_2)
+#endif
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);

@@ -186,16 +186,13 @@ ERRORS=\
  main.cpp
 
 #GTESTS_DEV=\
+ test_df1b2atan2.cpp\
  main.cpp
 
 ifdef GTESTS_DEV
 GTESTS=$(GTESTS_DEV)
 else
-  ifeq ($(OS),Windows_NT)
-    GTESTS=$(GTESTS_ALL)
-  else
-    GTESTS=$(GTESTS_ALL) test_df1b2atan2.cpp
-  endif
+GTESTS=$(GTESTS_ALL)
 endif
 
 ifeq ($(CXX),openCC)

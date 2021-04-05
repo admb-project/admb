@@ -621,7 +621,11 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_check_sparse_matrix_struc
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
+#ifdef _WIN32
+TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton)
+#else
 TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton)
+#endif
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);

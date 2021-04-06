@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <fstream>
 #include <fvar.hpp>
+#include <admodel.h>
 
 extern "C"
 {
@@ -418,6 +419,9 @@ TEST_F(test_utils, inv_cumd_mixture_02)
 
   zz = 0.001;
   ASSERT_DOUBLE_EQ(inv_cumd_mixture_02(zz), -8.9289930215071145);
+
+  zz = 0.03;
+  ASSERT_DOUBLE_EQ(inv_cumd_mixture_02(zz), -1.9634901490889378);
 }
 TEST_F(test_utils, inv_cumd_mixture)
 {
@@ -428,4 +432,34 @@ TEST_F(test_utils, inv_cumd_mixture)
 
   zz = 0.001;
   ASSERT_DOUBLE_EQ(inv_cumd_mixture(zz), -22.478280885941615);
+
+  zz = 0.03;
+  ASSERT_DOUBLE_EQ(inv_cumd_mixture(zz), -2.0329110115658309);
+}
+TEST_F(test_utils, inv_cumd_norm_ln)
+{
+  double inv_cumd_norm_ln(const double& x);
+
+  double x = 0;
+  ASSERT_DOUBLE_EQ(inv_cumd_norm_ln(x), 0);
+
+  x = -0.5;
+  ASSERT_DOUBLE_EQ(inv_cumd_norm_ln(x), 0.26986516776287539);
+
+  x = -0.1;
+  ASSERT_DOUBLE_EQ(inv_cumd_norm_ln(x), 1.3098127659105443);
+}
+TEST_F(test_utils, cumd_mixture)
+{
+  double cumd_mixture(const double& x);
+
+  double x = 0;
+  ASSERT_DOUBLE_EQ(cumd_mixture(x), 0.50000000050027404);
+}
+TEST_F(test_utils, cumd_mixture_02)
+{
+  double cumd_mixture_02(const double& x);
+
+  double x = 0;
+  ASSERT_DOUBLE_EQ(cumd_mixture_02(x), 0.50000000051607218);
 }

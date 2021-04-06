@@ -175,13 +175,11 @@ GTESTS_ALL=\
 ERRORS=\
  test_cfenv.cpp\
  test_dependent_variables_information.cpp\
- test_finance.cpp\
  test_grad_stack.cpp\
  test_gradient_structure.cpp\
  test_gradient_structure2.cpp\
  test_humungous_pointer.cpp\
  test_nuts.cpp\
- test_scalefactor.cpp\
  main.cpp
 
 #GTESTS_DEV=\
@@ -203,10 +201,22 @@ endif
 all: clean
 	$(MAKE) run
 
+ifdef GTESTS_DEV
 run: gtest-all
+else
+run: gtest-all gtest-finance gtest-scalefactor
+endif
 ifeq ($(CMDSHELL),cmd)
+  ifndef GTESTS_DEV
+	gtest-finance
+	gtest-scalefactor
+  endif
 	gtest-all
 else
+  ifndef GTESTS_DEV
+	./gtest-finance
+	./gtest-scalefactor
+  endif
 	./gtest-all
 endif
 
@@ -241,11 +251,11 @@ else
 	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c $^
 endif
 
-test_scalefactor: test_scalefactor.obj main.obj gtest-all.obj scalefactor.obj
+gtest-scalefactor: test_scalefactor.obj main.obj gtest-all.obj scalefactor.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 endif
 
 test_finance.obj: test_finance.cpp finance.obj
@@ -262,12 +272,12 @@ else
 	CXXFLAGS=-Dmain=finance ../../admb$(EXT) -c $^
 endif
 
-test_finance: test_finance.obj main.obj gtest-all.obj finance.obj
+gtest-finance: test_finance.obj main.obj gtest-all.obj finance.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
 	copy ..\\..\\examples\\admb\\finance\\finance.dat
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 	cp ../../examples/admb/finance/finance.dat .
 endif
 

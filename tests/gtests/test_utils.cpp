@@ -193,7 +193,7 @@ TEST_F(test_utils, allocated_arr6)
   d6_array arr6;
 
   ASSERT_EQ(0, allocated(arr6));
- 
+
   arr6.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
 
   ASSERT_EQ(1, allocated(arr6));
@@ -205,7 +205,7 @@ TEST_F(test_utils, allocated_varr6)
   dvar6_array arr6;
 
   ASSERT_EQ(0, allocated(arr6));
- 
+
   arr6.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
 
   ASSERT_EQ(1, allocated(arr6));
@@ -215,7 +215,7 @@ TEST_F(test_utils, allocated_arr7)
   d7_array arr7;
 
   ASSERT_EQ(0, allocated(arr7));
- 
+
   arr7.allocate(1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2);
 
   ASSERT_EQ(1, allocated(arr7));
@@ -227,7 +227,7 @@ TEST_F(test_utils, allocated_varr7)
   dvar7_array arr7;
 
   ASSERT_EQ(0, allocated(arr7));
- 
+
   arr7.allocate(1, 2, 1, 2, 1, 1, 2, 2, 1, 2, 1, 2, 1, 2);
 
   ASSERT_EQ(1, allocated(arr7));
@@ -273,4 +273,79 @@ TEST_F(test_utils, fcomp1)
   double f = fcomp1(x, d, samplesize, n, g, M);
   ASSERT_DOUBLE_EQ(g(1), 46.051701859880922);
   ASSERT_DOUBLE_EQ(f, 789.21885044586338);
+}
+TEST_F(test_utils, read_hessian_matrix_and_scale1)
+{
+  void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double rbp, int mcmc2_flag);
+
+  uostream ofs("admodel.hes");
+
+  int nvar = 2;
+  ofs << nvar;
+
+  dmatrix SS(1, nvar, 1, nvar);
+  SS(1, 1) = 1;
+  SS(1, 2) = 2;
+  SS(2, 1) = 3;
+  SS(2, 2) = 4;
+
+  ofs << SS;
+
+  ofs.close();
+
+  read_hessian_matrix_and_scale1(nvar, SS, 1, 0);
+}
+TEST_F(test_utils, log_likelihood_mixture)
+{
+  double log_likelihood_mixture(const double& x);
+
+  double x = 0;
+
+  double result = log_likelihood_mixture(x);
+
+  ASSERT_DOUBLE_EQ(std::log(0.379+0.01254), result);
+}
+TEST_F(test_utils, log_likelihood_mixture_02)
+{
+  double log_likelihood_mixture_02(const double& x);
+
+  double x = 0;
+
+  double result = log_likelihood_mixture_02(x);
+
+  ASSERT_DOUBLE_EQ(std::log(0.391+0.004502), result);
+}
+TEST_F(test_utils, ln_normal_tail_left)
+{
+  double ln_normal_tail_left(const double& x);
+
+  double x = -2;
+
+  double result = ln_normal_tail_left(x);
+
+  ASSERT_DOUBLE_EQ(-3.7820288432464331, result);
+}
+TEST_F(test_utils, ln_normal_tail_right_zero)
+{
+  double ln_normal_tail_right(const double& x);
+
+  double x = 0;
+
+  ASSERT_EXIT(ln_normal_tail_right(x), testing::ExitedWithCode(1), "ln_normal_tail_right");
+}
+TEST_F(test_utils, ln_normal_tail_leftt_zero)
+{
+  double ln_normal_tail_left(const double& x);
+
+  double x = 0;
+
+  ASSERT_EXIT(ln_normal_tail_left(x), testing::ExitedWithCode(1), "ln_normal_tail_left");
+}
+TEST_F(test_utils, ln_normal_tail)
+{
+  double ln_normal_tail(const double& x);
+
+  double x = 0;
+
+  ASSERT_EXIT(ln_normal_tail(x), testing::ExitedWithCode(1), "ln_normal_tail");
 }

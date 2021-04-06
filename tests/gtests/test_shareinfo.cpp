@@ -40,6 +40,8 @@ TEST_F(test_shareinfo, get_inv_matrix_shared_same)
 }
 TEST_F(test_shareinfo, get_inv_matrix_shared_01)
 {
+  ad_exit=&test_ad_exit;
+
   index_type sf(1);
   index_type af(1);
   shareinfo info(sf, af);

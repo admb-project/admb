@@ -1,5 +1,3 @@
-DEBUG=yes
-
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
@@ -169,6 +167,8 @@ GTESTS_ALL=\
  test_funnel_init_df1b2variable.cpp\
  test_laplace_approximation_calculator.cpp\
  test_df1b2atan2.cpp\
+ test_shareinfo.cpp\
+ test_quadratic_prior.cpp\
  main.cpp
 
 ERRORS=\
@@ -185,8 +185,8 @@ ERRORS=\
 
 #GTESTS_DEV=\
  test_dll_param_init_bounded_vector.cpp\
- test_quadratic_prior.cpp\
- test_shareinfo.cpp\
+ main.cpp
+#GTESTS_DEV=\
  main.cpp
 
 ifdef GTESTS_DEV

@@ -202,6 +202,7 @@ all: clean
 	$(MAKE) run
 
 run:
+	$(MAKE) googletest-read-only
 	$(MAKE) gtest-finance
 	$(MAKE) gtest-scalefactor
 	$(MAKE) gtest-all
@@ -216,6 +217,7 @@ else
 endif
 
 dev: clean
+	$(MAKE) googletest-read-only
 	$(MAKE) gtest-dev
 ifeq ($(CMDSHELL),cmd)
 	gtest-dev

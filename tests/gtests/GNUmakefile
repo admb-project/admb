@@ -182,7 +182,7 @@ ERRORS=\
  test_nuts.cpp\
  main.cpp
 
-#GTESTS_DEV=\
+GTESTS_DEV=\
  main.cpp
 
 ifdef GTESTS_DEV
@@ -201,23 +201,26 @@ endif
 all: clean
 	$(MAKE) run
 
-ifdef GTESTS_DEV
-run: gtest-all
-else
-run: gtest-all gtest-finance gtest-scalefactor
-endif
+run:
+	$(MAKE) gtest-finance
+	$(MAKE) gtest-scalefactor
+	$(MAKE) gtest-all
 ifeq ($(CMDSHELL),cmd)
-  ifndef GTESTS_DEV
 	gtest-finance
 	gtest-scalefactor
-  endif
 	gtest-all
 else
-  ifndef GTESTS_DEV
 	./gtest-finance
 	./gtest-scalefactor
-  endif
 	./gtest-all
+endif
+
+dev: clean
+	$(MAKE) gtest-dev
+ifeq ($(CMDSHELL),cmd)
+	gtest-dev
+else
+	./gtest-dev
 endif
 
 memcheck: gtest-all
@@ -239,53 +242,60 @@ endif
 
 test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_scalefactor.cpp
+	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" & ..\\..\\admb -c $(ADMB_OPTIONS) test_scalefactor.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_scalefactor.cpp
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_scalefactor.cpp
 endif
 
 scalefactor.obj: scalefactor.tpl
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS="-Dmain=scalefactor" & ..\\..\\admb -c $^
+	set CXXFLAGS="$(CXXFLAGS) -Dmain=scalefactor" & ..\\..\\admb -c $^
 else
-	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c $^
+	CXXFLAGS="$(CXXFLAGS) -Dmain=scalefactor" ../../admb$(EXT) -c $^
 endif
 
-gtest-scalefactor: test_scalefactor.obj main.obj gtest-all.obj scalefactor.obj
+gtest-scalefactor: test_scalefactor.obj main.cpp gtest-all.obj scalefactor.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 endif
 
 test_finance.obj: test_finance.cpp finance.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_finance.cpp
+	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" & ..\\..\\admb -c $(ADMB_OPTIONS) test_finance.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_finance.cpp
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_finance.cpp
 endif
 
 finance.obj: finance.tpl
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS="-Dmain=finance" & ..\\..\\admb -c $^
+	set CXXFLAGS="$(CXXFLAGS) -Dmain=finance" & ..\\..\\admb -c $^
 else
-	CXXFLAGS=-Dmain=finance ../../admb$(EXT) -c $^
+	CXXFLAGS="$(CXXFLAGS) -Dmain=finance" ../../admb$(EXT) -c $^
 endif
 
-gtest-finance: test_finance.obj main.obj gtest-all.obj finance.obj
+gtest-finance: test_finance.obj main.cpp gtest-all.obj finance.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+	set CXXFLAGS="$CXXFLAGS) -I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
 	copy ..\\..\\examples\\admb\\finance\\finance.dat
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 	cp ../../examples/admb/finance/finance.dat .
 endif
 
-gtest-all: gtest-all.obj $(GTESTS)
+gtest-all: gtest-all.obj $(GTESTS_ALL)
 ifeq ($(CMDSHELL),cmd)
 	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) $(ADMB_OPTIONS) $^
+endif
+
+gtest-dev: gtest-all.obj $(GTESTS_DEV)
+ifeq ($(CMDSHELL),cmd)
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+else
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 endif
 
 test_nuts.obj: test_nuts.cpp

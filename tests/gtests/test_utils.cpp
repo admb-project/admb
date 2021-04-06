@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <fstream>
 #include <fvar.hpp>
 
 extern "C"
@@ -295,6 +296,65 @@ TEST_F(test_utils, read_hessian_matrix_and_scale1)
 
   read_hessian_matrix_and_scale1(nvar, SS, 1, 0);
 }
+TEST_F(test_utils, read_hessian_matrix_and_scale)
+{
+  void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS, const dvector& pen_vector);
+
+  uostream ofs("admodel.hes");
+
+  int nvar = 2;
+  ofs << nvar;
+
+  dmatrix SS(1, nvar, 1, nvar);
+  SS(1, 1) = 1;
+  SS(1, 2) = 2;
+  SS(2, 1) = 3;
+  SS(2, 2) = 4;
+
+  ofs << SS;
+
+  ofs.close();
+
+  std::ofstream ofs2("admodel.bvs");
+  ofs2 << "1 1" << std::endl;
+  ofs2.close();
+
+  ad_comm::adprogram_name = "admodel";
+  dvector pen_vector;
+  ASSERT_EXIT(read_hessian_matrix_and_scale(nvar, SS, pen_vector), testing::ExitedWithCode(1), "");
+}
+TEST_F(test_utils, read_hessian_matrix_and_scale_zero)
+{
+  void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS, const dvector& pen_vector);
+
+  uostream ofs("admodel.hes");
+
+  int nvar = 2;
+  ofs << nvar;
+
+  dmatrix SS(1, nvar, 1, nvar);
+  SS(1, 1) = 1;
+  SS(1, 2) = -2;
+  SS(2, 1) = 3;
+  SS(2, 2) = 4;
+
+  ofs << SS;
+
+  ofs.close();
+
+  std::ofstream ofs2("admodel.bvs");
+  ofs2 << "0 0" << std::endl;
+  ofs2.close();
+
+  ad_comm::adprogram_name = "admodel";
+  dvector pen_vector;
+  read_hessian_matrix_and_scale(nvar, SS, pen_vector);
+ 
+  ASSERT_DOUBLE_EQ(SS(1, 1), 0.4);
+  ASSERT_DOUBLE_EQ(SS(1, 2), 0.2);
+  ASSERT_DOUBLE_EQ(SS(2, 1), -0.3);
+  ASSERT_DOUBLE_EQ(SS(2, 2), 0.1);
+}
 TEST_F(test_utils, log_likelihood_mixture)
 {
   double log_likelihood_mixture(const double& x);
@@ -348,4 +408,24 @@ TEST_F(test_utils, ln_normal_tail)
   double x = 0;
 
   ASSERT_EXIT(ln_normal_tail(x), testing::ExitedWithCode(1), "ln_normal_tail");
+}
+TEST_F(test_utils, inv_cumd_mixture_02)
+{
+  double inv_cumd_mixture_02(const double& zz);
+
+  double zz = 0.5;
+  ASSERT_DOUBLE_EQ(inv_cumd_mixture_02(zz), 0);
+
+  zz = 0.001;
+  ASSERT_DOUBLE_EQ(inv_cumd_mixture_02(zz), -8.9289930215071145);
+}
+TEST_F(test_utils, inv_cumd_mixture)
+{
+  double inv_cumd_mixture(const double& zz);
+
+  double zz = 0.5;
+  ASSERT_DOUBLE_EQ(inv_cumd_mixture(zz), 0);
+
+  zz = 0.001;
+  ASSERT_DOUBLE_EQ(inv_cumd_mixture(zz), -22.478280885941615);
 }

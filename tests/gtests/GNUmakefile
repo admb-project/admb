@@ -169,6 +169,7 @@ GTESTS_ALL=\
  test_df1b2atan2.cpp\
  test_shareinfo.cpp\
  test_quadratic_prior.cpp\
+ test_dll_param_init_bounded_vector.cpp\
  main.cpp
 
 ERRORS=\
@@ -183,9 +184,6 @@ ERRORS=\
  test_scalefactor.cpp\
  main.cpp
 
-#GTESTS_DEV=\
- test_dll_param_init_bounded_vector.cpp\
- main.cpp
 #GTESTS_DEV=\
  main.cpp
 

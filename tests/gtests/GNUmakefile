@@ -23,6 +23,7 @@ else
 GTEST_DIR=googletest-read-only/googletest
 endif
 
+
 GTESTS_ALL=\
  test_atomic.cpp\
  test_shared_ptr.cpp\
@@ -217,7 +218,6 @@ else
 endif
 
 dev: clean
-	$(MAKE) googletest-read-only
 	$(MAKE) gtest-dev
 ifeq ($(CMDSHELL),cmd)
 	gtest-dev

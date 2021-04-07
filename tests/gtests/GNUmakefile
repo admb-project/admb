@@ -23,6 +23,7 @@ else
 GTEST_DIR=googletest-read-only/googletest
 endif
 
+
 GTESTS_ALL=\
  test_atomic.cpp\
  test_shared_ptr.cpp\
@@ -217,7 +218,6 @@ else
 endif
 
 dev: clean
-	$(MAKE) googletest-read-only
 	$(MAKE) gtest-dev
 ifeq ($(CMDSHELL),cmd)
 	gtest-dev
@@ -258,7 +258,7 @@ endif
 
 gtest-scalefactor: test_scalefactor.obj main.cpp gtest-all.obj scalefactor.obj
 ifeq ($(CMDSHELL),cmd)
-	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)" & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)" & ..\\..\\admb -o $@.exe $(ADMB_OPTIONS) $^
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 endif
@@ -279,7 +279,7 @@ endif
 
 gtest-finance: test_finance.obj main.cpp gtest-all.obj finance.obj
 ifeq ($(CMDSHELL),cmd)
-	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)" & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)" & ..\\..\\admb -o $@.exe $(ADMB_OPTIONS) $^
 	copy ..\\..\\examples\\admb\\finance\\finance.dat
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^

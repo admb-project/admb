@@ -258,9 +258,9 @@ endif
 
 gtest-scalefactor: test_scalefactor.obj main.cpp gtest-all.obj scalefactor.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS="-pthread $(LDFLAGS)" & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 endif
 
 test_finance.obj: test_finance.cpp finance.obj
@@ -279,23 +279,23 @@ endif
 
 gtest-finance: test_finance.obj main.cpp gtest-all.obj finance.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS="-pthread $(LDFLAGS)" & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
 	copy ..\\..\\examples\\admb\\finance\\finance.dat
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 	cp ../../examples/admb/finance/finance.dat .
 endif
 
 gtest-all: gtest-all.obj $(GTESTS_ALL)
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
+	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS="-pthread $(LDFLAGS)"  & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
 gtest-dev: gtest-all.obj $(GTESTS_DEV)
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS=-pthread & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+	set CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set LDFLAGS="-pthread $(LDFLAGS)" & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
 else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 endif

@@ -839,6 +839,9 @@ TEST_F(test_laplace_approximation_calculator, generate_antithetical_rvs_noactive
     laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
     ASSERT_TRUE(f1b2gradlist != NULL);
 
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
     lac.num_local_re_array = new ivector(1, 1);
     *(lac.num_local_re_array) = 1;
     lac.num_separable_calls = 1;

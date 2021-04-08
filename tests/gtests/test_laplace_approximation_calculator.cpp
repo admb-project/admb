@@ -603,7 +603,8 @@ TEST_F(test_laplace_approximation_calculator, check_sparse_matrix_structure_deri
     laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
     ASSERT_TRUE(f1b2gradlist != NULL);
 
-    lac.derindex = new imatrix(1, 1000);
+    lac.derindex = new imatrix(1, 1000, 1, 2);
+    *(lac.derindex) = 1;
     lac.num_separable_calls = 1;
     lac.check_sparse_matrix_structure();
     delete lac.derindex;

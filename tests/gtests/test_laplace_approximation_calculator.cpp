@@ -2,6 +2,11 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_laplace_approximation_calculator: public ::testing::Test
 {
 public:
@@ -786,6 +791,61 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_chec
 
     delete objective_function_value::pobjfun;
     objective_function_value::pobjfun = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+  }
+  ASSERT_TRUE(df1b2variable::pool == pool);
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, generate_antithetical_rvs_noactive_parameters)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    ivector minder(1, 2);
+    minder(1) = 1;
+    minder(2) = 1;
+    ivector maxder(1, 2);
+    maxder(1) = 2;
+    maxder(2) = 2;
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+
+    lac.num_local_re_array = new ivector(1, 1);
+    *(lac.num_local_re_array) = 1;
+    lac.num_separable_calls = 1;
+     ad_exit=&test_ad_exit;
+    ASSERT_THROW(lac.generate_antithetical_rvs(), int);
+    delete lac.num_local_re_array;
+    lac.num_local_re_array = nullptr;
 
     delete pmin;
     pmin = nullptr;

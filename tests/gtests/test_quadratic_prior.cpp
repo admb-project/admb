@@ -6,7 +6,38 @@ extern "C"
   void test_ad_exit(const int exit_code);
 }
 
-class test_quadratic_prior: public ::testing::Test {};
+class test_quadratic_prior: public ::testing::Test
+{
+  virtual void SetUp()
+  {
+    TearDown();
+  }
+  virtual void TearDown()
+  {
+    if (df1b2variable::pool)
+    {
+      delete df1b2variable::pool;
+      df1b2variable::pool = NULL;
+    }
+    if (f1b2gradlist)
+    {
+      delete f1b2gradlist;
+      f1b2gradlist = NULL;
+    }
+    if (initial_df1b2params::varsptr)
+    {
+      delete initial_df1b2params::varsptr;
+      initial_df1b2params::varsptr = NULL;
+    }
+    df1b2variable::noallocate = 0;
+    df1b2_gradlist::no_derivatives = 0;
+    initial_params::varsptr.initialize();
+
+    for (int i = 0; i < 100; ++i) quadratic_prior::ptr[i] = nullptr;
+
+    quadratic_prior::num_quadratic_prior=0;
+  }
+};
 
 class my_quadratic_prior: public quadratic_prior
 {
@@ -22,7 +53,9 @@ TEST_F(test_quadratic_prior, default_constructor)
 {
   gradient_structure gs;
 
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 0);
   my_quadratic_prior data;
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 1);
 
   ASSERT_EQ(data.get_myindex(), 0);
 
@@ -56,12 +89,14 @@ TEST_F(test_quadratic_prior, assignment_dmatrix)
   laplace_approximation_calculator::where_are_we_flag = 2;
   gradient_structure gs;
 
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 0);
   my_quadratic_prior data;
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 1);
 
   data.old_style_flag = 2;
   ASSERT_EQ(data.old_style_flag, 2);
 
-  ASSERT_EQ(data.get_myindex(), 1);
+  ASSERT_EQ(data.get_myindex(), 0);
 
   dvar_matrix M(1, 2, 1, 2);
   M(1, 1) = 1;
@@ -334,7 +369,11 @@ TEST_F(test_quadratic_prior, normal_quadratic_prior_3)
 
   gradient_structure gs;
 
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 0);
+
   normal_quadratic_prior2 data;
+
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 1);
 
   ASSERT_EQ(data.old_style_flag, 0);
 

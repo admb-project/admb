@@ -190,6 +190,10 @@ class constant_quadratic_re_penalty2: public constant_quadratic_re_penalty
 {
 public:
   constant_quadratic_re_penalty2(): constant_quadratic_re_penalty() { }
+  void operator=(const dmatrix& M)
+  {
+    constant_quadratic_re_penalty::operator=(M);
+  }
   void get_cM(void) {}
 };
 TEST_F(test_quadratic_prior, constant_quadratic_re_penalty)
@@ -201,6 +205,26 @@ TEST_F(test_quadratic_prior, constant_quadratic_re_penalty)
   constant_quadratic_re_penalty2 data;
 
   ASSERT_EQ(data.old_style_flag, 2);
+
+  dmatrix m(1, 1, 1, 1);
+  m.initialize();
+  m = 5;
+
+  objective_function_value::pobjfun = new objective_function_value();
+
+  value(*objective_function_value::pobjfun) = 0;
+  ASSERT_DOUBLE_EQ(value(*objective_function_value::pobjfun), 0);
+
+  dvar_vector v(1, 1);
+  v.initialize();
+  v = 1;
+  data.allocate(v);
+  data = m;
+
+  ASSERT_DOUBLE_EQ(value(*objective_function_value::pobjfun), 5);
+
+  delete objective_function_value::pobjfun;
+  objective_function_value::pobjfun = nullptr;
 }
 class normal_quadratic_prior2: public normal_quadratic_prior
 {

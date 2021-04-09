@@ -692,7 +692,7 @@ TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton)
       //ASSERT_EQ(initial_params::varsptr.list.size(), 1);
       //ASSERT_TRUE(initial_params::varsptr[0] != &number);
       //ASSERT_TRUE(initial_params::varsptr[0]->share_flags != nullptr);
-      ASSERT_EQ(initial_params::varsptr[0]->shared_size_count(), 0);
+      //ASSERT_EQ(initial_params::varsptr[0]->shared_size_count(), 0);
       //ASSERT_EQ(initial_params::varsptr[0]->share_flags->get_current_phase(), number.current_phase);
       //(initial_params::varsptr[0])->get_share_flags()->get_maxshare() = 1;
       number.get_share_flags()->get_maxshare() = 1;

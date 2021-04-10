@@ -29,6 +29,7 @@ class test_quadratic_prior: public ::testing::Test
       delete initial_df1b2params::varsptr;
       initial_df1b2params::varsptr = NULL;
     }
+    initial_df1b2params::num_initial_df1b2params = 0;
     df1b2variable::noallocate = 0;
     df1b2_gradlist::no_derivatives = 0;
     initial_params::varsptr.initialize();
@@ -397,4 +398,188 @@ TEST_F(test_quadratic_prior, normal_quadratic_prior_3)
 
   delete objective_function_value::pobjfun;
   objective_function_value::pobjfun = nullptr;
+}
+class my_df1b2quadratic_prior: public df1b2quadratic_prior
+{
+public:
+  virtual ~my_df1b2quadratic_prior() {}
+  void get_Lxu(dmatrix&) {}
+  void set_old_style_flag(void) {}
+};
+TEST_F(test_quadratic_prior, get_offset)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 0);
+
+  normal_quadratic_prior2 data;
+
+  ASSERT_EQ(data.get_myindex(), 0);
+  my_df1b2quadratic_prior* ptr = new my_df1b2quadratic_prior();
+  df1b2quadratic_prior::ptr[0] = ptr;
+  ASSERT_TRUE(df1b2quadratic_prior::ptr[0]->pu == nullptr);
+
+  ASSERT_TRUE(initial_df1b2params::varsptr == nullptr);
+  initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1];
+
+  ASSERT_EQ(initial_df1b2params::num_initial_df1b2params, 0);
+  df1b2quadratic_prior::ptr[0]->pu = new df1b2_init_vector();
+
+  adpool* pool = new adpool(100);
+  df1b2variable::pool = pool;
+
+  f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
+
+  df1b2quadratic_prior::ptr[0]->pu->allocate(1, 1, "get_offset");
+  df1b2quadratic_prior::ptr[0]->pu->initialize();
+
+  ASSERT_EQ(data.get_offset(0), -2);
+
+  delete df1b2quadratic_prior::ptr[0]->pu;
+  df1b2quadratic_prior::ptr[0]->pu = nullptr;
+
+  delete ptr;
+  ptr = nullptr;
+  df1b2quadratic_prior::ptr[0] = nullptr;
+
+  delete initial_df1b2params::varsptr;
+  initial_df1b2params::varsptr = nullptr;
+  initial_df1b2params::num_initial_df1b2params = 0;
+
+  delete f1b2gradlist;
+  f1b2gradlist = nullptr;
+
+  delete df1b2variable::pool;
+  df1b2variable::pool = nullptr;
+  pool = nullptr;
+}
+TEST_F(test_quadratic_prior, get_cgradient_03)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 0);
+
+  normal_quadratic_prior2 data;
+
+  ASSERT_EQ(data.get_myindex(), 0);
+  my_df1b2quadratic_prior* ptr = new my_df1b2quadratic_prior();
+  df1b2quadratic_prior::ptr[0] = ptr;
+  ASSERT_TRUE(df1b2quadratic_prior::ptr[0]->pu == nullptr);
+
+  ASSERT_TRUE(initial_df1b2params::varsptr == nullptr);
+  initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1];
+
+  ASSERT_EQ(initial_df1b2params::num_initial_df1b2params, 0);
+  df1b2quadratic_prior::ptr[0]->pu = new df1b2_init_vector();
+
+  adpool* pool = new adpool(100);
+  df1b2variable::pool = pool;
+
+  f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
+
+  df1b2quadratic_prior::ptr[0]->pu->allocate(1, 1, "get_offset");
+  df1b2quadratic_prior::ptr[0]->pu->initialize();
+
+  dvar_matrix M(1, 2, 1, 2);
+  M(1, 1) = 1;
+  M(1, 2) = 2;
+  M(2, 1) = 3;
+  M(2, 2) = 4;
+
+  dvar_vector u(1, 2);
+  u(1) = 1;
+  u(2) = 2;
+
+  data.allocate(M, u, "unused message");
+
+  dvector g;
+  data.old_style_flag = 3;
+  ASSERT_THROW(data.get_cgradient(g, 0), int);
+  ASSERT_THROW(data.get_cgradient(g, 1), int);
+
+  delete df1b2quadratic_prior::ptr[0]->pu;
+  df1b2quadratic_prior::ptr[0]->pu = nullptr;
+
+  delete ptr;
+  ptr = nullptr;
+  df1b2quadratic_prior::ptr[0] = nullptr;
+
+  delete initial_df1b2params::varsptr;
+  initial_df1b2params::varsptr = nullptr;
+
+  delete f1b2gradlist;
+  f1b2gradlist = nullptr;
+
+  delete df1b2variable::pool;
+  df1b2variable::pool = nullptr;
+  pool = nullptr;
+}
+TEST_F(test_quadratic_prior, get_cgradient_02)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  ASSERT_EQ(quadratic_prior::get_num_quadratic_prior(), 0);
+
+  normal_quadratic_prior2 data;
+
+  ASSERT_EQ(data.get_myindex(), 0);
+  my_df1b2quadratic_prior* ptr = new my_df1b2quadratic_prior();
+  df1b2quadratic_prior::ptr[0] = ptr;
+  ASSERT_TRUE(df1b2quadratic_prior::ptr[0]->pu == nullptr);
+
+  ASSERT_TRUE(initial_df1b2params::varsptr == nullptr);
+  initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1];
+
+  ASSERT_EQ(initial_df1b2params::num_initial_df1b2params, 0);
+  df1b2quadratic_prior::ptr[0]->pu = new df1b2_init_vector();
+
+  adpool* pool = new adpool(100);
+  df1b2variable::pool = pool;
+
+  f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,2000000U,100000U,adstring("f1b2list1"));
+
+  df1b2quadratic_prior::ptr[0]->pu->allocate(1, 1, "get_offset");
+  df1b2quadratic_prior::ptr[0]->pu->initialize();
+
+  dvar_matrix M(1, 2, 1, 2);
+  M(1, 1) = 1;
+  M(1, 2) = 2;
+  M(2, 1) = 3;
+  M(2, 2) = 4;
+
+  dvar_vector u(1, 2);
+  u(1) = 1;
+  u(2) = 2;
+
+  data.allocate(M, u, "unused message");
+
+  dvector g(1, 2);
+  ASSERT_EQ(data.get_offset(0), -2);
+  data.old_style_flag = 2;
+  data.get_cgradient(g, -2);
+  data.old_style_flag = 1;
+  data.get_cgradient(g, -2);
+
+  delete df1b2quadratic_prior::ptr[0]->pu;
+  df1b2quadratic_prior::ptr[0]->pu = nullptr;
+
+  delete ptr;
+  ptr = nullptr;
+  df1b2quadratic_prior::ptr[0] = nullptr;
+
+  delete initial_df1b2params::varsptr;
+  initial_df1b2params::varsptr = nullptr;
+
+  delete f1b2gradlist;
+  f1b2gradlist = nullptr;
+
+  delete df1b2variable::pool;
+  df1b2variable::pool = nullptr;
+  pool = nullptr;
 }

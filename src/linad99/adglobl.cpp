@@ -11,15 +11,12 @@
  int initial_params::straight_through_flag=0;
  unsigned char ad_comm::directory_prefix='\\';
  unsigned int ad_comm::wd_flag=0;
- adtimer * ad_comm::ptm=0;
- adtimer * ad_comm::ptm1=0;
  int ad_comm::bandwidth=0;
 
 #if defined(USE_ADPVM)
 adpvm_manager* ad_comm::pvm_manager = NULL;
 #endif
 
- int ad_comm::time_flag=0;
  adstring ad_comm::subdir;
  cifstream * ad_comm::global_datafile=NULL;
  cifstream * ad_comm::global_parfile=NULL;

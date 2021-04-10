@@ -52,6 +52,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
   ad_comm::argc=_argc;
   ad_comm::argv=_argv;
+#ifdef DIAG_TIMER
   if (option_match(_argc,_argv,"-time")>-1)
   {
     time_flag=1;
@@ -71,6 +72,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       ptm1=new adtimer();
     }
   }
+#endif
   no_atlas_flag=0;
   if (option_match(_argc,_argv,"-noatlas")>-1) no_atlas_flag=1;
 
@@ -546,6 +548,7 @@ Destructor
 */
 ad_comm::~ad_comm()
 {
+#ifdef DIAG_TIMER
   if (ptm)
   {
     delete ptm;
@@ -556,6 +559,7 @@ ad_comm::~ad_comm()
     delete ptm1;
     ptm1=0;
   }
+#endif
   if (global_datafile)
   {
     delete global_datafile;

@@ -16,6 +16,20 @@ ADMB-12.3-git
 
 #### Changes and Improvements
 
+* Profiling diagnostic option -time has been disabled for releases.
+  To develop and using the -time option, rebuild ADMB libraries and
+  define compiler macro DIAG_TIMER.  See commands below.
+
+  For Microsoft Visual Studio,
+  ```
+  > nmake CXXFLAGS=/DDIAG_TIMER
+  ```
+
+  For Unix,
+  ```
+  $ make CXXFLAGS=-DDIAG_TIMER
+  ```
+  
 * Defined DEBUG macro in build files.
 
 * Defined DEBUG=diag in main Makefile to build ADMB with diagnostic outputs.

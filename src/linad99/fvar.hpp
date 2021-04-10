@@ -8730,14 +8730,16 @@ protected:
 
   void allocate();
  public:
-   static int time_flag;
    static int bandwidth;
    static int print_hess_and_exit_flag;
    static int no_pvm_flag;
    static int no_atlas_flag;
    static int no_ln_det_choleski_flag;
+#ifdef DIAG_TIMER
+   static int time_flag;
    static adtimer *ptm;
    static adtimer *ptm1;
+#endif
 #if defined(USE_ADPVM)
    virtual void get_slave_assignments(void);
    static adpvm_manager *pvm_manager;

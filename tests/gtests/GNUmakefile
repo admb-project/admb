@@ -171,6 +171,7 @@ GTESTS_ALL=\
  test_shareinfo.cpp\
  test_quadratic_prior.cpp\
  test_dll_param_init_bounded_vector.cpp\
+ test_evaluate_function.cpp\
  main.cpp
 
 ERRORS=\

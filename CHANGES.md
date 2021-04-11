@@ -17,8 +17,8 @@ ADMB-12.3-git
 #### Changes and Improvements
 
 * Profiling diagnostic option -time has been disabled for releases.
-  To develop and using the -time option, rebuild ADMB libraries and
-  define compiler macro DIAG_TIMER.  See commands below.
+  To develop and use the -time option, rebuild ADMB libraries with 
+  compiler macro DIAG_TIMER defined (See commands below).  ([See Changes a1667e3](https://github.com/admb-project/admb/commit/a1667e31cb862355932609a839e5962fa04823c4)).
 
   For Microsoft Visual Studio,
   ```

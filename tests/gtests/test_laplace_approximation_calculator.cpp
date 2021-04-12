@@ -982,7 +982,7 @@ TEST_F(test_laplace_approximation_calculator, get_fx_fu)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton2)
+TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton2_error)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -1029,6 +1029,217 @@ TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton2)
     ASSERT_THROW(lac.get_uhat_lm_newton2(x, pmin), int);
     delete lac.num_local_re_array;
     lac.num_local_re_array = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_TRUE(df1b2variable::pool == pool);
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton2)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    ivector minder(1, 2);
+    minder(1) = 1;
+    minder(2) = 1;
+    ivector maxder(1, 2);
+    maxder(1) = 2;
+    maxder(2) = 2;
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    param_init_number number;
+    number.allocate(1, "number");
+    ASSERT_EQ(initial_params::nvarcalc(), 1);
+
+    *(objective_function_value::pobjfun) = number;
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+    ASSERT_EQ(lac.usize, 1);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    lac.num_local_re_array = new ivector(1, 1);
+    *(lac.num_local_re_array) = 1;
+    lac.num_separable_calls = 1;
+
+    ad_exit=&test_ad_exit;
+    dvector x(1, 1);
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    lac.ubest.allocate(1, 1);
+    lac.get_uhat_lm_newton2(x, pmin);
+    delete lac.num_local_re_array;
+    lac.num_local_re_array = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_TRUE(df1b2variable::pool == pool);
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, get_newton_raphson_info)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    ivector minder(1, 2);
+    minder(1) = 1;
+    minder(2) = 1;
+    ivector maxder(1, 2);
+    maxder(1) = 2;
+    maxder(2) = 2;
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    void get_newton_raphson_info(int xs, int us,const init_df1b2vector _y, dmatrix& Hess,
+    dvector& grad, df1b2_gradlist* f1b2gradlist, function_minimizer* pfmin);
+    int xs = 0;
+    int us = 0;
+    init_df1b2vector y;
+    y.allocate(1, 2);
+    dmatrix Hess;
+    dvector grad;
+    re_objective_function_value::pobjfun = new re_objective_function_value();
+    re_objective_function_value::pobjfun->allocate();
+    get_newton_raphson_info(xs, us, y, Hess, grad, f1b2gradlist, pmin);
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_TRUE(df1b2variable::pool == pool);
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, build_up_nested_shape)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    ivector minder(1, 2);
+    minder(1) = 1;
+    minder(2) = 1;
+    ivector maxder(1, 2);
+    maxder(1) = 2;
+    maxder(2) = 2;
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+/*
+    void get_newton_raphson_info(int xs, int us,const init_df1b2vector _y, dmatrix& Hess,
+    dvector& grad, df1b2_gradlist* f1b2gradlist, function_minimizer* pfmin);
+    int xs = 0;
+    int us = 0;
+    init_df1b2vector y;
+    y.allocate(1, 2);
+    dmatrix Hess;
+    dvector grad;
+*/
+    re_objective_function_value::pobjfun = new re_objective_function_value();
+    re_objective_function_value::pobjfun->allocate();
+    //get_newton_raphson_info(xs, us, y, Hess, grad, f1b2gradlist, pmin);
+    lac.build_up_nested_shape();
 
     delete pmin;
     pmin = nullptr;

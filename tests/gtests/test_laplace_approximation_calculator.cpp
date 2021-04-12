@@ -1172,11 +1172,15 @@ TEST_F(test_laplace_approximation_calculator, get_newton_raphson_info)
     re_objective_function_value::pobjfun->allocate();
     get_newton_raphson_info(xs, us, y, Hess, grad, f1b2gradlist, pmin);
 
-    delete pmin;
-    pmin = nullptr;
+    re_objective_function_value::pobjfun->deallocate();
+    delete re_objective_function_value::pobjfun;
+    re_objective_function_value::pobjfun = nullptr;
 
     delete objective_function_value::pobjfun;
     objective_function_value::pobjfun = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
   }
   ASSERT_TRUE(df1b2variable::pool == pool);
   pool->deallocate();
@@ -1226,26 +1230,19 @@ TEST_F(test_laplace_approximation_calculator, build_up_nested_shape)
     lac.num_importance_samples = 1;
     ASSERT_EQ(lac.num_importance_samples, 1);
 
-/*
-    void get_newton_raphson_info(int xs, int us,const init_df1b2vector _y, dmatrix& Hess,
-    dvector& grad, df1b2_gradlist* f1b2gradlist, function_minimizer* pfmin);
-    int xs = 0;
-    int us = 0;
-    init_df1b2vector y;
-    y.allocate(1, 2);
-    dmatrix Hess;
-    dvector grad;
-*/
     re_objective_function_value::pobjfun = new re_objective_function_value();
     re_objective_function_value::pobjfun->allocate();
-    //get_newton_raphson_info(xs, us, y, Hess, grad, f1b2gradlist, pmin);
     lac.build_up_nested_shape();
 
-    delete pmin;
-    pmin = nullptr;
+    re_objective_function_value::pobjfun->deallocate();
+    delete re_objective_function_value::pobjfun;
+    re_objective_function_value::pobjfun = nullptr;
 
     delete objective_function_value::pobjfun;
     objective_function_value::pobjfun = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
   }
   ASSERT_TRUE(df1b2variable::pool == pool);
   pool->deallocate();

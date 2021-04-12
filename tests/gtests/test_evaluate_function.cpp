@@ -213,7 +213,7 @@ TEST_F(test_evaluate_function, case3)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_evaluate_function, DISABLED_case4)
+TEST_F(test_evaluate_function, case4)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -238,19 +238,21 @@ TEST_F(test_evaluate_function, DISABLED_case4)
     df1b2_gradlist::no_derivatives = 1;
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
-    param_init_vector number;
+    param_init_vector a;
+    param_init_vector b;
     ASSERT_EQ(initial_params::nvarcalc(), 0);
-    number.allocate(1, 1, 1, "number");
-    ASSERT_EQ(initial_params::nvarcalc(), 1);
+    a.allocate(1, 1, 1, "a");
+    b.allocate(1, 1, 1, "b");
+    ASSERT_EQ(initial_params::nvarcalc(), 2);
 
     ASSERT_TRUE(f1b2gradlist == NULL);
 
     void evaluate_function_gradient(double& f,const dvector& x, function_minimizer* pfmin, dvector& xadjoint, dvector& uadjoint);
     double f = 0.0;
-    dvector x(1, 1);
+    dvector x(1, 2);
     dvector xadjoint(1, 1);
     dvector uadjoint(1, 1);
-    ASSERT_EQ(initial_params::nvarcalc(), 1);
+    ASSERT_EQ(initial_params::nvarcalc(), 2);
     evaluate_function_gradient(f, x, pfmin, xadjoint, uadjoint);
   }
 

@@ -1121,7 +1121,7 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton2)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_laplace_approximation_calculator, get_newton_raphson_info)
+TEST_F(test_laplace_approximation_calculator, DISABLED_get_newton_raphson_info)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);

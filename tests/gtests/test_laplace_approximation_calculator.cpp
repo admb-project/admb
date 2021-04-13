@@ -731,7 +731,7 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_chec
   ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
   ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
 
-  adpool* pool = new adpool();
+  adpool* pool = new adpool(100);
   df1b2variable::pool = pool;
   ASSERT_EQ(df1b2variable::pool->nvar, 0);
   {
@@ -752,6 +752,9 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_chec
     ASSERT_TRUE(f1b2gradlist == NULL);
     laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
     ASSERT_TRUE(f1b2gradlist != NULL);
+
+    re_objective_function_value::pobjfun = new re_objective_function_value();
+    re_objective_function_value::pobjfun->allocate();
 
     {
       ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -788,6 +791,10 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_chec
       double f = 0;
       dvector result = lac.default_calculations_check_derivatives(x, pmin, f);
     }
+
+    re_objective_function_value::pobjfun->deallocate();
+    delete re_objective_function_value::pobjfun;
+    re_objective_function_value::pobjfun = nullptr;
 
     delete objective_function_value::pobjfun;
     objective_function_value::pobjfun = nullptr;
@@ -1121,7 +1128,7 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton2)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_laplace_approximation_calculator, DISABLED_get_newton_raphson_info)
+TEST_F(test_laplace_approximation_calculator, get_newton_raphson_info)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -1135,6 +1142,7 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_get_newton_raphson_info)
   ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
   ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
 
+  initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1];
   adpool* pool = new adpool();
   df1b2variable::pool = pool;
   ASSERT_EQ(df1b2variable::pool->nvar, 0);
@@ -1187,6 +1195,10 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_get_newton_raphson_info)
   delete pool;
   pool = nullptr;
   df1b2variable::pool = nullptr;
+
+  delete initial_df1b2params::varsptr;
+  initial_df1b2params::varsptr = nullptr;
+
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);

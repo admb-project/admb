@@ -34,6 +34,7 @@ public:
     df1b2variable::noallocate = 0;
     df1b2_gradlist::no_derivatives = 0;
     initial_params::varsptr.initialize();
+    initial_df1b2params::num_initial_df1b2params = 0;
   }
 };
 class myfunction_minimizer: public function_minimizer
@@ -1142,7 +1143,9 @@ TEST_F(test_laplace_approximation_calculator, get_newton_raphson_info)
   ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
   ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
 
-  initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1];
+  initial_df1b2params::num_initial_df1b2params = 0;
+  ASSERT_EQ(initial_df1b2params::num_initial_df1b2params, 0);
+  initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[10];
   adpool* pool = new adpool();
   df1b2variable::pool = pool;
   ASSERT_EQ(df1b2variable::pool->nvar, 0);
@@ -1176,6 +1179,7 @@ TEST_F(test_laplace_approximation_calculator, get_newton_raphson_info)
     y.allocate(1, 2);
     dmatrix Hess;
     dvector grad;
+    ASSERT_EQ(initial_df1b2params::num_initial_df1b2params, 0);
     re_objective_function_value::pobjfun = new re_objective_function_value();
     re_objective_function_value::pobjfun->allocate();
     get_newton_raphson_info(xs, us, y, Hess, grad, f1b2gradlist, pmin);

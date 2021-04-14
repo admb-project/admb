@@ -147,6 +147,7 @@ TEST_F(test_df1b2atan2, default_constructor_allocate)
     y.ptr = (double*)pool.alloc();
 
     y.allocate();
+    y.deallocate();
   }
   df1b2variable::pool = nullptr;
 }

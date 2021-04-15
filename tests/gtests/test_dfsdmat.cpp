@@ -1,7 +1,18 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-class test_dfsdmat: public ::testing::Test {};
+class test_dfsdmat: public ::testing::Test
+{
+public:
+  virtual void SetUp()
+  {
+    TearDown();
+  }
+  virtual void TearDown()
+  {
+    gradient_structure::set_USE_FOR_HESSIAN(0);
+  }
+};
 
 TEST_F(test_dfsdmat, default_constructor)
 {

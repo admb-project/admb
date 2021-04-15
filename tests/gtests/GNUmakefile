@@ -185,6 +185,7 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
+ test_laplace_approximation_calculator.cpp\
  main.cpp
 
 ifdef GTESTS_DEV
@@ -204,18 +205,29 @@ all: clean
 	$(MAKE) run
 
 run:
-	$(MAKE) googletest-read-only
-	$(MAKE) gtest-finance
-	$(MAKE) gtest-scalefactor
+	$(MAKE) finance
+	$(MAKE) scalefactor
 	$(MAKE) gtest-all
 ifeq ($(CMDSHELL),cmd)
-	gtest-finance
-	gtest-scalefactor
 	gtest-all
 else
-	./gtest-finance
-	./gtest-scalefactor
 	./gtest-all
+endif
+
+finance: clean
+	$(MAKE) gtest-finance
+ifeq ($(CMDSHELL),cmd)
+	gtest-finance
+else
+	./gtest-finance
+endif
+
+scalefactor: clean
+	$(MAKE) gtest-scalefactor
+ifeq ($(CMDSHELL),cmd)
+	gtest-scalefactor
+else
+	./gtest-scalefactor
 endif
 
 dev: clean
@@ -455,6 +467,12 @@ ifeq ($(CMDSHELL),cmd)
 	@del /Q test_dvector_read_from_file2.txt 2>NUL
 	@del /Q test_dvector_read_from_file3.txt 2>NUL
 	@del /Q test_param_init_number.txt
+	@del /Q admodel.bvs
+	@del /Q corrtest
+	@del /Q gtest-dev
+	@del /Q gtest-finance
+	@del /Q gtest-scalefactor
+	@del /Q sparseness.info
 else
 	@rm -vf test_i4_array.txt
 	@rm -vf test_i5_array.txt
@@ -567,4 +585,10 @@ else
 	@rm -vf test_dvector_read_from_file2.txt
 	@rm -vf test_dvector_read_from_file3.txt
 	@rm -vf test_param_init_number.txt
+	@rm -vf admodel.bvs
+	@rm -vf corrtest
+	@rm -vf gtest-dev
+	@rm -vf gtest-finance
+	@rm -vf gtest-scalefactor
+	@rm -vf sparseness.info
 endif

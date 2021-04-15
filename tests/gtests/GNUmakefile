@@ -205,6 +205,7 @@ all: clean
 	$(MAKE) run
 
 run:
+	$(MAKE) googletest-read-only
 	$(MAKE) finance
 	$(MAKE) scalefactor
 	$(MAKE) gtest-all

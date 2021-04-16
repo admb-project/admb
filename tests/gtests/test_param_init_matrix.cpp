@@ -16,6 +16,8 @@ TEST_F(test_param_init_matrix, constructor)
 }
 TEST_F(test_param_init_matrix, assignment_operator_empty_dmatrix)
 {
+  ad_exit=&test_ad_exit;
+
   param_init_matrix p;
   dmatrix m;
   try
@@ -29,6 +31,8 @@ TEST_F(test_param_init_matrix, assignment_operator_empty_dmatrix)
 }
 TEST_F(test_param_init_matrix, allocate_nogradient)
 {
+  ad_exit=&test_ad_exit;
+
   param_init_matrix p;
   try
   {
@@ -42,6 +46,8 @@ TEST_F(test_param_init_matrix, allocate_nogradient)
 }
 TEST_F(test_param_init_matrix, assignment_operator_allocated_matrix)
 {
+  ad_exit=&test_ad_exit;
+
   param_init_matrix p;
   dmatrix m(1, 2, 1, 3);
   try

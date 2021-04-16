@@ -202,6 +202,8 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
  */
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_05)
 {
+  ad_exit=&test_ad_exit;
+
   gradient_structure gs;
   dmatrix b(1, 5, 1, 5);
   imatrix m(1, 5, 1, 5);
@@ -218,6 +220,7 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
   }
   catch (const int exit_code)
   {
+    v.deallocate();
     SUCCEED();
     return;
   }
@@ -228,6 +231,8 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
  */
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_06)
 {
+  ad_exit=&test_ad_exit;
+
   gradient_structure gs;
   dmatrix b(1, 5, 1, 5);
   imatrix m(1, 5, 1, 5);
@@ -244,6 +249,7 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
   }
   catch (const int exit_code)
   {
+    v.deallocate();
     SUCCEED();
     return;
   }
@@ -254,6 +260,8 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
  */
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_07)
 {
+  ad_exit=&test_ad_exit;
+
   gradient_structure gs;
   dmatrix b(1, 5, 1, 5);
   imatrix m(1, 5, 1, 5);
@@ -271,6 +279,7 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
   }
   catch (const int exit_code)
   {
+    v.deallocate();
     SUCCEED();
     return;
   }

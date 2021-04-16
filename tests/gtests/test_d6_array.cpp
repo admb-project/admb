@@ -2,6 +2,11 @@
 #include <cmath>
 #include "fvar.hpp"
 
+extern "C"
+{
+  void test_ad_exit(const int exit_code);
+}
+
 class test_d6_array: public ::testing::Test {};
 
 TEST_F(test_d6_array, allocate_copy_full)
@@ -236,6 +241,8 @@ TEST_F(test_d6_array, sum)
 }
 TEST_F(test_d6_array, assigmenterror)
 {
+  ad_exit=&test_ad_exit;
+
   d6_array a;
   a.allocate(2, 5);
   ASSERT_ANY_THROW({
@@ -251,6 +258,8 @@ TEST_F(test_d6_array, assigmenterror)
 }
 TEST_F(test_d6_array, elemerror)
 {
+  ad_exit=&test_ad_exit;
+
   d6_array a;
   a.allocate(2, 5);
   ASSERT_ANY_THROW({

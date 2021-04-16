@@ -220,7 +220,7 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
   }
   catch (const int exit_code)
   {
-    v.deallocate();
+    //v.deallocate();
     SUCCEED();
     return;
   }
@@ -249,7 +249,7 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
   }
   catch (const int exit_code)
   {
-    v.deallocate();
+    //v.deallocate();
     SUCCEED();
     return;
   }
@@ -279,7 +279,7 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
   }
   catch (const int exit_code)
   {
-    v.deallocate();
+    //v.deallocate();
     SUCCEED();
     return;
   }

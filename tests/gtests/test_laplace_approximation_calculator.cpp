@@ -21,6 +21,13 @@ public:
       delete df1b2variable::pool;
       df1b2variable::pool = NULL;
     }
+    for (int i=0;i<df1b2variable::adpool_counter;i++)
+    {
+      delete df1b2variable::adpool_vector[i];
+      df1b2variable::adpool_vector[i]=0;
+      df1b2variable::nvar_vector[i]=0;
+    }
+    df1b2variable::adpool_counter=0;
     if (f1b2gradlist)
     {
       delete f1b2gradlist;
@@ -884,8 +891,7 @@ TEST_F(test_laplace_approximation_calculator, cleanup_laplace_stuff)
   ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
   ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
 
-  adpool* pool = new adpool();
-  df1b2variable::pool = pool;
+  df1b2variable::pool = new adpool();
   ASSERT_EQ(df1b2variable::pool->nvar, 0);
   {
     df1b2variable::noallocate = 1;
@@ -912,17 +918,23 @@ TEST_F(test_laplace_approximation_calculator, cleanup_laplace_stuff)
     l->end_separable_call_stuff();
     ASSERT_EQ(l->separable_call_level, 1);
 
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+    df1b2variable::adpool_vector[df1b2variable::adpool_counter] = df1b2variable::pool;
+    df1b2variable::nvar_vector[df1b2variable::adpool_counter] = 1;
+    ++df1b2variable::adpool_counter;
+
     void cleanup_laplace_stuff(laplace_approximation_calculator* l);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
     cleanup_laplace_stuff(l);
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+    ASSERT_TRUE(df1b2variable::adpool_vector[0] == nullptr);
+    ASSERT_EQ(df1b2variable::nvar_vector[0], 0);
+
     //ASSERT_TRUE(l == nullptr);
 
     delete pmin;
     pmin = nullptr;
   }
-  ASSERT_TRUE(df1b2variable::pool == pool);
-  pool->deallocate();
-  delete pool;
-  pool = nullptr;
   df1b2variable::pool = nullptr;
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);

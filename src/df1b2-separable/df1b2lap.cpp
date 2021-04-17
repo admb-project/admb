@@ -2221,8 +2221,9 @@ void cleanup_laplace_stuff(laplace_approximation_calculator * l)
       delete df1b2variable::adpool_vector[i];
       df1b2variable::adpool_vector[i]=0;
       df1b2variable::nvar_vector[i]=0;
-      df1b2variable::adpool_counter=0;
     }
+
+    df1b2variable::adpool_counter=0;
   }
 }
 

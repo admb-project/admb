@@ -1065,7 +1065,7 @@ TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton2_error)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton2)
+TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton2)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -1088,12 +1088,8 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton2)
 
     int xsize = 1;
     int usize = 1;
-    ivector minder(1, 2);
-    minder(1) = 1;
-    minder(2) = 1;
-    ivector maxder(1, 2);
-    maxder(1) = 2;
-    maxder(2) = 2;
+    int minder = 1;
+    int maxder = 1;
     ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
     ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
@@ -1106,13 +1102,19 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton2)
 
     *(objective_function_value::pobjfun) = number;
 
+
     ASSERT_TRUE(f1b2gradlist == NULL);
+
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
     laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+
     ASSERT_TRUE(f1b2gradlist != NULL);
     ASSERT_EQ(lac.usize, 1);
 
     lac.num_importance_samples = 1;
     ASSERT_EQ(lac.num_importance_samples, 1);
+
 
     lac.num_local_re_array = new ivector(1, 1);
     *(lac.num_local_re_array) = 1;
@@ -1132,10 +1134,16 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_get_uhat_lm_newton2)
     delete objective_function_value::pobjfun;
     objective_function_value::pobjfun = nullptr;
   }
-  ASSERT_TRUE(df1b2variable::pool == pool);
+  ASSERT_EQ(df1b2variable::adpool_counter, 1);
+  ASSERT_TRUE(df1b2variable::pool == df1b2variable::adpool_vector[0]);
+
+  df1b2variable::adpool_vector[0] = nullptr;
+  df1b2variable::adpool_counter = 0;
+
   pool->deallocate();
   delete pool;
   pool = nullptr;
+
   df1b2variable::pool = nullptr;
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);

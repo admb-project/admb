@@ -725,7 +725,7 @@ TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_check_derivatives)
+TEST_F(test_laplace_approximation_calculator, default_calculations_check_derivatives)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -758,7 +758,7 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_chec
     ASSERT_EQ(initial_params::nvarcalc(), 0);
 
     ASSERT_TRUE(f1b2gradlist == NULL);
-    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    pmin->lapprox = new laplace_approximation_calculator(xsize, usize, minder, maxder, pmin);
     ASSERT_TRUE(f1b2gradlist != NULL);
 
     re_objective_function_value::pobjfun = new re_objective_function_value();
@@ -783,7 +783,7 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_chec
       number.setshare(sf, af);
       //ASSERT_TRUE(number.share_flags != nullptr);
 
-      ASSERT_EQ(lac.init_switch, 1);
+      ASSERT_EQ(pmin->lapprox->init_switch, 1);
 
       ASSERT_EQ(initial_params::num_initial_params, 1);
       //ASSERT_EQ(initial_params::varsptr.list.size(), 1);
@@ -797,7 +797,9 @@ TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_chec
       ASSERT_EQ(initial_params::nvarcalc(), 1);
       dvector x(1, 1);
       double f = 0;
-      dvector result = lac.default_calculations_check_derivatives(x, pmin, f);
+
+      ASSERT_TRUE(pmin->lapprox != nullptr);
+      dvector result = pmin->lapprox->default_calculations_check_derivatives(x, pmin, f);
     }
 
     re_objective_function_value::pobjfun->deallocate();

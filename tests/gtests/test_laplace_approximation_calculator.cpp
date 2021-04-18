@@ -1354,3 +1354,80 @@ TEST_F(test_laplace_approximation_calculator, gauss_hermite_stuff)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
+TEST_F(test_laplace_approximation_calculator, build_up_nested_shape_2)
+{
+  ad_exit=&test_ad_exit;
+
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  df1b2variable::pool = new adpool();
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    ivector minder(1, 2);
+    minder(1) = 1;
+    minder(2) = 1;
+    ivector maxder(1, 2);
+    maxder(1) = 2;
+    maxder(2) = 2;
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    laplace_approximation_calculator* l =
+      new laplace_approximation_calculator(xsize, usize, minder, maxder, pmin);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+
+    l->nested_shape.allocate(1, 1, 1);
+    l->nested_shape(1) = -1;
+    l->nested_shape(1, 1) = -1;
+    l->nested_shape(1, 1, 1) = -1;
+    l->nested_separable_calls_counter.allocate(1, 4);
+    l->nested_separable_calls_counter(1) = 1;
+    l->nested_separable_calls_counter(2) = 1;
+    l->nested_separable_calls_counter(3) = 1;
+    l->nested_separable_calls_counter(4) = 0;
+
+    ASSERT_EQ(l->separable_call_level, 1);
+    l->build_up_nested_shape();
+    ASSERT_EQ(l->separable_call_level, 1);
+    ASSERT_DOUBLE_EQ(l->nested_shape(1), 1);
+
+    l->nested_separable_calls_counter(2) = 1;
+    l->build_up_nested_shape();
+
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+    df1b2variable::adpool_vector[df1b2variable::adpool_counter] = df1b2variable::pool;
+    df1b2variable::nvar_vector[df1b2variable::adpool_counter] = 1;
+    ++df1b2variable::adpool_counter;
+
+    void cleanup_laplace_stuff(laplace_approximation_calculator* l);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+    cleanup_laplace_stuff(l);
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+    ASSERT_TRUE(df1b2variable::adpool_vector[0] == nullptr);
+    ASSERT_EQ(df1b2variable::nvar_vector[0], 0);
+
+    //ASSERT_TRUE(l == nullptr);
+
+    delete pmin;
+    pmin = nullptr;
+  }
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}

@@ -471,6 +471,8 @@ TEST_F(test_dvector, fill_lbraces_zero)
 }
 TEST_F(test_dvector, fill_lbraces_greater_than_one)
 {
+  ad_exit=&test_ad_exit;
+
   dvector v(1, 6);
   v.initialize();
 
@@ -484,12 +486,13 @@ TEST_F(test_dvector, fill_lbraces_greater_than_one)
 }
 TEST_F(test_dvector, fill_lbraces_not_equal_rbraces)
 {
+  ad_exit=&test_ad_exit;
+
   dvector v(1, 6);
   v.initialize();
 
   char array[] = "{{0, 1, 2, 3, 4, 5}}}";
 
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW
   ({
     v.fill(array);
@@ -497,12 +500,13 @@ TEST_F(test_dvector, fill_lbraces_not_equal_rbraces)
 }
 TEST_F(test_dvector, fill_lbraces1_not_equal_rbraces)
 {
+  ad_exit=&test_ad_exit;
+
   dvector v(1, 6);
   v.initialize();
 
   char array[] = "{0, 1, 2, 3, 4, 5}}}";
 
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW
   ({
     v.fill(array);
@@ -526,6 +530,8 @@ TEST_F(test_dvector, filename_goodcolumn)
 }
 TEST_F(test_dvector, filename_badcolumn)
 {
+  ad_exit=&test_ad_exit;
+
   ofstream ofs("test_dvector.txt");
   ofs << "1 2 3\n";
   ofs << "4 5 6\n";
@@ -538,6 +544,8 @@ TEST_F(test_dvector, filename_badcolumn)
 }
 TEST_F(test_dvector, filename_negativebadcolumn)
 {
+  ad_exit=&test_ad_exit;
+
   ofstream ofs("test_dvector.txt");
   ofs << "1 2 3\n";
   ofs << "4 5 6\n";
@@ -550,6 +558,8 @@ TEST_F(test_dvector, filename_negativebadcolumn)
 }
 TEST_F(test_dvector, filename_zerobadcolumn)
 {
+  ad_exit=&test_ad_exit;
+
   ofstream ofs("test_dvector.txt");
   ofs << "1 2 3\n";
   ofs << "4 5 6\n";
@@ -562,6 +572,8 @@ TEST_F(test_dvector, filename_zerobadcolumn)
 }
 TEST_F(test_dvector, filename_raggedcolumn)
 {
+  ad_exit=&test_ad_exit;
+
   ofstream ofs("test_dvector.txt");
   ofs << "1 2 3\n";
   ofs << "4\n";

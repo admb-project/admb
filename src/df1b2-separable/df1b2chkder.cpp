@@ -41,8 +41,10 @@ adtimer* ad_comm::ptm1 = nullptr;
 void laplace_approximation_calculator::
   check_derivatives(const dvector& _x,function_minimizer * pfmin,double f)
 {
+#ifdef DIAG
   cerr << "need to define this" << endl;
   ad_exit(1);
+#endif
 }
 
 /**
@@ -143,6 +145,7 @@ dvector laplace_approximation_calculator::
     {
       // test newton raphson
       Hess.initialize();
+
       cout << "Checking derivatives " << ii << endl;
       check_derivatives(x,pfmin,fval1);
 

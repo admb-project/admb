@@ -1098,6 +1098,9 @@ laplace_approximation_calculator::laplace_approximation_calculator(
       ad_exit(1);
     }
   }
+  num_importance_samples = 0;
+  grad.allocate(1,usize);
+
 #ifndef OPT_LIB
   assert(maxder(1) >= minder(1));
 #endif

@@ -42,6 +42,19 @@ public:
     df1b2_gradlist::no_derivatives = 0;
     initial_params::varsptr.initialize();
     initial_df1b2params::num_initial_df1b2params = 0;
+    for (int i = 0; i < 100; ++i)
+    {
+      quadratic_prior::ptr[i] = nullptr;
+      df1b2quadratic_prior::ptr[i] = nullptr;
+    }
+    quadratic_prior::num_quadratic_prior = 0;
+    df1b2quadratic_prior::num_quadratic_prior = 0;
+    if (gradient_structure::ARR_LIST1)
+    {
+      delete gradient_structure::ARR_LIST1;
+      gradient_structure::ARR_LIST1 = nullptr;
+    }
+    function_minimizer::first_hessian_flag = 0;
   }
 };
 class myfunction_minimizer: public function_minimizer
@@ -727,6 +740,7 @@ TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton)
 }
 TEST_F(test_laplace_approximation_calculator, default_calculations_check_derivatives)
 {
+  ASSERT_EQ(quadratic_prior::num_quadratic_prior, 0);
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
@@ -743,6 +757,7 @@ TEST_F(test_laplace_approximation_calculator, default_calculations_check_derivat
   df1b2variable::pool = pool;
   ASSERT_EQ(df1b2variable::pool->nvar, 0);
   {
+    ASSERT_EQ(quadratic_prior::num_quadratic_prior, 0);
     df1b2variable::noallocate = 0;
     df1b2_gradlist::no_derivatives = 0;
 
@@ -759,12 +774,14 @@ TEST_F(test_laplace_approximation_calculator, default_calculations_check_derivat
 
     ASSERT_TRUE(f1b2gradlist == NULL);
     pmin->lapprox = new laplace_approximation_calculator(xsize, usize, minder, maxder, pmin);
+    ASSERT_EQ(pmin->lapprox->num_importance_samples, 0);
     ASSERT_TRUE(f1b2gradlist != NULL);
 
     re_objective_function_value::pobjfun = new re_objective_function_value();
     re_objective_function_value::pobjfun->allocate();
 
     {
+      ASSERT_EQ(quadratic_prior::num_quadratic_prior, 0);
       ASSERT_EQ(initial_params::nvarcalc(), 0);
       param_init_vector number;
       ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -796,8 +813,11 @@ TEST_F(test_laplace_approximation_calculator, default_calculations_check_derivat
       //ASSERT_EQ(initial_params::varsptr[0]->share_flags->get_maxshare(), 1);
       ASSERT_EQ(initial_params::nvarcalc(), 1);
       dvector x(1, 1);
+      x = 1;
       double f = 0;
 
+      ASSERT_EQ(pmin->lapprox->num_importance_samples, 0);
+      ASSERT_EQ(quadratic_prior::num_quadratic_prior, 0);
       ASSERT_TRUE(pmin->lapprox != nullptr);
       dvector result = pmin->lapprox->default_calculations_check_derivatives(x, pmin, f);
     }

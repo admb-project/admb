@@ -75,6 +75,7 @@ TEST_F(test_imatrix, diagonal)
 }
 TEST_F(test_imatrix, diagonalerror)
 {
+  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW({
     imatrix m(1, 3, 2, 3);
     diagonal(m);
@@ -184,6 +185,7 @@ TEST_F(test_imatrix, column)
 }
 TEST_F(test_imatrix, columnexit)
 {
+  ad_exit=&test_ad_exit;
   imatrix m(1, 3, 2, 4);
   ASSERT_ANY_THROW({
     column(m, 1);
@@ -390,6 +392,7 @@ TEST_F(test_imatrix, imatrix_position)
 }
 TEST_F(test_imatrix, imatrix_position_error)
 {
+  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW({
     imatrix m;
     imatrix_position position(1, 3);
@@ -448,6 +451,7 @@ TEST_F(test_imatrix, imatrix_imatrix)
 }
 TEST_F(test_imatrix, error_imatrix_imatrix)
 {
+  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW({
     imatrix a(1, 2, 1, 3);
     imatrix b(1, 3, 2, 2);
@@ -539,6 +543,7 @@ TEST_F(test_imatrix, assigmentallocated)
 }
 TEST_F(test_imatrix, assigmentsame)
 {
+  ad_exit=&test_ad_exit;
   imatrix m(1, 3, 1, 3);
   ASSERT_NO_THROW({
     m = m;

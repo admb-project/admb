@@ -738,11 +738,7 @@ TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-#ifdef _WIN32
 TEST_F(test_laplace_approximation_calculator, DISABLED_default_calculations_check_derivatives)
-#else
-TEST_F(test_laplace_approximation_calculator, default_calculations_check_derivatives)
-#endif
 {
   ASSERT_EQ(quadratic_prior::num_quadratic_prior, 0);
   ASSERT_TRUE(df1b2variable::pool == NULL);

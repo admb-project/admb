@@ -17,13 +17,17 @@ using std::istringstream;
   #include <cassert>
   #include <climits>
 #endif
-        int fcount =0;
+
 static int no_stuff=0;
+
+#ifdef DIAG
+int fcount =0;
 static int write_sparse_flag=0;
     static void trapper(void)
     {
       //int x=5;
     }
+#endif
 int noboundepen_flag=1;
 unsigned int global_nvar=0;
 
@@ -144,8 +148,10 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
     u=ub;
   }
   cout <<  " inner maxg = " <<  fmc1.gmax;
+#ifdef DIAG
   if (fabs(fmc1.gmax)>1.e+3)
     trapper();
+#endif
 
   if (fabs(fmc1.gmax)>1.e-4)
   {
@@ -1757,11 +1763,13 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
            //double ld1=0.5*ln_det(*(pmin->lapprox->sparse_triplet),
            //  *(pmin->lapprox->sparse_symbolic));
 
+#ifdef DIAG
            if (write_sparse_flag)
            {
              //ofstream ofs("sparse");
              //ofs << *(pmin->lapprox->vsparse_triplet) << endl;
            }
+#endif
            ld=0.5*ln_det(*(pmin->lapprox->vsparse_triplet),
              ssymb,*(pmin->lapprox->sparse_triplet2));
              //*(pmin->lapprox->sparse_symbolic2),pmin->lapprox);
@@ -2886,8 +2894,10 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
     u=ub;
   }
   cout <<  " inner maxg = " <<  fmc1.gmax;
+#ifdef DIAG
   if (fabs(fmc1.gmax)>1.e+3)
     trapper();
+#endif
 
   if (fabs(fmc1.gmax)>1.e-4)
   {

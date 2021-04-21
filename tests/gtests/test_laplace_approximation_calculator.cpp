@@ -1417,19 +1417,23 @@ TEST_F(test_laplace_approximation_calculator, build_up_nested_shape_2)
     l->nested_shape(1) = -1;
     l->nested_shape(1, 1) = -1;
     l->nested_shape(1, 1, 1) = -1;
-    l->nested_separable_calls_counter.allocate(1, 4);
+    i4_array* ptr4 = l->nested_shape.get_ptr4();
+    ptr4 = new i4_array(1, 1, 1, 1, 1, 1, 1, 1);
+    ptr4->operator()(1, 1, 1, 1) = -1;
+    l->nested_separable_calls_counter.allocate(1, 5);
     l->nested_separable_calls_counter(1) = 1;
     l->nested_separable_calls_counter(2) = 1;
     l->nested_separable_calls_counter(3) = 1;
-    l->nested_separable_calls_counter(4) = 0;
+    l->nested_separable_calls_counter(4) = 1;
+    l->nested_separable_calls_counter(5) = 0;
 
     ASSERT_EQ(l->separable_call_level, 1);
     l->build_up_nested_shape();
     ASSERT_EQ(l->separable_call_level, 1);
     ASSERT_DOUBLE_EQ(l->nested_shape(1), 1);
 
-    l->nested_separable_calls_counter(2) = 1;
-    l->build_up_nested_shape();
+    //l->nested_separable_calls_counter(2) = 1;
+    //l->build_up_nested_shape();
 
     ASSERT_EQ(df1b2variable::adpool_counter, 0);
     df1b2variable::adpool_vector[df1b2variable::adpool_counter] = df1b2variable::pool;

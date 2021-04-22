@@ -36,6 +36,8 @@ TEST_F(test_autodif, gradcalc_no_independant_variables)
 
 TEST_F(test_autodif, dvar_vector_with_no_gradient_structure)
 {
+  ad_exit=&test_ad_exit;
+
   const int nvar = 1;
   independent_variables variables(1, nvar);
   ASSERT_ANY_THROW(

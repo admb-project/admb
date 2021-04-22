@@ -55,6 +55,8 @@ public:
       gradient_structure::ARR_LIST1 = nullptr;
     }
     function_minimizer::first_hessian_flag = 0;
+    ad_comm::argc = 0;
+    ad_comm::argv = nullptr;
   }
 };
 class myfunction_minimizer: public function_minimizer
@@ -1376,6 +1378,74 @@ TEST_F(test_laplace_approximation_calculator, gauss_hermite_stuff)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
+TEST_F(test_laplace_approximation_calculator, gauss_hermite_stuff2)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    ivector minder(1, 2);
+    minder(1) = 1;
+    minder(2) = 1;
+    ivector maxder(1, 2);
+    maxder(1) = 2;
+    maxder(2) = 2;
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    re_objective_function_value::pobjfun = new re_objective_function_value();
+    re_objective_function_value::pobjfun->allocate();
+    //lac.build_up_nested_shape();
+
+    ivector itmp(1, 2);
+    itmp(1) = 0;
+    itmp(2) = 1;
+    ad_exit=&test_ad_exit;
+    ASSERT_THROW(gauss_hermite_stuff stuff(&lac, true, 2, itmp), int);
+
+    re_objective_function_value::pobjfun->deallocate();
+    delete re_objective_function_value::pobjfun;
+    re_objective_function_value::pobjfun = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+  }
+  ASSERT_TRUE(df1b2variable::pool == pool);
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
 TEST_F(test_laplace_approximation_calculator, build_up_nested_shape_2)
 {
   ad_exit=&test_ad_exit;
@@ -1452,6 +1522,561 @@ TEST_F(test_laplace_approximation_calculator, build_up_nested_shape_2)
     delete pmin;
     pmin = nullptr;
   }
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+class ad_comm2: public ad_comm
+{
+public:
+ad_comm2(): ad_comm() {}
+ad_comm2(const int argc, const char *argv[]): ad_comm((int)argc, (char**)argv) {}
+};
+TEST_F(test_laplace_approximation_calculator, ndi)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    int minder = 1;
+    int maxder = 1;
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    param_init_number number;
+    number.allocate(1, "number");
+    ASSERT_EQ(initial_params::nvarcalc(), 1);
+
+    *(objective_function_value::pobjfun) = number;
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+
+    int argc = 3;
+    const char* argv[] = { "./simple" , "-ndi", "5"};
+    ad_comm2 adcomm(argc, argv);
+    ASSERT_EQ(ad_comm::argc, 3);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+
+    ASSERT_EQ(lac.derindex->rowmin(), 1);
+    ASSERT_EQ(lac.derindex->rowmax(), 5);
+
+    ASSERT_TRUE(f1b2gradlist != NULL);
+    ASSERT_EQ(lac.usize, 1);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    lac.num_local_re_array = new ivector(1, 1);
+    *(lac.num_local_re_array) = 1;
+    lac.num_separable_calls = 1;
+
+    ad_exit=&test_ad_exit;
+    dvector x(1, 1);
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    lac.ubest.allocate(1, 1);
+    lac.get_uhat_lm_newton2(x, pmin);
+    delete lac.num_local_re_array;
+    lac.num_local_re_array = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_EQ(df1b2variable::adpool_counter, 1);
+  ASSERT_TRUE(df1b2variable::pool == df1b2variable::adpool_vector[0]);
+
+  df1b2variable::adpool_vector[0] = nullptr;
+  df1b2variable::adpool_counter = 0;
+
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, ilmn)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    int minder = 1;
+    int maxder = 1;
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    param_init_number number;
+    number.allocate(1, "number");
+    ASSERT_EQ(initial_params::nvarcalc(), 1);
+
+    *(objective_function_value::pobjfun) = number;
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+
+    int argc = 3;
+    const char* argv[] = { "./simple" , "-ilmn", "5"};
+    ad_comm2 adcomm(argc, argv);
+    ASSERT_EQ(ad_comm::argc, 3);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+
+    ASSERT_EQ(lac.derindex->rowmin(), 1);
+    ASSERT_EQ(lac.derindex->rowmax(), 20000);
+    ASSERT_EQ(lac.inner_lmnsteps, 5);
+
+    ASSERT_TRUE(f1b2gradlist != NULL);
+    ASSERT_EQ(lac.usize, 1);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    lac.num_local_re_array = new ivector(1, 1);
+    *(lac.num_local_re_array) = 1;
+    lac.num_separable_calls = 1;
+
+    ad_exit=&test_ad_exit;
+    dvector x(1, 1);
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    lac.ubest.allocate(1, 1);
+    lac.get_uhat_lm_newton2(x, pmin);
+    delete lac.num_local_re_array;
+    lac.num_local_re_array = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_EQ(df1b2variable::adpool_counter, 1);
+  ASSERT_TRUE(df1b2variable::pool == df1b2variable::adpool_vector[0]);
+
+  df1b2variable::adpool_vector[0] = nullptr;
+  df1b2variable::adpool_counter = 0;
+
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, ndb)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    int minder = 1;
+    int maxder = 1;
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    param_init_number number;
+    number.allocate(1, "number");
+    ASSERT_EQ(initial_params::nvarcalc(), 1);
+
+    *(objective_function_value::pobjfun) = number;
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+
+    int argc = 3;
+    const char* argv[] = { "./simple" , "-ndb", "2"};
+    ad_comm2 adcomm(argc, argv);
+    ASSERT_EQ(ad_comm::argc, 3);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+
+    ASSERT_EQ(lac.derindex->rowmin(), 1);
+    ASSERT_EQ(lac.derindex->rowmax(), 20000);
+    ASSERT_EQ(lac.inner_lmnsteps, 10);
+    ASSERT_EQ(lac.num_der_blocks, 2);
+
+    ASSERT_TRUE(f1b2gradlist != NULL);
+    ASSERT_EQ(lac.usize, 1);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    lac.num_local_re_array = new ivector(1, 1);
+    *(lac.num_local_re_array) = 1;
+    lac.num_separable_calls = 1;
+
+    ad_exit=&test_ad_exit;
+    dvector x(1, 1);
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    lac.ubest.allocate(1, 1);
+    lac.get_uhat_lm_newton2(x, pmin);
+    delete lac.num_local_re_array;
+    lac.num_local_re_array = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_EQ(df1b2variable::adpool_counter, 1);
+  ASSERT_TRUE(df1b2variable::pool == df1b2variable::adpool_vector[0]);
+
+  df1b2variable::adpool_vector[0] = nullptr;
+  df1b2variable::adpool_counter = 0;
+
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, nr)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    int minder = 1;
+    int maxder = 1;
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    param_init_number number;
+    number.allocate(1, "number");
+    ASSERT_EQ(initial_params::nvarcalc(), 1);
+
+    *(objective_function_value::pobjfun) = number;
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+
+    int argc = 3;
+    const char* argv[] = { "./simple" , "-nr", "2"};
+    ad_comm2 adcomm(argc, argv);
+    ASSERT_EQ(ad_comm::argc, 3);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+
+    ASSERT_EQ(lac.derindex->rowmin(), 1);
+    ASSERT_EQ(lac.derindex->rowmax(), 20000);
+    ASSERT_EQ(lac.inner_lmnsteps, 10);
+    ASSERT_EQ(lac.num_nr_iters, 2);
+
+    ASSERT_TRUE(f1b2gradlist != NULL);
+    ASSERT_EQ(lac.usize, 1);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    lac.num_local_re_array = new ivector(1, 1);
+    *(lac.num_local_re_array) = 1;
+    lac.num_separable_calls = 1;
+
+    ad_exit=&test_ad_exit;
+    dvector x(1, 1);
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    lac.ubest.allocate(1, 1);
+    lac.get_uhat_lm_newton2(x, pmin);
+    delete lac.num_local_re_array;
+    lac.num_local_re_array = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_EQ(df1b2variable::adpool_counter, 1);
+  ASSERT_TRUE(df1b2variable::pool == df1b2variable::adpool_vector[0]);
+
+  df1b2variable::adpool_vector[0] = nullptr;
+  df1b2variable::adpool_counter = 0;
+
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, nrcrit)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    int minder = 1;
+    int maxder = 1;
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    param_init_number number;
+    number.allocate(1, "number");
+    ASSERT_EQ(initial_params::nvarcalc(), 1);
+
+    *(objective_function_value::pobjfun) = number;
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+
+    int argc = 3;
+    const char* argv[] = { "./simple" , "-nrcrit", "2"};
+    ad_comm2 adcomm(argc, argv);
+    ASSERT_EQ(ad_comm::argc, 3);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+
+    ASSERT_EQ(lac.derindex->rowmin(), 1);
+    ASSERT_EQ(lac.derindex->rowmax(), 20000);
+    ASSERT_EQ(lac.inner_lmnsteps, 10);
+    ASSERT_EQ(lac.nr_crit, 2);
+
+    ASSERT_TRUE(f1b2gradlist != NULL);
+    ASSERT_EQ(lac.usize, 1);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    lac.num_local_re_array = new ivector(1, 1);
+    *(lac.num_local_re_array) = 1;
+    lac.num_separable_calls = 1;
+
+    ad_exit=&test_ad_exit;
+    dvector x(1, 1);
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    lac.ubest.allocate(1, 1);
+    lac.get_uhat_lm_newton2(x, pmin);
+    delete lac.num_local_re_array;
+    lac.num_local_re_array = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_EQ(df1b2variable::adpool_counter, 1);
+  ASSERT_TRUE(df1b2variable::pool == df1b2variable::adpool_vector[0]);
+
+  df1b2variable::adpool_vector[0] = nullptr;
+  df1b2variable::adpool_counter = 0;
+
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+
+  df1b2variable::pool = nullptr;
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}
+TEST_F(test_laplace_approximation_calculator, use_gauss_hermite)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    int minder = 1;
+    int maxder = 1;
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_EQ(initial_params::nvarcalc(), 0);
+    param_init_number number;
+    number.allocate(1, "number");
+    ASSERT_EQ(initial_params::nvarcalc(), 1);
+
+    *(objective_function_value::pobjfun) = number;
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+
+    ASSERT_EQ(df1b2variable::adpool_counter, 0);
+
+    int argc = 3;
+    const char* argv[] = { "./simple" , "-gh", "2"};
+    ad_comm2 adcomm(argc, argv);
+    ASSERT_EQ(ad_comm::argc, 3);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_EQ(df1b2variable::adpool_counter, 1);
+
+    ASSERT_EQ(lac.derindex->rowmin(), 1);
+    ASSERT_EQ(lac.derindex->rowmax(), 20000);
+    ASSERT_EQ(lac.inner_lmnsteps, 10);
+    ASSERT_EQ(lac.use_gauss_hermite, 2);
+
+    ASSERT_TRUE(f1b2gradlist != NULL);
+    ASSERT_EQ(lac.usize, 1);
+
+    lac.num_importance_samples = 1;
+    ASSERT_EQ(lac.num_importance_samples, 1);
+
+    lac.num_local_re_array = new ivector(1, 1);
+    *(lac.num_local_re_array) = 1;
+    lac.num_separable_calls = 1;
+
+    ad_exit=&test_ad_exit;
+    dvector x(1, 1);
+    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    lac.ubest.allocate(1, 1);
+    lac.get_uhat_lm_newton2(x, pmin);
+    delete lac.num_local_re_array;
+    lac.num_local_re_array = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+  }
+  ASSERT_EQ(df1b2variable::adpool_counter, 1);
+  ASSERT_TRUE(df1b2variable::pool == df1b2variable::adpool_vector[0]);
+
+  df1b2variable::adpool_vector[0] = nullptr;
+  df1b2variable::adpool_counter = 0;
+
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+
   df1b2variable::pool = nullptr;
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);

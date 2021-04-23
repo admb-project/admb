@@ -549,6 +549,7 @@ TEST_F(test_dmatrix, mean)
 }
 TEST_F(test_dmatrix, colsum)
 {
+  ad_exit=&test_ad_exit;
   dmatrix m(1, 3, 1, 3);
   m(1, 1) = 1;
   m(1, 2) = 2;
@@ -716,6 +717,7 @@ TEST_F(test_dmatrix, fullcolsum)
 }
 TEST_F(test_dmatrix, uoistream)
 {
+  ad_exit=&test_ad_exit;
   dmatrix m(1, 2, 1, 3);
 
   char array[] = "{0, -1, 2} {-3, 4, 5}";
@@ -754,6 +756,7 @@ TEST_F(test_dmatrix, uoistream)
 }
 TEST_F(test_dmatrix, assigmenterror)
 {
+  ad_exit=&test_ad_exit;
   dmatrix a(1, 2, 1, 3);
   ASSERT_ANY_THROW({
     dmatrix b(2, 2, 1, 3);
@@ -774,6 +777,7 @@ TEST_F(test_dmatrix, assigmenterror)
 }
 TEST_F(test_dmatrix, plusassigmenterror)
 {
+  ad_exit=&test_ad_exit;
   dmatrix a(1, 2, 1, 3);
   ASSERT_ANY_THROW({
     dmatrix b(2, 2, 1, 3);
@@ -786,6 +790,7 @@ TEST_F(test_dmatrix, plusassigmenterror)
 }
 TEST_F(test_dmatrix, minusassigmenterror)
 {
+  ad_exit=&test_ad_exit;
   dmatrix a(1, 2, 1, 3);
   ASSERT_ANY_THROW({
     dmatrix b(2, 2, 1, 3);
@@ -877,6 +882,7 @@ TEST_F(test_dmatrix, initialize)
 }
 TEST_F(test_dmatrix, emptyinitialize)
 {
+  ad_exit=&test_ad_exit;
   dmatrix m;
   ASSERT_NO_THROW({
     m.initialize();
@@ -884,6 +890,7 @@ TEST_F(test_dmatrix, emptyinitialize)
 }
 TEST_F(test_dmatrix, empty)
 {
+  ad_exit=&test_ad_exit;
   dmatrix empty;
   ASSERT_EQ(1, empty.rowmin());
   ASSERT_EQ(0, empty.rowmax());
@@ -917,6 +924,7 @@ TEST_F(test_dmatrix, symmetrize)
 }
 TEST_F(test_dmatrix, symmetrizeerror)
 {
+  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW({
     dmatrix m(1, 2, 1, 3);
     symmetrize(m);
@@ -953,6 +961,7 @@ TEST_F(test_dmatrix, extract_row)
 }
 TEST_F(test_dmatrix, extract_rowerror)
 {
+  ad_exit=&test_ad_exit;
   dmatrix m(1, 3);
   ASSERT_ANY_THROW({
     row(m, 0);
@@ -988,6 +997,7 @@ TEST_F(test_dmatrix, extract_column)
 }
 TEST_F(test_dmatrix, extract_columnerror)
 {
+  ad_exit=&test_ad_exit;
   dmatrix m(1, 3, 1, 3);
   ASSERT_ANY_THROW({
     row(m, 0);

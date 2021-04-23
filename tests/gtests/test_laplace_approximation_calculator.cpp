@@ -2602,32 +2602,32 @@ TEST_F(test_laplace_approximation_calculator, iiprint)
 
     {
       int argc = 2;
-      const char* argv[] = { "./simple" , "-iiprint"};
+      const char* argv[] = { "./simple" , "-nrcrit"};
       ad_comm2 adcomm(argc, argv);
       ASSERT_EQ(ad_comm::argc, 2);
       laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
       ASSERT_EQ(df1b2variable::adpool_counter, 1);
-      ASSERT_DOUBLE_EQ(lac.inner_iprint, 0);
+      ASSERT_DOUBLE_EQ(lac.nr_crit, 1.e-11);
     }
     df1b2variable::adpool_counter=0;
     {
       int argc = 3;
-      const char* argv[] = { "./simple" , "-iiprint", "0"};
+      const char* argv[] = { "./simple" , "-nrcrit", "0"};
       ad_comm2 adcomm(argc, argv);
       ASSERT_EQ(ad_comm::argc, 3);
       laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
       ASSERT_EQ(df1b2variable::adpool_counter, 1);
-      ASSERT_DOUBLE_EQ(lac.inner_iprint, 0);
+      ASSERT_DOUBLE_EQ(lac.nr_crit, 1.e-11);
     }
     df1b2variable::adpool_counter=0;
     {
       int argc = 3;
-      const char* argv[] = { "./simple" , "-iiprint", "5"};
+      const char* argv[] = { "./simple" , "-nrcrit", "5"};
       ad_comm2 adcomm(argc, argv);
       ASSERT_EQ(ad_comm::argc, 3);
       laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
       ASSERT_EQ(df1b2variable::adpool_counter, 1);
-      ASSERT_DOUBLE_EQ(lac.inner_iprint, 5);
+      ASSERT_DOUBLE_EQ(lac.nr_crit, 5);
     }
 
     delete pmin;

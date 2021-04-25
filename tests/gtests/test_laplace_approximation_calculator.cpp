@@ -2652,3 +2652,81 @@ TEST_F(test_laplace_approximation_calculator, iiprint)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
+double ff(double arg, double arg2) { return 0; }
+TEST_F(test_laplace_approximation_calculator, write_pass1)
+{
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+
+  ASSERT_EQ(laplace_approximation_calculator::saddlepointflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::alternative_user_function_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::sparse_hessian_flag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::antiflag, 0);
+  ASSERT_EQ(laplace_approximation_calculator::print_importance_sampling_weights_flag, 0);
+  ASSERT_TRUE(laplace_approximation_calculator::variance_components_vector == nullptr);
+  ASSERT_EQ(laplace_approximation_calculator::where_are_we_flag, 0);
+
+  initial_df1b2params::num_initial_df1b2params = 0;
+  ASSERT_EQ(initial_df1b2params::num_initial_df1b2params, 0);
+  initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[10];
+  adpool* pool = new adpool();
+  df1b2variable::pool = pool;
+  ASSERT_EQ(df1b2variable::pool->nvar, 0);
+  {
+    df1b2variable::noallocate = 1;
+    df1b2_gradlist::no_derivatives = 1;
+
+    int xsize = 1;
+    int usize = 1;
+    ivector minder(1, 2);
+    minder(1) = 1;
+    minder(2) = 1;
+    ivector maxder(1, 2);
+    maxder(1) = 2;
+    maxder(2) = 2;
+    myfunction_minimizer* pmin = new myfunction_minimizer();
+    objective_function_value::pobjfun = new objective_function_value();
+
+    ASSERT_TRUE(f1b2gradlist == NULL);
+    laplace_approximation_calculator lac(xsize, usize, minder, maxder, pmin);
+    ASSERT_TRUE(f1b2gradlist != NULL);
+
+    {
+    df1b2variable px(2.1);
+    df1b2variable py(2.2);
+    df1b2variable pz(2.4);
+    df1b2function2 pf(&ff,
+                      &ff,
+                      &ff,
+                      &ff,
+                      &ff,
+                      &ff,
+                      &ff,
+                      &ff,
+                      &ff,
+                      &ff,
+                      "try");
+
+    f1b2gradlist->write_pass1(&px, &py, &pz, &pf);
+    }
+
+    delete objective_function_value::pobjfun;
+    objective_function_value::pobjfun = nullptr;
+
+    delete pmin;
+    pmin = nullptr;
+  }
+  ASSERT_TRUE(df1b2variable::pool == pool);
+  pool->deallocate();
+  delete pool;
+  pool = nullptr;
+  df1b2variable::pool = nullptr;
+
+  delete initial_df1b2params::varsptr;
+  initial_df1b2params::varsptr = nullptr;
+
+  ASSERT_TRUE(df1b2variable::pool == NULL);
+  ASSERT_TRUE(f1b2gradlist == NULL);
+  ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
+}

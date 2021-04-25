@@ -16,7 +16,13 @@ public:
       delete df1b2variable::pool;
       df1b2variable::pool = NULL;
     }
-    extern df1b2_gradlist* f1b2gradlist;
+    for (int i=0;i<df1b2variable::adpool_counter;i++)
+    {
+      delete df1b2variable::adpool_vector[i];
+      df1b2variable::adpool_vector[i]=0;
+      df1b2variable::nvar_vector[i]=0;
+    }
+    df1b2variable::adpool_counter=0;
     if (f1b2gradlist)
     {
       delete f1b2gradlist;
@@ -27,8 +33,29 @@ public:
       delete initial_df1b2params::varsptr;
       initial_df1b2params::varsptr = NULL;
     }
+    ad_comm::no_ln_det_choleski_flag = 0;
+    ad_comm::print_hess_and_exit_flag = 0;
     df1b2variable::noallocate = 0;
     df1b2_gradlist::no_derivatives = 0;
+    initial_params::varsptr.initialize();
+    initial_df1b2params::num_initial_df1b2params = 0;
+    for (int i = 0; i < 100; ++i)
+    {
+      quadratic_prior::ptr[i] = nullptr;
+      df1b2quadratic_prior::ptr[i] = nullptr;
+    }
+    quadratic_prior::num_quadratic_prior = 0;
+    df1b2quadratic_prior::num_quadratic_prior = 0;
+    if (gradient_structure::ARR_LIST1)
+    {
+      delete gradient_structure::ARR_LIST1;
+      gradient_structure::ARR_LIST1 = nullptr;
+    }
+    function_minimizer::first_hessian_flag = 0;
+    ad_comm::argc = 0;
+    ad_comm::argv = nullptr;
+    laplace_approximation_calculator::antiflag = 0;
+    df1b2variable::nvar = 0;
   }
 };
 
@@ -146,7 +173,7 @@ TEST_F(test_df1b2variable, copy_constructor_empty)
   ASSERT_TRUE(f1b2gradlist == NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_df1b2variable, DISABLED_copy_constructor_noallocate_nonempty)
+TEST_F(test_df1b2variable, copy_constructor_noallocate_nonempty)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -170,7 +197,8 @@ TEST_F(test_df1b2variable, DISABLED_copy_constructor_noallocate_nonempty)
     ASSERT_EQ(0, *v.ncopies);
     ASSERT_TRUE(v.u == (v.ptr + 2));
     ASSERT_TRUE(v.u_dot == (v.u + 1));
-    int nvar = v.get_local_nvar();
+    int nvar = df1b2variable::nvar;
+    ASSERT_EQ(nvar, 0);
     ASSERT_TRUE(v.u_bar == (v.u_dot + nvar));
     ASSERT_TRUE(v.u_dot_bar == (v.u_bar + nvar));
     ASSERT_TRUE(v.u_tilde == (v.u_dot_bar + nvar));
@@ -201,7 +229,7 @@ TEST_F(test_df1b2variable, DISABLED_copy_constructor_noallocate_nonempty)
   ASSERT_TRUE(f1b2gradlist != NULL);
   ASSERT_TRUE(initial_df1b2params::varsptr == NULL);
 }
-TEST_F(test_df1b2variable, DISABLED_constructor_double)
+TEST_F(test_df1b2variable, constructor_double)
 {
   ASSERT_TRUE(df1b2variable::pool == NULL);
   ASSERT_TRUE(f1b2gradlist == NULL);
@@ -225,7 +253,8 @@ TEST_F(test_df1b2variable, DISABLED_constructor_double)
     ASSERT_DOUBLE_EQ(*v.u, expected);
     ASSERT_TRUE(v.u == (v.ptr + 2));
     ASSERT_TRUE(v.u_dot == (v.u + 1));
-    int nvar = v.get_local_nvar();
+    int nvar = df1b2variable::nvar;
+    ASSERT_EQ(nvar, 0);
     ASSERT_TRUE(v.u_bar == (v.u_dot + nvar));
     ASSERT_TRUE(v.u_dot_bar == (v.u_bar + nvar));
     ASSERT_TRUE(v.u_tilde == (v.u_dot_bar + nvar));

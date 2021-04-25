@@ -60,6 +60,7 @@ public:
     ad_comm::argc = 0;
     ad_comm::argv = nullptr;
     laplace_approximation_calculator::antiflag = 0;
+    df1b2variable::nvar = 0;
   }
 };
 class myfunction_minimizer: public function_minimizer

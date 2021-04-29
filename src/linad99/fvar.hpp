@@ -511,7 +511,7 @@ class vector_shape
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
-  #if (USE_VECTOR_SHAPE_POOL==1)
+  #if (USE_VECTOR_SHAPE_POOL1)
   static vector_shape_pool& get_xpool()
   {
     static vector_shape_pool xpool(sizeof(vector_shape));

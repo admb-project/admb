@@ -165,6 +165,7 @@ void vector_shapex::operator delete(void* ptr, size_t)
     }
   }
 }
+#endif
 
 #if defined(__CHECK_MEMORY__)
 /**
@@ -638,5 +639,3 @@ void dfpool::clean(void)
     ptr++;
   }
 }
-
-#endif  // #if defined(USE_VECTOR_SHAPE_POOL)

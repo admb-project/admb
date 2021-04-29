@@ -488,7 +488,7 @@ TEST_F(test_i3_array, intintimatrix)
   ASSERT_EQ(1, a.slicemin());
   ASSERT_EQ(2, a.slicemax());
   ASSERT_EQ(2, a.slicesize());
- 
+
   ASSERT_EQ(3, a(1).indexmin());
   ASSERT_EQ(4, a(1).indexmax());
   ASSERT_EQ(3, a(2).indexmin());

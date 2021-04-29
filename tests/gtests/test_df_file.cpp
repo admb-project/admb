@@ -184,10 +184,10 @@ TEST_F(test_df_file, memcpy_ptr)
 
   size_t expected = __LINE__;
   uintptr_t src = (uintptr_t)&expected;
-  memcpy(&array, &src, size); 
+  memcpy(&array, &src, size);
 
   uintptr_t dst;
-  memcpy(&dst, &array, size); 
+  memcpy(&dst, &array, size);
 
   ASSERT_EQ(src, dst);
 

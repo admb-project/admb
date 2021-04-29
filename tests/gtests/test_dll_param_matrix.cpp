@@ -6,7 +6,7 @@ extern "C"
   void test_ad_exit(const int exit_code);
 }
 
-class test_dll_param_matrix: public ::testing::Test 
+class test_dll_param_matrix: public ::testing::Test
 {
 protected:
   double d;

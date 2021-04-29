@@ -74,6 +74,10 @@ unit-gtests:
 test-rgamma:
 	$(MAKE) --directory=rgamma
 
+tests-afunnel:\
+  test-afunnel\
+  test-afunnel2
+
 core-tpls:\
   tpl-4darray\
   tpl-adnuts\
@@ -142,6 +146,12 @@ tpl-alternatives:
 
 tpl-strip_full_path:
 	$(MAKE) --directory=strip_full_path
+
+test-afunnel:
+	$(MAKE) --directory=afunnel
+
+test-afunnel2:
+	$(MAKE) --directory=afunnel2
 
 cpp-globals:
 	$(MAKE) --directory=globals

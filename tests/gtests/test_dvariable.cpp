@@ -54,7 +54,7 @@ TEST_F(test_dvariable, det)
 TEST_F(test_dvariable, exp_1)
 {
   gradient_structure gs;
-  
+
   dvariable v = 1;
   try
   {
@@ -62,8 +62,8 @@ TEST_F(test_dvariable, exp_1)
     dvariable result = exp(v);
     ASSERT_DOUBLE_EQ(expected, value(result));
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     const int expected_exit_code = 1;
     if (exit_code == expected_exit_code)
     {
@@ -77,14 +77,14 @@ TEST_F(test_dvariable, exp_1)
 TEST_F(test_dvariable, exp_max)
 {
   gradient_structure gs;
-  
+
   dvariable v = std::numeric_limits< double >::max();
   try
   {
     exp(v);
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     const int expected_exit_code = 1;
     if (exit_code == expected_exit_code)
     {
@@ -99,52 +99,52 @@ TEST_F(test_dvariable, exp_max)
 TEST_F(test_dvariable, mfexp)
 {
   gradient_structure gs;
-  
+
   {
-  double input = 100; 
+  double input = 100;
   double result = mfexp(input);
 
-  dvariable vinput = 100; 
+  dvariable vinput = 100;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
   ASSERT_TRUE(result > ::exp(60));
   }
   {
-  double input = -100; 
+  double input = -100;
   double result = mfexp(input);
 
-  dvariable vinput = -100; 
+  dvariable vinput = -100;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
   ASSERT_TRUE(result < ::exp(-60));
   }
   {
-  double input = 60; 
+  double input = 60;
   double result = mfexp(input);
 
-  dvariable vinput = 60; 
+  dvariable vinput = 60;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
   ASSERT_DOUBLE_EQ(result, ::exp(60));
   }
   {
-  double input = -60; 
+  double input = -60;
   double result = mfexp(input);
 
-  dvariable vinput = -60; 
+  dvariable vinput = -60;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
   ASSERT_DOUBLE_EQ(result, ::exp(-60));
   }
   {
-  double input = 61; 
+  double input = 61;
   double result = mfexp(input);
 
-  dvariable vinput = 61; 
+  dvariable vinput = 61;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
@@ -152,10 +152,10 @@ TEST_F(test_dvariable, mfexp)
   ASSERT_TRUE(result < ::exp(61));
   }
   {
-  double input = -61; 
+  double input = -61;
   double result = mfexp(input);
 
-  dvariable vinput = -61; 
+  dvariable vinput = -61;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
@@ -163,30 +163,30 @@ TEST_F(test_dvariable, mfexp)
   ASSERT_TRUE(result > ::exp(-61));
   }
   {
-  double input = 10; 
+  double input = 10;
   double result = mfexp(input);
 
-  dvariable vinput = 10; 
+  dvariable vinput = 10;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
   ASSERT_DOUBLE_EQ(result, ::exp(10));
   }
   {
-  double input = -10; 
+  double input = -10;
   double result = mfexp(input);
 
-  dvariable vinput = -10; 
+  dvariable vinput = -10;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));
   ASSERT_DOUBLE_EQ(result, ::exp(-10));
   }
   {
-  double input = 0; 
+  double input = 0;
   double result = mfexp(input);
 
-  dvariable vinput = 0; 
+  dvariable vinput = 0;
   dvariable vresult = mfexp(vinput);
 
   ASSERT_DOUBLE_EQ(result, value(vresult));

@@ -36,7 +36,7 @@ TEST_F(test_issues, issue50)
   ASSERT_DOUBLE_EQ(gradients(1), std::pow(1.0 + independents(1) - 60.0, -2));
   ASSERT_DOUBLE_EQ(gradients(2), std::pow(1.0 + independents(2) - 60.0, -2));
   ASSERT_DOUBLE_EQ(gradients(3), std::pow(1.0 + independents(3) - 60.0, -2));
- 
+
   dvector fd(1, 3);
   fd(1) = (fd2(1) - fd1(1)) / dx;
   fd(2) = (fd2(2) - fd1(2)) / dx;

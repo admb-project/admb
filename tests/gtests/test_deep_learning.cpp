@@ -87,7 +87,7 @@ void neural_network_part1(double** data, double* layer)
     {
       for (int k = 0; k < 4; ++k)
       {
-        weights[j] += data[k][j] * errors[k] * slopes[k]; 
+        weights[j] += data[k][j] * errors[k] * slopes[k];
       }
     }
   }
@@ -107,7 +107,7 @@ void neural_network_two_layers(double** data, double** output_layer)
   data[3][3] = 0;
 
   double hidden_weights[3][4];
-  hidden_weights[0][0] = -0.16595599;  
+  hidden_weights[0][0] = -0.16595599;
   hidden_weights[0][1] = 0.44064899;
   hidden_weights[0][2] = -0.99977125;
   hidden_weights[0][3] = -0.39533485;
@@ -196,7 +196,7 @@ TEST_F(test_deep_learning, part1)
   double layer[4];
   neural_network_part1(get_data(), &layer[0]);
 
-  ASSERT_NEAR(0.00966449, layer[0], 0.00001); 
+  ASSERT_NEAR(0.00966449, layer[0], 0.00001);
   ASSERT_NEAR(0.00786506, layer[1], 0.00001);
   ASSERT_NEAR(0.993589, layer[2], 0.00001);
   ASSERT_NEAR(0.99212, layer[3], 0.00001);
@@ -211,7 +211,7 @@ TEST_F(test_deep_learning, two_layers)
 
   neural_network_two_layers(get_data(), outputs);
 
-  ASSERT_NEAR(0.00260572, outputs[0][0], 0.00001); 
+  ASSERT_NEAR(0.00260572, outputs[0][0], 0.00001);
   ASSERT_NEAR(0.996722, outputs[1][0], 0.00001);
   ASSERT_NEAR(0.997017, outputs[2][0], 0.00001);
   ASSERT_NEAR(0.00386759, outputs[3][0], 0.00001);

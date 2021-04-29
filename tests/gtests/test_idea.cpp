@@ -176,8 +176,8 @@ TEST_F(test_idea, multichar)
 }
 TEST_F(test_idea, multiple_int_double)
 {
-  int i = 5; 
-  double d = 2.5; 
+  int i = 5;
+  double d = 2.5;
   ASSERT_DOUBLE_EQ(d * i, 12.5);
   ASSERT_DOUBLE_EQ(i * d, 12.5);
 }

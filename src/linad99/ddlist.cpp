@@ -14,31 +14,13 @@ Copyright (c) 2008-2012 Regents of the University of California
 /**
 Default constructor
 */
-dlist::dlist()
+dlist::dlist(const unsigned int _size): size(_size)
 {
-  int on,nopt = 0;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
-  {
-    if (nopt == 1)
-    {
-      int i = atoi(ad_comm::argv[on+1]);
-      if (i > 0)
-        gradient_structure::MAX_DLINKS = (unsigned int)i;
-    }
-    else
-    {
-      cerr << "Wrong number of options to -mdl -- must be 1"
-        " you have " << nopt << endl;
-      ad_exit(1);
-    }
-  }
-
   last = NULL;
   nlinks = 0;
-  dlink_addresses = new dlink*[gradient_structure::MAX_DLINKS];
-  ddlist_space =
-    (char*)malloc(gradient_structure::MAX_DLINKS * sizeof(dlink));
-  variables_save = new double[gradient_structure::MAX_DLINKS];
+  dlink_addresses = new dlink*[size];
+  ddlist_space = (char*)malloc(size * sizeof(dlink));
+  variables_save = new double[size];
 
 #ifndef OPT_LIB
   //fails for insufficient memory to allocate space for dvariables save buffer
@@ -46,7 +28,7 @@ dlist::dlist()
 #endif
 
   //Initialize addresses to zero
-  memset(dlink_addresses, 0, sizeof(dlink*) * gradient_structure::MAX_DLINKS);
+  memset(dlink_addresses, 0, size * sizeof(dlink*));
 }
 /**
 Destructor
@@ -76,7 +58,7 @@ dlink* dlist::create()
 {
 #ifndef OPT_LIB
   //If fails, then need to increase the maximum number of dlinks.
-  assert(nlinks < gradient_structure::MAX_DLINKS);
+  assert(nlinks < size);
 #endif
 
   dlink* link = (dlink*)(&ddlist_space[sizeof(dlink) * nlinks]);
@@ -169,7 +151,7 @@ Get total addresses stored.
 size_t dlist::total_addresses() const
 {
   size_t total = 0;
-  for (unsigned int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
+  for (unsigned int i = 0; i < size; ++i)
   {
     if (dlink_addresses[i] != 0)
     {

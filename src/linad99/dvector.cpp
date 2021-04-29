@@ -57,6 +57,7 @@ dvector& dvector::shift(int min)
   shape->shift(min);
   return *this;
 }
+
 /**
 Default destructor. Invoked by the compiler. Only frees allocated memory
 if all shallow copies in scope have been removed.

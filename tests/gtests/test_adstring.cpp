@@ -778,7 +778,7 @@ TEST_F(test_adstring, init_line_adstring_allocate)
 
   adstring input = "maxlimit3.txt";
   cifstream ifs(input);
-  
+
   ad_comm::global_datafile = &ifs;
   {
     init_line_adstring a;

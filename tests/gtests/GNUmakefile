@@ -25,6 +25,9 @@ endif
 
 
 GTESTS_ALL=\
+ test_afunnel.cpp\
+ test_dlist.cpp\
+ test_funnel_thread_arr_list.cpp\
  test_atomic.cpp\
  test_shared_ptr.cpp\
  test_adstring_strcase.cpp\
@@ -185,6 +188,8 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
+ test_funnel_thread_grad_stack.cpp\
+ test_funnel_thread_df_file.cpp\
  test_laplace_approximation_calculator.cpp\
  main.cpp
 
@@ -304,7 +309,7 @@ gtest-all: gtest-all.obj $(GTESTS_ALL)
 ifeq ($(CMDSHELL),cmd)
 	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)"  & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
 endif
 
 gtest-dev: gtest-all.obj $(GTESTS_DEV)

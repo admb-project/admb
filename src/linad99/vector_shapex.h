@@ -47,10 +47,19 @@ class vector_shapex
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
+  #if (USE_VECTOR_SHAPE_POOL==1)  
+  static vector_shape_pool& get_xpool()
+  {
+    static vector_shape_pool xpool(sizeof(vector_shapex));
+    return xpool;
+  }
+  void operator delete(void* ptr, size_t)
+    { vector_shapex::get_xpool().free(ptr); }
+  #else
   static vector_shape_pool* xpool;
-
-  void* operator new(size_t);
   void operator delete(void* ptr, size_t);
+  #endif
+  void* operator new(size_t);
   vector_shapex(const vector_shapex&) = delete;
   vector_shapex& operator=(const vector_shapex&) = delete;
 #endif
@@ -65,7 +74,6 @@ public:
    {
       return trueptr;
    }
-
    void shift(int min);
    int index_min;  ///< Minimum valid subscript
    int index_max;  ///< Maximum valid subscript

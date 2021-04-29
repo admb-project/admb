@@ -7,7 +7,7 @@ TEST_F(test_ad_integer, constructor)
 {
   int l = __LINE__;
   ad_integer i(l);
-  
+
   ASSERT_EQ(int(i), l);
 
   int l2 = __LINE__;

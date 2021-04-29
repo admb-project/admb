@@ -46,8 +46,8 @@ TEST_F(test_index_type, constructor_for_vector_index)
   {
     c.integer();
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -88,8 +88,8 @@ TEST_F(test_index_type, constructor_for_matrix_index)
   {
     c.integer();
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -114,8 +114,8 @@ TEST_F(test_index_type, constructor_for_i3_array_index)
   {
     c.integer();
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();
@@ -141,8 +141,8 @@ TEST_F(test_index_type, constructor_for_i4_array_index)
   {
     c.integer();
   }
-  catch (const int exit_code)          
-  {   
+  catch (const int exit_code)
+  {
     return;
   }
   FAIL();

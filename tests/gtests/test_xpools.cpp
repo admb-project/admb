@@ -3,6 +3,7 @@
 
 class test_xpools: public ::testing::Test {};
 
+#ifdef USE_VECTOR_SHAPE_POOL
 TEST_F(test_xpools, sizes)
 {
 #ifdef USE_VECTOR_SHAPE_POOL
@@ -11,3 +12,4 @@ TEST_F(test_xpools, sizes)
   ASSERT_EQ(arr_link::xpool->size, sizeof(arr_link));
 #endif
 }
+#endif

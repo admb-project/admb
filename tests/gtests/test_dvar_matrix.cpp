@@ -23,7 +23,7 @@ TEST_F(test_dvar_matrix, square_multiplication)
   b(1, 2) = 6;
   b(2, 1) = 7;
   b(2, 2) = 8;
-  
+
   dvar_matrix ab = a * b;
   ASSERT_DOUBLE_EQ(19, value(ab(1, 1)));
   ASSERT_DOUBLE_EQ(22, value(ab(1, 2)));
@@ -55,7 +55,7 @@ TEST_F(test_dvar_matrix, multiplication)
   b(2, 2) = 10;
   b(3, 1) = 11;
   b(3, 2) = 12;
-  
+
   dvar_matrix ab = a * b;
   ASSERT_DOUBLE_EQ(58, value(ab(1, 1)));
   ASSERT_DOUBLE_EQ(64, value(ab(1, 2)));

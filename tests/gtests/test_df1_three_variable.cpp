@@ -7,7 +7,7 @@ class test_df1_three_variable: public ::testing::Test {};
 TEST_F(test_df1_three_variable, default_constructor)
 {
   df1_three_variable x;
-  
+
   ASSERT_EQ(0, value(x));
   ASSERT_EQ(0, *x.get_u());
   ASSERT_EQ(0, *x.get_u_x());
@@ -34,7 +34,7 @@ TEST_F(test_df1_three_variable, assignment)
 {
   df1_three_variable x;
   x = 10;
-  
+
   ASSERT_EQ(10, value(x));
   ASSERT_EQ(10, *x.get_u());
   ASSERT_EQ(0, *x.get_u_x());

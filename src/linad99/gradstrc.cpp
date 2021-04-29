@@ -146,11 +146,13 @@ void cleanup_temporary_files()
   void cleanup_xpools();
   cleanup_xpools();
 #endif
+  /*
   if (gradient_structure::fp)
   {
     delete gradient_structure::fp;
     gradient_structure::fp = NULL;
   }
+  */
   if (gradient_structure::GRAD_STACK1)
   {
     if (gradient_structure::GRAD_STACK1->fp)

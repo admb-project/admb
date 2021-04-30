@@ -84,6 +84,7 @@ using namespace std;
 
 char lastchar(char *);
 void memory_allocate_error(const char * s, void * ptr);
+void null_ptr_err_message();
 
 /*
 char ad_random_part[6]="tmp";

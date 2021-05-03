@@ -134,7 +134,6 @@ GTESTS_ALL=\
  test_return_arrays.cpp\
  test_df_file.cpp\
  test_async.cpp\
- test_df1b2variable.cpp\
  test_df1b2vector.cpp\
  test_move.cpp\
  test_move_dvar_vector.cpp\
@@ -188,6 +187,7 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
+ test_df1b2variable.cpp\
  test_funnel_thread_grad_stack.cpp\
  test_funnel_thread_df_file.cpp\
  test_laplace_approximation_calculator.cpp\

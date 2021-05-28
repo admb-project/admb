@@ -23,7 +23,6 @@ else
 GTEST_DIR=googletest-read-only/googletest
 endif
 
-
 GTESTS_ALL=\
  test_atomic.cpp\
  test_shared_ptr.cpp\
@@ -172,6 +171,7 @@ GTESTS_ALL=\
  test_quadratic_prior.cpp\
  test_dll_param_init_bounded_vector.cpp\
  test_evaluate_function.cpp\
+ test_gradient_structure_thread.cpp\
  main.cpp
 
 ERRORS=\

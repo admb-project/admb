@@ -41,6 +41,7 @@
 #ifndef __ADMB_GRADIENT_STRUCTURE_H__
 #define __ADMB_GRADIENT_STRUCTURE_H__
 
+#include <thread>
 #include <fstream>
 using std::ofstream;
 
@@ -94,6 +95,14 @@ class gradient_structure
    static char cmpdif_file_name[61];
    static DF_FILE *fp;
  public:
+  thread_local static gradient_structure* _instance;
+  static gradient_structure* get() { return _instance; }
+  static gradient_structure* create()
+  {
+    _instance = new gradient_structure();
+    return get();
+  }
+
 #if defined(NO_DERIVS)
    static int no_derivatives;
 #endif

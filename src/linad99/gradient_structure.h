@@ -96,12 +96,9 @@ class gradient_structure
    static DF_FILE *fp;
  public:
   thread_local static gradient_structure* _instance;
-  static gradient_structure* get() { return _instance; }
-  static gradient_structure* create()
-  {
-    _instance = new gradient_structure();
-    return get();
-  }
+  static gradient_structure* get();
+  static gradient_structure* create();
+  static void clean();
 
 #if defined(NO_DERIVS)
    static int no_derivatives;

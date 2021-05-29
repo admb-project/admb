@@ -34,3 +34,24 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  double objective_function_value::fun_without_pen=0;
 
 thread_local gradient_structure* gradient_structure::_instance = nullptr;
+
+/// Create a thread_local instance of gradient_structure.
+gradient_structure* gradient_structure::create()
+{
+  _instance = new gradient_structure();
+  return get();
+}
+/// Create a thread_local instance of gradient_structure.
+gradient_structure* gradient_structure::get()
+{
+#ifdef DEBUG
+  assert(_instance != nullptr);
+#endif
+  return _instance;
+}
+/// Delete thread_local instance of gradient_structure.
+void gradient_structure::clean()
+{
+  delete _instance;
+  _instance = nullptr;
+}

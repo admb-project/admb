@@ -41,20 +41,23 @@ thread_local gradient_structure* gradient_structure::_instance = nullptr;
 /// Create a thread_local instance of gradient_structure.
 gradient_structure* gradient_structure::create()
 {
+#ifdef DEBUG
+  assert(_instance != nullptr);
+#endif
   _instance = new gradient_structure();
   return get();
 }
 /// Create a thread_local instance of gradient_structure.
 gradient_structure* gradient_structure::get()
 {
-#ifdef DEBUG
-  assert(_instance != nullptr);
-#endif
   return _instance;
 }
 /// Delete thread_local instance of gradient_structure.
 void gradient_structure::clean()
 {
-  delete _instance;
-  _instance = nullptr;
+  if (_instance != nullptr)
+  {
+    delete _instance;
+    _instance = nullptr;
+  }
 }

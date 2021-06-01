@@ -92,7 +92,6 @@ public:
  */
 class gradient_structure
 {
-   static char cmpdif_file_name[61];
    static DF_FILE *fp;
  public:
   thread_local static gradient_structure* _instance;

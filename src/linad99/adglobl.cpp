@@ -6,6 +6,9 @@
 @brief Global and static types for ad_comm, initial_params and objective_function_values classes.
 */
 
+#ifdef DEBUG
+  #include <cassert>
+#endif
 #include <admodel.h>
 
  int initial_params::straight_through_flag=0;

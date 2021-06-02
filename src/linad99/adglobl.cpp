@@ -42,7 +42,7 @@ thread_local gradient_structure* gradient_structure::_instance = nullptr;
 gradient_structure* gradient_structure::create()
 {
 #ifdef DEBUG
-  assert(_instance != nullptr);
+  assert(_instance == nullptr);
 #endif
   _instance = new gradient_structure();
   return get();

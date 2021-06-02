@@ -65,7 +65,6 @@ extern "C"{
 // *************************************************************
 int ctlc_flag = 0;
 int gradient_structure::Hybrid_bounded_flag=0;
-DF_FILE * gradient_structure::fp=NULL;
 unsigned int gradient_structure::NUM_RETURN_ARRAYS = 25;
 double * gradient_structure::hessian_ptr=NULL;
 int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
@@ -173,10 +172,11 @@ void cleanup_temporary_files()
   void cleanup_xpools();
   cleanup_xpools();
 #endif
-  if (gradient_structure::fp)
+  DF_FILE* fp = gradient_structure::get_fp();
+  if (fp)
   {
-    delete gradient_structure::fp;
-    gradient_structure::fp = NULL;
+    delete fp;
+    fp = nullptr;
   }
   if (gradient_structure::GRAD_STACK1)
   {
@@ -337,18 +337,9 @@ gradient_structure::gradient_structure(long int _size):
     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
 
-  if (fp!= NULL)
-  {
-    cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
-            "_structure" << endl;
-  }
-  else
-  {
-    fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
-    memory_allocate_error("fp", (void *) fp);
-  }
+  fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+  memory_allocate_error("fp", (void *) fp);
 
-  // double_and_int * tmp;
 #ifdef DIAG
   cerr <<" In gradient_structure::gradient_structure()\n";
   cerr <<"  ARRAY_MEMBLOCK_SIZE = " << ARRAY_MEMBLOCK_SIZE << "\n";
@@ -491,6 +482,8 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
   {
     RETURN_PTR_CONTAINER[i] = 0;
   }
+
+  _instance = this;
 }
 
 /**
@@ -651,6 +644,8 @@ gradient_structure::~gradient_structure()
 
   delete fp;
   fp = NULL;
+
+  _instance = nullptr;
 }
 
 /**

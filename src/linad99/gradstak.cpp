@@ -104,8 +104,6 @@ Default constructor
 */
 grad_stack::grad_stack()
 {
-  gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
   true_length = gradient_structure::GRADSTACK_BUFFER_SIZE;
   length = true_length;
 
@@ -369,7 +367,8 @@ void  grad_stack::write_grad_stack_buffer()
   }
 #endif
   //keep track of the size of the grad_stack
-  gradient_structure::TOTAL_BYTES+=nbw;
+  gradient_structure* gs = gradient_structure::get();
+  gs->TOTAL_BYTES += nbw;
   ptr = ptr_first;
 }
 

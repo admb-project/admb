@@ -867,7 +867,7 @@ public:
   friend void df_check_derivative_values(void);
   friend void df_check_derivative_values_indexed(void);
   friend void df_check_derivative_values_indexed_break(void);
-  friend void funnel_gradcalc(void);
+  friend void gradient_structure::funnel_gradcalc(void);
   friend void slave_gradcalc(void);
   friend void gradcalc(int nvar, const dvector& g);
   friend void gradloop();

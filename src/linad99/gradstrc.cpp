@@ -73,8 +73,6 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #endif
 unsigned long int gradient_structure::max_last_offset = 0;
 long int gradient_structure::NVAR = 0;
-size_t gradient_structure::TOTAL_BYTES = 0;
-size_t gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 dvariable** gradient_structure::RETURN_ARRAYS = NULL;
 unsigned int gradient_structure::RETURN_ARRAYS_PTR;
@@ -291,6 +289,9 @@ gradient_structure::gradient_structure(long int _size):
   gradient_structure::NVAR=0;
   atexit(cleanup_temporary_files);
   fill_ad_random_part();
+
+  TOTAL_BYTES = 0;
+  PREVIOUS_TOTAL_BYTES = 0;
 
   if (instances++ > 0)
   {

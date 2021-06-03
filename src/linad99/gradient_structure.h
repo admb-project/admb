@@ -101,6 +101,7 @@ public:
   static void clean();
 
   void gradcalc(int nvar, const dvector& g);
+  void funnel_gradcalc();
 
 #if defined(NO_DERIVS)
    static int no_derivatives;
@@ -112,8 +113,8 @@ public:
    static dvariable **RETURN_ARRAYS;
    static unsigned int RETURN_ARRAYS_PTR;
    static dvariable **RETURN_PTR_CONTAINER;
-   static size_t TOTAL_BYTES;
-   static size_t PREVIOUS_TOTAL_BYTES;
+   size_t TOTAL_BYTES;
+   size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
    static humungous_pointer ARRAY_MEMBLOCK_BASE;
    static humungous_pointer ARRAY_MEMBLOCK_SAVE;
@@ -169,7 +170,9 @@ public:
    static void restore_variables(void);
    static void save_arrays(void);
    static void restore_arrays(void);
-   static size_t totalbytes(void);
+
+  size_t totalbytes(void);
+
    friend dvector restore_dvar_vector_value(
      const dvar_vector_position& tmp);
    friend void cleanup_temporary_files();
@@ -239,7 +242,9 @@ public:
 #endif
    static void set_MAX_NVAR_OFFSET(unsigned int i);
    static void set_MAX_DLINKS(int i);
-   static size_t NUM_GRADSTACK_BYTES_WRITTEN(void);
+
+  size_t NUM_GRADSTACK_BYTES_WRITTEN();
+
    static unsigned int get_MAX_DLINKS() { return MAX_DLINKS; }
    static void save_dependent_variable_position(const prevariable & v1);
    static unsigned long int max_last_offset;

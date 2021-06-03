@@ -74,7 +74,17 @@ void funnel_derivatives(void);
  * Description not yet available.
  * \param
  */
-void funnel_gradcalc(void)
+void funnel_gradcalc()
+{
+  gradient_structure* gs = gradient_structure::get();
+  if (!gs)
+  {
+    cerr << "Error: No instance of gradient data structure.\n";
+    ad_exit(1);
+  }
+  gs->funnel_gradcalc();
+}
+void gradient_structure::funnel_gradcalc()
 {
 #  ifdef NO_DERIVS
      if (gradient_structure::no_derivatives)
@@ -82,8 +92,10 @@ void funnel_gradcalc(void)
        return;
      }
 #  endif
-  gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
+
+  TOTAL_BYTES = 0;
+  PREVIOUS_TOTAL_BYTES=0;
+
   if(!gradient_structure::instances)
   {
     return;

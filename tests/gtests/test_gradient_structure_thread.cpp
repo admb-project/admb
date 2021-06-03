@@ -15,6 +15,8 @@ TEST_F(test_gradient_structure_thread, instance)
 }
 TEST_F(test_gradient_structure_thread, clean)
 {
+  ASSERT_TRUE(gradient_structure::_instance == nullptr);
+
   gradient_structure::create();
 
   ASSERT_TRUE(gradient_structure::get() != nullptr);
@@ -22,4 +24,9 @@ TEST_F(test_gradient_structure_thread, clean)
   gradient_structure::clean();
 
   ASSERT_TRUE(gradient_structure::get() == nullptr);
+}
+TEST_F(test_gradient_structure_thread, get)
+{
+  gradient_structure gs;
+  ASSERT_TRUE(gradient_structure::get() == &gs);
 }

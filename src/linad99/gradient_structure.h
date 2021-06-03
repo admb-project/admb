@@ -100,6 +100,8 @@ public:
   static gradient_structure* create();
   static void clean();
 
+  void gradcalc(int nvar, const dvector& g);
+
 #if defined(NO_DERIVS)
    static int no_derivatives;
 #endif

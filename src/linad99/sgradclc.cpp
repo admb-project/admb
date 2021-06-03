@@ -75,6 +75,16 @@
 #if !defined(OPT_LIB) || defined(_MSC_VER)
   #include <cassert>
 #endif
+void gradcalc(int nvar, const dvector& g)
+{
+  gradient_structure* gs = gradient_structure::get();
+  if (!gs)
+  {
+    cerr << "Error: No instance of gradient data structure.\n";
+    ad_exit(1);
+  }
+  gs->gradcalc(nvar, g);
+}
 
 /**
 Compute the gradient from the data stored in the global \ref gradient_structure.
@@ -82,7 +92,7 @@ Compute the gradient from the data stored in the global \ref gradient_structure.
 \param nvar Number of variables in the gradient.
 \param _g Vector from 1 to nvar. On return contains the gradient.
 */
-void gradcalc(int nvar, const dvector& _g)
+void gradient_structure::gradcalc(int nvar, const dvector& _g)
 {
   if (nvar!=0)
   {

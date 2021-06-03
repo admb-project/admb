@@ -13,8 +13,12 @@ class test_simple_async: public ::testing::Test {};
 
 TEST_F(test_simple_async, gradcalc_empty)
 {
-  dvector empty;
-  gradcalc(empty.size(), empty);
+  ASSERT_TRUE(gradient_structure::_instance == nullptr);
+
+  ASSERT_ANY_THROW({
+    dvector empty;
+    gradcalc(empty.size(), empty);
+  });
 }
 TEST_F(test_simple_async, gradcalc_empty_with_gradient_structure)
 {

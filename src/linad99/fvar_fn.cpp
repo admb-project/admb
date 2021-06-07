@@ -43,7 +43,7 @@ prevariable& pow(const prevariable& v1, const double u)
       x=::pow(v1.v->x,u-1);
       y=x* v1.v->x;
       gradient_structure::RETURN_PTR->v->x=y;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+      gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
         &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), u * x );
       return(*gradient_structure::RETURN_PTR);
     }
@@ -66,7 +66,7 @@ prevariable& pow(const prevariable& v1, const double u)
    if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
      gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::sin(v1.v->x);
-   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
      &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), ::cos(v1.v->x) );
    return(*gradient_structure::RETURN_PTR);
  }
@@ -84,7 +84,7 @@ prevariable& sigmoid(const prevariable& v1)
    //gradient_structure::RETURN_PTR->v->x=atan(tmp)/1.5708;
       gradient_structure::RETURN_PTR->v->x=::atan(tmp)/2.8;
 
-   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
      &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),
  //                1./((1.+tmp*tmp)*1.5708));
                    1./((1.+tmp*tmp)*2.8));
@@ -110,13 +110,13 @@ prevariable& fabs(const prevariable& v1)
       (gradient_structure::RETURN_PTR->v)->x=fabs(tmp);
       if (tmp >=0)
       {
-        gradient_structure::GRAD_STACK1->set_gradient_stack(
+        gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
           default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
           &(v1.v->x),1);
       }
       else
       {
-        gradient_structure::GRAD_STACK1->set_gradient_stack(
+        gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
           default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
           &(v1.v->x),-1);
       }
@@ -149,13 +149,13 @@ prevariable& sfabs(const prevariable& v1)
         gradient_structure::RETURN_PTR->v->x=tmp;
         if (tmp1 >=0)
         {
-          gradient_structure::GRAD_STACK1->set_gradient_stack(
+          gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
             default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
             &(v1.v->x),1);
         }
         else
         {
-          gradient_structure::GRAD_STACK1->set_gradient_stack(
+          gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
             default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
             &(v1.v->x),-1);
         }
@@ -166,14 +166,14 @@ prevariable& sfabs(const prevariable& v1)
         if (tmp1 >=0)
         {
           gradient_structure::RETURN_PTR->v->x=t2*(a-b*tmp1);
-          gradient_structure::GRAD_STACK1->set_gradient_stack(
+          gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
             default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
             &(v1.v->x),tmp*(2*a-3*b*tmp1) );
         }
         else
         {
           gradient_structure::RETURN_PTR->v->x=t2*(a+b*tmp1);
-          gradient_structure::GRAD_STACK1->set_gradient_stack(
+          gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
             default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
             &(v1.v->x),tmp1*(2*a+3*b*tmp1));
         }
@@ -190,7 +190,7 @@ prevariable& cos(const prevariable& v1)
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
         gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::cos(v1.v->x);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(
+      gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
         default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
         &(v1.v->x),-::sin(v1.v->x) );
       return(*gradient_structure::RETURN_PTR);
@@ -205,7 +205,7 @@ prevariable& log(const prevariable& v1)
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
         gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::log(v1.v->x);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(
+      gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
         default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
         &(v1.v->x),1./(v1.v->x) );
       return(*gradient_structure::RETURN_PTR);
@@ -220,7 +220,7 @@ prevariable& log10(const prevariable& v1)
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
         gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::log10(v1.v->x);
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+      gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
         &(gradient_structure::RETURN_PTR->v->x),&(v1.v->x),
         1./(v1.v->x)/2.3025851);
       return(*gradient_structure::RETURN_PTR);

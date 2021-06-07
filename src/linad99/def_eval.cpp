@@ -62,7 +62,7 @@
   void default_evaluation(void)
   {
     // checks to see how many independent variables there are
-    grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry * grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     double * zptr = grad_ptr->dep_addr;
     double z = *zptr;
     *zptr = 0;
@@ -94,7 +94,7 @@
   void default_evaluation1(void)
   {
     // there is one independent variable
-    grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry * grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z;
@@ -111,7 +111,7 @@
   void default_evaluation1m(void)
   {
     // there is one independent variable
-    grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry * grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 -= z;
@@ -127,7 +127,7 @@
   void default_evaluation0(void)
   {
     // there is one independent variable
-    * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;
+    * gradient_structure::get()->GRAD_STACK1->ptr->dep_addr=0.;
   }
 
 /**
@@ -138,7 +138,7 @@
   {
     //char ch;
     // there is one independent variable
-    grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry * grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     //cout << setprecision(16) << *grad_ptr->dep_addr << endl;
     //cout << setprecision(16) << *grad_ptr->ind_addr1 << endl;
     //cout << setprecision(16) << grad_ptr->mult1 << endl;
@@ -158,7 +158,7 @@
   void default_evaluation3(void)
   {
     // there are two independent variables
-    grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry * grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
@@ -175,25 +175,25 @@
   void default_evaluation3ind(void)
   {
     // there are three independent variables
-    grad_stack_entry *  grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry *  grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
 
     double mult3=grad_ptr->mult1 ;
     double * ind_addr3=grad_ptr->ind_addr1;
-    if (gradient_structure::GRAD_STACK1->ptr-- ==
-      gradient_structure::GRAD_STACK1->ptr_first)
+    if (gradient_structure::get()->GRAD_STACK1->ptr-- ==
+      gradient_structure::get()->GRAD_STACK1->ptr_first)
     {
       // \todo Need test
       // back up the file one buffer size and read forward
       OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
-        * gradient_structure::GRAD_STACK1->length);
-      OFF_T lpos=LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+        * gradient_structure::get()->GRAD_STACK1->length);
+      OFF_T lpos=LSEEK(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR,
         -offset, SEEK_CUR);
 
-      gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
-      //gradient_structure::GRAD_STACK1->ptr++;
+      gradient_structure::get()->GRAD_STACK1->read_grad_stack_buffer(lpos);
+      //gradient_structure::get()->GRAD_STACK1->ptr++;
     }
 
-    grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
@@ -208,27 +208,27 @@
   void default_evaluation4ind(void)
   {
     // there are three independent variables
-    grad_stack_entry *  grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry *  grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
 
     double * ind_addr3=grad_ptr->ind_addr1;
     double mult3=grad_ptr->mult1 ;
     double * ind_addr4=grad_ptr->ind_addr2;
     double mult4=grad_ptr->mult2 ;
-    if (gradient_structure::GRAD_STACK1->ptr-- ==
-      gradient_structure::GRAD_STACK1->ptr_first)
+    if (gradient_structure::get()->GRAD_STACK1->ptr-- ==
+      gradient_structure::get()->GRAD_STACK1->ptr_first)
     {
       // \todo Need test
       // back up the file one buffer size and read forward
       OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
-        * gradient_structure::GRAD_STACK1->length);
-      OFF_T lpos=LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+        * gradient_structure::get()->GRAD_STACK1->length);
+      OFF_T lpos=LSEEK(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR,
         -offset, SEEK_CUR);
 
-      gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
-      //gradient_structure::GRAD_STACK1->ptr++;
+      gradient_structure::get()->GRAD_STACK1->read_grad_stack_buffer(lpos);
+      //gradient_structure::get()->GRAD_STACK1->ptr++;
     }
 
-    grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
@@ -256,7 +256,7 @@
   void default_evaluation4(void)
   {
     // there are two independent variables
-    grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry * grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z;
@@ -270,7 +270,7 @@
   void default_evaluation4m(void)
   {
     // there are two independent variables
-    grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+    grad_stack_entry * grad_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z;

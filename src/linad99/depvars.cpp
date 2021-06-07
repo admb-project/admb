@@ -117,13 +117,13 @@ void gradient_structure::save_dependent_variable_position(const prevariable& v1)
         ad_exit(1);
       }
       DF_FILE* fp = get_fp();
-      DEPVARS_INFO->grad_buffer_position(depvar_count)=GRAD_STACK1->ptr;
+      DEPVARS_INFO->grad_buffer_position(depvar_count)=_instance->GRAD_STACK1->ptr;
       DEPVARS_INFO->cmpdif_buffer_position(depvar_count)=fp->offset;
       DEPVARS_INFO->grad_file_count(depvar_count)=
-                                GRAD_STACK1->_GRADFILE_PTR;
+                                _instance->GRAD_STACK1->_GRADFILE_PTR;
       DEPVARS_INFO->cmpdif_file_count(depvar_count)=fp->file_ptr;
       DEPVARS_INFO->grad_file_position(depvar_count)
-        =LSEEK(GRAD_STACK1->_GRADFILE_PTR,0,SEEK_CUR);
+        =LSEEK(_instance->GRAD_STACK1->_GRADFILE_PTR,0,SEEK_CUR);
       DEPVARS_INFO->cmpdif_file_position(depvar_count)
         =LSEEK(fp->file_ptr,0,SEEK_CUR);
     }

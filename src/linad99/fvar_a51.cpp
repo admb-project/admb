@@ -38,7 +38,7 @@ dvar_vector mfexp(const dvar_vector& v1, const double d)
   vtmp.save_dvar_vector_value();
   vtmp.save_dvar_vector_position();
   save_identifier_string("hee");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(DF_dvexp);
   return vtmp;
 }

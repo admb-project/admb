@@ -112,7 +112,6 @@ int gradient_structure::save_var_file_flag=0;
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
 dlist * gradient_structure::GRAD_LIST;
-grad_stack* gradient_structure::GRAD_STACK1;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
 arr_list * gradient_structure::ARR_LIST1 = NULL;
 arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
@@ -176,37 +175,37 @@ void cleanup_temporary_files()
     delete fp;
     fp = nullptr;
   }
-  if (gradient_structure::GRAD_STACK1)
+  if (gradient_structure::get() != nullptr && gradient_structure::get()->GRAD_STACK1)
   {
-    if (gradient_structure::GRAD_STACK1->_GRADFILE_PTR1 != -1
-        && close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR1))
+    if (gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR1 != -1
+        && close(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR1))
     {
       cerr << "Error closing file "
-           << gradient_structure::GRAD_STACK1->gradfile_name1 << "\n";
+           << gradient_structure::get()->GRAD_STACK1->gradfile_name1 << "\n";
     }
-    gradient_structure::GRAD_STACK1->_GRADFILE_PTR1 = -1;
-    if (gradient_structure::GRAD_STACK1->_GRADFILE_PTR2 != -1
-        && close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR2))
+    gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR1 = -1;
+    if (gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR2 != -1
+        && close(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR2))
     {
       cerr << "Error closing file "
-           << gradient_structure::GRAD_STACK1->gradfile_name2 << "\n";
+           << gradient_structure::get()->GRAD_STACK1->gradfile_name2 << "\n";
     }
-    gradient_structure::GRAD_STACK1->_GRADFILE_PTR2 = -1;
-    if (gradient_structure::GRAD_STACK1->_VARSSAV_PTR != -1
-        && close(gradient_structure::GRAD_STACK1->_VARSSAV_PTR))
+    gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR2 = -1;
+    if (gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR != -1
+        && close(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR))
     {
       cerr << "Error closing file "
-           << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
+           << gradient_structure::get()->GRAD_STACK1->var_store_file_name << "\n";
     }
-    gradient_structure::GRAD_STACK1->_VARSSAV_PTR = -1;
+    gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR = -1;
 #if defined (_MSC_VER)
-    remove(gradient_structure::GRAD_STACK1->gradfile_name1);
-    remove(gradient_structure::GRAD_STACK1->gradfile_name2);
-    remove(gradient_structure::GRAD_STACK1->var_store_file_name);
+    remove(gradient_structure::get()->GRAD_STACK1->gradfile_name1);
+    remove(gradient_structure::get()->GRAD_STACK1->gradfile_name2);
+    remove(gradient_structure::get()->GRAD_STACK1->var_store_file_name);
 #else
-    unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
-    unlink(gradient_structure::GRAD_STACK1->gradfile_name2);
-    unlink(gradient_structure::GRAD_STACK1->var_store_file_name);
+    unlink(gradient_structure::get()->GRAD_STACK1->gradfile_name1);
+    unlink(gradient_structure::get()->GRAD_STACK1->gradfile_name2);
+    unlink(gradient_structure::get()->GRAD_STACK1->var_store_file_name);
 #endif
   }
 }
@@ -400,16 +399,10 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
    const size_t adjustment = (8 -((size_t)ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
    ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
-   if (GRAD_STACK1 != NULL)
-   {
-     cerr << "Trying to allocate to a non NULL pointer\n";
-   }
-   else
-   {
-     GRAD_STACK1 = new grad_stack;
-     memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
-     gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
-   }
+  GRAD_STACK1 = new grad_stack;
+  memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
+  gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
+
 #ifdef DIAG
    cout << "GRAD_STACK1= "<< _farptr_tolong(GRAD_STACK1)<<"\n";
 #endif

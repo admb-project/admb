@@ -194,7 +194,7 @@ public:
    friend void allocate_dvariable_space(void);
    friend void wide_funnel_gradcalc(void);
    friend dvar_vector_position restore_dvar_vector_position(void);
-   static grad_stack *GRAD_STACK1;
+  grad_stack* GRAD_STACK1;
    friend double_and_int *gradnew();
    static dlist *GRAD_LIST;
    static unsigned int RETURN_ARRAYS_SIZE;

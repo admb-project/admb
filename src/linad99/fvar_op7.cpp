@@ -19,7 +19,7 @@ dvariable& square(const prevariable& variable)
   double& x = value(variable);
   gradient_structure::RETURN_PTR->v->x = x * x;
 
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation2,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation2,
      &(gradient_structure::RETURN_PTR->v->x), &(variable.v->x), 2 * x );
 
   return *gradient_structure::RETURN_PTR;

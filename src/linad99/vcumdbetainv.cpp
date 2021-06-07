@@ -54,7 +54,7 @@ dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
   dvariable tmp;
   value(tmp)=cx;
 
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
     &(value(tmp)) ,&(value(_a)),dfa ,&(value(_b)),dfb ,&(value(_y)),dfx);
 
   return tmp;

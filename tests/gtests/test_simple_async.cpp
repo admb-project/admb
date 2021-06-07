@@ -118,11 +118,11 @@ TEST_F(test_simple_async, gradient_structure_only_GRAD_LIST)
 }
 TEST_F(test_simple_async, gradient_structure_only_GRAD_STACK1)
 {
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+  ASSERT_TRUE(gradient_structure::get() == NULL);
 
   gradient_structure gs;
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+  ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
 }
 TEST_F(test_simple_async, gradient_structure_only_DF_FILE)
 {
@@ -149,8 +149,8 @@ TEST_F(test_simple_async, DISABLED_simple_final_values)
 
   gradient_structure gs;
 
-  grad_stack_entry* expected_ptr = gradient_structure::GRAD_STACK1->ptr;
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1->ptr == expected_ptr);
+  grad_stack_entry* expected_ptr = gradient_structure::get()->GRAD_STACK1->ptr;
+  ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1->ptr == expected_ptr);
 
   dvar_vector variables(independents);
 
@@ -195,7 +195,7 @@ TEST_F(test_simple_async, DISABLED_simple_final_values)
   //ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(),
   //          25 * gradient_structure::RETURN_ARRAYS_SIZE);
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1->ptr != expected_ptr);
+  ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1->ptr != expected_ptr);
 
   ASSERT_EQ(gradient_structure::get_fp()->toffset, 460);
   ASSERT_EQ(gradient_structure::get_fp()->offset, 460);
@@ -204,7 +204,7 @@ TEST_F(test_simple_async, DISABLED_simple_final_values)
 
   int total = 0;
   grad_stack_entry* ptr = expected_ptr;
-  while (gradient_structure::GRAD_STACK1->ptr != ptr)
+  while (gradient_structure::get()->GRAD_STACK1->ptr != ptr)
   {
     ptr++;
     total++;
@@ -213,7 +213,7 @@ TEST_F(test_simple_async, DISABLED_simple_final_values)
 
   gradcalc(gradients.size(), gradients);
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1->ptr == expected_ptr);
+  ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1->ptr == expected_ptr);
 
   ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
   ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
@@ -397,13 +397,13 @@ TEST_F(test_simple_async, lambda_and_copy_constructor)
 
   ASSERT_EQ(1, gradient_structure::ARR_LIST1->get_number_arr_links());
   ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
-  ASSERT_EQ(0, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(0, gradient_structure::get()->GRAD_STACK1->total());
   compute_a(variables(1));
   ASSERT_EQ(1751, gradient_structure::GRAD_LIST->total_addresses());
-  ASSERT_EQ(1, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(1, gradient_structure::get()->GRAD_STACK1->total());
   ASSERT_EQ(1, gradient_structure::ARR_LIST1->get_number_arr_links());
 
-  grad_stack_entry* ptr = gradient_structure::GRAD_STACK1->ptr;
+  grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
 
   --ptr;
   //1: called dvariable::dvariable(const prevariable& t)
@@ -445,11 +445,11 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
     };
 
 
-  ASSERT_EQ(0, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(0, gradient_structure::get()->GRAD_STACK1->total());
   a = compute_a(variables(1));
-  ASSERT_EQ(4, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(4, gradient_structure::get()->GRAD_STACK1->total());
   b = compute_b(variables(1));
-  ASSERT_EQ(8, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(8, gradient_structure::get()->GRAD_STACK1->total());
 
   ASSERT_EQ(1754, gradient_structure::GRAD_LIST->total_addresses());
 
@@ -464,9 +464,9 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
   dvector gradients(independents.indexmin(), independents.indexmax());
 
   //jca
-  ASSERT_EQ(10, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(10, gradient_structure::get()->GRAD_STACK1->total());
 
-  grad_stack_entry* ptr = gradient_structure::GRAD_STACK1->ptr;
+  grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
 
   --ptr;
   //10: f = ... in fvar_o10.cpp
@@ -521,7 +521,7 @@ TEST_F(test_simple_async, verysimpleaa_noasync)
   ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
   ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
 
-  ASSERT_EQ(10, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(10, gradient_structure::get()->GRAD_STACK1->total());
 
   //In gradcalc sets variables dependant value to 1.
   gradcalc(gradients.size(), gradients);
@@ -559,13 +559,13 @@ TEST_F(test_simple_async, DISABLED_verysimpleaa_async_racecondition)
   a = compute_a.get();
   b = compute_b.get();
 
-  ASSERT_EQ(12, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(12, gradient_structure::get()->GRAD_STACK1->total());
 
   objective_function_value f;
 
   f = a + b;
 
-  ASSERT_EQ(14, gradient_structure::GRAD_STACK1->total());
+  ASSERT_EQ(14, gradient_structure::get()->GRAD_STACK1->total());
 
   ASSERT_DOUBLE_EQ(value(f), (3.5 * independents(1) + 1.5 * independents(1)));
 

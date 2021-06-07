@@ -215,7 +215,7 @@ dvar_matrix inv(const dvar_matrix& aa)
   bb.save_dmatrix_value();
   bb.save_dmatrix_position();
   save_identifier_string("P1");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfinvpret);
   return vc;
 }

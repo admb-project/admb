@@ -77,7 +77,7 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
        t.save_dvar_vector_position();
        this->save_dvar_vector_position();
        save_identifier_string("aaaa");
-       gradient_structure::GRAD_STACK1->
+       gradient_structure::get()->GRAD_STACK1->
          set_gradient_stack(dv_assign);
      }
    }
@@ -105,7 +105,7 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
    t.save_prevariable_position();
    this->save_dvar_vector_position();
    save_identifier_string("ssss");
-   gradient_structure::GRAD_STACK1->
+   gradient_structure::get()->GRAD_STACK1->
      set_gradient_stack(dv_eqprev);
    return (*this);
  }
@@ -129,7 +129,7 @@ dvar_vector& dvar_vector::operator=(const double t)
    save_identifier_string("trut");
    this->save_dvar_vector_position();
    save_identifier_string("ssss");
-   gradient_structure::GRAD_STACK1->
+   gradient_structure::get()->GRAD_STACK1->
      set_gradient_stack(dv_eqdoub);
    return (*this);
  }

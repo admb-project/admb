@@ -29,7 +29,7 @@ dvar_vector operator-(const dvector& t1, const prevariable& x)
     tmp.save_dvar_vector_position();
     save_identifier_string("ddu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_v_xdble_diff);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_v_xdble_diff);
     return(tmp);
   }
 

@@ -1118,9 +1118,9 @@ TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton2)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -1150,7 +1150,7 @@ TEST_F(test_laplace_approximation_calculator, get_uhat_lm_newton2)
 
     ad_exit=&test_ad_exit;
     dvector x(1, 1);
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     lac.ubest.allocate(1, 1);
     lac.get_uhat_lm_newton2(x, pmin);
     delete lac.num_local_re_array;
@@ -1562,9 +1562,9 @@ TEST_F(test_laplace_approximation_calculator, ndi)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -1600,7 +1600,7 @@ TEST_F(test_laplace_approximation_calculator, ndi)
 
     ad_exit=&test_ad_exit;
     dvector x(1, 1);
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     lac.ubest.allocate(1, 1);
     lac.get_uhat_lm_newton2(x, pmin);
     delete lac.num_local_re_array;
@@ -1652,9 +1652,9 @@ TEST_F(test_laplace_approximation_calculator, ilmn)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -1691,7 +1691,7 @@ TEST_F(test_laplace_approximation_calculator, ilmn)
 
     ad_exit=&test_ad_exit;
     dvector x(1, 1);
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     lac.ubest.allocate(1, 1);
     lac.get_uhat_lm_newton2(x, pmin);
     delete lac.num_local_re_array;
@@ -1743,9 +1743,9 @@ TEST_F(test_laplace_approximation_calculator, ndb)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -1783,7 +1783,7 @@ TEST_F(test_laplace_approximation_calculator, ndb)
 
     ad_exit=&test_ad_exit;
     dvector x(1, 1);
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     lac.ubest.allocate(1, 1);
     lac.get_uhat_lm_newton2(x, pmin);
     delete lac.num_local_re_array;
@@ -1835,9 +1835,9 @@ TEST_F(test_laplace_approximation_calculator, nr)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -1875,7 +1875,7 @@ TEST_F(test_laplace_approximation_calculator, nr)
 
     ad_exit=&test_ad_exit;
     dvector x(1, 1);
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     lac.ubest.allocate(1, 1);
     lac.get_uhat_lm_newton2(x, pmin);
     delete lac.num_local_re_array;
@@ -1927,9 +1927,9 @@ TEST_F(test_laplace_approximation_calculator, nrcrit)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -1967,7 +1967,7 @@ TEST_F(test_laplace_approximation_calculator, nrcrit)
 
     ad_exit=&test_ad_exit;
     dvector x(1, 1);
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     lac.ubest.allocate(1, 1);
     lac.get_uhat_lm_newton2(x, pmin);
     delete lac.num_local_re_array;
@@ -2019,9 +2019,9 @@ TEST_F(test_laplace_approximation_calculator, use_gauss_hermite)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -2059,7 +2059,7 @@ TEST_F(test_laplace_approximation_calculator, use_gauss_hermite)
 
     ad_exit=&test_ad_exit;
     dvector x(1, 1);
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     lac.ubest.allocate(1, 1);
     lac.get_uhat_lm_newton2(x, pmin);
     delete lac.num_local_re_array;
@@ -2111,9 +2111,9 @@ TEST_F(test_laplace_approximation_calculator, isfunnel_flag)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -2157,7 +2157,7 @@ TEST_F(test_laplace_approximation_calculator, isfunnel_flag)
 
     ad_exit=&test_ad_exit;
     dvector x(1, 1);
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     lac.ubest.allocate(1, 1);
     lac.get_uhat_lm_newton2(x, pmin);
     delete lac.num_local_re_array;
@@ -2209,9 +2209,9 @@ TEST_F(test_laplace_approximation_calculator, icrit)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -2301,9 +2301,9 @@ TEST_F(test_laplace_approximation_calculator, num_importance_samples)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -2397,9 +2397,9 @@ TEST_F(test_laplace_approximation_calculator, iiprint2)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -2489,9 +2489,9 @@ TEST_F(test_laplace_approximation_calculator, isb)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);
@@ -2585,9 +2585,9 @@ TEST_F(test_laplace_approximation_calculator, iiprint)
     int usize = 1;
     int minder = 1;
     int maxder = 1;
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+    ASSERT_TRUE(gradient_structure::get() == NULL);
     myfunction_minimizer* pmin = new myfunction_minimizer();
-    ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+    ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
     objective_function_value::pobjfun = new objective_function_value();
 
     ASSERT_EQ(initial_params::nvarcalc(), 0);

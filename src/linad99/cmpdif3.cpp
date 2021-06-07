@@ -94,7 +94,7 @@ void set_gradstack_flag(char* str)
 #endif
   gradient_structure::get_fp()->fwrite(str, (size_t)length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
     set_gradient_stack(report_gradstack_flag);
   save_identifier_string("stack");
 #endif
@@ -128,7 +128,7 @@ void set_gradstack_flag(char* _str,int i,int j)
 #endif
   gradient_structure::get_fp()->fwrite(str, (size_t)length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
     set_gradient_stack(report_gradstack_flag2);
   save_identifier_string("stack");
 #endif

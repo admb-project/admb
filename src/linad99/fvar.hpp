@@ -8687,27 +8687,27 @@ extern int ad_kill_flag;
 void reset_gradient_stack(void);
 
 #define AD_SET_DERIVATIVES1(depvar,indvar,df)  \
-     gradient_structure::GRAD_STACK1->set_gradient_stack2(default_evaluation2,\
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack2(default_evaluation2,\
        &(value(depvar)), &(value(indvar)),df);
 
 #define AD_SET_DERIVATIVES2(depvar,indvar1,df1,indvar2,df2)  \
-     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3,\
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3,\
        &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2);
 
 #define AD_SET_DERIVATIVES3(depvar,indvar1,df1,indvar2,df2,indvar3,df3)  \
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,\
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3ind,\
       &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2, \
       &(value(indvar3)),df3);
 
 #define AD_SET_DERIVATIVES4(depvar,indvar1,df1,indvar2,df2,indvar3,df3, \
   indvar4, df4)  \
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation4ind,\
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation4ind,\
       &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2, \
       &(value(indvar3)),df3, \
       &(value(indvar4)),df4);
 
 #define ADJOINT_CODE(x) \
-     gradient_structure::GRAD_STACK1->set_gradient_stack(x);
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(x);
 
 int make_sub_directory(const char *s);
 #include <adstring.hpp>

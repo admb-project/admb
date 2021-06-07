@@ -80,7 +80,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
 
     RETURN_ARRAYS_DECREMENT();
     gradient_structure::RETURN_PTR->v->x=pp;
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::RETURN_PTR->v->x), &(x.v->x),dfx);
     return(*gradient_structure::RETURN_PTR);
   }
@@ -123,7 +123,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
 
     RETURN_ARRAYS_DECREMENT();
     gradient_structure::RETURN_PTR->v->x=pp;
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::RETURN_PTR->v->x), &(x.v->x),dfx);
     return(*gradient_structure::RETURN_PTR);
   }
@@ -216,7 +216,7 @@ prevariable& cumd_norm(const prevariable& _x)
     //double u=1./(1+p*x);
     dfx-=u*u*p*dfu;
 
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::RETURN_PTR->v->x), &(_x.v->x), dfx);
   }
   else
@@ -244,7 +244,7 @@ prevariable& cumd_norm(const prevariable& _x)
     dfx-=dfw;
 
     gradient_structure::RETURN_PTR->v->x=z;
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::RETURN_PTR->v->x), &(_x.v->x),dfx);
   }
   return(*gradient_structure::RETURN_PTR);
@@ -311,7 +311,7 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
     //double u=1./(1+p*x);
     dfx-=u*u*p*dfu;
 
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::RETURN_PTR->v->x), &(_x.v->x), dfx);
   }
   else
@@ -343,7 +343,7 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
     dfx-=dfw;
 
     gradient_structure::RETURN_PTR->v->x=z;
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::RETURN_PTR->v->x), &(_x.v->x),dfx);
   }
   return(*gradient_structure::RETURN_PTR);

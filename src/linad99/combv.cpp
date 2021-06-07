@@ -274,7 +274,7 @@ static dvariable gammlnguts(const prevariable _z)
   double ansdot=log(t) + (z+0.5)/t -1.0 +xdot/x;
   dvariable u;
   u.v->x=ans;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
     &(u.v->x), &(_z.v->x), ansdot );
   return(u);
 }

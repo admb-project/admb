@@ -67,7 +67,7 @@ void dvar_matrix::initialize(void)
     }
     save_identifier_string("p");
     save_dvar_matrix_position();
-    gradient_structure::GRAD_STACK1->
+    gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfmatinit);
     save_identifier_string("q");
   }

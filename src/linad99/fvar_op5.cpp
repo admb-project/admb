@@ -74,7 +74,7 @@ prevariable& operator*(double x, const prevariable& v2)
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x = x * v2.v->x;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation2,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation2,
     &(gradient_structure::RETURN_PTR->v->x),&(v2.v->x),x);
   return (*gradient_structure::RETURN_PTR);
 }
@@ -87,7 +87,7 @@ prevariable& operator*(const prevariable& v1, double x)
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
     gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x = v1.v->x * x;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation2,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation2,
     &(gradient_structure::RETURN_PTR->v->x),&(v1.v->x),x);
   return (*gradient_structure::RETURN_PTR);
 }
@@ -99,7 +99,7 @@ void prevariable::operator/=(const prevariable& v1)
 {
   double tmp=1./(v1.v->x);
   v->x *= tmp;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
     default_evaluation,&(v->x), &(v->x), tmp,&(v1.v->x), -(v->x)*tmp);
 }
 /**
@@ -110,7 +110,7 @@ void prevariable::operator/=(double v1)
 {
   double tmp=1./v1;
   v->x *= tmp;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
     default_evaluation,&(v->x), &(v->x), tmp);
 }
 /**
@@ -120,7 +120,7 @@ void prevariable::operator/=(double v1)
 void prevariable::operator*=(const prevariable& v1)
 {
   double* tmp=&((v1.v)->x);
-  gradient_structure::GRAD_STACK1->set_gradient_stack(
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
     default_evaluation,&(v->x), &(v->x), *tmp, tmp, v->x);
   v->x *= *tmp;
 }
@@ -130,7 +130,7 @@ void prevariable::operator*=(const prevariable& v1)
  */
 void prevariable::operator*=(double v1)
 {
-  gradient_structure::GRAD_STACK1->set_gradient_stack(
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(
     default_evaluation,&(v->x), &(v->x), v1);
   v->x *= v1;
 }

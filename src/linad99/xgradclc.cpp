@@ -101,15 +101,15 @@ void gradient_structure::funnel_gradcalc()
     return;
   }
 
-   gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
-              gradient_structure::GRAD_STACK1->gradfile_handle();
+   gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR =
+              gradient_structure::get()->GRAD_STACK1->gradfile_handle();
 
-  int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
+  int& _GRADFILE_PTR=gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR;
 
   OFF_T lpos = LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
-  if(gradient_structure::GRAD_STACK1->ptr
-       <= gradient_structure::GRAD_STACK1->ptr_first)
+  if(gradient_structure::get()->GRAD_STACK1->ptr
+       <= gradient_structure::get()->GRAD_STACK1->ptr_first)
   {
 #ifdef DIAG
       cerr <<
@@ -125,7 +125,7 @@ void gradient_structure::funnel_gradcalc()
     gradient_structure::save_variables();
   }
 
-  gradient_structure::GRAD_STACK1->ptr--;
+  gradient_structure::get()->GRAD_STACK1->ptr--;
 
   gradient_structure::GRAD_LIST->initialize();
 
@@ -149,30 +149,30 @@ void gradient_structure::funnel_gradcalc()
 #endif
    }
 
-    *gradient_structure::GRAD_STACK1->ptr->dep_addr = 1;
-    zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
+    *gradient_structure::get()->GRAD_STACK1->ptr->dep_addr = 1;
+    zptr = gradient_structure::get()->GRAD_STACK1->ptr->dep_addr;
 
 int break_flag=1;
 int funnel_flag=0;
 
 do
 {
-  gradient_structure::GRAD_STACK1->ptr++;
+  gradient_structure::get()->GRAD_STACK1->ptr++;
   #ifdef FAST_ASSEMBLER
     gradloop();
   #else
     grad_stack_entry * grad_ptr_first=
-      gradient_structure::GRAD_STACK1->ptr_first;
-    while (gradient_structure::GRAD_STACK1->ptr-- >
+      gradient_structure::get()->GRAD_STACK1->ptr_first;
+    while (gradient_structure::get()->GRAD_STACK1->ptr-- >
            grad_ptr_first)
     {
-      if (!gradient_structure::GRAD_STACK1->ptr->func)
+      if (!gradient_structure::get()->GRAD_STACK1->ptr->func)
       {
         funnel_flag=1;
         break;
       }
       else
-        (*(gradient_structure::GRAD_STACK1->ptr->func))();
+        (*(gradient_structure::get()->GRAD_STACK1->ptr->func))();
     }
 
   #endif
@@ -180,11 +180,11 @@ do
 
   // back up the file one buffer size and read forward
   OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
-    * gradient_structure::GRAD_STACK1->length);
-  lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+    * gradient_structure::get()->GRAD_STACK1->length);
+  lpos = LSEEK(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR,
     -offset, SEEK_CUR);
 
-  break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
+  break_flag=gradient_structure::get()->GRAD_STACK1->read_grad_stack_buffer(lpos);
 }  while (break_flag); // do
 
  {
@@ -193,7 +193,7 @@ do
      #ifdef GRAD_DIAG
       OFF_T ttmp =
      #endif
-      LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
+      LSEEK(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
 
      #ifdef GRAD_DIAG
       cout << "Offset in file at end of gradcalc is " << ttmp
@@ -298,7 +298,7 @@ do
     gradient_structure::get_fp()->fwrite(&zptr, wsize);
     save_identifier_string("ae");
 
-    gradient_structure::GRAD_STACK1->set_gradient_stack(funnel_derivatives);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(funnel_derivatives);
     gradient_structure::restore_arrays();
     gradient_structure::restore_variables();
   }
@@ -388,6 +388,6 @@ dvariable& funnel_dvariable::operator=(const prevariable& t)
  */
 void ad_begin_funnel(void)
 {
-  gradient_structure::GRAD_STACK1->set_gradient_stack(NULL);
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(NULL);
 }
 

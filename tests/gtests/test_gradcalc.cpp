@@ -197,14 +197,14 @@ TEST_F(test_gradcalc, simple_final)
 {
   ad_exit=&test_ad_exit;
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+  ASSERT_TRUE(gradient_structure::get() == NULL);
 
   gradient_structure gs;
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+  ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
 
   const unsigned int NUM_RETURN_ARRAYS = 25;
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   dvector x(1, 10);
   x(1) = -1.0;
@@ -239,7 +239,7 @@ TEST_F(test_gradcalc, simple_final)
 
   dvar_vector yhat(1, 10);
   yhat = variables(1) + variables(2) * x;
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 3);
 
   ASSERT_DOUBLE_EQ(value(yhat(1)), independents(1) + independents(2) * x(1));
   ASSERT_DOUBLE_EQ(value(yhat(2)), independents(1) + independents(2) * x(2));
@@ -252,19 +252,19 @@ TEST_F(test_gradcalc, simple_final)
   ASSERT_DOUBLE_EQ(value(yhat(9)), independents(1) + independents(2) * x(9));
   ASSERT_DOUBLE_EQ(value(yhat(10)), independents(1) + independents(2) * x(10));
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 3);
   dvariable f = 0.0;
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 4);
   f = regression(y,yhat);
-  //ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 13);
+  //ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 13);
 
   double result = value(f);
   ASSERT_DOUBLE_EQ(result, 3.4512604236817603);
 
-  //ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 13);
+  //ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 13);
   dvector g(1, 2);
   gradcalc(2, g);
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   ASSERT_DOUBLE_EQ(g(1), value(variables(1)));
   ASSERT_DOUBLE_EQ(g(2), value(variables(2)));
@@ -294,12 +294,12 @@ TEST_F(test_gradcalc, simple_xy)
 
   const unsigned int NUM_RETURN_ARRAYS = 25;
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+  ASSERT_TRUE(gradient_structure::get() == NULL);
   ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
 
   gradient_structure gs(total_size);
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1 != NULL);
+  ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1 != NULL);
   ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1750);
 
   independent_variables independents(1, 2);
@@ -313,26 +313,26 @@ TEST_F(test_gradcalc, simple_xy)
 
   ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), total_size);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1750);
   dvariable f = 0.0;
   ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1751);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 1);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 1);
 
   f = variables(1) * variables(2);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 3);
 
   double result = value(f);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 3);
 
   dvector g(1, 2);
   gradcalc(2, g);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   ASSERT_DOUBLE_EQ(result, independents(1) * independents(2));
   ASSERT_DOUBLE_EQ(g(1), -1.90909);
@@ -341,7 +341,7 @@ TEST_F(test_gradcalc, simple_xy)
   ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1751);
   }
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1 == NULL);
+  ASSERT_TRUE(gradient_structure::get() == NULL);
   ASSERT_TRUE(gradient_structure::ARR_LIST1 == NULL);
   ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
 }
@@ -355,30 +355,30 @@ TEST_F(test_gradcalc, operator_multiply_vars_vars)
   independents(1) = 4.7;
   independents(2) = -2.3;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   dvariable f;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   cout << __FILE__ << ':' << __LINE__ << endl;
   f = variables * variables;
   cout << __FILE__ << ':' << __LINE__ << endl;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 2);
 
   double result = value(f);
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 2);
   ASSERT_DOUBLE_EQ(result, 27.38);
 
   dvector g(-1, 0);
   gradcalc(2, g);
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
   ASSERT_DOUBLE_EQ(g(-1), 9.4);
   ASSERT_DOUBLE_EQ(g(0), -4.6);
 }
@@ -392,30 +392,30 @@ TEST_F(test_gradcalc, operator_plus_prevar_prevar)
   independents(1) = 4.7;
   independents(2) = -2.3;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   dvariable f;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   cout << __FILE__ << ':' << __LINE__ << endl;
   f = variables(1) + variables(2);
   cout << __FILE__ << ':' << __LINE__ << endl;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 2);
 
   double result = value(f);
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 2);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 2);
   ASSERT_DOUBLE_EQ(result, 2.4);
 
   dvector g(-1, 0);
   gradcalc(2, g);
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
   ASSERT_DOUBLE_EQ(g(-1), 1);
   ASSERT_DOUBLE_EQ(g(0), 1);
 }
@@ -431,28 +431,28 @@ TEST_F(test_gradcalc, cube_forth)
   independents(1) = 4.7;
   independents(2) = -2.3;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   dvariable f;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   f = cube(variables(1)) + fourth(variables(2));
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 4);
 
   double result = value(f);
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 4);
   ASSERT_DOUBLE_EQ(result, 131.8071);
 
   dvector g(-1, 0);
   gradcalc(2, g);
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
   ASSERT_DOUBLE_EQ(g(-1), 66.27);
   ASSERT_DOUBLE_EQ(g(0), -48.668);
 }

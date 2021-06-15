@@ -196,6 +196,13 @@ else
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -iprint 1 $(ADMB_RUN_ARGS)
 endif
 
+bhplfine:
+ifeq ($(CMDSHELL),cmd)
+	pushd admb\\prof_like && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
+else
+	cd admb/prof_like && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
+endif
+
 admb-re: $(ADMB_RE_TPLS)
 
 bcb:
@@ -2032,11 +2039,6 @@ endif
 	@rm -vf admb/simple/simple.par
 	@rm -vf admb/simple/simple.std
 	@rm -vf autodif/bigmin/matinv.est
-	@rm -vf examples/admb/prof_like/bhplfine.prf
-	@rm -vf examples/admb/prof_like/dgs2
-	@rm -vf examples/admb/prof_like/diags
-	@rm -vf examples/admb/prof_like/loga_pl.plt
-	@rm -vf examples/admb/prof_like/logb_pl.plt
 	@rm -vf admb/prof_like/bhplfine.prf
 	@rm -vf admb/prof_like/dgs2
 	@rm -vf admb/prof_like/diags

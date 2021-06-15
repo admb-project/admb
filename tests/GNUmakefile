@@ -1,5 +1,5 @@
 ifndef TESTS_REMOTE
-  TESTS_REMOTE=all
+  TESTS_REMOTE=yes
 endif
 
 ifndef ADMB_VER
@@ -47,7 +47,9 @@ endif
 all:
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
+ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
+endif
 	$(MAKE) unit-gtests
 
 verify: examples

@@ -38,7 +38,7 @@ jobs:
         path: build/admb-macos.dmg
     - name: tests
       run: |
-        make verify DEBUG=yes SAFE_ONLY=yes
+        make verify DEBUG=yes SAFE_ONLY=yes TESTS_REMOTE=no
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

@@ -161,8 +161,7 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
     double_and_int* tmp =
       (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
 
-    unsigned long int max_last_offset
-               = gradient_structure::get()->ARR_LIST1->get_max_last_offset();
+    unsigned long int max_last_offset = ARR_LIST1->get_max_last_offset();
 
     size_t size = sizeof(double_and_int);
 

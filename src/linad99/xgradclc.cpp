@@ -125,7 +125,7 @@ void gradient_structure::funnel_gradcalc()
 
   GRAD_STACK1->ptr--;
 
-  gradient_structure::GRAD_LIST->initialize();
+  GRAD_LIST->initialize();
 
   double_and_int* tmp =
     (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
@@ -267,7 +267,7 @@ do
     }
     save_int_value(ii);
 
-    unsigned int ssize=gradient_structure::GRAD_LIST->nlinks;
+    unsigned int ssize = GRAD_LIST->nlinks;
 #ifndef OPT_LIB
     assert(ssize > 0);
     assert(ssize <= INT_MAX);
@@ -275,12 +275,11 @@ do
     dvector stmp(0,(int)(ssize-1));
 
 #ifndef OPT_LIB
-    assert(gradient_structure::GRAD_LIST->nlinks <= INT_MAX);
+    assert(GRAD_LIST->nlinks <= INT_MAX);
 #endif
-    for (int i=0; i < (int)gradient_structure::GRAD_LIST->nlinks; i++)
+    for (int i=0; i < (int)GRAD_LIST->nlinks; i++)
     {
-      memcpy((char*)&(stmp(i)),
-        gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
+      memcpy((char*)&(stmp(i)), GRAD_LIST->dlink_addresses[i],sizeof(double));
     }
     //dtmp.save_dvector_value();
     //dtmp.save_dvector_position();
@@ -359,7 +358,7 @@ void funnel_derivatives(void)
   {
     if (!ISZERO(stmp(i)))
     {
-      *(double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
+      *(double*)(gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
         +=stmp(i)*df;
     }
   }

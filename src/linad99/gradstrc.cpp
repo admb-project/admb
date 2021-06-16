@@ -111,7 +111,6 @@ int gradient_structure::save_var_file_flag=0;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
-dlist * gradient_structure::GRAD_LIST;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
 arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
 unsigned int gradient_structure::MAX_DLINKS = 5000;
@@ -259,8 +258,8 @@ void allocate_dvariable_space()
     tmp1+=2*sizeof(double);
     dl->prev=NULL;
     dlink * prev=dl;
-    int& nlinks=(int&)gradient_structure::GRAD_LIST->nlinks;
-    gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
+    int& nlinks=(int&)gradient_structure::get()->GRAD_LIST->nlinks;
+    gradient_structure::get()->GRAD_LIST->dlink_addresses[nlinks++]=dl;
     for (unsigned int i=1;i<=numlinks;i++)
     {
       dl=(dlink*)tmp1;
@@ -268,10 +267,10 @@ void allocate_dvariable_space()
       prev=dl;
       tmp1+=2*sizeof(double);
 
-      gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
+      gradient_structure::get()->GRAD_LIST->dlink_addresses[nlinks++]=dl;
       // keep track of the links so you can zero them out
     }
-    gradient_structure::GRAD_LIST->last=dl;
+    gradient_structure::get()->GRAD_LIST->last=dl;
   }
 }
 
@@ -344,15 +343,10 @@ gradient_structure::gradient_structure(long int _size):
   cerr <<"  ARRAY_MEMBLOCK_SIZE = " << ARRAY_MEMBLOCK_SIZE << "\n";
 #endif
 
-   if (GRAD_LIST!= NULL)
-   {
-     cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
-   }
-   else
-   {
-     GRAD_LIST = new dlist;
-     memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
-   }
+  {
+    GRAD_LIST = new dlist;
+    memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
+  }
   {
     ARR_LIST1 = new arr_list;
     memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
@@ -439,6 +433,7 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
    }
 
    //allocate_dvariable_space();
+  _instance = this;
 
   if ( RETURN_ARRAYS!= NULL)
   {
@@ -470,8 +465,6 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
   {
     RETURN_PTR_CONTAINER[i] = 0;
   }
-
-  _instance = this;
 }
 
 /**
@@ -596,12 +589,7 @@ gradient_structure::~gradient_structure()
     delete ARR_LIST1;
     ARR_LIST1 = NULL;
   }
-  if (GRAD_LIST == NULL)
-  {
-    null_ptr_err_message();
-    ad_exit(1);
-  }
-  else
+  if (GRAD_LIST != NULL)
   {
     delete GRAD_LIST;
     GRAD_LIST = NULL;

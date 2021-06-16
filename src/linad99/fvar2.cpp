@@ -41,10 +41,10 @@ double_and_int* gradnew()
     ad_exit(1);
   }
 #endif
-  dlink* tmp = gradient_structure::GRAD_LIST->last_remove();
+  dlink* tmp = gradient_structure::get()->GRAD_LIST->last_remove();
   if (!tmp)
   {
-    tmp = gradient_structure::GRAD_LIST->create();
+    tmp = gradient_structure::get()->GRAD_LIST->create();
   }
   //  cout << "In gradnew the address of the double * ptr is "
   //       << _farptr_tolong(tmp) << "\n";
@@ -56,18 +56,19 @@ double_and_int* gradnew()
  */
 void gradfree(dlink* v)
 {
-  if (gradient_structure::GRAD_LIST)
-  {
-    if (gradient_structure::instances)
+  if (gradient_structure::get())
+    if (gradient_structure::get()->GRAD_LIST)
     {
-      gradient_structure::GRAD_LIST->append(v);
+      if (gradient_structure::instances)
+      {
+        gradient_structure::get()->GRAD_LIST->append(v);
+      }
+      else
+      {
+        delete (double_and_int*)v;
+        v = NULL;
+      }
     }
-    else
-    {
-      delete (double_and_int*)v;
-      v = NULL;
-    }
-  }
 }
 //prevariable::prevariable(const prevariable& t)
 //  {

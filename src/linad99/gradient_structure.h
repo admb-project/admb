@@ -45,6 +45,10 @@
 #include <fstream>
 using std::ofstream;
 
+#ifdef __BORLANDC__
+  #define size_t long int
+#endif
+
 class dvariable;
 class DF_FILE;
 class dvector;
@@ -124,13 +128,8 @@ public:
       return (double*)ARRAY_MEMBLOCK_BASE;
    }
  private:
-#ifdef __BORLANDC__
-   static long int CMPDIF_BUFFER_SIZE;
-   static long int GRADSTACK_BUFFER_SIZE;
-#else
    static size_t CMPDIF_BUFFER_SIZE;
    static size_t GRADSTACK_BUFFER_SIZE;
-#endif
    static unsigned int MAX_NVAR_OFFSET;
    static int save_var_file_flag;
    static int save_var_flag;
@@ -232,15 +231,9 @@ public:
    static void set_NUM_DEPENDENT_VARIABLES(int i);
    static void set_RETURN_ARRAYS_SIZE(unsigned int i);
    static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
-#ifdef __BORLANDC__
-   static void set_CMPDIF_BUFFER_SIZE(long int i);
-   static void set_GRADSTACK_BUFFER_SIZE(long int i);
-   static void set_GRADSTACK_BUFFER_BYTES(long int i);
-#else
    static void set_CMPDIF_BUFFER_SIZE(const size_t i);
    static void set_GRADSTACK_BUFFER_SIZE(const size_t i);
    static void set_GRADSTACK_BUFFER_BYTES(const size_t i);
-#endif
    static void set_MAX_NVAR_OFFSET(unsigned int i);
    static void set_MAX_DLINKS(int i);
 

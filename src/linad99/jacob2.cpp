@@ -80,8 +80,6 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
     GRAD_STACK1->write_grad_stack_buffer();
   }
 
-  DF_FILE* fp = gradient_structure::get_fp();
-
   // check to see if anything has been written into the file
   OFF_T last_cpos=LSEEK(fp->file_ptr,0L,SEEK_CUR);
 

@@ -218,7 +218,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
     int mindx = g.indexmin();
     for (int i=0; i < nvar; i++)
     {
-      g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
+      g[i+mindx] = *INDVAR_LIST->get_address(i);
     }
     GRAD_STACK1->ptr = GRAD_STACK1->ptr_first;
     //ofs << setprecision(10) << g << endl;
@@ -228,7 +228,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
   DEPVARS_INFO->depvar_count=0;
   if (gradient_structure::save_var_flag)
   {
-    gradient_structure::restore_arrays();
-    gradient_structure::restore_variables();
+    restore_arrays();
+    restore_variables();
   }
 }

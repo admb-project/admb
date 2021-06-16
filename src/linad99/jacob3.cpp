@@ -75,8 +75,6 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
     GRAD_STACK1->write_grad_stack_buffer();
   }
 
-  DF_FILE* fp = gradient_structure::get_fp();
-
   // check to see if anything has been written into the file
   OFF_T last_cpos=LSEEK(fp->file_ptr,0L,SEEK_CUR);
 
@@ -207,7 +205,7 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
     int mindx = g.indexmin();
     for (int i=0; i < nvar; i++)
     {
-      g[i+mindx] =  *INDVAR_LIST->get_address(i);
+      g[i+mindx] = *INDVAR_LIST->get_address(i);
     }
     GRAD_STACK1->ptr = GRAD_STACK1->ptr_first;
     //ofs << setprecision(10) << g << endl;
@@ -216,7 +214,7 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
   DEPVARS_INFO->depvar_count=0;
   if (gradient_structure::save_var_flag)
   {
-    gradient_structure::restore_arrays();
-    gradient_structure::restore_variables();
+    restore_arrays();
+    restore_variables();
   }
 }

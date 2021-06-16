@@ -15,6 +15,8 @@ TEST_F(test_simple_async, gradcalc_empty)
 {
   ASSERT_TRUE(gradient_structure::_instance == nullptr);
 
+  ad_exit=&test_ad_exit;
+
   ASSERT_ANY_THROW({
     dvector empty;
     gradcalc(empty.size(), empty);

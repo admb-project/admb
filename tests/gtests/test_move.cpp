@@ -349,7 +349,7 @@ TEST_F(test_move, independents_gradmanual)
   --gradient_structure::get()->GRAD_STACK1->ptr;
 
   double_and_int* ptr = (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
-  unsigned long int imax = gradient_structure::ARR_LIST1->get_max_last_offset() / sizeof(double_and_int);
+  unsigned long int imax = gradient_structure::get()->ARR_LIST1->get_max_last_offset() / sizeof(double_and_int);
   for (unsigned int i = 0; i < imax; ++i)
   {
      ptr->x = 0.0;

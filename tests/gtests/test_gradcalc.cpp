@@ -69,12 +69,12 @@ TEST_F(test_gradcalc, dvar_vector)
   const long int total_size  = size * 4;
   gradient_structure gs(total_size);
 
-  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), 0);
+  ASSERT_EQ(gradient_structure::get()->ARR_LIST1->get_max_last_offset(), 0);
 
   dvar_vector v(1, 4);
   v.initialize();
 
-  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), total_size);
+  ASSERT_EQ(gradient_structure::get()->ARR_LIST1->get_max_last_offset(), total_size);
 
   double_and_int* ptr =
     (double_and_int*)gradient_structure::get_ARRAY_MEMBLOCK_BASE();
@@ -111,14 +111,14 @@ TEST_F(test_gradcalc, dvar_vector)
 
   /*
   unsigned long int max_last_offset0 =
-    gradient_structure::ARR_LIST1->get_max_last_offset();
+    gradient_structure::get()->ARR_LIST1->get_max_last_offset();
   ASSERT_EQ(max_last_offset0, 0);
 
   size_t size = sizeof(double_and_int);
 
   dvar_vector v(1, 4);
   unsigned long int max_last_offset =
-    gradient_structure::ARR_LIST1->get_max_last_offset();
+    gradient_structure::get()->ARR_LIST1->get_max_last_offset();
   ASSERT_EQ(max_last_offset, 4 * size);
   for (unsigned int i = 0; i < (max_last_offset/size); i++)
   {
@@ -306,12 +306,12 @@ TEST_F(test_gradcalc, simple_xy)
   independents(1) = 4.07818;
   independents(2) = -1.90909;
 
-  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), 0);
+  ASSERT_EQ(gradient_structure::get()->ARR_LIST1->get_max_last_offset(), 0);
 
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
 
-  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), total_size);
+  ASSERT_EQ(gradient_structure::get()->ARR_LIST1->get_max_last_offset(), total_size);
 
   ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
@@ -337,12 +337,11 @@ TEST_F(test_gradcalc, simple_xy)
   ASSERT_DOUBLE_EQ(result, independents(1) * independents(2));
   ASSERT_DOUBLE_EQ(g(1), -1.90909);
   ASSERT_DOUBLE_EQ(g(2), 4.07818);
-  ASSERT_EQ(gradient_structure::ARR_LIST1->get_max_last_offset(), total_size);
+  ASSERT_EQ(gradient_structure::get()->ARR_LIST1->get_max_last_offset(), total_size);
   ASSERT_EQ(gradient_structure::GRAD_LIST->total_addresses(), 1751);
   }
 
   ASSERT_TRUE(gradient_structure::get() == NULL);
-  ASSERT_TRUE(gradient_structure::ARR_LIST1 == NULL);
   ASSERT_TRUE(gradient_structure::GRAD_LIST == NULL);
 }
 TEST_F(test_gradcalc, operator_multiply_vars_vars)

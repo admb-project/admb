@@ -113,7 +113,6 @@ unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
 dlist * gradient_structure::GRAD_LIST;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
-arr_list * gradient_structure::ARR_LIST1 = NULL;
 arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
 unsigned int gradient_structure::MAX_DLINKS = 5000;
 
@@ -354,15 +353,10 @@ gradient_structure::gradient_structure(long int _size):
      GRAD_LIST = new dlist;
      memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
    }
-   if (ARR_LIST1!= NULL)
-   {
-     cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
-   }
-   else
-   {
-      ARR_LIST1 = new arr_list;
-      memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
-   }
+  {
+    ARR_LIST1 = new arr_list;
+    memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
+  }
 
 /*
    if ( ARR_FREE_LIST1!= NULL)
@@ -597,12 +591,7 @@ gradient_structure::~gradient_structure()
   {
     ARRAY_MEMBLOCK_BASE.free();
   }
-  if (ARR_LIST1 == NULL)
-  {
-    null_ptr_err_message();
-    ad_exit(1);
-  }
-  else
+  if (ARR_LIST1 != NULL)
   {
     delete ARR_LIST1;
     ARR_LIST1 = NULL;

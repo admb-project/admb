@@ -384,24 +384,24 @@ TEST_F(test_simple_async, lambda_and_copy_constructor)
 
   gradient_structure gs;
 
-  ASSERT_EQ(0, gradient_structure::ARR_LIST1->get_number_arr_links());
+  ASSERT_EQ(0, gradient_structure::get()->ARR_LIST1->get_number_arr_links());
 
   dvar_vector variables(independents);
 
-  ASSERT_EQ(1, gradient_structure::ARR_LIST1->get_number_arr_links());
+  ASSERT_EQ(1, gradient_structure::get()->ARR_LIST1->get_number_arr_links());
 
   auto compute_a =
     [](const dvariable& a)
     {
     };
 
-  ASSERT_EQ(1, gradient_structure::ARR_LIST1->get_number_arr_links());
+  ASSERT_EQ(1, gradient_structure::get()->ARR_LIST1->get_number_arr_links());
   ASSERT_EQ(1750, gradient_structure::GRAD_LIST->total_addresses());
   ASSERT_EQ(0, gradient_structure::get()->GRAD_STACK1->total());
   compute_a(variables(1));
   ASSERT_EQ(1751, gradient_structure::GRAD_LIST->total_addresses());
   ASSERT_EQ(1, gradient_structure::get()->GRAD_STACK1->total());
-  ASSERT_EQ(1, gradient_structure::ARR_LIST1->get_number_arr_links());
+  ASSERT_EQ(1, gradient_structure::get()->ARR_LIST1->get_number_arr_links());
 
   grad_stack_entry* ptr = gradient_structure::get()->GRAD_STACK1->ptr;
 

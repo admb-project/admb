@@ -51,11 +51,12 @@ public:
     }
     quadratic_prior::num_quadratic_prior = 0;
     df1b2quadratic_prior::num_quadratic_prior = 0;
-    if (gradient_structure::ARR_LIST1)
-    {
-      delete gradient_structure::ARR_LIST1;
-      gradient_structure::ARR_LIST1 = nullptr;
-    }
+    if (gradient_structure::get())
+      if (gradient_structure::get()->ARR_LIST1)
+      {
+        delete gradient_structure::get()->ARR_LIST1;
+        gradient_structure::get()->ARR_LIST1 = nullptr;
+      }
     function_minimizer::first_hessian_flag = 0;
     ad_comm::argc = 0;
     ad_comm::argv = nullptr;

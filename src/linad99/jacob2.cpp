@@ -56,7 +56,7 @@
  */
 void jacobcalc(int nvar, const ofstream& ofs)
 {
-  gradient_structure::jacobcalc(nvar,ofs);
+  gradient_structure::get()->jacobcalc(nvar,ofs);
 }
 
 /**
@@ -70,14 +70,14 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
   OFF_T lpos;
   int depvar_count=DEPVARS_INFO->depvar_count;
 
-  int& _GRADFILE_PTR=get()->GRAD_STACK1->_GRADFILE_PTR;
+  int& _GRADFILE_PTR = GRAD_STACK1->_GRADFILE_PTR;
   // check to see if anything has been written into the file
   OFF_T last_gpos=LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
   //save current contents of the buffer so we can get them later
   if (last_gpos)
   {
-    get()->GRAD_STACK1->write_grad_stack_buffer();
+    GRAD_STACK1->write_grad_stack_buffer();
   }
 
   DF_FILE* fp = gradient_structure::get_fp();
@@ -130,32 +130,32 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 #endif
       fp->read_cmpdif_stack_buffer(cmp_lpos);
     }
-    get()->GRAD_STACK1->_GRADFILE_PTR = get()->GRAD_STACK1->gradfile_handle();
+    GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();
 
     if (last_gpos)
     {
       // just use the end of the buffer
-      get()->GRAD_STACK1->set_gbuffer_pointers();
+      GRAD_STACK1->set_gbuffer_pointers();
 
       // check to sere if buffer was written into the beginning of
       // the next file
-      if ( (get()->GRAD_STACK1->_GRADFILE_PTR == get()->GRAD_STACK1->_GRADFILE_PTR1)
-         && (lpos == get()->GRAD_STACK1->end_pos1) && (lpos>0) )
+      if ( (GRAD_STACK1->_GRADFILE_PTR == GRAD_STACK1->_GRADFILE_PTR1)
+         && (lpos == GRAD_STACK1->end_pos1) && (lpos>0) )
       {
         // get the next file
-        get()->GRAD_STACK1->increment_current_gradfile_ptr();
+        GRAD_STACK1->increment_current_gradfile_ptr();
         lpos=0;
       }
       // and position the file to the begginig of the buffer image
       LSEEK(_GRADFILE_PTR,lpos,SEEK_SET);
       // now fill the buffer with the appropriate stuff
-      get()->GRAD_STACK1->read_grad_stack_buffer(lpos);
+      GRAD_STACK1->read_grad_stack_buffer(lpos);
       // now reposition the grad_buffer pointer
     }
-    get()->GRAD_STACK1->ptr=
+    GRAD_STACK1->ptr=
          (grad_stack_entry *)DEPVARS_INFO->grad_buffer_position(ijac);
 
-    if(get()->GRAD_STACK1->ptr <= get()->GRAD_STACK1->ptr_first)
+    if (GRAD_STACK1->ptr <= GRAD_STACK1->ptr_first)
     {
 #ifdef DIAG
         cerr << "warning -- calling gradcalc when no calculations generating"
@@ -165,7 +165,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
       return;
     }    // current is one past the end so -- it
 
-    get()->GRAD_STACK1->ptr--;
+    GRAD_STACK1->ptr--;
 
     get()->GRAD_LIST->initialize();
 
@@ -187,37 +187,35 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 #endif
     }
 
-    *get()->GRAD_STACK1->ptr->dep_addr  = 1;
-    //double* zptr = get()->GRAD_STACK1->ptr->dep_addr;
+    *GRAD_STACK1->ptr->dep_addr  = 1;
+    //double* zptr = GRAD_STACK1->ptr->dep_addr;
 
     int break_flag=1;
 
     do
     {
-      get()->GRAD_STACK1->ptr++;
+      GRAD_STACK1->ptr++;
       #ifdef FAST_ASSEMBLER
         gradloop();
       #else
         //int counter=0;
-      while (get()->GRAD_STACK1->ptr-- >
-             get()->GRAD_STACK1->ptr_first)
+      while (GRAD_STACK1->ptr-- > GRAD_STACK1->ptr_first)
       {
         //grad_stack_entry* grad_ptr =
         //gradient_structure::get()->GRAD_STACK1->ptr;
         {
-          (*get()->GRAD_STACK1->ptr->func)();
+          (*GRAD_STACK1->ptr->func)();
         }
       }
       #endif
 
   // back up the file one buffer size and read forward
       OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
-        *get()->GRAD_STACK1->length);
-      lpos = LSEEK(get()->GRAD_STACK1->_GRADFILE_PTR,
+        *GRAD_STACK1->length);
+      lpos = LSEEK(GRAD_STACK1->_GRADFILE_PTR,
         -offset, SEEK_CUR);
 
-       break_flag=gradient_structure::
-                  get()->GRAD_STACK1->read_grad_stack_buffer(lpos);
+       break_flag = GRAD_STACK1->read_grad_stack_buffer(lpos);
     }  while (break_flag); // do
 
     int mindx = g.indexmin();
@@ -225,8 +223,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
     {
       g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
     }
-    get()->GRAD_STACK1->ptr =
-         get()->GRAD_STACK1->ptr_first;
+    GRAD_STACK1->ptr = GRAD_STACK1->ptr_first;
     //ofs << setprecision(10) << g << endl;
     ofs.precision(10);
     ofs << g << endl;

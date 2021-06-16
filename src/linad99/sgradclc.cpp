@@ -139,8 +139,8 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 
   if (gradient_structure::save_var_flag)
   {
-    gradient_structure::save_arrays();
-    gradient_structure::save_variables();
+    save_arrays();
+    save_variables();
   }
 
   GRAD_STACK1->ptr--;
@@ -202,8 +202,8 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 
   if (gradient_structure::save_var_flag)
   {
-    gradient_structure::restore_arrays();
-    gradient_structure::restore_variables();
+    restore_arrays();
+    restore_variables();
   }
 }
 /**
@@ -224,10 +224,9 @@ double gradcalc(int nvar, const dvector& _g, dvariable& f)
  */
 void gradient_structure::save_arrays()
 {
-  void * temp_ptr;
+  void* temp_ptr = nullptr;
   unsigned long bytes_needed =
-    min(gradient_structure::get()->ARR_LIST1->get_last_offset() + 1,
-        ARRAY_MEMBLOCK_SIZE);
+    min(ARR_LIST1->get_last_offset() + 1, ARRAY_MEMBLOCK_SIZE);
   gradient_structure::save_var_file_flag=0;
 #ifdef __ZTC__
    if ( (temp_ptr = farmalloc(bytes_needed) ) == 0)
@@ -270,13 +269,12 @@ void gradient_structure::save_arrays()
   else
   {
      humungous_pointer src = ARRAY_MEMBLOCK_BASE;
-     LSEEK(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+     LSEEK(GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
   #ifdef OPT_LIB
-     write(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR,
-       (char*)src, bytes_needed);
+     write(GRAD_STACK1->_VARSSAV_PTR, (char*)src, bytes_needed);
   #else
-     ssize_t ret = write(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR, (char*)src, bytes_needed);
+     ssize_t ret = write(GRAD_STACK1->_VARSSAV_PTR, (char*)src, bytes_needed);
      assert(ret != -1);
   #endif
 #else
@@ -298,8 +296,7 @@ void gradient_structure::save_arrays()
 void gradient_structure::restore_arrays()
 {
   unsigned long bytes_needed =
-    min(gradient_structure::get()->ARR_LIST1->get_last_offset() + 1,
-        ARRAY_MEMBLOCK_SIZE);
+    min(ARR_LIST1->get_last_offset() + 1, ARRAY_MEMBLOCK_SIZE);
   if (gradient_structure::save_var_file_flag==0)
   {
 #if defined(DOS386)
@@ -330,12 +327,12 @@ void gradient_structure::restore_arrays()
   else
   {
     humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
-    LSEEK(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+    LSEEK(GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
   #if defined(OPT_LIB) && !defined(_MSC_VER)
-    read(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR, (char*)dest,bytes_needed);
+    read(GRAD_STACK1->_VARSSAV_PTR, (char*)dest,bytes_needed);
   #else
-    ssize_t ret = read(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR, (char*)dest,bytes_needed);
+    ssize_t ret = read(GRAD_STACK1->_VARSSAV_PTR, (char*)dest,bytes_needed);
     assert(ret != -1);
   #endif
 #else
@@ -344,11 +341,11 @@ void gradient_structure::restore_arrays()
      long int left_to_move=bytes_needed;
      while(left_to_move > max_move)
      {
-       read(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR, (char*)dest, max_move);
+       read(GRAD_STACK1->_VARSSAV_PTR, (char*)dest, max_move);
        left_to_move-=max_move;
        dest+=max_move;
      }
-     read(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR, (char*)dest, left_to_move);
+     read(GRAD_STACK1->_VARSSAV_PTR, (char*)dest, left_to_move);
 #endif
   }
 }
@@ -357,14 +354,14 @@ Save variables to a buffer.
 */
 void gradient_structure::save_variables()
 {
-  get()->GRAD_LIST->save_variables();
+  GRAD_LIST->save_variables();
 }
 /**
 Restore variables from buffer.
 */
 void gradient_structure::restore_variables()
 {
-  get()->GRAD_LIST->restore_variables();
+  GRAD_LIST->restore_variables();
 }
 /**
 Rewind buffer.

@@ -111,8 +111,7 @@ int gradient_structure::save_var_file_flag=0;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
-indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
-arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
+//arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
 unsigned int gradient_structure::MAX_DLINKS = 5000;
 
 // note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons
@@ -395,13 +394,6 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
    cout << "GRAD_STACK1= "<< _farptr_tolong(GRAD_STACK1)<<"\n";
 #endif
 
-   if (INDVAR_LIST!= NULL)
-   {
-      cerr <<
-        "Trying to allocate to a non NULL pointer in gradient structure \n";
-      ad_exit(1);
-   }
-   else
    {
      INDVAR_LIST = new indvar_offset_list;
      memory_allocate_error("INDVAR_LIST",INDVAR_LIST);

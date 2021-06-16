@@ -136,7 +136,7 @@ public:
    static int save_var_flag;
 
    static unsigned int MAX_DLINKS;
-   static indvar_offset_list *INDVAR_LIST;
+  indvar_offset_list* INDVAR_LIST;
    static int NUM_DEPENDENT_VARIABLES;
    static dependent_variables_information *DEPVARS_INFO;
 
@@ -204,7 +204,7 @@ public:
    static dvariable *MIN_RETURN;
    static dvariable *MAX_RETURN;
   arr_list* ARR_LIST1;
-   static arr_list *ARR_FREE_LIST1;
+   //static arr_list *ARR_FREE_LIST1;
    //static void funnel_jacobcalc(void);
   void jacobcalc(int nvar, const dmatrix& jac);
   void jacobcalc(int nvar, const ofstream& jac);

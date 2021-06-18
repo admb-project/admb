@@ -24,7 +24,7 @@ prevariable& operator<<(const prevariable& _v1, const prevariable& v2)
   {
     ADUNCONST(prevariable,v1)
     v1=v2;
-    gradient_structure::save_dependent_variable_position(v1);
+    gradient_structure::get()->save_dependent_variable_position(v1);
     return (prevariable&)v1;
   }
 
@@ -116,7 +116,6 @@ void gradient_structure::save_dependent_variable_position(const prevariable& v1)
            << endl;
         ad_exit(1);
       }
-      DF_FILE* fp = get_fp();
       DEPVARS_INFO->grad_buffer_position(depvar_count)=_instance->GRAD_STACK1->ptr;
       DEPVARS_INFO->cmpdif_buffer_position(depvar_count)=fp->offset;
       DEPVARS_INFO->grad_file_count(depvar_count)=

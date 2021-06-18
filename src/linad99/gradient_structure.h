@@ -114,7 +114,7 @@ public:
    static long int USE_FOR_HESSIAN;
    static long int NVAR;
    static unsigned int NUM_RETURN_ARRAYS;
-   static dvariable **RETURN_ARRAYS;
+  dvariable **RETURN_ARRAYS;
    static unsigned int RETURN_ARRAYS_PTR;
   dvariable** RETURN_PTR_CONTAINER;
    size_t TOTAL_BYTES;
@@ -137,7 +137,7 @@ public:
    static unsigned int MAX_DLINKS;
   indvar_offset_list* INDVAR_LIST;
    static int NUM_DEPENDENT_VARIABLES;
-   static dependent_variables_information *DEPVARS_INFO;
+  dependent_variables_information* DEPVARS_INFO;
 
    // this needs to be a static member function so other static
    // member functions can call it
@@ -240,8 +240,11 @@ public:
   size_t NUM_GRADSTACK_BYTES_WRITTEN();
 
    static unsigned int get_MAX_DLINKS() { return MAX_DLINKS; }
-   static void save_dependent_variable_position(const prevariable & v1);
+  void save_dependent_variable_position(const prevariable&);
    static unsigned long int max_last_offset;
+
+  void RETURN_ARRAYS_DECREMENT();
+  void RETURN_ARRAYS_INCREMENT();
 
    friend class dlist;
    friend class grad_stack;

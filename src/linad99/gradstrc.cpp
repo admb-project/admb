@@ -74,7 +74,6 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 unsigned long int gradient_structure::max_last_offset = 0;
 long int gradient_structure::NVAR = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
-dvariable** gradient_structure::RETURN_ARRAYS = NULL;
 unsigned int gradient_structure::RETURN_ARRAYS_PTR;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
@@ -88,22 +87,8 @@ size_t gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
 size_t gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
 #endif
 
-dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
-
 int gradient_structure::save_var_flag=0;
 int gradient_structure::save_var_file_flag=0;
-
-// should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR = NULL;
-
-// should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR1 = NULL;
-
-// should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR2 = NULL;
-
-// should be int gradfile_handle;
-//int gradient_structure::_VARSSAV_PTR = 0;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
@@ -298,12 +283,6 @@ gradient_structure::gradient_structure(long int _size):
   gradient_structure::ARRAY_MEMBLOCK_SIZE =
     static_cast<unsigned long int>(_size - remainder);
 
-  if (DEPVARS_INFO!= NULL)
-  {
-    cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
-            "_structure" << endl;
-  }
-  else
   {
     int on,nopt = 0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
@@ -423,12 +402,6 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
    //allocate_dvariable_space();
   _instance = this;
 
-  if ( RETURN_ARRAYS!= NULL)
-  {
-cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
-    ad_exit(1);
-  }
-  else
   {
     RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
     memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
@@ -461,13 +434,16 @@ Must be called on entry to any function that returns a variable object.
 Calls must balance calls to void RETURN_ARRAYS_DECREMENT(void).
 \ingroup RA
 */
-void RETURN_ARRAYS_INCREMENT(void)
+void RETURN_ARRAYS_INCREMENT()
+{
+  gradient_structure::get()->RETURN_ARRAYS_INCREMENT();
+}
+void gradient_structure::RETURN_ARRAYS_INCREMENT(void)
 {
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_return_arrays);
 #endif
-  gradient_structure::get()->RETURN_PTR_CONTAINER[
-    gradient_structure::RETURN_ARRAYS_PTR]=gradient_structure::get()->RETURN_PTR;
+  RETURN_PTR_CONTAINER[RETURN_ARRAYS_PTR] = RETURN_PTR;
   if (++gradient_structure::RETURN_ARRAYS_PTR ==
     gradient_structure::NUM_RETURN_ARRAYS)
   {
@@ -476,12 +452,10 @@ void RETURN_ARRAYS_INCREMENT(void)
     cerr << " which is not matched by a RETURN_ARRAYS_DECREMENT()\n";
     ad_exit(24);
   }
-  gradient_structure::get()->MIN_RETURN =
-    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
-  gradient_structure::get()->MAX_RETURN =
-    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
+  MIN_RETURN = RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
+  MAX_RETURN = RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
     gradient_structure::RETURN_ARRAYS_SIZE-1;
-  gradient_structure::get()->RETURN_PTR = gradient_structure::get()->MIN_RETURN;
+  RETURN_PTR = MIN_RETURN;
 #if defined(THREAD_SAFE)
   pthread_mutex_unlock(&mutex_return_arrays);
 #endif
@@ -493,7 +467,11 @@ Must be called prior to exit from any functiton that returns a variable object.
 Calls must balance calls to void RETURN_ARRAYS_INCREMENT(void).
 \ingroup RA
 */
-void RETURN_ARRAYS_DECREMENT(void)
+void RETURN_ARRAYS_DECREMENT()
+{
+  gradient_structure::get()->RETURN_ARRAYS_DECREMENT();
+}
+void gradient_structure::RETURN_ARRAYS_DECREMENT()
 {
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_return_arrays);
@@ -507,14 +485,11 @@ void RETURN_ARRAYS_DECREMENT(void)
   }
   --gradient_structure::RETURN_ARRAYS_PTR;
 
-  gradient_structure::get()->MIN_RETURN =
-    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
-  gradient_structure::get()->MAX_RETURN =
-    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
+  MIN_RETURN = RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
+  MAX_RETURN = RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
     gradient_structure::RETURN_ARRAYS_SIZE-1;
-  gradient_structure::get()->RETURN_PTR =
-    gradient_structure::get()->RETURN_PTR_CONTAINER[
-      gradient_structure::RETURN_ARRAYS_PTR];
+  RETURN_PTR = RETURN_PTR_CONTAINER[gradient_structure::RETURN_ARRAYS_PTR];
+
 #if defined(THREAD_SAFE)
   pthread_mutex_unlock(&mutex_return_arrays);
 #endif

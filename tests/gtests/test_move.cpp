@@ -74,7 +74,7 @@ TEST_F(test_move, follow_gradient_structure)
   ASSERT_EQ(1753, gradient_structure::get()->GRAD_LIST->total_addresses());
 
   ASSERT_TRUE(ptr->func == &default_evaluation4);
-  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::get()->RETURN_PTR->v->x));
   ASSERT_TRUE(ptr->ind_addr1 == gradient_structure::get()->GRAD_LIST->get(1750));
   ASSERT_TRUE(ptr->ind_addr2 == gradient_structure::get()->GRAD_LIST->get(1751));
   ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -84,7 +84,7 @@ TEST_F(test_move, follow_gradient_structure)
 
   ASSERT_TRUE(ptr->func == &default_evaluation1);
   ASSERT_TRUE(ptr->dep_addr == gradient_structure::get()->GRAD_LIST->get(1752));
-  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::get()->RETURN_PTR->v->x));
   ASSERT_TRUE(ptr->ind_addr2 == NULL);
   ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
   ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
@@ -125,14 +125,14 @@ TEST_F(test_move, temporary)
   --ptr;
   ASSERT_TRUE(ptr->func == &default_evaluation1);
   ASSERT_TRUE(ptr->dep_addr == gradient_structure::get()->GRAD_LIST->get(1750));
-  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::get()->RETURN_PTR->v->x));
   ASSERT_TRUE(ptr->ind_addr2 == NULL);
   ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
   ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
 
   --ptr;
   ASSERT_TRUE(ptr->func == &default_evaluation4);
-  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::get()->RETURN_PTR->v->x));
   ASSERT_TRUE(ptr->ind_addr1 == gradient_structure::get()->GRAD_LIST->get(1750));
   ASSERT_TRUE(ptr->ind_addr2 == gradient_structure::get()->GRAD_LIST->get(1751));
   ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -187,7 +187,7 @@ TEST_F(test_move, independents2)
   ASSERT_TRUE(ptr->func == &default_evaluation1);
   ASSERT_TRUE(ptr->dep_addr == gradient_structure::get()->GRAD_LIST->get(1750));
   ASSERT_DOUBLE_EQ(*ptr->dep_addr, 5.0);
-  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::get()->RETURN_PTR->v->x));
   ASSERT_DOUBLE_EQ(*ptr->ind_addr1, 5.0);
   ASSERT_TRUE(ptr->ind_addr2 == NULL);
   ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
@@ -195,7 +195,7 @@ TEST_F(test_move, independents2)
 
   --ptr;
   ASSERT_TRUE(ptr->func == &default_evaluation4);
-  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::get()->RETURN_PTR->v->x));
   ASSERT_DOUBLE_EQ(*ptr->dep_addr, 5.0);
   ASSERT_TRUE(ptr->ind_addr1 == gradient_structure::get()->GRAD_LIST->get(1750));
   ASSERT_DOUBLE_EQ(*ptr->ind_addr1, 5.0);
@@ -256,14 +256,14 @@ TEST_F(test_move, independents)
   --ptr;
   ASSERT_TRUE(ptr->func == &default_evaluation1);
   ASSERT_TRUE(ptr->dep_addr == gradient_structure::get()->GRAD_LIST->get(1752));
-  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->ind_addr1 == &(gradient_structure::get()->RETURN_PTR->v->x));
   ASSERT_TRUE(ptr->ind_addr2 == NULL);
   ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);
   ASSERT_DOUBLE_EQ(ptr->mult2, 0.0);
 
   --ptr;
   ASSERT_TRUE(ptr->func == &default_evaluation4);
-  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::RETURN_PTR->v->x));
+  ASSERT_TRUE(ptr->dep_addr == &(gradient_structure::get()->RETURN_PTR->v->x));
   ASSERT_TRUE(ptr->ind_addr1 == gradient_structure::get()->GRAD_LIST->get(1750));
   ASSERT_TRUE(ptr->ind_addr2 == gradient_structure::get()->GRAD_LIST->get(1751));
   ASSERT_DOUBLE_EQ(ptr->mult1, 0.0);

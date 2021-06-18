@@ -199,9 +199,9 @@ public:
   dlist* GRAD_LIST;
    static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
-   static dvariable *RETURN_PTR;
-   static dvariable *MIN_RETURN;
-   static dvariable *MAX_RETURN;
+  dvariable* RETURN_PTR;
+  dvariable* MIN_RETURN;
+  dvariable* MAX_RETURN;
   arr_list* ARR_LIST1;
    //static arr_list *ARR_FREE_LIST1;
    //static void funnel_jacobcalc(void);

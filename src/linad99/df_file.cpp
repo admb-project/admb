@@ -193,7 +193,7 @@ DF_FILE::DF_FILE(const size_t nbytes)
   }
 #if defined (_MSC_VER) || defined (__WAT32__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
-                     O_BINARY, S_IRUSR | S_IWUSR);
+                     O_BINARY, S_IREAD | S_IWRITE);
 #elif defined (__TURBOC__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
                      O_BINARY, S_IRUSR | S_IWUSR);

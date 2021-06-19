@@ -84,8 +84,13 @@ void test_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
   //buffend=true_buffer+bufsize-1+sizeof(double);
   buffend=true_buffer+bufsize-1;
   bptr=buffer;
+#ifdef _MSC_VER
+  fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
+                   O_BINARY, S_IREAD | S_IWRITE);
+#else
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IRUSR | S_IWUSR);
+#endif
   if (fp == -1)
   {
     cerr << "Error trying to open file " << filename

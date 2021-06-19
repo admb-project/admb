@@ -115,7 +115,7 @@ public:
    static long int NVAR;
    static unsigned int NUM_RETURN_ARRAYS;
   dvariable **RETURN_ARRAYS;
-   static unsigned int RETURN_ARRAYS_PTR;
+  unsigned int RETURN_ARRAYS_PTR;
   dvariable** RETURN_PTR_CONTAINER;
    size_t TOTAL_BYTES;
    size_t PREVIOUS_TOTAL_BYTES;

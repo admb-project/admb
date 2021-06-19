@@ -427,7 +427,7 @@ void grad_stack::create_gradfile()
     _GRADFILE_PTR2=creat(gradfile_name2, O_RDWR);
   #elif defined (_MSC_VER)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-      O_BINARY, S_IRUSR | S_IWUSR);
+      O_BINARY, S_IREAD | S_IWRITE);
   #elif defined (__WAT32__)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY, S_IRUSR | S_IWUSR);

@@ -18,15 +18,6 @@
   #include <cassert>
   #include <climits>
 #endif
-#ifdef _WIN32
-  #ifdef __GNUC__
-    #if __GNUC__ >= 10
-      #define S_IREAD S_IRUSR
-      #define S_IWRITE S_IWUSR
-    #endif
-  #endif
-#endif
-
 
 do_naught_kludge df1b2_init_number::do_naught_kludge_a;
 
@@ -668,7 +659,7 @@ smartlist::smartlist(unsigned int _bufsize,const adstring& _filename):
   buffend=buffer+bufsize-1;
   bptr=buffer;
   fp = open((char*)filename,
-    O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+    O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IRUSR | S_IWUSR);
   if (fp == -1)
   {
     cerr << "Error trying to open file " << filename

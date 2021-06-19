@@ -13,14 +13,6 @@
   #endif
 #else
   #include <unistd.h>
-  #ifdef _WIN32
-    #ifdef __GNUC__
-      #if __GNUC__ >= 10
-        #define S_IREAD S_IRUSR
-        #define S_IWRITE S_IWUSR
-      #endif
-    #endif
-  #endif
 #endif
 
 /**
@@ -84,7 +76,7 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
   true_buffend->numbytes=9999;
   //int(true_buffend->pf)=6666;
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
-                   O_BINARY, S_IREAD | S_IWRITE);
+                   O_BINARY, S_IRUSR | S_IWUSR);
   if (fp < 0)
   {
     cerr << "Error trying to open file " << filename

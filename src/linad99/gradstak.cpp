@@ -28,14 +28,6 @@ using namespace std;
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
-  #ifdef _WIN32
-    #ifdef __GNUC__
-      #if __GNUC__ >= 10
-        #define S_IREAD S_IRUSR
-        #define S_IWRITE S_IWUSR
-      #endif
-    #endif
-  #endif
 #endif
 
 #if defined(__TURBOC__)
@@ -388,22 +380,22 @@ void grad_stack::create_gradfile()
 {
   #if defined (__TURBOC__)
    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
-       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+       O_TRUNC | O_BINARY, S_IRUSR | S_IWUSR);
    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
-       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+       O_TRUNC | O_BINARY, S_IRUSR | S_IWUSR);
   #elif defined (__ZTC__)
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
-      O_TRUNC , S_IREAD | S_IWRITE);
+      O_TRUNC , S_IRUSR | S_IWUSR);
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT
-      | O_TRUNC,  S_IREAD | S_IWRITE);
+      | O_TRUNC,  S_IRUSR | S_IWUSR);
   #elif defined (__NDPX__)
     _GRADFILE_PTR1=creat(gradfile_name1, O_RDWR);
      _VARSSAV_PTR=creat(var_store_file_name, O_RDWR);
   #elif defined (__WAT32__)
    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
-       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+       O_TRUNC | O_BINARY, S_IRUSR | S_IWUSR);
    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
-       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+       O_TRUNC | O_BINARY, S_IRUSR | S_IWUSR);
   #else
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
@@ -427,18 +419,18 @@ void grad_stack::create_gradfile()
 
   #if defined (__TURBOC__)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-      O_BINARY, S_IREAD | S_IWRITE);
+      O_BINARY, S_IRUSR | S_IWUSR);
   #elif defined (__ZTC__)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC ,
-      S_IREAD | S_IWRITE);
+      S_IRUSR | S_IWUSR);
   #elif defined (__NDPX__)
     _GRADFILE_PTR2=creat(gradfile_name2, O_RDWR);
   #elif defined (_MSC_VER)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-      O_BINARY, S_IREAD | S_IWRITE);
+      O_BINARY, S_IRUSR | S_IWUSR);
   #elif defined (__WAT32__)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-      O_BINARY, S_IREAD | S_IWRITE);
+      O_BINARY, S_IRUSR | S_IWUSR);
   #else
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);

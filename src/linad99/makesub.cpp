@@ -33,14 +33,6 @@ using namespace std;
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-  #ifdef _WIN32
-    #ifdef __GNUC__
-      #if __GNUC__ >= 10
-        #define S_IREAD S_IRUSR
-        #define S_IWRITE S_IWUSR
-      #endif
-    #endif
-  #endif
 #endif
 
 #include <cassert>
@@ -93,7 +85,7 @@ int ad_mkdir(const char* s)
 #if defined(_WIN32)
   return CreateDirectory(s, NULL) != 0;
 #else
-  return mkdir(s,S_IREAD | S_IWRITE) == 0;
+  return mkdir(s, S_IRUSR | S_IWUSR) == 0;
 #endif
 }
 /**

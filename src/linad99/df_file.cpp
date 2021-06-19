@@ -16,14 +16,6 @@ Copyright (c) 2008-2016 ADMB Foundation and
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
-  #ifdef _WIN32
-    #ifdef __GNUC__
-      #if __GNUC__ >= 10
-        #define S_IREAD S_IRUSR
-        #define S_IWRITE S_IWUSR
-      #endif
-    #endif
-  #endif
 #endif
 
 #if defined(__TURBOC__)
@@ -201,13 +193,13 @@ DF_FILE::DF_FILE(const size_t nbytes)
   }
 #if defined (_MSC_VER) || defined (__WAT32__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
-                     O_BINARY, S_IREAD | S_IWRITE);
+                     O_BINARY, S_IRUSR | S_IWUSR);
 #elif defined (__TURBOC__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
-                     O_BINARY, S_IREAD | S_IWRITE);
+                     O_BINARY, S_IRUSR | S_IWUSR);
 #elif defined (__ZTC__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC ,
-                     S_IREAD | S_IWRITE);
+                     S_IRUSR | S_IWUSR);
 #elif  defined (__NDPX__)
   file_ptr=creat(cmpdif_file_name, O_RDWR);
 #else

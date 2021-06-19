@@ -18,6 +18,15 @@
   #include <cassert>
   #include <climits>
 #endif
+#ifdef _WIN32
+  #ifdef __GNUC__
+    #if __GNUC__ >= 10
+      #define S_IREAD S_IRUSR
+      #define S_IWRITE S_IWUSR
+    #endif
+  #endif
+#endif
+
 
 do_naught_kludge df1b2_init_number::do_naught_kludge_a;
 

@@ -2004,10 +2004,6 @@ class arr_list
    {
       max_last_offset = 0;
    }
-   friend void arr_remove(arr_link **);
-   friend void arr_free_list_remove(arr_link **);
-   friend void arr_free_add(arr_link *);
-   friend void arr_free_remove(arr_link *);
   friend class gradient_structure;
 };
 
@@ -2050,9 +2046,6 @@ public:
   unsigned int get_status() const
     { return status; }
 
-   friend void arr_remove(arr_link **);
-   friend void arr_free_remove(arr_link *);
-   friend void arr_free_add(arr_link *);
   friend class gradient_structure;
 };
 

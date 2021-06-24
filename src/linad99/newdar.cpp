@@ -41,13 +41,13 @@ arr_link::arr_link()
  * Description not yet available.
  * \param
  */
-void arr_free_remove(arr_link * tmp)
+void gradient_structure::arr_free_remove(arr_link * tmp)
 {
   num_free_obj--;
   // if this is the last free object reset list pointer
   if (!tmp->free_next)
   {
-    gradient_structure::get()->ARR_LIST1->free_last=tmp->free_prev;
+    ARR_LIST1->free_last=tmp->free_prev;
   }
   // This routine removes the link pointed to by tmp
   if (tmp->free_next)  // Make the one after it point to tmp->prev
@@ -65,12 +65,12 @@ void arr_free_remove(arr_link * tmp)
  * Description not yet available.
  * \param
  */
-void arr_free_add(arr_link * tmp)
+void gradient_structure::arr_free_add(arr_link* tmp)
 {
   num_free_obj++;
   // This routine adds the link pointed to by tmp to  the end of the free list
-  tmp->free_prev = gradient_structure::get()->ARR_LIST1->free_last;
-  gradient_structure::get()->ARR_LIST1->free_last=tmp;
+  tmp->free_prev = ARR_LIST1->free_last;
+  ARR_LIST1->free_last=tmp;
   tmp->free_next = NULL;
   if (tmp->free_prev) tmp->free_prev->free_next = tmp;
 }
@@ -543,7 +543,7 @@ void df_check_derivative_values_indexed_break(void)
 /**
 Remove and delete arr_link node pptr from gradient_structure::ARR_LIST1.
 */
-void arr_remove(arr_link** pptr)
+void gradient_structure::arr_remove(arr_link** pptr)
 {
 #ifndef OPT_LIB
   assert(pptr != NULL);
@@ -581,7 +581,7 @@ void arr_remove(arr_link** pptr)
     delete tmp;
     tmp = NULL;
   }
-  gradient_structure::get()->ARR_LIST1->number_arr_links -= 1;
+  ARR_LIST1->number_arr_links -= 1;
   //cout <<  "after delete number_arr_links = "
   //<<  gradient_structure::get()->ARR_LIST1->number_arr_links <<"\n";
 }

@@ -8,6 +8,11 @@ extern "C"
 
 class test_arr_link: public ::testing::Test {};
 
+void arr_remove(arr_link** pptr)
+{
+  gradient_structure::get()->arr_remove(pptr);
+}
+
 TEST_F(test_arr_link, arr_remove_null)
 {
   void arr_remove(arr_link** pptr);

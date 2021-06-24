@@ -121,9 +121,12 @@ public:
    size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
    static humungous_pointer ARRAY_MEMBLOCK_SAVE;
- public:
+public:
   double_and_int* arr_new(unsigned int sz);
   void arr_free(double_and_int* varr);
+  void arr_free_add(arr_link* tmp);
+  void arr_free_remove(arr_link* tmp);
+  void arr_remove(arr_link** pptr);
   humungous_pointer ARRAY_MEMBLOCK_BASE;
 
  private:

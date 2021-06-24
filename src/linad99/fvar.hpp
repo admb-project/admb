@@ -781,7 +781,7 @@ class dependent_variables_information
 dvar_vector_position restore_dvar_vector_position(void);
 dvector restore_dvar_vector_value(const dvar_vector_position & tmp);
 void arr_free(double_and_int *);
-double_and_int *arr_new(unsigned int sz);
+double_and_int* arr_new(unsigned int sz);
 
 #include <gradient_structure.h>
 
@@ -2004,12 +2004,11 @@ class arr_list
    {
       max_last_offset = 0;
    }
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
    friend void arr_remove(arr_link **);
    friend void arr_free_list_remove(arr_link **);
    friend void arr_free_add(arr_link *);
    friend void arr_free_remove(arr_link *);
+  friend class gradient_structure;
 };
 
 /**
@@ -2051,11 +2050,10 @@ public:
   unsigned int get_status() const
     { return status; }
 
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
    friend void arr_remove(arr_link **);
    friend void arr_free_remove(arr_link *);
    friend void arr_free_add(arr_link *);
+  friend class gradient_structure;
 };
 
 #if defined(__NUMBERVECTOR__)

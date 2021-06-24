@@ -120,13 +120,12 @@ public:
    size_t TOTAL_BYTES;
    size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
-   static humungous_pointer ARRAY_MEMBLOCK_BASE;
    static humungous_pointer ARRAY_MEMBLOCK_SAVE;
  public:
-   static double *get_ARRAY_MEMBLOCK_BASE()
-   {
-      return (double*)ARRAY_MEMBLOCK_BASE;
-   }
+  double_and_int* arr_new(unsigned int sz);
+  void arr_free(double_and_int* varr);
+  humungous_pointer ARRAY_MEMBLOCK_BASE;
+
  private:
    static size_t CMPDIF_BUFFER_SIZE;
    static size_t GRADSTACK_BUFFER_SIZE;

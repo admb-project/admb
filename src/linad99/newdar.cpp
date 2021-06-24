@@ -81,6 +81,10 @@ void arr_free_add(arr_link * tmp)
  */
 double_and_int * arr_new(unsigned int sz)
 {
+  return gradient_structure::get()->arr_new(sz);
+}
+double_and_int* gradient_structure::arr_new(unsigned int sz)
+{
   if (!gradient_structure::instances)
   {
     cerr << "Error -- you are trying to create a dvar_vector object"
@@ -94,7 +98,7 @@ double_and_int * arr_new(unsigned int sz)
   // this routine allocated a block of memory of sizeof(double)*sz bytes
   // for the gradients of an array or matrix of prevariables
 
-  arr_link * tmp = gradient_structure::get()->ARR_LIST1->free_last;
+  arr_link * tmp = ARR_LIST1->free_last;
 
   unsigned int bytes_needed = sz * (unsigned int)sizeof(double_and_int);
 
@@ -120,7 +124,7 @@ double_and_int * arr_new(unsigned int sz)
         // remove tmp from the free list
         arr_free_remove(tmp);
 
-        temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
+        temp_ptr = (char*)ARRAY_MEMBLOCK_BASE + tmp->offset;
 
         //put the address tmp into the location pointed to by temp_ptr
         (* (arr_link **) (temp_ptr)) = tmp;
@@ -133,7 +137,7 @@ double_and_int * arr_new(unsigned int sz)
         // the part you need
 
         arr_link* tmp1 = new arr_link;
-        gradient_structure::get()->ARR_LIST1->number_arr_links += 1;
+        ARR_LIST1->number_arr_links += 1;
 
         // put the new link tmp1-> into the list BEFORE tmp->
 
@@ -156,7 +160,7 @@ double_and_int * arr_new(unsigned int sz)
         tmp->offset+=bytes_needed;
         tmp->size-=bytes_needed;
 
-        temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp1->offset;
+        temp_ptr = (char*)(ARRAY_MEMBLOCK_BASE) + tmp1->offset;
 
    //put the address pointed to by tmp1 into the location pointed to by temp_ptr
         (*(arr_link**)(temp_ptr)) = tmp1;
@@ -176,44 +180,40 @@ double_and_int * arr_new(unsigned int sz)
     ad_exit(1);
   }
 
-  gradient_structure::get()->ARR_LIST1->number_arr_links  += 1;
+  ARR_LIST1->number_arr_links  += 1;
 
-  tmp->prev = gradient_structure::get()->ARR_LIST1->last; // the new block point back
+  tmp->prev = ARR_LIST1->last; // the new block point back
                                                  // at the previous last block
 
-  if (gradient_structure::get()->ARR_LIST1->last)
+  if (ARR_LIST1->last)
   {
-    gradient_structure::get()->ARR_LIST1->last->next = tmp; // the previous last
+    ARR_LIST1->last->next = tmp; // the previous last
                                                   // block point forward to tmp
   }
-  gradient_structure::get()->ARR_LIST1->last = tmp;        // tmp is the new last block
+  ARR_LIST1->last = tmp;        // tmp is the new last block
 
   tmp->next = 0;
 
   tmp->status = 1;
 
-  tmp->offset = gradient_structure::get()->ARR_LIST1->last_offset;
+  tmp->offset = ARR_LIST1->last_offset;
 
-  gradient_structure::get()->ARR_LIST1->last_offset += bytes_needed;
+  ARR_LIST1->last_offset += bytes_needed;
 
-  if (gradient_structure::get()->ARR_LIST1->last_offset>
+  if (ARR_LIST1->last_offset>
     (unsigned int)gradient_structure::max_last_offset )
   {
-    gradient_structure::max_last_offset=
-      gradient_structure::get()->ARR_LIST1->last_offset;
+    gradient_structure::max_last_offset = ARR_LIST1->last_offset;
   }
 
-  if (gradient_structure::get()->ARR_LIST1->last_offset >
-    gradient_structure::get()->ARR_LIST1->max_last_offset)
+  if (ARR_LIST1->last_offset > ARR_LIST1->max_last_offset)
   {
-    gradient_structure::get()->ARR_LIST1->max_last_offset =
-     gradient_structure::get()->ARR_LIST1->last_offset;
+    ARR_LIST1->max_last_offset = ARR_LIST1->last_offset;
   }
 
-  if(gradient_structure::get()->ARR_LIST1->last_offset >
-    gradient_structure::ARRAY_MEMBLOCK_SIZE)
+  if (ARR_LIST1->last_offset > gradient_structure::ARRAY_MEMBLOCK_SIZE)
   {
-    cout << gradient_structure::get()->ARR_LIST1->last_offset <<" > "
+    cout << ARR_LIST1->last_offset <<" > "
          <<  gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
     cout << " No memory for dvar_vectors\n"
          << " Need to increase ARRAY_MEMBLOCK_SIZE parameter\n"
@@ -224,7 +224,7 @@ double_and_int * arr_new(unsigned int sz)
 
   tmp->size = bytes_needed;
 
-  temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
+  temp_ptr = (char*)(ARRAY_MEMBLOCK_BASE) + tmp->offset;
 
   (*(arr_link **) (temp_ptr )) = tmp; //put the address
                                    // tmp into the location pointed to
@@ -239,6 +239,10 @@ double_and_int * arr_new(unsigned int sz)
  * \param
  */
 void arr_free(double_and_int * varr)
+{
+  gradient_structure::get()->arr_free(varr);
+}
+void gradient_structure::arr_free(double_and_int * varr)
 {
   // This routines frees up a memory block and
   // consolidates the free blocks if possible
@@ -268,20 +272,20 @@ void arr_free(double_and_int * varr)
     if (ptr->prev && !ptr->prev->status)
     {
       // delete ptr->prev
-      gradient_structure::get()->ARR_LIST1->last = ptr->prev->prev;
+      ARR_LIST1->last = ptr->prev->prev;
       //if (gradient_structure::get()->ARR_LIST1->last ==0)
        // cout << "gradient_structure::get()->ARR_LIST1->last =0 " << endl;
 
-      gradient_structure::get()->ARR_LIST1->last_offset -= ptr->size + ptr->prev->size;
+      ARR_LIST1->last_offset -= ptr->size + ptr->prev->size;
       arr_free_remove(ptr->prev);
       arr_remove(&(ptr->prev));
     }
     else
     {
-      gradient_structure::get()->ARR_LIST1->last = ptr->prev;
+      ARR_LIST1->last = ptr->prev;
       //if (gradient_structure::ARR_LIST1->last ==0)
        // cout << "gradient_structure::ARR_LIST1->last =0 " << endl;
-      gradient_structure::get()->ARR_LIST1->last_offset -= ptr->size;
+      ARR_LIST1->last_offset -= ptr->size;
     }
     arr_remove(&ptr);
   }
@@ -377,7 +381,7 @@ void df_check_derivative_values(void)
 {
   //char label[20];
   adstring str=get_string_marker();
-  double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  double* temp_ptr = (double*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
     gradient_structure::get()->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
@@ -442,7 +446,7 @@ void df_check_derivative_values_indexed(void)
   //char label[20];
   int index=restore_int_value();
   adstring str=get_string_marker();
-  double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  double* temp_ptr = (double*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
     gradient_structure::get()->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
@@ -492,7 +496,7 @@ void df_check_derivative_values_indexed_break(void)
   int b=restore_int_value();
   int index=restore_int_value();
   adstring str=get_string_marker();
-  double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
+  double* temp_ptr = (double*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
     gradient_structure::get()->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);

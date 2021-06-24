@@ -332,7 +332,7 @@ void funnel_derivatives(void)
   verify_identifier_string("ue");
 
   double df = restore_prevariable_derivative(deppos);
-  double * dptr= (double *) gradient_structure::ARRAY_MEMBLOCK_BASE;
+  double* dptr = (double*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE);
 
   //double * dd = &(dx(1));
   ii=0;

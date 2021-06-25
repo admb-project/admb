@@ -2004,7 +2004,12 @@ class arr_list
    {
       max_last_offset = 0;
    }
-  friend class gradient_structure;
+
+  double_and_int* arr_new(unsigned int sz);
+  void arr_free(double_and_int* varr);
+  void arr_free_add(arr_link* tmp);
+  void arr_free_remove(arr_link* tmp);
+  void arr_remove(arr_link** pptr);
 };
 
 /**
@@ -2046,7 +2051,7 @@ public:
   unsigned int get_status() const
     { return status; }
 
-  friend class gradient_structure;
+  friend class arr_list;
 };
 
 #if defined(__NUMBERVECTOR__)

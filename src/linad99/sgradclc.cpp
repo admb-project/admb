@@ -147,7 +147,7 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 
   GRAD_LIST->initialize();
 
-  memset(gradient_structure::ARRAY_MEMBLOCK_BASE, 0,
+  memset(ARR_LIST1->ARRAY_MEMBLOCK_BASE, 0,
     ARR_LIST1->get_max_last_offset());
 
   *GRAD_STACK1->ptr->dep_addr = 1;
@@ -245,17 +245,17 @@ void gradient_structure::save_arrays()
      ARRAY_MEMBLOCK_SAVE = temp_ptr;
 #if defined(DOS386)
   #ifndef USE_ASSEMBLER
-         memcpy((char*)ARRAY_MEMBLOCK_SAVE,(char*)ARRAY_MEMBLOCK_BASE,
+         memcpy((char*)ARRAY_MEMBLOCK_SAVE,(char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
            bytes_needed);
   #else
          dw_block_move((double*)ARRAY_MEMBLOCK_SAVE,
-           (double*)ARRAY_MEMBLOCK_BASE,bytes_needed/8);
+           (double*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,bytes_needed/8);
   #endif
 #else
      unsigned long int max_move=50000;
      unsigned long int left_to_move=bytes_needed;
      humungous_pointer dest = ARRAY_MEMBLOCK_SAVE;
-     humungous_pointer src = ARRAY_MEMBLOCK_BASE;
+     humungous_pointer src = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
      while(left_to_move > max_move)
      {
        memcpy((char*)dest,(char*)src,max_move);
@@ -268,7 +268,7 @@ void gradient_structure::save_arrays()
   }
   else
   {
-     humungous_pointer src = ARRAY_MEMBLOCK_BASE;
+     humungous_pointer src = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
      LSEEK(GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
   #ifdef OPT_LIB
@@ -301,10 +301,10 @@ void gradient_structure::restore_arrays()
   {
 #if defined(DOS386)
   #ifndef USE_ASSEMBLER
-        memcpy((char*)ARRAY_MEMBLOCK_BASE,(char*)ARRAY_MEMBLOCK_SAVE,
+        memcpy((char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,(char*)ARRAY_MEMBLOCK_SAVE,
           bytes_needed);
   #else
-         dw_block_move((double*)ARRAY_MEMBLOCK_BASE,
+         dw_block_move((double*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
            (double*)ARRAY_MEMBLOCK_SAVE,bytes_needed/8);
   #endif
 #else
@@ -312,7 +312,7 @@ void gradient_structure::restore_arrays()
 
      long int left_to_move=bytes_needed;
      humungous_pointer src = ARRAY_MEMBLOCK_SAVE;
-     humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
+     humungous_pointer dest = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
      while(left_to_move > max_move)
      {
        memcpy((char*)dest,(char*)src,max_move);
@@ -326,7 +326,7 @@ void gradient_structure::restore_arrays()
   }
   else
   {
-    humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
+    humungous_pointer dest = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
     LSEEK(GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 #if defined(DOS386)
   #if defined(OPT_LIB) && !defined(_MSC_VER)

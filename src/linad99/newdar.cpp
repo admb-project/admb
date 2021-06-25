@@ -125,7 +125,7 @@ double_and_int* arr_list::arr_new(unsigned int sz)
         // remove tmp from the free list
         arr_free_remove(tmp);
 
-        temp_ptr = (char*)gradient_structure::get()->ARRAY_MEMBLOCK_BASE + tmp->offset;
+        temp_ptr = (char*)gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE + tmp->offset;
 
         //put the address tmp into the location pointed to by temp_ptr
         (* (arr_link **) (temp_ptr)) = tmp;
@@ -161,7 +161,7 @@ double_and_int* arr_list::arr_new(unsigned int sz)
         tmp->offset+=bytes_needed;
         tmp->size-=bytes_needed;
 
-        temp_ptr = (char*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE) + tmp1->offset;
+        temp_ptr = (char*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE) + tmp1->offset;
 
    //put the address pointed to by tmp1 into the location pointed to by temp_ptr
         (*(arr_link**)(temp_ptr)) = tmp1;
@@ -225,7 +225,7 @@ double_and_int* arr_list::arr_new(unsigned int sz)
 
   tmp->size = bytes_needed;
 
-  temp_ptr = (char*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE) + tmp->offset;
+  temp_ptr = (char*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE) + tmp->offset;
 
   (*(arr_link **) (temp_ptr )) = tmp; //put the address
                                    // tmp into the location pointed to
@@ -382,7 +382,7 @@ void df_check_derivative_values(void)
 {
   //char label[20];
   adstring str=get_string_marker();
-  double* temp_ptr = (double*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE);
+  double* temp_ptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
     gradient_structure::get()->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
@@ -447,7 +447,7 @@ void df_check_derivative_values_indexed(void)
   //char label[20];
   int index=restore_int_value();
   adstring str=get_string_marker();
-  double* temp_ptr = (double*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE);
+  double* temp_ptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
     gradient_structure::get()->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
@@ -497,7 +497,7 @@ void df_check_derivative_values_indexed_break(void)
   int b=restore_int_value();
   int index=restore_int_value();
   adstring str=get_string_marker();
-  double* temp_ptr = (double*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE);
+  double* temp_ptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
     gradient_structure::get()->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);

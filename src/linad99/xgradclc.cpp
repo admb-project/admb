@@ -127,11 +127,9 @@ void gradient_structure::funnel_gradcalc()
 
   GRAD_LIST->initialize();
 
-  double_and_int* tmp =
-    (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
+  double_and_int* tmp = (double_and_int*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
 
-     unsigned long int max_last_offset =
-       gradient_structure::ARR_LIST1->get_max_last_offset();
+  unsigned long int max_last_offset = ARR_LIST1->get_max_last_offset();
 
   size_t size = sizeof(double_and_int);
 
@@ -208,10 +206,10 @@ do
     int dsize = (int)_dsize;
 
     //dvector dtmp(0,dsize-1);
-    //memcpy((char*)&(dtmp(0)),(char*)gradient_structure::ARRAY_MEMBLOCK_BASE,
+    //memcpy((char*)&(dtmp(0)),(char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
       //dsize*sizeof(double));
 
-    double* dptr=(double*) gradient_structure::ARRAY_MEMBLOCK_BASE;
+    double* dptr = (double*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
     dptr-=1;
     int ii=0;
     int nzero=0;
@@ -332,7 +330,7 @@ void funnel_derivatives(void)
   verify_identifier_string("ue");
 
   double df = restore_prevariable_derivative(deppos);
-  double* dptr = (double*)(gradient_structure::get()->ARRAY_MEMBLOCK_BASE);
+  double* dptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
 
   //double * dd = &(dx(1));
   ii=0;

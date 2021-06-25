@@ -207,8 +207,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 
     GRAD_LIST->initialize();
 
-    double_and_int* tmp =
-      (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
+    double_and_int* tmp = (double_and_int*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
 
     unsigned long int max_last_offset = ARR_LIST1->get_max_last_offset();
 

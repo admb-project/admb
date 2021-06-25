@@ -197,7 +197,7 @@ dfsdmat::dfsdmat(int _n, const gradient_structure& gs)
 void dfsdmat::allocate(int _n, const gradient_structure& gs)
 {
   n=_n;
-  ptr = (double*)(const_cast<gradient_structure&>(gs).ARRAY_MEMBLOCK_BASE);
+  ptr = (double*)(const_cast<gradient_structure&>(gs).ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   shared_memory=1;
   minp=ptr;
   maxp=ptr+((n*(n+1))/2-1);

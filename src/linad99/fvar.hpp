@@ -1976,6 +1976,8 @@ class arr_list
    friend class arr_link;
 
  public:
+  humungous_pointer ARRAY_MEMBLOCK_BASE;
+
    arr_list(void)
    {
       last = 0;
@@ -2010,6 +2012,9 @@ class arr_list
   void arr_free_add(arr_link* tmp);
   void arr_free_remove(arr_link* tmp);
   void arr_remove(arr_link** pptr);
+
+  friend class dfsdmat;
+  friend class gradient_structure;
 };
 
 /**

@@ -354,10 +354,10 @@ cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
    }
  */
 
-   ARRAY_MEMBLOCK_BASE = temp_ptr;
+   ARR_LIST1->ARRAY_MEMBLOCK_BASE = temp_ptr;
 
-   const size_t adjustment = (8 -((size_t)ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
-   ARRAY_MEMBLOCK_BASE.adjust(adjustment);
+   const size_t adjustment = 8 - ((size_t)(ARR_LIST1->ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
+   ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
   GRAD_STACK1 = new grad_stack;
   memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
@@ -536,17 +536,12 @@ gradient_structure::~gradient_structure()
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;
   }
-  if (ARRAY_MEMBLOCK_BASE == NULL)
-  {
-    cerr << "Trying to farfree a NULL pointer in ~gradient_structure\n";
-    ad_exit(1);
-  }
-  else
-  {
-    ARRAY_MEMBLOCK_BASE.free();
-  }
   if (ARR_LIST1 != NULL)
   {
+    if (ARR_LIST1->ARRAY_MEMBLOCK_BASE != NULL)
+    {
+      ARR_LIST1->ARRAY_MEMBLOCK_BASE.free();
+    }
     delete ARR_LIST1;
     ARR_LIST1 = NULL;
   }

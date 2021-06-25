@@ -122,7 +122,6 @@ public:
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
    static humungous_pointer ARRAY_MEMBLOCK_SAVE;
 public:
-  humungous_pointer ARRAY_MEMBLOCK_BASE;
   friend class arr_list;
 
  private:

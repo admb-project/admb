@@ -41,11 +41,18 @@ double_and_int* gradnew()
     ad_exit(1);
   }
 #endif
-  dlink* tmp = gradient_structure::get()->GRAD_LIST->last_remove();
-  if (!tmp)
+  dlink* tmp = nullptr;
+
+  gradient_structure* gs = gradient_structure::get();
+  if (gs)
   {
-    tmp = gradient_structure::get()->GRAD_LIST->create();
+    tmp = gs->GRAD_LIST->last_remove();
+    if (!tmp)
+    {
+      tmp = gs->GRAD_LIST->create();
+    }
   }
+
   //  cout << "In gradnew the address of the double * ptr is "
   //       << _farptr_tolong(tmp) << "\n";
   return (double_and_int*)tmp;

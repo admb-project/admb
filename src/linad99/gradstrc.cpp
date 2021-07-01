@@ -324,18 +324,6 @@ gradient_structure::gradient_structure(long int _size):
     memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
   }
 
-/*
-   if ( ARR_FREE_LIST1!= NULL)
-   {
-cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
-   }
-   else
-   {
-      ARR_FREE_LIST1 = new arr_list;
-      memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
-   }
-*/
-
    void* temp_ptr = NULL;
 #ifdef __ZTC__
    if ((temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE)) == 0)
@@ -347,16 +335,9 @@ cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
      ad_exit(1);
    }
 
-  /*
-   if (ARRAY_MEMBLOCK_BASE != NULL)
-   {
-cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
-   }
- */
-
    ARR_LIST1->ARRAY_MEMBLOCK_BASE = temp_ptr;
 
-   const size_t adjustment = 8 - ((size_t)(ARR_LIST1->ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
+   const size_t adjustment = (8 -((size_t)ARR_LIST1->ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
    ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
   GRAD_STACK1 = new grad_stack;
@@ -538,10 +519,6 @@ gradient_structure::~gradient_structure()
   }
   if (ARR_LIST1 != NULL)
   {
-    if (ARR_LIST1->ARRAY_MEMBLOCK_BASE != NULL)
-    {
-      ARR_LIST1->ARRAY_MEMBLOCK_BASE.free();
-    }
     delete ARR_LIST1;
     ARR_LIST1 = NULL;
   }

@@ -209,7 +209,7 @@ do
     //memcpy((char*)&(dtmp(0)),(char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
       //dsize*sizeof(double));
 
-    double* dptr = (double*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
+    double* dptr=(double*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
     dptr-=1;
     int ii=0;
     int nzero=0;

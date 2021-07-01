@@ -1975,16 +1975,20 @@ class arr_list
    unsigned long int number_arr_links;
    friend class arr_link;
 
- public:
   humungous_pointer ARRAY_MEMBLOCK_BASE;
 
-   arr_list(void)
+ public:
+   arr_list()
    {
       last = 0;
       free_last = 0;
       last_offset = 0;
       max_last_offset = 0;
       number_arr_links = 0;
+   }
+   virtual ~arr_list()
+   {
+     ARRAY_MEMBLOCK_BASE.free();
    }
 
   arr_link* get_last() const
@@ -2012,9 +2016,6 @@ class arr_list
   void arr_free_add(arr_link* tmp);
   void arr_free_remove(arr_link* tmp);
   void arr_remove(arr_link** pptr);
-
-  friend class dfsdmat;
-  friend class gradient_structure;
 };
 
 /**

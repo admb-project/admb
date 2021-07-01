@@ -126,7 +126,7 @@ TEST_F(test_gradcalc, dvar_vector)
      tmp++;
   }
 
-  memset(gradient_structure::ARR_LIST1->ARRAY_MEMBLOCK_BASE,
+  memset(gradient_structure::ARRAY_MEMBLOCK_BASE,
          0, gradient_structure::ARRAY_MEMBLOCK_SIZE);
   */
 }

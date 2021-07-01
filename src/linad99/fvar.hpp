@@ -1976,6 +1976,7 @@ class arr_list
    friend class arr_link;
 
   humungous_pointer ARRAY_MEMBLOCK_BASE;
+  humungous_pointer ARRAY_MEMBLOCK_SAVE;
 
  public:
    arr_list()
@@ -1989,6 +1990,7 @@ class arr_list
    virtual ~arr_list()
    {
      ARRAY_MEMBLOCK_BASE.free();
+     ARRAY_MEMBLOCK_SAVE.free();
    }
 
   arr_link* get_last() const

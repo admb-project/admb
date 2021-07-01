@@ -120,7 +120,6 @@ public:
    size_t TOTAL_BYTES;
    size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
-   static humungous_pointer ARRAY_MEMBLOCK_SAVE;
 public:
   friend class arr_list;
 

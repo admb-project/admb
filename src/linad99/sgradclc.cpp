@@ -242,19 +242,19 @@ void gradient_structure::save_arrays()
    }
    if (gradient_structure::save_var_file_flag==0)
    {
-     ARRAY_MEMBLOCK_SAVE = temp_ptr;
+     ARR_LIST1->ARRAY_MEMBLOCK_SAVE = temp_ptr;
 #if defined(DOS386)
   #ifndef USE_ASSEMBLER
-         memcpy((char*)ARRAY_MEMBLOCK_SAVE,(char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
+         memcpy((char*)ARR_LIST1->ARRAY_MEMBLOCK_SAVE,(char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
            bytes_needed);
   #else
-         dw_block_move((double*)ARRAY_MEMBLOCK_SAVE,
+         dw_block_move((double*)ARR_LIST1->ARRAY_MEMBLOCK_SAVE,
            (double*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,bytes_needed/8);
   #endif
 #else
      unsigned long int max_move=50000;
      unsigned long int left_to_move=bytes_needed;
-     humungous_pointer dest = ARRAY_MEMBLOCK_SAVE;
+     humungous_pointer dest = ARR_LIST1->ARRAY_MEMBLOCK_SAVE;
      humungous_pointer src = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
      while(left_to_move > max_move)
      {
@@ -301,17 +301,17 @@ void gradient_structure::restore_arrays()
   {
 #if defined(DOS386)
   #ifndef USE_ASSEMBLER
-        memcpy((char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,(char*)ARRAY_MEMBLOCK_SAVE,
+        memcpy((char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,(char*)ARR_LIST1->ARRAY_MEMBLOCK_SAVE,
           bytes_needed);
   #else
          dw_block_move((double*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
-           (double*)ARRAY_MEMBLOCK_SAVE,bytes_needed/8);
+           (double*)ARR_LIST1->ARRAY_MEMBLOCK_SAVE,bytes_needed/8);
   #endif
 #else
      unsigned long max_move=50000;
 
      long int left_to_move=bytes_needed;
-     humungous_pointer src = ARRAY_MEMBLOCK_SAVE;
+     humungous_pointer src = ARR_LIST1->ARRAY_MEMBLOCK_SAVE;
      humungous_pointer dest = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
      while(left_to_move > max_move)
      {
@@ -322,7 +322,7 @@ void gradient_structure::restore_arrays()
      }
      memcpy((char*)dest,(char*)src,left_to_move);
 #endif
-    ARRAY_MEMBLOCK_SAVE.free();
+    ARR_LIST1->ARRAY_MEMBLOCK_SAVE.free();
   }
   else
   {

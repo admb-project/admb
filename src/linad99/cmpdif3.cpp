@@ -59,17 +59,18 @@ static void report_gradstack_flag2(void)
   verify_identifier_string("stack");
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
+  DF_FILE* fp = gradient_structure::get_fp();
   int num_bytes;
-  gradient_structure::get_fp()->fread(&num_bytes,sizeof(int));
+  fp->fread(&num_bytes,sizeof(int));
   char str1[100];
   str1[0]='\0';
 #ifndef OPT_LIB
   assert(num_bytes >= 0);
 #endif
-  gradient_structure::get_fp()->fread(str1, (size_t)num_bytes);
+  fp->fread(str1, (size_t)num_bytes);
   int i,j;
-  gradient_structure::get_fp()->fread(&j,sizeof(int));
-  gradient_structure::get_fp()->fread(&i,sizeof(int));
+  fp->fread(&j,sizeof(int));
+  fp->fread(&i,sizeof(int));
   cout << "in report_gradstack_flag  " << str1 << endl;
 }
 #endif
@@ -92,10 +93,11 @@ void set_gradstack_flag(char* str)
 #ifndef OPT_LIB
   assert(length >= 0);
 #endif
-  gradient_structure::get_fp()->fwrite(str, (size_t)length);
-  gradient_structure::get_fp()->fwrite(&length,sizeof(int));
-  gradient_structure::get()->GRAD_STACK1->
-    set_gradient_stack(report_gradstack_flag);
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+  fp->fwrite(str, (size_t)length);
+  fp->fwrite(&length,sizeof(int));
+  gs->GRAD_STACK1->set_gradient_stack(report_gradstack_flag);
   save_identifier_string("stack");
 #endif
 }
@@ -121,15 +123,16 @@ void set_gradstack_flag(char* _str,int i,int j)
   assert(_length <= INT_MAX);
   int length=(int)_length;
 #endif
-  gradient_structure::get_fp()->fwrite(&i,sizeof(int));
-  gradient_structure::get_fp()->fwrite(&j,sizeof(int));
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+  fp->fwrite(&i,sizeof(int));
+  fp->fwrite(&j,sizeof(int));
 #ifndef OPT_LIB
   assert(length >= 0);
 #endif
-  gradient_structure::get_fp()->fwrite(str, (size_t)length);
-  gradient_structure::get_fp()->fwrite(&length,sizeof(int));
-  gradient_structure::get()->GRAD_STACK1->
-    set_gradient_stack(report_gradstack_flag2);
+  fp->fwrite(str, (size_t)length);
+  fp->fwrite(&length,sizeof(int));
+  gs->GRAD_STACK1->set_gradient_stack(report_gradstack_flag2);
   save_identifier_string("stack");
 #endif
 }

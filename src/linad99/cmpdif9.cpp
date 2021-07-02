@@ -34,32 +34,36 @@ void imatrix::save_imatrix_position(void)
   size_t wsize=sizeof(int);
   size_t wsize1=sizeof(void*);
 
+  DF_FILE* fp = gradient_structure::get_fp();
+
   int min=rowmin();
   int max=rowmax();
   for (int i=min;i<=max;i++)
   {
-    gradient_structure::get_fp()->fwrite(&(tmp.lb(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
+    fp->fwrite(&(tmp.lb(i)),wsize);
+    fp->fwrite(&(tmp.ub(i)),wsize);
+    fp->fwrite(&(tmp.ptr(i)),wsize1);
   }
-  gradient_structure::get_fp()->fwrite(&(tmp.row_min),wsize);
-  gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
+  fp->fwrite(&(tmp.row_min),wsize);
+  fp->fwrite(&(tmp.row_max),wsize);
 }
 /**
 Reads and restores back the size and address information for a imatrix.
 */
 imatrix_position restore_imatrix_position(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   int min;
   int max;
-  gradient_structure::get_fp()->fread(&max,sizeof(int));
-  gradient_structure::get_fp()->fread(&min,sizeof(int));
+  fp->fread(&max,sizeof(int));
+  fp->fread(&min,sizeof(int));
   imatrix_position tmp(min,max);
   for (int i=max;i>=min;i--)
   {
-    gradient_structure::get_fp()->fread(&(tmp.ptr(i)),sizeof(void*));
-    gradient_structure::get_fp()->fread(&(tmp.ub(i)),sizeof(int));
-    gradient_structure::get_fp()->fread(&(tmp.lb(i)),sizeof(int));
+    fp->fread(&(tmp.ptr(i)),sizeof(void*));
+    fp->fread(&(tmp.ub(i)),sizeof(int));
+    fp->fread(&(tmp.lb(i)),sizeof(int));
   }
   return tmp;
 }

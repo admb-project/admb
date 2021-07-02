@@ -96,9 +96,9 @@ public:
  */
 class gradient_structure
 {
+public:
    DF_FILE *fp;
 
-public:
   thread_local static gradient_structure* _instance;
   static gradient_structure* get();
   static gradient_structure* create();

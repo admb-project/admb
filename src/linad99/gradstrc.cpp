@@ -64,7 +64,6 @@ extern "C"{
 // *************************************************************
 // *************************************************************
 int ctlc_flag = 0;
-int gradient_structure::Hybrid_bounded_flag=0;
 unsigned int gradient_structure::NUM_RETURN_ARRAYS = 25;
 int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
@@ -255,6 +254,7 @@ gradient_structure::gradient_structure(long int _size):
   NVAR(0),
   hessian_ptr(NULL),
   max_last_offset(0),
+  Hybrid_bounded_flag(0),
   x(0)
 {
 #ifndef OPT_LIB

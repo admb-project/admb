@@ -117,8 +117,8 @@ public:
   dvariable **RETURN_ARRAYS;
   unsigned int RETURN_ARRAYS_PTR;
   dvariable** RETURN_PTR_CONTAINER;
-   size_t TOTAL_BYTES;
-   size_t PREVIOUS_TOTAL_BYTES;
+  size_t TOTAL_BYTES;
+  size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
 public:
   friend class arr_list;
@@ -149,7 +149,7 @@ public:
    };
 
    static int Hybrid_bounded_flag;
-   static double *hessian_ptr;
+  double* hessian_ptr;
    static long int get_USE_FOR_HESSIAN()
    {
       return USE_FOR_HESSIAN;

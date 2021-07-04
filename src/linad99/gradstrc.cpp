@@ -66,7 +66,6 @@ extern "C"{
 int ctlc_flag = 0;
 int gradient_structure::Hybrid_bounded_flag=0;
 unsigned int gradient_structure::NUM_RETURN_ARRAYS = 25;
-double * gradient_structure::hessian_ptr=NULL;
 int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
   int gradient_structure::no_derivatives = 0;
@@ -255,6 +254,7 @@ Constructor
 */
 gradient_structure::gradient_structure(long int _size):
   NVAR(0),
+  hessian_ptr(NULL),
   x(0)
 {
 #ifndef OPT_LIB
@@ -334,7 +334,7 @@ gradient_structure::gradient_structure(long int _size):
 
   GRAD_STACK1 = new grad_stack;
   memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
-  gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
+  hessian_ptr = (double*)GRAD_STACK1->true_ptr_first;
 
 #ifdef DIAG
    cout << "GRAD_STACK1= "<< _farptr_tolong(GRAD_STACK1)<<"\n";

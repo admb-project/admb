@@ -72,7 +72,6 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
   int gradient_structure::no_derivatives = 0;
 #endif
 unsigned long int gradient_structure::max_last_offset = 0;
-long int gradient_structure::NVAR = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
@@ -255,25 +254,19 @@ void allocate_dvariable_space()
 Constructor
 */
 gradient_structure::gradient_structure(long int _size):
+  NVAR(0),
   x(0)
 {
 #ifndef OPT_LIB
   assert(_size > 0);
 #endif
-  gradient_structure::NVAR=0;
   atexit(cleanup_temporary_files);
   fill_ad_random_part();
 
   TOTAL_BYTES = 0;
   PREVIOUS_TOTAL_BYTES = 0;
 
-  if (instances++ > 0)
-  {
-    cerr << "More than one gradient_structure object has been declared.\n"
-         << "  Only one gradient_structure object can exist. Check the scope\n"
-         << "  of the objects declared.\n";
-    ad_exit(1);
-  }
+  ++instances;
 
   //Should be a multiple of sizeof(double_and_int)
   const long int remainder = _size % sizeof(double_and_int);
@@ -477,7 +470,7 @@ Destructor
 */
 gradient_structure::~gradient_structure()
 {
-  gradient_structure::NVAR=0;
+  NVAR = 0;
   if (RETURN_ARRAYS == NULL)
   {
     null_ptr_err_message();

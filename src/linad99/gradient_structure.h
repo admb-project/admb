@@ -112,7 +112,7 @@ public:
 #endif
  private:
    static long int USE_FOR_HESSIAN;
-   static long int NVAR;
+  long int NVAR;
    static unsigned int NUM_RETURN_ARRAYS;
   dvariable **RETURN_ARRAYS;
   unsigned int RETURN_ARRAYS_PTR;
@@ -182,7 +182,9 @@ public:
    friend void arr_free(double_and_int *);
    friend void RETURN_ARRAYS_DECREMENT(void);
    friend void RETURN_ARRAYS_INCREMENT(void);
-   friend void make_indvar_list(const dvar_vector & t);
+
+  void make_indvar_list(const dvar_vector& t);
+
    //friend void gradcalc( int , double *);
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);

@@ -96,11 +96,11 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 {
   if (nvar!=0)
   {
-    if (nvar != gradient_structure::NVAR)
+    if (nvar != NVAR)
     {
       cerr << "nvar != gradient_structure::NVAR in gradcalc" << endl;
       cerr << "  nvar = " << nvar << endl;
-      cerr << "  gradient_structure::NVAR = " << gradient_structure::NVAR
+      cerr << "  gradient_structure::NVAR = " << NVAR
            << endl;
       cerr << "  in " __FILE__ << endl;
       ad_exit(1);

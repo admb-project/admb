@@ -70,7 +70,6 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
   int gradient_structure::no_derivatives = 0;
 #endif
-unsigned long int gradient_structure::max_last_offset = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
@@ -255,6 +254,7 @@ Constructor
 gradient_structure::gradient_structure(long int _size):
   NVAR(0),
   hessian_ptr(NULL),
+  max_last_offset(0),
   x(0)
 {
 #ifndef OPT_LIB
@@ -265,6 +265,7 @@ gradient_structure::gradient_structure(long int _size):
 
   TOTAL_BYTES = 0;
   PREVIOUS_TOTAL_BYTES = 0;
+
 
   ++instances;
 

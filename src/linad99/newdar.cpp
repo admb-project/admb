@@ -201,12 +201,6 @@ double_and_int* arr_list::arr_new(unsigned int sz)
 
   last_offset += bytes_needed;
 
-  if (last_offset>
-    (unsigned int)gradient_structure::max_last_offset )
-  {
-    gradient_structure::max_last_offset = last_offset;
-  }
-
   if (last_offset > max_last_offset)
   {
     max_last_offset = last_offset;

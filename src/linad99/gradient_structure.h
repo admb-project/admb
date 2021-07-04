@@ -239,7 +239,7 @@ public:
 
    static unsigned int get_MAX_DLINKS() { return MAX_DLINKS; }
   void save_dependent_variable_position(const prevariable&);
-   static unsigned long int max_last_offset;
+  unsigned long int max_last_offset;
 
   void RETURN_ARRAYS_DECREMENT();
   void RETURN_ARRAYS_INCREMENT();

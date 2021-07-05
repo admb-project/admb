@@ -148,7 +148,7 @@ public:
    {
    };
 
-  int Hybrid_bounded_flag;
+   static int Hybrid_bounded_flag;
   double* hessian_ptr;
    static long int get_USE_FOR_HESSIAN()
    {

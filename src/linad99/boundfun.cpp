@@ -105,7 +105,7 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,
 dvariable boundp(const prevariable& x, double fmin, double fmax,
   const prevariable& _fpen)
 {
-  if (Hybrid_bounded_flag == 0)
+  if (gradient_structure::Hybrid_bounded_flag==0)
   {
     prevariable&  fpen=(prevariable&)  _fpen;
     dvariable t,y;
@@ -172,7 +172,7 @@ Computes the derivative of \ref dvariable boundp(const prevariable& x,
  */
 dvariable dfboundp(const prevariable& x, double fmin,double fmax)
 {
-  if (Hybrid_bounded_flag == 0)
+  if (gradient_structure::Hybrid_bounded_flag==0)
   {
     return (fmax-fmin)*0.499999999999999*1.57079632679489661
       *cos(x*1.57079632679489661);
@@ -212,7 +212,7 @@ Derivatative code for \ref double nd2fboundp( double x, double fmin,
 */
 double ndfboundp( double x, double fmin, double fmax,const double& fpen)
 {
-  if (Hybrid_bounded_flag == 0)
+  if (gradient_structure::Hybrid_bounded_flag==0)
   {
     return (fmax-fmin)*0.499999999999999*1.57079632679489661
       *cos(x*1.57079632679489661);
@@ -246,7 +246,7 @@ double ndfboundp( double x, double fmin, double fmax,const double& fpen)
  */
 double boundp(double x, double fmin, double fmax)
 {
-  if (Hybrid_bounded_flag == 0)
+  if (gradient_structure::Hybrid_bounded_flag==0)
   {
     double t;
     double diff=fmax-fmin;
@@ -312,7 +312,7 @@ Inverse of \ref double boundp(const double& x, double fmin, double fmax,
  */
 double boundp( double x, double fmin, double fmax,const double& _fpen)
 {
-  if (Hybrid_bounded_flag == 0)
+  if (gradient_structure::Hybrid_bounded_flag==0)
   {
     double t;
     double& fpen=(double&) _fpen;
@@ -415,7 +415,7 @@ double boundpin(double x, double fmin, double fmax)
   }
 
   double tinv;
-  if (Hybrid_bounded_flag == 0)
+  if (gradient_structure::Hybrid_bounded_flag==0)
   {
     tinv=::asin(2.*(x-fmin)/(fmax-fmin)-1.)/1.57079632679489661;
   }
@@ -477,7 +477,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
 
     x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
-  if (Hybrid_bounded_flag == 0)
+  if (gradient_structure::Hybrid_bounded_flag==0)
   {
     tinv=::asin(2.*(x-fmin)/(fmax-fmin)-1.)/1.57079632679489661;
   }

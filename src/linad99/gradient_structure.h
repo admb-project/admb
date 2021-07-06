@@ -257,8 +257,17 @@ by gradcalc.
 class DF_FILE
 {
 public:
-  DF_FILE(const size_t nbytes);
+  /// Default uses gradient_structure::CMPDIF_BUFFER_SIZE
+  DF_FILE(): DF_FILE(gradient_structure::CMPDIF_BUFFER_SIZE) {}
+  /// Do not allow copy contructor
+  DF_FILE(const DF_FILE&) = delete;
+  /// User defined size with default id
+  DF_FILE(const size_t nbytes): DF_FILE(nbytes, 0) {}
+  DF_FILE(const size_t nbytes, const unsigned int id);
   ~DF_FILE();
+
+  /// Do not allow assignment operator
+  DF_FILE& operator=(const DF_FILE&) = delete;
 
   char* buff;
   OFF_T toffset;

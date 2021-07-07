@@ -8,6 +8,7 @@
  * \file
  * Description not yet available.
  */
+#include <mutex>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
@@ -73,6 +74,7 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
+unsigned int gradient_structure::x = 0;
 //int gradient_structure::RETURN_INDEX = 0;
 //dvariable * gradient_structure::FRETURN = NULL;
 #ifdef __BORLANDC__
@@ -248,14 +250,15 @@ void allocate_dvariable_space()
   }
 }
 
+std::mutex gsm;
+
 /**
 Constructor
 */
 gradient_structure::gradient_structure(long int _size):
   NVAR(0),
   hessian_ptr(NULL),
-  max_last_offset(0),
-  x(0)
+  max_last_offset(0)
 {
 #ifndef OPT_LIB
   assert(_size > 0);
@@ -266,8 +269,10 @@ gradient_structure::gradient_structure(long int _size):
   TOTAL_BYTES = 0;
   PREVIOUS_TOTAL_BYTES = 0;
 
-
+  gsm.lock();
   ++instances;
+  ++x;
+  gsm.unlock();
 
   //Should be a multiple of sizeof(double_and_int)
   const long int remainder = _size % sizeof(double_and_int);
@@ -521,7 +526,9 @@ gradient_structure::~gradient_structure()
     GRAD_LIST = NULL;
   }
 
-  instances--;
+  gsm.lock();
+  --instances;
+  gsm.unlock();
 
   if (DEPVARS_INFO==NULL)
   {

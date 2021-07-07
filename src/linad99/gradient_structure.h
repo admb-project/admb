@@ -140,7 +140,7 @@ public:
    static void check_set_error(const char *variable_name);
 
    static int instances;
-   int x;
+   static unsigned int x;
 
  public:
    // exception class

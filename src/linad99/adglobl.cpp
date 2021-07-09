@@ -38,26 +38,48 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
 
 thread_local gradient_structure* gradient_structure::_instance = nullptr;
 
-/// Create a thread_local instance of gradient_structure.
-gradient_structure* gradient_structure::create()
+/// Allocate array of gradient_structure instances with size elements.
+void gradient_structure::create(const unsigned int size)
 {
-#ifdef DEBUG
-  assert(_instance == nullptr);
-#endif
-  _instance = new gradient_structure();
-  return get();
+  gradients_size = size + 1;
+  gradients = new gradient_structure*[gradients_size];
+  for (int id = 1; id <= gradients_size; ++id)
+  {
+    gradients[id] = new gradient_structure(10000L, id);
+  }
+  gradients[0] = _instance;
 }
-/// Create a thread_local instance of gradient_structure.
+/// Get current instance of gradient_structure.
 gradient_structure* gradient_structure::get()
 {
   return _instance;
 }
-/// Delete thread_local instance of gradient_structure.
+/// Set _instance of gradient_structure from instances with id.
+gradient_structure* gradient_structure::set(const unsigned int id)
+{
+#ifdef DEBUG
+  assert(id <= gradients_size);
+#endif
+  _instance = gradients[id];
+  return _instance;
+}
+/// Delete gradient_structure instances.
 void gradient_structure::clean()
 {
-  if (_instance != nullptr)
+  if (gradients != nullptr)
   {
-    delete _instance;
-    _instance = nullptr;
+    for (int id = 1; id <= gradients_size; ++id)
+    {
+      if (gradients[id] != nullptr)
+      {
+        delete gradients[id];
+        gradients[id] = nullptr;
+      }
+    }
+    gradients[0] = nullptr;
+
+    delete [] gradients;
+    gradients = nullptr;
   }
+  gradients_size = 0;
 }

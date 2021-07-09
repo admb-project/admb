@@ -100,8 +100,12 @@ public:
    DF_FILE *fp;
 
   thread_local static gradient_structure* _instance;
+
+  static gradient_structure** gradients;
+  static unsigned int gradients_size;
+  static void create(const unsigned int size);
   static gradient_structure* get();
-  static gradient_structure* create();
+  static gradient_structure* set(const unsigned int id);
   static void clean();
 
   void gradcalc(int nvar, const dvector& g);
@@ -139,10 +143,10 @@ public:
    // member functions can call it
    static void check_set_error(const char *variable_name);
 
-   static int instances;
-   static unsigned int x;
-
  public:
+   static int instances;
+   unsigned int x;
+
    // exception class
    class arrmemblerr
    {
@@ -159,8 +163,11 @@ public:
       USE_FOR_HESSIAN = i;
    }
    friend class dfsdmat;
-   gradient_structure(long int size = 100000L);// constructor
-   ~gradient_structure(void);// destructor
+
+   gradient_structure(): gradient_structure(100000L) {}
+   gradient_structure(const long int size): gradient_structure(size, 0) {}
+   gradient_structure(const long int size, const unsigned int id);
+   ~gradient_structure();
 
   void save_variables();
   void restore_variables();

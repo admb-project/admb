@@ -74,7 +74,8 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
-unsigned int gradient_structure::x = 0;
+gradient_structure** gradient_structure::gradients = nullptr;
+unsigned int gradient_structure::gradients_size = 0;
 //int gradient_structure::RETURN_INDEX = 0;
 //dvariable * gradient_structure::FRETURN = NULL;
 #ifdef __BORLANDC__
@@ -255,10 +256,11 @@ std::mutex gsm;
 /**
 Constructor
 */
-gradient_structure::gradient_structure(long int _size):
+gradient_structure::gradient_structure(long int _size, const unsigned int id):
   NVAR(0),
   hessian_ptr(NULL),
-  max_last_offset(0)
+  max_last_offset(0),
+  x(id)
 {
 #ifndef OPT_LIB
   assert(_size > 0);
@@ -271,7 +273,6 @@ gradient_structure::gradient_structure(long int _size):
 
   gsm.lock();
   ++instances;
-  ++x;
   gsm.unlock();
 
   //Should be a multiple of sizeof(double_and_int)
@@ -377,7 +378,10 @@ gradient_structure::gradient_structure(long int _size):
    }
 
    //allocate_dvariable_space();
-  _instance = this;
+  if (id == 0)
+  {
+    _instance = this;
+  }
 
   {
     RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];

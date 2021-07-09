@@ -41,13 +41,14 @@ thread_local gradient_structure* gradient_structure::_instance = nullptr;
 /// Allocate array of gradient_structure instances with size elements.
 void gradient_structure::create(const unsigned int size)
 {
-  gradients_size = size + 1;
-  gradients = new gradient_structure*[gradients_size];
+  gradients_size = size;
+  gradients = new gradient_structure*[gradients_size + 1];
+  gradients[0] = _instance;
   for (int id = 1; id <= gradients_size; ++id)
   {
     gradients[id] = new gradient_structure(10000L, id);
   }
-  gradients[0] = _instance;
+  _instance = gradients[0];
 }
 /// Get current instance of gradient_structure.
 gradient_structure* gradient_structure::get()

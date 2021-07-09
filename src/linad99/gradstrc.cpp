@@ -378,11 +378,9 @@ gradient_structure::gradient_structure(long int _size, const unsigned int id):
    }
 
    //allocate_dvariable_space();
-  if (id == 0)
   {
     _instance = this;
   }
-
   {
     RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
     memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);

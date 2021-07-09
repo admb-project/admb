@@ -13,16 +13,70 @@ TEST_F(test_gradient_structure_thread, instance)
 {
   ASSERT_TRUE(gradient_structure::_instance == nullptr);
 }
-TEST_F(test_gradient_structure_thread, clean)
+TEST_F(test_gradient_structure_thread, clean_empty)
 {
   ASSERT_TRUE(gradient_structure::gradients == nullptr);
   ASSERT_TRUE(gradient_structure::gradients_size == 0);
 
+  gradient_structure::clean();
+
+  ASSERT_TRUE(gradient_structure::gradients == nullptr);
+  ASSERT_TRUE(gradient_structure::gradients_size == 0);
+}
+TEST_F(test_gradient_structure_thread, clean0)
+{
+  ASSERT_TRUE(gradient_structure::gradients == nullptr);
+  ASSERT_TRUE(gradient_structure::gradients_size == 0);
+
+  gradient_structure gs;
+
+  gradient_structure::create(0);
+
+  ASSERT_TRUE(gradient_structure::gradients != nullptr);
+  ASSERT_TRUE(gradient_structure::gradients[0] == &gs);
+  ASSERT_TRUE(gradient_structure::gradients_size == 0);
+
+  gradient_structure::clean();
+
+  ASSERT_TRUE(gradient_structure::gradients == nullptr);
+  ASSERT_TRUE(gradient_structure::gradients_size == 0);
+}
+TEST_F(test_gradient_structure_thread, clean1)
+{
+  ASSERT_TRUE(gradient_structure::gradients == nullptr);
+  ASSERT_TRUE(gradient_structure::gradients_size == 0);
+
+  gradient_structure gs;
+
   gradient_structure::create(1);
 
   ASSERT_TRUE(gradient_structure::gradients != nullptr);
-  ASSERT_TRUE(gradient_structure::gradients[0]->x == 0);
+  ASSERT_TRUE(gradient_structure::gradients[0] == &gs);
+  ASSERT_TRUE(gradient_structure::gradients[1] != &gs);
   ASSERT_TRUE(gradient_structure::gradients[1]->x == 1);
+  ASSERT_TRUE(gradient_structure::gradients_size == 1);
+
+  gradient_structure::clean();
+
+  ASSERT_TRUE(gradient_structure::gradients == nullptr);
+  ASSERT_TRUE(gradient_structure::gradients_size == 0);
+}
+TEST_F(test_gradient_structure_thread, clean2)
+{
+  ASSERT_TRUE(gradient_structure::gradients == nullptr);
+  ASSERT_TRUE(gradient_structure::gradients_size == 0);
+
+  gradient_structure gs;
+
+  gradient_structure::create(2);
+
+  ASSERT_TRUE(gradient_structure::gradients != nullptr);
+  ASSERT_TRUE(gradient_structure::gradients[0] == &gs);
+  ASSERT_TRUE(gradient_structure::gradients[1] != &gs);
+  ASSERT_TRUE(gradient_structure::gradients[2] != &gs);
+  ASSERT_TRUE(gradient_structure::gradients[1] != gradient_structure::gradients[2]);
+  ASSERT_TRUE(gradient_structure::gradients[1]->x == 1);
+  ASSERT_TRUE(gradient_structure::gradients[2]->x == 2);
   ASSERT_TRUE(gradient_structure::gradients_size == 2);
 
   gradient_structure::clean();

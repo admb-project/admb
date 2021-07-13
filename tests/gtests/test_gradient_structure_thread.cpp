@@ -7,13 +7,24 @@ extern "C"
   void test_ad_exit(const int exit_code);
 }
 
-class test_gradient_structure_thread: public ::testing::Test {};
+class test_gradient_structure_thread: public ::testing::Test
+{
+#ifdef __MINGW64__
+  virtual void SetUp()
+  {
+    TearDown();
+  }
+  virtual void TearDown()
+  {
+    gradient_structure::_instance = nullptr;
+  }
+#endif
+};
 
 TEST_F(test_gradient_structure_thread, instance)
 {
-  //ASSERT_TRUE(gradient_structure::_instance == nullptr);
+  ASSERT_TRUE(gradient_structure::_instance == nullptr);
 }
-/*
 TEST_F(test_gradient_structure_thread, create)
 {
   gradient_structure::create();
@@ -25,4 +36,3 @@ TEST_F(test_gradient_structure_thread, create)
 
   ASSERT_TRUE(gradient_structure::get() == nullptr);
 }
-*/

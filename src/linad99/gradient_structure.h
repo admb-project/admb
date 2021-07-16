@@ -96,6 +96,7 @@ class gradient_structure
    static DF_FILE *fp;
  public:
   static gradient_structure* _instance;
+  thread_local static unsigned int _instance_id;
   static gradient_structure* get() { return _instance; }
   static gradient_structure* create()
   {

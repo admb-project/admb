@@ -34,3 +34,4 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  double objective_function_value::fun_without_pen=0;
 
 gradient_structure* gradient_structure::_instance = nullptr;
+thread_local unsigned int gradient_structure::_instance_id = 0;

@@ -248,8 +248,8 @@ if "!CXX!"=="cl" (
   )
 ) else (
   if "!CXX!"=="clang++" (
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
-      set CXXMAJORNUMBER=-clang++9
+    for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
+      set CXXMAJORNUMBER=-clang++%%i
       set STDCXX=-std=c++11
     )
     set LD=clang++
@@ -338,7 +338,7 @@ if "!CXX!"=="cl" (
       )
     )
     if defined ADMB_CFG_LDFLAGS (
-      set LDFLAGS=!LDFLAGS!!ADMB_CFG_LDFLAGS:-static=!
+      set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS:-static=!
     )
   )
   if defined g (
@@ -718,13 +718,13 @@ if not defined tpls (
       ) else (
         if defined objs (
           if defined output (
-            set CMD=!LD!!LDFLAGS! -o !outputs! !tpl!.obj !objs! !libs!
+            set CMD=!LD!!LDFLAGS! -o !output! !tpl!.obj !objs! !libs!
           ) else (
             set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
           ) 
         ) else (
           if defined output (
-            set CMD=!LD!!LDFLAGS! -o !outputs! !tpl!.obj !libs!
+            set CMD=!LD!!LDFLAGS! -o !output! !tpl!.obj !libs!
           ) else (
             set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
           ) 

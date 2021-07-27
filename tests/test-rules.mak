@@ -83,7 +83,7 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).htp del /Q $(TARGET).htp 2>nul
 	@if exist $(TARGET).bar del /Q $(TARGET).bar 2>nul
 	@if exist $(TARGET).bgs del /Q $(TARGET).bgs 2>nul
-	@if exist $(TARGET)cor del /Q $(TARGET).cor 2>nul
+	@if exist $(TARGET).cor del /Q $(TARGET).cor 2>nul
 ifeq (,$(USE_SRCS))
 	@if exist $(TARGET).cpp del /Q $(TARGET).cpp 2>nul
 endif

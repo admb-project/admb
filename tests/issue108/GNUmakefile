@@ -34,6 +34,7 @@ endif
 clean: _clean
 ifeq ($(CMDSHELL),cmd)
 	@if exist dat del /Q dat 2>nul
+	@if exist dat.exe del /Q dat.exe 2>nul
 	@if exist $(TARGET).dat del /Q $(TARGET).dat 2>nul
 else
 	@rm -vf dat

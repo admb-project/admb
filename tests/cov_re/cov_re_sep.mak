@@ -10,7 +10,7 @@ endif
 run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
 	$(TARGET)	
-	$(TARGET)cov_re_sep -shess
+	$(TARGET) -shess
 else
 	./$(TARGET)
 	./$(TARGET) -shess

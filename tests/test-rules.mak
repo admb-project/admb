@@ -91,6 +91,8 @@ endif
 	@if exist $(TARGET).o del /Q $(TARGET).o 2>nul
 	@if exist $(TARGET).obj del /Q $(TARGET).obj 2>nul
 	@if exist $(TARGET).par del /Q $(TARGET).par 2>nul
+	@if exist $(TARGET).b01 del /Q $(TARGET).b01 2>nul
+	@if exist $(TARGET).r01 del /Q $(TARGET).r01 2>nul
 	@if exist $(TARGET).p01 del /Q $(TARGET).p01 2>nul
 	@if exist $(TARGET).std del /Q $(TARGET).std 2>nul
 	@if exist tests_$(TARGET).o del /Q tests_$(TARGET).o 2>nul

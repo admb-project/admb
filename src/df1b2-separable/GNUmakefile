@@ -1,10 +1,10 @@
 ifeq ($(OS),Windows_NT)
   ifeq ($(CMDSHELL),cmd)
-PATH:=$(PATH):..\..\utilities
+PATH:=..\..\utilities;$(PATH)
 bins: $(DIST)\bin\tpl2rem.exe
 $(DIST)\bin\tpl2rem.exe: ..\..\build\tpl2rem\tpl2rem.c
   else
-PATH:=$(PATH):../../utilities
+PATH:=../../utilities;$(PATH)
 bins: $(DIST)/bin/tpl2rem.exe
 $(DIST)/bin/tpl2rem.exe: ../../build/tpl2rem/tpl2rem.c
   endif

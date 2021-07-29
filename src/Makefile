@@ -2,6 +2,8 @@
 ADMB_VER=admb
 !ENDIF
 
+PATH=..\utilities;$(PATH)
+
 #SAFE_ALL= /DSAFE_ALL
 
 !IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
@@ -146,7 +148,7 @@ dist: bins
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)
 	copy ..\LICENSE.txt $(DESTDIR)
 	copy ..\CHANGES.md $(DESTDIR)\CHANGES.txt
-	..\utilities\sed.exe "s/\.md/\.txt/g" ..\README.md > $(DESTDIR)\README.txt
+	sed.exe "s/\.md/\.txt/g" ..\README.md > $(DESTDIR)\README.txt
 	copy ..\VERSION $(DESTDIR)
 	$(MAKE) lexfiles
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
@@ -176,15 +178,15 @@ $(DESTDIR)\bin\tpl2cpp.exe: ..\build\tpl2cpp\tpl2cpp.c
 	$(CC) /nologo /TC /Fo..\build\tpl2cpp\ /Fe$@ ..\build\tpl2cpp\tpl2cpp.c
 
 ..\build\tpl2cpp\tpl2cpp.c: nh99\tpl2cpp.lex
-	..\utilities\flex -o..\build\tpl2cpp\lex.yy.c nh99\tpl2cpp.lex
-	..\utilities\sed -f nh99\sedflex ..\build\tpl2cpp\lex.yy.c > $@
+	flex --nounistd -o..\build\tpl2cpp\lex.yy.c nh99\tpl2cpp.lex
+	sed -f nh99\sedflex ..\build\tpl2cpp\lex.yy.c > $@
 
 $(DESTDIR)\bin\tpl2rem.exe: ..\build\tpl2rem\tpl2rem.c
 	$(CC) /nologo /TC /Fo..\build\tpl2rem\ /Fe$@ ..\build\tpl2rem\tpl2rem.c
 
 ..\build\tpl2rem\tpl2rem.c: df1b2-separable\tpl2rem.lex
-	..\utilities\flex -o..\build\tpl2rem\lex.yy.c df1b2-separable\tpl2rem.lex
-	..\utilities\sed -f df1b2-separable\sedflex ..\build\tpl2rem\lex.yy.c > $@
+	flex --nounistd -o..\build\tpl2rem\lex.yy.c df1b2-separable\tpl2rem.lex
+	sed -f df1b2-separable\sedflex ..\build\tpl2rem\lex.yy.c > $@
 
 libs: objects
 	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib

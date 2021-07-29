@@ -406,9 +406,9 @@ ifeq ($(CMDSHELL),cmd)
 	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>${DIST}\bin\admb-cfg$(OSNAME)$(CXXVERSION).bat
 	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}\bin\admb-cfg$(OSNAME)$(CXXVERSION).bat
 	copy ..\utilities\sed.exe ${DIST}\bin
-	copy ..\utilities\libiconv2.dll ${DIST}\bin
-	copy ..\utilities\libintl3.dll ${DIST}\bin
-	copy ..\utilities\regex2.dll ${DIST}\bin
+	copy ..\utilities\msys-iconv-2.dll ${DIST}\bin
+	copy ..\utilities\msys-intl-8.dll ${DIST}\bin
+	copy ..\utilities\msys-2.0.dll ${DIST}\bin
 	copy ..\scripts\admb\admb.bat ${DIST}\bin\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd

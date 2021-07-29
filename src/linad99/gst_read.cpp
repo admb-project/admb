@@ -49,7 +49,6 @@
   #define close _close
 #else
   #include <iostream>
-  using namespace std;
   #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>

@@ -9,7 +9,6 @@
  * Description not yet available.
  */
 #include <iostream>
-using namespace std;
 #include <fcntl.h>
 #include "fvar.hpp"
 #include <adstring.hpp>

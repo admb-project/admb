@@ -11,7 +11,6 @@ Copyright (c) 2008-2016 ADMB Foundation and
   #include <sys\stat.h>
 #else
   #include <iostream>
-  using namespace std;
   #include <memory.h>
   #include <sys/stat.h>
   #include <sys/types.h>

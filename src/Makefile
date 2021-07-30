@@ -164,7 +164,7 @@ bins: libs
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat $(DESTDIR)\admb.cmd
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
-	copy ..\utilities\*.dll $(DESTDIR)\bin
+	copy ..\utilities\shared\*.dll $(DESTDIR)\bin
 
 lexfiles: lexdestdir $(DESTDIR)\bin\tpl2cpp.exe $(DESTDIR)\bin\tpl2rem.exe
 

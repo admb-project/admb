@@ -2,7 +2,7 @@
 ADMB_VER=admb
 !ENDIF
 
-PATH=..\utilities;$(PATH)
+PATH=..\utilities;$(PATH);..\utilities\shared
 
 #SAFE_ALL= /DSAFE_ALL
 

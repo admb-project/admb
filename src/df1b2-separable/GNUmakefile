@@ -1,10 +1,10 @@
 ifeq ($(OS),Windows_NT)
   ifeq ($(CMDSHELL),cmd)
-PATH:=..\..\utilities;$(PATH)
+PATH:=..\..\utilities;$(PATH);..\..\utilities\shared
 bins: $(DIST)\bin\tpl2rem.exe
 $(DIST)\bin\tpl2rem.exe: ..\..\build\tpl2rem\tpl2rem.c
   else
-PATH:=../../utilities:$(PATH)
+PATH:=../../utilities:$(PATH);../../utilities/shared
 bins: $(DIST)/bin/tpl2rem.exe
 $(DIST)/bin/tpl2rem.exe: ../../build/tpl2rem/tpl2rem.c
   endif
@@ -30,6 +30,7 @@ ifeq ($(CMDSHELL),cmd)
 else
 ../../build/tpl2rem/lex.yy.c: tpl2rem.lex
 	rm -vf $@
+	echo "$(PATH)"
 	@if [ -z "`command -v flex`" ]; then echo "Error: Unable to find flex."; exit 1; fi
 	flex -v -w -o../../build/tpl2rem/lex.yy.c $^
 endif

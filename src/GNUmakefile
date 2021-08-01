@@ -6,7 +6,7 @@ ifeq ($(OS),Windows_NT)
     CMDSHELL=cmd
   else
     ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      ifneq ($(findstring cygpath.exe,$(shell where cygpath.exe 2>&1 | findstr cygpath.exe)),sh.exe)
+      ifneq ($(findstring cygpath.exe,$(shell where cygpath.exe 2>&1 | findstr cygpath.exe)),cygpath.exe)
         SHELL=cmd
         CMDSHELL=cmd
       endif

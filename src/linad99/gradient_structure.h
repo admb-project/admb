@@ -218,10 +218,7 @@ public:
    //access functions
 
    friend class DF_FILE;
-   static DF_FILE* get_fp()
-   {
-      return _instance != nullptr ? _instance->fp : nullptr;
-   }
+   static DF_FILE* get_fp();
    static void set_NUM_RETURN_ARRAYS(unsigned int i);
 #if defined(NO_DERIVS)
    static void set_NO_DERIVATIVES(void);

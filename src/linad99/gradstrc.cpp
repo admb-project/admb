@@ -104,6 +104,59 @@ long int _farptr_tolong(void *) ;
 #endif
 void memory_allocate_error(const char * s, void * ptr);
 
+thread_local gradient_structure* gradient_structure::_instance = nullptr;
+
+/// Allocate array of gradient_structure instances with size elements.
+void gradient_structure::create(const unsigned int size)
+{
+  gradients_size = size;
+  gradients = new gradient_structure*[gradients_size + 1];
+  gradients[0] = _instance;
+  for (int id = 1; id <= gradients_size; ++id)
+  {
+    gradients[id] = new gradient_structure(10000L, id);
+  }
+  _instance = gradients[0];
+}
+/// Get current instance of gradient_structure.
+gradient_structure* gradient_structure::get()
+{
+  return _instance;
+}
+/// Set _instance of gradient_structure from instances with id.
+gradient_structure* gradient_structure::set(const unsigned int id)
+{
+#ifdef DEBUG
+  assert(id <= gradients_size);
+#endif
+  _instance = gradients[id];
+  return _instance;
+}
+/// Delete gradient_structure instances.
+void gradient_structure::clean()
+{
+  if (gradients != nullptr)
+  {
+    for (int id = 1; id <= gradients_size; ++id)
+    {
+      if (gradients[id] != nullptr)
+      {
+        delete gradients[id];
+        gradients[id] = nullptr;
+      }
+    }
+    gradients[0] = nullptr;
+
+    delete [] gradients;
+    gradients = nullptr;
+  }
+  gradients_size = 0;
+}
+DF_FILE* gradient_structure::get_fp()
+{
+  return _instance != nullptr ? _instance->fp : nullptr;
+}
+
 /**
  * Description not yet available.
  * \param
@@ -256,7 +309,7 @@ std::mutex gsm;
 /**
 Constructor
 */
-gradient_structure::gradient_structure(long int _size, const unsigned int id):
+gradient_structure::gradient_structure(const long int _size, const unsigned int id):
   NVAR(0),
   hessian_ptr(NULL),
   max_last_offset(0),

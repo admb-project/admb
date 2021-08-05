@@ -11,7 +11,7 @@ class test_gradient_structure_thread: public ::testing::Test {};
 
 TEST_F(test_gradient_structure_thread, instance)
 {
-  ASSERT_TRUE(gradient_structure::_instance == nullptr);
+  ASSERT_TRUE(gradient_structure::get() == nullptr);
 }
 TEST_F(test_gradient_structure_thread, clean_empty)
 {
@@ -28,7 +28,7 @@ TEST_F(test_gradient_structure_thread, clean0)
   ASSERT_TRUE(gradient_structure::gradients == nullptr);
   ASSERT_TRUE(gradient_structure::gradients_size == 0);
 
-  gradient_structure gs;
+  gradient_structure gs(1000, 0);
 
   gradient_structure::create(0);
 

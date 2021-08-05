@@ -13,7 +13,7 @@ class test_simple_async: public ::testing::Test {};
 
 TEST_F(test_simple_async, gradcalc_empty)
 {
-  ASSERT_TRUE(gradient_structure::_instance == nullptr);
+  ASSERT_TRUE(gradient_structure::get() == nullptr);
 
   ad_exit=&test_ad_exit;
 

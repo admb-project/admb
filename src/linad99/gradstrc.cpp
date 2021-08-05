@@ -265,7 +265,7 @@ void allocate_dvariable_space()
   unsigned int numlinks=gradient_structure::MAX_DLINKS;
   //cout << sizeof(dlink) << endl;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   //cerr << "sizeof(char) is not equal 1) --"
   // " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
   assert(sizeof(char) == 1);

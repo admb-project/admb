@@ -38,7 +38,7 @@ void null_ptr_err_message(void);
   void _far * _cdecl farmalloc(unsigned long size);
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 

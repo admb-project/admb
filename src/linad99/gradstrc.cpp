@@ -315,7 +315,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
   max_last_offset(0),
   x(id)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(_size > 0);
 #endif
   atexit(cleanup_temporary_files);

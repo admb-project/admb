@@ -303,7 +303,7 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! -g
     set LDFLAGS=!LDFLAGS! -g
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -O3
+    set CXXFLAGS=!CXXFLAGS! -O2
   )
   if "!CXX!"=="clang++" (
     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
@@ -432,7 +432,6 @@ if "!CXX!"=="cl" (
       )
     )
   )
-  set CXXFLAGS=!CXXFLAGS! -fpermissive
   for /f %%i in ('!CXX! -dumpmachine ^| findstr x86_64') do (
     set CXXFLAGS=!CXXFLAGS! -D_FILE_OFFSET_BITS=64
   )
@@ -718,13 +717,13 @@ if not defined tpls (
       ) else (
         if defined objs (
           if defined output (
-            set CMD=!LD!!LDFLAGS! -o !outputs! !tpl!.obj !objs! !libs!
+            set CMD=!LD!!LDFLAGS! -o !output! !tpl!.obj !objs! !libs!
           ) else (
             set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
           ) 
         ) else (
           if defined output (
-            set CMD=!LD!!LDFLAGS! -o !outputs! !tpl!.obj !libs!
+            set CMD=!LD!!LDFLAGS! -o !output! !tpl!.obj !libs!
           ) else (
             set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
           ) 

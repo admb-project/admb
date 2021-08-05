@@ -263,8 +263,10 @@ else
     CXXFLAGS=" $CXXFLAGS"
     LDFLAGS=" $LDFLAGS"
   else
-    CXXFLAGS="-O3 $CXXFLAGS"
-    LDFLAGS="-O3 $LDFLAGS"
+    if [ "$OS" != "Windows_NT" ]; then
+      CXXFLAGS="-O2 $CXXFLAGS"
+      LDFLAGS="-O2 $LDFLAGS"
+    fi
   fi
 fi
 if [ "`uname`" == "Darwin" ]; then

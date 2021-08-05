@@ -203,7 +203,7 @@ else
     ADCXXFLAGS:= -O2 $(ADCXXFLAGS)
   else
     ifneq ($(CXX),icpc)
-      ADCXXFLAGS:= -O3 $(ADCXXFLAGS)
+      ADCXXFLAGS:= -O2 $(ADCXXFLAGS)
     endif
   endif
 endif

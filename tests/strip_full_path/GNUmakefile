@@ -15,7 +15,7 @@ all: clean
 	$(MAKE) dirs
 ifeq ($(CMDSHELL),cmd)
 	pushd src & ..\\..\\..\\admb -o ..\\bin\\simple.exe simple.tpl
-	pushd run & ..\\src\\simple.exe
+	pushd run & ..\\bin\\simple.exe
 else
 	cd src && ../../../admb$(EXT) -o ../bin/simple simple.tpl
 	cd run && ../bin/simple

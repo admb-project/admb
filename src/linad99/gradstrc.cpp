@@ -359,7 +359,10 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
 
-  fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+  if (id > 0)
+    fp = new DF_FILE(CMPDIF_BUFFER_SIZE, id);
+  else
+    fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
   memory_allocate_error("fp", (void *) fp);
 
 #ifdef DIAG

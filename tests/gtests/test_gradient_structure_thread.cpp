@@ -89,3 +89,15 @@ TEST_F(test_gradient_structure_thread, get)
   gradient_structure gs;
   ASSERT_TRUE(gradient_structure::get() == &gs);
 }
+TEST_F(test_gradient_structure_thread, nested)
+{
+  gradient_structure top;
+  ASSERT_TRUE(strcmp(gradient_structure::get()->fp->cmpdif_file_name, "cmpdiff.tmp") == 0);
+  ASSERT_TRUE(gradient_structure::get() == &top);
+  {
+    gradient_structure nested(10000L, 10);
+    ASSERT_TRUE(gradient_structure::get() == &nested);
+    ASSERT_TRUE(strcmp(gradient_structure::get()->fp->cmpdif_file_name, "cmpdiff10.tmp") == 0);
+  }
+  ASSERT_TRUE(gradient_structure::get() == nullptr);
+}

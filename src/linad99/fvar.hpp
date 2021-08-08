@@ -932,6 +932,10 @@ class grad_stack
 #endif
  public:
    grad_stack_entry * ptr;
+   char gradfile_name[61];
+   char gradfile_name1[61];
+   char gradfile_name2[61];
+   char var_store_file_name[61];
  private:
    //lvector * table;
    // js
@@ -939,10 +943,6 @@ class grad_stack
    int _GRADFILE_PTR1;  // should be int gradfile_handle;
    int _GRADFILE_PTR2;  // should be int gradfile_handle;
    int _VARSSAV_PTR;  // should be int gradfile_handle;
-   char gradfile_name[61];
-   char gradfile_name1[61];
-   char gradfile_name2[61];
-   char var_store_file_name[61];
    void create_gradfile();
 #ifdef __BORLANDC__
    long end_pos;

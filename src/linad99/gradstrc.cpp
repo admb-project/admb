@@ -395,7 +395,10 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
    const size_t adjustment = (8 -((size_t)ARR_LIST1->ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
    ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
-  GRAD_STACK1 = new grad_stack;
+  if (id > 0)
+    GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, id);
+  else
+    GRAD_STACK1 = new grad_stack();
   memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
   hessian_ptr = (double*)GRAD_STACK1->true_ptr_first;
 

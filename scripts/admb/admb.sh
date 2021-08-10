@@ -289,12 +289,17 @@ elif [ "$CXX" == "g++" ]; then
   GCCMAJVER="`gcc -dumpversion | cut -f1 -d.`"
   if [ "$GCCMAJVER" == "4" ]; then
     GCCMINVER="`gcc -dumpversion | cut -f2 -d.`"
-    if [ "$GCCMINVER" == "8" ]; then
+    if [ "$GCCMINVER" == "9" ]; then
       CXXFLAGS="-std=c++11 $CXXFLAGS"
       LDFLAGS="-std=c++11 $LDFLAGS"
     else
-      CXXFLAGS="-std=c++0x $CXXFLAGS"
-      LDFLAGS="-std=c++0x $LDFLAGS"
+      if [ "$GCCMINVER" == "8" ]; then
+        CXXFLAGS="-std=c++11 $CXXFLAGS"
+        LDFLAGS="-std=c++11 $LDFLAGS"
+      else
+        CXXFLAGS="-std=c++0x $CXXFLAGS"
+        LDFLAGS="-std=c++0x $LDFLAGS"
+      fi
     fi
   elif [ "$GCCMAJVER" == "5" ]; then
     CXXFLAGS="-std=c++11 $CXXFLAGS"

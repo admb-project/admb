@@ -19,3 +19,8 @@ endif
 get-outputs: _get-outputs
 
 clean: _clean
+ifeq ($(CMDSHELL),cmd)
+	@del /Q inverse.temp
+else
+	@rm -vf inverse.temp
+endif

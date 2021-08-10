@@ -45,6 +45,8 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist hybrid_seed del /Q hybrid_seed
 	@if exist s1 del /Q s1 
 	@if exist s2 del /Q s2
+	@del /Q dualaveraging.b01
+	@del /Q dualaveraging.r01
 else
 	@rm -vf b1
 	@rm -vf b2
@@ -53,4 +55,6 @@ else
 	@rm -vf hybrid_seed
 	@rm -vf s1
 	@rm -vf s2
+	@rm -vf dualaveraging.b01
+	@rm -vf dualaveraging.r01
 endif

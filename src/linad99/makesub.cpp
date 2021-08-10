@@ -27,7 +27,6 @@
 
 #if !defined(_MSC_VER)
 #include <iostream>
-using namespace std;
 #include <memory.h>
 #include <fcntl.h>
 #include <sys/stat.h>

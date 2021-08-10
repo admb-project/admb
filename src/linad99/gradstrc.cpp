@@ -558,6 +558,8 @@ Destructor
 */
 gradient_structure::~gradient_structure()
 {
+  _instance = this;
+
   NVAR = 0;
   if (RETURN_ARRAYS != NULL)
   {

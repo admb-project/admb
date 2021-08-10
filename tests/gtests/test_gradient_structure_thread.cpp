@@ -138,3 +138,24 @@ TEST_F(test_gradient_structure_thread, nested_grad_stack)
   gradient_structure::reset(&top);
   ASSERT_TRUE(gradient_structure::get() == &top);
 }
+TEST_F(test_gradient_structure_thread, multiple)
+{
+  {
+  gradient_structure a;
+  ASSERT_TRUE(gradient_structure::get() == &a);
+  gradient_structure b;
+  ASSERT_TRUE(gradient_structure::get() == &b);
+  gradient_structure c;
+  ASSERT_TRUE(gradient_structure::get() == &c);
+
+  gradient_structure::reset(&a);
+  ASSERT_TRUE(gradient_structure::get() == &a);
+  gradient_structure::reset(&c);
+  ASSERT_TRUE(gradient_structure::get() == &c);
+  gradient_structure::reset(&b);
+  ASSERT_TRUE(gradient_structure::get() == &b);
+  ASSERT_TRUE(gradient_structure::instances == 3);
+  }
+  ASSERT_TRUE(gradient_structure::get() == nullptr);
+  ASSERT_TRUE(gradient_structure::instances == 0);
+}

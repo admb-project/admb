@@ -74,8 +74,6 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 int gradient_structure::instances = 0;
-gradient_structure** gradient_structure::gradients = nullptr;
-unsigned int gradient_structure::gradients_size = 0;
 //int gradient_structure::RETURN_INDEX = 0;
 //dvariable * gradient_structure::FRETURN = NULL;
 #ifdef __BORLANDC__
@@ -109,25 +107,33 @@ thread_local gradient_structure* gradient_structure::_instance = nullptr;
 /// Allocate array of gradient_structure instances with size elements.
 void gradient_structure::create(const unsigned int size)
 {
-  gradients_size = size;
-  gradients = new gradient_structure*[gradients_size + 1];
-  gradients[0] = _instance;
-  for (int id = 1; id <= gradients_size; ++id)
+  if (size > 0)
   {
-    gradients[id] = new gradient_structure(10000L, id);
+    gradients_size = size;
+    gradients = new gradient_structure*[gradients_size];
+    gradients[0] = gradient_structure::get();
+    for (unsigned int id = 1; id < gradients_size; ++id)
+    {
+      gradients[id] = new gradient_structure(10000L, id);
+    }
+    gradient_structure::reset(gradients[0]);
   }
-  _instance = gradients[0];
 }
 /// Get current instance of gradient_structure.
 gradient_structure* gradient_structure::get()
 {
   return _instance;
 }
+gradient_structure* gradient_structure::reset(gradient_structure* instance)
+{
+  _instance = instance;
+  return _instance;
+}
 /// Set _instance of gradient_structure from instances with id.
 gradient_structure* gradient_structure::set(const unsigned int id)
 {
 #ifdef DEBUG
-  assert(id <= gradients_size);
+  assert(id < gradients_size);
 #endif
   _instance = gradients[id];
   return _instance;
@@ -135,9 +141,11 @@ gradient_structure* gradient_structure::set(const unsigned int id)
 /// Delete gradient_structure instances.
 void gradient_structure::clean()
 {
-  if (gradients != nullptr)
+  if (gradients_size > 0)
   {
-    for (int id = 1; id <= gradients_size; ++id)
+    gradients[0] = nullptr;
+
+    for (unsigned int id = 1; id < gradients_size; ++id)
     {
       if (gradients[id] != nullptr)
       {
@@ -145,12 +153,13 @@ void gradient_structure::clean()
         gradients[id] = nullptr;
       }
     }
-    gradients[0] = nullptr;
 
     delete [] gradients;
     gradients = nullptr;
+
+    gradients_size = 0;
   }
-  gradients_size = 0;
+  _instance = this;
 }
 DF_FILE* gradient_structure::get_fp()
 {
@@ -321,6 +330,9 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
   atexit(cleanup_temporary_files);
   fill_ad_random_part();
 
+  gradients = nullptr;
+  gradients_size = 0;
+
   TOTAL_BYTES = 0;
   PREVIOUS_TOTAL_BYTES = 0;
 
@@ -359,8 +371,8 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
 
-  if (id > 0)
-    fp = new DF_FILE(CMPDIF_BUFFER_SIZE, id);
+  if (x > 0)
+    fp = new DF_FILE(CMPDIF_BUFFER_SIZE, x);
   else
     fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
   memory_allocate_error("fp", (void *) fp);
@@ -395,7 +407,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
    const size_t adjustment = (8 -((size_t)ARR_LIST1->ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
    ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
-  if (id > 0)
+  if (x > 0)
     GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, id);
   else
     GRAD_STACK1 = new grad_stack();
@@ -436,10 +448,10 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
      memory_allocate_error("INDVAR_LIST->address",INDVAR_LIST->address);
    }
 
-   //allocate_dvariable_space();
-  {
-    _instance = this;
-  }
+  _instance = this;
+
+  //allocate_dvariable_space();
+  if (true)
   {
     RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
     memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
@@ -454,15 +466,24 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
     MAX_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
     RETURN_PTR = MIN_RETURN;
-  }
   //RETURN_INDEX = 0;
 
-  RETURN_PTR_CONTAINER = new dvariable*[NUM_RETURN_ARRAYS];
-  memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
+    RETURN_PTR_CONTAINER = new dvariable*[NUM_RETURN_ARRAYS];
+    memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
 
-  for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
+    for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
+    {
+      RETURN_PTR_CONTAINER[i] = 0;
+    }
+  }
+  else
   {
-    RETURN_PTR_CONTAINER[i] = 0;
+    RETURN_ARRAYS = nullptr;
+    RETURN_ARRAYS_PTR = 0;
+    MIN_RETURN = nullptr;
+    MAX_RETURN = nullptr;
+    RETURN_PTR = nullptr;
+    RETURN_PTR_CONTAINER = nullptr;
   }
 }
 
@@ -538,12 +559,7 @@ Destructor
 gradient_structure::~gradient_structure()
 {
   NVAR = 0;
-  if (RETURN_ARRAYS == NULL)
-  {
-    null_ptr_err_message();
-    ad_exit(1);
-  }
-  else
+  if (RETURN_ARRAYS != NULL)
   {
      for (unsigned int i = 0; i < NUM_RETURN_ARRAYS; ++i)
      {
@@ -555,23 +571,13 @@ gradient_structure::~gradient_structure()
      delete [] RETURN_PTR_CONTAINER;
      RETURN_PTR_CONTAINER = NULL;
   }
-  if (INDVAR_LIST == NULL)
-  {
-     null_ptr_err_message();
-     ad_exit(1);
-  }
-  else
+  if (INDVAR_LIST != NULL)
   {
      delete [] INDVAR_LIST->address;
      delete INDVAR_LIST;
      INDVAR_LIST = NULL;
   }
-  if (GRAD_STACK1 == NULL)
-  {
-    null_ptr_err_message();
-    ad_exit(1);
-  }
-  else
+  if (GRAD_STACK1 != NULL)
   {
     delete GRAD_STACK1;
     GRAD_STACK1 = NULL;

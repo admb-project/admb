@@ -100,13 +100,14 @@ public:
    DF_FILE *fp;
 
   thread_local static gradient_structure* _instance;
-
-  static gradient_structure** gradients;
-  static unsigned int gradients_size;
-  static void create(const unsigned int size);
   static gradient_structure* get();
-  static gradient_structure* set(const unsigned int id);
-  static void clean();
+  static gradient_structure* reset(gradient_structure*);
+
+  gradient_structure** gradients;
+  unsigned int gradients_size;
+  void create(const unsigned int size);
+  gradient_structure* set(const unsigned int id);
+  void clean();
 
   void gradcalc(int nvar, const dvector& g);
   void funnel_gradcalc();
@@ -167,7 +168,12 @@ public:
    gradient_structure(): gradient_structure(100000L) {}
    gradient_structure(const long int size): gradient_structure(size, 0) {}
    gradient_structure(const long int size, const unsigned int id);
-   ~gradient_structure();
+   gradient_structure(const gradient_structure&) = delete;
+   gradient_structure(gradient_structure&&) = delete;
+   virtual ~gradient_structure();
+
+   gradient_structure& operator=(const gradient_structure&) = delete;
+   gradient_structure& operator=(gradient_structure&&) = delete;
 
   void save_variables();
   void restore_variables();

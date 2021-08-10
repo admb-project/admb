@@ -244,7 +244,7 @@ else
       GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
       ifeq ("$(GCCMAJVER)","4")
         GCCMINVER:=$(shell gcc -dumpversion | cut -f2 -d. )
-        ifeq ("$(GCCMINVER)","9")
+        ifeq ("$(GCCMINVER)","8")
           ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
         else
           ADCXXFLAGS:= -std=c++0x $(ADCXXFLAGS)

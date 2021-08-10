@@ -10,7 +10,7 @@ extern "C"
 
 class test_gradcalc: public ::testing::Test {};
 
-TEST_F(test_gradcalc, gradient_size_intmax)
+TEST_F(test_gradcalc, DISABLED_gradient_size_intmax)
 {
   ad_exit=&test_ad_exit;
 

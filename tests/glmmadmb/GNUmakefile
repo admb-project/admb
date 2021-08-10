@@ -12,15 +12,12 @@ ifeq ($(OS),Windows_NT)
 endif
 
 all: rforge-glmmadmb
-ifeq ($(CMDSHELL),cmd)
-	$(MAKE) --file=Makefile all
-else
+	$(MAKE) clean
 	$(MAKE) glmmadmb
 	$(MAKE) nbmm
 	$(MAKE) bvprobit
 	$(MAKE) admb_tests
 	$(MAKE) run
-endif
 
 rforge-glmmadmb:
 	git clone --depth 1 https://github.com/rforge/glmmadmb.git rforge-glmmadmb
@@ -33,7 +30,11 @@ else
 endif
 
 glmmadmb.tpl:
+ifeq ($(CMDSHELL),cmd)
+	copy rforge-glmmadmb\pkg\inst\tpl\glmmadmb.tpl
+else
 	cp rforge-glmmadmb/pkg/inst/tpl/glmmadmb.tpl .
+endif
 
 nbmm: nbmm.tpl
 ifeq ($(CMDSHELL),cmd)
@@ -43,7 +44,11 @@ else
 endif
 
 nbmm.tpl:
+ifeq ($(CMDSHELL),cmd)
+	copy rforge-glmmadmb\pkg\inst\tpl\nbmm.tpl
+else
 	cp rforge-glmmadmb/pkg/inst/tpl/nbmm.tpl .
+endif
 
 bvprobit: bvprobit.tpl
 ifeq ($(CMDSHELL),cmd)
@@ -53,14 +58,34 @@ else
 endif
 
 bvprobit.tpl:
+ifeq ($(CMDSHELL),cmd)
+	copy rforge-glmmadmb\pkg\inst\tpl\bvprobit.tpl
+else
 	cp rforge-glmmadmb/pkg/inst/tpl/bvprobit.tpl .
+endif
 
 admb_tests:
+ifeq ($(CMDSHELL),cmd)
+	xcopy rforge-glmmadmb\pkg\inst\admb_tests admb_tests /I
+else
 	cp -R rforge-glmmadmb/pkg/inst/admb_tests .
+endif
 
 run:
 ifeq ($(CMDSHELL),cmd)
-	$(MAKE) --file=Makefile run
+	copy glmmadmb.exe admb_tests\\bacteria.exe
+	pushd admb_tests & bacteria
+	copy glmmadmb.exe admb_tests\\betabinom.exe
+	pushd admb_tests & betabinom
+	copy glmmadmb.exe admb_tests\\epil2.exe
+	pushd admb_tests & epil2 -nohess
+	copy glmmadmb.exe admb_tests\\hurdle_biochem1.exe
+	pushd admb_tests & hurdle_biochem1
+	copy glmmadmb.exe admb_tests\\hurdle_biochem2.exe
+	pushd admb_tests & hurdle_biochem2
+	copy glmmadmb.exe admb_tests\\zi_owls.exe
+	pushd admb_tests & zi_owls
+	glmmadmb.exe -maxfn 500 -maxph 5 -noinit -shess
 else
 	cp -vf glmmadmb admb_tests/bacteria
 	cd admb_tests && ./bacteria
@@ -102,6 +127,42 @@ ifeq ($(CMDSHELL),cmd)
 	@del /Q glmmadmb.r03
 	@del /Q glmmadmb.r04
 	@del /Q glmmadmb.shess
+	@del /Q admodel.cov
+	@del /Q admodel.dep
+	@del /Q admodel.hes
+	@del /Q b1
+	@del /Q b2
+	@del /Q bvprobit.cpp
+	@del /Q bvprobit.exe
+	@del /Q bvprobit.htp
+	@del /Q bvprobit.obj
+	@del /Q fmin.log
+	@del /Q glmmadmb.b01
+	@del /Q glmmadmb.bar
+	@del /Q glmmadmb.bgs
+	@del /Q glmmadmb.cor
+	@del /Q glmmadmb.cpp
+	@del /Q glmmadmb.eva
+	@del /Q glmmadmb.exe
+	@del /Q glmmadmb.htp
+	@del /Q glmmadmb.log
+	@del /Q glmmadmb.luu
+	@del /Q glmmadmb.obj
+	@del /Q glmmadmb.p01
+	@del /Q glmmadmb.par
+	@del /Q glmmadmb.r01
+	@del /Q glmmadmb.rep
+	@del /Q glmmadmb.rhes
+	@del /Q glmmadmb.std
+	@del /Q hesscheck
+	@del /Q hessian.bin
+	@del /Q nbmm.cpp
+	@del /Q nbmm.exe
+	@del /Q nbmm.htp
+	@del /Q nbmm.obj
+	@del /Q phi.rep
+	@del /Q s1
+	@del /Q s2
 else
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

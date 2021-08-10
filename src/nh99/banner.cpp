@@ -13,7 +13,6 @@
   #include <iomanip.h>
 #else
   #include <sstream>
-  using namespace std;
 #endif
 
 #include <sstream>

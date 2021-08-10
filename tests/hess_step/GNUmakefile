@@ -43,16 +43,20 @@ endif
 clean: _clean
 ifeq ($(CMDSHELL),cmd)
 	@if exist $(TARGET).tpl del /Q $(TARGET).tpl 2>nul
+	@if exist $(TARGET).b01 del /Q $(TARGET).b01 2>nul
 	@if exist $(TARGET).b02 del /Q $(TARGET).b02 2>nul
 	@if exist $(TARGET).dat del /Q $(TARGET).dat 2>nul
 	@if exist $(TARGET).p02 del /Q $(TARGET).p02 2>nul
+	@if exist $(TARGET).r01 del /Q $(TARGET).r01 2>nul
 	@if exist $(TARGET).r02 del /Q $(TARGET).r02 2>nul
 	@if exist $(TARGET).tpl del /Q $(TARGET).tpl 2>nul
 else
 	@rm -vf $(TARGET).tpl
+	@rm -vf $(TARGET).b01
 	@rm -vf $(TARGET).b02
 	@rm -vf $(TARGET).dat
 	@rm -vf $(TARGET).p02
+	@rm -vf $(TARGET).r01
 	@rm -vf $(TARGET).r02
 	@rm -vf $(TARGET).tpl
 endif

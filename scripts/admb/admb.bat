@@ -248,8 +248,8 @@ if "!CXX!"=="cl" (
   )
 ) else (
   if "!CXX!"=="clang++" (
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
-      set CXXMAJORNUMBER=-clang++9
+    for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
+      set CXXMAJORNUMBER=-clang++%%i
       set STDCXX=-std=c++11
     )
     set LD=clang++
@@ -338,7 +338,7 @@ if "!CXX!"=="cl" (
       )
     )
     if defined ADMB_CFG_LDFLAGS (
-      set LDFLAGS=!LDFLAGS!!ADMB_CFG_LDFLAGS:-static=!
+      set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS:-static=!
     )
   )
   if defined g (

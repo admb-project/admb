@@ -26,7 +26,6 @@ extern int ctlc_flag;
   #include <conio.h>
 #else
   #include <iostream>
-  using namespace std;
   #include <signal.h>
   // this is to get UNIX systems to use getchar
   #define getch getchar

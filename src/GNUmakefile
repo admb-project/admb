@@ -5,12 +5,10 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(TERM),cygwin)
-      ifneq ($(TERM),xterm)
-        ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-          SHELL=cmd
-          CMDSHELL=cmd
-        endif
+    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+      ifneq ($(findstring cygpath.exe,$(shell where cygpath.exe 2>&1 | findstr cygpath.exe)),cygpath.exe)
+        SHELL=cmd
+        CMDSHELL=cmd
       endif
     endif
   endif
@@ -20,7 +18,7 @@ ifeq ($(OS),Windows_NT)
     endif
   else
     ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
-      PATH:=$(abspath /../utilities/mingw/bin):$(PATH)
+      PATH:=$(abspath /../utilities/mingw/bin);$(PATH)
     endif
   endif
 endif
@@ -389,7 +387,7 @@ dist: libs
 	$(MAKE) bins
 ifeq ($(CMDSHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
-	..\utilities\sed.exe "s/\.md/\.txt/g" ..\README.md > ${DIST}\README.txt
+	$(DIST)\bin\sed.exe "s/\.md/\.txt/g" ..\README.md > ${DIST}\README.txt
 	copy /Y ..\CHANGES.md ${DIST}\CHANGES.txt
 	copy /Y ..\VERSION ${DIST}
 	pushd $(DIST) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
@@ -410,9 +408,9 @@ ifeq ($(CMDSHELL),cmd)
 	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>${DIST}\bin\admb-cfg$(OSNAME)$(CXXVERSION).bat
 	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}\bin\admb-cfg$(OSNAME)$(CXXVERSION).bat
 	copy ..\utilities\sed.exe ${DIST}\bin
-	copy ..\utilities\libiconv2.dll ${DIST}\bin
-	copy ..\utilities\libintl3.dll ${DIST}\bin
-	copy ..\utilities\regex2.dll ${DIST}\bin
+	copy ..\utilities\shared\msys-iconv-2.dll ${DIST}\bin
+	copy ..\utilities\shared\msys-intl-8.dll ${DIST}\bin
+	copy ..\utilities\shared\msys-2.0.dll ${DIST}\bin
 	copy ..\scripts\admb\admb.bat ${DIST}\bin\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd

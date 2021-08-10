@@ -31,7 +31,6 @@
 
 #if !defined(_MSC_VER)
   #include <iostream>
-  using namespace std;
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>

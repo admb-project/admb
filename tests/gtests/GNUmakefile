@@ -474,6 +474,8 @@ ifeq ($(CMDSHELL),cmd)
 	@del /Q gtest-finance
 	@del /Q gtest-scalefactor
 	@del /Q sparseness.info
+	@del /Q gtest-finance.exe
+	@del /Q gtest-scalefactor.exe
 else
 	@rm -vf test_i4_array.txt
 	@rm -vf test_i5_array.txt

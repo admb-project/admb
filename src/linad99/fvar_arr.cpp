@@ -21,11 +21,6 @@
   #include <climits>
 #endif
 
-//extern double * NULL_ADDRESS;
-//extern grad_stack  * GRAD_STACK1; //js
-//extern indvar_offset_list * INDVAR_LIST;
-//extern unsigned  MAX_NVAR_OFFSET;
-
 /**
  * Description not yet available.
  * \param
@@ -151,47 +146,45 @@ dvar_vector::dvar_vector()
  */
 void make_indvar_list(const dvar_vector& t)
 {
-  if (!gradient_structure::instances)
+  gradient_structure::get()->make_indvar_list(t);
+}
+void gradient_structure::make_indvar_list(const dvar_vector& t)
+{
+  unsigned int size = (unsigned int)(t.indexmax() - t.indexmin() + 1);
+  if (size > gradient_structure::MAX_NVAR_OFFSET)
   {
-    return;
-  }
-  if ((unsigned int)(t.indexmax()-t.indexmin()+1)
-    > gradient_structure::MAX_NVAR_OFFSET)
-  {
-   if (ad_printf)
-   {
-     (*ad_printf)("Current maximum number of independent variables is %d\n",
-        gradient_structure::MAX_NVAR_OFFSET);
-     (*ad_printf)("  You need to increase the global variable "
-     "MAX_NVAR_OFFSET to %d\n",t.indexmax()-t.indexmin()+1);
-     (*ad_printf)("  This can be done by putting the line\n"
-         "    gradient_structure::set_MAX_NVAR_OFFSET(%d);\n",
-        t.indexmax()-t.indexmin()+1);
-     (*ad_printf)("  before the declaration of the gradient_structure object.\n"
-        " or the command line option -mno %d\n",
-        t.indexmax()-t.indexmin()+1);
-   }
-   else
-   {
-     cerr << "Current maximum number of independent variables is "
-          << gradient_structure::MAX_NVAR_OFFSET << "\n"
-          <<  "  You need to increase the global variable MAX_NVAR_OFFSET to "
-          << (t.indexmax()-t.indexmin()+1) << "\n"
-          << "  This can be done by putting the line\n"
-          << "    'gradient_structure::set_MAX_NVAR_OFFSET("
-          << (t.indexmax()-t.indexmin()+1) << ");'\n"
-          << "  before the declaration of the gradient_structure object.\n"
-          << " or use the -mno 1149 command line option in AD Model Builder\n";
-   }
-   ad_exit(21);
+    if (ad_printf)
+    {
+      (*ad_printf)("Current maximum number of independent variables is %d\n",
+         gradient_structure::MAX_NVAR_OFFSET);
+      (*ad_printf)("  You need to increase the global variable "
+         "MAX_NVAR_OFFSET to %d\n", size);
+      (*ad_printf)("  This can be done by putting the line\n"
+         "    gradient_structure::set_MAX_NVAR_OFFSET(%d);\n", size);
+      (*ad_printf)("  before the declaration of the gradient_structure object.\n"
+         " or the command line option -mno %d\n", size);
+    }
+    else
+    {
+      cerr << "Current maximum number of independent variables is "
+           << gradient_structure::MAX_NVAR_OFFSET << "\n"
+           <<  "  You need to increase the global variable MAX_NVAR_OFFSET to "
+           << size << "\n"
+           << "  This can be done by putting the line\n"
+           << "    'gradient_structure::set_MAX_NVAR_OFFSET("
+           << size << ");'\n"
+           << "  before the declaration of the gradient_structure object.\n"
+           << " or use the -mno 1149 command line option in AD Model Builder\n";
+    }
+    ad_exit(21);
   }
 
-  for (int i=t.indexmin(); i<=t.indexmax(); i++)
+  for (int i = t.indexmin(); i <= t.indexmax(); ++i)
   {
     unsigned int tmp = (unsigned int)(i - t.indexmin());
-    gradient_structure::INDVAR_LIST->put_address(tmp,&(t.va[i].x));
+    INDVAR_LIST->put_address(tmp, &(t.va[i].x));
   }
-  gradient_structure::NVAR=t.indexmax()-t.indexmin()+1;
+  NVAR = size;
 }
 
 /**

@@ -4,8 +4,6 @@
  */
 #include "fvar.hpp"
 
-// double upick(double x) { return x*x; } 
-
 /**
 Return the computed square of variable, then set gradient_structure.
 
@@ -13,16 +11,17 @@ Return the computed square of variable, then set gradient_structure.
 */
 dvariable& square(const prevariable& variable)
 {
-  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
-    gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+  gradient_structure* gs = gradient_structure::get();
+  if (++gs->RETURN_PTR > gs->MAX_RETURN)
+    gs->RETURN_PTR = gs->MIN_RETURN;
 
   double& x = value(variable);
-  gradient_structure::RETURN_PTR->v->x = x * x;
+  gs->RETURN_PTR->v->x = x * x;
 
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation2,
-     &(gradient_structure::RETURN_PTR->v->x), &(variable.v->x), 2 * x );
+  gs->GRAD_STACK1->set_gradient_stack(default_evaluation2,
+     &(gs->RETURN_PTR->v->x), &(variable.v->x), 2 * x );
 
-  return *gradient_structure::RETURN_PTR;
+  return *gs->RETURN_PTR;
 }
 /**
 Return results of computing the square of variable matrix.

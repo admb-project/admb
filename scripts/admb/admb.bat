@@ -303,7 +303,7 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! -g
     set LDFLAGS=!LDFLAGS! -g
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -O3
+    set CXXFLAGS=!CXXFLAGS! -O2
   )
   if "!CXX!"=="clang++" (
     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
@@ -432,7 +432,6 @@ if "!CXX!"=="cl" (
       )
     )
   )
-  set CXXFLAGS=!CXXFLAGS! -fpermissive
   for /f %%i in ('!CXX! -dumpmachine ^| findstr x86_64') do (
     set CXXFLAGS=!CXXFLAGS! -D_FILE_OFFSET_BITS=64
   )

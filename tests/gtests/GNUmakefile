@@ -23,7 +23,6 @@ else
 GTEST_DIR=googletest-read-only/googletest
 endif
 
-
 GTESTS_ALL=\
  test_atomic.cpp\
  test_shared_ptr.cpp\
@@ -171,6 +170,7 @@ GTESTS_ALL=\
  test_shareinfo.cpp\
  test_quadratic_prior.cpp\
  test_evaluate_function.cpp\
+ test_gradient_structure_thread.cpp\
  main.cpp
 
 ERRORS=\
@@ -356,7 +356,7 @@ else
 endif
 
 googletest-read-only:
-	git clone --depth=1 --branch=release-1.10.0 https://github.com/google/googletest.git googletest-read-only
+	git clone --depth=1 --branch=release-1.11.0 https://github.com/google/googletest.git googletest-read-only
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@

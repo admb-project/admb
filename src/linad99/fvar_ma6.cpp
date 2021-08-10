@@ -58,7 +58,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
   v1.save_dvar_matrix_value();
   v1.save_dvar_matrix_position();
   save_identifier_string("rv");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfempirical_covarv_partial);
    return(tmp);
  }
@@ -152,7 +152,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
   v1.save_dvar_matrix_value();
   v1.save_dvar_matrix_position();
   save_identifier_string("rv");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfempirical_covarv);
    return(tmp);
  }
@@ -224,7 +224,7 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
   v2.save_dvar_vector_value();
   v2.save_dvar_vector_position();
   save_identifier_string("tv");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfouter_prodvv);
    return(tmp);
  }

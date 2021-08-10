@@ -1,5 +1,5 @@
 ifndef TESTS_REMOTE
-  TESTS_REMOTE=all
+  TESTS_REMOTE=yes
 endif
 
 ifndef ADMB_VER
@@ -47,7 +47,9 @@ endif
 all:
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
+ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
+endif
 	$(MAKE) unit-gtests
 
 verify: examples
@@ -119,8 +121,7 @@ core-tpls:\
   tpl-tiny_ad_re\
   tpl-tinyfun\
   tpl-vectorize\
-  tpl-vonmises\
-  example-prof_like
+  tpl-vonmises
 
 remote-core-tpls:\
   tpl-changepoint\
@@ -293,27 +294,28 @@ tpl-orange_mvn:
 tpl-lprof:
 	$(MAKE) --directory=lprof
 
-example-prof_like:
-	$(MAKE) --directory=../examples/admb/prof_like
-
 examples:
 ifeq ($(CMDSHELL),cmd)
 	if exist $(DIST)\\examples rmdir /s /q $(DIST)\\examples
 	md $(DIST)\\examples
 	xcopy ..\\examples $(DIST)\examples /S /Y /D
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples bhplfine
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\\examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\\examples bhplfine
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-opt.txt
   endif
 else
 	if [ -d "$(DIST)/examples" ]; then rm -rvf $(DIST)/examples; fi
 	cp -Rvf ../examples $(DIST)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples bhplfine
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples bhplfine
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-opt.txt
   endif
 endif
@@ -387,7 +389,6 @@ endif
 	$(MAKE) --directory=tinyfun clean
 	$(MAKE) --directory=vectorize clean
 	$(MAKE) --directory=vonmises clean
-	$(MAKE) --directory=../examples/admb/prof_like clean
 	$(MAKE) --directory=issue158 clean
 
 dist-clean:

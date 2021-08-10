@@ -41,8 +41,13 @@
 #ifndef __ADMB_GRADIENT_STRUCTURE_H__
 #define __ADMB_GRADIENT_STRUCTURE_H__
 
+#include <thread>
 #include <fstream>
 using std::ofstream;
+
+#ifdef __BORLANDC__
+  #define size_t long int
+#endif
 
 class dvariable;
 class DF_FILE;
@@ -91,61 +96,65 @@ public:
  */
 class gradient_structure
 {
-   static char cmpdif_file_name[61];
-   static DF_FILE *fp;
- public:
+public:
+   DF_FILE *fp;
+
+  thread_local static gradient_structure* _instance;
+  static gradient_structure* get();
+  static gradient_structure* reset(gradient_structure*);
+
+  gradient_structure** gradients;
+  unsigned int gradients_size;
+  void create(const unsigned int size);
+  gradient_structure* set(const unsigned int id);
+  void clean();
+
+  void gradcalc(int nvar, const dvector& g);
+  void funnel_gradcalc();
+
 #if defined(NO_DERIVS)
    static int no_derivatives;
 #endif
  private:
    static long int USE_FOR_HESSIAN;
-   static long int NVAR;
+  long int NVAR;
    static unsigned int NUM_RETURN_ARRAYS;
-   static dvariable **RETURN_ARRAYS;
-   static unsigned int RETURN_ARRAYS_PTR;
-   static dvariable **RETURN_PTR_CONTAINER;
-   static size_t TOTAL_BYTES;
-   static size_t PREVIOUS_TOTAL_BYTES;
+  dvariable **RETURN_ARRAYS;
+  unsigned int RETURN_ARRAYS_PTR;
+  dvariable** RETURN_PTR_CONTAINER;
+  size_t TOTAL_BYTES;
+  size_t PREVIOUS_TOTAL_BYTES;
    static unsigned long ARRAY_MEMBLOCK_SIZE;//js
-   static humungous_pointer ARRAY_MEMBLOCK_BASE;
-   static humungous_pointer ARRAY_MEMBLOCK_SAVE;
- public:
-   static double *get_ARRAY_MEMBLOCK_BASE()
-   {
-      return (double*)ARRAY_MEMBLOCK_BASE;
-   }
+public:
+  friend class arr_list;
+
  private:
-#ifdef __BORLANDC__
-   static long int CMPDIF_BUFFER_SIZE;
-   static long int GRADSTACK_BUFFER_SIZE;
-#else
    static size_t CMPDIF_BUFFER_SIZE;
    static size_t GRADSTACK_BUFFER_SIZE;
-#endif
    static unsigned int MAX_NVAR_OFFSET;
    static int save_var_file_flag;
    static int save_var_flag;
 
    static unsigned int MAX_DLINKS;
-   static indvar_offset_list *INDVAR_LIST;
+  indvar_offset_list* INDVAR_LIST;
    static int NUM_DEPENDENT_VARIABLES;
-   static dependent_variables_information *DEPVARS_INFO;
+  dependent_variables_information* DEPVARS_INFO;
 
    // this needs to be a static member function so other static
    // member functions can call it
    static void check_set_error(const char *variable_name);
 
-   static int instances;
-   int x;
-
  public:
+   static int instances;
+   unsigned int x;
+
    // exception class
    class arrmemblerr
    {
    };
 
    static int Hybrid_bounded_flag;
-   static double *hessian_ptr;
+  double* hessian_ptr;
    static long int get_USE_FOR_HESSIAN()
    {
       return USE_FOR_HESSIAN;
@@ -155,13 +164,24 @@ class gradient_structure
       USE_FOR_HESSIAN = i;
    }
    friend class dfsdmat;
-   gradient_structure(long int size = 100000L);// constructor
-   ~gradient_structure(void);// destructor
-   static void save_variables(void);
-   static void restore_variables(void);
-   static void save_arrays(void);
-   static void restore_arrays(void);
-   static size_t totalbytes(void);
+
+   gradient_structure(): gradient_structure(100000L) {}
+   gradient_structure(const long int size): gradient_structure(size, 0) {}
+   gradient_structure(const long int size, const unsigned int id);
+   gradient_structure(const gradient_structure&) = delete;
+   gradient_structure(gradient_structure&&) = delete;
+   virtual ~gradient_structure();
+
+   gradient_structure& operator=(const gradient_structure&) = delete;
+   gradient_structure& operator=(gradient_structure&&) = delete;
+
+  void save_variables();
+  void restore_variables();
+  void save_arrays();
+  void restore_arrays();
+
+  size_t totalbytes(void);
+
    friend dvector restore_dvar_vector_value(
      const dvar_vector_position& tmp);
    friend void cleanup_temporary_files();
@@ -175,7 +195,9 @@ class gradient_structure
    friend void arr_free(double_and_int *);
    friend void RETURN_ARRAYS_DECREMENT(void);
    friend void RETURN_ARRAYS_INCREMENT(void);
-   friend void make_indvar_list(const dvar_vector & t);
+
+  void make_indvar_list(const dvar_vector& t);
+
    //friend void gradcalc( int , double *);
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);
@@ -183,29 +205,26 @@ class gradient_structure
    friend void allocate_dvariable_space(void);
    friend void wide_funnel_gradcalc(void);
    friend dvar_vector_position restore_dvar_vector_position(void);
-   static grad_stack *GRAD_STACK1;
+  grad_stack* GRAD_STACK1;
    friend double_and_int *gradnew();
-   static dlist *GRAD_LIST;
+  dlist* GRAD_LIST;
    static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
-   static dvariable *RETURN_PTR;
-   static dvariable *MIN_RETURN;
-   static dvariable *MAX_RETURN;
-   static arr_list *ARR_LIST1;
-   static arr_list *ARR_FREE_LIST1;
+  dvariable* RETURN_PTR;
+  dvariable* MIN_RETURN;
+  dvariable* MAX_RETURN;
+  arr_list* ARR_LIST1;
+   //static arr_list *ARR_FREE_LIST1;
    //static void funnel_jacobcalc(void);
-   static void jacobcalc(int nvar, const dmatrix & jac);
-   static void jacobcalc(int nvar, const ofstream & jac);
-   static void jacobcalc(int nvar, const uostream & jac);
+  void jacobcalc(int nvar, const dmatrix& jac);
+  void jacobcalc(int nvar, const ofstream& jac);
+  void jacobcalc(int nvar, const uostream& jac);
 
    friend void default_evaluation(void);
    //access functions
 
    friend class DF_FILE;
-   static DF_FILE *get_fp(void)
-   {
-      return fp;
-   }
+   static DF_FILE* get_fp();
    static void set_NUM_RETURN_ARRAYS(unsigned int i);
 #if defined(NO_DERIVS)
    static void set_NO_DERIVATIVES(void);
@@ -220,21 +239,20 @@ class gradient_structure
    static void set_NUM_DEPENDENT_VARIABLES(int i);
    static void set_RETURN_ARRAYS_SIZE(unsigned int i);
    static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
-#ifdef __BORLANDC__
-   static void set_CMPDIF_BUFFER_SIZE(long int i);
-   static void set_GRADSTACK_BUFFER_SIZE(long int i);
-   static void set_GRADSTACK_BUFFER_BYTES(long int i);
-#else
    static void set_CMPDIF_BUFFER_SIZE(const size_t i);
    static void set_GRADSTACK_BUFFER_SIZE(const size_t i);
    static void set_GRADSTACK_BUFFER_BYTES(const size_t i);
-#endif
    static void set_MAX_NVAR_OFFSET(unsigned int i);
    static void set_MAX_DLINKS(int i);
-   static size_t NUM_GRADSTACK_BYTES_WRITTEN(void);
+
+  size_t NUM_GRADSTACK_BYTES_WRITTEN();
+
    static unsigned int get_MAX_DLINKS() { return MAX_DLINKS; }
-   static void save_dependent_variable_position(const prevariable & v1);
-   static unsigned long int max_last_offset;
+  void save_dependent_variable_position(const prevariable&);
+  unsigned long int max_last_offset;
+
+  void RETURN_ARRAYS_DECREMENT();
+  void RETURN_ARRAYS_INCREMENT();
 
    friend class dlist;
    friend class grad_stack;
@@ -249,8 +267,17 @@ by gradcalc.
 class DF_FILE
 {
 public:
-  DF_FILE(const size_t nbytes);
+  /// Default uses gradient_structure::CMPDIF_BUFFER_SIZE
+  DF_FILE(): DF_FILE(gradient_structure::CMPDIF_BUFFER_SIZE) {}
+  /// Do not allow copy contructor
+  DF_FILE(const DF_FILE&) = delete;
+  /// User defined size with default id
+  DF_FILE(const size_t nbytes): DF_FILE(nbytes, 0) {}
+  DF_FILE(const size_t nbytes, const unsigned int id);
   ~DF_FILE();
+
+  /// Do not allow assignment operator
+  DF_FILE& operator=(const DF_FILE&) = delete;
 
   char* buff;
   OFF_T toffset;

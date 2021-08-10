@@ -44,40 +44,40 @@ TEST_F(test_funnels, simple)
   // Set gradient_structure::NVAR
   dvar_vector variables(independents);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   dvar_vector yhat(1, 10);
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 0);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 0);
 
   yhat = variables(1) + variables(2) * x;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 3);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 3);
 
   dvariable f = 0.0;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 4);
 
   funnel_dvariable Integral;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 4);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 4);
 
   ad_begin_funnel();
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 5);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 5);
 
   dvariable tmp;
   tmp = regression(y,yhat);
 
-  ASSERT_TRUE(gradient_structure::GRAD_STACK1->total() >= 13);
+  ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1->total() >= 13);
 
   Integral = tmp;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 5);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 5);
 
   f = Integral;
 
-  ASSERT_EQ(gradient_structure::GRAD_STACK1->total(), 6);
+  ASSERT_EQ(gradient_structure::get()->GRAD_STACK1->total(), 6);
 
   double result = value(f);
 

@@ -49,7 +49,7 @@ dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)
   save_identifier_string("PLACE2");
   tmp.save_dvar_vector_position();
   save_identifier_string("PLACE1");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dmdv_prod);
   RETURN_ARRAYS_DECREMENT();
   return(tmp);
@@ -129,7 +129,7 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
   save_identifier_string("PLACE2");
   tmp.save_dvar_vector_position();
   save_identifier_string("PLACE1");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(cmdv_prod);
   RETURN_ARRAYS_DECREMENT();
   return tmp;

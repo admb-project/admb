@@ -263,8 +263,10 @@ else
     CXXFLAGS=" $CXXFLAGS"
     LDFLAGS=" $LDFLAGS"
   else
-    CXXFLAGS="-O3 $CXXFLAGS"
-    LDFLAGS="-O3 $LDFLAGS"
+    if [ "$OS" != "Windows_NT" ]; then
+      CXXFLAGS="-O2 $CXXFLAGS"
+      LDFLAGS="-O2 $LDFLAGS"
+    fi
   fi
 fi
 if [ "`uname`" == "Darwin" ]; then
@@ -293,8 +295,13 @@ elif [ "$CXX" == "g++" ]; then
       CXXFLAGS="-std=c++11 $CXXFLAGS"
       LDFLAGS="-std=c++11 $LDFLAGS"
     else
-      CXXFLAGS="-std=c++0x $CXXFLAGS"
-      LDFLAGS="-std=c++0x $LDFLAGS"
+      if [ "$GCCMINVER" == "8" ]; then
+        CXXFLAGS="-std=c++11 $CXXFLAGS"
+        LDFLAGS="-std=c++11 $LDFLAGS"
+      else
+        CXXFLAGS="-std=c++0x $CXXFLAGS"
+        LDFLAGS="-std=c++0x $LDFLAGS"
+      fi
     fi
   elif [ "$GCCMAJVER" == "5" ]; then
     CXXFLAGS="-std=c++11 $CXXFLAGS"

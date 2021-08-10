@@ -472,7 +472,7 @@ void function_minimizer::depvars_routine(void)
   {
      stddev_params::stddevptr[i]->set_dependent_variables();
   }
-  gradient_structure::jacobcalc(nvar,ofs);
+  gradient_structure::get()->jacobcalc(nvar,ofs);
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
      ofs << stddev_params::stddevptr[i]->label() << "  ";

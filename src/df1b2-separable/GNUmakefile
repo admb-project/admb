@@ -30,7 +30,6 @@ ifeq ($(CMDSHELL),cmd)
 else
 ../../build/tpl2rem/lex.yy.c: tpl2rem.lex
 	rm -vf $@
-	echo "$(PATH)"
 	@if [ -z "`command -v flex`" ]; then echo "Error: Unable to find flex."; exit 1; fi
 	flex -v -w -o../../build/tpl2rem/lex.yy.c $^
 endif

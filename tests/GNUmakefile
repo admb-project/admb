@@ -1,5 +1,5 @@
 ifndef TESTS_REMOTE
-  TESTS_REMOTE=yes
+  TESTS_REMOTE=no
 endif
 
 ifndef ADMB_VER
@@ -10,13 +10,12 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(TERM),cygwin)
-      ifneq ($(TERM),xterm)
-        ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-          SHELL=cmd
-          CMDSHELL=cmd
-        endif
-      endif
+    ifndef TERM
+      export SHELL=cmd
+      CMDSHELL=cmd
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
   ifeq ($(CMDSHELL),cmd)

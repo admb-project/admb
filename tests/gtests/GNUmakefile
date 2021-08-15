@@ -3,12 +3,12 @@ ifeq ($(OS),Windows_NT)
     CMDSHELL=cmd
     ADMB_HOME=..\\..\\..
   else
-    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      EXT=.sh
-    else
-      SHELL=cmd
+    ifndef TERM
+      export SHELL=cmd
       CMDSHELL=cmd
-      ADMB_HOME=..\\..\\..
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
 endif

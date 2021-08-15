@@ -4,13 +4,20 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
       CMDSHELL=cmd
   else
-    ifneq ($(TERM),cygwin)
-      ifneq ($(TERM),xterm)
-        ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+    ifndef TERM
+      dir_cygpath=$(subst \cygpath.exe,;,$(shell where cygpath.exe 2>&1 | findstr cygpath.exe))
+      ifeq ($(dir_cygpath),)
+        SHELL=cmd
+        CMDSHELL=cmd
+      else
+        ifneq ($(findstring $(dir_cygpath),$(PATH)),$(dir_cygpath))
           SHELL=cmd
           CMDSHELL=cmd
         endif
       endif
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
   ifeq ($(CMDSHELL),cmd)

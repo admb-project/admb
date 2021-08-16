@@ -9,7 +9,7 @@ include ../test-rules.mak
 endif
 
 run: $(TARGET)
-ifeq ($(SHELL),cmd)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -mno 1000
 	$(TARGET) -mno 1000 -mcsave 20 -ainp $(TARGET).par -phase 10 -nohess -mcmc2 6000 -hybrid
 	$(TARGET) -mno 1000  -mceval -ainp $(TARGET).par -phase 10 -nohess 

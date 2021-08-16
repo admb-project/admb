@@ -20,11 +20,23 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-ifeq ($(SCRIPT_DIR),)
+ifndef SCRIPT_DIR
   ifeq ($(CMDSHELL),cmd)
-    SCRIPT_DIR=..\\..\\
+    ifeq ($(wildcard ..\\..\\admb.cmd),..\\..\\admb.cmd)
+      SCRIPT_DIR=..\\..\\
+    else
+      ifeq ($(wildcard ..\\..\\..\\admb.cmd),..\\..\\..\\admb.cmd)
+        SCRIPT_DIR=..\\..\\..\\
+      endif
+    endif
   else
-    SCRIPT_DIR=../../
+    ifeq ($(wildcard ../../admb$(EXT)),../../admb$(EXT))
+      SCRIPT_DIR=../../
+    else
+      ifeq ($(wildcard ../../../admb$(EXT)),../../../admb$(EXT))
+        SCRIPT_DIR=../../../
+      endif
+    endif
   endif
 endif
 

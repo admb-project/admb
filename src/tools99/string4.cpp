@@ -16,11 +16,12 @@ Input string from stream c into adstring t.
 */
 istream& operator>>(istream& c, adstring& t)
 {
-  const unsigned int max_length = 1025;
-  char tmp[max_length + 1];
-  tmp[max_length] = '\0';
+  const unsigned int max_length = 1024;
+  /// For some reason 3 works.
+  char tmp[max_length + 3];
+  tmp[max_length + 1] = '\0';
   c >> tmp;
-  if (tmp[max_length] != '\0')
+  if (tmp[max_length + 1] != '\0')
   {
     cerr << "Error -- Maximum adstring length exceeded in "
          << "istream& operator>>(istream&, adstring&)" << endl;

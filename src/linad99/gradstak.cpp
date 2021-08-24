@@ -336,7 +336,7 @@ grad_stack::~grad_stack()
  * Description not yet available.
  * \param
  */
-void  grad_stack::write_grad_stack_buffer()
+void grad_stack::write_grad_stack_buffer(gradient_structure* gs)
 {
 #ifdef GRAD_DIAG
   cout << "Grad_stack size exceeded\n ";
@@ -421,7 +421,6 @@ void  grad_stack::write_grad_stack_buffer()
   }
 #endif
   //keep track of the size of the grad_stack
-  gradient_structure* gs = gradient_structure::get();
   gs->TOTAL_BYTES += nbw;
   ptr = ptr_first;
 }

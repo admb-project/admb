@@ -115,7 +115,7 @@ public:
 #if defined(NO_DERIVS)
    static int no_derivatives;
 #endif
- private:
+
    static long int USE_FOR_HESSIAN;
   long int NVAR;
    static unsigned int NUM_RETURN_ARRAYS;
@@ -128,7 +128,6 @@ public:
 public:
   friend class arr_list;
 
- private:
    static size_t CMPDIF_BUFFER_SIZE;
    static size_t GRADSTACK_BUFFER_SIZE;
    static unsigned int MAX_NVAR_OFFSET;
@@ -301,7 +300,7 @@ public:
   void fread(void *&ptr);
   void fwrite(void *ptr);
 
-  void write_cmpdif_stack_buffer(void);
+  void write_cmpdif_stack_buffer();
   void read_cmpdif_stack_buffer(OFF_T & lpos);
 
 private:

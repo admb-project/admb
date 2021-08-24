@@ -920,6 +920,7 @@ void default_evaluation3ind(void);
  */
 class grad_stack
 {
+public:
    grad_stack_entry *true_ptr_first;
    grad_stack_entry *ptr_first;
    grad_stack_entry *ptr_last;
@@ -930,13 +931,13 @@ class grad_stack
    size_t length;
    size_t true_length;
 #endif
- public:
+
    grad_stack_entry * ptr;
    char gradfile_name[61];
    char gradfile_name1[61];
    char gradfile_name2[61];
    char var_store_file_name[61];
- private:
+
    //lvector * table;
    // js
    int _GRADFILE_PTR;  // should be int gradfile_handle;
@@ -954,7 +955,6 @@ class grad_stack
    OFF_T end_pos2;
 #endif
    //dmatrix *table;
- public:
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);
    friend void funnel_gradcalc(void);
@@ -974,7 +974,9 @@ class grad_stack
   grad_stack(const grad_stack&) = delete;
   ~grad_stack();
 
-   void write_grad_stack_buffer(void);
+  void write_grad_stack_buffer()
+    { write_grad_stack_buffer(gradient_structure::get()); }
+  void write_grad_stack_buffer(gradient_structure*);
 
    void set_gradient_stack(void (*func) (void),
      double *dep_addr, double *ind_addr1 = NULL, double mult1 = 0,

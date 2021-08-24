@@ -408,7 +408,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
    ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
   if (x > 0)
-    GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, id);
+    GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, x);
   else
     GRAD_STACK1 = new grad_stack();
   memory_allocate_error("GRAD_STACK1",GRAD_STACK1);

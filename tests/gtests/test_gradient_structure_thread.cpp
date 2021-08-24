@@ -289,7 +289,7 @@ TEST_F(test_gradient_structure_thread, multiple_grad_stack)
   ASSERT_EQ(b.GRAD_STACK1->total(), 2);
   }
 }
-TEST_F(test_gradient_structure_thread, cleanup_temporary_files)
+TEST_F(test_gradient_structure_thread, DISABLED_cleanup_temporary_files)
 {
   {
   gradient_structure* a = new gradient_structure(100000L, 1);
@@ -304,5 +304,26 @@ TEST_F(test_gradient_structure_thread, cleanup_temporary_files)
   cleanup_temporary_files();
 
   ASSERT_TRUE(gradient_structure::get() == nullptr);
+  }
+}
+TEST_F(test_gradient_structure_thread, multiple_save_var_file_flag)
+{
+  {
+  gradient_structure a(100000L, 1);
+  gradient_structure b(100000L, 5);
+
+  ASSERT_EQ(a.save_var_file_flag, 0);
+  ASSERT_EQ(b.save_var_file_flag, 0);
+
+  a.save_var_file_flag = 1;
+
+  ASSERT_EQ(a.save_var_file_flag, 1);
+  ASSERT_EQ(b.save_var_file_flag, 0);
+
+  a.save_var_file_flag = 0;
+  b.save_var_file_flag = 1;
+
+  ASSERT_EQ(a.save_var_file_flag, 0);
+  ASSERT_EQ(b.save_var_file_flag, 1);
   }
 }

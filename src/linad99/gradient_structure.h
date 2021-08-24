@@ -131,7 +131,7 @@ public:
    static size_t CMPDIF_BUFFER_SIZE;
    static size_t GRADSTACK_BUFFER_SIZE;
    static unsigned int MAX_NVAR_OFFSET;
-   static int save_var_file_flag;
+  int save_var_file_flag;
    static int save_var_flag;
 
    static unsigned int MAX_DLINKS;

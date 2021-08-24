@@ -85,7 +85,6 @@ size_t gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
 #endif
 
 int gradient_structure::save_var_flag=0;
-int gradient_structure::save_var_file_flag=0;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
@@ -302,6 +301,8 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
 
   TOTAL_BYTES = 0;
   PREVIOUS_TOTAL_BYTES = 0;
+
+  save_var_file_flag = 0;
 
   gsm.lock();
   ++instances;

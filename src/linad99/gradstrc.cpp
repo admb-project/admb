@@ -206,44 +206,11 @@ void cleanup_temporary_files()
   void cleanup_xpools();
   cleanup_xpools();
 #endif
-  DF_FILE* fp = gradient_structure::get_fp();
-  if (fp)
+  gradient_structure* gs = gradient_structure::get();
+  if (gs)
   {
-    delete fp;
-    fp = nullptr;
-  }
-  if (gradient_structure::get() != nullptr && gradient_structure::get()->GRAD_STACK1)
-  {
-    if (gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR1 != -1
-        && close(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR1))
-    {
-      cerr << "Error closing file "
-           << gradient_structure::get()->GRAD_STACK1->gradfile_name1 << "\n";
-    }
-    gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR1 = -1;
-    if (gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR2 != -1
-        && close(gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR2))
-    {
-      cerr << "Error closing file "
-           << gradient_structure::get()->GRAD_STACK1->gradfile_name2 << "\n";
-    }
-    gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR2 = -1;
-    if (gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR != -1
-        && close(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR))
-    {
-      cerr << "Error closing file "
-           << gradient_structure::get()->GRAD_STACK1->var_store_file_name << "\n";
-    }
-    gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR = -1;
-#if defined (_MSC_VER)
-    remove(gradient_structure::get()->GRAD_STACK1->gradfile_name1);
-    remove(gradient_structure::get()->GRAD_STACK1->gradfile_name2);
-    remove(gradient_structure::get()->GRAD_STACK1->var_store_file_name);
-#else
-    unlink(gradient_structure::get()->GRAD_STACK1->gradfile_name1);
-    unlink(gradient_structure::get()->GRAD_STACK1->gradfile_name2);
-    unlink(gradient_structure::get()->GRAD_STACK1->var_store_file_name);
-#endif
+    delete gs;
+    gs = nullptr;
   }
 }
 

@@ -289,3 +289,20 @@ TEST_F(test_gradient_structure_thread, multiple_grad_stack)
   ASSERT_EQ(b.GRAD_STACK1->total(), 2);
   }
 }
+TEST_F(test_gradient_structure_thread, cleanup_temporary_files)
+{
+  {
+  gradient_structure* a = new gradient_structure(100000L, 1);
+
+  ASSERT_TRUE(gradient_structure::get() == a);
+
+  a = nullptr;
+
+  ASSERT_TRUE(gradient_structure::get() != a);
+
+  void cleanup_temporary_files();
+  cleanup_temporary_files();
+
+  ASSERT_TRUE(gradient_structure::get() == nullptr);
+  }
+}

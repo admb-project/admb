@@ -226,7 +226,7 @@ void gradient_structure::save_arrays()
   void* temp_ptr = nullptr;
   unsigned long bytes_needed =
     min(ARR_LIST1->get_last_offset() + 1, ARRAY_MEMBLOCK_SIZE);
-  gradient_structure::save_var_file_flag=0;
+  save_var_file_flag=0;
 #ifdef __ZTC__
    if ( (temp_ptr = farmalloc(bytes_needed) ) == 0)
 #else
@@ -235,11 +235,11 @@ void gradient_structure::save_arrays()
   #define __USE_IOSTREAM__
 #endif
    {
-     gradient_structure::save_var_file_flag=1;
+     save_var_file_flag=1;
      cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCK"
           << " save buffer " << endl;
    }
-   if (gradient_structure::save_var_file_flag==0)
+   if (save_var_file_flag==0)
    {
      ARR_LIST1->ARRAY_MEMBLOCK_SAVE = temp_ptr;
 #if defined(DOS386)
@@ -285,7 +285,7 @@ void gradient_structure::save_arrays()
        left_to_move-=max_move;
        src+=max_move;
      }
-     write(gradient_structure::get()->GRAD_STACK1->_VARSSAV_PTR,(char*)src, left_to_move);
+     write(GRAD_STACK1->_VARSSAV_PTR,(char*)src, left_to_move);
 #endif
   }
 }
@@ -296,7 +296,7 @@ void gradient_structure::restore_arrays()
 {
   unsigned long bytes_needed =
     min(ARR_LIST1->get_last_offset() + 1, ARRAY_MEMBLOCK_SIZE);
-  if (gradient_structure::save_var_file_flag==0)
+  if (save_var_file_flag==0)
   {
 #if defined(DOS386)
   #ifndef USE_ASSEMBLER

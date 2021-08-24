@@ -327,3 +327,32 @@ TEST_F(test_gradient_structure_thread, multiple_save_var_file_flag)
   ASSERT_EQ(b.save_var_file_flag, 1);
   }
 }
+TEST_F(test_gradient_structure_thread, multiple_save_arrays)
+{
+  {
+  gradient_structure a(100000L, 1);
+  gradient_structure b(100000L, 5);
+
+  ASSERT_EQ(a.save_var_file_flag, 0);
+  ASSERT_EQ(b.save_var_file_flag, 0);
+
+  ASSERT_EQ(a.ARR_LIST1->get_last_offset(), 0);
+  ASSERT_EQ(b.ARR_LIST1->get_last_offset(), 0);
+
+  ASSERT_TRUE(a.ARR_LIST1->ARRAY_MEMBLOCK_SAVE == nullptr);
+  ASSERT_TRUE(b.ARR_LIST1->ARRAY_MEMBLOCK_SAVE == nullptr);
+  a.save_arrays();
+  ASSERT_TRUE(a.ARR_LIST1->ARRAY_MEMBLOCK_SAVE != nullptr);
+  ASSERT_TRUE(b.ARR_LIST1->ARRAY_MEMBLOCK_SAVE == nullptr);
+  b.save_arrays();
+  ASSERT_TRUE(a.ARR_LIST1->ARRAY_MEMBLOCK_SAVE != nullptr);
+  ASSERT_TRUE(b.ARR_LIST1->ARRAY_MEMBLOCK_SAVE != nullptr);
+
+  a.restore_arrays();
+  ASSERT_TRUE(a.ARR_LIST1->ARRAY_MEMBLOCK_SAVE == nullptr);
+  ASSERT_TRUE(b.ARR_LIST1->ARRAY_MEMBLOCK_SAVE != nullptr);
+  b.restore_arrays();
+  ASSERT_TRUE(a.ARR_LIST1->ARRAY_MEMBLOCK_SAVE == nullptr);
+  ASSERT_TRUE(b.ARR_LIST1->ARRAY_MEMBLOCK_SAVE == nullptr);
+  }
+}

@@ -59,10 +59,12 @@ PROCEDURE_SECTION
    f+=sum_freq*log(1.e-50+S(1));
 PRELIMINARY_CALCS_SECTION
   auto start = std::chrono::high_resolution_clock::now();
-  global_grad_stack = new grad_stack(10000, 10);
-  global_grad_stack2 = new grad_stack(10000, 10);
-  global_grad_stack3 = new grad_stack(10000, 10);
-  global_grad_stack4 = new grad_stack(10000, 10);
+  /*
+  global_gs1 = new gradient_structure(10000, 1);
+  global_gs2 = new gradient_structure(10000, 2);
+  global_gs3 = new gradient_structure(10000, 3);
+  global_gs4 = new gradient_structure(10000, 4);
+  */
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
   allocation_time = elapsed.count();
@@ -92,14 +94,15 @@ FINAL_SECTION
   cout << "Total Funnel time: " << total_funnel_time << endl;
 
   auto start = std::chrono::high_resolution_clock::now();
-  delete global_grad_stack;
-  global_grad_stack = nullptr;
-  delete global_grad_stack2;
-  global_grad_stack2 = nullptr;
-  delete global_grad_stack3;
-  global_grad_stack3 = nullptr;
-  delete global_grad_stack4;
-  global_grad_stack4 = nullptr;
+  delete global_gs1;
+  global_gs1 = nullptr;
+  delete global_gs2;
+  global_gs2 = nullptr;
+  delete global_gs3;
+  global_gs3 = nullptr;
+  delete global_gs4;
+  global_gs4 = nullptr;
+
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
   deallocation_time = elapsed.count();
@@ -158,22 +161,21 @@ GLOBALS_SECTION
     }
     return s[1];
   }
-  grad_stack* global_grad_stack = nullptr;
-  grad_stack* global_grad_stack2 = nullptr;
-  grad_stack* global_grad_stack3 = nullptr;
-  grad_stack* global_grad_stack4 = nullptr;
+  gradient_structure* global_gs1 = nullptr;
+  gradient_structure* global_gs2 = nullptr;
+  gradient_structure* global_gs3 = nullptr;
+  gradient_structure* global_gs4 = nullptr;
 
   std::future<std::pair<double, dvector>> afunnel(
     dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
-    const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps, grad_stack* gstack)
+    const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps, gradient_structure* gs)
   {
     return std::async(std::launch::async, [=]()->std::pair<double, dvector>
     {
       double v = 0;
       dvector g(1, 4);
 
-      cout << gradient_structure::get() << endl;
-      gradient_structure::get()->GRAD_STACK1 = gstack;
+      gradient_structure::_instance = gs;
       //gradient_structure::get()->GRAD_STACK1->allocate_RETURN_ARRAYS(25, 70);
       {
         independent_variables scoped_independents(1, 4);
@@ -199,37 +201,37 @@ GLOBALS_SECTION
         gradcalc(4, g);
       }
       //gradient_structure::get()->GRAD_STACK1->deallocate_RETURN_ARRAYS();
-      gradient_structure::get()->GRAD_STACK1 = nullptr;
+      gradient_structure::_instance = nullptr;
 
       return std::make_pair(v, g);
     });
   }
   dvariable to_dvariable(
+    gradient_structure* gs,
     std::pair<double, dvector>& p,
     const dvariable& x, const dvariable& y,
     const dvariable& u, const dvariable& v)
   {
+    gradient_structure::_instance = gs;
+
     dvariable var(p.first);
     dvector g(p.second);
-    cout << "===" << endl;
-    cout << value(var) << endl;
-    cout << "===" << endl;
 
-    grad_stack_entry* entry = gradient_structure::get()->GRAD_STACK1->ptr;
+    grad_stack_entry* entry = gs->GRAD_STACK1->ptr;
     entry->func = NULL;
     entry->dep_addr = &((*var.v).x);
     entry->ind_addr1 = &((*x.v).x);
     entry->mult1 = g(1);
     entry->ind_addr2 = &((*y.v).x);
     entry->mult2 = g(2);
-    gradient_structure::get()->GRAD_STACK1->ptr++;
-    grad_stack_entry* entry2 = gradient_structure::get()->GRAD_STACK1->ptr;
+    gs->GRAD_STACK1->ptr++;
+    grad_stack_entry* entry2 = gs->GRAD_STACK1->ptr;
     entry2->func = default_evaluation4ind;
     entry2->ind_addr1 = &((*u.v).x);
     entry2->mult1 = g(3);
     entry2->ind_addr2 = &((*v.v).x);
     entry2->mult2 = g(4);
-    gradient_structure::get()->GRAD_STACK1->ptr++;
+    gs->GRAD_STACK1->ptr++;
 
     return var;
   }
@@ -241,33 +243,54 @@ GLOBALS_SECTION
     const int max = a.indexmax();
     dvar_vector results(min, max);
 
+    gradient_structure* gs = gradient_structure::get();
+
     for (int i = min; i < max; i += 4)
     {
+      global_gs1 = new gradient_structure(10000, i);
+      global_gs2 = new gradient_structure(10000, i + 1);
+      global_gs3 = new gradient_structure(10000, i + 2);
+      global_gs4 = new gradient_structure(10000, i + 3);
+
       std::future<std::pair<double, dvector>> f = 
-        afunnel(func, tau, nu, sigma, beta, a(i), nsteps, global_grad_stack);
+        afunnel(func, tau, nu, sigma, beta, a(i), nsteps, global_gs1);
       std::future<std::pair<double, dvector>> f2 = 
-        afunnel(func, tau, nu, sigma, beta, a(i + 1), nsteps, global_grad_stack2);
+        afunnel(func, tau, nu, sigma, beta, a(i + 1), nsteps, global_gs2);
       std::future<std::pair<double, dvector>> f3 = 
-        afunnel(func, tau, nu, sigma, beta, a(i + 2), nsteps, global_grad_stack3);
+        afunnel(func, tau, nu, sigma, beta, a(i + 2), nsteps, global_gs3);
       std::future<std::pair<double, dvector>> f4 = 
-        afunnel(func, tau, nu, sigma, beta, a(i + 3), nsteps, global_grad_stack4);
+        afunnel(func, tau, nu, sigma, beta, a(i + 3), nsteps, global_gs4);
 
       std::pair<double, dvector> p = f.get();
       std::pair<double, dvector> p2 = f2.get();
       std::pair<double, dvector> p3 = f3.get();
       std::pair<double, dvector> p4 = f4.get();
 
-      results(i) = to_dvariable(p, tau, nu, sigma, beta);
-      results(i + 1) = to_dvariable(p2, tau, nu, sigma, beta);
-      results(i + 2) = to_dvariable(p3, tau, nu, sigma, beta);
-      results(i + 3) = to_dvariable(p4, tau, nu, sigma, beta);
+      delete global_gs1;
+      global_gs1 = nullptr;
+      delete global_gs2;
+      global_gs2 = nullptr;
+      delete global_gs3;
+      global_gs3 = nullptr;
+      delete global_gs4;
+      global_gs4 = nullptr;
+
+      results(i) = to_dvariable(gs, p, tau, nu, sigma, beta);
+      results(i + 1) = to_dvariable(gs, p2, tau, nu, sigma, beta);
+      results(i + 2) = to_dvariable(gs, p3, tau, nu, sigma, beta);
+      results(i + 3) = to_dvariable(gs, p4, tau, nu, sigma, beta);
     }
     {
+      global_gs1 = new gradient_structure(10000, max);
       std::future<std::pair<double, dvector>> f = 
-        afunnel(func, tau, nu, sigma, beta, a(max), nsteps, global_grad_stack);
+        afunnel(func, tau, nu, sigma, beta, a(max), nsteps, global_gs1);
       std::pair<double, dvector> p = f.get();
-      results(max) = to_dvariable(p, tau, nu, sigma, beta);
+      delete global_gs1;
+      global_gs1 = nullptr;
+
+      results(max) = to_dvariable(gs, p, tau, nu, sigma, beta);
     }
+    gradient_structure::_instance = gs;
 
     return results;
   }

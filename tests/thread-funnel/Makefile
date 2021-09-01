@@ -3,18 +3,38 @@ default:
 all:
 	$(MAKE) run
 	$(MAKE) run8
+	$(MAKE) run8b
+	$(MAKE) run8c
+	$(MAKE) run8d
 run0:
 	@#cp ../../examples/admb/forest/forest.dat forest0.dat
 	../../admb forest0 &> /dev/null
 	time ./forest0 &> forest0.out
 run:
 	@cp ../../examples/admb/forest/forest.dat .
-	@cp ../../examples/admb/forest/forest.tpl .
-	../../admb forest && time ./forest &> forest.out
+	@#cp ../../examples/admb/forest/forest.tpl .
+	../../admb forest
+	time ./forest &> forest.out
 
 run8:
 	@cp ../../examples/admb/forest/forest.dat forest8.dat
-	../../admb forest8 && time ./forest8 &> forest8.out
+	../../admb forest8
+	time ./forest8 &> forest8.out
+
+run8b:
+	@cp ../../examples/admb/forest/forest.dat forest8b.dat
+	../../admb forest8b
+	time ./forest8b &> forest8b.out
+
+run8c:
+	@cp ../../examples/admb/forest/forest.dat forest8c.dat
+	../../admb forest8c
+	time ./forest8c &> forest8c.out
+
+run8d:
+	@cp ../../examples/admb/forest/forest.dat forest8d.dat
+	../../admb forest8d
+	time ./forest8d &> forest8d.out
 
 clean:
 	@rm -vf admodel.cov
@@ -68,3 +88,67 @@ clean:
 	@rm -vf forest8.r01
 	@rm -vf forest8.rep
 	@rm -vf forest8.std
+	@rm -vf forest8b
+	@rm -vf forest8b.b01
+	@rm -vf forest8b.bar
+	@rm -vf forest8b.cor
+	@rm -vf forest8b.cpp
+	@rm -vf forest8b.dat
+	@rm -vf forest8b.eva
+	@rm -vf forest8b.htp
+	@rm -vf forest8b.log
+	@rm -vf forest8b.obj
+	@rm -vf forest8b.out
+	@rm -vf forest8b.p01
+	@rm -vf forest8b.par
+	@rm -vf forest8b.r01
+	@rm -vf forest8b.rep
+	@rm -vf forest8b.std
+	@rm -vf forest8c
+	@rm -vf forest8c.b01
+	@rm -vf forest8c.bar
+	@rm -vf forest8c.cor
+	@rm -vf forest8c.cpp
+	@rm -vf forest8c.dat
+	@rm -vf forest8c.eva
+	@rm -vf forest8c.htp
+	@rm -vf forest8c.log
+	@rm -vf forest8c.obj
+	@rm -vf forest8c.out
+	@rm -vf forest8c.p01
+	@rm -vf forest8c.par
+	@rm -vf forest8c.r01
+	@rm -vf forest8c.rep
+	@rm -vf forest8c.std
+	@rm -vf forest8d
+	@rm -vf forest8d.b01
+	@rm -vf forest8d.bar
+	@rm -vf forest8d.cor
+	@rm -vf forest8d.cpp
+	@rm -vf forest8d.dat
+	@rm -vf forest8d.eva
+	@rm -vf forest8d.htp
+	@rm -vf forest8d.log
+	@rm -vf forest8d.obj
+	@rm -vf forest8d.out
+	@rm -vf forest8d.p01
+	@rm -vf forest8d.par
+	@rm -vf forest8d.r01
+	@rm -vf forest8d.rep
+	@rm -vf forest8d.std
+	@rm -vf cmpdiff.tmp
+	@rm -vf cmpdiff1.tmp
+	@rm -vf cmpdiff2.tmp
+	@rm -vf cmpdiff3.tmp
+	@rm -vf gradfil1.tmp
+	@rm -vf gradfil11.tmp
+	@rm -vf gradfil12.tmp
+	@rm -vf gradfil13.tmp
+	@rm -vf gradfil2.tmp
+	@rm -vf gradfil21.tmp
+	@rm -vf gradfil22.tmp
+	@rm -vf gradfil23.tmp
+	@rm -vf varssave.tmp
+	@rm -vf varssave1.tmp
+	@rm -vf varssave2.tmp
+	@rm -vf varssave3.tmp

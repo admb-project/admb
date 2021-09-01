@@ -1,14 +1,16 @@
 default:
 	$(MAKE) run8
 all:
+	$(MAKE) run0
 	$(MAKE) run
 	$(MAKE) run8
 	$(MAKE) run8b
 	$(MAKE) run8c
 	$(MAKE) run8d
+	$(MAKE) run8e
 run0:
-	@#cp ../../examples/admb/forest/forest.dat forest0.dat
-	../../admb forest0 &> /dev/null
+	@cp ../../examples/admb/forest/forest.dat forest0.dat
+	../../admb forest0
 	time ./forest0 &> forest0.out
 run:
 	@cp ../../examples/admb/forest/forest.dat .
@@ -35,6 +37,16 @@ run8d:
 	@cp ../../examples/admb/forest/forest.dat forest8d.dat
 	../../admb forest8d
 	time ./forest8d &> forest8d.out
+
+run8e:
+	@cp ../../examples/admb/forest/forest.dat forest8e.dat
+	../../admb forest8e
+	time ./forest8e &> forest8e.out
+
+run8f:
+	@cp ../../examples/admb/forest/forest.dat forest8f.dat
+	../../admb forest8f
+	time ./forest8f &> forest8f.out
 
 clean:
 	@rm -vf admodel.cov
@@ -136,6 +148,38 @@ clean:
 	@rm -vf forest8d.r01
 	@rm -vf forest8d.rep
 	@rm -vf forest8d.std
+	@rm -vf forest8e
+	@rm -vf forest8e.b01
+	@rm -vf forest8e.bar
+	@rm -vf forest8e.cor
+	@rm -vf forest8e.cpp
+	@rm -vf forest8e.dat
+	@rm -vf forest8e.eva
+	@rm -vf forest8e.htp
+	@rm -vf forest8e.log
+	@rm -vf forest8e.obj
+	@rm -vf forest8e.out
+	@rm -vf forest8e.p01
+	@rm -vf forest8e.par
+	@rm -vf forest8e.r01
+	@rm -vf forest8e.rep
+	@rm -vf forest8e.std
+	@rm -vf forest8f
+	@rm -vf forest8f.b01
+	@rm -vf forest8f.bar
+	@rm -vf forest8f.cor
+	@rm -vf forest8f.cpp
+	@rm -vf forest8f.dat
+	@rm -vf forest8f.eva
+	@rm -vf forest8f.htp
+	@rm -vf forest8f.log
+	@rm -vf forest8f.obj
+	@rm -vf forest8f.out
+	@rm -vf forest8f.p01
+	@rm -vf forest8f.par
+	@rm -vf forest8f.r01
+	@rm -vf forest8f.rep
+	@rm -vf forest8f.std
 	@rm -vf cmpdiff.tmp
 	@rm -vf cmpdiff1.tmp
 	@rm -vf cmpdiff2.tmp

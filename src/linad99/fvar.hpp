@@ -512,7 +512,7 @@ class vector_shape
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
-  static vector_shape_pool* xpool;
+  thread_local static vector_shape_pool* xpool;
 
   void* operator new(size_t);
   void operator delete(void* ptr, size_t);
@@ -1781,9 +1781,9 @@ class ts_vector_shapex
    friend class dvar_vector;
 
 #  if defined(USE_VECTOR_SHAPE_POOL)
-   static ts_vector_shape_pool **xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n);
+   thread_local static ts_vector_shape_pool** xpool;
+   void *operator new(size_t);
+   void operator delete(void *ptr, size_t n);
 #  endif
 
    unsigned int ncopies;
@@ -2044,7 +2044,7 @@ class arr_link
 
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
-  static vector_shape_pool* xpool;
+  thread_local static vector_shape_pool* xpool;
 
   void* operator new(size_t);
   void operator delete(void* ptr, size_t);

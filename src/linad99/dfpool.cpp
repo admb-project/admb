@@ -15,13 +15,13 @@
 
 #if defined(USE_VECTOR_SHAPE_POOL)
 
-bool cleanup_arr_link_xpool = false;
-bool cleanup_vector_shape_xpool = false;
-bool cleanup_vector_shapex_xpool = false;
+thread_local bool cleanup_arr_link_xpool = false;
+thread_local bool cleanup_vector_shape_xpool = false;
+thread_local bool cleanup_vector_shapex_xpool = false;
 
-vector_shape_pool* arr_link::xpool = nullptr;
-vector_shape_pool* vector_shape::xpool = nullptr;
-vector_shape_pool* vector_shapex::xpool = nullptr;
+thread_local vector_shape_pool* arr_link::xpool = nullptr;
+thread_local vector_shape_pool* vector_shape::xpool = nullptr;
+thread_local vector_shape_pool* vector_shapex::xpool = nullptr;
 
 void cleanup_xpools()
 {

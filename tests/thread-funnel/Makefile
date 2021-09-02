@@ -1,5 +1,3 @@
-default:
-	$(MAKE) run8
 all:
 	$(MAKE) run0
 	$(MAKE) run
@@ -8,13 +6,13 @@ all:
 	$(MAKE) run8c
 	$(MAKE) run8d
 	$(MAKE) run8e
+	$(MAKE) run8f
 run0:
 	@cp ../../examples/admb/forest/forest.dat forest0.dat
 	../../admb forest0
 	time ./forest0 &> forest0.out
 run:
 	@cp ../../examples/admb/forest/forest.dat .
-	@#cp ../../examples/admb/forest/forest.tpl .
 	../../admb forest
 	time ./forest &> forest.out
 
@@ -49,6 +47,7 @@ run8f:
 	time ./forest8f &> forest8f.out
 
 clean:
+	@rm -vf forest.dat
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
 	@rm -vf admodel.hes

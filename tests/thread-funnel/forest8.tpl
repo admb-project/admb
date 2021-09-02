@@ -93,19 +93,6 @@ REPORT_SECTION
 FINAL_SECTION
   cout << "Total Funnel time: " << total_funnel_time << endl;
 
-  auto start = std::chrono::high_resolution_clock::now();
-  delete global_gs1;
-  global_gs1 = nullptr;
-  delete global_gs2;
-  global_gs2 = nullptr;
-  delete global_gs3;
-  global_gs3 = nullptr;
-  delete global_gs4;
-  global_gs4 = nullptr;
-
-  auto finish = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double> elapsed = finish - start;
-  deallocation_time = elapsed.count();
   std::cout << "Resource time: " << (deallocation_time + allocation_time)  <<  endl;
 GLOBALS_SECTION
   #include <fvar.hpp>

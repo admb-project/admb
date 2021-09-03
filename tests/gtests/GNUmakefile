@@ -171,6 +171,7 @@ GTESTS_ALL=\
  test_quadratic_prior.cpp\
  test_evaluate_function.cpp\
  test_gradient_structure_thread.cpp\
+ test_dll_param_init_bounded_vector.cpp\
  main.cpp
 
 ERRORS=\
@@ -185,7 +186,6 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
- test_laplace_approximation_calculator.cpp\
  main.cpp
 
 ifdef GTESTS_DEV

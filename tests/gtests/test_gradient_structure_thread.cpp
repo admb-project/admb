@@ -356,3 +356,95 @@ TEST_F(test_gradient_structure_thread, multiple_save_arrays)
   ASSERT_TRUE(b.ARR_LIST1->ARRAY_MEMBLOCK_SAVE == nullptr);
   }
 }
+TEST_F(test_gradient_structure_thread, multiple_gradcalc)
+{
+  {
+    gradient_structure a(100000L, 1);
+    gradient_structure b(100000L, 5);
+
+    gradient_structure::_instance = &a;
+    {
+      independent_variables independents(1, 2);
+      independents(1) = 1;
+      independents(2) = 1;
+      dvar_vector variables(independents);
+
+      ASSERT_EQ(a.NVAR, 2);
+      ASSERT_EQ(b.NVAR, 0);
+
+      dvariable f = 2 * variables(1) + 3 * variables(2);
+      ASSERT_DOUBLE_EQ(value(f), 5);
+
+      dvector g(1, 2);
+      a.gradcalc(2, g);
+
+      ASSERT_DOUBLE_EQ(g(1), 2);
+      ASSERT_DOUBLE_EQ(g(2), 3);
+    }
+    gradient_structure::_instance = &b;
+    {
+      independent_variables independents(1, 4);
+      independents(1) = -1;
+      independents(2) = -1;
+      independents(3) = -1;
+      independents(4) = -1;
+      dvar_vector variables(independents);
+
+      ASSERT_EQ(a.NVAR, 2);
+      ASSERT_EQ(b.NVAR, 4);
+
+      dvariable f = 2 * variables(1) + 3 * variables(2) + 4 * variables(3) + 5 * variables(4);
+      ASSERT_DOUBLE_EQ(value(f), -14);
+
+      dvector g(1, 4);
+      b.gradcalc(4, g);
+
+      ASSERT_DOUBLE_EQ(g(1), 2);
+      ASSERT_DOUBLE_EQ(g(2), 3);
+      ASSERT_DOUBLE_EQ(g(3), 4);
+      ASSERT_DOUBLE_EQ(g(4), 5);
+    }
+    gradient_structure::_instance = &b;
+    {
+      independent_variables independents(1, 2);
+      independents(1) = 1;
+      independents(2) = 1;
+      dvar_vector variables(independents);
+
+      ASSERT_EQ(a.NVAR, 2);
+      ASSERT_EQ(b.NVAR, 2);
+
+      dvariable f = 2 * variables(1) + 3 * variables(2);
+      ASSERT_DOUBLE_EQ(value(f), 5);
+
+      dvector g(1, 2);
+      b.gradcalc(2, g);
+
+      ASSERT_DOUBLE_EQ(g(1), 2);
+      ASSERT_DOUBLE_EQ(g(2), 3);
+    }
+    gradient_structure::_instance = &a;
+    {
+      independent_variables independents(1, 4);
+      independents(1) = -1;
+      independents(2) = -1;
+      independents(3) = -1;
+      independents(4) = -1;
+      dvar_vector variables(independents);
+
+      ASSERT_EQ(a.NVAR, 4);
+      ASSERT_EQ(b.NVAR, 2);
+
+      dvariable f = 2 * variables(1) + 3 * variables(2) + 4 * variables(3) + 5 * variables(4);
+      ASSERT_DOUBLE_EQ(value(f), -14);
+
+      dvector g(1, 4);
+      a.gradcalc(4, g);
+
+      ASSERT_DOUBLE_EQ(g(1), 2);
+      ASSERT_DOUBLE_EQ(g(2), 3);
+      ASSERT_DOUBLE_EQ(g(3), 4);
+      ASSERT_DOUBLE_EQ(g(4), 5);
+    }
+  }
+}

@@ -16,6 +16,18 @@ ADMB-12.3-git
 
 #### Changes and Improvements
 
+*  Simplify linking of static library files with .lib or .a extension using the admb script ([See Changes 3fbfd6e](https://github.com/admb-project/admb/commit/3fbfd6edcf5a953a160ef54dcbee0397405519c0)).
+
+  For Microsoft Visual Studio,
+  ```
+  > admb.bat myfile.tpl mylibrary.lib
+  ```
+
+  For Unix,
+  ```
+  > admb myfile.tpl mylibrary.a
+  ```
+
 * Profiling diagnostic option -time has been disabled for releases.
   To develop and use the -time option, rebuild ADMB libraries with 
   compiler macro DIAG_TIMER defined (See commands below).  ([See Changes a1667e3](https://github.com/admb-project/admb/commit/a1667e31cb862355932609a839e5962fa04823c4)).

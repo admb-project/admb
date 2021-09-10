@@ -128,6 +128,23 @@ for %%a in (%*) do (
         )
       )
     )
+    if "!CXX!"=="cl" (
+       if "%%~xa"==".lib" (
+         if not defined option_libs (
+           set option_libs=!arg!
+         ) else (
+           option_libs=!option_libs! !arg!
+         )
+       )
+    ) else (
+       if "%%~xa"==".a" (
+         if defined option_libs (
+           set option_libs=!arg!
+         ) else (
+           option_libs=!option_libs! !arg!
+         )
+       )
+    )
     if "%%~xa"==".exe" (
       if defined option_o (
         set output=!arg!
@@ -657,7 +674,10 @@ if not defined tpls (
           )
         )
       )
-      echo.&echo *** Linking: !objs!
+      if defined option_libs (
+        CMD=!CMD! !option_libs!
+      )
+      echo.&echo *** Linking: !objs! !option_libs!
       echo !CMD!
       call !CMD! || goto ERROR
       if defined d (
@@ -734,10 +754,13 @@ if not defined tpls (
         )
       )
     )
+    if defined option_libs (
+      CMD=!CMD! !option_libs!
+    )
     if defined objs (
-      echo.&echo *** Linking: !tpl!.obj !objs!
+      echo.&echo *** Linking: !tpl!.obj !objs! !option_libs!
     ) else (
-      echo.&echo *** Linking: !tpl!.obj
+      echo.&echo *** Linking: !tpl!.obj !option_libs!
     )
     echo !CMD!
     call !CMD! || goto ERROR

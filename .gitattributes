@@ -3,4 +3,4 @@
 .github export-ignore
 .gitignore export-ignore
 .travis.yml export-ignore
-*.tpl linguist-language=AD_Model_Builder
+*.tpl linguist-language=C++

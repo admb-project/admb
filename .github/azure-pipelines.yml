@@ -8,6 +8,8 @@
 
 trigger:
 - master
+- main
+- dev
 
 jobs:
 - job: VS2017_vcvars32

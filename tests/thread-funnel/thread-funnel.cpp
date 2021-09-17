@@ -158,6 +158,11 @@ dvar_vector funnel(
       afunnel(func, tau, nu, sigma, beta, a(i + 3), nsteps);
     gradient_structure::_instance = nullptr;
 
+    f.wait();
+    f2.wait();
+    f3.wait();
+    f4.wait();
+
     std::pair<double, dvector> p = f.get();
     std::pair<double, dvector> p2 = f2.get();
     std::pair<double, dvector> p3 = f3.get();
@@ -176,6 +181,9 @@ dvar_vector funnel(
     std::future<std::pair<double, dvector>> f = 
       afunnel(func, tau, nu, sigma, beta, a(max), nsteps);
     gradient_structure::_instance = nullptr;
+
+    f.wait();
+
     std::pair<double, dvector> p = f.get();
 
     gradient_structure::_instance = gs;

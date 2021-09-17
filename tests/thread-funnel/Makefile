@@ -7,6 +7,7 @@ all:
 	$(MAKE) run8d
 	$(MAKE) run8e
 	$(MAKE) run8f
+	$(MAKE) run8g
 run0:
 	@cp ../../examples/admb/forest/forest.dat forest0.dat
 	../../admb forest0
@@ -45,6 +46,10 @@ run8f:
 	@cp ../../examples/admb/forest/forest.dat forest8f.dat
 	../../admb forest8f
 	time ./forest8f &> forest8f.out
+run8g:
+	@cp ../../examples/admb/forest/forest.dat forest8g.dat
+	../../admb forest8g thread-funnel.cpp
+	time ./forest8g &> forest8g.out
 
 clean:
 	@rm -vf forest.dat
@@ -179,6 +184,22 @@ clean:
 	@rm -vf forest8f.r01
 	@rm -vf forest8f.rep
 	@rm -vf forest8f.std
+	@rm -vf forest8g
+	@rm -vf forest8g.b01
+	@rm -vf forest8g.bar
+	@rm -vf forest8g.cor
+	@rm -vf forest8g.cpp
+	@rm -vf forest8g.dat
+	@rm -vf forest8g.eva
+	@rm -vf forest8g.htp
+	@rm -vf forest8g.log
+	@rm -vf forest8g.obj
+	@rm -vf forest8g.out
+	@rm -vf forest8g.p01
+	@rm -vf forest8g.par
+	@rm -vf forest8g.r01
+	@rm -vf forest8g.rep
+	@rm -vf forest8g.std
 	@rm -vf cmpdiff.tmp
 	@rm -vf cmpdiff1.tmp
 	@rm -vf cmpdiff2.tmp
@@ -195,3 +216,4 @@ clean:
 	@rm -vf varssave1.tmp
 	@rm -vf varssave2.tmp
 	@rm -vf varssave3.tmp
+	@rm -vf thread-funnel.obj

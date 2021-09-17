@@ -1,25 +1,26 @@
 #include <future>
 #include <fvar.hpp>
 
-gradient_structure* global_gs1 = nullptr;
-gradient_structure* global_gs2 = nullptr;
-gradient_structure* global_gs3 = nullptr;
-gradient_structure* global_gs4 = nullptr;
-
+size_t ngradients = 5;
+gradient_structure** gradients = nullptr;
 
 double total_funnel_time = 0;
 double allocation_time = 0;
 double deallocation_time = 0;
 
-void allocate_global_gs()
+void allocate_gradients()
 {
   gradient_structure* gs = gradient_structure::get();
 
   auto start = std::chrono::high_resolution_clock::now();
-  global_gs1 = new gradient_structure(10000, 1);
-  global_gs2 = new gradient_structure(10000, 2);
-  global_gs3 = new gradient_structure(10000, 3);
-  global_gs4 = new gradient_structure(10000, 4);
+
+  gradients = new gradient_structure*[ngradients];
+
+  gradients[0] = nullptr;
+  for (int i = 1; i < ngradients; ++i)
+  {
+    gradients[i] = new gradient_structure(10000, i);
+  }
 
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
@@ -28,21 +29,23 @@ void allocate_global_gs()
   gradient_structure::_instance = gs;
   gs = nullptr;
 }
-void clean_global_gs()
+void deallocate_gradients()
 {
   gradient_structure* gs = gradient_structure::get();
   gradient_structure::_instance = nullptr;
 
   cout << "Total Funnel time: " << total_funnel_time << endl;
   auto start = std::chrono::high_resolution_clock::now();
-  delete global_gs1;
-  global_gs1 = nullptr;
-  delete global_gs2;
-  global_gs2 = nullptr;
-  delete global_gs3;
-  global_gs3 = nullptr;
-  delete global_gs4;
-  global_gs4 = nullptr;
+
+  gradients[0] = nullptr;
+  for (int i = 1; i < ngradients; ++i)
+  {
+    delete gradients[i];
+    gradients[i] = nullptr;
+  }
+  delete [] gradients;
+  gradients = nullptr;
+
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
   deallocation_time = elapsed.count();
@@ -135,22 +138,22 @@ dvar_vector funnel(
 
   for (int i = min; i < max; i += 4)
   {
-    gradient_structure::_instance = global_gs1;
+    gradient_structure::_instance = gradients[1];
     std::future<std::pair<double, dvector>> f = 
       afunnel(func, tau, nu, sigma, beta, a(i), nsteps);
     gradient_structure::_instance = nullptr;
 
-    gradient_structure::_instance = global_gs2;
+    gradient_structure::_instance = gradients[2];
     std::future<std::pair<double, dvector>> f2 = 
       afunnel(func, tau, nu, sigma, beta, a(i + 1), nsteps);
     gradient_structure::_instance = nullptr;
 
-    gradient_structure::_instance = global_gs3;
+    gradient_structure::_instance = gradients[3];
     std::future<std::pair<double, dvector>> f3 = 
       afunnel(func, tau, nu, sigma, beta, a(i + 2), nsteps);
     gradient_structure::_instance = nullptr;
 
-    gradient_structure::_instance = global_gs4;
+    gradient_structure::_instance = gradients[4];
     std::future<std::pair<double, dvector>> f4 = 
       afunnel(func, tau, nu, sigma, beta, a(i + 3), nsteps);
     gradient_structure::_instance = nullptr;
@@ -169,7 +172,7 @@ dvar_vector funnel(
   }
 
   {
-    gradient_structure::_instance = global_gs1;
+    gradient_structure::_instance = gradients[1];
     std::future<std::pair<double, dvector>> f = 
       afunnel(func, tau, nu, sigma, beta, a(max), nsteps);
     gradient_structure::_instance = nullptr;

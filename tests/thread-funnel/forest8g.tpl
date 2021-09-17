@@ -53,8 +53,8 @@ PROCEDURE_SECTION
   }
   f+=sum_freq*log(1.e-50+S(1));
 PRELIMINARY_CALCS_SECTION
-  void allocate_global_gs();
-  allocate_global_gs();
+  void allocate_gradients();
+  allocate_gradients();
 FUNCTION dvariable h(const dvariable& z)
   dvariable tmp;
   tmp=mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(a(a_index),beta)*mfexp(sigma*z))) );  
@@ -78,8 +78,8 @@ REPORT_SECTION
   report << "beta "  << beta << endl; 
   report << "sigma "  << sigma << endl; 
 FINAL_SECTION
-  void clean_global_gs();
-  clean_global_gs();
+  void deallocate_gradients();
+  deallocate_gradients();
 GLOBALS_SECTION
   #include <fvar.hpp>
   #include <admodel.h>

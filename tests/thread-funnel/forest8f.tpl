@@ -40,18 +40,12 @@ PROCEDURE_SECTION
 
   gradient_structure::_instance = gs;
 
-  auto start = std::chrono::high_resolution_clock::now();
   S = funnel([](const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps)
   {
     dvariable Integral;
     Integral=adromb2(&h2,tau,nu,sigma,beta,ai,-3.0,3.0,nsteps);
     return Integral;
   }, tau, nu, sigma, beta, a, nsteps);
-  auto finish = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double> elapsed = finish - start;
-  double count = elapsed.count();
-  std::cout << "Funnel time: " << count <<  endl;
-  total_funnel_time += count;
 
   gradient_structure::_instance = gs;
 
@@ -123,6 +117,10 @@ GLOBALS_SECTION
   #include <fvar.hpp>
   #include <admodel.h>
   #include <future>
+
+  double total_funnel_time = 0;
+  double allocation_time = 0;
+  double deallocation_time = 0;
 
   typedef std::function<dvariable(const dvariable&, const dvariable&, const dvariable&, const dvariable&, const dvariable&, const double)> _func2;
 
@@ -252,6 +250,8 @@ GLOBALS_SECTION
     dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
     const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
   {
+    auto start = std::chrono::high_resolution_clock::now();
+
     const int min = a.indexmin();
     const int max = a.indexmax();
     dvar_vector results(min, max);
@@ -307,8 +307,11 @@ GLOBALS_SECTION
 
     gradient_structure::_instance = gs;
 
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    double count = elapsed.count();
+    std::cout << "Funnel time: " << count <<  endl;
+    total_funnel_time += count;
+
     return results;
   }
-  double total_funnel_time = 0;
-  double allocation_time = 0;
-  double deallocation_time = 0;

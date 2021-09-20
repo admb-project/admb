@@ -8,6 +8,8 @@ all:
 	$(MAKE) run8e
 	$(MAKE) run8f
 	$(MAKE) run8g
+dev:
+	$(MAKE) run8h
 run0:
 	@cp ../../examples/admb/forest/forest.dat forest0.dat
 	../../admb forest0
@@ -50,6 +52,11 @@ run8g:
 	@cp ../../examples/admb/forest/forest.dat forest8g.dat
 	../../admb forest8g thread-funnel.cpp
 	time ./forest8g &> forest8g.out
+
+run8h:
+	@cp ../../examples/admb/forest/forest.dat forest8h.dat
+	../../admb forest8h thread_funnel.cpp
+	time ./forest8h
 
 clean:
 	@rm -vf forest.dat
@@ -217,3 +224,24 @@ clean:
 	@rm -vf varssave2.tmp
 	@rm -vf varssave3.tmp
 	@rm -vf thread-funnel.obj
+	@rm -vf cmpdiff4.tmp
+	@rm -vf forest8h
+	@rm -vf forest8h.b01
+	@rm -vf forest8h.bar
+	@rm -vf forest8h.cor
+	@rm -vf forest8h.cpp
+	@rm -vf forest8h.dat
+	@rm -vf forest8h.eva
+	@rm -vf forest8h.htp
+	@rm -vf forest8h.log
+	@rm -vf forest8h.obj
+	@rm -vf forest8h.out
+	@rm -vf forest8h.p01
+	@rm -vf forest8h.par
+	@rm -vf forest8h.r01
+	@rm -vf forest8h.rep
+	@rm -vf forest8h.std
+	@rm -vf gradfil14.tmp
+	@rm -vf gradfil24.tmp
+	@rm -vf varssave4.tmp
+	@rm -vf thread_funnel.obj

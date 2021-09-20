@@ -36,15 +36,12 @@ PROCEDURE_SECTION
   nu=mfexp(log_nu);
   sigma=mfexp(log_sigma);
 
-  /*  
   S = funnel([](const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps)
   {
     dvariable Integral;
     Integral=adromb2(&h2,tau,nu,sigma,beta,ai,-3.0,3.0,nsteps);
     return Integral;
   }, tau, nu, sigma, beta, a, nsteps);
-  */
-  S = funnel(f2, tau, nu, sigma, beta, a, nsteps);
 
   f=0.0;
   for (int i=1;i<=k;i++)
@@ -137,21 +134,6 @@ GLOBALS_SECTION
     }
     return s[1];
   }
-  //void f2(void)
-  void f2(const int i , const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
-  {
-    cout << "kdjfkdj" << __FILE__ << ':' << __LINE__ << endl;
-  }
-  void func(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
-  {
-    cout << __FILE__ << ':' << __LINE__ << endl;
-  }
-  template<typename ...FTs, typename ...Ts> 
-  dvar_vector funnel(void (*f)(FTs...), Ts... args)
-  {
-    dvar_vector variables;
-    cout << __FILE__ << ':' << __LINE__ << endl;
-    f(0, args...);
-    func(args...);
-    return variables;
-  }
+  dvar_vector funnel(
+    dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
+    const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps);

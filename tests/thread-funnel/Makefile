@@ -8,8 +8,8 @@ all:
 	$(MAKE) run8e
 	$(MAKE) run8f
 	$(MAKE) run8g
-dev:
 	$(MAKE) run8h
+
 run0:
 	@cp ../../examples/admb/forest/forest.dat forest0.dat
 	../../admb forest0
@@ -56,7 +56,7 @@ run8g:
 run8h:
 	@cp ../../examples/admb/forest/forest.dat forest8h.dat
 	../../admb forest8h thread_funnel.cpp
-	time ./forest8h
+	time ./forest8h &> forest8h.out
 
 clean:
 	@rm -vf forest.dat

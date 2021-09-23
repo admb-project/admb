@@ -41,8 +41,8 @@ void set_independent_variables(independent_variables& independents, int index, c
   set_independent_variables(independents, index + 1, args...);
 }
 
-template<typename ...PTs, typename ...Ts>
-std::future<std::pair<double, dvector>> thread_funnel(dvariable (*func)(PTs...), Ts... args)
+template<class F, class ...Args>
+std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
 {
   gradient_structure* gs = gradient_structure::get();
   return std::async(std::launch::async, [=]()->std::pair<double, dvector>
@@ -68,12 +68,11 @@ std::future<std::pair<double, dvector>> thread_funnel(dvariable (*func)(PTs...),
       dvariable _sigma = scoped_variables(3);
       dvariable _beta = scoped_variables(4);
 
-      //f = func(_tau, _nu, _sigma, _beta, ai, nsteps);
-
-      std::tuple<PTs...> t = std::make_tuple(args...);
-      //using indexes = std::make_index_sequence<nvar>;
-      f = func(_tau, _nu, _sigma, _beta, std::get<4>(t), std::get<5>(t));
-      //f = func(std::get<std::integer_sequence<int, 0, 1, 2, 3, 4, 5>>(t)...);
+      std::tuple<Args...> t = std::make_tuple(args...);
+      double ai = std::get<4>(t);
+      int nsteps = std::get<5>(t);
+      std::tuple<Args&&...> t2 = std::forward_as_tuple(_tau, _nu, _sigma, _beta, ai, nsteps);
+      f = std::apply(func, t2);
 
       v = value(f);
 

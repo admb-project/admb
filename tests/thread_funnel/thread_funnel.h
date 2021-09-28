@@ -43,6 +43,10 @@ void set_independent_variables(independent_variables& independents, int index, c
   set_independent_variables(independents, index + 1, args...);
 }
 
+std::tuple<dvariable const&> create_tuple(std::vector<dvariable>& variables, int index, dvariable const& arg)
+{
+  return std::tie(variables[index]);
+}
 template<typename Arg>
 std::tuple<Arg> create_tuple(std::vector<dvariable>& variables, int index, Arg&& arg)
 {
@@ -61,7 +65,8 @@ std::tuple<dvariable const&, Args...> create_tuple(std::vector<dvariable>& varia
   std::tuple<dvariable const&> t = std::tie(variables[index]);
   std::tuple<Args...> t2 = create_tuple(variables, index + 1, args...);
   return std::tuple_cat(t, t2);
-} template<typename ...Args>
+}
+template<typename ...Args>
 std::tuple<Args...> create_tuple(std::vector<dvariable>& variables, Args&&... args)
 {
   std::tuple<Args...> t = create_tuple(variables, 0, args...);

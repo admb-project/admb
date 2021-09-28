@@ -1,3 +1,5 @@
+#include <tuple>
+#include <vector>
 #include <future>
 #include <fvar.hpp>
 
@@ -41,6 +43,31 @@ void set_independent_variables(independent_variables& independents, int index, c
   set_independent_variables(independents, index + 1, args...);
 }
 
+template<typename Arg>
+std::tuple<Arg> create_tuple(std::vector<dvariable>& variables, int index, Arg&& arg)
+{
+  return std::tie(arg);
+}
+template<typename Arg, typename ...Args>
+std::tuple<Arg, Args...> create_tuple(std::vector<dvariable>& variables, int index, Arg&& arg, Args&&... args)
+{
+  std::tuple<Arg> t = std::tie(arg);
+  std::tuple<Args...> t2 = create_tuple(variables, index, args...);
+  return std::tuple_cat(t, t2);
+}
+template<typename ...Args>
+std::tuple<dvariable const&, Args...> create_tuple(std::vector<dvariable>& variables, int index, dvariable const& arg, Args&&... args)
+{
+  std::tuple<dvariable const&> t = std::tie(variables[index]);
+  std::tuple<Args...> t2 = create_tuple(variables, index + 1, args...);
+  return std::tuple_cat(t, t2);
+} template<typename ...Args>
+std::tuple<Args...> create_tuple(std::vector<dvariable>& variables, Args&&... args)
+{
+  std::tuple<Args...> t = create_tuple(variables, 0, args...);
+  return std::tuple_cat(t);
+}
+
 template<class F, class ...Args>
 std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
 {
@@ -61,18 +88,16 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
       // Set gradient_structure::NVAR
       dvar_vector scoped_variables(scoped_independents);
 
+      std::vector<dvariable> variables;
+      for (int i = 1; i <= nvar; ++i)
+      {
+        variables.push_back(std::move(scoped_variables(i)));
+      }
+
       dvariable f(0);
 
-      dvariable _tau = scoped_variables(1);
-      dvariable _nu = scoped_variables(2);
-      dvariable _sigma = scoped_variables(3);
-      dvariable _beta = scoped_variables(4);
-
-      std::tuple<Args...> t = std::make_tuple(args...);
-      double ai = std::get<4>(t);
-      int nsteps = std::get<5>(t);
-      std::tuple<Args&&...> t2 = std::forward_as_tuple(_tau, _nu, _sigma, _beta, ai, nsteps);
-      f = std::apply(func, t2);
+      std::tuple<Args...> t = create_tuple(variables, args...);
+      f = std::apply(func, t);
 
       v = value(f);
 

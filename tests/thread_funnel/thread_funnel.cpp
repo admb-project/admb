@@ -54,36 +54,6 @@ void deallocate_gradients()
 
   gradient_structure::_instance = gs;
 }
-dvariable to_dvariable(
-  std::pair<double, dvector>& p,
-  const dvariable& x, const dvariable& y,
-  const dvariable& u, const dvariable& v)
-{
-  gradient_structure* gs = gradient_structure::get();
-  grad_stack* GRAD_STACK1 = gs->GRAD_STACK1;
-
-  dvariable var(p.first);
-  dvector g(p.second);
-
-  grad_stack_entry* entry = GRAD_STACK1->ptr;
-  entry->func = NULL;
-  entry->dep_addr = &((*var.v).x);
-  entry->ind_addr1 = &((*x.v).x);
-  entry->mult1 = g(1);
-  entry->ind_addr2 = &((*y.v).x);
-  entry->mult2 = g(2);
-  GRAD_STACK1->ptr++;
-  grad_stack_entry* entry2 = GRAD_STACK1->ptr;
-  entry2->func = default_evaluation4ind;
-  entry2->ind_addr1 = &((*u.v).x);
-  entry2->mult1 = g(3);
-  entry2->ind_addr2 = &((*v.v).x);
-  entry2->mult2 = g(4);
-  GRAD_STACK1->ptr++;
-
-  return var;
-}
-
 dvar_vector funnel(
   dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
   const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)

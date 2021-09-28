@@ -113,3 +113,36 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
     return std::make_pair(v, g);
   });
 }
+template<class ...Args>
+dvariable to_dvariable(std::pair<double, dvector>& p, Args&& ...args)
+{
+  gradient_structure* gs = gradient_structure::get();
+  grad_stack* GRAD_STACK1 = gs->GRAD_STACK1;
+
+  dvariable var(p.first);
+  dvector g(p.second);
+
+  std::tuple<Args...> t = std::make_tuple(args...);
+  dvariable const& x = std::get<0>(t);
+  dvariable const& y = std::get<1>(t);
+  dvariable const& u = std::get<2>(t);
+  dvariable const& v = std::get<3>(t);
+
+  grad_stack_entry* entry = GRAD_STACK1->ptr;
+  entry->func = NULL;
+  entry->dep_addr = &((*var.v).x);
+  entry->ind_addr1 = &((*x.v).x);
+  entry->mult1 = g(1);
+  entry->ind_addr2 = &((*y.v).x);
+  entry->mult2 = g(2);
+  GRAD_STACK1->ptr++;
+  grad_stack_entry* entry2 = GRAD_STACK1->ptr;
+  entry2->func = default_evaluation4ind;
+  entry2->ind_addr1 = &((*u.v).x);
+  entry2->mult1 = g(3);
+  entry2->ind_addr2 = &((*v.v).x);
+  entry2->mult2 = g(4);
+  GRAD_STACK1->ptr++;
+
+  return var;
+}

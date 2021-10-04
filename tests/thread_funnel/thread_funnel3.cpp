@@ -57,6 +57,19 @@ void deallocate_gradients()
 int id = 1;
 std::vector<std::future<std::pair<double, dvector>>> futures;
 std::vector<std::pair<double, dvector>> pairs;
+void add_pairs()
+{
+  int jmax = futures.size();
+  for (int j = 0; j < jmax; ++j)
+  {
+    futures[j].wait();
+
+    std::pair<double, dvector> p = futures[j].get();
+
+    pairs.push_back(std::move(p));
+  }
+  futures.clear();
+}
 template<class F, class ...Args>
 void funnel(F&& func, Args&&... args)
 {
@@ -93,17 +106,7 @@ dvar_vector funnels(
     int id2 = (i % n) + 1;
     if (id2 == n || i == max)
     {
-      int jmax = futures.size();
-      for (int j = 0; j < jmax; ++j)
-      {
-        futures[j].wait();
-
-        std::pair<double, dvector> p = futures[j].get();
-
-        pairs.push_back(std::move(p));
-
-      }
-      futures.clear();
+      add_pairs();
     }
   }
   for (int k = min; k < max; ++k)

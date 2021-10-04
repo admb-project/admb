@@ -82,6 +82,7 @@ void funnel(F&& func, Args&&... args)
   ++id;
   if (id >= ngradients)
   {
+    add_pairs();
     id = 1;
   }
 }
@@ -97,18 +98,11 @@ dvar_vector funnels(
 
   gradient_structure* gs = gradient_structure::get();
 
-  int n = ngradients - 1;
-  int k = min;
   for (int i = min; i <= max; ++i)
   {
     funnel(func, tau, nu, sigma, beta, a(i), nsteps);
-
-    int id2 = (i % n) + 1;
-    if (id2 == n || i == max)
-    {
-      add_pairs();
-    }
   }
+  add_pairs();
   for (int k = min; k < max; ++k)
   {
     gradient_structure::_instance = gs;

@@ -100,13 +100,17 @@ dvar_vector funnels(
 
         std::pair<double, dvector> p = futures[j].get();
 
-        gradient_structure::_instance = gs;
-        results(k) = to_dvariable(p, tau, nu, sigma, beta);
-        ++k;
-        gradient_structure::_instance = nullptr;
+        pairs.push_back(std::move(p));
+
       }
       futures.clear();
     }
+  }
+  for (int k = min; k < max; ++k)
+  {
+    gradient_structure::_instance = gs;
+    results(k) = to_dvariable(pairs[k - 1], tau, nu, sigma, beta);
+    gradient_structure::_instance = nullptr;
   }
   gradient_structure::_instance = gs;
 

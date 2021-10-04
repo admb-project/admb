@@ -229,7 +229,6 @@ clean:
 	@rm -vf varssave1.tmp
 	@rm -vf varssave2.tmp
 	@rm -vf varssave3.tmp
-	@rm -vf thread-funnel.obj
 	@rm -vf cmpdiff4.tmp
 	@rm -vf forest8h
 	@rm -vf forest8h.b01
@@ -250,7 +249,6 @@ clean:
 	@rm -vf gradfil14.tmp
 	@rm -vf gradfil24.tmp
 	@rm -vf varssave4.tmp
-	@rm -vf thread_funnel.obj
 	@rm -vf forest8i
 	@rm -vf forest8i.b01
 	@rm -vf forest8i.bar
@@ -267,4 +265,6 @@ clean:
 	@rm -vf forest8i.r01
 	@rm -vf forest8i.rep
 	@rm -vf forest8i.std
-
+	@rm -vf thread_funnel.obj
+	@rm -vf thread_funnel2.obj
+	@rm -vf thread_funnel3.obj

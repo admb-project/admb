@@ -54,7 +54,24 @@ void deallocate_gradients()
 
   gradient_structure::_instance = gs;
 }
+int id = 1;
 std::vector<std::future<std::pair<double, dvector>>> futures;
+std::vector<std::pair<double, dvector>> pairs;
+template<class F, class ...Args>
+void funnel(F&& func, Args&&... args)
+{
+  gradient_structure::_instance = gradients[id];
+  std::future<std::pair<double, dvector>> f =
+    thread_funnel(func, std::forward<Args>(args)...);
+  futures.push_back(std::move(f));
+  gradient_structure::_instance = nullptr;
+
+  ++id;
+  if (id >= ngradients)
+  {
+    id = 1;
+  }
+}
 dvar_vector funnels(
   dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
   const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
@@ -71,14 +88,10 @@ dvar_vector funnels(
   int k = min;
   for (int i = min; i <= max; ++i)
   {
-    int id = (i % n) + 1;
-    gradient_structure::_instance = gradients[id];
-    std::future<std::pair<double, dvector>> f =
-      thread_funnel(func, tau, nu, sigma, beta, a(i), nsteps);
-    futures.push_back(std::move(f));
-    gradient_structure::_instance = nullptr;
+    funnel(func, tau, nu, sigma, beta, a(i), nsteps);
 
-    if (id == n || i == max)
+    int id2 = (i % n) + 1;
+    if (id2 == n || i == max)
     {
       int jmax = futures.size();
       for (int j = 0; j < jmax; ++j)

@@ -67,24 +67,33 @@ dvar_vector funnels(
 
   gradient_structure* gs = gradient_structure::get();
 
+  int n = ngradients - 1;
+  int k = min;
   for (int i = min; i <= max; ++i)
   {
-    int id = (i % 4) + 1;
+    int id = (i % n) + 1;
     gradient_structure::_instance = gradients[id];
     std::future<std::pair<double, dvector>> f =
       thread_funnel(func, tau, nu, sigma, beta, a(i), nsteps);
     futures.push_back(std::move(f));
     gradient_structure::_instance = nullptr;
 
-    futures[0].wait();
+    if (id == n || i == max)
+    {
+      int jmax = futures.size();
+      for (int j = 0; j < jmax; ++j)
+      {
+        futures[j].wait();
 
-    std::pair<double, dvector> p = futures[0].get();
+        std::pair<double, dvector> p = futures[j].get();
 
-    gradient_structure::_instance = gs;
-    results(i) = to_dvariable(p, tau, nu, sigma, beta);
-    gradient_structure::_instance = nullptr;
-
-    futures.clear();
+        gradient_structure::_instance = gs;
+        results(k) = to_dvariable(p, tau, nu, sigma, beta);
+        ++k;
+        gradient_structure::_instance = nullptr;
+      }
+      futures.clear();
+    }
   }
   gradient_structure::_instance = gs;
 

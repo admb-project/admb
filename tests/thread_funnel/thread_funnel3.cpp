@@ -54,6 +54,7 @@ void deallocate_gradients()
 
   gradient_structure::_instance = gs;
 }
+std::vector<std::future<std::pair<double, dvector>>> futures;
 dvar_vector funnels(
   dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
   const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
@@ -68,18 +69,22 @@ dvar_vector funnels(
 
   for (int i = min; i <= max; ++i)
   {
-    gradient_structure::_instance = gradients[(i % 4) + 1];
+    int id = (i % 4) + 1;
+    gradient_structure::_instance = gradients[id];
     std::future<std::pair<double, dvector>> f =
       thread_funnel(func, tau, nu, sigma, beta, a(i), nsteps);
+    futures.push_back(std::move(f));
     gradient_structure::_instance = nullptr;
 
-    f.wait();
+    futures[0].wait();
 
-    std::pair<double, dvector> p = f.get();
+    std::pair<double, dvector> p = futures[0].get();
 
     gradient_structure::_instance = gs;
     results(i) = to_dvariable(p, tau, nu, sigma, beta);
     gradient_structure::_instance = nullptr;
+
+    futures.clear();
   }
   gradient_structure::_instance = gs;
 

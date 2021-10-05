@@ -103,12 +103,13 @@ dvar_vector funnels(
     funnel(func, tau, nu, sigma, beta, a(i), nsteps);
   }
   add_pairs();
-  for (int k = min; k < max; ++k)
+  for (int k = min; k <= max; ++k)
   {
     gradient_structure::_instance = gs;
     results(k) = to_dvariable(pairs[k - 1], tau, nu, sigma, beta);
     gradient_structure::_instance = nullptr;
   }
+  pairs.clear();
   gradient_structure::_instance = gs;
 
   auto finish = std::chrono::high_resolution_clock::now();

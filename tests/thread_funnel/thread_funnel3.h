@@ -1,3 +1,6 @@
+#ifndef __THREAD_FUNNEL_H__
+#define __THREAD_FUNNEL_H__
+
 #include <tuple>
 #include <vector>
 #include <future>
@@ -197,3 +200,4 @@ void get_results(dvar_vector& results, Args&&... args)
   }
   gradient_structure::_instance = gs;
 }
+#endif

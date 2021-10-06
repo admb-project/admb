@@ -1,6 +1,6 @@
 #include <future>
+#include <vector>
 #include <fvar.hpp>
-#include "thread_funnel3.h"
 
 size_t ngradients = 5;
 size_t get_ngradients()
@@ -14,6 +14,10 @@ gradient_structure** get_gradients()
 }
 
 double total_funnel_time = 0;
+double* get_total_funnel_time()
+{
+  return &total_funnel_time;
+}
 double allocation_time = 0;
 double deallocation_time = 0;
 

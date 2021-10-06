@@ -268,3 +268,4 @@ clean:
 	@rm -vf thread_funnel.obj
 	@rm -vf thread_funnel2.obj
 	@rm -vf thread_funnel3.obj
+	@rm -vf thread-funnel.obj

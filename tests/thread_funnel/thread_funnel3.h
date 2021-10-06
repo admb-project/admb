@@ -56,20 +56,20 @@ template<typename Arg, typename ...Args>
 std::tuple<Arg, Args...> create_tuple(std::vector<dvariable>& variables, int index, Arg&& arg, Args&&... args)
 {
   std::tuple<Arg> t = std::tie(arg);
-  std::tuple<Args...> t2 = create_tuple(variables, index, args...);
+  std::tuple<Args...> t2 = create_tuple(variables, index, std::forward<Args>(args)...);
   return std::tuple_cat(t, t2);
 }
 template<typename ...Args>
 std::tuple<dvariable const&, Args...> create_tuple(std::vector<dvariable>& variables, int index, dvariable const& arg, Args&&... args)
 {
   std::tuple<dvariable const&> t = std::tie(variables[index]);
-  std::tuple<Args...> t2 = create_tuple(variables, index + 1, args...);
+  std::tuple<Args...> t2 = create_tuple(variables, index + 1, std::forward<Args>(args)...);
   return std::tuple_cat(t, t2);
 }
 template<typename ...Args>
 std::tuple<Args...> create_tuple(std::vector<dvariable>& variables, Args&&... args)
 {
-  std::tuple<Args...> t = create_tuple(variables, 0, args...);
+  std::tuple<Args...> t = create_tuple(variables, 0, std::forward<Args>(args)...);
   return std::tuple_cat(t);
 }
 
@@ -101,7 +101,7 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
 
       dvariable f(0);
 
-      std::tuple<Args...> t = create_tuple(variables, args...);
+      std::tuple<Args...> t = create_tuple(variables, std::forward<Args>(args)...);
       f = std::apply(func, t);
 
       v = value(f);

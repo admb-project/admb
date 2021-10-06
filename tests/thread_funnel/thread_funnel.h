@@ -122,7 +122,7 @@ dvariable to_dvariable(std::pair<double, dvector>& p, Args&& ...args)
   dvariable var(p.first);
   dvector g(p.second);
 
-  std::tuple<Args...> t = std::make_tuple(args...);
+  std::tuple<Args&&...> t = std::forward_as_tuple(args...);
   dvariable const& x = std::get<0>(t);
   dvariable const& y = std::get<1>(t);
   dvariable const& u = std::get<2>(t);

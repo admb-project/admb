@@ -91,15 +91,18 @@ void get_results(dvar_vector& results, Args&&... args)
 {
   gradient_structure* gs = gradient_structure::get();
 
+  gradient_structure::_instance = nullptr;
+  add_pairs();
+
   const int size = pairs.size();
   if (size > 0)
   {
+    gradient_structure::_instance = gs;
     for (int k = results.indexmin(); k <= results.indexmax(); ++k)
     {
-      gradient_structure::_instance = gs;
       results(k) = to_dvariable(pairs[k - 1], std::forward<Args>(args)...);
-      gradient_structure::_instance = nullptr;
     }
+    gradient_structure::_instance = nullptr;
     pairs.clear();
   }
 }
@@ -119,7 +122,6 @@ dvar_vector funnels(
   {
     funnel(func, tau, nu, sigma, beta, a(i), nsteps);
   }
-  add_pairs();
   gradient_structure::_instance = gs;
   get_results(results, tau, nu, sigma, beta);
   gradient_structure::_instance = gs;

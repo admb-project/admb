@@ -61,7 +61,7 @@ run8h:
 
 run8i:
 	@cp ../../examples/admb/forest/forest.dat forest8i.dat
-	../../admb -o forest8i forest8i thread_funnel3.cpp
+	../../admb forest8i thread_funnel3.cpp
 	time ./forest8i &> forest8i.out
 
 clean:

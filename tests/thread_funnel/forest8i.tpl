@@ -83,7 +83,7 @@ FINAL_SECTION
 GLOBALS_SECTION
   #include <fvar.hpp>
   #include <admodel.h>
-  #include <future>
+  #include "thread_funnel3.h"
 
   typedef std::function<dvariable(const dvariable&, const dvariable&, const dvariable&, const dvariable&, const dvariable&, const double)> _func2;
 
@@ -136,4 +136,25 @@ GLOBALS_SECTION
   }
   dvar_vector funnels(
     dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
-    const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps);
+    const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
+  {
+    auto start = std::chrono::high_resolution_clock::now();
+
+    const int min = a.indexmin();
+    const int max = a.indexmax();
+    dvar_vector results(min, max);
+
+    for (int i = min; i <= max; ++i)
+    {
+      funnel(func, tau, nu, sigma, beta, a(i), nsteps);
+    }
+    get_results(results, tau, nu, sigma, beta);
+
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    double count = elapsed.count();
+    std::cout << "Funnel time: " << count <<  endl;
+    total_funnel_time += count;
+
+    return results;
+  }

@@ -3,7 +3,15 @@
 #include "thread_funnel3.h"
 
 size_t ngradients = 5;
+size_t get_ngradients()
+{
+  return ngradients;
+}
 gradient_structure** gradients = nullptr;
+gradient_structure** get_gradients()
+{
+  return gradients;
+}
 
 double total_funnel_time = 0;
 double allocation_time = 0;
@@ -55,8 +63,20 @@ void deallocate_gradients()
   gradient_structure::_instance = gs;
 }
 int id = 1;
+int* get_id()
+{
+  return &id;
+}
 std::vector<std::future<std::pair<double, dvector>>> futures;
+std::vector<std::future<std::pair<double, dvector>>>* get_futures()
+{
+  return &futures;
+}
 std::vector<std::pair<double, dvector>> pairs;
+std::vector<std::pair<double, dvector>>* get_pairs()
+{
+  return &pairs;
+}
 void add_pairs()
 {
   gradient_structure* gs = gradient_structure::get();
@@ -74,68 +94,4 @@ void add_pairs()
   futures.clear();
 
   gradient_structure::_instance = gs;
-}
-template<class F, class ...Args>
-void funnel(F&& func, Args&&... args)
-{
-  gradient_structure* gs = gradient_structure::get();
-
-  gradient_structure::_instance = gradients[id];
-  std::future<std::pair<double, dvector>> f =
-    thread_funnel(func, std::forward<Args>(args)...);
-  futures.push_back(std::move(f));
-  gradient_structure::_instance = nullptr;
-
-  ++id;
-  if (id >= ngradients)
-  {
-    add_pairs();
-    id = 1;
-  }
-
-  gradient_structure::_instance = gs;
-}
-template<class ...Args>
-void get_results(dvar_vector& results, Args&&... args)
-{
-  gradient_structure* gs = gradient_structure::get();
-
-  add_pairs();
-
-  const int size = pairs.size();
-  if (size > 0)
-  {
-    gradient_structure::_instance = gs;
-    for (int k = results.indexmin(); k <= results.indexmax(); ++k)
-    {
-      results(k) = to_dvariable(pairs[k - 1], std::forward<Args>(args)...);
-    }
-    gradient_structure::_instance = nullptr;
-    pairs.clear();
-  }
-  gradient_structure::_instance = gs;
-}
-dvar_vector funnels(
-  dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
-  const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
-{
-  auto start = std::chrono::high_resolution_clock::now();
-
-  const int min = a.indexmin();
-  const int max = a.indexmax();
-  dvar_vector results(min, max);
-
-  for (int i = min; i <= max; ++i)
-  {
-    funnel(func, tau, nu, sigma, beta, a(i), nsteps);
-  }
-  get_results(results, tau, nu, sigma, beta);
-
-  auto finish = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double> elapsed = finish - start;
-  double count = elapsed.count();
-  std::cout << "Funnel time: " << count <<  endl;
-  total_funnel_time += count;
-
-  return results;
 }

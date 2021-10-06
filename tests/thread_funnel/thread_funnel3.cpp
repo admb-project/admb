@@ -59,6 +59,9 @@ std::vector<std::future<std::pair<double, dvector>>> futures;
 std::vector<std::pair<double, dvector>> pairs;
 void add_pairs()
 {
+  gradient_structure* gs = gradient_structure::get();
+
+  gradient_structure::_instance = nullptr;
   int jmax = futures.size();
   for (int j = 0; j < jmax; ++j)
   {
@@ -69,10 +72,14 @@ void add_pairs()
     pairs.push_back(std::move(p));
   }
   futures.clear();
+
+  gradient_structure::_instance = gs;
 }
 template<class F, class ...Args>
 void funnel(F&& func, Args&&... args)
 {
+  gradient_structure* gs = gradient_structure::get();
+
   gradient_structure::_instance = gradients[id];
   std::future<std::pair<double, dvector>> f =
     thread_funnel(func, std::forward<Args>(args)...);
@@ -85,13 +92,14 @@ void funnel(F&& func, Args&&... args)
     add_pairs();
     id = 1;
   }
+
+  gradient_structure::_instance = gs;
 }
 template<class ...Args>
 void get_results(dvar_vector& results, Args&&... args)
 {
   gradient_structure* gs = gradient_structure::get();
 
-  gradient_structure::_instance = nullptr;
   add_pairs();
 
   const int size = pairs.size();
@@ -105,6 +113,7 @@ void get_results(dvar_vector& results, Args&&... args)
     gradient_structure::_instance = nullptr;
     pairs.clear();
   }
+  gradient_structure::_instance = gs;
 }
 dvar_vector funnels(
   dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
@@ -116,15 +125,11 @@ dvar_vector funnels(
   const int max = a.indexmax();
   dvar_vector results(min, max);
 
-  gradient_structure* gs = gradient_structure::get();
-
   for (int i = min; i <= max; ++i)
   {
     funnel(func, tau, nu, sigma, beta, a(i), nsteps);
   }
-  gradient_structure::_instance = gs;
   get_results(results, tau, nu, sigma, beta);
-  gradient_structure::_instance = gs;
 
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;

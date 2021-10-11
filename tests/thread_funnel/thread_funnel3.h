@@ -150,31 +150,20 @@ dvariable to_dvariable(std::pair<double, dvector>& p, Args&& ...args)
   return var;
 }
 void add_pairs();
-int* get_id();
-size_t get_ngradients();
 std::vector<std::future<std::pair<double, dvector>>>* get_futures();
-gradient_structure** get_gradients();
+gradient_structure* get_gradient();
 template<class F, class ...Args>
 void funnel(F&& func, Args&&... args)
 {
   gradient_structure* gs = gradient_structure::get();
 
-  int* id = get_id();
   std::vector<std::future<std::pair<double, dvector>>>* futures = get_futures();
-  gradient_structure** gradients = get_gradients();
 
-  gradient_structure::_instance = gradients[*id];
+  gradient_structure::_instance = get_gradient();
   std::future<std::pair<double, dvector>> f =
     thread_funnel(func, std::forward<Args>(args)...);
   futures->push_back(std::move(f));
   gradient_structure::_instance = nullptr;
-
-  ++(*id);
-  if (*id >= get_ngradients())
-  {
-    add_pairs();
-    *id = 1;
-  }
 
   gradient_structure::_instance = gs;
 }

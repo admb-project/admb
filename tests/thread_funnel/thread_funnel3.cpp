@@ -3,16 +3,7 @@
 #include <fvar.hpp>
 
 size_t ngradients = 5;
-size_t get_ngradients()
-{
-  return ngradients;
-}
 gradient_structure** gradients = nullptr;
-gradient_structure** get_gradients()
-{
-  return gradients;
-}
-
 double total_funnel_time = 0;
 double* get_total_funnel_time()
 {
@@ -67,10 +58,6 @@ void deallocate_gradients()
   gradient_structure::_instance = gs;
 }
 int id = 1;
-int* get_id()
-{
-  return &id;
-}
 std::vector<std::future<std::pair<double, dvector>>> futures;
 std::vector<std::future<std::pair<double, dvector>>>* get_futures()
 {
@@ -98,4 +85,19 @@ void add_pairs()
   futures.clear();
 
   gradient_structure::_instance = gs;
+}
+gradient_structure* get_gradient()
+{
+  if (id == 0)
+  {
+    add_pairs();
+    id = 1;
+  }
+  gradient_structure* gs = gradients[id];
+  ++id;
+  if (id >= ngradients)
+  {
+    id = 0;
+  }
+  return gs;
 }

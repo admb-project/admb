@@ -4,11 +4,8 @@
 
 size_t ngradients = 5;
 gradient_structure** gradients = nullptr;
+
 double total_funnel_time = 0;
-double* get_total_funnel_time()
-{
-  return &total_funnel_time;
-}
 double allocation_time = 0;
 double deallocation_time = 0;
 

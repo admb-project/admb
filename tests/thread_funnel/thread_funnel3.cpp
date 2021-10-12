@@ -2,12 +2,12 @@
 #include <vector>
 #include <fvar.hpp>
 
-size_t ngradients = 5;
-gradient_structure** gradients = nullptr;
-
 double total_funnel_time = 0;
 double allocation_time = 0;
 double deallocation_time = 0;
+
+size_t ngradients = 5;
+gradient_structure** gradients = nullptr;
 
 void allocate_gradients()
 {
@@ -56,15 +56,9 @@ void deallocate_gradients()
 }
 int id = 1;
 std::vector<std::future<std::pair<double, dvector>>> futures;
-void add_futures(std::future<std::pair<double, dvector>>&& f)
-{
-  futures.push_back(std::move(f));
-}
 std::vector<std::pair<double, dvector>> pairs;
 void add_pairs()
 {
-  gradient_structure* gs = gradient_structure::get();
-
   int jmax = futures.size();
   for (int j = 0; j < jmax; ++j)
   {
@@ -75,8 +69,14 @@ void add_pairs()
     pairs.push_back(std::move(p));
   }
   futures.clear();
-
-  gradient_structure::_instance = gs;
+}
+void add_futures(std::future<std::pair<double, dvector>>&& f)
+{
+  futures.push_back(std::move(f));
+  if (id == 0)
+  {
+    add_pairs();
+  }
 }
 std::vector<std::pair<double, dvector>>* get_pairs()
 {
@@ -88,7 +88,6 @@ gradient_structure* get_gradient()
 {
   if (id == 0)
   {
-    add_pairs();
     id = 1;
   }
   gradient_structure* gs = gradients[id];

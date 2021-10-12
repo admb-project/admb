@@ -163,7 +163,6 @@ void funnel(F&& func, Args&&... args)
 
   gradient_structure::_instance = gs;
 }
-void add_pairs();
 std::vector<std::pair<double, dvector>>* get_pairs();
 template<class ...Args>
 void get_results(dvar_vector& results, Args&&... args)
@@ -171,7 +170,6 @@ void get_results(dvar_vector& results, Args&&... args)
   gradient_structure* gs = gradient_structure::get();
 
   std::vector<std::pair<double, dvector>>* pairs = get_pairs();
-  add_pairs();
 
   const int size = pairs->size();
   if (size > 0)

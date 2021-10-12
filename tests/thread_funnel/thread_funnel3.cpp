@@ -64,10 +64,6 @@ void add_futures(std::future<std::pair<double, dvector>>&& f)
   futures.push_back(std::move(f));
 }
 std::vector<std::pair<double, dvector>> pairs;
-std::vector<std::pair<double, dvector>>* get_pairs()
-{
-  return &pairs;
-}
 void add_pairs()
 {
   gradient_structure* gs = gradient_structure::get();
@@ -85,6 +81,12 @@ void add_pairs()
   futures.clear();
 
   gradient_structure::_instance = gs;
+}
+std::vector<std::pair<double, dvector>>* get_pairs()
+{
+  add_pairs();
+
+  return &pairs;
 }
 gradient_structure* get_gradient()
 {

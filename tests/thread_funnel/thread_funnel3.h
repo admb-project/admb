@@ -81,7 +81,6 @@ template<class F, class ...Args>
 std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
 {
   gradient_structure* gs = get_gradient();
-  gradient_structure::_instance = gs;
   return std::async(std::launch::async, [=]()->std::pair<double, dvector>
   {
     gradient_structure::_instance = gs;

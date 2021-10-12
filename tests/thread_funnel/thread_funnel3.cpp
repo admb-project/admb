@@ -63,6 +63,8 @@ void add_futures(std::future<std::pair<double, dvector>>&& f)
 std::vector<std::pair<double, dvector>> pairs;
 void add_pairs()
 {
+  gradient_structure* gs = gradient_structure::get();
+
   int jmax = futures.size();
   for (int j = 0; j < jmax; ++j)
   {
@@ -73,6 +75,8 @@ void add_pairs()
     pairs.push_back(std::move(p));
   }
   futures.clear();
+
+  gradient_structure::_instance = gs;
 }
 std::vector<std::pair<double, dvector>>* get_pairs()
 {

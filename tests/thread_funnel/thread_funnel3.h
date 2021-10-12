@@ -76,10 +76,12 @@ std::tuple<Args...> create_tuple(std::vector<dvariable>& variables, Args&&... ar
   return std::tuple_cat(t);
 }
 
+gradient_structure* get_gradient();
 template<class F, class ...Args>
 std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = get_gradient();
+  gradient_structure::_instance = gs;
   return std::async(std::launch::async, [=]()->std::pair<double, dvector>
   {
     gradient_structure::_instance = gs;
@@ -149,14 +151,12 @@ dvariable to_dvariable(std::pair<double, dvector>& p, Args&& ...args)
 
   return var;
 }
-gradient_structure* get_gradient();
 void add_futures(std::future<std::pair<double, dvector>>&& f);
 template<class F, class ...Args>
 void funnel(F&& func, Args&&... args)
 {
   gradient_structure* gs = gradient_structure::get();
 
-  gradient_structure::_instance = get_gradient();
   std::future<std::pair<double, dvector>> f =
     thread_funnel(func, std::forward<Args>(args)...);
   add_futures(std::move(f));

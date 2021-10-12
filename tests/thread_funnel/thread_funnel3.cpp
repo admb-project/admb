@@ -59,9 +59,9 @@ void deallocate_gradients()
 }
 int id = 1;
 std::vector<std::future<std::pair<double, dvector>>> futures;
-std::vector<std::future<std::pair<double, dvector>>>* get_futures()
+void add_futures(std::future<std::pair<double, dvector>>&& f)
 {
-  return &futures;
+  futures.push_back(std::move(f));
 }
 std::vector<std::pair<double, dvector>> pairs;
 std::vector<std::pair<double, dvector>>* get_pairs()

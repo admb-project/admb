@@ -90,7 +90,6 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
 
     double v = 0;
     dvector g(1, nvar);
-    //gradient_structure::get()->GRAD_STACK1->allocate_RETURN_ARRAYS(25, 70);
     {
       independent_variables scoped_independents(1, nvar);
       set_independent_variables(scoped_independents, 1, args...);
@@ -113,7 +112,6 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
 
       gradcalc(nvar, g);
     }
-    //gradient_structure::get()->GRAD_STACK1->deallocate_RETURN_ARRAYS();
 
     return std::make_pair(v, g);
   });

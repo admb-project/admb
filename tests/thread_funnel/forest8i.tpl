@@ -134,7 +134,7 @@ GLOBALS_SECTION
     }
     return s[1];
   }
-  double* get_total_funnel_time();
+  extern double total_funnel_time;
   dvar_vector funnels(
     dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
     const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
@@ -155,8 +155,7 @@ GLOBALS_SECTION
     std::chrono::duration<double> elapsed = finish - start;
     double count = elapsed.count();
     std::cout << "Funnel time: " << count <<  endl;
-    double* total_funnel_time = get_total_funnel_time();
-    *total_funnel_time += count;
+    total_funnel_time += count;
 
     return results;
   }

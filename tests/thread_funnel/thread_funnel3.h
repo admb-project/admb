@@ -167,21 +167,18 @@ std::vector<std::pair<double, dvector>>* get_pairs();
 template<class ...Args>
 void get_results(dvar_vector& results, Args&&... args)
 {
-  gradient_structure* gs = gradient_structure::get();
-
   std::vector<std::pair<double, dvector>>* pairs = get_pairs();
 
   const int size = pairs->size();
   if (size > 0)
   {
-    gradient_structure::_instance = gs;
+    int j = 0;
     for (int k = results.indexmin(); k <= results.indexmax(); ++k)
     {
-      results(k) = to_dvariable(pairs->at(k - 1), std::forward<Args>(args)...);
+      results(k) = to_dvariable(pairs->at(j), std::forward<Args>(args)...);
+      ++j;
     }
-    gradient_structure::_instance = nullptr;
     pairs->clear();
   }
-  gradient_structure::_instance = gs;
 }
 #endif

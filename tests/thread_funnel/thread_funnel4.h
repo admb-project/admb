@@ -16,29 +16,25 @@ size_t count_variables(T arg)
   return 0;
 }
 template<typename ...Ts>
-size_t count_all_variables(Ts... args)
+size_t count_variables(Ts... args)
 {
   return (count_variables(args) + ...);
 }
 
-void set_independent_variables(independent_variables& independents, int index, const dvariable& arg)
+void set_independent_variables(independent_variables& independents, int& index, const dvariable& arg)
 {
   independents(index) = value(arg);
+  ++index;
 }
 template<typename T>
-void set_independent_variables(independent_variables& independents, int index, T arg)
+void set_independent_variables(independent_variables& independents, int& index, T arg)
 {
-}
-template<typename T, typename ...Ts>
-void set_independent_variables(independent_variables& independents, int index, T arg, Ts... args)
-{
-  set_independent_variables(independents, index, args...);
 }
 template<typename ...Ts>
-void set_independent_variables(independent_variables& independents, int index, const dvariable& arg, Ts... args)
+void set_independent_variables(independent_variables& independents, Ts... args)
 {
-  independents(index) = value(arg);
-  set_independent_variables(independents, index + 1, args...);
+  int index = independents.indexmin();;
+  (set_independent_variables(independents, index, args), ...);
 }
 
 std::tuple<dvariable const&> create_tuple(std::vector<dvariable>& variables, int index, dvariable const& arg)
@@ -80,7 +76,7 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
   {
     gradient_structure::_instance = gs;
 
-    size_t nvar = count_all_variables(args...);
+    size_t nvar = count_variables(args...);
 
     double v = 0;
     dvector g(1, nvar);

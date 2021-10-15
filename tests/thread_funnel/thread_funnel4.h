@@ -42,28 +42,30 @@ std::tuple<dvariable const&> create_tuple(std::vector<dvariable>& variables, int
   return std::tie(variables[index]);
 }
 template<typename Arg>
-std::tuple<Arg> create_tuple(std::vector<dvariable>& variables, int index, Arg&& arg)
+std::tuple<Arg> create_tuple(std::vector<dvariable>& variables, int& index, Arg&& arg)
 {
   return std::tie(arg);
 }
 template<typename Arg, typename ...Args>
-std::tuple<Arg, Args...> create_tuple(std::vector<dvariable>& variables, int index, Arg&& arg, Args&&... args)
+std::tuple<Arg, Args...> create_tuple(std::vector<dvariable>& variables, int& index, Arg&& arg, Args&&... args)
 {
   std::tuple<Arg> t = std::tie(arg);
   std::tuple<Args...> t2 = create_tuple(variables, index, std::forward<Args>(args)...);
   return std::tuple_cat(t, t2);
 }
 template<typename ...Args>
-std::tuple<dvariable const&, Args...> create_tuple(std::vector<dvariable>& variables, int index, dvariable const& arg, Args&&... args)
+std::tuple<dvariable const&, Args...> create_tuple(std::vector<dvariable>& variables, int& index, dvariable const& arg, Args&&... args)
 {
   std::tuple<dvariable const&> t = std::tie(variables[index]);
-  std::tuple<Args...> t2 = create_tuple(variables, index + 1, std::forward<Args>(args)...);
+  ++index;
+  std::tuple<Args...> t2 = create_tuple(variables, index, std::forward<Args>(args)...);
   return std::tuple_cat(t, t2);
 }
 template<typename ...Args>
 std::tuple<Args...> create_tuple(std::vector<dvariable>& variables, Args&&... args)
 {
-  std::tuple<Args...> t = create_tuple(variables, 0, std::forward<Args>(args)...);
+  int index = 0;
+  std::tuple<Args...> t = create_tuple(variables, index, std::forward<Args>(args)...);
   return std::tuple_cat(t);
 }
 

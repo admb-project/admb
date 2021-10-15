@@ -33,7 +33,7 @@ void set_independent_variables(independent_variables& independents, int& index, 
 template<typename ...Ts>
 void set_independent_variables(independent_variables& independents, Ts... args)
 {
-  int index = independents.indexmin();;
+  int index = independents.indexmin();
   (set_independent_variables(independents, index, args), ...);
 }
 
@@ -82,7 +82,7 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
     dvector g(1, nvar);
     {
       independent_variables scoped_independents(1, nvar);
-      set_independent_variables(scoped_independents, 1, args...);
+      set_independent_variables(scoped_independents, args...);
 
       // Set gradient_structure::NVAR
       dvar_vector scoped_variables(scoped_independents);

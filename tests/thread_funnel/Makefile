@@ -11,6 +11,7 @@ all:
 	$(MAKE) run8h
 	$(MAKE) run8i
 	$(MAKE) run8i4
+	$(MAKE) run8j
 
 run0:
 	@cp ../../examples/admb/forest/forest.dat forest0.dat
@@ -69,6 +70,14 @@ run8i4: thread_funnel4.h
 	@cp ../../examples/admb/forest/forest.dat forest8i4.dat
 	../../admb forest8i4.tpl thread_funnel4.cpp
 	time ./forest8i4 &> forest8i4.out
+	cat forest8i4.out
+
+dev: run8j
+run8j: thread_funnel5.h
+	@cp ../../examples/admb/forest/forest.dat forest8j.dat
+	../../admb forest8j.tpl thread_funnel5.cpp
+	time ./forest8j &> forest8j.out
+	cat forest8j.out
 
 clean:
 	@rm -vf forest.dat
@@ -292,3 +301,20 @@ clean:
 	@rm -vf forest8i4.cpp
 	@rm -vf forest8i4.htp
 	@rm -vf forest8i4.obj
+	@rm -vf forest8j
+	@rm -vf forest8j.b01
+	@rm -vf forest8j.bar
+	@rm -vf forest8j.cor
+	@rm -vf forest8j.cpp
+	@rm -vf forest8j.dat
+	@rm -vf forest8j.eva
+	@rm -vf forest8j.htp
+	@rm -vf forest8j.log
+	@rm -vf forest8j.obj
+	@rm -vf forest8j.out
+	@rm -vf forest8j.p01
+	@rm -vf forest8j.par
+	@rm -vf forest8j.r01
+	@rm -vf forest8j.rep
+	@rm -vf forest8j.std
+	@rm -vf thread_funnel5.obj

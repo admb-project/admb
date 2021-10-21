@@ -103,23 +103,38 @@ dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t)
 
   int i = 0;
   int j = 1;
-  while (j <= g.indexmax())
+  int min = g.indexmin();
+  int max = g.indexmax();
+  while (j <= max)
   {
     grad_stack_entry* entry = GRAD_STACK1->ptr;
 
-    entry->dep_addr = j == g.indexmin() ? &((*var.v).x) : NULL;
+    entry->dep_addr = j == min ? &((*var.v).x) : nullptr;
 
     entry->ind_addr1 = a[i];
     ++i;
     entry->mult1 = g(j);
     ++j;
-    entry->ind_addr2 = a[i];
-    ++i;
-    entry->mult2 = g(j);
-    ++j;
-
-    entry->func = j > g.indexmax() ? default_evaluation4ind : NULL;
-
+    if (j <= max)
+    {
+      entry->ind_addr2 = a[i];
+      ++i;
+      entry->mult2 = g(j);
+      ++j;
+    }
+    else
+    {
+      entry->ind_addr2 = nullptr;
+      entry->mult2 = 0;
+    }
+    if (j > max)
+    {
+      entry->func = default_evaluation4ind;
+    }
+    else
+    {
+      entry->func = nullptr;
+    }
     GRAD_STACK1->ptr++;
   }
 

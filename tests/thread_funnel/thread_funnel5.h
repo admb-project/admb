@@ -6,19 +6,20 @@
 #include <future>
 #include <fvar.hpp>
 
-size_t count_variables(const dvariable& arg)
+size_t get_addresses(std::vector<double*>& addresses, const dvariable& arg)
 {
+  addresses.push_back(&((*arg.v).x));
   return 1;
 }
 template<typename T>
-size_t count_variables(T arg)
+size_t get_addresses(std::vector<double*>& addresses, T arg)
 {
   return 0;
 }
 template<typename ...Ts>
-size_t count_variables(Ts... args)
+size_t get_addresses(std::vector<double*>& addresses, Ts&&... args)
 {
-  return (count_variables(args) + ...);
+  return (get_addresses(addresses, args) + ...);
 }
 
 void set_independent_variables(independent_variables& independents, int& index, const dvariable& arg)
@@ -78,7 +79,8 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
   {
     gradient_structure::_instance = gs;
 
-    size_t nvar = count_variables(args...);
+    std::vector<double*> addresses;
+    size_t nvar = get_addresses(addresses, std::forward<Args>(args)...);
 
     double v = 0;
     dvector g(1, nvar);

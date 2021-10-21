@@ -98,3 +98,36 @@ gradient_structure* get_gradient()
   }
   return gs;
 }
+dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t)
+{
+  gradient_structure* gs = gradient_structure::get();
+  grad_stack* GRAD_STACK1 = gs->GRAD_STACK1;
+
+  dvariable var = std::get<0>(t);
+  dvector g = std::get<1>(t);
+  std::vector<double*> a = std::get<2>(t);
+
+  int i = 0;
+  int j = 1;
+  while (j <= g.indexmax())
+  {
+    grad_stack_entry* entry = GRAD_STACK1->ptr;
+
+    entry->dep_addr = j == g.indexmin() ? &((*var.v).x) : NULL;
+
+    entry->ind_addr1 = a[i];
+    ++i;
+    entry->mult1 = g(j);
+    ++j;
+    entry->ind_addr2 = a[i];
+    ++i;
+    entry->mult2 = g(j);
+    ++j;
+
+    entry->func = j > g.indexmax() ? default_evaluation4ind : NULL;
+
+    GRAD_STACK1->ptr++;
+  }
+
+  return var;
+}

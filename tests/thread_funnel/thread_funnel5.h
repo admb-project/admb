@@ -6,7 +6,7 @@
 #include <future>
 #include <fvar.hpp>
 
-size_t get_addresses(std::vector<double*>& addresses, const dvariable& arg)
+size_t get_addresses(std::vector<double*>& addresses, dvariable const& arg)
 {
   addresses.push_back(&((*arg.v).x));
   return 1;
@@ -19,7 +19,7 @@ size_t get_addresses(std::vector<double*>& addresses, T arg)
 template<typename ...Ts>
 size_t get_addresses(std::vector<double*>& addresses, Ts&&... args)
 {
-  return (get_addresses(addresses, args) + ...);
+  return (get_addresses(addresses, std::forward<Ts>(args)) + ...);
 }
 
 void set_independent_variables(independent_variables& independents, int& index, const dvariable& arg)
@@ -74,13 +74,13 @@ gradient_structure* get_gradient();
 template<class F, class ...Args>
 std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&& func, Args&&... args)
 {
+  std::vector<double*> addresses;
+  size_t nvar = get_addresses(addresses, std::forward<Args>(args)...);
+
   gradient_structure* gs = get_gradient();
   return std::async(std::launch::async, [=]()->std::tuple<double, dvector, std::vector<double*>>
   {
     gradient_structure::_instance = gs;
-
-    std::vector<double*> addresses;
-    size_t nvar = get_addresses(addresses, std::forward<Args>(args)...);
 
     double v = 0;
     dvector g(1, nvar);
@@ -120,18 +120,6 @@ dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t, Arg
   dvector g = std::get<1>(t);
   std::vector<double*> a = std::get<2>(t);
 
-  std::tuple<Args&&...> t2 = std::forward_as_tuple(args...);
-  dvariable const& x = std::get<0>(t2);
-  dvariable const& y = std::get<1>(t2);
-  dvariable const& u = std::get<2>(t2);
-  dvariable const& v = std::get<3>(t2);
-
-  std::vector<double*> addresses;
-  addresses.push_back(&((*x.v).x));
-  addresses.push_back(&((*y.v).x));
-  addresses.push_back(&((*u.v).x));
-  addresses.push_back(&((*v.v).x));
-
   int i = 0;
   int j = 1;
   while (j <= g.indexmax())
@@ -140,11 +128,11 @@ dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t, Arg
 
     entry->dep_addr = j == g.indexmin() ? &((*var.v).x) : NULL;
 
-    entry->ind_addr1 = addresses[i];
+    entry->ind_addr1 = a[i];
     ++i;
     entry->mult1 = g(j);
     ++j;
-    entry->ind_addr2 = addresses[i];
+    entry->ind_addr2 = a[i];
     ++i;
     entry->mult2 = g(j);
     ++j;

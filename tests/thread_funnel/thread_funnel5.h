@@ -123,21 +123,33 @@ dvariable to_dvariable(std::pair<double, dvector>& p, Args&& ...args)
   dvariable const& u = std::get<2>(t);
   dvariable const& v = std::get<3>(t);
 
-  grad_stack_entry* entry = GRAD_STACK1->ptr;
-  entry->func = NULL;
-  entry->dep_addr = &((*var.v).x);
-  entry->ind_addr1 = &((*x.v).x);
-  entry->mult1 = g(1);
-  entry->ind_addr2 = &((*y.v).x);
-  entry->mult2 = g(2);
-  GRAD_STACK1->ptr++;
-  grad_stack_entry* entry2 = GRAD_STACK1->ptr;
-  entry2->func = default_evaluation4ind;
-  entry2->ind_addr1 = &((*u.v).x);
-  entry2->mult1 = g(3);
-  entry2->ind_addr2 = &((*v.v).x);
-  entry2->mult2 = g(4);
-  GRAD_STACK1->ptr++;
+  std::vector<double*> addresses;
+  addresses.push_back(&((*x.v).x));
+  addresses.push_back(&((*y.v).x));
+  addresses.push_back(&((*u.v).x));
+  addresses.push_back(&((*v.v).x));
+
+  int i = 0;
+  int j = 1;
+  while (j <= g.indexmax())
+  {
+    grad_stack_entry* entry = GRAD_STACK1->ptr;
+
+    entry->dep_addr = j == g.indexmin() ? &((*var.v).x) : NULL;
+
+    entry->ind_addr1 = addresses[i];
+    ++i;
+    entry->mult1 = g(j);
+    ++j;
+    entry->ind_addr2 = addresses[i];
+    ++i;
+    entry->mult2 = g(j);
+    ++j;
+
+    entry->func = j > g.indexmax() ? default_evaluation4ind : NULL;
+
+    GRAD_STACK1->ptr++;
+  }
 
   return var;
 }

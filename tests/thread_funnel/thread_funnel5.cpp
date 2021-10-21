@@ -55,34 +55,34 @@ void deallocate_gradients()
   gradient_structure::_instance = gs;
 }
 int id = 1;
-std::vector<std::future<std::pair<double, dvector>>> futures;
-std::vector<std::pair<double, dvector>> pairs;
-void add_pairs()
+std::vector<std::future<std::tuple<double, dvector, std::vector<double*>>>> futures;
+std::vector<std::tuple<double, dvector, std::vector<double*>>> tuples;
+void add_tuples()
 {
   int jmax = futures.size();
   for (int j = 0; j < jmax; ++j)
   {
     futures[j].wait();
 
-    std::pair<double, dvector> p = futures[j].get();
+    std::tuple<double, dvector, std::vector<double*>> t = futures[j].get();
 
-    pairs.push_back(std::move(p));
+    tuples.push_back(std::move(t));
   }
   futures.clear();
 }
-void add_futures(std::future<std::pair<double, dvector>>&& f)
+void add_futures(std::future<std::tuple<double, dvector, std::vector<double*>>>&& f)
 {
   futures.push_back(std::move(f));
   if (id == 0)
   {
-    add_pairs();
+    add_tuples();
   }
 }
-std::vector<std::pair<double, dvector>>* get_pairs()
+std::vector<std::tuple<double, dvector, std::vector<double*>>>* get_tuples()
 {
-  add_pairs();
+  add_tuples();
 
-  return &pairs;
+  return &tuples;
 }
 gradient_structure* get_gradient()
 {

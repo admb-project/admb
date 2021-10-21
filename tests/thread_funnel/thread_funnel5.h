@@ -72,10 +72,10 @@ std::tuple<Args...> create_tuple(std::vector<dvariable>& variables, Args&&... ar
 
 gradient_structure* get_gradient();
 template<class F, class ...Args>
-std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
+std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&& func, Args&&... args)
 {
   gradient_structure* gs = get_gradient();
-  return std::async(std::launch::async, [=]()->std::pair<double, dvector>
+  return std::async(std::launch::async, [=]()->std::tuple<double, dvector, std::vector<double*>>
   {
     gradient_structure::_instance = gs;
 
@@ -107,23 +107,24 @@ std::future<std::pair<double, dvector>> thread_funnel(F&& func, Args&&... args)
       gradcalc(nvar, g);
     }
 
-    return std::make_pair(v, g);
+    return std::make_tuple(v, g, addresses);
   });
 }
 template<class ...Args>
-dvariable to_dvariable(std::pair<double, dvector>& p, Args&& ...args)
+dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t, Args&& ...args)
 {
   gradient_structure* gs = gradient_structure::get();
   grad_stack* GRAD_STACK1 = gs->GRAD_STACK1;
 
-  dvariable var(p.first);
-  dvector g(p.second);
+  dvariable var = std::get<0>(t);
+  dvector g = std::get<1>(t);
+  std::vector<double*> a = std::get<2>(t);
 
-  std::tuple<Args&&...> t = std::forward_as_tuple(args...);
-  dvariable const& x = std::get<0>(t);
-  dvariable const& y = std::get<1>(t);
-  dvariable const& u = std::get<2>(t);
-  dvariable const& v = std::get<3>(t);
+  std::tuple<Args&&...> t2 = std::forward_as_tuple(args...);
+  dvariable const& x = std::get<0>(t2);
+  dvariable const& y = std::get<1>(t2);
+  dvariable const& u = std::get<2>(t2);
+  dvariable const& v = std::get<3>(t2);
 
   std::vector<double*> addresses;
   addresses.push_back(&((*x.v).x));
@@ -155,34 +156,34 @@ dvariable to_dvariable(std::pair<double, dvector>& p, Args&& ...args)
 
   return var;
 }
-void add_futures(std::future<std::pair<double, dvector>>&& f);
+void add_futures(std::future<std::tuple<double, dvector, std::vector<double*>>>&& f);
 template<class F, class ...Args>
 void funnel(F&& func, Args&&... args)
 {
   gradient_structure* gs = gradient_structure::get();
 
-  std::future<std::pair<double, dvector>> f =
+  std::future<std::tuple<double, dvector, std::vector<double*>>> f =
     thread_funnel(func, std::forward<Args>(args)...);
   add_futures(std::move(f));
 
   gradient_structure::_instance = gs;
 }
-std::vector<std::pair<double, dvector>>* get_pairs();
+std::vector<std::tuple<double, dvector, std::vector<double*>>>* get_tuples();
 template<class ...Args>
 void get_results(dvar_vector& results, Args&&... args)
 {
-  std::vector<std::pair<double, dvector>>* pairs = get_pairs();
+  std::vector<std::tuple<double, dvector, std::vector<double*>>>* tuples = get_tuples();
 
-  const int size = pairs->size();
+  const int size = tuples->size();
   if (size > 0)
   {
     int j = 0;
     for (int k = results.indexmin(); k <= results.indexmax(); ++k)
     {
-      results(k) = to_dvariable(pairs->at(j), std::forward<Args>(args)...);
+      results(k) = to_dvariable(tuples->at(j), std::forward<Args>(args)...);
       ++j;
     }
-    pairs->clear();
+    tuples->clear();
   }
 }
 #endif

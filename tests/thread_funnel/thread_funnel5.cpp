@@ -1,5 +1,6 @@
 #include <future>
 #include <vector>
+#include <unistd.h>
 #include <fvar.hpp>
 
 double total_funnel_time = 0;
@@ -92,6 +93,34 @@ gradient_structure* get_gradient()
   }
   return gs;
 }
+void funnel_evaluation_nindependents()
+{
+  gradient_structure* gs = gradient_structure::get();
+  grad_stack* GRAD_STACK1 = gs->GRAD_STACK1;
+  // there are three independent variables
+  grad_stack_entry* grad_ptr = GRAD_STACK1->ptr;
+
+  double* ind_addr3 = grad_ptr->ind_addr1;
+  double mult3 = grad_ptr->mult1 ;
+  double* ind_addr4 = grad_ptr->ind_addr2;
+  double mult4 = grad_ptr->mult2 ;
+  if (GRAD_STACK1->ptr-- == GRAD_STACK1->ptr_first)
+  {
+    // back up the file one buffer size and read forward
+    OFF_T offset = (OFF_T)(sizeof(grad_stack_entry) * GRAD_STACK1->length);
+    OFF_T lpos=LSEEK(GRAD_STACK1->_GRADFILE_PTR, -offset, SEEK_CUR);
+
+    GRAD_STACK1->read_grad_stack_buffer(lpos);
+  }
+
+  grad_ptr = GRAD_STACK1->ptr;
+  double z = *grad_ptr->dep_addr;
+  *grad_ptr->dep_addr=0.;
+  *grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
+  *grad_ptr->ind_addr2 += z * grad_ptr->mult2 ;
+  *ind_addr3 += z * mult3 ;
+  *ind_addr4 += z * mult4 ;
+}
 dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t)
 {
   gradient_structure* gs = gradient_structure::get();
@@ -129,7 +158,8 @@ dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t)
     }
     if (j > max)
     {
-      entry->func = default_evaluation4ind;
+      //entry->func = default_evaluation4ind;
+      entry->func = funnel_evaluation_nindependents;
     }
     else
     {

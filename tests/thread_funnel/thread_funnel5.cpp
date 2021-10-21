@@ -78,12 +78,6 @@ void add_futures(std::future<std::tuple<double, dvector, std::vector<double*>>>&
     add_tuples();
   }
 }
-std::vector<std::tuple<double, dvector, std::vector<double*>>>* get_tuples()
-{
-  add_tuples();
-
-  return &tuples;
-}
 gradient_structure* get_gradient()
 {
   if (id == 0)
@@ -130,4 +124,20 @@ dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t)
   }
 
   return var;
+}
+void get_results(dvar_vector& results)
+{
+  add_tuples();
+
+  const int size = tuples.size();
+  if (size > 0)
+  {
+    int j = 0;
+    for (int k = results.indexmin(); k <= results.indexmax(); ++k)
+    {
+      results(k) = to_dvariable(tuples.at(j));
+      ++j;
+    }
+    tuples.clear();
+  }
 }

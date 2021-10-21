@@ -21,7 +21,6 @@ size_t get_addresses(std::vector<double*>& addresses, Ts&&... args)
 {
   return (get_addresses(addresses, std::forward<Ts>(args)) + ...);
 }
-
 void set_independent_variables(independent_variables& independents, int& index, const dvariable& arg)
 {
   independents(index) = value(arg);
@@ -37,7 +36,6 @@ void set_independent_variables(independent_variables& independents, Ts... args)
   int index = independents.indexmin();
   (set_independent_variables(independents, index, args), ...);
 }
-
 std::tuple<dvariable const&> create_tuple(std::vector<dvariable>& variables, int index, dvariable const& arg)
 {
   return std::tie(variables[index]);
@@ -69,7 +67,6 @@ std::tuple<Args...> create_tuple(std::vector<dvariable>& variables, Args&&... ar
   std::tuple<Args...> t = create_tuple(variables, index, std::forward<Args>(args)...);
   return std::tuple_cat(t);
 }
-
 gradient_structure* get_gradient();
 template<class F, class ...Args>
 std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&& func, Args&&... args)
@@ -110,8 +107,8 @@ std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&&
     return std::make_tuple(v, g, addresses);
   });
 }
-dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t);
 void add_futures(std::future<std::tuple<double, dvector, std::vector<double*>>>&& f);
+
 template<class F, class ...Args>
 void funnel(F&& func, Args&&... args)
 {
@@ -123,22 +120,5 @@ void funnel(F&& func, Args&&... args)
 
   gradient_structure::_instance = gs;
 }
-std::vector<std::tuple<double, dvector, std::vector<double*>>>* get_tuples();
-template<class ...Args>
-void get_results(dvar_vector& results, Args&&... args)
-{
-  std::vector<std::tuple<double, dvector, std::vector<double*>>>* tuples = get_tuples();
-
-  const int size = tuples->size();
-  if (size > 0)
-  {
-    int j = 0;
-    for (int k = results.indexmin(); k <= results.indexmax(); ++k)
-    {
-      results(k) = to_dvariable(tuples->at(j));
-      ++j;
-    }
-    tuples->clear();
-  }
-}
+void get_results(dvar_vector& results);
 #endif

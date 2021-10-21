@@ -149,7 +149,7 @@ GLOBALS_SECTION
     {
       funnel(func, tau, nu, sigma, beta, a(i), nsteps);
     }
-    get_results(results, tau, nu, sigma, beta);
+    get_results(results);
 
     auto finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = finish - start;

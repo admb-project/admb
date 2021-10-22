@@ -60,14 +60,11 @@ std::vector<std::future<std::tuple<double, dvector, std::vector<double*>>>> futu
 std::vector<std::tuple<double, dvector, std::vector<double*>>> tuples;
 void add_tuples()
 {
-  int jmax = futures.size();
-  for (int j = 0; j < jmax; ++j)
+  for (std::future<std::tuple<double, dvector, std::vector<double*>>>& f : futures)
   {
-    futures[j].wait();
+    f.wait();
 
-    std::tuple<double, dvector, std::vector<double*>> t = futures[j].get();
-
-    tuples.push_back(std::move(t));
+    tuples.push_back(std::move(f.get()));
   }
   futures.clear();
 }
@@ -185,14 +182,13 @@ void get_results(dvar_vector& results)
 {
   add_tuples();
 
-  const int size = tuples.size();
-  if (size > 0)
+  if (tuples.size() > 0)
   {
-    int j = 0;
-    for (int k = results.indexmin(); k <= results.indexmax(); ++k)
+    int i = results.indexmin();
+    for (std::tuple<double, dvector, std::vector<double*>>& t: tuples)
     {
-      results(k) = to_dvariable(tuples.at(j));
-      ++j;
+      results(i) = to_dvariable(t);
+      ++i;
     }
     tuples.clear();
   }

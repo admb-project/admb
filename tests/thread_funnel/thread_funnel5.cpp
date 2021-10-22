@@ -100,17 +100,18 @@ void funnel_evaluation_nindependents()
 {
   gradient_structure* gs = gradient_structure::get();
   grad_stack* GRAD_STACK1 = gs->GRAD_STACK1;
+  grad_stack_entry* grad_ptr = GRAD_STACK1->ptr;
 
   double z = 0;
+  if (grad_ptr->dep_addr)
+  {
+    z = *grad_ptr->dep_addr;
+    *grad_ptr->dep_addr = 0.0;
+  }
   do
   {
     // there are n independent variables
-    grad_stack_entry* grad_ptr = GRAD_STACK1->ptr;
-    if (grad_ptr->dep_addr)
-    {
-      z = *grad_ptr->dep_addr;
-      *grad_ptr->dep_addr = 0.0;
-    }
+    grad_ptr = GRAD_STACK1->ptr;
     if (grad_ptr->ind_addr1)
     {
       *(grad_ptr->ind_addr1) += z * grad_ptr->mult1;
@@ -121,11 +122,10 @@ void funnel_evaluation_nindependents()
     }
     if (GRAD_STACK1->ptr-- == GRAD_STACK1->ptr_first)
     {
-        // back up the file one buffer size and read forward
-        OFF_T offset = (OFF_T)(sizeof(grad_stack_entry) * GRAD_STACK1->length);
-        OFF_T lpos=LSEEK(GRAD_STACK1->_GRADFILE_PTR, -offset, SEEK_CUR);
-
-        GRAD_STACK1->read_grad_stack_buffer(lpos);
+      // back up the file one buffer size and read forward
+      OFF_T offset = (OFF_T)(sizeof(grad_stack_entry) * GRAD_STACK1->length);
+      OFF_T lpos = LSEEK(GRAD_STACK1->_GRADFILE_PTR, -offset, SEEK_CUR);
+      GRAD_STACK1->read_grad_stack_buffer(lpos);
     }
   } while (GRAD_STACK1->ptr->func != funnel_evaluation_end);
 }

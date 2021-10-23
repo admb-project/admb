@@ -133,7 +133,7 @@ dvariable to_dvariable(std::tuple<double, dvector, std::vector<double*>>& t)
 
   dvariable var = std::get<0>(t);
   dvector g = std::get<1>(t);
-  std::vector<double*> a = std::get<2>(t);
+  double** a = std::get<2>(t).data();
 
   // Mark end
   GRAD_STACK1->ptr->func = funnel_evaluation_end;

@@ -662,10 +662,10 @@ DATA_SECTION  {
 
 
 
-<DEFINE_DATA>^[ \t]*LOCAL_CALCULATIONS |
-<DEFINE_DATA>^[ \t]*LOCAL_CALCS |
-<DEFINE_DATA>^[ \t]*LOC_CALCULATIONS |
-<DEFINE_DATA>^[ \t]*LOC_CALCS  {
+<DEFINE_DATA>^[ \t]+LOCAL_CALCULATIONS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOCAL_CALCS[ \t\r\n]* |
+<DEFINE_DATA>^[ \t]+LOC_CALCULATIONS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOC_CALCS[ \t\r]*  {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -922,8 +922,8 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  d7_array ");
                      }
 
-<IN_LOCAL_CALCS>^[ \t]+END_CALCS[ \t\r]+ |
-<IN_LOCAL_CALCS>^[ \t]+END_CALCULATIONS[ \t\r]+ {
+<IN_LOCAL_CALCS>^[ \t]+END_CALCS[ \t\r]* |
+<IN_LOCAL_CALCS>^[ \t]+END_CALCULATIONS[ \t\r]* {
 
     if (in_define_data) BEGIN DEFINE_DATA;
     if (in_define_parameters) BEGIN DEFINE_PARAMETERS;
@@ -991,10 +991,10 @@ DATA_SECTION  {
 
     }
 
-<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCULATIONS[ \t\r]+ |
-<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCS[ \t\r]+ |
-<DEFINE_PARAMETERS>^[ \t]+LOC_CALCULATIONS[ \t\r]+ |
-<DEFINE_PARAMETERS>^[ \t]+LOC_CALCS[ \t\r]+  {
+<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCULATIONS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOC_CALCULATIONS[ \t\r$]* |
+<DEFINE_PARAMETERS>^[ \t]+LOC_CALCS[ \t\r]*  {
 
     BEGIN IN_LOCAL_CALCS;
 

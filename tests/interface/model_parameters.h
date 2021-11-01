@@ -1,21 +1,32 @@
-#if !defined(_simple_)
-#  define _simple_
+#if !defined(__model_parameters_h__)
+#define __model_parameters_h__
 
-class model_data : public ad_comm{
-  data_int n;
-  data_vector x;
-  data_vector y;
-  ~model_data();
-  model_data(int argc,char * argv[]);
-  friend class model_parameters;
-};
+#ifdef DEBUG
+  #ifndef __SUNPRO_C
+    #include <cfenv>
+    #include <cstdlib>
+  #endif
+  #include <chrono>
+#endif
+#include <fvar.hpp>
+#include <admodel.h>
 
-class model_parameters : public model_data ,
+#ifdef USE_ADMB_CONTRIBS
+#include <contrib.h>
+#endif
+
+class model_parameters: public ad_comm,
   public function_minimizer
 {
 public:
   ~model_parameters();
   void preliminary_calculations(void);
+  void minimize(int argc,char * argv[])
+  {
+    iprint = 10;
+    preliminary_calculations();
+    computations(argc, argv);
+  }
   void set_runtime(void);
   static int mc_phase(void)
   {
@@ -46,7 +57,6 @@ public:
   {
     return *objective_function_value::pobjfun;
   }
-private:
   dvariable adromb(dvariable(model_parameters::*f)(const dvariable&), double a, double b, int ns)
   {
     using namespace std::placeholders;
@@ -55,23 +65,18 @@ private:
   }
   ivector integer_control_flags;
   dvector double_control_flags;
-  param_init_number b0;
-  param_init_number b1;
-  param_vector yhat;
   param_number prior_function_value;
   param_number likelihood_function_value;
-  objective_function_value f;
 public:
   virtual void userfunction(void);
   virtual void report(const dvector& gradients);
   virtual void final_calcs(void);
-  model_parameters(int sz,int argc, char * argv[]);
+  model_parameters(int argc, char * argv[]);
   virtual void initializationfunction(void){}
 
 };
-class simple: public model_parameters
-{
-public:
-  simple(int sz,int argc, char * argv[]): model_parameters(sz, argc, argv) {}
-};
+
+extern "C"  {
+  void ad_boundf(int i);
+}
 #endif

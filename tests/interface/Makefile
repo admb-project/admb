@@ -1,5 +1,5 @@
 all: simple.dat
-	../../admb simple.cpp
+	../../admb simple.cpp model_parameters.cpp
 	./simple
 
 simple.dat:
@@ -22,3 +22,4 @@ clean:
 	@rm -vf simple.std
 	@rm -vf simple.dat
 	@rm -vf simple.tpl
+	@rm -vf model_parameters.obj

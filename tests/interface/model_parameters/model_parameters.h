@@ -42,12 +42,14 @@ public:
   {
     return *objective_function_value::pobjfun;
   }
-  dvariable adromb(dvariable(model_parameters::*f)(const dvariable&), double a, double b, int ns)
+  /*
+  dvariable adromb(dvariable(*f)(const dvariable&), double a, double b, int ns)
   {
     using namespace std::placeholders;
-    _func func = std::bind(f, this, _1);
+    auto func = std::bind(f, this, _1);
     return function_minimizer::adromb(func, a, b, ns);
   }
+  */
   ivector integer_control_flags;
   dvector double_control_flags;
 public:

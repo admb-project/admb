@@ -1,20 +1,3 @@
-#ifdef DEBUG
-  #ifndef __SUNPRO_C
-    #include <cfenv>
-    #include <cstdlib>
-  #endif
-#endif
-#ifdef DEBUG
-  #include <chrono>
-#endif
-#include <admodel.h>
-#ifdef USE_ADMB_CONTRIBS
-#include <contrib.h>
-
-#endif
-  extern "C"  {
-    void ad_boundf(int i);
-  }
 #include "catage.htp"
 
 void catage::initializationfunction(void)
@@ -201,48 +184,18 @@ void catage::report(const dvector& gradients)
   report << F << endl; 
 }
 
-#ifdef _BORLANDC_
-  extern unsigned _stklen=10000U;
-#endif
-
-
-#ifdef __ZTC__
-  extern unsigned int _stack=10000U;
-#endif
-
-  long int arrmblsize=0;
+long int arrmblsize=0;
 
 int main(int argc,char * argv[])
 {
-    ad_set_new_handler();
+  ad_set_new_handler();
   ad_exit=&ad_boundf;
-    gradient_structure::set_NO_DERIVATIVES();
-#ifdef DEBUG
-  #ifndef __SUNPRO_C
-std::feclearexcept(FE_ALL_EXCEPT);
-  #endif
-  auto start = std::chrono::high_resolution_clock::now();
-#endif
-    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
-    if (!arrmblsize) arrmblsize=15000000;
-    catage mp(arrmblsize,argc,argv);
-    mp.iprint=10;
-    mp.preliminary_calculations();
-    mp.computations(argc,argv);
-#ifdef DEBUG
-  std::cout << endl << argv[0] << " elapsed time is " << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count() << " microseconds." << endl;
-  #ifndef __SUNPRO_C
-bool failedtest = false;
-if (std::fetestexcept(FE_DIVBYZERO))
-  { cerr << "Error: Detected division by zero." << endl; failedtest = true; }
-if (std::fetestexcept(FE_INVALID))
-  { cerr << "Error: Detected invalid argument." << endl; failedtest = true; }
-if (std::fetestexcept(FE_OVERFLOW))
-  { cerr << "Error: Detected overflow." << endl; failedtest = true; }
-if (std::fetestexcept(FE_UNDERFLOW))
-  { cerr << "Error: Detected underflow." << endl; }
-if (failedtest) { std::abort(); } 
-  #endif
-#endif
-    return 0;
+  gradient_structure::set_NO_DERIVATIVES();
+  gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
+  if (!arrmblsize) arrmblsize=15000000;
+  catage mp(arrmblsize,argc,argv);
+  mp.iprint=10;
+  mp.preliminary_calculations();
+  mp.computations(argc,argv);
+  return 0;
 }

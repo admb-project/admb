@@ -1,4 +1,5 @@
 #include <fvar.hpp>
+#include <admodel.h>
 
 extern "C"  {
   void ad_boundf(int i);

@@ -1,4 +1,48 @@
-#include "catage.htp"
+#include "model_parameters.h"
+
+class catage: public model_parameters
+{
+public:
+  data_int nyrs;
+  data_int nages;
+  data_matrix obs_catch_at_age;
+  data_vector effort;
+  data_number M;
+  dvector relwt;
+  param_init_number log_q;
+  param_init_number log_popscale;
+  param_init_bounded_dev_vector log_sel_coff;
+  param_init_bounded_dev_vector log_relpop;
+  param_init_bounded_dev_vector effort_devs;
+  param_vector log_sel;
+  param_vector log_initpop;
+  param_matrix F;
+  param_matrix Z;
+  param_matrix S;
+  param_matrix N;
+  param_matrix C;
+  param_number prior_function_value;
+  param_number likelihood_function_value;
+  objective_function_value f;
+  param_number recsum;
+  param_number initsum;
+  param_stddev_number avg_F;
+  param_stddev_vector predicted_N;
+  param_stddev_vector ratio_N;
+  param_likeprof_number pred_B;
+
+  catage(int sz,int argc, char * argv[]);
+
+  void initializationfunction(void);
+  void preliminary_calculations(void);
+  void userfunction(void);
+  void report(const dvector& gradients);
+
+  void get_mortality_and_survivial_rates(void);
+  void get_numbers_at_age(void);
+  void get_catch_at_age(void);
+  void evaluate_the_objective_function(void);
+};
 
 void catage::initializationfunction(void)
 {

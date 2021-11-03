@@ -8,8 +8,8 @@ extern "C"  {
   }
 }
 
-model_parameters::model_parameters(int argc,char * argv[]) :
- ad_comm(argc,argv), function_minimizer(15000000)
+model_parameters::model_parameters(int sz, int argc,char * argv[]) :
+ ad_comm(argc,argv), function_minimizer(sz)
 {
   ad_set_new_handler();
   ad_exit=&ad_boundf;
@@ -48,19 +48,6 @@ model_parameters::model_parameters(int argc,char * argv[]) :
   }
 
   initializationfunction();
-  prior_function_value.allocate("prior_function_value");
-  likelihood_function_value.allocate("likelihood_function_value");
-}
-
-void model_parameters::userfunction(void) {}
-
-
-void model_parameters::preliminary_calculations(void){
-#if defined(USE_ADPVM)
-
-  admaster_slave_variable_interface(*this);
-
-#endif
 }
 
 model_parameters::~model_parameters()
@@ -71,18 +58,3 @@ model_parameters::~model_parameters()
     global_datafile = NULL;
   }
 }
-
-void model_parameters::report(const dvector& gradients){}
-
-void model_parameters::final_calcs(void){}
-
-void model_parameters::set_runtime(void){}
-
-#ifdef _BORLANDC_
-  extern unsigned _stklen=10000U;
-#endif
-
-#ifdef __ZTC__
-  extern unsigned int _stack=10000U;
-#endif
-

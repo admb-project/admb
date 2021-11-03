@@ -1,33 +1,18 @@
-#if !defined(__model_parameters_h__)
-#define __model_parameters_h__
-
-#ifdef DEBUG
-  #ifndef __SUNPRO_C
-    #include <cfenv>
-    #include <cstdlib>
-  #endif
-  #include <chrono>
-#endif
 #include <fvar.hpp>
 #include <admodel.h>
 
-#ifdef USE_ADMB_CONTRIBS
-#include <contrib.h>
-#endif
+extern "C"  {
+  void ad_boundf(int i);
+}
 
-class model_parameters: public ad_comm,
+class model_parameters : public ad_comm,
   public function_minimizer
 {
 public:
   ~model_parameters();
-  void preliminary_calculations(void);
-  void minimize(int argc,char * argv[])
-  {
-    iprint = 10;
-    preliminary_calculations();
-    computations(argc, argv);
-  }
-  void set_runtime(void);
+  void preliminary_calculations(void) {}
+  void set_runtime(void) {}
+
   static int mc_phase(void)
   {
     return initial_params::mc_phase;
@@ -65,18 +50,17 @@ public:
   }
   ivector integer_control_flags;
   dvector double_control_flags;
-  param_number prior_function_value;
-  param_number likelihood_function_value;
 public:
-  virtual void userfunction(void);
-  virtual void report(const dvector& gradients);
-  virtual void final_calcs(void);
-  model_parameters(int argc, char * argv[]);
-  virtual void initializationfunction(void){}
-
+  virtual void userfunction(void) {}
+  virtual void report(const dvector& gradients) {}
+  virtual void final_calcs(void) {}
+  model_parameters(int sz,int argc, char * argv[]);
+  model_parameters(int argc, char * argv[]): model_parameters(150000, argc, argv) {} 
+  virtual void initializationfunction(void) {}
+  void minimize(int argc,char * argv[])
+  {
+    iprint = 10;
+    preliminary_calculations();
+    computations(argc, argv);
+  }
 };
-
-extern "C"  {
-  void ad_boundf(int i);
-}
-#endif

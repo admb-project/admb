@@ -1,6 +1,5 @@
 all: catage.dat
-	
-	../../../admb catage.cpp model_parameters.cpp
+	CXXFLAGS=-I../model_parameters ../../../admb catage.cpp ../model_parameters/model_parameters.cpp
 	./catage
 
 catage.dat:

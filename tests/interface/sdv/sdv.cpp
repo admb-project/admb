@@ -1,78 +1,4 @@
-#ifdef DEBUG
-  #ifndef __SUNPRO_C
-    #include <cfenv>
-    #include <cstdlib>
-  #endif
-#endif
-  //#include <df1b2fun.h>
-#ifdef DEBUG
-  #include <chrono>
-#endif
-#include <admodel.h>
-#ifdef USE_ADMB_CONTRIBS
-#include <contrib.h>
-#endif
-#include <df1b2fun.h>
-#include <adrndeff.h>
-
-class model_parameters : public ad_comm,
-  public function_minimizer
-{
-public:
-  friend class df1b2_pre_parameters;
-  friend class df1b2_parameters;
-  static model_parameters * model_parameters_ptr;
-  static model_parameters * get_model_parameters_ptr(void)
-  {
-    return model_parameters_ptr;
-  }
-  ~model_parameters();
-  void preliminary_calculations(void);
-  void set_runtime(void);
-  static int mc_phase(void)
-  {
-    return initial_params::mc_phase;
-  }
-  static int mceval_phase(void)
-  {
-    return initial_params::mceval_phase;
-  }
-  static int hessian_phase(void)
-  {
-    return initial_params::in_hessian_phase;
-  }
-  static int sd_phase(void)
-  {
-    return initial_params::sd_phase;
-  }
-  static int current_phase(void)
-  {
-    return initial_params::current_phase;
-  }
-  static int last_phase(void)
-  {
-    return (initial_params::current_phase
-      >=initial_params::max_number_phases);
-  }
-  static prevariable current_feval(void)
-  {
-    return *objective_function_value::pobjfun;
-  }
-  ivector integer_control_flags;
-  void begin_df1b2_funnel(void);
-  void end_df1b2_funnel(void);
-  dvector double_control_flags;
-public:
-  virtual void userfunction(void) {}
-  virtual void report(const dvector& gradients);
-  virtual void final_calcs(void) {}
-  model_parameters(int sz,int argc, char * argv[]);
-  virtual void initializationfunction(void){}
-  virtual void AD_uf_inner(void){pre_userfunction();}
-  virtual void AD_uf_outer(void){pre_userfunction();}
-  virtual void user_function(void){;}
-  virtual void allocate(void){;}
-};
+#include "model_parameters.h"
 
 class sdv: public model_parameters
 {
@@ -141,12 +67,7 @@ public:
 
 };
 
-  extern "C"  {
-    void ad_boundf(int i);
-  }
-
-  df1b2_parameters * df1b2_parameters::df1b2_parameters_ptr=0;
-  model_parameters * model_parameters::model_parameters_ptr=0;
+df1b2_parameters * df1b2_parameters::df1b2_parameters_ptr=0;
 
 sdv::sdv(int sz,int argc,char * argv[]): model_parameters(sz, argc, argv)
 {
@@ -162,48 +83,6 @@ sdv::sdv(int sz,int argc,char * argv[]): model_parameters(sz, argc, argv)
   g.allocate("g");  /* ADOBJECTIVEFUNCTION */
 }
 
-model_parameters::model_parameters(int sz,int argc,char * argv[]):
- ad_comm(argc,argv) , function_minimizer(sz)
-{
-  adstring tmpstring;
-  tmpstring=adprogram_name + adstring(".dat");
-  if (argc > 1)
-  {
-    int on=0;
-    if ( (on=option_match(argc,argv,"-ind"))>-1)
-    {
-      if (on>argc-2 || argv[on+1][0] == '-')
-      {
-        cerr << "Invalid input data command line option"
-                " -- ignored" << endl;
-      }
-      else
-      {
-        tmpstring = adstring(argv[on+1]);
-      }
-    }
-  }
-  global_datafile = new cifstream(tmpstring);
-  if (!global_datafile)
-  {
-    cerr << "Error: Unable to allocate global_datafile in model_data constructor.";
-    ad_exit(1);
-  }
-  if (!(*global_datafile))
-  {
-    delete global_datafile;
-    global_datafile=NULL;
-  }
-  /*
-  if (global_datafile)
-  {
-    delete global_datafile;
-    global_datafile = NULL;
-  }
-  */
-  model_parameters_ptr=this;
-  initializationfunction();
-}
 void sdv::userfunction(void)
 {
   g =0.0;
@@ -242,27 +121,6 @@ void sdv::sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,
   end_df1b2_funnel();
 }
 
-void model_parameters::report(const dvector& gradients)
-{
- adstring ad_tmp=initial_params::get_reportfile_name();
-  ofstream report((char*)(adprogram_name + ad_tmp));
-  if (!report)
-  {
-    cerr << "error trying to open report file"  << adprogram_name << ".rep";
-    return;
-  }
-}
-
-void model_parameters::preliminary_calculations(void) 
-{
-
-  #if defined(USE_ADPVM)
-
-  admaster_slave_variable_interface(*this);
-
-  #endif
-  cout << setprecision(4);
-}
   long int arrmblsize=0;
 
 int main(int argc,char * argv[])
@@ -319,18 +177,6 @@ if (failedtest) { std::abort(); }
     return 0;
 }
 
-extern "C"  {
-  void ad_boundf(int i)
-  {
-    /* so we can stop here */
-    exit(i);
-  }
-}
-
-model_parameters::~model_parameters()
-{}
-
-void model_parameters::set_runtime(void){}
 
 #ifdef _BORLANDC_
   extern unsigned _stklen=10000U;
@@ -404,23 +250,6 @@ void df1b2_pre_parameters::end_df1b2_funnel(void)
   funnel_init_var::deallocate_all(); 
 } 
   
-void model_parameters::begin_df1b2_funnel(void) 
-{ 
-  if (lapprox)  
-  {  
-    {  
-      begin_funnel_stuff();  
-    }  
-  }  
-}  
- 
-void model_parameters::end_df1b2_funnel(void) 
-{  
-  if (lapprox)  
-  {  
-    end_df1b2_funnel_stuff();  
-  }  
-} 
 
 void df1b2_parameters::deallocate() 
 {

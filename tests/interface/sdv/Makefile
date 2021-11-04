@@ -1,5 +1,5 @@
 all: sdv.dat
-	CXXFLAGS=-I../model_parameters ../../../admb sdv.cpp
+	../../../admb sdv.cpp model_parameters.cpp
 	./sdv
 
 sdv.dat:

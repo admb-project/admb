@@ -19,8 +19,6 @@ class model_parameters : public ad_comm,
   public function_minimizer
 {
 public:
-  data_int  n;
-  data_vector y;
   friend class df1b2_pre_parameters;
   friend class df1b2_parameters;
   static model_parameters * model_parameters_ptr;
@@ -60,11 +58,27 @@ public:
   {
     return *objective_function_value::pobjfun;
   }
-private:
   ivector integer_control_flags;
   void begin_df1b2_funnel(void);
   void end_df1b2_funnel(void);
   dvector double_control_flags;
+public:
+  virtual void userfunction(void) {}
+  virtual void report(const dvector& gradients);
+  virtual void final_calcs(void) {}
+  model_parameters(int sz,int argc, char * argv[]);
+  virtual void initializationfunction(void){}
+  virtual void AD_uf_inner(void){pre_userfunction();}
+  virtual void AD_uf_outer(void){pre_userfunction();}
+  virtual void user_function(void){;}
+  virtual void allocate(void){;}
+};
+
+class sdv: public model_parameters
+{
+public:
+  data_int n;
+  data_vector y;
   param_init_bounded_number b;
   param_init_bounded_number log_sigma;
   param_init_bounded_number mu;
@@ -73,26 +87,21 @@ private:
   param_number prior_function_value;
   param_number likelihood_function_value;
   objective_function_value  g;
-public:
-  virtual void userfunction(void);
-  virtual void report(const dvector& gradients);
-  virtual void final_calcs(void);
-  model_parameters(int sz,int argc, char * argv[]);
-  virtual void initializationfunction(void){}
-  virtual void AD_uf_inner(void){pre_userfunction();}
-  virtual void AD_uf_outer(void){pre_userfunction();}
-  virtual void user_function(void){;}
-  virtual void allocate(void){;}
+
+  sdv(int sz,int argc,char * argv[]);
+
+  void userfunction(void);
+
   void sf1(const dvariable& ls,const dvariable& bb,const dvariable& x_1);
   void sf2(const dvariable& ls,const dvariable& bb,const dvariable& x_i,const dvariable& x_i1);
   void sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,int i);
 };
   
-class df1b2_pre_parameters : public model_parameters
+class df1b2_pre_parameters : public sdv
 { 
 public: 
   df1b2_pre_parameters(int sz,int argc, char * argv[]) : 
-    model_parameters(sz,argc,argv){;}
+    sdv(sz,argc,argv){;}
   re_objective_function_value  g;
   void begin_df1b2_funnel(void); 
   void setup_quadprior_calcs(void); 
@@ -139,6 +148,20 @@ public:
   df1b2_parameters * df1b2_parameters::df1b2_parameters_ptr=0;
   model_parameters * model_parameters::model_parameters_ptr=0;
 
+sdv::sdv(int sz,int argc,char * argv[]): model_parameters(sz, argc, argv)
+{
+  n.allocate("n");
+  y.allocate(1,n,"y");
+  b.allocate(-.9999,.9999,2,"b");
+  log_sigma.allocate(-3.0,3.0,2,"log_sigma");
+  mu.allocate(-10,10,-1,"mu");
+  mu_x.allocate(-10,3,1,"mu_x");
+  x.allocate(1,n,2,"x");
+  prior_function_value.allocate("prior_function_value");
+  likelihood_function_value.allocate("likelihood_function_value");
+  g.allocate("g");  /* ADOBJECTIVEFUNCTION */
+}
+
 model_parameters::model_parameters(int sz,int argc,char * argv[]):
  ad_comm(argc,argv) , function_minimizer(sz)
 {
@@ -171,25 +194,17 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]):
     delete global_datafile;
     global_datafile=NULL;
   }
-  n.allocate("n");
-  y.allocate(1,n,"y");
+  /*
   if (global_datafile)
   {
     delete global_datafile;
     global_datafile = NULL;
   }
+  */
   model_parameters_ptr=this;
   initializationfunction();
-  b.allocate(-.9999,.9999,2,"b");
-  log_sigma.allocate(-3.0,3.0,2,"log_sigma");
-  mu.allocate(-10,10,-1,"mu");
-  mu_x.allocate(-10,3,1,"mu_x");
-  x.allocate(1,n,2,"x");
-  prior_function_value.allocate("prior_function_value");
-  likelihood_function_value.allocate("likelihood_function_value");
-  g.allocate("g");  /* ADOBJECTIVEFUNCTION */
 }
-void model_parameters::userfunction(void)
+void sdv::userfunction(void)
 {
   g =0.0;
   int i;	
@@ -204,21 +219,21 @@ void model_parameters::userfunction(void)
   }
 }
 
-void model_parameters::sf1(const dvariable& ls,const dvariable& bb,const dvariable& x_1)
+void sdv::sf1(const dvariable& ls,const dvariable& bb,const dvariable& x_1)
 {
   begin_df1b2_funnel();
   g -= -ls + 0.5*log(1-square(bb))  - 0.5*square(x_1/mfexp(ls))*(1-square(bb));
   end_df1b2_funnel();
 }
 
-void model_parameters::sf2(const dvariable& ls,const dvariable& bb,const dvariable& x_i,const dvariable& x_i1)
+void sdv::sf2(const dvariable& ls,const dvariable& bb,const dvariable& x_i,const dvariable& x_i1)
 {
   begin_df1b2_funnel();
   g -= -ls - .5*square((x_i-bb*x_i1)/mfexp(ls));
   end_df1b2_funnel();
 }
 
-void model_parameters::sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,int i)
+void sdv::sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,int i)
 {
   begin_df1b2_funnel();
   dvariable log_sigma_y = 0.5*(mu_x + x_i);
@@ -314,8 +329,6 @@ extern "C"  {
 
 model_parameters::~model_parameters()
 {}
-
-void model_parameters::final_calcs(void){}
 
 void model_parameters::set_runtime(void){}
 

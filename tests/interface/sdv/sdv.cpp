@@ -15,19 +15,12 @@
 #include <df1b2fun.h>
 #include <adrndeff.h>
 
-class model_data : public ad_comm{
-  public:
-  data_int  n;
-  data_vector y;
-  ~model_data();
-  model_data(int argc,char * argv[]);
-  friend class model_parameters;
-};
-
-class model_parameters : public model_data ,
+class model_parameters : public ad_comm,
   public function_minimizer
 {
 public:
+  data_int  n;
+  data_vector y;
   friend class df1b2_pre_parameters;
   friend class df1b2_parameters;
   static model_parameters * model_parameters_ptr;
@@ -145,7 +138,9 @@ public:
 
   df1b2_parameters * df1b2_parameters::df1b2_parameters_ptr=0;
   model_parameters * model_parameters::model_parameters_ptr=0;
-model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
+
+model_parameters::model_parameters(int sz,int argc,char * argv[]):
+ ad_comm(argc,argv) , function_minimizer(sz)
 {
   adstring tmpstring;
   tmpstring=adprogram_name + adstring(".dat");
@@ -183,11 +178,6 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
     delete global_datafile;
     global_datafile = NULL;
   }
-}
-
-model_parameters::model_parameters(int sz,int argc,char * argv[]) : 
- model_data(argc,argv) , function_minimizer(sz)
-{
   model_parameters_ptr=this;
   initializationfunction();
   b.allocate(-.9999,.9999,2,"b");
@@ -321,9 +311,6 @@ extern "C"  {
     exit(i);
   }
 }
-
-model_data::~model_data()
-{}
 
 model_parameters::~model_parameters()
 {}

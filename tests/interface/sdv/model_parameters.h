@@ -61,6 +61,14 @@ public:
   {
     return *objective_function_value::pobjfun;
   }
+  /*
+  dvariable adromb(dvariable(*f)(const dvariable&), double a, double b, int ns)
+  {
+    using namespace std::placeholders;
+    auto func = std::bind(f, this, _1);
+    return function_minimizer::adromb(func, a, b, ns);
+  }
+  */
   ivector integer_control_flags;
   void begin_df1b2_funnel(void);
   void end_df1b2_funnel(void);
@@ -70,10 +78,16 @@ public:
   virtual void report(const dvector& gradients);
   virtual void final_calcs(void) {}
   model_parameters(int sz,int argc, char * argv[]);
+  model_parameters(int argc, char * argv[]): model_parameters(150000, argc, argv) {}
   virtual void initializationfunction(void){}
   virtual void AD_uf_inner(void){pre_userfunction();}
   virtual void AD_uf_outer(void){pre_userfunction();}
   virtual void user_function(void){;}
   virtual void allocate(void){;}
+  void minimize(int argc,char * argv[])
+  {
+    iprint = 10;
+    preliminary_calculations();
+    computations(argc, argv);
+  }
 };
-

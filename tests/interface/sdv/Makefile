@@ -1,5 +1,5 @@
 all: sdv.dat
-	../../../admb sdv.cpp model_parameters.cpp
+	../../../admb sdv.cpp model_parameters.cpp main.cpp
 	./sdv
 
 sdv.dat:
@@ -10,6 +10,7 @@ clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
 	@rm -vf admodel.hes
+	@rm -vf main.obj
 	@rm -vf sdv
 	@rm -vf sdv.dat
 	@rm -vf sdv.b01

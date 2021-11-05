@@ -1,7 +1,10 @@
 
 #include "model_parameters.h"
 
+/*
 model_parameters* model_parameters::model_parameters_ptr = nullptr;
+model_parameters* model_parameters::df1b2_parameters_ptr = nullptr;
+*/
 
 model_parameters::model_parameters(int sz,int argc,char * argv[]):
  ad_comm(argc,argv) , function_minimizer(sz)
@@ -41,12 +44,10 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]):
     delete global_datafile;
     global_datafile = NULL;
   }
-  */
   model_parameters_ptr=this;
+  */
   initializationfunction();
 }
-
-
 void model_parameters::report(const dvector& gradients)
 {
  adstring ad_tmp=initial_params::get_reportfile_name();
@@ -57,7 +58,6 @@ void model_parameters::report(const dvector& gradients)
     return;
   }
 }
-
 void model_parameters::preliminary_calculations(void)
 {
 
@@ -68,7 +68,6 @@ void model_parameters::preliminary_calculations(void)
   #endif
   cout << setprecision(4);
 }
-
 extern "C"  {
   void ad_boundf(int i)
   {
@@ -76,7 +75,6 @@ extern "C"  {
     exit(i);
   }
 }
-
 void model_parameters::begin_df1b2_funnel(void)
 {
   if (lapprox)
@@ -86,7 +84,6 @@ void model_parameters::begin_df1b2_funnel(void)
     }
   }
 }
-
 void model_parameters::end_df1b2_funnel(void)
 {
   if (lapprox)
@@ -94,13 +91,11 @@ void model_parameters::end_df1b2_funnel(void)
     end_df1b2_funnel_stuff();
   }
 }
-
 void model_parameters::setup_quadprior_calcs(void)
 {
   df1b2_gradlist::set_no_derivatives();
   quadratic_prior::in_qp_calculations=1;
 }
-
 void model_parameters::begin_df1b2_funnel2(void)
 {
   (*re_objective_function_value::pobjfun)=0;
@@ -112,7 +107,6 @@ void model_parameters::begin_df1b2_funnel2(void)
   }
   funnel_init_var::allocate_all();
 }
-
 void model_parameters::end_df1b2_funnel2(void)
 {
   lapprox->do_separable_stuff();

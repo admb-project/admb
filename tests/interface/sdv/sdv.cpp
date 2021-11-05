@@ -26,16 +26,10 @@ public:
 class df1b2_parameters : public sdv
 { 
 public: 
-  static df1b2_parameters * df1b2_parameters_ptr;
-  static df1b2_parameters * get_df1b2_parameters_ptr(void) 
-  { 
-    return df1b2_parameters_ptr; 
-  } 
   void deallocate(); 
   df1b2_parameters(int sz,int argc, char * argv[]) : 
     sdv(sz,argc,argv)
   { 
-    df1b2_parameters_ptr=this;
   }
   df1b2_init_bounded_number b;
   df1b2_init_bounded_number log_sigma;
@@ -52,10 +46,7 @@ public:
   void sf1(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_1);
   void sf2(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_i,const funnel_init_df1b2variable& x_i1);
   void sf3(const funnel_init_df1b2variable& x_i ,const funnel_init_df1b2variable& mu ,const funnel_init_df1b2variable& mu_x ,int i);
-
 };
-
-df1b2_parameters * df1b2_parameters::df1b2_parameters_ptr=0;
 
 sdv::sdv(int sz,int argc,char * argv[]): model_parameters(sz, argc, argv)
 {
@@ -70,7 +61,6 @@ sdv::sdv(int sz,int argc,char * argv[]): model_parameters(sz, argc, argv)
   likelihood_function_value.allocate("likelihood_function_value");
   g.allocate("g");  /* ADOBJECTIVEFUNCTION */
 }
-
 void sdv::userfunction(void)
 {
   g =0.0;
@@ -85,21 +75,18 @@ void sdv::userfunction(void)
     sf3(x(i),mu,mu_x,i);
   }
 }
-
 void sdv::sf1(const dvariable& ls,const dvariable& bb,const dvariable& x_1)
 {
   begin_df1b2_funnel();
   g -= -ls + 0.5*log(1-square(bb))  - 0.5*square(x_1/mfexp(ls))*(1-square(bb));
   end_df1b2_funnel();
 }
-
 void sdv::sf2(const dvariable& ls,const dvariable& bb,const dvariable& x_i,const dvariable& x_i1)
 {
   begin_df1b2_funnel();
   g -= -ls - .5*square((x_i-bb*x_i1)/mfexp(ls));
   end_df1b2_funnel();
 }
-
 void sdv::sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,int i)
 {
   begin_df1b2_funnel();
@@ -108,9 +95,64 @@ void sdv::sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,
   g -= -log_sigma_y - .5*square((y(i)-mu)/sigma_y);
   end_df1b2_funnel();
 }
+void df1b2_parameters::user_function(void)
+{
+  g =0.0;
+  int i;	
+  sf1(log_sigma,b,x(1));
+  for (i=2;i<=n;i++)
+  {
+    sf2(log_sigma,b,x(i),x(i-1));
+  }
+  for (i=1;i<=n;i++)
+  {
+    sf3(x(i),mu,mu_x,i);
+  }
+}
+void df1b2_parameters::sf1(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_1)
+{
+  begin_df1b2_funnel2();
+  g -= -ls + 0.5*log(1-square(bb))  - 0.5*square(x_1/mfexp(ls))*(1-square(bb));
+  end_df1b2_funnel2();
+}
+void df1b2_parameters::sf2(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_i,const funnel_init_df1b2variable& x_i1)
+{
+  begin_df1b2_funnel2();
+  g -= -ls - .5*square((x_i-bb*x_i1)/mfexp(ls));
+  end_df1b2_funnel2();
+}
+void df1b2_parameters::sf3(const funnel_init_df1b2variable& x_i ,const funnel_init_df1b2variable& mu ,const funnel_init_df1b2variable& mu_x ,int i)
+{
+  begin_df1b2_funnel2();
+  df1b2variable log_sigma_y = 0.5*(mu_x + x_i);
+  df1b2variable sigma_y = mfexp(log_sigma_y);
+  g -= -log_sigma_y - .5*square((y(i)-mu)/sigma_y);
+  end_df1b2_funnel2();
+}
+void df1b2_parameters::deallocate() 
+{
+  b.deallocate();
+  log_sigma.deallocate();
+  mu.deallocate();
+  mu_x.deallocate();
+  x.deallocate();
+  prior_function_value.deallocate();
+  likelihood_function_value.deallocate();
+  g.deallocate();
+} 
+void df1b2_parameters::allocate(void) 
+{
+  b.allocate(-.9999,.9999,2,"b");
+  log_sigma.allocate(-3.0,3.0,2,"log_sigma");
+  mu.allocate(-10,10,-1,"mu");
+  mu_x.allocate(-10,3,1,"mu_x");
+  x.allocate(1,n,2,"x");
+  prior_function_value.allocate("prior_function_value");
+  likelihood_function_value.allocate("likelihood_function_value");
+  g.allocate("g");  /* ADOBJECTIVEFUNCTION */
+}
 
-  long int arrmblsize=0;
-
+long int arrmblsize=0;
 int main(int argc,char * argv[])
 {
 #ifdef DEBUG
@@ -163,67 +205,4 @@ if (failedtest) { std::abort(); }
   #endif
 #endif
     return 0;
-}
-
-void df1b2_parameters::user_function(void)
-{
-  g =0.0;
-  int i;	
-  sf1(log_sigma,b,x(1));
-  for (i=2;i<=n;i++)
-  {
-    sf2(log_sigma,b,x(i),x(i-1));
-  }
-  for (i=1;i<=n;i++)
-  {
-    sf3(x(i),mu,mu_x,i);
-  }
-}
-
-void df1b2_parameters::sf1(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_1)
-{
-  begin_df1b2_funnel2();
-  g -= -ls + 0.5*log(1-square(bb))  - 0.5*square(x_1/mfexp(ls))*(1-square(bb));
-  end_df1b2_funnel2();
-}
-
-void df1b2_parameters::sf2(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_i,const funnel_init_df1b2variable& x_i1)
-{
-  begin_df1b2_funnel2();
-  g -= -ls - .5*square((x_i-bb*x_i1)/mfexp(ls));
-  end_df1b2_funnel2();
-}
-
-void df1b2_parameters::sf3(const funnel_init_df1b2variable& x_i ,const funnel_init_df1b2variable& mu ,const funnel_init_df1b2variable& mu_x ,int i)
-{
-  begin_df1b2_funnel2();
-  df1b2variable log_sigma_y = 0.5*(mu_x + x_i);
-  df1b2variable sigma_y = mfexp(log_sigma_y);
-  g -= -log_sigma_y - .5*square((y(i)-mu)/sigma_y);
-  end_df1b2_funnel2();
-}
-   
-  
-
-void df1b2_parameters::deallocate() 
-{
-  b.deallocate();
-  log_sigma.deallocate();
-  mu.deallocate();
-  mu_x.deallocate();
-  x.deallocate();
-  prior_function_value.deallocate();
-  likelihood_function_value.deallocate();
-  g.deallocate();
-} 
-void df1b2_parameters::allocate(void) 
-{
-  b.allocate(-.9999,.9999,2,"b");
-  log_sigma.allocate(-3.0,3.0,2,"log_sigma");
-  mu.allocate(-10,10,-1,"mu");
-  mu_x.allocate(-10,3,1,"mu_x");
-  x.allocate(1,n,2,"x");
-  prior_function_value.allocate("prior_function_value");
-  likelihood_function_value.allocate("likelihood_function_value");
-  g.allocate("g");  /* ADOBJECTIVEFUNCTION */
 }

@@ -22,13 +22,20 @@ class model_parameters : public ad_comm,
   public function_minimizer
 {
 public:
-  friend class df1b2_pre_parameters;
-  friend class df1b2_parameters;
-  static model_parameters * model_parameters_ptr;
-  static model_parameters * get_model_parameters_ptr(void)
+/*
+  static model_parameters* df1b2_parameters_ptr;
+  static model_parameters* get_df1b2_parameters_ptr(void) 
+  { 
+    return df1b2_parameters_ptr; 
+  } 
+
+  static model_parameters* model_parameters_ptr;
+  static model_parameters* get_model_parameters_ptr(void)
   {
     return model_parameters_ptr;
   }
+*/
+
   ~model_parameters() {}
   void preliminary_calculations(void);
   void set_runtime(void) {}

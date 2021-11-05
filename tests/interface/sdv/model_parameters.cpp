@@ -58,7 +58,7 @@ void model_parameters::report(const dvector& gradients)
   }
 }
 
-void model_parameters::preliminary_calculations(void) 
+void model_parameters::preliminary_calculations(void)
 {
 
   #if defined(USE_ADPVM)
@@ -77,20 +77,45 @@ extern "C"  {
   }
 }
 
-void model_parameters::begin_df1b2_funnel(void) 
-{ 
-  if (lapprox)  
-  {  
-    {  
-      begin_funnel_stuff();  
-    }  
-  }  
-}  
- 
-void model_parameters::end_df1b2_funnel(void) 
-{  
-  if (lapprox)  
-  {  
-    end_df1b2_funnel_stuff();  
-  }  
-} 
+void model_parameters::begin_df1b2_funnel(void)
+{
+  if (lapprox)
+  {
+    {
+      begin_funnel_stuff();
+    }
+  }
+}
+
+void model_parameters::end_df1b2_funnel(void)
+{
+  if (lapprox)
+  {
+    end_df1b2_funnel_stuff();
+  }
+}
+
+void model_parameters::setup_quadprior_calcs(void)
+{
+  df1b2_gradlist::set_no_derivatives();
+  quadratic_prior::in_qp_calculations=1;
+}
+
+void model_parameters::begin_df1b2_funnel2(void)
+{
+  (*re_objective_function_value::pobjfun)=0;
+  other_separable_stuff_begin();
+  f1b2gradlist->reset();
+  if (!quadratic_prior::in_qp_calculations)
+  {
+    df1b2_gradlist::set_yes_derivatives();
+  }
+  funnel_init_var::allocate_all();
+}
+
+void model_parameters::end_df1b2_funnel2(void)
+{
+  lapprox->do_separable_stuff();
+  other_separable_stuff_end();
+  funnel_init_var::deallocate_all();
+}

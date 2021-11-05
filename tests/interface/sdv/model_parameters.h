@@ -90,4 +90,8 @@ public:
     preliminary_calculations();
     computations(argc, argv);
   }
+
+  void begin_df1b2_funnel2(void);
+  void setup_quadprior_calcs(void);
+  void end_df1b2_funnel2(void);
 };

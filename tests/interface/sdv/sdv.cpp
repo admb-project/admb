@@ -23,17 +23,7 @@ public:
   void sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,int i);
 };
   
-class df1b2_pre_parameters : public sdv
-{ 
-public: 
-  df1b2_pre_parameters(int sz,int argc, char * argv[]) : 
-    sdv(sz,argc,argv){;}
-  void begin_df1b2_funnel(void); 
-  void setup_quadprior_calcs(void); 
-  void end_df1b2_funnel(void);
-}; 
- 
-class df1b2_parameters : public df1b2_pre_parameters 
+class df1b2_parameters : public sdv
 { 
 public: 
   static df1b2_parameters * df1b2_parameters_ptr;
@@ -43,7 +33,7 @@ public:
   } 
   void deallocate(); 
   df1b2_parameters(int sz,int argc, char * argv[]) : 
-    df1b2_pre_parameters(sz,argc,argv) 
+    sdv(sz,argc,argv)
   { 
     df1b2_parameters_ptr=this;
   }
@@ -56,12 +46,8 @@ public:
   df1b2variable likelihood_function_value;
   re_objective_function_value  g;
 
-   // re_objective_function_value  g;
   virtual void user_function(void); 
   virtual void allocate(void); 
- // void begin_df1b2_funnel(void); 
- // void setup_quadprior_calcs(void); 
- // void end_df1b2_funnel(void);
 
   void sf1(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_1);
   void sf2(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_i,const funnel_init_df1b2variable& x_i1);
@@ -196,51 +182,27 @@ void df1b2_parameters::user_function(void)
 
 void df1b2_parameters::sf1(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_1)
 {
-  begin_df1b2_funnel();
+  begin_df1b2_funnel2();
   g -= -ls + 0.5*log(1-square(bb))  - 0.5*square(x_1/mfexp(ls))*(1-square(bb));
-  end_df1b2_funnel();
+  end_df1b2_funnel2();
 }
 
 void df1b2_parameters::sf2(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_i,const funnel_init_df1b2variable& x_i1)
 {
-  begin_df1b2_funnel();
+  begin_df1b2_funnel2();
   g -= -ls - .5*square((x_i-bb*x_i1)/mfexp(ls));
-  end_df1b2_funnel();
+  end_df1b2_funnel2();
 }
 
 void df1b2_parameters::sf3(const funnel_init_df1b2variable& x_i ,const funnel_init_df1b2variable& mu ,const funnel_init_df1b2variable& mu_x ,int i)
 {
-  begin_df1b2_funnel();
+  begin_df1b2_funnel2();
   df1b2variable log_sigma_y = 0.5*(mu_x + x_i);
   df1b2variable sigma_y = mfexp(log_sigma_y);
   g -= -log_sigma_y - .5*square((y(i)-mu)/sigma_y);
-  end_df1b2_funnel();
+  end_df1b2_funnel2();
 }
    
-void df1b2_pre_parameters::setup_quadprior_calcs(void) 
-{ 
-  df1b2_gradlist::set_no_derivatives(); 
-  quadratic_prior::in_qp_calculations=1; 
-}  
-  
-void df1b2_pre_parameters::begin_df1b2_funnel(void) 
-{ 
-  (*re_objective_function_value::pobjfun)=0; 
-  other_separable_stuff_begin(); 
-  f1b2gradlist->reset();  
-  if (!quadratic_prior::in_qp_calculations) 
-  { 
-    df1b2_gradlist::set_yes_derivatives();  
-  } 
-  funnel_init_var::allocate_all();  
-}  
- 
-void df1b2_pre_parameters::end_df1b2_funnel(void) 
-{  
-  lapprox->do_separable_stuff(); 
-  other_separable_stuff_end(); 
-  funnel_init_var::deallocate_all(); 
-} 
   
 
 void df1b2_parameters::deallocate() 

@@ -1,4 +1,4 @@
-#include "sdv.h"
+#include "model_parameters.h"
 
 long int arrmblsize=0;
 int main(int argc,char * argv[])
@@ -22,7 +22,7 @@ std::feclearexcept(FE_ALL_EXCEPT);
 df1b2variable::pool = new adpool();
 initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1000];
 {
-    df1b2_parameters mp(arrmblsize,argc,argv);
+    model_parameters mp(arrmblsize,argc,argv);
     mp.iprint=10;
 
     function_minimizer::random_effects_flag=1;

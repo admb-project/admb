@@ -1,10 +1,31 @@
 
 #include "model_parameters.h"
+#include "sdv.h"
 
 /*
 model_parameters* model_parameters::model_parameters_ptr = nullptr;
 model_parameters* model_parameters::df1b2_parameters_ptr = nullptr;
 */
+
+df1b2_parameters* model = nullptr;
+model_parameters* minimizer = nullptr;
+
+void begin_df1b2_funnel()
+{
+  minimizer->begin_df1b2_funnel();
+}
+void end_df1b2_funnel()
+{
+  minimizer->end_df1b2_funnel();
+}
+void begin_df1b2_funnel2()
+{
+  minimizer->begin_df1b2_funnel2();
+}
+void end_df1b2_funnel2()
+{
+  minimizer->end_df1b2_funnel2();
+}
 
 model_parameters::model_parameters(int sz,int argc,char * argv[]):
  ad_comm(argc,argv) , function_minimizer(sz)
@@ -47,6 +68,8 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]):
   model_parameters_ptr=this;
   */
   initializationfunction();
+  model = new df1b2_parameters();
+  minimizer = this;
 }
 void model_parameters::report(const dvector& gradients)
 {
@@ -112,4 +135,20 @@ void model_parameters::end_df1b2_funnel2(void)
   lapprox->do_separable_stuff();
   other_separable_stuff_end();
   funnel_init_var::deallocate_all();
+}
+void model_parameters::userfunction()
+{
+  model->userfunction();
+}
+void model_parameters::user_function()
+{
+  model->user_function();
+}
+void model_parameters::allocate()
+{
+  model->allocate();
+}
+void model_parameters::deallocate()
+{
+  model->deallocate();
 }

@@ -1,6 +1,11 @@
 #include "sdv.h"
 
-sdv::sdv(int sz,int argc,char * argv[]): model_parameters(sz, argc, argv)
+void begin_df1b2_funnel();
+void end_df1b2_funnel();
+void begin_df1b2_funnel2();
+void end_df1b2_funnel2();
+
+sdv::sdv()
 {
   n.allocate("n");
   y.allocate(1,n,"y");
@@ -9,11 +14,9 @@ sdv::sdv(int sz,int argc,char * argv[]): model_parameters(sz, argc, argv)
   mu.allocate(-10,10,-1,"mu");
   mu_x.allocate(-10,3,1,"mu_x");
   x.allocate(1,n,2,"x");
-  prior_function_value.allocate("prior_function_value");
-  likelihood_function_value.allocate("likelihood_function_value");
   g.allocate("g");  /* ADOBJECTIVEFUNCTION */
 }
-void sdv::userfunction(void)
+void sdv::userfunction()
 {
   g =0.0;
   int i;	
@@ -47,29 +50,25 @@ void sdv::sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,
   g -= -log_sigma_y - .5*square((y(i)-mu)/sigma_y);
   end_df1b2_funnel();
 }
-void df1b2_parameters::allocate(void) 
+void df1b2_parameters::allocate()
 {
   b.allocate(-.9999,.9999,2,"b");
   log_sigma.allocate(-3.0,3.0,2,"log_sigma");
   mu.allocate(-10,10,-1,"mu");
   mu_x.allocate(-10,3,1,"mu_x");
   x.allocate(1,n,2,"x");
-  prior_function_value.allocate("prior_function_value");
-  likelihood_function_value.allocate("likelihood_function_value");
   g.allocate("g");  /* ADOBJECTIVEFUNCTION */
 }
-void df1b2_parameters::deallocate() 
+void df1b2_parameters::deallocate()
 {
   b.deallocate();
   log_sigma.deallocate();
   mu.deallocate();
   mu_x.deallocate();
   x.deallocate();
-  prior_function_value.deallocate();
-  likelihood_function_value.deallocate();
   g.deallocate();
-} 
-void df1b2_parameters::user_function(void)
+}
+void df1b2_parameters::user_function()
 {
   g =0.0;
   int i;	

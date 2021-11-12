@@ -7,7 +7,6 @@ model_parameters* model_parameters::model_parameters_ptr = nullptr;
 model_parameters* model_parameters::df1b2_parameters_ptr = nullptr;
 */
 
-df1b2_parameters* model = nullptr;
 model_parameters* minimizer = nullptr;
 
 void begin_df1b2_funnel()
@@ -68,7 +67,6 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]):
   model_parameters_ptr=this;
   */
   initializationfunction();
-  model = new df1b2_parameters();
   minimizer = this;
 }
 void model_parameters::report(const dvector& gradients)

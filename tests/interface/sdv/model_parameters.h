@@ -18,6 +18,8 @@ extern "C"  {
   void ad_boundf(int i);
 }
 
+class df1b2_parameters;
+
 class model_parameters : public ad_comm,
   public function_minimizer
 {
@@ -35,6 +37,8 @@ public:
     return model_parameters_ptr;
   }
 */
+
+  df1b2_parameters* model = nullptr;
 
   ~model_parameters() {}
   void preliminary_calculations();

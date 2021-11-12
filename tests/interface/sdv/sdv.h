@@ -1,7 +1,8 @@
 #include <fvar.hpp>
 #include <admodel.h>
+#include "model_interface.h"
 
-class sdv
+class sdv: public model_interface
 {
 public:
   data_int n;

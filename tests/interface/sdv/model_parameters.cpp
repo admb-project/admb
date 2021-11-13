@@ -140,13 +140,13 @@ void model_parameters::userfunction()
 }
 void model_parameters::user_function()
 {
-  model->user_function();
+  model2->user_function();
 }
 void model_parameters::allocate()
 {
-  model->allocate();
+  model2->allocate();
 }
 void model_parameters::deallocate()
 {
-  model->deallocate();
+  model2->deallocate();
 }

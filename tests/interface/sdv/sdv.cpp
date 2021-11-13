@@ -52,6 +52,11 @@ void sdv::sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,
 }
 void df1b2_parameters::allocate()
 {
+  ad_comm::global_datafile->clear();
+  ad_comm::global_datafile->seekg(0, std::ios::beg);
+
+  n.allocate("n");
+  y.allocate(1,n,"y");
   b.allocate(-.9999,.9999,2,"b");
   log_sigma.allocate(-3.0,3.0,2,"log_sigma");
   mu.allocate(-10,10,-1,"mu");

@@ -23,9 +23,12 @@ public:
   void sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,int i);
 };
 
-class df1b2_parameters : public sdv
+class df1b2_parameters : public model_interface
 {
 public:
+  data_int n;
+  data_vector y;
+
   df1b2_init_bounded_number b;
   df1b2_init_bounded_number log_sigma;
   df1b2_init_bounded_number mu;
@@ -33,7 +36,7 @@ public:
   df1b2_init_vector x;
   re_objective_function_value  g;
 
-  df1b2_parameters(): sdv() { }
+  df1b2_parameters() {}
 
   void allocate();
   void deallocate();

@@ -26,8 +26,10 @@ int main(int argc,char * argv[])
   initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1000];
   {
     model_parameters mp(arrmblsize,argc,argv);
-    df1b2_parameters model;
+    sdv model;
     mp.model = &model;
+    df1b2_parameters model2;
+    mp.model2 = &model2;
 
     mp.iprint=10;
 

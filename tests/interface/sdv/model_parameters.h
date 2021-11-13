@@ -39,6 +39,7 @@ public:
 */
 
   model_interface* model = nullptr;
+  model_interface* model2 = nullptr;
 
   ~model_parameters() {}
   void preliminary_calculations();

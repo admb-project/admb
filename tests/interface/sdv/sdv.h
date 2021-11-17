@@ -2,25 +2,26 @@
 #include <admodel.h>
 #include "model_interface.h"
 
+template <typename T, typename U, typename V, typename W>
 class sdv: public model_interface
 {
 public:
   data_int n;
   data_vector y;
-  param_init_bounded_number b;
-  param_init_bounded_number log_sigma;
-  param_init_bounded_number mu;
-  param_init_bounded_number mu_x;
-  random_effects_vector x;
-  objective_function_value  g;
+  U b;
+  U log_sigma;
+  U mu;
+  U mu_x;
+  V x;
+  W g;
 
   sdv();
 
   void userfunction();
 
-  void sf1(const dvariable& ls,const dvariable& bb,const dvariable& x_1);
-  void sf2(const dvariable& ls,const dvariable& bb,const dvariable& x_i,const dvariable& x_i1);
-  void sf3(const dvariable& x_i ,const dvariable& mu ,const dvariable& mu_x ,int i);
+  void sf1(const T& ls, const T& bb, const T& x_1);
+  void sf2(const T& ls, const T& bb, const T& x_i,const T& x_i1);
+  void sf3(const T& x_i, const T& mu, const T& mu_x, int i);
 };
 
 class df1b2_parameters : public model_interface

@@ -1,5 +1,6 @@
 #include "model_parameters.h"
 #include "sdv.h"
+#include "sdv.cpp"
 
 int main(int argc,char * argv[])
 {
@@ -26,7 +27,7 @@ int main(int argc,char * argv[])
   initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1000];
   {
     model_parameters mp(arrmblsize,argc,argv);
-    sdv model;
+    sdv<dvariable, param_init_bounded_number, random_effects_vector, objective_function_value> model;
     mp.model = &model;
     df1b2_parameters model2;
     mp.model2 = &model2;

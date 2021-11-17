@@ -1,5 +1,5 @@
 all: sdv.dat
-	../../../admb sdv.cpp model_parameters.cpp main.cpp
+	../../../admb -o sdv model_parameters.cpp main.cpp
 	./sdv
 
 sdv.dat:

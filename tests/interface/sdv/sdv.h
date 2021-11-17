@@ -15,7 +15,10 @@ public:
   V x;
   W g;
 
-  sdv();
+  sdv() {}
+
+  void allocate();
+  void deallocate();
 
   void userfunction();
 

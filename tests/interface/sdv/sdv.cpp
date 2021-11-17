@@ -4,7 +4,7 @@ void begin_df1b2_funnel2();
 void end_df1b2_funnel2();
 
 template <typename T, typename U, typename V, typename W>
-sdv<T, U, V, W>::sdv()
+void sdv<T, U, V, W>::allocate()
 {
   n.allocate("n");
   y.allocate(1,n,"y");
@@ -14,6 +14,10 @@ sdv<T, U, V, W>::sdv()
   mu_x.allocate(-10,3,1,"mu_x");
   x.allocate(1,n,2,"x");
   g.allocate("g");  /* ADOBJECTIVEFUNCTION */
+}
+template <typename T, typename U, typename V, typename W>
+void sdv<T, U, V, W>::deallocate()
+{
 }
 template <typename T, typename U, typename V, typename W>
 void sdv<T, U, V, W>::userfunction()

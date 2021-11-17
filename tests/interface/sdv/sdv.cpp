@@ -53,7 +53,8 @@ void sdv<T, U, V, W>::sf3(const T& x_i, const T& mu, const T& mu_x, int i)
   g -= -log_sigma_y - .5*square((y(i)-mu)/sigma_y);
   end_df1b2_funnel();
 }
-void df1b2_parameters::allocate()
+template <typename T, typename U, typename V, typename W>
+void df1b2_parameters<T, U, V, W>::allocate()
 {
   ad_comm::global_datafile->clear();
   ad_comm::global_datafile->seekg(0, std::ios::beg);
@@ -67,7 +68,8 @@ void df1b2_parameters::allocate()
   x.allocate(1,n,2,"x");
   g.allocate("g");  /* ADOBJECTIVEFUNCTION */
 }
-void df1b2_parameters::deallocate()
+template <typename T, typename U, typename V, typename W>
+void df1b2_parameters<T, U, V, W>::deallocate()
 {
   b.deallocate();
   log_sigma.deallocate();
@@ -76,7 +78,8 @@ void df1b2_parameters::deallocate()
   x.deallocate();
   g.deallocate();
 }
-void df1b2_parameters::user_function()
+template <typename T, typename U, typename V, typename W>
+void df1b2_parameters<T, U, V, W>::user_function()
 {
   g =0.0;
   int i;	
@@ -90,19 +93,22 @@ void df1b2_parameters::user_function()
     sf3(x(i),mu,mu_x,i);
   }
 }
-void df1b2_parameters::sf1(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_1)
+template <typename T, typename U, typename V, typename W>
+void df1b2_parameters<T, U, V, W>::sf1(const T& ls, const T& bb,const T& x_1)
 {
   begin_df1b2_funnel2();
   g -= -ls + 0.5*log(1-square(bb))  - 0.5*square(x_1/mfexp(ls))*(1-square(bb));
   end_df1b2_funnel2();
 }
-void df1b2_parameters::sf2(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_i,const funnel_init_df1b2variable& x_i1)
+template <typename T, typename U, typename V, typename W>
+void df1b2_parameters<T, U, V, W>::sf2(const T& ls,const T& bb,const T& x_i,const T& x_i1)
 {
   begin_df1b2_funnel2();
   g -= -ls - .5*square((x_i-bb*x_i1)/mfexp(ls));
   end_df1b2_funnel2();
 }
-void df1b2_parameters::sf3(const funnel_init_df1b2variable& x_i ,const funnel_init_df1b2variable& mu ,const funnel_init_df1b2variable& mu_x ,int i)
+template <typename T, typename U, typename V, typename W>
+void df1b2_parameters<T, U, V, W>::sf3(const T& x_i ,const T& mu ,const T& mu_x ,int i)
 {
   begin_df1b2_funnel2();
   df1b2variable log_sigma_y = 0.5*(mu_x + x_i);

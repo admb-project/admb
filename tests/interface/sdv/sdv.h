@@ -24,18 +24,19 @@ public:
   void sf3(const T& x_i, const T& mu, const T& mu_x, int i);
 };
 
+template <typename T, typename U, typename V, typename W>
 class df1b2_parameters : public model_interface
 {
 public:
   data_int n;
   data_vector y;
 
-  df1b2_init_bounded_number b;
-  df1b2_init_bounded_number log_sigma;
-  df1b2_init_bounded_number mu;
-  df1b2_init_bounded_number mu_x;
-  df1b2_init_vector x;
-  re_objective_function_value  g;
+  U b;
+  U log_sigma;
+  U mu;
+  U mu_x;
+  V x;
+  W g;
 
   df1b2_parameters() {}
 
@@ -44,7 +45,7 @@ public:
 
   void user_function();
 
-  void sf1(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_1);
-  void sf2(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_i,const funnel_init_df1b2variable& x_i1);
-  void sf3(const funnel_init_df1b2variable& x_i ,const funnel_init_df1b2variable& mu ,const funnel_init_df1b2variable& mu_x ,int i);
+  void sf1(const T& ls, const T& bb, const T& x_1);
+  void sf2(const T& ls, const T& bb, const T& x_i, const T& x_i1);
+  void sf3(const T& x_i , const T& mu, const T& mu_x, int i);
 };

@@ -2,7 +2,7 @@
 #include <admodel.h>
 #include "model_interface.h"
 
-template <typename T, typename U, typename V, typename W>
+template <typename T, typename U, typename V, typename W, typename X>
 class sdv: public model_interface
 {
 public:
@@ -27,7 +27,7 @@ public:
   void sf3(const T& x_i, const T& mu, const T& mu_x, int i);
 };
 
-template <typename T, typename U, typename V, typename W>
+template <typename T, typename U, typename V, typename W, typename X>
 class df1b2_parameters : public model_interface
 {
 public:

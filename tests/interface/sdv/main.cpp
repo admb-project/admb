@@ -27,7 +27,6 @@ int main(int argc,char * argv[])
   initial_df1b2params::varsptr = new P_INITIAL_DF1B2PARAMS[1000];
   {
     model_parameters mp(arrmblsize,argc,argv);
-    //sdv<dvariable, param_init_bounded_number, random_effects_vector, objective_function_value, dvariable> model;
     df1b2_parameters<dvariable, param_init_bounded_number, random_effects_vector, objective_function_value, dvariable> model;
     model.allocate();
     mp.model = &model;

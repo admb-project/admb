@@ -47,6 +47,7 @@ public:
   void deallocate();
 
   void user_function();
+  void userfunction();
 
   void sf1(const T& ls, const T& bb, const T& x_1);
   void sf2(const T& ls, const T& bb, const T& x_i, const T& x_i1);

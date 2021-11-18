@@ -114,6 +114,11 @@ void df1b2_parameters<funnel_init_df1b2variable, df1b2_init_bounded_number, df1b
   g.deallocate();
 }
 template <typename T, typename U, typename V, typename W, typename X>
+void df1b2_parameters<T, U, V, W, X>::userfunction()
+{
+  user_function();
+}
+template <typename T, typename U, typename V, typename W, typename X>
 void df1b2_parameters<T, U, V, W, X>::user_function()
 {
   g =0.0;
@@ -131,9 +136,9 @@ void df1b2_parameters<T, U, V, W, X>::user_function()
 template <typename T, typename U, typename V, typename W, typename X>
 void df1b2_parameters<T, U, V, W, X>::sf1(const T& ls, const T& bb,const T& x_1)
 {
-  begin_df1b2_funnel2();
+  begin_df1b2_funnel();
   g -= -ls + 0.5*log(1-square(bb))  - 0.5*square(x_1/mfexp(ls))*(1-square(bb));
-  end_df1b2_funnel2();
+  end_df1b2_funnel();
 }
 template <>
 void df1b2_parameters<funnel_init_df1b2variable, df1b2_init_bounded_number, df1b2_init_vector, re_objective_function_value, df1b2variable>::sf1(const funnel_init_df1b2variable& ls, const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_1)
@@ -145,9 +150,9 @@ void df1b2_parameters<funnel_init_df1b2variable, df1b2_init_bounded_number, df1b
 template <typename T, typename U, typename V, typename W, typename X>
 void df1b2_parameters<T, U, V, W, X>::sf2(const T& ls,const T& bb,const T& x_i,const T& x_i1)
 {
-  begin_df1b2_funnel2();
+  begin_df1b2_funnel();
   g -= -ls - .5*square((x_i-bb*x_i1)/mfexp(ls));
-  end_df1b2_funnel2();
+  end_df1b2_funnel();
 }
 template <>
 void df1b2_parameters<funnel_init_df1b2variable, df1b2_init_bounded_number, df1b2_init_vector, re_objective_function_value, df1b2variable>::sf2(const funnel_init_df1b2variable& ls,const funnel_init_df1b2variable& bb,const funnel_init_df1b2variable& x_i,const funnel_init_df1b2variable& x_i1)
@@ -159,11 +164,11 @@ void df1b2_parameters<funnel_init_df1b2variable, df1b2_init_bounded_number, df1b
 template <typename T, typename U, typename V, typename W, typename X>
 void df1b2_parameters<T, U, V, W, X>::sf3(const T& x_i ,const T& mu ,const T& mu_x ,int i)
 {
-  begin_df1b2_funnel2();
+  begin_df1b2_funnel();
   X log_sigma_y = 0.5*(mu_x + x_i);
   X sigma_y = mfexp(log_sigma_y);
   g -= -log_sigma_y - .5*square((y(i)-mu)/sigma_y);
-  end_df1b2_funnel2();
+  end_df1b2_funnel();
 }
 template <>
 void df1b2_parameters<funnel_init_df1b2variable, df1b2_init_bounded_number, df1b2_init_vector, re_objective_function_value, df1b2variable>::sf3(const funnel_init_df1b2variable& x_i ,const funnel_init_df1b2variable& mu ,const funnel_init_df1b2variable& mu_x ,int i)

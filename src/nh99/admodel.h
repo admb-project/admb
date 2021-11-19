@@ -1975,6 +1975,9 @@ public:
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
 
+  // Compact flag to toggle new console output
+  bool compact_flag;
+
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();
   bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);

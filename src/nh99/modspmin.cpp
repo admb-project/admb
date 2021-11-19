@@ -43,6 +43,16 @@ extern admb_javapointers * adjm_ptr;
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
+
+     // Experimental new flag to improve console output to be
+     // more compact and informative
+     if (option_match(argc,argv,"-compact") > -1){
+         function_minimizer::compact_flag=1;
+	 cout << "!! Using new compact output !!" << endl;
+     } else {
+       function_minimizer::compact_flag=0;
+     }	 
+
      if (option_match(argc,argv,"-mceval") == -1)
      {
        if(!(option_match(argc,argv,"-hess_step") == -1))

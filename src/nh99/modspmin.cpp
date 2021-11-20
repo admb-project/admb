@@ -43,16 +43,28 @@ extern admb_javapointers * adjm_ptr;
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
-
-     // Experimental new flag to improve console output to be
-     // more compact and informative
-     if (option_match(argc,argv,"-compact") > -1){
-         function_minimizer::compact_flag=1;
-	 cout << "!! Using new compact output !!" << endl;
+     // ------------------------------------------------------------
+     // Cole added experimental new flag to improve console
+     // output to be more compact and informative
+     int on, nopt, tmp;
+     if ( (on=option_match(argc,argv,"-output",nopt))>-1){
+       if (nopt ==1){
+	 tmp=atoi(argv[on+1]);
+	 if(tmp<0 | tmp >2) {
+	   cerr << "Invalid output value, must be 0, 1, or 2" << endl;
+	   ad_exit(1);
+	 }
+       } else {
+	 cerr << "Wrong number of arguments after -output argument" << endl;
+	 ad_exit(1);
+       }
+       function_minimizer::output_flag=tmp;
+       cout << "!! Using new output option =" << tmp << " !!"<< endl;
      } else {
-       function_minimizer::compact_flag=0;
+       // default to 2 for now which is original
+       function_minimizer::output_flag=2;
      }	 
-
+     // ------------------------------------------------------------
      if (option_match(argc,argv,"-mceval") == -1)
      {
        if(!(option_match(argc,argv,"-hess_step") == -1))

@@ -15,6 +15,7 @@
  */
 
 #include <fvar.hpp>
+#include <cassert>
 #if defined(_WIN32)
   #include <windows.h>
   #include <admodel.h>
@@ -479,7 +480,17 @@ label20: /* check for convergence */
         if (!scroll_flag) clrscr();
 #endif
 label7003: /* Printing table header */
-      if (iprint>0)
+	// This is the main console output
+	if(function_minimizer::output_flag==1){
+	  // new console output for optimization
+	  assert(ad_printf);
+	  assert(pointer_to_phase);
+	  if (itn % iprint ==0 ) 
+	  (*ad_printf)("iteration=%ld | phase=%d | nvar=%d | nll=%15.7le | mgc=%12.4le\n",
+		       itn,*pointer_to_phase, n,  double(f), double(gmax));
+	}
+	// if(function_minimizer::output_flag==2){
+	if (function_minimizer::output_flag==2 & iprint>0)
       {
         if (ad_printf)
         {
@@ -502,7 +513,7 @@ label7003: /* Printing table header */
       }
 /*label7002:*/
       /* Printing Statistics table */
-      if(iprint>0)
+      if(function_minimizer::output_flag==2 & iprint>0)
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
       }
@@ -929,7 +940,8 @@ label92: /* Exit with error */
         if (quit_flag == 'Q')
           if (ad_printf) (*ad_printf)("User initiated interrupt");
       }
-      if(iprint == 0) goto label777;
+if(iprint == 0) goto label777;
+if(function_minimizer::output_flag==2){
       if (ad_printf) (*ad_printf)("\n - final statistics:\n");
       if (ad_printf)
         (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
@@ -954,6 +966,7 @@ label92: /* Exit with error */
           "Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
 #endif
       fmmdisp(x, g, n, this->scroll_flag,noprintx);
+ }
 label777: /* Printing final Hessian approximation */
          if (ireturn <= 0)
          #ifdef DIAG
@@ -972,7 +985,7 @@ label7000:/* Printing Initial statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
-        if (ad_printf) (*ad_printf)("\nInitial statistics: ");
+        if (function_minimizer::output_flag==2 && ad_printf) (*ad_printf)("\nInitial statistics: ");
       }
       goto label7003;
 label7010:/* Printing Intermediate statistics */
@@ -981,7 +994,7 @@ label7010:/* Printing Intermediate statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
      if (!scroll_flag) clrscr();
 #endif
-     if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+     if (function_minimizer::output_flag==2 && ad_printf) (*ad_printf)("\nIntermediate statistics: ");
    }
    llog=0;
    goto label7003;

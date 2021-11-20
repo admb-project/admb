@@ -90,9 +90,18 @@ void function_minimizer::hess_routine_noparallel(void)
     }
     double sdelta1;
     double sdelta2;
+    if(function_minimizer::output_flag==1) cout << "Estimating Hessian: 0%";
+    double percentage=0.1;
     for (int i=1;i<=nvar;i++)
     {
-      hess_calcreport(i,nvar);
+      if(function_minimizer::output_flag==1){
+	if(i==floor(percentage*nvar)){
+	  cout << "..." << 100*percentage << "%";
+	  percentage += 0.10;
+	}
+      } else if(function_minimizer::output_flag==2){
+	hess_calcreport(i,nvar);
+      }
 
       double xsave=x(i);
       sdelta1=x(i)+delta;
@@ -150,6 +159,7 @@ void function_minimizer::hess_routine_noparallel(void)
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
     }
+    if(function_minimizer::output_flag==1) cout << "... done!" <<endl;
   }
   initial_params::reset(dvar_vector(x));
   ofs << gradient_structure::Hybrid_bounded_flag;

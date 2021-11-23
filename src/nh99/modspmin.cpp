@@ -47,7 +47,7 @@ extern admb_javapointers * adjm_ptr;
      // Cole added experimental new flag to improve console
      // output to be more compact and informative
      int on, nopt, tmp;
-     tmp=2;
+     tmp=1;
      std::clock_t start = clock();
      if ( (on=option_match(argc,argv,"-output",nopt))>-1){
        if (nopt ==1){
@@ -61,10 +61,10 @@ extern admb_javapointers * adjm_ptr;
 	 ad_exit(1);
        }
        function_minimizer::output_flag=tmp;
-       cout << "!! Using new output option =" << tmp << " !!"<< endl;
+       //cout << "!! Using new output option =" << tmp << " !!"<< endl;
      } else {
        // default to 2 for now which is original
-       function_minimizer::output_flag=2;
+       function_minimizer::output_flag=1;
      }	 
      // ------------------------------------------------------------
      if (option_match(argc,argv,"-mceval") == -1)
@@ -96,9 +96,9 @@ extern admb_javapointers * adjm_ptr;
      // cleanup_laplace_stuff(lapprox);
      if(function_minimizer::output_flag==1){
        double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-       std::string u; // units
        // Depending on how long it ran convert to sec/min/hour/days so
        // the outputs are interpretable
+       std::string u; // units
        if(runtime<=60){
 	 u=" seconds";
        } else if(runtime > 60 && runtime <=60*60){
@@ -110,7 +110,7 @@ extern admb_javapointers * adjm_ptr;
        }
        std::string m=get_filename((char*)ad_comm::adprogram_name);
        cout << "Finished running model '" << m<<
-	 "' after " << runtime << " " << u << "." <<  endl;
+	 "' after " << runtime  << u << "." <<  endl;
      }
   }
 

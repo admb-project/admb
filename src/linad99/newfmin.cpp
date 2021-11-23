@@ -486,8 +486,8 @@ label7003: /* Printing table header */
 	  assert(ad_printf);
 	  assert(pointer_to_phase);
 	  if (itn % iprint ==0 ) 
-	  (*ad_printf)("iteration=%ld | phase=%d | nvar=%d | nll=%15.7le | mgc=%12.4le\n",
-		       itn,*pointer_to_phase, n,  double(f), double(gmax));
+	  (*ad_printf)("phase=%d | nvar=%d | iter=%ld | nll=%.3e | mgc=%.3e\n",
+		       *pointer_to_phase, n, itn,  double(f), double(gmax));
 	}
 	// if(function_minimizer::output_flag==2){
 	if (function_minimizer::output_flag==2 & iprint>0)
@@ -712,7 +712,8 @@ label30: /* Taking a step, updating x */
          {
            if (ad_printf)
              (*ad_printf)("  ic > imax  in fminim is answer attained ?\n");
-           fmmdisp(x, g, n, this->scroll_flag,noprintx);
+	   if(function_minimizer::output_flag==2)
+	     fmmdisp(x, g, n, this->scroll_flag,noprintx);
          }
          ihflag=1;
          ihang=1;
@@ -941,14 +942,24 @@ label92: /* Exit with error */
           if (ad_printf) (*ad_printf)("User initiated interrupt");
       }
 if(iprint == 0) goto label777;
+// if last iteration of last phase print to screen
+if(function_minimizer::output_flag==1 && (initial_params::current_phase==initial_params::max_number_phases)){
+  // new console output for optimization
+  assert(ad_printf);
+  assert(pointer_to_phase);
+  cout << "Optimization complete with final statistics:\n" ;
+  (*ad_printf)("phase=%d | nvar=%d | iter=%ld | nll=%.3e | mgc=%.3e | exit code=%ld\n",
+	       *pointer_to_phase, n, itn,  double(f), double(gmax), iexit);
+ }
+
 if(function_minimizer::output_flag==2){
-      if (ad_printf) (*ad_printf)("\n - final statistics:\n");
-      if (ad_printf)
-        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-                       n, itn, ifn);
+  if (ad_printf) (*ad_printf)("\n - final statistics:\n");
+  if (ad_printf)
+    (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+		 n, itn, ifn);
 #if defined(USE_DDOUBLE)
 #undef double
-      if (ad_printf)
+  if (ad_printf)
         (*ad_printf)(
              "Function value %12.4le; maximum gradient component mag %12.4le\n",
              double(f), double(gmax));

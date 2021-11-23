@@ -215,9 +215,9 @@ void tracing_message(int traceflag,const char *s);
       time_t now = time(0);
       tm* localtm = localtime(&now);
       std::string m=get_filename((char*)ad_comm::adprogram_name);
-      cout << "Starting optimization of model '" << m<< "' in phase " <<
+      cout << endl << endl << "Starting optimization of '" << m<< "' in phase " <<
 	initial_params::current_phase << " of " <<
-	initial_params::max_number_phases << " total at " << asctime(localtm);
+	initial_params::max_number_phases << " at " << asctime(localtm);
     }
     
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-lapqd"))>-1)

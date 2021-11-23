@@ -90,7 +90,7 @@ void function_minimizer::hess_routine_noparallel(void)
     }
     double sdelta1;
     double sdelta2;
-    if(function_minimizer::output_flag==1) cout << "Estimating Hessian: 0%";
+    if(function_minimizer::output_flag==1) cout << endl << "Calculating Hessian: 0%";
     double percentage=0.1;
     for (int i=1;i<=nvar;i++)
     {
@@ -457,6 +457,9 @@ void function_minimizer::depvars_routine(void)
   }
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
+  if(function_minimizer::output_flag==1 && ndvar>0){
+    cout << "Applying delta method to dependent variables...";
+  }
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
   //double f;
@@ -478,9 +481,16 @@ void function_minimizer::depvars_routine(void)
 
   ofs << nvar << "  "  << ndvar << endl;
   int i;
+  double percentage=0.1;
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
-     stddev_params::stddevptr[i]->set_dependent_variables();
+    // if(function_minimizer::output_flag==1){
+    //   if(i==floor(percentage*nvar)){
+    // 	cout << "..." << 100*percentage << "%";
+    // 	percentage += 0.10;
+    //   }
+    // }
+      stddev_params::stddevptr[i]->set_dependent_variables();
   }
   gradient_structure::jacobcalc(nvar,ofs);
   for (i=0;i< stddev_params::num_stddev_params;i++)
@@ -493,12 +503,20 @@ void function_minimizer::depvars_routine(void)
     lapprox->no_function_component_flag=0;
   }
   gradient_structure::set_NO_DERIVATIVES();
+  if(function_minimizer::output_flag==1){
+    cout << " done!" << endl;;
+ }
 }
 /**
 Symmetrize and invert the hessian
 */
 bool function_minimizer::hess_inv(void)
 {
+
+  if(function_minimizer::output_flag==1){
+    cout << "Inverting Hessian: 0%";
+  }
+
   initial_params::set_inactive_only_random_effects();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);
@@ -540,6 +558,7 @@ bool function_minimizer::hess_inv(void)
   }
 
   double maxerr=0.0;
+  double percentage=0.1;
   for (int i = 1;i <= nvar; i++)
   {
     for (int j=1;j<i;j++)
@@ -550,6 +569,12 @@ bool function_minimizer::hess_inv(void)
       if (tmp1>maxerr) maxerr=tmp1;
       hess(i,j)=tmp;
       hess(j,i)=tmp;
+    }
+    if(function_minimizer::output_flag==1){
+      if(i==floor(percentage*nvar)){
+	cout << "..." << 100*percentage << "%";
+	percentage += 0.10;
+      }
     }
   }
   /*
@@ -571,9 +596,16 @@ bool function_minimizer::hess_inv(void)
     }
     if (!zero_switch)
     {
-      cerr << " Hessian is 0 in row " << i << endl;
-      cerr << " This means that the derivative if probably identically 0 "
-              " for this parameter" << endl;
+      // If any values in the ith row are exactly zero it's
+      // probably a floating parameter, but this is caught below
+      // too when checking for invalid variances..?
+      if(function_minimizer::output_flag==1){
+	// cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
+      } else if(function_minimizer::output_flag==2){
+	cerr << " Hessian is 0 in row " << i << endl;
+	cerr << " This means that the derivative if probably identically 0 "
+	  " for this parameter" << endl;
+      }
     }
   }
 
@@ -592,8 +624,12 @@ bool function_minimizer::hess_inv(void)
      if (se(se.indexmin())<=0.0)
       {
         negative_eigenvalue_flag=1;
+	if(function_minimizer::output_flag!=2){
+	  //  cout << "\nWarning: Negative eigenvalues in covariance matrix\n";
+	} else {
         cout << "Warning -- Hessian does not appear to be"
          " positive definite" << endl;
+	}
       }
     }
     ivector negflags(0,hess.indexmax());
@@ -682,9 +718,15 @@ bool function_minimizer::hess_inv(void)
     {
       for (int i = 1;i <= nvar; i++)
       {
+	// hess is the covariance matrix b/c inverted above
         if (hess(i,i) <= 0.0)
         {
-          hess_errorreport();
+	  if(function_minimizer::output_flag==2){
+	    hess_errorreport();
+	  } else {
+	    cerr << "\n\nError: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to write admodel.cov." << endl;
+	    cerr << "       Do not trust model output files. Fix model structure and reoptimize" << endl << endl;
+	  }
           return false;
         }
       }
@@ -699,9 +741,12 @@ bool function_minimizer::hess_inv(void)
       ofs << sscale;
     }
   }
+  if(function_minimizer::output_flag==1){
+    cout << "... done!\n";
+  }
   return true;
 }
-void hess_calcreport(int i,int nvar)
+  void hess_calcreport(int i,int nvar)
 {
   if (ad_printf)
     (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);

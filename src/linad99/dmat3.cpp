@@ -212,7 +212,9 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
     }
     if (big == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+      // this is caught in other locations so suppress for compact output
+     //  if(function_minimizer::output_flag==2)
+    // 	cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
     }
     vv[i]=1.0/big;
   }

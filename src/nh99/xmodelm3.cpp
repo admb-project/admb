@@ -10,6 +10,7 @@ using std::istringstream;
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
+#include<ctime>
 
 void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
   int& next_flag);
@@ -207,8 +208,18 @@ void tracing_message(int traceflag,const char *s);
         jj=1;
       }
       initial_params::current_phase = jj;
-      cout << "Set current phase to " << jj << endl;
+      if(function_minimizer::output_flag==2) cout << "Set current phase to " << jj << endl;
     }
+
+    if(function_minimizer::output_flag==1){
+      time_t now = time(0);
+      tm* localtm = localtime(&now);
+      std::string m=get_filename((char*)ad_comm::adprogram_name);
+      cout << "Starting optimization of model '" << m<< "' in phase " <<
+	initial_params::current_phase << " of " <<
+	initial_params::max_number_phases << " total at " << asctime(localtm);
+    }
+    
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-lapqd"))>-1)
     {
       ADqd_flag=1;

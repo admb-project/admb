@@ -147,7 +147,8 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
     }
     u=ub;
   }
-  cout <<  " inner maxg = " <<  fmc1.gmax;
+  if(function_minimizer::output_flag==2)
+    cout <<  " inner maxg = " <<  fmc1.gmax;
 #ifdef DIAG
   if (fabs(fmc1.gmax)>1.e+3)
     trapper();
@@ -192,8 +193,10 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
       }
     }
     u=ub;
-    cout <<  "  Inner second time = " << fmc1.gmax;
+    if(function_minimizer::output_flag==2)
+      cout <<  "  Inner second time = " << fmc1.gmax;
   }
+  if(function_minimizer::output_flag==2)
   cout << "  Inner f = " << fb << endl;
   fmc1.ireturn=0;
   fmc1.fbest=fb;
@@ -2047,9 +2050,12 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   if (!initial_params::mc_phase)
   {
     std::streamsize save = cout.precision();
-    cout << setprecision(16) << " f = " << vf
-         << " max g = " << maxg << endl;
-    cout.precision(save);
+    if(function_minimizer::output_flag==2)
+      {
+	cout << setprecision(16) << " f = " << vf
+	     << " max g = " << maxg << endl;
+	cout.precision(save);
+      }
   }
   return maxg;
 }

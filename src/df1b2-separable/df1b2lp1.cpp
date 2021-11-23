@@ -157,7 +157,8 @@ dvector laplace_approximation_calculator::default_calculations
     {
       // test newton raphson
       Hess.initialize();
-     cout << "Newton raphson " << ii << endl;
+      if(function_minimizer::output_flag==2)
+	cout << "Newton raphson " << ii << endl;
       pmin->inner_opt_flag=1;
       get_newton_raphson_info(pfmin);
       pmin->inner_opt_flag=0;

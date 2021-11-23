@@ -347,15 +347,27 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     // get a number which is exactly representable
     double sdelta=1.0+delta;
     sdelta-=1.0;
+    if(function_minimizer::output_flag==1) cout << endl << "Calculating Hessian: 0%";
+    double percentage=0.1;
+
     {
       //
       uostream uos("hessian.bin");
       uos << npts;
       for (int i=1;i<=nvar;i++)
       {
-        cout << "Estimating row " << i << " out of " << nvar
-             << " for hessian" << endl;
-
+	if(function_minimizer::output_flag==1)
+	  {
+	    if(i==floor(percentage*nvar)){
+	      cout << "..." << 100*percentage << "%";
+	      percentage += 0.10;
+	    }
+	  }
+	else if(function_minimizer::output_flag==2)
+	  {
+	    cout << "Estimating row " << i << " out of " << nvar
+		 << " for hessian" << endl;
+	  }
         for (int j=-npts;j<=npts;j++)
         {
           if (j !=0)
@@ -373,6 +385,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
           }
         }
       }
+      if(function_minimizer::output_flag==1) cout << "... done!" <<endl;
     }
     // check for accuracy
     {

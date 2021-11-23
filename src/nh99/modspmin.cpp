@@ -11,7 +11,7 @@
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
-
+#include<ctime>
 #include <cassert>
 
 void ADSleep(unsigned int x);
@@ -47,6 +47,8 @@ extern admb_javapointers * adjm_ptr;
      // Cole added experimental new flag to improve console
      // output to be more compact and informative
      int on, nopt, tmp;
+     tmp=2;
+     std::clock_t start = clock();
      if ( (on=option_match(argc,argv,"-output",nopt))>-1){
        if (nopt ==1){
 	 tmp=atoi(argv[on+1]);
@@ -66,28 +68,52 @@ extern admb_javapointers * adjm_ptr;
      }	 
      // ------------------------------------------------------------
      if (option_match(argc,argv,"-mceval") == -1)
-     {
-       if(!(option_match(argc,argv,"-hess_step") == -1))
        {
-         // Experimental feature to take Newton steps after
-         // previous optimization
-         // Note: ::computations1 is called at the end of hess_step function. 
-         hess_step();
+	 // if not mceval model do optimization or hess step
+	 if(!(option_match(argc,argv,"-hess_step") == -1))
+	   {
+	     // Experimental feature to take Newton steps after
+	     // previous optimization
+	     // Note: ::computations1 is called at the end of hess_step function. 
+	     hess_step();
+	   }
+	 else
+	   {
+	     // main optimization call
+	     computations1(argc,argv);
+	   }
        }
-       else
+     else
        {
-         computations1(argc,argv);
+	 // mceval skips all the optimization stuff
+	 initial_params::mceval_phase=1;
+	 mcmc_eval();
+	 initial_params::mceval_phase=0;
        }
-     } else {
-       initial_params::mceval_phase=1;
-       mcmc_eval();
-       initial_params::mceval_phase=0;
-     }
      other_calculations();
      final_calcs();
      // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
+     if(function_minimizer::output_flag==1){
+       double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+       std::string u; // units
+       // Depending on how long it ran convert to sec/min/hour/days so
+       // the outputs are interpretable
+       if(runtime<=60){
+	 u=" seconds";
+       } else if(runtime > 60 && runtime <=60*60){
+	 runtime/=60; u=" minutes";
+       } else if(runtime > (60*60) && runtime <= (360*24)){
+	 runtime/=(60*60); u=" hours";
+       } else {
+	 runtime/=(24*60*60); u=" days";
+       }
+       std::string m=get_filename((char*)ad_comm::adprogram_name);
+       cout << "Finished running model '" << m<<
+	 "' after " << runtime << " " << u << "." <<  endl;
+     }
   }
+
 
   void function_minimizer::computations1(int argc,char * argv[])
   {

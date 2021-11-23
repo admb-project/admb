@@ -710,10 +710,12 @@ label30: /* Taking a step, updating x */
       {
          if (iprint>0)
          {
-           if (ad_printf)
-             (*ad_printf)("  ic > imax  in fminim is answer attained ?\n");
 	   if(function_minimizer::output_flag==2)
-	     fmmdisp(x, g, n, this->scroll_flag,noprintx);
+	     {
+	       if (ad_printf)
+		 (*ad_printf)("  ic > imax  in fminim is answer attained ?\n");
+	       fmmdisp(x, g, n, this->scroll_flag,noprintx);
+	     }
          }
          ihflag=1;
          ihang=1;
@@ -894,26 +896,29 @@ label70:  // Hessian update
 label92: /* Exit with error */
       if (iprint>0)
       {
-        if (ialph)
-        {
-          if (ad_printf)
-           (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
-        }
-        if (ihang == 1)
-        {
-          if (ad_printf)
-            (*ad_printf)(
-           "Function minimizer not making progress ... is minimum attained?\n");
+	if(function_minimizer::output_flag==2)
+	  {
+	    if (ialph)
+	      {
+		if (ad_printf)
+		  (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
+	      }
+	    if (ihang == 1)
+	      {
+		if (ad_printf)
+		  (*ad_printf)(
+			       "Function minimizer not making progress ... is minimum attained?\n");
 #if defined(USE_DDOUBLE)
 #undef double
-           if (ad_printf)
-           (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
+		if (ad_printf)
+		  (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
 #define double dd_real
 #else
-           if (ad_printf)
-             (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
+		if (ad_printf)
+		  (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
 #endif
-        }
+	      }
+	  }
       }
       if(iexit == 2)
       {

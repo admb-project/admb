@@ -302,7 +302,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       uistream uis1((char*)(tmpstring));
       int i = 0, j = 0;
       uis1 >> i >> j;
-      cout << i << " " << j << endl;
+      if(function_minimizer::output_flag==2) cout << i << " " << j << endl;
     }
 
     int npts=2;

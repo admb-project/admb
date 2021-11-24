@@ -38,6 +38,10 @@ void  set_covariance_matrix(const dmatrix& m)
 
 void function_minimizer::sd_routine(void)
 {
+
+  if(function_minimizer::output_flag==1)
+    cout << "Starting standard error calculations..." ;
+
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dvector x(1,nvar);
   initial_params::xinit(x); // get the number of active parameters
@@ -152,6 +156,7 @@ void function_minimizer::sd_routine(void)
         {
           cif >> tv;
           dvector tmpsub(1,nvar);
+	  bool bad_vars=false;
           for (int i=1;i<=ndvar;i++)
           {
             for (int j=1;j<=nvar;j++)
@@ -169,12 +174,25 @@ void function_minimizer::sd_routine(void)
 
             if (diag(i+nvar)<=0.0)
             {
-              cerr << "Estimated covariance matrix may not"
-               " be positive definite" << endl;
-              cerr << sort(eigenvalues(S)) << endl;
+	      if(function_minimizer::output_flag==2)
+		{
+		  cerr << "Estimated covariance matrix may not"
+		    " be positive definite" << endl;
+		  cerr << sort(eigenvalues(S)) << endl;
+		}
+	      else if(function_minimizer::output_flag==1)
+		{
+		  // If first variable print message, otherwise tack it on
+		  if(!bad_vars)
+		    cout << "\n Warning: Non-positive variance of sdreport variables: " << i+nvar;
+		  else
+		    cout << ", " << i+nvar;
+		  bad_vars=true;
+		}
             }
             ofs << endl;
           }
+	  if(bad_vars) cout << endl;
         }
       }
       else  // have random effects
@@ -479,4 +497,5 @@ void function_minimizer::sd_routine(void)
     char msg[40] = {"Error trying to delete temporary file "};
     cerr << msg << "admodel.tmp" << endl;
   }
+  if(function_minimizer::output_flag==1) cout << " done!" << endl;
 }

@@ -109,7 +109,7 @@ extern admb_javapointers * adjm_ptr;
 	 runtime/=(24*60*60); u=" days";
        }
        std::string m=get_filename((char*)ad_comm::adprogram_name);
-       cout << "Finished running model '" << m<<
+       cout << "\nFinished running model '" << m<<
 	 "' after " << runtime  << u << "." <<  endl;
      }
   }

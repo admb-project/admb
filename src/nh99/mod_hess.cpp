@@ -724,8 +724,8 @@ bool function_minimizer::hess_inv(void)
 	  if(function_minimizer::output_flag==2){
 	    hess_errorreport();
 	  } else {
-	    cerr << "\n\nError: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to write admodel.cov." << endl;
-	    cerr << "       Do not trust model output files. Fix model structure and reoptimize" << endl << endl;
+	    cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to write admodel.cov." << endl;
+	    cerr << "        Do not trust model output files. Fix model structure and reoptimize" << endl << endl;
 	  }
           return false;
         }

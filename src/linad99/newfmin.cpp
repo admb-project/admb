@@ -486,7 +486,7 @@ label7003: /* Printing table header */
 	  assert(ad_printf);
 	  assert(pointer_to_phase);
 	  if (itn % iprint ==0 ) 
-	  (*ad_printf)("phase=%d | nvar=%d | iter=%ld | nll=%.3e | mgc=%.3e\n",
+	  (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mgc=%+.3e\n",
 		       *pointer_to_phase, n, itn,  double(f), double(gmax));
 	}
 	// if(function_minimizer::output_flag==2){
@@ -919,6 +919,14 @@ label92: /* Exit with error */
 #endif
 	      }
 	  }
+	if(function_minimizer::output_flag==1)
+	  {
+	    // Not sure this really helps the user. It just moves
+	    // on to next phase or finishes optimization and
+	    // those messgaes are more useful
+	    // cout << "Optimizer ended early due to not making progress (ialpha=" <<
+	    //   ialph << ", ihang=" << ihang <<  ")" << endl;//try reoptimizing from .par file" << endl;
+	  }
       }
       if(iexit == 2)
       {
@@ -953,7 +961,7 @@ if(function_minimizer::output_flag==1 && (initial_params::current_phase==initial
   assert(ad_printf);
   assert(pointer_to_phase);
   cout << "Optimization complete with final statistics:\n" ;
-  (*ad_printf)("phase=%d | nvar=%d | iter=%ld | nll=%.3e | mgc=%.3e | exit code=%ld\n",
+  (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mgc=%+.3e\n",
 	       *pointer_to_phase, n, itn,  double(f), double(gmax), iexit);
  }
 

@@ -600,7 +600,7 @@ bool function_minimizer::hess_inv(void)
       // probably a floating parameter, but this is caught below
       // too when checking for invalid variances..?
       if(function_minimizer::output_flag==1){
-	// cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
+	cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
       } else if(function_minimizer::output_flag==2){
 	cerr << " Hessian is 0 in row " << i << endl;
 	cerr << " This means that the derivative if probably identically 0 "

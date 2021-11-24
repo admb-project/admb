@@ -954,9 +954,9 @@ label92: /* Exit with error */
         if (quit_flag == 'Q')
           if (ad_printf) (*ad_printf)("User initiated interrupt");
       }
-if(iprint == 0) goto label777;
 // if last iteration of last phase print to screen
-if(function_minimizer::output_flag==1 && (initial_params::current_phase==initial_params::max_number_phases)){
+//if(function_minimizer::output_flag==1){
+ if(function_minimizer::output_flag==1 && (initial_params::current_phase==initial_params::max_number_phases)){
   // new console output for optimization
   assert(ad_printf);
   assert(pointer_to_phase);
@@ -964,6 +964,8 @@ if(function_minimizer::output_flag==1 && (initial_params::current_phase==initial
   (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mgc=%+.3e\n",
 	       *pointer_to_phase, n, itn,  double(f), double(gmax), iexit);
  }
+ // appears unused unless in diagnostic mode
+ if(iprint == 0) goto label777;
 
 if(function_minimizer::output_flag==2){
   if (ad_printf) (*ad_printf)("\n - final statistics:\n");

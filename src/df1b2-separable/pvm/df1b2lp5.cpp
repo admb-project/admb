@@ -159,7 +159,8 @@ void laplace_approximation_calculator::default_calculations_parallel_slave
     {
       // test newton raphson
       Hess.initialize();
-      cout << "Newton raphson " << ii << endl;
+      if(function_minimizer::output_flag==2)
+	cout << "Newton raphson " << ii << endl;
       get_newton_raphson_info_slave(pfmin);
 
       step=get_dvector_from_master();

@@ -209,7 +209,8 @@ dvector laplace_approximation_calculator::default_calculations
       int print_hess_in_newton_raphson_flag=0;
       if (print_hess_in_newton_raphson_flag)
       {
-        cout << norm2(Hess-trans(Hess)) << endl;
+	if(function_minimizer::output_flag==2)
+	  cout << norm2(Hess-trans(Hess)) << endl;
         if (ad_comm::global_logfile)
         {
           (*ad_comm::global_logfile) << setprecision(4) << setscientific()

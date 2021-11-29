@@ -171,7 +171,8 @@ dvector safe_choleski_solver::solve
       dvector delta=m*w;
       dvector err=solve_trans(C,::solve(C,v-delta));
       dvector w1=w+err;
-      cout << norm(w1-w) << endl;
+      if(function_minimizer::output_flag==2)
+	cout << norm(w1-w) << endl;
       if (norm(err)>1.e-10)
       {
         cout << "precisionerror" << endl;
@@ -230,7 +231,7 @@ void laplace_approximation_calculator::
     }
 #endif
 
-    if (!initial_params::mc_phase)
+    if (!initial_params::mc_phase & function_minimizer::output_flag==2)
       cout << "Newton raphson " << ii << "  ";
 
     if (quadratic_prior::get_num_quadratic_prior()>0)

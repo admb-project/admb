@@ -486,8 +486,8 @@ label7003: /* Printing table header */
 	  assert(ad_printf);
 	  assert(pointer_to_phase);
 	  if (itn % iprint ==0 ) 
-	  (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mgc=%+.3e\n",
-		       *pointer_to_phase, n, itn,  double(f), double(gmax));
+	  (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mag=%.3e\n",
+		       *pointer_to_phase, n, itn,  double(f), fabs(double(gmax)));
 	}
 	// if(function_minimizer::output_flag==2){
 	if (function_minimizer::output_flag==2 && iprint>0)
@@ -969,8 +969,8 @@ if(function_minimizer::output_flag==1 &&
     assert(ad_printf);
     assert(pointer_to_phase);
     cout << "Optimization complete with final statistics:\n" ;
-    (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mgc=%+.3e\n",
-		 *pointer_to_phase, n, itn,  double(f), double(gmax));
+    (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mag=%.3e\n",
+		 *pointer_to_phase, n, itn,  double(f), fabs(double(gmax)));
   }
  }
 // Important to be here b/c it appears other parts of ADMB-RE

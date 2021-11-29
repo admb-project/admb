@@ -503,7 +503,7 @@ void function_minimizer::depvars_routine(void)
     lapprox->no_function_component_flag=0;
   }
   gradient_structure::set_NO_DERIVATIVES();
-  if(function_minimizer::output_flag==1){
+  if(function_minimizer::output_flag==1 && ndvar>0){
     cout << " done!" << endl;;
  }
 }

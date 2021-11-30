@@ -24,6 +24,11 @@ public:
   void user_function();
   void userfunction();
 
+  template <class F>
+  void separable(F&& f);
+  template <class F>
+  void separable2(F&& f);
+
   void sf1(const T& ls, const T& bb, const T& x_1);
   void sf2(const T& ls, const T& bb, const T& x_i, const T& x_i1);
   void sf3(const T& x_i , const T& mu, const T& mu_x, int i);

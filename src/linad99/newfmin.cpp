@@ -1,3 +1,4 @@
+
 /*
  * $Id$
  *
@@ -892,71 +893,71 @@ label70:  // Hessian update
       if (xxlink == 2) goto label65;
 /*label90:*/
       for (i=1;i<=n;i++)
-         g.elem(i)=w.elem(i);
+	g.elem(i)=w.elem(i);
 label92: /* Exit with error */
-      if (iprint>0)
+if (iprint>0)
+  {
+    if(function_minimizer::output_flag==2)
       {
-	if(function_minimizer::output_flag==2)
+	if (ialph)
 	  {
-	    if (ialph)
-	      {
-		if (ad_printf)
-		  (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
-	      }
-	    if (ihang == 1)
-	      {
-		if (ad_printf)
-		  (*ad_printf)(
-			       "Function minimizer not making progress ... is minimum attained?\n");
+	    if (ad_printf)
+	      (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
+	  }
+	if (ihang == 1)
+	  {
+	    if (ad_printf)
+	      (*ad_printf)(
+			   "Function minimizer not making progress ... is minimum attained?\n");
 #if defined(USE_DDOUBLE)
 #undef double
-		if (ad_printf)
-		  (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
+	    if (ad_printf)
+	      (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
 #define double dd_real
 #else
-		if (ad_printf)
-		  (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
+	    if (ad_printf)
+	      (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
 #endif
-	      }
-	  }
-	if(function_minimizer::output_flag==1)
-	  {
-	    // Not sure this really helps the user. It just moves
-	    // on to next phase or finishes optimization and
-	    // those messgaes are more useful
-	    // cout << "Optimizer ended early due to not making progress (ialpha=" <<
-	    //   ialph << ", ihang=" << ihang <<  ")" << endl;//try reoptimizing from .par file" << endl;
 	  }
       }
-      if(iexit == 2)
+    if(function_minimizer::output_flag==1)
       {
-        if (iprint>0)
-        {
-          if (ad_printf)
-            (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
-           " --- convergence critera may be too strict\n");
-          ireturn=-1;
-        }
+	// Not sure this really helps the user. It just moves
+	// on to next phase or finishes optimization and
+	// those messgaes are more useful
+	// cout << "Optimizer ended early due to not making progress (ialpha=" <<
+	//   ialph << ", ihang=" << ihang <<  ")" << endl;//try reoptimizing from .par file" << endl;
       }
+  }
+if(iexit == 2)
+  {
+    if (iprint>0)
+      {
+	if (ad_printf)
+	  (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
+		       " --- convergence critera may be too strict\n");
+	ireturn=-1;
+      }
+  }
 #if defined (_MSC_VER) && !defined (__WAT32__)
-        if (scroll_flag == 0) clrscr();
+if (scroll_flag == 0) clrscr();
 #endif
-      if (maxfn_flag == 1)
+if (maxfn_flag == 1)
+  {
+    if (iprint>0)
       {
-        if (iprint>0)
-        {
-          if (ad_printf)
-            (*ad_printf)("Maximum number of function evaluations exceeded");
-        }
+	if (ad_printf)
+	  (*ad_printf)("Maximum number of function evaluations exceeded");
       }
-      if (iprint>0)
-      {
-        if (quit_flag == 'Q')
-          if (ad_printf) (*ad_printf)("User initiated interrupt");
-      }
- // if last iteration of last phase print to screen regardless of
- // iprint. Note that for RE models it is sometimes set iprint=0
- // intermediately so turn that off.
+  }
+if (iprint>0)
+  {
+    if (quit_flag == 'Q')
+      if (ad_printf) (*ad_printf)("User initiated interrupt");
+  }
+// if last iteration of last phase print to screen regardless of
+// iprint. Note that for RE models it is sometimes set iprint=0
+// intermediately so turn that off.
 if(function_minimizer::output_flag==1 &&
    (initial_params::current_phase==initial_params::max_number_phases)){
   
@@ -968,9 +969,23 @@ if(function_minimizer::output_flag==1 &&
     // new console output for optimization
     assert(ad_printf);
     // assert(pointer_to_phase);
-    cout << "Optimization complete with final statistics:\n" ;
-    (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mag=%.3e\n",
-		 initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)));
+
+    double runtime = ( std::clock()-function_minimizer::output_time0)/(double) CLOCKS_PER_SEC;
+    // Depending on how long it ran convert to sec/min/hour/days so
+    // the outputs are interpretable
+    std::string u; // units
+    if(runtime<=60){
+      u=" seconds";
+    } else if(runtime > 60 && runtime <=60*60){
+      runtime/=60; u=" minutes";
+    } else if(runtime > (60*60) && runtime <= (360*24)){
+      runtime/=(60*60); u=" hours";
+    } else {
+      runtime/=(24*60*60); u=" days";
+    }
+    runtime=std::round(runtime * 10.0) / 10.0;
+    cout << "Optimization successful after " << runtime << u << " with final statistics:\n" ;
+    (*ad_printf)(" nll=%f | mag=%.5e\n", double(f), fabs(double(gmax)));
   }
  }
 // Important to be here b/c it appears other parts of ADMB-RE

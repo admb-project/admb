@@ -49,10 +49,11 @@ extern admb_javapointers * adjm_ptr;
      int on, nopt, tmp;
      tmp=1;
      std::clock_t start = clock();
+     function_minimizer::output_time0=start;
      if ( (on=option_match(argc,argv,"-output",nopt))>-1){
        if (nopt ==1){
 	 tmp=atoi(argv[on+1]);
-	 if(tmp<0 | tmp >2) {
+	 if(tmp<0 || tmp >2) {
 	   cerr << "Invalid output value, must be 0, 1, or 2" << endl;
 	   ad_exit(1);
 	 }
@@ -100,14 +101,15 @@ extern admb_javapointers * adjm_ptr;
        // the outputs are interpretable
        std::string u; // units
        if(runtime<=60){
-	 u=" seconds";
+	 u=" s";
        } else if(runtime > 60 && runtime <=60*60){
-	 runtime/=60; u=" minutes";
+	 runtime/=60; u=" mins";
        } else if(runtime > (60*60) && runtime <= (360*24)){
 	 runtime/=(60*60); u=" hours";
        } else {
 	 runtime/=(24*60*60); u=" days";
        }
+       runtime=std::round(runtime * 100.0) / 100.0;
        std::string m=get_filename((char*)ad_comm::adprogram_name);
        cout << "\nFinished running model '" << m<<
 	 "' after " << runtime  << u << "." <<  endl;

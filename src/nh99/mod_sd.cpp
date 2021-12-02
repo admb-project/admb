@@ -38,9 +38,9 @@ void  set_covariance_matrix(const dmatrix& m)
 
 void function_minimizer::sd_routine(void)
 {
-
+  std::clock_t start=std::clock();
   if(function_minimizer::output_flag==1)
-    cout << "Starting standard error calculations..." ;
+    cout << "Starting standard error calculations " ;
 
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dvector x(1,nvar);
@@ -497,5 +497,21 @@ void function_minimizer::sd_routine(void)
     char msg[40] = {"Error trying to delete temporary file "};
     cerr << msg << "admodel.tmp" << endl;
   }
-  if(function_minimizer::output_flag==1) cout << " done!" << endl;
+  if(function_minimizer::output_flag==1){
+    double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    // Depending on how long it ran convert to sec/min/hour/days so
+    // the outputs are interpretable
+    std::string u; // units
+    if(runtime<=60){
+      u=" s";
+    } else if(runtime > 60 && runtime <=60*60){
+      runtime/=60; u=" mins";
+    } else if(runtime > (60*60) && runtime <= (360*24)){
+      runtime/=(60*60); u=" hours";
+    } else {
+      runtime/=(24*60*60); u=" days";
+    }
+    runtime=std::round(runtime * 10.0) / 10.0;
+    cout << " done! (" << runtime  << u << ")" <<  endl;
+  }
 }

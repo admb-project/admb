@@ -1977,6 +1977,7 @@ public:
 
   // Compact flag to toggle new console output
   static int output_flag;
+  static int output_time0; // time started running model
  
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();

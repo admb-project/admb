@@ -40,7 +40,7 @@ void function_minimizer::sd_routine(void)
 {
   std::clock_t start=std::clock();
   if(function_minimizer::output_flag==1)
-    cout << "Starting standard error calculations " ;
+    cout << "Starting standard error calculations... " ;
 
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dvector x(1,nvar);

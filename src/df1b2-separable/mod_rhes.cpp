@@ -347,8 +347,13 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     // get a number which is exactly representable
     double sdelta=1.0+delta;
     sdelta-=1.0;
-    if(function_minimizer::output_flag==1) cout << endl << "Calculating Hessian: 0%";
-    double percentage=0.1;
+    std::clock_t start=std::clock();
+    if(function_minimizer::output_flag==1){
+      if(nvar>10) cout << endl << "Calculating Hessian: 0%";
+      else  cout << endl << "Calculating Hessian: 0";
+    }
+  
+    double percentage=0.2;
 
     {
       //
@@ -356,18 +361,21 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       uos << npts;
       for (int i=1;i<=nvar;i++)
       {
-	if(function_minimizer::output_flag==1)
-	  {
-	    if(i==floor(percentage*nvar)){
-	      cout << "..." << 100*percentage << "%";
-	      percentage += 0.10;
-	    }
+
+      if(function_minimizer::output_flag==1){
+	if(nvar>=10){
+	  if(i==floor(percentage*nvar)){
+	    cout << ", " << 100*percentage << "%";
+	    percentage += 0.20;
 	  }
-	else if(function_minimizer::output_flag==2)
-	  {
-	    cout << "Estimating row " << i << " out of " << nvar
-		 << " for hessian" << endl;
-	  }
+	} else {
+	  cout << ", " << i;
+	}
+      } else if(function_minimizer::output_flag==2) {
+	cout << "Estimating row " << i << " out of " << nvar
+	     << " for hessian" << endl;
+      }
+      
         for (int j=-npts;j<=npts;j++)
         {
           if (j !=0)
@@ -385,7 +393,24 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
           }
         }
       }
-      if(function_minimizer::output_flag==1) cout << "... done!" <<endl;
+
+    if(function_minimizer::output_flag==1){
+      double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+      // Depending on how long it ran convert to sec/min/hour/days so
+      // the outputs are interpretable
+      std::string u; // units
+      if(runtime<=60){
+	u=" s";
+      } else if(runtime > 60 && runtime <=60*60){
+	runtime/=60; u=" mins";
+      } else if(runtime > (60*60) && runtime <= (360*24)){
+	runtime/=(60*60); u=" hours";
+      } else {
+	runtime/=(24*60*60); u=" days";
+      }
+      runtime=std::round(runtime * 10.0) / 10.0;
+      cout << " done! (" << runtime  << u << ")" <<  endl;
+    }
     }
     // check for accuracy
     {

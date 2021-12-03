@@ -946,8 +946,11 @@ if (maxfn_flag == 1)
   {
     if (iprint>0)
       {
-	if (ad_printf)
+	if (ad_printf && function_minimizer::output_flag==2)
 	  (*ad_printf)("Maximum number of function evaluations exceeded");
+	if(function_minimizer::output_flag==1)
+	  cout <<"Exiting without success due to excessive function evaluations (maxfn=" <<
+	    maxfn << ") | mag=" << fabs(double(gmax)) << endl;
       }
   }
 if (iprint>0)
@@ -984,7 +987,7 @@ if(function_minimizer::output_flag==1 &&
       runtime/=(24*60*60); u=" days";
     }
     runtime=std::round(runtime * 10.0) / 10.0;
-    cout << "Optimization successful after " << runtime << u << " with final statistics:\n" ;
+    cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
     (*ad_printf)(" nll=%f | mag=%.5e\n", double(f), fabs(double(gmax)));
   }
  }

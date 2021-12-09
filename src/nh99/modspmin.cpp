@@ -215,6 +215,32 @@ extern admb_javapointers * adjm_ptr;
         {
           constraints_minimize();
         }
+
+	// Experiment to test for parameters near bounds
+	int nvar=initial_params::nvarcalc(); // get the number of active parameters
+	independent_variables mle(1,nvar); // original bounded MLE
+	independent_variables x(1,nvar); // original unbounded MLE
+	read_mle_hmc(nvar, mle); // takes MLE from admodel.hes file
+	// Push the original bounded MLE through the model
+	initial_params::restore_all_values(mle,1);
+	gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
+	// This copies the unbounded parameters into x
+	initial_params::xinit(x);
+	cout << endl << "Experimental feature tocheck for parameters on bounds..." << endl;
+	for(int i=1; i<=nvar; i++){
+	  // dangerous way to check for bounded is if unbounded=bounded??
+	  if(x(i)!=mle(i)){
+	    if(gradient_structure::Hybrid_bounded_flag==0){
+	      if(x(i)< -.99) 	cout << "Par "<< i << " appears to be on lower bound: " <<  mle(i) << endl;
+	      if(x(i)> .99) cout << "Par "<< i << " appears to be on upper bound: " <<  mle(i) << endl;
+	    }
+	    if(gradient_structure::Hybrid_bounded_flag==1){
+	      if(x(i)< -10) 	cout << "Par "<< i << " appears to be on lower bound: " <<  mle(i) << endl;
+	      if(x(i)> 10) cout << "Par "<< i << " appears to be on upper bound: " <<  mle(i) << endl;
+	    }
+	  }
+	}
+	
       }
       else
       {

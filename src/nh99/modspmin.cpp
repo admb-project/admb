@@ -95,7 +95,11 @@ extern admb_javapointers * adjm_ptr;
      final_calcs();
      // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
-     if(function_minimizer::output_flag==1){
+     //Print new concluding message unless in MCMC mode which already prints timing stuff 
+     if(function_minimizer::output_flag==1 &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1) &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1) &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)){
        double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
        // Depending on how long it ran convert to sec/min/hour/days so
        // the outputs are interpretable

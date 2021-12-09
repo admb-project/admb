@@ -16,10 +16,10 @@
  */
 
 #include <fvar.hpp>
+#include <admodel.h>
 #include <cassert>
 #if defined(_WIN32)
   #include <windows.h>
-  #include <admodel.h>
 #endif
 #if defined(__BORLANDC__)
   #include <signal.h>
@@ -27,7 +27,6 @@
 #ifdef __ZTC__
   #include <conio.h>
 #endif
-#include <fvar.hpp>
 extern int ctlc_flag;
 
 #if defined (__WAT32__) || defined (_MSC_VER)

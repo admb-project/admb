@@ -94,32 +94,47 @@ extern admb_javapointers * adjm_ptr;
      other_calculations();
      final_calcs();
 
-     // Experiment to test for parameters near bounds
-     int nvar=initial_params::nvarcalc(); // get the number of active parameters
-     independent_variables mle(1,nvar); // original bounded MLE
-     independent_variables x(1,nvar); // original unbounded MLE
-     read_mle_hmc(nvar, mle); // takes MLE from admodel.hes file
-     // Push the original bounded MLE through the model
-     initial_params::restore_all_values(mle,1); // last thing run should be MLE right?
-     gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
-     // This copies the unbounded parameters into x
-     initial_params::xinit(x);
-     cout << endl << "Checking for parameters on bounds (experimental)..." << endl;
-     for(int i=1; i<=nvar; i++){
-       // dangerous way to check for bounded is if unbounded=bounded??
-       if(x(i)!=mle(i)){
-	 if(gradient_structure::Hybrid_bounded_flag==0){
-	   if(x(i)< -.99) 	cout << "Par "<< i << " appears to be on lower bound: " <<  mle(i) << endl;
-	   if(x(i)> .99) cout << "Par "<< i << " appears to be on upper bound: " <<  mle(i) << endl;
-	 }
-	 if(gradient_structure::Hybrid_bounded_flag==1){
-	   if(x(i)< -10) 	cout << "Par "<< i << " appears to be on lower bound: " <<  mle(i) << endl;
-	   if(x(i)> 10) cout << "Par "<< i << " appears to be on upper bound: " <<  mle(i) << endl;
+     if(function_minimizer::output_flag==1){
+       cout << endl << "Checking for parameters on bounds (experimental)..." << endl;
+       // Don't technically need this but I don't know how to
+       // consistently get the MLE without reading it here (may not
+       // be last par vec executed)
+       adstring tmpstring = "admodel.hes";
+       uistream cif((char*)tmpstring);
+       if (!cif) {
+	 cerr << "  File admodel.hes required for bound checking but not found... skipping." << endl;
+       } else {
+	 // Experiment to test for parameters near bounds
+	 int nvar=initial_params::nvarcalc(); // get the number of active parameters
+	 independent_variables bounded(1,nvar); // original bounded MLE
+	 independent_variables unbounded(1,nvar); // original unbounded MLE
+	 // takes MLE from admodel.hes file. It would be better to
+	 // get this another way in case the model can't write it
+	 // for some reason (like if on a bound?). I'm not sure
+	 // where else to get it
+	 read_mle_hmc(nvar, bounded); 
+	 initial_params::restore_all_values(bounded,1);  // Push the original bounded MLE through the model
+	 gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
+	 initial_params::xinit(unbounded); // This copies the unbounded parameters into x
+	 for(int i=1; i<=nvar; i++){
+	   // dangerous way to check for bounded is if unbounded=bounded??
+	   if(unbounded(i)!=bounded(i)){
+	     if(gradient_structure::Hybrid_bounded_flag==0){
+	       if(unbounded(i)< -.99)
+		 cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << endl;
+	       if(unbounded(i)> .99)
+		 cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << endl;
+	     }
+	     if(gradient_structure::Hybrid_bounded_flag==1){
+	       if(unbounded(i)< -10)
+		 cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << endl;
+	       if(unbounded(i)> 10)
+		 cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << endl;
+	     }
+	   }
 	 }
        }
      }
-
-     
      // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
      //Print new concluding message unless in MCMC mode which already prints timing stuff 

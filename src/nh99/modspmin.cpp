@@ -119,17 +119,29 @@ extern admb_javapointers * adjm_ptr;
 	 for(int i=1; i<=nvar; i++){
 	   // dangerous way to check for bounded is if unbounded=bounded??
 	   if(unbounded(i)!=bounded(i)){
+	     // These values depend on the bounding
+	     // function. Here "close" is defined on the (0,1)
+	     // bounded scale as 0.001 or 0.999, and "on" is
+	     // 0.00001 or 0.9999. See boundpin function.
 	     if(gradient_structure::Hybrid_bounded_flag==0){
-	       if(unbounded(i)< -.99)
-		 cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << endl;
-	       if(unbounded(i)> .99)
-		 cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << endl;
+	       if(unbounded(i)> .9959737)
+		 cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	       else if(unbounded(i) < -.9959737)
+		 cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	       else if(unbounded(i) > .9597299) 
+		 cout << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	       else if(unbounded(i)< -.9597299)
+		 cout << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
 	     }
 	     if(gradient_structure::Hybrid_bounded_flag==1){
-	       if(unbounded(i)< -10)
-		 cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << endl;
-	       if(unbounded(i)> 10)
-		 cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << endl;
+	       if(unbounded(i)< -11.51292)
+		 cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	       else if(unbounded(i)> 11.51292)
+		 cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	       else if(unbounded(i)< -6.906755)
+		 cout << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	       else if(unbounded(i)> 6.906755)
+		 cout << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
 	     }
 	   }
 	 }

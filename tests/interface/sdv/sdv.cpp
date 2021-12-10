@@ -6,9 +6,11 @@ void end_df1b2_funnel2();
 template <typename T, typename U, typename V, typename W, typename X>
 void df1b2_parameters<T, U, V, W, X>::allocate()
 {
-  ad_comm::global_datafile->clear();
-  ad_comm::global_datafile->seekg(0, std::ios::beg);
-
+  if constexpr(std::is_same<X,df1b2variable>::value)
+  {
+    ad_comm::global_datafile->clear();
+    ad_comm::global_datafile->seekg(0, std::ios::beg);
+  }
   n.allocate("n");
   y.allocate(1,n,"y");
   b.allocate(-.9999,.9999,2,"b");
@@ -69,7 +71,7 @@ void df1b2_parameters<T, U, V, W, X>::separable(F&& f)
   }
 }
 template <typename T, typename U, typename V, typename W, typename X>
-void df1b2_parameters<T, U, V, W, X>::sf1(const T& ls, const T& bb,const T& x_1)
+void df1b2_parameters<T, U, V, W, X>::sf1(const T& ls, const T& bb, const T& x_1)
 {
   separable([this, &ls, &bb, &x_1]()
   {

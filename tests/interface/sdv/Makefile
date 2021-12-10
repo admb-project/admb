@@ -6,6 +6,20 @@ sdv.dat:
 	cp ../../../examples/admb-re/sdv/sdv.dat .
 	cp ../../../examples/admb-re/sdv/sdv.tpl .
 
+diff:
+	$(MAKE) --directory ../../../examples sdv
+	-diff -w admodel.dep ../../../examples/admb-re/sdv/admodel.dep
+	-diff -w sdv.log ../../../examples/admb-re/sdv/sdv.log
+	-diff -w sdv.eva ../../../examples/admb-re/sdv/sdv.eva
+	-diff -w hesscheck ../../../examples/admb-re/sdv/hesscheck
+	-diff -w sdv.par ../../../examples/admb-re/sdv/sdv.par
+
+diffs:
+	diff -w sdv.rhes ../../../examples/admb-re/sdv/sdv.rhes
+	diff -w sdv.p01 ../../../examples/admb-re/sdv/sdv.p01
+	diff -w sdv.std ../../../examples/admb-re/sdv/sdv.std
+	diff -w sdv.cor ../../../examples/admb-re/sdv/sdv.cor
+
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

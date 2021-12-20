@@ -94,59 +94,6 @@ extern admb_javapointers * adjm_ptr;
      other_calculations();
      final_calcs();
 
-     if(function_minimizer::output_flag==1){
-       cout << endl << "Checking for parameters on bounds (experimental)..." << endl;
-       // Don't technically need this but I don't know how to
-       // consistently get the MLE without reading it here (may not
-       // be last par vec executed)
-       adstring tmpstring = "admodel.hes";
-       uistream cif((char*)tmpstring);
-       if (!cif) {
-	 cerr << "  File admodel.hes required for bound checking but not found... skipping." << endl;
-       } else {
-	 // Experiment to test for parameters near bounds
-	 int nvar=initial_params::nvarcalc(); // get the number of active parameters
-	 independent_variables bounded(1,nvar); // original bounded MLE
-	 independent_variables unbounded(1,nvar); // original unbounded MLE
-	 // takes MLE from admodel.hes file. It would be better to
-	 // get this another way in case the model can't write it
-	 // for some reason (like if on a bound?). I'm not sure
-	 // where else to get it
-	 read_mle_hmc(nvar, bounded); 
-	 initial_params::restore_all_values(bounded,1);  // Push the original bounded MLE through the model
-	 gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
-	 initial_params::xinit(unbounded); // This copies the unbounded parameters into x
-	 for(int i=1; i<=nvar; i++){
-	   // dangerous way to check for bounded is if unbounded=bounded??
-	   if(unbounded(i)!=bounded(i)){
-	     // These values depend on the bounding
-	     // function. Here "close" is defined on the (0,1)
-	     // bounded scale as 0.001 or 0.999, and "on" is
-	     // 0.00001 or 0.9999. See boundpin function.
-	     if(gradient_structure::Hybrid_bounded_flag==0){
-	       if(unbounded(i)> .9959737)
-		 cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
-	       else if(unbounded(i) < -.9959737)
-		 cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
-	       else if(unbounded(i) > .9597299) 
-		 cout << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
-	       else if(unbounded(i)< -.9597299)
-		 cout << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
-	     }
-	     if(gradient_structure::Hybrid_bounded_flag==1){
-	       if(unbounded(i)< -11.51292)
-		 cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
-	       else if(unbounded(i)> 11.51292)
-		 cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
-	       else if(unbounded(i)< -6.906755)
-		 cout << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
-	       else if(unbounded(i)> 6.906755)
-		 cout << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
-	     }
-	   }
-	 }
-       }
-     }
      // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
      //Print new concluding message unless in MCMC mode which already prints timing stuff 
@@ -431,6 +378,7 @@ extern admb_javapointers * adjm_ptr;
       }
     }
     while(spminflag || repeatminflag);
+    if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
   }
 
   void function_minimizer::computations(void)

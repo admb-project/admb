@@ -211,7 +211,7 @@ extern admb_javapointers * adjm_ptr;
         if (!function_minimizer::have_constraints)
         {
           minimize();
-        }
+	}
         else
         {
           constraints_minimize();
@@ -276,6 +276,7 @@ extern admb_javapointers * adjm_ptr;
                 sd_routine();
               }
             }
+	    if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
           }
           else
           {
@@ -378,7 +379,6 @@ extern admb_javapointers * adjm_ptr;
       }
     }
     while(spminflag || repeatminflag);
-    if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
   }
 
   void function_minimizer::computations(void)

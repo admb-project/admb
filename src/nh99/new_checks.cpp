@@ -186,8 +186,9 @@ void function_minimizer::hess_step(){
 // on or near a bound and print to console. To be executed only
 // after optimization not things like mceval, profiles, MCMC etc.
 void function_minimizer::check_parameters_on_bounds(){
-  cout << endl << "Checking for parameters on bounds (experimental)..." << endl;
-  *ad_comm::global_logfile << endl<< "Checking for parameters on bounds (experimental)..." << endl;
+  bool tmp=false;
+  cout << endl << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
+  *ad_comm::global_logfile << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
   // Don't technically need this but I don't know how to
   // consistently get the MLE without reading it here (may not
   // be last par vec executed)
@@ -211,54 +212,61 @@ void function_minimizer::check_parameters_on_bounds(){
     for(int i=1; i<=nvar; i++){
       // dangerous way to check for bounded is if unbounded=bounded??
       if(unbounded(i)!=bounded(i)){
+	tmp=true;
 	// These values depend on the bounding
 	// function. Here "close" is defined on the (0,1)
 	// bounded scale as 0.001 or 0.999, and "on" is
 	// 0.00001 or 0.9999. See boundpin function.
 	if(gradient_structure::Hybrid_bounded_flag==0){
 	  if(unbounded(i)> .9959737)
-	    cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i) < -.9959737)
-	    cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i) > .9597299) 
-	    cout << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    cout << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)< -.9597299)
-	    cout << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    cout << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	}
 	if(gradient_structure::Hybrid_bounded_flag==1){
 	  if(unbounded(i)< -11.51292)
-	    cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    cout << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)> 11.51292)
-	    cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    cout << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)< -6.906755)
-	    cout << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    cout << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)> 6.906755)
-	    cout << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    cout << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	}
 
 	// same thing but write to log file
 	if(gradient_structure::Hybrid_bounded_flag==0){
 	  if(unbounded(i)> .9959737)
-	    *ad_comm::global_logfile << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i) < -.9959737)
-	    *ad_comm::global_logfile << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i) > .9597299) 
-	    *ad_comm::global_logfile << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)< -.9597299)
-	    *ad_comm::global_logfile << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	}
 	if(gradient_structure::Hybrid_bounded_flag==1){
 	  if(unbounded(i)< -11.51292)
-	    *ad_comm::global_logfile << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << " Par "<< i << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)> 11.51292)
-	    *ad_comm::global_logfile << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << " Par "<< i << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)< -6.906755)
-	    *ad_comm::global_logfile << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << " Par "<< i << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)> 6.906755)
-	    *ad_comm::global_logfile << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << " Par "<< i << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	}
- 
       }
     }
+  } // end loop over parameters
+  // close out
+  if(!tmp) {
+    cout <<" done!" << endl;
+    *ad_comm::global_logfile << " done!" << endl;
+  } else {
+    *ad_comm::global_logfile << endl;
   }
 }

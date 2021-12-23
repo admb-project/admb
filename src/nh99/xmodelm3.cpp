@@ -112,8 +112,8 @@ void tracing_message(int traceflag,const char *s);
       if (jj<allphases){
 	allphases = jj;
 	initial_params::max_number_phases=allphases;
-	cout<<"NOTE: max_number_of_phases reset from "<<origMPs<<" to "
-	    <<initial_params::max_number_phases << endl;
+	// cout<<"NOTE: max_number_of_phases reset from "<<origMPs<<" to "
+	//     <<initial_params::max_number_phases << endl;
       }
     }
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)

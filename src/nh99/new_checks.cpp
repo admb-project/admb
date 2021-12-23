@@ -3,7 +3,7 @@
 #include<ctime>
 
 /**
-  Experimental feature to try and get closer to the optimal point
+  Feature to try and get closer to the optimal point
   (minimum) using Newton steps with the inverse Hessian. If
   successful it gives evidence that the mode has been reached and
   the nearby curvature is well approximated by a quadratic form. 
@@ -14,13 +14,14 @@
 
   This feature is initiated by calling "-hess_step N
   -hess_step_tol eps" to specify the maximum number of steps (N)
-  and a minimum threshold for the maximum gradient (eps), below
-  which is deemed sufficient and causes the function to exit
-  early with success. The defaults are N=1 and eps=1e-12. The
-  function will also exit early if the gradients get worse as a
-  result of a step, printing information about which
-  parameters. If successful, the new MLE is deemed improved and
-  is propagated through the model to update all output files.
+  and a minimum threshold (eps) for the maximum absolute gradient
+  ('maxgrad'), below which is deemed sufficient and causes the function
+  to exit early with success. The defaults are N=5 and
+  eps=1e-12. The function will continue even if the maxgrad gets
+  bigger because often sucessive steps improve the Hessian and
+  can finish successfully. If successful, the new MLE is deemed
+  improved and is propagated through the model to update all
+  output files.
 
   The upside of this feature is it confirms that the geometry
   near the mode is quadratic and well represented by the
@@ -29,19 +30,28 @@
   recalculated and inverted at each step so it is costly
   computationally.
 
+  One technical issue is that because this is run after
+  optimization, the model initialization needs to be
+  considered. If there are inactive parameters in some cases they
+  may not be intialized to what is in the template. A workaround
+  is to specify initial values via the -ainp or -binp arguments,
+  as is standard. Future versions should explore how to automate
+  this, or only warn the user when there are inactive parameters.
+
   Typical usage is to optimize model, then use this feature if
-  convergence is suspect.
+  convergence is suspect. If it reduces the maxgrad to zero this
+  gives strong evidence for convergence.
 
   \author Cole Monnahan
 */
 void function_minimizer::hess_step(){
   // Read in the number of steps and optional tolerance
-  int N_hess_steps=1;
+  int N_hess_steps=5;
   int _N_hess_steps;
   int on, nopt;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hess_step",nopt))>-1) {
     if (!nopt){ 
-      cout << "Number of hess_steps not specified, using default of 1" << endl;
+      //cout << "Number of hess_steps not specified, using default of 1" << endl;
     } else {			
       istringstream ist(ad_comm::argv[on+1]);
       ist >> _N_hess_steps;

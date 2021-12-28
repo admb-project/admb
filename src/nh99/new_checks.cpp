@@ -108,7 +108,6 @@ void function_minimizer::hess_step(){
   dvariable nll,nll2;		// minimal values
   double maxgrad0, mingrad0,maxgrad, maxgrad2, mingrad2;
   read_mle_hmc(nvar, mle); // takes MLE from admodel.hes file
-  
  
   // Push the original bounded MLE through the model
   initial_params::restore_all_values(mle,1);
@@ -123,13 +122,24 @@ void function_minimizer::hess_step(){
   maxgrad0=max(fabs(gr0));
   mingrad0=min(fabs(gr0));
   nll=*objective_function_value::pobjfun;
+  adstring_array pars(1,nvar);
+  pars=function_minimizer::get_param_names();
+
+  int maxpar=1;
+  dvariable grMax=fabs(gr0[1]);
+  for (int i = 1; i<=nvar; i++){
+    if (fabs(gr0[i]) > grMax){
+      grMax = fabs(gr0[i]);
+      maxpar=i;
+    }
+  }
   
   if(maxgrad0<eps) {
     cout << "Initial max gradient already below threshold of " << eps << " so quitting now" << endl;
     return;
   }
 
-  cout << "Hess step 0: Max gradient=" << maxgrad0 << " and min gradient= " << mingrad0 << endl;
+  cout << "Hess step 0: Max gradient=" << maxgrad0 << " (" << pars[maxpar] << ") and min gradient= " << mingrad0 << endl;
   // for(int i=1; i<=5; i++) {cout << "i=" << i << " varsptr=" << 1 << " mle=" << mle(i) << " gradient=" << gr0(i) << endl;}
   dmatrix S(1,nvar,1,nvar); // covar (inverse Hess) in unbounded space
   dvector scale(1,nvar); // dummy var
@@ -153,39 +163,26 @@ void function_minimizer::hess_step(){
     gradcalc(nvar,gr2);
     maxgrad2=max(fabs(gr2));
     mingrad2=min(fabs(gr2));
+    // stupid way to do which.max()
+    maxpar=1; grMax=fabs(gr2[1]);
+    for (int i = 1; i<=nvar; i++){
+      if (fabs(gr2[i]) > grMax){
+	grMax = fabs(gr2[i]);
+	maxpar=i;
+      }
+    }
+    if(grMax!=maxgrad2) cerr << "Warning: which parameter has largest gradient may be unreliable" << endl;
+
     initial_params::copy_all_values(mle2,1.0);
     // Check whether to break out of loop early
     if(maxgrad2 < eps){
-      cout << "Hess step " << ii << ": Max gradient="<< maxgrad2 <<
-	" is below threshold of " << eps << " so exiting early" << endl;
+      cout << "Hess step " << ii << ": Max gradient="<< maxgrad2 << " (" << pars[maxpar] <<
+	") is below threshold of " << eps << " so exiting early" << endl;
       break;
     }
-    // if(maxgrad2>maxgrad) {
-    //   // which ones got worse?
-    //   //int jj = 1;
-    //   // for (int i = 0; i < initial_params::num_initial_params; ++i) {
-    //   //   if (active(*initial_params::varsptr[i])) {
-    //   //     int jmax = (int)initial_params::varsptr[i]->size_count();
-    //   //     for (int j = 1; j <= jmax; ++j) {
-    //   //       if(abs(gr(jj)) < abs(gr2(jj))){
-    //   // 	       cout << (initial_params::varsptr[i])->label();
-    //   //         if (jmax > 1) {
-    //   // 		cout << "(" << j << ")";
-    //   //         }
-    //   // 	      cout << ": original grad=" << gr(jj) << " and updated grad=" << gr2(jj) << endl;
-    //   //       }
-    //   // 	    ++jj;
-    //   //     }
-    //   //   }
-    //   // }
-    // // cerr << "Hess step " << ii << ": Max gradient=" << maxgrad2 <<
-    // // 	" and min gradient= " << mingrad2 << endl << endl; 
-    // } 
-    //ad_exit(1);
-    // } else {
     // Was successful but not good enough to break early
-    cout << "Hess step " << ii << ": Max gradient=" << maxgrad2 <<
-      " and min gradient= " << mingrad2 << endl; 
+    cout << "Hess step " << ii << ": Max gradient=" << maxgrad2 << " (" << pars[maxpar] <<
+      ") and min gradient= " << mingrad2 << endl; 
     x=x2; gr=gr2; maxgrad=maxgrad2; 
     // If not the last step then want to skip the sd_calcs
     // which are slow so manually update admodel.cov whereas
@@ -194,7 +191,7 @@ void function_minimizer::hess_step(){
     if(ii!=N_hess_steps){
       int oldoutput = function_minimizer::output_flag;
       function_minimizer::output_flag=0;
-      cout << " Updating Hessian for next step (output suppressed)...";
+      cout << "             Updating Hessian for next step (output suppressed)...";
       hess_routine(); // Calculate new Hessian
       depvars_routine(); // calculate derivatives of sdreport variables
       hess_inv(); // Invert Hess and write to admodel.cov
@@ -252,7 +249,6 @@ void function_minimizer::check_parameters_on_bounds(){
     independent_variables bounded(1,nvar); // original bounded MLE
     independent_variables unbounded(1,nvar); // original unbounded MLE
     adstring_array pars(1,nvar);
-    pars=function_minimizer::get_param_names();
     // takes MLE from admodel.hes file. It would be better to
     // get this another way in case the model can't write it
     // for some reason (like if on a bound?). I'm not sure
@@ -261,6 +257,7 @@ void function_minimizer::check_parameters_on_bounds(){
     initial_params::restore_all_values(bounded,1);  // Push the original bounded MLE through the model
     gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
     initial_params::xinit(unbounded); // This copies the unbounded parameters into x
+    pars=function_minimizer::get_param_names();
     for(int i=1; i<=nvar; i++){
       // dangerous way to check for bounded is if unbounded=bounded??
       if(unbounded(i)!=bounded(i)){
@@ -337,7 +334,13 @@ adstring_array function_minimizer::get_param_names(void) {
   }
   //define and allocate adstring array
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  if(nvar!=totNum) cerr << "Error in get_param_names calculation of total parameters" << endl;
+  if(nvar!=totNum){
+    // this will happen if the function is used before the model
+    // is fully initialized.. it needs to run a single iteration
+    // at least in this phase or things are not right
+    cerr << "Error in get_param_names calculation of total active parameters." << endl;
+    cerr << "  phase=" << initial_params::current_phase <<"  totNum=" << totNum << " and nvar=" << nvar << endl;
+  }
   adstring_array par_names(1,nvar);
 
   //loop over parameters and vectors and create names  

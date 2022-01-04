@@ -1982,7 +1982,7 @@ public:
  
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();
-  adstring_array get_param_names();
+  static adstring_array get_param_names();
   bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);
   bool calculate_chd_and_inverse(int nvar, const dmatrix& metric,
 				 dmatrix& chd, dmatrix& chdinv);

@@ -484,10 +484,20 @@ label7003: /* Printing table header */
 	if(function_minimizer::output_flag==1){
 	  // new console output for optimization
 	  assert(ad_printf);
+	  // stupid way to do which.max()
+	  adstring_array pars(1,n);
+          pars=function_minimizer::get_param_names();
+	  int maxpar=1; dvariable grMax=fabs(g.elem(1));
+	  for (int i = 1; i<=n; i++){
+	    if (g.elem(i)>grMax){
+	      grMax = fabs(g.elem(i));
+	      maxpar=i;
+	    }
+	  }
 	  // assert(pointer_to_phase);
 	  if (itn % iprint ==0 ) 
-	  (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.3e | mag=%.3e\n",
-		       initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)));
+	  (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par=%s\n",
+		       initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), (char*)pars(maxpar));
 	}
 	// if(function_minimizer::output_flag==2){
 	if (function_minimizer::output_flag==2 && iprint>0)
@@ -967,7 +977,7 @@ if(function_minimizer::output_flag==1 &&
   // iprint, and if RE is used if iprint>0. It will only not
   // work when user specifies iprint=0 with a RE model.
   if(!function_minimizer::random_effects_flag ||
-     (function_minimizer::random_effects_flag & iprint>0)){
+     (function_minimizer::random_effects_flag && iprint>0)){
     // new console output for optimization
     assert(ad_printf);
     // assert(pointer_to_phase);
@@ -986,8 +996,18 @@ if(function_minimizer::output_flag==1 &&
       runtime/=(24*60*60); u=" days";
     }
     runtime=std::round(runtime * 10.0) / 10.0;
+    // stupid way to do which.max()
+    adstring_array pars(1,n);
+    pars=function_minimizer::get_param_names();
+    int maxpar=1; dvariable grMax=fabs(g.elem(1));
+    for (int i = 1; i<=n; i++){
+      if (g.elem(i)>grMax){
+	grMax = fabs(g.elem(i));
+	maxpar=i;
+      }
+    }
     cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
-    (*ad_printf)(" nll=%f | mag=%.5e\n", double(f), fabs(double(gmax)));
+    (*ad_printf)(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
   }
  }
 // Important to be here b/c it appears other parts of ADMB-RE

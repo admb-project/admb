@@ -199,21 +199,27 @@ void function_minimizer::check_parameters_on_bounds(){
     cerr << "  File admodel.hes required for bound checking but not found... skipping." << endl;
   } else {
     // Experiment to test for parameters near bounds
+    initial_params::set_inactive_only_random_effects();
     int nvar=initial_params::nvarcalc(); // get the number of active parameters
     independent_variables bounded(1,nvar); // original bounded MLE
     independent_variables unbounded(1,nvar); // original unbounded MLE
-    adstring_array pars(1,nvar);
-    pars=function_minimizer::get_param_names();
+    adstring_array pars=initial_params::get_param_names();
+    cout<<"nvar = "<<nvar<<".  # params = "<<pars.size()<<endl;
     // takes MLE from admodel.hes file. It would be better to
     // get this another way in case the model can't write it
     // for some reason (like if on a bound?). I'm not sure
     // where else to get it
     read_mle_hmc(nvar, bounded); 
+    //cout<<"1"<<endl;
     initial_params::restore_all_values(bounded,1);  // Push the original bounded MLE through the model
+    //cout<<"2"<<endl;
     gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
+    //cout<<"3"<<endl;
     initial_params::xinit(unbounded); // This copies the unbounded parameters into x
+    //cout<<"4"<<endl;
     for(int i=1; i<=nvar; i++){
       // dangerous way to check for bounded is if unbounded=bounded??
+        cout<<"checking i = "<<i<<endl;
       if(unbounded(i)!=bounded(i)){
 	tmp=true;
 	// These values depend on the bounding
@@ -267,8 +273,8 @@ void function_minimizer::check_parameters_on_bounds(){
   } // end loop over parameters
   // close out
   if(!tmp) {
-    cout <<" done!" << endl;
-    *ad_comm::global_logfile << " done!" << endl;
+    cout <<" done checking fixed effects parameter bounds!" << endl;
+    *ad_comm::global_logfile << " done checking fixed effects parameter bounds!" << endl;
   } else {
     *ad_comm::global_logfile << endl;
   }
@@ -281,28 +287,30 @@ void function_minimizer::check_parameters_on_bounds(){
 //
 // \author Cole Monnahan and Buck Stockhausen
 adstring_array function_minimizer::get_param_names(void) {
-  //determine number of active parameters
-  int totNum = 0;
-  for (int i = 0; i < initial_params::num_initial_params; ++i) {
-     if (active(*initial_params::varsptr[i])) totNum += (int)initial_params::varsptr[i]->size_count();
-  }
-  //define and allocate adstring array
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  if(nvar!=totNum) cerr << "Error in get_param_names calculation of total parameters" << endl;
-  adstring_array par_names(1,nvar);
-
-  //loop over parameters and vectors and create names  
-  int kk = 0;
-  for (int i = 0; i < initial_params::num_initial_params; ++i) {
-    if (active(*initial_params::varsptr[i])) {
-      int jmax = (int)initial_params::varsptr[i]->size_count();
-      for (int j = 1; j <= jmax; ++j) {
-	kk++;
-	par_names[kk] = (initial_params::varsptr[i])->label();
-	if (jmax > 1) par_names[kk] += "["+str(j)+"]";//might have to do something similar to alternative above if this doesn't work
-      }//--j loop
-    }//--if
-  }//--i loop
-  if (totNum!=kk) cerr<<"Error in get_param_names: number of parameters does not match"<<endl;
-  return(par_names);
+//  //determine number of active parameters
+//  int totNum = 0;
+//  for (int i = 0; i < initial_params::num_initial_params; ++i) {
+//     if (active(*initial_params::varsptr[i])) totNum += (int)initial_params::varsptr[i]->size_count();
+//  }
+//  //define and allocate adstring array
+//  int nvar=initial_params::nvarcalc(); // get the number of active parameters
+//  if(nvar!=totNum) cerr << "Error in get_param_names calculation of total parameters" << endl;
+//  adstring_array par_names(1,nvar);
+//
+//  //loop over parameters and vectors and create names  
+//  int kk = 0;
+//  for (int i = 0; i < initial_params::num_initial_params; ++i) {
+//    if (active(*initial_params::varsptr[i])) {
+//      int jmax = (int)initial_params::varsptr[i]->size_count();
+//      for (int j = 1; j <= jmax; ++j) {
+//	kk++;
+//	par_names[kk] = (initial_params::varsptr[i])->label();
+//	if (jmax > 1) par_names[kk] += "["+str(j)+"]";//might have to do something similar to alternative above if this doesn't work
+//      }//--j loop
+//    }//--if
+//  }//--i loop
+//  if (totNum!=kk) cerr<<"Error in get_param_names: number of parameters does not match"<<endl;
+//  return(par_names);
+    adstring_array par_names = initial_params::get_param_names();
+    return(par_names);
 }

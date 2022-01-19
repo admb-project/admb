@@ -944,6 +944,7 @@ public:
   static dvariable reset(const dvar_vector& x, const dvector& pen);
   // get the number of active parameters
   static dvariable reset_all(const dvar_vector& x,const dvector& pen);
+  static adstring_array get_param_names(void);
   static int nvarcalc();
   static int nvarcalc_all(void);
   static int num_active_calc(void);

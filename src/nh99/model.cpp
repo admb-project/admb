@@ -187,6 +187,33 @@ int initial_params::nvarcalc()
     }
     return ntypes;
   }
+  
+  adstring_array initial_params::get_param_names(void){
+    //determine number of active parameters
+    int totNum = 0;
+    for (int i = 0; i < num_initial_params; ++i) {
+       if (withinbound(0,(varsptr[i])->phase_start,current_phase)) totNum += (varsptr[i])->size_count();
+    }
+    //define and allocate adstring array
+    int nvar=nvarcalc(); // get the number of active parameters
+    if(nvar!=totNum) cerr << "Error in initial_params::get_param_names calculation of total parameters" << endl;
+    adstring_array par_names(1,nvar);
+
+    //loop over parameters and vectors and create names  
+    int kk = 0;
+    for (int i = 0; i < num_initial_params; ++i) {
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase)) {
+        int jmax = (varsptr[i])->size_count();
+        for (int j = 1; j <= jmax; ++j) {
+          kk++;
+          par_names[kk] = (varsptr[i])->label();
+          if (jmax > 1) par_names[kk] += "["+str(j)+"]";//might have to do something similar to alternative above if this doesn't work
+        }//--j loop
+      }//--if
+    }//--i loop
+    if (totNum!=kk) cerr<<"Error in initial_params::get_param_names: number of parameters does not match"<<endl;
+    return(par_names);
+  }
 
   int initial_params::stddev_vscale(const dvar_vector& d,const dvar_vector& x)
   {

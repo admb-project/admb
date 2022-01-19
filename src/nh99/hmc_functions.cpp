@@ -430,6 +430,7 @@ double function_minimizer::leapfrog(int nvar, dvector& gr, dmatrix& chd, double 
 // -mcpin b/c the model is not necessarily run with -est. With adnuts it is
 // not by default so need a default starting value.
 void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
+  int debug = 0;//flag to print debugging info to terminal
   adstring tmpstring = "admodel.hes";
   uistream cif((char*)tmpstring);
   if (!cif) {
@@ -439,15 +440,19 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
   int tmp_nvar = 0;
   cif >> tmp_nvar;
   if (nvar !=tmp_nvar) {
-    cerr << "The number of variables in admodel.hes " << tmp_nvar << " does not match " << nvar <<
-	 ". Try re-optimizing model." << endl;
-    ad_exit(1);
+//    cerr << "The number of variables in admodel.hes " << tmp_nvar << " does not match " << nvar <<
+//	 ". Try re-optimizing model." << endl;
+//    ad_exit(1);
+      cout<<"NOTE: the number of active parameters ("<<nvar<<") does not equal the dimension in admodel.hes ("<<tmp_nvar<<")."<<endl;
+      cout<<"      This could mean admodel.hes is old or random effects are in use."<<endl;
   }
   dmatrix hess(1,tmp_nvar,1,tmp_nvar);
   cif >> hess;
   if (!cif) {
     cerr << "Error reading the Hessian matrix from admodel.hes. Try re-optimizing model." << endl;
     ad_exit(1);
+  } else {
+      if (debug) cout<<"the hessian matrix"<<endl<<hess<<endl;
   }
   int oldHbf;
   cif >> oldHbf;
@@ -460,10 +465,13 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
   if (!cif) {
     cerr << "Error reading the transformation scales from admodel.hes. Try re-optimizing model." << endl;
     ad_exit(1);
+  } else {
+      if (debug) cout<<"sscale = "<<sscale<<endl;
   }
   // Read in the MLEs finally
   int temp=0;
   cif >> temp;
+  if (debug) cout<<"flag = "<<temp<<endl;
   // temp is a unique flag to make sure the mle values were written (that
   // admodel.hes is not too old)
   if(temp != -987 || !cif){
@@ -471,6 +479,7 @@ void function_minimizer::read_mle_hmc(int nvar, dvector& mle) {
     ad_exit(1);
   }
   cif >> mle;
+  if (debug) cout<<"mle = "<<mle<<endl;
   if(!cif){
     cerr << "Error reading the bounded MLE values from admodel.hes. Try re-optimizing model." << endl;
     ad_exit(1);

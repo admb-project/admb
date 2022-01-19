@@ -206,7 +206,9 @@ dmatrix::dmatrix(char* s)
     //while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
     while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
     {
+#ifndef OPT_LIB
       assert(strlen(line) > 0);
+#endif
       strcat(line, " ");
       // increment row counter
       if ( i++ > MAX_NUMBER_ROWS)

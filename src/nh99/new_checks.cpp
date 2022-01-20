@@ -170,7 +170,7 @@ void function_minimizer::hess_step(){
       }
     } 
   }// end loop over hess_steps
-  // Finished successully so run the opitmizer without
+  // Finished successfully so run the optimizer without
   // taking any steps to produce updated output files
   // with this new MLE value.
   function_minimizer::maxfn=0;
@@ -182,14 +182,20 @@ void function_minimizer::hess_step(){
     "with quadratic log-likelihood surface." << endl;
 }
 
-// Quick epxerimental function to test whether MLE parameters are
+// Quick experimental function to test whether MLE parameters are
 // on or near a bound and print to console. To be executed only
-// after optimization not things like mceval, profiles, MCMC etc.
+// after optimization when the hessian has been calculated, 
+// not things like mceval, profiles, MCMC etc.
+//
+// NOTE: this works for fixed-effects models but does not work for models with random effects
 void function_minimizer::check_parameters_on_bounds(){
+  if (function_minimizer::random_effects_flag) {return;}//does not work for models with random effects
   bool tmp=false;
 
   cout << endl << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
+  cout << "    NOTE: this bounds checking does not work for models with random effects." << endl;
   *ad_comm::global_logfile << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
+  *ad_comm::global_logfile << "    NOTE: this bounds checking does not work for models with random effects." << endl;
   // Don't technically need this but I don't know how to
   // consistently get the MLE without reading it here (may not
   // be last par vec executed)
@@ -219,7 +225,7 @@ void function_minimizer::check_parameters_on_bounds(){
     //cout<<"4"<<endl;
     for(int i=1; i<=nvar; i++){
       // dangerous way to check for bounded is if unbounded=bounded??
-        cout<<"checking i = "<<i<<endl;
+      //  cout<<"checking parameter i = "<<i<<" (i.e., "<<pars[i]<<")"<<endl;
       if(unbounded(i)!=bounded(i)){
 	tmp=true;
 	// These values depend on the bounding
@@ -228,45 +234,45 @@ void function_minimizer::check_parameters_on_bounds(){
 	// 0.00001 or 0.9999. See boundpin function.
 	if(gradient_structure::Hybrid_bounded_flag==0){
 	  if(unbounded(i)> .9959737)
-	    cout << pars[i] << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    cout << "  '"<<pars[i]<<"'" << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i) < -.9959737)
-	    cout << pars[i] << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    cout << "  '"<<pars[i]<<"'" << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i) > .9597299) 
-	    cout << pars[i] << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    cout << "  '"<<pars[i]<<"'" << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)< -.9597299)
-	    cout << pars[i] << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    cout << "  '"<<pars[i]<<"'" << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	}
 	if(gradient_structure::Hybrid_bounded_flag==1){
 	  if(unbounded(i)< -11.51292)
-	    cout << pars[i] << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    cout << "  '"<<pars[i]<<"'" << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)> 11.51292)
-	    cout << pars[i] << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    cout << "  '"<<pars[i]<<"'" << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)< -6.906755)
-	    cout << pars[i] << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    cout << "  '"<<pars[i]<<"'" << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)> 6.906755)
-	    cout << pars[i] << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    cout << "  '"<<pars[i]<<"'" << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	}
 
 	// same thing but write to log file
 	if(gradient_structure::Hybrid_bounded_flag==0){
 	  if(unbounded(i)> .9959737)
-	    *ad_comm::global_logfile << pars[i] << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i) < -.9959737)
-	    *ad_comm::global_logfile << pars[i] << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i) > .9597299) 
-	    *ad_comm::global_logfile << pars[i] << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)< -.9597299)
-	    *ad_comm::global_logfile << pars[i] << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	}
 	if(gradient_structure::Hybrid_bounded_flag==1){
 	  if(unbounded(i)< -11.51292)
-	    *ad_comm::global_logfile << pars[i] << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)> 11.51292)
-	    *ad_comm::global_logfile << pars[i] << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)< -6.906755)
-	    *ad_comm::global_logfile << pars[i] << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	  else if(unbounded(i)> 6.906755)
-	    *ad_comm::global_logfile << pars[i] << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
 	}
       }
     }
@@ -284,6 +290,9 @@ void function_minimizer::check_parameters_on_bounds(){
 
 // Get the character name for all active parameters into a single
 // character vector.
+//
+// NOTE: This function has been superseded by the function initial_params::get_param_names().
+//       It simply delegates to that function now. 
 //
 // \author Cole Monnahan and Buck Stockhausen
 adstring_array function_minimizer::get_param_names(void) {

@@ -3,9 +3,10 @@
 #include<ctime>
 
 /**
-  Experimental feature to take Newton steps using the inverse
-  Hessian to get much closer to the optimum and reduce the
-  maximum gradient arbitrarily close to 0.
+  Feature to try and get closer to the optimal point
+  (minimum) using Newton steps with the inverse Hessian. If
+  successful it gives evidence that the mode has been reached and
+  the nearby curvature is well approximated by a quadratic form. 
 
   Let x be the current MLE parameter vector. Then a single step
   consists of calculating x'=x-inv(Hessian)*gradient. This
@@ -13,13 +14,14 @@
 
   This feature is initiated by calling "-hess_step N
   -hess_step_tol eps" to specify the maximum number of steps (N)
-  and a minimum threshold for the maximum gradient (eps), below
-  which is deemed sufficient and causes the function to exit
-  early with success. The defaults are N=1 and eps=1e-12. The
-  function will also exit early if the gradients get worse as a
-  result of a step, printing information about which
-  parameters. If successful, the new MLE is deemed improved and
-  is propagated through the model to update all output files.
+  and a minimum threshold (eps) for the maximum absolute gradient
+  ('maxgrad'), below which is deemed sufficient and causes the function
+  to exit early with success. The defaults are N=5 and
+  eps=1e-12. The function will continue even if the maxgrad gets
+  bigger because often sucessive steps improve the Hessian and
+  can finish successfully. If successful, the new MLE is deemed
+  improved and is propagated through the model to update all
+  output files.
 
   The upside of this feature is it confirms that the geometry
   near the mode is quadratic and well represented by the
@@ -28,19 +30,28 @@
   recalculated and inverted at each step so it is costly
   computationally.
 
+  One technical issue is that because this is run after
+  optimization, the model initialization needs to be
+  considered. If there are inactive parameters in some cases they
+  may not be intialized to what is in the template. A workaround
+  is to specify initial values via the -ainp or -binp arguments,
+  as is standard. Future versions should explore how to automate
+  this, or only warn the user when there are inactive parameters.
+
   Typical usage is to optimize model, then use this feature if
-  convergence is suspect.
+  convergence is suspect. If it reduces the maxgrad to zero this
+  gives strong evidence for convergence.
 
   \author Cole Monnahan
 */
 void function_minimizer::hess_step(){
   // Read in the number of steps and optional tolerance
-  int N_hess_steps=1;
+  int N_hess_steps=5;
   int _N_hess_steps;
   int on, nopt;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hess_step",nopt))>-1) {
     if (!nopt){ 
-      cout << "Number of hess_steps not specified, using default of 1" << endl;
+      //cout << "Number of hess_steps not specified, using default of 1" << endl;
     } else {			
       istringstream ist(ad_comm::argv[on+1]);
       ist >> _N_hess_steps;
@@ -68,14 +79,25 @@ void function_minimizer::hess_step(){
       }
     }
   }
-  cout << "Experimental feature to take up to " << N_hess_steps;
-  cout << " Newton step(s) using the inverse Hessian" << endl;
+  cout <<  endl << "Experimental feature to take up to " << N_hess_steps;
+  cout << " Newton step(s) using the inverse Hessian" << endl << endl;
+
+  initial_params::current_phase=initial_params::max_number_phases;
+  int nvar=initial_params::nvarcalc(); // get the number of active parameters
+  int aiopt,biopt;
+  biopt=option_match(ad_comm::argc,ad_comm::argv,"-binp");
+  aiopt=option_match(ad_comm::argc,ad_comm::argv,"-ainp");
+  if(biopt==-1 && aiopt==-1){
+    std::string m=get_filename((char*)ad_comm::adprogram_name);
+    cout << "Warning: Parameter inputs via '-ainp' and '-binp' were not detected." << endl;
+    cout << "         It is recommended to add option '-binp " << m << ".bar' when using -hess_step." << endl;
+    cout << "         Otherwise inactive parameters (and thus gradients) may not initialize correctly." << endl << endl;
+  }
+    
   // Let x'=x-inv(Hessian)*gradient, where x is MLE in
   // unbounded space and it's corresponding gradient and
   // Hessian. Need to calculate x' then push through
   // model and calculate SD report stuff
-  initial_params::current_phase=initial_params::max_number_phases;
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables mle(1,nvar); // original bounded MLE
   independent_variables mle2(1,nvar); // updated bounded MLE
   independent_variables x(1,nvar); // original unbounded MLE
@@ -83,9 +105,10 @@ void function_minimizer::hess_step(){
   dvector gr0(1,nvar);		// original gradients
   dvector gr(1,nvar);		// 
   dvector gr2(1,nvar);		// updated gradients
-  double maxgrad0, mingrad0, maxgrad, maxgrad2, mingrad2;
+  dvariable nll,nll2;		// minimal values
+  double maxgrad0, mingrad0,maxgrad, maxgrad2, mingrad2;
   read_mle_hmc(nvar, mle); // takes MLE from admodel.hes file
-
+ 
   // Push the original bounded MLE through the model
   initial_params::restore_all_values(mle,1);
   gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
@@ -98,15 +121,32 @@ void function_minimizer::hess_step(){
   gradcalc(nvar,gr0);			      // initial unbounded gradient
   maxgrad0=max(fabs(gr0));
   mingrad0=min(fabs(gr0));
-	  
-  cout << "Initial max gradient=" << maxgrad0 << " and min gradient= " << mingrad0 << endl;
+  nll=*objective_function_value::pobjfun;
+  adstring_array pars(1,nvar);
+  pars=function_minimizer::get_param_names();
+
+  int maxpar=1;
+  dvariable grMax=fabs(gr0[1]);
+  for (int i = 1; i<=nvar; i++){
+    if (fabs(gr0[i]) > grMax){
+      grMax = fabs(gr0[i]);
+      maxpar=i;
+    }
+  }
+  
+  if(maxgrad0<eps) {
+    cout << "Initial max gradient already below threshold of " << eps << " so quitting now" << endl;
+    return;
+  }
+
+  cout << "Hess step 0: Max gradient=" << maxgrad0 << " (" << pars[maxpar] << ") and min gradient= " << mingrad0 << endl;
+  // for(int i=1; i<=5; i++) {cout << "i=" << i << " varsptr=" << 1 << " mle=" << mle(i) << " gradient=" << gr0(i) << endl;}
   dmatrix S(1,nvar,1,nvar); // covar (inverse Hess) in unbounded space
   dvector scale(1,nvar); // dummy var
   int hbf; // dummy var
 
   // Initial for first iteration
   gr=gr0; maxgrad=maxgrad0; 
-
   int Nstep=0;
   for(int ii=1; ii<=N_hess_steps; ii++){
     Nstep++;
@@ -118,68 +158,74 @@ void function_minimizer::hess_step(){
     initial_params::reset(vx2);
     *objective_function_value::pobjfun=0.0;
     userfunction();
+    nll2=*objective_function_value::pobjfun;
     // Updated quantities after taking step
     gradcalc(nvar,gr2);
     maxgrad2=max(fabs(gr2));
     mingrad2=min(fabs(gr2));
+    // stupid way to do which.max()
+    maxpar=1; grMax=fabs(gr2[1]);
+    for (int i = 1; i<=nvar; i++){
+      if (fabs(gr2[i]) > grMax){
+	grMax = fabs(gr2[i]);
+	maxpar=i;
+      }
+    }
+    if(grMax!=maxgrad2) cerr << "Warning: which parameter has largest gradient may be unreliable" << endl;
+
     initial_params::copy_all_values(mle2,1.0);
     // Check whether to break out of loop early
-    if( (maxgrad2 < eps) & (ii < N_hess_steps)){
-      cout << "Step " << ii << ": Max gradient "<< maxgrad2 <<
-	" below threshold of " << eps << " so exiting early" << endl;
+    if(maxgrad2 < eps){
+      cout << "Hess step " << ii << ": Max gradient="<< maxgrad2 << " (" << pars[maxpar] <<
+	") is below threshold of " << eps << " so exiting early" << endl;
       break;
-    } else if(maxgrad2>maxgrad) {
-      // which ones got worse?
-      int jj = 1;
-      for (int i = 0; i < initial_params::num_initial_params; ++i) {
-        if (active(*initial_params::varsptr[i])) {
-          int jmax = (int)initial_params::varsptr[i]->size_count();
-          for (int j = 1; j <= jmax; ++j) {
-            if(abs(gr(jj)) < abs(gr2(jj))){
-              cout << (initial_params::varsptr[i])->label();
-              if (jmax > 1) {
-                cout << "(" << j << ")";
-              }
-              cout << ": original grad=" << gr(jj) << " and updated grad=" << gr2(jj) << endl;
-            }
-	    ++jj;
-          }
-        }
-      }
-      cerr << endl <<
-	"Experimental feature -hess_step resulted in worse gradients (above)." << endl <<  
-	"Consider reoptimizing model to reset files. This suggests that the" << endl <<
-	"the negative log-likelihood is not quadratic at the mode, or that the" << endl <<
-	"Hessian does not approximate it well. In short, it suggests the model is" << endl <<
-	"not converged. Check model structure and other output files to investigate" << endl <<
-	"potential causes and solutions." << endl;
-      ad_exit(1);
-    } else {
-      // Was successful but not good enough to break early
-      cout << "Step " << ii << ": Updated max gradient=" << maxgrad2 <<
-	" and min gradient= " << mingrad2 << endl; 
-      x=x2; gr=gr2; maxgrad=maxgrad2; 
-      // If not the last step then want to skip the sd_calcs
-      // which are slow so manually update admodel.cov whereas
-      // below computations1() runs everything so do that if last
-      // step
-      if(ii!=N_hess_steps){
-	hess_routine(); // Calculate new Hessian
-	depvars_routine(); // calculate derivatives of sdreport variables
-	hess_inv(); // Invert Hess and write to admodel.cov
-      }
-    } 
-  }// end loop over hess_steps
-  // Finished successully so run the opitmizer without
-  // taking any steps to produce updated output files
-  // with this new MLE value.
-  function_minimizer::maxfn=0;
-  computations1(ad_comm::argc,ad_comm::argv);
-  cout << endl << "The " << Nstep << " Hessian step(s) reduced maxgrad from " <<
-    maxgrad0 << " to " << maxgrad2 << "." << endl <<
-    "All output files should be updated, but confirm as this is experimental still." << endl <<
-    "The fact this was successful gives strong evidence of convergence to a mode" << endl <<
-    "with quadratic log-likelihood surface." << endl;
+    }
+    // Was successful but not good enough to break early
+    cout << "Hess step " << ii << ": Max gradient=" << maxgrad2 << " (" << pars[maxpar] <<
+      ") and min gradient= " << mingrad2 << endl; 
+    x=x2; gr=gr2; maxgrad=maxgrad2; 
+    // If not the last step then want to skip the sd_calcs
+    // which are slow so manually update admodel.cov whereas
+    // below computations1() runs everything so do that if last
+    // step
+    if(ii!=N_hess_steps){
+      int oldoutput = function_minimizer::output_flag;
+      function_minimizer::output_flag=0;
+      cout << "             Updating Hessian for next step (output suppressed)...";
+      hess_routine(); // Calculate new Hessian
+      depvars_routine(); // calculate derivatives of sdreport variables
+      hess_inv(); // Invert Hess and write to admodel.cov
+      function_minimizer::output_flag=oldoutput;
+      cout << "done!" << endl;
+    }
+  } // end loop over hess_steps
+  
+  if(maxgrad2>maxgrad0){
+    // worse gradient
+    cerr << "Experimental feature -hess_step resulted in worse gradients." << endl <<  
+      "Consider reoptimizing model to reset files. This suggests that the" << endl <<
+      "the negative log-likelihood is not quadratic at the mode, or that the" << endl <<
+      "Hessian does not approximate it well. In short, it suggests the model is" << endl <<
+      "not converged. Check model structure and other output files to investigate" << endl <<
+      "potential causes and solutions." << endl;
+    ad_exit(1);
+  } else {
+    // Finished successully so run the opitmizer without
+    // taking any steps to produce updated output files
+    // with this new MLE value.
+    function_minimizer::maxfn=0;
+    cout << endl << "Redoing uncertainty calculations and updating files (output suppressed)...";
+    int oldoutput = function_minimizer::output_flag;
+    function_minimizer::output_flag=0;
+    computations1(ad_comm::argc,ad_comm::argv);
+    function_minimizer::output_flag=oldoutput;
+    cout << " done!" << endl;
+    cout << endl << "The " << Nstep << " Hessian step(s) reduced maxgrad from " <<
+      maxgrad0 << " to " << maxgrad2 << " and NLL by " << nll-nll2 << "." << endl <<
+      "All output files should be updated, but confirm as this is experimental still." << endl <<
+      "The fact this was successful gives strong evidence of convergence to a mode" << endl <<
+      "with quadratic log-likelihood surface." << endl;
+  }
 }
 
 // Quick epxerimental function to test whether MLE parameters are
@@ -203,7 +249,6 @@ void function_minimizer::check_parameters_on_bounds(){
     independent_variables bounded(1,nvar); // original bounded MLE
     independent_variables unbounded(1,nvar); // original unbounded MLE
     adstring_array pars(1,nvar);
-    pars=function_minimizer::get_param_names();
     // takes MLE from admodel.hes file. It would be better to
     // get this another way in case the model can't write it
     // for some reason (like if on a bound?). I'm not sure
@@ -212,6 +257,7 @@ void function_minimizer::check_parameters_on_bounds(){
     initial_params::restore_all_values(bounded,1);  // Push the original bounded MLE through the model
     gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
     initial_params::xinit(unbounded); // This copies the unbounded parameters into x
+    pars=function_minimizer::get_param_names();
     for(int i=1; i<=nvar; i++){
       // dangerous way to check for bounded is if unbounded=bounded??
       if(unbounded(i)!=bounded(i)){
@@ -288,7 +334,13 @@ adstring_array function_minimizer::get_param_names(void) {
   }
   //define and allocate adstring array
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  if(nvar!=totNum) cerr << "Error in get_param_names calculation of total parameters" << endl;
+  if(nvar!=totNum){
+    // this will happen if the function is used before the model
+    // is fully initialized.. it needs to run a single iteration
+    // at least in this phase or things are not right
+    cerr << "Error in get_param_names calculation of total active parameters." << endl;
+    cerr << "  phase=" << initial_params::current_phase <<"  totNum=" << totNum << " and nvar=" << nvar << endl;
+  }
   adstring_array par_names(1,nvar);
 
   //loop over parameters and vectors and create names  

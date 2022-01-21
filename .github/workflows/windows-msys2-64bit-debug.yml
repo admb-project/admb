@@ -17,8 +17,8 @@ jobs:
     - name: build debug
       run: |
         set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
-        make -j 2 DEBUG=yes
-        make -j 2 shared DEBUG=yes
+        make DEBUG=yes
+        make shared DEBUG=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

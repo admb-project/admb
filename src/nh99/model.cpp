@@ -85,6 +85,7 @@ initial_params::initial_params()
   active_flag = 0;
   scalefactor = 0;
   pointer_to_phase=&initial_params::current_phase;
+  has_bounds = false;//default to no bounds
 }
 
   void initial_params::set_initial_value(double x)
@@ -188,15 +189,14 @@ int initial_params::nvarcalc()
     return ntypes;
   }
   
+  int initial_params::debug = 0;//flag to print debugging info
+  
+  /**
+   * Get names of active parameters
+   */
   adstring_array initial_params::get_param_names(void){
-    //determine number of active parameters
-    int totNum = 0;
-    for (int i = 0; i < num_initial_params; ++i) {
-       if (withinbound(0,(varsptr[i])->phase_start,current_phase)) totNum += (varsptr[i])->size_count();
-    }
     //define and allocate adstring array
     int nvar=nvarcalc(); // get the number of active parameters
-    if(nvar!=totNum) cerr << "Error in initial_params::get_param_names calculation of total parameters" << endl;
     adstring_array par_names(1,nvar);
 
     //loop over parameters and vectors and create names  
@@ -211,8 +211,90 @@ int initial_params::nvarcalc()
         }//--j loop
       }//--if
     }//--i loop
-    if (totNum!=kk) cerr<<"Error in initial_params::get_param_names: number of parameters does not match"<<endl;
+    if (nvar!=kk) cerr<<"Error in initial_params::get_param_names: number of parameters does not match"<<endl;
     return(par_names);
+  }
+  
+  void initial_params::check_for_params_on_bounds(ostream& os){
+    if (debug) os<<std::endl<<"Starting initial_params::check_parameters_on_bounds"<<std::endl;
+    int nvar=nvarcalc(); // get the number of active parameters
+    if (debug) os<<"--num initial params = "<<num_initial_params<<endl;
+    if (debug) os<<"--num active  params = "<<nvar<<endl;
+    //loop over parameters and vectors and create names  
+    int kk = 0;
+    for (int i = 0; i < num_initial_params; ++i) {
+      adstring par_name_base = (varsptr[i])->label();
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase)) {        
+        if ((varsptr[i])->has_bounds) {
+            if (debug) os<<"----"<<par_name_base<<" is active, bounded, and will be checked."<<endl;
+            int jmax = (varsptr[i])->size_count();
+            if (debug) os<<"------jmax = "<<jmax<<endl;
+            if (dynamic_cast<param_init_bounded_number*>(varsptr[i])!=nullptr){
+                if (debug) os<<"------'"<<par_name_base<<"' is a param_init_bounded_number."<<endl;
+                param_init_bounded_number* p = dynamic_cast<param_init_bounded_number*>(varsptr[i]);
+                double minb = p->get_minb();
+                double maxb = p->get_maxb();
+                double valp = ::value(*p);
+                adstring par_name = par_name_base;
+                if (debug) os<<"------"<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
+                if ((valp-minb)/(maxb-minb)<0.001) 
+                    os<<"------'"<<par_name<<"' is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                if ((maxb-valp)/(maxb-minb)<0.001) 
+                    os<<"------'"<<par_name<<"' is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+            } else if (dynamic_cast<param_init_bounded_dev_vector*>(varsptr[i]) != nullptr) {
+                if (debug) os<<"------'"<<par_name_base<<"' is a param_init_bounded_dev_vector with "<<jmax<<" elements."<<endl;
+                param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varsptr[i]);//note: can cast to _vector here
+                double minb = p->get_minb();
+                double maxb = p->get_maxb();
+                for (int j=p->indexmin();j<=p->indexmax();j++){
+                    double valp = ::value(p->elem(j));
+                    adstring par_name = par_name_base+"["+str(j)+"]";
+                    if (debug) os<<"------"<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
+                    if ((valp-minb)/(maxb-minb)<0.001) 
+                        os<<"------'"<<par_name<<"' is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                    if ((maxb-valp)/(maxb-minb)<0.001) 
+                        os<<"------'"<<par_name<<"' is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                }//-j
+            } else if (dynamic_cast<param_init_bounded_vector*>(varsptr[i]) != nullptr) {
+                if (debug) os<<"------'"<<par_name_base<<"' is a param_init_bounded_vector with "<<jmax<<" elements."<<endl;
+                param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varsptr[i]);
+                double minb = p->get_minb();
+                double maxb = p->get_maxb();
+                for (int j=p->indexmin();j<=p->indexmax();j++){
+                    double valp = ::value(p->elem(j));
+                    adstring par_name = par_name_base+"["+str(j)+"]";
+                    if (debug) os<<"------"<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
+                    if ((valp-minb)/(maxb-minb)<0.001) 
+                        os<<"------'"<<par_name<<"' is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                    if ((maxb-valp)/(maxb-minb)<0.001) 
+                        os<<"------'"<<par_name<<"' is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                }//-j
+            } else if (dynamic_cast<param_init_bounded_matrix*>(varsptr[i])!=nullptr) {
+                param_init_bounded_matrix* p = dynamic_cast<param_init_bounded_matrix*>(varsptr[i]);
+                if (debug) os<<"------'"<<par_name_base<<"' is a param_init_bounded_matrix with "<<jmax<<" elements."<<endl;
+                double minb = p->get_minb();
+                double maxb = p->get_maxb();
+                for (int j=p->indexmin();j<=p->indexmax();j++){
+                    dvar_vector v = p->elem(j);
+                    for (int k=v.indexmin();k<=v.index_max;k++){
+                        adstring par_name = par_name_base+"["+str(j)+"]"+"["+str(k)+"]";
+                        double valp = ::value(v[k]);
+                        if (debug) os<<"------"<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
+                        if ((valp-minb)/(maxb-minb)<0.001) 
+                            os<<"------'"<<par_name<<"' is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                        if ((maxb-valp)/(maxb-minb)<0.001) 
+                            os<<"------'"<<par_name<<"' is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                    }//-k
+                }//-j
+            }
+        } else {
+            if (debug) os<<"----"<<par_name_base<<" is active but not bounded and will not be checked."<<endl;
+        }
+      } else {
+        if (debug) os<<"--"<<par_name_base<<" is inactive and will not be checked for bounds."<<endl;
+      }
+    }//--i loop
+    if (debug) os<<"Finished initial_params::check_parameters_on_bounds"<<endl;
   }
 
   int initial_params::stddev_vscale(const dvar_vector& d,const dvar_vector& x)
@@ -516,6 +598,7 @@ void param_init_bounded_number::allocate(const data_vector& _v,
   void param_init_bounded_number::allocate(double _minb,
     double _maxb,int _phase_start,const char * _s)
   {
+    has_bounds = true;
     minb=_minb;
     maxb=_maxb;
     if (minb>maxb)
@@ -941,7 +1024,9 @@ param_init_bounded_vector::param_init_bounded_vector():
   initial_params(),
   minb(0),
   maxb(0)
+  
 {
+  has_bounds=true;
   //add_to_list();
 }
 /**
@@ -952,6 +1037,7 @@ param_init_bounded_number::param_init_bounded_number():
   minb(0),
   maxb(0)
 {
+  has_bounds=true;
   //add_to_list();
 }
 

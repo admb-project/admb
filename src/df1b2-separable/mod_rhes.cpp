@@ -131,9 +131,9 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
-  dvector mle(1,nvar);
-  mle = value(x);     //x should be the mle. save for later.
-  if (debug) cout<<"mle = "<<mle<<endl;
+//  dvector mle(1,nvar);
+//  mle = value(x);     //x should be the mle. save for later.
+//  if (debug) cout<<"mle = "<<mle<<endl;
   double delta=1.e-4;
   dvector g1(1,nvar);
   dvector g0(1,nvar);
@@ -468,6 +468,8 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         /*int check=*/initial_params::stddev_scale(tscale,x);
         ofs << tscale;
         ofs << -987;
+        dvector mle(1,nvar);
+        initial_params::copy_all_values(mle,1);
         ofs << mle;
         if (debug) {
             cout<<"admodel.hes:"<<endl;

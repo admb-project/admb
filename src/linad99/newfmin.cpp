@@ -1008,6 +1008,12 @@ if(function_minimizer::output_flag==1 &&
     }
     cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
     (*ad_printf)(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
+    
+    cout << "\nChecking MLE for parameters on bounds:"<<endl;
+    initial_params::check_for_params_on_bounds(std::cout);
+    std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
+    initial_params::check_for_params_on_bounds(os);
+    os.close();
   }
  }
 // Important to be here b/c it appears other parts of ADMB-RE

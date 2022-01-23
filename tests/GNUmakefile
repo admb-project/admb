@@ -108,21 +108,24 @@ core-tpls:\
   tpl-lprof\
   tpl-mcmc-theta\
   tpl-orange_mvn\
+  tpl-poisp\
   tpl-qbeta\
   tpl-rsimple\
   tpl-simple_mcmc\
   tpl-strip_full_path\
   tpl-svd\
   tpl-testminmax\
+  tpl-tiny\
+  tpl-tiny_ad_fe\
+  tpl-tiny_ad_re\
+  tpl-tinyfun\
   tpl-vectorize\
   tpl-vonmises
 
 remote-core-tpls:\
   tpl-changepoint\
+  tpl-geolocation\
   tpl-glmmadmb
-
-remote-core-tpls-needtofix:\
-  tpl-geolocation
 
 contrib-tpls:\
   tpl-ctl\

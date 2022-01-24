@@ -286,9 +286,9 @@ Constructor
 */
 gradient_structure::gradient_structure(const long int _size, const unsigned int id):
   NVAR(0),
+  x(id),
   hessian_ptr(NULL),
-  max_last_offset(0),
-  x(id)
+  max_last_offset(0)
 {
 #ifdef DEBUG
   assert(_size > 0);

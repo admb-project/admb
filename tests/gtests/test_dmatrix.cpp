@@ -1045,3 +1045,47 @@ TEST_F(test_dmatrix, mean_negative)
   double mean(const dmatrix& m);
   ASSERT_DOUBLE_EQ(4.025, mean(m));
 }
+TEST_F(test_dmatrix, file)
+{
+  std::ofstream ofs("dmatrix.txt");
+  ofs << "    1,     2   ,   3\n";
+  ofs << "    -4,5.25,6\n";
+  ofs.close();
+  
+  dmatrix m((char*)"dmatrix.txt");
+  cout << m << endl;
+  ASSERT_DOUBLE_EQ(m.rowmin(), 1);
+  ASSERT_DOUBLE_EQ(m.rowmax(), 2);
+  ASSERT_DOUBLE_EQ(m(1).indexmin(), 1);
+  ASSERT_DOUBLE_EQ(m(1).indexmax(), 3);
+  ASSERT_DOUBLE_EQ(m(2).indexmin(), 1);
+  ASSERT_DOUBLE_EQ(m(2).indexmax(), 3);
+  ASSERT_DOUBLE_EQ(m(1, 1), 1);
+  ASSERT_DOUBLE_EQ(m(1, 2), 2);
+  ASSERT_DOUBLE_EQ(m(1, 3), 3);
+  ASSERT_DOUBLE_EQ(m(2, 1), -4);
+  ASSERT_DOUBLE_EQ(m(2, 2), 5.25);
+  ASSERT_DOUBLE_EQ(m(2, 3), 6);
+}
+TEST_F(test_dmatrix, file_spaces)
+{
+  std::ofstream ofs("dmatrix.txt");
+  ofs << "    1      2       3\n";
+  ofs << "    -4 5.25 6\n";
+  ofs.close();
+  
+  dmatrix m((char*)"dmatrix.txt");
+  cout << m << endl;
+  ASSERT_DOUBLE_EQ(m.rowmin(), 1);
+  ASSERT_DOUBLE_EQ(m.rowmax(), 2);
+  ASSERT_DOUBLE_EQ(m(1).indexmin(), 1);
+  ASSERT_DOUBLE_EQ(m(1).indexmax(), 3);
+  ASSERT_DOUBLE_EQ(m(2).indexmin(), 1);
+  ASSERT_DOUBLE_EQ(m(2).indexmax(), 3);
+  ASSERT_DOUBLE_EQ(m(1, 1), 1);
+  ASSERT_DOUBLE_EQ(m(1, 2), 2);
+  ASSERT_DOUBLE_EQ(m(1, 3), 3);
+  ASSERT_DOUBLE_EQ(m(2, 1), -4);
+  ASSERT_DOUBLE_EQ(m(2, 2), 5.25);
+  ASSERT_DOUBLE_EQ(m(2, 3), 6);
+}

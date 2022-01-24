@@ -16,6 +16,8 @@ ADMB-12.3-git
 
 #### Changes and Improvements
 
+*  Ported source code to build and run with the ISO/IEC C++20 standard (See [Issue #223](https://github.com/admb-project/admb/issues/223).
+
 *  Simplify linking of static library files with .lib or .a extension using the admb script ([See Changes 3fbfd6e](https://github.com/admb-project/admb/commit/3fbfd6edcf5a953a160ef54dcbee0397405519c0)).
 
   For Microsoft Visual Studio,

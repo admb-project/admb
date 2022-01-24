@@ -31,9 +31,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#include <sstream>
-using std::istringstream;
-
 #include <cassert>
 
 const int MAX_FIELD_LENGTH = 500;
@@ -76,7 +73,6 @@ void dvector::fill(const char* s)
       t[k] = s[k];
     }
   }
-
   if (lbraces == 1 && rbraces == 1)
   {
     unsigned int nch = commas + 1;
@@ -97,15 +93,33 @@ void dvector::fill(const char* s)
           ad_exit(1);
       }
     }
-    istringstream ss(t);
-
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
    char* field = new char[size_t(MAX_FIELD_LENGTH+1)];
    char* err_ptr = NULL;
-
+   size_t index = 0;
+   size_t length = strlen(t);
    for (int i=indexmin();i<=indexmax();i++)
    {
-     ss >> field;
+     char c = t[index];
+     while (c == ' ')
+     {
+       ++index;
+       if (index >= length) break;
+
+       c = t[index];
+     }
+     int field_index = 0;
+     while (c != ' ')
+     {
+       field[field_index] = c;
+       ++field_index;
+
+       ++index;
+       if (index >= length) break;
+
+       c = t[index];
+     }
+     field[field_index] = '\0';
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
      if (isalpha((unsigned char)err_ptr[0]))

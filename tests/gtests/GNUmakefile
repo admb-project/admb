@@ -476,6 +476,8 @@ ifeq ($(CMDSHELL),cmd)
 	@del /Q sparseness.info
 	@del /Q gtest-finance.exe
 	@del /Q gtest-scalefactor.exe
+	@del /Q dmatrix.txt
+	@del /Q dvector.txt
 else
 	@rm -vf test_i4_array.txt
 	@rm -vf test_i5_array.txt
@@ -594,4 +596,6 @@ else
 	@rm -vf gtest-finance
 	@rm -vf gtest-scalefactor
 	@rm -vf sparseness.info
+	@rm -vf dmatrix.txt
+	@rm -vf dvector.txt
 endif

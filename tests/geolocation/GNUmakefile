@@ -32,6 +32,12 @@ endif
 
 kalmanfilter:
 	git clone --depth 1 https://github.com/positioning/kalmanfilter
+	cp chol.h kalmanfilter/trackit/inst/admb/src/chol.h
+	cp nLogNormal.h kalmanfilter/trackit/inst/admb/src/nLogNormal.h
+	cp ukf.tpl kalmanfilter/trackit/inst/admb/src/ukf.tpl
+	cp chol.h kalmanfilter/ukfsst/inst/admb/src/chol.h
+	cp nLogNormal.h kalmanfilter/ukfsst/inst/admb/src/nLogNormal.h
+	cp ukfsst.tpl kalmanfilter/ukfsst/inst/admb/src/ukfsst.tpl
 
 run:
 ifeq ($(CMDSHELL),cmd)

@@ -22,9 +22,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#include <sstream>
-using std::istringstream;
-
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
@@ -67,7 +64,6 @@ dvector::dvector(char* filename, const int& column)
   int i = 0;
   ivector nc(1, MAX_NUMBER_ROWS);
 
-  //while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
   while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
   {
     strcat(line, " ");
@@ -79,24 +75,35 @@ dvector::dvector(char* filename, const int& column)
                " dmatrix::dmatrix(char * filename)\n";
        ad_exit(21);
     }
-    int j=0;              // j counts columns
 
+    int j = 0;              // j counts columns
 #ifdef __ZTC__
     while( sscanf(line,"%s",field)) // reads a field from line into field
 #else
-    istringstream f(line);
-    while ( (f >> field).good() )
+    size_t index = 0;
+    size_t length = strlen(line);
+    while (index < length)
 #endif
     {
-       // f >> field;      // Need to derive a class so that this thing stops at
-                           // , or maybe deals with strings
-       //char * err_ptr;
-       // increment row counter
-      if ( ++j > MAX_NUMBER_COLUMNS)
+      char c = line[index];
+      while (c != ' ' && c != ',')
       {
-         cerr << " MAX_NUMBER_COLUMNS exceeded in "
-                 " dmatrix::dmatrix(char * filename)\n";
-         ad_exit(21);
+        ++index;
+        c = line[index];
+      }
+      ++j;
+      if (j > MAX_NUMBER_COLUMNS)
+      {
+        cerr << " MAX_NUMBER_COLUMNS exceeded in "
+                " dvector::dvector(char* filename)\n";
+        ad_exit(21);
+      }
+      while (c == ' ' || c == ',')
+      {
+        ++index;
+        if (index >= length) break;
+
+        c = line[index];
       }
     }
     // Need to check error status f
@@ -172,42 +179,67 @@ dvector::dvector(char* filename, const int& column)
 #ifdef __ZTC__
    while( sscanf(line,"%s",field)) // reads a field from line into field
 #else
-   istringstream f(line);
-   while ( (f >> field).good() )
+      size_t index = 0;
+      size_t length = strlen(line);
+      while (index < length)
 #endif
-   {
-     // f >> field;      // Need to derive a class so that this thing stops at
-     // , or maybe deals with strings
-     // increment row counter
-     j++;
+      {
+        int field_index = 0;
+        char c = line[index];
+        while (c != ' ' && c != ',')
+        {
+          field[field_index] = c;
+          ++field_index;
 
-     if (j==column)
-     {
-       char* err_ptr;
-       elem(i)=strtod(field,&err_ptr); // increment column counter
+          ++index;
+          c = line[index];
+        }
+        field[field_index] = '\0';
+        ++j;
+        if (j == column)
+        {
+          char* err_ptr;
+          elem(i)=strtod(field,&err_ptr); // increment column counter
 
-       if (isalpha((unsigned char)err_ptr[0]))
-       {
-          cerr << "Error decoding field " << filename
-               << " in dmatrix::dmatrix(char * filename) " << "\n";
-          cerr << "Error occurred in line " << i << " at field " << j << "\n";
-          cerr << "Offending characters start with "
-               << err_ptr[0]
-               << err_ptr[1]
-               << err_ptr[2]
-               << err_ptr[3] << "\n";
+          if (isalpha((unsigned char)err_ptr[0]))
+          {
+            cerr << "Error decoding field " << filename
+                 << " in dvector::dvector(char* filename) " << "\n";
+            cerr << "Error occurred in line " << i << " at field " << j << "\n";
+            cerr << "Offending characters start with "
+                 << err_ptr[0]
+                 << err_ptr[1]
+                 << err_ptr[2]
+                 << err_ptr[3] << "\n";
+            ad_exit(1);
+          }
+          if (elem(j) == HUGE_VAL || elem(j) == -HUGE_VAL)
+          {
+            cerr << "Overflow Error decoding field " << filename
+                 << " in dvector::dvector(char * filename) " << "\n";
+            cerr << "Error occurred in line " << i << " at field " << j << "\n";
+            cerr << "Offending characters start with "
+                 << err_ptr[0]
+                 << err_ptr[1]
+                 << err_ptr[2]
+                 << err_ptr[3] << "\n";
+            ad_exit(1);
+          }
+        }
+        if (j > MAX_NUMBER_COLUMNS)
+        {
+          cerr << " MAX_NUMBER_COLUMNS exceeded in "
+                  " dmatrix::dmatrix(char * filename)\n";
           ad_exit(1);
         }
-        if (elem(i) == HUGE_VAL || elem(i) == -HUGE_VAL)
+        while (c == ' ' || c == ',')
         {
-          cerr << "Overflow Error decoding field " << filename
-               << " in dvector::dvector(char * filename) " << "\n";
-          cerr << "Error occurred in line " << i << " at field " << j << "\n";
-          ad_exit(1);
+          ++index;
+          if (index >= length) break;
+
+          c = line[index];
         }
       }
-    }
-    // Need to check error status f
   }
 
   delete [] line;

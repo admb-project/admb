@@ -228,7 +228,7 @@ void tracing_message(int traceflag,const char *s);
       {
         cerr << "Error -- no active parameters. There must be at least 1"
              << endl;
-        exit(1);
+        ad_exit(1);
       }
       dvector g(1,nvar);
       independent_variables x(1,nvar);
@@ -365,7 +365,7 @@ void tracing_message(int traceflag,const char *s);
                 break;
               default:
                 cerr << "error illega value for pvm_manager->mode" << endl;
-                exit(1);
+                ad_exit(1);
               }
             }
           }
@@ -383,7 +383,7 @@ void tracing_message(int traceflag,const char *s);
                 break;
               default:
                 cerr << "error illega value for pvm_manager->mode" << endl;
-                exit(1);
+                ad_exit(1);
               }
             }
           }

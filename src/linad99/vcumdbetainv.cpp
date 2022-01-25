@@ -96,7 +96,7 @@ main()
     cin >> a;
     cin >> b;
     cin >> x;
-    if (x<0 ) exit(1);
+    if (x<0 ) ad_exit(1);
     independent_variables xx(1,3);
     dvector g(1,3);
     dvector gg(1,3);

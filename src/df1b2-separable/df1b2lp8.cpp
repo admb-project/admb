@@ -187,7 +187,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   else if (is<samplesize-1)
   {
     cerr << "This can't happen" << endl;
-    exit(1);
+    ad_exit(1);
   }
 
   // get random numbers

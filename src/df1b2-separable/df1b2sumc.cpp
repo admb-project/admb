@@ -96,7 +96,7 @@ void ad_read_pass2_sumc(void)
   default:
     cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
-    exit(1);
+    ad_exit(1);
   }
 }
 

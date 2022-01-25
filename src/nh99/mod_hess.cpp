@@ -512,7 +512,7 @@ bool function_minimizer::hess_inv(void)
     {
       cerr << "Error reading line " << i  << " of the hessian"
            << " in routine hess_inv()" << endl;
-      exit(1);
+      ad_exit(1);
     }
   }
 

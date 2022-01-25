@@ -218,7 +218,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
     }
   // console refresh rate
   int refresh=1;
-  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
+  if(nmcmc>10) refresh = (int)floor(nmcmc/10);
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
     int iii=atoi(ad_comm::argv[on+1]);
     if (iii < -1) {
@@ -410,13 +410,13 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 	    if (!cif) {
 	      cerr << "Error trying to open mcmc par input file "
 		   << ad_comm::argv[on+1] << endl;
-	      exit(1);
+              ad_exit(1);
 	    }
 	    cif >> parsave;
 	    if (!cif) {
 	      cerr << "Error reading from mcmc par input file "
 		   << ad_comm::argv[on+1] << endl;
-	      exit(1);
+              ad_exit(1);
 	    }
 	  } else {
 	    cerr << "Illegal option with -mcpin" << endl;

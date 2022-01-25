@@ -416,7 +416,7 @@ void df_check_derivative_values(void)
       }
     }
   }
-  if (exit_flag) exit(1);
+  if (exit_flag) ad_exit(1);
 }
 
 //extern  ofstream gradlog;
@@ -478,7 +478,7 @@ void df_check_derivative_values_indexed(void)
       }
     }
   }
-  if (exit_flag) exit(1);
+  if (exit_flag) ad_exit(1);
 }
 
 /**
@@ -532,7 +532,7 @@ void df_check_derivative_values_indexed_break(void)
       }
     }
   }
-  if (exit_flag) exit(1);
+  if (exit_flag) ad_exit(1);
 }
 
 /**

@@ -52,7 +52,7 @@ void param_init_matrix_vector::allocate(
     {
         cerr << " error trying to allocate memory in "
           "param_init_vector_vector " << endl;
-        exit(1);
+        ad_exit(1);
     }
     index_min=min1;
     index_max=max1;

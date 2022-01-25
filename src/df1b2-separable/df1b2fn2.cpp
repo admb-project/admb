@@ -669,7 +669,7 @@ smartlist::smartlist(unsigned int _bufsize,const adstring& _filename):
   {
     cerr << "Error trying to open file " << filename
          << " in class smartlist " << endl;
-    exit(1);
+    ad_exit(1);
   }
 }
 
@@ -687,7 +687,7 @@ ad_dstar::ad_dstar(void)
   if (!n)
   {
     cerr << "need to initialize size in class ad_dstar" << endl;
-    exit(1);
+    ad_exit(1);
   }
   p = new double[n];
 }

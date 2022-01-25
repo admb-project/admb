@@ -183,7 +183,7 @@ void fixed_smartlist::check_buffer_size(const size_t nsize)
       if (nsize>bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
-         exit(1);
+         ad_exit(1);
       }
       write_buffer();
     }
@@ -378,7 +378,7 @@ void fixed_smartlist::read_buffer(void)
     if ((size_t)nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
-      exit(1);
+      ad_exit(1);
     }
 
     // reset the pointer to the beginning of the buffer
@@ -421,7 +421,7 @@ void memcpy(const fixed_smartlist& _list, void* p, const size_t nsize)
   if (list.bptr+nsize-1 > list.buffend)
   {
     cerr << " Trying to write outside list buffer" << endl;
-    exit(1);
+    ad_exit(1);
   }
   memcpy(list.bptr,p,nsize);
   list.bptr+=nsize;
@@ -437,7 +437,7 @@ void memcpy(void* p, const fixed_smartlist& _list, const size_t nsize)
   if (list.bptr+nsize-1 > list.buffend)
   {
     cerr << " Trying to write outside list buffer" << endl;
-    exit(1);
+    ad_exit(1);
   }
   memcpy(p,list.bptr,nsize);
   list.bptr+=nsize;
@@ -450,7 +450,7 @@ void fixed_smartlist::operator -= (int n)
     if (bptr != buffer)
     {
       cerr << " Sanity error in fixed_smartlist::operator -= (int)" << endl;
-      exit(1);
+      ad_exit(1);
     }
     else
     {
@@ -471,7 +471,7 @@ void fixed_smartlist::operator -- (void)
     if (bptr != buffer)
     {
       cerr << " Sanity error in fixed_smartlist::operator -= (int)" << endl;
-      exit(1);
+      ad_exit(1);
     }
     else
     {
@@ -500,7 +500,7 @@ void fixed_smartlist::operator += (int nsize)
       if ((unsigned int)nsize>bufsize)
       {
         cout << "Need to increase buffsize in list" << endl;
-        exit(1);
+        ad_exit(1);
       }
       write_buffer();
     }

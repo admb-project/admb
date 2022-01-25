@@ -35,9 +35,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#include <sstream>
-using std::istringstream;
-
 #include <cassert>
 
 const unsigned int MAX_FIELD_LENGTH = 500;
@@ -101,14 +98,33 @@ dvector::dvector(const char* s)
 
     allocate(ncl,nch);
 
-    istringstream ss(t);
-
     char *field =  new char[MAX_FIELD_LENGTH + 1];
     char *err_ptr;
-
+    size_t index = 0;
+    size_t length = strlen(t);
     for (int i=ncl;i<=nch;i++)
     {
-      ss >> field;
+      char c = t[index];
+      while (c == ' ')
+      {
+        ++index;
+        if (index >= length) break;
+
+        c = t[index];
+      }
+      int field_index = 0;
+      while (c != ' ')
+      {
+        field[field_index] = c;
+        ++field_index;
+
+        ++index;
+        if (index >= length) break;
+
+        c = t[index];
+      }
+      field[field_index] = '\0';
+
       v[i]=strtod(field,&err_ptr); // increment column counter
 
       if (isalpha((unsigned char)err_ptr[0]))
@@ -147,27 +163,40 @@ dvector::dvector(const char* s)
     char* field = new char[MAX_FIELD_LENGTH + 1];
     infile.width(MAX_FIELD_LENGTH + 1);
     int count = 0;
-    do
+    char c;
+    infile.get(c);
+    while (!infile.eof())
     {
-      infile >> field;
-      if (infile.good())
+      if (isspace(c))
       {
-        count++;
+        infile.get(c);
+      }
+      else if (c == ',')
+      {
+        infile.get(c);
       }
       else
       {
-        if (!infile.eof())
+        ++count;
+        do
         {
-          cerr << "Error reading file " << filename
-               << " in dvector constructor "
-               << "dvector::dvector(char * filename)\n";
-          cerr << "Error appears to have occurred at element"
-               << count+1 << endl;
-          cerr << "Stream state is " << infile.rdstate() << endl;
-          ad_exit(1);
-        }
+          infile.get(c);
+        } while (!isspace(c) && c != ',');
       }
-    } while (!infile.eof());
+/*
+      if (!infile.good())
+      {
+        cerr << "Error reading file " << filename
+             << " in dvector constructor "
+             << "dvector::dvector(char * filename)\n";
+        cerr << "Error appears to have occurred at element"
+             << count+1 << endl;
+        cerr << "Stream state is " << infile.rdstate() << endl;
+        ad_exit(1);
+      }
+*/
+    }
+
     infile.clear();
     infile.seekg(0,ios::beg);
 
@@ -197,7 +226,32 @@ dvector::dvector(const char* s)
     infile.width(MAX_FIELD_LENGTH + 1);
     for (int i = 1; i <= count; ++i)
     {
-      infile >> field;
+      int index = 0;
+      char c;
+      infile.get(c);
+      while (!infile.eof())
+      {
+        if (isspace(c))
+        {
+          infile.get(c);
+        }
+        else if (c == ',')
+        {
+          infile.get(c);
+        }
+        else
+        {
+          do
+          {
+            field[index] = c;
+
+            infile.get(c);
+            ++index;
+          } while (!isspace(c) && c != ',');
+          field[index] = '\0';
+          break;
+        }
+      }
       elem(i) = strtod(field,&err_ptr); // increment column counter
 
       if (isalpha((unsigned char)err_ptr[0]))
@@ -292,14 +346,33 @@ void dvector::allocate(const char* s)
 
     allocate(ncl,nch);
 
-    istringstream ss(t);
-
     char* field =  new char[size_t(MAX_FIELD_LENGTH+1)];
     char* err_ptr;
-
+    size_t index = 0;
+    size_t length = strlen(t);
     for (int i=ncl;i<=nch;i++)
     {
-      ss >> field;
+      char c = t[index];
+      while (c == ' ')
+      {
+        ++index;
+        if (index >= length) break;
+
+        c = t[index];
+      }
+      int field_index = 0;
+      while (c != ' ')
+      {
+        field[field_index] = c;
+        ++field_index;
+
+        ++index;
+        if (index >= length) break;
+
+        c = t[index];
+      }
+      field[field_index] = '\0';
+
       v[i] = strtod(field,&err_ptr); // increment column counter
 
       if (isalpha((unsigned char)err_ptr[0]))
@@ -341,27 +414,40 @@ void dvector::allocate(const char* s)
     char* field = new char[MAX_FIELD_LENGTH + 1];
     infile.width(MAX_FIELD_LENGTH + 1);
 
-    int count = 0;
-    do
+/*
+    if (!infile.good())
     {
-      infile >> field;
-      if (infile.good())
+      cerr << "Error reading file " << filename
+           << " in dvector::allocate(char* filename)\n";
+      cerr << "Error appears to have occurred at element"
+           << count + 1 << endl;
+      cerr << "Stream state is " << infile.rdstate() << endl;
+      ad_exit(1);
+    }
+*/
+
+    int count = 0;
+    char c;
+    infile.get(c);
+    while (!infile.eof())
+    {
+      if (isspace(c))
       {
-        count++;
+        infile.get(c);
+      }
+      else if (c == ',')
+      {
+        infile.get(c);
       }
       else
       {
-        if (!infile.eof())
+        ++count;
+        do
         {
-          cerr << "Error reading file " << filename
-               << " in dvector::allocate(char* filename)\n";
-          cerr << "Error appears to have occurred at element"
-               << count + 1 << endl;
-          cerr << "Stream state is " << infile.rdstate() << endl;
-          ad_exit(1);
-        }
+          infile.get(c);
+        } while (!isspace(c) && c != ',');
       }
-    } while (!infile.eof());
+    }
 
     infile.clear();
     infile.seekg(0,ios::beg);
@@ -392,7 +478,32 @@ void dvector::allocate(const char* s)
     infile.width(MAX_FIELD_LENGTH + 1);
     for (int i = 1; i <= count; ++i)
     {
-      infile >> field;
+      int index = 0;
+      char c;
+      infile.get(c);
+      while (!infile.eof())
+      {
+        if (isspace(c))
+        {
+          infile.get(c);
+        }
+        else if (c == ',')
+        {
+          infile.get(c);
+        }
+        else
+        {
+          do
+          {
+            field[index] = c;
+
+            infile.get(c);
+            ++index;
+          } while (!isspace(c) && c != ',');
+          field[index] = '\0';
+          break;
+        }
+      }
       elem(i) = strtod(field, &err_ptr); // increment column counter
 
       if (isalpha((unsigned char)err_ptr[0]))

@@ -228,133 +228,122 @@ void function_minimizer::hess_step(){
   }
 }
 
-// Quick epxerimental function to test whether MLE parameters are
+// Quick experimental function to test whether MLE parameters are
 // on or near a bound and print to console. To be executed only
-// after optimization not things like mceval, profiles, MCMC etc.
+// after optimization when the hessian has been calculated, 
+// not things like mceval, profiles, MCMC etc.
+//
+// NOTE: bounds checking is not done here on random effects, only fixed effects parameters.
 void function_minimizer::check_parameters_on_bounds(){
+  //if (function_minimizer::random_effects_flag) {return;}//does not work for models with random effects
   bool tmp=false;
+  
+  std::ofstream os("parameters_on_bounds_after_hessian.txt", std::ofstream::out|std::ofstream::trunc);
 
   cout << endl << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
-  *ad_comm::global_logfile << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
-  // Don't technically need this but I don't know how to
-  // consistently get the MLE without reading it here (may not
-  // be last par vec executed)
+  cout << "    NOTE: bounds checking is not done here on random effects, only fixed effects parameters." << endl;
+  os   << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
+  os   << "    NOTE: bounds checking is not done here on random effects, only fixed effects parameters." << endl;
+  // Don't technically need this but I don't know how to consistently get the MLE 
+  // without reading it here (it may not be the last par vec executed)
+  // NOTE: random effects are not included in the MLE written to admodel.hes (see mod_rhes.cpp)
   adstring tmpstring = "admodel.hes";
   uistream cif((char*)tmpstring);
   if (!cif) {
     cerr << "  File admodel.hes required for bound checking but not found... skipping." << endl;
   } else {
     // Experiment to test for parameters near bounds
+    initial_params::set_inactive_only_random_effects();
     int nvar=initial_params::nvarcalc(); // get the number of active parameters
     independent_variables bounded(1,nvar); // original bounded MLE
     independent_variables unbounded(1,nvar); // original unbounded MLE
-    adstring_array pars(1,nvar);
+
+    adstring_array pars=initial_params::get_param_names();
+    cout<<"nvar = "<<nvar<<".  # params = "<<pars.size()<<endl;
+
     // takes MLE from admodel.hes file. It would be better to
     // get this another way in case the model can't write it
     // for some reason (like if on a bound?). I'm not sure
     // where else to get it
+    // NOTE: random effects are not included in the MLE written to admodel.hes (see mod_rhes.cpp)
     read_mle_hmc(nvar, bounded); 
+    //cout<<"1"<<endl;
+//    cout<<"bounded parameter values = "<<endl;
+//    for (int i=1;i<=nvar;i++){
+//        cout<<pars[i]<<" = "<<bounded[i]<<endl;
+//    }
     initial_params::restore_all_values(bounded,1);  // Push the original bounded MLE through the model
-    gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
-    initial_params::xinit(unbounded); // This copies the unbounded parameters into x
-    pars=function_minimizer::get_param_names();
-    for(int i=1; i<=nvar; i++){
-      // dangerous way to check for bounded is if unbounded=bounded??
-      if(unbounded(i)!=bounded(i)){
-	tmp=true;
-	// These values depend on the bounding
-	// function. Here "close" is defined on the (0,1)
-	// bounded scale as 0.001 or 0.999, and "on" is
-	// 0.00001 or 0.9999. See boundpin function.
-	if(gradient_structure::Hybrid_bounded_flag==0){
-	  if(unbounded(i)> .9959737)
-	    cout << pars[i] << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i) < -.9959737)
-	    cout << pars[i] << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i) > .9597299) 
-	    cout << pars[i] << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i)< -.9597299)
-	    cout << pars[i] << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	}
-	if(gradient_structure::Hybrid_bounded_flag==1){
-	  if(unbounded(i)< -11.51292)
-	    cout << pars[i] << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i)> 11.51292)
-	    cout << pars[i] << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i)< -6.906755)
-	    cout << pars[i] << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i)> 6.906755)
-	    cout << pars[i] << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	}
 
-	// same thing but write to log file
-	if(gradient_structure::Hybrid_bounded_flag==0){
-	  if(unbounded(i)> .9959737)
-	    *ad_comm::global_logfile << pars[i] << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i) < -.9959737)
-	    *ad_comm::global_logfile << pars[i] << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i) > .9597299) 
-	    *ad_comm::global_logfile << pars[i] << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i)< -.9597299)
-	    *ad_comm::global_logfile << pars[i] << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	}
-	if(gradient_structure::Hybrid_bounded_flag==1){
-	  if(unbounded(i)< -11.51292)
-	    *ad_comm::global_logfile << pars[i] << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i)> 11.51292)
-	    *ad_comm::global_logfile << pars[i] << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i)< -6.906755)
-	    *ad_comm::global_logfile << pars[i] << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	  else if(unbounded(i)> 6.906755)
-	    *ad_comm::global_logfile << pars[i] << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
-	}
-      }
-    }
-  } // end loop over parameters
-  // close out
-  if(!tmp) {
-    cout <<" done!" << endl;
-    *ad_comm::global_logfile << " done!" << endl;
-  } else {
-    *ad_comm::global_logfile << endl;
-  }
-}
-
-
-
-// Get the character name for all active parameters into a single
-// character vector.
+//    //cout<<"2"<<endl;
+//    gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
+//    //cout<<"3"<<endl;
+//    initial_params::xinit(unbounded); // This copies the unbounded parameters into x
+//    //cout<<"4"<<endl;
+//    dvar_vector vx=dvar_vector(bounded);
+//    initial_params::reset(vx);
+    initial_params::check_for_params_on_bounds(std::cout);
+    initial_params::check_for_params_on_bounds(os);
+    os.close();
+//    for(int i=1; i<=nvar; i++){
+//      // dangerous way to check for bounded is if unbounded=bounded??
+//      //  cout<<"checking parameter i = "<<i<<" (i.e., "<<pars[i]<<")"<<endl;
+//      if(unbounded(i)!=bounded(i)){
+//	tmp=true;
+//	// These values depend on the bounding
+//	// function. Here "close" is defined on the (0,1)
+//	// bounded scale as 0.001 or 0.999, and "on" is
+//	// 0.00001 or 0.9999. See boundpin function.
+//	if(gradient_structure::Hybrid_bounded_flag==0){
+//	  if(unbounded(i)> .9959737)
+//	    cout << "  '"<<pars[i]<<"'" << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i) < -.9959737)
+//	    cout << "  '"<<pars[i]<<"'" << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i) > .9597299) 
+//	    cout << "  '"<<pars[i]<<"'" << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i)< -.9597299)
+//	    cout << "  '"<<pars[i]<<"'" << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	}
+//	if(gradient_structure::Hybrid_bounded_flag==1){
+//	  if(unbounded(i)< -11.51292)
+//	    cout << "  '"<<pars[i]<<"'" << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i)> 11.51292)
+//	    cout << "  '"<<pars[i]<<"'" << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i)< -6.906755)
+//	    cout << "  '"<<pars[i]<<"'" << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i)> 6.906755)
+//	    cout << "  '"<<pars[i]<<"'" << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	}
 //
-// \author Cole Monnahan and Buck Stockhausen
-adstring_array function_minimizer::get_param_names(void) {
-  //determine number of active parameters
-  int totNum = 0;
-  for (int i = 0; i < initial_params::num_initial_params; ++i) {
-     if (active(*initial_params::varsptr[i])) totNum += (int)initial_params::varsptr[i]->size_count();
-  }
-  //define and allocate adstring array
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  if(nvar!=totNum){
-    // this will happen if the function is used before the model
-    // is fully initialized.. it needs to run a single iteration
-    // at least in this phase or things are not right
-    cerr << "Error in get_param_names calculation of total active parameters." << endl;
-    cerr << "  phase=" << initial_params::current_phase <<"  totNum=" << totNum << " and nvar=" << nvar << endl;
-  }
-  adstring_array par_names(1,nvar);
+//	// same thing but write to log file
+//	if(gradient_structure::Hybrid_bounded_flag==0){
+//	  if(unbounded(i)> .9959737)
+//	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i) < -.9959737)
+//	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i) > .9597299) 
+//	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i)< -.9597299)
+//	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	}
+//	if(gradient_structure::Hybrid_bounded_flag==1){
+//	  if(unbounded(i)< -11.51292)
+//	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be on lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i)> 11.51292)
+//	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be on upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i)< -6.906755)
+//	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be near lower bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	  else if(unbounded(i)> 6.906755)
+//	    *ad_comm::global_logfile << "  '"<<pars[i]<<"'" << " appears to be near upper bound: " <<  bounded(i) << " (unbounded=" << unbounded(i) << ")" << endl;
+//	}
+//      }
+//    }//-i loop
+  } // if (admodel.hes exists)
+  // close out
+//  if(!tmp) {
+//    cout <<" done checking fixed effects parameter bounds!" << endl;
+//    *ad_comm::global_logfile << " done checking fixed effects parameter bounds!" << endl;
+//  } else {
+//    *ad_comm::global_logfile << endl;
+//  }
 
-  //loop over parameters and vectors and create names  
-  int kk = 0;
-  for (int i = 0; i < initial_params::num_initial_params; ++i) {
-    if (active(*initial_params::varsptr[i])) {
-      int jmax = (int)initial_params::varsptr[i]->size_count();
-      for (int j = 1; j <= jmax; ++j) {
-	kk++;
-	par_names[kk] = (initial_params::varsptr[i])->label();
-	if (jmax > 1) par_names[kk] += "["+str(j)+"]";//might have to do something similar to alternative above if this doesn't work
-      }//--j loop
-    }//--if
-  }//--i loop
-  if (totNum!=kk) cerr<<"Error in get_param_names: number of parameters does not match"<<endl;
-  return(par_names);
 }

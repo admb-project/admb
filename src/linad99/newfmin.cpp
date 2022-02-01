@@ -486,7 +486,11 @@ label7003: /* Printing table header */
 	  assert(ad_printf);
 	  // stupid way to do which.max()
 	  adstring_array pars(1,n);
-          pars=function_minimizer::get_param_names();
+          if (initial_params::num_initial_params){
+              pars=initial_params::get_param_names();
+          } else {
+              for (int i = 1; i<=n; i++)  pars[i] = "param["+str(i)+"]";
+          }
 	  int maxpar=1; dvariable grMax=fabs(g.elem(1));
 	  for (int i = 1; i<=n; i++){
 	    if (g.elem(i)>grMax){
@@ -998,7 +1002,11 @@ if(function_minimizer::output_flag==1 &&
     runtime=std::round(runtime * 10.0) / 10.0;
     // stupid way to do which.max()
     adstring_array pars(1,n);
-    pars=function_minimizer::get_param_names();
+    if (initial_params::num_initial_params){
+        pars=initial_params::get_param_names();
+    } else {
+        for (int i = 1; i<=n; i++) pars[i] = "param["+str(i)+"]";
+    }
     int maxpar=1; dvariable grMax=fabs(g.elem(1));
     for (int i = 1; i<=n; i++){
       if (g.elem(i)>grMax){
@@ -1008,6 +1016,15 @@ if(function_minimizer::output_flag==1 &&
     }
     cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
     (*ad_printf)(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
+    
+    if (initial_params::num_initial_params){
+        cout << "\nChecking MLE for parameters on bounds:"<<endl;
+        initial_params::check_for_params_on_bounds(std::cout);
+        std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
+        os << "\nChecking MLE for parameters on bounds:"<<endl;
+        initial_params::check_for_params_on_bounds(os);
+        os.close();
+    }
   }
  }
 // Important to be here b/c it appears other parts of ADMB-RE

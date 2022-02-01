@@ -123,7 +123,7 @@ void function_minimizer::hess_step(){
   mingrad0=min(fabs(gr0));
   nll=*objective_function_value::pobjfun;
   adstring_array pars(1,nvar);
-  pars=function_minimizer::get_param_names();
+  pars=initial_params::get_param_names();
 
   int maxpar=1;
   dvariable grMax=fabs(gr0[1]);

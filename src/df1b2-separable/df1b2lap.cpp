@@ -2088,7 +2088,7 @@ double evaluate_function(double& fval,const dvector& x,
   gradcalc(usize,g);
   double maxg=max(fabs(g));
   fval=value(vf);
-  if (!initial_params::mc_phase & function_minimizer::output_flag==2)
+  if (!initial_params::mc_phase && function_minimizer::output_flag==2)
   {
     cout << setprecision(10) << " f = " << vf
          << " max g = " << maxg << endl;
@@ -2124,7 +2124,7 @@ double evaluate_function(double& fval,const dvector& x,const dvector& g,
   gradcalc(usize,g);
   double maxg=max(fabs(g));
   fval=value(vf);
-  if (!initial_params::mc_phase & function_minimizer::output_flag==2)
+  if (!initial_params::mc_phase && function_minimizer::output_flag==2)
   {
     cout << setprecision(15) << " f = " << vf
          << " max g = " << maxg << endl;

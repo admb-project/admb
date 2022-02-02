@@ -65,7 +65,7 @@ extern admb_javapointers * adjm_ptr;
        //cout << "!! Using new output option =" << tmp << " !!"<< endl;
      } else {
        // default to 2 for now which is original
-       function_minimizer::output_flag=1;
+       function_minimizer::output_flag=2;
      }	 
      // ------------------------------------------------------------
      if (option_match(argc,argv,"-mceval") == -1)
@@ -118,6 +118,9 @@ extern admb_javapointers * adjm_ptr;
        std::string m=get_filename((char*)ad_comm::adprogram_name);
        cout << "\nFinished running model '" << m<<
 	 "' after " << runtime  << u << "." <<  endl;
+     } else if(function_minimizer::output_flag==2){
+       cout << endl << "Consider using the new updated output option with argument '-output 1'"<< endl <<
+	 "Details and bug reports at: (https://github.com/admb-project/admb/discussions/219)" << endl;
      }
   }
 

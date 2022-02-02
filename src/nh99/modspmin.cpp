@@ -64,8 +64,8 @@ extern admb_javapointers * adjm_ptr;
        function_minimizer::output_flag=tmp;
        //cout << "!! Using new output option =" << tmp << " !!"<< endl;
      } else {
-       // default to 2 for now which is original
-       function_minimizer::output_flag=2;
+       // default to 1, 2 is original, 0 is suppressed completely except errors
+       function_minimizer::output_flag=1;
      }	 
      // ------------------------------------------------------------
      if (option_match(argc,argv,"-mceval") == -1)
@@ -120,7 +120,7 @@ extern admb_javapointers * adjm_ptr;
 	 "' after " << runtime  << u << "." <<  endl;
      } else if(function_minimizer::output_flag==2){
        cout << endl << "Consider using the new updated output option with argument '-output 1'"<< endl <<
-	 "Details and bug reports at: (https://github.com/admb-project/admb/discussions/219)" << endl;
+	 "Details and bug reports at: https://github.com/admb-project/admb/discussions/219" << endl;
      }
   }
 

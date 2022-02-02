@@ -1017,11 +1017,11 @@ if(function_minimizer::output_flag==1 &&
     cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
     (*ad_printf)(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
     
-    if (initial_params::num_initial_params){
-        cout << "\nChecking MLE for parameters on bounds:"<<endl;
+    if (initial_params::num_initial_params && function_minimizer::output_flag==1){
+        cout << "\nChecking MLE for parameters on bounds..."<<endl;
         initial_params::check_for_params_on_bounds(std::cout);
         std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
-        os << "\nChecking MLE for parameters on bounds:"<<endl;
+        os << "\nChecking MLE for parameters on bounds..."<<endl;
         initial_params::check_for_params_on_bounds(os);
         os.close();
     }

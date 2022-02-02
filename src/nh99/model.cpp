@@ -189,7 +189,7 @@ int initial_params::nvarcalc()
     return ntypes;
   }
   
-  int initial_params::debug = 1;//flag to print debugging info
+  int initial_params::debug = 0;//flag to print debugging info
   
   /**
    * Get names of active parameters
@@ -237,50 +237,50 @@ int initial_params::nvarcalc()
             if ((varsptr[i])->has_bounds) {
                 if (debug) os<<"----"<<par_name_base<<" is active, bounded, and will be checked."<<endl;
                 int jmax = (varsptr[i])->size_count();
-                if (debug) os<<"------jmax = "<<jmax<<endl;
+                if (debug) os<<"   jmax = "<<jmax<<endl;
                 if (dynamic_cast<param_init_bounded_number*>(varsptr[i])!=nullptr){
-                    if (debug) os<<"------'"<<par_name_base<<"' is a param_init_bounded_number."<<endl;
+                    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_number."<<endl;
                     param_init_bounded_number* p = dynamic_cast<param_init_bounded_number*>(varsptr[i]);
                     double minb = p->get_minb();
                     double maxb = p->get_maxb();
                     double valp = ::value(*p);
                     adstring par_name = par_name_base;
-                    if (debug) os<<"------"<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
+                    if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
                     if ((valp-minb)/(maxb-minb)<0.001) 
-                        os<<"------'"<<par_name<<"' is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                        os<<"   "<<par_name<<" is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
                     if ((maxb-valp)/(maxb-minb)<0.001) 
-                        os<<"------'"<<par_name<<"' is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                        os<<"   "<<par_name<<" is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
                 } else if (dynamic_cast<param_init_bounded_dev_vector*>(varsptr[i]) != nullptr) {
-                    if (debug) os<<"------'"<<par_name_base<<"' is a param_init_bounded_dev_vector with "<<jmax<<" elements."<<endl;
+                    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_dev_vector with "<<jmax<<" elements."<<endl;
                     param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varsptr[i]);//note: can cast to _vector here
                     double minb = p->get_minb();
                     double maxb = p->get_maxb();
                     for (int j=p->indexmin();j<=p->indexmax();j++){
                         double valp = ::value(p->elem(j));
                         adstring par_name = par_name_base+"["+str(j)+"]";
-                        if (debug) os<<"------"<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
+                        if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
                         if ((valp-minb)/(maxb-minb)<0.001) 
-                            os<<"------'"<<par_name<<"' is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                            os<<"   "<<par_name<<" is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
                         if ((maxb-valp)/(maxb-minb)<0.001) 
-                            os<<"------'"<<par_name<<"' is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                            os<<"   "<<par_name<<" is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
                     }//-j
                 } else if (dynamic_cast<param_init_bounded_vector*>(varsptr[i]) != nullptr) {
-                    if (debug) os<<"------'"<<par_name_base<<"' is a param_init_bounded_vector with "<<jmax<<" elements."<<endl;
+                    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_vector with "<<jmax<<" elements."<<endl;
                     param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varsptr[i]);
                     double minb = p->get_minb();
                     double maxb = p->get_maxb();
                     for (int j=p->indexmin();j<=p->indexmax();j++){
                         double valp = ::value(p->elem(j));
                         adstring par_name = par_name_base+"["+str(j)+"]";
-                        if (debug) os<<"------"<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
+                        if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
                         if ((valp-minb)/(maxb-minb)<0.001) 
-                            os<<"------'"<<par_name<<"' is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                            os<<"   "<<par_name<<" is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
                         if ((maxb-valp)/(maxb-minb)<0.001) 
-                            os<<"------'"<<par_name<<"' is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                            os<<"   "<<par_name<<" is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
                     }//-j
                 } else if (dynamic_cast<param_init_bounded_matrix*>(varsptr[i])!=nullptr) {
                     param_init_bounded_matrix* p = dynamic_cast<param_init_bounded_matrix*>(varsptr[i]);
-                    if (debug) os<<"------'"<<par_name_base<<"' is a param_init_bounded_matrix with "<<jmax<<" elements."<<endl;
+                    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_matrix with "<<jmax<<" elements."<<endl;
                     double minb = p->get_minb();
                     double maxb = p->get_maxb();
                     for (int j=p->indexmin();j<=p->indexmax();j++){
@@ -288,11 +288,11 @@ int initial_params::nvarcalc()
                         for (int k=v.indexmin();k<=v.index_max;k++){
                             adstring par_name = par_name_base+"["+str(j)+"]"+"["+str(k)+"]";
                             double valp = ::value(v[k]);
-                            if (debug) os<<"------"<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
+                            if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
                             if ((valp-minb)/(maxb-minb)<0.001) 
-                                os<<"------'"<<par_name<<"' is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                                os<<"   "<<par_name<<" is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
                             if ((maxb-valp)/(maxb-minb)<0.001) 
-                                os<<"------'"<<par_name<<"' is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+                                os<<"   "<<par_name<<" is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
                         }//-k
                     }//-j
                 }

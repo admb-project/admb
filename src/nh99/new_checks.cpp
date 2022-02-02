@@ -240,10 +240,12 @@ void function_minimizer::check_parameters_on_bounds(){
   
   std::ofstream os("parameters_on_bounds_after_hessian.txt", std::ofstream::out|std::ofstream::trunc);
 
-  cout << endl << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
-  cout << "    NOTE: bounds checking is not done here on random effects, only fixed effects parameters." << endl;
+  // cout <<  "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
+  // if(function_minimizer::random_effects_flag)
+  //   cout << "    NOTE: bounds checking is not done here on random effects, only fixed effects parameters." << endl;
   os   << "Checking for parameters on bounds (experimental; hbf=" << gradient_structure::Hybrid_bounded_flag << ")..." << endl;
-  os   << "    NOTE: bounds checking is not done here on random effects, only fixed effects parameters." << endl;
+  if(function_minimizer::random_effects_flag)
+    os   << "    NOTE: bounds checking is not done here on random effects, only fixed effects parameters." << endl;
   // Don't technically need this but I don't know how to consistently get the MLE 
   // without reading it here (it may not be the last par vec executed)
   // NOTE: random effects are not included in the MLE written to admodel.hes (see mod_rhes.cpp)
@@ -259,7 +261,7 @@ void function_minimizer::check_parameters_on_bounds(){
     independent_variables unbounded(1,nvar); // original unbounded MLE
 
     adstring_array pars=initial_params::get_param_names();
-    cout<<"nvar = "<<nvar<<".  # params = "<<pars.size()<<endl;
+    // cout<<"nvar = "<<nvar<<".  # params = "<<pars.size()<<endl;
 
     // takes MLE from admodel.hes file. It would be better to
     // get this another way in case the model can't write it

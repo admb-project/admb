@@ -52,6 +52,8 @@
   #pragma interface
 #endif
 
+#include <limits>
+
 #include <vector>
 
   class laplace_approximation_calculator;
@@ -837,6 +839,7 @@ protected:
   int initial_value_flag;
   double initial_value;
   double scalefactor;
+  bool has_bounds;
 public:
 #if defined(USE_SHARE_FLAGS)
   virtual void setshare(const index_type& sf,const index_type& af);
@@ -960,6 +963,18 @@ public:
     const double& ll, const dvector& diag);
   virtual void restore_value(const ifstream& ifs) = 0;
   virtual void add_to_list(void);
+  
+  //flag to print debugging info
+  static int debug;
+  //get names of active parameters
+  static adstring_array get_param_names(void);
+  /** 
+   * check for active parameters near bounds
+   * 
+   * @param os - ostream object to write results to
+   */
+  static void check_for_params_on_bounds(ostream & os);
+  
 #if defined(USE_ADPVM)
   virtual void pvm_pack(void)=0;
   virtual void pvm_unpack(void)=0;

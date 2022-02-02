@@ -124,11 +124,16 @@ dvector get_solution_vector(int npts);
  */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
 {
+  int debug = 0;
   // get the number of active parameters
   int nvar = initial_params::nvarcalc();
+  if (debug) cout<<endl<<"Starting hess_routine_noparallel_random_effects(). nvar = "<<nvar<<endl;
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
+//  dvector mle(1,nvar);
+//  mle = value(x);     //x should be the mle. save for later.
+//  if (debug) cout<<"mle = "<<mle<<endl;
   double delta=1.e-4;
   dvector g1(1,nvar);
   dvector g0(1,nvar);
@@ -440,7 +445,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
           tmpstring = ad_comm::adprogram_name + ".hes";
         }
         uostream ofs((char*)tmpstring);
-        ofs << nvar;
+        ofs << nvar; //writing to admodel.hes
         dmatrix shess(1,nvar,1,nvar);
         double maxerr=0.0;
         for (i=1;i<=nvar;i++)
@@ -462,6 +467,20 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         dvector tscale(1,nvar);   // need to get scale from somewhere
         /*int check=*/initial_params::stddev_scale(tscale,x);
         ofs << tscale;
+        ofs << -987;
+        dvector mle(1,nvar);
+        initial_params::copy_all_values(mle,1);
+        ofs << mle;
+        if (debug) {
+            cout<<"admodel.hes:"<<endl;
+            cout<<nvar<<endl;
+            cout<<hess<<endl;
+            cout<<gradient_structure::Hybrid_bounded_flag<<endl;
+            cout<<tscale<<endl;
+            cout<<-987<<endl;
+            cout<<mle<<endl;
+            cout<<"end of hess_routine_noparallel_random_effects()"<<endl<<endl;
+        }
       }
     }
    /*

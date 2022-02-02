@@ -276,7 +276,7 @@ extern admb_javapointers * adjm_ptr;
                 sd_routine();
               }
             }
-	    if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
+	    // if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
           }
           else
           {

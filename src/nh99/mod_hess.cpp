@@ -80,8 +80,8 @@ void function_minimizer::hess_routine_noparallel(void)
 
   std::clock_t start=std::clock();
   if(function_minimizer::output_flag==1){
-    if(nvar>10) cout << endl << "Calculating Hessian: 0%";
-    else  cout << endl << "Calculating Hessian: 0";
+    if(nvar>10) cout <<  "Calculating Hessian: 0%";
+    else  cout <<  "Calculating Hessian: 0";
   }
  
   ofs << nvar;

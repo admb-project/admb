@@ -17,6 +17,7 @@ Default constructor
 param_init_bounded_matrix::param_init_bounded_matrix():
   param_init_matrix(), minb(0), maxb(0)
 {
+    has_bounds=true;
 }
 
 void param_init_bounded_matrix::set_value(const dvar_vector& x,

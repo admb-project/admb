@@ -267,6 +267,7 @@ void initial_params::check_for_params_on_bounds(ostream& os){
   int nvar=nvarcalc(); // get the number of active parameters
   if (debug) os<<"--num initial params = "<<num_initial_params<<endl;
   if (debug) os<<"--num active  params = "<<nvar<<endl;
+  int counter=0;
   if (nvar>0){
     //loop over parameters and vectors and create names  
     int kk = 0;
@@ -285,10 +286,14 @@ void initial_params::check_for_params_on_bounds(ostream& os){
 	    double valp = ::value(*p);
 	    adstring par_name = par_name_base;
 	    if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
-	    if ((valp-minb)/(maxb-minb)<0.001) 
+	    if ((valp-minb)/(maxb-minb)<0.001){
+	      if(counter==0){ os << endl; counter++;}
 	      os<<"   "<<par_name<<" is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
-	    if ((maxb-valp)/(maxb-minb)<0.001) 
+	    }
+	    if ((maxb-valp)/(maxb-minb)<0.001) {
+	      if(counter==0){ os << endl; counter++;}
 	      os<<"   "<<par_name<<" is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+	    }
 	  } else if (dynamic_cast<param_init_bounded_dev_vector*>(varsptr[i]) != nullptr) {
 	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_dev_vector with "<<jmax<<" elements."<<endl;
 	    param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varsptr[i]);//note: can cast to _vector here
@@ -298,10 +303,14 @@ void initial_params::check_for_params_on_bounds(ostream& os){
 	      double valp = ::value(p->elem(j));
 	      adstring par_name = par_name_base+"["+str(j)+"]";
 	      if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
-	      if ((valp-minb)/(maxb-minb)<0.001) 
+	      if ((valp-minb)/(maxb-minb)<0.001) {
+		if(counter==0){ os << endl; counter++;}
 		os<<"   "<<par_name<<" is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
-	      if ((maxb-valp)/(maxb-minb)<0.001) 
+	      }
+	      if ((maxb-valp)/(maxb-minb)<0.001) {
+		if(counter==0){ os << endl; counter++;}
 		os<<"   "<<par_name<<" is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+	      }
 	    }//-j
 	  } else if (dynamic_cast<param_init_bounded_vector*>(varsptr[i]) != nullptr) {
 	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_vector with "<<jmax<<" elements."<<endl;
@@ -312,10 +321,14 @@ void initial_params::check_for_params_on_bounds(ostream& os){
 	      double valp = ::value(p->elem(j));
 	      adstring par_name = par_name_base+"["+str(j)+"]";
 	      if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
-	      if ((valp-minb)/(maxb-minb)<0.001) 
+	      if ((valp-minb)/(maxb-minb)<0.001) {
+		if(counter==0){ os << endl; counter++;}
 		os<<"   "<<par_name<<" is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
-	      if ((maxb-valp)/(maxb-minb)<0.001) 
+	      }
+	      if ((maxb-valp)/(maxb-minb)<0.001) {
+		if(counter==0){ os << endl; counter++;}
 		os<<"   "<<par_name<<" is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+	      }
 	    }//-j
 	  } else if (dynamic_cast<param_init_bounded_matrix*>(varsptr[i])!=nullptr) {
 	    param_init_bounded_matrix* p = dynamic_cast<param_init_bounded_matrix*>(varsptr[i]);
@@ -328,10 +341,14 @@ void initial_params::check_for_params_on_bounds(ostream& os){
 		adstring par_name = par_name_base+"["+str(j)+"]"+"["+str(k)+"]";
 		double valp = ::value(v[k]);
 		if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
-		if ((valp-minb)/(maxb-minb)<0.001) 
+		if ((valp-minb)/(maxb-minb)<0.001) {
+		  if(counter==0){ os << endl; counter++;}
 		  os<<"   "<<par_name<<" is near lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
-		if ((maxb-valp)/(maxb-minb)<0.001) 
+		}
+		if ((maxb-valp)/(maxb-minb)<0.001) {
+		  if(counter==0){ os << endl; counter++;}
 		  os<<"   "<<par_name<<" is near upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		}
 	      }//-k
 	    }//-j
 	  }
@@ -346,6 +363,7 @@ void initial_params::check_for_params_on_bounds(ostream& os){
     if (debug) os<<"--Model appears to be autodiff only: no bounds checking performed."<<endl;
   }
   if (debug) os<<"Finished initial_params::check_parameters_on_bounds"<<endl;
+  os << " done!" << endl;
 }
 
 

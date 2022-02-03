@@ -1018,12 +1018,12 @@ if(function_minimizer::output_flag==1 &&
     (*ad_printf)(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
     
     if (initial_params::num_initial_params && function_minimizer::output_flag==1){
-        cout << "\nChecking MLE for parameters on bounds..."<<endl;
+        cout << "\nChecking for estimated parameters on bounds...";
         initial_params::check_for_params_on_bounds(std::cout);
-        std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
-        os << "\nChecking MLE for parameters on bounds..."<<endl;
-        initial_params::check_for_params_on_bounds(os);
-        os.close();
+	//  std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
+	*ad_comm::global_logfile << "\nChecking for estimated parameters on bounds...";
+        initial_params::check_for_params_on_bounds(*ad_comm::global_logfile);
+        //os.close();
     }
   }
  }

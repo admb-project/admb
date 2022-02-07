@@ -11,8 +11,12 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-12.3-git
--------------
+ADMB-dev
+--------
+
+#### New Supported Compilers
+
+* Microsoft Visual C++ 2022
 
 #### Changes and Improvements
 

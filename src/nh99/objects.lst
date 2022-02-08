@@ -1,5 +1,5 @@
 OBJ6=\
- new_checks.obj\
+ output_checks.obj\
  hmc_functions.obj\
  rwm.obj\
  nuts.obj\

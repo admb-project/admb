@@ -53,6 +53,7 @@ void function_minimizer::hess_routine(void)
   }
   initial_params::in_hessian_phase = false;
 }
+
 void function_minimizer::hess_routine_noparallel(void)
 {
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
@@ -77,6 +78,12 @@ void function_minimizer::hess_routine_noparallel(void)
      tmpstring = ad_comm::adprogram_name + ".hes";
   uostream ofs((char*)tmpstring);
 
+  std::clock_t start=std::clock();
+  if(function_minimizer::output_flag==1){
+    if(nvar>10) cout <<  "Calculating Hessian: 0%";
+    else  cout <<  "Calculating Hessian: 0";
+  }
+ 
   ofs << nvar;
   {
     {
@@ -90,10 +97,22 @@ void function_minimizer::hess_routine_noparallel(void)
     }
     double sdelta1;
     double sdelta2;
+    double percentage=0.2;
     for (int i=1;i<=nvar;i++)
     {
-      hess_calcreport(i,nvar);
-
+      if(function_minimizer::output_flag==1){
+	if(nvar>=10){
+	  if(i==floor(percentage*nvar)){
+	    cout << ", " << 100*percentage << "%";
+	    percentage += 0.20;
+	  }
+	} else {
+	  cout << ", " << i;
+	}
+      } else if(function_minimizer::output_flag==2){
+	hess_calcreport(i,nvar);
+      }
+    
       double xsave=x(i);
       sdelta1=x(i)+delta;
       sdelta1-=x(i);
@@ -150,7 +169,24 @@ void function_minimizer::hess_routine_noparallel(void)
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
     }
-  }
+    if(function_minimizer::output_flag==1){
+      double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+      // Depending on how long it ran convert to sec/min/hour/days so
+      // the outputs are interpretable
+      std::string u; // units
+      if(runtime<=60){
+	u=" s";
+      } else if(runtime > 60 && runtime <=60*60){
+	runtime/=60; u=" mins";
+      } else if(runtime > (60*60) && runtime <= (360*24)){
+	runtime/=(60*60); u=" hours";
+      } else {
+	runtime/=(24*60*60); u=" days";
+      }
+      runtime=std::round(runtime * 10.0) / 10.0;
+      cout << " done! (" << runtime  << u << ")" <<  endl;
+    }
+    
   initial_params::reset(dvar_vector(x));
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
@@ -164,6 +200,7 @@ void function_minimizer::hess_routine_noparallel(void)
   dvector mle(1,nvar);
   initial_params::copy_all_values(mle,1);
   ofs << mle;
+  }
 }
 
 void function_minimizer::hess_routine_and_constraint(int iprof,
@@ -447,6 +484,12 @@ void function_minimizer::depvars_routine(void)
   }
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
+  int ndvarcals=stddev_params::num_stddev_params;
+  std::clock_t start = clock();
+  if(function_minimizer::output_flag==1 && ndvarcals>0){
+    cout << "Differentiating " << ndvarcals << " derived quantities: 0";
+    if(ndvarcals>=10) cout << "%";
+  }
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
   //double f;
@@ -468,9 +511,20 @@ void function_minimizer::depvars_routine(void)
 
   ofs << nvar << "  "  << ndvar << endl;
   int i;
+  double percentage=0.2;
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
-     stddev_params::stddevptr[i]->set_dependent_variables();
+    if(function_minimizer::output_flag==1){
+      if(ndvarcals>=10){
+	if((i+1)==floor(percentage*ndvarcals)){
+	  cout << ", " << 100*percentage << "%";
+	  percentage += 0.20;
+	}
+      } else {
+	cout << ", " << i+1;
+      }
+    }
+      stddev_params::stddevptr[i]->set_dependent_variables();
   }
   gradient_structure::get()->jacobcalc(nvar,ofs);
   for (i=0;i< stddev_params::num_stddev_params;i++)
@@ -483,15 +537,39 @@ void function_minimizer::depvars_routine(void)
     lapprox->no_function_component_flag=0;
   }
   gradient_structure::set_NO_DERIVATIVES();
+  if(function_minimizer::output_flag==1 && ndvarcals>0){
+    double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    // Depending on how long it ran convert to sec/min/hour/days so
+    // the outputs are interpretable
+    std::string u; // units
+    if(runtime<=60){
+      u=" s";
+    } else if(runtime > 60 && runtime <=60*60){
+      runtime/=60; u=" mins";
+    } else if(runtime > (60*60) && runtime <= (360*24)){
+      runtime/=(60*60); u=" hours";
+    } else {
+      runtime/=(24*60*60); u=" days";
+    }
+    runtime=std::round(runtime * 10.0) / 10.0;
+    cout << " done! (" << runtime  << u << ")" <<  endl;
+  }
 }
 /**
 Symmetrize and invert the hessian
 */
 bool function_minimizer::hess_inv(void)
 {
+
   initial_params::set_inactive_only_random_effects();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);
+
+  std::clock_t start=std::clock();
+  if(function_minimizer::output_flag==1){
+    if(nvar>10) cout << "Inverting Hessian: 0%";
+    else cout << "Inverting Hessian: 0";
+  }
 
   initial_params::xinit(x);        // get the initial values into the x vector
   //double f;
@@ -530,6 +608,7 @@ bool function_minimizer::hess_inv(void)
   }
 
   double maxerr=0.0;
+  double percentage=0.2;
   for (int i = 1;i <= nvar; i++)
   {
     for (int j=1;j<i;j++)
@@ -540,6 +619,16 @@ bool function_minimizer::hess_inv(void)
       if (tmp1>maxerr) maxerr=tmp1;
       hess(i,j)=tmp;
       hess(j,i)=tmp;
+    }
+    if(function_minimizer::output_flag==1){
+      if(nvar>=10){
+	if(i==floor(percentage*nvar)){
+	  cout << ", " << 100*percentage << "%";
+	  percentage += 0.20;
+	}
+      } else {
+	cout << ", " << i;
+      }
     }
   }
   /*
@@ -561,9 +650,16 @@ bool function_minimizer::hess_inv(void)
     }
     if (!zero_switch)
     {
-      cerr << " Hessian is 0 in row " << i << endl;
-      cerr << " This means that the derivative if probably identically 0 "
-              " for this parameter" << endl;
+      // If any values in the ith row are exactly zero it's
+      // probably a floating parameter, but this is caught below
+      // too when checking for invalid variances..?
+      if(function_minimizer::output_flag==1){
+	cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
+      } else if(function_minimizer::output_flag==2){
+	cerr << " Hessian is 0 in row " << i << endl;
+	cerr << " This means that the derivative if probably identically 0 "
+	  " for this parameter" << endl;
+      }
     }
   }
 
@@ -582,8 +678,12 @@ bool function_minimizer::hess_inv(void)
      if (se(se.indexmin())<=0.0)
       {
         negative_eigenvalue_flag=1;
+	if(function_minimizer::output_flag!=2){
+	  //  cout << "\nWarning: Negative eigenvalues in covariance matrix\n";
+	} else {
         cout << "Warning -- Hessian does not appear to be"
          " positive definite" << endl;
+	}
       }
     }
     ivector negflags(0,hess.indexmax());
@@ -672,9 +772,15 @@ bool function_minimizer::hess_inv(void)
     {
       for (int i = 1;i <= nvar; i++)
       {
+	// hess is the covariance matrix b/c inverted above
         if (hess(i,i) <= 0.0)
         {
-          hess_errorreport();
+	  if(function_minimizer::output_flag==2){
+	    hess_errorreport();
+	  } else {
+	    cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to invert Hessian." << endl;
+	    cerr << "        No uncertainty estimates available. Fix model structure and reoptimize" << endl << endl;
+	  }
           return false;
         }
       }
@@ -689,9 +795,26 @@ bool function_minimizer::hess_inv(void)
       ofs << sscale;
     }
   }
+  if(function_minimizer::output_flag==1){
+    double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    // Depending on how long it ran convert to sec/min/hour/days so
+    // the outputs are interpretable
+    std::string u; // units
+    if(runtime<=60){
+      u=" s";
+    } else if(runtime > 60 && runtime <=60*60){
+      runtime/=60; u=" mins";
+    } else if(runtime > (60*60) && runtime <= (360*24)){
+      runtime/=(60*60); u=" hours";
+    } else {
+      runtime/=(24*60*60); u=" days";
+    }
+    runtime=std::round(runtime * 10.0) / 10.0;
+    cout << " done! (" << runtime  << u << ")" <<  endl;
+  }
   return true;
 }
-void hess_calcreport(int i,int nvar)
+  void hess_calcreport(int i,int nvar)
 {
   if (ad_printf)
     (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);

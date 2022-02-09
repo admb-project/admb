@@ -11,7 +11,7 @@
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
-
+#include<ctime>
 #include <cassert>
 
 void ADSleep(unsigned int x);
@@ -43,29 +43,87 @@ extern admb_javapointers * adjm_ptr;
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
-     if (option_match(argc,argv,"-mceval") == -1)
-     {
-       if(!(option_match(argc,argv,"-hess_step") == -1))
-       {
-         // Experimental feature to take Newton steps after
-         // previous optimization
-         // Note: ::computations1 is called at the end of hess_step function. 
-         hess_step();
+     // ------------------------------------------------------------
+     // Cole added experimental new flag to improve console
+     // output to be more compact and informative
+     int on, nopt, tmp;
+     tmp=1;
+     std::clock_t start = clock();
+     function_minimizer::output_time0=start;
+     if ( (on=option_match(argc,argv,"-output",nopt))>-1){
+       if (nopt ==1){
+	 tmp=atoi(argv[on+1]);
+	 if(tmp<0 || tmp >2) {
+	   cerr << "Invalid output value, must be 0, 1, or 2" << endl;
+	   ad_exit(1);
+	 }
+       } else {
+	 cerr << "Wrong number of arguments after -output argument" << endl;
+	 ad_exit(1);
        }
-       else
-       {
-         computations1(argc,argv);
-       }
+       function_minimizer::output_flag=tmp;
+       //cout << "!! Using new output option =" << tmp << " !!"<< endl;
      } else {
-       initial_params::mceval_phase=1;
-       mcmc_eval();
-       initial_params::mceval_phase=0;
-     }
+       // default to 1, 2 is original, 0 is suppressed completely except errors
+       function_minimizer::output_flag=1;
+     }	 
+     // ------------------------------------------------------------
+     if (option_match(argc,argv,"-mceval") == -1)
+       {
+	 // if not mceval model do optimization or hess step
+	 if(!(option_match(argc,argv,"-hess_step") == -1))
+	   {
+	     // Experimental feature to take Newton steps after
+	     // previous optimization
+	     // Note: ::computations1 is called at the end of hess_step function. 
+	     hess_step();
+	   }
+	 else
+	   {
+	     // main optimization call
+	     computations1(argc,argv);
+	   }
+       }
+     else
+       {
+	 // mceval skips all the optimization stuff
+	 initial_params::mceval_phase=1;
+	 mcmc_eval();
+	 initial_params::mceval_phase=0;
+       }
      other_calculations();
      final_calcs();
+
      // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
+     //Print new concluding message unless in MCMC mode which already prints timing stuff 
+     if(function_minimizer::output_flag==1 &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1) &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1) &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)){
+       double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+       // Depending on how long it ran convert to sec/min/hour/days so
+       // the outputs are interpretable
+       std::string u; // units
+       if(runtime<=60){
+	 u=" s";
+       } else if(runtime > 60 && runtime <=60*60){
+	 runtime/=60; u=" mins";
+       } else if(runtime > (60*60) && runtime <= (360*24)){
+	 runtime/=(60*60); u=" hours";
+       } else {
+	 runtime/=(24*60*60); u=" days";
+       }
+       runtime=std::round(runtime * 100.0) / 100.0;
+       std::string m=get_filename((char*)ad_comm::adprogram_name);
+       cout << "\nFinished running model '" << m<<
+	 "' after " << runtime  << u << "." <<  endl;
+     } else if(function_minimizer::output_flag==2){
+       cout << endl << "Consider using the new updated output option with argument '-output 1'"<< endl <<
+	 "Details and bug reports at: https://github.com/admb-project/admb/discussions/219" << endl;
+     }
   }
+
 
   void function_minimizer::computations1(int argc,char * argv[])
   {
@@ -156,7 +214,7 @@ extern admb_javapointers * adjm_ptr;
         if (!function_minimizer::have_constraints)
         {
           minimize();
-        }
+	}
         else
         {
           constraints_minimize();
@@ -221,6 +279,7 @@ extern admb_javapointers * adjm_ptr;
                 sd_routine();
               }
             }
+	    // if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
           }
           else
           {

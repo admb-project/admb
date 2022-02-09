@@ -256,8 +256,8 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
       u=ub;
     }
     double tmax=max(gmax);
-    cout <<  " inner maxg = " << tmax << endl;
-
+    if(function_minimizer::output_flag==2)
+      cout <<  " inner maxg = " << tmax << endl;
     if (tmax< 1.e-4) break;
   }
   fmc1.ireturn=0;

@@ -1,3 +1,4 @@
+
 /*
  * $Id$
  *
@@ -15,9 +16,10 @@
  */
 
 #include <fvar.hpp>
+#include <admodel.h>
+#include <cassert>
 #if defined(_WIN32)
   #include <windows.h>
-  #include <admodel.h>
 #endif
 #if defined(__BORLANDC__)
   #include <signal.h>
@@ -25,7 +27,6 @@
 #ifdef __ZTC__
   #include <conio.h>
 #endif
-#include <fvar.hpp>
 extern int ctlc_flag;
 
 #if defined (__WAT32__) || defined (_MSC_VER)
@@ -479,7 +480,31 @@ label20: /* check for convergence */
         if (!scroll_flag) clrscr();
 #endif
 label7003: /* Printing table header */
-      if (iprint>0)
+	// This is the main console output
+	if(function_minimizer::output_flag==1){
+	  // new console output for optimization
+	  assert(ad_printf);
+	  // stupid way to do which.max()
+	  adstring_array pars(1,n);
+          if (initial_params::num_initial_params){
+              pars=initial_params::get_param_names();
+          } else {
+              for (int i = 1; i<=n; i++)  pars[i] = "param["+str(i)+"]";
+          }
+	  int maxpar=1; dvariable grMax=fabs(g.elem(1));
+	  for (int i = 1; i<=n; i++){
+	    if (g.elem(i)>grMax){
+	      grMax = fabs(g.elem(i));
+	      maxpar=i;
+	    }
+	  }
+	  // assert(pointer_to_phase);
+	  if (itn % iprint ==0 ) 
+	  (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par=%s\n",
+		       initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), (char*)pars(maxpar));
+	}
+	// if(function_minimizer::output_flag==2){
+	if (function_minimizer::output_flag==2 && iprint>0)
       {
         if (ad_printf)
         {
@@ -502,7 +527,7 @@ label7003: /* Printing table header */
       }
 /*label7002:*/
       /* Printing Statistics table */
-      if(iprint>0)
+      if(function_minimizer::output_flag==2 && iprint>0)
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
       }
@@ -699,9 +724,12 @@ label30: /* Taking a step, updating x */
       {
          if (iprint>0)
          {
-           if (ad_printf)
-             (*ad_printf)("  ic > imax  in fminim is answer attained ?\n");
-           fmmdisp(x, g, n, this->scroll_flag,noprintx);
+	   if(function_minimizer::output_flag==2)
+	     {
+	       if (ad_printf)
+		 (*ad_printf)("  ic > imax  in fminim is answer attained ?\n");
+	       fmmdisp(x, g, n, this->scroll_flag,noprintx);
+	     }
          }
          ihflag=1;
          ihang=1;
@@ -878,65 +906,140 @@ label70:  // Hessian update
       if (xxlink == 2) goto label65;
 /*label90:*/
       for (i=1;i<=n;i++)
-         g.elem(i)=w.elem(i);
+	g.elem(i)=w.elem(i);
 label92: /* Exit with error */
-      if (iprint>0)
+if (iprint>0)
+  {
+    if(function_minimizer::output_flag==2)
       {
-        if (ialph)
-        {
-          if (ad_printf)
-           (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
-        }
-        if (ihang == 1)
-        {
-          if (ad_printf)
-            (*ad_printf)(
-           "Function minimizer not making progress ... is minimum attained?\n");
+	if (ialph)
+	  {
+	    if (ad_printf)
+	      (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
+	  }
+	if (ihang == 1)
+	  {
+	    if (ad_printf)
+	      (*ad_printf)(
+			   "Function minimizer not making progress ... is minimum attained?\n");
 #if defined(USE_DDOUBLE)
 #undef double
-           if (ad_printf)
-           (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
+	    if (ad_printf)
+	      (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
 #define double dd_real
 #else
-           if (ad_printf)
-             (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
+	    if (ad_printf)
+	      (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
 #endif
-        }
+	  }
       }
-      if(iexit == 2)
+    if(function_minimizer::output_flag==1)
       {
-        if (iprint>0)
-        {
-          if (ad_printf)
-            (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
-           " --- convergence critera may be too strict\n");
-          ireturn=-1;
-        }
+	// Not sure this really helps the user. It just moves
+	// on to next phase or finishes optimization and
+	// those messgaes are more useful
+	// cout << "Optimizer ended early due to not making progress (ialpha=" <<
+	//   ialph << ", ihang=" << ihang <<  ")" << endl;//try reoptimizing from .par file" << endl;
       }
+  }
+if(iexit == 2)
+  {
+    if (iprint>0)
+      {
+	if (ad_printf)
+	  (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
+		       " --- convergence critera may be too strict\n");
+	ireturn=-1;
+      }
+  }
 #if defined (_MSC_VER) && !defined (__WAT32__)
-        if (scroll_flag == 0) clrscr();
+if (scroll_flag == 0) clrscr();
 #endif
-      if (maxfn_flag == 1)
+if (maxfn_flag == 1)
+  {
+    if (iprint>0)
       {
-        if (iprint>0)
-        {
-          if (ad_printf)
-            (*ad_printf)("Maximum number of function evaluations exceeded");
-        }
+	if (ad_printf && function_minimizer::output_flag==2)
+	  (*ad_printf)("Maximum number of function evaluations exceeded");
+	if(function_minimizer::output_flag==1)
+	  cout <<"Exiting without success due to excessive function evaluations (maxfn=" <<
+	    maxfn << ") | mag=" << fabs(double(gmax)) << endl;
       }
-      if (iprint>0)
-      {
-        if (quit_flag == 'Q')
-          if (ad_printf) (*ad_printf)("User initiated interrupt");
+  }
+if (iprint>0)
+  {
+    if (quit_flag == 'Q')
+      if (ad_printf) (*ad_printf)("User initiated interrupt");
+  }
+// if last iteration of last phase print to screen regardless of
+// iprint. Note that for RE models it is sometimes set iprint=0
+// intermediately so turn that off.
+if(function_minimizer::output_flag==1 &&
+   (initial_params::current_phase==initial_params::max_number_phases)){
+  
+  // this logic should print final when no RE are used for any
+  // iprint, and if RE is used if iprint>0. It will only not
+  // work when user specifies iprint=0 with a RE model.
+  if(!function_minimizer::random_effects_flag ||
+     (function_minimizer::random_effects_flag && iprint>0)){
+    // new console output for optimization
+    assert(ad_printf);
+    // assert(pointer_to_phase);
+
+    double runtime = ( std::clock()-function_minimizer::output_time0)/(double) CLOCKS_PER_SEC;
+    // Depending on how long it ran convert to sec/min/hour/days so
+    // the outputs are interpretable
+    std::string u; // units
+    if(runtime<=60){
+      u=" seconds";
+    } else if(runtime > 60 && runtime <=60*60){
+      runtime/=60; u=" minutes";
+    } else if(runtime > (60*60) && runtime <= (360*24)){
+      runtime/=(60*60); u=" hours";
+    } else {
+      runtime/=(24*60*60); u=" days";
+    }
+    runtime=std::round(runtime * 10.0) / 10.0;
+    // stupid way to do which.max()
+    adstring_array pars(1,n);
+    if (initial_params::num_initial_params){
+        pars=initial_params::get_param_names();
+    } else {
+        for (int i = 1; i<=n; i++) pars[i] = "param["+str(i)+"]";
+    }
+    int maxpar=1; dvariable grMax=fabs(g.elem(1));
+    for (int i = 1; i<=n; i++){
+      if (g.elem(i)>grMax){
+	grMax = fabs(g.elem(i));
+	maxpar=i;
       }
-      if(iprint == 0) goto label777;
-      if (ad_printf) (*ad_printf)("\n - final statistics:\n");
-      if (ad_printf)
-        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-                       n, itn, ifn);
+    }
+    cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
+    (*ad_printf)(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
+    
+    if (initial_params::num_initial_params && function_minimizer::output_flag==1){
+        cout << "\nChecking for estimated parameters on bounds...";
+        initial_params::check_for_params_on_bounds(std::cout);
+	//  std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
+	*ad_comm::global_logfile << "\nChecking for estimated parameters on bounds...";
+        initial_params::check_for_params_on_bounds(*ad_comm::global_logfile);
+        //os.close();
+    }
+  }
+ }
+// Important to be here b/c it appears other parts of ADMB-RE
+// code set iprint=0 then call fmin, so this exits early to
+// prevent excess printing.
+if(iprint == 0) goto label777;
+
+if(function_minimizer::output_flag==2){
+  if (ad_printf) (*ad_printf)("\n - final statistics:\n");
+  if (ad_printf)
+    (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+		 n, itn, ifn);
 #if defined(USE_DDOUBLE)
 #undef double
-      if (ad_printf)
+  if (ad_printf)
         (*ad_printf)(
              "Function value %12.4le; maximum gradient component mag %12.4le\n",
              double(f), double(gmax));
@@ -954,6 +1057,7 @@ label92: /* Exit with error */
           "Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
 #endif
       fmmdisp(x, g, n, this->scroll_flag,noprintx);
+ }
 label777: /* Printing final Hessian approximation */
          if (ireturn <= 0)
          #ifdef DIAG
@@ -972,7 +1076,7 @@ label7000:/* Printing Initial statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
-        if (ad_printf) (*ad_printf)("\nInitial statistics: ");
+        if (function_minimizer::output_flag==2 && ad_printf) (*ad_printf)("\nInitial statistics: ");
       }
       goto label7003;
 label7010:/* Printing Intermediate statistics */
@@ -981,7 +1085,7 @@ label7010:/* Printing Intermediate statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
      if (!scroll_flag) clrscr();
 #endif
-     if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+     if (function_minimizer::output_flag==2 && ad_printf) (*ad_printf)("\nIntermediate statistics: ");
    }
    llog=0;
    goto label7003;

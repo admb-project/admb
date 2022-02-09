@@ -38,6 +38,10 @@ void  set_covariance_matrix(const dmatrix& m)
 
 void function_minimizer::sd_routine(void)
 {
+  std::clock_t start=std::clock();
+  if(function_minimizer::output_flag==1)
+    cout << "Starting standard error calculations... " ;
+
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dvector x(1,nvar);
   initial_params::xinit(x); // get the number of active parameters
@@ -152,6 +156,7 @@ void function_minimizer::sd_routine(void)
         {
           cif >> tv;
           dvector tmpsub(1,nvar);
+	  bool bad_vars=false;
           for (int i=1;i<=ndvar;i++)
           {
             for (int j=1;j<=nvar;j++)
@@ -169,12 +174,25 @@ void function_minimizer::sd_routine(void)
 
             if (diag(i+nvar)<=0.0)
             {
-              cerr << "Estimated covariance matrix may not"
-               " be positive definite" << endl;
-              cerr << sort(eigenvalues(S)) << endl;
+	      if(function_minimizer::output_flag==2)
+		{
+		  cerr << "Estimated covariance matrix may not"
+		    " be positive definite" << endl;
+		  cerr << sort(eigenvalues(S)) << endl;
+		}
+	      else if(function_minimizer::output_flag==1)
+		{
+		  // If first variable print message, otherwise tack it on
+		  if(!bad_vars)
+		    cout << "\n Warning: Non-positive variance of sdreport variables: " << i+nvar;
+		  else
+		    cout << ", " << i+nvar;
+		  bad_vars=true;
+		}
             }
             ofs << endl;
           }
+	  if(bad_vars) cout << endl;
         }
       }
       else  // have random effects
@@ -478,5 +496,22 @@ void function_minimizer::sd_routine(void)
   {
     char msg[40] = {"Error trying to delete temporary file "};
     cerr << msg << "admodel.tmp" << endl;
+  }
+  if(function_minimizer::output_flag==1){
+    double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    // Depending on how long it ran convert to sec/min/hour/days so
+    // the outputs are interpretable
+    std::string u; // units
+    if(runtime<=60){
+      u=" s";
+    } else if(runtime > 60 && runtime <=60*60){
+      runtime/=60; u=" mins";
+    } else if(runtime > (60*60) && runtime <= (360*24)){
+      runtime/=(60*60); u=" hours";
+    } else {
+      runtime/=(24*60*60); u=" days";
+    }
+    runtime=std::round(runtime * 10.0) / 10.0;
+    cout << " done! (" << runtime  << u << ")" <<  endl;
   }
 }

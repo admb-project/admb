@@ -1,5 +1,3 @@
-/tests/*
-/examples/*
 /build/
 **/.DS_Store
 /benchmarks-opt.txt

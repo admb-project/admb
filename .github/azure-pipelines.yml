@@ -19,7 +19,9 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      nmake gtests
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -38,7 +40,9 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=yes TESTS_REMOTE=gtests
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -57,7 +61,9 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=yes TESTS_REMOTE=gtests
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -77,7 +83,9 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=yes TESTS_REMOTE=gtests
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -88,6 +96,50 @@ jobs:
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
       artifactName: VS2019_vcvars64
+
+- job: VS2022_vcvars32
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - script: |
+      pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
+      nmake
+      nmake zip
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: VS2022_vcvars32
+
+- job: VS2022_vcvars64
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - script: |
+      pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+      nmake
+      nmake zip
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: VS2022_vcvars64
 
 - job: MacOS
   pool:

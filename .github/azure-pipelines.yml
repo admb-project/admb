@@ -94,7 +94,7 @@ jobs:
     vmImage: 'macOS-latest'
   steps:
   - script: make clean
-  - script: make -j 2
+  - script: make -j 2 DEBUG=yes
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
   - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes tests-core unit-gtests

@@ -667,10 +667,8 @@ int get_option_number(const char * option_name,const char * error_message,
   {
     if (!nopt)
     {
-      if (ad_printf)
-        (*ad_printf)("%s\n",error_message);
-      else
-        cerr << error_message << endl;
+      ad_printf("%s\n",error_message);
+      //  cerr << error_message << endl;
       on1=-1;
     }
     else
@@ -694,10 +692,8 @@ int get_option_number(const char * option_name,const char * error_message,
   {
     if (!nopt)
     {
-      if (ad_printf)
-        (*ad_printf)("%s\n",error_message);
-      else
-        cerr << error_message << endl;
+      ad_printf("%s\n",error_message);
+      //  cerr << error_message << endl;
       on1=-1;
     }
     else

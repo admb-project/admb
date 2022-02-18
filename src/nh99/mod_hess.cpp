@@ -814,18 +814,18 @@ bool function_minimizer::hess_inv(void)
   }
   return true;
 }
-  void hess_calcreport(int i,int nvar)
+void hess_calcreport(int i,int nvar)
 {
-  if (ad_printf)
-    (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
-  else
+  ad_printf("Estimating row %d out of %d for hessian\n", i, nvar);
+/*
     cout << "Estimating row " << i << " out of " << nvar << " for hessian"
          << endl;
+*/
 }
 void hess_errorreport(void)
 {
-  if (ad_printf)
-    (*ad_printf)("Hessian does not appear to be positive definite\n");
-  else
+  ad_printf("Hessian does not appear to be positive definite\n");
+/*
     cout << "Hessian does not appear to be positive definite\n" << endl;
+*/
 }

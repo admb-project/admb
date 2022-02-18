@@ -217,7 +217,7 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
 #endif
   if (file_ptr == -1)
   {
-    if (ad_printf) (*ad_printf)("Error opening temporary gradient"
+    ad_printf("Error opening temporary gradient"
         " file %s\n", cmpdif_file_name );
     ad_exit(1);
   }

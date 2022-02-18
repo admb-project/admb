@@ -69,8 +69,7 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
     if (ctlc_flag) ad_exit(1);
 
     ctlc_flag = 1;
-    if (ad_printf)
-      (*ad_printf)("\npress q to quit or c to invoke derivative checker: ");
+    ad_printf("\npress q to quit or c to invoke derivative checker: ");
     return true;
   }
   return false;
@@ -80,8 +79,7 @@ extern "C" void onintr(int k)
 {
   signal(SIGINT, exit_handler);
   ctlc_flag = 1;
-  if (ad_printf)
-    (*ad_printf)("\npress q to quit or c to invoke derivative checker"
+  ad_printf("\npress q to quit or c to invoke derivative checker"
                  " or s to stop optimizing: ");
 }
 #endif
@@ -483,7 +481,6 @@ label7003: /* Printing table header */
 	// This is the main console output
 	if(function_minimizer::output_flag==1){
 	  // new console output for optimization
-	  assert(ad_printf);
 	  // stupid way to do which.max()
 	  adstring_array pars(1,n);
           if (initial_params::num_initial_params){
@@ -500,30 +497,27 @@ label7003: /* Printing table header */
 	  }
 	  // assert(pointer_to_phase);
 	  if (itn % iprint ==0 ) 
-	  (*ad_printf)("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par=%s\n",
+	  ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par=%s\n",
 		       initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), (char*)pars(maxpar));
 	}
 	// if(function_minimizer::output_flag==2){
 	if (function_minimizer::output_flag==2 && iprint>0)
       {
-        if (ad_printf)
-        {
-          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld",
+        ad_printf("%d variables; iteration %ld; function evaluation %ld",
            n, itn, ifn);
-          if (pointer_to_phase)
-          {
-            (*ad_printf)("; phase %d", *pointer_to_phase);
-          }
-          (*ad_printf)(
+        if (pointer_to_phase)
+        {
+          ad_printf("; phase %d", *pointer_to_phase);
+        }
+        ad_printf(
            "\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
 #if defined(USE_DDOUBLE)
   #undef double
-              double(f), double(gmax));
+           double(f), double(gmax));
   #define double dd_real
 #else
-              f, gmax);
+           f, gmax);
 #endif
-        }
       }
 /*label7002:*/
       /* Printing Statistics table */
@@ -725,11 +719,10 @@ label30: /* Taking a step, updating x */
          if (iprint>0)
          {
 	   if(function_minimizer::output_flag==2)
-	     {
-	       if (ad_printf)
-		 (*ad_printf)("  ic > imax  in fminim is answer attained ?\n");
-	       fmmdisp(x, g, n, this->scroll_flag,noprintx);
-	     }
+           {
+             ad_printf("  ic > imax  in fminim is answer attained ?\n");
+             fmmdisp(x, g, n, this->scroll_flag,noprintx);
+           }
          }
          ihflag=1;
          ihang=1;
@@ -813,7 +806,7 @@ label40: /* new step is not acceptable, stepping back and
          ialph=1;
         if (ialph)
         {
-          if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size"
+          ad_printf("\nFunction minimizer: Step size"
             "  too small -- ialph=1");
         }
          return;
@@ -913,25 +906,20 @@ if (iprint>0)
     if(function_minimizer::output_flag==2)
       {
 	if (ialph)
-	  {
-	    if (ad_printf)
-	      (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
-	  }
+        {
+          ad_printf("\nFunction minimizer: Step size too small -- ialph=1");
+        }
 	if (ihang == 1)
-	  {
-	    if (ad_printf)
-	      (*ad_printf)(
-			   "Function minimizer not making progress ... is minimum attained?\n");
+        {
+	  ad_printf("Function minimizer not making progress ... is minimum attained?\n");
 #if defined(USE_DDOUBLE)
 #undef double
-	    if (ad_printf)
-	      (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
+         ad_printf("Minimprove criterion = %12.4le\n",double(min_improve));
 #define double dd_real
 #else
-	    if (ad_printf)
-	      (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
+         ad_printf("Minimprove criterion = %12.4le\n",min_improve);
 #endif
-	  }
+        }
       }
     if(function_minimizer::output_flag==1)
       {
@@ -945,12 +933,11 @@ if (iprint>0)
 if(iexit == 2)
   {
     if (iprint>0)
-      {
-	if (ad_printf)
-	  (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
+    {
+      ad_printf("*** grad transpose times delta x greater >= 0\n"
 		       " --- convergence critera may be too strict\n");
-	ireturn=-1;
-      }
+      ireturn=-1;
+    }
   }
 #if defined (_MSC_VER) && !defined (__WAT32__)
 if (scroll_flag == 0) clrscr();
@@ -959,8 +946,8 @@ if (maxfn_flag == 1)
   {
     if (iprint>0)
       {
-	if (ad_printf && function_minimizer::output_flag==2)
-	  (*ad_printf)("Maximum number of function evaluations exceeded");
+	if (function_minimizer::output_flag==2)
+	  ad_printf("Maximum number of function evaluations exceeded");
 	if(function_minimizer::output_flag==1)
 	  cout <<"Exiting without success due to excessive function evaluations (maxfn=" <<
 	    maxfn << ") | mag=" << fabs(double(gmax)) << endl;
@@ -969,7 +956,7 @@ if (maxfn_flag == 1)
 if (iprint>0)
   {
     if (quit_flag == 'Q')
-      if (ad_printf) (*ad_printf)("User initiated interrupt");
+      ad_printf("User initiated interrupt");
   }
 // if last iteration of last phase print to screen regardless of
 // iprint. Note that for RE models it is sometimes set iprint=0
@@ -983,7 +970,6 @@ if(function_minimizer::output_flag==1 &&
   if(!function_minimizer::random_effects_flag ||
      (function_minimizer::random_effects_flag && iprint>0)){
     // new console output for optimization
-    assert(ad_printf);
     // assert(pointer_to_phase);
 
     double runtime = ( std::clock()-function_minimizer::output_time0)/(double) CLOCKS_PER_SEC;
@@ -1015,7 +1001,7 @@ if(function_minimizer::output_flag==1 &&
       }
     }
     cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
-    (*ad_printf)(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
+    ad_printf(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
     
     if (initial_params::num_initial_params && function_minimizer::output_flag==1){
         cout << "\nChecking for estimated parameters on bounds...";
@@ -1033,35 +1019,26 @@ if(function_minimizer::output_flag==1 &&
 if(iprint == 0) goto label777;
 
 if(function_minimizer::output_flag==2){
-  if (ad_printf) (*ad_printf)("\n - final statistics:\n");
-  if (ad_printf)
-    (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+  ad_printf("\n - final statistics:\n");
+  ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
 		 n, itn, ifn);
 #if defined(USE_DDOUBLE)
 #undef double
-  if (ad_printf)
-        (*ad_printf)(
-             "Function value %12.4le; maximum gradient component mag %12.4le\n",
+  ad_printf("Function value %12.4le; maximum gradient component mag %12.4le\n",
              double(f), double(gmax));
-      if (ad_printf)
-        (*ad_printf)(
-          "Exit code = %ld;  converg criter %12.4le\n",iexit,double(crit));
+  ad_printf("Exit code = %ld;  converg criter %12.4le\n",iexit,double(crit));
 #define double dd_real
 #else
-      if (ad_printf)
-        (*ad_printf)(
-          "Function value %12.4le; maximum gradient component mag %12.4le\n",
-          f, gmax);
-      if (ad_printf)
-        (*ad_printf)(
-          "Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
+  ad_printf("Function value %12.4le; maximum gradient component mag %12.4le\n",
+    f, gmax);
+  ad_printf("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
 #endif
-      fmmdisp(x, g, n, this->scroll_flag,noprintx);
+  fmmdisp(x, g, n, this->scroll_flag,noprintx);
  }
 label777: /* Printing final Hessian approximation */
          if (ireturn <= 0)
          #ifdef DIAG
-           if (ad_printf) (*ad_printf)("Final values of h in fmin:\n");
+           ad_printf("Final values of h in fmin:\n");
            //cout << h << "\n";
          #endif
          #ifdef __ZTC__
@@ -1076,7 +1053,7 @@ label7000:/* Printing Initial statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
-        if (function_minimizer::output_flag==2 && ad_printf) (*ad_printf)("\nInitial statistics: ");
+        if (function_minimizer::output_flag==2) ad_printf("\nInitial statistics: ");
       }
       goto label7003;
 label7010:/* Printing Intermediate statistics */
@@ -1085,14 +1062,14 @@ label7010:/* Printing Intermediate statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
      if (!scroll_flag) clrscr();
 #endif
-     if (function_minimizer::output_flag==2 && ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+     if (function_minimizer::output_flag==2) ad_printf("\nIntermediate statistics: ");
    }
    llog=0;
    goto label7003;
 label7020:/* Exis because Hessian is not positive definite */
   if (iprint > 0)
   {
-    if (ad_printf) (*ad_printf)("*** hessian not positive definite\n");
+    ad_printf("*** hessian not positive definite\n");
   }
 #ifdef __ZTC__
   if (ireturn <= 0)

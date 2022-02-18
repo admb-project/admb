@@ -67,6 +67,7 @@ extern admb_javapointers * adjm_ptr;
        // default to 1, 2 is original, 0 is suppressed completely except errors
        function_minimizer::output_flag=1;
      }	 
+     function_minimizer::output_flag=2;
      // ------------------------------------------------------------
      if (option_match(argc,argv,"-mceval") == -1)
        {

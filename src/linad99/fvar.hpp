@@ -177,8 +177,6 @@ Macro definitions.
 // C language function prototypes
 extern "C"
 {
-   typedef int (*fptr) (const char *format, ...);
-   extern fptr ad_printf;
    typedef void (*exitptr) (int);
    extern exitptr ad_exit;
 
@@ -9389,5 +9387,16 @@ dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &,
 dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
+
+template <class ... Args>
+int ad_printf( FILE* stream, const char* format, Args ... args )
+{
+  return fprintf(stream, format, args...);
+}
+template <class ... Args>
+int ad_printf( const char* format, Args ... args )
+{
+  return printf(format, args...);
+}
 
 #endif//#ifndef FVAR_HPP

@@ -153,23 +153,21 @@ L20:
     {
       if (!itn)
       {
-        if (ad_printf) (*ad_printf)("\nInitial statistics: ");
+        ad_printf("\nInitial statistics: ");
       }
       else
       {
-        if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+        ad_printf("\nIntermediate statistics: ");
       }
 
-      if (ad_printf)
-        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+      ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
 
       if (!itn)
       {
         double xf=value(f);
         double xg=max(value(g));
-        if (ad_printf)
-          (*ad_printf)(
+        ad_printf(
             "Function value %12.4le; maximum gradient component mag %12.4le\n",
             xf, xg);
       }
@@ -177,8 +175,7 @@ L20:
       {
         double xf=value(fbest);
         double xg=max(value(gbest));
-        if (ad_printf)
-          (*ad_printf)(
+        ad_printf(
             "Function value %12.4le; maximum gradient component mag %12.4le\n",
             xf, xg);
       }
@@ -222,15 +219,12 @@ L50:
   {
     double xf=value(f);
     double xg=max(value(g));
-    if (ad_printf)
-    {
-      (*ad_printf)("\nfinal statistics: ");
-      (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+    ad_printf("\nfinal statistics: ");
+    ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
-      (*ad_printf)(
+    ad_printf(
         "Function value %12.4le; maximum gradient component mag %12.4le\n",
         xf, xg);
-    }
     fmmdisp(value(x),value(g), nvar, 0,noprintx);
   }
   //gradient_structure::set_NO_DERIVATIVES();

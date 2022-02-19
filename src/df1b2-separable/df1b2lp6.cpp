@@ -91,7 +91,7 @@ void laplace_approximation_calculator::
     //cout << "norm(Hess) = " << norm(Hess) << endl;
     //cout << grad << endl;
     //check_pool_depths();
-    if (!initial_params::mc_phase && function_minimizer::output_flag==2)
+    if (!initial_params::mc_phase)
     {
       std::ostream& output_stream = get_output_stream();
       output_stream << "Newton raphson " << ii << "  ";

@@ -102,6 +102,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     }
   }
 
+  std::ostream& output_stream = get_output_stream();
   for(int ii=1;ii<=num_nr_iters;ii++)
   {
     {
@@ -112,10 +113,8 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       max_separable_g=0.0;
       pmin->inner_opt_flag=1;
       step=get_newton_raphson_info_block_diagonal(pfmin);
-      if(function_minimizer::output_flag==2){
-	cout << "max separable g " << max_separable_g << endl;
-	cout << "Newton raphson " << ii << endl;
-      }
+      output_stream << "max separable g " << max_separable_g
+                    << "\nNewton raphson " << ii << endl;
       uhat+=step;
 
       evaluate_function(uhat,pfmin);
@@ -138,8 +137,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     }
   }
 
-  if(function_minimizer::output_flag==2)
-    cout << initial_df1b2params::cobjfun << endl;
+  output_stream << initial_df1b2params::cobjfun << endl;
   xadjoint.initialize();
   uadjoint.initialize();
   block_diagonal_flag=2;

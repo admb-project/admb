@@ -109,7 +109,9 @@ void function_minimizer::hess_routine_noparallel(void)
 	} else {
 	  cout << ", " << i;
 	}
-      } else if(function_minimizer::output_flag==2){
+      }
+      else
+      {
 	hess_calcreport(i,nvar);
       }
     

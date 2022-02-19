@@ -92,7 +92,10 @@ void laplace_approximation_calculator::
     //cout << grad << endl;
     //check_pool_depths();
     if (!initial_params::mc_phase && function_minimizer::output_flag==2)
-      cout << "Newton raphson " << ii << "  ";
+    {
+      std::ostream& output_stream = get_output_stream();
+      output_stream << "Newton raphson " << ii << "  ";
+    }
     if (quadratic_prior::get_num_quadratic_prior()>0)
     {
       quadratic_prior::get_cHessian_contribution(Hess,xsize);

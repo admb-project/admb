@@ -124,6 +124,8 @@ dvector get_solution_vector(int npts);
  */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
 {
+  std::ostream& output_stream = get_output_stream();
+
   int debug = 0;
   // get the number of active parameters
   int nvar = initial_params::nvarcalc();
@@ -307,7 +309,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       uistream uis1((char*)(tmpstring));
       int i = 0, j = 0;
       uis1 >> i >> j;
-      if(function_minimizer::output_flag==2) cout << i << " " << j << endl;
+      output_stream << i << " " << j << endl;
     }
 
     int npts=2;
@@ -376,9 +378,11 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 	} else {
 	  cout << ", " << i;
 	}
-      } else if(function_minimizer::output_flag==2) {
-	cout << "Estimating row " << i << " out of " << nvar
-	     << " for hessian" << endl;
+      }
+      else
+      {
+	output_stream << "Estimating row " << i << " out of " << nvar
+	              << " for hessian" << endl;
       }
       
         for (int j=-npts;j<=npts;j++)

@@ -325,6 +325,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
   double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
+  std::ostream& output_stream = get_output_stream();
   uostream ofs("admodel.hes");
   //ofstream ofs5("tmphess");
   ofs << nvar;
@@ -340,8 +341,8 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     }
     for (int i=1;i<=nvar;i++)
     {
-      cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
+      output_stream << "Estimating row " << i << " out of " << nvar
+                    << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
@@ -404,8 +405,8 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     cofs << nvar;
     for (i=1;i<=nvar;i++)
     {
-      cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
+      output_stream << "Estimating row " << i << " out of " << nvar
+                    << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);

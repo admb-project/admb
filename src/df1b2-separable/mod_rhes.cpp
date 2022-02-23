@@ -379,11 +379,9 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 	  cout << ", " << i;
 	}
       }
-      else
-      {
-	output_stream << "Estimating row " << i << " out of " << nvar
-	              << " for hessian" << endl;
-      }
+
+        output_stream << "Estimating row " << i << " out of " << nvar
+                      << " for hessian" << endl;
       
         for (int j=-npts;j<=npts;j++)
         {

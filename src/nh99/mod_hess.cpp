@@ -110,10 +110,8 @@ void function_minimizer::hess_routine_noparallel(void)
 	  cout << ", " << i;
 	}
       }
-      else
-      {
-	hess_calcreport(i,nvar);
-      }
+
+      hess_calcreport(i,nvar);
     
       double xsave=x(i);
       sdelta1=x(i)+delta;
@@ -674,18 +672,15 @@ bool function_minimizer::hess_inv(void)
       dvector se=eigenvalues(hess);
       ofs3 << setshowpoint() << setw(14) << setprecision(10)
            << "unsorted:\t" << se << endl;
-     se=sort(se);
-     ofs3 << setshowpoint() << setw(14) << setprecision(10)
-     << "sorted:\t" << se << endl;
-     if (se(se.indexmin())<=0.0)
+      se=sort(se);
+      ofs3 << setshowpoint() << setw(14) << setprecision(10)
+           << "sorted:\t" << se << endl;
+      if (se(se.indexmin())<=0.0)
       {
-        negative_eigenvalue_flag=1;
-	if(function_minimizer::output_flag!=2){
-	  //  cout << "\nWarning: Negative eigenvalues in covariance matrix\n";
-	} else {
-        cout << "Warning -- Hessian does not appear to be positive definite"
-             << endl;
-	}
+        negative_eigenvalue_flag = 1;
+        std::ostream& output_stream = get_output_stream();
+        output_stream << "Warning -- Hessian does not appear to be positive definite"
+                      << endl;
       }
     }
     ivector negflags(0,hess.indexmax());
@@ -817,17 +812,12 @@ bool function_minimizer::hess_inv(void)
 }
 void hess_calcreport(int i,int nvar)
 {
-  ad_printf("Estimating row %d out of %d for hessian\n", i, nvar);
-/*
-    cout << "Estimating row " << i << " out of " << nvar << " for hessian"
-         << endl;
-*/
+  std::ostream& output_stream = get_output_stream();
+  output_stream << "Estimating row " << i << " out of " << nvar << " for hessian"
+                << endl;
 }
 void hess_errorreport(void)
 {
   std::ostream& output_stream = get_output_stream();
   output_stream << "Hessian does not appear to be positive definite." << endl;
-/*
-    cout << "Hessian does not appear to be positive definite\n" << endl;
-*/
 }

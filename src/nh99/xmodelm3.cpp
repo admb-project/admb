@@ -208,7 +208,8 @@ void tracing_message(int traceflag,const char *s);
         jj=1;
       }
       initial_params::current_phase = jj;
-      if(function_minimizer::output_flag==2) cout << "Set current phase to " << jj << endl;
+      std::ostream& output_stream = get_output_stream();
+      output_stream << "Set current phase to " << jj << endl;
     }
 
     if(function_minimizer::output_flag==1){

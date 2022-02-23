@@ -657,11 +657,11 @@ bool function_minimizer::hess_inv(void)
       // too when checking for invalid variances..?
       if(function_minimizer::output_flag==1){
 	cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
-      } else if(function_minimizer::output_flag==2){
-	cerr << " Hessian is 0 in row " << i << endl;
-	cerr << " This means that the derivative if probably identically 0 "
-	  " for this parameter" << endl;
       }
+      std::ostream& output_stream = get_output_stream();
+      output_stream << " Hessian is 0 in row " << i
+                    << "\n This means that the derivative if probably identically 0  for this parameter."
+                    << endl;
     }
   }
 
@@ -683,8 +683,8 @@ bool function_minimizer::hess_inv(void)
 	if(function_minimizer::output_flag!=2){
 	  //  cout << "\nWarning: Negative eigenvalues in covariance matrix\n";
 	} else {
-        cout << "Warning -- Hessian does not appear to be"
-         " positive definite" << endl;
+        cout << "Warning -- Hessian does not appear to be positive definite"
+             << endl;
 	}
       }
     }
@@ -777,12 +777,11 @@ bool function_minimizer::hess_inv(void)
 	// hess is the covariance matrix b/c inverted above
         if (hess(i,i) <= 0.0)
         {
-	  if(function_minimizer::output_flag==2){
-	    hess_errorreport();
-	  } else {
-	    cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to invert Hessian." << endl;
-	    cerr << "        No uncertainty estimates available. Fix model structure and reoptimize" << endl << endl;
-	  }
+	  hess_errorreport();
+
+	  cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to invert Hessian.\n"
+	       << "        No uncertainty estimates available. Fix model structure and reoptimize.\n";
+
           return false;
         }
       }
@@ -826,7 +825,8 @@ void hess_calcreport(int i,int nvar)
 }
 void hess_errorreport(void)
 {
-  ad_printf("Hessian does not appear to be positive definite\n");
+  std::ostream& output_stream = get_output_stream();
+  output_stream << "Hessian does not appear to be positive definite." << endl;
 /*
     cout << "Hessian does not appear to be positive definite\n" << endl;
 */

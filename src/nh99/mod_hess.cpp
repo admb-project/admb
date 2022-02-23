@@ -109,9 +109,9 @@ void function_minimizer::hess_routine_noparallel(void)
 	} else {
 	  cout << ", " << i;
 	}
-      } else if(function_minimizer::output_flag==2){
-	hess_calcreport(i,nvar);
       }
+
+      hess_calcreport(i,nvar);
     
       double xsave=x(i);
       sdelta1=x(i)+delta;
@@ -325,6 +325,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
   double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
+  std::ostream& output_stream = get_output_stream();
   uostream ofs("admodel.hes");
   //ofstream ofs5("tmphess");
   ofs << nvar;
@@ -340,8 +341,8 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     }
     for (int i=1;i<=nvar;i++)
     {
-      cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
+      output_stream << "Estimating row " << i << " out of " << nvar
+                    << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
@@ -404,8 +405,8 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     cofs << nvar;
     for (i=1;i<=nvar;i++)
     {
-      cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
+      output_stream << "Estimating row " << i << " out of " << nvar
+                    << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
@@ -655,11 +656,11 @@ bool function_minimizer::hess_inv(void)
       // too when checking for invalid variances..?
       if(function_minimizer::output_flag==1){
 	cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
-      } else if(function_minimizer::output_flag==2){
-	cerr << " Hessian is 0 in row " << i << endl;
-	cerr << " This means that the derivative if probably identically 0 "
-	  " for this parameter" << endl;
       }
+      std::ostream& output_stream = get_output_stream();
+      output_stream << " Hessian is 0 in row " << i
+                    << "\n This means that the derivative if probably identically 0  for this parameter."
+                    << endl;
     }
   }
 
@@ -672,18 +673,15 @@ bool function_minimizer::hess_inv(void)
       dvector se=eigenvalues(hess);
       ofs3 << setshowpoint() << setw(14) << setprecision(10)
            << "unsorted:\t" << se << endl;
-     se=sort(se);
-     ofs3 << setshowpoint() << setw(14) << setprecision(10)
-     << "sorted:\t" << se << endl;
-     if (se(se.indexmin())<=0.0)
+      se=sort(se);
+      ofs3 << setshowpoint() << setw(14) << setprecision(10)
+           << "sorted:\t" << se << endl;
+      if (se(se.indexmin())<=0.0)
       {
-        negative_eigenvalue_flag=1;
-	if(function_minimizer::output_flag!=2){
-	  //  cout << "\nWarning: Negative eigenvalues in covariance matrix\n";
-	} else {
-        cout << "Warning -- Hessian does not appear to be"
-         " positive definite" << endl;
-	}
+        negative_eigenvalue_flag = 1;
+        std::ostream& output_stream = get_output_stream();
+        output_stream << "Warning -- Hessian does not appear to be positive definite"
+                      << endl;
       }
     }
     ivector negflags(0,hess.indexmax());
@@ -775,12 +773,11 @@ bool function_minimizer::hess_inv(void)
 	// hess is the covariance matrix b/c inverted above
         if (hess(i,i) <= 0.0)
         {
-	  if(function_minimizer::output_flag==2){
-	    hess_errorreport();
-	  } else {
-	    cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to invert Hessian." << endl;
-	    cerr << "        No uncertainty estimates available. Fix model structure and reoptimize" << endl << endl;
-	  }
+	  hess_errorreport();
+
+	  cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to invert Hessian.\n"
+	       << "        No uncertainty estimates available. Fix model structure and reoptimize.\n";
+
           return false;
         }
       }
@@ -816,16 +813,12 @@ bool function_minimizer::hess_inv(void)
 }
 void hess_calcreport(int i,int nvar)
 {
-  ad_printf("Estimating row %d out of %d for hessian\n", i, nvar);
-/*
-    cout << "Estimating row " << i << " out of " << nvar << " for hessian"
-         << endl;
-*/
+  std::ostream& output_stream = get_output_stream();
+  output_stream << "Estimating row " << i << " out of " << nvar << " for hessian"
+                << endl;
 }
 void hess_errorreport(void)
 {
-  ad_printf("Hessian does not appear to be positive definite\n");
-/*
-    cout << "Hessian does not appear to be positive definite\n" << endl;
-*/
+  std::ostream& output_stream = get_output_stream();
+  output_stream << "Hessian does not appear to be positive definite." << endl;
 }

@@ -9398,5 +9398,6 @@ int ad_printf( const char* format, Args ... args )
 {
   return printf(format, args...);
 }
+std::ostream& get_output_stream();
 
 #endif//#ifndef FVAR_HPP

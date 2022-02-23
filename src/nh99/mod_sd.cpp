@@ -174,21 +174,18 @@ void function_minimizer::sd_routine(void)
 
             if (diag(i+nvar)<=0.0)
             {
-	      if(function_minimizer::output_flag==2)
-		{
-		  cerr << "Estimated covariance matrix may not"
-		    " be positive definite" << endl;
-		  cerr << sort(eigenvalues(S)) << endl;
-		}
-	      else if(function_minimizer::output_flag==1)
-		{
-		  // If first variable print message, otherwise tack it on
-		  if(!bad_vars)
-		    cout << "\n Warning: Non-positive variance of sdreport variables: " << i+nvar;
-		  else
-		    cout << ", " << i+nvar;
-		  bad_vars=true;
-		}
+              std::ostream& output_stream = get_output_stream();
+              output_stream << "Estimated covariance matrix may not be positive definite.\n"
+	                    << sort(eigenvalues(S)) << endl;
+	      if(function_minimizer::output_flag==1)
+              {
+                // If first variable print message, otherwise tack it on
+                if(!bad_vars)
+                  cout << "\n Warning: Non-positive variance of sdreport variables: " << i+nvar;
+                else
+                  cout << ", " << i+nvar;
+                bad_vars=true;
+              }
             }
             ofs << endl;
           }

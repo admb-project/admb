@@ -49,13 +49,13 @@ dvector laplace_approximation_calculator::local_minimization
   s.initialize();
   s(1)=1.0;
   double fbest=evaluate_function_no_derivatives(uhat,pmin);
+  std::ostream& output_stream = get_output_stream();
   do
   {
     dvector v=local_minimization_routine(s,H,grad,lambda);
     dvector xx=uhat+v;
     double f2=evaluate_function_no_derivatives(xx,pmin);
-    if(function_minimizer::output_flag==2)
-      cout << endl << fbest-f2 << endl;
+    output_stream << endl << fbest-f2 << endl;
     if(f2<fbest)
     {
       better_flag=1;
@@ -138,8 +138,8 @@ dvector laplace_approximation_calculator::local_minimization_routine
     }
   }
   s=ub;
-  if(function_minimizer::output_flag==2)
-    cout <<  " inner maxg = " <<  fmc1.gmax;
+  std::ostream& output_stream = get_output_stream();
+  output_stream <<  " inner maxg = " <<  fmc1.gmax;
 
   fmc1.maxfn=fmsave;
   fmc1.ireturn=0;

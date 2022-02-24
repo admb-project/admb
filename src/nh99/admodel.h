@@ -964,8 +964,6 @@ public:
   virtual void restore_value(const ifstream& ifs) = 0;
   virtual void add_to_list(void);
   
-  //flag to print debugging info
-  static int debug;
   //get names of active parameters
   static adstring_array get_param_names(void);
   /** 

@@ -228,7 +228,7 @@ void function_minimizer::hess_step(){
   }
 }
 
-int initial_params::debug = 0;//flag to print debugging info
+static int debug = 0;//flag to print debugging info
 
 /**
  * Get names of active parameters

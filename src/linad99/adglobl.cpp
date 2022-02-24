@@ -40,7 +40,7 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
 
 std::ostream& get_output_stream()
 {
-  if (ad_comm::global_logfile)
+  if (function_minimizer::output_flag == 1 && ad_comm::global_logfile)
   {
     return *ad_comm::global_logfile;
   }

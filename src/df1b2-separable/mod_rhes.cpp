@@ -126,10 +126,17 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 {
   std::ostream& output_stream = get_output_stream();
 
+#ifdef DEBUG
   int debug = 0;
+#endif
+
   // get the number of active parameters
   int nvar = initial_params::nvarcalc();
+
+#ifdef DEBUG
   if (debug) cout<<endl<<"Starting hess_routine_noparallel_random_effects(). nvar = "<<nvar<<endl;
+#endif
+
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
@@ -473,6 +480,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         dvector mle(1,nvar);
         initial_params::copy_all_values(mle,1);
         ofs << mle;
+#ifdef DEBUG
         if (debug) {
             cout<<"admodel.hes:"<<endl;
             cout<<nvar<<endl;
@@ -483,6 +491,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
             cout<<mle<<endl;
             cout<<"end of hess_routine_noparallel_random_effects()"<<endl<<endl;
         }
+#endif
       }
     }
    /*

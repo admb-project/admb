@@ -839,7 +839,6 @@ protected:
   int initial_value_flag;
   double initial_value;
   double scalefactor;
-  bool has_bounds;
 public:
 #if defined(USE_SHARE_FLAGS)
   virtual void setshare(const index_type& sf,const index_type& af);

@@ -85,7 +85,6 @@ initial_params::initial_params()
   active_flag = 0;
   scalefactor = 0;
   pointer_to_phase=&initial_params::current_phase;
-  has_bounds = false;//default to no bounds
 }
 
   void initial_params::set_initial_value(double x)
@@ -490,7 +489,6 @@ void param_init_bounded_number::allocate(const data_vector& _v,
   void param_init_bounded_number::allocate(double _minb,
     double _maxb,int _phase_start,const char * _s)
   {
-    has_bounds = true;
     minb=_minb;
     maxb=_maxb;
     if (minb>maxb)
@@ -918,7 +916,6 @@ param_init_bounded_vector::param_init_bounded_vector():
   maxb(0)
   
 {
-  has_bounds=true;
   //add_to_list();
 }
 /**
@@ -929,7 +926,6 @@ param_init_bounded_number::param_init_bounded_number():
   minb(0),
   maxb(0)
 {
-  has_bounds=true;
   //add_to_list();
 }
 

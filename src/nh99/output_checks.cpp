@@ -262,6 +262,25 @@ adstring_array initial_params::get_param_names(void){
   return(par_names);
 }
   
+bool has_bounds(initial_params* p)
+{
+  constexpr const std::type_info& typeid_param_init_bounded_number = typeid(param_init_bounded_number);
+  constexpr const std::type_info& typeid_param_init_bounded_vector = typeid(param_init_bounded_vector);
+  constexpr const std::type_info& typeid_param_init_bounded_dev_vector = typeid(param_init_bounded_dev_vector);
+  constexpr const std::type_info& typeid_param_init_bounded_matrix = typeid(param_init_bounded_matrix);
+
+  const std::type_info& id = typeid(*p);
+  if (id == typeid_param_init_bounded_number
+      || id == typeid_param_init_bounded_vector
+      || id == typeid_param_init_bounded_dev_vector
+      || id == typeid_param_init_bounded_matrix)
+  {
+    return true;
+  }
+  //cout << id.name() << endl;
+
+  return false;
+}
 void initial_params::check_for_params_on_bounds(ostream& os){
   if (debug) os<<std::endl<<"Starting initial_params::check_parameters_on_bounds"<<std::endl;
   int nvar=nvarcalc(); // get the number of active parameters
@@ -274,7 +293,8 @@ void initial_params::check_for_params_on_bounds(ostream& os){
     for (int i = 0; i < num_initial_params; ++i) {
       adstring par_name_base = (varsptr[i])->label();
       if (withinbound(0,(varsptr[i])->phase_start,current_phase)) {        
-	if ((varsptr[i])->has_bounds) {
+	if (has_bounds(varsptr[i]))
+        {
 	  if (debug) os<<"----"<<par_name_base<<" is active, bounded, and will be checked."<<endl;
 	  int jmax = (varsptr[i])->size_count();
 	  if (debug) os<<"   jmax = "<<jmax<<endl;

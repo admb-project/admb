@@ -959,61 +959,83 @@ if (iprint>0)
     if (quit_flag == 'Q')
       ad_printf("User initiated interrupt");
   }
-// if last iteration of last phase print to screen regardless of
+// if last iteration of phase print to screen regardless of
 // iprint. Note that for RE models it is sometimes set iprint=0
 // intermediately so turn that off.
-if(function_minimizer::output_flag==1 &&
-   (initial_params::current_phase==initial_params::max_number_phases)){
-  
-  // this logic should print final when no RE are used for any
-  // iprint, and if RE is used if iprint>0. It will only not
-  // work when user specifies iprint=0 with a RE model.
-  if(!function_minimizer::random_effects_flag ||
-     (function_minimizer::random_effects_flag && iprint>0)){
-    // new console output for optimization
-    // assert(pointer_to_phase);
+ if(function_minimizer::output_flag==1){
+   // this logic should print final when no RE are used for any
+   // iprint, and if RE is used if iprint>0. It will only not
+   // work when user specifies iprint=0 with a RE model.
+   if(!function_minimizer::random_effects_flag ||
+      (function_minimizer::random_effects_flag && iprint>0)){
+     // always print info from final iteration.. copied from 7003
+     // above b/c I don't know how to get the logic write, I
+     // can't just use goto label7003 or it loops forever.
+     adstring_array pars(1,n);
+     if (initial_params::num_initial_params){
+       pars=initial_params::get_param_names();
+     } else {
+       for (int i = 1; i<=n; i++)  pars[i] = "param["+str(i)+"]";
+     }
+     int maxpar=1; dvariable grMax=fabs(g.elem(1));
+     for (int i = 1; i<=n; i++){
+       if (g.elem(i)>grMax){
+	 grMax = fabs(g.elem(i));
+	 maxpar=i;
+       }
+     }
+     if(iprint>0)
+       ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par=%s\n",
+		 initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), (char*)pars(maxpar));
+      
+     // only print global stuff if in last phase
+     if((initial_params::current_phase==initial_params::max_number_phases)){
+       // new console output for optimization
+       // assert(pointer_to_phase);
 
-    double runtime = ( std::clock()-function_minimizer::output_time0)/(double) CLOCKS_PER_SEC;
-    // Depending on how long it ran convert to sec/min/hour/days so
-    // the outputs are interpretable
-    std::string u; // units
-    if(runtime<=60){
-      u=" seconds";
-    } else if(runtime > 60 && runtime <=60*60){
-      runtime/=60; u=" minutes";
-    } else if(runtime > (60*60) && runtime <= (360*24)){
-      runtime/=(60*60); u=" hours";
-    } else {
-      runtime/=(24*60*60); u=" days";
-    }
-    runtime=std::round(runtime * 10.0) / 10.0;
-    // stupid way to do which.max()
-    adstring_array pars(1,n);
-    if (initial_params::num_initial_params){
-        pars=initial_params::get_param_names();
-    } else {
-        for (int i = 1; i<=n; i++) pars[i] = "param["+str(i)+"]";
-    }
-    int maxpar=1; dvariable grMax=fabs(g.elem(1));
-    for (int i = 1; i<=n; i++){
-      if (g.elem(i)>grMax){
-	grMax = fabs(g.elem(i));
-	maxpar=i;
-      }
-    }
-    cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
-    ad_printf(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
+       double runtime = ( std::clock()-function_minimizer::output_time0)/(double) CLOCKS_PER_SEC;
+       // Depending on how long it ran convert to sec/min/hour/days so
+       // the outputs are interpretable
+       std::string u; // units
+       if(runtime<=60){
+	 u=" seconds";
+       } else if(runtime > 60 && runtime <=60*60){
+	 runtime/=60; u=" minutes";
+       } else if(runtime > (60*60) && runtime <= (360*24)){
+	 runtime/=(60*60); u=" hours";
+       } else {
+	 runtime/=(24*60*60); u=" days";
+       }
+       runtime=std::round(runtime * 10.0) / 10.0;
+       // stupid way to do which.max()
+       adstring_array pars(1,n);
+       if (initial_params::num_initial_params){
+	 pars=initial_params::get_param_names();
+       } else {
+	 for (int i = 1; i<=n; i++) pars[i] = "param["+str(i)+"]";
+       }
+       int maxpar=1; dvariable grMax=fabs(g.elem(1));
+       for (int i = 1; i<=n; i++){
+	 if (g.elem(i)>grMax){
+	   grMax = fabs(g.elem(i));
+	   maxpar=i;
+	 }
+       }
+       cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
+       ad_printf(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
     
-    if (initial_params::num_initial_params && function_minimizer::output_flag==1){
-        cout << "\nChecking for estimated parameters on bounds...";
-        initial_params::check_for_params_on_bounds(std::cout);
-	//  std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
-	*ad_comm::global_logfile << "\nChecking for estimated parameters on bounds...";
-        initial_params::check_for_params_on_bounds(*ad_comm::global_logfile);
-        //os.close();
-    }
-  }
+       if (initial_params::num_initial_params && function_minimizer::output_flag==1){
+	 cout << "\nChecking for estimated parameters on bounds...";
+	 initial_params::check_for_params_on_bounds(std::cout);
+	 //  std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
+	 *ad_comm::global_logfile << "\nChecking for estimated parameters on bounds...";
+	 initial_params::check_for_params_on_bounds(*ad_comm::global_logfile);
+	 //os.close();
+       }
+     }
+   }
  }
+
 // Important to be here b/c it appears other parts of ADMB-RE
 // code set iprint=0 then call fmin, so this exits early to
 // prevent excess printing.

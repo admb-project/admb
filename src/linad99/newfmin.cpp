@@ -492,15 +492,15 @@ label7003: /* Printing table header */
           }
 	  int maxpar=1; dvariable grMax=fabs(g.elem(1));
 	  for (int i = 1; i<=n; i++){
-	    if (g.elem(i)>grMax){
+	    if (fabs(g.elem(i))>grMax){
 	      grMax = fabs(g.elem(i));
 	      maxpar=i;
 	    }
 	  }
 	  // assert(pointer_to_phase);
 	  if (itn % iprint ==0 ) 
-	  ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par=%s\n",
-		       initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), (char*)pars(maxpar));
+	  ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+		       initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
 	}
       if (iprint>0)
       {
@@ -979,14 +979,14 @@ if (iprint>0)
      }
      int maxpar=1; dvariable grMax=fabs(g.elem(1));
      for (int i = 1; i<=n; i++){
-       if (g.elem(i)>grMax){
+       if (fabs(g.elem(i))>grMax){
 	 grMax = fabs(g.elem(i));
 	 maxpar=i;
        }
      }
      if(iprint>0)
-       ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par=%s\n",
-		 initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), (char*)pars(maxpar));
+       ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+		 initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
       
      // only print global stuff if in last phase
      if((initial_params::current_phase==initial_params::max_number_phases)){
@@ -1016,13 +1016,13 @@ if (iprint>0)
        }
        int maxpar=1; dvariable grMax=fabs(g.elem(1));
        for (int i = 1; i<=n; i++){
-	 if (g.elem(i)>grMax){
+	 if (fabs(g.elem(i))>grMax){
 	   grMax = fabs(g.elem(i));
 	   maxpar=i;
 	 }
        }
        cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
-       ad_printf(" nll=%f | mag=%.5e | par=%s\n", double(f), fabs(double(gmax)), (char*)pars(maxpar));
+       ad_printf(" nll=%f | mag=%.5e | par[%3d]=%s\n", double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
     
        if (initial_params::num_initial_params && function_minimizer::output_flag==1){
 	 cout << "\nChecking for estimated parameters on bounds...";

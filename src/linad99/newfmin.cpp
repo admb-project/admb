@@ -977,11 +977,14 @@ if (iprint>0)
      } else {
        for (int i = 1; i<=n; i++)  pars[i] = "param["+str(i)+"]";
      }
-     int maxpar=1; dvariable grMax=fabs(g.elem(1));
-     for (int i = 1; i<=n; i++){
-       if (fabs(g.elem(i))>grMax){
-	 grMax = fabs(g.elem(i));
-	 maxpar=i;
+     int maxpar = 1; double grMax = fabs(g.elem(1));
+     for (int i = 2; i <= n; ++i)
+     {
+       double v = fabs(g.elem(i));
+       if (v > grMax)
+       {
+	 grMax = v;
+	 maxpar = i;
        }
      }
      if(iprint>0)
@@ -1014,12 +1017,15 @@ if (iprint>0)
        } else {
 	 for (int i = 1; i<=n; i++) pars[i] = "param["+str(i)+"]";
        }
-       int maxpar=1; dvariable grMax=fabs(g.elem(1));
-       for (int i = 1; i<=n; i++){
-	 if (fabs(g.elem(i))>grMax){
-	   grMax = fabs(g.elem(i));
-	   maxpar=i;
-	 }
+       int maxpar = 1; double grMax = fabs(g.elem(1));
+       for (int i = 2; i <= n; ++i)
+       {
+         double v = fabs(g.elem(i));
+         if (v > grMax)
+         {
+           grMax = v;
+           maxpar = i;
+         }
        }
        cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
        ad_printf(" nll=%f | mag=%.5e | par[%3d]=%s\n", double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));

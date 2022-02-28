@@ -1467,6 +1467,9 @@ public:
       v = u;
    }
 #endif
+   prevariable(const prevariable& other): prevariable(other.get_v())
+   {
+   }
 
    void initialize(void);
 
@@ -8423,6 +8426,10 @@ public:
   }
   ad_double(double _d):d(_d)
   {
+  }
+  ad_double(const ad_double& other)
+  {
+    operator=(other);
   }
   ad_double(const double_index_type& it);
   ad_double make_ad_double(double _d)

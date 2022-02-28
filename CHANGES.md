@@ -40,6 +40,8 @@ ADMB-12.3-git
   df1b2variable should be assign assigned to all elements in f1b2matrix if not empty.
   ([See Changes 463db83](https://github.com/admb-project/admb/commit/463db839675fa17f2aa3852422d89e1a51f8715d)).
 
+* Added new function feature **dtweedie** (See [Issue #234](https://github.com/admb-project/admb/issues/234)).
+
 ADMB-12.3
 ---------
 *Released March 7, 2021*  

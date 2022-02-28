@@ -9379,4 +9379,6 @@ dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
 
+dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, const bool use_log);
+
 #endif//#ifndef FVAR_HPP

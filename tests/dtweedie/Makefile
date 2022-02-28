@@ -1,11 +1,12 @@
+tweedie: tweedie.tpl
+	$(MAKE) clean
+	../../admb -g tweedie.tpl
+	./tweedie
+
 all:
 	$(MAKE) clean
 	$(MAKE) R
 	$(MAKE) tweedie
-
-tweedie: tweedie.tpl dtweedie.cpp
-	~/admb-github/build/admb/bin/admb -g tweedie.tpl dtweedie.cpp
-	./tweedie
 
 R:
 	Rscript Tweedie_demo.R

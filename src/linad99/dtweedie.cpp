@@ -11,7 +11,7 @@ int imin2(int a, int b)
 {
   return a < b ? a : b;  
 }
-int fmax2(double a, const dvariable& v)
+double fmax2(double a, const dvariable& v)
 {
   double b = value(v);
   return a > b ? a : b;  
@@ -45,7 +45,7 @@ dvariable lgamma(const prevariable& v)
   \ingroup R_style_distribution
 */
 template<class Type>
-Type _dtweedie(double y, Type& mu, Type& phi, Type& p, int give_log = 0) {
+Type _dtweedie(const double y, Type& mu, Type& phi, Type& p, bool give_log) {
   Type p1 = p - 1.0, p2 = 2.0 - p;
   Type ans = -pow(mu, p2) / (phi * p2); // log(prob(y=0))
   if (y > 0) {
@@ -54,7 +54,9 @@ Type _dtweedie(double y, Type& mu, Type& phi, Type& p, int give_log = 0) {
   }
   return ( give_log ? ans : exp(ans) );
 }
-dvariable dtweedie(double y, dvariable& mu, dvariable& phi, dvariable& p, int give_log = 0)
+
+/// dtweedie is a wrapper to _dtweedie using ADMB data types. 
+dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, const bool use_log)
 {
-  return _dtweedie(y, mu, phi, p, give_log);
+  return _dtweedie(y, mu, phi, p, use_log);
 }

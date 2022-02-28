@@ -3,8 +3,8 @@ all:
 	$(MAKE) R
 	$(MAKE) tweedie
 
-tweedie: tweedie.tpl dtweedie.cpp tweedie_logW.cpp
-	~/admb-github/build/admb/bin/admb -g tweedie.tpl
+tweedie: tweedie.tpl dtweedie.cpp
+	~/admb-github/build/admb/bin/admb -g tweedie.tpl dtweedie.cpp
 	./tweedie
 
 R:
@@ -27,3 +27,4 @@ clean:
 	@rm -vf tweedie.obj
 	@rm -vf tweedie.par
 	@rm -vf tweedie.std
+	@rm -vf dtweedie.obj

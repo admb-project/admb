@@ -19,4 +19,5 @@ PROCEDURE_SECTION
   }
 
 GLOBALS_SECTION
-  #include "dtweedie.cpp"
+  #include <fvar.hpp>
+  dvariable dtweedie(double y, dvariable& mu, dvariable& phi, dvariable& p, int give_log);

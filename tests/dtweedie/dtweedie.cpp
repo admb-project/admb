@@ -45,7 +45,7 @@ dvariable lgamma(const prevariable& v)
   \ingroup R_style_distribution
 */
 template<class Type>
-Type dtweedie(double y, Type& mu, Type& phi, Type& p, int give_log = 0) {
+Type _dtweedie(double y, Type& mu, Type& phi, Type& p, int give_log = 0) {
   Type p1 = p - 1.0, p2 = 2.0 - p;
   Type ans = -pow(mu, p2) / (phi * p2); // log(prob(y=0))
   if (y > 0) {
@@ -53,4 +53,8 @@ Type dtweedie(double y, Type& mu, Type& phi, Type& p, int give_log = 0) {
     ans += -y / (phi * p1 * pow(mu, p1)) - log(y);
   }
   return ( give_log ? ans : exp(ans) );
+}
+dvariable dtweedie(double y, dvariable& mu, dvariable& phi, dvariable& p, int give_log = 0)
+{
+  return _dtweedie(y, mu, phi, p, give_log);
 }

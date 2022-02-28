@@ -1125,3 +1125,27 @@ TEST_F(test_dvector, initialize)
   ASSERT_DOUBLE_EQ(0, a(2));
   ASSERT_DOUBLE_EQ(0, a(3));
 }
+TEST_F(test_dvector, file)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("dvector.txt");
+  ofs << "  3 ,   -5,     8.9\n";
+  ofs.close();
+  dvector a((char*)"dvector.txt", 2);
+  ASSERT_EQ(a.indexmin(), 1);
+  ASSERT_EQ(a.indexmax(), 1);
+  ASSERT_DOUBLE_EQ(a(1), -5);
+}
+TEST_F(test_dvector, file2)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("dvector.txt");
+  ofs << "  3     -5      8.9\n";
+  ofs.close();
+  dvector a((char*)"dvector.txt", 2);
+  ASSERT_EQ(a.indexmin(), 1);
+  ASSERT_EQ(a.indexmax(), 1);
+  ASSERT_DOUBLE_EQ(a(1), -5);
+}

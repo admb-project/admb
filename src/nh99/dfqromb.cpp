@@ -293,7 +293,7 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
       if ( (den=ho-hp) == 0.0)
       {
         cerr << "Error in routine POLINT" << endl;
-        exit(1);
+        ad_exit(1);
       }
       den=w/den;
       d[i]=hp*den;

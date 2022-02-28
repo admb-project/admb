@@ -65,7 +65,7 @@
  */
 void jacobcalc(int nvar, const dmatrix& jac)
 {
-  gradient_structure::jacobcalc(nvar,jac);
+  gradient_structure::get()->jacobcalc(nvar,jac);
 }
 
 /**
@@ -99,7 +99,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     return;
   }
 
-  int& _GRADFILE_PTR=GRAD_STACK1->_GRADFILE_PTR;
+  int& _GRADFILE_PTR = GRAD_STACK1->_GRADFILE_PTR;
   // check to see if anything has been written into the file
   OFF_T last_gpos=LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
@@ -192,7 +192,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     GRAD_STACK1->ptr=
          (grad_stack_entry *)DEPVARS_INFO->grad_buffer_position(ijac);
 
-    if(GRAD_STACK1->ptr <= GRAD_STACK1->ptr_first)
+    if (GRAD_STACK1->ptr <= GRAD_STACK1->ptr_first)
     {
 #ifdef DIAG
         cerr << "warning -- calling gradcalc when no calculations generating"
@@ -202,15 +202,13 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
       return;
     }    // current is one past the end so -- it
 
-    gradient_structure::GRAD_STACK1->ptr--;
+    GRAD_STACK1->ptr--;
 
     GRAD_LIST->initialize();
 
-    double_and_int* tmp =
-      (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
+    double_and_int* tmp = (double_and_int*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
 
-    unsigned long int max_last_offset
-               = gradient_structure::ARR_LIST1->get_max_last_offset();
+    unsigned long int max_last_offset = ARR_LIST1->get_max_last_offset();
 
     size_t size = sizeof(double_and_int);
 
@@ -224,35 +222,31 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 #endif
     }
 
-    *gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
+    *GRAD_STACK1->ptr->dep_addr  = 1;
 
     int break_flag=1;
     do
     {
-      gradient_structure::GRAD_STACK1->ptr++;
+      GRAD_STACK1->ptr++;
       #ifdef FAST_ASSEMBLER
         gradloop();
       #else
         //int counter=0;
-      while (gradient_structure::GRAD_STACK1->ptr-- >
-             gradient_structure::GRAD_STACK1->ptr_first)
+      while (GRAD_STACK1->ptr-- > GRAD_STACK1->ptr_first)
       {
         //grad_stack_entry* grad_ptr =
-        //gradient_structure::GRAD_STACK1->ptr;
+        //gradient_structure::get()->GRAD_STACK1->ptr;
         {
-          (* gradient_structure::GRAD_STACK1->ptr->func)();
+          (*GRAD_STACK1->ptr->func)();
         }
       }
       #endif
       // \todo Need test
       // back up the file one buffer size and read forward
-      OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
-        * gradient_structure::GRAD_STACK1->length);
-      lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
-        -offset, SEEK_CUR);
+      OFF_T offset = (OFF_T)(sizeof(grad_stack_entry) * GRAD_STACK1->length);
+      lpos = LSEEK(GRAD_STACK1->_GRADFILE_PTR, -offset, SEEK_CUR);
 
-       break_flag=gradient_structure::
-                  GRAD_STACK1->read_grad_stack_buffer(lpos);
+       break_flag = GRAD_STACK1->read_grad_stack_buffer(lpos);
     }  while (break_flag); // do
 
     int mindx = g.indexmin();
@@ -262,8 +256,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
       gg[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
       //g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
     }
-    gradient_structure::GRAD_STACK1->ptr =
-         gradient_structure::GRAD_STACK1->ptr_first;
+    GRAD_STACK1->ptr = GRAD_STACK1->ptr_first;
   }// loop over dep vars
   DEPVARS_INFO->depvar_count=0;
   if (gradient_structure::save_var_flag)

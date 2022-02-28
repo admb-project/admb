@@ -31,7 +31,7 @@
     save_dvar_vector_position();
     save_identifier_string("d");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_unary_diff);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_unary_diff);
     return(tmp);
   }
 

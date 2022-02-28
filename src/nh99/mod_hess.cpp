@@ -472,7 +472,7 @@ void function_minimizer::depvars_routine(void)
   {
      stddev_params::stddevptr[i]->set_dependent_variables();
   }
-  gradient_structure::jacobcalc(nvar,ofs);
+  gradient_structure::get()->jacobcalc(nvar,ofs);
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
      ofs << stddev_params::stddevptr[i]->label() << "  ";
@@ -512,7 +512,7 @@ bool function_minimizer::hess_inv(void)
     {
       cerr << "Error reading line " << i  << " of the hessian"
            << " in routine hess_inv()" << endl;
-      exit(1);
+      ad_exit(1);
     }
   }
 

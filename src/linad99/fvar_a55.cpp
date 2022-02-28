@@ -32,7 +32,7 @@ dvar_vector operator*(const dvector& t1, const prevariable& x)
     t1.save_dvector_position();
     save_identifier_string("Da");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_ccv_dble_prod);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_ccv_dble_prod);
     return(tmp);
   }
 
@@ -56,7 +56,7 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
     t1.save_dvector_position();
     save_identifier_string("Da");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_ccv_dble_prod);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_ccv_dble_prod);
     return(tmp);
   }
 

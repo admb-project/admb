@@ -167,7 +167,7 @@ void fmmt1::fmin2(const double& _f, const independent_variables &_x,
   }
   while (1);
 
-      exit(1);
+      ad_exit(1);
 }
 
 /**

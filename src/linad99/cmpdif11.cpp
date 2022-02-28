@@ -121,16 +121,18 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_position(void) const
   size_t wsize = sizeof(int);
   size_t wsize1 = sizeof(void*);
 
+  DF_FILE* fp = gradient_structure::get_fp();
+
   int min=rowmin();
   int max=rowmax();
   for (int i=min;i<=max;i++)
   {
-    gradient_structure::get_fp()->fwrite(&(tmp.lb(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
-   }
-  gradient_structure::get_fp()->fwrite(&(tmp.row_min),wsize);
-  gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
+    fp->fwrite(&(tmp.lb(i)),wsize);
+    fp->fwrite(&(tmp.ub(i)),wsize);
+    fp->fwrite(&(tmp.ptr(i)),wsize1);
+  }
+  fp->fwrite(&(tmp.row_min),wsize);
+  fp->fwrite(&(tmp.row_max),wsize);
 }
 
 /**
@@ -144,16 +146,18 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) const
   size_t wsize=sizeof(int);
   size_t wsize1=sizeof(void*);
 
+  DF_FILE* fp = gradient_structure::get_fp();
+
   int min=rowmin();
   int max=rowmax();
   for (int i=min;i<=max;i++)
   {
-    gradient_structure::get_fp()->fwrite(&(tmp.lb(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
-   }
-  gradient_structure::get_fp()->fwrite(&(tmp.row_min),wsize);
-  gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
+    fp->fwrite(&(tmp.lb(i)),wsize);
+    fp->fwrite(&(tmp.ub(i)),wsize);
+    fp->fwrite(&(tmp.ptr(i)),wsize1);
+  }
+  fp->fwrite(&(tmp.row_min),wsize);
+  fp->fwrite(&(tmp.row_max),wsize);
 }
 
 /**

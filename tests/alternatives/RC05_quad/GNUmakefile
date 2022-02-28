@@ -2,15 +2,17 @@ TARGET=quad
 OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
-SCRIPT_DIR=..\\..\\..\\
 include ..\\..\\test-rules.mak
 else
-SCRIPT_DIR=../../../
 include ../../test-rules.mak
 endif
 
 run: $(TARGET)
+ifeq ($(CMDSHELL),cmd)
+	$(TARGET) -nohess
+else
 	./$(TARGET) -nohess
+endif
 
 get-outputs: _get-outputs
 

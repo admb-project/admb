@@ -166,7 +166,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
   dvariable vz=0.0;
   value(vz)=x;
 
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
     &(vz.v->x),&(_y.v->x),F_x,&(_a.v->x),F_y);
 
   return vz;

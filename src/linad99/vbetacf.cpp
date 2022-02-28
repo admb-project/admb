@@ -20,7 +20,7 @@ dvariable betacf(const dvariable& a, const dvariable& b, const dvariable& x, int
 
   dvariable hh;
   value(hh) = ans.value;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind, &(value(hh)), 
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3ind, &(value(hh)), 
                          &(value(a)), der[0] ,&(value(b)), der[1], &(value(x)), der[2]);
   return hh;
 }

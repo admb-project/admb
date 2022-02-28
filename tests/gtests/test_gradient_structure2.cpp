@@ -80,8 +80,8 @@ TEST_F(test_gradient_structure2, ARRAY_MEMBLOCK_BASE_save_arrays)
 
     ASSERT_EQ(gradient_structure::get()->save_var_file_flag, 0);
     ASSERT_EQ(gradient_structure::get()->ARRAY_MEMBLOCK_SIZE, 1000000);
-    ASSERT_EQ(gradient_structure::get()->ARRAY_MEMBLOCK_BASE.adjustment, 0);
-    ASSERT_TRUE(gradient_structure::get()->ARRAY_MEMBLOCK_BASE != NULL);
+    ASSERT_EQ(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjustment, 0);
+    ASSERT_TRUE(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE != NULL);
     ASSERT_TRUE(gradient_structure::get()->ARRAY_MEMBLOCK_SAVE == NULL);
   }
   ASSERT_TRUE(gradient_structure::get() == NULL);

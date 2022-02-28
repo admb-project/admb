@@ -41,11 +41,18 @@ double_and_int* gradnew()
     ad_exit(1);
   }
 #endif
-  dlink* tmp = gradient_structure::GRAD_LIST->last_remove();
-  if (!tmp)
+  dlink* tmp = nullptr;
+
+  gradient_structure* gs = gradient_structure::get();
+  if (gs)
   {
-    tmp = gradient_structure::GRAD_LIST->create();
+    tmp = gs->GRAD_LIST->last_remove();
+    if (!tmp)
+    {
+      tmp = gs->GRAD_LIST->create();
+    }
   }
+
   //  cout << "In gradnew the address of the double * ptr is "
   //       << _farptr_tolong(tmp) << "\n";
   return (double_and_int*)tmp;
@@ -56,18 +63,19 @@ double_and_int* gradnew()
  */
 void gradfree(dlink* v)
 {
-  if (gradient_structure::GRAD_LIST)
-  {
-    if (gradient_structure::instances)
+  if (gradient_structure::get())
+    if (gradient_structure::get()->GRAD_LIST)
     {
-      gradient_structure::GRAD_LIST->append(v);
+      if (gradient_structure::instances)
+      {
+        gradient_structure::get()->GRAD_LIST->append(v);
+      }
+      else
+      {
+        delete (double_and_int*)v;
+        v = NULL;
+      }
     }
-    else
-    {
-      delete (double_and_int*)v;
-      v = NULL;
-    }
-  }
 }
 //prevariable::prevariable(const prevariable& t)
 //  {
@@ -84,7 +92,7 @@ dvariable::dvariable(const prevariable& t)
   v=gradnew();
   //(*v).nc=0;
   v->x=t.v->x;
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
     set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
 }
 /**
@@ -96,7 +104,7 @@ dvariable::dvariable(const dvariable& t): prevariable()
 {
   v=gradnew();
   v->x=t.v->x;
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
     set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
 }
 /**
@@ -110,7 +118,7 @@ dvariable::dvariable()
   (*v).x = 0.0;
 
 #ifdef SAFE_INITIALIZE
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack0(
     default_evaluation0,&((*v).x));
 #endif
 }
@@ -136,7 +144,7 @@ dvariable::dvariable(const double t)
   v = gradnew();
   v->x = t;
   //(*v).nc=0;
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack0(default_evaluation0,
     &(v->x));
 }
 /**
@@ -150,6 +158,6 @@ dvariable::dvariable(const int& t)
   v = gradnew();
   v->x = t;
   //(*v).nc=0;
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack0(default_evaluation0,
     &(v->x) );
 }

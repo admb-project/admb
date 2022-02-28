@@ -974,7 +974,7 @@ dvariable& dvariable::operator = (const df1_three_variable& v)
   double  dfz= *v.get_u_z();
   value(*this)=*v.get_u();
 
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
     &(value(*this)),&(value(*px)),dfx,&(value(*py)),dfy,&(value(*pz)),
     dfz);
 

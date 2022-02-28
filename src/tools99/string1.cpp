@@ -164,10 +164,12 @@ Return true if adstring is equal to other, otherwise false.
 
 \param other compare string
 */
+/*
 bool adstring::operator==(const adstring& other)
 {
   return !strcmp(*this, other);
 }
+*/
 /*
 int adstring::operator!=(const adstring& v)
 {

@@ -90,9 +90,11 @@ void banner(const adstring& program_name)
   ss << "2017 Version 15";
   #elif (_MSC_VER<1930)
   ss << "2019 Version 16";
+  #elif (_MSC_VER==1930)
+  ss << "2022 Version 17.0";
   #else
     #if DEBUG
-      #error "Unknown MSVC version."
+      #warning "Unknown MSVC version."
     #endif
   #endif
   #if defined(_M_X64)

@@ -112,7 +112,7 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
-#define USE_VECTOR_SHAPE_POOL
+//#define USE_VECTOR_SHAPE_POOL
 
 #if defined(USE_DDOUBLE)
 #   include <qd/qd.h>
@@ -512,7 +512,7 @@ class vector_shape
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
-  static vector_shape_pool* xpool;
+  thread_local static vector_shape_pool* xpool;
 
   void* operator new(size_t);
   void operator delete(void* ptr, size_t);
@@ -781,7 +781,7 @@ class dependent_variables_information
 dvar_vector_position restore_dvar_vector_position(void);
 dvector restore_dvar_vector_value(const dvar_vector_position & tmp);
 void arr_free(double_and_int *);
-double_and_int *arr_new(unsigned int sz);
+double_and_int* arr_new(unsigned int sz);
 
 #include <gradient_structure.h>
 
@@ -867,7 +867,7 @@ public:
   friend void df_check_derivative_values(void);
   friend void df_check_derivative_values_indexed(void);
   friend void df_check_derivative_values_indexed_break(void);
-  friend void funnel_gradcalc(void);
+  friend void gradient_structure::funnel_gradcalc(void);
   friend void slave_gradcalc(void);
   friend void gradcalc(int nvar, const dvector& g);
   friend void gradloop();
@@ -920,6 +920,7 @@ void default_evaluation3ind(void);
  */
 class grad_stack
 {
+public:
    grad_stack_entry *true_ptr_first;
    grad_stack_entry *ptr_first;
    grad_stack_entry *ptr_last;
@@ -930,19 +931,19 @@ class grad_stack
    size_t length;
    size_t true_length;
 #endif
- public:
+
    grad_stack_entry * ptr;
- private:
+   char gradfile_name[61];
+   char gradfile_name1[61];
+   char gradfile_name2[61];
+   char var_store_file_name[61];
+
    //lvector * table;
    // js
    int _GRADFILE_PTR;  // should be int gradfile_handle;
    int _GRADFILE_PTR1;  // should be int gradfile_handle;
    int _GRADFILE_PTR2;  // should be int gradfile_handle;
    int _VARSSAV_PTR;  // should be int gradfile_handle;
-   char gradfile_name[61];
-   char gradfile_name1[61];
-   char gradfile_name2[61];
-   char var_store_file_name[61];
    void create_gradfile();
 #ifdef __BORLANDC__
    long end_pos;
@@ -954,7 +955,6 @@ class grad_stack
    OFF_T end_pos2;
 #endif
    //dmatrix *table;
- public:
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);
    friend void funnel_gradcalc(void);
@@ -967,9 +967,16 @@ class grad_stack
    friend void cleanup_temporary_files();
    ostream & operator  <<(grad_stack);
    void print();
-   grad_stack();
-   ~grad_stack();
-   void write_grad_stack_buffer(void);
+
+  grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
+  grad_stack(const size_t size): grad_stack(size, 0) {}
+  grad_stack(const size_t size, const unsigned int id);
+  grad_stack(const grad_stack&) = delete;
+  ~grad_stack();
+
+  void write_grad_stack_buffer()
+    { write_grad_stack_buffer(gradient_structure::get()); }
+  void write_grad_stack_buffer(gradient_structure*);
 
    void set_gradient_stack(void (*func) (void),
      double *dep_addr, double *ind_addr1 = NULL, double mult1 = 0,
@@ -1774,9 +1781,9 @@ class ts_vector_shapex
    friend class dvar_vector;
 
 #  if defined(USE_VECTOR_SHAPE_POOL)
-   static ts_vector_shape_pool **xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n);
+   thread_local static ts_vector_shape_pool** xpool;
+   void *operator new(size_t);
+   void operator delete(void *ptr, size_t n);
 #  endif
 
    unsigned int ncopies;
@@ -1975,14 +1982,22 @@ class arr_list
    unsigned long int number_arr_links;
    friend class arr_link;
 
+  humungous_pointer ARRAY_MEMBLOCK_BASE;
+  humungous_pointer ARRAY_MEMBLOCK_SAVE;
+
  public:
-   arr_list(void)
+   arr_list()
    {
       last = 0;
       free_last = 0;
       last_offset = 0;
       max_last_offset = 0;
       number_arr_links = 0;
+   }
+   virtual ~arr_list()
+   {
+     ARRAY_MEMBLOCK_BASE.free();
+     ARRAY_MEMBLOCK_SAVE.free();
    }
 
   arr_link* get_last() const
@@ -2004,12 +2019,12 @@ class arr_list
    {
       max_last_offset = 0;
    }
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_list_remove(arr_link **);
-   friend void arr_free_add(arr_link *);
-   friend void arr_free_remove(arr_link *);
+
+  double_and_int* arr_new(unsigned int sz);
+  void arr_free(double_and_int* varr);
+  void arr_free_add(arr_link* tmp);
+  void arr_free_remove(arr_link* tmp);
+  void arr_remove(arr_link** pptr);
 };
 
 /**
@@ -2029,7 +2044,7 @@ class arr_link
 
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
-  static vector_shape_pool* xpool;
+  thread_local static vector_shape_pool* xpool;
 
   void* operator new(size_t);
   void operator delete(void* ptr, size_t);
@@ -2051,11 +2066,7 @@ public:
   unsigned int get_status() const
     { return status; }
 
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_remove(arr_link *);
-   friend void arr_free_add(arr_link *);
+  friend class arr_list;
 };
 
 #if defined(__NUMBERVECTOR__)
@@ -8687,27 +8698,27 @@ extern int ad_kill_flag;
 void reset_gradient_stack(void);
 
 #define AD_SET_DERIVATIVES1(depvar,indvar,df)  \
-     gradient_structure::GRAD_STACK1->set_gradient_stack2(default_evaluation2,\
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack2(default_evaluation2,\
        &(value(depvar)), &(value(indvar)),df);
 
 #define AD_SET_DERIVATIVES2(depvar,indvar1,df1,indvar2,df2)  \
-     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3,\
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3,\
        &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2);
 
 #define AD_SET_DERIVATIVES3(depvar,indvar1,df1,indvar2,df2,indvar3,df3)  \
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,\
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3ind,\
       &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2, \
       &(value(indvar3)),df3);
 
 #define AD_SET_DERIVATIVES4(depvar,indvar1,df1,indvar2,df2,indvar3,df3, \
   indvar4, df4)  \
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation4ind,\
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation4ind,\
       &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2, \
       &(value(indvar3)),df3, \
       &(value(indvar4)),df4);
 
 #define ADJOINT_CODE(x) \
-     gradient_structure::GRAD_STACK1->set_gradient_stack(x);
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(x);
 
 int make_sub_directory(const char *s);
 #include <adstring.hpp>

@@ -3,12 +3,12 @@ ifeq ($(OS),Windows_NT)
     CMDSHELL=cmd
     ADMB_HOME=..\\..\\..
   else
-    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      EXT=.sh
-    else
-      SHELL=cmd
+    ifndef TERM
+      export SHELL=cmd
       CMDSHELL=cmd
-      ADMB_HOME=..\\..\\..
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
 endif
@@ -22,7 +22,6 @@ GTEST_DIR=googletest-read-only\\googletest
 else
 GTEST_DIR=googletest-read-only/googletest
 endif
-
 
 GTESTS_ALL=\
  test_atomic.cpp\
@@ -171,6 +170,8 @@ GTESTS_ALL=\
  test_shareinfo.cpp\
  test_quadratic_prior.cpp\
  test_evaluate_function.cpp\
+ test_gradient_structure_thread.cpp\
+ test_dll_param_init_bounded_vector.cpp\
  main.cpp
 
 ERRORS=\
@@ -185,7 +186,6 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
- test_laplace_approximation_calculator.cpp\
  main.cpp
 
 ifdef GTESTS_DEV
@@ -476,6 +476,8 @@ ifeq ($(CMDSHELL),cmd)
 	@del /Q sparseness.info
 	@del /Q gtest-finance.exe
 	@del /Q gtest-scalefactor.exe
+	@del /Q dmatrix.txt
+	@del /Q dvector.txt
 else
 	@rm -vf test_i4_array.txt
 	@rm -vf test_i5_array.txt
@@ -594,4 +596,6 @@ else
 	@rm -vf gtest-finance
 	@rm -vf gtest-scalefactor
 	@rm -vf sparseness.info
+	@rm -vf dmatrix.txt
+	@rm -vf dvector.txt
 endif

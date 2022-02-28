@@ -4,13 +4,20 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
       CMDSHELL=cmd
   else
-    ifneq ($(TERM),cygwin)
-      ifneq ($(TERM),xterm)
-        ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
+    ifndef TERM
+      dir_cygpath=$(subst \cygpath.exe,;,$(shell where cygpath.exe 2>&1 | findstr cygpath.exe))
+      ifeq ($(dir_cygpath),)
+        SHELL=cmd
+        CMDSHELL=cmd
+      else
+        ifneq ($(findstring $(dir_cygpath),$(PATH)),$(dir_cygpath))
           SHELL=cmd
           CMDSHELL=cmd
         endif
       endif
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
   ifeq ($(CMDSHELL),cmd)
@@ -194,6 +201,13 @@ ifeq ($(CMDSHELL),cmd)
 	pushd admb\\vol && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
 	cd admb/vol && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -iprint 1 $(ADMB_RUN_ARGS)
+endif
+
+bhplfine:
+ifeq ($(CMDSHELL),cmd)
+	pushd admb\\prof_like && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
+else
+	cd admb/prof_like && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 admb-re: $(ADMB_RE_TPLS)
@@ -2032,11 +2046,6 @@ endif
 	@rm -vf admb/simple/simple.par
 	@rm -vf admb/simple/simple.std
 	@rm -vf autodif/bigmin/matinv.est
-	@rm -vf examples/admb/prof_like/bhplfine.prf
-	@rm -vf examples/admb/prof_like/dgs2
-	@rm -vf examples/admb/prof_like/diags
-	@rm -vf examples/admb/prof_like/loga_pl.plt
-	@rm -vf examples/admb/prof_like/logb_pl.plt
 	@rm -vf admb/prof_like/bhplfine.prf
 	@rm -vf admb/prof_like/dgs2
 	@rm -vf admb/prof_like/diags

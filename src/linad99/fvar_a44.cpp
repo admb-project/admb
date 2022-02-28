@@ -32,7 +32,7 @@ dvar_vector square(const dvar_vector& v1)
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eee");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(DF_dvsquare);
   return vtmp;
 }
@@ -84,7 +84,7 @@ dvar_vector cube(const dvar_vector& v1)
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("tee");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(DF_dvcube);
   return vtmp;
 }
@@ -136,7 +136,7 @@ dvar_vector fourth(const dvar_vector& v1)
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("gee");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(DF_dvfourth);
   return vtmp;
 }

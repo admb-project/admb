@@ -10,20 +10,33 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      EXT=.sh
-    else
-      SHELL=cmd
+    ifndef TERM
+      export SHELL=cmd
       CMDSHELL=cmd
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
 endif
 
-ifeq ($(SCRIPT_DIR),)
+ifndef SCRIPT_DIR
   ifeq ($(CMDSHELL),cmd)
-    SCRIPT_DIR=..\\..\\
+    ifeq ($(wildcard ..\\..\\admb.cmd),..\\..\\admb.cmd)
+      SCRIPT_DIR=..\\..\\
+    else
+      ifeq ($(wildcard ..\\..\\..\\admb.cmd),..\\..\\..\\admb.cmd)
+        SCRIPT_DIR=..\\..\\..\\
+      endif
+    endif
   else
-    SCRIPT_DIR=../../
+    ifeq ($(wildcard ../../admb$(EXT)),../../admb$(EXT))
+      SCRIPT_DIR=../../
+    else
+      ifeq ($(wildcard ../../../admb$(EXT)),../../../admb$(EXT))
+        SCRIPT_DIR=../../../
+      endif
+    endif
   endif
 endif
 

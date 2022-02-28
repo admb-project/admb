@@ -88,14 +88,13 @@ void byte_copy(void* dest, void* source, const size_t num_bytes)
 }
 #endif
 
-extern char ad_random_part[6];
-
 /**
-Constructor to allocate buffer.
+Constructor to allocate buffer and storage output file.
 
 \param nbytes size of buffer
+\param id added to filename if greater than default zero.
 */
-DF_FILE::DF_FILE(const size_t nbytes)
+DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
 {
 #if defined(_MSC_VER) || defined(__MINGW64__)
   auto max = std::numeric_limits<unsigned int>::max() - sizeof(OFF_T);
@@ -169,36 +168,47 @@ DF_FILE::DF_FILE(const size_t nbytes)
   if (path != NULL && strlen(path) <= 45)
 #if !defined (_WIN32)
   {
-      sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
-        ad_random_part);
+    if (id > 0)
+      sprintf(&cmpdif_file_name[0],"%s/cmpdiff%u.tmp", path, id);
+    else
+      sprintf(&cmpdif_file_name[0],"%s/cmpdiff.tmp", path);
+
   }
 #else
   {
     if (lastchar(path) != '\\')
     {
-      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
-        ad_random_part);
+      if (id > 0)
+        sprintf(&cmpdif_file_name[0],"%s\\cmpdiff%u.tmp", path, id);
+      else
+        sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.tmp", path);
+
     }
     else
     {
-      sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
-        ad_random_part);
+      if (id > 0)
+        sprintf(&cmpdif_file_name[0],"%scmpdiff%u.tmp", path, id);
+      else
+        sprintf(&cmpdif_file_name[0],"%scmpdiff.tmp", path);
     }
   }
 #endif
   else
   {
-    sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
+    if (id > 0)
+      sprintf(&cmpdif_file_name[0],"cmpdiff%u.tmp",id);
+    else
+      sprintf(&cmpdif_file_name[0],"cmpdiff.tmp");
   }
 #if defined (_MSC_VER) || defined (__WAT32__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
                      O_BINARY, S_IREAD | S_IWRITE);
 #elif defined (__TURBOC__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
-                     O_BINARY, S_IREAD | S_IWRITE);
+                     O_BINARY, S_IRUSR | S_IWUSR);
 #elif defined (__ZTC__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC ,
-                     S_IREAD | S_IWRITE);
+                     S_IRUSR | S_IWUSR);
 #elif  defined (__NDPX__)
   file_ptr=creat(cmpdif_file_name, O_RDWR);
 #else

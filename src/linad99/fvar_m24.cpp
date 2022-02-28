@@ -244,7 +244,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   save_identifier_string("PLACE1");
   z.save_dvar_vector_position();
   save_identifier_string("PLACE0");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
      set_gradient_stack(dmdv_solve);
   RETURN_ARRAYS_DECREMENT();
   return vc;

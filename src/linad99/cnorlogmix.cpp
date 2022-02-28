@@ -92,7 +92,7 @@ dvariable inv_cumd_normal_logistic_mixture(const prevariable& _yy,double a)
   dvariable z;
   value(z)=x;
   double dfx=1.0/df_cumd_normal_logistic_mixture(x,a);
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
      &(value(z)), &(value(yy)),dfx);
   return z;
 }

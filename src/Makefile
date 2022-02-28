@@ -149,7 +149,7 @@ dist: bins
 	copy ..\LICENSE.txt $(DESTDIR)
 	copy ..\CHANGES.md $(DESTDIR)\CHANGES.txt
 	sed.exe "s/\.md/\.txt/g" ..\README.md > $(DESTDIR)\README.txt
-	copy ..\VERSION $(DESTDIR)
+	copy ..\VERSION.txt $(DESTDIR)
 	$(MAKE) lexfiles
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
 	pushd $(DESTDIR)\bin & copy ..\..\..\scripts\set-admb-command-prompt.bat & popd

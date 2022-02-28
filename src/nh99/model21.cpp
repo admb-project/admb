@@ -21,7 +21,7 @@ void param_init_d3array::get_jacobian(const dvector& y, const dvector& ndev,
  cerr << " Error -- "
    " void param_init_number::add_value(const dvector& ndev, const int& ii)"
    " has not yet been defined" << endl;
- exit(1);
+ ad_exit(1);
 }
 
 const char * param_init_d3array::label(void)

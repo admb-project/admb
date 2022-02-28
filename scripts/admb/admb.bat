@@ -128,6 +128,23 @@ for %%a in (%*) do (
         )
       )
     )
+    if "!CXX!"=="cl" (
+       if "%%~xa"==".lib" (
+         if not defined option_libs (
+           set option_libs=!arg!
+         ) else (
+           option_libs=!option_libs! !arg!
+         )
+       )
+    ) else (
+       if "%%~xa"==".a" (
+         if defined option_libs (
+           set option_libs=!arg!
+         ) else (
+           option_libs=!option_libs! !arg!
+         )
+       )
+    )
     if "%%~xa"==".exe" (
       if defined option_o (
         set output=!arg!
@@ -278,13 +295,17 @@ if "!CXX!"=="cl" (
       set CXXMAJORNUMBER=-g++4
       set STDCXX=-std=c++11
     )
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 5.') do (
-      set CXXMAJORNUMBER=-g++5
-      set STDCXX=-std=c++11
+    if not defined CXXMAJORNUMBER (
+      for /f %%i in ('!CXX! -dumpversion ^| findstr /b 5.') do (
+        set CXXMAJORNUMBER=-g++5
+        set STDCXX=-std=c++11
+      )
     )
-    for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
-      set CXXMAJORNUMBER=-g++%%i
-      set STDCXX=-std=c++14
+    if not defined CXXMAJORNUMBER (
+      for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
+        set CXXMAJORNUMBER=-g++%%i
+        set STDCXX=-std=c++14
+      )
     )
   )
   if defined CXXFLAGS (
@@ -303,7 +324,7 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! -g
     set LDFLAGS=!LDFLAGS! -g
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -O3
+    set CXXFLAGS=!CXXFLAGS! -O2
   )
   if "!CXX!"=="clang++" (
     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
@@ -432,7 +453,6 @@ if "!CXX!"=="cl" (
       )
     )
   )
-  set CXXFLAGS=!CXXFLAGS! -fpermissive
   for /f %%i in ('!CXX! -dumpmachine ^| findstr x86_64') do (
     set CXXFLAGS=!CXXFLAGS! -D_FILE_OFFSET_BITS=64
   )
@@ -654,7 +674,10 @@ if not defined tpls (
           )
         )
       )
-      echo.&echo *** Linking: !objs!
+      if defined option_libs (
+        CMD=!CMD! !option_libs!
+      )
+      echo.&echo *** Linking: !objs! !option_libs!
       echo !CMD!
       call !CMD! || goto ERROR
       if defined d (
@@ -731,10 +754,13 @@ if not defined tpls (
         )
       )
     )
+    if defined option_libs (
+      CMD=!CMD! !option_libs!
+    )
     if defined objs (
-      echo.&echo *** Linking: !tpl!.obj !objs!
+      echo.&echo *** Linking: !tpl!.obj !objs! !option_libs!
     ) else (
-      echo.&echo *** Linking: !tpl!.obj
+      echo.&echo *** Linking: !tpl!.obj !option_libs!
     )
     echo !CMD!
     call !CMD! || goto ERROR

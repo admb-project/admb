@@ -299,6 +299,8 @@ TEST_F(test_utils, read_hessian_matrix_and_scale1)
 }
 TEST_F(test_utils, read_hessian_matrix_and_scale)
 {
+  ad_exit=&test_ad_exit;
+
   void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS, const dvector& pen_vector);
 
   uostream ofs("admodel.hes");
@@ -322,7 +324,9 @@ TEST_F(test_utils, read_hessian_matrix_and_scale)
 
   ad_comm::adprogram_name = "admodel";
   dvector pen_vector;
-  ASSERT_EXIT(read_hessian_matrix_and_scale(nvar, SS, pen_vector), testing::ExitedWithCode(1), "");
+  ASSERT_ANY_THROW({
+    read_hessian_matrix_and_scale(nvar, SS, pen_vector);
+  });
 }
 TEST_F(test_utils, read_hessian_matrix_and_scale_zero)
 {
@@ -388,27 +392,39 @@ TEST_F(test_utils, ln_normal_tail_left)
 }
 TEST_F(test_utils, ln_normal_tail_right_zero)
 {
+  ad_exit=&test_ad_exit;
+
   double ln_normal_tail_right(const double& x);
 
   double x = 0;
 
-  ASSERT_EXIT(ln_normal_tail_right(x), testing::ExitedWithCode(1), "ln_normal_tail_right");
+  ASSERT_ANY_THROW({
+    ln_normal_tail_right(x);
+  });
 }
 TEST_F(test_utils, ln_normal_tail_leftt_zero)
 {
+  ad_exit=&test_ad_exit;
+
   double ln_normal_tail_left(const double& x);
 
   double x = 0;
 
-  ASSERT_EXIT(ln_normal_tail_left(x), testing::ExitedWithCode(1), "ln_normal_tail_left");
+  ASSERT_ANY_THROW({
+    ln_normal_tail_left(x);
+  });
 }
 TEST_F(test_utils, ln_normal_tail)
 {
+  ad_exit=&test_ad_exit;
+
   double ln_normal_tail(const double& x);
 
   double x = 0;
 
-  ASSERT_EXIT(ln_normal_tail(x), testing::ExitedWithCode(1), "ln_normal_tail");
+  ASSERT_ANY_THROW({
+    ln_normal_tail(x);
+  });
 }
 TEST_F(test_utils, inv_cumd_mixture_02)
 {

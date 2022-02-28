@@ -104,19 +104,22 @@ public :
   inline adstring& operator+=(const char u)
     { return(*this += adstring(u)); }
 
-  bool operator==(const adstring& other);
+  bool operator==(const adstring& other) const;
+  bool operator==(const char* u) const
+    { return !strcmp(*this, u); }
 
-  inline int operator == (const char* u)
-    { return *this == adstring(u); }
-
-  inline int operator!=(const adstring &u)
+  bool operator!=(const adstring &u) const
     { return(!(*this==u)); }
+  bool operator!=(const char* u) const
+    { return strcmp(*this, u) != 0; }
 
   adstring operator()(const size_t i, const size_t j);
   adstring operator()(const size_t i, const size_t j) const;
 
+/*
   int operator==(const char* u) const;
   bool operator==(const adstring& other) const;
+*/
 
   adstring& operator=(const adstring &t);
   adstring& operator=(const char t);

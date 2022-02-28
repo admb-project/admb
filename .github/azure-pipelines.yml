@@ -8,7 +8,6 @@
 
 trigger:
 - master
-- main
 - dev
 
 jobs:
@@ -20,7 +19,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=yes TESTS_REMOTE=gtests
+      nmake gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -95,10 +94,10 @@ jobs:
     vmImage: 'macOS-latest'
   steps:
   - script: make clean
-  - script: make
+  - script: make -j 2
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes examples tests-core
+  - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes tests-core unit-gtests
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
@@ -136,11 +135,11 @@ jobs:
   pool:
     vmImage: 'macOS-latest'
   steps:
-  - script: make DEBUG=yes clean
-  - script: make DEBUG=yes
+  - script: make -j 2 DEBUG=yes clean
+  - script: make -j 2 DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make --directory=tests DEBUG=yes tests-contrib tests-remote unit-gtests
+  - script: make --directory=tests SAFE_ONLY=yes DEBUG=yes examples tests-contrib tests-remote
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:

@@ -432,7 +432,14 @@ PRELIMINARY_CALCS_SECTION  {
   }
                 }
 
-<DEFINE_PRELIMINARY_CALCS>^" ".* {fprintf(fall,"%s\n",yytext);}
+<DEFINE_PRELIMINARY_CALCS>^" ".* {
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(fall,"%s\n",yytext);
+  }
 
 BETWEEN_PHASES_SECTION {
   if (report_defined)
@@ -655,10 +662,10 @@ DATA_SECTION  {
 
 
 
-<DEFINE_DATA>^[ \t]*LOCAL_CALCULATIONS |
-<DEFINE_DATA>^[ \t]*LOCAL_CALCS |
-<DEFINE_DATA>^[ \t]*LOC_CALCULATIONS |
-<DEFINE_DATA>^[ \t]*LOC_CALCS  {
+<DEFINE_DATA>^[ \t]+LOCAL_CALCULATIONS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOCAL_CALCS[ \t\r\n]* |
+<DEFINE_DATA>^[ \t]+LOC_CALCULATIONS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOC_CALCS[ \t\r]*  {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -915,8 +922,8 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  d7_array ");
                      }
 
-<IN_LOCAL_CALCS>^[ \t]END_CALCS |
-<IN_LOCAL_CALCS>^[ \t]END_CALCULATIONS {
+<IN_LOCAL_CALCS>^[ \t]+END_CALCS[ \t\r]* |
+<IN_LOCAL_CALCS>^[ \t]+END_CALCULATIONS[ \t\r]* {
 
     if (in_define_data) BEGIN DEFINE_DATA;
     if (in_define_parameters) BEGIN DEFINE_PARAMETERS;
@@ -924,8 +931,13 @@ DATA_SECTION  {
                   }
 
 <IN_LOCAL_CALCS>^[ \t][ \t].*       {
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
     fprintf(fall,"%s\n",yytext);
-          }
+  }
 
 <DEFINE_PARAMETERS>^[ \t]*!!CLASS.* {              // start with !!CLASSbbclassname classinstance(xxx)
     num_user_classes++;
@@ -979,10 +991,10 @@ DATA_SECTION  {
 
     }
 
-<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCULATIONS |
-<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCS |
-<DEFINE_PARAMETERS>^[ \t]*LOC_CALCULATIONS |
-<DEFINE_PARAMETERS>^[ \t]*LOC_CALCS  {
+<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCULATIONS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOC_CALCULATIONS[ \t\r$]* |
+<DEFINE_PARAMETERS>^[ \t]+LOC_CALCS[ \t\r]*  {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -4272,12 +4284,14 @@ FUNCTION_DECLARATION[ ]*{name} |
    /*  BEGIN DEFINE_AUX_PROC; */
                               }
 
-
 <DEFINE_PROCS>^[ \t].* {
-   fprintf(fall,"%s\n",yytext);
-           }
-
-
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(fall,"%s\n",yytext);
+  }
 
 <DEFINE_AUX_PROC>^\ +{name}\ +{name}\(.*       {
 
@@ -4444,10 +4458,13 @@ TOP_OF_MAIN_SECTION {
                 }
 
 <IN_TOP_SECTION>^[ \t].* {
-
-        fprintf(ftopmain,"%s\n",yytext);
-
-                              }
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(ftopmain,"%s\n",yytext);
+  }
 
 
 <<EOF>>           {

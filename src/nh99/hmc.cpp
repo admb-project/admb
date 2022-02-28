@@ -115,16 +115,13 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     {
       if (nopt)
 	{
-	  int _L=atoi(ad_comm::argv[on+1]);
-	  if (_L < 1 )
-	    {
-	      cerr << "Error: hynstep argument must be integer > 0 " << endl;
-	      ad_exit(1);
-	    }
-	  else
-	    {
-	      L=_L;
-	    }
+	  int iii = atoi(ad_comm::argv[on+1]);
+	  if (iii < 1 )
+	  {
+	    cerr << "Error: hynstep argument must be integer > 0 " << endl;
+	    ad_exit(1);
+	  }
+	  L = iii;
 	}
     }
 

@@ -6,6 +6,9 @@
 @brief Global and static types for ad_comm, initial_params and objective_function_values classes.
 */
 
+#ifdef DEBUG
+  #include <cassert>
+#endif
 #include <admodel.h>
 
  int initial_params::straight_through_flag=0;
@@ -32,3 +35,4 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  int ad_comm::no_ln_det_choleski_flag=0;
  char ** ad_comm::argv=NULL;
  double objective_function_value::fun_without_pen=0;
+

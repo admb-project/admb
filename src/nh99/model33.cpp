@@ -270,7 +270,7 @@ string_parser::string_parser(char * s,int n)
   if (strlen(s)>n)
   {
     cerr "string too long in string_parser" << endl;
-    exit(1);
+    ad_exit(1);
   }
 
   str=new char[strlen(s+20];
@@ -369,7 +369,7 @@ string_parser::string_parser(char * s, const size_t n)
   if (strlen(s) > n)
   {
     cerr << "string too long in string_parser" << endl;
-    exit(1);
+    ad_exit(1);
   }
 
   str=new char[strlen(s)+20];

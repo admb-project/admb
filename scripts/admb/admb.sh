@@ -111,6 +111,8 @@ do
   elif [ "${file: -2}" = ".o" -o "${file: -4}" = ".obj" ]; then
     objs="$objs $file"
     nontpls="$nontpls $file"
+  elif [ "${file: -2}" = ".a" ]; then
+    libs="$libs $file"
   else
     tpls="$tpls $file"
   fi
@@ -263,8 +265,10 @@ else
     CXXFLAGS=" $CXXFLAGS"
     LDFLAGS=" $LDFLAGS"
   else
-    CXXFLAGS="-O3 $CXXFLAGS"
-    LDFLAGS="-O3 $LDFLAGS"
+    if [ "$OS" != "Windows_NT" ]; then
+      CXXFLAGS="-O2 $CXXFLAGS"
+      LDFLAGS="-O2 $LDFLAGS"
+    fi
   fi
 fi
 if [ "`uname`" == "Darwin" ]; then
@@ -524,6 +528,9 @@ do
       fi
     fi
   fi
+  if [ ! -z  "$libs" ]; then
+    CMD="$CMD $libs"
+  fi
   echo -e \*\*\* Linking: $file $objs\\n$CMD\\n
   eval $CMD
   if [[ -z $dll ]]; then
@@ -633,6 +640,9 @@ if [[ "$tplobjs" == "" ]]; then
         fi
       fi
     fi
+  fi
+  if [ ! -z  "$libs" ]; then
+    CMD="$CMD $libs"
   fi
   echo -e \*\*\* Linking: $listobjs\\n$CMD\\n
   eval $CMD

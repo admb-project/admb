@@ -245,7 +245,7 @@ extern admb_javapointers * adjm_ptr;
                     break;
                   default:
                     cerr << "error illega value for pvm_manager->mode" << endl;
-                    exit(1);
+                    ad_exit(1);
                   }
                 }
                 else
@@ -283,7 +283,7 @@ extern admb_javapointers * adjm_ptr;
                   break;
                 default:
                   cerr << "error illega value for pvm_manager->mode" << endl;
-                  exit(1);
+                  ad_exit(1);
                 }
               }
               else

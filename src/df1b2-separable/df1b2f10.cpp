@@ -84,13 +84,18 @@ void test_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
   //buffend=true_buffer+bufsize-1+sizeof(double);
   buffend=true_buffer+bufsize-1;
   bptr=buffer;
+#ifdef _MSC_VER
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
+#else
+  fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
+                   O_BINARY, S_IRUSR | S_IWUSR);
+#endif
   if (fp == -1)
   {
     cerr << "Error trying to open file " << filename
          << " in class test_smartlist " << endl;
-    exit(1);
+    ad_exit(1);
   }
 
   /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
@@ -192,7 +197,7 @@ void test_smartlist::check_buffer_size(const size_t nsize)
       if (nsize>bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
-         exit(1);
+         ad_exit(1);
       }
       write_buffer();
     }
@@ -330,7 +335,7 @@ void test_smartlist::read_buffer(void)
     if (nr <= -1 || (size_t)nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
-      exit(1);
+      ad_exit(1);
     }
     // reset the pointer to the beginning of the buffer
     bptr=buffer;
@@ -398,7 +403,7 @@ void test_smartlist::operator-=(const int n)
     if (bptr != buffer)
     {
       cerr << " Sanity error in test_smartlist::operator -= (int)" << endl;
-      exit(1);
+      ad_exit(1);
     }
     else
     {
@@ -430,7 +435,7 @@ void test_smartlist::operator+=(const int nsize)
       if ((unsigned int)nsize>bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
-         exit(1);
+         ad_exit(1);
       }
       write_buffer();
     }

@@ -98,13 +98,13 @@ void function_minimizer::sd_routine(void)
     {
       cerr << "Incorrect number of independent variables in file"
         " model.cov" << endl;
-      exit(1);
+      ad_exit(1);
     }
     cif >> S;
     if (!cif)
     {
       cerr << "error reading covariance matrix from model.cov" << endl;
-      exit(1);
+      ad_exit(1);
     }
   }
   int sgn;
@@ -331,7 +331,7 @@ void function_minimizer::sd_routine(void)
       {
         cerr << "Estimated covariance matrix may not be positive definite"
        << endl;
-        exit(1);
+        ad_exit(1);
       }
       else
       {
@@ -344,7 +344,7 @@ void function_minimizer::sd_routine(void)
       {
         cerr << "Estimated covariance matrix may not be positive definite"
        << endl;
-        exit(1);
+        ad_exit(1);
       }
       else if (diag(i)==0.0)
       {

@@ -38,7 +38,7 @@ dvar_vector operator+(const double x, const dvar_vector& t1)
     t1.save_dvar_vector_position();
     save_identifier_string("ddtu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_cdble_dv_add);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_add);
     return(tmp);
   }
 

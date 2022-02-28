@@ -2,10 +2,8 @@ TARGET=spline2
 OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
-SCRIPT_DIR=..\\..\\..\\
 include ..\\..\\test-rules.mak
 else
-SCRIPT_DIR=../../../
 include ../../test-rules.mak
 endif
 

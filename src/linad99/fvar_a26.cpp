@@ -36,7 +36,7 @@ void dv_minuseq(void);
    save_dvar_vector_position();  // for this->
    v1.save_dvar_vector_position();
    save_identifier_string("wwxx");
-    gradient_structure::GRAD_STACK1->
+    gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(dv_minuseq);
    return(*this);
  }

@@ -66,6 +66,9 @@ ADMB-dev
 
 * Renamed VERSION file to VERSION.txt to avoid compiler errors (See [Issue #240](https://github.com/admb-project/admb/issues/240)).
 
+* The default value for -iprint for printing function minimizer report is every 20 iterations instead of 10.
+  ([See Changes 581d46c0](https://github.com/admb-project/admb/commit/581d46c0ba066e1ee2548048bc1683888f18b76d)).
+
 ADMB-12.3
 ---------
 *Released March 7, 2021*  

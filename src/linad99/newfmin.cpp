@@ -17,7 +17,6 @@
 
 #include <fvar.hpp>
 #include <admodel.h>
-#include <cassert>
 #if defined(_WIN32)
   #include <windows.h>
 #endif
@@ -498,9 +497,11 @@ label7003: /* Printing table header */
 	    }
 	  }
 	  // assert(pointer_to_phase);
-	  if (itn % iprint ==0 ) 
-	  ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+	  if (itn % iprint == 0) 
+          {
+	    ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
 		       initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
+          }
 	}
       if (iprint>0)
       {

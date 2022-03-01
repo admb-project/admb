@@ -62,6 +62,10 @@ ADMB-dev
 
 * Replaced ad_printf pointer to printf with ad_printf function for outputs.
 
+* Added new function feature **dtweedie** (See [Issue #234](https://github.com/admb-project/admb/issues/234)).
+
+* Renamed VERSION file to VERSION.txt to avoid compiler errors (See [Issue #240](https://github.com/admb-project/admb/issues/240)).
+
 ADMB-12.3
 ---------
 *Released March 7, 2021*  

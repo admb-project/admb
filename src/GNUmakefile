@@ -56,7 +56,7 @@ ifeq ($(CMDSHELL),cmd)
   endif
   OBJSDIR_:=$(OBJSDIR)
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
-  ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
+  ADMB_VERSION:=$(shell if exist ..\VERSION.txt type ..\VERSION.txt)
 else
   ifndef INSTALL_DIR
     INSTALL_DIR=/usr/local/
@@ -169,7 +169,7 @@ else
     endif
     OBJSDIR_:=$(OBJSDIR)
     OBJSDIR:=$(sort $(addsuffix /, $(OBJSDIR)))
-    ADMB_VERSION:=$(shell cat ../VERSION)
+    ADMB_VERSION:=$(shell cat ../VERSION.txt)
   endif
 endif
 
@@ -387,7 +387,7 @@ ifeq ($(CMDSHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
 	$(DIST)\bin\sed.exe "s/\.md/\.txt/g" ..\README.md > ${DIST}\README.txt
 	copy /Y ..\CHANGES.md ${DIST}\CHANGES.txt
-	copy /Y ..\VERSION ${DIST}
+	copy /Y ..\VERSION.txt ${DIST}
 	pushd $(DIST) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
 	pushd $(DIST)\bin & copy ..\..\..\scripts\set-admb-command-prompt.bat & popd
 	pushd $(DIST)\bin & copy ..\..\..\scripts\admb-command-prompt.cmd & popd
@@ -395,7 +395,7 @@ else
 	cp -f ../LICENSE.txt ${DIST}
 	cat ../README.md | sed 's/\.md/\.txt/g' > ${DIST}/README.txt
 	cp -f ../CHANGES.md ${DIST}/CHANGES.txt
-	cp -f ../VERSION ${DIST}
+	cp -f ../VERSION.txt ${DIST}
 endif
 
 bins:

@@ -1,6 +1,6 @@
 @REM @setlocal
 
-@for /F %%a in ('type ..\VERSION') do @set Version=%%a
+@for /F %%a in ('type ..\VERSION.txt') do @set Version=%%a
 
 @set checkpath=%PATH:;=" "%
 @for %%i in ("%checkpath%") do @if exist %%~isvnversion.exe @for /F %%a in ('svnversion') do @set SvnVersion=.%%a

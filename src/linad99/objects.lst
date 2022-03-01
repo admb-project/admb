@@ -1,4 +1,5 @@
 OBJ1=\
+ dtweedie.obj\
  conjprod.obj\
  dmat21.obj\
  dmat3.obj\

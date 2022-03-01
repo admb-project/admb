@@ -25,6 +25,7 @@ all:\
   test-df33_tester\
   test-dd2\
   test-dualaveraging\
+  test-dtweedie\
   test-expm\
   test-f1b2vc5\
   test-geolocation\
@@ -116,6 +117,9 @@ test-dd2:
 
 test-dualaveraging:
 	pushd dualaveraging & $(MAKE) /NOLOGO & popd
+
+test-dtweedie:
+	pushd dtweedie& $(MAKE) /NOLOGO & popd
 
 test-expm:
 	pushd expm & $(MAKE) /NOLOGO & popd
@@ -218,6 +222,7 @@ clean:
 	pushd data_adstring_array & $(MAKE) /NOLOGO clean & popd
 	pushd dd2 & $(MAKE) /NOLOGO clean & popd
 	pushd dualaveraging & $(MAKE) /NOLOGO clean & popd
+	pushd dtweedie & $(MAKE) /NOLOGO clean & popd
 	pushd df33_tester & $(MAKE) /NOLOGO clean & popd
 	pushd expm & $(MAKE) /NOLOGO clean & popd
 	pushd f1b2vc5 & $(MAKE) /NOLOGO clean & popd

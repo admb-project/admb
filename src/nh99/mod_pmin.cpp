@@ -68,22 +68,18 @@ dmatrix trans(const dvector& x)
   {
     int on1 = 0;
     int nopt = 0;
+    iprint = defaults::iprint;
     if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-iprint",nopt))>-1)
     {
       if (!nopt)
       {
         cerr << "Usage -iprint option needs integer  -- ignored" << endl;
-        iprint = 10;
       }
       else
       {
         int jj=atoi(ad_comm::argv[on1+1]);
         iprint = jj;
       }
-    }
-    else
-    {
-      iprint = 10;
     }
 
     dvector siglevel("{.90,.95,.975}");

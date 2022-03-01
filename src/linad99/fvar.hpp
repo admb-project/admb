@@ -9402,5 +9402,9 @@ std::ostream& get_output_stream();
 
 dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, const bool use_log);
 
+namespace defaults
+{
+  const int iprint = 20;
+};
 
 #endif//#ifndef FVAR_HPP

@@ -37,7 +37,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   //double crit=1.e-3;
   int maxfn=400;
   int maxiter=50;
-  int iprint=-10;
+  int iprint = -defaults::iprint;
 
   dvar_vector& x = (dvar_vector&)(_x);
 

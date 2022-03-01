@@ -208,7 +208,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       ad_printf( " -crit N1,N2,... set gradient magnitude convergence "
       "criterion to N\n");
       ad_printf( " -iprint N       print out function minimizer report "
-      "every N iterations\n");
+      "every N iterations (default %i).\n", defaults::iprint);
       ad_printf( " -maxfn N1,N2,.. set maximum number opf function eval's "
       "to N\n");
       ad_printf( " -rs             if function minimizer can't make "

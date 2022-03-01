@@ -217,9 +217,9 @@ void tracing_message(int traceflag,const char *s);
       tm* localtm = localtime(&now);
       std::string m=get_filename((char*)ad_comm::adprogram_name);
       if(!random_effects_flag){
-	cout << endl << endl << "Starting optimization of '";
+	cout << "Starting optimization of '";
       } else {
-	cout << endl << endl << "Starting RE optimization of '";
+	cout << "Starting RE optimization of '";
       }
       cout << m<< "' in phase " <<
 	initial_params::current_phase << " of " <<

@@ -1,5 +1,4 @@
 .ONESHELL:
-ADMB_RUN_ARGS="-options=0"
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
       CMDSHELL=cmd

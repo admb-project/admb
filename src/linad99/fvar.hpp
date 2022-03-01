@@ -9400,4 +9400,7 @@ int ad_printf( const char* format, Args ... args )
 }
 std::ostream& get_output_stream();
 
+dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, const bool use_log);
+
+
 #endif//#ifndef FVAR_HPP

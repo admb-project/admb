@@ -9405,6 +9405,7 @@ dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, 
 namespace defaults
 {
   const int iprint = 20;
+  const int output = 1;
 };
 
 #endif//#ifndef FVAR_HPP

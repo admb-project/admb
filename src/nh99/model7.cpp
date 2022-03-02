@@ -247,6 +247,9 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       ad_printf( " -pvmtime        record timing information for PVM "
       "performance analysis\n");
 #endif
+      ad_printf( " -output N       N sets display output with \'0\' for no display, "
+      "\'1\' for brief display, or \'2\' for legacy display (default is %i).\n",
+      defaults::output);
       ad_printf( " -info           show how to cite ADMB, license, and "
       "acknowledgements\n");
       ad_printf( " -version        show version information\n");

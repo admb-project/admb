@@ -46,27 +46,30 @@ extern admb_javapointers * adjm_ptr;
      // ------------------------------------------------------------
      // Cole added experimental new flag to improve console
      // output to be more compact and informative
-     int on, nopt, tmp;
-     tmp=1;
      std::clock_t start = clock();
      function_minimizer::output_time0=start;
-     if ( (on=option_match(argc,argv,"-output",nopt))>-1){
-       if (nopt ==1){
-	 tmp=atoi(argv[on+1]);
-	 if(tmp<0 || tmp >2) {
-	   cerr << "Invalid output value, must be 0, 1, or 2" << endl;
-	   ad_exit(1);
+
+     function_minimizer::output_flag = defaults::output;
+
+     int on, nopt;
+     if ( (on=option_match(argc,argv,"-output",nopt)) > -1)
+     {
+       if (nopt == 1){
+	 int argument = atoi(argv[on+1]);
+	 if (argument <= 0 && argument <= 2)
+         {
+           function_minimizer::output_flag = argument;
 	 }
-       } else {
-	 cerr << "Wrong number of arguments after -output argument" << endl;
-	 ad_exit(1);
+         else
+         {
+	   cerr << "Warning: Invaild argument for option -output (See -help).\n\n";
+         }
        }
-       function_minimizer::output_flag=tmp;
-       //cout << "!! Using new output option =" << tmp << " !!"<< endl;
-     } else {
-       // default to 1, 2 is original, 0 is suppressed completely except errors
-       function_minimizer::output_flag=1;
-     }	 
+       else
+       {
+	 cerr << "Warning: Option -output needs a number argument (See -help).\n\n";
+       }
+     }
      // ------------------------------------------------------------
      if (option_match(argc,argv,"-mceval") == -1)
        {

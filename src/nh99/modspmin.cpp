@@ -54,6 +54,8 @@ extern admb_javapointers * adjm_ptr;
      int on, nopt;
      if ( (on=option_match(argc,argv,"-output",nopt)) > -1)
      {
+       // Updated output option with argument '-output 1'
+       // Details and bug reports at: https://github.com/admb-project/admb/discussions/219"
        if (nopt == 1){
 	 int argument = atoi(argv[on+1]);
 	 if (argument <= 0 && argument <= 2)
@@ -78,7 +80,7 @@ extern admb_javapointers * adjm_ptr;
 	   {
 	     // Experimental feature to take Newton steps after
 	     // previous optimization
-	     // Note: ::computations1 is called at the end of hess_step function. 
+	     // Note: ::computations1 is called at the end of hess_step function.
 	     hess_step();
 	   }
 	 else
@@ -99,7 +101,8 @@ extern admb_javapointers * adjm_ptr;
 
      // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
-     //Print new concluding message unless in MCMC mode which already prints timing stuff 
+
+     // Print new concluding message unless in MCMC mode which already prints timing stuff
      if(function_minimizer::output_flag==1 &&
 	!(option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1) &&
 	!(option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1) &&
@@ -121,10 +124,11 @@ extern admb_javapointers * adjm_ptr;
        std::string m=get_filename((char*)ad_comm::adprogram_name);
        cout << "\nFinished running model '" << m<<
 	 "' after " << runtime  << u << "." <<  endl;
-     } else if(function_minimizer::output_flag==2){
-       cout << endl << "Consider using the new updated output option with argument '-output 1'"<< endl <<
-	 "Details and bug reports at: https://github.com/admb-project/admb/discussions/219" << endl;
      }
+     /*
+     else if(function_minimizer::output_flag==2){
+     }
+     */
   }
 
 

@@ -87,9 +87,9 @@ void function_minimizer::hess_routine_noparallel(void)
   {
     from_start = std::chrono::system_clock::now();
 
-    cout <<  "Calculating Hessian";
-    if (nvar < 10) cout <<  ": ";
-    else cout << " (" << nvar << " variables): 0%";
+    cout << "Calculating Hessian";
+    if (nvar >= 10) cout << " (" << nvar << " variables): 0%";
+    else cout <<  ": ";
     cout.flush();
   }
 
@@ -107,8 +107,8 @@ void function_minimizer::hess_routine_noparallel(void)
     double sdelta1;
     double sdelta2;
     int percentage = 20;
-    const int num = static_cast<int>((percentage * 0.01) * nvar);
-    int index = num;
+    const int num = nvar / 5;
+    int index = num + (nvar % 5);
     for (int i=1;i<=nvar;i++)
     {
       hess_calcreport(i,nvar);
@@ -504,7 +504,7 @@ void function_minimizer::depvars_routine(void)
     from_start = std::chrono::system_clock::now();
 
     cout << "Differentiating " << ndvarcals << " derived quantities: 0";
-    if(ndvarcals>=10) cout << "%";
+    if (ndvarcals >= 10) cout << "%";
   }
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
@@ -528,22 +528,22 @@ void function_minimizer::depvars_routine(void)
   ofs << nvar << "  "  << ndvar << endl;
   int i;
   int percentage = 20;
-  const int num = static_cast<int>((percentage * 0.01) * ndvarcals);
-  int index = num;
+  const int num = nvar / 5;
+  int index = num + (nvar % 5);
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
     if (function_minimizer::output_flag == 1)
     {
       if (ndvarcals >= 10)
       {
-	if ((i + 1) == index)
+        if ((i + 1) == index)
         {
-	  cout << ", " << percentage << "%";
-	  percentage += 20;
+          cout << ", " << percentage << "%";
+          percentage += 20;
           index += num;
-	}
+        }
       } else {
-	cout << ", " << i+1;
+        cout << ", " << i + 1;
       }
     }
       stddev_params::stddevptr[i]->set_dependent_variables();
@@ -577,8 +577,11 @@ bool function_minimizer::hess_inv(void)
   if (function_minimizer::output_flag == 1)
   {
     from_start = std::chrono::system_clock::now();
-    if(nvar>10) cout << "Inverting Hessian: 0%";
-    else cout << "Inverting Hessian: 0";
+
+    cout << "Inverting Hessian";
+    if (nvar >= 10) cout << " (" << nvar << " variables): 0%";
+    else cout << ": ";
+    cout.flush();
   }
 
   initial_params::xinit(x);        // get the initial values into the x vector
@@ -619,8 +622,8 @@ bool function_minimizer::hess_inv(void)
 
   double maxerr=0.0;
   int percentage = 20;
-  const int num = static_cast<int>((percentage * 0.01) * nvar);
-  int index = num;
+  const int num = nvar / 5;
+  int index = num + (nvar % 5);
   for (int i = 1;i <= nvar; i++)
   {
     for (int j=1;j<i;j++)
@@ -636,16 +639,17 @@ bool function_minimizer::hess_inv(void)
     {
       if(nvar >= 10)
       {
-	if (i == index)
+        if (i == index)
         {
-	  cout << ", " << percentage << "%";
-	  percentage += 20;
+          cout << ", " << percentage << "%";
+          percentage += 20;
           index += num;
-	}
+        }
       }
       else
       {
-	cout << ", " << i;
+        if (i > 1) cout << ", ";
+        cout << i;
       }
     }
   }
@@ -671,8 +675,9 @@ bool function_minimizer::hess_inv(void)
       // If any values in the ith row are exactly zero it's
       // probably a floating parameter, but this is caught below
       // too when checking for invalid variances..?
-      if(function_minimizer::output_flag==1){
-	cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
+      if (function_minimizer::output_flag == 1)
+      {
+        cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
       }
       std::ostream& output_stream = get_output_stream();
       output_stream << " Hessian is 0 in row " << i
@@ -787,13 +792,13 @@ bool function_minimizer::hess_inv(void)
     {
       for (int i = 1;i <= nvar; i++)
       {
-	// hess is the covariance matrix b/c inverted above
+        // hess is the covariance matrix b/c inverted above
         if (hess(i,i) <= 0.0)
         {
-	  hess_errorreport();
+          hess_errorreport();
 
-	  cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to invert Hessian.\n"
-	       << "        No uncertainty estimates available. Fix model structure and reoptimize.\n";
+          cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to invert Hessian.\n"
+               << "        No uncertainty estimates available. Fix model structure and reoptimize.\n";
 
           return false;
         }

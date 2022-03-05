@@ -378,8 +378,8 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     }
 
     int percentage = 20;
-    const int num = static_cast<int>((percentage * 0.01) * nvar);
-    int index = num;
+    const int num = nvar / 5;
+    int index = num + (nvar % 5);
     {
       //
       uostream uos("hessian.bin");

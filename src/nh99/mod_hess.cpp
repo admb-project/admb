@@ -106,7 +106,9 @@ void function_minimizer::hess_routine_noparallel(void)
     }
     double sdelta1;
     double sdelta2;
-    double percentage=0.2;
+    int percentage = 20;
+    const int num = static_cast<int>((percentage * 0.01) * nvar);
+    int index = num;
     for (int i=1;i<=nvar;i++)
     {
       hess_calcreport(i,nvar);
@@ -115,10 +117,11 @@ void function_minimizer::hess_routine_noparallel(void)
       {
         if (nvar >= 10)
         {
-          if (i == floor(percentage * nvar))
+          if (i == index)
           {
-            cout << ", " << (100 * percentage) << "%";
-            percentage += 0.20;
+            cout << ", " << percentage << "%";
+            percentage += 20;
+            index += num;
           }
         }
         else

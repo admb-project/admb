@@ -13,6 +13,10 @@ void set_labels_for_hess(int);
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
+void print_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
+
 bool initial_params::in_hessian_phase = false;
 void function_minimizer::hess_routine(void)
 {
@@ -78,12 +82,17 @@ void function_minimizer::hess_routine_noparallel(void)
      tmpstring = ad_comm::adprogram_name + ".hes";
   uostream ofs((char*)tmpstring);
 
-  std::clock_t start=std::clock();
-  if(function_minimizer::output_flag==1){
-    if(nvar>10) cout <<  "Calculating Hessian: 0%";
-    else  cout <<  "Calculating Hessian: 0";
+  std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1)
+  {
+    from_start = std::chrono::system_clock::now();
+
+    cout <<  "Calculating Hessian";
+    if (nvar < 10) cout <<  ": ";
+    else cout << " (" << nvar << " variables): 0%";
+    cout.flush();
   }
- 
+
   ofs << nvar;
   {
     {
@@ -100,19 +109,26 @@ void function_minimizer::hess_routine_noparallel(void)
     double percentage=0.2;
     for (int i=1;i<=nvar;i++)
     {
-      if(function_minimizer::output_flag==1){
-	if(nvar>=10){
-	  if(i==floor(percentage*nvar)){
-	    cout << ", " << 100*percentage << "%";
-	    percentage += 0.20;
-	  }
-	} else {
-	  cout << ", " << i;
-	}
+      hess_calcreport(i,nvar);
+
+      if (function_minimizer::output_flag == 1)
+      {
+        if (nvar >= 10)
+        {
+          if (i == floor(percentage * nvar))
+          {
+            cout << ", " << (100 * percentage) << "%";
+            percentage += 0.20;
+          }
+        }
+        else
+        {
+          if (i > 1) cout << ", ";
+          cout << i;
+        }
+        cout.flush();
       }
 
-      hess_calcreport(i,nvar);
-    
       double xsave=x(i);
       sdelta1=x(i)+delta;
       sdelta1-=x(i);
@@ -168,38 +184,27 @@ void function_minimizer::hess_routine_noparallel(void)
 
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
+
     }
-    if(function_minimizer::output_flag==1){
-      double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-      // Depending on how long it ran convert to sec/min/hour/days so
-      // the outputs are interpretable
-      std::string u; // units
-      if(runtime<=60){
-	u=" s";
-      } else if(runtime > 60 && runtime <=60*60){
-	runtime/=60; u=" mins";
-      } else if(runtime > (60*60) && runtime <= (360*24)){
-	runtime/=(60*60); u=" hours";
-      } else {
-	runtime/=(24*60*60); u=" days";
-      }
-      runtime=std::round(runtime * 10.0) / 10.0;
-      cout << " done! (" << runtime  << u << ")" <<  endl;
+
+    if (function_minimizer::output_flag == 1)
+    {
+      print_elapsed_time(from_start, std::chrono::system_clock::now());
     }
-    
-  initial_params::reset(dvar_vector(x));
-  ofs << gradient_structure::Hybrid_bounded_flag;
-  dvector tscale(1,nvar);   // need to get scale from somewhere
-  /*int check=*/initial_params::stddev_scale(tscale,x);
-  ofs << tscale;
-  // Write the MLE (bounded space) to file to be read in later by hybrid
-  // methods. This is needed b/c the covar needs to be rescaled and the MLE
-  // is needed for that.
-  // Added by Cole; 4/2017
-  ofs << -987; // unique flag to check for later
-  dvector mle(1,nvar);
-  initial_params::copy_all_values(mle,1);
-  ofs << mle;
+
+    initial_params::reset(dvar_vector(x));
+    ofs << gradient_structure::Hybrid_bounded_flag;
+    dvector tscale(1,nvar);   // need to get scale from somewhere
+    /*int check=*/initial_params::stddev_scale(tscale,x);
+    ofs << tscale;
+    // Write the MLE (bounded space) to file to be read in later by hybrid
+    // methods. This is needed b/c the covar needs to be rescaled and the MLE
+    // is needed for that.
+    // Added by Cole; 4/2017
+    ofs << -987; // unique flag to check for later
+    dvector mle(1,nvar);
+    initial_params::copy_all_values(mle,1);
+    ofs << mle;
   }
 }
 
@@ -468,6 +473,10 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 }
 */
 
+void print_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
+
 /**
 Calculate the derivatives of dependent variables with respect to
 the independent variables.
@@ -486,8 +495,11 @@ void function_minimizer::depvars_routine(void)
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
   int ndvarcals=stddev_params::num_stddev_params;
-  std::clock_t start = clock();
-  if(function_minimizer::output_flag==1 && ndvarcals>0){
+  std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1 && ndvarcals > 0)
+  {
+    from_start = std::chrono::system_clock::now();
+
     cout << "Differentiating " << ndvarcals << " derived quantities: 0";
     if(ndvarcals>=10) cout << "%";
   }
@@ -538,22 +550,9 @@ void function_minimizer::depvars_routine(void)
     lapprox->no_function_component_flag=0;
   }
   gradient_structure::set_NO_DERIVATIVES();
-  if(function_minimizer::output_flag==1 && ndvarcals>0){
-    double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    // Depending on how long it ran convert to sec/min/hour/days so
-    // the outputs are interpretable
-    std::string u; // units
-    if(runtime<=60){
-      u=" s";
-    } else if(runtime > 60 && runtime <=60*60){
-      runtime/=60; u=" mins";
-    } else if(runtime > (60*60) && runtime <= (360*24)){
-      runtime/=(60*60); u=" hours";
-    } else {
-      runtime/=(24*60*60); u=" days";
-    }
-    runtime=std::round(runtime * 10.0) / 10.0;
-    cout << " done! (" << runtime  << u << ")" <<  endl;
+  if (function_minimizer::output_flag == 1 && ndvarcals > 0)
+  {
+    print_elapsed_time(from_start, std::chrono::system_clock::now());
   }
 }
 /**
@@ -561,13 +560,14 @@ Symmetrize and invert the hessian
 */
 bool function_minimizer::hess_inv(void)
 {
-
   initial_params::set_inactive_only_random_effects();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);
 
-  std::clock_t start=std::clock();
-  if(function_minimizer::output_flag==1){
+  std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1)
+  {
+    from_start = std::chrono::system_clock::now();
     if(nvar>10) cout << "Inverting Hessian: 0%";
     else cout << "Inverting Hessian: 0";
   }
@@ -792,22 +792,9 @@ bool function_minimizer::hess_inv(void)
       ofs << sscale;
     }
   }
-  if(function_minimizer::output_flag==1){
-    double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    // Depending on how long it ran convert to sec/min/hour/days so
-    // the outputs are interpretable
-    std::string u; // units
-    if(runtime<=60){
-      u=" s";
-    } else if(runtime > 60 && runtime <=60*60){
-      runtime/=60; u=" mins";
-    } else if(runtime > (60*60) && runtime <= (360*24)){
-      runtime/=(60*60); u=" hours";
-    } else {
-      runtime/=(24*60*60); u=" days";
-    }
-    runtime=std::round(runtime * 10.0) / 10.0;
-    cout << " done! (" << runtime  << u << ")" <<  endl;
+  if (function_minimizer::output_flag == 1)
+  {
+    print_elapsed_time(from_start, std::chrono::system_clock::now());
   }
   return true;
 }

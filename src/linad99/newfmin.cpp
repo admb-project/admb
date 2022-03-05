@@ -162,6 +162,9 @@ void print_values(const double& f, const dvector & x,const dvector& g)
 extern int traceflag;
 //#pragma warn -sig
 
+std::string get_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
 
 /**
 * Function fmin contains Quasi-Newton function minimizer with
@@ -997,20 +1000,6 @@ if (iprint>0)
        // new console output for optimization
        // assert(pointer_to_phase);
 
-       double runtime = ( std::clock()-function_minimizer::output_time0)/(double) CLOCKS_PER_SEC;
-       // Depending on how long it ran convert to sec/min/hour/days so
-       // the outputs are interpretable
-       std::string u; // units
-       if(runtime<=60){
-	 u=" seconds";
-       } else if(runtime > 60 && runtime <=60*60){
-	 runtime/=60; u=" minutes";
-       } else if(runtime > (60*60) && runtime <= (360*24)){
-	 runtime/=(60*60); u=" hours";
-       } else {
-	 runtime/=(24*60*60); u=" days";
-       }
-       runtime=std::round(runtime * 10.0) / 10.0;
        // stupid way to do which.max()
        adstring_array pars(1,n);
        if (initial_params::num_initial_params){
@@ -1028,7 +1017,9 @@ if (iprint>0)
            maxpar = i;
          }
        }
-       cout << "Optimization completed after " << runtime << u << " with final statistics:\n" ;
+       cout << "Optimization completed after "
+            << get_elapsed_time(function_minimizer::start_time, std::chrono::system_clock::now())
+            << " with final statistics:\n" ;
        ad_printf(" nll=%f | mag=%.5e | par[%3d]=%s\n", double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
     
        if (initial_params::num_initial_params && function_minimizer::output_flag==1){

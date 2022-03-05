@@ -11,6 +11,7 @@
   #define DOS386
 #endif
 
+#include <chrono>
 #include <df1b2fun.h>
 #include <admodel.h>
 
@@ -36,11 +37,75 @@ void  set_covariance_matrix(const dmatrix& m)
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
 
+#include <string>
+std::string get_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to)
+{
+  std::stringstream ss;
+
+  /*
+  using namespace std::chrono_literals;
+  auto elapsed = 86400000ms * 2 + 3600000ms * 11 + 60000ms * 34 + 1500ms;
+  //(2d 11h 34m 1.5s)
+  */
+  auto elapsed = to - from;
+  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(elapsed);
+  int count = ms.count();
+
+  if (count >= 86400000)
+  {
+    ss << (count / 86400000) << " d ";
+    count %= 86400000;
+  }
+  if (count >= 3600000)
+  {
+    ss << (count / 3600000) << " h ";
+    count %= 3600000;
+  }
+  if (count >= 60000)
+  {
+    ss << (count / 60000) << " m ";
+    count %= 60000;
+  }
+  ss << setprecision(2) << (count / 1000.0) << " s";
+
+/*
+  double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+  // Depending on how long it ran convert to sec/min/hour/days so
+  // the outputs are interpretable
+  std::string u; // units
+  if(runtime<=60){
+    u=" s";
+  } else if(runtime > 60 && runtime <=60*60){
+    runtime/=60; u=" mins";
+  } else if(runtime > (60*60) && runtime <= (360*24)){
+    runtime/=(60*60); u=" hours";
+  } else {
+    runtime/=(24*60*60); u=" days";
+  }
+  runtime=std::round(runtime * 10.0) / 10.0;
+  cout << " done! (" << runtime  << u << ")" <<  endl;
+*/
+
+  return std::move(ss.str());
+}
+
+void print_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to)
+{
+  cout << " done! (" << get_elapsed_time(from, to) << ") " << endl;
+}
+
 void function_minimizer::sd_routine(void)
 {
-  std::clock_t start=std::clock();
-  if(function_minimizer::output_flag==1)
+  std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1)
+  {
+    from_start = std::chrono::system_clock::now();
     cout << "Starting standard error calculations... " ;
+  }
 
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dvector x(1,nvar);
@@ -172,24 +237,27 @@ void function_minimizer::sd_routine(void)
             }
             diag(i+nvar)=tmp(i+nvar);
 
-            if (diag(i+nvar)<=0.0)
+            if (diag(i + nvar) <= 0.0)
             {
               std::ostream& output_stream = get_output_stream();
               output_stream << "Estimated covariance matrix may not be positive definite.\n"
 	                    << sort(eigenvalues(S)) << endl;
+
 	      if(function_minimizer::output_flag==1)
               {
                 // If first variable print message, otherwise tack it on
                 if(!bad_vars)
-                  cout << "\n Warning: Non-positive variance of sdreport variables: " << i+nvar;
+                  cout << "\n Warning: Non-positive variance of sdreport variables: ";
                 else
-                  cout << ", " << i+nvar;
+                  cout << ", ";
+
+                cout << i + nvar;
                 bad_vars=true;
               }
             }
             ofs << endl;
           }
-	  if(bad_vars) cout << endl;
+	  if (bad_vars) cout << endl;
         }
       }
       else  // have random effects
@@ -494,21 +562,9 @@ void function_minimizer::sd_routine(void)
     char msg[40] = {"Error trying to delete temporary file "};
     cerr << msg << "admodel.tmp" << endl;
   }
-  if(function_minimizer::output_flag==1){
-    double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    // Depending on how long it ran convert to sec/min/hour/days so
-    // the outputs are interpretable
-    std::string u; // units
-    if(runtime<=60){
-      u=" s";
-    } else if(runtime > 60 && runtime <=60*60){
-      runtime/=60; u=" mins";
-    } else if(runtime > (60*60) && runtime <= (360*24)){
-      runtime/=(60*60); u=" hours";
-    } else {
-      runtime/=(24*60*60); u=" days";
-    }
-    runtime=std::round(runtime * 10.0) / 10.0;
-    cout << " done! (" << runtime  << u << ")" <<  endl;
+
+  if (function_minimizer::output_flag == 1)
+  {
+    print_elapsed_time(from_start, std::chrono::system_clock::now());
   }
 }

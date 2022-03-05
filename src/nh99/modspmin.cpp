@@ -30,6 +30,10 @@ void ADSleep(unsigned int x);
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
 
+std::string get_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
+
   void function_minimizer::computations(int argc,char * argv[])
   {
     //traceflag=1;
@@ -46,10 +50,8 @@ extern admb_javapointers * adjm_ptr;
      // ------------------------------------------------------------
      // Cole added experimental new flag to improve console
      // output to be more compact and informative
-     std::clock_t start = clock();
-     function_minimizer::output_time0=start;
 
-     function_minimizer::output_flag = defaults::output;
+     output_flag = defaults::output;
 
      int on, nopt;
      if ( (on=option_match(argc,argv,"-output",nopt)) > -1)
@@ -72,6 +74,12 @@ extern admb_javapointers * adjm_ptr;
 	 cerr << "Warning: Option -output needs a number argument (See -help).\n\n";
        }
      }
+
+     if (function_minimizer::output_flag == 1)
+     {
+       start_time = std::chrono::system_clock::now();
+     }
+
      // ------------------------------------------------------------
      if (option_match(argc,argv,"-mceval") == -1)
        {
@@ -107,30 +115,13 @@ extern admb_javapointers * adjm_ptr;
 	!(option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1) &&
 	!(option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1) &&
 	!(option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)){
-       double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-       // Depending on how long it ran convert to sec/min/hour/days so
-       // the outputs are interpretable
-       std::string u; // units
-       if(runtime<=60){
-	 u=" s";
-       } else if(runtime > 60 && runtime <=60*60){
-	 runtime/=60; u=" mins";
-       } else if(runtime > (60*60) && runtime <= (360*24)){
-	 runtime/=(60*60); u=" hours";
-       } else {
-	 runtime/=(24*60*60); u=" days";
-       }
-       runtime=std::round(runtime * 100.0) / 100.0;
-       std::string m=get_filename((char*)ad_comm::adprogram_name);
-       cout << "\nFinished running model '" << m<<
-	 "' after " << runtime  << u << "." <<  endl;
-     }
-     /*
-     else if(function_minimizer::output_flag==2){
-     }
-     */
-  }
 
+       std::string m=get_filename((char*)ad_comm::adprogram_name);
+       cout << "\nFinished running model '" << m << "' after "
+            << get_elapsed_time(start_time, std::chrono::system_clock::now())
+            << "." <<  endl;
+     }
+  }
 
   void function_minimizer::computations1(int argc,char * argv[])
   {

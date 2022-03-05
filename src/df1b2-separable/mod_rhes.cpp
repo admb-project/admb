@@ -23,6 +23,10 @@ using std::istringstream;
 void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
   uostream& ofs1,ofstream& ofs,int usize,int xsize,dvector& u);
 
+void print_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
+
 /**
  * Description not yet available.
  * \param
@@ -361,35 +365,46 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     // get a number which is exactly representable
     double sdelta=1.0+delta;
     sdelta-=1.0;
-    std::clock_t start=std::clock();
-    if(function_minimizer::output_flag==1){
-      if(nvar>10) cout << endl << "Calculating Hessian: 0%";
-      else  cout << endl << "Calculating Hessian: 0";
-    }
-  
-    double percentage=0.2;
 
+    std::chrono::time_point<std::chrono::system_clock> from_start;
+    if (function_minimizer::output_flag == 1)
+    {
+      from_start = std::chrono::system_clock::now();
+
+      cout <<  "Calculating Hessian";
+      if (nvar < 10) cout <<  ": ";
+      else cout << " (" << nvar << " variables): 0%";
+      cout.flush();
+    }
+
+    double percentage=0.2;
     {
       //
       uostream uos("hessian.bin");
       uos << npts;
       for (int i=1;i<=nvar;i++)
       {
-
-      if(function_minimizer::output_flag==1){
-	if(nvar>=10){
-	  if(i==floor(percentage*nvar)){
-	    cout << ", " << 100*percentage << "%";
-	    percentage += 0.20;
-	  }
-	} else {
-	  cout << ", " << i;
-	}
-      }
-
         output_stream << "Estimating row " << i << " out of " << nvar
                       << " for hessian" << endl;
-      
+
+        if (function_minimizer::output_flag == 1)
+        {
+          if (nvar >= 10)
+          {
+            if (i == floor(percentage * nvar))
+            {
+              cout << ", " << (100 * percentage) << "%";
+              percentage += 0.20;
+            }
+          }
+          else
+          {
+            if (i > 1) cout << ", ";
+            cout << i;
+          }
+          cout.flush();
+        }
+
         for (int j=-npts;j<=npts;j++)
         {
           if (j !=0)
@@ -407,24 +422,10 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
           }
         }
       }
-
-    if(function_minimizer::output_flag==1){
-      double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-      // Depending on how long it ran convert to sec/min/hour/days so
-      // the outputs are interpretable
-      std::string u; // units
-      if(runtime<=60){
-	u=" s";
-      } else if(runtime > 60 && runtime <=60*60){
-	runtime/=60; u=" mins";
-      } else if(runtime > (60*60) && runtime <= (360*24)){
-	runtime/=(60*60); u=" hours";
-      } else {
-	runtime/=(24*60*60); u=" days";
+      if (function_minimizer::output_flag == 1)
+      {
+        print_elapsed_time(from_start, std::chrono::system_clock::now());
       }
-      runtime=std::round(runtime * 10.0) / 10.0;
-      cout << " done! (" << runtime  << u << ")" <<  endl;
-    }
     }
     // check for accuracy
     {

@@ -527,14 +527,20 @@ void function_minimizer::depvars_routine(void)
 
   ofs << nvar << "  "  << ndvar << endl;
   int i;
-  double percentage=0.2;
+  int percentage = 20;
+  const int num = static_cast<int>((percentage * 0.01) * ndvarcals);
+  int index = num;
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
-    if(function_minimizer::output_flag==1){
-      if(ndvarcals>=10){
-	if((i+1)==floor(percentage*ndvarcals)){
-	  cout << ", " << 100*percentage << "%";
-	  percentage += 0.20;
+    if (function_minimizer::output_flag == 1)
+    {
+      if (ndvarcals >= 10)
+      {
+	if ((i + 1) == index)
+        {
+	  cout << ", " << percentage << "%";
+	  percentage += 20;
+          index += num;
 	}
       } else {
 	cout << ", " << i+1;
@@ -612,7 +618,9 @@ bool function_minimizer::hess_inv(void)
   }
 
   double maxerr=0.0;
-  double percentage=0.2;
+  int percentage = 20;
+  const int num = static_cast<int>((percentage * 0.01) * nvar);
+  int index = num;
   for (int i = 1;i <= nvar; i++)
   {
     for (int j=1;j<i;j++)
@@ -624,13 +632,19 @@ bool function_minimizer::hess_inv(void)
       hess(i,j)=tmp;
       hess(j,i)=tmp;
     }
-    if(function_minimizer::output_flag==1){
-      if(nvar>=10){
-	if(i==floor(percentage*nvar)){
-	  cout << ", " << 100*percentage << "%";
-	  percentage += 0.20;
+    if (function_minimizer::output_flag == 1)
+    {
+      if(nvar >= 10)
+      {
+	if (i == index)
+        {
+	  cout << ", " << percentage << "%";
+	  percentage += 20;
+          index += num;
 	}
-      } else {
+      }
+      else
+      {
 	cout << ", " << i;
       }
     }

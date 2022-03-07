@@ -9406,6 +9406,8 @@ namespace defaults
 {
   const int iprint = 20;
   const int output = 1;
+  const int percentage = 20;
+  constexpr const int percentage_number = 100 / defaults::percentage;
 };
 
 #endif//#ifndef FVAR_HPP

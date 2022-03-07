@@ -88,8 +88,8 @@ void function_minimizer::hess_routine_noparallel(void)
     from_start = std::chrono::system_clock::now();
 
     cout << "Calculating Hessian";
-    if (nvar >= 10) cout << " (" << nvar << " variables): 0%";
-    else cout <<  ": ";
+    if (nvar >= 10) cout << " (" << nvar << " variables)";
+    cout <<  ": ";
     cout.flush();
   }
 
@@ -106,7 +106,7 @@ void function_minimizer::hess_routine_noparallel(void)
     }
     double sdelta1;
     double sdelta2;
-    int percentage = 20;
+    int percentage = defaults::percentage;
     const int num = nvar / 5;
     int index = num + (nvar % 5);
     for (int i=1;i<=nvar;i++)
@@ -119,7 +119,8 @@ void function_minimizer::hess_routine_noparallel(void)
         {
           if (i == index)
           {
-            cout << ", " << percentage << "%";
+            if (percentage > defaults::percentage) cout << ", ";
+            cout << percentage << "%";
             percentage += 20;
             index += num;
           }
@@ -527,7 +528,7 @@ void function_minimizer::depvars_routine(void)
 
   ofs << nvar << "  "  << ndvar << endl;
   int i;
-  int percentage = 20;
+  int percentage = defaults::percentage;
   const int num = nvar / 5;
   int index = num + (nvar % 5);
   for (i=0;i< stddev_params::num_stddev_params;i++)
@@ -538,7 +539,8 @@ void function_minimizer::depvars_routine(void)
       {
         if ((i + 1) == index)
         {
-          cout << ", " << percentage << "%";
+          if (percentage > defaults::percentage) cout << ", ";
+          cout << percentage << "%";
           percentage += 20;
           index += num;
         }
@@ -579,8 +581,8 @@ bool function_minimizer::hess_inv(void)
     from_start = std::chrono::system_clock::now();
 
     cout << "Inverting Hessian";
-    if (nvar >= 10) cout << " (" << nvar << " variables): 0%";
-    else cout << ": ";
+    if (nvar >= 10) cout << " (" << nvar << " variables)";
+    cout << ": ";
     cout.flush();
   }
 
@@ -621,7 +623,7 @@ bool function_minimizer::hess_inv(void)
   }
 
   double maxerr=0.0;
-  int percentage = 20;
+  int percentage = defaults::percentage;
   const int num = nvar / 5;
   int index = num + (nvar % 5);
   for (int i = 1;i <= nvar; i++)
@@ -641,7 +643,8 @@ bool function_minimizer::hess_inv(void)
       {
         if (i == index)
         {
-          cout << ", " << percentage << "%";
+          if (percentage > defaults::percentage) cout << ", ";
+          cout << percentage << "%";
           percentage += 20;
           index += num;
         }

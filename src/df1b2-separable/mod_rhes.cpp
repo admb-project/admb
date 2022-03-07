@@ -372,13 +372,13 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       from_start = std::chrono::system_clock::now();
 
       cout <<  "Calculating Hessian";
-      if (nvar >= 10) cout << " (" << nvar << " variables): 0%";
+      if (nvar >= 10) cout << " (" << nvar << " variables)";
       else cout << ": ";
       cout.flush();
     }
 
-    int percentage = 20;
-    const int num = nvar / 5;
+    int percentage = defaults::percentage;
+    const int num = nvar / defaults::percentage_number;
     int index = num + (nvar % 5);
     {
       //
@@ -395,7 +395,9 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
           {
             if (i == index)
             {
-              cout << ", " << percentage << "%";
+              if (percentage > defaults::percentage) cout << ", ";
+
+              cout << percentage << "%";
               percentage += 20;
               index += num;
             }

@@ -167,6 +167,7 @@ std::string get_elapsed_time(
   const std::chrono::time_point<std::chrono::system_clock>& to);
 
 void check_for_params_on_bounds(ostream& os);
+adstring_array get_param_names();
 
 /**
 * Function fmin contains Quasi-Newton function minimizer with
@@ -490,7 +491,7 @@ label7003: /* Printing table header */
 	  // stupid way to do which.max()
 	  adstring_array pars(1,n);
           if (initial_params::num_initial_params){
-              pars=initial_params::get_param_names();
+              pars = get_param_names();
           } else {
               for (int i = 1; i<=n; i++)  pars[i] = "param["+str(i)+"]";
           }
@@ -979,7 +980,7 @@ if (iprint>0)
      // can't just use goto label7003 or it loops forever.
      adstring_array pars(1,n);
      if (initial_params::num_initial_params){
-       pars=initial_params::get_param_names();
+       pars = get_param_names();
      } else {
        for (int i = 1; i<=n; i++)  pars[i] = "param["+str(i)+"]";
      }
@@ -1005,7 +1006,7 @@ if (iprint>0)
        // stupid way to do which.max()
        adstring_array pars(1,n);
        if (initial_params::num_initial_params){
-	 pars=initial_params::get_param_names();
+	 pars = get_param_names();
        } else {
 	 for (int i = 1; i<=n; i++) pars[i] = "param["+str(i)+"]";
        }

@@ -963,9 +963,6 @@ public:
   virtual void restore_value(const ifstream& ifs) = 0;
   virtual void add_to_list(void);
   
-  //get names of active parameters
-  static adstring_array get_param_names(void);
-  
 #if defined(USE_ADPVM)
   virtual void pvm_pack(void)=0;
   virtual void pvm_unpack(void)=0;
@@ -1987,7 +1984,6 @@ public:
  
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();
-  static adstring_array get_param_names();
   bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);
   bool calculate_chd_and_inverse(int nvar, const dmatrix& metric,
 				 dmatrix& chd, dmatrix& chdinv);

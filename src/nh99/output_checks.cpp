@@ -2,6 +2,8 @@
 #include "admodel.h"
 #include<ctime>
 
+adstring_array get_param_names();
+
 /**
   Feature to try and get closer to the optimal point
   (minimum) using Newton steps with the inverse Hessian. If
@@ -123,7 +125,7 @@ void function_minimizer::hess_step(){
   mingrad0=min(fabs(gr0));
   nll=*objective_function_value::pobjfun;
   adstring_array pars(1,nvar);
-  pars=initial_params::get_param_names();
+  pars = get_param_names();
 
   int maxpar=1;
   dvariable grMax=fabs(gr0[1]);
@@ -233,10 +235,10 @@ static int debug = 0;//flag to print debugging info
 /**
  * Get names of active parameters
  */
-adstring_array initial_params::get_param_names(void){
+adstring_array get_param_names() {
   //define and allocate adstring array
-  int nvar=nvarcalc(); // get the number of active parameters
-  if (debug) cout<<"--num initial params = "<<num_initial_params<<endl;
+  int nvar = initial_params::nvarcalc(); // get the number of active parameters
+  if (debug) cout<<"--num initial params = "<< initial_params::num_initial_params <<endl;
   if (debug) cout<<"--num active  params = "<<nvar<<endl;
   adstring_array par_names;
   if (nvar>0){
@@ -244,12 +246,13 @@ adstring_array initial_params::get_param_names(void){
 
     //loop over parameters and vectors and create names  
     int kk = 0;
-    for (int i = 0; i < num_initial_params; ++i) {
-      if (withinbound(0,(varsptr[i])->phase_start,current_phase)) {
-	int jmax = (varsptr[i])->size_count();
+    for (int i = 0; i < initial_params::num_initial_params; ++i) {
+      initial_params* varptr = initial_params::varsptr[i];
+      if (withinbound(0,varptr->phase_start,initial_params::current_phase)) {
+	int jmax = varptr->size_count();
 	for (int j = 1; j <= jmax; ++j) {
 	  kk++;
-	  par_names[kk] = (varsptr[i])->label();
+	  par_names[kk] = varptr->label();
 	  if (jmax > 1) par_names[kk] += "["+str(j)+"]";//might have to do something similar to alternative above if this doesn't work
 	}//--j loop
       }//--if

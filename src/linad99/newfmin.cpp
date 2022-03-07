@@ -166,6 +166,8 @@ std::string get_elapsed_time(
   const std::chrono::time_point<std::chrono::system_clock>& from,
   const std::chrono::time_point<std::chrono::system_clock>& to);
 
+void check_for_params_on_bounds(ostream& os);
+
 /**
 * Function fmin contains Quasi-Newton function minimizer with
 * inexact line search using Wolfe conditions and
@@ -1024,10 +1026,10 @@ if (iprint>0)
     
        if (initial_params::num_initial_params && function_minimizer::output_flag==1){
 	 cout << "\nChecking for estimated parameters on bounds...";
-	 initial_params::check_for_params_on_bounds(std::cout);
+	 check_for_params_on_bounds(std::cout);
 	 //  std::ofstream os("parameters_on_bounds.txt", std::ofstream::out|std::ofstream::trunc);
 	 *ad_comm::global_logfile << "\nChecking for estimated parameters on bounds...";
-	 initial_params::check_for_params_on_bounds(*ad_comm::global_logfile);
+	 check_for_params_on_bounds(*ad_comm::global_logfile);
 	 //os.close();
        }
      }

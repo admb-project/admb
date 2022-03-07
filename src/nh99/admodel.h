@@ -965,12 +965,6 @@ public:
   
   //get names of active parameters
   static adstring_array get_param_names(void);
-  /** 
-   * check for active parameters near bounds
-   * 
-   * @param os - ostream object to write results to
-   */
-  static void check_for_params_on_bounds(ostream & os);
   
 #if defined(USE_ADPVM)
   virtual void pvm_pack(void)=0;
@@ -1990,7 +1984,6 @@ public:
   // Compact flag to toggle new console output
   static int output_flag;
   static std::chrono::time_point<std::chrono::system_clock> start_time; // time started running model
-  void check_parameters_on_bounds();
  
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();

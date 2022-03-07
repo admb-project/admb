@@ -281,26 +281,32 @@ bool has_bounds(initial_params* p)
 
   return false;
 }
-void initial_params::check_for_params_on_bounds(ostream& os){
+/** 
+ * check for active parameters near bounds
+ * 
+ * @param os - ostream object to write results to
+ */
+void check_for_params_on_bounds(ostream& os){
   if (debug) os<<std::endl<<"Starting initial_params::check_parameters_on_bounds"<<std::endl;
-  int nvar=nvarcalc(); // get the number of active parameters
-  if (debug) os<<"--num initial params = "<<num_initial_params<<endl;
+  int nvar = initial_params::nvarcalc(); // get the number of active parameters
+  if (debug) os<<"--num initial params = "<< initial_params::num_initial_params <<endl;
   if (debug) os<<"--num active  params = "<<nvar<<endl;
   int counter=0;
   if (nvar>0){
     //loop over parameters and vectors and create names  
     int kk = 0;
-    for (int i = 0; i < num_initial_params; ++i) {
-      adstring par_name_base = (varsptr[i])->label();
-      if (withinbound(0,(varsptr[i])->phase_start,current_phase)) {        
-	if (has_bounds(varsptr[i]))
+    for (int i = 0; i < initial_params::num_initial_params; ++i) {
+      initial_params* varptr = initial_params::varsptr[i];
+      adstring par_name_base = varptr->label();
+      if (withinbound(0, varptr->phase_start, initial_params::current_phase)) {
+	if (has_bounds(varptr))
         {
 	  if (debug) os<<"----"<<par_name_base<<" is active, bounded, and will be checked."<<endl;
-	  int jmax = (varsptr[i])->size_count();
+	  int jmax = varptr->size_count();
 	  if (debug) os<<"   jmax = "<<jmax<<endl;
-	  if (dynamic_cast<param_init_bounded_number*>(varsptr[i])!=nullptr){
+	  if (dynamic_cast<param_init_bounded_number*>(varptr) != nullptr){
 	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_number."<<endl;
-	    param_init_bounded_number* p = dynamic_cast<param_init_bounded_number*>(varsptr[i]);
+	    param_init_bounded_number* p = dynamic_cast<param_init_bounded_number*>(varptr);
 	    double minb = p->get_minb();
 	    double maxb = p->get_maxb();
 	    double valp = ::value(*p);
@@ -320,9 +326,9 @@ void initial_params::check_for_params_on_bounds(ostream& os){
 	      if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
 	      os<<"   "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	    }
-	  } else if (dynamic_cast<param_init_bounded_dev_vector*>(varsptr[i]) != nullptr) {
+	  } else if (dynamic_cast<param_init_bounded_dev_vector*>(varptr) != nullptr) {
 	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_dev_vector with "<<jmax<<" elements."<<endl;
-	    param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varsptr[i]);//note: can cast to _vector here
+	    param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varptr);//note: can cast to _vector here
 	    double minb = p->get_minb();
 	    double maxb = p->get_maxb();
 	    for (int j=p->indexmin();j<=p->indexmax();j++){
@@ -344,9 +350,9 @@ void initial_params::check_for_params_on_bounds(ostream& os){
 		os<<"   "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      }
 	    }//-j
-	  } else if (dynamic_cast<param_init_bounded_vector*>(varsptr[i]) != nullptr) {
+	  } else if (dynamic_cast<param_init_bounded_vector*>(varptr) != nullptr) {
 	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_vector with "<<jmax<<" elements."<<endl;
-	    param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varsptr[i]);
+	    param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varptr);
 	    double minb = p->get_minb();
 	    double maxb = p->get_maxb();
 	    for (int j=p->indexmin();j<=p->indexmax();j++){
@@ -368,8 +374,8 @@ void initial_params::check_for_params_on_bounds(ostream& os){
 		os<<"   "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      }
 	    }//-j
-	  } else if (dynamic_cast<param_init_bounded_matrix*>(varsptr[i])!=nullptr) {
-	    param_init_bounded_matrix* p = dynamic_cast<param_init_bounded_matrix*>(varsptr[i]);
+	  } else if (dynamic_cast<param_init_bounded_matrix*>(varptr)!=nullptr) {
+	    param_init_bounded_matrix* p = dynamic_cast<param_init_bounded_matrix*>(varptr);
 	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_matrix with "<<jmax<<" elements."<<endl;
 	    double minb = p->get_minb();
 	    double maxb = p->get_maxb();

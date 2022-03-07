@@ -35,7 +35,8 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  int ad_comm::no_ln_det_choleski_flag=0;
  char ** ad_comm::argv=NULL;
  double objective_function_value::fun_without_pen=0;
- int function_minimizer::output_flag = 1;
+
+int function_minimizer::output_flag = defaults::output;
 
 std::chrono::time_point<std::chrono::system_clock> function_minimizer::start_time;
 

@@ -34,6 +34,8 @@ std::string get_elapsed_time(
   const std::chrono::time_point<std::chrono::system_clock>& from,
   const std::chrono::time_point<std::chrono::system_clock>& to);
 
+extern std::chrono::time_point<std::chrono::system_clock> start_time;
+
   void function_minimizer::computations(int argc,char * argv[])
   {
     //traceflag=1;

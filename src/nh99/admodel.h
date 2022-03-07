@@ -1980,7 +1980,6 @@ public:
 
   // Compact flag to toggle new console output
   static int output_flag;
-  static std::chrono::time_point<std::chrono::system_clock> start_time; // time started running model
  
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();

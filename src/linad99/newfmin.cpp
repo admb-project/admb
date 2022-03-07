@@ -168,6 +168,7 @@ std::string get_elapsed_time(
 
 void check_for_params_on_bounds(ostream& os);
 adstring_array get_param_names();
+std::chrono::time_point<std::chrono::system_clock> start_time;
 
 /**
 * Function fmin contains Quasi-Newton function minimizer with
@@ -1021,7 +1022,7 @@ if (iprint>0)
          }
        }
        cout << "Optimization completed after "
-            << get_elapsed_time(function_minimizer::start_time, std::chrono::system_clock::now())
+            << get_elapsed_time(start_time, std::chrono::system_clock::now())
             << " with final statistics:\n" ;
        ad_printf(" nll=%f | mag=%.5e | par[%3d]=%s\n", double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
     

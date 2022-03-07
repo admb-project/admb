@@ -504,7 +504,7 @@ void function_minimizer::depvars_routine(void)
   {
     from_start = std::chrono::system_clock::now();
 
-    cout << "Differentiating " << ndvarcals << " derived quantities: 0";
+    cout << "Differentiating " << ndvarcals << " derived quantities: ";
     if (ndvarcals >= 10) cout << "%";
   }
   independent_variables x(1,nvar);
@@ -545,7 +545,8 @@ void function_minimizer::depvars_routine(void)
           index += num;
         }
       } else {
-        cout << ", " << i + 1;
+        if (i > 0) cout << ", ";
+        cout << i + 1;
       }
     }
       stddev_params::stddevptr[i]->set_dependent_variables();

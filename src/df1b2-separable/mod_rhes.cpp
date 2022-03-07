@@ -373,7 +373,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 
       cout <<  "Calculating Hessian";
       if (nvar >= 10) cout << " (" << nvar << " variables)";
-      else cout << ": ";
+      cout << ": ";
       cout.flush();
     }
 

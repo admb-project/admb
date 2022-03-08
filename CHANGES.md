@@ -20,6 +20,8 @@ ADMB-dev
 
 #### Changes and Improvements
 
+*  Major update to the program display outputs (See [Issue #221](https://github.com/admb-project/admb/issues/221)).
+
 *  Change all exit statements to ad_exit as recommended by Dr. Dave Fournier (See [Issue #216](https://github.com/admb-project/admb/issues/216)).
 
 *  Ported source code to build and run with the ISO/IEC C++20 standard (See [Issue #223](https://github.com/admb-project/admb/issues/223)).

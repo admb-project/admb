@@ -62,7 +62,7 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
        // Details and bug reports at: https://github.com/admb-project/admb/discussions/219"
        if (nopt == 1){
 	 int argument = atoi(argv[on+1]);
-	 if (argument <= 0 && argument <= 2)
+	 if (argument >= 0 && argument <= 2)
          {
            function_minimizer::output_flag = argument;
 	 }

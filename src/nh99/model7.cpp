@@ -590,7 +590,9 @@ void function_minimizer::pre_userfunction(void)
       lapprox->separable_calls_counter=0;
     }
   }
+  cout << std::defaultfloat;
   userfunction();
+  cout << std::defaultfloat;
   if (lapprox)
   {
     if (lapprox->hesstype==2)

@@ -241,7 +241,7 @@ void function_minimizer::sd_routine(void)
             {
               std::ostream& output_stream = get_output_stream();
               output_stream << "Estimated covariance matrix may not be positive definite.\n"
-	                    << sort(eigenvalues(S)) << endl;
+	                    << std::scientific << setprecision(10) << sort(eigenvalues(S)) << endl;
 
 	      if(function_minimizer::output_flag==1)
               {

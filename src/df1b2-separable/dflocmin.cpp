@@ -139,7 +139,7 @@ dvector laplace_approximation_calculator::local_minimization_routine
   }
   s=ub;
   std::ostream& output_stream = get_output_stream();
-  output_stream <<  " inner maxg = " <<  fmc1.gmax;
+  output_stream <<  " inner maxg = " << std::scientific << setprecision(10) <<  fmc1.gmax;
 
   fmc1.maxfn=fmsave;
   fmc1.ireturn=0;

@@ -219,7 +219,7 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   double maxg=max(fabs(get_gradient_lme(uhat,pfmin)));
   if (maxg > 1.e-12)
   {
-    cout << "max g = " << maxg << endl;
+    cout << "max g = " << std::scientific << setprecision(10) << maxg << endl;
   }
 
   double f2=0.0;

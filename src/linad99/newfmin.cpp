@@ -525,7 +525,7 @@ label7003: /* Printing table header */
         output_stream << "\nFunction value " << double(f) << "; maximum gradient component mag " << double(gmax) << "\n";
   #define double dd_real
 #else
-        output_stream << "\nFunction value " << f << "; maximum gradient component mag " << gmax << "\n";
+        output_stream << "\nFunction value " << std::scientific << setprecision(7) << f << "; maximum gradient component mag " << setprecision(4) << gmax << "\n";
 #endif
       }
 /*label7002:*/
@@ -925,7 +925,7 @@ if (iprint>0)
 #define double dd_real
 #else
          //ad_printf("Minimprove criterion = %12.4le\n",min_improve);
-                    << min_improve
+                    << std::scientific << setprecision(4) << min_improve
 #endif
                     << endl;
     }
@@ -1053,7 +1053,8 @@ if(iprint == 0) goto label777;
                 << "Exit code = " << iexit << ";  converg criter " << double(crit)
 #define double dd_real
 #else
-                << "Function value " << f << "; maximum gradient component mag " << gmax
+                << "Function value " << std::scientific << setprecision(4) << f
+                << "; maximum gradient component mag " << gmax
                 << "\nExit code = " << iexit << ";  converg criter " << crit
 #endif
                 << endl;
@@ -1077,7 +1078,7 @@ label7000:/* Printing Initial statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
-        output_stream << "\nInitial statistics: \n";
+        output_stream << "\nInitial statistics: " << std::scientific << setprecision(8);
       }
       goto label7003;
 label7010:/* Printing Intermediate statistics */
@@ -1086,7 +1087,7 @@ label7010:/* Printing Intermediate statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
      if (!scroll_flag) clrscr();
 #endif
-     output_stream << "\nIntermediate statistics: \n";
+     output_stream << "\nIntermediate statistics: " << std::scientific << setprecision(8);
    }
    llog=0;
    goto label7003;

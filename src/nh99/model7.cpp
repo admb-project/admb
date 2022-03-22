@@ -597,12 +597,16 @@ void function_minimizer::pre_userfunction(void)
   #if __GNUC__ > 4
   cout << std::defaultfloat;
   #endif
+#else
+  cout << std::defaultfloat;
 #endif
   userfunction();
 #if defined(__GNUC__)
   #if __GNUC__ > 4
   cout << std::defaultfloat;
   #endif
+#else
+  cout << std::defaultfloat;
 #endif
   if (lapprox)
   {

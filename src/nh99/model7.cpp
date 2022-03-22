@@ -4,10 +4,13 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#  include <df1b2fun.h>
-#  include <admodel.h>
-//#include <parallel.h>
+#include <iostream>
+#include <df1b2fun.h>
+#include <admodel.h>
 #include <signal.h>
+
+//#include <parallel.h>
+
 #ifdef __MINGW64__
   #include <cassert>
 #endif
@@ -590,9 +593,17 @@ void function_minimizer::pre_userfunction(void)
       lapprox->separable_calls_counter=0;
     }
   }
+#if defined(__GNUC__)
+  #if __GNUC__ > 4
   cout << std::defaultfloat;
+  #endif
+#endif
   userfunction();
+#if defined(__GNUC__)
+  #if __GNUC__ > 4
   cout << std::defaultfloat;
+  #endif
+#endif
   if (lapprox)
   {
     if (lapprox->hesstype==2)

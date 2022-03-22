@@ -9404,8 +9404,8 @@ dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, 
 
 namespace defaults
 {
-  const int iprint = 10;
-  const int output = 2;
+  const int iprint = 20;
+  const int output = 1;
   const int percentage = 20;
   constexpr const int percentage_number = 100 / defaults::percentage;
 };

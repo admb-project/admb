@@ -177,8 +177,6 @@ Macro definitions.
 // C language function prototypes
 extern "C"
 {
-   typedef int (*fptr) (const char *format, ...);
-   extern fptr ad_printf;
    typedef void (*exitptr) (int);
    extern exitptr ad_exit;
 
@@ -9390,6 +9388,26 @@ dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
 
+template <class ... Args>
+int ad_printf( FILE* stream, const char* format, Args ... args )
+{
+  return fprintf(stream, format, args...);
+}
+template <class ... Args>
+int ad_printf( const char* format, Args ... args )
+{
+  return printf(format, args...);
+}
+std::ostream& get_output_stream();
+
 dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, const bool use_log);
+
+namespace defaults
+{
+  const int iprint = 20;
+  const int output = 1;
+  const int percentage = 20;
+  constexpr const int percentage_number = 100 / defaults::percentage;
+};
 
 #endif//#ifndef FVAR_HPP

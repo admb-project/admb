@@ -52,6 +52,8 @@
   #pragma interface
 #endif
 
+#include <limits>
+
 #include <vector>
 
   class laplace_approximation_calculator;
@@ -960,6 +962,7 @@ public:
     const double& ll, const dvector& diag);
   virtual void restore_value(const ifstream& ifs) = 0;
   virtual void add_to_list(void);
+  
 #if defined(USE_ADPVM)
   virtual void pvm_pack(void)=0;
   virtual void pvm_unpack(void)=0;
@@ -1975,6 +1978,9 @@ public:
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
 
+  // Compact flag to toggle new console output
+  static int output_flag;
+ 
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();
   bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);

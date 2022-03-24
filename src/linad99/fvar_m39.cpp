@@ -155,7 +155,7 @@ dvar_matrix choleski_decomp(const dvar_matrix& MM)
   save_identifier_string("rl");
   MM.save_dvar_matrix_position();
   save_identifier_string("ro");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfcholeski_decomp);
   return vc;
 }

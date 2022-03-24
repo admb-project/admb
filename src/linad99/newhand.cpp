@@ -11,7 +11,6 @@ Copyright (c) 2008-2012 Regents of the University of California
   #include <new.h>
 #else
   #include <iostream>
-  using namespace std;
   #include <new>
 #endif
 
@@ -44,6 +43,6 @@ void ad_set_new_handler (void)
 #if defined(_MSC_VER)   // will need to deal with different VC versions
   _set_new_handler (adnewhandler);
 #else
-  set_new_handler (adnewhandler);
+  std::set_new_handler(adnewhandler);
 #endif
 }

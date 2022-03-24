@@ -290,7 +290,7 @@ void i3_array::deallocate()
     }
     allocate();
   }
-#if defined(DEBUG)
+#if defined(DIAG)
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated i3_array.\n";

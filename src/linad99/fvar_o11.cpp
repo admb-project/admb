@@ -34,7 +34,7 @@
 void prevariable::operator-=(const prevariable& v1)
     {
       (*v).x-=(*v1.v).x;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(df_minus_eq_pvpv,&(v->x),
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(df_minus_eq_pvpv,&(v->x),
         &(v1.v->x));
     }
 
@@ -44,6 +44,6 @@ void prevariable::operator-=(const prevariable& v1)
  */
   void df_minus_eq_pvpv(void)
   {
-    * gradient_structure::GRAD_STACK1->ptr->ind_addr1
-               -= * gradient_structure::GRAD_STACK1->ptr->dep_addr;
+    * gradient_structure::get()->GRAD_STACK1->ptr->ind_addr1
+               -= * gradient_structure::get()->GRAD_STACK1->ptr->dep_addr;
   }

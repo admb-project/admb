@@ -36,12 +36,14 @@ void * _farptr_fromlong(unsigned long int i)
  * \param
  */
 #ifdef DIAG
-  #if !defined(__MINGW64__)
 long int _farptr_tolong(void * ptr)
 {
   return( (long int) ptr);
 }
-  #endif
+long int farptr_tolong(void * ptr)
+{
+  return _farptr_tolong(ptr);
+}
 #endif
 
 #if defined(__ZTC__)

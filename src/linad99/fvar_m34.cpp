@@ -48,7 +48,7 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
   m.save_dvar_matrix_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("PLX");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dmcv_prod);
    RETURN_ARRAYS_DECREMENT();
    return(tmp);

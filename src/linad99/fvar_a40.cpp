@@ -29,7 +29,7 @@ dvar_vector operator-(const double x, const dvar_vector& t1)
     t1.save_dvar_vector_position();
     save_identifier_string("druu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diff);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diff);
     return(tmp);
   }
 
@@ -74,7 +74,7 @@ dvar_vector operator-(const dvar_vector& t1)
     t1.save_dvar_vector_position();
     save_identifier_string("tduu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dv_minus);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_dv_minus);
     return(tmp);
   }
 

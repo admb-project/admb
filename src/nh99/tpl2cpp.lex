@@ -358,7 +358,14 @@ PRELIMINARY_CALCS_SECTION  {
   }
                 }
 
-<DEFINE_PRELIMINARY_CALCS>^[ \t].* { fprintf(fall,"%s\n",yytext); }
+<DEFINE_PRELIMINARY_CALCS>^[ \t].* {
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(fall,"%s\n",yytext);
+  }
 
 BETWEEN_PHASES_SECTION {
 
@@ -594,10 +601,10 @@ DATA_SECTION  {
 
 
 
-<DEFINE_DATA>^[ \t]*LOCAL_CALCULATIONS |
-<DEFINE_DATA>^[ \t]*LOCAL_CALCS |
-<DEFINE_DATA>^[ \t]*LOC_CALCULATIONS |
-<DEFINE_DATA>^[ \t]*LOC_CALCS  {
+<DEFINE_DATA>^[ \t]+LOCAL_CALCULATIONS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOCAL_CALCS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOC_CALCULATIONS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOC_CALCS[ \t\r]*  {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -640,6 +647,18 @@ DATA_SECTION  {
 
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  init_adstring ");
+                     }
+
+<DEFINE_DATA>init_adstring_array {
+
+    BEGIN IN_VECTOR_DEF;
+    fprintf(fdat,"%s","  data_adstring_array ");
+                     }
+
+<DEFINE_DATA>adstring_array {
+
+    BEGIN IN_NAMED_VECTOR_DEF;
+    fprintf(fdat,"%s","  adstring_array ");
                      }
 
 <DEFINE_DATA>init_line_adstring {
@@ -857,8 +876,8 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  d7_array ");
                      }
 
-<IN_LOCAL_CALCS>^[ \t]END_CALCS |
-<IN_LOCAL_CALCS>^[ \t]END_CALCULATIONS {
+<IN_LOCAL_CALCS>^[ \t]+END_CALCS[ \t\r]* |
+<IN_LOCAL_CALCS>^[ \t]+END_CALCULATIONS[ \t\r]* {
 
     if (in_define_data) BEGIN DEFINE_DATA;
     if (in_define_parameters) BEGIN DEFINE_PARAMETERS;
@@ -874,8 +893,13 @@ DATA_SECTION  {
 }
 
 <IN_LOCAL_CALCS>^[ \t][ \t].*       {
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
     fprintf(fall,"%s\n",yytext);
-          }
+  }
 
 <DEFINE_PARAMETERS>^[ \t]*!!CLASS.* {              // start with !!CLASSbbclassname classinstance(xxx)
     num_user_classes++;
@@ -929,10 +953,10 @@ DATA_SECTION  {
 
     }
 
-<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCULATIONS |
-<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCS |
-<DEFINE_PARAMETERS>^[ \t]*LOC_CALCULATIONS |
-<DEFINE_PARAMETERS>^[ \t]*LOC_CALCS  {
+<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCULATIONS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOC_CALCULATIONS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOC_CALCS[ \t\r]* {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -2372,10 +2396,10 @@ DATA_SECTION  {
 <IN_TABLE_DEF>{name}\({filename}\) {
 
     before_part(tmp_string,yytext,'(');  // get A in A("mat.tab")
- 
+
     fprintf(fdat,"%s",tmp_string);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",tmp_string);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
     after_part(tmp_string1,yytext,'\"');
@@ -2407,7 +2431,7 @@ DATA_SECTION  {
 <IN_TABLE_DEF>{name} {
     fprintf(fdat,"%s",yytext);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",yytext);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",yytext);
     fprintf(fall,"  adstring datname;\n");
@@ -2442,7 +2466,7 @@ DATA_SECTION  {
     before_part(tmp_string,yytext,'(');  // get A in A(str1)
     fprintf(fdat,"%s",tmp_string);
     fprintf(fdat,"%s",";\n");
- 
+
     fprintf(fall,"  %s",tmp_string);
     fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
 
@@ -3672,6 +3696,9 @@ PARAMETER_SECTION {
     fprintf(fdat,"%s", "  static int mceval_phase(void)\n"
       "  {\n    return initial_params::mceval_phase;\n  }\n");
 
+    fprintf(fdat,"%s", "  static int hessian_phase(void)\n"
+      "  {\n    return initial_params::in_hessian_phase;\n  }\n");
+
     fprintf(fdat,"%s", "  static int sd_phase(void)\n"
       "  {\n    return initial_params::sd_phase;\n  }\n");
 
@@ -3976,7 +4003,14 @@ FUNCTION_DECLARATION[ ]*{name} |
                               }
 
 
-<DEFINE_PROCS>^[ \t].* { fprintf(fall,"%s\n",yytext); }
+<DEFINE_PROCS>^[ \t].* {
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(fall,"%s\n",yytext);
+  }
 
 
 <DEFINE_AUX_PROC>^\ +{name}\ +{name}\(.*       {
@@ -4034,9 +4068,13 @@ GLOBALS_SECTION {
                 }
 
 <IN_GLOBALS_SECTION>^[ \t].* {
-
-        fprintf(fglobals,"%s\n",yytext);
-                              }
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(fglobals,"%s\n",yytext);
+  }
 
 TOP_OF_MAIN_SECTION {
 
@@ -4133,10 +4171,13 @@ TOP_OF_MAIN_SECTION {
                 }
 
 <IN_TOP_SECTION>^[ \t].* {
-
-        fprintf(ftopmain,"%s\n",yytext);
-
-                              }
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(ftopmain,"%s\n",yytext);
+  }
 
 
 <<EOF>> {
@@ -4353,14 +4394,14 @@ TOP_OF_MAIN_SECTION {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
         "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
-        "    mp.iprint=10;\n");
+        "    mp.iprint = defaults::iprint;\n");
     }
     else
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
         "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv);\n"
-        "    mp.iprint=10;\n");
+        "    mp.iprint = defaults::iprint;\n");
     }
 
     fprintf(ftopmain,"    mp.preliminary_calculations();\n");
@@ -4965,9 +5006,9 @@ void marker(void){;}
     if (!procedure_done)
     {
       fprintf(fall,"#ifdef DEBUG\n");
-      fprintf(fall,"  std::cout << \"DEBUG: Total gradient stack used is \" << gradient_structure::GRAD_STACK1->total() << \" out of \" << gradient_structure::get_GRADSTACK_BUFFER_SIZE() << std::endl;;\n");
-      fprintf(fall,"  std::cout << \"DEBUG: Total dvariable address used is \" << gradient_structure::GRAD_LIST->total_addresses() << \" out of \" << gradient_structure::get_MAX_DLINKS() << std::endl;;\n");
-      fprintf(fall,"  std::cout << \"DEBUG: Total dvariable address used is \" << gradient_structure::ARR_LIST1->get_max_last_offset() << \" out of \" << gradient_structure::get_ARRAY_MEMBLOCK_SIZE() << std::endl;;\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total gradient stack used is \" << gradient_structure::get()->GRAD_STACK1->total() << \" out of \" << gradient_structure::get_GRADSTACK_BUFFER_SIZE() << std::endl;;\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total dvariable address used is \" << gradient_structure::get()->GRAD_LIST->total_addresses() << \" out of \" << gradient_structure::get_MAX_DLINKS() << std::endl;;\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total dvariable address used is \" << gradient_structure::get()->ARR_LIST1->get_max_last_offset() << \" out of \" << gradient_structure::get_ARRAY_MEMBLOCK_SIZE() << std::endl;;\n");
       fprintf(fall,"#endif\n");
     }
     procedure_done=1;

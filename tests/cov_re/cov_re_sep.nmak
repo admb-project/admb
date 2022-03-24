@@ -1,0 +1,12 @@
+TARGET=cov_re_sep
+OVERRIDE=all
+
+!include <..\test-rules.nmake>
+
+run: $(TARGET)
+	$(TARGET)
+	$(TARGET) -shess
+
+get-outputs: _get-outputs
+
+clean: _clean

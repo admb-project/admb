@@ -264,6 +264,7 @@ Construct adpool with size (sz).
 \param sz size of adpool.
 */
 adpool::adpool(const size_t sz):
+  nvar(0),
   last_chunk(NULL),
   num_allocated(0),
   num_chunks(0),

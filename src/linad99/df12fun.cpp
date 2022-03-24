@@ -73,9 +73,9 @@ df1_two_vector::~df1_two_vector()
      {
        v = (df1_two_variable*) (shape->trueptr);
        delete [] v;
-       v = NULL;
        delete shape;
-       shape=0;
+       //Reinitialize to empty
+       allocate();
      }
    }
  }
@@ -228,6 +228,8 @@ void df1_two_vector::allocate()
        v=0;
        delete shape;
        shape=0;
+       index_min = 0;
+       index_max = -1;
      }
    }
  }

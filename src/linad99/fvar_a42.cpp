@@ -32,7 +32,7 @@ dvar_vector operator/(const prevariable& x, const dvar_vector& t1)
     t1.save_dvar_vector_position();
     save_identifier_string("deea");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dble_dv_div);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_dble_dv_div);
     return(tmp);
   }
 

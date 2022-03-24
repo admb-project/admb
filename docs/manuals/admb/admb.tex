@@ -26,9 +26,9 @@
 \newcommand\Pone{P_{t|t-1}}
 \newcommand\diag{\textrm{diag}}
 \newcommand\ep{\textrm{elem\_prod}}
-\newcommand\admbversion{12.1}
-\newcommand\admbyear{2020}
-\newcommand\admbdate{2020-01-17}
+\newcommand\admbversion{12.3}
+\newcommand\admbyear{2021}
+\newcommand\admbdate{2021-03-07}
 
 \makeindex
 
@@ -177,7 +177,7 @@ models.
 \ADM\ is open source, available at \url{https://www.admb-project.org/downloads/}
 for Windows, Linux, and MacOS across a variety of \cplus\ compilers.
 Installation instructions are available at
-\url{https://github.com/admb-project/admb/blob/master/INSTALL.md}.
+\url{https://github.com/admb-project/admb/blob/main/INSTALL.md}.
 
 \section{The sections in an \ADMS\ \textsc{tpl} file}
 \X{template sections}
@@ -2005,6 +2005,8 @@ write its name in the procedure section.
   get_mortality_and_survival_rates();
 \end{lstlisting}
 You must include the parentheses and the semicolon here.
+
+\section{The \texttt{REPORT\_SECTION}}
 
 The \texttt{REPORT\_SECTION} shows how to generate a report for an \ADM\
 program. The default report generating machinery utilizes the \cplus\ ``stream

@@ -27,7 +27,6 @@
 
 #if !defined(_MSC_VER)
 #include <iostream>
-using namespace std;
 #include <memory.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -85,7 +84,7 @@ int ad_mkdir(const char* s)
 #if defined(_WIN32)
   return CreateDirectory(s, NULL) != 0;
 #else
-  return mkdir(s,S_IREAD | S_IWRITE) == 0;
+  return mkdir(s, S_IRUSR | S_IWUSR) == 0;
 #endif
 }
 /**

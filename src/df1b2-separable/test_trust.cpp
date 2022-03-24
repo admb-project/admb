@@ -210,7 +210,7 @@ void laplace_approximation_calculator::get_complete_hessian
   (dmatrix& H,dvector& g,function_minimizer * pfmin)
 {
   int i,j,ip;
-
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -219,7 +219,7 @@ void laplace_approximation_calculator::get_complete_hessian
           <<  endl;
     }
   }
-
+#endif
   for (ip=1;ip<=num_der_blocks;ip++)
   {
     df1b2variable::minder=minder(ip);
@@ -251,6 +251,7 @@ void laplace_approximation_calculator::get_complete_hessian
       grad.initialize();
     }
 
+#ifdef DIAG_TIMER
     double time1 = 0;
     if (ad_comm::time_flag)
     {
@@ -259,9 +260,9 @@ void laplace_approximation_calculator::get_complete_hessian
         time1=ad_comm::ptm->get_elapsed_time();
       }
     }
-
+#endif
     pfmin->user_function();
-
+#ifdef DIAG_TIMER
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
@@ -274,7 +275,7 @@ void laplace_approximation_calculator::get_complete_hessian
         }
       }
     }
-
+#endif
     re_objective_function_value::fun_without_pen
       =value(*re_objective_function_value::pobjfun);
 
@@ -329,6 +330,7 @@ void laplace_approximation_calculator::get_complete_hessian
 
 
   // just to match master pvm routine
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -336,13 +338,10 @@ void laplace_approximation_calculator::get_complete_hessian
       /*double time=*/ad_comm::ptm->get_elapsed_time();
     }
   }
+#endif
 }
 
-
-
 #define EPS 1.0e-14
-
-
 
 /*
 int main(int argc,char * argv[])

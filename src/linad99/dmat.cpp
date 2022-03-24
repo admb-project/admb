@@ -341,7 +341,7 @@ void dmatrix::deallocate()
     }
     allocate();
   }
-#ifdef DEBUG
+#if defined(DIAG)
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated dmatrix.\n";

@@ -171,7 +171,7 @@ void function_minimizer::constraints_minimize(void)
     {
       cerr << "Error -- no active parameters. There must be at least 1"
            << endl;
-      exit(1);
+      ad_exit(1);
     }
 
     pfm=this;

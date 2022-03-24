@@ -41,6 +41,8 @@ TEST_F(test_ad_comm, timer)
 }
 TEST_F(test_ad_comm, help)
 {
+  ad_exit=&test_ad_exit;
+
   int argc = 2;
   char* argv[] = { "./simple" , "-help"};
   ASSERT_ANY_THROW({
@@ -51,6 +53,8 @@ TEST_F(test_ad_comm, help)
 }
 TEST_F(test_ad_comm, info)
 {
+  ad_exit=&test_ad_exit;
+
   int argc = 2;
   char* argv[] = { "./simple" , "-info"};
   ASSERT_ANY_THROW({

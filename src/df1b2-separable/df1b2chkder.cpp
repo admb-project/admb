@@ -28,6 +28,12 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
 
 dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 
+#ifdef DIAG_TIMER
+int ad_comm::time_flag = 0;
+adtimer* ad_comm::ptm = nullptr;
+adtimer* ad_comm::ptm1 = nullptr;
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -35,8 +41,10 @@ dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 void laplace_approximation_calculator::
   check_derivatives(const dvector& _x,function_minimizer * pfmin,double f)
 {
+#ifdef DIAG
   cerr << "need to define this" << endl;
   ad_exit(1);
+#endif
 }
 
 /**
@@ -65,6 +73,7 @@ dvector laplace_approximation_calculator::
   initial_params::set_active_only_random_effects();
   initial_params::xinit(uhat);    // get current x values into the model
   //int lmn_flag=0;
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm1)
@@ -88,6 +97,7 @@ dvector laplace_approximation_calculator::
       }
     }
   }
+#endif
 
   double maxg = 0;
   dvector uhat_old(1,usize);
@@ -135,6 +145,7 @@ dvector laplace_approximation_calculator::
     {
       // test newton raphson
       Hess.initialize();
+
       cout << "Checking derivatives " << ii << endl;
       check_derivatives(x,pfmin,fval1);
 
@@ -197,6 +208,7 @@ dvector laplace_approximation_calculator::
       step=-solve(Hess,grad);
 #endif
 
+#ifdef DIAG_TIMER
       if (ad_comm::time_flag)
       {
         if (ad_comm::ptm)
@@ -209,6 +221,7 @@ dvector laplace_approximation_calculator::
           }
         }
       }
+#endif
 
       f1b2gradlist->reset();
       f1b2gradlist->list.initialize();
@@ -251,6 +264,7 @@ dvector laplace_approximation_calculator::
   }
 
 
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -263,9 +277,11 @@ dvector laplace_approximation_calculator::
       }
     }
   }
+#endif
   get_second_ders(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
   //int sgn=0;
 
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -278,6 +294,7 @@ dvector laplace_approximation_calculator::
       }
     }
   }
+#endif
   if (!ierr)
   {
     if (num_importance_samples==0)
@@ -305,6 +322,7 @@ dvector laplace_approximation_calculator::
     f=1.e+30;
   }
 
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -317,7 +335,7 @@ dvector laplace_approximation_calculator::
       }
     }
   }
-
+#endif
   for (int ip=num_der_blocks;ip>=1;ip--)
   {
     df1b2variable::minder=minder(ip);
@@ -395,6 +413,7 @@ dvector laplace_approximation_calculator::
       f1b2gradlist->nlist3.initialize();
     }
 
+#ifdef DIAG_TIMER
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
@@ -407,6 +426,7 @@ dvector laplace_approximation_calculator::
         }
       }
     }
+#endif
 
     dvector dtmp(1,xsize);
     for (i=1;i<=xsize;i++)
@@ -497,11 +517,12 @@ dvector laplace_approximation_calculator::
  // *****************************************************************
  // new stuff to deal with quadraticprior
  // *****************************************************************
+#ifdef DIAG_TIMER
   if (ad_comm::ptm)
   {
     /*double time=*/ad_comm::ptm->get_elapsed_time_and_reset();
   }
-
+#endif
 #if defined(USE_ATLAS)
       if (!ad_comm::no_atlas_flag)
       {
@@ -519,6 +540,7 @@ dvector laplace_approximation_calculator::
 #endif
 
 
+#ifdef DIAG_TIMER
   if (ad_comm::ptm)
   {
     double time=ad_comm::ptm->get_elapsed_time_and_reset();
@@ -537,6 +559,7 @@ dvector laplace_approximation_calculator::
         << time << endl << endl;
     }
   }
+#endif
 
   return xadjoint;
 }

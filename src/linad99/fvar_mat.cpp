@@ -472,7 +472,7 @@ void dvar_matrix::deallocate()
     }
     allocate();
   }
-#ifdef DEBUG
+#if defined(DIAG)
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated dvar_matrix.\n";

@@ -31,6 +31,7 @@ PROCEDURE_SECTION
 
 GLOBALS_SECTION
   #include <fvar.hpp>
+  #define BOR_CONST const
   dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     dvariable ypn);
   dvariable splint(const dvector& _xa,const dvar_vector& _ya,

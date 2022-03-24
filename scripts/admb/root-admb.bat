@@ -5,6 +5,9 @@
 
 setlocal EnableExtensions EnableDelayedExpansion
 
+if not defined ADMB_VER (
+  set ADMB_VER=admb
+)
 set SCRIPT_PATH=%~dp0
 if not defined SCRIPT_PATH (
   for %%a in (%0) do (
@@ -21,8 +24,8 @@ popd
 if exist !ADMB_PATH!\bin\admb.cmd (
   set ADMB_HOME=!ADMB_PATH!
 ) else (
-  if exist !ADMB_PATH!\build\admb\bin\admb.cmd (
-    set ADMB_HOME=!ADMB_PATH!\build\admb
+  if exist !ADMB_PATH!\build\!ADMB_VER!\bin\admb.cmd (
+    set ADMB_HOME=!ADMB_PATH!\build\!ADMB_VER!
   )
 )
 if not defined ADMB_HOME (

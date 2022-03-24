@@ -1,28 +1,14 @@
-all: cov_re
+TARGET=cov_re
+OVERRIDE=all
 
-cov_re: cov_re.tpl
-	..\..\admb -r cov_re.tpl
-	cov_re.exe
+!include <..\test-rules.nmake>
 
-clean:
-	del admodel.cov
-	del admodel.dep
-	del admodel.hes
-	del cov_re.bar
-	del cov_re.bgs
-	del cov_re.cor
-	del cov_re.cpp
-	del cov_re.eva
-	del cov_re.exe
-	del cov_re.htp
-	del cov_re.log
-	del cov_re.luu
-	del cov_re.obj
-	del cov_re.par
-	del cov_re.rhes
-	del cov_re.std
-	del eigv.rpt
-	del fmin.log
-	del hesscheck
-	del hessian.bin
-	del variance
+run: $(TARGET) cov_re_sep
+	$(TARGET)
+	$(MAKE) /fcov_re_sep.nmak run
+
+get-outputs: _get-outputs
+	$(MAKE) /fcov_re_sep.nmak get-outputs
+
+clean: _clean
+	$(MAKE) /fcov_re_sep.nmak clean

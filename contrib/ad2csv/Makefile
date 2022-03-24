@@ -1,10 +1,17 @@
+!IFNDEF ADMB_VER
+ADMB_VER=admb
+!ENDIF
+
 all:
 !IF DEFINED(DEBUG)
-	..\..\admb.cmd -g ad2csv.cpp main.cpp
+	..\..\admb.cmd -g -c -o ..\..\build\ad2csv\ad2csv.obj ad2csv.cpp
+	..\..\admb.cmd -g -c -o ..\..\build\ad2csv\main.obj main.cpp
+	..\..\admb.cmd -g -o ..\..\build\$(ADMB_VER)\bin\ad2csv.exe ..\..\build\ad2csv\ad2csv.obj ..\..\build\ad2csv\main.obj
 !ELSE
-	..\..\admb.cmd ad2csv.cpp main.cpp
+	..\..\admb.cmd -c -o ..\..\build\ad2csv\ad2csv.obj ad2csv.cpp
+	..\..\admb.cmd -c -o ..\..\build\ad2csv\main.obj main.cpp
+	..\..\admb.cmd -o ..\..\build\$(ADMB_VER)\bin\ad2csv.exe ..\..\build\ad2csv\ad2csv.obj ..\..\build\ad2csv\main.obj
 !ENDIF
-	copy ad2csv.exe ..\..\build\admb\bin
 
 clean:
 	if exist ad2csv.obj del /Q ad2csv.obj

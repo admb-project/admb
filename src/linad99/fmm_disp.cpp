@@ -28,8 +28,6 @@
   // note the order of includes is important - this stuff should come
   // after stdio.h, disp.h and anything that might also include these
 
-//  #define if (ad_printf) (*ad_printf) disp_if (ad_printf) (*ad_printf)
-
 /**
  * Description not yet available.
  * \param
@@ -135,9 +133,13 @@ void fmmdisp(const dvector& x, const dvector& g,
 
     char colhead[30];
     char colhead2[30];
-    strcpy(colhead,"Var   Value    Gradient   ");
-    strcpy(colhead2,"Var   Value    Gradient");
-    if (ad_printf) (*ad_printf)("%26s|%26s|%23s\n",colhead,colhead,colhead2);
+    strcpy(colhead, "Var    Value     Gradient ");
+    strcpy(colhead2,"Var    Value     Gradient");
+    //ad_printf("%26s|%26s|%23s\n",colhead,colhead,colhead2);
+    std::ostream& output_stream = get_output_stream();
+    output_stream << colhead << "|"
+                  << colhead << "|"
+                  << colhead2 << endl;
 
     // number of columns to display
     const int cols = 3;
@@ -162,29 +164,33 @@ void fmmdisp(const dvector& x, const dvector& g,
         {
           if (fabs(x[ij])<100)
           {
-            if (ad_printf) (*ad_printf)(format, ij, x[ij], g[ij]);
+            //ad_printf(format, ij, x[ij], g[ij]);
+            output_stream << setw(3) << ij << ' ' << setw(8) << setprecision(5) << std::fixed << x[ij] << setw(13) << setprecision(5) << std::scientific << g[ij];
           }
           else if (fabs(x[ij])<1000)
           {
-            if (ad_printf) (*ad_printf)(format1, ij, x[ij], g[ij]);
+            //ad_printf(format1, ij, x[ij], g[ij]);
+            output_stream << setw(3) << ij << ' ' << setw(8) << setprecision(4) << std::fixed << x[ij] << setw(13) << setprecision(5) << std::scientific << g[ij];
           }
           else if (fabs(x[ij])<10000)
           {
-            if (ad_printf) (*ad_printf)(format2, ij, x[ij], g[ij]);
+            //ad_printf(format2, ij, x[ij], g[ij]);
+            output_stream << setw(3) << ij << ' ' << setw(8) << setprecision(3) << std::fixed << x[ij] << setw(13) << setprecision(5) << std::scientific << g[ij];
           }
           else
           {
-            if (ad_printf) (*ad_printf)(format3, ij, x[ij], g[ij]);
+            //ad_printf(format3, ij, x[ij], g[ij]);
+            output_stream << setw(3) << ij << ' ' << setw(8) << setprecision(2) << std::fixed << x[ij] << setw(13) << setprecision(5) << std::scientific << g[ij];
           }
           if (j<cols-1)
           {
-            if (ad_printf) (*ad_printf)(" |");
+            output_stream << " |";
           }
         }
       } // j loop
-      if (i<=imax) if (ad_printf) (*ad_printf)("\n");
+      if (i<=imax) output_stream << endl;
     }  // i loop
-    if (ad_printf) fflush(stdout);
+    //fflush(stdout);
   }
 }
 
@@ -232,9 +238,14 @@ void fmmdisp(const double *x, const double *g,
               /*  12345678901234567 */
     #endif
 
+
     wmax = 22;
     strcpy(colhead,"Var   Value               ");
-    if (ad_printf) (*ad_printf)("%26s|%26s|%26s\n",colhead,colhead,colhead);
+    //ad_printf("%26s|%26s|%26s\n",colhead,colhead,colhead);
+    std::ostream& output_stream = get_output_stream();
+    output_stream << colhead << "| "
+                  << colhead << "| "
+                  << colhead << endl;
     imax = nvar / cols;
     if (nvar % cols > 0) imax++;
     if ( (scroll_flag == 0) && (imax > wmax-headings) )
@@ -251,29 +262,34 @@ void fmmdisp(const double *x, const double *g,
         {
           if (fabs(x[ij])<100)
           {
-            if (ad_printf) (*ad_printf)(format, ij, x[ij]);
+            //ad_printf(format, ij, x[ij]);
+            output_stream << setw(3) << ij << " " << x[ij];
           }
           else if (fabs(x[ij])<1000)
           {
-            if (ad_printf) (*ad_printf)(format1, ij, x[ij]);
+            //ad_printf(format1, ij, x[ij]);
+            output_stream << setw(3) << ij << " " << x[ij];
           }
           else if (fabs(x[ij])<10000)
           {
-            if (ad_printf) (*ad_printf)(format2, ij, x[ij]);
+            //ad_printf(format2, ij, x[ij]);
+            output_stream << setw(3) << ij << " " << x[ij];
           }
           else
           {
-            if (ad_printf) (*ad_printf)(format3, ij, x[ij]);
+            //ad_printf(format3, ij, x[ij]);
+            output_stream << setw(3) << ij << " " << x[ij];
           }
           if (j<cols-1)
           {
-            if (ad_printf) (*ad_printf)(" |");
+            //ad_printf(" |");
+            output_stream << " |";
           }
         }
       } // j loop
-      if (i<=imax) if (ad_printf) (*ad_printf)("\n");
+      if (i<=imax) output_stream << endl;
     }  // i loop
-    if (ad_printf) fflush(stdout);
+    //fflush(stdout);
   }
 }
 

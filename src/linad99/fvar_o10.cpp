@@ -38,7 +38,7 @@
 prevariable& prevariable::operator=(const double t) const
     {
       (*v).x=t;
-      gradient_structure::GRAD_STACK1->
+      gradient_structure::get()->GRAD_STACK1->
         set_gradient_stack0(df_eq_pvdoub,&(v->x));
       return((prevariable&)(*this));
     }
@@ -50,7 +50,7 @@ prevariable& prevariable::operator=(const double t) const
 prevariable& prevariable::operator=(const prevariable& t) const
     {
       (*v).x=(*t.v).x;
-      gradient_structure::GRAD_STACK1->
+      gradient_structure::get()->GRAD_STACK1->
         set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
       return((prevariable&)(*this));
     }
@@ -65,7 +65,7 @@ prevariable& prevariable::operator=(const prevariable& t) const
 prevariable& prevariable::operator=(const prevariable& t)
     {
       (*v).x=(*t.v).x;
-      gradient_structure::GRAD_STACK1->
+      gradient_structure::get()->GRAD_STACK1->
         set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
       return(*this);
     }
@@ -78,7 +78,7 @@ prevariable& prevariable::operator=(const prevariable& t)
 dvariable& dvariable::operator=(const prevariable& t)
     {
       (*v).x=(*t.v).x;
-      gradient_structure::GRAD_STACK1->
+      gradient_structure::get()->GRAD_STACK1->
         set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
       return(*this);
     }
@@ -91,7 +91,7 @@ dvariable& dvariable::operator=(const prevariable& t)
 dvariable& dvariable::operator=(const double t)
     {
       (*v).x=t;
-      gradient_structure::GRAD_STACK1->
+      gradient_structure::get()->GRAD_STACK1->
         set_gradient_stack0(df_eq_pvdoub,&(v->x));
       return(*this);
     }
@@ -104,7 +104,7 @@ dvariable& dvariable::operator=(const double t)
 prevariable& prevariable::operator=(const double t)
     {
       (*v).x=t;
-      gradient_structure::GRAD_STACK1->
+      gradient_structure::get()->GRAD_STACK1->
         set_gradient_stack0(df_eq_pvdoub,&(v->x));
       return(*this);
     }
@@ -114,6 +114,6 @@ prevariable& prevariable::operator=(const double t)
  */
   void df_eq_pvdoub(void)
   {
-    * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;
+    * gradient_structure::get()->GRAD_STACK1->ptr->dep_addr=0.;
   }
 

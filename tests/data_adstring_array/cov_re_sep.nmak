@@ -1,0 +1,3 @@
+TARGET=cov_re_sep
+
+!include <..\test-rules.nmake>

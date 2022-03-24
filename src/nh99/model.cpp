@@ -5,6 +5,9 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 #ifdef ISZERO
   #undef ISZERO
@@ -13,14 +16,8 @@
 
 int initial_params::num_initial_params = 0;
 
-const int initial_params::max_num_initial_params = 4000;
-#if defined(USE_PTR_INIT_PARAMS)
-  initial_params* initial_params::varsptr[
-    initial_params::max_num_initial_params + 1];
-#else
-  adlist_ptr initial_params::varsptr(
-    initial_params::max_num_initial_params);
-#endif
+adlist_ptr initial_params::varsptr;
+
  int initial_params::max_number_phases=1;
  int initial_params::current_phase=1;
  int initial_params::restart_phase=0;
@@ -131,20 +128,8 @@ void initial_params::allocate(int _phase_start)
 
 void initial_params::add_to_list()
 {
-  if (num_initial_params >= initial_params::max_num_initial_params)
-  {
-    cerr << " This version of ADMB only supports "
-         << initial_params::max_num_initial_params
-         << " initial parameter objects.\n";
-    ad_exit(1);
-  }
-
   // this is the list of fundamental objects
-#if defined(USE_PTR_INIT_PARAMS)
-  varsptr[num_initial_params] = this;
-#else
   varsptr.add_to_list(this);
-#endif
 
   num_initial_params++;
 }
@@ -202,7 +187,7 @@ int initial_params::nvarcalc()
     }
     return ntypes;
   }
-
+  
   int initial_params::stddev_vscale(const dvar_vector& d,const dvar_vector& x)
   {
     int ii=1;
@@ -612,6 +597,17 @@ data_number& data_number::operator=(const double& v)
     model_name_tag::allocate(s);
   }
 
+void named_adstring_array::allocate(int mmin, int mmax, const char* s)
+{
+  adstring_array::allocate(mmin, mmax);
+  model_name_tag::allocate(s);
+}
+void named_adstring_array::allocate(const char* s)
+{
+  adstring_array::allocate();
+  model_name_tag::allocate(s);
+}
+
 
   void named_ivector::allocate(int mmin,int mmax,const char * s)
   {
@@ -918,6 +914,7 @@ param_init_bounded_vector::param_init_bounded_vector():
   initial_params(),
   minb(0),
   maxb(0)
+  
 {
   //add_to_list();
 }
@@ -1238,6 +1235,24 @@ void named_imatrix::allocate(int rmin,int rmax, const index_type& cmin,
   }
 
 
+void data_adstring_array::allocate(const char* s)
+{
+  int imax = 1;
+  *(ad_comm::global_datafile) >> imax;
+  allocate(1, imax, s);
+}
+void data_adstring_array::allocate(int imin, int imax, const char* s)
+{
+  named_adstring_array::allocate(imin, imax, s);
+  if (size() > 0)
+  {
+    check_datafile_pointer(ad_comm::global_datafile);
+    for (int i = indexmin(); i <= indexmax(); ++i)
+    {
+      *(ad_comm::global_datafile) >> operator[](i);
+    }
+  }
+}
   void data_ivector::allocate(int imin,int imax,const char * s)
   {
     named_ivector::allocate(imin,imax,s);
@@ -1278,33 +1293,46 @@ void initial_params::set_random_effects_inactive(void) {;}
 
 pinitial_params& adlist_ptr::operator[](int i)
 {
-  return (pinitial_params&)ptr[i];
+#ifdef DEBUG
+  assert(i < current);
+#endif
+
+  unsigned int index = static_cast<unsigned int>(i);
+  if (index < current_size)
+  {
+    return (pinitial_params&)ptr[index];
+  }
+  return (pinitial_params&)list[index - current_size];
+}
+int initial_params::max_num_initial_params = 0;
+/// Default constructor
+adlist_ptr::adlist_ptr()
+{
+  current = 0;
+  current_size = 0;
+  ptr = nullptr;
 }
 /**
 Construct array with init_size.
 */
-adlist_ptr::adlist_ptr(unsigned int init_size)
+void adlist_ptr::allocate(unsigned int init_size)
 {
   current = 0;
-  ptr = new ptovoid[init_size];
-  if (ptr == 0)
+  if (init_size > 0)
   {
-    cerr << "Error: allocating memory in adlist_ptr" << endl;
+    ptr = new ptovoid[init_size] { nullptr };
+    if (ptr == 0)
+    {
+      cerr << "Error: allocating memory in adlist_ptr" << endl;
+      ad_exit(1);
+    }
+    current_size = init_size;
   }
-  current_size = init_size;
-}
-void adlist_ptr::initialize()
-{
-  for (unsigned int i = 0; i < current_size; ++i)
-  {
-    ptr[i] = 0;
-  }
-  //reset current index to beginning
-  current = 0;
 }
 /**
 Double array size if needed.
 */
+/*
 void adlist_ptr::resize(void)
 {
   current_size *= 2;
@@ -1321,21 +1349,31 @@ void adlist_ptr::resize(void)
   ptr = tmp;
   tmp = 0;
 }
+*/
+void adlist_ptr::initialize()
+{
+  for (unsigned int i = 0; i < current_size; ++i)
+  {
+    ptr[i] = 0;
+  }
+  list.clear();
+  //reset current index to beginning
+  current = 0;
+}
 /**
 Store pointer p to array.
 */
 void adlist_ptr::add_to_list(void* p)
 {
-  if (current > current_size)
+  if (current >= current_size)
   {
-    cerr << "This can't happen in adlist_ptr" << endl;
-    exit(1);
+    list.push_back(p);
+    ++current;
   }
-  if (current == current_size)
+  else
   {
-    resize();
+    ptr[current++] = p;
   }
-  ptr[current++] = p;
 }
 /**
 Destructor
@@ -1347,4 +1385,5 @@ adlist_ptr::~adlist_ptr()
     delete [] ptr;
     ptr = 0;
   }
+  list.clear();
 }

@@ -2,11 +2,12 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
-      EXT=.sh
-    else
-      SHELL=cmd
+    ifndef TERM
+      export SHELL=cmd
       CMDSHELL=cmd
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
 endif
@@ -31,20 +32,16 @@ endif
 
 $(SAFE_PREFIX)%.obj: %.cpp
 ifeq ($(CMDSHELL),cmd)
-	..\..\admb.cmd -c $(OPTION) $<
-	copy $(basename $<).obj "$@"
+	..\..\admb.cmd -c $(OPTION) -o "$@" $<
 else
-	../../admb$(EXT) -c $(OPTION) $<
-	cp $(basename $<).obj $@
+	../../admb$(EXT) -c $(OPTION) -o $@ $<
 endif
 
 $(OPT_PREFIX)%.obj: %.cpp
 ifeq ($(CMDSHELL),cmd)
-	..\..\admb.cmd -c -f $(OPTION) $<
-	copy $(basename $<).obj "$@"
+	..\..\admb.cmd -c -f $(OPTION) -o "$@" $<
 else
-	../../admb$(EXT) -c -f $(OPTION) $<
-	cp $(basename $<).obj $@
+	../../admb$(EXT) -c -f $(OPTION) -o $@ $<
 endif
 
 includes:

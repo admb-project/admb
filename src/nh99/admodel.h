@@ -52,6 +52,9 @@
   #pragma interface
 #endif
 
+#include <limits>
+
+#include <vector>
 
   class laplace_approximation_calculator;
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
@@ -753,22 +756,29 @@ public:
 
 class initial_params;
 typedef initial_params* pinitial_params;
-typedef void* ptovoid;
+
 /**
 For storing void pointers in a array.
 */
 class adlist_ptr
 {
-  ptovoid* ptr;
-  unsigned int current_size;
   unsigned int current;
+  unsigned int current_size;
+  typedef void* ptovoid;
+  ptovoid* ptr;
   void resize(void);
-  void add_to_list(void* p);
+  std::vector<void*> list;
+  void add_to_list(void*);
+
 public:
-  adlist_ptr(unsigned int init_size);
+  adlist_ptr();
+  adlist_ptr(const adlist_ptr&) = delete;
+  adlist_ptr(adlist_ptr&&) = delete;
   ~adlist_ptr();
 
   void initialize();
+
+  void allocate(unsigned int init_size);
 
   pinitial_params& operator[](int i);
 
@@ -840,19 +850,16 @@ public:
   double get_scalefactor();
   void set_scalefactor(const double);
   //Resizeable arrays
-#if defined(USE_PTR_INIT_PARAMS)
-  static initial_params* varsptr[];
-#else
-  static adlist_ptr varsptr;
-#endif
   static int num_initial_params;
-  static const int max_num_initial_params;
+  static int max_num_initial_params;
+  static adlist_ptr varsptr;
   static int straight_through_flag;
   static int num_active_initial_params;
   static int max_number_phases;
   static int current_phase;
   static int restart_phase;
   static int sd_phase;
+  static bool in_hessian_phase;
   static int mc_phase;
   static int mceval_phase;
   int phase_start;
@@ -955,6 +962,7 @@ public:
     const double& ll, const dvector& diag);
   virtual void restore_value(const ifstream& ifs) = 0;
   virtual void add_to_list(void);
+  
 #if defined(USE_ADPVM)
   virtual void pvm_pack(void)=0;
   virtual void pvm_unpack(void)=0;
@@ -1020,6 +1028,7 @@ private:
   virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
+public:
   void allocate(int imin,int imax,int phasestart=1,const char * s="UNNAMED");
   void allocate(const ad_integer& imin,const ad_integer& imax,
     const ad_integer& phasestart=1,const char * s="UNNAMED");
@@ -1035,6 +1044,7 @@ public:
   param_init_vector& operator = (const dvar_vector&);
   param_init_vector& operator = (const prevariable&);
   param_init_vector& operator = (const double&);
+  shareinfo* get_share_flags() const { return share_flags; }
 };
 
 /**
@@ -1167,6 +1177,7 @@ public:
  */
 class param_init_number: public named_dvariable, public initial_params
 {
+public:
   virtual void dev_correction(const dmatrix&, const int&);
   virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
 
@@ -1202,7 +1213,7 @@ class param_init_number: public named_dvariable, public initial_params
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,
     const int& ii);
   //virtual void read_value(void);
-protected:
+public:
   void allocate(int phase_start=1,const char *s="UNNAMED");
   void allocate(const char *s="UNNAMED");
   void allocate(init_xml_doc&, const char *s="UNNAMED");
@@ -1325,11 +1336,11 @@ class param_init_matrix: public named_dvar_matrix,public initial_params
 #endif
 //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds,
 //  const int& ii);
+public:
   virtual void add_value(const dvector&, const dvector&, const int&,
     const double&, const dvector&);
   virtual void add_value(const dvector&, const int&);
   virtual void get_jacobian(const dvector&, const dvector&, const int&);
-public:
   virtual void set_value(const dvar_vector& x, const int& ii,
     const dvariable& pen);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
@@ -1479,6 +1490,7 @@ protected:
   void allocate(init_xml_doc&, const char * s="UNNAMED");
 
 public:
+  //data_int(): val(0) { }
   ~data_int() { }
   operator int() const { return val; }
 
@@ -1501,6 +1513,13 @@ protected:
   void operator = (const char *);
 };
 
+class named_adstring_array: public adstring_array, public model_name_tag
+{
+protected:
+  void allocate(int min, int max, const char* s);
+  void allocate(const char* s);
+};
+
 /**
  * Description not yet available.
  * \param
@@ -1521,6 +1540,13 @@ class init_adstring: public named_adstring
 {
 public:
   void allocate(const char * s="UNNAMED");
+};
+
+class data_adstring_array: public named_adstring_array
+{
+public:
+  void allocate(const char* s = "UNNAMED");
+  void allocate(int imin, int imax, const char* s= "UNNAMED");
 };
 
 /**
@@ -1952,23 +1978,33 @@ public:
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
 
-  // Functions added by Cole for HMC.
+  // Compact flag to toggle new console output
+  static int output_flag;
+ 
+  /// hess_step is used for HMC. See details in function_minimizer::hess_step.
+  void hess_step();
+  bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);
+  bool calculate_chd_and_inverse(int nvar, const dmatrix& metric,
+				 dmatrix& chd, dmatrix& chdinv);
+  void add_sample_diag(const int nvar, int& n, dvector& m, dvector& m2,
+		       const independent_variables& q);
+  void add_sample_dense(const int nvar, int& is2, dvector& m, dmatrix& m2,
+			const independent_variables& q);
   dvector rotate_pars(const dvector& m, const dvector& x);
   dvector rotate_pars(const dmatrix& m, const dvector& x);
-  dvector rotate_gradient(const dvector& x, const dmatrix& m);
-  int compute_next_window(int i, int anw, int warmup, int w1, int aws, int w3);
+  dvector rotate_gradient(const dvector& x, const dmatrix& m); 
+  int compute_next_window(int i, int warmup, int w1, int aws, int w3);
   bool slow_phase(int is, int warmup, int w1, int w3);
   std::string get_filename(const char* f);
-  double get_hybrid_monte_carlo_value(int nvar,const independent_variables& x,
+  double get_hybrid_monte_carlo_value(int nvar,const independent_variables& y,
     dvector& g);
   void read_mle_hmc(int nvar, dvector& mle);
   void rwm_mcmc_routine(int,int, double, int);
   void shmc_mcmc_routine(int,int,double,int);
   void nuts_mcmc_routine(int,int,double,int);
-  void nuts_test_mcmc_routine(int,int,double,int);
-  void print_mcmc_timing(double, double);
-   void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain);
-  double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose);
+  void print_mcmc_timing(double time_warmup, double time_total, int chain);
+  void print_mcmc_progress(int is, int nmcmc, int nwarmup, int chain, int refresh);
+  double find_reasonable_stepsize(int nvar, dvector y, dvector p, dmatrix& chd, bool verbose_adapt_mass, bool verbose_find_epsilon, int chain);
   bool stop_criterion(int nvar, dvector& thetaminus, dvector& thetaplus,
 		      dvector& rminus, dvector& rplus);
   void build_tree(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
@@ -1977,18 +2013,12 @@ public:
 		  dvector& _rplus, dvector& _rminus,
 		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
 		  int& _nprime, int& _nfevals, bool& _divergent,
-		  const random_number_generator& rng);
-  void build_tree_test(int nvar, dvector& gr, dmatrix& chd, double eps, dvector& p,
-		  dvector& y, dvector& gr2, double logu, int v, int j, double H0,
-		  dvector& _thetaprime, dvector& _thetaplus, dvector& _thetaminus,
-		  dvector& _rplus, dvector& _rminus,
-		  double& _alphaprime, int& _nalphaprime, bool& _sprime,
-		       int& _nprime, int& _nfevals, bool& _divergent,
-		       const random_number_generator& rng,
-		        ofstream& out);
+		  const random_number_generator& rng,
+		  dvector& gr2_end, dvector& _grprime, dvector& _gr2prime, double& _nllprime,
+		  double& _Hprime, independent_variables& _parsaveprime);
   double leapfrog(int nvar,dvector& gr, dmatrix& chd,
-		  double eps, dvector& p, dvector& y, dvector& gr2);
-  double adapt_eps(int ii, double eps, double alpha,
+		  double eps, dvector& p, dvector& x, dvector& gr2);
+  double adapt_eps(int ii, int iseps, double eps, double alpha,
 		   double& adapt_delta, double& mu,
 		   dvector& epsvec, dvector& epsbar,
 		   dvector& Hbar);
@@ -2003,7 +2033,7 @@ public:
   void hess_routine_and_constraint(int iprof, const dvector& g,
     dvector& fg);
   dmatrix diag_hess_routine(void);
-  void hess_inv(void);
+  bool hess_inv();
   void depvars_routine(void);
   void sd_routine(void);
   int ef_(double * f, double * x);
@@ -2165,8 +2195,16 @@ public:
   dvariable do_gauss_hermite_integration(void);
   void end_df1b2_funnel_stuff(void);
 
+  double get_ln_det_value() const
+    { return !_hessian ? 0 : _ln_det_value; }
+  dmatrix& get_hessian() { return _hessian; }
+  dmatrix& get_hessian_inverse() { return _hessian_inverse; }
+
 private:
   dvariable do_gauss_hermite_integration_multi(void);
+  double _ln_det_value;
+  dmatrix _hessian;
+  dmatrix _hessian_inverse;
 };
 
 cifstream& operator>>(const cifstream& s, const param_init_number& x);

@@ -1359,10 +1359,10 @@ public:
   static void save_varsptr(void);
   static double cobjfun;
   static void restore_varsptr(void);
-#if defined(__x86_64) || (defined(_MSC_VER) && defined(_M_X64))
-  static lmatrix* pointer_table;
-#else
+#if (defined(__GNUC__) && defined(__i386)) || (defined(_MSC_VER) && defined(_M_IX86))
   static imatrix* pointer_table;
+#else
+  static lmatrix* pointer_table;
 #endif
   static initial_df1b2params **  varsptr;  // this should be a resizeable
   static initial_df1b2params **  varsptr_sav;  // this should be a resizeable

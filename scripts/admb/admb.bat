@@ -1,6 +1,6 @@
 @echo off
 @REM
-@REM  Copyright 2013-2017 (c) ADMB Foundation
+@REM  Copyright 2013-2020 (c) ADMB Foundation
 @REM
 
 if [%1]==[] goto HELP
@@ -52,6 +52,7 @@ if not defined ADMB_HOME (
 set tpls=
 set srcs=
 set objs=
+set output=
 for %%a in (%*) do (
   set arg=%%a
   if "!arg:~0,1!"=="-" (
@@ -66,6 +67,9 @@ for %%a in (%*) do (
     )
     if "!arg!"=="-g" (
       set g= -g
+    )
+    if "!arg!"=="-o" (
+      set option_o= -o
     )
     if "!arg!"=="-r" (
       set r = -r
@@ -101,36 +105,52 @@ for %%a in (%*) do (
       )
     )
     if "%%~xa"==".o" (
-      if not defined objs (
-        set objs=!arg!
+      if defined option_o (
+        set output=!arg!
+        set option_o=
       ) else (
-        set objs=!objs! !arg!
+        if not defined objs (
+          set objs=!arg!
+        ) else (
+          set objs=!objs! !arg!
+        )
       )
     )
     if "%%~xa"==".obj" (
-      if not defined objs (
-        set objs=!arg!
+      if defined option_o (
+        set output=!arg!
+        set option_o=
       ) else (
-        set objs=!objs! !arg!
+        if not defined objs (
+          set objs=!arg!
+        ) else (
+          set objs=!objs! !arg!
+        )
       )
     )
-  )
-)
-if exist "!ADMB_HOME!\bin\admb-cfg.bat" (
-  call "!ADMB_HOME!\bin\admb-cfg.bat"
-  if defined ADMB_CFG_CXX (
-    set CXX=!ADMB_CFG_CXX!
-  )
-  if defined ADMB_CFG_CXXFLAGS (
-    set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
-  )
-  if defined ADMB_CFG_LD (
-    if not defined d (
-      set LD=!ADMB_CFG_LD!
+    if "!CXX!"=="cl" (
+       if "%%~xa"==".lib" (
+         if not defined option_libs (
+           set option_libs=!arg!
+         ) else (
+           option_libs=!option_libs! !arg!
+         )
+       )
+    ) else (
+       if "%%~xa"==".a" (
+         if defined option_libs (
+           set option_libs=!arg!
+         ) else (
+           option_libs=!option_libs! !arg!
+         )
+       )
     )
-  )
-  if defined ADMB_CFG_LDFLAGS (
-    set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
+    if "%%~xa"==".exe" (
+      if defined option_o (
+        set output=!arg!
+        set option_o=
+      )
+    )
   )
 )
 
@@ -145,7 +165,13 @@ if "!CXX!"=="" (
     )
   )
 )
-
+if "!CXX!"=="cl" (
+  pushd !ADMB_HOME!\lib
+  for /f "tokens=*" %%i in ('dir /B admb*-cl*.lib 2^>^&1 ^| findstr "File Not Found"') do (
+    set CXX=
+  )
+  popd
+)
 if "!CXX!"=="cl" (
   where /Q !CXX!
   if errorlevel 1 (
@@ -178,6 +204,20 @@ if "!CXX!"=="cl" (
   if not defined OSNAME (
     set OSNAME=-win
   )
+  if exist "!ADMB_HOME!\bin\admb-cfg!OSNAME!!CXXVERSION!.bat" (
+    call "!ADMB_HOME!\bin\admb-cfg!OSNAME!!CXXVERSION!.bat"
+    if defined ADMB_CFG_CXXFLAGS (
+      set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
+    )
+    if defined ADMB_CFG_LD (
+      if not defined d (
+        set LD=!ADMB_CFG_LD!
+      )
+    )
+    if defined ADMB_CFG_LDFLAGS (
+      set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
+    )
+  )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /nologo /DOPT_LIB
     if defined g (
@@ -192,7 +232,7 @@ if "!CXX!"=="cl" (
     )
     if not defined libs (
       if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" (
-        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!lib" /link
+        set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!.lib" /link
 	set use_contrib_lib=yes
       ) else (
         set libs="!ADMB_HOME!\lib\admbo!OSNAME!!CXXVERSION!.lib" /link
@@ -225,8 +265,8 @@ if "!CXX!"=="cl" (
   )
 ) else (
   if "!CXX!"=="clang++" (
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
-      set CXXMAJORNUMBER=-clang++9
+    for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
+      set CXXMAJORNUMBER=-clang++%%i
       set STDCXX=-std=c++11
     )
     set LD=clang++
@@ -243,8 +283,9 @@ if "!CXX!"=="cl" (
     )
     where /Q !CXX!
     if errorlevel 1 (
-      if exist "!ADMB_HOME!\utilities\mingw\bin\g++.exe" (
-        set "PATH=!ADMB_HOME!\utilities\mingw\bin;!PATH!"
+      set "SHORT_SCRIPT_PATH=%~dps0"
+      if exist "!SHORT_SCRIPT_PATH!..\utilities\mingw\bin\g++.exe" (
+        set "PATH=!SHORT_SCRIPT_PATH!..\utilities\mingw\bin;!PATH!"
       ) else (
         echo Error: Unable to find !CXX!
         exit /B 1
@@ -254,25 +295,17 @@ if "!CXX!"=="cl" (
       set CXXMAJORNUMBER=-g++4
       set STDCXX=-std=c++11
     )
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 5.') do (
-      set CXXMAJORNUMBER=-g++5
-      set STDCXX=-std=c++14
+    if not defined CXXMAJORNUMBER (
+      for /f %%i in ('!CXX! -dumpversion ^| findstr /b 5.') do (
+        set CXXMAJORNUMBER=-g++5
+        set STDCXX=-std=c++11
+      )
     )
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 6.') do (
-      set CXXMAJORNUMBER=-g++6
-      set STDCXX=-std=c++14
-    )
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 7.') do (
-      set CXXMAJORNUMBER=-g++7
-      set STDCXX=-std=c++14
-    )
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 8.') do (
-      set CXXMAJORNUMBER=-g++8
-      set STDCXX=-std=c++14
-    )
-    for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
-      set CXXMAJORNUMBER=-g++9
-      set STDCXX=-std=c++14
+    if not defined CXXMAJORNUMBER (
+      for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
+        set CXXMAJORNUMBER=-g++%%i
+        set STDCXX=-std=c++14
+      )
     )
   )
   if defined CXXFLAGS (
@@ -287,24 +320,19 @@ if "!CXX!"=="cl" (
       set LDFLAGS= -shared
     )
   )
-  if defined LDFLAGS (
-    set LDFLAGS= -static !LDFLAGS!
-  ) else (
-    set LDFLAGS= -static
-  )
   if defined g (
     set CXXFLAGS=!CXXFLAGS! -g
     set LDFLAGS=!LDFLAGS! -g
   ) else (
-    set CXXFLAGS=!CXXFLAGS! -O3
+    set CXXFLAGS=!CXXFLAGS! -O2
   )
   if "!CXX!"=="clang++" (
     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
-       set CXXVERSION=-win32!CXXMAJORNUMBER!
-     )
-     for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
-       set CXXVERSION=-win64!CXXMAJORNUMBER!
-     )
+      set CXXVERSION=-win32!CXXMAJORNUMBER!
+    )
+    for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
+      set CXXVERSION=-win64!CXXMAJORNUMBER!
+    )
   ) else (
     if "!CXX!"=="g++" (
       for /f %%i in ('!CXX! -dumpmachine ^| findstr /b i686') do (
@@ -313,6 +341,25 @@ if "!CXX!"=="cl" (
       for /f %%i in ('!CXX! -dumpmachine ^| findstr /b x86_64') do (
         set CXXVERSION=-mingw64!CXXMAJORNUMBER!
       )
+    )
+  )
+  if defined LDFLAGS (
+    set LDFLAGS= -static !LDFLAGS!
+  ) else (
+    set LDFLAGS= -static
+  )
+  if exist "!ADMB_HOME!\bin\admb-cfg!CXXVERSION!.bat" (
+    call "!ADMB_HOME!\bin\admb-cfg!CXXVERSION!.bat"
+    if defined ADMB_CFG_CXXFLAGS (
+      set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
+    )
+    if defined ADMB_CFG_LD (
+      if not defined d (
+        set LD=!ADMB_CFG_LD!
+      )
+    )
+    if defined ADMB_CFG_LDFLAGS (
+      set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS:-static=!
     )
   )
   if defined g (
@@ -332,7 +379,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
             ) else (
-              echo Error: Unable to find libadmbo-debug.a
+              echo Error: Unable to find ADMB DEBUG library 'libadmbo!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -353,7 +400,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!.a" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
             ) else (
-              echo Error: Unable to find libadmb
+              echo Error: Unable to find ADMB DEBUG library 'libadmb!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -377,7 +424,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
             ) else (
-              echo Error: Unable to find libadmbo-debug.a
+              echo Error: Unable to find ADMB library 'libadmbo!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -398,7 +445,7 @@ if "!CXX!"=="cl" (
             if exist "!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
             ) else (
-              echo Error: Unable to find libadmb
+              echo Error: Unable to find ADMB library 'libadmb!CXXVERSION!.a'
               exit /B 1
             )
           )
@@ -406,7 +453,6 @@ if "!CXX!"=="cl" (
       )
     )
   )
-  set CXXFLAGS=!CXXFLAGS! -fpermissive
   for /f %%i in ('!CXX! -dumpmachine ^| findstr x86_64') do (
     set CXXFLAGS=!CXXFLAGS! -D_FILE_OFFSET_BITS=64
   )
@@ -450,6 +496,20 @@ for %%a in (!tpls!) do (
   if defined g (
     set debug= -debug
   )
+  where /Q sed.exe
+  if errorlevel 1 (
+    set "SHORT_SCRIPT_PATH=%~dps0"
+    if exist "!SHORT_SCRIPT_PATH!..\utilities\sed.exe" (
+      set "PATH=!SHORT_SCRIPT_PATH!..\utilities;!PATH!"
+    ) else (
+      if exist "!SHORT_SCRIPT_PATH!..\..\..\utilities\sed.exe" (
+        set "PATH=!SHORT_SCRIPT_PATH!..\..\..\utilities;!PATH!"
+      ) else (
+        echo Error: Unable to find sed.exe
+        exit /B 1
+      )
+    )
+  )
   echo.&echo *** Parse: !tpl!.tpl
   if defined parser (
     set CMD=!parser! !debug! !dll! !tpl!
@@ -479,9 +539,25 @@ for %%b in (!tpls!) do (
   set tpl=%%~nb
   @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
   if "!CXX!"=="cl" (
-    set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+    if defined compileonly (
+      if defined output (
+        set CMD=!CXX!!CXXFLAGS! /Fo!output! !tpl!.cpp
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+      )
+    ) else (
+      set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+    )
   ) else (
-    set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+    if defined compileonly (
+      if defined output (
+        set CMD=!CXX!!CXXFLAGS! -o !output! !tpl!.cpp
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+      )
+    ) else (
+      set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+    )
   )
   echo.&echo *** Compile: !tpl!.cpp
   echo !CMD!
@@ -502,28 +578,69 @@ if defined srcs (
     set filename=%%~na
     @REM set CMD=adcomp!d!!g!!r!!fast! !src!
     if "!CXX!"=="cl" (
-      set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+      if defined compileonly (
+        if defined output (
+          set CMD=!CXX!!CXXFLAGS! /Fo!output! !filename!.cpp
+        ) else (
+          set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+        )
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+      )
     ) else (
-      set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+      if defined compileonly (
+        if defined output (
+          set CMD=!CXX!!CXXFLAGS! -o !output! !filename!.cpp
+        ) else (
+          set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+        )
+      ) else (
+        set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+      )
     )
     echo.&echo *** Compile: !src!
     echo !CMD!
     call !CMD!
-    if not exist !filename!.obj (
-      echo.&echo Error: Unable to build !src! to !filename!.obj
-      goto ERROR
-    ) else (
-      if not defined objs (
-        set objs=!filename!.obj
+    if defined compileonly (
+      if defined output (
+        if not exist !output! (
+          echo.&echo Error: Unable to build !src! to !output!
+          goto ERROR
+        ) else (
+          if not defined objs (
+            set objs=!output!
+          ) else (
+            set objs=!objs! !output!
+          )
+        )
       ) else (
-        set objs=!objs! !filename!.obj
+        if not exist !filename!.obj (
+          echo.&echo Error: Unable to build !src! to !filename!.obj
+          goto ERROR
+        ) else (
+          if not defined objs (
+            set objs=!filename!.obj
+          ) else (
+            set objs=!objs! !filename!.obj
+          )
+        )
+      )
+    ) else (
+      if not exist !filename!.obj (
+        echo.&echo Error: Unable to build !src! to !filename!.obj
+        goto ERROR
+      ) else (
+        if not defined objs (
+          set objs=!filename!.obj
+        ) else (
+          set objs=!objs! !filename!.obj
+        )
       )
     )
   )
 )
 :linker
 if defined compileonly (
-  echo.&echo Compiled !objs!.
   goto EOF
 )
 if not defined tpls (
@@ -544,25 +661,50 @@ if not defined tpls (
         set CMD=!LD!!LDFLAGS! -o !main!.dll !objs! !libs!
       ) else (
         if "!CXX!"=="cl" (
-          set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !objs! !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
+          )
         ) else (
-          set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! -o !output! !objs! !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
+          )
         )
       )
-      echo.&echo *** Linking: !objs!
+      if defined option_libs (
+        CMD=!CMD! !option_libs!
+      )
+      echo.&echo *** Linking: !objs! !option_libs!
       echo !CMD!
       call !CMD! || goto ERROR
       if defined d (
-        if not exist !main!.dll (
-          goto ERROR
-        )
-        echo.&echo Successfully built '!main!.dll'.
+        if defined output (
+          if not exist !output! (
+            goto ERROR
+          )
+          echo.&echo Successfully built '!output!'.
+        ) else (
+          if not exist !main!.dll (
+            goto ERROR
+          )
+          echo.&echo Successfully built '!main!.dll'.
+	)
         goto SUCCESS
       ) else (
-        if not exist !main!.exe (
-          goto ERROR
+        if defined output (
+          if not exist !output! (
+            goto ERROR
+          )
+          echo.&echo Successfully built '!output!'.
+        ) else (
+          if not exist !main!.exe (
+            goto ERROR
+          )
+          echo.&echo Successfully built '!main!.exe'.
         )
-        echo.&echo Successfully built '!main!.exe'.
         goto EOF
       )
     )
@@ -584,37 +726,72 @@ if not defined tpls (
     ) else (
       if "!CXX!"=="cl" (
         if defined objs (
-          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !tpl!.obj !objs! !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+          ) 
         ) else (
-          set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !tpl!.obj !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
+          ) 
         )
       ) else (
         if defined objs (
-          set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! -o !output! !tpl!.obj !objs! !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+          ) 
         ) else (
-          set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
+          if defined output (
+            set CMD=!LD!!LDFLAGS! -o !output! !tpl!.obj !libs!
+          ) else (
+            set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
+          ) 
         )
       )
     )
+    if defined option_libs (
+      CMD=!CMD! !option_libs!
+    )
     if defined objs (
-      echo.&echo *** Linking: !tpl!.obj !objs!
+      echo.&echo *** Linking: !tpl!.obj !objs! !option_libs!
     ) else (
-      echo.&echo *** Linking: !tpl!.obj
+      echo.&echo *** Linking: !tpl!.obj !option_libs!
     )
     echo !CMD!
     call !CMD! || goto ERROR
     if defined d (
-      if not exist !tpl!.dll (
-        goto ERROR
+      if defined output (
+        if not exist !output! (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!output!'.
+        goto SUCCESS
+      ) else (
+        if not exist !tpl!.dll (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!tpl!.dll'.
+        goto SUCCESS
       )
-      echo.&echo Successfully built '!tpl!.dll'.
-      goto SUCCESS
     ) else (
-      if not exist !tpl!.exe (
-        goto ERROR
+      if defined output (
+        if not exist !output! (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!output!'.
+        goto SUCCESS
+      ) else (
+        if not exist !tpl!.exe (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!tpl!.exe'.
+        goto SUCCESS
       )
-      echo.&echo Successfully built '!tpl!.exe'.
-      goto SUCCESS
     )
   )
 )
@@ -631,7 +808,7 @@ goto EOF
 :HELP
 echo Builds AD Model Builder executable or library.
 echo.
-echo Release Version: 12.1
+echo Release Version: 12.3
 echo Location: %~dp0
 echo.
 echo Usage: admb [-c] [-d] [-f] [-g] [-r] model [src(s)]

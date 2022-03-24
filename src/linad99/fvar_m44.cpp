@@ -35,7 +35,7 @@ dvar_matrix trans(const dvar_matrix& m1)
   m1.save_dvar_matrix_position();
   t1.save_dvar_matrix_position();
   save_identifier_string("vv");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfmattrans);
   return (t1);
 }

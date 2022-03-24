@@ -59,36 +59,30 @@ df1_three_vector::df1_three_vector(const df1_three_vector& m2)
   v = m2.v;
 }
 
-/**
-Destructor
-*/
+/// Destructor
 df1_three_vector::~df1_three_vector()
 {
   deallocate();
 }
-
-/**
- * Description not yet available.
- * \param
- */
- void df1_three_vector::deallocate(void)
- {
-   if(shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df1_three_variable*) (shape->trueptr);
-       delete [] v;
-       v = NULL;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+/// Deallocate df1_three_vector, then set as empty.
+void df1_three_vector::deallocate(void)
+{
+  if(shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df1_three_variable*)(shape->trueptr);
+      delete [] v;
+      v = NULL;
+      delete shape;
+      allocate();
+    }
+  }
+}
 
 /**
  * Description not yet available.
@@ -213,37 +207,32 @@ void df1_three_vector::allocate(int min, int max)
    v = m2.v;
  }
 
-/**
- * Description not yet available.
- * \param
- */
- df1_three_matrix::~df1_three_matrix()
- {
-   deallocate();
- }
-
-/**
- * Description not yet available.
- * \param
- */
- void df1_three_matrix::deallocate(void)
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df1_three_vector*) (shape->get_pointer());
-       delete [] v;
-       v=0;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+/// Destructor
+df1_three_matrix::~df1_three_matrix()
+{
+  deallocate();
+}
+/// Deallocate df1_three_vector, then set as empty.
+void df1_three_matrix::deallocate(void)
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df1_three_vector*) (shape->get_pointer());
+      delete [] v;
+      v=0;
+      delete shape;
+      shape=0;
+      index_min = 0;
+      index_max = -1;
+    }
+  }
+}
 
 /**
  * Description not yet available.
@@ -985,7 +974,7 @@ dvariable& dvariable::operator = (const df1_three_variable& v)
   double  dfz= *v.get_u_z();
   value(*this)=*v.get_u();
 
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
     &(value(*this)),&(value(*px)),dfx,&(value(*py)),dfy,&(value(*pz)),
     dfz);
 

@@ -35,6 +35,34 @@ TEST_F(test_dvector, sqr)
   ASSERT_DOUBLE_EQ(16, results(5));
   ASSERT_DOUBLE_EQ(std::pow(5.1, 2), results(6));
 }
+TEST_F(test_dvector, read_from_file2)
+{
+  ofstream ofs("test_dvector_read_from_file2.txt");
+  ofs << "3.5 -6.8 11.4 -77.5" << endl;
+  ofs.close();
+
+  dvector v("test_dvector_read_from_file2.txt");
+
+  ASSERT_EQ(4, v.size());
+  ASSERT_DOUBLE_EQ(3.5, v(1));
+  ASSERT_DOUBLE_EQ(-6.8, v(2));
+  ASSERT_DOUBLE_EQ(11.4, v(3));
+  ASSERT_DOUBLE_EQ(-77.5, v(4));
+}
+TEST_F(test_dvector, allocate_read_from_file3)
+{
+  ofstream ofs("test_dvector_read_from_file3.txt");
+  ofs << "3.5 -6.8 11.4 -77.5" << endl;
+  ofs.close();
+
+  dvector v;
+  v.allocate("test_dvector_read_from_file3.txt");
+  ASSERT_EQ(4, v.size());
+  ASSERT_DOUBLE_EQ(3.5, v(1));
+  ASSERT_DOUBLE_EQ(-6.8, v(2));
+  ASSERT_DOUBLE_EQ(11.4, v(3));
+  ASSERT_DOUBLE_EQ(-77.5, v(4));
+}
 TEST_F(test_dvector, log10)
 {
   char array[] = "{0.5, 1.5, 2, 3, 4, 5.1}";
@@ -443,6 +471,8 @@ TEST_F(test_dvector, fill_lbraces_zero)
 }
 TEST_F(test_dvector, fill_lbraces_greater_than_one)
 {
+  ad_exit=&test_ad_exit;
+
   dvector v(1, 6);
   v.initialize();
 
@@ -456,12 +486,13 @@ TEST_F(test_dvector, fill_lbraces_greater_than_one)
 }
 TEST_F(test_dvector, fill_lbraces_not_equal_rbraces)
 {
+  ad_exit=&test_ad_exit;
+
   dvector v(1, 6);
   v.initialize();
 
   char array[] = "{{0, 1, 2, 3, 4, 5}}}";
 
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW
   ({
     v.fill(array);
@@ -469,12 +500,13 @@ TEST_F(test_dvector, fill_lbraces_not_equal_rbraces)
 }
 TEST_F(test_dvector, fill_lbraces1_not_equal_rbraces)
 {
+  ad_exit=&test_ad_exit;
+
   dvector v(1, 6);
   v.initialize();
 
   char array[] = "{0, 1, 2, 3, 4, 5}}}";
 
-  ad_exit=&test_ad_exit;
   ASSERT_ANY_THROW
   ({
     v.fill(array);
@@ -498,6 +530,8 @@ TEST_F(test_dvector, filename_goodcolumn)
 }
 TEST_F(test_dvector, filename_badcolumn)
 {
+  ad_exit=&test_ad_exit;
+
   ofstream ofs("test_dvector.txt");
   ofs << "1 2 3\n";
   ofs << "4 5 6\n";
@@ -510,6 +544,8 @@ TEST_F(test_dvector, filename_badcolumn)
 }
 TEST_F(test_dvector, filename_negativebadcolumn)
 {
+  ad_exit=&test_ad_exit;
+
   ofstream ofs("test_dvector.txt");
   ofs << "1 2 3\n";
   ofs << "4 5 6\n";
@@ -522,6 +558,8 @@ TEST_F(test_dvector, filename_negativebadcolumn)
 }
 TEST_F(test_dvector, filename_zerobadcolumn)
 {
+  ad_exit=&test_ad_exit;
+
   ofstream ofs("test_dvector.txt");
   ofs << "1 2 3\n";
   ofs << "4 5 6\n";
@@ -534,6 +572,8 @@ TEST_F(test_dvector, filename_zerobadcolumn)
 }
 TEST_F(test_dvector, filename_raggedcolumn)
 {
+  ad_exit=&test_ad_exit;
+
   ofstream ofs("test_dvector.txt");
   ofs << "1 2 3\n";
   ofs << "4\n";
@@ -1084,4 +1124,28 @@ TEST_F(test_dvector, initialize)
   ASSERT_DOUBLE_EQ(0, a(1));
   ASSERT_DOUBLE_EQ(0, a(2));
   ASSERT_DOUBLE_EQ(0, a(3));
+}
+TEST_F(test_dvector, file)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("dvector.txt");
+  ofs << "  3 ,   -5,     8.9\n";
+  ofs.close();
+  dvector a((char*)"dvector.txt", 2);
+  ASSERT_EQ(a.indexmin(), 1);
+  ASSERT_EQ(a.indexmax(), 1);
+  ASSERT_DOUBLE_EQ(a(1), -5);
+}
+TEST_F(test_dvector, file2)
+{
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("dvector.txt");
+  ofs << "  3     -5      8.9\n";
+  ofs.close();
+  dvector a((char*)"dvector.txt", 2);
+  ASSERT_EQ(a.indexmin(), 1);
+  ASSERT_EQ(a.indexmax(), 1);
+  ASSERT_DOUBLE_EQ(a(1), -5);
 }

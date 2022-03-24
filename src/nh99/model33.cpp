@@ -148,7 +148,6 @@ void cleanup_argv(int nopt,char *** pa)
   #if !defined(_MSC_VER)
 void get_sp_printf(void)
 {
-  ad_printf=NULL;
 /*
   HINSTANCE h=LoadLibrary("sqpe.dll");
   if(h)
@@ -170,18 +169,15 @@ void do_dll_housekeeping(int argc,char ** argv)
   }
   else if ( (on=option_match(argc,argv,"-spexit"))>-1)
   {
-    ad_printf=printf;
     ad_exit=spdll_exit;
   }
   else
   {
     ad_exit=exit;
-    if (!ad_printf) ad_printf=printf;
   }
 #else
   ad_exit=exit;
 
-  if (!ad_printf) ad_printf=printf;
 #endif
 }
 
@@ -270,7 +266,7 @@ string_parser::string_parser(char * s,int n)
   if (strlen(s)>n)
   {
     cerr "string too long in string_parser" << endl;
-    exit(1);
+    ad_exit(1);
   }
 
   str=new char[strlen(s+20];
@@ -369,7 +365,7 @@ string_parser::string_parser(char * s, const size_t n)
   if (strlen(s) > n)
   {
     cerr << "string too long in string_parser" << endl;
-    exit(1);
+    ad_exit(1);
   }
 
   str=new char[strlen(s)+20];

@@ -18,8 +18,11 @@ void read_pass1_init_3(void);
   extern int addebug_count;
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
+#endif
+
+#ifndef OPT_LIB
   #include <climits>
 #endif
 
@@ -122,6 +125,9 @@ df1b2variable::df1b2variable(const newadkludge* z)
  */
 void df1b2variable::allocate(void)
 {
+#ifdef DEBUG
+  assert(pool);
+#endif
   // vectors are all 1,...,nvar
   ptr = (double*) pool->alloc();
   //cout << *(int*)ptr << endl;
@@ -239,7 +245,7 @@ void ad_read_pass1_initialize(void)
   default:
     cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
-    exit(1);
+    ad_exit(1);
   }
 }
 

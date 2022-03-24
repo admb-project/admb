@@ -38,6 +38,12 @@
  */
 #ifndef FVAR_HPP
 #define FVAR_HPP
+
+#if defined(DEBUG)
+  #if DEBUG==0
+    #define DIAG
+  #endif
+#endif
 /** \file fvar.hpp
 AUTODIF classes.
 Class definitions for reverse mode automatic differentiation.
@@ -82,7 +88,8 @@ Macro definitions.
 
 #include <cmath>
 #ifndef M_PI
-  #error "Error: M_PI is not defined."
+  //#error "Error: M_PI is not defined."
+  #define M_PI 3.14159265358979323846
 #endif
 #ifndef PI
   #define PI M_PI
@@ -105,8 +112,7 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
-
-#define USE_VECTOR_SHAPE_POOL
+//#define USE_VECTOR_SHAPE_POOL
 
 #if defined(USE_DDOUBLE)
 #   include <qd/qd.h>
@@ -171,8 +177,6 @@ Macro definitions.
 // C language function prototypes
 extern "C"
 {
-   typedef int (*fptr) (const char *format, ...);
-   extern fptr ad_printf;
    typedef void (*exitptr) (int);
    extern exitptr ad_exit;
 
@@ -473,11 +477,17 @@ class kkludge_object{};
  * Description not yet available.
  * \param
  */
-class vector_shape_pool:public dfpool
+class vector_shape_pool: public dfpool
 {
 public:
-  vector_shape_pool();
-  vector_shape_pool(const size_t);
+  vector_shape_pool(): dfpool() {}
+  vector_shape_pool(const size_t n): dfpool(n) {}
+  vector_shape_pool(const vector_shape_pool&) = delete;
+  vector_shape_pool(vector_shape_pool&&) = delete;
+  ~vector_shape_pool() {}
+
+  vector_shape_pool& operator=(const vector_shape_pool&) = delete;
+  vector_shape_pool& operator=(vector_shape_pool&&) = delete;
 };
 
 /**
@@ -498,19 +508,16 @@ class ts_vector_shape_pool:public tsdfpool
  */
 class vector_shape
 {
- public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-  static vector_shape_pool& get_xpool()
-  {
-    static vector_shape_pool xpool(sizeof(vector_shape));
-    return xpool;
-  }
+public:
+  thread_local static vector_shape_pool* xpool;
+
   void* operator new(size_t);
-  void operator delete(void* ptr, size_t)
-   { vector_shape::get_xpool().free(ptr); }
+  void operator delete(void* ptr, size_t);
   vector_shape(const vector_shape&) = delete;
   vector_shape& operator=(const vector_shape&) =  delete;
 #endif
+public:
 
    unsigned int ncopies;
    void shift(int min);
@@ -772,7 +779,7 @@ class dependent_variables_information
 dvar_vector_position restore_dvar_vector_position(void);
 dvector restore_dvar_vector_value(const dvar_vector_position & tmp);
 void arr_free(double_and_int *);
-double_and_int *arr_new(unsigned int sz);
+double_and_int* arr_new(unsigned int sz);
 
 #include <gradient_structure.h>
 
@@ -858,7 +865,7 @@ public:
   friend void df_check_derivative_values(void);
   friend void df_check_derivative_values_indexed(void);
   friend void df_check_derivative_values_indexed_break(void);
-  friend void funnel_gradcalc(void);
+  friend void gradient_structure::funnel_gradcalc(void);
   friend void slave_gradcalc(void);
   friend void gradcalc(int nvar, const dvector& g);
   friend void gradloop();
@@ -911,6 +918,7 @@ void default_evaluation3ind(void);
  */
 class grad_stack
 {
+public:
    grad_stack_entry *true_ptr_first;
    grad_stack_entry *ptr_first;
    grad_stack_entry *ptr_last;
@@ -921,19 +929,19 @@ class grad_stack
    size_t length;
    size_t true_length;
 #endif
- public:
+
    grad_stack_entry * ptr;
- private:
+   char gradfile_name[61];
+   char gradfile_name1[61];
+   char gradfile_name2[61];
+   char var_store_file_name[61];
+
    //lvector * table;
    // js
    int _GRADFILE_PTR;  // should be int gradfile_handle;
    int _GRADFILE_PTR1;  // should be int gradfile_handle;
    int _GRADFILE_PTR2;  // should be int gradfile_handle;
    int _VARSSAV_PTR;  // should be int gradfile_handle;
-   char gradfile_name[61];
-   char gradfile_name1[61];
-   char gradfile_name2[61];
-   char var_store_file_name[61];
    void create_gradfile();
 #ifdef __BORLANDC__
    long end_pos;
@@ -945,7 +953,6 @@ class grad_stack
    OFF_T end_pos2;
 #endif
    //dmatrix *table;
- public:
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);
    friend void funnel_gradcalc(void);
@@ -958,9 +965,16 @@ class grad_stack
    friend void cleanup_temporary_files();
    ostream & operator  <<(grad_stack);
    void print();
-   grad_stack();
-   ~grad_stack();
-   void write_grad_stack_buffer(void);
+
+  grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
+  grad_stack(const size_t size): grad_stack(size, 0) {}
+  grad_stack(const size_t size, const unsigned int id);
+  grad_stack(const grad_stack&) = delete;
+  ~grad_stack();
+
+  void write_grad_stack_buffer()
+    { write_grad_stack_buffer(gradient_structure::get()); }
+  void write_grad_stack_buffer(gradient_structure*);
 
    void set_gradient_stack(void (*func) (void),
      double *dep_addr, double *ind_addr1 = NULL, double mult1 = 0,
@@ -1765,9 +1779,9 @@ class ts_vector_shapex
    friend class dvar_vector;
 
 #  if defined(USE_VECTOR_SHAPE_POOL)
-   static ts_vector_shape_pool **xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n);
+   thread_local static ts_vector_shape_pool** xpool;
+   void *operator new(size_t);
+   void operator delete(void *ptr, size_t n);
 #  endif
 
    unsigned int ncopies;
@@ -1966,14 +1980,22 @@ class arr_list
    unsigned long int number_arr_links;
    friend class arr_link;
 
+  humungous_pointer ARRAY_MEMBLOCK_BASE;
+  humungous_pointer ARRAY_MEMBLOCK_SAVE;
+
  public:
-   arr_list(void)
+   arr_list()
    {
       last = 0;
       free_last = 0;
       last_offset = 0;
       max_last_offset = 0;
       number_arr_links = 0;
+   }
+   virtual ~arr_list()
+   {
+     ARRAY_MEMBLOCK_BASE.free();
+     ARRAY_MEMBLOCK_SAVE.free();
    }
 
   arr_link* get_last() const
@@ -1995,12 +2017,12 @@ class arr_list
    {
       max_last_offset = 0;
    }
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_list_remove(arr_link **);
-   friend void arr_free_add(arr_link *);
-   friend void arr_free_remove(arr_link *);
+
+  double_and_int* arr_new(unsigned int sz);
+  void arr_free(double_and_int* varr);
+  void arr_free_add(arr_link* tmp);
+  void arr_free_remove(arr_link* tmp);
+  void arr_remove(arr_link** pptr);
 };
 
 /**
@@ -2018,20 +2040,17 @@ class arr_link
    unsigned int size;
    unsigned long int offset;
 
- public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-  static vector_shape_pool& get_xpool()
-  {
-    static vector_shape_pool xpool(sizeof(arr_link));
-    return xpool;
-  }
+public:
+  thread_local static vector_shape_pool* xpool;
+
   void* operator new(size_t);
-  void operator delete(void* ptr, size_t)
-    { arr_link::get_xpool().free(ptr); }
+  void operator delete(void* ptr, size_t);
   arr_link(const arr_link&) = delete;
   arr_link& operator=(const arr_link&) = delete;
 #endif
 
+public:
   arr_link();
 
   arr_link* get_prev() const
@@ -2045,11 +2064,7 @@ class arr_link
   unsigned int get_status() const
     { return status; }
 
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_remove(arr_link *);
-   friend void arr_free_add(arr_link *);
+  friend class arr_list;
 };
 
 #if defined(__NUMBERVECTOR__)
@@ -8681,27 +8696,27 @@ extern int ad_kill_flag;
 void reset_gradient_stack(void);
 
 #define AD_SET_DERIVATIVES1(depvar,indvar,df)  \
-     gradient_structure::GRAD_STACK1->set_gradient_stack2(default_evaluation2,\
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack2(default_evaluation2,\
        &(value(depvar)), &(value(indvar)),df);
 
 #define AD_SET_DERIVATIVES2(depvar,indvar1,df1,indvar2,df2)  \
-     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3,\
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3,\
        &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2);
 
 #define AD_SET_DERIVATIVES3(depvar,indvar1,df1,indvar2,df2,indvar3,df3)  \
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,\
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3ind,\
       &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2, \
       &(value(indvar3)),df3);
 
 #define AD_SET_DERIVATIVES4(depvar,indvar1,df1,indvar2,df2,indvar3,df3, \
   indvar4, df4)  \
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation4ind,\
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation4ind,\
       &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2, \
       &(value(indvar3)),df3, \
       &(value(indvar4)),df4);
 
 #define ADJOINT_CODE(x) \
-     gradient_structure::GRAD_STACK1->set_gradient_stack(x);
+     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(x);
 
 int make_sub_directory(const char *s);
 #include <adstring.hpp>
@@ -8724,14 +8739,16 @@ protected:
 
   void allocate();
  public:
-   static int time_flag;
    static int bandwidth;
    static int print_hess_and_exit_flag;
    static int no_pvm_flag;
    static int no_atlas_flag;
    static int no_ln_det_choleski_flag;
+#ifdef DIAG_TIMER
+   static int time_flag;
    static adtimer *ptm;
    static adtimer *ptm1;
+#endif
 #if defined(USE_ADPVM)
    virtual void get_slave_assignments(void);
    static adpvm_manager *pvm_manager;
@@ -9370,5 +9387,27 @@ dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &,
 dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
+
+template <class ... Args>
+int ad_printf( FILE* stream, const char* format, Args ... args )
+{
+  return fprintf(stream, format, args...);
+}
+template <class ... Args>
+int ad_printf( const char* format, Args ... args )
+{
+  return printf(format, args...);
+}
+std::ostream& get_output_stream();
+
+dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, const bool use_log);
+
+namespace defaults
+{
+  const int iprint = 20;
+  const int output = 1;
+  const int percentage = 20;
+  constexpr const int percentage_number = 100 / defaults::percentage;
+};
 
 #endif//#ifndef FVAR_HPP

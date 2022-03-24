@@ -192,7 +192,7 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
   save_identifier_string("PLACE1");
   save_double_value(ld);
   save_identifier_string("PLACE0");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(df_xldet);
   if (errflag) sgn=-1;
   return rdet;

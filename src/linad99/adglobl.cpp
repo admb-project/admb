@@ -6,20 +6,20 @@
 @brief Global and static types for ad_comm, initial_params and objective_function_values classes.
 */
 
+#ifdef DEBUG
+  #include <cassert>
+#endif
 #include <admodel.h>
 
  int initial_params::straight_through_flag=0;
  unsigned char ad_comm::directory_prefix='\\';
  unsigned int ad_comm::wd_flag=0;
- adtimer * ad_comm::ptm=0;
- adtimer * ad_comm::ptm1=0;
  int ad_comm::bandwidth=0;
 
 #if defined(USE_ADPVM)
 adpvm_manager* ad_comm::pvm_manager = NULL;
 #endif
 
- int ad_comm::time_flag=0;
  adstring ad_comm::subdir;
  cifstream * ad_comm::global_datafile=NULL;
  cifstream * ad_comm::global_parfile=NULL;
@@ -35,3 +35,14 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  int ad_comm::no_ln_det_choleski_flag=0;
  char ** ad_comm::argv=NULL;
  double objective_function_value::fun_without_pen=0;
+
+int function_minimizer::output_flag = defaults::output;
+
+std::ostream& get_output_stream()
+{
+  if (function_minimizer::output_flag < 2 && ad_comm::global_logfile)
+  {
+    return *ad_comm::global_logfile;
+  }
+  return std::cout;
+}

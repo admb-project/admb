@@ -212,7 +212,8 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
     }
     if (big == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+      std::ostream& output_stream = get_output_stream();
+      output_stream << "Error: division by zero in ludcmp\n";
     }
     vv[i]=1.0/big;
   }

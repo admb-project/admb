@@ -4,7 +4,7 @@
 
 ;; Author:   Arni Magnusson
 ;; Keywords: languages
-;; URL:      https://github.com/admb-project/admb/blob/master/contrib/emacs
+;; URL:      https://github.com/admb-project/admb/blob/main/contrib/emacs
 
 (defconst admb-mode-version "12.1-0" "ADMB Mode version number.")
 

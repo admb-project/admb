@@ -1,12 +1,9 @@
 ADMB Changes
 ============
 
-Describe changes and features for each release.
+Describe new features, changes and improvements for each release.
 
----
-
-Release Goals
--------------
+**Release Goals**
  
 * Continually improve algorithms
 * Add new requested features
@@ -14,8 +11,174 @@ Release Goals
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-Development Version
--------------------
+ADMB-dev
+--------
+
+#### New Supported Compilers
+
+* Microsoft Visual C++ 2022
+
+#### Changes and Improvements
+
+*  Major update to the program display outputs (See [Issue #221](https://github.com/admb-project/admb/issues/221)).
+
+*  Change all exit statements to ad_exit as recommended by Dr. Dave Fournier (See [Issue #216](https://github.com/admb-project/admb/issues/216)).
+
+*  Ported source code to build and run with the ISO/IEC C++20 standard (See [Issue #223](https://github.com/admb-project/admb/issues/223)).
+
+*  Simplify linking of static library files with .lib or .a extension using the admb script (See [Changes 3fbfd6e](https://github.com/admb-project/admb/commit/3fbfd6edcf5a953a160ef54dcbee0397405519c0)).
+
+  For Microsoft Visual Studio,
+  ```
+  > admb.bat myfile.tpl mylibrary.lib
+  ```
+
+  For Unix,
+  ```
+  > admb myfile.tpl mylibrary.a
+  ```
+
+* Profiling diagnostic option -time has been disabled for releases.
+  To develop and use the -time option, rebuild ADMB libraries with 
+  compiler macro DIAG_TIMER defined (See commands below).  (See [Changes a1667e3](https://github.com/admb-project/admb/commit/a1667e31cb862355932609a839e5962fa04823c4)).
+
+  For Microsoft Visual Studio,
+  ```
+  > nmake CXXFLAGS=/DDIAG_TIMER
+  ```
+
+  For Unix,
+  ```
+  $ make CXXFLAGS=-DDIAG_TIMER
+  ```
+  
+* Defined DEBUG macro in build files.
+
+* Defined DEBUG=diag in main Makefile to build ADMB with diagnostic outputs.
+
+* Copy sparse headers to distribution includes.
+
+* Fixed typo bug in df1b2matrix& df1b2matrix::operator=(const df1b2variable&).
+  df1b2variable should be assign assigned to all elements in f1b2matrix if not empty.
+  (See [Changes 463db83](https://github.com/admb-project/admb/commit/463db839675fa17f2aa3852422d89e1a51f8715d)).
+
+* Replaced ad_printf pointer to printf with ad_printf function for outputs.
+
+* Added new function feature **dtweedie** (See [Issue #234](https://github.com/admb-project/admb/issues/234)).
+
+* Renamed VERSION file to VERSION.txt to avoid compiler errors (See [Issue #240](https://github.com/admb-project/admb/issues/240)).
+
+* The default value for -iprint for printing function minimizer report is every 20 iterations instead of 10.
+  (See [Changes 581d46c0](https://github.com/admb-project/admb/commit/581d46c0ba066e1ee2548048bc1683888f18b76d)).
+
+ADMB-12.3
+---------
+*Released March 7, 2021*  
+
+#### New Supported Processor
+
+* Apple M1 Processor (arm64)
+  Alejandro Yáñez contributed to testing and porting of ADMB-12.3 using a local computer with the Apple M1 processor.
+
+#### New Features
+
+* Add **hess_step()** function for the capability to do single Newton steps using the inverse Hessian
+  developed by @Cole-Monnahan-NOAA (See [Issue #160](https://github.com/admb-project/admb/issues/160) and
+  [Pull #179](https://github.com/admb-project/admb/pull/179)).
+
+* Added function hessian_phase() which will return true if the hessian is being computed
+  ([See Issue #158](https://github.com/admb-project/admb/issues/158)).
+
+* Increased static allocation size of initial_params::max_num_initial_params to 4000 using -mip option.
+  If -mip is not used, the program will dynamically allocate memory for any amount of initial_params
+  ([See Issue #157](https://github.com/admb-project/admb/issues/157)).
+
+#### Changes and Improvements
+
+* Fixed compiler boolean warnings in hmc functions
+  ([See Pull #188](https://github.com/admb-project/admb/pull/186)).
+
+* Fix bug in labels and cleanup hess_step outputs in hmc functions
+  ([See Pull #185](https://github.com/admb-project/admb/pull/185)).
+
+* Use 'make verify' to run all unit and program testing.  All the testing outputs are combined into 
+  a single outputs.txt file
+  ([See Issue #188](https://github.com/admb-project/admb/issues/188)).
+
+  Also, added output file option -o to the admb script to rename and build to a specific directory.
+
+  For example, the admb script will build the executable for mymodel.tpl to ~/bin/myprogram. 
+
+  ```
+  $ admb -o ~/bin/myprogram mymodel.tpl
+  ```
+
+* Yukio Takeuchi updated the docs for the natural cubic spline
+  ([See Issue #180](https://github.com/admb-project/admb/issues/180)).
+
+* C++14 is the default C++ compiler standard for ADMB. C++11 is still supported for older compilers
+  ([See Issue #166](https://github.com/admb-project/admb/issues/166)).
+
+* Able to use absolute path with ADMB program from any run directory with the data files
+  ([See Issue #165](https://github.com/admb-project/admb/issues/165)).
+
+  For example, use the absolute path of myprogram to run in a different directory.
+
+  ```
+  myrundirectory$ ~/bin/myprogram
+  ```
+
+* If the hessian is not positive definite, the ADMB program will NOT exit.  It will instead stop
+  computing the hessian, then call the the FINAL_SECTION
+  ([See Issue #164](https://github.com/admb-project/admb/issues/164)).
+
+* Updated Git Ignore with more files to avoid displaying as unmodified list
+  ([See Issue #162](https://github.com/admb-project/admb/issues/162)).
+
+* Use CodeQL recommendations for setting size of input reads
+  ([See Issue #159](https://github.com/admb-project/admb/issues/159)).
+
+* Improved data file parser to work with different line ending including for older MacOS9 files
+  ([See Issue #155](https://github.com/admb-project/admb/issues/155)).
+
+* Added missing i5_array::initialize() function
+  ([See Issue #155](https://github.com/admb-project/admb/issues/155)).
+
+* Reverted to back to faster version of vector shape pooling code
+  ([See Issue #152](https://github.com/admb-project/admb/issues/152)).
+
+* Added a REPORT_SECTION section to the ADMB Manual
+  ([See Issue #97](https://github.com/admb-project/admb/issues/97)).
+
+* Fixed input stream for adstring to check if the buffer was exceeded
+  ([See Changes 7237a6a](https://github.com/admb-project/admb/commit/7237a6a1eb3e1ddee6195db4cf6bf080b0acc665)).
+
+* Fixed file input stream for dvector and dvar_vector to read in values from file
+  ([See Changes d3be66a](https://github.com/admb-project/admb/commit/d3be66a632b28c412cc84161cc5c3725c0ae06b4)).
+
+* The build files and outputs scripts were simplified.
+
+* Update banner string to include Apple Clang builds.
+
+#### Counts and Statistics
+
+* Total Code Coverage is ~ 49.16%.  Total lines tested is 31605 out of 62160
+  in the src directory
+  ([See ADMB Code Coverage](https://app.codecov.io/gh/admb-project/admb)).
+
+* Synopsys static code analyzer detected 223 outstanding defects in ADMB.  The
+  total defects that have been resolved is 193
+  ([See ADMB Static Analysis](https://scan.coverity.com/project/admb-project/)).
+
+* Total Unit Tests is 933.
+
+ADMB-12.2
+---------
+
+*Released July 31, 2020*  
+
+#### New Supported Compilers
+* GNU C++ 10 
 
 #### New Features
 
@@ -28,16 +191,48 @@ Development Version
   admb -p simple
   ```
 
-  to produce an executable that can run on both machines.
+  to produce an executable that can run on both machines.  [See Issue #127](https://github.com/admb-project/admb/issues/127)
 
+* Added access functions for ln_det, hessian and hessian inverse which should only be used in the FINAL_SECTION. [See Issue #132](https://github.com/admb-project/admb/issues/132)
+
+  ```
+  FINAL_SECTION
+  cout << "\nln_det:\n" << get_ln_det_value() << endl;
+  cout << "\nhessian:\n" << get_hessian() << endl;
+  cout << "\nhessian inverse:\n" << get_hessian_inverse() << endl;
+  ```
+
+* Added code to do mass matrix adaptation in the NUTS routine.
+  This can be initiated with the flag
+  `-adapt_mass_dense` when calling the NUTS routine with
+  `-nuts`. It is an experimental feature.
+  
 #### Changes and Improvements
 
 * Fixed GNUmakefile and admb script when building for MacOS and clang.  [See Issue #128](https://github.com/admb-project/admb/issues/128)
 * Function sqr should compute the square of a variable not the square root.  [See Issue #129](https://github.com/admb-project/admb/issues/129)
+* Add batch file create-admb-command-prompt.bat to create shortcut with full instead of relative path.  [See Issue #135](https://github.com/admb-project/admb/issues/135)
+* Able to use FINAL_SECTION without REPORT_SECTION. [See Issue #133](https://github.com/admb-project/admb/issues/133)
+* Fixed core dump when deallocating already freed memory from xpools.  [See Issue #138](https://github.com/admb-project/admb/issues/138)   
+  *Note: USE_VECTOR_SHAPE_POOL for memory pool is now disabled by default.*   
+* Support adstring_array in DATA_SECTION.  [See Issue #143](https://github.com/admb-project/admb/issues/143)
+* Merged adnuts improvements developed by @Cole-Monnahan-NOAA.  [See Pull #146](https://github.com/admb-project/admb/pull/146)
+  - Several bugs in the NUTS MCMC routine were fixed, adaptation schemes altered, and console output improved.
+  - Validity testing of all MCMC algorithms against known statistical distributions give strong evidence of the robustness of them.  
+* Applied fixes from @yukio-takeuchi.
+  * [Issue #122](https://github.com/admb-project/admb/issues/122)
+  * [Issue #125](https://github.com/admb-project/admb/issues/125)
+  * [Issue #126](https://github.com/admb-project/admb/issues/126)
+  * [Issue #120](https://github.com/admb-project/admb/issues/120)
+* Fixed Windows build issue reported by Jon Schnute.  [See Issue #130](https://github.com/admb-project/admb/issues/130)
+* Added api documentation for functions.
+* Fixed windows admb building with invalid /32 character. [See commit](https://github.com/admb-project/admb/commit/7bf1f308cad12c9c2fda0fa9dc844768691b156d) 
+* Windows Innosetup installer includes mingw-w64 compiler used in Rtools 4.0.
+* Updated make.exe and sed.exe in utilities from Rtools 4.0.
+* Improvements to GNUmakefile files to build with GNU Make 4.3.
 
 ADMB-12.1
 ---------
-
 *Released January 17, 2020*  
 
 #### New Supported Compilers

@@ -17,13 +17,17 @@ using std::istringstream;
   #include <cassert>
   #include <climits>
 #endif
-        int fcount =0;
+
 static int no_stuff=0;
+
+#ifdef DIAG
+int fcount =0;
 static int write_sparse_flag=0;
     static void trapper(void)
     {
       //int x=5;
     }
+#endif
 int noboundepen_flag=1;
 unsigned int global_nvar=0;
 
@@ -58,6 +62,7 @@ dvar_vector *
 dvector laplace_approximation_calculator::get_uhat_quasi_newton
   (const dvector& x,function_minimizer * pfmin)
 {
+  std::ostream& output_stream = get_output_stream();
   //int on,nopt;
   pfmin->inner_opt_flag=1;
   double f=0.0;
@@ -143,9 +148,11 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
     }
     u=ub;
   }
-  cout <<  " inner maxg = " <<  fmc1.gmax;
+  output_stream <<  " inner maxg = " << std::scientific << setprecision(10) <<  fmc1.gmax;
+#ifdef DIAG
   if (fabs(fmc1.gmax)>1.e+3)
     trapper();
+#endif
 
   if (fabs(fmc1.gmax)>1.e-4)
   {
@@ -186,9 +193,9 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
       }
     }
     u=ub;
-    cout <<  "  Inner second time = " << fmc1.gmax;
+    output_stream <<  "  Inner second time = " << std::scientific << setprecision(10) << fmc1.gmax;
   }
-  cout << "  Inner f = " << fb << endl;
+  output_stream << "  Inner f = " << std::scientific << setprecision(10) << fb << endl;
   fmc1.ireturn=0;
   fmc1.fbest=fb;
   gradient_structure::set_NO_DERIVATIVES();
@@ -229,7 +236,7 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton
   pfmin->iprint=iprint_save;
   if (initial_params::mc_phase==0)
   {
-    cout << "  Inner f = " << f << endl;
+    cout << "  Inner f = " << std::scientific << setprecision(10) << f << endl;
   }
   //gradient_structure::set_NO_DERIVATIVES();
   //initial_params::set_inactive_only_random_effects();
@@ -1018,6 +1025,7 @@ laplace_approximation_calculator::laplace_approximation_calculator(
   ivector _maxder,
   function_minimizer* _pmin
 ):
+  init_switch(1),
   separable_call_level(1),
   triplet_information(0),
   compressed_triplet_information(0),
@@ -1097,6 +1105,9 @@ laplace_approximation_calculator::laplace_approximation_calculator(
       ad_exit(1);
     }
   }
+  num_importance_samples = 0;
+  grad.allocate(1,usize);
+
 #ifndef OPT_LIB
   assert(maxder(1) >= minder(1));
 #endif
@@ -1113,25 +1124,32 @@ laplace_approximation_calculator::laplace_approximation_calculator(
   df1b2variable::set_maxder(maxder(1));
   df1b2variable::set_blocksize();
   y.allocate(1,nvariables);
-}
 
-/**
- * Description not yet available.
- * \param
- */
+  gh = nullptr;
+  importance_sampling_weights = nullptr;
+  importance_sampling_components = nullptr;
+  importance_sampling_values = nullptr;
+  separable_function_difference = nullptr;
+  Hess_components = nullptr;
+  derindex = nullptr;
+  bHessadjoint = nullptr;
+  block_diagonal_vch = nullptr;
+  block_diagonal_ch = nullptr;
+}
+/// Destructor
 laplace_approximation_calculator::~laplace_approximation_calculator()
 {
-  if(importance_sampling_weights)
+  if (importance_sampling_weights)
   {
     delete importance_sampling_weights;
     importance_sampling_weights = 0;
   }
-  if(importance_sampling_components)
+  if (importance_sampling_components)
   {
     delete importance_sampling_components;
     importance_sampling_components = 0;
   }
-  if(importance_sampling_values)
+  if (importance_sampling_values)
   {
     delete importance_sampling_values;
     importance_sampling_values = 0;
@@ -1746,11 +1764,13 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
            //double ld1=0.5*ln_det(*(pmin->lapprox->sparse_triplet),
            //  *(pmin->lapprox->sparse_symbolic));
 
+#ifdef DIAG
            if (write_sparse_flag)
            {
              //ofstream ofs("sparse");
              //ofs << *(pmin->lapprox->vsparse_triplet) << endl;
            }
+#endif
            ld=0.5*ln_det(*(pmin->lapprox->vsparse_triplet),
              ssymb,*(pmin->lapprox->sparse_triplet2));
              //*(pmin->lapprox->sparse_symbolic2),pmin->lapprox);
@@ -2027,10 +2047,11 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   double maxg=max(fabs(g));
   if (!initial_params::mc_phase)
   {
-    std::streamsize save = cout.precision();
-    cout << setprecision(16) << " f = " << vf
-         << " max g = " << maxg << endl;
-    cout.precision(save);
+    std::ostream& output_stream = get_output_stream();
+    std::streamsize save = output_stream.precision();
+    output_stream << std::fixed << setprecision(10) << " f = " << vf
+                  << " max g = " << std::scientific << maxg << endl;
+    output_stream.precision(save);
   }
   return maxg;
 }
@@ -2065,8 +2086,9 @@ double evaluate_function(double& fval,const dvector& x,
   fval=value(vf);
   if (!initial_params::mc_phase)
   {
-    cout << setprecision(10) << " f = " << vf
-         << " max g = " << maxg << endl;
+    std::ostream& output_stream = get_output_stream();
+    output_stream << std::fixed << setprecision(10) << " f = " << vf
+                  << " max g = " << std::scientific << maxg << endl;
   }
   return maxg;
 }
@@ -2101,8 +2123,9 @@ double evaluate_function(double& fval,const dvector& x,const dvector& g,
   fval=value(vf);
   if (!initial_params::mc_phase)
   {
-    cout << setprecision(15) << " f = " << vf
-         << " max g = " << maxg << endl;
+    std::ostream& output_stream = get_output_stream();
+    output_stream << std::fixed << setprecision(10) << " f = " << vf
+                  << " max g = " << std::scientific << maxg << endl;
   }
   return maxg;
 }
@@ -2213,8 +2236,9 @@ void cleanup_laplace_stuff(laplace_approximation_calculator * l)
       delete df1b2variable::adpool_vector[i];
       df1b2variable::adpool_vector[i]=0;
       df1b2variable::nvar_vector[i]=0;
-      df1b2variable::adpool_counter=0;
     }
+
+    df1b2variable::adpool_counter=0;
   }
 }
 
@@ -2789,6 +2813,8 @@ void nested_calls_indices::allocate(const nested_calls_shape& _nsc)
 dvector laplace_approximation_calculator::get_uhat_lm_newton2
   (const dvector& x,function_minimizer * pfmin)
 {
+  std::ostream& output_stream = get_output_stream();
+
   //int on,nopt;
   pfmin->inner_opt_flag=1;
   double f=0.0;
@@ -2873,9 +2899,11 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
     }
     u=ub;
   }
-  cout <<  " inner maxg = " <<  fmc1.gmax;
+  output_stream <<  " inner maxg = " << std::scientific << setprecision(10) <<  fmc1.gmax;
+#ifdef DIAG
   if (fabs(fmc1.gmax)>1.e+3)
     trapper();
+#endif
 
   if (fabs(fmc1.gmax)>1.e-4)
   {
@@ -2916,9 +2944,9 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
       }
     }
     u=ub;
-    cout <<  "  Inner second time = " << fmc1.gmax;
+    output_stream <<  "  Inner second time = " << std::scientific << setprecision(10) << fmc1.gmax;
   }
-  cout << "  Inner f = " << fb << endl;
+  output_stream << "  Inner f = " << std::scientific << setprecision(10)  << fb << endl;
   fmc1.ireturn=0;
   fmc1.fbest=fb;
   gradient_structure::set_NO_DERIVATIVES();

@@ -30,7 +30,6 @@
 
 #ifndef _MSC_VER
   #include <iostream>
-  using namespace std;
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
@@ -74,7 +73,17 @@ void funnel_derivatives(void);
  * Description not yet available.
  * \param
  */
-void funnel_gradcalc(void)
+void funnel_gradcalc()
+{
+  gradient_structure* gs = gradient_structure::get();
+  if (!gs)
+  {
+    cerr << "Error: No instance of gradient data structure.\n";
+    ad_exit(1);
+  }
+  gs->funnel_gradcalc();
+}
+void gradient_structure::funnel_gradcalc()
 {
 #  ifdef NO_DERIVS
      if (gradient_structure::no_derivatives)
@@ -82,24 +91,24 @@ void funnel_gradcalc(void)
        return;
      }
 #  endif
-  gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
+
+  TOTAL_BYTES = 0;
+  PREVIOUS_TOTAL_BYTES=0;
+
   if(!gradient_structure::instances)
   {
     return;
   }
 
-   gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
-              gradient_structure::GRAD_STACK1->gradfile_handle();
+  GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();
 
-  int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
+  int& _GRADFILE_PTR = GRAD_STACK1->_GRADFILE_PTR;
 
   OFF_T lpos = LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 
-  if(gradient_structure::GRAD_STACK1->ptr
-       <= gradient_structure::GRAD_STACK1->ptr_first)
+  if (GRAD_STACK1->ptr <= GRAD_STACK1->ptr_first)
   {
-#ifdef DEBUG
+#ifdef DIAG
       cerr <<
         "warning -- calling funnel_gradcalc when no calculations generating"
            << endl << "derivative information have occurred" << endl;
@@ -113,15 +122,13 @@ void funnel_gradcalc(void)
     gradient_structure::save_variables();
   }
 
-  gradient_structure::GRAD_STACK1->ptr--;
+  GRAD_STACK1->ptr--;
 
-  gradient_structure::GRAD_LIST->initialize();
+  GRAD_LIST->initialize();
 
-  double_and_int* tmp =
-    (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
+  double_and_int* tmp = (double_and_int*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
 
-     unsigned long int max_last_offset =
-       gradient_structure::ARR_LIST1->get_max_last_offset();
+  unsigned long int max_last_offset = ARR_LIST1->get_max_last_offset();
 
   size_t size = sizeof(double_and_int);
 
@@ -137,42 +144,38 @@ void funnel_gradcalc(void)
 #endif
    }
 
-    *gradient_structure::GRAD_STACK1->ptr->dep_addr = 1;
-    zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
+    *GRAD_STACK1->ptr->dep_addr = 1;
+    zptr = GRAD_STACK1->ptr->dep_addr;
 
 int break_flag=1;
 int funnel_flag=0;
 
 do
 {
-  gradient_structure::GRAD_STACK1->ptr++;
+  GRAD_STACK1->ptr++;
   #ifdef FAST_ASSEMBLER
     gradloop();
   #else
-    grad_stack_entry * grad_ptr_first=
-      gradient_structure::GRAD_STACK1->ptr_first;
-    while (gradient_structure::GRAD_STACK1->ptr-- >
-           grad_ptr_first)
+    grad_stack_entry * grad_ptr_first = GRAD_STACK1->ptr_first;
+    while (GRAD_STACK1->ptr-- > grad_ptr_first)
     {
-      if (!gradient_structure::GRAD_STACK1->ptr->func)
+      if (!GRAD_STACK1->ptr->func)
       {
         funnel_flag=1;
         break;
       }
       else
-        (*(gradient_structure::GRAD_STACK1->ptr->func))();
+        (*(GRAD_STACK1->ptr->func))();
     }
 
   #endif
    if (funnel_flag) break;
 
   // back up the file one buffer size and read forward
-  OFF_T offset = (OFF_T)(sizeof(grad_stack_entry)
-    * gradient_structure::GRAD_STACK1->length);
-  lpos = LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
-    -offset, SEEK_CUR);
+  OFF_T offset = (OFF_T)(sizeof(grad_stack_entry) * GRAD_STACK1->length);
+  lpos = LSEEK(GRAD_STACK1->_GRADFILE_PTR, -offset, SEEK_CUR);
 
-  break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
+  break_flag = GRAD_STACK1->read_grad_stack_buffer(lpos);
 }  while (break_flag); // do
 
  {
@@ -181,7 +184,7 @@ do
      #ifdef GRAD_DIAG
       OFF_T ttmp =
      #endif
-      LSEEK(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
+      LSEEK(GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
 
      #ifdef GRAD_DIAG
       cout << "Offset in file at end of gradcalc is " << ttmp
@@ -202,10 +205,10 @@ do
     int dsize = (int)_dsize;
 
     //dvector dtmp(0,dsize-1);
-    //memcpy((char*)&(dtmp(0)),(char*)gradient_structure::ARRAY_MEMBLOCK_BASE,
+    //memcpy((char*)&(dtmp(0)),(char*)ARR_LIST1->ARRAY_MEMBLOCK_BASE,
       //dsize*sizeof(double));
 
-    double* dptr=(double*) gradient_structure::ARRAY_MEMBLOCK_BASE;
+    double* dptr=(double*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
     dptr-=1;
     int ii=0;
     int nzero=0;
@@ -261,7 +264,7 @@ do
     }
     save_int_value(ii);
 
-    unsigned int ssize=gradient_structure::GRAD_LIST->nlinks;
+    unsigned int ssize = GRAD_LIST->nlinks;
 #ifndef OPT_LIB
     assert(ssize > 0);
     assert(ssize <= INT_MAX);
@@ -269,12 +272,11 @@ do
     dvector stmp(0,(int)(ssize-1));
 
 #ifndef OPT_LIB
-    assert(gradient_structure::GRAD_LIST->nlinks <= INT_MAX);
+    assert(GRAD_LIST->nlinks <= INT_MAX);
 #endif
-    for (int i=0; i < (int)gradient_structure::GRAD_LIST->nlinks; i++)
+    for (int i=0; i < (int)GRAD_LIST->nlinks; i++)
     {
-      memcpy((char*)&(stmp(i)),
-        gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
+      memcpy((char*)&(stmp(i)), GRAD_LIST->dlink_addresses[i],sizeof(double));
     }
     //dtmp.save_dvector_value();
     //dtmp.save_dvector_position();
@@ -283,10 +285,10 @@ do
 
     // save the address of the dependent variable for the funnel
     size_t wsize=sizeof(double_and_int*);
-    gradient_structure::get_fp()->fwrite(&zptr, wsize);
+    fp->fwrite(&zptr, wsize);
     save_identifier_string("ae");
 
-    gradient_structure::GRAD_STACK1->set_gradient_stack(funnel_derivatives);
+    GRAD_STACK1->set_gradient_stack(funnel_derivatives);
     gradient_structure::restore_arrays();
     gradient_structure::restore_variables();
   }
@@ -327,7 +329,7 @@ void funnel_derivatives(void)
   verify_identifier_string("ue");
 
   double df = restore_prevariable_derivative(deppos);
-  double * dptr= (double *) gradient_structure::ARRAY_MEMBLOCK_BASE;
+  double* dptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
 
   //double * dd = &(dx(1));
   ii=0;
@@ -353,7 +355,7 @@ void funnel_derivatives(void)
   {
     if (!ISZERO(stmp(i)))
     {
-      *(double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
+      *(double*)(gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
         +=stmp(i)*df;
     }
   }
@@ -376,6 +378,6 @@ dvariable& funnel_dvariable::operator=(const prevariable& t)
  */
 void ad_begin_funnel(void)
 {
-  gradient_structure::GRAD_STACK1->set_gradient_stack(NULL);
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(NULL);
 }
 

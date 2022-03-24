@@ -10,6 +10,7 @@ using std::istringstream;
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
+#include<ctime>
 
 void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
   int& next_flag);
@@ -207,8 +208,24 @@ void tracing_message(int traceflag,const char *s);
         jj=1;
       }
       initial_params::current_phase = jj;
-      cout << "Set current phase to " << jj << endl;
+      std::ostream& output_stream = get_output_stream();
+      output_stream << "Set current phase to " << jj << endl;
     }
+
+    if(function_minimizer::output_flag==1){
+      time_t now = time(0);
+      tm* localtm = localtime(&now);
+      std::string m=get_filename((char*)ad_comm::adprogram_name);
+      if(!random_effects_flag){
+	cout << "Starting optimization of '";
+      } else {
+	cout << "Starting RE optimization of '";
+      }
+      cout << m<< "' in phase " <<
+	initial_params::current_phase << " of " <<
+	initial_params::max_number_phases << " at " << asctime(localtm);
+    }
+    
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-lapqd"))>-1)
     {
       ADqd_flag=1;
@@ -228,7 +245,7 @@ void tracing_message(int traceflag,const char *s);
       {
         cerr << "Error -- no active parameters. There must be at least 1"
              << endl;
-        exit(1);
+        ad_exit(1);
       }
       dvector g(1,nvar);
       independent_variables x(1,nvar);
@@ -365,7 +382,7 @@ void tracing_message(int traceflag,const char *s);
                 break;
               default:
                 cerr << "error illega value for pvm_manager->mode" << endl;
-                exit(1);
+                ad_exit(1);
               }
             }
           }
@@ -383,7 +400,7 @@ void tracing_message(int traceflag,const char *s);
                 break;
               default:
                 cerr << "error illega value for pvm_manager->mode" << endl;
-                exit(1);
+                ad_exit(1);
               }
             }
           }
@@ -411,7 +428,7 @@ void tracing_message(int traceflag,const char *s);
               {
                 if (!nopt)
                 {
-                  cerr << "Usage -lmn option needs integer"
+                  cerr << "Usage -lmn2 option needs integer"
                      "  -- set to default 5" << endl;
                 }
                 else
@@ -419,7 +436,7 @@ void tracing_message(int traceflag,const char *s);
                   int jj=atoi(ad_comm::argv[lmnflag+1]);
                   if (jj<=0)
                   {
-                    cerr << "Usage -lmn option needs positive integer "
+                    cerr << "Usage -lmn2 option needs positive integer "
                      " -- set to default 5" << endl;
                   }
                   else
@@ -539,13 +556,30 @@ function_minimizer::function_minimizer(long int sz):
     spminflag=0;
     repeatminflag=0;
 
-    int ssz;
+    int ssz = 0;
 
     int nopt=get_option_number("-ams",
       "-ams option needs positive integer -- ignored",ssz);
     if (nopt>-1 && ssz>0) {
       sz=ssz;
     }
+    ssz = -1;
+    nopt = get_option_number("-mip",
+      "Warning: Invalid non-positive argument for command line option -mip.", ssz);
+
+    if (nopt == 1)
+    {
+      if (ssz > 0)
+      {
+        initial_params::max_num_initial_params = ssz;
+      }
+      else
+      {
+        cerr << "Warning: Invalid non-positive argument for command line option -mip.\n"
+                "The default value (" << initial_params::max_num_initial_params << ") will be used.\n";
+      }
+    }
+    initial_params::varsptr.allocate(static_cast<unsigned int>(initial_params::max_num_initial_params));
 
 #ifdef __BORLANDC__
     long int lssz;
@@ -634,10 +668,8 @@ int get_option_number(const char * option_name,const char * error_message,
   {
     if (!nopt)
     {
-      if (ad_printf)
-        (*ad_printf)("%s\n",error_message);
-      else
-        cerr << error_message << endl;
+      ad_printf("%s\n",error_message);
+      //  cerr << error_message << endl;
       on1=-1;
     }
     else
@@ -661,10 +693,8 @@ int get_option_number(const char * option_name,const char * error_message,
   {
     if (!nopt)
     {
-      if (ad_printf)
-        (*ad_printf)("%s\n",error_message);
-      else
-        cerr << error_message << endl;
+      ad_printf("%s\n",error_message);
+      //  cerr << error_message << endl;
       on1=-1;
     }
     else

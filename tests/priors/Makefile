@@ -11,10 +11,12 @@ runre: $(TPL_TARGETRE)
 	$(TPL_TARGETRE) -nohess
 
 $(TPL_TARGET): $(TPL_TARGET).tpl
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=${CXXFLAGS} admb -s $(TPL_TARGET)
+	..\\..\\admb.cmd $(TPL_TARGET)
 
 $(TPL_TARGETRE): $(TPL_TARGETRE).tpl
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=${CXXFLAGS} admb -s -r $(TPL_TARGETRE)
+	..\\..\\admb.cmd $(TPL_TARGETRE)
+
+get-outputs:
 
 clean:
 	@if exist eigv.rpt del /Q eigv.rpt

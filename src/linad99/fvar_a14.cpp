@@ -78,7 +78,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
   v2.save_dvar_vector_position();
   vtmp.save_prevariable_position();
   save_identifier_string("aaaa");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(dvdv_dot);
   RETURN_ARRAYS_DECREMENT();
   return vtmp;
@@ -149,7 +149,7 @@ dvariable sum(const dvar_vector& v1)
     v1.save_dvar_vector_position();
     vtmp.save_prevariable_position();
     save_identifier_string("aaaa");
-    gradient_structure::GRAD_STACK1->
+    gradient_structure::get()->GRAD_STACK1->
               set_gradient_stack(X_dv_sum);
   }
   return vtmp;

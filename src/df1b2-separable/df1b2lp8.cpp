@@ -187,7 +187,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   else if (is<samplesize-1)
   {
     cerr << "This can't happen" << endl;
-    exit(1);
+    ad_exit(1);
   }
 
   // get random numbers
@@ -223,7 +223,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   fmmt1 fmc(nvar,5);
   //fmm fmc(nvar,5);
   fmc.noprintx=1;
-  fmc.iprint=10;
+  fmc.iprint = defaults::iprint;
   fmc.maxfn=2500;
   fmc.crit=1.e-6;
 

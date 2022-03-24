@@ -103,6 +103,7 @@ TEST_F(test_df1_one_variable, operator_equal_multiply)
   //\todo can't understand how it got 16???
   ASSERT_EQ(16, *x.get_u_x());
 }
+/*
 TEST_F(test_df1_one_variable, init_df1_one_variable)
 {
   gradient_structure gs;
@@ -124,4 +125,110 @@ TEST_F(test_df1_one_variable, init_df1_one_variable)
     return;
   }
   FAIL();
+}
+*/
+TEST_F(test_df1_one_variable, operator_negative)
+{
+  df1_one_variable x;
+  x = 2;
+  *x.get_u_x() = -1;
+
+  df1_one_variable y;
+
+  y = -x;
+
+  ASSERT_DOUBLE_EQ(-2, value(y));
+  ASSERT_DOUBLE_EQ(-2, *y.get_u());
+  ASSERT_DOUBLE_EQ(1, *y.get_u_x());
+  ASSERT_DOUBLE_EQ(1, *y.get_udot());
+}
+TEST_F(test_df1_one_variable, operator_multiply)
+{
+  df1_one_variable x;
+  x = 2;
+  *x.get_u_x() = -1;
+
+  df1_one_variable y;
+
+  y = 2.0 * x;
+
+  ASSERT_DOUBLE_EQ(4, value(y));
+  ASSERT_DOUBLE_EQ(4, *y.get_u());
+  ASSERT_DOUBLE_EQ(-2, *y.get_u_x());
+  ASSERT_DOUBLE_EQ(-2, *y.get_udot());
+}
+TEST_F(test_df1_one_variable, operator_multiply2)
+{
+  df1_one_variable x;
+  x = 2;
+  *x.get_u_x() = -1;
+
+  df1_one_variable y;
+
+  y = x * 2.0;
+
+  ASSERT_DOUBLE_EQ(4, value(y));
+  ASSERT_DOUBLE_EQ(4, *y.get_u());
+  ASSERT_DOUBLE_EQ(-2, *y.get_u_x());
+  ASSERT_DOUBLE_EQ(-2, *y.get_udot());
+}
+TEST_F(test_df1_one_variable, operator_plus)
+{
+  df1_one_variable x;
+  x = 2;
+  *x.get_u_x() = -1;
+
+  df1_one_variable y;
+
+  y = 2.0 + x;
+
+  ASSERT_DOUBLE_EQ(4, value(y));
+  ASSERT_DOUBLE_EQ(4, *y.get_u());
+  ASSERT_DOUBLE_EQ(-1, *y.get_u_x());
+  ASSERT_DOUBLE_EQ(-1, *y.get_udot());
+}
+TEST_F(test_df1_one_variable, operator_plus2)
+{
+  df1_one_variable x;
+  x = 2;
+  *x.get_u_x() = -1;
+
+  df1_one_variable y;
+
+  y = x + 2.0;
+
+  ASSERT_DOUBLE_EQ(4, value(y));
+  ASSERT_DOUBLE_EQ(4, *y.get_u());
+  ASSERT_DOUBLE_EQ(-1, *y.get_u_x());
+  ASSERT_DOUBLE_EQ(-1, *y.get_udot());
+}
+TEST_F(test_df1_one_variable, operator_minus)
+{
+  df1_one_variable x;
+  x = 2;
+  *x.get_u_x() = -1;
+
+  df1_one_variable y;
+
+  y = 2.0 - x;
+
+  ASSERT_DOUBLE_EQ(0, value(y));
+  ASSERT_DOUBLE_EQ(0, *y.get_u());
+  ASSERT_DOUBLE_EQ(1, *y.get_u_x());
+  ASSERT_DOUBLE_EQ(1, *y.get_udot());
+}
+TEST_F(test_df1_one_variable, operator_minus2)
+{
+  df1_one_variable x;
+  x = 2;
+  *x.get_u_x() = -1;
+
+  df1_one_variable y;
+
+  y = x - 2.0;
+
+  ASSERT_DOUBLE_EQ(0, value(y));
+  ASSERT_DOUBLE_EQ(0, *y.get_u());
+  ASSERT_DOUBLE_EQ(-1, *y.get_u_x());
+  ASSERT_DOUBLE_EQ(-1, *y.get_udot());
 }

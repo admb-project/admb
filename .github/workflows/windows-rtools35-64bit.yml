@@ -8,17 +8,17 @@ jobs:
     runs-on: [self-hosted, windows]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: clean
       run: |
-        set PATH=C:\rtools35\mingw_64\bin;%PATH%
-        utilities\\make clean
+        set PATH=C:\PortableGit\bin;C:\rtools35\mingw_64\bin;%PATH%
+        utilities\make clean SHELL=
       shell: cmd
     - name: build
       run: |
-        set PATH=C:\rtools35\mingw_64\bin;%PATH%
-        utilities\\make -j 2
-        utilities\\make -j 2 shared
+        set PATH=C:\PortableGit\bin;C:\rtools35\mingw_64\bin;%PATH%
+        utilities\make -j 4 SHELL=
+        utilities\make -j 4 shared SHELL=
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
@@ -27,22 +27,22 @@ jobs:
         path: build\\admb
     - name: debug
       run: |
-        set PATH=C:\rtools35\mingw_64\bin;%PATH%
-        utilities\\make -j 2 DEBUG=yes
-        utilities\\make -j 2 shared DEBUG=yes
+        set PATH=C:\PortableGit\bin;C:\rtools35\mingw_64\bin;%PATH%
+        utilities\make -j 4 DEBUG=yes SHELL=
+        utilities\make -j 4 shared DEBUG=yes SHELL=
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: admb_rtools35_debug
         path: build\\admb
-    - name: test
+    - name: tests
       run: |
-        set PATH=C:\rtools35\mingw_64\bin;%PATH%
-        utilities\\make test DEBUG=yes TESTS_REMOTE=no
+        set PATH=C:\PortableGit\bin;C:\rtools35\mingw_64\bin;%PATH%
+        utilities\make verify SHELL= DEBUG=yes SAFE_ONLY=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: outputs
-        path: outputs-opt.txt
+        path: outputs.txt

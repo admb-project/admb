@@ -1,3 +1,6 @@
+!IFNDEF ADMB_VER
+ADMB_VER=admb
+!ENDIF
 !IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
 CXXVERSION=-cl19
 !ELSE
@@ -11,7 +14,7 @@ OSNAME=win32
 OSNAME=vs
 !ENDIF
 
-DESTDIR=..\build\admb
+DESTDIR=..\build\$(ADMB_VER)
 !IFDEF DEBUG
 _DEBUG=-debug
 !ENDIF
@@ -52,6 +55,7 @@ contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib
 !ENDIF
 
 contrib-ad2csv:
+	if not exist ..\build\ad2csv md ..\build\ad2csv
 	pushd ad2csv& $(MAKE) /nologo
 
 contrib-ecolib:

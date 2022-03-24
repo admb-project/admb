@@ -8,30 +8,30 @@ jobs:
     runs-on: [self-hosted, windows]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: clean
       run: |
-        set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make clean
+        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        make clean
       shell: cmd
     - name: build debug
       run: |
-        set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make -j 2 DEBUG=yes
-        utilities\\make -j 2 shared DEBUG=yes
+        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        make -j 4 DEBUG=yes
+        make -j 4 shared DEBUG=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: admb_msys2_debug
         path: build\\admb
-    - name: test
+    - name: tests
       run: |
-        set PATH=C:\msys64\mingw64\bin;%PATH%
-        utilities\\make test DEBUG=yes TESTS_REMOTE=no
+        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        make verify DEBUG=yes SAFE_ONLY=yes TESTS_REMOTE=no
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: outputs
-        path: outputs-opt.txt
+        path: outputs.txt

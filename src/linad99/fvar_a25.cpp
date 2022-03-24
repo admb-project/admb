@@ -36,7 +36,7 @@ dvar_vector& dvar_vector::operator+=(const dvar_vector& v1)
    save_dvar_vector_position();  // for this->
    v1.save_dvar_vector_position();
    save_identifier_string("wwxx");
-    gradient_structure::GRAD_STACK1->
+    gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(dv_pluseq);
    return(*this);
  }

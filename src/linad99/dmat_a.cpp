@@ -64,7 +64,7 @@
    {
      m[i].allocate(ncl[i],nch[i]);
      #ifdef DIAG
-       cerr << "Created a dvector with address "<< farptr_tolong(*(m+i))<<"\n";
+       cerr << "Created a dvector with address "<< farptr_tolong((void*)(m+i))<<"\n";
      #endif
    }
    #ifdef DIAG

@@ -46,6 +46,22 @@ TEST_F(test_dvar_vector, fill)
   ASSERT_DOUBLE_EQ(4, value(v(5)));
   ASSERT_DOUBLE_EQ(5, value(v(6)));
 }
+TEST_F(test_dvar_vector, read_from_file)
+{
+  gradient_structure gs;
+
+  ofstream ofs("test_dvar_vector_read_from_file.txt");
+  ofs << "3.5 -6.8 11.4 -77.5" << endl;
+  ofs.close();
+
+  dvar_vector v("test_dvar_vector_read_from_file.txt");
+
+  ASSERT_EQ(4, v.size());
+  ASSERT_DOUBLE_EQ(3.5, value(v(1)));
+  ASSERT_DOUBLE_EQ(-6.8, value(v(2)));
+  ASSERT_DOUBLE_EQ(11.4, value(v(3)));
+  ASSERT_DOUBLE_EQ(-77.5, value(v(4)));
+}
 TEST_F(test_dvar_vector, min)
 {
   gradient_structure gs;
@@ -696,4 +712,21 @@ TEST_F(test_dvar_vector, sqrvariable)
   ASSERT_DOUBLE_EQ(gradients(2), 2.0 * independents(2));
   ASSERT_DOUBLE_EQ(gradients(3), 2.0 * independents(3));
   ASSERT_DOUBLE_EQ(gradients(4), 2.0 * independents(4));
+}
+TEST_F(test_dvar_vector, nobraces)
+{
+  gradient_structure gs;
+
+  ofstream ofs("test_dvector.txt");
+  ofs << "0 1 2 3 4 5\n";
+  ofs.close();
+
+  dvar_vector v("test_dvector.txt");
+
+  ASSERT_DOUBLE_EQ(0, value(v(1)));
+  ASSERT_DOUBLE_EQ(1, value(v(2)));
+  ASSERT_DOUBLE_EQ(2, value(v(3)));
+  ASSERT_DOUBLE_EQ(3, value(v(4)));
+  ASSERT_DOUBLE_EQ(4, value(v(5)));
+  ASSERT_DOUBLE_EQ(5, value(v(6)));
 }

@@ -1,9 +1,5 @@
 TARGET=simple
-
-default: simple.dat
-	$(MAKE) all
-	$(MAKE) run2
-
+OVERRIDE=all
 
 ifeq ($(OS),Windows_NT)
 include ..\test-rules.mak
@@ -18,46 +14,53 @@ else
 	cp ../../examples/admb/simple/simple.dat .
 endif
 
-run2:
+run: $(TARGET) simple.dat
 ifeq ($(CMDSHELL),cmd)
 	simple
 	move simple.par simple.par.save
 	simple -lprof
 	move simple.par simple.par.lprof
 	simple -lprof -ainp simple.par.save
-	type simple.par simple.par.save simple.par.lprof
 else
 	./simple
 	mv simple.par simple.par.save
 	./simple -lprof
 	mv simple.par simple.par.lprof
 	./simple -lprof -ainp simple.par.save
-	cat simple.par simple.par.save simple.par.lprof
 endif
 
-get-outputs:
+get-outputs: _get-outputs
 ifeq ($(CMDSHELL),cmd)
-	type dgs2
-	type diags
-	type est_a.plt
-	type est_b.plt
-	type simple.cor
-	type simple.dat
-	type simple.eva
-	type simple.log
-	type simple.par
-	type simple.prf
-	type simple.std
+	@if exist dgs2 type dgs2
+	@if exist diags type diags
+	@if exist est_a.plt type est_a.plt
+	@if exist est_b.plt type est_b.plt
+	@if exist $(TARGET).par.save type simple.par.save
+	@if exist $(TARGET).par.lprof type simple.par.lprof
 else
-	cat dgs2
-	cat diags
-	cat est_a.plt
-	cat est_b.plt
-	cat simple.cor
-	cat simple.dat
-	cat simple.eva
-	cat simple.log
-	cat simple.par
-	cat simple.prf
-	cat simple.std
+	@if [ -e dgs2 ]; then cat dgs2; fi
+	@if [ -e diags ]; then cat diags; fi
+	@if [ -e est_a.plt ]; then cat est_a.plt; fi
+	@if [ -e est_b.plt ]; then cat est_b.plt; fi
+	@if [ -e $(TARGET).par.save ]; then cat $(TARGET).par.save; fi
+	@if [ -e $(TARGET).par.lprof ]; then cat $(TARGET).par.lprof; fi
+endif
+
+clean: _clean
+ifeq ($(CMDSHELL),cmd)
+	if exist dgs2 del /Q dgs2
+	if exist diags del /Q diags
+	if exist est_a.plt del /Q est_a.plt
+	if exist est_b.plt del /Q est_b.plt
+	if exist $(TARGET).par.save del /Q simple.par.save
+	if exist $(TARGET).par.lprof del /Q simple.par.lprof
+	if exist $(TARGET).dat del /Q simple.dat
+else
+	rm -vf dgs2
+	rm -vf diags
+	rm -vf est_a.plt
+	rm -vf est_b.plt
+	rm -vf simple.par.save
+	rm -vf simple.par.lprof
+	rm -vf simple.dat
 endif

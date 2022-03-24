@@ -16,10 +16,12 @@ Input string from stream c into adstring t.
 */
 istream& operator>>(istream& c, adstring& t)
 {
-  const unsigned int max_length = 1025;
-  char tmp[max_length + 1];
+  const unsigned int max_length = 1024;
+  /// For some reason 3 works.
+  char tmp[max_length + 3];
+  tmp[max_length + 1] = '\0';
   c >> tmp;
-  if (strlen(tmp) > max_length)
+  if (tmp[max_length + 1] != '\0')
   {
     cerr << "Error -- Maximum adstring length exceeded in "
          << "istream& operator>>(istream&, adstring&)" << endl;
@@ -39,22 +41,41 @@ istream& operator>>(istream& c, line_adstring& t)
 {
   const unsigned int max_length = 1025;
   char tmp[max_length + 1];
-  char ch = (char)c.get();
 
   // throw away the newline at the end of the last line if necessary
-  if (ch == '\n') ch = (char)c.get();
+  //if (ch == '\r') ch = (char)c.get();
 
   unsigned int ii = 0;
-  while (ch != '\n' && ch != EOF)
+  while (ii <= max_length)
   {
-    if (ii == max_length)
+    char ch = (char)c.get();
+    if (ch == '\r')
     {
-      cerr << "Error -- Maximum line_adstring length exceeded in "
-           << "istream& operator>>(istream&, line_adstring&)" << endl;
-      ad_exit(1);
+      char p = (char)c.peek();
+      if (p == '\n')
+      {
+        ch = (char)c.get();
+      }
+      break;
     }
-    tmp[ii++] = ch;
-    ch = (char)c.get();
+    else if (ch == '\n')
+    {
+      break;
+    }
+    else if (ch == EOF)
+    {
+      break;
+    }
+    else
+    {
+      tmp[ii++] = ch;
+    }
+  }
+  if (ii > max_length)
+  {
+    cerr << "Error -- Maximum line_adstring length exceeded in "
+         << "istream& operator>>(istream&, line_adstring&)" << endl;
+    ad_exit(1);
   }
   tmp[ii] = '\0';
   t = tmp;

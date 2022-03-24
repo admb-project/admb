@@ -1,4 +1,8 @@
-LEXDESTDIR=..\build\lex
+!IFNDEF ADMB_VER
+ADMB_VER=admb
+!ENDIF
+
+PATH=..\utilities;$(PATH);..\utilities\shared
 
 #SAFE_ALL= /DSAFE_ALL
 
@@ -15,11 +19,16 @@ OSNAME=win32
 OSNAME=win
 !ENDIF
 
-DESTDIR=..\build\admb
+DESTDIR=..\build\$(ADMB_VER)
 !IF DEFINED(DEBUG)
 OBJDESTDIR=..\build\objects\$(OSNAME)$(CXXVERSION)-debug
-CXXFLAGS_SAF=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
-CXXFLAGS_OPT=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc /D_USE_MATH_DEFINES /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+!IF "$(DEBUG)"=="diag"
+CXXFLAGS_SAF=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /DDEBUG=0 /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc /DDEBUG=0 /D_USE_MATH_DEFINES /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+!ELSE
+CXXFLAGS_SAF=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /DDEBUG /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /Z7 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc /DDEBUG /D_USE_MATH_DEFINES /DOPT_LIB /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
+!ENDIF
 !ELSE
 OBJDESTDIR=..\build\objects\$(OSNAME)$(CXXVERSION)
 CXXFLAGS_SAF=/nologo /O2 /W4 /wd6001 /wd4100 /wd4239 /GF /EHsc$(SAFE_ALL) /D_USE_MATH_DEFINES /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_DEPRECATE /I$(DESTDIR)\include
@@ -139,44 +148,45 @@ dist: bins
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)
 	copy ..\LICENSE.txt $(DESTDIR)
 	copy ..\CHANGES.md $(DESTDIR)\CHANGES.txt
-	..\utilities\sed.exe "s/\.md/\.txt/g" ..\README.md > $(DESTDIR)\README.txt
-	copy ..\VERSION $(DESTDIR)
+	sed.exe "s/\.md/\.txt/g" ..\README.md > $(DESTDIR)\README.txt
+	copy ..\VERSION.txt $(DESTDIR)
 	$(MAKE) lexfiles
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
 	pushd $(DESTDIR)\bin & copy ..\..\..\scripts\set-admb-command-prompt.bat & popd
 
 bins: libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
-	echo set ADMB_CFG_CXX=$(CXX)>$(DESTDIR)\bin\admb-cfg.bat
-	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS)>>$(DESTDIR)\bin\admb-cfg.bat
-	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS)>>$(DESTDIR)\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS)>$(DESTDIR)\bin\admb-cfg-$(OSNAME)$(CXXVERSION).bat
+	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS)>>$(DESTDIR)\bin\admb-cfg-$(OSNAME)$(CXXVERSION).bat
 	copy df1b2-separable\sed* $(DESTDIR)\bin
 	if exist ..\admb del ..\admb
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat $(DESTDIR)\admb.cmd
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
-	copy ..\utilities\*.dll $(DESTDIR)\bin
+	copy ..\utilities\shared\*.dll $(DESTDIR)\bin
 
 lexfiles: lexdestdir $(DESTDIR)\bin\tpl2cpp.exe $(DESTDIR)\bin\tpl2rem.exe
 
 lexdestdir:
-	IF NOT EXIST $(LEXDESTDIR) md $(LEXDESTDIR)
+	IF NOT EXIST ..\build md ..\build
+	IF NOT EXIST ..\build\tpl2cpp md ..\build\tpl2cpp
+	IF NOT EXIST ..\build\\tpl2rem md ..\build\tpl2rem
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
 
-$(DESTDIR)\bin\tpl2cpp.exe: $(LEXDESTDIR)\tpl2cpp.c
-	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2cpp.c
+$(DESTDIR)\bin\tpl2cpp.exe: ..\build\tpl2cpp\tpl2cpp.c
+	$(CC) /nologo /TC /Fo..\build\tpl2cpp\ /Fe$@ ..\build\tpl2cpp\tpl2cpp.c
 
-$(LEXDESTDIR)\tpl2cpp.c: nh99\tpl2cpp.lex
-	..\utilities\flex -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
-	..\utilities\sed -f nh99\sedflex $(LEXDESTDIR)\lex.yy.c > $@
+..\build\tpl2cpp\tpl2cpp.c: nh99\tpl2cpp.lex
+	flex --nounistd -o..\build\tpl2cpp\lex.yy.c nh99\tpl2cpp.lex
+	sed -f nh99\sedflex ..\build\tpl2cpp\lex.yy.c > $@
 
-$(DESTDIR)\bin\tpl2rem.exe: $(LEXDESTDIR)\tpl2rem.c
-	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2rem.c
+$(DESTDIR)\bin\tpl2rem.exe: ..\build\tpl2rem\tpl2rem.c
+	$(CC) /nologo /TC /Fo..\build\tpl2rem\ /Fe$@ ..\build\tpl2rem\tpl2rem.c
 
-$(LEXDESTDIR)\tpl2rem.c: df1b2-separable\tpl2rem.lex
-	..\utilities\flex -o$(LEXDESTDIR)\lex.yy.c df1b2-separable\tpl2rem.lex
-	..\utilities\sed -f df1b2-separable\sedflex $(LEXDESTDIR)\lex.yy.c > $@
+..\build\tpl2rem\tpl2rem.c: df1b2-separable\tpl2rem.lex
+	flex --nounistd -o..\build\tpl2rem\lex.yy.c df1b2-separable\tpl2rem.lex
+	sed -f df1b2-separable\sedflex ..\build\tpl2rem\lex.yy.c > $@
 
 libs: objects
 	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
@@ -266,6 +276,8 @@ $(DESTDIR)\include:
 	copy tools99\integrate.hpp $(DESTDIR)\include
 	copy tools99\integrate_wrap.hpp $(DESTDIR)\include
 	copy tools99\adjson.h $(DESTDIR)\include
+	copy sparse\hs.h $(DESTDIR)\include
+	copy sparse\cs.h $(DESTDIR)\include
 	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
 
 $(OBJDESTDIR): $(DESTDIR)\include
@@ -312,5 +324,5 @@ check:
 zip:
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\examples
 	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
-	copy /Y ..\docs\install\QuickStartWindows.md ..\build\admb\INSTALL.txt
+	copy /Y ..\docs\install\QuickStartWindows.md $(DESTDIR)\INSTALL.txt
 	pushd ..\\build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd

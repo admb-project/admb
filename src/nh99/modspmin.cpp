@@ -11,6 +11,8 @@
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
+#include<ctime>
+#include <cassert>
 
 void ADSleep(unsigned int x);
 
@@ -18,13 +20,21 @@ void ADSleep(unsigned int x);
   void ad_open_mcmc_options_window(void);
   void ad_open_mcmchist_window(void);
   void ad_update_mcmc_report(double * v,int l);
+#if defined (AD_DEMO)
   void write_banner_stuff(void);
+#endif
   int function_minimizer::have_constraints=0;
   int function_minimizer::first_hessian_flag=0;
   //int function_minimizer::in_likeprof_flag=0;
 
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
+
+std::string get_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
+
+extern std::chrono::time_point<std::chrono::system_clock> start_time;
 
   void function_minimizer::computations(int argc,char * argv[])
   {
@@ -39,21 +49,80 @@ extern admb_javapointers * adjm_ptr;
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
-    if (option_match(argc,argv,"-mceval") == -1)
-    {
-        computations1(argc,argv);
-    }
-    else
-    {
-      initial_params::mceval_phase=1;
-      mcmc_eval();
-      initial_params::mceval_phase=0;
-    }
-    other_calculations();
+     // ------------------------------------------------------------
+     // Cole added experimental new flag to improve console
+     // output to be more compact and informative
 
-    final_calcs();
-    // clean up if have random effects
+     output_flag = defaults::output;
+
+     int on, nopt;
+     if ( (on=option_match(argc,argv,"-output",nopt)) > -1)
+     {
+       // Updated output option with argument '-output 1'
+       // Details and bug reports at: https://github.com/admb-project/admb/discussions/219"
+       if (nopt == 1){
+	 int argument = atoi(argv[on+1]);
+	 if (argument >= 0 && argument <= 2)
+         {
+           function_minimizer::output_flag = argument;
+	 }
+         else
+         {
+	   cerr << "Warning: Invaild argument for option -output (See -help).\n\n";
+         }
+       }
+       else
+       {
+	 cerr << "Warning: Option -output needs a number argument (See -help).\n\n";
+       }
+     }
+
+     if (function_minimizer::output_flag == 1)
+     {
+       start_time = std::chrono::system_clock::now();
+     }
+
+     // ------------------------------------------------------------
+     if (option_match(argc,argv,"-mceval") == -1)
+       {
+	 // if not mceval model do optimization or hess step
+	 if(!(option_match(argc,argv,"-hess_step") == -1))
+	   {
+	     // Experimental feature to take Newton steps after
+	     // previous optimization
+	     // Note: ::computations1 is called at the end of hess_step function.
+	     hess_step();
+	   }
+	 else
+	   {
+	     // main optimization call
+	     computations1(argc,argv);
+	   }
+       }
+     else
+       {
+	 // mceval skips all the optimization stuff
+	 initial_params::mceval_phase=1;
+	 mcmc_eval();
+	 initial_params::mceval_phase=0;
+       }
+     other_calculations();
+     final_calcs();
+
+     // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
+
+     // Print new concluding message unless in MCMC mode which already prints timing stuff
+     if(function_minimizer::output_flag==1 &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1) &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1) &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)){
+
+       std::string m=get_filename((char*)ad_comm::adprogram_name);
+       cout << "\nFinished running model '" << m << "' after "
+            << get_elapsed_time(start_time, std::chrono::system_clock::now())
+            << "." <<  endl;
+     }
   }
 
   void function_minimizer::computations1(int argc,char * argv[])
@@ -145,7 +214,7 @@ extern admb_javapointers * adjm_ptr;
         if (!function_minimizer::have_constraints)
         {
           minimize();
-        }
+	}
         else
         {
           constraints_minimize();
@@ -204,12 +273,13 @@ extern admb_javapointers * adjm_ptr;
 #endif
             {
               depvars_routine();
-              hess_inv();
+              if (!hess_inv()) break;
               if (spminflag==0)
               {
                 sd_routine();
               }
             }
+	    // if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
           }
           else
           {
@@ -234,7 +304,7 @@ extern admb_javapointers * adjm_ptr;
                     break;
                   default:
                     cerr << "error illega value for pvm_manager->mode" << endl;
-                    exit(1);
+                    ad_exit(1);
                   }
                 }
                 else
@@ -272,7 +342,7 @@ extern admb_javapointers * adjm_ptr;
                   break;
                 default:
                   cerr << "error illega value for pvm_manager->mode" << endl;
-                  exit(1);
+                  ad_exit(1);
                 }
               }
               else
@@ -321,6 +391,7 @@ extern admb_javapointers * adjm_ptr;
     minimize();
   }
 
+#if defined (AD_DEMO)
 void write_banner_stuff(void)
 {
   if (ad_printf)
@@ -341,12 +412,12 @@ void write_banner_stuff(void)
     (*ad_printf)("%s\n", banner0);
     (*ad_printf)("%s\n\n", banner0);
   }
-#if defined (AD_DEMO)
   void adwait(double sec);
   adwait(2.5);
-#endif
 }
+#endif
 
+#ifdef DEBUG
   void test_mcmc_options_window(void)
   {
     dvector v(1,1000);
@@ -365,6 +436,7 @@ void write_banner_stuff(void)
       ADSleep(500);
     }
   }
+#endif
 
   void function_minimizer::set_runtime(void){;}
 
@@ -471,12 +543,6 @@ void write_banner_stuff(void)
 	{
 	  gradient_structure::Hybrid_bounded_flag=1;
 	  nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
-	  return;
-	}
-      if (option_match(ad_comm::argc,ad_comm::argv,"-nuts_test") > -1)
-	{
-	  gradient_structure::Hybrid_bounded_flag=1;
-	  nuts_test_mcmc_routine(nmcmc,iseed0,dscale,0);
 	  return;
 	}
       // This one is my modified version of the one Dave wrote. Mostly

@@ -42,8 +42,6 @@ extern int ctlc_flag;
   // note the order of includes is important - this stuff should come
   // after stdio.h, disp.h and anything that might also include these
 
-//#define if (ad_printf) (*ad_printf) disp_if (ad_printf) (*ad_printf)
-
   void gotoxy(int x, int y);
   void clrscr();
 
@@ -200,13 +198,10 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
         {
           if (iprint>0)
           {
-            if (ad_printf)
-              (*ad_printf)("Gradient magnitude criterion satisfied\n");
-            if (ad_printf)
-          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+            ad_printf("Gradient magnitude criterion satisfied\n");
+            ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
             n, iter, ifn);
-            if (ad_printf)
-   (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+            ad_printf("Function value %le; maximum gradient component mag %le\n",
                fret, max(fabs(gg)) );
             fmmdisp(p, gg, n, this->scroll_flag); //fmc);
           }
@@ -259,12 +254,10 @@ label800:
 #if !defined (__WAT32__) && !defined (_MSC_VER)
         if (!scroll_flag) clrscr();
 #endif
-      if (ad_printf) (*ad_printf)("Initial statistics: ");
-      if (ad_printf)
- (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+      ad_printf("Initial statistics: ");
+      ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
        n, iter, ifn);
-      if (ad_printf)
- (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+      ad_printf("Function value %le; maximum gradient component mag %le\n",
        fbest, max(fabs(*gbest)) );
       fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
     }
@@ -310,13 +303,11 @@ label1000:
           {
             if (iprint>0)
             {
-              if (ad_printf) (*ad_printf)("User initiated interrupt\n");
-              if (ad_printf) (*ad_printf)(" - final statistics:\n");
-              if (ad_printf)
- (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+              ad_printf("User initiated interrupt\n");
+              ad_printf(" - final statistics:\n");
+              ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
                 n, iter, ifn);
-              if (ad_printf)
- (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+              ad_printf("Function value %le; maximum gradient component mag %le\n",
                 fbest, max(fabs(*gbest)) );
               fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
             }
@@ -368,11 +359,9 @@ label1000:
       {
         if (iprint>0)
         {
-          if (ad_printf)
- (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+          ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
             n, iter, ifn);
-          if (ad_printf)
- (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+          ad_printf("Function value %le; maximum gradient component mag %le\n",
              fbest, max(fabs(*gbest)) );
           fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
         }
@@ -402,13 +391,10 @@ label1000:
         {
           if (iprint>0)
           {
-            if (ad_printf)
- (*ad_printf)("Gradient magnitude criterion satisfied\n");
-            if (ad_printf)
- (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+            ad_printf("Gradient magnitude criterion satisfied\n");
+            ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
               n, iter, ifn);
-            if (ad_printf)
- (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+            ad_printf("Function value %le; maximum gradient component mag %le\n",
              fbest, max(fabs(*gbest)) );
             fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
           }
@@ -425,14 +411,11 @@ label1000:
     {
       if (iprint>0)
       {
-        if (ad_printf)
-        {
-          (*ad_printf)("Maximum number of function evaluations exceeded\n");
-          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+        ad_printf("Maximum number of function evaluations exceeded\n");
+        ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
             n, iter, ifn);
-        (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+        ad_printf("Function value %le; maximum gradient component mag %le\n",
             fbest, max(fabs(*gbest)) );
-        }
         fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
       }
       p=*xbest;
@@ -445,18 +428,14 @@ label1000:
     {
       if (!(iter%iprint)&&(iprint>0))
       {
-        {
 #if !defined (__WAT32__) && !defined (_MSC_VER)
-            if (!scroll_flag) clrscr();
+        if (!scroll_flag) clrscr();
 #endif
-          if (ad_printf) (*ad_printf)("Intermediate statistics: ");
-        }
-        if (ad_printf)
- (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-          n, iter, ifn);
-        if (ad_printf)
- (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
-          fbest, max(fabs(*gbest)) );
+        ad_printf("Intermediate statistics: ");
+        ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
+            n, iter, ifn);
+        ad_printf("Function value %le; maximum gradient component mag %le\n",
+            fbest, max(fabs(*gbest)) );
         fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
       }
     }
@@ -675,8 +654,10 @@ label120:
     rho_0=right_bracket-left_bracket;
 
 #ifdef DIAG
+  #ifdef CUBIC_INTERPOLATION
       cout << "f'(x) " << gamma  << "   "
          << "f'(y) " << gamma1 << endl;
+  #endif
 
       cout << "f(x)  " << left_bracket_value  << "   "
          << "f(y)  " << right_bracket_value << endl;
@@ -874,7 +855,7 @@ void bracket_report(const dvector& theta, const double& left_bracket,
 #ifdef DIAG
     cout << "lb " <<  setprecision(4) << setw(12) << left_bracket
       << "rb " << setprecision(4) << setw(12)  << right_bracket
-      << setprecision(4) << setw(12) << theta(ii) <<"\n";
+      << setprecision(4) << setw(12) << theta <<"\n";
 #endif
 }
 
@@ -1085,7 +1066,7 @@ void derch(const double& _f, const dvector& _x, const dvector& _gg, int n,
       f = fsave;
       x(i)=xsave;
       g2=(f1-f2)/(2.*s);
-      if (ad_printf) (*ad_printf)("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
+      ad_printf("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
               x(i), f, g(i), g2, i);
     } // for loop
   } // while (j > 0)

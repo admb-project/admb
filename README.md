@@ -1,7 +1,7 @@
 ADMB Project
 ============
-*ADMB-12.1*  
-*Released January 17, 2020*  
+*ADMB-12.3*  
+*Released March 7, 2021*  
 
 ---
 
@@ -17,7 +17,7 @@ package, ADMB-RE, implements random effects in nonlinear models.
 
 ADMB is an open source project.  Read the AD Model Builder [LICENSE][LICENSE_link].
 
-[LICENSE_link]: https://raw.githubusercontent.com/admb-project/admb/master/LICENSE.txt
+[LICENSE_link]: https://raw.githubusercontent.com/admb-project/admb/main/LICENSE.txt
 
 Donations
 ---------
@@ -71,7 +71,7 @@ Contributors
 The ADMB software was originally developed by David Fournier of Otter Research Ltd.
 
 Thanks to the following who have contributed to the ADMB Project by
-providing fixes and/or suggestions:
+developing features, testing, providing fixes, improving documentation and giving suggestions:
 
 * David Fournier
 * John Sibert
@@ -89,9 +89,12 @@ providing fixes and/or suggestions:
 * Barak A. Pearlmutter
 * Jon Schnute
 * Jiashen Tang
-* William Stockhausen - NOAA
+* William Stockhausen
 * Allan Hicks
+* Cole Monnahan
+* Yukio Takeuchi
+* Alejandro Yáñez
 * Johnoel Ancheta
 
 ---
-For help and support, email <users@admb-project.org>.
+Copyright (c) 2008-2021 ADMB Foundation and Regents of the University of California

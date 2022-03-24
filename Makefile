@@ -19,7 +19,6 @@ contribs:
 	$(MAKE) $(CXX)-contribs DEBUG=$(DEBUG)
 	@echo ADMB build contribs completed.
 test: verify
-	$(MAKE) $(CXX)-test DEBUG=$(DEBUG)
 gtests:
 	$(MAKE) $(CXX)-gtests DEBUG=$(DEBUG)
 verify:
@@ -55,7 +54,7 @@ cl-all:
 cl-dist: 
 	nmake /nologo cl-contribs
 cl-debug:
-	pushd src& nmake /nologo DEBUG=yes all
+	pushd src& nmake /nologo DEBUG=!DEBUG! all
 	pushd contrib& nmake /nologo DEBUG=yes all
 cl-core:
 	pushd src& nmake /nologo all
@@ -63,8 +62,6 @@ cl-contribs: cl-core
 	pushd contrib& nmake /nologo all
 cl-docs:
 	pushd docs& nmake /nologo all
-cl-test:
-	pushd tests & nmake /nologo all
 cl-gtests:
 	pushd tests & nmake /nologo test-gtests
 cl-verify:
@@ -102,8 +99,6 @@ g++-contribs: g++-core
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ all
 g++-docs:
 	$(MAKE) --directory=docs CC=gcc CXX=g++ all
-g++-test:
-	$(MAKE) --directory=tests CC=gcc CXX=g++ all
 g++-gtests:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ unit-gtests
 g++-coverage:
@@ -143,8 +138,6 @@ clang++-contribs: clang++-core
 	$(MAKE) --directory=contrib CC=clang CXX=clang++ all
 clang++-docs:
 	$(MAKE) --directory=docs CC=clang CXX=clang++ all
-clang++-test:
-	$(MAKE) --directory=tests CC=clang CXX=clang++ all
 clang++-gtests:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ unit-gtests
 clang++-coverage:
@@ -187,8 +180,6 @@ c++-docs:
 c++-coverage:
 	$(MAKE) --directory=src CC=cc CXX=c++ SAFE_ONLY=yes dist
 	$(MAKE) --directory=tests CC=cc CXX=c++ coverage
-c++-test:
-	$(MAKE) --directory=tests CC=cc CXX=c++ all
 c++-gtests:
 	$(MAKE) --directory=tests CC=cc CXX=c++ unit-gtests
 c++-verify:
@@ -225,8 +216,6 @@ CC-contribs: CC-core
 	$(MAKE) --directory=contrib CC=cc CXX=CC all
 CC-docs:
 	$(MAKE) --directory=docs CC=cc CXX=CC all
-CC-test:
-	$(MAKE) --directory=tests CC=cc CXX=CC all
 CC-gtests:
 	$(MAKE) --directory=tests CC=cc CXX=CC unit-gtests
 CC-verify:
@@ -263,8 +252,6 @@ icpc-contribs: icpc-core
 	$(MAKE) --directory=contrib CC=icc CXX=icpc all
 icpc-docs:
 	$(MAKE) --directory=docs CC=icc CXX=icpc all
-icpc-test:
-	$(MAKE) --directory=tests CC=icc CXX=icpc all
 icpc-gtests:
 	$(MAKE) --directory=tests CC=icc CXX=icpc unit-gtests
 icpc-verify:
@@ -301,8 +288,6 @@ openCC-contribs: openCC-core
 	$(MAKE) --directory=contrib CC=opencc CXX=openCC all
 openCC-docs:
 	$(MAKE) --directory=docs CC=opencc CXX=openCC all
-openCC-test:
-	$(MAKE) --directory=tests CC=opencc CXX=openCC all
 openCC-gtests:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC unit-gtests
 openCC-verify:
@@ -342,8 +327,6 @@ analyze-c++-docs:
 analyze-c++-coverage:
 	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ SAFE_ONLY=yes dist
 	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ coverage
-analyze-c++-test:
-	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ all
 analyze-c++-gtests:
 	$(MAKE) --directory=tests CC=analyze-cc CXX=analyze-c++ unit-gtests
 analyze-c++-verify:
@@ -373,8 +356,6 @@ bcc-debug:
 bcc-verify:
 	cd src& $(MAKE) -fbcc.mak verify
 bcc-gtests:
-bcc-test:
-	cd src& $(MAKE) -fbcc.mak tests
 bcc-install:
 	cd src& $(MAKE) -fbcc.mak install
 bcc-clean:

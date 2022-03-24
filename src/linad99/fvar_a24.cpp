@@ -26,7 +26,7 @@
       save_identifier_string("b");
       this->save_dvar_vector_position();
       save_identifier_string("a");
-      gradient_structure::GRAD_STACK1->
+      gradient_structure::get()->GRAD_STACK1->
         set_gradient_stack(dv_init);
     }
   }
@@ -74,6 +74,6 @@ void dvar_vector::initialize(const dvector& ww)
     save_identifier_string("b");
     this->save_dvar_vector_position();
     save_identifier_string("a");
-    gradient_structure::GRAD_STACK1->
+    gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dv_init);
   }

@@ -209,7 +209,7 @@ namespace tiny_ad {
 #define COMPARISON_OPERATOR_FLIP(OP1, OP2)			\
   template<class T, class V>					\
   bool operator OP1 (const double &x, const ad<T, V> &y) {	\
-    return y OP2 x;						\
+    return y.operator OP2(x);					\
   }
   COMPARISON_OPERATOR_FLIP(<,>)
   COMPARISON_OPERATOR_FLIP(<=,>=)
@@ -300,18 +300,18 @@ namespace tiny_ad {
   struct variable<1, nvar, Double> : ad<Double, TINY_VECTOR(Double,nvar) >{
     typedef ad<Double, TINY_VECTOR(Double,nvar) > Base;
     static const int result_size = nvar;
-    variable<1, nvar, Double>() { /* Do not zero-initialize */ }
-    variable<1, nvar, Double>(Base x) : Base(x) {}
-    variable<1, nvar, Double>(double x) : Base(x) {}
-    variable<1, nvar, Double>(double x, int id) : Base(x) {
+    variable() { /* Do not zero-initialize */ }
+    variable(Base x) : Base(x) {}
+    variable(double x) : Base(x) {}
+    variable(double x, int id) : Base(x) {
       setid(id);
     }
     template<class Constant>
-    variable<1, nvar, Double>(Constant x) {
+    variable(Constant x) {
       Base::value = x; Base::deriv.setZero();
     }
     template<class Constant>
-    variable<1, nvar, Double>(Constant x, int id) {
+    variable(Constant x, int id) {
       Base::value = x; Base::deriv.setZero();
       setid(id);
     }

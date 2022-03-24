@@ -26,9 +26,11 @@ PROCEDURE_SECTION
 
 GLOBALS_SECTION
   #include <df1b2fun.h>
+  /*
   df1b2vector solve(const df1b2matrix & aa, const df1b2vector & z,
         df1b2variable & ln_unsigned_det,
         const df1b2variable & _sign);
+  */
 
 REPORT_SECTION
   report << "#test" << endl;

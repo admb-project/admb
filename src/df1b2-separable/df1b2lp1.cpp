@@ -43,6 +43,8 @@ dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 dvector laplace_approximation_calculator::default_calculations
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
+  std::ostream& output_stream = get_output_stream();
+
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)
@@ -54,6 +56,7 @@ dvector laplace_approximation_calculator::default_calculations
 
   initial_params::set_active_only_random_effects();
   //int lmn_flag=0;
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm1)
@@ -77,7 +80,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
     }
   }
-
+#endif
   double maxg=1.e+200;
   //double maxg_save;
   dvector uhat_old(1,usize);
@@ -98,7 +101,7 @@ dvector laplace_approximation_calculator::default_calculations
     {
       uhat=get_uhat_lm_newton(x,pfmin);
     }
-
+#ifdef DIAG_TIMER
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
@@ -111,6 +114,7 @@ dvector laplace_approximation_calculator::default_calculations
         }
       }
     }
+#endif
   }
 
   for (int i=1;i<=xsize;i++)
@@ -155,7 +159,7 @@ dvector laplace_approximation_calculator::default_calculations
     {
       // test newton raphson
       Hess.initialize();
-     cout << "Newton raphson " << ii << endl;
+      output_stream << "Newton raphson " << ii << endl;
       pmin->inner_opt_flag=1;
       get_newton_raphson_info(pfmin);
       pmin->inner_opt_flag=0;
@@ -187,6 +191,7 @@ dvector laplace_approximation_calculator::default_calculations
        */
       }
 
+#ifdef DIAG_TIMER
       if (ad_comm::time_flag)
       {
         if (ad_comm::ptm)
@@ -199,13 +204,13 @@ dvector laplace_approximation_calculator::default_calculations
           }
         }
       }
-
+#endif
       dvector step;
 #ifdef DIAG
       int print_hess_in_newton_raphson_flag=0;
       if (print_hess_in_newton_raphson_flag)
       {
-        cout << norm2(Hess-trans(Hess)) << endl;
+        output_stream << norm2(Hess-trans(Hess)) << endl;
         if (ad_comm::global_logfile)
         {
           (*ad_comm::global_logfile) << setprecision(4) << setscientific()
@@ -319,6 +324,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
 #endif
 
+#ifdef DIAG_TIMER
       if (ad_comm::time_flag)
       {
         if (ad_comm::ptm)
@@ -331,7 +337,7 @@ dvector laplace_approximation_calculator::default_calculations
           }
         }
       }
-
+#endif
       f1b2gradlist->reset();
       f1b2gradlist->list.initialize();
       f1b2gradlist->list2.initialize();
@@ -379,8 +385,7 @@ dvector laplace_approximation_calculator::default_calculations
   {
     y(i+xsize)=uhat(i);
   }
-
-
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -393,6 +398,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
     }
   }
+#endif
   pmin->inner_opt_flag=0;
 
 
@@ -424,6 +430,7 @@ dvector laplace_approximation_calculator::default_calculations
     get_second_ders(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
     //int sgn=0;
 
+#ifdef DIAG_TIMER
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
@@ -436,6 +443,7 @@ dvector laplace_approximation_calculator::default_calculations
         }
       }
     }
+#endif
     if (!ierr)
     {
       if (num_importance_samples==0)
@@ -462,7 +470,7 @@ dvector laplace_approximation_calculator::default_calculations
     {
       f=1.e+30;
     }
-
+#ifdef DIAG_TIMER
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
@@ -475,7 +483,7 @@ dvector laplace_approximation_calculator::default_calculations
         }
       }
     }
-
+#endif
     for (int ip=num_der_blocks;ip>=1;ip--)
     {
       df1b2variable::minder=minder(ip);
@@ -552,7 +560,7 @@ dvector laplace_approximation_calculator::default_calculations
         f1b2gradlist->nlist2.initialize();
         f1b2gradlist->nlist3.initialize();
       }
-
+#ifdef DIAG_TIMER
       if (ad_comm::time_flag)
       {
         if (ad_comm::ptm)
@@ -565,7 +573,7 @@ dvector laplace_approximation_calculator::default_calculations
           }
         }
       }
-
+#endif
       dvector dtmp(1,xsize);
       for (int i=1;i<=xsize;i++)
       {
@@ -655,10 +663,12 @@ dvector laplace_approximation_calculator::default_calculations
    // *****************************************************************
    // new stuff to deal with quadraticprior
    // *****************************************************************
+#ifdef DIAG_TIMER
     if (ad_comm::ptm)
     {
       /*double time=*/ad_comm::ptm->get_elapsed_time_and_reset();
     }
+#endif
 
   #if defined(USE_ATLAS)
         if (!ad_comm::no_atlas_flag)
@@ -676,6 +686,7 @@ dvector laplace_approximation_calculator::default_calculations
         xadjoint -= solve(Hess,uadjoint)*Dux;
   #endif
 
+#ifdef DIAG_TIMER
     if (ad_comm::ptm)
     {
       double time=ad_comm::ptm->get_elapsed_time_and_reset();
@@ -694,6 +705,7 @@ dvector laplace_approximation_calculator::default_calculations
           << time << endl << endl;
       }
     }
+#endif
   }
   return xadjoint;
 }
@@ -705,6 +717,7 @@ dvector laplace_approximation_calculator::default_calculations
 void laplace_approximation_calculator::get_newton_raphson_info
   (function_minimizer * pfmin)
 {
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -713,7 +726,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
           <<  endl;
     }
   }
-
+#endif
   for (int ip=1;ip<=num_der_blocks;ip++)
   {
     df1b2variable::minder=minder(ip);
@@ -737,6 +750,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
       grad.initialize();
     }
 
+#ifdef DIAG_TIMER
     double time1 = 0;
     if (ad_comm::time_flag)
     {
@@ -745,7 +759,9 @@ void laplace_approximation_calculator::get_newton_raphson_info
         time1 = ad_comm::ptm->get_elapsed_time();
       }
     }
+#endif
     pfmin->user_function();
+#ifdef DIAG_TIMER
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
@@ -759,7 +775,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
         }
       }
     }
-
+#endif
     re_objective_function_value::fun_without_pen
       =value(*re_objective_function_value::pobjfun);
 
@@ -822,6 +838,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
 
 
   // just to match master pvm routine
+#ifdef DIAG_TIMER
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -829,6 +846,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
       /*double time=*/ad_comm::ptm->get_elapsed_time();
     }
   }
+#endif
 }
 
 /**

@@ -8,9 +8,12 @@ jobs:
     runs-on: [self-hosted, linux]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: clean
       run: make clean
+    - name: api
+      run: |
+        make --directory=docs/api
     - name: build
       run: make
     - name: debug
@@ -33,9 +36,9 @@ jobs:
         name: manuals_pdfs
         path: build/manuals
     - name: tests
-      run: make test DEBUG=yes
+      run: make verify DEBUG=yes TESTS_REMOTE=no
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: outputs
-        path: outputs-opt.txt
+        path: outputs.txt

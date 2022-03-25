@@ -13,6 +13,10 @@ void set_labels_for_hess(int);
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
+void print_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
+
 bool initial_params::in_hessian_phase = false;
 void function_minimizer::hess_routine(void)
 {
@@ -53,6 +57,7 @@ void function_minimizer::hess_routine(void)
   }
   initial_params::in_hessian_phase = false;
 }
+
 void function_minimizer::hess_routine_noparallel(void)
 {
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
@@ -77,6 +82,17 @@ void function_minimizer::hess_routine_noparallel(void)
      tmpstring = ad_comm::adprogram_name + ".hes";
   uostream ofs((char*)tmpstring);
 
+  std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1)
+  {
+    from_start = std::chrono::system_clock::now();
+
+    cout << "Calculating Hessian";
+    if (nvar >= 10) cout << " (" << nvar << " variables)";
+    cout <<  ": ";
+    cout.flush();
+  }
+
   ofs << nvar;
   {
     {
@@ -90,9 +106,32 @@ void function_minimizer::hess_routine_noparallel(void)
     }
     double sdelta1;
     double sdelta2;
+    int percentage = defaults::percentage;
+    const int num = nvar / 5;
+    int index = num + (nvar % 5);
     for (int i=1;i<=nvar;i++)
     {
       hess_calcreport(i,nvar);
+
+      if (function_minimizer::output_flag == 1)
+      {
+        if (nvar >= 10)
+        {
+          if (i == index)
+          {
+            if (percentage > defaults::percentage) cout << ", ";
+            cout << percentage << "%";
+            percentage += 20;
+            index += num;
+          }
+        }
+        else
+        {
+          if (i > 1) cout << ", ";
+          cout << i;
+        }
+        cout.flush();
+      }
 
       double xsave=x(i);
       sdelta1=x(i)+delta;
@@ -149,21 +188,28 @@ void function_minimizer::hess_routine_noparallel(void)
 
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
+
     }
+
+    if (function_minimizer::output_flag == 1)
+    {
+      print_elapsed_time(from_start, std::chrono::system_clock::now());
+    }
+
+    initial_params::reset(dvar_vector(x));
+    ofs << gradient_structure::Hybrid_bounded_flag;
+    dvector tscale(1,nvar);   // need to get scale from somewhere
+    /*int check=*/initial_params::stddev_scale(tscale,x);
+    ofs << tscale;
+    // Write the MLE (bounded space) to file to be read in later by hybrid
+    // methods. This is needed b/c the covar needs to be rescaled and the MLE
+    // is needed for that.
+    // Added by Cole; 4/2017
+    ofs << -987; // unique flag to check for later
+    dvector mle(1,nvar);
+    initial_params::copy_all_values(mle,1);
+    ofs << mle;
   }
-  initial_params::reset(dvar_vector(x));
-  ofs << gradient_structure::Hybrid_bounded_flag;
-  dvector tscale(1,nvar);   // need to get scale from somewhere
-  /*int check=*/initial_params::stddev_scale(tscale,x);
-  ofs << tscale;
-  // Write the MLE (bounded space) to file to be read in later by hybrid
-  // methods. This is needed b/c the covar needs to be rescaled and the MLE
-  // is needed for that.
-  // Added by Cole; 4/2017
-  ofs << -987; // unique flag to check for later
-  dvector mle(1,nvar);
-  initial_params::copy_all_values(mle,1);
-  ofs << mle;
 }
 
 void function_minimizer::hess_routine_and_constraint(int iprof,
@@ -288,6 +334,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
   double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
+  std::ostream& output_stream = get_output_stream();
   uostream ofs("admodel.hes");
   //ofstream ofs5("tmphess");
   ofs << nvar;
@@ -303,8 +350,8 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     }
     for (int i=1;i<=nvar;i++)
     {
-      cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
+      output_stream << "Estimating row " << i << " out of " << nvar
+                    << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
@@ -367,8 +414,8 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     cofs << nvar;
     for (i=1;i<=nvar;i++)
     {
-      cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
+      output_stream << "Estimating row " << i << " out of " << nvar
+                    << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
@@ -430,6 +477,10 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 }
 */
 
+void print_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
+
 /**
 Calculate the derivatives of dependent variables with respect to
 the independent variables.
@@ -447,6 +498,15 @@ void function_minimizer::depvars_routine(void)
   }
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
+  int ndvarcals=stddev_params::num_stddev_params;
+  std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1 && ndvarcals > 0)
+  {
+    from_start = std::chrono::system_clock::now();
+
+    cout << "Differentiating " << ndvarcals << " derived quantities: ";
+    if (ndvarcals >= 10) cout << "%";
+  }
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
   //double f;
@@ -468,9 +528,28 @@ void function_minimizer::depvars_routine(void)
 
   ofs << nvar << "  "  << ndvar << endl;
   int i;
+  int percentage = defaults::percentage;
+  const int num = nvar / 5;
+  int index = num + (nvar % 5);
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
-     stddev_params::stddevptr[i]->set_dependent_variables();
+    if (function_minimizer::output_flag == 1)
+    {
+      if (ndvarcals >= 10)
+      {
+        if ((i + 1) == index)
+        {
+          if (percentage > defaults::percentage) cout << ", ";
+          cout << percentage << "%";
+          percentage += 20;
+          index += num;
+        }
+      } else {
+        if (i > 0) cout << ", ";
+        cout << i + 1;
+      }
+    }
+      stddev_params::stddevptr[i]->set_dependent_variables();
   }
   gradient_structure::get()->jacobcalc(nvar,ofs);
   for (i=0;i< stddev_params::num_stddev_params;i++)
@@ -483,6 +562,10 @@ void function_minimizer::depvars_routine(void)
     lapprox->no_function_component_flag=0;
   }
   gradient_structure::set_NO_DERIVATIVES();
+  if (function_minimizer::output_flag == 1 && ndvarcals > 0)
+  {
+    print_elapsed_time(from_start, std::chrono::system_clock::now());
+  }
 }
 /**
 Symmetrize and invert the hessian
@@ -492,6 +575,17 @@ bool function_minimizer::hess_inv(void)
   initial_params::set_inactive_only_random_effects();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);
+
+  std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1)
+  {
+    from_start = std::chrono::system_clock::now();
+
+    cout << "Inverting Hessian";
+    if (nvar >= 10) cout << " (" << nvar << " variables)";
+    cout << ": ";
+    cout.flush();
+  }
 
   initial_params::xinit(x);        // get the initial values into the x vector
   //double f;
@@ -530,6 +624,9 @@ bool function_minimizer::hess_inv(void)
   }
 
   double maxerr=0.0;
+  int percentage = defaults::percentage;
+  const int num = nvar / 5;
+  int index = num + (nvar % 5);
   for (int i = 1;i <= nvar; i++)
   {
     for (int j=1;j<i;j++)
@@ -540,6 +637,24 @@ bool function_minimizer::hess_inv(void)
       if (tmp1>maxerr) maxerr=tmp1;
       hess(i,j)=tmp;
       hess(j,i)=tmp;
+    }
+    if (function_minimizer::output_flag == 1)
+    {
+      if(nvar >= 10)
+      {
+        if (i == index)
+        {
+          if (percentage > defaults::percentage) cout << ", ";
+          cout << percentage << "%";
+          percentage += 20;
+          index += num;
+        }
+      }
+      else
+      {
+        if (i > 1) cout << ", ";
+        cout << i;
+      }
     }
   }
   /*
@@ -561,9 +676,17 @@ bool function_minimizer::hess_inv(void)
     }
     if (!zero_switch)
     {
-      cerr << " Hessian is 0 in row " << i << endl;
-      cerr << " This means that the derivative if probably identically 0 "
-              " for this parameter" << endl;
+      // If any values in the ith row are exactly zero it's
+      // probably a floating parameter, but this is caught below
+      // too when checking for invalid variances..?
+      if (function_minimizer::output_flag == 1)
+      {
+        cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
+      }
+      std::ostream& output_stream = get_output_stream();
+      output_stream << " Hessian is 0 in row " << i
+                    << "\n This means that the derivative if probably identically 0  for this parameter."
+                    << endl;
     }
   }
 
@@ -576,14 +699,15 @@ bool function_minimizer::hess_inv(void)
       dvector se=eigenvalues(hess);
       ofs3 << setshowpoint() << setw(14) << setprecision(10)
            << "unsorted:\t" << se << endl;
-     se=sort(se);
-     ofs3 << setshowpoint() << setw(14) << setprecision(10)
-     << "sorted:\t" << se << endl;
-     if (se(se.indexmin())<=0.0)
+      se=sort(se);
+      ofs3 << setshowpoint() << setw(14) << setprecision(10)
+           << "sorted:\t" << se << endl;
+      if (se(se.indexmin())<=0.0)
       {
-        negative_eigenvalue_flag=1;
-        cout << "Warning -- Hessian does not appear to be"
-         " positive definite" << endl;
+        negative_eigenvalue_flag = 1;
+        std::ostream& output_stream = get_output_stream();
+        output_stream << "Warning -- Hessian does not appear to be positive definite"
+                      << endl;
       }
     }
     ivector negflags(0,hess.indexmax());
@@ -672,9 +796,14 @@ bool function_minimizer::hess_inv(void)
     {
       for (int i = 1;i <= nvar; i++)
       {
+        // hess is the covariance matrix b/c inverted above
         if (hess(i,i) <= 0.0)
         {
           hess_errorreport();
+
+          cerr << "\n\n Error: Estimated variance of parameter " << i << " is "<< hess(i,i) << ", failed to invert Hessian.\n"
+               << "        No uncertainty estimates available. Fix model structure and reoptimize.\n";
+
           return false;
         }
       }
@@ -689,20 +818,20 @@ bool function_minimizer::hess_inv(void)
       ofs << sscale;
     }
   }
+  if (function_minimizer::output_flag == 1)
+  {
+    print_elapsed_time(from_start, std::chrono::system_clock::now());
+  }
   return true;
 }
 void hess_calcreport(int i,int nvar)
 {
-  if (ad_printf)
-    (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
-  else
-    cout << "Estimating row " << i << " out of " << nvar << " for hessian"
-         << endl;
+  std::ostream& output_stream = get_output_stream();
+  output_stream << "Estimating row " << i << " out of " << nvar << " for hessian"
+                << endl;
 }
 void hess_errorreport(void)
 {
-  if (ad_printf)
-    (*ad_printf)("Hessian does not appear to be positive definite\n");
-  else
-    cout << "Hessian does not appear to be positive definite\n" << endl;
+  std::ostream& output_stream = get_output_stream();
+  output_stream << "Hessian does not appear to be positive definite." << endl;
 }

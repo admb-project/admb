@@ -43,6 +43,8 @@ dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 dvector laplace_approximation_calculator::default_calculations
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
+  std::ostream& output_stream = get_output_stream();
+
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)
@@ -157,7 +159,7 @@ dvector laplace_approximation_calculator::default_calculations
     {
       // test newton raphson
       Hess.initialize();
-     cout << "Newton raphson " << ii << endl;
+      output_stream << "Newton raphson " << ii << endl;
       pmin->inner_opt_flag=1;
       get_newton_raphson_info(pfmin);
       pmin->inner_opt_flag=0;
@@ -208,7 +210,7 @@ dvector laplace_approximation_calculator::default_calculations
       int print_hess_in_newton_raphson_flag=0;
       if (print_hess_in_newton_raphson_flag)
       {
-        cout << norm2(Hess-trans(Hess)) << endl;
+        output_stream << norm2(Hess-trans(Hess)) << endl;
         if (ad_comm::global_logfile)
         {
           (*ad_comm::global_logfile) << setprecision(4) << setscientific()

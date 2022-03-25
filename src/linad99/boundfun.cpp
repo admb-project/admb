@@ -67,12 +67,9 @@ double dftinv(double x, double fmin, double fmax)
 {
   if (x <= fmin)
   {
-    if (ad_printf)
-    {
-      (*ad_printf)("variable out of bounds in dftinv\nvariable = %lg", x);
-      (*ad_printf)("lower bound = %lg", fmin);
-      (*ad_printf)("upper bound = %lg\n", fmax);
-    }
+    ad_printf("variable out of bounds in dftinv\nvariable = %lg", x);
+    ad_printf("lower bound = %lg", fmin);
+    ad_printf("upper bound = %lg\n", fmax);
 
     x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
@@ -395,21 +392,17 @@ double boundpin(double x, double fmin, double fmax)
 {
   if (x < fmin)
   {
-    if (ad_printf)
-    {
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
-      (*ad_printf)("; min = %lg", fmin);
-      (*ad_printf)("; max = %lg\n", fmax);
-    }
+    ad_printf("variable out of bounds in boundpin: variable = %lg", x);
+    ad_printf("; min = %lg", fmin);
+    ad_printf("; max = %lg\n", fmax);
     x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
   if (x > fmax)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
-    if (ad_printf) (*ad_printf)("; min = %lg", fmin);
-    if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
+    ad_printf("variable out of bounds in boundpin: variable = %lg", x);
+    ad_printf("; min = %lg", fmin);
+    ad_printf("; max = %lg\n", fmax);
 
     x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
@@ -458,22 +451,18 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
 
   if (x < fmin)
   {
-    if (ad_printf)
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
-    if (ad_printf) (*ad_printf)("; min = %lg", fmin);
-    if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
+    ad_printf("variable out of bounds in boundpin: variable = %lg", x);
+    ad_printf("; min = %lg", fmin);
+    ad_printf("; max = %lg\n", fmax);
 
     x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
   if (x > fmax)
   {
-    if (ad_printf)
-    {
-      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
-      (*ad_printf)("; min = %lg", fmin);
-      (*ad_printf)("; max = %lg\n", fmax);
-    }
+    ad_printf("variable out of bounds in boundpin: variable = %lg", x);
+    ad_printf("; min = %lg", fmin);
+    ad_printf("; max = %lg\n", fmax);
 
     x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }

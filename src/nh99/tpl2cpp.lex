@@ -4394,14 +4394,14 @@ TOP_OF_MAIN_SECTION {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
         "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
-        "    mp.iprint=10;\n");
+        "    mp.iprint = defaults::iprint;\n");
     }
     else
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
         "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv);\n"
-        "    mp.iprint=10;\n");
+        "    mp.iprint = defaults::iprint;\n");
     }
 
     fprintf(ftopmain,"    mp.preliminary_calculations();\n");

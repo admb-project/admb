@@ -161,6 +161,7 @@ dvector safe_choleski_solver::solve
   v.shift(1);
   int ibreak=1;
   dvector w;
+  std::ostream& output_stream = get_output_stream();
   do
   {
     const banded_lower_triangular_dmatrix& C=quiet_choleski_decomp(m,ierr);
@@ -171,7 +172,7 @@ dvector safe_choleski_solver::solve
       dvector delta=m*w;
       dvector err=solve_trans(C,::solve(C,v-delta));
       dvector w1=w+err;
-      cout << norm(w1-w) << endl;
+      output_stream << norm(w1-w) << endl;
       if (norm(err)>1.e-10)
       {
         cout << "precisionerror" << endl;
@@ -202,6 +203,8 @@ void laplace_approximation_calculator::
   do_newton_raphson_state_space(function_minimizer * pfmin,double f_from_1,
   int& no_converge_flag)
 {
+  std::ostream& output_stream = get_output_stream();
+
   laplace_approximation_calculator::where_are_we_flag=2;
   double fbest=1.e+100;
   double fval=1.e+100;
@@ -231,7 +234,9 @@ void laplace_approximation_calculator::
 #endif
 
     if (!initial_params::mc_phase)
-      cout << "Newton raphson " << ii << "  ";
+    {
+      output_stream << "Newton raphson " << ii << "  ";
+    }
 
     if (quadratic_prior::get_num_quadratic_prior()>0)
     {

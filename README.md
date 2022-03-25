@@ -17,7 +17,7 @@ package, ADMB-RE, implements random effects in nonlinear models.
 
 ADMB is an open source project.  Read the AD Model Builder [LICENSE][LICENSE_link].
 
-[LICENSE_link]: https://raw.githubusercontent.com/admb-project/admb/master/LICENSE.txt
+[LICENSE_link]: https://raw.githubusercontent.com/admb-project/admb/main/LICENSE.txt
 
 Donations
 ---------

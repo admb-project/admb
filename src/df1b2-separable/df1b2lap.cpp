@@ -62,6 +62,7 @@ dvar_vector *
 dvector laplace_approximation_calculator::get_uhat_quasi_newton
   (const dvector& x,function_minimizer * pfmin)
 {
+  std::ostream& output_stream = get_output_stream();
   //int on,nopt;
   pfmin->inner_opt_flag=1;
   double f=0.0;
@@ -147,7 +148,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
     }
     u=ub;
   }
-  cout <<  " inner maxg = " <<  fmc1.gmax;
+  output_stream <<  " inner maxg = " << std::scientific << setprecision(10) <<  fmc1.gmax;
 #ifdef DIAG
   if (fabs(fmc1.gmax)>1.e+3)
     trapper();
@@ -192,9 +193,9 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
       }
     }
     u=ub;
-    cout <<  "  Inner second time = " << fmc1.gmax;
+    output_stream <<  "  Inner second time = " << std::scientific << setprecision(10) << fmc1.gmax;
   }
-  cout << "  Inner f = " << fb << endl;
+  output_stream << "  Inner f = " << std::scientific << setprecision(10) << fb << endl;
   fmc1.ireturn=0;
   fmc1.fbest=fb;
   gradient_structure::set_NO_DERIVATIVES();
@@ -235,7 +236,7 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton
   pfmin->iprint=iprint_save;
   if (initial_params::mc_phase==0)
   {
-    cout << "  Inner f = " << f << endl;
+    cout << "  Inner f = " << std::scientific << setprecision(10) << f << endl;
   }
   //gradient_structure::set_NO_DERIVATIVES();
   //initial_params::set_inactive_only_random_effects();
@@ -2046,10 +2047,11 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   double maxg=max(fabs(g));
   if (!initial_params::mc_phase)
   {
-    std::streamsize save = cout.precision();
-    cout << setprecision(16) << " f = " << vf
-         << " max g = " << maxg << endl;
-    cout.precision(save);
+    std::ostream& output_stream = get_output_stream();
+    std::streamsize save = output_stream.precision();
+    output_stream << std::fixed << setprecision(10) << " f = " << vf
+                  << " max g = " << std::scientific << maxg << endl;
+    output_stream.precision(save);
   }
   return maxg;
 }
@@ -2084,8 +2086,9 @@ double evaluate_function(double& fval,const dvector& x,
   fval=value(vf);
   if (!initial_params::mc_phase)
   {
-    cout << setprecision(10) << " f = " << vf
-         << " max g = " << maxg << endl;
+    std::ostream& output_stream = get_output_stream();
+    output_stream << std::fixed << setprecision(10) << " f = " << vf
+                  << " max g = " << std::scientific << maxg << endl;
   }
   return maxg;
 }
@@ -2120,8 +2123,9 @@ double evaluate_function(double& fval,const dvector& x,const dvector& g,
   fval=value(vf);
   if (!initial_params::mc_phase)
   {
-    cout << setprecision(15) << " f = " << vf
-         << " max g = " << maxg << endl;
+    std::ostream& output_stream = get_output_stream();
+    output_stream << std::fixed << setprecision(10) << " f = " << vf
+                  << " max g = " << std::scientific << maxg << endl;
   }
   return maxg;
 }
@@ -2809,6 +2813,8 @@ void nested_calls_indices::allocate(const nested_calls_shape& _nsc)
 dvector laplace_approximation_calculator::get_uhat_lm_newton2
   (const dvector& x,function_minimizer * pfmin)
 {
+  std::ostream& output_stream = get_output_stream();
+
   //int on,nopt;
   pfmin->inner_opt_flag=1;
   double f=0.0;
@@ -2893,7 +2899,7 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
     }
     u=ub;
   }
-  cout <<  " inner maxg = " <<  fmc1.gmax;
+  output_stream <<  " inner maxg = " << std::scientific << setprecision(10) <<  fmc1.gmax;
 #ifdef DIAG
   if (fabs(fmc1.gmax)>1.e+3)
     trapper();
@@ -2938,9 +2944,9 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
       }
     }
     u=ub;
-    cout <<  "  Inner second time = " << fmc1.gmax;
+    output_stream <<  "  Inner second time = " << std::scientific << setprecision(10) << fmc1.gmax;
   }
-  cout << "  Inner f = " << fb << endl;
+  output_stream << "  Inner f = " << std::scientific << setprecision(10)  << fb << endl;
   fmc1.ireturn=0;
   fmc1.fbest=fb;
   gradient_structure::set_NO_DERIVATIVES();

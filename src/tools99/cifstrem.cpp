@@ -50,11 +50,11 @@ char* cifstream::signature()
     int n = 0;
     while (c != '\n' && c != '\r' && c != EOF)
     {
-      cout << (char)c << endl;
+      //cout << (char)c << endl;
       if (n < SIGNATURE_LENGTH)
       {
         signature_line[n] = (char)c;
-        cout << signature_line << endl;
+        //cout << signature_line << endl;
         ++n;
       }
       c = bp->snextc();

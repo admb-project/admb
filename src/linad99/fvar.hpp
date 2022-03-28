@@ -8415,28 +8415,30 @@ class ad_double
 protected:
   double d;
 public:
+  ad_double() = delete;
+
   operator double () const
   {
     return d;
   }
-  ad_double(const double& _d, const adkludge&):d(_d)
+  ad_double(const double& _d, const adkludge&): d(_d)
   {
   }
   ad_double(double _d):d(_d)
   {
   }
-  ad_double(const ad_double& other)
+  ad_double(const ad_double& other): ad_double(double(other))
   {
-    operator=(other);
   }
+
   ad_double(const double_index_type& it);
-  ad_double make_ad_double(double _d)
+  static ad_double make_ad_double(double _d)
   {
     adkludge adk;
     //??Should parameter be d or _d?
-    return ad_double(d, adk);
+    return ad_double(_d, adk);
   }
-  ad_double& operator=(const ad_double&);
+  ad_double& operator=(const ad_double&) = delete;
 };
 
 /**

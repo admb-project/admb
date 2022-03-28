@@ -172,6 +172,7 @@ GTESTS_ALL=\
  test_evaluate_function.cpp\
  test_gradient_structure_thread.cpp\
  test_dll_param_init_bounded_vector.cpp\
+ test_ad_double.cpp\
  main.cpp
 
 ERRORS=\

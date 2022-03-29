@@ -1000,7 +1000,8 @@ if (iprint>0)
 		 initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
       
      // only print global stuff if in last phase
-     if((initial_params::current_phase==initial_params::max_number_phases)){
+     if (initial_params::current_phase==initial_params::max_number_phases)
+     {
        // new console output for optimization
        // assert(pointer_to_phase);
 

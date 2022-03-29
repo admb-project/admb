@@ -1313,22 +1313,19 @@ object is passed on the stack.
 class prevariable
 {
 protected:
-#ifndef __SUN__
-  /**
-  Default constructor
-  */
-  prevariable()
+  /// Default constructor
+  prevariable(): prevariable(nullptr)
   {
   }
-#endif
-#ifndef __NDPX__
-   prevariable(double_and_int * u)
-   {
-      v = u;
-   }
-#endif
+  prevariable(double_and_int* u): v(u)
+  {
+  }
 
 public:
+  prevariable(const prevariable& other): prevariable(other.get_v())
+  {
+  }
+
   double_and_int* v; ///< pointer to the data
 
    friend class dvar_vector_iterator;
@@ -1454,18 +1451,6 @@ public:
 #endif
 
  public:
-#ifdef __SUN__
-   prevariable(void)
-   {
-   }
-#endif
-#ifdef __NDPX__
-   prevariable(double_and_int * u)
-   {
-      v = u;
-   }
-#endif
-
    void initialize(void);
 
    friend char *fform(const char *, const prevariable &);
@@ -8412,24 +8397,30 @@ class ad_double
 protected:
   double d;
 public:
+  ad_double() = delete;
+
   operator double () const
   {
     return d;
   }
-  ad_double(const double& _d, const adkludge&):d(_d)
+  ad_double(const double& _d, const adkludge&): d(_d)
   {
   }
   ad_double(double _d):d(_d)
   {
   }
+  ad_double(const ad_double& other): ad_double(double(other))
+  {
+  }
+
   ad_double(const double_index_type& it);
-  ad_double make_ad_double(double _d)
+  static ad_double make_ad_double(double _d)
   {
     adkludge adk;
     //??Should parameter be d or _d?
-    return ad_double(d, adk);
+    return ad_double(_d, adk);
   }
-  ad_double& operator=(const ad_double&);
+  ad_double& operator=(const ad_double&) = delete;
 };
 
 /**

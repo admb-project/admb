@@ -1313,22 +1313,19 @@ object is passed on the stack.
 class prevariable
 {
 protected:
-#ifndef __SUN__
-  /**
-  Default constructor
-  */
-  prevariable()
+  /// Default constructor
+  prevariable(): prevariable(nullptr)
   {
   }
-#endif
-#ifndef __NDPX__
-   prevariable(double_and_int * u)
-   {
-      v = u;
-   }
-#endif
+  prevariable(double_and_int* u): v(u)
+  {
+  }
 
 public:
+  prevariable(const prevariable& other): prevariable(other.get_v())
+  {
+  }
+
   double_and_int* v; ///< pointer to the data
 
    friend class dvar_vector_iterator;
@@ -1454,21 +1451,6 @@ public:
 #endif
 
  public:
-#ifdef __SUN__
-   prevariable(void)
-   {
-   }
-#endif
-#ifdef __NDPX__
-   prevariable(double_and_int * u)
-   {
-      v = u;
-   }
-#endif
-   prevariable(const prevariable& other): prevariable(other.get_v())
-   {
-   }
-
    void initialize(void);
 
    friend char *fform(const char *, const prevariable &);

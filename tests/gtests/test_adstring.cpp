@@ -721,7 +721,11 @@ TEST_F(test_adstring, errorunsignedchar)
   ASSERT_EQ('c', a(3));
   ASSERT_EQ('d', a(4));
 }
+#ifdef __MINGW32__
+TEST_F(test_adstring, DISABLED_errormaxlimit)
+#else
 TEST_F(test_adstring, errormaxlimit)
+#endif
 {
   ad_exit=&test_ad_exit;
 

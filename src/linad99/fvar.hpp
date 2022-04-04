@@ -177,8 +177,6 @@ Macro definitions.
 // C language function prototypes
 extern "C"
 {
-   typedef int (*fptr) (const char *format, ...);
-   extern fptr ad_printf;
    typedef void (*exitptr) (int);
    extern exitptr ad_exit;
 
@@ -1315,22 +1313,19 @@ object is passed on the stack.
 class prevariable
 {
 protected:
-#ifndef __SUN__
-  /**
-  Default constructor
-  */
-  prevariable()
+  /// Default constructor
+  prevariable(): prevariable(nullptr)
   {
   }
-#endif
-#ifndef __NDPX__
-   prevariable(double_and_int * u)
-   {
-      v = u;
-   }
-#endif
+  prevariable(double_and_int* u): v(u)
+  {
+  }
 
 public:
+  prevariable(const prevariable& other): prevariable(other.get_v())
+  {
+  }
+
   double_and_int* v; ///< pointer to the data
 
    friend class dvar_vector_iterator;
@@ -1456,18 +1451,6 @@ public:
 #endif
 
  public:
-#ifdef __SUN__
-   prevariable(void)
-   {
-   }
-#endif
-#ifdef __NDPX__
-   prevariable(double_and_int * u)
-   {
-      v = u;
-   }
-#endif
-
    void initialize(void);
 
    friend char *fform(const char *, const prevariable &);
@@ -8414,24 +8397,30 @@ class ad_double
 protected:
   double d;
 public:
+  ad_double() = delete;
+
   operator double () const
   {
     return d;
   }
-  ad_double(const double& _d, const adkludge&):d(_d)
+  ad_double(const double& _d, const adkludge&): d(_d)
   {
   }
   ad_double(double _d):d(_d)
   {
   }
+  ad_double(const ad_double& other): ad_double(double(other))
+  {
+  }
+
   ad_double(const double_index_type& it);
-  ad_double make_ad_double(double _d)
+  static ad_double make_ad_double(double _d)
   {
     adkludge adk;
     //??Should parameter be d or _d?
-    return ad_double(d, adk);
+    return ad_double(_d, adk);
   }
-  ad_double& operator=(const ad_double&);
+  ad_double& operator=(const ad_double&) = delete;
 };
 
 /**
@@ -9389,5 +9378,27 @@ dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &,
 dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
+
+template <class ... Args>
+int ad_printf( FILE* stream, const char* format, Args ... args )
+{
+  return fprintf(stream, format, args...);
+}
+template <class ... Args>
+int ad_printf( const char* format, Args ... args )
+{
+  return printf(format, args...);
+}
+std::ostream& get_output_stream();
+
+dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, const bool use_log);
+
+namespace defaults
+{
+  const int iprint = 20;
+  const int output = 1;
+  const int percentage = 20;
+  constexpr const int percentage_number = 100 / defaults::percentage;
+};
 
 #endif//#ifndef FVAR_HPP

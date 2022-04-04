@@ -36,3 +36,13 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  char ** ad_comm::argv=NULL;
  double objective_function_value::fun_without_pen=0;
 
+int function_minimizer::output_flag = defaults::output;
+
+std::ostream& get_output_stream()
+{
+  if (function_minimizer::output_flag < 2 && ad_comm::global_logfile)
+  {
+    return *ad_comm::global_logfile;
+  }
+  return std::cout;
+}

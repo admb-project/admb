@@ -377,7 +377,7 @@ double ln_normal_tail_left(const double& x)
   {
     cerr << "arugument of ln_normal_tail_left must be < -2.0 you have "
          << x << endl;
-    exit(1);
+    ad_exit(1);
   }
   return ln_normal_tail_right(-x);
 }
@@ -388,7 +388,7 @@ double ln_normal_tail_right(const double& x)
   {
     cerr << "arugument of ln_normal_tail_right must be > 2.0 you have "
          << x << endl;
-    exit(1);
+    ad_exit(1);
   }
   const double a3=5;
   const double a4=9;

@@ -187,7 +187,7 @@ int initial_params::nvarcalc()
     }
     return ntypes;
   }
-
+  
   int initial_params::stddev_vscale(const dvar_vector& d,const dvar_vector& x)
   {
     int ii=1;
@@ -914,6 +914,7 @@ param_init_bounded_vector::param_init_bounded_vector():
   initial_params(),
   minb(0),
   maxb(0)
+  
 {
   //add_to_list();
 }

@@ -43,7 +43,7 @@ double inv_cumd_norm_logistic(double x,double p)
   {
     cerr << "Error in double inv_cumd_norm_logistic -- illegal p value = "
          << p << endl;
-    exit(1);
+    ad_exit(1);
   }
 #endif
   cout << log(x) << " ";

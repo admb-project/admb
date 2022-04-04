@@ -4697,13 +4697,13 @@ TOP_OF_MAIN_SECTION {
       if (!random_effects_flag)
       {
         fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
-          "    mp.iprint=10;\n");
+          "    mp.iprint = defaults::iprint;\n");
       }
       else
       {
         fprintf(ftopmain,"    df1b2variable::noallocate=1;\n");
         fprintf(ftopmain,"    df1b2_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
-          "    mp.iprint=10;\n");
+          "    mp.iprint = defaults::iprint;\n");
       }
 
     }
@@ -4711,13 +4711,13 @@ TOP_OF_MAIN_SECTION {
     {
       if (!random_effects_flag)
       {
-       fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv);\n"
-         "    mp.iprint=10;\n");
+        fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv);\n"
+         "    mp.iprint = defaults::iprint;\n");
       }
       else
       {
-       fprintf(ftopmain,"    df1b2_parameters mp(arrmblsize,argc,argv);\n"
-         "    mp.iprint=10;\n");
+        fprintf(ftopmain,"    df1b2_parameters mp(arrmblsize,argc,argv);\n"
+         "    mp.iprint = defaults::iprint;\n");
       }
     }
 

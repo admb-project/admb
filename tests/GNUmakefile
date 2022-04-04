@@ -94,6 +94,7 @@ core-tpls:\
   tpl-df33_tester\
   tpl-dd2\
   tpl-dualaveraging\
+  tpl-dtweedie\
   tpl-expm\
   tpl-f1b2vc5\
   cpp-globals\
@@ -220,6 +221,9 @@ tpl-dualaveraging:
 
 tpl-data_adstring_array:
 	$(MAKE) --directory=data_adstring_array
+
+tpl-dtweedie:
+	$(MAKE) --directory=dtweedie
 
 tpl-beta_deviate:
 	$(MAKE) --directory=beta_deviate
@@ -356,6 +360,7 @@ endif
 	$(MAKE) --directory=dd2 clean
 	$(MAKE) --directory=df33_tester clean
 	$(MAKE) --directory=dualaveraging clean
+	$(MAKE) --directory=dtweedie clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=geolocation clean

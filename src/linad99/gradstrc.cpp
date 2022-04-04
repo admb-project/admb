@@ -47,14 +47,13 @@ typedef int (* fptr) (const char * format, ...) ;
 #endif
 
 //void adwait(double);
-fptr ad_printf = printf;
 extern "C"{
   exitptr ad_exit=&exit;
 
   void spdll_exit(int ierr)
   {
-    if (ad_printf) (*ad_printf) (" Exception -- error code %d\n",ierr);
-    if (ad_printf) (*ad_printf) (" Pause");
+    ad_printf(" Exception -- error code %d\n",ierr);
+    ad_printf(" Pause");
     //adwait(4.0);
 #if defined(USE_EXCEPTIONS)
     throw spdll_exception(ierr);

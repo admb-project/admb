@@ -4394,14 +4394,14 @@ TOP_OF_MAIN_SECTION {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
         "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
-        "    mp.iprint=10;\n");
+        "    mp.iprint = defaults::iprint;\n");
     }
     else
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
         "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv);\n"
-        "    mp.iprint=10;\n");
+        "    mp.iprint = defaults::iprint;\n");
     }
 
     fprintf(ftopmain,"    mp.preliminary_calculations();\n");
@@ -5001,7 +5001,18 @@ void marker(void){;}
   {
   if(priors_defined) priors_done=1;
   if(likelihood_defined) likelihood_done=1;
-  if((procedure_defined)&&(!priors_defined)&&(!likelihood_defined)) procedure_done=1;
+  if((procedure_defined)&&(!priors_defined)&&(!likelihood_defined))
+  {
+    if (!procedure_done)
+    {
+      fprintf(fall,"#ifdef DEBUG\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total gradient stack used is \" << gradient_structure::get()->GRAD_STACK1->total() << \" out of \" << gradient_structure::get_GRADSTACK_BUFFER_SIZE() << std::endl;;\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total dvariable address used is \" << gradient_structure::get()->GRAD_LIST->total_addresses() << \" out of \" << gradient_structure::get_MAX_DLINKS() << std::endl;;\n");
+      fprintf(fall,"  std::cout << \"DEBUG: Total dvariable address used is \" << gradient_structure::get()->ARR_LIST1->get_max_last_offset() << \" out of \" << gradient_structure::get_ARRAY_MEMBLOCK_SIZE() << std::endl;;\n");
+      fprintf(fall,"#endif\n");
+    }
+    procedure_done=1;
+  }
   if((procedure_defined)&&(priors_defined)&&(!prior_done_once)) add_prior_to_objective();
   if((procedure_defined)&&(likelihood_defined)&&(!likelihood_done_once)) add_likelihood_to_objective();
   //if((priors_defined)&&(!prior_done_once)) add_prior_to_objective();

@@ -1,5 +1,4 @@
 .ONESHELL:
-
 ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
       CMDSHELL=cmd

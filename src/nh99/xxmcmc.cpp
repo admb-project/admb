@@ -414,14 +414,14 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
             {
               cerr << "Error trying to open mcmc par input file "
                    << ad_comm::argv[on+1] << endl;
-              exit(1);
+              ad_exit(1);
             }
             cif >> parsave;
             if (!cif)
             {
               cerr << "Error reading from mcmc par input file "
                    << ad_comm::argv[on+1] << endl;
-              exit(1);
+              ad_exit(1);
             }
           }
           else
@@ -1317,28 +1317,28 @@ void read_covariance_matrix(const dmatrix& S,int nvar,int& oldHbf,
   {
     cerr << "Incorrect number of independent variables in file"
       " model.cov" << endl;
-    exit(1);
+    ad_exit(1);
   }
   cif >> S;
   if (!cif)
   {
     cerr << "error reading covariance matrix from " << tmpstring
          << endl;
-    exit(1);
+    ad_exit(1);
   }
   cif >> oldHbf;
   if (!cif)
   {
     cerr << "error reading old_hybrid_bounded_flag from " << tmpstring
          << endl;
-    exit(1);
+    ad_exit(1);
   }
   cif >> sscale;
   if (!cif)
   {
     cerr << "error reading sscale from " << tmpstring
          << endl;
-    exit(1);
+    ad_exit(1);
   }
 }
 void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS,
@@ -1361,13 +1361,13 @@ void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS,
   {
     cerr << "Incorrect number of independent variables in file"
       " admodel.hes" << endl;
-    exit(1);
+    ad_exit(1);
   }
   cif >> S;
   if (!cif)
   {
     cerr << "error reading covariance matrix from model.cov" << endl;
-    exit(1);
+    ad_exit(1);
   }
   cifstream cifs((char*)(ad_comm::adprogram_name + adstring(".bvs")));
   dvector tmp(1,nvar);
@@ -1393,7 +1393,7 @@ void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS,
   if (dmin<0)
   {
     cout << "Smallest eigenvalue = " << dmin << endl;
-    exit(1);
+    ad_exit(1);
   }
   /*
   do
@@ -1459,13 +1459,13 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,
   {
     cerr << "Incorrect number of independent variables in file"
       " admodel.hes" << endl;
-    exit(1);
+    ad_exit(1);
   }
   cif >> S;
   if (!cif)
   {
     cerr << "error reading covariance matrix from model.cov" << endl;
-    exit(1);
+    ad_exit(1);
   }
   dmatrix Save=1*S;
   // for mcmc2 option Hessian is already inverted.
@@ -1664,7 +1664,7 @@ dvector read_old_scale(int & old_nvar)
   {
     cerr << "error reading covariance matrix from " << tmpstring
          << endl;
-    exit(1);
+    ad_exit(1);
   }
   int oldHbf;
   cif >> oldHbf;
@@ -1672,7 +1672,7 @@ dvector read_old_scale(int & old_nvar)
   {
     cerr << "error reading old_hybrid_bounded_flag from " << tmpstring
          << endl;
-    exit(1);
+    ad_exit(1);
   }
   dvector sscale(1,old_nvar);
   cif >> sscale;
@@ -1680,7 +1680,7 @@ dvector read_old_scale(int & old_nvar)
   {
     cerr << "error reading sscale from " << tmpstring
          << endl;
-    exit(1);
+    ad_exit(1);
   }
   return sscale;
 }

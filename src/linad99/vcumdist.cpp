@@ -88,7 +88,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
   else if (x==0.5)
   {
     cout << "can't happen" << endl;
-    exit(1);
+    ad_exit(1);
     //return 0.0;
   }
   else
@@ -361,7 +361,7 @@ dvariable inv_cumd_norm_logistic(const prevariable& x,double p)
   {
     cerr << "Error in dvariable inv_cumd_norm_logistic -- illegal p value = "
          << p << endl;
-    exit(1);
+    ad_exit(1);
   }
 #endif
   dvariable y=inv_cumd_norm_inner(x);

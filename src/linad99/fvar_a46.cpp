@@ -1,15 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
-// file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Member functions dvar_vector::elem_div for various types.
+*/
 
 #include "fvar.hpp"
 
@@ -26,9 +21,11 @@
 void dvdv_elem_div(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Element-wise division of v1 by v2 into a dvar_vector.
+
+@param v1 dvar_vector of numerators
+@param v2 dvar_vector of denominators
+*/
 dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -60,15 +57,13 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint gradient computation of elem_div(const dvar_vector&, const dvar_vector&)
+*/
 void dvdv_elem_div(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -101,9 +96,11 @@ void dvdv_elem_div(void)
 void dvcv_elem_div(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Element-wise division of v1 by v2 into a dvar_vector.
+
+@param v1 dvar_vector of numerators
+@param v2 dvector of denominators
+*/
 dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -133,15 +130,13 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
   save_identifier_string("vvvv");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint gradient computation of elem_div(const dvar_vector&, const dvector&)
+*/
 void dvcv_elem_div(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -167,9 +162,11 @@ void dvcv_elem_div(void)
 void cvdv_elem_div(void);
 
 /**
- * Description not yet available.
- * \param
- */
+Element-wise division of v1 by v2 into a dvar_vector.
+
+@param v1 dvector of numerators
+@param v2 dvar_vector of denominators
+*/
 dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -199,15 +196,13 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Adjoint gradient computation of elem_div(const dvector&, const dvar_vector&)
+*/
 void cvdv_elem_div(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

@@ -103,6 +103,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     u.initialize();
   }
 
+  std::ostream& output_stream = get_output_stream();
   for (int ii=1;ii<=2;ii++)
   {
     // get the initial u into the uu's
@@ -256,8 +257,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
       u=ub;
     }
     double tmax=max(gmax);
-    cout <<  " inner maxg = " << tmax << endl;
-
+    output_stream <<  " inner maxg = " << std::scientific << setprecision(10) <<  tmax;
     if (tmax< 1.e-4) break;
   }
   fmc1.ireturn=0;

@@ -1,13 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Safe member functions for dvector to get the element of a vector.
+*/
 #include "fvar.hpp"
 #include <cassert>
 

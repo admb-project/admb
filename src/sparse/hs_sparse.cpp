@@ -3161,7 +3161,7 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   save_ad_pointer(&S);
   save_ad_pointer(&sparse_triplet2);
   save_identifier_string("dg");
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfcholeski_sparse);
   RETURN_ARRAYS_DECREMENT(); //Need this statement because the function
   return (1) ;
@@ -3558,7 +3558,7 @@ void report_derivatives(const dvar_vector& x)
 {
   save_identifier_string("jx");
   x.save_dvar_vector_position();
-  gradient_structure::GRAD_STACK1->
+  gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(report_dvar_vector_derivatives);
   save_identifier_string("jr");
 }

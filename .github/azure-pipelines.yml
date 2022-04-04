@@ -8,83 +8,9 @@
 
 trigger:
 - master
+- dev
 
 jobs:
-- job: VS2015_vcvars32
-  pool:
-    vmImage: 'vs2015-win2012r2'
-  steps:
-  - script: |
-      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat x86 & popd
-      nmake
-      nmake zip
-      nmake verify SAFE_ONLY=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: VS2015_vcvars32
-
-- job: VS2015_vcvars64
-  pool:
-    vmImage: 'vs2015-win2012r2'
-  steps:
-  - script: |
-      pushd "%VS140COMNTOOLS%..\..\VC" & call vcvarsall.bat amd64 & popd
-      nmake
-      nmake zip
-      nmake verify SAFE_ONLY=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: VS2015_vcvars64
-
-- job: VS2017_vcvars32
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - script: |
-      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
-      nmake
-      nmake zip
-      nmake verify SAFE_ONLY=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: VS2017_vcvars32
-
-- job: VS2017_vcvars64
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - script: |
-      pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-      nmake
-      nmake zip
-      nmake verify SAFE_ONLY=1
-  - task: CopyFiles@2
-    inputs:
-      contents: |
-        outputs-saf.txt
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: VS2017_vcvars64
 
 - job: VS2019_vcvars32
   pool:
@@ -94,12 +20,14 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=1
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -114,32 +42,80 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      nmake verify SAFE_ONLY=1
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
       artifactName: VS2019_vcvars64
 
-- job: MacOS
+- job: VS2022_vcvars32
   pool:
-    vmImage: 'macOS-latest'
+    vmImage: 'windows-2022'
   steps:
-  - script: make
-  - script: make zip
-  - script: make --directory=scripts/installers/packagemaker
-  - script: make verify
+  - script: |
+      pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
+      nmake
+      nmake zip
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        scripts/installers/packagemaker/ADMBTerminal.dmg
-        outputs-saf.txt
+        outputs.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: VS2022_vcvars32
+
+- job: VS2022_vcvars64
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - script: |
+      pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+      nmake
+      nmake zip
+      pushd tests& nmake SAFE_ONLY=yes examples
+      pushd tests& nmake outputs.txt
+      pushd tests& nmake gtests
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        outputs.txt
+      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: VS2022_vcvars64
+
+- job: MacOS
+  pool:
+    vmImage: 'macOS-latest'
+  steps:
+  - script: make clean
+  - script: make -j 2 DEBUG=yes
+  - script: make zip
+  - script: make --directory=scripts/installers/packagemaker
+  - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes tests-core unit-gtests
+  - script: make --directory=tests outputs.txt
+  - task: CopyFiles@2
+    inputs:
+      contents: |
+        admb.zip
+        build/admb-macos.dmg
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -151,16 +127,15 @@ jobs:
     vmImage: 'ubuntu-latest'
   steps:
   - script: |
-      sudo apt install -y flex
       make
       make zip
-      make verify
+      make verify SAFE_ONLY=yes TESTS_REMOTE=gtests
     displayName: 'make'
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -171,16 +146,18 @@ jobs:
   pool:
     vmImage: 'macOS-latest'
   steps:
-  - script: make DEBUG=yes
+  - script: make -j 2 DEBUG=yes clean
+  - script: make -j 2 DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make gtests DEBUG=yes
+  - script: make --directory=tests SAFE_ONLY=yes DEBUG=yes examples tests-contrib tests-remote
+  - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        scripts/installers/packagemaker/ADMBTerminal.dmg
-        outputs-saf.txt
+        build/admb-macos.dmg
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
@@ -192,16 +169,16 @@ jobs:
     vmImage: 'ubuntu-latest'
   steps:
   - script: |
-      sudo apt install -y flex
       make DEBUG=yes
       make zip DEBUG=yes
-      make verify DEBUG=yes
+      make --directory=tests DEBUG=yes tests-contrib tests-remote unit-gtests
+      make --directory=tests outputs.txt
     displayName: 'make'
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        outputs-saf.txt
+        outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:

@@ -1,7 +1,8 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+*/
 #include "fvar.hpp"
 
 /**
@@ -53,13 +54,13 @@ void ghk_test(const dmatrix& eps,int i)
   {
     cerr << "Index too low in function ghk -- min is "
          << eps.indexmin() << " you have " << i << endl;
-    exit(21);
+    ad_exit(21);
   }
   else  if (i>eps.indexmax())
   {
     cerr << "Index too high in function ghk -- max is "
          << eps.indexmax() << " you have " << i << endl;
-    exit(21);
+    ad_exit(21);
   }
 }
 

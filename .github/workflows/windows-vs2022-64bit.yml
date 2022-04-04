@@ -1,0 +1,53 @@
+name: windows-vs2022-64bit
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: clean
+      run: |
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake clean
+      shell: cmd
+    - name: build
+      run: |
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake
+        nmake shared
+      shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_vs2022
+        path: build\\admb
+    - name: debug
+      run: |
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake DEBUG=yes
+        nmake shared DEBUG=yes
+      shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: admb_vs2022_debug
+        path: build\\admb
+    - name: tests
+      run: |
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        nmake verify DEBUG=yes SAFE_ONLY=yes
+      shell: cmd
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: outputs
+        path: outputs.txt
+    - name: analyze
+      run: |
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        cd src & nmake CXXFLAGS=/analyze DEBUG=yes objects
+      shell: cmd

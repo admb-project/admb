@@ -26,7 +26,6 @@ extern int ctlc_flag;
   #include <conio.h>
 #else
   #include <iostream>
-  using namespace std;
   #include <signal.h>
   // this is to get UNIX systems to use getchar
   #define getch getchar
@@ -86,7 +85,7 @@ double get_second_derivative(double f,independent_variables& x,
   x-=2.*stepsize*r;
   do_evaluation(f,x,g2,nvar,pmp);
   double scder=r*(g1-g2)/(2.0*stepsize);
-  cout << " f = " << f << endl;
+  cout << std::scientific < setprecision(10) << " f = " << f << endl;
   cout << "  second derivative =  " ;
   cout  << " r*(g1-g)/stepsize  = " << scder << endl;
   return scder;
@@ -119,7 +118,7 @@ void fmmt1::fmin2(const double& _f, const independent_variables &_x,
   dvector curx(1,nvar), g1(1,nvar), xtry(1,nvar), g(1,nvar), r(1,nvar);
   do_evaluation(f,x,g,nvar,pmp); // get initial vales for f and g
   curf=f; curx=x;
-  cout << " f = " << f << endl;
+  cout << std::scientific < setprecision(10) << " f = " << f << endl;
 
 
   do
@@ -141,7 +140,7 @@ void fmmt1::fmin2(const double& _f, const independent_variables &_x,
         xtry=curx+stepsize*r; x=xtry;
 
         do_evaluation(f,x,g,nvar,pmp);
-        cout << " f = " << f << endl;
+        cout << std::scientific < setprecision(10) << " f = " << f << endl;
         cout << "  r*g/norm(g) =  " << r*g/norm(g) << endl;
 
         if (f<curf+1.e-10)
@@ -168,7 +167,7 @@ void fmmt1::fmin2(const double& _f, const independent_variables &_x,
   }
   while (1);
 
-      exit(1);
+      ad_exit(1);
 }
 
 /**

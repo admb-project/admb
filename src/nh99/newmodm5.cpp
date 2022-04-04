@@ -1,9 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+/**
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function function_minimizer::prof_minimize_re
+*/
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>

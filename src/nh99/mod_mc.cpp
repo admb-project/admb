@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function function_minimizer::monte_carlo_routine
+*/
 #include <admodel.h>
 
 double inv_cumd_norm(const double& x);
@@ -62,14 +65,14 @@ void function_minimizer::monte_carlo_routine(void)
       {
         cerr << "Incorrect number of independent variables in file"
             << tmpstring  << endl;
-        exit(1);
+        ad_exit(1);
       }
       cif >> S;
       if (!cif)
       {
         cerr << "error reading covariance matrix from "
              <<  tmpstring << endl;
-        exit(1);
+        ad_exit(1);
       }
 
       initial_params::mc_phase=0;
@@ -192,7 +195,7 @@ void function_minimizer::monte_carlo_routine(void)
           break;
         default:
           cerr << "error illegal value for pvm_manager->mode" << endl;
-          exit(1);
+          ad_exit(1);
         }
       }
       else
@@ -314,7 +317,7 @@ void function_minimizer::monte_carlo_routine(void)
             break;
           default:
             cerr << "error illega value for pvm_manager->mode" << endl;
-            exit(1);
+            ad_exit(1);
           }
         }
         else

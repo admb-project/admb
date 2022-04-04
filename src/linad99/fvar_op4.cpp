@@ -26,9 +26,6 @@
 #include <stdio.h>
 #include <math.h>
 
-
-void gradfree(dlink *);
-
 #ifndef OPT_LIB
 
 /**

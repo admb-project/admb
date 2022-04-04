@@ -1,9 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+/**
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function function_minimizer::unrestricted_hess_determinant
+*/
 #include <admodel.h>
 
 double function_minimizer::unrestricted_hess_determinant(void)

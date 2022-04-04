@@ -20,7 +20,7 @@ stddev_params* stddev_params::stddevptr[150];
     {
       cerr << "This version of ADMB only supports " << num_stddev_params
            << " stddev_params." << endl;
-      exit(1);
+      ad_exit(1);
     }
     stddevptr[num_stddev_params++]= this; // this is the list of
   }
@@ -31,7 +31,7 @@ stddev_params* stddev_params::stddevptr[150];
     {
       cerr << "This version of ADMB only supports " << num_stddev_params
            << " stddev_params." << endl;
-      exit(1);
+      ad_exit(1);
     }
     stddev_number_ptr[num_stddev_number_params++]= this; // this is the list of
   }

@@ -1,12 +1,13 @@
-all: agemat.tpl
-	$(MAKE) agemat.tpl
-	..\\..\\admb agemat.tpl
-	$(MAKE) run
+TARGET=agemat
+OVERRIDE=all
 
-run:
-	agemat
+!include <..\test-rules.nmake>
 
-agemat.tpl:
+run: agemat.tpl
+	$(MAKE) /NOLOGO $(TARGET)
+	$(MAKE) /NOLOGO _run
+
+agemat.tpl: agemat.dat
 	copy rforge-nwfscassmt\\pkg\\nwfscAgeingError\\inst\\executables\\AGEMAT.TPL agemat.tpl
 
 agemat.dat: rforge-nwfscassmt
@@ -15,32 +16,13 @@ agemat.dat: rforge-nwfscassmt
 rforge-nwfscassmt:
 	git clone --depth 1 https://github.com/rforge/nwfscassmt rforge-nwfscassmt
 
-total-clean:
-	@if exist agemat.dat del /Q agemat.dat
-	@if exist agemat.tpl del /Q agemat.tpl
+get-outputs: _get-outputs
+	@if exist Echo.Out type Echo.Out
 
-clean:
-	@del /Q agemat agemat.cpp agemat.htp agemat.obj 2>nul
-	@del /Q Echo.Out 2>nul
-	@del /Q admodel.cov 2>nul
-	@del /Q admodel.dep 2>nul
-	@del /Q admodel.hes 2>nul
-	@del /Q agemat.b01 2>nul
-	@del /Q agemat.bar 2>nul
-	@del /Q agemat.cor 2>nul
-	@del /Q agemat.eva 2>nul
-	@del /Q agemat.log 2>nul
-	@del /Q agemat.p01 2>nul
-	@del /Q agemat.par 2>nul
-	@del /Q agemat.r01 2>nul
-	@del /Q agemat.rep 2>nul
-	@del /Q agemat.std 2>nul
-	@del /Q agemat 2>nul
-	@del /Q agemat.exe 2>nul
-	@del /Q cmpdiff.tmp 2>nul
-	@del /Q eigv.rpt 2>nul
-	@del /Q fmin.log 2>nul
-	@del /Q gradfil1.tmp 2>nul
-	@del /Q gradfil2.tmp 2>nul
-	@del /Q variance 2>nul
-	@del /Q varssave.tmp 2>nul
+clean: _clean
+	@if exist $(TARGET).tpl del /Q $(TARGET).tpl 2>nul
+	@if exist $(TARGET).dat del /Q $(TARGET).dat 2>nul
+	@if exist Echo.Out del /Q Echo.Out 2>nul
+
+total-clean:
+	@if exist rforge-nwfscassmt rmdir /s /q rforge-nwfscassmt

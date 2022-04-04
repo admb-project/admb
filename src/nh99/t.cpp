@@ -53,7 +53,7 @@ dvariable daves_kludge(prevariable& x)
   if (i>0 || x < 0 || x > 1)
   {
     cout << "i > 0 in daves kludge" << endl;
-    exit(1);
+    ad_exit(1);
   }
   if (cx-i <= 0.5)
   {

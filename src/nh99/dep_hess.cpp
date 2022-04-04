@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function function_minimizer::dep_hess_routine
+*/
 #include <admodel.h>
 
 // estimate the matrix of second derivatives
@@ -40,13 +43,14 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     f = value(vf);
     gradcalc(nvar, depg);
   }
+  std::ostream& output_stream = get_output_stream();
   double sdelta1;
   double sdelta2;
   int i;
   for (i=1;i<=nvar;i++)
   {
-    cout << "Estimating row " << i << " out of " << nvar
-         << " for dependent variable hessian" << endl;
+    output_stream << "Estimating row " << i << " out of " << nvar
+                  << " for dependent variable hessian" << endl;
 
     double f = 0.0;
     double xsave=x(i);

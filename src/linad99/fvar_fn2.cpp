@@ -15,8 +15,6 @@
 #include <stdio.h>
 #include <math.h>
 
-void gradfree(dlink *);
-
 /**
  * Description not yet available.
  * \param
@@ -80,7 +78,7 @@ dvariable avg( const prevariable& x,const prevariable& y)
     }
 
     gradient_structure::RETURN_PTR->v->x=fval;
-    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
       &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),dftmp);
    return(*gradient_structure::RETURN_PTR);
  }

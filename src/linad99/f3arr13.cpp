@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Assignment functions for dvar3_array for d3_array and double.
+*/
 #include <fvar.hpp>
 
 #ifdef DEBUG
@@ -11,7 +14,7 @@
 /**
 Assign element values from scalar arr3 to dvar3_array.
 
-\param arr3 scalar values
+\param arr3 d3_array
 */
 dvar3_array& dvar3_array::operator=(const d3_array& arr3)
 {
@@ -33,7 +36,7 @@ dvar3_array& dvar3_array::operator=(const d3_array& arr3)
 /**
 Assigns value to all elements of dvar3_array.
 
-\param value assigment value
+\param value double
 */
 dvar3_array& dvar3_array::operator=(double value)
 {

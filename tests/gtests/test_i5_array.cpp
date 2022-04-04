@@ -251,3 +251,65 @@ TEST_F(test_i5_array, deallocatecopies)
   ASSERT_EQ(0, firstcopy.get_ncopies());
   ASSERT_EQ(0, secondcopy.get_ncopies());
 }
+TEST_F(test_i5_array, empty_initialize)
+{
+  i5_array a;
+  ASSERT_NO_THROW({
+    a.initialize();
+  });
+}
+TEST_F(test_i5_array, initialize)
+{
+  i5_array a;
+  a.allocate(1, 5, 1, 4, 1, 3, 1, 2, 1, 10);
+  int index = 1;
+  for (int i5 = 1; i5 <= 5; ++i5)
+  {
+    for (int i4 = 1; i4 <= 4; ++i4)
+    {
+      for (int i3 = 1; i3 <= 3; ++i3)
+      {
+        for (int i2 = 1; i2 <= 2; ++i2)
+        {
+          for (int i1 = 1; i1 <= 10; ++i1)
+          {
+            a(i5, i4, i3, i2, i1) = index++;
+          }
+        }
+      }
+    }
+  }
+  for (int i5 = 1; i5 <= 5; ++i5)
+  {
+    for (int i4 = 1; i4 <= 4; ++i4)
+    {
+      for (int i3 = 1; i3 <= 3; ++i3)
+      {
+        for (int i2 = 1; i2 <= 2; ++i2)
+        {
+          for (int i1 = 1; i1 <= 10; ++i1)
+          {
+            ASSERT_TRUE(a(i5, i4, i3, i2, i1) != 0);
+          }
+        }
+      }
+    }
+  }
+  a.initialize();
+  for (int i5 = 1; i5 <= 5; ++i5)
+  {
+    for (int i4 = 1; i4 <= 4; ++i4)
+    {
+      for (int i3 = 1; i3 <= 3; ++i3)
+      {
+        for (int i2 = 1; i2 <= 2; ++i2)
+        {
+          for (int i1 = 1; i1 <= 10; ++i1)
+          {
+            ASSERT_EQ(a(i5, i4, i3, i2, i1), 0);
+          }
+        }
+      }
+    }
+  }
+}

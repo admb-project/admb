@@ -7,12 +7,24 @@ git:
 branches:
   only:
     - master
+    - dev
 
 notifications:
   email: false
 
 jobs:
   include:
+  - name: linux-ubuntu-focal
+    os: linux
+    dist: focal
+    env:
+     - SAFE_ONLY=yes
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
+    - make --directory=examples 
+
   - name: llvm-scan-build
     os: osx
     before_install:
@@ -26,31 +38,102 @@ jobs:
     - scan-build -v make core
 
   - name: cpplint 
-    os: osx
+    os: linux
     before_install:
     - sudo pip install cpplint
     script:
     - make clean
     - cpplint --recursive --filter=-whitespace,-runtime,-build,-readability,-legal src
 
-  - name: Code Coverage 
+  - name: Code Coverage examples
     os: linux
-    env:
-     - CXXFLAGS="-coverage -fprofile-arcs -O0" LDFLAGS="-coverage -fprofile-arcs -O0" DEBUG="yes" PROG=
-    dist: xenial
+    dist: bionic
     compiler: gcc
+    env: DEBUG=yes
     before_install:
     - sudo pip install codecov
     after_success:
-    - bash <(curl -s https://codecov.io/bash) -a "--object-directory=build/objects/x86_64-linux-g++5"
+    - bash <(curl -s https://codecov.io/bash)
     script:
     - make clean
-    - make coverage
-    - codecov
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage dist
+    - make --directory=examples LDFLAGS=--coverage PROG= all
+    - make --directory=examples LDFLAGS=--coverage PROG= FAST_OPTION=-f all
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-version" PROG=
+    - codecov &> /dev/null
+
+  - name: Code Coverage examples -lmn -lmn2 -simplex
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage dist
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-lmn 5" PROG= admb
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-lmn2 5" PROG= simple bcb
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-simplex -nohess" PROG= bcb
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-neldmead -nohess" PROG= bcb
+    - codecov &> /dev/null
+
+  - name: Code Coverage tests-core
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage dist
+    - make --directory=tests LDFLAGS=--coverage tests-core
+    - codecov &> /dev/null
+
+  - name: Code Coverage mcmc
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage dist
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-mcmc 10000 -mcsave 100 -mcu" bcb
+    - make --directory=examples LDFLAGS=--coverage ADMB_RUN_ARGS="-mcmc 10000 -hmc -hynstep 1 -hyeps .001" PROG= forest catage
+    - codecov &> /dev/null
+
+  - name: Code Coverage Contrib, Remote and Unit Tests
+    os: linux
+    dist: bionic
+    compiler: gcc
+    env: DEBUG=yes
+    before_install:
+    - sudo pip install codecov
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    script:
+    - make clean
+    - make --directory=src CXXFLAGS=--coverage objects
+    - make LDFLAGS=--coverage dist
+    - make --directory=tests LDFLAGS=--coverage tests-contrib tests-remote unit-gtests
+    - codecov &> /dev/null
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-ham4
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -66,7 +149,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-ham5
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -80,7 +163,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-ham5
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -94,7 +177,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-ham5
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -110,7 +193,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-catage
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -126,7 +209,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-chem_eng
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -142,7 +225,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-forest
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -158,7 +241,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-finance
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -174,7 +257,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-simple
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -190,7 +273,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-pella_t
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -206,7 +289,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-robreg
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -222,7 +305,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-truncreg
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -238,7 +321,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-bcb
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -254,7 +337,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-bvprobit
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -270,7 +353,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-caest
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -284,7 +367,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-caest
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -298,7 +381,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-caest
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -312,7 +395,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-gamma
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -328,7 +411,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-lidar
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -344,7 +427,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-logistic
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -360,7 +443,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-nbmm
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -374,7 +457,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-nbmm
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -388,7 +471,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-nbmm
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -400,9 +483,9 @@ jobs:
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind nbmm
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-nested4
+  - name: linux-valgrind-memcheck-nested4
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -413,12 +496,25 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck nested4
+
+  - name: linux-valgrind-callgrind-cachegrind-nested4
+    os: linux
+    dist: bionic
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind nested4
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind nested4
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-orange
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -434,7 +530,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-orange2
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -450,7 +546,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-orange_cor
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -466,7 +562,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-pheno
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -482,7 +578,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-sdv
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -496,7 +592,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-sdv
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -510,7 +606,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-sdv
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -524,7 +620,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-skewed
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -538,7 +634,7 @@ jobs:
 
   - name: linux-valgrind-callgrind-skewed
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -552,7 +648,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-skewed
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -566,7 +662,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-socatt
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -582,7 +678,7 @@ jobs:
 
   - name: linux-valgrind-memcheck-callgrind-spatial
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -597,7 +693,7 @@ jobs:
 
   - name: linux-valgrind-cachegrind-spatial
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -609,9 +705,9 @@ jobs:
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind spatial
 
-  - name: linux-valgrind-memcheck-callgrind-cachegrind-union
+  - name: linux-valgrind-memcheck-union
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -622,12 +718,25 @@ jobs:
     - make clean
     - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-memcheck union
+
+  - name: linux-valgrind-callgrind-cachegrind-union
+    os: linux
+    dist: bionic
+    env:
+     - SAFE_ONLY=yes
+     - DEBUG=yes
+    before_install:
+    - sudo apt-get install -y valgrind
+    compiler: gcc
+    script:
+    - make clean
+    - make core 
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-callgrind union
     - make --directory=examples PROG=../../../scripts/ci/run-valgrind-cachegrind union
 
   - name: linux-valgrind-memcheck-callgrind-cachegrind-weights
     os: linux
-    dist: xenial
+    dist: bionic
     env:
      - SAFE_ONLY=yes
      - DEBUG=yes
@@ -644,6 +753,7 @@ jobs:
   - os: windows
     env:
     - SAFE_ONLY=yes
+    - DEBUG=yes
     compiler: gcc
     script:
     - utilities/make.exe clean
@@ -662,5 +772,6 @@ jobs:
   - os: windows
     env:
     - SAFE_ONLY=yes
+    - DEBUG=yes
     script:
     - scripts/ci/travis-windows-vc-build.bat

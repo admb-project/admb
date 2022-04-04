@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Functions val(const adstring&, int&, int&) and val(const adstring&)
+*/
 #include <fvar.hpp>
 #include <stdio.h>
 

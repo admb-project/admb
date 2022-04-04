@@ -37,11 +37,7 @@ TEST_F(test_param_init_bounded_number_vector, nonmatching)
 
   param_init_bounded_number_vector p;
   p.allocate(1, 4, 0.5, 1.0, "param_init_bounded_number_vecotor");
-cout << __FILE__ << ':' << __LINE__ << endl;
-  p.deallocate();
-cout << __FILE__ << ':' << __LINE__ << endl;
 
-/*
   ASSERT_ANY_THROW({
     dvector scalefactor;
     p.set_scalefactor(scalefactor);
@@ -54,7 +50,6 @@ cout << __FILE__ << ':' << __LINE__ << endl;
     dvector scalefactor(1, 5);
     p.set_scalefactor(scalefactor);
   });
-*/
 }
 TEST_F(test_param_init_bounded_number_vector, allocateset_initial_value)
 {
@@ -150,10 +145,11 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_only_paren)
   }
   FAIL();
 }
-/*
 TEST_F(test_param_init_bounded_number_vector, allocated_set_initial_value_only_paren)
 {
-  gradient_structure* gs = new gradient_structure();
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
 
   const int min = 1;
   const int max = 3;
@@ -165,18 +161,15 @@ TEST_F(test_param_init_bounded_number_vector, allocated_set_initial_value_only_p
   p.set_initial_value(v);
   try
   {
-    p(min);
+    p(0);
   }
   catch (const std::out_of_range&)
   {   
-    delete gs;
     return;
   }
   FAIL();
 }
-*/
 #endif
-/*
 TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
 {
   gradient_structure gs(1500);
@@ -187,7 +180,6 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
 
   dvector v(min, max); 
   v.initialize();
-  p.set_initial_value(v);
 
   dvector mins(min, max);
   mins.initialize();
@@ -199,6 +191,7 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
   EXPECT_EQ(min, p.indexmin());
   EXPECT_EQ(max, p.indexmax());
 
+  p.set_initial_value(v);
   for (int i = min; i <= max; i++)
   {
     EXPECT_EQ(0, value(p[i]));
@@ -206,7 +199,6 @@ TEST_F(test_param_init_bounded_number_vector, set_initial_value_first)
 
   p.deallocate();
   EXPECT_EQ(0, p.allocated());
-  EXPECT_EQ(-1, p.indexmin());
-  EXPECT_EQ(-1, p.indexmax());
+  EXPECT_EQ(1, p.indexmin());
+  EXPECT_EQ(0, p.indexmax());
 }
-*/

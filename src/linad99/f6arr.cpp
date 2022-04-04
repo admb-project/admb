@@ -78,7 +78,7 @@ void dvar6_array::deallocate()
     }
     allocate();
   }
-#ifdef DEBUG
+#if defined(DIAG)
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated dvar6_array.\n";

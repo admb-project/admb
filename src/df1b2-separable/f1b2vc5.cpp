@@ -769,9 +769,8 @@ void df1b2matrix::deallocate()
   {
     v=(df1b2vector*)(shape->get_pointer());
     delete [] v;
-    v=0;
     delete shape;
-    shape=0;
+    allocate();
   }
 }
 

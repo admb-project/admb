@@ -1,9 +1,11 @@
 /**
- * $Id: vbetai.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Functions betai(const dvariable, const dvariable, const dvariable, int) and wrapper pbeta(const dvariable, const dvariable, const dvariable, int)
+*/
+
 #include <fvar.hpp>
 #include <math.h>
 

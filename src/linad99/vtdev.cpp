@@ -1,13 +1,11 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function t_deviate(const prevariable&,const prevariable&)
+*/
+
 #include <fvar.hpp>
 
 /**

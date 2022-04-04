@@ -1,9 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+/**
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Member functions projected_hess_determinant,iget_particular_grad, prof_minimize for class function_minimizer.
+*/
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>

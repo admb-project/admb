@@ -572,6 +572,8 @@ TEST_F(test_ivector, equalexit)
 }
 TEST_F(test_ivector, add_b_tothis)
 {
+  ad_exit=&test_ad_exit;
+
   ivector a(1, 4);
   a(1) = 0;
   a(2) = 7;

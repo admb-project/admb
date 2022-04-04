@@ -1,9 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+/**
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function named_dvar3_array::allocate
+*/
 #include <admodel.h>
 
 void named_dvar3_array::allocate(const ad_integer& sl,

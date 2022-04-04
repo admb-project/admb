@@ -96,15 +96,11 @@ TEST_F(test_admb_messages, linad99_dmat6_01)
   {
     dvector v1 = extract_column(m, 1);
     dvector v0 = extract_column(m, 0);
-  } 
+  }
   catch (const int exit_code)          
   {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -118,15 +114,11 @@ TEST_F(test_admb_messages, linad99_dmat6_02)
   {
     dvector v1 = extract_row(m, 1);
     dvector v0 = extract_row(m, 0);
-  } 
+  }
   catch (const int exit_code)          
   {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -180,21 +172,10 @@ TEST_F(test_admb_messages, linad99_dmat_acc_02)
 TEST_F(test_admb_messages, linad99_dmat8_01)
 {
   dmatrix m(1, 5, 1, 5);
-  try
-  {
+  EXPECT_DEATH({
     dvector v1 = m(1);
     dvector v0 = m(0);
-  } 
-  catch (const int exit_code)          
-  {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests errors for "dvector& dmatrix::operator() (int i)"
@@ -202,21 +183,10 @@ TEST_F(test_admb_messages, linad99_dmat8_01)
 TEST_F(test_admb_messages, linad99_dmat8_02)
 {
   dmatrix m(1, 5, 1, 5);
-  try
-  {
+  EXPECT_DEATH({
     dvector v5 = m(5);
     dvector v6 = m(6);
-  } 
-  catch (const int exit_code)          
-  {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests errors for "dmatrix& d3_array::operator() (int i)"
@@ -564,21 +534,10 @@ TEST_F(test_admb_messages, linad99_f3arr1_08)
 TEST_F(test_admb_messages, linad99_dvec_acc_01)
 {
   dvector v(1, 5);
-  try
-  {
+  EXPECT_DEATH({
     double d1 = v[1];
     double d0 = v[0];
-  } 
-  catch (const int exit_code)          
-  {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests errors for "double& dvar_vector::operator[] (int i)"
@@ -586,21 +545,10 @@ TEST_F(test_admb_messages, linad99_dvec_acc_01)
 TEST_F(test_admb_messages, linad99_dvec_acc_02)
 {
   dvector v(1, 5);
-  try
-  {
+  EXPECT_DEATH({
     double d5 = v[5];
     double d6 = v[6];
-  } 
-  catch (const int exit_code)          
-  {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests errors for "double& dvar_vector::operator() (int i)"
@@ -608,21 +556,10 @@ TEST_F(test_admb_messages, linad99_dvec_acc_02)
 TEST_F(test_admb_messages, linad99_dvec_acc_03)
 {
   dvector v(1, 5);
-  try
-  {
+  EXPECT_DEATH({
     double d1 = v(1);
     double d0 = v(0);
-  } 
-  catch (const int exit_code)          
-  {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests errors for "double& dvar_vector::operator() (int i)"
@@ -630,21 +567,10 @@ TEST_F(test_admb_messages, linad99_dvec_acc_03)
 TEST_F(test_admb_messages, linad99_dvec_acc_04)
 {
   dvector v(1, 5);
-  try
-  {
+  EXPECT_DEATH({
     double d5 = v(5);
     double d6 = v(6);
-  } 
-  catch (const int exit_code)          
-  {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
-  }
-  FAIL();
+  }, "Assertion");
 }
 /**
  * Tests errors for "dvar_vector extract_column(_CONST dvar_matrix& m,int j)"
@@ -746,12 +672,8 @@ TEST_F(test_admb_messages, linad99_fvma_acc_01)
   } 
   catch (const int exit_code)          
   {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -767,12 +689,8 @@ TEST_F(test_admb_messages, linad99_fvma_acc_02)
   } 
   catch (const int exit_code)          
   {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -788,12 +706,8 @@ TEST_F(test_admb_messages, linad99_fvma_acc_03)
   } 
   catch (const int exit_code)          
   {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -809,12 +723,8 @@ TEST_F(test_admb_messages, linad99_fvma_acc_04)
   } 
   catch (const int exit_code)          
   {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -830,12 +740,8 @@ TEST_F(test_admb_messages, linad99_fvma_acc_05)
   } 
   catch (const int exit_code)          
   {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }
@@ -851,12 +757,8 @@ TEST_F(test_admb_messages, linad99_fvma_acc_06)
   } 
   catch (const int exit_code)          
   {   
-    const int expected_exit_code = admb::ARRAY_BOUNDS_ERROR;
-    if (exit_code == expected_exit_code)
-    {
-      SUCCEED();
-      return;
-    }
+    SUCCEED();
+    return;
   }
   FAIL();
 }

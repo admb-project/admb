@@ -1,10 +1,10 @@
 /**
-   Author: Cole Monnahan
-   Copyright (c) 2016 ADMB Foundation
+This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo
+samplers (static HMC and No-u-turn).
 
-   \file
-   This file was copied from hybmcmc.cpp to use as a template to create updated Hamiltonian Monte Carlo
-   samplers (static HMC and No-u-turn).
+\file
+\author Cole Monnahan
+\copyright   Copyright (c) 2016 ADMB Foundation
 */
 
 #include "admodel.h"
@@ -18,7 +18,7 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
 
 void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 					  int restart_flag) {
-
+  cerr << endl << endl << "Option -hmc is deprecated, please use option -nuts" << endl << endl;
   if (nmcmc<=0)
     {
       cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
@@ -95,22 +95,33 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
   }
+  // console refresh rate
+  int refresh=1;
+  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
+    int iii=atoi(ad_comm::argv[on+1]);
+    if (iii < -1) {
+      cerr << iii << endl;
+      cerr << "Error: refresh must be >= -1. Use -1 for no refresh or positive integer for rate." << endl;
+      ad_exit(1);
+    } else {
+      refresh=iii;
+    }
+  }
+
   // Number of leapfrog steps. Defaults to 10.
   int L=10;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1)
     {
       if (nopt)
 	{
-	  int _L=atoi(ad_comm::argv[on+1]);
-	  if (_L < 1 )
-	    {
-	      cerr << "Error: hynstep argument must be integer > 0 " << endl;
-	      ad_exit(1);
-	    }
-	  else
-	    {
-	      L=_L;
-	    }
+	  int iii = atoi(ad_comm::argv[on+1]);
+	  if (iii < 1 )
+	  {
+	    cerr << "Error: hynstep argument must be integer > 0 " << endl;
+	    ad_exit(1);
+	  }
+	  L = iii;
 	}
     }
 
@@ -192,6 +203,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	  S(i,i)=dscale;
 	}
     }
+  diagonal_metric_flag=0; // global flag used in functions to do more efficient calculations
 
   // How much to thin, for now fixed at 1.
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
@@ -340,11 +352,11 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     // Adaptation of step size (eps).
     if(useDA && is <= nwarmup){
-      eps=adapt_eps(is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
+      eps=adapt_eps(is, is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
     }
     adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
     if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    print_mcmc_progress(is, nmcmc, nwarmup, chain);
+    print_mcmc_progress(is, nmcmc, nwarmup, chain, refresh);
   } // end of MCMC chain
 
   // This final ratio should closely match adapt_delta
@@ -356,8 +368,8 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
 
   time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-  print_mcmc_timing(time_warmup, time_total);
-
+  print_mcmc_timing(time_warmup, time_total, chain);
+ 
   // I assume this closes the connection to the file??
   if (pofs_psave)
     {

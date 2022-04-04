@@ -291,6 +291,20 @@ FINAL_SECTION  {
   }
   else
   {
+    if (!report_defined)
+    {
+      fprintf(fall,"}\n");
+      fclose(fall);
+      fall=fopen("xxalloc4.tmp","w+");
+      if (fall==NULL)
+      {
+        fprintf(stderr,"%s","Error trying to open file xxalloc4.tmp\n");
+      }
+      report_defined = 1;
+      fprintf(fall,"%s",
+        "\nvoid model_parameters::report(const dvector& gradients)"
+        "\n{\n");
+    }
     BEGIN DEFINE_PROCS;
     final_defined=1;
     setup_for_prior_likelihood();
@@ -418,7 +432,14 @@ PRELIMINARY_CALCS_SECTION  {
   }
                 }
 
-<DEFINE_PRELIMINARY_CALCS>^" ".* {fprintf(fall,"%s\n",yytext);}
+<DEFINE_PRELIMINARY_CALCS>^" ".* {
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(fall,"%s\n",yytext);
+  }
 
 BETWEEN_PHASES_SECTION {
   if (report_defined)
@@ -641,10 +662,10 @@ DATA_SECTION  {
 
 
 
-<DEFINE_DATA>^[ \t]*LOCAL_CALCULATIONS |
-<DEFINE_DATA>^[ \t]*LOCAL_CALCS |
-<DEFINE_DATA>^[ \t]*LOC_CALCULATIONS |
-<DEFINE_DATA>^[ \t]*LOC_CALCS  {
+<DEFINE_DATA>^[ \t]+LOCAL_CALCULATIONS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOCAL_CALCS[ \t\r\n]* |
+<DEFINE_DATA>^[ \t]+LOC_CALCULATIONS[ \t\r]* |
+<DEFINE_DATA>^[ \t]+LOC_CALCS[ \t\r]*  {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -661,6 +682,18 @@ DATA_SECTION  {
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  init_adstring ");
                      }
+<DEFINE_DATA>init_adstring_array {
+
+    BEGIN IN_VECTOR_DEF;
+    fprintf(fdat,"%s","  data_adstring_array ");
+                     }
+
+<DEFINE_DATA>adstring_array {
+
+    BEGIN IN_NAMED_VECTOR_DEF;
+    fprintf(fdat,"%s","  adstring_array ");
+                     }
+
 
 <DEFINE_DATA>init_line_adstring {
 
@@ -889,8 +922,8 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  d7_array ");
                      }
 
-<IN_LOCAL_CALCS>^[ \t]END_CALCS |
-<IN_LOCAL_CALCS>^[ \t]END_CALCULATIONS {
+<IN_LOCAL_CALCS>^[ \t]+END_CALCS[ \t\r]* |
+<IN_LOCAL_CALCS>^[ \t]+END_CALCULATIONS[ \t\r]* {
 
     if (in_define_data) BEGIN DEFINE_DATA;
     if (in_define_parameters) BEGIN DEFINE_PARAMETERS;
@@ -898,8 +931,13 @@ DATA_SECTION  {
                   }
 
 <IN_LOCAL_CALCS>^[ \t][ \t].*       {
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
     fprintf(fall,"%s\n",yytext);
-          }
+  }
 
 <DEFINE_PARAMETERS>^[ \t]*!!CLASS.* {              // start with !!CLASSbbclassname classinstance(xxx)
     num_user_classes++;
@@ -953,10 +991,10 @@ DATA_SECTION  {
 
     }
 
-<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCULATIONS |
-<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCS |
-<DEFINE_PARAMETERS>^[ \t]*LOC_CALCULATIONS |
-<DEFINE_PARAMETERS>^[ \t]*LOC_CALCS  {
+<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCULATIONS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOCAL_CALCS[ \t\r]* |
+<DEFINE_PARAMETERS>^[ \t]+LOC_CALCULATIONS[ \t\r$]* |
+<DEFINE_PARAMETERS>^[ \t]+LOC_CALCS[ \t\r]*  {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -3763,6 +3801,9 @@ PARAMETER_SECTION {
     fprintf(fdat,"%s", "  static int mceval_phase(void)\n"
       "  {\n    return initial_params::mceval_phase;\n  }\n");
 
+    fprintf(fdat,"%s", "  static int hessian_phase(void)\n"
+      "  {\n    return initial_params::in_hessian_phase;\n  }\n");
+
     fprintf(fdat,"%s", "  static int sd_phase(void)\n"
       "  {\n    return initial_params::sd_phase;\n  }\n");
 
@@ -4243,12 +4284,14 @@ FUNCTION_DECLARATION[ ]*{name} |
    /*  BEGIN DEFINE_AUX_PROC; */
                               }
 
-
 <DEFINE_PROCS>^[ \t].* {
-   fprintf(fall,"%s\n",yytext);
-           }
-
-
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(fall,"%s\n",yytext);
+  }
 
 <DEFINE_AUX_PROC>^\ +{name}\ +{name}\(.*       {
 
@@ -4415,10 +4458,13 @@ TOP_OF_MAIN_SECTION {
                 }
 
 <IN_TOP_SECTION>^[ \t].* {
-
-        fprintf(ftopmain,"%s\n",yytext);
-
-                              }
+    size_t len = strlen(yytext);
+    if (yytext[len - 1] == '\r')
+    {
+      yytext[len - 1] = '\0';
+    }
+    fprintf(ftopmain,"%s\n",yytext);
+  }
 
 
 <<EOF>>           {
@@ -4651,13 +4697,13 @@ TOP_OF_MAIN_SECTION {
       if (!random_effects_flag)
       {
         fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
-          "    mp.iprint=10;\n");
+          "    mp.iprint = defaults::iprint;\n");
       }
       else
       {
         fprintf(ftopmain,"    df1b2variable::noallocate=1;\n");
         fprintf(ftopmain,"    df1b2_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
-          "    mp.iprint=10;\n");
+          "    mp.iprint = defaults::iprint;\n");
       }
 
     }
@@ -4665,13 +4711,13 @@ TOP_OF_MAIN_SECTION {
     {
       if (!random_effects_flag)
       {
-       fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv);\n"
-         "    mp.iprint=10;\n");
+        fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv);\n"
+         "    mp.iprint = defaults::iprint;\n");
       }
       else
       {
-       fprintf(ftopmain,"    df1b2_parameters mp(arrmblsize,argc,argv);\n"
-         "    mp.iprint=10;\n");
+        fprintf(ftopmain,"    df1b2_parameters mp(arrmblsize,argc,argv);\n"
+         "    mp.iprint = defaults::iprint;\n");
       }
     }
 

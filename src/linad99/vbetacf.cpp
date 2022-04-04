@@ -1,9 +1,11 @@
 /**
- * $Id: vbetacf.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Function betacf(const dvariable&, const dvariable&, const dvariable&, int MAXIT)
+*/
+
 #include <fvar.hpp>
 #include "betacf_val.hpp"
 
@@ -18,7 +20,7 @@ dvariable betacf(const dvariable& a, const dvariable& b, const dvariable& x, int
 
   dvariable hh;
   value(hh) = ans.value;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind, &(value(hh)), 
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation3ind, &(value(hh)), 
                          &(value(a)), der[0] ,&(value(b)), der[1], &(value(x)), der[2]);
   return hh;
 }

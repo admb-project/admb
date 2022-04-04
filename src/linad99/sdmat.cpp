@@ -44,7 +44,7 @@ void sdmatrix::allocate(int irh)
    #endif
 
    #ifdef DIAG
-     cerr << "created a ncopies with address "<< farptr_tolong(ncopies)<<"\n";
+     cerr << "created a ncopies with address "<< farptr_tolong(&(shape->ncopies))<<"\n";
    #endif
    m = new dvector [rowsize()];
 
@@ -59,7 +59,7 @@ void sdmatrix::allocate(int irh)
    {
      m[i].allocate(1, i);
      #ifdef DIAG
-       cerr << "Created a dvector with address "<< farptr_tolong(*(m+i))<<"\n";
+       cerr << "Created a dvector with address "<< farptr_tolong((void*)(m+i))<<"\n";
      #endif
    }
    #ifdef DIAG

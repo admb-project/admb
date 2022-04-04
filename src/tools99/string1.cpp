@@ -1,7 +1,10 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Member functions for class adstring.
+*/
 #include <fvar.hpp>
 #include <string.h>
 #include <stdlib.h>
@@ -161,10 +164,12 @@ Return true if adstring is equal to other, otherwise false.
 
 \param other compare string
 */
+/*
 bool adstring::operator==(const adstring& other)
 {
   return !strcmp(*this, other);
 }
+*/
 /*
 int adstring::operator!=(const adstring& v)
 {

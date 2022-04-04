@@ -1,8 +1,10 @@
-/*
- * $Id$
- *
- * Copyright (c) 2008-2013 ADMB Foundation
- */
+/**
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 ADMB Foundation
+
+@brief Function banner
+*/
 
 #include <fvar.hpp>
 #include <adstring.hpp>
@@ -11,7 +13,6 @@
   #include <iomanip.h>
 #else
   #include <sstream>
-  using namespace std;
 #endif
 
 #include <sstream>
@@ -44,15 +45,28 @@ void banner(const adstring& program_name)
   else
      ss << " safe libraries";
 
-  ss << " compiled with ";
+  ss << " was compiled using ";
 
-#if defined(__GNUC__)
+#if defined(__clang__)
+  #if defined(__apple_build_version__)
+  ss <<  "Apple ";
+  #endif
+  ss <<  "Clang C++ "<< __clang_major__ << '.' << __clang_minor__ << '.'
+    << __clang_patchlevel__;
+  #if defined(__arm64__)
+  ss <<  " arm64bit";
+  #elif defined(__x86_64)
+  ss <<  " 64bit";
+  #else
+  ss <<  " 32bit";
+  #endif
+#elif defined(__GNUC__)
   ss <<  "GNU C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.'
     << __GNUC_PATCHLEVEL__;
   #if defined(__x86_64)
-  ss <<  " (64bit)";
+  ss <<  " 64bit";
   #else
-  ss <<  " (32bit)";
+  ss <<  " 32bit";
   #endif
 #elif defined(_MSC_VER)
   ss << "Microsoft Visual C++ ";
@@ -75,10 +89,12 @@ void banner(const adstring& program_name)
   #elif (_MSC_VER<1920)
   ss << "2017 Version 15";
   #elif (_MSC_VER<1930)
-  ss << "2017 Version 16";
+  ss << "2019 Version 16";
+  #elif (_MSC_VER>=1930)
+  ss << "2022 Version 17.0";
   #else
     #if DEBUG
-      #error "Unknown MSVC version."
+      #warning "Unknown MSVC version."
     #endif
   #endif
   #if defined(_M_X64)
@@ -125,13 +141,12 @@ void banner(const adstring& program_name)
 #else
   ss << "unknown compiler";
 #endif
-  ss << "\n";
-  ss << "Copyright (c) 2008-2020 ADMB Foundation"
-     << " and Regents of the University of California\n";
-  ss << "Build date: " << __DATE__ << "\n";
+  ss << " on " << __DATE__ << ".\n";
 #if defined(ADMB_REVISION)
   ss << "Revision: " << STR2(ADMB_REVISION) << "\n";
 #endif
+  ss << "Copyright (c) 2008-2021 ADMB Foundation"
+     << " and Regents of the University of California\n";
 
   cout << ss.str() << endl;
 }

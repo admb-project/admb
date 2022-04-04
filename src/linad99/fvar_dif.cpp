@@ -33,8 +33,7 @@ dvar_vector first_difference(const dvar_vector& x)
   x.save_dvar_vector_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("CE1");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(DF_first_diference);
+  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_first_diference);
   RETURN_ARRAYS_DECREMENT();
   return(tmp);
 }

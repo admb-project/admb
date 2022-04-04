@@ -2,10 +2,12 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
-      EXT=.sh
-    else
+    ifndef TERM
+      export SHELL=cmd
       CMDSHELL=cmd
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
 endif
@@ -14,7 +16,9 @@ TARGET=priors
 TPL_TARGET=rat
 TPL_TARGETRE=ratre
 
-all: clean run runre
+all: clean
+	$(MAKE) run
+	$(MAKE) runre
 
 run: $(TPL_TARGET)
 ifeq ($(CMDSHELL),cmd)
@@ -43,6 +47,8 @@ ifeq ($(CMDSHELL),cmd)
 else
 	../../admb$(EXT) -r $(TPL_TARGETRE)
 endif
+
+get-outputs:
 
 clean:
 ifeq ($(CMDSHELL),cmd)

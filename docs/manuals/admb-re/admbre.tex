@@ -16,9 +16,9 @@
 \newcommand{\scGLM}{\textsc{glm}}
 \newcommand{\scGLMM}{\textsc{glmm}}
 \newcommand{\scLIDAR}{\textsc{lidar}}
-\newcommand\admbversion{12.1}
-\newcommand\admbyear{2020}
-\newcommand\admbdate{2020-01-17}
+\newcommand\admbversion{12.3}
+\newcommand\admbyear{2021}
+\newcommand\admbdate{2021-03-07}
 
 \makeindex
 
@@ -820,7 +820,7 @@ PROCEDURE_SECTION
 \end{lstlisting}
 
 See a full example
-\href{http://www.otter-rsch.com/admbre/examples/gamma/gamma.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/gamma/gamma.html}{here}.
 
 Similarly, to obtain beta$(a,b)$ distributed random effects, with density
 $f(x)\propto x^{a-1}(1-x)^{b-1}$, we use:
@@ -1190,7 +1190,7 @@ variables. As mentioned, the Laplace approximation is exact for Gaussian models,
 so it does not matter what way you do it.
 
 An example of such a model is found
-\href{http://otter-rsch.com/admbre/examples/bcb/bcb.html}{here}. To make the
+\href{http://www.admb-project.org/otter-research/admbre/examples/bcb/bcb.html}{here}. To make the
 executable program run efficiently, the command line options
 \texttt{-nr 1 -sparse} should be used for linear models. Also, note that
 \scREML\ estimates can be obtained, as explained in Section~\ref{sec:reml}.
@@ -1249,7 +1249,7 @@ choose $N$ such that $m/N\approx 50$. For most of the models in the example
 collection (Chapter~\ref{ch:random-effects-modeling}),% 3
 this choice of $N$ prevents any temporary files being created.
 
-Consider \href{http://otter-rsch.com/admbre/examples/union/union.html}{this}
+Consider \href{http://www.admb-project.org/otter-research/admbre/examples/union/union.html}{this}
 model as an example. It contains only about 60 random effects, but does rather
 heavy computations with these. As a consequence, large temporary files are
 generated. The following command line
@@ -1451,7 +1451,7 @@ SEPARABLE_FUNCTION void prior(const dvariable& log_s, const dvariable& u)
 \end{lstlisting}
 
 See a full example
-\href{http://otter-rsch.com/admbre/examples/orange/orange.html}{here}. The
+\href{http://www.admb-project.org/otter-research/admbre/examples/orange/orange.html}{here}. The
 orange model has block size 1.
 
 \section{Nested or clustered random effects:\br block diagonal $H$}
@@ -1594,7 +1594,7 @@ The \texttt{-gh N} option should be preferred over importance sampling
 % three times.
 %
 % See a full example
-% \href{http://www.otter-rsch.com/admbre/examples/weights/weights.html}{here}.
+% \href{http://www.admb-project.org/otter-research/admbre/examples/weights/weights.html}{here}.
 
 \section{State-space models: banded $H$}
 \label{sec:state-space}\index{state-space models}
@@ -1619,7 +1619,7 @@ This function would then be invoked as follows
     g_conditional(u(i),u(i-1),rho,sigma);
 \end{lstlisting}
 See a full example
-\href{http://www.otter-rsch.com/admbre/examples/polio/polio.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/polio/polio.html}{here}.
 
 Above, we have looked at a model with a univariate state vector. For
 multivariate state vectors, as in
@@ -1718,7 +1718,7 @@ the code where \texttt{S} gets assigned its value must be placed in a
   % to observe that the \texttt{SEPARABLE\_FUNCTION} version runs faster.
 \end{itemize}
 See a full example
-\href{http://otter-rsch.com/admbre/examples/spatial/spatial.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/spatial/spatial.html}{here}.
 
 \appendix
 
@@ -1809,7 +1809,7 @@ $2,000$ iterations. The time taken by \scWinBUGS\ to generate the first $2,000$
 was approximately $700$~seconds.
 
 See the files
-\href{http://otter-rsch.com/admbre/examples/logistic/logistic.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/logistic/logistic.html}{here}.
 
 % x\newpage
 
@@ -1912,7 +1912,7 @@ model was 165~seconds.
 \end{itemize}
 
 See the files
-\href{http://otter-rsch.com/admbre/examples/union/union.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/union/union.html}{here}.
 
 \subsection{Semi-parametric estimation of mean and variance}
 \label{sec:lidar}
@@ -1973,7 +1973,7 @@ Details on how to implement spline components are given in Example
 \end{figure}
 
 See the files
-\href{http://otter-rsch.com/admbre/examples/lidar/lidar.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/lidar/lidar.html}{here}.
 
 \subsection{Weibull regression in survival analysis}
 \subsubsection{Model description}
@@ -2042,7 +2042,7 @@ Table~\ref{kidney-parameter-estimates}.
   \label{kidney-parameter-estimates}
 \end{table}
 See the files
-\href{http://otter-rsch.com/admbre/examples/kidney/kidney.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/kidney/kidney.html}{here}.
 
 \section{Block-diagonal Hessian}
 
@@ -2106,7 +2106,7 @@ The computation time for \scAB\ was 0.58~seconds, while the computation time for
 \texttt{nlme} (running under S-Plus~6.1) was 1.6~seconds.
 
 See the files
-\href{http://otter-rsch.com/admbre/examples/orange/orange.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/orange/orange.html}{here}.
 
 \subsection{Pharmacokinetics: an \scNLME\ comparison}
 \label{sec:pheno}
@@ -2166,7 +2166,7 @@ The time taken to fit the model by \scAR\ was 17~seconds, while the computation
 time for \texttt{nlme} (under S-Plus~6.1) was 7~seconds.
 
 See the files
-\href{http://otter-rsch.com/admbre/examples/pheno/pheno.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/pheno/pheno.html}{here}.
 
 \subsection{Frequency weighting in \scAR}
 \label{seq:frequency_example}
@@ -2211,7 +2211,7 @@ the \scAR\ manual). Then you should do the following:
 \end{itemize}
 
 See the files
-\href{http://otter-rsch.com/admbre/examples/weights/weights.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/weights/weights.html}{here}.
 
 \subsection{Ordinal-logistic regression}
 \label{sec:socatt_example}
@@ -2239,7 +2239,7 @@ The $u_j$ ($j=1,\ldots,q$) are independent $N(0,\sigma^2)$ variables, and $j_i$
 is the latent variable class of individual $i$.
 
 See the files
-\href{http://otter-rsch.com/admbre/examples/socatt/socatt.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/socatt/socatt.html}{here}.
 
 \section{Banded Hessian (state-space)}
 
@@ -2270,7 +2270,7 @@ x_t = \beta x_{t-1} + \varepsilon_t, \qquad \varepsilon_t \sim N(0,\sigma^2).
 The vector of hyper-parameters is for this model is thus
 $(\beta,\sigma,\mu,\mu_x)$.
 
-See the files \href{http://otter-rsch.com/admbre/examples/sdv/sdv.html}{here}.
+See the files \href{http://www.admb-project.org/otter-research/admbre/examples/sdv/sdv.html}{here}.
 
 \subsection{A discrete valued time series: the polio data set}
 \label{sec:sdv_example}
@@ -2342,7 +2342,7 @@ exact maximum likelihood estimates, as obtained with the method
 of~\citeasnoun{kuk:chen:1999}.
 
 See the files
-\href{http://otter-rsch.com/admbre/examples/polio/polio.html}{here}.
+\href{http://www.admb-project.org/otter-research/admbre/examples/polio/polio.html}{here}.
 
 \section{Generally sparse Hessian}
 

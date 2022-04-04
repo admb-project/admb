@@ -3,11 +3,12 @@ ifeq ($(OS),Windows_NT)
     CMDSHELL=cmd
     ADMB_HOME=..\\..\\..
   else
-    ifeq ($(findstring bash.exe,$(shell where bash.exe 2>&1 | findstr bash.exe)),bash.exe)
-      EXT=.sh
-    else
+    ifndef TERM
+      export SHELL=cmd
       CMDSHELL=cmd
-      ADMB_HOME=..\\..\\..
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
 endif
@@ -124,26 +125,76 @@ GTESTS_ALL=\
  test_vector.cpp\
  test_xpools.cpp\
  test_issues.cpp\
+ test_funnel.cpp\
+ test_math.cpp\
+ test_return_arrays.cpp\
+ test_df_file.cpp\
+ test_async.cpp\
+ test_df1b2variable.cpp\
+ test_df1b2vector.cpp\
+ test_move.cpp\
+ test_move_dvar_vector.cpp\
+ test_omp.cpp\
+ test_simple_async.cpp\
+ test_template.cpp\
+ test_admb_messages.cpp\
+ test_param_init_bounded_number_matrix.cpp\
+ test_data_number.cpp\
+ test_rvalue.cpp\
+ test_dfsdmat.cpp\
+ test_data_int.cpp\
+ test_dvar_compressed_triplet.cpp\
+ test_dcompressed_triplet.cpp\
+ test_df1_three_vector.cpp\
+ test_df1_three_matrix.cpp\
+ test_df1_two_vector.cpp\
+ test_df1_two_matrix.cpp\
+ test_df1_one_vector.cpp\
+ test_df1_one_matrix.cpp\
+ test_hs_smatrix.cpp\
+ test_dvar_hs_smatrix.cpp\
+ test_hs_symbolic.cpp\
+ test_hs_smatrix.cpp\
+ test_df3_one_vector.cpp\
+ test_df3_one_matrix.cpp\
+ test_df3_three_vector.cpp\
+ test_df3_three_matrix.cpp\
+ test_df3_two_vector.cpp\
+ test_df3_two_matrix.cpp\
+ test_df1b2matrix.cpp\
+ test_nested_calls_shape.cpp\
+ test_df1b2bessel.cpp\
+ test_funnel_init_df1b2variable.cpp\
+ test_laplace_approximation_calculator.cpp\
+ test_df1b2atan2.cpp\
+ test_shareinfo.cpp\
+ test_quadratic_prior.cpp\
+ test_evaluate_function.cpp\
+ test_gradient_structure_thread.cpp\
+ test_dll_param_init_bounded_vector.cpp\
+ test_ad_double.cpp\
+ test_prevariable.cpp\
  main.cpp
 
-GTESTS_NEW=\
- test_adpool.cpp\
- test_move.cpp\
+ERRORS=\
+ test_dll_param_init_bounded_vector.cpp\
+ test_cfenv.cpp\
+ test_dependent_variables_information.cpp\
+ test_grad_stack.cpp\
+ test_gradient_structure.cpp\
+ test_gradient_structure2.cpp\
+ test_humungous_pointer.cpp\
+ test_nuts.cpp\
  main.cpp
 
 GTESTS_DEV=\
- test_return_arrays.cpp\
- test_grad_stack.cpp\
- test_df_file.cpp\
- test_dlist.cpp\
- test_gradient_structure.cpp\
- test_gradient_structure2.cpp\
- test_dfsdmat.cpp\
- test_dependent_variables_information.cpp\
  main.cpp
 
-#GTESTS=$(GTESTS_DEV)
+ifdef GTESTS_DEV
+GTESTS=$(GTESTS_DEV)
+else
 GTESTS=$(GTESTS_ALL)
+endif
 
 ifeq ($(CXX),openCC)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
@@ -152,21 +203,42 @@ ifeq ($(SAFE_ONLY),yes)
   GTESTS:=$(filter-out test_adjson.cpp,$(GTESTS))
 endif
 
-##Need to debug this
-# test_data_number.cpp\
-# test_dll_param_init_bounded_vector.cpp\
-# test_df1b2atan2.cpp\
-# test_df1b2variable.cpp\
-#cfenv is not completely supported by most compilers
-#  test_cfenv.cpp
-# df1b2atan2.obj\
-# scalefactor.obj\
+all: clean
+	$(MAKE) run
 
-all: clean gtest-all
+run:
+	$(MAKE) googletest-read-only
+	$(MAKE) finance
+	$(MAKE) scalefactor
+	$(MAKE) gtest-all
 ifeq ($(CMDSHELL),cmd)
 	gtest-all
 else
 	./gtest-all
+endif
+
+finance: clean
+	$(MAKE) gtest-finance
+ifeq ($(CMDSHELL),cmd)
+	gtest-finance
+else
+	./gtest-finance
+endif
+
+scalefactor: clean
+	$(MAKE) gtest-scalefactor
+ifeq ($(CMDSHELL),cmd)
+	gtest-scalefactor
+else
+	./gtest-scalefactor
+endif
+
+dev: clean
+	$(MAKE) gtest-dev
+ifeq ($(CMDSHELL),cmd)
+	gtest-dev
+else
+	./gtest-dev
 endif
 
 memcheck: gtest-all
@@ -188,65 +260,72 @@ endif
 
 test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_scalefactor.cpp
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & ..\\..\\admb -c $(ADMB_OPTIONS) test_scalefactor.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_scalefactor.cpp
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_scalefactor.cpp
 endif
 
 scalefactor.obj: scalefactor.tpl
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS="-Dmain=scalefactor" & ..\\..\\admb -c $^
+	set "CXXFLAGS=$(CXXFLAGS) -Dmain=scalefactor" & ..\\..\\admb -c $^
 else
-	CXXFLAGS=-Dmain=scalefactor ../../admb$(EXT) -c $^
+	CXXFLAGS="$(CXXFLAGS) -Dmain=scalefactor" ../../admb$(EXT) -c $^
 endif
 
-test_scalefactor: test_scalefactor.obj main.obj gtest-all.obj scalefactor.obj
+gtest-scalefactor: test_scalefactor.obj main.cpp gtest-all.obj scalefactor.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)" & ..\\..\\admb -o $@.exe $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 endif
 
 test_finance.obj: test_finance.cpp finance.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_finance.cpp
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & ..\\..\\admb -c $(ADMB_OPTIONS) test_finance.cpp
 else
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_finance.cpp
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_finance.cpp
 endif
 
 finance.obj: finance.tpl
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS="-Dmain=finance" & ..\\..\\admb -c $^
+	set "CXXFLAGS=$(CXXFLAGS) -Dmain=finance" & ..\\..\\admb -c $^
 else
-	CXXFLAGS=-Dmain=finance ../../admb$(EXT) -c $^
+	CXXFLAGS="$(CXXFLAGS) -Dmain=finance" ../../admb$(EXT) -c $^
 endif
 
-test_finance: test_finance.obj main.obj gtest-all.obj finance.obj
+gtest-finance: test_finance.obj main.cpp gtest-all.obj finance.obj
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)" & ..\\..\\admb -o $@.exe $(ADMB_OPTIONS) $^
 	copy ..\\..\\examples\\admb\\finance\\finance.dat
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 	cp ../../examples/admb/finance/finance.dat .
 endif
 
-gtest-all: gtest-all.obj $(GTESTS)
+gtest-all: gtest-all.obj $(GTESTS_ALL)
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)\\include & set LDFLAGS=-pthread & ..\\..\\admb $(ADMB_OPTIONS) $^
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)"  & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
-	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) $^
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) $(ADMB_OPTIONS) $^
+endif
+
+gtest-dev: gtest-all.obj $(GTESTS_DEV)
+ifeq ($(CMDSHELL),cmd)
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)" & ..\\..\\admb -o $@ $(ADMB_OPTIONS) $^
+else
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -o $@ $(ADMB_OPTIONS) $^
 endif
 
 test_nuts.obj: test_nuts.cpp
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) test_nuts.cpp
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & ..\\..\\admb -c $(ADMB_OPTIONS) test_nuts.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) test_nuts.cpp
 endif
 
 nuts_da.obj: nuts_da.cpp nuts_da.h
 ifeq ($(CMDSHELL),cmd)
-	set CXXFLAGS=-I$(GTEST_DIR)/include & ..\\..\\admb -c $(ADMB_OPTIONS) nuts_da.cpp
+	set CXXFLAGS=-I$(GTEST_DIR)\\include & ..\\..\\admb -c $(ADMB_OPTIONS) nuts_da.cpp
 else
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb$(EXT) -c $(ADMB_OPTIONS) nuts_da.cpp
 endif
@@ -279,7 +358,7 @@ else
 endif
 
 googletest-read-only:
-	git clone --depth=1 https://github.com/google/googletest.git googletest-read-only
+	git clone --depth=1 --branch=release-1.10.0 https://github.com/google/googletest.git googletest-read-only
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -379,6 +458,28 @@ ifeq ($(CMDSHELL),cmd)
 	@del test_cifstream_darray.txt 2>NUL
 	@del test_cifstream_dvariable.txt 2>NUL
 	@del test_cifstream_iarray.txt 2>NUL
+	@del test_cifstream_float_dos.txt 2>NUL
+	@del /Q big_signature_n.txt 2>NUL
+	@del /Q big_signature_r.txt 2>NUL
+	@del /Q big_signature_rn.txt 2>NUL
+	@del /Q maxlimit1.txt 2>NUL
+	@del /Q maxlimit2.txt 2>NUL
+	@del /Q maxlimit3.txt 2>NUL
+	@del /Q maxlimita.txt 2>NUL
+	@del /Q test_dvar_vector_read_from_file.txt 2>NUL
+	@del /Q test_dvector_read_from_file2.txt 2>NUL
+	@del /Q test_dvector_read_from_file3.txt 2>NUL
+	@del /Q test_param_init_number.txt
+	@del /Q admodel.bvs
+	@del /Q corrtest
+	@del /Q gtest-dev
+	@del /Q gtest-finance
+	@del /Q gtest-scalefactor
+	@del /Q sparseness.info
+	@del /Q gtest-finance.exe
+	@del /Q gtest-scalefactor.exe
+	@del /Q dmatrix.txt
+	@del /Q dvector.txt
 else
 	@rm -vf test_i4_array.txt
 	@rm -vf test_i5_array.txt
@@ -479,4 +580,24 @@ else
 	@rm -vf test_cifstream_iarray.txt
 	@rm -vf datafiledoesexist.dat
 	@rm -vf pinfiledoesexist.pin
+	@rm -vf test_cifstream_float_dos.txt
+	@rm -vf big_signature_n.txt
+	@rm -vf big_signature_r.txt
+	@rm -vf big_signature_rn.txt
+	@rm -vf maxlimit1.txt
+	@rm -vf maxlimit2.txt
+	@rm -vf maxlimit3.txt
+	@rm -vf maxlimita.txt
+	@rm -vf test_dvar_vector_read_from_file.txt
+	@rm -vf test_dvector_read_from_file2.txt
+	@rm -vf test_dvector_read_from_file3.txt
+	@rm -vf test_param_init_number.txt
+	@rm -vf admodel.bvs
+	@rm -vf corrtest
+	@rm -vf gtest-dev
+	@rm -vf gtest-finance
+	@rm -vf gtest-scalefactor
+	@rm -vf sparseness.info
+	@rm -vf dmatrix.txt
+	@rm -vf dvector.txt
 endif

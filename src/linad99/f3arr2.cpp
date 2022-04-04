@@ -45,106 +45,107 @@ dvariable norm2(const dvar3_array& m)
 dvariable sumsq(const dvar3_array& m) {return(norm2(m));}
 
 /**
- * Description not yet available.
- * \param
- */
+Computes exp of each element in m to a dvar3_array.
+
+@param m dvar3_array
+*/
 dvar3_array exp(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=exp(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
-
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=exp(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
- * Description not yet available.
- * \param
- */
+Computes log of each element in m to a dvar3_array.
+
+@param m dvar3_array
+*/
 dvar3_array log(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=log(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
-
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=log(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
- * Description not yet available.
- * \param
- */
+Computes sin of each element in m to a dvar3_array.
+
+@param m dvar3_array
+*/
 dvar3_array sin(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=sin(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
-
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=sin(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
- * Description not yet available.
- * \param
- */
+Computes cos of each element in m to a dvar3_array.
+
+@param m dvar3_array
+*/
 dvar3_array cos(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=cos(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
-
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=cos(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
- * Description not yet available.
- * \param
- */
+Computes square root of each element in m to a dvar3_array.
+
+@param m dvar3_array
+*/
 dvar3_array sqrt(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=sqrt(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
-
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=sqrt(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
- * Description not yet available.
- * \param
+Computes square of each element in m to a dvar3_array.
+
+@param m dvar3_array
  */
 dvar3_array sqr(const dvar3_array& m)
-   {
-     RETURN_ARRAYS_INCREMENT();
-     dvar3_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
-     {
-       tmp(i)=sqr(m(i));
-     }
-     RETURN_ARRAYS_DECREMENT();
-     return tmp;
-   }
+{
+  RETURN_ARRAYS_INCREMENT();
+  dvar3_array tmp;
+  tmp.allocate(m);
+  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  {
+    tmp(i)=sqr(m(i));
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 
 /**
  * Description not yet available.

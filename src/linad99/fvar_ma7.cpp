@@ -24,8 +24,9 @@ void dvar_matrix::initialize(void)
 */
 
 /**
- * Description not yet available.
- * \param
+ * Adjoint function for dvar_matrix::initialize.
+ *
+ * Zero initialize a dvar_matrix_position restored from stored adjoint data.
  */
 void dfmatinit(void)
 {
@@ -36,10 +37,11 @@ void dfmatinit(void)
   tmp.initialize();
   tmp.save_dmatrix_derivatives_na(tmp_pos);
 }
-
 /**
- * Description not yet available.
- * \param
+ * Zero initialize allocated dvar_matrix, then saves adjoint function
+ * and position data.
+ *
+ * If dvar_matrix is empty, there are no changes.
  */
 void dvar_matrix::initialize(void)
 {
@@ -65,7 +67,7 @@ void dvar_matrix::initialize(void)
     }
     save_identifier_string("p");
     save_dvar_matrix_position();
-    gradient_structure::GRAD_STACK1->
+    gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfmatinit);
     save_identifier_string("q");
   }

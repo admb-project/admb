@@ -43,32 +43,32 @@ df3_one_vector::df3_one_vector(const df3_one_vector& m2)
   }
   v = m2.v;
 }
-/**
-Destructor
-*/
+/// Destructor
 df3_one_vector::~df3_one_vector()
 {
   deallocate();
 }
-
- void df3_one_vector::deallocate(void)
- {
-   if(shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df3_one_variable*) (shape->trueptr);
-       delete [] v;
-       v = NULL;
-       delete shape;
-       shape=0;
-     }
-   }
- }
+/// Deallocate df3_one_vector, then set to empty.
+void df3_one_vector::deallocate(void)
+{
+  if(shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df3_one_variable*) (shape->trueptr);
+      delete [] v;
+      v = NULL;
+      delete shape;
+      shape=0;
+      index_min = 0;
+      index_max = -1;
+    }
+  }
+}
 
  dvector value(const df3_one_vector& v)
  {
@@ -253,30 +253,32 @@ void df3_one_vector::allocate(void)
    v = m2.v;
  }
 
- df3_one_matrix::~df3_one_matrix()
- {
-   deallocate();
- }
-
- void df3_one_matrix::deallocate(void)
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       v = (df3_one_vector*) (shape->get_pointer());
-       delete [] v;
-       v=0;
-       delete shape;
-       shape=0;
-     }
-   }
- }
-
+/// Destructor
+df3_one_matrix::~df3_one_matrix()
+{
+  deallocate();
+}
+/// Deallocate df3_one_matrix, then set to empty.
+void df3_one_matrix::deallocate(void)
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      v = (df3_one_vector*) (shape->get_pointer());
+      delete [] v;
+      v = nullptr;
+      delete shape;
+      shape = nullptr;
+      index_min = 0;
+      index_max = -1;
+    }
+  }
+}
 
   void df3_one_matrix::initialize(void)
   {

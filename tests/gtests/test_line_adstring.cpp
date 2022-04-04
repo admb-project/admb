@@ -39,7 +39,10 @@ TEST_F(test_line_adstring, assignment_char)
 }
 TEST_F(test_line_adstring, errormaxlimit)
 {
-  ofstream ofs("maxlimit.txt");
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimita.txt");
+  
   for (int i = 0; i <= 1025; ++i)
   {
     ofs << "i";
@@ -48,7 +51,7 @@ TEST_F(test_line_adstring, errormaxlimit)
 
   line_adstring a;
 
-  ifstream ifs("maxlimit.txt");
+  ifstream ifs("maxlimita.txt");
   ASSERT_ANY_THROW({
     ifs >> a;
   });

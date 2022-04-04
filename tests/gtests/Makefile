@@ -98,13 +98,14 @@ GTESTS_ALL=\
  test_vector.cpp\
  test_xpools.cpp\
  test_issues.cpp\
+ test_math.cpp\
  main.cpp
 
 all: clean gtest-all
 	$(MAKE) run
 
 googletest-read-only:
-	git clone --depth=1 https://github.com/google/googletest.git googletest-read-only
+	git clone --depth=1 --branch=release-1.11.0 https://github.com/google/googletest.git googletest-read-only
 
 gtest-all.obj: googletest-read-only
 	$(CXX) /c /EHsc /Igoogletest-read-only\googletest\include /Igoogletest-read-only\googletest /Fo$@ googletest-read-only\googletest\src\gtest-all.cc
@@ -117,5 +118,5 @@ run:
 	gtest-all
 
 clean:
-	del gtest-all.obj
-	del gtest-all.exe
+	@if exist gtest-all.obj del /Q gtest-all.obj
+	@if exist gtest-all.exe del /Q gtest-all.exe

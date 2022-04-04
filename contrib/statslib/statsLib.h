@@ -293,7 +293,7 @@ private:
 
 void bicubic_spline(const dvector& x, const dvector& y, dvar_matrix& knots, dvar_matrix& S);
 
-dvar_vector cubic_spline(const dvar_vector& spline_nodes, const dvar_vector& ip);
+dvar_vector cubic_spline(const dvar_vector& spline_nodes, const dvector& ip);
 
 dvariable splin2(const dvector& _x1a,const dvector& _x2a, const dvar_matrix _ya,dvar_matrix& _y2a, const double& x1,const double& x2);
 

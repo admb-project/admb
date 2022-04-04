@@ -16,9 +16,9 @@ void dvar_vector::deallocate()
 {
   if (shape)
   {
-#ifdef DIAG
+#if defined(DIAG)
      cout << " Deallocating dvar_vector with ptr_address\n  "
-          << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
+          << &va << "  pointing at  " << (va+indexmin()) << "\n";
 #endif
     if (shape->ncopies > 0)
     {
@@ -33,7 +33,7 @@ void dvar_vector::deallocate()
     }
     allocate();
   }
-#ifdef DEBUG
+#if defined(DIAG)
   else
   {
     cerr << "Warning -- Unable to deallocate an unallocated dvar_vector.\n";
@@ -45,7 +45,7 @@ dvar_vector::dvar_vector(const dvar_vector& other)
 {
   shallow_copy(other);
 
-#ifdef DEBUG
+#if defined(DIAG)
   cout << " Making copy for dvar_vector with ptr_address\n  "
        << &va << "  pointing at  " << (va+indexmin()) << "\n";
 #endif
@@ -70,7 +70,7 @@ void dvar_vector::shallow_copy(const dvar_vector& other)
   }
   else
   {
-#ifdef DEBUG
+#if defined(DIAG)
     cerr << "Warning -- Unable to shallow copy an unallocated dvar_vector.\n";
 #endif
     allocate();
@@ -110,10 +110,10 @@ dvar_vector::dvar_vector(const predvar_vector& pdv)
    link_ptr=pdv.p->link_ptr;
    (shape->ncopies)++;
    va = pdv.p->va;
-   #ifdef DIAG
+#if defined(DIAG)
      cout << " Making copy for dvar_vector with ptr_address\n  "
            << &va << "  pointing at  " << (va+indexmin()) << "\n";
-   #endif
+#endif
  }
 
 /*
@@ -147,10 +147,10 @@ dvar_vector::dvar_vector(const dvar_vector& t, int lb, int ub)
    link_ptr=t.link_ptr;
    (shape->ncopies)++;
    va = t.va;
-   #ifdef DIAG
+#if defined(DIAG)
      cout << " Making copy for dvar_vector with ptr_address\n  "
            << &va << "  pointing at  " << (va+indexmin()) << "\n";
-   #endif
+#endif
  }
 */
 

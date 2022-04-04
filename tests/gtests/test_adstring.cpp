@@ -712,36 +712,44 @@ TEST_F(test_adstring, errorunsignedchar)
   ASSERT_EQ('c', a(3));
   ASSERT_EQ('d', a(4));
 }
-#ifndef __MINGW32__
+#ifdef __MINGW32__
+TEST_F(test_adstring, DISABLED_errormaxlimit)
+#else
 TEST_F(test_adstring, errormaxlimit)
+#endif
 {
-  ofstream ofs("maxlimit.txt");
-  for (int i = 0; i <= 1025; ++i)
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit1.txt");
+  for (int i = 1; i <= 1025; ++i)
   {
     ofs << "i";
   }
+  ofs << "x";
   ofs.close();
 
   adstring a;
 
-  ifstream ifs("maxlimit.txt");
+  ifstream ifs("maxlimit1.txt");
   ASSERT_ANY_THROW({
     ifs >> a;
   });
   ifs.close();
 }
-#endif
 TEST_F(test_adstring, init_adstring_allocate)
 {
-  ofstream ofs("maxlimit.txt");
-   ofs << "idkjfskjdfklsjkljdfsk";
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit2.txt");
+  
+  ofs << "idkjfskjdfklsjkljdfsk";
   ofs.close();
 
   init_adstring a;
 
   ASSERT_TRUE(ad_comm::global_datafile == NULL);
 
-  cifstream ifs("maxlimit.txt");
+  cifstream ifs("maxlimit2.txt");
   
   ad_comm::global_datafile = &ifs;
 
@@ -756,13 +764,16 @@ TEST_F(test_adstring, init_adstring_allocate)
 }
 TEST_F(test_adstring, init_line_adstring_allocate)
 {
-  ofstream ofs("maxlimit.txt");
+  ad_exit=&test_ad_exit;
+
+  ofstream ofs("maxlimit3.txt");
+
   ofs << "idkjfskjdfklsjkljdfsk";
   ofs.close();
 
   ASSERT_TRUE(ad_comm::global_datafile == NULL);
 
-  adstring input = "maxlimit.txt";
+  adstring input = "maxlimit3.txt";
   cifstream ifs(input);
   
   ad_comm::global_datafile = &ifs;

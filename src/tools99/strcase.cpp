@@ -1,7 +1,11 @@
 /**
- * Author: John Sibert
- * Copyright (c) 2010-2012 ADMB Foundation
- */
+@file
+@author John Sibert
+@copyright Copyright (c) 2010-2020 ADMB Foundation
+
+@brief Functions for adstring used to_lower and to_upper.
+*/
+
 #include "adstring.hpp"
 
 void adstring::to_lower(void)

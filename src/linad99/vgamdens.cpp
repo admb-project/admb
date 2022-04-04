@@ -1,13 +1,10 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
-  \file
-  Functions for gamma probability density; differentiable (variable) objects.
- */
+file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Functions for gamma probability density; differentiable (variable) objects.
+*/
 #include <fvar.hpp>
 
   /**

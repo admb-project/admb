@@ -1,0 +1,13 @@
+ADMB_VER=admb-12.3
+BUILD_DIR=build\$(ADMB_VER)
+
+debug:
+	$(MAKE) dist shared DEBUG=yes ADMB_VER=$(ADMB_VER)
+
+all:
+	$(MAKE) dist shared ADMB_VER=$(ADMB_VER)
+zip:
+	IF NOT EXIST $(BUILD_DIR)\examples md $(BUILD_DIR)\examples
+	xcopy /I /E /Y examples $(BUILD_DIR)\examples
+	copy /Y docs\install\QuickStartWindowsZip.md $(BUILD_DIR)\INSTALL.txt
+	pushd build && powershell -ExecutionPolicy ByPass -F ..\\scripts\zipadmb.ps1 && popd

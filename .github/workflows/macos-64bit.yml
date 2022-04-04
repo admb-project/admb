@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: clean
       run: make clean
     - name: dist
@@ -30,17 +30,26 @@ jobs:
         path: build/admb.zip
     - name: dmg
       run: |
-        make --directory=scripts/installers/packagemaker clean all
+        make ADMB_VER=admb --directory=scripts/installers/packagemaker clean all
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: admb_dmg_distribution
-        path: scripts/installers/packagemaker/ADMBTerminal.dmg
+        path: build/admb-macos.dmg
     - name: tests
       run: |
-        make test DEBUG=yes
+        make verify DEBUG=yes SAFE_ONLY=yes TESTS_REMOTE=no
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: outputs
-        path: outputs-opt.txt
+        path: outputs.txt
+    - name: kalmanfilter
+      run: |
+        make --directory=tests/geolocation
+        cd tests/geolocation/kalmanfilter && tar cvzf trackit.tar.gz trackit
+    - name: Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: trackit.tar.gz
+        path: tests/geolocation/kalmanfilter/trackit.tar.gz

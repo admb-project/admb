@@ -1,11 +1,9 @@
 /**
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2012 Regents of the University of California
 
-/**
-\file
-constructors, destructors and misc functions involving class dvariable
+@brief Math functions for dmatrix to compute cos, exp, log, pow, sin, sqr, sqrt, tan, elem_div and elem_prod.
 */
 
 #include "fvar.hpp"

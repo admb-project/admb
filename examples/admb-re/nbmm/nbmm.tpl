@@ -152,3 +152,8 @@ FINAL_SECTION
    control87(controlword,0xfffff);
   #endif
   */
+  #ifdef DEBUG
+  cout << "\nln_det:\n" << get_ln_det_value() << endl;
+  cout << "\nhessian:\n" << get_hessian() << endl;
+  cout << "\nhessian inverse:\n" << get_hessian_inverse() << endl;
+  #endif

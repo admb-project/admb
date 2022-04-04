@@ -1,7 +1,14 @@
 #include <gtest/gtest.h>
 #include "fvar.hpp"
+#include <cassert>
 
 class test_arr_link: public ::testing::Test {};
+
+void arr_remove(arr_link** pptr)
+{
+  assert(pptr != nullptr);
+  gradient_structure::get()->ARR_LIST1->arr_remove(pptr);
+}
 
 TEST_F(test_arr_link, arr_remove_null)
 {
@@ -10,6 +17,9 @@ TEST_F(test_arr_link, arr_remove_null)
 }
 TEST_F(test_arr_link, arr_remove)
 {
+  ad_exit=&test_ad_exit;
+  gradient_structure gs;
+
   arr_link** pptr = new arr_link*[1];
   pptr[0] = NULL;
   try
@@ -36,7 +46,7 @@ TEST_F(test_arr_link, dvar_vector1to4)
 
   dvar_vector v(1, 4);
 
-  arr_link* last = gradient_structure::ARR_LIST1->get_last();
+  arr_link* last = gradient_structure::get()->ARR_LIST1->get_last();
 
   ASSERT_TRUE(last->get_prev() == NULL);
   ASSERT_TRUE(last->get_next() == NULL);

@@ -26,9 +26,6 @@
 #include <stdio.h>
 #include <math.h>
 
-
-void gradfree(dlink *);
-
 //extern prevariable * FRETURN;
 //extern int RETURN_INDEX;
 //extern dlist * GRAD_LIST; //js

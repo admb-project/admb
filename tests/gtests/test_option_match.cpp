@@ -2,6 +2,20 @@
 
 class test_option_match: public ::testing::Test {};
 
+
+TEST_F(test_option_match, option_negative)
+{
+  int argc = 3;
+  char* argv[] = { "./simple", "-option", "-1"};
+
+  int nopt = 0;
+
+  int option_match(int argc, char *argv[], const char *option, int& _nopt);
+
+  ASSERT_EQ(1, option_match(argc, argv, "-option", nopt));
+  ASSERT_EQ(0, nopt);
+  ASSERT_EQ(-1, std::atoi(argv[2]));
+}
 TEST_F(test_option_match, calls)
 {
   //ASSERT_NE(0, strcmp(0, "-option"));

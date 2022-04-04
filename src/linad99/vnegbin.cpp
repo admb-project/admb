@@ -1,14 +1,10 @@
-/*
-  $Id$
-
-  Author: David Fournier
-  Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
-  \file
-  Poisson and negative binomial probability density functions for
-  differentiable objects.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Poisson and negative binomial probability density functions for differentiable objects.
+*/
 #include "fvar.hpp"
 
 

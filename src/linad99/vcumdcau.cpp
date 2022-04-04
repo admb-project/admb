@@ -1,13 +1,11 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
+
+@brief Functions cumd_cauchy(const prevariable&), kludge_cumd_cauchy(const prevariable&) and inv_cumd_cauchy(const prevariable&)
+*/
+
 #include <fvar.hpp>
 
 /**

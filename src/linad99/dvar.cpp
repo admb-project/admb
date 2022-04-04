@@ -1,17 +1,12 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- */
 /**
- * \file
- * Description not yet available.
- */
-// file fvar_fn.cpp
-// math.h functions involving prevariables
-#include "fvar.hpp"
+@file
+@author David Fournier
+@copyright Copyright (c) 2008-2020 Regents of the University of California
 
+@brief Function to compute sigmoid.
+*/
+
+#include "fvar.hpp"
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -28,10 +23,12 @@
 #include <math.h>
 
 /**
- * Description not yet available.
- * \param
- */
+Returns computed sigmoid value at v1.
+
+@param v1 value
+@return computed sigmoid value
+*/
 double sigmoid(const double v1)
- {
-   return(atan(v1)/2.8);
- }
+{
+  return(atan(v1)/2.8);
+}

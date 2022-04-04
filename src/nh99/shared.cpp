@@ -262,6 +262,8 @@
     set_activeflags(af);
     invflags=0;
     current_phase=-1;
+    bmap = new i3_array();
+    dimension = 0;
   }
 
   void shareinfo::get_inv_matrix_shared(int _cf)

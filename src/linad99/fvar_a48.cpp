@@ -29,7 +29,7 @@ dvar_vector& dvar_vector::operator/=(const double x)
     save_double_value(x);
     save_identifier_string("cmtu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diveq);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diveq);
     return(*this);
   }
 
@@ -75,7 +75,7 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     x.save_prevariable_position();
     save_identifier_string("cmtu");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);
+    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);
     return(*this);
   }
 

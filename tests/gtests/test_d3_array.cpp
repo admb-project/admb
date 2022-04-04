@@ -934,6 +934,8 @@ TEST_F(test_d3_array, allocate_5int)
 }
 TEST_F(test_d3_array, allocate_5int_error)
 {
+  ad_exit=&test_ad_exit;
+
   d3_array b;
 
   ASSERT_ANY_THROW({
@@ -967,6 +969,8 @@ TEST_F(test_d3_array, allocate_5intb)
 }
 TEST_F(test_d3_array, allocate_5intb_error)
 {
+  ad_exit=&test_ad_exit;
+
   d3_array b;
 
   ASSERT_ANY_THROW({
@@ -1118,6 +1122,8 @@ TEST_F(test_d3_array, allocate4int2vectors)
 }
 TEST_F(test_d3_array, invalidindexesallocate4int2vectors)
 {
+  ad_exit=&test_ad_exit;
+
   d3_array a;
 
   ivector lowers(1, 3);

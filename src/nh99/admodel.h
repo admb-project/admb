@@ -945,7 +945,7 @@ public:
     const double& ll, const dvector& diag);
   virtual void restore_value(const ifstream& ifs) = 0;
   virtual void add_to_list(void);
-  
+
 #if defined(USE_ADPVM)
   virtual void pvm_pack(void)=0;
   virtual void pvm_unpack(void)=0;
@@ -1191,6 +1191,10 @@ public:
   void allocate(init_xml_doc&, const char *s="UNNAMED");
   friend class param_init_number_vector;
   param_init_number();
+  param_init_number(const char* name): param_init_number()
+  {
+    allocate(name);
+  }
   param_init_number& operator=(const double m);
   param_init_number& operator=(const prevariable& m);
 };
@@ -1938,7 +1942,7 @@ public:
 
   // Compact flag to toggle new console output
   static int output_flag;
- 
+
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();
   bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);
@@ -1950,7 +1954,7 @@ public:
 			const independent_variables& q);
   dvector rotate_pars(const dvector& m, const dvector& x);
   dvector rotate_pars(const dmatrix& m, const dvector& x);
-  dvector rotate_gradient(const dvector& x, const dmatrix& m); 
+  dvector rotate_gradient(const dvector& x, const dmatrix& m);
   int compute_next_window(int i, int warmup, int w1, int aws, int w3);
   bool slow_phase(int is, int warmup, int w1, int w3);
   std::string get_filename(const char* f);
@@ -2346,6 +2350,11 @@ public:
     static double fun_without_pen;
     static double gmax;
     objective_function_value();
+    objective_function_value(const char* name): objective_function_value()
+    {
+      allocate(name);
+    }
+
     objective_function_value& operator=(const prevariable& v);
     objective_function_value& operator=(const double v);
   };

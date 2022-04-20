@@ -1,5 +1,6 @@
 all: simple.dat
-	CXXFLAGS=-I../model_parameters ../../../admb simple.cpp ../model_parameters/model_parameters.cpp
+	CXXFLAGS=-I../include ../../../admb -c -o model_parameters.obj ../include/model_parameters.cpp
+	CXXFLAGS=-I../include ../../../admb simple.cpp model_parameters.obj
 	./simple
 
 simple.dat:

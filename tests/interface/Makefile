@@ -1,6 +1,8 @@
 all:
-	$(MAKE) --directory=catage
 	$(MAKE) --directory=simple
+
+dev:
+	$(MAKE) --directory=catage
 	$(MAKE) --directory=forest
 	$(MAKE) --directory=sdv
 

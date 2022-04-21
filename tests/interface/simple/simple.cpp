@@ -11,7 +11,7 @@ int main(int argc,char * argv[])
   param_init_number b1("b1");
   objective_function_value f("f");
 
-  m.minimize([&x, &y, &b0, &b1, &f]()
+  m.minimize([&]()
   {
     auto yhat = b0 + b1 * x;
     f = regression(y, yhat);

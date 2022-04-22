@@ -64,12 +64,9 @@ int main(int argc,char* argv[])
   param_init_bounded_number log_nu;
   param_init_bounded_number beta;
   param_init_bounded_number log_sigma;
-  param_likeprof_number tau;
-  param_stddev_number nu;
-  param_stddev_number sigma;
-  param_vector S;
-  param_number prior_function_value;
-  param_number likelihood_function_value;
+  param_likeprof_number tau("tau");
+  param_stddev_number nu("nu");
+  param_stddev_number sigma("sigma");
   objective_function_value f("f");
 
   log_tau.set_initial_value(0);
@@ -81,14 +78,10 @@ int main(int argc,char* argv[])
   log_nu.allocate(-15,4,"log_nu");
   beta.allocate(.1,1.0,-1,"beta");
   log_sigma.allocate(-5,3,"log_sigma");
-  tau.allocate("tau");
   tau.set_stepnumber(25);
-  nu.allocate("nu");
-  sigma.allocate("sigma");
-  S.allocate(1,k+1,"S");
+
+  dvar_vector S(1, k + 1);;
   S.initialize();
-  prior_function_value.allocate("prior_function_value");
-  likelihood_function_value.allocate("likelihood_function_value");
 
   m.minimize([&]()
   {
@@ -119,7 +112,7 @@ int main(int argc,char* argv[])
     f+=sum_freq*log(1.e-50+S(1));
   });
 
-  ofstream report("forest.rep");
+  ofstream report(ad_comm::adprogram_name + ".rep");
   if (!report)
   {
     cerr << "error trying to open report file"  << ad_comm::adprogram_name << ".rep\n";

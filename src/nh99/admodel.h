@@ -2288,6 +2288,10 @@ public:
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void get_sd_values(const dvector& x, const int& ii);
   param_stddev_number();
+  param_stddev_number(const char* name): param_stddev_number()
+  {
+    allocate(name);
+  }
   virtual void set_dependent_variables(void);
   param_stddev_number& operator=(const prevariable&);
   param_stddev_number& operator=(const double);
@@ -2301,20 +2305,26 @@ class param_likeprof_number: public param_stddev_number ,
     public likeprof_params
 {
 public:
-    double sigma;
-    void allocate(const char *s="UNNAMED");
+  double sigma;
+  void allocate(const char *s="UNNAMED");
 
   // get the number of active parameters
   virtual unsigned int size_count() const;
 
-    virtual const char * label(void);
-    virtual double& get_sigma(void){return sigma;}
-    virtual double get_value(void){return value(*this);}
-    //void copy_value_to_vector(const dvector& x, const int& ii);
-    virtual dvariable variable(void){ return dvariable(*this);}
-    param_likeprof_number();
-    param_likeprof_number& operator=(const prevariable&);
-    param_likeprof_number& operator=(const double);
+  virtual const char * label(void);
+  virtual double& get_sigma(void){return sigma;}
+  virtual double get_value(void){return value(*this);}
+  //void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual dvariable variable(void){ return dvariable(*this);}
+
+  param_likeprof_number();
+  param_likeprof_number(const char* name): param_likeprof_number()
+  {
+    allocate(name);
+  }
+
+  param_likeprof_number& operator=(const prevariable&);
+  param_likeprof_number& operator=(const double);
 };
 
 /**

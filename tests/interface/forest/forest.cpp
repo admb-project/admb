@@ -1,55 +1,12 @@
 #include "admb.h"
+#include "adromb.cpp"
 
-typedef std::function<dvariable(const dvariable&, const dvariable&, const dvariable&, const dvariable&, const dvariable&, const double)> _func2;
-
-dvariable h2(const dvariable& z, const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai)
+dvariable h(const double z, const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai)
 {
   dvariable tmp;
-  tmp=mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(ai,beta)*mfexp(sigma*z))) );
+  tmp = mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(ai,beta)*mfexp(sigma*z))));
   return tmp;
 }
-dvariable trapzd(_func2 func, const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, double a, double b, int n, int& interval, dvariable& s)
-{
-  double x,num_interval,hn;
-  dvariable sum;
-  int j;
-  if (n == 1) {
-    interval=1;
-    return (s=0.5*(b-a)*(func(a, tau, nu, sigma, beta, ai)+func(b, tau, nu, sigma, beta, ai)));
-  } else {
-    num_interval=interval;
-    hn=(b-a)/num_interval;
-    x=a+0.5*hn;
-    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += func(x, tau, nu, sigma, beta, ai);
-    interval *= 2;
-    s=0.5*(s+(b-a)*sum/num_interval);
-    return s;
-  }
-}
-dvariable adromb2(_func2 func, const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, double a, double b, int ns)
-{
-  const int JMAX = 50;
-  const double base = 4;
-  int MAXN = min(JMAX, ns);
-  dvar_vector s(1,MAXN+1);
-
-  int interval = 0;
-  dvariable s2;
-  for(int j=1; j<=MAXN+1; j++)
-  {
-    s[j] = trapzd(func,tau,nu,sigma,beta,ai,a,b,j,interval,s2);
-  }
-
-  for(int iter=1; iter<=MAXN+1; iter++)
-  {
-    for(int j=1; j<=MAXN+1-iter; j++)
-    {
-      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
-    }
-  }
-  return s[1];
-}
-
 int main(int argc,char* argv[])
 {
   int nsteps{8};
@@ -99,7 +56,7 @@ int main(int argc,char* argv[])
     for (int i=1;i<=k+1;i++)
     {
       ad_begin_funnel();
-      Integral=adromb2(&h2, tau, nu, sigma, beta, a(i), -3.0,3.0,nsteps);
+      Integral=adromb(-3.0, 3.0, nsteps, &h, tau, nu, sigma, beta, a(i));
       S(i)=Integral;
     }
     for (int i=1;i<=k;i++)

@@ -70,7 +70,7 @@ int main(int argc,char* argv[])
   param_vector S;
   param_number prior_function_value;
   param_number likelihood_function_value;
-  objective_function_value f;
+  objective_function_value f("f");
 
   log_tau.set_initial_value(0);
   log_nu.set_initial_value(0);
@@ -87,7 +87,6 @@ int main(int argc,char* argv[])
   sigma.allocate("sigma");
   S.allocate(1,k+1,"S");
   S.initialize();
-  f.allocate("f");
   prior_function_value.allocate("prior_function_value");
   likelihood_function_value.allocate("likelihood_function_value");
 

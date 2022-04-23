@@ -9,6 +9,7 @@ dvariable h(const double z, const dvariable& tau, const dvariable& nu, const dva
 }
 int main(int argc,char* argv[])
 {
+  // data_section
   int nsteps{8};
   int k{12};
   dvector a("{ 0.04, 0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8, 25.6, 51.2, 102.4, 204.8 }");
@@ -17,6 +18,7 @@ int main(int argc,char* argv[])
 
   minimizer m(argc, argv);
 
+  // parameter_section
   param_init_bounded_number log_tau;
   param_init_bounded_number log_nu;
   param_init_bounded_number beta;
@@ -26,11 +28,13 @@ int main(int argc,char* argv[])
   param_stddev_number sigma("sigma");
   objective_function_value f("f");
 
+  // initialization_section
   log_tau.set_initial_value(0);
   log_nu.set_initial_value(0);
   beta.set_initial_value(0.6666667);
   log_sigma.set_initial_value(-2);
 
+  // continue parameter_section
   log_tau.allocate(-14,15,2,"log_tau");
   log_nu.allocate(-15,4,"log_nu");
   beta.allocate(.1,1.0,-1,"beta");
@@ -40,6 +44,7 @@ int main(int argc,char* argv[])
   dvar_vector S(1, k + 1);;
   S.initialize();
 
+  // minimize procedure_section
   m.minimize([&]()
   {
     f = 0.0;
@@ -69,6 +74,7 @@ int main(int argc,char* argv[])
     f+=sum_freq*log(1.e-50+S(1));
   });
 
+  // report_section
   ofstream report(ad_comm::adprogram_name + ".rep");
   if (!report)
   {
@@ -93,6 +99,8 @@ int main(int argc,char* argv[])
   report << "beta "  << beta << endl;
   report << "sigma "  << sigma << endl;
   report.close();
+
+  // empty final_section
 
   return 0;
 }

@@ -1,5 +1,6 @@
 all: forest.dat
-	CXXFLAGS=-I../include ../../../admb forest.cpp ../include/model_parameters.cpp
+	CXXFLAGS=-I../include ../../../admb -c -o model_parameters.obj ../include/model_parameters.cpp
+	CXXFLAGS=-I../include ../../../admb forest.cpp model_parameters.obj
 	./forest -output 1
 
 forest.dat:

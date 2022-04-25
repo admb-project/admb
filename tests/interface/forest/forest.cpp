@@ -18,28 +18,16 @@ int main(int argc,char* argv[])
 
   minimizer m(argc, argv);
 
-  // parameter_section
-  param_init_bounded_number log_tau;
-  param_init_bounded_number log_nu;
-  param_init_bounded_number beta;
-  param_init_bounded_number log_sigma;
-  param_likeprof_number tau("tau");
+  // parameter_section(initial_value, minimimum_bounded_value, maximum_bounded_value, start_phase, name) 
+  // parameter_section(initial_value, minimimum_bounded_value, maximum_bounded_value, name) -- uses 1 as default start phase
+  param_init_bounded_number log_tau(0.0, -14, 15, 2, "log_tau");
+  param_init_bounded_number log_nu(0.0, -15, 4, "log_nu");
+  param_init_bounded_number beta(0.6666667, 0.1, 1.0, -1, "beta");
+  param_init_bounded_number log_sigma(-2.0, -5, 3, "log_sigma");
+  param_likeprof_number tau(25, "tau");
   param_stddev_number nu("nu");
   param_stddev_number sigma("sigma");
   objective_function_value f("f");
-
-  // initialization_section
-  log_tau.set_initial_value(0);
-  log_nu.set_initial_value(0);
-  beta.set_initial_value(0.6666667);
-  log_sigma.set_initial_value(-2);
-
-  // continue parameter_section
-  log_tau.allocate(-14,15,2,"log_tau");
-  log_nu.allocate(-15,4,"log_nu");
-  beta.allocate(.1,1.0,-1,"beta");
-  log_sigma.allocate(-5,3,"log_sigma");
-  tau.set_stepnumber(25);
 
   dvar_vector S(1, k + 1);;
   S.initialize();

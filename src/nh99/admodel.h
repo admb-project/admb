@@ -1246,6 +1246,29 @@ public:
   void pvm_unpack(void){::pvm_unpack(*this);}
 #endif
   param_init_bounded_number();
+  param_init_bounded_number(
+      const double new_initial_value,
+      const double bounds_min,
+      const double bounds_max,
+      const double phase_start,
+      const char* name
+    ): param_init_bounded_number()
+  {
+    set_initial_value(new_initial_value);
+    allocate(bounds_min, bounds_max, phase_start, name);
+  }
+  param_init_bounded_number
+    (
+      const double new_initial_value,
+      const double bounds_min,
+      const double bounds_max,
+      const char* name
+    ): param_init_bounded_number()
+  {
+    set_initial_value(new_initial_value);
+    allocate(bounds_min, bounds_max, 1, name);
+  }
+
   virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
 //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds,
 //  const int& ii);
@@ -2321,6 +2344,13 @@ public:
   param_likeprof_number(const char* name): param_likeprof_number()
   {
     allocate(name);
+  }
+  param_likeprof_number(
+      const int step_number,
+      const char* name
+    ): param_likeprof_number(name)
+  {
+    set_stepnumber(step_number);
   }
 
   param_likeprof_number& operator=(const prevariable&);

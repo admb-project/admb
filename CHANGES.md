@@ -11,8 +11,8 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-dev
---------
+ADMB-13
+-------
 
 #### New Supported Compilers
 
@@ -70,6 +70,9 @@ ADMB-dev
 
 * The default value for -iprint for printing function minimizer report is every 20 iterations instead of 10.
   (See [Changes 581d46c0](https://github.com/admb-project/admb/commit/581d46c0ba066e1ee2548048bc1683888f18b76d)).
+
+* Added new feature to code admb programs directly into C++ code instead of using a TPL.  
+  _Note &emdash; does not work for random effect models._
 
 ADMB-12.3
 ---------

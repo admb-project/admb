@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 ADMB Foundation
 
 DATA_SECTION
- init_int nsteps 
+ init_int nsteps
  init_int k
  init_vector a(1,k+1)
  init_vector freq(1,k)
@@ -21,16 +21,16 @@ PARAMETER_SECTION
   vector S(1,k+1)
   objective_function_value f
 INITIALIZATION_SECTION
-  log_tau 0  
-  beta 0.6666667 
-  log_nu 0  
+  log_tau 0
+  beta 0.6666667
+  log_nu 0
   log_sigma -2
 PROCEDURE_SECTION
   cout << endl;
   cout << "ifn = " << ifn << endl;
   cout << "quit_flag = " << quit_flag << endl;
   cout << "ihflag = " << ihflag << endl;
-  cout << "last_phase() " << last_phase() << endl; 
+  cout << "last_phase() " << last_phase() << endl;
   cout << "iexit = " << iexit << endl;
   tau=mfexp(log_tau);
   nu=mfexp(log_nu);
@@ -39,7 +39,7 @@ PROCEDURE_SECTION
   S = funnels([](const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps)
   {
     dvariable Integral;
-    Integral = ::adromb(-3.0, 3.0, nsteps, &h2, tau, nu, sigma, beta, ai);
+    Integral = ::adromb(-3.0, 3.0, nsteps, &h, tau, nu, sigma, beta, ai);
     return Integral;
   }, tau, nu, sigma, beta, a, nsteps);
 
@@ -55,16 +55,12 @@ PROCEDURE_SECTION
 PRELIMINARY_CALCS_SECTION
   void allocate_gradients();
   allocate_gradients();
-FUNCTION dvariable h(const dvariable& z)
-  dvariable tmp;
-  tmp=mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(a(a_index),beta)*mfexp(sigma*z))) );  
-  return tmp;
 REPORT_SECTION
   report << "report:" << endl;
   report << "ifn = " << ifn << endl;
   report << "quit_flag = " << quit_flag << endl;
   report << "ihflag = " << ihflag << endl;
-  report << "last_phase() " << last_phase() << endl; 
+  report << "last_phase() " << last_phase() << endl;
   report << "iexit = " << iexit << endl;
   tau=mfexp(log_tau);
   report << "nsteps = " << std::setprecision(10) <<  nsteps << endl;
@@ -73,10 +69,10 @@ REPORT_SECTION
   report << "freq" << endl << freq << endl;
   report << "S" << endl << S << endl;
   report << "S/S(1)" << endl << std::ios::fixed << std::setprecision(6) << S/S(1) << endl;
-  report << "tau "  << tau << endl; 
-  report << "nu "  << nu << endl; 
-  report << "beta "  << beta << endl; 
-  report << "sigma "  << sigma << endl; 
+  report << "tau "  << tau << endl;
+  report << "nu "  << nu << endl;
+  report << "beta "  << beta << endl;
+  report << "sigma "  << sigma << endl;
 FINAL_SECTION
   void deallocate_gradients();
   deallocate_gradients();
@@ -86,12 +82,13 @@ GLOBALS_SECTION
   #include "adromb.cpp"
   #include "thread_funnel5.h"
 
-  dvariable h2(const dvariable& z, const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double aa_index)
+  dvariable h(const double z, const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai)
   {
     dvariable tmp;
-    tmp=mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(aa_index,beta)*mfexp(sigma*z))) );  
+    tmp = mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(ai,beta)*mfexp(sigma*z))));
     return tmp;
   }
+
   extern double total_funnel_time;
   dvar_vector funnels(
     dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),

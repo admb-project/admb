@@ -2,8 +2,8 @@
 dev: run8j
 run8j: thread_funnel5.h
 	@cp ../../../examples/admb/forest/forest.dat .
-	../../../admb forest.tpl thread_funnel5.cpp
-	time ./forest &> forest.out
+	CXXFLAGS=-I../../interface/forest ../../../admb forest.tpl thread_funnel5.cpp
+	time ./forest
 
 clean:
 	@rm -vf forest.dat

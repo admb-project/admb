@@ -27,3 +27,19 @@ clean:
 	@rm -vf forest.rep
 	@rm -vf forest.std
 	@rm -vf thread_funnel5.obj
+	@rm -vf cmpdiff1.tmp
+	@rm -vf cmpdiff2.tmp
+	@rm -vf cmpdiff3.tmp
+	@rm -vf cmpdiff4.tmp
+	@rm -vf gradfil11.tmp
+	@rm -vf gradfil12.tmp
+	@rm -vf gradfil13.tmp
+	@rm -vf gradfil14.tmp
+	@rm -vf gradfil21.tmp
+	@rm -vf gradfil22.tmp
+	@rm -vf gradfil23.tmp
+	@rm -vf gradfil24.tmp
+	@rm -vf varssave1.tmp
+	@rm -vf varssave2.tmp
+	@rm -vf varssave3.tmp
+	@rm -vf varssave4.tmp

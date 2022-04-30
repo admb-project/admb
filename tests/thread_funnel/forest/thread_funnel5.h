@@ -11,15 +11,15 @@ size_t get_addresses(std::vector<double*>& addresses, dvariable const& arg)
   addresses.push_back(&((*arg.v).x));
   return 1;
 }
-template<typename T>
-size_t get_addresses(std::vector<double*>& addresses, T arg)
+template<typename Arg>
+size_t get_addresses(std::vector<double*>& addresses, Arg arg)
 {
   return 0;
 }
-template<typename ...Ts>
-size_t get_addresses(std::vector<double*>& addresses, Ts&&... args)
+template<typename ...Args>
+size_t get_addresses(std::vector<double*>& addresses, Args... args)
 {
-  return (get_addresses(addresses, std::forward<Ts>(args)) + ...);
+  return (get_addresses(addresses, args) + ...);
 }
 void set_independent_variables(independent_variables& independents, int& index, const dvariable& arg)
 {
@@ -72,7 +72,7 @@ template<class F, class ...Args>
 std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&& func, Args&&... args)
 {
   std::vector<double*> addresses;
-  size_t nvar = get_addresses(addresses, std::forward<Args>(args)...);
+  size_t nvar = get_addresses(addresses, args...);
 
   gradient_structure* gs = get_gradient();
   return std::async(std::launch::async, [=]()->std::tuple<double, dvector, std::vector<double*>>

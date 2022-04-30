@@ -36,12 +36,18 @@ PROCEDURE_SECTION
   nu=mfexp(log_nu);
   sigma=mfexp(log_sigma);
 
-  S = funnels([](const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps)
+  const int min = a.indexmin();
+  const int max = a.indexmax();
+  for (int i = min; i <= max; ++i)
   {
-    dvariable Integral;
-    Integral = ::adromb(-3.0, 3.0, nsteps, &h, tau, nu, sigma, beta, ai);
-    return Integral;
-  }, tau, nu, sigma, beta, a, nsteps);
+    funnel([](const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps)
+    {
+      dvariable Integral;
+      Integral = ::adromb(-3.0, 3.0, nsteps, &h, tau, nu, sigma, beta, ai);
+      return Integral;
+    }, (const dvariable&)tau, (const dvariable&)nu, (const dvariable&)sigma, (const dvariable&)beta, (const double&)a(i), (const int&)nsteps);
+  }
+  get_results(S);
 
   f=0.0;
   for (int i=1;i<=k;i++)
@@ -87,30 +93,4 @@ GLOBALS_SECTION
     dvariable tmp;
     tmp = mfexp(-.5*z*z + tau*(-1.+mfexp(-nu*pow(ai,beta)*mfexp(sigma*z))));
     return tmp;
-  }
-
-  extern double total_funnel_time;
-  dvar_vector funnels(
-    dvariable (*func)(const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps),
-    const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const dvector& a, const int nsteps)
-  {
-    auto start = std::chrono::high_resolution_clock::now();
-
-    const int min = a.indexmin();
-    const int max = a.indexmax();
-    dvar_vector results(min, max);
-
-    for (int i = min; i <= max; ++i)
-    {
-      funnel(func, tau, nu, sigma, beta, a(i), nsteps);
-    }
-    get_results(results);
-
-    auto finish = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = finish - start;
-    double count = elapsed.count();
-    std::cout << "Funnel time: " << count <<  endl;
-    total_funnel_time += count;
-
-    return results;
   }

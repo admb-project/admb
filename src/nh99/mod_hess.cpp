@@ -505,7 +505,6 @@ void function_minimizer::depvars_routine(void)
     from_start = std::chrono::system_clock::now();
 
     cout << "Differentiating " << ndvarcals << " derived quantities: ";
-    if (ndvarcals >= 10) cout << "%";
   }
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
@@ -529,9 +528,9 @@ void function_minimizer::depvars_routine(void)
   ofs << nvar << "  "  << ndvar << endl;
   int i;
   int percentage = defaults::percentage;
-  const int num = nvar / 5;
-  int index = num + (nvar % 5);
-  for (i=0;i< stddev_params::num_stddev_params;i++)
+  const int num = ndvarcals / 5;
+  int index = num + (ndvarcals % 5);
+  for (i=0;i<ndvarcals;i++)
   {
     if (function_minimizer::output_flag == 1)
     {
@@ -552,6 +551,7 @@ void function_minimizer::depvars_routine(void)
       stddev_params::stddevptr[i]->set_dependent_variables();
   }
   gradient_structure::get()->jacobcalc(nvar,ofs);
+  for (i=0;i<ndvarcals;i++)
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
      ofs << stddev_params::stddevptr[i]->label() << "  ";

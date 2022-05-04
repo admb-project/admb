@@ -100,13 +100,6 @@ void print_elapsed_time(
 
 void function_minimizer::sd_routine(void)
 {
-  std::chrono::time_point<std::chrono::system_clock> from_start;
-  if (function_minimizer::output_flag == 1)
-  {
-    from_start = std::chrono::system_clock::now();
-    cout << "Starting standard error calculations... " ;
-  }
-
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dvector x(1,nvar);
   initial_params::xinit(x); // get the number of active parameters
@@ -561,10 +554,5 @@ void function_minimizer::sd_routine(void)
   {
     char msg[40] = {"Error trying to delete temporary file "};
     cerr << msg << "admodel.tmp" << endl;
-  }
-
-  if (function_minimizer::output_flag == 1)
-  {
-    print_elapsed_time(from_start, std::chrono::system_clock::now());
   }
 }

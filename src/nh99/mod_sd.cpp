@@ -85,7 +85,7 @@ std::string get_elapsed_time(
     runtime/=(24*60*60); u=" days";
   }
   runtime=std::round(runtime * 10.0) / 10.0;
-  cout << " done! (" << runtime  << u << ")" <<  endl;
+  cout << " done (" << runtime  << u << ")" <<  endl;
 */
 
   return std::move(ss.str());
@@ -95,7 +95,7 @@ void print_elapsed_time(
   const std::chrono::time_point<std::chrono::system_clock>& from,
   const std::chrono::time_point<std::chrono::system_clock>& to)
 {
-  cout << " done! (" << get_elapsed_time(from, to) << ") " << endl;
+  cout << " done (" << get_elapsed_time(from, to) << ") " << endl;
 }
 
 void function_minimizer::sd_routine(void)

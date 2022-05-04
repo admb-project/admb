@@ -198,7 +198,7 @@ void function_minimizer::hess_step(){
       depvars_routine(); // calculate derivatives of sdreport variables
       hess_inv(); // Invert Hess and write to admodel.cov
       function_minimizer::output_flag=oldoutput;
-      cout << "done!" << endl;
+      cout << "done" << endl;
     }
   } // end loop over hess_steps
   
@@ -221,7 +221,7 @@ void function_minimizer::hess_step(){
     function_minimizer::output_flag=0;
     computations1(ad_comm::argc,ad_comm::argv);
     function_minimizer::output_flag=oldoutput;
-    cout << " done!" << endl;
+    cout << " done" << endl;
     cout << endl << "The " << Nstep << " Hessian step(s) reduced maxgrad from " <<
       maxgrad0 << " to " << maxgrad2 << " and NLL by " << nll-nll2 << "." << endl <<
       "All output files should be updated, but confirm as this is experimental still." << endl <<

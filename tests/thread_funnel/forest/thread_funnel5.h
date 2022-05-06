@@ -71,12 +71,12 @@ gradient_structure* get_gradient();
 template<class F, class ...Args>
 std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&& func, Args&&... args)
 {
-  std::vector<double*> addresses;
-  get_addresses(addresses, std::forward<Args>(args)...);
-
   gradient_structure* gs = get_gradient();
-  return std::async(std::launch::async, [=]()->std::tuple<double, dvector, std::vector<double*>>
+  return std::async(std::launch::async, [gs, &func, &args...]()->std::tuple<double, dvector, std::vector<double*>>
   {
+    std::vector<double*> addresses;
+    get_addresses(addresses, std::forward<Args>(args)...);
+
     gradient_structure::_instance = gs;
 
     double v = 0;

@@ -17,12 +17,33 @@ struct A
     Ai = 1;
   }
 };
-TEST_F(test_thread_funnel, lambda_capture)
+TEST_F(test_thread_funnel, create_tuple_A)
+{
+  Ai = 0;
+}
+TEST_F(test_thread_funnel, lambda_capture_reference)
 {
   Ai = 0;
   A a;
   Ai = 0;
-  auto f = [=, &a]()
+  auto f = [&a]()
+  {
+    const A* p = &a;
+    EXPECT_EQ(Ai, 0);
+  };
+  EXPECT_EQ(Ai, 0);
+
+  Ai = 0;
+  f();
+  EXPECT_EQ(Ai, 0);
+  Ai = 0;
+}
+TEST_F(test_thread_funnel, lambda_capture_copy)
+{
+  Ai = 0;
+  A a;
+  Ai = 0;
+  auto f = [a]()
   {
     const A* p = &a;
     EXPECT_EQ(Ai, 0);

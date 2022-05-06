@@ -188,6 +188,8 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
+ test_thread_funnel.obj\
+ thread_funnel5.obj\
  main.cpp
 
 ifdef GTESTS_DEV
@@ -243,6 +245,21 @@ endif
 
 memcheck: gtest-all
 	valgrind -v --tool=memcheck ./gtest-all
+
+ifeq ($(CMDSHELL),cmd)
+thread_funnel5.obj: thread_funnel5.cpp
+	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_thread_funnel.cpp
+else
+thread_funnel5.obj: ../thread_funnel/forest/thread_funnel5.cpp
+	CXXFLAGS="-I$(GTEST_DIR)/include -I../thread_funnel/forest" ../../admb$(EXT) -o thread_funnel5.obj -c $(ADMB_OPTIONS) ../thread_funnel/forest/thread_funnel5.cpp
+endif
+
+test_thread_funnel.obj: test_thread_funnel.cpp
+ifeq ($(CMDSHELL),cmd)
+	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_thread_funnel.cpp
+else
+	CXXFLAGS="-I$(GTEST_DIR)/include -I../thread_funnel/forest" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_thread_funnel.cpp
+endif
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
 ifeq ($(CMDSHELL),cmd)

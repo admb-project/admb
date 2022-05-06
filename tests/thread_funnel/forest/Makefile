@@ -9,6 +9,7 @@ run8j: thread_funnel5.h
 	diff forest.std ~/admb-github/examples/admb/forest/forest.std
 	diff forest.rep ~/admb-github/examples/admb/forest/forest.rep
 	diff forest.cor ~/admb-github/examples/admb/forest/forest.cor
+	diff forest.eva ~/admb-github/examples/admb/forest/forest.eva
 
 clean:
 	@rm -vf forest.dat

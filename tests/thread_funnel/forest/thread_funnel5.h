@@ -6,35 +6,35 @@
 #include <future>
 #include <fvar.hpp>
 
-size_t get_addresses(std::vector<double*>& addresses, dvariable const& arg)
+void add_address(std::vector<double*>& addresses, const dvariable& arg)
 {
   addresses.push_back(&((*arg.v).x));
-  return 1;
 }
 template<typename T>
-size_t get_addresses(std::vector<double*>& addresses, T arg)
+void add_address(std::vector<double*>& addresses, const T& arg)
 {
-  return 0;
 }
 template<typename ...Ts>
-size_t get_addresses(std::vector<double*>& addresses, Ts&&... args)
+void get_addresses(std::vector<double*>& addresses, Ts&&... args)
 {
-  return (get_addresses(addresses, std::forward<Ts>(args)) + ...);
+  (add_address(addresses, args), ...);
 }
-void set_independent_variables(independent_variables& independents, int& index, const dvariable& arg)
+void set_independent_variable(independent_variables& independents, int& index, const dvariable& arg)
 {
   independents(index) = value(arg);
   ++index;
 }
 template<typename T>
-void set_independent_variables(independent_variables& independents, int& index, T arg)
+void set_independent_variable(independent_variables& independents, int& index, const T& arg)
 {
 }
 template<typename ...Ts>
-void set_independent_variables(independent_variables& independents, Ts... args)
+int set_independent_variables(independent_variables& independents, Ts&&... args)
 {
   int index = independents.indexmin();
-  (set_independent_variables(independents, index, args), ...);
+  (set_independent_variable(independents, index, args), ...);
+
+  return index;
 }
 std::tuple<dvariable const&> create_tuple(std::vector<dvariable>& variables, int index, dvariable const& arg)
 {
@@ -72,7 +72,7 @@ template<class F, class ...Args>
 std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&& func, Args&&... args)
 {
   std::vector<double*> addresses;
-  size_t nvar = get_addresses(addresses, std::forward<Args>(args)...);
+  get_addresses(addresses, std::forward<Args>(args)...);
 
   gradient_structure* gs = get_gradient();
   return std::async(std::launch::async, [=]()->std::tuple<double, dvector, std::vector<double*>>
@@ -80,10 +80,11 @@ std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&&
     gradient_structure::_instance = gs;
 
     double v = 0;
+    const size_t nvar = addresses.size();
     dvector g(1, nvar);
     {
       independent_variables scoped_independents(1, nvar);
-      set_independent_variables(scoped_independents, args...);
+      set_independent_variables(scoped_independents, std::forward<Args>(args)...);
 
       // Set gradient_structure::NVAR
       dvar_vector scoped_variables(scoped_independents);
@@ -104,7 +105,7 @@ std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&&
       gradcalc(nvar, g);
     }
 
-    return std::make_tuple(v, g, addresses);
+    return std::make_tuple(v, g, std::move(addresses));
   });
 }
 void add_futures(std::future<std::tuple<double, dvector, std::vector<double*>>>&& f);

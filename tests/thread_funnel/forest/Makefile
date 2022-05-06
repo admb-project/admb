@@ -2,8 +2,13 @@
 dev: run8j
 run8j: thread_funnel5.h
 	@cp ../../../examples/admb/forest/forest.dat .
-	CXXFLAGS=-I../../interface/forest ../../../admb forest.tpl thread_funnel5.cpp
+	CXXFLAGS=-I../../interface/forest ../../../admb -g forest.tpl thread_funnel5.cpp
 	time ./forest
+
+	diff forest.par ~/admb-github/examples/admb/forest/forest.par
+	diff forest.std ~/admb-github/examples/admb/forest/forest.std
+	diff forest.rep ~/admb-github/examples/admb/forest/forest.rep
+	diff forest.cor ~/admb-github/examples/admb/forest/forest.cor
 
 clean:
 	@rm -vf forest.dat
@@ -43,3 +48,7 @@ clean:
 	@rm -vf varssave2.tmp
 	@rm -vf varssave3.tmp
 	@rm -vf varssave4.tmp
+	@rm -vf cmpdiff.tmp
+	@rm -vf gradfil1.tmp
+	@rm -vf gradfil2.tmp
+	@rm -vf varssave.tmp

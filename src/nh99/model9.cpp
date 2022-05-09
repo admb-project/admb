@@ -7,19 +7,19 @@
 #include <fvar.hpp>
 #include <admodel.h>
 
-int operator + (int n,data_int v)
+int operator+(const int n, const data_int& v)
 {
   return n+v.val;
 }
 
-int operator + (data_int v,int n)
+int operator+(const data_int& v, const int n)
 {
   return n+v.val;
 }
 
-int operator + (data_int v,data_int n)
+int operator+(const data_int& v, const data_int& n)
 {
-  return n.val+v.val;
+  return n.val + v.val;
 }
 
 data_int& data_int::operator=(const int xx)

@@ -1250,7 +1250,7 @@ public:
       const double new_initial_value,
       const double bounds_min,
       const double bounds_max,
-      const double phase_start,
+      const int phase_start,
       const char* name
     ): param_init_bounded_number()
   {
@@ -1477,19 +1477,22 @@ protected:
   int val;
 
 public:
-  data_int& operator=(const int);
-
   void allocate(int n,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
   void allocate(init_xml_doc&, const char * s="UNNAMED");
 
-  //data_int(): val(0) { }
+  data_int(): val(0) { }
+  data_int(const data_int& other): val((int)other)
+  {
+  }
   ~data_int() { }
+
+  data_int& operator=(const int);
   operator int() const { return val; }
 
-  friend int operator + (int n,data_int v);
-  friend int operator + (data_int v,int n);
-  friend int operator + (data_int v,data_int n);
+  friend int operator+(const int n, const data_int& v);
+  friend int operator+(const data_int& v, const int n);
+  friend int operator+(const data_int& v, const data_int& n);
 };
 
 /**

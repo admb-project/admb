@@ -10,9 +10,8 @@ dvariable trapzd(double a, double b, int n, int& interval, dvariable& s, F&& fun
   double num_interval=interval;
   double hn=(b-a)/num_interval;
   double x=a+0.5*hn;
-  int j = 1;
-  dvariable sum;
-  for (sum=0.0;j<=interval;j++,x+=hn) sum += func(x, args...);
+  dvariable sum = 0.0;
+  for (int j = 1; j <= interval; ++j, x+=hn) sum += func(x, args...);
   interval *= 2;
   s=0.5*(s+(b-a)*sum/num_interval);
   return s;

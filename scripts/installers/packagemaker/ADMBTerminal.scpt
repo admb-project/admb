@@ -1,7 +1,7 @@
 -- main.scpt
 -- Cocoa-AppleScript Applet
 --
--- Copyright 2012-2021 ADMB Foundation. All rights reserved.
+-- Copyright 2012-2022 ADMB Foundation. All rights reserved.
 
 on isrun(name)
     tell application "System Events" to (name of processes) contains name
@@ -13,12 +13,12 @@ set p to path to
 set pp to (POSIX path of p)
 if check then
   tell application "Terminal"
-    do script "export ADMB_HOME=\"" & pp & "admb-12.3\"; export PATH=\"" & pp & "admb-12.3/bin\":${PATH}"
+    do script "export ADMB_HOME=\"" & pp & "admb-13.0\"; export PATH=\"" & pp & "admb-13.0/bin\":${PATH}"
     activate
   end tell
 else
   tell application "Terminal"
-    do script "export ADMB_HOME=\"" & pp & "admb-12.3\"; export PATH=\"" & pp & "admb-12.3/bin\":${PATH}" in window 1
+    do script "export ADMB_HOME=\"" & pp & "admb-13.0\"; export PATH=\"" & pp & "admb-13.0/bin\":${PATH}" in window 1
     activate
   end tell
 end if

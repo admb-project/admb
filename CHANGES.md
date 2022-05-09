@@ -11,8 +11,9 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-13
--------
+ADMB-13.0
+---------
+*Released May 31, 2022*  
 
 #### New Supported Compilers
 

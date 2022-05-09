@@ -41,7 +41,7 @@ ADMB-13.0
 
 * Profiling diagnostic option -time has been disabled for releases.
   To develop and use the -time option, rebuild ADMB libraries with 
-  compiler macro DIAG_TIMER defined (See commands below).  (See [Changes a1667e3](https://github.com/admb-project/admb/commit/a1667e31cb862355932609a839e5962fa04823c4)).
+  compiler macro DIAG_TIMER defined (See [Changes a1667e3](https://github.com/admb-project/admb/commit/a1667e31cb862355932609a839e5962fa04823c4)).
 
   For Microsoft Visual Studio,
   ```
@@ -60,7 +60,7 @@ ADMB-13.0
 * Copy sparse headers to distribution includes.
 
 * Fixed typo bug in df1b2matrix& df1b2matrix::operator=(const df1b2variable&).
-  df1b2variable should be assign assigned to all elements in f1b2matrix if not empty.
+  df1b2variable should be assign assigned to all elements in f1b2matrix if not empty
   (See [Changes 463db83](https://github.com/admb-project/admb/commit/463db839675fa17f2aa3852422d89e1a51f8715d)).
 
 * Replaced ad_printf pointer to printf with ad_printf function for outputs.
@@ -69,7 +69,7 @@ ADMB-13.0
 
 * Renamed VERSION file to VERSION.txt to avoid compiler errors (See [Issue #240](https://github.com/admb-project/admb/issues/240)).
 
-* The default value for -iprint for printing function minimizer report is every 20 iterations instead of 10.
+* The default value for -iprint for printing function minimizer report is every 20 iterations instead of 10
   (See [Changes 581d46c0](https://github.com/admb-project/admb/commit/581d46c0ba066e1ee2548048bc1683888f18b76d)).
 
 * Added new feature to code admb programs directly into C++ code instead of using a TPL.  

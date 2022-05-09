@@ -73,7 +73,7 @@ ADMB-13.0
   (See [Changes 581d46c0](https://github.com/admb-project/admb/commit/581d46c0ba066e1ee2548048bc1683888f18b76d)).
 
 * Added new feature to code admb programs directly into C++ code instead of using a TPL.  
-  _Note &emdash; does not work for random effect models._
+  _Note &mdash; does not work for random effect models._
 
 ADMB-12.3
 ---------

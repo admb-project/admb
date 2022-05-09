@@ -36,36 +36,21 @@ int set_independent_variables(independent_variables& independents, Ts&&... args)
 
   return index;
 }
-std::tuple<dvariable const&> create_tuple(std::vector<dvariable>& variables, int index, dvariable const& arg)
+std::tuple<const dvariable&> create_tuple_element(std::vector<dvariable>& variables, int& index, const dvariable& arg)
 {
-  return std::tie(variables[index]);
+  return std::tie(variables[index++]);
 }
 template<typename Arg>
-std::tuple<Arg> create_tuple(std::vector<dvariable>& variables, int& index, Arg&& arg)
+std::tuple<const Arg&> create_tuple_element(std::vector<dvariable>& variables, int& index, const Arg& arg)
 {
   return std::tie(arg);
 }
-template<typename Arg, typename ...Args>
-std::tuple<Arg, Args...> create_tuple(std::vector<dvariable>& variables, int& index, Arg&& arg, Args&&... args)
-{
-  std::tuple<Arg> t = std::tie(arg);
-  std::tuple<Args...> t2 = create_tuple(variables, index, std::forward<Args>(args)...);
-  return std::tuple_cat(t, t2);
-}
 template<typename ...Args>
-std::tuple<dvariable const&, Args...> create_tuple(std::vector<dvariable>& variables, int& index, dvariable const& arg, Args&&... args)
-{
-  std::tuple<dvariable const&> t = std::tie(variables[index]);
-  ++index;
-  std::tuple<Args...> t2 = create_tuple(variables, index, std::forward<Args>(args)...);
-  return std::tuple_cat(t, t2);
-}
-template<typename ...Args>
-std::tuple<Args...> create_tuple(std::vector<dvariable>& variables, Args&&... args)
+std::tuple<const Args&...> create_tuple(std::vector<dvariable>& variables, Args&&... args)
 {
   int index = 0;
-  std::tuple<Args...> t = create_tuple(variables, index, std::forward<Args>(args)...);
-  return std::tuple_cat(t);
+  std::tuple<const Args&...> t = std::tuple_cat(create_tuple_element(variables, index, args)...);
+  return std::move(t);
 }
 gradient_structure* get_gradient();
 template<class F, class ...Args>
@@ -97,7 +82,7 @@ std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&&
 
       dvariable f(0);
 
-      std::tuple<Args...> t = create_tuple(variables, std::forward<Args>(args)...);
+      std::tuple<const Args&...> t = create_tuple(variables, std::forward<Args>(args)...);
       f = std::apply(func, t);
 
       v = value(f);

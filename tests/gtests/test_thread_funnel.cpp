@@ -17,9 +17,18 @@ struct A
     Ai = 1;
   }
 };
-TEST_F(test_thread_funnel, create_tuple_A)
+TEST_F(test_thread_funnel, create_sub_tuple_A)
 {
   Ai = 0;
+  gradient_structure gs;
+
+
+  dvar_vector vs(1, 4);
+  vs.initialize();
+
+  int index = 1;
+
+  auto t = create_sub_tuple(vs, index, vs[4]); 
 }
 TEST_F(test_thread_funnel, lambda_capture_reference)
 {

@@ -216,8 +216,18 @@ ifeq ($(CMDSHELL),cmd)
         ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
       else ifeq (GCCVER5,$(findstring GCCVER5,$(GCCMAJVER)))
         ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-      else
+      else ifeq (GCCVER5,$(findstring GCCVER6,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      else ifeq (GCCVER5,$(findstring GCCVER7,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      else ifeq (GCCVER5,$(findstring GCCVER8,$(GCCMAJVER)))
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq (GCCVER5,$(findstring GCCVER9,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq (GCCVER5,$(findstring GCCVER10,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else
+        ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
       endif
     endif
   endif
@@ -226,7 +236,7 @@ else
     ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
   else
     ifeq ($(CXX),clang++)
-      ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
     else ifeq ($(CXX),icpc)
       ICPCMAJVER:=$(shell icpc -dumpversion | cut -f1 -d. )
       ifeq ("$(ICPCMAJVER)","17")
@@ -251,8 +261,18 @@ else
         endif
       else ifeq ("$(GCCMAJVER)","5")
         ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-      else
+      else ifeq ("$(GCCMAJVER)","6")
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","7")
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","8")
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","9")
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","10")
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else
+        ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
       endif
     endif
   endif

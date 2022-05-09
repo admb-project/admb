@@ -302,9 +302,39 @@ if "!CXX!"=="cl" (
       )
     )
     if not defined CXXMAJORNUMBER (
+      for /f %%i in ('!CXX! -dumpversion ^| findstr /b 6.') do (
+        set CXXMAJORNUMBER=-g++6
+        set STDCXX=-std=c++11
+      )
+    )
+    if not defined CXXMAJORNUMBER (
+      for /f %%i in ('!CXX! -dumpversion ^| findstr /b 7.') do (
+        set CXXMAJORNUMBER=-g++6
+        set STDCXX=-std=c++11
+      )
+    )
+    if not defined CXXMAJORNUMBER (
+      for /f %%i in ('!CXX! -dumpversion ^| findstr /b 8.') do (
+        set CXXMAJORNUMBER=-g++6
+        set STDCXX=-std=c++14
+      )
+    )
+    if not defined CXXMAJORNUMBER (
+      for /f %%i in ('!CXX! -dumpversion ^| findstr /b 9.') do (
+        set CXXMAJORNUMBER=-g++6
+        set STDCXX=-std=c++14
+      )
+    )
+    if not defined CXXMAJORNUMBER (
+      for /f %%i in ('!CXX! -dumpversion ^| findstr /b 10.') do (
+        set CXXMAJORNUMBER=-g++6
+        set STDCXX=-std=c++14
+      )
+    )
+    if not defined CXXMAJORNUMBER (
       for /f "tokens=1,2,3 delims=." %%i in ('!CXX! -dumpversion') do (
         set CXXMAJORNUMBER=-g++%%i
-        set STDCXX=-std=c++14
+        set STDCXX=-std=c++17
       )
     )
   )

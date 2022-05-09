@@ -97,4 +97,4 @@ developing features, testing, providing fixes, improving documentation and givin
 * Johnoel Ancheta
 
 ---
-Copyright (c) 2008-2021 ADMB Foundation and Regents of the University of California
+Copyright (c) 2008-2022 ADMB Foundation and Regents of the University of California

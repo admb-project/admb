@@ -21,7 +21,7 @@ ADMB-13.0
 
 #### Changes and Improvements
 
-*  Major update to the program display outputs (See [Issue #221](https://github.com/admb-project/admb/issues/221)).
+*  Major update to the program display outputs (See [Issue #221](https://github.com/admb-project/admb/issues/221)).  To change display use the command line option -display N for the ADMB program. Set N to 0 to the quiet display from library.  Set N to 1 (default) to use new concise display.  Set N to 2 to use legacy display.
 
 *  Change all exit statements to ad_exit as recommended by Dr. Dave Fournier (See [Issue #216](https://github.com/admb-project/admb/issues/216)).
 

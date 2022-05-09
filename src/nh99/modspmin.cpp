@@ -56,9 +56,9 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
      output_flag = defaults::output;
 
      int on, nopt;
-     if ( (on=option_match(argc,argv,"-output",nopt)) > -1)
+     if ( (on=option_match(argc,argv,"-display",nopt)) > -1)
      {
-       // Updated output option with argument '-output 1'
+       // Updated output option with argument '-display 1'
        // Details and bug reports at: https://github.com/admb-project/admb/discussions/219"
        if (nopt == 1){
 	 int argument = atoi(argv[on+1]);
@@ -68,12 +68,12 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
 	 }
          else
          {
-	   cerr << "Warning: Invaild argument for option -output (See -help).\n\n";
+	   cerr << "Warning: Invaild argument for option -display (See -help).\n\n";
          }
        }
        else
        {
-	 cerr << "Warning: Option -output needs a number argument (See -help).\n\n";
+	 cerr << "Warning: Option -display needs a number argument (See -help).\n\n";
        }
      }
 

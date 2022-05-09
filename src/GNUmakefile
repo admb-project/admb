@@ -223,7 +223,7 @@ ifeq ($(CMDSHELL),cmd)
   endif
 else
   ifeq ("$(UNAME_S)","Darwin")
-    ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+    ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
   else
     ifeq ($(CXX),clang++)
       ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)

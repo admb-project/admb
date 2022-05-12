@@ -1,9 +1,9 @@
 !IF EXISTS (..\\..\\admb.cmd)
 SCRIPT_DIR=..\\..\\
 !ELSE
-  !IF EXISTS (..\\..\\..\\admb.cmd)
-    SCRIPT_DIR=..\\..\\..\\
-  !ENDIF
+!IF EXISTS (..\\..\\..\\admb.cmd)
+SCRIPT_DIR=..\\..\\..\\
+!ENDIF
 !ENDIF
 
 all: clean

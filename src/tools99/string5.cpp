@@ -111,7 +111,7 @@ adstring& adstring_array::operator[](int i)
 {
   if (!shape)
   {
-    cerr << "Error -- trying to acess unallocated adstring array" << endl;
+    cerr << "Error -- trying to access unallocated adstring array" << endl;
     ad_exit(1);
   }
 
@@ -130,7 +130,7 @@ adstring& adstring_array::operator()(int i)
 {
   if (!shape)
   {
-    cerr << "Error -- trying to acess unallocated adstring array" << endl;
+    cerr << "Error -- trying to access unallocated adstring array" << endl;
     ad_exit(1);
   }
 
@@ -149,7 +149,7 @@ const adstring& adstring_array::operator[](int i) const
 {
   if (!shape)
   {
-    cerr << "Error -- trying to acess unallocated adstring array" << endl;
+    cerr << "Error -- trying to access unallocated adstring array" << endl;
     ad_exit(1);
   }
 
@@ -168,7 +168,7 @@ const adstring& adstring_array::operator()(int i) const
 {
   if (!shape)
   {
-    cerr << "Error -- trying to acess unallocated adstring array" << endl;
+    cerr << "Error -- trying to access unallocated adstring array" << endl;
     ad_exit(1);
   }
 

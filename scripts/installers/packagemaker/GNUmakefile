@@ -1,4 +1,4 @@
-ifndef ADMB_VER
+ifdef USE_ADMB_VER
   ADMB_VER=-13.0
 endif
 

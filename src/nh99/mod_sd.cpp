@@ -95,7 +95,7 @@ void print_elapsed_time(
   const std::chrono::time_point<std::chrono::system_clock>& from,
   const std::chrono::time_point<std::chrono::system_clock>& to)
 {
-  cout << " done! (" << get_elapsed_time(from, to) << ") " << endl;
+  cout << " done (" << get_elapsed_time(from, to) << ") " << endl;
 }
 
 void function_minimizer::sd_routine(void)

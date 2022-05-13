@@ -576,6 +576,15 @@ bool function_minimizer::hess_inv(void)
   independent_variables x(1,nvar);
 
   std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1)
+  {
+    from_start = std::chrono::system_clock::now();
+
+    cout << "Inverting Hessian";
+    if (nvar >= 10) cout << " (" << nvar << " variables)";
+    cout << ": ";
+    cout.flush();
+  }
 
   initial_params::xinit(x);        // get the initial values into the x vector
   //double f;
@@ -627,6 +636,24 @@ bool function_minimizer::hess_inv(void)
       if (tmp1>maxerr) maxerr=tmp1;
       hess(i,j)=tmp;
       hess(j,i)=tmp;
+    }
+    if (function_minimizer::output_flag == 1)
+    {
+      if(nvar >= 10)
+      {
+        if (i == index)
+        {
+          if (percentage > defaults::percentage) cout << ", ";
+          cout << percentage << "%";
+          percentage += 20;
+          index += num;
+        }
+      }
+      else
+      {
+        if (i > 1) cout << ", ";
+        cout << i;
+      }
     }
   }
   /*
@@ -789,6 +816,10 @@ bool function_minimizer::hess_inv(void)
       ofs << gradient_structure::Hybrid_bounded_flag;
       ofs << sscale;
     }
+  }
+  if (function_minimizer::output_flag == 1)
+  {
+    print_elapsed_time(from_start, std::chrono::system_clock::now());
   }
   return true;
 }

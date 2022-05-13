@@ -1487,6 +1487,8 @@ public:
   }
   ~data_int() { }
 
+  data_int& operator=(const data_int& other)
+    { return data_int::operator=((int)other); }
   data_int& operator=(const int);
   operator int() const { return val; }
 

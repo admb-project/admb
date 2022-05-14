@@ -84,13 +84,15 @@ void tracing_message(int traceflag,const char *s);
     int allphases=initial_params::max_number_phases;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxph",nopt))>-1)
     {
+      int origMPs = initial_params::max_number_phases;
+      int jj=0;
       if (!nopt)
       {
         cerr << "Usage -maxph option needs integer  -- ignored" << endl;
       }
       else
       {
-        int jj=atoi(ad_comm::argv[on+1]);
+	jj=atoi(ad_comm::argv[on+1]);
         if (jj<=0)
         {
           cerr << "Usage -maxph option needs positive integer  -- ignored.\n";
@@ -106,6 +108,12 @@ void tracing_message(int traceflag,const char *s);
       if (allphases>initial_params::max_number_phases)
       {
         initial_params::max_number_phases=allphases;
+      }
+      if (jj<allphases){
+	allphases = jj;
+	initial_params::max_number_phases=allphases;
+	// cout<<"NOTE: max_number_of_phases reset from "<<origMPs<<" to "
+	//     <<initial_params::max_number_phases << endl;
       }
     }
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)

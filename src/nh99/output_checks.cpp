@@ -198,7 +198,7 @@ void function_minimizer::hess_step(){
       depvars_routine(); // calculate derivatives of sdreport variables
       hess_inv(); // Invert Hess and write to admodel.cov
       function_minimizer::output_flag=oldoutput;
-      cout << "done!" << endl;
+      cout << "done" << endl;
     }
   } // end loop over hess_steps
   
@@ -221,7 +221,7 @@ void function_minimizer::hess_step(){
     function_minimizer::output_flag=0;
     computations1(ad_comm::argc,ad_comm::argv);
     function_minimizer::output_flag=oldoutput;
-    cout << " done!" << endl;
+    cout << " done" << endl;
     cout << endl << "The " << Nstep << " Hessian step(s) reduced maxgrad from " <<
       maxgrad0 << " to " << maxgrad2 << " and NLL by " << nll-nll2 << "." << endl <<
       "All output files should be updated, but confirm as this is experimental still." << endl <<
@@ -316,18 +316,18 @@ void check_for_params_on_bounds(ostream& os){
 	    adstring par_name = par_name_base;
 	    if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
 	    if ((valp-minb)/(maxb-minb)<0.001) {
-	      if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-	      os<<"   "<<par_name<<" is within 0.1\% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+	      if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+	      os<<"  "<<par_name<<" is within 0.1\% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	    } else if ((valp-minb)/(maxb-minb)<0.01) {
-	      if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-	      os<<"   "<<par_name<<" is within 1% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+	      if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+	      os<<"  "<<par_name<<" is within 1% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	    }
 	    if ((maxb-valp)/(maxb-minb)<0.001) {
-	      if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-	      os<<"   "<<par_name<<" is within 0.1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+	      if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+	      os<<"  "<<par_name<<" is within 0.1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	    } else if ((maxb-valp)/(maxb-minb)<0.01) {
-	      if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-	      os<<"   "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+	      if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+	      os<<"  "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	    }
 	  } else if (dynamic_cast<param_init_bounded_dev_vector*>(varptr) != nullptr) {
 	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_dev_vector with "<<jmax<<" elements."<<endl;
@@ -339,22 +339,22 @@ void check_for_params_on_bounds(ostream& os){
 	      adstring par_name = par_name_base+"["+str(j)+"]";
 	      if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
 	      if ((valp-minb)/(maxb-minb)<0.001) {
-		if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		os<<"   "<<par_name<<" is within 0.1\% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		os<<"  "<<par_name<<" is within 0.1\% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      } else if ((valp-minb)/(maxb-minb)<0.01) {
-		if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		os<<"   "<<par_name<<" is within 1% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		os<<"  "<<par_name<<" is within 1% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      }
 	      if ((maxb-valp)/(maxb-minb)<0.001) {
-		if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		os<<"   "<<par_name<<" is within 0.1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		os<<"  "<<par_name<<" is within 0.1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      } else if ((maxb-valp)/(maxb-minb)<0.01) {
-		if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		os<<"   "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		os<<"  "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      }
 	    }//-j
 	  } else if (dynamic_cast<param_init_bounded_vector*>(varptr) != nullptr) {
-	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_vector with "<<jmax<<" elements."<<endl;
+	    if (debug) os<<"  "<<par_name_base<<" is a param_init_bounded_vector with "<<jmax<<" elements."<<endl;
 	    param_init_bounded_vector* p = dynamic_cast<param_init_bounded_vector*>(varptr);
 	    double minb = p->get_minb();
 	    double maxb = p->get_maxb();
@@ -363,18 +363,18 @@ void check_for_params_on_bounds(ostream& os){
 	      adstring par_name = par_name_base+"["+str(j)+"]";
 	      if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
 	      if ((valp-minb)/(maxb-minb)<0.001) {
-		if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		os<<"   "<<par_name<<" is within 0.1\% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		os<<"  "<<par_name<<" is within 0.1\% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      } else if ((valp-minb)/(maxb-minb)<0.01) {
-		if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		os<<"   "<<par_name<<" is within 1% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		os<<"  "<<par_name<<" is within 1% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      }
 	      if ((maxb-valp)/(maxb-minb)<0.001) {
-		if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		os<<"   "<<par_name<<" is within 0.1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		os<<"  "<<par_name<<" is within 0.1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      } else if ((maxb-valp)/(maxb-minb)<0.01) {
-		if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		os<<"   "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		os<<"  "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 	      }
 	    }//-j
 	  } else if (dynamic_cast<param_init_bounded_matrix*>(varptr)!=nullptr) {
@@ -389,18 +389,18 @@ void check_for_params_on_bounds(ostream& os){
 		double valp = ::value(v[k]);
 		if (debug) os<<"   "<<par_name<<": "<<minb<<" < "<<valp<<" < "<<maxb<<"?"<<endl;
 		if ((valp-minb)/(maxb-minb)<0.001) {
-		  if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		  os<<"   "<<par_name<<" is within 0.1\% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		  if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		  os<<"  "<<par_name<<" is within 0.1\% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 		} else if ((valp-minb)/(maxb-minb)<0.01) {
-		  if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		  os<<"   "<<par_name<<" is within 1% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		  if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		  os<<"  "<<par_name<<" is within 1% of lower bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 		}
 		if ((maxb-valp)/(maxb-minb)<0.001) {
-		  if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		  os<<"   "<<par_name<<" is within 0.1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		  if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		  os<<"  "<<par_name<<" is within 0.1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 		} else if ((maxb-valp)/(maxb-minb)<0.01) {
-		  if(counter==0){os << endl << "  Warning: the following parameters had issues:" << endl; counter++;}
-		  os<<"   "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
+		  if(counter==0){os << "Warning: the following parameters had issues" << endl; counter++;}
+		  os<<"  "<<par_name<<" is within 1\% of upper bound: "<<minb<<" < "<<valp<<" < "<<maxb<<endl;
 		}
 	      }//-k
 	    }//-j
@@ -416,12 +416,5 @@ void check_for_params_on_bounds(ostream& os){
     if (debug) os<<"--Model appears to be autodiff only: no bounds checking performed."<<endl;
   }
   if (debug) os<<"Finished initial_params::check_parameters_on_bounds"<<endl;
-  if(counter==0){
-    os << " none found!" << endl;
-  } else {
-    os << " done!" << endl;
-  }
+  if (counter > 0) os << endl;
 }
-
-
-

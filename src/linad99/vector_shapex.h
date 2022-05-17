@@ -47,7 +47,7 @@ class vector_shapex
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
-  thread_local static vector_shape_pool* xpool;
+  static vector_shape_pool* xpool;
 
   void* operator new(size_t);
   void operator delete(void* ptr, size_t);

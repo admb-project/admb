@@ -112,7 +112,7 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
-//#define USE_VECTOR_SHAPE_POOL
+#define USE_VECTOR_SHAPE_POOL
 
 #if defined(USE_DDOUBLE)
 #   include <qd/qd.h>
@@ -510,7 +510,7 @@ class vector_shape
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
-  thread_local static vector_shape_pool* xpool;
+  static vector_shape_pool* xpool;
 
   void* operator new(size_t);
   void operator delete(void* ptr, size_t);
@@ -1764,7 +1764,7 @@ class ts_vector_shapex
    friend class dvar_vector;
 
 #  if defined(USE_VECTOR_SHAPE_POOL)
-   thread_local static ts_vector_shape_pool** xpool;
+   static ts_vector_shape_pool** xpool;
    void *operator new(size_t);
    void operator delete(void *ptr, size_t n);
 #  endif
@@ -2027,7 +2027,7 @@ class arr_link
 
 #if defined(USE_VECTOR_SHAPE_POOL)
 public:
-  thread_local static vector_shape_pool* xpool;
+  static vector_shape_pool* xpool;
 
   void* operator new(size_t);
   void operator delete(void* ptr, size_t);

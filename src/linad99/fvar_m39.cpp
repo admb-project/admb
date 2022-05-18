@@ -147,11 +147,12 @@ dvar_matrix choleski_decomp(const dvar_matrix& MM)
   //cout << B << endl;
   //cout << L << endl;
 
+  DF_FILE* fp = gradient_structure::get_fp();
   dvar_matrix vc=nograd_assign(L);
   save_identifier_string("rs");
   vc.save_dvar_matrix_position();
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value();
+  MM.save_dvar_matrix_value(fp);
   save_identifier_string("rl");
   MM.save_dvar_matrix_position();
   save_identifier_string("ro");
@@ -166,12 +167,14 @@ dvar_matrix choleski_decomp(const dvar_matrix& MM)
  */
 void dfcholeski_decomp(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("ro");
-  dvar_matrix_position MMpos=restore_dvar_matrix_position();
+  dvar_matrix_position MMpos=restore_dvar_matrix_position(fp);
   verify_identifier_string("rl");
   dmatrix M=restore_dvar_matrix_value(MMpos);
   verify_identifier_string("rt");
-  dvar_matrix_position vcpos=restore_dvar_matrix_position();
+  dvar_matrix_position vcpos=restore_dvar_matrix_position(fp);
   verify_identifier_string("rs");
   dmatrix dfL=restore_dvar_matrix_derivatives(vcpos);
 

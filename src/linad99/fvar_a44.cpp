@@ -27,10 +27,11 @@ dvar_vector square(const dvar_vector& v1)
     vtmp.elem_value(i)=x*x;
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("sddd");
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
-  vtmp.save_dvar_vector_position();
+  v1.save_dvar_vector_value(fp);
+  v1.save_dvar_vector_position(fp);
+  vtmp.save_dvar_vector_position(fp);
   save_identifier_string("eee");
   gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(DF_dvsquare);
@@ -43,11 +44,13 @@ dvar_vector square(const dvar_vector& v1)
  */
 void DF_dvsquare(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position(fp);
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position(fp);
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("sddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -79,10 +82,11 @@ dvar_vector cube(const dvar_vector& v1)
     vtmp.elem_value(i)=x*x*x;
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("sssd");
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
-  vtmp.save_dvar_vector_position();
+  v1.save_dvar_vector_value(fp);
+  v1.save_dvar_vector_position(fp);
+  vtmp.save_dvar_vector_position(fp);
   save_identifier_string("tee");
   gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(DF_dvcube);
@@ -95,11 +99,13 @@ dvar_vector cube(const dvar_vector& v1)
  */
 void DF_dvcube(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("tee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position(fp);
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position(fp);
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("sssd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -131,10 +137,11 @@ dvar_vector fourth(const dvar_vector& v1)
     vtmp.elem_value(i)=x2*x2;
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("ssf");
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
-  vtmp.save_dvar_vector_position();
+  v1.save_dvar_vector_value(fp);
+  v1.save_dvar_vector_position(fp);
+  vtmp.save_dvar_vector_position(fp);
   save_identifier_string("gee");
   gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(DF_dvfourth);
@@ -147,11 +154,13 @@ dvar_vector fourth(const dvar_vector& v1)
  */
 void DF_dvfourth(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("gee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position(fp);
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position(fp);
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ssf");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());

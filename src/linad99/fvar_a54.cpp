@@ -18,15 +18,17 @@
  */
 dvar_vector operator-(const dvector& t1, const prevariable& x)
   {
+    DF_FILE* fp = gradient_structure::get_fp();
+
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("zcb");
-    x.save_prevariable_position();
+    x.save_prevariable_position(fp);
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
     {
       tmp.elem_value(i)=t1.elem(i)-value(x);
     }
-    tmp.save_dvar_vector_position();
+    tmp.save_dvar_vector_position(fp);
     save_identifier_string("ddu");
     RETURN_ARRAYS_DECREMENT();
     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_v_xdble_diff);
@@ -39,9 +41,11 @@ dvar_vector operator-(const dvector& t1, const prevariable& x)
  */
  void DF_v_xdble_diff(void)
  {
+    DF_FILE* fp = gradient_structure::get_fp();
+
     verify_identifier_string("ddu");
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
-    prevariable_position xpos=restore_prevariable_position();
+    dvar_vector_position tmp_pos=restore_dvar_vector_position(fp);
+    prevariable_position xpos=restore_prevariable_position(fp);
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     verify_identifier_string("zcb");
     //double xinv=1./x;

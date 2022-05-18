@@ -24,13 +24,12 @@
 /**
  * Saves size and address information for a dmatrix to adjoint data file.
  */
-void dmatrix::save_dmatrix_position(void) const
+void dmatrix::save_dmatrix_position(DF_FILE* fp) const
 {
-  dmatrix_position tmp(*this);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  constexpr size_t wsize = sizeof(int);
+  constexpr size_t wsize1 = sizeof(void*);
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  dmatrix_position tmp(*this);
 
   int min=rowmin();
   int max=rowmax();
@@ -68,19 +67,23 @@ void d3_array::save_d3_array_position() const
 */
   gradient_structure::get_fp()->fwrite(&(mmin),wsize);
   gradient_structure::get_fp()->fwrite(&(mmax),wsize);
+
+assert(false);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-d3_array_position restore_d3_array_position(void)
+d3_array_position restore_d3_array_position(DF_FILE* fp)
 {
+  constexpr size_t wsize = sizeof(int);
+
   // saves the size and address information for a dvar_vector
   int mmin;
   int mmax;
-  gradient_structure::get_fp()->fread(&mmax,sizeof(int));
-  gradient_structure::get_fp()->fread(&mmin,sizeof(int));
+  fp->fread(&mmax, wsize);
+  fp->fread(&mmin, wsize);
   d3_array_position tmp(mmin,mmax);
   return tmp;
 }
@@ -89,21 +92,22 @@ d3_array_position restore_d3_array_position(void)
  * Reads back the size and address information for a dvar_matrix,
  * restores the size, address, and value information for a dvar_vector
  */
-dvar_matrix_position restore_dvar_matrix_position(void)
+dvar_matrix_position restore_dvar_matrix_position(DF_FILE* fp)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  constexpr size_t wsize = sizeof(int);
+  constexpr size_t wsizev = sizeof(void*);
 
   int min;
   int max;
-  fp->fread(&max,sizeof(int));
-  fp->fread(&min,sizeof(int));
+  fp->fread(&max, wsize);
+  fp->fread(&min, wsize);
   dvar_matrix_position tmp(min,max);
   // cout << "tmp.ptr= " << tmp.ptr ;
   for (int i=max;i>=min;i--)
   {
-    fp->fread(&(tmp.ptr(i)),sizeof(void*));
-    fp->fread(&(tmp.ub(i)),sizeof(int));
-    fp->fread(&(tmp.lb(i)),sizeof(int));
+    fp->fread(&(tmp.ptr(i)), wsizev);
+    fp->fread(&(tmp.ub(i)), wsize);
+    fp->fread(&(tmp.lb(i)), wsize);
   }
   return tmp;
 }
@@ -112,23 +116,24 @@ dvar_matrix_position restore_dvar_matrix_position(void)
  * Description not yet available.
  * \param
  */
-dmatrix_position restore_dmatrix_position(void)
+dmatrix_position restore_dmatrix_position(DF_FILE* fp)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  constexpr size_t wsize = sizeof(int);
+  constexpr size_t wsizev = sizeof(void*);
 
   // reads back the size and address information for a dvar_matrix
   // restores the size, address, and value information for a dvar_vector
   int min;
   int max;
-  fp->fread(&max,sizeof(int));
-  fp->fread(&min,sizeof(int));
+  fp->fread(&max, wsize);
+  fp->fread(&min, wsize);
   dmatrix_position tmp(min,max);
   // cout << "tmp.ptr= " << tmp.ptr ;
   for (int i=max;i>=min;i--)
   {
-    fp->fread(&(tmp.ptr(i)),sizeof(void*));
-    fp->fread(&(tmp.ub(i)),sizeof(int));
-    fp->fread(&(tmp.lb(i)),sizeof(int));
+    fp->fread(&(tmp.ptr(i)), wsizev);
+    fp->fread(&(tmp.ub(i)), wsize);
+    fp->fread(&(tmp.lb(i)), wsize);
   }
   return tmp;
 }

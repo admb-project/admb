@@ -3153,10 +3153,11 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   save_int_value(nlkicount);
   save_int_value(nccount);
 
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("tu");
-  C.x.save_dvar_vector_position();
+  C.x.save_dvar_vector_position(fp);
   save_identifier_string("wy");
-  L.x.save_dvar_vector_position();
+  L.x.save_dvar_vector_position(fp);
   save_identifier_string("iy");
   save_ad_pointer(&S);
   save_ad_pointer(&sparse_triplet2);
@@ -3169,15 +3170,17 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
 
 static void dfcholeski_sparse(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("dg");
   dcompressed_triplet * sparse_triplet2  =
     ( dcompressed_triplet *) restore_ad_pointer();
   hs_symbolic & S  =
     *( hs_symbolic * ) restore_ad_pointer();
   verify_identifier_string("iy");
-  dvar_vector_position dpos=restore_dvar_vector_position();
+  dvar_vector_position dpos=restore_dvar_vector_position(fp);
   verify_identifier_string("wy");
-  dvar_vector_position cpos=restore_dvar_vector_position();
+  dvar_vector_position cpos=restore_dvar_vector_position(fp);
   verify_identifier_string("tu");
 
   int nccount=restore_int_value();
@@ -3547,8 +3550,10 @@ void dvar_hs_smatrix::set_symbolic(hs_symbolic& s)
 
 void report_dvar_vector_derivatives(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("jr");
-  /*dvar_vector_position dpos=*/restore_dvar_vector_position();
+  /*dvar_vector_position dpos=*/restore_dvar_vector_position(fp);
   //dvector  dfLx=restore_dvar_vector_derivatives(dpos);
   verify_identifier_string("jx");
 }
@@ -3556,8 +3561,9 @@ void report_dvar_vector_derivatives(void)
 
 void report_derivatives(const dvar_vector& x)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("jx");
-  x.save_dvar_vector_position();
+  x.save_dvar_vector_position(fp);
   gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(report_dvar_vector_derivatives);
   save_identifier_string("jr");

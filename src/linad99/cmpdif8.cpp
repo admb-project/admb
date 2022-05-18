@@ -36,10 +36,12 @@ void save_double_derivative(const double x, const prevariable_position& _pos)
  * Description not yet available.
  * \param
  */
-prevariable_position restore_prevariable_position(void)
+prevariable_position restore_prevariable_position(DF_FILE* fp)
 {
+  constexpr size_t wsize = sizeof(double_and_int*);
+
   double_and_int* tmp;
-  gradient_structure::get_fp()->fread(&tmp, sizeof(double_and_int*));
+  fp->fread(&tmp, wsize); 
   return prevariable_position(tmp);
 }
 
@@ -47,25 +49,22 @@ prevariable_position restore_prevariable_position(void)
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_position() const
+void prevariable::save_prevariable_position(DF_FILE* fp) const
 {
+  constexpr size_t wsize = sizeof(double_and_int*);
+
   double_and_int* tmp = get_v();
-  size_t wsize = sizeof(double_and_int*);
-  gradient_structure::get_fp()->fwrite(&tmp, wsize);
+  fp->fwrite(&tmp, wsize);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_value(void) const
+void prevariable::save_prevariable_value(DF_FILE* fp) const
 {
-  //double_and_int * tmp=get_v();
-  //const unsigned wsize=sizeof(double_and_int*);
-  //gradient_structure::get_fp()->fwrite(&tmp,wsize);
   double x=value(*this);
-  //const unsigned dsize=sizeof(double);
-  gradient_structure::get_fp()->fwrite(x);
+  fp->fwrite(x);
 }
 
 /**
@@ -74,7 +73,6 @@ void prevariable::save_prevariable_value(void) const
  */
 void save_double_value(const double x)
 {
-  //const unsigned wsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);
 }
 
@@ -84,7 +82,6 @@ void save_double_value(const double x)
  */
 void save_int_value( int x)
 {
-  //const unsigned wsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);
 }
 
@@ -113,12 +110,12 @@ double restore_prevariable_derivative(const prevariable_position& _pos)
  * Description not yet available.
  * \param
  */
-double restore_prevariable_derivative(void)
+double restore_prevariable_derivative(DF_FILE* fp)
 {
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
   double_and_int* tmp;
-  gradient_structure::get_fp()->fread(&tmp,sizeof(double_and_int *));
+  fp->fread(&tmp,sizeof(double_and_int *));
   double tmpout=tmp->x;
   tmp->x=0.0;
   return tmpout;
@@ -128,12 +125,12 @@ double restore_prevariable_derivative(void)
  * Description not yet available.
  * \param
  */
-double restore_prevariable_value(void)
+double restore_prevariable_value(DF_FILE* fp)
 {
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
   double tmpout = 0;
-  gradient_structure::get_fp()->fread(&tmpout,sizeof(double));
+  fp->fread(&tmpout,sizeof(double));
   return tmpout;
 }
 

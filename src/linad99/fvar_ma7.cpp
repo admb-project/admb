@@ -30,8 +30,10 @@ void dvar_matrix::initialize(void)
  */
 void dfmatinit(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("q");
-  dvar_matrix_position tmp_pos=restore_dvar_matrix_position();
+  dvar_matrix_position tmp_pos=restore_dvar_matrix_position(fp);
   verify_identifier_string("p");
   dmatrix tmp(tmp_pos);
   tmp.initialize();

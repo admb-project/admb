@@ -24,9 +24,10 @@ dvar_vector& dvar_vector::operator-=(const prevariable& d)
     }
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("Pvv");
-  save_dvar_vector_position();  // for this->
-  d.save_prevariable_position();
+  save_dvar_vector_position(fp);  // for this->
+  d.save_prevariable_position(fp);
   save_identifier_string("Pxx");
   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dv_xminuseq);
 
@@ -37,10 +38,12 @@ Adjoint function to compute gradients for dvar_vector::operator-=(const prevaria
 */
 void dv_xminuseq(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Pxx");
-  prevariable_position d_pos=restore_prevariable_position();
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  prevariable_position d_pos=restore_prevariable_position(fp);
+  dvar_vector_position this_pos=restore_dvar_vector_position(fp);
   verify_identifier_string("Pvv");
   dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
   double temp=-sum(dfthis);
@@ -64,9 +67,10 @@ dvar_vector& dvar_vector::operator+=(const prevariable& d)
     }
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("Qvv");
-  save_dvar_vector_position();  // for this->
-  d.save_prevariable_position();
+  save_dvar_vector_position(fp);  // for this->
+  d.save_prevariable_position(fp);
   save_identifier_string("Qxx");
   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dv_xpluseq);
 
@@ -77,10 +81,12 @@ Adjoint function to compute gradients for dvar_vector::operator+=(const prevaria
 */
 void dv_xpluseq(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Qxx");
-  prevariable_position d_pos=restore_prevariable_position();
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  prevariable_position d_pos=restore_prevariable_position(fp);
+  dvar_vector_position this_pos=restore_dvar_vector_position(fp);
   verify_identifier_string("Qvv");
   dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
   double temp=sum(dfthis);

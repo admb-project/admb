@@ -45,17 +45,18 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
+  v1.save_dvar_vector_value(fp);
+  v1.save_dvar_vector_position(fp);
   save_identifier_string("wwww");
-  tmp_inv.save_dvector_value();
-  tmp_inv.save_dvector_position();
+  tmp_inv.save_dvector_value(fp);
+  tmp_inv.save_dvector_position(fp);
   save_identifier_string("vvvv");
-  v2.save_dvar_vector_position();
+  v2.save_dvar_vector_position(fp);
   save_identifier_string("uuuu");
-  tmp.save_dvar_vector_position();
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("aaaa");
   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
   RETURN_ARRAYS_DECREMENT();
@@ -66,17 +67,18 @@ Adjoint gradient computation of elem_div(const dvar_vector&, const dvar_vector&)
 */
 void dvdv_elem_div(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=restore_dvar_vector_position(fp);
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
   verify_identifier_string("uuuu");
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=restore_dvar_vector_position(fp);
   verify_identifier_string("vvvv");
-  dvector_position tmp_divpos=restore_dvector_position();
+  dvector_position tmp_divpos=restore_dvector_position(fp);
   dvector tmp_div=restore_dvector_value(tmp_divpos);
   verify_identifier_string("wwww");
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position(fp);
   dvector cv1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("bbbb");
   dvector dfv1(cv1.indexmin(),cv1.indexmax());
@@ -120,15 +122,16 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
+  v1.save_dvar_vector_value(fp);
+  v1.save_dvar_vector_position(fp);
   save_identifier_string("wwww");
-  tmp_inv.save_dvector_value();
-  tmp_inv.save_dvector_position();
+  tmp_inv.save_dvector_value(fp);
+  tmp_inv.save_dvector_position(fp);
   save_identifier_string("vvvv");
-  tmp.save_dvar_vector_position();
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("aaaa");
   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
   RETURN_ARRAYS_DECREMENT();
@@ -139,15 +142,16 @@ Adjoint gradient computation of elem_div(const dvar_vector&, const dvector&)
 */
 void dvcv_elem_div(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=restore_dvar_vector_position(fp);
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
   verify_identifier_string("vvvv");
-  dvector_position tmp_divpos=restore_dvector_position();
+  dvector_position tmp_divpos=restore_dvector_position(fp);
   dvector tmp_div=restore_dvector_value(tmp_divpos);
   verify_identifier_string("wwww");
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position(fp);
   dvector cv1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("bbbb");
   dvector dfv1(cv1.indexmin(),cv1.indexmax());
@@ -187,14 +191,15 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
     tmp_inv.elem(i)=-tmp.elem_value(i)*x;
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   // The derivative list considerations
   save_identifier_string("bbbb");
-  tmp_inv.save_dvector_value();
-  tmp_inv.save_dvector_position();
+  tmp_inv.save_dvector_value(fp);
+  tmp_inv.save_dvector_position(fp);
   save_identifier_string("vvvv");
-  v2.save_dvar_vector_position();
+  v2.save_dvar_vector_position(fp);
   save_identifier_string("uuuu");
-  tmp.save_dvar_vector_position();
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("aaaa");
   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
   RETURN_ARRAYS_DECREMENT();
@@ -205,14 +210,15 @@ Adjoint gradient computation of elem_div(const dvector&, const dvar_vector&)
 */
 void cvdv_elem_div(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=restore_dvar_vector_position(fp);
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
   verify_identifier_string("uuuu");
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=restore_dvar_vector_position(fp);
   verify_identifier_string("vvvv");
-  dvector_position tmp_divpos=restore_dvector_position();
+  dvector_position tmp_divpos=restore_dvector_position(fp);
   dvector tmp_div=restore_dvector_value(tmp_divpos);
   verify_identifier_string("bbbb");
   dvector dfv2(tmp_div.indexmin(),tmp_div.indexmax());

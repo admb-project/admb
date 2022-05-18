@@ -35,11 +35,12 @@ dvar_vector mfexp(const dvar_vector& v1)
     }
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("ddt");
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
-  vtmp.save_dvar_vector_value();
-  vtmp.save_dvar_vector_position();
+  v1.save_dvar_vector_value(fp);
+  v1.save_dvar_vector_position(fp);
+  vtmp.save_dvar_vector_value(fp);
+  vtmp.save_dvar_vector_position(fp);
   save_identifier_string("see");
   gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(DF_dvmfexp);
@@ -52,12 +53,14 @@ dvar_vector mfexp(const dvar_vector& v1)
  */
 void DF_dvmfexp(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("see");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position(fp);
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvector vtmp=restore_dvar_vector_value(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position(fp);
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddt");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());

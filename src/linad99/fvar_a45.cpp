@@ -46,13 +46,14 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*v2.elem_value(i);
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   // The derivative list considerations
   save_identifier_string("b");
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
-  v2.save_dvar_vector_value();
-  v2.save_dvar_vector_position();
-  tmp.save_dvar_vector_position();
+  v1.save_dvar_vector_value(fp);
+  v1.save_dvar_vector_position(fp);
+  v2.save_dvar_vector_value(fp);
+  v2.save_dvar_vector_position(fp);
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("a");
   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvdv_elem_prod);
   RETURN_ARRAYS_DECREMENT();
@@ -65,13 +66,15 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_elem_prod(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=restore_dvar_vector_position(fp);
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=restore_dvar_vector_position(fp);
   dvector cv2=restore_dvar_vector_value(v2pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position(fp);
   dvector cv1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("b");
   dvector dfv1(cv1.indexmin(),cv1.indexmax());
@@ -110,12 +113,13 @@ dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
     tmp.elem_value(i)=v1.elem(i)*v2.elem_value(i);
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   // The derivative list considerations
   save_identifier_string("b");
-  v1.save_dvector_value();
-  v1.save_dvector_position();
-  v2.save_dvar_vector_position();
-  tmp.save_dvar_vector_position();
+  v1.save_dvector_value(fp);
+  v1.save_dvector_position(fp);
+  v2.save_dvar_vector_position(fp);
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("a");
   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(cvdv_elem_prod);
   RETURN_ARRAYS_DECREMENT();
@@ -128,12 +132,13 @@ dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
  */
 void cvdv_elem_prod(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=restore_dvar_vector_position(fp);
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
-  dvar_vector_position v2pos=restore_dvar_vector_position();
-  dvector_position v1pos=restore_dvector_position();
+  dvar_vector_position v2pos=restore_dvar_vector_position(fp);
+  dvector_position v1pos=restore_dvector_position(fp);
   dvector cv1=restore_dvector_value(v1pos);
   verify_identifier_string("b");
   dvector dfv2(cv1.indexmin(),cv1.indexmax());
@@ -169,12 +174,13 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*v2.elem(i);
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
   // The derivative list considerations
   save_identifier_string("b");
-  v1.save_dvar_vector_position();
-  v2.save_dvector_value();
-  v2.save_dvector_position();
-  tmp.save_dvar_vector_position();
+  v1.save_dvar_vector_position(fp);
+  v2.save_dvector_value(fp);
+  v2.save_dvector_position(fp);
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("a");
   gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvcv_elem_prod);
   RETURN_ARRAYS_DECREMENT();
@@ -187,13 +193,14 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
  */
 void dvcv_elem_prod(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=restore_dvar_vector_position(fp);
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
-  dvector_position v2pos=restore_dvector_position();
+  dvector_position v2pos=restore_dvector_position(fp);
   dvector cv2=restore_dvector_value(v2pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position(fp);
   verify_identifier_string("b");
   dvector dfv1(cv2.indexmin(),cv2.indexmax());
   for (int i=cv2.indexmin();i<=cv2.indexmax();i++)

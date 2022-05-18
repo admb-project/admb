@@ -64,12 +64,13 @@ dvariable operator*(const dvector& cv1, const dvar_vector& v2)
 #endif
   dvariable vtmp=nograd_assign(tmp);
 
+  DF_FILE* fp = gradient_structure::get_fp();
   // The derivative list considerations
   save_identifier_string("bbbb");
-  cv1.save_dvector_value();
-  cv1.save_dvector_position();
-  v2.save_dvar_vector_position();
-  vtmp.save_prevariable_position();
+  cv1.save_dvector_value(fp);
+  cv1.save_dvector_position(fp);
+  v2.save_dvar_vector_position(fp);
+  vtmp.save_prevariable_position(fp);
   save_identifier_string("aaaa");
   gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(cvdv_dot);
@@ -82,10 +83,11 @@ dvariable operator*(const dvector& cv1, const dvar_vector& v2)
  */
 void cvdv_dot(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   verify_identifier_string("aaaa");
-  double dftmp=restore_prevariable_derivative();
-  dvar_vector_position v2pos=restore_dvar_vector_position();
-  dvector_position dpos=restore_dvector_position();
+  double dftmp=restore_prevariable_derivative(fp);
+  dvar_vector_position v2pos=restore_dvar_vector_position(fp);
+  dvector_position dpos=restore_dvector_position(fp);
   dvector cv1=restore_dvector_value(dpos);
   dvector dfv2(cv1.indexmin(),cv1.indexmax());
   verify_identifier_string("bbbb");

@@ -42,11 +42,12 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
      }
      tmp.elem_value(i)=sum;
    }
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("PL4");
-  x.save_dvector_value();
-  x.save_dvector_position();
+  x.save_dvector_value(fp);
+  x.save_dvector_position(fp);
   m.save_dvar_matrix_position();
-  tmp.save_dvar_vector_position();
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("PLX");
   gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dmcv_prod);
@@ -60,10 +61,12 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
  */
 void dmcv_prod(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("PLX");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
-  dvar_matrix_position m_pos=restore_dvar_matrix_position();
-  dvar_vector_position x_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position(fp);
+  dvar_matrix_position m_pos=restore_dvar_matrix_position(fp);
+  dvar_vector_position x_pos=restore_dvar_vector_position(fp);
   dvector x=restore_dvar_vector_value(x_pos);
   verify_identifier_string("PL4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);

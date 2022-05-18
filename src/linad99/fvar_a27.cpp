@@ -33,8 +33,9 @@
    {
      va[i].x=t[i];
    }
+   DF_FILE* fp = gradient_structure::get_fp();
    save_identifier_string("b");
-   this->save_dvar_vector_position();
+   this->save_dvar_vector_position(fp);
    save_identifier_string("a");
    gradient_structure::get()->GRAD_STACK1->
      set_gradient_stack(dv_init);

@@ -158,19 +158,20 @@ dvariable det(const dvar_matrix& aa)
   }
   double det=part_prod(ub);
   dvariable rdet=nograd_assign(det);
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("PLACE7");
-  part_prod.save_dvector_value();
-  part_prod.save_dvector_position();
-  indx.save_ivector_value();
-  indx.save_ivector_position();
+  part_prod.save_dvector_value(fp);
+  part_prod.save_dvector_position(fp);
+  indx.save_ivector_value(fp);
+  indx.save_ivector_position(fp);
   save_identifier_string("PLACE3");
   aa.save_dvar_matrix_position();
   save_identifier_string("PLACE2b");
-  rdet.save_prevariable_position();
+  rdet.save_prevariable_position(fp);
   save_identifier_string("PLACE2a");
-  bb.save_dmatrix_value();
+  bb.save_dmatrix_value(fp);
   save_identifier_string("PLACE2");
-  bb.save_dmatrix_position();
+  bb.save_dmatrix_position(fp);
   save_identifier_string("PLACE1");
   save_double_value(d);
   save_identifier_string("PLACE0");
@@ -182,21 +183,22 @@ dvariable det(const dvar_matrix& aa)
 /** Adjoint code for dvariable det(const dvar_matrix& aa) */
 void df_xdet(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   verify_identifier_string("PLACE0");
   double d=restore_double_value();
   verify_identifier_string("PLACE1");
-  dmatrix_position bpos=restore_dmatrix_position();
+  dmatrix_position bpos=restore_dmatrix_position(fp);
   verify_identifier_string("PLACE2");
   dmatrix b=restore_dmatrix_value(bpos);
   verify_identifier_string("PLACE2a");
   //dvar_matrix_position rdet_pos=restore_prevariable_position();
-  double dfdet=restore_prevariable_derivative();
+  double dfdet=restore_prevariable_derivative(fp);
   verify_identifier_string("PLACE2b");
-  dvar_matrix_position a_pos=restore_dvar_matrix_position();
+  dvar_matrix_position a_pos=restore_dvar_matrix_position(fp);
   verify_identifier_string("PLACE3");
-  ivector_position indx_pos=restore_ivector_position();
+  ivector_position indx_pos=restore_ivector_position(fp);
   ivector indx=restore_ivector_value(indx_pos);
-  dvector_position part_prod_pos=restore_dvector_position();
+  dvector_position part_prod_pos=restore_dvector_position(fp);
   dvector part_prod=restore_dvector_value(part_prod_pos);
   verify_identifier_string("PLACE7");
   int lb=b.colmin();

@@ -78,11 +78,12 @@ dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& cm2)
      throw e;
    }
    dvar_matrix vtmp=nograd_assign(tmp);
+   DF_FILE* fp = gradient_structure::get_fp();
    save_identifier_string("TEST1");
    //m1.save_dvar_matrix_value();
    m1.save_dvar_matrix_position();
-   cm2.save_dmatrix_value();
-   cm2.save_dmatrix_position();
+   cm2.save_dmatrix_value(fp);
+   cm2.save_dmatrix_position(fp);
    vtmp.save_dvar_matrix_position();
    save_identifier_string("TEST6");
    gradient_structure::get()->GRAD_STACK1->
@@ -96,12 +97,14 @@ dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& cm2)
  */
 void dmcm_prod(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("TEST6");
-  dvar_matrix_position vpos=restore_dvar_matrix_position();
+  dvar_matrix_position vpos=restore_dvar_matrix_position(fp);
   dmatrix dftmp=restore_dvar_matrix_derivatives(vpos);
-  dmatrix_position m2pos=restore_dmatrix_position();
+  dmatrix_position m2pos=restore_dmatrix_position(fp);
   dmatrix cm2=restore_dmatrix_value(m2pos);
-  dvar_matrix_position m1pos=restore_dvar_matrix_position();
+  dvar_matrix_position m1pos=restore_dvar_matrix_position(fp);
   //dmatrix cm1=restore_dvar_matrix_value(m1pos);
   verify_identifier_string("TEST1");
   dmatrix dfm1(m1pos);

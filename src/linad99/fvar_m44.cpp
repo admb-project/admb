@@ -46,9 +46,11 @@ dvar_matrix trans(const dvar_matrix& m1)
  */
 void dfmattrans(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("vv");
-  dvar_matrix_position t1pos=restore_dvar_matrix_position();
-  dvar_matrix_position m1pos=restore_dvar_matrix_position();
+  dvar_matrix_position t1pos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position m1pos=restore_dvar_matrix_position(fp);
   verify_identifier_string("uu");
   dmatrix dftmp=restore_dvar_matrix_derivatives(t1pos);
   dmatrix dfm1(m1pos);

@@ -25,7 +25,8 @@ dvar_vector& dvar_vector::operator/=(const double x)
     {
       elem_value(i)*=xinv;
     }
-    save_dvar_vector_position();
+    DF_FILE* fp = gradient_structure::get_fp();
+    save_dvar_vector_position(fp);
     save_double_value(x);
     save_identifier_string("cmtu");
     RETURN_ARRAYS_DECREMENT();
@@ -39,9 +40,11 @@ dvar_vector& dvar_vector::operator/=(const double x)
  */
  void DF_cdble_dv_diveq(void)
  {
+    DF_FILE* fp = gradient_structure::get_fp();
+
     verify_identifier_string("cmtu");
     double x=restore_double_value();
-    dvar_vector_position this_pos=restore_dvar_vector_position();
+    dvar_vector_position this_pos=restore_dvar_vector_position(fp);
     dvector dfthis=restore_dvar_vector_derivatives(this_pos);
     verify_identifier_string("wctf");
     double xinv=1./x;
@@ -62,6 +65,8 @@ dvar_vector& dvar_vector::operator/=(const double x)
  */
 dvar_vector& dvar_vector::operator/=(const prevariable& x)
   {
+    DF_FILE* fp = gradient_structure::get_fp();
+
     RETURN_ARRAYS_INCREMENT();
     double xinv=1./value(x);
     for (int i=indexmin(); i<=indexmax(); i++)
@@ -69,10 +74,10 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
       elem_value(i)=elem_value(i)*xinv;
     }
     save_identifier_string("wctg");
-    save_dvar_vector_value();
-    save_dvar_vector_position();
-    x.save_prevariable_value();
-    x.save_prevariable_position();
+    save_dvar_vector_value(fp);
+    save_dvar_vector_position(fp);
+    x.save_prevariable_value(fp);
+    x.save_prevariable_position(fp);
     save_identifier_string("cmtu");
     RETURN_ARRAYS_DECREMENT();
     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);
@@ -85,11 +90,13 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
  */
  void DF_vdble_dv_diveq(void)
  {
+    DF_FILE* fp = gradient_structure::get_fp();
+
     verify_identifier_string("cmtu");
-    prevariable_position x_pos=restore_prevariable_position();
+    prevariable_position x_pos=restore_prevariable_position(fp);
     double dfx=restore_prevariable_derivative(x_pos);
-    double x=restore_prevariable_value();
-    dvar_vector_position this_pos=restore_dvar_vector_position();
+    double x=restore_prevariable_value(fp);
+    dvar_vector_position this_pos=restore_dvar_vector_position(fp);
     dvector tmp=restore_dvar_vector_value(this_pos);
     dvector dfthis=restore_dvar_vector_derivatives(this_pos);
     verify_identifier_string("wctg");

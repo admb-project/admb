@@ -17,24 +17,24 @@
 /**
 Saves the size, address, and value information for a imatrix.
 */
-void imatrix::save_imatrix_value(void)
+void imatrix::save_imatrix_value(DF_FILE* fp)
 {
   for (int i=rowmin();i<=rowmax();i++)
   {
-    ((*this)(i).save_ivector_value());
-    ((*this)(i).save_ivector_position());
+    ((*this)(i).save_ivector_value(fp));
+    ((*this)(i).save_ivector_position(fp));
   }
 }
 /**
 Saves the size and address information for a imatrix.
 */
-void imatrix::save_imatrix_position(void)
+void imatrix::save_imatrix_position(DF_FILE* fp)
 {
   imatrix_position tmp(*this);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  //DF_FILE* fp = gradient_structure::get_fp();
 
   int min=rowmin();
   int max=rowmax();
@@ -50,20 +50,22 @@ void imatrix::save_imatrix_position(void)
 /**
 Reads and restores back the size and address information for a imatrix.
 */
-imatrix_position restore_imatrix_position(void)
+imatrix_position restore_imatrix_position(DF_FILE* fp)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  //DF_FILE* fp = gradient_structure::get_fp();
 
+  constexpr size_t sizeofint = sizeof(int);
+  constexpr size_t sizeofvoidp = sizeof(void*);
   int min;
   int max;
-  fp->fread(&max,sizeof(int));
-  fp->fread(&min,sizeof(int));
+  fp->fread(&max, sizeofint);
+  fp->fread(&min, sizeofint);
   imatrix_position tmp(min,max);
   for (int i=max;i>=min;i--)
   {
-    fp->fread(&(tmp.ptr(i)),sizeof(void*));
-    fp->fread(&(tmp.ub(i)),sizeof(int));
-    fp->fread(&(tmp.lb(i)),sizeof(int));
+    fp->fread(&(tmp.ptr(i)), sizeofvoidp);
+    fp->fread(&(tmp.ub(i)), sizeofint);
+    fp->fread(&(tmp.lb(i)), sizeofint);
   }
   return tmp;
 }
@@ -73,6 +75,7 @@ imatrix_position restore_imatrix_position(void)
  */
 imatrix restore_imatrix_value(const imatrix_position& mpos)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
   imatrix out(mpos);
@@ -80,7 +83,7 @@ imatrix restore_imatrix_value(const imatrix_position& mpos)
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
   {
-    ivector_position vpos=restore_ivector_position();
+    ivector_position vpos=restore_ivector_position(fp);
     out(i)=restore_ivector_value(vpos);
   }
   return out;

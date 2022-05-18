@@ -191,24 +191,24 @@ adstring get_string_marker(void)
  * Description not yet available.
  * \param
  */
-void ivector::save_ivector_position(void) const
+void ivector::save_ivector_position(DF_FILE* fp) const
 {
   // saves the size and address information for a ivector
-  size_t wsize=sizeof(ivector_position);
+  constexpr size_t wsize=sizeof(ivector_position);
   ivector_position tmp(*this);
-  gradient_structure::get_fp()->fwrite(&tmp, wsize);
+  fp->fwrite(&tmp, wsize);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void dvar_vector::save_dvar_vector_position(void) const
+void dvar_vector::save_dvar_vector_position(DF_FILE* fp) const
 {
   // saves the size and address information for a dvar_vector
-  size_t wsize=sizeof(dvar_vector_position);
+  constexpr size_t wsize=sizeof(dvar_vector_position);
   dvar_vector_position tmp(*this);
-  gradient_structure::get_fp()->fwrite(&tmp, wsize);
+  fp->fwrite(&tmp, wsize);
 }
 
 /**
@@ -218,7 +218,7 @@ void dvar_vector::save_dvar_vector_position(void) const
 void save_ad_pointer(void * p)
 {
   // saves the size and address information for a dvar_vector
-  size_t wsize=sizeof(void *);
+  constexpr size_t wsize=sizeof(void *);
   gradient_structure::get_fp()->fwrite(&p, wsize);
 }
 
@@ -230,7 +230,7 @@ void * restore_ad_pointer(void)
 {
   void * p=0;
   // saves the size and address information for a dvar_vector
-  size_t wsize=sizeof(void *);
+  constexpr size_t wsize=sizeof(void *);
   gradient_structure::get_fp()->fread(&p, wsize);
   return p;
 }

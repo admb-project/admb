@@ -238,12 +238,12 @@ class dvector
 
    ~dvector();
 
-   void save_dvector_position(void) const;
+   void save_dvector_position(DF_FILE* fp) const;
    void save_dvector_derivatives(const dvar_vector_position & pos) const;
    void save_dvector_derivatives_na(const dvar_vector_position & pos)
       const;
    void save_dvector_derivatives(void) const;
-   void save_dvector_value(void) const;
+   void save_dvector_value(DF_FILE* fp) const;
 
    //dvector operator()(int,int);
    dvector operator() (const lvector &);

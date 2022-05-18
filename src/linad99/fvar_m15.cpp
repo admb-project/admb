@@ -160,6 +160,8 @@ dvar_matrix inv(const dvar_matrix& aa)
     }
   }
 
+  DF_FILE* fp = gradient_structure::get_fp();
+
   dvector y(lb,ub);
   dvector x(lb,ub);
   //int lb=rowmin;
@@ -200,20 +202,19 @@ dvar_matrix inv(const dvar_matrix& aa)
       }
       x.elem(i)=sum/b.elem(i,i);
     }
-    y.save_dvector_value();
-    x.save_dvector_value();
+    y.save_dvector_value(fp);
+    x.save_dvector_value(fp);
     nograd_assign_column(vc,x,ii);
   }
-
   save_identifier_string("P5");
-  x.save_dvector_position();
-  y.save_dvector_position();
-  indx.save_ivector_value();
-  indx.save_ivector_position();
+  x.save_dvector_position(fp);
+  y.save_dvector_position(fp);
+  indx.save_ivector_value(fp);
+  indx.save_ivector_position(fp);
   aa.save_dvar_matrix_position();
   vc.save_dvar_matrix_position();
-  bb.save_dmatrix_value();
-  bb.save_dmatrix_position();
+  bb.save_dmatrix_value(fp);
+  bb.save_dmatrix_position(fp);
   save_identifier_string("P1");
   gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfinvpret);
@@ -224,15 +225,16 @@ dvar_matrix inv(const dvar_matrix& aa)
 */
 void dfinvpret(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   verify_identifier_string("P1");
-  dmatrix_position bpos=restore_dmatrix_position();
+  dmatrix_position bpos=restore_dmatrix_position(fp);
   dmatrix b=restore_dmatrix_value(bpos);
-  dvar_matrix_position v_pos=restore_dvar_matrix_position();
-  dvar_matrix_position a_pos=restore_dvar_matrix_position();
-  ivector_position indx_pos=restore_ivector_position();
+  dvar_matrix_position v_pos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position a_pos=restore_dvar_matrix_position(fp);
+  ivector_position indx_pos=restore_ivector_position(fp);
   ivector indx=restore_ivector_value(indx_pos);
-  dvector_position y_pos=restore_dvector_position();
-  dvector_position x_pos=restore_dvector_position();
+  dvector_position y_pos=restore_dvector_position(fp);
+  dvector_position x_pos=restore_dvector_position(fp);
   verify_identifier_string("P5");
   int lb=b.colmin();
   int ub=b.colmax();

@@ -41,6 +41,7 @@
 #ifndef __ADMB_IVECTOR_H__
 #define __ADMB_IVECTOR_H__
 
+#include "gradient_structure.h"
 #include "vector_shapex.h"
 
 /**
@@ -143,9 +144,9 @@ public:
 
    //operator int* () {return v;}
 
-   void save_ivector_position() const;
+   void save_ivector_position(DF_FILE* fp) const;
 
-   void save_ivector_value() const;
+   void save_ivector_value(DF_FILE* fp) const;
 
    void write_on(const ostream& s) const;
 

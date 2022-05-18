@@ -218,31 +218,32 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   }
 
   vc=nograd_assign(x);
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("PLACE8");
-  ln_unsigned_det.save_prevariable_position();
+  ln_unsigned_det.save_prevariable_position(fp);
   save_identifier_string("PLACE7");
-  part_prod.save_dvector_value();
-  part_prod.save_dvector_position();
+  part_prod.save_dvector_value(fp);
+  part_prod.save_dvector_position(fp);
   save_identifier_string("PLACE6");
-  y.save_dvector_value();
-  x.save_dvector_value();
+  y.save_dvector_value(fp);
+  x.save_dvector_value(fp);
   save_identifier_string("PLACE5");
-  x.save_dvector_position();
+  x.save_dvector_position(fp);
   save_identifier_string("PLACE4");
-  y.save_dvector_position();
-  indx.save_ivector_value();
+  y.save_dvector_position(fp);
+  indx.save_ivector_value(fp);
   save_identifier_string("PLACE3a");
-  indx.save_ivector_position();
+  indx.save_ivector_position(fp);
   save_identifier_string("PLACE3");
   aa.save_dvar_matrix_position();
   save_identifier_string("PLACE2b");
-  vc.save_dvar_vector_position();
+  vc.save_dvar_vector_position(fp);
   save_identifier_string("PLACE2a");
-  bb.save_dmatrix_value();
+  bb.save_dmatrix_value(fp);
   save_identifier_string("PLACE2");
-  bb.save_dmatrix_position();
+  bb.save_dmatrix_position(fp);
   save_identifier_string("PLACE1");
-  z.save_dvar_vector_position();
+  z.save_dvar_vector_position(fp);
   save_identifier_string("PLACE0");
   gradient_structure::get()->GRAD_STACK1->
      set_gradient_stack(dmdv_solve);
@@ -254,31 +255,32 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 /// dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 void dmdv_solve(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   verify_identifier_string("PLACE0");
-  dvar_vector_position zpos=restore_dvar_vector_position();
+  dvar_vector_position zpos=restore_dvar_vector_position(fp);
   verify_identifier_string("PLACE1");
-  dmatrix_position bpos=restore_dmatrix_position();
+  dmatrix_position bpos=restore_dmatrix_position(fp);
   verify_identifier_string("PLACE2");
   dmatrix b=restore_dmatrix_value(bpos);
   verify_identifier_string("PLACE2a");
-  dvar_vector_position v_pos=restore_dvar_vector_position();
+  dvar_vector_position v_pos=restore_dvar_vector_position(fp);
   verify_identifier_string("PLACE2b");
-  dvar_matrix_position a_pos=restore_dvar_matrix_position();
+  dvar_matrix_position a_pos=restore_dvar_matrix_position(fp);
   verify_identifier_string("PLACE3");
-  ivector_position indx_pos=restore_ivector_position();
+  ivector_position indx_pos=restore_ivector_position(fp);
   verify_identifier_string("PLACE3a");
   ivector indx=restore_ivector_value(indx_pos);
-  dvector_position y_pos=restore_dvector_position();
+  dvector_position y_pos=restore_dvector_position(fp);
   verify_identifier_string("PLACE4");
-  dvector_position x_pos=restore_dvector_position();
+  dvector_position x_pos=restore_dvector_position(fp);
   verify_identifier_string("PLACE5");
   dvector x=restore_dvector_value(x_pos);
   dvector y=restore_dvector_value(y_pos);
   verify_identifier_string("PLACE6");
-  dvector_position part_prod_pos=restore_dvector_position();
+  dvector_position part_prod_pos=restore_dvector_position(fp);
   dvector part_prod=restore_dvector_value(part_prod_pos);
   verify_identifier_string("PLACE7");
-  double df_ln_det=restore_prevariable_derivative();
+  double df_ln_det=restore_prevariable_derivative(fp);
   verify_identifier_string("PLACE8");
   int lb=b.colmin();
   int ub=b.colmax();

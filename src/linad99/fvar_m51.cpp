@@ -119,10 +119,11 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
 
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("ps");
-  vlog_det.save_prevariable_position();
+  vlog_det.save_prevariable_position(fp);
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value();
+  MM.save_dvar_matrix_value(fp);
   save_identifier_string("pl");
   MM.save_dvar_matrix_position();
   save_identifier_string("pa");
@@ -137,13 +138,15 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
  */
 void df_ln_det_choleski(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("pa");
-  dvar_matrix_position MMpos=restore_dvar_matrix_position();
+  dvar_matrix_position MMpos=restore_dvar_matrix_position(fp);
   verify_identifier_string("pl");
   dmatrix M=restore_dvar_matrix_value(MMpos);
   verify_identifier_string("rt");
   //prevariable_position vcpos=restore_prevariable_position();
-  double dflog_det=restore_prevariable_derivative();
+  double dflog_det=restore_prevariable_derivative(fp);
   verify_identifier_string("ps");
 
   if (M.colsize() != M.rowsize())
@@ -377,10 +380,11 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
  */
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("ps");
-  vlog_det.save_prevariable_position();
+  vlog_det.save_prevariable_position(fp);
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value();
+  MM.save_dvar_matrix_value(fp);
   save_identifier_string("pl");
   MM.save_dvar_matrix_position();
   save_identifier_string("pa");

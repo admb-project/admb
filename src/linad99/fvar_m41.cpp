@@ -33,12 +33,13 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
     }
     x.elem_value(i)=(v.elem_value(i)-ssum)/m.elem_value(i,i);
   }
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("rt");
-  m.save_dvar_matrix_value();
-  m.save_dvar_matrix_position();
-  v.save_dvar_vector_value();
-  v.save_dvar_vector_position();
-  x.save_dvar_vector_position();
+  m.save_dvar_matrix_value(fp);
+  m.save_dvar_matrix_position(fp);
+  v.save_dvar_vector_value(fp);
+  v.save_dvar_vector_position(fp);
+  x.save_dvar_vector_position(fp);
   save_identifier_string("ww");
   gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfbltsolve);
@@ -83,11 +84,13 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
  */
 void dfbltsolve(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("ww");
-  dvar_vector_position xpos=restore_dvar_vector_position();
-  dvar_vector_position vpos=restore_dvar_vector_position();
+  dvar_vector_position xpos=restore_dvar_vector_position(fp);
+  dvar_vector_position vpos=restore_dvar_vector_position(fp);
   dvector v=restore_dvar_vector_value(vpos);
-  dvar_matrix_position mpos=restore_dvar_matrix_position();
+  dvar_matrix_position mpos=restore_dvar_matrix_position(fp);
   banded_lower_triangular_dmatrix m=
     restore_banded_lower_triangular_dvar_matrix_value(mpos);
   verify_identifier_string("rt");

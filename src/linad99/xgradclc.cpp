@@ -280,11 +280,12 @@ do
     }
     //dtmp.save_dvector_value();
     //dtmp.save_dvector_position();
-    stmp.save_dvector_value();
-    stmp.save_dvector_position();
+    DF_FILE* fp = gradient_structure::get_fp();
+    stmp.save_dvector_value(fp);
+    stmp.save_dvector_position(fp);
 
     // save the address of the dependent variable for the funnel
-    size_t wsize=sizeof(double_and_int*);
+    constexpr size_t wsize=sizeof(double_and_int*);
     fp->fwrite(&zptr, wsize);
     save_identifier_string("ae");
 
@@ -300,9 +301,10 @@ do
  */
 void funnel_derivatives(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
   verify_identifier_string("ae");
-  prevariable_position deppos=restore_prevariable_position();
-  dvector_position stmp_pos=restore_dvector_position();
+  prevariable_position deppos=restore_prevariable_position(fp);
+  dvector_position stmp_pos=restore_dvector_position(fp);
   dvector stmp=restore_dvector_value(stmp_pos);
   //dvector_position dtmp_pos=restore_dvector_position();
   //dvector dtmp=restore_dvector_value(dtmp_pos);

@@ -266,8 +266,8 @@ else
     CXXFLAGS=" $CXXFLAGS"
     LDFLAGS=" $LDFLAGS"
   else
-    CXXFLAGS="-O3 $CXXFLAGS"
-    LDFLAGS="-O3 $LDFLAGS"
+    CXXFLAGS="-Ofast $CXXFLAGS"
+    LDFLAGS="-Ofast $LDFLAGS"
   fi
 fi
 if [ "`uname`" == "Darwin" ]; then

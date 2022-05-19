@@ -33,7 +33,8 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
     }
     x.elem_value(i)=(v.elem_value(i)-ssum)/m.elem_value(i,i);
   }
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("rt");
   m.save_dvar_matrix_value(fp);
   m.save_dvar_matrix_position(fp);
@@ -41,8 +42,7 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
   v.save_dvar_vector_position(fp);
   x.save_dvar_vector_position(fp);
   save_identifier_string("ww");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfbltsolve);
+  gs->GRAD_STACK1->set_gradient_stack(dfbltsolve);
   return x;
 }
 

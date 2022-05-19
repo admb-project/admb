@@ -66,7 +66,8 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
 
   //dvar_vector vtmp=nograd_assign(tmp);
 
-   DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
 
   // The derivative list considerations
   save_identifier_string("bbbb");
@@ -74,8 +75,8 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
   v2.save_dvar_vector_position(fp);
   vtmp.save_dvar_vector_position(fp);
   save_identifier_string("aaaa");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(dvdv_add);
+  gs->GRAD_STACK1->set_gradient_stack(dvdv_add);
+
   return vtmp;
 }
 

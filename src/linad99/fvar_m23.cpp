@@ -41,8 +41,8 @@ dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
      }
      tmp.elem_value(j)=sum;
    }
-
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE4");
   x.save_dvar_vector_value(fp);
   x.save_dvar_vector_position(fp);
@@ -52,8 +52,7 @@ dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
   save_identifier_string("PLACE2");
   tmp.save_dvar_vector_position(fp);
   save_identifier_string("PLACE1");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dvdm_prod);
+  gs->GRAD_STACK1->set_gradient_stack(dvdm_prod);
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
@@ -130,7 +129,8 @@ dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
      tmp.elem_value(j)=sum;
    }
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("P4");
   x.save_dvar_vector_position(fp);
   save_identifier_string("PLACE3");
@@ -139,8 +139,7 @@ dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
   save_identifier_string("PLACE2");
   tmp.save_dvar_vector_position(fp);
   save_identifier_string("PLACE1");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dvcm_prod);
+  gs->GRAD_STACK1->set_gradient_stack(dvcm_prod);
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }

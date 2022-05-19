@@ -218,7 +218,8 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   }
 
   vc=nograd_assign(x);
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE8");
   ln_unsigned_det.save_prevariable_position(fp);
   save_identifier_string("PLACE7");
@@ -245,8 +246,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   save_identifier_string("PLACE1");
   z.save_dvar_vector_position(fp);
   save_identifier_string("PLACE0");
-  gradient_structure::get()->GRAD_STACK1->
-     set_gradient_stack(dmdv_solve);
+  gs->GRAD_STACK1->set_gradient_stack(dmdv_solve);
   RETURN_ARRAYS_DECREMENT();
   return vc;
 }

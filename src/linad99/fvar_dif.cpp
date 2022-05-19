@@ -21,6 +21,8 @@ dvar_vector first_difference(const dvar_vector& x)
     ad_exit(1);
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   RETURN_ARRAYS_INCREMENT();
   int mmin=x.indexmin();
   int mmax=x.indexmax()-1;
@@ -29,12 +31,11 @@ dvar_vector first_difference(const dvar_vector& x)
   {
     tmp.elem_value(i)=x.elem_value(i+1)-x.elem_value(i);
   }
-  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("CE4");
   x.save_dvar_vector_position(fp);
   tmp.save_dvar_vector_position(fp);
   save_identifier_string("CE1");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_first_diference);
+  gs->GRAD_STACK1->set_gradient_stack(DF_first_diference);
   RETURN_ARRAYS_DECREMENT();
   return(tmp);
 }

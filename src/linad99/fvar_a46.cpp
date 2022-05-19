@@ -45,7 +45,8 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
   }
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   // The derivative list considerations
   save_identifier_string("bbbb");
   v1.save_dvar_vector_value(fp);
@@ -58,7 +59,7 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   tmp.save_dvar_vector_position(fp);
   save_identifier_string("aaaa");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
+  gs->GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -122,7 +123,8 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
   }
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   // The derivative list considerations
   save_identifier_string("bbbb");
   v1.save_dvar_vector_value(fp);
@@ -133,7 +135,7 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
   save_identifier_string("vvvv");
   tmp.save_dvar_vector_position(fp);
   save_identifier_string("aaaa");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
+  gs->GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -142,7 +144,8 @@ Adjoint gradient computation of elem_div(const dvar_vector&, const dvector&)
 */
 void dvcv_elem_div(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
   dvar_vector_position tmppos=restore_dvar_vector_position(fp);
@@ -191,7 +194,8 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
     tmp_inv.elem(i)=-tmp.elem_value(i)*x;
   }
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   // The derivative list considerations
   save_identifier_string("bbbb");
   tmp_inv.save_dvector_value(fp);
@@ -201,7 +205,7 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   tmp.save_dvar_vector_position(fp);
   save_identifier_string("aaaa");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
+  gs->GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }

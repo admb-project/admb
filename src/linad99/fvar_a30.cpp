@@ -24,12 +24,13 @@ dvar_vector& dvar_vector::operator-=(const prevariable& d)
     }
   }
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("Pvv");
   save_dvar_vector_position(fp);  // for this->
   d.save_prevariable_position(fp);
   save_identifier_string("Pxx");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dv_xminuseq);
+  gs->GRAD_STACK1->set_gradient_stack(dv_xminuseq);
 
   return *this;
 }
@@ -67,12 +68,13 @@ dvar_vector& dvar_vector::operator+=(const prevariable& d)
     }
   }
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("Qvv");
   save_dvar_vector_position(fp);  // for this->
   d.save_prevariable_position(fp);
   save_identifier_string("Qxx");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dv_xpluseq);
+  gs->GRAD_STACK1->set_gradient_stack(dv_xpluseq);
 
   return *this;
 }

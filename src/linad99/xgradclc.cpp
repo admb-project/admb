@@ -330,8 +330,9 @@ void funnel_derivatives(void)
 
   verify_identifier_string("ue");
 
+  gradient_structure* gs = gradient_structure::get();
   double df = restore_prevariable_derivative(deppos);
-  double* dptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
+  double* dptr = (double*)(gs->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
 
   //double * dd = &(dx(1));
   ii=0;
@@ -357,8 +358,7 @@ void funnel_derivatives(void)
   {
     if (!ISZERO(stmp(i)))
     {
-      *(double*)(gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
-        +=stmp(i)*df;
+      *(double*)(gs->GRAD_LIST->dlink_addresses[i]) += stmp(i)*df;
     }
   }
 }

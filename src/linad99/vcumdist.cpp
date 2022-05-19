@@ -36,8 +36,10 @@ double normal_tail_right(const double& x)
  */
 dvariable inv_cumd_norm_inner(const prevariable& x)
 {
- if (++gradient_structure::get()->RETURN_PTR > gradient_structure::get()->MAX_RETURN)
-   gradient_structure::get()->RETURN_PTR = gradient_structure::get()->MIN_RETURN;
+ gradient_structure* gs = gradient_structure::get();
+
+ if (++gs->RETURN_PTR > gs->MAX_RETURN)
+   gs->RETURN_PTR = gs->MIN_RETURN;
 
  RETURN_ARRAYS_INCREMENT();
   const double c0=2.515517;
@@ -80,10 +82,10 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
     double dfx=-1.0/(tt*value(x))*dftt;
 
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::get()->RETURN_PTR->v->x=pp;
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
-       &(gradient_structure::get()->RETURN_PTR->v->x), &(x.v->x),dfx);
-    return(*gradient_structure::get()->RETURN_PTR);
+    gs->RETURN_PTR->v->x=pp;
+    gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
+       &(gs->RETURN_PTR->v->x), &(x.v->x),dfx);
+    return(*gs->RETURN_PTR);
   }
   else if (x==0.5)
   {
@@ -123,10 +125,10 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
     double dfx=-dfy;
 
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::get()->RETURN_PTR->v->x=pp;
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
-       &(gradient_structure::get()->RETURN_PTR->v->x), &(x.v->x),dfx);
-    return(*gradient_structure::get()->RETURN_PTR);
+    gs->RETURN_PTR->v->x=pp;
+    gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
+       &(gs->RETURN_PTR->v->x), &(x.v->x),dfx);
+    return (*gs->RETURN_PTR);
   }
 }
 
@@ -181,8 +183,9 @@ dvariable old_cumd_norm(const prevariable& x)
 */
 prevariable& cumd_norm(const prevariable& _x)
 {
- if (++gradient_structure::get()->RETURN_PTR > gradient_structure::get()->MAX_RETURN)
-   gradient_structure::get()->RETURN_PTR = gradient_structure::get()->MIN_RETURN;
+  gradient_structure* gs = gradient_structure::get();
+  if (++gs->RETURN_PTR > gs->MAX_RETURN)
+   gs->RETURN_PTR = gs->MIN_RETURN;
 
   double x=value(_x);
   const double b1=0.319381530;
@@ -201,7 +204,7 @@ prevariable& cumd_norm(const prevariable& _x)
     double y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     double tmp1=-0.3989422804*exp(-.5*x*x);
     double z=1.0+tmp1*y;
-    gradient_structure::get()->RETURN_PTR->v->x=z;
+    gs->RETURN_PTR->v->x=z;
 
 
     // double z=1.0+tmp1*y;
@@ -217,8 +220,8 @@ prevariable& cumd_norm(const prevariable& _x)
     //double u=1./(1+p*x);
     dfx-=u*u*p*dfu;
 
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
-       &(gradient_structure::get()->RETURN_PTR->v->x), &(_x.v->x), dfx);
+    gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
+       &(gs->RETURN_PTR->v->x), &(_x.v->x), dfx);
   }
   else
   {
@@ -244,11 +247,11 @@ prevariable& cumd_norm(const prevariable& _x)
     //double w=-value(x);
     dfx-=dfw;
 
-    gradient_structure::get()->RETURN_PTR->v->x=z;
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
-       &(gradient_structure::get()->RETURN_PTR->v->x), &(_x.v->x),dfx);
+    gs->RETURN_PTR->v->x=z;
+    gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
+       &(gs->RETURN_PTR->v->x), &(_x.v->x),dfx);
   }
-  return(*gradient_structure::get()->RETURN_PTR);
+  return (*gs->RETURN_PTR);
 }
 
 /**
@@ -273,8 +276,9 @@ dvar_vector inv_cumd_norm(const dvar_vector& x)
  */
 prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
 {
- if (++gradient_structure::get()->RETURN_PTR > gradient_structure::get()->MAX_RETURN)
-   gradient_structure::get()->RETURN_PTR = gradient_structure::get()->MIN_RETURN;
+  gradient_structure* gs = gradient_structure::get();
+  if (++gs->RETURN_PTR > gs->MAX_RETURN)
+   gs->RETURN_PTR = gs->MIN_RETURN;
 
   double x=value(_x);
   const double b1=0.319381530;
@@ -294,7 +298,7 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
     double tmp1=-0.3989422804*exp(-.5*x*x);
     double z1=1.0+tmp1*y;
     double z=beta*(z1-0.5)+0.5;
-    gradient_structure::get()->RETURN_PTR->v->x=z;
+    gs->RETURN_PTR->v->x=z;
 
     //double z=beta*(z1-0.5)+0.5
     double dfz1=beta;
@@ -312,8 +316,8 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
     //double u=1./(1+p*x);
     dfx-=u*u*p*dfu;
 
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
-       &(gradient_structure::get()->RETURN_PTR->v->x), &(_x.v->x), dfx);
+    gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
+       &(gs->RETURN_PTR->v->x), &(_x.v->x), dfx);
   }
   else
   {
@@ -343,11 +347,11 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
     //double w=-value(x);
     dfx-=dfw;
 
-    gradient_structure::get()->RETURN_PTR->v->x=z;
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
-       &(gradient_structure::get()->RETURN_PTR->v->x), &(_x.v->x),dfx);
+    gs->RETURN_PTR->v->x=z;
+    gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
+       &(gs->RETURN_PTR->v->x), &(_x.v->x),dfx);
   }
-  return(*gradient_structure::get()->RETURN_PTR);
+  return (*gs->RETURN_PTR);
 }
 
 /**

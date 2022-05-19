@@ -42,15 +42,15 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
      }
      tmp.elem_value(i)=sum;
    }
-  DF_FILE* fp = gradient_structure::get_fp();
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("PL4");
   x.save_dvector_value(fp);
   x.save_dvector_position(fp);
   m.save_dvar_matrix_position();
   tmp.save_dvar_vector_position(fp);
   save_identifier_string("PLX");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dmcv_prod);
+  gs->GRAD_STACK1->set_gradient_stack(dmcv_prod);
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }

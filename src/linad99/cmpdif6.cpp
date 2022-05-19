@@ -67,8 +67,6 @@ void d3_array::save_d3_array_position() const
 */
   gradient_structure::get_fp()->fwrite(&(mmin),wsize);
   gradient_structure::get_fp()->fwrite(&(mmax),wsize);
-
-assert(false);
 }
 
 /**

@@ -52,7 +52,7 @@ void d3_array::save_d3_array_position() const
   // saves the size and address information for a dvar_vector
   int mmin=indexmin();
   int mmax=indexmax();
-  size_t wsize = sizeof(int);
+  constexpr size_t wsize = sizeof(int);
 /*
   dmatrix_position tmp(*this);
   const int wsize=sizeof(int);

@@ -122,8 +122,8 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_position(DF_FILE* fp) const
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp((*this).d,1);
-  size_t wsize = sizeof(int);
-  size_t wsize1 = sizeof(void*);
+  constexpr size_t wsize = sizeof(int);
+  constexpr size_t wsize1 = sizeof(void*);
 
   //DF_FILE* fp = gradient_structure::get_fp();
 
@@ -147,8 +147,8 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(DF_FILE* fp)
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp((*this).d,1);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
   //DF_FILE* fp = gradient_structure::get_fp();
 

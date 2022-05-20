@@ -447,7 +447,7 @@ void df_check_derivative_values_indexed(void)
   adstring str=get_string_marker();
   double* temp_ptr = (double*)(gs->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset = gs->ARR_LIST1->get_max_last_offset();
-  size_t size = sizeof(double_and_int);
+  constexpr size_t size = sizeof(double_and_int);
 
   int icount=0;
   int exit_flag=0;
@@ -496,7 +496,7 @@ void df_check_derivative_values_indexed_break(void)
   adstring str=get_string_marker();
   double* temp_ptr = (double*)(gs->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset = gs->ARR_LIST1->get_max_last_offset();
-  size_t size = sizeof(double_and_int);
+  constexpr size_t size = sizeof(double_and_int);
 
   if (index<=b)
   {

@@ -51,7 +51,7 @@
 
 #include <math.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -199,7 +199,7 @@ do
       gradient_structure::ARR_LIST1->get_last_offset() + 1,
       gradient_structure::ARRAY_MEMBLOCK_SIZE);
     size_t _dsize = bytes_needed/sizeof(double);
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(_dsize <= INT_MAX);
 #endif
     int dsize = (int)_dsize;
@@ -265,13 +265,13 @@ do
     save_int_value(ii);
 
     unsigned int ssize = GRAD_LIST->nlinks;
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(ssize > 0);
     assert(ssize <= INT_MAX);
 #endif
     dvector stmp(0,(int)(ssize-1));
 
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(GRAD_LIST->nlinks <= INT_MAX);
 #endif
     for (int i=0; i < (int)GRAD_LIST->nlinks; i++)

@@ -10,7 +10,7 @@
  */
 #include <df1b2fnl.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -36,7 +36,7 @@ void laplace_approximation_calculator::
   int num_fixed_effects=0;
 
   //cout << list << endl;
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(funnel_init_var::num_active_parameters <= INT_MAX);
 #endif
   ivector lre_index(1,(int)funnel_init_var::num_active_parameters);
@@ -142,7 +142,7 @@ void laplace_approximation_calculator::
   imatrix& list=*funnel_init_var::plist;
 
   int us=0; int xs=0;
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(funnel_init_var::num_active_parameters <= INT_MAX);
 #endif
   ivector lre_index(1,(int)funnel_init_var::num_active_parameters);

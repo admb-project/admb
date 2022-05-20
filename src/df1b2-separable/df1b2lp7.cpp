@@ -10,7 +10,7 @@
  */
 #include <df1b2fun.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -35,7 +35,7 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_local_fe=0;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(funnel_init_var::num_active_parameters <= INT_MAX);
 #endif
   ivector lre_index(1,(int)funnel_init_var::num_active_parameters);

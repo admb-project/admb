@@ -261,7 +261,7 @@ void dvar_vector::allocate(int ncl, int nch)
   {
     index_min=ncl;
     index_max=nch;
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(nch >= ncl);
 #endif
     unsigned int itemp = (unsigned int)(nch - ncl + 1);
@@ -274,7 +274,14 @@ void dvar_vector::allocate(int ncl, int nch)
          ad_exit(1);
     }
 */
-    if ((va = arr_new(itemp)) == 0)
+    gradient_structure* gs = gradient_structure::get();
+    if (!gs)
+    {
+      cerr << "Error: Instance of gradient_structure is null.\n";
+      ad_exit(1);
+    }
+
+    if ((va = gs->ARR_LIST1->arr_new(itemp)) == 0)
     {
       cerr << " Error trying to allocate memory for dvar_vector\n";
       ad_exit(1);

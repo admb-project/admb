@@ -40,6 +40,8 @@ TEST_F(test_autodif, dvar_vector_with_no_gradient_structure)
 
   const int nvar = 1;
   independent_variables variables(1, nvar);
+  ASSERT_TRUE(gradient_structure::get() == NULL);
+  ASSERT_TRUE(gradient_structure::instances == 0);
   ASSERT_ANY_THROW(
       dvar_vector x(variables);
   );

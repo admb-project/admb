@@ -128,7 +128,7 @@ TEST_F(test_simple_async, gradient_structure_only_GRAD_STACK1)
 }
 TEST_F(test_simple_async, gradient_structure_only_DF_FILE)
 {
-  ASSERT_TRUE(gradient_structure::get_fp() == NULL);
+  ASSERT_TRUE(gradient_structure::get() == NULL);
 
   gradient_structure gs;
 

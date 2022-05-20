@@ -7,7 +7,7 @@
 */
 #include <fvar.hpp>
 
-#ifndef DEBUG
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif

@@ -7,11 +7,6 @@
 */
 #include <admodel.h>
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 #ifdef ISZERO
   #undef ISZERO
 #endif

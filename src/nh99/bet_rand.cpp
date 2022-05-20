@@ -6,7 +6,8 @@
 @brief Function better_rand
 */
 #include <fvar.hpp>
-#ifndef OPT_LIB
+
+#ifndef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -17,9 +18,10 @@
  */
 double better_rand(long int& idum)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(idum <= INT_MAX);
 #endif
+
   random_number_generator rng((int)idum);
   double rr = ((random_number_generator&) rng).better_rand();
   return rr;

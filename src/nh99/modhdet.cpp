@@ -5,7 +5,6 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
-#include <cassert>
 
 double function_minimizer::hess_determinant(int underflow_flag)
 {

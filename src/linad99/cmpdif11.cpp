@@ -33,7 +33,7 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_value(DF_FILE* fp) const
   for (int i=min;i<=max;i++)
   {
     d(i).save_dvar_vector_value(fp);
-    d(i).save_dvar_vector_position();
+    d(i).save_dvar_vector_position(fp);
   }
 }
 
@@ -49,7 +49,7 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(DF_FILE* fp) co
   for (int i=min;i<=max;i++)
   {
     d(i).save_dvar_vector_value(fp);
-    d(i).save_dvar_vector_position();
+    d(i).save_dvar_vector_position(fp);
   }
 }
 

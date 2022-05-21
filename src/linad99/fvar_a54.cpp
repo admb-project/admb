@@ -19,6 +19,8 @@
 dvar_vector operator-(const dvector& t1, const prevariable& x)
   {
     gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     gs->RETURN_ARRAYS_INCREMENT();
 
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -28,7 +30,7 @@ dvar_vector operator-(const dvector& t1, const prevariable& x)
     {
       tmp.elem_value(i)=t1.elem(i)-value(x);
     }
-    tmp.save_dvar_vector_position();
+    tmp.save_dvar_vector_position(fp);
     save_identifier_string("ddu");
     gs->GRAD_STACK1->set_gradient_stack(DF_v_xdble_diff);
     gs->RETURN_ARRAYS_DECREMENT();

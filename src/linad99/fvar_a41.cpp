@@ -28,6 +28,7 @@ dvar_vector operator+(const dvar_vector& t1, const double x)
 dvar_vector operator+(const double x, const dvar_vector& t1)
   {
     gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
     gs->RETURN_ARRAYS_INCREMENT();
 
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -36,8 +37,8 @@ dvar_vector operator+(const double x, const dvar_vector& t1)
     {
       tmp.elem_value(i)=t1.elem_value(i)+x;
     }
-    tmp.save_dvar_vector_position();
-    t1.save_dvar_vector_position();
+    tmp.save_dvar_vector_position(fp);
+    t1.save_dvar_vector_position(fp);
     save_identifier_string("ddtu");
     gs->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_add);
     gs->RETURN_ARRAYS_DECREMENT();

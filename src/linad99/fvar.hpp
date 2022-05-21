@@ -2170,7 +2170,7 @@ public:
    void allocate(const ad_integer &, const ad_integer &);
    void initialize(const dvector & ww);
    void initialize(void);
-   void save_dvar_vector_position(void) const;
+   void save_dvar_vector_position(DF_FILE* fp) const;
    void save_dvar_vector_value(DF_FILE* fp) const;
    void write_on(const ostream &) const;
    void write_on(const uostream &) const;

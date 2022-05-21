@@ -3063,6 +3063,7 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
  //laplace_approximation_calculator * lapprox)
 {
   gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   gs->RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
   //ADUNCONST(hs_symbolic,S)
   //ADUNCONST(dvar_hs_smatrix,L)
@@ -3156,15 +3157,14 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   save_int_value(nccount);
 
   save_identifier_string("tu");
-  C.x.save_dvar_vector_position();
+  C.x.save_dvar_vector_position(fp);
   save_identifier_string("wy");
-  L.x.save_dvar_vector_position();
+  L.x.save_dvar_vector_position(fp);
   save_identifier_string("iy");
   save_ad_pointer(&S);
   save_ad_pointer(&sparse_triplet2);
   save_identifier_string("dg");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfcholeski_sparse);
+  gs->GRAD_STACK1->set_gradient_stack(dfcholeski_sparse);
   gs->RETURN_ARRAYS_DECREMENT(); //Need this statement because the function
   return (1) ;
 }
@@ -3558,10 +3558,13 @@ void report_dvar_vector_derivatives(void)
 
 void report_derivatives(const dvar_vector& x)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   save_identifier_string("jx");
-  x.save_dvar_vector_position();
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(report_dvar_vector_derivatives);
+  x.save_dvar_vector_position(fp);
+
+  gs->GRAD_STACK1->set_gradient_stack(report_dvar_vector_derivatives);
   save_identifier_string("jr");
 }
 

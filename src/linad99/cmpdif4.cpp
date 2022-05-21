@@ -202,6 +202,6 @@ void dvar_matrix::save_dvar_matrix_value(DF_FILE* fp) const
   for (int i=min;i<=max;i++)
   {
     ((*this)(i).save_dvar_vector_value(fp));
-    ((*this)(i).save_dvar_vector_position());
+    ((*this)(i).save_dvar_vector_position(fp));
   }
 }

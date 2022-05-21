@@ -33,11 +33,13 @@ dvar_vector operator+(const dvector& v1, const dvar_vector& v2)
   }
 
   //dvar_vector vtmp=nograd_assign(tmp);
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
 
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v2.save_dvar_vector_position();
-  vtmp.save_dvar_vector_position();
+  v2.save_dvar_vector_position(fp);
+  vtmp.save_dvar_vector_position(fp);
   save_identifier_string("aaaa");
   gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(cvdv_add);

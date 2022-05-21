@@ -40,9 +40,9 @@ dvar_vector mfexp(const dvar_vector& v1)
 
   save_identifier_string("ddt");
   v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position();
+  v1.save_dvar_vector_position(fp);
   vtmp.save_dvar_vector_value(fp);
-  vtmp.save_dvar_vector_position();
+  vtmp.save_dvar_vector_position(fp);
   save_identifier_string("see");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvmfexp);
   return vtmp;

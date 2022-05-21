@@ -59,6 +59,8 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   prevariable& sign=(prevariable&) _sign;
 
   gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   gs->RETURN_ARRAYS_INCREMENT();
 
 #if !defined(OPT_LIB) && (__cplusplus >= 201103L)
@@ -238,16 +240,15 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   save_identifier_string("PLACE3");
   aa.save_dvar_matrix_position();
   save_identifier_string("PLACE2b");
-  vc.save_dvar_vector_position();
+  vc.save_dvar_vector_position(fp);
   save_identifier_string("PLACE2a");
   bb.save_dmatrix_value();
   save_identifier_string("PLACE2");
   bb.save_dmatrix_position();
   save_identifier_string("PLACE1");
-  z.save_dvar_vector_position();
+  z.save_dvar_vector_position(fp);
   save_identifier_string("PLACE0");
-  gradient_structure::get()->GRAD_STACK1->
-     set_gradient_stack(dmdv_solve);
+  gs->GRAD_STACK1->set_gradient_stack(dmdv_solve);
   gs->RETURN_ARRAYS_DECREMENT();
   return vc;
 }

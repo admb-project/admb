@@ -29,14 +29,15 @@ dvar_vector dvar_vector::operator()(const ivector& u)
    {
      tmp.elem_value(i)=elem_value(u(i));
    }
+   gradient_structure* gs = gradient_structure::get();
+   DF_FILE* fp = gs->fp;
    save_identifier_string("by");
-   save_dvar_vector_position();
-   tmp.save_dvar_vector_position();
+   save_dvar_vector_position(fp);
+   tmp.save_dvar_vector_position(fp);
    u.save_ivector_value();
    u.save_ivector_position();
    save_identifier_string("ay");
-   gradient_structure::get()->GRAD_STACK1->
-     set_gradient_stack(dv_subassign);
+   gs->GRAD_STACK1->set_gradient_stack(dv_subassign);
    return tmp;
  }
 

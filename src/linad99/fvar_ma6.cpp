@@ -227,9 +227,9 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
   save_identifier_string("tu");
   tmp.save_dvar_matrix_position();
   v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position();
+  v1.save_dvar_vector_position(fp);
   v2.save_dvar_vector_value(fp);
-  v2.save_dvar_vector_position();
+  v2.save_dvar_vector_position(fp);
   save_identifier_string("tv");
   gs->GRAD_STACK1->set_gradient_stack(dfouter_prodvv);
    return(tmp);

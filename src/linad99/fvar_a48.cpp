@@ -19,6 +19,8 @@
 dvar_vector& dvar_vector::operator/=(const double x)
   {
     gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     gs->RETURN_ARRAYS_INCREMENT();
     save_identifier_string("wctf");
     double xinv=1./x;
@@ -26,7 +28,7 @@ dvar_vector& dvar_vector::operator/=(const double x)
     {
       elem_value(i)*=xinv;
     }
-    save_dvar_vector_position();
+    save_dvar_vector_position(fp);
     save_double_value(x);
     save_identifier_string("cmtu");
     gs->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diveq);
@@ -64,16 +66,17 @@ dvar_vector& dvar_vector::operator/=(const double x)
 dvar_vector& dvar_vector::operator/=(const prevariable& x)
   {
     gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     gs->RETURN_ARRAYS_INCREMENT();
     double xinv=1./value(x);
     for (int i=indexmin(); i<=indexmax(); i++)
     {
       elem_value(i)=elem_value(i)*xinv;
     }
-    DF_FILE* fp = gs->fp;
     save_identifier_string("wctg");
     save_dvar_vector_value(fp);
-    save_dvar_vector_position();
+    save_dvar_vector_position(fp);
     x.save_prevariable_value();
     x.save_prevariable_position();
     save_identifier_string("cmtu");

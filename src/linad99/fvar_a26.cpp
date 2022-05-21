@@ -31,13 +31,14 @@ void dv_minuseq(void);
        elem_value(i) -= v1.elem_value(i);
      }
    }
+   gradient_structure* gs = gradient_structure::get();
+   DF_FILE* fp = gs->fp;
 
    save_identifier_string("uuvv");
-   save_dvar_vector_position();  // for this->
-   v1.save_dvar_vector_position();
+   save_dvar_vector_position(fp);  // for this->
+   v1.save_dvar_vector_position(fp);
    save_identifier_string("wwxx");
-    gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(dv_minuseq);
+   gs->GRAD_STACK1->set_gradient_stack(dv_minuseq);
    return(*this);
  }
 

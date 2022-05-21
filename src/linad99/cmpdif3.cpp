@@ -194,7 +194,7 @@ adstring get_string_marker(void)
 void ivector::save_ivector_position(void) const
 {
   // saves the size and address information for a ivector
-  size_t wsize=sizeof(ivector_position);
+  constexpr size_t wsize=sizeof(ivector_position);
   ivector_position tmp(*this);
   gradient_structure::get_fp()->fwrite(&tmp, wsize);
 }
@@ -203,12 +203,12 @@ void ivector::save_ivector_position(void) const
  * Description not yet available.
  * \param
  */
-void dvar_vector::save_dvar_vector_position(void) const
+void dvar_vector::save_dvar_vector_position(DF_FILE* fp) const
 {
   // saves the size and address information for a dvar_vector
-  size_t wsize=sizeof(dvar_vector_position);
+  constexpr size_t wsize=sizeof(dvar_vector_position);
   dvar_vector_position tmp(*this);
-  gradient_structure::get_fp()->fwrite(&tmp, wsize);
+  fp->fwrite(&tmp, wsize);
 }
 
 /**

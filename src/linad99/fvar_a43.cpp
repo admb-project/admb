@@ -30,8 +30,8 @@ dvar_vector operator/(const double x, const dvar_vector& t1)
     }
     DF_FILE* fp = gs->fp;
     t1.save_dvar_vector_value(fp);
-    tmp.save_dvar_vector_position();
-    t1.save_dvar_vector_position();
+    tmp.save_dvar_vector_position(fp);
+    t1.save_dvar_vector_position(fp);
     save_identifier_string("dffa");
     gs->RETURN_ARRAYS_DECREMENT();
     gs->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_div);

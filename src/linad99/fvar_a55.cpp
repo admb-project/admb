@@ -19,6 +19,8 @@
 dvar_vector operator*(const dvector& t1, const prevariable& x)
   {
     gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     gs->RETURN_ARRAYS_INCREMENT();
 
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -30,7 +32,7 @@ dvar_vector operator*(const dvector& t1, const prevariable& x)
       tmp.elem_value(i)=t1.elem(i)*value(x);
     }
     t1.save_dvector_value();
-    tmp.save_dvar_vector_position();
+    tmp.save_dvar_vector_position(fp);
     t1.save_dvector_position();
     save_identifier_string("Da");
     gs->RETURN_ARRAYS_DECREMENT();
@@ -45,6 +47,8 @@ dvar_vector operator*(const dvector& t1, const prevariable& x)
 dvar_vector operator*(const prevariable& x, const dvector& t1)
   {
     gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     gs->RETURN_ARRAYS_INCREMENT();
 
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -56,7 +60,7 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
       tmp.elem_value(i)=t1.elem(i)*value(x);
     }
     t1.save_dvector_value();
-    tmp.save_dvar_vector_position();
+    tmp.save_dvar_vector_position(fp);
     t1.save_dvector_position();
     save_identifier_string("Da");
     gs->RETURN_ARRAYS_DECREMENT();

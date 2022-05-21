@@ -44,12 +44,12 @@ dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)
   DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE4");
   x.save_dvar_vector_value(fp);
-  x.save_dvar_vector_position();
+  x.save_dvar_vector_position(fp);
   save_identifier_string("PLACE3");
   m.save_dvar_matrix_value(fp);
   m.save_dvar_matrix_position();
   save_identifier_string("PLACE2");
-  tmp.save_dvar_vector_position();
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("PLACE1");
   gs->GRAD_STACK1->set_gradient_stack(dmdv_prod);
   gs->RETURN_ARRAYS_DECREMENT();
@@ -127,11 +127,11 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
 
   save_identifier_string("PLACE4");
   x.save_dvar_vector_value(fp);
-  x.save_dvar_vector_position();
+  x.save_dvar_vector_position(fp);
   m.save_dmatrix_value();
   m.save_dmatrix_position();
   save_identifier_string("PLACE2");
-  tmp.save_dvar_vector_position();
+  tmp.save_dvar_vector_position(fp);
   save_identifier_string("PLACE1");
   gs->GRAD_STACK1->set_gradient_stack(cmdv_prod);
   gs->RETURN_ARRAYS_DECREMENT();

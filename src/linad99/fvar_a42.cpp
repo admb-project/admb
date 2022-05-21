@@ -31,8 +31,8 @@ dvar_vector operator/(const prevariable& x, const dvar_vector& t1)
       tmp.elem_value(i)=value(x)/t1.elem_value(i);
     }
     t1.save_dvar_vector_value(fp);
-    tmp.save_dvar_vector_position();
-    t1.save_dvar_vector_position();
+    tmp.save_dvar_vector_position(fp);
+    t1.save_dvar_vector_position(fp);
     save_identifier_string("deea");
     gs->GRAD_STACK1->set_gradient_stack(DF_dble_dv_div);
     gs->RETURN_ARRAYS_DECREMENT();

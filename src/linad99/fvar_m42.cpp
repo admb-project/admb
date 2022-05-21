@@ -183,7 +183,7 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
   save_identifier_string("PLACE7");
   part_prod.save_dvector_value(fp);
   part_prod.save_dvector_position(fp);
-  indx.save_ivector_value();
+  indx.save_ivector_value(fp);
   indx.save_ivector_position();
   save_identifier_string("PLACE3");
   aa.save_dvar_matrix_position();

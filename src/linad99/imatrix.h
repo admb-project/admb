@@ -103,7 +103,7 @@ public:
    ~imatrix();
    void shallow_copy(const imatrix &);
 
-   void save_imatrix_value(void);
+   void save_imatrix_value(DF_FILE* fp);
    void save_imatrix_position(void);
    imatrix restore_imatrix_value(const imatrix_position & mpos);
    imatrix_position restore_imatrix_position(void);

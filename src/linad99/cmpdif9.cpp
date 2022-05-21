@@ -17,11 +17,11 @@
 /**
 Saves the size, address, and value information for a imatrix.
 */
-void imatrix::save_imatrix_value(void)
+void imatrix::save_imatrix_value(DF_FILE* fp)
 {
   for (int i=rowmin();i<=rowmax();i++)
   {
-    ((*this)(i).save_ivector_value());
+    ((*this)(i).save_ivector_value(fp));
     ((*this)(i).save_ivector_position());
   }
 }

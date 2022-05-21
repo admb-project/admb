@@ -54,7 +54,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("ru");
-  missflags.save_imatrix_value();
+  missflags.save_imatrix_value(fp);
   missflags.save_imatrix_position();
   save_int_value(nobs);
   tmp.save_dvar_matrix_position();

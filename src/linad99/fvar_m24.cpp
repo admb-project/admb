@@ -234,7 +234,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   x.save_dvector_position(fp);
   save_identifier_string("PLACE4");
   y.save_dvector_position(fp);
-  indx.save_ivector_value();
+  indx.save_ivector_value(fp);
   save_identifier_string("PLACE3a");
   indx.save_ivector_position();
   save_identifier_string("PLACE3");

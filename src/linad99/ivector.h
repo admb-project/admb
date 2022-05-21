@@ -42,6 +42,7 @@
 #define __ADMB_IVECTOR_H__
 
 #include "vector_shapex.h"
+#include "gradient_structure.h"
 
 /**
 Array of integers(int) with indexes from index_min to indexmax.
@@ -145,7 +146,7 @@ public:
 
    void save_ivector_position() const;
 
-   void save_ivector_value() const;
+   void save_ivector_value(DF_FILE* fp) const;
 
    void write_on(const ostream& s) const;
 

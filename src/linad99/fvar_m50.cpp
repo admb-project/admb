@@ -77,7 +77,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
   _fpen.save_prevariable_position();
   save_double_value(eps);
   save_identifier_string("rs");
-  L.save_dvar_matrix_position();
+  L.save_dvar_matrix_position(fp);
   save_identifier_string("rt");
   MM.save_dvar_matrix_value(fp);
   save_identifier_string("rl");

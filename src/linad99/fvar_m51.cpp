@@ -127,7 +127,7 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
   save_identifier_string("rt");
   MM.save_dvar_matrix_value(fp);
   save_identifier_string("pl");
-  MM.save_dvar_matrix_position();
+  MM.save_dvar_matrix_position(fp);
   save_identifier_string("pa");
   gs->GRAD_STACK1->set_gradient_stack(df_ln_det_choleski);
   return vlog_det;
@@ -386,7 +386,7 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
   save_identifier_string("rt");
   MM.save_dvar_matrix_value(fp);
   save_identifier_string("pl");
-  MM.save_dvar_matrix_position();
+  MM.save_dvar_matrix_position(fp);
   save_identifier_string("pa");
   gs->GRAD_STACK1->set_gradient_stack(df_ln_det_choleski);
   return vlog_det;

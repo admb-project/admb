@@ -66,10 +66,10 @@
    DF_FILE* fp = gs->fp;
    save_identifier_string("TEST1");
    m1.save_dvar_matrix_value(fp);
-   m1.save_dvar_matrix_position();
+   m1.save_dvar_matrix_position(fp);
    m2.save_dvar_matrix_value(fp);
-   m2.save_dvar_matrix_position();
-   vtmp.save_dvar_matrix_position();
+   m2.save_dvar_matrix_position(fp);
+   vtmp.save_dvar_matrix_position(fp);
    save_identifier_string("TEST6");
    gs->GRAD_STACK1->set_gradient_stack(dmdm_prod);
    return vtmp;
@@ -110,10 +110,10 @@
    DF_FILE* fp = gs->fp;
    save_identifier_string("TEST1");
    m1.save_dvar_matrix_value(fp);
-   m1.save_dvar_matrix_position();
+   m1.save_dvar_matrix_position(fp);
    m2.save_dvar_matrix_value(fp);
-   m2.save_dvar_matrix_position();
-   vtmp.save_dvar_matrix_position();
+   m2.save_dvar_matrix_position(fp);
+   vtmp.save_dvar_matrix_position(fp);
    save_identifier_string("TEST6");
    gs->GRAD_STACK1->set_gradient_stack(dmdm_prod);
    return vtmp;

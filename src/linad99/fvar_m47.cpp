@@ -110,10 +110,10 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
   save_identifier_string("qs");
   _fpen.save_prevariable_position();
   save_double_value(eps);
-  vc.save_dvar_matrix_position();
+  vc.save_dvar_matrix_position(fp);
   MM.save_dvar_matrix_value(fp);
   save_identifier_string("rl");
-  MM.save_dvar_matrix_position();
+  MM.save_dvar_matrix_position(fp);
   save_identifier_string("lo");
   gs->GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_positive);
   return vc;

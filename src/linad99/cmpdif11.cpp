@@ -137,14 +137,12 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_position(DF_FILE* fp) const
  * Description not yet available.
  * \param
  */
-void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) const
+void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(DF_FILE* fp) const
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp((*this).d,1);
   constexpr size_t wsize=sizeof(int);
   constexpr size_t wsize1=sizeof(void*);
-
-  DF_FILE* fp = gradient_structure::get_fp();
 
   int min=rowmin();
   int max=rowmax();

@@ -285,14 +285,13 @@ void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::save_dvar_matrix_position(void) const
+void dvar_matrix::save_dvar_matrix_position(DF_FILE* fp) const
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp(*this,1);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
-  DF_FILE* fp = gradient_structure::get_fp();
   int min=rowmin();
   int max=rowmax();
   for (int i=min;i<=max;i++)

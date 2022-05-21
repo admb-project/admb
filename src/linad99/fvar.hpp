@@ -2513,7 +2513,7 @@ class dvar_matrix
 
    ~dvar_matrix();
 
-   void save_dvar_matrix_position(void) const;
+   void save_dvar_matrix_position(DF_FILE* fp) const;
    void save_dvar_matrix_value(DF_FILE* fp) const;
 
    void fill(const char *);
@@ -8107,7 +8107,7 @@ class banded_lower_triangular_dvar_matrix
    }
    void initialize(void);
    void save_dvar_matrix_value(DF_FILE* fp) const;
-   void save_dvar_matrix_position(void) const;
+   void save_dvar_matrix_position(DF_FILE* fp) const;
 
    banded_lower_triangular_dvar_matrix(int _min, int _max, int _bw);
    banded_lower_triangular_dvar_matrix

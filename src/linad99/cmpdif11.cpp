@@ -57,14 +57,14 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(DF_FILE* fp) co
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dmatrix::save_dmatrix_value(void) const
+void banded_symmetric_dmatrix::save_dmatrix_value(DF_FILE* fp) const
 {
   // saves the size, address, and value information for a dvar_matrix
   int min=d.rowmin();
   int max=d.rowmax();
   for (int i=min;i<=max;i++)
   {
-    d(i).save_dvector_value();
+    d(i).save_dvector_value(fp);
     d(i).save_dvector_position();
   }
 }

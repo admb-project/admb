@@ -280,7 +280,7 @@ do
     }
     //dtmp.save_dvector_value();
     //dtmp.save_dvector_position();
-    stmp.save_dvector_value();
+    stmp.save_dvector_value(fp);
     stmp.save_dvector_position();
 
     // save the address of the dependent variable for the funnel

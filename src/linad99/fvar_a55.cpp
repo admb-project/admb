@@ -31,7 +31,7 @@ dvar_vector operator*(const dvector& t1, const prevariable& x)
     {
       tmp.elem_value(i)=t1.elem(i)*value(x);
     }
-    t1.save_dvector_value();
+    t1.save_dvector_value(fp);
     tmp.save_dvar_vector_position(fp);
     t1.save_dvector_position();
     save_identifier_string("Da");
@@ -59,7 +59,7 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
     {
       tmp.elem_value(i)=t1.elem(i)*value(x);
     }
-    t1.save_dvector_value();
+    t1.save_dvector_value(fp);
     tmp.save_dvar_vector_position(fp);
     t1.save_dvector_position();
     save_identifier_string("Da");

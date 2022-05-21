@@ -16,13 +16,13 @@
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_value(void) const
+void dmatrix::save_dmatrix_value(DF_FILE* fp) const
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
   for (int i=rowmin();i<=rowmax();i++)
   {
-    ((*this)(i).save_dvector_value());
+    ((*this)(i).save_dvector_value(fp));
     ((*this)(i).save_dvector_position());
   }
 }
@@ -31,13 +31,13 @@ void dmatrix::save_dmatrix_value(void) const
  * Description not yet available.
  * \param
  */
-void d3_array::save_d3_array_value(void) const
+void d3_array::save_d3_array_value(DF_FILE* fp) const
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
   for (int i=indexmin();i<=indexmax();i++)
   {
-    ((*this)(i).save_dmatrix_value());
+    ((*this)(i).save_dmatrix_value(fp));
     ((*this)(i).save_dmatrix_position());
   }
 }

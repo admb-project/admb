@@ -618,7 +618,7 @@ dvar_vector pow(const dvector& v1,const prevariable& e)
   save_identifier_string("eddg");
   e.save_prevariable_value();
   e.save_prevariable_position();
-  v1.save_dvector_value();
+  v1.save_dvector_value(fp);
   v1.save_dvector_position();
   vtmp.save_dvar_vector_position(fp);
   save_identifier_string("feeg");

@@ -160,6 +160,9 @@ dvar_matrix inv(const dvar_matrix& aa)
     }
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   dvector y(lb,ub);
   dvector x(lb,ub);
   //int lb=rowmin;
@@ -200,13 +203,11 @@ dvar_matrix inv(const dvar_matrix& aa)
       }
       x.elem(i)=sum/b.elem(i,i);
     }
-    y.save_dvector_value();
-    x.save_dvector_value();
+    y.save_dvector_value(fp);
+    x.save_dvector_value(fp);
     nograd_assign_column(vc,x,ii);
   }
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
   save_identifier_string("P5");
   x.save_dvector_position();
   y.save_dvector_position();
@@ -214,7 +215,7 @@ dvar_matrix inv(const dvar_matrix& aa)
   indx.save_ivector_position();
   aa.save_dvar_matrix_position();
   vc.save_dvar_matrix_position();
-  bb.save_dmatrix_value();
+  bb.save_dmatrix_value(fp);
   bb.save_dmatrix_position();
   save_identifier_string("P1");
   gs->GRAD_STACK1->set_gradient_stack(dfinvpret);

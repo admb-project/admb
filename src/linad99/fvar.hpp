@@ -2802,7 +2802,7 @@ class dmatrix
    void save_dmatrix_derivatives(const dvar_matrix_position & pos) const;
    void save_dmatrix_derivatives_na(const dvar_matrix_position & pos)
       const;
-   void save_dmatrix_value(void) const;
+   void save_dmatrix_value(DF_FILE* fp) const;
    void save_dmatrix_position(void) const;
    //void save_dmatrix_derivatives(void);
 
@@ -3628,7 +3628,7 @@ class d3_array
    }
    // conclass cgors
    d3_array(void);
-   void save_d3_array_value(void) const;
+   void save_d3_array_value(DF_FILE* fp) const;
    void shallow_copy(const d3_array &);
    d3_array sub(int, int);
    d3_array(int sl, int sh, int nrl, int nrh, int ncl, int nch);
@@ -7915,7 +7915,7 @@ class banded_symmetric_dmatrix
    banded_symmetric_dmatrix(int _min, int _max, int _bw);
 
    banded_symmetric_dmatrix(const dvar_matrix_position & mpos);
-   void save_dmatrix_value(void) const;
+   void save_dmatrix_value(DF_FILE* fp) const;
    void save_dmatrix_position(void) const;
    void save_dmatrix_derivatives(const dvar_matrix_position &) const;
 

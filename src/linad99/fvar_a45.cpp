@@ -118,7 +118,7 @@ dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("b");
-  v1.save_dvector_value();
+  v1.save_dvector_value(fp);
   v1.save_dvector_position();
   v2.save_dvar_vector_position(fp);
   tmp.save_dvar_vector_position(fp);
@@ -181,7 +181,7 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
   // The derivative list considerations
   save_identifier_string("b");
   v1.save_dvar_vector_position(fp);
-  v2.save_dvector_value();
+  v2.save_dvector_value(fp);
   v2.save_dvector_position();
   tmp.save_dvar_vector_position(fp);
   save_identifier_string("a");

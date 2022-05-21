@@ -98,12 +98,11 @@ void dvar_vector::save_dvar_vector_value(DF_FILE* fp) const
 /**
 Saves the size, address, and value information for a dvector.
 */
-void dvector::save_dvector_value(void) const
+void dvector::save_dvector_value(DF_FILE* fp) const
 {
   // int ierr=save_dvector_position();
   //int wsize=sizeof(double);
   //int num_rec;
-  DF_FILE* fp = gradient_structure::get_fp();
   int min=indexmin();
   int max=indexmax();
   for (int i=min;i<=max;i++)

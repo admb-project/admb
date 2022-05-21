@@ -83,7 +83,7 @@ dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& cm2)
    save_identifier_string("TEST1");
    //m1.save_dvar_matrix_value();
    m1.save_dvar_matrix_position();
-   cm2.save_dmatrix_value();
+   cm2.save_dmatrix_value(fp);
    cm2.save_dmatrix_position();
    vtmp.save_dvar_matrix_position();
    save_identifier_string("TEST6");

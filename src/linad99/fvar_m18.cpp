@@ -81,7 +81,7 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
    DF_FILE* fp = gs->fp;
    dvar_matrix vtmp=nograd_assign(tmp);
    save_identifier_string("TEST1");
-   cm1.save_dmatrix_value();
+   cm1.save_dmatrix_value(fp);
    cm1.save_dmatrix_position();
    // m2.save_dvar_matrix_value();
    m2.save_dvar_matrix_position();

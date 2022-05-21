@@ -69,7 +69,7 @@ dvariable operator*(const dvector& cv1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("bbbb");
-  cv1.save_dvector_value();
+  cv1.save_dvector_value(fp);
   cv1.save_dvector_position();
   v2.save_dvar_vector_position(fp);
   vtmp.save_prevariable_position();

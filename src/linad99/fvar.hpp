@@ -7983,7 +7983,7 @@ class banded_symmetric_dvar_matrix
    }
 
    void save_dvar_matrix_value(DF_FILE* fp) const;
-   void save_dvar_matrix_position(void) const;
+   void save_dvar_matrix_position(DF_FILE* fp) const;
    banded_symmetric_dvar_matrix(int _min, int _max, int _bw);
    banded_symmetric_dvar_matrix(const banded_symmetric_dvar_matrix &);
 

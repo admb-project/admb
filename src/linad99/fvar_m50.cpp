@@ -81,7 +81,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
   save_identifier_string("rt");
   MM.save_dvar_matrix_value(fp);
   save_identifier_string("rl");
-  MM.save_dvar_matrix_position();
+  MM.save_dvar_matrix_position(fp);
   save_identifier_string("ro");
   gs->GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_banded_positive);
 

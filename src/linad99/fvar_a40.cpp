@@ -80,7 +80,7 @@ dvar_vector operator-(const dvar_vector& t1)
     t1.save_dvar_vector_position(fp);
     save_identifier_string("tduu");
     gs->RETURN_ARRAYS_DECREMENT();
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_dv_minus);
+    gs->GRAD_STACK1->set_gradient_stack(DF_dv_minus);
     return(tmp);
   }
 

@@ -158,6 +158,8 @@ dvariable det(const dvar_matrix& aa)
   }
   double det=part_prod(ub);
   dvariable rdet=nograd_assign(det);
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE7");
   part_prod.save_dvector_value();
   part_prod.save_dvector_position();
@@ -174,8 +176,7 @@ dvariable det(const dvar_matrix& aa)
   save_identifier_string("PLACE1");
   save_double_value(d);
   save_identifier_string("PLACE0");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(df_xdet);
+  gs->GRAD_STACK1->set_gradient_stack(df_xdet);
   return rdet;
 }
 

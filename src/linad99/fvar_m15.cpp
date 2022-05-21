@@ -205,6 +205,8 @@ dvar_matrix inv(const dvar_matrix& aa)
     nograd_assign_column(vc,x,ii);
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("P5");
   x.save_dvector_position();
   y.save_dvector_position();
@@ -215,8 +217,7 @@ dvar_matrix inv(const dvar_matrix& aa)
   bb.save_dmatrix_value();
   bb.save_dmatrix_position();
   save_identifier_string("P1");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfinvpret);
+  gs->GRAD_STACK1->set_gradient_stack(dfinvpret);
   return vc;
 }
 

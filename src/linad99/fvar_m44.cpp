@@ -31,12 +31,13 @@ dvar_matrix trans(const dvar_matrix& m1)
       t1.elem_value(j,i)=m1.elem_value(i,j);
     }
   }
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("uu");
   m1.save_dvar_matrix_position();
   t1.save_dvar_matrix_position();
   save_identifier_string("vv");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfmattrans);
+  gs->GRAD_STACK1->set_gradient_stack(dfmattrans);
   return (t1);
 }
 

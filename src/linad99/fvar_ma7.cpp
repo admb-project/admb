@@ -65,10 +65,11 @@ void dvar_matrix::initialize(void)
         }
       }
     }
+    gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
     save_identifier_string("p");
     save_dvar_matrix_position();
-    gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfmatinit);
+    gs->GRAD_STACK1->set_gradient_stack(dfmatinit);
     save_identifier_string("q");
   }
 }

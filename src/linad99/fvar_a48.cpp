@@ -70,14 +70,15 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     {
       elem_value(i)=elem_value(i)*xinv;
     }
+    DF_FILE* fp = gs->fp;
     save_identifier_string("wctg");
-    save_dvar_vector_value();
+    save_dvar_vector_value(fp);
     save_dvar_vector_position();
     x.save_prevariable_value();
     x.save_prevariable_position();
     save_identifier_string("cmtu");
     gs->RETURN_ARRAYS_DECREMENT();
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);
+    gs->GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);
     return(*this);
   }
 

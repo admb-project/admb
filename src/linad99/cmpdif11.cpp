@@ -25,14 +25,14 @@
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dvar_matrix::save_dvar_matrix_value(void) const
+void banded_symmetric_dvar_matrix::save_dvar_matrix_value(DF_FILE* fp) const
 {
   // saves the size, address, and value information for a dvar_matrix
   int min=d.rowmin();
   int max=d.rowmax();
   for (int i=min;i<=max;i++)
   {
-    d(i).save_dvar_vector_value();
+    d(i).save_dvar_vector_value(fp);
     d(i).save_dvar_vector_position();
   }
 }
@@ -41,14 +41,14 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_value(void) const
  * Description not yet available.
  * \param
  */
-void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(void) const
+void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(DF_FILE* fp) const
 {
   // saves the size, address, and value information for a dvar_matrix
   int min=d.rowmin();
   int max=d.rowmax();
   for (int i=min;i<=max;i++)
   {
-    d(i).save_dvar_vector_value();
+    d(i).save_dvar_vector_value(fp);
     d(i).save_dvar_vector_position();
   }
 }

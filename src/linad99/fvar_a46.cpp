@@ -47,9 +47,11 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
   }
 
+  DF_FILE* fp = gs->fp;
+
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   save_identifier_string("wwww");
   tmp_inv.save_dvector_value();
@@ -124,9 +126,10 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
   }
 
+  DF_FILE* fp = gs->fp;
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   save_identifier_string("wwww");
   tmp_inv.save_dvector_value();

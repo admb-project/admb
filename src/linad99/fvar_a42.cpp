@@ -19,6 +19,7 @@
 dvar_vector operator/(const prevariable& x, const dvar_vector& t1)
   {
     gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
     gs->RETURN_ARRAYS_INCREMENT();
 
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -29,7 +30,7 @@ dvar_vector operator/(const prevariable& x, const dvar_vector& t1)
     {
       tmp.elem_value(i)=value(x)/t1.elem_value(i);
     }
-    t1.save_dvar_vector_value();
+    t1.save_dvar_vector_value(fp);
     tmp.save_dvar_vector_position();
     t1.save_dvar_vector_position();
     save_identifier_string("deea");

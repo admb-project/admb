@@ -27,8 +27,10 @@ dvar_vector square(const dvar_vector& v1)
     vtmp.elem_value(i)=x*x;
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("sddd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eee");
@@ -79,8 +81,10 @@ dvar_vector cube(const dvar_vector& v1)
     vtmp.elem_value(i)=x*x*x;
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("sssd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("tee");
@@ -131,8 +135,10 @@ dvar_vector fourth(const dvar_vector& v1)
     vtmp.elem_value(i)=x2*x2;
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ssf");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("gee");

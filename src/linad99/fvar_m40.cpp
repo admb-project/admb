@@ -370,16 +370,18 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
     L.elem_value(i,i)=sqrt(tmp);
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   //banded_lower_triangular_dvar_matrix vc=nograd_assign(L);
   save_identifier_string("rs");
   L.save_dvar_matrix_position();
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value();
+  MM.save_dvar_matrix_value(fp);
   save_identifier_string("rl");
   MM.save_dvar_matrix_position();
   save_identifier_string("ro");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfcholeski_decomp_banded);
+  gs->GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_banded);
 
   return L;
 }

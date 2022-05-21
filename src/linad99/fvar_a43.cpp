@@ -28,7 +28,8 @@ dvar_vector operator/(const double x, const dvar_vector& t1)
     {
       tmp.elem_value(i)=x/t1.elem_value(i);
     }
-    t1.save_dvar_vector_value();
+    DF_FILE* fp = gs->fp;
+    t1.save_dvar_vector_value(fp);
     tmp.save_dvar_vector_position();
     t1.save_dvar_vector_position();
     save_identifier_string("dffa");

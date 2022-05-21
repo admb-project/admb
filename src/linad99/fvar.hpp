@@ -2171,7 +2171,7 @@ public:
    void initialize(const dvector & ww);
    void initialize(void);
    void save_dvar_vector_position(void) const;
-   void save_dvar_vector_value(void) const;
+   void save_dvar_vector_value(DF_FILE* fp) const;
    void write_on(const ostream &) const;
    void write_on(const uostream &) const;
    void read_from(const istream &);
@@ -2514,7 +2514,7 @@ class dvar_matrix
    ~dvar_matrix();
 
    void save_dvar_matrix_position(void) const;
-   void save_dvar_matrix_value(void) const;
+   void save_dvar_matrix_value(DF_FILE* fp) const;
 
    void fill(const char *);
    //void colfill(const int&n,...);
@@ -7982,7 +7982,7 @@ class banded_symmetric_dvar_matrix
       return d.rowmax();
    }
 
-   void save_dvar_matrix_value(void) const;
+   void save_dvar_matrix_value(DF_FILE* fp) const;
    void save_dvar_matrix_position(void) const;
    banded_symmetric_dvar_matrix(int _min, int _max, int _bw);
    banded_symmetric_dvar_matrix(const banded_symmetric_dvar_matrix &);
@@ -8106,7 +8106,7 @@ class banded_lower_triangular_dvar_matrix
       return d.rowmax();
    }
    void initialize(void);
-   void save_dvar_matrix_value(void) const;
+   void save_dvar_matrix_value(DF_FILE* fp) const;
    void save_dvar_matrix_position(void) const;
 
    banded_lower_triangular_dvar_matrix(int _min, int _max, int _bw);

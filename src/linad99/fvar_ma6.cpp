@@ -50,16 +50,18 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
        tmp.elem_value(i,j)/=nobs;
      }
    }
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   save_identifier_string("ru");
   missflags.save_imatrix_value();
   missflags.save_imatrix_position();
   save_int_value(nobs);
   tmp.save_dvar_matrix_position();
-  v1.save_dvar_matrix_value();
+  v1.save_dvar_matrix_value(fp);
   v1.save_dvar_matrix_position();
   save_identifier_string("rv");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfempirical_covarv_partial);
+  gs->GRAD_STACK1->set_gradient_stack(dfempirical_covarv_partial);
    return(tmp);
  }
 
@@ -147,13 +149,15 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
        tmp.elem_value(i,j)/=double(nobs);
      }
    }
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   save_identifier_string("ru");
   tmp.save_dvar_matrix_position();
-  v1.save_dvar_matrix_value();
+  v1.save_dvar_matrix_value(fp);
   v1.save_dvar_matrix_position();
   save_identifier_string("rv");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfempirical_covarv);
+  gs->GRAD_STACK1->set_gradient_stack(dfempirical_covarv);
    return(tmp);
  }
 
@@ -217,15 +221,17 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
        tmp.elem_value(i,j)=v1.elem_value(i)*v2.elem_value(j);
      }
    }
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   save_identifier_string("tu");
   tmp.save_dvar_matrix_position();
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
-  v2.save_dvar_vector_value();
+  v2.save_dvar_vector_value(fp);
   v2.save_dvar_vector_position();
   save_identifier_string("tv");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dfouter_prodvv);
+  gs->GRAD_STACK1->set_gradient_stack(dfouter_prodvv);
    return(tmp);
  }
 

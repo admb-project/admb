@@ -43,11 +43,12 @@ dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
      tmp.elem_value(j)=sum;
    }
 
+  DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE4");
-  x.save_dvar_vector_value();
+  x.save_dvar_vector_value(fp);
   x.save_dvar_vector_position();
   save_identifier_string("PLACE3");
-  m.save_dvar_matrix_value();
+  m.save_dvar_matrix_value(fp);
   m.save_dvar_matrix_position();
   save_identifier_string("PLACE2");
   tmp.save_dvar_vector_position();

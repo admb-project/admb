@@ -68,13 +68,14 @@ dvar_vector sin(const dvar_vector& v1)
     vtmp.elem_value(i)=sin(v1.elem_value(i));
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eee");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvsin);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvsin);
   return vtmp;
 }
 /**
@@ -114,13 +115,14 @@ dvar_vector exp(const dvar_vector& v1)
     vtmp.elem_value(i)=exp(v1.elem_value(i));
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
   v1.save_dvar_vector_position();
-  vtmp.save_dvar_vector_value();
+  vtmp.save_dvar_vector_value(fp);
   vtmp.save_dvar_vector_position();
   save_identifier_string("hee");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvexp);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvexp);
   return vtmp;
 }
 
@@ -163,13 +165,14 @@ dvar_vector cos(const dvar_vector& v1)
     vtmp.elem_value(i)=cos(v1.elem_value(i));
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("cee");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvcos);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvcos);
   return vtmp;
 }
 
@@ -211,13 +214,14 @@ dvar_vector log(const dvar_vector& v1)
     vtmp.elem_value(i)=log(v1.elem_value(i));
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("cdd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eee");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvlog);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvlog);
   return vtmp;
 }
 
@@ -269,12 +273,14 @@ dvar_vector tan(const dvar_vector& v1)
     vtmp.elem_value(i)=tan(v1.elem_value(i));
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("xee");
-  gradient_structure::get()->GRAD_STACK1-> set_gradient_stack(DF_dvtan);
+  gs->GRAD_STACK1-> set_gradient_stack(DF_dvtan);
 
   return vtmp;
 }
@@ -316,13 +322,14 @@ dvar_vector atan(const dvar_vector& v1)
     vtmp.elem_value(i)=atan(v1.elem_value(i));
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("udd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eee");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvatan);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvatan);
   return vtmp;
 }
 /**
@@ -363,13 +370,14 @@ dvar_vector sqrt(const dvar_vector& v1)
     vtmp.elem_value(i)=sqrt(v1.elem_value(i));
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eve");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvsqrt);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvsqrt);
   return vtmp;
 }
 /**
@@ -387,13 +395,14 @@ dvar_vector sqr(const dvar_vector& v1)
     vtmp.elem_value(i)=sqrt(v1.elem_value(i));
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eve");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvsqrt);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvsqrt);
   return vtmp;
   */
 
@@ -437,14 +446,15 @@ dvar_vector pow(const dvar_vector& v1, const double e)
     vtmp.elem_value(i)=pow(v1.elem_value(i),e);
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddf");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   save_double_value(e);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eef");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvpow);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvpow);
   return vtmp;
 }
 /**
@@ -490,15 +500,16 @@ dvar_vector pow(const dvar_vector& v1, const prevariable& e)
     vtmp.elem_value(i)=pow(v1.elem_value(i),ce);
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddg");
   e.save_prevariable_value();
   e.save_prevariable_position();
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eeg");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvdvpow);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvdvpow);
   return vtmp;
 }
 
@@ -547,14 +558,15 @@ dvar_vector pow(const dvar_vector& v1,int e)
     vtmp.elem_value(i)=pow(v1.elem_value(i),e);
   }
 
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("ddf");
-  v1.save_dvar_vector_value();
+  v1.save_dvar_vector_value(fp);
   save_double_value(double(e));
   v1.save_dvar_vector_position();
   vtmp.save_dvar_vector_position();
   save_identifier_string("eef");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(DF_dvcpow);
+  gs->GRAD_STACK1->set_gradient_stack(DF_dvcpow);
   return vtmp;
 }
 

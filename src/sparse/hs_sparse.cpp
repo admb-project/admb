@@ -2901,7 +2901,8 @@ dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S)
 dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S,
   dcompressed_triplet& s)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   int n=VM.get_n();
   dvar_hs_smatrix H(n,VM);
   //hs_symbolic S(VM,1);         // Fill reducing row-col permutation
@@ -2922,7 +2923,7 @@ dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S,
   }
   //set_gradstack_flag("AAC");
   dvariable tmp= 2.0*ln_det(L);
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
   //return L.x(0);
 }
@@ -3061,7 +3062,8 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   dvar_hs_smatrix &LL, dcompressed_triplet & sparse_triplet2)
  //laplace_approximation_calculator * lapprox)
 {
-  RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
   //ADUNCONST(hs_symbolic,S)
   //ADUNCONST(dvar_hs_smatrix,L)
   //ADUNCONST(dvar_hs_smatrix,A)
@@ -3163,7 +3165,7 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   save_identifier_string("dg");
   gradient_structure::get()->GRAD_STACK1->
       set_gradient_stack(dfcholeski_sparse);
-  RETURN_ARRAYS_DECREMENT(); //Need this statement because the function
+  gs->RETURN_ARRAYS_DECREMENT(); //Need this statement because the function
   return (1) ;
 }
 

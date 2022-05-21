@@ -66,7 +66,8 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
  */
 dvariable norm(const dvar_matrix& m1)
     {
-      RETURN_ARRAYS_INCREMENT();
+      gradient_structure* gs = gradient_structure::get();
+      gs->RETURN_ARRAYS_INCREMENT();
 
       dvariable tmp;
       tmp=0.0;
@@ -82,13 +83,14 @@ dvariable norm(const dvar_matrix& m1)
       {
         tmp=0.0;
       }
-      RETURN_ARRAYS_DECREMENT();
+      gs->RETURN_ARRAYS_DECREMENT();
       return(tmp);
     }
 
 dvariable norm2(const dvar_matrix& m1)
     {
-      RETURN_ARRAYS_INCREMENT();
+      gradient_structure* gs = gradient_structure::get();
+      gs->RETURN_ARRAYS_INCREMENT();
 
       dvariable tmp;
       tmp=0.0;
@@ -96,7 +98,7 @@ dvariable norm2(const dvar_matrix& m1)
       {
         tmp+=norm2(m1.elem(i));
       }
-      RETURN_ARRAYS_DECREMENT();
+      gs->RETURN_ARRAYS_DECREMENT();
       return(tmp);
     }
 dvariable sumsq(const dvar_matrix& m1) {return(norm2(m1));}

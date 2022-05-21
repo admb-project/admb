@@ -18,7 +18,8 @@ void dmcv_prod(void);
  */
 dvar_vector operator*(const dvar_matrix& m, const dvector& x)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
@@ -48,9 +49,8 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
   m.save_dvar_matrix_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("PLX");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dmcv_prod);
-   RETURN_ARRAYS_DECREMENT();
+   gs->GRAD_STACK1->set_gradient_stack(dmcv_prod);
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 

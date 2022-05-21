@@ -268,7 +268,8 @@ Compute the outer product of v1 and v2 vectors into dvar_matrix.
 */
 dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
 
    dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
 
@@ -279,7 +280,7 @@ dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
        tmp.elem(i,j)=v1.elem(i)*v2.elem(j);
      }
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 /**
@@ -290,7 +291,8 @@ Compute the outer product of v1 and v2 vectors into dvar_matrix.
 */
 dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
 
    dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
 
@@ -301,7 +303,7 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
        tmp.elem(i,j)=v1.elem(i)*v2.elem(j);
      }
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
 
    return(tmp);
  }

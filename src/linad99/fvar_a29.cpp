@@ -641,7 +641,9 @@ void DF_cdvpow(void)
 }
 dvar_vector pow(const dvector& x,const dvar_vector& a)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
 
   dvar_vector y(x.indexmin(), x.indexmax());
   for(int i=x.indexmin(); i<=x.indexmax(); i++)
@@ -649,7 +651,7 @@ dvar_vector pow(const dvector& x,const dvar_vector& a)
     y(i)=pow(x(i),a(i));
   }
 
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
 
   return(y);
 }

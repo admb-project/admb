@@ -31,7 +31,9 @@ void dvdv_elem_prod(void);
  */
 dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -54,8 +56,8 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
   v2.save_dvar_vector_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("a");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvdv_elem_prod);
-  RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(dvdv_elem_prod);
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 
@@ -95,7 +97,8 @@ void cvdv_elem_prod(void);
  */
 dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -117,8 +120,8 @@ dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
   v2.save_dvar_vector_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("a");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(cvdv_elem_prod);
-  RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(cvdv_elem_prod);
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 
@@ -154,7 +157,9 @@ void dvcv_elem_prod(void);
  */
 dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -176,8 +181,8 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
   v2.save_dvector_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("a");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvcv_elem_prod);
-  RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(dvcv_elem_prod);
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 

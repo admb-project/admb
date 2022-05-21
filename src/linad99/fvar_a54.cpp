@@ -18,7 +18,9 @@
  */
 dvar_vector operator-(const dvector& t1, const prevariable& x)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
+
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("zcb");
     x.save_prevariable_position();
@@ -28,8 +30,8 @@ dvar_vector operator-(const dvector& t1, const prevariable& x)
     }
     tmp.save_dvar_vector_position();
     save_identifier_string("ddu");
-    RETURN_ARRAYS_DECREMENT();
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_v_xdble_diff);
+    gs->GRAD_STACK1->set_gradient_stack(DF_v_xdble_diff);
+    gs->RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
 

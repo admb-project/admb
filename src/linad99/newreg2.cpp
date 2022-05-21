@@ -22,8 +22,12 @@ dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
     cerr << "Index limits on observed vector are not equal to the Index\n"
       "limits on the predicted vector in robust_reg_likelihood function\n";
   }
-  RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
-                             //returns a variable type
+
+  //Need this statement because the function
+  //returns a variable type
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   dvariable v_hat;
   double width=3.0;
   double pcon=0.05;
@@ -39,8 +43,11 @@ dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
   dvariable log_likelihood = -sum(log((1.-pcon)*exp(-diff2/(2.*a2*v_hat))
     + b/(1.+pow(diff2/(width2*a2*v_hat),2))));
   log_likelihood += 0.5*diff.size()*log(a2*v_hat);
-  RETURN_ARRAYS_DECREMENT(); // Need this to decrement the stack increment
-                             // caused by RETURN_ARRAYS_INCREMENT();
+
+  // Need this to decrement the stack increment
+  // caused by RETURN_ARRAYS_INCREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
+
   return(log_likelihood);
 }
 
@@ -56,8 +63,12 @@ dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
     cerr << "Index limits on observed vector are not equal to the Index\n"
       "limits on the predicted vector in robust_reg_likelihood function\n";
   }
-  RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
-                             //returns a variable type
+
+  //Need this statement because the function
+  //returns a variable type
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   dvariable v_hat;
   double width=3.0;
   double pcon=0.05;
@@ -73,7 +84,8 @@ dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
   dvariable log_likelihood = -sum(log((1.-pcon)*exp(-diff2/(2.*a2*v_hat))
     + b/(1.+pow(diff2/(a2*v_hat),2))));
   log_likelihood += 0.5*diff.size()*log(a2*v_hat);
-  RETURN_ARRAYS_DECREMENT(); // Need this to decrement the stack increment
-                             // caused by RETURN_ARRAYS_INCREMENT();
+  // Need this to decrement the stack increment
+  // caused by RETURN_ARRAYS_INCREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return(log_likelihood);
 }

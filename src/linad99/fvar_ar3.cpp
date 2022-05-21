@@ -16,7 +16,8 @@
  */
 dvar_vector fabs(const dvar_vector& t1)
   {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
 
      dvar_vector tmp(t1.indexmin(),t1.indexmax());
 
@@ -24,7 +25,7 @@ dvar_vector fabs(const dvar_vector& t1)
      {
        tmp.elem(i)=fabs(t1.elem(i));
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return(tmp);
   }
 
@@ -34,7 +35,8 @@ dvar_vector fabs(const dvar_vector& t1)
  */
 dvector value(const dvar_vector& t1)
   {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
 
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -42,7 +44,7 @@ dvector value(const dvar_vector& t1)
      {
        tmp.elem(i)=value(t1.elem(i));
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return(tmp);
   }
 
@@ -52,14 +54,15 @@ dvector value(const dvar_vector& t1)
  */
 dvariable norm(const dvar_vector& t1)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     dvariable tmp;
     tmp=t1*t1;
     if (value(tmp)>0.0)
     {
      tmp=pow(tmp,.5);
     }
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
 
@@ -69,10 +72,11 @@ dvariable norm(const dvar_vector& t1)
  */
 dvariable norm2(const dvar_vector& t1)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     dvariable tmp;
     tmp=t1*t1;
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
 dvariable sumsq(const dvar_vector& t1) {return(norm2(t1));}
@@ -83,7 +87,8 @@ dvariable sumsq(const dvar_vector& t1) {return(norm2(t1));}
  */
 dvar_vector sfabs(const dvar_vector& t1)
   {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
 
      dvar_vector tmp(t1.indexmin(),t1.indexmax());
 
@@ -91,6 +96,6 @@ dvar_vector sfabs(const dvar_vector& t1)
      {
        tmp.elem(i)=sfabs(t1.elem(i));
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return(tmp);
   }

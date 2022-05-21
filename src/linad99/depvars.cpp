@@ -34,7 +34,8 @@ prevariable& operator<<(const prevariable& _v1, const prevariable& v2)
  */
 dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
 
     int mmin=v1.indexmin();
     int mmax=v1.indexmax();
@@ -49,7 +50,7 @@ dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2)
     {
       v1(i) << v2(i);
     }
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return (dvar_vector&) v1;
   }
 
@@ -59,9 +60,11 @@ dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2)
  */
 dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2)
   {
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
+
     int mmin=v1.rowmin();
     int mmax=v1.rowmax();
-    RETURN_ARRAYS_INCREMENT();
     if (mmin != v2.rowmin() || mmax != v2.rowmax())
     {
       cerr << " Incompatible bounds in dvar_matrix& operator"
@@ -72,7 +75,7 @@ dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2)
     {
       v1(i) << v2(i);
     }
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return (dvar_matrix&)v1;
   }
 

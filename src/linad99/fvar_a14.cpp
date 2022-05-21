@@ -34,7 +34,8 @@
 */
 dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -80,7 +81,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
   save_identifier_string("aaaa");
   gradient_structure::get()->GRAD_STACK1->
             set_gradient_stack(dvdv_dot);
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return vtmp;
 }
 
@@ -182,12 +183,13 @@ void X_dv_sum(void)
 
 dvariable sum(const dvar_matrix& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;
   for (int i=m.rowmin();i<=m.rowmax();i++)
   {
     tmp+=sum(m.elem(i));
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }

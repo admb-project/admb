@@ -11,14 +11,15 @@ Copyright (c) 2008-2012 Regents of the University of California
  */
 dvar3_array operator-(const double d, const dvar3_array& m2)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
      for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
        tmp(i)=d-m2(i);
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 /**

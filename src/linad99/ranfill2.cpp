@@ -32,14 +32,16 @@ double randn(long int& n);
   void dvar_vector::fill_randu(long int& n)
   {
     long int nn;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
+
     nn=n;
     for (int i=indexmin(); i<=indexmax(); i++)
     {
       elem(i)=auto_rand(nn,1);
     }
     reinitialize_auto_rand();
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -55,7 +57,8 @@ double randn(long int& n);
       ad_exit(1);
     }
     long int nn;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int i=indexmin(); i<=indexmax(); i++)
     {
@@ -69,7 +72,7 @@ double randn(long int& n);
       }
     }
     reinitialize_auto_rand();
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -79,14 +82,15 @@ double randn(long int& n);
 void dvar_matrix::colfill_randu(const int &j, long int &n)
   {
     long int nn;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i,j)=auto_rand(nn,1);
     }
     reinitialize_auto_rand();
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -96,13 +100,14 @@ void dvar_matrix::colfill_randu(const int &j, long int &n)
 void dvar_matrix::rowfill_randu(const int& i, long int& n)
   {
     long int nn;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int j=colmin(); j<=colmax(); j++)
     {
       elem(i,j)=auto_rand(nn,1);
     }
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     reinitialize_auto_rand();
   }
 
@@ -113,14 +118,15 @@ void dvar_matrix::rowfill_randu(const int& i, long int& n)
   void dvar_vector::fill_randn(long int& n)
   {
     long int nn;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int i=indexmin(); i<=indexmax(); i++)
     {
       elem(i)=randn(nn);
     }
     reinitialize_auto_rand();
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -130,14 +136,15 @@ void dvar_matrix::rowfill_randu(const int& i, long int& n)
 void dvar_matrix::colfill_randn(const int &j, long int &n)
   {
     long int nn;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i,j)=randn(nn);
     }
     reinitialize_auto_rand();
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -147,14 +154,15 @@ void dvar_matrix::colfill_randn(const int &j, long int &n)
 void dvar_matrix::rowfill_randn(const int& i, long int& n)
   {
     long int nn;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int j=colmin(); j<=colmax(); j++)
     {
       elem(i,j)=randn(nn);
     }
     reinitialize_auto_rand();
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -164,14 +172,15 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
   void dvar_matrix::fill_randn(long int& n)
   {
     long int nn=n;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randn_ni(nn);
       nn+=2;
     }
     reinitialize_auto_rand();
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -181,14 +190,15 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
   void dvar_matrix::fill_randu(long int& n)
   {
     long int nn=n;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randn_ni(nn);
       nn+=2;
     }
     reinitialize_auto_rand();
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**

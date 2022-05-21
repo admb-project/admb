@@ -19,7 +19,8 @@ void dvcm_prod(void);
  */
 dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
@@ -51,9 +52,8 @@ dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
   save_identifier_string("PLACE2");
   tmp.save_dvar_vector_position();
   save_identifier_string("PLACE1");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dvdm_prod);
-   RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(dvdm_prod);
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -104,7 +104,8 @@ void dvdm_prod(void)
  */
 dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
@@ -135,9 +136,8 @@ dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
   save_identifier_string("PLACE2");
   tmp.save_dvar_vector_position();
   save_identifier_string("PLACE1");
-  gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dvcm_prod);
-   RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(dvcm_prod);
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 

@@ -139,7 +139,9 @@ equation (ODE) systems:
   */
 dvar_matrix expm(const dvar_matrix& A)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   int rmin = A.rowmin();
   int rmax = A.rowmax();
 
@@ -191,14 +193,16 @@ dvar_matrix expm(const dvar_matrix& A)
   for(k = 1; k<=s; ++k){
     E = E*E;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return E;
 }
 
 dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
   dvariable ln_unsigned_det, dvariable& sign)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
 #if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
@@ -360,7 +364,7 @@ dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
       x(kk)(i)=sum/b(i,i);
     }
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return trans(x);
 }
 #undef TINY

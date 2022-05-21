@@ -58,7 +58,9 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 {
   prevariable& sign=(prevariable&) _sign;
 
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
 #if !defined(OPT_LIB) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
@@ -246,7 +248,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   save_identifier_string("PLACE0");
   gradient_structure::get()->GRAD_STACK1->
      set_gradient_stack(dmdv_solve);
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return vc;
 }
 

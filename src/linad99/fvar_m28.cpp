@@ -34,12 +34,14 @@
  */
 dvar_matrix& dvar_matrix::operator/=(const double x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   for (int i=rowmin();i<=rowmax();i++)
   {
     elem(i)/=x;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return (*this);
 }
 
@@ -49,12 +51,13 @@ dvar_matrix& dvar_matrix::operator/=(const double x)
  */
 dvar_matrix& dvar_matrix::operator/=(const prevariable& x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
   {
     elem(i)/=x;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return (*this);
 }
 
@@ -64,12 +67,13 @@ dvar_matrix& dvar_matrix::operator/=(const prevariable& x)
  */
 dvar_matrix& dvar_matrix::operator=(const double x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
   {
     elem(i)=x;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return (*this);
 }
 
@@ -79,12 +83,13 @@ dvar_matrix& dvar_matrix::operator=(const double x)
  */
 dvar_matrix& dvar_matrix::operator=(const prevariable& x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
   {
     elem(i)=x;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return (*this);
 }
 
@@ -94,12 +99,13 @@ dvar_matrix& dvar_matrix::operator=(const prevariable& x)
  */
 dvar_matrix& dvar_matrix::operator*=(const double x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
   {
     elem(i)*=x;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return (*this);
 }
 
@@ -109,11 +115,12 @@ dvar_matrix& dvar_matrix::operator*=(const double x)
  */
 dvar_matrix& dvar_matrix::operator*=(const prevariable& x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
   {
     elem(i)*=x;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return (*this);
 }

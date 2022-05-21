@@ -26,12 +26,14 @@
       cerr << "tau <=1 in log_negbinomial_density " << endl;
       ad_exit(1);
     }
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
+
     dvariable r=mu/(1.e-120+(tau-1));
     dvariable tmp;
     tmp=gammln(x+r)-gammln(r) -gammln(x+1)
       +r*log(r)+x*log(mu)-(r+x)*log(r+mu);
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return tmp;
   }
 
@@ -52,7 +54,8 @@ A local parameter r is used to make it robust.
       cerr << "tau <=1 in log_negbinomial_density " << endl;
       ad_exit(1);
     }
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
     dvariable r=mu/(1.e-120+(tau-1));
     dvariable tmp;
     //tmp=exp(gammln(x+r)-gammln(r) -gammln(x+1)
@@ -65,8 +68,7 @@ A local parameter r is used to make it robust.
     tmp-=(r+x)*log(r+mu);
     tmp=exp(tmp);
 
-
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return tmp;
   }
 

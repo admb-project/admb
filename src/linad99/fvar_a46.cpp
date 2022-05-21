@@ -28,7 +28,9 @@ Element-wise division of v1 by v2 into a dvar_vector.
 */
 dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -57,8 +59,8 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
-  RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 /**
@@ -103,7 +105,9 @@ Element-wise division of v1 by v2 into a dvar_vector.
 */
 dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -130,8 +134,8 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
   save_identifier_string("vvvv");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
-  RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 /**
@@ -169,7 +173,9 @@ Element-wise division of v1 by v2 into a dvar_vector.
 */
 dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -196,8 +202,8 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   tmp.save_dvar_vector_position();
   save_identifier_string("aaaa");
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
-  RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 /**

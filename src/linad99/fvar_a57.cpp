@@ -18,7 +18,9 @@
  */
   dvar_vector dvar_vector::operator- (void)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
+
     int mmin=indexmin();
     int mmax=indexmax();
     dvar_vector tmp(mmin,mmax);
@@ -30,8 +32,8 @@
     tmp.save_dvar_vector_position();
     save_dvar_vector_position();
     save_identifier_string("d");
-    RETURN_ARRAYS_DECREMENT();
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_unary_diff);
+    gs->GRAD_STACK1->set_gradient_stack(DF_unary_diff);
+    gs->RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
 

@@ -18,7 +18,9 @@
  */
 dvar_vector operator-(const double x, const dvar_vector& t1)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
+
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ecbb");
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
@@ -28,8 +30,8 @@ dvar_vector operator-(const double x, const dvar_vector& t1)
     tmp.save_dvar_vector_position();
     t1.save_dvar_vector_position();
     save_identifier_string("druu");
-    RETURN_ARRAYS_DECREMENT();
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diff);
+    gs->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diff);
+    gs->RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
 
@@ -63,7 +65,9 @@ dvar_vector operator-(const double x, const dvar_vector& t1)
  */
 dvar_vector operator-(const dvar_vector& t1)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
+
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("vcbb");
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
@@ -73,7 +77,7 @@ dvar_vector operator-(const dvar_vector& t1)
     tmp.save_dvar_vector_position();
     t1.save_dvar_vector_position();
     save_identifier_string("tduu");
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_dv_minus);
     return(tmp);
   }

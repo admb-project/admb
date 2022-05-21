@@ -18,7 +18,9 @@
  */
 dvar_vector operator*(const dvar_vector& t1, const double x)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::get();
+    gs->RETURN_ARRAYS_INCREMENT();
+
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ccbb");
     save_double_value(x);
@@ -29,8 +31,8 @@ dvar_vector operator*(const dvar_vector& t1, const double x)
     tmp.save_dvar_vector_position();
     t1.save_dvar_vector_position();
     save_identifier_string("DDaa");
-    RETURN_ARRAYS_DECREMENT();
-    gradient_structure::get()->GRAD_STACK1->set_gradient_stack(DF_dv_double_prod);
+    gs->GRAD_STACK1->set_gradient_stack(DF_dv_double_prod);
+    gs->RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
 

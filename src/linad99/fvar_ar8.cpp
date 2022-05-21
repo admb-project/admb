@@ -45,13 +45,15 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector sinh(const dvar_vector& v1)// ***
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
+
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
      tmp.elem(i)=sinh(v1.elem(i));             // ***
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -61,13 +63,14 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector cosh(const dvar_vector& v1)// ***
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
      tmp.elem(i)=cosh(v1.elem(i));             // ***
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -77,13 +80,14 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector tanh(const dvar_vector& v1)// ***
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
      tmp.elem(i)=tanh(v1.elem(i));             // ***
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -96,13 +100,14 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
    shape_check(v1,v2,
      "dvar_vector pow(const dvar_vector& v1,const dvar_vector& v2)");
 
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
      tmp.elem(i)=pow(v1.elem(i),v2.elem(i));             // ***
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -112,13 +117,14 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector pow(const prevariable& x, const dvar_vector& v2)// ***
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v2.indexmin(),v2.indexmax());
    for (int i=v2.indexmin();i<=v2.indexmax();i++)
    {
      tmp.elem(i)=pow(x,v2.elem(i));             // ***
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -128,13 +134,14 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector asin(const dvar_vector& v1)// ***
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
      tmp.elem(i)=asin(v1.elem(i));             // ***
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -144,13 +151,14 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector acos(const dvar_vector& v1)// ***
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
      tmp.elem(i)=acos(v1.elem(i));             // ***
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -160,13 +168,14 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector log10(const dvar_vector& v1)// ***
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::get();
+   gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
      tmp.elem(i)=log10(v1.elem(i));             // ***
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 

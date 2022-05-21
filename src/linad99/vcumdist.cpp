@@ -36,10 +36,11 @@ double normal_tail_right(const double& x)
  */
 dvariable inv_cumd_norm_inner(const prevariable& x)
 {
- if (++gradient_structure::get()->RETURN_PTR > gradient_structure::get()->MAX_RETURN)
-   gradient_structure::get()->RETURN_PTR = gradient_structure::get()->MIN_RETURN;
+  gradient_structure* gs = gradient_structure::get();
+  if (++gs->RETURN_PTR > gs->MAX_RETURN)
+    gs->RETURN_PTR = gs->MIN_RETURN;
 
- RETURN_ARRAYS_INCREMENT();
+  gs->RETURN_ARRAYS_INCREMENT();
   const double c0=2.515517;
   const double c1=0.802853;
   const double c2=0.010328;
@@ -49,7 +50,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
   if (x<=0 || x>=1.0)
   {
     //cerr << "Illegal argument to inv_cumd_norm = " << x << endl;
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return 0.0;
   }
 
@@ -79,7 +80,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
     //double tt = sqrt(-2.*log(value(x)));
     double dfx=-1.0/(tt*value(x))*dftt;
 
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     gradient_structure::get()->RETURN_PTR->v->x=pp;
     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::get()->RETURN_PTR->v->x), &(x.v->x),dfx);
@@ -122,7 +123,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
     //double yy=1.-value(x);
     double dfx=-dfy;
 
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     gradient_structure::get()->RETURN_PTR->v->x=pp;
     gradient_structure::get()->GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::get()->RETURN_PTR->v->x), &(x.v->x),dfx);
@@ -148,7 +149,9 @@ dvariable inv_cumd_norm(const prevariable& x)
  */
 dvariable old_cumd_norm(const prevariable& x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   const double b1=0.319381530;
   const double b2=-0.356563782;
   const double b3=1.781477937;
@@ -160,7 +163,7 @@ dvariable old_cumd_norm(const prevariable& x)
     dvariable u=1./(1+p*x);
     dvariable y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     dvariable z=1.0-0.3989422804*exp(-.5*x*x)*y;
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return z;
   }
   else
@@ -169,7 +172,7 @@ dvariable old_cumd_norm(const prevariable& x)
     dvariable u=1./(1+p*w);
     dvariable y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     dvariable z=0.3989422804*exp(-.5*x*x)*y;
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return z;
   }
 }

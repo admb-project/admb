@@ -76,12 +76,14 @@ dvar4_array log(const dvar4_array& m)
  */
 dvariable sum(const dvar4_array& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
   dvariable tmp=0.;
   for (int i=m.indexmin();i<=m.indexmax();i++)
   {
     tmp+=sum(m.elem(i));
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }

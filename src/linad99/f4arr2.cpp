@@ -16,14 +16,16 @@
  */
 dvar4_array operator/(const d4_array& m, const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
+
      dvar4_array tmp;
      tmp.allocate(m);
      for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
        tmp(i)=m(i)/d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -33,14 +35,15 @@ dvar4_array operator/(const d4_array& m, const prevariable& d)
  */
 dvar4_array operator/(const dvar4_array& m, const double d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
      dvar4_array tmp;
      tmp.allocate(m);
      for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
        tmp(i)=m(i)/d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -50,14 +53,15 @@ dvar4_array operator/(const dvar4_array& m, const double d)
  */
 dvar4_array operator/(const dvar4_array& m, const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
      dvar4_array tmp;
      tmp.allocate(m);
      for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
        tmp(i)=m(i)/d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -67,12 +71,13 @@ dvar4_array operator/(const dvar4_array& m, const prevariable& d)
  */
 void dvar4_array::operator/=(const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
      {
        (*this)(i)/=d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
    }
 
 /**
@@ -81,10 +86,11 @@ void dvar4_array::operator/=(const prevariable& d)
  */
 void dvar4_array::operator/=(const double& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::get();
+     gs->RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
      {
        (*this)(i)/=d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
    }

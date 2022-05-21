@@ -25,13 +25,13 @@
  * Description not yet available.
  * \param
  */
-void dvector::save_dvector_position(void) const
+void dvector::save_dvector_position(DF_FILE* fp) const
 {
   // saves the size and address information for a dvar_vector
   size_t wsize=sizeof(dvector_position);
   dvector_position tmp(*this);
   //int num_rec;
-  gradient_structure::get_fp()->fwrite(&tmp,wsize);
+  fp->fwrite(&tmp,wsize);
 }
 
 /**

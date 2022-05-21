@@ -162,7 +162,7 @@ dvariable det(const dvar_matrix& aa)
   DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE7");
   part_prod.save_dvector_value(fp);
-  part_prod.save_dvector_position();
+  part_prod.save_dvector_position(fp);
   indx.save_ivector_value();
   indx.save_ivector_position();
   save_identifier_string("PLACE3");

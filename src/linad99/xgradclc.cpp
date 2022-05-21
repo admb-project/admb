@@ -281,7 +281,7 @@ do
     //dtmp.save_dvector_value();
     //dtmp.save_dvector_position();
     stmp.save_dvector_value(fp);
-    stmp.save_dvector_position();
+    stmp.save_dvector_position(fp);
 
     // save the address of the dependent variable for the funnel
     size_t wsize=sizeof(double_and_int*);

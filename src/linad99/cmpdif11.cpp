@@ -65,7 +65,7 @@ void banded_symmetric_dmatrix::save_dmatrix_value(DF_FILE* fp) const
   for (int i=min;i<=max;i++)
   {
     d(i).save_dvector_value(fp);
-    d(i).save_dvector_position();
+    d(i).save_dvector_position(fp);
   }
 }
 

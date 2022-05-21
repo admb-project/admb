@@ -23,7 +23,7 @@ void dmatrix::save_dmatrix_value(DF_FILE* fp) const
   for (int i=rowmin();i<=rowmax();i++)
   {
     ((*this)(i).save_dvector_value(fp));
-    ((*this)(i).save_dvector_position());
+    ((*this)(i).save_dvector_position(fp));
   }
 }
 

@@ -274,7 +274,13 @@ void dvar_vector::allocate(int ncl, int nch)
          ad_exit(1);
     }
 */
-    if ((va = arr_new(itemp)) == 0)
+    gradient_structure* gs = gradient_structure::get();
+    if (!gs)
+    {
+      cerr << "Error: instance of gradient_structure is a nullptr.\n";
+      ad_exit(1);
+    }
+    if ((va = gs->ARR_LIST1->arr_new(itemp)) == 0)
     {
       cerr << " Error trying to allocate memory for dvar_vector\n";
       ad_exit(1);

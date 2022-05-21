@@ -163,7 +163,13 @@ dvar_vector::dvar_vector(const char * s)
 #ifndef OPT_LIB
   assert(size() > 0);
 #endif
-   if ((va = arr_new((unsigned int)size()))==0 )
+   gradient_structure* gs = gradient_structure::get();
+   if (!gs)
+   {
+     cerr << "Error: instance of gradient_structure is a nullptr.\n";
+     ad_exit(1);
+   }
+   if ((va = gs->ARR_LIST1->arr_new((unsigned int)size()))==0 )
    {
      cerr << " Error trying to allocate memory for dvector\n";
      ad_exit(21);

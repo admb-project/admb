@@ -75,15 +75,6 @@ void arr_list::arr_free_add(arr_link* tmp)
   if (tmp->free_prev) tmp->free_prev->free_next = tmp;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-double_and_int * arr_new(unsigned int sz)
-{
-  gradient_structure* gs = gradient_structure::get();
-  return gs ? gradient_structure::get()->ARR_LIST1->arr_new(sz) : nullptr;
-}
 double_and_int* arr_list::arr_new(unsigned int sz)
 {
   if (!gradient_structure::instances)
@@ -94,7 +85,7 @@ double_and_int* arr_list::arr_new(unsigned int sz)
     ad_exit(1);
   }
 
-  char * temp_ptr;
+  char* temp_ptr = nullptr;
 
   // this routine allocated a block of memory of sizeof(double)*sz bytes
   // for the gradients of an array or matrix of prevariables
@@ -233,10 +224,6 @@ double_and_int* arr_list::arr_new(unsigned int sz)
  * Description not yet available.
  * \param
  */
-void arr_free(double_and_int * varr)
-{
-  gradient_structure::get()->ARR_LIST1->arr_free(varr);
-}
 void arr_list::arr_free(double_and_int * varr)
 {
   // This routines frees up a memory block and

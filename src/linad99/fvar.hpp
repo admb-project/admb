@@ -779,7 +779,6 @@ class dependent_variables_information
 dvar_vector_position restore_dvar_vector_position(void);
 dvector restore_dvar_vector_value(const dvar_vector_position & tmp);
 void arr_free(double_and_int *);
-double_and_int* arr_new(unsigned int sz);
 
 #include <gradient_structure.h>
 

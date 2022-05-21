@@ -190,10 +190,6 @@ public:
    friend dmatrix restore_dvar_matrix_value(void);
    //friend dmatrix restore_derivatives(void);
    friend void gradfree(dlink * v);
-   friend double_and_int *arr_new(unsigned int sz);//js
-   friend void arr_free(double_and_int *);
-   friend void RETURN_ARRAYS_DECREMENT(void);
-   friend void RETURN_ARRAYS_INCREMENT(void);
 
   void make_indvar_list(const dvar_vector& t);
 

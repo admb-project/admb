@@ -47,11 +47,11 @@ prevariable_position restore_prevariable_position(void)
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_position() const
+void prevariable::save_prevariable_position(DF_FILE* fp) const
 {
   double_and_int* tmp = get_v();
-  size_t wsize = sizeof(double_and_int*);
-  gradient_structure::get_fp()->fwrite(&tmp, wsize);
+  constexpr size_t wsize = sizeof(double_and_int*);
+  fp->fwrite(&tmp, wsize);
 }
 
 /**

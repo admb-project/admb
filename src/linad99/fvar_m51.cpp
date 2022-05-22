@@ -123,7 +123,7 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("ps");
-  vlog_det.save_prevariable_position();
+  vlog_det.save_prevariable_position(fp);
   save_identifier_string("rt");
   MM.save_dvar_matrix_value(fp);
   save_identifier_string("pl");
@@ -382,7 +382,7 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ps");
-  vlog_det.save_prevariable_position();
+  vlog_det.save_prevariable_position(fp);
   save_identifier_string("rt");
   MM.save_dvar_matrix_value(fp);
   save_identifier_string("pl");

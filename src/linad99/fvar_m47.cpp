@@ -108,7 +108,7 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("qs");
-  _fpen.save_prevariable_position();
+  _fpen.save_prevariable_position(fp);
   save_double_value(eps);
   vc.save_dvar_matrix_position(fp);
   MM.save_dvar_matrix_value(fp);

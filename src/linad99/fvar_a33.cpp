@@ -19,16 +19,16 @@
 dvar_vector operator/(const dvar_vector& t1, const prevariable& x)
   {
     gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
     gs->RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ccbb");
     x.save_prevariable_value();
-    x.save_prevariable_position();
+    x.save_prevariable_position(fp);
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
     {
       tmp.elem_value(i)=t1.elem_value(i)/value(x);
     }
-    DF_FILE* fp = gs->fp;
     tmp.save_dvar_vector_value(fp);
     tmp.save_dvar_vector_position(fp);
     t1.save_dvar_vector_position(fp);

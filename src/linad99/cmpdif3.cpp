@@ -191,12 +191,12 @@ adstring get_string_marker(void)
  * Description not yet available.
  * \param
  */
-void ivector::save_ivector_position(void) const
+void ivector::save_ivector_position(DF_FILE* fp) const
 {
   // saves the size and address information for a ivector
   constexpr size_t wsize=sizeof(ivector_position);
   ivector_position tmp(*this);
-  gradient_structure::get_fp()->fwrite(&tmp, wsize);
+  fp->fwrite(&tmp, wsize);
 }
 
 /**

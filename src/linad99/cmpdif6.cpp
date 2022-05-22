@@ -24,13 +24,12 @@
 /**
  * Saves size and address information for a dmatrix to adjoint data file.
  */
-void dmatrix::save_dmatrix_position(void) const
+void dmatrix::save_dmatrix_position(DF_FILE* fp) const
 {
-  dmatrix_position tmp(*this);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
-  DF_FILE* fp = gradient_structure::get_fp();
+  dmatrix_position tmp(*this);
 
   int min=rowmin();
   int max=rowmax();

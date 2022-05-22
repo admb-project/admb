@@ -29,7 +29,7 @@ dvar_vector& dvar_vector::operator-=(const prevariable& d)
 
   save_identifier_string("Pvv");
   save_dvar_vector_position(fp);  // for this->
-  d.save_prevariable_position();
+  d.save_prevariable_position(fp);
   save_identifier_string("Pxx");
   gs->GRAD_STACK1->set_gradient_stack(dv_xminuseq);
 
@@ -71,7 +71,7 @@ dvar_vector& dvar_vector::operator+=(const prevariable& d)
   DF_FILE* fp = gs->fp;
   save_identifier_string("Qvv");
   save_dvar_vector_position(fp);  // for this->
-  d.save_prevariable_position();
+  d.save_prevariable_position(fp);
   save_identifier_string("Qxx");
   gs->GRAD_STACK1->set_gradient_stack(dv_xpluseq);
 

@@ -22,7 +22,7 @@ void imatrix::save_imatrix_value(DF_FILE* fp)
   for (int i=rowmin();i<=rowmax();i++)
   {
     ((*this)(i).save_ivector_value(fp));
-    ((*this)(i).save_ivector_position());
+    ((*this)(i).save_ivector_position(fp));
   }
 }
 /**

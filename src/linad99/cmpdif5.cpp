@@ -38,7 +38,7 @@ void d3_array::save_d3_array_value(DF_FILE* fp) const
   for (int i=indexmin();i<=indexmax();i++)
   {
     ((*this)(i).save_dmatrix_value(fp));
-    ((*this)(i).save_dmatrix_position());
+    ((*this)(i).save_dmatrix_position(fp));
   }
 }
 

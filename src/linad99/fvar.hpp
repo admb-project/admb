@@ -1395,7 +1395,7 @@ public:
 
 
  public:
-   void save_prevariable_position(void) const;
+   void save_prevariable_position(DF_FILE* fp) const;
    prevariable_position restore_prevariable_position(void);
    void save_prevariable_value(void) const;
    double restore_prevariable_value(void);
@@ -2803,7 +2803,7 @@ class dmatrix
    void save_dmatrix_derivatives_na(const dvar_matrix_position & pos)
       const;
    void save_dmatrix_value(DF_FILE* fp) const;
-   void save_dmatrix_position(void) const;
+   void save_dmatrix_position(DF_FILE* fp) const;
    //void save_dmatrix_derivatives(void);
 
   int indexmin() const

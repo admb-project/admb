@@ -144,7 +144,7 @@ public:
 
    //operator int* () {return v;}
 
-   void save_ivector_position() const;
+   void save_ivector_position(DF_FILE* fp) const;
 
    void save_ivector_value(DF_FILE* fp) const;
 

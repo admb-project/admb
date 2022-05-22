@@ -78,7 +78,7 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     save_dvar_vector_value(fp);
     save_dvar_vector_position(fp);
     x.save_prevariable_value();
-    x.save_prevariable_position();
+    x.save_prevariable_position(fp);
     save_identifier_string("cmtu");
     gs->RETURN_ARRAYS_DECREMENT();
     gs->GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);

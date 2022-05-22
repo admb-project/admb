@@ -79,7 +79,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
   v1.save_dvar_vector_position(fp);
   v2.save_dvar_vector_value(fp);
   v2.save_dvar_vector_position(fp);
-  vtmp.save_prevariable_position();
+  vtmp.save_prevariable_position(fp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(dvdv_dot);
   gs->RETURN_ARRAYS_DECREMENT();
@@ -151,7 +151,7 @@ dvariable sum(const dvar_vector& v1)
     // The derivative list considerations
     save_identifier_string("bbbb");
     v1.save_dvar_vector_position(fp);
-    vtmp.save_prevariable_position();
+    vtmp.save_prevariable_position(fp);
     save_identifier_string("aaaa");
     gs->GRAD_STACK1->set_gradient_stack(X_dv_sum);
   }

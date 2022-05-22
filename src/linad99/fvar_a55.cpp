@@ -26,7 +26,7 @@ dvar_vector operator*(const dvector& t1, const prevariable& x)
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("xc");
     //x.save_prevariable_value();
-    x.save_prevariable_position();
+    x.save_prevariable_position(fp);
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
     {
       tmp.elem_value(i)=t1.elem(i)*value(x);
@@ -54,7 +54,7 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("xc");
     //x.save_prevariable_value();
-    x.save_prevariable_position();
+    x.save_prevariable_position(fp);
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
     {
       tmp.elem_value(i)=t1.elem(i)*value(x);

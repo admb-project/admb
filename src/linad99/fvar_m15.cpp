@@ -212,11 +212,11 @@ dvar_matrix inv(const dvar_matrix& aa)
   x.save_dvector_position(fp);
   y.save_dvector_position(fp);
   indx.save_ivector_value(fp);
-  indx.save_ivector_position();
+  indx.save_ivector_position(fp);
   aa.save_dvar_matrix_position(fp);
   vc.save_dvar_matrix_position(fp);
   bb.save_dmatrix_value(fp);
-  bb.save_dmatrix_position();
+  bb.save_dmatrix_position(fp);
   save_identifier_string("P1");
   gs->GRAD_STACK1->set_gradient_stack(dfinvpret);
   return vc;

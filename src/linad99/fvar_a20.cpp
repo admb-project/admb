@@ -107,7 +107,7 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
 
    // The derivative list considerations
    save_identifier_string("dddd");
-   t.save_prevariable_position();
+   t.save_prevariable_position(fp);
    this->save_dvar_vector_position(fp);
    save_identifier_string("ssss");
    gs->GRAD_STACK1->set_gradient_stack(dv_eqprev);

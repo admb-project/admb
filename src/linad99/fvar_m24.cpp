@@ -223,7 +223,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 
   vc=nograd_assign(x);
   save_identifier_string("PLACE8");
-  ln_unsigned_det.save_prevariable_position();
+  ln_unsigned_det.save_prevariable_position(fp);
   save_identifier_string("PLACE7");
   part_prod.save_dvector_value(fp);
   part_prod.save_dvector_position(fp);
@@ -236,7 +236,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   y.save_dvector_position(fp);
   indx.save_ivector_value(fp);
   save_identifier_string("PLACE3a");
-  indx.save_ivector_position();
+  indx.save_ivector_position(fp);
   save_identifier_string("PLACE3");
   aa.save_dvar_matrix_position(fp);
   save_identifier_string("PLACE2b");
@@ -244,7 +244,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   save_identifier_string("PLACE2a");
   bb.save_dmatrix_value(fp);
   save_identifier_string("PLACE2");
-  bb.save_dmatrix_position();
+  bb.save_dmatrix_position(fp);
   save_identifier_string("PLACE1");
   z.save_dvar_vector_position(fp);
   save_identifier_string("PLACE0");

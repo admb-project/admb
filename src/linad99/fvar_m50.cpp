@@ -74,7 +74,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("qs");
-  _fpen.save_prevariable_position();
+  _fpen.save_prevariable_position(fp);
   save_double_value(eps);
   save_identifier_string("rs");
   L.save_dvar_matrix_position(fp);

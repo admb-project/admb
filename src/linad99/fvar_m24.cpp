@@ -257,18 +257,21 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 /// dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 void dmdv_solve(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("PLACE0");
   dvar_vector_position zpos=restore_dvar_vector_position();
   verify_identifier_string("PLACE1");
-  dmatrix_position bpos=restore_dmatrix_position();
+  dmatrix_position bpos=restore_dmatrix_position(fp);
   verify_identifier_string("PLACE2");
   dmatrix b=restore_dmatrix_value(bpos);
   verify_identifier_string("PLACE2a");
   dvar_vector_position v_pos=restore_dvar_vector_position();
   verify_identifier_string("PLACE2b");
-  dvar_matrix_position a_pos=restore_dvar_matrix_position();
+  dvar_matrix_position a_pos=restore_dvar_matrix_position(fp);
   verify_identifier_string("PLACE3");
-  ivector_position indx_pos=restore_ivector_position();
+  ivector_position indx_pos=restore_ivector_position(fp);
   verify_identifier_string("PLACE3a");
   ivector indx=restore_ivector_value(indx_pos);
   dvector_position y_pos=restore_dvector_position();

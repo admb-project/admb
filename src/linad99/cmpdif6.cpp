@@ -88,10 +88,8 @@ d3_array_position restore_d3_array_position(void)
  * Reads back the size and address information for a dvar_matrix,
  * restores the size, address, and value information for a dvar_vector
  */
-dvar_matrix_position restore_dvar_matrix_position(void)
+dvar_matrix_position restore_dvar_matrix_position(DF_FILE* fp)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
-
   int min;
   int max;
   fp->fread(&max,sizeof(int));
@@ -111,10 +109,8 @@ dvar_matrix_position restore_dvar_matrix_position(void)
  * Description not yet available.
  * \param
  */
-dmatrix_position restore_dmatrix_position(void)
+dmatrix_position restore_dmatrix_position(DF_FILE* fp)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
-
   // reads back the size and address information for a dvar_matrix
   // restores the size, address, and value information for a dvar_vector
   int min;

@@ -25,7 +25,7 @@ dvar_vector operator*(const dvar_vector& t1,const prevariable& x)
 
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ccbb");
-    x.save_prevariable_value();
+    x.save_prevariable_value(fp);
     x.save_prevariable_position(fp);
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
     {

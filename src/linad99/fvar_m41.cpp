@@ -86,11 +86,14 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
  */
 void dfbltsolve(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("ww");
   dvar_vector_position xpos=restore_dvar_vector_position();
   dvar_vector_position vpos=restore_dvar_vector_position();
   dvector v=restore_dvar_vector_value(vpos);
-  dvar_matrix_position mpos=restore_dvar_matrix_position();
+  dvar_matrix_position mpos=restore_dvar_matrix_position(fp);
   banded_lower_triangular_dmatrix m=
     restore_banded_lower_triangular_dvar_matrix_value(mpos);
   verify_identifier_string("rt");

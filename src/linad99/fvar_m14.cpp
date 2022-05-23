@@ -125,12 +125,14 @@
  */
 void dmdm_prod(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   verify_identifier_string("TEST6");
-  dvar_matrix_position vpos=restore_dvar_matrix_position();
+  dvar_matrix_position vpos=restore_dvar_matrix_position(fp);
   dmatrix dftmp=restore_dvar_matrix_derivatives(vpos);
-  dvar_matrix_position m2pos=restore_dvar_matrix_position();
+  dvar_matrix_position m2pos=restore_dvar_matrix_position(fp);
   dmatrix cm2=restore_dvar_matrix_value(m2pos);
-  dvar_matrix_position m1pos=restore_dvar_matrix_position();
+  dvar_matrix_position m1pos=restore_dvar_matrix_position(fp);
   dmatrix cm1=restore_dvar_matrix_value(m1pos);
   verify_identifier_string("TEST1");
   dmatrix dfm1(m1pos);

@@ -1397,7 +1397,7 @@ public:
  public:
    void save_prevariable_position(DF_FILE* fp) const;
    prevariable_position restore_prevariable_position(void);
-   void save_prevariable_value(void) const;
+   void save_prevariable_value(DF_FILE* fp) const;
    double restore_prevariable_value(void);
    double restore_prevariable_derivative(void);
 
@@ -4602,8 +4602,8 @@ void verify_identifier_string(const char *);
 
 
 ivector restore_ivector_value(const ivector_position &);
-ivector_position restore_ivector_position(void);
-dvar_matrix_position restore_dvar_matrix_position(void);
+ivector_position restore_ivector_position(DF_FILE* fp);
+dvar_matrix_position restore_dvar_matrix_position(DF_FILE* fp);
 dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& pos,
   const int &ii);
 dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& pos,
@@ -4622,7 +4622,7 @@ dvar_matrix nograd_assign(const dmatrix &);
 dvariable nograd_assign(double tmp);
 dvar_vector nograd_assign(dvector tmp);
 dmatrix restore_dvar_matrix_value(const dvar_matrix_position & mpos);
-dmatrix_position restore_dmatrix_position(void);
+dmatrix_position restore_dmatrix_position(DF_FILE* fp);
 dvector_position restore_dvector_position(void);
 dvector restore_dvector_value(const dvector_position &);
 dmatrix restore_dmatrix_value(const dmatrix_position &);
@@ -4635,7 +4635,7 @@ void save_dmatrix_derivatives(const dvar_matrix_position & pos, double x,
 dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position & pos);
 dvector restore_dvar_vector_der_nozero(const dvar_vector_position & tmp);
 d3_array_position restore_d3_array_position(void);
-d3_array restore_d3_array_value(const d3_array_position &);
+d3_array restore_d3_array_value(const d3_array_position &, DF_FILE* fp);
 void nograd_assign_row(const dvar_matrix & m, const dvector & v,
   const int &ii);
 void nograd_assign_column(const dvar_matrix & m, const dvector & v,

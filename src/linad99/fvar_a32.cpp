@@ -45,11 +45,14 @@ dvar_vector dvar_vector::operator()(const ivector& u)
  * Description not yet available.
  * \param
  */
-void dv_subassign(void)
+void dv_subassign()
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ay");
-  ivector_position u_pos=restore_ivector_position();
+  ivector_position u_pos=restore_ivector_position(fp);
   ivector u=restore_ivector_value(u_pos);
   dvar_vector_position tmp_pos=restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);

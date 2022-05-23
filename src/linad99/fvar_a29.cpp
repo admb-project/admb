@@ -505,7 +505,7 @@ dvar_vector pow(const dvar_vector& v1, const prevariable& e)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddg");
-  e.save_prevariable_value();
+  e.save_prevariable_value(fp);
   e.save_prevariable_position(fp);
   v1.save_dvar_vector_value(fp);
   v1.save_dvar_vector_position(fp);
@@ -616,7 +616,7 @@ dvar_vector pow(const dvector& v1,const prevariable& e)
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("eddg");
-  e.save_prevariable_value();
+  e.save_prevariable_value(fp);
   e.save_prevariable_position(fp);
   v1.save_dvector_value(fp);
   v1.save_dvector_position(fp);

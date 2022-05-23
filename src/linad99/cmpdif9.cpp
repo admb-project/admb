@@ -28,13 +28,11 @@ void imatrix::save_imatrix_value(DF_FILE* fp)
 /**
 Saves the size and address information for a imatrix.
 */
-void imatrix::save_imatrix_position(void)
+void imatrix::save_imatrix_position(DF_FILE* fp)
 {
   imatrix_position tmp(*this);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
-
-  DF_FILE* fp = gradient_structure::get_fp();
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
   int min=rowmin();
   int max=rowmax();
@@ -50,20 +48,21 @@ void imatrix::save_imatrix_position(void)
 /**
 Reads and restores back the size and address information for a imatrix.
 */
-imatrix_position restore_imatrix_position(void)
+imatrix_position restore_imatrix_position(DF_FILE* fp)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
   int min;
   int max;
-  fp->fread(&max,sizeof(int));
-  fp->fread(&min,sizeof(int));
+  fp->fread(&max,wsize);
+  fp->fread(&min,wsize);
   imatrix_position tmp(min,max);
   for (int i=max;i>=min;i--)
   {
-    fp->fread(&(tmp.ptr(i)),sizeof(void*));
-    fp->fread(&(tmp.ub(i)),sizeof(int));
-    fp->fread(&(tmp.lb(i)),sizeof(int));
+    fp->fread(&(tmp.ptr(i)),wsize1);
+    fp->fread(&(tmp.ub(i)),wsize);
+    fp->fread(&(tmp.lb(i)),wsize);
   }
   return tmp;
 }
@@ -71,7 +70,7 @@ imatrix_position restore_imatrix_position(void)
  * Description not yet available.
  * \param
  */
-imatrix restore_imatrix_value(const imatrix_position& mpos)
+imatrix restore_imatrix_value(const imatrix_position& mpos, DF_FILE* fp)
 {
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
@@ -80,7 +79,7 @@ imatrix restore_imatrix_value(const imatrix_position& mpos)
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
   {
-    ivector_position vpos=restore_ivector_position();
+    ivector_position vpos=restore_ivector_position(fp);
     out(i)=restore_ivector_value(vpos);
   }
   return out;

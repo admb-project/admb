@@ -226,12 +226,15 @@ dvar_matrix inv(const dvar_matrix& aa)
 */
 void dfinvpret(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("P1");
-  dmatrix_position bpos=restore_dmatrix_position();
+  dmatrix_position bpos=restore_dmatrix_position(fp);
   dmatrix b=restore_dmatrix_value(bpos);
-  dvar_matrix_position v_pos=restore_dvar_matrix_position();
-  dvar_matrix_position a_pos=restore_dvar_matrix_position();
-  ivector_position indx_pos=restore_ivector_position();
+  dvar_matrix_position v_pos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position a_pos=restore_dvar_matrix_position(fp);
+  ivector_position indx_pos=restore_ivector_position(fp);
   ivector indx=restore_ivector_value(indx_pos);
   dvector_position y_pos=restore_dvector_position();
   dvector_position x_pos=restore_dvector_position();

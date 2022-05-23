@@ -85,7 +85,7 @@ dmatrix restore_dmatrix_value(const dmatrix_position& mpos)
  * Description not yet available.
  * \param
  */
-d3_array restore_d3_array_value(const d3_array_position& mpos)
+d3_array restore_d3_array_value(const d3_array_position& mpos, DF_FILE* fp)
 {
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
@@ -95,7 +95,7 @@ d3_array restore_d3_array_value(const d3_array_position& mpos)
   int max=out.indexmax();
   for (int i=max;i>=min;i--)
   {
-    dmatrix_position vpos=restore_dmatrix_position();
+    dmatrix_position vpos=restore_dmatrix_position(fp);
     out(i)=restore_dmatrix_value(vpos);
   }
   return out;

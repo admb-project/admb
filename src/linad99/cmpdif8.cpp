@@ -58,14 +58,14 @@ void prevariable::save_prevariable_position(DF_FILE* fp) const
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_value(void) const
+void prevariable::save_prevariable_value(DF_FILE* fp) const
 {
   //double_and_int * tmp=get_v();
   //const unsigned wsize=sizeof(double_and_int*);
   //gradient_structure::get_fp()->fwrite(&tmp,wsize);
   double x=value(*this);
   //const unsigned dsize=sizeof(double);
-  gradient_structure::get_fp()->fwrite(x);
+  fp->fwrite(x);
 }
 
 /**

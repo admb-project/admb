@@ -59,8 +59,8 @@ public:
   ivector_position operator()(int i);
 };
 
-imatrix_position restore_imatrix_position(void);
-imatrix restore_imatrix_value(const imatrix_position &);
+imatrix_position restore_imatrix_position(DF_FILE* fp);
+imatrix restore_imatrix_value(const imatrix_position &, DF_FILE*);
 
 /**
  * Description not yet available.
@@ -104,7 +104,7 @@ public:
    void shallow_copy(const imatrix &);
 
    void save_imatrix_value(DF_FILE* fp);
-   void save_imatrix_position(void);
+   void save_imatrix_position(DF_FILE* fp);
    imatrix restore_imatrix_value(const imatrix_position & mpos);
    imatrix_position restore_imatrix_position(void);
 

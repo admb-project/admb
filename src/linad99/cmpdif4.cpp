@@ -38,14 +38,14 @@ void dvector::save_dvector_position(DF_FILE* fp) const
  * Description not yet available.
  * \param
  */
-ivector_position restore_ivector_position(void)
+ivector_position restore_ivector_position(DF_FILE* fp)
 {
   // reads back the size and address information for a ivector
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
   ivector_position tmp;
   //int ierr;
-  gradient_structure::get_fp()->fread(&tmp,sizeof(ivector_position));
+  fp->fread(&tmp,sizeof(ivector_position));
   return tmp;
 }
 

@@ -392,13 +392,16 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
  */
 void dfcholeski_decomp_banded(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("ro");
-  dvar_matrix_position MMpos=restore_dvar_matrix_position();
+  dvar_matrix_position MMpos=restore_dvar_matrix_position(fp);
   verify_identifier_string("rl");
   banded_symmetric_dmatrix M=
     restore_banded_symmetric_dvar_matrix_value(MMpos);
   verify_identifier_string("rt");
-  dvar_matrix_position vcpos=restore_dvar_matrix_position();
+  dvar_matrix_position vcpos=restore_dvar_matrix_position(fp);
   verify_identifier_string("rs");
   banded_lower_triangular_dmatrix dfL=
     restore_banded_lower_triangular_dvar_matrix_derivatives(vcpos);

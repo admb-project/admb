@@ -20,6 +20,8 @@ void cmdv_prod(void);
 dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)
 {
   gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   gs->RETURN_ARRAYS_INCREMENT();
 
   if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
@@ -41,7 +43,6 @@ dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)
     }
     tmp.elem_value(i)=sum;
   }
-  DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE4");
   x.save_dvar_vector_value(fp);
   x.save_dvar_vector_position(fp);
@@ -62,10 +63,13 @@ dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)
  */
 void dmdv_prod(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("PLACE1");
   dvar_vector_position tmp_pos=restore_dvar_vector_position();
   verify_identifier_string("PLACE2");
-  dvar_matrix_position m_pos=restore_dvar_matrix_position();
+  dvar_matrix_position m_pos=restore_dvar_matrix_position(fp);
   dmatrix m=restore_dvar_matrix_value(m_pos);
   verify_identifier_string("PLACE3");
   dvar_vector_position x_pos=restore_dvar_vector_position();
@@ -144,10 +148,13 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
  */
 void cmdv_prod(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("PLACE1");
   dvar_vector_position tmp_pos=restore_dvar_vector_position();
   verify_identifier_string("PLACE2");
-  dmatrix_position m_pos=restore_dmatrix_position();
+  dmatrix_position m_pos=restore_dmatrix_position(fp);
   dmatrix m=restore_dmatrix_value(m_pos);
   dvar_vector_position x_pos=restore_dvar_vector_position();
   dvector x=restore_dvar_vector_value(x_pos);

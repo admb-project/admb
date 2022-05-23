@@ -202,17 +202,20 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
 /// Adjoint code for dvariable ln_det(const dvar_matrix& aa, int& sgn).
 void df_xldet(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("PLACE0");
   /*double ld=*/restore_double_value();
   verify_identifier_string("PLACE1");
-  dmatrix_position bpos=restore_dmatrix_position();
+  dmatrix_position bpos=restore_dmatrix_position(fp);
   verify_identifier_string("PLACE2");
   dmatrix b=restore_dmatrix_value(bpos);
   //dvar_matrix_position rdet_pos=restore_prevariable_position();
   double dfdet=restore_prevariable_derivative();
-  dvar_matrix_position a_pos=restore_dvar_matrix_position();
+  dvar_matrix_position a_pos=restore_dvar_matrix_position(fp);
   verify_identifier_string("PLACE3");
-  ivector_position indx_pos=restore_ivector_position();
+  ivector_position indx_pos=restore_ivector_position(fp);
   ivector indx=restore_ivector_value(indx_pos);
   dvector_position part_prod_pos=restore_dvector_position();
   dvector part_prod=restore_dvector_value(part_prod_pos);

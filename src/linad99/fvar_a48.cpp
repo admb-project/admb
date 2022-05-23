@@ -77,7 +77,7 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     save_identifier_string("wctg");
     save_dvar_vector_value(fp);
     save_dvar_vector_position(fp);
-    x.save_prevariable_value();
+    x.save_prevariable_value(fp);
     x.save_prevariable_position(fp);
     save_identifier_string("cmtu");
     gs->RETURN_ARRAYS_DECREMENT();

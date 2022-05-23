@@ -284,7 +284,7 @@ void dmdv_solve(void)
   dvector_position part_prod_pos=restore_dvector_position();
   dvector part_prod=restore_dvector_value(part_prod_pos);
   verify_identifier_string("PLACE7");
-  double df_ln_det=restore_prevariable_derivative();
+  double df_ln_det=restore_prevariable_derivative(fp);
   verify_identifier_string("PLACE8");
   int lb=b.colmin();
   int ub=b.colmax();

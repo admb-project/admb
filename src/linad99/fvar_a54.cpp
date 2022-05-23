@@ -43,9 +43,12 @@ dvar_vector operator-(const dvector& t1, const prevariable& x)
  */
  void DF_v_xdble_diff(void)
  {
+    gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     verify_identifier_string("ddu");
     dvar_vector_position tmp_pos=restore_dvar_vector_position();
-    prevariable_position xpos=restore_prevariable_position();
+    prevariable_position xpos=restore_prevariable_position(fp);
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     verify_identifier_string("zcb");
     //double xinv=1./x;

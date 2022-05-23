@@ -40,9 +40,12 @@ Adjoint function to compute gradients for dvar_vector::operator-=(const prevaria
 */
 void dv_xminuseq(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Pxx");
-  prevariable_position d_pos=restore_prevariable_position();
+  prevariable_position d_pos=restore_prevariable_position(fp);
   dvar_vector_position this_pos=restore_dvar_vector_position();
   verify_identifier_string("Pvv");
   dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
@@ -82,9 +85,12 @@ Adjoint function to compute gradients for dvar_vector::operator+=(const prevaria
 */
 void dv_xpluseq(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Qxx");
-  prevariable_position d_pos=restore_prevariable_position();
+  prevariable_position d_pos=restore_prevariable_position(fp);
   dvar_vector_position this_pos=restore_dvar_vector_position();
   verify_identifier_string("Qvv");
   dvector dfthis=restore_dvar_vector_der_nozero(this_pos);

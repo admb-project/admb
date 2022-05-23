@@ -155,11 +155,14 @@ Adjoint to compute gradient for dvar_vector::operator=(const prevariable&).
 */
 void dv_eqprev(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
   dvar_vector_position tmp_pos=restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  prevariable_position t_pos=restore_prevariable_position();
+  prevariable_position t_pos=restore_prevariable_position(fp);
   verify_identifier_string("dddd");
   double dft=0.;
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)

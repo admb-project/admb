@@ -522,13 +522,15 @@ dvar_vector pow(const dvar_vector& v1, const prevariable& e)
 void DF_dvdvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
 
   verify_identifier_string("eeg");
   dvar_vector_position tmp_pos=restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvar_vector_position v1pos=restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
-  prevariable_position epos=restore_prevariable_position();
+  prevariable_position epos=restore_prevariable_position(fp);
   double e=restore_prevariable_value();
   verify_identifier_string("ddg");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -633,13 +635,15 @@ dvar_vector pow(const dvector& v1,const prevariable& e)
 void DF_cdvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
 
   verify_identifier_string("feeg");
   dvar_vector_position tmp_pos=restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvector_position v1pos=restore_dvector_position();
   dvector v1=restore_dvector_value(v1pos);
-  prevariable_position epos=restore_prevariable_position();
+  prevariable_position epos=restore_prevariable_position(fp);
   double e=restore_prevariable_value();
   verify_identifier_string("eddg");
   //dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());

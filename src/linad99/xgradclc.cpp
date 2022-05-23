@@ -300,8 +300,11 @@ do
  */
 void funnel_derivatives(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("ae");
-  prevariable_position deppos=restore_prevariable_position();
+  prevariable_position deppos=restore_prevariable_position(fp);
   dvector_position stmp_pos=restore_dvector_position();
   dvector stmp=restore_dvector_value(stmp_pos);
   //dvector_position dtmp_pos=restore_dvector_position();

@@ -89,8 +89,11 @@ dvariable operator*(const dvar_vector& v2, const dvector& cv1)
  */
 void dvcv_dot(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("uuuu");
-  double dftmp=restore_prevariable_derivative();
+  double dftmp=restore_prevariable_derivative(fp);
   dvar_vector_position v2pos=restore_dvar_vector_position();
   dvector_position dpos=restore_dvector_position();
   dvector cv1=restore_dvector_value(dpos);

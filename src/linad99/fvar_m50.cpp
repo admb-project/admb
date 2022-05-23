@@ -108,7 +108,7 @@ void dfcholeski_decomp_banded_positive(void)
   banded_lower_triangular_dmatrix dfL=
     restore_banded_lower_triangular_dvar_matrix_derivatives(vcpos);
   double eps=restore_double_value();
-  prevariable_position fpenpos=restore_prevariable_position();
+  prevariable_position fpenpos=restore_prevariable_position(fp);
   verify_identifier_string("qs");
   double dfpen=restore_prevariable_derivative(fpenpos);
 

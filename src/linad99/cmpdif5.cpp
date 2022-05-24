@@ -10,20 +10,27 @@
  */
 #include "fvar.hpp"
 #include <string.h>
-#include <cassert>
+
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 /**
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_value(DF_FILE* fp) const
+void dmatrix::save_dmatrix_value() const
+{
+  gradient_structure::get_fp()->save_dmatrix_value(*this);
+}
+void DF_FILE::save_dmatrix_value(const dmatrix& m)
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i=m.rowmin();i<=m.rowmax();i++)
   {
-    ((*this)(i).save_dvector_value(fp));
-    ((*this)(i).save_dvector_position(fp));
+    save_dvector_value(m(i));
+    save_dvector_position(m(i));
   }
 }
 
@@ -31,14 +38,18 @@ void dmatrix::save_dmatrix_value(DF_FILE* fp) const
  * Description not yet available.
  * \param
  */
-void d3_array::save_d3_array_value(DF_FILE* fp) const
+void d3_array::save_d3_array_value() const
+{
+  gradient_structure::get_fp()->save_d3_array_value(*this);
+}
+void DF_FILE::save_d3_array_value(const d3_array& a)
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
-  for (int i=indexmin();i<=indexmax();i++)
+  for (int i=a.indexmin();i<=a.indexmax();i++)
   {
-    ((*this)(i).save_dmatrix_value(fp));
-    ((*this)(i).save_dmatrix_position(fp));
+    save_dmatrix_value(a(i));
+    save_dmatrix_position(a(i));
   }
 }
 
@@ -178,8 +189,10 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
   const int min = indexmin();
   const int max = indexmax();
 
+#ifdef DEBUG
   //Check for incompatible array sizes
   assert(min == pos.indexmin() && max == pos.indexmax());
+#endif
 
 #ifdef USE_ASSEMBLER
   double_and_int* ptr = pos.va;

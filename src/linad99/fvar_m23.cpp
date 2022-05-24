@@ -137,8 +137,8 @@ dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
   save_identifier_string("P4");
   fp->save_dvar_vector_position(x);
   save_identifier_string("PLACE3");
-  m.save_dmatrix_value(fp);
-  m.save_dmatrix_position(fp);
+  fp->save_dmatrix_value(m);
+  fp->save_dmatrix_position(m);
   save_identifier_string("PLACE2");
   fp->save_dvar_vector_position(tmp);
   save_identifier_string("PLACE1");

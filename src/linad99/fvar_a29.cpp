@@ -649,8 +649,8 @@ dvar_vector pow(const dvector& v1,const prevariable& e)
   save_identifier_string("eddg");
   e.save_prevariable_value(fp);
   e.save_prevariable_position(fp);
-  v1.save_dvector_value(fp);
-  v1.save_dvector_position(fp);
+  fp->save_dvector_value(v1);
+  fp->save_dvector_position(v1);
   fp->save_dvar_vector_position(vtmp);
   save_identifier_string("feeg");
   gs->GRAD_STACK1->set_gradient_stack(DF_cdvpow);

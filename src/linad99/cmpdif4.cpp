@@ -25,13 +25,17 @@
  * Description not yet available.
  * \param
  */
-void dvector::save_dvector_position(DF_FILE* fp) const
+void dvector::save_dvector_position() const
+{
+  return gradient_structure::get_fp()->save_dvector_position(*this);
+}
+void DF_FILE::save_dvector_position(const dvector& v)
 {
   // saves the size and address information for a dvar_vector
-  size_t wsize=sizeof(dvector_position);
-  dvector_position tmp(*this);
+  constexpr size_t wsize=sizeof(dvector_position);
+  dvector_position tmp(v);
   //int num_rec;
-  fp->fwrite(&tmp,wsize);
+  fwrite(&tmp, wsize);
 }
 
 /**
@@ -116,17 +120,21 @@ void DF_FILE::save_dvar_vector_value(const dvar_vector& v)
 /**
 Saves the size, address, and value information for a dvector.
 */
-void dvector::save_dvector_value(DF_FILE* fp) const
+void dvector::save_dvector_value() const
+{
+  return gradient_structure::get_fp()->save_dvector_value(*this);
+}
+void DF_FILE::save_dvector_value(const dvector& v)
 {
   // int ierr=save_dvector_position();
   //int wsize=sizeof(double);
   //int num_rec;
-  int min=indexmin();
-  int max=indexmax();
+  int min=v.indexmin();
+  int max=v.indexmax();
   for (int i=min;i<=max;i++)
   {
-    double tmp=(*this)(i);
-    fp->fwrite(tmp);
+    double tmp = v(i);
+    fwrite(tmp);
   }
 }
 

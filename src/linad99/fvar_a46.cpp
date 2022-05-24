@@ -54,8 +54,8 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
   fp->save_dvar_vector_value(v1);
   fp->save_dvar_vector_position(v1);
   save_identifier_string("wwww");
-  tmp_inv.save_dvector_value(fp);
-  tmp_inv.save_dvector_position(fp);
+  fp->save_dvector_value(tmp_inv);
+  fp->save_dvector_position(tmp_inv);
   save_identifier_string("vvvv");
   fp->save_dvar_vector_position(v2);
   save_identifier_string("uuuu");
@@ -135,8 +135,8 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
   fp->save_dvar_vector_value(v1);
   fp->save_dvar_vector_position(v1);
   save_identifier_string("wwww");
-  tmp_inv.save_dvector_value(fp);
-  tmp_inv.save_dvector_position(fp);
+  fp->save_dvector_value(tmp_inv);
+  fp->save_dvector_position(tmp_inv);
   save_identifier_string("vvvv");
   fp->save_dvar_vector_position(tmp);
   save_identifier_string("aaaa");
@@ -206,8 +206,8 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("bbbb");
-  tmp_inv.save_dvector_value(fp);
-  tmp_inv.save_dvector_position(fp);
+  fp->save_dvector_value(tmp_inv);
+  fp->save_dvector_position(tmp_inv);
   save_identifier_string("vvvv");
   fp->save_dvar_vector_position(v2);
   save_identifier_string("uuuu");

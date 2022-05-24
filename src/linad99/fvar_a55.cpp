@@ -31,9 +31,9 @@ dvar_vector operator*(const dvector& t1, const prevariable& x)
     {
       tmp.elem_value(i)=t1.elem(i)*value(x);
     }
-    t1.save_dvector_value(fp);
+    fp->save_dvector_value(t1);
     fp->save_dvar_vector_position(tmp);
-    t1.save_dvector_position(fp);
+    fp->save_dvector_position(t1);
     save_identifier_string("Da");
     gs->RETURN_ARRAYS_DECREMENT();
     gs->GRAD_STACK1->set_gradient_stack(DF_ccv_dble_prod);
@@ -59,9 +59,9 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
     {
       tmp.elem_value(i)=t1.elem(i)*value(x);
     }
-    t1.save_dvector_value(fp);
+    fp->save_dvector_value(t1);
     fp->save_dvar_vector_position(tmp);
-    t1.save_dvector_position(fp);
+    fp->save_dvector_position(t1);
     save_identifier_string("Da");
     gs->RETURN_ARRAYS_DECREMENT();
     gs->GRAD_STACK1->set_gradient_stack(DF_ccv_dble_prod);

@@ -161,8 +161,8 @@ dvariable det(const dvar_matrix& aa)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE7");
-  part_prod.save_dvector_value(fp);
-  part_prod.save_dvector_position(fp);
+  fp->save_dvector_value(part_prod);
+  fp->save_dvector_position(part_prod);
   indx.save_ivector_value(fp);
   indx.save_ivector_position(fp);
   save_identifier_string("PLACE3");
@@ -170,9 +170,9 @@ dvariable det(const dvar_matrix& aa)
   save_identifier_string("PLACE2b");
   rdet.save_prevariable_position(fp);
   save_identifier_string("PLACE2a");
-  bb.save_dmatrix_value(fp);
+  fp->save_dmatrix_value(bb);
   save_identifier_string("PLACE2");
-  bb.save_dmatrix_position(fp);
+  fp->save_dmatrix_position(bb);
   save_identifier_string("PLACE1");
   fp->save_double_value(d);
   save_identifier_string("PLACE0");

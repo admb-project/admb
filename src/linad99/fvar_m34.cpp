@@ -46,8 +46,8 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
      tmp.elem_value(i)=sum;
    }
   save_identifier_string("PL4");
-  x.save_dvector_value(fp);
-  x.save_dvector_position(fp);
+  fp->save_dvector_value(x);
+  fp->save_dvector_position(x);
   m.save_dvar_matrix_position(fp);
   fp->save_dvar_vector_position(tmp);
   save_identifier_string("PLX");

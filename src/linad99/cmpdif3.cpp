@@ -203,12 +203,16 @@ void ivector::save_ivector_position(DF_FILE* fp) const
  * Description not yet available.
  * \param
  */
-void dvar_vector::save_dvar_vector_position(DF_FILE* fp) const
+void dvar_vector::save_dvar_vector_position() const
+{
+  gradient_structure::get_fp()->save_dvar_vector_position(*this);
+}
+void DF_FILE::save_dvar_vector_position(const dvar_vector& v)
 {
   // saves the size and address information for a dvar_vector
   constexpr size_t wsize=sizeof(dvar_vector_position);
-  dvar_vector_position tmp(*this);
-  fp->fwrite(&tmp, wsize);
+  dvar_vector_position tmp(v);
+  fwrite(&tmp, wsize);
 }
 
 /**

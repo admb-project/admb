@@ -37,7 +37,7 @@
    DF_FILE* fp = gs->fp;
 
    save_identifier_string("b");
-   this->save_dvar_vector_position(fp);
+   fp->save_dvar_vector_position(*this);
    save_identifier_string("a");
    gs->GRAD_STACK1->set_gradient_stack(dv_init);
    return(*this);

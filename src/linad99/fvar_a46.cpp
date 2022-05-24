@@ -51,15 +51,15 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
   save_identifier_string("wwww");
   tmp_inv.save_dvector_value(fp);
   tmp_inv.save_dvector_position(fp);
   save_identifier_string("vvvv");
-  v2.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(v2);
   save_identifier_string("uuuu");
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
   gs->RETURN_ARRAYS_DECREMENT();
@@ -111,6 +111,7 @@ Element-wise division of v1 by v2 into a dvar_vector.
 dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
 {
   gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
@@ -129,16 +130,15 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
     tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
   }
 
-  DF_FILE* fp = gs->fp;
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
   save_identifier_string("wwww");
   tmp_inv.save_dvector_value(fp);
   tmp_inv.save_dvector_position(fp);
   save_identifier_string("vvvv");
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(dvcv_elem_div);
   gs->RETURN_ARRAYS_DECREMENT();
@@ -209,9 +209,9 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
   tmp_inv.save_dvector_value(fp);
   tmp_inv.save_dvector_position(fp);
   save_identifier_string("vvvv");
-  v2.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(v2);
   save_identifier_string("uuuu");
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(cvdv_elem_div);
   gs->RETURN_ARRAYS_DECREMENT();

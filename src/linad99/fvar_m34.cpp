@@ -49,7 +49,7 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
   x.save_dvector_value(fp);
   x.save_dvector_position(fp);
   m.save_dvar_matrix_position(fp);
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("PLX");
    gs->GRAD_STACK1->set_gradient_stack(dmcv_prod);
    gs->RETURN_ARRAYS_DECREMENT();

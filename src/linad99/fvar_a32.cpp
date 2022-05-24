@@ -32,8 +32,8 @@ dvar_vector dvar_vector::operator()(const ivector& u)
    gradient_structure* gs = gradient_structure::get();
    DF_FILE* fp = gs->fp;
    save_identifier_string("by");
-   save_dvar_vector_position(fp);
-   tmp.save_dvar_vector_position(fp);
+   fp->save_dvar_vector_position(*this);
+   fp->save_dvar_vector_position(tmp);
    u.save_ivector_value(fp);
    u.save_ivector_position(fp);
    save_identifier_string("ay");

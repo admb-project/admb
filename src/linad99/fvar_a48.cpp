@@ -28,7 +28,7 @@ dvar_vector& dvar_vector::operator/=(const double x)
     {
       elem_value(i)*=xinv;
     }
-    save_dvar_vector_position(fp);
+    fp->save_dvar_vector_position(*this);
     fp->save_double_value(x);
     save_identifier_string("cmtu");
     gs->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_diveq);
@@ -77,8 +77,8 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
       elem_value(i)=elem_value(i)*xinv;
     }
     save_identifier_string("wctg");
-    save_dvar_vector_value(fp);
-    save_dvar_vector_position(fp);
+    fp->save_dvar_vector_value(*this);
+    fp->save_dvar_vector_position(*this);
     x.save_prevariable_value(fp);
     x.save_prevariable_position(fp);
     save_identifier_string("cmtu");

@@ -52,11 +52,11 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("b");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  v2.save_dvar_vector_value(fp);
-  v2.save_dvar_vector_position(fp);
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_value(v2);
+  fp->save_dvar_vector_position(v2);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("a");
   gs->GRAD_STACK1->set_gradient_stack(dvdv_elem_prod);
   gs->RETURN_ARRAYS_DECREMENT();
@@ -123,8 +123,8 @@ dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
   save_identifier_string("b");
   v1.save_dvector_value(fp);
   v1.save_dvector_position(fp);
-  v2.save_dvar_vector_position(fp);
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(v2);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("a");
   gs->GRAD_STACK1->set_gradient_stack(cvdv_elem_prod);
   gs->RETURN_ARRAYS_DECREMENT();
@@ -186,10 +186,10 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
 
   // The derivative list considerations
   save_identifier_string("b");
-  v1.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(v1);
   v2.save_dvector_value(fp);
   v2.save_dvector_position(fp);
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("a");
   gs->GRAD_STACK1->set_gradient_stack(dvcv_elem_prod);
   gs->RETURN_ARRAYS_DECREMENT();

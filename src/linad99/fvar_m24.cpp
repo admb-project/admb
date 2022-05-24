@@ -240,13 +240,13 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   save_identifier_string("PLACE3");
   aa.save_dvar_matrix_position(fp);
   save_identifier_string("PLACE2b");
-  vc.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(vc);
   save_identifier_string("PLACE2a");
   bb.save_dmatrix_value(fp);
   save_identifier_string("PLACE2");
   bb.save_dmatrix_position(fp);
   save_identifier_string("PLACE1");
-  z.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(z);
   save_identifier_string("PLACE0");
   gs->GRAD_STACK1->set_gradient_stack(dmdv_solve);
   gs->RETURN_ARRAYS_DECREMENT();

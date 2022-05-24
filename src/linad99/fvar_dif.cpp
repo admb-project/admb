@@ -33,8 +33,8 @@ dvar_vector first_difference(const dvar_vector& x)
     tmp.elem_value(i)=x.elem_value(i+1)-x.elem_value(i);
   }
   save_identifier_string("CE4");
-  x.save_dvar_vector_position(fp);
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(x);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("CE1");
   gs->GRAD_STACK1->set_gradient_stack(DF_first_diference);
   gs->RETURN_ARRAYS_DECREMENT();

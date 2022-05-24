@@ -31,8 +31,8 @@
     {
       tmp.elem_value(i)=-elem_value(i);
     }
-    tmp.save_dvar_vector_position(fp);
-    save_dvar_vector_position(fp);
+    fp->save_dvar_vector_position(tmp);
+    fp->save_dvar_vector_position(*this);
     save_identifier_string("d");
     gs->GRAD_STACK1->set_gradient_stack(DF_unary_diff);
     gs->RETURN_ARRAYS_DECREMENT();

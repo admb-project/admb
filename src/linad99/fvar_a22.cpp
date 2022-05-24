@@ -40,9 +40,9 @@ dvar_vector operator-(const dvar_vector& v1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_position(fp);
-  v2.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(v2);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(dvdv_sub);
   return vtmp;

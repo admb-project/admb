@@ -28,8 +28,8 @@ dvar_vector operator-(const prevariable& x, const dvar_vector& t1)
     {
       tmp.elem_value(i)=value(x)-t1.elem_value(i);
     }
-    tmp.save_dvar_vector_position(fp);
-    t1.save_dvar_vector_position(fp);
+    fp->save_dvar_vector_position(tmp);
+    fp->save_dvar_vector_position(t1);
     save_identifier_string("dduu");
     gs->RETURN_ARRAYS_DECREMENT();
     gs->GRAD_STACK1->set_gradient_stack(DF_dble_dv_diff);

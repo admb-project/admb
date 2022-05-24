@@ -35,8 +35,8 @@ void dv_minuseq(void);
    DF_FILE* fp = gs->fp;
 
    save_identifier_string("uuvv");
-   save_dvar_vector_position(fp);  // for this->
-   v1.save_dvar_vector_position(fp);
+   fp->save_dvar_vector_position(*this);  // for this->
+   fp->save_dvar_vector_position(v1);
    save_identifier_string("wwxx");
    gs->GRAD_STACK1->set_gradient_stack(dv_minuseq);
    return(*this);

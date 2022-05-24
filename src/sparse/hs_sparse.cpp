@@ -3157,9 +3157,9 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   fp->save_int_value(nccount);
 
   save_identifier_string("tu");
-  C.x.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(C.x);
   save_identifier_string("wy");
-  L.x.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(L.x);
   save_identifier_string("iy");
   save_ad_pointer(&S);
   save_ad_pointer(&sparse_triplet2);
@@ -3568,7 +3568,7 @@ void report_derivatives(const dvar_vector& x)
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("jx");
-  x.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(x);
 
   gs->GRAD_STACK1->set_gradient_stack(report_dvar_vector_derivatives);
   save_identifier_string("jr");

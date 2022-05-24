@@ -94,18 +94,22 @@ dvector_position DF_FILE::restore_dvector_position()
 /**
 Saves the size, address, and value information for a dvar_vector.
 */
-void dvar_vector::save_dvar_vector_value(DF_FILE* fp) const
+void dvar_vector::save_dvar_vector_value() const
+{
+  return gradient_structure::get_fp()->save_dvar_vector_value(*this);
+}
+void DF_FILE::save_dvar_vector_value(const dvar_vector& v)
 {
   //int ierr=save_dvar_vector_position();
   //const unsigned wsize=sizeof(double);
   //int num_rec;
-  int min=indexmin();
-  int max=indexmax();
-  for (int i=min;i<=max;i++)
+  int min=v.indexmin();
+  int max=v.indexmax();
+  for (int i=min;i<=max;++i)
   {
     //double tmp=value((*this)(i));
     //gradient_structure::get_fp()->fwrite(&tmp,wsize);
-    fp->fwrite(this->elem_value(i));
+    fwrite(v.elem_value(i));
   }
 }
 
@@ -222,7 +226,7 @@ void dvar_matrix::save_dvar_matrix_value(DF_FILE* fp) const
   int max=rowmax();
   for (int i=min;i<=max;i++)
   {
-    ((*this)(i).save_dvar_vector_value(fp));
-    ((*this)(i).save_dvar_vector_position(fp));
+    fp->save_dvar_vector_value(elem(i));
+    fp->save_dvar_vector_position(elem(i));
   }
 }

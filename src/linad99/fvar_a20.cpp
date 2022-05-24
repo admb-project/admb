@@ -77,8 +77,8 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
 
        // The derivative list considerations
        save_identifier_string("bbbb");
-       t.save_dvar_vector_position(fp);
-       this->save_dvar_vector_position(fp);
+       fp->save_dvar_vector_position(t);
+       fp->save_dvar_vector_position(*this);
        save_identifier_string("aaaa");
        gs->GRAD_STACK1->set_gradient_stack(dv_assign);
      }
@@ -108,7 +108,7 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
    // The derivative list considerations
    save_identifier_string("dddd");
    t.save_prevariable_position(fp);
-   this->save_dvar_vector_position(fp);
+   fp->save_dvar_vector_position(*this);
    save_identifier_string("ssss");
    gs->GRAD_STACK1->set_gradient_stack(dv_eqprev);
    return (*this);
@@ -134,7 +134,7 @@ dvar_vector& dvar_vector::operator=(const double t)
 
    // The derivative list considerations
    save_identifier_string("trut");
-   this->save_dvar_vector_position(fp);
+   fp->save_dvar_vector_position(*this);
    save_identifier_string("ssss");
    gs->GRAD_STACK1->set_gradient_stack(dv_eqdoub);
    return (*this);

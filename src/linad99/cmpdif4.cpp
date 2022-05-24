@@ -38,7 +38,7 @@ void dvector::save_dvector_position(DF_FILE* fp) const
  * Description not yet available.
  * \param
  */
-ivector_position restore_ivector_position(DF_FILE* fp)
+ivector_position restore_ivector_position()
 {
   return gradient_structure::get_fp()->restore_ivector_position();
 }

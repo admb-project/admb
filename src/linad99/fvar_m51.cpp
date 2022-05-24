@@ -148,7 +148,7 @@ void df_ln_det_choleski(void)
   dmatrix M=fp->restore_dvar_matrix_value(MMpos);
   verify_identifier_string("rt");
   //prevariable_position vcpos=restore_prevariable_position();
-  double dflog_det=restore_prevariable_derivative(fp);
+  double dflog_det=fp->restore_prevariable_derivative();
   verify_identifier_string("ps");
 
   if (M.colsize() != M.rowsize())

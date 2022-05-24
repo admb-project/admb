@@ -81,7 +81,7 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
     dvector_position t1_pos=fp->restore_dvector_position();
     dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
     dvector t1=restore_dvar_vector_value(tmp_pos);
-    prevariable_position xpos=restore_prevariable_position(fp);
+    prevariable_position xpos=fp->restore_prevariable_position();
     //double x=restore_prevariable_value();
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     //dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());

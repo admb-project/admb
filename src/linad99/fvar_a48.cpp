@@ -97,7 +97,7 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     DF_FILE* fp = gs->fp;
 
     verify_identifier_string("cmtu");
-    prevariable_position x_pos=restore_prevariable_position(fp);
+    prevariable_position x_pos=fp->restore_prevariable_position();
     double dfx=restore_prevariable_derivative(x_pos);
     double x=fp->restore_prevariable_value();
     dvar_vector_position this_pos=fp->restore_dvar_vector_position();

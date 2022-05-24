@@ -96,7 +96,7 @@ void dvdv_dot(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("aaaa");
-  double dftmp=restore_prevariable_derivative(fp);
+  double dftmp=fp->restore_prevariable_derivative();
   dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   dvector cv2=restore_dvar_vector_value(v2pos);
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
@@ -171,7 +171,7 @@ void X_dv_sum(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("aaaa");
-  double dftmp=restore_prevariable_derivative(fp);
+  double dftmp=fp->restore_prevariable_derivative();
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dfv1(v1pos.indexmin(),v1pos.indexmax());

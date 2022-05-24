@@ -134,7 +134,7 @@ void dfcholeski_decomp_positive(void)
   dmatrix M=fp->restore_dvar_matrix_value(MMpos);
   dvar_matrix_position vcpos=fp->restore_dvar_matrix_position();
   double eps=fp->restore_double_value();
-  prevariable_position fpenpos=restore_prevariable_position(fp);
+  prevariable_position fpenpos=fp->restore_prevariable_position();
   verify_identifier_string("qs");
   dmatrix dfL=restore_dvar_matrix_derivatives(vcpos);
   double dfpen=restore_prevariable_derivative(fpenpos);

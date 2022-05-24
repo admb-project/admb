@@ -65,6 +65,7 @@ class grad_stack;
 class uostream;
 class dlist;
 class imatrix_position;
+class prevariable_position;
 
 /**
  * Description not yet available.
@@ -330,6 +331,8 @@ public:
   imatrix restore_imatrix_value(const imatrix_position& mpos);
   imatrix_position restore_imatrix_position();
   dvar_matrix_position restore_dvar_matrix_position();
+  double restore_prevariable_derivative();
+  prevariable_position restore_prevariable_position();
 
 private:
   OFF_T buff_end;

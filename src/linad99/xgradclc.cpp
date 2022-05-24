@@ -304,7 +304,7 @@ void funnel_derivatives(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("ae");
-  prevariable_position deppos=restore_prevariable_position(fp);
+  prevariable_position deppos=fp->restore_prevariable_position();
   dvector_position stmp_pos=fp->restore_dvector_position();
   dvector stmp=fp->restore_dvector_value(stmp_pos);
   //dvector_position dtmp_pos=fp->restore_dvector_position();

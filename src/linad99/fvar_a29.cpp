@@ -557,7 +557,7 @@ void DF_dvdvpow(void)
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
-  prevariable_position epos=restore_prevariable_position(fp);
+  prevariable_position epos=fp->restore_prevariable_position();
   double e=fp->restore_prevariable_value();
   verify_identifier_string("ddg");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -672,7 +672,7 @@ void DF_cdvpow(void)
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvector_position v1pos=fp->restore_dvector_position();
   dvector v1=fp->restore_dvector_value(v1pos);
-  prevariable_position epos=restore_prevariable_position(fp);
+  prevariable_position epos=fp->restore_prevariable_position();
   double e=fp->restore_prevariable_value();
   verify_identifier_string("eddg");
   //dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());

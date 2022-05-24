@@ -164,7 +164,7 @@ void dv_eqprev(void)
   verify_identifier_string("ssss");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  prevariable_position t_pos=restore_prevariable_position(fp);
+  prevariable_position t_pos=fp->restore_prevariable_position();
   verify_identifier_string("dddd");
   double dft=0.;
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)

@@ -194,7 +194,7 @@ void df_xdet(void)
   dmatrix b=fp->restore_dmatrix_value(bpos);
   verify_identifier_string("PLACE2a");
   //dvar_matrix_position rdet_pos=restore_prevariable_position();
-  double dfdet=restore_prevariable_derivative(fp);
+  double dfdet=fp->restore_prevariable_derivative();
   verify_identifier_string("PLACE2b");
   dvar_matrix_position a_pos=fp->restore_dvar_matrix_position();
   verify_identifier_string("PLACE3");

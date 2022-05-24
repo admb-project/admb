@@ -93,7 +93,7 @@ void dvcv_dot(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("uuuu");
-  double dftmp=restore_prevariable_derivative(fp);
+  double dftmp=fp->restore_prevariable_derivative();
   dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   dvector_position dpos=fp->restore_dvector_position();
   dvector cv1=fp->restore_dvector_value(dpos);

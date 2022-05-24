@@ -4348,8 +4348,7 @@ class prevariable_position
 };
 
 double restore_prevariable_derivative(const prevariable_position & pre);
-double restore_prevariable_derivative(DF_FILE* fp);
-prevariable_position restore_prevariable_position(DF_FILE* fp);
+prevariable_position restore_prevariable_position();
 void save_double_derivative(double x, const prevariable_position & pos);
 double restore_prevariable_value(void);
 void save_double_value(double x);
@@ -4610,7 +4609,7 @@ dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& pos,
   const int &ii);
 dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position & pos);
 dmatrix restore_dvar_matrix_derivatives(void);
-double restore_prevariable_derivative(DF_FILE* fp);
+double restore_prevariable_derivative();
 double restore_double_value(void);
 int restore_int_value(void);
 void save_double_value(double x);

@@ -212,7 +212,7 @@ void df_xldet(void)
   verify_identifier_string("PLACE2");
   dmatrix b=fp->restore_dmatrix_value(bpos);
   //dvar_matrix_position rdet_pos=restore_prevariable_position();
-  double dfdet=restore_prevariable_derivative(fp);
+  double dfdet=fp->restore_prevariable_derivative();
   dvar_matrix_position a_pos=fp->restore_dvar_matrix_position();
   verify_identifier_string("PLACE3");
   ivector_position indx_pos=fp->restore_ivector_position();

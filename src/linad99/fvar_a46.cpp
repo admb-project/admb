@@ -70,17 +70,20 @@ Adjoint gradient computation of elem_div(const dvar_vector&, const dvar_vector&)
 */
 void dvdv_elem_div(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
   verify_identifier_string("uuuu");
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   verify_identifier_string("vvvv");
-  dvector_position tmp_divpos=restore_dvector_position();
-  dvector tmp_div=restore_dvector_value(tmp_divpos);
+  dvector_position tmp_divpos=fp->restore_dvector_position();
+  dvector tmp_div=fp->restore_dvector_value(tmp_divpos);
   verify_identifier_string("wwww");
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector cv1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("bbbb");
   dvector dfv1(cv1.indexmin(),cv1.indexmax());
@@ -146,15 +149,18 @@ Adjoint gradient computation of elem_div(const dvar_vector&, const dvector&)
 */
 void dvcv_elem_div(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
   verify_identifier_string("vvvv");
-  dvector_position tmp_divpos=restore_dvector_position();
-  dvector tmp_div=restore_dvector_value(tmp_divpos);
+  dvector_position tmp_divpos=fp->restore_dvector_position();
+  dvector tmp_div=fp->restore_dvector_value(tmp_divpos);
   verify_identifier_string("wwww");
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector cv1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("bbbb");
   dvector dfv1(cv1.indexmin(),cv1.indexmax());
@@ -216,15 +222,18 @@ Adjoint gradient computation of elem_div(const dvector&, const dvar_vector&)
 */
 void cvdv_elem_div(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmppos=restore_dvar_vector_position();
+  dvar_vector_position tmppos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmppos);
   verify_identifier_string("uuuu");
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   verify_identifier_string("vvvv");
-  dvector_position tmp_divpos=restore_dvector_position();
-  dvector tmp_div=restore_dvector_value(tmp_divpos);
+  dvector_position tmp_divpos=fp->restore_dvector_position();
+  dvector tmp_div=fp->restore_dvector_value(tmp_divpos);
   verify_identifier_string("bbbb");
   dvector dfv2(tmp_div.indexmin(),tmp_div.indexmax());
   for (int i=dfv2.indexmin();i<=dfv2.indexmax();i++)

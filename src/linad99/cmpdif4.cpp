@@ -40,12 +40,16 @@ void dvector::save_dvector_position(DF_FILE* fp) const
  */
 ivector_position restore_ivector_position(DF_FILE* fp)
 {
+  return gradient_structure::get_fp()->restore_ivector_position();
+}
+ivector_position DF_FILE::restore_ivector_position()
+{
   // reads back the size and address information for a ivector
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
   ivector_position tmp;
   //int ierr;
-  fp->fread(&tmp,sizeof(ivector_position));
+  fread(&tmp,sizeof(ivector_position));
   return tmp;
 }
 
@@ -53,13 +57,18 @@ ivector_position restore_ivector_position(DF_FILE* fp)
  * Description not yet available.
  * \param
  */
-dvar_vector_position restore_dvar_vector_position(void)
+dvar_vector_position restore_dvar_vector_position()
+{
+  return gradient_structure::get_fp()->restore_dvar_vector_position();
+}
+dvar_vector_position DF_FILE::restore_dvar_vector_position()
 {
   // reads back the size and address information for a dvar_vector
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
+  constexpr size_t wsize = sizeof(dvar_vector_position);
   dvar_vector_position tmp;
-  gradient_structure::get_fp()->fread(&tmp,sizeof(dvar_vector_position));
+  fread(&tmp, wsize);
   return tmp;
 }
 
@@ -67,13 +76,18 @@ dvar_vector_position restore_dvar_vector_position(void)
  * Description not yet available.
  * \param
  */
-dvector_position restore_dvector_position(void)
+dvector_position restore_dvector_position()
+{
+  return gradient_structure::get_fp()->restore_dvector_position();
+}
+dvector_position DF_FILE::restore_dvector_position()
 {
   // reads back the size and address information for a dvar_vector
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
+  constexpr size_t wsize = sizeof(dvector_position);
   dvector_position tmp;
-  gradient_structure::get_fp()->fread(&tmp,sizeof(dvector_position));
+  fread(&tmp, wsize);
   return tmp;
 }
 
@@ -138,13 +152,16 @@ Back up the stream and read the number of bytes written in the
 */
 dvector restore_dvector_value(const dvector_position& tmp)
 {
+  return gradient_structure::get_fp()->restore_dvector_value(tmp);
+}
+dvector DF_FILE::restore_dvector_value(const dvector_position& tmp)
+{
   // restores the size, address, and value information for a dvar_vector
-  DF_FILE* fp = gradient_structure::get_fp();
   dvector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
     double ttmp = 0.0;
-    fp->fread(ttmp);
+    fread(ttmp);
     temp_vec(i)=ttmp;
   }
   return temp_vec;
@@ -156,15 +173,18 @@ dvector restore_dvector_value(const dvector_position& tmp)
  */
 ivector restore_ivector_value(const ivector_position& tmp)
 {
+  return gradient_structure::get_fp()->restore_ivector_value(tmp);
+}
+ivector DF_FILE::restore_ivector_value(const ivector_position& tmp)
+{
   // restores the size, address, and value information for a ivector
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
-  DF_FILE* fp = gradient_structure::get_fp();
   ivector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
     int n = 0;
-    fp->fread(&n, sizeof(int));
+    fread(&n, sizeof(int));
     temp_vec(i) = n;
   }
   return temp_vec;
@@ -179,13 +199,16 @@ Back up the stream and read the number of bytes written in the
 */
 dvector restore_dvar_vector_value(const dvar_vector_position& tmp)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  return gradient_structure::get_fp()->restore_dvar_vector_value(tmp);
+}
+dvector DF_FILE::restore_dvar_vector_value(const dvar_vector_position& tmp)
+{
   dvector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
     double ttmp = 0.0;
     //gradient_structure::get_fp()->fread(&ttmp,sizeof(double));
-    fp->fread(ttmp);
+    fread(ttmp);
     temp_vec(i)=ttmp;
   }
   return temp_vec;

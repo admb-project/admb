@@ -305,9 +305,9 @@ void funnel_derivatives(void)
 
   verify_identifier_string("ae");
   prevariable_position deppos=restore_prevariable_position(fp);
-  dvector_position stmp_pos=restore_dvector_position();
-  dvector stmp=restore_dvector_value(stmp_pos);
-  //dvector_position dtmp_pos=restore_dvector_position();
+  dvector_position stmp_pos=fp->restore_dvector_position();
+  dvector stmp=fp->restore_dvector_value(stmp_pos);
+  //dvector_position dtmp_pos=fp->restore_dvector_position();
   //dvector dtmp=restore_dvector_value(dtmp_pos);
   int ii=fp->restore_int_value();
   int i;

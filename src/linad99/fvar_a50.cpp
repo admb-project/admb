@@ -54,12 +54,15 @@ dvar_vector mfexp(const dvar_vector& v1)
  */
 void DF_dvmfexp(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("see");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvector vtmp=restore_dvar_vector_value(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddt");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());

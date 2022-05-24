@@ -48,6 +48,10 @@ void d3_array::save_d3_array_value(DF_FILE* fp) const
  */
 dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos)
 {
+  return gradient_structure::get_fp()->restore_dvar_matrix_value(mpos);
+}
+dmatrix DF_FILE::restore_dvar_matrix_value(const dvar_matrix_position& mpos)
+{
   // restores the size, address, and value information for a dvar_matrix
   dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
@@ -67,6 +71,10 @@ dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos)
  */
 dmatrix restore_dmatrix_value(const dmatrix_position& mpos)
 {
+  return gradient_structure::get_fp()->restore_dmatrix_value(mpos);
+}
+dmatrix DF_FILE::restore_dmatrix_value(const dmatrix_position& mpos)
+{
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
   dmatrix out((const dmatrix_position&) mpos);
@@ -85,7 +93,11 @@ dmatrix restore_dmatrix_value(const dmatrix_position& mpos)
  * Description not yet available.
  * \param
  */
-d3_array restore_d3_array_value(const d3_array_position& mpos, DF_FILE* fp)
+d3_array restore_d3_array_value(const d3_array_position& mpos)
+{
+  return gradient_structure::get_fp()->restore_d3_array_value(mpos);
+}
+d3_array DF_FILE::restore_d3_array_value(const d3_array_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
@@ -95,7 +107,7 @@ d3_array restore_d3_array_value(const d3_array_position& mpos, DF_FILE* fp)
   int max=out.indexmax();
   for (int i=max;i>=min;i--)
   {
-    dmatrix_position vpos=restore_dmatrix_position(fp);
+    dmatrix_position vpos=restore_dmatrix_position();
     out(i)=restore_dmatrix_value(vpos);
   }
   return out;

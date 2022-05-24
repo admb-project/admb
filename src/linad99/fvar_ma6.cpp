@@ -75,13 +75,13 @@ void dfempirical_covarv_partial(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("rv");
-  dvar_matrix_position v1pos=restore_dvar_matrix_position(fp);
-  dmatrix v1=restore_dvar_matrix_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
+  dmatrix v1=fp->restore_dvar_matrix_value(v1pos);
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
   int nobs=fp->restore_int_value();
-  imatrix_position mfpos=restore_imatrix_position(fp);
-  imatrix missflags=restore_imatrix_value(mfpos, fp);
+  imatrix_position mfpos=fp->restore_imatrix_position();
+  imatrix missflags=fp->restore_imatrix_value(mfpos);
   verify_identifier_string("ru");
   int mmin=v1(v1.indexmin()).indexmin();
   int mmax=v1(v1.indexmin()).indexmax();
@@ -174,9 +174,9 @@ void dfempirical_covarv(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("rv");
-  dvar_matrix_position v1pos=restore_dvar_matrix_position(fp);
-  dmatrix v1=restore_dvar_matrix_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
+  dmatrix v1=fp->restore_dvar_matrix_value(v1pos);
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
   verify_identifier_string("ru");
   int mmin=v1(v1.indexmin()).indexmin();
@@ -251,11 +251,11 @@ void dfouter_prodvv(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("tv");
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   dvector v2=restore_dvar_vector_value(v2pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
   verify_identifier_string("tu");
   dvector dfv1(v1pos.indexmin(),v1pos.indexmax());

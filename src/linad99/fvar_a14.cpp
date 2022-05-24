@@ -97,9 +97,9 @@ void dvdv_dot(void)
 
   verify_identifier_string("aaaa");
   double dftmp=restore_prevariable_derivative(fp);
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   dvector cv2=restore_dvar_vector_value(v2pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector cv1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("bbbb");
   dvector dfv1(cv1.indexmin(),cv1.indexmax());
@@ -172,7 +172,7 @@ void X_dv_sum(void)
 
   verify_identifier_string("aaaa");
   double dftmp=restore_prevariable_derivative(fp);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dfv1(v1pos.indexmin(),v1pos.indexmax());
   for (int i=dfv1.indexmin();i<=dfv1.indexmax();i++)

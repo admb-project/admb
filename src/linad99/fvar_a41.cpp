@@ -51,9 +51,12 @@ dvar_vector operator+(const double x, const dvar_vector& t1)
  */
  void DF_cdble_dv_add(void)
  {
+    gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     verify_identifier_string("ddtu");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
+    dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
+    dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
     verify_identifier_string("wctf");

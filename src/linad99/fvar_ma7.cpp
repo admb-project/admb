@@ -34,7 +34,7 @@ void dfmatinit(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("q");
-  dvar_matrix_position tmp_pos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position tmp_pos=fp->restore_dvar_matrix_position();
   verify_identifier_string("p");
   dmatrix tmp(tmp_pos);
   tmp.initialize();

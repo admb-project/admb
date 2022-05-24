@@ -64,6 +64,7 @@ class dependent_variables_information;
 class grad_stack;
 class uostream;
 class dlist;
+class imatrix_position;
 
 /**
  * Description not yet available.
@@ -313,6 +314,22 @@ public:
   void* restore_pointer_value();
 
   double restore_prevariable_value();
+
+  d3_array_position restore_d3_array_position();
+
+  dvector restore_dvector_value(const dvector_position& tmp);
+  dmatrix restore_dmatrix_value(const dmatrix_position& mpos);
+  d3_array restore_d3_array_value(const d3_array_position& mpos);
+  dmatrix_position restore_dmatrix_position();
+  dvector restore_dvar_vector_value(const dvar_vector_position& tmp);
+  ivector restore_ivector_value(const ivector_position& tmp);
+  dvector_position restore_dvector_position();
+  dvar_vector_position restore_dvar_vector_position();
+  ivector_position restore_ivector_position();
+  dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos);
+  imatrix restore_imatrix_value(const imatrix_position& mpos);
+  imatrix_position restore_imatrix_position();
+  dvar_matrix_position restore_dvar_matrix_position();
 
 private:
   OFF_T buff_end;

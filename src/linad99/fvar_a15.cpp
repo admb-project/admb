@@ -89,9 +89,9 @@ void cvdv_dot(void)
 
   verify_identifier_string("aaaa");
   double dftmp=restore_prevariable_derivative(fp);
-  dvar_vector_position v2pos=restore_dvar_vector_position();
-  dvector_position dpos=restore_dvector_position();
-  dvector cv1=restore_dvector_value(dpos);
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
+  dvector_position dpos=fp->restore_dvector_position();
+  dvector cv1=fp->restore_dvector_value(dpos);
   dvector dfv2(cv1.indexmin(),cv1.indexmax());
   verify_identifier_string("bbbb");
 #ifdef OPT_LIB

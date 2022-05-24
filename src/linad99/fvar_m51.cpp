@@ -143,9 +143,9 @@ void df_ln_det_choleski(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("pa");
-  dvar_matrix_position MMpos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();
   verify_identifier_string("pl");
-  dmatrix M=restore_dvar_matrix_value(MMpos);
+  dmatrix M=fp->restore_dvar_matrix_value(MMpos);
   verify_identifier_string("rt");
   //prevariable_position vcpos=restore_prevariable_position();
   double dflog_det=restore_prevariable_derivative(fp);

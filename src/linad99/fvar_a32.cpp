@@ -52,11 +52,11 @@ void dv_subassign()
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ay");
-  ivector_position u_pos=restore_ivector_position(fp);
+  ivector_position u_pos=fp->restore_ivector_position();
   ivector u=restore_ivector_value(u_pos);
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position t_pos=restore_dvar_vector_position();
+  dvar_vector_position t_pos=fp->restore_dvar_vector_position();
   dvector dft(t_pos.indexmin(),t_pos.indexmax());
   verify_identifier_string("by");
   dft.initialize();

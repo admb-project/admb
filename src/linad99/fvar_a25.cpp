@@ -49,10 +49,13 @@ dvar_vector& dvar_vector::operator+=(const dvar_vector& v1)
  */
 void dv_pluseq(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("wwxx");
-  dvar_vector_position v1_pos=restore_dvar_vector_position();
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  dvar_vector_position v1_pos=fp->restore_dvar_vector_position();
+  dvar_vector_position this_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("uuvv");
   dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
   dfthis.save_dvector_derivatives(v1_pos);

@@ -50,8 +50,8 @@ dvar_vector operator*(const dvar_vector& t1,const prevariable& x)
     DF_FILE* fp = gs->fp;
 
     verify_identifier_string("DDaa");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
+    dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
+    dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
     dvector t1=restore_dvar_vector_value(tmp_pos);
     prevariable_position xpos=restore_prevariable_position(fp);
     double x=fp->restore_prevariable_value();

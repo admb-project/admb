@@ -46,8 +46,8 @@ Adjoint function for dvar_vector operator/(const dvar_vector&, const double)
     DF_FILE* fp = gs->fp;
 
     verify_identifier_string("ddba");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
+    dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
+    dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
     dvector tmp=restore_dvar_vector_value(tmp_pos);
     double x=fp->restore_prevariable_value();
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);

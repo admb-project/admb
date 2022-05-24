@@ -230,14 +230,14 @@ void dfinvpret(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("P1");
-  dmatrix_position bpos=restore_dmatrix_position(fp);
-  dmatrix b=restore_dmatrix_value(bpos);
-  dvar_matrix_position v_pos=restore_dvar_matrix_position(fp);
-  dvar_matrix_position a_pos=restore_dvar_matrix_position(fp);
-  ivector_position indx_pos=restore_ivector_position(fp);
+  dmatrix_position bpos=fp->restore_dmatrix_position();
+  dmatrix b=fp->restore_dmatrix_value(bpos);
+  dvar_matrix_position v_pos=fp->restore_dvar_matrix_position();
+  dvar_matrix_position a_pos=fp->restore_dvar_matrix_position();
+  ivector_position indx_pos=fp->restore_ivector_position();
   ivector indx=restore_ivector_value(indx_pos);
-  dvector_position y_pos=restore_dvector_position();
-  dvector_position x_pos=restore_dvector_position();
+  dvector_position y_pos=fp->restore_dvector_position();
+  dvector_position x_pos=fp->restore_dvector_position();
   verify_identifier_string("P5");
   int lb=b.colmin();
   int ub=b.colmax();
@@ -257,9 +257,9 @@ void dfinvpret(void)
   for (int ii=ub;ii>=lb;ii--)
   {
     //x.save_dvector_value();
-    dvector x=restore_dvector_value(x_pos);
+    dvector x=fp->restore_dvector_value(x_pos);
     //y.save_dvector_value();
-    dvector y=restore_dvector_value(y_pos);
+    dvector y=fp->restore_dvector_value(y_pos);
     dvector dfx=restore_dvar_matrix_derivative_column(v_pos,ii);
     for (int i=lb;i<=ub;i++)
     {

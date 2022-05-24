@@ -46,7 +46,7 @@ dvar_vector& dvar_vector::operator/=(const double x)
     DF_FILE* fp = gs->fp;
     verify_identifier_string("cmtu");
     double x=fp->restore_double_value();
-    dvar_vector_position this_pos=restore_dvar_vector_position();
+    dvar_vector_position this_pos=fp->restore_dvar_vector_position();
     dvector dfthis=restore_dvar_vector_derivatives(this_pos);
     verify_identifier_string("wctf");
     double xinv=1./x;
@@ -100,7 +100,7 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     prevariable_position x_pos=restore_prevariable_position(fp);
     double dfx=restore_prevariable_derivative(x_pos);
     double x=fp->restore_prevariable_value();
-    dvar_vector_position this_pos=restore_dvar_vector_position();
+    dvar_vector_position this_pos=fp->restore_dvar_vector_position();
     dvector tmp=restore_dvar_vector_value(this_pos);
     dvector dfthis=restore_dvar_vector_derivatives(this_pos);
     verify_identifier_string("wctg");

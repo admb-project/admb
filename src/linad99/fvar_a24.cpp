@@ -40,9 +40,12 @@
  */
 void dv_init(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("b");
   dvector dftmp(tmp_pos.indexmin(),tmp_pos.indexmax());
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)

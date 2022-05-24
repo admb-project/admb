@@ -144,9 +144,11 @@ Adjoint to compute gradient for dvar_vector::operator=(const double).
 */
 void dv_eqdoub(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   verify_identifier_string("trut");
 }
@@ -160,7 +162,7 @@ void dv_eqprev(void)
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   prevariable_position t_pos=restore_prevariable_position(fp);
   verify_identifier_string("dddd");
@@ -177,11 +179,14 @@ Adjoint to compute gradients for dvar_vector::operator=(const dvar_vector&)
 */
 void dv_assign(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position t_pos=restore_dvar_vector_position();
+  dvar_vector_position t_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dft(dftmp.indexmin(),dftmp.indexmax());
 #ifndef OPT_LIB

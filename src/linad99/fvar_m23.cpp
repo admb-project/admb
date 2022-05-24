@@ -68,12 +68,12 @@ void dvdm_prod(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("PLACE1");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("PLACE2");
-  dvar_matrix_position m_pos=restore_dvar_matrix_position(fp);
-  dmatrix m=restore_dvar_matrix_value(m_pos);
+  dvar_matrix_position m_pos=fp->restore_dvar_matrix_position();
+  dmatrix m=fp->restore_dvar_matrix_value(m_pos);
   verify_identifier_string("PLACE3");
-  dvar_vector_position x_pos=restore_dvar_vector_position();
+  dvar_vector_position x_pos=fp->restore_dvar_vector_position();
   dvector x=restore_dvar_vector_value(x_pos);
   verify_identifier_string("PLACE4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
@@ -157,12 +157,12 @@ void dvcm_prod(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("PLACE1");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("PLACE2");
-  dvar_matrix_position m_pos=restore_dvar_matrix_position(fp);
-  dmatrix m=restore_dvar_matrix_value(m_pos);
+  dvar_matrix_position m_pos=fp->restore_dvar_matrix_position();
+  dmatrix m=fp->restore_dvar_matrix_value(m_pos);
   verify_identifier_string("PLACE3");
-  dvar_vector_position x_pos=restore_dvar_vector_position();
+  dvar_vector_position x_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("P4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
 

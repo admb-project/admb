@@ -90,10 +90,10 @@ void dfbltsolve(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("ww");
-  dvar_vector_position xpos=restore_dvar_vector_position();
-  dvar_vector_position vpos=restore_dvar_vector_position();
+  dvar_vector_position xpos=fp->restore_dvar_vector_position();
+  dvar_vector_position vpos=fp->restore_dvar_vector_position();
   dvector v=restore_dvar_vector_value(vpos);
-  dvar_matrix_position mpos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position mpos=fp->restore_dvar_matrix_position();
   banded_lower_triangular_dmatrix m=
     restore_banded_lower_triangular_dvar_matrix_value(mpos);
   verify_identifier_string("rt");

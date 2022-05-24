@@ -76,6 +76,9 @@ void banded_symmetric_dmatrix::save_dmatrix_value(DF_FILE* fp) const
 banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(
   const dvar_matrix_position& mpos)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // restores the size, address, and value information for a dvar_matrix
   banded_symmetric_dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
@@ -83,7 +86,7 @@ banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
   {
-    dvar_vector_position vpos=restore_dvar_vector_position();
+    dvar_vector_position vpos=fp->restore_dvar_vector_position();
     out.d(i)=restore_dvar_vector_value(vpos);
   }
   return out;
@@ -97,6 +100,9 @@ banded_lower_triangular_dmatrix
 restore_banded_lower_triangular_dvar_matrix_value(
   const dvar_matrix_position& mpos)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
@@ -104,7 +110,7 @@ restore_banded_lower_triangular_dvar_matrix_value(
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
   {
-    dvar_vector_position vpos=restore_dvar_vector_position();
+    dvar_vector_position vpos=fp->restore_dvar_vector_position();
     out.d(i)=restore_dvar_vector_value(vpos);
   }
   return out;

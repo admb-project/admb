@@ -46,8 +46,8 @@ dvar_vector operator-(const dvar_vector& t1, const prevariable& x)
     DF_FILE* fp = gs->fp;
 
     verify_identifier_string("dduu");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
+    dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
+    dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
     prevariable_position xpos=restore_prevariable_position(fp);
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());

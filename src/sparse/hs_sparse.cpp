@@ -3180,9 +3180,9 @@ static void dfcholeski_sparse(void)
   hs_symbolic & S  =
     *( hs_symbolic * ) restore_ad_pointer();
   verify_identifier_string("iy");
-  dvar_vector_position dpos=restore_dvar_vector_position();
+  dvar_vector_position dpos=fp->restore_dvar_vector_position();
   verify_identifier_string("wy");
-  dvar_vector_position cpos=restore_dvar_vector_position();
+  dvar_vector_position cpos=fp->restore_dvar_vector_position();
   verify_identifier_string("tu");
 
   int nccount=fp->restore_int_value();
@@ -3552,8 +3552,11 @@ void dvar_hs_smatrix::set_symbolic(hs_symbolic& s)
 
 void report_dvar_vector_derivatives(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("jr");
-  /*dvar_vector_position dpos=*/restore_dvar_vector_position();
+  /*dvar_vector_position dpos=*/fp->restore_dvar_vector_position();
   //dvector  dfLx=restore_dvar_vector_derivatives(dpos);
   verify_identifier_string("jx");
 }

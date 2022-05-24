@@ -78,8 +78,8 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
     DF_FILE* fp = gs->fp;
 
     verify_identifier_string("Da");
-    dvector_position t1_pos=restore_dvector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
+    dvector_position t1_pos=fp->restore_dvector_position();
+    dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
     dvector t1=restore_dvar_vector_value(tmp_pos);
     prevariable_position xpos=restore_prevariable_position(fp);
     //double x=restore_prevariable_value();

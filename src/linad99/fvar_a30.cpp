@@ -46,7 +46,7 @@ void dv_xminuseq(void)
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Pxx");
   prevariable_position d_pos=restore_prevariable_position(fp);
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  dvar_vector_position this_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("Pvv");
   dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
   double temp=-sum(dfthis);
@@ -91,7 +91,7 @@ void dv_xpluseq(void)
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Qxx");
   prevariable_position d_pos=restore_prevariable_position(fp);
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  dvar_vector_position this_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("Qvv");
   dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
   double temp=sum(dfthis);

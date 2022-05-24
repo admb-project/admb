@@ -100,11 +100,11 @@ void dmcm_prod(void)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   verify_identifier_string("TEST6");
-  dvar_matrix_position vpos=restore_dvar_matrix_position(fp);
+  dvar_matrix_position vpos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(vpos);
-  dmatrix_position m2pos=restore_dmatrix_position(fp);
-  dmatrix cm2=restore_dmatrix_value(m2pos);
-  dvar_matrix_position m1pos=restore_dvar_matrix_position(fp);
+  dmatrix_position m2pos=fp->restore_dmatrix_position();
+  dmatrix cm2=fp->restore_dmatrix_value(m2pos);
+  dvar_matrix_position m1pos=fp->restore_dvar_matrix_position();
   //dmatrix cm1=restore_dvar_matrix_value(m1pos);
   verify_identifier_string("TEST1");
   dmatrix dfm1(m1pos);

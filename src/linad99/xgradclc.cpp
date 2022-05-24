@@ -219,7 +219,7 @@ do
     save_identifier_string("ue");
     if (!ISZERO(*(++dptr)))
     {
-      save_double_value(*dptr);
+      fp->save_double_value(*dptr);
       dcount++;
       zero_flag=0;
       offset(ii++)=0;
@@ -235,7 +235,7 @@ do
     {
       if (!ISZERO(*(++dptr)))
       {
-        save_double_value(*dptr);
+        fp->save_double_value(*dptr);
         dcount++;
         nnzero++;
         if (zero_flag)
@@ -256,13 +256,13 @@ do
         }
       }
     }
-    save_int_value(dcount);
+    fp->save_int_value(dcount);
 
     for (int i=0;i<ii;i++)
     {
-      save_int_value(offset(i));
+      fp->save_int_value(offset(i));
     }
-    save_int_value(ii);
+    fp->save_int_value(ii);
 
     unsigned int ssize = GRAD_LIST->nlinks;
 #ifndef OPT_LIB
@@ -309,7 +309,7 @@ void funnel_derivatives(void)
   dvector stmp=restore_dvector_value(stmp_pos);
   //dvector_position dtmp_pos=restore_dvector_position();
   //dvector dtmp=restore_dvector_value(dtmp_pos);
-  int ii=restore_int_value();
+  int ii=fp->restore_int_value();
   int i;
   int ip=ii;
   if (!ip) ip=1;
@@ -318,15 +318,15 @@ void funnel_derivatives(void)
   //ivector offset(0,ip-1);
   for (i=ii-1;i>=0;i--)
   {
-    offset(i)=restore_int_value();
+    offset(i)=fp->restore_int_value();
   }
-  int dcount=restore_int_value();
+  int dcount=fp->restore_int_value();
   int dc=dcount;
   if (!dc) dc=1;
   dvector dx(0,dc-1);
   for (i=dcount-1;i>=0;i--)
   {
-    dx(i)=restore_double_value();
+    dx(i)=fp->restore_double_value();
   }
 
   verify_identifier_string("ue");

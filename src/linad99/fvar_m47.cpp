@@ -109,7 +109,7 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
 
   save_identifier_string("qs");
   _fpen.save_prevariable_position(fp);
-  save_double_value(eps);
+  fp->save_double_value(eps);
   vc.save_dvar_matrix_position(fp);
   MM.save_dvar_matrix_value(fp);
   save_identifier_string("rl");
@@ -133,7 +133,7 @@ void dfcholeski_decomp_positive(void)
   verify_identifier_string("rl");
   dmatrix M=restore_dvar_matrix_value(MMpos);
   dvar_matrix_position vcpos=restore_dvar_matrix_position(fp);
-  double eps=restore_double_value();
+  double eps=fp->restore_double_value();
   prevariable_position fpenpos=restore_prevariable_position(fp);
   verify_identifier_string("qs");
   dmatrix dfL=restore_dvar_matrix_derivatives(vcpos);

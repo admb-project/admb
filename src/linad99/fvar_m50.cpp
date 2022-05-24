@@ -75,7 +75,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
   DF_FILE* fp = gs->fp;
   save_identifier_string("qs");
   _fpen.save_prevariable_position(fp);
-  save_double_value(eps);
+  fp->save_double_value(eps);
   save_identifier_string("rs");
   L.save_dvar_matrix_position(fp);
   save_identifier_string("rt");
@@ -107,7 +107,7 @@ void dfcholeski_decomp_banded_positive(void)
   verify_identifier_string("rs");
   banded_lower_triangular_dmatrix dfL=
     restore_banded_lower_triangular_dvar_matrix_derivatives(vcpos);
-  double eps=restore_double_value();
+  double eps=fp->restore_double_value();
   prevariable_position fpenpos=restore_prevariable_position(fp);
   verify_identifier_string("qs");
   double dfpen=restore_prevariable_derivative(fpenpos);

@@ -174,7 +174,7 @@ dvariable det(const dvar_matrix& aa)
   save_identifier_string("PLACE2");
   bb.save_dmatrix_position(fp);
   save_identifier_string("PLACE1");
-  save_double_value(d);
+  fp->save_double_value(d);
   save_identifier_string("PLACE0");
   gs->GRAD_STACK1->set_gradient_stack(df_xdet);
   return rdet;
@@ -187,7 +187,7 @@ void df_xdet(void)
   DF_FILE* fp = gs->fp;
 
   verify_identifier_string("PLACE0");
-  double d=restore_double_value();
+  double d=fp->restore_double_value();
   verify_identifier_string("PLACE1");
   dmatrix_position bpos=restore_dmatrix_position(fp);
   verify_identifier_string("PLACE2");

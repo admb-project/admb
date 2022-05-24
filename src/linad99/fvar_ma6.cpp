@@ -56,7 +56,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
   save_identifier_string("ru");
   missflags.save_imatrix_value(fp);
   missflags.save_imatrix_position(fp);
-  save_int_value(nobs);
+  fp->save_int_value(nobs);
   tmp.save_dvar_matrix_position(fp);
   v1.save_dvar_matrix_value(fp);
   v1.save_dvar_matrix_position(fp);
@@ -79,7 +79,7 @@ void dfempirical_covarv_partial(void)
   dmatrix v1=restore_dvar_matrix_value(v1pos);
   dvar_matrix_position tmppos=restore_dvar_matrix_position(fp);
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
-  int nobs=restore_int_value();
+  int nobs=fp->restore_int_value();
   imatrix_position mfpos=restore_imatrix_position(fp);
   imatrix missflags=restore_imatrix_value(mfpos, fp);
   verify_identifier_string("ru");

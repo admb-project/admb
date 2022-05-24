@@ -25,7 +25,7 @@ dvar_vector operator*(const dvar_vector& t1, const double x)
 
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ccbb");
-    save_double_value(x);
+    fp->save_double_value(x);
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
     {
       tmp.elem_value(i)=t1.elem_value(i)*x;
@@ -44,10 +44,13 @@ dvar_vector operator*(const dvar_vector& t1, const double x)
  */
  void DF_dv_double_prod(void)
  {
+    gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     verify_identifier_string("DDaa");
     dvar_vector_position t1_pos=restore_dvar_vector_position();
     dvar_vector_position tmp_pos=restore_dvar_vector_position();
-    double x=restore_double_value();
+    double x=fp->restore_double_value();
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
     verify_identifier_string("ccbb");

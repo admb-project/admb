@@ -54,7 +54,7 @@ dvar_vector operator*(const dvar_vector& t1,const prevariable& x)
     dvar_vector_position tmp_pos=restore_dvar_vector_position();
     dvector t1=restore_dvar_vector_value(tmp_pos);
     prevariable_position xpos=restore_prevariable_position(fp);
-    double x=restore_prevariable_value();
+    double x=fp->restore_prevariable_value();
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
     verify_identifier_string("ccbb");

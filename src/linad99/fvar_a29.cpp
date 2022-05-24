@@ -452,7 +452,7 @@ dvar_vector pow(const dvar_vector& v1, const double e)
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddf");
   v1.save_dvar_vector_value(fp);
-  save_double_value(e);
+  fp->save_double_value(e);
   v1.save_dvar_vector_position(fp);
   vtmp.save_dvar_vector_position(fp);
   save_identifier_string("eef");
@@ -464,12 +464,14 @@ Adjoint function to compute gradients for pow(const dvar_vector&, const double).
 */
 void DF_dvpow(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eef");
   dvar_vector_position tmp_pos=restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvar_vector_position v1pos=restore_dvar_vector_position();
-  double e=restore_double_value();
+  double e=fp->restore_double_value();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddf");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -531,7 +533,7 @@ void DF_dvdvpow(void)
   dvar_vector_position v1pos=restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   prevariable_position epos=restore_prevariable_position(fp);
-  double e=restore_prevariable_value();
+  double e=fp->restore_prevariable_value();
   verify_identifier_string("ddg");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
   double dfe=0.;
@@ -566,7 +568,7 @@ dvar_vector pow(const dvar_vector& v1,int e)
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddf");
   v1.save_dvar_vector_value(fp);
-  save_double_value(double(e));
+  fp->save_double_value(double(e));
   v1.save_dvar_vector_position(fp);
   vtmp.save_dvar_vector_position(fp);
   save_identifier_string("eef");
@@ -580,12 +582,14 @@ dvar_vector pow(const dvar_vector& v1,int e)
  */
 void DF_dvcpow(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eef");
   dvar_vector_position tmp_pos=restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvar_vector_position v1pos=restore_dvar_vector_position();
-  double e=restore_double_value();
+  double e=fp->restore_double_value();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddf");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -644,7 +648,7 @@ void DF_cdvpow(void)
   dvector_position v1pos=restore_dvector_position();
   dvector v1=restore_dvector_value(v1pos);
   prevariable_position epos=restore_prevariable_position(fp);
-  double e=restore_prevariable_value();
+  double e=fp->restore_prevariable_value();
   verify_identifier_string("eddg");
   //dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
   double dfe=0.;

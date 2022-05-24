@@ -3152,9 +3152,9 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   int nlkicount=lkicount;
   save_identifier_string("ty");
 
-  save_int_value(nxcount);
-  save_int_value(nlkicount);
-  save_int_value(nccount);
+  fp->save_int_value(nxcount);
+  fp->save_int_value(nlkicount);
+  fp->save_int_value(nccount);
 
   save_identifier_string("tu");
   C.x.save_dvar_vector_position(fp);
@@ -3171,6 +3171,9 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
 
 static void dfcholeski_sparse(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("dg");
   dcompressed_triplet * sparse_triplet2  =
     ( dcompressed_triplet *) restore_ad_pointer();
@@ -3182,9 +3185,9 @@ static void dfcholeski_sparse(void)
   dvar_vector_position cpos=restore_dvar_vector_position();
   verify_identifier_string("tu");
 
-  int nccount=restore_int_value();
-  int nlkicount=restore_int_value();
-  int nxcount=restore_int_value();
+  int nccount=fp->restore_int_value();
+  int nlkicount=fp->restore_int_value();
+  int nxcount=fp->restore_int_value();
 
   verify_identifier_string("ty");
 

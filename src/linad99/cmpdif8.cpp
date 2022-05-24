@@ -77,18 +77,26 @@ void prevariable::save_prevariable_value(DF_FILE* fp) const
  */
 void save_double_value(const double x)
 {
+  gradient_structure::get_fp()->save_double_value(x);
+}
+void DF_FILE::save_double_value(const double x)
+{
   //const unsigned wsize=sizeof(double);
-  gradient_structure::get_fp()->fwrite(x);
+  fwrite(x);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void save_int_value( int x)
+void save_int_value(int x)
+{
+  gradient_structure::get_fp()->save_int_value(x);
+}
+void DF_FILE::save_int_value(int x)
 {
   //const unsigned wsize=sizeof(double);
-  gradient_structure::get_fp()->fwrite(x);
+  fwrite(x);
 }
 
 /**
@@ -97,7 +105,11 @@ void save_int_value( int x)
  */
 void save_pointer_value(void *ptr)
 {
-  gradient_structure::get_fp()->fwrite(ptr);
+  gradient_structure::get_fp()->save_pointer_value(ptr);
+}
+void DF_FILE::save_pointer_value(void *ptr)
+{
+  fwrite(ptr);
 }
 
 /**
@@ -133,12 +145,17 @@ double restore_prevariable_derivative(DF_FILE* fp)
  * Description not yet available.
  * \param
  */
-double restore_prevariable_value(void)
+double restore_prevariable_value()
+{
+  return gradient_structure::get_fp()->restore_prevariable_value();
+}
+double DF_FILE::restore_prevariable_value()
 {
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
+  constexpr size_t wsize = sizeof(double);
   double tmpout = 0;
-  gradient_structure::get_fp()->fread(&tmpout,sizeof(double));
+  fread(&tmpout, wsize);
   return tmpout;
 }
 
@@ -146,10 +163,14 @@ double restore_prevariable_value(void)
  * Description not yet available.
  * \param
  */
-double restore_double_value(void)
+double restore_double_value()
+{
+  return gradient_structure::get_fp()->restore_double_value();
+}
+double DF_FILE::restore_double_value()
 {
   double tmpout = 0;
-  gradient_structure::get_fp()->fread(tmpout);
+  fread(tmpout);
   return tmpout;
 }
 
@@ -159,8 +180,12 @@ double restore_double_value(void)
  */
 int restore_int_value(void)
 {
+  return gradient_structure::get_fp()->restore_int_value();
+}
+int DF_FILE::restore_int_value()
+{
   int tmpout = 0;
-  gradient_structure::get_fp()->fread(tmpout);
+  fread(tmpout);
   return tmpout;
 }
 
@@ -168,9 +193,13 @@ int restore_int_value(void)
  * Description not yet available.
  * \param
  */
-void* restore_pointer_value(void)
+void* restore_pointer_value()
+{
+  return gradient_structure::get_fp()->restore_pointer_value();
+}
+void* DF_FILE::restore_pointer_value()
 {
   void* tmpout = NULL;
-  gradient_structure::get_fp()->fread(tmpout);
+  fread(tmpout);
   return tmpout;
 }

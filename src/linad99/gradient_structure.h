@@ -303,6 +303,17 @@ public:
   void write_cmpdif_stack_buffer();
   void read_cmpdif_stack_buffer(OFF_T & lpos);
 
+  void save_double_value(double x);
+  double restore_double_value();
+
+  void save_int_value(int x);
+  int restore_int_value();
+
+  void save_pointer_value(void *ptr);
+  void* restore_pointer_value();
+
+  double restore_prevariable_value();
+
 private:
   OFF_T buff_end;
 #if defined(_MSC_VER) || defined(__MINGW64__)

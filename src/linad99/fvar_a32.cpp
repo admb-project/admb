@@ -34,8 +34,8 @@ dvar_vector dvar_vector::operator()(const ivector& u)
    save_identifier_string("by");
    fp->save_dvar_vector_position(*this);
    fp->save_dvar_vector_position(tmp);
-   u.save_ivector_value(fp);
-   u.save_ivector_position(fp);
+   fp->save_ivector_value(u);
+   fp->save_ivector_position(u);
    save_identifier_string("ay");
    gs->GRAD_STACK1->set_gradient_stack(dv_subassign);
    return tmp;

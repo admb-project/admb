@@ -141,16 +141,20 @@ void DF_FILE::save_dvector_value(const dvector& v)
 /**
 Saves the size, address, and value information for a ivector.
 */
-void ivector::save_ivector_value(DF_FILE* fp) const
+void ivector::save_ivector_value() const
+{
+  return gradient_structure::get_fp()->save_ivector_value(*this);
+}
+void DF_FILE::save_ivector_value(const ivector& v)
 {
   // int ierr=save_ivector_position();
   constexpr size_t wsize=sizeof(int);
-  int min=indexmin();
-  int max=indexmax();
+  int min=v.indexmin();
+  int max=v.indexmax();
   for (int i=min;i<=max;i++)
   {
-    int tmp=(*this)(i);
-    fp->fwrite(&tmp,size_t(wsize));
+    int tmp=v(i);
+    fwrite(&tmp, wsize);
   }
 }
 

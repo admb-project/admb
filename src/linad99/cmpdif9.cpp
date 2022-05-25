@@ -17,33 +17,41 @@
 /**
 Saves the size, address, and value information for a imatrix.
 */
-void imatrix::save_imatrix_value(DF_FILE* fp)
+void imatrix::save_imatrix_value()
 {
-  for (int i=rowmin();i<=rowmax();i++)
+  gradient_structure::get_fp()->save_imatrix_value(*this);
+}
+void DF_FILE::save_imatrix_value(const imatrix& m)
+{
+  for (int i=m.rowmin();i<=m.rowmax();++i)
   {
-    ((*this)(i).save_ivector_value(fp));
-    ((*this)(i).save_ivector_position(fp));
+    save_ivector_value(m(i));
+    save_ivector_position(m(i));
   }
 }
 /**
 Saves the size and address information for a imatrix.
 */
-void imatrix::save_imatrix_position(DF_FILE* fp)
+void imatrix::save_imatrix_position()
 {
-  imatrix_position tmp(*this);
+  gradient_structure::get_fp()->save_imatrix_position(*this);
+}
+void DF_FILE::save_imatrix_position(const imatrix& m)
+{
+  imatrix_position tmp(m);
   constexpr size_t wsize=sizeof(int);
   constexpr size_t wsize1=sizeof(void*);
 
-  int min=rowmin();
-  int max=rowmax();
-  for (int i=min;i<=max;i++)
+  int min=m.rowmin();
+  int max=m.rowmax();
+  for (int i=min;i<=max;++i)
   {
-    fp->fwrite(&(tmp.lb(i)),wsize);
-    fp->fwrite(&(tmp.ub(i)),wsize);
-    fp->fwrite(&(tmp.ptr(i)),wsize1);
+    fwrite(&(tmp.lb(i)),wsize);
+    fwrite(&(tmp.ub(i)),wsize);
+    fwrite(&(tmp.ptr(i)),wsize1);
   }
-  fp->fwrite(&(tmp.row_min),wsize);
-  fp->fwrite(&(tmp.row_max),wsize);
+  fwrite(&(tmp.row_min),wsize);
+  fwrite(&(tmp.row_max),wsize);
 }
 /**
 Reads and restores back the size and address information for a imatrix.

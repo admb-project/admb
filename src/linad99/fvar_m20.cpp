@@ -163,8 +163,8 @@ dvariable det(const dvar_matrix& aa)
   save_identifier_string("PLACE7");
   fp->save_dvector_value(part_prod);
   fp->save_dvector_position(part_prod);
-  indx.save_ivector_value(fp);
-  indx.save_ivector_position(fp);
+  fp->save_ivector_value(indx);
+  fp->save_ivector_position(indx);
   save_identifier_string("PLACE3");
   aa.save_dvar_matrix_position(fp);
   save_identifier_string("PLACE2b");

@@ -211,8 +211,8 @@ dvar_matrix inv(const dvar_matrix& aa)
   save_identifier_string("P5");
   fp->save_dvector_position(x);
   fp->save_dvector_position(y);
-  indx.save_ivector_value(fp);
-  indx.save_ivector_position(fp);
+  fp->save_ivector_value(indx);
+  fp->save_ivector_position(indx);
   aa.save_dvar_matrix_position(fp);
   vc.save_dvar_matrix_position(fp);
   fp->save_dmatrix_value(bb);

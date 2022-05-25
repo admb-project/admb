@@ -334,7 +334,6 @@ public:
   void save_dvar_vector_position(const dvar_vector& v);
   dvar_vector_position restore_dvar_vector_position();
 
-  ivector_position restore_ivector_position();
   dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos);
   imatrix restore_imatrix_value(const imatrix_position& mpos);
   imatrix_position restore_imatrix_position();
@@ -344,6 +343,14 @@ public:
   void save_dmatrix_value(const dmatrix& m);
   void save_d3_array_value(const d3_array& a);
   void save_dmatrix_position(const dmatrix& m);
+
+  void save_ivector_position(const ivector& v);
+  ivector_position restore_ivector_position();
+
+  void save_ivector_value(const ivector& v);
+  void save_imatrix_value(const imatrix& m);
+
+  void save_imatrix_position(const imatrix& m);
 
 private:
   OFF_T buff_end;

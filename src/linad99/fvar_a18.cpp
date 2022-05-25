@@ -41,8 +41,7 @@ dvar_vector operator+(const dvector& v1, const dvar_vector& v2)
   fp->save_dvar_vector_position(v2);
   fp->save_dvar_vector_position(vtmp);
   save_identifier_string("aaaa");
-  gradient_structure::get()->GRAD_STACK1->
-            set_gradient_stack(cvdv_add);
+  gs->GRAD_STACK1->set_gradient_stack(cvdv_add);
   return vtmp;
 }
 

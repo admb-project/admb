@@ -82,6 +82,5 @@ void dvar_vector::initialize(const dvector& ww)
     save_identifier_string("b");
     fp->save_dvar_vector_position(*this);
     save_identifier_string("a");
-    gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dv_init);
+    gs->GRAD_STACK1->set_gradient_stack(dv_init);
   }

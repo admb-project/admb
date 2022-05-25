@@ -357,6 +357,8 @@ public:
   void save_prevariable_position(const prevariable& v);
   void save_prevariable_value(const prevariable& v);
 
+  void save_d3_array_position(const d3_array& a);
+
 private:
   OFF_T buff_end;
 #if defined(_MSC_VER) || defined(__MINGW64__)

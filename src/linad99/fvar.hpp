@@ -3638,7 +3638,7 @@ class d3_array
    d3_array(int sl, int sh);
    d3_array(const d3_array_position &);
 
-   void save_d3_array_position(DF_FILE* fp) const;
+   void save_d3_array_position() const;
 
    d3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl, int nch);
 

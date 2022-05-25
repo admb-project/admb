@@ -232,13 +232,17 @@ dvector DF_FILE::restore_dvar_vector_value(const dvar_vector_position& tmp)
 /**
 Saves the size, address, and value information for a dvar_matrix.
 */
-void dvar_matrix::save_dvar_matrix_value(DF_FILE* fp) const
+void dvar_matrix::save_dvar_matrix_value() const
 {
-  int min=rowmin();
-  int max=rowmax();
-  for (int i=min;i<=max;i++)
+  gradient_structure::get_fp()->save_dvar_matrix_value(*this);
+}
+void DF_FILE::save_dvar_matrix_value(const dvar_matrix& m)
+{
+  int min=m.rowmin();
+  int max=m.rowmax();
+  for (int i=min;i<=max;++i)
   {
-    fp->save_dvar_vector_value(elem(i));
-    fp->save_dvar_vector_position(elem(i));
+    save_dvar_vector_value(m(i));
+    save_dvar_vector_position(m(i));
   }
 }

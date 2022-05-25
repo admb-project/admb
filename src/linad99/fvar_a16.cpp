@@ -77,7 +77,7 @@ dvariable operator*(const dvar_vector& v2, const dvector& cv1)
   fp->save_dvector_value(cv1);
   fp->save_dvector_position(cv1);
   fp->save_dvar_vector_position(v2);
-  vtmp.save_prevariable_position(fp);
+  fp->save_prevariable_position(vtmp);
   save_identifier_string("uuuu");
   gs->GRAD_STACK1->set_gradient_stack(dvcv_dot);
   return vtmp;

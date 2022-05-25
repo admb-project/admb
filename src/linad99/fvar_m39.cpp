@@ -152,11 +152,11 @@ dvar_matrix choleski_decomp(const dvar_matrix& MM)
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("rs");
-  vc.save_dvar_matrix_position(fp);
+  fp->save_dvar_matrix_position(vc);
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value(fp);
+  fp->save_dvar_matrix_value(MM);
   save_identifier_string("rl");
-  MM.save_dvar_matrix_position(fp);
+  fp->save_dvar_matrix_position(MM);
   save_identifier_string("ro");
   gs->GRAD_STACK1->set_gradient_stack(dfcholeski_decomp);
   return vc;

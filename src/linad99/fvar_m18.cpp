@@ -84,8 +84,8 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
    fp->save_dmatrix_value(cm1);
    fp->save_dmatrix_position(cm1);
    // m2.save_dvar_matrix_value();
-   m2.save_dvar_matrix_position(fp);
-   vtmp.save_dvar_matrix_position(fp);
+   fp->save_dvar_matrix_position(m2);
+   fp->save_dvar_matrix_position(vtmp);
    save_identifier_string("TEST6");
    gs->GRAD_STACK1->set_gradient_stack(cmdm_prod);
    return vtmp;

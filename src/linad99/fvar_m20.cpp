@@ -166,9 +166,9 @@ dvariable det(const dvar_matrix& aa)
   fp->save_ivector_value(indx);
   fp->save_ivector_position(indx);
   save_identifier_string("PLACE3");
-  aa.save_dvar_matrix_position(fp);
+  fp->save_dvar_matrix_position(aa);
   save_identifier_string("PLACE2b");
-  rdet.save_prevariable_position(fp);
+  fp->save_prevariable_position(rdet);
   save_identifier_string("PLACE2a");
   fp->save_dmatrix_value(bb);
   save_identifier_string("PLACE2");

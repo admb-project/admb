@@ -53,26 +53,34 @@ prevariable_position DF_FILE::restore_prevariable_position()
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_position(DF_FILE* fp) const
+void prevariable::save_prevariable_position() const
+{
+  gradient_structure::get_fp()->save_prevariable_position(*this);
+}
+void DF_FILE::save_prevariable_position(const prevariable& v)
 {
   constexpr size_t wsize = sizeof(double_and_int*);
 
-  double_and_int* tmp = get_v();
-  fp->fwrite(&tmp, wsize);
+  double_and_int* tmp = v.get_v();
+  fwrite(&tmp, wsize);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_value(DF_FILE* fp) const
+void prevariable::save_prevariable_value() const
+{
+  gradient_structure::get_fp()->save_prevariable_value(*this);
+}
+void DF_FILE::save_prevariable_value(const prevariable& v)
 {
   //double_and_int * tmp=get_v();
   //const unsigned wsize=sizeof(double_and_int*);
   //gradient_structure::get_fp()->fwrite(&tmp,wsize);
-  double x=value(*this);
+  double x=value(v);
   //const unsigned dsize=sizeof(double);
-  fp->fwrite(x);
+  fwrite(x);
 }
 
 /**

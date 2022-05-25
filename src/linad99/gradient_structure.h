@@ -351,6 +351,11 @@ public:
   void save_imatrix_value(const imatrix& m);
 
   void save_imatrix_position(const imatrix& m);
+  void save_dvar_matrix_position(const dvar_matrix& m);
+  void save_dvar_matrix_value(const dvar_matrix& m);
+
+  void save_prevariable_position(const prevariable& v);
+  void save_prevariable_value(const prevariable& v);
 
 private:
   OFF_T buff_end;

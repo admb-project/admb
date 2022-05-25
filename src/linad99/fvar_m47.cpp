@@ -108,12 +108,12 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("qs");
-  _fpen.save_prevariable_position(fp);
+  fp->save_prevariable_position(_fpen);
   fp->save_double_value(eps);
-  vc.save_dvar_matrix_position(fp);
-  MM.save_dvar_matrix_value(fp);
+  fp->save_dvar_matrix_position(vc);
+  fp->save_dvar_matrix_value(MM);
   save_identifier_string("rl");
-  MM.save_dvar_matrix_position(fp);
+  fp->save_dvar_matrix_position(MM);
   save_identifier_string("lo");
   gs->GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_positive);
   return vc;

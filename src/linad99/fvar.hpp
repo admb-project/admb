@@ -1395,9 +1395,9 @@ public:
 
 
  public:
-   void save_prevariable_position(DF_FILE* fp) const;
+   void save_prevariable_position() const;
    prevariable_position restore_prevariable_position(void);
-   void save_prevariable_value(DF_FILE* fp) const;
+   void save_prevariable_value() const;
    double restore_prevariable_value(void);
    double restore_prevariable_derivative(void);
 
@@ -2513,8 +2513,8 @@ class dvar_matrix
 
    ~dvar_matrix();
 
-   void save_dvar_matrix_position(DF_FILE* fp) const;
-   void save_dvar_matrix_value(DF_FILE* fp) const;
+   void save_dvar_matrix_position() const;
+   void save_dvar_matrix_value() const;
 
    void fill(const char *);
    //void colfill(const int&n,...);

@@ -82,10 +82,10 @@ dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& cm2)
    DF_FILE* fp = gs->fp;
    save_identifier_string("TEST1");
    //m1.save_dvar_matrix_value();
-   m1.save_dvar_matrix_position(fp);
+   fp->save_dvar_matrix_position(m1);
    fp->save_dmatrix_value(cm2);
    fp->save_dmatrix_position(cm2);
-   vtmp.save_dvar_matrix_position(fp);
+   fp->save_dvar_matrix_position(vtmp);
    save_identifier_string("TEST6");
    gs->GRAD_STACK1->set_gradient_stack(dmcm_prod);
    return vtmp;

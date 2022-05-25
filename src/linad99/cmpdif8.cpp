@@ -142,7 +142,7 @@ double restore_prevariable_derivative(const prevariable_position& _pos)
  */
 double restore_prevariable_derivative()
 {
-  gradient_structure::get_fp()->restore_prevariable_derivative();
+  return gradient_structure::get_fp()->restore_prevariable_derivative();
 }
 double DF_FILE::restore_prevariable_derivative()
 {

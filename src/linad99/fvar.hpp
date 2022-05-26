@@ -7915,7 +7915,7 @@ class banded_symmetric_dmatrix
    banded_symmetric_dmatrix(int _min, int _max, int _bw);
 
    banded_symmetric_dmatrix(const dvar_matrix_position & mpos);
-   void save_dmatrix_value(DF_FILE* fp) const;
+   void save_dmatrix_value() const;
    void save_dmatrix_position(void) const;
    void save_dmatrix_derivatives(const dvar_matrix_position &) const;
 
@@ -7957,9 +7957,9 @@ class banded_symmetric_dmatrix
  */
 class banded_symmetric_dvar_matrix
 {
+ public:
    int bw;
    dvar_matrix d;
- public:
    void initialize(void);
    int bandwidth(void) const
    {
@@ -7982,8 +7982,8 @@ class banded_symmetric_dvar_matrix
       return d.rowmax();
    }
 
-   void save_dvar_matrix_value(DF_FILE* fp) const;
-   void save_dvar_matrix_position(DF_FILE* fp) const;
+   void save_dvar_matrix_value() const;
+   void save_dvar_matrix_position() const;
    banded_symmetric_dvar_matrix(int _min, int _max, int _bw);
    banded_symmetric_dvar_matrix(const banded_symmetric_dvar_matrix &);
 
@@ -8082,9 +8082,9 @@ class banded_lower_triangular_dmatrix
  */
 class banded_lower_triangular_dvar_matrix
 {
+public:
    int bw;
    dvar_matrix d;
- public:
    int bandwidth(void) const
    {
       return bw;
@@ -8106,8 +8106,8 @@ class banded_lower_triangular_dvar_matrix
       return d.rowmax();
    }
    void initialize(void);
-   void save_dvar_matrix_value(DF_FILE* fp) const;
-   void save_dvar_matrix_position(DF_FILE* fp) const;
+   void save_dvar_matrix_value() const;
+   void save_dvar_matrix_position() const;
 
    banded_lower_triangular_dvar_matrix(int _min, int _max, int _bw);
    banded_lower_triangular_dvar_matrix
@@ -8144,8 +8144,6 @@ class banded_lower_triangular_dvar_matrix
    {
       return *(double *) ((d.m[i - j]).va + i);
    }
-   friend banded_lower_triangular_dmatrix value
-      (const banded_lower_triangular_dvar_matrix & v);
 };
 
 ostream & operator<<(const ostream & ofs,

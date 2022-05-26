@@ -375,11 +375,11 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
 
   //banded_lower_triangular_dvar_matrix vc=nograd_assign(L);
   save_identifier_string("rs");
-  L.save_dvar_matrix_position(fp);
+  fp->save_dvar_matrix_position(L.d);
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value(fp);
+  fp->save_dvar_matrix_value(MM.d);
   save_identifier_string("rl");
-  MM.save_dvar_matrix_position(fp);
+  fp->save_dvar_matrix_position(MM.d);
   save_identifier_string("ro");
   gs->GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_banded);
 

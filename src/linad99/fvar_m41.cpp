@@ -37,8 +37,8 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("rt");
-  m.save_dvar_matrix_value(fp);
-  m.save_dvar_matrix_position(fp);
+  fp->save_dvar_matrix_value(m.d);
+  fp->save_dvar_matrix_position(m.d);
   fp->save_dvar_vector_value(v);
   fp->save_dvar_vector_position(v);
   fp->save_dvar_vector_position(x);

@@ -1529,7 +1529,8 @@ class dvariable:public prevariable
    dvariable & operator=(double);
 #  define double dd_real
 #endif
-   dvariable(const dvariable &);
+   dvariable(const dvariable&);
+   dvariable& operator=(const dvariable&);
 //#  if (__BORLANDC__  > 0x0520)
 //     dvariable& operator+=(const prevariable&);
 //#  endif

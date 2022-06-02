@@ -26,10 +26,6 @@ Compute exponential variable
 */
 prevariable& exp(const prevariable& v1)
 {
-  gradient_structure* gs = gradient_structure::get();
-  if (++gs->RETURN_PTR > gs->MAX_RETURN)
-    gs->RETURN_PTR = gs->MIN_RETURN;
-
   double tmp;
   //Avoid underflow for large negative values
   // https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/exp-expf
@@ -57,11 +53,14 @@ prevariable& exp(const prevariable& v1)
   #endif
 #endif
 
-  gs->RETURN_PTR->v->x=tmp;
-  gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(gs->RETURN_PTR->v->x), &(v1.v->x),tmp);
+  gradient_structure* gs = gradient_structure::get();
+  dvariable* RETURN_PTR = gs->RETURN_PTR == gs->MAX_RETURN ? gs->RETURN_PTR = gs->MIN_RETURN : ++gs->RETURN_PTR;
 
-  return *gs->RETURN_PTR;
+  RETURN_PTR->v->x=tmp;
+  gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
+    &(RETURN_PTR->v->x), &(v1.v->x),tmp);
+
+  return *RETURN_PTR;
 }
 
 /**

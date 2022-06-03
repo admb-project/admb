@@ -68,10 +68,12 @@ prevariable& operator*(const prevariable& v1, const prevariable& v2)
   gradient_structure* gs = gradient_structure::get();
   dvariable* RETURN_PTR = gs->RETURN_PTR == gs->MAX_RETURN ? gs->RETURN_PTR = gs->MIN_RETURN : ++gs->RETURN_PTR;
 
-  RETURN_PTR->v->x= (*v1.v).x * (*v2.v).x;
+  double_and_int* di1 = v1.v;
+  double_and_int* di2 = v2.v;
+  RETURN_PTR->v->x = di1->x * di2->x;
   gs->GRAD_STACK1->set_gradient_stack(default_evaluation3,
     &(RETURN_PTR->v->x),
-    &((*v1.v).x),(*v2.v).x,&((*v2.v).x),(*v1.v).x );
+    &(di1->x), di2->x, &(di2->x), di1->x);
 
   return *RETURN_PTR;
  }

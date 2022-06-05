@@ -32,7 +32,11 @@ dvector elem_prod(const dvector& t1, const dvector& t2)
 
      dvector tmp(min, max);
 
-#ifndef USE_ASSEMBLER
+#ifdef USE_ASSEMBLER
+     int min=t1.indexmin();
+     int n=t1.indexmax()-min+1;
+     dp_vector_elem_prod(&(tmp(min)),&(t1(min)),&(t2(min)),n);
+#else
      double* ptmp = tmp.get_v() + min;
      double* pt1 = t1.get_v() + min;
      double* pt2 = t2.get_v() + min;
@@ -44,10 +48,6 @@ dvector elem_prod(const dvector& t1, const dvector& t2)
        ++pt1;
        ++pt2;
      }
-#else
-     int min=t1.indexmin();
-     int n=t1.indexmax()-min+1;
-     dp_vector_elem_prod(&(tmp(min)),&(t1(min)),&(t2(min)),n);
 #endif
 
      return(tmp);
@@ -76,7 +76,11 @@ dvector elem_div(const dvector& t1, const dvector& t2)
 
      dvector tmp(min, max);
 
-#ifndef USE_ASSEMBLER
+#ifdef USE_ASSEMBLER
+     int min=t1.indexmin();
+     int n=t1.indexmax()-min+1;
+     dp_vector_elem_prod(&(tmp(min)),&(t1(min)),&(t2(min)),n);
+#else
      double* ptmp = tmp.get_v() + min;
      double* pt1 = t1.get_v() + min;
      double* pt2 = t2.get_v() + min;
@@ -88,10 +92,6 @@ dvector elem_div(const dvector& t1, const dvector& t2)
        ++pt1;
        ++pt2;
      }
-#else
-     int min=t1.indexmin();
-     int n=t1.indexmax()-min+1;
-     dp_vector_elem_prod(&(tmp(min)),&(t1(min)),&(t2(min)),n);
 #endif
 
      return(tmp);

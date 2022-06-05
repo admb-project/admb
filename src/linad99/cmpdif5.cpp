@@ -130,14 +130,19 @@ d3_array DF_FILE::restore_d3_array_value(const d3_array_position& mpos)
  */
 dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 {
-  // puts the derivative values from a dvar_vector's guts into a dvector
-  dvector tempvec(tmp.indexmin(),tmp.indexmax());
-  double_and_int* va = &tmp.va[tmp.indexmin()];
-
-
-#ifndef USE_ASSEMBLER
   int min = tmp.indexmin();
   int max = tmp.indexmax();
+
+  // puts the derivative values from a dvar_vector's guts into a dvector
+  dvector tempvec(min, max);
+  double_and_int* va = tmp.va + min;
+
+#ifdef USE_ASSEMBLER
+     int min=tmp.indexmin();
+     int n=tmp.max-min+1;
+     dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
+     dp_block_initialize(&(va[min].xvalue()),n);
+#else
   double* ptmpvec = tempvec.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
@@ -148,11 +153,6 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
     ++va;
     ++ptmpvec;
   }
-#else
-     int min=tmp.indexmin();
-     int n=tmp.max-min+1;
-     dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
-     dp_block_initialize(&(va[min].xvalue()),n);
 #endif
 
 //  _dp_vector_add
@@ -173,19 +173,24 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 dvector restore_dvar_vector_der_nozero(const dvar_vector_position& tmp)
 {
   // puts the derivative values from a dvar_vector's guts into a dvector
-  dvector tempvec(tmp.min,tmp.max);
-  double_and_int * va=tmp.va;
+  int min = tmp.min;
+  int max = tmp.max;
+  dvector tempvec(min, max);
+  double_and_int* va=tmp.va + min;
 
-  #ifndef USE_ASSEMBLER
-    for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
-    {
-      tempvec(i)=va[i].xvalue();
-    }
-  #else
-     int min=tmp.indexmin();
-     int n=tmp.indexmax()-min+1;
-     dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
-  #endif
+#ifdef USE_ASSEMBLER
+  int min=tmp.indexmin();
+  int n=tmp.indexmax()-min+1;
+  dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
+#else
+  double* ptempvec = tempvec.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptempvec = va->x;
+    ++va;
+    ++ptempvec;
+  }
+#endif
   return tempvec;
 }
 
@@ -208,8 +213,8 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
   dp_vector_add(&(ptr[min].xvalue()), &(ptr[min].xvalue()),
     &(this->elem(min)), n);
 #else
-  double_and_int* dest = &pos.va[min];
-  double* source = &v[min];
+  double_and_int* dest = pos.va + min;
+  double* source = v + min;
   for (int i = min; i <= max; ++i)
   {
     dest->x += *source;
@@ -226,24 +231,31 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
 void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
-  int min=indexmin();
-  int max=indexmax();
-  if (min!=pos.indexmin() || max!=pos.indexmax())
+  int min = indexmin();
+  int max = indexmax();
+
+#ifndef OPT_LIB
+  if (min != pos.indexmin() || max != pos.indexmax())
   {
     cerr << "Incompatible array sizes in " <<
     "void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos)"
     << endl;
   }
-  double_and_int * ptr=pos.va;
+#endif
 
-#ifndef USE_ASSEMBLER
-  for (int i=min;i<=max;i++)
-  {
-    ptr[i].xvalue()=(*this)(i);
-  }
+#ifdef USE_ASSEMBLER
+  double_and_int* ptr = pos.va;
+  int n=max-min+1;
+  dw_block_move(&(ptr[min].xvalue()),&(this->elem(min)),n);
 #else
-     int n=max-min+1;
-     dw_block_move(&(ptr[min].xvalue()),&(this->elem(min)),n);
+  double_and_int* dest = pos.va + min;
+  double* source = v + min;
+  for (int i = min; i <= max; ++i)
+  {
+    dest->x = *source;
+    ++dest;
+    ++source;
+  }
 #endif
 }
 

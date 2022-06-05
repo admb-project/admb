@@ -22,6 +22,9 @@
   #include <iostream.hpp>
 #endif
 
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 /** Compute the dot product of two variable type vectors. The minimum and maxium
   legal subscripts of the arguments must agree; otherwize an error message
@@ -36,19 +39,27 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
 {
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
-  if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
+  DF_FILE* fp = gs->fp;
+  grad_stack* GRAD_STACK1 = gs->GRAD_STACK1;
+
+  int min=v1.indexmin();
+  int max=v1.indexmax();
+#ifdef OPT_LIB
+  if (min != v2.indexmin() || max != v2.indexmax())
   {
-    cerr << "Incompatible bounds in "
-      "prevariable operator * (const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+    cerr << "Incompatible bounds in prevariable operator*(const dvar_vector&, const dvar_vector&)\n";
     ad_exit(1);
   }
+#endif
+
   double tmp=0;
 
-  #ifndef USE_ASSEMBLER
+#ifdef USE_ASSEMBLER
     int mmin=v1.indexmin();
-    int mmax=v1.indexmax();
-  #ifdef OPT_LIB
+    int n=v1.indexmax()-mmin+1;
+    dp_dotproduct(&tmp,&(v1.elem_value(mmin)),&(v2.elem_value(mmin)),n);
+#else
+    /*
     double * pt1=&v1.elem_value(mmin);
     double * pt1m=&v1.elem_value(mmax);
     double * pt2=&v2.elem_value(mmin);
@@ -57,21 +68,18 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
       tmp+= *pt1++ * *pt2++;
     }
     while (pt1<=pt1m);
-  #else
-    for (int i=mmin;i<=mmax;i++)
+    */
+    double_and_int* pva1 = v1.va + min;
+    double_and_int* pva2 = v2.va + min;
+    for (int i = min; i <= max; ++i)
     {
-      tmp+=v1.elem_value(i)*v2.elem_value(i);
+      tmp += pva1->x * pva2->x;
+      ++pva1;
+      ++pva2;
     }
-  #endif
-  #else
-    int mmin=v1.indexmin();
-    int n=v1.indexmax()-mmin+1;
-    dp_dotproduct(&tmp,&(v1.elem_value(mmin)),&(v2.elem_value(mmin)),n);
-  #endif
+#endif
 
   dvariable vtmp=nograd_assign(tmp);
-
-  DF_FILE* fp = gs->fp;
 
   // The derivative list considerations
   save_identifier_string("bbbb");
@@ -81,7 +89,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
   fp->save_dvar_vector_position(v2);
   fp->save_prevariable_position(vtmp);
   save_identifier_string("aaaa");
-  gs->GRAD_STACK1->set_gradient_stack(dvdv_dot);
+  GRAD_STACK1->set_gradient_stack(dvdv_dot);
   gs->RETURN_ARRAYS_DECREMENT();
   return vtmp;
 }
@@ -102,9 +110,17 @@ void dvdv_dot(void)
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector cv1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("bbbb");
-  dvector dfv1(cv1.indexmin(),cv1.indexmax());
-  dvector dfv2(cv2.indexmin(),cv2.indexmax());
-#ifdef OPT_LIB
+
+  int min = cv1.indexmin();
+  int max = cv1.indexmax();
+
+#ifdef DEBUG
+  assert(min == cv2.indexmin() && max == cv2.indexmax());
+#endif
+
+  dvector dfv1(min, max);
+  dvector dfv2(min, max);
+  /*
   double * pdf1=&dfv1(cv1.indexmin());
   double * pdf1m=&dfv1(cv1.indexmax());
   double * pdf2=&dfv2(cv1.indexmin());
@@ -116,14 +132,21 @@ void dvdv_dot(void)
     *pdf2++ = dftmp * *pc1++;
   }
   while (pdf1<=pdf1m);
-#else
-  for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
+  */
+  double* pcv1 = cv1.get_v() + min;
+  double* pcv2 = cv2.get_v() + min;
+  double* pdfv1 = dfv1.get_v() + min;
+  double* pdfv2 = dfv2.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //tmp+=cv1(i)*cv2(i);
-    dfv1(i)=dftmp*cv2.elem(i);
-    dfv2(i)=dftmp*cv1.elem(i);
+    *pdfv1 = dftmp * *pcv2;
+    *pdfv2 = dftmp * *pcv1;
+    ++pdfv1;
+    ++pdfv2;
+    ++pcv2;
+    ++pcv1;
   }
-#endif
   dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);
 }

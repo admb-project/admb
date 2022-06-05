@@ -132,13 +132,21 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 {
   // puts the derivative values from a dvar_vector's guts into a dvector
   dvector tempvec(tmp.indexmin(),tmp.indexmax());
-  double_and_int * va=tmp.va;
+  double_and_int* va = &tmp.va[tmp.indexmin()];
+
 
 #ifndef USE_ASSEMBLER
-  for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+  int min = tmp.indexmin();
+  int max = tmp.indexmax();
+  double* ptmpvec = tempvec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    tempvec(i)=va[i].xvalue();
-    va[i].xvalue()=0.;
+    //tempvec(i)=va[i].xvalue();
+    //va[i].xvalue()=0.;
+    *ptmpvec = va->x;
+    va->x = 0.0;
+    ++va;
+    ++ptmpvec;
   }
 #else
      int min=tmp.indexmin();

@@ -24,24 +24,38 @@ dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)
 
   gs->RETURN_ARRAYS_INCREMENT();
 
-  if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
+  int imin = m.rowmin();
+  int imax = m.rowmax();
+  int jmin = x.indexmin();
+  int jmax = x.indexmax();
+#ifndef OPT_LIB
+  if (jmin != m.colmin() || jmax != m.colmax())
   {
      cerr << " Incompatible array bounds in "
      "dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
      ad_exit(21);
   }
+#endif
 
   kkludge_object kkk;
-  dvar_vector tmp(m.rowmin(),m.rowmax(),kkk);
-  for (int i=m.rowmin(); i<=m.rowmax(); i++)
+  dvar_vector tmp(imin, imax, kkk);
+  double_and_int* ptmp = tmp.va + imin;
+  for (int i = imin; i <= imax; ++i)
   {
+    double_and_int* px = x.va + jmin;
+    dvar_vector& mi = m.elem(i);
+    double_and_int* pmi = mi.va + jmin;
+
     double sum = 0.0;
-    for (int j=x.indexmin(); j<=x.indexmax(); j++)
+    for (int j = jmin; j <= jmax; ++j)
     {
        //sum+=m[i][j]*x[j];
-       sum+=(m.elem(i)).elem_value(j)*x.elem_value(j);
+       sum += pmi->x * px->x;
+       ++px;
+       ++pmi;
     }
-    tmp.elem_value(i)=sum;
+    ptmp->x = sum;
+    ++ptmp;
   }
   save_identifier_string("PLACE4");
   fp->save_dvar_vector_value(x);
@@ -82,18 +96,33 @@ void dmdv_prod(void)
   dfm.initialize();
   dfx.initialize();
 
-  for (int i=m.rowmax(); i>=m.rowmin(); i--)
+  int imax = m.rowmax();
+  int imin = m.rowmin();
+  int jmax = x.indexmax();
+  int jmin = x.indexmin();
+  double* pdftmp = dftmp.get_v() + imax;
+  for (int i = imax; i >= imin; --i)
   {
     //tmp.elem_value(i)=sum;
-    double dfsum=dftmp.elem(i);
-    for (int j=x.indexmax(); j>=x.indexmin(); j--)
+    double dfsum = *pdftmp;
+    double* px = x.get_v() + jmax;
+    double* pdfx = dfx.get_v() + jmax;
+    double* pdfmi = dfm(i).get_v() + jmax;
+    double* pmi = m(i).get_v() + jmax;
+    for (int j = jmax; j >= jmin; --j)
     {
       //sum+=(m.elem(i)).elem_value(j)*x.elem_value(j);
-      dfm.elem(i,j)+=dfsum*x.elem(j);
-      dfx.elem(j)+=dfsum*m.elem(i,j);
+      *pdfmi += dfsum * *px;
+      *pdfx += dfsum * *pmi;
+      --px;
+      --pdfx;
+      --pdfmi;
+      --pmi;
     }
     //sum=0.0;
     dfsum=0.0;
+
+    --pdftmp;
   }
   dfx.save_dvector_derivatives(x_pos);
   dfm.save_dmatrix_derivatives(m_pos);
@@ -109,12 +138,14 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
   DF_FILE* fp = gs->fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
+#ifndef OPT_LIB
   if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
   {
     cerr << " Incompatible array bounds in "
     "dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
     ad_exit(21);
   }
+#endif
 
   kkludge_object kkk;
   dvar_vector tmp(m.rowmin(),m.rowmax(),kkk);

@@ -31,6 +31,7 @@ void cvdv_dot(void);
  */
 dvariable operator*(const dvector& cv1, const dvar_vector& v2)
 {
+#ifndef OPT_LIB
   if (cv1.indexmin()!=v2.indexmin()||cv1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -38,6 +39,7 @@ dvariable operator*(const dvector& cv1, const dvar_vector& v2)
     << endl;
     ad_exit(1);
   }
+#endif
     double tmp=0;
     int mmin=cv1.indexmin();
     int mmax=cv1.indexmax();

@@ -222,10 +222,16 @@ void DF_dvlog(void);
 dvar_vector log(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
-  dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i=v1.indexmin();i<=v1.indexmax();i++)
+  int min = v1.indexmin();
+  int max = v1.indexmax();
+  dvar_vector vtmp(min, max);
+  double_and_int* pvtmp = vtmp.va + min;
+  double_and_int* pv1 = v1.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    vtmp.elem_value(i)=log(v1.elem_value(i));
+    pvtmp->x = log(pv1->x);
+    ++pvtmp;
+    ++pv1;
   }
 
   gradient_structure* gs = gradient_structure::get();
@@ -257,18 +263,27 @@ void DF_dvlog(void)
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("cdd");
-  dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+
+  int min = dfvtmp.indexmin();
+  int max = dfvtmp.indexmax();
+  dvector dfv1(min, max);
+  double* pdfv1 = dfv1.get_v() + min;
+  double* pv1 = v1.get_v() + min;
+  double* pdfvtmp = dfvtmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-#    ifndef OPT_LIB
+#ifdef DEBUG
      if (ad_debug_arithmetic==1)
       if (v1.elem(i)==0.0 || fabs(v1.elem(i))<1.e-150 ||
         dfvtmp(i) > 1.e+150)
       {
-        // cerr << "Possible overflow in DF_dvlog" << endl;
+        cerr << "Possible overflow in DF_dvlog" << endl;
       }
-#    endif
-    dfv1(i)=dfvtmp(i)/(v1.elem(i));
+#endif
+    *pdfv1 = *pdfvtmp / *pv1;
+    ++pdfv1;
+    ++pv1;
+    ++pdfvtmp;
   }
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);

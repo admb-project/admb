@@ -19,7 +19,7 @@ void dv_assign(void);
   #include <memory.h>
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -45,7 +45,7 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
    {
      int mmin=indexmin();
      int mmax=indexmax();
-#ifndef OPT_LIB
+#ifdef DEBUG
      assert(mmax >= mmin);
 #endif
      if (mmin != t.indexmin() || mmax != t.indexmax())
@@ -189,7 +189,7 @@ void dv_assign(void)
   dvar_vector_position t_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dft(dftmp.indexmin(),dftmp.indexmax());
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(dftmp.indexmax() >= dftmp.indexmin());
 #endif
 #ifdef OPT_LIB

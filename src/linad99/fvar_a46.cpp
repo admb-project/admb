@@ -33,20 +33,32 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
 
   gs->RETURN_ARRAYS_INCREMENT();
 
-  if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
+  int min = v1.indexmin();
+  int max = v1.indexmax();
+#ifndef OPT_LIB
+  if (min != v2.indexmin() || max != v2.indexmax())
   {
     cerr << "Incompatible bounds in "
     "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
     << endl;
     ad_exit(1);
   }
-  dvar_vector tmp(v1.indexmin(),v1.indexmax());
-  dvector tmp_inv(v1.indexmin(),v1.indexmax());
+#endif
+  dvar_vector tmp(min, max);
+  dvector tmp_inv(min, max);
 
-  for (int i=v1.indexmin();i<=v1.indexmax();i++)
+  double_and_int* pv1 = v1.va + min;
+  double_and_int* pv2 = v2.va + min;
+  double* ptmp_inv = tmp_inv.get_v() + min;
+  double_and_int* ptmp = tmp.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    tmp_inv.elem(i)=1./v2.elem_value(i);
-    tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
+    *ptmp_inv = 1.0 / pv2->x;
+    ptmp->x = pv1->x * *ptmp_inv;
+    ++pv2;
+    ++pv1;
+    ++ptmp_inv;
+    ++ptmp;
   }
 
   // The derivative list considerations
@@ -86,14 +98,34 @@ void dvdv_elem_div(void)
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector cv1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("bbbb");
-  dvector dfv1(cv1.indexmin(),cv1.indexmax());
-  dvector dfv2(tmp_div.indexmin(),tmp_div.indexmax());
-  for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
+
+  int min = cv1.indexmin();
+  int max = cv1.indexmax();
+  dvector dfv1(min, max);
+  int min2 = tmp_div.indexmin();
+  int max2 = tmp_div.indexmax();
+  dvector dfv2(min2, max2);
+
+  double* ptmp_div = tmp_div.get_v() + min;
+  double* pdftmp = dftmp.get_v() + min;
+  double* pcv1 = cv1.get_v() + min;
+  double* pdfv1 = dfv1.get_v() + min;
+  double* pdfv2 = dfv2.get_v() + min2;
+  for (int i = min; i <= max; ++i)
   {
     //tmp+=cv1(i)*cv2(i);
-    double& xx=tmp_div.elem(i);
-    dfv1(i)=dftmp.elem(i)*xx;
-    dfv2(i)=-dftmp.elem(i)*cv1.elem(i)*xx*xx;
+
+    //double& xx=tmp_div.elem(i);
+    double xx = *ptmp_div;
+    //dfv1(i)=dftmp.elem(i)*xx;
+    *pdfv1 = *pdftmp * xx;
+    //dfv2(i)=-dftmp.elem(i)*cv1.elem(i)*xx*xx;
+    *pdfv2 = -(*pdftmp) * *pcv1 * xx * xx;
+    ++ptmp_div;
+    ++pdftmp;
+    ++pcv1;
+    ++pdfv1;
+    ++pdfv2;
   }
   dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);
@@ -114,20 +146,34 @@ dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
   DF_FILE* fp = gs->fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
-  if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
+  int min = v1.indexmin();
+  int max = v1.indexmax();
+#ifndef OPT_LIB
+  if (min != v2.indexmin() || max != v2.indexmax())
   {
     cerr << "Incompatible bounds in "
     "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
     << endl;
     ad_exit(1);
   }
-  dvar_vector tmp(v1.indexmin(),v1.indexmax());
-  dvector tmp_inv(v1.indexmin(),v1.indexmax());
+#endif
+  dvar_vector tmp(min, max);
+  dvector tmp_inv(min, max);
 
-  for (int i=v1.indexmin();i<=v1.indexmax();i++)
+  double_and_int* pv1 = v1.va + min;
+  double* pv2 = v2.get_v() + min;
+  double* ptmp_inv = tmp_inv.get_v() + min;
+  double_and_int* ptmp = tmp.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    tmp_inv.elem(i)=1./v2.elem(i);
-    tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
+    //tmp_inv.elem(i)=1./v2.elem(i);
+    //tmp.elem_value(i)=v1.elem_value(i)*tmp_inv.elem(i);
+    *ptmp_inv = 1.0 / *pv2;
+    ptmp->x = pv1->x * *ptmp_inv;
+    ++ptmp_inv;
+    ++ptmp;
+    ++pv1;
+    ++pv2;
   }
 
   // The derivative list considerations

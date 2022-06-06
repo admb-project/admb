@@ -23,12 +23,21 @@ dvar_vector operator-(const dvector& t1, const prevariable& x)
 
     gs->RETURN_ARRAYS_INCREMENT();
 
-    dvar_vector tmp(t1.indexmin(),t1.indexmax());
+    int min = t1.indexmin();
+    int max = t1.indexmax();
+    dvar_vector tmp(min, max);
     save_identifier_string("zcb");
     fp->save_prevariable_position(x);
-    for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
+
+    double_and_int* ptmp = tmp.va + min;
+    double* pt1 = t1.get_v() + min;
+    double value_x = value(x);
+    for (int i = min; i <= max; ++i)
     {
-      tmp.elem_value(i)=t1.elem(i)-value(x);
+      //tmp.elem_value(i)=t1.elem(i)-value(x);
+      ptmp->x = *pt1 - value_x;
+      ++ptmp;
+      ++pt1;
     }
     fp->save_dvar_vector_position(tmp);
     save_identifier_string("ddu");
@@ -52,11 +61,16 @@ dvar_vector operator-(const dvector& t1, const prevariable& x)
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     verify_identifier_string("zcb");
     //double xinv=1./x;
-    double dfx=0.;
-    for (int i=tmp_pos.indexmax(); i>=tmp_pos.indexmin(); i--)
+    int min = tmp_pos.indexmin();
+    int max = tmp_pos.indexmax();
+    double dfx = 0.0;
+    double* pdftmp = dftmp.get_v() + max;
+    for (int i = max; i >= min; --i)
     {
       // tmp.elem_value(i)=t1.elem(i)-value(x);
-      dfx-=dftmp(i);
+      //dfx -= dftmp(i);
+      dfx -= *pdftmp;
+      --pdftmp;
     }
     save_double_derivative(dfx,xpos);
  }

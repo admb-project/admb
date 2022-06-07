@@ -163,11 +163,16 @@ dvariable sum(const dvar_vector& v1)
   dvariable vtmp = 0.0;
   if (allocated(v1))
   {
-    dvector cv1=value(v1);
+    int min = v1.indexmin();
+    int max = v1.indexmax();
+    //dvector cv1=value(v1);
+    double_and_int* pv1 = v1.va + min;
     double tmp=0;
-    for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
+    for (int i = min; i <= max; ++i)
     {
-      tmp+=cv1.elem(i);
+      //tmp+=cv1.elem(i);
+      tmp += pv1->x;
+      ++pv1;
     }
 
     vtmp = nograd_assign(tmp);
@@ -197,11 +202,16 @@ void X_dv_sum(void)
   double dftmp=fp->restore_prevariable_derivative();
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
-  dvector dfv1(v1pos.indexmin(),v1pos.indexmax());
-  for (int i=dfv1.indexmin();i<=dfv1.indexmax();i++)
+  int min = v1pos.indexmin();
+  int max = v1pos.indexmax();
+  dvector dfv1(min, max);
+  double* pdfv1 = dfv1.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //tmp+=cv1(i)*cv2(i);
-    dfv1(i)=dftmp;
+    //dfv1(i)=dftmp;
+    *pdfv1 = dftmp;
+    ++pdfv1;
   }
   dfv1.save_dvector_derivatives(v1pos);
 }
@@ -216,10 +226,15 @@ dvariable sum(const dvar_matrix& m)
 {
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
-  dvariable tmp=0.;
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvariable tmp = 0.0;
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp+=sum(m.elem(i));
+    tmp += sum(*pmi);
+    ++pmi;
   }
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;

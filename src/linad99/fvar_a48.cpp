@@ -23,10 +23,14 @@ dvar_vector& dvar_vector::operator/=(const double x)
 
     gs->RETURN_ARRAYS_INCREMENT();
     save_identifier_string("wctf");
-    double xinv=1./x;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    double xinv = 1.0 / x;
+    int min = index_min;
+    int max = index_max;
+    double_and_int* pva = va + min;
+    for (int i = min; i <= max; ++i)
     {
-      elem_value(i)*=xinv;
+      pva->x *=xinv;
+      ++pva;
     }
     fp->save_dvar_vector_position(*this);
     fp->save_double_value(x);
@@ -50,10 +54,15 @@ dvar_vector& dvar_vector::operator/=(const double x)
     dvector dfthis=restore_dvar_vector_derivatives(this_pos);
     verify_identifier_string("wctf");
     double xinv=1./x;
-    for (int i=dfthis.indexmax(); i>=dfthis.indexmin(); i--)
+    int max = dfthis.indexmax();
+    int min = dfthis.indexmin();
+    double* pdfthis = dfthis.get_v() + max;
+    for (int i = max; i >= min; --i)
     {
       // elem_value(i)=elem_value(i)/x;
-      dfthis(i)*=xinv;
+      //dfthis(i)*=xinv;
+      *pdfthis *= xinv;
+      --pdfthis;
     }
     dfthis.save_dvector_derivatives(this_pos);
  }
@@ -71,10 +80,15 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     DF_FILE* fp = gs->fp;
 
     gs->RETURN_ARRAYS_INCREMENT();
-    double xinv=1./value(x);
-    for (int i=indexmin(); i<=indexmax(); i++)
+    double xinv = 1.0 / value(x);
+    int min = index_min;
+    int max = index_max;
+    double_and_int* pva = va + min;
+    for (int i = min; i <= max; ++i)
     {
-      elem_value(i)=elem_value(i)*xinv;
+      //elem_value(i)=elem_value(i)*xinv;
+      pva->x *= xinv;
+      ++pva;
     }
     save_identifier_string("wctg");
     fp->save_dvar_vector_value(*this);
@@ -104,20 +118,28 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     dvector tmp=restore_dvar_vector_value(this_pos);
     dvector dfthis=restore_dvar_vector_derivatives(this_pos);
     verify_identifier_string("wctg");
-    double tmp1=0.;
-    double xinv=1./x;
-    int i;
-    for (i=dfthis.indexmax(); i>=dfthis.indexmin(); i--)
+    double tmp1=0.0;
+    double xinv=1.0/x;
+    int max = dfthis.indexmax();
+    int min = dfthis.indexmin();
+    double* pdfthis = dfthis.get_v() + max;
+    double* ptmp = tmp.get_v() + max;
+    for (int i = max; i >= min; --i)
     {
       // elem_value(i)=elem_value(i)/x;
-      tmp1+=dfthis(i)*tmp(i);
+      //tmp1+=dfthis(i)*tmp(i);
+      tmp1 += *pdfthis * *ptmp;
+      --pdfthis;
+      --ptmp;
     }
     tmp1*=-xinv;
 
-    for (i=dfthis.indexmax(); i>=dfthis.indexmin(); i--)
+    pdfthis = dfthis.get_v() + max;
+    for (int i = max; i >= min; --i)
     {
       // elem_value(i)=elem_value(i)/x;
-      dfthis(i)*=xinv;
+      *pdfthis *= xinv;
+      --pdfthis;
     }
     dfthis.save_dvector_derivatives(this_pos);
     save_double_derivative(dfx+tmp1,x_pos);

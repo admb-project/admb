@@ -29,11 +29,11 @@ dvar_vector operator/(const dvar_vector& t1, const prevariable& x)
     int max = t1.indexmax();
     double_and_int* ptmp = tmp.va + min;
     double_and_int* pt1 = t1.va + min;
-    double value_x = 1.0 / value(x);
+    double value_x = value(x);
     for (int i = min; i <= max; ++i)
     {
       //tmp.elem_value(i)=t1.elem_value(i)/value(x);
-      ptmp->x = pt1->x * value_x;
+      ptmp->x = pt1->x / value_x;
       ++ptmp;
       ++pt1;
     }
@@ -69,17 +69,17 @@ dvar_vector operator/(const dvar_vector& t1, const prevariable& x)
 
     int min = t1_pos.indexmin();
     int max = t1_pos.indexmax();
-    double* pdftmp = dftmp.get_v() + min;
-    double* ptmp = tmp.get_v() + min;
-    double* pdft1 = dft1.get_v() + min;
+    double* pdftmp = dftmp.get_v() + max;
+    double* ptmp = tmp.get_v() + max;
+    double* pdft1 = dft1.get_v() + max;
     for (int i = max; i >= min; --i)
     {
       //tmp.elem_value(i)=value(x)*t1.elem_value(i)/value(x);
       dfx -= *pdftmp * (*ptmp) * xinv;
       *pdft1 = *pdftmp * xinv;
-      ++pdftmp;
-      ++ptmp;
-      ++pdft1;
+      --pdftmp;
+      --ptmp;
+      --pdft1;
     }
     save_double_derivative(dfx,xpos);
     dft1.save_dvector_derivatives(t1_pos);

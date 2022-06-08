@@ -116,11 +116,17 @@ void DF_dvexp(void);
  */
 dvar_vector exp(const dvar_vector& v1)
 {
+  int min = v1.indexmin();
+  int max = v1.indexmax();
   //dvector cv1=value(v1);
-  dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i=v1.indexmin();i<=v1.indexmax();i++)
+  dvar_vector vtmp(min, max);
+  double_and_int* pvtmp = vtmp.va + min;
+  double_and_int* pv1 = v1.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    vtmp.elem_value(i)=exp(v1.elem_value(i));
+    pvtmp->x = exp(pv1->x);
+    ++pvtmp;
+    ++pv1;
   }
 
   gradient_structure* gs = gradient_structure::get();
@@ -150,11 +156,19 @@ void DF_dvexp(void)
   dvector vtmp=restore_dvar_vector_value(tmp_pos);
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("ddd");
-  dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  int min = dfvtmp.indexmin();
+  int max = dfvtmp.indexmax();
+  dvector dfv1(min, max);
+  double* pdfv1 = dfv1.get_v() + min;
+  double* pvtmp = vtmp.get_v() + min;
+  double* pdfvtmp = dfvtmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //vtmp.elem(i)=sin(value(v1.elem(i))));
-    dfv1(i)=dfvtmp(i)*vtmp.elem(i);
+    *pdfv1 = *pdfvtmp * *pvtmp;
+    ++pdfv1;
+    ++pvtmp;
+    ++pdfvtmp;
   }
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -245,7 +259,9 @@ dvar_vector log(const dvar_vector& v1)
   return vtmp;
 }
 
+#ifdef DEBUG
 int ad_debug_arithmetic=1;
+#endif
 
 /**
  * Description not yet available.

@@ -16,13 +16,7 @@ Substracts d from each element of dvar_vector.
 */
 dvar_vector& dvar_vector::operator-=(const prevariable& d)
 {
-  {
-    double value_d = value(d);
-    for (int i = indexmin(); i <= indexmax(); ++i)
-    {
-      elem_value(i) -= value_d;
-    }
-  }
+  dvar_vector::operator-=(value(d));
 
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
@@ -62,13 +56,7 @@ Adds d to each element of dvar_vector.
 */
 dvar_vector& dvar_vector::operator+=(const prevariable& d)
 {
-  {
-    double value_d = value(d);
-    for (int i = indexmin(); i <= indexmax(); ++i)
-    {
-      elem_value(i) += value_d;
-    }
-  }
+  dvar_vector::operator+=(value(d));
 
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
@@ -104,14 +92,14 @@ Substracts d from each element of dvar_vector.
 */
 dvar_vector& dvar_vector::operator-=(double d)
 {
+  double_and_int* pv = va + index_min;
+  for (int i = index_min; i <= index_max; ++i)
   {
-    for (int i = indexmin(); i <= indexmax(); ++i)
-    {
-      elem_value(i) -= d;
-    }
+    pv->x -= d;
+    ++pv;
   }
 
-  return*this;
+  return *this;
 }
 /**
 Adds d to each element of dvar_vector.
@@ -120,11 +108,11 @@ Adds d to each element of dvar_vector.
 */
 dvar_vector& dvar_vector::operator+=(double d)
 {
+  double_and_int* pv = va + index_min;
+  for (int i = index_min; i <= index_max; ++i)
   {
-    for (int i = indexmin(); i <= indexmax(); ++i)
-    {
-      elem_value(i) += d;
-    }
+    pv->x += d;
+    ++pv;
   }
 
   return *this;

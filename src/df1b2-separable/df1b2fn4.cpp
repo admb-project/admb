@@ -222,9 +222,14 @@ void read_pass1_eq_1(void)
   print_derivatives(px,"x");
 #endif
 
+  double* pxu_bar = px->u_bar;
+  double* pzu_bar = pz->u_bar;
   for (size_t i=0;i<nvar;i++)
   {
-    px->u_bar[i]+=pz->u_bar[i];
+    *pxu_bar += *pzu_bar;
+    ++pxu_bar;
+    ++pzu_bar;
+
 #if defined(ADDEBUG_PRINT)
     addebug_count++;
     if (addebug_count == 49)
@@ -234,10 +239,15 @@ void read_pass1_eq_1(void)
     cout << px->u_bar[i] << " " << pz->u_bar[i] << " " << addebug_count << endl;
 #endif
   }
+  double* pxu_dot_bar = px->u_dot_bar;
+  double* pzu_dot_bar = pz->u_dot_bar;
   for (size_t i=0;i<nvar;i++)
   {
-    px->u_dot_bar[i]+=pz->u_dot_bar[i];
+    *pxu_dot_bar += *pzu_dot_bar;
+    ++pxu_dot_bar;
+    ++pzu_dot_bar;
   }
+  /*
   for (size_t i=0;i<nvar;i++)
   {
     pz->u_bar[i]=0;
@@ -246,6 +256,11 @@ void read_pass1_eq_1(void)
   {
     pz->u_dot_bar[i]=0;
   }
+  */
+  constexpr size_t sizeofdouble = sizeof(double);
+  size_t size = nvar * sizeofdouble;
+  memset(pz->u_bar, 0, size);
+  memset(pz->u_dot_bar, 0, size);
 #if defined(PRINT_DERS)
   print_derivatives(px,"x");
   print_derivatives(pz,"z");

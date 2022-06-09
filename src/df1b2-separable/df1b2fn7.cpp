@@ -110,11 +110,17 @@ void read_tilde_values_1(void)
   list.restoreposition(); // save pointer to beginning of record;
 
   // don't need this here for = since it zeroes this out.
+  /*
   for (unsigned int i=0;i<nvar;i++)
   {
     px->u_bar[i]=0;
     px->u_dot_bar[i]=0;
   }
+  */
+  constexpr size_t sizeofdouble = sizeof(double);
+  size_t size = nvar * sizeofdouble;
+  memset(px->u_bar, 0, size);
+  memset(px->u_dot_bar, 0, size);
 }
 
 /**

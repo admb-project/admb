@@ -72,11 +72,12 @@ void ad_read_pass2_prodc1(void);
     cout << ncount << endl;
 #endif
    size_t nvar=df1b2variable::nvar;
+   constexpr size_t sizeofdouble = sizeof(double);
 
    //int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
    //  +2*(nvar+1)*sizeof(double);
    size_t total_bytes=2*sizeof(df1b2_header)
-     +(nvar+2)*sizeof(double);
+     +(nvar+2)*sizeofdouble;
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DL";
@@ -91,10 +92,9 @@ void ad_read_pass2_prodc1(void);
 #endif
 // end of string identifier debug stuff
 
-   memcpy(list,&x,sizeof(double));
+   memcpy(list,&x,sizeofdouble);
    memcpy(list,(df1b2_header*)(py),sizeof(df1b2_header));
    memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
-   size_t sizeofdouble = sizeof(double);
    memcpy(list,py->get_u(),sizeofdouble);
    memcpy(list,py->get_u_dot(),nvar*sizeofdouble);
    // ***** write  record size
@@ -198,6 +198,7 @@ void read_pass2_1_prodc1(void)
   memcpy(list2,ids,slen);
 #endif
 
+  constexpr size_t sizeofdouble = sizeof(double);
   fixed_smartlist2 & nlist2 = f1b2gradlist->nlist2;
   /*
   if (debugcounter++>569)
@@ -210,7 +211,6 @@ void read_pass2_1_prodc1(void)
   else
   */
   {
-    size_t sizeofdouble = sizeof(double);
     memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
     memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
   }
@@ -218,17 +218,26 @@ void read_pass2_1_prodc1(void)
   ++nlist2;
 
   // Do first reverse pass calculations
-  for (size_t i=0;i<nvar;i++)
+  double* py_u_bar = py->u_bar;
+  double* pz_u_bar = pz->u_bar;
+  for (size_t i = 0; i < nvar; ++i)
   {
-    py->u_bar[i]+=xu*pz->u_bar[i];
+    *py_u_bar += xu * *pz_u_bar;
+    ++pz_u_bar;
+    ++py_u_bar;
   }
 
-  for (size_t i=0;i<nvar;i++)
+  double* py_u_dot_bar = py->u_dot_bar;
+  double* pz_u_dot_bar = pz->u_dot_bar;
+  for (size_t i = 0; i < nvar; ++i)
   {
-    py->u_dot_bar[i]+=xu*pz->u_dot_bar[i];
+    *py_u_dot_bar += xu * *pz_u_dot_bar;
+    ++pz_u_dot_bar;
+    ++py_u_dot_bar;
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /*
   for (size_t i=0;i<nvar;i++)
   {
     pz->u_bar[i]=0;
@@ -237,6 +246,9 @@ void read_pass2_1_prodc1(void)
   {
     pz->u_dot_bar[i]=0;
   }
+  */
+  memset(pz->u_bar, 0, nvar * sizeofdouble);
+  memset(pz->u_dot_bar, 0, nvar * sizeofdouble);
 }
 
 /**
@@ -321,21 +333,29 @@ void read_pass2_2_prodc1(void)
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
 
+  /*
   for (size_t i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
+  */
+  constexpr size_t sizeofdouble = sizeof(double);
+  memset(z_bar_tilde, 0, nvar * sizeofdouble);
+  memset(z_dot_bar_tilde, 0, nvar * sizeofdouble);
 
   // start with y and add x
   for (size_t i=0;i<nvar;i++)
   {
-    z_bar_tilde[i]+=xu*y_bar_tilde[i];
+    *z_bar_tilde += xu * *y_bar_tilde;
+    ++y_bar_tilde;
+    ++z_bar_tilde;
   }
-
   for (size_t i=0;i<nvar;i++)
   {
-    z_dot_bar_tilde[i]+=xu*y_dot_bar_tilde[i];
+    *z_dot_bar_tilde += xu * *y_dot_bar_tilde;
+    ++y_dot_bar_tilde;
+    ++z_dot_bar_tilde;
   }
 }
 
@@ -381,13 +401,21 @@ void read_pass2_3_prodc1(void)
   list.restoreposition(); // save pointer to beginning of record;
 
   *(py->u_tilde)+=xu* *(pz->u_tilde);
+  double* py_u_dot_tilde = py->u_dot_tilde;
+  double* pz_u_dot_tilde = pz->u_dot_tilde;
   for (size_t i=0;i<nvar;i++)
   {
-    py->u_dot_tilde[i]+=xu*pz->u_dot_tilde[i];
+    *py_u_dot_tilde += xu * *pz_u_dot_tilde;
+    ++pz_u_dot_tilde;
+    ++py_u_dot_tilde;
   }
   *(pz->u_tilde)=0;
+  /*
   for (size_t i=0;i<nvar;i++)
   {
     pz->u_dot_tilde[i]=0;
   }
+  */
+  constexpr size_t sizeofdouble = sizeof(double);
+  memset(pz->u_dot_tilde, 0, nvar * sizeofdouble);
 }

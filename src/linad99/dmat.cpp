@@ -33,9 +33,11 @@ where ncl to nch are vector of indexes.
 void dmatrix::allocate(int nrl, int nrh, int ncl, int nch)
 {
   allocate(nrl, nrh);
-  for (int i = rowmin(); i <= rowmax(); ++i)
+  dvector* pm = m + nrl;
+  for (int i = nrl; i <= nrh; ++i)
   {
-    elem(i).allocate(ncl, nch);
+    pm->allocate(ncl, nch);
+    ++pm;
   }
 }
 /**
@@ -145,10 +147,17 @@ Allocate dmatrix using the same dimensions as other.
 */
 void dmatrix::allocate(const dmatrix& other)
 {
-  allocate(other.rowmin(), other.rowmax());
-  for (int i = rowmin(); i <= rowmax(); ++i)
+  int min = other.rowmin();
+  int max = other.rowmax();
+  allocate(min, max);
+
+  dvector* pm = m + min;
+  const dvector* pother = &other(min);
+  for (int i = min; i <= max; ++i)
   {
-    elem(i).allocate(other.elem(i));
+    pm->allocate(*pother);
+    ++pother;
+    ++pm;
   }
 }
 /**
@@ -174,6 +183,7 @@ where ncl to nch are vector of indexes.
 */
 void dmatrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& nch)
 {
+#ifndef OPT_LIB
   if (nrl != ncl.indexmin() || nrh != ncl.indexmax()
       || nrl != nch.indexmin() || nrh != nch.indexmax())
   {
@@ -181,10 +191,17 @@ void dmatrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& nch)
          << "dmatrix(int, int, const ivector&,const ivector&)\n";
     ad_exit(1);
   }
+#endif
   allocate(nrl, nrh);
-  for (int i = rowmin(); i <= rowmax(); ++i)
+  dvector* pm = m + nrl;
+  int* pncl = ncl.get_v() + nrl;
+  int* pnch = nch.get_v() + nrl;
+  for (int i = nrl; i <= nrh; ++i)
   {
-    elem(i).allocate(ncl(i), nch(i));
+    pm->allocate(*pncl, *pnch);
+    ++pncl;
+    ++pnch;
+    ++pm;
   }
 }
 /**
@@ -198,10 +215,22 @@ where nch is vector of indexes.
 */
 void dmatrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
 {
-  allocate(nrl, nrh);
-  for (int i = rowmin(); i <= rowmax(); ++i)
+#ifndef OPT_LIB
+  if (nrl != nch.indexmin() || nrh != nch.indexmax())
   {
-    elem(i).allocate(ncl, nch(i));
+    cerr << "Incompatible array bounds in "
+         << "dmatrix(int nrl, int nrh, int ncl, const ivector& nch)\n";
+    ad_exit(1);
+  }
+#endif
+  allocate(nrl, nrh);
+  dvector* pm = m + nrl;
+  const int* pnch = nch.get_v() + nrl;
+  for (int i = nrl; i <= nrh; ++i)
+  {
+    pm->allocate(ncl, *pnch);
+    ++pm;
+    ++pnch;
   }
 }
 /**
@@ -215,16 +244,22 @@ where nch is vector of indexes.
 */
 void dmatrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
 {
+#ifndef OPT_LIB
   if (nrl != ncl.indexmin() || nrh != ncl.indexmax())
   {
     cerr << "Incompatible array bounds in "
          << "dmatrix(int nrl, int nrh, int ncl, const ivector& nch)\n";
     ad_exit(1);
   }
+#endif
   allocate(nrl, nrh);
-  for (int i = rowmin(); i <= rowmax(); ++i)
+  dvector* pm = m + nrl;
+  const int* pncl = ncl.get_v() + nrl;
+  for (int i = nrl; i <= nrh; ++i)
   {
-    elem(i).allocate(ncl(i), nch);
+    pm->allocate(*pncl, nch);
+    ++pncl;
+    ++pm;
   }
 }
 
